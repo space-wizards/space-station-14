@@ -23,7 +23,6 @@
   categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
-    drawdepth: BelowMobs
     offset: 0.15, 0
     layers:
     - shader: unshaded
@@ -37,7 +36,6 @@
   categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
-    drawdepth: BelowMobs
     offset: 0.15, 0
     layers:
     - shader: unshaded
@@ -124,7 +122,6 @@
   categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
-    sprite: Objects/Weapons/Guns/Projectiles/projectiles2.rsi
     layers:
     - state: practice
   - type: Projectile
@@ -157,7 +154,6 @@
   categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
-    sprite: Objects/Weapons/Guns/Projectiles/projectiles2.rsi
     layers:
     - state: piercing
   - type: Projectile
@@ -173,7 +169,6 @@
   categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
-    sprite: Objects/Weapons/Guns/Projectiles/projectiles2.rsi
     layers:
     - state: uranium
   - type: Projectile
@@ -195,12 +190,10 @@
         volume: 5
   - type: Sprite
     noRot: true
-    sprite: Objects/Weapons/Guns/Projectiles/projectiles2.rsi
     color: "#ffff33"
     layers:
     - state: spark
       shader: unshaded
-  - type: Physics
   - type: Fixtures
     fixtures:
       projectile:
@@ -233,13 +226,10 @@
   parent: BulletTaser
   id: BulletTaserSuper
   categories: [ HideSpawnMenu ]
-  name: taser bolt
   description: If you can see this, you've probably been stun-meta'd
   components:
   - type: Sprite
-    noRot: true
     sprite: Structures/Power/Generation/Tesla/energy_miniball.rsi
-    color: "#ffff33"
     layers:
     - state: tesla_projectile
       shader: unshaded
@@ -254,51 +244,6 @@
     stunAmount: 5
     knockdownAmount: 10
     slowdownAmount: 10
-    walkSpeedModifier: 0.5
-    sprintSpeedModifier: 0.5
-
-- type: entity
-  name : disabler bolt
-  id: BulletDisabler
-  parent: BaseBullet
-  categories: [ HideSpawnMenu ]
-  components:
-  - type: Reflective
-    reflective:
-    - Energy
-  - type: FlyBySound
-    sound:
-      collection: EnergyMiss
-      params:
-        volume: 5
-  - type: Sprite
-    sprite: Objects/Weapons/Guns/Projectiles/projectiles_tg.rsi
-    layers:
-    - state: omnilaser
-      shader: unshaded
-  - type: Physics
-  - type: Fixtures
-    fixtures:
-      projectile:
-        shape:
-          !type:PhysShapeAabb
-          bounds: "-0.15,-0.3,0.15,0.3"
-        hard: false
-        mask:
-        - Impassable
-        - BulletImpassable
-      fly-by: *flybyfixture
-  - type: Ammo
-  - type: StaminaDamageOnCollide
-    damage: 33
-  - type: Projectile
-    impactEffect: BulletImpactEffectDisabler
-    damage:
-      types:
-        Heat: 0
-    soundHit:
-      collection: WeakHit
-    forceSound: true
 
 - type: entity
   name : disabler bolt practice
@@ -316,7 +261,6 @@
     layers:
     - state: omnilaser
       shader: unshaded
-  - type: Physics
   - type: Fixtures
     fixtures:
       projectile:
@@ -341,6 +285,27 @@
     forceSound: true
 
 - type: entity
+  name : disabler bolt
+  id: BulletDisabler
+  parent: BulletDisablerPractice
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Reflective
+    reflective:
+    - Energy
+  - type: StaminaDamageOnCollide
+    damage: 33
+
+- type: entity
+  name : disabler bolt smg
+  id: BulletDisablerSmg
+  parent: BulletDisabler
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: StaminaDamageOnCollide
+    damage: 15
+
+- type: entity
   name: emitter bolt
   id: EmitterBolt
   parent: BaseBullet
@@ -353,7 +318,6 @@
         shader: unshaded
   - type: Ammo
     muzzleFlash: null
-  - type: Physics
   - type: Fixtures
     fixtures:
       projectile:
@@ -395,7 +359,6 @@
       shader: unshaded
   - type: Ammo
     muzzleFlash: null
-  - type: Physics
   - type: Fixtures
     fixtures:
       projectile:
@@ -425,23 +388,19 @@
   components:
   - type: Projectile
     #   soundHit:  Waiting on serv3
-    impactEffect: BulletImpactEffectDisabler
     damage:
       types:
         Cold: 10
-  - type: TimedDespawn
-    lifetime: 3
   - type: ChangeTemperatureOnCollide
     heat: -100000
 
 - type: entity
   name: magmawing watcher bolt
   id: WatcherBoltMagmawing
-  parent: BaseBullet
+  parent: WatcherBolt
   categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
-    sprite: Objects/Weapons/Guns/Projectiles/projectiles_tg.rsi
     layers:
     - state: omnilaser_greyscale
       shader: unshaded
@@ -463,7 +422,6 @@
   components:
   - type: Projectile
     #   soundHit:  Waiting on serv3
-    impactEffect: BulletImpactEffectOrangeDisabler
     damage:
       types:
         Heat: 10
@@ -488,7 +446,6 @@
       shader: unshaded
   - type: Ammo
     muzzleFlash: null
-  - type: Physics
   - type: Fixtures
     fixtures:
       projectile:
@@ -520,7 +477,6 @@
     reflective:
       - NonEnergy
   - type: Sprite
-    noRot: false
     sprite: Objects/Weapons/Guns/Projectiles/magic.rsi
     layers:
     - state: chronobolt
@@ -538,17 +494,10 @@
 
 - type: entity
   id: BulletKineticShuttle
-  parent: BaseBullet
+  parent: BulletKinetic
   categories: [ HideSpawnMenu ]
   components:
-  - type: Sprite
-    noRot: false
-    sprite: Objects/Weapons/Guns/Projectiles/magic.rsi
-    layers:
-    - state: chronobolt
-      shader: unshaded
   - type: Projectile
-    impactEffect: BulletImpactEffectKinetic
     damage:
       types:
         Blunt: 30
@@ -561,7 +510,6 @@
     radius: 2.5
     color: white
     energy: 0.5
-  - type: GatheringProjectile
 
 - type: entity
   id: BulletCharge
@@ -574,7 +522,6 @@
     reflective:
     - NonEnergy
   - type: Sprite
-    noRot: false
     sprite: Objects/Weapons/Guns/Projectiles/magic.rsi
     layers:
       - state: chronobolt
@@ -604,35 +551,31 @@
   parent: BulletCharge
   components:
   - type: DamageMarkerOnCollide
-    whitelist:
-      components:
-        - MobState
     damage:
       types:
         Blunt: 1
         Slash: 5
 
+  # Anomalous particles
 - type: entity
   parent: BaseBullet
-  id: AnomalousParticleDelta
-  name: delta particles
+  id: BaseAnomalousParticle
+  name: base anomalous particle
+  description: Run if it's coming to you.
   categories: [ HideSpawnMenu ]
   components:
   - type: PointLight
     enabled: true
-    color: "#c2385d"
     radius: 2.0
     energy: 7.0
-  - type: AnomalousParticle
-    particleType: Delta
   - type: Sprite
     sprite: Objects/Weapons/Guns/Projectiles/magic.rsi
     layers:
-      - state: magicm_red
-        shader: unshaded
+    - state: magicm
+      shader: unshaded
+
   - type: Ammo
     muzzleFlash: null
-  - type: Physics
   - type: Fixtures
     fixtures:
       projectile:
@@ -653,30 +596,47 @@
     reflective:
     - Energy
 
-
 - type: entity
-  parent: AnomalousParticleDelta
-  id: AnomalousParticleDeltaStrong
+  parent: BaseAnomalousParticle
+  id: BaseAnomalousParticleStrong
+  name: base strong anomalous particle
   categories: [ HideSpawnMenu ]
   components:
   - type: AnomalousParticle
-    particleType: Delta
+    particleType: Default
     severityPerSeverityHit: 0.05
     stabilityPerDestabilizingHit: 0.08
     healthPerWeakeningeHit: -0.1
     stabilityPerWeakeningeHit: -0.2
 
 - type: entity
-  parent: AnomalousParticleDelta
+  parent: BaseAnomalousParticle
+  id: AnomalousParticleDelta
+  name: delta particles
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: PointLight
+    color: "#c2385d"
+  - type: AnomalousParticle
+    particleType: Delta
+  - type: Sprite
+    layers:
+    - state: magicm_red
+      shader: unshaded
+
+- type: entity
+  parent: [ AnomalousParticleDelta, BaseAnomalousParticleStrong ]
+  id: AnomalousParticleDeltaStrong
+  categories: [ HideSpawnMenu ]
+
+- type: entity
+  parent: BaseAnomalousParticle
   id: AnomalousParticleEpsilon
   name: epsilon particles
   categories: [ HideSpawnMenu ]
   components:
   - type: PointLight
-    enabled: true
     color: "#38c296"
-    radius: 2.0
-    energy: 7.0
   - type: Sprite
     layers:
       - state: magicm_cyan
@@ -685,28 +645,18 @@
     particleType: Epsilon
 
 - type: entity
-  parent: AnomalousParticleEpsilon
+  parent: [ AnomalousParticleEpsilon, BaseAnomalousParticleStrong ]
   id: AnomalousParticleEpsilonStrong
   categories: [ HideSpawnMenu ]
-  components:
-  - type: AnomalousParticle
-    particleType: Epsilon
-    severityPerSeverityHit: 0.05
-    stabilityPerDestabilizingHit: 0.08
-    healthPerWeakeningeHit: -0.1
-    stabilityPerWeakeningeHit: -0.2
 
 - type: entity
-  parent: AnomalousParticleDelta
+  parent: BaseAnomalousParticle
   id: AnomalousParticleZeta
   name: zeta particles
   categories: [ HideSpawnMenu ]
   components:
   - type: PointLight
-    enabled: true
     color: "#b9c238"
-    radius: 2.0
-    energy: 7.0
   - type: Sprite
     layers:
       - state: magicm_yellow
@@ -715,35 +665,43 @@
     particleType: Zeta
 
 - type: entity
-  parent: AnomalousParticleZeta
+  parent: [ AnomalousParticleZeta, BaseAnomalousParticleStrong ]
   id: AnomalousParticleZetaStrong
   categories: [ HideSpawnMenu ]
-  components:
-  - type: AnomalousParticle
-    particleType: Zeta
-    severityPerSeverityHit: 0.05
-    stabilityPerDestabilizingHit: 0.08
-    healthPerWeakeningeHit: -0.1
-    stabilityPerWeakeningeHit: -0.2
 
 - type: entity
-  parent: AnomalousParticleDelta
+  parent: BaseAnomalousParticle
+  id: AnomalousParticleSigma
+  name: sigma particles
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: PointLight
+    color: "#8d38c2"
+  - type: Sprite
+    layers:
+      - state: magicm
+        shader: unshaded
+  - type: AnomalousParticle
+    particleType: Sigma
+
+- type: entity
+  parent: [ AnomalousParticleSigma, BaseAnomalousParticleStrong ]
+  id: AnomalousParticleSigmaStrong
+  categories: [ HideSpawnMenu ]
+
+- type: entity
+  parent: BaseAnomalousParticleStrong
   id: AnomalousParticleOmegaStrong
   name: omega particles
   categories: [ HideSpawnMenu ]
   components:
   - type: PointLight
-    enabled: true
     color: "#38c24f"
-    radius: 2.0
-    energy: 7.0
   - type: Sprite
-    sprite: Objects/Weapons/Guns/Projectiles/magic.rsi
     layers:
       - state: magicm_green
         shader: unshaded
   - type: AnomalousParticle
-    particleType: Default
     severityOverride: true
     severityPerSeverityHit: 0.1
     stabilityPerDestabilizingHit: 0.05
@@ -755,33 +713,6 @@
       types:
         Heat: 20
 
-- type: entity
-  parent: AnomalousParticleDelta
-  id: AnomalousParticleSigma
-  name: sigma particles
-  categories: [ HideSpawnMenu ]
-  components:
-  - type: PointLight
-    enabled: true
-    color: "#8d38c2"
-    radius: 2.0
-    energy: 7.0
-  - type: Sprite
-    layers:
-      - state: magicm
-        shader: unshaded
-  - type: AnomalousParticle
-    particleType: Sigma
-
-- type: entity
-  parent: AnomalousParticleSigma
-  id: AnomalousParticleSigmaStrong
-  name: sigma particles
-  categories: [ HideSpawnMenu ]
-  components:
-  - type: AnomalousParticle
-    particleType: Sigma
-
 # Launcher projectiles (grenade / rocket)
 - type: entity
   id: BulletRocket
@@ -790,7 +721,6 @@
   categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
-    sprite: Objects/Weapons/Guns/Projectiles/projectiles2.rsi
     layers:
       - state: frag
   - type: ExplodeOnTrigger
@@ -808,24 +738,13 @@
 - type: entity
   id: BulletWeakRocket
   name: weak rocket
-  parent: BaseBulletTrigger
+  parent: BulletRocket
   categories: [ HideSpawnMenu ]
   components:
-  - type: Sprite
-    sprite: Objects/Weapons/Guns/Projectiles/projectiles2.rsi
-    layers:
-      - state: frag
-  - type: ExplodeOnTrigger
   - type: Explosive
-    explosionType: Default
     maxIntensity: 2 # max 30 per tile
     intensitySlope: 1
     totalIntensity: 4 # 60 total damage to distribute over tiles
-    maxTileBreak: 1
-  - type: PointLight
-    radius: 3.5
-    color: orange
-    energy: 0.5
 
 - type: entity
   id: BulletGrenadeBaton
@@ -834,7 +753,6 @@
   categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
-    sprite: Objects/Weapons/Guns/Projectiles/projectiles2.rsi
     layers:
       - state: grenade
   - type: Projectile
@@ -854,7 +772,6 @@
   categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
-    sprite: Objects/Weapons/Guns/Projectiles/projectiles2.rsi
     layers:
       - state: grenade
   - type: ExplodeOnTrigger
@@ -872,7 +789,6 @@
   categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
-    sprite: Objects/Weapons/Guns/Projectiles/projectiles2.rsi
     layers:
       - state: grenade
   - type: FlashOnTrigger
@@ -888,7 +804,6 @@
   categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
-    sprite: Objects/Weapons/Guns/Projectiles/projectiles2.rsi
     layers:
       - state: grenade
   - type: ExplodeOnTrigger
@@ -912,7 +827,6 @@
   categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
-    sprite: Objects/Weapons/Guns/Projectiles/projectiles2.rsi
     layers:
     - state: cleanade
   - type: SmokeOnTrigger
@@ -940,7 +854,6 @@
   categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
-    sprite: Objects/Weapons/Guns/Projectiles/projectiles2.rsi
     layers:
       - state: frag
   - type: EmpOnTrigger
@@ -1048,7 +961,6 @@
   categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
-    sprite: Objects/Weapons/Guns/Projectiles/projectiles2.rsi
     layers:
       - state: ball
   - type: ExplodeOnTrigger
@@ -1099,50 +1011,7 @@
     - type: GrapplingProjectile
 
 - type: entity
-  name : disabler bolt smg
-  id: BulletDisablerSmg
-  parent: BaseBullet
-  categories: [ HideSpawnMenu ]
-  components:
-  - type: Reflective
-    reflective:
-    - Energy
-  - type: FlyBySound
-    sound:
-      collection: EnergyMiss
-      params:
-        volume: 5
-  - type: Sprite
-    sprite: Objects/Weapons/Guns/Projectiles/projectiles_tg.rsi
-    layers:
-    - state: omnilaser
-      shader: unshaded
-  - type: Physics
-  - type: Fixtures
-    fixtures:
-      projectile:
-        shape:
-          !type:PhysShapeAabb
-          bounds: "-0.15,-0.3,0.15,0.3"
-        hard: false
-        mask:
-        - Impassable
-        - BulletImpassable
-      fly-by: *flybyfixture
-  - type: Ammo
-  - type: StaminaDamageOnCollide
-    damage: 15
-  - type: Projectile
-    impactEffect: BulletImpactEffectDisabler
-    damage:
-      types:
-        Heat: 0
-    soundHit:
-      collection: WeakHit
-    forceSound: true
-
-- type: entity
-  name : energy bolt
+  name: energy bolt
   id: BulletEnergyTurretBase
   parent: BaseBullet
   categories: [ HideSpawnMenu ]
@@ -1174,7 +1043,7 @@
   - type: Ammo
 
 - type: entity
-  name : laser bolt
+  name: laser bolt
   id: BulletEnergyTurretLaser
   parent: BulletEnergyTurretBase
   categories: [ HideSpawnMenu ]
@@ -1193,7 +1062,7 @@
         Heat: 28
 
 - type: entity
-  name : disabler bolt
+  name: disabler bolt
   id: BulletEnergyTurretDisabler
   parent: BulletEnergyTurretBase
   categories: [ HideSpawnMenu ]
