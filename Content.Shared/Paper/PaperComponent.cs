@@ -7,7 +7,6 @@ namespace Content.Shared.Paper;
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
 public sealed partial class PaperComponent : Component
 {
-    public PaperAction Mode;
     [DataField("content"), AutoNetworkedField]
     public string Content { get; set; } = "";
 
@@ -37,23 +36,50 @@ public sealed partial class PaperComponent : Component
     {
         public readonly string Text;
         public readonly List<StampDisplayInfo> StampedBy;
-        public readonly PaperAction Mode;
 
-        public PaperBoundUserInterfaceState(string text, List<StampDisplayInfo> stampedBy, PaperAction mode = PaperAction.Read)
+        public PaperBoundUserInterfaceState(string text, List<StampDisplayInfo> stampedBy)
         {
             Text = text;
             StampedBy = stampedBy;
-            Mode = mode;
+        }
+    }
+
+    [Serializable, NetSerializable]
+    public sealed class PaperBeginEditMessage : BoundUserInterfaceMessage
+    {
+        /// <summary>
+        /// The entity ID of the tool used to begin editing (i.e. a pen).
+        /// </summary>
+        public readonly NetEntity EditToolEntity;
+
+        public PaperBeginEditMessage(NetEntity editTool)
+        {
+            EditToolEntity = editTool;
         }
     }
 
     [Serializable, NetSerializable]
     public sealed class PaperInputTextMessage : BoundUserInterfaceMessage
     {
+        /// <summary>
+        /// The entity of the player who edited the paper
+        /// </summary>
+        public readonly NetEntity User;
+
+        /// <summary>
+        /// The entity ID of the tool used to begin editing (i.e. a pen).
+        /// </summary>
+        public readonly NetEntity EditToolEntity;
+
+        /// <summary>
+        /// The new text the paper should have
+        /// </summary>
         public readonly string Text;
 
-        public PaperInputTextMessage(string text)
+        public PaperInputTextMessage(NetEntity user, NetEntity editTool, string text)
         {
+            User = user;
+            EditToolEntity = editTool;
             Text = text;
         }
     }
@@ -62,13 +88,6 @@ public sealed partial class PaperComponent : Component
     public enum PaperUiKey
     {
         Key
-    }
-
-    [Serializable, NetSerializable]
-    public enum PaperAction
-    {
-        Read,
-        Write,
     }
 
     [Serializable, NetSerializable]
