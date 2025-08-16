@@ -1,10 +1,26 @@
 using Content.Server.Chat.Systems;
+using Content.Server.Destructible;
+using Content.Server.Ghost;
+using Content.Server.Mind;
+using Content.Server.Power.Components;
+using Content.Server.Power.EntitySystems;
+using Content.Server.Spawners.Components;
+using Content.Server.Spawners.EntitySystems;
+using Content.Server.Station.Systems;
+using Content.Shared.Alert;
 using Content.Shared.Chat.Prototypes;
+using Content.Shared.Damage;
+using Content.Shared.Destructible;
 using Content.Shared.DeviceNetwork.Components;
+using Content.Shared.DoAfter;
+using Content.Shared.Popups;
+using Content.Shared.Roles;
 using Content.Shared.Silicons.StationAi;
+using Content.Shared.Speech.Components;
 using Content.Shared.StationAi;
 using Content.Shared.Turrets;
 using Content.Shared.Weapons.Ranged.Events;
+using Robust.Shared.Containers;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
@@ -16,17 +32,122 @@ public sealed class StationAiSystem : SharedStationAiSystem
 {
     [Dependency] private readonly EntityLookupSystem _lookup = default!;
     [Dependency] private readonly SharedTransformSystem _xforms = default!;
+    [Dependency] private readonly GhostSystem _ghost = default!;
+    [Dependency] private readonly AlertsSystem _alerts = default!;
+    [Dependency] private readonly DestructibleSystem _destructible = default!;
+    [Dependency] private readonly BatterySystem _battery = default!;
+    [Dependency] private readonly DamageableSystem _damageable = default!;
+    [Dependency] private readonly MindSystem _mind = default!;
+    [Dependency] private readonly SharedPopupSystem _popups = default!;
+    [Dependency] private readonly StationSystem _station = default!;
+    [Dependency] private readonly StationJobsSystem _stationJobs = default!;
 
     private readonly HashSet<Entity<StationAiCoreComponent>> _stationAiCores = new();
+
     private readonly ProtoId<ChatNotificationPrototype> _turretIsAttackingChatNotificationPrototype = "TurretIsAttacking";
     private readonly ProtoId<ChatNotificationPrototype> _aiWireSnippedChatNotificationPrototype = "AiWireSnipped";
+
+    private readonly ProtoId<AlertPrototype> _batteryAlert = "BorgBattery";
+    private readonly ProtoId<AlertPrototype> _integrityAlert = "BorgHealth";
+    private readonly ProtoId<JobPrototype> _stationAiJob = "StationAi";
 
     public override void Initialize()
     {
         base.Initialize();
 
+        SubscribeLocalEvent<StationAiCoreComponent, ContainerSpawnEvent>(OnContainerSpawn);
+        SubscribeLocalEvent<StationAiCoreComponent, DestructionEventArgs>(OnDestruction);
+        SubscribeLocalEvent<StationAiCoreComponent, ChargeChangedEvent>(OnChargeChanged);
+        SubscribeLocalEvent<StationAiCoreComponent, DamageChangedEvent>(OnDamageChanged);
+        SubscribeLocalEvent<StationAiCoreComponent, DoAfterAttemptEvent<IntellicardDoAfterEvent>>(OnDoAfterAttempt);
         SubscribeLocalEvent<ExpandICChatRecipientsEvent>(OnExpandICChatRecipients);
         SubscribeLocalEvent<StationAiTurretComponent, AmmoShotEvent>(OnAmmoShot);
+    }
+
+    private void OnContainerSpawn(Entity<StationAiCoreComponent> ent, ref ContainerSpawnEvent args)
+    {
+        // Ensure that players that recently joined the round will spawn
+        // into an AI core that a full battery and full integrity.
+        if (TryComp<BatteryComponent>(ent, out var battery))
+        {
+            _battery.SetCharge(ent, battery.MaxCharge);
+        }
+
+        if (TryComp<DamageableComponent>(ent, out var damageable))
+        {
+            _damageable.SetAllDamage(ent, damageable, 0);
+        }
+    }
+
+    protected override void OnAiInsert(Entity<StationAiCoreComponent> ent, ref EntInsertedIntoContainerMessage args)
+    {
+        base.OnAiInsert(ent, ref args);
+
+        UpdateBatteryAlert(ent);
+        UpdateCoreIntegrityAlert(ent);
+        UpdateDamagedAccent(ent);
+    }
+
+    protected override void OnAiRemove(Entity<StationAiCoreComponent> ent, ref EntRemovedFromContainerMessage args)
+    {
+        base.OnAiRemove(ent, ref args);
+
+        _alerts.ClearAlert(args.Entity, _batteryAlert);
+        _alerts.ClearAlert(args.Entity, _integrityAlert);
+
+        if (TryComp<DamagedSiliconAccentComponent>(args.Entity, out var accent))
+        {
+            accent.OverrideChargeLevel = null;
+            accent.OverrideTotalDamage = null;
+            accent.DamageAtMaxCorruption = null;
+        }
+    }
+
+    private void OnDestruction(Entity<StationAiCoreComponent> ent, ref DestructionEventArgs args)
+    {
+        var station = _station.GetOwningStation(ent);
+
+        if (station == null)
+            return;
+
+        if (TryComp<ContainerSpawnPointComponent>(ent, out var container) && container.Job == _stationAiJob)
+            _stationJobs.TryAdjustJobSlot(station.Value, _stationAiJob, -1, false, true);
+    }
+
+    private void OnChargeChanged(Entity<StationAiCoreComponent> entity, ref ChargeChangedEvent args)
+    {
+        UpdateBatteryAlert(entity);
+        UpdateDamagedAccent(entity);
+    }
+
+    private void OnDamageChanged(Entity<StationAiCoreComponent> entity, ref DamageChangedEvent args)
+    {
+        UpdateCoreIntegrityAlert(entity);
+        UpdateDamagedAccent(entity);
+    }
+
+    private void OnDoAfterAttempt(Entity<StationAiCoreComponent> ent, ref DoAfterAttemptEvent<IntellicardDoAfterEvent> args)
+    {
+        // Do not allow an AI to be uploaded into a currently unpowered or broken AI core.
+
+        if (TryGetHeld((ent.Owner, ent.Comp), out var _))
+            return;
+
+        if (TryComp<ApcPowerReceiverComponent>(ent, out var apcPower) && !apcPower.Powered)
+        {
+            _popups.PopupEntity(Loc.GetString("station-ai-has-no-power-for-upload"), ent, args.Event.User);
+
+            args.Cancel();
+            return;
+        }
+
+        if (TryComp<DestructibleComponent>(ent, out var destructible) && destructible.IsBroken)
+        {
+            _popups.PopupEntity(Loc.GetString("station-ai-is-too-damaged-for-upload"), ent, args.Event.User);
+
+            args.Cancel();
+            return;
+        }
     }
 
     private void OnExpandICChatRecipients(ExpandICChatRecipientsEvent ev)
@@ -79,6 +200,67 @@ public sealed class StationAiSystem : SharedStationAiSystem
             RaiseLocalEvent(ai, ref ev);
         }
     }
+
+    private void UpdateDamagedAccent(Entity<StationAiCoreComponent> ent)
+    {
+        if (!TryGetHeld((ent.Owner, ent.Comp), out var held))
+            return;
+
+        if (!TryComp<DamagedSiliconAccentComponent>(held, out var accent))
+            return;
+
+        if (TryComp<BatteryComponent>(ent, out var battery))
+            accent.OverrideChargeLevel = battery.CurrentCharge / battery.MaxCharge;
+
+        if (TryComp<DamageableComponent>(ent, out var damageable))
+            accent.OverrideTotalDamage = damageable.TotalDamage;
+
+        if (TryComp<DestructibleComponent>(ent, out var destructible))
+            accent.DamageAtMaxCorruption = _destructible.DestroyedAt(ent, destructible);
+
+        Dirty(held, accent);
+    }
+
+    private void UpdateBatteryAlert(Entity<StationAiCoreComponent> ent)
+    {
+        if (!TryComp<BatteryComponent>(ent, out var battery))
+            return;
+
+        if (!TryGetHeld((ent.Owner, ent.Comp), out var held))
+            return;
+
+        var chargePercent = (short)MathF.Round(battery.CurrentCharge / battery.MaxCharge * 10f);
+        _alerts.ShowAlert(held, _batteryAlert, chargePercent);
+    }
+
+    private void UpdateCoreIntegrityAlert(Entity<StationAiCoreComponent> ent)
+    {
+        if (!TryComp<DamageableComponent>(ent, out var damageable))
+            return;
+
+        if (!TryComp<DestructibleComponent>(ent, out var destructible))
+            return;
+
+        if (!TryGetHeld((ent.Owner, ent.Comp), out var held))
+            return;
+
+        var damagePercent = (short)MathF.Round(damageable.TotalDamage.Float() / _destructible.DestroyedAt(ent, destructible).Float() * 4f);
+        _alerts.ShowAlert(held, _integrityAlert, damagePercent);
+    }
+
+    public override void KillHeldAi(Entity<StationAiCoreComponent> ent)
+    {
+        base.KillHeldAi(ent);
+
+        if (!TryGetHeld((ent.Owner, ent.Comp), out var held))
+            return;
+
+        if (!_mind.TryGetMind(held, out var mindId, out var mind))
+            return;
+
+        _ghost.OnGhostAttempt(mindId, false, mind: mind);
+    }
+
 
     public override bool SetVisionEnabled(Entity<StationAiVisionComponent> entity, bool enabled, bool announce = false)
     {
