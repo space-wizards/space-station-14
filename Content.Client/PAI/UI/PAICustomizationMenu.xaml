@@ -1,0 +1,84 @@
+<controls:FancyWindow
+    xmlns="https://spacestation14.io"
+    xmlns:gfx="clr-namespace:Robust.Client.Graphics;assembly=Robust.Client"
+    xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
+    xmlns:customControls="clr-namespace:Content.Client.Administration.UI.CustomControls"
+    Title="{Loc 'pai-customization-ui-menu'}"
+    MinSize="550 250"
+    SetSize="550 250">
+
+    <BoxContainer Orientation="Horizontal"
+                  HorizontalExpand="True"
+                  VerticalExpand="True">
+
+        <!-- Left side - Controls -->
+        <BoxContainer Orientation="Vertical"
+                      VerticalExpand="True"
+                      HorizontalExpand="True"
+                      Margin="15 10 15 15">
+
+            <!-- Name input -->
+            <Label Text="{Loc 'pai-customization-name-label'}" HorizontalAlignment="Center" StyleClasses="LabelHeading" Margin="0 0 0 5"/>
+            <BoxContainer Orientation="Horizontal" HorizontalExpand="True" Margin="0 5 0 0">
+                <LineEdit Name="NameLineEdit"
+                          HorizontalExpand="True"
+                          PlaceHolder="{Loc 'pai-customization-name-placeholder'}"/>
+            </BoxContainer>
+
+            <!-- Reset button -->
+            <Button Name="ResetNameButton"
+                    Text="{Loc 'pai-customization-reset-name'}"
+                    HorizontalAlignment="Center"
+                    Margin="0 10 0 0"
+                    MinSize="300 20"/>
+
+            <!-- Emotion selector with label -->
+            <BoxContainer Orientation="Horizontal"
+                          HorizontalAlignment="Center"
+                          Margin="0 20 0 0">
+                <Label Text="{Loc 'pai-emotion-ui-set-label'}"
+                       Margin="0 0 5 0"
+                       VerticalAlignment="Center"/>
+                <OptionButton Name="EmotionOptions"
+                              VerticalAlignment="Center"
+                              MinSize="150 30"/>
+            </BoxContainer>
+
+            <!-- Glasses selector with label -->
+            <BoxContainer Orientation="Horizontal"
+                          HorizontalAlignment="Center"
+                          Margin="0 20 0 0">
+                <Label Text="{Loc 'pai-glasses-ui-set-label'}"
+                       Margin="0 0 5 0"
+                       VerticalAlignment="Center"/>
+                <OptionButton Name="GlassesOptions"
+                              VerticalAlignment="Center"
+                              MinSize="150 30"/>
+            </BoxContainer>
+
+            <!-- Spacer -->
+            <Control VerticalExpand="True"/>
+        </BoxContainer>
+
+        <customControls:VSeparator/>
+
+        <!-- Right side - Preview -->
+        <BoxContainer Orientation="Vertical"
+                      VerticalExpand="True"
+                      HorizontalExpand="True"
+                      Margin="15 10 15 15">
+            <PanelContainer VerticalExpand="True"
+                            HorizontalExpand="True"
+                            MinHeight="200">
+                <PanelContainer.PanelOverride>
+                    <gfx:StyleBoxFlat BackgroundColor="#1B1B1E"/>
+                </PanelContainer.PanelOverride>
+                <BoxContainer HorizontalAlignment="Center"
+                              VerticalAlignment="Center">
+                    <SpriteView Name="PAIPreviewSprite"
+                                Scale="9 9"/>
+                </BoxContainer>
+            </PanelContainer>
+        </BoxContainer>
+    </BoxContainer>
+</controls:FancyWindow>
