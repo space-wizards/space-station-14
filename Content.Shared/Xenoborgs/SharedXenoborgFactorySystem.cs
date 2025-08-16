@@ -2,9 +2,7 @@ using Content.Shared.ActionBlocker;
 using Content.Shared.Bed.Sleep;
 using Content.Shared.Lathe;
 using Content.Shared.Materials;
-using Content.Shared.Mobs.Components;
 using Content.Shared.Mobs.Systems;
-using Content.Shared.Silicons.Borgs.Components;
 using Content.Shared.Verbs;
 using Content.Shared.Whitelist;
 using Content.Shared.Xenoborgs.Components;
@@ -21,16 +19,14 @@ namespace Content.Shared.Xenoborgs;
 /// </summary>
 public abstract class SharedXenoborgFactorySystem : EntitySystem
 {
-    [Dependency] private readonly IGameTiming _timing = default!;
+    [Dependency] private readonly ActionBlockerSystem _actionBlocker = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
-    [Dependency] protected readonly SharedContainerSystem Container = default!;
+    [Dependency] private readonly MobStateSystem _mobState = default!;
+    [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly EntityWhitelistSystem _whitelistSystem = default!;
+    [Dependency] protected readonly SharedContainerSystem Container = default!;
     [Dependency] protected readonly SharedMaterialStorageSystem MaterialStorage = default!;
     [Dependency] protected readonly IPrototypeManager Proto = default!;
-    [Dependency] private readonly MobStateSystem _mobState = default!;
-    [Dependency] private readonly ActionBlockerSystem _actionBlocker = default!;
-
-
 
     public override void Initialize()
     {
@@ -65,7 +61,8 @@ public abstract class SharedXenoborgFactorySystem : EntitySystem
         if (!CanProduce(uid, component))
             return;
 
-        if (!_mobState.IsIncapacitated(item) && !HasComp<SleepingComponent>(item) && _actionBlocker.CanInteract(item, null) && !suicide)
+        if (!_mobState.IsIncapacitated(item) && !HasComp<SleepingComponent>(item) &&
+            _actionBlocker.CanInteract(item, null) && !suicide)
             return;
 
         if (_whitelistSystem.IsWhitelistFail(component.Whitelist, item) ||

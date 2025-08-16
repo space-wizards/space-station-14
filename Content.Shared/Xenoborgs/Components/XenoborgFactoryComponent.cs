@@ -12,35 +12,14 @@ namespace Content.Shared.Xenoborgs.Components;
 [Access(typeof(SharedXenoborgFactorySystem))]
 public sealed partial class XenoborgFactoryComponent : Component
 {
-    [DataField, AutoNetworkedField]
-    public ProtoId<LatheRecipePrototype> Recipe;
-
-    [DataField, AutoNetworkedField]
-    public ProtoId<LatheRecipePackPrototype> BorgRecipePack;
-
-    /// <summary>
-    /// An "enable" toggle for things like interfacing with machine linking
-    /// </summary>
-    [DataField, AutoNetworkedField, ViewVariables(VVAccess.ReadWrite)]
-    public bool Enabled = true;
-
-    /// <summary>
-    /// a whitelist for what entities can be inserted into this reclaimer
-    /// </summary>
-    [DataField]
-    public EntityWhitelist? Whitelist;
-
     /// <summary>
     /// a blacklist for what entities cannot be inserted into this reclaimer
     /// </summary>
     [DataField]
     public EntityWhitelist? Blacklist;
 
-    /// <summary>
-    /// The sound played when something is being processed.
-    /// </summary>
-    [DataField]
-    public SoundSpecifier? Sound;
+    [DataField, AutoNetworkedField]
+    public ProtoId<LatheRecipePackPrototype> BorgRecipePack;
 
     /// <summary>
     /// whether or not we cut off the sound early when the reclaiming ends.
@@ -49,11 +28,35 @@ public sealed partial class XenoborgFactoryComponent : Component
     public bool CutOffSound = true;
 
     /// <summary>
+    /// An "enable" toggle for things like interfacing with machine linking
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public bool Enabled = true;
+
+    /// <summary>
+    /// A counter of how many items have been processed
+    /// </summary>
+    /// <remarks>
+    /// I saw this on the recycler and i'm porting it because it's cute af
+    /// </remarks>
+    [DataField, AutoNetworkedField]
+    public int ItemsProcessed;
+
+    /// <summary>
     /// When the next sound will be allowed to be played. Used to prevent spam.
     /// </summary>
     [DataField(customTypeSerializer: typeof(TimeOffsetSerializer))]
     [AutoPausedField]
     public TimeSpan NextSound;
+
+    [DataField, AutoNetworkedField]
+    public ProtoId<LatheRecipePrototype> Recipe;
+
+    /// <summary>
+    /// The sound played when something is being processed.
+    /// </summary>
+    [DataField]
+    public SoundSpecifier? Sound;
 
     /// <summary>
     /// Minimum time inbetween each <see cref="Sound"/>
@@ -64,11 +67,8 @@ public sealed partial class XenoborgFactoryComponent : Component
     public EntityUid? Stream;
 
     /// <summary>
-    /// A counter of how many items have been processed
+    /// a whitelist for what entities can be inserted into this reclaimer
     /// </summary>
-    /// <remarks>
-    /// I saw this on the recycler and i'm porting it because it's cute af
-    /// </remarks>
-    [DataField, AutoNetworkedField]
-    public int ItemsProcessed;
+    [DataField]
+    public EntityWhitelist? Whitelist;
 }
