@@ -1515,7 +1515,7 @@
           dataset: PlushiesRedwoods
         - type: TextToSpeech
           voice: klaasjeamandou
-
+   
 - type: entity
   parent: BasePlushie
   id: PlushieDoxesTheCaptain #Weh!
@@ -1745,6 +1745,30 @@
     wideAnimationRotation: 180
     soundHit:
       path: /Audio/Animals/cat_hiss.ogg
+
+- type: entity
+  parent: BaseVulpkaninPlushie
+  id: PlushieKilla
+  name: killa plushie
+  description: Looks like a cheap knockoff, it has visibly loose stitching
+  components:
+  - type: Item
+    size: Small
+    sprite: _Starlight/Objects/Fun/Plushies/killa_plushie.rsi
+  - type: Sprite
+    sprite: _Starlight/Objects/Fun/Plushies/killa_plushie.rsi
+    layers: 
+      - state: KillaTamalePlush
+  - type: ItemToggle
+    onUse: false
+    verbToggleOn: plushie-voicebox-activate
+    verbToggleOff: plushie-voicebox-deactivate
+  - type: ComponentToggler
+    components:
+    - type: DatasetVocalizer
+      dataset: PlushiesKilla
+    - type: TextToSpeech
+      voice: heavy
 
 - type: entity
   parent: BasePlushie

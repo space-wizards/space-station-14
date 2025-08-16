@@ -153,3 +153,9 @@
   values:
     prefix: plushie-brighteyes-
     count: 10
+
+- type: localizedDataset
+  id: PlushiesKilla
+  values:
+    prefix: plushie-killa-
+    count: 5
