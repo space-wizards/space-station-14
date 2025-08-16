@@ -11800,5 +11800,12 @@ Entries:
   id: 106500
   time: '2025-08-16T07:41:25.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/1065
+- author: Happyrobot33
+  changes:
+  - message: Added dynamic examine text for knockback component.
+    type: Add
+  id: 128200
+  time: '2025-08-16T07:47:56.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1282
 Order: -1
 
