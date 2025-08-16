@@ -121,36 +121,57 @@ public sealed class AmeNodeGroup : BaseNodeGroup
         }
     }
 
+    /* STARLIGHT taking control of AME injection Code */
     public float InjectFuel(int fuel, out bool overloading)
     {
         overloading = false;
 
+        //don't make power if no cores and/or no injection
         var shieldQuery = _entMan.GetEntityQuery<AmeShieldComponent>();
         if (fuel <= 0 || CoreCount <= 0)
             return 0;
 
         var powerOutput = CalculatePower(fuel, CoreCount);
-        if (fuel <= SafeFuelLimit)
+
+        //Safe fuel is stable
+        if (fuel == SafeFuelLimit)
             return powerOutput;
 
-        // The AME is being overloaded.
+        var stabilityAdjust = 0;
+
+        // The AME regains Stability when below SafeFuelLimit.
+        // Regaining stability is predictable and slow.
+        if (fuel < SafeFuelLimit)
+        {
+            stabilityAdjust = SafeFuelLimit - fuel;
+        }
+
+        // The AME is being overloaded and loses stability when above SafeFuelLimit.
         // Note about these maths: I would assume the general idea here is to make larger engines less safe to overload.
         // In other words, yes, those are supposed to be CoreCount, not SafeFuelLimit.
-        var overloadVsSizeResult = fuel - CoreCount;
+        else
+        {
+            var overloadVsSizeResult = fuel - CoreCount;
+            var fuzz = _random.Next(-1, 2); // -1 to 1
 
-        var instability = overloadVsSizeResult / CoreCount;
-        var fuzz = _random.Next(-1, 2); // -1 to 1
-        instability += fuzz; // fuzz the values a tiny bit.
+            stabilityAdjust = -(overloadVsSizeResult / CoreCount);
+            stabilityAdjust -= fuzz; // fuzz the values a tiny bit.
 
-        overloading = true;
+            overloading = true;
+        }
+
         var integrityCheck = 100;
+
         foreach (var coreUid in _cores)
         {
             if (!shieldQuery.TryGetComponent(coreUid, out var core))
                 continue;
 
             var oldIntegrity = core.CoreIntegrity;
-            core.CoreIntegrity -= instability;
+
+            core.CoreIntegrity += stabilityAdjust;
+            if (core.CoreIntegrity > 100)
+                core.CoreIntegrity = 100;
 
             if (oldIntegrity > 95
                 && core.CoreIntegrity <= 95
@@ -164,6 +185,7 @@ public sealed class AmeNodeGroup : BaseNodeGroup
 
         return powerOutput;
     }
+    /* End STARLIGHT Control of AME Injection */
 
     /// <summary>
     /// Calculates the amount of power the AME can produce with the given settings

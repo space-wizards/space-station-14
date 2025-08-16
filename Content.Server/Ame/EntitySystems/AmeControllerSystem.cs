@@ -354,10 +354,10 @@ public sealed class AmeControllerSystem : EntitySystem
                 ToggleInjecting(uid, user: user, controller: comp);
                 break;
             case UiButton.IncreaseFuel:
-                AdjustInjectionAmount(uid, +2, user: user, controller: comp);
+                AdjustInjectionAmount(uid, +1, user: user, controller: comp); // STARLIGHT injection code needs sginle steps
                 break;
             case UiButton.DecreaseFuel:
-                AdjustInjectionAmount(uid, -2, user: user, controller: comp);
+                AdjustInjectionAmount(uid, -1, user: user, controller: comp); // STARLIGHT injection code needs single steps
                 break;
         }
 
