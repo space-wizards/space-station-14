@@ -1,4 +1,5 @@
 ﻿using Content.Shared.Containers.ItemSlots;
+using Content.Shared.Mind;
 using Content.Shared.Mind.Components;
 using Content.Shared.Roles;
 using Content.Shared.Roles.Components;
@@ -47,10 +48,19 @@ public sealed partial class BorgSystem
 
         if (_mind.TryGetMind(ent, out var mindId, out var mind))
         {
-            _mind.TransferTo(mindId, uid, true, mind: mind);
-
-            if (!_roles.MindHasRole<SiliconBrainRoleComponent>(mindId))
-                _roles.MindAddRole(mindId, "MindRoleSiliconBrain", silent: true);
+            // If the player is still in the brain, bypass the confirmation window.
+            if (mind.CurrentEntity != args.Entity &&
+                mind.UserId != null &&
+                _player.TryGetSessionById(mind.UserId, out var playerSession))
+            {
+                _euiManager.OpenEui(
+                    new AcceptBorgingEui(args.Entity, (uid, component), (mindId, mind), _dependencies),
+                    playerSession);
+            }
+            else
+            {
+                DirectTransferToMMI((uid, component), (mindId, mind));
+            }
         }
 
         _appearance.SetData(uid, MMIVisuals.BrainPresent, true);
@@ -93,5 +103,13 @@ public sealed partial class BorgSystem
         }
 
         _appearance.SetData(linked, MMIVisuals.BrainPresent, false);
+    }
+
+    public void DirectTransferToMMI(Entity<MMIComponent> mmi, Entity<MindComponent> mind)
+    {
+        _mind.TransferTo(mind, mmi, true, mind: mind);
+
+        if (!_roles.MindHasRole<SiliconBrainRoleComponent>(mind))
+            _roles.MindAddRole(mind, "MindRoleSiliconBrain", silent: true);
     }
 }
