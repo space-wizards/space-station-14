@@ -1,0 +1,93 @@
+{
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "Taken from cmss13 at https://github.com/cmss13-devs/cmss13/blob/09a5191fb11aab8ddffe3f9be94292b53e4d96f6/icons/mob/hud/alien_standard.dmi, 0 to 9 by EmoGarbage404",
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "states": [
+        {
+            "name": "bio16"
+        },
+        {
+            "name": "bio15"
+        },
+        {
+            "name": "bio14"
+        },
+        {
+            "name": "bio13"
+        },
+        {
+            "name": "bio12"
+        },
+        {
+            "name": "bio11"
+        },
+        {
+            "name": "bio10"
+        },
+        {
+            "name": "bio9"
+        },
+        {
+            "name": "bio8"
+        },
+        {
+            "name": "bio7"
+        },
+        {
+            "name": "bio6"
+        },
+        {
+            "name": "bio5"
+        },
+        {
+            "name": "bio4"
+        },
+        {
+            "name": "bio3"
+        },
+        {
+            "name": "bio2"
+        },
+        {
+            "name": "bio1"
+        },
+        {
+            "name": "bio0",
+            "delays": [ [ 0.2, 0.2 ] ]
+        },
+        {
+            "name": "0"
+        },
+        {
+            "name": "1"
+        },
+        {
+            "name": "2"
+        },
+        {
+            "name": "3"
+        },
+        {
+            "name": "4"
+        },
+        {
+            "name": "5"
+        },
+        {
+            "name": "6"
+        },
+        {
+            "name": "7"
+        },
+        {
+            "name": "8"
+        },
+        {
+            "name": "9"
+        }
+    ]
+}
