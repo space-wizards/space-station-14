@@ -32,7 +32,8 @@
     - id: ClosetSkeleton
     - id: KingRatMigration
     - id: RevenantSpawn
-    - id: DerelictCyborgSpawn
+    - !type:NestedSelector
+      tableId: DerelictBorgEventTable
 
 - type: entityTable
   id: ModerateAntagEventsTable
