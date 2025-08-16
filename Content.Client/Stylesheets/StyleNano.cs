@@ -477,6 +477,12 @@ namespace Content.Client.Stylesheets
             var monotoneCheckBoxTextureChecked = resCache.GetTexture("/Textures/Interface/Nano/Monotone/monotone_checkbox_checked.svg.96dpi.png");
             var monotoneCheckBoxTextureUnchecked = resCache.GetTexture("/Textures/Interface/Nano/Monotone/monotone_checkbox_unchecked.svg.96dpi.png");
 
+            // SwitchButton
+            var switchButtonTextureUnchecked = resCache.GetTexture("/Textures/Interface/Nano/toggleswitch_off.svg.96dpi.png");
+            var switchButtonTextureChecked = resCache.GetTexture("/Textures/Interface/Nano/toggleswitch_on.svg.96dpi.png");
+            var switchButtonTextureDisabledUnchecked = resCache.GetTexture("/Textures/Interface/Nano/toggleswitch_disabled_off.svg.96dpi.png");
+            var switchButtonTextureDisabledChecked = resCache.GetTexture("/Textures/Interface/Nano/toggleswitch_disabled_on.svg.96dpi.png");
+
             // Tooltip box
             var tooltipTexture = resCache.GetTexture("/Textures/Interface/Nano/tooltip.png");
             var tooltipBox = new StyleBoxTexture
@@ -1016,26 +1022,28 @@ namespace Content.Client.Stylesheets
                     new StyleProperty(TextureRect.StylePropertyTexture, monotoneCheckBoxTextureChecked),
                 }),
 
-                // Tooltip
-                new StyleRule(new SelectorElement(typeof(Tooltip), null, null, null), new[]
-                {
-                    new StyleProperty(PanelContainer.StylePropertyPanel, tooltipBox)
-                }),
+                // SwitchButton
+                Element<SwitchButton>().Prop(SwitchButton.StylePropertySeparation, 10),
 
-                new StyleRule(new SelectorElement(typeof(PanelContainer), new [] { StyleClassTooltipPanel }, null, null), new[]
-                {
-                    new StyleProperty(PanelContainer.StylePropertyPanel, tooltipBox)
-                }),
+                Child().Parent(Element<SwitchButton>())
+                    .Child(Element<TextureRect>())
+                    .Prop(TextureRect.StylePropertyTexture, switchButtonTextureUnchecked),
 
-                new StyleRule(new SelectorElement(typeof(PanelContainer), new[] {"speechBox", "sayBox"}, null, null), new[]
-                {
-                    new StyleProperty(PanelContainer.StylePropertyPanel, tooltipBox)
-                }),
+                Child().Parent(Element<SwitchButton>().Pseudo(SwitchButton.StylePseudoClassPressed))
+                    .Child(Element<TextureRect>())
+                    .Prop(TextureRect.StylePropertyTexture, switchButtonTextureChecked),
 
-                new StyleRule(new SelectorElement(typeof(PanelContainer), new[] {"speechBox", "whisperBox"}, null, null), new[]
-                {
-                    new StyleProperty(PanelContainer.StylePropertyPanel, whisperBox)
-                }),
+                Child().Parent(Element<SwitchButton>().Pseudo(SwitchButton.StylePseudoClassDisabled))
+                    .Child(Element<TextureRect>())
+                    .Prop(TextureRect.StylePropertyTexture, switchButtonTextureDisabledUnchecked),
+
+                Child().Parent(Element<SwitchButton>().Pseudo(SwitchButton.StylePseudoClassPressed).Pseudo(SwitchButton.StylePseudoClassDisabled))
+                    .Child(Element<TextureRect>())
+                    .Prop(TextureRect.StylePropertyTexture, switchButtonTextureDisabledChecked),
+
+                Child().Parent(Element<SwitchButton>().Pseudo(SwitchButton.StylePseudoClassDisabled))
+                    .Child(Element<Label>())
+                    .Prop(Label.StylePropertyFontColor, DisabledFore),
 
                 new StyleRule(new SelectorChild(
                     new SelectorElement(typeof(PanelContainer), new[] {"speechBox", "whisperBox"}, null, null),
