@@ -76,7 +76,7 @@
 
 - type: entity
   name: banana peel
-  suffix: Explosive
+  suffix: explosive, armed
   parent: TrashBananaPeel
   id: TrashBananaPeelExplosive
   components:
@@ -117,8 +117,8 @@
   parent: BaseItem
   id: TrashBananaPeelExplosiveUnarmed
   name: banana
-  suffix: Unarmed
-  description: There's something unusual about this banana.
+  suffix: explosive, unarmed
+  description: Rich in potassium.
   components:
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/banana.rsi
@@ -131,3 +131,18 @@
   - type: Tag
     tags:
     - Banana
+
+- type: entity
+  parent: [BaseItem, BaseSyndicateContraband]
+  id: BoxBananaPeelExplosiveUnarmed
+  name: explosive banana box
+  description: A box containing an unarmed explosive banana. Packaging disintegrates when opened, leaving no evidence behind.
+  components:
+  - type: Sprite
+    sprite: Objects/Storage/boxicons.rsi
+    state: bananafake
+  - type: SpawnItemsOnUse
+    items:
+    - id: TrashBananaPeelExplosiveUnarmed
+    sound:
+      path: /Audio/Effects/unwrap.ogg

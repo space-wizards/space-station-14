@@ -43,6 +43,21 @@
           type: VoiceMaskBoundUserInterface
 
 - type: entity
+  parent: [BaseItem, BaseSyndicateContraband]
+  id: BoxMaskGasVoiceChameleon
+  name: chameleon voice mask box
+  description: A box containing a chameleon voice mask. Packaging disintegrates when opened, leaving no evidence behind.
+  components:
+  - type: Sprite
+    sprite: Objects/Storage/boxicons.rsi
+    state: gasmaskfake
+  - type: SpawnItemsOnUse
+    items:
+    - id: ClothingMaskGasVoiceChameleon
+    sound:
+      path: /Audio/Effects/unwrap.ogg
+
+- type: entity
   parent: ClothingMaskBase
   id: ClothingMaskGoldenCursed
   name: golden mask
