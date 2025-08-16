@@ -52,9 +52,9 @@
       path: /Audio/_Starlight/Medical/Surgery/scalpel1.ogg
     endSound:
       path: /Audio/_Starlight/Medical/Surgery/scalpel2.ogg
+      path: /Audio/_Starlight/Medical/Surgery/hemostat1.ogg
   - type: ItemPrice
     priceCategory: tool_basic
-      path: /Audio/_Starlight/Medical/Surgery/hemostat1.ogg
   # 🌟Starlight-end🌟
 
 - type: entity
