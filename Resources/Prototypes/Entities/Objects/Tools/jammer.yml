@@ -56,6 +56,12 @@
   id: XenoborgRadioJammer
   name: xenoborg radio jammer
   components:
+  - type: RadioJammer
+    frequenciesExcluded:
+    - 2002 # xenoborg radio
+    - 2003 # mothership radio
+    - 2004 # xenoborg network
+    - 2005 # mothership network
   - type: ItemSlots
     slots:
       cell_slot:
