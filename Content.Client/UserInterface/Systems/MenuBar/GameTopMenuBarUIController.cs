@@ -9,7 +9,7 @@ using Content.Client.UserInterface.Systems.Gameplay;
 using Content.Client.UserInterface.Systems.Guidebook;
 using Content.Client.UserInterface.Systems.MenuBar.Widgets;
 using Content.Client.UserInterface.Systems.Sandbox;
-using Content.Client.UserInterface.Systems.Language; // Starlight
+using Content.Client._Starlight.UserInterface.Systems.Language; // Starlight
 using Robust.Client.UserInterface.Controllers;
 
 namespace Content.Client.UserInterface.Systems.MenuBar;
