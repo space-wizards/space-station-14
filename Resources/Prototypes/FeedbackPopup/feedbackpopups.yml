@@ -1,0 +1,8 @@
+﻿- type: feedbackPopup
+  id: FeedbackPopupFeedbackPopup
+  popupOrigin: wizden_master
+  title: "[bold]Feedback on the new feedback popup system[/bold]"
+  description:
+  - "This is a new system to get feedback on features. It will give popups at the end of the round!"
+  - "Share your thoughts through the form below! Log in with your ss14 account (You might also need to apply for a whitelist)."
+  responseLink: "ffffff"
