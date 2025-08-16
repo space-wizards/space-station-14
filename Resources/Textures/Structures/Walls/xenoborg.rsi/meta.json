@@ -1,0 +1,46 @@
+{
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "Created by Samuka-C (github)",
+    "size": {
+      "x": 32,
+      "y": 32
+    },
+    "states": [
+        {
+            "name": "full"
+        },
+        {
+            "name": "xenoborg0",
+            "directions": 4
+        },
+        {
+            "name": "xenoborg1",
+            "directions": 4
+        },
+        {
+            "name": "xenoborg2",
+            "directions": 4
+        },
+        {
+            "name": "xenoborg3",
+            "directions": 4
+        },
+        {
+            "name": "xenoborg4",
+            "directions": 4
+        },
+        {
+            "name": "xenoborg5",
+            "directions": 4
+        },
+        {
+            "name": "xenoborg6",
+            "directions": 4
+        },
+        {
+            "name": "xenoborg7",
+            "directions": 4
+        }
+    ]
+}

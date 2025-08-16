@@ -162,6 +162,16 @@
 
 - type: entity
   parent: Airlock
+  id: AirlockXenoborg
+  name: xenoborg airlock
+  components:
+  - type: Sprite
+    sprite: Structures/Doors/Airlocks/Standard/xenoborg.rsi
+  - type: Paintable
+    group: null
+
+- type: entity
+  parent: Airlock
   id: AirlockHatchMaintenance
   name: maintenance hatch
   components:
