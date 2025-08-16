@@ -277,7 +277,7 @@ public sealed class AmeControllerSystem : EntitySystem
 
         var safeLimit = int.MaxValue;
         if (TryGetAMENodeGroup(uid, out var group))
-            safeLimit = group.CoreCount * 4;
+            safeLimit = group.CoreCount * 2; /* STARLIGHT I have no idea why it was alerting at the wrong level. */
 
         var logImpact = (oldValue <= safeLimit && value > safeLimit) ? LogImpact.Extreme : LogImpact.Medium;
 
