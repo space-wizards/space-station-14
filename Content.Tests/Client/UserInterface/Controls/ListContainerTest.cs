@@ -278,7 +278,7 @@ public sealed class ListContainerTest : RobustUnitTest
         // Test that the button is selected even when scrolled away and scrolled back.
         scrollbar.Value = 11;
         listContainer.Arrange(root.SizeBox);
-        Assert.That(oldButton.Disposed);
+        Assert.That(oldButton.IsInsideTree, Is.False);
         scrollbar.Value = 0;
         listContainer.Arrange(root.SizeBox);
         children = listContainer.Children.ToList();
