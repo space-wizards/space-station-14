@@ -11716,5 +11716,13 @@ Entries:
   id: 127600
   time: '2025-08-16T07:03:34.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/1276
+- author: RoadTrain
+  changes:
+  - message: AI can now use shuttle consoles. You can now truly roleplay being HAL
+      aboard Reach.
+    type: Add
+  id: 127300
+  time: '2025-08-16T07:05:36.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1273
 Order: -1
 
