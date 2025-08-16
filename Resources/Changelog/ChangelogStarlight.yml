@@ -11903,5 +11903,19 @@ Entries:
   id: 124202
   time: '2025-08-16T08:22:07.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/1242
+- author: CrazyPhantom
+  changes:
+  - message: Added BrigMedic Access to HoP
+    type: Add
+  id: 134100
+  time: '2025-08-16T08:25:48.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1341
+- author: CrazyPhantom
+  changes:
+  - message: Added Lawyer and Brigmed Access to BSO
+    type: Add
+  id: 134101
+  time: '2025-08-16T08:25:48.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1341
 Order: -1
 
