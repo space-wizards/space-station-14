@@ -8,7 +8,7 @@
       stripTime: 6
       uiWindowPos: 2,1
       strippingWindowPos: 2,4
-      displayName: ID
+      displayName: inventory-slot-id
     - name: id
       slotTexture: id
       fullTextureName: template_small
@@ -17,7 +17,7 @@
       stripTime: 6
       uiWindowPos: 2,2
       strippingWindowPos: 2,3
-      displayName: ID
+      displayName: inventory-slot-id
 
     # For drip reasons.
     - name: head
@@ -25,10 +25,10 @@
       slotFlags: HEAD
       uiWindowPos: 0,2
       strippingWindowPos: 0,0
-      displayName: Head
+      displayName: inventory-slot-head
     - name: mask
       slotTexture: mask
       slotFlags: MASK
       uiWindowPos: 0,1
       strippingWindowPos: 1,1
-      displayName: Mask
+      displayName: inventory-slot-mask
