@@ -8,6 +8,7 @@ using Robust.Client.UserInterface.Controls;
 using Robust.Shared.Input.Binding;
 using Robust.Shared.Utility;
 using static Robust.Client.UserInterface.Controls.BaseButton;
+using Content.Client.UserInterface.Systems.MenuBar.Widgets;
 
 namespace Content.Client._Starlight.UserInterface.Systems.Language;
 
@@ -15,7 +16,7 @@ namespace Content.Client._Starlight.UserInterface.Systems.Language;
 public sealed class LanguageMenuUIController : UIController, IOnStateEntered<GameplayState>, IOnStateExited<GameplayState>
 {
     public LanguageMenuWindow? LanguageWindow;
-    private MenuButton? LanguageButton => UIManager.GetActiveUIWidgetOrNull<MenuBar.Widgets.GameTopMenuBar>()?.LanguageButton;
+    private MenuButton? LanguageButton => UIManager.GetActiveUIWidgetOrNull<GameTopMenuBar>()?.LanguageButton;
 
     public void OnStateEntered(GameplayState state)
     {
