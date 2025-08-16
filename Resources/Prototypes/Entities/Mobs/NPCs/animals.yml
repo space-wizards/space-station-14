@@ -1659,11 +1659,6 @@
   parent: MobBaseKobold
   suffix: syndicate base
   components:
-  - type: MobThresholds
-    thresholds:
-      0: Alive
-      100: Critical
-      200: Dead
   - type: NpcFactionMember
     factions:
     - Syndicate
