@@ -1,15 +1,12 @@
-using System.Linq;
 using System.Numerics;
-using System.Threading.Tasks;
 using Content.Server.Administration.Logs;
 using Content.Server.Administration.Managers;
+using Content.Server.Chunking;
 using Content.Shared.Administration;
-using Content.Shared.Chunking;
 using Content.Shared.Database;
 using Content.Shared.Decals;
 using Content.Shared.Maps;
 using Microsoft.Extensions.ObjectPool;
-using Robust.Server.GameObjects;
 using Robust.Server.Player;
 using Robust.Shared;
 using Robust.Shared.Configuration;
@@ -27,21 +24,21 @@ namespace Content.Server.Decals
 {
     public sealed class DecalSystem : SharedDecalSystem
     {
-        [Dependency] private readonly IPlayerManager _playerManager = default!;
         [Dependency] private readonly IAdminManager _adminManager = default!;
-        [Dependency] private readonly IParallelManager _parMan = default!;
-        [Dependency] private readonly ChunkingSystem _chunking = default!;
+        [Dependency] private readonly IAdminLogManager _adminLogger = default!;
         [Dependency] private readonly IConfigurationManager _conf = default!;
         [Dependency] private readonly IGameTiming _timing = default!;
-        [Dependency] private readonly IAdminLogManager _adminLogger = default!;
+        [Dependency] private readonly IParallelManager _parMan = default!;
+        [Dependency] private readonly IPlayerManager _playerManager = default!;
+        [Dependency] private readonly ChunkingSystem _chunking = default!;
         [Dependency] private readonly SharedMapSystem _mapSystem = default!;
         [Dependency] private readonly SharedTransformSystem _transform = default!;
         [Dependency] private readonly TurfSystem _turf = default!;
 
         private readonly Dictionary<NetEntity, HashSet<Vector2i>> _dirtyChunks = new();
         private readonly Dictionary<ICommonSession, Dictionary<NetEntity, HashSet<Vector2i>>> _previousSentChunks = new();
-        private static readonly Vector2 _boundsMinExpansion = new(0.01f, 0.01f);
-        private static readonly Vector2 _boundsMaxExpansion = new(1.01f, 1.01f);
+        private static readonly Vector2 BoundsMinExpansion = new(0.01f, 0.01f);
+        private static readonly Vector2 BoundsMaxExpansion = new(1.01f, 1.01f);
 
         private UpdatePlayerJob _updateJob;
         private List<ICommonSession> _sessions = new();
@@ -49,11 +46,13 @@ namespace Content.Server.Decals
         // If this ever gets parallelised then you'll want to increase the pooled count.
         private ObjectPool<HashSet<Vector2i>> _chunkIndexPool =
             new DefaultObjectPool<HashSet<Vector2i>>(
-                new DefaultPooledObjectPolicy<HashSet<Vector2i>>(), 64);
+                new DefaultPooledObjectPolicy<HashSet<Vector2i>>(),
+                64);
 
         private ObjectPool<Dictionary<NetEntity, HashSet<Vector2i>>> _chunkViewerPool =
             new DefaultObjectPool<Dictionary<NetEntity, HashSet<Vector2i>>>(
-                new DefaultPooledObjectPolicy<Dictionary<NetEntity, HashSet<Vector2i>>>(), 64);
+                new DefaultPooledObjectPolicy<Dictionary<NetEntity, HashSet<Vector2i>>>(),
+                64);
 
         public override void Initialize()
         {
@@ -120,7 +119,7 @@ namespace Content.Server.Decals
                 if (!oldChunkCollection.TryGetValue(chunkIndices, out var oldChunk))
                     continue;
 
-                var bounds = new Box2(tilePos - _boundsMinExpansion, tilePos + _boundsMaxExpansion);
+                var bounds = new Box2(tilePos - BoundsMinExpansion, tilePos + BoundsMaxExpansion);
                 var toRemove = new RemQueue<uint>();
 
                 foreach (var (oldDecalId, decal) in oldChunk.Decals)
@@ -233,12 +232,14 @@ namespace Content.Server.Decals
 
             if (eventArgs.SenderSession.AttachedEntity != null)
             {
-                _adminLogger.Add(LogType.CrayonDraw, LogImpact.Low,
+                _adminLogger.Add(LogType.CrayonDraw,
+                    LogImpact.Low,
                     $"{ToPrettyString(eventArgs.SenderSession.AttachedEntity.Value):actor} drew a {ev.Decal.Color} {ev.Decal.Id} at {ev.Coordinates}");
             }
             else
             {
-                _adminLogger.Add(LogType.CrayonDraw, LogImpact.Low,
+                _adminLogger.Add(LogType.CrayonDraw,
+                    LogImpact.Low,
                     $"{eventArgs.SenderSession.Name} drew a {ev.Decal.Color} {ev.Decal.Id} at {ev.Coordinates}");
             }
         }
@@ -267,12 +268,14 @@ namespace Content.Server.Decals
             {
                 if (eventArgs.SenderSession.AttachedEntity != null)
                 {
-                    _adminLogger.Add(LogType.CrayonDraw, LogImpact.Low,
+                    _adminLogger.Add(LogType.CrayonDraw,
+                        LogImpact.Low,
                         $"{ToPrettyString(eventArgs.SenderSession.AttachedEntity.Value):actor} removed a {decal.Color} {decal.Id} at {ev.Coordinates}");
                 }
                 else
                 {
-                    _adminLogger.Add(LogType.CrayonDraw, LogImpact.Low,
+                    _adminLogger.Add(LogType.CrayonDraw,
+                        LogImpact.Low,
                         $"{eventArgs.SenderSession.Name} removed a {decal.Color} {decal.Id} at {ev.Coordinates}");
                 }
 
