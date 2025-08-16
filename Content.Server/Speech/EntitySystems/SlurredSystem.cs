@@ -3,8 +3,7 @@ using Content.Server.Speech.Components;
 using Content.Shared.Drunk;
 using Content.Shared.Speech;
 using Content.Shared.Speech.EntitySystems;
-using Content.Shared.StatusEffect;
-using Robust.Shared.Prototypes;
+using Content.Shared.StatusEffectNew;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
 
@@ -12,26 +11,15 @@ namespace Content.Server.Speech.EntitySystems;
 
 public sealed class SlurredSystem : SharedSlurredSystem
 {
-    [Dependency] private readonly StatusEffectsSystem _statusEffectsSystem = default!;
+    [Dependency] private readonly StatusEffectsSystem _status = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
-
-    private static readonly ProtoId<StatusEffectPrototype> SlurKey = "SlurredSpeech";
 
     public override void Initialize()
     {
         SubscribeLocalEvent<SlurredAccentComponent, AccentGetEvent>(OnAccent);
-    }
 
-    public override void DoSlur(EntityUid uid, TimeSpan time, StatusEffectsComponent? status = null)
-    {
-        if (!Resolve(uid, ref status, false))
-            return;
-
-        if (!_statusEffectsSystem.HasStatusEffect(uid, SlurKey, status))
-            _statusEffectsSystem.TryAddStatusEffect<SlurredAccentComponent>(uid, SlurKey, time, true, status);
-        else
-            _statusEffectsSystem.TryAddTime(uid, SlurKey, time, status);
+        SubscribeLocalEvent<SlurredAccentComponent, StatusEffectRelayedEvent<AccentGetEvent>>(OnAccentRelayed);
     }
 
     /// <summary>
@@ -39,15 +27,33 @@ public sealed class SlurredSystem : SharedSlurredSystem
     /// </summary>
     private float GetProbabilityScale(EntityUid uid)
     {
-        if (!_statusEffectsSystem.TryGetTime(uid, SharedDrunkSystem.DrunkKey, out var time))
+        if (!_status.TryGetMaxTime<DrunkStatusEffectComponent>(uid, out var time))
             return 0;
 
-        var curTime = _timing.CurTime;
-        var timeLeft = (float) (time.Value.Item2 - curTime).TotalSeconds;
-        return Math.Clamp((timeLeft - 80) / 1100, 0f, 1f);
+        // This is a magic number. Why this value? No clue it was made 3 years before I refactored this.
+        var magic = SharedDrunkSystem.MagicNumber;
+
+        if (time.Item2 != null)
+        {
+            var curTime = _timing.CurTime;
+            magic = (float) (time.Item2 - curTime).Value.TotalSeconds - 80f;
+        }
+
+        return Math.Clamp(magic / SharedDrunkSystem.MagicNumber, 0f, 1f);
     }
 
-    private void OnAccent(EntityUid uid, SlurredAccentComponent component, AccentGetEvent args)
+    private void OnAccent(Entity<SlurredAccentComponent> entity, ref AccentGetEvent args)
+    {
+        GetAccent(entity, ref args);
+    }
+
+    private void OnAccentRelayed(Entity<SlurredAccentComponent> entity, ref StatusEffectRelayedEvent<AccentGetEvent> args)
+    {
+        var ev = args.Args;
+        GetAccent(args.Args.Entity, ref ev);
+    }
+
+    private void GetAccent(EntityUid uid, ref AccentGetEvent args)
     {
         var scale = GetProbabilityScale(uid);
         args.Message = Accentuate(args.Message, scale);
