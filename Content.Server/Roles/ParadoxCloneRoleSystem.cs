@@ -19,11 +19,13 @@ public sealed class ParadoxCloneRoleSystem : EntitySystem
 
     private void OnRefreshNameModifiers(Entity<ParadoxCloneRoleComponent> ent, ref MindRelayedEvent<RefreshNameModifiersEvent> args)
     {
-        if (!TryComp<MindRoleComponent>(ent.Owner, out var roleComp))
+        var mindId = Transform(ent).ParentUid; // the mind role entity is in a container in the mind entity
+
+        if (!TryComp<MindComponent>(mindId, out var mindComp))
             return;
 
         // only show for ghosts
-        if (!HasComp<GhostComponent>(roleComp.Mind.Comp.OwnedEntity))
+        if (!HasComp<GhostComponent>(mindComp.OwnedEntity))
             return;
 
         if (ent.Comp.NameModifier != null)
