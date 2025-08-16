@@ -18,13 +18,20 @@ public sealed class GeneralStationRecordConsoleSystem : EntitySystem
         SubscribeLocalEvent<GeneralStationRecordConsoleComponent, AfterGeneralRecordCreatedEvent>(UpdateUserInterface);
         SubscribeLocalEvent<GeneralStationRecordConsoleComponent, RecordRemovedEvent>(UpdateUserInterface);
 
-        Subs.BuiEvents<GeneralStationRecordConsoleComponent>(GeneralStationRecordConsoleKey.Key, subs =>
-        {
-            subs.Event<BoundUIOpenedEvent>(UpdateUserInterface);
-            subs.Event<SelectStationRecord>(OnKeySelected);
-            subs.Event<SetStationRecordFilter>(OnFiltersChanged);
-            subs.Event<DeleteStationRecord>(OnRecordDelete);
-        });
+        Subs.BuiEvents<GeneralStationRecordConsoleComponent>(GeneralStationRecordConsoleKey.Key,
+            subs =>
+            {
+                subs.Event<BoundUIOpenedEvent>(UpdateUserInterface);
+                subs.Event<SelectStationRecord>(OnKeySelected);
+                subs.Event<SetStationRecordFilter>(OnFiltersChanged);
+                subs.Event<DeleteStationRecord>(OnRecordDelete);
+                subs.Event<ShowAddStationRecord>(OnShowAddStationRecord);
+            });
+        Subs.BuiEvents<GeneralStationRecordConsoleComponent>(AddGeneralStationRecordKey.Key,
+            subs =>
+            {
+                subs.Event<AddStationRecordMessage>(OnAddStationRecord);
+            });
     }
 
     private void OnRecordDelete(Entity<GeneralStationRecordConsoleComponent> ent, ref DeleteStationRecord args)
@@ -36,6 +43,31 @@ public sealed class GeneralStationRecordConsoleSystem : EntitySystem
 
         if (owning != null)
             _stationRecords.RemoveRecord(new StationRecordKey(args.Id, owning.Value));
+        UpdateUserInterface(ent); // Apparently an event does not get raised for this.
+    }
+
+    private void OnShowAddStationRecord(Entity<GeneralStationRecordConsoleComponent> ent, ref ShowAddStationRecord args)
+    {
+        _ui.OpenUi(ent.Owner, AddGeneralStationRecordKey.Key, args.Actor);
+    }
+
+    private void OnAddStationRecord(Entity<GeneralStationRecordConsoleComponent> ent, ref AddStationRecordMessage msg)
+    {
+        if (_station.GetOwningStation(ent.Owner) is { } owningStation &&
+            TryComp<StationRecordsComponent>(owningStation, out var stationRecords))
+        {
+            _stationRecords.CreateGeneralRecord(owningStation,
+                idUid: null,
+                msg.Record.Name,
+                msg.Record.Age,
+                msg.Record.Species,
+                msg.Record.Gender,
+                msg.Record.JobPrototype,
+                msg.Record.Fingerprint,
+                msg.Record.DNA,
+                profile: null,
+                stationRecords);
+        }
         UpdateUserInterface(ent); // Apparently an event does not get raised for this.
     }
 
