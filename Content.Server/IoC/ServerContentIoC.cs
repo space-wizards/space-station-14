@@ -21,6 +21,7 @@ using Content.Server.Players.JobWhitelist;
 using Content.Server.Players.PlayTimeTracking;
 using Content.Server.Players.RateLimiting;
 using Content.Server.Preferences.Managers;
+using Content.Server.Roles;
 using Content.Server.ServerInfo;
 using Content.Server.ServerUpdates;
 using Content.Server.Voting.Managers;
@@ -31,6 +32,7 @@ using Content.Shared.Chat;
 using Content.Shared.Kitchen;
 using Content.Shared.Players.PlayTimeTracking;
 using Content.Shared.Players.RateLimiting;
+using Content.Shared.Roles;
 
 namespace Content.Server.IoC
 {
@@ -70,6 +72,8 @@ namespace Content.Server.IoC
             IoCManager.Register<VoteWebhooks>();
             IoCManager.Register<ServerDbEntryManager>();
             IoCManager.Register<ISharedPlaytimeManager, PlayTimeTrackingManager>();
+            IoCManager.Register<JobRequirementsManager>();
+            IoCManager.Register<ISharedJobRequirementsManager, JobRequirementsManager>();
             IoCManager.Register<ServerApi>();
             IoCManager.Register<JobWhitelistManager>();
             IoCManager.Register<PlayerRateLimitManager>();
