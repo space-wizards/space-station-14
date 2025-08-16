@@ -10,7 +10,7 @@ namespace Content.Shared.Weapons.Hitscan.Components;
 public sealed partial class HitscanBasicRaycastComponent : Component
 {
     /// <summary>
-    /// Maximum distance the raycast will travel before giving up.
+    /// Maximum distance the raycast will travel before giving up. Reflections will reset the distance traveled
     /// </summary>
     [DataField]
     public float MaxDistance = 20.0f;
