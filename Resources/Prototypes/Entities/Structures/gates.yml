@@ -265,11 +265,22 @@
     ports:
     - PowerCharging
     - PowerDischarging
+    - AboveThreshold
+    - BelowThreshold
     lastSignals:
       PowerCharging: false
       PowerDischarging: false
+      AboveThreshold: false
+      BelowThreshold: false
   - type: Construction
     node: power_sensor
+  - type: PowerThreshold
+    defaultThresholdAmounts: [0, 500, 1000, 5000, 10000, 50000, 100000, 500000, 1000000]
+    canChangeThresholdAmount: true
+  - type: UserInterface
+    interfaces:
+      enum.ThresholdAmountUiKey.Key:
+        type: ThresholdAmountBoundUserInterface
 
 - type: entity
   parent: BaseLogicItem
