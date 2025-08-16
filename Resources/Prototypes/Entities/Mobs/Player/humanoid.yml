@@ -531,8 +531,8 @@
       prototypes: [CBURNGear]
       roleLoadout: [ RoleSurvivalEVA ]
     - type: GhostRole
-      name: ghost-role-information-cburn-agent-name
-      description: ghost-role-information-cburn-agent-description
+      name: ghost-role-information-cburn-officer-name
+      description: ghost-role-information-cburn-officer-description
       rules: ghost-role-information-nonantagonist-rules
       raffle:
         settings: short

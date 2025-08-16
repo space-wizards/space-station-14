@@ -179,6 +179,14 @@
     - WeaponShotgunKammerer
 
 - type: entity
+  parent: WeaponShotgunKammerer
+  id: WeaponShotgunKammererIncendiary
+  suffix: Incendiary
+  components:
+  - type: BallisticAmmoProvider
+    proto: ShellShotgunIncendiary
+
+- type: entity
   name: sawn-off shotgun
   parent: [ BaseWeaponShotgun, BaseSecurityBartenderContraband ]
   id: WeaponShotgunSawn
