@@ -11807,5 +11807,13 @@ Entries:
   id: 128200
   time: '2025-08-16T07:47:56.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/1282
+- author: Trosling
+  changes:
+  - message: Re-added Cluwne at 5 wizcoin, only available when server population is
+      above 80, on trial basis
+    type: Tweak
+  id: 123900
+  time: '2025-08-16T07:49:54.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1239
 Order: -1
 
