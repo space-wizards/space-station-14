@@ -1,143 +1,138 @@
-- type: entityTable
-  id: XenoArtifactEffectsDefaultTable
-  table: !type:GroupSelector
-    children:
+- type: weightedRandomXenoArchEffect
+  id: XenoArtifactEffectsDefaultWeightedTable
+  weights:
     # hijacks use key, prevents from using artifact, sadly
-    #- id: XenoArtifactEffectUniversalIntercom
-    #  weight: 10.0
-    - id: XenoArtifactSolutionStorage
-      weight: 10.0
-    - id: XenoArtifactPhasing
-      weight: 2.0
-    - id: XenoArtifactWandering
-      weight: 4.0
-    - id: XenoArtifactSpeedUp
-      weight: 4.0
-    - id: XenoArtifactGhost
-      weight: 2.0
-    - id: XenoArtifactEffectBadFeeling
-      weight: 10.0
-    - id: XenoArtifactEffectGoodFeeling
-      weight: 10.0
-    - id: XenoArtifactEffectJunkSpawn
-      weight: 10.0
-    - id: XenoArtifactEffectLightFlicker
-      weight: 10.0
-    - id: XenoArtifactPotassiumWave
-      weight: 7.0
-    - id: XenoArtifactFloraSpawn
-      weight: 10.0
-    - id: XenoArtifactChemicalPuddle
-      weight: 10.0
-    - id: XenoArtifactThrowThingsAround
-      weight: 10.0
-    - id: XenoArtifactColdWave
-      weight: 10.0
-    - id: XenoArtifactHeatWave
-      weight: 4.0
-    - id: XenoArtifactFoamMild
-      weight: 8.0
-    - id: XenoArtifactRandomInstrumentSpawn
-      weight: 10.0
-    - id: XenoArtifactMonkeySpawn
-      weight: 10.0
-    - id: XenoArtifactRadioactive
-      weight: 8.0
-    - id: XenoArtifactChargeBattery
-      weight: 10.0
-    - id: XenoArtifactKnock
-      weight: 4.0
-    - id: XenoArtifactMagnet
-      weight: 2.0
-    - id: XenoArtifactMagnetNegative
-      weight: 2.0
-    - id: XenoArtifactStealth
-      weight: 1.0
-    - id: XenoArtifactRareMaterialSpawnSilver
-      weight: 1.8 # amount is laughable
-    - id: XenoArtifactRareMaterialSpawnPlasma
-      weight: 2.0 # amount is laughable
-    - id: XenoArtifactRareMaterialSpawnGold
-      weight: 1.8 # amount is laughable
-    - id: XenoArtifactRareMaterialSpawnUranium
-      weight: 1.0 # amount is laughable
-    - id: XenoArtifactAngryCarpSpawn
-      weight: 4.0
-    - id: XenoArtifactFaunaSpawn
-      weight: 10.0
-    - id: XenoArtifactCashSpawn
-      weight: 10.0
-    - id: XenoArtifactShatterWindows
-      weight: 8.0
-    - id: XenoArtifactFoamGood
-      weight: 4.0
-    - id: XenoArtifactFoamDangerous
-      weight: 2.0
-    - id: XenoArtifactPuddleRare
-      weight: 2.0
-    - id: XenoArtifactAnomalySpawn
-      weight: 10.0
-    - id: XenoArtifactIgnite
-      weight: 2.0
-    - id: XenoArtifactTeleport
-      weight: 2.0
-    - id: XenoArtifactEmp
-      weight: 2.0
-    - id: XenoArtifactPolyMonkey
-      weight: 2.0
-    - id: XenoArtifactPolyLuminous
-      weight: 2.0
-    - id: XenoArtifactPolyLizard
-      weight: 2.0
-    - id: XenoArtifactRadioactiveStrong
-      weight: 3.0
-    - id: XenoArtifactMaterialSpawnGlass
-      weight: 3.3
-    - id: XenoArtifactMaterialSpawnSteel
-      weight: 3.3
-    - id: XenoArtifactMaterialSpawnPlastic
-      weight: 3.3
-    - id: XenoArtifactPortal
-      weight: 2.0
-    - id: XenoArtifactArtifactSpawn
-      weight: 0.5
-    - id: XenoArtifactShuffle
-      weight: 3.0
-    - id: XenoArtifactHealAll
-      weight: 1.0
-    #- id: XenoArtifactTesla
-    #  weight: 10.0
-    #- id: XenoArtifactSingularity
-    #  weight: 10.0
-    - id: XenoArtifactExplosionScary
-      weight: 1.0
-    - id: XenoArtifactBoom
-      weight: 5.0
-    - id: XenoArtifactEffectCreationGasPlasma
-      weight: 2.0
-    - id: XenoArtifactEffectCreationGasTritium
-      weight: 2.0
-    - id: XenoArtifactEffectCreationGasAmmonia
-      weight: 3.0
-    - id: XenoArtifactEffectCreationGasFrezon
-      weight: 1.0
-    - id: XenoArtifactEffectCreationGasNitrousOxide
-      weight: 4.0
-    - id: XenoArtifactEffectCreationGasCarbonDioxide
-      weight: 4.0
+    #XenoArtifactEffectUniversalIntercom   weight: 10.0
+    XenoArtifactSolutionStorage : 10.0
+    XenoArtifactPhasing : 2.0
+    XenoArtifactWandering : 4.0
+    XenoArtifactSpeedUp : 4.0
+    XenoArtifactGhost : 2.0
+    XenoArtifactEffectBadFeeling : 10.0
+    XenoArtifactEffectGoodFeeling : 10.0
+    XenoArtifactEffectJunkSpawn : 10.0
+    XenoArtifactEffectLightFlicker : 10.0
+    XenoArtifactPotassiumWave : 7.0
+    XenoArtifactFloraSpawn : 10.0
+    XenoArtifactChemicalPuddle : 10.0
+    XenoArtifactThrowThingsAround : 10.0
+    XenoArtifactColdWave : 10.0
+    XenoArtifactHeatWave : 4.0
+    XenoArtifactFoamMild : 8.0
+    XenoArtifactRandomInstrumentSpawn : 10.0
+    XenoArtifactMonkeySpawn : 10.0
+    XenoArtifactRadioactive : 8.0
+    XenoArtifactChargeBattery : 10.0
+    XenoArtifactKnock : 4.0
+    XenoArtifactMagnet : 2.0
+    XenoArtifactMagnetNegative : 2.0
+    XenoArtifactStealth : 1.0
+    XenoArtifactRareMaterialSpawnSilver : 1.8 # amount is laughable
+    XenoArtifactRareMaterialSpawnPlasma : 2.0 # amount is laughable
+    XenoArtifactRareMaterialSpawnGold : 1.8 # amount is laughable
+    XenoArtifactRareMaterialSpawnUranium : 1.0 # amount is laughable
+    XenoArtifactAngryCarpSpawn : 4.0
+    XenoArtifactFaunaSpawn : 10.0
+    XenoArtifactCashSpawn : 10.0
+    XenoArtifactShatterWindows : 8.0
+    XenoArtifactFoamGood : 4.0
+    XenoArtifactFoamDangerous : 2.0
+    XenoArtifactPuddleRare : 2.0
+    XenoArtifactAnomalySpawn : 10.0
+    XenoArtifactIgnite : 2.0
+    XenoArtifactTeleport : 2.0
+    XenoArtifactEmp : 2.0
+    XenoArtifactPolyMonkey : 2.0
+    XenoArtifactPolyLuminous : 2.0
+    XenoArtifactPolyLizard : 2.0
+    XenoArtifactRadioactiveStrong : 3.0
+    XenoArtifactMaterialSpawnGlass : 3.3
+    XenoArtifactMaterialSpawnSteel : 3.3
+    XenoArtifactMaterialSpawnPlastic : 3.3
+    XenoArtifactPortal : 2.0
+    XenoArtifactArtifactSpawn : 0.5
+    XenoArtifactShuffle : 3.0
+    XenoArtifactHealAll : 1.0
+    #XenoArtifactTesla   weight: 10.0
+    #XenoArtifactSingularity   weight: 10.0
+    XenoArtifactExplosionScary : 1.0
+    XenoArtifactBoom : 5.0
+    XenoArtifactEffectCreationGasPlasma : 2.0
+    XenoArtifactEffectCreationGasTritium : 2.0
+    XenoArtifactEffectCreationGasAmmonia : 3.0
+    XenoArtifactEffectCreationGasFrezon : 1.0
+    XenoArtifactEffectCreationGasNitrousOxide : 4.0
+    XenoArtifactEffectCreationGasCarbonDioxide : 4.0
 
-- type: entityTable
-  id: XenoArtifactEffectsHandheldOnlyTable
-  table: !type:GroupSelector
-    children:
-    #- id: XenoArtifactBecomeRandomInstrument
-    #  weight 10.0 # removed until we have value-based system
-    #- id: XenoArtifactGun
-    #  weight 4.0 #it conflicts with default interaction - it should activate artifact nodes
-    - id: XenoArtifactOmnitool
-      weight: 10.0
-    - id: XenoArtifactDrill
-      weight: 10.0
+- type: weightedRandomXenoArchEffect
+  id: XenoArtifactEffectsDefaultWeightedTableHandheld
+  weights:
+    # hijacks use key, prevents from using artifact, sadly
+    #XenoArtifactEffectUniversalIntercom   weight: 10.0
+    XenoArtifactSolutionStorage : 10.0
+    XenoArtifactPhasing : 2.0
+    XenoArtifactWandering : 4.0
+    XenoArtifactSpeedUp : 4.0
+    XenoArtifactGhost : 2.0
+    XenoArtifactEffectBadFeeling : 10.0
+    XenoArtifactEffectGoodFeeling : 10.0
+    XenoArtifactEffectJunkSpawn : 10.0
+    XenoArtifactEffectLightFlicker : 10.0
+    XenoArtifactPotassiumWave : 7.0
+    XenoArtifactFloraSpawn : 10.0
+    XenoArtifactChemicalPuddle : 10.0
+    XenoArtifactThrowThingsAround : 10.0
+    XenoArtifactColdWave : 10.0
+    XenoArtifactHeatWave : 4.0
+    XenoArtifactFoamMild : 8.0
+    XenoArtifactRandomInstrumentSpawn : 10.0
+    XenoArtifactMonkeySpawn : 10.0
+    XenoArtifactRadioactive : 8.0
+    XenoArtifactChargeBattery : 10.0
+    XenoArtifactKnock : 4.0
+    XenoArtifactMagnet : 2.0
+    XenoArtifactMagnetNegative : 2.0
+    XenoArtifactStealth : 1.0
+    XenoArtifactRareMaterialSpawnSilver : 1.8 # amount is laughable
+    XenoArtifactRareMaterialSpawnPlasma : 2.0 # amount is laughable
+    XenoArtifactRareMaterialSpawnGold : 1.8 # amount is laughable
+    XenoArtifactRareMaterialSpawnUranium : 1.0 # amount is laughable
+    XenoArtifactAngryCarpSpawn : 4.0
+    XenoArtifactFaunaSpawn : 10.0
+    XenoArtifactCashSpawn : 10.0
+    XenoArtifactShatterWindows : 8.0
+    XenoArtifactFoamGood : 4.0
+    XenoArtifactFoamDangerous : 2.0
+    XenoArtifactPuddleRare : 2.0
+    XenoArtifactAnomalySpawn : 10.0
+    XenoArtifactIgnite : 2.0
+    XenoArtifactTeleport : 2.0
+    XenoArtifactEmp : 2.0
+    XenoArtifactPolyMonkey : 2.0
+    XenoArtifactPolyLuminous : 2.0
+    XenoArtifactPolyLizard : 2.0
+    XenoArtifactRadioactiveStrong : 3.0
+    XenoArtifactMaterialSpawnGlass : 3.3
+    XenoArtifactMaterialSpawnSteel : 3.3
+    XenoArtifactMaterialSpawnPlastic : 3.3
+    XenoArtifactPortal : 2.0
+    XenoArtifactArtifactSpawn : 0.5
+    XenoArtifactShuffle : 3.0
+    XenoArtifactHealAll : 1.0
+    #XenoArtifactTesla   weight: 10.0
+    #XenoArtifactSingularity   weight: 10.0
+    XenoArtifactExplosionScary : 1.0
+    XenoArtifactBoom : 5.0
+    XenoArtifactEffectCreationGasPlasma : 2.0
+    XenoArtifactEffectCreationGasTritium : 2.0
+    XenoArtifactEffectCreationGasAmmonia : 3.0
+    XenoArtifactEffectCreationGasFrezon : 1.0
+    XenoArtifactEffectCreationGasNitrousOxide : 4.0
+    XenoArtifactEffectCreationGasCarbonDioxide : 4.0
+    #XenoArtifactBecomeRandomInstrument   weight 10.0 # removed until we have value-based system
+    #XenoArtifactGun   weight 4.0 #it conflicts with default interaction - it should activate artifact nodes
+    XenoArtifactOmnitool : 10.0
+    XenoArtifactDrill : 10.0
 
 - type: entity
   id: BaseXenoArtifactEffect
