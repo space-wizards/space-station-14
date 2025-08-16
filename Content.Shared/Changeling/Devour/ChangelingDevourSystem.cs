@@ -250,8 +250,19 @@ public sealed class ChangelingDevourSystem : EntitySystem
             && HasComp<HumanoidAppearanceComponent>(target)
             && TryComp<ChangelingIdentityComponent>(args.User, out var identityStorage))
         {
-            _adminLogger.Add(LogType.Action, LogImpact.Medium, $"{ToPrettyString(ent.Owner):player}  successfully devoured {ToPrettyString(args.Target):player}'s identity");
-            _changelingIdentitySystem.CloneToPausedMap((ent, identityStorage), target.Value);
+
+            // If this is the first time devouring somebody, gain their identity.
+            if (!TryComp<ChangelingDevouredComponent>(target, out var devoured) || !devoured.DevouredBy.Contains(args.User)
+                || !identityStorage.ConsumedIdentities.ContainsValue(target))
+            {
+                _adminLogger.Add(LogType.Action, LogImpact.Medium, $"{ToPrettyString(ent.Owner):player} successfully devoured {ToPrettyString(args.Target):player}'s identity");
+                _changelingIdentitySystem.CloneToPausedMap((ent, identityStorage), target.Value);
+
+                // Save reference to the changeling.
+                EnsureComp<ChangelingDevouredComponent>(target.Value, out var targetDevoured);
+                targetDevoured.DevouredBy.Add(args.User);
+                Dirty(target.Value, targetDevoured);
+            }
 
             if (_inventorySystem.TryGetSlotEntity(target.Value, "jumpsuit", out var item)
                 && TryComp<ButcherableComponent>(item, out var butcherable))
