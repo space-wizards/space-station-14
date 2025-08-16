@@ -78,3 +78,13 @@
   name: hallucinations
   components:
   - type: SeeingRainbowsStatusEffect
+
+# Adds drugs overlay
+- type: entity
+  parent: MobStatusEffectDebuff
+  id: StatusEffectPacified
+  name: pacified
+  components:
+  - type: PacifiedStatusEffect
+  - type: StatusEffectAlert
+    alert: Pacified
