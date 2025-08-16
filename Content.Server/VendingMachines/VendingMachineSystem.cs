@@ -431,7 +431,7 @@ namespace Content.Server.VendingMachines
                 }
 
                 // Try to get price from ItemPriceManager using prototype
-                if (proto.TryGetComponent<ItemPriceComponent>(out var priceComponent, _componentFactory))
+                if (proto.Components.TryGetComponent("ItemPrice", out var comp) && comp is ItemPriceComponent priceComponent)
                 {
                     // Use the new GetPriceForPrototype method to ensure consistent pricing
                     var categoryPrice = _itemPriceManager.GetPriceForPrototype(entry.ID, priceComponent.PriceCategory);
