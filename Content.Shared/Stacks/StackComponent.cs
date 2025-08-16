@@ -1,50 +1,58 @@
 using Robust.Shared.GameStates;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
 namespace Content.Shared.Stacks
 {
+    /// <summary>
+    ///     Component on an entity that represents a stack of identical things, usually materials.
+    /// </summary>
     [RegisterComponent, NetworkedComponent]
+    [Access(typeof(SharedStackSystem))]
     public sealed partial class StackComponent : Component
     {
-        [ViewVariables(VVAccess.ReadWrite)]
-        [DataField("stackType", required: true, customTypeSerializer: typeof(PrototypeIdSerializer<StackPrototype>))]
-        public string StackTypeId { get; private set; } = default!;
+        /// <summary>
+        ///     What stack type we are.
+        /// </summary>
+        [DataField("stackType", required: true)]
+        public ProtoId<StackPrototype> StackTypeId { get; private set; } = default!;
 
         /// <summary>
         ///     Current stack count.
-        ///     Do NOT set this directly, use the <see cref="SharedStackSystem.SetCount"/> method instead.
+        ///     Do NOT set this directly, use a setter method instead.
         /// </summary>
-        [DataField("count")]
+        [DataField]
         public int Count { get; set; } = 30;
 
         /// <summary>
         ///     Max amount of things that can be in the stack.
         ///     Overrides the max defined on the stack prototype.
         /// </summary>
-        [ViewVariables(VVAccess.ReadOnly)]
-        [DataField("maxCountOverride")]
-        public int? MaxCountOverride  { get; set; }
+        [ViewVariables(VVAccess.ReadOnly)] // Is this necessary?
+        [DataField]
+        public int? MaxCountOverride { get; set; }
 
         /// <summary>
         ///     Set to true to not reduce the count when used.
-        ///     Note that <see cref="Count"/> still limits the amount that can be used at any one time.
         /// </summary>
-        [DataField("unlimited")]
-        [ViewVariables(VVAccess.ReadOnly)]
+        [ViewVariables(VVAccess.ReadOnly)] // Is this necessary?
+        [DataField]
         public bool Unlimited { get; set; }
 
-        [DataField("throwIndividually"), ViewVariables(VVAccess.ReadWrite)]
+        [DataField]
         public bool ThrowIndividually { get; set; } = false;
 
+        /// <summary>
+        ///     Used by StackStatusControl in client to update UI.
+        /// </summary>
         [ViewVariables]
+        [Access(typeof(SharedStackSystem), Other = AccessPermissions.ReadWrite)] // Set by StackStatusControl
         public bool UiUpdateNeeded { get; set; }
 
         /// <summary>
-        /// Default IconLayer stack.
+        ///     Default IconLayer stack.
         /// </summary>
-        [DataField("baseLayer")]
-        [ViewVariables(VVAccess.ReadWrite)]
+        [DataField]
         public string BaseLayer = "";
 
         /// <summary>
@@ -61,20 +69,18 @@ namespace Content.Shared.Stacks
         ///
         /// </summary>
         [DataField("composite")]
-        [ViewVariables(VVAccess.ReadWrite)]
         public bool IsComposite;
 
         /// <summary>
-        /// Sprite layers used in stack visualizer. Sprites first in layer correspond to lower stack states
-        /// e.g. <code>_spriteLayers[0]</code> is lower stack level than <code>_spriteLayers[1]</code>.
+        ///     Sprite layers used in stack visualizer. Sprites first in layer correspond to lower stack states
+        ///     e.g. <code>_spriteLayers[0]</code> is lower stack level than <code>_spriteLayers[1]</code>.
         /// </summary>
-        [DataField("layerStates")]
-        [ViewVariables(VVAccess.ReadWrite)]
+        [DataField]
         public List<string> LayerStates = new();
 
         /// <summary>
-        /// An optional function to convert the amounts used to adjust a stack's appearance.
-        /// Useful for different denominations of cash, for example.
+        ///     An optional function to convert the amounts used to adjust a stack's appearance.
+        ///     Useful for different denominations of cash, for example.
         /// </summary>
         [DataField]
         public StackLayerFunction LayerFunction = StackLayerFunction.None;

@@ -7,6 +7,9 @@ using Robust.Client.GameObjects;
 
 namespace Content.Client.Stack
 {
+    /// <summary>
+    ///     Client system for handling stacks of like entities.
+    /// </summary>
     [UsedImplicitly]
     public sealed class StackSystem : SharedStackSystem
     {
@@ -21,29 +24,41 @@ namespace Content.Client.Stack
             Subs.ItemStatus<StackComponent>(ent => new StackStatusControl(ent));
         }
 
-        public override void SetCount(EntityUid uid, int amount, StackComponent? component = null)
+        /// <inheritdoc />
+        public override void SetCount(Entity<StackComponent?> ent, int amount)
         {
-            if (!Resolve(uid, ref component))
+            if (!Resolve(ent.Owner, ref ent.Comp))
                 return;
 
-            base.SetCount(uid, amount, component);
+            base.SetCount(ent, amount);
 
             // TODO PREDICT ENTITY DELETION: This should really just be a normal entity deletion call.
-            if (component.Count <= 0)
+            if (ent.Comp.Count <= 0)
             {
-                Xform.DetachEntity(uid, Transform(uid));
+                Xform.DetachEntity(ent.Owner, Transform(ent.Owner));
                 return;
             }
 
-            component.UiUpdateNeeded = true;
+            ent.Comp.UiUpdateNeeded = true;
         }
 
-        private void OnAppearanceChange(EntityUid uid, StackComponent comp, ref AppearanceChangeEvent args)
+        /// <inheritdoc cref="SetCount(Entity{StackComponent?}, int)"/>
+        [Obsolete("Use Entity<T> method instead")]
+        public override void SetCount(EntityUid uid, int amount, StackComponent? component = null)
         {
+            SetCount((uid, component), amount);
+        }
+
+        #region Event Handlers
+
+        private void OnAppearanceChange(Entity<StackComponent> ent, ref AppearanceChangeEvent args)
+        {
+            var (uid, comp) = ent;
+
             if (args.Sprite == null || comp.LayerStates.Count < 1)
                 return;
 
-            // Skip processing if no actual
+            // Skip processing if no elements in the stack
             if (!_appearanceSystem.TryGetData<int>(uid, StackVisuals.Actual, out var actual, args.Component))
                 return;
 
@@ -57,9 +72,24 @@ namespace Content.Client.Stack
                 ApplyLayerFunction((uid, comp), ref actual, ref maxCount);
 
             if (comp.IsComposite)
-                _counterSystem.ProcessCompositeSprite(uid, actual, maxCount, comp.LayerStates, hidden, sprite: args.Sprite);
+            {
+                _counterSystem.ProcessCompositeSprite(uid,
+                                                    actual,
+                                                    maxCount,
+                                                    comp.LayerStates,
+                                                    hidden,
+                                                    sprite: args.Sprite);
+            }
             else
-                _counterSystem.ProcessOpaqueSprite(uid, comp.BaseLayer, actual, maxCount, comp.LayerStates, hidden, sprite: args.Sprite);
+            {
+                _counterSystem.ProcessOpaqueSprite(uid,
+                                                comp.BaseLayer,
+                                                actual,
+                                                maxCount,
+                                                comp.LayerStates,
+                                                hidden,
+                                                sprite: args.Sprite);
+            }
         }
 
         /// <summary>
@@ -68,7 +98,7 @@ namespace Content.Client.Stack
         /// <param name="ent">The entity considered.</param>
         /// <param name="actual">The actual number of items in the stack. Altered depending on the function to run.</param>
         /// <param name="maxCount">The maximum number of items in the stack. Altered depending on the function to run.</param>
-        /// <returns>Whether or not a function was applied.</returns>
+        /// <returns>True if a function was applied.</returns>
         private bool ApplyLayerFunction(Entity<StackComponent> ent, ref int actual, ref int maxCount)
         {
             switch (ent.Comp.LayerFunction)
@@ -79,8 +109,10 @@ namespace Content.Client.Stack
                         ApplyThreshold(threshold, ref actual, ref maxCount);
                         return true;
                     }
+
                     break;
             }
+
             // No function applied.
             return false;
         }
@@ -106,7 +138,10 @@ namespace Content.Client.Stack
                 else
                     break;
             }
+
             actual = newActual;
         }
+
+        #endregion
     }
 }
