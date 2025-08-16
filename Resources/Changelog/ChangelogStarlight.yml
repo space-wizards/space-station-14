@@ -11754,5 +11754,13 @@ Entries:
   id: 130300
   time: '2025-08-16T07:13:58.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/1303
+- author: TheRealSlimRedwoods
+  changes:
+  - message: Head of Security now gets his blue and grey counterpart. You still owe
+      that beer you know? (blue shirt and tie is now in the loadout)
+    type: Add
+  id: 134600
+  time: '2025-08-16T07:15:51.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1346
 Order: -1
 
