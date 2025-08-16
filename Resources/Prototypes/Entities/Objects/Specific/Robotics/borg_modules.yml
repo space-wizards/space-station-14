@@ -464,29 +464,29 @@
     hands:
     - item: SprayPainter
       hand:
-        emptyRepresentative: SprayPainterEmpty
-        emptyLabel: empty
-        whitelist:
-          tags:
-          - SprayPainter
+       emptyRepresentative: SprayPainterEmpty
+       emptyLabel: borg-slot-painter-empty
+       whitelist:
+          components:
+           - SprayPainter
     - item: CrayonRainbow
       hand:
-        emptyRepresentative: CrayonRainbow
-        emptyLabel: no crayon
+        emptyRepresentative: CrayonRed
+        emptyLabel: borg-slot-crayon-empty
         whitelist:
           tags:
           - Crayon
     - hand:
-        emptyRepresentative: CrayonRed
-        emptyLabel: no crayon
+        emptyRepresentative: CrayonYellow
+        emptyLabel: borg-slot-crayon-empty
         whitelist:
           tags:
           - Crayon
     - hand:
         emptyRepresentative: SprayPainterAmmo
-        emptyLabel: empty
+        emptyLabel: borg-slot-painter-ammo-empty
         whitelist:
-          tags:
+          components:
           - SprayPainterAmmo
   - type: BorgModuleIcon
     icon: { sprite: Interface/Actions/actions_borg.rsi, state: artistry-module }

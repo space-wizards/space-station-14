@@ -42,7 +42,6 @@
   id: BorgModuleArtistry
   result: BorgModuleArtistry
 
-
 # Cargo Modules
 
 - type: latheRecipe

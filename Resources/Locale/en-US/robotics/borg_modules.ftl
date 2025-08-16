@@ -10,3 +10,6 @@ borg-slot-documents-empty = Books and papers
 borg-slot-soap-empty = Soap
 borg-slot-instruments-empty = Instruments
 borg-slot-beakers-empty = Beakers
+borg-slot-crayon-empty: Crayon
+borg-slot-painter-empty: SprayPainter
+borg-slot-painter-ammo-empty: Compressed paint
