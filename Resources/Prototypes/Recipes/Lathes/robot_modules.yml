@@ -37,6 +37,12 @@
   id: BorgModuleFireExtinguisher
   result: BorgModuleFireExtinguisher
 
+- type: latheRecipe
+  parent: BaseBorgModuleRecipe
+  id: BorgModuleArtistry
+  result: BorgModuleArtistry
+
+
 # Cargo Modules
 
 - type: latheRecipe

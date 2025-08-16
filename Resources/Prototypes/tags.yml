@@ -1329,6 +1329,12 @@
   id: SprayNozzle
 
 - type: Tag
+  id: SprayPainter
+
+- type: Tag
+  id: SprayPainterAmmo
+
+- type: Tag
   id: SpreaderIgnore
 
 - type: Tag
