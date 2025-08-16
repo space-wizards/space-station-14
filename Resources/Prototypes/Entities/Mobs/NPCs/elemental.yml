@@ -65,6 +65,7 @@
   - type: MobMover
   - type: ZombieImmune
   - type: ProtectedFromStepTriggers
+  - type: TriggerProtectedFromStepTriggers
 
 - type: entity
   abstract: true
