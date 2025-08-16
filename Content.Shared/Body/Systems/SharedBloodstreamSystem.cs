@@ -102,12 +102,12 @@ public abstract class SharedBloodstreamSystem : EntitySystem
                 // Multiplying by 2 is arbitrary but works for this case, it just prevents the time from running out
                 _drunkSystem.TryApplyDrunkenness(
                     uid,
-                    (float)bloodstream.AdjustedUpdateInterval.TotalSeconds * 2,
+                    (float)bloodstream.AdjustedUpdateInterval.TotalSeconds * 10,
                     applySlur: false);
-                _stutteringSystem.DoStutter(uid, bloodstream.AdjustedUpdateInterval * 2, refresh: false);
+                _stutteringSystem.DoStutter(uid, bloodstream.AdjustedUpdateInterval * 10, refresh: false);
 
                 // storing the drunk and stutter time so we can remove it independently from other effects additions
-                bloodstream.StatusTime += bloodstream.AdjustedUpdateInterval * 2;
+                bloodstream.StatusTime += bloodstream.AdjustedUpdateInterval * 7;
                 DirtyField(uid, bloodstream, nameof(BloodstreamComponent.StatusTime));
             }
             else if (!_mobStateSystem.IsDead(uid))
@@ -118,12 +118,23 @@ public abstract class SharedBloodstreamSystem : EntitySystem
                     bloodstream.BloodlossHealDamage * bloodPercentage,
                     ignoreResistances: true, interruptsDoAfters: false);
 
-                // Remove the drunk effect when healthy. Should only remove the amount of drunk and stutter added by low blood level
-                _drunkSystem.TryRemoveDrunkenessTime(uid, bloodstream.StatusTime.TotalSeconds);
-                _stutteringSystem.DoRemoveStutterTime(uid, bloodstream.StatusTime.TotalSeconds);
-                // Reset the drunk and stutter time to zero
-                bloodstream.StatusTime = TimeSpan.Zero;
-                DirtyField(uid, bloodstream, nameof(BloodstreamComponent.StatusTime));
+                // Remove the drunk effect when healthy. Should only remove the amount of drunk and stutter added by low blood level over time
+                if (bloodstream.StatusTime.TotalSeconds > 10 + bloodstream.UpdateInterval.TotalSeconds)
+                {
+                    _drunkSystem.TryRemoveDrunkenessTime(uid, 10);
+                    _stutteringSystem.DoRemoveStutterTime(uid, 10);
+
+                    bloodstream.StatusTime -= TimeSpan.FromSeconds(10) + bloodstream.UpdateInterval;
+                    DirtyField(uid, bloodstream, nameof(BloodstreamComponent.StatusTime));
+                }
+                else if (bloodstream.StatusTime.TotalSeconds > 0)
+                {
+                    _drunkSystem.TryRemoveDrunkenessTime(uid, bloodstream.StatusTime.TotalSeconds);
+                    _stutteringSystem.DoRemoveStutterTime(uid, bloodstream.StatusTime.TotalSeconds);
+
+                    bloodstream.StatusTime = TimeSpan.Zero;
+                    DirtyField(uid, bloodstream, nameof(BloodstreamComponent.StatusTime));
+                }
             }
         }
     }
