@@ -114,7 +114,7 @@
     color: "#43ccb5"
 
 - type: entity
-  parent: BaseComputer
+  parent: BaseComputerAiAccess
   id: BaseComputerShuttle
   name: shuttle console
   description: Used to pilot a shuttle.
