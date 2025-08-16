@@ -8,6 +8,9 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 
 namespace Content.Shared.Xenoborgs.Components;
 
+/// <summary>
+/// Enables an entity to convert bodies into Xenoborgs.
+/// </summary>
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState, AutoGenerateComponentPause]
 [Access(typeof(SharedXenoborgFactorySystem))]
 public sealed partial class XenoborgFactoryComponent : Component
@@ -18,8 +21,11 @@ public sealed partial class XenoborgFactoryComponent : Component
     [DataField]
     public EntityWhitelist? Blacklist;
 
+    /// <summary>
+    /// Recipes that this factory can produce.
+    /// </summary>
     [DataField, AutoNetworkedField]
-    public ProtoId<LatheRecipePackPrototype> BorgRecipePack;
+    public ProtoId<LatheRecipePackPrototype> BorgRecipePack = "EmptyXenoborgs";
 
     /// <summary>
     /// whether or not we cut off the sound early when the reclaiming ends.
@@ -49,8 +55,11 @@ public sealed partial class XenoborgFactoryComponent : Component
     [AutoPausedField]
     public TimeSpan NextSound;
 
+    /// <summary>
+    /// Default chassis type to produce.
+    /// </summary>
     [DataField, AutoNetworkedField]
-    public ProtoId<LatheRecipePrototype> Recipe;
+    public ProtoId<LatheRecipePrototype> Recipe = "XenoborgEngiRecipe";
 
     /// <summary>
     /// The sound played when something is being processed.

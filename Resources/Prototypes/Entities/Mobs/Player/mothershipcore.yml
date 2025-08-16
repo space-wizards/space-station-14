@@ -186,8 +186,6 @@
       components:
       - BorgChassis
   - type: XenoborgFactory
-    recipe: XenoborgEngiRecipe
-    borgRecipePack: EmptyXenoborgs
     whitelist:
       components:
       - MobState

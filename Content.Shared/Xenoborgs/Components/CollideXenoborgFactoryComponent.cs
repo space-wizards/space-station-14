@@ -12,5 +12,5 @@ public sealed partial class CollideXenoborgFactoryComponent : Component
     /// The fixture that starts reclaiming on collision.
     /// </summary>
     [DataField]
-    public string FixtureId = "brrt";
+    public string FixtureId = "XenoborgFactoryFixture";
 }

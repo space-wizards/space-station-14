@@ -9,29 +9,23 @@ using Content.Shared.Database;
 using Content.Shared.Humanoid;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Interaction.Events;
-using Content.Shared.Lathe;
 using Content.Shared.Mind;
-using Content.Shared.Popups;
 using Content.Shared.Silicons.Borgs.Components;
-using Content.Shared.Verbs;
 using Content.Shared.Xenoborgs;
 using Content.Shared.Xenoborgs.Components;
 using Robust.Shared.Player;
-using System.Linq;
 
 namespace Content.Server.Xenoborgs;
 
 public sealed class XenoborgFactorySystem : SharedXenoborgFactorySystem
 {
-    [Dependency] private readonly SharedBodySystem _body = default!; //bobby
     [Dependency] private readonly IAdminLogManager _adminLogger = default!;
-    [Dependency] private readonly ItemSlotsSystem _itemSlots = default!;
+    [Dependency] private readonly SharedBodySystem _body = default!; //bobby
     [Dependency] private readonly BorgSystem _borg = default!;
+    [Dependency] private readonly GhostSystem _ghostSystem = default!;
+    [Dependency] private readonly ItemSlotsSystem _itemSlots = default!;
     [Dependency] private readonly SharedMindSystem _mind = default!;
     [Dependency] private readonly ISharedPlayerManager _player = default!;
-    [Dependency] private readonly SharedPopupSystem _popup = default!;
-    [Dependency] private readonly GhostSystem _ghostSystem = default!;
-    [Dependency] private readonly SharedLatheSystem _lathe = default!;
 
     public override void Initialize()
     {
@@ -95,6 +89,7 @@ public sealed class XenoborgFactorySystem : SharedXenoborgFactorySystem
         if (!Resolve(result, ref chassis) || chassis.BrainEntity == null)
             return false;
 
+        // _borg.CanPlayerBeBorged handles role bans.
         if (_mind.TryGetMind(brain.Value, out _, out var mind) &&
             _player.TryGetSessionById(mind.UserId, out var session) && _borg.CanPlayerBeBorged(session))
         {
@@ -102,11 +97,10 @@ public sealed class XenoborgFactorySystem : SharedXenoborgFactorySystem
         }
         else
         {
-            _popup.PopupEntity(Loc.GetString("borg-player-not-allowed"), brain.Value);
+            Popup.PopupEntity(Loc.GetString("borg-player-not-allowed"), brain.Value);
         }
 
         return true;
-
     }
 
     private void OnSuicideByEnvironment(Entity<XenoborgFactoryComponent> entity, ref SuicideByEnvironmentEvent args)
@@ -121,49 +115,17 @@ public sealed class XenoborgFactorySystem : SharedXenoborgFactorySystem
             _ghostSystem.OnGhostAttempt(mindId, false, mind: mind);
             if (mind.OwnedEntity is { Valid: true } suicider)
             {
-                _popup.PopupEntity(Loc.GetString("xenoborgfactory-component-suicide-message"), suicider);
+                Popup.PopupEntity(Loc.GetString("xenoborgfactory-component-suicide-message"), suicider);
             }
         }
 
-        _popup.PopupEntity(Loc.GetString("xenoborgfactory-component-suicide-message-others",
+        Popup.PopupEntity(Loc.GetString("xenoborgfactory-component-suicide-message-others",
                 ("victim", Identity.Entity(victim, EntityManager))),
             victim,
             Filter.PvsExcept(victim, entityManager: EntityManager),
             true);
 
-        TryStartProcessItem(entity, victim, suicide:true);
+        TryStartProcessItem(entity, victim, suicide: true);
         args.Handled = true;
-    }
-
-    protected override void OnGetVerb(EntityUid uid, XenoborgFactoryComponent component, GetVerbsEvent<Verb> args)
-    {
-        if (!args.CanAccess || !args.CanInteract || args.Hands == null)
-            return;
-
-        if (!Proto.TryIndex(component.BorgRecipePack, out var recipePack))
-            return;
-
-        foreach (var v in from type in recipePack.Recipes
-                 let proto = Proto.Index(type)
-                 select new Verb
-                 {
-                     Category = VerbCategory.SelectType,
-                     Text = _lathe.GetRecipeName(proto),
-                     Disabled = type == component.Recipe,
-                     DoContactInteraction = true,
-                     Icon = proto.Icon,
-                     Act = () =>
-                     {
-                         // Putting this in shared causes the client to execute this multiple times
-                         component.Recipe = type;
-                         _popup.PopupEntity(Loc.GetString("emitter-component-type-set",
-                                 ("type", _lathe.GetRecipeName(proto))),
-                             uid);
-                         Dirty(uid, component);
-                     },
-                 })
-        {
-            args.Verbs.Add(v);
-        }
     }
 }

@@ -1,8 +1,10 @@
+using System.Linq;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Bed.Sleep;
 using Content.Shared.Lathe;
 using Content.Shared.Materials;
 using Content.Shared.Mobs.Systems;
+using Content.Shared.Popups;
 using Content.Shared.Verbs;
 using Content.Shared.Whitelist;
 using Content.Shared.Xenoborgs.Components;
@@ -21,11 +23,13 @@ public abstract class SharedXenoborgFactorySystem : EntitySystem
 {
     [Dependency] private readonly ActionBlockerSystem _actionBlocker = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
+    [Dependency] private readonly SharedLatheSystem _lathe = default!;
     [Dependency] private readonly MobStateSystem _mobState = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly EntityWhitelistSystem _whitelistSystem = default!;
     [Dependency] protected readonly SharedContainerSystem Container = default!;
     [Dependency] protected readonly SharedMaterialStorageSystem MaterialStorage = default!;
+    [Dependency] protected readonly SharedPopupSystem Popup = default!;
     [Dependency] protected readonly IPrototypeManager Proto = default!;
 
     public override void Initialize()
@@ -36,8 +40,6 @@ public abstract class SharedXenoborgFactorySystem : EntitySystem
 
     private void OnCollide(EntityUid uid, CollideXenoborgFactoryComponent component, ref StartCollideEvent args)
     {
-        // if (args.OurFixtureId != component.FixtureId)
-        //     return;
         if (!TryComp<XenoborgFactoryComponent>(uid, out var reclaimer))
             return;
         TryStartProcessItem(uid, args.OtherEntity, reclaimer);
@@ -120,5 +122,35 @@ public abstract class SharedXenoborgFactorySystem : EntitySystem
         return true;
     }
 
-    protected abstract void OnGetVerb(EntityUid uid, XenoborgFactoryComponent component, GetVerbsEvent<Verb> args);
+    private void OnGetVerb(EntityUid uid, XenoborgFactoryComponent component, GetVerbsEvent<Verb> args)
+    {
+        if (!args.CanAccess || !args.CanInteract || args.Hands == null)
+            return;
+
+        if (!Proto.TryIndex(component.BorgRecipePack, out var recipePack))
+            return;
+
+        foreach (var v in from type in recipePack.Recipes
+                 let proto = Proto.Index(type)
+                 select new Verb
+                 {
+                     Category = VerbCategory.SelectType,
+                     Text = _lathe.GetRecipeName(proto),
+                     Disabled = type == component.Recipe,
+                     DoContactInteraction = true,
+                     Icon = proto.Icon,
+                     Act = () =>
+                     {
+                         component.Recipe = type;
+                         Popup.PopupPredicted(Loc.GetString("emitter-component-type-set",
+                                 ("type", _lathe.GetRecipeName(proto))),
+                             uid,
+                             args.User);
+                         Dirty(uid, component);
+                     },
+                 })
+        {
+            args.Verbs.Add(v);
+        }
+    }
 }
