@@ -22,6 +22,11 @@ public sealed partial class ChangelogTab : Control
 
     public bool AdminOnly;
 
+    /// <summary>
+    /// Changelog is from a PR marked "Experimental" and should therefore have an additional icon.
+    /// </summary>
+    private static string _experimentalString = "Intent: Experimental";
+
     public ChangelogTab()
     {
         RobustXamlLoader.Load(this);
@@ -134,20 +139,47 @@ public sealed partial class ChangelogTab : Control
                     FormattedMessage.FromMarkupOrThrow(Loc.GetString("changelog-author-changed", ("author", FormattedMessage.EscapeText(author)))));
                 ChangelogBody.AddChild(authorLabel);
 
-                foreach (var change in groupedEntry.SelectMany(c => c.Changes))
+                foreach (var (labels, changes) in groupedEntry.Select(c => (c.Labels, c.Changes)))
                 {
-                    var text = new RichTextLabel();
-                    text.SetMessage(FormattedMessage.FromUnformatted(change.Message));
-                    ChangelogBody.AddChild(new BoxContainer
+                    foreach (var change in changes)
                     {
-                        Orientation = LayoutOrientation.Horizontal,
-                        Margin = new Thickness(14, 1, 10, 2),
-                        Children =
+                        var text = new RichTextLabel();
+                        text.SetMessage(FormattedMessage.FromUnformatted(change.Message));
+                        if (labels != null && labels.Contains(_experimentalString))
                         {
-                            GetIcon(change.Type),
-                            text
+                            ChangelogBody.AddChild(new BoxContainer
+                            {
+                                Orientation = LayoutOrientation.Horizontal,
+                                Margin = new Thickness(14, 1, 10, 2),
+                                Children =
+                                {
+                                    GetIcon(change.Type),
+                                    new TextureRect
+                                    {
+                                        Texture = _resourceCache.GetTexture(new ResPath($"/Textures/Interface/Changelog/test-tube.svg.192dpi.png")),
+                                        VerticalAlignment = VAlignment.Top,
+                                        TextureScale = new Vector2(0.5f, 0.5f),
+                                        Margin = new Thickness(0, 4, 6, 2),
+                                        ModulateSelfOverride = Color.FromHex("#A0d16E"),
+                                    },
+                                    text
+                                }
+                            });
                         }
-                    });
+                        else
+                        {
+                            ChangelogBody.AddChild(new BoxContainer
+                            {
+                                Orientation = LayoutOrientation.Horizontal,
+                                Margin = new Thickness(14, 1, 10, 2),
+                                Children =
+                                {
+                                    GetIcon(change.Type),
+                                    text
+                                }
+                            });
+                        }
+                    }
                 }
             }
         }
