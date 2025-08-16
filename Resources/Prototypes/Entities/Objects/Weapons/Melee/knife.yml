@@ -362,9 +362,9 @@
     sprite: Objects/Weapons/Melee/utility_knife.rsi
   - type: ItemToggle
     soundActivate:
-      path: /Audio/Items/change_drill.ogg
+      path: /Audio/Weapons/utilityknifeopen.ogg
     soundDeactivate:
-      path: /Audio/Items/change_drill.ogg
+      path: /Audio/Weapons/utilityknifeclose.ogg
   - type: ItemToggleMeleeWeapon
     activatedSoundOnHit:
       path: /Audio/Weapons/bladeslice.ogg
