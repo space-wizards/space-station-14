@@ -11815,5 +11815,13 @@ Entries:
   id: 123900
   time: '2025-08-16T07:49:54.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/1239
+- author: Aedler
+  changes:
+  - message: End of Round now triggers on Shuttle Launch instead of CentComm docking.
+      Round restart timer has been extended.
+    type: Tweak
+  id: 105000
+  time: '2025-08-16T07:52:15.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1050
 Order: -1
 
