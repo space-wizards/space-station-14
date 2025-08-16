@@ -2,7 +2,7 @@
 using Robust.Shared.Audio;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
-namespace Content.Server.Weapons.Melee.Balloon;
+namespace Content.Shared.Weapons.Melee.Balloon;
 
 /// <summary>
 /// This is used for weapons that pop balloons on attack.
