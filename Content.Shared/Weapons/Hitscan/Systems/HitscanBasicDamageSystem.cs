@@ -15,13 +15,24 @@ public sealed class HitscanBasicDamageSystem : EntitySystem
         SubscribeLocalEvent<HitscanBasicDamageComponent, HitscanRaycastFiredEvent>(OnHitscanHit, after: [ typeof(HitscanReflectSystem) ]);
     }
 
-    private void OnHitscanHit(Entity<HitscanBasicDamageComponent> hitscan, ref HitscanRaycastFiredEvent args)
+    private void OnHitscanHit(Entity<HitscanBasicDamageComponent> ent, ref HitscanRaycastFiredEvent args)
     {
         if (args.Canceled || args.HitEntity == null)
             return;
 
-        var dmg = hitscan.Comp.Damage * _damage.UniversalHitscanDamageModifier;
+        var dmg = ent.Comp.Damage * _damage.UniversalHitscanDamageModifier;
 
-        hitscan.Comp.DamageDealt = _damage.TryChangeDamage(args.HitEntity, dmg, origin: args.Gun);
+        var damageDealt = _damage.TryChangeDamage(args.HitEntity, dmg, origin: args.Gun);
+
+        if (damageDealt == null)
+            return;
+
+        var damageEvent = new HitscanDamageDealtEvent
+        {
+            Target = args.HitEntity.Value,
+            DamageDealt = damageDealt,
+        };
+
+        RaiseLocalEvent(ent, ref damageEvent);
     }
 }

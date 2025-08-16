@@ -16,23 +16,21 @@ public sealed class HitscanBasicEffectsSystem : EntitySystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<HitscanBasicEffectsComponent, HitscanRaycastFiredEvent>(OnHitscanHit, after: [ typeof(HitscanBasicDamageSystem) ]);
+        SubscribeLocalEvent<HitscanBasicEffectsComponent, HitscanDamageDealtEvent>(OnHitscanDamageDealt);
     }
 
-    private void OnHitscanHit(Entity<HitscanBasicEffectsComponent> hitscan, ref HitscanRaycastFiredEvent args)
+    private void OnHitscanDamageDealt(Entity<HitscanBasicEffectsComponent> ent, ref HitscanDamageDealtEvent args)
     {
-        if (args.Canceled || args.HitEntity == null || Deleted(args.HitEntity))
+        if (Deleted(args.Target))
             return;
 
-        if (TryComp<HitscanBasicDamageComponent>(hitscan, out var hitscanDamageComp)
-            && hitscan.Comp.HitColor != null
-            && hitscanDamageComp.Damage.AnyPositive())
+        if (ent.Comp.HitColor != null && args.DamageDealt.GetTotal() != 0)
         {
-            _color.RaiseEffect(hitscan.Comp.HitColor.Value,
-                new List<EntityUid> { args.HitEntity.Value },
-                Filter.Pvs(args.HitEntity.Value, entityManager: EntityManager));
+            _color.RaiseEffect(ent.Comp.HitColor.Value,
+                new List<EntityUid> { args.Target },
+                Filter.Pvs(args.Target, entityManager: EntityManager));
         }
 
-        _gun.PlayImpactSound(args.HitEntity.Value, hitscanDamageComp?.Damage, hitscan.Comp.Sound, hitscan.Comp.ForceSound);
+        _gun.PlayImpactSound(args.Target, args.DamageDealt, ent.Comp.Sound, ent.Comp.ForceSound);
     }
 }

@@ -1,4 +1,5 @@
 using System.Numerics;
+using Content.Shared.Damage;
 using Robust.Shared.Map;
 
 namespace Content.Shared.Weapons.Hitscan.Events;
@@ -26,7 +27,7 @@ public record struct HitscanTraceEvent
     public EntityUid Gun;
 
     /// <summary>
-    /// Who shot the gun. Could be the gun itself or the entity that reflected the shot!
+    /// Player who shot the gun, if null the gun was fired by itself.
     /// </summary>
     public EntityUid Shooter;
 
@@ -64,7 +65,7 @@ public record struct HitscanRaycastFiredEvent
     public EntityUid Gun;
 
     /// <summary>
-    /// Who shot the gun. Could be the gun itself or the entity that reflected the shot!
+    /// Player who shot the gun, if null the gun was fired by itself.
     /// </summary>
     public EntityUid Shooter;
 
@@ -78,4 +79,18 @@ public record struct HitscanRaycastFiredEvent
     /// Cancelled hitscans should not apply damage or trigger follow-up effects.
     /// </summary>
     public bool Canceled;
+}
+
+[ByRefEvent]
+public record struct HitscanDamageDealtEvent
+{
+    /// <summary>
+    /// Target that was dealt damage.
+    /// </summary>
+    public EntityUid Target;
+
+    /// <summary>
+    /// The amount of damage that the target was dealt.
+    /// </summary>
+    public DamageSpecifier DamageDealt;
 }

@@ -26,6 +26,9 @@ public sealed class HitscanBasicVisualsSystem : EntitySystem
 
     private void FireEffects(EntityCoordinates fromCoordinates, float distance, Angle shotAngle, HitscanBasicVisualsComponent hitscan)
     {
+        if (distance == 0)
+            return;
+
         var sprites = new List<(NetCoordinates coordinates, Angle angle, SpriteSpecifier sprite, float scale)>();
         var fromXform = Transform(fromCoordinates.EntityId);
 
