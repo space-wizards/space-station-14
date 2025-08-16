@@ -1,4 +1,5 @@
 using System.Diagnostics;
+using Content.Shared.ActionBlocker;
 using Content.Shared.Database;
 using Content.Shared.Hands.Components;
 using Content.Shared.Item;
@@ -84,7 +85,7 @@ public abstract partial class SharedHandsSystem
         if (!Resolve(entity, ref item, false))
             return false;
 
-        if (!CanPickupToHand(uid, entity, handId, checkActionBlocker, handsComp, item))
+        if (!CanPickupToHand(uid, entity, handId, checkActionBlocker, true, handsComp, item))
             return false;
 
         if (animate)
@@ -151,7 +152,12 @@ public abstract partial class SharedHandsSystem
         return false;
     }
 
-    public bool CanPickupAnyHand(EntityUid uid, EntityUid entity, bool checkActionBlocker = true, HandsComponent? handsComp = null, ItemComponent? item = null)
+    public bool CanPickupAnyHand(EntityUid uid,
+        EntityUid entity,
+        bool checkActionBlocker = true,
+        bool physicalAttempt = false,
+        HandsComponent? handsComp = null,
+        ItemComponent? item = null)
     {
         if (!Resolve(uid, ref handsComp, false))
             return false;
@@ -159,13 +165,31 @@ public abstract partial class SharedHandsSystem
         if (!TryGetEmptyHand((uid, handsComp), out var hand))
             return false;
 
-        return CanPickupToHand(uid, entity, hand, checkActionBlocker, handsComp, item);
+        return CanPickupToHand(uid, entity, hand, checkActionBlocker, false, handsComp, item);
     }
 
     /// <summary>
-    ///     Checks whether a given item will fit into a specific user's hand. Unless otherwise specified, this will also check the general CanPickup action blocker.
+    /// Checks whether a given item will fit into a specific user's hand. Unless otherwise specified, this will also
+    /// check the general CanPickup action blocker.
     /// </summary>
-    public bool CanPickupToHand(EntityUid uid, EntityUid entity, string handId, bool checkActionBlocker = true, HandsComponent? handsComp = null, ItemComponent? item = null)
+    /// <param name="uid">The user picking up the item.</param>
+    /// <param name="entity">The item being picked up.</param>
+    /// <param name="handId">The ID of the hand being used.</param>
+    /// <param name="checkActionBlocker">If <see cref="ActionBlockerSystem.CanPickup" /> should be called.</param>
+    /// <param name="physicalAttempt">
+    /// If true, indicates this corresponds with the physical attempt to pick up an item.
+    /// Should be set to false for things like UI indicators. Has no effect if <see cref="checkActionBlocker"/> is false.
+    /// </param>
+    /// <param name="handsComp">The HandsComponent if already known.</param>
+    /// <param name="item">The ItemComponent if already known.</param>
+    /// <returns>True if the item is able to be picked up.</returns>
+    public bool CanPickupToHand(EntityUid uid,
+        EntityUid entity,
+        string handId,
+        bool checkActionBlocker = true,
+        bool physicalAttempt = false,
+        HandsComponent? handsComp = null,
+        ItemComponent? item = null)
     {
         if (!Resolve(uid, ref handsComp, false))
             return false;
@@ -182,8 +206,12 @@ public abstract partial class SharedHandsSystem
         if (TryComp(entity, out PhysicsComponent? physics) && physics.BodyType == BodyType.Static)
             return false;
 
-        if (checkActionBlocker && !_actionBlocker.CanPickup(uid, entity))
+        if (checkActionBlocker && !_actionBlocker.CanPickup(uid, entity, out var reason, physicalAttempt))
+        {
+            if (reason is not null)
+                _popup.PopupPredictedCursor(reason, uid);
             return false;
+        }
 
         if (!CheckWhitelists((uid, handsComp), handId, entity))
             return false;
