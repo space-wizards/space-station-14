@@ -1,4 +1,5 @@
-﻿using Content.Shared.Actions;
+using Content.Shared.Actions;
+using Robust.Shared.Serialization;
 
 namespace Content.Shared.Mobs;
 
@@ -21,4 +22,14 @@ public sealed partial class CritFakeDeathEvent : InstantActionEvent
 /// </summary>
 public sealed partial class CritLastWordsEvent : InstantActionEvent
 {
+}
+
+/// <summary>
+///     Only applies to mobs capable of speaking, as a last resort in crit.
+///     Raised by the client, when the last words are ready to be said.
+/// </summary>
+[Serializable, NetSerializable]
+public sealed partial class CritLastWordsSayEvent(string Message) : EntityEventArgs
+{
+    public string Message = Message;
 }
