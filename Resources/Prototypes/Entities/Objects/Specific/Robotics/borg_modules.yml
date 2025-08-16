@@ -451,6 +451,47 @@
     icon: { sprite: Interface/Actions/actions_borg.rsi, state: wire-module }
 
 - type: entity
+  id: BorgModuleArtistry
+  parent: [ BaseBorgModule, BaseProviderBorgModule ]
+  name: artistry cyborg module
+  description: A module for arts & crafts whilst the station burns!
+  components:
+  - type: Sprite
+    layers:
+    - state: generic
+    - state: icon-artistry
+  - type: ItemBorgModule
+    hands:
+    - item: SprayPainter
+      hand:
+        emptyRepresentative: SprayPainterEmpty
+        emptyLabel: empty
+        whitelist:
+          tags:
+          - SprayPainter
+    - item: CrayonRainbow
+      hand:
+        emptyRepresentative: CrayonRainbow
+        emptyLabel: no crayon
+        whitelist:
+          tags:
+          - Crayon
+    - hand:
+        emptyRepresentative: CrayonRed
+        emptyLabel: no crayon
+        whitelist:
+          tags:
+          - Crayon
+    - hand:
+        emptyRepresentative: SprayPainterAmmo
+        emptyLabel: empty
+        whitelist:
+          tags:
+          - SprayPainterAmmo
+  - type: BorgModuleIcon
+    icon: { sprite: Interface/Actions/actions_borg.rsi, state: artistry-module }
+
+- type: entity
   id: BorgModuleFireExtinguisher
   parent: [ BaseBorgModule, BaseProviderBorgModule ]
   name: thruster cyborg module

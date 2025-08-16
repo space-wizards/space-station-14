@@ -4,6 +4,9 @@
   name: spray painter
   description: A spray painter for painting airlocks, pipes, and other items.
   components:
+  - type: Tag
+    tags:
+    - SprayPainter
   - type: Sprite
     sprite: Objects/Tools/spray_painter.rsi
     state: spray_painter
@@ -61,6 +64,9 @@
   name: compressed paint
   description: A cartridge of highly compressed paint, commonly used in spray painters.
   components:
+  - type: Tag
+    tags:
+    - SprayPainterAmmo
   - type: SprayPainterAmmo
   - type: Sprite
     sprite: Objects/Tools/spray_painter.rsi
