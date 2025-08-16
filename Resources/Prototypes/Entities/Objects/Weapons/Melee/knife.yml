@@ -341,7 +341,7 @@
   name: utility knife
   parent: BaseItem
   id: UtilityKnife
-  description: A knife with a tiny blade. Useful for opening mail, and in a pinch, butchering space carp.
+  description: A knife with a retractable, tiny blade. Useful as a box cutter and letter opener, among other things.
   components:
   - type: Appearance
   - type: ComponentToggler
@@ -349,14 +349,14 @@
     - type: Execution
       doAfterDuration: 4.0
     - type: Sharp
-    - type: Tool
-      qualities:
-      - Slicing
-      useSound:
-        path: /Audio/Items/Culinary/chop.ogg
     - type: Utensil
       types:
       - Knife
+  - type: Tool # for some reason slicing did not work when in ComponentToggler
+    qualities:
+    - Slicing
+    useSound:
+      path: /Audio/Items/Culinary/chop.ogg
   - type: Item
     size: Tiny
     sprite: Objects/Weapons/Melee/utility_knife.rsi
