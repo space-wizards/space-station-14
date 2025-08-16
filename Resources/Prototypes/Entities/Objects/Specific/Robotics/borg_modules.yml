@@ -1197,9 +1197,9 @@
     - state: syndicate
     - state: icon-syndicate
   - type: ItemBorgModule
-    items:
-    - CyborgEnergySword
-    - PinpointerSyndicateNuclear
+    hands:
+    - item: CyborgEnergySword
+    - item: PinpointerSyndicateNuclear
   - type: BorgModuleIcon
     icon: { sprite: Interface/Actions/actions_borg.rsi, state: syndicate-esword-module }
 
@@ -1214,9 +1214,9 @@
     - state: syndicate
     - state: icon-syndicate
   - type: ItemBorgModule
-    items:
-    - CyborgEnergySwordDouble
-    - PinpointerSyndicateNuclear
+    hands:
+    - item: CyborgEnergySwordDouble
+    - item: PinpointerSyndicateNuclear
   - type: BorgModuleIcon
     icon: { sprite: Interface/Actions/actions_borg.rsi, state: syndicate-desword-module }
 
@@ -1231,9 +1231,9 @@
     - state: syndicate
     - state: icon-syndicate
   - type: ItemBorgModule
-    items:
-    - WeaponLightMachineGunL6C
-    - PinpointerSyndicateNuclear
+    hands:
+    - item: WeaponLightMachineGunL6C
+    - item: PinpointerSyndicateNuclear
   - type: BorgModuleIcon
     icon: { sprite: Interface/Actions/actions_borg.rsi, state: syndicate-l6c-module }
 
@@ -1248,9 +1248,9 @@
     - state: syndicate
     - state: icon-syndicate
   - type: ItemBorgModule
-    items:
-    - WeaponSubMachineGunC20rROW
-    - PinpointerSyndicateNuclear
+    hands:
+    - item: WeaponSubMachineGunC20rROW
+    - item: PinpointerSyndicateNuclear
   - type: BorgModuleIcon
     icon: { sprite: Interface/Actions/actions_borg.rsi, state: syndicate-c20r-module }
 
