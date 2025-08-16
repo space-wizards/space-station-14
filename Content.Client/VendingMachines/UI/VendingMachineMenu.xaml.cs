@@ -90,14 +90,14 @@ namespace Content.Client.VendingMachines.UI
 
         private void GenerateButton(ListData data, ListContainerButton button)
         {
-            if (data is not VendorItemsListData { ItemProtoID: var protoID, ItemText: var text })
+            if (data is not VendorItemsListData { ItemProtoID: var protoID, ItemText: var text } vendorListData)
                 return;
 
             // 🌟Starlight🌟 start
             _dummies.TryGetValue(protoID, out var dummy);
             var itemName = dummy != default ? Identity.Name(dummy, _entityManager) : text;
-            var amount = (data as VendorItemsListData)?.Amount ?? 0;
-            var price = (data as VendorItemsListData)?.Price ?? 0;
+            var amount = vendorListData.Amount;
+            var price = vendorListData.Price;
 
             var item = new VendingMachineItem(protoID, itemName, amount, price, _showPrices);
             // 🌟Starlight🌟 end
