@@ -40,6 +40,7 @@ public sealed partial class TriggerSystem : EntitySystem
     [Dependency] private readonly SharedDeviceLinkSystem _deviceLink = default!;
 
     public const string DefaultTriggerKey = "trigger";
+    public const string CancelledTriggerKey = "cancelled";
 
     public override void Initialize()
     {
@@ -67,7 +68,11 @@ public sealed partial class TriggerSystem : EntitySystem
         var attemptTriggerEvent = new AttemptTriggerEvent(user, key);
         RaiseLocalEvent(trigger, ref attemptTriggerEvent);
         if (attemptTriggerEvent.Cancelled)
+        {
+            var cancelledTriggerEvent = new CancelledTriggerEvent(user, key);
+            RaiseLocalEvent(trigger, ref cancelledTriggerEvent);
             return false;
+        }
 
         var triggerEvent = new TriggerEvent(user, key);
         RaiseLocalEvent(trigger, ref triggerEvent, true);
