@@ -11709,5 +11709,12 @@ Entries:
   id: 134002
   time: '2025-08-16T06:59:46.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/1340
+- author: Conflee
+  changes:
+  - message: Added a 'Doxes-the-Captain' Plushie, found in the Hug Dispenser
+    type: Add
+  id: 127600
+  time: '2025-08-16T07:03:34.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1276
 Order: -1
 
