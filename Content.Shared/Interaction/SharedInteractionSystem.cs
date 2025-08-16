@@ -1358,7 +1358,7 @@ namespace Content.Shared.Interaction
             if (_strippable.IsStripHidden(slotDef, user))
                 return false;
 
-            return InRangeUnobstructed(user, wearer) && _containerSystem.IsInSameOrParentContainer(user, wearer);
+            return InRangeUnobstructed(user, wearer) && _containerSystem.IsInSameOrParentContainer((user, null), (wearer, null));
         }
 
         protected bool ValidateClientInput(
