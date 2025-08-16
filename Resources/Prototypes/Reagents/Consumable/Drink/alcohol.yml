@@ -15,6 +15,7 @@
   metamorphicMaxFillLevels: 4
   metamorphicFillBaseName: fill-
   metamorphicChangeColor: true
+  flammability: 2
   metabolisms:
     Drink:
       effects:
@@ -159,6 +160,7 @@
   color: "#b05b3c"
   boilingPoint: 78.2
   meltingPoint: -114.1
+  flammability: 3
   metabolisms:
     Alcohol:
       effects:
@@ -402,6 +404,7 @@
   metamorphicMaxFillLevels: 4
   metamorphicFillBaseName: fill-
   metamorphicChangeColor: false
+  flammability: 2
   metabolisms:
     Drink:
       effects:
@@ -426,6 +429,7 @@
   metamorphicMaxFillLevels: 4
   metamorphicFillBaseName: fill-
   metamorphicChangeColor: false
+  flammability: 2
   metabolisms:
     Drink:
       effects:
@@ -2506,6 +2510,7 @@
   metamorphicMaxFillLevels: 2
   metamorphicFillBaseName: fill-
   metamorphicChangeColor: false
+  flammability: 5
   metabolisms:
     Drink:
       effects:

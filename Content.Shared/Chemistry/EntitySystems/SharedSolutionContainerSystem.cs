@@ -677,6 +677,15 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
         return true;
     }
 
+    public void BurnFlammableReagents(Entity<SolutionComponent> soln, float fraction)
+    {
+        var (uid, comp) = soln;
+        var solution = comp.Solution;
+
+        solution.BurnFlammableReagents(fraction, PrototypeManager);
+        UpdateChemicals(soln);
+    }
+
     /// <summary>
     ///     Removes an amount from all reagents in a solution, adding it to a new solution.
     /// </summary>
