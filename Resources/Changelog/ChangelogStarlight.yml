@@ -11845,5 +11845,12 @@ Entries:
   id: 102200
   time: '2025-08-16T08:11:37.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/1022
+- author: Trosling
+  changes:
+  - message: HP scaling system added based on population
+    type: Tweak
+  id: 122800
+  time: '2025-08-16T08:14:39.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1228
 Order: -1
 
