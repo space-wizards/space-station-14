@@ -17,4 +17,18 @@ public sealed partial class TriggerOnInteractUsingComponent : BaseTriggerOnXComp
     /// <remarks>No whitelist check when null.</remarks>
     [DataField, AutoNetworkedField]
     public EntityWhitelist? Whitelist;
+
+    /// <summary>
+    /// Blacklist of entities that cannot be used to trigger this component.
+    /// </summary>
+    /// <remarks>No blacklist check when null.</remarks>
+    [DataField, AutoNetworkedField]
+    public EntityWhitelist? Blacklist;
+
+    /// <summary>
+    /// If false, the trigger user will be the user that initiated the interaction.
+    /// If true, the trigger user will the entity that was used to interact.
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public bool TargetUsed = false;
 }

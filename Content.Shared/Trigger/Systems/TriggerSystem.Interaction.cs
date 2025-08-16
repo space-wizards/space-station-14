@@ -66,10 +66,10 @@ public sealed partial class TriggerSystem
         if (args.Handled)
             return;
 
-        if (!_whitelist.IsWhitelistPassOrNull(ent.Comp.Whitelist, args.Used))
+        if (!_whitelist.CheckBoth(args.Used, ent.Comp.Blacklist, ent.Comp.Whitelist))
             return;
 
-        Trigger(ent.Owner, args.User, ent.Comp.KeyOut);
+        Trigger(ent.Owner, ent.Comp.TargetUsed ? args.Used : args.User, ent.Comp.KeyOut);
         args.Handled = true;
     }
 
