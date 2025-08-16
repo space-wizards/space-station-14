@@ -124,7 +124,7 @@ public sealed class TileSystem : EntitySystem
         var decals = _decal.GetDecalsInRange(tileref.GridUid, _turf.GetTileCenter(tileref).Position, 0.5f);
         foreach (var (id, _) in decals)
         {
-            _decal.RemoveDecal(tileref.GridUid, id);
+            _decal.RemoveDecal(tileref.GridUid, id, out var _);
         }
 
         _maps.SetTile(grid, component, tileref.GridIndices, new Tile(replacementTile.TileId, 0, variant));
@@ -160,7 +160,7 @@ public sealed class TileSystem : EntitySystem
         var decals = _decal.GetDecalsInRange(gridUid, coordinates.SnapToGrid(EntityManager, _mapManager).Position, 0.5f);
         foreach (var (id, _) in decals)
         {
-            _decal.RemoveDecal(tileRef.GridUid, id);
+            _decal.RemoveDecal(tileRef.GridUid, id, out var _);
         }
 
         var plating = _tileDefinitionManager[tileDef.BaseTurf];

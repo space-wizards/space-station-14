@@ -1,6 +1,6 @@
 using Content.Server.Atmos.Components;
-using Content.Server.Decals;
 using Content.Shared.Atmos;
+using Content.Shared.Decals;
 using Content.Shared.Atmos.Components;
 using Content.Shared.Atmos.Reactions;
 using Content.Shared.Database;
@@ -16,7 +16,7 @@ namespace Content.Server.Atmos.EntitySystems
     {
         private static readonly ProtoId<SoundCollectionPrototype> DefaultHotspotSounds = "AtmosHotspot";
 
-        [Dependency] private readonly DecalSystem _decalSystem = default!;
+        [Dependency] private readonly SharedDecalSystem _decalSystem = default!;
         [Dependency] private readonly IRobustRandom _random = default!;
 
         private const int HotspotSoundCooldownCycles = 200;
@@ -84,7 +84,7 @@ namespace Content.Server.Atmos.EntitySystems
 
                 // Add a random burned decal to the tile only if there are less than 4 of them
                 if (tileBurntDecals < 4)
-                    _decalSystem.TryAddDecal(_burntDecals[_random.Next(_burntDecals.Length)], new EntityCoordinates(gridUid, tilePos), out _, cleanable: true);
+                    _decalSystem.TryAddDecal(new Decal(_burntDecals[_random.Next(_burntDecals.Length)]).WithCleanable(true), new EntityCoordinates(gridUid, tilePos), out _);
 
                 if (tile.Air.Temperature > Atmospherics.FireMinimumTemperatureToSpread)
                 {
