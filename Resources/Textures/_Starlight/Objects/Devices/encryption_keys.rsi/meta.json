@@ -9,6 +9,7 @@
   "states": [
     {"name": "crypt_soviet"},
     {"name": "soviet_label"},
-    {"name": "expedition_label"}
+    {"name": "expedition_label"},
+    {"name": "salvage_label"}
   ]
 }
