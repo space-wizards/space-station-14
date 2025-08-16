@@ -1,3 +1,4 @@
+using System.Linq;
 using Content.Shared.Light.Components;
 using Content.Shared.Light.EntitySystems;
 using Content.Shared.Maps;
@@ -26,7 +27,9 @@ public abstract class SharedWeatherSystem : EntitySystem
     {
         base.Initialize();
         _blockQuery = GetEntityQuery<BlockWeatherComponent>();
+
         SubscribeLocalEvent<WeatherComponent, EntityUnpausedEvent>(OnWeatherUnpaused);
+        SubscribeLocalEvent<WeatherComponent, ComponentShutdown>(OnWeatherRemoved);
     }
 
     private void OnWeatherUnpaused(EntityUid uid, WeatherComponent component, ref EntityUnpausedEvent args)
@@ -138,9 +141,9 @@ public abstract class SharedWeatherSystem : EntitySystem
                     var elapsed = Timing.CurTime - startTime;
 
                     if (elapsed < WeatherComponent.StartupTime)
-                    {
                         SetState(uid, WeatherState.Starting, comp, weather, weatherProto);
-                    }
+                    else
+                        SetState(uid, WeatherState.Running, comp, weather, weatherProto);
                 }
 
                 // Run whatever code we need.
@@ -210,17 +213,20 @@ public abstract class SharedWeatherSystem : EntitySystem
         Dirty(uid, component);
     }
 
-    protected virtual void EndWeather(EntityUid uid, WeatherComponent component, string proto)
+    protected virtual WeatherData? EndWeather(EntityUid uid, WeatherComponent component, ProtoId<WeatherPrototype> proto)
     {
         if (!component.Weather.TryGetValue(proto, out var data))
-            return;
+            return null;
 
-        _audio.Stop(data.Stream);
-        data.Stream = null;
         component.Weather.Remove(proto);
         Dirty(uid, component);
+
+        return data;
     }
 
+    /// <remarks>
+    /// On client, will do nothing and return true if the current tick has already been predicted.
+    /// </remarks>
     protected virtual bool SetState(EntityUid uid, WeatherState state, WeatherComponent component, WeatherData weather, WeatherPrototype weatherProto)
     {
         if (weather.State.Equals(state))
@@ -228,8 +234,11 @@ public abstract class SharedWeatherSystem : EntitySystem
 
         weather.State = state;
         Dirty(uid, component);
+
         return true;
     }
+
+    private void OnWeatherRemoved(Entity<WeatherComponent> weatherEnt, ref ComponentShutdown args) => weatherEnt.Comp.Weather.ToList().ForEach(w => EndWeather(weatherEnt.Owner, weatherEnt.Comp, w.Key));
 
     [Serializable, NetSerializable]
     protected sealed class WeatherComponentState : ComponentState
