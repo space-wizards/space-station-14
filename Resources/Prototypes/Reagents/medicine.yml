@@ -363,14 +363,6 @@
         reagent: Histamine
         amount: 4
       - !type:GenericStatusEffect
-        key: Stun
-        time: 0.75
-        type: Remove
-      - !type:GenericStatusEffect
-        key: KnockedDown
-        time: 0.75
-        type: Remove
-      - !type:GenericStatusEffect
         key: Adrenaline # Guess what epinephrine is...
         component: IgnoreSlowOnDamage
         time: 5 # lingers less than hivemind reagent to give it a niche
