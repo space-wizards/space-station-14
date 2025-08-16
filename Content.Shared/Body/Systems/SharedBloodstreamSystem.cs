@@ -76,7 +76,7 @@ public abstract class SharedBloodstreamSystem : EntitySystem
             var bloodLevel = GetBloodLevel(uid);
 
             // Blood level regulation. Must be alive.
-            if (bloodLevel != 1f && !_mobStateSystem.IsDead(uid))
+            if (!MathHelper.CloseTo(bloodLevel, 1f) && !_mobStateSystem.IsDead(uid))
             {
                 var bloodError = bloodstream.BloodReferenceVolume - bloodstream.BloodReferenceVolume * bloodLevel;
                 var bloodRefreshAmount = bloodstream.BloodRefreshAmount;
