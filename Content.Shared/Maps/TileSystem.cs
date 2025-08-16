@@ -1,9 +1,12 @@
 using System.Linq;
 using System.Numerics;
+using Content.Shared.CCVar;
 using Content.Shared.Coordinates.Helpers;
 using Content.Shared.Decals;
+using Robust.Shared.Configuration;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Utility;
 
@@ -20,6 +23,23 @@ public sealed class TileSystem : EntitySystem
     [Dependency] private readonly SharedDecalSystem _decal = default!;
     [Dependency] private readonly SharedMapSystem _maps = default!;
     [Dependency] private readonly TurfSystem _turf = default!;
+
+    public override void Initialize()
+    {
+        base.Initialize();
+        SubscribeLocalEvent<GridInitializeEvent>(OnGridStartup);
+    }
+
+    /// <summary>
+    /// On grid startup, ensure that we have Tile History.
+    /// </summary>
+    private void OnGridStartup(GridInitializeEvent ev)
+    {
+        if (HasComp<MapComponent>(ev.EntityUid))
+            return;
+
+        EnsureComp<TileHistoryComponent>(ev.EntityUid);
+    }
 
     /// <summary>
     ///     Returns a weighted pick of a tile variant.
@@ -85,7 +105,7 @@ public sealed class TileSystem : EntitySystem
         return PryTile(tileRef);
     }
 
-	public bool PryTile(TileRef tileRef)
+    public bool PryTile(TileRef tileRef)
     {
         return PryTile(tileRef, false);
     }
@@ -97,7 +117,7 @@ public sealed class TileSystem : EntitySystem
         if (tile.IsEmpty)
             return false;
 
-        var tileDef = (ContentTileDefinition) _tileDefinitionManager[tile.TypeId];
+        var tileDef = (ContentTileDefinition)_tileDefinitionManager[tile.TypeId];
 
         if (!tileDef.CanCrowbar)
             return false;
@@ -119,6 +139,24 @@ public sealed class TileSystem : EntitySystem
         if (!Resolve(grid, ref component))
             return false;
 
+        var key = tileref.GridIndices;
+
+        //Get or add the history component on the grid
+        var history = EnsureComp<TileHistoryComponent>(grid);
+
+        //Create stack if needed
+        if (!history.TileHistory.TryGetValue(key, out var stack))
+        {
+            stack = new Stack<ProtoId<ContentTileDefinition>>();
+            history.TileHistory[key] = stack;
+        }
+
+        //Push current tile to the stack, if not empty
+        if (!tileref.Tile.IsEmpty)
+        {
+            var currentTileDef = (ContentTileDefinition)_tileDefinitionManager[tileref.Tile.TypeId];
+            stack.Push(currentTileDef.ID);
+        }
 
         var variant = PickVariant(replacementTile);
         var decals = _decal.GetDecalsInRange(tileref.GridUid, _turf.GetTileCenter(tileref).Position, 0.5f);
@@ -131,13 +169,15 @@ public sealed class TileSystem : EntitySystem
         return true;
     }
 
+
     public bool DeconstructTile(TileRef tileRef)
     {
         if (tileRef.Tile.IsEmpty)
             return false;
 
-        var tileDef = (ContentTileDefinition) _tileDefinitionManager[tileRef.Tile.TypeId];
+        var tileDef = (ContentTileDefinition)_tileDefinitionManager[tileRef.Tile.TypeId];
 
+        //Can't deconstruct anything that doesn't have a base turf.
         if (string.IsNullOrEmpty(tileDef.BaseTurf))
             return false;
 
@@ -152,19 +192,40 @@ public sealed class TileSystem : EntitySystem
                 (_robustRandom.NextFloat() - 0.5f) * bounds,
                 (_robustRandom.NextFloat() - 0.5f) * bounds));
 
+        var historyComp = EnsureComp<TileHistoryComponent>(gridUid);
+        ProtoId<ContentTileDefinition> previousTileId;
+
+        //Pop from stack if we have history
+        if (historyComp.TileHistory.TryGetValue(indices, out var stack) && stack.Count > 0)
+        {
+            previousTileId = stack.Pop();
+
+            //Clean up empty stacks to avoid memory buildup
+            if (stack.Count == 0)
+            {
+                historyComp.TileHistory.Remove(indices);
+            }
+        }
+        else
+        {
+            //No stack? Assume BaseTurf[0] was the layer below
+            previousTileId = tileDef.BaseTurf;
+        }
+
         //Actually spawn the relevant tile item at the right position and give it some random offset.
         var tileItem = Spawn(tileDef.ItemDropPrototypeName, coordinates);
         Transform(tileItem).LocalRotation = _robustRandom.NextDouble() * Math.Tau;
 
-        // Destroy any decals on the tile
+        //Destroy any decals on the tile
         var decals = _decal.GetDecalsInRange(gridUid, coordinates.SnapToGrid(EntityManager, _mapManager).Position, 0.5f);
         foreach (var (id, _) in decals)
         {
             _decal.RemoveDecal(tileRef.GridUid, id);
         }
 
-        var plating = _tileDefinitionManager[tileDef.BaseTurf];
-        _maps.SetTile(gridUid, mapGrid, tileRef.GridIndices, new Tile(plating.TileId));
+        //Replace tile with the one it was placed on
+        var previousDef = (ContentTileDefinition)_tileDefinitionManager[previousTileId];
+        _maps.SetTile(gridUid, mapGrid, indices, new Tile(previousDef.TileId));
 
         return true;
     }

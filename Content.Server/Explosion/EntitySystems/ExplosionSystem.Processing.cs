@@ -18,6 +18,7 @@ using Robust.Shared.Physics;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Dynamics;
 using Robust.Shared.Player;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
@@ -28,6 +29,7 @@ namespace Content.Server.Explosion.EntitySystems;
 public sealed partial class ExplosionSystem
 {
     [Dependency] private readonly FlammableSystem _flammableSystem = default!;
+    [Dependency] private readonly IEntityManager _entityManager = default!;
 
     /// <summary>
     ///     Used to limit explosion processing time. See <see cref="MaxProcessingTime"/>.
@@ -518,18 +520,43 @@ public sealed partial class ExplosionSystem
         else if (tileDef.MapAtmosphere)
             canCreateVacuum = true; // is already a vacuum.
 
+        var gridUid = tileRef.GridUid;
+        var indices = tileRef.GridIndices;
+
+        Stack<ProtoId<ContentTileDefinition>>? tileHistory = null;
+        if (_entityManager.TryGetComponent<TileHistoryComponent>(gridUid, out var historyComp))
+        {
+            historyComp.TileHistory.TryGetValue(indices, out tileHistory);
+        }
+
         int tileBreakages = 0;
         while (maxTileBreak > tileBreakages && _robustRandom.Prob(type.TileBreakChance(effectiveIntensity)))
         {
             tileBreakages++;
             effectiveIntensity -= type.TileBreakRerollReduction;
 
-            // does this have a base-turf that we can break it down to?
-            if (string.IsNullOrEmpty(tileDef.BaseTurf))
+            ProtoId < ContentTileDefinition >? nextTileId = null;
+
+            if (tileHistory != null && tileHistory.Count > 0)
+            {
+                nextTileId = tileHistory.Pop();
+
+                if (tileHistory.Count == 0)
+                    historyComp?.TileHistory.Remove(indices);
+            }
+            else
+            {
+                nextTileId = tileDef.BaseTurf;
+            }
+
+            if (string.IsNullOrEmpty(nextTileId))
                 break;
 
-            if (_tileDefinitionManager[tileDef.BaseTurf] is not ContentTileDefinition newDef)
+            if (!_tileDefinitionManager.TryGetDefinition(nextTileId, out var baseTurfDef)
+                || baseTurfDef is not ContentTileDefinition newDef)
+            {
                 break;
+            }
 
             if (newDef.MapAtmosphere && !canCreateVacuum)
                 break;
