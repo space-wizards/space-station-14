@@ -74,6 +74,12 @@
       "name": "doctor"
     },
     {
+      "name": "ertchaplain"
+    },
+    {
+      "name": "ertchaplaineva"
+    },
+    {
       "name": "ertengineer"
     },
     {
@@ -170,7 +176,7 @@
       "name": "scientist"
     },
     {
-      "name": "security_cadet" 
+      "name": "security_cadet"
     },
     {
       "name": "security_officer"
