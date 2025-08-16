@@ -6,7 +6,7 @@ namespace Content.Shared.Trigger.Components.Triggers;
 
 /// <summary>
 /// Triggers when an entity is used to interact with another entity (<see cref="InteractUsingEvent"/>).
-/// User is the player initiating the interaction.
+/// The user is the player initiating the interaction or the item used, depending on the TargetUsed datafield.
 /// </summary>
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
 public sealed partial class TriggerOnInteractUsingComponent : BaseTriggerOnXComponent
