@@ -162,6 +162,8 @@ namespace Content.Client.Stylesheets
         public const string StyleClassPinButtonPinned = "pinButtonPinned";
         public const string StyleClassPinButtonUnpinned = "pinButtonUnpinned";
 
+        // MIDI
+        public const string StyleClassMidi = "MidiChannels";
 
         public override Stylesheet Stylesheet { get; }
 
@@ -187,6 +189,7 @@ namespace Content.Client.Stylesheets
             var robotoMonoBold11 = resCache.GetFont("/Fonts/RobotoMono/RobotoMono-Bold.ttf", size: 11);
             var robotoMonoBold12 = resCache.GetFont("/Fonts/RobotoMono/RobotoMono-Bold.ttf", size: 12);
             var robotoMonoBold14 = resCache.GetFont("/Fonts/RobotoMono/RobotoMono-Bold.ttf", size: 14);
+            var matrixSansRegular = resCache.GetFont("/Fonts/MatrixSans/MatrixSansPrint-Regular.ttf", size: 12);
 
             var windowHeaderTex = resCache.GetTexture("/Textures/Interface/Nano/window_header.png");
             var windowHeader = new StyleBoxTexture
@@ -1829,6 +1832,21 @@ namespace Content.Client.Stylesheets
                 Element<PanelContainer>()
                     .Class(StyleClassInset)
                     .Prop(PanelContainer.StylePropertyPanel, insetBack),
+
+                // MIDI
+                new StyleRule(new SelectorElement(typeof(ItemList), new[] {StyleClassMidi}, null, null), new[]
+                {
+                    new StyleProperty("font", matrixSansRegular),
+                    new StyleProperty("font-color", Color.GreenYellow),
+                    new StyleProperty(ItemList.StylePropertyBackground,
+                        new StyleBoxFlat {BackgroundColor = Color.DarkGreen}),
+                    new StyleProperty(ItemList.StylePropertyItemBackground,
+                        new StyleBoxFlat {BackgroundColor = Color.DarkGreen}),
+                    new StyleProperty(ItemList.StylePropertyDisabledItemBackground,
+                        itemListItemBackgroundDisabled),
+                    new StyleProperty(ItemList.StylePropertySelectedItemBackground,
+                        new StyleBoxFlat { BackgroundColor = Color.Green}),
+                }),
             }).ToList());
         }
     }

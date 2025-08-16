@@ -45,3 +45,7 @@
 - type: font
   id: Emoji
   path: /Fonts/NotoEmoji.ttf
+
+- type: font
+  id: MatrixSansPrint
+  path: /Fonts/MatrixSans/MatrixSansPrint-Regular.ttf
