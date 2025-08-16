@@ -1,13 +1,12 @@
-using Content.Server.Store.Components;
 using Content.Shared.Actions.Events;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Store.Components;
 using Content.Shared.Weapons.Ranged.Systems;
 using Robust.Shared.Containers;
 
-namespace Content.Server.Store.Systems;
+namespace Content.Shared.Store.Systems;
 
-public sealed partial class StoreSystem
+public abstract partial class SharedStoreSystem
 {
     private void InitializeRefund()
     {

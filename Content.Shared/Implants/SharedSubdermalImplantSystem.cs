@@ -4,6 +4,9 @@ using Content.Shared.Implants.Components;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Mobs;
+using Content.Shared.Popups;
+using Content.Shared.Store.Components;
+using Content.Shared.Store.Systems;
 using Content.Shared.Tag;
 using JetBrains.Annotations;
 using Robust.Shared.Containers;
@@ -17,6 +20,8 @@ public abstract class SharedSubdermalImplantSystem : EntitySystem
     [Dependency] private readonly SharedContainerSystem _container = default!;
     [Dependency] private readonly TagSystem _tag = default!;
     [Dependency] private readonly SharedTransformSystem _transformSystem = default!;
+    [Dependency] private readonly SharedStoreSystem _store = default!;
+    [Dependency] private readonly SharedPopupSystem _popup = default!;
 
     public const string BaseStorageId = "storagebase";
 
@@ -32,6 +37,8 @@ public abstract class SharedSubdermalImplantSystem : EntitySystem
         SubscribeLocalEvent<ImplantedComponent, MobStateChangedEvent>(RelayToImplantEvent);
         SubscribeLocalEvent<ImplantedComponent, AfterInteractUsingEvent>(RelayToImplantEvent);
         SubscribeLocalEvent<ImplantedComponent, SuicideEvent>(RelayToImplantEvent);
+
+        SubscribeLocalEvent<StoreComponent, ImplantRelayEvent<AfterInteractUsingEvent>>(OnStoreRelay);
     }
 
     private void OnInsert(EntityUid uid, SubdermalImplantComponent component, EntGotInsertedIntoContainerMessage args)
@@ -85,6 +92,29 @@ public abstract class SharedSubdermalImplantSystem : EntitySystem
         {
             _transformSystem.DropNextTo(entity, uid);
         }
+    }
+
+    private void OnStoreRelay(EntityUid uid, StoreComponent store, ImplantRelayEvent<AfterInteractUsingEvent> implantRelay)
+    {
+        var args = implantRelay.Event;
+
+        if (args.Handled)
+            return;
+
+        // can only insert into yourself to prevent uplink checking with renault
+        if (args.Target != args.User)
+            return;
+
+        if (!TryComp<CurrencyComponent>(args.Used, out var currency))
+            return;
+
+        // same as store code, but message is only shown to yourself
+        if (!_store.TryAddCurrency((args.Used, currency), (uid, store)))
+            return;
+
+        args.Handled = true;
+        var msg = Loc.GetString("store-currency-inserted-implant", ("used", args.Used));
+        _popup.PopupEntity(msg, args.User, args.User);
     }
 
     /// <summary>

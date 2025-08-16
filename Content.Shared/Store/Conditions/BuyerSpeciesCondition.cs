@@ -4,7 +4,7 @@ using Content.Shared.Humanoid.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.Set;
 using Content.Shared.Mind;
 
-namespace Content.Server.Store.Conditions;
+namespace Content.Shared.Store.Conditions;
 
 /// <summary>
 /// Allows a store entry to be filtered out based on the user's species.

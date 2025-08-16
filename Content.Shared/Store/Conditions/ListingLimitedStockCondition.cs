@@ -1,6 +1,6 @@
 using Content.Shared.Store;
 
-namespace Content.Server.Store.Conditions;
+namespace Content.Shared.Store.Conditions;
 
 /// <summary>
 /// Only allows a listing to be purchased a certain amount of times.
