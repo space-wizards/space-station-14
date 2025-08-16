@@ -17,6 +17,7 @@
 - type: speciesBaseSprites
   id: MobVoxSprites
   sprites:
+    Special: MobHumanoidAnyMarking
     Head: MobVoxHead
     Snout: MobHumanoidAnyMarking
     Hair: MobHumanoidAnyMarking
@@ -24,6 +25,8 @@
     UndergarmentTop: MobHumanoidAnyMarking
     UndergarmentBottom: MobHumanoidAnyMarking
     Chest: MobVoxTorso
+    HeadTop: MobHumanoidAnyMarking
+    HeadSide: MobHumanoidAnyMarking
     Eyes: MobVoxEyes
     LArm: MobVoxLArm
     RArm: MobVoxRArm
