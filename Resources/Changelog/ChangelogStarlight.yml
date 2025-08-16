@@ -11925,5 +11925,12 @@ Entries:
   id: 116900
   time: '2025-08-16T08:57:58.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/1169
+- author: FoxxoTrystan
+  changes:
+  - message: You can now offer items in your hands to others.
+    type: Add
+  id: 108600
+  time: '2025-08-16T08:59:45.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1086
 Order: -1
 
