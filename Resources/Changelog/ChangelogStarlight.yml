@@ -11688,5 +11688,26 @@ Entries:
   id: 133101
   time: '2025-08-16T06:57:16.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/1331
+- author: CrazyPhantom
+  changes:
+  - message: Added 2h Bartender Playtime Requirement for PunPun
+    type: Add
+  id: 134000
+  time: '2025-08-16T06:59:46.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1340
+- author: CrazyPhantom
+  changes:
+  - message: Removed Engineering Playtime Requirement for Derelict Cyborg
+    type: Remove
+  id: 134001
+  time: '2025-08-16T06:59:46.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1340
+- author: CrazyPhantom
+  changes:
+  - message: Added Same Playtime Requirement for Derelict Cyborg to Derelict Borgi
+    type: Add
+  id: 134002
+  time: '2025-08-16T06:59:46.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1340
 Order: -1
 
