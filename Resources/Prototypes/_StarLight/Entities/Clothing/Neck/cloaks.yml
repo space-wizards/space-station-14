@@ -257,6 +257,18 @@
     size: Huge
   - type: StaticPrice
     price: 5000
+    
+# Salvage Lead
+- type: entity
+  parent: [ ClothingNeckBase, BaseSalvageContraband ]
+  id: ClothingNeckMantleDecoratedSalvager
+  name: ceremonial salvage mantle
+  description: A ceremonial purple mantle worn by salvagers that have distinguished themselves.
+  components:
+    - type: Sprite
+      sprite: _Starlight/Clothing/Neck/Mantles/salvagemantle.rsi
+    - type: Clothing
+      sprite: _Starlight/Clothing/Neck/Mantles/salvagemantle.rsi
 
 ## Cool
 
