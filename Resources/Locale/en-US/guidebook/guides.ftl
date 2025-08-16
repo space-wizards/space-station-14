@@ -69,6 +69,7 @@ guide-entry-medical = Medical
 guide-entry-medicaldoctor = Medical Doctor
 guide-entry-chemist = Chemist
 guide-entry-brute = Advanced Brute Medication
+guide-entry-plastic = Plastic Sheet Production
 guide-entry-botanicals = Botanicals
 guide-entry-cloning = Cloning
 guide-entry-cryogenics = Cryogenics
