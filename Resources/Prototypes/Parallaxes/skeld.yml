@@ -1,0 +1,35 @@
+- type: parallax
+  id: SkeldStation
+  layers:
+    - texture:
+        !type:GeneratedParallaxTextureSource
+        id: "hq_wizard_stars"
+        configPath: "/Prototypes/Parallaxes/parallax_config_stars.toml"
+      slowness: 0.996625
+      scrolling: "-0.196625, 0"
+    - texture:
+        !type:GeneratedParallaxTextureSource
+        id: "hq_wizard_stars_dim"
+        configPath: "/Prototypes/Parallaxes/parallax_config_stars_dim.toml"
+      slowness: 0.989375
+      scrolling: "-0.209375, 0"
+    - texture:
+        !type:GeneratedParallaxTextureSource
+        id: "hq_wizard_stars_faster"
+        configPath: "/Prototypes/Parallaxes/parallax_config_stars-2.toml"
+      slowness: 0.987265625
+      scrolling: "-0.287265625, 0"
+    - texture:
+        !type:GeneratedParallaxTextureSource
+        id: "hq_wizard_stars_dim_faster"
+        configPath: "/Prototypes/Parallaxes/parallax_config_stars_dim-2.toml"
+      slowness: 0.984352
+      scrolling: "-0.384352, 0"
+  layersLQ:
+    - texture:
+        !type:GeneratedParallaxTextureSource
+        id: ""
+        configPath: "/Prototypes/Parallaxes/parallax_config.toml"
+        slowness: 0.875
+      scrolling: "-0.475, 0"
+  layersLQUseHQ: false
