@@ -249,5 +249,24 @@
   materials:
     Biomass: 18
 
+- type: latheRecipe
+  id: BioGenDiseaseSwab
+  result: DiseaseSwab
+  categories:
+  - Materials
+  completetime: 3
+  materials:
+    Biomass: 2
 
-
+- type: latheRecipe
+  id: BioGenUnstableMutagen
+  resultReagents:
+    UnstableMutagen: 10
+  categories:
+  - Chemicals
+  icon:
+    sprite: Objects/Specific/Chemistry/bottle.rsi
+    state: bottle-1
+  completetime: 5
+  materials:
+    Biomass: 20
