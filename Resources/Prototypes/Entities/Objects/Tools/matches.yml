@@ -107,6 +107,7 @@
   - type: Tag
     tags:
     - Trash
+    - Lighters #SL
   - type: SpaceGarbage
 
 - type: entity

@@ -39,6 +39,7 @@ using Robust.Shared.Random;
 using Robust.Shared.Serialization;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
+using Content.Shared.VentCraw;
 
 namespace Content.Shared.Weapons.Ranged.Systems;
 
@@ -143,6 +144,10 @@ public abstract partial class SharedGunSystem : EntitySystem
             return;
 
         if (ent != GetEntity(msg.Gun))
+            return;
+
+        if (TryComp(user, out VentCrawlerComponent? crawlerComp) //🌟Starlight🌟
+            && crawlerComp.InTube == true)
             return;
 
         gun.ShootCoordinates = GetCoordinates(msg.Coordinates);
