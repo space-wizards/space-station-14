@@ -546,7 +546,7 @@ public sealed partial class ClimbSystem : VirtualController
 
     private void OnStored(EntityUid uid, ClimbingComponent component, ref EntGotInsertedIntoContainerMessage args)
     {
-        StopOrCancelClimb(uid, component);
+        StopClimb(uid, component);
     }
 
     private void StopOrCancelClimb(EntityUid uid, ClimbingComponent component)
