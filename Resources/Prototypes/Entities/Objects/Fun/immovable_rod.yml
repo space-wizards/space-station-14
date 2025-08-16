@@ -1,7 +1,7 @@
 - type: entity
   id: ImmovableRod
   name: immovable rod
-  description: You can sense that it's hungry. That's usually a bad sign.
+  description: You can sense that it's hungry.
   components:
   - type: Clickable
   - type: InteractionOutline
@@ -11,9 +11,14 @@
     state: icon
     noRot: false
   - type: ImmovableRod
+    damage:
+      types:
+        Piercing: 85 # CLANG
+        Structural: 1000 # C L A N G
   - type: Physics
     bodyType: Dynamic
     linearDamping: 0
+    bodyStatus: InAir
   - type: TileFrictionModifier
     modifier: 0
   - type: PointLight
@@ -29,6 +34,9 @@
         density: 1
         hard: false
         layer:
+        - Impassable
+        - Opaque
+        mask:
         - Impassable
         - Opaque
   - type: WarpPoint
@@ -55,29 +63,19 @@
     minSpeed: 1
     maxSpeed: 5
 
-- type: entity
-  parent: ImmovableRodDespawn
-  id: ImmovableRodKeepTiles
-  suffix: Keep Tiles
-  components:
-  - type: ImmovableRod
-    destroyTiles: false
-    hitSoundProbability: 1.0
-
 # For Wizard Polymorph
 - type: entity
-  parent: ImmovableRod
+  parent: ImmovableRodDespawn
   id: ImmovableRodWizard
   suffix: Wizard
   components:
-  - type: ImmovableRod
-    maxSpeed: 25
-    destroyTiles: false
+  - type: ImmovableRod # Deliberately significantly weaker than the non-spell counterpart.
+    maxSpeed: 20 # Because the Wizard's camera follows the rod, it needs slowing down a lot.
     randomizeVelocity: false
-    shouldGib: false
     damage:
       types:
-        Blunt: 190
+        Piercing: 50 # OH GOD, MY INSIDES!
+        Structural: 1000 # OH GOD, MY CAR!
   - type: MovementIgnoreGravity
     gravityState: true
   - type: InputMover
@@ -92,16 +90,18 @@
   - type: NoSlip
 
 - type: entity
-  parent: ImmovableRodKeepTiles
-  id: ImmovableRodKeepTilesStill
-  suffix: Keep Tiles, Still
+  parent: ImmovableRodDespawn
+  id: ImmovableRodStill
+  name: immobile Rod
+  suffix: still
+  description: Shh, it's sleeping.
   components:
   - type: ImmovableRod
     randomizeVelocity: false
     maxSpeed: 0
 
 - type: entity
-  parent: ImmovableRodKeepTilesStill
+  parent: ImmovableRodDespawn
   id: ImmovableRodMop
   name: immovable mop
   description: Hurled like a javelin, with the power of a thousand furious janitors.
@@ -113,7 +113,7 @@
     noRot: false
 
 - type: entity
-  parent: ImmovableRodKeepTilesStill
+  parent: ImmovableRodDespawn
   id: ImmovableRodShark
   name: immovable shark
   description: SHARK TORNADO!
@@ -125,7 +125,7 @@
     noRot: false
 
 - type: entity
-  parent: ImmovableRodKeepTilesStill
+  parent: ImmovableRodDespawn
   id: ImmovableRodClown
   name: immovable clown
   description: Ejected from the neighbouring station one solar system over. HONK!
@@ -137,7 +137,7 @@
     noRot: false
 
 - type: entity
-  parent: ImmovableRodKeepTilesStill
+  parent: ImmovableRodDespawn
   id: ImmovableRodBanana
   name: immovable banana
   description: At least you won't slip on it.
@@ -148,7 +148,7 @@
     noRot: false
 
 - type: entity
-  parent: ImmovableRodKeepTilesStill
+  parent: ImmovableRodDespawn
   id: ImmovableRodHammer
   name: immovable hammer
   description: Bwoink.
@@ -160,7 +160,7 @@
     noRot: false
 
 - type: entity
-  parent: ImmovableRodKeepTilesStill
+  parent: ImmovableRodDespawn
   id: ImmovableRodThrongler
   name: immovable throngler
   description: If you catch it, you can keep it.
@@ -172,7 +172,7 @@
     noRot: false
 
 - type: entity
-  parent: ImmovableRodKeepTilesStill
+  parent: ImmovableRodDespawn
   id: ImmovableRodGibstick
   name: immovable gibstick
   description: What did you expect?
@@ -184,7 +184,7 @@
     noRot: false
 
 - type: entity
-  parent: ImmovableRodKeepTilesStill
+  parent: ImmovableRodDespawn
   id: ImmovableRodWeh
   name: immovable weh
   description: WEH!
@@ -193,3 +193,40 @@
     sprite: Objects/Fun/Plushies/lizard.rsi
     state: icon
     noRot: false
+
+- type: entity
+  parent: ImmovableRodDespawn
+  id: ImmovableRodSus
+  name: immovable among pequeño
+  description: They were not the impostor.
+  components:
+  - type: Sprite
+    sprite: Objects/Fun/pequeno.rsi
+    layers:
+    - state: base
+      map: [ "enum.DamageStateVisualLayers.Base" ]
+    - state: visor
+
+- type: entity
+  parent: ImmovableRodDespawn
+  id: ImmovableRodSpearOfGourmand
+  name: immovable spear
+  description: Legends say this was thrown into orbit by the biggest chungus on Planet Wawa, shortly before a long nap.
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Melee/spear.rsi
+    layers:
+    - state: spear
+    - state: spear1
+      map: ["enum.SolutionContainerLayers.Fill"]
+      visible: false
+
+- type: entity
+  parent: ImmovableRodDespawn
+  id: ImmovableRodToolbox
+  name: the robustest toolbox
+  description: Garbage collection!!
+  components:
+  - type: Sprite
+    sprite: Objects/Tools/Toolboxes/toolbox_blue.rsi
+    state: icon
