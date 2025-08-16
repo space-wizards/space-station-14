@@ -14,6 +14,7 @@
   id: BaseDoAfterAction
   components:
   - type: DoAfter
+  - type: DoAfterArgs
 
 # an action that is done all in le head and cant be prevented by any means
 - type: entity
