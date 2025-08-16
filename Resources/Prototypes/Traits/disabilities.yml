@@ -83,3 +83,12 @@
   category: Disabilities
   components:
   - type: PainNumbness
+
+- type: trait
+  id: ImpairedMobility
+  name: trait-impaired-mobility-name
+  description: trait-impaired-mobility-desc
+  traitGear: OffsetCane
+  category: Disabilities
+  components:
+    - type: ImpairedMobility
