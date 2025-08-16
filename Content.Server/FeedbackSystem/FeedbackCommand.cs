@@ -1,4 +1,3 @@
-using System.Linq;
 using Content.Server.Administration;
 using Content.Shared.Administration;
 using Content.Shared.FeedbackSystem;
@@ -61,7 +60,7 @@ public sealed class FeedbackPopupCommand : LocalizedEntityCommands
 
         if (args.Length == 2)
         {
-            return CompletionResult.FromHintOptions(_feedback.FeedbackPopupProtoIds.Select(x => (string) x), Loc.GetString("feedbackpopup-command-hint-protoId"));
+            return CompletionResult.FromHintOptions(_feedback.FeedbackPopupProtoIds, Loc.GetString("feedbackpopup-command-hint-protoId"));
         }
         return CompletionResult.Empty;
     }

@@ -8,7 +8,7 @@ public sealed partial class SharedFeedbackSystem : EntitySystem
 {
     [Dependency] private readonly ISharedPlayerManager _player = default!;
 
-    public List<ProtoId<FeedbackPopupPrototype>> FeedbackPopupProtoIds = new();
+    public List<string> FeedbackPopupProtoIds = new();
 
     public override void Initialize()
     {
@@ -24,6 +24,7 @@ public sealed partial class SharedFeedbackSystem : EntitySystem
     {
         if (!args.WasModified<FeedbackPopupPrototype>())
             return;
+
         LoadPrototypes();
     }
 
@@ -33,7 +34,7 @@ public sealed partial class SharedFeedbackSystem : EntitySystem
     private void LoadPrototypes()
     {
         FeedbackPopupProtoIds = _proto.EnumeratePrototypes<FeedbackPopupPrototype>()
-            .Select(x => (ProtoId<FeedbackPopupPrototype>) x.ID)
+            .Select(x => x.ID)
             .ToList();
         FeedbackPopupProtoIds.Sort();
     }
