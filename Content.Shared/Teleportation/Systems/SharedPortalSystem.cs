@@ -110,7 +110,7 @@ public abstract class SharedPortalSystem : EntitySystem
             return;
         }
 
-        if (TryComp<LinkedEntityComponent>(uid, out var link))
+        if (TryComp<LinkedEntityComponent>(uid, out var link) && link.LinkedEntities.Any())
         {
             if (link.LinkedEntities.Count == 0)
                 return;
