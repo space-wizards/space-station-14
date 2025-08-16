@@ -587,15 +587,15 @@ namespace Content.Server.VendingMachines
                 Popup.PopupEntity($"Debited {entry.Price}\u20a1. Balance: {playerData.Balance}\u20a1", uid, sender);
                 SendBalanceUpdate(uid, sender, playerData.Balance);
 
-                // var stationUid = _stationSystem.GetOwningStation(uid);
-                // if (stationUid != null && TryComp<StationBankAccountComponent>(stationUid, out var bank))
-                // {
-                //     var creditLong = (long) entry.Price * 10L; // idk really, it just works
-                //     var toCredit = creditLong > int.MaxValue ? int.MaxValue: creditLong < int.MinValue ? int.MinValue : (int) creditLong;
+                var stationUid = _stationSystem.GetOwningStation(uid);
+                if (stationUid != null && TryComp<StationBankAccountComponent>(stationUid, out var bank))
+                {
+                    var creditLong = (long) entry.Price * 10L; // idk really, it just works
+                    var toCredit = creditLong > int.MaxValue ? int.MaxValue: creditLong < int.MinValue ? int.MinValue : (int) creditLong;
 
-                //     if (toCredit > 0)
-                //         _cargoSystem.UpdateBankAccount((stationUid.Value, bank), toCredit, bank.PrimaryAccount);
-                // }
+                    if (toCredit > 0)
+                        _cargoSystem.UpdateBankAccount((stationUid.Value, bank), toCredit, bank.PrimaryAccount);
+                }
             }
         }
 
