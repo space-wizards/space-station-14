@@ -1467,7 +1467,7 @@
       - MedTekCartridge
 
 - type: entity
-  parent: [BasePDA, VoiceLock]
+  parent: [BasePDA, SelectableLock]
   id: ChameleonPDA
   name: passenger PDA
   description: Why isn't it gray?
