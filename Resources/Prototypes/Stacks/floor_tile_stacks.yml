@@ -694,3 +694,23 @@
   name: stack-uranium-marble-floor
   spawn: FloorTileItemUraniumMarble
   maxCount: 30
+
+# Game carpet boards
+- type: stack
+  id: FloorCarpetBoardWhite
+  name: stack-board-white-tile
+  spawn: FloorCarpetItemBoardWhite
+  maxCount: 32
+
+- type: stack
+  id: FloorCarpetBoardBlack
+  name: stack-board-black-tile
+  spawn: FloorCarpetItemBoardBlack
+  maxCount: 32
+
+- type: stack
+  id: FloorCarpetBoardChecker
+  name: stack-board-checker-tile
+  spawn: FloorCarpetItemBoardChecker
+  maxCount: 30
+ 
