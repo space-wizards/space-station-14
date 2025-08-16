@@ -11,10 +11,12 @@ namespace Content.Shared.Disposal.Components
         public sealed class DisposalRouterUserInterfaceState : BoundUserInterfaceState
         {
             public readonly string Tags;
+            public readonly bool BackwardsAllowed;
 
-            public DisposalRouterUserInterfaceState(string tags)
+            public DisposalRouterUserInterfaceState(string tags, bool backwardsAllowed = false)
             {
                 Tags = tags;
+                BackwardsAllowed = backwardsAllowed;
             }
         }
 
@@ -23,14 +25,16 @@ namespace Content.Shared.Disposal.Components
         {
             public readonly UiAction Action;
             public readonly string Tags = "";
+            public readonly bool BackwardsAllowed;
 
-            public UiActionMessage(UiAction action, string tags)
+            public UiActionMessage(UiAction action, string tags, bool backwardsAllowed = false)
             {
                 Action = action;
 
                 if (Action == UiAction.Ok)
                 {
                     Tags = tags.Substring(0, Math.Min(tags.Length, 150));
+                    BackwardsAllowed = backwardsAllowed;
                 }
             }
         }
