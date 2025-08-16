@@ -11747,5 +11747,12 @@ Entries:
   id: 113402
   time: '2025-08-16T07:10:32.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/1134
+- author: Scarlet Lightweaver
+  changes:
+  - message: A new foe has apeared in the ghost theme tab!
+    type: Add
+  id: 130300
+  time: '2025-08-16T07:13:58.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1303
 Order: -1
 
