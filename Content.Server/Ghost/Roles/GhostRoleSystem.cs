@@ -1,6 +1,9 @@
 using System.Linq;
 using Content.Server.Administration.Logs;
+using Content.Server.Administration.Managers;
+using Content.Server.Antag.Components;
 using Content.Server.EUI;
+using Content.Server.GameTicking.Events;
 using Content.Server.Ghost.Roles.Components;
 using Content.Server.Ghost.Roles.Events;
 using Content.Shared.Ghost.Roles.Raffles;
@@ -38,6 +41,7 @@ namespace Content.Server.Ghost.Roles;
 [UsedImplicitly]
 public sealed class GhostRoleSystem : EntitySystem
 {
+    [Dependency] private readonly IBanManager _ban = default!;
     [Dependency] private readonly IConfigurationManager _cfg = default!;
     [Dependency] private readonly EuiManager _euiManager = default!;
     [Dependency] private readonly IPlayerManager _playerManager = default!;
@@ -459,6 +463,23 @@ public sealed class GhostRoleSystem : EntitySystem
         if (!_ghostRoles.TryGetValue(identifier, out var roleEnt))
             return;
 
+        TryPrototypes(roleEnt, out var antags, out var jobs);
+
+        // Check role bans
+        if (_ban.IsRoleBanned(player, antags) || _ban.IsRoleBanned(player, jobs))
+        {
+            Log.Warning($"Server rejected ghost role request '{roleEnt.Comp.RoleName}' for '{player.Name}' - client missed ban?");
+            return;
+        }
+
+        // Check role requirements
+        if (!IsRoleAllowed(player, jobs, antags))
+        {
+            Log.Warning($"Server rejected ghost role request '{roleEnt.Comp.RoleName}' for '{player.Name}' - client missed requirement check?");
+            return;
+        }
+
+        // Decide to do a raffle or not
         if (roleEnt.Comp.RaffleConfig is not null)
         {
             JoinRaffle(player, identifier);
@@ -467,6 +488,101 @@ public sealed class GhostRoleSystem : EntitySystem
         {
             Takeover(player, identifier);
         }
+    }
+
+    /// <summary>
+    /// Collect all role prototypes on the Ghostrole.
+    /// </summary>
+    /// <returns>
+    /// Returns true if at least on role prototype could be found.
+    /// </returns>
+    private bool TryPrototypes(
+        Entity<GhostRoleComponent> roleEnt,
+        out List<ProtoId<AntagPrototype>> antags,
+        out List<ProtoId<JobPrototype>> jobs)
+    {
+        antags = [];
+        jobs = [];
+
+        // If there is a mind already, check its mind roles.
+        // Not sure if this can ever actually happen.
+        if (TryComp<MindContainerComponent>(roleEnt, out var mindCont)
+            && TryComp<MindComponent>(mindCont.Mind, out var mind))
+        {
+            foreach (var role in mind.MindRoles)
+            {
+                if(!TryComp<MindRoleComponent>(role, out var comp))
+                    continue;
+
+                if (comp.JobPrototype is not null)
+                    jobs.Add(comp.JobPrototype.Value);
+
+                else if (comp.AntagPrototype is not null)
+                    antags.Add(comp.AntagPrototype.Value);
+            }
+
+            return antags.Count > 0 || jobs.Count > 0;
+        }
+
+        if (roleEnt.Comp.JobProto is not null)
+            jobs.Add(roleEnt.Comp.JobProto.Value);
+
+
+        // If there is no mind, check the mindRole prototypes
+        foreach (var proto in roleEnt.Comp.MindRoles)
+        {
+            if (!_prototype.TryIndex(proto, out var indexed)
+                || !indexed.Components.TryGetComponent("MindRole", out var comp))
+                continue;
+            var roleComp = (MindRoleComponent)comp;
+
+            if (roleComp.JobPrototype is not null)
+                jobs.Add(roleComp.JobPrototype.Value);
+            else if (roleComp.AntagPrototype is not null)
+                antags.Add(roleComp.AntagPrototype.Value);
+            else
+                Log.Debug($"Mind role '{proto}' of '{roleEnt.Comp.RoleName}' has neither a job or antag prototype specified");
+        }
+
+        return antags.Count > 0 || jobs.Count > 0;
+    }
+
+    /// <summary>
+    /// Collect all role prototypes on the Ghostrole
+    /// </summary>
+    // [Obsolete("Phase out string-typed roles, use the typed lists provided by TryPrototypes()")]
+    // private List<string> GetPrototypes(Entity<GhostRoleComponent> roleEnt)
+    // {
+    //     TryPrototypes(roleEnt, out var antags, out var jobs);
+    //
+    //     var list = new List<string>();
+    //
+    //     foreach (var i in antags)
+    //     {
+    //         list.Add(i.ToString());
+    //     }
+    //
+    //     foreach (var i in jobs)
+    //     {
+    //         list.Add(i.ToString());
+    //     }
+    //
+    //     return list;
+    // }
+
+    /// <summary>
+    /// Checks if the player passes the requirements for the supplied roles.
+    /// Returns false if any role fails the check.
+    /// </summary>
+    private bool IsRoleAllowed(
+        ICommonSession player,
+        List<ProtoId<JobPrototype>>? jobIds,
+        List<ProtoId<AntagPrototype>>? antagIds)
+    {
+        var ev = new IsRoleAllowedEvent(player, jobIds, antagIds);
+        RaiseLocalEvent(ref ev);
+
+        return !ev.Cancelled;
     }
 
     /// <summary>
@@ -571,13 +687,15 @@ public sealed class GhostRoleSystem : EntitySystem
                 ? _timing.CurTime.Add(raffle.Countdown)
                 : TimeSpan.MinValue;
 
+            TryPrototypes((uid, role), out var antags, out var jobs);
+
             roles.Add(new GhostRoleInfo
             {
                 Identifier = id,
                 Name = role.RoleName,
                 Description = role.RoleDescription,
                 Rules = role.RoleRules,
-                Requirements = role.Requirements,
+                RolePrototypes = (jobs, antags),
                 Kind = kind,
                 RafflePlayerCount = rafflePlayerCount,
                 RaffleEndTime = raffleEndTime
