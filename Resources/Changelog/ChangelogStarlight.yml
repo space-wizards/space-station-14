@@ -11917,5 +11917,13 @@ Entries:
   id: 134101
   time: '2025-08-16T08:25:48.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/1341
+- author: stickycheZ101
+  changes:
+  - message: made the QM's luxury maxim hardsuit not blindingly bright when the helmet
+      is equipped (it's now toggleable)
+    type: Tweak
+  id: 116900
+  time: '2025-08-16T08:57:58.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1169
 Order: -1
 
