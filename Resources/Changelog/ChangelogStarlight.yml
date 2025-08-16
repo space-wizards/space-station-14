@@ -11831,5 +11831,12 @@ Entries:
   id: 120000
   time: '2025-08-16T08:03:19.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/1200
+- author: PubliclyExecutedPig
+  changes:
+  - message: Added admin only buffed xenos
+    type: Add
+  id: 99500
+  time: '2025-08-16T08:09:16.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/995
 Order: -1
 
