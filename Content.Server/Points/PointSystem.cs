@@ -76,7 +76,7 @@ public sealed class PointSystem : SharedPointSystem
             if (!_player.TryGetPlayerData(id, out var data))
                 continue;
 
-            msg.AddMarkupOrThrow(Loc.GetString("point-scoreboard-list",
+            msg.AddMarkupPermissive(Loc.GetString("point-scoreboard-list",
                 ("place", place),
                 ("name", data.UserName),
                 ("points", points.Int())));

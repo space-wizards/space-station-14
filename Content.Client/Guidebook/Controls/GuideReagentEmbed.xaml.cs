@@ -147,7 +147,7 @@ public sealed partial class GuideReagentEmbed : BoxContainer, IDocumentTag, ISea
                 var i = 0;
                 foreach (var effectString in effect.EffectDescriptions)
                 {
-                    descMsg.AddMarkupOrThrow(effectString);
+                    descMsg.AddMarkupPermissive(effectString);
                     i++;
                     if (i < descriptionsCount)
                         descMsg.PushNewline();
@@ -181,7 +181,7 @@ public sealed partial class GuideReagentEmbed : BoxContainer, IDocumentTag, ISea
             var i = 0;
             foreach (var effectString in guideEntryRegistryPlant.PlantMetabolisms)
             {
-                descMsg.AddMarkupOrThrow(effectString);
+                descMsg.AddMarkupPermissive(effectString);
                 i++;
                 if (i < descriptionsCount)
                     descMsg.PushNewline();
@@ -202,7 +202,7 @@ public sealed partial class GuideReagentEmbed : BoxContainer, IDocumentTag, ISea
         FormattedMessage description = new();
         description.AddText(reagent.LocalizedDescription);
         description.PushNewline();
-        description.AddMarkupOrThrow(Loc.GetString("guidebook-reagent-physical-description",
+        description.AddMarkupPermissive(Loc.GetString("guidebook-reagent-physical-description",
             ("description", reagent.LocalizedPhysicalDescription)));
         ReagentDescription.SetMessage(description);
     }

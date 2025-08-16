@@ -82,7 +82,7 @@ public sealed partial class PowerMonitoringWindow : FancyWindow
                 stationName = stationMetaData.EntityName;
 
             var msg = new FormattedMessage();
-            msg.AddMarkupOrThrow(Loc.GetString("power-monitoring-window-station-name", ("stationName", stationName)));
+            msg.AddMarkupPermissive(Loc.GetString("power-monitoring-window-station-name", ("stationName", stationName)));
 
             StationName.SetMessage(msg);
         }

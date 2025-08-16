@@ -109,12 +109,12 @@ public sealed partial class AnalysisConsoleMenu : FancyWindow
             var nodeId = _xenoArtifact.GetNodeId(node);
 
             var text = Loc.GetString("analysis-console-extract-value", ("id", nodeId), ("value", pointValue));
-            extractionMessage.AddMarkupOrThrow(text);
+            extractionMessage.AddMarkupPermissive(text);
             extractionMessage.PushNewline();
         }
 
         if (count == 0)
-            extractionMessage.AddMarkupOrThrow(Loc.GetString("analysis-console-extract-none"));
+            extractionMessage.AddMarkupPermissive(Loc.GetString("analysis-console-extract-none"));
 
         _hideExtractInfoIn = _timing.CurTime + ExtractInfoDisplayForDuration;
 

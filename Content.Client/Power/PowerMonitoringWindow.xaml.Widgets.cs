@@ -305,7 +305,7 @@ public sealed partial class PowerMonitoringWindow
                 BorderThickness = new Thickness(2),
             };
 
-            msg.AddMarkupOrThrow(Loc.GetString("power-monitoring-window-rogue-power-consumer"));
+            msg.AddMarkupPermissive(Loc.GetString("power-monitoring-window-rogue-power-consumer"));
             SystemWarningPanel.Visible = true;
         }
 
@@ -318,7 +318,7 @@ public sealed partial class PowerMonitoringWindow
                 BorderThickness = new Thickness(2),
             };
 
-            msg.AddMarkupOrThrow(Loc.GetString("power-monitoring-window-power-net-abnormalities"));
+            msg.AddMarkupPermissive(Loc.GetString("power-monitoring-window-power-net-abnormalities"));
             SystemWarningPanel.Visible = true;
         }
 

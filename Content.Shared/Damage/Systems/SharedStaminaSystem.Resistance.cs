@@ -33,6 +33,6 @@ public partial class SharedStaminaSystem
             return;
 
         args.Msg.PushNewline();
-        args.Msg.AddMarkupOrThrow(Loc.GetString(ent.Comp.Examine, ("value", value)));
+        args.Msg.AddMarkupPermissive(Loc.GetString(ent.Comp.Examine, ("value", value)));
     }
 }

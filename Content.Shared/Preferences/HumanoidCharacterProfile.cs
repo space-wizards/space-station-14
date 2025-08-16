@@ -544,11 +544,11 @@ namespace Content.Shared.Preferences
             var maxFlavorTextLength = configManager.GetCVar(CCVars.MaxFlavorTextLength);
             if (FlavorText.Length > maxFlavorTextLength)
             {
-                flavortext = FormattedMessage.RemoveMarkupOrThrow(FlavorText)[..maxFlavorTextLength];
+                flavortext = FormattedMessage.RemoveMarkupPermissive(FlavorText)[..maxFlavorTextLength];
             }
             else
             {
-                flavortext = FormattedMessage.RemoveMarkupOrThrow(FlavorText);
+                flavortext = FormattedMessage.RemoveMarkupPermissive(FlavorText);
             }
 
             var appearance = HumanoidCharacterAppearance.EnsureValid(Appearance, Species, Sex);
