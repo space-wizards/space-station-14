@@ -32,14 +32,15 @@ namespace Content.Shared.Strip.Components
     public sealed class StrippingEnsnareButtonPressed : BoundUserInterfaceMessage;
 
     [ByRefEvent]
-    public abstract class BaseBeforeStripEvent(TimeSpan initialTime, bool stealth = false) : EntityEventArgs, IInventoryRelayEvent
+    public abstract class BaseBeforeStripEvent(TimeSpan initialTime, bool stealth = false, bool popup = true) : EntityEventArgs, IInventoryRelayEvent
     {
         public readonly TimeSpan InitialTime = initialTime;
         public float Multiplier = 1f;
         public TimeSpan Additive = TimeSpan.Zero;
         public bool Stealth = stealth;
+        public bool Popup = popup;
 
-        public TimeSpan Time => TimeSpan.FromSeconds(MathF.Max(InitialTime.Seconds * Multiplier + Additive.Seconds, 0f));
+        public TimeSpan Time => TimeSpan.FromSeconds(MathF.Max(InitialTime.Seconds * Multiplier + (float)Additive.TotalSeconds, 0f));
 
         public SlotFlags TargetSlots { get; } = SlotFlags.GLOVES;
     }
@@ -80,12 +81,14 @@ namespace Content.Shared.Strip.Components
         public readonly bool InsertOrRemove;
         public readonly bool InventoryOrHand;
         public readonly string SlotOrHandName;
+        public readonly bool ShowPopup;
 
-        public StrippableDoAfterEvent(bool insertOrRemove, bool inventoryOrHand, string slotOrHandName)
+        public StrippableDoAfterEvent(bool insertOrRemove, bool inventoryOrHand, string slotOrHandName, bool showPopup = true)
         {
             InsertOrRemove = insertOrRemove;
             InventoryOrHand = inventoryOrHand;
             SlotOrHandName = slotOrHandName;
+            ShowPopup = showPopup;
         }
 
         public override DoAfterEvent Clone() => this;
