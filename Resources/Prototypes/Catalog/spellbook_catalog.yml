@@ -45,12 +45,14 @@
   description: spellbook-cluwne-desc
   productAction: ActionCluwne
   cost:
-    WizCoin: 3
+    WizCoin: 5 # Starlight: More expensive than usual, back on trial basis.
   categories:
   - SpellbookOffensive
   conditions:
   - !type:ListingLimitedStockCondition
     stock: 1
+  - !type:ListingPlayerCountCondition # Starlight, make this only buyable on highpop
+    minimum: 80
 
 - type: listing
   id: SpellbookSlip
