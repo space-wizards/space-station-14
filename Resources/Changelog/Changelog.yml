@@ -1,44 +1,4 @@
 ﻿Entries:
-- author: Nox38
-  changes:
-  - message: Rebalanced cyborg modules and made more of them starting equipment.
-    type: Tweak
-  - message: Added new advanced mining and advanced chemical modules.
-    type: Add
-  id: 8338
-  time: '2025-04-25T02:29:16.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/34186
-- author: AgentSmithRadio
-  changes:
-  - message: Reptilians can now eat orange creamsicles.
-    type: Tweak
-  - message: Berry creamsicles can no longer be used in cargo's generic fruit bounty.
-    type: Fix
-  id: 8339
-  time: '2025-04-25T03:53:13.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/36890
-- author: Vexerot
-  changes:
-  - message: Goliaths now have a bloodstream and can bleed.
-    type: Tweak
-  id: 8340
-  time: '2025-04-25T04:02:03.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/33305
-- author: Blackern5000
-  changes:
-  - message: The mining hardsuit has had it's armor tweaked to be more effective against
-      fish and less effective against bullets and/or bombs
-    type: Tweak
-  id: 8341
-  time: '2025-04-25T04:05:29.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/31450
-- author: Krzeszny
-  changes:
-  - message: Rewrote the controls guide.
-    type: Tweak
-  id: 8342
-  time: '2025-04-25T04:49:35.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/36363
 - author: ScarKy0
   changes:
   - message: Interdyne cigs now cost 1TC instead of 2TC.
@@ -3946,3 +3906,51 @@
   id: 8850
   time: '2025-08-13T17:13:14.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/36473
+- author: slarticodefast
+  changes:
+  - message: Fixed light bulb color.
+    type: Fix
+  id: 8851
+  time: '2025-08-13T22:45:51.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/39623
+- author: Bhijn and Myr
+  changes:
+  - message: Those within the SS13 and SS14 community who have passed are now explicitly
+      memorialized within the game's credits, accessible within the lobby. May their
+      names and legacies live on.
+    type: Add
+  id: 8852
+  time: '2025-08-14T01:21:36.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/39621
+- author: rumaks-xyz, SlamBamActionman
+  changes:
+  - message: Advanced Brute chemicals, Insuzine, Ultravasculine and Sigynate have
+      had changes to their healing, metabolism rates and behaviors.
+    type: Tweak
+  - message: Bicardine and Advanced Brute Chemicals once again create Razorium when
+      mixed.
+    type: Tweak
+  id: 8853
+  time: '2025-08-14T17:32:22.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/39472
+- author: ScholarNZL
+  changes:
+  - message: Added IC visibility of "animal organs", e.g "animal lungs" etc, to facilitate
+      recipe creation.
+    type: Tweak
+  id: 8854
+  time: '2025-08-15T04:21:51.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/39228
+- author: FlipBrooke
+  changes:
+  - message: Banana peels and their variants can now be worn as headgear
+    type: Add
+  - message: Banana peels will correctly render when selected using chameleon headgear
+    type: Fix
+  - message: Banana peels will no longer render as headgear when off a player's head
+    type: Fix
+  - message: Banana peels as headgear now correctly displays in the change log
+    type: Fix
+  id: 8855
+  time: '2025-08-15T05:56:19.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/39457
