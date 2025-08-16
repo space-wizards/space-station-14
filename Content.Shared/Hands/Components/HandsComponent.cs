@@ -1,3 +1,4 @@
+using Content.Shared.Alert; // Starlight
 using Content.Shared.DisplacementMap;
 using Content.Shared.Hands.EntitySystems;
 using Robust.Shared.GameStates;
@@ -99,7 +100,23 @@ public sealed partial class HandsComponent : Component
     /// </summary>
     [DataField]
     public bool CanBeStripped = true;
+
+    // Starlight - OfferSystem - Start
+    [DataField, ViewVariables(VVAccess.ReadOnly)]
+    public bool Offering;
+
+    [DataField, ViewVariables(VVAccess.ReadOnly)]
+    public bool ReceivingOffer;
+
+    [DataField, ViewVariables(VVAccess.ReadOnly)]
+    public EntityUid? OfferItem;
+
+    [DataField, ViewVariables(VVAccess.ReadOnly)]
+    public EntityUid? OfferTarget;
+    // Starlight - OfferSystem - End
 }
+
+public sealed partial class OfferItemAlertEvent : BaseAlertEvent; // Starlight
 
 [DataDefinition]
 [Serializable, NetSerializable]

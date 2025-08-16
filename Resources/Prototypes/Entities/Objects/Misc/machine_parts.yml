@@ -26,7 +26,13 @@
     - type: Tag
       tags:
       - MicroManipulatorStockPart
-    # Starlight-start: Vending Machines Prices
+    # 🌟Starlight-start🌟
     - type: ItemPrice
       priceCategory: tool_cheap
-    # Starlight-end
+    - type: Hemostat
+    - type: SurgeryTool
+      successRate: 0.3 # These are crude but, can grab things
+      speed: 1.5
+      startSound:
+        path: /Audio/_Starlight/Medical/Surgery/hemostat1.ogg
+    # 🌟Starlight-end🌟

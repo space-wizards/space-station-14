@@ -24,6 +24,9 @@ public sealed partial class NullLinkCCVars
 
     public static readonly CVarDef<string> Description =
         CVarDef.Create("nulllink.hub.description", "----", CVar.SERVERONLY);
+
+    public static readonly CVarDef<bool> IsAdultOnly =
+        CVarDef.Create("nulllink.is_adult_only", false, CVar.REPLICATED | CVar.SERVER);
 }
 
 public enum ServerType
