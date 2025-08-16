@@ -1326,6 +1326,7 @@
   abstract: true
   components:
   - type: CombatMode
+    canDisarm: true
   - type: Inventory
     templateId: monkey
     speciesId: monkey
