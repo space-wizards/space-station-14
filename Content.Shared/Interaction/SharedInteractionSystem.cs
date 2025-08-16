@@ -58,6 +58,7 @@ namespace Content.Shared.Interaction
         [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
         [Dependency] private readonly ISharedChatManager _chat = default!;
         [Dependency] private readonly ActionBlockerSystem _actionBlockerSystem = default!;
+        [Dependency] private readonly ActivatableUISystem _activatableUI = default!;
         [Dependency] private readonly EntityLookupSystem _lookup = default!;
         [Dependency] private readonly SharedHandsSystem _hands = default!;
         [Dependency] private readonly InventorySystem _inventory = default!;
@@ -169,13 +170,15 @@ namespace Content.Shared.Interaction
             {
                 // We permit ghosts to open uis unless explicitly blocked
                 if (ev.Message is not OpenBoundInterfaceMessage
-                    || !HasComp<GhostComponent>(ev.Actor)
-                    || aUiComp?.BlockSpectators == true)
+                    || !_activatableUI.CanSpectatorInteract((ev.Target, aUiComp), ev.Actor))
                 {
                     ev.Cancel();
                     return;
                 }
             }
+
+            if (_activatableUI.CanSpectatorInteract((ev.Target, aUiComp), ev.Actor))
+                return;
 
             var range = _ui.GetUiRange(ev.Target, ev.UiKey);
 
