@@ -11792,5 +11792,13 @@ Entries:
   id: 120200
   time: '2025-08-16T07:35:03.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/1202
+- author: walksanatora
+  changes:
+  - message: chaplains can cure cluwnification with a 1/30 chance on every successful
+      bible thwack.
+    type: Add
+  id: 106500
+  time: '2025-08-16T07:41:25.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1065
 Order: -1
 
