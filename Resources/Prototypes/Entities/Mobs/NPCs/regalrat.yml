@@ -4,6 +4,7 @@
   parent: [ SimpleMobBase, MobCombat ]
   description: He's da rat. He make da roolz.
   components:
+  # Starlight-start: Languages
   - type: LanguageKnowledge
     speaks:
     - GalacticCommon
@@ -11,8 +12,9 @@
     understands:
     - GalacticCommon
     - Mouse
-  - type: ThermalVision
-  - type: VentCrawler
+  # Starlight-end
+  - type: ThermalVision # Starlight-edit: Thermal Vision
+  - type: VentCrawler # Starlight-edit: Vent Crawl
   - type: CombatMode
   - type: MovementSpeedModifier
     baseWalkSpeed : 3.00
@@ -180,13 +182,15 @@
   description: He's da mini rat. He don't make da roolz.
   categories: [ HideSpawnMenu ] #Must be configured to a King or the AI breaks.
   components:
+  # Starlight-start: Languages
   - type: LanguageKnowledge
     speaks:
     - Mouse
     understands:
     - GalacticCommon
     - Mouse
-  - type: VentCrawler
+  # Starlight-end
+  - type: VentCrawler # Starlight-edit: Vent Crawl
   - type: CombatMode
   - type: MovementSpeedModifier
     baseWalkSpeed : 3.5

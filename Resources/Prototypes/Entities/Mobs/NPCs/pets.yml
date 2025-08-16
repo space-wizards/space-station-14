@@ -7,6 +7,7 @@
   id: MobCorgiIan
   description: Favorite pet corgi.
   components:
+  # Starlight-start: Languages
   - type: LanguageSpeaker
   - type: LanguageKnowledge
     speaks:
@@ -14,6 +15,7 @@
     understands:
     - Dog
     - GalacticCommon
+  # Starlight-end
   - type: Sprite
     drawdepth: Mobs
     sprite: Mobs/Pets/corgi.rsi
@@ -64,6 +66,7 @@
   id: MobCorgiIanOld
   description: Still the favorite pet corgi. Love his wheels.
   components:
+  # Starlight-start: Languages
   - type: LanguageSpeaker
   - type: LanguageKnowledge
     speaks:
@@ -71,6 +74,7 @@
     understands:
     - Dog
     - GalacticCommon
+  # Starlight-end
   - type: Sprite
     layers:
     - map: ["enum.DamageStateVisualLayers.Base"]
@@ -96,6 +100,7 @@
   id: MobCorgiLisa
   description: Ian's favorite corgi.
   components:
+  # Starlight-start: Languages
   - type: LanguageSpeaker
   - type: LanguageKnowledge
     speaks:
@@ -103,6 +108,7 @@
     understands:
     - Dog
     - GalacticCommon
+  # Starlight-end
   - type: Sprite
     layers:
     - map: ["enum.DamageStateVisualLayers.Base"]
@@ -140,6 +146,7 @@
   id: MobCorgiMouse
   description: It's 100% a real hungry mouse.
   components:
+  # Starlight-start: Languages
   - type: LanguageSpeaker
   - type: LanguageKnowledge
     speaks:
@@ -147,6 +154,7 @@
     understands:
     - Dog
     - GalacticCommon
+  # Starlight-end
   - type: Sprite
     layers:
     - map: ["enum.DamageStateVisualLayers.Base"]
@@ -170,6 +178,7 @@
   id: MobCorgiIanPup
   description: Favourite puppy corgi. Awww.
   components:
+  # Starlight-start: Languages
   - type: LanguageSpeaker
   - type: LanguageKnowledge
     speaks:
@@ -177,6 +186,7 @@
     understands:
     - Dog
     - GalacticCommon
+  # Starlight-end
   - type: Grammar
     attributes:
       proper: true
@@ -195,6 +205,7 @@
   id: MobCatRuntime
   description: Professional mouse hunter. Escape artist.
   components:
+  # Starlight-start: Languages
   - type: LanguageSpeaker
   - type: LanguageKnowledge
     speaks:
@@ -202,6 +213,7 @@
     understands:
     - Cat
     - GalacticCommon
+  # Starlight-end
   - type: NpcFactionMember
     factions:
       - PetsNT
@@ -230,6 +242,7 @@
   parent: MobCatCalico
   description: Ask nicely, and maybe they'll give you one of their spare lives.
   components:
+  # Starlight-start: Languages
   - type: LanguageSpeaker
   - type: LanguageKnowledge
     speaks:
@@ -237,6 +250,7 @@
     understands:
     - Cat
     - GalacticCommon
+  # Starlight-end
   - type: NpcFactionMember
     factions:
       - PetsNT
@@ -262,6 +276,7 @@
   parent: MobCatCaracal
   description: He out here.
   components:
+  # Starlight-start: Languages
   - type: LanguageSpeaker
   - type: LanguageKnowledge
     speaks:
@@ -269,6 +284,7 @@
     understands:
     - Cat
     - GalacticCommon
+  # Starlight-end
   - type: Fixtures
     fixtures:
       fix1:
@@ -316,6 +332,7 @@
   id: MobBingus
   description: Bingus my beloved...
   components:
+  # Starlight-start: Languages
   - type: LanguageSpeaker
   - type: LanguageKnowledge
     speaks:
@@ -323,6 +340,7 @@
     understands:
     - Cat
     - GalacticCommon
+  # Starlight-end
   - type: Sprite
     drawdepth: Mobs
     sprite: Mobs/Pets/bingus.rsi
@@ -381,6 +399,7 @@
   id: MobMcGriff
   description: This dog can tell something smells around here, and that something is CRIME!
   components:
+  # Starlight-start: Languages
   - type: LanguageSpeaker
   - type: LanguageKnowledge
     speaks:
@@ -388,6 +407,7 @@
     understands:
     - Dog
     - GalacticCommon
+  # Starlight-end
   - type: Sprite
     drawdepth: Mobs
     sprite: Mobs/Pets/mcgriff.rsi
@@ -495,6 +515,7 @@
   id: MobWalter
   description: He likes chems and treats. Walter.
   components:
+  # Starlight-start: Languages
   - type: LanguageSpeaker
   - type: LanguageKnowledge
     speaks:
@@ -502,6 +523,7 @@
     understands:
     - Dog
     - GalacticCommon
+  # Starlight-end
   - type: Sprite
     drawdepth: Mobs
     sprite: Mobs/Pets/walter.rsi
@@ -650,6 +672,7 @@
   id: MobAlexander
   description: Chef's finest colleague.
   components:
+  # Starlight-start: Languages
   - type: LanguageSpeaker
   - type: LanguageKnowledge
     speaks:
@@ -657,6 +680,7 @@
     understands:
     - Pig
     - GalacticCommon
+  # Starlight-end
   - type: InteractionPopup
     successChance: 1
     interactSuccessString: petting-success-pig
@@ -679,6 +703,7 @@
   id: MobFoxRenault
   description: The captain's trustworthy fox.
   components:
+  # Starlight-start: Languages
   - type: LanguageSpeaker
   - type: LanguageKnowledge
     speaks:
@@ -686,6 +711,7 @@
     understands:
     - Fox
     - GalacticCommon
+  # Starlight-end
   - type: InteractionPopup
     successChance: 1
     interactSuccessString: petting-success-soft-floofy
@@ -716,6 +742,7 @@
   id: MobHamsterHamlet
   description: A grumpy, cute and fluffy hamster.
   components:
+  # Starlight-start: Languages
   - type: LanguageSpeaker
   - type: LanguageKnowledge
     speaks:
@@ -723,6 +750,7 @@
     understands:
     - Mouse
     - GalacticCommon
+  # Starlight-end
   - type: Sprite
     drawdepth: SmallMobs
     sprite: Mobs/Pets/hamlet.rsi
@@ -776,6 +804,7 @@
   id: MobSpiderShiva
   description: The first defender of the station.
   components:
+  # Starlight-start: Languages
   - type: LanguageSpeaker
   - type: LanguageKnowledge
     speaks:
@@ -783,6 +812,7 @@
     understands:
     - Chittin
     - GalacticCommon
+  # Starlight-end
   - type: InteractionPopup
     successChance: 0.5 # spider is mean
     interactSuccessString: petting-success-tarantula
@@ -881,6 +911,7 @@
   parent: [MobAdultSlimes, StripableInventoryBase]
   description: This masterpiece has gone through thousands of experiments. But it is the sweetest creature in the world. Smile Slime!
   components:
+  # Starlight-start: Languages
   - type: LanguageSpeaker
   - type: LanguageKnowledge
     speaks:
@@ -888,6 +919,7 @@
     understands:
     - Fox
     - Bubblish
+  # Starlight-end
   - type: Sprite
     layers:
     - map: [ "enum.DamageStateVisualLayers.Base" ]
@@ -970,12 +1002,14 @@
   id: MobMonkeyPunpun
   description: A prominent representative of monkeys with unlimited access to alcohol.
   components:
+  # Starlight-start: Languages
   - type: LanguageKnowledge
     speaks:
     - Ancestor
     understands:
     - Ancestor
     - GalacticCommon
+  # Starlight-end
   - type: GhostRole
     prob: 1
     makeSentient: true

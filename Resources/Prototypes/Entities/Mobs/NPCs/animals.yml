@@ -4,11 +4,13 @@
   id: MobBat
   description: Some cultures find them terrifying, others crunchy on the teeth.
   components:
+  # Starlight-start: Languages
   - type: LanguageKnowledge
     speaks:
     - Mouse
     understands:
     - Mouse
+  # Starlight-end
   - type: MovementSpeedModifier
     baseWalkSpeed : 3
     baseSprintSpeed : 6
@@ -199,11 +201,13 @@
   id: MobChicken
   description: Comes before an egg, and IS a dinosaur!
   components:
+  # Starlight-start: Languages
   - type: LanguageKnowledge
     speaks:
     - Chicken
     understands:
     - Chicken
+  # Starlight-end
   - type: Sprite
     drawdepth: Mobs
     layers:
@@ -481,11 +485,13 @@
   id: MobMothroach
   description: This is the adorable by-product of multiple attempts at genetically mixing mothpeople with cockroaches.
   components:
+  # Starlight-start: Languages
   - type: LanguageKnowledge
     speaks:
     - Moffic
     understands:
     - Moffic
+  # Starlight-end
   - type: GhostRole
     makeSentient: true
     allowSpeech: true
@@ -654,11 +660,13 @@
   id: MobDuckMallard
   description: An adorable mallard duck, it's fluffy and soft!
   components:
+  # Starlight-start: Languages
   - type: LanguageKnowledge
     speaks:
     - Sylvan
     understands:
     - Sylvan
+  # Starlight-end
   - type: Sprite
     drawdepth: Mobs
     layers:
@@ -1261,12 +1269,14 @@
   description: The genetic bipedal ancestor of... Uh... Something. Yeah, there's definitely something on the station that descended from whatever this is.
   abstract: true
   components:
+  # Starlight-start: Languages
   - type: LanguageKnowledge
     speaks:
     - Ancestor
     understands:
     - Ancestor
-  - type: VentCrawler
+  # Starlight-end
+  - type: VentCrawler # Starlight-edit: Vent Crawl
   - type: CombatMode
   - type: Inventory
     templateId: monkey
@@ -1420,12 +1430,14 @@
   description: New church of neo-darwinists actually believe that EVERY animal evolved from a monkey. Tastes like pork, and killing them is both fun and relaxing.
   suffix: syndicate base
   components:
+  # Starlight-start: Languages
   - type: LanguageKnowledge
     speaks:
     - Ancestor
     understands:
     - Ancestor
     - GalacticCommon
+  # Starlight-end
   - type: NameIdentifier
     group: Monkey
   - type: SentienceTarget
@@ -1647,12 +1659,14 @@
   id: MobMouse
   description: Squeak!
   components:
+  # Starlight-start: Languages
   - type: LanguageKnowledge
     speaks:
     - Mouse
     understands:
     - Mouse
-  - type: VentCrawler
+  # Starlight-end
+  - type: VentCrawler # Starlight-edit: Vent Crawl
   - type: Body
     prototype: Mouse
   - type: GhostRole
@@ -2400,12 +2414,14 @@
   id: MobSpiderBase
   abstract: true
   components:
+  # Starlight-start: Languages
   - type: LanguageKnowledge
     speaks:
     - Chittin
     understands:
     - Chittin
-  - type: VentCrawler
+  # Starlight-end
+  - type: VentCrawler # Starlight-edit: Vent Crawl
   - type: Physics
   - type: Fixtures
     fixtures:
@@ -2748,11 +2764,13 @@
   id: MobFox
   description: They're a fox.
   components:
+  # Starlight-start: Languages
   - type: LanguageKnowledge
     speaks:
     - Fox
     understands:
     - Fox
+  # Starlight-end
   - type: Sprite
     drawdepth: Mobs
     sprite: Mobs/Animals/fox.rsi
@@ -2872,11 +2890,13 @@
   parent: MobCorgiBase
   id: MobCorgi
   components:
+  # Starlight-start: Languages
   - type: LanguageKnowledge
     speaks:
     - Dog
     understands:
     - Dog
+  # Starlight-end
   - type: DamageStateVisuals
     states:
       Alive:
@@ -2990,11 +3010,13 @@
   id: MobCat
   description: Feline pet, very funny.
   components:
+  # Starlight-start: Languages
   - type: LanguageKnowledge
     speaks:
     - Cat
     understands:
     - Cat
+  # Starlight-end
   - type: Sprite
     drawdepth: Mobs
     sprite: Mobs/Pets/cat.rsi
@@ -3339,12 +3361,14 @@
   id: MobHamster
   description: A cute, fluffy, robust hamster.
   components:
+  # Starlight-start: Languages
   - type: LanguageKnowledge
     speaks:
     - Mouse
     understands:
     - Mouse
-  - type: VentCrawler
+  # Starlight-end
+  - type: VentCrawler # Starlight-edit: Vent Crawl
   - type: GhostRole
     makeSentient: true
     allowSpeech: true
@@ -3495,11 +3519,13 @@
   id: MobPig
   description: Oink.
   components:
+  # Starlight-start: Languages
   - type: LanguageKnowledge
     speaks:
     - Pig
     understands:
     - Pig
+  # Starlight-end
   - type: Sprite
     drawdepth: Mobs
     layers:
@@ -3649,11 +3675,13 @@
   id: MobDionaNymphAccent # No talky. For non-brain & wild nymphs
   suffix: Accent
   components:
+  # Starlight-start: Languages
   - type: LanguageKnowledge
     speaks:
     - Sylvan
     understands:
     - Sylvan
+  # Starlight-end
 
 - type: entity
   name: reindeer buck
@@ -3756,6 +3784,7 @@
   description: An unusually smart dog.
   components:
   # Use corgi sprite, need to add handcuff layer
+  # Starlight-start: Languages
   - type: LanguageKnowledge
     speaks:
     - Dog
@@ -3763,6 +3792,7 @@
     understands:
     - Dog
     - GalacticCommon
+  # Starlight-end
   - type: Sprite
     layers:
     - map: ["enum.DamageStateVisualLayers.Base"]

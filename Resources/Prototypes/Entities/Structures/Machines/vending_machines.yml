@@ -5,6 +5,7 @@
   description: Just add capitalism!
   abstract: true
   components:
+  # Starlight-start: Languages
   - type: LanguageSpeaker
   - type: LanguageKnowledge
     speaks:
@@ -13,6 +14,7 @@
     understands:
     - GalacticCommon
     - Machine
+  # Starlight-end
   - type: ActionGrant
     actions:
     - ActionVendingThrow

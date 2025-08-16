@@ -4,6 +4,7 @@
   id: BaseMobSlimePerson
   abstract: true
   components:
+  # Starlight-start: Languages
   - type: LanguageKnowledge
     speaks:
     - GalacticCommon
@@ -11,6 +12,7 @@
     understands:
     - GalacticCommon
     - Bubblish
+  # Starlight-end
   - type: UserInterface
     interfaces:
       enum.StorageUiKey.Key:

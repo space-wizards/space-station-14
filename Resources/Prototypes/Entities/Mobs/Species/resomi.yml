@@ -4,6 +4,7 @@
   id: BaseMobResomi
   abstract: true
   components:
+  # Starlight-start: Languages
   - type: LanguageKnowledge
     speaks:
     - GalacticCommon
@@ -11,6 +12,7 @@
     understands:
     - GalacticCommon
     - Scratch
+  # Starlight-end
   - type: Absorbable
   - type: Jump
     action: JumpResomi

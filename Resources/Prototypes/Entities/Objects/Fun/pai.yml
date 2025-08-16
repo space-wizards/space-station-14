@@ -6,6 +6,7 @@
   name: personal ai device
   description: Your electronic pal who's fun to be with!
   components:
+  # Starlight-start: Languages
   - type: LanguageSpeaker
   - type: LanguageKnowledge
     speaks:
@@ -26,6 +27,7 @@
     - Terrum
     - VoxPidgin
   - type: TextToSpeech
+  # Starlight-end
   - type: Instrument
     allowPercussion: false
     handheld: false
