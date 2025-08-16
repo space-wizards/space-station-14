@@ -60,4 +60,10 @@ public sealed partial class TraitPrototype : IPrototype
     /// </summary>
     [DataField]
     public ProtoId<TraitCategoryPrototype>? Category;
+
+    /// <summary>
+    /// Allows this trait to be optionally selected for disabling when getting an antag role that disables traits.
+    /// </summary>
+    [DataField]
+    public bool AllowAntagDisable = true;
 }

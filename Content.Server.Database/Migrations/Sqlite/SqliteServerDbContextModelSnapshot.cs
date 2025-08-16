@@ -1283,6 +1283,10 @@ namespace Content.Server.Database.Migrations.Sqlite
                         .HasColumnType("INTEGER")
                         .HasColumnName("trait_id");
 
+                    b.Property<bool>("AntagDisable")
+                        .HasColumnType("INTEGER")
+                        .HasColumnName("antag_disable");
+
                     b.Property<int>("ProfileId")
                         .HasColumnType("INTEGER")
                         .HasColumnName("profile_id");
