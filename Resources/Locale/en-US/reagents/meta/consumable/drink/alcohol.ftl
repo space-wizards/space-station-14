@@ -235,11 +235,17 @@ reagent-desc-moonshine = Artisanal homemade liquor. What could go wrong?
 reagent-name-neurotoxin = neurotoxin
 reagent-desc-neurotoxin = A strong neurotoxin that puts the subject into a death-like state.
 
+reagent-name-nada-colada = Nada Colada
+reagent-desc-nada-colada = For getting lost.
+
 reagent-name-painkiller = painkiller
 reagent-desc-painkiller = A cure for what ails you.
 
 reagent-name-patron = Patrón
 reagent-desc-patron = Tequila with silver in it, a favorite of alcoholic women in the club scene.
+
+reagent-name-pain-colada = Pain Colada
+reagent-desc-pain-colada = For getting lost in the pain.
 
 reagent-name-pina-colada = Piña Colada
 reagent-desc-pina-colada = For getting lost in the rain.

@@ -840,6 +840,16 @@
   description: flavor-complex-pina-colada
 
 - type: flavor
+  id: nadacolada
+  flavorType: Complex
+  description: flavor-complex-nada-colada
+
+- type: flavor
+  id: paincolada
+  flavorType: Complex
+  description: flavor-complex-pain-colada
+
+- type: flavor
   id: longisland
   flavorType: Complex
   description: flavor-complex-long-island

@@ -80,6 +80,7 @@
       - DrinkMilkshake
       - DrinkMojito
       - DrinkMonkeyBusinessGlass
+      - DrinkNadaColadaGlass
       - DrinkNTCahors
       - DrinkPainkillerGlass
       - DrinkPatronGlass
@@ -131,6 +132,7 @@
       - DrinkDoctorsDelightGlass
       - DrinkNeurotoxinGlass
       - DrinkNuclearColaGlass
+      - DrinkPainColadaGlass
       - DrinkSilencerGlass
       - DrinkShakeMeat
       - DrinkShakeRobo
