@@ -1,4 +1,10 @@
 # Traitor single items
+- type: stealTargetGroup
+  id: Money
+  name: steal-target-groups-money
+  sprite:
+    sprite: Objects/Economy/cash.rsi
+    state: cash_100
 
 - type: stealTargetGroup
   id: Hypospray
