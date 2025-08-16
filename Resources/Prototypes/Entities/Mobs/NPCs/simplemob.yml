@@ -65,6 +65,11 @@
   - type: MobPrice
     price: 1000 # Living critters are valuable in space.
   - type: Perishable
+  - type: Vocalizer
+    minVocalizeInterval: 60
+    maxVocalizeInterval: 120
+  - type: DatasetVocalizer
+    dataset: AnimalVocalizations
 
 - type: entity
   parent:
@@ -106,3 +111,8 @@
   - type: MobPrice
     price: 150
   - type: FloatingVisuals
+  - type: Vocalizer
+    minVocalizeInterval: 60
+    maxVocalizeInterval: 120
+  - type: DatasetVocalizer
+    dataset: AnimalVocalizations
