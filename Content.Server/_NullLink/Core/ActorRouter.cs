@@ -33,10 +33,19 @@ public sealed partial class ActorRouter : IActorRouter, IDisposable
     {
         _sawmill = Logger.GetSawmill("actor-router");
 
-        _onConnectedProxy ??= () =>
+        _onConnectedProxy = () =>
         {
+            _sawmill.Info("Attempting to invoke Orleans cluster connection callbacks...");
+            try
+            {
+                OnConnected.Invoke();
+                _sawmill.Info("Successfully executed Orleans cluster connection callbacks");
+            }
+            catch (Exception ex)
+            {
+                _sawmill.Error($"Error invoking OnConnected callback, {ex}");
+            }
             _sawmill.Info("Connected to Orleans cluster.");
-            OnConnected.Invoke();
         };
         OrleansClientHolder.OnConnected += _onConnectedProxy;
 

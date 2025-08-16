@@ -1,5 +1,6 @@
 ﻿using Content.Server.Actions;
 using Content.Server.Humanoid;
+using Content.Shared._Starlight.Humanoid.Markings;
 using Content.Shared.Humanoid;
 using Content.Shared.Humanoid.Markings;
 using Content.Shared.Mobs;
@@ -17,6 +18,8 @@ public sealed class WaggingSystem : EntitySystem
     [Dependency] private readonly ActionsSystem _actions = default!;
     [Dependency] private readonly HumanoidAppearanceSystem _humanoidAppearance = default!;
     [Dependency] private readonly IPrototypeManager _prototype = default!;
+
+    [Dependency] private readonly StarlightMarkingSystem _starlightMarking = default!; //starlight edit
 
     public override void Initialize()
     {
@@ -71,7 +74,7 @@ public sealed class WaggingSystem : EntitySystem
             foreach (var possibleSuffix in wagging.Suffixes)
             {
                 var currentMarkingId = markings[idx].MarkingId;
-                string newMarkingId;
+                string? newMarkingId;
 
                 if (wagging.Wagging)
                 {
@@ -90,7 +93,8 @@ public sealed class WaggingSystem : EntitySystem
                     }
                 }
 
-                if (!_prototype.HasIndex<MarkingPrototype>(newMarkingId))
+                if (!_prototype.HasIndex<MarkingPrototype>(newMarkingId) &&
+                    !_starlightMarking.TryGetWaggingId(currentMarkingId, out newMarkingId)) //starlight edit
                 {
                     Log.Warning($"{ToPrettyString(uid)} tried toggling wagging but {newMarkingId} marking doesn't exist");
                     continue;

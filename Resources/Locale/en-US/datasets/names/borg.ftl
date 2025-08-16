@@ -1,5 +1,7 @@
-names-borg-dataset-1 = Bob
-names-borg-dataset-2 = Joe
+## STARLIGHT
+names-borg-dataset-1 = Whirr
+## STARLIGHT
+names-borg-dataset-2 = Whirr II
 names-borg-dataset-3 = Beep
 names-borg-dataset-4 = Beep II
 names-borg-dataset-5 = Boombox
@@ -28,7 +30,8 @@ names-borg-dataset-27 = Echo
 names-borg-dataset-28 = Vector
 names-borg-dataset-29 = B-0-RG
 names-borg-dataset-30 = Megabyte
-names-borg-dataset-31 = Butt-Bot
+## STARLIGHT
+names-borg-dataset-31 = Gigabyte
 names-borg-dataset-32 = Deceptiborg
 names-borg-dataset-33 = Le Borgue
 names-borg-dataset-34 = Beepers
@@ -37,7 +40,25 @@ names-borg-dataset-36 = Makeshifter
 names-borg-dataset-37 = Twin
 names-borg-dataset-38 = S.A.U.L
 names-borg-dataset-39 = Honker
-names-borg-dataset-40 = Clanker 
+names-borg-dataset-40 = Clanker
 names-borg-dataset-41 = Is-The-Robot
 names-borg-dataset-42 = 9 of 7
 names-borg-dataset-43 = Dank bot
+## STARLIGHT after this
+names-borg-dataset-44 = Kilobit
+names-borg-dataset-45 = Gigabit
+names-borg-dataset-46 = Megabit
+names-borg-dataset-47 = Rice-Cooker
+names-borg-dataset-48 = Chip
+names-borg-dataset-49 = Servo
+names-borg-dataset-50 = FooBar
+names-borg-dataset-51 = Order Follower
+names-borg-dataset-52 = Helping Hand
+names-borg-dataset-53 = Borg-san
+names-borg-dataset-54 = Kilobyte
+names-borg-dataset-55 = minus 32
+names-borg-dataset-56 = El Borgo
+names-borg-dataset-57 = Rattle
+names-borg-dataset-58 = Solid Steel
+names-borg-dataset-59 = Clack
+names-borg-dataset-60 = Señor Borgo

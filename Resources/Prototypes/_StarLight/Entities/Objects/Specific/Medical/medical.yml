@@ -182,6 +182,7 @@
   - type: Healing
     damageContainers:
       - Biological
+    delay: 1.6 # STARLIGHT
     damage:
       types:
         Heat: -6
@@ -245,6 +246,7 @@
   - type: Healing
     damageContainers:
       - Biological
+    delay: 1.6 # STARLIGHT
     damage:
       groups:
         Brute: -18 # 6 for each type in the group :3
@@ -306,6 +308,7 @@
   - type: Healing
     damageContainers:
       - Biological
+    delay: 1.6 # STARLIGHT
     damage:
       types:
         Piercing: -7.5
@@ -370,6 +373,7 @@
   - type: Healing
     damageContainers:
       - Biological
+    delay: 1.6 # STARLIGHT
     damage:
       types:
         Piercing: -2.5
@@ -434,6 +438,7 @@
   - type: Healing
     damageContainers:
       - Biological
+    delay: 1.6 # STARLIGHT
     damage:
       types:
         Piercing: -2.5

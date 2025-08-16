@@ -49,83 +49,73 @@ public sealed partial class HubSystem : EntitySystem, IServerObserver, IServerIn
         SubscribeNetworkEvent<NullLink.Subscribe>(OnSubscribe);
         SubscribeNetworkEvent<NullLink.Resubscribe>(OnResubscribe);
         SubscribeNetworkEvent<NullLink.Unsubscribe>(OnUnsubscribe);
+
+        _actors.OnConnected += OnNullLinkConnected;
+    }
+
+    public override void Shutdown() => _actors.OnConnected -= OnNullLinkConnected;
+
+    private void OnNullLinkConnected()
+    {
+        _lastResubscribe = null;
+        TryUpdateServer();
+        TryUpdateServerInfo();
     }
 
     public override void Update(float frameTime)
     {
         base.Update(frameTime);
 
-        if (!_processingResubscribe)
+        if (!_actors.Enabled) return;
+
+        SendUpdate();
+
+        if (_processingResubscribe) return;
+        _processingResubscribe = true;
+        Resubscribe();
+    }
+
+    private void Resubscribe() => Pipe.RunInBackground(async () =>
+    {
+        if (!_actors.TryGetGrain<IHubGrain>(0, out var hub)
+            || !_actors.TryCreateObjectReference<IServerObserver>(this, out var serverObjectReference)
+            || !_actors.TryCreateObjectReference<IServerInfoObserver>(this, out var serverInfoObjectReference))
         {
-            if ( _actors.Enabled
-                && (_lastResubscribe == null || _lastResubscribe + _grainDelay < _timing.RealTime))
-            {
-                _processingResubscribe = true;
-                if (_lastResubscribe == null)
-                {
-                    Pipe.RunInBackground(async () =>
-                    {
-                        await _actors.Connection;
-                        if (!_actors.TryGetGrain<IHubGrain>(0, out var hub)
-                          || !_actors.TryCreateObjectReference<IServerObserver>(this, out var serverObjectReference)
-                          || !_actors.TryCreateObjectReference<IServerInfoObserver>(this, out var serverInfoObjectReference))
-                        {
-                            _processingResubscribe = false;
-                            return;
-                        }
-
-                        var serverData = await hub!.GetAndSubscribe(serverObjectReference!);
-                        _serverData = new(serverData.Select(x => KeyValuePair.Create(x.Key, Map(x.Value))));
-
-                        var serverInfoData = await hub!.GetAndSubscribe(serverInfoObjectReference!);
-                        _serverInfoData = new(serverInfoData.Select(x => KeyValuePair.Create(x.Key, Map(x.Value))));
-
-                        _processingResubscribe = false;
-                        _lastResubscribe = _timing.RealTime;
-
-                    }, ex =>
-                    {
-                        _processingResubscribe = false;
-                        _sawmill.Log(LogLevel.Warning, ex, "Failed to resubscribe to server data.");
-                        _lastResubscribe = null;
-                    });
-                }
-                else
-                {
-                    Pipe.RunInBackground(async () =>
-                    {
-                        await _actors.Connection;
-                        if (!_actors.TryGetGrain<IHubGrain>(0, out var hub)
-                          || !_actors.TryCreateObjectReference<IServerObserver>(this, out var serverObjectReference)
-                          || !_actors.TryCreateObjectReference<IServerInfoObserver>(this, out var serverInfoObjectReference))
-                        {
-                            _processingResubscribe = false;
-                            return;
-                        }
-
-                        await hub!.Resubscribe(serverObjectReference!);
-                        await hub!.Resubscribe(serverInfoObjectReference!);
-
-                        _processingResubscribe = false;
-                        _lastResubscribe = _timing.RealTime;
-
-                    }, ex =>
-                    {
-                        _processingResubscribe = false;
-                        _sawmill.Log(LogLevel.Warning, ex, "Failed to resubscribe to serverinfo data.");
-                        _lastResubscribe = null;
-                    });
-                }
-            }
+            _processingResubscribe = false;
+            return;
         }
 
-        var processed = 0;
-        var now = _timing.RealTime;
+        if (_lastResubscribe == null)
+        {
+            var serverData = await hub.GetAndSubscribe(serverObjectReference!);
+            _serverData = new(serverData.Select(x => KeyValuePair.Create(x.Key, Map(x.Value))));
 
+            var serverInfoData = await hub.GetAndSubscribe(serverInfoObjectReference!);
+            _serverInfoData = new(serverInfoData.Select(x => KeyValuePair.Create(x.Key, Map(x.Value))));
+        }
+        else
+        {
+            await hub.Resubscribe(serverObjectReference!);
+            await hub.Resubscribe(serverInfoObjectReference!);
+        }
+
+        _processingResubscribe = false;
+        _lastResubscribe = _timing.RealTime;
+
+    }, ex =>
+    {
+        _processingResubscribe = false;
+        _sawmill.Log(LogLevel.Warning, ex, "Failed to resubscribe to server data.");
+        _lastResubscribe = null;
+    });
+
+    private void SendUpdate()
+    {
+        var processed = 0;
         while (processed < MaxEventsPerTick && _updateEvents.TryDequeue(out var ev))
         {
             foreach (var (session, lastSeen) in _subscriptions)
-                if (now - lastSeen > _subLifetime)
+                if (_timing.RealTime - lastSeen > _subLifetime)
                     _toRemove.Add(session);
                 else
                     RaiseNetworkEvent(ev, session);
@@ -135,7 +125,6 @@ public sealed partial class HubSystem : EntitySystem, IServerObserver, IServerIn
 
         foreach (var dead in _toRemove)
             _subscriptions.Remove(dead);
-
         _toRemove.Clear();
     }
 
@@ -156,6 +145,9 @@ public sealed partial class HubSystem : EntitySystem, IServerObserver, IServerIn
 
     public Task Updated(string key, NLServer value)
     {
+        if (!value.IsAdultOnly == _isAdultOnly)
+            return Task.CompletedTask;
+
         _serverData.AddOrUpdate(key, Map(value), (k, v) => Map(value));
         _updateEvents.Enqueue(new NullLink.AddOrUpdateServer
         {

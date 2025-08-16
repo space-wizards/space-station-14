@@ -300,7 +300,7 @@
   description: spellbook-event-summon-guns-description
   productAction: ActionSummonGuns
   cost:
-    WizCoin: 15
+    WizCoin: 11 #Starlight edit. just out of reach
   categories:
   - SpellbookEvents
   conditions:
@@ -314,7 +314,7 @@
   description: spellbook-event-summon-magic-description
   productAction: ActionSummonMagic
   cost:
-    WizCoin: 15
+    WizCoin: 11 #Starlight edit. just out of reach.
   categories:
   - SpellbookEvents
   conditions:

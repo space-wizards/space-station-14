@@ -65,4 +65,4 @@
   - type: Armor
     modifiers:
       coefficients:
-        Blunt: 0.05
+        Blunt: 0.90
