@@ -1,29 +1,22 @@
-using System.Linq;
 using System.Numerics;
 using Content.Server.Cargo.Systems;
 using Content.Server.Weapons.Ranged.Components;
 using Content.Shared.Cargo;
 using Content.Shared.Damage;
 using Content.Shared.Damage.Systems;
-using Content.Shared.Database;
-using Content.Shared.Effects;
 using Content.Shared.Projectiles;
 using Content.Shared.Weapons.Melee;
 using Content.Shared.Weapons.Ranged;
 using Content.Shared.Weapons.Ranged.Components;
 using Content.Shared.Weapons.Ranged.Events;
 using Content.Shared.Weapons.Ranged.Systems;
-using Content.Shared.Weapons.Reflect;
-using Content.Shared.Damage.Components;
 using Content.Shared.Weapons.Hitscan.Components;
 using Content.Shared.Weapons.Hitscan.Events;
 using Robust.Shared.Audio;
 using Robust.Shared.Map;
-using Robust.Shared.Physics;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
-using Robust.Shared.Containers;
 
 namespace Content.Server.Weapons.Ranged.Systems;
 
@@ -144,11 +137,11 @@ public sealed partial class GunSystem : SharedGunSystem
                     if (ent == null)
                         break;
 
-                    var hitscanEv = new HitscanFiredEvent
+                    var hitscanEv = new HitscanTraceEvent
                     {
                         FromCoordinates = fromCoordinates,
                         ShotDirection = mapDirection.Normalized(),
-                        GunUid = gunUid,
+                        Gun = gunUid,
                         Shooter = user ?? gunUid,
                         Target = gun.Target,
                     };

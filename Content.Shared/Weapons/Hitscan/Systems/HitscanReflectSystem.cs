@@ -8,25 +8,23 @@ namespace Content.Shared.Weapons.Hitscan.Systems;
 
 public sealed class HitscanReflectSystem : EntitySystem
 {
-    [Dependency] private readonly IRobustRandom _random = default!;
-
     public override void Initialize()
     {
         base.Initialize();
 
-        SubscribeLocalEvent<HitscanReflectComponent, HitscanHitEntityEvent>(OnHitscanHit);
+        SubscribeLocalEvent<HitscanReflectComponent, HitscanRaycastFiredEvent>(OnHitscanHit);
     }
 
-    private void OnHitscanHit(Entity<HitscanReflectComponent> hitscan, ref HitscanHitEntityEvent args)
+    private void OnHitscanHit(Entity<HitscanReflectComponent> hitscan, ref HitscanRaycastFiredEvent args)
     {
-        if (hitscan.Comp.ReflectiveType == ReflectType.None)
+        if (hitscan.Comp.ReflectiveType == ReflectType.None || args.HitEntity == null)
             return;
 
         if (hitscan.Comp.CurrentReflections >= hitscan.Comp.MaxReflections)
             return;
 
-        var ev = new HitScanReflectAttemptEvent(args.Shooter, args.GunUid, hitscan.Comp.ReflectiveType, args.ShotDirection, false);
-        RaiseLocalEvent(args.HitEntity, ref ev);
+        var ev = new HitScanReflectAttemptEvent(args.Shooter, args.Gun, hitscan.Comp.ReflectiveType, args.ShotDirection, false);
+        RaiseLocalEvent(args.HitEntity.Value, ref ev);
 
         if (!ev.Reflected)
             return;
@@ -35,16 +33,16 @@ public sealed class HitscanReflectSystem : EntitySystem
 
         args.Canceled = true;
 
-        var fromEffect = Transform(args.HitEntity).Coordinates;
+        var fromEffect = Transform(args.HitEntity.Value).Coordinates;
 
-        var evnt = new HitscanFiredEvent
+        var hitFiredEvent = new HitscanTraceEvent
         {
             FromCoordinates = fromEffect,
             ShotDirection = ev.Direction,
-            GunUid = args.GunUid,
-            Shooter = args.HitEntity,
+            Gun = args.Gun,
+            Shooter = args.HitEntity.Value,
         };
 
-        RaiseLocalEvent(hitscan, ref evnt);
+        RaiseLocalEvent(hitscan, ref hitFiredEvent);
     }
 }

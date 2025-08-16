@@ -12,14 +12,14 @@ public sealed class HitscanStunSystem : EntitySystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<HitscanStunComponent, HitscanHitEntityEvent>(OnHitscanHit, after: [ typeof(HitscanReflectSystem) ]);
+        SubscribeLocalEvent<HitscanStaminaDamageComponent, HitscanRaycastFiredEvent>(OnHitscanHit, after: [ typeof(HitscanReflectSystem) ]);
     }
 
-    private void OnHitscanHit(Entity<HitscanStunComponent> hitscan, ref HitscanHitEntityEvent args)
+    private void OnHitscanHit(Entity<HitscanStaminaDamageComponent> hitscan, ref HitscanRaycastFiredEvent args)
     {
-        if (args.Canceled)
+        if (args.Canceled || args.HitEntity == null)
             return;
 
-        _stamina.TakeStaminaDamage(args.HitEntity, hitscan.Comp.StaminaDamage, source: args.Shooter);
+        _stamina.TakeStaminaDamage(args.HitEntity.Value, hitscan.Comp.StaminaDamage, source: args.Shooter);
     }
 }

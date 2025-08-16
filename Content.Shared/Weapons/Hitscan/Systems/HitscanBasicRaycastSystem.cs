@@ -2,12 +2,12 @@ using System.Linq;
 using Content.Shared.Administration.Logs;
 using Content.Shared.Damage.Components;
 using Content.Shared.Database;
-using Content.Shared.Physics;
 using Content.Shared.Weapons.Hitscan.Components;
 using Content.Shared.Weapons.Hitscan.Events;
 using Robust.Shared.Containers;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Systems;
+using Robust.Shared.Utility;
 
 namespace Content.Shared.Weapons.Hitscan.Systems;
 
@@ -22,59 +22,42 @@ public sealed class HitscanBasicRaycastSystem : EntitySystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<HitscanBasicRaycastComponent, HitscanFiredEvent>(OnHitscanFired);
+        SubscribeLocalEvent<HitscanBasicRaycastComponent, HitscanTraceEvent>(OnHitscanFired);
     }
 
-    private void OnHitscanFired(Entity<HitscanBasicRaycastComponent> hitscan, ref HitscanFiredEvent args)
+    private void OnHitscanFired(Entity<HitscanBasicRaycastComponent> ent, ref HitscanTraceEvent args)
     {
         var mapCords = _transform.ToMapCoordinates(args.FromCoordinates);
-        var ray = new CollisionRay(mapCords.Position, args.ShotDirection, (int) CollisionGroup.Opaque);
-        var rayCastResults = _physics.IntersectRay(mapCords.MapId, ray, hitscan.Comp.MaxDistance, args.Shooter, false).ToList();
+        var ray = new CollisionRay(mapCords.Position, args.ShotDirection, (int) ent.Comp.CollisionMask);
+        var rayCastResults = _physics.IntersectRay(mapCords.MapId, ray, ent.Comp.MaxDistance, args.Shooter, false).ToList();
 
-        RayCastResults? result = null;
+        var target = args.Target;
+        // If you are in a container, use the raycast result
+        // Otherwise:
+        //  1.) Hit the first entity that you targeted.
+        //  2.) Hit the first entity that doesn't require you to aim at it specifically to be hit.
+        var result = _container.IsEntityOrParentInContainer(args.Shooter)
+            ? rayCastResults.FirstOrNull()
+            : rayCastResults.FirstOrNull(hit => hit.HitEntity == target
+                                                || CompOrNull<RequireProjectileTargetComponent>(hit.HitEntity)?.Active != true);
 
-        if (rayCastResults.Any())
-            result = rayCastResults[0];
-
-        // Check if laser is shot from in a container
-        if (!_container.IsEntityOrParentInContainer(args.Shooter))
+        var trace = new HitscanRaycastFiredEvent
         {
-            // Checks if the laser should pass over unless targeted by its user
-            foreach (var collide in rayCastResults)
-            {
-                if (collide.HitEntity != args.Target && CompOrNull<RequireProjectileTargetComponent>(collide.HitEntity)?.Active == true)
-                    continue;
-
-                result = collide;
-                break;
-            }
-        }
-
-        var raycastEvent = new HitscanRaycastResultsEvent
-        {
-            RaycastResults = result,
-            DistanceTried = hitscan.Comp.MaxDistance,
             FromCoordinates = args.FromCoordinates,
             ShotDirection = args.ShotDirection,
+            Gun = args.Gun,
+            Shooter = args.Shooter,
+            HitEntity = result?.HitEntity,
+            DistanceTried = result?.Distance ?? ent.Comp.MaxDistance,
         };
 
-        RaiseLocalEvent(hitscan, ref raycastEvent);
+        RaiseLocalEvent(ent, ref trace);
 
-        if (result == null)
+        if (result?.HitEntity == null)
             return;
 
-        var hitEvent = new HitscanHitEntityEvent
-        {
-            FromCoordinates = args.FromCoordinates,
-            ShotDirection = args.ShotDirection,
-            GunUid = args.GunUid,
-            Shooter = args.Shooter,
-            HitEntity = result.Value.HitEntity,
-        };
-
-        RaiseLocalEvent(hitscan, ref hitEvent);
-
-        _log.Add(LogType.HitScanHit, $"{ToPrettyString(args.Shooter):user} hit {hitEvent.HitEntity:target} using hitscan.");
-
+        _log.Add(LogType.HitScanHit,
+            $"{ToPrettyString(args.Shooter):user} hit {ToPrettyString(result.Value.HitEntity):target}"
+            + $" using {ToPrettyString(args.Gun):entity}.");
     }
 }

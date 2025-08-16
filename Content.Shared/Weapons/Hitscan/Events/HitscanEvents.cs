@@ -1,14 +1,14 @@
 using System.Numerics;
 using Robust.Shared.Map;
-using Robust.Shared.Physics;
 
 namespace Content.Shared.Weapons.Hitscan.Events;
 
 /// <summary>
-/// Raised on the hitscan entity when "fired". This could be from reflections or from the gun.
+/// Raised on the hitscan entity when "fired". This could be from reflections or from the gun. This is the catalyst that
+/// other systems will listen for to actually shoot the gun.
 /// </summary>
 [ByRefEvent]
-public record struct HitscanFiredEvent
+public record struct HitscanTraceEvent
 {
     /// <summary>
     /// Location the hitscan was fired from.
@@ -16,31 +16,32 @@ public record struct HitscanFiredEvent
     public EntityCoordinates FromCoordinates;
 
     /// <summary>
-    /// Direction that was fired.
+    /// Direction that the ray was fired towards.
     /// </summary>
     public Vector2 ShotDirection;
 
     /// <summary>
-    /// Gun that was fired.
+    /// Gun that was fired - this will always be the original weapon even if reflected.
     /// </summary>
-    public EntityUid GunUid;
+    public EntityUid Gun;
 
     /// <summary>
-    /// Who shot the gun. Could be the gun itself!
+    /// Who shot the gun. Could be the gun itself or the entity that reflected the shot!
     /// </summary>
     public EntityUid Shooter;
 
     /// <summary>
-    /// Target that was being aimed at (Not necessarly hit)
+    /// Target that was being aimed at (Not necessarily hit).
     /// </summary>
     public EntityUid? Target;
 }
 
 /// <summary>
-/// Gets raised on a hitscan laser if it has hit an entity.
+/// Results of a hitscan raycast and will be raised on the raycast entity on itself. Stuff like the reflection system
+/// or damage system will listen for this.
 /// </summary>
 [ByRefEvent]
-public record struct HitscanHitEntityEvent
+public record struct HitscanRaycastFiredEvent
 {
     /// <summary>
     /// Location the hitscan was fired from.
@@ -48,54 +49,33 @@ public record struct HitscanHitEntityEvent
     public EntityCoordinates FromCoordinates;
 
     /// <summary>
-    /// Direction that was fired.
+    /// Direction that the ray was fired towards.
     /// </summary>
     public Vector2 ShotDirection;
 
     /// <summary>
     /// The entity that got hit, if null the raycast didn't hit anyone.
     /// </summary>
-    public EntityUid HitEntity;
+    public EntityUid? HitEntity;
 
     /// <summary>
     /// Gun that fired the raycast.
     /// </summary>
-    public EntityUid GunUid;
+    public EntityUid Gun;
 
     /// <summary>
-    /// Who shot the gun. Could be the gun itself!
+    /// Who shot the gun. Could be the gun itself or the entity that reflected the shot!
     /// </summary>
     public EntityUid Shooter;
-
-    /// <summary>
-    /// Was this canceled? Used for stuff like reflections.
-    /// </summary>
-    public bool Canceled;
-}
-
-/// <summary>
-/// Results of a hitscan raycast - useful for visuals and things that rely on more than just what entity was hit.
-/// </summary>
-[ByRefEvent]
-public record struct HitscanRaycastResultsEvent
-{
-    /// <summary>
-    /// Results of the raycast - if null, the raycast didn't hit anything!
-    /// </summary>
-    public RayCastResults? RaycastResults;
-
-    /// <summary>
-    /// Location the hitscan was fired from.
-    /// </summary>
-    public EntityCoordinates FromCoordinates;
-
-    /// <summary>
-    /// Direction that was fired.
-    /// </summary>
-    public Vector2 ShotDirection;
 
     /// <summary>
     /// How far the hitscan tried to go to intersect with a target.
     /// </summary>
     public float DistanceTried;
+
+    /// <summary>
+    /// Set to true the hitscan is cancelled (e.g. due to reflection).
+    /// Cancelled hitscans should not apply damage or trigger follow-up effects.
+    /// </summary>
+    public bool Canceled;
 }
