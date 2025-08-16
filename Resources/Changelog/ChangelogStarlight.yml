@@ -11838,5 +11838,12 @@ Entries:
   id: 99500
   time: '2025-08-16T08:09:16.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/995
+- author: IQlvlZero
+  changes:
+  - message: added the very original Killa Tamale Plush
+    type: Add
+  id: 102200
+  time: '2025-08-16T08:11:37.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1022
 Order: -1
 
