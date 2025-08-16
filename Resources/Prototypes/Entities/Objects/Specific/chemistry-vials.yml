@@ -1,56 +1,70 @@
-# TODO: Have a seperate lid state that can be popped on and off (not as a seperate item) that changes whether the vial can be spilled or not.
-
 - type: entity
-  name: vial
+  abstract: true
   parent: BaseItem
-  id: BaseChemistryEmptyVial
-  description: A small vial.
+  id: BaseChemistryVial
   components:
   - type: Tag
     tags:
     - Trash
-    - CentrifugeCompatible
+    - CentrifugeCompatible # unique feature of vials
+  - type: TrashOnSolutionEmpty
+    solution: &sol beaker
   - type: PhysicalComposition
     materialComposition:
       Glass: 25
   - type: FitsInDispenser
-    solution: beaker
+    solution: *sol
   - type: SpaceGarbage
   - type: Sprite
     sprite: Objects/Specific/Chemistry/vial.rsi
     layers:
-      - state: vial-1
-      - state: vial-1-1
-        map: ["enum.SolutionContainerLayers.Fill"]
-        visible: false
+    - state: vial-1-closed
+      map: ["enum.OpenableVisuals.Layer"]
+    - state: vial-1-1
+      map: ["enum.SolutionContainerLayers.Fill"]
+      visible: false
   - type: Appearance
   - type: SolutionContainerVisuals
     maxFillLevels: 6
     fillBaseName: vial-1-
     inHandsMaxFillLevels: 4
     inHandsFillBaseName: -fill-
-  - type: Drink
-    solution: beaker
+  - type: GenericVisualizer
+    visuals:
+      enum.OpenableVisuals.Opened:
+        enum.OpenableVisuals.Layer:
+          True: {state: "vial-1-open"}
+          False: {state: "vial-1-closed"}
+  - type: Openable
+    sound:
+      collection: bottleOpenSounds
+    closeable: true
+    closeSound:
+      collection: bottleCloseSounds
+  - type: Edible
+    edible: Drink
+    solution: *sol
+    destroyOnEmpty: false
   - type: SolutionContainerManager
     solutions:
       beaker:
         maxVol: 30
   - type: MixableSolution
-    solution: beaker
+    solution: *sol
   - type: RefillableSolution
-    solution: beaker
+    solution: *sol
   - type: DrainableSolution
-    solution: beaker
+    solution: *sol
   - type: ExaminableSolution
-    solution: beaker
+    solution: *sol
     exactVolume: true
   - type: DrawableSolution
-    solution: beaker
+    solution: *sol
   - type: SolutionTransfer
     maxTransferAmount: 30
     canChangeTransferAmount: true
   - type: SolutionItemStatus
-    solution: beaker
+    solution: *sol
   - type: UserInterface
     interfaces:
       enum.TransferAmountUiKey.Key:
@@ -58,16 +72,12 @@
   - type: Item
     size: Tiny
     sprite: Objects/Specific/Chemistry/vial.rsi
-    shape:
-    - 0,0,0,0
   - type: MeleeWeapon
     soundNoDamage:
       path: "/Audio/Effects/Fluids/splat.ogg"
     damage:
       types:
         Blunt: 0
-  - type: TrashOnSolutionEmpty
-    solution: beaker
   - type: StaticPrice
     price: 100
   - type: DamageOnLand
@@ -80,6 +90,7 @@
         Blunt: 2
   - type: Damageable
     damageContainer: Inorganic
+    damageModifierSet: FlimsyGlass
   - type: Destructible
     thresholds:
     - trigger:
@@ -101,12 +112,74 @@
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
   - type: Spillable
-    solution: beaker
+    solution: *sol
   - type: DnaSubstanceTrace
 
+## entities
+
 - type: entity
-  id: VestineChemistryVial
+  parent: BaseChemistryVial
+  id: BaseChemistryEmptyVial # TODO remove base from the id
+  name: vial
+  description: A small vial.
+
+- type: entity
+  parent: BaseChemistryVial
+  id: ChemistryEmptyVialSmall
+  name: mini vial
+  description: A smaller vial.
+  components:
+  - type: Sprite
+    sprite: Objects/Specific/Chemistry/vial.rsi
+    layers:
+    - state: vial-2-closed
+      map: ["enum.OpenableVisuals.Layer"]
+    - state: vial-2-1
+      map: ["enum.SolutionContainerLayers.Fill"]
+      visible: false
+  - type: SolutionContainerVisuals
+    maxFillLevels: 5
+    fillBaseName: vial-2-
+    inHandsMaxFillLevels: 4
+    inHandsFillBaseName: -fill-
+  - type: GenericVisualizer
+    visuals:
+      enum.OpenableVisuals.Opened:
+        enum.OpenableVisuals.Layer:
+          True: {state: "vial-2-open"}
+          False: {state: "vial-2-closed"}
+  - type: SolutionContainerManager
+    solutions:
+      beaker:
+        maxVol: 10
+  - type: SolutionTransfer
+    maxTransferAmount: 10
+    canChangeTransferAmount: true
+  - type: StaticPrice
+    price: 50
+  - type: PhysicalComposition
+    materialComposition:
+      Glass: 10
+  - type: Destructible # Remove glass spawn
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 10 # smaller so weaker
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          collection: GlassBreak
+          params:
+            volume: -4
+      - !type:SpillBehavior { }
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+
+## Reagent filled
+
+- type: entity
   parent: BaseChemistryEmptyVial
+  id: VestineChemistryVial
   suffix: vestine
   components:
   - type: Label
@@ -118,12 +191,13 @@
         reagents:
         - ReagentId: Vestine
           Quantity: 30
-  - type: Tag
-    tags: []
+  - type: Tag # Remove trash tag
+    tags:
+    - CentrifugeCompatible
 
 - type: entity
+  parent: ChemistryEmptyVialSmall
   id: RadiumChemistryVial
-  parent: BaseChemistryEmptyVial
   suffix: radium
   components:
   - type: Label
@@ -131,14 +205,17 @@
   - type: SolutionContainerManager
     solutions:
       beaker:
-        maxVol: 5
+        maxVol: 10
         reagents:
           - ReagentId: Radium
             Quantity: 5
+  - type: Tag # Remove trash tag
+    tags:
+    - CentrifugeCompatible
 
 - type: entity
+  parent: ChemistryEmptyVialSmall
   id: ChlorineChemistryVial
-  parent: BaseChemistryEmptyVial
   suffix: chlorine
   components:
   - type: Label
@@ -146,14 +223,17 @@
   - type: SolutionContainerManager
     solutions:
       beaker:
-        maxVol: 5
+        maxVol: 10
         reagents:
           - ReagentId: Chlorine
             Quantity: 5
+  - type: Tag # Remove trash tag
+    tags:
+    - CentrifugeCompatible
 
 - type: entity
+  parent: ChemistryEmptyVialSmall
   id: PlasmaChemistryVial
-  parent: BaseChemistryEmptyVial
   suffix: plasma
   components:
   - type: Label
@@ -165,3 +245,6 @@
         reagents:
           - ReagentId: Plasma
             Quantity: 10
+  - type: Tag # Remove trash tag
+    tags:
+    - CentrifugeCompatible
