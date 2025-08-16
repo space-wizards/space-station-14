@@ -1,0 +1,14 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Original icon taken from https://github.com/ss220-space/Paradise/blob/master220/icons/mob/screen_alert.dmi, modified by Mocho",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "offer"
+    }
+  ]
+}
