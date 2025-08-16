@@ -46,9 +46,11 @@ public abstract partial class SharedDoAfterSystem : EntitySystem
         if (!TryComp<DoAfterComponent>(args.Performer, out var userDoAfter))
             return;
 
-        var actionDoAfter = ent.Comp;
+        // Check DoAfterArgs Settings
+        if (!TryComp<DoAfterArgsComponent>(ent.Owner,  out var doAfterArgsComp))
+            return;
 
-        var delay = actionDoAfter.Delay;
+        var delay = doAfterArgsComp.Delay;
 
         var actionDoAfterEvent = new ActionDoAfterEvent(args.Performer, args.OriginalUseDelay, args.Input);
 
@@ -56,19 +58,19 @@ public abstract partial class SharedDoAfterSystem : EntitySystem
 
         var doAfterArgs = new DoAfterArgs(EntityManager, args.Performer, delay, actionDoAfterEvent, ent.Owner, args.Performer)
         {
-            AttemptFrequency = actionDoAfter.AttemptFrequency,
-            Broadcast = actionDoAfter.Broadcast,
-            Hidden = actionDoAfter.Hidden,
-            NeedHand = actionDoAfter.NeedHand,
-            BreakOnHandChange = actionDoAfter.BreakOnHandChange,
-            BreakOnDropItem = actionDoAfter.BreakOnDropItem,
-            BreakOnMove = actionDoAfter.BreakOnMove,
-            BreakOnWeightlessMove = actionDoAfter.BreakOnWeightlessMove,
-            MovementThreshold = actionDoAfter.MovementThreshold,
-            DistanceThreshold = actionDoAfter.DistanceThreshold,
-            BreakOnDamage = actionDoAfter.BreakOnDamage,
-            DamageThreshold = actionDoAfter.DamageThreshold,
-            RequireCanInteract = actionDoAfter.RequireCanInteract
+            AttemptFrequency = doAfterArgsComp.AttemptFrequency,
+            Broadcast = doAfterArgsComp.Broadcast,
+            Hidden = doAfterArgsComp.Hidden,
+            NeedHand = doAfterArgsComp.NeedHand,
+            BreakOnHandChange = doAfterArgsComp.BreakOnHandChange,
+            BreakOnDropItem = doAfterArgsComp.BreakOnDropItem,
+            BreakOnMove = doAfterArgsComp.BreakOnMove,
+            BreakOnWeightlessMove = doAfterArgsComp.BreakOnWeightlessMove,
+            MovementThreshold = doAfterArgsComp.MovementThreshold,
+            DistanceThreshold = doAfterArgsComp.DistanceThreshold,
+            BreakOnDamage = doAfterArgsComp.BreakOnDamage,
+            DamageThreshold = doAfterArgsComp.DamageThreshold,
+            RequireCanInteract = doAfterArgsComp.RequireCanInteract
         };
 
         TryStartDoAfter(doAfterArgs, userDoAfter);
@@ -160,7 +162,6 @@ public abstract partial class SharedDoAfterSystem : EntitySystem
         }
 
         comp.NextId = state.NextId;
-        comp.DelayReduction = state.DelayReduction;
         DebugTools.Assert(!comp.DoAfters.ContainsKey(comp.NextId));
 
         if (comp.DoAfters.Count == 0)

@@ -87,13 +87,13 @@ public abstract class SharedActionsSystem : EntitySystem
 
     private void OnActionDoAfterAttempt(Entity<ActionComponent> ent, ref ActionDoAfterEvent args)
     {
-        if (!TryComp<DoAfterComponent>(ent, out var actionDoAfter))
+        if (!TryComp<DoAfterComponent>(ent, out var actionDoAfter) || !TryComp<DoAfterArgsComponent>(ent, out var actionDoAfterArgsComp))
             return;
 
         Entity<ActionComponent?>? action = (ent, ent);
 
         // If this doafter is on repeat and was cancelled, start use delay as expected
-        if (args.Cancelled && actionDoAfter.Repeat)
+        if (args.Cancelled && actionDoAfterArgsComp.Repeat)
         {
             SetUseDelay(action, args.OriginalUseDelay);
             RemoveCooldown(action);
@@ -102,10 +102,10 @@ public abstract class SharedActionsSystem : EntitySystem
             return;
         }
 
-        args.Repeat = actionDoAfter.Repeat;
+        args.Repeat = actionDoAfterArgsComp.Repeat;
 
         // Set the use delay to 0 so this can repeat properly
-        if (actionDoAfter.Repeat)
+        if (actionDoAfterArgsComp.Repeat)
         {
             SetUseDelay(action, TimeSpan.FromSeconds(DoAfterRepeatUseDelay));
         }
@@ -114,8 +114,8 @@ public abstract class SharedActionsSystem : EntitySystem
             return;
 
         // Post original doafter, reduce the time on it now for other casts if ables
-        if (actionDoAfter.DelayReduction != null)
-            args.Args.Delay = actionDoAfter.DelayReduction.Value;
+        if (actionDoAfterArgsComp.DelayReduction != null)
+            args.Args.Delay = actionDoAfterArgsComp.DelayReduction.Value;
 
         // Validate again for charges, blockers, etc
         if (TryPerformAction(args.Input, args.Performer, skipDoActionRequest: true))
