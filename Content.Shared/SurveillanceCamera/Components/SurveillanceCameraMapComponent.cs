@@ -11,12 +11,19 @@ public sealed partial class SurveillanceCameraMapComponent : Component
     public Dictionary<NetEntity, CameraMarker> Cameras = new();
 }
 
-[Serializable, NetSerializable]
-public struct CameraMarker
+[Serializable, NetSerializable, DataDefinition]
+public partial struct CameraMarker
 {
+    [DataField]
     public Vector2 Position;
+
+    [DataField]
     public bool Active;
+
+    [DataField]
     public string Address;
+
+    [DataField]
     public string Subnet;
 }
 
