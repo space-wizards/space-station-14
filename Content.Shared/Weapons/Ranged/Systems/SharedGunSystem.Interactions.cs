@@ -112,30 +112,12 @@ public abstract partial class SharedGunSystem
 
     private void OnGunSelected(EntityUid uid, GunComponent component, HandSelectedEvent args)
     {
-        if (Timing.ApplyingState)
-             return;
+        if (!component.ResetOnHandSelected)
+            return;
 
         if (component.FireRateModified <= 0)
             return;
 
-        var fireDelay = 1f / component.FireRateModified;
-        if (fireDelay.Equals(0f))
-            return;
-
-        if (!component.ResetOnHandSelected)
-            return;
-
-        if (Paused(uid))
-            return;
-
-        // If someone swaps to this weapon then reset its cd.
-        var curTime = Timing.CurTime;
-        var minimum = curTime + TimeSpan.FromSeconds(fireDelay);
-
-        if (minimum < component.NextFire)
-            return;
-
-        component.NextFire = minimum;
-        Dirty(uid, component);
+        AddFireDelay(uid, TimeSpan.FromSeconds(1f / component.FireRateModified));
     }
 }
