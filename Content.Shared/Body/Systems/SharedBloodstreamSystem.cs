@@ -312,11 +312,16 @@ public abstract class SharedBloodstreamSystem : EntitySystem
 
     private void OnMetabolismExclusion(Entity<BloodstreamComponent> ent, ref MetabolismExclusionEvent args)
     {
+        // We explicitly want the exactly blood type that way consuming others blood makes us sick
+        var referenceBlood = new ReagentId(ent.Comp.BloodReagent, GetEntityBloodData(ent.Owner));
+
         // Copy to list again to avoid modifying during enumeration!
         foreach (var reagentQuantity in args.ReagentList.ToList())
         {
-            if (reagentQuantity.Reagent.Prototype == ent.Comp.BloodReagent.Id)
-                args.ReagentList.Remove(reagentQuantity);
+            if (reagentQuantity.Reagent != referenceBlood)
+                continue;
+
+            args.ReagentList.Remove(reagentQuantity);
         }
     }
 
@@ -336,6 +341,7 @@ public abstract class SharedBloodstreamSystem : EntitySystem
 
         for (var i = bloodSolution.Contents.Count - 1; i >= 0; i--)
         {
+            // Unlike with the metabolism exclusion, we treat all blood as blood, so long as it's "close enough"
             var (reagentId, quantity) = bloodSolution.Contents[i];
             if (reagentId.Prototype == entity.Comp.BloodReagent)
             {

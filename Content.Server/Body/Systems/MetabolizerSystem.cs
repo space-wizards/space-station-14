@@ -140,6 +140,9 @@ namespace Content.Server.Body.Systems
             var ev = new MetabolismExclusionEvent(list);
             RaiseLocalEvent(solutionEntityUid.Value, ref ev);
 
+            if (ev.ReagentList.Count == 0)
+                return;
+
             // randomize the reagent list so we don't have any weird quirks
             // like alphabetical order or insertion order mattering for processing
             _random.Shuffle(ev.ReagentList);
