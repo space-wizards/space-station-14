@@ -1766,7 +1766,7 @@
   - type: ComponentToggler
     components:
     - type: DatasetVocalizer
-      pack: PlushiesKilla
+      dataset: PlushiesKilla
     - type: TextToSpeech
       voice: heavy
 
