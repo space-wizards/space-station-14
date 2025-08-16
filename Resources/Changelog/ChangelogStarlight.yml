@@ -11852,5 +11852,26 @@ Entries:
   id: 122800
   time: '2025-08-16T08:14:39.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/1228
+- author: Rinary
+  changes:
+  - message: Added working operating computer(body scanner).
+    type: Add
+  id: 131400
+  time: '2025-08-16T08:17:55.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1314
+- author: Rinary
+  changes:
+  - message: Now when you open incision, patient starts bleeding.
+    type: Tweak
+  id: 131401
+  time: '2025-08-16T08:17:55.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1314
+- author: Rinary
+  changes:
+  - message: Operation table now don't healing patient.
+    type: Tweak
+  id: 131402
+  time: '2025-08-16T08:17:55.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1314
 Order: -1
 
