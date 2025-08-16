@@ -145,7 +145,7 @@ public sealed class MaterialArbitrageTest
 
         Dictionary<string, double> priceCache = new();
 
-        Dictionary<string, (Dictionary<string, int> Ents, Dictionary<string, int> Mats)> spawnedOnDestroy = new();
+        Dictionary<string, (Dictionary<string, float> Ents, Dictionary<string, float> Mats)> spawnedOnDestroy = new();
 
         // cache the compositions of entities
         // If the entity is refineable (i.e. glass shared can be turned into glass, we take the greater of the two compositions.
@@ -217,8 +217,8 @@ public sealed class MaterialArbitrageTest
 
             var comp = (DestructibleComponent) destructible.Component;
 
-            var spawnedEnts = new Dictionary<string, int>();
-            var spawnedMats = new Dictionary<string, int>();
+            var spawnedEnts = new Dictionary<string, float>();
+            var spawnedMats = new Dictionary<string, float>();
 
             // This test just blindly assumes that ALL spawn entity behaviors get triggered. In reality, some entities
             // might only trigger a subset. If that starts being a problem, this test either needs fixing or needs to
@@ -233,14 +233,14 @@ public sealed class MaterialArbitrageTest
 
                     foreach (var (key, value) in spawn.Spawn)
                     {
-                        spawnedEnts[key] = spawnedEnts.GetValueOrDefault(key) + value.Max;
+                        spawnedEnts[key] = spawnedEnts.GetValueOrDefault(key) + (float)(value.Min + value.Max) / 2;
 
                         if (!compositions.TryGetValue(key, out var composition))
                             continue;
 
                         foreach (var (matId, amount) in composition)
                         {
-                            spawnedMats[matId] = value.Max * amount + spawnedMats.GetValueOrDefault(matId);
+                            spawnedMats[matId] = (float)(value.Min + value.Max) / 2 * amount + spawnedMats.GetValueOrDefault(matId);
                         }
                     }
                 }
@@ -451,7 +451,7 @@ public sealed class MaterialArbitrageTest
         await server.WaitPost(() => mapSystem.DeleteMap(testMap.MapId));
         await pair.CleanReturnAsync();
 
-        async Task<double> GetSpawnedPrice(Dictionary<string, int> ents)
+        async Task<double> GetSpawnedPrice(Dictionary<string, float> ents)
         {
             double price = 0;
             foreach (var (id, num) in ents)
