@@ -1,0 +1,142 @@
+using Content.Server.Atmos.EntitySystems;
+using Content.Shared.Damage;
+using Content.Shared.FixedPoint;
+
+namespace Content.Server.Atmos.Components;
+
+/// <summary>
+/// Entities that have this component will have damage done to them depending on the local pressure
+/// environment that they reside in.
+///
+/// Atmospherics.DeltaPressure batch-processes entities with this component in a list on
+/// the grid's <see cref="GridAtmosphereComponent"/>.
+/// The entities are automatically added and removed from this list, and automatically
+/// added on initialization if <see cref="AutoJoinProcessingList"/> is set to true.
+/// </summary>
+/// <remarks><para>Systems wanting to change these values should go through the <see cref="DeltaPressureSystem"/> API.</para>
+/// <para>Note that the entity should have an <see cref="AirtightComponent"/> and be a grid structure.</para></remarks>
+[RegisterComponent]
+public sealed partial class DeltaPressureComponent : Component
+{
+    /// <summary>
+    /// Whether the entity is allowed to take pressure damage or not.
+    /// </summary>
+    [DataField(readOnly: true)]
+    [Access(typeof(DeltaPressureSystem), typeof(AtmosphereSystem))]
+    public bool InProcessingList;
+
+    /// <summary>
+    /// Whether this entity is currently taking damage.
+    /// </summary>
+    [DataField(readOnly: true)]
+    [Access(typeof(DeltaPressureSystem), typeof(AtmosphereSystem))]
+    public bool IsTakingDamage;
+
+    /// <summary>
+    /// Whether the entity should automatically join the processing list on the grid's <see cref="GridAtmosphereComponent"/>
+    /// for delta pressure processing.
+    /// If this is set to false, the entity will not be automatically added to the list.
+    /// </summary>
+    [DataField]
+    public bool AutoJoinProcessingList = true;
+
+    /// <summary>
+    /// The percent chance that the entity will take damage each atmos tick,
+    /// when the entity is above the damage threshold.
+    /// Makes it so that windows don't all break in one go.
+    /// Float is from 0 to 1, where 1 means 100% chance.
+    /// If this is set to 0, the entity will never take damage.
+    /// </summary>
+    [DataField]
+    public float RandomDamageChance = 1f;
+
+    /// <summary>
+    /// The base damage applied to the entity per atmos tick when it is above the damage threshold.
+    /// This damage will be scaled as defined by the <see cref="DeltaPressureDamageScalingType"/> enum
+    /// depending on the current effective pressure this entity is experiencing.
+    /// Note that this damage will scale depending on the pressure above the minimum pressure,
+    /// not at the current pressure.
+    /// </summary>
+    [DataField]
+    public DamageSpecifier BaseDamage = new()
+    {
+        DamageDict = new Dictionary<string, FixedPoint2>
+        {
+            { "Structural", 10 },
+        },
+    };
+
+    /// <summary>
+    /// If the entity is fulfilling both minimum pressure requirements, then this entity will stack damage.
+    /// </summary>
+    [DataField]
+    public bool StackDamage;
+
+    /// <summary>
+    /// The minimum pressure in kPa at which the entity will start taking damage.
+    /// This doesn't depend on the difference in pressure.
+    /// The entity will start to take damage if it is exposed to this pressure.
+    /// </summary>
+    [DataField]
+    public float MinPressure = 10000;
+
+    /// <summary>
+    /// The minimum difference in pressure between any side required for the entity to start taking damage.
+    /// </summary>
+    [DataField]
+    public float MinPressureDelta = 7500;
+
+    /// <summary>
+    /// The maximum pressure at which damage will no longer scale.
+    /// If the effective pressure goes beyond this, the damage will be considered at this pressure.
+    /// </summary>
+    [DataField]
+    public float MaxEffectivePressure = 10000;
+
+    /// <summary>
+    /// Simple constant to affect the scaling behavior.
+    /// See comments in the <see cref="DeltaPressureDamageScalingType"/> types to see how this affects scaling.
+    /// </summary>
+    [DataField]
+    public float ScalingPower = 1;
+
+    /// <summary>
+    /// Defines the scaling behavior for the damage.
+    /// </summary>
+    [DataField]
+    public DeltaPressureDamageScalingType ScalingType = DeltaPressureDamageScalingType.Threshold;
+}
+
+/// <summary>
+/// An enum that defines how the damage dealt by the <see cref="DeltaPressureComponent"/> scales
+/// depending on the pressure experienced by the entity.
+/// The scaling is done on the effective pressure, which is the pressure above the minimum pressure.
+/// See https://www.desmos.com/calculator/9ctlq3zpnt for a visual representation of the scaling types.
+/// </summary>
+[Serializable]
+public enum DeltaPressureDamageScalingType : byte
+{
+    /// <summary>
+    /// Damage dealt will be constant as long as the minimum values are met.
+    /// Scaling power is ignored.
+    /// </summary>
+    Threshold,
+
+    /// <summary>
+    /// Damage dealt will be a linear function.
+    /// Scaling power determines the slope of the function.
+    /// </summary>
+    Linear,
+
+    /// <summary>
+    /// Damage dealt will be a logarithmic function.
+    /// Scaling power determines the base of the log.
+    /// </summary>
+    Log,
+
+    /// <summary>
+    /// Damage dealt will be an exponential function.
+    /// Scaling power determines the power of the exponent.
+    /// </summary>
+    Exponential,
+}
