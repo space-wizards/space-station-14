@@ -1,0 +1,321 @@
+- type: decal
+  id: stencil0
+  tags: ["station", "markings"]
+  sprite:
+    sprite: Decals/stencil.rsi
+    state: stencil0
+
+- type: decal
+  id: stencil1
+  tags: ["station", "markings"]
+  sprite:
+    sprite: Decals/stencil.rsi
+    state: stencil1
+
+- type: decal
+  id: stencil2
+  tags: ["station", "markings"]
+  sprite:
+    sprite: Decals/stencil.rsi
+    state: stencil2
+
+- type: decal
+  id: stencil3
+  tags: ["station", "markings"]
+  sprite:
+    sprite: Decals/stencil.rsi
+    state: stencil3
+
+- type: decal
+  id: stencil4
+  tags: ["station", "markings"]
+  sprite:
+    sprite: Decals/stencil.rsi
+    state: stencil4
+
+- type: decal
+  id: stencil5
+  tags: ["station", "markings"]
+  sprite:
+    sprite: Decals/stencil.rsi
+    state: stencil5
+
+- type: decal
+  id: stencil6
+  tags: ["station", "markings"]
+  sprite:
+    sprite: Decals/stencil.rsi
+    state: stencil6
+
+- type: decal
+  id: stencil7
+  tags: ["station", "markings"]
+  sprite:
+    sprite: Decals/stencil.rsi
+    state: stencil7
+
+- type: decal
+  id: stencil8
+  tags: ["station", "markings"]
+  sprite:
+    sprite: Decals/stencil.rsi
+    state: stencil8
+
+- type: decal
+  id: stencil9
+  tags: ["station", "markings"]
+  sprite:
+    sprite: Decals/stencil.rsi
+    state: stencil9
+
+- type: decal
+  id: stencilA
+  tags: ["station", "markings"]
+  sprite:
+    sprite: Decals/stencil.rsi
+    state: stencilA
+
+- type: decal
+  id: stencilB
+  tags: ["station", "markings"]
+  sprite:
+    sprite: Decals/stencil.rsi
+    state: stencilB
+
+- type: decal
+  id: stencilC
+  tags: ["station", "markings"]
+  sprite:
+    sprite: Decals/stencil.rsi
+    state: stencilC
+
+- type: decal
+  id: stencilD
+  tags: ["station", "markings"]
+  sprite:
+    sprite: Decals/stencil.rsi
+    state: stencilD
+
+- type: decal
+  id: stencilE
+  tags: ["station", "markings"]
+  sprite:
+    sprite: Decals/stencil.rsi
+    state: stencilE
+
+- type: decal
+  id: stencilF
+  tags: ["station", "markings"]
+  sprite:
+    sprite: Decals/stencil.rsi
+    state: stencilF
+
+- type: decal
+  id: stencilG
+  tags: ["station", "markings"]
+  sprite:
+    sprite: Decals/stencil.rsi
+    state: stencilG
+
+- type: decal
+  id: stencilH
+  tags: ["station", "markings"]
+  sprite:
+    sprite: Decals/stencil.rsi
+    state: stencilH
+
+- type: decal
+  id: stencilI
+  tags: ["station", "markings"]
+  sprite:
+    sprite: Decals/stencil.rsi
+    state: stencilI
+
+- type: decal
+  id: stencilJ
+  tags: ["station", "markings"]
+  sprite:
+    sprite: Decals/stencil.rsi
+    state: stencilJ
+
+- type: decal
+  id: stencilK
+  tags: ["station", "markings"]
+  sprite:
+    sprite: Decals/stencil.rsi
+    state: stencilK
+
+- type: decal
+  id: stencilL
+  tags: ["station", "markings"]
+  sprite:
+    sprite: Decals/stencil.rsi
+    state: stencilL
+
+- type: decal
+  id: stencilM
+  tags: ["station", "markings"]
+  sprite:
+    sprite: Decals/stencil.rsi
+    state: stencilM
+
+- type: decal
+  id: stencilN
+  tags: ["station", "markings"]
+  sprite:
+    sprite: Decals/stencil.rsi
+    state: stencilN
+
+- type: decal
+  id: stencilO
+  tags: ["station", "markings"]
+  sprite:
+    sprite: Decals/stencil.rsi
+    state: stencilO
+
+- type: decal
+  id: stencilP
+  tags: ["station", "markings"]
+  sprite:
+    sprite: Decals/stencil.rsi
+    state: stencilP
+
+- type: decal
+  id: stencilQ
+  tags: ["station", "markings"]
+  sprite:
+    sprite: Decals/stencil.rsi
+    state: stencilQ
+
+- type: decal
+  id: stencilR
+  tags: ["station", "markings"]
+  sprite:
+    sprite: Decals/stencil.rsi
+    state: stencilR
+
+- type: decal
+  id: stencilS
+  tags: ["station", "markings"]
+  sprite:
+    sprite: Decals/stencil.rsi
+    state: stencilS
+
+- type: decal
+  id: stencilT
+  tags: ["station", "markings"]
+  sprite:
+    sprite: Decals/stencil.rsi
+    state: stencilT
+
+- type: decal
+  id: stencilU
+  tags: ["station", "markings"]
+  sprite:
+    sprite: Decals/stencil.rsi
+    state: stencilU
+
+- type: decal
+  id: stencilV
+  tags: ["station", "markings"]
+  sprite:
+    sprite: Decals/stencil.rsi
+    state: stencilV
+
+- type: decal
+  id: stencilW
+  tags: ["station", "markings"]
+  sprite:
+    sprite: Decals/stencil.rsi
+    state: stencilW
+
+- type: decal
+  id: stencilX
+  tags: ["station", "markings"]
+  sprite:
+    sprite: Decals/stencil.rsi
+    state: stencilX
+
+- type: decal
+  id: stencilY
+  tags: ["station", "markings"]
+  sprite:
+    sprite: Decals/stencil.rsi
+    state: stencilY
+
+- type: decal
+  id: stencilZ
+  tags: ["station", "markings"]
+  sprite:
+    sprite: Decals/stencil.rsi
+    state: stencilZ
+
+- type: decal
+  id: stencil_Ampersand
+  tags: ["station", "markings"]
+  sprite:
+    sprite: Decals/stencil.rsi
+    state: stencil_Ampersand
+
+- type: decal
+  id: stencil_Asterix
+  tags: ["station", "markings"]
+  sprite:
+    sprite: Decals/stencil.rsi
+    state: stencil_Asterix
+
+- type: decal
+  id: stencil_Dash
+  tags: ["station", "markings"]
+  sprite:
+    sprite: Decals/stencil.rsi
+    state: stencil_Dash
+
+- type: decal
+  id: stencil_Equals
+  tags: ["station", "markings"]
+  sprite:
+    sprite: Decals/stencil.rsi
+    state: stencil_Equals
+
+- type: decal
+  id: stencil_Exclaim
+  tags: ["station", "markings"]
+  sprite:
+    sprite: Decals/stencil.rsi
+    state: stencil_Exclaim
+
+- type: decal
+  id: stencil_Hash
+  tags: ["station", "markings"]
+  sprite:
+    sprite: Decals/stencil.rsi
+    state: stencil_Hash
+
+- type: decal
+  id: stencil_Speso
+  tags: ["station", "markings"]
+  sprite:
+    sprite: Decals/stencil.rsi
+    state: stencil_Speso
+
+- type: decal
+  id: stencil_Multiocular
+  tags: ["station", "markings"]
+  sprite:
+    sprite: Decals/stencil.rsi
+    state: stencil_Multiocular
+
+- type: decal
+  id: stencil_Plus
+  tags: ["station", "markings"]
+  sprite:
+    sprite: Decals/stencil.rsi
+    state: stencil_Plus
+
+- type: decal
+  id: stencil_Question
+  tags: ["station", "markings"]
+  sprite:
+    sprite: Decals/stencil.rsi
+    state: stencil_Question
