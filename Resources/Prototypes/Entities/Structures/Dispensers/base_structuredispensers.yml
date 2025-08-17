@@ -78,6 +78,7 @@
   - type: EmptyOnMachineDeconstruct
     containers:
       - storagebase
+      - beakerSlot
   # Starlight-end
   
 # Starlight-start: power cell chem dispenser
