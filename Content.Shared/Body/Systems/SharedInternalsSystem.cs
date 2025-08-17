@@ -277,7 +277,7 @@ public abstract class SharedInternalsSystem : EntitySystem
             _gasTank.CanConnectToInternals((backEntity.Value, backGasTank)))
         {
             found = (backEntity.Value, backGasTank);
-            if (!TryComp<JetpackComponent>(backEntity.Value, out var _))
+            if (!HasComp<JetpackComponent>(backEntity.Value))
             {
                 return found;
             }
@@ -288,7 +288,7 @@ public abstract class SharedInternalsSystem : EntitySystem
             _gasTank.CanConnectToInternals((entity.Value, gasTank)))
         {
             found ??= (entity.Value, gasTank);
-            if (!TryComp<JetpackComponent>(entity.Value, out var _))
+            if (!HasComp<JetpackComponent>(entity.Value))
             {
                 return (entity.Value, gasTank);
             }
@@ -299,7 +299,7 @@ public abstract class SharedInternalsSystem : EntitySystem
             if (TryComp(item, out gasTank) && _gasTank.CanConnectToInternals((item, gasTank)))
             {
                 found ??= (item, gasTank);
-                if (!TryComp<JetpackComponent>(item, out var _))
+                if (!HasComp<JetpackComponent>(item))
                 {
                     return (item, gasTank);
                 }
