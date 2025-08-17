@@ -25,7 +25,7 @@ public sealed class EmpOnTriggerSystem : EntitySystem
         if (target == null)
             return;
 
-        _emp.EmpPulse(_transform.GetMapCoordinates(target.Value), ent.Comp.Range, ent.Comp.EnergyConsumption, (float)ent.Comp.DisableDuration.TotalSeconds);
+        _emp.EmpPulse(_transform.GetMapCoordinates(target.Value), ent.Comp.Range, ent.Comp.EnergyConsumption, ent.Comp.DisableDuration, args.User);
         args.Handled = true;
     }
 }

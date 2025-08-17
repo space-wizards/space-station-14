@@ -72,10 +72,10 @@ public sealed partial class NinjaSuitComponent : Component
     public float EmpConsumption = 100000f;
 
     /// <summary>
-    /// How long the EMP effects last for, in seconds
+    /// How long the EMP effects last for
     /// </summary>
     [DataField]
-    public float EmpDuration = 60f;
+    public TimeSpan EmpDuration = TimeSpan.FromSeconds(60);
 }
 
 public sealed partial class RecallKatanaEvent : InstantActionEvent;
