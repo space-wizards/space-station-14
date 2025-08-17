@@ -2,7 +2,7 @@
 - type: reagent
   id: Holywater
   name: reagent-name-holywater
-  group: Medicine
+  group: Sacred
   desc: reagent-desc-holywater
   evaporationSpeed: 0.3
   physicalDesc: reagent-physical-desc-holy
@@ -48,7 +48,7 @@
 - type: reagent
   id: BlessedBolognese
   name: reagent-name-blessedbolognese
-  group: Medicine
+  group: Sacred
   desc: reagent-desc-blessedbolognese
   physicalDesc: reagent-physical-desc-holy
   flavor: meaty
@@ -74,7 +74,7 @@
 - type: reagent
   id: NarsieBlood
   name: reagent-name-narsieblood
-  group: Medicine
+  group: Sacred
   desc: reagent-desc-narsieblood
   evaporationSpeed: 0
   physicalDesc: reagent-physical-desc-unholy
@@ -109,7 +109,7 @@
 - type: reagent
   id: PureJoy
   name: reagent-name-purejoy
-  group: Medicine
+  group: Sacred
   desc: reagent-desc-purejoy
   evaporationSpeed: 0
   physicalDesc: reagent-physical-desc-holy
@@ -158,7 +158,7 @@
 - type: reagent
   id: PureVodka
   name: reagent-name-purevodka
-  group: Medicine
+  group: Sacred
   desc: reagent-desc-purevodka
   evaporationSpeed: 0
   physicalDesc: reagent-physical-desc-holy
@@ -201,7 +201,7 @@
 - type: reagent
   id: ManaPotion
   name: reagent-name-manapotion
-  group: Medicine
+  group: Sacred
   desc: reagent-desc-manapotion
   evaporationSpeed: 0
   physicalDesc: reagent-physical-desc-holy
@@ -238,7 +238,7 @@
 - type: reagent
   id: TemporalLubricant
   name: reagent-name-temporallubricant
-  group: Medicine
+  group: Sacred
   desc: reagent-desc-temporallubricant
   evaporationSpeed: 0.1
   physicalDesc: reagent-physical-desc-unholy
@@ -271,7 +271,7 @@
 - type: reagent
   id: RadiantNectar
   name: reagent-name-radiantnectar
-  group: Medicine
+  group: Sacred
   desc: reagent-desc-radiantnectar
   evaporationSpeed: 0
   physicalDesc: reagent-physical-desc-holy
@@ -320,7 +320,7 @@
 - type: reagent
   id: HydrationSolution
   name: reagent-name-hydrationsolution
-  group: Medicine
+  group: Sacred
   desc: reagent-desc-hydrationsolution
   evaporationSpeed: 0.6
   physicalDesc: reagent-physical-desc-holy
@@ -355,7 +355,7 @@
 - type: reagent
   id: LifebloomSap
   name: reagent-name-lifebloomsap
-  group: Medicine
+  group: Sacred
   desc: reagent-desc-lifebloomsap
   evaporationSpeed: 0
   physicalDesc: reagent-physical-desc-holy
