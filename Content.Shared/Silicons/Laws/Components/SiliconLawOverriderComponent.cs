@@ -1,3 +1,5 @@
+using Robust.Shared.GameStates;
+
 namespace Content.Shared.Silicons.Laws.Components;
 
 /// <summary>
