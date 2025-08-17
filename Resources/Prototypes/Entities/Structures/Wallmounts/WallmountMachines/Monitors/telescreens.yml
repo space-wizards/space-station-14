@@ -1,0 +1,83 @@
+- type: entity
+  parent: BaseWallmountMachine
+  id: WallmountTelescreen
+  suffix: camera monitor
+  name: telescreen
+  description: Finally, some decent reception around here...
+  components:
+  - type: Sprite
+    sprite: Structures/Machines/computers.rsi
+    layers:
+      - map: ["computerLayerBody"]
+        state: telescreen_frame
+      - map: ["computerLayerScreen"]
+        state: telescreen
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 200
+      behaviors:
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalGlassBreak
+  - type: Construction
+    graph: WallmountTelescreen
+    node: Telescreen
+  - type: PointLight
+    radius: 1.5
+    energy: 1.6
+    color: "#b89f25"
+  - type: DeviceNetwork
+    deviceNetId: Wired
+    receiveFrequencyId: SurveillanceCamera
+    transmitFrequencyId: SurveillanceCamera
+  - type: WiredNetworkConnection
+  - type: DeviceNetworkRequiresPower
+  - type: SurveillanceCameraMonitor
+  - type: ActivatableUI
+    key: enum.SurveillanceCameraMonitorUiKey.Key
+  - type: ActivatableUIRequiresPower
+  - type: ActivatableUIRequiresVision
+  - type: UserInterface
+    interfaces:
+        enum.SurveillanceCameraMonitorUiKey.Key:
+          type: SurveillanceCameraMonitorBoundUserInterface
+
+- type: entity
+  parent: BaseWallmountMetallic
+  id: WallmountTelescreenFrame
+  name: telescreen frame
+  description: Finally, some decent reception around here...
+  components:
+  - type: Construction
+    graph: WallmountTelescreen
+    node: TelescreenFrame
+  - type: Sprite
+    sprite: Structures/Machines/computers.rsi
+    layers:
+      - map: ["computerLayerBody"]
+        state: telescreen_frame
+      - map: ["computerLayerScreen"]
+        state: telescreen
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 200
+      behaviors: #excess damage, don't spawn entities.
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+    - trigger:
+        !type:DamageTrigger
+        damage: 50
+      behaviors:
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          SheetSteel1:
+            min: 1
+            max: 1
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]

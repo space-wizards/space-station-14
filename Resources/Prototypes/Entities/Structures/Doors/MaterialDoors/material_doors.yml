@@ -261,3 +261,82 @@
       path: /Audio/Effects/rustle1.ogg
     openSound:
       path: /Audio/Effects/rustle2.ogg
+
+
+- type: entity
+  id: CardDoor
+  parent: BaseStructure
+  name: cardboard door
+  description: A door, where will it lead?
+  components:
+  - type: InteractionOutline
+  - type: Sprite
+    sprite: Structures/Doors/MineralDoors/card_door.rsi
+    layers:
+    - state: closed
+      map: ["enum.DoorVisualLayers.Base"]
+  - type: AnimationPlayer
+  - type: Physics
+    bodyType: Static
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.49,-0.49,0.49,0.49"
+        density: 100
+        mask:
+        - FullTileMask
+        layer:
+        - FlimsyLayer
+  - type: Door
+    bumpOpen: false
+    clickOpen: true
+    canCrush: false
+    closeTimeOne: 0.2
+    closeTimeTwo: 0.6
+    openTimeOne: 0.6
+    openTimeTwo: 0.2
+    openingAnimationTime: 1.2
+    closingAnimationTime: 1.2
+    openSound:
+      path: /Audio/Effects/card_drag.ogg 
+    closeSound:
+      path: /Audio/Effects/card_drag.ogg
+  - type: MeleeSound
+    soundGroups:
+      Brute:
+        path:
+          "/Audio/Weapons/pierce.ogg"
+  - type: Appearance
+  - type: Damageable
+    damageContainer: StructuralInorganic
+    damageModifierSet: Card
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 60 #excess damage (nuke?). avoid computational cost of spawning entities.
+      behaviors:
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+    - trigger:
+        !type:DamageTrigger
+        damage: 30
+      behaviors:
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          MaterialCardboard:
+            min: 2
+            max: 4
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+  - type: Icon
+    sprite: Structures/Doors/MineralDoors/card_door.rsi
+    state: closed
+  - type: Construction
+    graph: DoorGraph
+    node: cardDoor
+  - type: NavMapDoor
+  - type: Occluder
+  - type: BlockWeather
