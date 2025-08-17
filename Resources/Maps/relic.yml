@@ -4,8 +4,8 @@ meta:
   engineVersion: 264.0.0
   forkId: ""
   forkVersion: ""
-  time: 08/15/2025 18:01:45
-  entityCount: 11366
+  time: 08/17/2025 19:06:57
+  entityCount: 11399
 maps:
 - 1
 grids:
@@ -3114,6 +3114,12 @@ entities:
       rot: 1.5707963267948966 rad
       pos: 46.5,3.5
       parent: 2
+  - uid: 4740
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: 55.5,36.5
+      parent: 2
   - uid: 8278
     components:
     - type: Transform
@@ -5908,15 +5914,10 @@ entities:
     - type: Transform
       pos: 21.5,20.5
       parent: 2
-  - uid: 2129
-    components:
-    - type: Transform
-      pos: 22.5,20.5
-      parent: 2
   - uid: 2138
     components:
     - type: Transform
-      pos: 23.5,20.5
+      pos: 22.5,20.5
       parent: 2
   - uid: 2176
     components:
@@ -5953,30 +5954,20 @@ entities:
     - type: Transform
       pos: 47.5,12.5
       parent: 2
-  - uid: 2387
-    components:
-    - type: Transform
-      pos: 24.5,20.5
-      parent: 2
   - uid: 2427
     components:
     - type: Transform
       pos: 50.5,20.5
       parent: 2
-  - uid: 2469
-    components:
-    - type: Transform
-      pos: 25.5,20.5
-      parent: 2
   - uid: 2470
     components:
     - type: Transform
-      pos: 26.5,20.5
+      pos: 33.5,22.5
       parent: 2
   - uid: 2471
     components:
     - type: Transform
-      pos: 27.5,20.5
+      pos: 33.5,21.5
       parent: 2
   - uid: 2472
     components:
@@ -6016,7 +6007,7 @@ entities:
   - uid: 2883
     components:
     - type: Transform
-      pos: 29.5,20.5
+      pos: 32.5,20.5
       parent: 2
   - uid: 2884
     components:
@@ -6031,7 +6022,7 @@ entities:
   - uid: 3025
     components:
     - type: Transform
-      pos: 28.5,20.5
+      pos: 33.5,20.5
       parent: 2
   - uid: 4954
     components:
@@ -11883,6 +11874,116 @@ entities:
     - type: Transform
       pos: 22.5,-26.5
       parent: 3564
+  - uid: 11375
+    components:
+    - type: Transform
+      pos: 31.5,24.5
+      parent: 2
+  - uid: 11376
+    components:
+    - type: Transform
+      pos: 30.5,24.5
+      parent: 2
+  - uid: 11377
+    components:
+    - type: Transform
+      pos: 29.5,24.5
+      parent: 2
+  - uid: 11378
+    components:
+    - type: Transform
+      pos: 28.5,24.5
+      parent: 2
+  - uid: 11379
+    components:
+    - type: Transform
+      pos: 27.5,24.5
+      parent: 2
+  - uid: 11380
+    components:
+    - type: Transform
+      pos: 28.5,25.5
+      parent: 2
+  - uid: 11381
+    components:
+    - type: Transform
+      pos: 28.5,26.5
+      parent: 2
+  - uid: 11382
+    components:
+    - type: Transform
+      pos: 28.5,27.5
+      parent: 2
+  - uid: 11383
+    components:
+    - type: Transform
+      pos: 28.5,28.5
+      parent: 2
+  - uid: 11384
+    components:
+    - type: Transform
+      pos: 28.5,29.5
+      parent: 2
+  - uid: 11385
+    components:
+    - type: Transform
+      pos: 27.5,29.5
+      parent: 2
+  - uid: 11386
+    components:
+    - type: Transform
+      pos: 26.5,29.5
+      parent: 2
+  - uid: 11387
+    components:
+    - type: Transform
+      pos: 32.5,34.5
+      parent: 2
+  - uid: 11388
+    components:
+    - type: Transform
+      pos: 31.5,34.5
+      parent: 2
+  - uid: 11389
+    components:
+    - type: Transform
+      pos: 30.5,34.5
+      parent: 2
+  - uid: 11390
+    components:
+    - type: Transform
+      pos: 29.5,34.5
+      parent: 2
+  - uid: 11391
+    components:
+    - type: Transform
+      pos: 34.5,34.5
+      parent: 2
+  - uid: 11392
+    components:
+    - type: Transform
+      pos: 35.5,34.5
+      parent: 2
+  - uid: 11393
+    components:
+    - type: Transform
+      pos: 36.5,34.5
+      parent: 2
+  - uid: 11394
+    components:
+    - type: Transform
+      pos: 37.5,34.5
+      parent: 2
+  - uid: 11395
+    components:
+    - type: Transform
+      pos: 27.5,27.5
+      parent: 2
+  - uid: 11396
+    components:
+    - type: Transform
+      pos: 26.5,27.5
+      parent: 2
 - proto: CableApcStack10
   entities:
   - uid: 4504
@@ -17611,10 +17712,20 @@ entities:
     - type: Transform
       pos: 5.5,-10.5
       parent: 2
+  - uid: 7579
+    components:
+    - type: Transform
+      pos: 32.5,30.5
+      parent: 2
   - uid: 7604
     components:
     - type: Transform
       pos: 43.5,30.5
+      parent: 2
+  - uid: 7774
+    components:
+    - type: Transform
+      pos: 32.5,29.5
       parent: 2
   - uid: 8416
     components:
@@ -17630,6 +17741,11 @@ entities:
     components:
     - type: Transform
       pos: 47.5,36.5
+      parent: 2
+  - uid: 8469
+    components:
+    - type: Transform
+      pos: 32.5,28.5
       parent: 2
   - uid: 8562
     components:
@@ -18476,6 +18592,31 @@ entities:
     - type: Transform
       pos: 22.5,-12.5
       parent: 2
+  - uid: 11370
+    components:
+    - type: Transform
+      pos: 32.5,27.5
+      parent: 2
+  - uid: 11371
+    components:
+    - type: Transform
+      pos: 32.5,26.5
+      parent: 2
+  - uid: 11372
+    components:
+    - type: Transform
+      pos: 32.5,25.5
+      parent: 2
+  - uid: 11373
+    components:
+    - type: Transform
+      pos: 32.5,24.5
+      parent: 2
+  - uid: 11374
+    components:
+    - type: Transform
+      pos: 31.5,24.5
+      parent: 2
 - proto: CableMVStack10
   entities:
   - uid: 4505
@@ -18587,19 +18728,13 @@ entities:
   - uid: 1615
     components:
     - type: Transform
-      anchored: True
       pos: 14.5,39.5
       parent: 2
-    - type: Physics
-      bodyType: Static
   - uid: 1634
     components:
     - type: Transform
-      anchored: True
       pos: 19.5,33.5
       parent: 2
-    - type: Physics
-      bodyType: Static
   - uid: 1919
     components:
     - type: Transform
@@ -22814,6 +22949,8 @@ entities:
     - type: Transform
       pos: 63.5,31.5
       parent: 2
+    - type: NavMapBeacon
+      defaultText: Control Room
 - proto: DefaultStationBeaconCaptainsQuarters
   entities:
   - uid: 7752
@@ -22849,6 +22986,8 @@ entities:
     - type: Transform
       pos: 7.5,-0.5
       parent: 2
+    - type: NavMapBeacon
+      defaultText: Crew Sleeping Area
 - proto: DefaultStationBeaconEngineering
   entities:
   - uid: 7607
@@ -22863,15 +23002,13 @@ entities:
     - type: Transform
       pos: 60.5,-0.5
       parent: 2
-    - type: NavMapBeacon
-      defaultText: Evac North
   - uid: 7765
     components:
     - type: Transform
       pos: 47.5,-15.5
       parent: 2
     - type: NavMapBeacon
-      defaultText: Evac South
+      defaultText: Observation
 - proto: DefaultStationBeaconEVAStorage
   entities:
   - uid: 7763
@@ -22928,6 +23065,8 @@ entities:
     - type: Transform
       pos: 9.5,-6.5
       parent: 2
+    - type: NavMapBeacon
+      defaultText: Security (West)
 - proto: DefaultStationBeaconSolars
   entities:
   - uid: 7741
@@ -48461,15 +48600,13 @@ entities:
     - type: Transform
       pos: 59.5,-0.5
       parent: 2
-    - type: Label
-      currentLabel: Evac North
   - uid: 7751
     components:
     - type: Transform
       pos: 47.5,-14.5
       parent: 2
     - type: Label
-      currentLabel: Evac South
+      currentLabel: Observation
 - proto: HolopadGeneralEVAStorage
   entities:
   - uid: 3753
@@ -50630,19 +50767,13 @@ entities:
   - uid: 7338
     components:
     - type: Transform
-      anchored: True
       pos: 51.5,4.5
       parent: 2
-    - type: Physics
-      bodyType: Static
   - uid: 8283
     components:
     - type: Transform
-      anchored: True
       pos: 27.5,30.5
       parent: 2
-    - type: Physics
-      bodyType: Static
   - uid: 8289
     components:
     - type: Transform
@@ -54973,13 +55104,6 @@ entities:
     - type: Transform
       pos: 52.5,19.5
       parent: 2
-- proto: ShuttersNormal
-  entities:
-  - uid: 5900
-    components:
-    - type: Transform
-      pos: 55.5,36.5
-      parent: 2
 - proto: ShuttleConsoleCircuitboard
   entities:
   - uid: 5972
@@ -55665,7 +55789,7 @@ entities:
     components:
     - type: Transform
       rot: 3.141592653589793 rad
-      pos: 57.5,35.5
+      pos: 56.5,35.5
       parent: 2
     - type: SignalSwitch
       state: True
@@ -56717,19 +56841,6 @@ entities:
         - - Off
           - Toggle
         8345:
-        - - On
-          - Toggle
-        - - Off
-          - Toggle
-  - uid: 8469
-    components:
-    - type: Transform
-      rot: 3.141592653589793 rad
-      pos: 56.5,35.5
-      parent: 2
-    - type: DeviceLinkSource
-      linkedPorts:
-        5900:
         - - On
           - Toggle
         - - Off
@@ -59061,7 +59172,7 @@ entities:
       pos: 59.5,34.5
       parent: 2
     - type: SurveillanceCamera
-      id: Bridge
+      id: Control Room
   - uid: 7458
     components:
     - type: Transform
@@ -59069,7 +59180,7 @@ entities:
       pos: 56.5,24.5
       parent: 2
     - type: SurveillanceCamera
-      id: Captain's Quarters
+      id: Secure Storage
   - uid: 7472
     components:
     - type: Transform
@@ -59078,14 +59189,6 @@ entities:
       parent: 2
     - type: SurveillanceCamera
       id: HoP Office
-  - uid: 7579
-    components:
-    - type: Transform
-      rot: 1.5707963267948966 rad
-      pos: 62.5,6.5
-      parent: 2
-    - type: SurveillanceCamera
-      id: Chamber 5.7289551529456855
   - uid: 7620
     components:
     - type: Transform
@@ -59101,7 +59204,7 @@ entities:
       pos: 34.5,51.5
       parent: 2
     - type: SurveillanceCamera
-      id: AI Upload
+      id: AI Upload Station
 - proto: SurveillanceCameraEngineering
   entities:
   - uid: 1080
@@ -59111,7 +59214,23 @@ entities:
       pos: -5.5,6.5
       parent: 2
     - type: SurveillanceCamera
-      id: Tele Room
+      id: Telecomms
+  - uid: 2129
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: 0.5,33.5
+      parent: 2
+    - type: SurveillanceCamera
+      id: Anchor
+  - uid: 2387
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: 26.5,27.5
+      parent: 2
+    - type: SurveillanceCamera
+      id: Main Engine
   - uid: 2609
     components:
     - type: Transform
@@ -59119,7 +59238,7 @@ entities:
       pos: 44.5,-4.5
       parent: 2
     - type: SurveillanceCamera
-      id: atmos canisters
+      id: Atmo. Gas Storage
   - uid: 3231
     components:
     - type: Transform
@@ -59127,7 +59246,7 @@ entities:
       pos: 29.5,-4.5
       parent: 2
     - type: SurveillanceCamera
-      id: Atmos Main
+      id: ' Atmospherics Entrance'
   - uid: 4219
     components:
     - type: Transform
@@ -59135,7 +59254,7 @@ entities:
       pos: 30.5,26.5
       parent: 2
     - type: SurveillanceCamera
-      id: Engineering Burn Chamber
+      id: Engine Control
   - uid: 4666
     components:
     - type: Transform
@@ -59143,7 +59262,7 @@ entities:
       pos: 39.5,35.5
       parent: 2
     - type: SurveillanceCamera
-      id: Main Engineering
+      id: Engine Hallway (E)
   - uid: 4700
     components:
     - type: Transform
@@ -59151,7 +59270,7 @@ entities:
       pos: 32.5,21.5
       parent: 2
     - type: SurveillanceCamera
-      id: Engineering Hallway
+      id: Engine Hall (South)
   - uid: 4946
     components:
     - type: Transform
@@ -59159,7 +59278,7 @@ entities:
       pos: 22.5,-7.5
       parent: 2
     - type: SurveillanceCamera
-      id: Atmos Burn Chamber
+      id: Atmospheric Control Room
   - uid: 5207
     components:
     - type: Transform
@@ -59167,7 +59286,7 @@ entities:
       pos: 27.5,35.5
       parent: 2
     - type: SurveillanceCamera
-      id: Engineering North Hallway
+      id: Engine Hall (Center)
   - uid: 5208
     components:
     - type: Transform
@@ -59175,7 +59294,7 @@ entities:
       pos: 17.5,42.5
       parent: 2
     - type: SurveillanceCamera
-      id: Engineering Lockers
+      id: Engine Hallway (W)
   - uid: 5209
     components:
     - type: Transform
@@ -59183,7 +59302,7 @@ entities:
       pos: 11.5,37.5
       parent: 2
     - type: SurveillanceCamera
-      id: TEG
+      id: Generator Room (West)
   - uid: 5884
     components:
     - type: Transform
@@ -59195,11 +59314,11 @@ entities:
   - uid: 7470
     components:
     - type: Transform
-      rot: 1.5707963267948966 rad
-      pos: 60.5,61.5
+      rot: -1.5707963267948966 rad
+      pos: 56.5,62.5
       parent: 2
     - type: SurveillanceCamera
-      id: Solars North
+      id: Northern Airlock
   - uid: 7609
     components:
     - type: Transform
@@ -59214,17 +59333,41 @@ entities:
       pos: 37.5,-10.5
       parent: 2
     - type: SurveillanceCamera
-      id: atmos locker room
-- proto: SurveillanceCameraGeneral
-  entities:
-  - uid: 4740
+      id: Atmospherics Locker Storage
+  - uid: 11397
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: 5.5,36.5
+      parent: 2
+    - type: SurveillanceCamera
+      id: Anchor
+  - uid: 11398
     components:
     - type: Transform
       rot: 1.5707963267948966 rad
-      pos: 0.5,13.5
+      pos: 39.5,38.5
       parent: 2
     - type: SurveillanceCamera
-      id: Chapel
+      id: Plasma Storage
+  - uid: 11399
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: 20.5,39.5
+      parent: 2
+    - type: SurveillanceCamera
+      id: Generator Room (East)
+- proto: SurveillanceCameraGeneral
+  entities:
+  - uid: 2469
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: 44.5,20.5
+      parent: 2
+    - type: SurveillanceCamera
+      id: Supply Room
   - uid: 4931
     components:
     - type: Transform
@@ -59232,7 +59375,7 @@ entities:
       pos: 13.5,23.5
       parent: 2
     - type: SurveillanceCamera
-      id: Escape Zone
+      id: Escape Pod Bay
   - uid: 4938
     components:
     - type: Transform
@@ -59250,7 +59393,7 @@ entities:
       pos: 66.5,-7.5
       parent: 2
     - type: SurveillanceCamera
-      id: Evac Dock
+      id: External - shuttle dock
   - uid: 7283
     components:
     - type: Transform
@@ -59258,7 +59401,7 @@ entities:
       pos: 56.5,-0.5
       parent: 2
     - type: SurveillanceCamera
-      id: Evac North
+      id: Evac Shuttle Bay
   - uid: 7284
     components:
     - type: Transform
@@ -59266,7 +59409,7 @@ entities:
       pos: 49.5,-14.5
       parent: 2
     - type: SurveillanceCamera
-      id: Evac South
+      id: Observation
   - uid: 7464
     components:
     - type: Transform
@@ -59274,7 +59417,7 @@ entities:
       pos: 54.5,41.5
       parent: 2
     - type: SurveillanceCamera
-      id: EVA
+      id: EVA Storage
   - uid: 7465
     components:
     - type: Transform
@@ -59282,7 +59425,7 @@ entities:
       pos: 49.5,37.5
       parent: 2
     - type: SurveillanceCamera
-      id: Bridge Hallway
+      id: Control Access
   - uid: 7468
     components:
     - type: Transform
@@ -59290,7 +59433,7 @@ entities:
       pos: 58.5,44.5
       parent: 2
     - type: SurveillanceCamera
-      id: Arrivals South
+      id: Crew Shuttle Disembarkment Hall North
   - uid: 7469
     components:
     - type: Transform
@@ -59298,15 +59441,15 @@ entities:
       pos: 58.5,53.5
       parent: 2
     - type: SurveillanceCamera
-      id: Arrivals North
+      id: Crew Shuttle Disembarkment Hall North
   - uid: 7478
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
-      pos: 36.5,16.5
+      pos: 36.5,15.5
       parent: 2
     - type: SurveillanceCamera
-      id: Middle Hallways
+      id: Central Hallway
   - uid: 7483
     components:
     - type: Transform
@@ -59314,7 +59457,7 @@ entities:
       pos: 46.5,0.5
       parent: 2
     - type: SurveillanceCamera
-      id: Evac Hallway West
+      id: Transit tunnel (East)
   - uid: 7505
     components:
     - type: Transform
@@ -59322,7 +59465,7 @@ entities:
       pos: 4.5,-0.5
       parent: 2
     - type: SurveillanceCamera
-      id: Dorms
+      id: Crew Sleeping Area
   - uid: 7506
     components:
     - type: Transform
@@ -59330,7 +59473,7 @@ entities:
       pos: 0.5,-1.5
       parent: 2
     - type: SurveillanceCamera
-      id: Cryosleep
+      id: Sleeping Area Annex
   - uid: 7517
     components:
     - type: Transform
@@ -59338,7 +59481,7 @@ entities:
       pos: 15.5,0.5
       parent: 2
     - type: SurveillanceCamera
-      id: Meeting Room
+      id: Lounge/Meeting Area
   - uid: 7542
     components:
     - type: Transform
@@ -59346,7 +59489,7 @@ entities:
       pos: 9.5,7.5
       parent: 2
     - type: SurveillanceCamera
-      id: Western Hallway
+      id: Personell Lockers
   - uid: 7560
     components:
     - type: Transform
@@ -59354,15 +59497,15 @@ entities:
       pos: 2.5,-11.5
       parent: 2
     - type: SurveillanceCamera
-      id: Southwest Maintenance
+      id: Main Solar Control
   - uid: 7578
     components:
     - type: Transform
-      rot: 1.5707963267948966 rad
-      pos: 58.5,10.5
+      rot: 3.141592653589793 rad
+      pos: 59.5,9.5
       parent: 2
     - type: SurveillanceCamera
-      id: Evac Hallway East
+      id: East of Research Lab
   - uid: 7582
     components:
     - type: Transform
@@ -59370,7 +59513,7 @@ entities:
       pos: 62.5,15.5
       parent: 2
     - type: SurveillanceCamera
-      id: Courtroom
+      id: Assembly Room
   - uid: 7616
     components:
     - type: Transform
@@ -59386,7 +59529,7 @@ entities:
       pos: 17.5,55.5
       parent: 2
     - type: SurveillanceCamera
-      id: Outside Foyer
+      id: AI Upload Airlock Entrance
   - uid: 7618
     components:
     - type: Transform
@@ -59403,7 +59546,7 @@ entities:
       pos: 27.5,16.5
       parent: 2
     - type: SurveillanceCamera
-      id: Medical Logistics
+      id: Medical Lab
   - uid: 7432
     components:
     - type: Transform
@@ -59411,7 +59554,7 @@ entities:
       pos: 16.5,16.5
       parent: 2
     - type: SurveillanceCamera
-      id: Medbay
+      id: Medical Bay
   - uid: 7433
     components:
     - type: Transform
@@ -59525,7 +59668,15 @@ entities:
       pos: 55.5,5.5
       parent: 2
     - type: SurveillanceCamera
-      id: Science
+      id: Research Lab
+  - uid: 7001
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: 50.5,14.5
+      parent: 2
+    - type: SurveillanceCamera
+      id: Research Gas Storage
 - proto: SurveillanceCameraSecurity
   entities:
   - uid: 7485
@@ -59535,7 +59686,7 @@ entities:
       pos: 42.5,-0.5
       parent: 2
     - type: SurveillanceCamera
-      id: Brig
+      id: Prison
   - uid: 7486
     components:
     - type: Transform
@@ -59543,7 +59694,7 @@ entities:
       pos: 34.5,2.5
       parent: 2
     - type: SurveillanceCamera
-      id: Security
+      id: Security (Main)
   - uid: 7516
     components:
     - type: Transform
@@ -59551,7 +59702,7 @@ entities:
       pos: 10.5,-6.5
       parent: 2
     - type: SurveillanceCamera
-      id: Security Outpost
+      id: Security (West)
   - uid: 10538
     components:
     - type: Transform
@@ -59559,7 +59710,7 @@ entities:
       pos: 32.5,-25.5
       parent: 3564
     - type: SurveillanceCamera
-      id: Brig Locker Room
+      id: Security Office
   - uid: 10539
     components:
     - type: Transform
@@ -59567,7 +59718,7 @@ entities:
       pos: 19.5,-24.5
       parent: 3564
     - type: SurveillanceCamera
-      id: Brig Common East
+      id: Recreation Area (East)
   - uid: 10540
     components:
     - type: Transform
@@ -59575,7 +59726,7 @@ entities:
       pos: 9.5,-24.5
       parent: 3564
     - type: SurveillanceCamera
-      id: Brig Common West
+      id: Recreation Area (West)
   - uid: 10541
     components:
     - type: Transform
@@ -59583,7 +59734,7 @@ entities:
       pos: 21.5,-20.5
       parent: 3564
     - type: SurveillanceCamera
-      id: Brig Medbay
+      id: Infirmary
   - uid: 10542
     components:
     - type: Transform
@@ -59591,7 +59742,7 @@ entities:
       pos: 10.5,-40.5
       parent: 3564
     - type: SurveillanceCamera
-      id: Solitary Wing
+      id: Solitary Cells
   - uid: 10543
     components:
     - type: Transform
@@ -59621,10 +59772,19 @@ entities:
   - uid: 4737
     components:
     - type: Transform
+      rot: 1.5707963267948966 rad
       pos: 20.5,-8.5
       parent: 2
     - type: SurveillanceCamera
-      id: Insecure Secure Canister Storage
+      id: Aux Storage
+  - uid: 7002
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: 0.5,13.5
+      parent: 2
+    - type: SurveillanceCamera
+      id: Chapel
 - proto: SurveillanceCameraWirelessRouterConstructed
   entities:
   - uid: 6351
@@ -71409,7 +71569,7 @@ entities:
       lastSignals:
         DoorStatus: True
     - type: Door
-      secondsUntilStateChange: -220082.22
+      secondsUntilStateChange: -223040.97
       state: Opening
     - type: Airlock
       autoClose: False
@@ -72350,6 +72510,11 @@ entities:
     components:
     - type: Transform
       pos: 30.5,8.5
+      parent: 2
+  - uid: 5900
+    components:
+    - type: Transform
+      pos: 26.515392,8.719088
       parent: 2
   - uid: 6699
     components:
