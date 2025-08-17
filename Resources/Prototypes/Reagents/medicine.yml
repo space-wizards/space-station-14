@@ -1382,3 +1382,361 @@
       - !type:AdjustReagent
         reagent: TemporalLubricant
         amount: -3.0
+
+# Italian Restaurant Menu Holy Water
+- type: reagent
+  id: BlessedBolognese
+  name: reagent-name-blessedbolognese
+  group: Medicine
+  desc: reagent-desc-blessedbolognese
+  physicalDesc: reagent-physical-desc-holy
+  flavor: meaty
+  color: "#912711"
+  metabolisms:
+    Drink:
+      effects:
+      - !type:SatiateHunger
+        factor: 3
+      - !type:HealthChange
+        conditions:
+        - !type:TotalDamage
+          max: 50
+        damage:
+          types:
+            Blunt: -0.2
+            Poison: -0.2
+            Heat: -0.2
+            Shock: -0.2
+            Cold: -0.2
+
+# Book of Narsie Holy Water
+- type: reagent
+  id: NarsieBlood
+  name: reagent-name-narsieblood
+  group: Medicine
+  desc: reagent-desc-narsieblood
+  evaporationSpeed: 0
+  physicalDesc: reagent-physical-desc-unholy
+  flavor: unholy
+  color: "#4a0707"
+  reactiveEffects:
+    Acidic:
+      methods: [ Touch ]
+      effects:
+      - !type:HealthChange
+        scaleByQuantity: true
+        ignoreResistances: false
+        damage:
+          types:
+            Holy: 0.5
+  metabolisms:
+    Drink:
+      effects:
+      - !type:SatiateThirst
+        factor: 1
+      - !type:ModifyBloodLevel
+        amount: 2
+      - !type:HealthChange
+        conditions:
+        - !type:TotalDamage
+          max: 50
+        damage:
+          types:
+            Bloodloss: -0.4
+
+# Mirth of the Honkmother Holy Water
+- type: reagent
+  id: PureJoy
+  name: reagent-name-purejoy
+  group: Medicine
+  desc: reagent-desc-purejoy
+  evaporationSpeed: 0
+  physicalDesc: reagent-physical-desc-holy
+  flavor: joyful
+  color: "#fc1cba"
+  reactiveEffects:
+    Acidic:
+      methods: [ Touch ]
+      effects:
+      - !type:HealthChange
+        scaleByQuantity: true
+        ignoreResistances: false
+        damage:
+          types:
+            Holy: 0.5
+  metabolisms:
+    Drink:
+      effects:
+      - !type:Emote
+        emote: Laugh
+        showInChat: true
+        probability: 0.2
+      - !type:Emote
+        emote: Whistle
+        showInChat: true
+        probability: 0.1
+      - !type:PopupMessage
+        type: Local
+        visualType: Large
+        messages:
+        - "psicodine-effect-anxieties-wash-away"
+        - "psicodine-effect-at-peace"
+        probability: 0.1
+      - !type:PopupMessage
+        type: Local
+        visualType: Large
+        messages: [ "laughter-effect-control-laughter" ]
+        probability: 0.1
+      - !type:ModifyStatusEffect
+        effectProto: StatusEffectSeeingRainbow
+        type: Add
+        time: 2
+        refresh: false
+
+# Communist Manifesto Holy Water
+- type: reagent
+  id: PureVodka
+  name: reagent-name-purevodka
+  group: Medicine
+  desc: reagent-desc-purevodka
+  evaporationSpeed: 0
+  physicalDesc: reagent-physical-desc-holy
+  flavor: holy
+  color: "#d5dee0"
+  reactiveEffects:
+    Extinguish:
+      methods: [ Touch ]
+      effects:
+      - !type:ExtinguishReaction
+    Acidic:
+      methods: [ Touch ]
+      effects:
+      - !type:HealthChange
+        scaleByQuantity: true
+        ignoreResistances: false
+        damage:
+          types:
+            Holy: 0.5
+  tileReactions:
+  - !type:ExtinguishTileReaction { }
+  metabolisms:
+    Drink:
+      effects:
+      - !type:SatiateThirst
+        factor: 1.5
+      - !type:HealthChange
+        conditions:
+        - !type:TotalDamage
+          max: 50
+        damage:
+          types:
+            Poison: -0.4
+      - !type:GenericStatusEffect
+        key: Drunk
+        time: 2.0
+        type: Remove
+
+# Carps & Crypts Holy Water
+- type: reagent
+  id: ManaPotion
+  name: reagent-name-manapotion
+  group: Medicine
+  desc: reagent-desc-manapotion
+  evaporationSpeed: 0
+  physicalDesc: reagent-physical-desc-holy
+  flavor: magical
+  color: "#0f3df7"
+  reactiveEffects:
+    Acidic:
+      methods: [ Touch ]
+      effects:
+      - !type:HealthChange
+        scaleByQuantity: true
+        ignoreResistances: false
+        damage:
+          types:
+            Holy: 0.5
+  plantMetabolism:
+  - !type:PlantAdjustWater
+    amount: 1
+  metabolisms:
+    Drink:
+      effects:
+      - !type:SatiateThirst
+        factor: 2
+      - !type:ModifyStatusEffect
+        effectProto: StatusEffectDrowsiness
+        time: 2
+        type: Remove
+      - !type:AdjustReagent
+        reagent: Theobromine
+        amount: 0.1
+  fizziness: 0.4
+
+# Ratvar Holy Water
+- type: reagent
+  id: TemporalLubricant
+  name: reagent-name-temporallubricant
+  group: Medicine
+  desc: reagent-desc-temporallubricant
+  evaporationSpeed: 0.1
+  physicalDesc: reagent-physical-desc-holy
+  flavor: holy
+  color: "#D4AF37"
+  reactiveEffects:
+    Acidic:
+      methods: [ Touch ]
+      effects:
+      - !type:HealthChange
+        scaleByQuantity: true
+        ignoreResistances: false
+        damage:
+          types:
+            Holy: 0.5
+  slipData:
+    requiredSlipSpeed: 2
+  metabolisms:
+    Drink:
+      effects:
+      - !type:MovespeedModifier
+        walkSpeedModifier: 1.05
+        sprintSpeedModifier: 1.05
+      - !type:GenericStatusEffect
+        key: Stutter
+        component: StutteringAccent
+      - !type:Jitter
+
+# Lamp Holy Water
+- type: reagent
+  id: RadiantNectar
+  name: reagent-name-radiantnectar
+  group: Medicine
+  desc: reagent-desc-radiantnectar
+  evaporationSpeed: 0
+  physicalDesc: reagent-physical-desc-holy
+  flavor: magical
+  color: "#FFF4CC"
+  reactiveEffects:
+    Extinguish:
+    Acidic:
+      methods: [ Touch ]
+      effects:
+      - !type:HealthChange
+        scaleByQuantity: true
+        ignoreResistances: false
+        damage:
+          types:
+            Holy: 0.5
+  metabolisms:
+    Drink:
+      effects:
+      - !type:SatiateThirst
+        factor: 1.5
+      - !type:SatiateHunger
+        factor: 1.5
+      - !type:Emote
+        emote: Chitter
+        showInChat: true
+        force: true
+        probability: 0.25
+      - !type:Emote
+        emote: Squeak
+        showInChat: true
+        probability: 0.15
+      - !type:HealthChange
+        conditions:
+        - !type:TotalDamage
+          max: 50
+        damage:
+          types:
+            Blunt: -0.1
+            Poison: -0.1
+            Heat: -0.1
+            Shock: -0.1
+            Cold: -0.1
+
+# NanoTrasen Holy Water
+- type: reagent
+  id: HydrationSolution
+  name: reagent-name-hydrationsolution
+  group: Medicine
+  desc: reagent-desc-hydrationsolution
+  evaporationSpeed: 0.6
+  physicalDesc: reagent-physical-desc-holy
+  flavor: flavorless
+  color: "#96d7eb"
+  reactiveEffects:
+    Extinguish:
+      methods: [ Touch ]
+      effects:
+      - !type:ExtinguishReaction
+    Acidic:
+      methods: [ Touch ]
+      effects:
+      - !type:HealthChange
+        scaleByQuantity: true
+        ignoreResistances: false
+        damage:
+          types:
+            Holy: 0.5
+  plantMetabolism:
+  - !type:PlantAdjustWater
+    amount: 1.5
+  tileReactions:
+  - !type:ExtinguishTileReaction { }
+  metabolisms:
+    Drink:
+      effects:
+      - !type:SatiateThirst
+        factor: 7.5
+
+# Druidic Holy Water
+- type: reagent
+  id: LifebloomSap
+  name: reagent-name-lifebloomsap
+  group: Medicine
+  desc: reagent-desc-lifebloomsap
+  evaporationSpeed: 0
+  physicalDesc: reagent-physical-desc-holy
+  flavor: magical
+  color: "#4CAF50"
+  reactiveEffects:
+    Acidic:
+      methods: [ Touch ]
+      effects:
+      - !type:HealthChange
+        scaleByQuantity: true
+        ignoreResistances: false
+        damage:
+          types:
+            Holy: 0.5
+  plantMetabolism:
+    - !type:PlantAdjustNutrition
+      amount: 0.5
+  metabolisms:
+    Drink:
+      effects:
+      - !type:HealthChange
+        conditions:
+        - !type:OrganType
+          type: Plant
+        - !type:TotalDamage
+          max: 50
+        damage:
+          types:
+            Blunt: -0.3
+            Poison: -0.3
+            Heat: -0.3
+            Shock: -0.3
+            Cold: -0.3
+      - !type:HealthChange
+        conditions:
+        - !type:TotalDamage
+          max: 50
+        damage:
+          types:
+            Blunt: -0.1
+            Poison: -0.1
+            Heat: -0.1
+            Shock: -0.1
+            Cold: -0.1
