@@ -99,7 +99,7 @@
       - Toggle
   - type: Construction
     graph: LightFixture
-    node: groundLight
+    node: postLight
   - type: Appearance
   - type: PoweredLightVisuals
     blinkingSound:
@@ -263,6 +263,9 @@
     - On
     - Off
     - Toggle
+  - type: Construction
+    graph: LightFixture
+    node: floorLight
   - type: Appearance
   - type: PoweredLightVisuals
     blinkingSound:
