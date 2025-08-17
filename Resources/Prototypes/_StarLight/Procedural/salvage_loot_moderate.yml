@@ -3,9 +3,9 @@
   loots:
     - !type:RandomSpawnsLoot
       entries:
-        - proto: SheetPlasma30
+        - proto: SheetPlasma10
           guaranteed: true
-        - proto: SheetUranium30
+        - proto: SheetUranium10
           guaranteed: true
 
         - proto: AdvMopItem

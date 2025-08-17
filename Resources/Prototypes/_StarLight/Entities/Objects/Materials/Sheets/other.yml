@@ -40,11 +40,11 @@
 
 - type: entity
   parent: SheetUranium
-  id: SheetUranium30
-  suffix: 30
+  id: SheetUranium10
+  suffix: 10
   components:
     - type: Stack
-      count: 30
+      count: 10
 
 - type: entity
   parent: SheetPlasma
