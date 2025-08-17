@@ -13,7 +13,7 @@ namespace Content.Shared.Silicons.Laws;
 public abstract partial class SharedSiliconLawSystem
 {
     [Dependency] private readonly SharedDoAfterSystem _doAfter = default!;
-    [Dependency] private readonly ItemSlotsSystem _slots = default!;
+    [Dependency] private readonly ItemSlotsSystem _slot = default!;
     private readonly ProtoId<ChatNotificationPrototype> _overrideLawsChatNotificationPrototype = "OverrideLaws";
     private void InitializeOverrider()
     {
@@ -76,7 +76,12 @@ public abstract partial class SharedSiliconLawSystem
 }
 
 [Serializable, NetSerializable]
-public sealed partial class OverriderDoAfterEvent(EntityUid? lawProviderBaseEntity = null) : SimpleDoAfterEvent
+public sealed partial class OverriderDoAfterEvent : SimpleDoAfterEvent
 {
-    public EntityUid? LawProviderBaseEntity = lawProviderBaseEntity;
+    public EntityUid? LawProviderBaseEntity;
+
+    public OverriderDoAfterEvent(EntityUid? lawProviderBaseEntity)
+    {
+        LawProviderBaseEntity = lawProviderBaseEntity;
+    }
 }
