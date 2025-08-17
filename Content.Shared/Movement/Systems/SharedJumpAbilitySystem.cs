@@ -3,6 +3,7 @@ using Content.Shared.Actions.Components;
 using Content.Shared.Cloning.Events;
 using Content.Shared.Gravity;
 using Content.Shared.Movement.Components;
+using Content.Shared.Popups;
 using Content.Shared.Standing;
 using Content.Shared.Stunnable;
 using Content.Shared.Throwing;
@@ -19,6 +20,7 @@ public sealed partial class SharedJumpAbilitySystem : EntitySystem
     [Dependency] private readonly SharedActionsSystem _actions = default!;
     [Dependency] private readonly SharedStunSystem _stun = default!;
     [Dependency] private readonly StandingStateSystem _standing = default!;
+    [Dependency] private readonly SharedPopupSystem _popup = default!;
 
     public override void Initialize()
     {
@@ -51,9 +53,6 @@ public sealed partial class SharedJumpAbilitySystem : EntitySystem
 
     private void OnLeaperCollide(Entity<ActiveLeaperComponent> entity, ref StartCollideEvent args)
     {
-        if (!HasComp<ActiveLeaperComponent>(entity.Owner))
-            return;
-
         if (!TryComp<JumpAbilityComponent>(entity.Owner, out var ability))
             return;
 
@@ -77,7 +76,11 @@ public sealed partial class SharedJumpAbilitySystem : EntitySystem
     private void OnGravityJump(Entity<JumpAbilityComponent> entity, ref GravityJumpEvent args)
     {
         if (_gravity.IsWeightless(args.Performer) || _standing.IsDown(args.Performer))
+        {
+            if (entity.Comp.JumpFailedPopup != null)
+                _popup.PopupClient(Loc.GetString(entity.Comp.JumpFailedPopup.Value), args.Performer, args.Performer);
             return;
+        }
 
         var xform = Transform(args.Performer);
         var throwing = xform.LocalRotation.ToWorldVec() * entity.Comp.JumpDistance;
