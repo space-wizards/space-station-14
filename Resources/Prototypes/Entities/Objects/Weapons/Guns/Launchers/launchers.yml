@@ -37,6 +37,10 @@
     slots:
     - Back
     - suitStorage
+  - type: Item
+    size: Huge
+    shape:
+    - 0,0,4,2
   # start of modifications
   - type: ItemSlots
     slots:
