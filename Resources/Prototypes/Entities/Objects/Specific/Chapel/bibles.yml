@@ -198,11 +198,11 @@
   - type: Item
     sprite: Objects/Specific/Chapel/honk.rsi
 
-- type: entity
+- type: entity 
   id: BibleLamp
-  name: compendium of the lamp
+  name: doctrine of the lantern path
   parent: BibleBase
-  description: "May the light and warmth of the glorious lamp purify your soul and mind."
+  description: "Carry forth your inner flame, through shadow toward rebirth in the First Light."
   components:
   - type: ReactionMixer
     mixMessage: "bible-mixing-success"
