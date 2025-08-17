@@ -142,14 +142,14 @@ public abstract class SharedJetpackSystem : EntitySystem
         if (TryComp<PhysicsComponent>(user, out var physics))
             _physics.SetBodyStatus(user, physics, BodyStatus.InAir);
 
+        EnsureComp<ActiveJetpackComponent>(jetpackUid);
+
         userComp.Jetpack = jetpackUid;
         userComp.WeightlessAcceleration = jetpackComp.Acceleration;
         userComp.WeightlessModifier = jetpackComp.WeightlessModifier;
         userComp.WeightlessFriction = jetpackComp.Friction;
         userComp.WeightlessFrictionNoInput = jetpackComp.Friction;
         _movementSpeedModifier.RefreshWeightlessModifiers(user);
-
-        EnsureComp<ActiveJetpackComponent>(jetpackUid);
     }
 
     private void EndUserFlying(EntityUid user, Entity<JetpackComponent> jetpack)
@@ -177,7 +177,7 @@ public abstract class SharedJetpackSystem : EntitySystem
             return;
         }
 
-        // You can still turn the jetpack on/off when on a grid that doesn't permit flying; you just won't be able to fly!
+        // You can still turn the jetpack on/off when on a grid that doesn't permit flying, you just won't be able to fly!
         SetEnabled(jetpack, toggled, null, toggled ? CanFlyOnGrid(Transform(jetpack).GridUid) : false);
 
         args.Handled = true;

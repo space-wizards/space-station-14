@@ -48,7 +48,6 @@ public sealed class JetpackSystem : SharedJetpackSystem
         // TODO: Please don't copy-paste this I beg
         // make a generic particle emitter system / actual particles instead.
         var query = EntityQueryEnumerator<ActiveJetpackComponent>();
-
         while (query.MoveNext(out var uid, out var comp))
         {
             var transform = Transform(uid);
