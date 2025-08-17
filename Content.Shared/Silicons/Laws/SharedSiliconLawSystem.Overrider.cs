@@ -5,8 +5,8 @@ namespace Content.Shared.Silicons.Laws;
 
 public abstract partial class SharedSiliconLawSystem
 {
+    [Dependency] private readonly ItemSlotsSystem _slots = default!;
     private readonly ProtoId<ChatNotificationPrototype> _overrideLawsChatNotificationPrototype = "OverrideLaws";
-
     private void InitializeOverrider()
     {
         SubscribeLocalEvent<SiliconLawOverriderComponent, AfterInteractEvent>(OnOverriderInteract);
@@ -18,25 +18,28 @@ public abstract partial class SharedSiliconLawSystem
         if (args.Handled || !args.CanReach || args.Target == null)
             return;
 
-        if (!TryComp(args.Target, out SiliconLawProviderComponent? targetOverrider))
+        if (!TryComp(args.Target, out SiliconLawProviderComponent? LawProviderTarget))
             return;
 
         if (!TryComp(args.Used, out SiliconLawOverriderComponent? OverriderComp))
             return;
 
-        var doAfterTime = OverriderComp.OverrideTime;
+        var lawBoard = _slot.GetItemOrNull(ent, OverriderComp.LawBoardId);
 
-        if (TryGetHeld((args.Target.Value, targetOverrider), out var held))
-        {
-            var ev = new ChatNotificationEvent(_downloadChatNotificationPrototype, args.Used, args.User);
-            RaiseLocalEvent(held, ref ev);
-        }
+        if (!TryComp(lawBoard, out SiliconLawOverriderComponent? LawProviderBase))
+            return;
 
-        // TODO: RETRIVE LAW PROVIDER FROM LAW BOARD IN THE ITEM SLOT
+        if (TryGetHeld((args.Target.Value, LawProviderTarget), out var held))
+            {
+                var ev = new ChatNotificationEvent(_downloadChatNotificationPrototype, args.Used, args.User);
+                RaiseLocalEvent(held, ref ev);
+            }
 
         // TODO: PASS THE LAW PROVIDER TO THE DOAFTER EVENT
 
-        var doAfterArgs = new DoAfterArgs(EntityManager, args.User, doAfterTime, new OverriderDoAfterEvent(), args.Target, ent.Owner)
+        var doAfterTime = OverriderComp.OverrideTime;
+
+        var doAfterArgs = new DoAfterArgs(EntityManager, args.User, doAfterTime, new OverriderDoAfterEvent(lawBoard), args.Target, ent.Owner)
         {
             BreakOnDamage = true,
             BreakOnMove = true,
@@ -56,20 +59,27 @@ public abstract partial class SharedSiliconLawSystem
         if (args.Handled)
             return;
 
-        if (!TryComp(args.Args.Target, out SiliconLawProviderComponent? targetOverrider))
+        if (!TryComp(args.Args.Target, out SiliconLawProviderComponent? LawProviderTarget))
             return;
 
-        var provider; //TODO: GET THE LAW PROVIDER HERE SOMEHOW
+        if (args.LawProviderBaseEntity is not { } lawProviderBaseEntity)
+            return;
 
-        var lawset = GetLawset(provider.Laws).Laws;
+        if (!TryComp(lawProviderBaseEntity, out SiliconLawProviderComponent? LawProviderBase))
+            return;
+
+        var lawset = GetLawset(LawProviderBase.Laws).Laws;
         var query = EntityManager.CompRegistryQueryEnumerator(ent.Comp.Components);
 
         while (query.MoveNext(out var update))
         {
-            SetLaws(lawset, update, provider.LawUploadSound);
+            SetLaws(lawset, update, LawProviderBase.LawUploadSound);
         }
     }
 }
 
 [Serializable, NetSerializable]
-public sealed partial class OverriderDoAfterEvent : SimpleDoAfterEvent;
+public sealed partial class OverriderDoAfterEvent(EntityUid? lawProviderBaseEntity = null) : SimpleDoAfterEvent
+{
+    public EntityUid? LawProviderBaseEntity = lawProviderBaseEntity;
+}

@@ -11,4 +11,10 @@ public sealed partial class SiliconLawOverriderComponent : Component
     /// </summary>
     [DataField, ViewVariables(VVAccess.ReadWrite)]
     public TimeSpan OverrideTime = TimeSpan.Zero;
+
+    /// <summary>
+    /// The ID of the itemslot that holds the law board.
+    /// </summary>
+    [DataField("LawBoardId")]
+    public string LawBoardId = "law_board";
 }
