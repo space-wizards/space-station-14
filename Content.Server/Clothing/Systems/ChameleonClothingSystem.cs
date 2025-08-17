@@ -19,6 +19,7 @@ public sealed class ChameleonClothingSystem : SharedChameleonClothingSystem
         SubscribeLocalEvent<ChameleonClothingComponent, ChameleonPrototypeSelectedMessage>(OnSelected);
 
         SubscribeLocalEvent<ChameleonClothingComponent, EmpPulseEvent>(OnEmpPulse);
+        SubscribeLocalEvent<ChameleonClothingComponent, EmpDisabledRemoved>(OnEmpRemoved);
     }
 
     private void OnMapInit(EntityUid uid, ChameleonClothingComponent component, MapInitEvent args)
@@ -42,6 +43,13 @@ public sealed class ChameleonClothingSystem : SharedChameleonClothingSystem
         UI.CloseUi(ent.Owner, ChameleonUiKey.Key);
         args.Affected = true;
         args.Disabled = true;
+    }
+
+    // TODO: Just subscribe on the client once EMPs are predicted
+    private void OnEmpRemoved(Entity<ChameleonClothingComponent> ent, ref EmpDisabledRemoved args)
+    {
+        // force an update on the client to get rid of the last visual effect from swapping continuously.
+        Dirty(ent);
     }
 
     private void UpdateUi(EntityUid uid, ChameleonClothingComponent? component = null)
