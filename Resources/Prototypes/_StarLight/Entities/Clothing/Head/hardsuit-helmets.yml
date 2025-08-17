@@ -334,7 +334,7 @@
         Piercing: 0.9
         Heat: 0.9
 
-#Salvage Hardsuit
+#Mining Hardsuit
 - type: entity
   parent: [ ClothingHeadHardsuitBase, ClothingHeadSuitWithLightBase ]
   id: ClothingHeadHelmetHardsuitMining
@@ -354,4 +354,3 @@
   - type: Tag
     tags:
     - CorgiWearable
-    - WhitelistChameleon
