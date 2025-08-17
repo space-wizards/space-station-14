@@ -246,3 +246,11 @@
     exitPolymorphSound: /Audio/Magic/ethereal_exit.ogg
     duration: 120
     effectProto: EffectDesynchronizer
+
+- type: polymorph
+  id: PaiBorgi
+  configuration:
+    entity: Borgi
+    transferName: true
+    revertOnDeath: true
+    transferDamage: false
