@@ -105,15 +105,7 @@ public sealed class DeltaPressureSystem : EntitySystem
     [PublicAPI]
     public bool TryRemoveFromProcessingQueue(Entity<DeltaPressureComponent> ent)
     {
-        var xformEnt = Transform(ent);
-
-        // The entity is not on a grid, so it cannot possibly have an atmosphere that affects it.
-        if (xformEnt.GridUid == null)
-        {
-            return false;
-        }
-
-        return _atmosphereSystem.TryRemoveDeltaPressureEntity(xformEnt.GridUid.Value, ent);
+        return ent.Comp.GridUid != null && _atmosphereSystem.TryRemoveDeltaPressureEntity(ent.Comp.GridUid.Value, ent);
     }
 
     /// <summary>
