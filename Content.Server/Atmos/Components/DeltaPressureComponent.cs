@@ -33,7 +33,7 @@ public sealed partial class DeltaPressureComponent : Component
     public bool IsTakingDamage;
 
     /// <summary>
-    /// The grid this entity is on.
+    /// The grid this entity is currently joined to for processing.
     /// Required for proper deletion, as we cannot reference the grid
     /// for removal while the entity is being deleted.
     /// </summary>

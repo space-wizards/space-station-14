@@ -385,6 +385,7 @@ public partial class AtmosphereSystem
             grid.Comp.DeltaPressureCursor = grid.Comp.DeltaPressureEntities.Count;
 
         ent.Comp.InProcessingList = false;
+        ent.Comp.GridUid = null;
         return true;
     }
 
