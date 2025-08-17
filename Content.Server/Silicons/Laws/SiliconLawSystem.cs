@@ -279,7 +279,7 @@ public sealed class SiliconLawSystem : SharedSiliconLawSystem
     /// <summary>
     /// Set the laws of a silicon entity while notifying the player.
     /// </summary>
-    public void SetLaws(List<SiliconLaw> newLaws, EntityUid target, SoundSpecifier? cue = null)
+    public override void SetLaws(List<SiliconLaw> newLaws, EntityUid target, SoundSpecifier? cue = null)
     {
         if (!TryComp<SiliconLawProviderComponent>(target, out var component))
             return;
@@ -304,28 +304,6 @@ public sealed class SiliconLawSystem : SharedSiliconLawSystem
         {
             SetLaws(lawset, update, provider.LawUploadSound);
         }
-    }
-
-    protected override void OnOverriderDoAfter(Entity<SiliconLawProviderComponent> ent, ref OverriderDoAfterEvent args)
-    {
-        if (args.Cancelled)
-            return;
-
-        if (args.Handled)
-            return;
-
-        if (!TryComp(args.Args.Target, out SiliconLawProviderComponent? LawProviderTarget))
-            return;
-
-        if (args.LawProviderBaseEntity is not { } lawProviderBaseEntity)
-            return;
-
-        if (!TryComp(lawProviderBaseEntity, out SiliconLawProviderComponent? LawProviderBase))
-            return;
-
-        var lawset = GetLawset(LawProviderBase.Laws).Laws;
-
-        SetLaws(lawset, ent, LawProviderBase.LawUploadSound);
     }
 }
 

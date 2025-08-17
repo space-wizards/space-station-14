@@ -54,7 +54,29 @@ public abstract partial class SharedSiliconLawSystem
         args.Handled = true;
     }
 
-    protected virtual void OnOverriderDoAfter(Entity<SiliconLawProviderComponent> ent, ref OverriderDoAfterEvent args)
+    private void OnOverriderDoAfter(Entity<SiliconLawProviderComponent> ent, ref OverriderDoAfterEvent args)
+    {
+        if (args.Cancelled)
+            return;
+
+        if (args.Handled)
+            return;
+
+        if (!TryComp(args.Args.Target, out SiliconLawProviderComponent? LawProviderTarget))
+            return;
+
+        if (args.LawProviderBaseEntity is not { } lawProviderBaseEntity)
+            return;
+
+        if (!TryComp(lawProviderBaseEntity, out SiliconLawProviderComponent? LawProviderBase))
+            return;
+
+        var lawset = GetLawset(LawProviderBase.Laws).Laws;
+
+        SetLaws(lawset, ent, LawProviderBase.LawUploadSound);
+    }
+
+    protected virtual void SetLaws(List<SiliconLaw> newLaws, EntityUid target, SoundSpecifier? cue = null)
     {
 
     }
