@@ -38,7 +38,7 @@ public abstract partial class SharedSiliconLawSystem
             return;
 
         var ev = new ChatNotificationEvent(_overrideLawsChatNotificationPrototype, args.Used, args.User);
-        RaiseLocalEvent(held, ref ev);
+        RaiseLocalEvent(ent, ref ev);
 
         var doAfterTime = OverriderComp.OverrideTime;
 
