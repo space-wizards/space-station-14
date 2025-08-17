@@ -86,7 +86,7 @@ public sealed partial class SharedJumpAbilitySystem : EntitySystem
 
         if (entity.Comp.CanCollide)
         {
-            var leaperComp = EnsureComp<ActiveLeaperComponent>(entity);
+            EnsureComp<ActiveLeaperComponent>(entity, out var leaperComp);
             leaperComp.KnockdownDuration = entity.Comp.CollideKnockdown;
             Dirty(entity.Owner, leaperComp);
         }
