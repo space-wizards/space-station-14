@@ -118,9 +118,6 @@ reagent-desc-puncturase = A fizzy chemical that helps rebuild trauma caused by p
 reagent-name-bruizine = bruizine
 reagent-desc-bruizine = Originally developed as a cough medicine, it turns out this chemical is wildly effective at treating blunt force trauma.
 
-reagent-name-holywater = holy water
-reagent-desc-holywater = The cleanest and purest of waters straight from the hands of god, is known to magically heal wounds.
-
 reagent-name-pyrazine = pyrazine
 reagent-desc-pyrazine = Efficiently heals burns from the hottest of fires. Causes massive internal bleeding when overdosed.
 
@@ -147,24 +144,3 @@ reagent-desc-potassium-iodide = Will reduce the damaging effects of radiation by
 
 reagent-name-haloperidol = haloperidol
 reagent-desc-haloperidol = Removes most stimulating and hallucinogenic drugs. Reduces druggy effects and jitteriness. Causes drowsiness.
-
-reagent-name-temporallubricant = temporal lubricant
-reagent-desc-temporallubricant = With a metalic glint of gold, it evokes the divine and grace of the Clockwork Justice.
-
-reagent-name-lifebloomsap = lifebloom sap
-reagent-desc-lifebloomsap = A thick and healthy looking sap that glistens a healthy green.
-
-reagent-name-narsieblood = the blood of nar'sie
-reagent-desc-narsieblood = A dark void with a sinister red oozing through. The color of dried blood and eldritch betrayal.
-
-reagent-name-hydrationsolution = brand-compliant hydration solution™
-reagent-desc-hydrationsolution = A sterile fluid with a tint of blue to make it appear "refreshing" — cold, efficient, and market-tested.
-
-reagent-name-radiantnectar = radiant nectar
-reagent-desc-radiantnectar = Bright and comforting. This creamy fluid emulates the warm and soft gaze of a soothing lamp.
-
-reagent-name-purejoy = pure joy
-reagent-desc-purejoy = A pink fluid that glitters in the light. It has a faint scent of banana and is as ensuring as a warm smile.
-
-reagent-name-purevodka = pure vodka
-reagent-desc-purevodka = Crystal-clear and strong. The beverage of the people. Probably distributed in strictly equal milliliters.
