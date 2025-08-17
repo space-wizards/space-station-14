@@ -45,6 +45,6 @@ public sealed partial class SharedFeedbackSystem
 
     private void OnFeedbackOriginsUpdated(string newOrigins)
     {
-        _validOrigins =  newOrigins.Split(' ').ToList();
+        _validOrigins = newOrigins.Split(' ').ToList();
     }
 }

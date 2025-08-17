@@ -19,13 +19,13 @@ public sealed class FeedbackPopupCommand : LocalizedEntityCommands
     {
         if (args.Length != 2)
         {
-            shell.WriteError(Loc.GetString("feedbackpopup-command-error-wrong-arguments"));
+            shell.WriteError(Loc.GetString("shell-wrong-arguments-number"));
             return;
         }
 
         if (!int.TryParse(args[0], out var entityUidInt))
         {
-            shell.WriteError(Loc.GetString("feedbackpopup-command-error-invalid-uid"));
+            shell.WriteError(Loc.GetString("shell-entity-uid-must-be-number"));
             return;
         }
 
@@ -33,7 +33,7 @@ public sealed class FeedbackPopupCommand : LocalizedEntityCommands
 
         if (!EntityManager.TryGetEntity(netEnt, out var target))
         {
-            shell.WriteLine(Loc.GetString("feedbackpopup-command-error-entity-not-found"));
+            shell.WriteLine(Loc.GetString("shell-could-not-find-entity-with-uid"));
             return;
         }
 

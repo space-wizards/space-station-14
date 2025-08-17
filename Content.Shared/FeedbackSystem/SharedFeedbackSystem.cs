@@ -44,14 +44,15 @@ public sealed partial class SharedFeedbackSystem : EntitySystem
         if (!_player.TryGetSessionByEntity(uid, out var session))
             return false;
 
-        return SendPopupsSession(session, popupPrototypes);
+        SendPopupsSession(session, popupPrototypes);
+        return true;
     }
 
-    public bool SendPopupsSession(ICommonSession session, List<ProtoId<FeedbackPopupPrototype>> popupPrototypes)
+    public void SendPopupsSession(ICommonSession session, List<ProtoId<FeedbackPopupPrototype>> popupPrototypes)
     {
         var msg = new FeedbackPopupMessage(popupPrototypes);
         RaiseNetworkEvent(msg, session);
 
-        return true;
+        return;
     }
 }
