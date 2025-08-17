@@ -510,4 +510,11 @@
   id: 63
   time: '2025-08-11T15:43:47.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/39331
+- author: Steffo99
+  changes:
+  - message: On many stations, fax machines have slightly more consistent names.
+    type: Tweak
+  id: 64
+  time: '2025-08-17T18:50:57.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/39455
 Order: 1
