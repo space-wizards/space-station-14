@@ -196,29 +196,29 @@
   fx: EffectRCDConstruct3
   
 #fans
-- type: rcd
-  id: AtmosDeviceFanTiny
-  category: Airlocks
-  sprite: /Textures/Interface/Radial/RCD/tiny_fan.png
-  mode: ConstructObject
-  prototype: AtmosDeviceFanTiny
-  cost: 3
-  delay: 2
-  collisionMask: Impassable
-  rotation: Camera
-  fx: EffectRCDConstruct3
+#- type: rcd
+#  id: AtmosDeviceFanTiny
+#  category: Airlocks
+#  sprite: /Textures/Interface/Radial/RCD/tiny_fan.png
+#  mode: ConstructObject
+#  prototype: AtmosDeviceFanTiny
+#  cost: 3
+#  delay: 2
+#  collisionMask: Impassable
+#  rotation: Camera
+#  fx: EffectRCDConstruct3
   
-- type: rcd
-  id: AtmosDeviceFanDirectional
-  category: Airlocks
-  sprite: /Textures/Interface/Radial/RCD/directional_fan.png
-  mode: ConstructObject
-  prototype: AtmosDeviceFanDirectional
-  cost: 3
-  delay: 2
-  collisionMask: Impassable
-  rotation: User
-  fx: EffectRCDConstruct3
+#- type: rcd
+#  id: AtmosDeviceFanDirectional
+#  category: Airlocks
+#  sprite: /Textures/Interface/Radial/RCD/directional_fan.png
+#  mode: ConstructObject
+#  prototype: AtmosDeviceFanDirectional
+#  cost: 3
+#  delay: 2
+#  collisionMask: Impassable
+#  rotation: User
+#  fx: EffectRCDConstruct3
 
 # Lighting
 - type: rcd
