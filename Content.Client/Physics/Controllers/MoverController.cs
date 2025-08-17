@@ -1,5 +1,6 @@
 using Content.Shared.Alert;
 using Content.Shared.CCVar;
+using Content.Shared.Friction;
 using Content.Shared.Movement.Components;
 using Content.Shared.Movement.Pulling.Components;
 using Content.Shared.Movement.Systems;

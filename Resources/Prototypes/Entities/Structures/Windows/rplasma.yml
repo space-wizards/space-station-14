@@ -82,6 +82,8 @@
     trackAllDamage: true
     damageOverlay:
       sprite: Structures/Windows/cracks_directional.rsi
+  - type: Damageable
+    damageModifierSet: RGlass
   - type: RadiationBlocker
     resistance: 2
   - type: Destructible
@@ -128,6 +130,7 @@
   - type: Tag
     tags:
     - Diagonal
+    - Window
   - type: IconSmooth
     mode: Diagonal
     key: windows
@@ -148,6 +151,7 @@
         - FullTileMask
         layer:
         - GlassLayer
+        density: 2000
   - type: Airtight
     noAirWhenFullyAirBlocked: false
     airBlockedDirection:

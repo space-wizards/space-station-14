@@ -1,0 +1,22 @@
+- type: htnCompound
+  id: BasiliskCompound
+  branches:
+  - tasks:
+    - !type:HTNCompoundTask
+      task: BasiliskMeleeCombatCompound
+  - tasks:
+    - !type:HTNCompoundTask
+      task: InnateRangedCombatCompound
+  - tasks:
+    - !type:HTNCompoundTask
+      task: IdleCompound
+
+- type: htnCompound
+  id: BasiliskMeleeCombatCompound
+  branches:
+  - tasks:
+    - !type:HTNPrimitiveTask
+      operator: !type:UtilityOperator
+        proto: NearbyColdMeleeTargets
+    - !type:HTNCompoundTask
+      task: BeforeMeleeAttackTargetCompound
