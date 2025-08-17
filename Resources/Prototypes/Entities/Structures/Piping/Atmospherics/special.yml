@@ -1,4 +1,5 @@
 # Devices which are not portable but don't link up to anything
+# Now fans are porteble and you can unanhor them and pull
 - type: entity
   parent: [ConstructibleMachine, BaseMachine]
   id: AtmosDeviceFanTiny
