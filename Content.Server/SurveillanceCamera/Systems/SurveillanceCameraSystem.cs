@@ -296,7 +296,7 @@ public sealed class SurveillanceCameraSystem : EntitySystem
 
         UpdateVisuals(camera, component);
 
-        _cameraMapSystem.UpdateCameraMarker(camera, component);
+        _cameraMapSystem.UpdateCameraMarker((camera, component));
     }
 
     public void AddActiveViewer(EntityUid camera, EntityUid player, EntityUid? monitor = null, SurveillanceCameraComponent? component = null, ActorComponent? actor = null)
