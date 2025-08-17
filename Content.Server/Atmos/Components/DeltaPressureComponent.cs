@@ -33,6 +33,14 @@ public sealed partial class DeltaPressureComponent : Component
     public bool IsTakingDamage;
 
     /// <summary>
+    /// The grid this entity is currently joined to for processing.
+    /// Required for proper deletion, as we cannot reference the grid
+    /// for removal while the entity is being deleted.
+    /// </summary>
+    [DataField]
+    public EntityUid? GridUid;
+
+    /// <summary>
     /// Whether the entity should automatically join the processing list on the grid's <see cref="GridAtmosphereComponent"/>
     /// for delta pressure processing.
     /// If this is set to false, the entity will not be automatically added to the list.
