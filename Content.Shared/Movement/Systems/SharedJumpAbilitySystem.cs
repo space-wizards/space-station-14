@@ -88,7 +88,11 @@ public sealed partial class SharedJumpAbilitySystem : EntitySystem
         _audio.PlayPredicted(entity.Comp.JumpSound, args.Performer, args.Performer);
 
         if (entity.Comp.CanCollide)
-            EnsureComp<ActiveLeaperComponent>(entity);
+        {
+            var leaperComp = EnsureComp<ActiveLeaperComponent>(entity);
+            leaperComp.KnockdownDuration = entity.Comp.CollideKnockdown;
+            Dirty(entity.Owner, leaperComp);
+        }
 
         args.Handled = true;
     }
