@@ -130,7 +130,7 @@
     - GroupSpeciesBreathTool
 
 - type: roleLoadout
-  id: SalvageMedic
+  id: JobSalvageMedic
   groups:
     - GroupTankHarness
     - SalvageSpecialistBackpack
