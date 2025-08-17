@@ -76,13 +76,7 @@ public abstract partial class SharedSiliconLawSystem
         if (!TryComp(lawProviderBaseEntity, out SiliconLawProviderComponent? LawProviderBase))
             return;
 
-        var lawset = GetLawset(LawProviderBase.Laws).Laws;
-        var query = EntityManager.CompRegistryQueryEnumerator(ent.Comp.Components);
-
-        while (query.MoveNext(out var update))
-        {
-            SetLaws(lawset, update, LawProviderBase.LawUploadSound);
-        }
+        // TODO: UPDATE LAWS
     }
 }
 
