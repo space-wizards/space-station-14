@@ -136,7 +136,7 @@
   - type: ReactionMixer
     mixMessage: "bible-mixing-success"
     reactionTypes:
-    - Communist
+    - Holy
   - type: Sprite
     sprite: Objects/Specific/Chapel/communistmanifesto.rsi
   - type: Item

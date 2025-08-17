@@ -128,49 +128,6 @@
         time: 2
         refresh: false
 
-# Communist Manifesto Holy Water
-- type: reagent
-  id: PureVodka
-  name: reagent-name-purevodka
-  group: Sacred
-  desc: reagent-desc-purevodka
-  evaporationSpeed: 0
-  physicalDesc: reagent-physical-desc-holy
-  flavor: holy
-  color: "#d5dee0"
-  reactiveEffects:
-    Extinguish:
-      methods: [ Touch ]
-      effects:
-      - !type:ExtinguishReaction
-    Acidic:
-      methods: [ Touch ]
-      effects:
-      - !type:HealthChange
-        scaleByQuantity: true
-        ignoreResistances: false
-        damage:
-          types:
-            Holy: 0.5
-  tileReactions:
-  - !type:ExtinguishTileReaction { }
-  metabolisms:
-    Drink:
-      effects:
-      - !type:SatiateThirst
-        factor: 1.5
-      - !type:HealthChange
-        conditions:
-        - !type:TotalDamage
-          max: 50
-        damage:
-          types:
-            Poison: -0.4
-      - !type:GenericStatusEffect
-        key: Drunk
-        time: 2.0
-        type: Remove
-
 # Ratvar Holy Water
 - type: reagent
   id: TemporalLubricant

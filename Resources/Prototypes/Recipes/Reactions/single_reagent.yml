@@ -69,18 +69,6 @@
   products:
     PureJoy: 1
 
-# Communist Manifesto Holy Water
-- type: reaction
-  id: WatertoPureVodka
-  impact: Low
-  requiredMixerCategories:
-  - Communist
-  reactants:
-    Water:
-      amount: 1
-  products:
-    PureVodka: 1
-
 # Tome of Nar'sie Holy Water
 - type: reaction
   id: WatertoNarsieBlood

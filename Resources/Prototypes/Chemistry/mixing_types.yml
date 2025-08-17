@@ -67,13 +67,6 @@
     state: spoon
 
 - type: mixingCategory
-  id: Communist
-  verbText: mixing-verb-holy
-  icon:
-    sprite: Objects/Specific/Chapel/communistmanifesto.rsi
-    state: icon
-
-- type: mixingCategory
   id: Clown
   verbText: mixing-verb-holy
   icon:

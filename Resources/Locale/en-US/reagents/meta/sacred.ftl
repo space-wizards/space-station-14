@@ -18,6 +18,3 @@ reagent-desc-radiantnectar = Bright and comforting. This creamy fluid emulates t
 
 reagent-name-purejoy = pure joy
 reagent-desc-purejoy = A pink fluid that glitters in the light. It has a faint scent of banana and is as ensuring as a warm smile.
-
-reagent-name-purevodka = pure vodka
-reagent-desc-purevodka = Crystal-clear and strong. The beverage of the people. Probably distributed in strictly equal milliliters.

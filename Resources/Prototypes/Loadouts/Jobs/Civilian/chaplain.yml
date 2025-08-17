@@ -117,12 +117,6 @@
     - Bible
 
 - type: loadout
-  id: BibleCommunistManifesto
-  storage:
-    back:
-    - BibleCommunistManifesto
-
-- type: loadout
   id: BibleDruid
   effects:
   - !type:GroupLoadoutEffect
