@@ -31,7 +31,11 @@ public sealed class SurveillanceCameraNavMapControl : NavMapControl
     {
         _cameraTexture = _resourceCache.GetTexture("/Textures/Interface/NavMap/beveled_triangle.png");
 
-        TrackedEntitySelectedAction += OnTrackedEntitySelected;
+        TrackedEntitySelectedAction += entity =>
+        {
+            if (entity.HasValue)
+                CameraSelected?.Invoke(entity.Value);
+        };
     }
 
     public void SetActiveCameraAddress(string address)
@@ -71,12 +75,15 @@ public sealed class SurveillanceCameraNavMapControl : NavMapControl
     {
         TrackedEntities.Clear();
 
+        if (MapUid is null)
+            return;
+
         foreach (var (netEntity, marker) in mapComp.Cameras)
         {
             if (!_availableSubnets.Contains(marker.Subnet))
                 continue;
 
-            var coords = new EntityCoordinates(MapUid!.Value, marker.Position);
+            var coords = new EntityCoordinates(MapUid.Value, marker.Position);
 
             Color color;
             if (string.IsNullOrEmpty(marker.Address))
@@ -94,11 +101,5 @@ public sealed class SurveillanceCameraNavMapControl : NavMapControl
                 EnableCameraSelection
             );
         }
-    }
-
-    private void OnTrackedEntitySelected(NetEntity? netEntity)
-    {
-        if (netEntity.HasValue && CameraSelected is not null)
-            CameraSelected(netEntity.Value);
     }
 }
