@@ -198,6 +198,7 @@
   - type: Physics
     canCollide: false
   - type: Fixtures
+  - type: InteractionOutline
   - type: Damageable
     damageContainer: Inorganic
     damageModifierSet: Metallic
