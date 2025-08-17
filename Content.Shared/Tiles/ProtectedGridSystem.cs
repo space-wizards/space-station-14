@@ -62,7 +62,7 @@ public sealed class ProtectedGridSystem : EntitySystem
             return;
         }
 
-        if (SharedMapSystem.FromBitmask(args.GridIndices, data))
+        if (!SharedMapSystem.FromBitmask(args.GridIndices, data))
         {
             args.Cancelled = true;
         }

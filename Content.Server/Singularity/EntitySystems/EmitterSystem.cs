@@ -7,7 +7,6 @@ using Content.Server.Projectiles;
 using Content.Server.Weapons.Ranged.Systems;
 using Content.Shared.Database;
 using Content.Shared.DeviceLinking.Events;
-using Content.Shared.Examine;
 using Content.Shared.Interaction;
 using Content.Shared.Lock;
 using Content.Shared.Popups;
@@ -15,9 +14,7 @@ using Content.Shared.Power;
 using Content.Shared.Projectiles;
 using Content.Shared.Singularity.Components;
 using Content.Shared.Singularity.EntitySystems;
-using Content.Shared.Verbs;
 using Content.Shared.Weapons.Ranged.Components;
-using JetBrains.Annotations;
 using Robust.Shared.Map;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Components;
@@ -28,7 +25,6 @@ using Timer = Robust.Shared.Timing.Timer;
 
 namespace Content.Server.Singularity.EntitySystems
 {
-    [UsedImplicitly]
     public sealed class EmitterSystem : SharedEmitterSystem
     {
         [Dependency] private readonly IRobustRandom _random = default!;
@@ -46,8 +42,6 @@ namespace Content.Server.Singularity.EntitySystems
             SubscribeLocalEvent<EmitterComponent, PowerConsumerReceivedChanged>(ReceivedChanged);
             SubscribeLocalEvent<EmitterComponent, PowerChangedEvent>(OnApcChanged);
             SubscribeLocalEvent<EmitterComponent, ActivateInWorldEvent>(OnActivate);
-            SubscribeLocalEvent<EmitterComponent, GetVerbsEvent<Verb>>(OnGetVerb);
-            SubscribeLocalEvent<EmitterComponent, ExaminedEvent>(OnExamined);
             SubscribeLocalEvent<EmitterComponent, AnchorStateChangedEvent>(OnAnchorStateChanged);
             SubscribeLocalEvent<EmitterComponent, SignalReceivedEvent>(OnSignalReceived);
         }
@@ -97,47 +91,6 @@ namespace Content.Server.Singularity.EntitySystems
                 _popup.PopupEntity(Loc.GetString("comp-emitter-not-anchored",
                     ("target", uid)), uid, args.User);
             }
-        }
-
-        private void OnGetVerb(EntityUid uid, EmitterComponent component, GetVerbsEvent<Verb> args)
-        {
-            if (!args.CanAccess || !args.CanInteract || !args.CanComplexInteract || args.Hands == null)
-                return;
-
-            if (TryComp<LockComponent>(uid, out var lockComp) && lockComp.Locked)
-                return;
-
-            if (component.SelectableTypes.Count < 2)
-                return;
-
-            foreach (var type in component.SelectableTypes)
-            {
-                var proto = _prototype.Index<EntityPrototype>(type);
-
-                var v = new Verb
-                {
-                    Priority = 1,
-                    Category = VerbCategory.SelectType,
-                    Text = proto.Name,
-                    Disabled = type == component.BoltType,
-                    Impact = LogImpact.Medium,
-                    DoContactInteraction = true,
-                    Act = () =>
-                    {
-                        component.BoltType = type;
-                        _popup.PopupEntity(Loc.GetString("emitter-component-type-set", ("type", proto.Name)), uid);
-                    }
-                };
-                args.Verbs.Add(v);
-            }
-        }
-
-        private void OnExamined(EntityUid uid, EmitterComponent component, ExaminedEvent args)
-        {
-            if (component.SelectableTypes.Count < 2)
-                return;
-            var proto = _prototype.Index<EntityPrototype>(component.BoltType);
-            args.PushMarkup(Loc.GetString("emitter-component-current-type", ("type", proto.Name)));
         }
 
         private void ReceivedChanged(

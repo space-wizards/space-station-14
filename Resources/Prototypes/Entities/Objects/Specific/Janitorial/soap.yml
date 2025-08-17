@@ -158,6 +158,7 @@
   - type: Slippery
   - type: StepTrigger
     intersectRatio: 0.04
+  - type: TriggerOnStepTrigger
   - type: Item
     heldPrefix: syndie
   - type: Fixtures
@@ -178,10 +179,12 @@
         - ItemMask
   - type: DeleteOnTrigger
   - type: EmitSoundOnTrigger
+    predicted: true
+    positional: true
     sound:
       path: "/Audio/Effects/Fluids/splat.ogg"
       params:
-        volume: -20
+        volume: -8
 
 - type: entity
   name: soap
@@ -236,25 +239,3 @@
   - type: Residue
     residueAdjective: residue-slippery
     residueColor: residue-blue
-
-- type: entity
-  name: soap
-  id: SoapBorg # Intended for borg internals, not slippery or food, not a container for soap reagent
-  parent: BaseItem
-  description: A Nanotrasen brand bar of soap. Smells of plasma and machines.
-  components:
-  - type: Sprite
-    sprite: Objects/Specific/Janitorial/soap.rsi
-    layers:
-    - state: nt-4
-  - type: Appearance
-  - type: Item
-    sprite: Objects/Specific/Janitorial/soap.rsi
-    storedRotation: -90
-  - type: CleansForensics
-  - type: Residue
-    residueAdjective: residue-slippery
-    residueColor: residue-grey
-  - type: Tag
-    tags:
-    - Soap

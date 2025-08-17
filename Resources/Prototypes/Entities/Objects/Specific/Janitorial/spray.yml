@@ -42,6 +42,7 @@
     solution: spray
   - type: ExaminableSolution
     solution: spray
+    exactVolume: true
 
 - type: entity
   name: mega spray bottle

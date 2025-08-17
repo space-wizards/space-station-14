@@ -1,0 +1,31 @@
+- type: entity
+  parent: ComputerSurveillanceWirelessCameraMonitor
+  id: ComputerTelevision
+  name: wooden television
+  description: Finally, some decent reception around here...
+  components:
+  - type: Sprite
+    noRot: true
+    drawdepth: SmallObjects
+    layers:
+    - map: ["computerLayerBody"]
+      state: television
+    - map: ["computerLayerScreen"]
+      state: detective_television
+  - type: Computer
+    board: ComputerTelevisionCircuitboard
+  - type: PointLight
+    radius: 1.5
+    energy: 1.6
+    color: "#b89f25"
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.25,-0.25,0.25,0.25"
+        density: 200
+        mask:
+          - TabletopMachineMask
+        layer:
+          - TabletopMachineLayer

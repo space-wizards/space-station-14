@@ -112,10 +112,20 @@ public sealed partial record PolymorphConfiguration
     public bool RevertOnEat;
 
     /// <summary>
-    /// Whether or not an already polymorphed entity is able to be polymorphed again
+    /// If true, attempts to polymorph this polymorph will fail, unless
+    /// <see cref="IgnoreAllowRepeatedMorphs"/> is true on the /new/ morph.
     /// </summary>
     [DataField(serverOnly: true)]
     public bool AllowRepeatedMorphs;
+
+    /// <summary>
+    /// If true, this morph will succeed even when used on an entity
+    /// that is already polymorphed with a configuration that has
+    /// <see cref="AllowRepeatedMorphs"/> set to false. Helpful for
+    /// smite polymorphs which should always succeed.
+    /// </summary>
+    [DataField(serverOnly: true)]
+    public bool IgnoreAllowRepeatedMorphs;
 
     /// <summary>
     /// The amount of time that should pass after this polymorph has ended, before a new one

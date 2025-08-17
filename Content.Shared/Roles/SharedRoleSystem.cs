@@ -5,7 +5,8 @@ using Content.Shared.CCVar;
 using Content.Shared.Database;
 using Content.Shared.GameTicking;
 using Content.Shared.Mind;
-using Content.Shared.Roles.Jobs;
+using Content.Shared.Roles.Components;
+using Content.Shared.Whitelist;
 using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Configuration;
@@ -19,13 +20,14 @@ namespace Content.Shared.Roles;
 
 public abstract class SharedRoleSystem : EntitySystem
 {
-    [Dependency] private   readonly IConfigurationManager _cfg = default!;
-    [Dependency] private   readonly IEntityManager _entityManager = default!;
-    [Dependency] private   readonly IPrototypeManager _prototypes = default!;
-    [Dependency] private   readonly ISharedAdminLogManager _adminLogger = default!;
+    [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
+    [Dependency] private readonly SharedAudioSystem _audio = default!;
+    [Dependency] private readonly IConfigurationManager _cfg = default!;
     [Dependency] protected readonly ISharedPlayerManager Player = default!;
-    [Dependency] private   readonly SharedAudioSystem _audio = default!;
-    [Dependency] private   readonly SharedMindSystem _minds = default!;
+    [Dependency] private readonly IEntityManager _entityManager = default!;
+    [Dependency] private readonly EntityWhitelistSystem _whitelist = default!;
+    [Dependency] private readonly SharedMindSystem _minds = default!;
+    [Dependency] private readonly IPrototypeManager _prototypes = default!;
 
     private JobRequirementOverridePrototype? _requirementOverride;
 
@@ -502,6 +504,20 @@ public abstract class SharedRoleSystem : EntitySystem
         }
 
         return found;
+    }
+
+    /// <summary>
+    /// Returns true if a mind has a role that matches a whitelist.
+    /// </summary>
+    public bool MindHasRole(Entity<MindComponent> mind, EntityWhitelist whitelist)
+    {
+        foreach (var roleEnt in mind.Comp.MindRoles)
+        {
+            if (_whitelist.IsWhitelistPass(whitelist, roleEnt))
+                return true;
+        }
+
+        return false;
     }
 
     /// <summary>

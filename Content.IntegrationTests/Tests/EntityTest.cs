@@ -56,7 +56,7 @@ namespace Content.IntegrationTests.Tests
                 }
             });
 
-            await server.WaitRunTicks(15);
+            await server.WaitRunTicks(450); // 15 seconds, enough to trigger most update loops
 
             await server.WaitPost(() =>
             {
@@ -112,7 +112,7 @@ namespace Content.IntegrationTests.Tests
                     entityMan.SpawnEntity(protoId, map.GridCoords);
                 }
             });
-            await server.WaitRunTicks(15);
+            await server.WaitRunTicks(450); // 15 seconds, enough to trigger most update loops
             await server.WaitPost(() =>
             {
                 static IEnumerable<(EntityUid, TComp)> Query<TComp>(IEntityManager entityMan)
@@ -270,7 +270,7 @@ namespace Content.IntegrationTests.Tests
             await pair.RunTicksSync(3);
 
             // We consider only non-audio entities, as some entities will just play sounds when they spawn.
-            int Count(IEntityManager ent) =>  ent.EntityCount - ent.Count<AudioComponent>();
+            int Count(IEntityManager ent) => ent.EntityCount - ent.Count<AudioComponent>();
             IEnumerable<EntityUid> Entities(IEntityManager entMan) => entMan.GetEntities().Where(entMan.HasComponent<AudioComponent>);
 
             await Assert.MultipleAsync(async () =>

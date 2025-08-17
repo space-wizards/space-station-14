@@ -53,6 +53,7 @@
         recursive: false
   - type: Stamina
     critThreshold: 15
+    animationThreshold: 5
   - type: MovementAlwaysTouching
   - type: DamageStateVisuals
     states:

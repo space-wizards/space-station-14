@@ -1,11 +1,11 @@
 meta:
   format: 7
   category: Map
-  engineVersion: 260.1.0
+  engineVersion: 264.0.0
   forkId: ""
   forkVersion: ""
-  time: 05/20/2025 22:12:43
-  entityCount: 15479
+  time: 07/22/2025 16:27:25
+  entityCount: 15464
 maps:
 - 126
 grids:
@@ -9523,7 +9523,7 @@ entities:
       pos: 44.5,30.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -4038.7175
+      secondsUntilStateChange: -4092.861
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -79966,9 +79966,9 @@ entities:
     - type: Transform
       pos: -14.5,-22.5
       parent: 2
-- proto: SpawnMobParrot
+- proto: SpawnMobPollyParrot
   entities:
-  - uid: 6125
+  - uid: 2409
     components:
     - type: Transform
       pos: 11.5,-33.5

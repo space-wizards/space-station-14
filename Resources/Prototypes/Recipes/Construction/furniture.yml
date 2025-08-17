@@ -156,6 +156,18 @@
     - !type:TileNotBlocked
 
 - type: construction
+  id: StoolCard
+  graph: Seat
+  startNode: start
+  targetNode: stoolCard
+  category: construction-category-furniture
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+  - !type:TileNotBlocked
+
+- type: construction
   id: ChairWoodBench
   graph: Seat
   startNode: start
@@ -229,6 +241,18 @@
   canBuildInImpassable: false
   conditions:
     - !type:TileNotBlocked
+
+- type: construction
+  id: TableCard
+  graph: Table
+  startNode: start
+  targetNode: TableCard
+  category: construction-category-furniture
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+  - !type:TileNotBlocked
 
 - type: construction
   id: TableReinforcedGlass

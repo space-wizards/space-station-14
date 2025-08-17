@@ -61,12 +61,12 @@ public sealed class SSDIndicatorSystem : EntitySystem
     // Prevents mapped mobs to go to sleep immediately
     private void OnMapInit(EntityUid uid, SSDIndicatorComponent component, MapInitEvent args)
     {
-        if (_icSsdSleep &&
-            component.IsSSD &&
-            component.FallAsleepTime == TimeSpan.Zero)
-        {
-            component.FallAsleepTime = _timing.CurTime + TimeSpan.FromSeconds(_icSsdSleepTime);
-        }
+        if (!_icSsdSleep || !component.IsSSD)
+            return;
+
+        component.FallAsleepTime = _timing.CurTime + TimeSpan.FromSeconds(_icSsdSleepTime);
+        component.NextUpdate = _timing.CurTime + component.UpdateInterval;
+        Dirty(uid, component);
     }
 
     public override void Update(float frameTime)
@@ -76,17 +76,21 @@ public sealed class SSDIndicatorSystem : EntitySystem
         if (!_icSsdSleep)
             return;
 
+        var curTime = _timing.CurTime;
         var query = EntityQueryEnumerator<SSDIndicatorComponent>();
 
         while (query.MoveNext(out var uid, out var ssd))
         {
             // Forces the entity to sleep when the time has come
-            if (ssd.IsSSD &&
-                ssd.FallAsleepTime <= _timing.CurTime &&
-                !TerminatingOrDeleted(uid))
-            {
-                _statusEffects.TrySetStatusEffectDuration(uid, StatusEffectSSDSleeping, null);
-            }
+            if (!ssd.IsSSD
+                || ssd.NextUpdate > curTime
+                || ssd.FallAsleepTime > curTime
+                || TerminatingOrDeleted(uid))
+                continue;
+
+            _statusEffects.TryUpdateStatusEffectDuration(uid, StatusEffectSSDSleeping);
+            ssd.NextUpdate += ssd.UpdateInterval;
+            Dirty(uid, ssd);
         }
     }
 }

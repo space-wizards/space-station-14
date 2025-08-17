@@ -1,0 +1,60 @@
+- type: entity
+  parent: MobStatusEffectDebuff
+  id: StatusEffectSlowdown
+  abstract: true
+  name: slowdown
+  components:
+  - type: StatusEffect
+    whitelist:
+      components:
+      - MobState
+    blacklist:
+      tags:
+      - SlowImmune
+  - type: MovementModStatusEffect
+
+- type: entity
+  parent: StatusEffectSlowdown
+  id: VomitingSlowdownStatusEffect
+  name: vomiting slowdown
+
+- type: entity
+  parent: StatusEffectSlowdown
+  id: TaserSlowdownStatusEffect
+  name: shot by taser slowdown
+
+- type: entity
+  parent: StatusEffectSlowdown
+  id: FlashSlowdownStatusEffect
+  name: affected by flash slowdown
+
+- type: entity
+  parent: StatusEffectSlowdown
+  id: StatusEffectStaminaLow
+  name: stamina low
+
+# Makes you more slippery, or perhaps less slippery.
+- type: entity
+  parent: MobStatusEffectDebuff # Debatable if this should be MobStatusEffectBase or not
+  id: StatusEffectFriction
+  name: friction
+  components:
+  - type: FrictionStatusEffect
+
+# Stunnable Status Effect
+
+- type: entity
+  parent: MobStatusEffectDebuff
+  id: StatusEffectStunned
+  name: stunned
+  components:
+  - type: StatusEffect
+    whitelist:
+      components:
+      - MobState
+    blacklist:
+      tags:
+      - StunImmune
+  - type: StatusEffectAlert
+    alert: Stun
+  - type: StunnedStatusEffect

@@ -185,3 +185,28 @@
   - type: Construction
     graph: ImprovisedArrowCarp
     node: ImprovisedArrowCarp
+
+- type: entity
+  parent: BaseArrow
+  id: ArrowCard
+  name: cardboard arrow
+  description: Cant kill no matter how hard you try.
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Projectiles/arrows.rsi
+    layers:
+    - state: tail
+      color: white
+    - state: rod
+      color: brown
+    - state: tip
+      color: brown
+  - type: Projectile
+    damage:
+      types:
+        Blunt: 1
+  - type: StaminaDamageOnCollide
+    damage: 10
+  - type: Construction
+    graph: CardArrow
+    node: CardArrow

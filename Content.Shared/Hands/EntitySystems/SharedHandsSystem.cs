@@ -7,8 +7,10 @@ using Content.Shared.Interaction;
 using Content.Shared.Inventory;
 using Content.Shared.Inventory.VirtualItem;
 using Content.Shared.Storage.EntitySystems;
+using Content.Shared.Whitelist;
 using Robust.Shared.Containers;
 using Robust.Shared.Input.Binding;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
 
 namespace Content.Shared.Hands.EntitySystems;
@@ -23,6 +25,7 @@ public abstract partial class SharedHandsSystem
     [Dependency] private readonly SharedStorageSystem _storage = default!;
     [Dependency] protected readonly SharedTransformSystem TransformSystem = default!;
     [Dependency] private readonly SharedVirtualItemSystem _virtualSystem = default!;
+    [Dependency] private readonly EntityWhitelistSystem _entityWhitelist = default!;
 
     public event Action<Entity<HandsComponent>, string, HandLocation>? OnPlayerAddHand;
     public event Action<Entity<HandsComponent>, string>? OnPlayerRemoveHand;
@@ -66,9 +69,9 @@ public abstract partial class SharedHandsSystem
     /// <summary>
     /// Adds a hand with the given container id and supplied location to the specified entity.
     /// </summary>
-    public void AddHand(Entity<HandsComponent?> ent, string handName, HandLocation handLocation)
+    public void AddHand(Entity<HandsComponent?> ent, string handName, HandLocation handLocation, LocId? emptyLabel = null, EntProtoId? emptyRepresentative = null, EntityWhitelist? whitelist = null, EntityWhitelist? blacklist = null)
     {
-        AddHand(ent, handName, new Hand(handLocation));
+        AddHand(ent, handName, new Hand(handLocation, emptyLabel, emptyRepresentative, whitelist, blacklist));
     }
 
     /// <summary>

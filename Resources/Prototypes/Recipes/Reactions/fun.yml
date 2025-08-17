@@ -25,34 +25,6 @@
     BuzzochloricBees: 3
 
 - type: reaction
-  id: CreateSoap
-  impact: Low
-  quantized: true
-  reactants:
-    Fat:
-      amount: 15
-    Saline:
-      amount: 25
-  effects:
-    - !type:CreateEntityReactionEffect
-      entity: Soap
-
-- type: reaction
-  id: CreateSoapHomemade
-  impact: Low
-  quantized: true
-  reactants:
-    Fat:
-      amount: 15
-    TableSalt:
-      amount: 10
-    Blood:
-      amount: 10
-  effects:
-    - !type:CreateEntityReactionEffect
-      entity: SoapHomemade
-
-- type: reaction
   id: Meatification
   impact: Low
   quantized: true

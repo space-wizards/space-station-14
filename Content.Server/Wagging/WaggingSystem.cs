@@ -1,5 +1,6 @@
 ﻿using Content.Server.Actions;
 using Content.Server.Humanoid;
+using Content.Shared.Cloning.Events;
 using Content.Shared.Humanoid;
 using Content.Shared.Humanoid.Markings;
 using Content.Shared.Mobs;
@@ -26,6 +27,15 @@ public sealed class WaggingSystem : EntitySystem
         SubscribeLocalEvent<WaggingComponent, ComponentShutdown>(OnWaggingShutdown);
         SubscribeLocalEvent<WaggingComponent, ToggleActionEvent>(OnWaggingToggle);
         SubscribeLocalEvent<WaggingComponent, MobStateChangedEvent>(OnMobStateChanged);
+        SubscribeLocalEvent<WaggingComponent, CloningEvent>(OnCloning);
+    }
+
+    private void OnCloning(Entity<WaggingComponent> ent, ref CloningEvent args)
+    {
+        if (!args.Settings.EventComponents.Contains(Factory.GetRegistration(ent.Comp.GetType()).Name))
+            return;
+
+        EnsureComp<WaggingComponent>(args.CloneUid);
     }
 
     private void OnWaggingMapInit(EntityUid uid, WaggingComponent component, MapInitEvent args)

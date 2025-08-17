@@ -14,7 +14,8 @@
     quickEquip: false
     slots:
     - Belt
-  - type: OnUseTimerTrigger
+  - type: TriggerOnUse
+  - type: TimerTrigger
     delay: 3
   - type: Damageable
     damageContainer: Inorganic
@@ -25,6 +26,7 @@
         damage: 10
       behaviors:
       - !type:TriggerBehavior
+        keyOut: timer # explode immediately
       - !type:DoActsBehavior
         acts: ["Destruction"]
   - type: Appearance
@@ -56,13 +58,15 @@
   id: ExGrenade
   components:
   - type: ExplodeOnTrigger
+    keysIn:
+    - timer
   - type: Explosive
     explosionType: Default
     maxIntensity: 10
     intensitySlope: 3
     totalIntensity: 120 # about a ~4 tile radius
     canCreateVacuum: false
-  - type: OnUseTimerTrigger
+  - type: TimerTrigger
     beepSound:
       path: "/Audio/Effects/beep1.ogg"
       params:
@@ -79,13 +83,22 @@
   - type: Sprite
     sprite: Objects/Weapons/Grenades/flashbang.rsi
   - type: FlashOnTrigger
+    keysIn:
+    - timer
     range: 7
-  - type: SoundOnTrigger
+  - type: EmitSoundOnTrigger
+    keysIn:
+    - timer
     sound:
       path: "/Audio/Effects/flash_bang.ogg"
   - type: DeleteOnTrigger
+    keysIn:
+    - timer
   - type: SpawnOnTrigger
+    keysIn:
+    - timer
     proto: GrenadeFlashEffect
+    predicted: true
   - type: Appearance
   - type: TimerTriggerVisuals
     primingSound:
@@ -137,11 +150,14 @@
         damage: 45
       behaviors:
       - !type:TriggerBehavior
+        keyOut: timer # immediately explode
       - !type:DoActsBehavior
         acts: ["Destruction"]
-  - type: OnUseTimerTrigger
+  - type: TimerTrigger
     delay: 5
   - type: ExplodeOnTrigger
+    keysIn:
+    - timer
   - type: Explosive
     explosionType: Minibomb
     totalIntensity: 200
@@ -164,13 +180,15 @@
   categories: [ HideSpawnMenu ]
   components:
   - type: ExplodeOnTrigger
+    keysIn:
+    - timer
   - type: Explosive
     explosionType: Minibomb
     totalIntensity: 400
     intensitySlope: 30
     maxIntensity: 125
     canCreateVacuum: true
-  - type: OnUseTimerTrigger
+  - type: TimerTrigger
     delay: 4.5
     beepSound:
       path: /Audio/Effects/Grenades/SelfDestruct/SDS_Charge2.ogg
@@ -188,7 +206,7 @@
   components:
   - type: Sprite
     sprite: Objects/Weapons/Grenades/singularitygrenade.rsi
-  - type: OnUseTimerTrigger
+  - type: TimerTrigger
     delay: 3
     beepInterval: 0.46
     beepSound:
@@ -200,14 +218,20 @@
       path: /Audio/Effects/Grenades/Supermatter/smbeep.ogg
       params:
         volume: -5
-  - type: SoundOnTrigger
-    removeOnTrigger: true
+  - type: EmitSoundOnTrigger
+    keysIn:
+    - timer
     sound:
       path: /Audio/Effects/Grenades/Supermatter/supermatter_start.ogg
-      volume: 5
+      params:
+        volume: 5
   - type: AnchorOnTrigger
+    keysIn:
+    - timer
     removeOnTrigger: true
   - type: TwoStageTrigger
+    keysIn:
+    - timer
     triggerDelay: 10.45
     components:
       - type: AmbientSound
@@ -231,12 +255,16 @@
         radius: 6
         softness: 1
         offset: "0, 0"
-      - type: SoundOnTrigger
+      - type: EmitSoundOnTrigger
         sound:
           path: /Audio/Effects/Grenades/Supermatter/supermatter_end.ogg
           params:
             volume: 5
+        keysIn:
+        - stageTwo
       - type: DeleteOnTrigger
+        keysIn:
+        - stageTwo
   - type: StaticPrice
     price: 1000
 
@@ -248,14 +276,20 @@
   components:
   - type: Sprite
     sprite: Objects/Weapons/Grenades/whiteholegrenade.rsi
-  - type: OnUseTimerTrigger
+  - type: TimerTrigger
     delay: 3
     beepInterval: 0.69
-  - type: SoundOnTrigger
-    removeOnTrigger: true
+  - type: EmitSoundOnTrigger
+    keysIn:
+    - timer
     sound:
       path: /Audio/Effects/Grenades/Supermatter/whitehole_start.ogg
-      volume: 5
+      params:
+        volume: 5
+  - type: AnchorOnTrigger
+    keysIn:
+    - timer
+    removeOnTrigger: true
   - type: TwoStageTrigger
     triggerDelay: 11.14
     components:
@@ -280,12 +314,17 @@
         radius: 6
         softness: 1
         offset: "0, 0"
-      - type: SoundOnTrigger
+      - type: EmitSoundOnTrigger
+        keysIn:
+        - stageTwo
         sound:
           path: /Audio/Effects/Grenades/Supermatter/supermatter_end.ogg
           params:
             volume: 15
+        positional: true
       - type: DeleteOnTrigger
+        keysIn:
+        - stageTwo
   - type: StaticPrice
     price: 1000
 
@@ -297,9 +336,11 @@
   components:
   - type: Sprite
     sprite: Objects/Weapons/Grenades/nukenade.rsi
-  - type: OnUseTimerTrigger
+  - type: TimerTrigger
     delay: 5
   - type: ExplodeOnTrigger
+    keysIn:
+    - timer
   - type: Explosive
     explosionType: Default
     totalIntensity: 20000 # ~15 tile radius.
@@ -312,6 +353,7 @@
         damage: 50
       behaviors:
       - !type:TriggerBehavior
+        keyOut: timer # immediately explode
       - !type:DoActsBehavior
         acts: ["Destruction"]
   - type: Appearance
@@ -376,9 +418,13 @@
   - type: Sprite
     sprite: Objects/Weapons/Grenades/empgrenade.rsi
   - type: EmpOnTrigger
+    keysIn:
+    - timer
     range: 5.5
     energyConsumption: 50000
   - type: DeleteOnTrigger
+    keysIn:
+    - timer
   - type: Appearance
   - type: TimerTriggerVisuals
     primingSound:
@@ -395,13 +441,15 @@
   - type: Sprite
     sprite: Objects/Weapons/Grenades/holyhandgrenade.rsi
   - type: ExplodeOnTrigger
+    keysIn:
+    - timer
   - type: Explosive
     explosionType: Default # same as macrobomb
     totalIntensity: 3500
     intensitySlope: 15
     maxIntensity: 70
     canCreateVacuum: true
-  - type: OnUseTimerTrigger
+  - type: TimerTrigger
     delay: 3 # by canon
   - type: PointLight
     radius: 7
@@ -422,11 +470,17 @@
   - type: Sprite
     sprite: Objects/Weapons/Grenades/smoke.rsi
   - type: SmokeOnTrigger
+    keysIn:
+    - timer
     duration: 30
     spreadAmount: 50
-  - type: SoundOnTrigger
+  - type: EmitSoundOnTrigger
+    keysIn:
+    - timer
     sound: /Audio/Items/smoke_grenade_smoke.ogg
   - type: DeleteOnTrigger
+    keysIn:
+    - timer
   - type: TimerTriggerVisuals
     primingSound:
       path: /Audio/Items/smoke_grenade_prime.ogg
@@ -440,6 +494,8 @@
   - type: Sprite
     sprite: Objects/Weapons/Grenades/janitor.rsi
   - type: SmokeOnTrigger
+    keysIn:
+    - timer
     duration: 15
     spreadAmount: 50
     smokePrototype: Foam
@@ -457,6 +513,8 @@
   - type: Sprite
     sprite: Objects/Weapons/Grenades/tear_gas.rsi
   - type: SmokeOnTrigger
+    keysIn:
+    - timer
     duration: 10
     spreadAmount: 30
     smokePrototype: TearGasSmokeWhite
@@ -473,9 +531,11 @@
   components:
   - type: Sprite
     sprite: Objects/Weapons/Grenades/metalfoam.rsi
-  - type: OnUseTimerTrigger
+  - type: TimerTrigger
     delay: 5
   - type: SmokeOnTrigger
+    keysIn:
+    - timer
     duration: 10
     spreadAmount: 20
     smokePrototype: AluminiumMetalFoam
@@ -490,14 +550,18 @@
   components:
   - type: Sprite
     sprite: Objects/Weapons/Grenades/airboom.rsi
-  - type: SoundOnTrigger
+  - type: EmitSoundOnTrigger
+    keysIn:
+    - timer
     sound: /Audio/Items/smoke_grenade_smoke.ogg
   - type: TimerTriggerVisuals
     primingSound:
       path: /Audio/Items/smoke_grenade_prime.ogg
-  - type: OnUseTimerTrigger
+  - type: TimerTrigger
     delay: 3
   - type: ReleaseGasOnTrigger
+    keysIn:
+    - timer
     removeFraction: 0.25
     air:
       volume: 1000
@@ -525,9 +589,16 @@
   - type: Sprite
     sprite: Objects/Weapons/Grenades/grenade.rsi
   - type: DeleteOnTrigger
+    keysIn:
+    - timer
   - type: SpawnOnTrigger
+    keysIn:
+    - timer
     proto: GrenadeFlashEffect
-  - type: SoundOnTrigger
+    predicted: true
+  - type: EmitSoundOnTrigger
+    keysIn:
+    - timer
     sound:
       path: /Audio/Effects/Emotes/parp1.ogg
   - type: Appearance
@@ -543,9 +614,11 @@
   components:
   - type: Sprite
     sprite: Objects/Weapons/Grenades/syndgrenade.rsi
-  - type: OnUseTimerTrigger
+  - type: TimerTrigger
     delay: 5
-  - type: SoundOnTrigger
+  - type: EmitSoundOnTrigger
+    keysIn:
+    - timer
     sound:
       path: /Audio/Effects/Emotes/parp1.ogg
   - type: Appearance

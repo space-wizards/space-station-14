@@ -7,7 +7,7 @@
     sprite: /Textures/Objects/Fun/goldbikehorn.rsi
     visible: false
     state: icon
-  - type: TriggerOnSpawn   
+  - type: TriggerOnSpawn
   - type: TimedDespawn
     lifetime: 5
 
@@ -25,7 +25,7 @@
   suffix: BluespaceFlash
   parent: AdminInstantEffectBase
   components:
-  - type: SpawnOnTrigger 
+  - type: SpawnOnTrigger
     proto: EffectFlashBluespace
 
 - type: entity
@@ -35,9 +35,9 @@
   components:
   - type: FlashOnTrigger
     range: 7
-  - type: SpawnOnTrigger 
+  - type: SpawnOnTrigger
     proto: GrenadeFlashEffect
-  
+
 - type: entity
   id: AdminInstantEffectSmoke3
   suffix: Smoke (03 sec)
@@ -46,12 +46,12 @@
   - type: SmokeOnTrigger
     duration: 3
     spreadAmount: 1
-  - type: SoundOnTrigger
+  - type: EmitSoundOnTrigger
     sound: /Audio/Effects/smoke.ogg
   - type: TimerTriggerVisuals
     primingSound:
       path: /Audio/Effects/Smoke-grenade.ogg
-  
+
 - type: entity
   id: AdminInstantEffectSmoke10
   suffix: Smoke (10 sec)
@@ -60,12 +60,12 @@
   - type: SmokeOnTrigger
     duration: 10
     spreadAmount: 30
-  - type: SoundOnTrigger
+  - type: EmitSoundOnTrigger
     sound: /Audio/Effects/smoke.ogg
   - type: TimerTriggerVisuals
     primingSound:
       path: /Audio/Effects/Smoke-grenade.ogg
-  
+
 - type: entity
   id: AdminInstantEffectSmoke30
   suffix: Smoke (30 sec)
@@ -74,7 +74,7 @@
   - type: SmokeOnTrigger
     duration: 30
     spreadAmount: 50
-  - type: SoundOnTrigger
+  - type: EmitSoundOnTrigger
     sound: /Audio/Effects/smoke.ogg
   - type: TimerTriggerVisuals
     primingSound:
@@ -97,12 +97,12 @@
   id: AdminInstantEffectGravityWell
   suffix: Gravity Well
   parent: AdminInstantEffectBase
-  components: 
-  - type: SoundOnTrigger
-    removeOnTrigger: true
+  components:
+  - type: EmitSoundOnTrigger
     sound:
       path: /Audio/Effects/Grenades/Supermatter/supermatter_start.ogg
-      volume: 5
+      params:
+        volume: 5
   - type: AmbientSound
     enabled: true
     volume: -5
@@ -117,4 +117,4 @@
   - type: SingularityDistortion
     intensity: 10
     falloffPower: 1.5
-      
+

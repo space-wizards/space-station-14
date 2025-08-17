@@ -33,7 +33,7 @@ namespace Content.Server.Stack
             base.SetCount(uid, amount, component);
 
             // Queue delete stack if count reaches zero.
-            if (component.Count <= 0 && !component.Lingering)
+            if (component.Count <= 0)
                 QueueDel(uid);
         }
 

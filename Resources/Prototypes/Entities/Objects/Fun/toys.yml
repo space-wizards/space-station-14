@@ -317,6 +317,10 @@
     - state: base
       map: ["enum.GunVisualLayers.Base"]
   - type: Item
+    shape:
+    - 0,0,1,0
+    - 0,1,0,1
+    storedOffset: -2,-7
     sprite: Objects/Fun/capgun.rsi
   - type: Tag
     tags:
@@ -771,6 +775,44 @@
 
 - type: entity
   parent: BaseItem
+  id: CardSword
+  name: cardboard sword
+  description: A cardboard tube thats been fashioned into a sword.
+  components:
+  - type: Sprite
+    sprite: Objects/Fun/card_sword.rsi
+    state: icon
+  - type: Clothing
+    sprite: Objects/Fun/card_sword.rsi
+    slots:
+    - Back
+    - SuitStorage
+  - type: StaminaDamageOnHit
+    damage: 6
+  - type: Appearance
+  - type: DisarmMalus
+    malus: 0
+  - type: MeleeWeapon
+    wideAnimationRotation: -135
+    attackRate: 1.25
+    damage:
+      types:
+        Blunt: 0.3
+    soundHit:
+      path: /Audio/Items/Toys/card_tube_bonk.ogg
+  - type: Construction
+    graph: CardSword
+    node: cardSword
+  - type: Item
+    size: Normal
+    storedSprite:
+      state: icon
+      sprite: Objects/Fun/card_sword.rsi
+    shape:
+    - 0,0,1,3
+
+- type: entity
+  parent: BaseItem
   id: ClownRecorder
   name: clown recorder
   description: When you just can't get those laughs coming the natural way!
@@ -873,6 +915,7 @@
     delay: 0.8
   - type: Slippery
     staminaDamage: 0
+    frictionStatusTime: 0
     slipData:
       stunTime: 0
       knockdownTime: 0
@@ -892,7 +935,7 @@
   - type: StepTrigger
     intersectRatio: 0.2
     requiredTriggeredSpeed: 2
-  - type: TriggerOnStepTrigger
+  - type: TriggerOnStepTrigger # for payloads
   - type: Appearance
   - type: CollisionWake
     enabled: false

@@ -1,0 +1,21 @@
+- type: chatNotification
+  id: IntellicardDownload
+  message: ai-consciousness-download-warning
+  color: Red
+  sound: /Audio/Misc/notice2.ogg
+  nextDelay: 8
+
+- type: chatNotification
+  id: TurretIsAttacking
+  message: station-ai-turret-component-is-attacking-warning
+  color: Orange
+  sound: /Audio/Misc/notice2.ogg
+  nextDelay: 14
+  notifyBySource: true
+
+- type: chatNotification
+  id: AiWireSnipped
+  message: ai-wire-snipped
+  color: Pink
+  nextDelay: 12
+  notifyBySource: true

@@ -1,0 +1,24 @@
+- type: entity
+  id: VoiceLock
+  abstract: true
+  components:
+  - type: Lock
+    locked: false
+    showLockVerbs: false
+    showExamine: false
+    lockOnClick: false
+    unlockOnClick: false
+    useAccess: false
+    unlockingSound: null # TODO: Maybe add sounds but just to the user?
+    lockingSound: null
+    lockTime: 0
+    unlockTime: 0
+  - type: TriggerOnVoice
+    listenRange: 2 # more fun
+    startRecordingVerb: voice-trigger-lock-verb-record
+    recordingVerbMessage: voice-trigger-lock-verb-message
+    inspectUninitializedLoc: voice-trigger-lock-on-uninitialized
+    inspectInitializedLoc: voice-trigger-lock-on-examine
+  - type: LockOnTrigger
+  - type: ActiveListener
+  - type: VoiceTriggerLock

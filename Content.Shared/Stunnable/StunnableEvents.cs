@@ -16,11 +16,17 @@ namespace Content.Shared.Stunnable;
 public record struct StunnedEvent;
 
 /// <summary>
+///     Raised on a stunned entity when something wants to remove the stunned component.
+/// </summary>
+[ByRefEvent]
+public record struct StunEndAttemptEvent(bool Cancelled);
+
+/// <summary>
 ///     Raised directed on an entity before it is knocked down to see if it should be cancelled, and to determine
 ///     knocked down arguments.
 /// </summary>
 [ByRefEvent]
-public record struct KnockDownAttemptEvent(bool AutoStand, bool Drop)
+public record struct KnockDownAttemptEvent(bool AutoStand, bool Drop, TimeSpan? Time)
 {
     public bool Cancelled;
 }
@@ -29,7 +35,7 @@ public record struct KnockDownAttemptEvent(bool AutoStand, bool Drop)
 ///     Raised directed on an entity when it is knocked down.
 /// </summary>
 [ByRefEvent]
-public record struct KnockedDownEvent(TimeSpan Time);
+public record struct KnockedDownEvent;
 
 /// <summary>
 ///     Raised on an entity that needs to refresh its knockdown modifiers

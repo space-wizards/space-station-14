@@ -46,6 +46,9 @@
     solution: drink
   - type: PressurizedSolution
     solution: drink
+  - type: ExaminableSolution
+    solution: drink
+    examinableWhileClosed: false
   - type: Appearance
   - type: GenericVisualizer
     visuals:
