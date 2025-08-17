@@ -2,17 +2,14 @@ using Content.Client.PDA;
 using Content.Shared.Clothing.Components;
 using Content.Shared.Clothing.EntitySystems;
 using Content.Shared.Emp;
-using Content.Shared.Inventory;
 using Robust.Client.GameObjects;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Random;
 
 namespace Content.Client.Clothing.Systems;
 
 // All valid items for chameleon are calculated on client startup and stored in dictionary.
 public sealed class ChameleonClothingSystem : SharedChameleonClothingSystem
 {
-    [Dependency] private readonly IRobustRandom _random = default!;
 
     public override void Initialize()
     {
@@ -54,15 +51,6 @@ public sealed class ChameleonClothingSystem : SharedChameleonClothingSystem
         }
     }
 
-    /// <summary>
-    /// Get a random prototype for a given slot.
-    /// </summary>
-    public EntProtoId GetRandomValidPrototype(SlotFlags slot, string? tag = null)
-    {
-        var validTargets = GetValidTargets(slot, tag);
-        return _random.Pick(validTargets);
-    }
-
     /// <inheritdoc />
     public override void Update(float frameTime)
     {
@@ -83,7 +71,7 @@ public sealed class ChameleonClothingSystem : SharedChameleonClothingSystem
             chameleon.Default = picked;
             UpdateVisuals(uid, chameleon);
 
-            chameleon.NextEmpChange += TimeSpan.FromSeconds(1f / chameleon.EmpChangeIntensity);
+            chameleon.NextEmpChange = Timing.CurTime + TimeSpan.FromSeconds(1f / chameleon.EmpChangeIntensity);
         }
     }
 }

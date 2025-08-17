@@ -11,13 +11,12 @@ using Content.Shared.Verbs;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
+using Robust.Shared.Random;
 
 namespace Content.Shared.Clothing.EntitySystems;
 
 public abstract class SharedChameleonClothingSystem : EntitySystem
 {
-    private static readonly ProtoId<TagPrototype> WhitelistChameleonTag = "WhitelistChameleon";
-
     [Dependency] protected readonly IPrototypeManager Proto = default!;
     [Dependency] protected readonly IGameTiming Timing = default!;
     [Dependency] protected readonly SharedUserInterfaceSystem UI = default!;
@@ -28,7 +27,9 @@ public abstract class SharedChameleonClothingSystem : EntitySystem
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
     [Dependency] private readonly TagSystem _tag = default!;
     [Dependency] private readonly LockSystem _lock = default!;
+    [Dependency] private readonly IRobustRandom _random = default!;
 
+    private static readonly ProtoId<TagPrototype> WhitelistChameleonTag = "WhitelistChameleon";
     private static readonly SlotFlags[] IgnoredSlots =
     [
         SlotFlags.All,
@@ -99,21 +100,21 @@ public abstract class SharedChameleonClothingSystem : EntitySystem
 
         // clothing sprite logic
         if (TryComp(uid, out ClothingComponent? clothing) &&
-            proto.TryGetComponent("Clothing", out ClothingComponent? otherClothing))
+            proto.TryGetComponent(out ClothingComponent? otherClothing, Factory))
         {
             _clothingSystem.CopyVisuals(uid, otherClothing, clothing);
         }
 
         // appearance data logic
         if (TryComp(uid, out AppearanceComponent? appearance) &&
-            proto.TryGetComponent("Appearance", out AppearanceComponent? appearanceOther))
+            proto.TryGetComponent(out AppearanceComponent? appearanceOther, Factory))
         {
             _appearance.AppendData(appearanceOther, uid);
             Dirty(uid, appearance);
         }
 
         // properly mark contraband
-        if (proto.TryGetComponent("Contraband", out ContrabandComponent? contra))
+        if (proto.TryGetComponent(out ContrabandComponent? contra, Factory))
         {
             EnsureComp<ContrabandComponent>(uid, out var current);
             _contraband.CopyDetails(uid, contra, current);
@@ -159,7 +160,7 @@ public abstract class SharedChameleonClothingSystem : EntitySystem
             return false;
 
         // check if it's valid clothing
-        if (!proto.TryGetComponent("Clothing", out ClothingComponent? clothing))
+        if (!proto.TryGetComponent(out ClothingComponent? clothing, Factory))
             return false;
         if (!clothing.Slots.HasFlag(chameleonSlot))
             return false;
@@ -187,6 +188,15 @@ public abstract class SharedChameleonClothingSystem : EntitySystem
         }
 
         return validTargets;
+    }
+
+    /// <summary>
+    /// Get a random prototype for a given slot.
+    /// </summary>
+    public EntProtoId GetRandomValidPrototype(SlotFlags slot, string? tag = null)
+    {
+        var validTargets = GetValidTargets(slot, tag);
+        return _random.Pick(validTargets);
     }
 
     protected void PrepareAllVariants()

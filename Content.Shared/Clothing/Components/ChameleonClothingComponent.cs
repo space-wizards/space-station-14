@@ -3,14 +3,13 @@ using Content.Shared.Inventory;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 
 namespace Content.Shared.Clothing.Components;
 
 /// <summary>
 ///     Allow players to change clothing sprite to any other clothing prototype.
 /// </summary>
-[RegisterComponent, NetworkedComponent, AutoGenerateComponentState(true, fieldDeltas: true), AutoGenerateComponentPause]
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState(true), AutoGenerateComponentPause]
 [Access(typeof(SharedChameleonClothingSystem))]
 public sealed partial class ChameleonClothingComponent : Component
 {
@@ -50,7 +49,7 @@ public sealed partial class ChameleonClothingComponent : Component
     ///     Useless without <see cref="AffectedByEmp"/> set to true.
     /// </summary>
     [DataField]
-    public int EmpChangeIntensity = 7;
+    public int EmpChangeIntensity = 5;
 
     /// <summary>
     ///     Should the EMP-change happen continuously, or only once?
@@ -61,15 +60,9 @@ public sealed partial class ChameleonClothingComponent : Component
     public bool EmpContinuous = true;
 
     /// <summary>
-    /// Prototype that was used before EMP affected entity and it started switching
-    /// prototype sporadically. Is server-only.
+    /// When should the next EMP-caused appearance change happen?
+    /// Client-side only.
     /// </summary>
-    public EntProtoId? BeforeEmpPrototype = null;
-
-    /// <summary>
-    ///     When should next EMP-caused appearance change happen?
-    /// </summary>
-    [AutoPausedField, DataField(customTypeSerializer: typeof(TimeOffsetSerializer)), AutoNetworkedField]
     public TimeSpan NextEmpChange = TimeSpan.Zero;
 }
 

@@ -19,17 +19,6 @@ public sealed class ChameleonClothingSystem : SharedChameleonClothingSystem
         SubscribeLocalEvent<ChameleonClothingComponent, ChameleonPrototypeSelectedMessage>(OnSelected);
 
         SubscribeLocalEvent<ChameleonClothingComponent, EmpPulseEvent>(OnEmpPulse);
-        SubscribeLocalEvent<ChameleonClothingComponent, EmpDisabledRemoved>(OnEmpRemoved);
-    }
-
-    private void OnEmpRemoved(Entity<ChameleonClothingComponent> ent, ref EmpDisabledRemoved args)
-    {
-        var beforeEmp = ent.Comp.BeforeEmpPrototype;
-        if(beforeEmp == null)
-            return;
-
-        ent.Comp.BeforeEmpPrototype = null;
-        SetSelectedPrototype(ent, beforeEmp, forceUpdate: true, component: ent);
     }
 
     private void OnMapInit(EntityUid uid, ChameleonClothingComponent component, MapInitEvent args)
@@ -48,21 +37,9 @@ public sealed class ChameleonClothingSystem : SharedChameleonClothingSystem
         if (!component.AffectedByEmp)
             return;
 
-        if (component.EmpContinuous)
-        {
-            component.NextEmpChange = Timing.CurTime;
-            component.BeforeEmpPrototype = component.Default;
-
-            UI.CloseUi(ent.Owner, ChameleonUiKey.Key);
-
-            DirtyFields(
-                ent.Owner,
-                ent.Comp,
-                null,
-                fields: [ nameof(ChameleonClothingComponent.NextEmpChange)]
-            );
-        }
-
+        var pick = GetRandomValidPrototype(component.Slot, component.RequireTag);
+        SetSelectedPrototype(ent, pick, component: ent);
+        UI.CloseUi(ent.Owner, ChameleonUiKey.Key);
         args.Affected = true;
         args.Disabled = true;
     }
@@ -103,7 +80,7 @@ public sealed class ChameleonClothingSystem : SharedChameleonClothingSystem
         Dirty(uid, component);
     }
 
-    protected void UpdateIdentityBlocker(EntityUid uid, ChameleonClothingComponent component, EntityPrototype proto)
+    private void UpdateIdentityBlocker(EntityUid uid, ChameleonClothingComponent component, EntityPrototype proto)
     {
         if (proto.HasComponent<IdentityBlockerComponent>(Factory))
             EnsureComp<IdentityBlockerComponent>(uid);
