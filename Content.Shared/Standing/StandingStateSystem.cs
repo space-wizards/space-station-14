@@ -69,15 +69,6 @@ public sealed class StandingStateSystem : EntitySystem
         ChangeLayers(entity);
     }
 
-    private void OnEndClimb(Entity<StandingStateComponent> entity, ref EndClimbEvent args)
-    {
-        if (entity.Comp.Standing)
-            return;
-
-        // Currently only Climbing also edits fixtures layers like this so this is fine for now.
-        ChangeLayers(entity);
-    }
-
     public bool IsDown(EntityUid uid, StandingStateComponent? standingState = null)
     {
         if (!Resolve(uid, ref standingState, false))
