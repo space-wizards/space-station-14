@@ -12,6 +12,7 @@ namespace Content.Shared.Silicons.Laws;
 
 public abstract partial class SharedSiliconLawSystem
 {
+    [Dependency] private readonly SharedDoAfterSystem _doAfter = default!;
     [Dependency] private readonly ItemSlotsSystem _slots = default!;
     private readonly ProtoId<ChatNotificationPrototype> _overrideLawsChatNotificationPrototype = "OverrideLaws";
     private void InitializeOverrider()
