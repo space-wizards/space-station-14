@@ -15,6 +15,7 @@ using Content.Shared.Chat;
 using Content.Shared.Database;
 using Content.Shared.Examine;
 using Content.Shared.Ghost;
+using Content.Shared.Grammar;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Mobs.Systems;
 using Content.Shared.Players;
@@ -795,14 +796,9 @@ public sealed partial class ChatSystem : SharedChatSystem
             .Select(p => p.Channel);
     }
 
-    private string SanitizeMessagePeriod(string message)
+    private static string SanitizeMessagePeriod(string message)
     {
-        if (string.IsNullOrEmpty(message))
-            return message;
-        // Adds a period if the last character is a letter.
-        if (char.IsLetter(message[^1]))
-            message += ".";
-        return message;
+        return GrammarUtility.SanitizeTextEnsureTrailingPeriod(message);
     }
 
     public static readonly ProtoId<ReplacementAccentPrototype> ChatSanitize_Accent = "chatsanitize";

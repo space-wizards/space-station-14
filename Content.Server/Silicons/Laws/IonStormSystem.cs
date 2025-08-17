@@ -1,9 +1,8 @@
-using Content.Server.StationEvents.Components;
 using Content.Shared.Administration.Logs;
 using Content.Shared.Database;
 using Content.Shared.Dataset;
 using Content.Shared.FixedPoint;
-using Content.Shared.GameTicking.Components;
+using Content.Shared.Grammar;
 using Content.Shared.Random;
 using Content.Shared.Random.Helpers;
 using Content.Shared.Silicons.Laws;
@@ -210,7 +209,7 @@ public sealed class IonStormSystem : EntitySystem
         var subjects = _robustRandom.Prob(0.5f) ? objectsThreats : Loc.GetString("ion-storm-people");
 
         // message logic!!!
-        return _robustRandom.Next(0, 35) switch
+        return FormatLawString(_robustRandom.Next(0, 35) switch
         {
             0  => Loc.GetString("ion-storm-law-on-station", ("joined", joined), ("subjects", triple)),
             1  => Loc.GetString("ion-storm-law-call-shuttle", ("joined", joined), ("subjects", triple)),
@@ -247,7 +246,7 @@ public sealed class IonStormSystem : EntitySystem
             32 => Loc.GetString("ion-storm-law-harm", ("who", harm)),
             33 => Loc.GetString("ion-storm-law-protect", ("who", harm)),
             _ => Loc.GetString("ion-storm-law-concept-verb", ("concept", concept), ("verb", verb), ("subjects", triple))
-        };
+        });
     }
 
     /// <summary>
@@ -258,5 +257,11 @@ public sealed class IonStormSystem : EntitySystem
     {
         var dataset = _proto.Index<DatasetPrototype>(name);
         return _robustRandom.Pick(dataset.Values);
+    }
+
+    private static string FormatLawString(string toFormat)
+    {
+        return GrammarUtility.SanitizeTextEnsureTrailingPeriod(
+            GrammarUtility.SanitizeTextCapitalizeFirstLetter(toFormat));
     }
 }

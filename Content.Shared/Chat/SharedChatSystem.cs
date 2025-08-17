@@ -1,5 +1,6 @@
 using System.Collections.Frozen;
 using System.Text.RegularExpressions;
+using Content.Shared.Grammar;
 using Content.Shared.Popups;
 using Content.Shared.Radio;
 using Content.Shared.Speech;
@@ -181,19 +182,9 @@ public abstract class SharedChatSystem : EntitySystem
         return true;
     }
 
-    public string SanitizeMessageCapital(string message)
+    public static string SanitizeMessageCapital(string message)
     {
-        if (string.IsNullOrEmpty(message))
-            return message;
-        // Capitalize first letter
-        message = OopsConcat(char.ToUpper(message[0]).ToString(), message.Remove(0, 1));
-        return message;
-    }
-
-    private static string OopsConcat(string a, string b)
-    {
-        // This exists to prevent Roslyn being clever and compiling something that fails sandbox checks.
-        return a + b;
+        return GrammarUtility.SanitizeTextCapitalizeFirstLetter(message);
     }
 
     public string SanitizeMessageCapitalizeTheWordI(string message, string theWordI = "i")
