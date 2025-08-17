@@ -24,7 +24,13 @@ public sealed partial class SurveillanceCameraMonitorWindow : DefaultWindow
     [Dependency] private readonly IResourceCache _resourceCache = default!;
     [Dependency] private readonly IEntityManager _entityManager = default!;
 
+    /// <summary>
+    /// Triggered when a camera is selected.
+    /// First parameter contains the camera's address.
+    /// Second optional parameter contains a subnet - if possible, the monitor will switch to this subnet.
+    /// </summary>
     public event Action<string, string?>? CameraSelected;
+
     public event Action<string>? SubnetOpened;
     public event Action? CameraRefresh;
     public event Action? SubnetRefresh;
@@ -71,12 +77,12 @@ public sealed partial class SurveillanceCameraMonitorWindow : DefaultWindow
         SubnetSelector.OnItemSelected += args =>
         {
             // piss
-            SubnetOpened!((string) args.Button.GetItemMetadata(args.Id)!);
+            SubnetOpened?.Invoke((string) args.Button.GetItemMetadata(args.Id)!);
         };
-        SubnetRefreshButton.OnPressed += _ => SubnetRefresh!();
-        SubnetRefreshButtonMap.OnPressed += _ => SubnetRefresh!();
-        CameraRefreshButton.OnPressed += _ => CameraRefresh!();
-        CameraDisconnectButton.OnPressed += _ => CameraDisconnect!();
+        SubnetRefreshButton.OnPressed += _ => SubnetRefresh?.Invoke();
+        SubnetRefreshButtonMap.OnPressed += _ => SubnetRefresh?.Invoke();
+        CameraRefreshButton.OnPressed += _ => CameraRefresh?.Invoke();
+        CameraDisconnectButton.OnPressed += _ => CameraDisconnect?.Invoke();
 
         CameraMap.EnableCameraSelection = true;
         CameraMap.CameraSelected += OnCameraMapSelected;
