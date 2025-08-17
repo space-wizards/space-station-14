@@ -96,7 +96,7 @@
 
 - type: mixingCategory
   id: Narsie
-  verbText: mixing-verb-unholy
+  verbText: mixing-verb-holy
   icon:
     sprite: Objects/Specific/Chapel/tomeofnarsie.rsi
     state: icon
@@ -117,7 +117,7 @@
 
 - type: mixingCategory
   id: Ratvar
-  verbText: mixing-verb-unholy
+  verbText: mixing-verb-holy
   icon:
     sprite: Objects/Specific/Chapel/ratvartablet.rsi
     state: icon

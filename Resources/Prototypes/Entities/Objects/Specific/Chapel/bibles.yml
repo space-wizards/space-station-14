@@ -138,7 +138,7 @@
   description: "What could possibly go wrong with a book covered in blood?"
   components:
   - type: ReactionMixer
-    mixMessage: "bible-mixing-success-curse"
+    mixMessage: "bible-mixing-success"
     reactionTypes:
     - Narsie
   - type: Sprite
@@ -198,7 +198,7 @@
   description: "A holy relic of the Clockwork Cult, blessed by the Clockwork Justice, Ratvar."
   components:
   - type: ReactionMixer
-    mixMessage: "bible-mixing-success-curse"
+    mixMessage: "bible-mixing-success"
     reactionTypes:
     - Ratvar
   - type: Sprite
