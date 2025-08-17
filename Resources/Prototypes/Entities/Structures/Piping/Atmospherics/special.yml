@@ -49,7 +49,7 @@
         acts: ["Destruction"]
 
 - type: entity
-  parent: [ConstructibleMachine, BaseMachine]
+  parent: [ConstructibleMachine] #if you ask why this dosent have "BaseStructure" parent. it`s becouse it`s makes game explode, for some reason and I have no idea why
   id: AtmosDeviceFanDirectional
   name: directional fan
   description: A thin fan, stopping the movement of gases across it.
@@ -60,6 +60,7 @@
     anchored: true
   - type: Physics
     bodyType: Static
+  - type: Pullable
   - type: InteractionOutline
   - type: Machine
     board: FanDirectionalMachineCircuitboard
@@ -84,6 +85,9 @@
   - type: Tag
     tags:
       - SpreaderIgnore
+  - type: Damageable
+    damageContainer: StructuralInorganic
+    damageModifierSet: StructuralMetallic
   - type: Destructible
     thresholds:
     - trigger:
