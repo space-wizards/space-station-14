@@ -152,8 +152,8 @@
     - !type:TargetObjectiveMindFilter
       blacklist:
         components:
-        - RandomTraitorAlive
-        - RandomTraitorProgress
+        - HelpProgressCondition
+        - KeepAliveCondition
 
 - type: entity
   parent: [BaseTraitorSocialObjective, BaseHelpProgressObjective]
@@ -181,8 +181,8 @@
     - !type:TargetObjectiveMindFilter
       blacklist:
         components:
-        - RandomTraitorAlive
-        - RandomTraitorProgress
+        - HelpProgressCondition
+        - KeepAliveCondition
 
 # steal
 
