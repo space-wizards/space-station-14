@@ -1,6 +1,7 @@
 using System.Numerics;
 using Content.Shared.Examine;
 using Content.Shared.Trigger.Components.Triggers;
+using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Events;
 
 namespace Content.Shared.Trigger.Systems;
@@ -16,6 +17,44 @@ public sealed partial class TriggerSystem
         SubscribeLocalEvent<TriggerOnProximityComponent, AnchorStateChangedEvent>(OnProximityAnchor);
         SubscribeLocalEvent<TriggerOnProximityComponent, TriggerEvent>(OnProximityReceivingTrigger);
         SubscribeLocalEvent<TriggerOnProximityComponent, ExaminedEvent>(OnProximityExamined);
+    }
+
+    /// <summary>
+    /// Gets the velocity of either an entity's grid, or itself if it is not on any grid.
+    /// I.e., the velocity of the entity only relative to the map, unlike <see cref="PhysicsComponent.LinearVelocity"/>.
+    /// </summary>
+    private Vector2 GetAbsoluteVelocity(Entity<PhysicsComponent> entity)
+    {
+        if (!TryComp(entity, out TransformComponent? transformComponent))
+            return Vector2.Zero;
+
+        // If they have a grid, return the grid's velocity.
+        // If the trycomp somehow fails, it means the grid is static and therefore we can accurately assume that the entity's
+        // absolute velocity is it's velocity relative to the grid.
+        if (transformComponent.GridUid is { } gridUid &&
+            _physicsQuery.TryComp(gridUid, out var gridPhysicsComponent))
+        {
+            return gridPhysicsComponent.LinearVelocity;
+        }
+        else
+            return entity.Comp.LinearVelocity;
+    }
+
+    /// <summary>
+    /// Helper method for setting an entity's <see cref="PhysicsComponent.SleepingAllowed"/>, to <paramref name="value"/>,
+    /// and also waking them if it's true.
+    /// </summary>
+    private void UpdateProximityAwakeness(Entity<PhysicsComponent?> ent, bool value)
+    {
+        ref PhysicsComponent? physicsComponent = ref ent.Comp;
+        if (!_physicsQuery.Resolve(ent, ref physicsComponent, false))
+            return;
+
+        _physics.SetSleepingAllowed(ent, physicsComponent, value);
+
+        // If we're not allowed to sleep then might as well wake it.
+        if (!value)
+            _physics.WakeBody(ent, body: physicsComponent);
     }
 
     private void OnProximityExamined(Entity<TriggerOnProximityComponent> ent, ref ExaminedEvent args)
@@ -48,6 +87,10 @@ public sealed partial class TriggerSystem
         // If you could manually enable/disable collision processing on fixtures then I'd do it here.
         // Surely it would save some performance, no?
         DirtyField(ent, proximityComponent, nameof(proximityComponent.Enabled));
+
+        // If it's enabled, don't let it sleep, otherwise it won't work across grids.
+        UpdateProximityAwakeness(ent.Owner, !proximityComponent.Enabled);
+
         SetProximityAppearance(ent);
     }
 
@@ -64,6 +107,7 @@ public sealed partial class TriggerSystem
         // Re-check for contacts as we cleared them.
         else if (_physicsQuery.TryGetComponent(ent, out var body))
         {
+            UpdateProximityAwakeness((ent.Owner, body), !ent.Comp.Enabled);
             _physics.RegenerateContacts((ent.Owner, body));
         }
 
@@ -79,6 +123,7 @@ public sealed partial class TriggerSystem
         if (!_physicsQuery.TryGetComponent(ent, out var body))
             return;
 
+        UpdateProximityAwakeness((ent.Owner, body), !ent.Comp.Enabled);
         _fixture.TryCreateFixture(
             ent.Owner,
             ent.Comp.Shape,
@@ -118,6 +163,8 @@ public sealed partial class TriggerSystem
         if (!ent.Comp.Repeating)
         {
             ent.Comp.Enabled = false;
+            UpdateProximityAwakeness(ent.Owner, false);
+
             ent.Comp.Colliding.Clear();
         }
         else
@@ -157,9 +204,9 @@ public sealed partial class TriggerSystem
                 colliding.Count == 0)
                 continue;
 
-            var ourVelocity = _physicsQuery.TryGetComponent(uid, out var physicsComponent) ?
-                physicsComponent.LinearVelocity :
-                Vector2.Zero;
+            var ourVelocity = Vector2.Zero;
+            if (_physicsQuery.TryGetComponent(uid, out var ourPhysicsComponent))
+                ourVelocity = GetAbsoluteVelocity((uid, ourPhysicsComponent));
 
             var triggerSpeed = trigger.TriggerSpeed;
 
@@ -169,7 +216,7 @@ public sealed partial class TriggerSystem
                 if (TerminatingOrDeleted(collidingUid))
                     continue;
 
-                if ((collidingPhysics.LinearVelocity - ourVelocity).Length() < triggerSpeed)
+                if ((GetAbsoluteVelocity((collidingUid, collidingPhysics)) - ourVelocity).Length() < triggerSpeed)
                     continue;
 
                 if (trigger.RequiresLineOfSight && !_examineSystem.InRangeUnOccluded(uid, collidingUid, range: trigger.Shape.Radius))
