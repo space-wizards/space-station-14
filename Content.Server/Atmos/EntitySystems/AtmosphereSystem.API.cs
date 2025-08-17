@@ -1,6 +1,8 @@
+using System.Diagnostics;
 using System.Linq;
 using Content.Server.Atmos.Components;
 using Content.Server.Atmos.Piping.Components;
+using Content.Server.Database.Migrations.Sqlite;
 using Content.Server.NodeContainer.NodeGroups;
 using Content.Shared.Atmos;
 using Content.Shared.Atmos.Components;
@@ -394,7 +396,7 @@ public partial class AtmosphereSystem
     [PublicAPI]
     public bool IsDeltaPressureEntityInList(Entity<GridAtmosphereComponent?> grid, Entity<DeltaPressureComponent> ent)
     {
-        return _atmosQuery.Resolve(grid, ref grid.Comp, false) && grid.Comp.DeltaPressureEntities.Contains(ent);
+        return _atmosQuery.Resolve(grid, ref grid.Comp, false) && grid.Comp.DeltaPressureEntityLookup.ContainsKey(ent.Owner);
     }
 
     [ByRefEvent] private record struct SetSimulatedGridMethodEvent
