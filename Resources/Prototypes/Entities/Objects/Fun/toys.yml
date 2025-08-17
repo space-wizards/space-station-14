@@ -155,6 +155,15 @@
   - type: Sprite
     sprite: Objects/Fun/AI.rsi
     state: icon
+  - type: Clothing
+    quickEquip: false
+    sprite: Objects/Fun/AI.rsi
+    slots:
+    - HEAD
+    clothingVisuals:
+      head:
+      - state: equipped-HELMET
+        offset: "0, 0.06"
 
 - type: entity
   parent: BaseFigurineCheapo
@@ -165,6 +174,15 @@
   - type: Sprite
     sprite: Objects/Fun/toy_nuke.rsi
     state: icon
+  - type: Clothing
+    quickEquip: false
+    sprite: Objects/Fun/toy_nuke.rsi
+    slots:
+    - HEAD
+    clothingVisuals:
+      head:
+      - state: equipped-HELMET
+        offset: "0, 0.12"
   - type: Tag
     tags:
     - Payload
@@ -198,6 +216,15 @@
   - type: Sprite
     sprite: Objects/Fun/toy_ian.rsi
     state: icon
+  - type: Clothing
+    quickEquip: false
+    sprite: Objects/Fun/toy_ian.rsi
+    slots:
+      - HEAD
+    clothingVisuals:
+      head:
+      - state: equipped-HELMET
+        offset: "0, 0.06"
   - type: Item
     size: Tiny
   - type: EmitSoundOnUse
@@ -290,6 +317,10 @@
     - state: base
       map: ["enum.GunVisualLayers.Base"]
   - type: Item
+    shape:
+    - 0,0,1,0
+    - 0,1,0,1
+    storedOffset: -2,-7
     sprite: Objects/Fun/capgun.rsi
   - type: Tag
     tags:
@@ -369,6 +400,20 @@
   - type: Sprite
     sprite: Objects/Fun/Balls/basketball.rsi
     state: icon
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape: !type:PhysShapeCircle
+          radius: 0.25
+        density: 20
+        mask:
+        - ItemMask
+        restitution: 0.8 # bouncy
+        friction: 0.2
+  - type: Catchable
+    catchChance: 0.8
+    catchSuccessSound:
+      path: /Audio/Effects/Footsteps/bounce.ogg
   - type: EmitSoundOnCollide
     sound:
       path: /Audio/Effects/Footsteps/bounce.ogg
@@ -387,6 +432,23 @@
   - type: Sprite
     sprite: Objects/Fun/Balls/football.rsi
     state: icon
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape: !type:PhysShapeCircle
+          radius: 0.25
+        density: 20
+        mask:
+        - ItemMask
+        restitution: 0.5 # a little bouncy
+        friction: 0.2
+  - type: Catchable
+    catchChance: 0.8
+    catchSuccessSound:
+      path: /Audio/Effects/Footsteps/bounce.ogg
+  - type: EmitSoundOnCollide
+    sound:
+      path: /Audio/Effects/Footsteps/bounce.ogg
   - type: Item
     size: Small
     sprite: Objects/Fun/Balls/football.rsi
@@ -400,6 +462,21 @@
   - type: Sprite
     sprite: Objects/Fun/Balls/beach_ball.rsi
     state: icon
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape: !type:PhysShapeCircle
+          radius: 0.3
+          position: "0,-0.2"
+        density: 20
+        mask:
+        - ItemMask
+        restitution: 0.1 # not bouncy
+        friction: 0.2
+  - type: Catchable
+    catchChance: 0.8
+    catchSuccessSound:
+      path: /Audio/Effects/Footsteps/bounce.ogg
   - type: EmitSoundOnCollide
     sound:
       path: /Audio/Effects/Footsteps/bounce.ogg
@@ -478,11 +555,17 @@
     sprite: Objects/Fun/toy_singularity.rsi
     state: icon
   - type: SingularityDistortion
-    intensity: 2000
+    intensity: 25
     falloffPower: 2.6
   - type: Item
     size: Normal
-    sprite: Objects/Fun/icon.rsi
+    inhandVisuals:
+      left:
+      - state: singu-inhand-left
+        shader: unshaded
+      right:
+      - state: singu-inhand-right
+        shader: unshaded
 
 - type: entity
   parent: BaseItem
@@ -492,9 +575,17 @@
   components:
   - type: Sprite
     sprite: Structures/Power/Generation/Tesla/energy_miniball.rsi
-    shader: unshaded
     layers:
     - state: tesla_projectile
+      shader: unshaded
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: tesla-inhand-left
+        shader: unshaded
+      right:
+      - state: tesla-inhand-right
+        shader: unshaded
   - type: PointLight
     enabled: true
     radius: 5
@@ -518,8 +609,9 @@
   components:
   - type: Sprite
     sprite: Objects/Fun/pondering_orb.rsi
-    state: icon
-    shader: unshaded
+    layers:
+    - state: icon
+      shader: unshaded
   - type: PointLight
     radius: 2
     color: "#00CCFF"
@@ -587,7 +679,7 @@
     color: white
     netsync: false
   - type: Appearance
-  - type: ToggleableLightVisuals
+  - type: ToggleableVisuals
     spriteLayer: blade
     inhandVisuals:
       left:
@@ -632,6 +724,22 @@
     - state: base
       map: [ "enum.DamageStateVisualLayers.Base" ]
     - state: visor
+  - type: Clothing
+    sprite: Objects/Fun/pequeno.rsi
+    slots:
+    - HEAD
+    clothingVisuals:
+      head:
+      - state: equipped-HELMET-body
+      - state: equipped-HELMET-vis
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: inhand-left-body
+      - state: inhand-left-vis
+      right:
+      - state: inhand-right-body
+      - state: inhand-right-vis
   - type: RandomSprite
     available:
     - enum.DamageStateVisualLayers.Base:
@@ -664,6 +772,44 @@
       sprite: Objects/Weapons/Melee/cutlass.rsi
     shape:
     - 0,0,0,2
+
+- type: entity
+  parent: BaseItem
+  id: CardSword
+  name: cardboard sword
+  description: A cardboard tube thats been fashioned into a sword.
+  components:
+  - type: Sprite
+    sprite: Objects/Fun/card_sword.rsi
+    state: icon
+  - type: Clothing
+    sprite: Objects/Fun/card_sword.rsi
+    slots:
+    - Back
+    - SuitStorage
+  - type: StaminaDamageOnHit
+    damage: 6
+  - type: Appearance
+  - type: DisarmMalus
+    malus: 0
+  - type: MeleeWeapon
+    wideAnimationRotation: -135
+    attackRate: 1.25
+    damage:
+      types:
+        Blunt: 0.3
+    soundHit:
+      path: /Audio/Items/Toys/card_tube_bonk.ogg
+  - type: Construction
+    graph: CardSword
+    node: cardSword
+  - type: Item
+    size: Normal
+    storedSprite:
+      state: icon
+      sprite: Objects/Fun/card_sword.rsi
+    shape:
+    - 0,0,1,3
 
 - type: entity
   parent: BaseItem
@@ -742,7 +888,6 @@
   - type: Sprite
     sprite: Objects/Fun/whoopie.rsi
     state: icon
-    quickEquip: false
   - type: Tag
     tags:
     - Payload
@@ -769,8 +914,11 @@
   - type: UseDelay
     delay: 0.8
   - type: Slippery
+    staminaDamage: 0
+    frictionStatusTime: 0
     slipData:
-      paralyzeTime: 0
+      stunTime: 0
+      knockdownTime: 0
       launchForwardsMultiplier: 0
     slipSound:
       collection: Parp
@@ -787,7 +935,7 @@
   - type: StepTrigger
     intersectRatio: 0.2
     requiredTriggeredSpeed: 2
-  - type: TriggerOnStepTrigger
+  - type: TriggerOnStepTrigger # for payloads
   - type: Appearance
   - type: CollisionWake
     enabled: false
