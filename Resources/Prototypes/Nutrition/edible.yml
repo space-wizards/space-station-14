@@ -11,6 +11,7 @@
       volume: -1
     collection: eating # I think this *should* grab the sound specifier...
   message: edible-nom
+  otherMessage: edible-nom-other
   verb: edible-verb-food
   noun: edible-noun-food
   verbName: ingestion-verb-food
@@ -26,6 +27,7 @@
       volume: -2
     path: /Audio/Items/drink.ogg
   message: edible-slurp
+  otherMessage: edible-slurp-other
   verb: edible-verb-drink
   noun: edible-noun-drink
   verbName: ingestion-verb-drink
@@ -41,6 +43,7 @@
       volume: -1
     path: /Audio/Items/pill.ogg
   message: edible-swallow
+  otherMessage: edible-gulp-other
   verb: edible-verb-pill
   noun: edible-noun-pill
   verbName: ingestion-verb-food
