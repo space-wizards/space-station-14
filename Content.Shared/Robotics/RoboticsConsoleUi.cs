@@ -129,7 +129,7 @@ public partial record struct CyborgControlData
     public bool IsAiControllable;
     // Corvax-Next-AiRemoteControl-End
 
-    public CyborgControlData(SpriteSpecifier? chassisSprite, string chassisName, string name, float charge, int moduleCount, bool hasBrain, bool canDisable, bool isAiControllable) // Corvax-Next-AiRemoteControl
+    public CyborgControlData(SpriteSpecifier? chassisSprite, string chassisName, string name, float charge, float hpPercent, int moduleCount, bool hasBrain, bool canDisable, bool isAiControllable) // Corvax-Next-AiRemoteControl
     {
         ChassisSprite = chassisSprite;
         ChassisName = chassisName;
