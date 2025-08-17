@@ -1640,6 +1640,7 @@
     access: [ [ "ResearchDirector" ] ]
   - type: Lock
     unlockOnClick: false
+  - type: StationAiFixerConsole
   - type: ReviverDevice
     restorationStageCount: 4
     restorationRate: 1.6667
@@ -1665,3 +1666,11 @@
     containers:
       intellicard_holder: !type:ContainerSlot
       board: !type:Container
+  - type: ActivatableUI
+    key: enum.StationAiFixerConsoleUiKey.Key
+  - type: UserInterface
+    interfaces:
+      enum.StationAiFixerConsoleUiKey.Key:
+        type: StationAiFixerConsoleBoundUserInterface
+      enum.WiresUiKey.Key:
+        type: WiresBoundUserInterface
