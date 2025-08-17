@@ -142,7 +142,7 @@ public sealed class SiliconLawSystem : SharedSiliconLawSystem
             component.Subverted = true;
 
             // new laws may allow antagonist behaviour so make it clear for admins
-            if (_mind.TryGetMind(uid, out var mindId, out _))
+            if(_mind.TryGetMind(uid, out var mindId, out _))
                 EnsureSubvertedSiliconRole(mindId);
 
         }
