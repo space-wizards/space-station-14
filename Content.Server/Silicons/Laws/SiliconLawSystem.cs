@@ -258,25 +258,6 @@ public sealed class SiliconLawSystem : SharedSiliconLawSystem
     }
 
     /// <summary>
-    /// Extract all the laws from a lawset's prototype ids.
-    /// </summary>
-    public override SiliconLawset GetLawset(ProtoId<SiliconLawsetPrototype> lawset)
-    {
-        var proto = _prototype.Index(lawset);
-        var laws = new SiliconLawset()
-        {
-            Laws = new List<SiliconLaw>(proto.Laws.Count)
-        };
-        foreach (var law in proto.Laws)
-        {
-            laws.Laws.Add(_prototype.Index<SiliconLawPrototype>(law).ShallowClone());
-        }
-        laws.ObeysTo = proto.ObeysTo;
-
-        return laws;
-    }
-
-    /// <summary>
     /// Set the laws of a silicon entity while notifying the player.
     /// </summary>
     public override void SetLaws(List<SiliconLaw> newLaws, EntityUid target, SoundSpecifier? cue = null)

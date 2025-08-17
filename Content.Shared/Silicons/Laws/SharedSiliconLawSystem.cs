@@ -54,12 +54,31 @@ public abstract partial class SharedSiliconLawSystem : EntitySystem
         component.OwnerName = Name(args.UserUid);
 
         NotifyLawsChanged(uid, component.EmaggedSound);
-        if(_mind.TryGetMind(uid, out var mindId, out _))
+        if (_mind.TryGetMind(uid, out var mindId, out _))
             EnsureSubvertedSiliconRole(mindId);
 
         _stunSystem.TryUpdateParalyzeDuration(uid, component.StunTime);
 
         args.Handled = true;
+    }
+
+    /// <summary>
+    /// Extract all the laws from a lawset's prototype ids.
+    /// </summary>
+    public SiliconLawset GetLawset(ProtoId<SiliconLawsetPrototype> lawset)
+    {
+        var proto = _prototype.Index(lawset);
+        var laws = new SiliconLawset()
+        {
+            Laws = new List<SiliconLaw>(proto.Laws.Count)
+        };
+        foreach (var law in proto.Laws)
+        {
+            laws.Laws.Add(_prototype.Index<SiliconLawPrototype>(law).ShallowClone());
+        }
+        laws.ObeysTo = proto.ObeysTo;
+
+        return laws;
     }
 
     public virtual void NotifyLawsChanged(EntityUid uid, SoundSpecifier? cue = null)
@@ -73,6 +92,11 @@ public abstract partial class SharedSiliconLawSystem : EntitySystem
     }
 
     protected virtual void RemoveSubvertedSiliconRole(EntityUid mindId)
+    {
+
+    }
+
+    protected virtual void SetLaws(List<SiliconLaw> newLaws, EntityUid target, SoundSpecifier? cue = null)
     {
 
     }
