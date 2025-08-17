@@ -5,6 +5,7 @@
     children:
     - id: BoxFolderClipboard
     - id: RubberStampSalvageLead
+    - id: ClothingNeckMantleDecoratedSalvager
 
 - type: entityTable
   id: FillSalvageLeadHardsuitSpatio
@@ -60,7 +61,6 @@
       prob: 0.3
       rolls: !type:ConstantNumberSelector
         value: 3
-    - id: MedkitAdvanced
     - id: BoxBodyBag
     - id: EmergencyRollerBedSpawnFolded
 
