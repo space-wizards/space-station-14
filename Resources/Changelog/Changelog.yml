@@ -3947,3 +3947,11 @@
   id: 8858
   time: '2025-08-16T23:04:12.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/39674
+- author: august-sun
+  changes:
+  - message: Pacifists can now use the practice disabler, practice laser rifle, disabler,
+      and disabler SMG.
+    type: Tweak
+  id: 8859
+  time: '2025-08-17T19:25:31.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37164
