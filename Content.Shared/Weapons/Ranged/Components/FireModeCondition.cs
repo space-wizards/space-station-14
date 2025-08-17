@@ -15,6 +15,11 @@ public abstract partial class FireModeCondition
     /// </summary>
     /// <returns>Whether or not the firemode can be changed</returns>
     public abstract bool Condition(FireModeConditionConditionArgs args);
+
+    public bool ConditionMet = false;
+
+    [DataField]
+    public virtual string PopupMessage { get; set; } = "fire-mode-condition";
 }
 
 public readonly record struct FireModeConditionConditionArgs(EntityUid Shooter, EntityUid? Weapon, BatteryWeaponFireMode? FireMode, IEntityManager EntityManager);
