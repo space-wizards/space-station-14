@@ -20,7 +20,7 @@
 
 # Playtime requirement for Clown Bible, Mirth of the Honkmother
 - type: loadoutEffectGroup
-  id: ClownbibleRequirement
+  id: ClownBibleRequirement
   effects:
   - !type:JobRequirementLoadoutEffect
     requirement:

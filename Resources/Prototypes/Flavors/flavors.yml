@@ -1499,6 +1499,7 @@
   flavorType: base
   description: flavor-base-flavorless
 
+- type: flavor
   id: alkaline
   flavorType: Base
   description: flavor-base-alkaline
