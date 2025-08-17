@@ -24,33 +24,37 @@
                                                            MinSize="350 350"/>
 
                     <!-- Map legend -->
-                    <BoxContainer Margin="0 10">
-                        <TextureRect Stretch="KeepAspectCentered"
-                                    TexturePath="/Textures/Interface/NavMap/beveled_triangle.png"
-                                    Modulate="#FF00FF"
-                                    SetSize="20 20"
-                                    Margin="10 0 5 0"/>
+                    <BoxContainer Name="LegendContainer" Margin="0 10">
+                        <TextureRect Name="ActiveLegend"
+                                     Stretch="KeepAspectCentered"
+                                     TexturePath="/Textures/Interface/NavMap/beveled_triangle.png"
+                                     Modulate="#FF00FF"
+                                     SetSize="20 20"
+                                     Margin="10 0 5 0"/>
                         <Label Text="{Loc 'surveillance-camera-monitor-ui-legend-active'}"/>
 
-                        <TextureRect Stretch="KeepAspectCentered"
-                                    TexturePath="/Textures/Interface/NavMap/beveled_triangle.png"
-                                    SetSize="20 20"
-                                    Modulate="#a09f9fff"
-                                    Margin="10 0 5 0"/>
+                        <TextureRect Name="InactiveLegend"
+                                     Stretch="KeepAspectCentered"
+                                     TexturePath="/Textures/Interface/NavMap/beveled_triangle.png"
+                                     SetSize="20 20"
+                                     Modulate="#a09f9fff"
+                                     Margin="10 0 5 0"/>
                         <Label Text="{Loc 'surveillance-camera-monitor-ui-legend-inactive'}"/>
 
-                        <TextureRect Stretch="KeepAspectCentered"
-                                    TexturePath="/Textures/Interface/NavMap/beveled_triangle.png"
-                                    SetSize="20 20"
-                                    Modulate="#fbff19ff"
-                                    Margin="10 0 5 0"/>
+                        <TextureRect Name="SelectedLegend"
+                                     Stretch="KeepAspectCentered"
+                                     TexturePath="/Textures/Interface/NavMap/beveled_triangle.png"
+                                     SetSize="20 20"
+                                     Modulate="#fbff19ff"
+                                     Margin="10 0 5 0"/>
                         <Label Text="{Loc 'surveillance-camera-monitor-ui-legend-selected'}"/>
 
-                        <TextureRect Stretch="KeepAspectCentered"
-                                    TexturePath="/Textures/Interface/NavMap/beveled_triangle.png"
-                                    SetSize="20 20"
-                                    Modulate="#fa1f1fff"
-                                    Margin="10 0 5 0"/>
+                        <TextureRect Name="InvalidLegend"
+                                     Stretch="KeepAspectCentered"
+                                     TexturePath="/Textures/Interface/NavMap/beveled_triangle.png"
+                                     SetSize="20 20"
+                                     Modulate="#fa1f1fff"
+                                     Margin="10 0 5 0"/>
                         <Label Text="{Loc 'surveillance-camera-monitor-ui-legend-invalid'}"/>
                     </BoxContainer>
                     <Button Name="SubnetRefreshButtonMap" Text="{Loc 'surveillance-camera-monitor-ui-refresh-subnets'}"/>

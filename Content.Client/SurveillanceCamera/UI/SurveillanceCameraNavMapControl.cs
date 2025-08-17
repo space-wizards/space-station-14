@@ -1,8 +1,10 @@
 using Robust.Client.Graphics;
 using Robust.Client.ResourceManagement;
+using Robust.Shared.Configuration;
 using Robust.Shared.Map;
 using Content.Client.Pinpointer.UI;
 using Content.Client.Resources;
+using Content.Shared.CCVar;
 using Content.Shared.SurveillanceCamera.Components;
 
 namespace Content.Client.SurveillanceCamera.UI;
@@ -11,16 +13,22 @@ public sealed class SurveillanceCameraNavMapControl : NavMapControl
 {
     [Dependency] private readonly IEntityManager _entityManager = default!;
     [Dependency] private readonly IResourceCache _resourceCache = default!;
+    [Dependency] private readonly IConfigurationManager _cfg = default!;
 
     private static readonly Color CameraActiveColor = Color.FromHex("#FF00FF");
     private static readonly Color CameraInactiveColor = Color.FromHex("#a09f9fff");
     private static readonly Color CameraSelectedColor = Color.FromHex("#fbff19ff");
     private static readonly Color CameraInvalidColor = Color.FromHex("#fa1f1fff");
 
-    private readonly Texture _cameraTexture;
+    private readonly Texture _activeTexture;
+    private readonly Texture _inactiveTexture;
+    private readonly Texture _selectedTexture;
+    private readonly Texture _invalidTexture;
+
     private string _activeCameraAddress = string.Empty;
     private HashSet<string> _availableSubnets = new();
     private (Dictionary<NetEntity, CameraMarker> Cameras, string ActiveAddress, HashSet<string> AvailableSubnets) _lastState;
+    private bool _colorblindMode;
 
     public bool EnableCameraSelection { get; set; }
 
@@ -29,7 +37,20 @@ public sealed class SurveillanceCameraNavMapControl : NavMapControl
 
     public SurveillanceCameraNavMapControl()
     {
-        _cameraTexture = _resourceCache.GetTexture("/Textures/Interface/NavMap/beveled_triangle.png");
+        _colorblindMode = _cfg.GetCVar(CCVars.AccessibilityColorblindFriendly);
+
+        if (_colorblindMode)
+        {
+            _activeTexture = _resourceCache.GetTexture("/Textures/Interface/NavMap/beveled_triangle.png");
+            _inactiveTexture = _resourceCache.GetTexture("/Textures/Interface/NavMap/beveled_square.png");
+            _selectedTexture = _resourceCache.GetTexture("/Textures/Interface/NavMap/beveled_circle.png");
+            _invalidTexture = _resourceCache.GetTexture("/Textures/Interface/NavMap/beveled_hexagon.png");
+        }
+        else
+        {
+            var defaultTexture = _resourceCache.GetTexture("/Textures/Interface/NavMap/beveled_triangle.png");
+            _activeTexture = _inactiveTexture = _selectedTexture = _invalidTexture = defaultTexture;
+        }
 
         TrackedEntitySelectedAction += entity =>
         {
@@ -85,17 +106,33 @@ public sealed class SurveillanceCameraNavMapControl : NavMapControl
 
             var coords = new EntityCoordinates(MapUid.Value, marker.Position);
 
+            Texture texture;
             Color color;
+
             if (string.IsNullOrEmpty(marker.Address))
+            {
                 color = CameraInvalidColor;
+                texture = _invalidTexture;
+            }
             else if (marker.Address == _activeCameraAddress)
+            {
                 color = CameraSelectedColor;
+                texture = _selectedTexture;
+            }
+            else if (marker.Active)
+            {
+                color = CameraActiveColor;
+                texture = _activeTexture;
+            }
             else
-                color = marker.Active ? CameraActiveColor : CameraInactiveColor;
+            {
+                color = CameraInactiveColor;
+                texture = _inactiveTexture;
+            }
 
             TrackedEntities[netEntity] = new NavMapBlip(
                 coords,
-                _cameraTexture,
+                texture,
                 color,
                 false,
                 EnableCameraSelection
