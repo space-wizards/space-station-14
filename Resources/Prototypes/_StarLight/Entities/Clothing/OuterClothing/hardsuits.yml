@@ -485,7 +485,7 @@
 
 #Mining Hardsuit
 - type: entity
-  parent: [ClothingOuterHardsuitBase, BaseCargoContraband]
+  parent: [ClothingOuterHardsuitBase, BaseSalvageMiningContraband]
   id: ClothingOuterHardsuitMining
   name: mining hardsuit
   description: A special suit that protects against hazardous, low pressure environments encountered during space mining.
