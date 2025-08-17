@@ -320,3 +320,5 @@
     roleType: SoloAntagonist
     subtype: role-subtype-changeling
   - type: ChangelingRole
+  - type: RoleBriefing
+    briefing: changeling-briefing

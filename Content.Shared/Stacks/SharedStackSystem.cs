@@ -352,10 +352,6 @@ namespace Content.Shared.Stacks
 
         private void OnStackStarted(EntityUid uid, StackComponent component, ComponentStartup args)
         {
-            // on client, lingering stacks that start at 0 need to be darkened
-            // on server this does nothing
-            SetCount(uid, component.Count, component);
-
             if (!TryComp(uid, out AppearanceComponent? appearance))
                 return;
 
@@ -366,7 +362,7 @@ namespace Content.Shared.Stacks
 
         private void OnStackGetState(EntityUid uid, StackComponent component, ref ComponentGetState args)
         {
-            args.State = new StackComponentState(component.Count, component.MaxCountOverride, component.Lingering);
+            args.State = new StackComponentState(component.Count, component.MaxCountOverride);
         }
 
         private void OnStackHandleState(EntityUid uid, StackComponent component, ref ComponentHandleState args)
@@ -375,7 +371,6 @@ namespace Content.Shared.Stacks
                 return;
 
             component.MaxCountOverride = cast.MaxCount;
-            component.Lingering = cast.Lingering;
             // This will change the count and call events.
             SetCount(uid, cast.Count, component);
         }
@@ -428,7 +423,7 @@ namespace Content.Shared.Stacks
                 return;
 
             // We haven't eaten the whole stack yet or are unable to eat it completely.
-            if (eaten.Comp.Count > 0 || eaten.Comp.Lingering)
+            if (eaten.Comp.Count > 0)
             {
                 args.Refresh = true;
                 return;

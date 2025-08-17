@@ -91,6 +91,12 @@
   - type: TargetObjective
     title: objective-condition-maroon-person-title
   - type: PickRandomPerson
+    filters:
+    # Can't have multiple objectives to kill the same person.
+    - !type:TargetObjectiveMindFilter
+      blacklist:
+        components:
+        - KillPersonCondition
   - type: KillPersonCondition
     requireMaroon: true
 
@@ -106,7 +112,17 @@
     unique: true
   - type: TargetObjective
     title: objective-condition-kill-maroon-title
-  - type: PickRandomHead
+  - type: PickRandomPerson
+    filters:
+    - !type:BodyMindFilter
+      whitelist:
+        components:
+        - CommandStaff
+    # Can't have multiple objectives to kill the same person.
+    - !type:TargetObjectiveMindFilter
+      blacklist:
+        components:
+        - KillPersonCondition
   - type: KillPersonCondition
     # don't count missing evac as killing as heads are higher profile, so you really need to do the dirty work
     # if ce flies a shittle to centcom you better find a way onto it
@@ -124,7 +140,18 @@
     difficulty: 1.75
   - type: TargetObjective
     title: objective-condition-other-traitor-alive-title
-  - type: RandomTraitorAlive
+  - type: PickRandomPerson
+    filters:
+    - !type:HasRoleMindFilter
+      whitelist:
+        components:
+        - TraitorRole
+    # Can't have multiple objectives to help/save the same person
+    - !type:TargetObjectiveMindFilter
+      blacklist:
+        components:
+        - HelpProgressCondition
+        - KeepAliveCondition
 
 - type: entity
   parent: [BaseTraitorSocialObjective, BaseHelpProgressObjective]
@@ -135,7 +162,25 @@
     difficulty: 2.5
   - type: TargetObjective
     title: objective-condition-other-traitor-progress-title
-  - type: RandomTraitorProgress
+  - type: PickRandomPerson
+    filters:
+    - !type:HasRoleMindFilter
+      whitelist:
+        components:
+        - TraitorRole
+    # Can't help anyone who is tasked with helping:
+    # 1. thats boring
+    # 2. no cyclic progress dependencies!!!
+    - !type:ObjectiveMindFilter
+      blacklist:
+        components:
+        - HelpProgressCondition
+    # Can't have multiple objectives to help/save the same person
+    - !type:TargetObjectiveMindFilter
+      blacklist:
+        components:
+        - HelpProgressCondition
+        - KeepAliveCondition
 
 # steal
 
