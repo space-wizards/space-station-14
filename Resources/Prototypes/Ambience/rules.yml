@@ -1,4 +1,4 @@
-# Rules
+    # Rules
 - type: rules
   id: AlwaysTrue
   rules:

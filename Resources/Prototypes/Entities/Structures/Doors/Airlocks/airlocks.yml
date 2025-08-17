@@ -213,8 +213,10 @@
   components:
   - type: Sprite
     sprite: Structures/Doors/Airlocks/Glass/atmospherics.rsi
+  - type: Tag
     tags:
       - EngineeringEquipment
+
 
 - type: entity
   parent: AirlockGlass
