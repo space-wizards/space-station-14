@@ -1,3 +1,5 @@
+# Modified by Ronstation contributor(s), therefore this file is licensed as MIT sublicensed with AGPL-v3.0.
+
 - type: reagent
   id: EZNutrient
   name: reagent-name-e-z-nutrient
@@ -240,6 +242,11 @@
         - !type:OrganType
           type: Vox
           shouldHave: false
+        # start of modifications
+        - !type:OrganType
+          type: Avali
+          shouldHave: false
+        # end of modifications
         - !type:ReagentThreshold
           reagent: Ammonia
           min: 0.8

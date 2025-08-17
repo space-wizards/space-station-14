@@ -23,7 +23,7 @@
     - id: SlimesSpawn
     - id: SolarFlare
     - id: SnakeSpawn
-#    - id: SpiderClownSpawn - Ronstation - modification. No.
+    - id: SpiderClownSpawn
     - id: SpiderSpawn
     - id: VentClog
 
@@ -32,15 +32,20 @@
   table: !type:AllSelector # we need to pass a list of rules, since rules have further restrictions to consider via StationEventComp
     children:
     - id: ClosetSkeleton
-    - id: DragonSpawn
     - id: KingRatMigration
+    - id: RevenantSpawn
+    - id: DerelictCyborgSpawn
+
+- type: entityTable
+  id: ModerateAntagEventsTable
+  table: !type:AllSelector # we need to pass a list of rules, since rules have further restrictions to consider via StationEventComp
+    children:
+    - id: DragonSpawn
     - id: NinjaSpawn
     - id: ParadoxCloneSpawn
-    - id: RevenantSpawn
     - id: SleeperAgents
     - id: ZombieOutbreak
     - id: LoneOpsSpawn
-    - id: DerelictCyborgSpawn
     - id: WizardSpawn
 
 - type: entity
@@ -185,6 +190,8 @@
       pickPlayer: false
       mindRoles:
       - MindRoleDragon
+  - type: DynamicRuleCost
+    cost: 75
 
 - type: entity
   parent: BaseGameRule
@@ -235,6 +242,8 @@
         nameFormat: name-format-ninja
       mindRoles:
       - MindRoleNinja
+  - type: DynamicRuleCost
+    cost: 75
 
 - type: entity
   parent: BaseGameRule
@@ -271,6 +280,8 @@
         sound: /Audio/Misc/paradox_clone_greeting.ogg
       mindRoles:
       - MindRoleParadoxClone
+  - type: DynamicRuleCost
+    cost: 50
 
 - type: entity
   parent: BaseGameRule
@@ -471,24 +482,25 @@
     table: # DeltaV: EntityTable instead of spawn entries
       id: MobGiantSpiderAngry
 
-# start of modifications
-#- type: entity
-#  id: SpiderClownSpawn
-#  parent: BaseStationEventShortDelay
-#  components:
-#  - type: StationEvent
-#    startAnnouncement: station-event-vent-creatures-start-announcement
-#    startAudio:
-#      path: /Audio/Announcements/attention.ogg
-#    earliestStart: 20
-#    minimumPlayers: 20
-#    weight: 1.5
-#    duration: 60
-#  - type: VentCrittersRule
-#    entries:
-#    - id: MobClownSpider
-#      prob: 0.05
-# end of modifications
+- type: entity
+  id: SpiderClownSpawn
+  parent: BaseStationEventShortDelay
+  components:
+  - type: StationEvent
+    startAnnouncement: station-event-vent-creatures-start-announcement
+    startAudio:
+      path: /Audio/Announcements/attention.ogg
+    earliestStart: 20
+    minimumPlayers: 20
+    weight: 1.5
+    duration: 60
+  - type: VentCrittersRule
+    table: # DeltaV: EntityTable instead of spawn entries
+      id: MobClownSpider
+    min: 1 # Ronstation - Clownspiders are annoying and so not as many spawn when they are rolled
+    max: 2
+    ceiling: 4
+    floor: 1
 
 - type: entity
   id: ZombieOutbreak
@@ -522,6 +534,8 @@
       - type: InitialInfected
       mindRoles:
       - MindRoleInitialInfected
+  - type: DynamicRuleCost
+    cost: 200
 
 - type: entity
   parent: BaseNukeopsRule
@@ -558,6 +572,8 @@
         - Syndicate
       mindRoles:
       - MindRoleNukeops
+  - type: DynamicRuleCost
+    cost: 75
 
 - type: entity
   parent: BaseTraitorRule
