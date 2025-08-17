@@ -77,6 +77,11 @@ public abstract partial class SharedSiliconLawSystem
         SetLaws(lawset, ent, LawProviderBase.LawUploadSound);
     }
 
+    protected virtual SiliconLawset GetLawset(ProtoId<SiliconLawsetPrototype> lawset)
+    {
+
+    }
+
     protected virtual void SetLaws(List<SiliconLaw> newLaws, EntityUid target, SoundSpecifier? cue = null)
     {
 

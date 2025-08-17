@@ -260,7 +260,7 @@ public sealed class SiliconLawSystem : SharedSiliconLawSystem
     /// <summary>
     /// Extract all the laws from a lawset's prototype ids.
     /// </summary>
-    public SiliconLawset GetLawset(ProtoId<SiliconLawsetPrototype> lawset)
+    public override SiliconLawset GetLawset(ProtoId<SiliconLawsetPrototype> lawset)
     {
         var proto = _prototype.Index(lawset);
         var laws = new SiliconLawset()
