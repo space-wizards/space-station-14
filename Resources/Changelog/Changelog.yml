@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: kosticia
-  changes:
-  - message: Moths can no longer eat rubber toys.
-    type: Fix
-  id: 8346
-  time: '2025-04-25T07:20:09.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/34543
 - author: chromiumboy
   changes:
   - message: Gas vent under-pressure lockout releases are now performed using the
@@ -3954,3 +3947,14 @@
   id: 8858
   time: '2025-08-16T23:04:12.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/39674
+- author: Nox38, ArtisticRoomba
+  changes:
+  - message: On Packed, added Genpop and revamped security.
+    type: Add
+  - message: On Packed, revamped the north maints area above security.
+    type: Tweak
+  - message: On Packed, revamped Science.
+    type: Tweak
+  id: 8859
+  time: '2025-08-17T19:00:49.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38339
