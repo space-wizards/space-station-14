@@ -182,7 +182,7 @@
   - type: Item
     heldPrefix: green
   - type: Crayon
-    color: green
+    color: "#A8E61D"
   - type: Tag
     tags:
     - Write
@@ -201,7 +201,7 @@
   - type: Item
     heldPrefix: blue
   - type: Crayon
-    color: lightblue
+    color: "#00B7EF"
   - type: Tag
     tags:
     - Write

@@ -10,17 +10,17 @@ namespace Content.Client.Wires.Visualizers
             if (args.Sprite == null)
                 return;
 
-            var layer = args.Sprite.LayerMapReserveBlank(WiresVisualLayers.MaintenancePanel);
+            var layer = SpriteSystem.LayerMapReserve((uid, args.Sprite), WiresVisualLayers.MaintenancePanel);
 
-            if(args.AppearanceData.TryGetValue(WiresVisuals.MaintenancePanelState, out var panelStateObject) &&
+            if (args.AppearanceData.TryGetValue(WiresVisuals.MaintenancePanelState, out var panelStateObject) &&
                 panelStateObject is bool panelState)
             {
-                args.Sprite.LayerSetVisible(layer, panelState);
+                SpriteSystem.LayerSetVisible((uid, args.Sprite), layer, panelState);
             }
             else
             {
                 //Mainly for spawn window
-                args.Sprite.LayerSetVisible(layer, false);
+                SpriteSystem.LayerSetVisible((uid, args.Sprite), layer, false);
             }
         }
     }

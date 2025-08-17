@@ -5,7 +5,7 @@
   description: A special machine intended to create a safe environment for the use of chemicals that react in cold environments.
   components:
   - type: Sprite
-    sprite: Structures/Machines/cryogenics.rsi
+    sprite: Structures/Machines/Medical/cryopod.rsi
     drawdepth: Mobs
     noRot: true
     offset: 0, 0.5
@@ -30,7 +30,7 @@
       fix1:
         shape:
           !type:PhysShapeAabb
-          bounds: "-0.5,-0.5,0.5,0.90"
+          bounds: "-0.5,-0.5,0.5,0.5"
         density: 200
         mask:
           - MachineMask
@@ -87,7 +87,6 @@
         whitelist:
           components:
             - FitsInDispenser
-  - type: ItemToggle
   - type: HealthAnalyzer
     scanDelay: 0
   - type: UserInterface
@@ -110,8 +109,49 @@
       - scanner-body
   - type: CryoPod
   - type: CryoPodAir
+  - type: Climbable # so that ejected bodies don't get stuck
+    vaultable: false
   - type: ContainerTemperatureDamageThresholds
     coldDamageThreshold: 10
   - type: GuideHelp
     guides:
     - Cryogenics
+
+- type: entity
+  parent: BaseMachine
+  id: CryoPodDestroyed
+  name: destroyed cryo pod
+  description: A cryo pod that has seen better days. It's entirely inoperable; not good for anything but scrap.
+  components:
+  - type: Sprite
+    sprite: Structures/Machines/Medical/cryopod.rsi
+    drawdepth: Mobs
+    noRot: true
+    offset: 0, 0.5
+    state: pod-cracked
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.5,-0.5,0.5,0.5"
+        density: 200
+        mask:
+        - MachineMask
+        layer:
+        - MachineLayer
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 100
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          collection: WindowShatter
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+  - type: PhysicalComposition
+    materialComposition:
+      Steel: 2000 # 20 sheets
+      Glass: 1000 # 10 sheets

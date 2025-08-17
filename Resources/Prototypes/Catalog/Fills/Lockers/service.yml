@@ -3,24 +3,28 @@
   suffix: Filled
   parent: LockerBooze
   components:
-  - type: StorageFill
-    contents:
-      - id: ClothingOuterArmorBasicSlim
-      - id: WeaponShotgunDoubleBarreledRubber
-      - id: DrinkShaker
-      - id: ClothingEyesHudBeer
-      - id: HandLabeler
-        amount: 1
-      - id: DrinkBottleBeer
-        prob: 0.5
-      - id: DrinkBottleBeer
-        prob: 0.5
-      - id: DrinkBottleBeer
-        prob: 0.5
+  - type: EntityTableContainerFill
+    containers:
+      entity_storage: !type:NestedSelector
+        tableId: FillLockerBooze
+
+- type: entityTable
+  id: FillLockerBooze
+  table: !type:AllSelector
+    children:
+    - id: ClothingOuterArmorBasicSlim
+    - id: WeaponShotgunDoubleBarreledRubber
+    - id: DrinkShaker
+    - id: ClothingEyesHudBeer
+    - id: HandLabeler
+    - id: DrinkBottleBeer
+      amount: !type:BinomialNumberSelector
+        trials: 3
+    - !type:AllSelector
+      rolls: 2
+      children:
       - id: BoxBeanbag
-        amount: 2
       - id: RagItem
-        amount: 2
 
 #- type: entity
 #  id: LockerFormalFilled
@@ -32,102 +36,134 @@
   suffix: Filled
   parent: ClosetChef
   components:
-  - type: StorageFill
-    contents:
-      - id: CrowbarRed
-      - id: VariantCubeBox
-      - id: BoxMousetrap
-        amount: 2
-      - id: SprayBottleWater
-      - id: ReagentContainerFlour
-        amount: 2
-      - id: FoodBoxCloth
-        amount: 1
-      - id: ReagentContainerSugar
-      - id: FoodCondimentPacketSalt
-        amount: 3
-      - id: FoodCondimentPacketPepper
-        amount: 3
-      - id: FoodCondimentBottleEnzyme
+  - type: EntityTableContainerFill
+    containers:
+      entity_storage: !type:NestedSelector
+        tableId: FillClosetChef
+
+- type: entityTable
+  id: FillClosetChef
+  table: !type:AllSelector
+    children:
+    - id: VariantCubeBox
+    - id: SprayBottleWater
+    - id: FoodBoxCloth
+    - id: ReagentContainerSugar
+    - id: FoodCondimentBottleEnzyme
+    - id: DrinkSoyMilkCarton
+    - !type:AllSelector
+      rolls: 2
+      children:
+      - id: DrinkMilkCarton
       # really, milk should go in the fridge. Unfortunately saltern only has freezers.
       # yes, I'm using this as an excuse to not have to do extra work.
-      - id: DrinkMilkCarton
-        amount: 2
-      - id: DrinkSoyMilkCarton
+      - id: ReagentContainerFlour
+      - id: BoxMousetrap
+    - !type:AllSelector
+      rolls: 3
+      children:
+      - id: FoodCondimentPacketSalt
+      - id: FoodCondimentPacketPepper
 
 - type: entity
   id: ClosetJanitorFilled
   suffix: Filled
   parent: ClosetJanitor
   components:
-  - type: StorageFill
-    contents:
+  - type: EntityTableContainerFill
+    containers:
+      entity_storage: !type:NestedSelector
+        tableId: FillClosetJanitor
+
+- type: entityTable
+  id: FillClosetJanitor
+  table: !type:AllSelector
+    children:
+    - id: WetFloorSign
+      amount: 3
+    - id: LightReplacer
+    - id: BoxLightMixed
+    - id: Holoprojector
+    - !type:AllSelector
+      rolls: 2
+      children:
       - id: MopItem
-        amount: 2
       - id: BoxMousetrap
-        amount: 2
-      - id: WetFloorSign
-        amount: 3
       - id: TrashBag
-        amount: 2
-      - id: LightReplacer
-      - id: BoxLightMixed
-      - id: Holoprojector
       - id: SoapNT
-        amount: 2
       - id: FlashlightLantern
-        amount: 2
       - id: Plunger
-        amount: 2
+      - id: WireBrush
 
 - type: entity
   id: ClosetLegalFilled
   suffix: Filled
   parent: ClosetLegal
   components:
-  - type: StorageFill
-    contents:
-      - id: BriefcaseBrownFilled
-        prob: 0.80
-      - id: ClothingOuterRobesJudge
+  - type: EntityTableContainerFill
+    containers:
+      entity_storage: !type:NestedSelector
+        tableId: FillClosetLegal
+
+- type: entityTable
+  id: FillClosetLegal
+  table: !type:AllSelector
+    children:
+    - id: BriefcaseBrownFilled
+      prob: 0.80
+    - id: ClothingOuterRobesJudge
 
 - type: entity
   id: LockerBotanistFilled
   suffix: Filled
   parent: LockerBotanist
   components:
-  - type: StorageFill
-    contents:
-      - id: ClothingHandsGlovesLeather
-      - id: ClothingOuterApronBotanist
-      - id: ClothingHeadBandBotany
-      - id: RobustHarvestChemistryBottle
-        prob: 0.3
-      - id: ClothingBeltPlant
-      - id: PlantBag ##Some maps don't have nutrivend
-      - id: BoxMouthSwab
-      - id: Dropper
-      - id: HandLabeler
-      - id: ClothingUniformOveralls
-      - id: ClothingHeadHatTrucker
-        prob: 0.1
+  - type: EntityTableContainerFill
+    containers:
+      entity_storage: !type:NestedSelector
+        tableId: FillLockerBotanist
+
+- type: entityTable
+  id: FillLockerBotanist
+  table: !type:AllSelector
+    children:
+    - id: ClothingHandsGlovesLeather
+    - id: ClothingOuterApronBotanist
+    - id: ClothingHeadBandBotany
+    - id: ChemistryBottleRobustHarvest
+      prob: 0.3
+    - id: ClothingBeltPlant
+    - id: PlantBag ##Some maps don't have nutrivend
+    - id: BoxMouthSwab
+    - id: Dropper
+    - id: HandLabeler
+    - id: ClothingUniformOveralls
+    - id: ClothingHeadHatTrucker
+      prob: 0.1
 
 - type: entity
   id: LockerBotanistLoot
   suffix: Loot
   parent: LockerBotanist
   components:
-  - type: StorageFill
-    contents:
-      - id: ClothingUniformOveralls
-      - id: ClothingHeadHatTrucker
-        prob: 0.3
-      - id: GatfruitSeeds
-        prob: 0.1
-      - id: FlyAmanitaSeeds
-        prob: 0.5
-      - id: NettleSeeds
-        prob: 0.7
+  - type: EntityTableContainerFill
+    containers:
+      entity_storage: !type:NestedSelector
+        tableId: FillLockerBotanistLoot
+
+- type: entityTable
+  id: FillLockerBotanistLoot
+  table: !type:AllSelector
+    children:
+    - id: ClothingUniformOveralls
+    - id: ClothingHeadHatTrucker
+      prob: 0.3
+    - id: GatfruitSeeds
+      prob: 0.1
+    - id: FlyAmanitaSeeds
+      prob: 0.5
+    - id: NettleSeeds
+      prob: 0.7
 
 - type: entity
   id: ClosetJanitorBombFilled
@@ -135,7 +171,14 @@
   suffix: DO NOT MAP, Filled
   categories: [ DoNotMap ]
   components:
-  - type: StorageFill
-    contents:
-      - id: ClothingHeadHelmetJanitorBombSuit
-      - id: ClothingOuterSuitJanitorBomb
+  - type: EntityTableContainerFill
+    containers:
+      entity_storage: !type:NestedSelector
+        tableId: FillClosetJanitorBomb
+
+- type: entityTable
+  id: FillClosetJanitorBomb
+  table: !type:AllSelector
+    children:
+    - id: ClothingHeadHelmetJanitorBombSuit
+    - id: ClothingOuterSuitJanitorBomb

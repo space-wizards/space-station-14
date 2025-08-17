@@ -1,3 +1,4 @@
+using System.IO;
 using System.Linq;
 using Content.Shared.CCVar;
 using Content.Shared.Instruments;
@@ -12,7 +13,7 @@ using Robust.Shared.Timing;
 
 namespace Content.Client.Instruments;
 
-public sealed class InstrumentSystem : SharedInstrumentSystem
+public sealed partial class InstrumentSystem : SharedInstrumentSystem
 {
     [Dependency] private readonly IClientNetManager _netManager = default!;
     [Dependency] private readonly IMidiManager _midiManager = default!;
@@ -22,6 +23,8 @@ public sealed class InstrumentSystem : SharedInstrumentSystem
     public readonly TimeSpan OneSecAgo = TimeSpan.FromSeconds(-1);
     public int MaxMidiEventsPerBatch { get; private set; }
     public int MaxMidiEventsPerSecond { get; private set; }
+
+    public event Action? OnChannelsUpdated;
 
     public override void Initialize()
     {
@@ -38,6 +41,26 @@ public sealed class InstrumentSystem : SharedInstrumentSystem
 
         SubscribeLocalEvent<InstrumentComponent, ComponentShutdown>(OnShutdown);
         SubscribeLocalEvent<InstrumentComponent, ComponentHandleState>(OnHandleState);
+        SubscribeLocalEvent<ActiveInstrumentComponent, AfterAutoHandleStateEvent>(OnActiveInstrumentAfterHandleState);
+    }
+
+    private bool _isUpdateQueued = false;
+
+    private void OnActiveInstrumentAfterHandleState(Entity<ActiveInstrumentComponent> ent, ref AfterAutoHandleStateEvent args)
+    {
+        // Called in the update loop so that the components update client side for resolving them in TryComps.
+        _isUpdateQueued = true;
+    }
+
+    public override void FrameUpdate(float frameTime)
+    {
+        base.FrameUpdate(frameTime);
+
+        if (!_isUpdateQueued)
+            return;
+
+        _isUpdateQueued = false;
+        OnChannelsUpdated?.Invoke();
     }
 
     private void OnHandleState(EntityUid uid, SharedInstrumentComponent component, ref ComponentHandleState args)
@@ -167,11 +190,14 @@ public sealed class InstrumentSystem : SharedInstrumentSystem
 
     private void UpdateRendererMaster(InstrumentComponent instrument)
     {
-        if (instrument.Renderer == null || instrument.Master == null)
+        if (instrument.Renderer == null)
             return;
 
-        if (!TryComp(instrument.Master, out InstrumentComponent? masterInstrument) || masterInstrument.Renderer == null)
+        if (instrument.Master == null || !TryComp(instrument.Master, out InstrumentComponent? masterInstrument) || masterInstrument.Renderer == null)
+        {
+            instrument.Renderer.Master = null;
             return;
+        }
 
         instrument.Renderer.Master = masterInstrument.Renderer;
     }
@@ -196,15 +222,16 @@ public sealed class InstrumentSystem : SharedInstrumentSystem
             return;
         }
 
-        instrument.Renderer?.SystemReset();
-        instrument.Renderer?.ClearAllEvents();
+        if (instrument.Renderer is { } renderer)
+        {
+            renderer.Master = null;
+            renderer.SystemReset();
+            renderer.ClearAllEvents();
 
-        var renderer = instrument.Renderer;
-
-        // We dispose of the synth two seconds from now to allow the last notes to stop from playing.
-        // Don't use timers bound to the entity in case it is getting deleted.
-        if (renderer != null)
+            // We dispose of the synth two seconds from now to allow the last notes to stop from playing.
+            // Don't use timers bound to the entity in case it is getting deleted.
             Timer.Spawn(2000, () => { renderer.Dispose(); });
+        }
 
         instrument.Renderer = null;
         instrument.MidiEventBuffer.Clear();
@@ -248,7 +275,13 @@ public sealed class InstrumentSystem : SharedInstrumentSystem
 
     }
 
+    [Obsolete("Use overload that takes in byte[] instead.")]
     public bool OpenMidi(EntityUid uid, ReadOnlySpan<byte> data, InstrumentComponent? instrument = null)
+    {
+        return OpenMidi(uid, data.ToArray(), instrument);
+    }
+
+    public bool OpenMidi(EntityUid uid, byte[] data, InstrumentComponent? instrument = null)
     {
         if (!Resolve(uid, ref instrument))
             return false;
@@ -259,7 +292,8 @@ public sealed class InstrumentSystem : SharedInstrumentSystem
             return false;
 
         SetMaster(uid, null);
-        instrument.MidiEventBuffer.Clear();
+        TrySetChannels(uid, data);
+
         instrument.Renderer.OnMidiEvent += instrument.MidiEventBuffer.Add;
         return true;
     }
