@@ -55,7 +55,7 @@ public sealed partial class StunProviderComponent : Component
     /// How long stunning is disabled after stunning something.
     /// </summary>
     [DataField]
-    public TimeSpan Cooldown = TimeSpan.FromSeconds(10);
+    public TimeSpan Cooldown = TimeSpan.FromSeconds(2);
 
     /// <summary>
     /// ID of the cooldown use delay.
