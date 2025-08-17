@@ -4,8 +4,8 @@ meta:
   engineVersion: 265.0.0
   forkId: ""
   forkVersion: ""
-  time: 08/08/2025 20:31:35
-  entityCount: 15906
+  time: 08/17/2025 18:39:31
+  entityCount: 15905
 maps:
 - 126
 grids:
@@ -489,10 +489,10 @@ entities:
           4,-1:
             0: 61919
           -4,-8:
-            1: 61688
-            0: 4
+            1: 61624
+            0: 68
           -5,-8:
-            1: 34944
+            1: 34952
           -4,-7:
             1: 112
             0: 29184
@@ -504,8 +504,8 @@ entities:
             0: 17408
             1: 35807
           -3,-8:
-            0: 69
-            1: 61624
+            0: 85
+            1: 61608
           -3,-7:
             1: 3840
           -3,-6:
@@ -515,8 +515,8 @@ entities:
             0: 21760
             1: 43759
           -2,-8:
-            0: 21
-            1: 61674
+            0: 85
+            1: 61610
           -2,-7:
             1: 768
           -2,-6:
@@ -525,8 +525,8 @@ entities:
             0: 21760
             1: 35471
           -1,-8:
-            0: 34953
-            1: 12848
+            0: 34969
+            1: 12832
           -1,-6:
             0: 3840
             1: 8
@@ -578,22 +578,22 @@ entities:
             0: 30583
           0,6:
             0: 2056
-          1,6:
-            0: 53199
           1,5:
+            0: 56512
             1: 16
-            0: 52416
+          1,6:
+            0: 57295
           1,7:
             1: 16
-            0: 60428
+            0: 60620
           1,8:
-            0: 15086
+            0: 47854
           2,5:
             0: 65529
           2,6:
             0: 65535
           2,7:
-            0: 48063
+            0: 47903
           2,8:
             0: 35763
           3,5:
@@ -601,7 +601,7 @@ entities:
           3,6:
             0: 46079
           3,7:
-            0: 48063
+            0: 48015
           4,4:
             0: 3845
           4,5:
@@ -725,11 +725,12 @@ entities:
           8,-5:
             0: 64287
           0,-11:
-            1: 14080
+            1: 4368
           -1,-11:
-            1: 14896
+            1: 58608
+            0: 4096
           0,-10:
-            1: 243
+            1: 241
             0: 49152
           1,-10:
             1: 3316
@@ -799,8 +800,7 @@ entities:
             1: 16
             0: 61611
           7,-11:
-            0: 61439
-            4: 4096
+            0: 65535
           7,-10:
             0: 63743
           7,-13:
@@ -864,13 +864,13 @@ entities:
           11,-4:
             0: 63692
           12,-8:
-            5: 7
+            4: 7
             3: 1792
           12,-7:
             3: 7
-            6: 1792
+            5: 1792
           12,-6:
-            7: 7
+            6: 7
             1: 256
             0: 49152
           12,-5:
@@ -990,13 +990,13 @@ entities:
           12,0:
             0: 65263
           12,1:
-            0: 3854
+            0: 36622
           12,2:
             0: 65534
           12,3:
             0: 61408
           9,-3:
-            0: 57275
+            0: 57339
           9,-2:
             0: 65535
           10,-3:
@@ -1008,8 +1008,7 @@ entities:
           11,-2:
             0: 65535
           12,-4:
-            0: 32648
-            8: 2
+            0: 32650
           12,-2:
             0: 61167
           12,-1:
@@ -1099,31 +1098,32 @@ entities:
           2,-14:
             1: 21847
           -4,-11:
-            1: 62448
+            1: 46064
+            0: 16384
           -5,-11:
             1: 34944
           -4,-10:
             1: 48008
             0: 1092
           -5,-10:
-            1: 44768
+            1: 44776
           -5,-9:
             1: 60074
           -3,-11:
-            1: 45296
-            0: 16384
+            1: 41200
+            0: 20480
           -3,-10:
             0: 1365
             1: 64168
           -2,-11:
-            1: 57584
-            0: 4096
+            1: 41200
+            0: 20480
           -2,-10:
             0: 1365
             1: 47752
           -1,-10:
             0: 273
-            1: 28672
+            1: 29764
           12,-3:
             0: 58470
           13,-4:
@@ -1193,13 +1193,13 @@ entities:
             1: 9728
           0,9:
             1: 9826
-            0: 2176
           0,10:
             1: 59938
           1,9:
-            0: 32754
+            3: 32752
+            0: 2
           1,10:
-            0: 7
+            3: 7
             1: 63488
           2,10:
             1: 15906
@@ -1273,8 +1273,7 @@ entities:
           9,8:
             0: 35763
           10,4:
-            0: 62928
-            4: 2048
+            0: 64976
           10,5:
             0: 3057
           10,6:
@@ -1294,13 +1293,11 @@ entities:
           12,5:
             0: 57598
           12,6:
-            0: 64782
-            4: 512
+            0: 65294
           12,7:
             0: 65327
           11,8:
-            0: 47544
-            4: 512
+            0: 48056
           8,12:
             0: 1
             1: 61952
@@ -1311,15 +1308,13 @@ entities:
           9,11:
             0: 34952
           10,9:
-            0: 57865
-            4: 2
+            0: 57867
           10,10:
             0: 56768
           10,11:
             0: 65521
           11,9:
-            0: 56329
-            4: 2
+            0: 56331
           11,10:
             0: 7676
           11,11:
@@ -1381,7 +1376,7 @@ entities:
           18,-1:
             0: 65399
           18,-5:
-            0: 62692
+            0: 62702
           18,0:
             0: 4081
           19,-4:
@@ -1411,6 +1406,7 @@ entities:
             1: 63232
           18,-6:
             1: 1
+            0: 16384
           19,-7:
             1: 63488
           19,-6:
@@ -1420,17 +1416,17 @@ entities:
           20,-5:
             0: 61440
           13,1:
-            0: 8067
+            0: 3971
           13,2:
-            0: 65535
+            0: 32631
           13,3:
-            0: 61412
+            0: 61408
           14,1:
             0: 12089
-          14,3:
-            0: 65526
           14,2:
-            0: 26214
+            0: 30583
+          14,3:
+            0: 65527
           14,4:
             0: 65532
           15,1:
@@ -1486,9 +1482,9 @@ entities:
           20,4:
             1: 19
           21,0:
-            0: 20985
+            0: 46073
           21,1:
-            0: 12639
+            0: 12735
           21,2:
             0: 30499
           21,3:
@@ -1497,22 +1493,25 @@ entities:
           21,-1:
             0: 48127
           22,0:
-            0: 51
+            0: 4147
+          22,1:
+            0: 19
+            1: 8192
           22,3:
             1: 3874
           22,-1:
             0: 12919
             1: 32768
-          22,1:
-            1: 10240
           22,2:
             1: 8738
+          23,0:
+            0: 256
+            1: 17
           23,1:
-            1: 4369
+            0: 256
+            1: 4096
           23,3:
             1: 273
-          23,0:
-            1: 4369
           23,-1:
             1: 4352
           23,2:
@@ -1599,13 +1598,13 @@ entities:
             0: 61007
           17,5:
             0: 47790
-          17,7:
-            0: 61167
           17,6:
+            0: 45056
             1: 224
-            0: 57344
+          17,7:
+            0: 61098
           17,8:
-            0: 3834
+            0: 61166
           18,5:
             0: 30495
           18,6:
@@ -1615,8 +1614,8 @@ entities:
             0: 7441
             1: 49344
           18,8:
-            0: 3345
-            1: 49344
+            0: 3089
+            1: 57536
           19,5:
             1: 3955
             0: 61440
@@ -1636,7 +1635,7 @@ entities:
           16,12:
             0: 4
           17,9:
-            0: 61422
+            0: 65248
           17,10:
             0: 9998
           17,11:
@@ -1987,21 +1986,6 @@ entities:
           - 0
           - 0
         - volume: 2500
-          temperature: 293.14975
-          moles:
-          - 20.078888
-          - 75.53487
-          - 0
-          - 0
-          - 0
-          - 0
-          - 0
-          - 0
-          - 0
-          - 0
-          - 0
-          - 0
-        - volume: 2500
           temperature: 293.15
           moles:
           - 0
@@ -2036,21 +2020,6 @@ entities:
           moles:
           - 0
           - 6666.982
-          - 0
-          - 0
-          - 0
-          - 0
-          - 0
-          - 0
-          - 0
-          - 0
-          - 0
-          - 0
-        - volume: 2500
-          temperature: 293.1495
-          moles:
-          - 21.824879
-          - 82.10312
           - 0
           - 0
           - 0
@@ -2075,7 +2044,6 @@ entities:
             1115: -3,0
             1474: 24,23
             3394: 11.968304,28.74898
-            5892: 30,21
         - node:
             angle: -1.5707963267948966 rad
             color: '#FFFFFFFF'
@@ -2090,7 +2058,7 @@ entities:
           decals:
             753: 21,-16
             2729: -15,-2
-            5891: 33,23
+            6846: 33,23
         - node:
             angle: 1.5707963267948966 rad
             color: '#FFFFFFFF'
@@ -2109,6 +2077,7 @@ entities:
             4811: 26.969461,-36.186703
             4812: 24.969461,-32.249786
             4813: 26.969461,-32.249786
+            6847: 30,21
         - node:
             angle: 3.141592653589793 rad
             color: '#FFFFFFFF'
@@ -2228,13 +2197,6 @@ entities:
             2635: 28,-56
             2636: 28,-48
             2637: 14,-48
-        - node:
-            angle: 3.141592653589793 rad
-            color: '#FFFFFFFF'
-            id: Bot
-          decals:
-            5853: 30,23
-            5854: 33,21
         - node:
             color: '#FFFFFFFF'
             id: BotGreyscale
@@ -2624,7 +2586,6 @@ entities:
             color: '#DE3A3A96'
             id: BrickTileWhiteCornerNe
           decals:
-            5500: 30,28
             5550: 31,31
             5603: 37,34
             5719: 40,28
@@ -2632,6 +2593,7 @@ entities:
             6486: 34,25
             6498: 57,33
             6503: 54,33
+            6850: 30,28
         - node:
             color: '#334E6DC8'
             id: BrickTileWhiteCornerNw
@@ -2661,7 +2623,6 @@ entities:
             color: '#DE3A3A96'
             id: BrickTileWhiteCornerNw
           decals:
-            5501: 29,28
             5542: 29,25
             5548: 29,31
             5552: 32,31
@@ -2671,6 +2632,7 @@ entities:
             6479: 47,36
             6483: 37,28
             6500: 56,33
+            6857: 29,28
         - node:
             color: '#334E6DC8'
             id: BrickTileWhiteCornerSe
@@ -2703,15 +2665,15 @@ entities:
             color: '#DE3A3A96'
             id: BrickTileWhiteCornerSe
           decals:
-            5503: 30,27
             5573: 35,29
             5582: 54,30
             5601: 37,32
             5779: 45,33
-            6269: 34,23
             6487: 31,30
             6493: 40,24
             6497: 57,31
+            6841: 34,23
+            6852: 30,27
         - node:
             color: '#334E6DC8'
             id: BrickTileWhiteCornerSw
@@ -2746,13 +2708,13 @@ entities:
             color: '#DE3A3A96'
             id: BrickTileWhiteCornerSw
           decals:
-            5502: 29,27
             5547: 29,30
             5723: 36,24
             5761: 39,33
             5859: 29,23
             6396: 34,32
             6501: 56,31
+            6853: 29,27
         - node:
             color: '#9FED5847'
             id: BrickTileWhiteEndE
@@ -2889,9 +2851,6 @@ entities:
             5498: 27,17
             5499: 27,22
             5537: 34,24
-            5543: 27,23
-            5544: 27,25
-            5545: 27,24
             5593: 57,32
             5602: 37,33
             5726: 40,27
@@ -2906,6 +2865,8 @@ entities:
             6529: 27,26
             6530: 27,28
             6531: 27,29
+            6838: 27,25
+            6839: 27,23
         - node:
             color: '#334E6DC8'
             id: BrickTileWhiteLineN
@@ -2917,7 +2878,6 @@ entities:
             id: BrickTileWhiteLineN
           decals:
             3117: -3,1
-            5889: 43,29
         - node:
             color: '#9FED5847'
             id: BrickTileWhiteLineN
@@ -2982,21 +2942,21 @@ entities:
             5562: 46,31
             5606: 35,34
             5607: 36,34
-            5700: 31,21
             5704: 35,21
-            5705: 29,21
             5757: 40,36
             5861: 32,21
             5862: 34,21
-            6329: 49,33
             6378: 33,31
             6485: 32,25
             6489: 34,31
             6490: 36,31
             6495: 39,28
-            6502: 52,33
             6512: 41,31
             6522: 39,31
+            6842: 31,21
+            6843: 29,21
+            6859: 52,33
+            6860: 49,33
         - node:
             color: '#EFB34196'
             id: BrickTileWhiteLineN
@@ -3050,24 +3010,15 @@ entities:
             color: '#D381C996'
             id: BrickTileWhiteLineS
           decals:
-            6591: 46,13
-            6592: 43,13
-            6602: 45,13
-            6603: 44,13
             6606: 45,9
             6607: 46,9
             6608: 47,9
             6609: 48,9
             6637: 54,13
-            6638: 55,13
-            6639: 56,13
             6647: 59,13
             6648: 60,13
             6649: 61,13
             6651: 63,13
-            6659: 62,13
-            6661: 58,13
-            6662: 57,13
             6675: 57,17
             6676: 56,17
             6677: 54,17
@@ -3080,11 +3031,13 @@ entities:
             6828: 52,9
             6829: 53,9
             6830: 54,9
+            6872: 46,13
+            6873: 43,13
+            6874: 55,13
         - node:
             color: '#DE3A3A96'
             id: BrickTileWhiteLineS
           decals:
-            5535: 32,23
             5551: 30,30
             5563: 36,30
             5570: 46,30
@@ -3105,6 +3058,7 @@ entities:
             6523: 39,30
             6524: 40,30
             6525: 41,30
+            6840: 32,23
         - node:
             color: '#334E6DC8'
             id: BrickTileWhiteLineW
@@ -3367,6 +3321,7 @@ entities:
             6392: 44,35
             6393: 40,34
             6394: 40,35
+            6858: 29.49797,27.479872
         - node:
             color: '#FFFFFF93'
             id: CheckerNWSE
@@ -3478,9 +3433,6 @@ entities:
             color: '#FFFFFFFF'
             id: DeliveryGreyscale
           decals:
-            5732: 31,28
-            5734: 31,27
-            5973: 28,24
             6223: 48,18
             6224: 48,17
         - node:
@@ -4689,6 +4641,7 @@ entities:
             6418: 20,-44
             6419: 21,-44
             6420: 22,-44
+            6845: 33,21
         - node:
             angle: 1.5707963267948966 rad
             color: '#FFFFFFFF'
@@ -4699,6 +4652,12 @@ entities:
             1178: 15,-2
             3096: 82,30
             6572: 7,24
+        - node:
+            angle: 3.141592653589793 rad
+            color: '#FFFFFFFF'
+            id: LoadingArea
+          decals:
+            6844: 30,23
         - node:
             color: '#827F8896'
             id: MiniTileCheckerAOverlay
@@ -4977,7 +4936,6 @@ entities:
             4377: -19,0
             4378: -20,0
             4379: -21,0
-            5471: 30,27
         - node:
             color: '#EFB34196'
             id: QuarterTileOverlayGreyscale
@@ -5175,7 +5133,6 @@ entities:
             2476: 103,-17
             2477: 102,-18
             2478: 103,-20
-            5472: 29,28
         - node:
             color: '#EFB34196'
             id: QuarterTileOverlayGreyscale180
@@ -6006,47 +5963,24 @@ entities:
           decals:
             3116: 67,22
         - node:
-            color: '#FFF5FF93'
-            id: WarnCornerSmallGreyscaleNE
-          decals:
-            5708: 29,21
-        - node:
-            color: '#FFFFFFDC'
-            id: WarnCornerSmallGreyscaleNE
-          decals:
-            5641: 27,23
-        - node:
             color: '#FFFFFFFF'
             id: WarnCornerSmallGreyscaleNE
           decals:
             1890: 9,-7
             6117: 10,28
             6118: 7,28
-            6335: 49,33
             6389: 41,33
-        - node:
-            color: '#FFF5FF93'
-            id: WarnCornerSmallGreyscaleNW
-          decals:
-            5710: 31,21
         - node:
             color: '#FFFFFFFF'
             id: WarnCornerSmallGreyscaleNW
           decals:
             6119: 9,28
             6226: 60,25
-            6507: 52,33
         - node:
             color: '#334E6DC8'
             id: WarnCornerSmallGreyscaleSE
           decals:
             3115: 67,24
-        - node:
-            color: '#FFFFFFDC'
-            id: WarnCornerSmallGreyscaleSE
-          decals:
-            5638: 27,25
-            5649: 32,23
         - node:
             color: '#FFFFFFFF'
             id: WarnCornerSmallGreyscaleSE
@@ -6057,7 +5991,6 @@ entities:
             6115: 13,20
             6121: 7,21
             6388: 41,36
-            6743: 43,13
         - node:
             color: '#FFFFFFDC'
             id: WarnCornerSmallGreyscaleSW
@@ -6072,7 +6005,6 @@ entities:
             6116: 15,20
             6120: 9,21
             6387: 43,36
-            6742: 46,13
         - node:
             color: '#FFFFFFFF'
             id: WarnCornerSmallNE
@@ -6218,6 +6150,7 @@ entities:
           decals:
             6492: 40,25
             6509: 54,32
+            6855: 27,24
         - node:
             color: '#FA750096'
             id: WarnLineGreyscaleE
@@ -6228,9 +6161,6 @@ entities:
             id: WarnLineGreyscaleE
           decals:
             5623: 31,30
-            5624: 30,28
-            5625: 30,27
-            5636: 27,24
         - node:
             color: '#FFFFFFFF'
             id: WarnLineGreyscaleE
@@ -6265,6 +6195,7 @@ entities:
             3850: 58,0
             3851: 59,0
             3852: 60,0
+            6869: 43,29
         - node:
             color: '#DE3A3A96'
             id: WarnLineGreyscaleN
@@ -6275,12 +6206,6 @@ entities:
             6477: 48,36
             6508: 53,33
             6510: 40,31
-        - node:
-            color: '#FFFFFF69'
-            id: WarnLineGreyscaleN
-          decals:
-            5855: 30,21
-            5858: 30,21
         - node:
             color: '#FFFFFFFF'
             id: WarnLineGreyscaleN
@@ -6304,8 +6229,6 @@ entities:
             4896: 17,-31
             4897: 18,-31
             4903: 26,-28
-            6332: 51,33
-            6333: 50,33
         - node:
             color: '#52B4E996'
             id: WarnLineGreyscaleS
@@ -6316,28 +6239,28 @@ entities:
             3847: 59,-2
             3848: 60,-2
         - node:
+            color: '#D381C996'
+            id: WarnLineGreyscaleS
+          decals:
+            6870: 44,13
+            6871: 45,13
+            6875: 56,13
+            6876: 57,13
+            6877: 58,13
+            6878: 62,13
+        - node:
             color: '#DE3A3A96'
             id: WarnLineGreyscaleS
           decals:
             6473: 38,30
             6475: 43,30
             6476: 49,30
+            6854: 40,33
         - node:
             color: '#FA750096'
             id: WarnLineGreyscaleS
           decals:
             3768: 50,-9
-        - node:
-            color: '#FFFFFF69'
-            id: WarnLineGreyscaleS
-          decals:
-            5856: 33,23
-            5857: 33,23
-        - node:
-            color: '#FFFFFF93'
-            id: WarnLineGreyscaleS
-          decals:
-            5739: 40,33
         - node:
             color: '#FFFFFFDC'
             id: WarnLineGreyscaleS
@@ -6367,8 +6290,6 @@ entities:
             4904: 26,-26
             4957: 21,-29
             4985: 31,-29
-            6740: 44,13
-            6741: 45,13
         - node:
             color: '#52B4E996'
             id: WarnLineGreyscaleW
@@ -6393,12 +6314,6 @@ entities:
             id: WarnLineGreyscaleW
           decals:
             3766: 55,-7
-        - node:
-            color: '#FFFFFFDC'
-            id: WarnLineGreyscaleW
-          decals:
-            5631: 29,27
-            5632: 29,28
         - node:
             color: '#FFFFFFFF'
             id: WarnLineGreyscaleW
@@ -6488,6 +6403,12 @@ entities:
             6570: 6,26
             6574: 6,24
             6575: 6,23
+        - node:
+            color: '#DE3A3A96'
+            id: WarnLineW
+          decals:
+            6867: 50,33
+            6868: 51,33
         - node:
             color: '#FFFFFFFF'
             id: WarnLineW
@@ -42873,7 +42794,7 @@ entities:
       pos: 59.5,39.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -7157.7466
+      secondsUntilStateChange: -7927.499
       state: Closing
 - proto: d6Dice
   entities:
@@ -48450,7 +48371,7 @@ entities:
       pos: 26.5,37.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -54451.53
+      secondsUntilStateChange: -55221.285
       state: Closing
   - uid: 9362
     components:
@@ -73642,22 +73563,6 @@ entities:
     - type: Transform
       pos: 89.48129,32.60053
       parent: 2
-  - uid: 15787
-    components:
-    - type: MetaData
-      name: office paper (Old Notice)
-    - type: Transform
-      pos: 49.5,-15.5
-      parent: 2
-    - type: Paper
-      content: >-
-        Hey Jones,
-
-        I had to borrow your NSTRA suit to go salvaging, I'll make sure to get it back to you by next week.
-
-
-        - J. Mar Loot
-      editingDisabled: True
 - proto: ParticleAcceleratorControlBox
   entities:
   - uid: 251
@@ -84862,58 +84767,6 @@ entities:
     - type: Transform
       pos: 80.5,34.5
       parent: 2
-- proto: SuitStorageBase
-  entities:
-  - uid: 128
-    components:
-    - type: Transform
-      pos: 49.5,-15.5
-      parent: 2
-    - type: Lock
-      locked: False
-    - type: Fixtures
-      fixtures:
-        fix1:
-          shape: !type:PolygonShape
-            radius: 0.01
-            vertices:
-            - -0.25,-0.48
-            - 0.25,-0.48
-            - 0.25,0.48
-            - -0.25,0.48
-          mask:
-          - Impassable
-          - TableLayer
-          - LowImpassable
-          layer:
-          - BulletImpassable
-          - Opaque
-          density: 350
-          hard: True
-          restitution: 0
-          friction: 0.4
-    - type: PlaceableSurface
-      isPlaceable: True
-    - type: EntityStorage
-      air:
-        volume: 200
-        immutable: False
-        temperature: 293.1465
-        moles:
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-      open: True
-      removedMasks: 20
 - proto: SuitStorageCaptain
   entities:
   - uid: 869
@@ -85002,6 +84855,13 @@ entities:
     components:
     - type: Transform
       pos: 46.5,38.5
+      parent: 2
+- proto: SuitStorageNTSRA
+  entities:
+  - uid: 128
+    components:
+    - type: Transform
+      pos: 49.5,-15.5
       parent: 2
 - proto: SuitStorageRD
   entities:
