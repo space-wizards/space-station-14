@@ -2,7 +2,7 @@
   id: KitchenSpikeAssembly
   parent: BaseMachine
   name: meat spike assembly
-  description: Assembly of the spike for collecting meat from animals.
+  description: Assembly of a spike for collecting meat from animals.
   components:
   - type: Construction
     graph: MeatSpike
