@@ -159,12 +159,6 @@
     - BibleNarsie
 
 - type: loadout
-  id: BibleCarpsCrypts
-  storage:
-    back:
-    - BibleCarpsCrypts
-
-- type: loadout
   id: BibleHonk
   effects:
   - !type:GroupLoadoutEffect

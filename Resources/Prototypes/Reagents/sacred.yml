@@ -171,43 +171,6 @@
         time: 2.0
         type: Remove
 
-# Carps & Crypts Holy Water
-- type: reagent
-  id: ManaPotion
-  name: reagent-name-manapotion
-  group: Sacred
-  desc: reagent-desc-manapotion
-  evaporationSpeed: 0
-  physicalDesc: reagent-physical-desc-holy
-  flavor: magical
-  color: "#0f3df7"
-  reactiveEffects:
-    Acidic:
-      methods: [ Touch ]
-      effects:
-      - !type:HealthChange
-        scaleByQuantity: true
-        ignoreResistances: false
-        damage:
-          types:
-            Holy: 0.5
-  plantMetabolism:
-  - !type:PlantAdjustWater
-    amount: 1
-  metabolisms:
-    Drink:
-      effects:
-      - !type:SatiateThirst
-        factor: 2
-      - !type:ModifyStatusEffect
-        effectProto: StatusEffectDrowsiness
-        time: 2
-        type: Remove
-      - !type:AdjustReagent
-        reagent: Theobromine
-        amount: 0.1
-  fizziness: 0.4
-
 # Ratvar Holy Water
 - type: reagent
   id: TemporalLubricant

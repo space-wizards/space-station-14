@@ -227,18 +227,3 @@
     sprite: Objects/Specific/Chapel/ratvartablet.rsi
   - type: Item
     sprite: Objects/Specific/Chapel/ratvartablet.rsi
-
-- type: entity
-  id: BibleCarpsCrypts
-  name: carps & crypts manual
-  parent: BibleBase
-  description: "A holy relic to some, contains the sacred rules for the famous TTRPG... Carps & Crypts."
-  components:
-  - type: ReactionMixer
-    mixMessage: "bible-mixing-success"
-    reactionTypes:
-    - Nerd
-  - type: Sprite
-    sprite: Objects/Specific/Chapel/carpscrypts.rsi
-  - type: Item
-    sprite: Objects/Specific/Chapel/carpscrypts.rsi

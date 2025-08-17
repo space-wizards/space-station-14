@@ -67,13 +67,6 @@
     state: spoon
 
 - type: mixingCategory
-  id: Nerd
-  verbText: mixing-verb-holy
-  icon:
-    sprite: Objects/Specific/Chapel/carpscrypts.rsi
-    state: icon
-
-- type: mixingCategory
   id: Communist
   verbText: mixing-verb-holy
   icon:
