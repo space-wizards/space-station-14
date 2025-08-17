@@ -7,7 +7,7 @@ feedbackpopup-control-total-surveys = {$num ->
     [one] {$num} survey
    *[other] {$num} surveys
 }
-feedbackpopup-control-ui-footer = Let us what you think!
+feedbackpopup-control-ui-footer = Let us know what you think!
 
 # Command strings
 feedbackpopup-command-name = givefeedbackpopup
