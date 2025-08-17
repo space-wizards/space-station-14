@@ -1,14 +1,6 @@
 ﻿Entries:
 - author: chromiumboy
   changes:
-  - message: Gas vent under-pressure lockout releases are now performed using the
-      right-click menu - a screwdriver is no longer required
-    type: Tweak
-  id: 8347
-  time: '2025-04-25T07:21:00.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/36910
-- author: chromiumboy
-  changes:
   - message: Ghosts will now follow the AI when it activates a holopad or answers
       a holo-call
     type: Fix
@@ -3955,3 +3947,10 @@
   id: 8859
   time: '2025-08-17T19:25:31.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/37164
+- author: Velcroboy
+  changes:
+  - message: Changed hamster crates are now able to be placed on top of tables.
+    type: Tweak
+  id: 8860
+  time: '2025-08-17T19:30:41.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37953
