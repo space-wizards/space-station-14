@@ -5,7 +5,7 @@
         <BoxContainer Orientation="Vertical">
 
             <!-- main box area -->
-            <BoxContainer Margin="12" VerticalExpand="True">
+            <BoxContainer Margin="12 12 12 5" VerticalExpand="True">
                 <PanelContainer HorizontalExpand="True" VerticalExpand="True" StyleClasses="InsetBackground">
                     <ScrollContainer HScrollEnabled="False" HorizontalExpand="True" VerticalExpand="True">
                         <BoxContainer Name="NotificationContainer" Orientation="Vertical" Margin="10" SeparationOverride="10" />
@@ -20,7 +20,7 @@
                         <graphics:StyleBoxFlat BorderColor="#5A5A5A" BorderThickness="0 2 0 0" />
                     </PanelContainer.PanelOverride>
                 </PanelContainer>
-                <BoxContainer SetHeight="33">
+                <BoxContainer HorizontalExpand="True" SetHeight="33" Margin="10 0 10 5">
                     <Label Text="{Loc feedbackpopup-control-ui-footer}" Margin="6 0" StyleClasses="PdaContentFooterText"/>
                     <Label Name="NumNotifications" VerticalAlignment="Center" Margin="6 0" HorizontalExpand="True" HorizontalAlignment="Right"/>
                 </BoxContainer>
