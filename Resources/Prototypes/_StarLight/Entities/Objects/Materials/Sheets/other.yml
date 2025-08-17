@@ -37,3 +37,21 @@
   - type: Stack
     stackType: SheetPrinter
     count: 1
+
+- type: entity
+  parent: SheetUranium
+  id: SheetUranium30
+  suffix: 30
+  components:
+    - type: Stack
+      count: 30
+
+- type: entity
+  parent: SheetPlasma
+  id: SheetPlasma30
+  suffix: 30
+  components:
+    - type: Sprite
+      state: plasma
+    - type: Stack
+      count: 30
