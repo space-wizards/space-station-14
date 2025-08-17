@@ -48,7 +48,7 @@ public sealed partial class JumpAbilityComponent : Component
     /// The duration of the knockdown in case of a collision from CanCollide.
     /// </summary>
     [DataField, AutoNetworkedField]
-    public TimeSpan CollideKnockdown = TimeSpan.FromSeconds(2f);
+    public TimeSpan CollideKnockdown = TimeSpan.FromSeconds(2);
 
     /// <summary>
     /// This gets played whenever the jump action is used.

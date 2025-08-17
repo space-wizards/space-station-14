@@ -56,9 +56,6 @@ public sealed partial class SharedJumpAbilitySystem : EntitySystem
         if (!TryComp<JumpAbilityComponent>(entity.Owner, out var ability))
             return;
 
-        if (!ability.CanCollide)
-            return;
-
         _stun.TryKnockdown(entity.Owner, ability.CollideKnockdown, force: true);
         RemCompDeferred<ActiveLeaperComponent>(entity);
     }
