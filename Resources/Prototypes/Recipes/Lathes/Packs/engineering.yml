@@ -46,6 +46,8 @@
   - CellRechargerCircuitboard
   - WeaponCapacitorRechargerCircuitboard
   - FreezerElectronics
+  - FanTinyMachineCircuitboard
+  - FanDirectionalMachineCircuitboard
 
 - type: latheRecipePack
   id: EngineeringBoardsStatic

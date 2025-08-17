@@ -1,5 +1,6 @@
 # Devices which are not portable but don't link up to anything
 - type: entity
+  parent: [ConstructibleMachine, BaseMachine]
   id: AtmosDeviceFanTiny
   name: tiny fan
   description: A tiny fan, releasing a thin gust of air.
@@ -10,6 +11,13 @@
     anchored: true
   - type: Physics
     bodyType: Static
+  - type: InteractionOutline
+  - type: Machine
+    board: FanTinyMachineCircuitboard
+  - type: Anchorable
+    delay: 2
+  - type: LightningTarget
+    priority: 1
   - type: Sprite
     sprite: Structures/Piping/Atmospherics/tinyfan.rsi
     state: icon
@@ -25,8 +33,22 @@
   - type: Tag
     tags:
       - SpreaderIgnore
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 100
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalBreak
+      - !type:ChangeConstructionNodeBehavior
+        node: machineFrame
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
 
 - type: entity
+  parent: [ConstructibleMachine, BaseMachine]
   id: AtmosDeviceFanDirectional
   name: directional fan
   description: A thin fan, stopping the movement of gases across it.
@@ -37,6 +59,13 @@
     anchored: true
   - type: Physics
     bodyType: Static
+  - type: InteractionOutline
+  - type: Machine
+    board: FanDirectionalMachineCircuitboard
+  - type: Anchorable
+    delay: 2
+  - type: LightningTarget
+    priority: 1
   - type: Sprite
     sprite: Structures/Piping/Atmospherics/directionalfan.rsi
     state: icon
@@ -54,3 +83,16 @@
   - type: Tag
     tags:
       - SpreaderIgnore
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 100
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalBreak
+      - !type:ChangeConstructionNodeBehavior
+        node: machineFrame
+      - !type:DoActsBehavior
+        acts: ["Destruction"]

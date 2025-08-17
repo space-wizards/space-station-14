@@ -311,6 +311,8 @@
     - Airlock
     - AirlockGlass
     - Firelock
+    - AtmosDeviceFanTiny
+    - AtmosDeviceFanDirectional
     - TubeLight
     - BulbLight
     - LVCable

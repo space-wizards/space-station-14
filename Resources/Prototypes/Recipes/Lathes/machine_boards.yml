@@ -80,6 +80,16 @@
   id: SMESMachineCircuitboard
   result: SMESMachineCircuitboard
 
+- type: latheRecipe
+  parent: [ BaseCircuitboardRecipe, BaseMachineRecipeCategory ]
+  id: FanTinyMachineCircuitboard
+  result: FanTinyMachineCircuitboard
+
+- type: latheRecipe
+  parent: [ BaseCircuitboardRecipe, BaseMachineRecipeCategory ]
+  id: FanDirectionalMachineCircuitboard
+  result: FanDirectionalMachineCircuitboard
+
 # Security techfab
 - type: latheRecipe
   parent: [ BaseCircuitboardRecipe, BaseMachineRecipeCategory ]

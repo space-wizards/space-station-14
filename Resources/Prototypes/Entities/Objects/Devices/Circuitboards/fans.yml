@@ -1,0 +1,21 @@
+- type: entity
+  id: FanTinyMachineCircuitboard
+  parent: BaseMachineCircuitboard
+  name: tiny fan machine circuitboard
+  description: A machine printed circuit board for a tiny fan.
+  components:
+    - type: MachineBoard
+      prototype: AtmosDeviceFanTiny
+      stackRequirements:
+        Manipulator: 2
+
+- type: entity
+  id: FanDirectionalMachineCircuitboard
+  parent: BaseMachineCircuitboard
+  name: directional fan machine circuitboard
+  description: A machine printed circuit board for a directional fan.
+  components:
+    - type: MachineBoard
+      prototype: AtmosDeviceFanDirectional
+      stackRequirements:
+        Manipulator: 2
