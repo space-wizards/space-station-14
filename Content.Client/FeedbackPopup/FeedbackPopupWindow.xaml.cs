@@ -7,9 +7,9 @@ using Robust.Shared.Prototypes;
 namespace Content.Client.FeedbackPopup;
 
 [GenerateTypedNameReferences]
-public sealed partial class FeebackPopupWindow : FancyWindow
+public sealed partial class FeedbackPopupWindow : FancyWindow
 {
-    public FeebackPopupWindow()
+    public FeedbackPopupWindow()
     {
         RobustXamlLoader.Load(this);
     }
@@ -20,9 +20,7 @@ public sealed partial class FeebackPopupWindow : FancyWindow
 
         foreach (var proto in popupProtos)
         {
-            var entry = new FeedbackEntry();
-            entry.Update(proto);
-            NotificationContainer.AddChild(entry);
+            NotificationContainer.AddChild(new FeedbackEntry(proto));
         }
 
         NumNotifications.Text = Loc.GetString("feedbackpopup-control-total-surveys", ("num", popupProtos.Count));

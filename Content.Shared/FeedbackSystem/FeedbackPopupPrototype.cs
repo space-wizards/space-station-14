@@ -6,7 +6,7 @@ namespace Content.Shared.FeedbackSystem;
 /// Prototype that describes the contents of a feedback popup.
 /// </summary>
 [Prototype]
-public sealed partial class  FeedbackPopupPrototype : IPrototype
+public sealed partial class FeedbackPopupPrototype : IPrototype
 {
     /// <inheritdoc/>
     [IdDataField]
@@ -26,7 +26,7 @@ public sealed partial class  FeedbackPopupPrototype : IPrototype
 
     /// <summary>
     /// List of "paragraphs" that are placed in the middle of the popup. Put any relevant information about what to give
-    /// feedback on here!
+    /// feedback on here! [bold]Rich text is allowed[/bold]
     /// </summary>
     [DataField(required: true)]
     public string Description = "";

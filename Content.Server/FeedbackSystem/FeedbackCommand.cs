@@ -2,6 +2,7 @@ using Content.Server.Administration;
 using Content.Shared.Administration;
 using Content.Shared.FeedbackSystem;
 using Robust.Shared.Console;
+using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 
 namespace Content.Server.FeedbackSystem;
@@ -42,7 +43,7 @@ public sealed class FeedbackPopupCommand : LocalizedEntityCommands
             return;
         }
 
-        if (!_feedback.SendPopups(target, [args[1]]))
+        if (!_feedback.SendPopups(target.Value, [args[1]]))
         {
             shell.WriteError(Loc.GetString("feedbackpopup-command-error-popup-send-fail"));
             return;
@@ -53,15 +54,13 @@ public sealed class FeedbackPopupCommand : LocalizedEntityCommands
 
     public override CompletionResult GetCompletion(IConsoleShell shell, string[] args)
     {
-        if (args.Length == 1)
+        return args.Length switch
         {
-            return CompletionResult.FromHint(Loc.GetString("feedbackpopup-command-hint-playerUid"));
-        }
-
-        if (args.Length == 2)
-        {
-            return CompletionResult.FromHintOptions(_feedback.FeedbackPopupProtoIds, Loc.GetString("feedbackpopup-command-hint-protoId"));
-        }
-        return CompletionResult.Empty;
+            1 => CompletionResult.FromHintOptions(CompletionHelper.Components<ActorComponent>(args[0]),
+                Loc.GetString("feedbackpopup-command-hint-playerUid")),
+            2 => CompletionResult.FromHintOptions(_feedback.FeedbackPopupProtoIds,
+                Loc.GetString("feedbackpopup-command-hint-protoId")),
+            _ => CompletionResult.Empty
+        };
     }
 }

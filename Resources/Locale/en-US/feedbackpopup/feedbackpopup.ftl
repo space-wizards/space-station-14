@@ -3,7 +3,10 @@ feedbackpopup-window-name = Request for feedback
 feedbackpopup-control-button-text = Open Link
 feedbackpopup-control-ui-type = Survey
 
-feedbackpopup-control-total-surveys = {$num} surveys
+feedbackpopup-control-total-surveys = {$num ->
+    [one] {$num} survey
+   *[other] {$num} surveys
+}
 feedbackpopup-control-ui-footer = Let us what you think!
 
 # Command strings

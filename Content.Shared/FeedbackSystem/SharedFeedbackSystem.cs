@@ -35,16 +35,13 @@ public sealed partial class SharedFeedbackSystem : EntitySystem
     {
         FeedbackPopupProtoIds = _proto.EnumeratePrototypes<FeedbackPopupPrototype>()
             .Select(x => x.ID)
+            .Order()
             .ToList();
-        FeedbackPopupProtoIds.Sort();
     }
 
-    public bool SendPopups(EntityUid? uid, List<ProtoId<FeedbackPopupPrototype>> popupPrototypes)
+    public bool SendPopups(EntityUid uid, List<ProtoId<FeedbackPopupPrototype>> popupPrototypes)
     {
-        if (uid == null)
-            return false;
-
-        if (!_player.TryGetSessionByEntity(uid.Value, out var session))
+        if (!_player.TryGetSessionByEntity(uid, out var session))
             return false;
 
         return SendPopupsSession(session, popupPrototypes);

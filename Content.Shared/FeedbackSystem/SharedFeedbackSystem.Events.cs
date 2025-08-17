@@ -15,12 +15,12 @@ public sealed partial class SharedFeedbackSystem
 
     private List<string> _validOrigins = [];
 
-    public void EventInitialize()
+    private void EventInitialize()
     {
         base.Initialize();
         SubscribeLocalEvent<RoundEndMessageEvent>(OnRoundEnd);
 
-        _confg.OnValueChanged(CCVars.FeedbackValidOrigins, OnFeedbackOriginsUpdated, true);
+        Subs.CVar(_confg, CCVars.FeedbackValidOrigins, OnFeedbackOriginsUpdated, true);
     }
 
     private void OnRoundEnd(RoundEndMessageEvent ev)

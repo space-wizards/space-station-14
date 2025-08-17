@@ -13,16 +13,13 @@ public sealed partial class FeedbackEntry : Control
     [Dependency] private readonly IPrototypeManager _proto = default!;
     [Dependency] private readonly IUriOpener _uri = default!;
 
-    private FeedbackPopupPrototype? _feedbackpopup;
+    private readonly FeedbackPopupPrototype? _feedbackpopup;
 
-    public FeedbackEntry()
+    public FeedbackEntry(ProtoId<FeedbackPopupPrototype> popupProto)
     {
         RobustXamlLoader.Load(this);
         IoCManager.InjectDependencies(this);
-    }
 
-    public void Update(ProtoId<FeedbackPopupPrototype> popupProto)
-    {
         _feedbackpopup = _proto.Index(popupProto);
 
         // Title
@@ -38,7 +35,7 @@ public sealed partial class FeedbackEntry : Control
 
     private void OnButtonPressed(BaseButton.ButtonEventArgs args)
     {
-        if (_feedbackpopup?.ResponseLink != null)
+        if (!string.IsNullOrWhiteSpace(_feedbackpopup?.ResponseLink))
             _uri.OpenUri(_feedbackpopup.ResponseLink);
     }
 

@@ -7,7 +7,7 @@ namespace Content.Client.FeedbackPopup;
 /// </summary>
 public sealed class FeedbackPopupUIController : EntitySystem
 {
-    private FeebackPopupWindow? _window;
+    private FeedbackPopupWindow? _window;
 
     public override void Initialize()
     {
@@ -20,7 +20,7 @@ public sealed class FeedbackPopupUIController : EntitySystem
         // If a window is already open, close it
         _window?.Close();
 
-        _window = new FeebackPopupWindow();
+        _window = new FeedbackPopupWindow();
         _window.Update(msg.FeedbackPrototypes);
         _window.OpenCentered();
         _window.OnClose += () => _window = null;
