@@ -1,0 +1,17 @@
+﻿{
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "Created by mofkkol (Discord) for SS14",
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "states": [
+        {
+            "name": "pai_base"
+        },
+        {
+            "name": "pai_borgi"
+        }
+    ]
+}

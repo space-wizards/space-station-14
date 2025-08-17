@@ -37,6 +37,7 @@
     context: "human"
   - type: PAI
   - type: BlockMovement
+    blockInteraction: false
   - type: ToggleableGhostRole
     examineTextMindPresent: pai-system-pai-installed
     examineTextMindSearching: pai-system-still-searching
@@ -93,6 +94,7 @@
       components:
         - SecretStash
         - WrappedParcel
+  - type: Polymorphable
   - type: Vocal
     sounds:
       Unsexed: UnisexSilicon
@@ -236,3 +238,18 @@
   - type: InstantAction
     event: !type:OpenUiActionEvent
       key: enum.StationMapUiKey.Key
+
+- type: entity
+  id: ActionPAIPolymorphBorgi
+  name: Borgi Form
+  description: Become your owner's favorite dog and always follow him.
+  components:
+  - type: Action
+    useDelay: 300
+    itemIconStyle: NoItem
+    icon:
+      sprite: Interface/Actions/actions_pai.rsi
+      state: pai_borgi
+  - type: InstantAction
+    event: !type:PolymorphActionEvent
+      protoId: PaiBorgi

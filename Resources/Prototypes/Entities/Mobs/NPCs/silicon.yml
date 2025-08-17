@@ -461,3 +461,31 @@
     - Supply
   - type: Puller
     needsHands: false
+
+- type: entity
+  name: Borgi
+  parent: MobSiliconBase
+  id: Borgi
+  description: PAI is still walking now! Unbelievable!
+  components:
+  - type: Sprite
+    layers:
+    - map: ["enum.DamageStateVisualLayers.Base"]
+      state: borgi
+      sprite: Mobs/Silicon/PaiAnimals/borgi.rsi
+  - type: DamageStateVisuals
+    states:
+      Alive:
+        Base: borgi
+      Dead:
+        Base: borgi-dead
+  - type: MobThresholds
+    thresholds:
+      0: Alive
+      50: Dead
+  - type: InteractionPopup
+    interactSuccessString: petting-success-dog
+    interactFailureString: petting-failure-generic
+    interactSuccessSpawn: EffectHearts
+    interactSuccessSound:
+      path: /Audio/Ambience/Objects/periodic_beep.ogg
