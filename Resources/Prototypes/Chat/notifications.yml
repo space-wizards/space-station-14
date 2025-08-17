@@ -6,6 +6,13 @@
   nextDelay: 8
 
 - type: chatNotification
+  id: OverrideLaws
+  message: laws-override-warning
+  color: Red
+  sound: /Audio/Misc/notice2.ogg
+  nextDelay: 8
+
+- type: chatNotification
   id: TurretIsAttacking
   message: station-ai-turret-component-is-attacking-warning
   color: Orange
