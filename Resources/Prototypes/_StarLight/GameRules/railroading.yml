@@ -18,8 +18,9 @@
 #    - RRCardFoodMelonFruitBowl
 #    - RRCardFoodStew
 #    - RRCardMetabolizeNicotine
-    - RRCardMetabolizeTest
-
+#    - RRCardMetabolizeTest
+    - RRCardCriminal
+    
 - type: entity
   parent: BaseGameRule
   id: RailroadingMinor

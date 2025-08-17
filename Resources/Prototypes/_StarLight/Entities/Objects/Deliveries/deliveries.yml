@@ -76,3 +76,12 @@
     containers:
       delivery:
       - PlushieCarp
+
+- type: entity
+  parent: LetterDeliveryEvil
+  id: PackageDeliveryRewardSyndicateLetter
+  components:
+  - type: ContainerFill
+    containers:
+      delivery:
+      - RRMailSyndicateSpamLetter
