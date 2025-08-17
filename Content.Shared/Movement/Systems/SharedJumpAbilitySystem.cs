@@ -76,7 +76,7 @@ public sealed partial class SharedJumpAbilitySystem : EntitySystem
 
     private void OnGravityJump(Entity<JumpAbilityComponent> entity, ref GravityJumpEvent args)
     {
-        if (_gravity.IsWeightless(args.Performer) || _standing.IsDown(entity))
+        if (_gravity.IsWeightless(args.Performer) || _standing.IsDown(args.Performer))
             return;
 
         var xform = Transform(args.Performer);
