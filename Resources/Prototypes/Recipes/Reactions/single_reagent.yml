@@ -57,18 +57,6 @@
   products:
     Holywater: 1
 
-# Italian Resturaunt Holy Water
-- type: reaction
-  id: WatertoBlessedBolognese
-  impact: Low
-  requiredMixerCategories:
-  - Italian
-  reactants:
-    Water:
-      amount: 1
-  products:
-    BlessedBolognese: 1
-
 # MIrth of the Honkmother Holy Water
 - type: reaction
   id: WatertoPureJoy
@@ -104,18 +92,6 @@
       amount: 1
   products:
     NarsieBlood: 1
-
-# Carps & Crypts Holy Water
-- type: reaction
-  id: WatertoManaPotion
-  impact: Low
-  requiredMixerCategories:
-  - Nerd
-  reactants:
-    Water:
-      amount: 1
-  products:
-    ManaPotion: 1
 
 # Codex NanoTrasium Holy Water
 - type: reaction
