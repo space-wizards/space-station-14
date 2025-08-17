@@ -9,9 +9,5 @@ public interface IClientPlayerRolesManager
 
     PlayerData? GetPlayerData();
 
-    string? GetDiscordLink();
-
-    bool HasFlag(PlayerFlags flag);
-
     void Initialize();
 }

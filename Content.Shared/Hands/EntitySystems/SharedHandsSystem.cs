@@ -37,6 +37,7 @@ public abstract partial class SharedHandsSystem
         InitializePickup();
         InitializeRelay();
         InitializeEventListeners(); //Starlight
+        InitializeOffer(); // Starlight
 
         SubscribeLocalEvent<HandsComponent, ComponentInit>(OnInit);
         SubscribeLocalEvent<HandsComponent, MapInitEvent>(OnMapInit);

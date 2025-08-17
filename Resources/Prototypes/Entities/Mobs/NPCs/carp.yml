@@ -177,6 +177,18 @@
     - type: HTN
       rootTask:
         task: DragonCarpCompound
+   #Starlight
+    - type: Flammable
+      damage:
+        types: {}
+    - type: Damageable
+      damageModifierSet: DragonCarpResistances
+    - type: Prying
+      pryPowered: true
+      force: true
+      speedModifier: 1.5 # faster because carp are kinda strong
+      useSound:
+         path: /Audio/Items/crowbar.ogg 
 
 - type: entity
   id: MobCarpDungeon

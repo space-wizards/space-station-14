@@ -472,15 +472,31 @@
     Hew:
       collection: Hew
     Gasp:
-      collection: MaleGasp
+      collection: FemaleGasp
     DefaultDeathgasp:
       collection: DeathGasp
+    Sigh:
+      collection: FemaleSigh
+    Crying:
+      collection: ResomiCry
+    Cough:
+      collection: FemaleCoughs
+    Yawn:
+      collection: FemaleYawn
     Hisses:
       collection: FelionoidHisses
     Purr:
       collection: FelionoidPurrs
     Growl:
       collection: FelionoidGrowls
+    Trill:
+      collection: FelionoidTrills
+    Scree:
+      collection: ResomiScrees
+    Call:
+      collection: ResomiCalls
+    Squawk:
+      collection: ResomiSquawk
 
 - type: emoteSounds
   id: UnisexSiliconXenoborg

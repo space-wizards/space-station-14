@@ -39,6 +39,7 @@
     - ActionJumpToCore
     - ActionSurvCameraLights
     - ActionAIViewLaws
+    - ActionAIShunt # Starlight AI Shunt ability
   - type: UserInterface
     interfaces:
       enum.RadarConsoleUiKey.Key:
@@ -79,6 +80,9 @@
     - sprite: Mobs/Silicon/station_ai.rsi
       state: default
   - type: ShowJobIcons
+  #region Starlight
+  - type: StationAIShuntable
+  #endregion Starlight
 
 - type: entity
   id: AiHeldIntellicard
@@ -288,6 +292,7 @@
     - HideContextMenu
     - StationAi
     - NoConsoleSound
+    - CanPilot
   - type: StartingMindRole
     mindRole: "MindRoleSiliconBrain"
     silent: true
@@ -462,7 +467,7 @@
         - BorgModuleTool
         - BorgModuleChemical
         - BorgModuleTopicals
-        - BorgModuleRescue
+        - BorgModuleSyndicateWeapon
   - type: ItemSlots
     slots:
       cell_slot:

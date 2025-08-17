@@ -176,3 +176,35 @@
       - Prying
     useSound:
       path: /Audio/Items/crowbar.ogg
+
+- type: entity
+  parent: BasePlushieVocalizer
+  id: BaseFelionoidPlushie
+  abstract: true
+  components:
+  - type: EmitSoundOnUse
+    sound:
+      path: /Audio/_Starlight/Voice/Felionoid/cat_meow1.ogg
+  - type: EmitSoundOnLand
+    sound:
+      path: /Audio/_Starlight/Voice/Felionoid/cat_purr1.ogg
+  - type: EmitSoundOnActivate
+    sound:
+      path: /Audio/_Starlight/Voice/Felionoid/cat_meow2.ogg
+  - type: EmitSoundOnCollide
+    sound:
+      path: /Audio/_Starlight/Voice/Felionoid/cat_mew1.ogg
+  - type: EmitSoundOnTrigger
+    sound:
+      path: /Audio/_Starlight/Voice/Felionoid/cat_meow3.ogg
+  - type: EmitSoundOnThrow
+    sound:
+      path: /Audio/_Starlight/Voice/Felionoid/cat_scream1.ogg
+  - type: MeleeWeapon
+    wideAnimationRotation: 180
+    soundHit:
+      path: /Audio/_Starlight/Voice/Felionoid/cat_growl1.ogg
+  - type: Food
+    requiresSpecialDigestion: true
+    useSound:
+      path: /Audio/_Starlight/Voice/Felionoid/cat_scream2.ogg

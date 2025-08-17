@@ -1,14 +1,13 @@
 <Document>
-    #Power Generation
+# Power Generation
 
-    <GuideEntityEmbed Entity="PortableGeneratorSuperPacman" Caption="A portable generator"/>
-    
-    1. Non-atmospheric engineering personnel must set up the AME and/or attach the solar network before moving to other power sources. Failure to do so will be considered grounds for immediate dismissal.
+<GuideEntityEmbed Entity="PortableGeneratorSuperPacman" Caption="A portable generator"/>
 
-    2. The tesla ball, singularity, and supermatter crystal may not be started without explicit permission from the Chief Engineer.
+1. Non-atmospheric engineering personnel must set up the AME and/or attach the solar network before moving to other power sources. Failure to do so will be considered grounds for immediate dismissal.
 
-    3. The supermatter crystal's chamber must incorporate an emergency venting system to reduce the pressure in the chamber to 0 kpa in the event of a potential delamination.
+2. The tesla ball, singularity and supermatter crystal may not be started without explicit permission from the Chief Engineer.
 
-    4. Atmospheric personnel may start the TEG and/or supermatter crystal after both the distribution and waste air lines are completed.
+3. The supermatter crystal's chamber must incorporate an emergency venting system to reduce the pressure in the chamber to 0 kpa in the event of a potential delamination.
 
+4. Atmospheric personnel may start the TEG and/or supermatter crystal after both the distribution and waste air lines are completed.
 </Document> 

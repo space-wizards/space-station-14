@@ -1,0 +1,44 @@
+- type: ghostTheme
+  id: Morph
+  name: Morph
+  description: a morph.
+  spriteSpecifier:
+    sprite:
+      sprite: _Starlight/Mobs/Customization/GhostThemes/morph.rsi
+      state: morph
+    color: "#ffffff"
+  requiredCkey: Grapegifter
+
+- type: ghostTheme
+  id: Cateor
+  name: Cateor
+  description: a cute cateor.
+  spriteSpecifier:
+    sprite:
+      sprite: _Starlight/Mobs/Customization/GhostThemes/cateor.rsi
+      state: cateor
+    color: "#ffffff"
+  requiredCkey: darkrell
+
+- type: ghostTheme
+  id: Firewraith
+  name: Firewraith
+  description: a cute firewraith.
+  spriteSpecifier:
+    sprite:
+      sprite: _Starlight/Mobs/Customization/GhostThemes/ghosts.rsi
+      state: ghost-firewraith
+    color: "#ffffff"
+  requiredCkey: Killerdash
+
+    
+- type: ghostTheme
+  id: Robot
+  name: Robot
+  description: a funny robot.
+  spriteSpecifier:
+    sprite:
+      sprite: _Starlight/Mobs/Customization/GhostThemes/ghosts.rsi
+      state: ghost-rinary
+    color: "#ffffff"
+  requiredCkey: Rinary

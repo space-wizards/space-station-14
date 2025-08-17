@@ -11,6 +11,7 @@ public sealed partial class HubSystem : EntitySystem
     private string? _hostname;
     private string? _connectionString;
     private string? _description;
+    private bool? _isAdultOnly;
     private ServerType _serverType = ServerType.NRP;
 
     public void InitializeServer()
@@ -20,7 +21,14 @@ public sealed partial class HubSystem : EntitySystem
         _cfg.OnValueChanged(NullLinkCCVars.Description, OnGameDescChanged, true);
         _cfg.OnValueChanged(NullLinkCCVars.Type, OnServerTypeChanged, true);
         _cfg.OnValueChanged(NullLinkCCVars.Title, OnGameHostNameChanged, true);
+        _cfg.OnValueChanged(NullLinkCCVars.IsAdultOnly, OnIsAdultOnlyChanged, true);
         _cfg.OnValueChanged(CCVars.HubServerUrl, OnConnectionStringChanged, true);
+    }
+
+    private void OnIsAdultOnlyChanged(bool isAdultOnly)
+    {
+        _isAdultOnly = isAdultOnly;
+        TryUpdateServer();
     }
 
     private void OnServerTypeChanged(Shared.NullLink.CCVar.ServerType type)
@@ -50,7 +58,8 @@ public sealed partial class HubSystem : EntitySystem
     {
         if (string.IsNullOrEmpty(_hostname)
             || string.IsNullOrEmpty(_connectionString)
-            || !_actors.Enabled)
+            || !_actors.Enabled
+            || _isAdultOnly is null)
             return;
 
         Pipe.RunInBackgroundVT(async () =>
@@ -58,32 +67,31 @@ public sealed partial class HubSystem : EntitySystem
             const int MaxRetries = 3;
             const int BackoffMs = 5000;
 
-            await _actors.Connection;
-
             for (var attempt = 1; attempt <= MaxRetries; attempt++)
             {
                 try
                 {
-                    if(!_actors.TryGetServerGrain(out var serverGrain))
+                    if (!_actors.TryGetServerGrain(out var serverGrain))
                     {
                         await Task.Delay(BackoffMs);
                         continue;
                     }
 
-                    await serverGrain!.UpdateServer(new()
+                    await serverGrain.UpdateServer(new()
                     {
                         Title = _hostname,
                         ConnectionString = _connectionString,
                         Description = _description,
+                        IsAdultOnly = _isAdultOnly ?? false,
                         Type = _serverType
                     });
-                    return;                          
+                    return;
                 }
                 catch when (attempt < MaxRetries)
                 {
-                    await Task.Delay(BackoffMs);       
+                    await Task.Delay(BackoffMs);
                 }
             }
-        }, ex=> _sawmill.Log(LogLevel.Warning, ex, "NullLink – failed to update server in the cluster."));
+        }, ex => _sawmill.Log(LogLevel.Warning, ex, "NullLink – failed to update server in the cluster."));
     }
 }

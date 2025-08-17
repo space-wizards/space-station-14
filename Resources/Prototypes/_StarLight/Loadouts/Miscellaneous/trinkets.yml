@@ -4,9 +4,8 @@
   effects:
   - !type:JobRequirementLoadoutEffect
     requirement:
-      !type:RoleTimeRequirement
-      role: JobMusician
-      time: 72000 # 20 hours of being the biggest musician on the station
+      !type:OverallPlaytimeRequirement
+      time: 360000 #100 hours of activity in the Starlight sectors ##changed from musician because musician isn't mechanically fun to play, and the slot was always hogged for playtime for this item
   storage:
     back:
     - SuperSynthesizerInstrument
@@ -22,6 +21,31 @@
   storage:
     back:
     - ClothingUnderSocksCoder
+  groupBy: "cat maid"
+
+- type: loadout
+  id: ClothingShoesHighheelBoots
+  effects:
+    - !type:JobRequirementLoadoutEffect
+      requirement:
+        !type:OverallPlaytimeRequirement
+        time: 144000 # 40hr
+  storage:
+    back:
+    - ClothingShoesHighheelBoots
+  groupBy: "cat maid"
+
+- type: loadout
+  id: ClothingShoesHighheelShoes
+  effects:
+    - !type:JobRequirementLoadoutEffect
+      requirement:
+        !type:OverallPlaytimeRequirement
+        time: 144000 # 40hr
+  storage:
+    back:
+    - ClothingShoesHighheelShoes
+  groupBy: "cat maid"
 
 - type: loadout
   id: ClothWrap
@@ -39,6 +63,7 @@
   storage:
     back:
     - ClothingUniformJumpskirtElegantMaid
+  groupBy: "cat maid"
 
 - type: loadout
   id: ClothingHeadHatCatEars
@@ -50,12 +75,14 @@
   storage:
     back:
     - ClothingHeadHatCatEars
+  groupBy: "cat maid"
 
 - type: loadout
   id: RolliePack
   storage:
     back:
       - CigPackRollie
+  groupBy: "smokeables"
 
 - type: loadout
   id: GoldRing
@@ -84,6 +111,7 @@
   storage:
     back:
       - Matchbox
+  groupBy: "smokeables"
 
 - type: loadout
   id: FancyPen
@@ -108,6 +136,7 @@
   storage:
     back:
       - BikeHornImplanter
+  groupBy: "clowning shit"
 
 - type: loadout
   id: TromboneImplant
@@ -120,6 +149,7 @@
   storage:
     back:
       - SadTromboneImplanter
+  groupBy: "clowning shit"
 
 - type: loadout
   id: NewtonsCradle
@@ -131,17 +161,6 @@
         time: 36000 # 10 hours of papers please
   equipment:
     back: NewtonCradle
-
-- type: loadout
-  id: POrb
-  effects:
-    - !type:JobRequirementLoadoutEffect
-      requirement:
-        !type:OverallPlaytimeRequirement
-        time: 36000 # 10hr
-  storage:
-    back:
-      - PonderingOrb
 
 - type: loadout
   id: BBall
@@ -182,6 +201,7 @@
   storage:
     back:
       - FlippoLighter
+  groupBy: "smokeables"
 
 - type: loadout
   id: MedChecker
@@ -235,6 +255,7 @@
   storage:
     back:
       - BoxFolderRed
+  groupBy: "folders"
 
 - type: loadout
   id: PaperFolder2
@@ -246,6 +267,7 @@
   storage:
     back:
       - BoxFolderBlue
+  groupBy: "folders"
 
 - type: loadout
   id: PaperFolder3
@@ -257,6 +279,7 @@
   storage:
     back:
       - BoxFolderYellow
+  groupBy: "folders"
 
 - type: loadout
   id: PaperFolder4
@@ -268,6 +291,7 @@
   storage:
     back:
       - BoxFolderWhite
+  groupBy: "folders"
 
 - type: loadout
   id: PaperFolder5
@@ -279,6 +303,7 @@
   storage:
     back:
       - BoxFolderGrey
+  groupBy: "folders"
 
 - type: loadout
   id: PaperFolder6
@@ -290,6 +315,7 @@
   storage:
     back:
       - BoxFolderBlack
+  groupBy: "folders"
 
 - type: loadout
   id: PaperFolder7
@@ -301,6 +327,7 @@
   storage:
     back:
       - BoxFolderGreen
+  groupBy: "folders"
 
 - type: loadout
   id: PaperClipboard
@@ -312,3 +339,77 @@
   storage:
     back:
       - BoxFolderClipboard
+  groupBy: "folders"
+
+- type: loadout
+  id: HonoredClownMask
+  effects:
+  - !type:JobRequirementLoadoutEffect
+    requirement:
+      !type:RoleTimeRequirement
+      role: JobClown
+      time: 72000 # 20 hours of honk
+  storage:
+    back:
+    - ClothingMaskClown
+  groupBy: "clowning shit"
+
+- type: loadout
+  id: MedRollies
+  effects:
+  - !type:JobRequirementLoadoutEffect
+    requirement:
+      !type:OverallPlaytimeRequirement
+      time: 36000 # 10hr
+  storage:
+    back:
+    - CigPackMedRollie
+  groupBy: "smokeables"
+
+- type: loadout
+  id: RollerSkates
+  effects:
+  - !type:JobRequirementLoadoutEffect
+    requirement:
+      !type:RoleTimeRequirement
+      role: JobMailTech
+      time: 36000 # 10 hours of being ignored while carrying a parcelbomb
+  storage:
+    back:
+    - ClothingShoesSkates
+
+- type: loadout
+  id: DaBling
+  effects:
+  - !type:JobRequirementLoadoutEffect
+    requirement:
+      !type:RoleTimeRequirement
+      role: JobCargoTechnician
+      time: 36000 # 10 hours of resisting the urge to declare cargonia
+  storage:
+    back:
+    - ClothingNeckBling
+
+- type: loadout
+  id: CrapPlushie
+  effects:
+  - !type:JobRequirementLoadoutEffect
+    requirement:
+      !type:RoleTimeRequirement
+      role: JobSalvageSpecialist
+      time: 36000 # 10 hours of not turning in contra to sec
+  storage:
+    back:
+    - PlushieCarp
+
+- type: loadout
+  id: LighterGatcha
+  effects:
+  - !type:JobRequirementLoadoutEffect
+    requirement:
+      !type:OverallPlaytimeRequirement
+      time: 36000 # 10hr
+  storage:
+    back:
+    - MysteryLighterBox
+  groupBy: "smokeables"
