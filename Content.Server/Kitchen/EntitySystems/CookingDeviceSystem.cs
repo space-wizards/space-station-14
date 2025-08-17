@@ -672,7 +672,7 @@ namespace Content.Server.Kitchen.EntitySystems
 
             List<FoodRecipePrototype> recipes = getRecipesEv.Recipes;
             recipes.AddRange(_recipeManager.Recipes);
-            var portionedRecipes = recipes.Select(r => CanSatisfyRecipe(component, r, solidsDict, reagentDict)).Where(r => r.Item2 > 0).OrderByDescending(r => r.Item1.IngredientsSolids.Count + r.Item1.IngredientsReagents.Count).ThenByDescending(r => r.Item2).ToList(); // Starlight-edit
+            var portionedRecipes = recipes.Select(r => CanSatisfyRecipe(component, r, solidsDict, reagentDict)).Where(r => r.Item2 > 0).ToList(); // Starlight-edit
 
             _audio.PlayPvs(component.StartCookingSound, uid);
             
