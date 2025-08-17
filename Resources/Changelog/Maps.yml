@@ -494,4 +494,20 @@
   id: 61
   time: '2025-07-23T00:55:18.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/39150
+- author: SlamBamActionman
+  changes:
+  - message: Exo station has had a major Security department rework, along with the
+      eastern maintenance section of the station, as well as several other minor changes
+      across the station.
+    type: Tweak
+  id: 62
+  time: '2025-07-31T20:28:39.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/39295
+- author: F1restar4
+  changes:
+  - message: On Oasis, added an atmospherics network monitor to atmos' front desk
+    type: Add
+  id: 63
+  time: '2025-08-11T15:43:47.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/39331
 Order: 1
