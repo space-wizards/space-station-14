@@ -379,7 +379,7 @@ entities:
       rot: -1.5707963267948966 rad
       pos: -6.5,2.5
       parent: 181
-- proto: AirlockMiningGlassLocked
+- proto: AirlockRetroSalvageGlassLocked
   entities:
   - uid: 127
     components:
@@ -1296,6 +1296,14 @@ entities:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 1.5,4.5
+      parent: 181
+- proto: ClosetWall
+  entities:
+  - uid: 436
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: -1.5,-0.5
       parent: 181
 - proto: ClothingEyesGlassesMeson
   entities:
