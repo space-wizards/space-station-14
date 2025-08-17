@@ -8,16 +8,6 @@
       role: JobCaptain
       time: 7200 #2 hrs
 
-# Playtime requirement for Italian Bible, Italian Restaurant Menu
-- type: loadoutEffectGroup
-  id: ItalianBibleRequirement
-  effects:
-  - !type:JobRequirementLoadoutEffect
-    requirement:
-      !type:RoleTimeRequirement
-      role: JobChef
-      time: 18000 #5 hrs
-
 # Playtime requirement for Druid Bible, Druidic Tablet
 - type: loadoutEffectGroup
   id: DruidBibleRequirement
@@ -182,15 +172,6 @@
   storage:
     back:
     - BibleHonk
-
-- type: loadout
-  id: BibleItalian
-  effects:
-  - !type:GroupLoadoutEffect
-    proto: ItalianBibleRequirement
-  storage:
-    back:
-    - BibleItalian
 
 - type: loadout
   id: BibleRatvar

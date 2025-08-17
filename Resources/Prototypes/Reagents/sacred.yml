@@ -44,32 +44,6 @@
   tileReactions:
   - !type:ExtinguishTileReaction { }
 
-# Italian Restaurant Menu Holy Water
-- type: reagent
-  id: BlessedBolognese
-  name: reagent-name-blessedbolognese
-  group: Sacred
-  desc: reagent-desc-blessedbolognese
-  physicalDesc: reagent-physical-desc-holy
-  flavor: meaty
-  color: "#912711"
-  metabolisms:
-    Drink:
-      effects:
-      - !type:SatiateHunger
-        factor: 3
-      - !type:HealthChange
-        conditions:
-        - !type:TotalDamage
-          max: 50
-        damage:
-          types:
-            Blunt: -0.2
-            Poison: -0.2
-            Heat: -0.2
-            Shock: -0.2
-            Cold: -0.2
-
 # Book of Narsie Holy Water
 - type: reagent
   id: NarsieBlood

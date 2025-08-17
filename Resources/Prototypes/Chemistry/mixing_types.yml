@@ -67,13 +67,6 @@
     state: spoon
 
 - type: mixingCategory
-  id: Italian
-  verbText: mixing-verb-holy
-  icon:
-    sprite: Objects/Specific/Chapel/italianrestaurantmenu.rsi
-    state: icon
-
-- type: mixingCategory
   id: Nerd
   verbText: mixing-verb-holy
   icon:

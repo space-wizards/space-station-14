@@ -148,9 +148,6 @@ reagent-desc-potassium-iodide = Will reduce the damaging effects of radiation by
 reagent-name-haloperidol = haloperidol
 reagent-desc-haloperidol = Removes most stimulating and hallucinogenic drugs. Reduces druggy effects and jitteriness. Causes drowsiness.
 
-reagent-name-blessedbolognese = blessed bolognese
-reagent-desc-blessedbolognese = A purified slow-cooked meat sauce that is rich in flavour and seasoned generously with italian herbs and spices.
-
 reagent-name-temporallubricant = temporal lubricant
 reagent-desc-temporallubricant = With a metalic glint of gold, it evokes the divine and grace of the Clockwork Justice.
 

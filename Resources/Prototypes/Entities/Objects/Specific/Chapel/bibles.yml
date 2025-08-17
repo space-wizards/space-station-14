@@ -229,21 +229,6 @@
     sprite: Objects/Specific/Chapel/ratvartablet.rsi
 
 - type: entity
-  id: BibleItalian
-  name: italian restaurant menu
-  parent: BibleBase
-  description: "Stolen from the holy grounds of the nearest Olive Garden."
-  components:
-  - type: ReactionMixer
-    mixMessage: "bible-mixing-success"
-    reactionTypes:
-    - Italian
-  - type: Sprite
-    sprite: Objects/Specific/Chapel/italianrestaurantmenu.rsi
-  - type: Item
-    sprite: Objects/Specific/Chapel/italianrestaurantmenu.rsi
-
-- type: entity
   id: BibleCarpsCrypts
   name: carps & crypts manual
   parent: BibleBase
