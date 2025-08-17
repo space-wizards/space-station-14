@@ -1,5 +1,12 @@
 using Content.Shared.Silicons.Laws.Components;
+using Content.Shared.Chat.Prototypes;
+using Content.Shared.Containers.ItemSlots;
+using Content.Shared.DoAfter;
+using Content.Shared.Interaction;
 using Robust.Shared.Containers;
+using Robust.Shared.Prototypes;
+using Robust.Shared.Network;
+using Robust.Shared.Serialization;
 
 namespace Content.Shared.Silicons.Laws;
 
