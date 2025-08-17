@@ -37,13 +37,8 @@ public abstract partial class SharedSiliconLawSystem
         if (!TryComp(lawBoard, out SiliconLawOverriderComponent? LawProviderBase))
             return;
 
-        if (TryGetHeld((args.Target.Value, LawProviderTarget), out var held))
-            {
-                var ev = new ChatNotificationEvent(_downloadChatNotificationPrototype, args.Used, args.User);
-                RaiseLocalEvent(held, ref ev);
-            }
-
-        // TODO: PASS THE LAW PROVIDER TO THE DOAFTER EVENT
+        var ev = new ChatNotificationEvent(_overrideLawsChatNotificationPrototype, args.Used, args.User);
+        RaiseLocalEvent(held, ref ev);
 
         var doAfterTime = OverriderComp.OverrideTime;
 
