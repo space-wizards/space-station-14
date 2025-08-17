@@ -56,8 +56,8 @@
 #  - !type:BuyerAccessCondition
 
 - type: listing
-  id: VendorMiningClothingOuterHardsuitMAHS
-  productEntity: ClothingOuterHardsuitMAHS
+  id: VendorMiningClothingOuterHardsuitAdvancedMining
+  productEntity: ClothingOuterHardsuitAdvancedMining
   cost:
     SalvageTicket: 1400
   categories:
