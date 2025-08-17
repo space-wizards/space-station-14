@@ -3,10 +3,9 @@ using Content.Shared.Chat.Prototypes;
 using Content.Shared.Containers.ItemSlots;
 using Content.Shared.DoAfter;
 using Content.Shared.Interaction;
-using Robust.Shared.Audio;
 using Robust.Shared.Containers;
-using Robust.Shared.Prototypes;
 using Robust.Shared.Network;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.Silicons.Laws;
@@ -75,16 +74,6 @@ public abstract partial class SharedSiliconLawSystem
         var lawset = GetLawset(LawProviderBase.Laws).Laws;
 
         SetLaws(lawset, ent, LawProviderBase.LawUploadSound);
-    }
-
-    protected virtual SiliconLawset GetLawset(ProtoId<SiliconLawsetPrototype> lawset)
-    {
-
-    }
-
-    protected virtual void SetLaws(List<SiliconLaw> newLaws, EntityUid target, SoundSpecifier? cue = null)
-    {
-
     }
 }
 
