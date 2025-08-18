@@ -92,5 +92,5 @@ public abstract partial class SharedMoverController
             RemComp(entity.Comp.Source, relay);
     }
 
-    protected abstract void UpdateMoverStatus(Entity<InputMoverComponent?, MovementRelayTargetComponent?> ent);
+    protected virtual void UpdateMoverStatus(Entity<InputMoverComponent?, MovementRelayTargetComponent?> ent) { }
 }
