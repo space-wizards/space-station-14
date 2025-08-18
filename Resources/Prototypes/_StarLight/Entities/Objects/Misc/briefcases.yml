@@ -19,6 +19,17 @@
         type: DigitalLockBoundUserInterface
   - type: ActivatableUI
     key: enum.DigitalLockUiKey.Key
+  - type: GenericVisualizer
+    visuals: 
+      enum.DigitalLockVisuals.Spark:
+        spark:
+          False: { visible: false }
+          True: { visible: true }
+  - type: AmbientSound
+    enabled: false
+    range: 20
+    sound: 
+      collection: "sparks"
     
 
 - type: entity
@@ -45,9 +56,3 @@
     stateUnlocked: open
   - type: Item
     sprite: _Starlight/Objects/Storage/Briefcases/briefcase_secure.rsi
-  - type: GenericVisualizer
-    visuals: 
-      enum.DigitalLockVisuals.Spark:
-        spark:
-          False: { visible: false }
-          True: { visible: true }
