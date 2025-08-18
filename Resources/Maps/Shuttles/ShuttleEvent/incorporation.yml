@@ -4,8 +4,8 @@ meta:
   engineVersion: 266.0.0
   forkId: ""
   forkVersion: ""
-  time: 08/18/2025 00:15:41
-  entityCount: 876
+  time: 08/18/2025 02:39:30
+  entityCount: 878
 maps: []
 grids:
 - 1
@@ -2488,10 +2488,28 @@ entities:
   - uid: 766
     components:
     - type: Transform
-      pos: 7.5,-16.5
+      pos: -6.5,-16.5
       parent: 1
     - type: Lock
       locked: False
+    - type: EntityStorage
+      air:
+        volume: 200
+        immutable: False
+        temperature: 293.14673
+        moles:
+        - 1.7459903
+        - 6.568249
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
     - type: ContainerContainer
       containers:
         entity_storage: !type:Container
@@ -2506,10 +2524,28 @@ entities:
   - uid: 768
     components:
     - type: Transform
-      pos: -6.5,-16.5
+      pos: 7.5,-16.5
       parent: 1
     - type: Lock
       locked: False
+    - type: EntityStorage
+      air:
+        volume: 200
+        immutable: False
+        temperature: 293.14673
+        moles:
+        - 1.7459903
+        - 6.568249
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
     - type: ContainerContainer
       containers:
         entity_storage: !type:Container
@@ -4587,6 +4623,18 @@ entities:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: -1.5,2.5
+      parent: 1
+- proto: RandomArtifactSpawner
+  entities:
+  - uid: 785
+    components:
+    - type: Transform
+      pos: 6.5,-12.5
+      parent: 1
+  - uid: 788
+    components:
+    - type: Transform
+      pos: -5.5,-12.5
       parent: 1
 - proto: ReinforcedWindow
   entities:
