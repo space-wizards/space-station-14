@@ -11,9 +11,9 @@ namespace Content.Shared.Trigger.Components.Effects;
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
 public sealed partial class LockOnTriggerComponent : BaseXOnTriggerComponent
 {
-  /// <summary>
-  /// If the trigger will lock, unlock or toggle the lock.
-  /// </summary>
+    /// <summary>
+    /// If the trigger will lock, unlock or toggle the lock.
+    /// </summary>
     [DataField, AutoNetworkedField]
     public LockAction LockMode = LockAction.Toggle;
 }
