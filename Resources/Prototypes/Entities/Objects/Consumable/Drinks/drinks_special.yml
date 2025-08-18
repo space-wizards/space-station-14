@@ -41,6 +41,10 @@
     mixOnInteract: false
     reactionTypes:
     - Shake
+  - type: ExaminableSolution
+    solution: drink
+    heldOnly: true
+    examinableWhileClosed: false
 
 - type: entity
   parent: DrinkGlassBase
