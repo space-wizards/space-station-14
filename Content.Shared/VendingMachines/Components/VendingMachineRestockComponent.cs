@@ -1,8 +1,8 @@
 using Content.Shared.DoAfter;
 using Robust.Shared.Audio;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.Set;
 using Robust.Shared.GameStates;
 using Robust.Shared.Serialization;
+using Robust.Shared.Prototypes;
 
 namespace Content.Shared.VendingMachines;
 
@@ -12,23 +12,20 @@ public sealed partial class VendingMachineRestockComponent : Component
     /// <summary>
     /// The time (in seconds) that it takes to restock a machine.
     /// </summary>
-    [ViewVariables(VVAccess.ReadWrite)]
-    [DataField("restockDelay")]
+    [DataField]
     public TimeSpan RestockDelay = TimeSpan.FromSeconds(5.0f);
 
     /// <summary>
     /// What sort of machine inventory does this restock?
     /// This is checked against the VendingMachineComponent's pack value.
     /// </summary>
-    [ViewVariables(VVAccess.ReadWrite)]
-    [DataField("canRestock", customTypeSerializer: typeof(PrototypeIdHashSetSerializer<VendingMachineInventoryPrototype>))]
-    public HashSet<string> CanRestock = new();
+    [DataField]
+    public HashSet<ProtoId<VendingMachineInventoryPrototype>> CanRestock = [];
 
     /// <summary>
     ///     Sound that plays when starting to restock a machine.
     /// </summary>
-    [ViewVariables(VVAccess.ReadWrite)]
-    [DataField("soundRestockStart")]
+    [DataField]
     public SoundSpecifier SoundRestockStart = new SoundPathSpecifier("/Audio/Machines/vending_restock_start.ogg")
     {
         Params = new AudioParams
@@ -41,12 +38,9 @@ public sealed partial class VendingMachineRestockComponent : Component
     /// <summary>
     ///     Sound that plays when finished restocking a machine.
     /// </summary>
-    [ViewVariables(VVAccess.ReadWrite)]
-    [DataField("soundRestockDone")]
+    [DataField]
     public SoundSpecifier SoundRestockDone = new SoundPathSpecifier("/Audio/Machines/vending_restock_done.ogg");
 }
 
 [Serializable, NetSerializable]
-public sealed partial class RestockDoAfterEvent : SimpleDoAfterEvent
-{
-}
+public sealed partial class RestockDoAfterEvent : SimpleDoAfterEvent;
