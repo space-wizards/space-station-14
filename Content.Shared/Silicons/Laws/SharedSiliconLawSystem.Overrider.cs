@@ -17,11 +17,11 @@ public abstract partial class SharedSiliconLawSystem
     private readonly ProtoId<ChatNotificationPrototype> _overrideLawsChatNotificationPrototype = "OverrideLaws";
     private void InitializeOverrider()
     {
-        SubscribeLocalEvent<SiliconLawProviderComponent, AfterInteractEvent>(OnOverriderInteract);
+        SubscribeLocalEvent<SiliconLawOverriderComponent, AfterInteractEvent>(OnOverriderInteract);
         SubscribeLocalEvent<SiliconLawProviderComponent, OverriderDoAfterEvent>(OnOverriderDoAfter);
     }
 
-    private void OnOverriderInteract(Entity<SiliconLawProviderComponent> ent, ref AfterInteractEvent args)
+    private void OnOverriderInteract(Entity<SiliconLawOverriderComponent> ent, ref AfterInteractEvent args)
     {
         Log.Debug($"ent: {ent}, args.Target: {args.Target}, args.User: {args.User}, args,.Used: {args.Used}");
 
@@ -42,7 +42,7 @@ public abstract partial class SharedSiliconLawSystem
             return;
 
         var ev = new ChatNotificationEvent(_overrideLawsChatNotificationPrototype, args.Used, args.User);
-        RaiseLocalEvent(ent, ref ev);
+        RaiseLocalEvent(args.Target.Value, ref ev);
 
         var doAfterTime = OverriderComp.OverrideTime;
 
