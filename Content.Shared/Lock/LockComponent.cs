@@ -19,7 +19,7 @@ public sealed partial class LockComponent : Component
     /// </summary>
     [DataField("locked"), ViewVariables(VVAccess.ReadWrite)]
     [AutoNetworkedField]
-    public bool Locked  = true;
+    public bool Locked = true;
 
     /// <summary>
     /// If true, will show verbs to lock and unlock the item. Otherwise, it will not.
