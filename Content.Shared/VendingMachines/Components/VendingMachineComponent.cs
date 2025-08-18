@@ -7,6 +7,9 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 
 namespace Content.Shared.VendingMachines.Components;
 
+/// <summary>
+///
+/// </summary>
 [RegisterComponent, NetworkedComponent]
 [AutoGenerateComponentState(true), AutoGenerateComponentPause]
 public sealed partial class VendingMachineComponent : Component
@@ -14,9 +17,8 @@ public sealed partial class VendingMachineComponent : Component
     /// <summary>
     /// PrototypeID for the vending machine's inventory, see <see cref="VendingMachineInventoryPrototype"/>
     /// </summary>
-    // Okay so not using ProtoId here is load-bearing because the ProtoId serializer will log errors if the prototype doesn't exist.
     [DataField("pack", required: true)]
-    public ProtoId<VendingMachineInventoryPrototype> PackPrototypeId = string.Empty;
+    public ProtoId<VendingMachineInventoryPrototype> PackPrototypeId;
 
     /// <summary>
     /// Used by the server to determine how long the vending machine stays in the "Deny" state.
@@ -33,20 +35,23 @@ public sealed partial class VendingMachineComponent : Component
     [DataField]
     public TimeSpan EjectDelay = TimeSpan.FromSeconds(1.2);
 
+    /// <summary>
+    ///
+    /// </summary>
     [DataField, AutoNetworkedField]
     public Dictionary<string, VendingMachineInventoryEntry> Inventory = [];
 
+    /// <summary>
+    ///
+    /// </summary>
     [DataField, AutoNetworkedField]
     public Dictionary<string, VendingMachineInventoryEntry> EmaggedInventory = [];
 
-    [DataField, AutoNetworkedField]
-    public Dictionary<string, VendingMachineInventoryEntry> ContrabandInventory = [];
-
     /// <summary>
-    /// If true then unlocks the <see cref="ContrabandInventory"/>
+    ///
     /// </summary>
     [DataField, AutoNetworkedField]
-    public bool Contraband;
+    public Dictionary<string, VendingMachineInventoryEntry> ContrabandInventory = [];
 
     [ViewVariables]
     public bool Ejecting => EjectEnd != null;
@@ -54,55 +59,12 @@ public sealed partial class VendingMachineComponent : Component
     [ViewVariables]
     public bool Denying => DenyEnd != null;
 
-    [ViewVariables]
-    public bool DispenseOnHitCoolingDown => DispenseOnHitEnd != null;
-
-    [DataField]
-    [AutoPausedField, AutoNetworkedField]
-    public TimeSpan? EjectEnd;
-
-    [DataField]
-    [AutoPausedField, AutoNetworkedField]
-    public TimeSpan? DenyEnd;
-
-    [DataField]
-    [AutoPausedField, AutoNetworkedField]
-    public TimeSpan? DispenseOnHitEnd;
-
     public string? NextItemToEject;
 
-    public bool Broken;
-
     /// <summary>
-    /// When true, will forcefully throw any object it dispenses
+    ///
     /// </summary>
-    [DataField]
-    public bool CanShoot = false;
-
     public bool ThrowNextItem = false;
-
-    /// <summary>
-    ///     The chance that a vending machine will randomly dispense an item on hit.
-    ///     Chance is 0 if null.
-    /// </summary>
-    [DataField]
-    public float? DispenseOnHitChance;
-
-    /// <summary>
-    ///     The minimum amount of damage that must be done per hit to have a chance
-    ///     of dispensing an item.
-    /// </summary>
-    [DataField]
-    public float? DispenseOnHitThreshold;
-
-    /// <summary>
-    ///     Amount of time in seconds that need to pass before damage can cause a vending machine to eject again.
-    ///     This value is separate to <see cref="VendingMachineComponent.EjectDelay"/> because that value might be
-    ///     0 for a vending machine for legitimate reasons (no desired delay/no eject animation)
-    ///     and can be circumvented with forced ejections.
-    /// </summary>
-    [DataField]
-    public TimeSpan? DispenseOnHitCooldown = TimeSpan.FromSeconds(1.0);
 
     /// <summary>
     ///     Sound that plays when ejecting an item
@@ -125,8 +87,16 @@ public sealed partial class VendingMachineComponent : Component
     // Yoinked from: https://github.com/discordia-space/CEV-Eris/blob/35bbad6764b14e15c03a816e3e89aa1751660ba9/sound/machines/Custom_deny.ogg
     public SoundSpecifier SoundDeny = new SoundPathSpecifier("/Audio/Machines/custom_deny.ogg");
 
+    /// <summary>
+    ///
+    /// </summary>
+    [DataField]
     public float NonLimitedEjectForce = 7.5f;
 
+    /// <summary>
+    ///
+    /// </summary>
+    [DataField]
     public float NonLimitedEjectRange = 5f;
 
     /// <summary>
@@ -138,6 +108,20 @@ public sealed partial class VendingMachineComponent : Component
     public float InitialStockQuality = 1.0f;
 
     /// <summary>
+    ///
+    /// </summary>
+    [DataField(customTypeSerializer: typeof(TimeOffsetSerializer))]
+    [AutoPausedField, AutoNetworkedField]
+    public TimeSpan? EjectEnd;
+
+    /// <summary>
+    ///
+    /// </summary>
+    [DataField(customTypeSerializer: typeof(TimeOffsetSerializer))]
+    [AutoPausedField, AutoNetworkedField]
+    public TimeSpan? DenyEnd;
+
+    /// <summary>
     ///     While disabled by EMP it randomly ejects items
     /// </summary>
     [DataField(customTypeSerializer: typeof(TimeOffsetSerializer))]
@@ -145,30 +129,16 @@ public sealed partial class VendingMachineComponent : Component
 }
 
 [Serializable, NetSerializable, DataDefinition]
-public sealed partial class VendingMachineInventoryEntry
+public sealed partial class VendingMachineInventoryEntry(InventoryType type, string id, uint amount)
 {
     [DataField]
-    public InventoryType Type;
+    public InventoryType Type = type;
 
     [DataField]
-    public string ID;
+    public string ID = id;
 
     [DataField]
-    public uint Amount;
-
-    public VendingMachineInventoryEntry(InventoryType type, string id, uint amount)
-    {
-        Type = type;
-        ID = id;
-        Amount = amount;
-    }
-
-    public VendingMachineInventoryEntry(VendingMachineInventoryEntry entry)
-    {
-        Type = entry.Type;
-        ID = entry.ID;
-        Amount = entry.Amount;
-    }
+    public uint Amount = amount;
 }
 
 [Serializable, NetSerializable]
@@ -193,22 +163,6 @@ public enum VendingMachineVisualState : byte
     Broken,
     Eject,
     Deny,
-}
-
-public enum VendingMachineVisualLayers : byte
-{
-    /// <summary>
-    /// Off / Broken. The other layers will overlay this if the machine is on.
-    /// </summary>
-    Base,
-    /// <summary>
-    /// Normal / Deny / Eject
-    /// </summary>
-    BaseUnshaded,
-    /// <summary>
-    /// Screens that are persistent (where the machine is not off or broken)
-    /// </summary>
-    Screen
 }
 
 [Serializable, NetSerializable]
