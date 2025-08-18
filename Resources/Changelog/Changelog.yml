@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: OnyxTheBrave
-  changes:
-  - message: Cloth is now able to be made in the Sheet-Meister 2000
-    type: Add
-  id: 8354
-  time: '2025-04-26T03:22:52.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/32676
 - author: SyaoranFox
   changes:
   - message: Pulse Pistol, Pulse Carbine, and Pulse Rifle now share the same sound
@@ -3952,3 +3945,10 @@
   id: 8866
   time: '2025-08-18T18:58:30.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/39732
+- author: Princess-Cheeseballs
+  changes:
+  - message: Being a Lightweight drunk no longer extends your bloodloss
+    type: Fix
+  id: 8867
+  time: '2025-08-18T20:26:29.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38678
