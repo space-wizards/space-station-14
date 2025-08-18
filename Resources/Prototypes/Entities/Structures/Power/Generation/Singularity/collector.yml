@@ -64,7 +64,7 @@
         reactantBreakdownRate: 0.0001
       - reactantPrototype: Tritium
         powerGenerationEfficiency: 1.5
-        reactantBreakdownRate: 0.0001
+        reactantBreakdownRate: 0.00005
   - type: RadiationReceiver
   - type: PowerSupplier
   - type: Anchorable
