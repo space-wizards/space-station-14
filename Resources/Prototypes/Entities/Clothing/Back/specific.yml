@@ -126,17 +126,29 @@
   parent: ClothingBackpack
   id: BorgMaterialBag
   name: silicon storage square
-  description: A knockoff version of a bluespace bag, unfit for use by humanoids due to harmful emissions
+  description: A knockoff version of a bluespace bag, can vacumn up select materials, unfit for use by humanoids due to harmful emissions.
   components:
+  - type: Sprite
+    sprite: 
+    state: icon
+  - type: MagnetPickup
+  - type: Dumpable
   - type: Storage
     grid:
     - 0,0,7,4
+    quickInsert: true
+    areaInsert: true
     whitelist:
       tags:
         - Sheet
         - ConstructionMaterial
+        - RawMaterial
+        - Ingot
       components:
          - ConstructionMaterial
          - Circuitboard
          - Flatpack
          - FloorTile
+     blacklist:
+       components:
+       - SiliconLawProvider
