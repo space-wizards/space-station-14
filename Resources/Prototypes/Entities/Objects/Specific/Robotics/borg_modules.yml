@@ -612,17 +612,17 @@
           tags:
           - ConstructionMaterial
     - hand:
-        emptyRepresentative: DoorElectronics
-        emptyLabel: borg-slot-circuitboards-empty
-        whitelist:
-          components:
-          - Circuitboard
-    - hand:
         emptyRepresentative: MicroManipulatorStockPart
         emptyLabel: borg-slot-construction-empty
         whitelist:
           tags:
           - ConstructionMaterial
+    - hand:
+        emptyRepresentative: DoorElectronics
+        emptyLabel: borg-slot-circuitboards-empty
+        whitelist:
+          components:
+          - Circuitboard
     - hand:
         emptyRepresentative: SpaceHeaterFlatpack
         emptyLabel: borg-slot-flatpacks-empty
