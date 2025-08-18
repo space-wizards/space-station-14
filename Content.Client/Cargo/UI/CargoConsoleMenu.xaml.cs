@@ -227,8 +227,9 @@ namespace Content.Client.Cargo.UI
                     {
                         Text = Loc.GetString(
                             "cargo-console-menu-order-row-title",
-                            ("orderRequester", requester),
-                            ("orderPrice", order.Price))
+                            ("productName", productName),
+                            ("orderAmount", order.OrderQuantity),
+                            ("orderPrice", order.Price)),
                     },
 
                     Icon = { Texture = _spriteSystem.Frame0(product) },
@@ -237,9 +238,7 @@ namespace Content.Client.Cargo.UI
                     {
                         Text = Loc.GetString(
                             "cargo-console-menu-populate-orders-cargo-order-row-product-name-text",
-                            ("productName", productName),
-                            ("orderAmount", order.OrderQuantity),
-                            ("orderRequester", order.Requester),
+                            ("orderRequester", requester),
                             ("accountColor", account.Color),
                             ("account", Loc.GetString(account.Code)))
                     },
