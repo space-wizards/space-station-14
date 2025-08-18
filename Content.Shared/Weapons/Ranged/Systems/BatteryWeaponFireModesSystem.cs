@@ -13,7 +13,7 @@ using Content.Shared.Weapons.Ranged.Components;
 using Content.Shared.Weapons.Ranged.Events;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Network;
+using Robust.Shared.Network; // Starlight-edit
 
 namespace Content.Shared.Weapons.Ranged.Systems;
 
