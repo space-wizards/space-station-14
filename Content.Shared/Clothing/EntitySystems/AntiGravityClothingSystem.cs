@@ -26,11 +26,11 @@ public sealed class AntiGravityClothingSystem : EntitySystem
 
     private void OnEquipped(Entity<AntiGravityClothingComponent> entity, ref ClothingGotEquippedEvent args)
     {
-        _gravity.SetWeightless(args.Wearer, true);
+        _gravity.RefreshWeightless(args.Wearer);
     }
 
     private void OnUnequipped(Entity<AntiGravityClothingComponent> entity, ref ClothingGotUnequippedEvent args)
     {
-        _gravity.SetWeightless(args.Wearer, false);
+        _gravity.RefreshWeightless(args.Wearer);
     }
 }
