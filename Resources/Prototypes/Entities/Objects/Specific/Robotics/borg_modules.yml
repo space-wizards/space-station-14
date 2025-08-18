@@ -635,7 +635,7 @@
         whitelist:
           components:
           - FloorTile
-    - item: BorgMaterialSatchel
+    - item: BorgMaterialBag
   - type: BorgModuleIcon
     icon: { sprite: Interface/Actions/actions_borg.rsi, state: construction-module }
 
