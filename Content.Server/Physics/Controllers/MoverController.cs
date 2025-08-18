@@ -29,8 +29,7 @@ public sealed class MoverController : SharedMoverController
 
     // Not needed for persistence; just used to save an alloc
     private readonly HashSet<EntityUid> _seenMovers = [];
-    // Budget OrderedSet
-    private readonly Dictionary<EntityUid, InputMoverComponent> _moversToUpdate = [];
+    private readonly List<Entity<InputMoverComponent>> _moversToUpdate = [];
 
     public override void Initialize()
     {
@@ -149,40 +148,59 @@ public sealed class MoverController : SharedMoverController
     {
         base.UpdateBeforeSolve(prediction, frameTime);
 
+        // We use _seenMovers here as well as in UpdateMoverStatus—this means we
+        // cannot have any events get fired while we use it in this while loop.
+        _seenMovers.Clear();
         _moversToUpdate.Clear();
+
         // Don't use EntityQueryEnumerator because admin ghosts have to move on
         // paused maps. Pausing movers is handled via ActiveInputMoverComponent.
         var inputQueryEnumerator = AllEntityQuery<ActiveInputMoverComponent, InputMoverComponent>();
-
         while (inputQueryEnumerator.MoveNext(out var uid, out var activeComp, out var moverComp))
         {
+            QueueRelaySources(activeComp.RelayedFrom);
+
             // If it's already inserted, that's fine—that means it'll still be
             // handled before its child movers
-            _moversToUpdate.TryAdd(uid, moverComp);
-            // Run up the chain of RelayedFrom's to get a deterministic update
-            // order for relay movers
-            var next = activeComp.RelayedFrom;
-            // Rely on RelayedFrom always being set in a way that prevents loops.
-            while (next is not null)
-            {
-                // We only care if it's still a mover
-                if (!_activeQuery.TryComp(next, out var nextActive)
-                    || !MoverQuery.TryComp(next, out var nextMover))
-                    break;
-
-                _moversToUpdate.TryAdd(next.Value, nextMover);
-                next = nextActive.RelayedFrom;
-            }
+            AddMover(uid, moverComp);
         }
 
         ActiveMoverGauge.Set(_moversToUpdate.Count);
 
-        foreach (var (uid, moverComp) in _moversToUpdate)
+        foreach (var ent in _moversToUpdate)
         {
-            HandleMobMovement((uid, moverComp), frameTime);
+            HandleMobMovement(ent, frameTime);
         }
 
         HandleShuttleMovement(frameTime);
+        return;
+
+        // When we insert a chain of relay sources we have to flip its ordering
+        // It's going to be extremely uncommon for a relay chain to be more than
+        // one entity so we just recurse as needed.
+        void QueueRelaySources(EntityUid? next)
+        {
+            // We only care if it's still a mover
+            if (!_activeQuery.TryComp(next, out var nextActive)
+                || !MoverQuery.TryComp(next, out var nextMover))
+                return;
+
+            // Rely on RelayedFrom always being set in a way that prevents loops
+            QueueRelaySources(nextActive.RelayedFrom);
+            AddMover(next.Value, nextMover);
+        }
+
+        // Track inserts so we have ~ O(1) inserts without duplicates. Hopefully
+        // it doesn't matter that both _seenMovers and _moversToUpdate are never
+        // trimmed? They should be pretty memory light anyway, and in general
+        // it'll be rare for there to be a decrease in movers.
+        void AddMover(EntityUid uid, InputMoverComponent comp)
+        {
+            if (_seenMovers.Contains(uid))
+                return;
+            _moversToUpdate.Add((uid, comp));
+            _seenMovers.Add(uid);
+        }
     }
 
     public (Vector2 Strafe, float Rotation, float Brakes) GetPilotVelocityInput(PilotComponent component)
