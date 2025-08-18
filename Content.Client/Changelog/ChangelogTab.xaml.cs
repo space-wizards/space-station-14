@@ -149,14 +149,14 @@ public sealed partial class ChangelogTab : Control
                         {
                             ChangelogBody.AddChild(new BoxContainer
                             {
-                                Orientation = LayoutOrientation.Horizontal,
                                 Margin = new Thickness(14, 1, 10, 2),
                                 Children =
                                 {
                                     GetIcon(change.Type),
                                     new TextureRect
                                     {
-                                        Texture = _resourceCache.GetTexture(new ResPath($"/Textures/Interface/Changelog/test-tube.svg.192dpi.png")),
+                                        Texture = _resourceCache.GetTexture(
+                                            new ResPath("/Textures/Interface/Changelog/test-tube.svg.192dpi.png")),
                                         VerticalAlignment = VAlignment.Top,
                                         TextureScale = new Vector2(0.5f, 0.5f),
                                         Margin = new Thickness(0, 4, 6, 2),
@@ -170,7 +170,6 @@ public sealed partial class ChangelogTab : Control
                         {
                             ChangelogBody.AddChild(new BoxContainer
                             {
-                                Orientation = LayoutOrientation.Horizontal,
                                 Margin = new Thickness(14, 1, 10, 2),
                                 Children =
                                 {
