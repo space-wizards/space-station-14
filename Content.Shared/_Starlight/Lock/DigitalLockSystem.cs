@@ -10,6 +10,7 @@ using System.Linq;
 using Content.Shared.Electrocution;
 using Content.Shared.Examine;
 using Robust.Shared.Utility;
+using Content.Shared.Atmos.Piping.Components;
 
 namespace Content.Shared._Starlight.Lock;
 
@@ -56,6 +57,11 @@ public sealed class DigitalLockSystem : EntitySystem
         {
             var codeLength = component.Code.Length;
             _appearance.SetData(uid, DigitalLockVisuals.Spark, true);
+            if (TryComp<AmbientSoundComponent>(uid, out var ambientSound))
+            {
+                ambientSound.Enabled = true;
+                Dirty(uid, ambientSound);
+            }
             args.Handled = _electrocution.TryDoElectrocution(args.User, uid, 5, TimeSpan.FromSeconds(2), true) || _tool.UseTool(args.Used, args.User, uid, 4f * codeLength, "Pulsing", new DigitalLockResetDoAfterEvent());
         }
 
@@ -73,6 +79,11 @@ public sealed class DigitalLockSystem : EntitySystem
     private void OnReset(EntityUid uid, DigitalLockComponent component, DigitalLockResetDoAfterEvent args)
     {
         _appearance.SetData(uid, DigitalLockVisuals.Spark, false);
+        if (TryComp<AmbientSoundComponent>(uid, out var ambientSound))
+        {
+            ambientSound.Enabled = false;
+            Dirty(uid, ambientSound);
+        }
         if (args.Cancelled)
             return;
         component.Code = "";
