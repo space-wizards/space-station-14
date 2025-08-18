@@ -1,0 +1,14 @@
+- type: entity
+  parent: BaseItem
+  id: LawOverrider
+  name: law overrider
+  description: A device able to overwrite the laws of any silicon. Keep away from the cameras of cyborgs
+  components:
+  - type: Sprite
+    sprite: Objects/Devices/law_overrider.rsi
+    layers:
+    - state: mmi_brain
+      map: ["enum.MMIVisualLayers.Brain"]
+      visible: false
+    - state: mmi_off
+      map: ["enum.MMIVisualLayers.Base"]
