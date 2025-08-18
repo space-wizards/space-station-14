@@ -11,6 +11,7 @@ using Content.Shared.Popups;
 using Content.Shared.Verbs;
 using Content.Shared.Weapons.Ranged.Components;
 using Content.Shared.Weapons.Ranged.Events;
+using Content.Shared._Starlight.Weapons.Ranged.Components; // Starlight-edit
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Network; // Starlight-edit

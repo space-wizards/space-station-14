@@ -3,12 +3,13 @@ using Content.Server.Popups;
 using Content.Shared.Station.Components;
 using Content.Shared.Weapons.Ranged.Components;
 using Content.Shared.Weapons.Ranged.Systems;
+using Content.Shared._Starlight.Weapons.Ranged.Components;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.Set;
 using Robust.Shared.Serialization;
 using Robust.Shared.Player;
 
-namespace Content.Server.Weapons.Ranged.Conditions;
+namespace Content.Server._Starlight.Weapons.Ranged.Conditions;
 
 public sealed partial class AlertLevelCondition : FireModeCondition
 {

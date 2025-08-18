@@ -1,7 +1,8 @@
 using JetBrains.Annotations;
+using Content.Shared.Weapons.Ranged.Components;
 using Robust.Shared.Serialization;
 
-namespace Content.Shared.Weapons.Ranged.Components;
+namespace Content.Shared._Starlight.Weapons.Ranged.Components;
 
 /// <summary>
 /// Used to define a complicated condition that requires C#
