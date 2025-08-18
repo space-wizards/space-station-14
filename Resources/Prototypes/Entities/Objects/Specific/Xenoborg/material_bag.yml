@@ -1,6 +1,6 @@
 - type: entity
   parent: [ BorgMaterialBag, BaseXenoborgContraband ]
-  id: XeroBorgMaterialBag
+  id: XenoBorgMaterialBag
   name: xenoborg storage cube
   description: A knockoff version of a bluespace bag, can vacumn up select materials, unfit for use by humanoids due to harmful emissions.
   components:
