@@ -11,7 +11,6 @@ using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.XAML;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
-using System.Linq;
 
 namespace Content.Client.Holopad;
 
@@ -178,38 +177,43 @@ public sealed partial class HolopadWindow : FancyWindow
         HolopadIdText.SetMessage(FormattedMessage.FromMarkupOrThrow(holoapdId));
         LockOutIdText.SetMessage(FormattedMessage.FromMarkupOrThrow(callerId));
 
-        KeyValuePair<NetEntity, string>[] holopadArray = [];
+        var holopadList = new List<(NetEntity, string Name)>();
 
-        for (var i = 0; i < holopads.Count; i++)
+        foreach (var receiverNetEnt in holopads)
         {
-            var receiverNetEnt = holopads.ElementAt(i);
             var receiverUid = _entManager.GetEntity(receiverNetEnt);
 
             // Filter holopads
-            if (_owner == receiverUid || !_entManager.TryGetComponent<TelephoneComponent>(receiverUid, out var receiverTelephone) || receiverTelephone.UnlistedNumber ||
-                !_telephoneSystem.IsSourceInRangeOfReceiver((_owner.Value, telephone), (receiverUid, receiverTelephone)))
+            if (_owner == receiverUid)
                 continue;
 
-            var name = _entManager.GetComponent<MetaDataComponent>(receiverUid).EntityName;
+            if (!_entManager.TryGetComponent<TelephoneComponent>(receiverUid, out var receiverTelephone) || receiverTelephone.UnlistedNumber)
+                continue;
+
+            if (!_telephoneSystem.IsSourceInRangeOfReceiver((_owner.Value, telephone), (receiverUid, receiverTelephone)))
+                continue;
+
+            // Get holopad name
+            var name = string.Empty;
 
             if (_entManager.TryGetComponent<LabelComponent>(receiverUid, out var label) && !string.IsNullOrEmpty(label.CurrentLabel))
                 name = label.CurrentLabel;
+            else if (_entManager.TryGetComponent<MetaDataComponent>(receiverUid, out var metaData))
+                name = metaData.EntityName;
 
-            holopadArray[i] = new KeyValuePair<NetEntity, string>(receiverNetEnt, name);
+            holopadList.Add((receiverNetEnt, name));
         }
 
         // Sort holopads alphabetically
-        Array.Sort(holopadArray, AlphabeticalSort);
+        holopadList.Sort((a, b) => string.Compare(a.Name, b.Name, StringComparison.Ordinal));
 
         // Clear excess children from the contact list
-        while (ContactsList.ChildCount > holopadArray.Length)
+        while (ContactsList.ChildCount > holopadList.Count)
             ContactsList.RemoveChild(ContactsList.GetChild(ContactsList.ChildCount - 1));
 
         // Make / update required children
-        for (int i = 0; i < holopadArray.Length; i++)
+        for (var i = 0; i < holopadList.Count; i++)
         {
-            var (netEntity, label) = holopadArray[i];
-
             if (i >= ContactsList.ChildCount)
             {
                 var newContactButton = new HolopadContactButton();
@@ -222,6 +226,8 @@ public sealed partial class HolopadWindow : FancyWindow
 
             if (child is not HolopadContactButton)
                 continue;
+
+            var (netEntity, label) = holopadList[i];
 
             var contactButton = (HolopadContactButton)child;
             contactButton.UpdateValues(netEntity, label);
