@@ -28,22 +28,24 @@ public sealed partial class TriggerSystem
         if (!TryComp(entity, out TransformComponent? transformComponent))
             return Vector2.Zero;
 
-        // If they have a grid, return the grid's velocity.
+        // If they have a grid, return the grid's velocity plus the velocity of the entity, relative to it.
         // If the trycomp somehow fails, it means the grid is static and therefore we can accurately assume that the entity's
         // absolute velocity is it's velocity relative to the grid.
+        var entityLinearVelocity = entity.Comp.LinearVelocity;
         if (transformComponent.GridUid is { } gridUid &&
             _physicsQuery.TryComp(gridUid, out var gridPhysicsComponent))
         {
-            return gridPhysicsComponent.LinearVelocity;
+            return gridPhysicsComponent.LinearVelocity + entityLinearVelocity;
         }
         else
-            return entity.Comp.LinearVelocity;
+            return entityLinearVelocity;
     }
 
     /// <summary>
-    /// Helper method for setting an entity's <see cref="PhysicsComponent.SleepingAllowed"/>, to <paramref name="value"/>,
-    /// and also waking them if it's true.
+    /// Helper method for setting whether an entity is allowed to sleep. Will wake the entity if it's not allowed to sleep.
     /// </summary>
+    /// <remarks>
+    /// This is done because sleeping prox-triggers won't trigger for things that are on another grid, but still in range.
     private void UpdateProximityAwakeness(Entity<PhysicsComponent?> ent, bool value)
     {
         ref PhysicsComponent? physicsComponent = ref ent.Comp;
@@ -107,7 +109,8 @@ public sealed partial class TriggerSystem
         // Re-check for contacts as we cleared them.
         else if (_physicsQuery.TryGetComponent(ent, out var body))
         {
-            UpdateProximityAwakeness((ent.Owner, body), !ent.Comp.Enabled);
+            // It's enabled so don't let it sleep.
+            UpdateProximityAwakeness((ent.Owner, body), false);
             _physics.RegenerateContacts((ent.Owner, body));
         }
 
@@ -123,6 +126,7 @@ public sealed partial class TriggerSystem
         if (!_physicsQuery.TryGetComponent(ent, out var body))
             return;
 
+        // If its enabled dont let it sleep.
         UpdateProximityAwakeness((ent.Owner, body), !ent.Comp.Enabled);
         _fixture.TryCreateFixture(
             ent.Owner,
@@ -163,7 +167,7 @@ public sealed partial class TriggerSystem
         if (!ent.Comp.Repeating)
         {
             ent.Comp.Enabled = false;
-            UpdateProximityAwakeness(ent.Owner, false);
+            UpdateProximityAwakeness(ent.Owner, true);
 
             ent.Comp.Colliding.Clear();
         }
