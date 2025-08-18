@@ -1,7 +1,6 @@
 using System.Linq;
 using Content.Client.Resources;
 using Content.Client.Viewport;
-using Content.Shared.CCVar;
 using Content.Shared.DeviceNetwork;
 using Content.Shared.SurveillanceCamera;
 using Content.Shared.SurveillanceCamera.Components;
@@ -11,7 +10,6 @@ using Robust.Client.ResourceManagement;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.CustomControls;
 using Robust.Client.UserInterface.XAML;
-using Robust.Shared.Configuration;
 using Robust.Shared.Graphics;
 using Robust.Shared.Prototypes;
 
@@ -25,7 +23,6 @@ public sealed partial class SurveillanceCameraMonitorWindow : DefaultWindow
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly IResourceCache _resourceCache = default!;
     [Dependency] private readonly IEntityManager _entityManager = default!;
-    [Dependency] private readonly IConfigurationManager _cfg = default!;
 
     /// <summary>
     /// Triggered when a camera is selected.
@@ -45,7 +42,6 @@ public sealed partial class SurveillanceCameraMonitorWindow : DefaultWindow
     private readonly FixedEye _defaultEye = new();
     private readonly Dictionary<string, int> _subnetMap = new();
     private EntityUid? _mapUid;
-    private bool _colorblindMode;
 
     private string? SelectedSubnet
     {
@@ -88,24 +84,8 @@ public sealed partial class SurveillanceCameraMonitorWindow : DefaultWindow
         CameraRefreshButton.OnPressed += _ => CameraRefresh?.Invoke();
         CameraDisconnectButton.OnPressed += _ => CameraDisconnect?.Invoke();
 
-        _colorblindMode = _cfg.GetCVar(CCVars.AccessibilityColorblindFriendly);
-
         CameraMap.EnableCameraSelection = true;
         CameraMap.CameraSelected += OnCameraMapSelected;
-
-        if (_colorblindMode)
-        {
-            ActiveLegend.Texture = _resourceCache.GetTexture("/Textures/Interface/NavMap/beveled_triangle.png");
-            InactiveLegend.Texture = _resourceCache.GetTexture("/Textures/Interface/NavMap/beveled_square.png");
-            SelectedLegend.Texture = _resourceCache.GetTexture("/Textures/Interface/NavMap/beveled_circle.png");
-            InvalidLegend.Texture = _resourceCache.GetTexture("/Textures/Interface/NavMap/beveled_hexagon.png");
-        }
-        else
-        {
-            var defaultTexture = _resourceCache.GetTexture("/Textures/Interface/NavMap/beveled_triangle.png");
-            ActiveLegend.Texture = InactiveLegend.Texture = SelectedLegend.Texture = InvalidLegend.Texture = defaultTexture;
-        }
-
     }
 
 

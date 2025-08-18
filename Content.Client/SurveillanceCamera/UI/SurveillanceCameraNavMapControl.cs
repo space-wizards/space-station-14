@@ -1,10 +1,8 @@
 using Robust.Client.Graphics;
 using Robust.Client.ResourceManagement;
-using Robust.Shared.Configuration;
 using Robust.Shared.Map;
 using Content.Client.Pinpointer.UI;
 using Content.Client.Resources;
-using Content.Shared.CCVar;
 using Content.Shared.SurveillanceCamera.Components;
 
 namespace Content.Client.SurveillanceCamera.UI;
@@ -13,7 +11,6 @@ public sealed class SurveillanceCameraNavMapControl : NavMapControl
 {
     [Dependency] private readonly IEntityManager _entityManager = default!;
     [Dependency] private readonly IResourceCache _resourceCache = default!;
-    [Dependency] private readonly IConfigurationManager _cfg = default!;
 
     private static readonly Color CameraActiveColor = Color.FromHex("#FF00FF");
     private static readonly Color CameraInactiveColor = Color.FromHex("#a09f9fff");
@@ -28,7 +25,6 @@ public sealed class SurveillanceCameraNavMapControl : NavMapControl
     private string _activeCameraAddress = string.Empty;
     private HashSet<string> _availableSubnets = new();
     private (Dictionary<NetEntity, CameraMarker> Cameras, string ActiveAddress, HashSet<string> AvailableSubnets) _lastState;
-    private bool _colorblindMode;
 
     public bool EnableCameraSelection { get; set; }
 
@@ -37,20 +33,11 @@ public sealed class SurveillanceCameraNavMapControl : NavMapControl
 
     public SurveillanceCameraNavMapControl()
     {
-        _colorblindMode = _cfg.GetCVar(CCVars.AccessibilityColorblindFriendly);
 
-        if (_colorblindMode)
-        {
-            _activeTexture = _resourceCache.GetTexture("/Textures/Interface/NavMap/beveled_triangle.png");
-            _inactiveTexture = _resourceCache.GetTexture("/Textures/Interface/NavMap/beveled_square.png");
-            _selectedTexture = _resourceCache.GetTexture("/Textures/Interface/NavMap/beveled_circle.png");
-            _invalidTexture = _resourceCache.GetTexture("/Textures/Interface/NavMap/beveled_hexagon.png");
-        }
-        else
-        {
-            var defaultTexture = _resourceCache.GetTexture("/Textures/Interface/NavMap/beveled_triangle.png");
-            _activeTexture = _inactiveTexture = _selectedTexture = _invalidTexture = defaultTexture;
-        }
+        _activeTexture = _resourceCache.GetTexture("/Textures/Interface/NavMap/beveled_triangle.png");
+        _selectedTexture = _activeTexture;
+        _inactiveTexture = _resourceCache.GetTexture("/Textures/Interface/NavMap/beveled_circle.png");
+        _invalidTexture = _resourceCache.GetTexture("/Textures/Interface/NavMap/beveled_square.png");
 
         TrackedEntitySelectedAction += entity =>
         {
