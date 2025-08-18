@@ -38,7 +38,7 @@
       borg_module:
       - XenoborgModuleBasic
       - BorgModuleAdvancedTool
-      - BorgModuleConstruction
+      - XenoBorgModuleConstruction
       - BorgModuleRCD
       - BorgModuleCable
       - XenoborgModuleAccessBreaker
