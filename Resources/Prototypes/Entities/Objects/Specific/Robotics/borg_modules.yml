@@ -1090,6 +1090,18 @@
     - item: HydroponicsToolScythe
     - item: HydroponicsToolHatchet
     - item: PlantBag
+    - hand:
+        emptyRepresentative: WheatSeeds
+        emptyLabel: borg-slot-seed-empty
+        whitelist:
+          components:
+          - Seed
+    - hand:
+        emptyRepresentative: WheatBushel
+        emptyLabel: borg-slot-produce-empty
+        whitelist:
+          components:
+          - Produce
   - type: BorgModuleIcon
     icon: { sprite: Interface/Actions/actions_borg.rsi, state: harvesting-module }
 
