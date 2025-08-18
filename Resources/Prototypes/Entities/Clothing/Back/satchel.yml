@@ -197,8 +197,11 @@
   components:
   - type: Storage
     whitelist:
-       components:
-          - ConstructionMaterial
-          - Circuitboard
-          - Flatpack
-          - FloorTile
+      tags:
+        - Sheet
+        - ConstructionMaterial
+      components:
+         - ConstructionMaterial
+         - Circuitboard
+         - Flatpack
+         - FloorTile
