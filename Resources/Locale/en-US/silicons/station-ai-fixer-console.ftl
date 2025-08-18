@@ -1,3 +1,10 @@
+# System
+station-ai-fixer-console-intellicard-inserted = You insert the intellicard.
+station-ai-fixer-console-is-locked = The console is locked.
+station-ai-fixer-console-intellicard-required = Only an intellicard can be inserted into the console.
+station-ai-fixer-console-examination-intellicard-present = There is an [color=cyan]intellicard[/color] inserted into the console.
+station-ai-fixer-console-examination-intellicard-absent = There is an unoccupied slot for an [color=cyan]intellicard[/color].
+
 # UI
 station-ai-fixer-console-window = AI restoration system
 station-ai-fixer-console-window-no-station-ai = << No AI present >>

@@ -18,6 +18,7 @@ public sealed partial class StationAiFixerConsoleWindow : FancyWindow
     [Dependency] private readonly IPrototypeManager _protoManager = default!;
 
     private readonly SharedContainerSystem _container = default!;
+    private readonly StationAiFixerConsoleSystem _stationAiFixerConsole = default!;
 
     private EntityUid? _owner;
     private readonly string _mindContainer = "station_ai_mind_slot";
@@ -33,6 +34,7 @@ public sealed partial class StationAiFixerConsoleWindow : FancyWindow
         IoCManager.InjectDependencies(this);
 
         _container = _entManager.System<SharedContainerSystem>();
+        _stationAiFixerConsole = _entManager.System<StationAiFixerConsoleSystem>();
 
         Title = Loc.GetString("station-ai-fixer-console-window");
 
@@ -55,28 +57,15 @@ public sealed partial class StationAiFixerConsoleWindow : FancyWindow
         if (_owner == null)
             return;
 
-        if (!_entManager.TryGetComponent<ReviverDeviceComponent>(_owner, out var reviverDevice))
+        if (!_entManager.TryGetComponent<StationAiFixerConsoleComponent>(_owner, out var stationAiFixerConsole))
             return;
 
-        if (!_container.TryGetContainer(_owner.Value, reviverDevice.RestorationContainer, out var restorationContainer))
-            return;
-
-        EntityUid? intellicardEnt = restorationContainer.Count > 0 ? restorationContainer.ContainedEntities[0] : null;
-        EntityUid? stationAiEnt = null;
-
-        if (intellicardEnt != null &&
-            _container.TryGetContainer(intellicardEnt.Value, _mindContainer, out var mindContainer) &&
-            mindContainer.Count > 0)
-        {
-            stationAiEnt = mindContainer.ContainedEntities[0];
-        }
-
-        var intellicardPresent = intellicardEnt != null;
-        var stationAiPresent = stationAiEnt != null;
+        var intellicardPresent = _stationAiFixerConsole.IsIntellicardInserted((_owner.Value, stationAiFixerConsole));
+        var stationAiPresent = _stationAiFixerConsole.TryGetTarget((_owner.Value, stationAiFixerConsole), out var stationAi);
 
         // Update station AI labels
-        StationAiNameLabel.Text = GetStationAiName(stationAiEnt);
-        StationAiStatusLabel.Text = GetStationAiStatus(stationAiEnt);
+        StationAiNameLabel.Text = GetStationAiName(stationAi);
+        StationAiStatusLabel.Text = GetStationAiStatus(stationAi);
 
         // Update station AI portrait
         var spriteSpecifier = new SpriteSpecifier.Rsi(new ResPath(_stationAiRsi), _emptyPortrait);
@@ -91,8 +80,8 @@ public sealed partial class StationAiFixerConsoleWindow : FancyWindow
 
         // Update buttons
         EjectButton.Disabled = !intellicardPresent;
-        RepairButton.Disabled = !(intellicardPresent && stationAiPresent && (IsStationAiDamaged(intellicardEnt) || !IsStationAiAlive(intellicardEnt)));
-        PurgeButton.Disabled = !(intellicardPresent && stationAiPresent);
+        RepairButton.Disabled = !(stationAiPresent && (IsStationAiDamaged(stationAi) || !IsStationAiAlive(stationAi)));
+        PurgeButton.Disabled = !stationAiPresent;
     }
 
     private string GetStationAiName(EntityUid? uid)

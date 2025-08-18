@@ -1,6 +1,4 @@
-
 using Content.Shared.Silicons.StationAi;
-using Content.Shared.TurretController;
 
 namespace Content.Client.Silicons.StationAi;
 
@@ -13,20 +11,9 @@ public sealed class StationAiFixerConsoleBoundUserInterface : BoundUserInterface
 
     }
 
-    protected override void UpdateState(BoundUserInterfaceState state)
-    {
-        //base.UpdateState(state);
-
-        //if (state is not StationAiFixerConsoleBoundUserInterfaceState { } castState)
-        //    return;
-
-        //_window?.UpdateState(castState);
-    }
-
     public override void Update()
     {
         base.Update();
-
         _window?.UpdateState();
     }
 

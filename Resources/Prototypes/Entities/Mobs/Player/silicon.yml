@@ -293,7 +293,21 @@
       state: ai_female
   - type: NameIdentifier
     group: StationAi
-
+  - type: Damageable
+    damageContainer: Silicon
+  - type: MobState
+    allowedStates:
+    - Alive
+    - Dead
+  - type: MobThresholds
+    thresholds:
+      0: Alive
+      100: Dead
+    triggersAlerts: false
+    showOverlays: false
+    allowRevives: true
+  - type: Alerts
+  
 # Hologram projection that the AI's eye tracks.
 - type: entity
   parent:
