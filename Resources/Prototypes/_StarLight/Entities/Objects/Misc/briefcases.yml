@@ -36,8 +36,18 @@
       - state: closed
         shader: unshaded
         map: ["enum.LockVisualLayers.Lock"]
+      - state: spark
+        shader: unshaded
+        visible: false
+        map: ["spark"]
   - type: LockVisuals
     stateLocked: closed
     stateUnlocked: open
   - type: Item
     sprite: _Starlight/Objects/Storage/Briefcases/briefcase_secure.rsi
+  - type: GenericVisualizer
+    visuals: 
+      enum.DigitalLockVisuals.Spark:
+        spark:
+          False: { visible: false }
+          True: { visible: true }

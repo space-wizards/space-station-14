@@ -9,6 +9,7 @@ using Content.Shared.Tools.Components;
 using System.Linq;
 using Content.Shared.Electrocution;
 using Content.Shared.Examine;
+using Robust.Shared.Utility;
 
 namespace Content.Shared._Starlight.Lock;
 
@@ -19,6 +20,7 @@ public sealed class DigitalLockSystem : EntitySystem
     [Dependency] private readonly SharedUserInterfaceSystem _ui = default!;
     [Dependency] private readonly SharedToolSystem _tool = default!;
     [Dependency] private readonly SharedElectrocutionSystem _electrocution = default!;
+    [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
 
     public override void Initialize()
     {
@@ -50,10 +52,11 @@ public sealed class DigitalLockSystem : EntitySystem
 
         if (_tool.HasQuality(args.Used, "Screwing"))
             args.Handled = _tool.UseTool(args.Used, args.User, uid, 2f, "Screwing", new DigitalLockMaintenanceOpenDoAfterEvent());
-        else if (_tool.HasQuality(args.Used, "Pulsing") && component.MaintenanceOpen)
+        else if (_tool.HasQuality(args.Used, "Pulsing") && component.MaintenanceOpen && component.Code != "")
         {
             var codeLength = component.Code.Length;
-            args.Handled = _electrocution.TryDoElectrocution(args.User, uid, 5, TimeSpan.FromSeconds(2), true) || _tool.UseTool(args.Used, args.User, uid, 2f * codeLength, "Pulsing", new DigitalLockMaintenanceOpenDoAfterEvent());
+            _appearance.SetData(uid, DigitalLockVisuals.Spark, true);
+            args.Handled = _electrocution.TryDoElectrocution(args.User, uid, 5, TimeSpan.FromSeconds(2), true) || _tool.UseTool(args.Used, args.User, uid, 4f * codeLength, "Pulsing", new DigitalLockResetDoAfterEvent());
         }
 
         args.Handled = false;
@@ -69,18 +72,21 @@ public sealed class DigitalLockSystem : EntitySystem
 
     private void OnReset(EntityUid uid, DigitalLockComponent component, DigitalLockResetDoAfterEvent args)
     {
+        _appearance.SetData(uid, DigitalLockVisuals.Spark, false);
         if (args.Cancelled)
             return;
         component.Code = "";
+        UpdateUserInterface(uid, component);
+        _audio.PlayPvs(component.AccessGrantedSound, uid);
     }
 
     private void OnExamine(EntityUid uid, DigitalLockComponent component, ExaminedEvent args)
     {
         var message = new FormattedMessage();
         if (component.MaintenanceOpen)
-            message.AddText(Loc.GetString("digital-lock-examine-maintenance-open"));
+            message.AddMarkup(Loc.GetString("digital-lock-examine-maintenance-open"));
         else
-            message.AddText(Loc.GetString("digital-lock-examine-maintenance-closed"));
+            message.AddMarkup(Loc.GetString("digital-lock-examine-maintenance-closed"));
         args.PushMessage(message);
     }
 

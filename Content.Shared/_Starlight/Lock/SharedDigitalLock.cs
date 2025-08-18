@@ -12,3 +12,10 @@ public sealed partial class DigitalLockMaintenanceOpenDoAfterEvent : SimpleDoAft
 public sealed partial class DigitalLockResetDoAfterEvent : SimpleDoAfterEvent
 {
 }
+
+[NetSerializable]
+[Serializable]
+public enum DigitalLockVisuals : byte
+{
+    Spark
+}
