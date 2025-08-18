@@ -135,6 +135,7 @@
     attributes:
       proper: true
       gender: female
+  - type: SpeakOnException
 
 - type: entity
   name: Puppy Ian
@@ -166,7 +167,6 @@
   - type: HTN
     rootTask:
       task: SimpleHostileCompound
-  - type: SpeakOnException
   - type: Grammar
     attributes:
       proper: true
