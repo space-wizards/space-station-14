@@ -38,7 +38,7 @@ public sealed class HolopadBoundUserInterface : BoundUserInterface
             uiKey = HolopadUiKey.InteractionWindowForAi;
 
         _window.SetState(Owner, uiKey);
-        _window.UpdateState(new Dictionary<NetEntity, string>());
+        _window.UpdateState([]);
 
         // Set message actions
         _window.SendHolopadStartNewCallMessageAction += SendHolopadStartNewCallMessage;
