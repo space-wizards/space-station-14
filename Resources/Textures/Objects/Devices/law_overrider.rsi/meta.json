@@ -1,0 +1,36 @@
+{
+    "license": "CC-BY-SA-3.0",
+    "copyright": "Created by Samuka-C (github)",
+
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+
+    "states": [
+        {
+            "name": "active",
+            "delay": [
+                [
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1
+                ]
+            ]
+        },
+        {
+            "name": "icon"
+        },
+        {
+            "name": "law_board"
+        }
+    ]
+}
