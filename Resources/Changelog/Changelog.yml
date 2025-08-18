@@ -1,20 +1,4 @@
 ﻿Entries:
-- author: Wolfkey-SomeoneElseTookMyUsername
-  changes:
-  - message: Added cotton buns, which can be be used for the creation of custom burgers
-      that can be eaten by moths.
-    type: Add
-  id: 8352
-  time: '2025-04-26T01:54:14.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/36405
-- author: Booblesnoot42
-  changes:
-  - message: Due to a lack of functionality, light-switches have temporarily been
-      removed from the construction menu.
-    type: Remove
-  id: 8353
-  time: '2025-04-26T01:54:23.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/34664
 - author: OnyxTheBrave
   changes:
   - message: Cloth is now able to be made in the Sheet-Meister 2000
@@ -3953,3 +3937,18 @@
   id: 8864
   time: '2025-08-18T18:22:02.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/35087
+- author: Zokkie
+  changes:
+  - message: Lone Operative is now assigned the Solo Antagonist role ingame instead
+      of the Team Antagonist role.
+    type: Fix
+  id: 8865
+  time: '2025-08-18T18:57:30.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/36521
+- author: beck-thompson, slarticodefast
+  changes:
+  - message: Fixed rebinding keys crashing the client.
+    type: Fix
+  id: 8866
+  time: '2025-08-18T18:58:30.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/39732
