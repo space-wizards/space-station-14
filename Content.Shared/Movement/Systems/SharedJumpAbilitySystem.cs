@@ -3,6 +3,8 @@ using Content.Shared.Actions.Components;
 using Content.Shared.Cloning.Events;
 using Content.Shared.Gravity;
 using Content.Shared.Movement.Components;
+using Content.Shared.Popups;
+using Content.Shared.Standing;
 using Content.Shared.Stunnable;
 using Content.Shared.Throwing;
 using Robust.Shared.Audio.Systems;
@@ -17,6 +19,8 @@ public sealed partial class SharedJumpAbilitySystem : EntitySystem
     [Dependency] private readonly SharedGravitySystem _gravity = default!;
     [Dependency] private readonly SharedActionsSystem _actions = default!;
     [Dependency] private readonly SharedStunSystem _stun = default!;
+    [Dependency] private readonly StandingStateSystem _standing = default!;
+    [Dependency] private readonly SharedPopupSystem _popup = default!;
 
     public override void Initialize()
     {
@@ -29,6 +33,7 @@ public sealed partial class SharedJumpAbilitySystem : EntitySystem
 
         SubscribeLocalEvent<ActiveLeaperComponent, StartCollideEvent>(OnLeaperCollide);
         SubscribeLocalEvent<ActiveLeaperComponent, LandEvent>(OnLeaperLand);
+        SubscribeLocalEvent<ActiveLeaperComponent, StopThrowEvent>(OnLeaperStopThrow);
 
         SubscribeLocalEvent<JumpAbilityComponent, CloningEvent>(OnClone);
     }
@@ -48,16 +53,7 @@ public sealed partial class SharedJumpAbilitySystem : EntitySystem
 
     private void OnLeaperCollide(Entity<ActiveLeaperComponent> entity, ref StartCollideEvent args)
     {
-        if (!HasComp<ActiveLeaperComponent>(entity.Owner))
-            return;
-
-        if (!TryComp<JumpAbilityComponent>(entity.Owner, out var ability))
-            return;
-
-        if (!ability.CanCollide)
-            return;
-
-        _stun.TryKnockdown(entity.Owner, ability.CollideKnockdown, true, force: true);
+        _stun.TryKnockdown(entity.Owner, entity.Comp.KnockdownDuration, force: true);
         RemCompDeferred<ActiveLeaperComponent>(entity);
     }
 
@@ -66,13 +62,19 @@ public sealed partial class SharedJumpAbilitySystem : EntitySystem
         RemCompDeferred<ActiveLeaperComponent>(entity);
     }
 
+    private void OnLeaperStopThrow(Entity<ActiveLeaperComponent> entity, ref StopThrowEvent args)
+    {
+        RemCompDeferred<ActiveLeaperComponent>(entity);
+    }
+
     private void OnGravityJump(Entity<JumpAbilityComponent> entity, ref GravityJumpEvent args)
     {
-        if (_gravity.IsWeightless(args.Performer))
+        if (_gravity.IsWeightless(args.Performer) || _standing.IsDown(args.Performer))
+        {
+            if (entity.Comp.JumpFailedPopup != null)
+                _popup.PopupClient(Loc.GetString(entity.Comp.JumpFailedPopup.Value), args.Performer, args.Performer);
             return;
-
-        if (HasComp<KnockedDownComponent>(args.Performer))
-            return;
+        }
 
         var xform = Transform(args.Performer);
         var throwing = xform.LocalRotation.ToWorldVec() * entity.Comp.JumpDistance;
@@ -83,7 +85,11 @@ public sealed partial class SharedJumpAbilitySystem : EntitySystem
         _audio.PlayPredicted(entity.Comp.JumpSound, args.Performer, args.Performer);
 
         if (entity.Comp.CanCollide)
-            EnsureComp<ActiveLeaperComponent>(entity);
+        {
+            EnsureComp<ActiveLeaperComponent>(entity, out var leaperComp);
+            leaperComp.KnockdownDuration = entity.Comp.CollideKnockdown;
+            Dirty(entity.Owner, leaperComp);
+        }
 
         args.Handled = true;
     }
