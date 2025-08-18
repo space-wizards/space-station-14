@@ -71,7 +71,7 @@ public sealed class MoverController : SharedMoverController
     protected override void OnTargetRelayShutdown(Entity<MovementRelayTargetComponent> ent, ref ComponentShutdown args)
     {
         base.OnTargetRelayShutdown(ent, ref args);
-        UpdateMoverStatus(ent.Owner);
+        UpdateMoverStatus((ent, null, ent.Comp));
     }
 
     protected override void UpdateMoverStatus(Entity<InputMoverComponent?, MovementRelayTargetComponent?> ent)
