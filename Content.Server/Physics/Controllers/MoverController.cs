@@ -61,10 +61,10 @@ public sealed class MoverController : SharedMoverController
         UpdateMoverStatus((ent, ent.Comp));
     }
 
-    protected override void OnMoverStartup(EntityUid uid, InputMoverComponent component, ComponentStartup args)
+    protected override void OnMoverStartup(Entity<InputMoverComponent> ent, ref ComponentStartup args)
     {
-        base.OnMoverStartup(uid, component, args);
-        UpdateMoverStatus((uid, component));
+        base.OnMoverStartup(ent, ref args);
+        UpdateMoverStatus((ent, ent.Comp));
     }
 
     protected override void OnTargetRelayShutdown(Entity<MovementRelayTargetComponent> ent, ref ComponentShutdown args)

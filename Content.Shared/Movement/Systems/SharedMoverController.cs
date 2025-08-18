@@ -111,9 +111,9 @@ public abstract partial class SharedMoverController : VirtualController
         Subs.CVar(_configManager, CCVars.OffgridFriction, value => _offGridDamping = value, true);
     }
 
-    protected virtual void OnMoverStartup(EntityUid uid, InputMoverComponent component, ComponentStartup args)
+    protected virtual void OnMoverStartup(Entity<InputMoverComponent> ent, ref ComponentStartup args)
     {
-       _blocker.UpdateCanMove(uid, component);
+       _blocker.UpdateCanMove(ent, ent.Comp);
     }
 
     public override void Shutdown()
