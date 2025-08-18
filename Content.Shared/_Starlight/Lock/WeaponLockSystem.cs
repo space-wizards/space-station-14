@@ -3,7 +3,7 @@ using Content.Shared.Lock;
 using Content.Shared.Hands;
 using Content.Shared.Weapons.Ranged.Systems;
 
-namespace Content.Server.Starlight.Lock;
+namespace Content.Shared.Starlight.Lock;
 
 public partial class WeaponLockSystem : EntitySystem
 {
@@ -28,11 +28,13 @@ public partial class WeaponLockSystem : EntitySystem
     
     private void OnUnequipHand(EntityUid uid, LockComponent component, GotUnequippedHandEvent args)
     {
-        _lock.Lock(uid, null, component);
+        if (component.AutoUnlock)
+            _lock.Lock(uid, null, component);
     }
     
     private void OnEquipHand(EntityUid uid, LockComponent component, GotEquippedHandEvent args)
     {
-        _lock.TryUnlock(uid, args.User, component);
+        if (component.AutoLock)
+            _lock.TryUnlock(uid, args.User, component);
     }
 }

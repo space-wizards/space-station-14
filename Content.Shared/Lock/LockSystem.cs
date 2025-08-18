@@ -85,7 +85,7 @@ public sealed class LockSystem : EntitySystem
 
     private void OnStorageOpenAttempt(EntityUid uid, LockComponent component, ref StorageOpenAttemptEvent args)
     {
-        if (!component.Locked)
+        if (component.Locked) // Starlight-edit: Fix stupid bug
             return;
 
         if (!args.Silent && component.PopupMessage) // Starlight-edit
@@ -303,7 +303,7 @@ public sealed class LockSystem : EntitySystem
 
     private void AddToggleLockVerb(EntityUid uid, LockComponent component, GetVerbsEvent<AlternativeVerb> args)
     {
-        if (!args.CanAccess || !args.CanInteract || !args.CanComplexInteract)
+        if (!args.CanAccess || !args.CanInteract || !args.CanComplexInteract || !component.LockVerbs) // Starlight-edit
             return;
 
         AlternativeVerb verb = new()
