@@ -212,7 +212,7 @@
 
 - type: entity
   id: ChemistryBottleBarozine
-  suffix: Barozine
+  suffix: barozine
   parent: BaseChemistryBottleFilled
   components:
   - type: Label
