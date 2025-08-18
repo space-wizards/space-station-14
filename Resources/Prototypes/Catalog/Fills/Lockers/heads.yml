@@ -279,6 +279,7 @@
     - id: ClothingHeadsetAltScience
     - id: DoorRemoteResearch
     - id: HandTeleporter
+    - id: LawOVerrider
     - id: ProtolatheMachineCircuitboard
     - id: ResearchComputerCircuitboard
     - id: CargoRequestScienceComputerCircuitboard
