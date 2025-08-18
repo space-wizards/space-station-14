@@ -500,8 +500,21 @@
     - state: icon-inflatable
   - type: ItemBorgModule
     hands:
-    - item: InflatableDoorStackLingering4
-    - item: InflatableWallStackLingering10
+    - item: InflatableDoorStack
+      hand:
+        emptyRepresentative: InflatableDoorStack
+        emptyLabel: borg-slot-inflatable-door-empty
+        whitelist:
+          tags:
+          - Inflatable
+    - item: InflatableWallStack
+      hand:
+        emptyRepresentative: InflatableWallStack
+        emptyLabel: borg-slot-inflatable-wall-empty
+        whitelist:
+          tags:
+          - Inflatable
+    - item: BoxInflatable
     - item: WeaponMeleeNeedle
   - type: BorgModuleIcon
     icon: { sprite: Interface/Actions/actions_borg.rsi, state: inflatable-module }
