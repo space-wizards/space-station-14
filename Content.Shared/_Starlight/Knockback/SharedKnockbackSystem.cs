@@ -26,7 +26,6 @@ public abstract partial class SharedKnockbackSystem : EntitySystem
     public override void Initialize()
     {
         SubscribeLocalEvent<KnockbackByUserTagComponent, TakeAmmoEvent>(OnGunShot);
-        SubscribeLocalEvent<KnockbackByUserTagComponent, OnNonEmptyGunShotEvent>(OnGunShot);
         SubscribeLocalEvent<KnockbackByUserTagComponent, ExaminedEvent>(OnExamined);
     }
 
