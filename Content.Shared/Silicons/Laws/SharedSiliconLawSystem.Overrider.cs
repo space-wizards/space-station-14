@@ -31,10 +31,12 @@ public abstract partial class SharedSiliconLawSystem
         if (!TryComp(args.Target, out SiliconLawProviderComponent? LawProviderTarget))
             return;
 
-        if (!TryComp(args.Used, out SiliconLawOverriderComponent? OverriderComp))
+        var lawOverrider = args.Used;
+
+        if (!TryComp(lawOverrider, out SiliconLawOverriderComponent? OverriderComp))
             return;
 
-        var lawBoard = _slot.GetItemOrNull(ent, OverriderComp.LawBoardId);
+        var lawBoard = _slot.GetItemOrNull(lawOverrider, OverriderComp.LawBoardId);
 
         if (!TryComp(lawBoard, out SiliconLawOverriderComponent? LawProviderBase))
             return;
