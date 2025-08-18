@@ -129,8 +129,8 @@
   description: A knockoff version of a bluespace bag, can vacumn up select materials, unfit for use by humanoids due to harmful emissions.
   components:
   - type: Sprite
-    sprite: 
-    state: icon
+    sprite: Objects/Specific/Robotics/silicon_storage_cube.rsi
+    state: engi
   - type: MagnetPickup
   - type: Dumpable
   - type: Storage
