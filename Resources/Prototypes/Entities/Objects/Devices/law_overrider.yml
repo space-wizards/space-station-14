@@ -7,8 +7,18 @@
   - type: Sprite
     sprite: Objects/Devices/law_overrider.rsi
     layers:
-    - state: mmi_brain
-      map: ["enum.MMIVisualLayers.Brain"]
-      visible: false
-    - state: mmi_off
-      map: ["enum.MMIVisualLayers.Base"]
+    - state: icon
+      map: ["enum.LawOverriderVisualLayers.Base"]
+    - state: law_board
+      map: ["enum.LawOverriderVisualLayers.LawBoard"]
+    - state: active
+      map: ["enum.LawOverriderVisualLayers.Light"]
+  - type: ItemSlots
+    slots:
+      law_board:
+        name: law-overrider-slot-component-slot-name-law-board
+        whitelist:
+          components:
+          - SiliconLawProvider
+  - type: siliconLawOverrider
+    overrideTime: 10
