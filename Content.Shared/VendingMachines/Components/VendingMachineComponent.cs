@@ -11,7 +11,7 @@ namespace Content.Shared.VendingMachines.Components;
 ///
 /// </summary>
 [RegisterComponent, NetworkedComponent]
-[AutoGenerateComponentState(true), AutoGenerateComponentPause]
+[AutoGenerateComponentState(true)]
 public sealed partial class VendingMachineComponent : Component
 {
     /// <summary>
@@ -50,21 +50,7 @@ public sealed partial class VendingMachineComponent : Component
     /// <summary>
     ///
     /// </summary>
-    [DataField, AutoNetworkedField]
-    public Dictionary<string, VendingMachineInventoryEntry> ContrabandInventory = [];
-
-    [ViewVariables]
-    public bool Ejecting => EjectEnd != null;
-
-    [ViewVariables]
-    public bool Denying => DenyEnd != null;
-
     public string? NextItemToEject;
-
-    /// <summary>
-    ///
-    /// </summary>
-    public bool ThrowNextItem = false;
 
     /// <summary>
     ///     Sound that plays when ejecting an item
@@ -106,20 +92,6 @@ public sealed partial class VendingMachineComponent : Component
     /// </summary>
     [DataField]
     public float InitialStockQuality = 1.0f;
-
-    /// <summary>
-    ///
-    /// </summary>
-    [DataField(customTypeSerializer: typeof(TimeOffsetSerializer))]
-    [AutoPausedField, AutoNetworkedField]
-    public TimeSpan? EjectEnd;
-
-    /// <summary>
-    ///
-    /// </summary>
-    [DataField(customTypeSerializer: typeof(TimeOffsetSerializer))]
-    [AutoPausedField, AutoNetworkedField]
-    public TimeSpan? DenyEnd;
 
     /// <summary>
     ///     While disabled by EMP it randomly ejects items

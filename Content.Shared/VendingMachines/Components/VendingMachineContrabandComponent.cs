@@ -6,4 +6,12 @@ namespace Content.Shared.VendingMachines.Components;
 ///
 /// </summary>
 [RegisterComponent, NetworkedComponent]
-public sealed partial class VendingMachineContrabandComponent : Component;
+[AutoGenerateComponentState]
+public sealed partial class VendingMachineContrabandComponent : Component
+{
+    /// <summary>
+    ///
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public Dictionary<string, VendingMachineInventoryEntry> ContrabandInventory = [];
+}

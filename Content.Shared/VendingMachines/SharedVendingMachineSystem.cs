@@ -12,7 +12,6 @@ using Content.Shared.Popups;
 using Content.Shared.Power.EntitySystems;
 using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
-using Robust.Shared.GameStates;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
 using Content.Shared.VendingMachines.Components;
@@ -59,36 +58,25 @@ public abstract partial class SharedVendingMachineSystem : EntitySystem
 
         while (query.MoveNext(out var uid, out var comp))
         {
-            if (comp.Ejecting)
+            if (TryComp<VendingMachineEjectingComponent>(uid, out var ejecting) && curTime > ejecting.EjectEnd)
             {
-                if (curTime > comp.EjectEnd)
-                {
-                    comp.EjectEnd = null;
-                    Dirty(uid, comp);
+                RemComp<VendingMachineEjectingComponent>(uid);
 
-                    EjectItem(uid, comp);
-                    UpdateUI((uid, comp));
-                }
+                EjectItem(uid, comp);
+                UpdateUI((uid, comp));
             }
 
-            if (comp.Denying)
+            if (TryComp<VendingMachineDenyingComponent>(uid, out var denying) && curTime > denying.DenyEnd)
             {
-                if (curTime > comp.DenyEnd)
-                {
-                    comp.DenyEnd = null;
-                    Dirty(uid, comp);
+                RemComp<VendingMachineDenyingComponent>(uid);
 
-                    TryUpdateVisualState((uid, comp));
-                }
+                TryUpdateVisualState((uid, comp));
             }
 
-            if (comp.DispenseOnHitCoolingDown)
+            if (TryComp<VendingMachineDispenseOnHitComponent>(uid, out var dispenseOnHit) && curTime > dispenseOnHit.DispenseOnHitEnd)
             {
-                if (curTime > comp.DispenseOnHitEnd)
-                {
-                    comp.DispenseOnHitEnd = null;
-                    Dirty(uid, comp);
-                }
+                dispenseOnHit.DispenseOnHitEnd = null;
+                Dirty(uid, comp);
             }
         }
     }
@@ -265,8 +253,7 @@ public abstract partial class SharedVendingMachineSystem : EntitySystem
         }
     }
 
-    public void RestockInventoryFromPrototype(EntityUid uid,
-        VendingMachineComponent? component = null, float restockQuality = 1f)
+    public void RestockInventoryFromPrototype(EntityUid uid, VendingMachineComponent? component = null, float restockQuality = 1f)
     {
         if (!Resolve(uid, ref component))
         {
