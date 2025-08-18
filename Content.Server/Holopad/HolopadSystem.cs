@@ -42,7 +42,7 @@ public sealed class HolopadSystem : SharedHolopadSystem
     private float _updateTimer = 1.0f;
     private const float UpdateTime = 1.0f;
 
-    private readonly HashSet<NetEntity> _holopads = [];
+    private readonly HashSet<EntityUid> _holopads = [];
 
     public override void Initialize()
     {
@@ -325,7 +325,7 @@ public sealed class HolopadSystem : SharedHolopadSystem
         if (entity.Comp.User != null)
             LinkHolopadToUser(entity, entity.Comp.User.Value);
 
-        _holopads.Add(GetNetEntity(entity));
+        _holopads.Add(entity);
     }
 
     private void OnHolopadUserInit(Entity<HolopadUserComponent> entity, ref ComponentInit args)
@@ -341,7 +341,7 @@ public sealed class HolopadSystem : SharedHolopadSystem
 
         ShutDownHolopad(entity);
         SetHolopadAmbientState(entity, false);
-        _holopads.Remove(GetNetEntity(entity));
+        _holopads.Remove(entity);
     }
 
     private void OnHolopadUserShutdown(Entity<HolopadUserComponent> entity, ref ComponentShutdown args)
@@ -485,10 +485,8 @@ public sealed class HolopadSystem : SharedHolopadSystem
 
         var holopadList = new List<(NetEntity, string Name)>();
 
-        foreach (var receiverNetEnt in _holopads)
+        foreach (var receiver in _holopads)
         {
-            var receiver = GetEntity(receiverNetEnt);
-
             // Filter holopads
             if (entity.Owner == receiver)
                 continue;
@@ -505,7 +503,7 @@ public sealed class HolopadSystem : SharedHolopadSystem
             if (TryComp<LabelComponent>(receiver, out var label) && !string.IsNullOrEmpty(label.CurrentLabel))
                 name = label.CurrentLabel;
 
-            holopadList.Add((receiverNetEnt, name));
+            holopadList.Add((GetNetEntity(receiver), name));
         }
 
         // Sort holopads alphabetically
