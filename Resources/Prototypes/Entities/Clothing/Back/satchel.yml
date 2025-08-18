@@ -188,3 +188,17 @@
   components:
   - type: ExplosionResistance
     damageCoefficient: 0
+
+- type: entity
+  parent: ClothingBackpackSatchelEngineering
+  id: BorgMaterialSatchel
+  name: borg's engineering satchel
+  description: A tough satchel with extra pockets, fitted for a silicon.
+  components:
+  - type: Storage
+    whitelist:
+       tags:
+          - ConstructionMaterial
+          - Circuitboard
+          - Flatpack
+          - FloorTile
