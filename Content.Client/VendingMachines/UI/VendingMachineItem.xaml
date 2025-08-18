@@ -9,6 +9,7 @@
             VerticalAlignment="Center"
             MinSize="32 32"
             />
+    <!-- Starlight-edit -->
     <Label Name="NameLabel"
             SizeFlagsStretchRatio="1"
             HorizontalExpand="True"
