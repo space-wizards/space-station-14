@@ -126,14 +126,14 @@ public sealed partial class BloodstreamComponent : Component
     /// <summary>
     /// The sound to be played when some damage actually heals bleeding rather than starting it.
     /// </summary>
-    [DataField]
+    [DataField, AutoNetworkedField]
     public SoundSpecifier BloodHealedSound = new SoundPathSpecifier("/Audio/Effects/lightburn.ogg");
 
     /// <summary>
     /// The minimum amount damage reduction needed to play the healing sound/popup.
     /// This prevents tiny amounts of heat damage from spamming the sound, e.g. spacing.
     /// </summary>
-    [DataField]
+    [DataField, AutoNetworkedField]
     public float BloodHealedSoundThreshold = -0.1f;
 
     // TODO probably damage bleed thresholds.
@@ -141,14 +141,14 @@ public sealed partial class BloodstreamComponent : Component
     /// <summary>
     /// Max volume of internal chemical solution storage
     /// </summary>
-    [DataField]
+    [DataField, AutoNetworkedField]
     public FixedPoint2 ChemicalMaxVolume = FixedPoint2.New(250);
 
     /// <summary>
     /// Max volume of internal blood storage,
     /// and starting level of blood.
     /// </summary>
-    [DataField]
+    [DataField, AutoNetworkedField]
     public FixedPoint2 BloodMaxVolume = FixedPoint2.New(300);
 
     /// <summary>

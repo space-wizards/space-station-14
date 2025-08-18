@@ -38,6 +38,7 @@ public abstract class SharedBloodstreamSystem : EntitySystem
     [Dependency] private readonly DamageableSystem _damageableSystem = default!;
     [Dependency] private readonly SharedDrunkSystem _drunkSystem = default!;
     [Dependency] private readonly SharedStutteringSystem _stutteringSystem = default!;
+    [Dependency] private readonly SharedMetabolizerSystem _metabolizer = default!;
 
     public override void Initialize()
     {
@@ -509,5 +510,43 @@ public abstract class SharedBloodstreamSystem : EntitySystem
         bloodData.Add(dnaData);
 
         return bloodData;
+    }
+
+    /// <summary>
+    /// Copy this component's datafields from one entity to another.
+    /// This can't use CopyComp because some datafields should not be copied over
+    /// and the blood reagent needs to be refreshed afterwards.
+    /// <summary>
+
+    public void CopyComponent(Entity<BloodstreamComponent?> source, EntityUid target)
+    {
+        if (!Resolve(source, ref source.Comp))
+            return;
+
+        // don't copy UpdateIntervalMultiplier, NextUpdate and status effects related datafields
+        var targetComp = EnsureComp<BloodstreamComponent>(target);
+        targetComp.UpdateInterval = source.Comp.UpdateInterval;
+        targetComp.BleedReductionAmount = source.Comp.BleedReductionAmount;
+        targetComp.MaxBleedAmount = source.Comp.MaxBleedAmount;
+        targetComp.BloodlossThreshold = source.Comp.BloodlossThreshold;
+        targetComp.BloodlossDamage = new DamageSpecifier(source.Comp.BloodlossDamage);
+        targetComp.BloodlossHealDamage = new DamageSpecifier(source.Comp.BloodlossHealDamage);
+        targetComp.BloodRefreshAmount = source.Comp.BloodRefreshAmount;
+        targetComp.BleedPuddleThreshold = source.Comp.BleedPuddleThreshold;
+        targetComp.DamageBleedModifiers = source.Comp.DamageBleedModifiers;
+        targetComp.InstantBloodSound = source.Comp.InstantBloodSound;
+        targetComp.BloodHealedSound = source.Comp.BloodHealedSound;
+        targetComp.BloodHealedSoundThreshold = source.Comp.BloodHealedSoundThreshold;
+        targetComp.ChemicalMaxVolume = source.Comp.ChemicalMaxVolume;
+        targetComp.BloodMaxVolume = source.Comp.BloodMaxVolume;
+        if (targetComp.BloodSolution != null)
+            SolutionContainer.SetCapacity(targetComp.BloodSolution.Value, targetComp.BloodMaxVolume);
+        if (targetComp.ChemicalSolution != null)
+            SolutionContainer.SetCapacity(targetComp.ChemicalSolution.Value, targetComp.ChemicalMaxVolume);
+
+        ChangeBloodReagent(target, source.Comp.BloodReagent);
+        _metabolizer.UpdateMetabolicMultiplier(target);
+
+        Dirty(target, targetComp);
     }
 }
