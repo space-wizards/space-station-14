@@ -17,12 +17,14 @@ public abstract partial class SharedSiliconLawSystem
     private readonly ProtoId<ChatNotificationPrototype> _overrideLawsChatNotificationPrototype = "OverrideLaws";
     private void InitializeOverrider()
     {
-        SubscribeLocalEvent<SiliconLawOverriderComponent, AfterInteractEvent>(OnOverriderInteract);
+        SubscribeLocalEvent<SiliconLawProviderComponent, AfterInteractEvent>(OnOverriderInteract);
         SubscribeLocalEvent<SiliconLawProviderComponent, OverriderDoAfterEvent>(OnOverriderDoAfter);
     }
 
-    private void OnOverriderInteract(Entity<SiliconLawOverriderComponent> ent, ref AfterInteractEvent args)
+    private void OnOverriderInteract(Entity<SiliconLawProviderComponent> ent, ref AfterInteractEvent args)
     {
+        Log.Debug($"ent: {ent}, args.Target: {args.Target}, args.User: {args.User}, args,.Used: {args.Used}");
+
         if (args.Handled || !args.CanReach || args.Target == null)
             return;
 
