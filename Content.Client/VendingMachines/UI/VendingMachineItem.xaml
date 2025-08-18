@@ -10,7 +10,7 @@
             MinSize="32 32"
             />
     <Label Name="NameLabel"
-            SizeFlagsStretchRatio="1"
+            SizeFlagsStretchRatio="1" <!-- Starlight -->
             HorizontalExpand="True"
             ClipText="True"/>
     <!-- 🌟Starlight🌟 Amount in brackets -->
