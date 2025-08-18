@@ -150,6 +150,8 @@ public sealed class MoverController : SharedMoverController
         base.UpdateBeforeSolve(prediction, frameTime);
 
         _moversToUpdate.Clear();
+        // Don't use EntityQueryEnumerator because admin ghosts have to move on
+        // paused maps. Pausing movers is handled via ActiveInputMoverComponent.
         var inputQueryEnumerator = AllEntityQuery<ActiveInputMoverComponent, InputMoverComponent>();
 
         while (inputQueryEnumerator.MoveNext(out var uid, out var activeComp, out var moverComp))
