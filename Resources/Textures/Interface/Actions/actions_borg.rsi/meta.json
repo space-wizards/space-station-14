@@ -158,6 +158,9 @@
             "name":"xenoborg-tool-module"
         },
         {
+            "name":"xenoborg-construction-module"
+        },
+        {
             "name": "select-type"
         }
     ]
