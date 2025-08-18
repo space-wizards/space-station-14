@@ -18,6 +18,9 @@ public sealed partial class DigitalLockComponent : Component
     public string Code = "";
 
     [AutoNetworkedField]
+    public bool MaintenanceOpen = false;
+
+    [AutoNetworkedField]
     public string EnteredCode = "";
 
     [AutoNetworkedField]

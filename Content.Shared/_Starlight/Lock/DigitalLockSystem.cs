@@ -1,8 +1,14 @@
 using Content.Shared.Lock;
 using Content.Shared.Audio;
+using Content.Shared.Tools.Systems;
+using Content.Shared.Interaction;
 using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.GameObjects;
+using Content.Shared.Tools.Components;
+using System.Linq;
+using Content.Shared.Electrocution;
+using Content.Shared.Examine;
 
 namespace Content.Shared._Starlight.Lock;
 
@@ -11,12 +17,19 @@ public sealed class DigitalLockSystem : EntitySystem
     [Dependency] private readonly LockSystem _lock = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly SharedUserInterfaceSystem _ui = default!;
+    [Dependency] private readonly SharedToolSystem _tool = default!;
+    [Dependency] private readonly SharedElectrocutionSystem _electrocution = default!;
 
     public override void Initialize()
     {
         base.Initialize();
 
         SubscribeLocalEvent<DigitalLockComponent, ComponentInit>(OnInit);
+
+        SubscribeLocalEvent<DigitalLockComponent, InteractUsingEvent>(OnInteractUsing);
+        SubscribeLocalEvent<DigitalLockComponent, DigitalLockMaintenanceOpenDoAfterEvent>(OnMaintenanceOpen);
+        SubscribeLocalEvent<DigitalLockComponent, DigitalLockResetDoAfterEvent>(OnReset);
+        SubscribeLocalEvent<DigitalLockComponent, ExaminedEvent>(OnExamine);
 
         // UI
         SubscribeLocalEvent<DigitalLockComponent, DigitalLockKeypadMessage>(OnKeypadButtonPressed);
@@ -30,6 +43,47 @@ public sealed class DigitalLockSystem : EntitySystem
         UpdateUserInterface(uid, component);
     }
 
+    private void OnInteractUsing(EntityUid uid, DigitalLockComponent component, InteractUsingEvent args)
+    {
+        if (args.Handled)
+            return;
+
+        if (_tool.HasQuality(args.Used, "Screwing"))
+            args.Handled = _tool.UseTool(args.Used, args.User, uid, 2f, "Screwing", new DigitalLockMaintenanceOpenDoAfterEvent());
+        else if (_tool.HasQuality(args.Used, "Pulsing") && component.MaintenanceOpen)
+        {
+            var codeLength = component.Code.Length;
+            args.Handled = _electrocution.TryDoElectrocution(args.User, uid, 5, TimeSpan.FromSeconds(2), true) || _tool.UseTool(args.Used, args.User, uid, 2f * codeLength, "Pulsing", new DigitalLockMaintenanceOpenDoAfterEvent());
+        }
+
+        args.Handled = false;
+    }
+
+    private void OnMaintenanceOpen(EntityUid uid, DigitalLockComponent component, DigitalLockMaintenanceOpenDoAfterEvent args)
+    {
+        if (args.Cancelled)
+            return;
+        component.MaintenanceOpen = !component.MaintenanceOpen;
+        args.Handled = true;
+    }
+
+    private void OnReset(EntityUid uid, DigitalLockComponent component, DigitalLockResetDoAfterEvent args)
+    {
+        if (args.Cancelled)
+            return;
+        component.Code = "";
+    }
+
+    private void OnExamine(EntityUid uid, DigitalLockComponent component, ExaminedEvent args)
+    {
+        var message = new FormattedMessage();
+        if (component.MaintenanceOpen)
+            message.AddText(Loc.GetString("digital-lock-examine-maintenance-open"));
+        else
+            message.AddText(Loc.GetString("digital-lock-examine-maintenance-closed"));
+        args.PushMessage(message);
+    }
+
     private void OnEnterButtonPressed(EntityUid uid, DigitalLockComponent component, DigitalLockKeypadEnterMessage args)
     {
         UpdateStatus(uid, component);
@@ -41,7 +95,8 @@ public sealed class DigitalLockSystem : EntitySystem
         PlayNukeKeypadSound(uid, args.Value, component);
 
         if (component.Status is not DigitalLockStatus.AWAIT_CODE
-            and not DigitalLockStatus.AWAIT_CONFIRMATION)
+            and not DigitalLockStatus.AWAIT_CONFIRMATION
+            and not DigitalLockStatus.CHANGE_MODE_CODE)
             return;
 
         if (component.EnteredCode.Length >= component.MaxCodeLength)
