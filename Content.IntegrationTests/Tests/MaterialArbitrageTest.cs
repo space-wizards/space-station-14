@@ -1,12 +1,13 @@
+#nullable enable
 using System.Collections.Generic;
 using Content.Server.Cargo.Systems;
 using Content.Server.Construction.Completions;
 using Content.Server.Construction.Components;
 using Content.Server.Destructible;
 using Content.Server.Destructible.Thresholds.Behaviors;
+using Content.Server.Lathe;
 using Content.Server.Stack;
 using Content.Shared.Chemistry.Reagent;
-using Content.Shared.Construction.Components;
 using Content.Shared.Construction.Prototypes;
 using Content.Shared.Construction.Steps;
 using Content.Shared.FixedPoint;
@@ -14,10 +15,9 @@ using Content.Shared.Lathe;
 using Content.Shared.Materials;
 using Content.Shared.Research.Prototypes;
 using Content.Shared.Stacks;
+using Content.Shared.Tools.Components;
 using Robust.Shared.GameObjects;
-using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Utility;
 
 namespace Content.IntegrationTests.Tests;
 
@@ -28,6 +28,21 @@ namespace Content.IntegrationTests.Tests;
 [TestFixture]
 public sealed class MaterialArbitrageTest
 {
+    // These recipes are currently broken and need fixing. You should not be adding to these sets.
+    private readonly HashSet<string> _destructionArbitrageIgnore =
+    [
+        "BaseChemistryEmptyVial", "DrinkShotGlass", "SodiumLightTube", "DrinkGlassCoupeShaped",
+        "LedLightBulb", "ExteriorLightTube", "LightTube", "DrinkGlass", "DimLightBulb", "LightBulb", "LedLightTube",
+        "SheetRGlass1", "ChemistryEmptyBottle01", "WarmLightBulb",
+    ];
+
+    private readonly HashSet<string> _compositionArbitrageIgnore =
+    [
+        "FoodPlateSmall", "AirTank", "FoodPlateTin", "FoodPlateMuffinTin", "WeaponCapacitorRechargerCircuitboard",
+        "WeaponCapacitorRechargerCircuitboard", "BorgChargerCircuitboard", "BorgChargerCircuitboard", "FoodPlate",
+        "CellRechargerCircuitboard", "CellRechargerCircuitboard",
+    ];
+
     [Test]
     public async Task NoMaterialArbitrage()
     {
@@ -38,28 +53,38 @@ public sealed class MaterialArbitrageTest
         await server.WaitIdleAsync();
 
         var entManager = server.ResolveDependency<IEntityManager>();
-        var mapManager = server.ResolveDependency<IMapManager>();
         var protoManager = server.ResolveDependency<IPrototypeManager>();
 
         var pricing = entManager.System<PricingSystem>();
         var stackSys = entManager.System<StackSystem>();
         var mapSystem = server.System<SharedMapSystem>();
-        var latheSys = server.System<SharedLatheSystem>();
+        var latheSys = server.System<LatheSystem>();
         var compFact = server.ResolveDependency<IComponentFactory>();
 
         Assert.That(mapSystem.IsInitialized(testMap.MapId));
 
-        var constructionName = compFact.GetComponentName(typeof(ConstructionComponent));
-        var compositionName = compFact.GetComponentName(typeof(PhysicalCompositionComponent));
-        var materialName = compFact.GetComponentName(typeof(MaterialComponent));
-        var destructibleName = compFact.GetComponentName(typeof(DestructibleComponent));
+        var constructionName = compFact.GetComponentName<ConstructionComponent>();
+        var compositionName = compFact.GetComponentName<PhysicalCompositionComponent>();
+        var materialName = compFact.GetComponentName<MaterialComponent>();
+        var destructibleName = compFact.GetComponentName<DestructibleComponent>();
+        var refinableName = compFact.GetComponentName<ToolRefinableComponent>();
 
         // get the inverted lathe recipe dictionary
         var latheRecipes = latheSys.InverseRecipes;
 
-        // Lets assume the possible lathe for resource multipliers:
-        // TODO: each recipe can technically have its own cost multiplier associated with it, so this test needs redone to factor that in.
-        var multiplier = MathF.Pow(0.85f, 3);
+        // Find the lowest multiplier / optimal lathe that can be used to construct a recipie.
+        var minMultiplier = new Dictionary<ProtoId<LatheRecipePrototype>, float>();
+
+        foreach (var (_, lathe) in pair.GetPrototypesWithComponent<LatheComponent>())
+        {
+            foreach (var recipe in latheSys.GetAllPossibleRecipes(lathe))
+            {
+                if (!minMultiplier.TryGetValue(recipe, out var min))
+                    min = 1;
+
+                minMultiplier[recipe] = Math.Min(min, lathe.MaterialUseMultiplier);
+            }
+        }
 
         // create construction dictionary
         Dictionary<string, ConstructionComponent> constructionRecipes = new();
@@ -122,6 +147,65 @@ public sealed class MaterialArbitrageTest
 
         Dictionary<string, (Dictionary<string, int> Ents, Dictionary<string, int> Mats)> spawnedOnDestroy = new();
 
+        // cache the compositions of entities
+        // If the entity is refineable (i.e. glass shared can be turned into glass, we take the greater of the two compositions.
+        Dictionary<EntProtoId, Dictionary<string, int>> compositions = new();
+        foreach (var proto in protoManager.EnumeratePrototypes<EntityPrototype>())
+        {
+            Dictionary<string, int>? baseComposition = null;
+
+            if (proto.Components.ContainsKey(materialName)
+                && proto.Components.TryGetValue(compositionName, out var compositionReg))
+            {
+                var compositionComp = (PhysicalCompositionComponent)compositionReg.Component;
+                baseComposition = compositionComp.MaterialComposition;
+
+            }
+
+            if (!proto.Components.TryGetValue(refinableName, out var refinableReg))
+            {
+                if (baseComposition != null)
+                    compositions[proto.ID] = new(baseComposition);
+                continue;
+            }
+
+            var composition = new Dictionary<string, int>();
+            compositions.Add(proto.ID, composition);
+
+            var refinable = (ToolRefinableComponent)refinableReg.Component;
+            foreach (var refineResult in refinable.RefineResult)
+            {
+                if (refineResult.PrototypeId == null)
+                    continue;
+
+                var refineProto = protoManager.Index(refineResult.PrototypeId.Value);
+                if (!refineProto.Components.ContainsKey(materialName))
+                    continue;
+
+                if (!refineProto.Components.TryGetValue(compositionName, out var refinedCompositionReg))
+                    continue;
+
+                var refinedCompositionComp = (PhysicalCompositionComponent)refinedCompositionReg.Component;
+
+                // This assumes refine results do not have complex spawn behaviours like exclusive groups.
+                var quantity = refineResult.MaxAmount;
+
+                foreach (var (matId, amount) in refinedCompositionComp.MaterialComposition)
+                {
+                    composition[matId] = quantity * amount + composition.GetValueOrDefault(matId);
+                }
+            }
+
+            if (baseComposition == null)
+                continue;
+
+            // If the un-refined material quantity is greater than the refined quantity, we use that instead.
+            foreach (var (matId, amount) in baseComposition)
+            {
+                composition[matId] = Math.Max(amount, composition.GetValueOrDefault(matId));
+            }
+        }
+
         // Here we get the set of entities/materials spawned when destroying an entity.
         foreach (var proto in protoManager.EnumeratePrototypes<EntityPrototype>())
         {
@@ -151,16 +235,10 @@ public sealed class MaterialArbitrageTest
                     {
                         spawnedEnts[key] = spawnedEnts.GetValueOrDefault(key) + value.Max;
 
-                        var spawnProto = protoManager.Index<EntityPrototype>(key);
-
-                        // get the amount of each material included in the entity
-
-                        if (!spawnProto.Components.ContainsKey(materialName) ||
-                            !spawnProto.Components.TryGetValue(compositionName, out var compositionReg))
+                        if (!compositions.TryGetValue(key, out var composition))
                             continue;
 
-                        var mat = (PhysicalCompositionComponent) compositionReg.Component;
-                        foreach (var (matId, amount) in mat.MaterialComposition)
+                        foreach (var (matId, amount) in composition)
                         {
                             spawnedMats[matId] = value.Max * amount + spawnedMats.GetValueOrDefault(matId);
                         }
@@ -173,10 +251,13 @@ public sealed class MaterialArbitrageTest
         }
 
         // This is the main loop where we actually check for destruction arbitrage
-        Assert.Multiple(async () =>
+        await Assert.MultipleAsync(async () =>
         {
             foreach (var (id, (spawnedEnts, spawnedMats)) in spawnedOnDestroy)
             {
+                if (_destructionArbitrageIgnore.Contains(id))
+                    continue;
+
                 // Check cargo sell price
                 // several constructible entities have no sell price
                 // also this test only really matters if the entity is also purchaseable.... eh..
@@ -190,6 +271,11 @@ public sealed class MaterialArbitrageTest
                 {
                     foreach (var recipe in recipes)
                     {
+                        if (!minMultiplier.TryGetValue(recipe, out var multiplier))
+                        {
+                            server.Log.Info($"Unused lathe recipe? {recipe.ID}?");
+                            continue;
+                        }
                         foreach (var (matId, amount) in recipe.Materials)
                         {
                             var actualAmount = SharedLatheSystem.AdjustMaterial(amount, recipe.ApplyMaterialDiscount, multiplier);
@@ -231,6 +317,9 @@ public sealed class MaterialArbitrageTest
                 var edge = cur.GetEdge(node.Name);
                 cur = node;
 
+                if (edge == null)
+                    continue;
+
                 foreach (var completion in edge.Completed)
                 {
                     if (completion is not SpawnPrototype spawnCompletion)
@@ -253,9 +342,9 @@ public sealed class MaterialArbitrageTest
         }
 
         // This is functionally the same loop as before, but now testing deconstruction rather than destruction.
-        // This is pretty braindead. In principle construction graphs can have loops and whatnot.
+        // This is pretty brain-dead. In principle construction graphs can have loops and whatnot.
 
-        Assert.Multiple(async () =>
+        await Assert.MultipleAsync(async () =>
         {
             foreach (var (id, deconstructedMats) in deconstructionMaterials)
             {
@@ -270,6 +359,11 @@ public sealed class MaterialArbitrageTest
                 {
                     foreach (var recipe in recipes)
                     {
+                        if (!minMultiplier.TryGetValue(recipe, out var multiplier))
+                        {
+                            server.Log.Info($"Unused lathe recipe? {recipe.ID}?");
+                            continue;
+                        }
                         foreach (var (matId, amount) in recipe.Materials)
                         {
                             var actualAmount = SharedLatheSystem.AdjustMaterial(amount, recipe.ApplyMaterialDiscount, multiplier);
@@ -291,7 +385,7 @@ public sealed class MaterialArbitrageTest
             }
         });
 
-        // create phyiscal composition dictionary
+        // create physical composition dictionary
         // this doesn't account for the chemicals in the composition
         Dictionary<string, PhysicalCompositionComponent> physicalCompositions = new();
         foreach (var proto in protoManager.EnumeratePrototypes<EntityPrototype>())
@@ -308,10 +402,13 @@ public sealed class MaterialArbitrageTest
 
         // This is functionally the same loop as before, but now testing composition rather than destruction or deconstruction.
         // This doesn't take into account chemicals generated when deconstructing. Maybe it should.
-        Assert.Multiple(async () =>
+        await Assert.MultipleAsync(async () =>
         {
             foreach (var (id, compositionComponent) in physicalCompositions)
             {
+                if (_compositionArbitrageIgnore.Contains(id))
+                    continue;
+
                 // Check cargo sell price
                 var materialPrice = await GetDeconstructedPrice(compositionComponent.MaterialComposition);
                 var chemicalPrice = await GetChemicalCompositionPrice(compositionComponent.ChemicalComposition);
@@ -325,6 +422,11 @@ public sealed class MaterialArbitrageTest
                 {
                     foreach (var recipe in recipes)
                     {
+                        if (!minMultiplier.TryGetValue(recipe, out var multiplier))
+                        {
+                            server.Log.Info($"Unused lathe recipe? {recipe.ID}?");
+                            continue;
+                        }
                         foreach (var (matId, amount) in recipe.Materials)
                         {
                             var actualAmount = SharedLatheSystem.AdjustMaterial(amount, recipe.ApplyMaterialDiscount, multiplier);

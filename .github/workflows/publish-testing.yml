@@ -2,6 +2,7 @@
 
 concurrency:
   group: publish-testing
+  cancel-in-progress: true
 
 on:
   workflow_dispatch:

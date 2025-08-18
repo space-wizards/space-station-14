@@ -12,6 +12,8 @@
     - Energy
     reflectProb: 0.2
     spread: 90
+  - type: Paintable
+    group: CrateSteel
   - type: RadiationBlockingContainer
     resistance: 2.5
 
@@ -31,6 +33,8 @@
     - entity_storage
   - type: StaticPrice
     price: 100
+  - type: Paintable
+    group: CratePlastic
 
 - type: entity
   parent: CratePlastic
@@ -49,6 +53,8 @@
     node: done
     containers:
     - entity_storage
+  - type: Paintable
+    group: null
 
 - type: entity
   parent: CratePlastic
@@ -155,6 +161,15 @@
     damageModifierSet: Web
   - type: Destructible
     thresholds:
+    - trigger: # Excess damage, don't spawn entities
+        !type:DamageTrigger
+        damage: 100
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          collection: WoodDestroy
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
     - trigger:
         !type:DamageTrigger
         damage: 50
@@ -381,6 +396,8 @@
   components:
   - type: Sprite
     sprite: Structures/Storage/Crates/cage.rsi
+    drawdepth: LargeObjects
+    snapCardinals: true
     layers:
     - state: base
     - state: closed
@@ -393,6 +410,15 @@
     sprite: Structures/Storage/Crates/cage.rsi
   - type: Destructible
     thresholds:
+    - trigger: # Excess damage, don't spawn entities
+        !type:DamageTrigger
+        damage: 75
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalGlassBreak
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
     - trigger:
         !type:DamageTrigger
         damage: 15
@@ -417,14 +443,202 @@
       fix1:
         shape:
           !type:PhysShapeAabb
-          bounds: "-0.4,-0.4,0.4,0.29"
+          bounds: "-0.4,-0.2,0.4,0.29"
         density: 80
         mask:
-        - CrateMask
+        - TabletopMachineMask
         layer:
-        - LargeMobLayer
+        - TabletopMachineLayer
   - type: StaticPrice
     price: 75
+
+- type: entity
+  id: CrateBaseLockBox
+  parent: CrateBaseSecure
+  name: lock box
+  description: "A secure lock box. Funds from its sale will be distributed back to the department. Just remember: Cargo always takes a cut."
+  abstract: true
+  components:
+  - type: Sprite
+    sprite: Structures/Storage/Crates/lockbox.rsi
+  - type: GenericVisualizer
+    visuals:
+      enum.PaperLabelVisuals.HasLabel:
+        enum.PaperLabelVisuals.Layer:
+          True: { visible: true }
+          False: { visible: false }
+      enum.PaperLabelVisuals.LabelType:
+        enum.PaperLabelVisuals.Layer:
+          Paper: { state: paper }
+          Bounty: { state: bounty }
+          CaptainsPaper: { state: captains_paper }
+          Invoice: { state: invoice }
+      enum.StorageVisuals.Open:
+        lid_overlay:
+          True: { visible: false }
+          False: { visible: true }
+  - type: OverrideSell
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.3,-0.4,0.3,0.19"
+        density: 50
+        mask:
+        - CrateMask #this is so they can go under plastic flaps
+        layer:
+        - MachineLayer
+
+- type: entity
+  id: CrateLockBoxEngineering
+  parent: CrateBaseLockBox
+  name: engineering lock box
+  components:
+  - type: Sprite
+    layers:
+    - state: base
+    - state: overlay
+      color: "#ad8c27"
+    - state: closed
+      map: ["enum.StorageVisualLayers.Door"]
+    - state: overlay-closed
+      color: "#ad8c27"
+      map: [ lid_overlay ]
+    - state: welded
+      visible: false
+      map: ["enum.WeldableLayers.BaseWelded"]
+    - state: locked
+      map: ["enum.LockVisualLayers.Lock"]
+      shader: unshaded
+    - state: paper
+      sprite: Structures/Storage/Crates/labels.rsi
+      offset: "-0.46875,0.03125"
+      map: ["enum.PaperLabelVisuals.Layer"]
+  - type: OverrideSell
+    overrideAccount: Engineering
+  - type: AccessReader
+    access: [["Engineering"]]
+
+- type: entity
+  id: CrateLockBoxMedical
+  parent: CrateBaseLockBox
+  name: medical lock box
+  components:
+  - type: Sprite
+    layers:
+    - state: base
+    - state: overlay
+      color: "#92c7e8"
+    - state: closed
+      map: ["enum.StorageVisualLayers.Door"]
+    - state: overlay-closed
+      color: "#92c7e8"
+      map: [ lid_overlay ]
+    - state: welded
+      visible: false
+      map: ["enum.WeldableLayers.BaseWelded"]
+    - state: locked
+      map: ["enum.LockVisualLayers.Lock"]
+      shader: unshaded
+    - state: paper
+      sprite: Structures/Storage/Crates/labels.rsi
+      offset: "-0.46875,0.03125"
+      map: ["enum.PaperLabelVisuals.Layer"]
+  - type: OverrideSell
+    overrideAccount: Medical
+  - type: AccessReader
+    access: [["Medical"]]
+
+- type: entity
+  id: CrateLockBoxScience
+  parent: CrateBaseLockBox
+  name: science lock box
+  components:
+  - type: Sprite
+    layers:
+    - state: base
+    - state: overlay
+      color: "#ba4bf0"
+    - state: closed
+      map: ["enum.StorageVisualLayers.Door"]
+    - state: overlay-closed
+      color: "#ba4bf0"
+      map: [ lid_overlay ]
+    - state: welded
+      visible: false
+      map: ["enum.WeldableLayers.BaseWelded"]
+    - state: locked
+      map: ["enum.LockVisualLayers.Lock"]
+      shader: unshaded
+    - state: paper
+      sprite: Structures/Storage/Crates/labels.rsi
+      offset: "-0.46875,0.03125"
+      map: ["enum.PaperLabelVisuals.Layer"]
+  - type: OverrideSell
+    overrideAccount: Science
+  - type: AccessReader
+    access: [["Research"]]
+
+- type: entity
+  id: CrateLockBoxSecurity
+  parent: CrateBaseLockBox
+  name: security lock box
+  components:
+  - type: Sprite
+    layers:
+    - state: base
+    - state: overlay
+      color: "#c12d30"
+    - state: closed
+      map: ["enum.StorageVisualLayers.Door"]
+    - state: overlay-closed
+      color: "#c12d30"
+      map: [ lid_overlay ]
+    - state: welded
+      visible: false
+      map: ["enum.WeldableLayers.BaseWelded"]
+    - state: locked
+      map: ["enum.LockVisualLayers.Lock"]
+      shader: unshaded
+    - state: paper
+      sprite: Structures/Storage/Crates/labels.rsi
+      offset: "-0.46875,0.03125"
+      map: ["enum.PaperLabelVisuals.Layer"]
+  - type: OverrideSell
+    overrideAccount: Security
+  - type: AccessReader
+    access: [["Security"]]
+
+- type: entity
+  id: CrateLockBoxService
+  parent: CrateBaseLockBox
+  name: service lock box
+  components:
+  - type: Sprite
+    layers:
+    - state: base
+    - state: overlay
+      color: "#53b723"
+    - state: closed
+      map: ["enum.StorageVisualLayers.Door"]
+    - state: overlay-closed
+      color: "#53b723"
+      map: [ lid_overlay ]
+    - state: welded
+      visible: false
+      map: ["enum.WeldableLayers.BaseWelded"]
+    - state: locked
+      map: ["enum.LockVisualLayers.Lock"]
+      shader: unshaded
+    - state: paper
+      sprite: Structures/Storage/Crates/labels.rsi
+      offset: "-0.46875,0.03125"
+      map: ["enum.PaperLabelVisuals.Layer"]
+  - type: OverrideSell
+    overrideAccount: Service
+  - type: AccessReader
+    access: [["Service"]]
 
 - type: entity
   parent: CrateGeneric
@@ -481,7 +695,7 @@
   parent: CrateGeneric
   id: CrateCoffin
   name: coffin
-  description: A comfy coffin, excelent place for the vampires and corpses.
+  description: A comfy coffin, excellent place for the vampires and corpses.
   components:
   - type: Sprite
     sprite: Structures/Storage/Crates/coffin.rsi
@@ -496,6 +710,15 @@
     state: base
   - type: Destructible
     thresholds:
+    - trigger: # Excess damage, don't spawn entities
+        !type:DamageTrigger
+        damage: 75
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          collection: WoodDestroy
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
     - trigger:
         !type:DamageTrigger
         damage: 15
@@ -538,6 +761,15 @@
     state: base
   - type: Destructible
     thresholds:
+    - trigger: # Excess damage, don't spawn entities
+        !type:DamageTrigger
+        damage: 400
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          collection: WoodDestroy
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
     - trigger:
         !type:DamageTrigger
         damage: 200 # discourage just beating the grave to break it open
@@ -616,6 +848,8 @@
       sprite: Structures/Storage/Crates/labels.rsi
       offset: "0.0,0.03125"
       map: ["enum.PaperLabelVisuals.Layer"]
+  - type: Paintable
+    group: null
 
 - type: entity
   parent: CrateBaseSecure
@@ -642,6 +876,8 @@
       map: ["enum.PaperLabelVisuals.Layer"]
   - type: AccessReader
     access: [["Janitor"]]
+  - type: Paintable
+    group: null
 
 - type: entity
   parent: CrateBaseWeldable

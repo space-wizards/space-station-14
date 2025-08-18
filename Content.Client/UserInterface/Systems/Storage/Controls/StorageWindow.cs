@@ -1,4 +1,4 @@
-﻿using System.Diagnostics.CodeAnalysis;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Numerics;
 using Content.Client.Hands.Systems;
@@ -621,7 +621,7 @@ public sealed class StorageWindow : BaseWindow
                         {
                             marked.Add(cell);
                             cell.ModulateSelfOverride = spotFree
-                                ? Color.FromHsv((0.18f, 1 / spot, 0.5f / spot + 0.5f, 1f))
+                                ? Color.FromHsv(new Vector4(0.18f, 1 / spot, 0.5f / spot + 0.5f, 1f))
                                 : Color.FromHex("#2222CC");
                         }
                     }

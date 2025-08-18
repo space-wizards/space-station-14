@@ -15,6 +15,7 @@
     tags:
     - Sheet
     - Metal
+    - ConstructionMaterial
   - type: Damageable
     damageContainer: Inorganic
     damageModifierSet: Metallic
@@ -59,9 +60,6 @@
   - type: Item
     heldPrefix: steel
   - type: Appearance
-  - type: FloorTile
-    outputs:
-    - Plating
   - type: Extractable
     grindableSolutionName: steel
   - type: SolutionContainerManager
@@ -96,15 +94,6 @@
   - type: Stack
     stackType: Steel
     count: 1
-
-- type: entity
-  parent: SheetSteel
-  id: SheetSteelLingering0
-  suffix: Lingering, 0
-  components:
-  - type: Stack
-    lingering: true
-    count: 0
 
 - type: entity
   parent: SheetMetalBase

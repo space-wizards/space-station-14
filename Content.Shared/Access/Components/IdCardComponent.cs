@@ -37,6 +37,13 @@ public sealed partial class IdCardComponent : Component
     public ProtoId<JobIconPrototype> JobIcon = "JobIconUnknown";
 
     /// <summary>
+    /// Holds the job prototype when the ID card has no associated station record
+    /// </summary>
+    [DataField]
+    [AutoNetworkedField]
+    public ProtoId<AccessLevelPrototype>? JobPrototype;
+
+    /// <summary>
     /// The proto IDs of the departments associated with the job
     /// </summary>
     [DataField]

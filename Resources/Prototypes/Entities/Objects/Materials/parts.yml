@@ -19,6 +19,9 @@
       behaviors:
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
+  - type: Tag
+    tags:
+    - ConstructionMaterial
 
 - type: entity
   parent: PartBase
@@ -81,6 +84,7 @@
   - type: Tag
     tags:
     - RodMetal1
+    - ConstructionMaterial
   - type: Sprite
     state: rods
   - type: Stack
@@ -95,25 +99,8 @@
   - type: Tag
     tags:
     - RodMetal1
+    - ConstructionMaterial
   - type: Sprite
     state: rods
   - type: Stack
     count: 1
-
-- type: entity
-  parent: PartRodMetal
-  id: PartRodMetalLingering0
-  suffix: Lingering, 0
-  components:
-  - type: Stack
-    lingering: true
-    count: 0
-
-- type: entity
-  parent: FloorTileItemSteel
-  id: FloorTileItemSteelLingering0
-  suffix: Lingering, 0
-  components:
-  - type: Stack
-    lingering: true
-    count: 0

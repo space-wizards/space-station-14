@@ -10,7 +10,6 @@ using Robust.Shared.Physics;
 using Robust.Shared.Threading;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
-using Vector2 = System.Numerics.Vector2;
 
 namespace Content.Client.Shuttles.UI;
 
@@ -119,8 +118,6 @@ public partial class BaseShuttleControl : MapGridControl
     protected void DrawGrid(DrawingHandleScreen handle, Matrix3x2 gridToView, Entity<MapGridComponent> grid, Color color, float alpha = 0.01f)
     {
         var rator = Maps.GetAllTilesEnumerator(grid.Owner, grid.Comp);
-        var minimapScale = MinimapScale;
-        var midpoint = new Vector2(MidPoint, MidPoint);
         var tileSize = grid.Comp.TileSize;
 
         // Check if we even have data
@@ -263,9 +260,7 @@ public partial class BaseShuttleControl : MapGridControl
         var edgeCount = totalData - gridData.EdgeIndex;
         Extensions.EnsureLength(ref _allVertices, totalData);
 
-        _drawJob.MidPoint = midpoint;
         _drawJob.Matrix = gridToView;
-        _drawJob.MinimapScale = minimapScale;
         _drawJob.Vertices = gridData.Vertices;
         _drawJob.ScaledVertices = _allVertices;
 
@@ -288,8 +283,6 @@ public partial class BaseShuttleControl : MapGridControl
     {
         public int BatchSize => 64;
 
-        public float MinimapScale;
-        public Vector2 MidPoint;
         public Matrix3x2 Matrix;
 
         public List<Vector2> Vertices;

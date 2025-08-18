@@ -7,13 +7,13 @@
     - to: empty
       steps:
       - tag: DrinkCan
-        name: an empty can
+        name: construction-graph-tag-empty-can
         icon:
           sprite: Objects/Consumable/Drinks/cola.rsi
           state: icon_open
         doAfter: 1
       - tag: Igniter
-        name: an igniter
+        name: construction-graph-tag-igniter
         icon:
           sprite: Objects/Devices/igniter.rsi
           state: icon

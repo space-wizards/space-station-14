@@ -15,43 +15,11 @@
     capacity: 7
 
 - type: entity
-  id: BaseMagazineMagnumSubMachineGun
-  name: SMG magazine (.45 magnum)
-  parent: BaseItem
-  abstract: true
-  components:
-  - type: Tag
-    tags:
-      - MagazineMagnumSubMachineGun
-  - type: BallisticAmmoProvider
-    mayTransfer: true
-    whitelist:
-      tags:
-        - CartridgeMagnum
-    capacity: 25
-  - type: Item
-    size: Small
-  - type: ContainerContainer
-    containers:
-      ballistic-ammo: !type:Container
-  - type: Sprite
-    sprite: Objects/Weapons/Guns/Ammunition/Magazine/Magnum/magnum_smg_mag.rsi
-    layers:
-    - state: base
-      map: ["enum.GunVisualLayers.Base"]
-    - state: mag-1
-      map: ["enum.GunVisualLayers.Mag"]
-  - type: MagazineVisuals
-    magState: mag
-    steps: 2
-    zeroVisible: false
-  - type: Appearance
-
-- type: entity
   id: MagazineMagnumEmpty
   name: pistol magazine (.45 magnum any)
   suffix: empty
   parent: BaseMagazineMagnum
+  description: 7-round single stack pistol magazine.
   components:
   - type: BallisticAmmoProvider
     proto: null
@@ -61,131 +29,111 @@
       map: ["enum.GunVisualLayers.Base"]
     - state: mag-1
       map: ["enum.GunVisualLayers.Mag"]
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: inhand-left-mag
+      right:
+      - state: inhand-right-mag
 
 - type: entity
   id: MagazineMagnum
   name: pistol magazine (.45 magnum)
   parent: BaseMagazineMagnum
+  description: 7-round single stack pistol magazine. Intended to hold general-purpose kinetic ammunition.
   components:
   - type: BallisticAmmoProvider
     proto: CartridgeMagnum
-  - type: Sprite
-    layers:
-    - state: red
-      map: ["enum.GunVisualLayers.Base"]
-    - state: mag-1
-      map: ["enum.GunVisualLayers.Mag"]
-
-- type: entity
-  id: MagazineMagnumPractice
-  name: pistol magazine (.45 magnum practice)
-  parent: BaseMagazineMagnum
-  components:
-  - type: BallisticAmmoProvider
-    proto: CartridgeMagnumPractice
-  - type: Sprite
-    layers:
-    - state: practice
-      map: ["enum.GunVisualLayers.Base"]
-    - state: mag-1
-      map: ["enum.GunVisualLayers.Mag"]
-
-- type: entity
-  id: MagazineMagnumUranium
-  name: pistol magazine (.45 magnum uranium)
-  parent: BaseMagazineMagnum
-  components:
-  - type: BallisticAmmoProvider
-    proto: CartridgeMagnumUranium
-  - type: Sprite
-    layers:
-    - state: uranium
-      map: ["enum.GunVisualLayers.Base"]
-    - state: mag-1
-      map: ["enum.GunVisualLayers.Mag"]
-
-- type: entity
-  id: MagazineMagnumAP
-  name: pistol magazine (.45 magnum armor-piercing)
-  parent: BaseMagazineMagnum
-  components:
-  - type: BallisticAmmoProvider
-    proto: CartridgeMagnumAP
-  - type: Sprite
-    layers:
-    - state: piercing
-      map: ["enum.GunVisualLayers.Base"]
-    - state: mag-1
-      map: ["enum.GunVisualLayers.Mag"]
-
-
-- type: entity
-  id: MagazineMagnumSubMachineGunEmpty
-  name: SMG magazine (.45 magnum any)
-  suffix: empty
-  parent: BaseMagazineMagnumSubMachineGun
-  components:
-  - type: BallisticAmmoProvider
-    proto: null
   - type: Sprite
     layers:
     - state: base
       map: ["enum.GunVisualLayers.Base"]
     - state: mag-1
       map: ["enum.GunVisualLayers.Mag"]
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: inhand-left-mag
+      right:
+      - state: inhand-right-mag
 
 - type: entity
-  id: MagazineMagnumSubMachineGun
-  name: SMG magazine (.45 magnum)
-  parent: BaseMagazineMagnumSubMachineGun
-  components:
-  - type: BallisticAmmoProvider
-    proto: CartridgeMagnum
-  - type: Sprite
-    layers:
-    - state: red
-      map: ["enum.GunVisualLayers.Base"]
-    - state: mag-1
-      map: ["enum.GunVisualLayers.Mag"]
-
-- type: entity
-  id: MagazineMagnumSubMachineGunPractice
-  name: SMG magazine (.45 magnum practice)
-  parent: BaseMagazineMagnumSubMachineGun
+  id: MagazineMagnumPractice
+  name: pistol magazine (.45 magnum practice)
+  parent: BaseMagazineMagnum
+  description: 7-round single stack pistol magazine. Intended to hold non-harmful chalk ammunition.
   components:
   - type: BallisticAmmoProvider
     proto: CartridgeMagnumPractice
   - type: Sprite
     layers:
-    - state: practice
+    - state: base
       map: ["enum.GunVisualLayers.Base"]
     - state: mag-1
       map: ["enum.GunVisualLayers.Mag"]
+    - state: stripe
+      color: "#dbdbdb"
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: inhand-left-mag
+      - state: inhand-left-stripe
+        color: "#dbdbdb"
+      right:
+      - state: inhand-right-mag
+      - state: inhand-right-stripe
+        color: "#dbdbdb"
 
 - type: entity
-  id: MagazineMagnumSubMachineGunUranium
-  name: SMG magazine (.45 magnum uranium)
-  parent: BaseMagazineMagnumSubMachineGun
+  id: MagazineMagnumUranium
+  name: pistol magazine (.45 magnum uranium)
+  parent: BaseMagazineMagnum
+  description: 7-round single stack pistol magazine. Intended to hold exotic uranium-core ammunition.
   components:
   - type: BallisticAmmoProvider
     proto: CartridgeMagnumUranium
   - type: Sprite
     layers:
-    - state: uranium
+    - state: base
       map: ["enum.GunVisualLayers.Base"]
     - state: mag-1
       map: ["enum.GunVisualLayers.Mag"]
+    - state: stripe
+      color: "#00cd42"
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: inhand-left-mag
+      - state: inhand-left-stripe
+        color: "#00cd42"
+      right:
+      - state: inhand-right-mag
+      - state: inhand-right-stripe
+        color: "#00cd42"
 
 - type: entity
-  id: MagazineMagnumSubMachineGunPiercing
-  name: SMG magazine (.45 magnum armour-piercing)
-  parent: BaseMagazineMagnumSubMachineGun
+  id: MagazineMagnumAP
+  name: pistol magazine (.45 magnum armor-piercing)
+  parent: BaseMagazineMagnum
+  description: 7-round single stack pistol magazine. Intended to hold rare armor-piercing ammunition.
   components:
   - type: BallisticAmmoProvider
     proto: CartridgeMagnumAP
   - type: Sprite
     layers:
-    - state: piercing
+    - state: base
       map: ["enum.GunVisualLayers.Base"]
     - state: mag-1
       map: ["enum.GunVisualLayers.Mag"]
+    - state: stripe
+      color: "#540000"
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: inhand-left-mag
+      - state: inhand-left-stripe
+        color: "#540000"
+      right:
+      - state: inhand-right-mag
+      - state: inhand-right-stripe
+        color: "#540000"

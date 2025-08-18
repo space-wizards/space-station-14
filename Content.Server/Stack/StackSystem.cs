@@ -33,7 +33,7 @@ namespace Content.Server.Stack
             base.SetCount(uid, amount, component);
 
             // Queue delete stack if count reaches zero.
-            if (component.Count <= 0 && !component.Lingering)
+            if (component.Count <= 0)
                 QueueDel(uid);
         }
 
@@ -86,7 +86,7 @@ namespace Content.Server.Stack
         public EntityUid Spawn(int amount, StackPrototype prototype, EntityCoordinates spawnPosition)
         {
             // Set the output result parameter to the new stack entity...
-            var entity = Spawn(prototype.Spawn, spawnPosition);
+            var entity = SpawnAtPosition(prototype.Spawn, spawnPosition);
             var stack = Comp<StackComponent>(entity);
 
             // And finally, set the correct amount!
