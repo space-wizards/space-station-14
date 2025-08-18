@@ -356,15 +356,4 @@ public sealed partial class HolopadWindow : FancyWindow
             Text = Loc.GetString("holopad-window-contact-label", ("label", label));
         }
     }
-
-    private int AlphabeticalSort(KeyValuePair<NetEntity, string> x, KeyValuePair<NetEntity, string> y)
-    {
-        if (string.IsNullOrEmpty(x.Value))
-            return -1;
-
-        if (string.IsNullOrEmpty(y.Value))
-            return 1;
-
-        return x.Value.CompareTo(y.Value);
-    }
 }
