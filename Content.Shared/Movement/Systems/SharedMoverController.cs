@@ -634,11 +634,12 @@ public abstract partial class SharedMoverController : VirtualController
 
     private void OnTileFriction(Entity<MovementSpeedModifierComponent> ent, ref TileFrictionEvent args)
     {
-        if (!PhysicsQuery.TryComp(ent, out var physicsComponent) || !XformQuery.TryComp(ent, out var xform))
+        if (!PhysicsQuery.TryComp(ent, out var physicsComponent))
             return;
 
         // TODO: Make IsWeightless event based!!!
-        if (physicsComponent.BodyStatus != BodyStatus.OnGround || _gravity.IsWeightless(ent, physicsComponent, xform))
+        if (physicsComponent.BodyStatus != BodyStatus.OnGround
+            || _gravity.IsWeightless(ent, physicsComponent, Transform(ent)))
             args.Modifier *= ent.Comp.BaseWeightlessFriction;
         else
             args.Modifier *= ent.Comp.BaseFriction;
