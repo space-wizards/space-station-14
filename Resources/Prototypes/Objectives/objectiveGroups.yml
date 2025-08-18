@@ -21,6 +21,7 @@
     CaptainGunStealObjective: 0.5
     CaptainJetpackStealObjective: 0.5
     HandTeleporterStealObjective: 0.5
+    LawOverriderStealObjective: 0.5
     EnergyShotgunStealObjective: 0.5
 
 - type: weightedRandom

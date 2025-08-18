@@ -26,3 +26,5 @@
           - SiliconLawProvider
   - type: SiliconLawOverrider
     overrideTime: 10
+  - type: StealTarget
+    stealGroup: LawOverrider
