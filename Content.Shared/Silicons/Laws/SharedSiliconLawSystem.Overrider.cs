@@ -23,8 +23,6 @@ public abstract partial class SharedSiliconLawSystem
 
     private void OnOverriderInteract(Entity<SiliconLawOverriderComponent> ent, ref AfterInteractEvent args)
     {
-        Log.Debug($"ent: {ent}, args.Target: {args.Target}, args.User: {args.User}, args,.Used: {args.Used}");
-
         if (args.Handled || !args.CanReach || args.Target == null)
             return;
 
@@ -38,7 +36,7 @@ public abstract partial class SharedSiliconLawSystem
 
         var lawBoard = _slot.GetItemOrNull(lawOverrider, OverriderComp.LawBoardId);
 
-        if (!TryComp(lawBoard, out SiliconLawOverriderComponent? LawProviderBase))
+        if (!TryComp(lawBoard, out SiliconLawProviderComponent? LawProviderBase))
             return;
 
         var ev = new ChatNotificationEvent(_overrideLawsChatNotificationPrototype, args.Used, args.User);
@@ -46,7 +44,7 @@ public abstract partial class SharedSiliconLawSystem
 
         var doAfterTime = OverriderComp.OverrideTime;
 
-        var doAfterArgs = new DoAfterArgs(EntityManager, args.User, doAfterTime, new OverriderDoAfterEvent(), args.Target, ent.Owner)
+        var doAfterArgs = new DoAfterArgs(EntityManager, args.User, doAfterTime, new OverriderDoAfterEvent(), args.Target, ent.Owner, args.Used)
         {
             BreakOnDamage = true,
             BreakOnMove = true,
@@ -66,7 +64,7 @@ public abstract partial class SharedSiliconLawSystem
         if (args.Handled)
             return;
 
-        if (!TryComp(args.Args.Target, out SiliconLawProviderComponent? LawProviderTarget))
+        if (!TryComp(ent, out SiliconLawProviderComponent? LawProviderTarget))
             return;
 
         var lawOverrider = args.Args.Used;
@@ -83,10 +81,9 @@ public abstract partial class SharedSiliconLawSystem
             return;
 
         if (!TryComp(lawBoard.Value, out SiliconLawProviderComponent? LawProviderBase))
-                return;
+            return;
 
         var lawset = GetLawset(LawProviderBase.Laws).Laws;
-
         SetLaws(lawset, ent, LawProviderBase.LawUploadSound);
     }
 }
