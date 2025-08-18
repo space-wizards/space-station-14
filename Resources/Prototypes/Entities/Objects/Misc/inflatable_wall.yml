@@ -39,6 +39,9 @@
     anchored: true
   placement:
     mode: SnapgridCenter
+  - type: Tag
+      tags:
+        - Inflatable
 
 - type: entity
   id: InflatableDoor
@@ -85,3 +88,6 @@
   - type: InflatableSafeDisassembly
   - type: Occluder
     enabled: false
+  - type: Tag
+      tags:
+        - Inflatable
