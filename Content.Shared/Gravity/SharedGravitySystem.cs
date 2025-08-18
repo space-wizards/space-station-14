@@ -55,7 +55,7 @@ public abstract partial class SharedGravitySystem : EntitySystem
         UpdateShake();
     }
 
-    [Obsolete("Use the Entity<WeightlessnessComponent?> overload instead.")]
+    [Obsolete("Use the Entity<GravityAffectedComponent?> overload instead.")]
     public bool IsWeightless(EntityUid uid, PhysicsComponent body, TransformComponent? xform = null)
     {
         if (_weightlessQuery.TryComp(uid, out var weightless))
