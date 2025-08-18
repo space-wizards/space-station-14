@@ -175,7 +175,7 @@
     - type: LoadMapRule
       mapPath: /Maps/_Starlight/EventMaps/research_outpost_map.yml
 
-#Quini's CBURN Shuttle
+# Quini's CBURN Shuttle
 - type: entity
   parent: BaseGameRule
   id: CBURNShuttleSpawn_Q
@@ -183,6 +183,24 @@
     - type: RuleGrids
     - type: LoadMapRule
       gridPath: /Maps/_Starlight/Shuttles/CBURN_Q.yml
+
+# Mining Shuttle
+- type: entity
+  parent: BaseGameRule
+  id: MiningShuttleSpawn_GR-4P3
+  components:
+    - type: RuleGrids
+    - type: LoadMapRule
+      gridPath: /Maps/_Starlight/Shuttles/Mining/GR-4P3.yml
+
+# Security Shuttle
+- type: entity
+  parent: BaseGameRule
+  id: SecurityShuttleSpawn_SP-4C3
+  components:
+    - type: RuleGrids
+    - type: LoadMapRule
+      gridPath: /Maps/_Starlight/Shuttles/Security/SP-4C3.yml
 
 # Roundender-less events table for survival
 - type: entityTable
