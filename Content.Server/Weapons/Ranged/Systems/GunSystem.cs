@@ -46,7 +46,6 @@ public sealed partial class GunSystem : SharedGunSystem
     {
         if (string.IsNullOrEmpty(component.Proto) || component.UnspawnedCount == 0)
             return;
-        Spawn("ffssff");
 
         if (!ProtoManager.TryIndex<EntityPrototype>(component.Proto, out var proto))
         {
@@ -74,8 +73,6 @@ public sealed partial class GunSystem : SharedGunSystem
                 return;
             }
         }
-
-        Spawn("ffff");
 
         var fromMap = TransformSystem.ToMapCoordinates(fromCoordinates);
         var toMap = TransformSystem.ToMapCoordinates(toCoordinates).Position;
