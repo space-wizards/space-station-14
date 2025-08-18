@@ -10,7 +10,7 @@
     "states": [
         {
             "name": "active",
-            "delay": [
+            "delays": [
                 [
                     0.1,
                     0.1,
