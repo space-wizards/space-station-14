@@ -27,7 +27,7 @@
                 </BoxContainer>
                 <!-- Lower row: every single gas -->
                 <Collapsible Margin="2 2 2 2">
-                    <CollapsibleHeading Title="Gas filters" />
+                    <CollapsibleHeading Title="{Loc 'air-alarm-ui-widget-gas-filters'}" />
                     <CollapsibleBody Margin="20 0 0 0">
                         <BoxContainer Orientation="Vertical">
                             <BoxContainer Margin="2">

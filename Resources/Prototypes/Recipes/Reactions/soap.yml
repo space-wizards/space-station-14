@@ -1,0 +1,119 @@
+- type: reaction
+  id: CreateSoapRegular
+  impact: Low
+  quantized: true
+  minTemp: 383 # Water boiling point + 10 Kelvin. We are boiling it
+  reactants:
+    Oil:
+      amount: 10
+    Lye:
+      amount: 15
+    TableSalt:
+      amount: 5
+  effects:
+    - !type:CreateEntityReactionEffect
+      entity: Soap
+
+- type: reaction
+  id: CreateSoapNT
+  impact: Low
+  quantized: true
+  minTemp: 373 # Water boiling point. We are boiling it too, but with higher priority!
+  reactants:
+    Oil:
+      amount: 15
+    Lye:
+      amount: 20
+    TableSalt:
+      amount: 5
+    Plasma:
+      amount: 5
+  effects:
+    - !type:CreateEntityReactionEffect
+      entity: SoapNT
+
+- type: reaction
+  id: CreateSoapDeluxe
+  impact: Low
+  quantized: true
+  minTemp: 373
+  reactants:
+    Oil:
+      amount: 15
+    Lye:
+      amount: 20
+    TableSalt:
+      amount: 5
+    JuiceBerry:
+      amount: 5
+  effects:
+    - !type:CreateEntityReactionEffect
+      entity: SoapDeluxe
+
+- type: reaction
+  id: CreateSoapBlood
+  impact: Low
+  quantized: true
+  minTemp: 373
+  reactants:
+    Fat:
+      amount: 10
+    Lye:
+      amount: 20
+    TableSalt:
+      amount: 5
+    Blood:
+      amount: 10
+  effects:
+    - !type:CreateEntityReactionEffect
+      entity: SoapHomemade
+
+- type: reaction
+  id: CreateSoapSyndie
+  impact: Medium
+  quantized: true
+  minTemp: 373
+  reactants:
+    Oil:
+      amount: 15
+    Lye:
+      amount: 20
+    TableSalt:
+      amount: 5
+    Stimulants:
+      amount: 5
+  effects:
+    - !type:CreateEntityReactionEffect
+      entity: SoapSyndie
+
+- type: reaction
+  id: CreateSoapOmega
+  impact: Medium
+  quantized: true
+  minTemp: 373
+  reactants:
+    Oil:
+      amount: 5
+    Fat:
+      amount: 5
+    Lye:
+      amount: 10
+    TableSalt:
+      amount: 5
+    Honk:
+      amount: 10
+    SpaceLube:
+      amount: 5
+    SpaceDrugs:
+      amount: 3
+    THC:
+      amount: 2
+    Bananadine:
+      amount: 2
+    Omnizine:
+      amount: 2
+    Amatoxin:
+      amount: 1
+  effects:
+    - !type:CreateEntityReactionEffect
+      entity: SoapOmega
