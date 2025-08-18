@@ -31,6 +31,7 @@ public abstract partial class SharedGravitySystem : EntitySystem
         SubscribeLocalEvent<GravityChangedEvent>(OnGravityChange);
 
         // Weightlessness
+        SubscribeLocalEvent<GravityAffectedComponent, MapInitEvent>(OnMapInit);
         SubscribeLocalEvent<GravityAffectedComponent, EntParentChangedMessage>(OnEntParentChanged);
         SubscribeLocalEvent<GravityAffectedComponent, PhysicsBodyTypeChangedEvent>(OnBodyTypeChanged);
 
@@ -60,7 +61,7 @@ public abstract partial class SharedGravitySystem : EntitySystem
         return _weightlessQuery.Resolve(entity, ref entity.Comp, false) && entity.Comp.Weightless;
     }
 
-    private bool TryWeightless(Entity<GravityAffectedComponent, PhysicsComponent?> entity)
+    private bool GetWeightless(Entity<GravityAffectedComponent, PhysicsComponent?> entity)
     {
         if (!_physicsQuery.Resolve(entity, ref entity.Comp2, false))
             return false;
@@ -89,9 +90,26 @@ public abstract partial class SharedGravitySystem : EntitySystem
         UpdateWeightless(entity!);
     }
 
+    /// <summary>
+    /// Overload of <see cref="RefreshWeightless(Entity{GravityAffectedComponent?})"/> which also takes a bool for the weightlessness value we want to change to.
+    /// </summary>
+    /// <param name="entity">The entity we are updating the weightless status of</param>
+    /// <param name="weightless">The weightless value we are trying to change to, helps avoid needless networking</param>
+    public void RefreshWeightless(Entity<GravityAffectedComponent?> entity, bool weightless)
+    {
+        if (!_weightlessQuery.Resolve(entity, ref entity.Comp))
+            return;
+
+        // Only update if we're changing our weightless status
+        if (entity.Comp.Weightless == weightless)
+            return;
+
+        UpdateWeightless(entity!);
+    }
+
     private void UpdateWeightless(Entity<GravityAffectedComponent> entity)
     {
-        var newWeightless = TryWeightless(entity);
+        var newWeightless = GetWeightless(entity);
 
         // Don't network or raise events if it's not changing
         if (newWeightless == entity.Comp.Weightless)
@@ -102,6 +120,11 @@ public abstract partial class SharedGravitySystem : EntitySystem
 
         var ev = new WeightlessnessChangedEvent(entity.Comp.Weightless);
         RaiseLocalEvent(entity, ref ev);
+    }
+
+    private void OnMapInit(Entity<GravityAffectedComponent> entity, ref MapInitEvent args)
+    {
+        RefreshWeightless((entity.Owner, entity.Comp));
     }
 
     private void OnWeightlessnessChanged(Entity<AlertsComponent> entity, ref WeightlessnessChangedEvent args)
@@ -118,7 +141,7 @@ public abstract partial class SharedGravitySystem : EntitySystem
         if (args.OldParent == args.Transform.GridUid)
             return;
 
-        RefreshWeightless((entity.Owner, entity.Comp));
+        RefreshWeightless((entity.Owner, entity.Comp), !EntityGridOrMapHaveGravity((entity, args.Transform)));
     }
 
     private void OnBodyTypeChanged(Entity<GravityAffectedComponent> entity, ref PhysicsBodyTypeChangedEvent args)
@@ -162,10 +185,10 @@ public abstract partial class SharedGravitySystem : EntitySystem
         var gravity = AllEntityQuery<GravityAffectedComponent, TransformComponent>();
         while(gravity.MoveNext(out var uid, out var weightless, out var xform))
         {
-            if (xform.GridUid != args.ChangedGridIndex || weightless.Weightless == !args.HasGravity)
+            if (xform.GridUid != args.ChangedGridIndex)
                 continue;
 
-            RefreshWeightless((uid, weightless));
+            RefreshWeightless((uid, weightless), !args.HasGravity);
         }
     }
 

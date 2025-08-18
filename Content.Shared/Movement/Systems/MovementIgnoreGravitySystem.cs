@@ -30,6 +30,6 @@ public sealed class MovementIgnoreGravitySystem : EntitySystem
     private void OnComponentStartup(Entity<MovementIgnoreGravityComponent> entity, ref ComponentStartup args)
     {
         EnsureComp<GravityAffectedComponent>(entity);
-        _gravity.RefreshWeightless(entity.Owner);
+        _gravity.RefreshWeightless(entity.Owner, entity.Comp.Weightless);
     }
 }
