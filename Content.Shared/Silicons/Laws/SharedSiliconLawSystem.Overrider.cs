@@ -65,13 +65,21 @@ public abstract partial class SharedSiliconLawSystem
         if (!TryComp(args.Args.Target, out SiliconLawProviderComponent? LawProviderTarget))
             return;
 
-        if (!TryComp(args.Args.Used, out SiliconLawOverriderComponent? OverriderComp))
+        var lawOverrider = args.Args.Used;
+
+        if (lawOverrider == null)
             return;
 
-        var lawBoard = _slot.GetItemOrNull(args.Args.Used, OverriderComp.LawBoardId);
-
-        if (!TryComp(lawBoard, out SiliconLawProviderComponent? LawProviderBase))
+        if (!TryComp(lawOverrider.Value, out SiliconLawOverriderComponent? OverriderComp))
             return;
+
+        var lawBoard = _slot.GetItemOrNull(lawOverrider.Value, OverriderComp.LawBoardId);
+
+        if (lawBoard == null)
+            return;
+
+        if (!TryComp(lawBoard.Value, out SiliconLawProviderComponent? LawProviderBase))
+                return;
 
         var lawset = GetLawset(LawProviderBase.Laws).Laws;
 
