@@ -4,8 +4,8 @@ meta:
   engineVersion: 266.0.0
   forkId: ""
   forkVersion: ""
-  time: 08/18/2025 02:39:30
-  entityCount: 878
+  time: 08/18/2025 04:40:53
+  entityCount: 876
 maps: []
 grids:
 - 1
@@ -2406,9 +2406,11 @@ entities:
       rot: -1.5707963267948966 rad
       pos: 7.5,-15.5
       parent: 1
+    - type: AnalysisConsole
+      analyzerEntity: 398
     - type: DeviceLinkSource
       linkedPorts:
-        272:
+        398:
         - - ArtifactAnalyzerSender
           - ArtifactAnalyzerReceiver
   - uid: 784
@@ -2417,9 +2419,11 @@ entities:
       rot: 1.5707963267948966 rad
       pos: -6.5,-15.5
       parent: 1
+    - type: AnalysisConsole
+      analyzerEntity: 272
     - type: DeviceLinkSource
       linkedPorts:
-        398:
+        272:
         - - ArtifactAnalyzerSender
           - ArtifactAnalyzerReceiver
 - proto: ComputerComms
@@ -2492,35 +2496,6 @@ entities:
       parent: 1
     - type: Lock
       locked: False
-    - type: EntityStorage
-      air:
-        volume: 200
-        immutable: False
-        temperature: 293.14673
-        moles:
-        - 1.7459903
-        - 6.568249
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-    - type: ContainerContainer
-      containers:
-        entity_storage: !type:Container
-          showEnts: False
-          occludes: True
-          ents:
-          - invalid
-        paper_label: !type:ContainerSlot
-          showEnts: False
-          occludes: True
-          ent: null
   - uid: 768
     components:
     - type: Transform
@@ -2528,35 +2503,6 @@ entities:
       parent: 1
     - type: Lock
       locked: False
-    - type: EntityStorage
-      air:
-        volume: 200
-        immutable: False
-        temperature: 293.14673
-        moles:
-        - 1.7459903
-        - 6.568249
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-    - type: ContainerContainer
-      containers:
-        entity_storage: !type:Container
-          showEnts: False
-          occludes: True
-          ents:
-          - invalid
-        paper_label: !type:ContainerSlot
-          showEnts: False
-          occludes: True
-          ent: null
 - proto: CrateFilledSpawner
   entities:
   - uid: 779
@@ -4330,19 +4276,13 @@ entities:
   - uid: 272
     components:
     - type: Transform
-      pos: 6.5,-12.5
+      pos: -5.5,-12.5
       parent: 1
-    - type: ItemPlacer
-      placedEntities:
-      - invalid
   - uid: 398
     components:
     - type: Transform
-      pos: -5.5,-12.5
+      pos: 6.5,-12.5
       parent: 1
-    - type: ItemPlacer
-      placedEntities:
-      - invalid
 - proto: MedicalBed
   entities:
   - uid: 422
@@ -4357,15 +4297,15 @@ entities:
       parent: 1
 - proto: NetworkConfigurator
   entities:
+  - uid: 785
+    components:
+    - type: Transform
+      pos: -3.7083337,-14.34175
+      parent: 1
   - uid: 809
     components:
     - type: Transform
       pos: 4.2934732,-14.35611
-      parent: 1
-  - uid: 810
-    components:
-    - type: Transform
-      pos: -3.716944,-14.345694
       parent: 1
 - proto: PaperCaptainsThoughts
   entities:
@@ -4623,18 +4563,6 @@ entities:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: -1.5,2.5
-      parent: 1
-- proto: RandomArtifactSpawner
-  entities:
-  - uid: 785
-    components:
-    - type: Transform
-      pos: 6.5,-12.5
-      parent: 1
-  - uid: 788
-    components:
-    - type: Transform
-      pos: -5.5,-12.5
       parent: 1
 - proto: ReinforcedWindow
   entities:
