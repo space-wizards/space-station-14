@@ -121,3 +121,22 @@
         location: Middle
       extra_hand_2:
         location: Middle
+
+- type: entity
+  parent: ClothingBackpack
+  id: BorgMaterialBag
+  name: silicon storage square
+  description: A knockoff version of a bluespace bag, unfit for use by humanoids due to harmful emissions
+  components:
+  - type: Storage
+    grid:
+    - 0,0,7,4
+    whitelist:
+      tags:
+        - Sheet
+        - ConstructionMaterial
+      components:
+         - ConstructionMaterial
+         - Circuitboard
+         - Flatpack
+         - FloorTile
