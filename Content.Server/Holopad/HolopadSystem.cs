@@ -42,7 +42,7 @@ public sealed class HolopadSystem : SharedHolopadSystem
     private float _updateTimer = 1.0f;
     private const float UpdateTime = 1.0f;
 
-    private readonly Dictionary<NetEntity, string> _holopads = [];
+    private readonly HashSet<NetEntity> _holopads = [];
 
     public override void Initialize()
     {
@@ -325,7 +325,7 @@ public sealed class HolopadSystem : SharedHolopadSystem
         if (entity.Comp.User != null)
             LinkHolopadToUser(entity, entity.Comp.User.Value);
 
-        _holopads.Add(GetNetEntity(entity), string.Empty);
+        _holopads.Add(GetNetEntity(entity));
     }
 
     private void OnHolopadUserInit(Entity<HolopadUserComponent> entity, ref ComponentInit args)
@@ -482,20 +482,6 @@ public sealed class HolopadSystem : SharedHolopadSystem
     {
         if (!Resolve(entity.Owner, ref telephone, false))
             return;
-
-        // Update names
-        for (var i = 1; i < _holopads.Count; i++)
-        {
-            var element = _holopads.ElementAt(i);
-            var receiverEnt = GetEntity(element.Key);
-
-            var name = MetaData(receiverEnt).EntityName;
-
-            if (TryComp<LabelComponent>(receiverEnt, out var label) && !string.IsNullOrEmpty(label.CurrentLabel))
-                name = label.CurrentLabel;
-
-            _holopads[element.Key] = name;
-        }
 
         var uiKey = HasComp<StationAiCoreComponent>(entity) ? HolopadUiKey.AiActionWindow : HolopadUiKey.InteractionWindow;
         _userInterfaceSystem.SetUiState(entity.Owner, uiKey, new HolopadBoundInterfaceState(_holopads));

@@ -64,14 +64,9 @@ public sealed partial class HolopadComponent : Component
 ///     Data from by the server to the client for the holopad UI
 /// </summary>
 [Serializable, NetSerializable]
-public sealed class HolopadBoundInterfaceState : BoundUserInterfaceState
+public sealed class HolopadBoundInterfaceState(HashSet<NetEntity> holopads) : BoundUserInterfaceState
 {
-    public readonly Dictionary<NetEntity, string> Holopads;
-
-    public HolopadBoundInterfaceState(Dictionary<NetEntity, string> holopads)
-    {
-        Holopads = holopads;
-    }
+    public readonly HashSet<NetEntity> Holopads = holopads;
 }
 
 /// <summary>
