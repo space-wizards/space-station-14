@@ -12,6 +12,7 @@
     state: icon
     noRot: false
   - type: ImmovableRod
+  - type: GravityAffected
   - type: Physics
     bodyType: Dynamic
     linearDamping: 0
