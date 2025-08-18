@@ -75,19 +75,18 @@ public sealed class SurveillanceCameraMapSystem : EntitySystem
         var powered = CompOrNull<ApcPowerReceiverComponent>(uid)?.Powered ?? true;
         var active = comp.Active && powered;
 
-        var visible = true;
-        if (mapComp.Cameras.TryGetValue(netEntity, out var existing))
+        bool exists = mapComp.Cameras.TryGetValue(netEntity, out var existing);
+
+        if (exists &&
+            existing.Position.Equals(localPos) &&
+            existing.Active == active &&
+            existing.Address == address &&
+            existing.Subnet == subnet)
         {
-            if (existing.Position.Equals(localPos) &&
-                existing.Active == active &&
-                existing.Address == address &&
-                existing.Subnet == subnet &&
-                existing.Visible)
-            {
-                return;
-            }
-            visible = existing.Visible;
+            return;
         }
+
+        var visible = exists ? existing.Visible : true;
 
         mapComp.Cameras[netEntity] = new CameraMarker
         {
