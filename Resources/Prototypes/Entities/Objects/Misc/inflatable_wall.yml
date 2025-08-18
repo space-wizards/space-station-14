@@ -40,8 +40,8 @@
   placement:
     mode: SnapgridCenter
   - type: Tag
-      tags:
-        - Inflatable
+    tags:
+      - Inflatable
 
 - type: entity
   id: InflatableDoor
@@ -89,5 +89,5 @@
   - type: Occluder
     enabled: false
   - type: Tag
-      tags:
-        - Inflatable
+    tags:
+      - Inflatable
