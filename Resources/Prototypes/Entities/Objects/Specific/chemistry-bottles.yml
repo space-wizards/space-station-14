@@ -166,21 +166,6 @@
           Quantity: 30
 
 - type: entity
-  id: ChemistryBottleAloxadone
-  suffix: aloxadone
-  parent: BaseChemistryBottleFilled
-  components:
-  - type: Label
-    currentLabel: reagent-aloxadone
-  - type: SolutionContainerManager
-    solutions:
-      drink:
-        maxVol: 30
-        reagents:
-        - ReagentId: Aloxadone
-          Quantity: 30
-
-- type: entity
   id: ChemistryBottleAmbuzol
   suffix: ambuzol
   parent: BaseChemistryBottleFilled
@@ -1422,7 +1407,7 @@
     - id: ChemistryBottleOculine
 
 - type: entityTable
-  id: MedicineReagentBottlesTable
+  id: AllMedicineReagentBottlesTable
   table: !type:GroupSelector
     children:
     - id: ChemistryBottleAloxadone
