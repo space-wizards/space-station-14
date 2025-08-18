@@ -24,7 +24,7 @@ public sealed class BatteryWeaponFireModesSystem : EntitySystem
     [Dependency] private readonly AccessReaderSystem _accessReaderSystem = default!;
     [Dependency] private readonly SharedAppearanceSystem _appearanceSystem = default!;
     [Dependency] private readonly SharedItemSystem _item = default!;
-    [Dependency] private readonly INetManager _net = default!;
+    [Dependency] private readonly INetManager _net = default!; // Starlight-edit
 
     public override void Initialize()
     {
