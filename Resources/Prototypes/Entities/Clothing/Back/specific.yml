@@ -135,7 +135,7 @@
   - type: Dumpable
   - type: Storage
     grid:
-    - 0,0,7,4
+    - 0,0,7,3
     quickInsert: true
     areaInsert: true
     whitelist:
