@@ -55,7 +55,8 @@ public sealed partial class TelephoneComponent : Component
     /// <summary>
     /// The maximum range at which the telephone initiate a call with another
     /// </summary>
-    [DataField]
+    // TODO: Predict?
+    [DataField, AutoNetworkedField]
     public TelephoneRange TransmissionRange = TelephoneRange.Grid;
 
     /// <summary>
@@ -65,14 +66,16 @@ public sealed partial class TelephoneComponent : Component
     /// This bool will be ignored if the <see cref="TransmissionRange"/> is
     /// set to <see cref="TelephoneRange.Grid"/>
     /// </remarks>
-    [DataField]
+    // TODO: Predict?
+    [DataField, AutoNetworkedField]
     public bool IgnoreTelephonesOnSameGrid = false;
 
     /// <summary>
     /// The telephone can only connect with other telephones which have a
     /// <see cref="TransmissionRange"/> present in this list
     /// </summary>
-    [DataField]
+    // TODO: Predict?
+    [DataField, AutoNetworkedField]
     public List<TelephoneRange> CompatibleRanges = new List<TelephoneRange>() { TelephoneRange.Grid };
 
     /// <summary>

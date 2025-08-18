@@ -177,6 +177,17 @@ public sealed partial class HolopadWindow : FancyWindow
         HolopadIdText.SetMessage(FormattedMessage.FromMarkupOrThrow(holoapdId));
         LockOutIdText.SetMessage(FormattedMessage.FromMarkupOrThrow(callerId));
 
+        // Filter holopads
+        for (var i = 0; i < holopads.Count; i++)
+        {
+            var receiver = holopads.ElementAt(i);
+            var receiverEnt = _entManager.GetEntity(receiver.Key);
+
+            if (_owner == receiverEnt || !_entManager.TryGetComponent<TelephoneComponent>(receiverEnt, out var receiverTelephone) || receiverTelephone.UnlistedNumber ||
+                !_telephoneSystem.IsSourceInRangeOfReceiver((_owner.Value, telephone), (receiverEnt, receiverTelephone)))
+                holopads.Remove(receiver.Key);
+        }
+
         // Sort holopads alphabetically
         var holopadArray = holopads.ToArray();
         Array.Sort(holopadArray, AlphabeticalSort);

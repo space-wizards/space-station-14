@@ -42,6 +42,8 @@ public sealed class HolopadSystem : SharedHolopadSystem
     private float _updateTimer = 1.0f;
     private const float UpdateTime = 1.0f;
 
+    private readonly Dictionary<NetEntity, string> _holopads = [];
+
     public override void Initialize()
     {
         base.Initialize();
@@ -322,6 +324,8 @@ public sealed class HolopadSystem : SharedHolopadSystem
     {
         if (entity.Comp.User != null)
             LinkHolopadToUser(entity, entity.Comp.User.Value);
+
+        _holopads.Add(GetNetEntity(entity), string.Empty);
     }
 
     private void OnHolopadUserInit(Entity<HolopadUserComponent> entity, ref ComponentInit args)
@@ -337,6 +341,7 @@ public sealed class HolopadSystem : SharedHolopadSystem
 
         ShutDownHolopad(entity);
         SetHolopadAmbientState(entity, false);
+        _holopads.Remove(GetNetEntity(entity));
     }
 
     private void OnHolopadUserShutdown(Entity<HolopadUserComponent> entity, ref ComponentShutdown args)
@@ -478,33 +483,22 @@ public sealed class HolopadSystem : SharedHolopadSystem
         if (!Resolve(entity.Owner, ref telephone, false))
             return;
 
-        var source = new Entity<TelephoneComponent>(entity, telephone);
-        var holopads = new Dictionary<NetEntity, string>();
-
-        var query = AllEntityQuery<HolopadComponent, TelephoneComponent>();
-        while (query.MoveNext(out var receiverUid, out var _, out var receiverTelephone))
+        // Update names
+        for (var i = 1; i < _holopads.Count; i++)
         {
-            var receiver = new Entity<TelephoneComponent>(receiverUid, receiverTelephone);
+            var element = _holopads.ElementAt(i);
+            var receiverEnt = GetEntity(element.Key);
 
-            if (receiverTelephone.UnlistedNumber)
-                continue;
+            var name = MetaData(receiverEnt).EntityName;
 
-            if (source == receiver)
-                continue;
-
-            if (!_telephoneSystem.IsSourceInRangeOfReceiver(source, receiver))
-                continue;
-
-            var name = MetaData(receiverUid).EntityName;
-
-            if (TryComp<LabelComponent>(receiverUid, out var label) && !string.IsNullOrEmpty(label.CurrentLabel))
+            if (TryComp<LabelComponent>(receiverEnt, out var label) && !string.IsNullOrEmpty(label.CurrentLabel))
                 name = label.CurrentLabel;
 
-            holopads.Add(GetNetEntity(receiverUid), name);
+            _holopads[element.Key] = name;
         }
 
         var uiKey = HasComp<StationAiCoreComponent>(entity) ? HolopadUiKey.AiActionWindow : HolopadUiKey.InteractionWindow;
-        _userInterfaceSystem.SetUiState(entity.Owner, uiKey, new HolopadBoundInterfaceState(holopads));
+        _userInterfaceSystem.SetUiState(entity.Owner, uiKey, new HolopadBoundInterfaceState(_holopads));
     }
 
     private void GenerateHologram(Entity<HolopadComponent> entity)
