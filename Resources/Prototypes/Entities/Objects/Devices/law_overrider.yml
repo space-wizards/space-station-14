@@ -10,8 +10,11 @@
     - state: icon
       map: ["enum.LawOverriderVisualLayers.Base"]
     - state: law_board
+      visible: false
       map: ["enum.LawOverriderVisualLayers.LawBoard"]
     - state: active
+      shader: unshaded
+      visible: false
       map: ["enum.LawOverriderVisualLayers.Light"]
   - type: ItemSlots
     slots:
