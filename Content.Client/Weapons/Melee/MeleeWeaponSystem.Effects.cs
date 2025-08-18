@@ -45,9 +45,9 @@ public sealed partial class MeleeWeaponSystem
         RaiseLocalEvent(user, ref prepare);
 
         EntityUid animationUid;
+        var (mapPos, mapRot) = TransformSystem.GetWorldPositionRotation(userXform);
         if (prepare.SpawnAtMap)
         {
-            var (mapPos, _) = TransformSystem.GetWorldPositionRotation(userXform);
             var spawnCoords = new MapCoordinates(mapPos, userXform.MapID);
             animationUid = Spawn(animation, spawnCoords);
         }
@@ -75,7 +75,8 @@ public sealed partial class MeleeWeaponSystem
             if (meleeWeaponComponent.SwingLeft)
                 angle *= -1;
         }
-        _sprite.SetRotation((animationUid, sprite), localPos.ToWorldAngle());
+        var baseVec = prepare.SpawnAtMap ? (mapRot - userXform.LocalRotation).RotateVec(localPos) : localPos;
+        _sprite.SetRotation((animationUid, sprite), baseVec.ToWorldAngle());
         var distance = Math.Clamp(localPos.Length() / 2f, 0.2f, 1f);
 
         var xform = _xformQuery.GetComponent(animationUid);
@@ -103,7 +104,7 @@ public sealed partial class MeleeWeaponSystem
                     _animation.Play(animationUid, GetFadeAnimation(sprite, 0.05f, 0.15f), FadeAnimationKey);
                 break;
             case WeaponArcAnimation.None:
-                var (mapPos, mapRot) = TransformSystem.GetWorldPositionRotation(userXform);
+                (mapPos, mapRot) = TransformSystem.GetWorldPositionRotation(userXform);
                 var worldPos = mapPos + (mapRot - userXform.LocalRotation).RotateVec(localPos);
                 var newLocalPos = Vector2.Transform(worldPos, TransformSystem.GetInvWorldMatrix(xform.ParentUid));
                 TransformSystem.SetLocalPositionNoLerp(animationUid, newLocalPos, xform);
