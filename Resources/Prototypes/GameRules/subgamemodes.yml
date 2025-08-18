@@ -35,6 +35,8 @@
       - MindRoleThief
       briefing:
         sound: "/Audio/Misc/thief_greeting.ogg"
+  - type: DynamicRuleCost
+    cost: 75
 
 # Needs testing
 - type: entity
