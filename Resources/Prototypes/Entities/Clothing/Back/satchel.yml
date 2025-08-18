@@ -197,7 +197,7 @@
   components:
   - type: Storage
     whitelist:
-       tags:
+       components:
           - ConstructionMaterial
           - Circuitboard
           - Flatpack
