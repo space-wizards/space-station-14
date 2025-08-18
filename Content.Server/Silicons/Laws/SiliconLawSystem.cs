@@ -49,6 +49,9 @@ public sealed class SiliconLawSystem : SharedSiliconLawSystem
         SubscribeLocalEvent<SiliconLawProviderComponent, MindAddedMessage>(OnLawProviderMindAdded);
         SubscribeLocalEvent<SiliconLawProviderComponent, MindRemovedMessage>(OnLawProviderMindRemoved);
         SubscribeLocalEvent<SiliconLawProviderComponent, SiliconEmaggedEvent>(OnEmagLawsAdded);
+
+        SubscribeLocalEvent<SiliconLawOverriderComponent, EntInsertedIntoContainerMessage>(OnLawOverriderEntityInserted);
+        SubscribeLocalEvent<SiliconLawOverriderComponent, EntRemovedFromContainerMessage>(OnLawOverriderEntityRemoved);
     }
 
     private void OnMapInit(EntityUid uid, SiliconLawBoundComponent component, MapInitEvent args)
@@ -285,6 +288,16 @@ public sealed class SiliconLawSystem : SharedSiliconLawSystem
         {
             SetLaws(lawset, update, provider.LawUploadSound);
         }
+    }
+
+    public void OnLawOverriderEntityInserted(EntityUid uid, SiliconLawOverriderComponent component, EntInsertedIntoContainerMessage args)
+    {
+        _appearance.SetData(uid, LawOverriderVisuals.LawBoardInserted, true);
+    }
+
+    public void OnLawOverriderEntityRemoved(EntityUid uid, SiliconLawOverriderComponent component, EntRemovedFromContainerMessage args)
+    {
+        _appearance.SetData(uid, LawOverriderVisuals.LawBoardInserted, false);
     }
 }
 
