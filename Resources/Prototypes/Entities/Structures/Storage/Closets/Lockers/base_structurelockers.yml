@@ -1,7 +1,6 @@
 - type: entity
   id: LockerBase
   parent: ClosetBase
-  abstract: true
   components:
   - type: AccessReader
   - type: Lock
