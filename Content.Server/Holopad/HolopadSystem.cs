@@ -7,6 +7,7 @@ using Content.Shared.Audio;
 using Content.Shared.Chat.TypingIndicator;
 using Content.Shared.Holopad;
 using Content.Shared.IdentityManagement;
+using Content.Shared.Labels.Components;
 using Content.Shared.Power;
 using Content.Shared.Silicons.StationAi;
 using Content.Shared.Speech;
@@ -482,8 +483,36 @@ public sealed class HolopadSystem : SharedHolopadSystem
         if (!Resolve(entity.Owner, ref telephone, false))
             return;
 
+        var holopadList = new List<(NetEntity, string Name)>();
+
+        foreach (var receiverNetEnt in _holopads)
+        {
+            var receiver = GetEntity(receiverNetEnt);
+
+            // Filter holopads
+            if (entity.Owner == receiver)
+                continue;
+
+            if (!TryComp<TelephoneComponent>(receiver, out var receiverTelephone) || receiverTelephone.UnlistedNumber)
+                continue;
+
+            if (!_telephoneSystem.IsSourceInRangeOfReceiver((entity, telephone), (receiver, receiverTelephone)))
+                continue;
+
+            // Get holopad name
+            var name = MetaData(receiver).EntityName;
+
+            if (TryComp<LabelComponent>(receiver, out var label) && !string.IsNullOrEmpty(label.CurrentLabel))
+                name = label.CurrentLabel;
+
+            holopadList.Add((receiverNetEnt, name));
+        }
+
+        // Sort holopads alphabetically
+        holopadList.Sort((a, b) => string.Compare(a.Name, b.Name, StringComparison.Ordinal));
+
         var uiKey = HasComp<StationAiCoreComponent>(entity) ? HolopadUiKey.AiActionWindow : HolopadUiKey.InteractionWindow;
-        _userInterfaceSystem.SetUiState(entity.Owner, uiKey, new HolopadBoundInterfaceState(_holopads));
+        _userInterfaceSystem.SetUiState(entity.Owner, uiKey, new HolopadBoundInterfaceState(holopadList));
     }
 
     private void GenerateHologram(Entity<HolopadComponent> entity)
