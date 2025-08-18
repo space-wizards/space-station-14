@@ -85,7 +85,7 @@ public sealed class LockSystem : EntitySystem
 
     private void OnStorageOpenAttempt(EntityUid uid, LockComponent component, ref StorageOpenAttemptEvent args)
     {
-        if (component.Locked) // Starlight-edit: Fix stupid bug
+        if (!component.Locked)
             return;
 
         if (!args.Silent)
