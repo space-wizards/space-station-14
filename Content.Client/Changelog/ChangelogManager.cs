@@ -200,7 +200,7 @@ namespace Content.Client.Changelog
             ///     Labels attached to the related PR, passed on via the SS14.Changelog parser.
             /// </summary>
             [DataField]
-            public List<string> Labels { get; private set; } = default!;
+            public List<string> Labels { get; private set; } = [];
         }
 
         [DataDefinition]

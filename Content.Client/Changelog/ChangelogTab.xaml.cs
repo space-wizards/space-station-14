@@ -145,7 +145,7 @@ public sealed partial class ChangelogTab : Control
                     {
                         var text = new RichTextLabel();
                         text.SetMessage(FormattedMessage.FromUnformatted(change.Message));
-                        if (labels != null && labels.Contains(_experimentalString))
+                        if (labels.Contains(_experimentalString))
                         {
                             ChangelogBody.AddChild(new BoxContainer
                             {
