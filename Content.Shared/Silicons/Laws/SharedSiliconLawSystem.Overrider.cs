@@ -42,7 +42,7 @@ public abstract partial class SharedSiliconLawSystem
 
         var doAfterTime = OverriderComp.OverrideTime;
 
-        var doAfterArgs = new DoAfterArgs(EntityManager, args.User, doAfterTime, new OverriderDoAfterEvent(lawBoard), args.Target, ent.Owner)
+        var doAfterArgs = new DoAfterArgs(EntityManager, args.User, doAfterTime, new OverriderDoAfterEvent(), args.Target, ent.Owner)
         {
             BreakOnDamage = true,
             BreakOnMove = true,
@@ -65,10 +65,12 @@ public abstract partial class SharedSiliconLawSystem
         if (!TryComp(args.Args.Target, out SiliconLawProviderComponent? LawProviderTarget))
             return;
 
-        if (args.LawProviderBaseEntity is not { } lawProviderBaseEntity)
+        if (!TryComp(args.Args.Used, out SiliconLawOverriderComponent? OverriderComp))
             return;
 
-        if (!TryComp(lawProviderBaseEntity, out SiliconLawProviderComponent? LawProviderBase))
+        var lawBoard = _slot.GetItemOrNull(args.Args.Used, OverriderComp.LawBoardId);
+
+        if (!TryComp(lawBoard, out SiliconLawProviderComponent? LawProviderBase))
             return;
 
         var lawset = GetLawset(LawProviderBase.Laws).Laws;
@@ -78,12 +80,4 @@ public abstract partial class SharedSiliconLawSystem
 }
 
 [Serializable, NetSerializable]
-public sealed partial class OverriderDoAfterEvent : SimpleDoAfterEvent
-{
-    public EntityUid? LawProviderBaseEntity;
-
-    public OverriderDoAfterEvent(EntityUid? lawProviderBaseEntity)
-    {
-        LawProviderBaseEntity = lawProviderBaseEntity;
-    }
-}
+public sealed partial class OverriderDoAfterEvent : SimpleDoAfterEvent;

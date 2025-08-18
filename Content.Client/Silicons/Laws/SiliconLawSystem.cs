@@ -1,4 +1,6 @@
 ﻿using Content.Shared.Silicons.Laws;
+using Content.Shared.Silicons.Laws.Components;
+using Robust.Client.GameObjects;
 
 namespace Content.Client.Silicons.Laws;
 
