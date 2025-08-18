@@ -1,29 +1,9 @@
 - type: entity
-  parent: [ BaseStorageItem, BaseXenoborgContraband ]
-  id: MaterialBag
-  name: material bag
-  description: A robust bag for Xenoborgs to carry large amounts of materials.
+  parent: [ BorgMaterialBag, BaseXenoborgContraband ]
+  id: XeroBorgMaterialBag
+  name: xenoborg storage cube
+  description: A knockoff version of a bluespace bag, can vacumn up select materials, unfit for use by humanoids due to harmful emissions.
   components:
-  - type: MagnetPickup
   - type: Sprite
-    sprite: Objects/Specific/Mining/ore_bag.rsi
-    state: icon
-  - type: Clothing
-    sprite: Objects/Specific/Mining/ore_bag.rsi
-    quickEquip: false
-    slots:
-    - belt
-  - type: Item
-    size: Ginormous
-  - type: Storage
-    maxItemSize: Normal
-    grid:
-    - 0,0,9,3
-    quickInsert: true
-    areaInsert: true
-    whitelist:
-      tags:
-      - Sheet
-      - RawMaterial
-      - Ingot
-  - type: Dumpable
+    sprite: Objects/Specific/Robotics/silicon_storage_cube.rsi
+    state: xenoborg
