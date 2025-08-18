@@ -20,6 +20,8 @@ using Robust.Shared.Audio.Systems;
 using Robust.Shared.Physics.Events;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
+using Content.Shared.CCVar;
+using Robust.Shared.Configuration;
 
 namespace Content.Shared.Stunnable;
 
@@ -38,6 +40,7 @@ public abstract partial class SharedStunSystem : EntitySystem
     [Dependency] protected readonly SharedDoAfterSystem DoAfter = default!;
     [Dependency] protected readonly SharedStaminaSystem Stamina = default!;
     [Dependency] private readonly StatusEffectsSystem _status = default!;
+    [Dependency] private readonly IConfigurationManager _cfgManager = default!;
 
     public override void Initialize()
     {
@@ -205,6 +208,9 @@ public abstract partial class SharedStunSystem : EntitySystem
     /// <param name="force">Should we force the status effect?</param>
     public bool CanKnockdown(Entity<StandingStateComponent?> entity, ref TimeSpan? time, ref bool autoStand, ref bool drop, bool force = false)
     {
+        if (!_cfgManager.GetCVar(CCVars.MovementCrawling))
+            return false;
+
         if (time <= TimeSpan.Zero)
             return false;
 
