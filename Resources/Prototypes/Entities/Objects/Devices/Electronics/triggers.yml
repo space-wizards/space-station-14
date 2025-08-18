@@ -84,9 +84,18 @@
     state: voice
   - type: StaticPrice
     price: 40
+  - type: DeviceLinkSource
+    ports:
+      - Pressed
   - type: Tag
     tags:
     - VoiceTrigger
+  - type: SignalOnTrigger
+    port: Pressed
+  - type: TriggerOnVoice
+  - type: EmitSoundOnTrigger
+    sound:
+      collection: WelderOn
   - type: PayloadTrigger
     components:
     - type: TriggerOnVoice
