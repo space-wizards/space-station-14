@@ -1,3 +1,8 @@
+# Examine
+
+digital-lock-examine-maintenance-open = The [color=lightgray]maintenance panel[/color] is [color=red]open[/color].
+digital-lock-examine-maintenance-closed = The [color=lightgray]maintenance panel[/color] is [color=darkgreen]closed[/color].
+
 # UI
 digital-lock-interface-title = Digital Lock
 
