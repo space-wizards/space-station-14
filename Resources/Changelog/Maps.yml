@@ -510,4 +510,22 @@
   id: 63
   time: '2025-08-11T15:43:47.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/39331
+- author: Steffo99
+  changes:
+  - message: On many stations, fax machines have slightly more consistent names.
+    type: Tweak
+  id: 64
+  time: '2025-08-17T18:50:57.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/39455
+- author: Nox38, ArtisticRoomba
+  changes:
+  - message: On Packed, added Genpop and revamped security.
+    type: Add
+  - message: On Packed, revamped the north maints area above security.
+    type: Tweak
+  - message: On Packed, revamped Science.
+    type: Tweak
+  id: 65
+  time: '2025-08-17T19:00:49.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38339
 Order: 1
