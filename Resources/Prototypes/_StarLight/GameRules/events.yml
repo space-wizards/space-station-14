@@ -101,7 +101,7 @@
   components:
     - type: RuleGrids
     - type: LoadMapRule
-      gridPath: /Maps/_Starlight/Shuttles/ERTShuttle.yml
+      gridPath: /Maps/_Starlight/Shuttles/CC-NT/ERTShuttle.yml
 
       #Pig's DS Shuttle
 - type: entity
@@ -110,7 +110,7 @@
   components:
     - type: RuleGrids
     - type: LoadMapRule
-      gridPath: /Maps/_Starlight/Shuttles/DSshuttle.yml
+      gridPath: /Maps/_Starlight/Shuttles/CC-NT/DSshuttle.yml
 
       #Pig's RadioTower
 - type: entity
@@ -129,7 +129,7 @@
   components:
     - type: RuleGrids
     - type: LoadMapRule
-      gridPath: /Maps/_Starlight/Shuttles/CBURN.yml
+      gridPath: /Maps/_Starlight/Shuttles/CC-NT/CBURN.yml
 
 # Karma's Quantum Ark Shuttles
 - type: entity
@@ -182,7 +182,7 @@
   components:
     - type: RuleGrids
     - type: LoadMapRule
-      gridPath: /Maps/_Starlight/Shuttles/CBURN_Q.yml
+      gridPath: /Maps/_Starlight/Shuttles/CC-NT/CBURN_Q.yml
 
 # Mining Shuttle
 - type: entity
