@@ -205,11 +205,11 @@ public sealed class MaterialReclaimerSystem : SharedMaterialReclaimerSystem
         else
         {
             SpawnChemicalsFromComposition(uid, item, completion, true, component, xform);
-        }
-        //Starlight
-        if (!ev.Handled)
+            //Starlight
             QueueDel(item);
-        //Starlight
+            //Starlight
+        }
+        
     }
 
     private void SpawnMaterialsFromComposition(EntityUid reclaimer,

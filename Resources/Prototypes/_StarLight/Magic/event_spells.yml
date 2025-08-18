@@ -1,0 +1,17 @@
+- type: entity
+  parent: BaseAction
+  id: ActionSummonCheese
+  name: Summon Cheese
+  description: Places a slice of cheese in your hand. delicious!
+  components:
+  - type: Magic
+    requiresClothes: false
+  - type: Action
+    useDelay: 15
+    itemIconStyle: BigAction
+    icon:
+      sprite: Objects/Consumable/Food/ingredients.rsi
+      state: cheesewedge
+  - type: InstantAction
+    event: !type:SpawnItemInHandEvent
+      spawned: FoodCheeseSlice

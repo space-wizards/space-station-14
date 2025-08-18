@@ -38,6 +38,9 @@ public abstract partial class SharedHandsSystem
         InitializeRelay();
         InitializeEventListeners();
 
+        InitializeOffer(); // Starlight
+
+
         SubscribeLocalEvent<HandsComponent, ComponentInit>(OnInit);
         SubscribeLocalEvent<HandsComponent, MapInitEvent>(OnMapInit);
     }
