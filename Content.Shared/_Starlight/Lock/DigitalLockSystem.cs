@@ -22,6 +22,7 @@ public sealed class DigitalLockSystem : EntitySystem
     [Dependency] private readonly SharedToolSystem _tool = default!;
     [Dependency] private readonly SharedElectrocutionSystem _electrocution = default!;
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
+    [Dependency] private readonly SharedAmbientSoundSystem _ambient = default!;
 
     public override void Initialize()
     {
@@ -57,11 +58,7 @@ public sealed class DigitalLockSystem : EntitySystem
         {
             var codeLength = component.Code.Length;
             _appearance.SetData(uid, DigitalLockVisuals.Spark, true);
-            if (TryComp<AmbientSoundComponent>(uid, out var ambientSound))
-            {
-                ambientSound.Enabled = true;
-                Dirty(uid, ambientSound);
-            }
+            _ambient.SetAmbience(uid, true);
             args.Handled = _electrocution.TryDoElectrocution(args.User, uid, 5, TimeSpan.FromSeconds(2), true) || _tool.UseTool(args.Used, args.User, uid, 4f * codeLength, "Pulsing", new DigitalLockResetDoAfterEvent());
         }
 
@@ -79,11 +76,7 @@ public sealed class DigitalLockSystem : EntitySystem
     private void OnReset(EntityUid uid, DigitalLockComponent component, DigitalLockResetDoAfterEvent args)
     {
         _appearance.SetData(uid, DigitalLockVisuals.Spark, false);
-        if (TryComp<AmbientSoundComponent>(uid, out var ambientSound))
-        {
-            ambientSound.Enabled = false;
-            Dirty(uid, ambientSound);
-        }
+        _ambient.SetAmbience(uid, false);
         if (args.Cancelled)
             return;
         component.Code = "";
