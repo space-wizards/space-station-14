@@ -528,4 +528,14 @@
   id: 65
   time: '2025-08-17T19:00:49.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/38339
+- author: beck-thompson
+  changes:
+  - message: Removed a lot of mapped gear on the nukie planet and replaced it with
+      random spawners.
+    type: Tweak
+  - message: Two new random spawners with loot for the nukie planet
+    type: Add
+  id: 66
+  time: '2025-08-18T04:33:37.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/39090
 Order: 1
