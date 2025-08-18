@@ -75,13 +75,18 @@ public sealed class SurveillanceCameraMapSystem : EntitySystem
         var powered = CompOrNull<ApcPowerReceiverComponent>(uid)?.Powered ?? true;
         var active = comp.Active && powered;
 
-        if (mapComp.Cameras.TryGetValue(netEntity, out var existing) &&
-            existing.Position.Equals(localPos) &&
-            existing.Active == active &&
-            existing.Address == address &&
-            existing.Subnet == subnet)
+        var visible = true;
+        if (mapComp.Cameras.TryGetValue(netEntity, out var existing))
         {
-            return;
+            if (existing.Position.Equals(localPos) &&
+                existing.Active == active &&
+                existing.Address == address &&
+                existing.Subnet == subnet &&
+                existing.Visible)
+            {
+                return;
+            }
+            visible = existing.Visible;
         }
 
         mapComp.Cameras[netEntity] = new CameraMarker
@@ -89,8 +94,46 @@ public sealed class SurveillanceCameraMapSystem : EntitySystem
             Position = localPos,
             Active = active,
             Address = address,
-            Subnet = subnet
+            Subnet = subnet,
+            Visible = visible
         };
         Dirty(gridUid.Value, mapComp);
+    }
+
+    /// <summary>
+    /// Sets the visibility state of a camera on the camera map.
+    /// </summary>
+    public void SetCameraVisibility(EntityUid cameraUid, bool visible)
+    {
+        if (!TryComp(cameraUid, out TransformComponent? xform))
+            return;
+
+        var gridUid = xform.GridUid ?? xform.MapUid;
+        if (gridUid == null || !TryComp<SurveillanceCameraMapComponent>(gridUid.Value, out var mapComp))
+            return;
+
+        var netEntity = GetNetEntity(cameraUid);
+        if (mapComp.Cameras.TryGetValue(netEntity, out var marker))
+        {
+            marker.Visible = visible;
+            mapComp.Cameras[netEntity] = marker;
+            Dirty(gridUid.Value, mapComp);
+        }
+    }
+
+    /// <summary>
+    /// Checks if a camera is currently visible on the camera map.
+    /// </summary>
+    public bool IsCameraVisible(EntityUid cameraUid)
+    {
+        if (!TryComp(cameraUid, out TransformComponent? xform))
+            return false;
+
+        var gridUid = xform.GridUid ?? xform.MapUid;
+        if (gridUid == null || !TryComp<SurveillanceCameraMapComponent>(gridUid, out var mapComp))
+            return false;
+
+        var netEntity = GetNetEntity(cameraUid);
+        return mapComp.Cameras.TryGetValue(netEntity, out var marker) && marker.Visible;
     }
 }

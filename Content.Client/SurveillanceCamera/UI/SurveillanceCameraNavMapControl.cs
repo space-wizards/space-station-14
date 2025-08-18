@@ -88,7 +88,7 @@ public sealed class SurveillanceCameraNavMapControl : NavMapControl
 
         foreach (var (netEntity, marker) in mapComp.Cameras)
         {
-            if (!_availableSubnets.Contains(marker.Subnet))
+            if (!marker.Visible || !_availableSubnets.Contains(marker.Subnet))
                 continue;
 
             var coords = new EntityCoordinates(MapUid.Value, marker.Position);

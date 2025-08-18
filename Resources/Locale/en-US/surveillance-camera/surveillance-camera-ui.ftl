@@ -17,3 +17,4 @@ surveillance-camera-monitor-ui-legend-invalid = Invalid
 surveillance-camera-setup = Setup
 surveillance-camera-setup-ui-set = Set
 
+wire-name-camera-map = MAP
