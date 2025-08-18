@@ -20,3 +20,17 @@ public sealed partial class SiliconLawOverriderComponent : Component
     [DataField("LawBoardId")]
     public string LawBoardId = "law_board";
 }
+
+[Serializable, NetSerializable]
+public enum LawOverriderVisuals : byte
+{
+    LawBoardInserted
+}
+
+[Serializable, NetSerializable]
+public enum LawOverriderVisualLayers : byte
+{
+    Base,
+    LawBoard,
+    Light
+}
