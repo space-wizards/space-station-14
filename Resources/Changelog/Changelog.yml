@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Kiri-Yoshikage
-  changes:
-  - message: Atomic Bomb cocktail is now mixed in 10u instead of 11.
-    type: Tweak
-  id: 8350
-  time: '2025-04-25T15:33:14.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/36921
 - author: EmoGarbage404
   changes:
   - message: Added 3 modkits for the proto-kinetic accelerator, granting increased
@@ -3953,3 +3946,10 @@
   id: 8862
   time: '2025-08-18T12:22:36.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/39710
+- author: SlamBamActionman
+  changes:
+  - message: Stamina resistance has been removed from cardboard armor and gorillas.
+    type: Tweak
+  id: 8863
+  time: '2025-08-18T14:33:16.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/39727
