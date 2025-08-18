@@ -1092,7 +1092,7 @@
     - item: PlantBag
     - hand:
         emptyRepresentative: WheatSeeds
-        emptyLabel: borg-slot-seed-empty
+        emptyLabel: borg-slot-seeds-empty
         whitelist:
           components:
           - Seed
