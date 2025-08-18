@@ -498,11 +498,9 @@
     layers:
     - state: generic
     - state: icon-inflatable
-  - type: ItemBorgModule
-    items:
-    - InflatableDoorStackLingering4
-    - InflatableWallStackLingering10
-    - WeaponMeleeNeedle
+  - item: InflatableDoorStackLingering4
+  - item: InflatableWallStackLingering10
+  - item: WeaponMeleeNeedle
   - type: BorgModuleIcon
     icon: { sprite: Interface/Actions/actions_borg.rsi, state: inflatable-module }
 
