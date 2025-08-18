@@ -7,7 +7,7 @@
   - type: Transform
     anchored: true
   - type: Clickable
-  - type: Weightlessness
+  - type: GravityAffected
   - type: Physics
     bodyType: Static
   - type: Fixtures

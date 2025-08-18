@@ -677,7 +677,7 @@ public sealed partial class AdminVerbSystem
 
                 Dirty(args.Target, grav);
 
-                EnsureComp<WeightlessnessComponent>(args.Target, out var weightless);
+                EnsureComp<GravityAffectedComponent>(args.Target, out var weightless);
                 weightless.Weightless = true;
 
                 Dirty(args.Target, weightless);

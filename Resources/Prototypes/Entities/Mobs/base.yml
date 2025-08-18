@@ -9,7 +9,7 @@
     noRot: true
     drawdepth: Mobs
   - type: MobCollision
-  - type: Weightlessness
+  - type: GravityAffected
   - type: Physics
     bodyType: KinematicController
   - type: Fixtures

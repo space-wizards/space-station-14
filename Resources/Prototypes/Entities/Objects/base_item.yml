@@ -24,7 +24,7 @@
     soundHit:
       collection: MetalThud
   - type: CollisionWake
-  - type: Weightlessness
+  - type: GravityAffected
   - type: Physics
     bodyType: Dynamic
     fixedRotation: false

@@ -7,7 +7,7 @@ namespace Content.Shared.Gravity;
 /// target will never be weightless.
 /// </summary>
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
-public sealed partial class WeightlessnessComponent : Component
+public sealed partial class GravityAffectedComponent : Component
 {
     /// <summary>
     /// If true, this entity will be considered "weightless"
