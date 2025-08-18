@@ -1,0 +1,98 @@
+- type: entity
+  id: BaseWallSafe
+  placement:
+    mode: SnapgridCenter
+  abstract: true
+  name: wall safe
+  description: A highly secured safe with digital lock.
+  components:
+  - type: Storage
+    grid:
+    - 0,0,5,5
+  - type: InteractionOutline
+  - type: Clickable
+  - type: ResistLocker
+  - type: WallMount
+    arc: 175
+  - type: Transform
+    noRot: false
+  - type: Sprite
+    drawdepth: WallMountedItems
+    noRot: false
+    sprite: _Starlight/Structures/Storage/safe.rsi
+    layers:
+    - state: icon
+    - state: open
+      shader: unshaded
+    - state: closed
+      shader: unshaded
+      map: ["enum.LockVisualLayers.Lock"]
+    - state: spark
+      shader: unshaded
+      visible: false
+      map: ["spark"]
+  - type: Damageable
+    damageContainer: StructuralInorganic
+    damageModifierSet: Metallic
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 500
+      behaviors:
+        - !type:DoActsBehavior
+          acts: [ "Destruction" ]
+    - trigger:
+        !type:DamageTrigger
+        damage: 200
+      behaviors:
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalBreak
+          params:
+            volume: -6
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          SheetSteel1:
+            min: 1
+            max: 1
+  - type: Appearance
+  - type: DigitalLock
+  - type: Lock
+    unlockOnClick: false
+    useAccess: false
+    autoUnlock: false
+    autoLock: false
+    lockVerbs: false
+  - type: UserInterface
+    interfaces:
+      enum.StorageUiKey.Key:
+        type: StorageBoundUserInterface
+      enum.DigitalLockUiKey.Key:
+        type: DigitalLockBoundUserInterface
+  - type: ActivatableUI
+    key: enum.DigitalLockUiKey.Key
+  - type: GenericVisualizer
+    visuals: 
+      enum.DigitalLockVisuals.Spark:
+        spark:
+          False: { visible: false }
+          True: { visible: true }
+  - type: AmbientSound
+    enabled: false
+    range: 20
+    sound: 
+      collection: "sparks"
+  - type: LockVisuals
+    stateLocked: closed
+    stateUnlocked: open
+  - type: ContainerContainer
+    containers:
+      storagebase: !type:Container
+        ents: []
+
+- type: entity
+  parent: BaseWallSafe
+  id: WallSafe
