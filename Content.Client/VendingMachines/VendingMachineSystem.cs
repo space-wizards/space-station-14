@@ -1,5 +1,6 @@
 using System.Linq;
 using Content.Shared.VendingMachines;
+using Content.Shared.VendingMachines.Components;
 using Robust.Client.Animations;
 using Robust.Client.GameObjects;
 using Robust.Shared.GameStates;
@@ -16,59 +17,16 @@ public sealed class VendingMachineSystem : SharedVendingMachineSystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<VendingMachineComponent, AppearanceChangeEvent>(OnAppearanceChange);
-        SubscribeLocalEvent<VendingMachineComponent, AnimationCompletedEvent>(OnAnimationCompleted);
-        SubscribeLocalEvent<VendingMachineComponent, ComponentHandleState>(OnVendingHandleState);
+        SubscribeLocalEvent<VendingMachineVisualsComponent, AppearanceChangeEvent>(OnAppearanceChange);
+        SubscribeLocalEvent<VendingMachineVisualsComponent, AnimationCompletedEvent>(OnAnimationCompleted);
+
+        SubscribeLocalEvent<VendingMachineComponent, AfterAutoHandleStateEvent>(OnVendingAfterHandleState);
     }
 
-    private void OnVendingHandleState(Entity<VendingMachineComponent> entity, ref ComponentHandleState args)
+    private void OnVendingAfterHandleState(Entity<VendingMachineComponent> entity, ref AfterAutoHandleStateEvent args)
     {
-        if (args.Current is not VendingMachineComponentState state)
-            return;
-
-        var uid = entity.Owner;
-        var component = entity.Comp;
-
-        component.Contraband = state.Contraband;
-        component.EjectEnd = state.EjectEnd;
-        component.DenyEnd = state.DenyEnd;
-        component.DispenseOnHitEnd = state.DispenseOnHitEnd;
-
-        // If all we did was update amounts then we can leave BUI buttons in place.
-        var fullUiUpdate = !component.Inventory.Keys.SequenceEqual(state.Inventory.Keys) ||
-                           !component.EmaggedInventory.Keys.SequenceEqual(state.EmaggedInventory.Keys) ||
-                           !component.ContrabandInventory.Keys.SequenceEqual(state.ContrabandInventory.Keys);
-
-        component.Inventory.Clear();
-        component.EmaggedInventory.Clear();
-        component.ContrabandInventory.Clear();
-
-        foreach (var entry in state.Inventory)
-        {
-            component.Inventory.Add(entry.Key, new(entry.Value));
-        }
-
-        foreach (var entry in state.EmaggedInventory)
-        {
-            component.EmaggedInventory.Add(entry.Key, new(entry.Value));
-        }
-
-        foreach (var entry in state.ContrabandInventory)
-        {
-            component.ContrabandInventory.Add(entry.Key, new(entry.Value));
-        }
-
-        if (UISystem.TryGetOpenUi<VendingMachineBoundUserInterface>(uid, VendingMachineUiKey.Key, out var bui))
-        {
-            if (fullUiUpdate)
-            {
-                bui.Refresh();
-            }
-            else
-            {
-                bui.UpdateAmounts();
-            }
-        }
+        if (UISystem.TryGetOpenUi<VendingMachineBoundUserInterface>(entity.Owner, VendingMachineUiKey.Key, out var bui))
+            bui.Update();
     }
 
     protected override void UpdateUI(Entity<VendingMachineComponent?> entity)
@@ -84,21 +42,21 @@ public sealed class VendingMachineSystem : SharedVendingMachineSystem
         }
     }
 
-    private void OnAnimationCompleted(EntityUid uid, VendingMachineComponent component, AnimationCompletedEvent args)
+    private void OnAnimationCompleted(Entity<VendingMachineVisualsComponent> ent, ref AnimationCompletedEvent args)
     {
-        if (!TryComp<SpriteComponent>(uid, out var sprite))
+        if (!TryComp<SpriteComponent>(ent, out var sprite))
             return;
 
-        if (!TryComp<AppearanceComponent>(uid, out var appearance) ||
-            !_appearanceSystem.TryGetData<VendingMachineVisualState>(uid, VendingMachineVisuals.VisualState, out var visualState, appearance))
+        if (!TryComp<AppearanceComponent>(ent, out var appearance) ||
+            !_appearanceSystem.TryGetData<VendingMachineVisualState>(ent, VendingMachineVisuals.VisualState, out var visualState, appearance))
         {
             visualState = VendingMachineVisualState.Normal;
         }
 
-        UpdateAppearance(uid, visualState, component, sprite);
+        UpdateAppearance(ent, visualState, sprite);
     }
 
-    private void OnAppearanceChange(EntityUid uid, VendingMachineComponent component, ref AppearanceChangeEvent args)
+    private void OnAppearanceChange(Entity<VendingMachineVisualsComponent> ent, ref AppearanceChangeEvent args)
     {
         if (args.Sprite == null)
             return;
@@ -109,11 +67,16 @@ public sealed class VendingMachineSystem : SharedVendingMachineSystem
             visualState = VendingMachineVisualState.Normal;
         }
 
-        UpdateAppearance(uid, visualState, component, args.Sprite);
+        UpdateAppearance(ent, visualState, args.Sprite);
     }
 
-    private void UpdateAppearance(EntityUid uid, VendingMachineVisualState visualState, VendingMachineComponent component, SpriteComponent sprite)
+    private void UpdateAppearance(Entity<VendingMachineVisualsComponent> ent, VendingMachineVisualState visualState, SpriteComponent sprite, VendingMachineComponent? vendingMachine = null)
     {
+        if (!Resolve(ent, ref vendingMachine))
+            return;
+
+        var (uid, component) = ent;
+
         SetLayerState(VendingMachineVisualLayers.Base, component.OffState, (uid, sprite));
 
         switch (visualState)
@@ -127,13 +90,13 @@ public sealed class VendingMachineSystem : SharedVendingMachineSystem
                 if (component.LoopDenyAnimation)
                     SetLayerState(VendingMachineVisualLayers.BaseUnshaded, component.DenyState, (uid, sprite));
                 else
-                    PlayAnimation(uid, VendingMachineVisualLayers.BaseUnshaded, component.DenyState, (float)component.DenyDelay.TotalSeconds, sprite);
+                    PlayAnimation(uid, VendingMachineVisualLayers.BaseUnshaded, component.DenyState, (float)vendingMachine.DenyDelay.TotalSeconds, sprite);
 
                 SetLayerState(VendingMachineVisualLayers.Screen, component.ScreenState, (uid, sprite));
                 break;
 
             case VendingMachineVisualState.Eject:
-                PlayAnimation(uid, VendingMachineVisualLayers.BaseUnshaded, component.EjectState, (float)component.EjectDelay.TotalSeconds, sprite);
+                PlayAnimation(uid, VendingMachineVisualLayers.BaseUnshaded, component.EjectState, (float)vendingMachine.EjectDelay.TotalSeconds, sprite);
                 SetLayerState(VendingMachineVisualLayers.Screen, component.ScreenState, (uid, sprite));
                 break;
 

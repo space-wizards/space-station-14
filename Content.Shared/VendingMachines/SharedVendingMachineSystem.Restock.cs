@@ -2,8 +2,8 @@ using Content.Shared.DoAfter;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Interaction;
 using Content.Shared.Popups;
+using Content.Shared.VendingMachines.Components;
 using Content.Shared.Wires;
-using Robust.Shared.Audio;
 
 namespace Content.Shared.VendingMachines;
 

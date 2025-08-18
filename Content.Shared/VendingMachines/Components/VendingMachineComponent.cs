@@ -5,9 +5,10 @@ using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 
-namespace Content.Shared.VendingMachines;
+namespace Content.Shared.VendingMachines.Components;
 
-[RegisterComponent, NetworkedComponent, AutoGenerateComponentPause]
+[RegisterComponent, NetworkedComponent]
+[AutoGenerateComponentState(true), AutoGenerateComponentPause]
 public sealed partial class VendingMachineComponent : Component
 {
     /// <summary>
@@ -32,19 +33,19 @@ public sealed partial class VendingMachineComponent : Component
     [DataField]
     public TimeSpan EjectDelay = TimeSpan.FromSeconds(1.2);
 
-    [DataField]
+    [DataField, AutoNetworkedField]
     public Dictionary<string, VendingMachineInventoryEntry> Inventory = [];
 
-    [DataField]
+    [DataField, AutoNetworkedField]
     public Dictionary<string, VendingMachineInventoryEntry> EmaggedInventory = [];
 
-    [DataField]
+    [DataField, AutoNetworkedField]
     public Dictionary<string, VendingMachineInventoryEntry> ContrabandInventory = [];
 
     /// <summary>
     /// If true then unlocks the <see cref="ContrabandInventory"/>
     /// </summary>
-    [DataField]
+    [DataField, AutoNetworkedField]
     public bool Contraband;
 
     [ViewVariables]
@@ -56,13 +57,16 @@ public sealed partial class VendingMachineComponent : Component
     [ViewVariables]
     public bool DispenseOnHitCoolingDown => DispenseOnHitEnd != null;
 
-    [DataField, AutoPausedField]
+    [DataField]
+    [AutoPausedField, AutoNetworkedField]
     public TimeSpan? EjectEnd;
 
-    [DataField, AutoPausedField]
+    [DataField]
+    [AutoPausedField, AutoNetworkedField]
     public TimeSpan? DenyEnd;
 
     [DataField]
+    [AutoPausedField, AutoNetworkedField]
     public TimeSpan? DispenseOnHitEnd;
 
     public string? NextItemToEject;
@@ -138,59 +142,6 @@ public sealed partial class VendingMachineComponent : Component
     /// </summary>
     [DataField(customTypeSerializer: typeof(TimeOffsetSerializer))]
     public TimeSpan NextEmpEject = TimeSpan.Zero;
-
-    #region Client Visuals
-    /// <summary>
-    /// RSI state for when the vending machine is unpowered.
-    /// Will be displayed on the layer <see cref="VendingMachineVisualLayers.Base"/>
-    /// </summary>
-    [DataField]
-    public string? OffState;
-
-    /// <summary>
-    /// RSI state for the screen of the vending machine
-    /// Will be displayed on the layer <see cref="VendingMachineVisualLayers.Screen"/>
-    /// </summary>
-    [DataField]
-    public string? ScreenState;
-
-    /// <summary>
-    /// RSI state for the vending machine's normal state. Usually a looping animation.
-    /// Will be displayed on the layer <see cref="VendingMachineVisualLayers.BaseUnshaded"/>
-    /// </summary>
-    [DataField]
-    public string? NormalState;
-
-    /// <summary>
-    /// RSI state for the vending machine's eject animation.
-    /// Will be displayed on the layer <see cref="VendingMachineVisualLayers.BaseUnshaded"/>
-    /// </summary>
-    [DataField]
-    public string? EjectState;
-
-    /// <summary>
-    /// RSI state for the vending machine's deny animation. Will either be played once as sprite flick
-    /// or looped depending on how <see cref="LoopDenyAnimation"/> is set.
-    /// Will be displayed on the layer <see cref="VendingMachineVisualLayers.BaseUnshaded"/>
-    /// </summary>
-    [DataField]
-    public string? DenyState;
-
-    /// <summary>
-    /// RSI state for when the vending machine is unpowered.
-    /// Will be displayed on the layer <see cref="VendingMachineVisualLayers.Base"/>
-    /// </summary>
-    [DataField]
-    public string? BrokenState;
-
-    /// <summary>
-    /// If set to <c>true</c> (default) will loop the animation of the <see cref="DenyState"/> for the duration
-    /// of <see cref="VendingMachineComponent.DenyDelay"/>. If set to <c>false</c> will play a sprite
-    /// flick animation for the state and then linger on the final frame until the end of the delay.
-    /// </summary>
-    [DataField("loopDeny")]
-    public bool LoopDenyAnimation = true;
-    #endregion
 }
 
 [Serializable, NetSerializable, DataDefinition]
@@ -273,25 +224,4 @@ public enum EjectWireKey : byte
     StatusKey,
 }
 
-public sealed partial class VendingMachineSelfDispenseEvent : InstantActionEvent
-{
-
-};
-
-[Serializable, NetSerializable]
-public sealed class VendingMachineComponentState : ComponentState
-{
-    public Dictionary<string, VendingMachineInventoryEntry> Inventory = new();
-
-    public Dictionary<string, VendingMachineInventoryEntry> EmaggedInventory = new();
-
-    public Dictionary<string, VendingMachineInventoryEntry> ContrabandInventory = new();
-
-    public bool Contraband;
-
-    public TimeSpan? EjectEnd;
-
-    public TimeSpan? DenyEnd;
-
-    public TimeSpan? DispenseOnHitEnd;
-}
+public sealed partial class VendingMachineSelfDispenseEvent : InstantActionEvent;

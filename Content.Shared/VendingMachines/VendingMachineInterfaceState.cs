@@ -1,3 +1,4 @@
+using Content.Shared.VendingMachines.Components;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.VendingMachines;

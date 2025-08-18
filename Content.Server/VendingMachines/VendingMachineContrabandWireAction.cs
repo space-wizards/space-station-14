@@ -1,5 +1,5 @@
 using Content.Server.Wires;
-using Content.Shared.VendingMachines;
+using Content.Shared.VendingMachines.Components;
 using Content.Shared.Wires;
 
 namespace Content.Server.VendingMachines;

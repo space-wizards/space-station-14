@@ -1,44 +1,43 @@
 using Content.Server.VendingMachines;
-using Content.Shared.VendingMachines;
+using Content.Shared.VendingMachines.Components;
 
-namespace Content.Server.Destructible.Thresholds.Behaviors
+namespace Content.Server.Destructible.Thresholds.Behaviors;
+
+/// <summary>
+///     Throws out a specific amount of random items from a vendor
+/// </summary>
+[Serializable]
+[DataDefinition]
+public sealed partial class EjectVendorItems : IThresholdBehavior
 {
     /// <summary>
-    ///     Throws out a specific amount of random items from a vendor
+    ///     The percent amount of the total inventory that will be ejected.
     /// </summary>
-    [Serializable]
-    [DataDefinition]
-    public sealed partial class EjectVendorItems : IThresholdBehavior
+    [DataField("percent", required: true)]
+    public float Percent = 0.25f;
+
+    /// <summary>
+    ///     The maximum amount of vendor items it can eject
+    ///     useful for high-inventory vendors
+    /// </summary>
+    [DataField("max")]
+    public int Max = 3;
+
+    public void Execute(EntityUid owner, DestructibleSystem system, EntityUid? cause = null)
     {
-        /// <summary>
-        ///     The percent amount of the total inventory that will be ejected.
-        /// </summary>
-        [DataField("percent", required: true)]
-        public float Percent = 0.25f;
+        if (!system.EntityManager.TryGetComponent<VendingMachineComponent>(owner, out var vendingcomp) ||
+            !system.EntityManager.TryGetComponent<TransformComponent>(owner, out var xform))
+            return;
 
-        /// <summary>
-        ///     The maximum amount of vendor items it can eject
-        ///     useful for high-inventory vendors
-        /// </summary>
-        [DataField("max")]
-        public int Max = 3;
+        var vendingMachineSystem = system.EntityManager.System<VendingMachineSystem>();
+        var inventory = vendingMachineSystem.GetAvailableInventory(owner, vendingcomp);
+        if (inventory.Count <= 0)
+            return;
 
-        public void Execute(EntityUid owner, DestructibleSystem system, EntityUid? cause = null)
+        var toEject = Math.Min(inventory.Count * Percent, Max);
+        for (var i = 0; i < toEject; i++)
         {
-            if (!system.EntityManager.TryGetComponent<VendingMachineComponent>(owner, out var vendingcomp) ||
-                !system.EntityManager.TryGetComponent<TransformComponent>(owner, out var xform))
-                return;
-
-            var vendingMachineSystem = system.EntityManager.System<VendingMachineSystem>();
-            var inventory = vendingMachineSystem.GetAvailableInventory(owner, vendingcomp);
-            if (inventory.Count <= 0)
-                return;
-
-            var toEject = Math.Min(inventory.Count * Percent, Max);
-            for (var i = 0; i < toEject; i++)
-            {
-                vendingMachineSystem.EjectRandom(owner, throwItem: true, forceEject: true, vendingcomp);
-            }
+            vendingMachineSystem.EjectRandom(owner, throwItem: true, forceEject: true, vendingcomp);
         }
     }
 }
