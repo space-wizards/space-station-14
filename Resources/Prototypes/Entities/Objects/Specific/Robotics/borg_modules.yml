@@ -587,7 +587,7 @@
     icon: { sprite: Interface/Actions/actions_borg.rsi, state: adv-tools-module }
 
 - type: entity
-  id: BorgModuleConstructionMaterialPlaceholder
+  id: BorgModuleConstructionMaterialPlaceholder #Steel/Glass/Plastic Sprite
   parent: BaseItem
   components:
   - type: Sprite
@@ -605,12 +605,6 @@
     - state: icon-construction
   - type: ItemBorgModule
     hands:
-    - hand:
-        emptyRepresentative: BorgModuleConstructionMaterialPlaceholder
-        emptyLabel: borg-slot-construction-empty
-        whitelist:
-          tags:
-          - ConstructionMaterial
     - hand:
         emptyRepresentative: BorgModuleConstructionMaterialPlaceholder
         emptyLabel: borg-slot-construction-empty
