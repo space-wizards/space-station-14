@@ -31,7 +31,6 @@ public abstract partial class SharedGravitySystem : EntitySystem
         SubscribeLocalEvent<GravityChangedEvent>(OnGravityChange);
 
         // Weightlessness
-        SubscribeLocalEvent<GravityAffectedComponent, MapInitEvent>(OnMapInit);
         SubscribeLocalEvent<GravityAffectedComponent, EntParentChangedMessage>(OnEntParentChanged);
         SubscribeLocalEvent<GravityAffectedComponent, PhysicsBodyTypeChangedEvent>(OnBodyTypeChanged);
 
@@ -103,11 +102,6 @@ public abstract partial class SharedGravitySystem : EntitySystem
 
         var ev = new WeightlessnessChangedEvent(entity.Comp.Weightless);
         RaiseLocalEvent(entity, ref ev);
-    }
-
-    private void OnMapInit(Entity<GravityAffectedComponent> entity, ref MapInitEvent args)
-    {
-        RefreshWeightless((entity.Owner, entity.Comp));
     }
 
     private void OnWeightlessnessChanged(Entity<AlertsComponent> entity, ref WeightlessnessChangedEvent args)
