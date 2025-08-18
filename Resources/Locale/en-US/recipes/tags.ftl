@@ -107,6 +107,7 @@ construction-graph-tag-conveyor-belt-assembly = conveyor belt assembly
 # tools
 construction-graph-tag-multitool = a multitool
 construction-graph-tag-health-analyzer = health analyzer
+construction-graph-tag-knife = knife
 
 # utils
 construction-graph-tag-air-alarm-electronics = air alarm electronics

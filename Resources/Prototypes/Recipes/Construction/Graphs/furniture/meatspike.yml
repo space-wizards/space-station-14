@@ -37,7 +37,7 @@
       steps:
       - tag: Knife
         store: knives
-        name: "knife"
+        name: construction-graph-tag-knife
         icon:
           sprite: "Objects/Weapons/Melee/kitchen_knife.rsi"
           state: "icon"
@@ -59,7 +59,7 @@
       steps:
       - tag: Knife
         store: knives
-        name: "knife"
+        name: construction-graph-tag-knife
         icon:
           sprite: "Objects/Weapons/Melee/kitchen_knife.rsi"
           state: "icon"
@@ -81,7 +81,7 @@
       steps:
       - tag: Knife
         store: knives
-        name: "knife"
+        name: construction-graph-tag-knife
         icon:
           sprite: "Objects/Weapons/Melee/kitchen_knife.rsi"
           state: "icon"
