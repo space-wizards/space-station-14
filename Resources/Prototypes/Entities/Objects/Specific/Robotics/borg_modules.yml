@@ -618,12 +618,6 @@
           tags:
           - ConstructionMaterial
     - hand:
-        emptyRepresentative: BorgModuleConstructionMaterialPlaceholder
-        emptyLabel: borg-slot-construction-empty
-        whitelist:
-          tags:
-          - ConstructionMaterial
-    - hand:
         emptyRepresentative: DoorElectronics
         emptyLabel: borg-slot-circuitboards-empty
         whitelist:
@@ -642,23 +636,12 @@
           components:
           - Flatpack
     - hand:
-        emptyRepresentative: FloorTileItemSteel
+        emptyRepresentative: FloorTileItemDark #Placeholder, needs sprite of a few tiles
         emptyLabel: borg-slot-tiles-empty
         whitelist:
           components:
           - FloorTile
-    - hand:
-        emptyRepresentative: FloorTileItemWhite
-        emptyLabel: borg-slot-tiles-empty
-        whitelist:
-          components:
-          - FloorTile
-    - hand:
-        emptyRepresentative: FloorTileItemDark
-        emptyLabel: borg-slot-tiles-empty
-        whitelist:
-          components:
-          - FloorTile
+    - item: BorgMaterialSatchel
   - type: BorgModuleIcon
     icon: { sprite: Interface/Actions/actions_borg.rsi, state: construction-module }
 
