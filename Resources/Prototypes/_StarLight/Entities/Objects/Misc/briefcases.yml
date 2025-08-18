@@ -4,6 +4,7 @@
   description: Useful for carrying items in your hands. Has a digital lock.
   abstract: true
   components:
+  - type: Appearance
   - type: DigitalLock
   - type: Lock
     unlockOnClick: false
@@ -37,7 +38,6 @@
   id: BriefcaseSecure
   name: secure briefcase
   components:
-  - type: Appearance
   - type: Sprite
     sprite: _Starlight/Objects/Storage/Briefcases/briefcase_secure.rsi
     layers: 
