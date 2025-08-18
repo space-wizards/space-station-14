@@ -623,6 +623,9 @@
         whitelist:
           components:
           - Circuitboard
+        blacklist:
+          components:
+          - SiliconLawProvider
     - hand:
         emptyRepresentative: SpaceHeaterFlatpack
         emptyLabel: borg-slot-flatpacks-empty
