@@ -15,6 +15,7 @@ namespace Content.Server.Stack
     public sealed class StackSystem : SharedStackSystem
     {
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+        [Dependency] private readonly SharedUserInterfaceSystem _ui = default!;
 
         public static readonly int[] DefaultSplitAmounts = { 1, 5, 10, 20, 30, 50 };
 
@@ -23,6 +24,7 @@ namespace Content.Server.Stack
             base.Initialize();
 
             SubscribeLocalEvent<StackComponent, GetVerbsEvent<AlternativeVerb>>(OnStackAlternativeInteract);
+            SubscribeLocalEvent<StackComponent, StackCustomSplitAmountMessage>(OnCustomSplitMessage);
         }
 
         public override void SetCount(EntityUid uid, int amount, StackComponent? component = null)
@@ -198,6 +200,32 @@ namespace Content.Server.Stack
 
                 args.Verbs.Add(verb);
             }
+
+            AlternativeVerb custom = new()
+            {
+                Text = Loc.GetString("comp-stack-split-custom"),
+                Category = VerbCategory.Split,
+                Act = () =>
+                {
+                    // add the UI if we don't have
+                    if (!_ui.HasUi(uid, StackCustomSplitUiKey.Key))
+                        _ui.SetUi(uid, StackCustomSplitUiKey.Key, new InterfaceData("StackCustomSplitBoundUserInterface"));
+
+                    _ui.OpenUi(uid, StackCustomSplitUiKey.Key, args.User);
+                },
+                Priority = priority - 1
+            };
+            args.Verbs.Add(custom);
+        }
+
+        private void OnCustomSplitMessage(Entity<StackComponent> ent, ref StackCustomSplitAmountMessage message)
+        {
+            // digital ghosts shouldn't be allowed to split stacks
+            if (!(message.Actor is { Valid: true } user))
+                return;
+
+            var amount = message.Amount;
+            UserSplit(ent, user, amount, ent.Comp);
         }
 
         private void UserSplit(EntityUid uid, EntityUid userUid, int amount,
