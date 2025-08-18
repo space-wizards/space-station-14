@@ -1,3 +1,5 @@
+// Contains modifications made by Ronstation contributors, therefore this file is subject to MIT sublicensed with AGPL v3.0.
+using System.Linq; // Ronstation - modification.
 using System.Threading.Tasks;
 using Content.Shared.Procedural;
 using Content.Shared.Procedural.Components;
@@ -19,6 +21,8 @@ public sealed partial class DungeonJob
         HashSet<Vector2i> reservedTiles,
         Random random)
     {
+        var remaining = new Dictionary<EntProtoId, int>(); // Ronstation - modification.
+
         foreach (var dungeon in dungeons)
         {
             var emptyTiles = false;
@@ -141,11 +145,26 @@ public sealed partial class DungeonJob
                     }
                 }
 
+                // Start of modifications.
                 if (groupSize > 0)
                 {
-                    _sawmill.Warning($"Found remaining group size for ore veins of {gen.Replacement ?? "null"}!");
+                    var key = gen.Replacement ?? "null";
+                    if (remaining.ContainsKey(key))
+                    {
+                        remaining[key]++;
+                    }
+                    else
+                    {
+                        remaining.Add(key, 1);
+                    }
                 }
+                // End of modifications.
             }
         }
+
+        // Start of modifications.
+        if (remaining.Count > 0)
+            _sawmill.Warning($"Found remaining group size for groups, ore veins of {String.Join(", ", remaining.Select(kvp => $"{kvp.Key}: {kvp.Value}"))}!");
+        // End of modifications.
     }
 }
