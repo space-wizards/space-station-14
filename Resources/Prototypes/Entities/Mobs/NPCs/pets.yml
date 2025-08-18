@@ -166,6 +166,7 @@
   - type: HTN
     rootTask:
       task: SimpleHostileCompound
+  - type: SpeakOnException
   - type: Grammar
     attributes:
       proper: true
@@ -186,6 +187,9 @@
   - type: NpcFactionMember
     factions:
       - PetsNT
+  - type: SpeakOnException
+    speechCooldown: 50s
+    chanceSpeakNoAccent: 0.007
   - type: Grammar
     attributes:
       proper: true

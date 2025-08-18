@@ -403,4 +403,10 @@ public sealed partial class CCVars
     /// </summary>
     public static readonly CVarDef<bool> GameHostnameInTitlebar =
         CVarDef.Create("game.hostname_in_titlebar", true, CVar.SERVER | CVar.REPLICATED);
+
+    /// <summary>
+    ///     Should exceptions be censored when spoken to in game chat?
+    /// </summary>
+    public static readonly CVarDef<bool> CensorExceptionsInChat =
+        CVarDef.Create("game.censor_exceptions_in_chat", true, CVar.SERVER | CVar.REPLICATED);
 }
