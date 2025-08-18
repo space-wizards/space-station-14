@@ -62,6 +62,9 @@
       - reactantPrototype: Plasma
         powerGenerationEfficiency: 1
         reactantBreakdownRate: 0.0001
+     - reactantPrototype: Tritium
+        powerGenerationEfficiency: 1.5
+        reactantBreakdownRate: 0.0001
   - type: RadiationReceiver
   - type: PowerSupplier
   - type: Anchorable
