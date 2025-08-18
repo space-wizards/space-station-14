@@ -41,7 +41,7 @@
     mode: SnapgridCenter
   - type: Tag
     tags:
-      - Inflatable
+    - Inflatable
 
 - type: entity
   id: InflatableDoor
@@ -90,4 +90,4 @@
     enabled: false
   - type: Tag
     tags:
-      - Inflatable
+    - Inflatable
