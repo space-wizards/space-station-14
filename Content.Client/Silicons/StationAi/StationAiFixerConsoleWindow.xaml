@@ -45,7 +45,26 @@
             <PanelContainer StyleClasses="LowDivider" VerticalExpand="True" Margin="0 0 0 0" SetWidth="2"/>
 
             <!-- Right side - control panel -->
-            <BoxContainer VerticalExpand="True" HorizontalExpand="True" Orientation="Vertical">
+
+            <!-- Locked controls -->
+            <BoxContainer Name="LockScreen" VerticalExpand="True" HorizontalExpand="True" Orientation="Vertical" ReservesSpace="False">
+                <PanelContainer>
+                    <PanelContainer.PanelOverride>
+                        <gfx:StyleBoxFlat BackgroundColor="#1B1B1E" />
+                    </PanelContainer.PanelOverride>
+                    <BoxContainer VerticalExpand="True" HorizontalExpand="True" Orientation="Vertical">
+                        <TextureRect VerticalAlignment="Center"
+                                        SetSize="64 64"
+                                        Stretch="KeepAspectCentered"
+                                        TexturePath="/Textures/Interface/VerbIcons/lock.svg.192dpi.png">
+                        </TextureRect>
+                        <Label Text="{Loc 'station-ai-fixer-console-window-controls-locked'}" HorizontalAlignment="Center"/>
+                    </BoxContainer>
+                </PanelContainer>
+            </BoxContainer>
+
+            <!-- Visible controls -->
+            <BoxContainer  Name="MainControls" VerticalExpand="True" HorizontalExpand="True" Orientation="Vertical" ReservesSpace="False" Visible="False">
 
                 <!-- Eject button -->
                 <PanelContainer>

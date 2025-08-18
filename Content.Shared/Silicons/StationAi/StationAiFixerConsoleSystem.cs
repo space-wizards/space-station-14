@@ -40,6 +40,7 @@ public sealed partial class StationAiFixerConsoleSystem : EntitySystem
 
         SubscribeLocalEvent<StationAiFixerConsoleComponent, EntInsertedIntoContainerMessage>(OnInserted);
         SubscribeLocalEvent<StationAiFixerConsoleComponent, EntRemovedFromContainerMessage>(OnRemoved);
+        SubscribeLocalEvent<StationAiFixerConsoleComponent, LockToggledEvent>(OnLockToggle);
         SubscribeLocalEvent<StationAiFixerConsoleComponent, StationAiFixerConsoleMessage>(OnMessage);
         SubscribeLocalEvent<StationAiFixerConsoleComponent, PowerChangedEvent>(OnPowerChanged);
         SubscribeLocalEvent<StationAiFixerConsoleComponent, ExaminedEvent>(OnExamined);
@@ -72,6 +73,12 @@ public sealed partial class StationAiFixerConsoleSystem : EntitySystem
             bui.Update<StationAiFixerConsoleBoundUserInterfaceState>();
 
         StopAction(ent);
+    }
+
+    private void OnLockToggle(Entity<StationAiFixerConsoleComponent> ent, ref LockToggledEvent args)
+    {
+        if (_userInterface.TryGetOpenUi(ent.Owner, StationAiFixerConsoleUiKey.Key, out var bui))
+            bui.Update<StationAiFixerConsoleBoundUserInterfaceState>();
     }
 
     private void OnMessage(Entity<StationAiFixerConsoleComponent> ent, ref StationAiFixerConsoleMessage args)
