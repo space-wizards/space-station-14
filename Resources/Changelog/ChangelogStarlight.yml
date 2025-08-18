@@ -11932,5 +11932,12 @@ Entries:
   id: 108600
   time: '2025-08-16T08:59:45.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/1086
+- author: Rinary
+  changes:
+  - message: 'Added new reward type to railroading system: Delivery.'
+    type: Add
+  id: 127500
+  time: '2025-08-18T06:54:02.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1275
 Order: -1
 
