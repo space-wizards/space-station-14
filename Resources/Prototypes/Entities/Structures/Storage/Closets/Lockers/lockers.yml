@@ -25,12 +25,13 @@
   id: LockerSteel
   parent: LockerBaseSecure
   name: secure closet
-  components:
-  - type: Appearance
-  - type: EntityStorageVisuals
-    stateBaseClosed: secure
-    stateDoorOpen: secure_open
-    stateDoorClosed: secure_door
+  suffix: Mapping # Starlight-edit
+#  components: Starlight-edit: Moved to LockerBaseSecure
+#  - type: Appearance
+#  - type: EntityStorageVisuals
+#    stateBaseClosed: secure
+#    stateDoorOpen: secure_open
+#    stateDoorClosed: secure_door
 
 # Cargo
 - type: entity
