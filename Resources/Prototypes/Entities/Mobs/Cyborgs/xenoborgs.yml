@@ -149,7 +149,7 @@
   - type: BorgTransponder
     name: scout xenoborg
     sprite:
-      sprite: Mobs/Silicon/Chassis/xenoborg_scout.rsi
+      sprite: Mobs/Silicon/Chassis/xeno_scout.rsi
       state: borg
   - type: Sprite
     layers:
@@ -202,7 +202,7 @@
   - type: BorgTransponder
     name: stealth xenoborg
     sprite:
-      sprite: Mobs/Silicon/Chassis/xenoborg_stealth.rsi
+      sprite: Mobs/Silicon/Chassis/xeno_stealth.rsi
       state: borg
   - type: Sprite
     layers:
