@@ -52,7 +52,7 @@
   - [bold]Visibly be destroyed upon being implanted into a [color=#ed7300]Head Revolutionary[/color][/bold], giving you away
   - NOT protect against flash disorientation
 
-  Assume all of [color=#cb0000]Security[/color], [color=#1b67a5]Command[/color], [color=#a86819]Salvage specialists[/color] and [color=#478bff]Internal Affairs Agents[/color] to be implanted with [color=cyan]MindShields™[/color] already, [bold]however they can be removed by using an empty implanter obtainable from the Medical department's MedFab, or by using an [color=#ed7300][bold]SKB Demindshielder[/bold][/color] available in your [color=#ed7300]uplink.[/color][/bold]
+  Assume all of [color=#cb0000]Security[/color], [color=#1b67a5]Command[/color], [color=#a86819]Salvage specialists[/color] and [color=#478bff]Internal Affairs Agents[/color] to be implanted with [color=cyan]MindShields™[/color] already, [bold]however they can be removed by using an empty implanter obtainable from the Medical department's MedFab, or by using an [color=#ed7300][bold]SKB Demindshielder[/bold][/color] available in your [color=#ed7300]uplink.[/color][/bold] <!-- Starlight-edit -->
 
   <Box>
     <GuideEntityEmbed Entity="ToyFigurineSecurity" Caption=""/>
