@@ -1,46 +1,4 @@
 ﻿Entries:
-- author: EmoGarbage404
-  changes:
-  - message: Added 3 modkits for the proto-kinetic accelerator, granting increased
-      damage, range, and fire rate. They can be researched via the new "Kinetic Modifications"
-      arsenal tech.
-    type: Add
-  - message: Reduced damage and range on the proto-kinetic accelerator.
-    type: Tweak
-  id: 8351
-  time: '2025-04-25T18:18:24.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/31247
-- author: Wolfkey-SomeoneElseTookMyUsername
-  changes:
-  - message: Added cotton buns, which can be be used for the creation of custom burgers
-      that can be eaten by moths.
-    type: Add
-  id: 8352
-  time: '2025-04-26T01:54:14.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/36405
-- author: Booblesnoot42
-  changes:
-  - message: Due to a lack of functionality, light-switches have temporarily been
-      removed from the construction menu.
-    type: Remove
-  id: 8353
-  time: '2025-04-26T01:54:23.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/34664
-- author: OnyxTheBrave
-  changes:
-  - message: Cloth is now able to be made in the Sheet-Meister 2000
-    type: Add
-  id: 8354
-  time: '2025-04-26T03:22:52.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/32676
-- author: SyaoranFox
-  changes:
-  - message: Pulse Pistol, Pulse Carbine, and Pulse Rifle now share the same sound
-      file.
-    type: Tweak
-  id: 8355
-  time: '2025-04-26T13:36:51.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/36952
 - author: RedBookcase
   changes:
   - message: Various changes to edged weapons, including new storage sprites and new
@@ -3953,3 +3911,44 @@
   id: 8863
   time: '2025-08-18T14:33:16.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/39727
+- author: SlamBamActionman
+  changes:
+  - message: Aiming with the Hristov is now working correctly when using the Separated
+      Chat HUD mode.
+    type: Fix
+  - message: Cursor targetting with the Hristov now correctly selects the target underneath
+      the cursor.
+    type: Fix
+  id: 8864
+  time: '2025-08-18T18:22:02.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/35087
+- author: Zokkie
+  changes:
+  - message: Lone Operative is now assigned the Solo Antagonist role ingame instead
+      of the Team Antagonist role.
+    type: Fix
+  id: 8865
+  time: '2025-08-18T18:57:30.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/36521
+- author: beck-thompson, slarticodefast
+  changes:
+  - message: Fixed rebinding keys crashing the client.
+    type: Fix
+  id: 8866
+  time: '2025-08-18T18:58:30.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/39732
+- author: Princess-Cheeseballs
+  changes:
+  - message: Being a Lightweight drunk no longer extends your bloodloss
+    type: Fix
+  id: 8867
+  time: '2025-08-18T20:26:29.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38678
+- author: SlamBamActionman
+  changes:
+  - message: Auto-injector/medipen pop-ups now show the correct identity when injecting
+      someone else.
+    type: Fix
+  id: 8868
+  time: '2025-08-18T20:42:41.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/39735

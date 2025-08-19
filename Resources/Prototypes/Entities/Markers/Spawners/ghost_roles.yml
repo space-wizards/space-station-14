@@ -113,7 +113,7 @@
     description: ghost-role-information-loneop-description
     rules: ghost-role-information-loneop-rules
     mindRoles:
-    - MindRoleNukeops
+    - MindRoleLoneops
   - type: Sprite
     sprite: Markers/jobs.rsi
     layers:
