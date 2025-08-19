@@ -20,6 +20,12 @@ public sealed partial class SiliconLawOverriderComponent : Component
     /// </summary>
     [DataField]
     public string LawBoardId = "law_board";
+
+    /// <summary>
+    /// If this tool can be used directly in the AI core to change it's laws
+    /// </summary>
+    [DataField]
+    public bool WorksOnAiCore;
 }
 
 [Serializable, NetSerializable]

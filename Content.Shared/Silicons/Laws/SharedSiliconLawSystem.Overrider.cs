@@ -30,6 +30,11 @@ public abstract partial class SharedSiliconLawSystem
         if (args.Handled || !args.CanReach || args.Target == null)
             return;
 
+        var lawOverrider = ent.Owner;
+
+        if (!TryComp(lawOverrider, out SiliconLawOverriderComponent? OverriderComp))
+            return;
+
         EntityUid? aiEntity = null;
 
         if (!TryComp(args.Target, out SiliconLawProviderComponent? LawProviderTarget))
@@ -37,6 +42,9 @@ public abstract partial class SharedSiliconLawSystem
             /* if the object doesn't have SiliconLawProviderComponent
             it checks to see if it is the AI core and then trys
             to get the SiliconLawProviderComponent from the AI*/
+
+            if (!OverriderComp.WorksOnAiCore)
+                return;
 
             if (!TryComp<StationAiCoreComponent>(args.Target, out var aiCoreComp))
                 return;
@@ -52,11 +60,6 @@ public abstract partial class SharedSiliconLawSystem
 
             LawProviderTarget = LawProviderAi;
         }
-
-        var lawOverrider = ent.Owner;
-
-        if (!TryComp(lawOverrider, out SiliconLawOverriderComponent? OverriderComp))
-            return;
 
         var lawBoard = _slot.GetItemOrNull(lawOverrider, OverriderComp.LawBoardId);
 
