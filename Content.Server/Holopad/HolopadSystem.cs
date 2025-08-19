@@ -16,7 +16,6 @@ using Content.Shared.Verbs;
 using Robust.Server.GameObjects;
 using Robust.Server.GameStates;
 using Robust.Shared.Containers;
-using Robust.Shared.Player;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 using System.Linq;
@@ -37,7 +36,6 @@ public sealed class HolopadSystem : SharedHolopadSystem
     [Dependency] private readonly PopupSystem _popupSystem = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly PvsOverrideSystem _pvs = default!;
-    [Dependency] private readonly ISharedPlayerManager _playerManager = default!;
 
     private float _updateTimer = 1.0f;
     private const float UpdateTime = 1.0f;
