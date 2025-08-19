@@ -3,7 +3,6 @@
 - type: Tag
   id: Arachnid
 
-
 - type: Tag
   id: Avali
 
@@ -11,10 +10,16 @@
   id: AvianFood
 
 - type: Tag
+  id: BibleThwackRemovable
+
+- type: Tag
   id: BladePlasteel
 
 - type: Tag
   id: BladeSteel
+
+- type: Tag
+  id: Bola
 
 - type: Tag
   id: CantInteract

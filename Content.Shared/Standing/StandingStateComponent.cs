@@ -18,8 +18,8 @@ namespace Content.Shared.Standing
         /// Time it takes us to stand up
         /// </summary>
         [DataField, AutoNetworkedField]
-        public TimeSpan StandTime = TimeSpan.FromSeconds(1);
-        
+        public TimeSpan StandTime = TimeSpan.FromSeconds(2);
+
         /// <summary>
         /// Default Friction modifier for knocked down players.
         /// Makes them accelerate and deccelerate slower.

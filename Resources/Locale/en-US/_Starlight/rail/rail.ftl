@@ -7,6 +7,27 @@ railroading-card-examined = ┌Active card:
     └[color={$Color}]{$Desc}[/color]
 railroading-issued-card = [color={$IconColor}][font="Icon"]{$Icon}[/font][/color] [color={$Color}]{$Title}[/color]
 
+railroading-chat-delivery-message-1 = A mysterious package has arrived just for you!
+railroading-chat-delivery-wrapped-message-1 = [bold]A mysterious package has arrived just for you[/bold]!
+
+railroading-chat-delivery-message-2 = Congratulations! You've just received a surprise delivery.
+railroading-chat-delivery-wrapped-message-2 = [bold]Congratulations! You've just received a surprise delivery[/bold].
+
+railroading-chat-delivery-message-3 = Special delivery! Someone out there likes you.
+railroading-chat-delivery-wrapped-message-3 = [bold]Special delivery! Someone out there likes you[/bold].
+
+railroading-chat-delivery-message-4 = You hear a knock at the door... Your package is here!
+railroading-chat-delivery-wrapped-message-4 = [bold]You hear a knock at the door... Your package is here[/bold]!
+
+railroading-chat-delivery-message-5 = Delivery incoming! It’s your lucky day.
+railroading-chat-delivery-wrapped-message-5 = [bold]Delivery incoming! It’s your lucky day[/bold].
+
+railroading-chat-delivery-message-6 = Surprise! The postman has brought you something special.
+railroading-chat-delivery-wrapped-message-6 = [bold]Surprise! The postman has brought you something special[/bold].
+
+railroading-chat-delivery-message-7 = Lucky you! A parcel just dropped into your hands.
+railroading-chat-delivery-wrapped-message-7 = [bold]Lucky you! A parcel just dropped into your hands[/bold].
+
 rail-consume-task = Eat {INDEFINITE($Target)} {$Target}
 
 rr-apple-pie = Apple pie
@@ -26,7 +47,6 @@ rr-melon-fruit-bowl-desc = At the spaceport, they called this dish Fructose Momm
 
 rr-stew = Stew
 rr-stew-desc = Space makes a lot of ordinary things feel exotic. Just try not to think about how it was cooked in a microwave.
-
 
 # Metabolize
 

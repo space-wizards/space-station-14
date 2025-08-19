@@ -173,6 +173,20 @@
   - UplinkWeaponry
 
 - type: listing
+  id: UplinkFireAxe
+  name: uplink-fire-axe-flaming-name
+  description: uplink-fire-axe-flaming-desc
+  icon: { sprite: /Textures/Objects/Weapons/Melee/fireaxeflaming.rsi, state: icon }
+  productEntity: FireAxeFlaming
+  discountCategory: usualDiscounts
+  discountDownTo:
+    Telecrystal: 10
+  cost:
+    Telecrystal: 15
+  categories:
+  - UplinkWeaponry
+
+- type: listing
   id: UplinkC20RBundle
   name: uplink-c20r-bundle-name
   description: uplink-c20r-bundle-desc
@@ -2310,3 +2324,39 @@
     Telecrystal: 2
   categories:
   - UplinkDeception
+
+- type: listing
+  id: UplinkAcolyteArmor
+  name: uplink-acolyte-armor-name
+  description: uplink-acolyte-armor-desc
+  icon: { sprite: Clothing/OuterClothing/Armor/cult_armour.rsi, state: icon}
+  productEntity: ClothingBackpackDuffelAcolyteBundle
+  discountCategory: veryRareDiscounts
+  discountDownTo:
+    Telecrystal: 3
+  cost:
+    Telecrystal: 4
+  categories:
+  - UplinkJob
+  conditions:
+  - !type:BuyerJobCondition
+    whitelist:
+    - Chaplain
+
+#- type: listing
+#  id: UplinkSawAdvanced
+#  name: uplink-saw-advanced-name
+#  description: uplink-saw-advanced-desc
+#  icon: { sprite:  Objects/Specific/Medical/Surgery/saw.rsi, state: advanced}
+#  productEntity: SawAdvanced
+#  discountCategory: rareDiscounts
+#  discountDownTo:
+#    Telecrystal: 1
+#  cost:
+#    Telecrystal: 2
+#  categories:
+#  - UplinkJob
+#  conditions:
+#  - !type:BuyerJobCondition
+#    whitelist:
+#    - MedicalDoctor

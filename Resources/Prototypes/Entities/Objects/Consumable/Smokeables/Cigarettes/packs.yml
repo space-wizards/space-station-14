@@ -283,4 +283,19 @@
       amount: 10
     - id: CigaretteSyndicate
       amount: 2
+
+- type: entity
+  id: CigPackMedRollie
+  parent: PackPaperRolling
+  name: medicinal blunt packet
+  description: An old rolling paper packet full of things to make blunts with. Its purely medicinal man..
+  components:
+  - type: StorageFill
+    contents:
+    - id: LeavesTobaccoDried
+      amount: 10
+    - id: GroundCannabis
+      amount: 10
+    - id: Blunt
+      amount: 2
 ### end SL

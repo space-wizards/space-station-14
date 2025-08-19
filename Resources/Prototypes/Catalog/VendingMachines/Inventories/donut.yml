@@ -9,4 +9,6 @@
     FoodBagel: 3 #Starlight +1
     FoodBagelPoppy: 3 #Starlight +1
   emaggedInventory:
+    FoodBagel: 2
+    FoodBagelPoppy: 2
     FoodDonutPoison: 1
