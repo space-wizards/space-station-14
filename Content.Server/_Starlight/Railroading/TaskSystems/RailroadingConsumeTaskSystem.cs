@@ -31,10 +31,10 @@ public sealed partial class RailroadingConsumeTaskSystem : EntitySystem
         SubscribeLocalEvent<RailroadConsumeTaskComponent, RailroadingCardCompletionQueryEvent>(OnConsumeTaskCompletionQuery);
         SubscribeLocalEvent<RailroadConsumeTaskComponent, CollectObjectiveInfoEvent>(OnCollectObjectiveInfo);
 
-        SubscribeLocalEvent<RailroadConsumeWatcherComponent, FullyEatenEvent>(OnFullyEaten);
+        SubscribeLocalEvent<RailroadConsumeWatcherComponent, ConsumedFoodEvent>(OnFullyEaten);
     }
 
-    private void OnFullyEaten(Entity<RailroadConsumeWatcherComponent> ent, ref FullyEatenEvent args)
+    private void OnFullyEaten(Entity<RailroadConsumeWatcherComponent> ent, ref ConsumedFoodEvent args)
     {
         if (!TryComp<RailroadableComponent>(ent, out var railroadable)
             || railroadable.ActiveCard is null

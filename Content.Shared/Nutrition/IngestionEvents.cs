@@ -214,3 +214,12 @@ public sealed class BeforeFullySlicedEvent : CancellableEntityEventArgs
     /// </summary>
     public EntityUid User;
 }
+
+
+#region Starlight
+[ByRefEvent]
+public readonly record struct ConsumedFoodEvent(EntProtoId food)
+{
+    public readonly EntProtoId Food = food;
+}
+#endregion

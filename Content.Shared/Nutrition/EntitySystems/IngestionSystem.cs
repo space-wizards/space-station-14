@@ -1,4 +1,5 @@
-﻿using Content.Shared.Administration.Logs;
+﻿using Content.Shared._Starlight.Abstract.Extensions;
+using Content.Shared.Administration.Logs;
 using Content.Shared.Body.Components;
 using Content.Shared.Body.Organ;
 using Content.Shared.Body.Systems;
@@ -390,6 +391,14 @@ public sealed partial class IngestionSystem : EntitySystem
         // Tell the food that it's time to die.
         var finishedEv = new FullyEatenEvent(args.User);
         RaiseLocalEvent(food, ref finishedEv);
+
+        #region Starlight railroading
+        if (Prototype(food).TryGetEntProtoId(out var foodProto))
+        {
+            var consumedEv = new ConsumedFoodEvent(foodProto);
+            RaiseLocalEvent(args.User, ref consumedEv);
+        }
+        #endregion
 
         var eventArgs = new DestructionEventArgs();
         RaiseLocalEvent(food, eventArgs);
