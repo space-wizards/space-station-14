@@ -535,7 +535,7 @@
   id: MeatSpike
   graph: MeatSpike
   startNode: start
-  targetNode: MeatSpike
+  targetNode: spike
   category: construction-category-furniture
   objectType: Structure
   placementMode: SnapgridCenter

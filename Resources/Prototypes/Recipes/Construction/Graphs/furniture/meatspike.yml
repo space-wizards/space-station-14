@@ -2,24 +2,28 @@
   id: MeatSpike
   start: start
   graph:
+
   - node: start
     actions:
     - !type:DeleteEntity {}
     edges:
-    - to: MeatSpike
+    # here to the assambly
+    - to: assembly
       completed:
+      - !type:SnapToGrid
+        southRotation: true
       - !type:AdminLog # Needs a log for start of attempt in addition to the completion log
         message: "Construction"
         impact: High
-      - !type:SnapToGrid
-        southRotation: true
       steps:
       - material: Steel
         amount: 15
         doAfter: 2
-  - node: MeatSpike
-    entity: KitchenSpike
+
+  - node: assembly
+    entity: KitchenSpikeAssembly
     edges:
+    # here to the start
     - to: start
       completed:
       - !type:SpawnPrototype
@@ -27,4 +31,88 @@
         amount: 15
       steps:
       - tool: Screwing
+        doAfter: 10
+    # here to the knife1
+    - to: knife1
+      steps:
+      - tag: Knife
+        store: knives
+        name: construction-graph-tag-knife
+        icon:
+          sprite: "Objects/Weapons/Melee/kitchen_knife.rsi"
+          state: "icon"
         doAfter: 1
+
+  - node: knife1
+    edges:
+    # here to the assembly
+    - to: assembly
+      completed:
+      - !type:EmptyAllContainers
+        pickup: true
+        emptyAtUser: true
+      steps:
+      - tool: Prying
+        doAfter: 10
+    # here to the knife2
+    - to: knife2
+      steps:
+      - tag: Knife
+        store: knives
+        name: construction-graph-tag-knife
+        icon:
+          sprite: "Objects/Weapons/Melee/kitchen_knife.rsi"
+          state: "icon"
+        doAfter: 1
+
+  - node: knife2
+    edges:
+    # here to the assembly
+    - to: assembly
+      completed:
+      - !type:EmptyAllContainers
+        pickup: true
+        emptyAtUser: true
+      steps:
+      - tool: Prying
+        doAfter: 10
+    # here to the knife3
+    - to: knife3
+      steps:
+      - tag: Knife
+        store: knives
+        name: construction-graph-tag-knife
+        icon:
+          sprite: "Objects/Weapons/Melee/kitchen_knife.rsi"
+          state: "icon"
+        doAfter: 1
+
+  - node: knife3
+    edges:
+    # here to the assembly
+    - to: assembly
+      completed:
+      - !type:EmptyAllContainers
+        pickup: true
+        emptyAtUser: true
+      steps:
+      - tool: Prying
+        doAfter: 10
+    # here to the spike
+    - to: spike
+      steps:
+      - tool: Welding
+        doAfter: 10
+
+  - node: spike
+    entity: KitchenSpike
+    edges:
+    # here to the assembly
+    - to: assembly
+      completed:
+      - !type:EmptyAllContainers
+        pickup: true
+        emptyAtUser: true
+      steps:
+      - tool: Prying
+        doAfter: 10
