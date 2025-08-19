@@ -408,5 +408,5 @@ public sealed partial class CCVars
     ///     Should exceptions be censored when spoken to in game chat?
     /// </summary>
     public static readonly CVarDef<bool> CensorExceptionsInChat =
-        CVarDef.Create("game.censor_exceptions_in_chat", false, CVar.SERVER | CVar.REPLICATED);
+        CVarDef.Create("game.censor_exceptions_in_chat", true, CVar.SERVER | CVar.REPLICATED);
 }

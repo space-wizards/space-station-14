@@ -4,6 +4,7 @@ lobbyenabled = false
 # Dev map for faster loading & convenience
 map = "Dev"
 role_timers = false
+censor_exceptions_in_chat = false
 
 [events]
 enabled = false

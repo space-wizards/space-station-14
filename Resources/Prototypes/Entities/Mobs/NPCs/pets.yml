@@ -188,7 +188,7 @@
     factions:
       - PetsNT
   - type: SpeakOnException
-    speechCooldown: 50s
+    speechCooldown: 5m
     chanceSpeakNoAccent: 0.007
   - type: Grammar
     attributes:
