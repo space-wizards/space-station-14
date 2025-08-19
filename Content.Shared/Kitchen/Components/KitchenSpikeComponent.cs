@@ -121,6 +121,12 @@ public sealed partial class KitchenSpikeComponent : Component
     /// </remarks>
     [DataField, AutoNetworkedField]
     public TimeSpan ButcherDelayAlive = TimeSpan.FromSeconds(8);
+
+    /// <summary>
+    /// Value by which the butchering delay will be multiplied if the victim is dead.
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public float ButcherModifierDead = 0.5f;
 }
 
 [Serializable, NetSerializable]

@@ -158,7 +158,7 @@ public sealed class SharedKitchenSpikeSystem : EntitySystem
         if (_mobStateSystem.IsAlive(victim.Value))
             delay += ent.Comp.ButcherDelayAlive;
         else
-            delay /= 2;
+            delay *= ent.Comp.ButcherModifierDead;
 
         _doAfterSystem.TryStartDoAfter(new DoAfterArgs(EntityManager,
             args.User,
