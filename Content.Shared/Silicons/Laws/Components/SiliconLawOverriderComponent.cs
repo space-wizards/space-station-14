@@ -18,7 +18,7 @@ public sealed partial class SiliconLawOverriderComponent : Component
     /// <summary>
     /// The ID of the itemslot that holds the law board.
     /// </summary>
-    [DataField("LawBoardId")]
+    [DataField]
     public string LawBoardId = "law_board";
 }
 
