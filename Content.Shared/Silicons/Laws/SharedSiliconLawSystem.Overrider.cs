@@ -126,7 +126,10 @@ public abstract partial class SharedSiliconLawSystem
         else
             lawset = LawProviderBase.Lawset;
 
-        SetLaws(lawset.Laws, ent, LawProviderBase.LawUploadSound);
+        if (OverriderComp.CanChangeCorruptedLaws)
+            SetLaws(lawset.Laws, ent, LawProviderBase.LawUploadSound);
+        else
+            SoftSetLaws(lawset.Laws, ent, LawProviderBase.LawUploadSound);
     }
 }
 

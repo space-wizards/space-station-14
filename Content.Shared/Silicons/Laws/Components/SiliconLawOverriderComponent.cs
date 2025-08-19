@@ -26,6 +26,12 @@ public sealed partial class SiliconLawOverriderComponent : Component
     /// </summary>
     [DataField]
     public bool WorksOnAiCore;
+
+    /// <summary>
+    /// If this tool can remove any corrupted laws
+    /// </summary>
+    [DataField]
+    public bool CanChangeCorruptedLaws;
 }
 
 [Serializable, NetSerializable]

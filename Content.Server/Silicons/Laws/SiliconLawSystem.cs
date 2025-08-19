@@ -273,6 +273,22 @@ public sealed class SiliconLawSystem : SharedSiliconLawSystem
         NotifyLawsChanged(target, cue);
     }
 
+    /// <summary>
+    /// Set the laws, without removing corrupted laws of a silicon entity while notifying the player.
+    /// </summary>
+    public override void SoftSetLaws(List<SiliconLaw> newLaws, EntityUid target, SoundSpecifier? cue = null)
+    {
+        if (!TryComp<SiliconLawProviderComponent>(target, out var component))
+            return;
+
+        if (component.Lawset == null)
+            component.Lawset = new SiliconLawset();
+
+        // TODO: HOW TO SEE IF A LAW IS A ION STORM LAW?
+        component.Lawset.Laws = newLaws;
+        NotifyLawsChanged(target, cue);
+    }
+
     protected override void OnUpdaterInsert(Entity<SiliconLawUpdaterComponent> ent, ref EntInsertedIntoContainerMessage args)
     {
         // TODO: Prediction dump this
