@@ -12039,5 +12039,13 @@ Entries:
   id: 139900
   time: '2025-08-19T20:09:33.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/1399
+- author: STARLIGHT TEAM
+  changes:
+  - message: The experiment failed, we’re bringing back real weapons. If you get hurt
+      again, we’ll swap them out for nerf guns again.
+    type: Tweak
+  id: 140000
+  time: '2025-08-19T20:15:04.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1400
 Order: -1
 
