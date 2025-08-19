@@ -12,6 +12,7 @@ using Robust.Shared.Map;
 
 //linq
 using System.Linq;
+using Content.Shared.Weapons.Ranged.Events;
 using Content.Shared.Examine;
 
 namespace Content.Shared.Starlight.Knockback;
@@ -24,7 +25,7 @@ public abstract partial class SharedKnockbackSystem : EntitySystem
     [Dependency] private readonly SharedStaminaSystem _stamina = default!;
     public override void Initialize()
     {
-        SubscribeLocalEvent<KnockbackByUserTagComponent, OnNonEmptyGunShotEvent>(OnGunShot);
+        SubscribeLocalEvent<KnockbackByUserTagComponent, TakeAmmoEvent>(OnGunShot);
         SubscribeLocalEvent<KnockbackByUserTagComponent, ExaminedEvent>(OnExamined);
     }
 
@@ -45,12 +46,12 @@ public abstract partial class SharedKnockbackSystem : EntitySystem
         }
     }
 
-    private void OnGunShot(Entity<KnockbackByUserTagComponent> ent, ref OnNonEmptyGunShotEvent args)
+    private void OnGunShot(Entity<KnockbackByUserTagComponent> ent, ref TakeAmmoEvent args)
     {
         //make sure the ammo is shootable
         foreach (var ammo in args.Ammo)
         {
-            if (TryComp<HitScanCartridgeAmmoComponent>(ammo.Uid, out var hitscanCartridge))
+            if (TryComp<HitScanCartridgeAmmoComponent>(ammo.Entity, out var hitscanCartridge))
             {
                 //check if its spent
                 if (hitscanCartridge.Spent)
@@ -59,7 +60,7 @@ public abstract partial class SharedKnockbackSystem : EntitySystem
                 }
             }
 
-            if (TryComp<CartridgeAmmoComponent>(ammo.Uid, out var cartridge))
+            if (TryComp<CartridgeAmmoComponent>(ammo.Entity, out var cartridge))
             {
                 //check if its spent
                 if (cartridge.Spent)
@@ -69,7 +70,9 @@ public abstract partial class SharedKnockbackSystem : EntitySystem
             }
         }
 
-        EntityUid user = args.User;
+        if (args.User == null)
+            return;
+        EntityUid user = args.User.Value;
 
         //check for tags
         if (_tagSystem.HasAnyTag(user, ent.Comp.DoestContain.Keys))

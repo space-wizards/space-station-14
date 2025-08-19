@@ -5,6 +5,7 @@ namespace Content.Shared.Input
     [KeyFunctions]
     public static class ContentKeyFunctions
     {
+        public static readonly BoundKeyFunction ToggleKnockdown = "ToggleKnockdown";
         public static readonly BoundKeyFunction UseItemInHand = "ActivateItemInHand";
         public static readonly BoundKeyFunction AltUseItemInHand = "AltActivateItemInHand";
         public static readonly BoundKeyFunction ActivateItemInWorld = "ActivateItemInWorld";
@@ -135,6 +136,5 @@ namespace Content.Shared.Input
 
         // 🌟Starlight🌟
         public static readonly BoundKeyFunction Jump = "Jump";
-        public static readonly BoundKeyFunction ToggleKnockdown = "ToggleKnockdown";
     }
 }

@@ -73,6 +73,8 @@
     stateDoorClosed: cap_door
   - type: AccessReader
     access: [["Captain"]]
+  - type: WiresPanelSecurity # Starlight-edit: Maintenance panel
+    securityLevel: medSecurity # Starlight-edit: Maintenance panel
 
 - type: entity
   id: LockerHeadOfPersonnel
@@ -86,6 +88,8 @@
     stateDoorClosed: hop_door
   - type: AccessReader
     access: [["HeadOfPersonnel"]]
+  - type: WiresPanelSecurity # Starlight-edit: Maintenance panel
+    securityLevel: medSecurity # Starlight-edit: Maintenance panel
 
 # CE
 - type: entity
@@ -100,6 +104,8 @@
     stateDoorClosed: ce_door
   - type: AccessReader
     access: [ [ "ChiefEngineer" ] ]
+  - type: WiresPanelSecurity # Starlight-edit: Maintenance panel
+    securityLevel: medSecurity # Starlight-edit: Maintenance panel
 
 # Electrical supplies
 - type: entity
@@ -289,6 +295,8 @@
     stateDoorClosed: cmo_door
   - type: AccessReader
     access: [ [ "ChiefMedicalOfficer" ] ]
+  - type: WiresPanelSecurity # Starlight-edit: Maintenance panel
+    securityLevel: medSecurity # Starlight-edit: Maintenance panel
 
 # Science
 - type: entity
@@ -303,6 +311,8 @@
     stateDoorClosed: rd_door
   - type: AccessReader
     access: [ [ "ResearchDirector" ] ]
+  - type: WiresPanelSecurity # Starlight-edit: Maintenance panel
+    securityLevel: medSecurity # Starlight-edit: Maintenance panel
 
 - type: entity
   id: LockerScientist
@@ -330,6 +340,8 @@
     stateDoorClosed: hos_door
   - type: AccessReader
     access: [["HeadOfSecurity"]]
+  - type: WiresPanelSecurity # Starlight-edit: Maintenance panel
+    securityLevel: medSecurity # Starlight-edit: Maintenance panel
 
 # Warden
 - type: entity
@@ -344,6 +356,8 @@
     stateDoorClosed: warden_door
   - type: AccessReader
     access: [["Armory"]]
+  - type: WiresPanelSecurity # Starlight-edit: Maintenance panel
+    securityLevel: medSecurity # Starlight-edit: Maintenance panel
 
 # Brigmedic
 - type: entity

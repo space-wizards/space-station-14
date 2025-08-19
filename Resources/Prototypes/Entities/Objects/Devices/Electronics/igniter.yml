@@ -23,3 +23,7 @@
   - type: Tag
     tags:
     - Igniter
+  # Starlight-start: Vending Machines Prices
+  - type: ItemPrice
+    priceCategory: tool_basic
+  # Starlight-end
