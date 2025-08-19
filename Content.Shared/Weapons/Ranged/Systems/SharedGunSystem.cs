@@ -507,6 +507,11 @@ public abstract partial class SharedGunSystem : EntitySystem
 
     protected IShootable EnsureShootable(EntityUid uid)
     {
+        // Starlight start
+        if (TryComp<HitScanCartridgeAmmoComponent>(uid, out var hitscanCartridge))
+            return hitscanCartridge;
+        // Starlight end
+
         if (TryComp<CartridgeAmmoComponent>(uid, out var cartridge))
             return cartridge;
 
@@ -624,6 +629,8 @@ public abstract partial class SharedGunSystem : EntitySystem
 
     protected abstract void CreateEffect(EntityUid gunUid, MuzzleFlashEvent message, EntityUid? user = null);
 
+    // Starlight start
+
     /// <summary>
     /// Used for animated effects on the client.
     /// </summary>
@@ -631,8 +638,22 @@ public abstract partial class SharedGunSystem : EntitySystem
     public sealed class HitscanEvent : EntityEventArgs
     {
         public ProtoId<HitscanPrototype> Hitscan;
-        public List<(NetCoordinates coordinates, Angle angle, SpriteSpecifier Sprite, float Distance)> Sprites = new();
+        public required Effect[][] Effects { get; init; }
     }
+    [Serializable, NetSerializable]
+    public struct Effect
+    {
+        public Angle Angle;
+        public float Distance;
+
+        public NetCoordinates? MuzzleCoordinates;
+        public NetCoordinates? TravelCoordinates;
+        public NetCoordinates ImpactCoordinates;
+        public NetEntity? ImpactEnt;
+
+    }
+    // Starlight end
+
 }
 
 /// <summary>
