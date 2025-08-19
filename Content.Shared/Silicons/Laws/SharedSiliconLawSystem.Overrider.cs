@@ -27,7 +27,22 @@ public abstract partial class SharedSiliconLawSystem
             return;
 
         if (!TryComp(args.Target, out SiliconLawProviderComponent? LawProviderTarget))
-            return;
+        {
+            /* if the object doesn't have SiliconLawProviderComponent
+            it checks to see if it is the AI core and then trys
+            to get the SiliconLawProviderComponent from the AI*/
+
+            if (!TryComp(args.Target, out StationAiHolderComponent? targetHolder))
+                return;
+
+            var ai = _slot.GetItemOrNull(args.Target, targetHolder.Slot);
+
+            if (ai == null)
+                return;
+
+            if (!TryComp(ai, out SiliconLawProviderComponent? LawProviderTarget))
+                return;
+        }
 
         var lawOverrider = args.Used;
 
