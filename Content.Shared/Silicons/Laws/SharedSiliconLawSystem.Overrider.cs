@@ -121,7 +121,7 @@ public abstract partial class SharedSiliconLawSystem
 
         SiliconLawset? lawset = null;
 
-        if (provider.Lawset == null)
+        if (LawProviderBase.Lawset == null)
             lawset = GetLawset(LawProviderBase.Laws);
         else
             lawset = LawProviderBase.Lawset;
