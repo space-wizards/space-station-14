@@ -294,15 +294,15 @@ public sealed class SiliconLawSystem : SharedSiliconLawSystem
     protected override void OnUpdaterInsert(Entity<SiliconLawUpdaterComponent> ent, ref EntInsertedIntoContainerMessage args)
     {
         // TODO: Prediction dump this
-        if (!TryComp(args.Entity, out SiliconLawProviderComponent? provider))
+        if (!TryComp<SiliconLawProviderComponent>(args.Entity, out var provider))
             return;
 
-        var lawset = provider.Lawset.Laws ?? GetLawset(provider.Laws).Laws;
+        var lawset = provider.Lawset ?? GetLawset(provider.Laws);
         var query = EntityManager.CompRegistryQueryEnumerator(ent.Comp.Components);
 
         while (query.MoveNext(out var update))
         {
-            SetLaws(lawset, update, provider.LawUploadSound);
+            SetLaws(lawset.Laws, update, provider.LawUploadSound);
         }
     }
 }
