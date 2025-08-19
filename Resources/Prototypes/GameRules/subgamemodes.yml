@@ -51,6 +51,10 @@
       multiAntagSetting: None
       mindRoles:
       - MindRoleChangeling
+      components:
+        - type: ChangelingDevour
+        - type: ChangelingIdentity
+        - type: ChangelingTransform
 
 - type: entity
   parent: BaseGameRule

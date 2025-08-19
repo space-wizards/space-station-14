@@ -6,6 +6,7 @@ using Content.Shared.Body.Components;
 using Content.Shared.Damage;
 using Content.Shared.Database;
 using Content.Shared.DoAfter;
+using Content.Shared.FixedPoint;
 using Content.Shared.Humanoid;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Inventory;
@@ -13,6 +14,7 @@ using Content.Shared.Mobs.Systems;
 using Content.Shared.Nutrition.Components;
 using Content.Shared.Popups;
 using Content.Shared.Storage;
+using Content.Shared.Store.Components;
 using Content.Shared.Whitelist;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Network;
@@ -258,6 +260,11 @@ public sealed class ChangelingDevourSystem : EntitySystem
                 RipClothing(target.Value, (item.Value, butcherable));
         }
 
+        #region Starlight ling devour.
+        var consumeEv = new OnLingDevour(target.Value);
+        RaiseLocalEvent(ent, ref consumeEv);
+        #endregion
+
         Dirty(ent);
     }
 
@@ -274,3 +281,11 @@ public sealed class ChangelingDevourSystem : EntitySystem
         PredictedQueueDel(item.Owner);
     }
 }
+
+#region Starlight ling consume event
+[ByRefEvent]
+public struct OnLingDevour(EntityUid target)
+{
+    public EntityUid Consumed = target;
+}
+#endregion
