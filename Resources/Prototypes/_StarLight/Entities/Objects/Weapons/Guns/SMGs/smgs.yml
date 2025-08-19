@@ -72,7 +72,11 @@
     - state: mag-0
       map: ["enum.GunVisualLayers.Mag"]
   - type: Gun
-    fireRate: 12
+    fireRate: 10
+    minAngle: 1
+    maxAngle: 25
+    angleIncrease: 8
+    angleDecay: 5
     selectedMode: FullAuto
     shotsPerBurst: 4
     availableModes:

@@ -4,7 +4,7 @@
   description: job-description-ntncblueshield
   playTimeTracker: JobConsortiumBlueShield
   setPreference: false
-  startingGear: NTNCBlueShieldGear
+  startingGear: NTNCHardsuitGear
   icon: JobIconNTNCBlueShield
   supervisors: job-supervisors-centcom
   canBeAntag: false
@@ -15,23 +15,3 @@
   special:
     - !type:AddImplantSpecial
       implants: [ MindShieldImplant, DeathRattleImplantCentcomm, RadioImplantCentcomm ]
-
-- type: startingGear
-  id: NTNCBlueShieldGear
-  equipment:
-    jumpsuit: ClothingUniformNTNCFatigues
-    back: ClothingBackpackERTLeader
-    shoes: ClothingShoesBootsCombatFilled
-    head: ClothingHeadHatBeretBlueShield
-    outerClothing: ClothingOuterVestNTNC
-    id: NTNCCSPDA
-    eyes: ClothingEyesGlassesBlueShield
-    ears: ClothingHeadsetAltCommand
-    belt: ClothingBeltBlueShieldWebbingFilled
-    gloves: ClothingHandsGlovesCombat
-    pocket1: WeaponMultiphaseGun
-    pocket2: WeaponPistolN1984
-  storage:
-    back:
-    - Flash
-    - ClothingMaskGasBSO

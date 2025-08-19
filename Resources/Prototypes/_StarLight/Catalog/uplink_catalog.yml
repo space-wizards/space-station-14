@@ -38,6 +38,20 @@
           - NukeOpsUplink
 
 - type: listing
+  id: UplinkUziBundle
+  name: uplink-uzi-bundle-name
+  description: uplink-uzi-bundle-desc
+  icon: { sprite: /Textures/_Starlight/Objects/Weapons/Guns/SMGs/uzi.rsi, state: icon }
+  productEntity: ClothingBackpackDuffelSyndicateFilledUzi
+  discountCategory: veryRareDiscounts
+  discountDownTo:
+    Telecrystal: 15
+  cost:
+    Telecrystal: 20
+  categories:
+  - UplinkWeaponry
+
+- type: listing
   id: uplinkWeaponShotgunMinotaur
   name: uplink-minotaur-name
   description: uplink-minotaur-desc
@@ -156,7 +170,28 @@
      state: mag-1 
     }
   productEntity: MagazineMagnumRifleSP
+  cost:
+    Telecrystal: 2
+  categories:
+    - UplinkAmmo
+  conditions:
+    - !type:StoreWhitelistCondition
+      whitelist:
+        tags:
+          - NukeOpsUplink
 
+- type: listing
+  id: UplinkUziMagazine
+  name: uplink-uzi-magazine-name
+  description: uplink-uzi-magazine-desc
+  icon:
+    { sprite: /Textures/_Starlight/Objects/Weapons/Guns/Ammunition/Magazine/SMGs/uzi.rsi, state: base }
+  productEntity: MagazinePistolSubMachineGunUzi
+  cost:
+    Telecrystal: 2
+  categories:
+    - UplinkAmmo
+    
 - type: listing
   id: UplinkShotgunBreachingMagazine
   name: uplink-breaching-magazine-name
