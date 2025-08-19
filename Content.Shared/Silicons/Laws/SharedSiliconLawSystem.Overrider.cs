@@ -38,7 +38,7 @@ public abstract partial class SharedSiliconLawSystem
             it checks to see if it is the AI core and then trys
             to get the SiliconLawProviderComponent from the AI*/
 
-            if (!TryComp(args.Target, out StationAiCoreComponent? aiCoreComp))
+            if (!TryComp<StationAiCoreComponent>(args.Target, out var aiCoreComp))
                 return;
 
             _stationAi.TryGetHeld((args.Target.Value, aiCoreComp), out var tempAi);
