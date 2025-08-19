@@ -232,6 +232,11 @@
   license: "CC-BY-SA-3.0"
   source: https://github.com/YuriyKiss/space-station-14/commit/971a135a9c83aed46e967aac9302ab5b35562b5f
 
+- files: [gateway_off.ogg]
+  copyright: 'by RunnerPack of Freesound.org'
+  license: "CC-BY-4.0"
+  source: https://freesound.org/people/RunnerPack/sounds/87040/
+
 - files: [inneranomaly.ogg]
   copyright: 'created by waveplaySFX on Freesound'
   license: "CC0-1.0"
