@@ -56,7 +56,7 @@
 
   <Box>
     <GuideEntityEmbed Entity="ToyFigurineSecurity" Caption=""/>
-    <GuideEntityEmbed Entity="ToyFigurineCaptain" Caption=""/>
+    <GuideEntityEmbed Entity="ToyFigurineCaptain" Caption=""/>  <!-- Starlight-edit -->
     <GuideEntityEmbed Entity="ToyFigurineSalvage" Caption=""/>
     <GuideEntityEmbed Entity="ToyFigurineLawyer" Caption=""/>
   </Box>
