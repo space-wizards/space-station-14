@@ -1,4 +1,5 @@
 using Content.Server.Chat.Managers;
+using Content.Shared._Starlight.Silicons.Borgs;
 using Content.Shared.Chat;
 using Content.Shared.Chat.Prototypes;
 using Content.Shared.Mind;
@@ -88,6 +89,15 @@ public sealed partial class ChatNotificationSystem : EntitySystem
 
         var message = Loc.GetString(chatNotification.Message, ("source", sourceName), ("user", userName), ("target", targetName));
         var wrappedMessage = Loc.GetString("chat-manager-server-wrap-message", ("message", message));
+
+        #region Starlight StationAI shunting redirector
+        if (TryComp<StationAIShuntableComponent>(ent, out var shuntable))
+        {
+            var inhabited = shuntable.Inhabited;
+            if (TryComp<ActorComponent>(inhabited, out var inhabitedActor))
+                ent = (inhabited.Value, inhabitedActor);
+        }
+        #endregion
 
         _chats.ChatMessageToOne(
             ChatChannel.Notifications,
