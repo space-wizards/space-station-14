@@ -43,6 +43,10 @@
   - type: PressurizedSolution
     solution: drink
   - type: Shakeable
+  # Starlight-edit: Vending Machines Prices
+  - type: ItemPrice
+    priceCategory: drink
+  # Starlight-end
 
 - type: entity
   parent: DrinkBase

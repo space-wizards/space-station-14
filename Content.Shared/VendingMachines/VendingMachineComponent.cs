@@ -1,7 +1,7 @@
 using Content.Shared.Actions;
 using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
-using Robust.Shared.Prototypes; //Starlight
+using Robust.Shared.Prototypes; // 🌟Starlight🌟 
 using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
@@ -47,6 +47,12 @@ namespace Content.Shared.VendingMachines
         /// </summary>
         [DataField]
         public bool Contraband;
+
+        /// <summary>
+        /// If true, items in this vending machine will display prices. If false, items are free 
+        /// </summary>
+        [DataField]
+        public bool ShowPrices = true;
 
         [ViewVariables]
         public bool Ejecting => EjectEnd != null;
@@ -211,11 +217,15 @@ namespace Content.Shared.VendingMachines
         public string ID;
         [ViewVariables(VVAccess.ReadWrite)]
         public uint Amount;
-        public VendingMachineInventoryEntry(InventoryType type, string id, uint amount)
+        [ViewVariables(VVAccess.ReadWrite)]
+        public int Price; // 🌟Starlight🌟 
+    
+        public VendingMachineInventoryEntry(InventoryType type, string id, uint amount, int price = 0)
         {
             Type = type;
             ID = id;
             Amount = amount;
+            Price = price; // 🌟Starlight🌟 
         }
 
         public VendingMachineInventoryEntry(VendingMachineInventoryEntry entry)
@@ -223,6 +233,7 @@ namespace Content.Shared.VendingMachines
             Type = entry.Type;
             ID = entry.ID;
             Amount = entry.Amount;
+            Price = entry.Price; // 🌟Starlight🌟 
         }
     }
 
@@ -294,6 +305,7 @@ namespace Content.Shared.VendingMachines
         public Dictionary<string, VendingMachineInventoryEntry> ContrabandInventory = new();
 
         public bool Contraband;
+        public bool ShowPrices; // 🌟Starlight🌟
 
         public TimeSpan? EjectEnd;
 

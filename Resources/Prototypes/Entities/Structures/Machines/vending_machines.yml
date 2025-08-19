@@ -107,70 +107,6 @@
   - type: Appearance
   - type: WiresVisuals
 
-- type: entity
-  id: VendingMachineWallmount
-  parent: BaseWallmountMachine
-  name: vending machine
-  abstract: true
-  components:
-  - type: StationAiWhitelist
-  - type: AmbientOnPowered
-  - type: AmbientSound
-    volume: -9
-    range: 3
-    enabled: false
-    sound:
-      path: /Audio/Ambience/Objects/vending_machine_hum.ogg
-  - type: Destructible
-    thresholds:
-    - trigger:
-        !type:DamageTrigger
-        damage: 100
-      behaviors:
-      - !type:DoActsBehavior
-        acts: ["Breakage"]
-      - !type:EjectVendorItems
-    - trigger:
-        !type:DamageTrigger
-        damage: 200
-      behaviors:
-      - !type:SpawnEntitiesBehavior
-        spawn:
-          SheetSteel1:
-            min: 1
-            max: 1
-      - !type:DoActsBehavior
-        acts: [ "Destruction" ]
-      - !type:PlaySoundBehavior
-        sound:
-          collection: MetalGlassBreak
-  - type: Repairable
-    doAfterDelay: 8
-  - type: ActivatableUI
-    key: enum.VendingMachineUiKey.Key
-  - type: ActivatableUIRequiresPower
-  - type: UserInterface
-    interfaces:
-      enum.VendingMachineUiKey.Key:
-        type: VendingMachineBoundUserInterface
-      enum.WiresUiKey.Key:
-        type: WiresBoundUserInterface
-  - type: WiresPanel
-  - type: Wires
-    boardName: wires-board-name-vendingmachine
-    layoutId: Vending
-  - type: PointLight
-    enabled: false
-    castShadows: false
-    radius: 1.5
-  - type: LitOnPowered
-  - type: Appearance
-  - type: WiresVisuals
-  - type: Electrified
-    enabled: false
-    usesApcPower: true
-  - type: Rotatable
-
 # Vending machines
 
 - type: entity
@@ -180,6 +116,7 @@
   description: Slather these thick gooey substances on your food for a full flavor effect.
   components:
   - type: VendingMachine
+    showPrices: false # Starlight-edit: Vending Machines Prices
     pack: CondimentInventory
     offState: off
   - type: Sprite
@@ -214,6 +151,7 @@
   components:
   - type: VendingMachine
     pack: AmmoVendInventory
+    showPrices: false # Starlight-edit: Vending Machines Prices
     offState: off
     brokenState: broken
     normalState: normal-unshaded
@@ -240,6 +178,7 @@
   components:
   - type: VendingMachine
     pack: BoozeOMatInventory
+    showPrices: false # Starlight-edit: Vending Machines Prices
     offState: off
     brokenState: broken
     normalState: normal-unshaded
@@ -275,6 +214,7 @@
   - type: VendingMachine
     pack: BoozeOMatInventory
     offState: off
+    showPrices: false # Starlight-edit: Vending Machines Prices
     brokenState: broken
     normalState: normal-unshaded
     denyState: deny-unshaded
@@ -309,6 +249,7 @@
   - type: VendingMachine
     pack: PTechInventory
     offState: off
+    showPrices: false # Starlight-edit: Vending Machines Prices
     brokenState: broken
     normalState: normal-unshaded
     ejectState: eject-unshaded
@@ -342,6 +283,7 @@
     brokenState: broken
     normalState: normal-unshaded
     ejectState: eject-unshaded
+    showPrices: false # Starlight-edit: Vending Machines Prices
   - type: DatasetVocalizer
     dataset: ChefvendAds
   - type: SpeakOnUIClosed
@@ -795,6 +737,7 @@
     brokenState: broken
     normalState: normal-unshaded
     ejectState: eject-unshaded
+    showPrices: false # Starlight-edit: Vending Machines Prices
   - type: DatasetVocalizer
     dataset: DinnerwareAds
   - type: SpeakOnUIClosed
@@ -825,6 +768,7 @@
   - type: VendingMachine
     pack: MagiVendInventory
     offState: off
+    showPrices: false # Starlight-edit: Vending Machines Prices
     brokenState: broken
     normalState: normal-unshaded
   - type: DatasetVocalizer
@@ -892,6 +836,7 @@
     normalState: normal-unshaded
     ejectState: eject-unshaded
     denyState: deny-unshaded
+    showPrices: false # Starlight-edit: Vending Machines Prices
   - type: Sprite
     sprite: Structures/Machines/VendingMachines/engivend.rsi
     layers:
@@ -923,6 +868,7 @@
     ejectState: eject-unshaded
     denyState: deny-unshaded
     ejectDelay: 0.6
+    showPrices: false # Starlight-edit: Vending Machines Prices
   - type: DatasetVocalizer
     dataset: NanoMedAds
   - type: SpeakOnUIClosed
@@ -960,6 +906,7 @@
     normalState: normal-unshaded
     ejectState: eject-unshaded
     denyState: deny-unshaded
+    showPrices: false # Starlight-edit: Vending Machines Prices
   - type: DatasetVocalizer
     dataset: NutriMaxAds
   - type: SpeakOnUIClosed
@@ -994,6 +941,7 @@
     normalState: normal-unshaded
     ejectState: eject-unshaded
     denyState: deny-unshaded
+    showPrices: false # Starlight-edit: Vending Machines Prices
   - type: DatasetVocalizer
     dataset: SecTechAds
   - type: SpeakOnUIClosed
@@ -1033,6 +981,7 @@
     normalState: normal-unshaded
     ejectState: eject-unshaded
     denyState: deny-unshaded
+    showPrices: false # Starlight-edit: Vending Machines Prices
   - type: DatasetVocalizer
     dataset: MegaSeedAds
   - type: SpeakOnUIClosed
@@ -1322,6 +1271,7 @@
     normalState: normal-unshaded
     ejectState: eject-unshaded
     denyState: deny-unshaded
+    showPrices: false # Starlight-edit: Vending Machines Prices
   - type: DatasetVocalizer
     dataset: VendomatAds
   - type: SpeakOnUIClosed
@@ -1359,6 +1309,7 @@
     normalState: normal-unshaded
     ejectState: eject-unshaded
     denyState: deny-unshaded
+    showPrices: false # Starlight-edit: Vending Machines Prices
   - type: Sprite
     sprite: Structures/Machines/VendingMachines/youtool.rsi
     layers:
@@ -1387,6 +1338,7 @@
     normalState: normal-unshaded
     ejectState: eject-unshaded
     ejectDelay: 1.8
+    showPrices: false # Starlight-edit: Vending Machines Prices
   - type: DatasetVocalizer
     dataset: GoodCleanFunAds
   - type: SpeakOnUIClosed
@@ -1447,6 +1399,7 @@
   components:
   - type: VendingMachine
     pack: SalvageEquipmentInventory
+    showPrices: false # Starlight-edit: Vending Machines Prices
     offState: off
     brokenState: broken
     normalState: normal-unshaded
@@ -1503,6 +1456,28 @@
     radius: 1.5
     energy: 1.6
     color: "#d4ab33"
+
+
+# wallmounted machines
+
+- type: entity
+  id: VendingMachineWallmount
+  parent: VendingMachine
+  name: vending machine
+  abstract: true
+  placement:
+    mode: SnapgridCenter
+    snap:
+    - Wallmount
+  components:
+  - type: Sprite
+    drawdepth: WallMountedItems
+    snapCardinals: false
+  - type: Rotatable
+  - type: WallMount
+    arc: 175
+  - type: Transform
+    noRot: false
 
 # job clothing
 
@@ -1607,6 +1582,7 @@
   - type: VendingMachine
     pack: BarDrobeInventory
     offState: off
+    showPrices: false # Starlight-edit: Vending Machines Prices
     brokenState: broken
     normalState: normal-unshaded
   - type: DatasetVocalizer
@@ -2111,6 +2087,7 @@
     ejectDelay: 1.9
     soundVend: /Audio/Items/bikehorn.ogg
     initialStockQuality: 1.0 # Nobody knows how Honk does it, but their vending machines always seem well-stocked...
+    showPrices: false # Starlight-edit: Vending Machines Prices
   - type: Sprite
     sprite: Structures/Machines/VendingMachines/happyhonk.rsi
     layers:
@@ -2143,6 +2120,7 @@
   - type: VendingMachine
     pack: PrideDrobeInventory
     offState: off
+    showPrices: false # Starlight-start: Vending Machines Prices
     brokenState: broken
     normalState: normal-unshaded
   - type: DatasetVocalizer
@@ -2175,6 +2153,7 @@
   description: A vendor for dispensing gas tanks.
   components:
   - type: VendingMachine
+    showPrices: false # Starlight-edit: Vending Machines Prices
     pack: TankDispenserEVAInventory
   - type: Sprite
     sprite: Structures/Machines/VendingMachines/tankdispenser.rsi #TODO add visualiser for remaining tanks as layers
@@ -2188,6 +2167,7 @@
   description: A vendor for dispensing gas tanks. This one has an engineering livery.
   components:
   - type: VendingMachine
+    showPrices: false # Starlight-edit: Vending Machines Prices
     pack: TankDispenserEngineeringInventory
   - type: Sprite
     sprite: Structures/Machines/VendingMachines/tankdispenser.rsi #TODO add visualiser for remaining tanks as layers
@@ -2202,6 +2182,7 @@
   description: Probably not the coffee machine.
   components:
   - type: VendingMachine
+    showPrices: false # Starlight-edit: Vending Machines Prices
     pack: ChemVendInventory
     offState: off
     brokenState: broken
@@ -2250,6 +2231,7 @@
   - type: VendingMachine
     pack: NanoMedInventory
     offState: off
+    showPrices: false # Starlight-edit: Vending Machines Prices
     brokenState: broken
     normalState: normal-unshaded
     denyState: deny-unshaded

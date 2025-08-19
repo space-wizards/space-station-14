@@ -11996,5 +11996,27 @@ Entries:
   id: 121303
   time: '2025-08-19T03:57:11.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/1213
+- author: CringeCursed
+  changes:
+  - message: Pricing for items in vending machines
+    type: Add
+  id: 134300
+  time: '2025-08-19T05:12:44.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1343
+- author: CringeCursed
+  changes:
+  - message: end-round stats for Abductors
+    type: Add
+  id: 137900
+  time: '2025-08-19T06:29:58.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1379
+- author: Rinary
+  changes:
+  - message: Fixed issue, when you trying to set dominator mode and after that it
+      instantly changes back to default.
+    type: Fix
+  id: 137200
+  time: '2025-08-19T06:43:27.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1372
 Order: -1
 
