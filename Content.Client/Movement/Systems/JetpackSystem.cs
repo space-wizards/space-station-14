@@ -51,19 +51,19 @@ public sealed class JetpackSystem : SharedJetpackSystem
         while (query.MoveNext(out var uid, out var comp))
         {
             var transform = Transform(uid);
-
-            // As long as the component is clientside it bulldozes *EVERYTHING*.
             var currentCoords = _transform.GetMoverCoordinates(transform.Coordinates);
-            if (comp.LastCoordinates is not { } lastCoords)
+
+            if (comp.LastCoordinates is not { })
             {
                 comp.LastCoordinates = currentCoords;
                 continue;
             }
-            else if (_transform.InRange(transform.Coordinates, lastCoords, comp.MaxDistance) && _timing.CurTime < comp.TargetTime)
+
+            if (_transform.InRange(transform.Coordinates, comp.LastCoordinates.Value, comp.MaxDistance) && _timing.CurTime < comp.TargetTime)
                 continue;
 
             comp.LastCoordinates = currentCoords;
-            comp.TargetTime = _timing.CurTime + TimeSpan.FromSeconds(comp.EffectCooldown);
+            comp.TargetTime = _timing.CurTime + comp.EffectCooldown;
             CreateParticles(uid, transform);
         }
     }

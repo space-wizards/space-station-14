@@ -6,7 +6,6 @@ using Content.Shared.Movement.Components;
 using Content.Shared.Movement.Events;
 using Content.Shared.Popups;
 using Robust.Shared.Containers;
-using Robust.Shared.Network;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Systems;
 using Robust.Shared.Serialization;
@@ -107,7 +106,7 @@ public abstract class SharedJetpackSystem : EntitySystem
         if (!TryComp<JetpackComponent>(jetpackUid, out var jetpackComponent))
             return;
 
-        var canFly = CanFlyOnGrid(Transform(jetpackUser).GridUid);
+        var canFly = CanFlyOnGrid(args.Transform.GridUid);
         var jetpackEnabled = jetpackComponent.Enabled;
 
         if (!canFly && jetpackEnabled)
@@ -178,7 +177,7 @@ public abstract class SharedJetpackSystem : EntitySystem
         }
 
         // You can still turn the jetpack on/off when on a grid that doesn't permit flying, you just won't be able to fly!
-        SetEnabled(jetpack, toggled, null, toggled ? CanFlyOnGrid(Transform(jetpack).GridUid) : false);
+        SetEnabled(jetpack, toggled, toggled ? CanFlyOnGrid(Transform(jetpack).GridUid) : false, user);
 
         args.Handled = true;
     }
@@ -197,48 +196,83 @@ public abstract class SharedJetpackSystem : EntitySystem
     private void OnJetpackGetAction(EntityUid uid, JetpackComponent component, GetItemActionsEvent args)
         => args.AddAction(ref component.ToggleActionEntity, component.ToggleAction);
 
+
     /// <summary>
     /// Sets the provided jetpack to whether it is enabled, and if so, whether it can fly.
-    /// <paramref name="enabled"/> is only whether the jetpack should appear active, but
-    /// <paramref name="flyIfEnabled"/> is whether the user should actually be able to fly with it.
     /// </summary>
-    /// <param name="enabled">Whether the jetpack should appear active, but not necessarily let the user fly.</param>
+    /// <param name="enabled">Whether the jetpack should be on/off, but not necessarily flying.</param>
+    public void SetEnabled(Entity<JetpackComponent> jetpack, bool enabled, EntityUid? user = null)
+    {
+        var (uid, component) = jetpack;
+        if (enabled == component.Enabled)
+            return;
+
+        // If the user wasn't specified, try to default to the entity holding this jetpack.
+        if (!TryResolveJetpackUser(jetpack, ref user))
+        {
+            Log.Error($"Failed to get container of jetpack {ToPrettyString(uid)} while turning it {(enabled ? "on" : "off")}!");
+            return;
+        }
+
+        // flyIfEnabled defaults to false, but if null it will be just whether the user is already flying.
+        // But, that only applies if the jetpack is enabled.
+        SetJetpackState(jetpack, user.Value, enabled, IsUserFlying(user.Value));
+    }
+
+    /// <inheritdoc cref="SetEnabled"/>
     /// <param name="flyIfEnabled">Whether the jetpack should let the user fly, if <paramref name="enabled"/> is true. If null, defaults to whether the user is already flying.</param>
-    public void SetEnabled(Entity<JetpackComponent> jetpack, bool enabled, EntityUid? user = null, bool? flyIfEnabled = false)
+    public void SetEnabled(Entity<JetpackComponent> jetpack, bool enabled, bool flyIfEnabled, EntityUid? user = null)
     {
         var (uid, component) = jetpack;
         if (enabled == component.Enabled && flyIfEnabled == IsFlying(uid))
             return;
 
-        if (user == null)
+        // If the user wasn't specified, try to default to the entity holding this jetpack.
+        if (!TryResolveJetpackUser(jetpack, ref user))
         {
-            if (!Container.TryGetContainingContainer((uid, null, null), out var container))
-                return;
-
-            user = container.Owner;
+            Log.Error($"Failed to get container of jetpack {ToPrettyString(uid)} while turning it {(enabled ? "on" : "off")}!");
+            return;
         }
 
-        // flyIfEnabled defaults to false, but if null it will be just whether the user is already flying.
-        // But, that only applies if the jetpack is enabled.
-        flyIfEnabled ??= IsUserFlying(user.Value);
-        component.Enabled = enabled;
+        SetJetpackState(jetpack, user.Value, enabled, flyIfEnabled);
+    }
+
+    private bool TryResolveJetpackUser(EntityUid uid, [NotNullWhen(true)] ref EntityUid? user)
+    {
+        if (user != null)
+            return true;
+
+        if (!Container.TryGetContainingContainer((uid, null, null), out var container))
+            return false;
+
+        user = container.Owner;
+        return true;
+    }
+
+    private void SetJetpackState(Entity<JetpackComponent> jetpack, EntityUid user, bool enabled, bool flyIfEnabled)
+    {
+        Log.Debug($"Setting jetpack state to {(enabled ? "on" : "off")}, while {(flyIfEnabled ? "flying" : "not flying")}.");
+        jetpack.Comp.Enabled = enabled;
         if (enabled)
         {
-            var userComp = SetupUser(user.Value, jetpack);
-            if (flyIfEnabled.Value)
-                StartUserFlying(user.Value, jetpack, userComp);
+            var userComp = SetupUser(user, jetpack);
+            if (flyIfEnabled)
+                StartUserFlying(user, jetpack, userComp);
             else
-                EndUserFlying(user.Value, jetpack);
+                EndUserFlying(user, jetpack);
         }
         else
         {
-            RemoveUser(user.Value, jetpack);
-            if (IsFlying(uid))
-                EndUserFlying(user.Value, jetpack);
+            RemoveUser(user, jetpack);
+            if (IsFlying(jetpack))
+                EndUserFlying(user, jetpack);
         }
 
-        Appearance.SetData(uid, JetpackVisuals.Enabled, enabled);
-        Dirty(jetpack);
+        Appearance.SetData(jetpack.Owner, JetpackVisuals.Enabled, enabled);
+        DirtyFields(jetpack.Owner, jetpack.Comp, null,
+            nameof(jetpack.Comp.Enabled),
+            nameof(jetpack.Comp.JetpackUser)
+        );
     }
 
 
