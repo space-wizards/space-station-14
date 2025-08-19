@@ -19,5 +19,5 @@
     sprite: Markers/jobs.rsi
     layers:
     - state: green
-    - sprite: Mobs/Silicon/chassis.rsi
+    - sprite: Mobs/Silicon/Chassis/derelict.rsi
       state: derelict_icon

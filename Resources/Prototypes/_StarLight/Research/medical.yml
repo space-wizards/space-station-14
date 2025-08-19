@@ -106,8 +106,8 @@
   id: MechanizedTreatment
   name: research-technology-mechanized-treatment
   icon:
-    sprite: Mobs/Silicon/chassis.rsi
-    state: medical
+    sprite: Mobs/Silicon/Chassis/medical.rsi
+    state: borg
   discipline: Biochemical
   tier: 2
   cost: 5000
