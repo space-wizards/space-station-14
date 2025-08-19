@@ -12003,5 +12003,12 @@ Entries:
   id: 134300
   time: '2025-08-19T05:12:44.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/1343
+- author: CringeCursed
+  changes:
+  - message: end-round stats for Abductors
+    type: Add
+  id: 137900
+  time: '2025-08-19T06:29:58.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1379
 Order: -1
 
