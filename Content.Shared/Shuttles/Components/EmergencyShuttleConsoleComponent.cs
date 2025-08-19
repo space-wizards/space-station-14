@@ -1,6 +1,9 @@
-namespace Content.Server.Shuttles.Components;
+using Robust.Shared.GameStates;
 
-[RegisterComponent]
+namespace Content.Shared.Shuttles.Components;
+
+[RegisterComponent, NetworkedComponent]
+[AutoGenerateComponentState]
 public sealed partial class EmergencyShuttleConsoleComponent : Component
 {
     // TODO: Okay doing it by string is kinda suss but also ID card tracking doesn't seem to be robust enough
@@ -8,9 +11,9 @@ public sealed partial class EmergencyShuttleConsoleComponent : Component
     /// <summary>
     /// ID cards that have been used to authorize an early launch.
     /// </summary>
-    [ViewVariables(VVAccess.ReadWrite), DataField("authorized")]
-    public HashSet<string> AuthorizedEntities = new();
+    [DataField("authorized"), AutoNetworkedField]
+    public HashSet<string> AuthorizedEntities = [];
 
-    [ViewVariables(VVAccess.ReadWrite), DataField("authorizationsRequired")]
+    [DataField, AutoNetworkedField]
     public int AuthorizationsRequired = 3;
 }
