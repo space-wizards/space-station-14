@@ -82,6 +82,7 @@ public abstract partial class SharedStunSystem
         SubscribeLocalEvent<KnockedDownComponent, DidEquipHandEvent>(OnHandEquipped);
         SubscribeLocalEvent<KnockedDownComponent, DidUnequipHandEvent>(OnHandUnequipped);
         SubscribeLocalEvent<HandsComponent, GetStandUpTimeEvent>(OnGetStandUpTime);
+        SubscribeLocalEvent<HandsComponent, KnockedDownRefreshEvent>(OnHandsKnockdownRefresh);
 
         // Handling Alternative Inputs
         SubscribeAllEvent<ForceStandUpEvent>(OnForceStandup);
