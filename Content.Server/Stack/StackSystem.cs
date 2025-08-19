@@ -16,13 +16,9 @@ namespace Content.Server.Stack
     {
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
 
-        public static readonly int[] DefaultSplitAmounts = { 1, 5, 10, 20, 30, 50 };
-
         public override void Initialize()
         {
             base.Initialize();
-
-            SubscribeLocalEvent<StackComponent, GetVerbsEvent<AlternativeVerb>>(OnStackAlternativeInteract);
         }
 
         /// <inheritdoc />
@@ -316,45 +312,7 @@ namespace Content.Server.Stack
         #endregion
         #region Event Handlers
 
-        private void OnStackAlternativeInteract(Entity<StackComponent> ent, ref GetVerbsEvent<AlternativeVerb> args)
-        {
-            if (!args.CanAccess || !args.CanInteract || args.Hands == null || ent.Comp.Count == 1)
-                return;
-
-            var (_, stack) = ent;
-            var user = args.User; // Can't pass ref events into verbs
-
-            AlternativeVerb halve = new()
-            {
-                Text = Loc.GetString("comp-stack-split-halve"),
-                Category = VerbCategory.Split,
-                Act = () => UserSplit(ent, user, stack.Count / 2),
-                Priority = 1
-            };
-            args.Verbs.Add(halve);
-
-            var priority = 0;
-            foreach (var amount in DefaultSplitAmounts)
-            {
-                if (amount >= stack.Count)
-                    continue;
-
-                AlternativeVerb verb = new()
-                {
-                    Text = amount.ToString(),
-                    Category = VerbCategory.Split,
-                    Act = () => UserSplit(ent, user, amount),
-                    // we want to sort by size, not alphabetically by the verb text.
-                    Priority = priority
-                };
-
-                priority--;
-
-                args.Verbs.Add(verb);
-            }
-        }
-
-        private void UserSplit(Entity<StackComponent> stack, Entity<TransformComponent?> user, int amount)
+        protected override void UserSplit(Entity<StackComponent> stack, Entity<TransformComponent?> user, int amount)
         {
             if (!Resolve(user.Owner, ref user.Comp, false))
                 return;
