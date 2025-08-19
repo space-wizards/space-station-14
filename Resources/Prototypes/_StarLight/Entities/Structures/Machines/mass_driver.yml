@@ -1,7 +1,7 @@
 - type: entity
   id: MassDriver
   name: mass driver
-  description: It's.
+  description: The finest in spring-loaded piston toy technology, now on a space station near you.
   placement:
     mode: SnapgridCenter
   components:
@@ -25,3 +25,10 @@
     sprite: _Starlight/Structures/Machines/mass_driver.rsi
     layers:
       - state: base
+        map: [ "mainLayer" ]
+  - type: GenericVisualizer
+    visuals: 
+      enum.MassDriverVisuals.Launching:
+        mainLayer:
+          True: { state: launching }
+          False: { state: base }

@@ -48,4 +48,10 @@ public sealed partial class MassDriverComponent : Component
     /// </summary>
     [DataField, AutoNetworkedField]
     public float ThrowCountDelta = 0.5f;
+
+    /// <summary>
+    /// How moch time we need to wait for throw?
+    /// </summary>
+    [DataField]
+    public TimeSpan ThrowDelay = TimeSpan.FromSeconds(2);
 }

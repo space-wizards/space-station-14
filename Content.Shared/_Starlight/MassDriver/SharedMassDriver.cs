@@ -6,5 +6,5 @@ namespace Content.Shared._Starlight.MassDriver;
 [Serializable]
 public enum MassDriverVisuals : byte
 {
-    Main
+    Launching
 }

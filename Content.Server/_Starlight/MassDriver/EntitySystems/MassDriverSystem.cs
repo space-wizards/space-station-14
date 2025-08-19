@@ -1,15 +1,19 @@
 using Content.Shared._Starlight.MassDriver.Components;
+using Content.Shared._Starlight.MassDriver;
 using Content.Shared.Throwing;
 using Robust.Shared.Physics.Events;
 using Robust.Shared.Timing;
+using Robust.Shared.GameObjects;
+using System.Linq;
 
-namespace Content.Shared._Starlight.MassDriver.EntitySystems;
+namespace Content.Server._Starlight.MassDriver.EntitySystems;
 
-public sealed class SharedMassDriverSystem : EntitySystem
+public sealed class MassDriverSystem : EntitySystem
 {
     [Dependency] private readonly IGameTiming Timing = default!;
     [Dependency] private readonly ThrowingSystem _throwing = default!;
     [Dependency] private readonly EntityLookupSystem _lookup = default!;
+    [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
 
     public override void Initialize()
     {
@@ -28,21 +32,38 @@ public sealed class SharedMassDriverSystem : EntitySystem
 
             if (activeMassDriver.NextUpdateTime == TimeSpan.Zero)
             {
-                activeMassDriver.NextUpdateTime = Timing.CurTime + activeMassDriver.Delay;
-                return;
+                activeMassDriver.NextUpdateTime = Timing.CurTime + activeMassDriver.UpdateDelay;
+                continue;
             }
-            activeMassDriver.NextUpdateTime = Timing.CurTime + activeMassDriver.Delay;
+            activeMassDriver.NextUpdateTime = Timing.CurTime + activeMassDriver.UpdateDelay;
 
             var entities = new HashSet<EntityUid>();
             _lookup.GetEntitiesIntersecting(uid, entities);
+            var entitiesCount = entities.Count(a => !Transform(a).Anchored);
 
-            if (entities.Count == 0)
-                return;
+            if (activeMassDriver.NextThrowTime != TimeSpan.Zero && entitiesCount == 0)
+            {
+                activeMassDriver.NextThrowTime = TimeSpan.Zero;
+                _appearance.SetData(uid, MassDriverVisuals.Launching, false);
+            }
+                
+            if (entitiesCount == 0)
+                continue;
+
+            if (activeMassDriver.NextThrowTime == TimeSpan.Zero)
+            {
+                activeMassDriver.NextThrowTime = Timing.CurTime + massDriver.ThrowDelay;
+                continue;
+            }
+            else if (Timing.CurTime < activeMassDriver.NextThrowTime)
+                continue;
+
+            _appearance.SetData(uid, MassDriverVisuals.Launching, true);
 
             var xform = Transform(uid);
             var throwing = xform.LocalRotation.ToWorldVec() * (massDriver.CurrentThrowDistance - (massDriver.ThrowCountDelta * (entities.Count - 1)));
             var direction = xform.Coordinates.Offset(throwing);
-            var speed = massDriver.CurrentThrowSpeed - (massDriver.ThrowCountDelta * (entities.Count - 1));
+            var speed = massDriver.CurrentThrowSpeed - (massDriver.ThrowCountDelta * (entitiesCount - 1));
 
             foreach (var entity in entities)
                 _throwing.TryThrow(entity, direction, speed);
