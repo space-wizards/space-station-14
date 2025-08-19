@@ -9,6 +9,7 @@
   - type: ThermalVision
   - type: Bloodstream
     bloodMaxVolume: 600
+  - type: AntagMonsterScaling ## Starlight
   - type: GhostRole
     allowMovement: true
     allowSpeech: true
