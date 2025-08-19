@@ -98,11 +98,13 @@
     - type: StationLimitedNetwork
     - type: WirelessNetworkConnection
       range: 500
+    #region Starlight Tracker rattle
     - type: TriggerOnMobstateChange
       mobState:
       - Critical
-    - type: Rattle
+    - type: RattleOnTrigger #
       radioChannel: "Security"
+    #endregion Starlight tracker rattle
 
 #Traitor implants
 

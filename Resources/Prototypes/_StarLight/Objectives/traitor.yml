@@ -10,6 +10,12 @@
     - type: TargetObjective
       title: objective-condition-teach-lesson-title
     - type: PickRandomPerson
+      filters:
+      # Can't have multiple objectives to teach the same person.
+      - !type:TargetObjectiveMindFilter
+        blacklist:
+          components:
+          - TeachALessonTargetComponent
 
 - type: entity
   parent: [BaseTraitorObjective, BaseTeachALessonObjective]
@@ -23,7 +29,16 @@
       unique: true
     - type: TargetObjective
       title: objective-condition-teach-lesson-title
-    - type: PickRandomHead
+    - type: PickRandomPerson
+      filters:
+      - !type:BodyMindFilter
+        whitelist:
+          components:
+          - CommandStaff
+      - !type:TargetObjectiveMindFilter
+        blacklist:
+          components:
+          - TeachALessonTargetComponent # dont let mutiple teach someone.
 
 - type: entity
   parent: BaseRDStealObjective

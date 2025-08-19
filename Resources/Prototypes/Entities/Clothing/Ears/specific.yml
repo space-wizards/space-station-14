@@ -1,5 +1,5 @@
 ﻿- type: entity
-  parent: [ClothingHeadsetGrey, BaseChameleon]
+  parent: [ClothingHeadsetAssistant, BaseChameleon] #Starlight de-tidification
   id: ClothingHeadsetChameleon
   name: assistant headset
   description: An updated, modular intercom that fits over the head. Takes encryption keys.
