@@ -12,6 +12,9 @@ using Content.Shared.Examine;
 using Content.Shared.FixedPoint;
 using Content.Shared.Hands.Components;
 using Content.Shared.Hands.EntitySystems;
+using Content.Shared.Localizations;
+using Content.Shared.Nutrition.Components;
+using Content.Shared.Nutrition.EntitySystems;
 using Content.Shared.Verbs;
 using JetBrains.Annotations;
 using Robust.Shared.Containers;
@@ -61,14 +64,15 @@ public partial record struct SolutionAccessAttemptEvent(string SolutionName)
 [UsedImplicitly]
 public abstract partial class SharedSolutionContainerSystem : EntitySystem
 {
-    [Robust.Shared.IoC.Dependency] protected readonly IPrototypeManager PrototypeManager = default!;
-    [Robust.Shared.IoC.Dependency] protected readonly ChemicalReactionSystem ChemicalReactionSystem = default!;
-    [Robust.Shared.IoC.Dependency] protected readonly ExamineSystemShared ExamineSystem = default!;
-    [Robust.Shared.IoC.Dependency] protected readonly SharedAppearanceSystem AppearanceSystem = default!;
-    [Robust.Shared.IoC.Dependency] protected readonly SharedHandsSystem Hands = default!;
-    [Robust.Shared.IoC.Dependency] protected readonly SharedContainerSystem ContainerSystem = default!;
-    [Robust.Shared.IoC.Dependency] protected readonly MetaDataSystem MetaDataSys = default!;
-    [Robust.Shared.IoC.Dependency] protected readonly INetManager NetManager = default!;
+    [Dependency] protected readonly IPrototypeManager PrototypeManager = default!;
+    [Dependency] protected readonly ChemicalReactionSystem ChemicalReactionSystem = default!;
+    [Dependency] protected readonly ExamineSystemShared ExamineSystem = default!;
+    [Dependency] protected readonly OpenableSystem Openable = default!;
+    [Dependency] protected readonly SharedAppearanceSystem AppearanceSystem = default!;
+    [Dependency] protected readonly SharedHandsSystem Hands = default!;
+    [Dependency] protected readonly SharedContainerSystem ContainerSystem = default!;
+    [Dependency] protected readonly MetaDataSystem MetaDataSys = default!;
+    [Dependency] protected readonly INetManager NetManager = default!;
 
     public override void Initialize()
     {
@@ -791,52 +795,55 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
         }
     }
 
+    /// <summary>
+    ///     Shift click examine.
+    /// </summary>
     private void OnExamineSolution(Entity<ExaminableSolutionComponent> entity, ref ExaminedEvent args)
     {
-        if (!TryGetSolution(entity.Owner, entity.Comp.Solution, out _, out var solution))
-        {
+        if (!args.IsInDetailsRange ||
+            !CanSeeHiddenSolution(entity, args.Examiner) ||
+            !TryGetSolution(entity.Owner, entity.Comp.Solution, out _, out var solution))
             return;
-        }
-
-        if (!CanSeeHiddenSolution(entity, args.Examiner))
-            return;
-
-        var primaryReagent = solution.GetPrimaryReagentId();
-
-        if (string.IsNullOrEmpty(primaryReagent?.Prototype))
-        {
-            args.PushText(Loc.GetString("shared-solution-container-component-on-examine-empty-container"));
-            return;
-        }
-
-        if (!PrototypeManager.TryIndex(primaryReagent.Value.Prototype, out ReagentPrototype? primary))
-        {
-            Log.Error($"{nameof(Solution)} could not find the prototype associated with {primaryReagent}.");
-            return;
-        }
-
-        var colorHex = solution.GetColor(PrototypeManager)
-            .ToHexNoAlpha(); //TODO: If the chem has a dark color, the examine text becomes black on a black background, which is unreadable.
-        var messageString = "shared-solution-container-component-on-examine-main-text";
 
         using (args.PushGroup(nameof(ExaminableSolutionComponent)))
         {
-            args.PushMarkup(Loc.GetString(messageString,
-                ("color", colorHex),
-                ("wordedAmount", Loc.GetString(solution.Contents.Count == 1
-                    ? "shared-solution-container-component-on-examine-worded-amount-one-reagent"
-                    : "shared-solution-container-component-on-examine-worded-amount-multiple-reagents")),
-                ("desc", primary.LocalizedPhysicalDescription)));
 
-            var reagentPrototypes = solution.GetReagentPrototypes(PrototypeManager);
+            var primaryReagent = solution.GetPrimaryReagentId();
+
+            // If there's no primary reagent, assume the solution is empty and exit early
+            if (string.IsNullOrEmpty(primaryReagent?.Prototype) ||
+                !PrototypeManager.Resolve<ReagentPrototype>(primaryReagent.Value.Prototype, out var primary))
+            {
+                args.PushMarkup(Loc.GetString(entity.Comp.LocVolume, ("fillLevel", ExaminedVolumeDisplay.Empty)));
+                return;
+            }
+
+            // Push amount of reagent
+
+            args.PushMarkup(Loc.GetString(entity.Comp.LocVolume,
+                                ("fillLevel", ExaminedVolume(entity, solution, args.Examiner)),
+                                ("current", solution.Volume),
+                                ("max", solution.MaxVolume)));
+
+            // Push the physical description of the primary reagent
+
+            var colorHex = solution.GetColor(PrototypeManager)
+                .ToHexNoAlpha(); //TODO: If the chem has a dark color, the examine text becomes black on a black background, which is unreadable.
+
+            args.PushMarkup(Loc.GetString(entity.Comp.LocPhysicalQuality,
+                                        ("color", colorHex),
+                                        ("desc", primary.LocalizedPhysicalDescription),
+                                        ("chemCount", solution.Contents.Count) ));
+
+            // Push the recognizable reagents
 
             // Sort the reagents by amount, descending then alphabetically
-            var sortedReagentPrototypes = reagentPrototypes
+            var sortedReagentPrototypes = solution.GetReagentPrototypes(PrototypeManager)
                 .OrderByDescending(pair => pair.Value.Value)
                 .ThenBy(pair => pair.Key.LocalizedName);
 
-            // Add descriptions of immediately recognizable reagents, like water or beer
-            var recognized = new List<ReagentPrototype>();
+            // Collect recognizable reagents, like water or beer
+            var recognized = new List<string>();
             foreach (var keyValuePair in sortedReagentPrototypes)
             {
                 var proto = keyValuePair.Key;
@@ -845,41 +852,58 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
                     continue;
                 }
 
-                recognized.Add(proto);
+                recognized.Add(Loc.GetString("examinable-solution-recognized",
+                                            ("color", proto.SubstanceColor.ToHexNoAlpha()),
+                                            ("chemical", proto.LocalizedName)));
             }
 
-            // Skip if there's nothing recognizable
             if (recognized.Count == 0)
                 return;
 
-            var msg = new StringBuilder();
-            foreach (var reagent in recognized)
-            {
-                string part;
-                if (reagent == recognized[0])
-                {
-                    part = "examinable-solution-recognized-first";
-                }
-                else if (reagent == recognized[^1])
-                {
-                    // this loc specifically  requires space to be appended, fluent doesnt support whitespace
-                    msg.Append(' ');
-                    part = "examinable-solution-recognized-last";
-                }
-                else
-                {
-                    part = "examinable-solution-recognized-next";
-                }
+            var msg = ContentLocalizationManager.FormatList(recognized);
 
-                msg.Append(Loc.GetString(part, ("color", reagent.SubstanceColor.ToHexNoAlpha()),
-                    ("chemical", reagent.LocalizedName)));
-            }
-
-            args.PushMarkup(Loc.GetString("examinable-solution-has-recognizable-chemicals",
-                ("recognizedString", msg.ToString())));
+            // Finally push the full message
+            args.PushMarkup(Loc.GetString(entity.Comp.LocRecognizableReagents,
+                ("recognizedString", msg)));
         }
     }
 
+    /// <returns>An enum for how to display the solution.</returns>
+    public ExaminedVolumeDisplay ExaminedVolume(Entity<ExaminableSolutionComponent> ent, Solution sol, EntityUid? examiner = null)
+    {
+        // Exact measurement
+        if (ent.Comp.ExactVolume)
+            return ExaminedVolumeDisplay.Exact;
+
+        // General approximation
+        return (int)PercentFull(sol) switch
+        {
+            100 => ExaminedVolumeDisplay.Full,
+            > 66 => ExaminedVolumeDisplay.MostlyFull,
+            > 33 => HalfEmptyOrHalfFull(examiner),
+            > 0 => ExaminedVolumeDisplay.MostlyEmpty,
+            _ => ExaminedVolumeDisplay.Empty,
+        };
+    }
+
+    // Some spessmen see half full, some see half empty, but always the same one.
+    private ExaminedVolumeDisplay HalfEmptyOrHalfFull(EntityUid? examiner = null)
+    {
+        // Optimistic when un-observed
+        if (examiner == null)
+            return ExaminedVolumeDisplay.HalfFull;
+
+        var meta = MetaData(examiner.Value);
+        if (meta.EntityName.Length > 0 &&
+            string.Compare(meta.EntityName.Substring(0, 1), "m", StringComparison.InvariantCultureIgnoreCase) > 0)
+            return ExaminedVolumeDisplay.HalfFull;
+
+        return ExaminedVolumeDisplay.HalfEmpty;
+    }
+
+    /// <summary>
+    ///     Full reagent scan, such as with chemical analysis goggles.
+    /// </summary>
     private void OnSolutionExaminableVerb(Entity<ExaminableSolutionComponent> entity, ref GetVerbsEvent<ExamineVerb> args)
     {
         if (!args.CanInteract || !args.CanAccess)
@@ -953,15 +977,18 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
     }
 
     /// <summary>
-    /// Check if examinable solution requires you to hold the item in hand.
+    ///     Check if an examinable solution is hidden by something.
     /// </summary>
     private bool CanSeeHiddenSolution(Entity<ExaminableSolutionComponent> entity, EntityUid examiner)
     {
         // If not held-only then it's always visible.
-        if (!entity.Comp.HeldOnly)
-            return true;
+        if (entity.Comp.HeldOnly && !Hands.IsHolding(examiner, entity, out _))
+            return false;
 
-        return Hands.IsHolding(examiner, entity, out _);
+        if (!entity.Comp.ExaminableWhileClosed && Openable.IsClosed(entity.Owner, predicted: true))
+            return false;
+
+        return true;
     }
 
     private void OnMapInit(Entity<SolutionContainerManagerComponent> entity, ref MapInitEvent args)
