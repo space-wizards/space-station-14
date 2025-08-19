@@ -75,7 +75,6 @@ namespace Content.Shared.Friction
                 float friction;
 
                 // If we're not touching the ground, don't use tileFriction.
-                // TODO: Make IsWeightless event-based; we already have grid traversals tracked so just raise events
                 if (body.BodyStatus != BodyStatus.OnGround && !_canMoveInAirQuery.HasComp(uid)
                     || _gravity.IsWeightless(uid, body, xform) || !xform.Coordinates.IsValid(EntityManager))
                     friction = xform.GridUid == null || !_gridQuery.HasComp(xform.GridUid) ? _offGridDamping : _airDamping;

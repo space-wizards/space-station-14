@@ -1,4 +1,3 @@
-using Content.Shared.EntityEffects;
 using Content.Shared.Stunnable;
 using Robust.Shared.Prototypes;
 
@@ -14,9 +13,11 @@ public sealed partial class Paralyze : EntityEffect
     [DataField] public bool Refresh = true;
 
     protected override string? ReagentEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys)
-        => Loc.GetString("reagent-effect-guidebook-paralyze",
+        => Loc.GetString(
+            "reagent-effect-guidebook-paralyze",
             ("chance", Probability),
-            ("time", ParalyzeTime));
+            ("time", ParalyzeTime)
+        );
 
     public override void Effect(EntityEffectBaseArgs args)
     {
@@ -27,7 +28,10 @@ public sealed partial class Paralyze : EntityEffect
             paralyzeTime *= (double)reagentArgs.Scale;
         }
 
-        args.EntityManager.System<SharedStunSystem>().TryParalyze(args.TargetEntity, TimeSpan.FromSeconds(paralyzeTime), Refresh);
+        var stunSystem = args.EntityManager.System<SharedStunSystem>();
+        _ = Refresh
+            ? stunSystem.TryUpdateParalyzeDuration(args.TargetEntity, TimeSpan.FromSeconds(paralyzeTime))
+            : stunSystem.TryAddParalyzeDuration(args.TargetEntity, TimeSpan.FromSeconds(paralyzeTime));
     }
 }
 
