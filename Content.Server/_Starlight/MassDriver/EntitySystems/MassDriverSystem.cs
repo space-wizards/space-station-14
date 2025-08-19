@@ -5,6 +5,8 @@ using Robust.Shared.Physics.Events;
 using Robust.Shared.Timing;
 using Robust.Shared.GameObjects;
 using System.Linq;
+using Content.Shared.Power;
+using Content.Server.Power.EntitySystems;
 
 namespace Content.Server._Starlight.MassDriver.EntitySystems;
 
@@ -14,10 +16,25 @@ public sealed class MassDriverSystem : EntitySystem
     [Dependency] private readonly ThrowingSystem _throwing = default!;
     [Dependency] private readonly EntityLookupSystem _lookup = default!;
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
+    [Dependency] private readonly PowerReceiverSystem _powerReceiver = default!;
 
     public override void Initialize()
     {
         base.Initialize();
+
+        SubscribeLocalEvent<MassDriverComponent, PowerChangedEvent>(OnPowerChanged);
+    }
+
+    private void OnPowerChanged(EntityUid uid, MassDriverComponent component, ref PowerChangedEvent args)
+    {
+        if (component.Mode != MassDriverMode.Auto)
+            return;
+
+        var hasComp = HasComp<ActiveMassDriverComponent>(uid);
+        if (hasComp && !args.Powered)
+            RemComp<ActiveMassDriverComponent>(uid);
+        else if (!hasComp && args.Powered)
+            EnsureComp<ActiveMassDriverComponent>(uid);
     }
 
     public override void Update(float frameTime)
@@ -37,6 +54,9 @@ public sealed class MassDriverSystem : EntitySystem
             }
             activeMassDriver.NextUpdateTime = Timing.CurTime + activeMassDriver.UpdateDelay;
 
+            if (!_powerReceiver.IsPowered(uid))
+                continue;
+
             var entities = new HashSet<EntityUid>();
             _lookup.GetEntitiesIntersecting(uid, entities);
             var entitiesCount = entities.Count(a => !Transform(a).Anchored);
@@ -49,7 +69,7 @@ public sealed class MassDriverSystem : EntitySystem
                     _appearance.SetData(uid, MassDriverVisuals.Launching, false);
                 }
                 if (massDriver.Mode == MassDriverMode.Manual)
-                        RemComp<ActiveMassDriverComponent>(uid);
+                    RemComp<ActiveMassDriverComponent>(uid);
                 continue;
             }
 
