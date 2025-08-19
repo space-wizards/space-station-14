@@ -1330,5 +1330,13 @@ Entries:
   id: 162
   time: '2025-08-08T19:00:41.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/35531
+- author: EmoGarbage404, soutbridge-fur
+  changes:
+  - message: A new experimental gamemode "Dynamic" has been added to the voting options
+      and admin seletion.
+    type: Add
+  id: 163
+  time: '2025-08-15T14:06:51.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37783
 Name: Admin
 Order: 2
