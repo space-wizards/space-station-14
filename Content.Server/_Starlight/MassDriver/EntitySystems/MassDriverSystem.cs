@@ -41,14 +41,17 @@ public sealed class MassDriverSystem : EntitySystem
             _lookup.GetEntitiesIntersecting(uid, entities);
             var entitiesCount = entities.Count(a => !Transform(a).Anchored);
 
-            if (activeMassDriver.NextThrowTime != TimeSpan.Zero && entitiesCount == 0)
-            {
-                activeMassDriver.NextThrowTime = TimeSpan.Zero;
-                _appearance.SetData(uid, MassDriverVisuals.Launching, false);
-            }
-                
             if (entitiesCount == 0)
+            {
+                if (activeMassDriver.NextThrowTime != TimeSpan.Zero)
+                {
+                    activeMassDriver.NextThrowTime = TimeSpan.Zero;
+                    _appearance.SetData(uid, MassDriverVisuals.Launching, false);
+                }
+                if (massDriver.Mode == MassDriverMode.Manual)
+                        RemComp<ActiveMassDriverComponent>(uid);
                 continue;
+            }
 
             if (activeMassDriver.NextThrowTime == TimeSpan.Zero)
             {

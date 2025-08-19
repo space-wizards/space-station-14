@@ -54,4 +54,10 @@ public sealed partial class MassDriverComponent : Component
     /// </summary>
     [DataField]
     public TimeSpan ThrowDelay = TimeSpan.FromSeconds(2);
+
+    /// <summary>
+    /// Determines which mode is used by mass driver
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public MassDriverMode Mode = MassDriverMode.Auto;
 }
