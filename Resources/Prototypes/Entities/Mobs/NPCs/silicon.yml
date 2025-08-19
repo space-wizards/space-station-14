@@ -15,9 +15,6 @@
     bodyType: KinematicController # Same for all inheritors
   - type: StatusEffects
     allowed:
-    - Stun
-    - KnockedDown
-    - SlowedDown
     - Stutter
     - Electrocution
   - type: Repairable
@@ -311,7 +308,20 @@
     interactFailureString: petting-failure-cleanbot
     interactSuccessSound:
       path: /Audio/Ambience/Objects/periodic_beep.ogg
-
+  #region starlight
+  - type: Vocalizer
+  - type: DatasetVocalizer
+    dataset: CleanbotAds
+  - type: WiresPanel
+  - type: Wires
+    boardName: wires-board-name-cleanbot
+    layoutId: MedibotControls
+    alwaysRandomize: true
+  - type: UserInterface
+    interfaces:
+      enum.WiresUiKey.Key:
+        type: WiresBoundUserInterface
+  #end region
 - type: entity
   parent:
   - MobSiliconBase

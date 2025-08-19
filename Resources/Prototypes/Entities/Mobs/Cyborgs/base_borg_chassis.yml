@@ -143,9 +143,6 @@
   - type: Body
   - type: StatusEffects
     allowed:
-    - Stun
-    - KnockedDown
-    - SlowedDown
     - Flashed
   - type: TypingIndicator
     proto: robot
@@ -250,6 +247,7 @@
       flatReductions:
         Heat: 10 # capable of touching light bulbs and stoves without feeling pain!
   - type: CyborgSparkEffect #starlight
+  - type: StationAIShunt #Starlight allow shunting into all borgs
 
 - type: entity
   abstract: true

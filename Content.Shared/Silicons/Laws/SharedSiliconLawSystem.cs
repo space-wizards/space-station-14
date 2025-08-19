@@ -1,4 +1,4 @@
-﻿using Content.Shared.Emag.Systems;
+using Content.Shared.Emag.Systems;
 using Content.Shared.Mind;
 using Content.Shared.Popups;
 using Content.Shared.Silicons.Borgs.Components; // Starlight
@@ -7,6 +7,7 @@ using Content.Shared.Stunnable;
 using Content.Shared.Wires;
 using Robust.Shared.Audio;
 using Robust.Shared.Prototypes; // Starlight
+using Content.Shared.Emag.Components; //Starlight
 
 namespace Content.Shared.Silicons.Laws;
 
@@ -61,25 +62,21 @@ public abstract partial class SharedSiliconLawSystem : EntitySystem
                 RemComp<BorgTransponderComponent>(uid);
             }
 
-
-            if (args.EmagComponent.Lawset != null)
-                proto = _prototype.Index<SiliconLawsetPrototype>(args.EmagComponent.Lawset);
-
             if (args.EmagComponent.Components != null)
                 _entMan.AddComponents(uid, args.EmagComponent.Components);
         }
         //#endregion Starlight
 
-            var ev = new SiliconEmaggedEvent(args.UserUid, proto); // Starlight
+        var ev = new SiliconEmaggedEvent(args.UserUid, args.EmagComponent); // Starlight
         RaiseLocalEvent(uid, ref ev);
 
         component.OwnerName = Name(args.UserUid);
 
         NotifyLawsChanged(uid, component.EmaggedSound);
-        if(_mind.TryGetMind(uid, out var mindId, out _))
+        if (_mind.TryGetMind(uid, out var mindId, out _))
             EnsureSubvertedSiliconRole(mindId);
 
-        _stunSystem.TryParalyze(uid, component.StunTime, true);
+        _stunSystem.TryUpdateParalyzeDuration(uid, component.StunTime);
 
         args.Handled = true;
     }
@@ -98,7 +95,16 @@ public abstract partial class SharedSiliconLawSystem : EntitySystem
     {
 
     }
+
+    #region Starlight
+    public void SetLawset(EntityUid entity, SiliconLawset? laws)
+    {
+        if (!TryComp<SiliconLawProviderComponent>(entity, out var provider))
+            return;
+        provider.Lawset = laws;
+    }
+    #endregion
 }
 
 [ByRefEvent]
-public record struct SiliconEmaggedEvent(EntityUid user, SiliconLawsetPrototype? lawset);
+public record struct SiliconEmaggedEvent(EntityUid user, EmagComponent? emagComp);

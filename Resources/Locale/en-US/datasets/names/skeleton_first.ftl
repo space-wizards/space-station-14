@@ -18,7 +18,8 @@ names-skeleton-first-dataset-17 = Marrow
 names-skeleton-first-dataset-18 = Tarsals
 names-skeleton-first-dataset-19 = Patella
 names-skeleton-first-dataset-20 = Tailbone
-names-skeleton-first-dataset-21 = Skull # Starlight
+## Starlight
+names-skeleton-first-dataset-21 = Skull
 names-skeleton-first-dataset-22 = Rib
 names-skeleton-first-dataset-23 = Hyoid
 names-skeleton-first-dataset-24 = Coccyx

@@ -1,0 +1,104 @@
+- type: ghostTheme
+  id: Bowmon
+  name: Bowmon
+  description: a cute bowmon.
+  spriteSpecifier:
+    sprite:
+      sprite: _Starlight/Mobs/Customization/GhostThemes/ghosts.rsi
+      state: ghost-bowmon
+    color: "#ffffff"
+  requirement: TesterReq
+  
+    
+- type: ghostTheme
+  id: Metroid
+  name: Metroid
+  description: a cute metroid.
+  spriteSpecifier:
+    sprite:
+      sprite: _Starlight/Mobs/Customization/GhostThemes/ghosts.rsi
+      state: ghost-metroid
+    color: "#ffffff"
+  requirement: TesterReq
+
+- type: ghostTheme
+  id: Imp
+  name: Imp
+  description: a cute imp.
+  spriteSpecifier:
+    sprite:
+      sprite: _Starlight/Mobs/Customization/GhostThemes/ghosts.rsi
+      state: ghost-imp
+    color: "#ffffff"
+  requirement: TesterReq
+
+- type: ghostTheme
+  id: Revenant
+  name: Revenant
+  description: a cute revenant.
+  spriteSpecifier:
+    sprite:
+      sprite: _Starlight/Mobs/Customization/GhostThemes/ghosts.rsi
+      state: ghost-revenant
+    color: "#ffffff"
+  requirement: TesterReq
+
+- type: ghostTheme
+  id: Ian
+  name: Ian
+  description: A pure dog.
+  colorizeable: true
+  spriteSpecifier:
+    sprite:
+      sprite: _Starlight/Mobs/Customization/GhostThemes/ghosts.rsi
+      state: ghost-ian
+    color: "#ffffff"
+  requirement: TesterReq
+
+- type: ghostTheme
+  id: IanCute
+  name: IanCute
+  description: A pure dog.
+  colorizeable: true
+  spriteSpecifier:
+    sprite:
+      sprite: _Starlight/Mobs/Customization/GhostThemes/ghosts.rsi
+      state: ghost-ian_cute
+    color: "#ffffff"
+  requirement: TesterReq
+
+- type: ghostTheme
+  id: Skeleton
+  name: Skeleton
+  description: skeleton.
+  colorizeable: true
+  spriteSpecifier:
+    sprite:
+      sprite: _Starlight/Mobs/Customization/GhostThemes/ghosts.rsi
+      state: ghost-skeleton
+    color: "#ffffff"
+  requirement: TesterReq
+
+- type: ghostTheme
+  id: Sheet
+  name: Sheet
+  description: Cute sheet.
+  colorizeable: true
+  spriteSpecifier:
+    sprite:
+      sprite: _Starlight/Mobs/Customization/GhostThemes/ghosts.rsi
+      state: ghost-sheet
+    color: "#ffffff"
+  requirement: TesterReq
+
+- type: ghostTheme
+  id: Cat
+  name: Cat
+  description: A cute little cat.
+  colorizeable: true
+  spriteSpecifier:
+    sprite:
+      sprite: _Starlight/Mobs/Customization/GhostThemes/ghosts.rsi
+      state: ghost-cat
+    color: "#ffffff"
+  requirement: TesterReq

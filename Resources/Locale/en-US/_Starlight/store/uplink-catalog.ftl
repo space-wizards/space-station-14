@@ -15,6 +15,13 @@ uplink-pistol-magnum-magazine-desc = Pistol magazine with 10 cartridges. Compati
 uplink-magillitis-serum-implanter-name = Magillitis Serum Implanter
 uplink-magillitis-serum-implanter-desc = An experimental biochip which causes irreversable rapid muscular growth in Hominidae. Side-affects may include hypertrichosis, violent outbursts, and an unending affinity for bananas.
 
+uplink-pitbull-bundle-name = Pitbull Bundle
+uplink-pitbull-bundle-desc = A large bullpup rifle with a low fire-rate but excellent accuracy. Chambered in .45 magnum. 
+
+
+uplink-rifle-magazine-pitbull-name = Bullpup magazine (.45 magnum)
+uplink-rifle-magazine-pitbull-desc = Bullpup magazines with 20 cartrides. Compatible with the Pitbull.
+
 uplink-nightvision-eyes = Night Vision Cyber Eyes
 uplink-nightvision-eyes-desc = Allows you to see in the dark but makes you more vulnerable to flashes. (Warning: You will need a surgical assistant for the procedure.)
 uplink-thermalvision-eyes = Thermal Vision Cyber Eyes
@@ -22,6 +29,11 @@ uplink-thermalvision-eyes-desc = Allows you to see in the dark and detect creatu
 uplink-mantis-blade-arms-name = Mantis Blade Arms Bundle
 uplink-mantis-blade-arms-desc = Originally used as a simple construction tool, now turned into hidden blades that can extend from your arm while still keeping its destructive prying skill. Truly a sight to behold. (Warning: You will need a surgical assistant for the procedure.)
 
+uplink-uzi-bundle-name = Type U3 Uzi Bundle
+uplink-uzi-bundle-desc = Contains the Type U3 Uzi, with two additional magazines.
+
+uplink-uzi-magazine-name = Uzi Magazine (.35 auto)
+uplink-uzi-magazine-desc = Submachine gun magazine with 32 cartridges. Compatible with the Type U3 Uzi
 
 uplink-breaching-magazine-name = Shotgun Magazine (.50 breaching)
 uplink-breaching-magazine-desc = A magazine loaded with breaching shells, for breaking down airlocks, windows and walls. Less effective on people.

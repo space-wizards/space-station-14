@@ -279,10 +279,6 @@
     layers:
     - state: base
       map: ["enum.GunVisualLayers.Base"]
-  - type: Lock
-    mindShieldLock: true
-  - type: AccessReader
-    access: [["Security"]]
   - type: Item
     size: Small
     shape:
@@ -294,19 +290,15 @@
   - type: BatteryWeaponFireModes
     fireModes:
     - proto: DisablerBolt
-      fireCost: 80
+      fireCost: 125
       magState: disable
       visualState: disable-unshaded
-    - proto: TaserBolt
-      fireCost: 100
-      magState: stun
-      visualState: stun-unshaded
     - proto: RedHeavyLaser # Does slightly more damage but costs more energy.
       fireCost: 222
       magState: kill
       visualState: kill-unshaded
     - proto: DestroyBeam
-      fireCost: 650
+      fireCost: 1000
       magState: destroy
       visualState: destroy-unshaded
   - type: Battery
@@ -314,7 +306,9 @@
     startingCharge: 2000
   - type: BatterySelfRecharger
     autoRecharge: true
-    autoRechargeRate: 25
+    autoRechargeRate: 100
+    autoRechargePause: true
+    autoRechargePauseTime: 44
 
 - type: entity
   parent: [ BaseWeaponBattery, BaseGunWieldable, BaseCentcommContraband ]
@@ -874,5 +868,49 @@
   - type: BatterySelfRecharger
     autoRecharge: true
     autoRechargeRate: 100
+    autoRechargePause: true
+    autoRechargePauseTime: 10
+
+- type: entity
+  name: pulse cannon
+  parent: [BaseWeaponBattery, BaseGunWieldable, BaseCentcommContraband]
+  id: WeaponPulseCannonNTNC
+  description: A weapon meant to blow holes in people with lasers. Like Superman. I like Superman.
+  components:
+  - type: Appearance
+  - type: Sprite
+    sprite: _Starlight/Objects/Weapons/Guns/Battery/ntnc_pulse.rsi
+    layers:
+    - state: base
+      map: ["enum.GunVisualLayers.Base"]
+  - type: Clothing
+    sprite: _Starlight/Objects/Weapons/Guns/Battery/ntnc_pulse.rsi
+  - type: Item
+    size: Large
+  - type: Gun
+    selectedMode: SemiAuto
+    fireRate: 1.5
+    availableModes:
+      - SemiAuto
+      - FullAuto
+    soundGunshot:
+      path: /Audio/Weapons/Guns/Gunshots/laser_cannon.ogg
+  - type: HitscanBatteryAmmoProvider
+    proto: DeleteBeam
+    fireCost: 10
+  - type: BatteryWeaponFireModes
+    fireModes:
+    - proto: TaserBoltExtreme
+      fireCost: 10
+      #magState: stun
+    - proto: DeleteBeam
+      fireCost: 10
+      #magState: delete
+  - type: Battery
+    maxCharge: 500
+    startingCharge: 500
+  - type: BatterySelfRecharger
+    autoRecharge: true
+    autoRechargeRate: 50
     autoRechargePause: true
     autoRechargePauseTime: 10

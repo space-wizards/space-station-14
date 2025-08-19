@@ -675,6 +675,7 @@
   id: BorgModuleDiagnosis # todo: reuse when med refractor is finished
   parent: [ BaseBorgModuleMedical, BaseProviderBorgModule ]
   name: diagnosis cyborg module
+  suffix: DO NOT USE
   components:
   - type: Sprite
     layers:
@@ -721,6 +722,7 @@
     items:
     - HandheldHealthAnalyzerUnpowered
     - DefibrillatorOneHandedUnpowered
+    - ClothingNeckStethoscope
     - BorgFireExtinguisher
     - BorgHandheldGPSBasic
     - HandLabeler
@@ -761,6 +763,8 @@
     items:
     - HandheldHealthAnalyzerUnpowered
     - BorgHypo
+    - AutoMenderBrute
+    - AutoMenderBurn
     - Syringe
     - BorgDropper
     - BorgBeaker

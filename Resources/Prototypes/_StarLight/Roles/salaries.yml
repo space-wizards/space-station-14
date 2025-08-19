@@ -57,3 +57,81 @@
     Magistrate: 176
 
     Visitor: 0
+  
+- type: SalaryRoleBonus
+  id: BlackOpsBonus
+  roles:
+  - 1294130614508716155 # Staff
+  multiplayer: 0.25
+
+- type: SalaryRoleBonus
+  id: MentorshipBonus
+  roles:
+  - 1294132218918207639 # Mentor
+  multiplayer: 0.25
+
+- type: SalaryRoleBonus
+  id: Pension
+  roles:
+  - 1294131297437876254 # Retired
+  multiplayer: 0.20
+
+- type: SalaryRoleBonus
+  id: SeniorityBonusAlfa
+  roles:
+  - 1275161200115712071 # AlfaTester
+  multiplayer: 0.20
+  
+- type: SalaryRoleBonus
+  id: SeniorityBonusBeta
+  roles:
+  - 1294130153651306516 # BetaTester
+  multiplayer: 0.10
+
+- type: SalaryRoleBonus
+  id: FirstPlacePrize
+  roles:
+  - 1294132398128107624 # GoldEventWinner
+  multiplayer: 0.20
+
+- type: SalaryRoleBonus
+  id: SecondPlacePrize
+  roles:
+  - 1294131865334185994 # SilverEventWinner
+  multiplayer: 0.15
+
+- type: SalaryRoleBonus
+  id: ThirdPlacePrize
+  roles:
+  - 1294134860050595862 # CopperEventWinner
+  multiplayer: 0.10
+  
+- type: SalaryRoleBonus
+  id: VeteranPayout
+  roles:
+  - 1327261545469575179 # Honorary Member
+  multiplayer: 0.20
+    
+- type: SalaryRoleBonus
+  id: SkillAdvancementBonus
+  roles:
+  - 1308143973684088883 # Changelog
+  multiplayer: 0.01 # fun 
+
+- type: SalaryRoleBonus
+  id: ContributionRoyaltyStarlight
+  roles:
+  - 1348034282370896012 # Contributor Starlight
+  multiplayer: 0.10
+  
+- type: SalaryRoleBonus
+  id: ContributionRoyaltyWizden
+  roles:
+  - 929452566092324954 # Contributor Wizden
+  multiplayer: 0.10
+    
+- type: SalaryRoleBonus
+  id: ContributionRoyaltyTrieste
+  roles:
+  - 1272376299943493716 # Contributor Trieste port
+  multiplayer: 0.10

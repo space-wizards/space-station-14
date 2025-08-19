@@ -70,8 +70,6 @@ public sealed partial class RailroadingConsumeTaskSystem : EntitySystem
         args.IsCompleted = ent.Comp.IsCompleted;
     }
 
-    private void OnConsumeTaskPicked(Entity<RailroadConsumeTaskComponent> ent, ref RailroadingCardChosenEvent args)
-    {
-        EnsureComp<RailroadConsumeWatcherComponent>(args.Subject.Owner);
-    }
+    private void OnConsumeTaskPicked(Entity<RailroadConsumeTaskComponent> ent, ref RailroadingCardChosenEvent args) 
+        => EnsureComp<RailroadConsumeWatcherComponent>(args.Subject.Owner);
 }

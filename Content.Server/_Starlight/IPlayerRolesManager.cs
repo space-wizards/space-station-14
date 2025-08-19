@@ -9,7 +9,6 @@ namespace Content.Server.Administration.Managers;
 
 public interface IPlayerRolesManager : ISharedPlayersRoleManager
 {
-    IEnumerable<ICommonSession> Mentors { get; }
     IEnumerable<PlayerReg> Players { get; }
 
     void Initialize();

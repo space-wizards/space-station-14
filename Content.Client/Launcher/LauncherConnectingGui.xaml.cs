@@ -1,3 +1,4 @@
+using System;
 using System.Linq;
 using Content.Client.Stylesheets;
 using Content.Shared.CCVar;
@@ -8,10 +9,10 @@ using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.XAML;
 using Robust.Shared.Configuration;
 using Robust.Shared.IoC;
-using Robust.Shared.Timing;
 using Robust.Shared.Network;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
+using Robust.Shared.Timing;
 
 namespace Content.Client.Launcher
 {
@@ -21,6 +22,7 @@ namespace Content.Client.Launcher
         private const float RedialWaitTimeSeconds = 15f;
         private readonly LauncherConnecting _state;
         private float _waitTime;
+        private string? _discord; //NullLink
 
         // Pressing reconnect will redial instead of simply reconnecting.
         private bool _redial;
@@ -123,6 +125,14 @@ namespace Content.Client.Launcher
             else
             {
                 _redial = reason.RedialFlag;
+                //NullLink start
+                if (reason.Message.StringOf("discord") is { } link)
+                {
+                    _discord = link;
+                    LinkDiscordButton.Visible = true;
+                    LinkDiscordButton.OnPressed += _ => IoCManager.Resolve<IUriOpener>().OpenUri(link);
+                }
+                //NullLink end
 
                 if (reason.Message.Int32Of("delay") is { } delay)
                 {

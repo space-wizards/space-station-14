@@ -263,7 +263,6 @@
         Radiation: 0.5
         Caustic: 0.5
     staminaModifier: 0.35
-    ingoreKnockdown: true
   - type: ExplosionResistance
     damageCoefficient: 0.5
   - type: FireProtection
@@ -271,14 +270,14 @@
     
 - type: entity
   parent: [ClothingOuterArmorBase, BaseCentcommContraband]
-  id: ClothingOuterVestNTCC
-  name: nt cc consortium officer's vest
+  id: ClothingOuterVestNTNC
+  name: nt-nc naval officer's vest
   description: Much better than a standard type-1 security vest. Don't lose it, you will NOT get a replacement.
   components:
   - type: Sprite
-    sprite: _Starlight/Clothing/OuterClothing/Vests/ntcc_vest.rsi
+    sprite: _Starlight/Clothing/OuterClothing/Vests/ntnc_vest.rsi
   - type: Clothing
-    sprite: _Starlight/Clothing/OuterClothing/Vests/ntcc_vest.rsi
+    sprite: _Starlight/Clothing/OuterClothing/Vests/ntnc_vest.rsi
   - type: Pierceable
     level: Metal
   - type: Armor

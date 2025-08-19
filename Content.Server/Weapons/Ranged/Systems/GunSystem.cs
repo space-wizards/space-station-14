@@ -43,9 +43,7 @@ using Robust.Shared.Timing;
 using Content.Server.Decals;
 using System;
 using Content.Server.IgnitionSource;
-using Content.Server.Atmos.EntitySystems;
 using Microsoft.CodeAnalysis.Elfie.Diagnostics;
-using Content.Server.Atmos.Components;
 using Content.Shared._Starlight.Weapon;
 using Robust.Shared.Maths;
 using static Content.Server.Starlight.TextToSpeech.TTSManager;
@@ -177,12 +175,12 @@ public sealed partial class GunSystem : SharedGunSystem
                             for (var i = 0; i < hitscanPrototype.Count; i++)
                                 hits.Add(Hitscan(gunUid, gun, fromCoordinates, user, fromMap, pointerLength, angles[i].ToVec(), hitscanPrototype, hitHashSet));
 
-                            FireEffects(hits.ToList(), hitscanPrototype);
+                            FireEffects(fromCoordinates, hitscanPrototype.MaxLength, mapDirection.ToAngle(), hitscanPrototype);
                         }
                         else
                         {
                             var hits = Hitscan(gunUid, gun, fromCoordinates, user, fromMap, pointerLength, mapDirection, hitscanPrototype, hitHashSet);
-                            FireEffects([hits], hitscanPrototype);
+                            FireEffects(fromCoordinates, hitscanPrototype.MaxLength, mapDirection.ToAngle(), hitscanPrototype);
                         }
 
                         RaiseLocalEvent(ent!.Value, new AmmoShotEvent()
@@ -310,15 +308,6 @@ public sealed partial class GunSystem : SharedGunSystem
                         if (hitscan.StaminaDamage > 0f)
                             _stamina.TakeStaminaDamage(hitEntity, hitscan.StaminaDamage, source: user);
 
-                        if (TryComp<StatusEffectsComponent>(hitEntity, out var status))
-                        {
-                            _stunSystem.TryStun(hitEntity, TimeSpan.FromSeconds(hitscan.StunAmount), true, status);
-
-                            _stunSystem.TryKnockdown(hitEntity, TimeSpan.FromSeconds(hitscan.KnockdownAmount), true, status: status);
-
-                            _stunSystem.TrySlowdown(hitEntity, TimeSpan.FromSeconds(hitscan.SlowdownAmount), true, hitscan.WalkSpeedMultiplier, hitscan.RunSpeedMultiplier, status);
-                        }
-
                         if (hitscan.Ignite)
                         {
                             if (TryComp<FlammableComponent>(hitEntity, out var flammable))
@@ -371,7 +360,7 @@ public sealed partial class GunSystem : SharedGunSystem
                         effects.Add((fromEffect, hitscan.MaxLength, dir.ToAngle(), null));
                     }
 
-                    FireEffects([effects], hitscan);
+                    FireEffects(fromCoordinates, hitscan.MaxLength, mapDirection.ToAngle(), hitscan);
 
                     Audio.PlayPredicted(gun.SoundGunshotModified, gunUid, user);
                     break;
@@ -560,7 +549,15 @@ public sealed partial class GunSystem : SharedGunSystem
 
                 var hitName = ToPrettyString(hitEntity);
                 if (dmg != null)
-                    dmg = Damageable.TryChangeDamage(hitEntity, dmg, ignoreResistances: hitscan.IgnoreResistances, origin: user, armorPenetration: hitscan.ArmorPenetration);
+                    dmg = Damageable.TryChangeDamage
+                        (
+                            hitEntity,
+                            dmg,
+                            ignoreResistances: hitscan.IgnoreResistances,
+                            origin: user,
+                            armorPenetration: hitscan.ArmorPenetration,
+                            canHeal: false
+                        );
 
                 // check null again, as TryChangeDamage returns modified damage values
                 if (dmg != null)
@@ -715,99 +712,64 @@ public sealed partial class GunSystem : SharedGunSystem
 
     // TODO: Pseudo RNG so the client can predict these.
     #region Hitscan effects
-    // 🌟Starlight🌟
-    private void FireEffects(List<List<(EntityCoordinates fromCoordinates, float distance, Angle angle, EntityUid? hitEntity)>> hits, HitscanPrototype hitscan)
+    private void FireEffects(EntityCoordinates fromCoordinates, float distance, Angle angle, HitscanPrototype hitscan, EntityUid? hitEntity = null)
     {
-        if (hits.Count == 0) return;
-        var hitscanEvent = new HitscanEvent
+        // Lord
+        // Forgive me for the shitcode I am about to do
+        // Effects tempt me not
+        var sprites = new List<(NetCoordinates coordinates, Angle angle, SpriteSpecifier sprite, float scale)>();
+        var fromXform = Transform(fromCoordinates.EntityId);
+
+        // We'll get the effects relative to the grid / map of the firer
+        // Look you could probably optimise this a bit with redundant transforms at this point.
+
+        var gridUid = fromXform.GridUid;
+        if (gridUid != fromCoordinates.EntityId && TryComp(gridUid, out TransformComponent? gridXform))
         {
-            Hitscan = hitscan.ID,
-            Effects = new Effect[hits.Count][]
-        };
-        var spreadIndex = -1;
-        HashSet<EntityCoordinates> pvs = [];
-
-        foreach (var hit in hits)
+            var (_, gridRot, gridInvMatrix) = TransformSystem.GetWorldPositionRotationInvMatrix(gridXform);
+            var map = TransformSystem.ToMapCoordinates(fromCoordinates);
+            fromCoordinates = new EntityCoordinates(gridUid.Value, Vector2.Transform(map.Position, gridInvMatrix));
+            angle -= gridRot;
+        }
+        else
         {
-            spreadIndex++;
-            var index = -1;
+            angle -= TransformSystem.GetWorldRotation(fromXform);
+        }
 
-            hitscanEvent.Effects[spreadIndex] = new Effect[hit.Count];
-            ref var effects = ref hitscanEvent.Effects[spreadIndex];
-
-            foreach (var item in hit)
+        if (distance >= 1f)
+        {
+            if (hitscan.MuzzleFlash != null)
             {
-                var (fromCoordinates, distance, angle, hitEntity) = item;
+                var coords = fromCoordinates.Offset(angle.ToVec().Normalized() / 2);
+                var netCoords = GetNetCoordinates(coords);
 
-                var fromXform = Transform(fromCoordinates.EntityId);
+                sprites.Add((netCoords, angle, hitscan.MuzzleFlash, 1f));
+            }
 
-                var gridUid = fromXform.GridUid;
+            if (hitscan.TravelFlash != null)
+            {
+                var coords = fromCoordinates.Offset(angle.ToVec() * (distance + 0.5f) / 2);
+                var netCoords = GetNetCoordinates(coords);
 
-                if (gridUid != fromCoordinates.EntityId && TryComp(gridUid, out TransformComponent? gridXform))
-                {
-                    var (_, gridRot, gridInvMatrix) = TransformSystem.GetWorldPositionRotationInvMatrix(gridXform);
-                    var map = _transform.ToMapCoordinates(fromCoordinates);
-                    fromCoordinates = new EntityCoordinates(gridUid.Value, Vector2.Transform(map.Position, gridInvMatrix));
-                    angle -= gridRot;
-                }
-                else
-                {
-                    angle -= _transform.GetWorldRotation(fromXform);
-                }
-
-                index++;
-                effects[index] = new Effect
-                {
-                    Angle = angle,
-                    Distance = distance,
-                };
-                ref var effect = ref effects[index];
-
-                if (distance >= 1f)
-                {
-                    var muzzleCoords = fromCoordinates.Offset(angle.ToVec().Normalized() / 2);
-                    var travelCoords = fromCoordinates.Offset(angle.ToVec() * (distance + 0.5f) / 2);
-                    effect.MuzzleCoordinates = GetNetCoordinates(muzzleCoords);
-                    effect.TravelCoordinates = GetNetCoordinates(travelCoords);
-                }
-                var impactCoords = fromCoordinates.Offset(angle.ToVec() * distance);
-                effect.ImpactCoordinates = GetNetCoordinates(impactCoords);
-
-                if (hitEntity is not null)
-                {
-                    if (hitscan.Reflective == ReflectType.NonEnergy)
-                    {
-                        if (TryComp<BloodstreamComponent>(hitEntity, out var bloodstream))
-                        {
-                            Timer.Spawn(200, () =>
-                            {
-                                var color = _proto.Index(bloodstream.BloodReagent).SubstanceColor;
-                                // A flash of the neuralyzer, then a man in a black suit says that you didn’t see any “vector crutch” here, and if you did—read it again.
-                                var coords = fromCoordinates.Offset((angle.ToVec() * (distance + 1.3f)) + new Vector2(-0.5f, -0.5f));
-                                _decals.TryAddDecal(_rand.Pick(_bloodDecals), coords, out _, color, angle + Angle.FromDegrees(-45), cleanable: true);
-                            });
-                        }
-                        else
-                        {
-                            effect.ImpactEnt = GetNetEntity(hitEntity.Value);
-                        }
-                    }
-                }
-
-                pvs.Add(fromCoordinates);
+                sprites.Add((netCoords, angle, hitscan.TravelFlash, distance - 1.5f));
             }
         }
 
-
-        if (pvs.Count > 0)
+        if (hitscan.ImpactFlash != null)
         {
-            var filter = Filter.Empty();
-            foreach (var pos in pvs.Where(x => x.IsValid(EntityManager)))
-                filter.Merge(Filter.Pvs(pos, entityMan: EntityManager));
+            var coords = fromCoordinates.Offset(angle.ToVec() * distance);
+            var netCoords = GetNetCoordinates(coords);
 
-            RaiseNetworkEvent(hitscanEvent, filter);
+            sprites.Add((netCoords, angle.FlipPositive(), hitscan.ImpactFlash, 1f));
+        }
+
+        if (sprites.Count > 0)
+        {
+            RaiseNetworkEvent(new HitscanEvent
+            {
+                Sprites = sprites,
+            }, Filter.Pvs(fromCoordinates, entityMan: EntityManager));
         }
     }
-
     #endregion
 }
