@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: archee1, Beck
-  changes:
-  - message: Inflatable walls no longer instantly deconstruct if canceled.
-    type: Fix
-  id: 8357
-  time: '2025-04-26T20:56:18.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/36937
 - author: ScarKy0
   changes:
   - message: Deliveries now have a random multiplier added to them, slightly modifying
@@ -3951,3 +3944,10 @@
   id: 8869
   time: '2025-08-19T17:56:36.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/38723
+- author: Princess-Cheeseballs
+  changes:
+  - message: You can no longer crawl while weightless.
+    type: Fix
+  id: 8870
+  time: '2025-08-19T19:18:06.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/39099
