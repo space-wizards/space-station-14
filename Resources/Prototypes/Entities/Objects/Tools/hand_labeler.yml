@@ -26,3 +26,7 @@
         tags:
           - Structure
     - type: PhysicalComposition
+    # Starlight-start: Vending Machines Prices
+    - type: ItemPrice
+      priceCategory: tool_basic
+    # Starlight-end

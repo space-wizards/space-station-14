@@ -52,3 +52,5 @@
   - type: DeliverySpawner
     table: !type:NestedSelector
       tableId: RandomDeliveryBasic
+    emagTable: !type:NestedSelector #Starlight
+      tableId: RandomDeliveryEvil #Starlight

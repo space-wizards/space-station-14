@@ -69,6 +69,10 @@
   - type: Tag
     tags:
       - Packet
+  # Starlight-start: Vending Machines Prices
+  - type: ItemPrice
+    priceCategory: miscellaneous
+  # Starlight-end
 
 - type: entity
   parent: BaseFoodCondimentPacket
@@ -364,6 +368,16 @@
   - type: PhysicalComposition
     materialComposition:
       Glass: 50
+  # 🌟Starlight-start🌟
+  - type: BoneGel
+  - type: SurgeryTool
+    successRate: 0.01 # How.
+    speed: 0.5
+    startSound:
+      path: /Audio/Items/Medical/ointment_begin.ogg
+    endSound:
+      path: /Audio/Items/Medical/ointment_end.ogg
+  # 🌟Starlight-end🌟
 
 - type: entity
   parent: BaseFoodCondimentBottle
