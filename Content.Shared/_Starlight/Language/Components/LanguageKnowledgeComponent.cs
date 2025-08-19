@@ -1,7 +1,7 @@
 using Content.Shared._Starlight.Language;
 using Robust.Shared.Prototypes;
 
-namespace Content.Server._Starlight.Language;
+namespace Content.Shared._Starlight.Language.Components;
 
 /// <summary>
 ///     Stores data about entities' intrinsic language knowledge.

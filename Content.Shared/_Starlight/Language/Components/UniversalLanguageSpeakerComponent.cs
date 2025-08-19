@@ -1,4 +1,4 @@
-namespace Content.Server._Starlight.Language;
+namespace Content.Shared._Starlight.Language.Components;
 
 // <summary>
 //     Signifies that this entity can speak and understand any language.
