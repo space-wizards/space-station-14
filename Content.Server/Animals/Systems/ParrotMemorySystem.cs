@@ -5,13 +5,13 @@ using Content.Server.Animals.Components;
 using Content.Server.Mind;
 using Content.Server.Popups;
 using Content.Server.Radio;
-using Content.Server.Speech;
-using Content.Server.Speech.Components;
 using Content.Server.Vocalization.Systems;
 using Content.Shared.Animals.Components;
 using Content.Shared.Animals.Systems;
 using Content.Shared.Database;
 using Content.Shared.Mobs.Systems;
+using Content.Shared.Speech;
+using Content.Shared.Speech.Components;
 using Content.Shared.Whitelist;
 using Robust.Shared.Network;
 using Robust.Shared.Random;
@@ -29,12 +29,10 @@ public sealed partial class ParrotMemorySystem : SharedParrotMemorySystem
 {
     [Dependency] private readonly EntityWhitelistSystem _whitelist = default!;
     [Dependency] private readonly IAdminLogManager _adminLogger = default!;
-    [Dependency] private readonly IAdminManager _admin = default!;
     [Dependency] private readonly IGameTiming _gameTiming = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly MindSystem _mind = default!;
     [Dependency] private readonly MobStateSystem _mobState = default!;
-    [Dependency] private readonly PopupSystem _popup = default!;
 
     public override void Initialize()
     {
