@@ -88,12 +88,6 @@ public sealed partial class LockComponent : Component
     [DataField]
     [AutoNetworkedField]
     public TimeSpan UnlockTime;
-    
-    [DataField]
-    public bool PopupMessage = true; // Starlight-edit
-    
-    [DataField]
-    public bool PowerNeeded = false; // Starlight-edit
 }
 
 /// <summary>

@@ -177,6 +177,7 @@
         Piercing: 0.3
         Heat: 0.9
     staminaModifier: 0.55
+    ingoreKnockdown: true
   - type: ExplosionResistance
     damageCoefficient: 0.9
   - type: StaticPrice
@@ -206,6 +207,7 @@
         Radiation: 0.5
         Caustic: 0.5
     staminaModifier: 0.35
+    ingoreKnockdown: true
   - type: ExplosionResistance
     damageCoefficient: 0.5
   - type: FireProtection
@@ -264,6 +266,7 @@
         Heat: 0.3
         Caustic: 0.5
     staminaModifier: 0.1
+    ingoreKnockdown: true
   - type: ExplosionResistance
     damageCoefficient: 0.35
   - type: StaminaResistance # do not add these to other equipment or mobs, we don't want to microbalance these everywhere
@@ -362,7 +365,7 @@
       coefficients:
         Blunt: 0.5
         Slash: 0.5
-        Piercing: 0.5
+        Piercing: 0.6
         Heat: 0.5
   - type: GroupExamine
 

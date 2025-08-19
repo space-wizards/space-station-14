@@ -239,13 +239,6 @@
   - type: Clothing
     sprite: Clothing/Shoes/Specific/cluwne.rsi
   - type: Unremoveable
-  #region Starlight
-  - type: Tag
-    tags:
-      - ClownShoes
-      - WhitelistChameleon
-      - BibleThwackRemovable
-  #endregion
 
 - type: entity
   parent: ClothingShoesClown

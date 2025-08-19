@@ -62,10 +62,6 @@
     - cigar7
     - cigar8
   - type: Appearance
-  # Starlight-start: Vending Machines Prices
-  - type: ItemPrice
-    priceCategory: miscellaneous
-  # Starlight-end
 
 - type: entity
   id: CigarGoldCase

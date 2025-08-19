@@ -2524,15 +2524,3 @@
     MobMothroach: 1
     OrganAnimalHeart: 1
     MoproachShoes: 1
-
-- type: microwaveMealRecipe
-  id: RecipeCottonCake
-  name: cotton cake recipe
-  result: FoodCottonCake #Starlight moff cake
-  time: 5
-  group: Cake
-  reagents:
-    Fiber: 10
-  solids:
-    FoodCakePlain: 1
-    

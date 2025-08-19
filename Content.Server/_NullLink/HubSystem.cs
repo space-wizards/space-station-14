@@ -145,9 +145,6 @@ public sealed partial class HubSystem : EntitySystem, IServerObserver, IServerIn
 
     public Task Updated(string key, NLServer value)
     {
-        if (!value.IsAdultOnly == _isAdultOnly)
-            return Task.CompletedTask;
-
         _serverData.AddOrUpdate(key, Map(value), (k, v) => Map(value));
         _updateEvents.Enqueue(new NullLink.AddOrUpdateServer
         {

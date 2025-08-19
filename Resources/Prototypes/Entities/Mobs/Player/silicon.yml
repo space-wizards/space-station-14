@@ -292,7 +292,6 @@
     - HideContextMenu
     - StationAi
     - NoConsoleSound
-    - CanPilot
   - type: StartingMindRole
     mindRole: "MindRoleSiliconBrain"
     silent: true
@@ -467,7 +466,7 @@
         - BorgModuleTool
         - BorgModuleChemical
         - BorgModuleTopicals
-        - BorgModuleSyndicateWeapon
+        - BorgModuleRescue
   - type: ItemSlots
     slots:
       cell_slot:

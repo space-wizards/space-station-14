@@ -51,10 +51,4 @@ public sealed class MentorSystem : SharedMentorSystem
         {
             Ticket = ticket,
         });
-
-    internal void SentTpto(Guid ticket)
-        => RaiseNetworkEvent(new MhelpTptoTicket
-        {
-            Ticket = ticket,
-        });
 }

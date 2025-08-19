@@ -59,7 +59,7 @@ public sealed partial class AtmosMonitorComponent : Component
     public AtmosAlarmType LastAlarmState = AtmosAlarmType.Normal;
 
     [DataField("trippedThresholds")]
-    public AtmosMonitorThresholdTypeFlags TrippedThresholds;
+    public HashSet<AtmosMonitorThresholdType> TrippedThresholds = new();
 
     /// <summary>
     ///     Registered devices in this atmos monitor. Alerts will be sent directly

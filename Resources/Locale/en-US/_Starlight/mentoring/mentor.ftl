@@ -8,9 +8,7 @@ mentor-system-typing-indicator = {$players} {$count ->
 } typing...
 
 mentor-play-sound = sound?
-mentor-send-ping = get pinged for mhelps?
 mentor-close-ticket = close ticket
-mentor-tpto = "Tpto"
 
 mentor-title-none-selected = None selected
 

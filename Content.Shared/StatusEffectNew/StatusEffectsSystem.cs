@@ -1,5 +1,4 @@
 using System.Diagnostics.CodeAnalysis;
-using Content.Shared.Rejuvenate;
 using Content.Shared.StatusEffectNew.Components;
 using Content.Shared.Whitelist;
 using Robust.Shared.Containers;
@@ -32,8 +31,6 @@ public sealed partial class StatusEffectsSystem : EntitySystem
         SubscribeLocalEvent<StatusEffectContainerComponent, ComponentShutdown>(OnStatusContainerShutdown);
         SubscribeLocalEvent<StatusEffectContainerComponent, EntInsertedIntoContainerMessage>(OnEntityInserted);
         SubscribeLocalEvent<StatusEffectContainerComponent, EntRemovedFromContainerMessage>(OnEntityRemoved);
-
-        SubscribeLocalEvent<RejuvenateRemovedStatusEffectComponent, StatusEffectRelayedEvent<RejuvenateEvent>>(OnRejuvenate);
 
         _containerQuery = GetEntityQuery<StatusEffectContainerComponent>();
         _effectQuery = GetEntityQuery<StatusEffectComponent>();
@@ -118,12 +115,6 @@ public sealed partial class StatusEffectsSystem : EntitySystem
         Dirty(args.Entity, statusComp);
     }
 
-    private void OnRejuvenate(Entity<RejuvenateRemovedStatusEffectComponent> ent,
-        ref StatusEffectRelayedEvent<RejuvenateEvent> args)
-    {
-        PredictedQueueDel(ent.Owner);
-    }
-
     private void SetStatusEffectTime(EntityUid effect, TimeSpan? duration)
     {
         if (!_effectQuery.TryComp(effect, out var effectComp))
@@ -165,7 +156,7 @@ public sealed partial class StatusEffectsSystem : EntitySystem
         Dirty(effect, effectComp);
     }
 
-    public bool CanAddStatusEffect(EntityUid uid, EntProtoId effectProto)
+    private bool CanAddStatusEffect(EntityUid uid, EntProtoId effectProto)
     {
         if (!_proto.TryIndex(effectProto, out var effectProtoData))
             return false;

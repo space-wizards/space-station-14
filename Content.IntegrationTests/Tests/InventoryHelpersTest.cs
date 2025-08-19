@@ -1,4 +1,4 @@
-using Content.Server.Stunnable;
+﻿using Content.Server.Stunnable;
 using Content.Shared.Inventory;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
@@ -17,7 +17,9 @@ namespace Content.IntegrationTests.Tests
   components:
   - type: Inventory
   - type: ContainerContainer
-  - type: MobState
+  - type: StatusEffects
+    allowed:
+    - Stun
 
 - type: entity
   name: InventoryJumpsuitJanitorDummy
@@ -68,7 +70,7 @@ namespace Content.IntegrationTests.Tests
                 });
 #pragma warning restore NUnit2045
 
-                systemMan.GetEntitySystem<StunSystem>().TryUpdateStunDuration(human, TimeSpan.FromSeconds(1f));
+                systemMan.GetEntitySystem<StunSystem>().TryStun(human, TimeSpan.FromSeconds(1f), true);
 
 #pragma warning disable NUnit2045
                 // Since the mob is stunned, they can't equip this.

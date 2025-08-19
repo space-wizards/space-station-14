@@ -19,5 +19,4 @@ public interface IMHelpUIHandler : IDisposable
     public event Action<Guid?, string, bool> OnMessageSend;
     public event Action<Guid?, string> OnInputTextChanged;
     public event Action<Guid> OnTicketClosed;
-    public event Action<Guid> OnTptoPressed;
 }

@@ -232,3 +232,11 @@
   wires:
   - !type:AccessWireAction
   - !type:AiInteractWireAction
+
+#region Starlight TODO: Move to _Starlight
+- type: wireLayout
+  id: MedibotControls
+  dummyWires: 9
+  wires:
+  - !type:SpeechWireAction
+#endregion

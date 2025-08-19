@@ -22,14 +22,11 @@ using Content.Shared.Movement.Systems;
 using Content.Shared.Flash.Components;
 using Content.Shared.Mindshield.Components;
 using Content.Shared.Mindshield.FakeMindShield;
-using Content.Shared.StatusEffect;
 
 namespace Content.Server.Changeling;
 
 public sealed partial class ChangelingSystem : EntitySystem
 {
-    [Dependency] private readonly StatusEffectsSystem _statusEffect = default!;
-
     public void SubscribeAbilities()
     {
         SubscribeLocalEvent<ChangelingComponent, OpenEvolutionMenuEvent>(OnOpenEvolutionMenu);

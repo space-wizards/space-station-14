@@ -24,6 +24,7 @@ public abstract class SharedArmorSystem : EntitySystem
         SubscribeLocalEvent<ArmorComponent, InventoryRelayedEvent<CoefficientQueryEvent>>(OnCoefficientQuery);
         SubscribeLocalEvent<ArmorComponent, InventoryRelayedEvent<DamageModifyEvent>>(OnDamageModify);
         SubscribeLocalEvent<ArmorComponent, InventoryRelayedEvent<StaminaModifyEvent>>(OnStaminaDamageModify);
+        SubscribeLocalEvent<ArmorComponent, InventoryRelayedEvent<BeforeKnockdownEvent>>(OnKnockdown);
         SubscribeLocalEvent<ArmorComponent, BorgModuleRelayedEvent<DamageModifyEvent>>(OnBorgDamageModify);
         SubscribeLocalEvent<ArmorComponent, GetVerbsEvent<ExamineVerb>>(OnArmorVerbExamine);
     }
@@ -55,6 +56,12 @@ public abstract class SharedArmorSystem : EntitySystem
             args.Args.Modifier = component.StaminaDamageModifier;
     }
     
+    private void OnKnockdown(EntityUid uid, ArmorComponent component, InventoryRelayedEvent<BeforeKnockdownEvent> args)
+    {
+        if (component.IngoreKnockdown)
+            args.Args.Cancelled = true;
+    }
+
     private void OnBorgDamageModify(EntityUid uid, ArmorComponent component,
         ref BorgModuleRelayedEvent<DamageModifyEvent> args)
     {

@@ -382,13 +382,6 @@
   description:  A cursed pair of cluwne hands.
   components:
   - type: Unremoveable
-  #region Starlight
-  - type: Tag
-    tags:
-    - ClothMade
-    - Recyclable
-    - WhitelistChameleon
-  #endregion Starlight
 
 - type: entity
   parent: [ClothingHandsButcherable, BaseSyndicateContraband]

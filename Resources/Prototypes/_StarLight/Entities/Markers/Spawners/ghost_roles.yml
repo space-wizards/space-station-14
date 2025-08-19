@@ -9,12 +9,6 @@
     rules: ghost-role-information-silicon-rules
     raffle:
       settings: default
-    requirements:
-    - !type:OverallPlaytimeRequirement
-      time: 86400 # 24h STARLIGHT
-    - !type:RoleTimeRequirement
-      role: JobBorg
-      time: 21600 # 6h STARLIGHT
   - type: Sprite
     sprite: Markers/jobs.rsi
     layers:

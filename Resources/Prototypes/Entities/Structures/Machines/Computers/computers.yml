@@ -114,7 +114,7 @@
     color: "#43ccb5"
 
 - type: entity
-  parent: BaseComputerAiAccess
+  parent: BaseComputer
   id: BaseComputerShuttle
   name: shuttle console
   description: Used to pilot a shuttle.
@@ -630,7 +630,7 @@
 - type: entity
   parent: BaseComputerAiAccess
   id: computerBodyScanner
-  name: operating computer # Starlight-edit
+  name: body scanner computer
   description: A body scanner.
   components:
   - type: ApcPowerReceiver
@@ -641,37 +641,6 @@
     radius: 1.5
     energy: 1.6
     color: "#1f8c28"
-  # Starlight-start: Surgery body scanner
-  - type: Sprite
-    layers:
-    - map: ["computerLayerBody"]
-      state: computer
-    - map: ["computerLayerKeyboard"]
-      state: generic_keyboard
-    - map: ["computerLayerScreen"]
-      state: crew
-    - map: ["computerLayerKeys"]
-      state: med_key
-    - map: [ "enum.WiresVisualLayers.MaintenancePanel" ]
-      state: generic_panel_open
-  - type: Speech
-  - type: BodyScanner
-  - type: HealthAnalyzer
-    talk: true
-  - type: ActivatableUI
-    key: enum.HealthAnalyzerUiKey.Key
-  - type: UserInterface
-    interfaces:
-      enum.HealthAnalyzerUiKey.Key:
-        type: HealthAnalyzerBoundUserInterface
-  - type: DeviceList
-  - type: DeviceNetwork
-    deviceNetId: Wired
-  - type: DeviceLinkSource
-    range: 2
-    ports:
-      - BodyScannerSender
-  # Starlight-end
 
 - type: entity
   parent: BaseComputerAiAccess

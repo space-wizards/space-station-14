@@ -1,4 +1,5 @@
 using System.Numerics;
+using Content.Shared.Mobs;
 using Content.Shared.CombatMode;
 using Content.Shared.Interaction;
 using Content.Shared.Rotation;
@@ -6,20 +7,22 @@ using Content.Shared.Stunnable;
 using Robust.Client.Animations;
 using Robust.Client.GameObjects;
 using Robust.Shared.Animations;
-using Robust.Shared.Input;
-using Robust.Shared.Input.Binding;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
+using Robust.Shared.Utility;
+using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
-
+using Robust.Shared.Input;
+using Robust.Shared.Input.Binding;
+using Robust.Shared.Timing;
 
 namespace Content.Client.Stunnable;
 
 public sealed class StunSystem : SharedStunSystem
 {
-    [Dependency] private readonly SharedCombatModeSystem _combat = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
     #region Starlight
+    [Dependency] private readonly SharedCombatModeSystem _combat = default!;
     [Dependency] private readonly InputSystem _input = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly AnimationPlayerSystem _animation = default!;
@@ -35,23 +38,14 @@ public sealed class StunSystem : SharedStunSystem
 
         SubscribeLocalEvent<StunVisualsComponent, ComponentInit>(OnComponentInit);
         SubscribeLocalEvent<StunVisualsComponent, AppearanceChangeEvent>(OnAppearanceChanged);
-        SubscribeLocalEvent<KnockedDownComponent, MoveEvent>(OnMovementInput);//Starlight
+
+        #region Starlight
+        SubscribeLocalEvent<KnockedDownComponent, MoveEvent>(OnMovementInput);
 
         CommandBinds.Builder
             .BindAfter(EngineKeyFunctions.UseSecondary, new PointerInputCmdHandler(OnUseSecondary, true, true), typeof(SharedInteractionSystem))
             .Register<StunSystem>();
-    }
-
-    private bool OnUseSecondary(in PointerInputCmdHandler.PointerInputCmdArgs args)
-    {
-        if (args.Session?.AttachedEntity is not {Valid: true} uid)
-            return false;
-
-        if (args.EntityUid != uid || !HasComp<KnockedDownComponent>(uid) || !_combat.IsInCombatMode(uid))
-            return false;
-
-        RaisePredictiveEvent(new ForceStandUpEvent());
-        return true;
+        #endregion
     }
 
     /// <summary>
@@ -186,6 +180,20 @@ public sealed class StunSystem : SharedStunSystem
         };
     }
     #region Starlight
+    private bool OnUseSecondary(in PointerInputCmdHandler.PointerInputCmdArgs args)
+    {
+        if (args.Session?.AttachedEntity is not { Valid: true } uid)
+            return false;
+
+        if (_input.Predicted)
+            return false;
+
+        if (args.EntityUid != uid || !HasComp<KnockedDownComponent>(uid) || !_combat.IsInCombatMode(uid))
+            return false;
+
+        RaisePredictiveEvent(new ForceStandUpEvent());
+        return true;
+    }
 
     private void OnMovementInput(EntityUid uid, KnockedDownComponent component, MoveEvent args)
     {

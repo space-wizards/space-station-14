@@ -42,7 +42,6 @@
       75: Dead
   - type: Stamina
     critThreshold: 50
-    animationThreshold: 25
   - type: Butcherable
     spawned:
     - id: FoodMeat
@@ -241,7 +240,6 @@
       75: Dead
   - type: Stamina
     critThreshold: 50
-    animationThreshold: 25
   - type: Butcherable
     spawned:
     - id: FoodMeat

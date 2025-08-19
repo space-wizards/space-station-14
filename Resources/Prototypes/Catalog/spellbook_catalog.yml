@@ -45,14 +45,12 @@
   description: spellbook-cluwne-desc
   productAction: ActionCluwne
   cost:
-    WizCoin: 5 # Starlight: More expensive than usual, back on trial basis.
+    WizCoin: 300 #starlight make stupid expensive
   categories:
   - SpellbookOffensive
   conditions:
   - !type:ListingLimitedStockCondition
     stock: 1
-  - !type:ListingPlayerCountCondition # Starlight, make this only buyable on highpop
-    minimum: 80
 
 - type: listing
   id: SpellbookSlip
@@ -300,7 +298,7 @@
   description: spellbook-event-summon-guns-description
   productAction: ActionSummonGuns
   cost:
-    WizCoin: 11 #Starlight edit. just out of reach
+    WizCoin: 15
   categories:
   - SpellbookEvents
   conditions:
@@ -314,7 +312,7 @@
   description: spellbook-event-summon-magic-description
   productAction: ActionSummonMagic
   cost:
-    WizCoin: 11 #Starlight edit. just out of reach.
+    WizCoin: 15
   categories:
   - SpellbookEvents
   conditions:

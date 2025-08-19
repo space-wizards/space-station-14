@@ -68,7 +68,7 @@
     tags:
       - HolofanProjector
   - type: StaticPrice
-    price: 50
+    price: 80
   - type: GuideHelp
     guides:
     - AtmosTools

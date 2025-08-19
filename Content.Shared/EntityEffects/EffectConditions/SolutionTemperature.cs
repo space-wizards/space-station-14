@@ -13,14 +13,17 @@ public sealed partial class SolutionTemperature : EntityEffectCondition
 
     [DataField]
     public float Max = float.PositiveInfinity;
-
     public override bool Condition(EntityEffectBaseArgs args)
     {
         if (args is EntityEffectReagentArgs reagentArgs)
         {
-            return reagentArgs?.Source != null &&
-                   reagentArgs.Source.Temperature >= Min &&
-                   reagentArgs.Source.Temperature <= Max;
+            if (reagentArgs.Source == null)
+                return false;
+            if (reagentArgs.Source.Temperature < Min)
+                return false;
+            if (reagentArgs.Source.Temperature > Max)
+                return false;
+            return true;
         }
 
         // TODO: Someone needs to figure out how to do this for non-reagent effects.

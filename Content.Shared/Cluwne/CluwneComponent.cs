@@ -66,15 +66,4 @@ public sealed partial class CluwneComponent : Component
     /// </summary>
     [DataField]
     public SoundSpecifier ArrivalSound = new SoundPathSpecifier("/Audio/Effects/teleport_arrival.ogg");
-
-    //#region Starlight
-
-    /// <summary>
-    /// whether this cluwne is permanent and should be unremovable by bible thwacks
-    /// </summary>
-    [DataField]
-    public bool Unremovable = false;
-
-    //#endregion Starlight
-
 }

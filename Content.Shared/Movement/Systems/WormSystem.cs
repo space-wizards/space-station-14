@@ -1,7 +1,6 @@
 ﻿using Content.Shared.Alert;
 using Content.Shared.Movement.Components;
 using Content.Shared.Popups;
-using Content.Shared.Rejuvenate;
 using Content.Shared.Stunnable;
 
 namespace Content.Shared.Movement.Systems;
@@ -19,7 +18,6 @@ public sealed class WormSystem : EntitySystem
     {
         SubscribeLocalEvent<WormComponent, StandUpAttemptEvent>(OnStandAttempt);
         SubscribeLocalEvent<WormComponent, KnockedDownRefreshEvent>(OnKnockedDownRefresh);
-        SubscribeLocalEvent<WormComponent, RejuvenateEvent>(OnRejuvenate);
         SubscribeLocalEvent<WormComponent, MapInitEvent>(OnMapInit);
     }
 
@@ -27,12 +25,7 @@ public sealed class WormSystem : EntitySystem
     {
         EnsureComp<KnockedDownComponent>(ent, out var knocked);
         _alerts.ShowAlert(ent, SharedStunSystem.KnockdownAlert);
-        _stun.SetAutoStand((ent, knocked));
-    }
-
-    private void OnRejuvenate(Entity<WormComponent> ent, ref RejuvenateEvent args)
-    {
-        RemComp<WormComponent>(ent);
+        _stun.ToggleAutoStand((ent, knocked));
     }
 
     private void OnStandAttempt(Entity<WormComponent> ent, ref StandUpAttemptEvent args)
@@ -41,8 +34,8 @@ public sealed class WormSystem : EntitySystem
             return;
 
         args.Cancelled = true;
-        args.Message = (Loc.GetString("worm-component-stand-attempt"), PopupType.SmallCaution);
-        args.Autostand = false;
+        _stun.ToggleAutoStand(ent.Owner);
+        _popup.PopupClient(Loc.GetString("worm-component-stand-attempt"), ent, ent, PopupType.SmallCaution);
     }
 
     private void OnKnockedDownRefresh(Entity<WormComponent> ent, ref KnockedDownRefreshEvent args)
