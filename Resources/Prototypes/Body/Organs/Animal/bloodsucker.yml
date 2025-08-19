@@ -1,7 +1,6 @@
 - type: entity
   id: OrganBloodsuckerStomach
   parent: OrganAnimalStomach
-  name: stomach
   categories: [ HideSpawnMenu ]
   components:
   - type: Metabolizer
@@ -10,7 +9,6 @@
 - type: entity
   id: OrganBloodsuckerLiver
   parent: OrganAnimalLiver
-  name: liver
   categories: [ HideSpawnMenu ]
   components:
   - type: Metabolizer
@@ -19,7 +17,6 @@
 - type: entity
   id: OrganBloodsuckerHeart
   parent: OrganAnimalHeart
-  name: heart
   categories: [ HideSpawnMenu ]
   components:
   - type: Metabolizer
