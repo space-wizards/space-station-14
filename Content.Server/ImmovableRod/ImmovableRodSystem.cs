@@ -35,7 +35,7 @@ public sealed class ImmovableRodSystem : EntitySystem
         base.Update(frameTime);
 
         // we are deliberately including paused entities. rod hungers for all
-        foreach (var (rod, trans) in EntityManager.EntityQuery<ImmovableRodComponent, TransformComponent>(true))
+        foreach (var (rod, trans) in EntityQuery<ImmovableRodComponent, TransformComponent>(true))
         {
             if (!rod.DestroyTiles)
                 continue;
@@ -58,7 +58,7 @@ public sealed class ImmovableRodSystem : EntitySystem
 
     private void OnMapInit(EntityUid uid, ImmovableRodComponent component, MapInitEvent args)
     {
-        if (EntityManager.TryGetComponent(uid, out PhysicsComponent? phys))
+        if (TryComp(uid, out PhysicsComponent? phys))
         {
             _physics.SetLinearDamping(uid, phys, 0f);
             _physics.SetFriction(uid, phys, 0f);

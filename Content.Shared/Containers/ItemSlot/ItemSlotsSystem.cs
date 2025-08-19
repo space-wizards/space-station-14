@@ -102,7 +102,7 @@ namespace Content.Shared.Containers.ItemSlots
             {
                 if (existing.Local)
                     Log.Error(
-                        $"Duplicate item slot key. Entity: {EntityManager.GetComponent<MetaDataComponent>(uid).EntityName} ({uid}), key: {id}");
+                        $"Duplicate item slot key. Entity: {Comp<MetaDataComponent>(uid).EntityName} ({uid}), key: {id}");
                 else
                     // server state takes priority
                     slot.CopyFrom(existing);
@@ -132,7 +132,7 @@ namespace Content.Shared.Containers.ItemSlots
             itemSlots.Slots.Remove(slot.ContainerSlot.ID);
 
             if (itemSlots.Slots.Count == 0)
-                EntityManager.RemoveComponent(uid, itemSlots);
+                RemComp(uid, itemSlots);
             else
                 Dirty(uid, itemSlots);
         }
@@ -206,7 +206,7 @@ namespace Content.Shared.Containers.ItemSlots
             if (args.Handled)
                 return;
 
-            if (!EntityManager.TryGetComponent(args.User, out HandsComponent? hands))
+            if (!TryComp(args.User, out HandsComponent? hands))
                 return;
 
             if (itemSlots.Slots.Count == 0)
@@ -395,7 +395,7 @@ namespace Content.Shared.Containers.ItemSlots
             if (!Resolve(user, ref hands, false))
                 return false;
 
-            if (!_handsSystem.TryGetActiveItem((uid, hands), out var held))
+            if (!_handsSystem.TryGetActiveItem((user, hands), out var held))
                 return false;
 
             if (!CanInsert(uid, held.Value, user, slot))
@@ -700,7 +700,7 @@ namespace Content.Shared.Containers.ItemSlots
 
                 var verbSubject = slot.Name != string.Empty
                     ? Loc.GetString(slot.Name)
-                    : EntityManager.GetComponent<MetaDataComponent>(slot.Item.Value).EntityName ?? string.Empty;
+                    : Comp<MetaDataComponent>(slot.Item.Value).EntityName ?? string.Empty;
 
                 AlternativeVerb verb = new()
                 {

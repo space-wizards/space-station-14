@@ -51,7 +51,7 @@ public sealed class SuicideSystem : EntitySystem
         if (!TryComp<MobStateComponent>(victim, out var mobState) || _mobState.IsDead(victim, mobState))
             return false;
 
-        _adminLogger.Add(LogType.Mind, $"{EntityManager.ToPrettyString(victim):player} is attempting to suicide");
+        _adminLogger.Add(LogType.Mind, $"{ToPrettyString(victim):player} is attempting to suicide");
 
         ICommonSession? session = null;
 
@@ -67,6 +67,9 @@ public sealed class SuicideSystem : EntitySystem
         if (!suicideGhostEvent.Handled || _tagSystem.HasTag(victim, CannotSuicideTag))
             return false;
 
+        // TODO: fix this
+        // This is a handled event, but the result is never used
+        // It looks like TriggerOnMobstateChange is supposed to prevent you from suiciding
         var suicideEvent = new SuicideEvent(victim);
         RaiseLocalEvent(victim, suicideEvent);
 
@@ -77,7 +80,7 @@ public sealed class SuicideSystem : EntitySystem
         }
         else
         {
-            _adminLogger.Add(LogType.Mind, $"{EntityManager.ToPrettyString(victim):player} suicided.");
+            _adminLogger.Add(LogType.Mind, $"{ToPrettyString(victim):player} suicided.");
         }
         return true;
     }

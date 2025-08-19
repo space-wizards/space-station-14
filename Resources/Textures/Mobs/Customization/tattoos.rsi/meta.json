@@ -1,7 +1,7 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
-  "copyright": "https://github.com/Skyrat-SS13/Skyrat-tg/tree/40e3cdbb15b8bc0d5ef2fb46133adf805bda5297/modular_skyrat/master_files/icons/mob/body_markings/tattoo_markings.dmi",
+  "copyright": "https://github.com/Skyrat-SS13/Skyrat-tg/tree/40e3cdbb15b8bc0d5ef2fb46133adf805bda5297/modular_skyrat/master_files/icons/mob/body_markings/tattoo_markings.dmi. eyeshadow_upper and eyeshadow_lower made by Flareguy for Space Station 14",
   "size": {
     "x": 32,
     "y": 32
@@ -53,6 +53,14 @@
     },
     {
       "name": "tattoo_eye_moth_l",
+      "directions": 4
+    },
+    {
+      "name": "eyeshadow_upper",
+      "directions": 4
+    },
+    {
+      "name": "eyeshadow_lower",
       "directions": 4
     }
   ]

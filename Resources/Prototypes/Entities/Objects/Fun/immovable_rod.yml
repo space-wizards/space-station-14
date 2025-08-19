@@ -6,11 +6,13 @@
   - type: Clickable
   - type: InteractionOutline
   - type: MovementIgnoreGravity
+    weightless: true
   - type: Sprite
     sprite: Objects/Fun/immovable_rod.rsi
     state: icon
     noRot: false
   - type: ImmovableRod
+  - type: GravityAffected
   - type: Physics
     bodyType: Dynamic
     linearDamping: 0

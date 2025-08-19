@@ -37,7 +37,7 @@ public sealed class MultiHandedItemSystem : EntitySystem
 
     private void OnAttemptPickup(Entity<MultiHandedItemComponent> ent, ref GettingPickedUpAttemptEvent args)
     {
-        if (_hands.CountFreeHands(ent.Owner) >= ent.Comp.HandsNeeded)
+        if (_hands.CountFreeHands(args.User) >= ent.Comp.HandsNeeded)
             return;
 
         args.Cancel();

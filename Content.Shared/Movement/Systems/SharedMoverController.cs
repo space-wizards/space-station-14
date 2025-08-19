@@ -73,6 +73,8 @@ public abstract partial class SharedMoverController : VirtualController
     /// </summary>
     public Dictionary<EntityUid, bool> UsedMobMovement = new();
 
+    private readonly HashSet<EntityUid> _aroundColliderSet = [];
+
     public override void Initialize()
     {
         UpdatesBefore.Add(typeof(TileFrictionController));
@@ -211,8 +213,7 @@ public abstract partial class SharedMoverController : VirtualController
             $"Input mover: {ToPrettyString(uid)} in HandleMobMovement is not the correct BodyType, BodyType found: {physicsComponent.BodyType}, expected: KinematicController.");
 
         // If the body is in air but isn't weightless then it can't move
-        // TODO: MAKE ISWEIGHTLESS EVENT BASED
-        var weightless = _gravity.IsWeightless(uid, physicsComponent, xform);
+        var weightless = _gravity.IsWeightless(uid);
         var inAirHelpless = false;
 
         if (physicsComponent.BodyStatus != BodyStatus.OnGround && !CanMoveInAirQuery.HasComponent(uid))
@@ -472,7 +473,9 @@ public abstract partial class SharedMoverController : VirtualController
         var (uid, collider, mover, transform) = entity;
         var enlargedAABB = _lookup.GetWorldAABB(entity.Owner, transform).Enlarged(mover.GrabRange);
 
-        foreach (var otherEntity in lookupSystem.GetEntitiesIntersecting(transform.MapID, enlargedAABB))
+        _aroundColliderSet.Clear();
+        lookupSystem.GetEntitiesIntersecting(transform.MapID, enlargedAABB, _aroundColliderSet);
+        foreach (var otherEntity in _aroundColliderSet)
         {
             if (otherEntity == uid)
                 continue; // Don't try to push off of yourself!
@@ -638,8 +641,7 @@ public abstract partial class SharedMoverController : VirtualController
         if (!TryComp<PhysicsComponent>(ent, out var physicsComponent) || !XformQuery.TryComp(ent, out var xform))
             return;
 
-        // TODO: Make IsWeightless event based!!!
-        if (physicsComponent.BodyStatus != BodyStatus.OnGround || _gravity.IsWeightless(ent, physicsComponent, xform))
+        if (physicsComponent.BodyStatus != BodyStatus.OnGround || _gravity.IsWeightless(ent.Owner))
             args.Modifier *= ent.Comp.BaseWeightlessFriction;
         else
             args.Modifier *= ent.Comp.BaseFriction;

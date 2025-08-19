@@ -359,7 +359,7 @@ public abstract class SharedMagicSystem : EntitySystem
             var component = (Component)Factory.GetComponent(name);
             var temp = (object)component;
             _seriMan.CopyTo(data.Component, ref temp);
-            EntityManager.AddComponent(target, (Component)temp!);
+            AddComp(target, (Component)temp!);
         }
     }
 
@@ -510,8 +510,8 @@ public abstract class SharedMagicSystem : EntitySystem
             _mind.TransferTo(tarMind, ev.Performer);
         }
 
-        _stun.TryParalyze(ev.Target, ev.TargetStunDuration, true);
-        _stun.TryParalyze(ev.Performer, ev.PerformerStunDuration, true);
+        _stun.TryUpdateParalyzeDuration(ev.Target, ev.TargetStunDuration);
+        _stun.TryUpdateParalyzeDuration(ev.Performer, ev.PerformerStunDuration);
     }
 
     #endregion
