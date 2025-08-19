@@ -1,15 +1,14 @@
-using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using System.Numerics;
+using Content.Server.Atmos;
 using Content.Server.Atmos.Components;
 using Content.Server.Atmos.EntitySystems;
+using Content.Shared.Atmos;
 using Robust.Shared.EntitySerialization;
 using Robust.Shared.EntitySerialization.Systems;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
-using Robust.Shared.Physics;
 using Robust.Shared.Utility;
 
 namespace Content.IntegrationTests.Tests.Atmos;
@@ -52,6 +51,23 @@ public sealed class DeltaPressureTest
     minPressure: 15000
     minPressureDelta: 10000
     scalingType: Threshold
+    baseDamage:
+      types:
+        Structural: 1000
+  - type: Damageable
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 300
+      behaviors:
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          Girder:
+            min: 1
+            max: 1
+      - !type:DoActsBehavior
+        acts: [ ""Destruction"" ]
 
 - type: entity
   parent: DeltaPressureSolidTest
@@ -81,7 +97,6 @@ public sealed class DeltaPressureTest
 
         var entMan = server.EntMan;
         var mapLoader = entMan.System<MapLoaderSystem>();
-        var mapSys = entMan.System<SharedMapSystem>();
         var atmosphereSystem = entMan.System<AtmosphereSystem>();
         var deserializationOptions = DeserializationOptions.Default with { InitializeMaps = true };
 
@@ -94,11 +109,9 @@ public sealed class DeltaPressureTest
 #pragma warning disable NUnit2045
             Assert.That(mapLoader.TryLoadMap(_testMap, out _, out var gridSet, deserializationOptions),
                 $"Failed to load map {_testMap}.");
-            Assert.That(gridSet, Is.Not.EqualTo(null), nameof(gridSet) + " != null");
+            Assert.That(gridSet, Is.Not.Null, "There were no grids loaded from the map!");
 #pragma warning restore NUnit2045
 
-            // We already assert this but its high, so whatever
-            // ReSharper disable once AssignNullToNotNullAttribute
             grid = gridSet.First();
         });
 
@@ -107,9 +120,9 @@ public sealed class DeltaPressureTest
             var uid = entMan.SpawnAtPosition("DeltaPressureSolidTest", new EntityCoordinates(grid.Owner, Vector2.Zero));
             dpEnt = new Entity<DeltaPressureComponent>(uid, entMan.GetComponent<DeltaPressureComponent>(uid));
 
-            Assert.That(atmosphereSystem.IsDeltaPressureEntityInList(grid.Owner, dpEnt));
+            Assert.That(atmosphereSystem.IsDeltaPressureEntityInList(grid.Owner, dpEnt), "Entity was not in processing list when it should have automatically joined!");
             entMan.DeleteEntity(uid);
-            Assert.That(!atmosphereSystem.IsDeltaPressureEntityInList(grid.Owner, dpEnt));
+            Assert.That(!atmosphereSystem.IsDeltaPressureEntityInList(grid.Owner, dpEnt), "Entity was still in processing list after deletion!");
         });
 
         await pair.CleanReturnAsync();
@@ -136,11 +149,9 @@ public sealed class DeltaPressureTest
 #pragma warning disable NUnit2045
             Assert.That(mapLoader.TryLoadMap(_testMap, out _, out var gridSet, deserializationOptions),
                 $"Failed to load map {_testMap}.");
-            Assert.That(gridSet, Is.Not.EqualTo(null), nameof(gridSet) + " != null");
+            Assert.That(gridSet, Is.Not.Null, "There were no grids loaded from the map!");
 #pragma warning restore NUnit2045
 
-            // We already assert this but its high, so whatever
-            // ReSharper disable once AssignNullToNotNullAttribute
             grid = gridSet.First();
         });
 
@@ -150,12 +161,154 @@ public sealed class DeltaPressureTest
             dpEnt = new Entity<DeltaPressureComponent>(uid, entMan.GetComponent<DeltaPressureComponent>(uid));
 
             // YUP
-            Assert.That(!atmosphereSystem.IsDeltaPressureEntityInList(grid.Owner, dpEnt));
+            Assert.That(!atmosphereSystem.IsDeltaPressureEntityInList(grid.Owner, dpEnt), "Entity was in processing list when it should not have automatically joined!");
             atmosphereSystem.TryAddDeltaPressureEntity(grid.Owner, dpEnt);
-            Assert.That(atmosphereSystem.IsDeltaPressureEntityInList(grid.Owner, dpEnt));
+            Assert.That(atmosphereSystem.IsDeltaPressureEntityInList(grid.Owner, dpEnt), "Entity was not in processing list when it should have been added!");
             atmosphereSystem.TryRemoveDeltaPressureEntity(grid.Owner, dpEnt);
-            Assert.That(!atmosphereSystem.IsDeltaPressureEntityInList(grid.Owner, dpEnt));
+            Assert.That(!atmosphereSystem.IsDeltaPressureEntityInList(grid.Owner, dpEnt), "Entity was still in processing list after removal!");
         });
+
+        await pair.CleanReturnAsync();
+    }
+
+    /// <summary>
+    /// Asserts that an entity that doesn't need to be damaged by DeltaPressure
+    /// is not damaged by DeltaPressure.
+    /// </summary>
+    [Test]
+    public async Task ProcessingStandbyTest()
+    {
+        await using var pair = await PoolManager.GetServerClient();
+        var server = pair.Server;
+
+        var entMan = server.EntMan;
+        var mapLoader = entMan.System<MapLoaderSystem>();
+        var atmosphereSystem = entMan.System<AtmosphereSystem>();
+        var transformSystem = entMan.System<SharedTransformSystem>();
+        var deserializationOptions = DeserializationOptions.Default with { InitializeMaps = true };
+
+        Entity<MapGridComponent> grid = default;
+        Entity<DeltaPressureComponent> dpEnt = default;
+        TileAtmosphere tile = default!;
+        AtmosDirection direction = default;
+
+        // Load our test map in and assert that it exists.
+        await server.WaitPost(() =>
+        {
+#pragma warning disable NUnit2045
+            Assert.That(mapLoader.TryLoadMap(_testMap, out _, out var gridSet, deserializationOptions),
+                $"Failed to load map {_testMap}.");
+            Assert.That(gridSet, Is.Not.Null, "There were no grids loaded from the map!");
+#pragma warning restore NUnit2045
+
+            grid = gridSet.First();
+            var uid = entMan.SpawnAtPosition("DeltaPressureSolidTest", new EntityCoordinates(grid.Owner, Vector2.Zero));
+            dpEnt = new Entity<DeltaPressureComponent>(uid, entMan.GetComponent<DeltaPressureComponent>(uid));
+            Assert.That(atmosphereSystem.IsDeltaPressureEntityInList(grid.Owner, dpEnt), "Entity was not in processing list when it should have been added!");
+        });
+
+        for (var i = 0; i < Atmospherics.Directions; i++)
+        {
+            await server.WaitPost(() =>
+            {
+                var indices = transformSystem.GetGridOrMapTilePosition(dpEnt);
+                var gridAtmosComp = entMan.GetComponent<GridAtmosphereComponent>(grid);
+
+                direction = (AtmosDirection)(1 << i);
+                var offsetIndices = indices.Offset(direction);
+                tile = gridAtmosComp.Tiles[offsetIndices];
+
+                Assert.That(tile.Air, Is.Not.Null, $"Tile at {offsetIndices} should have air!");
+
+                var toPressurize = dpEnt.Comp!.MinPressureDelta - 10;
+                var moles = (toPressurize * tile.Air.Volume) / (Atmospherics.R * Atmospherics.T20C);
+
+                tile.Air!.AdjustMoles(Gas.Nitrogen, moles);
+            });
+
+            await server.WaitRunTicks(30);
+
+            // Entity should exist, if it took one tick of damage then it should be instantly destroyed.
+            await server.WaitAssertion(() =>
+            {
+                Assert.That(!entMan.Deleted(dpEnt), $"{dpEnt} should still exist after experiencing non-threshold pressure from {direction} side!");
+                tile.Air!.Clear();
+            });
+
+            await server.WaitRunTicks(30);
+        }
+
+        await pair.CleanReturnAsync();
+    }
+
+    /// <summary>
+    /// Asserts that an entity that needs to be damaged by DeltaPressure
+    /// is damaged by DeltaPressure when the pressure is above the threshold.
+    /// </summary>
+    [Test]
+    public async Task ProcessingDeltaDamageTest()
+    {
+        await using var pair = await PoolManager.GetServerClient();
+        var server = pair.Server;
+
+        var entMan = server.EntMan;
+        var mapLoader = entMan.System<MapLoaderSystem>();
+        var atmosphereSystem = entMan.System<AtmosphereSystem>();
+        var transformSystem = entMan.System<SharedTransformSystem>();
+        var deserializationOptions = DeserializationOptions.Default with { InitializeMaps = true };
+
+        Entity<MapGridComponent> grid = default;
+        Entity<DeltaPressureComponent> dpEnt = default;
+        TileAtmosphere tile = default!;
+        AtmosDirection direction = default;
+
+        // Load our test map in and assert that it exists.
+        await server.WaitPost(() =>
+        {
+#pragma warning disable NUnit2045
+            Assert.That(mapLoader.TryLoadMap(_testMap, out _, out var gridSet, deserializationOptions),
+                $"Failed to load map {_testMap}.");
+            Assert.That(gridSet, Is.Not.Null, "There were no grids loaded from the map!");
+#pragma warning restore NUnit2045
+
+            grid = gridSet.First();
+        });
+
+        for (var i = 0; i < Atmospherics.Directions; i++)
+        {
+            await server.WaitPost(() =>
+            {
+                // Need to spawn an entity each run to ensure it works for all directions.
+                var uid = entMan.SpawnAtPosition("DeltaPressureSolidTest", new EntityCoordinates(grid.Owner, Vector2.Zero));
+                dpEnt = new Entity<DeltaPressureComponent>(uid, entMan.GetComponent<DeltaPressureComponent>(uid));
+                Assert.That(atmosphereSystem.IsDeltaPressureEntityInList(grid.Owner, dpEnt), "Entity was not in processing list when it should have been added!");
+
+                var indices = transformSystem.GetGridOrMapTilePosition(dpEnt);
+                var gridAtmosComp = entMan.GetComponent<GridAtmosphereComponent>(grid);
+
+                direction = (AtmosDirection)(1 << i);
+                var offsetIndices = indices.Offset(direction);
+                tile = gridAtmosComp.Tiles[offsetIndices];
+
+                Assert.That(tile.Air, Is.Not.Null, $"Tile at {offsetIndices} should have air!");
+
+                var toPressurize = dpEnt.Comp!.MinPressureDelta + 10;
+                var moles = (toPressurize * tile.Air.Volume) / (Atmospherics.R * Atmospherics.T20C);
+
+                tile.Air!.AdjustMoles(Gas.Nitrogen, moles);
+            });
+
+            await server.WaitRunTicks(30);
+
+            // Entity should exist, if it took one tick of damage then it should be instantly destroyed.
+            await server.WaitAssertion(() =>
+            {
+                Assert.That(entMan.Deleted(dpEnt), $"{dpEnt} still exists after experiencing threshold pressure from {direction} side!");
+                tile.Air!.Clear();
+            });
+
+            await server.WaitRunTicks(30);
+        }
 
         await pair.CleanReturnAsync();
     }
