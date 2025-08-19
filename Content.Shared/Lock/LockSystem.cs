@@ -18,6 +18,7 @@ using Content.Shared.Item.ItemToggle.Components;
 using JetBrains.Annotations;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Utility;
+using Content.Shared._Starlight.Power.Components; // Starlight-edit
 
 namespace Content.Shared.Lock;
 
@@ -74,11 +75,13 @@ public sealed class LockSystem : EntitySystem
         // Only attempt an unlock by default on Activate
         if (lockComp.Locked && lockComp.UnlockOnClick)
         {
-            args.Handled = TryUnlock(uid, args.User, lockComp);
+            args.Handled = true;
+            TryUnlock(uid, args.User, lockComp);
         }
         else if (!lockComp.Locked && lockComp.LockOnClick)
         {
-            args.Handled = TryLock(uid, args.User, lockComp);
+            args.Handled = true;
+            TryLock(uid, args.User, lockComp);
         }
     }
 
@@ -87,7 +90,7 @@ public sealed class LockSystem : EntitySystem
         if (!component.Locked)
             return;
 
-        if (!args.Silent)
+        if (!args.Silent && component.PopupMessage) // Starlight-edit
             _sharedPopupSystem.PopupClient(Loc.GetString("entity-storage-component-locked-message"), uid, args.User);
 
         args.Cancelled = true;
@@ -150,7 +153,7 @@ public sealed class LockSystem : EntitySystem
         if (!Resolve(uid, ref lockComp))
             return;
 
-        if (lockComp.Locked)
+        if (lockComp.Locked || (lockComp.PowerNeeded && TryComp<PoweredLockerComponent>(uid, out var power) && !power.Powered)) // Starlight-edit: Powered Locker
             return;
 
         if (user is { Valid: true })
@@ -183,7 +186,7 @@ public sealed class LockSystem : EntitySystem
         if (!Resolve(uid, ref lockComp))
             return;
 
-        if (!lockComp.Locked)
+        if (!lockComp.Locked || (lockComp.PowerNeeded && TryComp<PoweredLockerComponent>(uid, out var power) && !power.Powered)) // Starlight-edit: Powered Locker
             return;
 
         if (user is { Valid: true })
@@ -323,7 +326,7 @@ public sealed class LockSystem : EntitySystem
         if (!_emag.CompareFlag(args.Type, EmagType.Access))
             return;
 
-        if (!component.Locked || !component.BreakOnAccessBreaker)
+        if (!component.Locked || !component.BreakOnAccessBreaker || (component.PowerNeeded && TryComp<PoweredLockerComponent>(uid, out var power) && !power.Powered)) // Starlight-edit: Powered Locker
             return;
 
         _audio.PlayPredicted(component.UnlockSound, uid, args.UserUid);
@@ -417,7 +420,7 @@ public sealed class LockSystem : EntitySystem
         if (TryComp<LockComponent>(uid, out var lockComp) && lockComp.Locked != component.RequireLocked)
         {
             args.Cancel();
-            if (lockComp.Locked)
+            if (lockComp.Locked && lockComp.PopupMessage) // Starlight-edit
             {
                 _sharedPopupSystem.PopupClient(Loc.GetString("entity-storage-component-locked-message"), uid, args.User);
             }

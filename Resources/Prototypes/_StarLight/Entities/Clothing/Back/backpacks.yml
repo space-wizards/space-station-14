@@ -10,8 +10,19 @@
 - type: entity
   parent: [ClothingBackpack, BaseCommandContraband]
   id: ClothingBackpackBlueShield
-  name: blueshield's backpack
-  description: A lightweight but reliable backpack. Can't go wrong with the classics!
+  name: blueshields backpack
+  description: A lightweight but reliable backpack. Cant go wrong with the classics!
   components:
   - type: Sprite
     sprite: _Starlight/Clothing/Back/Backpacks/blueshield.rsi
+
+- type: entity
+  parent: [ ClothingBackpackERTLeader, BaseCentcommContraband ]
+  id: ClothingBackpackNTNC
+  name: NTNC backpack
+  description: A spacious backpack with lots of pockets, worn by NTNC Officers
+  components:
+  - type: ExplosionResistance
+    damageCoefficient: 0.1
+  - type: Sprite
+    sprite: _Starlight/Clothing/Back/Backpacks/ntnc_bag.rsi

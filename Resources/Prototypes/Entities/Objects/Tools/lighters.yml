@@ -98,7 +98,11 @@
   - type: PhysicalComposition
   - type: Tag
     tags:
-      - Lighters
+      - Lighters # SL
+  # Starlight-start: Vending Machines Prices
+  - type: ItemPrice
+    priceCategory: cigaretes
+  # Starlight-end
 
 - type: entity
   name: cheap lighter
@@ -221,6 +225,13 @@
   - type: UseDelay
   - type: IgnitionSource
     ignited: false
+  - type: Tag
+    tags:
+    - Lighters #SL
+  # Starlight-start: Vending Machines Prices
+  - type: ItemPrice
+    priceCategory: cigaretes
+  # Starlight-end
 
 - type: entity
   name: flippo engraved lighter
@@ -320,6 +331,9 @@
   - type: UseDelay
   - type: IgnitionSource
     ignited: false
+  - type: Tag #SL
+    tags: #SL
+      - Lighters #SL
 
 - type: entity
   parent: [BaseBrandedLighter, BaseSyndicateContraband]
@@ -619,6 +633,7 @@
     tags:
     - DonkPocket
     - Meat
+    - Lighters #SL
   - type: SolutionContainerManager
     solutions:
       Welder:

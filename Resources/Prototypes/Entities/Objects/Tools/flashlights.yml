@@ -74,6 +74,10 @@
     quickEquip: false
     slots:
       - Belt
+  # Starlight-start: Vending Machines Prices
+  - type: ItemPrice
+    fallbackPrice: 12
+  # Starlight-end
 
 - type: entity
   name: seclite
