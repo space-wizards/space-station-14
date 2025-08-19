@@ -68,9 +68,10 @@
       - state: inhand-right-blade
         shader: unshaded
   - type: Reflect
-    reflectProb: 0.25  # STARLIGHT
-    spread: 75  # STARLIGHT
-    enhancedReflection:  # STARLIGHT
+    # Starlight-start
+    reflectProb: 0.25
+    spread: 75
+    enhancedReflection:
       TaserBolt: 0.80 # cheesy
       DisablerBolt: 0.50
       LaserBolt: 0.50
@@ -84,6 +85,7 @@
       RedLaserBeam: 0.40
       IgnitionRedLaser: 0.40
       DestroyBeam: 0.40
+      # Starlight-end
   - type: IgnitionSource
     temperature: 700
 
