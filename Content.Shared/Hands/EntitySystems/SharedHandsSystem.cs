@@ -36,8 +36,10 @@ public abstract partial class SharedHandsSystem
         InitializeDrop();
         InitializePickup();
         InitializeRelay();
-        InitializeEventListeners(); //Starlight
+        InitializeEventListeners();
+
         InitializeOffer(); // Starlight
+
 
         SubscribeLocalEvent<HandsComponent, ComponentInit>(OnInit);
         SubscribeLocalEvent<HandsComponent, MapInitEvent>(OnMapInit);
@@ -166,6 +168,26 @@ public abstract partial class SharedHandsSystem
         }
 
         return false;
+    }
+
+    /// <summary>
+    ///     Does this entity have any empty hands, and how many?
+    /// </summary>
+    public int GetEmptyHandCount(Entity<HandsComponent?> entity)
+    {
+        if (!Resolve(entity, ref entity.Comp, false) || entity.Comp.Count == 0)
+            return 0;
+
+        var hands = 0;
+
+        foreach (var hand in EnumerateHands(entity))
+        {
+            if (!HandIsEmpty(entity, hand))
+                continue;
+            hands++;
+        }
+
+        return hands;
     }
 
     /// <summary>
