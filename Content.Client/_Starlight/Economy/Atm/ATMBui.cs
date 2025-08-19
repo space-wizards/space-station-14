@@ -12,8 +12,6 @@ namespace Content.Client._Starlight.Economy.Atm;
 [UsedImplicitly]
 public sealed class ATMBui : BoundUserInterface
 {
-    [Dependency] private readonly IEntityManager _entities = default!;
-
     [ViewVariables]
     private ATMWindow? _window;
     private int _amount;
@@ -148,8 +146,8 @@ public sealed class ATMBui : BoundUserInterface
         if (_window == null)
             return;
 
-    _window.OnClose -= Close;
-    _window.Orphan();
+        _window.OnClose -= Close;
+        _window.Orphan();
         _window = null;
     }
 }
