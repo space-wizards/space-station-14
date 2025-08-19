@@ -119,8 +119,14 @@ public abstract partial class SharedSiliconLawSystem
         if (!TryComp(lawBoard.Value, out SiliconLawProviderComponent? LawProviderBase))
             return;
 
-        var lawset = GetLawset(LawProviderBase.Laws).Laws;
-        SetLaws(lawset, ent, LawProviderBase.LawUploadSound);
+        SiliconLawset? lawset = null;
+
+        if (provider.Lawset == null)
+            lawset = GetLawset(LawProviderBase.Laws);
+        else
+            lawset = LawProviderBase.Lawset;
+
+        SetLaws(lawset.Laws, ent, LawProviderBase.LawUploadSound);
     }
 }
 
