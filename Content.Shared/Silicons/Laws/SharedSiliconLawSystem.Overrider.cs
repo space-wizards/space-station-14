@@ -53,7 +53,7 @@ public abstract partial class SharedSiliconLawSystem
             LawProviderTarget = LawProviderAi;
         }
 
-        var lawOverrider = args.Used;
+        var lawOverrider = ent.Owner;
 
         if (!TryComp(lawOverrider, out SiliconLawOverriderComponent? OverriderComp))
             return;
