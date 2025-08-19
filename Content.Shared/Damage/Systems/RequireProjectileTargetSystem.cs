@@ -46,10 +46,13 @@ public sealed class RequireProjectileTargetSystem : EntitySystem
 
             if (!_container.IsEntityOrParentInContainer(shooter.Value)) 
             {
-                // Check if this entity is a mob capable of going prone or something else
-                if (HasComp<StandingStateComponent>(ent))
+                var hitChance = _cfgManager.GetCVar(CCVars.ProneMobHitChance);
+
+                // Check if this entity is a mob capable of going prone
+                // Skip if false or hit chance is 0
+                if ((hitChance > 0) && HasComp<StandingStateComponent>(ent))
                 {
-                    if (_cfgManager.GetCVar(CCVars.ProneMobHitChance) <= _random.Next(100))
+                    if ((hitChance < 100) && (hitChance <= _random.Next(100)))
                     {
                         args.Cancelled = true;
                     }
