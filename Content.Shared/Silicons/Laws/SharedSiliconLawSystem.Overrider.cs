@@ -16,7 +16,9 @@ public abstract partial class SharedSiliconLawSystem
     [Dependency] private readonly SharedDoAfterSystem _doAfter = default!;
     [Dependency] private readonly SharedStationAiSystem _stationAi = default!;
     [Dependency] private readonly ItemSlotsSystem _slot = default!;
+
     private readonly ProtoId<ChatNotificationPrototype> _overrideLawsChatNotificationPrototype = "OverrideLaws";
+
     private void InitializeOverrider()
     {
         SubscribeLocalEvent<SiliconLawOverriderComponent, AfterInteractEvent>(OnOverriderInteract);
