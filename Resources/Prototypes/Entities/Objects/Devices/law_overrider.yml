@@ -24,6 +24,9 @@
         whitelist:
           components:
           - SiliconLawProvider
+  - type: ContainerContainer
+    containers:
+      law_board: !type:ContainerSlot {}
   - type: SiliconLawOverrider
     overrideTime: 10
   - type: StealTarget
