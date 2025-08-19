@@ -11996,5 +11996,12 @@ Entries:
   id: 121303
   time: '2025-08-19T03:57:11.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/1213
+- author: CringeCursed
+  changes:
+  - message: Pricing for items in vending machines
+    type: Add
+  id: 134300
+  time: '2025-08-19T05:12:44.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1343
 Order: -1
 
