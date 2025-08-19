@@ -22,7 +22,13 @@
     price: 40
   - type: PayloadTrigger
     components:
-    - type: OnUseTimerTrigger
+    - type: TriggerOnUse
+      keyOut: startTimer
+    - type: TimerTrigger
+      keysIn:
+      - startTimer
+      # use the default trigger key so it can activate any inserted payload
+      keyOut: trigger
       delay: 5
       delayOptions: [3, 5, 10, 15, 30]
       initialBeepDelay: 0
@@ -47,14 +53,19 @@
     - SignalTrigger
   - type: PayloadTrigger
     components:
-    - type: TimerStartOnSignal
     - type: DeviceNetwork
       deviceNetId: Wireless
       receiveFrequencyId: BasicDevice
     - type: WirelessNetworkConnection
       range: 200
     - type: DeviceLinkSink
-    - type: OnUseTimerTrigger
+    - type: TriggerOnSignal
+      keyOut: startTimer
+    - type: TimerTrigger
+      keysIn:
+      - startTimer
+      # use the default trigger key so it can activate any inserted payload
+      keyOut: trigger
       delay: 3
       initialBeepDelay: 0
       beepSound:

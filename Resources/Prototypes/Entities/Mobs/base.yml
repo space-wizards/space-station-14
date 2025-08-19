@@ -44,6 +44,7 @@
   - type: MovementSpeedModifier
   - type: RequireProjectileTarget
     active: False
+  - type: StunVisuals
 
 - type: entity
   save: false
@@ -107,6 +108,8 @@
     - Shock
     - Cold
     - Caustic
+    - Asphyxiation
+    - Radiation
   - type: DamageOnHighSpeedImpact
     damage:
       types:
