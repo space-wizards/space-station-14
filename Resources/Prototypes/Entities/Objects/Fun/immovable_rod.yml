@@ -82,8 +82,6 @@
         Blunt: 190
   - type: Physics
     bodyType: KinematicController
-  - type: MovementIgnoreGravity
-    gravityState: true
   - type: InputMover
   - type: MovementSpeedModifier
     baseWeightlessAcceleration: 5
