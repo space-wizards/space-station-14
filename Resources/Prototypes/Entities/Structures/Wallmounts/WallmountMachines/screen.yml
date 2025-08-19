@@ -4,6 +4,7 @@
   name: screen
   description: Displays text or time.
   components:
+  - type: Appearance # Starlight-edit
   - type: Rotatable
   - type: ScreenVisuals
     textOffset: 0,3
