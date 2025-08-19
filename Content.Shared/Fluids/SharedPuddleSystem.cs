@@ -56,6 +56,9 @@ public abstract partial class SharedPuddleSystem : EntitySystem
             CacheStandouts();
     }
 
+    /// <summary>
+    /// Used to cache standout reagents for future use.
+    /// </summary>
     private void CacheStandouts()
     {
         _standoutReagents = [.. _prototypeManager.EnumeratePrototypes<ReagentPrototype>().Where(x => x.Standouts).Select(x => x.ID)];
