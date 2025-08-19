@@ -17,6 +17,8 @@ public sealed class ATMBui : BoundUserInterface
     [ViewVariables]
     private ATMWindow? _window;
     private int _amount;
+    private int _transferAmount;
+    private string _transferRecipient = string.Empty;
     public ATMBui(EntityUid owner, Enum uiKey) : base(owner, uiKey)
     {
 
@@ -39,7 +41,7 @@ public sealed class ATMBui : BoundUserInterface
 
         View(ViewType.Withdraw);
 
-        RefreshUI();
+        RefreshUI(state);
 
         if (!_window!.IsOpen)
             _window.OpenCentered();
@@ -57,9 +59,9 @@ public sealed class ATMBui : BoundUserInterface
         _window.TransferTabButton.OnPressed += _ => View(ViewType.Transfer);
     }
 
-    private void RefreshUI()
+    private void RefreshUI(ATMBuiState state)
     {
-        if (_window == null || State is not ATMBuiState state)
+        if (_window == null)
             return;
 
         _window.BalanceLabel.Children.Clear();
@@ -76,6 +78,40 @@ public sealed class ATMBui : BoundUserInterface
         _window.WithdrawButton.OnPressed += _ =>
         {
             SendMessage(new ATMWithdrawBuiMsg() { Amount = _amount });
+            Close();
+        };
+
+        // omg help me
+        _window.TransferHelpLabel.Children.Clear();
+        var transferHelp = new FormattedMessage();
+        transferHelp.AddText("Enter a recipient username and amount to transfer");
+        _window.TransferHelpLabel.SetMessage(transferHelp);
+
+        _window.TransferAmountInput.OnTextChanged += _ =>
+        {
+            if (!int.TryParse(_window.TransferAmountInput.Text, out _transferAmount))
+                _transferAmount = 0;
+
+            _window.TransferButton.Disabled = string.IsNullOrWhiteSpace(_transferRecipient)
+                || _transferAmount <= 0 || _transferAmount > state.Balance;
+        };
+        _window.TransferTargetInput.OnTextChanged += _ =>
+        {
+            _transferRecipient = _window.TransferTargetInput.Text ?? string.Empty;
+
+            _window.TransferButton.Disabled = string.IsNullOrWhiteSpace(_transferRecipient)
+                || _transferAmount <= 0 || _transferAmount > state.Balance;
+        };
+        _window.TransferButton.OnPressed += _ =>
+        {
+            if (!string.IsNullOrWhiteSpace(_transferRecipient) && _transferAmount > 0)
+            {
+                SendMessage(new ATMTransferBuiMsg
+                {
+                    Recipient = _transferRecipient.Trim(),
+                    Amount = _transferAmount
+                });
+            }
             Close();
         };
     }
@@ -104,6 +140,6 @@ public sealed class ATMBui : BoundUserInterface
         base.Dispose(disposing);
 
         if (disposing)
-            _window?.Dispose();
+            _window = null;
     }
 }

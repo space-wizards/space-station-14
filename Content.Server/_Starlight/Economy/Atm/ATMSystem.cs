@@ -7,6 +7,10 @@ using Content.Shared.UserInterface;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Prototypes;
+using Robust.Server.Player;
+using Robust.Shared.Player;
+using Content.Server.Mind;
+using System;
 
 namespace Content.Shared.Starlight.Economy.Atm;
 public sealed partial class ATMSystem : SharedATMSystem
@@ -16,13 +20,19 @@ public sealed partial class ATMSystem : SharedATMSystem
     [Dependency] private readonly HandsSystem _hands = default!;
     [Dependency] private readonly StackSystem _stack = default!;
     [Dependency] private readonly SharedAudioSystem _audioSystem = default!;
+    [Dependency] private readonly IPlayerManager _players = default!;
+    [Dependency] private readonly MindSystem _mind = default!;
 
     private static readonly EntProtoId<StackComponent> _cash = "NTCredit";
     public override void Initialize()
     {
         SubscribeLocalEvent<ATMComponent, BeforeActivatableUIOpenEvent>(OnBeforeActivatableUIOpen);
         SubscribeLocalEvent<NTCashComponent, AfterInteractEvent>(OnAfterInteract);
-        Subs.BuiEvents<ATMComponent>(ATMUIKey.Key, subs => subs.Event<ATMWithdrawBuiMsg>(OnWithdraw));
+        Subs.BuiEvents<ATMComponent>(ATMUIKey.Key, subs =>
+        {
+            subs.Event<ATMWithdrawBuiMsg>(OnWithdraw);
+            subs.Event<ATMTransferBuiMsg>(OnTransfer);
+        });
         base.Initialize();
     }
 
@@ -53,6 +63,42 @@ public sealed partial class ATMSystem : SharedATMSystem
             _uiSystem.SetUiState(args.Target.Value, ATMUIKey.Key, new ATMBuiState() { Balance = playerData.Balance });
             _audioSystem.PlayPvs(atm.DepositSound, args.Target.Value);
         }
+    }
+
+    private void OnTransfer(EntityUid uid, ATMComponent component, ATMTransferBuiMsg args)
+    {
+        if (string.IsNullOrWhiteSpace(args.Recipient))
+            return;
+
+        if (_playerRolesManager.GetPlayerData(args.Actor) is not PlayerData sender)
+            return;
+
+        if (args.Amount <= 0 || sender.Balance < args.Amount)
+            return;
+
+        ICommonSession? recipientSession = null;
+        foreach (var reg in _playerRolesManager.Players)
+        {
+            if (_mind.TryGetMind(reg.Session.UserId, out _, out var mind)
+                && !string.IsNullOrWhiteSpace(mind.CharacterName)
+                && string.Equals(mind.CharacterName, args.Recipient, StringComparison.OrdinalIgnoreCase))
+            {
+                recipientSession = reg.Session;
+                break;
+            }
+        }
+
+        if (recipientSession == null)
+            return;
+
+        var recipientData = _playerRolesManager.GetPlayerData(recipientSession);
+        if (recipientData == null)
+            return;
+
+        sender.Balance -= args.Amount;
+        recipientData.Balance += args.Amount;
+
+        _uiSystem.SetUiState(uid, ATMUIKey.Key, new ATMBuiState() { Balance = sender.Balance });
     }
 
     private void OnBeforeActivatableUIOpen(Entity<ATMComponent> ent, ref BeforeActivatableUIOpenEvent args)

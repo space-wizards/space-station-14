@@ -34,3 +34,11 @@ public sealed class ATMWithdrawBuiMsg : BoundUserInterfaceMessage
 {
     public int Amount { get; init; }
 }
+
+[Serializable, NetSerializable]
+public sealed class ATMTransferBuiMsg : BoundUserInterfaceMessage
+{
+    public string Recipient { get; init; } = string.Empty;
+
+    public int Amount { get; init; }
+}
