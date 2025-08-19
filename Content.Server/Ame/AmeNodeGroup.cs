@@ -40,7 +40,7 @@ public sealed class AmeNodeGroup : BaseNodeGroup
 
     public int CoreCount => _cores.Count;
 
-    public int SafeFuelLimit => CoreCount * 2;
+    public int SafeFuelLimit => CoreCount * 2; // STARLIGHT
 
     public override void LoadNodes(List<Node> groupNodes)
     {
