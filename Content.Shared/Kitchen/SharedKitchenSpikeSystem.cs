@@ -46,11 +46,6 @@ public sealed class SharedKitchenSpikeSystem : EntitySystem
     [Dependency] private readonly IGameTiming _gameTiming = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
 
-    /// <summary>
-    /// List of the spikes that currently have a victim on them.
-    /// </summary>
-    private readonly HashSet<EntityUid> _activeSpikes = [];
-
     public override void Initialize()
     {
         base.Initialize();
@@ -101,7 +96,6 @@ public sealed class SharedKitchenSpikeSystem : EntitySystem
     {
         EnsureComp<KitchenSpikeHookedComponent>(args.Entity);
         _damageableSystem.TryChangeDamage(args.Entity, ent.Comp.SpikeDamage, true);
-        _activeSpikes.Add(ent);
 
         // TODO: Add sprites for different species.
         _appearanceSystem.SetData(ent.Owner, KitchenSpikeVisuals.Status, KitchenSpikeStatus.Bloody);
@@ -111,7 +105,6 @@ public sealed class SharedKitchenSpikeSystem : EntitySystem
     {
         RemComp<KitchenSpikeHookedComponent>(args.Entity);
         _damageableSystem.TryChangeDamage(args.Entity, ent.Comp.SpikeDamage, true);
-        _activeSpikes.Remove(ent);
 
         _appearanceSystem.SetData(ent.Owner, KitchenSpikeVisuals.Status, KitchenSpikeStatus.Empty);
     }
@@ -379,21 +372,17 @@ public sealed class SharedKitchenSpikeSystem : EntitySystem
     {
         base.Update(frameTime);
 
-        foreach (var uid in _activeSpikes)
+        var query = AllEntityQuery<KitchenSpikeComponent>();
+
+        while (query.MoveNext(out var uid, out var kitchenSpike))
         {
-            if (!TryComp<KitchenSpikeComponent>(uid, out var spike))
-            {
-                _activeSpikes.Remove(uid);
-                continue;
-            }
-
-            if (spike.NextDamage > _gameTiming.CurTime)
+            if (kitchenSpike.NextDamage > _gameTiming.CurTime)
                 continue;
 
-            spike.NextDamage += spike.DamageInterval;
-            Dirty(uid, spike);
+            kitchenSpike.NextDamage += kitchenSpike.DamageInterval;
+            Dirty(uid, kitchenSpike);
 
-            _damageableSystem.TryChangeDamage(spike.BodyContainer.ContainedEntity, spike.TimeDamage, true);
+            _damageableSystem.TryChangeDamage(kitchenSpike.BodyContainer.ContainedEntity, kitchenSpike.TimeDamage, true);
         }
     }
 
