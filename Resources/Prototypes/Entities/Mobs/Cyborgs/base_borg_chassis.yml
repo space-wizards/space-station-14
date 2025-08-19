@@ -35,7 +35,7 @@
     baseWalkSpeed : 2.5
     baseSprintSpeed : 4.5
   - type: Sprite
-    sprite: Mobs/Silicon/chassis.rsi
+    sprite: Mobs/Silicon/Chassis/generic.rsi
   - type: RotationVisuals
     horizontalRotation: 90
   - type: MobState
@@ -401,7 +401,7 @@
     nameSegments:
     - NamesXenoborg
   - type: Sprite
-    sprite: Mobs/Silicon/chassis.rsi
+    sprite: Mobs/Silicon/Chassis/generic.rsi
   - type: MobThresholds
     thresholds: # slightly tankier than a normal borg
       0: Alive
