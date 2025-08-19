@@ -94,32 +94,32 @@
   description: A lean, mean killing machine with access to a variety of deadly modules.
   components:
     - type: TextToSpeech
-  - type: Sprite
-    sprite: Mobs/Silicon/Chassis/synd_sec.rsi
-    layers:
-    - state: borg
-    - state: borg_e
-      map: [ "enum.BorgVisualLayers.Light" ]
-      shader: unshaded
-      visible: false
-    - state: borg_l
-      shader: unshaded
-      map: [ "light" ]
-      visible: false
-  - type: BorgChassis
-    maxModules: 4 # starlight
-    moduleWhitelist:
-      tags:
-      - BorgModuleGeneric
-      - BorgModuleSyndicate
-      - BorgModuleSyndicateAssault
-    hasMindState: borg_e
-    noMindState: borg
-  - type: InteractionPopup
-    interactSuccessString: petting-success-syndicate-cyborg
-    interactFailureString: petting-failure-syndicate-cyborg
-    interactSuccessSound:
-      path: /Audio/Ambience/Objects/periodic_beep.ogg
+    - type: Sprite
+      sprite: Mobs/Silicon/Chassis/synd_sec.rsi
+      layers:
+      - state: borg
+      - state: borg_e
+        map: [ "enum.BorgVisualLayers.Light" ]
+        shader: unshaded
+        visible: false
+      - state: borg_l
+        shader: unshaded
+        map: [ "light" ]
+        visible: false
+    - type: BorgChassis
+      maxModules: 4 # starlight
+      moduleWhitelist:
+        tags:
+        - BorgModuleGeneric
+        - BorgModuleSyndicate
+        - BorgModuleSyndicateAssault
+      hasMindState: borg_e
+      noMindState: borg
+    - type: InteractionPopup
+      interactSuccessString: petting-success-syndicate-cyborg
+      interactFailureString: petting-failure-syndicate-cyborg
+      interactSuccessSound:
+        path: /Audio/Ambience/Objects/periodic_beep.ogg
 
 - type: entity
   id: BorgChassisSyndicateMedical
