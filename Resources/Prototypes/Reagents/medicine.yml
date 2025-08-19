@@ -142,10 +142,9 @@
   metabolisms:
     Medicine:
       effects:
-      - !type:HealthChange
+      - !type:EvenHealthChange
         damage:
-          groups:
-            Brute: -2
+          Brute: -2 #Starlight adv. chem nerf revert
       - !type:HealthChange
         conditions:
         - !type:ReagentThreshold
@@ -904,15 +903,15 @@
           max: 30
         damage:
           groups:
-            Toxin: -3
-            Brute: 0.5
+            Toxin: -3 #Starlight adv. chem nerf revert
+            Brute: 0.5 #Starlight adv. chem nerf revert
       - !type:HealthChange
         conditions:
         - !type:ReagentThreshold
           min: 30
         damage:
           groups:
-            Toxin: -1
+            Toxin: -1 #Starlight adv. chem nerf revert
             Brute: 3
       - !type:AdjustReagent
         conditions:
@@ -1026,14 +1025,14 @@
       - !type:HealthChange
         damage:
           types:
-            Caustic: -3
+            Caustic: -3 #Starlight adv. chem nerf revert
       - !type:HealthChange
         conditions:
         - !type:ReagentThreshold
-          min: 16
+          min: 16 #Starlight adv. chem nerf revert
         damage:
           types:
-            Heat: 2
+            Heat: 2 #Starlight adv. chem nerf revert
       - !type:Jitter
         conditions:
         - !type:ReagentThreshold
@@ -1081,14 +1080,14 @@
       - !type:HealthChange
         damage:
           types:
-            Slash: -3
+            Slash: -3 #Starlight adv. chem nerf revert
       - !type:HealthChange
         conditions:
         - !type:ReagentThreshold
-          min: 12
+          min: 12 #Starlight adv. chem nerf revert
         damage:
           types:
-            Cold: 3
+            Cold: 3 #Starlight adv. chem nerf revert
 
 - type: reagent
   id: Puncturase
@@ -1104,15 +1103,15 @@
       - !type:HealthChange
         damage:
           types:
-            Piercing: -4
-            Blunt: 0.1
+            Piercing: -4 #Starlight adv. chem nerf revert
+            Blunt: 0.1 #Starlight adv. chem nerf revert
       - !type:HealthChange
         conditions:
         - !type:ReagentThreshold
-          min: 11
+          min: 11 #Starlight adv. chem nerf revert
         damage:
           types:
-            Blunt: 5
+            Blunt: 5 #Starlight adv. chem nerf revert
 
 - type: reagent
   id: Bruizine
@@ -1128,14 +1127,14 @@
       - !type:HealthChange
         damage:
           types:
-            Blunt: -3.5
+            Blunt: -3.5 #Starlight adv. chem nerf revert
       - !type:HealthChange
         conditions:
         - !type:ReagentThreshold
-          min: 10.5
+          min: 10.5 #Starlight adv. chem nerf revert
         damage:
           types:
-            Poison: 4
+            Poison: 4 #Starlight adv. chem nerf revert
 
 - type: reagent
   id: Holywater
@@ -1264,7 +1263,7 @@
       - !type:HealthChange
         damage:
           types:
-            Shock: -4
+            Shock: -4 #Starlight adv. chem nerf revert
       - !type:AdjustReagent
         reagent: Licoxide
         amount: -4
@@ -1278,14 +1277,14 @@
       - !type:HealthChange
         conditions:
         - !type:ReagentThreshold
-          min: 12
+          min: 12 #Starlight adv. chem nerf revert
         damage:
           types:
-            Cold: 2
+            Cold: 2 #Starlight adv. chem nerf revert
       - !type:AdjustTemperature
         conditions:
         - !type:ReagentThreshold
-          min: 12
+          min: 12 #Starlight adv. chem nerf revert
         amount: -30000
       - !type:Jitter
         conditions:

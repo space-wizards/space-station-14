@@ -11932,5 +11932,91 @@ Entries:
   id: 108600
   time: '2025-08-16T08:59:45.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/1086
+- author: Rinary
+  changes:
+  - message: 'Added new reward type to railroading system: Delivery.'
+    type: Add
+  id: 127500
+  time: '2025-08-18T06:54:02.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1275
+- author: Rinary
+  changes:
+  - message: Now AI can lock/unlock lockers(not cabinets).
+    type: Tweak
+  id: 128900
+  time: '2025-08-18T06:57:17.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1289
+- author: Rinary
+  changes:
+  - message: Now all lockers have maintenance panel with access, AI, power and log
+      wires.
+    type: Tweak
+  id: 128901
+  time: '2025-08-18T06:57:17.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1289
+- author: Rinary
+  changes:
+  - message: Now locker destruction much harder.
+    type: Tweak
+  id: 128902
+  time: '2025-08-18T06:57:17.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1289
+- author: Rinary
+  changes:
+  - message: Fixed bug with double popup, when you trying to open locker without access.
+    type: Fix
+  id: 128903
+  time: '2025-08-18T06:57:17.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1289
+- author: STARLIGHT TEAM, walksanatora
+  changes:
+  - message: another upstream merge.
+    type: Tweak
+  id: 121300
+  time: '2025-08-19T03:57:11.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1213
+- author: STARLIGHT TEAM, walksanatora
+  changes:
+  - message: gave wizard their shuttle back
+    type: Tweak
+  id: 121301
+  time: '2025-08-19T03:57:11.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1213
+- author: STARLIGHT TEAM, walksanatora
+  changes:
+  - message: reverted chem nerf
+    type: Tweak
+  id: 121302
+  time: '2025-08-19T03:57:11.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1213
+- author: STARLIGHT TEAM, walksanatora
+  changes:
+  - message: made upstream's moff cake recipe result in our moff cake
+    type: Tweak
+  id: 121303
+  time: '2025-08-19T03:57:11.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1213
+- author: CringeCursed
+  changes:
+  - message: Pricing for items in vending machines
+    type: Add
+  id: 134300
+  time: '2025-08-19T05:12:44.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1343
+- author: CringeCursed
+  changes:
+  - message: end-round stats for Abductors
+    type: Add
+  id: 137900
+  time: '2025-08-19T06:29:58.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1379
+- author: Rinary
+  changes:
+  - message: Fixed issue, when you trying to set dominator mode and after that it
+      instantly changes back to default.
+    type: Fix
+  id: 137200
+  time: '2025-08-19T06:43:27.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1372
 Order: -1
 

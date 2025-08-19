@@ -6,6 +6,10 @@
   id: FoodSnackBase
   abstract: true
   components:
+  # Starlight-start: Vending Machines Prices
+  - type: ItemPrice
+    priceCategory: food_cheap
+  # Starlight-end
   - type: Food
   - type: Tag
     tags:
@@ -120,6 +124,10 @@
       - id: FoodSnackChocolateBar
     sound:
       path: /Audio/Effects/unwrap.ogg
+  # Starlight-start: Vending Machines Prices
+  - type: ItemPrice
+    priceCategory: food_medium
+  # Starlight-end
 
 - type: entity
   name: chocolate bar
@@ -298,6 +306,10 @@
   - type: Food
     trash:
     - FoodPacketSyndiTrash
+  # Starlight-start: Vending Machines Prices
+  - type: ItemPrice
+    priceCategory: food_medium
+  # Starlight-end
 
 - type: entity
   parent: FoodSnackBase
@@ -399,6 +411,10 @@
   - type: Food
     trash:
     - FoodPacketDanDanTrash
+  # Starlight-start: Vending Machines Prices
+  - type: ItemPrice
+    priceCategory: food_medium
+  # Starlight-end
 
 - type: entity
   name: fortune cookie
@@ -447,6 +463,10 @@
       - id: FoodSnackNutribrickOpen
     sound:
       path: /Audio/Effects/unwrap.ogg
+  # Starlight-start: Vending Machines Prices
+  - type: ItemPrice
+    priceCategory: food_medium
+  # Starlight-end
 
 - type: entity
   id: FoodSnackNutribrickOpen
@@ -474,6 +494,10 @@
         reagents:
         - ReagentId: Nutriment
           Quantity: 20
+  # Starlight-start: Vending Machines Prices
+  - type: ItemPrice
+    priceCategory: food_medium
+  # Starlight-end
 
 - type: entity
   id: FoodSnackMREBrownie
@@ -520,6 +544,10 @@
           Quantity: 10
         - ReagentId: Theobromine
           Quantity: 3
+  # Starlight-start: Vending Machines Prices
+  - type: ItemPrice
+    priceCategory: food_medium
+  # Starlight-end
 
 - type: entity
   name: swirl lollipop
@@ -741,6 +769,7 @@
       right:
       - state: trash-inhand-right
         color: "#FF0033"
+
 
 - type: entity
   categories: [ HideSpawnMenu ]

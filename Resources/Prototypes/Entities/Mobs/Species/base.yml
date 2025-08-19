@@ -121,10 +121,7 @@
       - !type:WashCreamPieReaction
   - type: StatusEffects
     allowed:
-    - Stun
     - Friction
-    - KnockedDown
-    - SlowedDown
     - Stutter
     - Electrocution
     - Drunk
@@ -261,9 +258,9 @@
         Heat: 1.5 #per second, scales with temperature & other constants
   - type: TemperatureSpeed
     thresholds:
-      293: 0.8
-      280: 0.6
-      260: 0.4
+      293: 0.9
+      280: 0.8
+      260: 0.7
   - type: ThermalRegulator
     metabolismHeat: 800
     radiatedHeat: 100
