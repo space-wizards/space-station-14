@@ -59,6 +59,7 @@ public sealed class JetpackSystem : SharedJetpackSystem
                 continue;
             }
 
+            // Only spawn particles if we're far-enough from the last place at which we spawned particles, and a long-enough timespan has passed since then.
             if (_transform.InRange(transform.Coordinates, comp.LastCoordinates.Value, comp.MaxDistance) && _timing.CurTime < comp.TargetTime)
                 continue;
 
