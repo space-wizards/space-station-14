@@ -38,7 +38,7 @@ public sealed class HolopadBoundUserInterface : BoundUserInterface
             uiKey = HolopadUiKey.InteractionWindowForAi;
 
         _window.SetState(Owner, uiKey);
-        _window.UpdateState([]);
+        _window.Refresh();
 
         // Set message actions
         _window.SendHolopadStartNewCallMessageAction += SendHolopadStartNewCallMessage;
@@ -57,14 +57,12 @@ public sealed class HolopadBoundUserInterface : BoundUserInterface
             _window.OpenCenteredAt(new Vector2(0.3333f, 0.50f));
     }
 
-    protected override void UpdateState(BoundUserInterfaceState state)
+    protected override void ReceiveMessage(BoundUserInterfaceMessage message)
     {
-        base.UpdateState(state);
+        base.ReceiveMessage(message);
 
-        var castState = (HolopadBoundInterfaceState)state;
-        EntMan.TryGetComponent<TransformComponent>(Owner, out var xform);
-
-        _window?.UpdateState(castState.Holopads);
+        if (message is HolopadsUpdateMessage)
+            _window?.Refresh();
     }
 
     public void SendHolopadStartNewCallMessage(NetEntity receiver)

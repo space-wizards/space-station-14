@@ -7,17 +7,16 @@ using Content.Shared.Audio;
 using Content.Shared.Chat.TypingIndicator;
 using Content.Shared.Holopad;
 using Content.Shared.IdentityManagement;
-using Content.Shared.Labels.Components;
 using Content.Shared.Power;
 using Content.Shared.Silicons.StationAi;
 using Content.Shared.Speech;
 using Content.Shared.Speech.Components;
 using Content.Shared.Telephone;
-using Content.Shared.UserInterface;
 using Content.Shared.Verbs;
 using Robust.Server.GameObjects;
 using Robust.Server.GameStates;
 using Robust.Shared.Containers;
+using Robust.Shared.Player;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 using System.Linq;
@@ -38,18 +37,16 @@ public sealed class HolopadSystem : SharedHolopadSystem
     [Dependency] private readonly PopupSystem _popupSystem = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly PvsOverrideSystem _pvs = default!;
+    [Dependency] private readonly ISharedPlayerManager _playerManager = default!;
 
     private float _updateTimer = 1.0f;
     private const float UpdateTime = 1.0f;
-
-    private readonly HashSet<EntityUid> _holopads = [];
 
     public override void Initialize()
     {
         base.Initialize();
 
         // Holopad UI and bound user interface messages
-        SubscribeLocalEvent<HolopadComponent, BeforeActivatableUIOpenEvent>(OnUIOpen);
         SubscribeLocalEvent<HolopadComponent, HolopadStartNewCallMessage>(OnHolopadStartNewCall);
         SubscribeLocalEvent<HolopadComponent, HolopadAnswerCallMessage>(OnHolopadAnswerCall);
         SubscribeLocalEvent<HolopadComponent, HolopadEndCallMessage>(OnHolopadEndCall);
@@ -82,12 +79,6 @@ public sealed class HolopadSystem : SharedHolopadSystem
     }
 
     #region: Holopad UI bound user interface messages
-
-    private void OnUIOpen(Entity<HolopadComponent> entity, ref BeforeActivatableUIOpenEvent args)
-    {
-        UpdateUIState(entity);
-    }
-
     private void OnHolopadStartNewCall(Entity<HolopadComponent> source, ref HolopadStartNewCallMessage args)
     {
         if (IsHolopadControlLocked(source, args.Actor))
@@ -325,7 +316,7 @@ public sealed class HolopadSystem : SharedHolopadSystem
         if (entity.Comp.User != null)
             LinkHolopadToUser(entity, entity.Comp.User.Value);
 
-        _holopads.Add(entity);
+        _pvs.AddGlobalOverride(entity);
     }
 
     private void OnHolopadUserInit(Entity<HolopadUserComponent> entity, ref ComponentInit args)
@@ -341,7 +332,6 @@ public sealed class HolopadSystem : SharedHolopadSystem
 
         ShutDownHolopad(entity);
         SetHolopadAmbientState(entity, false);
-        _holopads.Remove(entity);
     }
 
     private void OnHolopadUserShutdown(Entity<HolopadUserComponent> entity, ref ComponentShutdown args)
@@ -466,7 +456,7 @@ public sealed class HolopadSystem : SharedHolopadSystem
             var query = AllEntityQuery<HolopadComponent, TelephoneComponent, TransformComponent>();
             while (query.MoveNext(out var uid, out var holopad, out var telephone, out var xform))
             {
-                UpdateUIState((uid, holopad), telephone);
+                RefreshUI(uid);
 
                 if (holopad.User != null &&
                     !HasComp<IgnoreUIRangeComponent>(holopad.User) &&
@@ -478,39 +468,10 @@ public sealed class HolopadSystem : SharedHolopadSystem
         }
     }
 
-    public void UpdateUIState(Entity<HolopadComponent> entity, TelephoneComponent? telephone = null)
+    public void RefreshUI(EntityUid uid)
     {
-        if (!Resolve(entity.Owner, ref telephone, false))
-            return;
-
-        var holopadList = new List<(NetEntity, string Name)>();
-
-        foreach (var receiver in _holopads)
-        {
-            // Filter holopads
-            if (entity.Owner == receiver)
-                continue;
-
-            if (!TryComp<TelephoneComponent>(receiver, out var receiverTelephone) || receiverTelephone.UnlistedNumber)
-                continue;
-
-            if (!_telephoneSystem.IsSourceInRangeOfReceiver((entity, telephone), (receiver, receiverTelephone)))
-                continue;
-
-            // Get holopad name
-            var name = MetaData(receiver).EntityName;
-
-            if (TryComp<LabelComponent>(receiver, out var label) && !string.IsNullOrEmpty(label.CurrentLabel))
-                name = label.CurrentLabel;
-
-            holopadList.Add((GetNetEntity(receiver), name));
-        }
-
-        // Sort holopads alphabetically
-        holopadList.Sort((a, b) => string.Compare(a.Name, b.Name, StringComparison.Ordinal));
-
-        var uiKey = HasComp<StationAiCoreComponent>(entity) ? HolopadUiKey.AiActionWindow : HolopadUiKey.InteractionWindow;
-        _userInterfaceSystem.SetUiState(entity.Owner, uiKey, new HolopadBoundInterfaceState(holopadList));
+        var uiKey = HasComp<StationAiCoreComponent>(uid) ? HolopadUiKey.AiActionWindow : HolopadUiKey.InteractionWindow;
+        _userInterfaceSystem.ServerSendUiMessage(uid, uiKey, new HolopadsUpdateMessage());
     }
 
     private void GenerateHologram(Entity<HolopadComponent> entity)

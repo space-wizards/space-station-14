@@ -61,13 +61,10 @@ public sealed partial class HolopadComponent : Component
 #region: Event messages
 
 /// <summary>
-///     Data from by the server to the client for the holopad UI
+/// Tells clients to update holopads UI.
 /// </summary>
 [Serializable, NetSerializable]
-public sealed class HolopadBoundInterfaceState(List<(NetEntity, string)> holopads) : BoundUserInterfaceState
-{
-    public readonly List<(NetEntity, string)> Holopads = holopads;
-}
+public sealed class HolopadsUpdateMessage : BoundUserInterfaceMessage;
 
 /// <summary>
 ///     Triggers the server to send updated power monitoring console data to the client for the single player session
