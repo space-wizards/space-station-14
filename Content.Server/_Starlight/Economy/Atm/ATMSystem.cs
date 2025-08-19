@@ -12,10 +12,8 @@ using Content.Server.Mind;
 using Content.Shared.Administration.Logs;
 using Content.Shared.Database;
 using Content.Server.Administration.Managers;
-using Content.Shared.Starlight.Economy.Atm;
-using Content.Shared.Starlight;
 
-namespace Content.Server.Starlight.Economy.Atm;
+namespace Content.Shared.Starlight.Economy.Atm;
 public sealed partial class ATMSystem : SharedATMSystem
 {
     [Dependency] private readonly IPlayerRolesManager _playerRolesManager = default!;
