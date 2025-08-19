@@ -538,4 +538,17 @@
   id: 66
   time: '2025-08-18T04:33:37.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/39090
+- author: beck-thompson
+  changes:
+  - message: Replaced the guaranteed explosives on the infiltrator with a random grenade
+      spawner and ammo bundle.
+    type: Tweak
+  - message: Replaced the guaranteed med spawns on the infiltrator with random med
+      kit spawners.
+    type: Tweak
+  - message: Added a random loot spawner to the infiltrator.
+    type: Add
+  id: 67
+  time: '2025-08-18T18:22:15.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/39091
 Order: 1
