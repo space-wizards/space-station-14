@@ -22,6 +22,13 @@ using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
+// 🌟Starlight🌟 
+using Content.Server.Economy;
+using Content.Shared.Economy;
+using Content.Shared.Emag.Components;
+using Content.Shared.Tag; 
+using Content.Shared.Cargo.Components; 
+using Content.Server.Administration.Managers; 
 
 namespace Content.Server.VendingMachines
 {
@@ -31,6 +38,14 @@ namespace Content.Server.VendingMachines
         [Dependency] private readonly PricingSystem _pricing = default!;
         [Dependency] private readonly ThrowingSystem _throwingSystem = default!;
         [Dependency] private readonly IGameTiming _timing = default!;
+        // 🌟Starlight🌟 start 
+        [Dependency] private readonly ItemPriceManager _itemPriceManager = default!; 
+        [Dependency] private readonly IComponentFactory _componentFactory = default!; 
+        [Dependency] private readonly IPlayerRolesManager _playerRolesManager = default!; 
+        [Dependency] private readonly TagSystem _tag = default!; 
+        [Dependency] private readonly CargoSystem _cargoSystem = default!;
+        [Dependency] private readonly Content.Server.Station.Systems.StationSystem _stationSystem = default!;
+        // 🌟Starlight🌟 end 
 
         private const float WallVendEjectDistanceFromWall = 1f;
 
@@ -52,8 +67,11 @@ namespace Content.Server.VendingMachines
             SubscribeLocalEvent<VendingMachineComponent, RestockDoAfterEvent>(OnDoAfter);
 
             SubscribeLocalEvent<VendingMachineRestockComponent, PriceCalculationEvent>(OnPriceCalculation);
-        }
 
+            // 🌟Starlight🌟 Push balance immediately when the UI opens so the client doesn't have to wait for a request/refresh
+            // Because im gonna loose this shit with calling from client
+            SubscribeLocalEvent<VendingMachineComponent, BoundUIOpenedEvent>(OnUiOpened);
+        }
         private void OnVendingPrice(EntityUid uid, VendingMachineComponent component, ref PriceCalculationEvent args)
         {
             var price = 0.0;
@@ -80,6 +98,9 @@ namespace Content.Server.VendingMachines
             {
                 TryUpdateVisualState((uid, component));
             }
+
+            //🌟Starlight🌟 Persist prices so UI shows them on first open
+            PersistInventoryPrices(uid, component);
         }
 
         private void OnActivatableUIOpenAttempt(EntityUid uid, VendingMachineComponent component, ActivatableUIOpenAttemptEvent args)
@@ -302,6 +323,23 @@ namespace Content.Server.VendingMachines
             args.Price += priceSets.Max();
         }
 
+        // 🌟Starlight🌟 Send balance to the opening player right away so it shows before any purchase
+        private void OnUiOpened(EntityUid uid, VendingMachineComponent component, BoundUIOpenedEvent args)
+        {
+            if (!Equals(args.UiKey, VendingMachineUiKey.Key))
+                return;
+
+            if (!component.ShowPrices)
+                return;
+
+            var actor = args.Actor;
+            var playerData = _playerRolesManager.GetPlayerData(actor);
+            if (playerData != null)
+            {
+                SendBalanceUpdate(uid, actor, playerData.Balance);
+            }
+        }
+
         private void OnEmpPulse(EntityUid uid, VendingMachineComponent component, ref EmpPulseEvent args)
         {
             if (!component.Broken && this.IsPowered(uid, EntityManager))
@@ -316,5 +354,282 @@ namespace Content.Server.VendingMachines
         {
             args.Cancelled |= ent.Comp.Broken;
         }
+
+        #region 🌟Starlight🌟 
+        /// <summary>
+        /// Persist prices into the live component so clients have prices on first open
+        /// </summary>
+        private void PersistInventoryPrices(EntityUid uid, VendingMachineComponent component)
+        {
+        var isEmagged = HasComp<EmaggedComponent>(uid);
+            void PriceDict(Dictionary<string, VendingMachineInventoryEntry> dict)
+            {
+                foreach (var entry in dict.Values)
+                {
+            if (!component.ShowPrices || isEmagged)
+                    {
+                        entry.Price = 0;
+                        continue;
+                    }
+
+                    if (PrototypeManager.TryIndex<EntityPrototype>(entry.ID, out var proto) &&
+                        proto.TryGetComponent<ItemPriceComponent>(out var priceComponent, _componentFactory))
+                    {
+                        var categoryPrice = _itemPriceManager.GetPriceForPrototype(entry.ID, priceComponent.PriceCategory);
+                        entry.Price = categoryPrice ?? priceComponent.FallbackPrice;
+                    }
+                    else
+                    {
+                        if (PrototypeManager.TryIndex<EntityPrototype>(entry.ID, out var p2))
+                        {
+                            var guessed = GuessCategory(p2);
+                            if (guessed != null)
+                            {
+                                var catPrice = _itemPriceManager.GetPriceForPrototype(entry.ID, guessed);
+                                if (catPrice.HasValue)
+                                {
+                                    entry.Price = catPrice.Value;
+                                    continue;
+                                }
+                            }
+
+                            var est = _pricing.GetEstimatedPrice(p2);
+                            entry.Price = Math.Max(1, (int) Math.Round(est));
+                        }
+                        else
+                        {
+                            entry.Price = 1;
+                        }
+                    }
+                }
+            }
+
+            PriceDict(component.Inventory);
+            PriceDict(component.EmaggedInventory);
+            PriceDict(component.ContrabandInventory);
+
+            Dirty(uid, component);
+        }
+
+        /// <summary>
+        /// Override to calculate prices for vending machine inventory entries using ItemPriceManager
+        /// </summary>
+        protected override void CalculateInventoryPrices(Dictionary<string, VendingMachineInventoryEntry> inventory, bool showPrices)
+        {
+            foreach (var entry in inventory.Values)
+            {
+                if (!showPrices)
+                {
+                    entry.Price = 0; // Free items for machines
+                    continue;
+                }
+
+                if (!PrototypeManager.TryIndex<EntityPrototype>(entry.ID, out var proto))
+                {
+                    entry.Price = 1;
+                    continue;
+                }
+
+                // Try to get price from ItemPriceManager using prototype
+                if (proto.Components.TryGetComponent("ItemPrice", out var comp) && comp is ItemPriceComponent priceComponent)
+                {
+                    // Use the new GetPriceForPrototype method to ensure consistent pricing
+                    var categoryPrice = _itemPriceManager.GetPriceForPrototype(entry.ID, priceComponent.PriceCategory);
+                    entry.Price = categoryPrice ?? priceComponent.FallbackPrice;
+                }
+                else
+                {
+                    // Ensure a sensible fallback even if no ItemPriceComponent is present
+                    var guessed = GuessCategory(proto);
+                    if (guessed != null)
+                    {
+                        var catPrice = _itemPriceManager.GetPriceForPrototype(entry.ID, guessed);
+                        if (catPrice.HasValue)
+                        {
+                            entry.Price = catPrice.Value;
+                            continue;
+                        }
+                    }
+
+                    var est = _pricing.GetEstimatedPrice(proto);
+                    entry.Price = Math.Max(1, (int) Math.Round(est));
+                }
+            }
+        }
+
+        /// <summary>
+        /// Override to handle balance requests from client
+        /// </summary>
+        protected override void OnRequestBalanceMessage(Entity<VendingMachineComponent> entity, ref VendingMachineRequestBalanceMessage args)
+        {
+            if (args.Actor is not { Valid: true } actor)
+            {
+                return;
+            }
+
+            var playerData = _playerRolesManager.GetPlayerData(actor);
+            if (playerData != null)
+            {
+                SendBalanceUpdate(entity.Owner, actor, playerData.Balance);
+            }
+        }
+
+        /// <summary>
+        /// Sends balance update to client
+        /// </summary>
+        private void SendBalanceUpdate(EntityUid uid, EntityUid player, int balance)
+        {
+            if (TryComp<VendingMachineComponent>(uid, out var component))
+            {
+                UISystem.ServerSendUiMessage(uid, VendingMachineUiKey.Key,
+                    new VendingMachineBalanceUpdateMessage(balance), player);
+            }
+        }
+
+        public override void AuthorizedVend(EntityUid uid, EntityUid sender, InventoryType type, string itemId, VendingMachineComponent component)
+        {
+            // Guard rails before any payment to avoid overcharging on spaming
+            if (!this.IsPowered(uid, EntityManager))
+                return;
+
+            if (!IsAuthorized(uid, sender, component))
+                return;
+
+            // If an ejection is already in progress or machine is broken, ignore
+            if (component.Ejecting || component.Broken)
+                return;
+
+            if (!TryComp<ActorComponent>(sender, out var actor))
+                return;
+
+            // Get player data for payment
+            var playerData = _playerRolesManager.GetPlayerData(sender);
+            if (playerData == null)
+            {
+                return;
+            }
+
+            // Get inventory entry for the correct inventory bucket
+            var entry = GetEntry(uid, itemId, type, component);
+            if (entry == null)
+                return;
+
+            if (entry.Amount <= 0)
+                return;
+
+            var isEmagged = HasComp<EmaggedComponent>(uid);
+
+            // If prices should be shown but this entry still has a 0 price, (likely because UI pricing
+            // operated on a copied dictionary and did not persist back to the component inventory)
+            // compute and persist the price now so payment logic can run
+            if (!isEmagged && component.ShowPrices && entry.Price <= 0)
+            {
+                if (PrototypeManager.TryIndex<EntityPrototype>(itemId, out var proto) &&
+                    proto.TryGetComponent<ItemPriceComponent>(out var priceComponent, _componentFactory))
+                {
+                    var categoryPrice = _itemPriceManager.GetPriceForPrototype(itemId, priceComponent.PriceCategory);
+                    entry.Price = categoryPrice ?? priceComponent.FallbackPrice;
+                }
+                else
+                {
+                    if (PrototypeManager.TryIndex<EntityPrototype>(itemId, out var p2))
+                    {
+                        var guessed = GuessCategory(p2);
+                        if (guessed != null)
+                        {
+                            var catPrice = _itemPriceManager.GetPriceForPrototype(itemId, guessed);
+                            if (catPrice.HasValue)
+                            {
+                                entry.Price = catPrice.Value;
+                            }
+                            else
+                            {
+                                var est = _pricing.GetEstimatedPrice(p2);
+                                entry.Price = Math.Max(1, (int) Math.Round(est));
+                            }
+                        }
+                        else
+                        {
+                            var est = _pricing.GetEstimatedPrice(p2);
+                            entry.Price = Math.Max(1, (int) Math.Round(est));
+                        }
+                    }
+                    else
+                    {
+                        entry.Price = 1;
+                    }
+                }
+            }
+
+            // If payment is required, pre-check funds but DO NOT! deduct yet
+            if (!isEmagged && component.ShowPrices && entry.Price > 0)
+            {
+                if (playerData.Balance < entry.Price)
+                {
+                    Popup.PopupEntity($"Insufficient funds. Required: {entry.Price}\u20a1", uid, sender);
+                    return;
+                }
+            }
+
+            // Try to start ejection, only one call will succeed while others will early-out due to Ejecting flag
+            var wasEjecting = component.Ejecting;
+            TryEjectVendorItem(uid, type, itemId, component.CanShoot, sender, component);
+            var started = !wasEjecting && component.Ejecting && component.NextItemToEject == itemId;
+
+            // If our call didnt actually start the ejection, exit without charging
+            if (!started)
+                return;
+
+            // Proceed with payment now that we are the one vend starting
+            if (!isEmagged && component.ShowPrices && entry.Price > 0)
+            {
+                playerData.Balance -= entry.Price;
+                Popup.PopupEntity($"Debited {entry.Price}\u20a1. Balance: {playerData.Balance}\u20a1", uid, sender);
+                SendBalanceUpdate(uid, sender, playerData.Balance);
+
+                var stationUid = _stationSystem.GetOwningStation(uid);
+                if (stationUid != null && TryComp<StationBankAccountComponent>(stationUid, out var bank))
+                {
+                    var creditLong = (long) entry.Price * 10L; // idk really, it just works
+                    var toCredit = creditLong > int.MaxValue ? int.MaxValue: creditLong < int.MinValue ? int.MinValue : (int) creditLong;
+
+                    if (toCredit > 0)
+                        _cargoSystem.UpdateBankAccount((stationUid.Value, bank), toCredit, bank.PrimaryAccount);
+                }
+            }
+        }
+
+    private static readonly ProtoId<TagPrototype> _foodSnackTag = "FoodSnack";
+    private static readonly ProtoId<TagPrototype> _cigaretteTag = "Cigarette";
+    private static readonly ProtoId<TagPrototype> _cigarTag = "Cigar";
+
+        private string? GuessCategory(EntityPrototype proto)
+        {
+            // Prefer tags if present on the prototype
+            if (proto.TryGetComponent<TagComponent>(out var tagComp, _componentFactory))
+            {
+                if (_tag.HasTag(tagComp, _foodSnackTag))
+                    return "food_cheap";
+                if (_tag.HasTag(tagComp, _cigaretteTag) || _tag.HasTag(tagComp, _cigarTag))
+                    return "cigaretes";
+            }
+
+            // Heuristic on prototype ID
+            var id = proto.ID.ToLowerInvariant();
+            if (id.Contains("cig"))
+                return "cigaretes";
+            if (id.Contains("cola") || id.Contains("drink") || id.Contains("soda") || id.Contains("beer") || id.Contains("juice"))
+                return "drink";
+            if (id.Contains("snack") || id.Contains("chips") || id.Contains("donk") || id.Contains("candy") || id.Contains("bar"))
+                return "food_cheap";
+
+            if (proto.TryGetComponent<Content.Shared.Clothing.Components.ClothingComponent>(out _, _componentFactory))
+                return "clothing";
+            if (id.StartsWith("clothing") || id.Contains("uniform") || id.Contains("shoes") || id.Contains("gloves") || id.Contains("belt") || id.Contains("backpack") || id.Contains("hat") || id.Contains("mask") || id.Contains("coat") || id.Contains("jacket"))
+                return "clothing";
+
+            return null;
+        }
+    #endregion
     }
 }
