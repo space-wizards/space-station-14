@@ -113,7 +113,7 @@ public sealed class DeltaPressureTest
         var deserializationOptions = DeserializationOptions.Default with { InitializeMaps = true };
 
         Entity<MapGridComponent> grid = default;
-        Entity<DeltaPressureComponent> dpEnt = default;
+        Entity<DeltaPressureComponent> dpEnt;
 
         // Load our test map in and assert that it exists.
         await server.WaitPost(() =>
@@ -148,12 +148,11 @@ public sealed class DeltaPressureTest
 
         var entMan = server.EntMan;
         var mapLoader = entMan.System<MapLoaderSystem>();
-        var mapSys = entMan.System<SharedMapSystem>();
         var atmosphereSystem = entMan.System<AtmosphereSystem>();
         var deserializationOptions = DeserializationOptions.Default with { InitializeMaps = true };
 
         Entity<MapGridComponent> grid = default;
-        Entity<DeltaPressureComponent> dpEnt = default;
+        Entity<DeltaPressureComponent> dpEnt;
 
         // Load our test map in and assert that it exists.
         await server.WaitPost(() =>
@@ -201,7 +200,7 @@ public sealed class DeltaPressureTest
 
         Entity<MapGridComponent> grid = default;
         Entity<DeltaPressureComponent> dpEnt = default;
-        TileAtmosphere tile = default!;
+        TileAtmosphere tile = null!;
         AtmosDirection direction = default;
 
         // Load our test map in and assert that it exists.
@@ -271,7 +270,7 @@ public sealed class DeltaPressureTest
 
         Entity<MapGridComponent> grid = default;
         Entity<DeltaPressureComponent> dpEnt = default;
-        TileAtmosphere tile = default!;
+        TileAtmosphere tile = null!;
         AtmosDirection direction = default;
 
         // Load our test map in and assert that it exists.
@@ -343,7 +342,7 @@ public sealed class DeltaPressureTest
 
         Entity<MapGridComponent> grid = default;
         Entity<DeltaPressureComponent> dpEnt = default;
-        TileAtmosphere tile = default!;
+        TileAtmosphere tile = null!;
         AtmosDirection direction = default;
 
         await server.WaitPost(() =>
@@ -408,7 +407,7 @@ public sealed class DeltaPressureTest
 
         Entity<MapGridComponent> grid = default;
         Entity<DeltaPressureComponent> dpEnt = default;
-        TileAtmosphere tile = default!;
+        TileAtmosphere tile = null!;
         AtmosDirection direction = default;
 
         await server.WaitPost(() =>
