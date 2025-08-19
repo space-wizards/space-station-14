@@ -86,16 +86,24 @@
     price: 40
   - type: DeviceLinkSource
     ports:
-      - Pressed
+      - Trigger
   - type: Tag
     tags:
     - VoiceTrigger
   - type: SignalOnTrigger
-    port: Pressed
+    port: Trigger
   - type: TriggerOnVoice
+  - type: UseDelayOnTrigger
+  - type: UseDelayTriggerCondition
+  - type: UseDelay
   - type: EmitSoundOnTrigger
     sound:
-      collection: WelderOn
+      collection: TriggerActivate
   - type: PayloadTrigger
     components:
     - type: TriggerOnVoice
+  - type: DeviceNetwork
+    deviceNetId: Wireless
+    receiveFrequencyId: BasicDevice
+  - type: WirelessNetworkConnection
+    range: 15
