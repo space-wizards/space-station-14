@@ -8,7 +8,6 @@ using Content.Shared.Interaction;
 using Content.Shared.Item;
 using Content.Shared.Materials;
 using Content.Shared.Nutrition;
-using Content.Shared.Nutrition.EntitySystems;
 using Content.Shared.Popups;
 using Content.Shared.Storage.Components;
 using Content.Shared.Tools.EntitySystems;
@@ -26,7 +25,6 @@ namespace Content.Shared.Storage.EntitySystems;
 /// </summary>
 public sealed class SecretStashSystem : EntitySystem
 {
-    [Dependency] private readonly IngestionSystem _ingestion = default!;
     [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
     [Dependency] private readonly SharedHandsSystem _handsSystem = default!;
     [Dependency] private readonly SharedContainerSystem _containerSystem = default!;
