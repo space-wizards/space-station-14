@@ -128,39 +128,39 @@
   description: A combat medical cyborg. Has limited offensive potential, but makes more than up for it with its support capabilities.
   components:
     - type: TextToSpeech
-  - type: Sprite
-    sprite: Mobs/Silicon/Chassis/synd_medical.rsi
-    layers:
-    - state: borg
-    - state: borg_e
-      map: [ "enum.BorgVisualLayers.Light" ]
-      shader: unshaded
-      visible: false
-    - state: borg_l
-      shader: unshaded
-      map: [ "light" ]
-      visible: false
-  - type: BorgChassis
-    maxModules: 4 # starlight
-    moduleWhitelist:
-      tags:
-      - BorgModuleGeneric
-      - BorgModuleMedical
-      - BorgModuleSyndicate
-    hasMindState: borg_e
-    noMindState: borg
-  - type: ShowHealthBars
-  - type: InteractionPopup
-    interactSuccessString: petting-success-syndicate-cyborg
-    interactFailureString: petting-failure-syndicate-cyborg
-    interactSuccessSound:
-      path: /Audio/Ambience/Objects/periodic_beep.ogg
-  - type: SolutionScanner
-  - type: FootstepModifier
-    footstepSoundCollection:
-      collection: FootstepHoverBorg
-      params:
-        volume: -6
+    - type: Sprite
+      sprite: Mobs/Silicon/Chassis/synd_medical.rsi
+      layers:
+      - state: borg
+      - state: borg_e
+        map: [ "enum.BorgVisualLayers.Light" ]
+        shader: unshaded
+        visible: false
+      - state: borg_l
+        shader: unshaded
+        map: [ "light" ]
+        visible: false
+    - type: BorgChassis
+      maxModules: 4 # starlight
+      moduleWhitelist:
+        tags:
+        - BorgModuleGeneric
+        - BorgModuleMedical
+        - BorgModuleSyndicate
+      hasMindState: borg_e
+      noMindState: borg
+    - type: ShowHealthBars
+    - type: InteractionPopup
+      interactSuccessString: petting-success-syndicate-cyborg
+      interactFailureString: petting-failure-syndicate-cyborg
+      interactSuccessSound:
+        path: /Audio/Ambience/Objects/periodic_beep.ogg
+    - type: SolutionScanner
+    - type: FootstepModifier
+      footstepSoundCollection:
+        collection: FootstepHoverBorg
+        params:
+          volume: -6
 
 - type: entity
   id: BorgChassisSyndicateSaboteur
