@@ -2,4 +2,4 @@
   id: ExceptionSpeechDataset
   values:
     prefix: exception-censored-
-    count: 8
+    count: 11
