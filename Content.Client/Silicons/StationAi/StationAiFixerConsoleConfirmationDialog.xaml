@@ -1,0 +1,15 @@
+<controls:FancyWindow xmlns="https://spacestation14.io"
+		 xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+		 xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
+		 xmlns:graphics="clr-namespace:Robust.Client.Graphics;assembly=Robust.Client"
+		 xmlns:gfx="clr-namespace:Robust.Client.Graphics;assembly=Robust.Client"
+		 Title="{Loc 'station-ai-fixer-console-window-purge-warning-title'}">
+	<BoxContainer Orientation="Vertical" VerticalExpand="True">
+		<RichTextLabel Name="PurgeWarningLabel" SetWidth="400"/>
+		<BoxContainer HorizontalExpand="True">
+			<Button Name="CancelPurge" Text="{Loc 'station-ai-fixer-console-window-cancel-action'}"/>
+			<Control HorizontalExpand="True"/>
+			<Button Name="ContinuePurge" Text="{Loc 'station-ai-fixer-console-window-continue-action'}"/>
+		</BoxContainer>
+	</BoxContainer>
+</controls:FancyWindow>

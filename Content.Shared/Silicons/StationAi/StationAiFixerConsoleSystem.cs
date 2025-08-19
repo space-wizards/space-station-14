@@ -1,7 +1,9 @@
+using Content.Shared.Administration.Logs;
 using Content.Shared.Chat;
 using Content.Shared.Containers.ItemSlots;
 using Content.Shared.Damage;
 using Content.Shared.Damage.Systems;
+using Content.Shared.Database;
 using Content.Shared.Examine;
 using Content.Shared.Lock;
 using Content.Shared.Mobs;
@@ -30,6 +32,7 @@ public sealed partial class StationAiFixerConsoleSystem : EntitySystem
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
     [Dependency] private readonly SharedSuicideSystem _suicide = default!;
+    [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
 
     private readonly string _intellicardHolder = "intellicard_holder";
     private readonly string _stationAiMindSlot = "station_ai_mind_slot";
@@ -48,37 +51,28 @@ public sealed partial class StationAiFixerConsoleSystem : EntitySystem
 
     private void OnInserted(Entity<StationAiFixerConsoleComponent> ent, ref EntInsertedIntoContainerMessage args)
     {
-        /*
         // DEBUGGING
-        if (TryGetRestorationTarget(ent, out var target))
+        if (TryGetTarget(ent, out var target))
         {
             if (TryComp<DamageableComponent>(target, out var targetDamageable))
-                _damageable.SetAllDamage(target.Value, targetDamageable, 25);
+                _damageable.SetAllDamage(target.Value, targetDamageable, 10);
 
             if (TryComp<MobStateComponent>(target, out var targetMobState))
                 _mobState.ChangeMobState(target.Value, MobState.Dead);
         }
         // DEBUGGING
-        */
-
-        if (_userInterface.TryGetOpenUi(ent.Owner, StationAiFixerConsoleUiKey.Key, out var bui))
-            bui.Update<StationAiFixerConsoleBoundUserInterfaceState>();
 
         UpdateAppearance(ent);
     }
 
     private void OnRemoved(Entity<StationAiFixerConsoleComponent> ent, ref EntRemovedFromContainerMessage args)
     {
-        if (_userInterface.TryGetOpenUi(ent.Owner, StationAiFixerConsoleUiKey.Key, out var bui))
-            bui.Update<StationAiFixerConsoleBoundUserInterfaceState>();
-
         StopAction(ent);
     }
 
     private void OnLockToggle(Entity<StationAiFixerConsoleComponent> ent, ref LockToggledEvent args)
     {
-        if (_userInterface.TryGetOpenUi(ent.Owner, StationAiFixerConsoleUiKey.Key, out var bui))
-            bui.Update<StationAiFixerConsoleBoundUserInterfaceState>();
+        UpdateAppearance(ent);
     }
 
     private void OnMessage(Entity<StationAiFixerConsoleComponent> ent, ref StationAiFixerConsoleMessage args)
@@ -98,7 +92,7 @@ public sealed partial class StationAiFixerConsoleSystem : EntitySystem
                 PurgeStationAi(ent, args.Actor);
                 break;
             case StationAiFixerConsoleAction.Cancel:
-                CancelRestoration(ent, args.Actor);
+                CancelAction(ent, args.Actor);
                 break;
         }
     }
@@ -128,7 +122,8 @@ public sealed partial class StationAiFixerConsoleSystem : EntitySystem
         if (!_itemSlots.TryGetSlot(ent, _intellicardHolder, out var intellicardSlot, slots))
             return;
 
-        _itemSlots.TryEjectToHands(ent, intellicardSlot, user, true);
+        if (_itemSlots.TryEjectToHands(ent, intellicardSlot, user, true))
+            _adminLogger.Add(LogType.Action, LogImpact.Medium, $"{ToPrettyString(user):user} ejected an intellicard from AI restoration console ({ent.Owner})");
     }
 
     private void RepairStationAi(Entity<StationAiFixerConsoleComponent> ent, EntityUid user)
@@ -136,6 +131,7 @@ public sealed partial class StationAiFixerConsoleSystem : EntitySystem
         if (!TryGetTarget(ent, out var target))
             return;
 
+        _adminLogger.Add(LogType.Action, LogImpact.Medium, $"{ToPrettyString(user):user} started a repair of {ToPrettyString(target)} using an AI restoration console ({ent.Owner})");
         StartAction(ent, target.Value, StationAiFixerConsoleAction.Repair);
     }
 
@@ -144,11 +140,13 @@ public sealed partial class StationAiFixerConsoleSystem : EntitySystem
         if (!TryGetTarget(ent, out var target))
             return;
 
+        _adminLogger.Add(LogType.Action, LogImpact.High, $"{ToPrettyString(user):user} started a purge of {ToPrettyString(target)} using {ToPrettyString(ent.Owner)}");
         StartAction(ent, target.Value, StationAiFixerConsoleAction.Purge);
     }
 
-    private void CancelRestoration(Entity<StationAiFixerConsoleComponent> ent, EntityUid user)
+    private void CancelAction(Entity<StationAiFixerConsoleComponent> ent, EntityUid user)
     {
+        _adminLogger.Add(LogType.Action, LogImpact.Medium, $"{ToPrettyString(user):user} canceled operation involving {ToPrettyString(ent.Comp.ActionTarget)} and {ToPrettyString(ent.Owner)} ({ent.Comp.ActionType} action)");
         StopAction(ent);
     }
 
@@ -246,7 +244,7 @@ public sealed partial class StationAiFixerConsoleSystem : EntitySystem
             }
             else if (ent.Comp.ActionType == StationAiFixerConsoleAction.Purge)
             {
-                QueueDel(ent.Comp.ActionTarget);
+                Del(ent.Comp.ActionTarget);
             }
         }
 
@@ -259,19 +257,23 @@ public sealed partial class StationAiFixerConsoleSystem : EntitySystem
     /// <param name="ent">The console.</param>
     private void UpdateAppearance(Entity<StationAiFixerConsoleComponent> ent)
     {
-        if (!TryComp<AppearanceComponent>(ent, out var entAppearance))
+        if (!TryComp<AppearanceComponent>(ent, out var appearance))
             return;
+
+        _userInterface.TryGetOpenUi(ent.Owner, StationAiFixerConsoleUiKey.Key, out var bui);
 
         if (IsActionInProgress(ent))
         {
-            if (!_appearance.TryGetData(ent, StationAiFixerConsoleVisuals.ActionProgress, out int oldStage) ||
+            if (!_appearance.TryGetData(ent, StationAiFixerConsoleVisuals.ActionProgress, out int oldStage, appearance) ||
                 oldStage != ent.Comp.CurrentActionStage)
             {
-                _appearance.RemoveData(ent, StationAiFixerConsoleVisuals.MobState);
-                _appearance.SetData(ent, StationAiFixerConsoleVisuals.ActionProgress, ent.Comp.CurrentActionStage);
+                _appearance.RemoveData(ent, StationAiFixerConsoleVisuals.MobState, appearance);
+                _appearance.SetData(ent, StationAiFixerConsoleVisuals.ActionProgress, ent.Comp.CurrentActionStage, appearance);
 
-                return;
+                bui?.Update<StationAiFixerConsoleBoundUserInterfaceState>();
             }
+
+            return;
         }
 
         var target = ent.Comp.ActionTarget;
@@ -283,13 +285,15 @@ public sealed partial class StationAiFixerConsoleSystem : EntitySystem
 
         var currentMobState = MobState.Invalid;
 
-        if (TryComp<MobStateComponent>(target, out var mobState))
+        if (TryComp<MobStateComponent>(target, out var mobState) && !EntityManager.IsQueuedForDeletion(target.Value))
         {
             currentMobState = mobState.CurrentState;
         }
 
-        _appearance.RemoveData(ent, StationAiFixerConsoleVisuals.ActionProgress);
-        _appearance.SetData(ent, StationAiFixerConsoleVisuals.MobState, currentMobState);
+        _appearance.RemoveData(ent, StationAiFixerConsoleVisuals.ActionProgress, appearance);
+        _appearance.SetData(ent, StationAiFixerConsoleVisuals.MobState, currentMobState, appearance);
+
+        bui?.Update<StationAiFixerConsoleBoundUserInterfaceState>();
     }
 
     /// <summary>
@@ -412,7 +416,7 @@ public sealed partial class StationAiFixerConsoleSystem : EntitySystem
     /// </summary>
     /// <param name="ent">The console.</param>
     /// <returns>Ture, if an action is in progress.</returns>
-    private bool IsActionInProgress(Entity<StationAiFixerConsoleComponent> ent)
+    public bool IsActionInProgress(Entity<StationAiFixerConsoleComponent> ent)
     {
         return ent.Comp.ActionType != StationAiFixerConsoleAction.None;
     }

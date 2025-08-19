@@ -5,6 +5,7 @@ namespace Content.Client.Silicons.StationAi;
 public sealed class StationAiFixerConsoleBoundUserInterface : BoundUserInterface
 {
     private StationAiFixerConsoleWindow? _window;
+    private StationAiFixerConsoleConfirmationDialog? _confirmationDialog;
 
     public StationAiFixerConsoleBoundUserInterface(EntityUid owner, Enum uiKey) : base(owner, uiKey)
     {
@@ -26,11 +27,28 @@ public sealed class StationAiFixerConsoleBoundUserInterface : BoundUserInterface
         _window.OnClose += Close;
 
         _window.SendStationAiFixerConsoleMessageAction += SendStationAiFixerConsoleMessage;
+        _window.OpenConfirmationDialogAction += OpenConfirmationDialog;
     }
 
-    public void SendStationAiFixerConsoleMessage(StationAiFixerConsoleAction action)
+    protected override void ReceiveMessage(BoundUserInterfaceMessage message)
+    {
+        _window?.UpdateState();
+    }
+
+    private void SendStationAiFixerConsoleMessage(StationAiFixerConsoleAction action)
     {
         SendPredictedMessage(new StationAiFixerConsoleMessage(action));
+    }
+
+    private void OpenConfirmationDialog()
+    {
+        if (_confirmationDialog != null)
+            _confirmationDialog.Close();
+
+        _confirmationDialog = new StationAiFixerConsoleConfirmationDialog(Owner);
+        _confirmationDialog.OpenCentered();
+
+        _confirmationDialog.SendStationAiFixerConsoleMessageAction += SendStationAiFixerConsoleMessage;
     }
 
     protected override void Dispose(bool disposing)
@@ -41,5 +59,6 @@ public sealed class StationAiFixerConsoleBoundUserInterface : BoundUserInterface
             return;
 
         _window?.Dispose();
+        _confirmationDialog?.Dispose();
     }
 }
