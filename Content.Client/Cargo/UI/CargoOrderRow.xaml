@@ -22,7 +22,10 @@
             </BoxContainer>
         </Control>
 
-        <PanelContainer StyleClasses="LowDivider" Margin="-6 0"/>
+        <PanelContainer Name="Stride"
+                        Access="Public"
+                        StyleClasses="LowDivider"
+                        Margin="-6 0" />
 
         <!-- Info -->
         <BoxContainer>
