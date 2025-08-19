@@ -11968,5 +11968,33 @@ Entries:
   id: 128903
   time: '2025-08-18T06:57:17.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/1289
+- author: STARLIGHT TEAM, walksanatora
+  changes:
+  - message: another upstream merge.
+    type: Tweak
+  id: 121300
+  time: '2025-08-19T03:57:11.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1213
+- author: STARLIGHT TEAM, walksanatora
+  changes:
+  - message: gave wizard their shuttle back
+    type: Tweak
+  id: 121301
+  time: '2025-08-19T03:57:11.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1213
+- author: STARLIGHT TEAM, walksanatora
+  changes:
+  - message: reverted chem nerf
+    type: Tweak
+  id: 121302
+  time: '2025-08-19T03:57:11.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1213
+- author: STARLIGHT TEAM, walksanatora
+  changes:
+  - message: made upstream's moff cake recipe result in our moff cake
+    type: Tweak
+  id: 121303
+  time: '2025-08-19T03:57:11.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1213
 Order: -1
 
