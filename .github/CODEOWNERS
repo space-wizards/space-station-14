@@ -24,6 +24,8 @@
 
 /Content.*/Forensics/ @ficcialfaint
 
+/Content.*/Trigger/ @slarticodefast
+
 # SKREEEE
 /Content.*.Database/ @PJB3005 @DrSmugleaf
 /Content.Shared.Database/Log*.cs @PJB3005 @DrSmugleaf @crazybrain23
@@ -37,3 +39,5 @@
 /Content.*/NPC @metalgearsloth
 /Content.*/Shuttles @metalgearsloth
 /Content.*/Weapons @metalgearsloth
+
+/Content.Server/Discord/ @Simyon264
