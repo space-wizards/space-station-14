@@ -31,3 +31,6 @@
       whitelist:
         components:
           - Hands
+    - type: TriggerOnActivateImplant
+    - type: PolymorphOnTrigger
+      polymorph: RampagingGorilla
