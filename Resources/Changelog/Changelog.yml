@@ -1,14 +1,4 @@
 ﻿Entries:
-- author: ScarKy0
-  changes:
-  - message: Deliveries now have a random multiplier added to them, slightly modifying
-      their earnings.
-    type: Add
-  - message: Deliveries now show how many spesos they grant on examine.
-    type: Tweak
-  id: 8358
-  time: '2025-04-26T21:42:27.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/36918
 - author: sowelipililimute
   changes:
   - message: Medical and security techfab will no longer announce more than five recipes
@@ -3951,3 +3941,11 @@
   id: 8870
   time: '2025-08-19T19:18:06.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/39099
+- author: Nox38
+  changes:
+  - message: Buffed the Librarian cane sword's damage and price to be more competitive.
+      Damage 15 -> 17 slash, TC cost 5 -> 3
+    type: Tweak
+  id: 8871
+  time: '2025-08-19T20:31:02.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/39586
