@@ -5,6 +5,7 @@
   placement:
     mode: SnapgridCenter
   components:
+  - type: ApcPowerReceiver
   - type: InteractionOutline
   - type: Clickable
   - type: Anchorable
