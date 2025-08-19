@@ -73,11 +73,12 @@
                                     <Control HorizontalExpand="True"/>
                                     <OptionButton Name="SexButton" HorizontalAlignment="Right" />
                                 </BoxContainer>
-                                <!-- Pronouns -->
+                                <!-- Gender, Pronouns  -->
                                 <BoxContainer HorizontalExpand="True">
-                                    <Label Text="{Loc 'humanoid-profile-editor-pronouns-label'}" />
+                                    <Label Text="{Loc 'humanoid-profile-editor-gender-label'}" />
                                     <Control HorizontalExpand="True"/>
-                                    <OptionButton Name="PronounsButton" HorizontalAlignment="Right" />
+                                    <OptionButton Name="GenderButton" HorizontalAlignment="Right" />
+                                    <Button Name="PronounsButton" Text="{Loc 'humanoid-profile-editor-pronouns-button'}" HorizontalAlignment="Right" />
                                 </BoxContainer>
                                 <!-- Show clothing -->
                                 <BoxContainer HorizontalExpand="True">

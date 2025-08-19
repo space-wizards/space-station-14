@@ -405,6 +405,7 @@ namespace Content.Server.Database
         public int Age { get; set; }
         public string Sex { get; set; } = null!;
         public string Gender { get; set; } = null!;
+        public DbPronoun Pronouns { get; set; } = new();
         public string Species { get; set; } = null!;
         [Column(TypeName = "jsonb")] public JsonDocument? Markings { get; set; } = null!;
         public string HairName { get; set; } = null!;
@@ -424,6 +425,19 @@ namespace Content.Server.Database
 
         public int PreferenceId { get; set; }
         public Preference Preference { get; set; } = null!;
+    }
+
+    public class DbPronoun
+    {
+        public string Subject { get; set; } = null!;
+        public string Object { get; set; } = null!;
+        public string DatObj { get; set; } = null!;
+        public string Genitive { get; set; } = null!;
+        public string PossAdj { get; set; } = null!;
+        public string PossPronoun { get; set; } = null!;
+        public string Reflexive { get; set; } = null!;
+        public string Counter { get; set; } = null!;
+        public bool Plural { get; set; }
     }
 
     public class Job

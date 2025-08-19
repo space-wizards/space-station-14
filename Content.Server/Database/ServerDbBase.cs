@@ -19,6 +19,7 @@ using Content.Shared.Roles;
 using Content.Shared.Traits;
 using Microsoft.EntityFrameworkCore;
 using Robust.Shared.Enums;
+using Robust.Shared.GameObjects.Components.Localization;
 using Robust.Shared.Network;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
@@ -266,6 +267,17 @@ namespace Content.Server.Database
                 profile.Age,
                 sex,
                 gender,
+                new Pronoun(
+                   profile.Pronouns.Subject,
+                   profile.Pronouns.Object,
+                   profile.Pronouns.DatObj,
+                   profile.Pronouns.Genitive,
+                   profile.Pronouns.PossAdj,
+                   profile.Pronouns.PossPronoun,
+                   profile.Pronouns.Reflexive,
+                   profile.Pronouns.Counter,
+                   profile.Pronouns.Plural
+                ),
                 new HumanoidCharacterAppearance
                 (
                     profile.HairName,
@@ -312,6 +324,30 @@ namespace Content.Server.Database
             profile.Markings = markings;
             profile.Slot = slot;
             profile.PreferenceUnavailable = (DbPreferenceUnavailableMode) humanoid.PreferenceUnavailable;
+
+            if (humanoid.Pronoun != null)
+            {
+                var pronoun = humanoid.Pronoun;
+
+                if (pronoun.Subject != null)
+                    profile.Pronouns.Subject = pronoun.Subject;
+                if (pronoun.Object != null)
+                    profile.Pronouns.Object = pronoun.Object;
+                if (pronoun.DatObj != null)
+                    profile.Pronouns.DatObj = pronoun.DatObj;
+                if (pronoun.Genitive != null)
+                    profile.Pronouns.Genitive = pronoun.Genitive;
+                if (pronoun.PossAdj != null)
+                    profile.Pronouns.PossAdj = pronoun.PossAdj;
+                if (pronoun.PossPronoun != null)
+                    profile.Pronouns.PossPronoun = pronoun.PossPronoun;
+                if (pronoun.Reflexive != null)
+                    profile.Pronouns.Reflexive = pronoun.Reflexive;
+                if (pronoun.Counter != null)
+                    profile.Pronouns.Counter = pronoun.Counter;
+                if (pronoun.Plural != null)
+                    profile.Pronouns.Plural = pronoun.Plural.Value;
+            }
 
             profile.Jobs.Clear();
             profile.Jobs.AddRange(

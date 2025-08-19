@@ -10,6 +10,7 @@ using Content.Shared.Preferences;
 using Content.Shared.Roles;
 using Content.Shared.StationRecords;
 using Robust.Shared.Enums;
+using Robust.Shared.GameObjects.Components.Localization;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 
@@ -97,7 +98,7 @@ public sealed class StationRecordsSystem : SharedStationRecordsSystem
         TryComp<FingerprintComponent>(player, out var fingerprintComponent);
         TryComp<DnaComponent>(player, out var dnaComponent);
 
-        CreateGeneralRecord(station, idUid.Value, profile.Name, profile.Age, profile.Species, profile.Gender, jobId, fingerprintComponent?.Fingerprint, dnaComponent?.DNA, profile, records);
+        CreateGeneralRecord(station, idUid.Value, profile.Name, profile.Age, profile.Species, profile.Gender, profile.Pronoun, jobId, fingerprintComponent?.Fingerprint, dnaComponent?.DNA, profile, records);
     }
 
 
@@ -135,6 +136,7 @@ public sealed class StationRecordsSystem : SharedStationRecordsSystem
         int age,
         string species,
         Gender gender,
+        Pronoun? pronoun,
         string jobId,
         string? mobFingerprint,
         string? dna,
@@ -161,6 +163,7 @@ public sealed class StationRecordsSystem : SharedStationRecordsSystem
             JobPrototype = jobId,
             Species = species,
             Gender = gender,
+            Pronoun = pronoun,
             DisplayPriority = jobPrototype.RealDisplayWeight,
             Fingerprint = mobFingerprint,
             DNA = dna
