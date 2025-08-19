@@ -12010,5 +12010,13 @@ Entries:
   id: 137900
   time: '2025-08-19T06:29:58.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/1379
+- author: Rinary
+  changes:
+  - message: Fixed issue, when you trying to set dominator mode and after that it
+      instantly changes back to default.
+    type: Fix
+  id: 137200
+  time: '2025-08-19T06:43:27.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1372
 Order: -1
 
