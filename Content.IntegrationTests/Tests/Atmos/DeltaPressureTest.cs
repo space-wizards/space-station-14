@@ -75,6 +75,18 @@ public sealed class DeltaPressureTest
   components:
   - type: DeltaPressure
     autoJoinProcessingList: false
+
+- type: entity
+  parent: DeltaPressureSolidTest
+  id: DeltaPressureSolidTestAbsolute
+  components:
+  - type: DeltaPressure
+    minPressure: 10000
+    minPressureDelta: 15000
+    scalingType: Threshold
+    baseDamage:
+      types:
+        Structural: 1000
 ";
 
     #endregion
@@ -176,7 +188,7 @@ public sealed class DeltaPressureTest
     /// is not damaged by DeltaPressure.
     /// </summary>
     [Test]
-    public async Task ProcessingStandbyTest()
+    public async Task ProcessingDeltaStandbyTest()
     {
         await using var pair = await PoolManager.GetServerClient();
         var server = pair.Server;
@@ -312,5 +324,137 @@ public sealed class DeltaPressureTest
 
         await pair.CleanReturnAsync();
     }
-}
 
+    /// <summary>
+    /// Asserts that an entity that doesn't need to be damaged by DeltaPressure
+    /// is not damaged by DeltaPressure when using absolute pressure thresholds.
+    /// </summary>
+    [Test]
+    public async Task ProcessingAbsoluteStandbyTest()
+    {
+        await using var pair = await PoolManager.GetServerClient();
+        var server = pair.Server;
+
+        var entMan = server.EntMan;
+        var mapLoader = entMan.System<MapLoaderSystem>();
+        var atmosphereSystem = entMan.System<AtmosphereSystem>();
+        var transformSystem = entMan.System<SharedTransformSystem>();
+        var deserializationOptions = DeserializationOptions.Default with { InitializeMaps = true };
+
+        Entity<MapGridComponent> grid = default;
+        Entity<DeltaPressureComponent> dpEnt = default;
+        TileAtmosphere tile = default!;
+        AtmosDirection direction = default;
+
+        await server.WaitPost(() =>
+        {
+#pragma warning disable NUnit2045
+            Assert.That(mapLoader.TryLoadMap(_testMap, out _, out var gridSet, deserializationOptions),
+                $"Failed to load map {_testMap}.");
+            Assert.That(gridSet, Is.Not.Null, "There were no grids loaded from the map!");
+#pragma warning restore NUnit2045
+            grid = gridSet.First();
+            var uid = entMan.SpawnAtPosition("DeltaPressureSolidTestAbsolute", new EntityCoordinates(grid.Owner, Vector2.Zero));
+            dpEnt = new Entity<DeltaPressureComponent>(uid, entMan.GetComponent<DeltaPressureComponent>(uid));
+            Assert.That(atmosphereSystem.IsDeltaPressureEntityInList(grid.Owner, dpEnt), "Entity was not in processing list when it should have been added!");
+        });
+
+        for (var i = 0; i < Atmospherics.Directions; i++)
+        {
+            await server.WaitPost(() =>
+            {
+                var indices = transformSystem.GetGridOrMapTilePosition(dpEnt);
+                var gridAtmosComp = entMan.GetComponent<GridAtmosphereComponent>(grid);
+
+                direction = (AtmosDirection)(1 << i);
+                var offsetIndices = indices.Offset(direction);
+                tile = gridAtmosComp.Tiles[offsetIndices];
+                Assert.That(tile.Air, Is.Not.Null, $"Tile at {offsetIndices} should have air!");
+
+                var toPressurize = dpEnt.Comp!.MinPressure - 10; // just below absolute threshold
+                var moles = (toPressurize * tile.Air.Volume) / (Atmospherics.R * Atmospherics.T20C);
+                tile.Air!.AdjustMoles(Gas.Nitrogen, moles);
+            });
+
+            await server.WaitRunTicks(30);
+
+            await server.WaitAssertion(() =>
+            {
+                Assert.That(!entMan.Deleted(dpEnt), $"{dpEnt} should still exist after experiencing non-threshold absolute pressure from {direction} side!");
+                tile.Air!.Clear();
+            });
+
+            await server.WaitRunTicks(30);
+        }
+
+        await pair.CleanReturnAsync();
+    }
+
+    /// <summary>
+    /// Asserts that an entity that needs to be damaged by DeltaPressure
+    /// is damaged by DeltaPressure when the pressure is above the absolute threshold.
+    /// </summary>
+    [Test]
+    public async Task ProcessingAbsoluteDamageTest()
+    {
+        await using var pair = await PoolManager.GetServerClient();
+        var server = pair.Server;
+
+        var entMan = server.EntMan;
+        var mapLoader = entMan.System<MapLoaderSystem>();
+        var atmosphereSystem = entMan.System<AtmosphereSystem>();
+        var transformSystem = entMan.System<SharedTransformSystem>();
+        var deserializationOptions = DeserializationOptions.Default with { InitializeMaps = true };
+
+        Entity<MapGridComponent> grid = default;
+        Entity<DeltaPressureComponent> dpEnt = default;
+        TileAtmosphere tile = default!;
+        AtmosDirection direction = default;
+
+        await server.WaitPost(() =>
+        {
+#pragma warning disable NUnit2045
+            Assert.That(mapLoader.TryLoadMap(_testMap, out _, out var gridSet, deserializationOptions),
+                $"Failed to load map {_testMap}.");
+            Assert.That(gridSet, Is.Not.Null, "There were no grids loaded from the map!");
+#pragma warning restore NUnit2045
+            grid = gridSet.First();
+        });
+
+        for (var i = 0; i < Atmospherics.Directions; i++)
+        {
+            await server.WaitPost(() =>
+            {
+                // Spawn fresh entity each iteration to verify all directions work
+                var uid = entMan.SpawnAtPosition("DeltaPressureSolidTestAbsolute", new EntityCoordinates(grid.Owner, Vector2.Zero));
+                dpEnt = new Entity<DeltaPressureComponent>(uid, entMan.GetComponent<DeltaPressureComponent>(uid));
+                Assert.That(atmosphereSystem.IsDeltaPressureEntityInList(grid.Owner, dpEnt), "Entity was not in processing list when it should have been added!");
+
+                var indices = transformSystem.GetGridOrMapTilePosition(dpEnt);
+                var gridAtmosComp = entMan.GetComponent<GridAtmosphereComponent>(grid);
+
+                direction = (AtmosDirection)(1 << i);
+                var offsetIndices = indices.Offset(direction);
+                tile = gridAtmosComp.Tiles[offsetIndices];
+                Assert.That(tile.Air, Is.Not.Null, $"Tile at {offsetIndices} should have air!");
+
+                // Above absolute threshold but below delta threshold to ensure absolute alone causes damage
+                var toPressurize = dpEnt.Comp!.MinPressure + 10;
+                var moles = (toPressurize * tile.Air.Volume) / (Atmospherics.R * Atmospherics.T20C);
+                tile.Air!.AdjustMoles(Gas.Nitrogen, moles);
+            });
+
+            await server.WaitRunTicks(30);
+
+            await server.WaitAssertion(() =>
+            {
+                Assert.That(entMan.Deleted(dpEnt), $"{dpEnt} still exists after experiencing threshold absolute pressure from {direction} side!");
+                tile.Air!.Clear();
+            });
+
+            await server.WaitRunTicks(30);
+        }
+
+        await pair.CleanReturnAsync();
+    }
+}
