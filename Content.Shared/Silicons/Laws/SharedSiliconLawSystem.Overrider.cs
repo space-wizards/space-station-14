@@ -28,6 +28,8 @@ public abstract partial class SharedSiliconLawSystem
         if (args.Handled || !args.CanReach || args.Target == null)
             return;
 
+        EntityUid? Ai = null;
+
         if (!TryComp(args.Target, out SiliconLawProviderComponent? LawProviderTarget))
         {
             /* if the object doesn't have SiliconLawProviderComponent
@@ -37,7 +39,8 @@ public abstract partial class SharedSiliconLawSystem
             if (!TryComp(args.Target, out StationAiCoreComponent? aiCoreComp))
                 return;
 
-            _stationAi.TryGetHeld((args.Target.Value, aiCoreComp), out var Ai);
+            _stationAi.TryGetHeld((args.Target.Value, aiCoreComp), out var tempAi);
+            Ai = tempAi;
 
             if (Ai == null)
                 return;
@@ -58,18 +61,40 @@ public abstract partial class SharedSiliconLawSystem
         if (!TryComp(lawBoard, out SiliconLawProviderComponent? LawProviderBase))
             return;
 
-        var ev = new ChatNotificationEvent(_overrideLawsChatNotificationPrototype, args.Used, args.User);
-        RaiseLocalEvent(args.Target.Value, ref ev);
+        if (Ai == null)
+        {
+            var ev = new ChatNotificationEvent(_overrideLawsChatNotificationPrototype, args.Used, args.User);
+            RaiseLocalEvent(args.Target.Value, ref ev);
+        }
+        else
+        {
+            var ev = new ChatNotificationEvent(_overrideLawsChatNotificationPrototype, args.Used, args.User);
+            RaiseLocalEvent(Ai.Value, ref ev);
+        }
 
         var doAfterTime = OverriderComp.OverrideTime;
+        DoAfterArgs? doAfterArgs = null;
 
-        var doAfterArgs = new DoAfterArgs(EntityManager, args.User, doAfterTime, new OverriderDoAfterEvent(), args.Target, ent.Owner, args.Used)
+        if (Ai == null)
         {
-            BreakOnDamage = true,
-            BreakOnMove = true,
-            NeedHand = true,
-            BreakOnDropItem = true
-        };
+            doAfterArgs = new DoAfterArgs(EntityManager, args.User, doAfterTime, new OverriderDoAfterEvent(), args.Target, ent.Owner, args.Used)
+            {
+                BreakOnDamage = true,
+                BreakOnMove = true,
+                NeedHand = true,
+                BreakOnDropItem = true
+            };
+        }
+        else
+        {
+            doAfterArgs = new DoAfterArgs(EntityManager, args.User, doAfterTime, new OverriderDoAfterEvent(), Ai.Value, ent.Owner, args.Used)
+            {
+                BreakOnDamage = true,
+                BreakOnMove = true,
+                NeedHand = true,
+                BreakOnDropItem = true
+            };
+        }
 
         _doAfter.TryStartDoAfter(doAfterArgs);
         args.Handled = true;
