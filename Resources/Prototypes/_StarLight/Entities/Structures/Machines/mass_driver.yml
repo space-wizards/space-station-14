@@ -1,0 +1,27 @@
+- type: entity
+  id: MassDriver
+  name: mass driver
+  description: It's.
+  placement:
+    mode: SnapgridCenter
+  components:
+  - type: InteractionOutline
+  - type: Clickable
+  - type: Anchorable
+  - type: Pullable
+  - type: Transform
+    anchored: true
+  - type: Appearance
+  - type: MassDriver
+  - type: ActiveMassDriver
+  - type: Physics
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.3,-0.16,0.3,0.16"
+  - type: Sprite
+    sprite: _Starlight/Structures/Machines/mass_driver.rsi
+    layers:
+      - state: base
