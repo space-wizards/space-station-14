@@ -247,7 +247,6 @@ public sealed partial class EmergencyShuttleSystem
         _logger.Add(LogType.EmergencyShuttle, LogImpact.High, $"Emergency shuttle early launch REPEAL ALL by {args.Actor:user}");
         _chatSystem.DispatchGlobalAnnouncement(Loc.GetString("emergency-shuttle-console-auth-revoked", ("remaining", component.AuthorizationsRequired)));
         component.AuthorizedEntities.Clear();
-        Dirty(uid, component);
         UpdateAllEmergencyConsoles();
     }
 
@@ -264,8 +263,6 @@ public sealed partial class EmergencyShuttleSystem
         // TODO: This is fucking bad
         if (!component.AuthorizedEntities.Remove(MetaData(idCard).EntityName))
             return;
-
-        Dirty(uid, component);
 
         _logger.Add(LogType.EmergencyShuttle, LogImpact.High, $"Emergency shuttle early launch REPEAL by {args.Actor:user}");
         var remaining = component.AuthorizationsRequired - component.AuthorizedEntities.Count;
@@ -287,8 +284,6 @@ public sealed partial class EmergencyShuttleSystem
         // TODO: This is fucking bad
         if (!component.AuthorizedEntities.Add(MetaData(idCard).EntityName))
             return;
-
-        Dirty(uid, component);
 
         _logger.Add(LogType.EmergencyShuttle, LogImpact.High, $"Emergency shuttle early launch AUTH by {args.Actor:user}");
         var remaining = component.AuthorizationsRequired - component.AuthorizedEntities.Count;
