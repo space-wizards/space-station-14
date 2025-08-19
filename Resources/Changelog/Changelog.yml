@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: RedBookcase
-  changes:
-  - message: Various changes to edged weapons, including new storage sprites and new
-      storage options.
-    type: Add
-  id: 8356
-  time: '2025-04-26T20:45:08.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/36564
 - author: archee1, Beck
   changes:
   - message: Inflatable walls no longer instantly deconstruct if canceled.
@@ -3952,3 +3944,10 @@
   id: 8868
   time: '2025-08-18T20:42:41.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/39735
+- author: Winkarst-cpu
+  changes:
+  - message: Meat spikes got an overhaul.
+    type: Tweak
+  id: 8869
+  time: '2025-08-19T17:56:36.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38723
