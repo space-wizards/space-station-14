@@ -9,6 +9,7 @@
   - type: RoleRequirement
     roles:
     - ChangelingRole
+    - SLChangelingRole #SL add SL lings as valid "base" objective targets
 
 - type: entity
   parent: [BaseChangelingObjective, BaseSurviveObjective]

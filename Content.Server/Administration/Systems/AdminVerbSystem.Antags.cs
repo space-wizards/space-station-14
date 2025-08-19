@@ -29,11 +29,9 @@ public sealed partial class AdminVerbSystem
     private static readonly EntProtoId DefaultThiefRule = "Thief";
     private static readonly EntProtoId DefaultChangelingRule = "Changeling";
     private static readonly ProtoId<StartingGearPrototype> PirateGearId = "PirateGear";
-    
     private static readonly EntProtoId DefaultVampireRule = "Vampire"; //Starlight
     
     private static readonly EntProtoId ParadoxCloneRuleId = "ParadoxCloneSpawn";
-    private static readonly ProtoId<StartingGearPrototype> PirateGearId = "PirateGear";
 
     // All antag verbs have names so invokeverb works.
     private void AddAntagVerbs(GetVerbsEvent<Verb> args)
@@ -203,7 +201,7 @@ public sealed partial class AdminVerbSystem
             Icon = new SpriteSpecifier.Rsi(new ResPath("/Textures/Changeling/changeling_abilities.rsi"), "transform"),
             Act = () =>
             {
-                _antag.ForceMakeAntag<SLChangelingRuleComponent>(targetPlayer, "Changeling");
+                _antag.ForceMakeAntag<SLChangelingRuleComponent>(targetPlayer, "SLChangeling");
             },
             Impact = LogImpact.High,
             Message = Loc.GetString("admin-verb-make-changeling"),

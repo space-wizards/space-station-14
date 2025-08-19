@@ -37,9 +37,9 @@
         
 - type: entity
   parent: BaseGameRule
-  id: Changeling
+  id: SLChangeling
   components:
-  - type: ChangelingRule
+  - type: SLChangelingRule
   - type: AntagSelection
     agentName: changeling-roundend-name
     definitions:

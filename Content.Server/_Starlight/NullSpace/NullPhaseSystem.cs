@@ -12,6 +12,7 @@ using Content.Server.Light.Components;
 using Content.Server.Ghost;
 using Robust.Server.Containers;
 using Robust.Shared.Prototypes;
+using Content.Shared.Light.Components;
 
 namespace Content.Server._Starlight.NullSpace;
 

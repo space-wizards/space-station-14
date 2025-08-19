@@ -8,7 +8,8 @@ using Robust.Shared.Collections;
 using Robust.Shared.Map.Components;
 using Content.Server.Polymorph.Systems; // Starlight
 using Content.Shared.Zombies; // Starlight
-using Robust.Shared.Player; // Starlight
+using Robust.Shared.Player;
+using Content.Shared.Implants.Components; // Starlight
 
 namespace Content.Server.Implants;
 
@@ -46,4 +47,26 @@ public sealed class SubdermalImplantSystem : SharedSubdermalImplantSystem
         var msg = Loc.GetString("store-currency-inserted-implant", ("used", args.Used));
         _popup.PopupEntity(msg, args.User, args.User);
     }
+
+    #region Starlight
+    /// </summary>
+    /// <param name="uid">The entity to get implants from</param>
+    /// <param name="implants">The list of implants found</param>
+    /// <returns>True if the entity has implants, false otherwise</returns>
+    public bool TryGetImplants(EntityUid uid, out List<EntityUid> implants)
+    {
+        implants = new List<EntityUid>();
+
+        if (!TryComp<ImplantedComponent>(uid, out var implanted))
+            return false;
+
+        var implantContainer = implanted.ImplantContainer;
+
+        if (implantContainer.ContainedEntities.Count == 0)
+            return false;
+
+        implants.AddRange(implantContainer.ContainedEntities);
+        return true;
+    }
+    #endregion
 }

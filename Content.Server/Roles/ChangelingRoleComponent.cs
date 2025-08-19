@@ -1,8 +1,8 @@
-using Content.Shared.Roles;
+using Content.Shared.Roles.Components;
 
 namespace Content.Server.Roles;
 
 [RegisterComponent]
-public sealed partial class ChangelingRoleComponent : BaseMindRoleComponent
+public sealed partial class SLChangelingRoleComponent : BaseMindRoleComponent
 {
 }

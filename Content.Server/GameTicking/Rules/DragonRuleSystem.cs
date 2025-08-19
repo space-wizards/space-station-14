@@ -10,6 +10,7 @@ using Content.Shared.Mobs;
 using Content.Shared.Mobs.Components;
 using Prometheus;
 using Robust.Server.GameObjects;
+using Content.Server.Dragon;
 
 namespace Content.Server.GameTicking.Rules;
 

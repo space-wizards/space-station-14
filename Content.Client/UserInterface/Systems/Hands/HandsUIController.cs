@@ -337,7 +337,6 @@ public sealed class HandsUIController : UIController, IOnStateEntered<GameplaySt
         var button = new HandButton(handName, hand.Location);
         button.StoragePressed += StorageActivate;
         button.Pressed += HandPressed;
-        var uiLocation = location.GetUILocation(); // 🌟Starlight🌟
 
         if (!_handLookup.TryAdd(handName, button))
             return _handLookup[handName];
@@ -345,7 +344,7 @@ public sealed class HandsUIController : UIController, IOnStateEntered<GameplaySt
         if (HandsGui != null)
         {
             // 🌟Starlight🌟  start
-            if (uiLocation == HandUILocation.Functional)
+            if (hand.Location == HandLocation.Functional)
                 HandsGui.FunctionalHandContainer.AddButton(button);
             else
             // 🌟Starlight🌟  end

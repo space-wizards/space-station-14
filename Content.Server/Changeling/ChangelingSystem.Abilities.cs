@@ -23,6 +23,7 @@ using Content.Shared.Flash.Components;
 using Content.Shared.Mindshield.Components;
 using Content.Shared.Mindshield.FakeMindShield;
 using Content.Shared.StatusEffect;
+using Content.Shared.Light.Components;
 
 namespace Content.Server.Changeling;
 
