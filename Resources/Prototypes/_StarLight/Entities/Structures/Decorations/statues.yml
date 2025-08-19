@@ -10,3 +10,17 @@
     state: stone_tea
     drawdepth: Mobs
     offset: "0.0,0.5"
+
+- type: entity
+  id: StatueOneYearAnniversary
+  parent: BaseStructure
+  name: monument to the first year
+  description: |
+    A marble statue of an idealized employee, made to celebrate the first anniversary of NanoTrasen control over the Starlight Sector.
+    The statue's eyes are hidden and its expression stern. Sacrifices were necessary to make it to this point.
+  components:
+  - type: Sprite
+    sprite: _Starlight/Structures/Decorations/Statues.rsi
+    state: one_year_anniversary
+    drawdepth: Mobs
+    offset: "0.0,0.5"
