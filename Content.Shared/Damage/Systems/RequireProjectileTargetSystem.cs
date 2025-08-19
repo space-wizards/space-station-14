@@ -1,13 +1,18 @@
+using Content.Shared.CCVar;
 using Content.Shared.Projectiles;
 using Content.Shared.Weapons.Ranged.Components;
 using Content.Shared.Standing;
 using Robust.Shared.Physics.Events;
+using Robust.Shared.Configuration;
 using Robust.Shared.Containers;
+using Robust.Shared.Random;
 
 namespace Content.Shared.Damage.Components;
 
 public sealed class RequireProjectileTargetSystem : EntitySystem
 {
+    [Dependency] private readonly IConfigurationManager _cfgManager = default!;
+    [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly SharedContainerSystem _container = default!;
 
     public override void Initialize()
@@ -39,8 +44,19 @@ public sealed class RequireProjectileTargetSystem : EntitySystem
             if (TerminatingOrDeleted(shooter.Value))
                 return;
 
-            if (!_container.IsEntityOrParentInContainer(shooter.Value))
-               args.Cancelled = true;
+            if (!_container.IsEntityOrParentInContainer(shooter.Value)) 
+            {
+                // Check if this entity is a mob capable of going prone or something else
+                if (HasComp<StandingStateComponent>(ent))
+                {
+                    if (_cfgManager.GetCVar(CCVars.ProneMobHitChance) <= _random.Next(100))
+                    {
+                        args.Cancelled = true;
+                    }
+                }
+                else
+                    args.Cancelled = true;
+            }
         }
     }
 
