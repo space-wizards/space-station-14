@@ -239,19 +239,6 @@ public sealed class DownedEvent : EntityEventArgs
 }
 
 /// <summary>
-/// Raised after an entity falls down.
-/// </summary>
-public sealed class FellDownEvent : EntityEventArgs
-{
-    public EntityUid Uid { get; }
-
-    public FellDownEvent(EntityUid uid)
-    {
-        Uid = uid;
-    }
-}
-
-/// <summary>
 /// Raised on the entity being thrown due to the holder falling down.
 /// </summary>
 [ByRefEvent]
