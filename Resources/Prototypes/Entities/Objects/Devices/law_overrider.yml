@@ -5,6 +5,15 @@
   description: A device able to overwrite the laws of any silicon. Keep away from the cameras of cyborgs.
   components:
   - type: Appearance
+  - type: GenericVisualizer
+    visuals:
+      enum.LawOverriderVisuals.LawBoardInserted:
+        enum.LawOverriderVisualLayers.LawBoard:
+          True: { visible: true }
+          False: { visible: false }
+        enum.LawOverriderVisualLayers.Light:
+          True: { visible: true }
+          False: { visible: false }
   - type: Sprite
     sprite: Objects/Devices/law_overrider.rsi
     layers:
