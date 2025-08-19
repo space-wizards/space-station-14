@@ -927,6 +927,7 @@
   color: "#d5d5e4"
   metabolisms:
     Medicine:
+      metabolismRate: 0.02
       effects:
       - !type:Jitter
       - !type:GenericStatusEffect
@@ -956,6 +957,7 @@
   color: "#b0abaa"
   metabolisms:
     Medicine:
+      metabolismRate: 0.02
       effects:
       - !type:ModifyStatusEffect
         effectProto: StatusEffectDrowsiness
