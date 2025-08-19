@@ -26,6 +26,7 @@ public sealed class ATMBui : BoundUserInterface
     {
         base.Open();
         TryInitWindow();
+        View(ViewType.Withdraw);
         UpdateState(State);
         _window?.OpenCentered();
     }
@@ -38,7 +39,6 @@ public sealed class ATMBui : BoundUserInterface
 
     private void Update(ATMBuiState state)
     {
-        View(ViewType.Withdraw);
         RefreshUI(state);
     }
 
@@ -47,36 +47,46 @@ public sealed class ATMBui : BoundUserInterface
         if (_window != null) return;
         _window = new ATMWindow();
         _window.OnClose += Close;
-        _window.Title = "automated teller machine";
+        _window.Title = "Automated Teller Machine";
 
-        _window.WithdrawTabButton.OnPressed += _ => View(ViewType.Withdraw);
+        _window.WithdrawTabButton.OnPressed += _ =>
+        {
+            View(ViewType.Withdraw);
+            _transferRecipient = string.Empty;
+            _transferAmount = 0;
+            _window.TransferTargetInput.Text = string.Empty;
+            _window.TransferAmountInput.Text = string.Empty;
+            _window.TransferButton.Disabled = true;
+        };
 
-        _window.TransferTabButton.OnPressed += _ => View(ViewType.Transfer);
+        _window.TransferTabButton.OnPressed += _ =>
+        {
+            View(ViewType.Transfer);
+            _window.TransferButton.Disabled = string.IsNullOrWhiteSpace(_transferRecipient)
+                || _transferAmount <= 0 || _transferAmount > _currentBalance;
+        };
 
-        _window.WithdrawInput.OnTextChanged += _ => {
+        _window.WithdrawInput.OnTextChanged += _ =>
             _window.WithdrawButton.Disabled = !int.TryParse(_window.WithdrawInput.Text, out _amount)
                 || _amount <= 0 || _amount > _currentBalance;
-        };
         
         _window.WithdrawButton.OnPressed += _ =>
         {
             SendMessage(new ATMWithdrawBuiMsg { Amount = _amount });
-            _window.OnClose -= Close;
-            Close();
+            _window.WithdrawButton.Disabled = true;
         };
 
-        _window.TransferAmountInput.OnTextChanged += _ => {
+        _window.TransferAmountInput.OnTextChanged += _ =>
+        {
             if (!int.TryParse(_window.TransferAmountInput.Text, out _transferAmount))
-            _transferAmount = 0;
+                _transferAmount = 0;
             _window.TransferButton.Disabled = string.IsNullOrWhiteSpace(_transferRecipient)
                 || _transferAmount <= 0 || _transferAmount > _currentBalance;
         };
 
-        _window.TransferTargetInput.OnTextChanged += _ => {
-            _transferRecipient = _window.TransferTargetInput.Text ?? string.Empty;
-            _window.TransferButton.Disabled = string.IsNullOrWhiteSpace(_transferRecipient)
+        _window.TransferTargetInput.OnTextChanged += _ =>
+            _window.TransferButton.Disabled = string.IsNullOrWhiteSpace(_transferRecipient = _window.TransferTargetInput.Text ?? string.Empty)
                 || _transferAmount <= 0 || _transferAmount > _currentBalance;
-        };
 
         _window.TransferButton.OnPressed += _ =>
         {
@@ -88,8 +98,11 @@ public sealed class ATMBui : BoundUserInterface
                     Amount = _transferAmount
                 });
             }
-            _window.OnClose -= Close;
-            Close();
+            _transferRecipient = string.Empty;
+            _transferAmount = 0;
+            _window.TransferTargetInput.Text = string.Empty;
+            _window.TransferAmountInput.Text = string.Empty;
+            _window.TransferButton.Disabled = true;
         };
     }
 
@@ -106,9 +119,20 @@ public sealed class ATMBui : BoundUserInterface
         _window.BalanceLabel.SetMessage(balanceMsg);
 
         _window.TransferHelpLabel.Children.Clear();
+
         var transferHelp = new FormattedMessage();
-        transferHelp.AddText("Enter a recipient name and amount to transfer");
+        transferHelp.AddText(Loc.GetString("economy-atm-ui-transfer-help"));
         _window.TransferHelpLabel.SetMessage(transferHelp);
+
+        if (!string.IsNullOrWhiteSpace(state.Message))
+        {
+            var msg = new FormattedMessage();
+            var color = state.IsError ? "red" : "green";
+            msg.AddMarkupOrThrow($"[color={color}]");
+            msg.AddText(state.Message!);
+            msg.AddMarkupOrThrow("[/color]");
+            _window.TransferHelpLabel.SetMessage(msg);
+        }
 
         _window.WithdrawButton.Disabled = !int.TryParse(_window.WithdrawInput.Text, out _amount)
             || _amount <= 0 || _amount > _currentBalance;

@@ -23,6 +23,8 @@ public enum ATMUIKey
 public sealed class ATMBuiState : BoundUserInterfaceState
 {
     public int Balance { get; init; }
+    public string? Message { get; init; }
+    public bool IsError { get; init; }
 }
 [RegisterComponent, NetworkedComponent]
 public sealed partial class NTCashComponent : Component

@@ -8,6 +8,18 @@ economy-atm-ui-deposit = To make a deposit, insert money into the ATM,
                         while cash deposit incurs a 10% fee. Credits
                         can be used as a 1:1 replacement for Spesos.
 
+# ATM transfer UX
+economy-atm-ui-transfer-help = Enter a recipient character name and amount to transfer
+economy-atm-ui-transfer-target-ph = Recipient character name
+economy-atm-ui-transfer-amount-ph = Amount
+
+# ATM transfer messages
+economy-atm-transfer-error-generic = Transfer failed.
+economy-atm-transfer-error-self = You cannot transfer money to yourself.
+economy-atm-transfer-error-no-recipient = Recipient not found.
+economy-atm-transfer-error-ambiguous = Multiple recipients match that name. Be more specific.
+economy-atm-transfer-success = Transferred {$amount} cr. to {$recipient}.
+
 economy-chat-salary-message = Salary credited, {$amount} cr., sender: {$sender}.
 economy-chat-salary-wrapped-message = [bold]Salary credited, [color=green]{$amount}[/color][/bold] cr., sender: [bold][color={$senderColor}]{$sender}[/color][/bold].
 

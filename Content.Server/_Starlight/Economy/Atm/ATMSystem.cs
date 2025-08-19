@@ -1,5 +1,4 @@
-﻿using Content.Server.Administration.Managers;
-using Content.Server.Hands.Systems;
+﻿using Content.Server.Hands.Systems;
 using Content.Server.Stack;
 using Content.Shared.Interaction;
 using Content.Shared.Stacks;
@@ -10,9 +9,13 @@ using Robust.Shared.Prototypes;
 using Robust.Server.Player;
 using Robust.Shared.Player;
 using Content.Server.Mind;
-using System;
+using Content.Shared.Administration.Logs;
+using Content.Shared.Database;
+using Content.Server.Administration.Managers;
+using Content.Shared.Starlight.Economy.Atm;
+using Content.Shared.Starlight;
 
-namespace Content.Shared.Starlight.Economy.Atm;
+namespace Content.Server.Starlight.Economy.Atm;
 public sealed partial class ATMSystem : SharedATMSystem
 {
     [Dependency] private readonly IPlayerRolesManager _playerRolesManager = default!;
@@ -22,8 +25,10 @@ public sealed partial class ATMSystem : SharedATMSystem
     [Dependency] private readonly SharedAudioSystem _audioSystem = default!;
     [Dependency] private readonly IPlayerManager _players = default!;
     [Dependency] private readonly MindSystem _mind = default!;
+    [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
 
     private static readonly EntProtoId<StackComponent> _cash = "NTCredit";
+    private readonly object _transferLock = new();
     public override void Initialize()
     {
         SubscribeLocalEvent<ATMComponent, BeforeActivatableUIOpenEvent>(OnBeforeActivatableUIOpen);
@@ -67,38 +72,104 @@ public sealed partial class ATMSystem : SharedATMSystem
 
     private void OnTransfer(EntityUid uid, ATMComponent component, ATMTransferBuiMsg args)
     {
-        if (string.IsNullOrWhiteSpace(args.Recipient))
-            return;
-
         if (_playerRolesManager.GetPlayerData(args.Actor) is not PlayerData sender)
             return;
 
-        if (args.Amount <= 0 || sender.Balance < args.Amount)
+        if (string.IsNullOrWhiteSpace(args.Recipient))
+        {
+            _uiSystem.SetUiState(uid, ATMUIKey.Key, new ATMBuiState
+            {
+                Balance = sender.Balance,
+                Message = Loc.GetString("economy-atm-transfer-error-no-recipient"),
+                IsError = true
+            });
             return;
+        }
 
-        ICommonSession? recipientSession = null;
+        if (!_players.TryGetSessionByEntity(args.Actor, out var senderSession))
+        {
+            _uiSystem.SetUiState(uid, ATMUIKey.Key, new ATMBuiState
+            {
+                Balance = sender.Balance,
+                Message = Loc.GetString("economy-atm-transfer-error-generic"),
+                IsError = true
+            });
+            return;
+        }
+
+        var matches = new List<ICommonSession>();
+        
         foreach (var reg in _playerRolesManager.Players)
         {
             if (_mind.TryGetMind(reg.Session.UserId, out _, out var mind)
                 && !string.IsNullOrWhiteSpace(mind.CharacterName)
                 && string.Equals(mind.CharacterName, args.Recipient, StringComparison.OrdinalIgnoreCase))
             {
-                recipientSession = reg.Session;
-                break;
+                matches.Add(reg.Session);
             }
         }
 
-        if (recipientSession == null)
+        if (matches.Count != 1)
+        {
+            var key = matches.Count == 0
+                ? "economy-atm-transfer-error-no-recipient"
+                : "economy-atm-transfer-error-ambiguous";
+
+            _uiSystem.SetUiState(uid, ATMUIKey.Key, new ATMBuiState
+            {
+                Balance = sender.Balance,
+                Message = Loc.GetString(key),
+                IsError = true
+            });
             return;
+        }
 
-        var recipientData = _playerRolesManager.GetPlayerData(recipientSession);
-        if (recipientData == null)
+        var recipientSession = matches[0];
+
+        if (recipientSession.UserId == senderSession.UserId)
+        {
+            _uiSystem.SetUiState(uid, ATMUIKey.Key, new ATMBuiState
+            {
+                Balance = sender.Balance,
+                Message = Loc.GetString("economy-atm-transfer-error-self"),
+                IsError = true
+            });
             return;
+        }
 
-        sender.Balance -= args.Amount;
-        recipientData.Balance += args.Amount;
+        lock (_transferLock)
+        {
+            var recipientData = _playerRolesManager.GetPlayerData(recipientSession);
+            if (recipientData == null)
+            {
+                _uiSystem.SetUiState(uid, ATMUIKey.Key, new ATMBuiState
+                {
+                    Balance = sender.Balance,
+                    Message = Loc.GetString("economy-atm-transfer-error-no-recipient"),
+                    IsError = true
+                });
+                return;
+            }
 
-        _uiSystem.SetUiState(uid, ATMUIKey.Key, new ATMBuiState() { Balance = sender.Balance });
+            sender.Balance -= args.Amount;
+            recipientData.Balance += args.Amount;
+
+            var recipientName = _mind.TryGetMind(recipientSession.UserId, out _, out var rMind)
+                ? rMind.CharacterName ?? recipientSession.Name
+                : recipientSession.Name;
+
+            _uiSystem.SetUiState(uid, ATMUIKey.Key, new ATMBuiState
+            {
+                Balance = sender.Balance,
+                Message = Loc.GetString("economy-atm-transfer-success", ("amount", args.Amount), ("recipient", recipientName)),
+                IsError = false
+            });
+
+            _adminLogger.Add(
+                LogType.Action,
+                LogImpact.Medium,
+                $"{ToPrettyString(args.Actor):player} transferred {args.Amount} cr. to {recipientName} via {ToPrettyString(uid):entity}");
+        }
     }
 
     private void OnBeforeActivatableUIOpen(Entity<ATMComponent> ent, ref BeforeActivatableUIOpenEvent args)
