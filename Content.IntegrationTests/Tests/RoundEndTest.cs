@@ -1,3 +1,4 @@
+using System.Threading;
 using Content.Server.GameTicking;
 using Content.Server.RoundEnd;
 using Content.Shared.CCVar;
@@ -21,7 +22,7 @@ namespace Content.IntegrationTests.Tests
 
             private void OnRoundEnd(RoundEndSystemChangedEvent ev)
             {
-                RoundCount += 1;
+                Interlocked.Increment(ref RoundCount);
             }
         }
 
@@ -126,17 +127,13 @@ namespace Content.IntegrationTests.Tests
 
             async Task WaitForEvent()
             {
-                const int maxTicks = 60;
-                var currentCount = sys.RoundCount;
-                for (var i = 0; i < maxTicks; i++)
+                var timeout = Task.Delay(TimeSpan.FromSeconds(10));
+                var currentCount = Thread.VolatileRead(ref sys.RoundCount);
+                while (currentCount == Thread.VolatileRead(ref sys.RoundCount) && !timeout.IsCompleted)
                 {
-                    if (currentCount != sys.RoundCount)
-                        return;
-
-                    await pair.RunTicksSync(1);
+                    await pair.RunTicksSync(5);
                 }
-
-                throw new TimeoutException("Event took too long to trigger");
+                if (timeout.IsCompleted) throw new TimeoutException("Event took too long to trigger");
             }
 
             // Need to clean self up

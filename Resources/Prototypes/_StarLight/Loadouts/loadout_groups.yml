@@ -153,7 +153,6 @@
   loadouts:
   - SecurityMk58
   - SecurityPistolDP
-  - SecurityPistolEnforcer
 
 # Assorted Boots
 - type: loadoutGroup

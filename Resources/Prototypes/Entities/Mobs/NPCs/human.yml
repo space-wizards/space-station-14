@@ -96,6 +96,5 @@
   description: A polymorphed unfortunate.
   components:
   - type: Cluwne
-    unremovable: true #Starlight
   - type: Speech
     speechVerb: Cluwne

@@ -1,5 +1,4 @@
-﻿using Content.Shared.DeviceLinking;
-using Robust.Shared.Audio;
+﻿using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
 // Based on the RMC14.
@@ -23,27 +22,8 @@ public sealed partial class SurgeryToolComponent : Component
     public SoundSpecifier? EndSound;
 }
 
-[RegisterComponent, NetworkedComponent, Access(typeof(SharedSurgerySystem), typeof(SharedBodyScannerSystem))]
-[AutoGenerateComponentState]
-public sealed partial class OperatingTableComponent : Component
-{
-    [ViewVariables, AutoNetworkedField]
-    public EntityUid? Scanner;
-}
-
-[RegisterComponent, NetworkedComponent, Access(typeof(SharedBodyScannerSystem))]
-[AutoGenerateComponentState]
-public sealed partial class BodyScannerComponent : Component
-{
-    [DataField, AutoNetworkedField]
-    public NetEntity? TableEntity;
-    
-    /// <summary>
-    /// The machine linking port
-    /// </summary>
-    [DataField]
-    public ProtoId<SourcePortPrototype> LinkingPort = "BodyScannerSender";
-}
+[RegisterComponent, NetworkedComponent, Access(typeof(SharedSurgerySystem))]
+public sealed partial class OperatingTableComponent : Component;
 
 [RegisterComponent, NetworkedComponent, Access(typeof(SharedSurgerySystem))]
 public sealed partial class BoneGelComponent : Component, ISurgeryToolComponent

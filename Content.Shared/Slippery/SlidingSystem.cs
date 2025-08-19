@@ -5,21 +5,19 @@ using Content.Shared.Weapons.Ranged.Systems;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Events;
 using Robust.Shared.Physics.Systems;
+using Robust.Shared.Timing;
 
 namespace Content.Shared.Slippery;
 
 public sealed class SlidingSystem : EntitySystem
 {
+    [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly SharedPhysicsSystem _physics = default!;
     [Dependency] private readonly MovementSpeedModifierSystem _speedModifierSystem = default!;
-
-    private EntityQuery<SlipperyComponent> _slipperyQuery;
 
     public override void Initialize()
     {
         base.Initialize();
-
-        _slipperyQuery = GetEntityQuery<SlipperyComponent>();
 
         SubscribeLocalEvent<SlidingComponent, ComponentInit>(OnComponentInit);
         SubscribeLocalEvent<SlidingComponent, ComponentShutdown>(OnComponentShutdown);
@@ -37,7 +35,10 @@ public sealed class SlidingSystem : EntitySystem
     /// </summary>
     private void OnComponentInit(Entity<SlidingComponent> entity, ref ComponentInit args)
     {
-        if (CalculateSlidingModifier(entity))
+        if (!_timing.IsFirstTimePredicted || !TryComp<PhysicsComponent>(entity, out var physics))
+            return;
+
+        if (CalculateSlidingModifier((entity.Owner, entity.Comp, physics)))
             _speedModifierSystem.RefreshFrictionModifiers(entity);
     }
 
@@ -63,7 +64,7 @@ public sealed class SlidingSystem : EntitySystem
     /// </summary>
     private void OnStartCollide(Entity<SlidingComponent> entity, ref StartCollideEvent args)
     {
-        if (!_slipperyQuery.TryComp(args.OtherEntity, out var slippery) || !slippery.AffectsSliding)
+        if (!TryComp<SlipperyComponent>(args.OtherEntity, out var slippery) || !slippery.AffectsSliding)
             return;
 
         CalculateSlidingModifier(entity);
@@ -75,7 +76,7 @@ public sealed class SlidingSystem : EntitySystem
     /// </summary>
     private void OnEndCollide(Entity<SlidingComponent> entity, ref EndCollideEvent args)
     {
-        if (!_slipperyQuery.TryComp(args.OtherEntity, out var slippery) || !slippery.AffectsSliding)
+        if (!TryComp<SlipperyComponent>(args.OtherEntity, out var slippery) || !slippery.AffectsSliding)
             return;
 
         if (!CalculateSlidingModifier(entity, args.OtherEntity))
@@ -92,18 +93,17 @@ public sealed class SlidingSystem : EntitySystem
     /// </summary>
     private bool CalculateSlidingModifier(Entity<SlidingComponent, PhysicsComponent?> entity, EntityUid? ignore = null)
     {
-        if (!Resolve(entity, ref entity.Comp2, false))
+        if (!Resolve(entity, ref entity.Comp2))
             return false;
 
         var friction = 0.0f;
         var count = 0;
-        entity.Comp1.Contacting.Clear();
 
-        _physics.GetContactingEntities((entity, entity.Comp2), entity.Comp1.Contacting);
+        var colliders = _physics.GetContactingEntities(entity, entity.Comp2);
 
-        foreach (var ent in entity.Comp1.Contacting)
+        foreach (var ent in colliders)
         {
-            if (ent == ignore || !_slipperyQuery.TryComp(ent, out var slippery) || !slippery.AffectsSliding)
+            if (ent == ignore || !TryComp<SlipperyComponent>(ent, out var slippery) || !slippery.AffectsSliding)
                 continue;
 
             friction += slippery.SlipData.SlipFriction;
@@ -114,9 +114,12 @@ public sealed class SlidingSystem : EntitySystem
         if (count > 0)
         {
             entity.Comp1.FrictionModifier = friction / count;
-            Dirty(entity.Owner, entity.Comp1);
             return true;
         }
+
+        // If we didn't collide with anything super slippery, and the ignored collider didn't cause us to slide, then how did we get here?
+        if (!TryComp<SlipperyComponent>(ignore, out var slip) || !slip.AffectsSliding)
+            Log.Error($"Entity by the name of {ToPrettyString(entity)} was given the Sliding Component despite not colliding with anything slippery");
 
         return false;
     }

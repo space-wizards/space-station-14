@@ -37,8 +37,6 @@
     stateDoorClosed: warden_door
   - type: AccessReader
     access: [["Armory"]]
-  - type: WiresPanelSecurity
-    securityLevel: medSecurity
   
 # Brigmedic
 - type: entity
@@ -69,8 +67,6 @@
     stateDoorClosed: bssecure_door
   - type: AccessReader
     access: [ [ "BlueShield" ] ]
-  - type: WiresPanelSecurity
-    securityLevel: medSecurity
     
 # Mining Specialist
 - type: entity

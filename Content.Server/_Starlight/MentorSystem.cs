@@ -33,10 +33,6 @@ using Robust.Shared.Network;
 using Robust.Shared.Player;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
-using Content.Shared.Ghost;
-using Content.Shared.Administration.Logs;
-using Content.Shared.Database;
-using Content.Server.Administration.Logs;
 using Content.Shared._NullLink;
 using Content.Server._NullLink.PlayerData;
 
@@ -54,8 +50,6 @@ public sealed partial class MentorSystem : SharedMentorSystem
     [Dependency] private readonly IAdminManager _adminManager = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly PlayerRateLimitManager _rateLimit = default!;
-    [Dependency] private readonly SharedTransformSystem _xform = default!;
-    [Dependency] private readonly ISharedAdminLogManager _alog = default!;
 
     private readonly Dictionary<Guid, MentorTicket> _tickets = [];
     private ISawmill _sawmill = default!;
@@ -71,7 +65,6 @@ public sealed partial class MentorSystem : SharedMentorSystem
 
         SubscribeNetworkEvent<MHelpTypingRequest>(OnClientTypingUpdated);
         SubscribeNetworkEvent<MHelpCloseTicket>(OnCloseTicket);
-        SubscribeNetworkEvent<MhelpTptoTicket>(OnTptoTicket);
         SubscribeLocalEvent<RoundRestartCleanupEvent>(_ =>
         {
             _tickets.Clear();
@@ -227,32 +220,6 @@ public sealed partial class MentorSystem : SharedMentorSystem
 
         foreach (var channel in recipients)
             RaiseNetworkEvent(msg, channel);
-    }
-
-    private void OnTptoTicket(MhelpTptoTicket message, EntitySessionEventArgs eventArgs)
-    {
-        MentorTicket? ticket = null;
-        var senderSession = eventArgs.SenderSession;
-        var adminData = _adminManager.GetAdminData(senderSession);
-
-        var senderIsAdmin = adminData?.HasFlag(AdminFlags.Adminhelp) ?? false;
-        var senderIsMentor = _playerRoles.IsMentor(senderSession);
-        if (!(senderIsAdmin || senderIsMentor)) //only admins/mentors can use mtpto
-            return;
-        if (message.Ticket is not Guid ticketId)
-            return;
-        if (ticket is null && !_tickets.TryGetValue(ticketId, out ticket))
-            return;
-        var mentorEnt = senderSession.AttachedEntity;
-        if (!HasComp<GhostComponent>(mentorEnt))
-            return;
-        
-        var playerSession = _playerManager.GetSessionById(ticket.Creator);
-
-        if (playerSession.AttachedEntity.HasValue)
-            _xform.SetCoordinates(mentorEnt.Value, Transform(playerSession.AttachedEntity.Value).Coordinates);
-
-        _alog.Add(LogType.AdminCommands, LogImpact.Low, $"mentor {senderSession} tpto'd ticket {ticketId} aka {playerSession}");
     }
 
     private void OnClientTypingUpdated(MHelpTypingRequest msg, EntitySessionEventArgs args)

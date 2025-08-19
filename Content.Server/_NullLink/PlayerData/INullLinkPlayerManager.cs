@@ -8,7 +8,6 @@ public interface INullLinkPlayerManager
 {
     IEnumerable<ICommonSession> Mentors { get; }
 
-    string GetDiscordAuthUrl(string customState);
     void Initialize();
     void Shutdown();
     ValueTask SyncRoles(PlayerRolesSyncEvent ev);

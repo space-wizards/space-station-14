@@ -2,8 +2,6 @@
 
 ## Window
 
-air-alarm-ui-title = Air Alarm
-
 air-alarm-ui-access-denied = Insufficient access!
 
 air-alarm-ui-window-pressure-label = Pressure

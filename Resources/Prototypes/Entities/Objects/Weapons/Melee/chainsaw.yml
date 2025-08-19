@@ -47,11 +47,10 @@
         maxVol: 300
   - type: UseDelay
     delay: 1
+  - type: Scalpel
   - type: SurgeryTool
-    successRate: 0.6 # 🌟Starlight🌟
-    speed: 0.2 #Chainsaws are very fast 🌟Starlight🌟
+    successRate: 0.01
     startSound:
-      path: /Audio/Weapons/chainsawwield.ogg
+      path: /Audio/_Starlight/Medical/Surgery/scalpel1.ogg
     endSound:
-      path: /Audio/Weapons/chainsaw.ogg
-  - type: BoneSaw # 🌟Starlight🌟
+      path: /Audio/_Starlight/Medical/Surgery/scalpel2.ogg

@@ -558,7 +558,7 @@
                   min: 2
                   max: 2
     - type: StaticPrice
-      price: 150
+      price: 250
 
 - type: entity
   parent: BaseShield

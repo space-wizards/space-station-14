@@ -11,12 +11,5 @@ public sealed partial class SlidingComponent : Component
     /// <summary>
     ///     The friction modifier that will be applied to any friction calculations.
     /// </summary>
-    [DataField, AutoNetworkedField]
-    public float FrictionModifier;
-
-    /// <summary>
-    /// Hashset of contacting entities.
-    /// </summary>
-    [DataField]
-    public HashSet<EntityUid> Contacting = new();
+    [DataField, AutoNetworkedField] public float FrictionModifier;
 }

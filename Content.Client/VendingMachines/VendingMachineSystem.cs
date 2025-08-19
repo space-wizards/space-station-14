@@ -30,7 +30,6 @@ public sealed class VendingMachineSystem : SharedVendingMachineSystem
         var component = entity.Comp;
 
         component.Contraband = state.Contraband;
-        component.ShowPrices = state.ShowPrices; // 🌟Starlight🌟 
         component.EjectEnd = state.EjectEnd;
         component.DenyEnd = state.DenyEnd;
         component.DispenseOnHitEnd = state.DispenseOnHitEnd;

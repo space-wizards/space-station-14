@@ -278,7 +278,7 @@
     - WizardSurviveObjective
     - WizardDemonstrateObjective
   - type: LoadMapRule
-    mapPath: /Maps/Shuttles/wizard.yml #Starlight. wizard deserves their shuttle.
+    gridPath: /Maps/Shuttles/wizard.yml
   - type: RuleGrids
   - type: AntagSelection
   - type: AntagLoadProfileRule

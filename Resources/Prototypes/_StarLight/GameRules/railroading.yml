@@ -17,8 +17,7 @@
 #    - RRCardFoodHerbSalad
 #    - RRCardFoodMelonFruitBowl
 #    - RRCardFoodStew
-#    - RRCardMetabolizeNicotine
-    - RRCardMetabolizeTest
+    - RRCardMetabolizeNicotine
 
 - type: entity
   parent: BaseGameRule

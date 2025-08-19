@@ -1,42 +1,53 @@
 using Content.Client.Markers;
 using Content.Client.Popups;
 using Content.Client.SubFloor;
+using Content.Shared.SubFloor;
+using Robust.Client.GameObjects;
 using Robust.Shared.Console;
+using DrawDepth = Content.Shared.DrawDepth.DrawDepth;
 
 namespace Content.Client.Commands;
 
-internal sealed class ShowMarkersCommand : LocalizedEntityCommands
+internal sealed class ShowMarkersCommand : LocalizedCommands
 {
-    [Dependency] private readonly MarkerSystem _markerSystem = default!;
+    [Dependency] private readonly IEntitySystemManager _entitySystemManager = default!;
 
     public override string Command => "showmarkers";
 
+    public override string Help => LocalizationManager.GetString($"cmd-{Command}-help", ("command", Command));
+
     public override void Execute(IConsoleShell shell, string argStr, string[] args)
     {
-        _markerSystem.MarkersVisible ^= true;
+        _entitySystemManager.GetEntitySystem<MarkerSystem>().MarkersVisible ^= true;
     }
 }
 
-internal sealed class ShowSubFloor : LocalizedEntityCommands
+internal sealed class ShowSubFloor : LocalizedCommands
 {
-    [Dependency] private readonly SubFloorHideSystem _subfloorSystem = default!;
+    [Dependency] private readonly IEntitySystemManager _entitySystemManager = default!;
 
     public override string Command => "showsubfloor";
 
+    public override string Help => LocalizationManager.GetString($"cmd-{Command}-help", ("command", Command));
+
     public override void Execute(IConsoleShell shell, string argStr, string[] args)
     {
-        _subfloorSystem.ShowAll ^= true;
+        _entitySystemManager.GetEntitySystem<SubFloorHideSystem>().ShowAll ^= true;
     }
 }
 
-internal sealed class NotifyCommand : LocalizedEntityCommands
+internal sealed class NotifyCommand : LocalizedCommands
 {
-    [Dependency] private readonly PopupSystem _popupSystem = default!;
+    [Dependency] private readonly IEntitySystemManager _entitySystemManager = default!;
 
     public override string Command => "notify";
 
+    public override string Help => LocalizationManager.GetString($"cmd-{Command}-help", ("command", Command));
+
     public override void Execute(IConsoleShell shell, string argStr, string[] args)
     {
-        _popupSystem.PopupCursor(args[0]);
+        var message = args[0];
+
+        _entitySystemManager.GetEntitySystem<PopupSystem>().PopupCursor(message);
     }
 }

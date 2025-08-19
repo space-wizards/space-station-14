@@ -260,22 +260,18 @@ public sealed partial class EmergencyShuttleSystem : EntitySystem
     /// </summary>
     private void OnEmergencyFTLComplete(EntityUid uid, EmergencyShuttleComponent component, ref FTLCompletedEvent args)
     {
-        // STARLOGHT: Round is already ended when shuttle launched, so just update the shuttle timers
+        var countdownTime = TimeSpan.FromSeconds(_configManager.GetCVar(CCVars.RoundRestartTime));
         var shuttle = args.Entity;
         if (TryComp<DeviceNetworkComponent>(shuttle, out var net))
         {
-            // Get the remaining restart time from the round end system
-            var remainingTime = _roundEnd.ShuttleTimeLeft ?? TimeSpan.FromSeconds(_configManager.GetCVar(CCVars.RoundRestartTime));
-            
             var payload = new NetworkPayload
             {
                 [ShuttleTimerMasks.ShuttleMap] = shuttle,
                 [ShuttleTimerMasks.SourceMap] = _roundEnd.GetCentcomm(),
                 [ShuttleTimerMasks.DestMap] = _roundEnd.GetStation(),
-                [ShuttleTimerMasks.ShuttleTime] = remainingTime,
-                [ShuttleTimerMasks.SourceTime] = remainingTime,
-                [ShuttleTimerMasks.DestTime] = remainingTime,
-                // STARLIGHT END
+                [ShuttleTimerMasks.ShuttleTime] = countdownTime,
+                [ShuttleTimerMasks.SourceTime] = countdownTime,
+                [ShuttleTimerMasks.DestTime] = countdownTime,
             };
 
             // by popular request

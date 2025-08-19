@@ -603,9 +603,6 @@
         },
         {
             "name": "representative_door"
-        },
-        {
-            "name": "panel_open"
         }
     ]
 }

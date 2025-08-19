@@ -323,13 +323,6 @@
     sprite: Clothing/Back/Backpacks/cluwne.rsi
   - type: Unremoveable
     deleteOnDrop: false
-  #region Starlight
-  - type: Tag
-    tags:
-      - WhitelistChameleon
-      - BibleThwackRemovable
-  #endregion Starlight
-  
 
 - type: entity
   parent: ClothingBackpack

@@ -1,4 +1,3 @@
-using Content.Shared._Starlight.Scaling;
 using Content.Shared.Alert;
 using Content.Shared.FixedPoint;
 using Content.Shared.Mobs.Systems;
@@ -9,7 +8,7 @@ using Robust.Shared.Serialization;
 namespace Content.Shared.Mobs.Components;
 
 [RegisterComponent, NetworkedComponent]
-[Access(typeof(MobThresholdSystem), typeof(SharedScalingSystem))] // STARLIGHT
+[Access(typeof(MobThresholdSystem))]
 public sealed partial class MobThresholdsComponent : Component
 {
     [DataField("thresholds", required: true)]

@@ -38,7 +38,6 @@ using Content.Shared.Kitchen;
 using Content.Shared.Players.PlayTimeTracking;
 using Content.Shared.Players.RateLimiting;
 using Content.Shared.Starlight;
-using Content.Server.Economy; // Starlight-edit
 
 namespace Content.Server.IoC
 {
@@ -97,7 +96,6 @@ namespace Content.Server.IoC
             IoCManager.Register<ISharedPlayersRoleManager, PlayerRolesManager>(); 
             IoCManager.Register<IPlayerRolesManager, PlayerRolesManager>();     
             IoCManager.Register<ITTSManager, TTSManager>();
-            IoCManager.Register<ItemPriceManager, ItemPriceManager>();
             // nulllink
             IoCManager.Register<IActorRouter, ActorRouter>(); 
             IoCManager.Register<INullLinkPlayerManager, NullLinkPlayerManager>();

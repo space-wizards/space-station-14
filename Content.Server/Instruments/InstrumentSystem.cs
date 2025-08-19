@@ -461,7 +461,7 @@ public sealed partial class InstrumentSystem : SharedInstrumentSystem
             {
                 if (instrument.InstrumentPlayer is {Valid: true} mob)
                 {
-                    _stuns.TryUpdateParalyzeDuration(mob, TimeSpan.FromSeconds(1));
+                    _stuns.TryParalyze(mob, TimeSpan.FromSeconds(1), true);
 
                     _popup.PopupEntity(Loc.GetString("instrument-component-finger-cramps-max-message"),
                         uid, mob, PopupType.LargeCaution);

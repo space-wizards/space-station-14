@@ -130,7 +130,7 @@ public sealed class ClumsySystem : EntitySystem
         if (ent.Comp.GunShootFailDamage != null)
             _damageable.TryChangeDamage(ent, ent.Comp.GunShootFailDamage, origin: ent);
 
-        _stun.TryUpdateParalyzeDuration(ent, ent.Comp.GunShootFailStunTime);
+        _stun.TryParalyze(ent, ent.Comp.GunShootFailStunTime, true);
 
         // Apply salt to the wound ("Honk!") (No idea what this comment means)
         _audio.PlayPvs(ent.Comp.GunShootFailSound, ent);
@@ -203,7 +203,7 @@ public sealed class ClumsySystem : EntitySystem
                 _damageable.TryChangeDamage(target, bonkComp.BonkDamage, true);
         }
 
-        _stun.TryUpdateParalyzeDuration(target, stunTime);
+        _stun.TryParalyze(target, stunTime, true);
     }
     #endregion
 }

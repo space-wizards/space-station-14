@@ -42,16 +42,13 @@
         Blunt: 0.5
   - type: Item
     sprite: _Starlight/Objects/Weapons/Melee/cyberchainsaw.rsi
-  # 🌟Starlight-start🌟
-  - type: BoneSaw
+  - type: Scalpel
   - type: SurgeryTool
-    successRate: 0.6
-    speed: 0.2
+    successRate: 0.01
     startSound:
-      path: /Audio/Weapons/chainsawwield.ogg
+      path: /Audio/Weapons/chainsaw.ogg
     endSound:
       path: /Audio/Weapons/chainsaw.ogg
-  # 🌟Starlight-end🌟
   - type: Reflect
     reflectProb: 0.1
 

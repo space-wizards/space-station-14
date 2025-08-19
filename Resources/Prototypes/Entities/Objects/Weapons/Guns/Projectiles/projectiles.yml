@@ -851,7 +851,6 @@
     totalIntensity: 150 # a ~2 tile radius
     intensitySlope: 5
     maxIntensity: 10
-    canCreateVacuum: false
 
 - type: entity
   id: BulletGrenadeFlash
@@ -871,6 +870,7 @@
     timeRemaining: 0.3
   - type: DeleteOnTrigger
 
+# This is supposed to spawn shrapnel and stuff so uhh... TODO?
 - type: entity
   id: BulletGrenadeFrag
   name: frag grenade
@@ -884,16 +884,9 @@
   - type: ExplodeOnTrigger
   - type: Explosive
     explosionType: Default
-    totalIntensity: 50
+    totalIntensity: 175 # about a ~6 tile radius
     intensitySlope: 1
-    maxIntensity: 5
-    canCreateVacuum: false
-  - type: ContainerContainer
-    containers:
-      cluster-payload: !type:Container
-  - type: ProjectileGrenade
-    fillPrototype: PelletClusterLessLethal
-    capacity: 30
+    maxIntensity: 10
 
 - type: entity
   parent: BaseBulletTrigger

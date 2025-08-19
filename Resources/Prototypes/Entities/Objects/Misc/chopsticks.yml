@@ -34,7 +34,3 @@
   - type: Tag
     tags:
     - Trash
-  # Starlight-start: Vending Machines Prices
-  - type: ItemPrice
-    priceCategory: miscellaneous
-  # Starlight-end

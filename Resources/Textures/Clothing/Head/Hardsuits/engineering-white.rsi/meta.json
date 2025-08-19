@@ -11,48 +11,30 @@
             "name": "icon"
         },
         {
-            "name": "icon-unshaded"
-        },
-        {
             "name": "icon-flash"
         },
         {
-            "name": "light-overlay"
-        },
-        {
-            "name": "equipped-head",
+            "name": "off-equipped-HELMET",
             "directions": 4
         },
         {
-            "name": "equipped-head-light",
+            "name": "on-equipped-HELMET",
             "directions": 4
         },
         {
-            "name": "equipped-head-unshaded",
+            "name": "off-equipped-HELMET-vox",
             "directions": 4
         },
         {
-            "name": "equipped-head-vox",
+            "name": "on-equipped-HELMET-vox",
             "directions": 4
         },
         {
-            "name": "equipped-head-light-vox",
+            "name": "off-equipped-HELMET-dog",
             "directions": 4
         },
         {
-            "name": "equipped-head-unshaded-vox",
-            "directions": 4
-        },
-        {
-            "name": "equipped-head-dog",
-            "directions": 4
-        },
-        {
-            "name": "equipped-head-light-dog",
-            "directions": 4
-        },
-        {
-            "name": "equipped-head-unshaded-dog",
+            "name": "on-equipped-HELMET-dog",
             "directions": 4
         }
     ]

@@ -1,5 +1,4 @@
 using System.Numerics;
-using Content.Shared._Starlight.Magic.Events;
 using Content.Shared.Body.Components;
 using Content.Shared.Body.Systems;
 using Content.Shared.Coordinates.Helpers;
@@ -15,7 +14,6 @@ using Content.Shared.Magic.Components;
 using Content.Shared.Magic.Events;
 using Content.Shared.Maps;
 using Content.Shared.Mind;
-using Content.Shared.Ninja.Systems;
 using Content.Shared.Physics;
 using Content.Shared.Popups;
 using Content.Shared.Speech.Muting;
@@ -87,9 +85,6 @@ public abstract class SharedMagicSystem : EntitySystem
         SubscribeLocalEvent<RandomGlobalSpawnSpellEvent>(OnRandomGlobalSpawnSpell);
         SubscribeLocalEvent<MindSwapSpellEvent>(OnMindSwapSpell);
         SubscribeLocalEvent<VoidApplauseSpellEvent>(OnVoidApplause);
-        #region Starlight
-        SubscribeLocalEvent<SpawnItemInHandEvent>(OnSpawnItemInHand);
-        #endregion
     }
 
     private void OnBeforeCastSpell(Entity<MagicComponent> ent, ref BeforeCastSpellEvent args)
@@ -151,7 +146,7 @@ public abstract class SharedMagicSystem : EntitySystem
         args.Handled = true;
     }
 
-    /// <summary>
+        /// <summary>
     ///     Gets spawn positions listed on <see cref="InstantSpawnSpellEvent"/>
     /// </summary>
     /// <exception cref="ArgumentOutOfRangeException"></exception>
@@ -160,65 +155,65 @@ public abstract class SharedMagicSystem : EntitySystem
         switch (data)
         {
             case TargetCasterPos:
-                return new List<EntityCoordinates>(1) { casterXform.Coordinates };
+                return new List<EntityCoordinates>(1) {casterXform.Coordinates};
             case TargetInFrontSingle:
-                {
-                    var directionPos = casterXform.Coordinates.Offset(casterXform.LocalRotation.ToWorldVec().Normalized());
+            {
+                var directionPos = casterXform.Coordinates.Offset(casterXform.LocalRotation.ToWorldVec().Normalized());
 
-                    if (!TryComp<MapGridComponent>(casterXform.GridUid, out var mapGrid))
-                        return new List<EntityCoordinates>();
-                    if (!_turf.TryGetTileRef(directionPos, out var tileReference))
-                        return new List<EntityCoordinates>();
-
-                    var tileIndex = tileReference.Value.GridIndices;
-                    return new List<EntityCoordinates>(1) { _mapSystem.GridTileToLocal(casterXform.GridUid.Value, mapGrid, tileIndex) };
-                }
-            case TargetInFront:
-                {
-                    var directionPos = casterXform.Coordinates.Offset(casterXform.LocalRotation.ToWorldVec().Normalized());
-
-                    if (!TryComp<MapGridComponent>(casterXform.GridUid, out var mapGrid))
-                        return new List<EntityCoordinates>();
-
-                    if (!_turf.TryGetTileRef(directionPos, out var tileReference))
-                        return new List<EntityCoordinates>();
-
-                    var tileIndex = tileReference.Value.GridIndices;
-                    var coords = _mapSystem.GridTileToLocal(casterXform.GridUid.Value, mapGrid, tileIndex);
-                    EntityCoordinates coordsPlus;
-                    EntityCoordinates coordsMinus;
-
-                    var dir = casterXform.LocalRotation.GetCardinalDir();
-                    switch (dir)
-                    {
-                        case Direction.North:
-                        case Direction.South:
-                            {
-                                coordsPlus = _mapSystem.GridTileToLocal(casterXform.GridUid.Value, mapGrid, tileIndex + (1, 0));
-                                coordsMinus = _mapSystem.GridTileToLocal(casterXform.GridUid.Value, mapGrid, tileIndex + (-1, 0));
-                                return new List<EntityCoordinates>(3)
-                        {
-                            coords,
-                            coordsPlus,
-                            coordsMinus,
-                        };
-                            }
-                        case Direction.East:
-                        case Direction.West:
-                            {
-                                coordsPlus = _mapSystem.GridTileToLocal(casterXform.GridUid.Value, mapGrid, tileIndex + (0, 1));
-                                coordsMinus = _mapSystem.GridTileToLocal(casterXform.GridUid.Value, mapGrid, tileIndex + (0, -1));
-                                return new List<EntityCoordinates>(3)
-                        {
-                            coords,
-                            coordsPlus,
-                            coordsMinus,
-                        };
-                            }
-                    }
-
+                if (!TryComp<MapGridComponent>(casterXform.GridUid, out var mapGrid))
                     return new List<EntityCoordinates>();
+                if (!_turf.TryGetTileRef(directionPos, out var tileReference))
+                    return new List<EntityCoordinates>();
+
+                var tileIndex = tileReference.Value.GridIndices;
+                return new List<EntityCoordinates>(1) { _mapSystem.GridTileToLocal(casterXform.GridUid.Value, mapGrid, tileIndex) };
+            }
+            case TargetInFront:
+            {
+                var directionPos = casterXform.Coordinates.Offset(casterXform.LocalRotation.ToWorldVec().Normalized());
+
+                if (!TryComp<MapGridComponent>(casterXform.GridUid, out var mapGrid))
+                    return new List<EntityCoordinates>();
+
+                if (!_turf.TryGetTileRef(directionPos, out var tileReference))
+                    return new List<EntityCoordinates>();
+
+                var tileIndex = tileReference.Value.GridIndices;
+                var coords = _mapSystem.GridTileToLocal(casterXform.GridUid.Value, mapGrid, tileIndex);
+                EntityCoordinates coordsPlus;
+                EntityCoordinates coordsMinus;
+
+                var dir = casterXform.LocalRotation.GetCardinalDir();
+                switch (dir)
+                {
+                    case Direction.North:
+                    case Direction.South:
+                    {
+                        coordsPlus = _mapSystem.GridTileToLocal(casterXform.GridUid.Value, mapGrid, tileIndex + (1, 0));
+                        coordsMinus = _mapSystem.GridTileToLocal(casterXform.GridUid.Value, mapGrid, tileIndex + (-1, 0));
+                        return new List<EntityCoordinates>(3)
+                        {
+                            coords,
+                            coordsPlus,
+                            coordsMinus,
+                        };
+                    }
+                    case Direction.East:
+                    case Direction.West:
+                    {
+                        coordsPlus = _mapSystem.GridTileToLocal(casterXform.GridUid.Value, mapGrid, tileIndex + (0, 1));
+                        coordsMinus = _mapSystem.GridTileToLocal(casterXform.GridUid.Value, mapGrid, tileIndex + (0, -1));
+                        return new List<EntityCoordinates>(3)
+                        {
+                            coords,
+                            coordsPlus,
+                            coordsMinus,
+                        };
+                    }
                 }
+
+                return new List<EntityCoordinates>();
+            }
             default:
                 throw new ArgumentOutOfRangeException();
         }
@@ -313,7 +308,7 @@ public abstract class SharedMagicSystem : EntitySystem
     /// <param name="args"></param>
     private void OnTeleportSpell(TeleportSpellEvent args)
     {
-        if (args.Handled || !PassesSpellPrerequisites(args.Action, args.Performer))
+        if ( args.Handled || !PassesSpellPrerequisites(args.Action, args.Performer))
             return;
 
         var transform = Transform(args.Performer);
@@ -523,24 +518,9 @@ public abstract class SharedMagicSystem : EntitySystem
             _mind.TransferTo(tarMind, ev.Performer);
         }
 
-        _stun.TryUpdateParalyzeDuration(ev.Target, ev.TargetStunDuration);
-        _stun.TryUpdateParalyzeDuration(ev.Performer, ev.PerformerStunDuration);
+        _stun.TryParalyze(ev.Target, ev.TargetStunDuration, true);
+        _stun.TryParalyze(ev.Performer, ev.PerformerStunDuration, true);
     }
-
-    #region Starlight
-    private void OnSpawnItemInHand(SpawnItemInHandEvent ev)
-    {
-        if (ev.Handled || !PassesSpellPrerequisites(ev.Action, ev.Performer))
-            return;
-        var user = ev.Performer;
-
-        // try to put item in hand, otherwise it goes on the ground
-        var star = Spawn(ev.Spawned, Transform(user).Coordinates);
-        _hands.TryPickupAnyHand(user, star);
-
-        ev.Handled = true;
-    }
-    #endregion
 
     #endregion
     // End Spells

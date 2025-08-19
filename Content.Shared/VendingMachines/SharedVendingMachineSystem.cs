@@ -28,7 +28,6 @@ public abstract partial class SharedVendingMachineSystem : EntitySystem
     [Dependency] protected readonly SharedAudioSystem Audio = default!;
     [Dependency] private   readonly SharedDoAfterSystem _doAfter = default!;
     [Dependency] protected readonly SharedPointLightSystem Light = default!;
-    [Dependency] protected readonly INetManager _net = default!; // 🌟Starlight🌟
     [Dependency] private   readonly SharedPowerReceiverSystem _receiver = default!;
     [Dependency] protected readonly SharedPopupSystem Popup = default!;
     [Dependency] private   readonly SharedSpeakOnUIClosedSystem _speakOn = default!;
@@ -48,7 +47,6 @@ public abstract partial class SharedVendingMachineSystem : EntitySystem
         Subs.BuiEvents<VendingMachineComponent>(VendingMachineUiKey.Key, subs =>
         {
             subs.Event<VendingMachineEjectMessage>(OnInventoryEjectMessage);
-            subs.Event<VendingMachineRequestBalanceMessage>(OnRequestBalanceMessage); // 🌟Starlight🌟
         });
     }
     
@@ -108,32 +106,16 @@ public abstract partial class SharedVendingMachineSystem : EntitySystem
             contrabandInventory[weh.Key] = new(weh.Value);
         }
 
-    // 🌟Starlight🌟 Allow server-side systems to calculate prices
-    // If emagged for interaction, the machine becomes free
-    var isEmagged = _emag.CheckFlag(entity.Owner, EmagType.Interaction);
-    var showPricesNow = component.ShowPrices && !isEmagged;
-    CalculateInventoryPrices(inventory, showPricesNow);
-    CalculateInventoryPrices(emaggedInventory, showPricesNow);
-    CalculateInventoryPrices(contrabandInventory, showPricesNow);
-
         args.State = new VendingMachineComponentState()
         {
             Inventory = inventory,
             EmaggedInventory = emaggedInventory,
             ContrabandInventory = contrabandInventory,
             Contraband = component.Contraband,
-            ShowPrices = showPricesNow, // 🌟Starlight🌟
             EjectEnd = component.EjectEnd,
             DenyEnd = component.DenyEnd,
             DispenseOnHitEnd = component.DispenseOnHitEnd,
         };
-    }
-    // 🌟Starlight🌟 
-    /// <summary>
-    /// Virtual method for calculating inventory prices. Override on server for actual pricing logic
-    /// </summary>
-    protected virtual void CalculateInventoryPrices(Dictionary<string, VendingMachineInventoryEntry> inventory, bool showPrices)
-    {
     }
 
     public override void Update(float frameTime)
@@ -179,8 +161,8 @@ public abstract partial class SharedVendingMachineSystem : EntitySystem
         }
     }
 
-    protected virtual void OnInventoryEjectMessage(Entity<VendingMachineComponent> entity, ref VendingMachineEjectMessage args)
-    { 
+    private void OnInventoryEjectMessage(Entity<VendingMachineComponent> entity, ref VendingMachineEjectMessage args)
+    {
         if (!_receiver.IsPowered(entity.Owner) || Deleted(entity))
             return;
 
@@ -188,14 +170,6 @@ public abstract partial class SharedVendingMachineSystem : EntitySystem
             return;
 
         AuthorizedVend(entity.Owner, actor, args.Type, args.ID, entity.Comp);
-    }
-
-    /// <summary>
-    /// Handles balance request from client. Override on server to provide actual balance data
-    /// </summary>
-    //  Starlight-edit
-    protected virtual void OnRequestBalanceMessage(Entity<VendingMachineComponent> entity, ref VendingMachineRequestBalanceMessage args)
-    {
     }
 
     protected virtual void OnMapInit(EntityUid uid, VendingMachineComponent component, MapInitEvent args)
@@ -276,16 +250,15 @@ public abstract partial class SharedVendingMachineSystem : EntitySystem
             return;
         }
 
-        // Start Ejecting, and prevent users from ordering while animation is playing
+        // Start Ejecting, and prevent users from ordering while anim playing
         vendComponent.EjectEnd = Timing.CurTime + vendComponent.EjectDelay;
         vendComponent.NextItemToEject = entry.ID;
         vendComponent.ThrowNextItem = throwItem;
-        // 🌟Starlight🌟 Reserve the item immediately to avoid multiple charges mapping to a single ejection on spam clicks
-        entry.Amount--; 
 
         if (TryComp(uid, out SpeakOnUIClosedComponent? speakComponent))
             _speakOn.TrySetFlag((uid, speakComponent));
 
+        entry.Amount--;
         Dirty(uid, vendComponent);
         UpdateUI((uid, vendComponent));
         TryUpdateVisualState((uid, vendComponent));
@@ -352,7 +325,7 @@ public abstract partial class SharedVendingMachineSystem : EntitySystem
     /// <param name="type">The type of inventory the item is from</param>
     /// <param name="itemId">The prototype ID of the item</param>
     /// <param name="component"></param>
-    public virtual void AuthorizedVend(EntityUid uid, EntityUid sender, InventoryType type, string itemId, VendingMachineComponent component) // Starlight-edit
+    public void AuthorizedVend(EntityUid uid, EntityUid sender, InventoryType type, string itemId, VendingMachineComponent component)
     {
         if (IsAuthorized(uid, sender, component))
         {
