@@ -67,7 +67,7 @@ namespace Content.Shared.Chemistry.Reagent
         /// Whether this reagent stands out (blood, slime).
         /// </summary>
         [DataField]
-        public bool Standouts;
+        public bool Standsout;
 
         [DataField]
         public ProtoId<FlavorPrototype>? Flavor;

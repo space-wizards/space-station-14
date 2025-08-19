@@ -46,22 +46,22 @@ public abstract partial class SharedPuddleSystem : EntitySystem
 
         SubscribeLocalEvent<PrototypesReloadedEventArgs>(OnPrototypesReloaded);
 
-        CacheStandouts();
+        CacheStandsout();
         InitializeSpillable();
     }
 
     private void OnPrototypesReloaded(PrototypesReloadedEventArgs ev)
     {
         if (ev.WasModified<ReagentPrototype>())
-            CacheStandouts();
+            CacheStandsout();
     }
 
     /// <summary>
     /// Used to cache standout reagents for future use.
     /// </summary>
-    private void CacheStandouts()
+    private void CacheStandsout()
     {
-        _standoutReagents = [.. _prototypeManager.EnumeratePrototypes<ReagentPrototype>().Where(x => x.Standouts).Select(x => x.ID)];
+        _standoutReagents = [.. _prototypeManager.EnumeratePrototypes<ReagentPrototype>().Where(x => x.Standsout).Select(x => x.ID)];
     }
 
     protected virtual void OnSolutionUpdate(Entity<PuddleComponent> entity, ref SolutionContainerChangedEvent args)
