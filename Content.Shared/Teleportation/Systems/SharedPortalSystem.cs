@@ -93,16 +93,10 @@ public abstract class SharedPortalSystem : EntitySystem
             return;
 
         // break pulls before portal enter so we dont break shit
-        if (TryComp<PullableComponent>(subject, out var pullable) && pullable.BeingPulled)
-        {
-            _pulling.TryStopPull(subject, pullable);
-        }
+        _pulling.TryStopPull(subject);
 
-        if (TryComp<PullerComponent>(subject, out var pullerComp)
-            && TryComp<PullableComponent>(pullerComp.Pulling, out var subjectPulling))
-        {
-            _pulling.TryStopPull(pullerComp.Pulling.Value, subjectPulling);
-        }
+        if (TryComp<PullerComponent>(subject, out var pullerComp))
+            _pulling.TryStopPull(pullerComp.Pulling);
 
         // if they came from another portal, just return and wait for them to exit the portal
         if (HasComp<PortalTimeoutComponent>(subject))

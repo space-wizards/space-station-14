@@ -1,4 +1,4 @@
-﻿using Content.Shared.Lock;
+using Content.Shared.Lock;
 using Content.Shared.Movement.Pulling.Components;
 using Content.Shared.Movement.Pulling.Systems;
 using Content.Shared.Security.Components;
@@ -54,8 +54,7 @@ public sealed class DeployableBarrierSystem : EntitySystem
                 _physics.SetHard(uid, fixture, false);
         }
 
-        if (TryComp(uid, out PullableComponent? pullable))
-            _pulling.TryStopPull(uid, pullable);
+        _pulling.TryStopPull(uid);
 
         SharedPointLightComponent? pointLight = null;
         if (_pointLight.ResolveLight(uid, ref pointLight))

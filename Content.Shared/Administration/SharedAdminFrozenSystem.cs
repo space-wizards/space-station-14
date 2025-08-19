@@ -60,10 +60,7 @@ public abstract class SharedAdminFrozenSystem : EntitySystem
 
     private void OnStartup(EntityUid uid, AdminFrozenComponent component, ComponentStartup args)
     {
-        if (TryComp<PullableComponent>(uid, out var pullable))
-        {
-            _pulling.TryStopPull(uid, pullable);
-        }
+        _pulling.TryStopPull(uid);
 
         UpdateCanMove(uid, component, args);
     }
