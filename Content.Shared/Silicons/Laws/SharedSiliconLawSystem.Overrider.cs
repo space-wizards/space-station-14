@@ -30,7 +30,7 @@ public abstract partial class SharedSiliconLawSystem
         if (args.Handled || !args.CanReach || args.Target == null)
             return;
 
-        EntityUid? Ai = null;
+        EntityUid? aiEntity = null;
 
         if (!TryComp(args.Target, out SiliconLawProviderComponent? LawProviderTarget))
         {
@@ -42,12 +42,12 @@ public abstract partial class SharedSiliconLawSystem
                 return;
 
             _stationAi.TryGetHeld((args.Target.Value, aiCoreComp), out var tempAi);
-            Ai = tempAi;
+            aiEntity = tempAi;
 
-            if (Ai == null)
+            if (aiEntity == null)
                 return;
 
-            if (!TryComp(Ai, out SiliconLawProviderComponent? LawProviderAi))
+            if (!TryComp(aiEntity, out SiliconLawProviderComponent? LawProviderAi))
                 return;
 
             LawProviderTarget = LawProviderAi;
@@ -63,7 +63,7 @@ public abstract partial class SharedSiliconLawSystem
         if (!TryComp(lawBoard, out SiliconLawProviderComponent? LawProviderBase))
             return;
 
-        if (Ai == null)
+        if (aiEntity == null)
         {
             var ev = new ChatNotificationEvent(_overrideLawsChatNotificationPrototype, args.Used, args.User);
             RaiseLocalEvent(args.Target.Value, ref ev);
@@ -71,13 +71,13 @@ public abstract partial class SharedSiliconLawSystem
         else
         {
             var ev = new ChatNotificationEvent(_overrideLawsChatNotificationPrototype, args.Used, args.User);
-            RaiseLocalEvent(Ai.Value, ref ev);
+            RaiseLocalEvent(aiEntity.Value, ref ev);
         }
 
         var doAfterTime = OverriderComp.OverrideTime;
         DoAfterArgs? doAfterArgs = null;
 
-        var target = Ai ?? args.Target;
+        var target = aiEntity ?? args.Target;
 
         var doAfterArgs = new DoAfterArgs(EntityManager, args.User, doAfterTime, new OverriderDoAfterEvent(), target, ent.Owner, args.Used)
         {
