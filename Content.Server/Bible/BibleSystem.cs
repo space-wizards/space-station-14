@@ -68,7 +68,7 @@ namespace Content.Server.Bible
             {
                 Timer.Spawn(500, () =>
                 {
-                    _stun.TryParalyze(args.Container.Owner, TimeSpan.FromSeconds(10), true);
+                    _stun.TryUpdateParalyzeDuration(args.Container.Owner, TimeSpan.FromSeconds(10));
                     _damageableSystem.TryChangeDamage(args.Container.Owner, component.DamageOnUnholyUse);
                     _audio.PlayPvs(component.SizzleSoundPath, args.Container.Owner);
                 });

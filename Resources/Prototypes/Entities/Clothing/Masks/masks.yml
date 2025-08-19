@@ -315,6 +315,8 @@
   - type: PhysicalComposition
     materialComposition:
       Plastic: 25
+  - type: StaticPrice
+    price: 5
   - type: Tag
     tags:
     - SurgeryCompatibleArmor # Starlight-edit
