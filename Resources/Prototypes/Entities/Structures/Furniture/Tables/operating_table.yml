@@ -12,3 +12,16 @@
     sprite: Structures/Furniture/Tables/optable.rsi
     state: operating_table
   - type: OperatingTable
+  # Starlight-start: Surgery body scanner
+  - type: HealOnBuckle
+    damage: {}
+  - type: InteractionOutline
+  - type: DeviceList
+  - type: DeviceNetwork
+    deviceNetId: Wired
+  - type: DeviceLinkSink
+    ports:
+      - BodyScannerReceiver
+  - type: PlaceableSurface
+    isPlaceable: false
+  # Starlight-end

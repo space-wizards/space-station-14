@@ -30,6 +30,7 @@
     - alertType: Rooted
     - alertType: Pacified
     - alertType: Stealthy
+    - alertType: Offer # Starlight
 
 - type: entity
   id: AlertSpriteView

@@ -52,6 +52,18 @@ public sealed partial class LocalizedDatasetValues : IReadOnlyList<string>
             return Prefix + (index + 1);
         }
     }
+    
+    // Starlight-start
+    public int IndexOf(string value)
+    {
+        for (int i = 0; i < Count; i++)
+        {
+            if (this[i] == value)
+                return i;
+        }
+        return -1;
+    }
+    // Starlight-end
 
     public IEnumerator<string> GetEnumerator()
     {

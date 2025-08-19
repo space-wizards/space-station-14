@@ -1,0 +1,32 @@
+name: Check PR Target Branch
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened, edited]
+
+jobs:
+  check-target-branch:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Check if PR targets starlight-dev
+        run: |
+          SOURCE_BRANCH="${{ github.event.pull_request.head.ref }}"
+          TARGET_BRANCH="${{ github.event.pull_request.base.ref }}"
+          echo "PR from: $SOURCE_BRANCH -> $TARGET_BRANCH"
+          
+          # Allow starlight-dev to starlight PRs in both directions
+          if [[ ("$SOURCE_BRANCH" == "starlight-dev" && "$TARGET_BRANCH" == "starlight") || 
+                ("$SOURCE_BRANCH" == "starlight" && "$TARGET_BRANCH" == "starlight-dev") ]]; then
+            echo "Allowed: PR between starlight-dev and starlight branches"
+            exit 0
+          fi
+          
+          # For all other PRs, require starlight-dev as target
+          if [ "$TARGET_BRANCH" != "starlight-dev" ]; then
+            echo "Error: PR must target 'starlight-dev' branch, but targets '$TARGET_BRANCH'"
+            echo "Please change the target branch to 'starlight-dev'"
+            exit 1
+          else
+            echo "Success: PR correctly targets 'starlight-dev' branch"
+          fi

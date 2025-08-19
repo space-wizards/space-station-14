@@ -11597,5 +11597,433 @@ Entries:
   id: 134700
   time: '2025-08-15T01:10:08.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/1347
+- author: MaxAlpine
+  changes:
+  - message: removed duplicated service request computer (dumb)
+    type: Fix
+  id: 135300
+  time: '2025-08-15T09:12:10.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1353
+- author: MaxAlpine
+  changes:
+  - message: some missing floor tiles under doors too
+    type: Fix
+  id: 135301
+  time: '2025-08-15T09:12:10.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1353
+- author: Trep_Maul
+  changes:
+  - message: Leth SM/TEG separate round start.
+    type: Tweak
+  id: 135100
+  time: '2025-08-15T09:14:59.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1351
+- author: Trep_Maul
+  changes:
+  - message: (Leth) a lot of small stuff.
+    type: Add
+  id: 135101
+  time: '2025-08-15T09:14:59.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1351
+- author: STARLIGHT TEAM
+  changes:
+  - message: The maximum pressure for the supermatter has been increased by 60.
+    type: Tweak
+  id: 135200
+  time: '2025-08-15T09:18:56.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1352
+- author: STARLIGHT TEAM
+  changes:
+  - message: The maximum temperature has been increased to 200.
+    type: Tweak
+  id: 135201
+  time: '2025-08-15T09:18:56.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1352
+- author: STARLIGHT TEAM
+  changes:
+  - message: Crystal destruction now lasts at least 3 minutes instead of 2.
+    type: Tweak
+  id: 135202
+  time: '2025-08-15T09:18:56.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1352
+- author: STARLIGHT TEAM
+  changes:
+  - message: Maximum radiation is capped at 50 instead of 100.
+    type: Tweak
+  id: 135203
+  time: '2025-08-15T09:18:56.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1352
+- author: STARLIGHT TEAM
+  changes:
+  - message: The supermatter cascade no longer destroys items on the tiles it fills.
+    type: Tweak
+  id: 135204
+  time: '2025-08-15T09:18:56.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1352
+- author: STARLIGHT TEAM
+  changes:
+  - message: But it does explode instead.
+    type: Tweak
+  id: 135205
+  time: '2025-08-15T09:18:56.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1352
+- author: STARLIGHT TEAM
+  changes:
+  - message: Nulllink whitelist
+    type: Add
+  id: 133800
+  time: '2025-08-16T06:03:50.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1338
+- author: Quini98
+  changes:
+  - message: Alternative CBURN Shuttle
+    type: Add
+  id: 133100
+  time: '2025-08-16T06:57:16.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1331
+- author: Quini98
+  changes:
+  - message: Gamerule to call new Shuttle
+    type: Add
+  id: 133101
+  time: '2025-08-16T06:57:16.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1331
+- author: CrazyPhantom
+  changes:
+  - message: Added 2h Bartender Playtime Requirement for PunPun
+    type: Add
+  id: 134000
+  time: '2025-08-16T06:59:46.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1340
+- author: CrazyPhantom
+  changes:
+  - message: Removed Engineering Playtime Requirement for Derelict Cyborg
+    type: Remove
+  id: 134001
+  time: '2025-08-16T06:59:46.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1340
+- author: CrazyPhantom
+  changes:
+  - message: Added Same Playtime Requirement for Derelict Cyborg to Derelict Borgi
+    type: Add
+  id: 134002
+  time: '2025-08-16T06:59:46.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1340
+- author: Conflee
+  changes:
+  - message: Added a 'Doxes-the-Captain' Plushie, found in the Hug Dispenser
+    type: Add
+  id: 127600
+  time: '2025-08-16T07:03:34.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1276
+- author: RoadTrain
+  changes:
+  - message: AI can now use shuttle consoles. You can now truly roleplay being HAL
+      aboard Reach.
+    type: Add
+  id: 127300
+  time: '2025-08-16T07:05:36.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1273
+- author: walksanatora
+  changes:
+  - message: Staff of healing can now be bought by the wizard for 2wc
+    type: Add
+  id: 113400
+  time: '2025-08-16T07:10:32.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1134
+- author: walksanatora
+  changes:
+  - message: free wizard spell. it summons a slice of cheese ever 15 seconds. savor
+      it.
+    type: Add
+  id: 113401
+  time: '2025-08-16T07:10:32.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1134
+- author: walksanatora
+  changes:
+  - message: Event spells only turn 10% of the station into free-agents (not that
+      you can get them)
+    type: Tweak
+  id: 113402
+  time: '2025-08-16T07:10:32.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1134
+- author: Scarlet Lightweaver
+  changes:
+  - message: A new foe has apeared in the ghost theme tab!
+    type: Add
+  id: 130300
+  time: '2025-08-16T07:13:58.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1303
+- author: TheRealSlimRedwoods
+  changes:
+  - message: Head of Security now gets his blue and grey counterpart. You still owe
+      that beer you know? (blue shirt and tie is now in the loadout)
+    type: Add
+  id: 134600
+  time: '2025-08-16T07:15:51.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1346
+- author: neomoth, leg
+  changes:
+  - message: koni plushie
+    type: Add
+  id: 132300
+  time: '2025-08-16T07:25:01.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1323
+- author: walksanatora
+  changes:
+  - message: mentors can now mghost and tpto the subject of tickets to aid in providing
+      support
+    type: Add
+  id: 109700
+  time: '2025-08-16T07:30:53.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1097
+- author: walksanatora
+  changes:
+  - message: mentors can now turn off mentor pings.
+    type: Add
+  id: 109701
+  time: '2025-08-16T07:30:53.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1097
+- author: Trosling
+  changes:
+  - message: Fixed Omnitools and Multitools requiring fuel even when not actually
+      welding
+    type: Fix
+  id: 120200
+  time: '2025-08-16T07:35:03.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1202
+- author: walksanatora
+  changes:
+  - message: chaplains can cure cluwnification with a 1/30 chance on every successful
+      bible thwack.
+    type: Add
+  id: 106500
+  time: '2025-08-16T07:41:25.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1065
+- author: Happyrobot33
+  changes:
+  - message: Added dynamic examine text for knockback component.
+    type: Add
+  id: 128200
+  time: '2025-08-16T07:47:56.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1282
+- author: Trosling
+  changes:
+  - message: Re-added Cluwne at 5 wizcoin, only available when server population is
+      above 80, on trial basis
+    type: Tweak
+  id: 123900
+  time: '2025-08-16T07:49:54.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1239
+- author: Aedler
+  changes:
+  - message: End of Round now triggers on Shuttle Launch instead of CentComm docking.
+      Round restart timer has been extended.
+    type: Tweak
+  id: 105000
+  time: '2025-08-16T07:52:15.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1050
+- author: walksanatora
+  changes:
+  - message: Cargo's Mail teleporter can now be emagged to re-weight it's tables towards
+      more chaotic and evil items
+    type: Add
+  id: 120000
+  time: '2025-08-16T08:03:19.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1200
+- author: PubliclyExecutedPig
+  changes:
+  - message: Added admin only buffed xenos
+    type: Add
+  id: 99500
+  time: '2025-08-16T08:09:16.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/995
+- author: IQlvlZero
+  changes:
+  - message: added the very original Killa Tamale Plush
+    type: Add
+  id: 102200
+  time: '2025-08-16T08:11:37.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1022
+- author: Trosling
+  changes:
+  - message: HP scaling system added based on population
+    type: Tweak
+  id: 122800
+  time: '2025-08-16T08:14:39.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1228
+- author: Rinary
+  changes:
+  - message: Added working operating computer(body scanner).
+    type: Add
+  id: 131400
+  time: '2025-08-16T08:17:55.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1314
+- author: Rinary
+  changes:
+  - message: Now when you open incision, patient starts bleeding.
+    type: Tweak
+  id: 131401
+  time: '2025-08-16T08:17:55.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1314
+- author: Rinary
+  changes:
+  - message: Operation table now don't healing patient.
+    type: Tweak
+  id: 131402
+  time: '2025-08-16T08:17:55.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1314
+- author: Citrea
+  changes:
+  - message: Several items can now be used as *very* inefficient surgery tools to
+      enable full back-alley surgeries.
+    type: Tweak
+  id: 131200
+  time: '2025-08-16T08:20:15.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1312
+- author: RoadTrain
+  changes:
+  - message: Adv. chem module now gets automenders
+    type: Add
+  id: 124200
+  time: '2025-08-16T08:22:07.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1242
+- author: RoadTrain
+  changes:
+  - message: Removed diagnosis module (stethoscope is in the rescue module). It wasn't
+      being used anyway and was literally useless.
+    type: Remove
+  id: 124201
+  time: '2025-08-16T08:22:07.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1242
+- author: RoadTrain
+  changes:
+  - message: Syndie mediborg loses rescue module, gains weapon module.
+    type: Tweak
+  id: 124202
+  time: '2025-08-16T08:22:07.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1242
+- author: CrazyPhantom
+  changes:
+  - message: Added BrigMedic Access to HoP
+    type: Add
+  id: 134100
+  time: '2025-08-16T08:25:48.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1341
+- author: CrazyPhantom
+  changes:
+  - message: Added Lawyer and Brigmed Access to BSO
+    type: Add
+  id: 134101
+  time: '2025-08-16T08:25:48.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1341
+- author: stickycheZ101
+  changes:
+  - message: made the QM's luxury maxim hardsuit not blindingly bright when the helmet
+      is equipped (it's now toggleable)
+    type: Tweak
+  id: 116900
+  time: '2025-08-16T08:57:58.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1169
+- author: FoxxoTrystan
+  changes:
+  - message: You can now offer items in your hands to others.
+    type: Add
+  id: 108600
+  time: '2025-08-16T08:59:45.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1086
+- author: Rinary
+  changes:
+  - message: 'Added new reward type to railroading system: Delivery.'
+    type: Add
+  id: 127500
+  time: '2025-08-18T06:54:02.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1275
+- author: Rinary
+  changes:
+  - message: Now AI can lock/unlock lockers(not cabinets).
+    type: Tweak
+  id: 128900
+  time: '2025-08-18T06:57:17.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1289
+- author: Rinary
+  changes:
+  - message: Now all lockers have maintenance panel with access, AI, power and log
+      wires.
+    type: Tweak
+  id: 128901
+  time: '2025-08-18T06:57:17.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1289
+- author: Rinary
+  changes:
+  - message: Now locker destruction much harder.
+    type: Tweak
+  id: 128902
+  time: '2025-08-18T06:57:17.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1289
+- author: Rinary
+  changes:
+  - message: Fixed bug with double popup, when you trying to open locker without access.
+    type: Fix
+  id: 128903
+  time: '2025-08-18T06:57:17.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1289
+- author: STARLIGHT TEAM, walksanatora
+  changes:
+  - message: another upstream merge.
+    type: Tweak
+  id: 121300
+  time: '2025-08-19T03:57:11.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1213
+- author: STARLIGHT TEAM, walksanatora
+  changes:
+  - message: gave wizard their shuttle back
+    type: Tweak
+  id: 121301
+  time: '2025-08-19T03:57:11.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1213
+- author: STARLIGHT TEAM, walksanatora
+  changes:
+  - message: reverted chem nerf
+    type: Tweak
+  id: 121302
+  time: '2025-08-19T03:57:11.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1213
+- author: STARLIGHT TEAM, walksanatora
+  changes:
+  - message: made upstream's moff cake recipe result in our moff cake
+    type: Tweak
+  id: 121303
+  time: '2025-08-19T03:57:11.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1213
+- author: CringeCursed
+  changes:
+  - message: Pricing for items in vending machines
+    type: Add
+  id: 134300
+  time: '2025-08-19T05:12:44.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1343
+- author: CringeCursed
+  changes:
+  - message: end-round stats for Abductors
+    type: Add
+  id: 137900
+  time: '2025-08-19T06:29:58.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1379
+- author: Rinary
+  changes:
+  - message: Fixed issue, when you trying to set dominator mode and after that it
+      instantly changes back to default.
+    type: Fix
+  id: 137200
+  time: '2025-08-19T06:43:27.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1372
+- author: Rinary
+  changes:
+  - message: Fixed screens updating.
+    type: Fix
+  id: 139200
+  time: '2025-08-19T17:01:12.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1392
 Order: -1
 

@@ -6,6 +6,7 @@ using Content.Shared.Magic.Events;
 using Content.Shared.Mind;
 using Content.Shared.Tag;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Random;
 
 namespace Content.Server.Magic;
 
@@ -15,7 +16,7 @@ public sealed class MagicSystem : SharedMagicSystem
     [Dependency] private readonly GameTicker _gameTicker = default!;
     [Dependency] private readonly TagSystem _tag = default!;
     [Dependency] private readonly SharedMindSystem _mind = default!;
-
+    [Dependency] private readonly IRobustRandom _random = default!;
     private static readonly ProtoId<TagPrototype> InvalidForSurvivorAntagTag = "InvalidForSurvivorAntag";
 
     public override void Initialize()
@@ -40,7 +41,7 @@ public sealed class MagicSystem : SharedMagicSystem
     {
         base.OnRandomGlobalSpawnSpell(ev);
 
-        if (!ev.MakeSurvivorAntagonist)
+        if (!(ev.MakeSurvivorAntagonist && _random.NextFloat() < ev.SurvivorAntagChance)) //Starlight survivor chance.
             return;
 
         if (_mind.TryGetMind(ev.Performer, out var mind, out _) && !_tag.HasTag(mind, InvalidForSurvivorAntagTag))

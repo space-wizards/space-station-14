@@ -75,6 +75,10 @@
     tags:
     - DrinkCan
   - type: DnaSubstanceTrace
+  # Starlight-edit: Vending Machines Prices
+  - type: ItemPrice
+    priceCategory: drink
+  # Starlight-end
 
 - type: entity
   parent: DrinkCanBaseFull

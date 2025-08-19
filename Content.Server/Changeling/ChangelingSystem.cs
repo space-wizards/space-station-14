@@ -96,13 +96,13 @@ public sealed partial class ChangelingSystem : EntitySystem
     [Dependency] private readonly SharedStaminaSystem _stamina = default!;
     [Dependency] private readonly GravitySystem _gravity = default!;
     [Dependency] private readonly BlindableSystem _blindable = default!;
-    [Dependency] private readonly StatusEffectsSystem _statusEffect = default!;
     [Dependency] private readonly PullingSystem _pull = default!;
     [Dependency] private readonly SharedCuffableSystem _cuffs = default!;
     [Dependency] private readonly SharedPuddleSystem _puddle = default!;
     [Dependency] private readonly StunSystem _stun = default!;
     [Dependency] private readonly SharedJitteringSystem _jitter = default!;
     [Dependency] private readonly NpcFactionSystem _factionSystem = default!;
+    [Dependency] private readonly MovementModStatusSystem _movementMod = default!;
 
     public EntProtoId ArmbladePrototype = "ArmBladeChangeling";
     public EntProtoId FakeArmbladePrototype = "FakeArmBladeChangeling";
@@ -116,6 +116,7 @@ public sealed partial class ChangelingSystem : EntitySystem
     public EntProtoId SpacesuitPrototype = "ChangelingClothingOuterHardsuit";
     public EntProtoId SpacesuitHelmetPrototype = "ChangelingClothingHeadHelmetHardsuit";
 
+    public EntProtoId SlowdownPrototype = "StatusEffectStaminaLow";
     public override void Initialize()
     {
         base.Initialize();
@@ -190,8 +191,7 @@ public sealed partial class ChangelingSystem : EntitySystem
             // vomit blood
             if (random)
             {
-                if (TryComp<StatusEffectsComponent>(uid, out var status))
-                    _stun.TrySlowdown(uid, TimeSpan.FromSeconds(1.5f), true, 0.5f, 0.5f, status);
+                _movementMod.TryAddMovementSpeedModDuration(uid, SlowdownPrototype, TimeSpan.FromSeconds(1.5f), 0.5f);
 
                 var solution = new Solution();
 
