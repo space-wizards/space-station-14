@@ -12047,5 +12047,13 @@ Entries:
   id: 140000
   time: '2025-08-19T20:15:04.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/1400
+- author: walksanatora
+  changes:
+  - message: Wizard gamerule now actually spawns the wizard shuttle instead of doing
+      nothing
+    type: Fix
+  id: 140100
+  time: '2025-08-19T21:07:44.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1401
 Order: -1
 
