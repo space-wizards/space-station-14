@@ -1277,5 +1277,21 @@ Entries:
   id: 155
   time: '2025-07-16T22:35:14.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/38384
+- author: perryprog
+  changes:
+  - message: Rejuvenate will now remove drowsiness, forced sleep, and the seeing rainbows
+      status effect.
+    type: Add
+  id: 156
+  time: '2025-07-24T15:13:29.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/39025
+- author: slarticodefast, beck-thompson
+  changes:
+  - message: Added the "Open Camera" admin verb and the "camera" console command which
+      allow you to observe entities in separate window using a remote camera.
+    type: Add
+  id: 157
+  time: '2025-07-25T16:53:01.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/36969
 Name: Admin
 Order: 2

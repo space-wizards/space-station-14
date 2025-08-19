@@ -315,6 +315,8 @@
   - type: PhysicalComposition
     materialComposition:
       Plastic: 25
+  - type: StaticPrice
+    price: 5
   - type: Tag
     tags:
     - SurgeryCompatibleArmor # Starlight-edit
@@ -375,6 +377,13 @@
   - type: Unremoveable
   - type: AddAccentClothing
     accent: StutteringAccent
+  #region Starlight
+  - type: Tag
+    tags:
+    - ClownMask
+    - WhitelistChameleon
+    - BibleThwackRemovable
+  #endregion Starlight
 
 - type: entity
   parent: [ ClothingMaskGas, BaseSecurityContraband ]

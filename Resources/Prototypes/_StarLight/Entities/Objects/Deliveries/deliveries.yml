@@ -1,0 +1,78 @@
+- type: entity
+  parent: BaseDelivery
+  id: PackageDeliveryEvil
+  name: package
+  components:
+  - type: EntityTableContainerFill
+    containers:
+      delivery: !type:NestedSelector
+        tableId: PackageDeliveryRewardsEvil
+
+- type: entity
+  parent: BaseDelivery
+  id: LetterDeliveryEvil
+  name: letter
+  components:
+  - type: EntityTableContainerFill
+    containers:
+      delivery: !type:NestedSelector
+        tableId: LetterDeliveryRewardsEvil
+
+# Railroading
+
+- type: entity
+  parent: BaseDelivery
+  id: BasePackageDeliveryReward
+  name: package
+  abstract: true
+  components:
+  - type: Sprite
+    sprite: Objects/Specific/Cargo/mail_large.rsi
+    layers:
+    - state: icon
+      map: [ "enum.DeliveryVisualLayers.Icon" ]
+    - state: trash
+      map: [ "enum.DeliveryVisualLayers.Trash" ]
+      visible: false
+    - state: priority
+      map: [ "enum.DeliveryVisualLayers.PriorityTape" ]
+      visible: false
+      shader: unshaded
+    - state: fragile
+      map: [ "enum.DeliveryVisualLayers.FragileStamp" ]
+      visible: false
+    - state: postmark
+    - map: [ "enum.DeliveryVisualLayers.JobStamp" ]
+      offset: -0.21875, -0.25
+    - state: locked
+      map: [ "enum.DeliveryVisualLayers.Lock" ]
+    - state: broken
+      map: [ "enum.DeliveryVisualLayers.Breakage" ]
+      visible: false
+    - state: bomb
+      map: [ "enum.DeliveryVisualLayers.Bomb" ]
+      visible: false
+    - state: bomb_unshaded
+      map: [ "enum.DeliveryVisualLayers.BombPrimed" ]
+      shader: unshaded
+      visible: false
+  - type: MultiHandedItem
+  - type: Item
+    size: Huge
+  - type: Delivery
+    baseSpesoReward: 1000
+    baseSpesoPenalty: 250 # So low due to dept economy splitting all the earnings, but not splitting the penalty.
+    systemDeliverySpawn: true
+  - type: Speech
+    speechVerb: Robotic
+  - type: SimpleToolUsage
+    doAfter: 6
+      
+- type: entity
+  parent: BasePackageDeliveryReward
+  id: PackageDeliveryRewardPlush
+  components:
+  - type: ContainerFill
+    containers:
+      delivery:
+      - PlushieCarp
