@@ -77,26 +77,15 @@ public abstract partial class SharedSiliconLawSystem
         var doAfterTime = OverriderComp.OverrideTime;
         DoAfterArgs? doAfterArgs = null;
 
-        if (Ai == null)
+        var target = Ai ?? args.Target;
+
+        var doAfterArgs = new DoAfterArgs(EntityManager, args.User, doAfterTime, new OverriderDoAfterEvent(), target, ent.Owner, args.Used)
         {
-            doAfterArgs = new DoAfterArgs(EntityManager, args.User, doAfterTime, new OverriderDoAfterEvent(), args.Target, ent.Owner, args.Used)
-            {
-                BreakOnDamage = true,
-                BreakOnMove = true,
-                NeedHand = true,
-                BreakOnDropItem = true
-            };
-        }
-        else
-        {
-            doAfterArgs = new DoAfterArgs(EntityManager, args.User, doAfterTime, new OverriderDoAfterEvent(), Ai.Value, ent.Owner, args.Used)
-            {
-                BreakOnDamage = true,
-                BreakOnMove = true,
-                NeedHand = true,
-                BreakOnDropItem = true
-            };
-        }
+            BreakOnDamage = true,
+            BreakOnMove = true,
+            NeedHand = true,
+            BreakOnDropItem = true
+        };
 
         _doAfter.TryStartDoAfter(doAfterArgs);
         args.Handled = true;
