@@ -1,4 +1,5 @@
 using Content.Shared.Silicons.Laws.Components;
+using Content.Shared.Silicons.StationAi;
 using Content.Shared.Chat.Prototypes;
 using Content.Shared.Containers.ItemSlots;
 using Content.Shared.DoAfter;
@@ -13,6 +14,7 @@ namespace Content.Shared.Silicons.Laws;
 public abstract partial class SharedSiliconLawSystem
 {
     [Dependency] private readonly SharedDoAfterSystem _doAfter = default!;
+    [Dependency] private readonly SharedStationAiSystem _stationAi = default!;
     [Dependency] private readonly ItemSlotsSystem _slot = default!;
     private readonly ProtoId<ChatNotificationPrototype> _overrideLawsChatNotificationPrototype = "OverrideLaws";
     private void InitializeOverrider()
@@ -32,16 +34,18 @@ public abstract partial class SharedSiliconLawSystem
             it checks to see if it is the AI core and then trys
             to get the SiliconLawProviderComponent from the AI*/
 
-            if (!TryComp(args.Target, out StationAiHolderComponent? targetHolder))
+            if (!TryComp(args.Target, out StationAiCoreComponent? aiCoreComp))
                 return;
 
-            var ai = _slot.GetItemOrNull(args.Target, targetHolder.Slot);
+            _stationAi.TryGetHeld((args.Target.Value, aiCoreComp), out var Ai);
 
-            if (ai == null)
+            if (Ai == null)
                 return;
 
-            if (!TryComp(ai, out SiliconLawProviderComponent? LawProviderTarget))
+            if (!TryComp(Ai, out SiliconLawProviderComponent? LawProviderAi))
                 return;
+
+            LawProviderTarget = LawProviderAi;
         }
 
         var lawOverrider = args.Used;
