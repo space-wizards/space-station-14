@@ -92,6 +92,7 @@ public abstract partial class SharedGravitySystem : EntitySystem
 
     /// <summary>
     /// Overload of <see cref="RefreshWeightless(Entity{GravityAffectedComponent?})"/> which also takes a bool for the weightlessness value we want to change to.
+    /// This method is LOAD BEARING for UninitializedSaveTest. DO NOT REMOVE IT.
     /// </summary>
     /// <param name="entity">The entity we are updating the weightless status of</param>
     /// <param name="weightless">The weightless value we are trying to change to, helps avoid needless networking</param>
