@@ -260,7 +260,7 @@ public abstract partial class SharedStunSystem
         if (!KnockdownOver((entity, entity.Comp)))
             return false;
 
-        if (!_crawlerQuery.TryComp(entity, out var crawler))
+        if (!_crawlerQuery.TryComp(entity, out var crawler) || !_cfgManager.GetCVar(CCVars.MovementCrawling))
         {
             // If we can't crawl then just have us sit back up...
             // In case you're wondering, the KnockdownOverCheck, returns if we're able to move, so if next update is null.
@@ -272,12 +272,6 @@ public abstract partial class SharedStunSystem
 
         if (!TryStand((entity, entity.Comp)))
             return false;
-
-        if (!_cfgManager.GetCVar(CCVars.MovementCrawling))
-        {
-            RemComp<KnockedDownComponent>(entity);
-            return true;
-        }
 
         var ev = new GetStandUpTimeEvent(crawler.StandTime);
         RaiseLocalEvent(entity, ref ev);
