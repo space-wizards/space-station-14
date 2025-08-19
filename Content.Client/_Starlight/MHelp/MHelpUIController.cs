@@ -131,7 +131,7 @@ public sealed class MHelpUIController : UIController, IOnSystemChanged<MentorSys
         var localPlayer = _playerManager.LocalSession;
         if (localPlayer == null)
             return;
-        if (message.PlaySound && localPlayer.UserId != message.Sender)
+        if (message.PlaySound && localPlayer.UserId != message.Sender && _config.GetCVar(StarlightCCVars.MHelpPing))
         {
             if (_mHelpSound != null)
                 _audio.PlayGlobal(_mHelpSound, Filter.Local(), false);
@@ -169,6 +169,7 @@ public sealed class MHelpUIController : UIController, IOnSystemChanged<MentorSys
         UIHelper.OnMessageSend += (ticket, textMessage, playSound) => _mentorSystem?.Send(ticket,  textMessage, playSound);
         UIHelper.OnInputTextChanged += (ticket, text) => _mentorSystem?.SendInputTextUpdated(ticket,  text.Length > 0);
         UIHelper.OnTicketClosed += ticket => _mentorSystem?.SendCloseTicket(ticket);
+        UIHelper.OnTptoPressed += ticket => _mentorSystem?.SentTpto(ticket);
         UIHelper.OnClose += () => SetMHelpPressed(false);
         UIHelper.OnOpen += () => SetMHelpPressed(true);
         SetMHelpPressed(UIHelper.IsOpen);

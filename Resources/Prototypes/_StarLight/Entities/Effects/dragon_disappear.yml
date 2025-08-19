@@ -1,0 +1,21 @@
+- type: entity
+  id: EffectFlashDragonDisappear
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: PointLight
+    radius: 15
+    energy: 5
+    color: "#ff0b0b"
+  - type: TimedDespawn
+    lifetime: 3
+  - type: EmitSoundOnSpawn
+    sound:
+      path: /Audio/Animals/space_dragon_roar.ogg
+  - type: Sprite
+    drawdepth: Effects
+    noRot: true
+    layers:
+    - shader: unshaded
+      map: ["enum.EffectLayers.Unshaded"]
+      sprite: Effects/chronofield.rsi
+      state: chronofield

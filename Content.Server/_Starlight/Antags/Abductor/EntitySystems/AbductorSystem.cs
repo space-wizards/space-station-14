@@ -49,6 +49,7 @@ public sealed partial class AbductorSystem : SharedAbductorSystem
         InitializeOrgans();
         InitializeVest();
         InitializeExtractor();
+        InitializeRoundEnd();
         base.Initialize();
     }
 

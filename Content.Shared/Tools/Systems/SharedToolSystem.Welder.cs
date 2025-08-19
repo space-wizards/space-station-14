@@ -17,13 +17,16 @@ public abstract partial class SharedToolSystem
 
     public void InitializeWelder()
     {
+        SubscribeLocalEvent<WelderComponent, MapInitEvent>(OnWelderInit);
         SubscribeLocalEvent<WelderComponent, ExaminedEvent>(OnWelderExamine);
         SubscribeLocalEvent<WelderComponent, AfterInteractEvent>(OnWelderAfterInteract);
 
-        SubscribeLocalEvent<WelderComponent, ToolUseAttemptEvent>((uid, comp, ev) => {
+        SubscribeLocalEvent<WelderComponent, ToolUseAttemptEvent>((uid, comp, ev) =>
+        {
             CanCancelWelderUse((uid, comp), ev.User, ev.Fuel, ev);
         });
-        SubscribeLocalEvent<WelderComponent, DoAfterAttemptEvent<ToolDoAfterEvent>>((uid, comp, ev) => {
+        SubscribeLocalEvent<WelderComponent, DoAfterAttemptEvent<ToolDoAfterEvent>>((uid, comp, ev) =>
+        {
             CanCancelWelderUse((uid, comp), ev.Event.User, ev.Event.Fuel, ev);
         });
         SubscribeLocalEvent<WelderComponent, ToolDoAfterEvent>(OnWelderDoAfter);
@@ -31,6 +34,7 @@ public abstract partial class SharedToolSystem
         SubscribeLocalEvent<WelderComponent, ItemToggledEvent>(OnToggle);
         SubscribeLocalEvent<WelderComponent, ItemToggleActivateAttemptEvent>(OnActivateAttempt);
         SubscribeLocalEvent<WelderComponent, ItemToggleDeactivateAttemptEvent>(OnDeactivateAttempt);
+        SubscribeLocalEvent<WelderComponent, ItemSwitchedEvent>(ToggleComponent);
     }
 
     public void TurnOn(Entity<WelderComponent> entity, EntityUid? user)
@@ -71,8 +75,16 @@ public abstract partial class SharedToolSystem
         return (fuelSolution.GetTotalPrototypeQuantity(welder.FuelReagent), fuelSolution.MaxVolume);
     }
 
+    private void OnWelderInit(Entity<WelderComponent> ent, ref MapInitEvent args)
+    {
+        ent.Comp.NextUpdate = _timing.CurTime + ent.Comp.WelderUpdateTimer;
+        Dirty(ent);
+    }
+
     private void OnWelderExamine(Entity<WelderComponent> entity, ref ExaminedEvent args)
     {
+        if (ShouldWelderBuggerOff(entity))
+            return;
         using (args.PushGroup(nameof(WelderComponent)))
         {
             if (ItemToggle.IsActivated(entity.Owner))
@@ -99,6 +111,8 @@ public abstract partial class SharedToolSystem
 
     private void OnWelderAfterInteract(Entity<WelderComponent> entity, ref AfterInteractEvent args)
     {
+        if (ShouldWelderBuggerOff(entity)) /// STARLIGHT
+            return;
         if (args.Handled)
             return;
 
@@ -133,6 +147,8 @@ public abstract partial class SharedToolSystem
 
     private void CanCancelWelderUse(Entity<WelderComponent> entity, EntityUid user, float requiredFuel, CancellableEntityEventArgs ev)
     {
+        if (ShouldWelderBuggerOff(entity)) /// STARLIGHT
+            return;
         if (!ItemToggle.IsActivated(entity.Owner))
         {
             _popup.PopupClient(Loc.GetString("welder-component-welder-not-lit-message"), entity, user);
@@ -150,6 +166,8 @@ public abstract partial class SharedToolSystem
 
     private void OnWelderDoAfter(Entity<WelderComponent> ent, ref ToolDoAfterEvent args)
     {
+        if (ShouldWelderBuggerOff(ent)) //STARLIGHT
+            return;
         if (args.Cancelled)
             return;
 
@@ -169,7 +187,10 @@ public abstract partial class SharedToolSystem
 
     private void OnActivateAttempt(Entity<WelderComponent> entity, ref ItemToggleActivateAttemptEvent args)
     {
-        if (args.User != null && !_actionBlocker.CanComplexInteract(args.User.Value)) {
+        if (ShouldWelderBuggerOff(entity)) /// Starlight
+            return;
+        if (args.User != null && !_actionBlocker.CanComplexInteract(args.User.Value))
+        {
             args.Cancelled = true;
             return;
         }
@@ -191,9 +212,68 @@ public abstract partial class SharedToolSystem
 
     private void OnDeactivateAttempt(Entity<WelderComponent> entity, ref ItemToggleDeactivateAttemptEvent args)
     {
-        if (args.User != null && !_actionBlocker.CanComplexInteract(args.User.Value)) {
+        if (args.User != null && !_actionBlocker.CanComplexInteract(args.User.Value))
+        {
             args.Cancelled = true;
-            return;
+        }
+    }
+
+    private void UpdateWelders()
+    {
+        var query = EntityQueryEnumerator<WelderComponent, SolutionContainerManagerComponent>();
+        var curTime = _timing.CurTime;
+        while (query.MoveNext(out var uid, out var welder, out var solutionContainer))
+        {
+            if (curTime < welder.NextUpdate)
+                continue;
+
+            welder.NextUpdate += welder.WelderUpdateTimer;
+            Dirty(uid, welder);
+
+            if (!welder.Enabled)
+                continue;
+
+            if (!SolutionContainerSystem.TryGetSolution((uid, solutionContainer), welder.FuelSolutionName, out var solutionComp, out var solution))
+                continue;
+
+            SolutionContainerSystem.RemoveReagent(solutionComp.Value, welder.FuelReagent, welder.FuelConsumption * welder.WelderUpdateTimer.TotalSeconds);
+
+            if (solution.GetTotalPrototypeQuantity(welder.FuelReagent) <= FixedPoint2.Zero)
+                ItemToggle.Toggle(uid);
+        }
+    }
+
+    /// <summary>
+    /// STARLIGHT
+    /// Method to cancel welder methods if the welder is deactivated as part of an omnitool or similar.
+    /// </summary>
+    /// <param name="entity"></param>
+    /// <returns></returns>
+    private bool ShouldWelderBuggerOff(Entity<WelderComponent> entity)
+    {
+        if (entity.Comp.ComponentActive == false)
+        {
+            return true;
+        }
+
+        return false;
+    }
+
+    /// <summary>
+    /// STARLIGHT
+    /// Method to toggle the welder component off, to make ShouldWelderBuggerOff function.
+    /// </summary>
+    /// <param name="entity"></param>
+    /// <param name="args"></param>
+    private void ToggleComponent(Entity<WelderComponent> entity, ref ItemSwitchedEvent args)
+    {
+        if (args.State.ToLower().Contains("welding"))
+        {
+            entity.Comp.ComponentActive = true;
+        }
+        else
+        {
+            entity.Comp.ComponentActive = false;
         }
     }
 }

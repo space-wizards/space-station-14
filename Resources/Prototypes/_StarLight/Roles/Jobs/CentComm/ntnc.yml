@@ -2,22 +2,26 @@
   id: NTNCHardsuitGear
   equipment:
     jumpsuit: ClothingUniformNTNCFatigues
-    back: ClothingBackpackBlueShield
+    back: ClothingBackpackNTNC
     shoes: ClothingShoesBootsJackFilled
     outerClothing: ClothingOuterHardsuitNTNCConsortium
     id: NTNCCSPDA
     eyes: ClothingEyesGlassesBlueShield
     ears: ClothingHeadsetAltCentComNTNC
     mask: ClothingMaskGasSecurity
-    belt: ClothingBeltBlueShieldWebbingFilled
+    belt: ClothingBeltNTNCRigFilled
     gloves: ClothingHandsGlovesCombat
     suitstorage: WeaponSubMachineGunWt550
+    pocket1: MindShieldImplanter
+    pocket2: DeathRattleImplanterCentcomm
+  inhand: 
+  - RadioImplanterCentcomm
 
 - type: startingGear
   id: NTNCTrainerGear
   equipment:
     jumpsuit: ClothingUniformNTNCFatigues
-    back: ClothingBackpackBlueShield
+    back: ClothingBackpackNTNC
     shoes: ClothingShoesBootsJackFilled
     head: ClothingHeadHatBeretCommand
     outerClothing: ClothingOuterHardsuitNTNCConsortium
@@ -25,15 +29,19 @@
     eyes: ClothingEyesGlassesBlueShield
     ears: ClothingHeadsetAltCentComNTNC
     mask: ClothingMaskGasSecurity
-    belt: ClothingBeltBlueShieldWebbingFilled
+    belt: ClothingBeltNTNCRigFilled
     gloves: ClothingHandsGlovesCombat
     suitstorage: WeaponSubMachineGunWt550
+    pocket1: MindShieldImplanter
+    pocket2: DeathRattleImplanterCentcomm
+  inhand: 
+  - RadioImplanterCentcomm
 
 - type: startingGear
   id: NTNCBasicGear
   equipment:
     jumpsuit: ClothingUniformNTNCFatigues
-    back: ClothingBackpackBlueShield
+    back: ClothingBackpackNTNC
     shoes: ClothingShoesBootsJackFilled
     head: ClothingHeadHelmetHardsuitNTNCConsortium
     outerClothing: ClothingOuterVestNTNC
@@ -41,21 +49,29 @@
     eyes: ClothingEyesGlassesBlueShield
     ears: ClothingHeadsetAltCentComNTNC
     mask: ClothingMaskGasSecurity
-    belt: ClothingBeltBlueShieldWebbingFilled
+    belt: ClothingBeltNTNCRigFilled
     gloves: ClothingHandsGlovesCombat
     suitstorage: WeaponSubMachineGunWt550
+    pocket1: MindShieldImplanter
+    pocket2: DeathRattleImplanterCentcomm
+  inhand: 
+  - RadioImplanterCentcomm
 
 - type: startingGear
   id: NTNCMedicGear
   equipment:
     jumpsuit: ClothingUniformNTNCFatigues
-    back: ClothingBackpackDuffelBlueShield
+    back: ClothingBackpackNTNC
     shoes: ClothingShoesBootsJackFilled
     outerClothing: ClothingOuterHardsuitNTNCConsortiumMedic
     id: NTNCCSPDA
     eyes: ClothingEyesGlassesBlueShield
     ears: ClothingHeadsetAltCentComNTNC
     mask: ClothingMaskGasSecurity
-    belt: ClothingBeltBlueShieldWebbingFilled
+    belt: ClothingBeltNTNCRigFilledMed
     gloves: ClothingHandsGlovesCombat
     suitstorage: WeaponSubMachineGunWt550
+    pocket1: MindShieldImplanter
+    pocket2: DeathRattleImplanterCentcomm
+  inhand: 
+  - RadioImplanterCentcomm
