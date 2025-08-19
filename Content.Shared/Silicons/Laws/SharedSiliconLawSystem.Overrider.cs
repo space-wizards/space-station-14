@@ -75,8 +75,6 @@ public abstract partial class SharedSiliconLawSystem
         }
 
         var doAfterTime = OverriderComp.OverrideTime;
-        DoAfterArgs? doAfterArgs = null;
-
         var target = aiEntity ?? args.Target;
 
         var doAfterArgs = new DoAfterArgs(EntityManager, args.User, doAfterTime, new OverriderDoAfterEvent(), target, ent.Owner, args.Used)
