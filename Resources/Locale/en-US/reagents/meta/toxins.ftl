@@ -83,4 +83,4 @@ reagent-name-mechanotoxin = mechanotoxin
 reagent-desc-mechanotoxin = A neurotoxin used as venom by some species of spider. Degrades movement when built up.
 
 reagent-name-toxintrash = reprocessed material
-reagent-desc-toxintrash = An awfully-smelling, nutrient-dense slurry efficiently refined from discarded matter. It represents a perfect, zero-waste conversion of salvage into Vox sustenance, though it is a violent poison to others.
+reagent-desc-toxintrash = An awfully-smelling slurry efficiently refined from discarded matter. It represents a perfect, zero-waste conversion of salvage into Vox sustenance, though it is a violent poison to others.
