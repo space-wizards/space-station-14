@@ -66,40 +66,40 @@
     chemicalCost: 25
     useInLesserForm: true
 
-- type: entity
-  id: ActionChangelingTransformCycle
-  name: Cycle DNA
-  description: Cycle your available DNA.
-  categories: [ HideSpawnMenu ]
-  components:
-  - type: Action
-    itemIconStyle: NoItem
-    icon:
-      sprite: Changeling/changeling_abilities.rsi
-      state: transform_cycle
-  - type: InstantAction
-    event: !type:ChangelingTransformCycleEvent {}
-  - type: ChangelingAction
-    requireBiomass: false
-    useInLesserForm: true
+# - type: entity
+#   id: ActionChangelingTransformCycle
+#   name: Cycle DNA
+#   description: Cycle your available DNA.
+#   categories: [ HideSpawnMenu ]
+#   components:
+#   - type: Action
+#     itemIconStyle: NoItem
+#     icon:
+#       sprite: Changeling/changeling_abilities.rsi
+#       state: transform_cycle
+#   - type: InstantAction
+#     event: !type:ChangelingTransformCycleEvent {}
+#   - type: ChangelingAction
+#     requireBiomass: false
+#     useInLesserForm: true
 
-- type: entity
-  id: ActionChangelingTransform
-  name: Transform
-  description: Transform into another humanoid. Doesn't come with clothes. Costs 5 chemicals.
-  categories: [ HideSpawnMenu ]
-  components:
-  - type: Action
-    useDelay: 5
-    itemIconStyle: NoItem
-    icon:
-      sprite: Changeling/changeling_abilities.rsi
-      state: transform
-  - type: InstantAction
-    event: !type:ChangelingTransformEvent {}
-  - type: ChangelingAction
-    chemicalCost: 5
-    useInLesserForm: true
+# - type: entity
+#   id: ActionChangelingTransform
+#   name: Transform
+#   description: Transform into another humanoid. Doesn't come with clothes. Costs 5 chemicals.
+#   categories: [ HideSpawnMenu ]
+#   components:
+#   - type: Action
+#     useDelay: 5
+#     itemIconStyle: NoItem
+#     icon:
+#       sprite: Changeling/changeling_abilities.rsi
+#       state: transform
+#   - type: InstantAction
+#     event: !type:ChangelingTransformEvent {}
+#   - type: ChangelingAction
+#     chemicalCost: 5
+#     useInLesserForm: true
 
 - type: entity
   id: ActionEnterStasis
