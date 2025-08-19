@@ -12,6 +12,7 @@ namespace Content.Client.Stack
     {
         [Dependency] private readonly AppearanceSystem _appearanceSystem = default!;
         [Dependency] private readonly ItemCounterSystem _counterSystem = default!;
+
         public override void Initialize()
         {
             base.Initialize();
