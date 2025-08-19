@@ -12,7 +12,7 @@ public sealed partial class SiliconLawOverriderComponent : Component
     /// <summary>
     /// Duration of the doafter after using this tool
     /// </summary>
-    [DataField, ViewVariables(VVAccess.ReadWrite)]
+    [DataField]
     public TimeSpan OverrideTime = TimeSpan.Zero;
 
     /// <summary>
