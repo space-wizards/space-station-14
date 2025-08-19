@@ -1617,14 +1617,16 @@
         computerLayerKeys:
           True: { visible: true, shader: unshaded }
           False: { visible: true, shader: shaded }
-      enum.StationAiFixerConsoleVisuals.ActionProgress:
+      enum.StationAiFixerConsoleVisuals.Key:
         computerLayerScreen:
-          0: { state: ai-fixer-progress-0 }
-          1: { state: ai-fixer-progress-1 }
-          2: { state: ai-fixer-progress-2 }
-          3: { state: ai-fixer-progress-3 }
-      enum.StationAiFixerConsoleVisuals.MobState:
-        computerLayerScreen:
+          Repair0: { state: ai-fixer-progress-0 }
+          Repair1: { state: ai-fixer-progress-1 }
+          Repair2: { state: ai-fixer-progress-2 }
+          Repair3: { state: ai-fixer-progress-3 }
+          Purge0: { state: ai-fixer-purge-0 }
+          Purge1: { state: ai-fixer-purge-1 }
+          Purge2: { state: ai-fixer-purge-2 }
+          Purge3: { state: ai-fixer-purge-3 }
           Invalid: { state: ai-fixer-empty }
           Alive: { state: ai-fixer-full }
           Dead: { state: ai-fixer-404 }

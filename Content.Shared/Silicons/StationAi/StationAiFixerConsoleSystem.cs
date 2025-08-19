@@ -264,11 +264,12 @@ public sealed partial class StationAiFixerConsoleSystem : EntitySystem
 
         if (IsActionInProgress(ent))
         {
-            if (!_appearance.TryGetData(ent, StationAiFixerConsoleVisuals.ActionProgress, out int oldStage, appearance) ||
-                oldStage != ent.Comp.CurrentActionStage)
+            var currentStage = ent.Comp.ActionType.ToString() + ent.Comp.CurrentActionStage.ToString();
+
+            if (!_appearance.TryGetData(ent, StationAiFixerConsoleVisuals.Key, out int oldStage, appearance) ||
+                ent.Comp.ActionType.ToString() + oldStage != currentStage)
             {
-                _appearance.RemoveData(ent, StationAiFixerConsoleVisuals.MobState, appearance);
-                _appearance.SetData(ent, StationAiFixerConsoleVisuals.ActionProgress, ent.Comp.CurrentActionStage, appearance);
+                _appearance.SetData(ent, StationAiFixerConsoleVisuals.Key, currentStage, appearance);
 
                 bui?.Update<StationAiFixerConsoleBoundUserInterfaceState>();
             }
@@ -290,8 +291,7 @@ public sealed partial class StationAiFixerConsoleSystem : EntitySystem
             currentMobState = mobState.CurrentState;
         }
 
-        _appearance.RemoveData(ent, StationAiFixerConsoleVisuals.ActionProgress, appearance);
-        _appearance.SetData(ent, StationAiFixerConsoleVisuals.MobState, currentMobState, appearance);
+        _appearance.SetData(ent, StationAiFixerConsoleVisuals.Key, currentMobState.ToString(), appearance);
 
         bui?.Update<StationAiFixerConsoleBoundUserInterfaceState>();
     }

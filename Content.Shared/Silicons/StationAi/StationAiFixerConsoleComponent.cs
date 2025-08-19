@@ -123,8 +123,11 @@ public enum StationAiFixerConsoleAction
 [Serializable, NetSerializable]
 public enum StationAiFixerConsoleVisuals : byte
 {
-    MobState,
+    Key,
     ActionProgress,
+    MobState,
+    RepairProgress,
+    PurgeProgress,
 }
 
 /// <summary>
