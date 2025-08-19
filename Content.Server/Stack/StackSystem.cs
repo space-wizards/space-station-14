@@ -1,6 +1,5 @@
 using Content.Shared.Popups;
 using Content.Shared.Stacks;
-using Content.Shared.Verbs;
 using JetBrains.Annotations;
 using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
@@ -8,18 +7,13 @@ using Robust.Shared.Prototypes;
 namespace Content.Server.Stack
 {
     /// <summary>
-    ///     Entity system that handles everything relating to stacks.
-    ///     This is a good example for learning how to code in an ECS manner.
+    /// Entity system that handles everything relating to stacks.
+    /// This is a good example for learning how to code in an ECS manner.
     /// </summary>
     [UsedImplicitly]
     public sealed class StackSystem : SharedStackSystem
     {
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
-
-        public override void Initialize()
-        {
-            base.Initialize();
-        }
 
         /// <inheritdoc />
         public override void SetCount(Entity<StackComponent?> ent, int amount)
@@ -44,8 +38,8 @@ namespace Content.Server.Stack
         #region Spawning
 
         /// <summary>
-        ///     Spawns a new entity and moves an amount to it from ent.
-        ///     Moves nothing if amount is greater than ent's stack count.
+        /// Spawns a new entity and moves an amount to it from ent.
+        /// Moves nothing if amount is greater than ent's stack count.
         /// </summary>
         /// <param name="amount"> How much to move to the new entity. </param>
         /// <returns>Null if StackComponent doesn't resolve, or amount to move is greater than ent has available.</returns>
@@ -82,14 +76,14 @@ namespace Content.Server.Stack
         #region SpawnAtPosition
 
         /// <summary>
-        ///     Spawns a stack of a certain stack type and sets its count. Won't set the stack over its max.
+        /// Spawns a stack of a certain stack type and sets its count. Won't set the stack over its max.
         /// </summary>
         /// <param name="count">The amount to set the spawned stack to.</param>
         [PublicAPI]
         public EntityUid SpawnAtPosition(int count, StackPrototype prototype, EntityCoordinates spawnPosition)
         {
             var entity = SpawnAtPosition(prototype.Spawn, spawnPosition); // The real SpawnAtPosition
-            // There should always be a StackComponent, but make sure
+            // There should always be a StackComponent, but make sure. TODO an integration test should ensure that StackPrototypes have stack component
             var stack = EnsureComp<StackComponent>(entity);
 
             SetCount((entity, stack), count);
@@ -105,13 +99,11 @@ namespace Content.Server.Stack
         }
 
         /// <summary>
-        ///     Say you want to spawn 97 units of something that has a max stack count of 30.
-        ///     This would spawn 3 stacks of 30 and 1 stack of 7.
+        /// Say you want to spawn 97 units of something that has a max stack count of 30.
+        /// This would spawn 3 stacks of 30 and 1 stack of 7.
         /// </summary>
         /// <returns>The entities spawned.</returns>
-        /// <remarks>
-        ///     If the entity to spawn doesn't have stack component this will spawn a bunch of single items.
-        /// </remarks>
+        /// <remarks> If the entity to spawn doesn't have stack component this will spawn a bunch of single items. </remarks>
         private List<EntityUid> SpawnMultipleAtPosition(EntProtoId entityPrototype,
                                                         List<int> amounts,
                                                         EntityCoordinates spawnPosition)
@@ -187,7 +179,7 @@ namespace Content.Server.Stack
         public EntityUid SpawnNextToOrDrop(int amount, StackPrototype prototype, EntityUid source)
         {
             var entity = SpawnNextToOrDrop(prototype.Spawn, source); // The real SpawnNextToOrDrop
-            // There should always be a StackComponent, but make sure
+            // There should always be a StackComponent, but make sure. TODO This should be an integration test
             var stack = EnsureComp<StackComponent>(entity);
 
             SetCount((entity, stack), amount);
@@ -274,7 +266,7 @@ namespace Content.Server.Stack
         #region Calculate
 
         /// <summary>
-        ///     Calculates how many stacks to spawn that total up to <paramref name="amount"/>.
+        /// Calculates how many stacks to spawn that total up to <paramref name="amount"/>.
         /// </summary>
         /// <returns>The list of stack counts per entity.</returns>
         private List<int> CalculateSpawns(int maxCountPerStack, int amount)
@@ -312,6 +304,7 @@ namespace Content.Server.Stack
         #endregion
         #region Event Handlers
 
+        /// <inheritdoc />
         protected override void UserSplit(Entity<StackComponent> stack, Entity<TransformComponent?> user, int amount)
         {
             if (!Resolve(user.Owner, ref user.Comp, false))

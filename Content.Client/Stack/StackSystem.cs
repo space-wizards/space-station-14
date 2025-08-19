@@ -1,4 +1,3 @@
-using System.Linq;
 using Content.Client.Items;
 using Content.Client.Storage.Systems;
 using Content.Shared.Stacks;
@@ -7,19 +6,17 @@ using Robust.Client.GameObjects;
 
 namespace Content.Client.Stack
 {
-    /// <summary>
-    ///     Client system for handling stacks of like entities.
-    /// </summary>
+    /// <inheritdoc />
     [UsedImplicitly]
     public sealed class StackSystem : SharedStackSystem
     {
         [Dependency] private readonly AppearanceSystem _appearanceSystem = default!;
         [Dependency] private readonly ItemCounterSystem _counterSystem = default!;
-        [Dependency] private readonly SpriteSystem _sprite = default!;
 
         public override void Initialize()
         {
             base.Initialize();
+
             SubscribeLocalEvent<StackComponent, AppearanceChangeEvent>(OnAppearanceChange);
             Subs.ItemStatus<StackComponent>(ent => new StackStatusControl(ent));
         }
@@ -49,7 +46,7 @@ namespace Content.Client.Stack
             SetCount((uid, component), amount);
         }
 
-        #region Event Handlers
+        #region Appearance
 
         private void OnAppearanceChange(Entity<StackComponent> ent, ref AppearanceChangeEvent args)
         {

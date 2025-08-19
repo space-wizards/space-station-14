@@ -15,7 +15,7 @@ public abstract partial class SharedStackSystem
     /// </summary>
     /// <param name="transferred">How much stack count was moved.</param>
     /// <param name="amount">Optional. Limits amount of stack count to move from the donor.</param>
-    /// <returns>True if transferred is greater than 0.</returns>
+    /// <returns> True if transferred is greater than 0. </returns>
     [PublicAPI]
     public bool TryMergeStacks(Entity<StackComponent?> donor,
                                 Entity<StackComponent?> recipient,
@@ -48,11 +48,11 @@ public abstract partial class SharedStackSystem
     }
 
     /// <summary>
-    ///     If the given item is a stack, this attempts to find a matching stack in the users hand and merge with that.
+    /// If the given item is a stack, this attempts to find a matching stack in the users hand and merge with that.
     /// </summary>
     /// <remarks>
-    ///     If the interaction fails to fully merge the stack, or if this is just not a stack, it will instead try
-    ///     to place it in the user's hand normally.
+    /// If the interaction fails to fully merge the stack, or if this is just not a stack, it will instead try
+    /// to place it in the user's hand normally.
     /// </remarks>
     [PublicAPI]
     public void TryMergeToHands(Entity<StackComponent?> item, Entity<HandsComponent?> user)
@@ -82,7 +82,7 @@ public abstract partial class SharedStackSystem
     /// Donor entity merges stack count into contacting entities.
     /// Deletes the donor if count goes to 0.
     /// </summary>
-    /// <returns>True if donor moved any count to contacts.</returns>
+    /// <returns> True if donor moved any count to contacts. </returns>
     [PublicAPI]
     public bool TryMergeToContacts(Entity<StackComponent?, TransformComponent?> donor)
     {
@@ -117,12 +117,10 @@ public abstract partial class SharedStackSystem
     #region Setters
 
     /// <summary>
-    ///     Sets a stack count to an amount. Server will delete ent if count is 0.
-    ///     Clamps between zero and the stack's max size.
+    /// Sets a stack count to an amount. Server will delete ent if count is 0.
+    /// Clamps between zero and the stack's max size.
     /// </summary>
-    /// <remarks>
-    ///     All setter functions should end up here.
-    /// </remarks>
+    /// <remarks> All setter functions should end up here. </remarks>
     public virtual void SetCount(Entity<StackComponent?> ent, int amount)
     {
         if (!Resolve(ent.Owner, ref ent.Comp))
@@ -150,7 +148,6 @@ public abstract partial class SharedStackSystem
         // Server-side override deletes the entity if count == 0
     }
 
-    // TODO remove
     /// <inheritdoc cref="SetCount(Entity{StackComponent?}, int)"/>
     [Obsolete("Use Entity<T> method instead")]
     public virtual void SetCount(EntityUid uid, int amount, StackComponent? component = null)
@@ -160,12 +157,12 @@ public abstract partial class SharedStackSystem
 
     // TODO
     /// <summary>
-    ///     Increase a stack count by an amount, and spawn new entities if above the max.
+    /// Increase a stack count by an amount, and spawn new entities if above the max.
     /// </summary>
     // public List<EntityUid> RaiseCountAndSpawn(Entity<StackComponent?> ent, int amount);
 
     /// <summary>
-    ///     Reduce a stack count by an amount, even if it would go below 0.
+    /// Reduce a stack count by an amount, even if it would go below 0.
     /// </summary>
     /// <seealso cref="TryUse"/>
     [PublicAPI]
@@ -182,10 +179,10 @@ public abstract partial class SharedStackSystem
     }
 
     /// <summary>
-    ///     Try to reduce a stack count by a whole amount.
-    ///     Won't reduce the stack count if the amount is larger than the stack.
+    /// Try to reduce a stack count by a whole amount.
+    /// Won't reduce the stack count if the amount is larger than the stack.
     /// </summary>
-    /// <returns> True if the count was lowered. Always true if the stack is unlimited.</returns>
+    /// <returns> True if the count was lowered. Always true if the stack is unlimited. </returns>
     [PublicAPI]
     public bool TryUse(Entity<StackComponent?> ent, int amount)
     {
@@ -289,5 +286,6 @@ public abstract partial class SharedStackSystem
     {
         return GetMaxCount(component) - component.Count;
     }
+
     #endregion
 }

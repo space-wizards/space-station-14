@@ -115,13 +115,6 @@ namespace Content.Shared.Stacks
             Appearance.SetData(ent.Owner, StackVisuals.Hide, false, appearance);
         }
 
-        /// <summary>
-        ///     Used on client to set visuals for a lingering stack.
-        /// </summary>
-        protected virtual void UpdateLingering(Entity<StackComponent> ent)
-        {
-        }
-
         private void OnStackGetState(Entity<StackComponent> ent, ref ComponentGetState args)
         {
             args.State = new StackComponentState(ent.Comp.Count, ent.Comp.MaxCountOverride);
@@ -195,16 +188,18 @@ namespace Content.Shared.Stacks
             args.Destroy = true;
         }
 
-        private void OnStackAlternativeInteract(EntityUid uid, StackComponent stack, GetVerbsEvent<AlternativeVerb> args)
+        private void OnStackAlternativeInteract(Entity<StackComponent> ent, ref GetVerbsEvent<AlternativeVerb> args)
         {
-            if (!args.CanAccess || !args.CanInteract || args.Hands == null || stack.Count == 1)
+            if (!args.CanAccess || !args.CanInteract || args.Hands == null || ent.Comp.Count == 1)
                 return;
+
+            var user = args.User; // Can't pass ref events into verbs
 
             AlternativeVerb halve = new()
             {
                 Text = Loc.GetString("comp-stack-split-halve"),
                 Category = VerbCategory.Split,
-                Act = () => UserSplit(uid, args.User, stack.Count / 2, stack),
+                Act = () => UserSplit(ent, user, ent.Comp.Count / 2),
                 Priority = 1
             };
             args.Verbs.Add(halve);
@@ -212,14 +207,14 @@ namespace Content.Shared.Stacks
             var priority = 0;
             foreach (var amount in DefaultSplitAmounts)
             {
-                if (amount >= stack.Count)
+                if (amount >= ent.Comp.Count)
                     continue;
 
                 AlternativeVerb verb = new()
                 {
                     Text = amount.ToString(),
                     Category = VerbCategory.Split,
-                    Act = () => UserSplit(uid, args.User, amount, stack),
+                    Act = () => UserSplit(ent, user, amount),
                     // we want to sort by size, not alphabetically by the verb text.
                     Priority = priority
                 };
@@ -237,26 +232,24 @@ namespace Content.Shared.Stacks
         ///     This empty virtual method allows for UserSplit() to be called on the server from the client.
         ///     When prediction is improved, those two methods should be moved to shared, in order to predict the splitting itself (not just the verbs)
         /// </remarks>
-        protected virtual void UserSplit(EntityUid uid, EntityUid userUid, int amount,
-            StackComponent? stack = null,
-            TransformComponent? userTransform = null)
+        protected virtual void UserSplit(Entity<StackComponent> stack, Entity<TransformComponent?> user, int amount)
         {
 
         }
     }
 
     /// <summary>
-    ///     Event raised when a stack's count has changed.
+    /// Event raised when a stack's count has changed.
     /// </summary>
     public sealed class StackCountChangedEvent : EntityEventArgs
     {
         /// <summary>
-        ///     The old stack count.
+        /// The old stack count.
         /// </summary>
         public int OldCount;
 
         /// <summary>
-        ///     The new stack count.
+        /// The new stack count.
         /// </summary>
         public int NewCount;
 
