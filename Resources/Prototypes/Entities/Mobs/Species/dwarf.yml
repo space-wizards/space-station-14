@@ -18,6 +18,8 @@
     damageRecovery:
       types:
         Asphyxiation: -1.0
+  - type: ScaleVisuals
+    scale: 1, 0.8
   - type: Body
     prototype: Dwarf
     requiredLegs: 2
@@ -66,7 +68,7 @@
   id: MobDwarfDummy
   categories: [ HideSpawnMenu ]
   components:
-  - type: Sprite
+  - type: ScaleVisuals
     scale: 1, 0.8
   - type: Inventory
     femaleDisplacements:
