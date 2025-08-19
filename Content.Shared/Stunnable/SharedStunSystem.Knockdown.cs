@@ -60,9 +60,11 @@ public abstract partial class SharedStunSystem
         SubscribeLocalEvent<KnockedDownComponent, TryStandDoAfterEvent>(OnStandDoAfter);
 
         // Crawling
-        SubscribeLocalEvent<CrawlerComponent, DamageChangedEvent>(OnDamaged);
         SubscribeLocalEvent<CrawlerComponent, KnockedDownRefreshEvent>(OnKnockdownRefresh);
+        SubscribeLocalEvent<CrawlerComponent, DamageChangedEvent>(OnDamaged);
         SubscribeLocalEvent<KnockedDownComponent, WeightlessnessChangedEvent>(OnWeightlessnessChanged);
+        SubscribeLocalEvent<GravityAffectedComponent, KnockDownAttemptEvent>(OnKnockdownAttempt);
+        SubscribeLocalEvent<GravityAffectedComponent, GetStandUpTimeEvent>(OnGetStandUpTime);
 
         // Handling Alternative Inputs
         SubscribeAllEvent<ForceStandUpEvent>(OnForceStandup);
@@ -501,6 +503,20 @@ public abstract partial class SharedStunSystem
         // Targeted moth attack
         CancelKnockdownDoAfter((entity, entity.Comp));
         RemComp<KnockedDownComponent>(entity);
+    }
+
+    private void OnKnockdownAttempt(Entity<GravityAffectedComponent> entity, ref KnockDownAttemptEvent args)
+    {
+        // Directed, targeted moth attack.
+        if (entity.Comp.Weightless)
+            args.Cancelled = true;
+    }
+
+    private void OnGetStandUpTime(Entity<GravityAffectedComponent> entity, ref GetStandUpTimeEvent args)
+    {
+        // Get up instantly if weightless
+        if (entity.Comp.Weightless)
+            args.DoAfterTime = TimeSpan.Zero;
     }
 
     #endregion

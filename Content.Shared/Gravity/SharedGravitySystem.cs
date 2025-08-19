@@ -1,6 +1,5 @@
 using Content.Shared.Alert;
 using Content.Shared.Inventory;
-using Content.Shared.Stunnable;
 using Content.Shared.Throwing;
 using Content.Shared.Weapons.Ranged.Systems;
 using Robust.Shared.Map;
@@ -41,11 +40,9 @@ public abstract partial class SharedGravitySystem : EntitySystem
         SubscribeLocalEvent<AlertsComponent, WeightlessnessChangedEvent>(OnWeightlessnessChanged);
         SubscribeLocalEvent<AlertsComponent, EntParentChangedMessage>(OnAlertsParentChange);
 
-        // Things that care about weightlessness
+        // Impulse
         SubscribeLocalEvent<GravityAffectedComponent, ShooterImpulseEvent>(OnShooterImpulse);
         SubscribeLocalEvent<GravityAffectedComponent, ThrowerImpulseEvent>(OnThrowerImpulse);
-        SubscribeLocalEvent<GravityAffectedComponent, KnockDownAttemptEvent>(OnKnockdownAttempt);
-        SubscribeLocalEvent<GravityAffectedComponent, GetStandUpTimeEvent>(OnGetStandUpTime);
 
         GravityQuery = GetEntityQuery<GravityComponent>();
         _weightlessQuery = GetEntityQuery<GravityAffectedComponent>();
@@ -68,6 +65,7 @@ public abstract partial class SharedGravitySystem : EntitySystem
     {
         if (!_physicsQuery.Resolve(entity, ref entity.Comp2, false))
             return false;
+
         if (entity.Comp2.BodyType is BodyType.Static or BodyType.Kinematic)
             return false;
 
@@ -76,6 +74,7 @@ public abstract partial class SharedGravitySystem : EntitySystem
         RaiseLocalEvent(entity, ref ev);
         if (ev.Handled)
             return ev.IsWeightless;
+
         return !EntityGridOrMapHaveGravity(entity.Owner);
     }
 
@@ -101,9 +100,11 @@ public abstract partial class SharedGravitySystem : EntitySystem
     {
         if (!_weightlessQuery.Resolve(entity, ref entity.Comp))
             return;
+
         // Only update if we're changing our weightless status
         if (entity.Comp.Weightless == weightless)
             return;
+
         UpdateWeightless(entity!);
     }
 
@@ -232,20 +233,6 @@ public abstract partial class SharedGravitySystem : EntitySystem
     private void OnShooterImpulse(Entity<GravityAffectedComponent> entity, ref ShooterImpulseEvent args)
     {
         args.Push = true;
-    }
-
-    private void OnKnockdownAttempt(Entity<GravityAffectedComponent> entity, ref KnockDownAttemptEvent args)
-    {
-        // Directed, targeted moth attack.
-        if (entity.Comp.Weightless)
-            args.Cancelled = true;
-    }
-
-    private void OnGetStandUpTime(Entity<GravityAffectedComponent> entity, ref GetStandUpTimeEvent args)
-    {
-        // Get up instantly if weightless
-        if (entity.Comp.Weightless)
-            args.DoAfterTime = TimeSpan.Zero;
     }
 }
 
