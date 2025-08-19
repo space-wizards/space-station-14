@@ -3,7 +3,6 @@ using Content.Shared.Inventory;
 using Content.Shared.Stunnable;
 using Content.Shared.Throwing;
 using Content.Shared.Weapons.Ranged.Systems;
-using Robust.Shared.GameStates;
 using Robust.Shared.Map;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Components;
@@ -31,8 +30,6 @@ public abstract partial class SharedGravitySystem : EntitySystem
         // Grid Gravity
         SubscribeLocalEvent<GridInitializeEvent>(OnGridInit);
         SubscribeLocalEvent<GravityChangedEvent>(OnGravityChange);
-        SubscribeLocalEvent<GravityComponent, ComponentGetState>(OnGetState);
-        SubscribeLocalEvent<GravityComponent, ComponentHandleState>(OnHandleState);
 
         // Weightlessness
         SubscribeLocalEvent<GravityAffectedComponent, MapInitEvent>(OnMapInit);
@@ -237,14 +234,14 @@ public abstract partial class SharedGravitySystem : EntitySystem
         args.Push = true;
     }
 
-    private void OnKnockdownAttempt(Entity<WeightlessnessComponent> entity, ref KnockDownAttemptEvent args)
+    private void OnKnockdownAttempt(Entity<GravityAffectedComponent> entity, ref KnockDownAttemptEvent args)
     {
         // Directed, targeted moth attack.
         if (entity.Comp.Weightless)
             args.Cancelled = true;
     }
 
-    private void OnGetStandUpTime(Entity<WeightlessnessComponent> entity, ref GetStandUpTimeEvent args)
+    private void OnGetStandUpTime(Entity<GravityAffectedComponent> entity, ref GetStandUpTimeEvent args)
     {
         // Get up instantly if weightless
         if (entity.Comp.Weightless)
