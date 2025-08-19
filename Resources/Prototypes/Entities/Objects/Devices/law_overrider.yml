@@ -2,7 +2,7 @@
   parent: BaseItem
   id: LawOverrider
   name: law overrider
-  description: A device able to overwrite the laws of any silicon. Keep away from the cameras of cyborgs
+  description: A device able to overwrite the laws of any silicon. Keep away from the cameras of cyborgs.
   components:
   - type: Appearance
   - type: Sprite
