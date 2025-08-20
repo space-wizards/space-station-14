@@ -38,6 +38,7 @@ public sealed class MassDriverSystem : EntitySystem
         SubscribeLocalEvent<MassDriverConsoleComponent, NewLinkEvent>(OnNewLink);
         SubscribeLocalEvent<MassDriverConsoleComponent, PortDisconnectedEvent>(OnPortDisconnected);
         SubscribeLocalEvent<MassDriverComponent, SignalReceivedEvent>(OnSignalReceived);
+        SubscribeLocalEvent<MassDriverConsoleComponent, BoundUIOpenedEvent>(OnBoundUiOpened);
     }
 
     #region DeviceLinking
@@ -73,7 +74,7 @@ public sealed class MassDriverSystem : EntitySystem
         Dirty(uid, component);
     }
 
-    private void OnSignalReceived(EntityUid uid, MassDriverComponent component, SignalReceivedEvent args)
+    private void OnSignalReceived(EntityUid uid, MassDriverComponent component, ref SignalReceivedEvent args)
     {
         if (args.Port == component.LaunchPort && component.Mode == MassDriverMode.Manual)
             AddComp<ActiveMassDriverComponent>(uid);
@@ -167,6 +168,18 @@ public sealed class MassDriverSystem : EntitySystem
             var massDriverUid = GetEntity(massDriverConsole.MassDriver);
             if (TryComp<MassDriverComponent>(massDriverUid, out var component))
                 UpdateUserInterface(uid, massDriverUid.Value, component);
+        }
+        else
+            UpdateUserInterface(uid, null, null);
+    }
+
+    private void OnBoundUiOpened(EntityUid uid, MassDriverConsoleComponent component, BoundUIOpenedEvent args)
+    {
+        if (component.MassDriver != null)
+        {
+            var massDriverUid = GetEntity(component.MassDriver);
+            if (TryComp<MassDriverComponent>(massDriverUid, out var driver))
+                UpdateUserInterface(uid, massDriverUid.Value, driver);
         }
         else
             UpdateUserInterface(uid, null, null);
