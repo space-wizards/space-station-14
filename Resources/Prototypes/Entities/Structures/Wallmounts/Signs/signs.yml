@@ -12,6 +12,7 @@
   parent: BaseSign
   id: BaseSignDirectional
   abstract: true
+  suffix: SignDirectional
   components:
     - type: Sprite
       snapCardinals: false
@@ -298,7 +299,7 @@
     state: ass
 
 - type: entity
-  parent: BaseSign
+  parent: BaseSignRoom
   id: SignAnomaly
   name: xenoarcheology lab sign
   description: A sign indicating the xenoarchaeology lab.
@@ -307,7 +308,7 @@
     state: xenoarch
 
 - type: entity
-  parent: BaseSign
+  parent: BaseSignRoom
   id: SignAnomaly2
   name: anomaly lab sign
   description: A sign indicating the anomalous research lab.
@@ -316,7 +317,7 @@
     state: anomaly
 
 - type: entity
-  parent: BaseSign
+  parent: BaseSignRoom
   id: SignAtmos
   name: atmos sign
   description: A sign indicating the atmospherics area.
@@ -325,7 +326,7 @@
     state: atmos
 
 - type: entity
-  parent: BaseSign
+  parent: BaseSignRoom
   id: SignBar
   name: bar sign
   description: A sign indicating the bar.
@@ -334,7 +335,7 @@
     state: bar
 
 - type: entity
-  parent: BaseSign
+  parent: BaseSignRoom
   id: SignBath
   name: bathroom sign
   description: A sign indicating the bathroom.
@@ -343,7 +344,7 @@
     state: bath
 
 - type: entity
-  parent: BaseSign
+  parent: BaseSignRoom
   id: SignKitchen
   name: kitchen sign
   description: The heart of the home. And disease.
@@ -352,7 +353,7 @@
     state: kitchen
 
 - type: entity
-  parent: BaseSign
+  parent: BaseSignRoom
   id: SignTheater
   name: theater sign
   description: Would it even be Space Station without drama?
@@ -369,7 +370,7 @@
         drama3: null
 
 - type: entity
-  parent: BaseSign
+  parent: BaseSignRoom
   id: SignBarbershop
   name: barbershop sign
   description: A sign indicating the barbershop.
@@ -378,7 +379,7 @@
     state: barbershop
 
 - type: entity
-  parent: BaseSign
+  parent: BaseSignRoom
   id: SignBio
   name: bio sign
   description: A sign indicating the biology lab.
@@ -387,7 +388,7 @@
     state: bio
 
 - type: entity
-  parent: BaseSign
+  parent: BaseSignRoom
   id: SignBridge
   name: bridge sign
   description: A sign indicating the bridge.
@@ -396,7 +397,7 @@
     state: bridge
 
 - type: entity
-  parent: BaseSign
+  parent: BaseSignRoom
   id: SignCargo
   name: cargo sign
   description: A sign indicating the cargo area.
@@ -405,7 +406,7 @@
     state: cargo
 
 - type: entity
-  parent: BaseSign
+  parent: BaseSignRoom
   id: SignCargoDock
   name: cargo dock sign
   description: A sign indicating a cargo dock.
@@ -414,7 +415,7 @@
     state: cargo_dock
 
 - type: entity
-  parent: BaseSign
+  parent: BaseSignRoom
   id: SignChapel
   name: chapel sign
   description: A sign indicating the chapel.
@@ -423,7 +424,7 @@
     state: chapel
 
 - type: entity
-  parent: BaseSign
+  parent: BaseSignRoom
   id: SignChem
   name: chemistry sign
   description: A sign indicating the chemistry lab.
@@ -432,7 +433,7 @@
     state: chem
 
 - type: entity
-  parent: BaseSign
+  parent: BaseSignRoom
   id: SignCloning
   name: cloning sign
   description: A sign indicating the cloning lab.
@@ -441,7 +442,7 @@
     state: cloning
 
 - type: entity
-  parent: BaseSign
+  parent: BaseSignRoom
   id: SignConference
   name: conference room sign
   description: Where work happens.
@@ -450,7 +451,7 @@
     state: conference_room
 
 - type: entity
-  parent: BaseSign
+  parent: BaseSignRoom
   id: SignCryo
   name: cryosleep sign
   description: Just like that? You're gonna chicken out?
@@ -460,7 +461,7 @@
 
 
 - type: entity
-  parent: BaseSign
+  parent: BaseSignRoom
   id: SignDisposalSpace
   name: disposal sign
   description: A sign indicating a disposal area.
@@ -469,7 +470,7 @@
     state: deathsposal
 
 - type: entity
-  parent: BaseSign
+  parent: BaseSignRoom
   id: SignDoors
   name: doors sign
   description: A sign indicating doors.
@@ -478,7 +479,7 @@
     state: doors
 
 - type: entity
-  parent: BaseSign
+  parent: BaseSignRoom
   id: SignRestroom
   name: restroom sign
   description: A sign indicating where you go to... What do you do here again?
@@ -487,7 +488,7 @@
     state: restroom
 
 - type: entity
-  parent: BaseSign
+  parent: BaseSignRoom
   id: SignMaterials
   name: materials sign
   description: An omen to the juicy vault of steel, glass, and plastic that lays before you.
@@ -496,7 +497,7 @@
     state: mats
 
 - type: entity
-  parent: BaseSign
+  parent: BaseSignRoom
   id: SignEngine
   name: power sign
   description: Where the powa happens.
@@ -505,7 +506,7 @@
     state: engine
 
 - type: entity
-  parent: BaseSign
+  parent: BaseSignRoom
   id: SignEngineering
   name: engineering sign
   description: A sign indicating the engineering area.
@@ -514,7 +515,7 @@
     state: eng
 
 - type: entity
-  parent: BaseSign
+  parent: BaseSignRoom
   id: SignEscapePods
   name: escape pods sign
   description: A sign indicating the escape pods.
@@ -523,7 +524,7 @@
     state: pods
 
 - type: entity
-  parent: BaseSign
+  parent: BaseSignRoom
   id: SignEVA
   name: EVA sign
   description: A sign indicating an EVA area. EVA equipment may be required beyond this point.
@@ -532,7 +533,7 @@
     state: eva
 
 - type: entity
-  parent: BaseSign
+  parent: BaseSignRoom
   id: SignExamroom
   name: examination room sign
   description: A sign indicating a medical examination room.
@@ -541,7 +542,7 @@
     state: examroom
 
 - type: entity
-  parent: BaseSign
+  parent: BaseSignRoom
   id: SignGravity
   name: gravity sign
   description: A sign indicating the gravity generator.
@@ -550,7 +551,7 @@
     state: gravi
 
 - type: entity
-  parent: BaseSign
+  parent: BaseSignRoom
   id: SignHead
   name: head sign
   description: An official sign indicating the dwellings of a Nanotrasen-certified head of department.
@@ -559,7 +560,7 @@
     state: commander
 
 - type: entity
-  parent: BaseSign
+  parent: BaseSignRoom
   id: SignHydro1
   name: hydro sign
   description: A sign indicating a hydroponics area.
@@ -568,7 +569,7 @@
     state: hydro
 
 - type: entity
-  parent: BaseSign
+  parent: BaseSignRoom
   id: SignInterrogation
   name: interrogation sign
   description: A sign indicating an interrogation room.
@@ -577,7 +578,7 @@
     state: interrogation
 
 - type: entity
-  parent: BaseSign
+  parent: BaseSignRoom
   id: SignJanitor
   name: janitor sign
   description: A sign labelling an area where the janitor works.
@@ -586,7 +587,7 @@
     state: janitor
 
 - type: entity
-  parent: BaseSign
+  parent: BaseSignRoom
   id: SignLaundromat
   name: laundromat sign
   description: A sign indicating the laundromat.
@@ -595,7 +596,7 @@
     state: laundromat
 
 - type: entity
-  parent: BaseSign
+  parent: BaseSignRoom
   id: SignLawyer
   name: law sign
   description: A sign indicating the presence of the (typically absent) rule of law.
@@ -604,7 +605,7 @@
     state: law
 
 - type: entity
-  parent: BaseSign
+  parent: BaseSignRoom
   id: SignLibrary
   name: library sign
   description: A sign indicating the library.
@@ -613,7 +614,7 @@
     state: biblio
 
 - type: entity
-  parent: BaseSign
+  parent: BaseSignRoom
   id: SignMail
   name: mail sign
   description: A sign indicating mail.
@@ -622,7 +623,7 @@
     state: mail
 
 - type: entity
-  parent: BaseSign
+  parent: BaseSignRoom
   id: SignMedical
   name: medbay sign
   description: A sign indicating the medical bay.
@@ -631,7 +632,7 @@
     state: medbay
 
 - type: entity
-  parent: BaseSign
+  parent: BaseSignRoom
   id: SignMorgue
   name: morgue sign
   description: A sign indicating the morgue.
@@ -640,7 +641,7 @@
     state: morgue
 
 - type: entity
-  parent: BaseSign
+  parent: BaseSignRoom
   id: SignNews
   name: news sign
   description: A sign indicating where the Reporter works.
@@ -658,7 +659,7 @@
     state: nosmoking
 
 - type: entity
-  parent: BaseSign
+  parent: BaseSignRoom
   id: SignGenpop
   name: genpop sign
   description: A sign indicating the genpop prison.
@@ -667,7 +668,7 @@
     state: genpop
 
 - type: entity
-  parent: BaseSign
+  parent: BaseSignRoom
   id: SignPrison
   name: prison sign
   description: A sign indicating the prison.
@@ -676,7 +677,7 @@
     state: prison
 
 - type: entity
-  parent: BaseSign
+  parent: BaseSignRoom
   id: SignPsychology
   name: psychology sign
   description: A sign labelling an area where the Psychologist works.
@@ -685,7 +686,7 @@
     state: psychology
 
 - type: entity
-  parent: BaseSign
+  parent: BaseSignRoom
   id: SignReception
   name: reception sign
   description: A sign indicating the reception.
@@ -694,7 +695,7 @@
     state: reception
 
 - type: entity
-  parent: BaseSign
+  parent: BaseSignRoom
   id: SignRND
   name: research and development sign
   description: A sign indicating the research and development lab.
@@ -703,7 +704,7 @@
     state: rnd
 
 - type: entity
-  parent: BaseSign
+  parent: BaseSignRoom
   id: SignRobo
   name: robo sign
   description: A sign indicating the robotics lab.
@@ -712,7 +713,7 @@
     state: robo
 
 - type: entity
-  parent: BaseSign
+  parent: BaseSignRoom
   id: SignSalvage
   name: salvage sign
   description: A sign indicating the salvage area.
@@ -721,7 +722,7 @@
     state: salvage
 
 - type: entity
-  parent: BaseSign
+  parent: BaseSignRoom
   id: SignScience
   name: science sign
   description: A sign indicating the science area.
@@ -730,7 +731,7 @@
     state: sci
 
 - type: entity
-  parent: BaseSign
+  parent: BaseSignRoom
   id: SignServer
   name: server sign
   description: Ever heard of Big Data? This is it, chump. The biggest.
@@ -739,7 +740,7 @@
     state: data
 
 - type: entity
-  parent: BaseSign
+  parent: BaseSignRoom
   id: SignCans
   name: canisters sign
   description: A sign indicating the auspicious presence of gas canisters.
@@ -756,7 +757,7 @@
     state: cans_sci
 
 - type: entity
-  parent: BaseSign
+  parent: BaseSignRoom
   id: SignShipDock
   name: evac sign
   description: A sign indicating the where the evac shuttle will (likely) arrive.
@@ -765,7 +766,7 @@
     state: dock
 
 - type: entity
-  parent: BaseSign
+  parent: BaseSignRoom
   id: SignSpace
   name: space sign
   description: A sign warning that the area ahead is nothing but cold, empty space.
@@ -774,7 +775,7 @@
     state: space
 
 - type: entity
-  parent: BaseSign
+  parent: BaseSignRoom
   id: SignSurgery
   name: surgery sign
   description: A sign indicating the operating theater.
@@ -783,7 +784,7 @@
     state: surgery
 
 - type: entity
-  parent: BaseSign
+  parent: BaseSignRoom
   id: SignTelecomms
   name: telecomms sign
   description: A sign indicating the telecommunications room.
@@ -792,7 +793,7 @@
     state: telecoms
 
 - type: entity
-  parent: BaseSign
+  parent: BaseSignRoom
   id: SignToxins
   name: toxins sign
   description: A sign indicating the toxin lab.
@@ -801,7 +802,7 @@
     state: toxins
 
 - type: entity
-  parent: BaseSign
+  parent: BaseSignRoom
   id: SignVault
   name: vault sign
   description: A sign indicating the vault. Who knows what secrets lie inside?
@@ -810,7 +811,7 @@
     state: vault
 
 - type: entity
-  parent: BaseSign
+  parent: BaseSignRoom
   id: SignVirology
   name: virology sign
   description: A sign indicating the virology lab.
@@ -819,7 +820,7 @@
     state: virology
 
 - type: entity
-  parent: BaseSign
+  parent: BaseSignWarning
   id: SignCorrosives
   name: corrosives warning sign
   description: A sign indicating a corrosive materials hazard.
@@ -828,7 +829,7 @@
     state: medium_corrosives
 
 - type: entity
-  parent: BaseSign
+  parent: BaseSignWarning
   id: SignMemetic
   name: memetic warning sign
   description: A sign indicating a memetic hazard.
@@ -837,7 +838,7 @@
     state: medium_memetic
 
 - type: entity
-  parent: BaseSign
+  parent: BaseSignWarning
   id: SignOxidants
   name: oxidants warning sign
   description: A sign indicating an oxidizing agent hazard.
@@ -846,7 +847,7 @@
     state: medium_oxidants
 
 - type: entity
-  parent: BaseSign
+  parent: BaseSignRoom
   id: SignXenobio
   name: xenobio sign
   description: A sign indicating the xenobiology lab.
@@ -864,7 +865,7 @@
     state: zomlab
 
 - type: entity
-  parent: BaseSign
+  parent: BaseSignWarning
   id: SignSecureMedRed
   name: red secure sign
   description: A sign indicating that the area ahead is a secure area.
@@ -873,7 +874,7 @@
     state: medium_secure_red
 
 - type: entity
-  parent: BaseSign
+  parent: BaseSignWarning
   id: SignSecureSmall
   name: small secure sign
   description: A sign indicating that the area ahead is a secure area.
@@ -882,7 +883,7 @@
     state: small_secure
 
 - type: entity
-  parent: BaseSign
+  parent: BaseSignWarning
   id: SignSecureSmallRed
   name: small red secure sign
   description: A sign indicating that the area ahead is a secure area.
@@ -891,7 +892,7 @@
     state: small_secure_red
 
 - type: entity
-  parent: BaseSign
+  parent: BaseSignWarning
   id: SignBlankMed
   name: blank sign
   description: A blank sign.
@@ -900,7 +901,7 @@
     state: medium_blank
 
 - type: entity
-  parent: BaseSign
+  parent: BaseSignWarning
   id: SignMagneticsMed
   name: magnetics sign
   description: A sign indicating the use of magnets.
@@ -909,7 +910,7 @@
     state: medium_magnetics
 
 - type: entity
-  parent: BaseSign
+  parent: BaseSignWarning
   id: SignDangerMed
   name: danger sign
   description: A sign warning against some form of danger.
@@ -918,7 +919,7 @@
     state: medium_danger
 
 - type: entity
-  parent: BaseSign
+  parent: BaseSignWarning
   id: ExplosivesSignMed
   name: explosives sign
   description: A sign indicating explosive materials.
@@ -927,7 +928,7 @@
     state: medium_explosives
 
 - type: entity
-  parent: BaseSign
+  parent: BaseSignWarning
   id: SignCryogenicsMed
   name: cryogenics sign
   description: A sign indicating cryogenic materials.
@@ -936,7 +937,7 @@
     state: medium_cryogenics
 
 - type: entity
-  parent: BaseSign
+  parent: BaseSignWarning
   id: SignElectricalMed
   name: electrical sign
   description: A sign indicating an electrical hazard.
@@ -945,7 +946,7 @@
     state: medium_electrical
 
 - type: entity
-  parent: BaseSign
+  parent: BaseSignWarning
   id: SignBiohazardMed
   name: biohazard sign
   description: A sign indicating a biohazard.
@@ -954,7 +955,7 @@
     state: medium_biohazard
 
 - type: entity
-  parent: BaseSign
+  parent: BaseSignWarning
   id: SignRadiationMed
   name: radiation sign
   description: A sign indicating an ionizing radiation hazard.
@@ -963,7 +964,7 @@
     state: medium_radiation
 
 - type: entity
-  parent: BaseSign
+  parent: BaseSignWarning
   id: SignFlammableMed
   name: flammable sign #when flammable component is done, this sign needs it
   description: A sign indicating flammable materials.
@@ -972,7 +973,7 @@
     state: medium_flammable
 
 - type: entity
-  parent: BaseSign
+  parent: BaseSignWarning
   id: SignLaserMed
   name: laser sign
   description: A sign indicating a laser hazard.
@@ -981,7 +982,7 @@
     state: medium_laser
 
 - type: entity
-  parent: BaseSign
+  parent: BaseSignWarning
   id: SignSecureMed
   name: secure sign
   description: A sign indicating that the area ahead is a secure area.
@@ -991,7 +992,7 @@
 
 # TODO: make a fancier version of this sign
 - type: entity
-  parent: BaseSign
+  parent: BaseSignRoom
   id: SignVox
   name: vox area sign
   description: A sign indicating that the area ahead is intended for Vox crew members and does not have an oxygen atmosphere.
@@ -1002,7 +1003,7 @@
 # Atmos Warnings
 
 - type: entity
-  parent: BaseSign
+  parent: BaseSignGas
   id: WarningAir
   name: air warning sign
   description: WARNING! Air flow tube. Ensure the flow is disengaged before working.
@@ -1011,7 +1012,7 @@
     state: atmos_air
 
 - type: entity
-  parent: BaseSign
+  parent: BaseSignGas
   id: WarningCO2
   name: CO2 warning sign
   description: WARNING! CO2 flow tube. Ensure the flow is disengaged before working.
@@ -1020,7 +1021,7 @@
     state: atmos_co2
 
 - type: entity
-  parent: BaseSign
+  parent: BaseSignGas
   id: WarningN2
   name: N2 warning sign
   description: WARNING! N2 flow tube. Ensure the flow is disengaged before working.
@@ -1029,7 +1030,7 @@
     state: atmos_n2
 
 - type: entity
-  parent: BaseSign
+  parent: BaseSignGas
   id: WarningN2O
   name: N2O warning sign
   description: WARNING! N2O flow tube. Ensure the flow is disengaged before working.
@@ -1038,7 +1039,7 @@
     state: atmos_n2o
 
 - type: entity
-  parent: BaseSign
+  parent: BaseSignGas
   id: WarningO2
   name: O2 warning sign
   description: WARNING! O2 flow tube. Ensure the flow is disengaged before working.
@@ -1047,7 +1048,7 @@
     state: atmos_o2
 
 - type: entity
-  parent: BaseSign
+  parent: BaseSignGas
   id: WarningPlasma
   name: plasma waste sign
   description: WARNING! Plasma flow tube. Ensure the flow is disengaged before working.
@@ -1056,7 +1057,7 @@
     state: atmos_plasma
 
 - type: entity
-  parent: BaseSign
+  parent: BaseSignGas
   id: WarningTritium
   name: tritium waste sign
   description: WARNING! Tritium flow tube. Ensure the flow is disengaged before working.
@@ -1065,7 +1066,7 @@
     state: atmos_tritium
 
 - type: entity
-  parent: BaseSign
+  parent: BaseSignGas
   id: WarningWaste
   name: atmos waste sign
   description: WARNING! Waste flow tube. Ensure the flow is disengaged before working.
@@ -1101,7 +1102,7 @@
     state: something-old2
 
 - type: entity
-  parent: BaseSign
+  parent: BaseSignRoom
   id: SignSecurity
   name: security sign
   description: A sign depicting the security insignia.
@@ -1110,7 +1111,7 @@
     state: security
 
 - type: entity
-  parent: BaseSign
+  parent: BaseSignRoom
   id: SignDetective
   name: Detective sign
   description: A sign depicting the detective's office.
@@ -1187,7 +1188,7 @@
     snapCardinals: false
 
 - type: entity
-  parent: BaseSign
+  parent: BaseSignNumber
   id: SignRedOne
   name: one sign
   description: A sign with a digit, one is written on it.
@@ -1196,7 +1197,7 @@
     state: one
 
 - type: entity
-  parent: BaseSign
+  parent: BaseSignNumber
   id: SignRedTwo
   name: two sign
   description: A sign with a digit, two is written on it.
@@ -1205,7 +1206,7 @@
     state: two
 
 - type: entity
-  parent: BaseSign
+  parent: BaseSignNumber
   id: SignRedThree
   name: three sign
   description: A sign with a digit, three is written on it.
@@ -1214,7 +1215,7 @@
     state: three
 
 - type: entity
-  parent: BaseSign
+  parent: BaseSignNumber
   id: SignRedFour
   name: four sign
   description: A sign with a digit, four is written on it.
@@ -1223,7 +1224,7 @@
     state: four
 
 - type: entity
-  parent: BaseSign
+  parent: BaseSignNumber
   id: SignRedFive
   name: five sign
   description: A sign with a digit, five is written on it.
@@ -1232,7 +1233,7 @@
     state: five
 
 - type: entity
-  parent: BaseSign
+  parent: BaseSignNumber
   id: SignRedSix
   name: six sign
   description: A sign with a digit, six is written on it.
@@ -1241,7 +1242,7 @@
     state: six
 
 - type: entity
-  parent: BaseSign
+  parent: BaseSignNumber
   id: SignRedSeven
   name: seven sign
   description: A sign with a digit, seven is written on it.
@@ -1250,7 +1251,7 @@
     state: seven
 
 - type: entity
-  parent: BaseSign
+  parent: BaseSignNumber
   id: SignRedEight
   name: eight sign
   description: A sign with a digit, eight is written on it.
@@ -1259,7 +1260,7 @@
     state: eight
 
 - type: entity
-  parent: BaseSign
+  parent: BaseSignNumber
   id: SignRedNine
   name: nine sign
   description: A sign with a digit, nine is written on it.
@@ -1268,7 +1269,7 @@
     state: nine
 
 - type: entity
-  parent: BaseSign
+  parent: BaseSignNumber
   id: SignRedZero
   name: zero sign
   description: A sign with a digit, zero is written on it.
