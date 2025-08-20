@@ -1,8 +1,8 @@
 reagent-name-toxin = toxin
 reagent-desc-toxin = An unsurprisingly toxic chemical. Available at an emagged chem dispenser.
 
-reagent-name-toxin = antitoxin
-reagent-desc-toxin = Generic antitoxin. Might save you from a snake bite.
+reagent-name-antitoxin = antitoxin
+reagent-desc-antitoxin = Generic antitoxin. Might save you from a snake bite.
 
 reagent-name-carpotoxin = carpotoxin
 reagent-desc-carpotoxin = A highly toxic reagent found in space carps. Causes a painful burning sensation.
