@@ -21,8 +21,6 @@ public sealed class SpeakOnExceptionSystem : EntitySystem
     // Special log handler that just saves the latest error.
     private SpeakOnExceptionLogHandler _logHandler = default!;
 
-    private bool _censor;
-
     public override void Initialize()
     {
         base.Initialize();
@@ -32,8 +30,6 @@ public sealed class SpeakOnExceptionSystem : EntitySystem
 
         SubscribeLocalEvent<SpeakOnExceptionComponent, MapInitEvent>(OnMapInit);
         SubscribeLocalEvent<SpeakOnExceptionComponent, TransformSpeechEvent>(OnTransformSpeech, before: [ typeof(AccentSystem) ]);
-
-        Subs.CVar(_config, CCVars.CensorExceptionsInChat, x => _censor = x, true);
     }
 
     private void OnMapInit(Entity<SpeakOnExceptionComponent> ent, ref MapInitEvent args)
@@ -59,7 +55,7 @@ public sealed class SpeakOnExceptionSystem : EntitySystem
                 if (_random.Prob(comp.ChanceSpeakNoAccent))
                     comp.BlockAccent = true;
 
-                _chat.TrySendInGameICMessage(uid, TryCensorMessage(comp, log), InGameICChatType.Speak, ChatTransmitRange.Normal, true);
+                _chat.TrySendInGameICMessage(uid, CensorMessage(comp), InGameICChatType.Speak, ChatTransmitRange.Normal, true);
                 comp.BlockAccent = false;
 
                 comp.NextTimeCanSpeak += comp.SpeechCooldown;
@@ -75,9 +71,9 @@ public sealed class SpeakOnExceptionSystem : EntitySystem
         args.Cancelled |= ent.Comp.BlockAccent;
     }
 
-    private string TryCensorMessage(SpeakOnExceptionComponent comp, string message)
+    private string CensorMessage(SpeakOnExceptionComponent comp)
     {
-        return _censor ? Loc.GetString(_random.Pick(_proto.Index(comp.Dataset).Values)) : message;
+        return Loc.GetString(_random.Pick(_proto.Index(comp.Dataset).Values));
     }
 }
 
