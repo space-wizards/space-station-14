@@ -57,6 +57,10 @@ namespace Content.Server.Database
                 .HasIndex(p => new {p.Slot, PrefsId = p.PreferenceId})
                 .IsUnique();
 
+            modelBuilder.Entity<DbPronoun>()
+                .HasIndex(p => new { HumanoidProfileId = p.ProfileId })
+                .IsUnique();
+
             modelBuilder.Entity<Antag>()
                 .HasIndex(p => new {HumanoidProfileId = p.ProfileId, p.AntagName})
                 .IsUnique();
@@ -405,7 +409,7 @@ namespace Content.Server.Database
         public int Age { get; set; }
         public string Sex { get; set; } = null!;
         public string Gender { get; set; } = null!;
-        public DbPronoun Pronouns { get; set; } = new();
+        public DbPronoun? Pronouns { get; set; }
         public string Species { get; set; } = null!;
         [Column(TypeName = "jsonb")] public JsonDocument? Markings { get; set; } = null!;
         public string HairName { get; set; } = null!;
@@ -430,15 +434,38 @@ namespace Content.Server.Database
     public class DbPronoun
     {
         public int Id { get; set; }
-        public string Subject { get; set; } = null!;
-        public string Object { get; set; } = null!;
-        public string DatObj { get; set; } = null!;
-        public string Genitive { get; set; } = null!;
-        public string PossAdj { get; set; } = null!;
-        public string PossPronoun { get; set; } = null!;
-        public string Reflexive { get; set; } = null!;
-        public string Counter { get; set; } = null!;
-        public bool Plural { get; set; }
+        public Profile Profile { get; set; } = null!;
+        public int ProfileId { get; set; }
+        public string? Subject { get; set; } = null!;
+        public string? Object { get; set; } = null!;
+        public string? DatObj { get; set; } = null!;
+        public string? Genitive { get; set; } = null!;
+        public string? PossAdj { get; set; } = null!;
+        public string? PossPronoun { get; set; } = null!;
+        public string? Reflexive { get; set; } = null!;
+        public string? Counter { get; set; } = null!;
+        public bool? Plural { get; set; }
+
+        public DbPronoun(string? subject,
+            string? @object,
+            string? datObj,
+            string? genitive,
+            string? possAdj,
+            string? possPronoun,
+            string? reflexive,
+            string? counter,
+            bool? plural)
+        {
+            Subject = subject;
+            Object = @object;
+            DatObj = datObj;
+            Genitive = genitive;
+            PossAdj = possAdj;
+            PossPronoun = possPronoun;
+            Reflexive = reflexive;
+            Counter = counter;
+            Plural = plural;
+        }
     }
 
     public class Job

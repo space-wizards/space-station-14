@@ -268,15 +268,15 @@ namespace Content.Server.Database
                 sex,
                 gender,
                 new Pronoun(
-                   profile.Pronouns.Subject,
-                   profile.Pronouns.Object,
-                   profile.Pronouns.DatObj,
-                   profile.Pronouns.Genitive,
-                   profile.Pronouns.PossAdj,
-                   profile.Pronouns.PossPronoun,
-                   profile.Pronouns.Reflexive,
-                   profile.Pronouns.Counter,
-                   profile.Pronouns.Plural
+                   profile.Pronouns?.Subject,
+                   profile.Pronouns?.Object,
+                   profile.Pronouns?.DatObj,
+                   profile.Pronouns?.Genitive,
+                   profile.Pronouns?.PossAdj,
+                   profile.Pronouns?.PossPronoun,
+                   profile.Pronouns?.Reflexive,
+                   profile.Pronouns?.Counter,
+                   profile.Pronouns?.Plural
                 ),
                 new HumanoidCharacterAppearance
                 (
@@ -329,24 +329,17 @@ namespace Content.Server.Database
             {
                 var pronoun = humanoid.Pronoun;
 
-                if (pronoun.Subject != null)
-                    profile.Pronouns.Subject = pronoun.Subject;
-                if (pronoun.Object != null)
-                    profile.Pronouns.Object = pronoun.Object;
-                if (pronoun.DatObj != null)
-                    profile.Pronouns.DatObj = pronoun.DatObj;
-                if (pronoun.Genitive != null)
-                    profile.Pronouns.Genitive = pronoun.Genitive;
-                if (pronoun.PossAdj != null)
-                    profile.Pronouns.PossAdj = pronoun.PossAdj;
-                if (pronoun.PossPronoun != null)
-                    profile.Pronouns.PossPronoun = pronoun.PossPronoun;
-                if (pronoun.Reflexive != null)
-                    profile.Pronouns.Reflexive = pronoun.Reflexive;
-                if (pronoun.Counter != null)
-                    profile.Pronouns.Counter = pronoun.Counter;
-                if (pronoun.Plural != null)
-                    profile.Pronouns.Plural = pronoun.Plural.Value;
+                profile.Pronouns = new DbPronoun(
+                    pronoun.Subject,
+                    pronoun.Object,
+                    pronoun.DatObj,
+                    pronoun.Genitive,
+                    pronoun.PossAdj,
+                    pronoun.PossPronoun,
+                    pronoun.Reflexive,
+                    pronoun.Counter,
+                    pronoun.Plural
+                );
             }
 
             profile.Jobs.Clear();
