@@ -4,8 +4,8 @@ meta:
   engineVersion: 265.0.0
   forkId: ""
   forkVersion: ""
-  time: 08/20/2025 07:20:44
-  entityCount: 16937
+  time: 08/20/2025 07:46:40
+  entityCount: 16939
 maps:
 - 1
 grids:
@@ -9950,7 +9950,7 @@ entities:
       pos: 13.5,-9.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -184165.16
+      secondsUntilStateChange: -185712.6
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -33746,6 +33746,16 @@ entities:
     components:
     - type: Transform
       pos: 23.5,-27.5
+      parent: 2
+  - uid: 16938
+    components:
+    - type: Transform
+      pos: 16.5,-30.5
+      parent: 2
+  - uid: 16939
+    components:
+    - type: Transform
+      pos: 17.5,-30.5
       parent: 2
 - proto: CableMVStack
   entities:
@@ -75746,7 +75756,7 @@ entities:
       pos: 16.5,-40.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -59544.016
+      secondsUntilStateChange: -61091.45
       state: Opening
 - proto: HospitalCurtainsOpen
   entities:
