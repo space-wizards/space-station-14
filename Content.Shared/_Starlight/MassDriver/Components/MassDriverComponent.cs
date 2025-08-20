@@ -88,8 +88,14 @@ public sealed partial class MassDriverComponent : Component
     public ProtoId<SinkPortPrototype> LaunchPort = "Launch";
 
     /// <summary>
-    /// Determines whether it has been hacked
+    /// Determines whether it has been hacked.
     /// </summary>
     [AutoNetworkedField]
     public bool Hacked = false;
+
+    /// <summary>
+    /// Determines how mach speed setted up when hacked.
+    /// </summary>
+    [DataField]
+    public float HackedSpeedRewrite = 20f;
 }

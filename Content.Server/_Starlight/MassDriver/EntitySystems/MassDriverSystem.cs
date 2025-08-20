@@ -151,7 +151,7 @@ public sealed class MassDriverSystem : EntitySystem
             var xform = Transform(uid);
             var throwing = xform.LocalRotation.ToWorldVec() * (massDriver.CurrentThrowDistance - (massDriver.ThrowCountDelta * (entities.Count - 1)));
             var direction = xform.Coordinates.Offset(throwing);
-            var speed = massDriver.CurrentThrowSpeed - (massDriver.ThrowCountDelta * (entitiesCount - 1));
+            var speed = massDriver.Hacked ? massDriver.HackedSpeedRewrite : massDriver.CurrentThrowSpeed - (massDriver.ThrowCountDelta * (entitiesCount - 1));
 
             foreach (var entity in entities)
                 _throwing.TryThrow(entity, direction, speed);

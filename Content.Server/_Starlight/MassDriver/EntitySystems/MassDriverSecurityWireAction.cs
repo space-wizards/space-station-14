@@ -20,7 +20,6 @@ public sealed partial class MassDriverSecurityWireAction : ComponentWireAction<M
     {
         WiresSystem.TryCancelWireAction(wire.Owner, PulseTimeoutKey.Key);
         component.Hacked = true;
-        component.MaxThrowSpeed = 20f;
 
         return true;
     }
@@ -28,7 +27,6 @@ public sealed partial class MassDriverSecurityWireAction : ComponentWireAction<M
     public override bool Mend(EntityUid user, Wire wire, MassDriverComponent component)
     {
         component.Hacked = false;
-        component.MaxThrowSpeed = 10f;
 
         return true;
     }
@@ -36,28 +34,20 @@ public sealed partial class MassDriverSecurityWireAction : ComponentWireAction<M
     public override void Pulse(EntityUid user, Wire wire, MassDriverComponent component)
     {
         component.Hacked = true;
-        component.MaxThrowSpeed = 20f;
         WiresSystem.StartWireAction(wire.Owner, _pulseTimeout, PulseTimeoutKey.Key, new TimedWireEvent(AwaitPulseCancel, wire));
     }
 
     public override void Update(Wire wire)
     {
         if (!IsPowered(wire.Owner))
-        {
             WiresSystem.TryCancelWireAction(wire.Owner, PulseTimeoutKey.Key);
-        }
     }
 
     private void AwaitPulseCancel(Wire wire)
     {
-        if (!wire.IsCut)
-        {
-            if (EntityManager.TryGetComponent<MassDriverComponent>(wire.Owner, out var driver))
-            {
-                driver.Hacked = false;
-                driver.MaxThrowSpeed = 10f;
-            }
-        }
+        if (!wire.IsCut
+            && EntityManager.TryGetComponent<MassDriverComponent>(wire.Owner, out var driver))
+            driver.Hacked = false;
     }
     
     private enum PulseTimeoutKey : byte
