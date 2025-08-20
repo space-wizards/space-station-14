@@ -45,7 +45,7 @@ public sealed class AntivenomProducerSystem : SharedAntivenomProducerSystem
                 : FixedPoint2.Min(cfg.MaxBuffer, amount);
 
             // account for current reagents in solution
-            var cur = _solutions.GetTotalPrototypeQuantity(soln.Owner, cfg.Antivenom);
+            var cur = soln.Comp.Solution.GetTotalPrototypeQuantity(cfg.Antivenom);
             if (delta <= cur)
                 continue;
 
@@ -67,9 +67,4 @@ public sealed class AntivenomProducerSystem : SharedAntivenomProducerSystem
             // ^ if this is firing it means an ent is filling its chemstream. Probably not because of us, but this lets us know to check.
         }
     }
-
-    // TODO: consider whether to increase number of metab'ed reagents so we cant get chock a block with antivenoms.
-    // hard choice because
-    // - will incentivise getting stage one of a lot of antivenoms
-    // - you can still metab everything just fine, but without additional metabs it will just be slower. Maybe thats a reasonable penalty to being poisoned a lot lmao.
 }

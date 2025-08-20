@@ -163,9 +163,17 @@ namespace Content.Server.Body.Systems
                     continue;
                 }
 
-                // we're done here entirely if this is true
-                if (reagents >= ent.Comp1.MaxReagentsProcessable)
-                    return;
+                // stop metabolizing if we're out of slots and dont have reagent immunizations
+                if (antivenomProducer)
+                {
+                    if (reagents >= ent.Comp1.MaxReagentsProcessable + antivenomComp!.UnlockedImmunities.Count)
+                        return;
+                }
+                else
+                {
+                    if (reagents >= ent.Comp1.MaxReagentsProcessable)
+                        return;
+                }
 
 
                 // loop over all our groups and see which ones apply
