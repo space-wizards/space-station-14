@@ -1256,6 +1256,44 @@
     - type: StaticPrice
       price: 2000
 
+# mothership module
+- type: entity
+  parent: [ BaseXenoborgModuleGeneric, BaseProviderBorgModule, BaseXenoborgContraband ]
+  id: MothershipModule
+  name: mothership module
+  description: Hands for borging, hands for inserting modules.
+  components:
+  - type: Tag
+    tags:
+    - MothershipModule
+  - type: Sprite
+    layers:
+    - state: xenoborg_generic
+    - state: icon-xenoborg-basic
+  - type: ItemBorgModule
+    hands:
+    - item: DoorRemoteXenoborg
+    - hand:
+      emptyLabel: borg-slot-brains-empty
+      emptyRepresentative: MMIFilled
+      whitelist:
+        tags:
+        - Brain
+    - hand:
+      emptyLabel: borg-slot-modules-empty
+      emptyRepresentative: XenoborgModuleBasic
+      whitelist:
+        components:
+        - BorgModule
+    - hand:
+      emptyRepresentative: BorgModuleConstructionMaterialPlaceholder
+      emptyLabel: borg-slot-construction-empty
+      whitelist:
+        tags:
+        - ConstructionMaterial
+  - type: BorgModuleIcon
+    icon: { sprite: Interface/Actions/actions_borg.rsi, state: xenoborg-basic-module }
+
 # xenoborg modules
 - type: entity
   parent: [ BaseXenoborgModuleGeneric, BaseProviderBorgModule, BaseXenoborgContraband ]
