@@ -8,7 +8,7 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototy
 namespace Content.Shared.WooWoo.Components.Antivenom;
 
 [RegisterComponent, NetworkedComponent]
-[AutoGenerateComponentState(fieldDeltas: true), AutoGenerateComponentPause]
+[AutoGenerateComponentState(fieldDeltas: true)]
 [Access(typeof(SharedAntivenomProducerSystem))]
 public sealed partial class AntivenomProducerComponent : Component
 {

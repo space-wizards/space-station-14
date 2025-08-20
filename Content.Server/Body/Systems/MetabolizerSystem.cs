@@ -220,7 +220,9 @@ namespace Content.Server.Body.Systems
                 if (mostToRemove > FixedPoint2.Zero)
                 {
                     if (antivenomProducer)
-                        _antivenomProducerSystem.AccumulateImmunity(ent, antivenomComp, reagent, mostToRemove);
+                    {
+                        _antivenomProducerSystem.AccumulateImmunity(ent, antivenomComp!, reagent, mostToRemove);
+                    }
 
                     solution.RemoveReagent(reagent, mostToRemove);
 
@@ -234,7 +236,10 @@ namespace Content.Server.Body.Systems
             // we do it after metabolzing so theres always antivenom to pull out of the solution by syringe.
             // all at the cost of one metab update loop of delay. We stay winning.
             if (antivenomProducer)
-                _antivenomProducerSystem.ProduceAntivenom(ent, antivenomComp, solution);
+            {
+                _antivenomProducerSystem.ProduceAntivenom(ent, antivenomComp!, solution);
+                Dirty(ent, antivenomComp!);
+            }
 
             _solutionContainerSystem.UpdateChemicals(soln.Value);
         }
