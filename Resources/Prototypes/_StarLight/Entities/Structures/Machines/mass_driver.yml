@@ -6,6 +6,7 @@
     mode: SnapgridCenter
   components:
   - type: ApcPowerReceiver
+    load: 100
   - type: ExtensionCableReceiver
   - type: InteractionOutline
   - type: Clickable
@@ -47,5 +48,6 @@
     layoutId: MassDriver
   - type: AmbientSound
     enabled: False
+    volume: 0
     sound: 
       path: /Audio/_Starlight/Effects/mass_driver_launching.ogg

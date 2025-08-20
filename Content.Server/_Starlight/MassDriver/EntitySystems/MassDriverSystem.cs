@@ -126,10 +126,11 @@ public sealed class MassDriverSystem : EntitySystem
             {
                 if (activeMassDriver.NextThrowTime != TimeSpan.Zero)
                 {
-                    _audioSystem.SetAmbience(uid, false); 
+                    if (TryComp<AmbientSoundComponent>(uid, out var ambient))
+                        _audioSystem.SetAmbience(uid, false, ambient); 
                     activeMassDriver.NextThrowTime = TimeSpan.Zero;
                     _appearance.SetData(uid, MassDriverVisuals.Launching, false);
-                    _powerReceiver.SetLoad(powered, powered.Load - massDriver.LaunchPowerLoad);
+                    _powerReceiver.SetLoad(powered, massDriver.MassDriverPowerLoad);
                 }
                 if (massDriver.Mode == MassDriverMode.Manual)
                     RemComp<ActiveMassDriverComponent>(uid);
@@ -144,7 +145,7 @@ public sealed class MassDriverSystem : EntitySystem
             else if (_timing.CurTime < activeMassDriver.NextThrowTime)
                 continue;
 
-            _powerReceiver.SetLoad(powered, powered.Load + massDriver.LaunchPowerLoad);
+            _powerReceiver.SetLoad(powered, massDriver.LaunchPowerLoad);
             _appearance.SetData(uid, MassDriverVisuals.Launching, true);
 
             var xform = Transform(uid);
@@ -155,7 +156,8 @@ public sealed class MassDriverSystem : EntitySystem
             foreach (var entity in entities)
                 _throwing.TryThrow(entity, direction, speed);
 
-            _audioSystem.SetAmbience(uid, true); 
+            if (TryComp<AmbientSoundComponent>(uid, out var ambientSound))
+                _audioSystem.SetAmbience(uid, true, ambientSound); 
         }
     }
 

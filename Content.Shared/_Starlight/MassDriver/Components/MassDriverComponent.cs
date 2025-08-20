@@ -76,6 +76,12 @@ public sealed partial class MassDriverComponent : Component
     public float LaunchPowerLoad = 1000f;
 
     /// <summary>
+    /// How moch energy we consume when just staying?
+    /// </summary>
+    [DataField]
+    public float MassDriverPowerLoad = 100f;
+
+    /// <summary>
     /// Determines which port is used for receive signals for launch.
     /// </summary>
     [DataField]
