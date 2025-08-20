@@ -15,10 +15,21 @@ public sealed partial class PronounWindow : FancyWindow
 {
     public HumanoidCharacterProfile Profile;
 
+    // loc strings
+    private const string GetSubject = "{Loc {SUBJECT(";
+    private const string GetObject = "{Loc {OBJECT(";
+    private const string GetDatObj = "{Loc {DATOBJ(";
+    private const string GetGenitive = "{Loc {GENITIVE(";
+    private const string GetPossAdj = "{Loc {POSSADJ(";
+    private const string GetPossPronoun = "{Loc {POSSPRONOUN(";
+    private const string GetReflexive = "{Loc {REFLEXIVE(";
+    private const string GetCounter = "{Loc {COUNTER(";
+    private const string EndGet = ")}}";
+
     // CCvar
-    private bool _showAdditionalPronouns;
-    private bool _restrictedPronouns;
-    private int _pronounLength;
+    private readonly bool _showAdditionalPronouns;
+    private readonly bool _restrictedPronouns;
+    private readonly int _pronounLength;
 
     public PronounWindow(HumanoidCharacterProfile profile, Pronoun pronouns, Gender? profileGender, ICommonSession session, IDependencyCollection collection)
     {
@@ -30,25 +41,79 @@ public sealed partial class PronounWindow : FancyWindow
         _restrictedPronouns = configManager.GetCVar(CCVars.RestrictedPronouns);
         _pronounLength = configManager.GetCVar(CCVars.MaxPronounLength);
 
+        // genitive, dative, and counter arent used in en-us, so we hide them
+        if (!_showAdditionalPronouns)
+        {
+            DatObjLine.Visible = false;
+            GenitiveLine.Visible = false;
+            CounterLine.Visible = false;
+        }
+
         var gender = profileGender ?? Gender.Epicene;
-        SubjectLine.PlaceHolder = $"{{Loc {{SUBJECT({gender}}}}}";
-        ObjectLine.PlaceHolder = $"{{Loc {{OBJECT({gender}}}}}";
-        DatObjLine.PlaceHolder = $"{{Loc {{DATOBJ({gender}}}}}";
-        GenitiveLine.PlaceHolder = $"{{Loc {{GENITIVE({gender}}}}}";
-        PossAdjLine.PlaceHolder = $"{{Loc {{POSSADJ({gender}}}}}";
-        PossPronounLine.PlaceHolder = $"{{Loc {{POSSPRONOUN({gender}}}}}";
-        ReflexiveLine.PlaceHolder = $"{{Loc {{REFLEXIVE({gender}}}}}";
-        CounterLine.PlaceHolder = $"{{Loc {{COUNTER({gender}}}}}";
+        SubjectLine.PlaceHolder = GetSubject + gender.ToString() + EndGet;
+        ObjectLine.PlaceHolder = GetObject + gender.ToString() + EndGet;
+        DatObjLine.PlaceHolder = GetDatObj + gender.ToString() + EndGet;
+        GenitiveLine.PlaceHolder = GetGenitive + gender.ToString() + EndGet;
+        PossAdjLine.PlaceHolder = GetPossAdj + gender.ToString() + EndGet;
+        PossPronounLine.PlaceHolder = GetPossPronoun + gender.ToString() + EndGet;
+        ReflexiveLine.PlaceHolder = GetReflexive + gender.ToString() + EndGet;
+        CounterLine.PlaceHolder = GetCounter + gender.ToString() + EndGet;
 
-        SubjectLine.OnTextChanged += args => { SetPronoun(args.Text, "subject"); };
-        ObjectLine.OnTextChanged += args => { SetPronoun(args.Text, "object"); };
-        DatObjLine.OnTextChanged += args => { SetPronoun(args.Text, "datObj"); };
-        GenitiveLine.OnTextChanged += args => { SetPronoun(args.Text, "genitive"); };
-        PossAdjLine.OnTextChanged += args => { SetPronoun(args.Text, "possAdj"); };
-        PossPronounLine.OnTextChanged += args => { SetPronoun(args.Text, "possPronoun"); };
-        ReflexiveLine.OnTextChanged += args => { SetPronoun(args.Text, "reflexive"); };
-        CounterLine.OnTextChanged += args => { SetPronoun(args.Text, "counter"); };
+        SubjectLine.OnTextChanged += args =>
+        {
+            var pronouns = Profile.Pronoun?.WithSubject(args.Text);
+            Profile = Profile.WithPronouns(pronouns);
+        };
+        SubjectLine.IsValid = args => args.Length <= _pronounLength;
 
+        ObjectLine.OnTextChanged += args =>
+        {
+            var pronouns = Profile.Pronoun?.WithObject(args.Text);
+            Profile = Profile.WithPronouns(pronouns);
+        };
+        ObjectLine.IsValid = args => args.Length <= _pronounLength;
+
+        DatObjLine.OnTextChanged += args =>
+        {
+            var pronouns = Profile.Pronoun?.WithDatObj(args.Text);
+            Profile = Profile.WithPronouns(pronouns);
+        };
+        DatObjLine.IsValid = args => args.Length <= _pronounLength;
+
+        GenitiveLine.OnTextChanged += args =>
+        {
+            var pronouns = Profile.Pronoun?.WithGenitive(args.Text);
+            Profile = Profile.WithPronouns(pronouns);
+        };
+        GenitiveLine.IsValid = args => args.Length <= _pronounLength;
+
+        PossAdjLine.OnTextChanged += args =>
+        {
+            var pronouns = Profile.Pronoun?.WithPossAdj(args.Text);
+            Profile = Profile.WithPronouns(pronouns);
+        };
+        PossAdjLine.IsValid = args => args.Length <= _pronounLength;
+
+        PossPronounLine.OnTextChanged += args =>
+        {
+            var pronouns = Profile.Pronoun?.WithPossPronoun(args.Text);
+            Profile = Profile.WithPronouns(pronouns);
+        };
+        PossPronounLine.IsValid = args => args.Length <= _pronounLength;
+
+        ReflexiveLine.OnTextChanged += args =>
+        {
+            var pronouns = Profile.Pronoun?.WithReflexive(args.Text);
+            Profile = Profile.WithPronouns(pronouns);
+        };
+        ReflexiveLine.IsValid = args => args.Length <= _pronounLength;
+
+        CounterLine.OnTextChanged += args =>
+        {
+            var pronouns = Profile.Pronoun?.WithCounter(args.Text);
+            Profile = Profile.WithPronouns(pronouns);
+        };
+        CounterLine.IsValid = args => args.Length <= _pronounLength;
 
         PluralOption.AddItem(Loc.GetString("humanoid-profile-editor-pronouns-plural-option-singular"));
         PluralOption.AddItem(Loc.GetString("humanoid-profile-editor-pronouns-plural-option-plural"));
@@ -56,17 +121,13 @@ public sealed partial class PronounWindow : FancyWindow
         PluralOption.OnItemSelected += args =>
         {
             PluralOption.SelectId(args.Id);
-            SetPlural(args.Id);
+            var plural = args.Id switch
+            {
+                2 => true,
+                _ => false,
+            };
+            var pronouns = Profile.Pronoun?.WithPlural(plural);
+            Profile = Profile.WithPronouns(pronouns);
         };
-    }
-
-    private void SetPronoun(string input, string type)
-    {
-        Profile = Profile?.WithPronouns(pronoun);
-    }
-
-    private void SetPlural(int plurality)
-    {
-
     }
 }

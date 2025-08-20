@@ -482,7 +482,6 @@ namespace Content.Client.Lobby.UI
                 return;
 
             _pronounWindow = new PronounWindow(Profile, pronouns, gender, _playerManager.LocalSession, collection);
-            _pronounWindow.RefreshPronouns(pronouns, gender, _playerManager.LocalSession, collection);
         }
 
         /// <summary>

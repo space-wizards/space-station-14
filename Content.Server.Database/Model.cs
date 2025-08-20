@@ -429,6 +429,7 @@ namespace Content.Server.Database
 
     public class DbPronoun
     {
+        public int Id { get; set; }
         public string Subject { get; set; } = null!;
         public string Object { get; set; } = null!;
         public string DatObj { get; set; } = null!;

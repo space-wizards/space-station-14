@@ -115,6 +115,7 @@ public sealed class StationRecordsSystem : SharedStationRecordsSystem
     /// <param name="name">Name of the character.</param>
     /// <param name="species">Species of the character.</param>
     /// <param name="gender">Gender of the character.</param>
+    /// <param name="pronoun">Pronouns the character uses.</param>
     /// <param name="jobId">
     ///     The job to initially tie this record to. This must be a valid job loaded in, otherwise
     ///     this call will cause an exception. Ensure that a general record starts out with a job

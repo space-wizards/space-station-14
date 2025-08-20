@@ -299,7 +299,7 @@ namespace Content.Shared.Preferences
             return new(this) { Gender = gender };
         }
 
-        public HumanoidCharacterProfile WithPronouns(Pronoun pronouns)
+        public HumanoidCharacterProfile WithPronouns(Pronoun? pronouns)
         {
             return new(this) { Pronoun = pronouns };
         }

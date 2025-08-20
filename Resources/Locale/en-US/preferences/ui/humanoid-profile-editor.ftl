@@ -37,7 +37,7 @@ humanoid-profile-editor-guidebook-button-tooltip = Click for more info
 
 # Pronouns
 humanoid-profile-editor-pronouns-title = Pronouns
-humanoid-profile-editor-pronouns-description =
+humanoid-profile-editor-pronouns-description = If the field is blank, default gender-associated pronouns will be used.
 humanoid-profile-editor-pronouns-subject-label = Subject
 humanoid-profile-editor-pronouns-subject-example = eg. "I think HE is very nice".
 humanoid-profile-editor-pronouns-object-label = Object
