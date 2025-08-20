@@ -58,6 +58,7 @@ public sealed partial class PaperComponent : Component
         }
     }
 
+    // Starlight-start
     [Serializable, NetSerializable]
     public sealed class PaperSignatureRequestMessage : BoundUserInterfaceMessage
     {
@@ -68,7 +69,7 @@ public sealed partial class PaperComponent : Component
             SignatureIndex = signatureIndex;
         }
     }
-
+    // Starlight-end
     [Serializable, NetSerializable]
     public enum PaperUiKey
     {

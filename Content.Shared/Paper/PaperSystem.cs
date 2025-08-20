@@ -13,10 +13,12 @@ using Robust.Shared.Audio.Systems;
 using static Content.Shared.Paper.PaperComponent;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
+// Starlight-start
 using Content.Shared.IdentityManagement;
 using Content.Shared.IdentityManagement.Components;
 using Content.Shared.Mind.Components;
 using Content.Shared.Roles;
+// Starlight-end
 
 namespace Content.Shared.Paper;
 
@@ -32,7 +34,7 @@ public sealed class PaperSystem : EntitySystem
     [Dependency] private readonly SharedUserInterfaceSystem _uiSystem = default!;
     [Dependency] private readonly MetaDataSystem _metaSystem = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
-    [Dependency] private readonly SharedIdentitySystem _identitySystem = default!;
+    [Dependency] private readonly SharedIdentitySystem _identitySystem = default!; // Starlight-edit
 
     private static readonly ProtoId<TagPrototype> WriteIgnoreStampsTag = "WriteIgnoreStamps";
     private static readonly ProtoId<TagPrototype> WriteTag = "Write";
@@ -56,7 +58,7 @@ public sealed class PaperSystem : EntitySystem
 
         // Umbra - Signing alt verb event listener.
         SubscribeLocalEvent<PaperComponent, GetVerbsEvent<AlternativeVerb>>(AddSignVerb);
-        SubscribeLocalEvent<PaperComponent, PaperSignatureRequestMessage>(OnSignatureRequest);
+        SubscribeLocalEvent<PaperComponent, PaperSignatureRequestMessage>(OnSignatureRequest); // Starlight-edit
 
         _paperQuery = GetEntityQuery<PaperComponent>();
     }
@@ -286,12 +288,11 @@ public sealed class PaperSystem : EntitySystem
         {
             entity.Comp.StampedBy.Add(stampInfo);
             
-            // Clean unfilled form and signature tags when stamping to finalize the document
+            // Starlight-start: Clean unfilled form and signature tags when stamping to finalize the document
             var cleanedContent = CleanUnfilledTags(entity.Comp.Content);
             if (cleanedContent != entity.Comp.Content)
-            {
                 SetContent(entity, cleanedContent);
-            }
+            // Starlight-end
             
             Dirty(entity);
             if (entity.Comp.StampState == null && TryComp<AppearanceComponent>(entity, out var appearance))
@@ -430,8 +431,10 @@ public sealed class PaperSystem : EntitySystem
 
     private void UpdateUserInterface(Entity<PaperComponent> entity)
     {
-        _uiSystem.SetUiState(entity.Owner, PaperUiKey.Key, new PaperBoundUserInterfaceState(entity.Comp.Content, entity.Comp.StampedBy, entity.Comp.Mode));
+        _uiSystem.SetUiState(entity.Owner, PaperUiKey.Key, new PaperBoundUserInterfaceState(entity.Comp.Content, entity.Comp.StampedBy, entity.Comp.Mode)); // Starlight-edit
     }
+
+    # region Starlight
 
     private void OnSignatureRequest(Entity<PaperComponent> entity, ref PaperSignatureRequestMessage args)
     {
@@ -535,6 +538,9 @@ public sealed class PaperSystem : EntitySystem
                   .Replace("[signature]", string.Empty)
                   .Replace("[check]", "☐");
     }
+    
+    # endregion
+
 }
 
 /// <summary>

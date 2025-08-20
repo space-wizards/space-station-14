@@ -52,8 +52,5 @@ public sealed class PaperBoundUserInterface : BoundUserInterface
         }
     }
 
-    private void OnSignatureRequested(int signatureIndex)
-    {
-        SendMessage(new PaperSignatureRequestMessage(signatureIndex));
-    }
+    private void OnSignatureRequested(int signatureIndex) => SendMessage(new PaperSignatureRequestMessage(signatureIndex)); // Starlight-edit
 }
