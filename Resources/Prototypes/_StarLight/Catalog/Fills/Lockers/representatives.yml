@@ -42,7 +42,7 @@
       - id: ClothingHandsGlovesCombat
       - id: ClothingShoesBootsCombat
       - id: TrackingImplanter
-        amount: 3
+        amount: 1
       - id: MedkitAdvancedFilled
       - id: ClothingEyesGlassesBlueShield
       - id: ClothingEyesHudBlueShield

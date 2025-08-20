@@ -1,46 +1,36 @@
 <Document>
+# Handling Orders
 
-    # Handling Orders
+Orders are to be taken and handled as they come in. Orders out of the ordinary or not on the pre-approved list for a department are to be vetted with the Quartermaster.
 
-    Orders are to be taken and handled as they come in. Orders out of the ordinary or not on the pre-approved list for a department are to be vetted with Item Request Forms.
+1.  Orders [bold]not[/bold]on the pre-approved materials list should be accompanied with an acquisition slip.
 
-    1. Only Cargo Technicians and the Quartermaster shall place orders. Non-Cargo crew members should never touch the cargo computer.
+1a Acquisition slips should match the ID of the person presenting the slip or the department head.
 
-    2. On Codes Red, Violet, or Gamma, item request forms shall not be required for any orders for Security, and Medical respectively.
+1b Acquisition slips should have a properly filled out reason for the request. The Quartermaster may deny any requisition that does not state an adequate reason.
 
-    3. Orders are not required to be delivered to their recipients. However, the mailing system or normal deliveries may take place on Code Green or Blue.
+2. On [color=#ff0000]Code Red[/color], [color=#8d1d75]Code Violet[/color] or [color=#ec9ba4]Code Gamma[/color], item request forms or acquisition slips shall not be required for any orders for security and medical respectively.
 
-    4. Item Request Forms are to be filled out should the requestor's department not match the pre-approved item list.
+3. Only Cargo Technicians and the Quartermaster shall handle orders. Non-cargo crew members should never touch the cargo request computer.
 
-    5. Assistants must fill out an Item Request Form for any request.
+4. Orders are not required to be delivered to their recipients. However, the mailing system or normal deliveries may occur on [color=#00a933]Code Green[/color] or [color=#2a6099]Code Blue[/color].
 
-    6. To be valid the order request form must must state:
+5. Assistants must fill out an [italic]item request form[/italic] for any request.
 
-        - Time of request.
-        - Name and title of requestor.
-        - Quantity of items and reason for request.
-        - Any special statements or considerations.
-        - Stamp from the requestor's head if the order is large or contains potential contraband.
+6. To be valid the [italic]item request form[/italic] must must state:
+- Time of the request.
+- Name and title of requestor.
+- Quantity of items and reason for request.
+- Any special statements or considerations.
+- Stamp from the requestor's head if the order is large or contains potential contraband.
 
-    7. All orders should have 3 copies.
+7. Copies of all approved invoices are to reviewed by the Quartermaster, stamped for confirmation and stored for future review should the need arise.
 
-        - One copy is to be stored for future review if needed, such as a Security review.
-        - One copy is to be placed for the Quartermaster's review.
-        - One copy is to be returned for the requestor for proof of their order.
+8. Upon receipt of 5 or more requests or after 15 minutes, all current invoices should be brought to the Quartermaster for approval and distribution.
 
-    The order may then be entered fully into the cargo request computer. The entered request should include all relevant information that was provided, including reason for the order, as well as requestor. The request SHOULD NOT be approved. Technicians may not approve requests unless it is an emergency.
+9. Once an order has arrived, the cargo invoice should be copied and posted outside of cargo to inform the crew of the delivery.
 
-    8. Upon receipt of 5 or more requests, or after 15 minutes, all current requests should be brought to the Quartermaster for review and approval. Alternatively, the Quartermaster may use their digiboard, and a cargo technician may approve the paperwork with the relevant stamp.
+10. In order to receive their order, the original requestor or department head must be present.
 
-    7. Once an order has arrived, the order slip that came with the order should be posted outside of Cargo for the requestor's use.
-
-    8. In order to receive their order, the requestor must bring their original request form and present it to the cargo technician or Quartermaster.
-
-    9. Non-cargo personnel may not use the cargo ordering computer.
-
-    10. Orders for the basic materials (glass, steel, plastic, cloth) may be placed by cargo personnel for the Cargo department if the material is below a limit of 180 between all lathes and loose resources.
-    Pre-Approved Materials List
-
-    This pre-approved materials list does not mean that you must order the item, rather it means that the Item Request Form may be omitted. Consideration to the station's needs and Cargo's budget still applies.
-
+11. Orders for basic materials (glass, steel, plastic & cloth) may be placed by cargo personnel for the cargo department if the material is below a limit of 240 between all lathes and loose resources.
 </Document>

@@ -33,7 +33,7 @@
   - type: StorageFill
     contents:
       - id: TrackingImplanter
-        amount: 5
+        amount: 6
 
 - type: entity
   parent: [ CrateWeaponSecure, BaseSecurityContraband ]

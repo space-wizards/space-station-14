@@ -21,8 +21,8 @@
   - type: Item
     size: Small
   - type: Tool # Starlight start
-    qualities: Screwing
-    speedModifier: 0.05
+    qualities: Slicing
+    speedModifier: 1
   - type: MultipleTool
     statusShowBehavior: true
     entries:

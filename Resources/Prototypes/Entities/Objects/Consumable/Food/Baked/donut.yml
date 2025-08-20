@@ -6,6 +6,10 @@
   abstract: true
   description: Goes great with robust coffee.
   components:
+  # Starlight-start: Vending Machines Prices
+  - type: ItemPrice
+    priceCategory: food_cheap
+  # Starlight-end
   - type: Food
   - type: Tag
     tags:

@@ -1,6 +1,6 @@
 - type: entity
   abstract: true
-  parent: MobAdmemeCorgi
+  parent: MobCorgiSmart
   id: BaseBorgiChassis
   save: false
   components:
@@ -8,16 +8,9 @@
     nameSegments:
     - NamesBorgi
   - type: ShowJobIcons
-  - type: Reactive
-    groups:
-      Acidic: [Touch]
   - type: DamageOnHighSpeedImpact
-    damage:
-      types:
-        Blunt: 5
     soundHit:
       collection: MetalThud
-  - type: CombatMode
   - type: Instrument # All borgi have an instrument, however only a few can access it
     allowPercussion: false
     handheld: false
@@ -41,33 +34,8 @@
       map: ["enum.BorgVisualLayers.LightStatus"]
       shader: unshaded
       visible: false
-  - type: Physics
-  - type: Fixtures
-    fixtures:
-      fix1:
-        shape:
-          !type:PhysShapeCircle
-          radius: 0.35
-        density: 50
-        mask:
-        - MobMask
-        layer:
-        - MobLayer
-  - type: RotationVisuals
-    defaultRotation: 90
-    horizontalRotation: 180
-  - type: MobState
-    allowedStates:
-    - Alive
-    - Critical
-    - Dead
   - type: MobThresholds
-    thresholds:
-      0: Alive
-      100: Critical
-      200: Dead
     showOverlays: false
-    allowRevives: true
   - type: Destructible
     thresholds:
     - trigger:
@@ -121,14 +89,6 @@
     - CanPilot
     - AnomalyHost
     - DoorBumpOpener
-  - type: Storage
-    clickInsert: false
-    openOnActivate: false
-    grid:
-    - 0,0,3,3
-    maxItemSize: Huge
-  - type: Body
-    prototype: BodySmartCorgi
   - type: ActivatableUI
     key: enum.BorgUiKey.Key
   - type: SiliconLawBound
@@ -137,16 +97,6 @@
   - type: ActionGrant
     actions:
     - ActionViewLaws
-  - type: InteractionPopup
-    interactSuccessString: petting-success-dog
-    interactFailureString: petting-failure-generic
-    interactSuccessSpawn: EffectHearts
-    interactSuccessSound:
-      path: /Audio/Animals/small_dog_bark_happy.ogg
-  - type: Inventory
-    speciesId: dog
-    templateId: smartpetborgi
-    # Borg chassis, to accept MMI and posibrain
   - type: BorgChassis
     maxModules: 4
     moduleWhitelist:
@@ -303,6 +253,7 @@
 
 - type: entity
   parent: BaseStationBorgiChassis
+  description: A smart dog, loves stating it's laws.
   id: StationBorgiChassis
   components:
     - type: ReplacementAccent

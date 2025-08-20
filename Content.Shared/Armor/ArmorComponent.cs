@@ -20,9 +20,6 @@ public sealed partial class ArmorComponent : Component
     [DataField("staminaModifier")]
     public float StaminaDamageModifier = 1.0f;
     
-    [DataField]
-    public bool IngoreKnockdown = false;
-
     /// <summary>
     /// A multiplier applied to the calculated point value
     /// to determine the monetary value of the armor

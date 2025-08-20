@@ -48,6 +48,9 @@
         },
         {
             "name": "miner_open"
+        },
+        {
+            "name": "panel_open"
         }
     ]
 }
