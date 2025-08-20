@@ -161,7 +161,7 @@
   id: Trigger
   name: signal-port-name-trigger-sender
   description: signal-port-description-trigger-sender
-  defaultLinks: [ AutoClose, On, Open, Forward, Trigger, Timer, Toggle]
+  defaultLinks: [ AutoClose, On, Open, Forward, Trigger, Timer, Toggle ]
 
 - type: sourcePort
   id: ItemDetected
