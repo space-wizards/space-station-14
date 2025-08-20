@@ -12,6 +12,7 @@
     shape:
     - 0,0,1,0
     - 0,1,0,1
+    storedOffset: 0,-6
   - type: Tag
     tags:
     - Sidearm
@@ -88,6 +89,8 @@
     sprite: Objects/Weapons/Guns/Revolvers/inspector.rsi
   - type: Clothing
     sprite: Objects/Weapons/Guns/Revolvers/inspector.rsi
+  - type: Item
+    storedOffset: 0,-2
   - type: RevolverAmmoProvider
     capacity: 6
     chambers: [ True, True, True, True, True, True ]
@@ -103,6 +106,8 @@
     sprite: Objects/Weapons/Guns/Revolvers/mateba.rsi
   - type: Clothing
     sprite: Objects/Weapons/Guns/Revolvers/mateba.rsi
+  - type: Item
+    storedOffset: 0,-3
   - type: Gun
     fireRate: 3
     soundGunshot:
@@ -126,6 +131,8 @@
     sprite: Objects/Weapons/Guns/Revolvers/python.rsi
   - type: Clothing
     sprite: Objects/Weapons/Guns/Revolvers/python.rsi
+  - type: Item
+    storedOffset: 0,-2
   - type: Gun
     selectedMode: SemiAuto
     fireRate: 2
@@ -161,6 +168,8 @@
     sprite: Objects/Weapons/Guns/Revolvers/pirate_revolver.rsi
   - type: Clothing
     sprite: Objects/Weapons/Guns/Revolvers/pirate_revolver.rsi
+  - type: Item
+    storedOffset: 1,-5
   - type: Gun
     fireRate: 1
   - type: ContainerContainer
