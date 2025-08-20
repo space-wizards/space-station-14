@@ -24,7 +24,7 @@
   name: reagent-name-antitoxin
   group: Medicine
   desc: reagent-name-antitoxin
-  flavour: metallic
+  flavor: metallic
   color: "#30c9ff"
   physicalDesc: reagent-physical-desc-murky
   # Does fuck all for plants. Works for Diona ig since theyre actually woodlice in a trenchcoat (and they get toxin'ed)
@@ -161,7 +161,7 @@
   name: reagent-name-carpoantitoxin
   group: Medicine
   desc: reagent-name-carpoantitoxin
-  flavour: metallic
+  flavor: metallic
   color: "#1d5c73"
   physicalDesc: reagent-physical-desc-pungent
   metabolisms:
@@ -841,7 +841,7 @@
   name: reagent-name-bungoantitoxin
   group: Medicine
   desc: reagent-name-bungoantitoxin
-  flavour: metallic
+  flavor: metallic
   color: "#140071"
   physicalDesc: reagent-physical-desc-acrid
   metabolisms:
@@ -1052,7 +1052,7 @@
   name: reagent-name-mechanoantitoxin
   group: Medicine
   desc: reagent-name-mechanoantitoxin
-  flavour: metallic
+  flavor: metallic
   color: "#FF4BF7"
   physicalDesc: reagent-physical-desc-viscous
   metabolisms:
