@@ -7,3 +7,4 @@ game-hud-open-crafting-menu-button-tooltip = Open crafting menu.
 game-hud-open-actions-menu-button-tooltip = Open actions menu.
 game-hud-open-admin-menu-button-tooltip = Open admin menu.
 game-hud-open-sandbox-menu-button-tooltip = Open sandbox menu.
+game-hud-open-bug-report-window-button-tooltip = Open bug report menu.

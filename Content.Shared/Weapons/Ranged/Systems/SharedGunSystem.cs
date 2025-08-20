@@ -407,7 +407,7 @@ public abstract partial class SharedGunSystem : EntitySystem
         var shooterEv = new ShooterImpulseEvent();
         RaiseLocalEvent(shootingEntity, ref shooterEv);
 
-        if (shooterEv.Push || _gravity.IsWeightless(shootingEntity, recoilPhysics))
+        if (shooterEv.Push)
             CauseImpulse(fromCoordinates, toCoordinates.Value, shootingEntity, recoilPhysics);
     }
 
