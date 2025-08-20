@@ -4,6 +4,7 @@ using Content.Server.Chat.Managers;
 using Content.Server.Radio.Components;
 using Content.Server.Roles;
 using Content.Server.Station.Systems;
+using Content.Shared._Starlight.Silicons.Borgs;
 using Content.Shared.Administration;
 using Content.Shared.Chat;
 using Content.Shared.Emag.Systems;
@@ -269,6 +270,11 @@ public sealed class SiliconLawSystem : SharedSiliconLawSystem
 
     public override void NotifyLawsChanged(EntityUid uid, SoundSpecifier? cue = null)
     {
+        #region Starlight statoin-ai shunt redirection
+        if (TryComp<StationAIShuntableComponent>(uid, out var shuntable) && shuntable.Inhabited.HasValue)
+            uid = shuntable.Inhabited.Value;
+        #endregion
+
         base.NotifyLawsChanged(uid, cue);
 
         if (!TryComp<ActorComponent>(uid, out var actor))
