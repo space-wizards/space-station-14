@@ -78,6 +78,12 @@ public sealed partial class BorgChassisComponent : Component
 
     [DataField]
     public ProtoId<AlertPrototype> NoBatteryAlert = "BorgBatteryNone";
+
+    /// <summary>
+    /// If the entity can open own UI (default: false)
+    /// </summary>
+    [DataField]
+    public bool CanOpenSelfUi;
 }
 
 [Serializable, NetSerializable]
