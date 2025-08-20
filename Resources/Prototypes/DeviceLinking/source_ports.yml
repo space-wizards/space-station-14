@@ -168,3 +168,9 @@
   name: signal-port-name-item-detected
   description: signal-port-description-item-detected
   defaultLinks: [ Toggle, Trigger, Timer ]
+
+- type: sourcePort
+  id: MassDriverConsoleSender
+  name: signal-port-name-mass-driver-console-sender
+  description: signal-port-description-mass-driver-console-sender
+  defaultLinks: [ MassDriverConsoleReceiver ]

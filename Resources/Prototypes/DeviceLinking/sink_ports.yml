@@ -127,3 +127,13 @@
   id: SetParticleSigma
   name: signal-port-name-set-particle-sigma
   description: signal-port-description-set-particle-sigma
+
+- type: sinkPort
+  id: MassDriverConsoleReceiver
+  name: signal-port-name-mass-driver-console-receiver
+  description: signal-port-description-mass-driver-console-receiver
+
+- type: sinkPort
+  id: Launch
+  name: signal-port-name-launch
+  description: signal-port-description-launch
