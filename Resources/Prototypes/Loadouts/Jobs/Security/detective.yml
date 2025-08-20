@@ -1,3 +1,13 @@
+# For glasses
+- type: loadoutEffectGroup
+  id: MasterDet
+  effects:
+  - !type:JobRequirementLoadoutEffect
+    requirement:
+      !type:RoleTimeRequirement
+      role: JobDetective
+      time: 36000 #10 hrs
+
 # Head
 - type: loadout
   id: DetectiveFedora
@@ -51,3 +61,12 @@
   id: DetectiveCoatGrey
   equipment:
     outerClothing: ClothingOuterCoatDetectiveLoadoutGrey
+
+#SL
+- type: loadout
+  id: DetectiveNoirGlasses
+  equipment:
+    Eyes: ClothingEyesGlassesNoir
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: MasterDet

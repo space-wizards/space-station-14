@@ -24,4 +24,12 @@ public sealed partial class RandomGlobalSpawnSpellEvent : InstantActionEvent
     /// </summary>
     [DataField]
     public bool MakeSurvivorAntagonist = false;
+
+    #region Starlight
+    /// <summary>
+    /// Assumint MakeSurvivorAntagonist is true. what is the chance of any person becoming a survivor
+    /// </summary>
+    [DataField]
+    public float SurvivorAntagChance = 0.1f;
+    #endregion
 }

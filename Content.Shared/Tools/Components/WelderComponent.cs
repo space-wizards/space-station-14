@@ -55,4 +55,12 @@ public sealed partial class WelderComponent : Component
 
     [DataField]
     public float WelderUpdateTimer = 1f;
+
+    /// <summary>
+    /// STARLIGHT
+    /// Field to make the damned welder system stop interfering even when turned off as an omnitool
+    /// This stops all welder systems from activating and preventing tool use.
+    /// </summary>
+    [DataField]
+    public bool ComponentActive = true;
 }

@@ -64,3 +64,118 @@
     - id: GrenadeFlashBang
     - id: TearGasGrenade
     - id: MedkitCombatFilled
+
+- type: entity
+  id: ClothingBeltNTNCRigFilled
+  parent: ClothingBeltNTNCRig
+  suffix: Filled
+  components:
+  - type: StorageFill
+    contents:
+    - id: Handcuffs
+    - id: Handcuffs
+    - id: Stunbaton
+    - id: GrenadeFlashBang
+    - id: TearGasGrenade
+    - id: MedkitCombatFilled
+    
+- type: entity
+  id: ClothingBeltNTNCRigFilledMed
+  parent: ClothingBeltNTNCRig
+
+# GMN webbings
+- type: entity
+  id: ClothingOuterVestWebEliteFilledMAA
+  parent: ClothingOuterVestWebElite
+  suffix: Filled
+  components:
+  - type: Storage #Starlight
+    maxItemSize: Normal
+    grid:
+    - 0,0,1,0 #left
+    - 0,1,0,1 #left - cube
+    - 3,0,10,1
+    - 12,0,13,1 #right
+    whitelist:
+      tags:
+        - Bola
+        - CigPack
+        - Taser
+        - SecBeltEquip
+        - Radio
+        - Sidearm
+        - MagazinePistol
+        - MagazineMagnum
+        - CombatKnife
+        - Truncheon
+        - HandGrenade
+      components:
+        - Stunbaton
+        - FlashOnTrigger
+        - SmokeOnTrigger
+        - Flash
+        - Handcuff
+        - BallisticAmmoProvider
+        - CartridgeAmmo
+        - DoorRemote
+        - Whistle
+        - BalloonPopper
+  - type: StorageFill
+    contents:
+    - id: WeaponPistolStechkin
+    - id: MagazinePistolFMJ
+    - id: MagazinePistolSP
+    - id: Stunbaton
+    - id: Handcuffs
+    - id: Handcuffs
+    - id: GrenadeShrapnel
+    - id: Bola
+    - id: HoloprojectorSecurity
+
+- type: entity
+  id: ClothingBeltMilitaryWebbingFilledDamageControle
+  parent: ClothingBeltMilitaryWebbing
+  suffix: Filled
+  components:
+  - type: StorageFill
+    contents:
+    - id: SyndicateJawsOfLife
+    - id: PowerDrill
+    - id: Multitool
+    - id: MetalFoamGrenade
+    - id: MetalFoamGrenade
+    - id: AirGrenade
+
+- type: entity
+  id: ClothingBeltMilitaryWebbingFilledNavigator
+  parent: ClothingBeltMilitaryWebbing
+  suffix: Filled
+  components:
+  - type: StorageFill
+    contents:
+    - id: WeaponPistolCobra
+    - id: MagazinePistolCaselessRifle
+    - id: MagazinePistolCaselessRifle
+    - id: MagazinePistolCaselessRifle
+    - id: Binoculars
+    - id: ThrowingKnife
+    - id: Whistle
+
+- type: entity
+  id: ClothingBeltMilitaryWebbingFilledGunner
+  parent: ClothingBeltMilitaryWebbing
+  suffix: Filled
+  components:
+  - type: StorageFill
+    contents:
+    - id: Handcuffs
+    - id: Handcuffs
+    - id: Stunbaton
+    - id: MedkitCombatFilled
+    - id: Brutepack
+    - id: Ointment
+    - id: Gauze
+    - id: MedkitCombatFilled
+    - id: CombatMedipen
+    - id: CrowbarRed
+    - id: Binoculars

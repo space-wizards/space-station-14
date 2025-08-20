@@ -1,20 +1,18 @@
 <Document>
+# Security orders
 
-# Security Orders
-
-Basic Materials only for printer/lathes
+## Basic materials
+### Only for printers & lathes
 <Box>
-    <GuideEntityEmbed Entity="SheetSteel"/>
-    <GuideEntityEmbed Entity="SheetGlass"/>
-    <GuideEntityEmbed Entity="SheetPlastic"/>
+	<GuideEntityEmbed Entity="SheetSteel"/>
+	<GuideEntityEmbed Entity="SheetGlass"/>
+	<GuideEntityEmbed Entity="SheetPlastic"/>
+	<GuideEntityEmbed Entity="MaterialCloth"/>
 </Box>
 
-Refill Crates
+## Refill Crates
 <Box>
-    <GuideEntityEmbed Entity="CrateSecurityTrackingMindshieldImplants"/>
-    <GuideEntityEmbed Entity="CrateVendingMachineRestockSecTechFilled"/>
+	<GuideEntityEmbed Entity="CrateSecurityTrackingMindshieldImplants"/>
+	<GuideEntityEmbed Entity="CrateVendingMachineRestockSecTechFilled"/>
 </Box>
-
 </Document>
-
-
