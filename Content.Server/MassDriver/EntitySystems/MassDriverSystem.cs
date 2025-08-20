@@ -146,19 +146,19 @@ public sealed class MassDriverSystem : EntitySystem
             _powerReceiver.SetLoad(powered, massDriver.LaunchPowerLoad);
             _appearance.SetData(uid, MassDriverVisuals.Launching, true);
 
-            ThrowEntities(uid, massDriver, entities);
+            ThrowEntities(uid, massDriver, entities, entitiesCount);
 
             if (TryComp<AmbientSoundComponent>(uid, out var ambientSound))
                 _audioSystem.SetAmbience(uid, true, ambientSound);
         }
     }
 
-    private void ThrowEntities(EntityUid massDriver, MassDriverComponent massDriverComponent, List<EntityUid> targets)
+    private void ThrowEntities(EntityUid massDriver, MassDriverComponent massDriverComponent, HashSet<EntityUid> targets, int targetCount)
     {
-        var xform = Transform(uid);
-        var throwing = xform.LocalRotation.ToWorldVec() * (massDriverComponent.CurrentThrowDistance - (massDriverComponent.ThrowCountDelta * (entities.Count - 1)));
+        var xform = Transform(massDriver);
+        var throwing = xform.LocalRotation.ToWorldVec() * (massDriverComponent.CurrentThrowDistance - (massDriverComponent.ThrowCountDelta * (targets.Count - 1)));
         var direction = xform.Coordinates.Offset(throwing);
-        var speed = massDriverComponent.Hacked ? massDriverComponent.HackedSpeedRewrite : massDriverComponent.CurrentThrowSpeed - (massDriverComponent.ThrowCountDelta * (entitiesCount - 1));
+        var speed = massDriverComponent.Hacked ? massDriverComponent.HackedSpeedRewrite : massDriverComponent.CurrentThrowSpeed - (massDriverComponent.ThrowCountDelta * (targetCount - 1));
 
         foreach (var entity in targets)
             _throwing.TryThrow(entity, direction, speed);
