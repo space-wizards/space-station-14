@@ -387,6 +387,16 @@
   - type: Sprite
     state: bio
 
+- type: entity # Required by a guidebook entry.
+  parent: BaseSign
+  id: SignBiohazard
+  name: biohazard sign
+  description: A sign indicating a biohazard.
+  abstract: true
+  components:
+  - type: Sprite
+    state: biohazard
+
 - type: entity
   parent: BaseSignRoom
   id: SignBridge
