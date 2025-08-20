@@ -4,7 +4,7 @@ meta:
   engineVersion: 266.0.0
   forkId: ""
   forkVersion: ""
-  time: 08/20/2025 09:14:22
+  time: 08/20/2025 12:00:39
   entityCount: 28685
 maps:
 - 780
@@ -14865,7 +14865,7 @@ entities:
       pos: 24.5,16.5
       parent: 8364
     - type: Door
-      secondsUntilStateChange: -141541.52
+      secondsUntilStateChange: -141636.67
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -22932,6 +22932,11 @@ entities:
       parent: 8364
 - proto: BoxFolderYellow
   entities:
+  - uid: 5745
+    components:
+    - type: Transform
+      pos: -11.496632,-21.394827
+      parent: 8364
   - uid: 10197
     components:
     - type: Transform
@@ -90162,7 +90167,7 @@ entities:
       pos: 18.5,-13.5
       parent: 8364
     - type: Door
-      secondsUntilStateChange: -48772.51
+      secondsUntilStateChange: -48867.664
       state: Closing
   - uid: 13388
     components:
@@ -90170,7 +90175,7 @@ entities:
       pos: 18.5,-14.5
       parent: 8364
     - type: Door
-      secondsUntilStateChange: -48808.21
+      secondsUntilStateChange: -48903.363
       state: Closing
   - uid: 13389
     components:
@@ -90328,7 +90333,7 @@ entities:
       pos: -34.5,-14.5
       parent: 8364
     - type: Door
-      secondsUntilStateChange: -135730.05
+      secondsUntilStateChange: -135825.2
       state: Closing
   - uid: 15010
     components:
@@ -134898,31 +134903,6 @@ entities:
     - type: Transform
       pos: 6.2533393,-15.307499
       parent: 8364
-  - uid: 5743
-    components:
-    - type: Transform
-      pos: -13.5,-21.5
-      parent: 8364
-  - uid: 5744
-    components:
-    - type: Transform
-      pos: -13.5,-21.5
-      parent: 8364
-  - uid: 5745
-    components:
-    - type: Transform
-      pos: -13.5,-21.5
-      parent: 8364
-  - uid: 5746
-    components:
-    - type: Transform
-      pos: -13.5,-21.5
-      parent: 8364
-  - uid: 5747
-    components:
-    - type: Transform
-      pos: -13.5,-21.5
-      parent: 8364
   - uid: 6426
     components:
     - type: Transform
@@ -135187,6 +135167,11 @@ entities:
       parent: 8364
 - proto: PaperBin20
   entities:
+  - uid: 5743
+    components:
+    - type: Transform
+      pos: -13.5,-21.5
+      parent: 8364
   - uid: 8551
     components:
     - type: Transform
@@ -135366,6 +135351,11 @@ entities:
     components:
     - type: Transform
       pos: 6.7796197,-15.189568
+      parent: 8364
+  - uid: 5744
+    components:
+    - type: Transform
+      pos: -13.786074,-21.56161
       parent: 8364
   - uid: 5771
     components:
@@ -148051,6 +148041,11 @@ entities:
       parent: 8364
 - proto: RubberStampApproved
   entities:
+  - uid: 5746
+    components:
+    - type: Transform
+      pos: -11.069336,-21.207197
+      parent: 8364
   - uid: 10198
     components:
     - type: Transform
@@ -148058,6 +148053,11 @@ entities:
       parent: 8364
 - proto: RubberStampDenied
   entities:
+  - uid: 5747
+    components:
+    - type: Transform
+      pos: -11.058914,-21.499067
+      parent: 8364
   - uid: 14190
     components:
     - type: Transform
