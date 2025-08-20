@@ -447,6 +447,7 @@
     - Trash
     - BananaPeel
     - Ruminant
+
     - WhitelistChameleon
     - HamsterWearable
   - type: SolutionContainerManager
@@ -463,7 +464,7 @@
     requiresSpecialDigestion: true
   - type: Clothing
     sprite: Objects/Specific/Hydroponics/banana.rsi
-    equippedState: peel-equipped-HELMET
+    equippedPrefix: peel
     slots:
     - HEAD
     quickEquip: false
@@ -475,7 +476,7 @@
   components:
   - type: Clothing
     sprite: Objects/Specific/Hydroponics/banana.rsi
-    equippedState: baked-peel-equipped-HELMET
+    equippedPrefix: baked-peel
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/banana.rsi
     state: baked-peel
@@ -506,7 +507,7 @@
     heldPrefix: peel
   - type: Clothing
     sprite: Objects/Specific/Hydroponics/mimana.rsi
-    equippedState: equipped-HELMET
+    equippedPrefix: peel
   - type: Slippery
     slipSound:
       path: /Audio/Effects/slip.ogg
@@ -527,7 +528,7 @@
   - type: Slippery
   - type: Clothing
     sprite: Objects/Materials/materials.rsi
-    equippedState: peel-equipped-HELMET
+    equippedPrefix: peel
 
 - type: entity
   name: carrot
