@@ -28,7 +28,7 @@ public sealed partial class MassDriverSecurityWireAction : ComponentWireAction<M
     public override bool Mend(EntityUid user, Wire wire, MassDriverComponent component)
     {
         component.Hacked = false;
-        component.MaxThrowSpeed = 15f;
+        component.MaxThrowSpeed = 10f;
 
         return true;
     }
@@ -55,7 +55,7 @@ public sealed partial class MassDriverSecurityWireAction : ComponentWireAction<M
             if (EntityManager.TryGetComponent<MassDriverComponent>(wire.Owner, out var driver))
             {
                 driver.Hacked = false;
-                driver.MaxThrowSpeed = 15f;
+                driver.MaxThrowSpeed = 10f;
             }
         }
     }
