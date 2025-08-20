@@ -61,6 +61,8 @@ public sealed class AirlockSystem : SharedAirlockSystem
         if (!comp.AnimatePanel)
             return;
 
+        door.ClosedSpriteStates.Add((WiresVisualLayers.MaintenancePanel, comp.OpenPanelSpriteState));
+
         ((Animation)door.OpeningAnimation).AnimationTracks.Add(new AnimationTrackSpriteFlick()
         {
             LayerKey = WiresVisualLayers.MaintenancePanel,
