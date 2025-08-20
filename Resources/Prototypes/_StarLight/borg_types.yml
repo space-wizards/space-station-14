@@ -6,13 +6,14 @@
   dummyPrototype: BorgChassisPurrfus
 
   # Functional
-  extraModuleCount: 1
+  extraModuleCount: 3
   moduleWhitelist:
     tags:
     - BorgModuleGeneric
     - BorgModulePurrfus
 
   defaultModules:
+  - BorgModuleTool
   - BorgModulePaperwork
 
   radioChannels:
