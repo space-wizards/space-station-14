@@ -45,7 +45,7 @@ public sealed class AntivenomProducerSystem : SharedAntivenomProducerSystem
                 : FixedPoint2.Min(cfg.MaxBuffer, amount);
 
             // account for current reagents in solution
-            var cur = _solutions.GetTotalPrototypeQuantity(soln, cfg.Antivenom);
+            var cur = _solutions.GetTotalPrototypeQuantity(soln.Owner, cfg.Antivenom);
             if (delta <= cur)
                 continue;
 
