@@ -12062,5 +12062,13 @@ Entries:
   id: 138700
   time: '2025-08-20T17:14:00.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/1387
+- author: walksanatora
+  changes:
+  - message: the wizard has stopped halucinating extra cheese from spawning some from
+      the void.
+    type: Fix
+  id: 140300
+  time: '2025-08-20T17:34:48.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1403
 Order: -1
 
