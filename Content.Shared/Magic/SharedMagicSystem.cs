@@ -531,13 +531,15 @@ public abstract class SharedMagicSystem : EntitySystem
     private void OnSpawnItemInHand(SpawnItemInHandEvent ev)
     {
         if (ev.Handled || !PassesSpellPrerequisites(ev.Action, ev.Performer))
-            return;
+                return;
         var user = ev.Performer;
 
         // try to put item in hand, otherwise it goes on the ground
         var star = Spawn(ev.Spawned, Transform(user).Coordinates);
-        _hands.TryPickupAnyHand(user, star);
-
+        if (IsClientSide(star))
+            Del(star);//event has a tendency to produce client-sided cheese... this cleans those up...
+        else
+            _hands.TryPickupAnyHand(user, star);
         ev.Handled = true;
     }
     #endregion
