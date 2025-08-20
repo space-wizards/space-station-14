@@ -49,6 +49,10 @@
   - type: WiresVisuals
   - type: Wires
     layoutId: MassDriver
+  - type: UserInterface
+    interfaces:
+      enum.WiresUiKey.Key:
+        type: WiresBoundUserInterface
   - type: AmbientSound
     range: 10
     enabled: False

@@ -13,7 +13,7 @@ public sealed partial class MassDriverSecurityWireAction : ComponentWireAction<M
     [DataField("pulseTimeout")]
     private int _pulseTimeout = 30;
 
-    public override StatusLightState? GetLightState(Wire wire, MassDriverComponent component) => component.Hacked ? StatusLightState.On : StatusLightState.Off;
+    public override StatusLightState? GetLightState(Wire wire, MassDriverComponent component) => component.Hacked ? StatusLightState.Off : StatusLightState.On;
     public override object StatusKey => SecurityWireActionKey.Status;
 
     public override bool Cut(EntityUid user, Wire wire, MassDriverComponent component)
