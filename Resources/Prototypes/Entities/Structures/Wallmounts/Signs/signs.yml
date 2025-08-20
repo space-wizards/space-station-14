@@ -392,7 +392,6 @@
   id: SignBiohazard
   name: biohazard sign
   description: A sign indicating a biohazard.
-  abstract: true
   components:
   - type: Sprite
     state: biohazard
