@@ -6,7 +6,7 @@
     state: pipecleaner1
 
 - type: decal
-  id: Pipecleaner3
+  id: Pipecleaner2
   tags: ["station", "markings"]
   sprite:
     sprite: _Starlight/Decals/pipecleaner.rsi
