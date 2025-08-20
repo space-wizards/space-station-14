@@ -18,10 +18,9 @@
 
 - type: wireLayout
   id: MassDriver
-  dummyWires: 9
+  dummyWires: 3
   wires:
   - !type:PowerWireAction
   - !type:PowerWireAction
     pulseTimeout: 15
   - !type:MassDriverSecurityWireAction
-  dummyWires: 3
