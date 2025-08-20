@@ -17,25 +17,25 @@
                 <!-- Mass Driver Throw Distance -->
                 <BoxContainer Orientation="Vertical">
                     <BoxContainer Orientation="Horizontal">
-                        <Label Text="{Loc 'mass-driver-ui-throw-distance-current'}" StyleClasses="StatusFieldTitle" HorizontalExpand="True" />
-                        <Label Name="ThrowDistanceCurrentValue" />
+                        <Label Text="{Loc 'mass-driver-ui-throw-distance-current'}" StyleClasses="StatusFieldTitle" />
+                        <Label Name="ThrowDistanceCurrentValue" Margin="5 0 0 0" />
                     </BoxContainer>
                     <BoxContainer Orientation="Horizontal" HorizontalExpand="True" VerticalAlignment="Center">
-                        <Label Name="ThrowDistanceMinValue" />          
+                        <Label Name="ThrowDistanceMinValue" Margin="0 0 5 0" StyleClasses="StatusFieldTitle" />          
                         <Slider Name="ThrowDistanceSlider" HorizontalExpand="True" />
-                        <Label Name="ThrowDistanceMaxValue" />
+                        <Label Name="ThrowDistanceMaxValue" Margin="5 0 0 0" StyleClasses="StatusFieldTitle" />
                     </BoxContainer>
                 </BoxContainer>
                 <!-- Mass Driver Throw Speed -->
                 <BoxContainer Orientation="Vertical" Margin="0 10 0 0">
                     <BoxContainer Orientation="Horizontal">
-                        <Label Text="{Loc 'mass-driver-ui-throw-speed-current'}" StyleClasses="StatusFieldTitle" HorizontalExpand="True" />
-                        <Label Name="ThrowSpeedCurrentValue" />
+                        <Label Text="{Loc 'mass-driver-ui-throw-speed-current'}" StyleClasses="StatusFieldTitle" />
+                        <Label Name="ThrowSpeedCurrentValue" Margin="5 0 0 0" />
                     </BoxContainer>
                     <BoxContainer Orientation="Horizontal" HorizontalExpand="True" VerticalAlignment="Center">
-                        <Label Name="ThrowSpeedMinValue" />          
+                        <Label Name="ThrowSpeedMinValue" Margin="0 0 5 0" StyleClasses="StatusFieldTitle" />          
                         <Slider Name="ThrowSpeedSlider" HorizontalExpand="True" />
-                        <Label Name="ThrowSpeedMaxValue" />
+                        <Label Name="ThrowSpeedMaxValue" Margin="5 0 0 0" StyleClasses="StatusFieldTitle" />
                     </BoxContainer>
                 </BoxContainer>
                 <cc:HSeparator Color="#a81b22" Margin="0 10 0 10" />
