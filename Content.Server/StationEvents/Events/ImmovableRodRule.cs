@@ -35,7 +35,8 @@ public sealed class ImmovableRodRule : StationEventSystem<ImmovableRodRuleCompon
             var speed = RobustRandom.NextFloat(rod.MinSpeed, rod.MaxSpeed);
             var angle = RobustRandom.NextAngle();
             var direction = angle.ToVec();
-            var spawnCoords = targetCoords.ToMap(EntityManager, _transform).Offset(-direction * speed * despawn.Lifetime / 2);
+            var mapCoords = _transform.ToMapCoordinates(targetCoords);
+            var spawnCoords = mapCoords.Offset(-direction * speed * despawn.Lifetime / 2);
             var ent = Spawn(protoName, spawnCoords);
             _gun.ShootProjectile(ent, direction, Vector2.Zero, uid, speed: speed);
         }
