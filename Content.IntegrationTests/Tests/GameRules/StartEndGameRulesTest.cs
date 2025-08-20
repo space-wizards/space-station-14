@@ -18,13 +18,18 @@ public sealed class StartEndGameRulesTest
         await using var pair = await PoolManager.GetServerClient(new PoolSettings
         {
             Dirty = true,
-            DummyTicker = false
+            InLobby = true,
         });
         var server = pair.Server;
         await server.WaitIdleAsync();
         var gameTicker = server.ResolveDependency<IEntitySystemManager>().GetEntitySystem<GameTicker>();
         var cfg = server.ResolveDependency<IConfigurationManager>();
         Assert.That(cfg.GetCVar(CCVars.GridFill), Is.False);
+
+        // Add several dummy players
+        await server.AddDummySessions(30);
+        await pair.RunTicksSync(5);
+        gameTicker.ToggleReadyAll(true);
 
         await server.WaitAssertion(() =>
         {
