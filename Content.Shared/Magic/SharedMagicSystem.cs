@@ -531,7 +531,7 @@ public abstract class SharedMagicSystem : EntitySystem
     private void OnSpawnItemInHand(SpawnItemInHandEvent ev)
     {
         if (ev.Handled || !PassesSpellPrerequisites(ev.Action, ev.Performer))
-                return;
+            return;
         var user = ev.Performer;
 
         // try to put item in hand, otherwise it goes on the ground
