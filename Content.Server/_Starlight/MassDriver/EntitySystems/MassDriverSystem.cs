@@ -47,7 +47,7 @@ public sealed class MassDriverSystem : EntitySystem
         Dirty(args.Sink, driver);
         Dirty(uid, component);
 
-        UpdateUserInterface(uid, driver);
+        UpdateUserInterface(uid, args.Sink, driver);
     }
 
     private void OnPortDisconnected(EntityUid uid, MassDriverConsoleComponent component, PortDisconnectedEvent args)
@@ -146,13 +146,16 @@ public sealed class MassDriverSystem : EntitySystem
     private void OnInit(EntityUid uid, MassDriverConsoleComponent massDriverConsole, ComponentInit args)
     {
         if (massDriverConsole.MassDriver != null
-            && TryComp<MassDriverComponent>(GetEntity(massDriverConsole.MassDriver), out var component))
-            UpdateUserInterface(uid, component);
+        {
+            var massDriverUid = GetEntity(massDriverConsole.MassDriver);
+            if (TryComp<MassDriverComponent>(massDriverUid, out var component))
+                UpdateUserInterface(uid, massDriverUid.Value, component);
+        }
     }
 
-    private void UpdateUserInterface(EntityUid console, MassDriverComponent? component = null)
+    private void UpdateUserInterface(EntityUid console, EntityUid massDriver, MassDriverComponent? component = null)
     {
-        if (!Resolve(console, ref component))
+        if (!Resolve(massDriver, ref component))
             return;
 
         if (!_ui.HasUi(console, MassDriverConsoleUiKey.Key))
