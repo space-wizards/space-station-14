@@ -3474,6 +3474,28 @@
   id: MobHamster
   description: A cute, fluffy, robust hamster.
   components:
+  - type: AntivenomProducer
+    immunityConfigs: # the guinea pig
+    - venom: Toxin
+      antivenom: Antitoxin
+      threshold: 18 # needs more, but they have like 3x the hp of mice.
+      maxStage: 2
+      maxBuffer: 2
+    - venom: BungoToxin
+      antivenom: BungoAntitoxin
+      threshold: 18
+      maxStage: 2
+      maxBuffer: 2
+    - venom: CarpoToxin
+      antivenom: CarpoAntitoxin
+      threshold: 18
+      maxStage: 2
+      maxBuffer: 2
+    - venom: Mechanotoxin
+      antivenom: MechanoAntitoxin
+      threshold: 18
+      maxStage: 2
+      maxBuffer: 2
   - type: GhostRole
     makeSentient: true
     allowSpeech: true
