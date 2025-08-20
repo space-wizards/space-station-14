@@ -41,3 +41,14 @@
     overrideTime: 10
   - type: StealTarget
     stealGroup: LawOverrider
+
+- type: entity
+  parent: LawOverrider
+  id: LawOverriderAdmeme
+  suffix: Admeme
+  components:
+  - type: SiliconLawOverrider
+    overrideTime: 0
+    worksOnAiCore: true
+    canChangeCorruptedLaws: true
+
