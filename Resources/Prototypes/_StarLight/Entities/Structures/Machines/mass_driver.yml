@@ -35,7 +35,7 @@
           True: { state: launching }
           False: { state: base }
   - type: DeviceNetwork
-    deviceNetId: Wired
+    deviceNetId: Wireless
     receiveFrequencyId: BasicDevice
   - type: DeviceList
   - type: DeviceLinkSink

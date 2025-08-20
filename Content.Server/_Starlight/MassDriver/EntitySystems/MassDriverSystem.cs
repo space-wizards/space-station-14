@@ -112,9 +112,6 @@ public sealed class MassDriverSystem : EntitySystem
                 continue;
             }
             activeMassDriver.NextUpdateTime = Timing.CurTime + activeMassDriver.UpdateDelay;
-            var console = GetEntity(massDriver.Console);
-            if (console != null)
-                UpdateUserInterface(console.Value, uid, massDriver);
 
             if (!_powerReceiver.IsPowered(uid))
                 continue;
