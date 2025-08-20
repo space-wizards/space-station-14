@@ -1,6 +1,7 @@
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.FixedPoint;
 using Content.Shared.WooWoo.Systems.Antivenom;
+using JetBrains.Annotations;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
@@ -8,7 +9,7 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototy
 namespace Content.Shared.WooWoo.Components.Antivenom;
 
 [RegisterComponent, NetworkedComponent]
-[AutoGenerateComponentState(fieldDeltas: true)]
+[AutoGenerateComponentState]
 [Access(typeof(SharedAntivenomProducerSystem))]
 public sealed partial class AntivenomProducerComponent : Component
 {
@@ -64,39 +65,47 @@ public partial record struct AntivenomImmunityConfig
     /// <summary>
     /// The venom reagent prototype ID the body learns to counter.
     /// </summary>
-    [DataField(required: true, customTypeSerializer: typeof(PrototypeIdSerializer<ReagentPrototype>))]
+    [DataField(required: true)]
     public ProtoId<ReagentPrototype> Venom;
 
     /// <summary>
     /// The antivenom reagent prototype ID produced once the venom threshold is reached.
     /// </summary>
-    [DataField(required: true, customTypeSerializer: typeof(PrototypeIdSerializer<ReagentPrototype>))]
+    [DataField(required: true)]
     public ProtoId<ReagentPrototype> Antivenom;
 
     /// <summary>
     /// Units of venom that must be metabolized (cumulative) to unlock the immunity.
     /// </summary>
     [DataField]
-    public FixedPoint2 Threshold = FixedPoint2.New(50);
+    public FixedPoint2 Threshold = FixedPoint2.New(30);
 
     /// <summary>
     /// Units produced per stage per update once unlocked.
     /// </summary>
     [DataField]
-    public FixedPoint2 AVPerStage = FixedPoint2.New(1);
+    public FixedPoint2 AVPerStage = FixedPoint2.New(.1);
 
     /// <summary>
-    /// The highest attainable stage of immunity. multiplicative with AV creation.
+    /// The highest attainable stage of immunity. multiplicative antivenom creation.
     /// </summary>
     [DataField]
-    public uint MaxStage;
+    public uint MaxStage = 3u;
+
+    /// <summary>
+    /// The maximum units of immune response generated to chemstream. Overflow protection.
+    /// scaled by Stage/MaxStage
+    /// </summary>
+    [DataField]
+    public FixedPoint2 MaxBuffer = FixedPoint2.New(3);
 
     public AntivenomImmunityConfig(
         ProtoId<ReagentPrototype> venom,
         ProtoId<ReagentPrototype> antivenom,
         FixedPoint2 threshold,
         FixedPoint2 aVPerStage,
-        uint maxStage
+        uint maxStage,
+        FixedPoint2 maxBuffer
         )
     {
         Venom = venom;
@@ -104,6 +113,7 @@ public partial record struct AntivenomImmunityConfig
         Threshold = threshold;
         AVPerStage = aVPerStage;
         MaxStage = maxStage;
+        MaxBuffer = maxBuffer;
     }
 }
 

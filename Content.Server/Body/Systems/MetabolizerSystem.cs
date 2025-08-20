@@ -142,7 +142,9 @@ namespace Content.Server.Body.Systems
             _random.Shuffle(list);
 
             // do we have antivenom immuno-metabolism?
-            bool antivenomProducer = TryComp<AntivenomProducerComponent>(ent, out var antivenomComp);
+            // Maybe if we add some organ related to the immune system we can use that, but for now we just use the body/parentEnt.
+            // This is so we can set different animals with different immune capabilities without a morbillion stomach types
+            bool antivenomProducer = TryComp<AntivenomProducerComponent>(solutionEntityUid, out var antivenomComp);
 
             int reagents = 0;
             foreach (var (reagent, quantity) in list)
@@ -221,7 +223,7 @@ namespace Content.Server.Body.Systems
                 {
                     if (antivenomProducer)
                     {
-                        _antivenomProducerSystem.AccumulateImmunity(ent, antivenomComp!, reagent, mostToRemove);
+                        _antivenomProducerSystem.AccumulateImmunity(solutionEntityUid.Value, antivenomComp!, reagent, mostToRemove);
                     }
 
                     solution.RemoveReagent(reagent, mostToRemove);
@@ -231,15 +233,12 @@ namespace Content.Server.Body.Systems
                 }
             }
 
-            // run our antivenom methods here so we can utilize the metabolizer's update logic
+            // run our antivenom production here so we can utilize the metabolizer's update logic
             // allowing us to bypass a whole bunch of metabolism / blood timing stuff.
             // we do it after metabolzing so theres always antivenom to pull out of the solution by syringe.
-            // all at the cost of one metab update loop of delay. We stay winning.
+            // all at the cost of one metab update loop of delay.
             if (antivenomProducer)
-            {
-                _antivenomProducerSystem.ProduceAntivenom(ent, antivenomComp!, solution);
-                Dirty(ent, antivenomComp!);
-            }
+                _antivenomProducerSystem.CreateAntivenom(soln.Value, antivenomComp!);
 
             _solutionContainerSystem.UpdateChemicals(soln.Value);
         }

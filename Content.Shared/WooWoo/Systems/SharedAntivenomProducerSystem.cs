@@ -8,8 +8,6 @@ namespace Content.Shared.WooWoo.Systems.Antivenom;
 
 public abstract class SharedAntivenomProducerSystem : EntitySystem
 {
-    [Dependency] private readonly IPrototypeManager _proto = default!;
-
     public override void Initialize()
     {
         SubscribeLocalEvent<AntivenomProducerComponent, ComponentInit>(OnAntivenomProducerInit);
@@ -58,21 +56,23 @@ public abstract class SharedAntivenomProducerSystem : EntitySystem
 
         // update stage
         var newStage = ComputeStage(ent, next, cfg);
-        if (!comp.UnlockedImmunities.TryGetValue(reagent.Prototype, out var oldStage))
+        // check if we have a non-null stage, if not treat it as zero temporarily so immunities can be removed fail-safe by setting them to zero
+        var oldStage = comp.UnlockedImmunities.TryGetValue(reagent.Prototype, out var s) ? s : 0u;
 
-            if (newStage != oldStage)
-            {
-                // consider whether to increase number of metab'ed reagents so we cant get chock a block with antivenoms.
-                // Its currently in server though, and I'm not sure its necessary.
-                if (newStage == 0u)
-                    comp.UnlockedImmunities.Remove(reagent.Prototype);
-                else
-                    comp.UnlockedImmunities[reagent.Prototype] = newStage;
-            }
+        if (newStage != oldStage)
+        {
+            if (newStage == 0u)
+                comp.UnlockedImmunities.Remove(reagent.Prototype);
+            else
+                comp.UnlockedImmunities[reagent.Prototype] = newStage;
+        }
+
+        // gotta do this since metab stuff is all server sided. I thought better to put it here than in the metab system.
+        Dirty(ent, comp);
     }
 
     /// <summary>
-    /// Computes an immune stage based on accumulated metabolized reagents
+    /// Computes an immune stage based on accumulated metabolized reagents and entity specific antivenom config
     /// </summary>
     public uint ComputeStage(EntityUid ent, FixedPoint2 metabolized, AntivenomImmunityConfig cfg)
     {
@@ -82,7 +82,7 @@ public abstract class SharedAntivenomProducerSystem : EntitySystem
             return 0; // you done fucked up son.
         }
 
-        var stage = (uint)Math.Floor(metabolized.Float() / cfg.Threshold.Float());
+        var stage = (uint)Math.Min(cfg.MaxStage, Math.Floor(metabolized.Float() / cfg.Threshold.Float()));
         return stage;
     }
 
@@ -109,26 +109,11 @@ public abstract class SharedAntivenomProducerSystem : EntitySystem
         return true;
     }
 
-    /// <summary>
-    /// Handle creating antivenom reagents
-    /// </summary>
-    public void ProduceAntivenom(EntityUid ent, AntivenomProducerComponent comp, Solution solution)
-    {
-        if (comp.ImmunoCompromised || comp.UnlockedImmunities.Count == 0)
-            return;
-
-        foreach (var (venom, stage) in comp.UnlockedImmunities)
-        {
-            if (!comp.ConfigByVenom.TryGetValue(venom, out var cfg))
-                continue;
-
-            var amount = cfg.AVPerStage * stage;
-            if (amount <= FixedPoint2.Zero)
-                continue;
-
-            solution.AddReagent(cfg.Antivenom, amount);
-        }
-    }
+    // always create reagents on server
+    public abstract void CreateAntivenom(
+        Entity<SolutionComponent> soln,
+        AntivenomProducerComponent comp
+        );
 
     // Parting Thoughts:
     // put antivenom in bloodstream & also ensure there is room in the bloodstream to add it somehow up to some quantity.
