@@ -40,6 +40,10 @@
         path: /Audio/Weapons/Guns/Empty/empty.ogg
       ejectSound:
         path: /Audio/Weapons/Guns/Empty/empty.ogg
+  # Starlight-start: Vending Machines Prices
+  - type: ItemPrice
+    priceCategory: miscellaneous
+  # Starlight-end
 
 - type: entity
   id: SmokingPipeFilledCannabis

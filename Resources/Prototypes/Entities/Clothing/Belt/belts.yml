@@ -281,6 +281,7 @@
         - WetFloorSign
         - HolosignProjector
         - Plunger
+        - GoldenPlunger
         - WireBrush
       components:
         - LightReplacer

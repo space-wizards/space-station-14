@@ -42,7 +42,6 @@ public partial class InventorySystem
         SubscribeLocalEvent<InventoryComponent, HitScanPierceAttemptEvent>(RelayInventoryEvent);
         SubscribeLocalEvent<InventoryComponent, DamageModifyEvent>(RelayInventoryEvent);
         SubscribeLocalEvent<InventoryComponent, StaminaModifyEvent>(RelayInventoryEvent);
-        SubscribeLocalEvent<InventoryComponent, BeforeKnockdownEvent>(RelayInventoryEvent);
         SubscribeLocalEvent<InventoryComponent, ElectrocutionAttemptEvent>(RelayInventoryEvent);
         SubscribeLocalEvent<InventoryComponent, SlipAttemptEvent>(RelayInventoryEvent);
         SubscribeLocalEvent<InventoryComponent, RefreshMovementSpeedModifiersEvent>(RelayInventoryEvent);

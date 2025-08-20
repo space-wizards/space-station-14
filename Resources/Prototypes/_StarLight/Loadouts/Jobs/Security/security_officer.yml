@@ -29,3 +29,11 @@
     back:
       - WeaponPistolDP
       - MagazinePistol40SP
+
+- type: loadout
+  id: SecurityPistolEnforcer
+  dummyEntity: WeaponPistolEnforcer
+  storage:
+    back:
+    - WeaponPistolEnforcer
+    - MagazinePistolSP
