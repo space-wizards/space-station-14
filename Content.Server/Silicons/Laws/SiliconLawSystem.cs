@@ -281,11 +281,47 @@ public sealed class SiliconLawSystem : SharedSiliconLawSystem
         if (!TryComp<SiliconLawProviderComponent>(target, out var component))
             return;
 
+        /// If Lawset is null there is no corrupted laws and so you can replace all laws
         if (component.Lawset == null)
+        {
             component.Lawset = new SiliconLawset();
+            component.Lawset.Laws = newLaws;
+        }
+        else
+        {
+            // Laws that are result from old ion laws and the newLaws
+            var updatedLaws = new List<SiliconLaw>();
 
-        // TODO: HOW TO SEE IF A LAW IS A ION STORM LAW?
-        component.Lawset.Laws = newLaws;
+            // Going through all laws in the old lawset
+            int j = 0;
+            for (int i = 0; i < component.Lawset.Laws.Count; i++)
+            {
+                // If a law is soft it is swapped for a new law from newLaws
+                if (component.Lawset.Laws[i].SoftLaw)
+                {
+                    /// If the number of newLaws is less than the number of old laws,
+                    /// it doesn't add any non-soft law
+                    if (j < newLaws.Count)
+                    {
+                        updatedLaws.add(newLaws[j]);
+                        j++;
+                    }
+                }
+                // Otherwise it just adds the old ion law to the updatedLaws
+                else
+                    updatedLaws.add(component.Lawset.Laws[i]);
+            }
+
+            /// If the number of newLaws is more than the number of old laws,
+            /// it adds all the last ones at the end.
+            for (; j < newLaws.Count; j++)
+            {
+                updatedLaws.add(newLaws[j]);
+            }
+
+            component.Lawset.Laws = updatedLaws;
+        }
+
         NotifyLawsChanged(target, cue);
     }
 

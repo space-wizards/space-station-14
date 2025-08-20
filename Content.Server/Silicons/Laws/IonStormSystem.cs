@@ -94,6 +94,7 @@ public sealed class IonStormSystem : EntitySystem
 
         // generate a new law...
         var newLaw = GenerateLaw();
+        newLaw.SoftLaw = false; // new law is not removable via SoftSetLaws
 
         // see if the law we add will replace a random existing law or be a new glitched order one
         if (laws.Laws.Count > 0 && _robustRandom.Prob(target.ReplaceChance))
