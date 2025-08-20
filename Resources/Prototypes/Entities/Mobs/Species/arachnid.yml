@@ -5,6 +5,16 @@
   id: BaseMobArachnid
   abstract: true
   components:
+  - type: AntivenomProducer
+    immunityConfigs: # the human super power is great antibodies.
+    - venom: Toxin
+      antivenom: Antitoxin
+    - venom: BungoToxin
+      antivenom: BungoAntitoxin
+    - venom: CarpoToxin
+      antivenom: CarpoAntitoxin
+#    - venom: Mechanotoxin # not effected by the toxin so it would be too easy.
+#      antivenom: MechanoAntitoxin
   - type: Body
     prototype: Arachnid
     requiredLegs: 2 # It would be funny if arachnids could use their little back limbs to move around once they lose their legs, but just something to consider post-woundmed

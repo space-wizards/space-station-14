@@ -218,6 +218,16 @@
   id: BaseMobSpeciesOrganic
   abstract: true
   components:
+  - type: AntivenomProducer
+    immunityConfigs:
+    - venom: Toxin
+      antivenom: Antitoxin
+    - venom: BungoToxin
+      antivenom: BungoAntitoxin
+    - venom: CarpoToxin
+      antivenom: CarpoAntitoxin
+    - venom: Mechanotoxin
+      antivenom: MechanoAntitoxin
   - type: Barotrauma
     damage:
       types:

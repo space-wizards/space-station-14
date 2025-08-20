@@ -5,6 +5,28 @@
   name: Urist McHands
   abstract: true
   components:
+  - type: AntivenomProducer
+    immunityConfigs: # the human super power is great antibodies.
+    - venom: Toxin
+      antivenom: Antitoxin
+      threshold: 25
+      maxStage: 4
+      maxBuffer: 4
+    - venom: BungoToxin
+      antivenom: BungoAntitoxin
+      threshold: 25
+      maxStage: 4
+      maxBuffer: 4
+    - venom: CarpoToxin
+      antivenom: CarpoAntitoxin
+      threshold: 25
+      maxStage: 4
+      maxBuffer: 4
+    - venom: Mechanotoxin
+      antivenom: MechanoAntitoxin
+      threshold: 25
+      maxStage: 4
+      maxBuffer: 4
   - type: Hunger
   - type: Icon # It will not have an icon in the adminspawn menu without this. Body parts seem fine for whatever reason.
     sprite: Mobs/Species/Human/parts.rsi
