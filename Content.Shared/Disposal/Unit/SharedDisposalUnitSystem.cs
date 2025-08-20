@@ -147,7 +147,7 @@ public abstract class SharedDisposalUnitSystem : EntitySystem
             {
                 _handsSystem.TryDropIntoContainer((args.User, args.Hands), args.Using.Value, component.Container, checkActionBlocker: false);
                 _adminLog.Add(LogType.Action, LogImpact.Medium, $"{ToPrettyString(args.User):player} inserted {ToPrettyString(args.Using.Value)} into {ToPrettyString(uid)}");
-                AfterInsert(uid, component, args.Using.Value, args.User);
+                AfterInsert(uid, args.Using.Value, args.User, component);
             }
         };
 
@@ -159,7 +159,7 @@ public abstract class SharedDisposalUnitSystem : EntitySystem
         if (args.Handled || args.Cancelled || args.Args.Target == null || args.Args.Used == null)
             return;
 
-        DoInsertDisposalUnit(uid, args.Args.Target.Value, args.Args.User, component, doContainerInsert: true, doAfterInsert: true);
+        DoInsertDisposalUnit(uid, args.Args.Target.Value, args.Args.User, component);
 
         args.Handled = true;
     }
@@ -225,7 +225,7 @@ public abstract class SharedDisposalUnitSystem : EntitySystem
         }
 
         _adminLog.Add(LogType.Action, LogImpact.Medium, $"{ToPrettyString(args.User):player} inserted {ToPrettyString(args.Used)} into {ToPrettyString(uid)}");
-        AfterInsert(uid, component, args.Used, args.User);
+        AfterInsert(uid, args.Used, args.User, component);
         args.Handled = true;
     }
 
@@ -467,37 +467,38 @@ public abstract class SharedDisposalUnitSystem : EntitySystem
         EntityUid toInsert,
         EntityUid? user,
         DisposalUnitComponent? disposal = null,
-        bool doContainerInsert = false,
-        bool doAfterInsert = false)
+        bool playDumpSound = true
+        )
     {
         if (!Resolve(uid, ref disposal))
             return;
 
-        if (doContainerInsert && !Containers.Insert(toInsert, disposal.Container))
+        if (!Containers.Insert(toInsert, disposal.Container))
             return;
 
         _adminLog.Add(LogType.Action, LogImpact.Medium, $"{ToPrettyString(user):player} inserted {ToPrettyString(toInsert)} into {ToPrettyString(uid)}");
 
-        if (doAfterInsert)
-        {
-            AfterInsert(uid, disposal, toInsert, user);
-        }
+        AfterInsert(uid, toInsert, user, disposal, playDumpSound);
     }
 
-    public virtual void AfterInsert(EntityUid uid,
-        DisposalUnitComponent component,
-        EntityUid inserted,
-        EntityUid? user = null)
+    public void AfterInsert(EntityUid disposalUnit,
+        EntityUid toInsert,
+        EntityUid? user,
+        DisposalUnitComponent disposal,
+        bool playDumpSound = true)
     {
-        Audio.PlayPredicted(component.InsertSound, uid, user: user);
+        QueueAutomaticEngage(disposalUnit, disposal);
 
-        QueueAutomaticEngage(uid, component);
-
-        _ui.CloseUi(uid, DisposalUnitComponent.DisposalUnitUiKey.Key, inserted);
+        _ui.CloseUi(disposalUnit, DisposalUnitComponent.DisposalUnitUiKey.Key, toInsert);
 
         // Maybe do pullable instead? Eh still fine.
-        Joints.RecursiveClearJoints(inserted);
-        UpdateVisualState(uid, component);
+        Joints.RecursiveClearJoints(toInsert);
+        UpdateVisualState(disposalUnit, disposal);
+
+        if (!playDumpSound)
+            return;
+
+        Audio.PlayPredicted(disposal.InsertSound, disposalUnit, user);
     }
 
     public bool TryInsert(EntityUid unitId, EntityUid toInsertId, EntityUid? userId, DisposalUnitComponent? unit = null)
@@ -523,7 +524,7 @@ public abstract class SharedDisposalUnitSystem : EntitySystem
 
         if (delay <= 0 || userId == null)
         {
-            DoInsertDisposalUnit(unitId, toInsertId, userId, unit, doContainerInsert: true, doAfterInsert: true);
+            DoInsertDisposalUnit(unitId, toInsertId, userId, unit);
             return true;
         }
 
@@ -803,9 +804,13 @@ public abstract class SharedDisposalUnitSystem : EntitySystem
         args.Handled = true;
         args.PlaySound = true;
 
-        foreach (var entity in args.DumpQueue)
+        while (args.DumpQueue.Count > 0)
         {
-            DoInsertDisposalUnit(ent, entity, args.User);
+            var entity = args.DumpQueue.Dequeue();
+
+            var playSound = args.DumpQueue.Count == 0;
+
+            DoInsertDisposalUnit(ent, entity, args.User, playDumpSound: playSound);
         }
     }
 }
