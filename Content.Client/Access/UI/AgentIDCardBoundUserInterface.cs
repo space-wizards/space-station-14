@@ -1,3 +1,4 @@
+using Content.Shared.Access.Components;
 using Content.Shared.Access.Systems;
 using Content.Shared.StatusIcon;
 using Robust.Client.GameObjects;
@@ -9,13 +10,9 @@ namespace Content.Client.Access.UI
     /// <summary>
     /// Initializes a <see cref="AgentIDCardWindow"/> and updates it when new server messages are received.
     /// </summary>
-    public sealed class AgentIDCardBoundUserInterface : BoundUserInterface
+    public sealed class AgentIDCardBoundUserInterface(EntityUid owner, Enum uiKey) : BoundUserInterface(owner, uiKey)
     {
         private AgentIDCardWindow? _window;
-
-        public AgentIDCardBoundUserInterface(EntityUid owner, Enum uiKey) : base(owner, uiKey)
-        {
-        }
 
         protected override void Open()
         {
@@ -26,6 +23,23 @@ namespace Content.Client.Access.UI
             _window.OnNameChanged += OnNameChanged;
             _window.OnJobChanged += OnJobChanged;
             _window.OnJobIconChanged += OnJobIconChanged;
+            Update();
+        }
+
+        public override void Update()
+        {
+            base.Update();
+
+            if (_window == null)
+                return;
+
+            if (!EntMan.TryGetComponent(Owner, out IdCardComponent? card) ||
+                !EntMan.TryGetComponent(Owner, out AgentIDCardComponent? agent))
+                return;
+
+            _window.SetCurrentName(card.FullName ?? string.Empty);
+            _window.SetCurrentJob(card.LocalizedJobTitle ?? string.Empty);
+            _window.SetAllowedIcons(card.JobIcon, agent.IconGroups);
         }
 
         private void OnNameChanged(string newName)
@@ -41,21 +55,6 @@ namespace Content.Client.Access.UI
         public void OnJobIconChanged(ProtoId<JobIconPrototype> newJobIconId)
         {
             SendMessage(new AgentIDCardJobIconChangedMessage(newJobIconId));
-        }
-
-        /// <summary>
-        /// Update the UI state based on server-sent info
-        /// </summary>
-        /// <param name="state"></param>
-        protected override void UpdateState(BoundUserInterfaceState state)
-        {
-            base.UpdateState(state);
-            if (_window == null || state is not AgentIDCardBoundUserInterfaceState cast)
-                return;
-
-            _window.SetCurrentName(cast.CurrentName);
-            _window.SetCurrentJob(cast.CurrentJob);
-            _window.SetAllowedIcons(cast.CurrentJobIconId, cast.IconGroups);
         }
     }
 }
