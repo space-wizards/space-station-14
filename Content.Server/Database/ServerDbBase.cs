@@ -1925,6 +1925,12 @@ INSERT INTO player_round (players_id, rounds_id) VALUES ({players[player]}, {id}
         {
             await using var db = await GetDb();
 
+            // check if there is a blocked memory with the same text
+            // this is an extremely simple filter, and is easily bypassed
+            // but, it should still catch some unwanted messages
+            if (db.DbContext.ParrotMemory.Count(memory => memory.Block && memory.Text == message) > 0)
+                return;
+
             var newMemory = new ParrotMemory()
             {
                 Text = message,
