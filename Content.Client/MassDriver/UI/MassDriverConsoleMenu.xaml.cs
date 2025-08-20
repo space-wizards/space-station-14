@@ -41,15 +41,17 @@ public sealed partial class MassDriverConsoleMenu : DefaultWindow
 
         ThrowDistanceSlider.OnValueChanged += _ =>
         {
-            OnThrowDistance?.Invoke(ThrowDistanceSlider.Value);
-            ThrowDistanceCurrentValue.Text = ThrowDistanceSlider.Value.ToString();
+            var ThrowDistance = Normalize(ThrowDistanceSlider.Value);
+            OnThrowDistance?.Invoke(ThrowDistance);
+            ThrowDistanceCurrentValue.Text = ThrowDistance.ToString();
 
         };
 
         ThrowSpeedSlider.OnValueChanged += _ =>
         {
-            OnThrowSpeed?.Invoke(ThrowSpeedSlider.Value);
-            ThrowSpeedCurrentValue.Text = ThrowSpeedSlider.Value.ToString();
+            var ThrowSpeed = Normalize(ThrowSpeedSlider.Value);
+            OnThrowSpeed?.Invoke(ThrowSpeed);
+            ThrowSpeedCurrentValue.Text = ThrowSpeed.ToString();
         };
     }
 
@@ -67,7 +69,7 @@ public sealed partial class MassDriverConsoleMenu : DefaultWindow
             if (DisabledLabel.GetMessage() is null)
             {
                 var text = new FormattedMessage();
-                text.AddMarkupOrThrow("[color=red][font size=16]You need to link mass driver![/font][/color]");
+                text.AddMarkupOrThrow(Loc.GetString("mass-driver-ui-link"));
                 DisabledLabel.SetMessage(text);
             }
         }

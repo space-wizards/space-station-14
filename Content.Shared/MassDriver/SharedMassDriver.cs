@@ -8,23 +8,20 @@ public enum MassDriverConsoleUiKey : byte
     Key
 }
 
-[NetSerializable]
-[Serializable]
+[Serializable, NetSerializable]
 public enum MassDriverMode : byte
 {
     Auto,
     Manual
 }
 
-[NetSerializable]
-[Serializable]
+[Serializable, NetSerializable]
 public enum MassDriverVisuals : byte
 {
     Launching
 }
 
-[NetSerializable]
-[Serializable]
+[Serializable, NetSerializable]
 public sealed class MassDriverUiState : BoundUserInterfaceState
 {
     public float MaxThrowSpeed = 1f;

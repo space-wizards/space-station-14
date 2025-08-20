@@ -4,6 +4,9 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Shared.MassDriver.Components;
 
+/// <summary>
+/// Stores configuration and state data for a mass driver.
+/// </summary>
 [RegisterComponent, NetworkedComponent]
 [AutoGenerateComponentState]
 public sealed partial class MassDriverComponent : Component

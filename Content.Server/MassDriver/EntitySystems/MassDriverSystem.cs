@@ -148,17 +148,22 @@ public sealed class MassDriverSystem : EntitySystem
             _powerReceiver.SetLoad(powered, massDriver.LaunchPowerLoad);
             _appearance.SetData(uid, MassDriverVisuals.Launching, true);
 
-            var xform = Transform(uid);
-            var throwing = xform.LocalRotation.ToWorldVec() * (massDriver.CurrentThrowDistance - (massDriver.ThrowCountDelta * (entities.Count - 1)));
-            var direction = xform.Coordinates.Offset(throwing);
-            var speed = massDriver.Hacked ? massDriver.HackedSpeedRewrite : massDriver.CurrentThrowSpeed - (massDriver.ThrowCountDelta * (entitiesCount - 1));
-
-            foreach (var entity in entities)
-                _throwing.TryThrow(entity, direction, speed);
+            ThrowEntities(uid, massDriver, entities);
 
             if (TryComp<AmbientSoundComponent>(uid, out var ambientSound))
                 _audioSystem.SetAmbience(uid, true, ambientSound);
         }
+    }
+
+    private void ThrowEntities(EntityUid massDriver, MassDriverComponent massDriverComponent, List<EntityUid> targets)
+    {
+        var xform = Transform(uid);
+        var throwing = xform.LocalRotation.ToWorldVec() * (massDriverComponent.CurrentThrowDistance - (massDriverComponent.ThrowCountDelta * (entities.Count - 1)));
+        var direction = xform.Coordinates.Offset(throwing);
+        var speed = massDriverComponent.Hacked ? massDriverComponent.HackedSpeedRewrite : massDriverComponent.CurrentThrowSpeed - (massDriverComponent.ThrowCountDelta * (entitiesCount - 1));
+
+        foreach (var entity in targets)
+            _throwing.TryThrow(entity, direction, speed);
     }
 
     #endregion
@@ -191,22 +196,20 @@ public sealed class MassDriverSystem : EntitySystem
 
     private void OnModeChanged(EntityUid uid, MassDriverConsoleComponent massDriverConsole, MassDriverModeMessage args)
     {
-        if (massDriverConsole.MassDriver != null)
-        {
-            var massDriverUid = GetEntity(massDriverConsole.MassDriver);
-            if (TryComp<MassDriverComponent>(massDriverUid, out var massDriverComponent))
-            {
-                massDriverComponent.Mode = args.Mode;
-                Dirty(massDriverUid.Value, massDriverComponent);
+        var massDriverUid = GetEntity(massDriverConsole.MassDriver);
 
-                if (massDriverComponent.Mode == MassDriverMode.Auto)
-                    EnsureComp<ActiveMassDriverComponent>(massDriverUid.Value);
-                else if (HasComp<ActiveMassDriverComponent>(massDriverUid.Value))
-                    RemComp<ActiveMassDriverComponent>(massDriverUid.Value);
+        if (!TryComp<MassDriverComponent>(massDriverUid, out var massDriverComponent))
+            return;
 
-                UpdateUserInterface(uid, massDriverUid.Value, massDriverComponent);
-            }
-        }
+        massDriverComponent.Mode = args.Mode;
+        Dirty(massDriverUid.Value, massDriverComponent);
+
+        if (massDriverComponent.Mode == MassDriverMode.Auto)
+            EnsureComp<ActiveMassDriverComponent>(massDriverUid.Value);
+        else if (HasComp<ActiveMassDriverComponent>(massDriverUid.Value))
+            RemComp<ActiveMassDriverComponent>(massDriverUid.Value);
+
+        UpdateUserInterface(uid, massDriverUid.Value, massDriverComponent);
     }
 
     private void OnLaunch(EntityUid uid, MassDriverConsoleComponent massDriverConsole, MassDriverLaunchMessage args)
@@ -220,14 +223,14 @@ public sealed class MassDriverSystem : EntitySystem
     {
         var massDriverUid = GetEntity(massDriverConsole.MassDriver);
         if (massDriverUid != null && TryComp<MassDriverComponent>(massDriverUid, out var massDriverComponent))
-            massDriverComponent.CurrentThrowSpeed = Math.Clamp(Normalize(args.Speed), massDriverComponent.MinThrowSpeed, massDriverComponent.MaxThrowSpeed);
+            massDriverComponent.CurrentThrowSpeed = Math.Clamp(args.Speed, massDriverComponent.MinThrowSpeed, massDriverComponent.MaxThrowSpeed);
     }
 
     private void OnThrowDistanceChanged(EntityUid uid, MassDriverConsoleComponent massDriverConsole, MassDriverThrowDistanceMessage args)
     {
         var massDriverUid = GetEntity(massDriverConsole.MassDriver);
         if (massDriverUid != null && TryComp<MassDriverComponent>(massDriverUid, out var massDriverComponent))
-            massDriverComponent.CurrentThrowDistance = Math.Clamp(Normalize(args.Distance), massDriverComponent.MinThrowDistance, massDriverComponent.MaxThrowDistance);
+            massDriverComponent.CurrentThrowDistance = Math.Clamp(args.Distance, massDriverComponent.MinThrowDistance, massDriverComponent.MaxThrowDistance);
     }
 
     private void UpdateUserInterface(EntityUid console, EntityUid? massDriver, MassDriverComponent? component = null)
@@ -262,8 +265,6 @@ public sealed class MassDriverSystem : EntitySystem
 
         _ui.SetUiState(console, MassDriverConsoleUiKey.Key, state);
     }
-
-    private float Normalize(float value, int decimals = 1) => (float)Math.Round(value, decimals, MidpointRounding.AwayFromZero);
 
     #endregion
 }
