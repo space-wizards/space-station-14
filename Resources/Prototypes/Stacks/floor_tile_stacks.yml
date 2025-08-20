@@ -666,6 +666,12 @@
   maxCount: 30
 
 - type: stack
+  id: FloorTileXenoborg
+  name: stack-xenoborg
+  spawn: FloorTileItemXenoborg
+  maxCount: 30
+
+- type: stack
   id: FloorTileDarkSquiggly
   name: stack-dark-squiggly
   spawn: FloorTileItemDarkSquiggly
