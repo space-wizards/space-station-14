@@ -12,17 +12,6 @@ public sealed class StoreSystem : SharedStoreSystem
 {
     [Dependency] private readonly StackSystem _stack = default!;
 
-    public override void Initialize()
-    {
-        base.Initialize();
-        SubscribeLocalEvent<StoreComponent, BeforeActivatableUIOpenEvent>(BeforeActivatableUiOpen);
-    }
-
-    private void BeforeActivatableUiOpen(EntityUid uid, StoreComponent component, BeforeActivatableUIOpenEvent args)
-    {
-        UpdateAvailableListings(args.User, uid, component);
-    }
-
     protected override void WithdrawCurrency(EntityUid user, CurrencyPrototype currency, int amount)
     {
         FixedPoint2 amountRemaining = amount;

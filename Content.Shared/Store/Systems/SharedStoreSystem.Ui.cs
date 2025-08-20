@@ -2,7 +2,6 @@ using System.Linq;
 using Content.Shared.Database;
 using Content.Shared.FixedPoint;
 using Content.Shared.Store.Components;
-using Content.Shared.UserInterface;
 using Robust.Shared.Player;
 
 namespace Content.Shared.Store.Systems;
@@ -44,7 +43,7 @@ public abstract partial class SharedStoreSystem
         if (!Ui.TryToggleUi(storeEnt, StoreUiKey.Key, actor.PlayerSession))
             return;
 
-        UpdateAvailableListings(user, storeEnt, component);
+        UpdateAvailableListings(user, (storeEnt, component));
     }
 
     /// <summary>
@@ -64,11 +63,12 @@ public abstract partial class SharedStoreSystem
     /// </summary>
     /// <param name="user">The person who if opening the store ui. Listings are filtered based on this.</param>
     /// <param name="store">The store entity itself</param>
-    /// <param name="component">The store component being refreshed.</param>
-    public void UpdateAvailableListings(EntityUid? user, EntityUid store, StoreComponent? component = null)
+    public void UpdateAvailableListings(EntityUid? user, Entity<StoreComponent?> store)
     {
-        if (!Resolve(store, ref component))
+        if (!Resolve(store, ref store.Comp))
             return;
+
+        var component = store.Comp;
 
         //this is the person who will be passed into logic for all listing filtering.
         if (user != null) //if we have no "buyer" for this update, then don't update the listings
@@ -78,6 +78,7 @@ public abstract partial class SharedStoreSystem
         }
 
         DirtyField(store, component, nameof(StoreComponent.LastAvailableListings));
+        UpdateUi((store, component));
     }
 
     /// <summary>
@@ -238,7 +239,10 @@ public abstract partial class SharedStoreSystem
         };
 
         RaiseLocalEvent(ref buyFinished);
-        Dirty(ent);
+        DirtyField(uid, component, nameof(StoreComponent.Balance));
+        DirtyField(uid, component, nameof(StoreComponent.BalanceSpent));
+        DirtyField(uid, component, nameof(StoreComponent.BoughtEntities));
+        DirtyField(uid, component, nameof(StoreComponent.RefundAllowed));
         UpdateUi(ent);
     }
 

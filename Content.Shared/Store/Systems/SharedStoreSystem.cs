@@ -11,6 +11,7 @@ using System.Linq;
 using Content.Shared.Actions;
 using Content.Shared.Administration.Logs;
 using Content.Shared.Hands.EntitySystems;
+using Content.Shared.Implants;
 using Content.Shared.Mind;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Network;
@@ -42,6 +43,7 @@ public abstract partial class SharedStoreSystem : EntitySystem
     {
         base.Initialize();
 
+        SubscribeLocalEvent<StoreComponent, BeforeActivatableUIOpenEvent>(BeforeActivatableUiOpen);
         SubscribeLocalEvent<StoreComponent, ActivatableUIOpenAttemptEvent>(OnStoreOpenAttempt);
         SubscribeLocalEvent<CurrencyComponent, AfterInteractEvent>(OnAfterInteract);
 
@@ -49,6 +51,7 @@ public abstract partial class SharedStoreSystem : EntitySystem
         SubscribeLocalEvent<StoreComponent, ComponentStartup>(OnStartup);
         SubscribeLocalEvent<StoreComponent, ComponentShutdown>(OnShutdown);
         SubscribeLocalEvent<StoreComponent, OpenUplinkImplantEvent>(OnImplantActivate);
+        SubscribeLocalEvent<StoreComponent, ImplantRelayEvent<AfterInteractUsingEvent>>(OnStoreRelay);
 
         InitializeUi();
         InitializeRefund();
@@ -80,6 +83,11 @@ public abstract partial class SharedStoreSystem : EntitySystem
     {
         var ev = new StoreRemovedEvent();
         RaiseLocalEvent(ent, ref ev, true);
+    }
+
+    private void BeforeActivatableUiOpen(Entity<StoreComponent> ent, ref BeforeActivatableUIOpenEvent args)
+    {
+        UpdateAvailableListings(args.User, (ent.Owner, ent.Comp));
     }
 
     private void OnStoreOpenAttempt(Entity<StoreComponent> ent, ref ActivatableUIOpenAttemptEvent args)
@@ -128,6 +136,29 @@ public abstract partial class SharedStoreSystem : EntitySystem
     private void OnImplantActivate(Entity<StoreComponent> ent, ref OpenUplinkImplantEvent args)
     {
         ToggleUi(args.Performer, ent, ent.Comp);
+    }
+
+    private void OnStoreRelay(EntityUid uid, StoreComponent store, ImplantRelayEvent<AfterInteractUsingEvent> implantRelay)
+    {
+        var args = implantRelay.Event;
+
+        if (args.Handled)
+            return;
+
+        // can only insert into yourself to prevent uplink checking with renault
+        if (args.Target != args.User)
+            return;
+
+        if (!TryComp<CurrencyComponent>(args.Used, out var currency))
+            return;
+
+        // same as store code, but message is only shown to yourself
+        if (!TryAddCurrency((args.Used, currency), (uid, store)))
+            return;
+
+        args.Handled = true;
+        var msg = Loc.GetString("store-currency-inserted-implant", ("used", args.Used));
+        _popup.PopupEntity(msg, args.User, args.User);
     }
 
     /// <summary>
