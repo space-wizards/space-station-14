@@ -104,6 +104,9 @@ public sealed class DoorSystem : SharedDoorSystem
             case DoorState.Open:
                 foreach (var (layer, layerState) in entity.Comp.OpenSpriteStates)
                 {
+                    // Allow animations to play while it's open (e.g., pinion);
+                    // the animation unsets this so we gotta set it again.
+                    _sprite.LayerSetAutoAnimated((entity.Owner, sprite), layer, true);
                     _sprite.LayerSetRsiState((entity.Owner, sprite), layer, layerState);
                 }
 
@@ -111,6 +114,7 @@ public sealed class DoorSystem : SharedDoorSystem
             case DoorState.Closed:
                 foreach (var (layer, layerState) in entity.Comp.ClosedSpriteStates)
                 {
+                    _sprite.LayerSetAutoAnimated((entity.Owner, sprite), layer, true);
                     _sprite.LayerSetRsiState((entity.Owner, sprite), layer, layerState);
                 }
 
