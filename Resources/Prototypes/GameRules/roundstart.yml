@@ -318,7 +318,7 @@
   id: Wizard
   components:
   - type: GameRule
-    minPlayers: 10
+    minPlayers: 30
   - type: AntagSelection
     agentName: wizard-round-end-name
     selectionTime: PrePlayerSpawn
@@ -465,6 +465,8 @@
   id: RampingStationEventScheduler
   parent: BaseGameRule
   components:
+  - type: GameRule
+    minPlayers: 20
   - type: RampingStationEventScheduler
     scheduledGameRules: !type:NestedSelector
       tableId: BasicGameRulesTable
