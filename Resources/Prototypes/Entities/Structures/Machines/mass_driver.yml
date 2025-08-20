@@ -18,7 +18,6 @@
   - type: MassDriver
   - type: ActiveMassDriver
   - type: Physics
-    bodyType: Dynamic
   - type: Fixtures
     fixtures:
       fix1:
