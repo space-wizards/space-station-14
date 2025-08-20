@@ -20,6 +20,38 @@
             Poison: 4
 
 - type: reagent
+  id: Antitoxin
+  name: reagent-name-antitoxin
+  group: Medicine
+  desc: reagent-name-antitoxin
+  flavour: metallic
+  color: "#1d5c73"
+  physicalDesc: reagent-physical-desc-metalic
+  # Does fuck all for plants. Works for Diona ig since theyre actually woodlice in a trenchcoat (and they get toxin'ed)
+  metabolisms:
+    Poison: # It doesn't matter if you cant metabolise toxins, so we might as well be that.
+      effects:
+      - !type:AdjustReagent
+        reagent: Toxin
+        amount: -2
+      - !type:HealthChange
+        conditions:
+        - !type:ReagentThreshold
+          reagent: Toxin
+          min: 1
+        damage:
+          types:
+            Poison: -2 # Still not gonna have a good time, but it will make you live for not huge doses.
+      - !type:AdjustReagent
+        conditions:
+        - !type:ReagentThreshold
+          reagent: Toxin
+          min: 1
+        probability: 0.0005 # 1 in 5000 allergic reaction. High number because its per metab cycle 
+        reagent: Histamine
+        amount: 60
+
+- type: reagent
   id: CarpoToxin
   name: reagent-name-carpotoxin
   group: Toxins
@@ -44,6 +76,37 @@
         visualType: MediumCaution
         messages: [ "generic-reagent-effect-burning-insides" ]
         probability: 0.33
+
+- type: reagent
+  id: CarpoAntitoxin
+  name: reagent-name-carpoantitoxin
+  group: Medicine
+  desc: reagent-name-carpoantitoxin
+  flavour: metallic
+  color: "#1d5c73"
+  physicalDesc: reagent-physical-desc-metalic
+  metabolisms:
+    Poison:
+      effects:
+      - !type:AdjustReagent
+        reagent: CarpoToxin
+        amount: -2
+      - !type:HealthChange
+        conditions:
+        - !type:ReagentThreshold
+          reagent: CarpoToxin
+          min: 1
+        damage:
+          types:
+            Poison: -2
+      - !type:AdjustReagent
+        conditions:
+        - !type:ReagentThreshold
+          reagent: CarpoToxin
+          min: 1
+        probability: 0.0005
+        reagent: Histamine
+        amount: 60
 
 - type: reagent
   id: ChloralHydrate
@@ -78,7 +141,7 @@
             Poison: 1.5
 
 - type: reagent
-  id: GastroToxin
+  id: GastroToxin # no antitoxin version because this is the catch all for eating nasty shit.
   name: reagent-name-gastrotoxin
   group: Toxins
   desc: reagent-desc-gastrotoxin
@@ -616,6 +679,37 @@
             Poison: 1.8
 
 - type: reagent
+  id: BungoAntitoxin
+  name: reagent-name-bungoantitoxin
+  group: Medicine
+  desc: reagent-name-bungoantitoxin
+  flavour: metallic
+  color: "#140071"
+  physicalDesc: reagent-physical-desc-metalic
+  metabolisms:
+    Poison:
+      effects:
+      - !type:AdjustReagent
+        reagent: BungoToxin
+        amount: -2
+      - !type:HealthChange
+        conditions:
+        - !type:ReagentThreshold
+          reagent: BungoToxin
+          min: 1
+        damage:
+          types:
+            Poison: -0.9
+      - !type:AdjustReagent
+        conditions:
+        - !type:ReagentThreshold
+          reagent: BungoToxin
+          min: 1
+        probability: 0.0005
+        reagent: Histamine
+        amount: 60
+
+- type: reagent
   id: Vestine
   name: reagent-name-vestine
   group: Toxins
@@ -715,6 +809,37 @@
           shouldHave: false
         walkSpeedModifier: 0.4
         sprintSpeedModifier: 0.4
+
+- type: reagent
+  id: MechanoAntitoxin
+  name: reagent-name-mechanoantitoxin
+  group: Medicine
+  desc: reagent-name-mechanoantitoxin
+  flavour: metallic
+  color: "#140071"
+  physicalDesc: reagent-physical-desc-metalic
+  metabolisms:
+    Poison:
+      effects:
+      - !type:AdjustReagent
+        reagent: Mechanotoxin
+        amount: -2
+      - !type:HealthChange
+        conditions:
+        - !type:ReagentThreshold
+          reagent: Mechanotoxin
+          min: 1
+        damage:
+          types:
+            Poison: -0.8
+      - !type:AdjustReagent
+        conditions:
+        - !type:ReagentThreshold
+          reagent: Mechanotoxin
+          min: 1
+        probability: 0.0005
+        reagent: Histamine
+        amount: 60
 
 - type: reagent
   id: ToxinTrash
