@@ -1,0 +1,32 @@
+- type: entity
+  name: ракетомёт
+  parent: [ BaseWeaponLauncher, BaseMajorContraband ]
+  id: WeaponRocketLauncher
+  description:
+  components:
+  - type: Sprite
+    sprite: _WH40K/Objects/Weapons/Guns/Launcher/rocketlauncher.rsi
+    layers:
+      - state: base
+        map: ["enum.GunVisualLayers.Base"]
+      - state: mag-0
+        map: ["enum.GunVisualLayers.Mag"]
+  - type: Clothing
+    sprite: _WH40K/Objects/Weapons/Guns/Launcher/rocketlauncher.rsi
+  - type: Gun
+    fireRate: 0.5
+    soundGunshot:
+      path: /Audio/Weapons/Guns/Gunshots/rpgfire.ogg
+  - type: BallisticAmmoProvider
+    whitelist:
+      tags:
+        - CartridgeRocket
+    proto: CartridgeRocket
+    capacity: 1
+    soundInsert:
+      path: /Audio/Weapons/Guns/MagIn/batrifle_magin.ogg
+  - type: MagazineVisuals
+    magState: mag
+    steps: 2
+    zeroVisible: false
+  - type: Appearance

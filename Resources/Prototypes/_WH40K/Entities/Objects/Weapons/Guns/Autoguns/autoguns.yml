@@ -145,3 +145,58 @@
     - SemiAuto
     soundGunshot:
       path: /Audio/_WH40K/Weapons/Guns/Gunshots/stubber_fire_3.wav
+
+- type: entity
+  name: автоматический карабин
+  parent: BaseWeaponRifle
+  id: WeaponAutoCarabin
+  description:
+  suffix: WH40K
+  components:
+  - type: Clothing
+    sprite: _WH40K/Objects/Weapons/Guns/Autoguns/autocarabin.rsi
+  - type: Sprite
+    sprite: _WH40K/Objects/Weapons/Guns/Autoguns/autocarabin.rsi
+    scale: 0.85,0.85
+    layers:
+    - state: base
+      map: ["enum.GunVisualLayers.Base"]
+    - state: mag-0
+      map: ["enum.GunVisualLayers.Mag"]
+  - type: Item
+    size: Huge
+    sprite: _WH40K/Objects/Weapons/Guns/Autoguns/autogun2_in-hand.rsi
+  - type: Gun
+    fireRate: 5
+    soundGunshot:
+      path: /Audio/_WH40K/Weapons/Guns/Gunshots/stubber_fire_2.wav
+  - type: ChamberMagazineAmmoProvider
+    soundRack:
+      path: /Audio/Weapons/Guns/Cock/ltrifle_cock.ogg
+  - type: ItemSlots
+    slots:
+      gun_magazine:
+        name: Magazine
+        startingItem: MagazineHeavyAutogun
+        insertSound: /Audio/Weapons/Guns/MagIn/ltrifle_magin.ogg
+        ejectSound: /Audio/Weapons/Guns/MagOut/ltrifle_magout.ogg
+        priority: 2
+        whitelist:
+          tags:
+          - MagazineHeavyAutogun
+      gun_chamber:
+        name: Chamber
+        startingItem: CartridgeHeavyAutogun
+        priority: 1
+        whitelist:
+          tags:
+          - CartridgeHeavyAutogun
+  - type: ContainerContainer
+    containers:
+      gun_magazine: !type:ContainerSlot
+      gun_chamber: !type:ContainerSlot
+  - type: MagazineVisuals
+    magState: mag
+    steps: 1
+    zeroVisible: true
+  - type: Appearance
