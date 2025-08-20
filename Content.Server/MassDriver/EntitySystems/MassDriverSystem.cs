@@ -1,9 +1,7 @@
 using Content.Shared.MassDriver.Components;
 using Content.Shared.MassDriver;
 using Content.Shared.Throwing;
-using Robust.Shared.Physics.Events;
 using Robust.Shared.Timing;
-using Robust.Shared.GameObjects;
 using System.Linq;
 using Content.Shared.Power;
 using Content.Server.Power.EntitySystems;
