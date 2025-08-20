@@ -25,7 +25,7 @@
   group: Medicine
   desc: reagent-name-antitoxin
   flavour: metallic
-  color: "#1d5c73"
+  color: "#30c9ff"
   physicalDesc: reagent-physical-desc-murky
   # Does fuck all for plants. Works for Diona ig since theyre actually woodlice in a trenchcoat (and they get toxin'ed)
   metabolisms:
@@ -1053,7 +1053,7 @@
   group: Medicine
   desc: reagent-name-mechanoantitoxin
   flavour: metallic
-  color: "#140071"
+  color: "#FF4BF7"
   physicalDesc: reagent-physical-desc-viscous
   metabolisms:
     Poison:

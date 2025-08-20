@@ -149,6 +149,66 @@
     - Bottle
 
 - type: entity
+  id: ChemistryBottleAntitoxin
+  suffix: antitoxin
+  parent: BaseChemistryBottleFilled
+  components:
+  - type: Label
+    currentLabel: reagent-name-antitoxin
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 30
+        reagents:
+        - ReagentId: Antitoxin
+          Quantity: 30
+
+- type: entity
+  id: ChemistryBottleBungoAntitoxin
+  suffix: bungoantitoxin
+  parent: BaseChemistryBottleFilled
+  components:
+  - type: Label
+    currentLabel: reagent-name-bungoantitoxin
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 30
+        reagents:
+        - ReagentId: BungoAntitoxin
+          Quantity: 30
+
+- type: entity
+  id: ChemistryBottleCarpoAntitoxin
+  suffix: carpoantitoxin
+  parent: BaseChemistryBottleFilled
+  components:
+  - type: Label
+    currentLabel: reagent-name-carpoantitoxin
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 30
+        reagents:
+        - ReagentId: CarpoAntitoxin
+          Quantity: 30
+
+- type: entity
+  id: ChemistryBottleMechanoAntitoxin
+  suffix: mechanoantitoxin
+  parent: BaseChemistryBottleFilled
+  components:
+  - type: Label
+    currentLabel: reagent-name-mechanoantitoxin
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 30
+        reagents:
+        - ReagentId: MechanoAntitoxin
+          Quantity: 30
+
+- type: entity
   id: ChemistryBottleEpinephrine
   suffix: epinephrine
   parent: BaseChemistryBottleFilled
