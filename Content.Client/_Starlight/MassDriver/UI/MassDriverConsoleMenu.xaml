@@ -34,7 +34,7 @@
                     </BoxContainer>
                     <BoxContainer Orientation="Horizontal" HorizontalExpand="True" VerticalAlignment="Center">
                         <Label Name="ThrowSpeedMinValue" />          
-                        <Slider Name="ThrowSpeedeSlider" HorizontalExpand="True" />
+                        <Slider Name="ThrowSpeedSlider" HorizontalExpand="True" />
                         <Label Name="ThrowSpeedMaxValue" />
                     </BoxContainer>
                 </BoxContainer>

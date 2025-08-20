@@ -19,6 +19,14 @@ public sealed class MassDriverConsoleBoundUserInterface : BoundUserInterface
         base.Open();
 
         _menu = this.CreateWindow<MassDriverConsoleMenu>();
+
+        _menu.OnLaunchButtonPressed += () => SendMessage(new MassDriverLaunchMessage());
+
+        _menu.OnModeButtonPressed += i => SendMessage(new MassDriverModeMessage(i));
+
+        _menu.OnThrowDistance += i => SendMessage(new MassDriverThrowDistanceMessage(i));
+
+        _menu.OnThrowSpeed += i => SendMessage(new MassDriverThrowSpeedMessage(i));
     }
 
     protected override void UpdateState(BoundUserInterfaceState state)
@@ -29,6 +37,6 @@ public sealed class MassDriverConsoleBoundUserInterface : BoundUserInterface
             return;
 
         if (state is MassDriverUiState massDriverUiState)
-            _menu.UpdateState(massDriverUiState)
+            _menu.UpdateState(massDriverUiState);
     }
 }

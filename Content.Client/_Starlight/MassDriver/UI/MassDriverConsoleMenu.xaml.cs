@@ -8,10 +8,67 @@ namespace Content.Client._Starlight.MassDriver.UI;
 [GenerateTypedNameReferences]
 public sealed partial class MassDriverConsoleMenu : DefaultWindow
 {
-    public MassDriverConsoleMenu() => RobustXamlLoader.Load(this);
+    public event Action? OnLaunchButtonPressed;
+    public event Action<MassDriverMode>? OnModeButtonPressed;
+    public event Action<float>? OnThrowSpeed;
+    public event Action<float>? OnThrowDistance;
+
+    public MassDriverConsoleMenu()
+    {
+        RobustXamlLoader.Load(this);
+
+        AutoModeButton.OnPressed += _ =>
+        {
+            AutoModeButton.Disabled = true;
+            ManualModeButton.Disabled = false;
+            OnModeButtonPressed?.Invoke(MassDriverMode.Auto);
+        };
+
+        ManualModeButton.OnPressed += _ =>
+        {
+            AutoModeButton.Disabled = false;
+            ManualModeButton.Disabled = true;
+            OnModeButtonPressed?.Invoke(MassDriverMode.Manual);
+        };
+
+        ThrowDistanceSlider.OnValueChanged += _ => OnThrowDistance?.Invoke(ThrowDistanceSlider.Value);
+
+        ThrowSpeedSlider.OnValueChanged += _ => OnThrowSpeed?.Invoke(ThrowSpeedSlider.Value);
+    }
 
     public void UpdateState(MassDriverUiState state)
     {
-        
+        if (state.CurrentMassDriverMode == MassDriverMode.Auto)
+        {
+            AutoModeButton.Disabled = true;
+            ManualModeButton.Disabled = false;
+        }
+        else
+        {
+            ManualModeButton.Disabled = true;
+            AutoModeButton.Disabled = false;
+        }
+
+        // Sliders Current Value Label
+        ThrowDistanceCurrentValue.Text = state.CurrentThrowDistance.ToString();
+        ThrowSpeedCurrentValue.Text = state.CurrentThrowSpeed.ToString();
+
+        // Distance Slider Labels
+        ThrowDistanceMaxValue.Text = state.MaxThrowDistance.ToString();
+        ThrowDistanceMinValue.Text = state.MinThrowDistance.ToString();
+
+        /// Speed Slider Labels
+        ThrowSpeedMaxValue.Text = state.MaxThrowSpeed.ToString();
+        ThrowSpeedMinValue.Text = state.MinThrowSpeed.ToString();
+
+        // Distance Slider
+        ThrowDistanceSlider.MaxValue = state.MaxThrowDistance;
+        ThrowDistanceSlider.MinValue = state.MinThrowDistance;
+        ThrowDistanceSlider.Value = state.CurrentThrowDistance;
+
+        // Speed Slider
+        ThrowSpeedSlider.MaxValue = state.MaxThrowSpeed;
+        ThrowSpeedSlider.MinValue = state.MinThrowSpeed;
+        ThrowSpeedSlider.Value = state.CurrentThrowSpeed;
     }
 }
