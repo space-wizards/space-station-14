@@ -1,9 +1,9 @@
 using Content.Server.Wires;
-using Content.Shared._Starlight.MassDriver;
-using Content.Shared._Starlight.MassDriver.Components;
+using Content.Shared.MassDriver;
+using Content.Shared.MassDriver.Components;
 using Content.Shared.Wires;
 
-namespace Content.Server._Starlight.MassDriver.EntitySystems;
+namespace Content.Server.MassDriver.EntitySystems;
 
 public sealed partial class MassDriverSecurityWireAction : ComponentWireAction<MassDriverComponent>
 {
@@ -49,7 +49,7 @@ public sealed partial class MassDriverSecurityWireAction : ComponentWireAction<M
             && EntityManager.TryGetComponent<MassDriverComponent>(wire.Owner, out var driver))
             driver.Hacked = false;
     }
-    
+
     private enum PulseTimeoutKey : byte
     {
         Key

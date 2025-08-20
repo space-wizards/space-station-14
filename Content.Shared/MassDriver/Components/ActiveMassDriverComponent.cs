@@ -1,7 +1,7 @@
 using Robust.Shared.GameStates;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 
-namespace Content.Shared._Starlight.MassDriver.Components;
+namespace Content.Shared.MassDriver.Components;
 
 [RegisterComponent, NetworkedComponent]
 [AutoGenerateComponentPause]

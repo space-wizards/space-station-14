@@ -27,7 +27,7 @@
           bounds: "-0.3,-0.16,0.3,0.16"
         density: 200
   - type: Sprite
-    sprite: _Starlight/Structures/Machines/mass_driver.rsi
+    sprite: Structures/Machines/mass_driver.rsi
     noRot: true
     layers:
       - state: base
@@ -35,7 +35,7 @@
       - state: panel_open
         map: ["enum.WiresVisualLayers.MaintenancePanel"]
   - type: GenericVisualizer
-    visuals: 
+    visuals:
       enum.MassDriverVisuals.Launching:
         mainLayer:
           True: { state: launching }
@@ -60,8 +60,8 @@
     range: 10
     enabled: False
     volume: 0
-    sound: 
-      path: /Audio/_Starlight/Effects/mass_driver_launching.ogg
+    sound:
+      path: /Audio/Effects/mass_driver_launching.ogg
   - type: Rotatable
   - type: Destructible
     thresholds:

@@ -1,5 +1,5 @@
-using Content.Shared._Starlight.MassDriver.Components;
-using Content.Shared._Starlight.MassDriver;
+using Content.Shared.MassDriver.Components;
+using Content.Shared.MassDriver;
 using Content.Shared.Throwing;
 using Robust.Shared.Physics.Events;
 using Robust.Shared.Timing;
@@ -11,7 +11,7 @@ using Content.Shared.DeviceLinking.Events;
 using Content.Server.Power.Components;
 using Content.Shared.Audio;
 
-namespace Content.Server._Starlight.MassDriver.EntitySystems;
+namespace Content.Server.MassDriver.EntitySystems;
 
 public sealed class MassDriverSystem : EntitySystem
 {
@@ -127,7 +127,7 @@ public sealed class MassDriverSystem : EntitySystem
                 if (activeMassDriver.NextThrowTime != TimeSpan.Zero)
                 {
                     if (TryComp<AmbientSoundComponent>(uid, out var ambient))
-                        _audioSystem.SetAmbience(uid, false, ambient); 
+                        _audioSystem.SetAmbience(uid, false, ambient);
                     activeMassDriver.NextThrowTime = TimeSpan.Zero;
                     _appearance.SetData(uid, MassDriverVisuals.Launching, false);
                     _powerReceiver.SetLoad(powered, massDriver.MassDriverPowerLoad);
@@ -157,7 +157,7 @@ public sealed class MassDriverSystem : EntitySystem
                 _throwing.TryThrow(entity, direction, speed);
 
             if (TryComp<AmbientSoundComponent>(uid, out var ambientSound))
-                _audioSystem.SetAmbience(uid, true, ambientSound); 
+                _audioSystem.SetAmbience(uid, true, ambientSound);
         }
     }
 
@@ -264,6 +264,6 @@ public sealed class MassDriverSystem : EntitySystem
     }
 
     private float Normalize(float value, int decimals = 1) => (float)Math.Round(value, decimals, MidpointRounding.AwayFromZero);
-    
+
     #endregion
 }

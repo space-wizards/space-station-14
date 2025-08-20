@@ -1,6 +1,6 @@
 using Robust.Shared.Serialization;
 
-namespace Content.Shared._Starlight.MassDriver;
+namespace Content.Shared.MassDriver;
 
 [Serializable, NetSerializable]
 public enum MassDriverConsoleUiKey : byte

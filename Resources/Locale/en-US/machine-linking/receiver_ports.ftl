@@ -86,3 +86,9 @@ signal-port-description-logic-memory-input = Signal to load into the memory cell
 
 signal-port-name-logic-enable = Enable
 signal-port-description-logic-enable = Only loads the input signal into the memory cell when HIGH.
+
+signal-port-name-mass-driver-console-receiver = Mass Driver
+signal-port-description-mass-driver-console-receiver = Recieves options only from Mass Driver Control Console.
+
+signal-port-name-launch = Launch
+signal-port-description-launch = When signal received, activated launch. Requires manual mode enabled.

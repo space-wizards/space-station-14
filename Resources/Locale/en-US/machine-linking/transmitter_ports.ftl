@@ -75,3 +75,6 @@ signal-port-description-power-discharging = This port is invoked with HIGH when 
 
 signal-port-name-item-detected = Detected
 signal-port-description-item-detected = This port is invoked whenever the transmitter detects an item.
+
+signal-port-name-mass-driver-console-sender = Mass Driver Console
+signal-port-description-mass-driver-console-sender = Sends options only to Mass Driver.

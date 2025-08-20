@@ -1,8 +1,8 @@
-using Content.Shared._Starlight.MassDriver;
+using Content.Shared.MassDriver;
 using JetBrains.Annotations;
 using Robust.Client.UserInterface;
 
-namespace Content.Client._Starlight.MassDriver.UI;
+namespace Content.Client.MassDriver.UI;
 
 [UsedImplicitly]
 public sealed class MassDriverConsoleBoundUserInterface : BoundUserInterface
