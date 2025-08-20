@@ -60,4 +60,10 @@ public sealed partial class MassDriverComponent : Component
     /// </summary>
     [DataField, AutoNetworkedField]
     public MassDriverMode Mode = MassDriverMode.Auto;
+    
+    /// <summary>
+    /// Mass driver console entity
+    /// </summary>
+    [AutoNetworkedField]
+    public NetEntity? Console;
 }

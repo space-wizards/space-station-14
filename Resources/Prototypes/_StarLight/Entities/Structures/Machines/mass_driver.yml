@@ -6,6 +6,7 @@
     mode: SnapgridCenter
   components:
   - type: ApcPowerReceiver
+  - type: ExtensionCableReceiver
   - type: InteractionOutline
   - type: Clickable
   - type: Anchorable

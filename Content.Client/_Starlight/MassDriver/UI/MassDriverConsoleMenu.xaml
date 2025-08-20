@@ -1,0 +1,47 @@
+<DefaultWindow xmlns="https://spacestation14.io"
+            xmlns:gfx="clr-namespace:Robust.Client.Graphics;assembly=Robust.Client"
+            xmlns:cc="clr-namespace:Content.Client.Administration.UI.CustomControls"
+            Title="{Loc 'mass-driver-ui-title'}"
+            MinSize="300 300"
+            SetSize="300 300">
+    <BoxContainer Orientation="Vertical" HorizontalExpand="True" VerticalExpand="True">
+        <ScrollContainer VScrollEnabled="True" HorizontalExpand="True" VerticalExpand="True">
+            <BoxContainer Orientation="Vertical">
+                <!-- Mass Driver Mode -->
+                <RichTextLabel Name="MassDriverModeLabel" Text="{Loc 'mass-driver-ui-mass-driver-modes-label'}" />
+                <BoxContainer Orientation="Horizontal" HorizontalExpand="True">
+                    <Button Name="AutoModeButton" Access="Public" Text="{Loc 'mass-driver-ui-auto-mode'}" HorizontalExpand="True" StyleClasses="OpenBoth" />
+                    <Button Name="ManualModeButton" Access="Public" Text="{Loc 'mass-driver-ui-manual-mode'}" HorizontalExpand="True" StyleClasses="OpenBoth" />
+                </BoxContainer>
+                <cc:HSeparator Color="#a81b22" Margin="0 10 0 10" />
+                <!-- Mass Driver Throw Distance -->
+                <BoxContainer Orientation="Vertical">
+                    <BoxContainer Orientation="Horizontal">
+                        <Label Text="{Loc 'mass-driver-ui-throw-distance-current'}" StyleClasses="StatusFieldTitle" HorizontalExpand="True" />
+                        <Label Name="ThrowDistanceCurrentValue" />
+                    </BoxContainer>
+                    <BoxContainer Orientation="Horizontal" HorizontalExpand="True" VerticalAlignment="Center">
+                        <Label Name="ThrowDistanceMinValue" />          
+                        <Slider Name="ThrowDistanceSlider" HorizontalExpand="True" />
+                        <Label Name="ThrowDistanceMaxValue" />
+                    </BoxContainer>
+                </BoxContainer>
+                <!-- Mass Driver Throw Speed -->
+                <BoxContainer Orientation="Vertical" Margin="0 10 0 0">
+                    <BoxContainer Orientation="Horizontal">
+                        <Label Text="{Loc 'mass-driver-ui-throw-speed-current'}" StyleClasses="StatusFieldTitle" HorizontalExpand="True" />
+                        <Label Name="ThrowSpeedCurrentValue" />
+                    </BoxContainer>
+                    <BoxContainer Orientation="Horizontal" HorizontalExpand="True" VerticalAlignment="Center">
+                        <Label Name="ThrowSpeedMinValue" />          
+                        <Slider Name="ThrowSpeedeSlider" HorizontalExpand="True" />
+                        <Label Name="ThrowSpeedMaxValue" />
+                    </BoxContainer>
+                </BoxContainer>
+                <cc:HSeparator Color="#a81b22" Margin="0 10 0 10" />
+                <!-- Mass Driver Throw Button -->
+                <Button Name="ThrowButton" VerticalAlignment="Center" Access="Public" Text="{Loc 'mass-driver-ui-launch'}" HorizontalExpand="True" StyleClasses="OpenBoth" />
+            </BoxContainer>
+        </ScrollContainer>
+    </BoxContainer>
+</DefaultWindow>
