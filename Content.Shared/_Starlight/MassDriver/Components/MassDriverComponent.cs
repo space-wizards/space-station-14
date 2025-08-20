@@ -1,4 +1,6 @@
+using Content.Shared.DeviceLinking;
 using Robust.Shared.GameStates;
+using Robust.Shared.Prototypes;
 
 namespace Content.Shared._Starlight.MassDriver.Components;
 
@@ -66,10 +68,16 @@ public sealed partial class MassDriverComponent : Component
     /// </summary>
     [AutoNetworkedField]
     public NetEntity? Console;
-    
+
     /// <summary>
     /// How moch energy we consume when launching?
     /// </summary>
     [DataField]
     public float LaunchPowerLoad = 1000f;
+    
+    /// <summary>
+    /// Determines which port is used for receive signals for launch.
+    /// </summary>
+    [DataField]
+    public ProtoId<SinkPortPrototype> LaunchPort = "Launch";
 }

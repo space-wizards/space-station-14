@@ -40,4 +40,5 @@
   - type: DeviceList
   - type: DeviceLinkSink
     ports:
-      - MassDriverConsoleReciever
+      - MassDriverConsoleReceiver
+      - Launch

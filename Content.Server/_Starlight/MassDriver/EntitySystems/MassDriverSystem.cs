@@ -37,6 +37,7 @@ public sealed class MassDriverSystem : EntitySystem
         // Device Linking
         SubscribeLocalEvent<MassDriverConsoleComponent, NewLinkEvent>(OnNewLink);
         SubscribeLocalEvent<MassDriverConsoleComponent, PortDisconnectedEvent>(OnPortDisconnected);
+        SubscribeLocalEvent<MassDriverComponent, SignalReceivedEvent>(OnSignalReceived);
     }
 
     #region DeviceLinking
@@ -70,6 +71,12 @@ public sealed class MassDriverSystem : EntitySystem
 
         component.MassDriver = null;
         Dirty(uid, component);
+    }
+
+    private void OnSignalReceived(EntityUid uid, MassDriverComponent component, SignalReceivedEvent args)
+    {
+        if (args.Port == component.LaunchPort && component.Mode == MassDriverMode.Manual)
+            AddComp<ActiveMassDriverComponent>(uid);
     }
 
     #endregion
