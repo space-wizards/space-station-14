@@ -80,6 +80,9 @@
             "name": "bio"
         },
         {
+            "name": "biohazard"
+        },
+        {
             "name": "bridge"
         },
         {
@@ -311,6 +314,9 @@
         },
         {
             "name": "psychology"
+        },
+        {
+            "name": "radiation"
         },
         {
             "name": "reception"
