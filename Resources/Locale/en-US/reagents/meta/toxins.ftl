@@ -1,8 +1,14 @@
 reagent-name-toxin = toxin
 reagent-desc-toxin = An unsurprisingly toxic chemical. Available at an emagged chem dispenser.
 
+reagent-name-toxin = antitoxin
+reagent-desc-toxin = Generic antitoxin. Might save you from a snake bite.
+
 reagent-name-carpotoxin = carpotoxin
 reagent-desc-carpotoxin = A highly toxic reagent found in space carps. Causes a painful burning sensation.
+
+reagent-name-carpoantitoxin = carpoantitoxin
+reagent-desc-carpoantitoxin = carp specific antitoxin. Straight from some animal's adrenals.
 
 reagent-name-mold = mold
 reagent-desc-mold = A fungal growth, often found in dark, humid places or on expired bread. Will cause you to develop a disease if ingested.
@@ -70,6 +76,9 @@ reagent-desc-lead = A slow-acting but incredibly lethal toxin found in steel, al
 reagent-name-bungotoxin = bungotoxin
 reagent-desc-bungotoxin = A moderately slow-acting poison found within the pit of the bungo fruit.
 
+reagent-name-bungoantitoxin = bungoantitoxin
+reagent-desc-bungoantitoxin = Bungo fruit antitoxin. Straight from some animal's adrenals.
+
 reagent-name-vestine = vestine
 reagent-desc-vestine = Has an adverse reaction within the body causing major jittering. While not particularly useful on its own, it can be used to produce a small variety of chemicals.
 
@@ -81,6 +90,9 @@ reagent-desc-lipolicide = A powerful toxin that will destroy fat cells, massivel
 
 reagent-name-mechanotoxin = mechanotoxin
 reagent-desc-mechanotoxin = A neurotoxin used as venom by some species of spider. Degrades movement when built up.
+
+reagent-name-mechanoantitoxin = mechanoantitoxin
+reagent-desc-mechanoantitoxin = Spider specific antitoxin. Straight from some animal's adrenals.
 
 reagent-name-toxintrash = trash 
 reagent-desc-toxintrash = An awful-smelling fluid. Deadly to non-vox.
