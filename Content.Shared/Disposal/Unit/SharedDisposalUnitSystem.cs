@@ -147,7 +147,7 @@ public abstract class SharedDisposalUnitSystem : EntitySystem
             {
                 _handsSystem.TryDropIntoContainer((args.User, args.Hands), args.Using.Value, component.Container, checkActionBlocker: false);
                 _adminLog.Add(LogType.Action, LogImpact.Medium, $"{ToPrettyString(args.User):player} inserted {ToPrettyString(args.Using.Value)} into {ToPrettyString(uid)}");
-                AfterInsert(uid, args.Using.Value, args.User, component);
+                AfterInsert(uid, component, args.Using.Value, args.User);
             }
         };
 
@@ -225,7 +225,7 @@ public abstract class SharedDisposalUnitSystem : EntitySystem
         }
 
         _adminLog.Add(LogType.Action, LogImpact.Medium, $"{ToPrettyString(args.User):player} inserted {ToPrettyString(args.Used)} into {ToPrettyString(uid)}");
-        AfterInsert(uid, args.Used, args.User, component);
+        AfterInsert(uid, component, args.Used, args.User);
         args.Handled = true;
     }
 
@@ -476,29 +476,28 @@ public abstract class SharedDisposalUnitSystem : EntitySystem
         if (!Containers.Insert(toInsert, disposal.Container))
             return;
 
-        _adminLog.Add(LogType.Action, LogImpact.Medium, $"{ToPrettyString(user):player} inserted {ToPrettyString(toInsert)} into {ToPrettyString(uid)}");
+        if (user != toInsert && user != null)
+            _adminLog.Add(LogType.Action, LogImpact.Medium, $"{ToPrettyString(user):player} inserted {ToPrettyString(toInsert)} into {ToPrettyString(uid)}");
 
-        AfterInsert(uid, toInsert, user, disposal, playDumpSound);
+        AfterInsert(uid, disposal, toInsert, user, playDumpSound);
     }
 
-    public void AfterInsert(EntityUid disposalUnit,
-        EntityUid toInsert,
-        EntityUid? user,
-        DisposalUnitComponent disposal,
+    public void AfterInsert(EntityUid uid,
+        DisposalUnitComponent component,
+        EntityUid inserted,
+        EntityUid? user = null,
         bool playDumpSound = true)
     {
-        QueueAutomaticEngage(disposalUnit, disposal);
+        if (playDumpSound)
+            Audio.PlayPredicted(component.InsertSound, uid, user);
 
-        _ui.CloseUi(disposalUnit, DisposalUnitComponent.DisposalUnitUiKey.Key, toInsert);
+        QueueAutomaticEngage(uid, component);
+
+        _ui.CloseUi(uid, DisposalUnitComponent.DisposalUnitUiKey.Key, inserted);
 
         // Maybe do pullable instead? Eh still fine.
-        Joints.RecursiveClearJoints(toInsert);
-        UpdateVisualState(disposalUnit, disposal);
-
-        if (!playDumpSound)
-            return;
-
-        Audio.PlayPredicted(disposal.InsertSound, disposalUnit, user);
+        Joints.RecursiveClearJoints(inserted);
+        UpdateVisualState(uid, component);
     }
 
     public bool TryInsert(EntityUid unitId, EntityUid toInsertId, EntityUid? userId, DisposalUnitComponent? unit = null)
