@@ -14,9 +14,12 @@ public sealed partial class ChangelingIdentityComponent : Component
     /// <summary>
     /// The list of entities that exist on a paused map. They are paused clones of the victims that the ling has consumed, with all relevant components copied from the original.
     /// </summary>
-    // TODO: Store a reference to the original entity as well so you cannot infinitely devour somebody. Currently very tricky due the inability to send over EntityUid if the original is ever deleted. Can be fixed by something like WeakEntityReference.
+    /// <remarks>
+    /// First is the Uid of the stored identity, second is the original entity the identity came from.
+    /// </remarks>
+    // TODO: Replace ChangelingDevouredComponent with WeakEntityReference once we have it.
     [DataField, AutoNetworkedField]
-    public List<EntityUid> ConsumedIdentities = new();
+    public Dictionary<EntityUid, EntityUid?> ConsumedIdentities = new();
 
 
     /// <summary>
