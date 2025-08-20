@@ -212,6 +212,13 @@
     radius: 1.5
     energy: 1.6
     color: "#3c5eb5"
+  - type: DeviceList
+  - type: DeviceNetwork
+    deviceNetId: Wired
+  - type: DeviceLinkSource
+    range: 5
+    ports:
+      - MassDriverConsoleSender
 #  - type: Tag
 #    tags:
 #    - EmagImmune
