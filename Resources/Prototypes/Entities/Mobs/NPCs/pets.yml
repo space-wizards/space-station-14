@@ -189,7 +189,7 @@
       - PetsNT
   - type: SpeakOnException
     speechCooldown: 2m
-    chanceSpeakNoAccent: 1
+    chanceSpeakNoAccent: 0.007
   - type: Grammar
     attributes:
       proper: true
