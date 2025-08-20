@@ -12055,5 +12055,12 @@ Entries:
   id: 140100
   time: '2025-08-19T21:07:44.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/1401
+- author: CringeCursed
+  changes:
+  - message: Transfer tab on ATM now have functionality
+    type: Add
+  id: 138700
+  time: '2025-08-20T17:14:00.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1387
 Order: -1
 
