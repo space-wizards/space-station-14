@@ -16,7 +16,7 @@ public sealed partial class MassDriverComponent : Component
     /// Max Mass Driver Throw Speed which can be setted by console.
     /// </summary>
     [DataField]
-    public float MaxThrowSpeed = 15.0f;
+    public float MaxThrowSpeed = 10.0f;
 
     /// <summary>
     /// Min Mass Driver Throw Speed which can be setted by console.
@@ -34,7 +34,7 @@ public sealed partial class MassDriverComponent : Component
     /// Max Mass Driver Throw Distance which can be setted by console.
     /// </summary>
     [DataField]
-    public float MaxThrowDistance = 10.0f;
+    public float MaxThrowDistance = 15.0f;
 
     /// <summary>
     /// Min Mass Driver Throw Distance which can be setted by console.

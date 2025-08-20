@@ -103,6 +103,9 @@ public sealed class MassDriverSystem : EntitySystem
                 continue;
             }
             activeMassDriver.NextUpdateTime = Timing.CurTime + activeMassDriver.UpdateDelay;
+            var console = GetEntity(massDriver.Console);
+            if (console != null)
+                UpdateUserInterface(console.Value, uid, massDriver);
 
             if (!_powerReceiver.IsPowered(uid))
                 continue;
@@ -155,6 +158,8 @@ public sealed class MassDriverSystem : EntitySystem
             if (TryComp<MassDriverComponent>(massDriverUid, out var component))
                 UpdateUserInterface(uid, massDriverUid.Value, component);
         }
+        else
+            UpdateUserInterface(uid, null, null);
     }
 
     private void OnModeChanged(EntityUid uid, MassDriverConsoleComponent massDriverConsole, MassDriverModeMessage args)
@@ -181,43 +186,59 @@ public sealed class MassDriverSystem : EntitySystem
     {
         var massDriverUid = GetEntity(massDriverConsole.MassDriver);
         if (massDriverUid != null)
-            EnsureComp<ActiveMassDriverComponent>(massDriverUid.Value);
+            AddComp<ActiveMassDriverComponent>(massDriverUid.Value);
     }
 
     private void OnThrowSpeedChanged(EntityUid uid, MassDriverConsoleComponent massDriverConsole, MassDriverThrowSpeedMessage args)
     {
         var massDriverUid = GetEntity(massDriverConsole.MassDriver);
         if (massDriverUid != null && TryComp<MassDriverComponent>(massDriverUid, out var massDriverComponent))
-            massDriverComponent.CurrentThrowSpeed = Math.Clamp(args.Speed, massDriverComponent.MinThrowSpeed, massDriverComponent.MaxThrowSpeed);
+            massDriverComponent.CurrentThrowSpeed = Math.Clamp(Normalize(args.Speed), massDriverComponent.MinThrowSpeed, massDriverComponent.MaxThrowSpeed);
     }
 
     private void OnThrowDistanceChanged(EntityUid uid, MassDriverConsoleComponent massDriverConsole, MassDriverThrowDistanceMessage args)
     {
         var massDriverUid = GetEntity(massDriverConsole.MassDriver);
         if (massDriverUid != null && TryComp<MassDriverComponent>(massDriverUid, out var massDriverComponent))
-            massDriverComponent.CurrentThrowDistance = Math.Clamp(args.Distance, massDriverComponent.MinThrowDistance, massDriverComponent.MaxThrowDistance);
+            massDriverComponent.CurrentThrowDistance = Math.Clamp(Normalize(args.Distance), massDriverComponent.MinThrowDistance, massDriverComponent.MaxThrowDistance);
     }
 
-    private void UpdateUserInterface(EntityUid console, EntityUid massDriver, MassDriverComponent? component = null)
+    private void UpdateUserInterface(EntityUid console, EntityUid? massDriver, MassDriverComponent? component = null)
     {
-        if (!Resolve(massDriver, ref component))
-            return;
-
         if (!_ui.HasUi(console, MassDriverConsoleUiKey.Key))
             return;
 
-        var state = new MassDriverUiState
+        MassDriverUiState state;
+
+        if (massDriver != null && Resolve(massDriver.Value, ref component))
         {
-            MaxThrowSpeed = component.MaxThrowSpeed,
-            MaxThrowDistance = component.MaxThrowDistance,
-            MinThrowSpeed = component.MinThrowSpeed,
-            MinThrowDistance = component.MinThrowDistance,
-            CurrentThrowSpeed = component.CurrentThrowSpeed,
-            CurrentThrowDistance = component.CurrentThrowDistance,
-            CurrentMassDriverMode = component.Mode
-        };
+            state = new MassDriverUiState
+            {
+                MaxThrowSpeed = component.MaxThrowSpeed,
+                MaxThrowDistance = component.MaxThrowDistance,
+                MinThrowSpeed = component.MinThrowSpeed,
+                MinThrowDistance = component.MinThrowDistance,
+                CurrentThrowSpeed = component.CurrentThrowSpeed,
+                CurrentThrowDistance = component.CurrentThrowDistance,
+                CurrentMassDriverMode = component.Mode,
+                MassDriverLinked = true
+
+            };
+        }
+        else
+        {
+            state = new MassDriverUiState
+            {
+                MassDriverLinked = false
+            };
+        }
 
         _ui.SetUiState(console, MassDriverConsoleUiKey.Key, state);
+    }
+
+    private float Normalize(float value, int decimals = 1)
+    {
+        return (float)Math.Round(value, decimals, MidpointRounding.AwayFromZero);
     }
     
     #endregion
