@@ -66,3 +66,12 @@ public sealed class MassDriverThrowDistanceMessage : BoundUserInterfaceMessage
 
     public MassDriverThrowDistanceMessage(float distance) => Distance = distance;
 }
+
+[Serializable, NetSerializable]
+public enum SecurityWireActionKey : byte
+{
+    Key,
+    Status,
+    Pulsed,
+    PulseCancel
+}

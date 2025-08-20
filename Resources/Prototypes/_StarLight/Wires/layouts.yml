@@ -23,3 +23,5 @@
   - !type:PowerWireAction
   - !type:PowerWireAction
     pulseTimeout: 15
+  - !type:MassDriverSecurityWireAction
+  dummyWires: 3

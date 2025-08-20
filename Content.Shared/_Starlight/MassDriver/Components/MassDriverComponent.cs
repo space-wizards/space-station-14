@@ -86,4 +86,10 @@ public sealed partial class MassDriverComponent : Component
     /// </summary>
     [DataField]
     public ProtoId<SinkPortPrototype> LaunchPort = "Launch";
+
+    /// <summary>
+    /// Determines whether it has been hacked
+    /// </summary>
+    [AutoNetworkedField]
+    public bool Hacked = false;
 }
