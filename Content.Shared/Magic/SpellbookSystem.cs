@@ -37,7 +37,7 @@ public sealed class SpellbookSystem : EntitySystem
             // Null means infinite charges.
             if (charges is { } count)
             {
-                var chargeComp = EnsureComp<LimitedChargesComponent>(spell);
+                EnsureComp<LimitedChargesComponent>(spell, out var chargeComp);
                 _sharedCharges.SetMaxCharges((spell, chargeComp), count);
                 _sharedCharges.SetCharges((spell, chargeComp), count);
             }

@@ -219,6 +219,7 @@ public abstract class SharedChargesSystem : EntitySystem
     {
         if (!Resolve(action, ref action.Comp))
             return;
+
         // You can't have negative max charges (even zero is a bit goofy but eh)
         var adjusted = Math.Max(0, value);
         if (action.Comp.MaxCharges == adjusted)
