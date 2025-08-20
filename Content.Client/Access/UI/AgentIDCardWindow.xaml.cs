@@ -21,6 +21,7 @@ namespace Content.Client.Access.UI
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         private readonly SpriteSystem _spriteSystem;
 
+        // CCvar
         private readonly int _maxNameLength;
         private readonly int _maxIdJobLength;
 
@@ -67,11 +68,11 @@ namespace Content.Client.Access.UI
             CTabContainer.SetTabTitle(1, Loc.GetString("agent-id-ui-tab-job-icons"));
         }
 
-        //TODO rename, remove currentJobIconId, summary
-        public void SetAllowedIcons(string currentJobIconId, List<ProtoId<JobIconGroupPrototype>> jobGroups)
+        /// <summary>
+        /// Creates the job icons tab.
+        /// </summary>
+        public void SetAllowedIcons(List<ProtoId<JobIconGroupPrototype>> jobGroups)
         {
-            // TODO move currentJobIconId to a general startup function
-            CurrentJobIcon.Texture = _spriteSystem.Frame0(_prototypeManager.Index<JobIconPrototype>(currentJobIconId).Icon);
             JobGroupGrid.DisposeAllChildren();
             IconGrid.DisposeAllChildren();
 
@@ -116,7 +117,10 @@ namespace Content.Client.Access.UI
             }
         }
 
-        // TODO summary
+        /// <summary>
+        /// Creates the job icon subgroup within the job icons tab.
+        /// </summary>
+        /// <param name="jobIcons"></param>
         private void SetJobIcons(List<ProtoId<JobIconPrototype>> jobIcons)
         {
             IconGrid.DisposeAllChildren();
@@ -159,6 +163,11 @@ namespace Content.Client.Access.UI
         {
             JobLineEdit.Text = job;
             CurrentJob.Text = job;
+        }
+
+        public void SetCurrentJobIcon(string jobIcon)
+        {
+            CurrentJobIcon.Texture = _spriteSystem.Frame0(_prototypeManager.Index<JobIconPrototype>(jobIcon).Icon);
         }
     }
 }

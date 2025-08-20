@@ -888,6 +888,20 @@
     tags:
     - DoorBumpOpener
   - type: AgentIDCard
+    iconGroups:
+    - CommandIconGroup
+    - SecurityIconGroup
+    - CargoIconGroup
+    - EngineeringIconGroup
+    - MedicalIconGroup
+    - ResearchIconGroup
+    - ServiceIconGroup
+    - EntertainerIconGroup
+    - CivilianIconGroup
+    - SiliconIconGroup
+    - BlankIconGroup
+    - ThreatIconGroup
+    - AdminIconGroup
   - type: ActivatableUI
     key: enum.AgentIDCardUiKey.Key
     inHandsOnly: true

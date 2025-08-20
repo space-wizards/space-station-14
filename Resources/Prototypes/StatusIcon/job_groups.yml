@@ -99,6 +99,7 @@
   - JobIconReporter
   - JobIconZookeeper
 
+# Not exactly service workers, but not civilians either
 - type: jobIconGroup
   id: EntertainerIconGroup
   groupName: job-icon-group-entertainer
@@ -141,6 +142,7 @@
   - JobIconUnknown
   - JobIconNoId
 
+# Non-station villains
 - type: jobIconGroup
   id: ThreatIconGroup
   groupName: job-icon-group-threat

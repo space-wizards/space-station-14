@@ -4,8 +4,8 @@
             xmlns:gfx="clr-namespace:Robust.Client.Graphics;assembly=Robust.Client"
             xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
             Title="{Loc agent-id-ui-menu-title}"
-            MinSize="740 400" Resizable="True">
-    <BoxContainer Orientation="Vertical" Margin="12 0" SeparationOverride="4" VerticalExpand="False" >
+            MinSize="737 383" Resizable="False">
+    <BoxContainer Orientation="Vertical" Margin="12 0" VerticalExpand="False" >
 
         <!-- Header: ID status -->
         <BoxContainer Orientation="Horizontal" Margin="0 12 0 4" MinHeight="80" >
@@ -13,8 +13,8 @@
                 <PanelContainer.PanelOverride>
                     <gfx:StyleBoxFlat BorderThickness="1" BorderColor="#444444" BackgroundColor="{x:Static s:StyleNano.PanelDark}" />
                 </PanelContainer.PanelOverride>
-                    <TextureRect Margin="4" Name="CurrentJobIcon" Stretch="KeepAspectCentered"
-                        VerticalAlignment="Center" HorizontalAlignment="Center" SetSize="64 64" />
+                <TextureRect Margin="8 0" Name="CurrentJobIcon" Stretch="KeepAspectCentered"
+                    VerticalAlignment="Center" HorizontalAlignment="Center" SetSize="64 64" />
             </PanelContainer>
             <BoxContainer Margin="8 4 0 0" Orientation="Vertical">
                 <Label Name="CurrentName" SetHeight="24" StyleClasses="LabelBig" FontColorOverride="{x:Static s:StyleNano.NanoGold}" />
@@ -24,49 +24,43 @@
         <PanelContainer Margin="0 4" StyleClasses="LowDivider" />
 
         <!-- Tabs -->
-        <PanelContainer MinHeight="220" VerticalExpand="True" > <!-- Inset aesthetics -->
+        <PanelContainer MinHeight="220" VerticalExpand="True"> <!-- Inset aesthetics -->
             <PanelContainer.PanelOverride>
-                <gfx:StyleBoxFlat BorderThickness="1" BorderColor="#444444" BackgroundColor="{x:Static s:StyleNano.PanelDark}" />
+                <gfx:StyleBoxFlat BorderThickness="2" BorderColor="#400000" BackgroundColor="#0E0000" />
             </PanelContainer.PanelOverride>
             <BoxContainer Orientation="Vertical" >
-                <BoxContainer Orientation="Horizontal" >
-                </BoxContainer>
-                <TabContainer Name="CTabContainer" Margin="4 4 4 0" VerticalExpand="True" MinHeight="180" >
+                <TabContainer Name="CTabContainer" Margin="8 8 8 0" VerticalExpand="True" MinHeight="180" >
 
                     <!-- Settings tab -->
-                    <!-- TODO reserve scrollbar -->
                     <ScrollContainer Name="TabSettings" >
-                        <BoxContainer Margin="4" Orientation="Vertical" >
-                            <Label Margin="8 0" Text="{Loc 'agent-id-ui-input-name'}" />
+                        <BoxContainer Margin="8" Orientation="Vertical" >
+                            <Label Margin=" 0" Text="{Loc 'agent-id-ui-input-name'}" />
                             <LineEdit Name="NameLineEdit" Margin="0 2" SelectAllOnFocus="True" />
-                            <Label Margin="8 0" Text="{Loc 'agent-id-ui-input-job'}" />
+                            <Label Margin="4 0" Text="{Loc 'agent-id-ui-input-job'}" />
                             <LineEdit Name="JobLineEdit" Margin="0 2" SelectAllOnFocus="True" />
                         </BoxContainer>
                     </ScrollContainer>
 
                     <!-- Job icon tab -->
-                    <BoxContainer Name="TabJobIcons" Margin="4" Orientation="Horizontal" VerticalExpand="True" >
-                            <ScrollContainer ReturnMeasure="True">
+                    <BoxContainer Name="TabJobIcons" Margin="8 8 4 4" Orientation="Horizontal" VerticalExpand="True" >
+                            <BoxContainer>
                                 <GridContainer Name="JobGroupGrid" Columns="6" />
                                     <!-- Group buttons are generated in code -->
-                            </ScrollContainer>
-                            <!-- TODO Replace with simple line --> <PanelContainer Margin="4 0" HorizontalExpand="True" StyleClasses="LowDivider" />
-                            <PanelContainer>
+                            </BoxContainer>
+                            <PanelContainer Margin="4 0" VerticalExpand="True" StyleClasses="LowDivider" />
+                            <PanelContainer >
                                 <PanelContainer.PanelOverride>
-                                    <gfx:StyleBoxFlat BorderThickness="2" BackgroundColor="#000000" BorderColor="#FFFFFF" />
+                                    <gfx:StyleBoxFlat BorderThickness="2" BorderColor="#444444" BackgroundColor="{x:Static s:StyleNano.PanelDark}" />
                                 </PanelContainer.PanelOverride>
-                                <BoxContainer Margin="4" SetWidth="104" VerticalExpand="True" >
-                                    <ScrollContainer ReturnMeasure="True" HScrollEnabled="False" >
+                                <BoxContainer Margin="4" SetWidth="98" VerticalExpand="True" >
                                         <GridContainer Name="IconGrid" Columns="3" />
                                         <!-- Job icon buttons are generated in code -->
-                                    </ScrollContainer>
                                 </BoxContainer>
                             </PanelContainer>
 
                     </BoxContainer>
                 </TabContainer>
-                <!-- TODO Make this flush with the tabs -->
-                <controls:StripeBack HasBottomEdge="False" Margin="4 0 4 4" >
+                <controls:StripeBack HasBottomEdge="False" Margin="8 -6 8 4" >
                     <Label Text="{Loc 'agent-id-ui-os'}" VerticalAlignment="Center" Margin="6 2" StyleClasses="PdaContentFooterText"/>
                     <Label Text="{Loc 'agent-id-ui-os-flavor'}" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="6 2" StyleClasses="PdaContentFooterText"/>
                 </controls:StripeBack>

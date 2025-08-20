@@ -1,7 +1,6 @@
 using Content.Shared.Access.Components;
 using Content.Shared.Access.Systems;
 using Content.Shared.StatusIcon;
-using Robust.Client.GameObjects;
 using Robust.Client.UserInterface;
 using Robust.Shared.Prototypes;
 
@@ -18,11 +17,16 @@ namespace Content.Client.Access.UI
         {
             base.Open();
 
+            if (!EntMan.TryGetComponent(Owner, out AgentIDCardComponent? agent))
+                return;
+
             _window = this.CreateWindow<AgentIDCardWindow>();
 
             _window.OnNameChanged += OnNameChanged;
             _window.OnJobChanged += OnJobChanged;
             _window.OnJobIconChanged += OnJobIconChanged;
+
+            _window.SetAllowedIcons(agent.IconGroups);
             Update();
         }
 
@@ -33,13 +37,12 @@ namespace Content.Client.Access.UI
             if (_window == null)
                 return;
 
-            if (!EntMan.TryGetComponent(Owner, out IdCardComponent? card) ||
-                !EntMan.TryGetComponent(Owner, out AgentIDCardComponent? agent))
+            if (!EntMan.TryGetComponent(Owner, out IdCardComponent? card))
                 return;
 
             _window.SetCurrentName(card.FullName ?? string.Empty);
             _window.SetCurrentJob(card.LocalizedJobTitle ?? string.Empty);
-            _window.SetAllowedIcons(card.JobIcon, agent.IconGroups);
+            _window.SetCurrentJobIcon(card.JobIcon);
         }
 
         private void OnNameChanged(string newName)
@@ -52,7 +55,7 @@ namespace Content.Client.Access.UI
             SendMessage(new AgentIDCardJobChangedMessage(newJob));
         }
 
-        public void OnJobIconChanged(ProtoId<JobIconPrototype> newJobIconId)
+        private void OnJobIconChanged(ProtoId<JobIconPrototype> newJobIconId)
         {
             SendMessage(new AgentIDCardJobIconChangedMessage(newJobIconId));
         }
