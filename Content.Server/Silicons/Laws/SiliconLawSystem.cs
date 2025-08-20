@@ -303,20 +303,20 @@ public sealed class SiliconLawSystem : SharedSiliconLawSystem
                     /// it doesn't add any non-soft law
                     if (j < newLaws.Count)
                     {
-                        updatedLaws.add(newLaws[j]);
+                        updatedLaws.Add(newLaws[j]);
                         j++;
                     }
                 }
                 // Otherwise it just adds the old ion law to the updatedLaws
                 else
-                    updatedLaws.add(component.Lawset.Laws[i]);
+                    updatedLaws.Add(component.Lawset.Laws[i]);
             }
 
             /// If the number of newLaws is more than the number of old laws,
             /// it adds all the last ones at the end.
             for (; j < newLaws.Count; j++)
             {
-                updatedLaws.add(newLaws[j]);
+                updatedLaws.Add(newLaws[j]);
             }
 
             component.Lawset.Laws = updatedLaws;
