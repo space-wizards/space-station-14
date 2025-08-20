@@ -388,30 +388,12 @@
 
 - type: entity
   parent: BaseSign
-  id: SignBiohazard
-  name: biohazard sign
-  description: A sign indicating a biohazard.
-  components:
-  - type: Sprite
-    state: biohazard
-
-- type: entity
-  parent: BaseSign
   id: SignBridge
   name: bridge sign
   description: A sign indicating the bridge.
   components:
   - type: Sprite
     state: bridge
-
-- type: entity
-  parent: BaseSign
-  id: SignCanisters
-  name: canisters sign
-  description: A sign warning the viewer about pressurised canisters.
-  components:
-  - type: Sprite
-    state: canisters
 
 - type: entity
   parent: BaseSign
@@ -551,30 +533,12 @@
 
 - type: entity
   parent: BaseSign
-  id: SignElectrical
-  name: electrical sign
-  description: A sign indicating an electrical hazard.
-  components:
-  - type: Sprite
-    state: electrical
-
-- type: entity
-  parent: BaseSign
   id: SignExamroom
   name: examination room sign
   description: A sign indicating a medical examination room.
   components:
   - type: Sprite
     state: examroom
-
-- type: entity
-  parent: BaseSign
-  id: SignFire
-  name: fire sign
-  description: A sign indicating a fire hazard.
-  components:
-  - type: Sprite
-    state: fire
 
 - type: entity
   parent: BaseSign
@@ -861,61 +825,7 @@
   description: A sign indicating a corrosive materials hazard.
   components:
   - type: Sprite
-    state: corrosives
-
-- type: entity
-  parent: BaseSign
-  id: SignCryogenics
-  name: cryogenics warning sign
-  description: A sign indicating a cryogenic materials hazard. Bring a jacket!
-  components:
-  - type: Sprite
-    state: cryogenics
-
-- type: entity
-  parent: BaseSign
-  id: SignDanger
-  name: danger warning sign
-  description: A sign warning against some danger.
-  components:
-  - type: Sprite
-    state: danger
-
-- type: entity
-  parent: BaseSign
-  id: SignExplosives
-  name: explosives warning sign
-  description: A sign indicating an explosive materials hazard.
-  components:
-  - type: Sprite
-    state: explosives
-
-- type: entity
-  parent: BaseSign
-  id: SignFlammable
-  name: flammable warning sign
-  description: A sign indicating a flammable materials hazard.
-  components:
-  - type: Sprite
-    state: flammable
-
-- type: entity
-  parent: BaseSign
-  id: SignLaser
-  name: laser warning sign
-  description: A sign indicating a laser hazard.
-  components:
-  - type: Sprite
-    state: laser
-
-- type: entity
-  parent: BaseSign
-  id: SignMagnetics
-  name: magnetics warning sign
-  description: A sign indicating a magnetic materials hazard.
-  components:
-  - type: Sprite
-    state: magnetics
+    state: medium_corrosives
 
 - type: entity
   parent: BaseSign
@@ -924,44 +834,7 @@
   description: A sign indicating a memetic hazard.
   components:
   - type: Sprite
-    state: memetic
-
-- type: entity
-  parent: BaseSign
-  id: SignSecure
-  name: secure sign
-  description: A sign indicating that the area ahead is a secure area.
-  components:
-  - type: Sprite
-    state: secure
-
-- type: entity
-  parent: BaseSign
-  id: SignSecurearea
-  name: secure area sign
-  description: A sign indicating that the area ahead is a secure area.
-  components:
-  - type: Sprite
-    state: securearea
-    snapCardinals: true
-
-- type: entity
-  parent: BaseSign
-  id: SignShock
-  name: shock sign
-  description: A sign indicating an electrical hazard.
-  components:
-  - type: Sprite
-    state: shock
-
-- type: entity
-  parent: BaseSign
-  id: SignOptical
-  name: optical warning sign
-  description: A sign indicating an optical radiation hazard.
-  components:
-  - type: Sprite
-    state: optical
+    state: medium_memetic
 
 - type: entity
   parent: BaseSign
@@ -970,16 +843,7 @@
   description: A sign indicating an oxidizing agent hazard.
   components:
   - type: Sprite
-    state: oxidants
-
-- type: entity
-  parent: BaseSign
-  id: SignRadiation
-  name: radiation warning sign
-  description: A sign indicating an ionizing radiation hazard.
-  components:
-  - type: Sprite
-    state: radiation
+    state: medium_oxidants
 
 - type: entity
   parent: BaseSign

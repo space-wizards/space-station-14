@@ -703,3 +703,20 @@ ClothingNeckHeadphones: ClothingMultipleHeadphones
 
 # 2025-08-01
 FoodDonutJellySlugcat: FoodDonutJellyScurret
+
+# 2025-08-19
+SignBiohazard: SignBiohazardMed
+SignCanisters: SignCans
+SignCryogenics: SignCryogenicsMed
+SignDanger: SignDangerMed
+SignElectrical: SignElectricalMed
+SignExplosives: ExplosivesSignMed
+SignFire: SignFlammableMed
+SignFlammable: SignFlammableMed
+SignLaser: SignLaserMed
+SignMagnetics: SignMagneticsMed
+SignOptical: SignRadiationMed
+SignRadiation: SignRadiationMed
+SignSecure: SignSecureMed
+SignSecurearea: SignSecureMedRed
+SignShock: SignElectricalMed
