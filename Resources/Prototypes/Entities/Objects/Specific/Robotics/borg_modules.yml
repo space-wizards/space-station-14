@@ -1293,7 +1293,7 @@
           tags:
           - ConstructionMaterial
   - type: BorgModuleIcon
-    icon: { sprite: Interface/Actions/actions_borg.rsi, state: xenoborg-basic-module }
+    icon: { sprite: Interface/Actions/actions_borg.rsi, state: xenoborg-module-module }
 
 # xenoborg modules
 - type: entity
