@@ -98,6 +98,10 @@
           0.1
         ]
       ]
+    },
+    {
+      "name": "panel_open",
+      "directions": 4
     }
   ]
 }

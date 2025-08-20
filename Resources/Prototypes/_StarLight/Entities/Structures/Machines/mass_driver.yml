@@ -29,6 +29,8 @@
     layers:
       - state: base
         map: [ "mainLayer" ]
+      - state: panel_open
+        map: ["enum.WiresVisualLayers.MaintenancePanel"]
   - type: GenericVisualizer
     visuals: 
       enum.MassDriverVisuals.Launching:
@@ -44,10 +46,34 @@
       - MassDriverConsoleReceiver
       - Launch
   - type: WiresPanel
+  - type: WiresVisuals
   - type: Wires
     layoutId: MassDriver
   - type: AmbientSound
+    range: 10
     enabled: False
     volume: 0
     sound: 
       path: /Audio/_Starlight/Effects/mass_driver_launching.ogg
+  - type: Destructible
+    thresholds:
+      - trigger:
+          !type:DamageTrigger
+          damage: 600
+        behaviors:
+          - !type:DoActsBehavior
+            acts: [ "Destruction" ]
+      - trigger:
+          !type:DamageTrigger
+          damage: 300
+        behaviors:
+          - !type:DoActsBehavior
+            acts: ["Destruction"]
+          - !type:PlaySoundBehavior
+            sound:
+              collection: MetalGlassBreak
+          - !type:SpawnEntitiesBehavior
+            spawn:
+              SheetSteel1:
+                min: 1
+                max: 2
