@@ -1,5 +1,4 @@
 using Content.Shared.DeviceLinking;
-using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
 
@@ -81,10 +80,4 @@ public sealed partial class MassDriverComponent : Component
     /// </summary>
     [DataField]
     public ProtoId<SinkPortPrototype> LaunchPort = "Launch";
-    
-    /// <summary>
-    /// Determines which port is used for receive signals for launch.
-    /// </summary>
-    [DataField]
-    public SoundSpecifier LaunchSound = new SoundPathSpecifier("/Audio/_Starlight/Effects/mass_driver_launching.ogg");
 }

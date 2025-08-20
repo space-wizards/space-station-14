@@ -45,3 +45,7 @@
   - type: WiresPanel
   - type: Wires
     layoutId: MassDriver
+  - type: AmbientSound
+    enabled: False
+    sound: 
+      path: /Audio/_Starlight/Effects/mass_driver_launching.ogg

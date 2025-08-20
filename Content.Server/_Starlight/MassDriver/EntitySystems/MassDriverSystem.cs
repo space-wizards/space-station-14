@@ -9,7 +9,7 @@ using Content.Shared.Power;
 using Content.Server.Power.EntitySystems;
 using Content.Shared.DeviceLinking.Events;
 using Content.Server.Power.Components;
-using Robust.Shared.Audio.Systems;
+using Content.Shared.Audio;
 
 namespace Content.Server._Starlight.MassDriver.EntitySystems;
 
@@ -21,7 +21,7 @@ public sealed class MassDriverSystem : EntitySystem
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
     [Dependency] private readonly PowerReceiverSystem _powerReceiver = default!;
     [Dependency] private readonly SharedUserInterfaceSystem _ui = default!;
-    [Dependency] private readonly SharedAudioSystem _audioSystem = default!;
+    [Dependency] private readonly SharedAmbientSoundSystem _audioSystem = default!;
 
     public override void Initialize()
     {
@@ -126,6 +126,7 @@ public sealed class MassDriverSystem : EntitySystem
             {
                 if (activeMassDriver.NextThrowTime != TimeSpan.Zero)
                 {
+                    _audioSystem.SetAmbience(uid, false); 
                     activeMassDriver.NextThrowTime = TimeSpan.Zero;
                     _appearance.SetData(uid, MassDriverVisuals.Launching, false);
                     _powerReceiver.SetLoad(powered, powered.Load - massDriver.LaunchPowerLoad);
@@ -154,7 +155,7 @@ public sealed class MassDriverSystem : EntitySystem
             foreach (var entity in entities)
                 _throwing.TryThrow(entity, direction, speed);
 
-            _audioSystem.PlayPvs(massDriver.LaunchSound, uid);
+            _audioSystem.SetAmbience(uid, true); 
         }
     }
 
