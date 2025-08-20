@@ -17,12 +17,23 @@ public sealed class MassDriverSystem : EntitySystem
     [Dependency] private readonly EntityLookupSystem _lookup = default!;
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
     [Dependency] private readonly PowerReceiverSystem _powerReceiver = default!;
+    [Dependency] private readonly SharedUserInterfaceSystem _ui = default!;
 
     public override void Initialize()
     {
         base.Initialize();
 
         SubscribeLocalEvent<MassDriverComponent, PowerChangedEvent>(OnPowerChanged);
+
+        // UI for console -_-
+        SubscribeLocalEvent<MassDriverConsoleComponent, ComponentInit>(OnInit); // Update state on init
+    }
+
+    private void OnInit(EntityUid uid, MassDriverConsoleComponent massDriverConsole, ComponentInit args)
+    {
+        if (massDriverConsole.MassDriver != null
+            && TryComp<MassDriverComponent>(GetEntity(massDriverConsole.MassDriver), out var component))
+            UpdateUserInterface(uid, component);
     }
 
     private void OnPowerChanged(EntityUid uid, MassDriverComponent component, ref PowerChangedEvent args)
@@ -91,5 +102,27 @@ public sealed class MassDriverSystem : EntitySystem
             foreach (var entity in entities)
                 _throwing.TryThrow(entity, direction, speed);
         }
+    }
+
+    private void UpdateUserInterface(EntityUid console, MassDriverComponent? component = null)
+    {
+        if (!Resolve(console, ref component))
+            return;
+
+        if (!_ui.HasUi(console, MassDriverConsoleUiKey.Key))
+            return;
+
+        var state = new MassDriverUiState
+        {
+            MaxThrowSpeed = component.MaxThrowSpeed,
+            MaxThrowDistance = component.MaxThrowDistance,
+            MinThrowSpeed = component.MinThrowSpeed,
+            MinThrowDistance = component.MinThrowDistance,
+            CurrentThrowSpeed = component.CurrentThrowSpeed,
+            CurrentThrowDistance = component.CurrentThrowDistance,
+            CurrentMassDriverMode = component.Mode
+        };
+
+        _ui.SetUiState(console, MassDriverConsoleUiKey.Key, state);
     }
 }
