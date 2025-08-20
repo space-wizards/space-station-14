@@ -1,4 +1,6 @@
+using Content.Shared.DeviceLinking;
 using Robust.Shared.GameStates;
+using Robust.Shared.Prototypes;
 
 namespace Content.Shared._Starlight.MassDriver.Components;
 
@@ -11,4 +13,10 @@ public sealed partial class MassDriverConsoleComponent : Component
     /// </summary>
     [AutoNetworkedField]
     public NetEntity? MassDriver;
+
+    /// <summary>
+    /// The machine linking port
+    /// </summary>
+    [DataField]
+    public ProtoId<SourcePortPrototype> LinkingPort = "MassDriverConsoleSender";
 }

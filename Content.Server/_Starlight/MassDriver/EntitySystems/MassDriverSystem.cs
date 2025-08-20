@@ -7,6 +7,7 @@ using Robust.Shared.GameObjects;
 using System.Linq;
 using Content.Shared.Power;
 using Content.Server.Power.EntitySystems;
+using Content.Shared.DeviceLinking.Events;
 
 namespace Content.Server._Starlight.MassDriver.EntitySystems;
 
@@ -27,14 +28,48 @@ public sealed class MassDriverSystem : EntitySystem
 
         // UI for console -_-
         SubscribeLocalEvent<MassDriverConsoleComponent, ComponentInit>(OnInit); // Update state on init
+
+        // Device Linking
+        SubscribeLocalEvent<MassDriverConsoleComponent, NewLinkEvent>(OnNewLink);
+        SubscribeLocalEvent<MassDriverConsoleComponent, PortDisconnectedEvent>(OnPortDisconnected);
     }
 
-    private void OnInit(EntityUid uid, MassDriverConsoleComponent massDriverConsole, ComponentInit args)
+    #region DeviceLinking
+
+    private void OnNewLink(EntityUid uid, MassDriverConsoleComponent component, NewLinkEvent args)
     {
-        if (massDriverConsole.MassDriver != null
-            && TryComp<MassDriverComponent>(GetEntity(massDriverConsole.MassDriver), out var component))
-            UpdateUserInterface(uid, component);
+        if (!TryComp<MassDriverComponent>(args.Sink, out var driver))
+            return;
+
+        component.MassDriver = GetNetEntity(args.Sink);
+        driver.Console = GetNetEntity(uid);
+
+        Dirty(args.Sink, driver);
+        Dirty(uid, component);
+
+        UpdateUserInterface(uid, driver);
     }
+
+    private void OnPortDisconnected(EntityUid uid, MassDriverConsoleComponent component, PortDisconnectedEvent args)
+    {
+        var massDriverNetEntity = component.MassDriver;
+        if (args.Port != component.LinkingPort || massDriverNetEntity == null)
+            return;
+
+        var massDriverEntityUid = GetEntity(massDriverNetEntity);
+        if (TryComp<MassDriverComponent>(massDriverEntityUid, out var massDriverComponent))
+        {
+            massDriverComponent.Console = null;
+            Dirty(massDriverEntityUid.Value, massDriverComponent);
+        }
+
+        component.MassDriver = null;
+        Dirty(uid, component);
+    }
+
+    #endregion
+
+    #region Logic
 
     private void OnPowerChanged(EntityUid uid, MassDriverComponent component, ref PowerChangedEvent args)
     {
@@ -104,6 +139,17 @@ public sealed class MassDriverSystem : EntitySystem
         }
     }
 
+    #endregion
+
+    #region UI
+
+    private void OnInit(EntityUid uid, MassDriverConsoleComponent massDriverConsole, ComponentInit args)
+    {
+        if (massDriverConsole.MassDriver != null
+            && TryComp<MassDriverComponent>(GetEntity(massDriverConsole.MassDriver), out var component))
+            UpdateUserInterface(uid, component);
+    }
+
     private void UpdateUserInterface(EntityUid console, MassDriverComponent? component = null)
     {
         if (!Resolve(console, ref component))
@@ -125,4 +171,6 @@ public sealed class MassDriverSystem : EntitySystem
 
         _ui.SetUiState(console, MassDriverConsoleUiKey.Key, state);
     }
+    
+    #endregion
 }
