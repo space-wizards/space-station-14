@@ -11,7 +11,7 @@ using Robust.Shared.Serialization;
 
 namespace Content.Shared.Access.Systems
 {
-    public sealed class AgentIDCardSystem : SharedAgentIdCardSystem
+    public sealed class AgentIDCardSystem : EntitySystem
     {
         [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
         [Dependency] private readonly SharedIdCardSystem _cardSystem = default!;
