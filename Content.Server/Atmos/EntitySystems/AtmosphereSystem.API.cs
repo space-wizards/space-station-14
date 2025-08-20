@@ -398,7 +398,14 @@ public partial class AtmosphereSystem
     [PublicAPI]
     public bool IsDeltaPressureEntityInList(Entity<GridAtmosphereComponent?> grid, Entity<DeltaPressureComponent> ent)
     {
-        return _atmosQuery.Resolve(grid, ref grid.Comp, false) && grid.Comp.DeltaPressureEntityLookup.ContainsKey(ent.Owner);
+        // Dict and list must be in sync - deep-fried if we aren't.
+        if (!_atmosQuery.Resolve(grid, ref grid.Comp, false))
+            return false;
+
+        var contains = grid.Comp.DeltaPressureEntityLookup.ContainsKey(ent.Owner);
+        Debug.Assert(contains && grid.Comp.DeltaPressureEntities.Contains(ent));
+
+        return contains;
     }
 
     [ByRefEvent] private record struct SetSimulatedGridMethodEvent
