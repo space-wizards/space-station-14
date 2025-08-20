@@ -1,7 +1,7 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
-  "copyright": "Stone tea statue by slycoolgamer",
+  "copyright": "Stone tea statue by slycoolgamer, one year statue by Trosling",
   "size": {
     "x": 32,
     "y": 64
@@ -9,6 +9,9 @@
   "states": [
     {
       "name": "stone_tea"
+    },
+    {
+      "name": "one_year_anniversary"
     }
   ]
 }

@@ -28,6 +28,14 @@
                                     HorizontalAlignment="Center"
                                     VerticalAlignment="Bottom"
                                     StyleClasses="OpenRight"/>
+                          <!-- NullLink start-->
+                          <Button Name="LinkDiscordButton"
+                                  Text="{Loc 'link-discord'}"
+                                  HorizontalAlignment="Center"
+                                  VerticalAlignment="Bottom"
+                                  Visible="False" 
+                                  StyleClasses="OpenBoth"/>
+                          <!-- NullLink end-->
                             <Button Name="CopyButton"
                                     Text="{Loc 'connecting-copy'}"
                                     HorizontalAlignment="Center"

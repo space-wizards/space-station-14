@@ -12,6 +12,8 @@ using Robust.Shared.Map;
 
 //linq
 using System.Linq;
+using Content.Shared.Weapons.Ranged.Events;
+using Content.Shared.Examine;
 
 namespace Content.Shared.Starlight.Knockback;
 public abstract partial class SharedKnockbackSystem : EntitySystem
@@ -23,15 +25,33 @@ public abstract partial class SharedKnockbackSystem : EntitySystem
     [Dependency] private readonly SharedStaminaSystem _stamina = default!;
     public override void Initialize()
     {
-        SubscribeLocalEvent<KnockbackByUserTagComponent, OnNonEmptyGunShotEvent>(OnGunShot);
+        SubscribeLocalEvent<KnockbackByUserTagComponent, TakeAmmoEvent>(OnGunShot);
+        SubscribeLocalEvent<KnockbackByUserTagComponent, ExaminedEvent>(OnExamined);
     }
 
-    private void OnGunShot(Entity<KnockbackByUserTagComponent> ent, ref OnNonEmptyGunShotEvent args)
+    private void OnExamined(Entity<KnockbackByUserTagComponent> ent, ref ExaminedEvent args)
+    {
+        if (args.IsInDetailsRange)
+        {
+            //check if the examiner has any tags that match the component's tags
+            if (_tagSystem.HasAnyTag(args.Examiner, ent.Comp.DoestContain.Keys))
+            {
+                var data = GetKnockbackData(ent, args.Examiner);
+                var knockback = CalculateKnockback(args.Examiner, data);
+                //figure out the forwards/backwards direction
+                var direction = knockback < 0 ? "forwards" : "backwards";
+                args.PushMarkup(Loc.GetString("knockback-by-user-tag-component-examine-distance", ("knockback", String.Format("{0:0.###}", MathF.Abs(knockback))), ("direction", direction)));
+                args.PushMarkup(Loc.GetString("knockback-by-user-tag-component-examine-stamina", ("stamina", String.Format("{0:0.###}", CalculateStaminaDamage(data, knockback)))));
+            }
+        }
+    }
+
+    private void OnGunShot(Entity<KnockbackByUserTagComponent> ent, ref TakeAmmoEvent args)
     {
         //make sure the ammo is shootable
         foreach (var ammo in args.Ammo)
         {
-            if (TryComp<HitScanCartridgeAmmoComponent>(ammo.Uid, out var hitscanCartridge))
+            if (TryComp<HitScanCartridgeAmmoComponent>(ammo.Entity, out var hitscanCartridge))
             {
                 //check if its spent
                 if (hitscanCartridge.Spent)
@@ -40,7 +60,7 @@ public abstract partial class SharedKnockbackSystem : EntitySystem
                 }
             }
 
-            if (TryComp<CartridgeAmmoComponent>(ammo.Uid, out var cartridge))
+            if (TryComp<CartridgeAmmoComponent>(ammo.Entity, out var cartridge))
             {
                 //check if its spent
                 if (cartridge.Spent)
@@ -50,13 +70,14 @@ public abstract partial class SharedKnockbackSystem : EntitySystem
             }
         }
 
-        EntityUid user = args.User;
+        if (args.User == null)
+            return;
+        EntityUid user = args.User.Value;
 
         //check for tags
         if (_tagSystem.HasAnyTag(user, ent.Comp.DoestContain.Keys))
         {
-            //get the specific knockback data for this tag
-            KnockbackData data = ent.Comp.DoestContain.FirstOrDefault(x => _tagSystem.HasTag(user, x.Key)).Value;
+            var data = GetKnockbackData(ent, user);
             //get the gun component
             if (TryComp<GunComponent>(ent, out var gunComponent))
             {
@@ -65,12 +86,7 @@ public abstract partial class SharedKnockbackSystem : EntitySystem
                 if (toCoordinates == null)
                     return;
 
-                float knockback = data.Knockback;
-                //If we have no slips, cut the knockback in half
-                if (CheckForNoSlips(user))
-                {
-                    knockback *= 0.5f;
-                }
+                var knockback = CalculateKnockback(user, data);
 
                 if (knockback == 0.0f)
                     return;
@@ -95,11 +111,29 @@ public abstract partial class SharedKnockbackSystem : EntitySystem
                 //deal stamina damage
                 if (TryComp<StaminaComponent>(user, out var stamina))
                 {
-                    _stamina.TakeStaminaDamage(user, knockback * data.StaminaMultiplier, component: stamina);
+                    _stamina.TakeStaminaDamage(user, CalculateStaminaDamage(data, knockback), component: stamina);
                 }
             }
         }
     }
+
+    private KnockbackData GetKnockbackData(Entity<KnockbackByUserTagComponent> ent, EntityUid user) =>            //get the specific knockback data for this tag
+                ent.Comp.DoestContain.FirstOrDefault(x => _tagSystem.HasTag(user, x.Key)).Value;
+
+    private float CalculateKnockback(EntityUid user, KnockbackData data)
+    {
+        float knockback = data.Knockback;
+        //If we have no slips, cut the knockback in half
+        if (CheckForNoSlips(user))
+        {
+            knockback *= 0.5f;
+        }
+
+        return knockback;
+    }
+
+    private static float CalculateStaminaDamage(KnockbackData data, float knockback) => MathF.Abs(knockback) * data.StaminaMultiplier;
+
 
     private bool CheckForNoSlips(EntityUid uid)
     {

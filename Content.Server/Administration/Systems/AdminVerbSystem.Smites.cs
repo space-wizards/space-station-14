@@ -577,7 +577,8 @@ public sealed partial class AdminVerbSystem
 
                 Act = () =>
                 {
-                    EnsureComp<CluwneComponent>(args.Target);
+                    var cluwne = EnsureComp<CluwneComponent>(args.Target); //Starlight
+                    cluwne.Unremovable = true; //Starlight
                 },
                 Impact = LogImpact.Extreme,
                 Message = string.Join(": ", cluwneName, Loc.GetString("admin-smite-cluwne-description"))

@@ -20,7 +20,7 @@ public sealed partial class NullLinkPlayerManager
         _discordCallback = _cfg.GetCVar(StarlightCCVars.DiscordCallback);
         _secret = _cfg.GetCVar(StarlightCCVars.Secret);
     }
-    private string GetDiscordAuthUrl(string customState)
+    public string GetDiscordAuthUrl(string customState)
     {
         if (string.IsNullOrEmpty(_discordCallback) || string.IsNullOrEmpty(_discordKey) || string.IsNullOrEmpty(_secret)) 
             return "";
