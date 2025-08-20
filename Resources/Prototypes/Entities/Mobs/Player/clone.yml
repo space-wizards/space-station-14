@@ -16,6 +16,7 @@
   # traits
   - BlackAndWhiteOverlay
   - Clumsy
+  - ImpairedMobility
   # - LegsParalyzed (you get healed)
   - LightweightDrunk
   - Muted
@@ -26,15 +27,6 @@
   - PermanentBlindness
   - Snoring
   - Unrevivable
-  - ImpairedMobility
-  # job specific
-  - BibleUser
-  - CommandStaff
-  - Clumsy
-  - MindShield
-  - MimePowers
-  - SpaceNinja
-  - Thieving
   # accents
   - Accentless
   - BackwardsAccent
@@ -130,6 +122,7 @@
   - Rootable # diona
   - Sericulture # arachnids
   - MovementSpeedModifier # moths when weightless
+  - JumpAbility # vulp leaping
   copyEquipment: null
   copyInternalStorage: false
   copyImplants: false
