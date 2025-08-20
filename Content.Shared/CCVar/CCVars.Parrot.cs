@@ -11,6 +11,12 @@ public sealed partial class CCVars
         CVarDef.Create("parrot.db_refresh_interval", TimeSpan.FromMinutes(10), CVar.SERVER);
 
     /// <summary>
+    /// The number of memories parrots retrieve from the database upon refreshing the memory
+    /// </summary>
+    public static readonly CVarDef<int> ParrotDbRefreshNumMemories =
+        CVarDef.Create("parrot.db_refresh_num_memories", 15, CVar.SERVER);
+
+    /// <summary>
     /// Minimum overall playtime a player needs for their messages to be committed to the database by a parrot
     /// </summary>
     public static readonly CVarDef<TimeSpan> ParrotMinimumPlaytimeFilter =

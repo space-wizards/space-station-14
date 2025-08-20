@@ -128,7 +128,7 @@ public sealed partial class ParrotDbSystem : EntitySystem
     public async void RefreshMemoryFromDb(Entity<ParrotMemoryComponent, ParrotDbMemoryComponent> entity)
     {
         // get an enum for new messages
-        var memories = _db.GetRandomParrotMemories(entity.Comp1.MaxSpeechMemory);
+        var memories = _db.GetRandomParrotMemories(_config.GetCVar(CCVars.ParrotDbRefreshNumMemories));
 
         // There are some edge cases where the database may not be full enough yet to fill the memory.
         // Ensure that the memory is always filled up to capacity first, and only after start replacing
