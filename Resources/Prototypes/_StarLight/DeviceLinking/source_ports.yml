@@ -8,4 +8,4 @@
   id: MassDriverConsoleSender
   name: signal-port-name-mass-driver-console-sender
   description: signal-port-description-mass-driver-console-sender
-  defaultLinks: [ MassDriverConsoleReciever ]
+  defaultLinks: [ MassDriverConsoleReceiver ]
