@@ -84,7 +84,7 @@ public partial record struct AntivenomImmunityConfig
     /// Units produced per stage per update once unlocked.
     /// </summary>
     [DataField]
-    public FixedPoint2 AVPerStage = FixedPoint2.New(.1);
+    public FixedPoint2 AVPerStage = FixedPoint2.New(.5);
 
     /// <summary>
     /// The highest attainable stage of immunity. multiplicative antivenom creation.
