@@ -1,3 +1,5 @@
+using Content.Server.GameTicking.Rules.Components;
+
 namespace Content.Server.GameTicking.Rules;
 
 public sealed class XenoborgsRuleSystem : GameRuleSystem<XenoborgsRuleComponent>
