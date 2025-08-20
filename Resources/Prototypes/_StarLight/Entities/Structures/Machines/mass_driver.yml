@@ -18,14 +18,17 @@
   - type: MassDriver
   - type: ActiveMassDriver
   - type: Physics
+    bodyType: Dynamic
   - type: Fixtures
     fixtures:
       fix1:
         shape:
           !type:PhysShapeAabb
           bounds: "-0.3,-0.16,0.3,0.16"
+        density: 200
   - type: Sprite
     sprite: _Starlight/Structures/Machines/mass_driver.rsi
+    noRot: true
     layers:
       - state: base
         map: [ "mainLayer" ]
@@ -59,6 +62,7 @@
     volume: 0
     sound: 
       path: /Audio/_Starlight/Effects/mass_driver_launching.ogg
+  - type: Rotatable
   - type: Destructible
     thresholds:
       - trigger:
