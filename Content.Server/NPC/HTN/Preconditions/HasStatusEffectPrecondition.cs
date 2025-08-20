@@ -11,7 +11,7 @@ public sealed partial class HasStatusEffectPrecondition : HTNPrecondition
     [Dependency] private readonly StatusEffectsSystem _statusEffectsSystem = default!;
     [Dependency] private readonly IEntityManager _entManager = default!;
 
-    [DataField(required: true)]
+    [DataField("statusEffect", required: true)]
     public EntProtoId StatusEffectId;
 
     public override bool IsMet(NPCBlackboard blackboard)
