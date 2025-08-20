@@ -8,19 +8,21 @@ namespace Content.Server.NPC.HTN.Preconditions;
 /// </summary>
 public sealed partial class HasStatusEffectPrecondition : HTNPrecondition
 {
-    [Dependency] private readonly StatusEffectsSystem _statusEffectsSystem = default!;
-    [Dependency] private readonly IEntityManager _entManager = default!;
+    private StatusEffectsSystem _statusEffects = default!;
 
     [DataField("statusEffect", required: true)]
     public EntProtoId StatusEffectId;
 
+    public override void Initialize(IEntitySystemManager sysManager)
+    {
+        base.Initialize(sysManager);
+        _statusEffects =  sysManager.GetEntitySystem<StatusEffectsSystem>();
+    }
+
     public override bool IsMet(NPCBlackboard blackboard)
     {
-        if (!blackboard.TryGetValue<EntityUid>(NPCBlackboard.Owner, out var owner, _entManager))
-        {
-            return false;
-        }
+        var owner = blackboard.GetValue<EntityUid>(NPCBlackboard.Owner);
 
-        return _statusEffectsSystem.HasStatusEffect(owner, StatusEffectId);
+        return _statusEffects.HasStatusEffect(owner, StatusEffectId);
     }
 }
