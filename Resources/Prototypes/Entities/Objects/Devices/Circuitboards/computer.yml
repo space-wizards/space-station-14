@@ -260,7 +260,7 @@
     state: cpu_service
   - type: ComputerBoard
     prototype: ComputerSurveillanceWirelessCameraMonitor
-  
+
 - type: entity
   parent: BaseComputerCircuitboard
   id: XenoborgCameraMonitorCircuitboard
@@ -560,3 +560,16 @@
       state: cpu_science
     - type: ComputerBoard
       prototype: StationAiUploadComputer
+
+- type: entity
+  parent: BaseComputerCircuitboard
+  id: MassDriverComputerCircuitboard
+  name: mass driver computer board
+  description: A computer printed circuit board for an mass driver computer.
+  components:
+    - type: Sprite
+      state: net_wired
+    - type: ComputerBoard
+      prototype: MassDriverComputer
+    - type: StaticPrice
+      price: 200

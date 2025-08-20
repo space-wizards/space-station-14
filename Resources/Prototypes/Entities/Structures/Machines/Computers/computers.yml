@@ -1664,8 +1664,8 @@
       state: generic_keys
     - map: [ "enum.WiresVisualLayers.MaintenancePanel" ]
       state: generic_panel_open
-#  - type: Computer
-#    board: RecruitmentComputerCircuitboard
+  - type: Computer
+    board: MassDriverComputerCircuitboard
   - type: PointLight
     radius: 1.5
     energy: 1.6
@@ -1677,10 +1677,7 @@
     range: 5
     ports:
       - MassDriverConsoleSender
-#  - type: Tag
-#    tags:
-#    - EmagImmune
-#  - type: ItemSlots
-#  - type: ContainerContainer
-#    containers:
-#      board: !type:Container
+  - type: ItemSlots
+  - type: ContainerContainer
+    containers:
+      board: !type:Container
