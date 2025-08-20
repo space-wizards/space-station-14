@@ -1152,6 +1152,28 @@
   id: MobGorilla
   description: Smashes, roars, looks cool. Don't stand near one.
   components:
+  - type: AntivenomProducer
+    immunityConfigs: # the ~~human~~ monkey super power is great antibodies.
+    - venom: Toxin
+      antivenom: Antitoxin
+      threshold: 20
+      maxStage: 5
+      maxBuffer: 5
+    - venom: BungoToxin
+      antivenom: BungoAntitoxin
+      threshold: 20
+      maxStage: 5
+      maxBuffer: 5
+    - venom: CarpoToxin
+      antivenom: CarpoAntitoxin
+      threshold: 20
+      maxStage: 5
+      maxBuffer: 5
+    - venom: Mechanotoxin
+      antivenom: MechanoAntitoxin
+      threshold: 20
+      maxStage: 5
+      maxBuffer: 5
   - type: Sprite
     drawdepth: Mobs
     layers:
@@ -1441,6 +1463,28 @@
   parent: MobBaseAncestor
   description: New church of neo-darwinists actually believe that EVERY animal evolved from a monkey. Tastes like pork, and killing them is both fun and relaxing.
   components:
+  - type: AntivenomProducer
+    immunityConfigs: # the ~~human~~ monkey super power is great antibodies.
+    - venom: Toxin
+      antivenom: Antitoxin
+      threshold: 20
+      maxStage: 4
+      maxBuffer: 4
+    - venom: BungoToxin
+      antivenom: BungoAntitoxin
+      threshold: 20
+      maxStage: 4
+      maxBuffer: 4
+    - venom: CarpoToxin
+      antivenom: CarpoAntitoxin
+      threshold: 20
+      maxStage: 4
+      maxBuffer: 4
+    - venom: Mechanotoxin
+      antivenom: MechanoAntitoxin
+      threshold: 20
+      maxStage: 4
+      maxBuffer: 4
   - type: NameIdentifier
     group: Monkey
   - type: Speech
@@ -1478,6 +1522,28 @@
   description: New church of neo-darwinists actually believe that EVERY animal evolved from a monkey. Tastes like pork, and killing them is both fun and relaxing.
   suffix: syndicate base
   components:
+  - type: AntivenomProducer
+    immunityConfigs: # the ~~human~~ monkey super power is great antibodies.
+    - venom: Toxin
+      antivenom: Antitoxin
+      threshold: 20
+      maxStage: 4
+      maxBuffer: 4
+    - venom: BungoToxin
+      antivenom: BungoAntitoxin
+      threshold: 20
+      maxStage: 4
+      maxBuffer: 4
+    - venom: CarpoToxin
+      antivenom: CarpoAntitoxin
+      threshold: 20
+      maxStage: 4
+      maxBuffer: 4
+    - venom: Mechanotoxin
+      antivenom: MechanoAntitoxin
+      threshold: 20
+      maxStage: 4
+      maxBuffer: 4
   - type: NameIdentifier
     group: Monkey
   - type: SentienceTarget
@@ -1527,6 +1593,20 @@
   description: Cousins to the sentient race of lizard people, kobolds blend in with their natural habitat and are as nasty as monkeys; ready to pull out your hair and stab you to death.
   abstract: true
   components:
+  - type: AntivenomProducer
+    immunityConfigs: # the ~~human~~ monkey super power is great antibodies.
+    - venom: Toxin
+      antivenom: Antitoxin
+      threshold: 25
+    - venom: BungoToxin
+      antivenom: BungoAntitoxin
+      threshold: 25
+    - venom: CarpoToxin
+      antivenom: CarpoAntitoxin
+      threshold: 25
+    - venom: Mechanotoxin
+      antivenom: MechanoAntitoxin
+      threshold: 25
   - type: NameIdentifier
     group: Kobold
   - type: LizardAccent
@@ -1699,6 +1779,28 @@
   id: MobMouse
   description: Squeak!
   components:
+  - type: AntivenomProducer
+    immunityConfigs: # the lab rat.
+    - venom: Toxin
+      antivenom: Antitoxin
+      threshold: 15 # good luck.
+      maxStage: 2
+      maxBuffer: 2
+    - venom: BungoToxin
+      antivenom: BungoAntitoxin
+      threshold: 15
+      maxStage: 2
+      maxBuffer: 2
+    - venom: CarpoToxin
+      antivenom: CarpoAntitoxin
+      threshold: 15
+      maxStage: 2
+      maxBuffer: 2
+    - venom: Mechanotoxin
+      antivenom: MechanoAntitoxin
+      threshold: 15
+      maxStage: 2
+      maxBuffer: 2
   - type: Body
     prototype: Mouse
   - type: GhostRole
