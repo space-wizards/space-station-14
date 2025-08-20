@@ -8,55 +8,115 @@
     },
     "states": [
         {
-            "name": "thin_box"
+            "name": "pipecleaner1"
         },
         {
-            "name": "thin_corner_ne"
+            "name": "pipecleaner2"
         },
         {
-            "name": "thin_corner_se"
+            "name": "pipecleaner3"
         },
         {
-            "name": "thin_corner_nw"
+            "name": "pipecleaner4"
         },
         {
-            "name": "thin_corner_sw"
+            "name": "pipecleaner5"
         },
         {
-            "name": "thin_end_n"
+            "name": "pipecleaner6"
         },
         {
-            "name": "thin_end_e"
+            "name": "pipecleaner7"
         },
         {
-            "name": "thin_end_s"
+            "name": "pipecleaner8"
         },
         {
-            "name": "thin_end_w"
+            "name": "pipecleaner9"
         },
         {
-            "name": "thin_line_n"
+            "name": "pipecleaner10"
         },
         {
-            "name": "thin_line_e"
+            "name": "pipecleaner11"
         },
         {
-            "name": "thin_line_s"
+            "name": "pipecleaner12"
         },
         {
-            "name": "thin_line_w"
+            "name": "pipecleaner13"
         },
         {
-            "name": "thin_inner_ne"
+            "name": "pipecleaner14"
         },
         {
-            "name": "thin_inner_se"
+            "name": "pipecleaner15"
         },
         {
-            "name": "thin_inner_nw"
+            "name": "pipecleaner16"
         },
         {
-            "name": "thin_inner_sw"
+            "name": "pipecleaner17"
+        },
+        {
+            "name": "pipecleaner18"
+        },
+        {
+            "name": "pipecleaner19"
+        },
+        {
+            "name": "pipecleaner20"
+        },
+        {
+            "name": "pipecleaner21"
+        },
+        {
+            "name": "pipecleaner22"
+        },
+        {
+            "name": "pipecleaner23"
+        },
+        {
+            "name": "pipecleaner24"
+        },
+        {
+            "name": "pipecleaner25"
+        },
+        {
+            "name": "pipecleaner26"
+        },
+        {
+            "name": "pipecleaner27"
+        },
+        {
+            "name": "pipecleaner28"
+        },
+        {
+            "name": "pipecleaner29"
+        },
+        {
+            "name": "pipecleaner30"
+        },
+        {
+            "name": "pipecleaner31"
+        },
+        {
+            "name": "pipecleaner32"
+        },
+        {
+            "name": "pipecleaner33"
+        },
+        {
+            "name": "pipecleaner34"
+        },
+        {
+            "name": "pipecleaner35"
+        },
+        {
+            "name": "pipecleaner36"
+        },
+        {
+            "name": "pipecleaner37"
         }
     ]
 }
