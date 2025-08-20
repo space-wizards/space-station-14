@@ -26,7 +26,7 @@
   desc: reagent-name-antitoxin
   flavour: metallic
   color: "#1d5c73"
-  physicalDesc: reagent-physical-desc-metalic
+  physicalDesc: reagent-physical-desc-murky
   # Does fuck all for plants. Works for Diona ig since theyre actually woodlice in a trenchcoat (and they get toxin'ed)
   metabolisms:
     Poison: # It doesn't matter if you cant metabolise toxins, so we might as well be that.
@@ -84,7 +84,7 @@
   desc: reagent-name-carpoantitoxin
   flavour: metallic
   color: "#1d5c73"
-  physicalDesc: reagent-physical-desc-metalic
+  physicalDesc: reagent-physical-desc-pungent
   metabolisms:
     Poison:
       effects:
@@ -685,17 +685,17 @@
   desc: reagent-name-bungoantitoxin
   flavour: metallic
   color: "#140071"
-  physicalDesc: reagent-physical-desc-metalic
+  physicalDesc: reagent-physical-desc-acrid
   metabolisms:
     Poison:
       effects:
       - !type:AdjustReagent
-        reagent: BungoToxin
+        reagent: Bungotoxin
         amount: -2
       - !type:HealthChange
         conditions:
         - !type:ReagentThreshold
-          reagent: BungoToxin
+          reagent: Bungotoxin
           min: 1
         damage:
           types:
@@ -703,7 +703,7 @@
       - !type:AdjustReagent
         conditions:
         - !type:ReagentThreshold
-          reagent: BungoToxin
+          reagent: Bungotoxin
           min: 1
         probability: 0.0005
         reagent: Histamine
@@ -817,7 +817,7 @@
   desc: reagent-name-mechanoantitoxin
   flavour: metallic
   color: "#140071"
-  physicalDesc: reagent-physical-desc-metalic
+  physicalDesc: reagent-physical-desc-viscous
   metabolisms:
     Poison:
       effects:

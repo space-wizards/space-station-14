@@ -1159,11 +1159,11 @@
       threshold: 20
       maxStage: 5
       maxBuffer: 5
-    - venom: BungoToxin
+    - venom: Bungotoxin
       antivenom: BungoAntitoxin
-      threshold: 20
-      maxStage: 5
-      maxBuffer: 5
+      threshold: 8
+      maxStage: 4
+      maxBuffer: 4
     - venom: CarpoToxin
       antivenom: CarpoAntitoxin
       threshold: 20
@@ -1470,11 +1470,9 @@
       threshold: 20
       maxStage: 4
       maxBuffer: 4
-    - venom: BungoToxin
+    - venom: Bungotoxin
       antivenom: BungoAntitoxin
-      threshold: 20
-      maxStage: 4
-      maxBuffer: 4
+      threshold: 8
     - venom: CarpoToxin
       antivenom: CarpoAntitoxin
       threshold: 20
@@ -1529,11 +1527,9 @@
       threshold: 20
       maxStage: 4
       maxBuffer: 4
-    - venom: BungoToxin
+    - venom: Bungotoxin
       antivenom: BungoAntitoxin
-      threshold: 20
-      maxStage: 4
-      maxBuffer: 4
+      threshold: 8
     - venom: CarpoToxin
       antivenom: CarpoAntitoxin
       threshold: 20
@@ -1598,9 +1594,9 @@
     - venom: Toxin
       antivenom: Antitoxin
       threshold: 25
-    - venom: BungoToxin
+    - venom: Bungotoxin
       antivenom: BungoAntitoxin
-      threshold: 25
+      threshold: 12
     - venom: CarpoToxin
       antivenom: CarpoAntitoxin
       threshold: 25
@@ -1786,9 +1782,9 @@
       threshold: 15 # good luck.
       maxStage: 2
       maxBuffer: 2
-    - venom: BungoToxin
+    - venom: Bungotoxin
       antivenom: BungoAntitoxin
-      threshold: 15
+      threshold: 10
       maxStage: 2
       maxBuffer: 2
     - venom: CarpoToxin
@@ -3481,9 +3477,9 @@
       threshold: 18 # needs more, but they have like 3x the hp of mice.
       maxStage: 2
       maxBuffer: 2
-    - venom: BungoToxin
+    - venom: Bungotoxin
       antivenom: BungoAntitoxin
-      threshold: 18
+      threshold: 12
       maxStage: 2
       maxBuffer: 2
     - venom: CarpoToxin

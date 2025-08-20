@@ -9,8 +9,11 @@
     immunityConfigs: # the human super power is great antibodies.
     - venom: Toxin
       antivenom: Antitoxin
-    - venom: BungoToxin
+    - venom: Bungotoxin
       antivenom: BungoAntitoxin
+      threshold: 15
+      maxStage: 2
+      maxBuffer: 2
     - venom: CarpoToxin
       antivenom: CarpoAntitoxin
 #    - venom: Mechanotoxin # not effected by the toxin so it would be too easy.
