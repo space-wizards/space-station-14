@@ -12070,5 +12070,12 @@ Entries:
   id: 140300
   time: '2025-08-20T17:34:48.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/1403
+- author: Trosling
+  changes:
+  - message: Added one year anniversary monument
+    type: Add
+  id: 138400
+  time: '2025-08-20T17:38:35.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1384
 Order: -1
 
