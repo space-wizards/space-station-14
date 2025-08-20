@@ -803,13 +803,11 @@ public abstract class SharedDisposalUnitSystem : EntitySystem
         args.Handled = true;
         args.PlaySound = true;
 
-        while (args.DumpQueue.Count > 0)
+        var playDumpSound = true;
+        foreach (var entity in args.DumpQueue)
         {
-            var entity = args.DumpQueue.Dequeue();
-
-            var playSound = args.DumpQueue.Count == 0;
-
-            DoInsertDisposalUnit(ent, entity, args.User, playDumpSound: playSound);
+            DoInsertDisposalUnit(ent, entity, args.User, playDumpSound: playDumpSound);
+            playDumpSound = false;
         }
     }
 }
