@@ -42,3 +42,6 @@
     ports:
       - MassDriverConsoleReceiver
       - Launch
+  - type: WiresPanel
+  - type: Wires
+    layoutId: MassDriver

@@ -15,13 +15,13 @@ namespace Content.Server._Starlight.MassDriver.EntitySystems;
 
 public sealed class MassDriverSystem : EntitySystem
 {
-    [Dependency] private readonly IGameTiming Timing = default!;
+    [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly ThrowingSystem _throwing = default!;
     [Dependency] private readonly EntityLookupSystem _lookup = default!;
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
     [Dependency] private readonly PowerReceiverSystem _powerReceiver = default!;
     [Dependency] private readonly SharedUserInterfaceSystem _ui = default!;
-    [Dependency] private readonly SharedAudioSystem _audioSystem = default;
+    [Dependency] private readonly SharedAudioSystem _audioSystem = default!;
 
     public override void Initialize()
     {
@@ -105,15 +105,15 @@ public sealed class MassDriverSystem : EntitySystem
         var query = EntityQueryEnumerator<ActiveMassDriverComponent, MassDriverComponent, ApcPowerReceiverComponent>();
         while (query.MoveNext(out var uid, out var activeMassDriver, out var massDriver, out var powered))
         {
-            if (Timing.CurTime < activeMassDriver.NextUpdateTime)
+            if (_timing.CurTime < activeMassDriver.NextUpdateTime)
                 continue;
 
             if (activeMassDriver.NextUpdateTime == TimeSpan.Zero)
             {
-                activeMassDriver.NextUpdateTime = Timing.CurTime + activeMassDriver.UpdateDelay;
+                activeMassDriver.NextUpdateTime = _timing.CurTime + activeMassDriver.UpdateDelay;
                 continue;
             }
-            activeMassDriver.NextUpdateTime = Timing.CurTime + activeMassDriver.UpdateDelay;
+            activeMassDriver.NextUpdateTime = _timing.CurTime + activeMassDriver.UpdateDelay;
 
             if (!_powerReceiver.IsPowered(uid))
                 continue;
@@ -137,10 +137,10 @@ public sealed class MassDriverSystem : EntitySystem
 
             if (activeMassDriver.NextThrowTime == TimeSpan.Zero)
             {
-                activeMassDriver.NextThrowTime = Timing.CurTime + massDriver.ThrowDelay;
+                activeMassDriver.NextThrowTime = _timing.CurTime + massDriver.ThrowDelay;
                 continue;
             }
-            else if (Timing.CurTime < activeMassDriver.NextThrowTime)
+            else if (_timing.CurTime < activeMassDriver.NextThrowTime)
                 continue;
 
             _powerReceiver.SetLoad(powered, powered.Load + massDriver.LaunchPowerLoad);
@@ -260,10 +260,7 @@ public sealed class MassDriverSystem : EntitySystem
         _ui.SetUiState(console, MassDriverConsoleUiKey.Key, state);
     }
 
-    private float Normalize(float value, int decimals = 1)
-    {
-        return (float)Math.Round(value, decimals, MidpointRounding.AwayFromZero);
-    }
+    private float Normalize(float value, int decimals = 1) => (float)Math.Round(value, decimals, MidpointRounding.AwayFromZero);
     
     #endregion
 }
