@@ -287,3 +287,15 @@
       path: /Audio/Effects/stonedoor_openclose.ogg
     closeSound:
       path: /Audio/Effects/stonedoor_openclose.ogg
+
+- type: entity
+  id: EncrustedIronstoneDoor
+  name: encrusted ironstone door
+  parent: IronstoneDoor
+  description: A door, where will it lead?
+  components:
+  - type: Sprite
+    sprite: Structures/Doors/MineralDoors/encrusted_ironstone_door.rsi
+    layers:
+    - state: closed
+      map: ["enum.DoorVisualLayers.Base"]
