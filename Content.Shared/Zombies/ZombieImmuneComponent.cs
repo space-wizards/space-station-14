@@ -1,4 +1,4 @@
-namespace Content.Server.Zombies;
+namespace Content.Shared.Zombies;
 
 /// <summary>
 /// Entities with this component cannot be zombified.

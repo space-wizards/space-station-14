@@ -1,4 +1,4 @@
-namespace Content.Server.Zombies
+namespace Content.Shared.Zombies
 {
     [RegisterComponent]
     public sealed partial class ZombifyOnDeathComponent : Component
