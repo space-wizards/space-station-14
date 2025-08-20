@@ -14,7 +14,9 @@ public sealed partial class StationAiFixerConsoleConfirmationDialog : FancyWindo
     {
         RobustXamlLoader.Load(this);
 
-        PurgeWarningLabel.SetMessage(Loc.GetString("station-ai-fixer-console-window-purge-warning"));
+        PurgeWarningLabel1.SetMessage(Loc.GetString($"station-ai-fixer-console-window-purge-warning-1"));
+        PurgeWarningLabel2.SetMessage(Loc.GetString($"station-ai-fixer-console-window-purge-warning-2"));
+        PurgeWarningLabel3.SetMessage(Loc.GetString($"station-ai-fixer-console-window-purge-warning-3"));
 
         CancelPurge.OnButtonDown += args => Close();
         ContinuePurge.OnButtonDown += args => OnSendStationAiFixerConsoleMessage(StationAiFixerConsoleAction.Purge);

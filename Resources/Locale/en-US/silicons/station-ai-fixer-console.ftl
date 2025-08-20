@@ -8,11 +8,11 @@ station-ai-fixer-console-examination-intellicard-absent = There is an unoccupied
 # UI
 station-ai-fixer-console-window = AI restoration system
 station-ai-fixer-console-window-no-station-ai = << No AI present >>
-station-ai-fixer-console-window-no-station-ai-status = Idle
+station-ai-fixer-console-window-no-station-ai-status = No signal
 station-ai-fixer-console-window-station-ai-online = Online
 station-ai-fixer-console-window-station-ai-offline = Offline
 
-station-ai-fixer-console-window-controls-locked = Locked
+station-ai-fixer-console-window-controls-locked = Controls locked
 
 station-ai-fixer-console-window-station-ai-eject = Eject intellicard
 station-ai-fixer-console-window-station-ai-repair = Run repair tool
@@ -25,7 +25,10 @@ station-ai-fixer-console-window-action-progress-eta = Time remaining: {$time} {$
 station-ai-fixer-console-window-flavor-left = This console must be locked when not in use
 station-ai-fixer-console-window-flavor-right = v4.0.4
 
-station-ai-fixer-console-window-purge-warning-title = Initiating AI purge
-station-ai-fixer-console-window-purge-warning = You are about to initiate the purging of an artifical intelligence.\n\nOnce this operation is complete, the intelligence will be utterly destroyed and cannot be revived.\n\nDo you wish to proceed?
 station-ai-fixer-console-window-continue-action = Continue
 station-ai-fixer-console-window-cancel-action = Cancel
+
+station-ai-fixer-console-window-purge-warning-title = Initiating AI purge
+station-ai-fixer-console-window-purge-warning-1 = You are about to initiate the purging of an artifical intelligence. 
+station-ai-fixer-console-window-purge-warning-2 = Once this operation is complete, the intelligence will be utterly destroyed and cannot be revived.
+station-ai-fixer-console-window-purge-warning-3 = Do you wish to proceed?
