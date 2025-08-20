@@ -1429,6 +1429,7 @@
     hands:
     - item: HandheldGPSBasic
     - item: HandHeldMassScannerBorg
+    - item: PinpointerMothership
     - item: HandheldStationMapUnpowered
     - item: WeaponGrapplingGun
     - item: JetpackXenoborg
