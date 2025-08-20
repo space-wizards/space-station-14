@@ -28,6 +28,10 @@ public sealed class MassDriverSystem : EntitySystem
 
         // UI for console -_-
         SubscribeLocalEvent<MassDriverConsoleComponent, ComponentInit>(OnInit); // Update state on init
+        SubscribeLocalEvent<MassDriverConsoleComponent, MassDriverModeMessage>(OnModeChanged);
+        SubscribeLocalEvent<MassDriverConsoleComponent, MassDriverLaunchMessage>(OnLaunch);
+        SubscribeLocalEvent<MassDriverConsoleComponent, MassDriverThrowSpeedMessage>(OnThrowSpeedChanged);
+        SubscribeLocalEvent<MassDriverConsoleComponent, MassDriverThrowDistanceMessage>(OnThrowDistanceChanged);
 
         // Device Linking
         SubscribeLocalEvent<MassDriverConsoleComponent, NewLinkEvent>(OnNewLink);
@@ -145,12 +149,53 @@ public sealed class MassDriverSystem : EntitySystem
 
     private void OnInit(EntityUid uid, MassDriverConsoleComponent massDriverConsole, ComponentInit args)
     {
-        if (massDriverConsole.MassDriver != null
+        if (massDriverConsole.MassDriver != null)
         {
             var massDriverUid = GetEntity(massDriverConsole.MassDriver);
             if (TryComp<MassDriverComponent>(massDriverUid, out var component))
                 UpdateUserInterface(uid, massDriverUid.Value, component);
         }
+    }
+
+    private void OnModeChanged(EntityUid uid, MassDriverConsoleComponent massDriverConsole, MassDriverModeMessage args)
+    {
+        if (massDriverConsole.MassDriver != null)
+        {
+            var massDriverUid = GetEntity(massDriverConsole.MassDriver);
+            if (TryComp<MassDriverComponent>(massDriverUid, out var massDriverComponent))
+            {
+                massDriverComponent.Mode = args.Mode;
+                Dirty(massDriverUid.Value, massDriverComponent);
+
+                if (massDriverComponent.Mode == MassDriverMode.Auto)
+                    EnsureComp<ActiveMassDriverComponent>(massDriverUid.Value);
+                else if (HasComp<ActiveMassDriverComponent>(massDriverUid.Value))
+                    RemComp<ActiveMassDriverComponent>(massDriverUid.Value);
+
+                UpdateUserInterface(uid, massDriverUid.Value, massDriverComponent);
+            }
+        }
+    }
+
+    private void OnLaunch(EntityUid uid, MassDriverConsoleComponent massDriverConsole, MassDriverLaunchMessage args)
+    {
+        var massDriverUid = GetEntity(massDriverConsole.MassDriver);
+        if (massDriverUid != null)
+            EnsureComp<ActiveMassDriverComponent>(massDriverUid.Value);
+    }
+
+    private void OnThrowSpeedChanged(EntityUid uid, MassDriverConsoleComponent massDriverConsole, MassDriverThrowSpeedMessage args)
+    {
+        var massDriverUid = GetEntity(massDriverConsole.MassDriver);
+        if (massDriverUid != null && TryComp<MassDriverComponent>(massDriverUid, out var massDriverComponent))
+            massDriverComponent.CurrentThrowSpeed = Math.Clamp(args.Speed, massDriverComponent.MinThrowSpeed, massDriverComponent.MaxThrowSpeed);
+    }
+
+    private void OnThrowDistanceChanged(EntityUid uid, MassDriverConsoleComponent massDriverConsole, MassDriverThrowDistanceMessage args)
+    {
+        var massDriverUid = GetEntity(massDriverConsole.MassDriver);
+        if (massDriverUid != null && TryComp<MassDriverComponent>(massDriverUid, out var massDriverComponent))
+            massDriverComponent.CurrentThrowDistance = Math.Clamp(args.Distance, massDriverComponent.MinThrowDistance, massDriverComponent.MaxThrowDistance);
     }
 
     private void UpdateUserInterface(EntityUid console, EntityUid massDriver, MassDriverComponent? component = null)
