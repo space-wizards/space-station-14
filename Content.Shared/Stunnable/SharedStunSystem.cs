@@ -208,9 +208,6 @@ public abstract partial class SharedStunSystem : EntitySystem
     /// <param name="force">Should we force the status effect?</param>
     public bool CanKnockdown(Entity<StandingStateComponent?> entity, ref TimeSpan? time, ref bool autoStand, ref bool drop, bool force = false)
     {
-        if (!_cfgManager.GetCVar(CCVars.MovementCrawling))
-            return false;
-
         if (time <= TimeSpan.Zero)
             return false;
 
