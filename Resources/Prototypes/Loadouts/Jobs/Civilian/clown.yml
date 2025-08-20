@@ -9,6 +9,18 @@
   equipment:
     head: ClothingHeadHatJesterAlt
 
+
+# Mask
+- type: loadout
+  id: ClownMaskDefault
+  equipment:
+    mask: ClothingMaskClown
+
+- type: loadout
+  id: ClownMaskBlushing
+  equipment:
+    mask: ClothingMaskBlushingClown
+
 # Jumpsuit
 - type: loadout
   id: ClownSuit

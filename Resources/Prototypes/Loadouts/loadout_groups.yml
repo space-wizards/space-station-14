@@ -464,6 +464,14 @@
   - JesterAltHat
 
 - type: loadoutGroup
+  id: ClownMask
+  name: loadout-group-clown-mask
+  loadouts:
+  - ClownMaskDefault
+  - ClownMaskBlushing
+
+
+- type: loadoutGroup
   id: ClownJumpsuit
   name: loadout-group-clown-jumpsuit
   loadouts:
@@ -521,6 +529,7 @@
   - MimeMask
   - MimeMaskSad
   - MimeMaskScared
+  - MimeMaskBlushing
 
 - type: loadoutGroup
   id: MimeJumpsuit

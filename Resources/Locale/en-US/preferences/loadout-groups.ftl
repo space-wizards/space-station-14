@@ -73,6 +73,7 @@ loadout-group-botanist-backpack = Botanist backpack
 loadout-group-botanist-outerclothing = Botanist outer clothing
 
 loadout-group-clown-head = Clown head
+loadout-group-clown-mask = Clown mask
 loadout-group-clown-jumpsuit = Clown jumpsuit
 loadout-group-clown-backpack = Clown backpack
 loadout-group-clown-outerclothing = Clown outer clothing
