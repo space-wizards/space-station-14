@@ -23,7 +23,7 @@ public sealed class PaperBoundUserInterface : BoundUserInterface
 
         _window = this.CreateWindow<PaperWindow>();
         _window.OnSaved += InputOnTextEntered;
-        _window.OnSignatureRequested += OnSignatureRequested;
+        _window.OnSignatureRequested += OnSignatureRequested; // Starlight-edit
 
         if (EntMan.TryGetComponent<PaperComponent>(Owner, out var paper))
         {
