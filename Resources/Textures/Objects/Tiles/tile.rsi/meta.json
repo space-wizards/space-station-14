@@ -96,15 +96,15 @@
     {
       "name": "blue"
     },
-	  {
-	    "name": "brass"
-	  },
-	  {
-	    "name": "brass-filled"
-	  },
-	  {
-	    "name": "reebe"
-	  },
+    {
+      "name": "brass"
+    },
+    {
+      "name": "brass-filled"
+    },
+    {
+      "name": "reebe"
+    },
     {
       "name": "lime"
     },
@@ -259,6 +259,9 @@
     },
     {
       "name": "techfloor"
+    },
+    {
+      "name": "techfloordark"
     },
     {
       "name": "white"
@@ -594,6 +597,68 @@
     {
       "name": "ironsand-inhand-left",
       "directions": 4
+    },
+    {
+        "name": "xenofloor"
+    },
+    {
+        "name": "xeno-steel"
+    },
+    {
+        "name": "xeno-steel-corner"
+    },
+    {
+        "name": "xeno-techmaint"
+    },
+    {
+        "name": "xenoborg-floor"
+    },
+    {
+        "name": "dark-squiggly"
+    },
+    {
+        "name": "white-marble"
+    },
+    {
+        "name": "white-marble-inhand-left",
+        "directions": 4
+    },
+    {
+        "name": "white-marble-inhand-right",
+        "directions": 4
+    },
+    {
+        "name": "dark-marble"
+    },
+    {
+        "name": "dark-marble-inhand-left",
+        "directions": 4
+    },
+    {
+        "name": "dark-marble-inhand-right",
+        "directions": 4
+    },
+    {
+        "name": "plasmarble"
+    },
+    {
+        "name": "plasmarble-inhand-left",
+        "directions": 4
+    },
+    {
+        "name": "plasmarble-inhand-right",
+        "directions": 4
+    },
+    {
+        "name": "uranium-marble"
+    },
+    {
+        "name": "uranium-marble-inhand-left",
+        "directions": 4
+    },
+    {
+        "name": "uranium-marble-inhand-right",
+        "directions": 4
     }
   ]
 }
