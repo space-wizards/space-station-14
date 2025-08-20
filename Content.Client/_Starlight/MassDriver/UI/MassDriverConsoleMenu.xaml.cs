@@ -100,7 +100,7 @@ public sealed partial class MassDriverConsoleMenu : DefaultWindow
         // Distance Slider
         ThrowDistanceSlider.MaxValue = state.MaxThrowDistance;
         ThrowDistanceSlider.MinValue = state.MinThrowDistance;
-        ThrowSpeedSlider.Value = state.CurrentThrowSpeed;
+        ThrowDistanceSlider.Value = state.CurrentThrowDistance;
 
         // Speed Slider
         ThrowSpeedSlider.MaxValue = state.MaxThrowSpeed;

@@ -8,6 +8,7 @@ using System.Linq;
 using Content.Shared.Power;
 using Content.Server.Power.EntitySystems;
 using Content.Shared.DeviceLinking.Events;
+using Content.Server.Power.Components;
 
 namespace Content.Server._Starlight.MassDriver.EntitySystems;
 
@@ -91,8 +92,8 @@ public sealed class MassDriverSystem : EntitySystem
     {
         base.Update(frameTime);
 
-        var query = EntityQueryEnumerator<ActiveMassDriverComponent, MassDriverComponent>();
-        while (query.MoveNext(out var uid, out var activeMassDriver, out var massDriver))
+        var query = EntityQueryEnumerator<ActiveMassDriverComponent, MassDriverComponent, ApcPowerReceiverComponent>();
+        while (query.MoveNext(out var uid, out var activeMassDriver, out var massDriver, out var powered))
         {
             if (Timing.CurTime < activeMassDriver.NextUpdateTime)
                 continue;
@@ -120,6 +121,7 @@ public sealed class MassDriverSystem : EntitySystem
                 {
                     activeMassDriver.NextThrowTime = TimeSpan.Zero;
                     _appearance.SetData(uid, MassDriverVisuals.Launching, false);
+                    _powerReceiver.SetLoad(powered, powered.Load - massDriver.LaunchPowerLoad);
                 }
                 if (massDriver.Mode == MassDriverMode.Manual)
                     RemComp<ActiveMassDriverComponent>(uid);
@@ -134,6 +136,7 @@ public sealed class MassDriverSystem : EntitySystem
             else if (Timing.CurTime < activeMassDriver.NextThrowTime)
                 continue;
 
+            _powerReceiver.SetLoad(powered, powered.Load + massDriver.LaunchPowerLoad);
             _appearance.SetData(uid, MassDriverVisuals.Launching, true);
 
             var xform = Transform(uid);
