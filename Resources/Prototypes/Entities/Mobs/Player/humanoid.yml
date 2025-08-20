@@ -568,11 +568,8 @@
       raffle:
         settings: default
       requirements:
-      - !type:AnyFlagsRequirement
-        flags:
-        - Staff
-        - Mentor
-        - Retiree
+      - !type:RolesRequirement
+        proto: StaffAndMentorOnlyRolesReq
     - type: Loadout
       prototypes: [ CentcomGear ]
       roleLoadout: [ RoleSurvivalStandard ]
@@ -645,3 +642,4 @@
       raffle:
         settings: default
     - type: Cluwne
+      unremovable: true #Starlight

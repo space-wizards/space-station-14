@@ -19,27 +19,10 @@
   abstract: true
   components:
   - type: Contraband
-    allowedJobs: [ SalvageSpecialist ]
-
-- type: entity
-  id: BaseSalvageMiningContraband
-  parent: BaseRestrictedContraband
-  abstract: true
-  components:
-  - type: Contraband
     allowedJobs: [ SalvageSpecialist, MiningSpecialist ]
 
 - type: entity
   id: BaseSecuritySalvageContraband
-  parent: BaseRestrictedContraband
-  abstract: true
-  components:
-  - type: Contraband
-    allowedDepartments: [ Security ]
-    allowedJobs: [ SalvageSpecialist ]
-
-- type: entity
-  id: BaseSecurityMiningSalvageContraband
   parent: BaseRestrictedContraband
   abstract: true
   components:
@@ -54,7 +37,17 @@
   components:
   - type: Contraband
     allowedDepartments: [ Engineering ]
-    allowedJobs: [ SalvageSpecialist ]
+    allowedJobs: [ SalvageSpecialist, MiningSpecialist ]
+
+# This might look really stupid but it's sadly necessary as conflicting base contra groups tend to be mutually exclusive...
+- type: entity
+  id: BaseEngineeringSecuritySalvageContraband
+  parent: BaseRestrictedContraband
+  abstract: true
+  components:
+  - type: Contraband
+    allowedDepartments: [ Engineering, Security ]
+    allowedJobs: [SalvageSpecialist, MiningSpecialist]
 
 - type: entity
   id: BaseLawContraband

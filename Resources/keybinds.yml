@@ -188,11 +188,9 @@ binds:
   type: State
   key: Z
   mod1: Alt
-# 🌟Starlight🌟
 - function: OpenCharacterMenu
   type: State
-  key: C
-  mod1: Shift
+  key: U
 - function: OpenEmotesMenu
   type: State
   key: Y
@@ -257,6 +255,11 @@ binds:
   type: State
   key: E
   mod1: Shift
+  # Starlight Start - Suit storage equip
+- function: SmartEquipSuitStorage
+  type: State
+  key: F
+  # Starlight End
 - function: OpenBackpack
   type: State
   key: V

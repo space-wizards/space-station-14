@@ -7,10 +7,13 @@
   components:
   - type: Emag
     lawset: CommiemovLawset
-    components: 
+    components:
       - type: ShowAntagIcons # behold. you can now see revs.
+    channelAdd:
+      - Soviet # Report in comrade.
   - type: Sprite
     sprite: _Starlight/Objects/Tools/emag.rsi
+    state: icon
   - type: Item
     sprite: _Starlight/Objects/Tools/emag.rsi
   - type: LimitedCharges

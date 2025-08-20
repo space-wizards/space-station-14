@@ -19,9 +19,7 @@
     group: GenericNumber
   - type: StatusEffects
     allowed:
-    - SlowedDown
     - Stutter
-    - Stun
     - Electrocution
     - TemporaryBlindness
     - RadiationProtection
@@ -57,7 +55,7 @@
   - type: MobThresholds
     thresholds:
       0: Alive
-      150: Dead
+      250: Dead
   - type: MeleeWeapon
     soundHit:
       path: "/Audio/Weapons/smash.ogg"
@@ -378,7 +376,7 @@
   - type: MobThresholds
     thresholds:
       0: Alive
-      45: Dead
+      75: Dead
   - type: MeleeWeapon
     angle: 0
     animation: WeaponArcBite

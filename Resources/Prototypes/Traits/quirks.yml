@@ -24,3 +24,17 @@
   category: Quirks
   components:
   - type: Snoring
+
+- type: trait #starlight 
+  id: Clumsy
+  name: trait-clumsy-name
+  description: trait-clumsy-desc
+  category: Quirks
+  components:
+    - type: Clumsy
+      gunShootFailDamage:
+        types: 
+          Blunt: 5
+          Piercing: 4
+        groups:
+          Burn: 3

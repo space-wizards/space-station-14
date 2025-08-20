@@ -17,7 +17,7 @@ entities:
   - uid: 1
     components:
     - type: MetaData
-      name: grid
+      name: ERT "Hawk" 2A-Q3234
     - type: Transform
       pos: -0.59375,-0.46875
       parent: invalid
@@ -5790,7 +5790,7 @@ entities:
     - type: Physics
       canCollide: False
     - type: InsideEntityStorage
-- proto: WeaponRifleARG
+- proto: WeaponRiflePeacemaker
   entities:
   - uid: 321
     components:

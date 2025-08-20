@@ -41,6 +41,14 @@
     size: Normal
     shape:
     - 0,0,0,1
+  # 🌟Starlight-start🌟
+  - type: BoneSetter
+  - type: SurgeryTool
+    successRate: 0.4
+    speed: 1.5
+    startSound:
+      path: /Audio/_Starlight/Medical/Surgery/bone_setter.ogg
+  # 🌟Starlight-end🌟
 
 # Standard (grey) Crowbar
 - type: entity

@@ -70,6 +70,22 @@
     proto: MasterGrey
   equipment:
     head: ClothingHeadHatBizarreSoft
+    
+- type: loadout
+  id: BrimHat
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: HonoredAssistant
+  equipment:
+    head: ClothingHeadHatBrimHat
+
+- type: loadout
+  id: FeatheredHat
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: HonoredAssistant
+  equipment:
+    head: ClothingHeadHatFeatheredHat
 
 # Eyes
 - type: loadout
@@ -79,6 +95,14 @@
     proto: HonoredAssistant
   equipment:
     eyes: ClothingEyesGlassesCheapSunglasses
+
+- type: loadout
+  id: AssistantNoirGlasses
+  equipment:
+    Eyes: ClothingEyesGlassesNoirAssistant
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: HonoredAssistant
 
 # Mask
 - type: loadout
@@ -106,6 +130,326 @@
   equipment:
     jumpsuit: ClothingUniformJumpskirtColorGrey
 
+- type: loadout
+  id: WhiteJumpsuitLoadout
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: HonoredAssistant
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitColorWhite
+
+- type: loadout
+  id: WhiteJumpskirtLoadout
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: HonoredAssistant
+  equipment:
+    jumpsuit: ClothingUniformJumpskirtColorWhite
+
+- type: loadout
+  id: BlackJumpsuitLoadout
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: HonoredAssistant
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitColorBlack
+
+- type: loadout
+  id: BlackJumpskirtLoadout
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: HonoredAssistant
+  equipment:
+    jumpsuit: ClothingUniformJumpskirtColorBlack
+
+- type: loadout
+  id: BlueJumpsuitLoadout
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: HonoredAssistant
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitColorBlue
+
+- type: loadout
+  id: BlueJumpskirtLoadout
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: HonoredAssistant
+  equipment:
+    jumpsuit: ClothingUniformJumpskirtColorBlue
+
+- type: loadout
+  id: DarkBlueJumpsuitLoadout
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: HonoredAssistant
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitColorDarkBlue
+
+- type: loadout
+  id: DarkBlueJumpskirtLoadout
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: HonoredAssistant
+  equipment:
+    jumpsuit: ClothingUniformJumpskirtColorDarkBlue
+
+- type: loadout
+  id: TealJumpsuitLoadout
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: HonoredAssistant
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitColorTeal
+
+- type: loadout
+  id: TealJumpskirtLoadout
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: HonoredAssistant
+  equipment:
+    jumpsuit: ClothingUniformJumpskirtColorTeal
+
+- type: loadout
+  id: GreenJumpsuitLoadout
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: HonoredAssistant
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitColorGreen
+
+- type: loadout
+  id: GreenJumpskirtLoadout
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: HonoredAssistant
+  equipment:
+    jumpsuit: ClothingUniformJumpskirtColorGreen
+
+- type: loadout
+  id: DarkGreenJumpsuitLoadout
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: HonoredAssistant
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitColorDarkGreen
+
+- type: loadout
+  id: DarkGreenJumpskirtLoadout
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: HonoredAssistant
+  equipment:
+    jumpsuit: ClothingUniformJumpskirtColorDarkGreen
+
+- type: loadout
+  id: OrangeJumpsuitLoadout
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: HonoredAssistant
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitColorOrange
+
+- type: loadout
+  id: OrangeJumpskirtLoadout
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: HonoredAssistant
+  equipment:
+    jumpsuit: ClothingUniformJumpskirtColorOrange
+
+- type: loadout
+  id: PinkJumpsuitLoadout
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: HonoredAssistant
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitColorPink
+
+- type: loadout
+  id: PinkJumpskirtLoadout
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: HonoredAssistant
+  equipment:
+    jumpsuit: ClothingUniformJumpskirtColorPink
+
+- type: loadout
+  id: RedJumpsuitLoadout
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: HonoredAssistant
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitColorRed
+
+- type: loadout
+  id: RedJumpskirtLoadout
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: HonoredAssistant
+  equipment:
+    jumpsuit: ClothingUniformJumpskirtColorRed
+
+- type: loadout
+  id: YellowJumpsuitLoadout
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: HonoredAssistant
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitColorYellow
+
+- type: loadout
+  id: YellowJumpskirtLoadout
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: HonoredAssistant
+  equipment:
+    jumpsuit: ClothingUniformJumpskirtColorYellow
+
+- type: loadout
+  id: PurpleJumpsuitLoadout
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: HonoredAssistant
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitColorPurple
+
+- type: loadout
+  id: PurpleJumpskirtLoadout
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: HonoredAssistant
+  equipment:
+    jumpsuit: ClothingUniformJumpskirtColorPurple
+
+- type: loadout
+  id: LightBrownJumpsuitLoadout
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: HonoredAssistant
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitColorLightBrown
+
+- type: loadout
+  id: LightBrownJumpskirtLoadout
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: HonoredAssistant
+  equipment:
+    jumpsuit: ClothingUniformJumpskirtColorLightBrown
+
+- type: loadout
+  id: BrownJumpsuitLoadout
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: HonoredAssistant
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitColorBrown
+
+- type: loadout
+  id: BrownJumpskirtLoadout
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: HonoredAssistant
+  equipment:
+    jumpsuit: ClothingUniformJumpskirtColorBrown
+
+- type: loadout
+  id: MaroonJumpsuitLoadout
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: HonoredAssistant
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitColorMaroon
+
+- type: loadout
+  id: MaroonJumpskirtLoadout
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: HonoredAssistant
+  equipment:
+    jumpsuit: ClothingUniformJumpskirtColorMaroon
+
+- type: loadout
+  id: BodysuitJeans
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: HonoredAssistant
+  equipment:
+    jumpsuit: BodysuitJeansUniformSuit
+
+- type: loadout
+  id: CoolTanktop
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: HonoredAssistant
+  equipment:
+    jumpsuit: CoolTanktopUniformSuit
+
+- type: loadout
+  id: LumberjackOveralls
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: MasterGrey
+  equipment:
+    jumpsuit: LumberjackOverallsUniformSuit
+
+- type: loadout
+  id: MechanicOveralls
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: MasterGrey
+  equipment:
+    jumpsuit: MechanicOverallsUniformSuit
+
+- type: loadout
+  id: MessyDressShirt
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: HonoredAssistant
+  equipment:
+    jumpsuit: MessyDressShirtUniformSuit
+
+- type: loadout
+  id: OldWomanDress
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: HonoredAssistant
+  equipment:
+    jumpsuit: OldWomanUniformSuit
+
+- type: loadout
+  id: PunkJeans
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: MasterGrey
+  equipment:
+    jumpsuit: PunkJeansUniformSuit
+
+- type: loadout
+  id: TatteredClothes
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: MasterGrey
+  equipment:
+    jumpsuit: TatteredClothesUniformSuit
+
+- type: loadout
+  id: TieDye
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: HonoredAssistant
+  equipment:
+    jumpsuit: TieDyeUniformSuit
+
+- type: loadout
+  id: VintageClothes
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: MasterGrey
+  equipment:
+    jumpsuit: VintageUniformSuit
+
 # Gloves
 - type: loadout
   id: GreyGloves
@@ -130,7 +474,7 @@
   - !type:GroupLoadoutEffect
     proto: HonoredAssistant
   equipment:
-    outerClothing: ClothingOuterCoatDetectiveLoadoutGrey
+    outerClothing: ClothingOuterCoatGreytiderTrenchcoat
   
 - type: loadout
   id: SpaceAssholeCoat
@@ -139,3 +483,11 @@
       proto: MasterGrey
   equipment:
     outerClothing: ClothingOuterCoatSpaceAsshole
+
+- type: loadout
+  id: RedLeatherJacker
+  effects:
+    - !type:GroupLoadoutEffect
+      proto: MasterGrey
+  equipment:
+    outerClothing: ClothingOuterRedLeather

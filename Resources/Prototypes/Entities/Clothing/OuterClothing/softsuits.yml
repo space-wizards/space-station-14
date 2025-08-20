@@ -119,8 +119,8 @@
     highPressureMultiplier: 0.5
     lowPressureMultiplier: 1000
   - type: ClothingSpeedModifier
-    walkModifier: 0.9
-    sprintModifier: 0.9
+    walkModifier: 1.0 # Starlight Edit
+    sprintModifier: 1.0 # Starlight Edit
   - type: HeldSpeedModifier
   - type: TemperatureProtection
     heatingCoefficient: 0.1

@@ -55,11 +55,33 @@
     ClothingShoesBootsCowboyBrown: 1
     ClothingShoesBootsCowboyBlack: 1
     ClothingShoesBootsCowboyWhite: 1
+    #Starlight
+    CandyClownUniformSuit: 1
+    StripedClownUniformSuit: 1
+    DruidRobesUniformSuit: 1
+    FlamboyantUniformSuit: 3
+    FlamencoUniformSuit: 2
+    FlyCaptainUniformSuit: 1
+    KiltUniformSuit: 4
+    MimeFrillsUniformSuit: 1
+    RefereeUniformSuit: 2
+    SailorUniformSuit: 2
+    TogaUniformSuit: 2
+    ClothingUnderSocksMime: 1
+    ClothingUnderSocksStirrup: 1
+    ClothingOutercorset: 2
+    ClothingKitsuneMask: 2
+    ClothingHeadHatTVHead: 1
+    ClothingHeadHatFeatheredHat: 1
+    ClothingHeadHatBrimHat: 1
   contrabandInventory:
     ClothingHeadHatRichard: 1
     ToyFigurineBoxer: 1
     ToyFigurineMusician: 1
-  emaggedInventory:
+    ClothingOuterBurnedRobes: 1 #Starlight
+    CamoUniformSuit: 1 #Starlight
+    TatteredClothesUniformSuit: 1 #Starlight
+    ClothingNeckTatteredHood: 1 #Starlight
     ClothingShoesBling: 1
     ClothingShoesBootsCowboyFancy: 1
     ClothingOuterDogi: 1

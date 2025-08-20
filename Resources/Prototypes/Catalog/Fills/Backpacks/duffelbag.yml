@@ -142,8 +142,14 @@
         amount: 4
       - id: MagazineShotgun
         amount: 4
+      - id: MagazineRifleSP
+        amount: 3
+      - id: MagazineRifleSP #Starlight, for the estoc
+        amount: 2 
       - id: MagazineLightRifleBoxSP
         amount: 3
+      - id: MagazineShotgunSlug
+        amount: 1
       - id: MagazineBoxLightRifleSP
         amount: 1
       - id: MagazineBoxLightRifleHP
@@ -348,6 +354,19 @@
         amount: 2
 
 - type: entity
+  parent: [ ClothingBackpackDuffelBundle, BaseMajorContraband ]
+  id: ClothingBackpackDuffelAcolyteBundle
+  name: acolyte armor bundle
+  description: "Contains the Acolyte Armor, the must have of any cult leader."
+  components:
+  - type: StorageFill
+    contents:
+    - id: ClothingOuterArmorCult
+    - id: ClothingHeadHelmetCult
+    - id: ClothingShoesCult
+    - id: BedsheetCult
+
+- type: entity
   parent: ClothingBackpackDuffelSyndicateBundle
   id: ClothingBackpackDuffelSyndicateFilledStarterKit
   name: basic operative bundle
@@ -366,3 +385,4 @@
       - id: EmpImplanter
       - id: ClothingShoesBootsMagSyndie
       - id: AgentIDCard
+

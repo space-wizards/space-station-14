@@ -49,3 +49,20 @@
         Piercing: 0.90
         Heat: 0.90
         Radiation: 0.60
+
+- type: entity
+  parent: ClothingMaskGas
+  id: ClothingKitsuneMask
+  name: kitsune mask
+  description: A ceramic mask fox mask.
+  components:
+  - type: Sprite
+    sprite: _Starlight/Clothing/Mask/kitsune_mask.rsi
+  - type: Clothing
+    sprite: _Starlight/Clothing/Mask/kitsune_mask.rsi
+  - type: Pierceable
+    level: Metal
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.90
