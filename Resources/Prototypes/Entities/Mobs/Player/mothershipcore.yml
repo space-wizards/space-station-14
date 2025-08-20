@@ -206,8 +206,6 @@
   - type: ShowElectrocutionHUD
   - type: PowerMonitoringCableNetworks
   - type: RadarConsole
-  - type: Physics
-    bodyType: Static
 
 - type: entity
   parent: BaseAGhostAction
