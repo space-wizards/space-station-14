@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: sowelipililimute
-  changes:
-  - message: Medical and security techfab will no longer announce more than five recipes
-      at once, avoiding chat flooding
-    type: Tweak
-  id: 8359
-  time: '2025-04-26T21:45:53.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/36945
 - author: Nox38
   changes:
   - message: Added descriptions for the .30 caliber and weapons.
@@ -3949,3 +3941,12 @@
   id: 8871
   time: '2025-08-19T20:31:02.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/39586
+- author: Princess-Cheeseballs
+  changes:
+  - message: Speed boots no longer affect crawling speed.
+    type: Remove
+  - message: Moon boots don't work unless you're standing
+    type: Tweak
+  id: 8872
+  time: '2025-08-20T11:08:31.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/39648
