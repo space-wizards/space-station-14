@@ -4,8 +4,8 @@ meta:
   engineVersion: 265.0.0
   forkId: ""
   forkVersion: ""
-  time: 08/20/2025 06:52:46
-  entityCount: 16933
+  time: 08/20/2025 07:09:49
+  entityCount: 16937
 maps:
 - 1
 grids:
@@ -8370,6 +8370,18 @@ entities:
       - 9990
       - 9882
       - 7594
+  - uid: 16935
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: 30.5,20.5
+      parent: 2
+    - type: DeviceList
+      devices:
+      - 9802
+      - 9913
+      - 16936
+      - 16937
 - proto: AirAlarmFreezer
   entities:
   - uid: 106
@@ -9916,7 +9928,7 @@ entities:
       pos: 13.5,-9.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -183389.22
+      secondsUntilStateChange: -183513.62
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -29063,6 +29075,11 @@ entities:
     components:
     - type: Transform
       pos: 16.5,-34.5
+      parent: 2
+  - uid: 16934
+    components:
+    - type: Transform
+      pos: 16.5,-29.5
       parent: 2
 - proto: CableHVStack
   entities:
@@ -51463,6 +51480,24 @@ entities:
       deviceLists:
       - 103
       - 104
+  - uid: 16936
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: 25.5,17.5
+      parent: 2
+    - type: DeviceNetwork
+      deviceLists:
+      - 16935
+  - uid: 16937
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: 25.5,16.5
+      parent: 2
+    - type: DeviceNetwork
+      deviceLists:
+      - 16935
 - proto: Fireplace
   entities:
   - uid: 7769
@@ -67259,6 +67294,9 @@ entities:
       rot: -1.5707963267948966 rad
       pos: 26.5,16.5
       parent: 2
+    - type: DeviceNetwork
+      deviceLists:
+      - 16935
     - type: AtmosPipeColor
       color: '#0335FCFF'
   - uid: 9803
@@ -68394,6 +68432,9 @@ entities:
       rot: -1.5707963267948966 rad
       pos: 26.5,17.5
       parent: 2
+    - type: DeviceNetwork
+      deviceLists:
+      - 16935
     - type: AtmosPipeColor
       color: '#FF1212FF'
   - uid: 9914
@@ -75683,7 +75724,7 @@ entities:
       pos: 16.5,-40.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -58768.082
+      secondsUntilStateChange: -58892.48
       state: Opening
 - proto: HospitalCurtainsOpen
   entities:
