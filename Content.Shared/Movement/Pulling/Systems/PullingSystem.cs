@@ -490,7 +490,7 @@ public sealed class PullingSystem : EntitySystem
             if (pullableComp.Puller == pullerUid)
                 return false;
 
-            if (!TryStopPull((pullableUid, pullableComp)))
+            if (!TryStopPull((pullableUid, pullableComp), pullableComp.Puller))
                 return false;
         }
 
@@ -583,12 +583,12 @@ public sealed class PullingSystem : EntitySystem
     /// <param name="pullable">The entity being pulled.</param>
     /// <param name="user">The entity that tries to initiate action of stoping of pulling. Fill it if you want to check if user is able to stop pulling action</param>
     ///  <returns>
-    ///     true if pull action was stopped
+    ///     false if user can't interact with pullable or stop pulling event has been cancelled
     /// </returns>
     public bool TryStopPull(EntityUid? pullable, EntityUid? user = null)
     {
         if (pullable == null)
-            return false;
+            return true;
         return TryStopPull(pullable.Value, user);
     }
 
@@ -598,7 +598,7 @@ public sealed class PullingSystem : EntitySystem
     /// <param name="pullable">The entity being pulled.</param>
     /// <param name="user">The entity that tries to initiate action of stoping of pulling. Fill it if you want to check if user is able to stop pulling action</param>
     ///  <returns>
-    ///     true if the puller can stop the pull
+    ///     false if user can't interact with pullable or stop pulling event has been cancelled
     /// </returns>
     public bool CanStopPull(Entity<PullableComponent?> pullable, EntityUid? user = null)
     {
