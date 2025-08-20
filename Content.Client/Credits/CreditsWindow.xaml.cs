@@ -80,7 +80,7 @@ public sealed partial class CreditsWindow : DefaultWindow
 
     private async void PopulateAttributions(BoxContainer attributionsContainer, int count)
     {
-        attributionsContainer.DisposeAllChildren();
+        attributionsContainer.RemoveAllChildren();
 
         if (_attributions.Count == 0)
         {
@@ -253,6 +253,8 @@ public sealed partial class CreditsWindow : DefaultWindow
 
     private void PopulateLicenses(BoxContainer licensesContainer)
     {
+        licensesContainer.RemoveAllChildren();
+
         foreach (var entry in CreditsManager.GetLicenses(_resourceManager).OrderBy(p => p.Name))
         {
             licensesContainer.AddChild(new Label
@@ -269,6 +271,8 @@ public sealed partial class CreditsWindow : DefaultWindow
 
     private void PopulatePatrons(BoxContainer patronsContainer)
     {
+        patronsContainer.RemoveAllChildren();
+
         var patrons = LoadPatrons();
 
         // Do not show "become a patron" button on Steam builds
@@ -318,6 +322,8 @@ public sealed partial class CreditsWindow : DefaultWindow
 
     private void PopulateContributors(BoxContainer ss14ContributorsContainer)
     {
+        ss14ContributorsContainer.RemoveAllChildren();
+
         Button contributeButton;
 
         ss14ContributorsContainer.AddChild(new BoxContainer
@@ -356,6 +362,7 @@ public sealed partial class CreditsWindow : DefaultWindow
         AddSection(Loc.GetString("credits-window-contributors-section-title"), "GitHub.txt");
         AddSection(Loc.GetString("credits-window-codebases-section-title"), "SpaceStation13.txt");
         AddSection(Loc.GetString("credits-window-original-remake-team-section-title"), "OriginalRemake.txt");
+        AddSection(Loc.GetString("credits-window-immortals-title"), "Immortals.txt", true);
         AddSection(Loc.GetString("credits-window-special-thanks-section-title"), "SpecialThanks.txt", true);
 
         var linkGithub = _cfg.GetCVar(CCVars.InfoLinksGithub);
