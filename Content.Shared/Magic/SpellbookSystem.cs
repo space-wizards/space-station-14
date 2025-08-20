@@ -1,5 +1,6 @@
 using Content.Shared.Actions;
 using Content.Shared.Actions.Components;
+using Content.Shared.Charges.Components;
 using Content.Shared.Charges.Systems;
 using Content.Shared.DoAfter;
 using Content.Shared.Interaction.Events;
@@ -36,8 +37,9 @@ public sealed class SpellbookSystem : EntitySystem
             // Null means infinite charges.
             if (charges is { } count)
             {
-                _sharedCharges.SetMaxCharges(spell, count);
-                _sharedCharges.SetCharges(spell, count);
+                var chargeComp = EnsureComp<LimitedChargesComponent>(spell);
+                _sharedCharges.SetMaxCharges((spell, chargeComp), count);
+                _sharedCharges.SetCharges((spell, chargeComp), count);
             }
 
             ent.Comp.Spells.Add(spell);
@@ -80,11 +82,12 @@ public sealed class SpellbookSystem : EntitySystem
             {
                 EntityUid? actionId = null;
                 if (!_actions.AddAction(args.Args.User, ref actionId, id)
-                    || charges is not { } count) // Null means infinite charges
+                    || charges is not { } count // Null means infinite charges
+                    || !TryComp<LimitedChargesComponent>(actionId, out var chargeComp))
                     continue;
 
-                _sharedCharges.SetMaxCharges(actionId.Value, count);
-                _sharedCharges.SetCharges(actionId.Value, count);
+                _sharedCharges.SetMaxCharges((actionId.Value, chargeComp), count);
+                _sharedCharges.SetCharges((actionId.Value, chargeComp), count);
             }
         }
 

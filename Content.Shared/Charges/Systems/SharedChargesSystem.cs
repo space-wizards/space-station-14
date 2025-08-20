@@ -177,13 +177,20 @@ public abstract class SharedChargesSystem : EntitySystem
     }
 
     /// <summary>
-    /// Set the number of charges an action has, adding <see cref="LimitedChargesComponent"/> if needed.
+    /// Set the number of charges an action has.
     /// </summary>
     /// <param name="action">The action in question</param>
-    /// <param name="value">The number of charges. Clamped to [0, MaxCharges].</param>
+    /// <param name="value">
+    /// The number of charges. Clamped to [0, MaxCharges].
+    /// </param>
+    /// <remarks>
+    /// This method doesn't implicitly add <see cref="LimitedChargesComponent"/>
+    /// unlike some other methods in this system.
+    /// </remarks>
     public void SetCharges(Entity<LimitedChargesComponent?> action, int value)
     {
-        action.Comp ??= EnsureComp<LimitedChargesComponent>(action.Owner);
+        if (!Resolve(action, ref action.Comp))
+            return;
 
         var adjusted = Math.Clamp(value, 0, action.Comp.MaxCharges);
 
@@ -198,16 +205,20 @@ public abstract class SharedChargesSystem : EntitySystem
     }
 
     /// <summary>
-    /// Sets the maximum charges of a given action, adding <see cref="LimitedChargesComponent"/> if it doesn't have it.
+    /// Sets the maximum charges of a given action.
     /// </summary>
     /// <param name="action">The action being modified.</param>
     /// <param name="value">The new maximum charges of the action. Clamped to zero.</param>
     /// <remarks>
-    /// Does not change the current charge count, or adjust the accumulator for auto-recharge.
+    /// Does not change the current charge count, or adjust the
+    /// accumulator for auto-recharge. It also doesn't implicitly add
+    /// <see cref="LimitedChargesComponent"/> unlike some other methods
+    /// in this system.
     /// </remarks>
     public void SetMaxCharges(Entity<LimitedChargesComponent?> action, int value)
     {
-        action.Comp ??= EnsureComp<LimitedChargesComponent>(action.Owner);
+        if (!Resolve(action, ref action.Comp))
+            return;
         // You can't have negative max charges (even zero is a bit goofy but eh)
         var adjusted = Math.Max(0, value);
         if (action.Comp.MaxCharges == adjusted)
