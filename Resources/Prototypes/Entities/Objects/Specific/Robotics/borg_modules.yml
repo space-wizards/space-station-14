@@ -1261,7 +1261,7 @@
   parent: [ BaseXenoborgModuleGeneric, BaseProviderBorgModule, BaseXenoborgContraband ]
   id: MothershipModule
   name: mothership module
-  description: Hands for borging, hands for inserting modules.
+  description: A module that helps the mothership borg brains and install other modules.
   components:
   - type: Tag
     tags:
@@ -1274,23 +1274,24 @@
     hands:
     - item: DoorRemoteXenoborg
     - hand:
-      emptyLabel: borg-slot-brains-empty
-      emptyRepresentative: MMIFilled
-      whitelist:
-        tags:
-        - Brain
+        emptyRepresentative: MMIFilled
+        emptyLabel: borg-slot-brains-empty
+        whitelist:
+          components:
+          - Brain
+          - BorgBrain
     - hand:
-      emptyLabel: borg-slot-modules-empty
-      emptyRepresentative: XenoborgModuleBasic
-      whitelist:
-        components:
-        - BorgModule
+        emptyRepresentative: XenoborgModuleBasic
+        emptyLabel: borg-slot-modules-empty
+        whitelist:
+          components:
+          - BorgModule
     - hand:
-      emptyRepresentative: BorgModuleConstructionMaterialPlaceholder
-      emptyLabel: borg-slot-construction-empty
-      whitelist:
-        tags:
-        - ConstructionMaterial
+        emptyRepresentative: BorgModuleConstructionMaterialPlaceholder
+        emptyLabel: borg-slot-construction-empty
+        whitelist:
+          tags:
+          - ConstructionMaterial
   - type: BorgModuleIcon
     icon: { sprite: Interface/Actions/actions_borg.rsi, state: xenoborg-basic-module }
 
