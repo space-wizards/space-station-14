@@ -1,9 +1,3 @@
-- type: startingGear
-  id: MothershipCoreGear
-  inhand:
-  - DoorRemoteXenoborg
-  - Omnitool
-
 - type: entity
   parent:
   - BaseMachinePowered
@@ -160,14 +154,36 @@
     - Structure
   - type: Inventory
     templateId: borg
-  - type: Loadout
-    prototypes: [MothershipCoreGear]
   - type: NpcFactionMember
     factions:
     - Xenoborg
-  - type: Body
-    prototype: MothershipCoreBody
   - type: Hands
+    showInHands: false
+    disableExplosionRecursion: true
+    canBeStripped: false
+  - type: BorgChassis
+    canOpenSelfUi: true
+    maxModules: 2
+    moduleWhitelist:
+      tags:
+      - MothershipModule
+      - BorgModuleEngineering
+  - type: ContainerFill
+    containers:
+      borg_module:
+      - BorgModuleAdvancedTool
+      - MothershipModule
+  - type: ContainerContainer
+    containers:
+      cell_slot: !type:ContainerSlot { }
+      borg_module: !type:Container { }
+  - type: PowerCellSlot
+    cellSlotId: cell_slot
+  - type: ItemSlots
+    slots:
+      cell_slot:
+        name: power-cell-slot-component-slot-name-default
+        startingItem: PowerCellMicroreactor
   # - type: Puller # use the conveyor
   - type: Eye
     drawFov: false
