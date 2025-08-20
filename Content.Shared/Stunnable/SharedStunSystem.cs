@@ -20,8 +20,6 @@ using Robust.Shared.Audio.Systems;
 using Robust.Shared.Physics.Events;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
-using Content.Shared.CCVar;
-using Robust.Shared.Configuration;
 
 namespace Content.Shared.Stunnable;
 
@@ -40,7 +38,6 @@ public abstract partial class SharedStunSystem : EntitySystem
     [Dependency] protected readonly SharedDoAfterSystem DoAfter = default!;
     [Dependency] protected readonly SharedStaminaSystem Stamina = default!;
     [Dependency] private readonly StatusEffectsSystem _status = default!;
-    [Dependency] private readonly IConfigurationManager _cfgManager = default!;
 
     public override void Initialize()
     {
