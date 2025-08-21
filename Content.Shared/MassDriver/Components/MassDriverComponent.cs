@@ -70,7 +70,7 @@ public sealed partial class MassDriverComponent : Component
     /// Mass driver console entity
     /// </summary>
     [AutoNetworkedField]
-    public NetEntity? Console;
+    public NetEntity? Console; // Only one console can be linked.
 
     /// <summary>
     /// How moch energy we consume when launching?

@@ -15,7 +15,7 @@ public sealed partial class MassDriverConsoleComponent : Component
     /// Mass Driver Entity
     /// </summary>
     [DataField, AutoNetworkedField]
-    public NetEntity? MassDriver;
+    public List<NetEntity> MassDrivers = new(); // Many MassDrivers can be linked
 
     /// <summary>
     /// The machine linking port

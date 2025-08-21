@@ -8,6 +8,7 @@ using Content.Server.Power.EntitySystems;
 using Content.Shared.DeviceLinking.Events;
 using Content.Server.Power.Components;
 using Content.Shared.Audio;
+using Robust.Shared.Utility;
 
 namespace Content.Server.MassDriver.EntitySystems;
 
@@ -29,7 +30,7 @@ public sealed class MassDriverSystem : EntitySystem
 
         // UI for console -_-
         SubscribeLocalEvent<MassDriverConsoleComponent, ComponentInit>(OnInit); // Update state on init
-        SubscribeLocalEvent<MassDriverConsoleComponent, MassDriverModeMessage>(OnModeChanged);
+        SubscribeLocalEvent<MassDriverConsoleComponent, MassDriverModeMessage>(OnModeChanged); // Update state on ui open
         SubscribeLocalEvent<MassDriverConsoleComponent, MassDriverLaunchMessage>(OnLaunch);
         SubscribeLocalEvent<MassDriverConsoleComponent, MassDriverThrowSpeedMessage>(OnThrowSpeedChanged);
         SubscribeLocalEvent<MassDriverConsoleComponent, MassDriverThrowDistanceMessage>(OnThrowDistanceChanged);
@@ -43,12 +44,18 @@ public sealed class MassDriverSystem : EntitySystem
 
     #region DeviceLinking
 
+    /// <summary>
+    /// Handle new link to add mass driver in mass driver console component
+    /// </summary>
+    /// <param name="uid">Mass Driver Console</param>
+    /// <param name="component">Mass Driver Console Component</param>
+    /// <param name="args">Event arguments</param>
     private void OnNewLink(EntityUid uid, MassDriverConsoleComponent component, NewLinkEvent args)
     {
         if (!TryComp<MassDriverComponent>(args.Sink, out var driver))
             return;
 
-        component.MassDriver = GetNetEntity(args.Sink);
+        component.MassDrivers.Add(GetNetEntity(args.Sink));
         driver.Console = GetNetEntity(uid);
 
         Dirty(args.Sink, driver);
@@ -57,23 +64,35 @@ public sealed class MassDriverSystem : EntitySystem
         UpdateUserInterface(uid, args.Sink, driver);
     }
 
+    /// <summary>
+    /// Handle disconnecting to remove mass driver from mass driver console component
+    /// </summary>
+    /// <param name="uid">Mass Driver Console</param>
+    /// <param name="component">Mass Driver Console Component</param>
+    /// <param name="args">Event arguments</param>
     private void OnPortDisconnected(EntityUid uid, MassDriverConsoleComponent component, PortDisconnectedEvent args)
     {
-        var massDriverNetEntity = component.MassDriver;
-        if (args.Port != component.LinkingPort || massDriverNetEntity == null)
+        var massDriverNetEntity = GetNetEntity(args.Sink);
+        if (args.Port != component.LinkingPort || !component.MassDrivers.Contains(massDriverNetEntity))
             return;
 
-        var massDriverEntityUid = GetEntity(massDriverNetEntity);
+        var massDriverEntityUid = args.Sink;
         if (TryComp<MassDriverComponent>(massDriverEntityUid, out var massDriverComponent))
         {
             massDriverComponent.Console = null;
-            Dirty(massDriverEntityUid.Value, massDriverComponent);
+            Dirty(massDriverEntityUid, massDriverComponent);
         }
 
-        component.MassDriver = null;
+        component.MassDrivers.Remove(massDriverNetEntity);
         Dirty(uid, component);
     }
 
+    /// <summary>
+    /// Handle signal receive, for launch some objects.
+    /// </summary>
+    /// <param name="uid">Mass Driver</param>
+    /// <param name="component">Mass Driver Component</param>
+    /// <param name="args">Event arguments</param>
     private void OnSignalReceived(EntityUid uid, MassDriverComponent component, ref SignalReceivedEvent args)
     {
         if (args.Port == component.LaunchPort && component.Mode == MassDriverMode.Manual)
@@ -84,6 +103,12 @@ public sealed class MassDriverSystem : EntitySystem
 
     #region Logic
 
+    /// <summary>
+    /// Handle power changing to disable or enable mass driver, so it can't work without power
+    /// </summary>
+    /// <param name="uid">Mass Driver</param>
+    /// <param name="component">Mass Driver Component</param>
+    /// <param name="args">Event arguments</param>
     private void OnPowerChanged(EntityUid uid, MassDriverComponent component, ref PowerChangedEvent args)
     {
         if (component.Mode != MassDriverMode.Auto)
@@ -96,6 +121,9 @@ public sealed class MassDriverSystem : EntitySystem
             EnsureComp<ActiveMassDriverComponent>(uid);
     }
 
+    /// <summary>
+    /// Update only active mass drivers, so we have it more optimized than conveyors
+    /// </summary>
     public override void Update(float frameTime)
     {
         base.Update(frameTime);
@@ -122,6 +150,7 @@ public sealed class MassDriverSystem : EntitySystem
 
             if (entitiesCount == 0)
             {
+                // Disable mass driver if we throw all entities
                 if (activeMassDriver.NextThrowTime != TimeSpan.Zero)
                 {
                     if (TryComp<AmbientSoundComponent>(uid, out var ambient))
@@ -135,6 +164,7 @@ public sealed class MassDriverSystem : EntitySystem
                 continue;
             }
 
+            // If we find first entity, charge mass driver(wait n seconds setuped in ThrowDelay)
             if (activeMassDriver.NextThrowTime == TimeSpan.Zero)
             {
                 activeMassDriver.NextThrowTime = _timing.CurTime + massDriver.ThrowDelay;
@@ -153,6 +183,13 @@ public sealed class MassDriverSystem : EntitySystem
         }
     }
 
+    /// <summary>
+    /// Throws All entities in list.
+    /// </summary>
+    /// <param name="massDriver">Mass Driver</param>
+    /// <param name="massDriverComponent">Mass Driver Component</param>
+    /// <param name="targets">Targets List</param>
+    /// <param name="targetCount">Count of target(added, because we can ignore some targets like anchored, etc.)</param>
     private void ThrowEntities(EntityUid massDriver, MassDriverComponent massDriverComponent, HashSet<EntityUid> targets, int targetCount)
     {
         var xform = Transform(massDriver);
@@ -168,69 +205,100 @@ public sealed class MassDriverSystem : EntitySystem
 
     #region UI
 
-    private void OnInit(EntityUid uid, MassDriverConsoleComponent massDriverConsole, ComponentInit args)
+    /// <summary>
+    /// Update ui on init
+    /// </summary>
+    private void OnInit(EntityUid uid, MassDriverConsoleComponent component, ComponentInit args)
     {
-        if (massDriverConsole.MassDriver != null)
-        {
-            var massDriverUid = GetEntity(massDriverConsole.MassDriver);
-            if (TryComp<MassDriverComponent>(massDriverUid, out var component))
-                UpdateUserInterface(uid, massDriverUid.Value, component);
-        }
+        var massDriverUid = GetEntity(component.MassDrivers.FirstOrDefault()); // We use first mass driver to update UI state
+        if (TryComp<MassDriverComponent>(massDriverUid, out var driver))
+            UpdateUserInterface(uid, massDriverUid, driver);
         else
             UpdateUserInterface(uid, null, null);
     }
 
+    /// <summary>
+    /// Update ui on ui open
+    /// </summary>
     private void OnBoundUiOpened(EntityUid uid, MassDriverConsoleComponent component, BoundUIOpenedEvent args)
     {
-        if (component.MassDriver != null)
-        {
-            var massDriverUid = GetEntity(component.MassDriver);
-            if (TryComp<MassDriverComponent>(massDriverUid, out var driver))
-                UpdateUserInterface(uid, massDriverUid.Value, driver);
-        }
+        var massDriverUid = GetEntity(component.MassDrivers.FirstOrDefault()); // We use first mass driver to update UI state
+        if (TryComp<MassDriverComponent>(massDriverUid, out var driver))
+            UpdateUserInterface(uid, massDriverUid, driver);
         else
             UpdateUserInterface(uid, null, null);
     }
 
-    private void OnModeChanged(EntityUid uid, MassDriverConsoleComponent massDriverConsole, MassDriverModeMessage args)
+    /// <summary>
+    /// Handle mode changing
+    /// </summary>
+    private void OnModeChanged(EntityUid uid, MassDriverConsoleComponent component, MassDriverModeMessage args)
     {
-        var massDriverUid = GetEntity(massDriverConsole.MassDriver);
+        foreach (var massDriverNetEntity in component.MassDrivers)
+        {
+            var massDriverUid = GetEntity(massDriverNetEntity);
 
-        if (!TryComp<MassDriverComponent>(massDriverUid, out var massDriverComponent))
-            return;
+            if (!TryComp<MassDriverComponent>(massDriverUid, out var massDriverComponent))
+                return;
 
-        massDriverComponent.Mode = args.Mode;
-        Dirty(massDriverUid.Value, massDriverComponent);
+            massDriverComponent.Mode = args.Mode;
+            Dirty(massDriverUid, massDriverComponent);
 
-        if (massDriverComponent.Mode == MassDriverMode.Auto)
-            EnsureComp<ActiveMassDriverComponent>(massDriverUid.Value);
-        else if (HasComp<ActiveMassDriverComponent>(massDriverUid.Value))
-            RemComp<ActiveMassDriverComponent>(massDriverUid.Value);
+            if (massDriverComponent.Mode == MassDriverMode.Auto)
+                EnsureComp<ActiveMassDriverComponent>(massDriverUid);
+            else if (HasComp<ActiveMassDriverComponent>(massDriverUid))
+                RemComp<ActiveMassDriverComponent>(massDriverUid);
+        }
 
-        UpdateUserInterface(uid, massDriverUid.Value, massDriverComponent);
+        var firstMassDriver = GetEntity(component.MassDrivers.FirstOrDefault()); // We use first mass driver to update UI state
+        if (TryComp<MassDriverComponent>(firstMassDriver, out var driver))
+            UpdateUserInterface(uid, firstMassDriver, driver);
     }
 
-    private void OnLaunch(EntityUid uid, MassDriverConsoleComponent massDriverConsole, MassDriverLaunchMessage args)
+    /// <summary>
+    /// Handle launch button, so we can launch entity
+    /// </summary>
+    private void OnLaunch(EntityUid uid, MassDriverConsoleComponent component, MassDriverLaunchMessage args)
     {
-        var massDriverUid = GetEntity(massDriverConsole.MassDriver);
-        if (massDriverUid != null)
-            AddComp<ActiveMassDriverComponent>(massDriverUid.Value);
+        foreach (var massDriverNetEntity in component.MassDrivers)
+        {
+            var massDriverUid = GetEntity(massDriverNetEntity);
+            AddComp<ActiveMassDriverComponent>(massDriverUid);
+        }
     }
 
-    private void OnThrowSpeedChanged(EntityUid uid, MassDriverConsoleComponent massDriverConsole, MassDriverThrowSpeedMessage args)
+    /// <summary>
+    /// Handle throw speed slider
+    /// </summary>
+    private void OnThrowSpeedChanged(EntityUid uid, MassDriverConsoleComponent component, MassDriverThrowSpeedMessage args)
     {
-        var massDriverUid = GetEntity(massDriverConsole.MassDriver);
-        if (massDriverUid != null && TryComp<MassDriverComponent>(massDriverUid, out var massDriverComponent))
-            massDriverComponent.CurrentThrowSpeed = Math.Clamp(args.Speed, massDriverComponent.MinThrowSpeed, massDriverComponent.MaxThrowSpeed);
+        foreach (var massDriverNetEntity in component.MassDrivers)
+        {
+            var massDriverUid = GetEntity(massDriverNetEntity);
+            if (TryComp<MassDriverComponent>(massDriverUid, out var massDriverComponent))
+                massDriverComponent.CurrentThrowSpeed = Math.Clamp(args.Speed, massDriverComponent.MinThrowSpeed, massDriverComponent.MaxThrowSpeed);
+        }
     }
 
-    private void OnThrowDistanceChanged(EntityUid uid, MassDriverConsoleComponent massDriverConsole, MassDriverThrowDistanceMessage args)
+    /// <summary>
+    /// Handle throw distance slider
+    /// </summary>
+    private void OnThrowDistanceChanged(EntityUid uid, MassDriverConsoleComponent component, MassDriverThrowDistanceMessage args)
     {
-        var massDriverUid = GetEntity(massDriverConsole.MassDriver);
-        if (massDriverUid != null && TryComp<MassDriverComponent>(massDriverUid, out var massDriverComponent))
-            massDriverComponent.CurrentThrowDistance = Math.Clamp(args.Distance, massDriverComponent.MinThrowDistance, massDriverComponent.MaxThrowDistance);
+        foreach (var massDriverNetEntity in component.MassDrivers)
+        {
+            var massDriverUid = GetEntity(massDriverNetEntity);
+            if (TryComp<MassDriverComponent>(massDriverUid, out var massDriverComponent))
+                massDriverComponent.CurrentThrowDistance = Math.Clamp(args.Distance, massDriverComponent.MinThrowDistance, massDriverComponent.MaxThrowDistance);
+        }
     }
 
+    /// <summary>
+    /// Updates Mass Driver Console UI
+    /// </summary>
+    /// <param name="console">Mass Driver Console</param>
+    /// <param name="massDriver">Mass Driver</param>
+    /// <param name="component">Mass Driver Component</param>
     private void UpdateUserInterface(EntityUid console, EntityUid? massDriver, MassDriverComponent? component = null)
     {
         if (!_ui.HasUi(console, MassDriverConsoleUiKey.Key))

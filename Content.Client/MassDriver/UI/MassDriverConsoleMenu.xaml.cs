@@ -9,106 +9,102 @@ namespace Content.Client.MassDriver.UI;
 [GenerateTypedNameReferences]
 public sealed partial class MassDriverConsoleMenu : DefaultWindow
 {
-  public event Action? OnLaunchButtonPressed;
-  public event Action<MassDriverMode>? OnModeButtonPressed;
-  public event Action<float>? OnThrowSpeed;
-  public event Action<float>? OnThrowDistance;
+    public event Action? OnLaunchButtonPressed;
+    public event Action<MassDriverMode>? OnModeButtonPressed;
+    public event Action<float>? OnThrowSpeed;
+    public event Action<float>? OnThrowDistance;
 
-  public MassDriverConsoleMenu()
-  {
-    RobustXamlLoader.Load(this);
-
-    LaunchButton.OnPressed += _ =>
+    public MassDriverConsoleMenu()
     {
-      OnLaunchButtonPressed?.Invoke();
-    };
+        RobustXamlLoader.Load(this);
 
-    AutoModeButton.OnPressed += _ =>
-    {
-      AutoModeButton.Disabled = true;
-      ManualModeButton.Disabled = false;
-      LaunchButton.Disabled = true;
-      OnModeButtonPressed?.Invoke(MassDriverMode.Auto);
-    };
+        LaunchButton.OnPressed += _ => OnLaunchButtonPressed?.Invoke();
 
-    ManualModeButton.OnPressed += _ =>
-    {
-      AutoModeButton.Disabled = false;
-      ManualModeButton.Disabled = true;
-      LaunchButton.Disabled = false;
-      OnModeButtonPressed?.Invoke(MassDriverMode.Manual);
-    };
+        AutoModeButton.OnPressed += _ =>
+        {
+            AutoModeButton.Disabled = true;
+            ManualModeButton.Disabled = false;
+            LaunchButton.Disabled = true;
+            OnModeButtonPressed?.Invoke(MassDriverMode.Auto);
+        };
 
-    ThrowDistanceSlider.OnValueChanged += _ =>
-    {
-      var ThrowDistance = Normalize(ThrowDistanceSlider.Value);
-      OnThrowDistance?.Invoke(ThrowDistance);
-      ThrowDistanceCurrentValue.Text = ThrowDistance.ToString() + " m/s";
+        ManualModeButton.OnPressed += _ =>
+        {
+            AutoModeButton.Disabled = false;
+            ManualModeButton.Disabled = true;
+            LaunchButton.Disabled = false;
+            OnModeButtonPressed?.Invoke(MassDriverMode.Manual);
+        };
 
-    };
+        ThrowDistanceSlider.OnValueChanged += _ =>
+        {
+            var throwDistance = Normalize(ThrowDistanceSlider.Value);
+            OnThrowDistance?.Invoke(throwDistance);
+            ThrowDistanceCurrentValue.Text = throwDistance.ToString();
+        };
 
-    ThrowSpeedSlider.OnValueChanged += _ =>
-    {
-      var ThrowSpeed = Normalize(ThrowSpeedSlider.Value);
-      OnThrowSpeed?.Invoke(ThrowSpeed);
-      ThrowSpeedCurrentValue.Text = ThrowSpeed.ToString() + " m/s";
-    };
-  }
-
-  public void UpdateState(MassDriverUiState state)
-  {
-    if (state.MassDriverLinked)
-    {
-      DisabledPanel.Visible = false;
-      DisabledPanel.MouseFilter = MouseFilterMode.Ignore;
-    }
-    else
-    {
-      DisabledPanel.Visible = true;
-      DisabledPanel.MouseFilter = MouseFilterMode.Stop;
-      if (DisabledLabel.GetMessage() is null)
-      {
-        var text = new FormattedMessage();
-        text.AddMarkupOrThrow(Loc.GetString("mass-driver-ui-link"));
-        DisabledLabel.SetMessage(text);
-      }
+        ThrowSpeedSlider.OnValueChanged += _ =>
+        {
+            var throwSpeed = Normalize(ThrowSpeedSlider.Value);
+            OnThrowSpeed?.Invoke(throwSpeed);
+            ThrowSpeedCurrentValue.Text = throwSpeed.ToString() + " m/s";
+        };
     }
 
-    if (state.CurrentMassDriverMode == MassDriverMode.Auto)
+    public void UpdateState(MassDriverUiState state)
     {
-      AutoModeButton.Disabled = true;
-      ManualModeButton.Disabled = false;
-      LaunchButton.Disabled = true;
+        if (state.MassDriverLinked)
+        {
+            DisabledPanel.Visible = false;
+            DisabledPanel.MouseFilter = MouseFilterMode.Ignore;
+        }
+        else
+        {
+            DisabledPanel.Visible = true;
+            DisabledPanel.MouseFilter = MouseFilterMode.Stop;
+            if (DisabledLabel.GetMessage() is null)
+            {
+                var text = new FormattedMessage();
+                text.AddMarkupOrThrow(Loc.GetString("mass-driver-ui-link"));
+                DisabledLabel.SetMessage(text);
+            }
+        }
+
+        if (state.CurrentMassDriverMode == MassDriverMode.Auto)
+        {
+            AutoModeButton.Disabled = true;
+            ManualModeButton.Disabled = false;
+            LaunchButton.Disabled = true;
+        }
+        else
+        {
+            ManualModeButton.Disabled = true;
+            AutoModeButton.Disabled = false;
+            LaunchButton.Disabled = false;
+        }
+
+        // Sliders Current Value Label
+        ThrowDistanceCurrentValue.Text = state.CurrentThrowDistance.ToString();
+        ThrowSpeedCurrentValue.Text = state.CurrentThrowSpeed.ToString() + " m/s";
+
+        // Distance Slider Labels
+        ThrowDistanceMaxValue.Text = state.MaxThrowDistance.ToString();
+        ThrowDistanceMinValue.Text = state.MinThrowDistance.ToString();
+
+        /// Speed Slider Labels
+        ThrowSpeedMaxValue.Text = state.MaxThrowSpeed.ToString();
+        ThrowSpeedMinValue.Text = state.MinThrowSpeed.ToString();
+
+        // Distance Slider
+        ThrowDistanceSlider.MaxValue = state.MaxThrowDistance;
+        ThrowDistanceSlider.MinValue = state.MinThrowDistance;
+        ThrowDistanceSlider.Value = state.CurrentThrowDistance;
+
+        // Speed Slider
+        ThrowSpeedSlider.MaxValue = state.MaxThrowSpeed;
+        ThrowSpeedSlider.MinValue = state.MinThrowSpeed;
+        ThrowSpeedSlider.Value = state.CurrentThrowSpeed;
     }
-    else
-    {
-      ManualModeButton.Disabled = true;
-      AutoModeButton.Disabled = false;
-      LaunchButton.Disabled = false;
-    }
 
-    // Sliders Current Value Label
-    ThrowDistanceCurrentValue.Text = state.CurrentThrowDistance.ToString();
-    ThrowSpeedCurrentValue.Text = state.CurrentThrowSpeed.ToString();
-
-    // Distance Slider Labels
-    ThrowDistanceMaxValue.Text = state.MaxThrowDistance.ToString();
-    ThrowDistanceMinValue.Text = state.MinThrowDistance.ToString();
-
-    /// Speed Slider Labels
-    ThrowSpeedMaxValue.Text = state.MaxThrowSpeed.ToString();
-    ThrowSpeedMinValue.Text = state.MinThrowSpeed.ToString();
-
-    // Distance Slider
-    ThrowDistanceSlider.MaxValue = state.MaxThrowDistance;
-    ThrowDistanceSlider.MinValue = state.MinThrowDistance;
-    ThrowDistanceSlider.Value = state.CurrentThrowDistance;
-
-    // Speed Slider
-    ThrowSpeedSlider.MaxValue = state.MaxThrowSpeed;
-    ThrowSpeedSlider.MinValue = state.MinThrowSpeed;
-    ThrowSpeedSlider.Value = state.CurrentThrowSpeed;
-  }
-
-  private float Normalize(float value, int decimals = 1) => (float)Math.Round(value, decimals, MidpointRounding.AwayFromZero);
+    private float Normalize(float value, int decimals = 1) => (float)Math.Round(value, decimals, MidpointRounding.AwayFromZero);
 }
