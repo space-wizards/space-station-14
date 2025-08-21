@@ -1,3 +1,4 @@
+using Content.Shared.Changeling.Systems;
 using Content.Shared.Damage;
 using Content.Shared.Damage.Prototypes;
 using Content.Shared.FixedPoint;
@@ -7,7 +8,7 @@ using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 
-namespace Content.Shared.Changeling.Devour;
+namespace Content.Shared.Changeling.Components;
 
 /// <summary>
 /// Component responsible for Changelings Devour attack. Including the amount of damage

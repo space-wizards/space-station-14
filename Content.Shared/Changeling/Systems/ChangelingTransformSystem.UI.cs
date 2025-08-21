@@ -1,6 +1,6 @@
 ﻿using Robust.Shared.Serialization;
 
-namespace Content.Shared.Changeling.Transform;
+namespace Content.Shared.Changeling.Systems;
 
 /// <summary>
 /// Send when a player selects an intentity to transform into in the radial menu.

@@ -3,6 +3,7 @@ using Content.Shared.Administration.Logs;
 using Content.Shared.Armor;
 using Content.Shared.Atmos.Rotting;
 using Content.Shared.Body.Components;
+using Content.Shared.Changeling.Components;
 using Content.Shared.Damage;
 using Content.Shared.Database;
 using Content.Shared.DoAfter;
@@ -19,7 +20,7 @@ using Robust.Shared.Network;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
 
-namespace Content.Shared.Changeling.Devour;
+namespace Content.Shared.Changeling.Systems;
 
 public sealed class ChangelingDevourSystem : EntitySystem
 {

@@ -1,9 +1,10 @@
+using Content.Shared.Changeling.Systems;
 using Content.Shared.Cloning;
 using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
 
-namespace Content.Shared.Changeling.Transform;
+namespace Content.Shared.Changeling.Components;
 
 /// <summary>
 /// The component containing information about Changelings Transformation action
