@@ -56,13 +56,13 @@ public sealed partial class CCVars
     ///     Whether automatic voting for a new map is enabled.
     /// </summary>
     public static readonly CVarDef<bool> VoteAutoMapEnabled =
-        CVarDef.Create("vote.auto_map_enabled", true, CVar.SERVERONLY);
+        CVarDef.Create("vote.auto_map_enabled", false, CVar.SERVERONLY);
 
     /// <summary>
     ///     Whether automatic voting for a new preset is enabled.
     /// </summary>
     public static readonly CVarDef<bool> VoteAutoPresetEnabled =
-        CVarDef.Create("vote.auto_preset_enabled", true, CVar.SERVERONLY);
+        CVarDef.Create("vote.auto_preset_enabled", false, CVar.SERVERONLY);
 
     /// <summary>
     ///     The delay which two votes of the same type are allowed to be made by separate people, in seconds.
