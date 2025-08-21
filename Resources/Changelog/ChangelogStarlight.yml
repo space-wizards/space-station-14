@@ -12210,5 +12210,26 @@ Entries:
   id: 141302
   time: '2025-08-21T17:21:24.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/1413
+- author: QuinAver
+  changes:
+  - message: Added gamerule for Mining Shuttle.
+    type: Add
+  id: 139500
+  time: '2025-08-21T18:15:49.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1395
+- author: QuinAver
+  changes:
+  - message: Added gamerule for Security Shuttle.
+    type: Add
+  id: 139501
+  time: '2025-08-21T18:15:49.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1395
+- author: QuinAver
+  changes:
+  - message: Folder structure in shuttles.
+    type: Tweak
+  id: 139502
+  time: '2025-08-21T18:15:49.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1395
 Order: -1
 
