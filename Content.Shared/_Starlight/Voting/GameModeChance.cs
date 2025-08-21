@@ -2,6 +2,7 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Shared._Starlight.Voting;
 
+[DataDefinition]
 public sealed class GameModeChance
 {
     [ViewVariables]
