@@ -29,7 +29,7 @@ namespace Content.Client.Access.UI
             _window.Title = EntMan.GetComponent<MetaDataComponent>(Owner).EntityName;
             _window.OnSubmit += SubmitData;
 
-            _window.PrivilegedIdButton.OnPressed += _ => SendMessage(new ItemSlotButtonPressedEvent(PrivilegedIdCardSlotId));
+            _window.PrivilegedIdButton.OnPressed += _ => SendPredictedMessage(new ItemSlotButtonPressedEvent(PrivilegedIdCardSlotId));
         }
 
         public override void OnProtoReload(PrototypesReloadedEventArgs args)
@@ -71,7 +71,7 @@ namespace Content.Client.Access.UI
 
         public void SubmitData(List<ProtoId<AccessLevelPrototype>> newAccessList)
         {
-            SendMessage(new WriteToTargetAccessReaderIdMessage(newAccessList));
+            SendPredictedMessage(new WriteToTargetAccessReaderIdMessage(newAccessList));
         }
     }
 }
