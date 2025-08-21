@@ -47,17 +47,17 @@ namespace Content.Client.Access.UI
 
         private void OnNameChanged(string newName)
         {
-            SendMessage(new AgentIDCardNameChangedMessage(newName));
+            SendPredictedMessage(new AgentIDCardNameChangedMessage(newName));
         }
 
         private void OnJobChanged(string newJob)
         {
-            SendMessage(new AgentIDCardJobChangedMessage(newJob));
+            SendPredictedMessage(new AgentIDCardJobChangedMessage(newJob));
         }
 
         private void OnJobIconChanged(ProtoId<JobIconPrototype> newJobIconId)
         {
-            SendMessage(new AgentIDCardJobIconChangedMessage(newJobIconId));
+            SendPredictedMessage(new AgentIDCardJobIconChangedMessage(newJobIconId));
         }
     }
 }

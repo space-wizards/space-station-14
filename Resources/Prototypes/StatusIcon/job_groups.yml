@@ -77,7 +77,6 @@
   - JobIconSecurityCadet
   - JobIconBrigmedic
   - JobIconDetective
-  - JobIconPrisoner
   - JobIconWarden
 
 - type: jobIconGroup
@@ -88,15 +87,16 @@
     state: ServiceWorker
   icons:
   - JobIconHeadOfPersonnel
-  - JobIconServiceWorker
   - JobIconBartender
   - JobIconBotanist
+  - JobIconBoxer
   - JobIconChaplain
   - JobIconChef
   - JobIconJanitor
   - JobIconLawyer
   - JobIconLibrarian
   - JobIconReporter
+  - JobIconServiceWorker
   - JobIconZookeeper
 
 # Not exactly service workers, but not civilians either
@@ -110,7 +110,6 @@
   - JobIconClown
   - JobIconMime
   - JobIconMusician
-  - JobIconBoxer
 
 - type: jobIconGroup
   id: CivilianIconGroup
@@ -151,6 +150,7 @@
     state: Syndicate
   icons:
   - JobIconCluwne
+  - JobIconPrisoner
   - JobIconSyndicate
   - JobIconZombie
 
@@ -162,6 +162,7 @@
     state: Admin
   icons:
   - JobIconAdmin
+  - JobIconNanotrasen
   - JobIconSeniorEngineer
   - JobIconSeniorPhysician
   - JobIconSeniorResearcher

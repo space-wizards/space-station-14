@@ -903,8 +903,7 @@
     - ThreatIconGroup
     - AdminIconGroup
   - type: ActivatableUI
-    key: enum.AgentIDCardUiKey.Key
-    inHandsOnly: true
+    key: enum.AgentIDCardUiKey.Key # Don't require inhand because admin
   - type: UserInterface
     interfaces:
       enum.AgentIDCardUiKey.Key:

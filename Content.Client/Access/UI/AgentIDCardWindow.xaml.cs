@@ -21,10 +21,6 @@ namespace Content.Client.Access.UI
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         private readonly SpriteSystem _spriteSystem;
 
-        // CCvar
-        private readonly int _maxNameLength;
-        private readonly int _maxIdJobLength;
-
         public event Action<string>? OnNameChanged;
         public event Action<string>? OnJobChanged;
 
@@ -36,33 +32,14 @@ namespace Content.Client.Access.UI
             IoCManager.InjectDependencies(this);
             _spriteSystem = _entitySystem.GetEntitySystem<SpriteSystem>();
 
-            _maxNameLength = _cfgManager.GetCVar(CCVars.MaxNameLength);
-            _maxIdJobLength = _cfgManager.GetCVar(CCVars.MaxIdJobLength);
+            NameLineEdit.OnTextEntered += e => OnNameChanged?.Invoke(e.Text);
+            NameLineEdit.OnFocusExit += e => OnNameChanged?.Invoke(e.Text);
 
-            NameLineEdit.OnTextEntered += e =>
-            {
-                OnNameChanged?.Invoke(e.Text);
-                CurrentName.Text = e.Text;
-            };
-            NameLineEdit.OnFocusExit += e =>
-            {
-                OnNameChanged?.Invoke(e.Text);
-                CurrentName.Text = e.Text;
-            };
+            JobLineEdit.OnTextEntered += e =>  OnJobChanged?.Invoke(e.Text);
+            JobLineEdit.OnFocusExit += e =>  OnJobChanged?.Invoke(e.Text);
 
-            JobLineEdit.OnTextEntered += e =>
-            {
-                OnJobChanged?.Invoke(e.Text);
-                CurrentJob.Text = e.Text;
-            };
-            JobLineEdit.OnFocusExit += e =>
-            {
-                OnJobChanged?.Invoke(e.Text);
-                CurrentJob.Text = e.Text;
-            };
-
-            NameLineEdit.IsValid = s => s.Length <= _maxNameLength;
-            JobLineEdit.IsValid = s => s.Length <= _maxIdJobLength;
+            NameLineEdit.IsValid = s => s.Length <= _cfgManager.GetCVar(CCVars.MaxNameLength);
+            JobLineEdit.IsValid = s => s.Length <= _cfgManager.GetCVar(CCVars.MaxIdJobLength);
 
             CTabContainer.SetTabTitle(0, Loc.GetString("agent-id-ui-tab-settings"));
             CTabContainer.SetTabTitle(1, Loc.GetString("agent-id-ui-tab-job-icons"));
@@ -139,15 +116,11 @@ namespace Content.Client.Access.UI
                     ToolTip = Loc.GetString(iconProto.JobName),
                     TextureNormal = texture,
                     Scale = new Vector2(4f, 4f),
-                    SetSize = new Vector2(32, 32)
+                    SetSize = new Vector2(32, 32),
                 };
 
                 // Finish button and add to UI
-                jobIconButton.OnPressed += _ =>
-                {
-                    OnJobIconChanged?.Invoke(iconProto.ID);
-                    CurrentJobIcon.Texture = texture;
-                };
+                jobIconButton.OnPressed += _ => OnJobIconChanged?.Invoke(iconProto.ID);
 
                 IconGrid.AddChild(jobIconButton);
             }
