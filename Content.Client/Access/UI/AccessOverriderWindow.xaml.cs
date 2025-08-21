@@ -13,26 +13,29 @@ namespace Content.Client.Access.UI
     [GenerateTypedNameReferences]
     public sealed partial class AccessOverriderWindow : DefaultWindow
     {
+        [Dependency] private readonly IPrototypeManager _protoMan= default!;
+
         private readonly Dictionary<string, Button> _accessButtons = new();
 
         public event Action<List<ProtoId<AccessLevelPrototype>>>? OnSubmit;
+        public event Action? OnItemSlotButtonPressed;
 
         public AccessOverriderWindow()
         {
             RobustXamlLoader.Load(this);
+            IoCManager.InjectDependencies(this);
+
+            PrivilegedIdButton.OnPressed += _ => OnItemSlotButtonPressed?.Invoke();
         }
 
-        public void SetAccessLevels(IPrototypeManager protoManager, List<ProtoId<AccessLevelPrototype>> accessLevels)
+        public void SetAccessLevels(List<ProtoId<AccessLevelPrototype>> accessLevels)
         {
             _accessButtons.Clear();
             AccessLevelGrid.DisposeAllChildren();
 
             foreach (var access in accessLevels)
             {
-                if (!protoManager.TryIndex(access, out var accessLevel))
-                {
-                    continue;
-                }
+                var accessLevel = _protoMan.Index(access);
 
                 var newButton = new Button
                 {
@@ -42,56 +45,43 @@ namespace Content.Client.Access.UI
 
                 AccessLevelGrid.AddChild(newButton);
                 _accessButtons.Add(accessLevel.ID, newButton);
-                newButton.OnPressed += _ =>
-                {
-                    OnSubmit?.Invoke(
-                        // Iterate over the buttons dictionary, filter by `Pressed`, only get key from the key/value pair
-                        _accessButtons.Where(x => x.Value.Pressed).Select(x => new ProtoId<AccessLevelPrototype>(x.Key)).ToList());
-                };
+
+                // Iterate over the buttons dictionary, filter by `Pressed`, only get key from the key/value pair
+                newButton.OnPressed += _ => OnSubmit?.Invoke(_accessButtons.Where(x => x.Value.Pressed)
+                    .Select(x => new ProtoId<AccessLevelPrototype>(x.Key))
+                    .ToList());
             }
         }
 
-        public void UpdateState(IPrototypeManager protoManager, AccessOverriderBoundUserInterfaceState state)
+        public void UpdateState(string? idName,
+            string? targetLabel,
+            bool isAuthed,
+            IEnumerable<ProtoId<AccessLevelPrototype>> missingAccess,
+            List<ProtoId<AccessLevelPrototype>> currentAccess,
+            List<ProtoId<AccessLevelPrototype>> possibleAccesses)
         {
-            PrivilegedIdLabel.Text = state.PrivilegedIdName;
-            PrivilegedIdButton.Text = state.IsPrivilegedIdPresent
-                ? Loc.GetString("access-overrider-window-eject-button")
-                : Loc.GetString("access-overrider-window-insert-button");
+            PrivilegedIdLabel.Text = idName;
+            PrivilegedIdButton.Text = idName is null
+                ? Loc.GetString("access-overrider-window-insert-button")
+                : Loc.GetString("access-overrider-window-eject-button");
 
-            TargetNameLabel.Text = state.TargetLabel;
-            TargetNameLabel.FontColorOverride = state.TargetLabelColor;
+            TargetNameLabel.Text = targetLabel ?? Loc.GetString("access-overrider-window-no-target");
+            TargetNameLabel.FontColorOverride = targetLabel is null ? Color.Red : Color.White;
 
-            MissingPrivilegesLabel.Text = "";
-            MissingPrivilegesLabel.FontColorOverride = Color.Yellow;
+            var missingList = string.Join(", ",
+                missingAccess.Select(proto => Loc.GetString(_protoMan.Index(proto).Name ?? "generic-unknown")));
 
-            MissingPrivilegesText.Text = "";
-            MissingPrivilegesText.FontColorOverride = Color.Yellow;
-
-            if (state.MissingPrivilegesList != null && state.MissingPrivilegesList.Any())
-            {
-                var missingPrivileges = new List<string>();
-
-                foreach (string tag in state.MissingPrivilegesList)
-                {
-                    var privilege = Loc.GetString(protoManager.Index<AccessLevelPrototype>(tag)?.Name ?? "generic-unknown");
-                    missingPrivileges.Add(privilege);
-                }
-
-                MissingPrivilegesLabel.Text = Loc.GetString("access-overrider-window-missing-privileges");
-                MissingPrivilegesText.Text = string.Join(", ", missingPrivileges);
-            }
-
-            var interfaceEnabled = state.IsPrivilegedIdPresent && state.IsPrivilegedIdAuthorized;
+            // Honestly this isn't great UI, or least not great string
+            // formatting. There's probably a visually clearer way to
+            // present this.
+            MissingPrivilegesText.Text = missingList == ""
+                ? ""
+                : Loc.GetString("access-overrider-window-missing-privileges", ("privileges", missingList));
 
             foreach (var (accessName, button) in _accessButtons)
             {
-                button.Disabled = !interfaceEnabled;
-                if (interfaceEnabled)
-                {
-                    // Explicit cast because Rider gives a false error otherwise.
-                    button.Pressed = state.TargetAccessReaderIdAccessList?.Contains((ProtoId<AccessLevelPrototype>) accessName) ?? false;
-                    button.Disabled = (!state.AllowedModifyAccessList?.Contains((ProtoId<AccessLevelPrototype>) accessName)) ?? true;
-                }
+                button.Disabled = !isAuthed || !possibleAccesses.Contains(accessName);
+                button.Pressed = isAuthed && currentAccess.Contains(accessName);
             }
         }
     }
