@@ -39,6 +39,6 @@ public sealed partial class SliceableComponent : Component
     /// <summary>
     /// Time of slicing.
     /// </summary>
-    [DataField(customTypeSerializer: typeof(TimeOffsetSerializer))]
-    public TimeSpan SliceTime = TimeSpan.FromSeconds(1);
+    [DataField(customTypeSerializer: typeof(TimeOffsetSerializer), required: true))]
+    public TimeSpan SliceTime;
 }
