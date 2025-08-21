@@ -232,6 +232,30 @@
 - type: entity
   categories: [ HideSpawnMenu, Spawner ]
   parent: BaseAntagSpawner
+  id: SpawnPointMothershipCore
+  components:
+  - type: GhostRole
+    name: ghost-role-information-mothership-core-name
+    description: ghost-role-information-mothership-core-desc
+    rules: ghost-role-information-silicon-rules
+    mindRoles:
+    - MindRoleMothershipCore
+
+- type: entity
+  categories: [ HideSpawnMenu, Spawner ]
+  parent: BaseAntagSpawner
+  id: SpawnPointXenoborg
+  components:
+  - type: GhostRole
+    name: ghost-role-information-xenoborg-name
+    description: ghost-role-information-xenoborg-desc
+    rules: ghost-role-information-silicon-rules
+    mindRoles:
+    - MindRoleXenoborg
+
+- type: entity
+  categories: [ HideSpawnMenu, Spawner ]
+  parent: BaseAntagSpawner
   id: SpawnPointGhostWizard
   name: ghost role spawn point
   suffix: wizard
