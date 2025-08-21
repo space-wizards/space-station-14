@@ -2,7 +2,7 @@ using Content.Shared.Cloning;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
 
-namespace Content.Shared.Changeling;
+namespace Content.Shared.Changeling.Components;
 
 /// <summary>
 /// The storage component for Changelings, it handles the link between a changeling and its consumed identities
@@ -29,6 +29,7 @@ public sealed partial class ChangelingIdentityComponent : Component
     /// The cloning settings passed to the CloningSystem, contains a list of all components to copy or have handled by their
     /// respective systems.
     /// </summary>
+    [DataField]
     public ProtoId<CloningSettingsPrototype> IdentityCloningSettings = "ChangelingCloningSettings";
 
     public override bool SendOnlyToOwner => true;
