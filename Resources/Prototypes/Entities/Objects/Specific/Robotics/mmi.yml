@@ -12,6 +12,17 @@
     understands:
     - GalacticCommon
     - Machine
+    - Canilunzt
+    - Sign
+    - Bubblish
+    - Chittin
+    - Draconic
+    - Marish
+    - Moffic
+    - Nekomimetic
+    - Sylvan
+    - Terrum
+    - VoxPidgin
   # Starlight-end
   - type: Sprite
     sprite: Objects/Specific/Robotics/mmi.rsi

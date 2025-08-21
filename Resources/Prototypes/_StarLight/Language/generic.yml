@@ -4,19 +4,18 @@
     !type:ReplacementObfuscation
     replacement:
     - "*incomprehensible*" # Never actually used.
+  iconNotUnderstood: false
+  iconUnderstood: false
 
 - type: language
   id: Machine
   icon: LanguageIconMachine
   speech:
-    fontId: Monospace
+    color: "#6174ff"
+    fontId: Octatrax
+    obfuscationFont: true
   obfuscation:
-    !type:SyllableObfuscation
-    minSyllables: 1
-    maxSyllables: 10
-    replacement:
-    - 0
-    - 1
+    !type:RandomObfuscation
 
 - type: language
   id: Zombie
