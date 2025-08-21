@@ -215,6 +215,7 @@
     forced: true
     revertOnCrit: false
     revertOnDeath: false
+    revertOnDelete: false
 
 # Temporary Jaunt
 # Don't make permanent jaunts until action system can be reworked to allow do afters and cooldown pausing

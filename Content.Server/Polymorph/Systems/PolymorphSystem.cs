@@ -152,10 +152,6 @@ public sealed partial class PolymorphSystem : EntitySystem
     {
         if (ent.Comp.Configuration.RevertOnDelete)
             Revert(ent.AsNullable());
-
-        // Remove our original entity too
-        // Note that Revert will set Parent to null, so reverted entities will not be deleted
-        QueueDel(ent.Comp.Parent);
     }
 
     /// <summary>
@@ -298,8 +294,6 @@ public sealed partial class PolymorphSystem : EntitySystem
         if (component.Parent is not { } parent)
             return null;
 
-        // Clear our reference to the original entity
-        component.Parent = null;
         if (Deleted(parent))
             return null;
 
