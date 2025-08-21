@@ -177,6 +177,28 @@
     - Binary
   - type: CyborgSparkEffect
   - type: StationAIShunt
+  - type: LanguageKnowledge
+    speaks:
+    - GalacticCommon
+    - Machine
+    - Dog
+    understands:
+    - GalacticCommon
+    - SolCommon
+    - Machine
+    - Canilunzt
+    - Sign
+    - Bubblish
+    - Chittin
+    - Draconic
+    - Marish
+    - Moffic
+    - Nekomimetic
+    - Sylvan
+    - Terrum
+    - VoxPidgin
+    - Scratch
+    - Dog
 
 - type: entity
   parent: [ BaseBorgiChassis, BaseBorgTransponder ]
