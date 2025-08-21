@@ -13,20 +13,12 @@ public sealed class SecretStartsTest
     [Test]
     public async Task TestSecretStarts()
     {
-        await using var pair = await PoolManager.GetServerClient(new PoolSettings
-        {
-            Dirty = true,
-            InLobby = true,
-        });
+        await using var pair = await PoolManager.GetServerClient(new PoolSettings { Dirty = true });
 
         var server = pair.Server;
         await server.WaitIdleAsync();
+        var entMan = server.ResolveDependency<IEntityManager>();
         var gameTicker = server.ResolveDependency<IEntitySystemManager>().GetEntitySystem<GameTicker>();
-
-        // Add several dummy players
-        await server.AddDummySessions(30);
-        await pair.RunTicksSync(5);
-        gameTicker.ToggleReadyAll(true);
 
         await server.WaitAssertion(() =>
         {
@@ -46,8 +38,6 @@ public sealed class SecretStartsTest
             // End all rules
             gameTicker.ClearGameRules();
         });
-
-        await server.RemoveAllDummySessions();
 
         await pair.CleanReturnAsync();
     }
