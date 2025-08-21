@@ -68,6 +68,12 @@ public sealed partial class CCVars
         CVarDef.Create("accessibility.censor_nudity", false, CVar.CLIENTONLY | CVar.ARCHIVE);
 
     /// <summary>
+    /// If enabled, captions are displayed in the UI
+    /// </summary>
+    public static readonly CVarDef<bool> EnableCaptions =
+        CVarDef.Create("accessibility.captions", false, CVar.CLIENTONLY | CVar.ARCHIVE);
+
+    /// <summary>
     /// If enabled, censors character nudity by forcing clothes markings on characters, selected by the server.
     /// Both this and AccessibilityClientCensorNudity must be false to display nudity on the client.
     /// </summary>
