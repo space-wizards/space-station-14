@@ -114,7 +114,7 @@ ghost-role-information-mimebot-name = Mimebot
 ghost-role-information-mimebot-description = A Mimebot, act like a mime but don't act like a greytider.
 
 ghost-role-information-medibot-name = Medibot
-ghost-role-information-medibot-description = A Medibot, assist the Station's Residents as needed.
+ghost-role-information-medibot-description = A Medibot, assist the Injured.
 
 ghost-role-information-supplybot-name = SupplyBot
 ghost-role-information-supplybot-description = Deliver goods around the station.
