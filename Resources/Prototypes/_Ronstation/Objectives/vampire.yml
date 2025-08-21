@@ -1,0 +1,40 @@
+- type: entity
+  abstract: true
+  parent: BaseObjective
+  id: BaseVampireObjective
+  components:
+  - type: Objective
+    difficulty: 1
+    issuer: objective-issuer-vampire
+  - type: RoleRequirement
+    roles:
+    - Vampire
+
+# State
+- type: entity
+  parent: [BaseVampireObjective, BaseSurviveObjective]
+  id: VampireSurviveObjective
+  name: Survive
+  description: Don't let the crew destroy you, and make sure you're on evac when it arrives!
+  components:
+  - type: Objective
+    difficulty: 1
+    icon:
+      sprite: Mobs/Species/Human/organs.rsi # Placeholder
+      state: heart-on
+
+# Kill (placeholder until we can track feeding on specific people)
+
+# - type: entity
+#   parent: [BaseVampireObjective, KillRandomPersonObjective]
+#   id: VampireKillRandomPersonObjective
+
+# - type: entity
+#   parent: [BaseVampireObjective, KillRandomHeadObjective]
+#   id: VampireKillRandomHeadObjective
+
+# Feed
+
+# - type: entity
+#   parent: [BaseVampireObjective, FeedObjective]
+#   id: VampireFeedObjective

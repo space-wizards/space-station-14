@@ -1,0 +1,15 @@
+# - type: entity
+#   id: ActionVampireFeed
+#   name: feed
+#   description: Drain blood from someone to sate your hunger
+#   components:
+#     - type: EntityTargetAction
+#       icon:
+#         sprite:
+#         state:
+#       event: !type:VampireFeedActionEvent
+#       whitelist:
+#         components:
+#         - HumanoidApperance
+#       canTargetSelf: false
+#       itemIconStyle: BigAction

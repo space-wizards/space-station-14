@@ -1,0 +1,1 @@
+admin-verb-text-make-vampire = Make the target into a Vampire.

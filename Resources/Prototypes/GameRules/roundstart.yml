@@ -24,6 +24,10 @@
       prob: 0.5
     - id: SubWizard
       prob: 0.05
+    # Ronstation start
+    # - id: Vampire
+    #   prob: 0.5
+    # Ronstation end
 
 - type: entity
   parent: BaseGameRule
