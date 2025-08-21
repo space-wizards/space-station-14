@@ -29,11 +29,10 @@ public sealed class AccessOverriderBoundUserInterface : BoundUserInterface
         _window = this.CreateWindow<AccessOverriderWindow>();
         _window.Title = EntMan.GetComponent<MetaDataComponent>(Owner).EntityName;
 
-        _window.OnSubmit += newAccessList =>
-            SendPredictedMessage(new WriteToTargetAccessReaderIdMessage(newAccessList));
+        _window.OnSubmit += newAccessList => SendPredictedMessage(new SetAccessesMessage(newAccessList));
 
-        _window.OnItemSlotButtonPressed += () =>
-            SendPredictedMessage(new ItemSlotButtonPressedEvent(PrivilegedIdCardSlotId));
+        _window.OnItemSlotButtonPressed +=
+            () => SendPredictedMessage(new ItemSlotButtonPressedEvent(PrivilegedIdCardSlotId));
 
         RefreshAccess();
         Update();

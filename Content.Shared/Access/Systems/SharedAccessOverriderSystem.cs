@@ -53,7 +53,7 @@ public abstract partial class SharedAccessOverriderSystem : EntitySystem
                 // subscribing.
                 subs.Event<BoundUIOpenedEvent>(UpdateUserInterface);
                 subs.Event<BoundUIClosedEvent>(OnClose);
-                subs.Event<WriteToTargetAccessReaderIdMessage>(OnWriteToTargetAccessReaderIdMessage);
+                subs.Event<SetAccessesMessage>(OnSetAccessesMessage);
             });
     }
 
@@ -140,8 +140,7 @@ public abstract partial class SharedAccessOverriderSystem : EntitySystem
         Dirty(ent);
     }
 
-    private void OnWriteToTargetAccessReaderIdMessage(Entity<AccessOverriderComponent> ent,
-        ref WriteToTargetAccessReaderIdMessage args)
+    private void OnSetAccessesMessage(Entity<AccessOverriderComponent> ent, ref SetAccessesMessage args)
     {
         if (ent.Comp.TargetAccessReaderId is not { } readerId
             || ent.Comp.PrivilegedIdSlot.Item is not { } idCard)

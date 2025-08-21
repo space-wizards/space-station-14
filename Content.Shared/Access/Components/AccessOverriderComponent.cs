@@ -50,8 +50,7 @@ public sealed partial class AccessOverriderComponent : Component
 /// The set of accesses that the targeted device should be set to.
 /// </param>
 [Serializable, NetSerializable]
-public sealed class WriteToTargetAccessReaderIdMessage(List<ProtoId<AccessLevelPrototype>> accessList)
-    : BoundUserInterfaceMessage
+public sealed class SetAccessesMessage(List<ProtoId<AccessLevelPrototype>> accessList) : BoundUserInterfaceMessage
 {
     public readonly List<ProtoId<AccessLevelPrototype>> AccessList = accessList;
 }
