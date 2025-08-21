@@ -53,17 +53,6 @@ public sealed partial class StationAiFixerConsoleSystem : EntitySystem
 
     private void OnInserted(Entity<StationAiFixerConsoleComponent> ent, ref EntInsertedIntoContainerMessage args)
     {
-        // DEBUGGING
-        if (TryGetTarget(ent, out var target))
-        {
-            if (TryComp<DamageableComponent>(target, out var targetDamageable))
-                _damageable.SetAllDamage(target.Value, targetDamageable, 10);
-
-            if (TryComp<MobStateComponent>(target, out var targetMobState))
-                _mobState.ChangeMobState(target.Value, MobState.Dead);
-        }
-        // DEBUGGING
-
         UpdateAppearance(ent);
     }
 
@@ -225,7 +214,7 @@ public sealed partial class StationAiFixerConsoleSystem : EntitySystem
 
     /// <summary>
     /// Finalizes the action being conducted by the specified console
-    /// (e.g., repairing a target).
+    /// (i.e., repairing or purging a target).
     /// </summary>
     /// <param name="ent">The console.</param>
     private void FinalizeAction(Entity<StationAiFixerConsoleComponent> ent)
@@ -254,11 +243,11 @@ public sealed partial class StationAiFixerConsoleSystem : EntitySystem
                 TryGetStationAiHolder(ent, out var holder))
             {
                 // Remove the AI from its holder and send it to null space while we wait for
-                // it to be deleted, so that the subsequent UI update can be predicted
+                // it to be deleted. Need this so that the subsequent UI update can be predicted
                 _container.RemoveEntity(holder.Value, ent.Comp.ActionTarget.Value, force: true);
                 _xform.DetachEntity(ent.Comp.ActionTarget.Value, Transform(ent.Comp.ActionTarget.Value));
 
-                // Let the server handle the deletion
+                // Let the server handle the deletion and audio
                 if (_net.IsServer)
                 {
                     QueueDel(ent.Comp.ActionTarget);
@@ -341,7 +330,7 @@ public sealed partial class StationAiFixerConsoleSystem : EntitySystem
                 ent.Comp.PurgeRate > 0 &&
                 TryComp<MobThresholdsComponent>(target, out var mobThresholds))
             {
-                // If the target does not have a MobThresholdsComponent, it will still be purged,
+                // If the target does not have a MobThresholdsComponent, the target will still be purged,
                 // but it will take the maximum amount of time to do so.
                 var lethalDamage = mobThresholds.Thresholds.Keys.Last() - targetDamageable.TotalDamage;
                 duration = (float)lethalDamage / ent.Comp.PurgeRate;

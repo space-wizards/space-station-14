@@ -83,9 +83,9 @@ public abstract partial class SharedStationAiSystem
     /// <summary>
     /// Returns a dictionary containing the station AI's appearance for different states.
     /// </summary>
-    /// <param name="entity">The station AI</param>
-    /// <param name="layerData">The apperance data, indexed by state.</param>
-    /// <returns>True, if layer data was found.</returns>
+    /// <param name="entity">The station AI.</param>
+    /// <param name="layerData">The apperance data, indexed by possible AI states.</param>
+    /// <returns>True if the apperance data was found.</returns>
     public bool TryGetCustomizedAppearanceData(Entity<StationAiCustomizationComponent> entity, [NotNullWhen(true)] out Dictionary<string, PrototypeLayerData>? layerData)
     {
         layerData = null;

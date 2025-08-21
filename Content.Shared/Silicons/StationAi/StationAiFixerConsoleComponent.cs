@@ -8,7 +8,7 @@ using System.Numerics;
 namespace Content.Shared.Silicons.StationAi;
 
 /// <summary>
-/// This components holds data for AI Restoration Consoles.
+/// This components holds data needed for AI Restoration Consoles to function.
 /// </summary>
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
 [Access(typeof(StationAiFixerConsoleSystem))]
@@ -33,9 +33,9 @@ public sealed partial class StationAiFixerConsoleComponent : Component
     public float PurgeRate = 10f;
 
     /// <summary>
-    /// The number of stages that an action progresses through
-    /// before it concludes. Each stage has an equal duration.
-    /// The appearance data of the entity will be updated with
+    /// The number of stages that a console action (repair or purge)
+    /// progresses through before it concludes. Each stage has an equal
+    /// duration. The appearance data of the entity is updated with
     /// each new stage reached.
     /// </summary>
     [DataField]
@@ -43,7 +43,7 @@ public sealed partial class StationAiFixerConsoleComponent : Component
 
     /// <summary>
     /// Sets the minimum and maximum amount of time (in seconds)
-    /// that this entity requires to perform an action.
+    /// that the console requires to perform an action.
     /// </summary>
     [DataField]
     public Vector2 ActionTimeLimits = new Vector2(10f, 600f);
