@@ -1010,8 +1010,8 @@
     polymorph: AdmemeForcedJohnToe
   - type: TriggerOnCollide
     fixtureID: projectile
-  - type: TriggerWhitelist
-    whitelist:
+  - type: WhitelistTriggerCondition
+    userWhitelist:
       components:
       - Body
 

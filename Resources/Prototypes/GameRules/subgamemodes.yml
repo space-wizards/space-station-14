@@ -37,9 +37,9 @@
         
 - type: entity
   parent: BaseGameRule
-  id: Changeling
+  id: SLChangeling
   components:
-  - type: ChangelingRule
+  - type: SLChangelingRule
   - type: AntagSelection
     agentName: changeling-roundend-name
     definitions:
@@ -51,6 +51,10 @@
       multiAntagSetting: None
       mindRoles:
       - MindRoleChangeling
+      components:
+        - type: ChangelingDevour
+        - type: ChangelingIdentity
+        - type: ChangelingTransform
 
 - type: entity
   parent: BaseGameRule
@@ -92,6 +96,7 @@
       startingGear: WizardBlueGear
       # TODO: WizardComp as needed
       components:
+      - type: UniversalLanguageSpeaker # Starlight-edit: Languages
       - type: NpcFactionMember
         factions:
         - Wizard

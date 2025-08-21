@@ -307,7 +307,8 @@
     exclusiveAntag: true
     subtype: role-subtype-zombie
   - type: ZombieRole
-  
+
+#TODO: Move the below to a _Starlight folder and add Upstream's Changeling
 # Changeling
 
 - type: entity
@@ -317,7 +318,7 @@
   components:
   - type: MindRole
     antagPrototype: Changeling
-  - type: ChangelingRole
+  - type: SLChangelingRole
   
 # Vampire
 

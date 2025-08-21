@@ -17,6 +17,7 @@ using Content.Shared.NPC.Components;
 using Content.Shared.NPC.Systems;
 using Content.Shared.Nuke;
 using Content.Shared.NukeOps;
+using Content.Shared.Roles.Components;
 using Content.Shared.Store;
 using Content.Shared.Tag;
 using Content.Shared.Zombies;
@@ -24,6 +25,7 @@ using Robust.Shared.Map;
 using Robust.Shared.Random;
 using Robust.Shared.Utility;
 using System.Linq;
+using Content.Shared.Station.Components;
 using Content.Shared.Store.Components;
 using Content.Server.Starlight.Antags.Abductor;
 using Prometheus;
@@ -33,10 +35,12 @@ namespace Content.Server.GameTicking.Rules;
 
 public sealed class NukeopsRuleSystem : GameRuleSystem<NukeopsRuleComponent>
 {
-    private static readonly Gauge NukeopsCount = Metrics.CreateGauge( // Startlight
+    #region Starlight data collection
+    private static readonly Histogram _nukeopsCount = Metrics.CreateHistogram(
         "nukie_count",
         "Number of all nukies Win/Loses Count.",
         ["results"]);
+    #endregion
 
     [Dependency] private readonly AntagSelectionSystem _antag = default!;
     [Dependency] private readonly EmergencyShuttleSystem _emergency = default!;
@@ -422,7 +426,7 @@ public sealed class NukeopsRuleSystem : GameRuleSystem<NukeopsRuleComponent>
     {
         ent.Comp.WinType = type;
 
-        NukeopsCount.WithLabels(type.ToString()).Inc(); // Starlight
+        _nukeopsCount.WithLabels(type.ToString()).Observe(1); // Starlight
 
         if (endRound && (type == WinType.CrewMajor || type == WinType.OpsMajor))
             _roundEndSystem.EndRound();

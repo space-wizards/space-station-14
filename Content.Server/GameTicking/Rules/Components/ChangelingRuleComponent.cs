@@ -6,8 +6,15 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Server.GameTicking.Rules.Components;
 
+/// <summary>
+/// Gamerule component for handling a changeling antagonist.
+/// </summary>
+[RegisterComponent]
+public sealed partial class ChangelingRuleComponent : Component;
+
+#region Starlight. THIS SHOULD REALLY BE PUT INTO _Starlight WHY IS IT NOT
 [RegisterComponent, Access(typeof(ChangelingRuleSystem))]
-public sealed partial class ChangelingRuleComponent : Component
+public sealed partial class SLChangelingRuleComponent : Component
 {
     public readonly List<EntityUid> ChangelingMinds = new();
 
@@ -25,3 +32,4 @@ public sealed partial class ChangelingRuleComponent : Component
         "EscapeIdentityObjective"
     };
 }
+#endregion

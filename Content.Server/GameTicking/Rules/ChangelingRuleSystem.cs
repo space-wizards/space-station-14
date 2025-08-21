@@ -7,6 +7,7 @@ using Content.Shared.Changeling;
 using Content.Shared.NPC.Prototypes;
 using Content.Shared.NPC.Systems;
 using Content.Shared.Roles;
+using Content.Shared.Roles.Components;
 using Content.Shared.Store;
 using Content.Shared.Store.Components;
 using Robust.Shared.Audio;
@@ -15,7 +16,7 @@ using System.Text;
 
 namespace Content.Server.GameTicking.Rules;
 
-public sealed partial class ChangelingRuleSystem : GameRuleSystem<ChangelingRuleComponent>
+public sealed partial class ChangelingRuleSystem : GameRuleSystem<SLChangelingRuleComponent>
 {
     [Dependency] private readonly MindSystem _mind = default!;
     [Dependency] private readonly AntagSelectionSystem _antag = default!;
@@ -37,15 +38,15 @@ public sealed partial class ChangelingRuleSystem : GameRuleSystem<ChangelingRule
     {
         base.Initialize();
 
-        SubscribeLocalEvent<ChangelingRuleComponent, AfterAntagEntitySelectedEvent>(OnSelectAntag);
-        SubscribeLocalEvent<ChangelingRuleComponent, ObjectivesTextPrependEvent>(OnTextPrepend);
+        SubscribeLocalEvent<SLChangelingRuleComponent, AfterAntagEntitySelectedEvent>(OnSelectAntag);
+        SubscribeLocalEvent<SLChangelingRuleComponent, ObjectivesTextPrependEvent>(OnTextPrepend);
     }
 
-    private void OnSelectAntag(EntityUid uid, ChangelingRuleComponent comp, ref AfterAntagEntitySelectedEvent args)
+    private void OnSelectAntag(EntityUid uid, SLChangelingRuleComponent comp, ref AfterAntagEntitySelectedEvent args)
     {
         MakeChangeling(args.EntityUid, comp);
     }
-    public bool MakeChangeling(EntityUid target, ChangelingRuleComponent rule)
+    public bool MakeChangeling(EntityUid target, SLChangelingRuleComponent rule)
     {
         if (!_mind.TryGetMind(target, out var mindId, out var mind))
             return false;
@@ -57,7 +58,7 @@ public sealed partial class ChangelingRuleSystem : GameRuleSystem<ChangelingRule
             var briefingShort = Loc.GetString("changeling-role-greeting-short", ("name", metaData?.EntityName ?? "Unknown"));
 
             _antag.SendBriefing(target, briefing, Color.Yellow, BriefingSound);
-            _role.MindHasRole<ChangelingRoleComponent>(mindId, out var changelingRole);
+            _role.MindHasRole<SLChangelingRoleComponent>(mindId, out var changelingRole);
             _role.MindHasRole<RoleBriefingComponent>(mindId, out var briefingComp);
             if (changelingRole is not null && briefingComp is null)
             {
@@ -87,7 +88,7 @@ public sealed partial class ChangelingRuleSystem : GameRuleSystem<ChangelingRule
         return true;
     }
 
-    private void OnTextPrepend(EntityUid uid, ChangelingRuleComponent comp, ref ObjectivesTextPrependEvent args)
+    private void OnTextPrepend(EntityUid uid, SLChangelingRuleComponent comp, ref ObjectivesTextPrependEvent args)
     {
         var mostAbsorbedName = string.Empty;
         var mostStolenName = string.Empty;

@@ -6,6 +6,8 @@
   name: revenant
   description: A spooky ghostie.
   components:
+  - type: LanguageSpeaker
+  - type: UniversalLanguageSpeaker
   - type: Emag
     emagType: All
   - type: ThermalVision
@@ -68,6 +70,7 @@
   - type: Visibility
     layer: 2 #ghost vis layer
   - type: Store
+    name: store-preset-name-revenant #Starlight UI change for data purity
     categories:
     - RevenantAbilities
     currencyWhitelist:

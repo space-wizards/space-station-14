@@ -24,7 +24,6 @@
             bounds: "-0.48,-0.48,0.48,-0.40"
   - type: Clickable
   - type: TriggerOnActivate
-    cooldownTime: 5.0
   - type: SmokeOnTrigger
     duration: 15
     spreadAmount: 50

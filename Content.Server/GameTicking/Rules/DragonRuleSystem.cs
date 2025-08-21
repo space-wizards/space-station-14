@@ -1,17 +1,16 @@
 using Content.Server.Antag;
-using Content.Server.Dragon;
 using Content.Server.GameTicking.Rules.Components;
 using Content.Server.Mind;
 using Content.Server.Roles;
-using Content.Server.Station.Components;
 using Content.Server.Station.Systems;
-using Content.Shared.CharacterInfo;
 using Content.Shared.Devour.Components;
 using Content.Shared.Localizations;
+using Content.Shared.Roles.Components;
 using Content.Shared.Mobs;
 using Content.Shared.Mobs.Components;
 using Prometheus;
 using Robust.Server.GameObjects;
+using Content.Server.Dragon;
 
 namespace Content.Server.GameTicking.Rules;
 
@@ -21,7 +20,7 @@ public sealed class DragonRuleSystem : GameRuleSystem<DragonRuleComponent>
     private static readonly Histogram _dragonWinInfo = Metrics.CreateHistogram(
         "sl_dragon_winning",
         "Contains info on if a dragon won and if so how hard they won",
-        ["alive", "rifts", "eaten"]
+        ["alive", "rifts"]
     );
     #endregion
 
@@ -68,10 +67,9 @@ public sealed class DragonRuleSystem : GameRuleSystem<DragonRuleComponent>
 
         var dragonXform = Transform(dragon);
 
-        var station = _station.GetStationInMap(dragonXform.MapID);
         EntityUid? stationGrid = null;
-        if (TryComp<StationDataComponent>(station, out var stationData))
-            stationGrid = _station.GetLargestGrid(stationData);
+        if (_station.GetStationInMap(dragonXform.MapID) is { } station)
+            stationGrid = _station.GetLargestGrid(station);
 
         if (stationGrid is not null)
         {
@@ -101,9 +99,8 @@ public sealed class DragonRuleSystem : GameRuleSystem<DragonRuleComponent>
                 alive = state.CurrentState == MobState.Alive;
             _dragonWinInfo.WithLabels([
                 alive.ToString(),
-                dragon.Comp.Rifts?.ToString() ?? "0",
-                devoured.ToString()
-            ]);  
+                dragon.Comp.Rifts?.ToString() ?? "0"
+            ]).Observe(devoured);  
         }
     }
     #endregion

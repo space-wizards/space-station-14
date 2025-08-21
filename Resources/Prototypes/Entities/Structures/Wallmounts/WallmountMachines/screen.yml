@@ -4,7 +4,6 @@
   name: screen
   description: Displays text or time.
   components:
-  - type: Appearance # Starlight-edit
   - type: Rotatable
   - type: ScreenVisuals
     textOffset: 0,3
@@ -19,6 +18,18 @@
       - state: green
         shader: unshaded
         map: [ "enum.TextScreenVisuals.AlertLevel" ]
+  - type: Appearance
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 200
+      behaviors:
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalGlassBreak
   - type: ApcPowerReceiver
     powerLoad: 100
   - type: ExtensionCableReceiver

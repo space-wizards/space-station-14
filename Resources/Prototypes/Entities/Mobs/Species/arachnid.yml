@@ -5,6 +5,15 @@
   id: BaseMobArachnid
   abstract: true
   components:
+  # Starlight-start: Languages
+  - type: LanguageKnowledge
+    speaks:
+    - GalacticCommon
+    - Chittin
+    understands:
+    - GalacticCommon
+    - Chittin
+  # Starlight-end
   - type: Absorbable
   - type: Body
     prototype: Arachnid

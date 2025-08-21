@@ -5,6 +5,15 @@
   id: BaseMobMoth
   abstract: true
   components:
+  # Starlight-start: Languages
+  - type: LanguageKnowledge
+    speaks:
+    - GalacticCommon
+    - Moffic
+    understands:
+    - GalacticCommon
+    - Moffic
+  # Starlight-end
   - type: Jump
     action: JumpMoth
   - type: Absorbable

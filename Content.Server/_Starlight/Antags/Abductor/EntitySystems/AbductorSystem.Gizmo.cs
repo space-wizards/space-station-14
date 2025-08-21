@@ -74,6 +74,7 @@ public sealed partial class AbductorSystem : SharedAbductorSystem
 
     private void OnGizmoDoAfter(Entity<AbductorGizmoComponent> ent, ref AbductorGizmoMarkDoAfterEvent args)
     {
+        if (!args.DoAfter.Completed) return;
         if (args.Target is null) return;
         ent.Comp.Target = GetNetEntity(args.Target);
         EnsureComp<AbductorVictimComponent>(args.Target.Value, out var victimComponent);
