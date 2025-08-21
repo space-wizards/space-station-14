@@ -366,6 +366,7 @@ namespace Content.Server.Construction
             var newTransform = Transform(newUid);
             TransformSystem.AttachToGridOrMap(newUid, newTransform); // in case in hands or a container
             newTransform.LocalRotation = transform.LocalRotation;
+            newTransform.Anchored = transform.Anchored;
 
             // Container transferring.
             if (containerManager != null)
@@ -405,11 +406,6 @@ namespace Content.Server.Construction
             }
 
             EntityManager.InitializeAndStartEntity(newUid);
-
-            if (transform.Anchored)
-                TransformSystem.AnchorEntity(newUid, newTransform);
-            else
-                TransformSystem.Unanchor(newUid, newTransform);
 
             QueueDel(uid);
 
