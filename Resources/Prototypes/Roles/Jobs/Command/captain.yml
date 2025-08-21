@@ -35,7 +35,7 @@
   id: CaptainGear
   equipment:
     #shoes: ClothingShoesBootsLaceup #Starlight
-    eyes: ClothingEyesGlassesCommand
+    #eyes: ClothingEyesGlassesCommand #Starlight
     gloves: ClothingHandsGlovesCaptain
     id: CaptainPDA
     ears: ClothingHeadsetAltCommand
