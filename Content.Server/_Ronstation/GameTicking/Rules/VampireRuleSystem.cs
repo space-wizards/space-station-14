@@ -4,6 +4,7 @@ using Content.Server._Ronstation.Roles;
 using Content.Server.Administration.Logs;
 using Content.Server.Antag;
 using Content.Server.GameTicking.Rules;
+using Content.Server.GameTicking.Rules.Components;
 using Content.Server.Mind;
 using Content.Server.Objectives;
 using Content.Server.Objectives.Components;
@@ -21,6 +22,7 @@ using Content.Shared.NPC.Systems;
 using Content.Shared.Popups;
 using Content.Shared.Preferences;
 using Content.Shared.Roles;
+using Content.Shared.Roles.Components;
 using Content.Shared.Zombies;
 using Robust.Server.Player;
 using Robust.Shared.Utility;
@@ -38,21 +40,30 @@ public sealed class VampireRuleSystem : GameRuleSystem<VampireRuleComponent>
     {
         base.Initialize();
 
-        SubscribeLocalEvent<VampireRuleComponent, ObjectivesTextPrependEvent>(OnObjectivesTextPrepend);
+        SubscribeLocalEvent<VampireRuleComponent, AfterAntagEntitySelectedEvent>(AfterAntagEntitySelected);
+        SubscribeLocalEvent<VampireRuleComponent, GetBriefingEvent>(OnGetBriefing);
     }
 
-    private void OnObjectivesTextPrepend(Entity<VampireRuleComponent> entity, ref ObjectivesTextPrependEvent args)
+    private void AfterAntagEntitySelected(Entity<VampireRuleComponent> mindId, ref AfterAntagEntitySelectedEvent args)
     {
-        var antags = _antagSystem.GetAntagIdentifiers(entity.Owner);
+        var ent = args.EntityUid;
+        _antagSystem.SendBriefing(ent, MakeBriefing(ent), null, null);
+    }
 
-        foreach (var (mind, sessionData, name) in antags)
-        {
-            if (!_roleSystem.MindHasRole<VampireRoleComponent>(mind, out var role))
-                continue;
+    // Character screen briefing
+    private void OnGetBriefing(Entity<VampireRuleComponent> role, ref GetBriefingEvent args)
+    {
+        var ent = args.Mind.Comp.OwnedEntity;
 
-            args.Text += "\n" + Loc.GetString("vampire-round-end",
-                ("name", name),
-                ("username", sessionData.UserName));
-        }
+        if (ent is null)
+            return;
+        args.Append(MakeBriefing(ent.Value));
+    }
+
+    private string MakeBriefing(EntityUid ent)
+    {
+        var briefing = Loc.GetString("vampire-role-greeting");
+
+        return briefing;
     }
 }

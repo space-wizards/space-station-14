@@ -16,8 +16,6 @@
       allowNonHumans: true
       multiAntagSetting: NotExclusive
       briefing:
-        text: vampire-initial-role-greetings
-        color: MediumVioletRed
         sound: /Audio/Ambience/Antag/traitor_start.ogg
       components:
         - type: Vampire

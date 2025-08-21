@@ -4,7 +4,7 @@ objective-issuer-vampire = [color=mediumvioletred]Vampire[/color]
 
 vampire-round-end = [color=white]{CAPITALIZE($name)}[/color] ([color=gray]{$username}[/color]) was a vampire.[/color]
 
-vampire-initial-role-greetings =
+vampire-role-greeting =
     You are a Vampire.
     You require the blood of the living to sustain yourself.
 
