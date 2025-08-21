@@ -282,19 +282,6 @@
               amount: 2
               doAfter: 1
 
-        - to: diagonalshuttleWall
-          conditions:
-            - !type:EntityAnchored { }
-          steps:
-            - material: Steel
-              amount: 1
-              doAfter: 1
-            - tool: Welding
-              doAfter: 4
-            - material: Plasteel
-              amount: 1
-              doAfter: 1
-
         - to: girder
           completed:
             - !type:SnapToGrid
