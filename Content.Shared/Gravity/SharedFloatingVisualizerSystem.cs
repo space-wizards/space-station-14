@@ -8,15 +8,14 @@ namespace Content.Shared.Gravity;
 /// </summary>
 public abstract class SharedFloatingVisualizerSystem : EntitySystem
 {
-    [Dependency] private readonly SharedGravitySystem GravitySystem = default!;
+    [Dependency] private readonly SharedGravitySystem _gravity = default!;
 
     public override void Initialize()
     {
         base.Initialize();
 
         SubscribeLocalEvent<FloatingVisualsComponent, ComponentStartup>(OnComponentStartup);
-        SubscribeLocalEvent<GravityChangedEvent>(OnGravityChanged);
-        SubscribeLocalEvent<FloatingVisualsComponent, EntParentChangedMessage>(OnEntParentChanged);
+        SubscribeLocalEvent<FloatingVisualsComponent, WeightlessnessChangedEvent>(OnWeightlessnessChanged);
     }
 
     /// <summary>
@@ -24,48 +23,28 @@ public abstract class SharedFloatingVisualizerSystem : EntitySystem
     /// </summary>
     public virtual void FloatAnimation(EntityUid uid, Vector2 offset, string animationKey, float animationTime, bool stop = false) { }
 
-    protected bool CanFloat(EntityUid uid, FloatingVisualsComponent component, TransformComponent? transform = null)
+    protected bool CanFloat(Entity<FloatingVisualsComponent> entity)
     {
-        if (!Resolve(uid, ref transform))
-            return false;
-
-        if (transform.MapID == MapId.Nullspace)
-            return false;
-
-        component.CanFloat = GravitySystem.IsWeightless(uid, xform: transform);
-        Dirty(uid, component);
-        return component.CanFloat;
+        entity.Comp.CanFloat = _gravity.IsWeightless(entity.Owner);
+        Dirty(entity);
+        return entity.Comp.CanFloat;
     }
 
-    private void OnComponentStartup(EntityUid uid, FloatingVisualsComponent component, ComponentStartup args)
+    private void OnComponentStartup(Entity<FloatingVisualsComponent> entity, ref ComponentStartup args)
     {
-        if (CanFloat(uid, component))
-            FloatAnimation(uid, component.Offset, component.AnimationKey, component.AnimationTime);
+        if (CanFloat(entity))
+            FloatAnimation(entity, entity.Comp.Offset, entity.Comp.AnimationKey, entity.Comp.AnimationTime);
     }
 
-    private void OnGravityChanged(ref GravityChangedEvent args)
+    private void OnWeightlessnessChanged(Entity<FloatingVisualsComponent> entity, ref WeightlessnessChangedEvent args)
     {
-        var query = EntityQueryEnumerator<FloatingVisualsComponent, TransformComponent>();
-        while (query.MoveNext(out var uid, out var floating, out var transform))
-        {
-            if (transform.MapID == MapId.Nullspace)
-                continue;
+        if (entity.Comp.CanFloat == args.Weightless)
+            return;
 
-            if (transform.GridUid != args.ChangedGridIndex)
-                continue;
+        entity.Comp.CanFloat = CanFloat(entity);
+        Dirty(entity);
 
-            floating.CanFloat = !args.HasGravity;
-            Dirty(uid, floating);
-
-            if (!args.HasGravity)
-                FloatAnimation(uid, floating.Offset, floating.AnimationKey, floating.AnimationTime);
-        }
-    }
-
-    private void OnEntParentChanged(EntityUid uid, FloatingVisualsComponent component, ref EntParentChangedMessage args)
-    {
-        var transform = args.Transform;
-        if (CanFloat(uid, component, transform))
-            FloatAnimation(uid, component.Offset, component.AnimationKey, component.AnimationTime);
+        if (args.Weightless)
+            FloatAnimation(entity, entity.Comp.Offset, entity.Comp.AnimationKey, entity.Comp.AnimationTime);
     }
 }
