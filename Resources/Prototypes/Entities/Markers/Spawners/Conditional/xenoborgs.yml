@@ -1,0 +1,59 @@
+- type: entity
+  id: SpawnPointMarkerMothershipCore
+  parent: MarkerBase
+  name: mothership core
+  components:
+  - type: SpawnPoint
+  - type: Sprite
+    layers:
+    - state: green
+    - sprite: Mobs/Silicon/mothership_core.rsi
+      state: core-idle
+
+- type: entity
+  id: SpawnPointMarkerXenoborgEngi
+  parent: MarkerBase
+  name: xenoborg
+  components:
+  - type: SpawnPoint
+  - type: Sprite
+    layers:
+    - state: green
+    - sprite: Mobs/Silicon/chassis.rsi
+      state: xenoborg_engi
+
+- type: entity
+  id: SpawnPointMarkerXenoborgHeavy
+  parent: MarkerBase
+  name: xenoborg
+  components:
+  - type: SpawnPoint
+  - type: Sprite
+    layers:
+    - state: green
+    - sprite: Mobs/Silicon/chassis.rsi
+      state: xenoborg_heavy
+
+- type: entity
+  id: SpawnPointMarkerXenoborgScout
+  parent: MarkerBase
+  name: xenoborg
+  components:
+  - type: SpawnPoint
+  - type: Sprite
+    layers:
+    - state: green
+    - sprite: Mobs/Silicon/chassis.rsi
+      state: xenoborg_scout
+
+- type: entity
+  id: SpawnPointMarkerXenoborgStealth
+  parent: MarkerBase
+  name: xenoborg
+  components:
+  - type: SpawnPoint
+  - type: Sprite
+    layers:
+    - state: green
+    - sprite: Mobs/Silicon/chassis.rsi
+      state: xenoborg_stealth
