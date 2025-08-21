@@ -15,4 +15,5 @@
   antagonist: true
   setPreference: false
   objective: roles-antag-zombie-objective
+  revertTraits: false
   guides: [ Zombies ]

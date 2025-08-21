@@ -3,4 +3,5 @@
   name: roles-antag-subverted-silicon-name
   antagonist: true
   setPreference: false
+  revertTraits: false
   objective: roles-antag-subverted-silicon-objective

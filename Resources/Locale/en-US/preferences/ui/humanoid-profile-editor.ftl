@@ -56,6 +56,7 @@ humanoid-profile-editor-flavortext-tab = Description
 # Traits
 humanoid-profile-editor-traits-tab = Traits
 humanoid-profile-editor-no-traits = No traits available
+humanoid-profile-editor-antag-disable-trait = Disable If Antagonist
 
 humanoid-profile-editor-trait-count-hint = Points available: [{$current}/{$max}]
 

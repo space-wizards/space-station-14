@@ -2,7 +2,6 @@
 using Content.Shared.Eye.Blinding.Components;
 using Content.Shared.Eye.Blinding.Systems;
 using Content.Shared.IdentityManagement;
-using Robust.Shared.Network;
 
 namespace Content.Shared.Traits.Assorted;
 
@@ -37,6 +36,7 @@ public sealed class PermanentBlindnessSystem : EntitySystem
         if (blindable.MinDamage != 0)
         {
             _blinding.SetMinDamage((blindness.Owner, blindable), 0);
+            _blinding.AdjustEyeDamage((blindness.Owner, blindable), -blindable.EyeDamage); // This heals your eyes, in case traits using this component are removed! Should be changed if traits are refactored!
         }
     }
 
