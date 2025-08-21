@@ -27,7 +27,6 @@
     slots: [neck]
 
 - type: entity
-  categories: [ HideSpawnMenu ]
   id: TranslatorPoweredBase
   parent: [ TranslatorUnpowered, PowerCellSlotMediumItem ]
   components:
