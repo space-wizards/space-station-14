@@ -7,6 +7,8 @@ using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
+using Content.Shared.Tools;
 
 namespace Content.Shared.Kitchen.Components;
 
@@ -29,9 +31,9 @@ public sealed partial class KitchenSpikeComponent : Component
     private static readonly ProtoId<SoundCollectionPrototype> DefaultSpikeButcher = new("SpikeButcher");
 
     /// <summary>
-    /// Tool quality that required if "piece" of the victim should be gotten with specified tool.
+    /// Tool quality that required for the entity that used for butchering.
     /// </summary>
-    [DataField]
+    [DataField(customTypeSerializer: typeof(PrototypeIdSerializer<ToolQualityPrototype>))]
     public string RequiredToolQuality = "Slicing";
 
     /// <summary>

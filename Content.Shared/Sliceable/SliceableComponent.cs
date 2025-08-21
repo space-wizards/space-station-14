@@ -1,7 +1,8 @@
 using Content.Shared.Tools;
 using Robust.Shared.Audio;
-using Robust.Shared.Prototypes;
 using Content.Shared.Storage;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
 namespace Content.Shared.Sliceable;
 
@@ -26,8 +27,8 @@ public sealed partial class SliceableComponent : Component
     /// <summary>
     /// ToolQuality for slicing.
     /// </summary>
-    [DataField]
-    public ProtoId<ToolQualityPrototype> ToolQuality = "Slicing";
+    [DataField(customTypeSerializer: typeof(PrototypeIdSerializer<ToolQualityPrototype>))]
+    public string ToolQuality = "Slicing";
 
     /// <summary>
     /// Sound that will be played after slicing.
@@ -38,6 +39,6 @@ public sealed partial class SliceableComponent : Component
     /// <summary>
     /// Time of slicing.
     /// </summary>
-    [DataField]
+    [DataField(customTypeSerializer: typeof(TimeOffsetSerializer))]
     public TimeSpan SliceTime = TimeSpan.FromSeconds(1);
 }

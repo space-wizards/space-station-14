@@ -30,7 +30,7 @@ public sealed class SliceableSystem : EntitySystem
     [Dependency] private readonly MobStateSystem _mob = default!;
     [Dependency] private readonly SharedBodySystem _body = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
-    [Dependency] private readonly SharedToolSystem _tool = default!;
+    [Dependency] private readonly SharedToolSystem _toolSystem = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly SharedContainerSystem _container = default!;
@@ -55,7 +55,7 @@ public sealed class SliceableSystem : EntitySystem
             return;
 
         args.Handled = true;
-        if (_tool.HasQuality(args.Used, comp.ToolQuality))
+        if (_toolSystem.HasQuality(args.Used, comp.ToolQuality))
         {
             CreateDoAfter(uid, args.User, args.Used, comp.SliceTime.Seconds, comp.ToolQuality);
             return;
@@ -78,14 +78,14 @@ public sealed class SliceableSystem : EntitySystem
             if (!TryComp<ToolComponent>(used, out var toolComp))
                 return;
 
-            if (!_tool.HasQuality(used, comp.ToolQuality))
+            if (!_toolSystem.HasQuality(used, comp.ToolQuality))
             {
                 verbDisabled = true;
                 verbMessage = Loc.GetString("slice-verb-message-tool", ("target", uid));
             }
             tool = used;
         }
-        else if (_tool.HasQuality(args.User, comp.ToolQuality))
+        else if (_toolSystem.HasQuality(args.User, comp.ToolQuality))
         {
             tool = args.User;
         }
@@ -120,7 +120,7 @@ public sealed class SliceableSystem : EntitySystem
 
     private void CreateDoAfter(EntityUid uid, EntityUid user, EntityUid used, float time, string qualities)
     {
-        _tool.UseTool(
+        _toolSystem.UseTool(
             used,
             user,
             uid,
