@@ -1,9 +1,9 @@
 {
     "version": 1,
     "license": "CC-BY-SA-3.0",
-    "copyright": "sprites by @thenekron",
+    "copyright": "sprites by @endr_animet",
     "size": {
-        "x": 32,
+        "x": 64,
         "y": 32
     },
     "states": [
