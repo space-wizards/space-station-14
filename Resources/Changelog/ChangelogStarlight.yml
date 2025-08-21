@@ -12098,5 +12098,12 @@ Entries:
   id: 136800
   time: '2025-08-21T11:17:54.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/1368
+- author: AndrewTateOfficialSS14
+  changes:
+  - message: Maxcap's radius cap upped to 15 instead of 10 .
+    type: Tweak
+  id: 137700
+  time: '2025-08-21T11:19:53.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1377
 Order: -1
 
