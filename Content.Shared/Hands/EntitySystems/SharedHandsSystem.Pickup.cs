@@ -1,4 +1,3 @@
-using System.Diagnostics;
 using Content.Shared.Database;
 using Content.Shared.Hands.Components;
 using Content.Shared.Item;
@@ -85,6 +84,9 @@ public abstract partial class SharedHandsSystem
             return false;
 
         if (!CanPickupToHand(uid, entity, handId, checkActionBlocker, handsComp, item))
+            return false;
+
+        if (!BeforeDoPickup((uid, handsComp), entity))
             return false;
 
         if (animate)
@@ -176,6 +178,10 @@ public abstract partial class SharedHandsSystem
         if (handContainer.ContainedEntities.FirstOrNull() != null)
             return false;
 
+        // Huh, seems kinda weird that this system passes item comp around
+        // everywhere but it's never actually used besides being resolved.
+        // I wouldn't be surprised if there's some API simplifications that
+        // could be made with respect to that.
         if (!Resolve(entity, ref item, false))
             return false;
 
@@ -227,6 +233,22 @@ public abstract partial class SharedHandsSystem
                 TransformSystem.PlaceNextTo(entity, uid.Value);
             }
         }
+    }
+
+    /// <summary>
+    /// Small helper function meant as a last step before <see cref="DoPickup"/>
+    /// is called. Used to run a cancelable before pickup event that can have
+    /// side effects, unlike the side effect free-ish <see cref="TryPickup"/>.
+    /// </summary>
+    private bool BeforeDoPickup(Entity<HandsComponent?> user, EntityUid item)
+    {
+        if (!Resolve(user, ref user.Comp))
+            return false;
+
+        var ev = new BeforeGettingEquippedHandEvent(user);
+        RaiseLocalEvent(item, ref ev);
+
+        return !ev.Cancelled;
     }
 
     /// <summary>
