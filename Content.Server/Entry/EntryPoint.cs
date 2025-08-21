@@ -3,19 +3,20 @@ using Content.Server.Administration;
 using Content.Server.Administration.Logs;
 using Content.Server.Administration.Managers;
 using Content.Server.Afk;
+using Content.Server.BugReports;
 using Content.Server.Chat.Managers;
 using Content.Server.Connection;
 using Content.Server.Database;
+using Content.Server.Discord.DiscordLink;
 using Content.Server.EUI;
 using Content.Server.GameTicking;
 using Content.Server.GhostKick;
+using Content.Server.Github;
 using Content.Server.GuideGenerator;
 using Content.Server.Info;
 using Content.Server.IoC;
 using Content.Server.Maps;
 using Content.Server.NodeContainer.NodeGroups;
-using Content.Server.Objectives;
-using Content.Server.Players;
 using Content.Server.Players.JobWhitelist;
 using Content.Server.Players.PlayTimeTracking;
 using Content.Server.Players.RateLimiting;
@@ -47,6 +48,8 @@ namespace Content.Server.Entry
         private PlayTimeTrackingManager? _playTimeTracking;
         private IEntitySystemManager? _sysMan;
         private IServerDbManager? _dbManager;
+        private IWatchlistWebhookManager _watchlistWebhookManager = default!;
+        private IConnectionManager? _connectionManager;
 
         /// <inheritdoc />
         public override void Init()
@@ -91,8 +94,10 @@ namespace Content.Server.Entry
                 _voteManager = IoCManager.Resolve<IVoteManager>();
                 _updateManager = IoCManager.Resolve<ServerUpdateManager>();
                 _playTimeTracking = IoCManager.Resolve<PlayTimeTrackingManager>();
+                _connectionManager = IoCManager.Resolve<IConnectionManager>();
                 _sysMan = IoCManager.Resolve<IEntitySystemManager>();
                 _dbManager = IoCManager.Resolve<IServerDbManager>();
+                _watchlistWebhookManager = IoCManager.Resolve<IWatchlistWebhookManager>();
 
                 logManager.GetSawmill("Storage").Level = LogLevel.Info;
                 logManager.GetSawmill("db.ef").Level = LogLevel.Info;
@@ -106,10 +111,15 @@ namespace Content.Server.Entry
                 IoCManager.Resolve<GhostKickManager>().Initialize();
                 IoCManager.Resolve<ServerInfoManager>().Initialize();
                 IoCManager.Resolve<ServerApi>().Initialize();
+                IoCManager.Resolve<GithubClient>().Initialize();
+                IoCManager.Resolve<GithubApiManager>().Initialize();
+                IoCManager.Resolve<GithubBackgroundWorker>().Initialize();
+                IoCManager.Resolve<IBugReportManager>().Initialize();
 
                 _voteManager.Initialize();
                 _updateManager.Initialize();
                 _playTimeTracking.Initialize();
+                _watchlistWebhookManager.Initialize();
                 IoCManager.Resolve<JobWhitelistManager>().Initialize();
                 IoCManager.Resolve<PlayerRateLimitManager>().Initialize();
             }
@@ -141,12 +151,18 @@ namespace Content.Server.Entry
                 IoCManager.Resolve<IAdminManager>().Initialize();
                 IoCManager.Resolve<IAfkManager>().Initialize();
                 IoCManager.Resolve<RulesManager>().Initialize();
+
+                IoCManager.Resolve<DiscordLink>().Initialize();
+                IoCManager.Resolve<DiscordChatLink>().Initialize();
+
                 _euiManager.Initialize();
 
                 IoCManager.Resolve<IGameMapManager>().Initialize();
                 IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<GameTicker>().PostInitialize();
                 IoCManager.Resolve<IBanManager>().Initialize();
                 IoCManager.Resolve<IConnectionManager>().PostInit();
+                IoCManager.Resolve<MultiServerKickManager>().Initialize();
+                IoCManager.Resolve<CVarControlManager>().Initialize();
             }
         }
 
@@ -166,6 +182,8 @@ namespace Content.Server.Entry
                 case ModUpdateLevel.FramePostEngine:
                     _updateManager.Update();
                     _playTimeTracking?.Update();
+                    _watchlistWebhookManager.Update();
+                    _connectionManager?.Update();
                     break;
             }
         }
@@ -175,6 +193,11 @@ namespace Content.Server.Entry
             _playTimeTracking?.Shutdown();
             _dbManager?.Shutdown();
             IoCManager.Resolve<ServerApi>().Shutdown();
+
+            IoCManager.Resolve<DiscordLink>().Shutdown();
+            IoCManager.Resolve<DiscordChatLink>().Shutdown();
+
+            IoCManager.Resolve<IBugReportManager>().Shutdown();
         }
 
         private static void LoadConfigPresets(IConfigurationManager cfg, IResourceManager res, ISawmill sawmill)
@@ -208,6 +231,7 @@ namespace Content.Server.Entry
             Load(CCVars.ConfigPresetDebug, "debug");
 #endif
 
+#pragma warning disable CS8321
             void Load(CVarDef<bool> cVar, string name)
             {
                 var path = $"{ConfigPresetsDirBuild}{name}.toml";
@@ -217,6 +241,7 @@ namespace Content.Server.Entry
                     sawmill.Info("Loaded config preset: {Preset}", path);
                 }
             }
+#pragma warning restore CS8321
         }
     }
 }

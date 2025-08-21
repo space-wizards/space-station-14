@@ -104,6 +104,26 @@ public sealed partial class PowerMonitoringWindow
         // Update power value
         // Don't use SI prefixes, just give the number in W, so that it is readily apparent which consumer is using a lot of power.
         button.PowerValue.Text = Loc.GetString("power-monitoring-window-button-value", ("value", Math.Round(entry.PowerValue).ToString("N0")));
+
+        // Update battery level if applicable
+        if (entry.BatteryLevel != null)
+        {
+            button.BatteryLevel.Value = entry.BatteryLevel.Value;
+            button.BatteryLevel.Visible = true;
+
+            button.BatteryPercentage.Text = entry.BatteryLevel.Value.ToString("P0");
+            button.BatteryPercentage.Visible = true;
+
+            // Set progress bar color based on percentage
+            var color = Color.FromHsv(new Vector4(entry.BatteryLevel.Value * 0.33f, 1, 1, 1));
+
+            button.BatteryLevel.ForegroundStyleBoxOverride = new StyleBoxFlat { BackgroundColor = color };
+        }
+        else
+        {
+            button.BatteryLevel.Visible = false;
+            button.BatteryPercentage.Visible = false;
+        }
     }
 
     private void UpdateEntrySourcesOrLoads(BoxContainer masterContainer, BoxContainer currentContainer, PowerMonitoringConsoleEntry[]? entries, SpriteSpecifier.Texture icon)
@@ -248,27 +268,6 @@ public sealed partial class PowerMonitoringWindow
         return false;
     }
 
-    private bool TryGetVerticalScrollbar(ScrollContainer scroll, [NotNullWhen(true)] out VScrollBar? vScrollBar)
-    {
-        vScrollBar = null;
-
-        foreach (var child in scroll.Children)
-        {
-            if (child is not VScrollBar)
-                continue;
-
-            var castChild = child as VScrollBar;
-
-            if (castChild != null)
-            {
-                vScrollBar = castChild;
-                return true;
-            }
-        }
-
-        return false;
-    }
-
     private void AutoScrollToFocus()
     {
         if (!_autoScrollActive)
@@ -278,15 +277,12 @@ public sealed partial class PowerMonitoringWindow
         if (scroll == null)
             return;
 
-        if (!TryGetVerticalScrollbar(scroll, out var vScrollbar))
-            return;
-
         if (!TryGetNextScrollPosition(out float? nextScrollPosition))
             return;
 
-        vScrollbar.ValueTarget = nextScrollPosition.Value;
+        scroll.VScrollTarget = nextScrollPosition.Value;
 
-        if (MathHelper.CloseToPercent(vScrollbar.Value, vScrollbar.ValueTarget))
+        if (MathHelper.CloseToPercent(scroll.VScroll, scroll.VScrollTarget))
             _autoScrollActive = false;
     }
 
@@ -443,6 +439,11 @@ public sealed class PowerMonitoringButton : Button
     public BoxContainer MainContainer;
     public TextureRect TextureRect;
     public Label NameLocalized;
+
+    public ProgressBar BatteryLevel;
+    public PanelContainer BackgroundPanel;
+    public Label BatteryPercentage;
+
     public Label PowerValue;
 
     public PowerMonitoringButton()
@@ -477,6 +478,49 @@ public sealed class PowerMonitoringButton : Button
         };
 
         MainContainer.AddChild(NameLocalized);
+
+        BatteryLevel = new ProgressBar()
+        {
+            SetWidth = 47f,
+            SetHeight = 20f,
+            Margin = new Thickness(15, 0, 0, 0),
+            MaxValue = 1,
+            Visible = false,
+            BackgroundStyleBoxOverride = new StyleBoxFlat { BackgroundColor = Color.Black },
+        };
+
+        MainContainer.AddChild(BatteryLevel);
+
+        BackgroundPanel = new PanelContainer
+        {
+            // Draw a half-transparent box over the battery level to make the text more readable.
+            PanelOverride = new StyleBoxFlat
+            {
+                BackgroundColor = new Color(0, 0, 0, 0.9f)
+            },
+            HorizontalAlignment = HAlignment.Center,
+            VerticalAlignment = VAlignment.Center,
+            HorizontalExpand = true,
+            VerticalExpand = true,
+            // Box is undersized perfectly compared to the progress bar, so a little bit of the unaffected progress bar is visible.
+            SetSize = new Vector2(43f, 16f)
+        };
+
+        BatteryLevel.AddChild(BackgroundPanel);
+
+        BatteryPercentage = new Label()
+        {
+            VerticalAlignment = VAlignment.Center,
+            HorizontalAlignment = HAlignment.Center,
+            Align = Label.AlignMode.Center,
+            SetWidth = 45f,
+            MinWidth = 20f,
+            Margin = new Thickness(10, -4, 10, 0),
+            ClipText = true,
+            Visible = false,
+        };
+
+        BackgroundPanel.AddChild(BatteryPercentage);
 
         PowerValue = new Label()
         {

@@ -147,30 +147,24 @@
 
 - type: entity
   parent: BaseRock
-  id: FloraRockSolid01
+  id: FloraRockSolid
   components:
   - type: Sprite
-    state: rocksolid01
-
-- type: entity
-  parent: BaseRock
-  id: FloraRockSolid02
-  components:
-  - type: Sprite
-    state: rocksolid02
-
-- type: entity
-  parent: BaseRock
-  id: FloraRockSolid03
-  components:
-  - type: Sprite
-    state: rocksolid03
+    layers:
+    - state: rocksolid01
+      map: ["random"]
+  - type: RandomSprite
+    available:
+    - random:
+        rocksolid01: ""
+        rocksolid02: ""
+        rocksolid03: ""
 
 - type: entity
   name: stalagmite
   description: Natural stone spikes.
   parent: BaseRock
-  id: FloraStalagmite1
+  id: FloraStalagmite
   components:
   - type: Destructible
     thresholds:
@@ -185,192 +179,75 @@
               collection: GlassBreak
   - type: Sprite
     sprite: Objects/Decoration/Flora/flora_stalagmite.rsi
-    state: stalagmite1
+    layers:
+    - state: stalagmite1
+      map: ["random"]
+  - type: RandomSprite
+    available:
+    - random:
+        stalagmite1: ""
+        stalagmite2: ""
+        stalagmite3: ""
+        stalagmite4: ""
+        stalagmite5: ""
+        stalagmite6: ""
 
 - type: entity
-  parent: FloraStalagmite1
-  id: FloraStalagmite2
+  parent: FloraStalagmite
+  id: FloraGreyStalagmite
   components:
   - type: Sprite
     sprite: Objects/Decoration/Flora/flora_stalagmite.rsi
-    state: stalagmite2
-
-- type: entity
-  parent: FloraStalagmite1
-  id: FloraStalagmite3
-  components:
-  - type: Sprite
-    sprite: Objects/Decoration/Flora/flora_stalagmite.rsi
-    state: stalagmite3
-
-- type: entity
-  parent: FloraStalagmite1
-  id: FloraStalagmite4
-  components:
-  - type: Sprite
-    sprite: Objects/Decoration/Flora/flora_stalagmite.rsi
-    state: stalagmite4
-
-- type: entity
-  parent: FloraStalagmite1
-  id: FloraStalagmite5
-  components:
-  - type: Sprite
-    sprite: Objects/Decoration/Flora/flora_stalagmite.rsi
-    state: stalagmite5
-
-- type: entity
-  parent: FloraStalagmite1
-  id: FloraStalagmite6
-  components:
-  - type: Sprite
-    sprite: Objects/Decoration/Flora/flora_stalagmite.rsi
-    state: stalagmite6
-
-- type: entity
-  parent: FloraStalagmite1
-  id: FloraGreyStalagmite1
-  components:
-  - type: Sprite
-    sprite: Objects/Decoration/Flora/flora_stalagmite.rsi
-    state: grey_stalagmite1
-
-- type: entity
-  parent: FloraGreyStalagmite1
-  id: FloraGreyStalagmite2
-  components:
-  - type: Sprite
-    sprite: Objects/Decoration/Flora/flora_stalagmite.rsi
-    state: grey_stalagmite2
-
-- type: entity
-  parent: FloraGreyStalagmite1
-  id: FloraGreyStalagmite3
-  components:
-  - type: Sprite
-    sprite: Objects/Decoration/Flora/flora_stalagmite.rsi
-    state: grey_stalagmite3
-
-- type: entity
-  parent: FloraGreyStalagmite1
-  id: FloraGreyStalagmite4
-  components:
-  - type: Sprite
-    sprite: Objects/Decoration/Flora/flora_stalagmite.rsi
-    state: grey_stalagmite4
-
-- type: entity
-  parent: FloraGreyStalagmite1
-  id: FloraGreyStalagmite5
-  components:
-  - type: Sprite
-    sprite: Objects/Decoration/Flora/flora_stalagmite.rsi
-    state: grey_stalagmite5
-
-- type: entity
-  parent: FloraGreyStalagmite1
-  id: FloraGreyStalagmite6
-  components:
-  - type: Sprite
-    sprite: Objects/Decoration/Flora/flora_stalagmite.rsi
-    state: grey_stalagmite6
-
+    layers:
+    - state: grey_stalagmite1
+      map: ["random"]
+  - type: RandomSprite
+    available:
+    - random:
+        grey_stalagmite1: ""
+        grey_stalagmite2: ""
+        grey_stalagmite3: ""
+        grey_stalagmite4: ""
+        grey_stalagmite5: ""
+        grey_stalagmite6: ""
 
 - type: entity
   parent: BaseTree
-  id: FloraTree01
+  id: FloraTree
   name: tree
   components:
   - type: Sprite
-    state: tree01
-
-- type: entity
-  parent: BaseTree
-  id: FloraTree02
-  name: tree
-  components:
-  - type: Sprite
-    state: tree02
-
-- type: entity
-  parent: BaseTree
-  id: FloraTree03
-  name: tree
-  components:
-  - type: Sprite
-    state: tree03
-
-- type: entity
-  parent: BaseTree
-  id: FloraTree04
-  name: tree
-  components:
-  - type: Sprite
-    state: tree04
-
-- type: entity
-  parent: BaseTree
-  id: FloraTree05
-  name: tree
-  components:
-  - type: Sprite
-    state: tree05
-
-- type: entity
-  parent: BaseTree
-  id: FloraTree06
-  name: tree
-  components:
-  - type: Sprite
-    state: tree06
+    layers:
+    - state: tree01
+      map: ["random"]
+  - type: RandomSprite
+    available:
+    - random:
+        tree01: ""
+        tree02: ""
+        tree03: ""
+        tree04: ""
+        tree05: ""
+        tree06: ""
 
 - type: entity
   parent: BaseTreeSnow
-  id: FloraTreeSnow01
+  id: FloraTreeSnow
   name: snowy tree
   components:
   - type: Sprite
-    state: treesnow01
-
-- type: entity
-  parent: BaseTreeSnow
-  id: FloraTreeSnow02
-  name: snowy tree
-  components:
-  - type: Sprite
-    state: treesnow02
-
-- type: entity
-  parent: BaseTreeSnow
-  id: FloraTreeSnow03
-  name: snowy tree
-  components:
-  - type: Sprite
-    state: treesnow03
-
-- type: entity
-  parent: BaseTreeSnow
-  id: FloraTreeSnow04
-  name: snowy tree
-  components:
-  - type: Sprite
-    state: treesnow04
-
-- type: entity
-  parent: BaseTreeSnow
-  id: FloraTreeSnow05
-  name: snowy tree
-  components:
-  - type: Sprite
-    state: treesnow05
-
-- type: entity
-  parent: BaseTreeSnow
-  id: FloraTreeSnow06
-  name: snowy tree
-  components:
-  - type: Sprite
-    state: treesnow06
+    layers:
+    - state: treesnow01
+      map: ["random"]
+  - type: RandomSprite
+    available:
+    - random:
+        treesnow01: ""
+        treesnow02: ""
+        treesnow03: ""
+        treesnow04: ""
+        treesnow05: ""
+        treesnow06: ""
 
 - type: entity
   parent: BaseTreeSnow
@@ -382,75 +259,38 @@
 
 - type: entity
   parent: BaseTreeLarge
-  id: FloraTreeLarge01
+  id: FloraTreeLarge
   name: large tree
   components:
   - type: Sprite
-    state: treelarge01
-
-- type: entity
-  parent: BaseTreeLarge
-  id: FloraTreeLarge02
-  name: large tree
-  components:
-  - type: Sprite
-    state: treelarge02
-
-- type: entity
-  parent: BaseTreeLarge
-  id: FloraTreeLarge03
-  name: large tree
-  components:
-  - type: Sprite
-    state: treelarge03
-
-- type: entity
-  parent: BaseTreeLarge
-  id: FloraTreeLarge04
-  name: large tree
-  components:
-  - type: Sprite
-    state: treelarge04
-
-- type: entity
-  parent: BaseTreeLarge
-  id: FloraTreeLarge05
-  name: large tree
-  components:
-  - type: Sprite
-    state: treelarge05
-
-- type: entity
-  parent: BaseTreeLarge
-  id: FloraTreeLarge06
-  name: large tree
-  components:
-  - type: Sprite
-    state: treelarge06
+    layers:
+    - state: treelarge01
+      map: ["random"]
+  - type: RandomSprite
+    available:
+    - random:
+        treelarge01: ""
+        treelarge02: ""
+        treelarge03: ""
+        treelarge04: ""
+        treelarge05: ""
+        treelarge06: ""
 
 - type: entity
   parent: BaseTreeConifer
-  id: FloraTreeConifer01
+  id: FloraTreeConifer
   name: snowy conifer
   components:
   - type: Sprite
-    state: treeconifer01
-
-- type: entity
-  parent: BaseTreeConifer
-  id: FloraTreeConifer02
-  name: snowy conifer
-  components:
-  - type: Sprite
-    state: treeconifer02
-
-- type: entity
-  parent: BaseTreeConifer
-  id: FloraTreeConifer03
-  name: snowy conifer
-  components:
-  - type: Sprite
-    state: treeconifer03
+    layers:
+    - state: treeconifer01
+      map: ["random"]
+  - type: RandomSprite
+    available:
+    - random:
+        treeconifer01: ""
+        treeconifer02: ""
+        treeconifer03: ""
 
 - type: entity
   parent: BaseTreeConifer
@@ -463,7 +303,7 @@
 - type: entity
   parent: BaseTreeConifer
   id: FloraTreeChristmas02
-  suffix: PresentsGiver
+  suffix: Safe Presents
   name: christmas tree
   components:
   - type: Sprite
@@ -481,15 +321,32 @@
     spawnEntries:
       - id: PresentRandom
         orGroup: present
-      - id: PresentRandomCash
-        prob: 0.20
+      - id: PresentRandomCash # buy your own.
+        prob: 0.1
         orGroup: present
-      - id: PresentRandomAsh
+      - id: PresentRandomCoal # naughty
         prob: 0.05
         orGroup: present
     receivedPopup: christmas-tree-got-gift
     deniedPopup: christmas-tree-no-gift
     requiredHoliday: FestiveSeason
+
+- type: entity
+  parent: FloraTreeChristmas02
+  id: FloraTreeChristmas03
+  suffix: Insane Presents
+  name: christmas tree
+  components:
+  - type: LimitedItemGiver
+    spawnEntries:
+      - id: PresentRandom
+        orGroup: present
+      - id: PresentRandomUnsafe
+        prob: 0.5
+        orGroup: present
+      - id: PresentRandomInsane
+        prob: 0.2
+        orGroup: present
 
 - type: entity
   parent: BaseTreeConifer
@@ -500,53 +357,17 @@
     state: treestumpconifer
 
 - type: entity
-  parent: FloraTree01
-  id: ShadowTree01
+  parent: FloraTree
+  id: ShadowTree
   name: dark wood
   description: The leaves are whispering about you.
   components:
   - type: Sprite
     sprite: Objects/Decoration/Flora/flora_shadow_trees.rsi
-    state: tree01
-
-- type: entity
-  parent: ShadowTree01
-  id: ShadowTree02
-  components:
-  - type: Sprite
-    state: tree02
-
-- type: entity
-  parent: ShadowTree01
-  id: ShadowTree03
-  components:
-  - type: Sprite
-    state: tree03
-
-- type: entity
-  parent: ShadowTree01
-  id: ShadowTree04
-  components:
-  - type: Sprite
-    state: tree04
-
-- type: entity
-  parent: ShadowTree01
-  id: ShadowTree05
-  components:
-  - type: Sprite
-    state: tree05
-
-- type: entity
-  parent: ShadowTree01
-  id: ShadowTree06
-  components:
-  - type: Sprite
-    state: tree06
 
 - type: entity
   parent: BaseTree
-  id: LightTree01
+  id: LightTree
   name: glowing tree
   description: A marvelous tree filled with strange energy.
   components:
@@ -556,7 +377,18 @@
     color: "#6270bb"
   - type: Sprite
     sprite: Objects/Decoration/Flora/flora_treeslight.rsi
-    state: tree01
+    layers:
+    - state: tree01
+      map: ["random"]
+  - type: RandomSprite
+    available:
+    - random:
+        tree01: ""
+        tree02: ""
+        tree03: ""
+        tree04: ""
+        tree05: ""
+        tree06: ""
   - type: Destructible
     thresholds:
     - trigger:
@@ -587,43 +419,3 @@
           MobLuminousObject:
             min: 0
             max: 1
-
-- type: entity
-  parent: LightTree01
-  id: LightTree02
-  components:
-  - type: Sprite
-    sprite: Objects/Decoration/Flora/flora_treeslight.rsi
-    state: tree02
-
-- type: entity
-  parent: LightTree01
-  id: LightTree03
-  components:
-  - type: Sprite
-    sprite: Objects/Decoration/Flora/flora_treeslight.rsi
-    state: tree03
-
-- type: entity
-  parent: LightTree01
-  id: LightTree04
-  components:
-  - type: Sprite
-    sprite: Objects/Decoration/Flora/flora_treeslight.rsi
-    state: tree04
-
-- type: entity
-  parent: LightTree01
-  id: LightTree05
-  components:
-  - type: Sprite
-    sprite: Objects/Decoration/Flora/flora_treeslight.rsi
-    state: tree05
-
-- type: entity
-  parent: LightTree01
-  id: LightTree06
-  components:
-  - type: Sprite
-    sprite: Objects/Decoration/Flora/flora_treeslight.rsi
-    state: tree06

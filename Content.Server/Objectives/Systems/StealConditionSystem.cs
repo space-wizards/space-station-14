@@ -1,5 +1,4 @@
 using Content.Server.Objectives.Components;
-using Content.Server.Objectives.Components.Targets;
 using Content.Shared.CartridgeLoader;
 using Content.Shared.Interaction;
 using Content.Shared.Mind;
@@ -29,6 +28,7 @@ public sealed class StealConditionSystem : EntitySystem
     private EntityQuery<ContainerManagerComponent> _containerQuery;
 
     private HashSet<Entity<TransformComponent>> _nearestEnts = new();
+    private HashSet<EntityUid> _countedItems = new();
 
     public override void Initialize()
     {
@@ -79,7 +79,7 @@ public sealed class StealConditionSystem : EntitySystem
         var group = _proto.Index(condition.Comp.StealGroup);
         string localizedName = Loc.GetString(group.Name);
 
-        var title =condition.Comp.OwnerText == null
+        var title = condition.Comp.OwnerText == null
             ? Loc.GetString(condition.Comp.ObjectiveNoOwnerText, ("itemName", localizedName))
             : Loc.GetString(condition.Comp.ObjectiveText, ("owner", Loc.GetString(condition.Comp.OwnerText)), ("itemName", localizedName));
 
@@ -93,16 +93,18 @@ public sealed class StealConditionSystem : EntitySystem
     }
     private void OnGetProgress(Entity<StealConditionComponent> condition, ref ObjectiveGetProgressEvent args)
     {
-        args.Progress = GetProgress(args.Mind, condition);
+        args.Progress = GetProgress((args.MindId, args.Mind), condition);
     }
 
-    private float GetProgress(MindComponent mind, StealConditionComponent condition)
+    private float GetProgress(Entity<MindComponent> mind, StealConditionComponent condition)
     {
-        if (!_containerQuery.TryGetComponent(mind.OwnedEntity, out var currentManager))
+        if (!_containerQuery.TryGetComponent(mind.Comp.OwnedEntity, out var currentManager))
             return 0;
 
         var containerStack = new Stack<ContainerManagerComponent>();
         var count = 0;
+
+        _countedItems.Clear();
 
         //check stealAreas
         if (condition.CheckStealAreas)
@@ -126,7 +128,7 @@ public sealed class StealConditionSystem : EntitySystem
         }
 
         //check pulling object
-        if (TryComp<PullerComponent>(mind.OwnedEntity, out var pull)) //TO DO: to make the code prettier? don't like the repetition
+        if (TryComp<PullerComponent>(mind.Comp.OwnedEntity, out var pull)) //TO DO: to make the code prettier? don't like the repetition
         {
             var pulledEntity = pull.Pulling;
             if (pulledEntity != null)
@@ -153,7 +155,7 @@ public sealed class StealConditionSystem : EntitySystem
             }
         } while (containerStack.TryPop(out currentManager));
 
-        var result = count / (float) condition.CollectionSize;
+        var result = count / (float)condition.CollectionSize;
         result = Math.Clamp(result, 0, 1);
         return result;
     }
@@ -174,6 +176,9 @@ public sealed class StealConditionSystem : EntitySystem
 
     private int CheckStealTarget(EntityUid entity, StealConditionComponent condition)
     {
+        if (_countedItems.Contains(entity))
+            return 0;
+
         // check if this is the target
         if (!TryComp<StealTargetComponent>(entity, out var target))
             return 0;
@@ -195,6 +200,8 @@ public sealed class StealConditionSystem : EntitySystem
                     return 0;
             }
         }
+
+        _countedItems.Add(entity);
 
         return TryComp<StackComponent>(entity, out var stack) ? stack.Count : 1;
     }

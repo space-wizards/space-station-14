@@ -108,7 +108,7 @@ public partial class RadiationSystem
 
         // save resistance into rad protection grid
         var gridId = trs.GridUid.Value;
-        var tilePos = grid.TileIndicesFor(trs.Coordinates);
+        var tilePos = _maps.TileIndicesFor((trs.GridUid.Value, grid), trs.Coordinates);
         AddToTile(gridId, tilePos, component.RadResistance);
 
         // and remember it as last valid position

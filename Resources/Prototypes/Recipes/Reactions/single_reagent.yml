@@ -26,12 +26,12 @@
   minTemp: 377
   reactants:
     Sap:
-      amount: 1.2
+      amount: 1
   effects:
   - !type:CreateGas
     gas: WaterVapor
   products:
-    Syrup: 0.1 #12:1 sap to syruop
+    Syrup: 0.5 #2:1 sap to syrup, killing diona for pancakes isn't really fun
 
 # Holy - TODO: make it so only the chaplain can use the bible to start these reactions, not anyone with a bible
 

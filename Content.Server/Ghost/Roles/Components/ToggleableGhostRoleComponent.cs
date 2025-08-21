@@ -9,39 +9,81 @@ namespace Content.Server.Ghost.Roles.Components;
 [RegisterComponent, Access(typeof(ToggleableGhostRoleSystem))]
 public sealed partial class ToggleableGhostRoleComponent : Component
 {
-    [DataField("examineTextMindPresent")]
+    /// <summary>
+    /// The text shown on the entity's Examine when it is controlled by a player
+    /// </summary>
+    [DataField]
     public string ExamineTextMindPresent = string.Empty;
 
-    [DataField("examineTextMindSearching")]
+    /// <summary>
+    /// The text shown on the entity's Examine when it is waiting for a controlling player
+    /// </summary>
+    [DataField]
     public string ExamineTextMindSearching = string.Empty;
 
-    [DataField("examineTextNoMind")]
+    /// <summary>
+    /// The text shown on the entity's Examine when it has no controlling player
+    /// </summary>
+    [DataField]
     public string ExamineTextNoMind = string.Empty;
 
-    [DataField("beginSearchingText")]
+    /// <summary>
+    /// The popup text when the entity (PAI/positronic brain) it is activated to seek a controlling player
+    /// </summary>
+    [DataField]
     public string BeginSearchingText = string.Empty;
 
-    [DataField("roleName")]
+    /// <summary>
+    /// The name shown on the Ghost Role list
+    /// </summary>
+    [DataField]
     public string RoleName = string.Empty;
 
-    [DataField("roleDescription")]
+    /// <summary>
+    /// The description shown on the Ghost Role list
+    /// </summary>
+    [DataField]
     public string RoleDescription = string.Empty;
 
-    [DataField("roleRules")]
+    /// <summary>
+    /// The introductory message shown when trying to take the ghost role/join the raffle
+    /// </summary>
+    [DataField]
     public string RoleRules = string.Empty;
 
-    [DataField("wipeVerbText")]
+    /// <summary>
+    /// A list of mind roles that will be added to the entity's mind
+    /// </summary>
+    [DataField]
+    public List<EntProtoId> MindRoles;
+
+    /// <summary>
+    /// The displayed name of the verb to wipe the controlling player
+    /// </summary>
+    [DataField]
     public string WipeVerbText = string.Empty;
 
-    [DataField("wipeVerbPopup")]
+    /// /// <summary>
+    /// The popup message when wiping the controlling player
+    /// </summary>
+    [DataField]
     public string WipeVerbPopup = string.Empty;
 
-    [DataField("stopSearchVerbText")]
+    /// <summary>
+    /// The displayed name of the verb to stop searching for a controlling player
+    /// </summary>
+    [DataField]
     public string StopSearchVerbText = string.Empty;
 
-    [DataField("stopSearchVerbPopup")]
+    /// /// <summary>
+    /// The popup message when stopping to search for a controlling player
+    /// </summary>
+    [DataField]
     public string StopSearchVerbPopup = string.Empty;
 
+    /// /// <summary>
+    /// The prototype ID of the job that will be given to the controlling mind
+    /// </summary>
     [DataField("job")]
-    public ProtoId<JobPrototype>? JobProto = null;
+    public ProtoId<JobPrototype>? JobProto;
 }

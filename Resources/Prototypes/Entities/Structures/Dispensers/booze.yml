@@ -1,7 +1,7 @@
 - type: entity
-  id: BoozeDispenser
+  id: BoozeDispenserEmpty
   name: booze dispenser
-  suffix: Filled
+  suffix: Empty
   description: A booze dispenser with a single slot for a container to be filled.
   parent: ReagentDispenserBase
   components:
@@ -10,11 +10,11 @@
     sprite: Structures/smalldispensers.rsi
     drawdepth: SmallObjects
     state: booze
-  - type: ReagentDispenser
-    storageWhitelist:
+  - type: Storage
+    openOnActivate: false
+    whitelist:
       tags:
       - DrinkBottle
-    pack: BoozeDispenserInventory
   - type: Transform
     noRot: false
   - type: Machine
@@ -27,12 +27,21 @@
     stealGroup: BoozeDispenser
 
 - type: entity
-  id: BoozeDispenserEmpty
-  suffix: Empty
-  parent: BoozeDispenser
+  id: BoozeDispenser
+  suffix: Filled
+  parent: BoozeDispenserEmpty
   components:
-  - type: ReagentDispenser
-    storageWhitelist:
-      tags:
-      - DrinkBottle
-    pack: EmptyInventory
+  - type: StorageFill
+    contents:
+    - id: DrinkAleBottleFullGrowler
+    - id: DrinkBeerGrowler
+    - id: DrinkCoffeeLiqueurBottleFull
+    - id: DrinkCognacBottleFull
+    - id: DrinkGinBottleFull
+    - id: DrinkMeadJug
+    - id: DrinkRumBottleFull
+    - id: DrinkTequilaBottleFull
+    - id: DrinkVermouthBottleFull
+    - id: DrinkVodkaBottleFull
+    - id: DrinkWhiskeyBottleFull
+    - id: DrinkWineBottleFull

@@ -1,7 +1,7 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
-  "copyright": "Taken from cev-eris at https://github.com/discordia-space/CEV-Eris/raw/983ad377d25729357b7ff8025f8014bd2f6ae9f7/icons/obj/ammo.dmi, base and mag-1 by Alekshhh",
+  "copyright": "Taken from vgstation at commit https://github.com/vgstation-coders/vgstation13/commit/ca674eff9d23e04357b7609ef7e07eadfc1a993f, modified by ps3moira (github)",
   "size": {
     "x": 32,
     "y": 32
@@ -11,9 +11,6 @@
       "name": "base"
     },
     {
-      "name": "base-b"
-    },
-    {
       "name": "mag-1"
     },
     {
@@ -21,15 +18,6 @@
     },
     {
       "name": "mag-3"
-    },
-    {
-      "name": "magb-1"
-    },
-    {
-      "name": "magb-2"
-    },
-    {
-      "name": "magb-3"
     }
   ]
 }

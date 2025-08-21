@@ -1,37 +1,48 @@
 - type: entity
+  abstract: true
+  parent: BaseAction
+  id: BaseMechAction
+  components:
+  - type: Action
+    itemIconStyle: NoItem
+
+- type: entity
+  parent: BaseMechAction
   id: ActionMechCycleEquipment
   name: Cycle
   description: Cycles currently selected equipment
   components:
-  - type: InstantAction
-    itemIconStyle: NoItem
+  - type: Action
+    useDelay: 0.5
     icon:
       sprite: Interface/Actions/actions_mecha.rsi
       state: mech_cycle_equip_on
+  - type: InstantAction
     event: !type:MechToggleEquipmentEvent
-    useDelay: 0.5
 
 - type: entity
+  parent: BaseMechAction
   id: ActionMechOpenUI
   name: Control Panel
   description: Opens the control panel for the mech
   components:
-  - type: InstantAction
-    itemIconStyle: NoItem
+  - type: Action
+    useDelay: 1
     icon:
       sprite: Interface/Actions/actions_mecha.rsi
       state: mech_view_stats
+  - type: InstantAction
     event: !type:MechOpenUiEvent
-    useDelay: 1
 
 - type: entity
+  parent: BaseMechAction
   id: ActionMechEject
   name: Eject
   description: Ejects the pilot from the mech
   components:
-  - type: InstantAction
-    itemIconStyle: NoItem
+  - type: Action
     icon:
       sprite: Interface/Actions/actions_mecha.rsi
       state: mech_eject
+  - type: InstantAction
     event: !type:MechEjectPilotEvent

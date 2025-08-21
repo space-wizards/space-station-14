@@ -1,7 +1,7 @@
 {
     "version": 1,
     "license": "CC-BY-SA-3.0",
-    "copyright": "tgstation at 3ddd840268e33bbcf316f242e6a972b84e6b773c",
+    "copyright": "tgstation at 3ddd840268e33bbcf316f242e6a972b84e6b773c, Inhand sprites by onesch",
     "size": {
         "x": 32,
         "y": 32
@@ -9,6 +9,14 @@
     "states": [
         {
             "name": "icon"
+        },
+        {
+            "name": "inhand-left",
+            "directions": 4
+        },
+        {
+            "name": "inhand-right",
+            "directions": 4
         },
         {
             "name": "active",

@@ -21,6 +21,7 @@ using Robust.Shared.GameStates;
 using Robust.Shared.Map;
 using Robust.Shared.Utility;
 using Content.Shared.UserInterface;
+using Robust.Shared.Prototypes;
 
 namespace Content.Server.Shuttles.Systems;
 
@@ -42,6 +43,8 @@ public sealed partial class ShuttleConsoleSystem : SharedShuttleConsoleSystem
     private EntityQuery<TransformComponent> _xformQuery;
 
     private readonly HashSet<Entity<ShuttleConsoleComponent>> _consoles = new();
+
+    private static readonly ProtoId<TagPrototype> CanPilotTag = "CanPilot";
 
     public override void Initialize()
     {
@@ -168,7 +171,7 @@ public sealed partial class ShuttleConsoleSystem : SharedShuttleConsoleSystem
 
     private bool TryPilot(EntityUid user, EntityUid uid)
     {
-        if (!_tags.HasTag(user, "CanPilot") ||
+        if (!_tags.HasTag(user, CanPilotTag) ||
             !TryComp<ShuttleConsoleComponent>(uid, out var component) ||
             !this.IsPowered(uid, EntityManager) ||
             !Transform(uid).Anchored ||
@@ -232,6 +235,8 @@ public sealed partial class ShuttleConsoleSystem : SharedShuttleConsoleSystem
                     _xformQuery.TryGetComponent(comp.DockedWith, out var otherDockXform) ?
                     GetNetEntity(otherDockXform.GridUid) :
                     null,
+                Color = comp.RadarColor,
+                HighlightedColor = comp.HighlightedRadarColor
             };
 
             gridDocks.Add(state);
@@ -317,7 +322,7 @@ public sealed partial class ShuttleConsoleSystem : SharedShuttleConsoleSystem
 
     public void AddPilot(EntityUid uid, EntityUid entity, ShuttleConsoleComponent component)
     {
-        if (!EntityManager.TryGetComponent(entity, out PilotComponent? pilotComponent)
+        if (!TryComp(entity, out PilotComponent? pilotComponent)
         || component.SubscribedPilots.Contains(entity))
         {
             return;
@@ -331,7 +336,7 @@ public sealed partial class ShuttleConsoleSystem : SharedShuttleConsoleSystem
 
         pilotComponent.Console = uid;
         ActionBlockerSystem.UpdateCanMove(entity);
-        pilotComponent.Position = EntityManager.GetComponent<TransformComponent>(entity).Coordinates;
+        pilotComponent.Position = Comp<TransformComponent>(entity).Coordinates;
         Dirty(entity, pilotComponent);
     }
 
@@ -354,12 +359,12 @@ public sealed partial class ShuttleConsoleSystem : SharedShuttleConsoleSystem
         _popup.PopupEntity(Loc.GetString("shuttle-pilot-end"), pilotUid, pilotUid);
 
         if (pilotComponent.LifeStage < ComponentLifeStage.Stopping)
-            EntityManager.RemoveComponent<PilotComponent>(pilotUid);
+            RemComp<PilotComponent>(pilotUid);
     }
 
     public void RemovePilot(EntityUid entity)
     {
-        if (!EntityManager.TryGetComponent(entity, out PilotComponent? pilotComponent))
+        if (!TryComp(entity, out PilotComponent? pilotComponent))
             return;
 
         RemovePilot(entity, pilotComponent);

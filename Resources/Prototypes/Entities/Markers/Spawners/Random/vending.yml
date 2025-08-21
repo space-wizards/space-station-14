@@ -6,29 +6,59 @@
   components:
   - type: Sprite
     layers:
-      - state: red
-      - sprite: Structures/Machines/VendingMachines/random.rsi
-        state: any
+    - state: red
+    - sprite: Structures/Machines/VendingMachines/random.rsi
+      state: any
   - type: RandomSpawner
     prototypes:
-      - VendingMachineCigs
-      - VendingMachineCoffee
-      - VendingMachineCola
-      - VendingMachineColaRed
-      - VendingMachineColaBlack
-      - VendingMachineDiscount
-      - VendingMachineSnack
-      - VendingMachineSnackBlue
-      - VendingMachineSnackGreen
-      - VendingMachineSnackOrange
-      - VendingMachineSnackTeal
-      - VendingMachineSovietSoda
-      - VendingMachineChang
-      - VendingMachineDonut
-      - VendingMachineShamblersJuice
-      - VendingMachinePwrGame
-      - VendingMachineDrGibb
-      - VendingMachineSoda
-      - VendingMachineStarkist
-      - VendingMachineSpaceUp
+    - VendingMachineChang
+    - VendingMachineCigs
+    - VendingMachineCoffee
+    - VendingMachineCola #Robust Sofdrinks
+    - VendingMachineColaBlack #Robust Sofdrinks [Black]
+    - VendingMachineColaRed #Space Cola
+    - VendingMachineDiscount
+    - VendingMachineDonut
+    - VendingMachineDrGibb
+    - VendingMachinePwrGame
+    - VendingMachineShamblersJuice
+    - VendingMachineSmite
+    - VendingMachineSnack
+    - VendingMachineSnackBlue
+    - VendingMachineSnackGreen
+    - VendingMachineSnackOrange
+    - VendingMachineSnackTeal
+    - VendingMachineSoda #Robust Sofdrinks [Soda]
+    - VendingMachineSovietSoda #Boda
+    - VendingMachineSpaceUp
+    - VendingMachineStarkist
     chance: 1
+
+
+- type: entityTable
+  id: ClothingVendorTable
+  table: !type:GroupSelector
+    children:
+    - id: VendingMachineClothing
+      weight: 40
+    - id: VendingMachineWinter
+      weight: 40
+    - id: VendingMachinePride
+      weight: 10
+    - id: VendingMachineTheater
+      weight: 10
+
+- type: entity
+  id: RandomVendingClothing
+  name: random vending machine spawner
+  suffix: Clothing
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+    - state: red
+    - sprite: Structures/Machines/VendingMachines/random.rsi
+      state: clothing
+  - type: EntityTableSpawner
+    table: !type:NestedSelector
+      tableId: ClothingVendorTable

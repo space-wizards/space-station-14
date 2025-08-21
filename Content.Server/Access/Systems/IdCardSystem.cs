@@ -1,5 +1,6 @@
 using System.Linq;
 using Content.Server.Administration.Logs;
+using Content.Server.Chat.Systems;
 using Content.Server.Kitchen.Components;
 using Content.Server.Popups;
 using Content.Shared.Access;
@@ -19,6 +20,7 @@ public sealed class IdCardSystem : SharedIdCardSystem
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly IAdminLogManager _adminLogger = default!;
+    [Dependency] private readonly ChatSystem _chat = default!;
     [Dependency] private readonly MicrowaveSystem _microwave = default!;
 
     public override void Initialize()
@@ -31,7 +33,7 @@ public sealed class IdCardSystem : SharedIdCardSystem
     private void OnMicrowaved(EntityUid uid, IdCardComponent component, BeingMicrowavedEvent args)
     {
         if (!component.CanMicrowave || !TryComp<MicrowaveComponent>(args.Microwave, out var micro) || micro.Broken)
-            return;   
+            return;
 
         if (TryComp<AccessComponent>(uid, out var access))
         {
@@ -45,12 +47,12 @@ public sealed class IdCardSystem : SharedIdCardSystem
                 {
                     _popupSystem.PopupCoordinates(Loc.GetString("id-card-component-microwave-burnt", ("id", uid)),
                      transformComponent.Coordinates, PopupType.Medium);
-                    EntityManager.SpawnEntity("FoodBadRecipe",
+                    Spawn("FoodBadRecipe",
                         transformComponent.Coordinates);
                 }
                 _adminLogger.Add(LogType.Action, LogImpact.Medium,
                     $"{ToPrettyString(args.Microwave)} burnt {ToPrettyString(uid):entity}");
-                EntityManager.QueueDeleteEntity(uid);
+                QueueDel(uid);
                 return;
             }
 
@@ -78,14 +80,37 @@ public sealed class IdCardSystem : SharedIdCardSystem
             }
 
             // Give them a wonderful new access to compensate for everything
-            var random = _random.Pick(_prototypeManager.EnumeratePrototypes<AccessLevelPrototype>().ToArray());
+            var ids = _prototypeManager.EnumeratePrototypes<AccessLevelPrototype>().Where(x => x.CanAddToIdCard).ToArray();
+
+            if (ids.Length == 0)
+                return;
+
+            var random = _random.Pick(ids);
 
             access.Tags.Add(random.ID);
             Dirty(uid, access);
 
-            _adminLogger.Add(LogType.Action, LogImpact.Medium,
+            _adminLogger.Add(LogType.Action, LogImpact.High,
                     $"{ToPrettyString(args.Microwave)} added {random.ID} access to {ToPrettyString(uid):entity}");
 
+        }
+    }
+
+    public override void ExpireId(Entity<ExpireIdCardComponent> ent)
+    {
+        if (ent.Comp.Expired)
+            return;
+
+        base.ExpireId(ent);
+
+        if (ent.Comp.ExpireMessage != null)
+        {
+            _chat.TrySendInGameICMessage(
+                ent,
+                Loc.GetString(ent.Comp.ExpireMessage),
+                InGameICChatType.Speak,
+                ChatTransmitRange.Normal,
+                true);
         }
     }
 }

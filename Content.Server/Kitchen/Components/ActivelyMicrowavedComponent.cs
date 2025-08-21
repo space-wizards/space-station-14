@@ -1,5 +1,3 @@
-using Content.Shared.Kitchen;
-
 namespace Content.Server.Kitchen.Components;
 
 /// <summary>
@@ -8,4 +6,9 @@ namespace Content.Server.Kitchen.Components;
 [RegisterComponent]
 public sealed partial class ActivelyMicrowavedComponent : Component
 {
+    /// <summary>
+    /// The microwave this entity is actively being microwaved by.
+    /// </summary>
+    [DataField]
+    public EntityUid? Microwave;
 }

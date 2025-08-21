@@ -14,6 +14,8 @@
       name: ghost-role-information-guardian-name
       description: ghost-role-information-guardian-description
       rules: ghost-role-information-familiar-rules
+      mindRoles:
+      - MindRoleGhostRoleFamiliar
       raffle:
         settings: default
     - type: GhostTakeoverAvailable
@@ -231,12 +233,15 @@
     - type: Hands
     - type: ComplexInteraction
     - type: Clumsy
-      clumsyDamage:
+      gunShootFailDamage:
         types:
           Blunt: 5
           Piercing: 4
         groups:
           Burn: 3
+      catchingFailDamage:
+        types:
+          Blunt: 1
     - type: MeleeWeapon
       angle: 30
       animation: WeaponArcFist
@@ -250,7 +255,7 @@
       prototypes: [ HoloClownGear ]
     - type: RandomMetadata
       nameSegments:
-      - names_clown
+      - NamesClown
     - type: NpcFactionMember
       factions:
         - Syndicate
@@ -259,13 +264,13 @@
         task: SimpleHumanoidHostileCompound
 
 - type: entity
+  parent: BaseMentalAction
   id: ActionToggleGuardian
   name: Toggle Guardian
   description: Either manifests the guardian or recalls it back into your body
   components:
-  - type: InstantAction
+  - type: Action
     icon: Interface/Actions/manifest.png
-    event: !type:GuardianToggleActionEvent
     useDelay: 2
-    checkCanInteract: false
-    checkConsciousness: false
+  - type: InstantAction
+    event: !type:GuardianToggleActionEvent

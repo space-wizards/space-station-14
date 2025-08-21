@@ -1,7 +1,7 @@
 using Content.Server.DeviceLinking.Components;
-using Content.Server.DeviceLinking.Events;
 using Content.Shared.UserInterface;
 using Content.Shared.Access.Systems;
+using Content.Shared.DeviceLinking.Events;
 using Content.Shared.MachineLinking;
 using Content.Shared.TextScreen;
 using Robust.Server.GameObjects;
@@ -152,7 +152,7 @@ public sealed class SignalTimerSystem : EntitySystem
         if (!IsMessageValid(uid, args))
             return;
 
-        component.Delay = args.Delay.TotalSeconds;
+        component.Delay = Math.Min(args.Delay.TotalSeconds, component.MaxDuration);
         _appearanceSystem.SetData(uid, TextScreenVisuals.TargetTime, component.Delay);
     }
 

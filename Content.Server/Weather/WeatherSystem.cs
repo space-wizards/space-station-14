@@ -4,6 +4,7 @@ using Content.Shared.Weather;
 using Robust.Shared.Console;
 using Robust.Shared.GameStates;
 using Robust.Shared.Map;
+using System.Linq;
 
 namespace Content.Server.Weather;
 
@@ -42,7 +43,7 @@ public sealed class WeatherSystem : SharedWeatherSystem
 
         var mapId = new MapId(mapInt);
 
-        if (!MapManager.MapExists(mapId))
+        if (!_mapSystem.MapExists(mapId))
             return;
 
         if (!_mapSystem.TryGetMap(mapId, out var mapUid))
@@ -85,6 +86,7 @@ public sealed class WeatherSystem : SharedWeatherSystem
             return CompletionResult.FromHintOptions(CompletionHelper.MapIds(EntityManager), "Map Id");
 
         var a = CompletionHelper.PrototypeIDs<WeatherPrototype>(true, ProtoMan);
-        return CompletionResult.FromHintOptions(a, Loc.GetString("cmd-weather-hint"));
+        var b = a.Concat(new[] { new CompletionOption("null", Loc.GetString("cmd-weather-null")) });
+        return CompletionResult.FromHintOptions(b, Loc.GetString("cmd-weather-hint"));
     }
 }

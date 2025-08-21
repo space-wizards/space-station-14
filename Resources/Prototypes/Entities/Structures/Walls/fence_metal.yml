@@ -70,8 +70,8 @@
   - type: Appearance
   - type: GenericVisualizer
     visuals:
-      enum.ElectrifiedVisuals.IsPowered:
-        enum.ElectrifiedLayers.Powered:
+      enum.ElectrifiedVisuals.ShowSparks:
+        enum.ElectrifiedLayers.Sparks:
           True: { visible: True }
           False: { visible: False }
   - type: AnimationPlayer
@@ -91,7 +91,7 @@
     - state: straight_broken
     - state: electrified
       sprite: Effects/electricity.rsi
-      map: ["enum.ElectrifiedLayers.Powered"]
+      map: ["enum.ElectrifiedLayers.Sparks"]
       shader: unshaded
       visible: false
   - type: Physics
@@ -151,7 +151,7 @@
     - state: straight
     - state: electrified
       sprite: Effects/electricity.rsi
-      map: ["enum.ElectrifiedLayers.Powered"]
+      map: ["enum.ElectrifiedLayers.Sparks"]
       shader: unshaded
       visible: false
   - type: Fixtures
@@ -209,7 +209,7 @@
     - state: corner
     - state: electrified
       sprite: Effects/electricity.rsi
-      map: ["enum.ElectrifiedLayers.Powered"]
+      map: ["enum.ElectrifiedLayers.Sparks"]
       shader: unshaded
       visible: false
   - type: Fixtures
@@ -256,7 +256,7 @@
     - state: end
     - state: electrified
       sprite: Effects/electricity.rsi
-      map: ["enum.ElectrifiedLayers.Powered"]
+      map: ["enum.ElectrifiedLayers.Sparks"]
       shader: unshaded
       visible: false
   - type: Fixtures
@@ -292,7 +292,7 @@
       map: ["enum.DoorVisualLayers.Base"]
     - state: electrified
       sprite: Effects/electricity.rsi
-      map: [ "enum.ElectrifiedLayers.Powered" ]
+      map: [ "enum.ElectrifiedLayers.Sparks" ]
       shader: unshaded
       visible: false
   - type: Fixtures

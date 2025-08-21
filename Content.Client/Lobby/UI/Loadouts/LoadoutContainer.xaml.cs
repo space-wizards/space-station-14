@@ -20,6 +20,12 @@ public sealed partial class LoadoutContainer : BoxContainer
 
     public Button Select => SelectButton;
 
+    public string? Text
+    {
+        get => SelectButton.Text;
+        set => SelectButton.Text = value;
+    }
+
     public LoadoutContainer(ProtoId<LoadoutPrototype> proto, bool disabled, FormattedMessage? reason)
     {
         RobustXamlLoader.Load(this);
@@ -36,39 +42,27 @@ public sealed partial class LoadoutContainer : BoxContainer
 
         if (_protoManager.TryIndex(proto, out var loadProto))
         {
-            var ent = _entManager.System<LoadoutSystem>().GetFirstOrNull(loadProto);
+            var ent = loadProto.DummyEntity ?? _entManager.System<LoadoutSystem>().GetFirstOrNull(loadProto);
 
-            if (ent != null)
-            {
-                _entity = _entManager.SpawnEntity(ent, MapCoordinates.Nullspace);
-                Sprite.SetEntity(_entity);
+            if (ent == null)
+                return;
 
-                var spriteTooltip = new Tooltip();
-                spriteTooltip.SetMessage(FormattedMessage.FromUnformatted(_entManager.GetComponent<MetaDataComponent>(_entity.Value).EntityDescription));
-                TooltipSupplier = _ => spriteTooltip;
-            }
+            _entity = _entManager.SpawnEntity(ent, MapCoordinates.Nullspace);
+            Sprite.SetEntity(_entity);
+
+            var spriteTooltip = new Tooltip();
+            spriteTooltip.SetMessage(FormattedMessage.FromUnformatted(_entManager.GetComponent<MetaDataComponent>(_entity.Value).EntityDescription));
+
+            TooltipSupplier = _ => spriteTooltip;
         }
     }
 
     protected override void Dispose(bool disposing)
     {
         base.Dispose(disposing);
-
         if (!disposing)
             return;
 
         _entManager.DeleteEntity(_entity);
-    }
-
-    public bool Pressed
-    {
-        get => SelectButton.Pressed;
-        set => SelectButton.Pressed = value;
-    }
-
-    public string? Text
-    {
-        get => SelectButton.Text;
-        set => SelectButton.Text = value;
     }
 }

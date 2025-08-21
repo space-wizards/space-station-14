@@ -26,7 +26,8 @@ public sealed class ImmovableRodRule : StationEventSystem<ImmovableRodRuleCompon
 
         var proto = _prototypeManager.Index<EntityPrototype>(protoName);
 
-        if (proto.TryGetComponent<ImmovableRodComponent>(out var rod) && proto.TryGetComponent<TimedDespawnComponent>(out var despawn))
+        if (proto.TryGetComponent<ImmovableRodComponent>(out var rod, EntityManager.ComponentFactory) &&
+            proto.TryGetComponent<TimedDespawnComponent>(out var despawn, EntityManager.ComponentFactory))
         {
             if (!TryFindRandomTile(out _, out _, out _, out var targetCoords))
                 return;

@@ -25,8 +25,8 @@ ui-vote-type-not-available = This vote type has been disabled
 
 # Vote option only available for specific users.
 ui-vote-trusted-users-notice =
-  This vote option is only available to whitelisted players.
-  In addition, you must have been a ghost for { $timeReq } minutes.
+  This vote option is only available to players who have enough playtime or are whitelisted.
+  In addition, you must have been a ghost for { $timeReq } seconds.
 
 # Warning to not abuse a specific vote option.
 ui-vote-abuse-warning =
@@ -38,5 +38,5 @@ ui-vote-fluff = Powered by Robust™ Anti-Tamper Technology
 
 ## Vote menu command
 
-ui-vote-menu-command-description = Opens the voting menu
-ui-vote-menu-command-help-text = Usage: votemenu
+cmd-votemenu-desc = Opens the voting menu.
+cmd-votemenu-help = Usage: votemenu

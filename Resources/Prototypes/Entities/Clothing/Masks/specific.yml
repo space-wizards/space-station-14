@@ -1,5 +1,5 @@
 - type: entity
-  parent: ClothingMaskBase
+  parent: [ClothingMaskBase, BaseChameleon]
   id: ClothingMaskGasChameleon
   name: gas mask
   description: A face-covering mask that can be connected to an air supply.
@@ -16,10 +16,6 @@
       default: ClothingMaskGas
     - type: BreathMask
     - type: IdentityBlocker # need that for default ClothingMaskGas
-    - type: UserInterface
-      interfaces:
-        enum.ChameleonUiKey.Key:
-          type: ChameleonBoundUserInterface
     - type: HideLayerClothing
       slots:
       - Snout
@@ -30,6 +26,12 @@
   suffix: Voice Mask, Chameleon
   components:
     - type: VoiceMask
+    - type: UIRequiresLock
+      userInterfaceKeys:
+        - enum.ChameleonUiKey.Key
+        - enum.VoiceMaskUIKey.Key
+      accessDeniedSound: null
+      popup: null
     - type: HideLayerClothing
       slots:
       - Snout
@@ -39,35 +41,6 @@
           type: ChameleonBoundUserInterface
         enum.VoiceMaskUIKey.Key:
           type: VoiceMaskBoundUserInterface
-
-- type: entity
-  parent: ClothingMaskBase
-  id: ClothingMaskWeldingGas
-  name: welding gas mask
-  description: A gas mask with built in welding goggles and face shield. Looks like a skull, clearly designed by a nerd.
-  components:
-  - type: Sprite
-    sprite: Clothing/Mask/welding-gas.rsi
-    state: icon
-  - type: Clothing
-    sprite: Clothing/Mask/welding-gas.rsi
-  - type: BreathMask
-  - type: IngestionBlocker
-  - type: IdentityBlocker
-  - type: FlashImmunity
-  - type: EyeProtection
-  - type: PhysicalComposition
-    materialComposition:
-      Steel: 200
-      Glass: 100
-  - type: StaticPrice
-    price: 100
-  - type: Tag
-    tags:
-    - WhitelistChameleon
-  - type: HideLayerClothing
-    slots:
-    - Snout
 
 - type: entity
   parent: ClothingMaskBase
