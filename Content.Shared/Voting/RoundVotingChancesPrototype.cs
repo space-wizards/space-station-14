@@ -1,4 +1,5 @@
 using Robust.Shared.Prototypes;
+using Content.Shared._Starlight.Voting; // Starlight-edit
 
 namespace Content.Shared.Voting.Prototypes;
 
@@ -10,11 +11,11 @@ public sealed partial class RoundVotingChancesPrototype : IPrototype
     public string ID { get; } = default!;
     
     [DataField("chances")] 
-    public Dictionary<string, float> Chances { get; private set; } = new();
+    public List<GameModeChance> Chances { get; private set; } = new(); // Starlight-edit
     
     private RoundVotingChancesPrototype() { }
     
-    public RoundVotingChancesPrototype(string id, Dictionary<string, float> chances)
+    public RoundVotingChancesPrototype(string id, List<GameModeChance> chances) // Starlight-edit
     {
         ID = id;
         Chances = chances;
