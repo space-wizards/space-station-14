@@ -1,3 +1,4 @@
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Shared.Access.Components;
 using Content.Shared.Administration.Logs;
@@ -6,10 +7,12 @@ using Content.Shared.Database;
 using Content.Shared.DoAfter;
 using Content.Shared.Interaction;
 using Content.Shared.Popups;
+using Content.Shared.Verbs;
 using Robust.Shared.Containers;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.Timing;
+using Robust.Shared.Utility;
 
 namespace Content.Shared.Access.Systems;
 
@@ -34,6 +37,7 @@ public abstract partial class SharedAccessOverriderSystem : EntitySystem
         SubscribeLocalEvent<AccessOverriderComponent, EntInsertedIntoContainerMessage>(UpdateUserInterface);
         SubscribeLocalEvent<AccessOverriderComponent, EntRemovedFromContainerMessage>(UpdateUserInterface);
 
+        SubscribeLocalEvent<AccessOverriderComponent, GetVerbsEvent<UtilityVerb>>(OnGetVerbs);
         SubscribeLocalEvent<AccessOverriderComponent, AfterInteractEvent>(AfterInteractOn);
         SubscribeLocalEvent<AccessOverriderComponent, AccessOverriderDoAfterEvent>(OnDoAfter);
 
@@ -68,20 +72,45 @@ public abstract partial class SharedAccessOverriderSystem : EntitySystem
         DirtyUI(ent);
     }
 
+    private void OnGetVerbs(Entity<AccessOverriderComponent> ent, ref GetVerbsEvent<UtilityVerb> args)
+    {
+        var user = args.User;
+        var target = args.Target;
+
+        if (!CanConfigurate(user, target))
+            return;
+
+        args.Verbs.Add(new UtilityVerb
+        {
+            Act = () => StartDoAfter(ent, user, target),
+            Icon = new SpriteSpecifier.Texture(new ResPath("/Textures/Interface/VerbIcons/in.svg.192dpi.png")),
+            Text = Loc.GetString("access-overrider-verb-modify-access"),
+        });
+    }
+
     private void AfterInteractOn(Entity<AccessOverriderComponent> ent, ref AfterInteractEvent args)
     {
-        if (args.Target is not { } target || !HasComp<AccessReaderComponent>(target))
+        if (!CanConfigurate(args.User, args.Target))
             return;
 
-        if (!_interactionSystem.InRangeUnobstructed(args.User, target))
-            return;
+        StartDoAfter(ent, args.User, args.Target.Value);
+    }
 
+    private bool CanConfigurate(EntityUid user, [NotNullWhen(true)] EntityUid? target)
+    {
+        return target is not null
+               && HasComp<AccessReaderComponent>(target)
+               && _interactionSystem.InRangeUnobstructed(user, target.Value);
+    }
+
+    private void StartDoAfter(Entity<AccessOverriderComponent> ent, EntityUid user, EntityUid target)
+    {
         _doAfterSystem.TryStartDoAfter(new DoAfterArgs(EntityManager,
-            args.User,
+            user,
             ent.Comp.DoAfterDuration,
             new AccessOverriderDoAfterEvent(),
             ent,
-            target: args.Target,
+            target: target,
             used: ent)
         {
             BreakOnMove = true,
@@ -92,13 +121,10 @@ public abstract partial class SharedAccessOverriderSystem : EntitySystem
 
     private void OnDoAfter(Entity<AccessOverriderComponent> ent, ref AccessOverriderDoAfterEvent args)
     {
-        if (args.Handled || args.Cancelled)
+        if (args.Handled || args.Cancelled || !CanConfigurate(args.User, args.Target))
             return;
 
         args.Handled = true;
-
-        if (args.Args.Target == null)
-            return;
 
         ent.Comp.TargetAccessReaderId = args.Target;
         Dirty(ent);

@@ -7,4 +7,4 @@ access-overrider-window-missing-privileges = Access to this device cannot be mod
     {$privileges}.
 access-overrider-cannot-modify-access = You do not have sufficient privileges to modify this device!
 access-overrider-out-of-range = The connected device is too far away
-
+access-overrider-verb-modify-access = Modify access
