@@ -12112,5 +12112,12 @@ Entries:
   id: 136100
   time: '2025-08-21T11:21:42.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/1361
+- author: walksanatora
+  changes:
+  - message: AIs are now properly informed of law updates when shunting.
+    type: Fix
+  id: 141000
+  time: '2025-08-21T11:23:26.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1410
 Order: -1
 
