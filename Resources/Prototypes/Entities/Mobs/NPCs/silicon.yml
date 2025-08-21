@@ -105,6 +105,7 @@
     - SiliconEmotes
     - Bot
     - Unimplantable
+    - CannotSuicide
   - type: Body
     prototype: Bot
   - type: Speech
