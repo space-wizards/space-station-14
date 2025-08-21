@@ -1,0 +1,57 @@
+- type: language
+  id: Terrum
+  icon: LanguageIconTerrum
+  speech:
+    color: "#a3d4eb"
+  obfuscation:
+    !type:SyllableObfuscation
+    minSyllables: 1
+    maxSyllables: 2
+    replacement:
+    - sha
+    - vu
+    - nah
+    - ha
+    - yom
+    - ma
+    - cha
+    - ar
+    - et
+    - mol
+    - lua
+    - ch
+    - na
+    - sh
+    - ni
+    - yah
+    - bes
+    - ol
+    - hish
+    - ev
+    - la
+    - ot
+    - la
+    - khe
+    - tza
+    - chak
+    - hak
+    - hin
+    - hok
+    - lir
+    - tov
+    - yef
+    - yfe
+    - cho
+    - ar
+    - kas
+    - kal
+    - ra
+    - lom
+    - im
+    - bok
+    - erev
+    - shlo
+    - lo
+    - ta
+    - im
+    - yom

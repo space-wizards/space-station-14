@@ -3,6 +3,7 @@ using Content.Shared.Administration;
 using Robust.Shared.Player;
 using Robust.Shared.Console;
 using Robust.Shared.Enums;
+using Content.Shared.Chat; // Starlight
 
 namespace Content.Server.Chat.Commands
 {

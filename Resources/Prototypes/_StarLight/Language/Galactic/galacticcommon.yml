@@ -1,0 +1,31 @@
+# The "Default Language" for everyone other than Universal.
+- type: language
+  id: GalacticCommon
+  icon: LanguageIconGalCom
+  iconUnderstood: false
+  obfuscation:
+    !type:SyllableObfuscation
+    minSyllables: 1
+    maxSyllables: 3
+    replacement:
+    - vol
+    - zum
+    - coo
+    - zoo
+    - bi
+    - do
+    - ooz
+    - ite
+    - og
+    - re
+    - si
+    - ite
+    - ish
+    - ar
+    - at
+    - on
+    - ee
+    - east
+    - ma
+    - da
+    - rim

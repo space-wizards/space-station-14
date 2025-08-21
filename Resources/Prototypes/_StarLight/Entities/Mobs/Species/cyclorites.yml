@@ -3,6 +3,13 @@
   id: BaseMobCyclorite
   abstract: true
   components:
+  - type: LanguageKnowledge
+    speaks:
+    - GalacticCommon
+    - Terrum
+    understands:
+    - GalacticCommon
+    - Terrum
   - type: Absorbable
   - type: Hunger
   - type: Icon

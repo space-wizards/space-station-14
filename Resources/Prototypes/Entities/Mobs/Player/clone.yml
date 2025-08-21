@@ -62,6 +62,10 @@
   - SouthernAccent
   - SpanishAccent
   - StutteringAccent
+  # Languages - Starlight
+  - LanguageSpeaker
+  - LanguageKnowledge
+  - ForeignerTrait
   blacklist:
     components:
     - AttachedClothing # helmets, which are part of the suit

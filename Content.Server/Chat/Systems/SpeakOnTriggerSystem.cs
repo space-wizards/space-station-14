@@ -2,6 +2,7 @@ using Content.Server.Explosion.EntitySystems;
 using Content.Shared.Timing;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
+using Content.Shared.Chat; // Starlight
 
 namespace Content.Server.Chat.Systems;
 

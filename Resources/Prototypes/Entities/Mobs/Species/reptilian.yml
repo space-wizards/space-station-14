@@ -5,6 +5,15 @@
   id: BaseMobReptilian
   abstract: true
   components:
+  # Starlight-start: Languages
+  - type: LanguageKnowledge
+    speaks:
+    - GalacticCommon
+    - Draconic
+    understands:
+    - GalacticCommon
+    - Draconic
+  # Starlight-end
   - type: Absorbable
   - type: HumanoidAppearance
     species: Reptilian
