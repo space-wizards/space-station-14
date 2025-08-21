@@ -12231,5 +12231,12 @@ Entries:
   id: 139502
   time: '2025-08-21T18:15:49.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/1395
+- author: Happyrobot33
+  changes:
+  - message: Fixed MMI's not being able to speak or understand languages.
+    type: Fix
+  id: 141600
+  time: '2025-08-21T19:53:44.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1416
 Order: -1
 
