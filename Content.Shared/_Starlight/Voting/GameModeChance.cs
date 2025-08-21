@@ -11,6 +11,6 @@ public sealed class GameModeChance
     [DataField(required: true)]
     public float Chance { get; set; } = default!;
 
-    [DataField("memorizeCount")]
-    public int MemorizeRoundCount { get; set; } = 0;
+    [DataField]
+    public int MemorizeCount { get; set; } = 0;
 }

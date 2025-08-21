@@ -272,8 +272,8 @@ namespace Content.Server.Voting.Managers
                 if (_roundVotingChances != null)
                 {
                     var chance = _roundVotingChances.Chances.FirstOrDefault(a => a.ID == picked);
-                    if (chance != null && chance.MemorizeRoundCount > 0)
-                        MemorizedRules.Add(picked, chance.MemorizeRoundCount);
+                    if (chance != null && chance.MemorizeCount > 0)
+                        MemorizedRules.Add(picked, chance.MemorizeCount);
                 }
                 // Starlight-end
                 _adminLogger.Add(LogType.Vote, LogImpact.Medium, $"Preset vote finished: {picked}");
