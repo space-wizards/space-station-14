@@ -403,7 +403,7 @@ public partial class AtmosphereSystem
             return false;
 
         var contains = grid.Comp.DeltaPressureEntityLookup.ContainsKey(ent.Owner);
-        Debug.Assert(contains && grid.Comp.DeltaPressureEntities.Contains(ent));
+        Debug.Assert(contains == grid.Comp.DeltaPressureEntities.Contains(ent));
 
         return contains;
     }

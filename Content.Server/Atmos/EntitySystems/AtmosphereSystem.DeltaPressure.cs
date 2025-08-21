@@ -64,6 +64,8 @@ public sealed partial class AtmosphereSystem
             opposingGroupB[i] = pressures[i + DeltaPressurePairCount];
         }
 
+        // TODO ATMOS: Needs to be changed to batch operations so that more operations can actually be done in parallel.
+
         // Need to determine max pressure in opposing directions for absolute pressure calcs.
         NumericsHelpers.Max(opposingGroupA, opposingGroupB, opposingGroupMax);
 
