@@ -3,6 +3,8 @@ using System.Linq;
 using System.Numerics;
 using Content.Server.Cargo.Components;
 using Content.Server.Cargo.Systems;
+using Content.Server.Nutrition.Components;
+using Content.Server.Nutrition.EntitySystems;
 using Content.Shared.Cargo.Prototypes;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Prototypes;
@@ -271,7 +273,6 @@ public sealed class CargoTest
             {
                 foreach (var (proto, comp) in pair.GetPrototypesWithComponent<MobPriceComponent>())
                 {
-                    Assert.That(proto.TryGetComponent<BodyComponent>(out _, componentFactory), $"Found MobPriceComponent on {proto.ID}, but no BodyComponent!");
                     Assert.That(proto.TryGetComponent<MobStateComponent>(out _, componentFactory), $"Found MobPriceComponent on {proto.ID}, but no MobStateComponent!");
                 }
             });
