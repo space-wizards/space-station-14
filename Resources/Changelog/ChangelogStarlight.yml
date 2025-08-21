@@ -12119,5 +12119,12 @@ Entries:
   id: 141000
   time: '2025-08-21T11:23:26.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/1410
+- author: Trep_Maul
+  changes:
+  - message: AME now heals slowly (faster if underloaded)
+    type: Add
+  id: 136600
+  time: '2025-08-21T11:25:35.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1366
 Order: -1
 
