@@ -25,6 +25,32 @@
     - !type:TileNotBlocked
 
 - type: construction
+  id: GirderDiagonal
+  graph: GirderDiagonal
+  startNode: start
+  targetNode: girderDiagonal
+  category: construction-category-structures
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canRotate: true
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
+
+- type: construction
+  id: ReinforcedGirderDiagonal
+  graph: GirderDiagonal
+  startNode: start
+  targetNode: reinforcedGirderDiagonal
+  category: construction-category-structures
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canRotate: true
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
+
+- type: construction
   id: ClockworkGirder
   graph: ClockworkGirder
   startNode: start
@@ -168,9 +194,37 @@
     - !type:TileNotBlocked
 
 - type: construction
+  id: WallSolidDiagonal
+  name: construction-recipe-diagonal-shuttle-wall
+  graph: GirderDiagonalDiagonal
+  startNode: start
+  targetNode: wallDiagonal
+  category: construction-category-structures
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canRotate: true
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
+
+- type: construction
+  id: WallReinforcedDiagonal
+  name: construction-recipe-diagonal-shuttle-wall
+  graph: GirderDiagonal
+  startNode: start
+  targetNode: wallReinforcedDiagonal
+  category: construction-category-structures
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canRotate: true
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
+
+- type: construction
   id: DiagonalShuttleWall
   name: construction-recipe-diagonal-shuttle-wall
-  graph: Girder
+  graph: GirderDiagonal
   startNode: start
   targetNode: diagonalshuttleWall
   category: construction-category-structures
