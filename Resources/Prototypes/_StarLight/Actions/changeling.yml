@@ -84,24 +84,6 @@
 
 # combat
 - type: entity
-  id: ActionToggleArmblade
-  name: Toggle Arm Blade
-  description: Reform one of your arms into a strong blade, composed of bone and flesh. Retract on secondary use. Costs 15 chemicals.
-  categories: [ HideSpawnMenu ]
-  components:
-  - type: Action
-    useDelay: 2
-    itemIconStyle: NoItem
-    icon:
-      sprite: Changeling/changeling_abilities.rsi
-      state: armblade
-  - type: InstantAction
-    event: !type:ToggleArmbladeEvent {}
-  - type: ChangelingAction
-    chemicalCost: 30
-    requireAbsorbed: 2
-
-- type: entity
   id: ActionCreateBoneShard
   name: Form Bone Shard
   description: Break off shards of your bone and shape them into a throwing star. Costs 15 chemicals.

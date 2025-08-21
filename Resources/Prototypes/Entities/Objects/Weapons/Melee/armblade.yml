@@ -6,7 +6,7 @@
   components:
   - type: Sharp
   - type: Sprite
-    sprite: Objects/Weapons/Melee/armblade.rsi
+    sprite: Changeling/arm_blade.rsi # Starlight new changeling armblade sprites
     state: icon
   - type: MeleeWeapon
     soundHit:

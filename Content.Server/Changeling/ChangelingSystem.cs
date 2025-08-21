@@ -104,7 +104,6 @@ public sealed partial class ChangelingSystem : EntitySystem
     [Dependency] private readonly NpcFactionSystem _factionSystem = default!;
     [Dependency] private readonly MovementModStatusSystem _movementMod = default!;
 
-    public EntProtoId ArmbladePrototype = "ArmBladeChangeling";
     public EntProtoId FakeArmbladePrototype = "FakeArmBladeChangeling";
 
     public EntProtoId ShieldPrototype = "ChangelingShield";

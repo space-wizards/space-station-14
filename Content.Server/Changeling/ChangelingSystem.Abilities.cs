@@ -41,7 +41,6 @@ public sealed partial class ChangelingSystem : EntitySystem
         SubscribeLocalEvent<ChangelingComponent, EnterStasisEvent>(OnEnterStasis);
         SubscribeLocalEvent<ChangelingComponent, ExitStasisEvent>(OnExitStasis);
 
-        SubscribeLocalEvent<ChangelingComponent, ToggleArmbladeEvent>(OnToggleArmblade);
         SubscribeLocalEvent<ChangelingComponent, CreateBoneShardEvent>(OnCreateBoneShard);
         SubscribeLocalEvent<ChangelingComponent, ToggleChitinousArmorEvent>(OnToggleArmor);
         SubscribeLocalEvent<ChangelingComponent, ToggleOrganicShieldEvent>(OnToggleShield);
@@ -247,17 +246,6 @@ public sealed partial class ChangelingSystem : EntitySystem
     #endregion
 
     #region Combat Abilities
-
-    private void OnToggleArmblade(EntityUid uid, ChangelingComponent comp, ref ToggleArmbladeEvent args)
-    {
-        if (!TryUseAbility(uid, comp, args))
-            return;
-
-        if (!TryToggleItem(uid, ArmbladePrototype, comp))
-            return;
-
-        PlayMeatySound(uid, comp);
-    }
     private void OnCreateBoneShard(EntityUid uid, ChangelingComponent comp, ref CreateBoneShardEvent args)
     {
         if (!TryUseAbility(uid, comp, args))
