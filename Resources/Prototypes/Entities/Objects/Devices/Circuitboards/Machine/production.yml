@@ -1349,3 +1349,15 @@
       Steel: 2
       Manipulator: 2
       Cable: 1
+
+- type: entity
+  parent: BaseMachineCircuitboard
+  id: MassDriverCircuitboard
+  name: mass driver board
+  components:
+  - type: MachineBoard
+    prototype: MassDriver
+    stackRequirements:
+      Steel: 5
+      Manipulator: 2
+      Cable: 4
