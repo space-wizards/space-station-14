@@ -29,3 +29,7 @@
 - type: font
   id: Octatrax
   path: /Fonts/_Starlight/Octatrax.ttf
+
+- type: font
+  id: Draconic
+  path: /Fonts/_Starlight/Draconic-modern.otf
