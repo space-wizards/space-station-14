@@ -1,15 +1,15 @@
-﻿using Content.Shared.Body.Components;
+﻿using Content.Shared.Body.Events;
 
 namespace Content.Shared.Traits.Assorted;
 
-public sealed partial class HemophiliaSystem : EntitySystem
+public sealed class HemophiliaSystem : EntitySystem
 {
     public override void Initialize()
     {
-        SubscribeLocalEvent<HemophiliaComponent, EntityBleedEvent>(OnBleedStackReduceEvent);
+        SubscribeLocalEvent<HemophiliaComponent, BleedModifierEvent>(OnBleedModifier);
     }
 
-    private void OnBleedStackReduceEvent(Entity<HemophiliaComponent> ent, ref EntityBleedEvent args)
+    private void OnBleedModifier(Entity<HemophiliaComponent> ent, ref BleedModifierEvent args)
     {
         args.BleedReductionAmount *= ent.Comp.HemophiliaBleedReductionMultiplier;
     }

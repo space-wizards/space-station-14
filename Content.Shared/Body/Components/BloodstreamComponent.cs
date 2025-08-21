@@ -205,11 +205,3 @@ public sealed partial class BloodstreamComponent : Component
     [DataField]
     public ProtoId<AlertPrototype> BleedingAlert = "Bleed";
 }
-
-/// <summary>
-/// Raised on an entity when they bleed.
-/// </summary>
-/// <param name="BleedAmount">The amount of blood the entity will lose.</param>
-/// <param name="BleedReductionAmount">The amount of bleed reduction that will happen.</param>
-[ByRefEvent]
-public record struct EntityBleedEvent(float BleedAmount, float BleedReductionAmount);
