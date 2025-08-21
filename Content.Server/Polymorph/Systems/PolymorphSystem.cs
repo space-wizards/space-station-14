@@ -150,13 +150,10 @@ public sealed partial class PolymorphSystem : EntitySystem
 
     private void OnPolymorphedTerminating(Entity<PolymorphedEntityComponent> ent, ref EntityTerminatingEvent args)
     {
-        if (ent.Comp.Configuration.RevertOnDelete)
-        {
-            Revert(ent.AsNullable());
-            ent.Comp.Parent = null;
-        }
+        if (!ent.Comp.Configuration.RevertOnDelete)
+            return;
 
-        QueueDel(ent);
+        Revert(ent.AsNullable());
     }
 
     /// <summary>
