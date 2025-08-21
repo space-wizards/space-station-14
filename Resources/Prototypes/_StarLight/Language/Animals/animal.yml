@@ -28,6 +28,7 @@
 
 - type: language
   id: Cat
+  icon: LanguageIconAnimal
   obfuscation:
     !type:SyllableObfuscation
     minSyllables: 1
@@ -40,6 +41,7 @@
 
 - type: language
   id: Dog
+  icon: LanguageIconAnimal
   obfuscation:
     !type:SyllableObfuscation
     minSyllables: 1
@@ -54,6 +56,7 @@
 
 - type: language
   id: Fox
+  icon: LanguageIconAnimal
   obfuscation:
     !type:SyllableObfuscation
     minSyllables: 1
@@ -68,6 +71,7 @@
 
 - type: language
   id: Chicken
+  icon: LanguageIconAnimal
   obfuscation:
     !type:SyllableObfuscation
     minSyllables: 1
@@ -79,6 +83,7 @@
 
 - type: language
   id: Duck
+  icon: LanguageIconAnimal
   obfuscation:
     !type:SyllableObfuscation
     minSyllables: 1
@@ -90,6 +95,7 @@
 
 - type: language
   id: Pig
+  icon: LanguageIconAnimal
   obfuscation:
     !type:SyllableObfuscation
     minSyllables: 1

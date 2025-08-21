@@ -26,6 +26,8 @@
     - Sylvan
     - Terrum
     - VoxPidgin
+    - Scratch
+    - SolCommon
   - type: TextToSpeech
   # Starlight-end
   - type: Instrument
