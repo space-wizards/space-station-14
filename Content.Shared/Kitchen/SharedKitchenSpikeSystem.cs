@@ -137,7 +137,7 @@ public sealed class SharedKitchenSpikeSystem : EntitySystem
 
         args.Handled = true;
 
-        if (TryComp<ToolComponent>(ent, out var tool) && _toolSystem.HasQuality(ent, ent.Comp.RequiredToolQuality, tool))
+        if (!TryComp<ToolComponent>(ent, out var tool) || !_tool.HasQuality(ent, ent.Comp.RequiredToolQuality, tool))
         {
             _popupSystem.PopupClient(Loc.GetString("butcherable-need-knife",
                     ("target", Identity.Entity(victim.Value, EntityManager))),
