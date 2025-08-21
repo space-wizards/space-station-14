@@ -53,6 +53,8 @@ public sealed class StartEndGameRulesTest
             Assert.That(!gameTicker.GetAddedGameRules().Any());
         });
 
+        await server.RemoveAllDummySessions();
+
         await pair.CleanReturnAsync();
     }
 }
