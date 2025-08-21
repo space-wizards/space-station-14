@@ -42,7 +42,7 @@
     attackRate: 1.5
     damage:
       types:
-        Slash: 14
+        Slash: 17
     soundHit:
         path: /Audio/Weapons/bladeslice.ogg
   - type: Item
@@ -54,7 +54,7 @@
   - type: DisarmMalus
 
 - type: entity
-  parent: Cane
+  parent: [Cane, VoiceLock]
   id: CaneSheath
   suffix: Empty
   components:
@@ -70,6 +70,9 @@
     interfaces:
       enum.StorageUiKey.Key:
         type: StorageBoundUserInterface
+  - type: ItemSlotsLock
+    slots:
+    - item
   - type: ItemSlots
     slots:
       item:

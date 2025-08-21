@@ -1,6 +1,7 @@
 using Content.Shared.ActionBlocker;
 using Content.Shared.Actions;
 using Content.Shared.Administration.Managers;
+using Content.Shared.Chat.Prototypes;
 using Content.Shared.Containers.ItemSlots;
 using Content.Shared.Database;
 using Content.Shared.Doors.Systems;
@@ -17,7 +18,6 @@ using Content.Shared.Power;
 using Content.Shared.Power.EntitySystems;
 using Content.Shared.StationAi;
 using Content.Shared.Verbs;
-using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Containers;
 using Robust.Shared.Map;
@@ -27,8 +27,8 @@ using Robust.Shared.Physics;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.Timing;
-using System.Diagnostics.CodeAnalysis;
 using Robust.Shared.Utility;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Content.Shared.Silicons.StationAi;
 
@@ -70,6 +70,7 @@ public abstract partial class SharedStationAiSystem : EntitySystem
     private EntityQuery<MapGridComponent> _gridQuery;
 
     private static readonly EntProtoId DefaultAi = "StationAiBrain";
+    private readonly ProtoId<ChatNotificationPrototype> _downloadChatNotificationPrototype = "IntellicardDownload";
 
     private const float MaxVisionMultiplier = 5f;
 
@@ -287,10 +288,10 @@ public abstract partial class SharedStationAiSystem : EntitySystem
             return;
         }
 
-        if (TryGetHeld((args.Target.Value, targetHolder), out var held) && _timing.CurTime > intelliComp.NextWarningAllowed)
+        if (TryGetHeld((args.Target.Value, targetHolder), out var held))
         {
-            intelliComp.NextWarningAllowed = _timing.CurTime + intelliComp.WarningDelay;
-            AnnounceIntellicardUsage(held, intelliComp.WarningSound);
+            var ev = new ChatNotificationEvent(_downloadChatNotificationPrototype, args.Used, args.User);
+            RaiseLocalEvent(held, ref ev);
         }
 
         var doAfterArgs = new DoAfterArgs(EntityManager, args.User, cardHasAi ? intelliComp.UploadTime : intelliComp.DownloadTime, new IntellicardDoAfterEvent(), args.Target, ent.Owner)
@@ -527,8 +528,6 @@ public abstract partial class SharedStationAiSystem : EntitySystem
         // Otherwise let generic visualizers handle the appearance update
         _appearance.SetData(entity.Owner, StationAiVisualState.Key, state);
     }
-
-    public virtual void AnnounceIntellicardUsage(EntityUid uid, SoundSpecifier? cue = null) { }
 
     public virtual bool SetVisionEnabled(Entity<StationAiVisionComponent> entity, bool enabled, bool announce = false)
     {
