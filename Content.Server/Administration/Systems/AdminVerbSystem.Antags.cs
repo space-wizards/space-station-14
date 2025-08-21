@@ -27,8 +27,8 @@ public sealed partial class AdminVerbSystem
     private static readonly EntProtoId DefaultNukeOpRule = "LoneOpsSpawn";
     private static readonly EntProtoId DefaultRevsRule = "Revolutionary";
     private static readonly EntProtoId DefaultThiefRule = "Thief";
+    private static readonly EntProtoId DefaultChangelingRule = "Changeling";
     private static readonly ProtoId<StartingGearPrototype> PirateGearId = "PirateGear";
-    
     private static readonly EntProtoId DefaultVampireRule = "Vampire"; //Starlight
     
     private static readonly EntProtoId ParadoxCloneRuleId = "ParadoxCloneSpawn";
@@ -60,7 +60,7 @@ public sealed partial class AdminVerbSystem
                 _antag.ForceMakeAntag<TraitorRuleComponent>(targetPlayer, DefaultTraitorRule);
             },
             Impact = LogImpact.High,
-            Message = string.Join(": ", traitorName,  Loc.GetString("admin-verb-make-traitor")),
+            Message = string.Join(": ", traitorName, Loc.GetString("admin-verb-make-traitor")),
         };
         args.Verbs.Add(traitor);
 
@@ -155,6 +155,21 @@ public sealed partial class AdminVerbSystem
         };
         args.Verbs.Add(thief);
 
+        var changelingName = Loc.GetString("admin-verb-text-make-changeling-wip"); //SL edit, -wip as we allready have lings
+        Verb changeling = new()
+        {
+            Text = changelingName,
+            Category = VerbCategory.Antag,
+            Icon = new SpriteSpecifier.Rsi(new ResPath("/Textures/Objects/Weapons/Melee/armblade.rsi"), "icon"),
+            Act = () =>
+            {
+                _antag.ForceMakeAntag<ChangelingRuleComponent>(targetPlayer, DefaultChangelingRule);
+            },
+            Impact = LogImpact.High,
+            Message = string.Join(": ", changelingName, Loc.GetString("admin-verb-make-changeling-wip")), //SL edit: -wip as we have lings allready
+        };
+        args.Verbs.Add(changeling);
+
         var paradoxCloneName = Loc.GetString("admin-verb-text-make-paradox-clone");
         Verb paradox = new()
         {
@@ -186,7 +201,7 @@ public sealed partial class AdminVerbSystem
             Icon = new SpriteSpecifier.Rsi(new ResPath("/Textures/Changeling/changeling_abilities.rsi"), "transform"),
             Act = () =>
             {
-                _antag.ForceMakeAntag<ChangelingRuleComponent>(targetPlayer, "Changeling");
+                _antag.ForceMakeAntag<SLChangelingRuleComponent>(targetPlayer, "SLChangeling");
             },
             Impact = LogImpact.High,
             Message = Loc.GetString("admin-verb-make-changeling"),

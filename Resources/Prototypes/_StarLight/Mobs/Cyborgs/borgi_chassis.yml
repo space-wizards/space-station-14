@@ -148,7 +148,9 @@
   - type: Lock
     locked: true
     unlockOnClick: false
-  - type: ActivatableUIRequiresLock
+  - type: UIRequiresLock
+    userInterfaceKeys:
+    - enum.BorgUiKey.Key
   - type: LockedWiresPanel
   - type: Pullable
   - type: StandingState
@@ -175,6 +177,28 @@
     - Binary
   - type: CyborgSparkEffect
   - type: StationAIShunt
+  - type: LanguageKnowledge
+    speaks:
+    - GalacticCommon
+    - Machine
+    - Dog
+    understands:
+    - GalacticCommon
+    - SolCommon
+    - Machine
+    - Canilunzt
+    - Sign
+    - Bubblish
+    - Chittin
+    - Draconic
+    - Marish
+    - Moffic
+    - Nekomimetic
+    - Sylvan
+    - Terrum
+    - VoxPidgin
+    - Scratch
+    - Dog
 
 - type: entity
   parent: [ BaseBorgiChassis, BaseBorgTransponder ]
@@ -194,8 +218,16 @@
       receiveFrequencyId: CyborgControl
       transmitFrequencyId: RoboticsConsole
       savableAddress: false
-    - type: AutomatedTimer
-    - type: ExplodeOnTrigger #bad borgis get exploded.
+    - type: TimerTrigger
+      delay: 10
+      examinable: false
+      beepSound:
+        path: /Audio/Effects/Cargo/buzz_two.ogg
+        params:
+          volume: -4
+    - type: ExplodeOnTrigger
+      keysIn:
+      - timer
     - type: Explosive
       explosionType: Minibomb
       deleteAfterExplosion: false # let damage threshold gib the borgi
@@ -203,13 +235,6 @@
       intensitySlope: 100
       maxIntensity: 60
       canCreateVacuum: false # its for killing the borg not the station
-    - type: OnUseTimerTrigger
-      delay: 10
-      examinable: false
-      beepSound: # it is LITERALLY a minibomb in their chassis.
-        path: /Audio/Effects/minibombcountdown.ogg
-        params:
-          volume: 12
     - type: IonStormTarget
     - type: Access
       enabled: false

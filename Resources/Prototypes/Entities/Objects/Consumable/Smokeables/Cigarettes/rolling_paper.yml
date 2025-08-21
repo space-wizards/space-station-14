@@ -41,6 +41,10 @@
         amount: 2
       - id: CigaretteFilter
         amount: 2
+  # Starlight-start: Vending Machines Prices
+  - type: ItemPrice
+    priceCategory: miscellaneous
+  # Starlight-end
 
 - type: entity
   id: PaperRolling

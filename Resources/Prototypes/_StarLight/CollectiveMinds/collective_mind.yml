@@ -5,14 +5,6 @@
   color: "#15912a"
   requiredTags: 
   - Diona
-
-- type: collectiveMind
-  id: Arachnids
-  name: collective-mind-arachnids
-  keycode: 'a'
-  color: "#cec816"
-  requiredTags: 
-  - Arachnid
   
 - type: collectiveMind
   id: Carp
@@ -23,14 +15,6 @@
   - Dragon
   requiredTags: 
   - Carp
-  
-- type: collectiveMind
-  id: Zombie
-  name: collective-mind-zombie
-  keycode: 'z'
-  color: "#508053"
-  requiredComponents:
-  - Zombie
   
 - type: collectiveMind
   id: Abductor
@@ -72,11 +56,3 @@
   requiredTags: 
   - Resomi
   - Avali
-
-- type: collectiveMind
-  id: Empathy
-  name: collective-mind-empathy
-  keycode: 'e'
-  color: "#ff00f2"
-  requiredComponents: 
-  - Shadekin

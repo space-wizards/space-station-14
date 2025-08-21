@@ -1,0 +1,9 @@
+- type: language
+  id: Draconic
+  icon: LanguageIconLizard
+  speech:
+    color: "#2aca2add"
+    fontId: Draconic
+    obfuscationFont: true
+  obfuscation:
+    !type:RandomObfuscation

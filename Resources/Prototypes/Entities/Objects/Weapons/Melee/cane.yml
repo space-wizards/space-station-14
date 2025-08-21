@@ -25,6 +25,10 @@
         Blunt: 3
   - type: UseDelay
     delay: 1
+  # Starlight-start: Vending Machines Prices
+  - type: ItemPrice
+    fallbackPrice: 25
+  # Starlight-end
 
 - type: entity
   name: cane blade
@@ -53,7 +57,7 @@
   - type: DisarmMalus
 
 - type: entity
-  parent: Cane
+  parent: [Cane, VoiceLock]
   id: CaneSheath
   suffix: Empty
   components:
@@ -69,6 +73,9 @@
     interfaces:
       enum.StorageUiKey.Key:
         type: StorageBoundUserInterface
+  - type: ItemSlotsLock
+    slots:
+    - item
   - type: ItemSlots
     slots:
       item:

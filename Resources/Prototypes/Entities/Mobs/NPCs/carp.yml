@@ -5,6 +5,14 @@
   description: It's a space carp.
   abstract: true
   components:
+  # Starlight-start: Languages
+    - type: LanguageSpeaker
+    - type: LanguageKnowledge
+      speaks:
+      - Carptongue
+      understands:
+      - Carptongue
+  # Starlight-end
     - type: InputMover
     - type: MobMover
     - type: HTN
@@ -77,8 +85,6 @@
         - Carp
         - DoorBumpOpener
         - CannotSuicide
-    - type: ReplacementAccent
-      accent: genericAggressive
     - type: Speech
       speechVerb: LargeMob
     - type: InteractionPopup

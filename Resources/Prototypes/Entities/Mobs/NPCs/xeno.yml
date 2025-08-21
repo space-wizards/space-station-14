@@ -5,6 +5,14 @@
   parent: SimpleSpaceMobBase
   description: They mostly come at night. Mostly.
   components:
+  # Starlight-start: Languages
+  - type: LanguageSpeaker
+  - type: LanguageKnowledge
+    speaks:
+    - Xeno
+    understands:
+    - Xeno
+  # Starlight-end
   - type: ThermalVision
   - type: Insulated
   - type: CombatMode
@@ -195,6 +203,16 @@
   parent: MobXeno
   id: MobXenoQueen
   components:
+  # Starlight-start: Languages
+  - type: LanguageSpeaker
+  - type: LanguageKnowledge
+    speaks:
+    - GalacticCommon
+    - Xeno
+    understands:
+    - GalacticCommon
+    - Xeno
+  # Starlight-end
   - type: Sprite
     drawdepth: Mobs
     sprite: Mobs/Aliens/Xenos/queen.rsi

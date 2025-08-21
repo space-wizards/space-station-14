@@ -1,3 +1,5 @@
+# base
+
 - type: entity
   id: VendingMachine
   parent: BaseMachinePowered
@@ -5,6 +7,16 @@
   description: Just add capitalism!
   abstract: true
   components:
+  # Starlight-start: Languages
+  - type: LanguageSpeaker
+  - type: LanguageKnowledge
+    speaks:
+    - GalacticCommon
+    - Machine
+    understands:
+    - GalacticCommon
+    - Machine
+  # Starlight-end
   - type: ActionGrant
     actions:
     - ActionVendingThrow
@@ -105,6 +117,8 @@
   - type: Appearance
   - type: WiresVisuals
 
+# Vending machines
+
 - type: entity
   parent: VendingMachine
   id: VendingMachineCondiments
@@ -112,6 +126,7 @@
   description: Slather these thick gooey substances on your food for a full flavor effect.
   components:
   - type: VendingMachine
+    showPrices: false # Starlight-edit: Vending Machines Prices
     pack: CondimentInventory
     offState: off
   - type: Sprite
@@ -146,6 +161,7 @@
   components:
   - type: VendingMachine
     pack: AmmoVendInventory
+    showPrices: false # Starlight-edit: Vending Machines Prices
     offState: off
     brokenState: broken
     normalState: normal-unshaded
@@ -172,6 +188,7 @@
   components:
   - type: VendingMachine
     pack: BoozeOMatInventory
+    showPrices: false # Starlight-edit: Vending Machines Prices
     offState: off
     brokenState: broken
     normalState: normal-unshaded
@@ -207,6 +224,7 @@
   - type: VendingMachine
     pack: BoozeOMatInventory
     offState: off
+    showPrices: false # Starlight-edit: Vending Machines Prices
     brokenState: broken
     normalState: normal-unshaded
     denyState: deny-unshaded
@@ -241,6 +259,7 @@
   - type: VendingMachine
     pack: PTechInventory
     offState: off
+    showPrices: false # Starlight-edit: Vending Machines Prices
     brokenState: broken
     normalState: normal-unshaded
     ejectState: eject-unshaded
@@ -274,6 +293,7 @@
     brokenState: broken
     normalState: normal-unshaded
     ejectState: eject-unshaded
+    showPrices: false # Starlight-edit: Vending Machines Prices
   - type: DatasetVocalizer
     dataset: ChefvendAds
   - type: SpeakOnUIClosed
@@ -727,6 +747,7 @@
     brokenState: broken
     normalState: normal-unshaded
     ejectState: eject-unshaded
+    showPrices: false # Starlight-edit: Vending Machines Prices
   - type: DatasetVocalizer
     dataset: DinnerwareAds
   - type: SpeakOnUIClosed
@@ -757,6 +778,7 @@
   - type: VendingMachine
     pack: MagiVendInventory
     offState: off
+    showPrices: false # Starlight-edit: Vending Machines Prices
     brokenState: broken
     normalState: normal-unshaded
   - type: DatasetVocalizer
@@ -824,6 +846,7 @@
     normalState: normal-unshaded
     ejectState: eject-unshaded
     denyState: deny-unshaded
+    showPrices: false # Starlight-edit: Vending Machines Prices
   - type: Sprite
     sprite: Structures/Machines/VendingMachines/engivend.rsi
     layers:
@@ -855,6 +878,7 @@
     ejectState: eject-unshaded
     denyState: deny-unshaded
     ejectDelay: 0.6
+    showPrices: false # Starlight-edit: Vending Machines Prices
   - type: DatasetVocalizer
     dataset: NanoMedAds
   - type: SpeakOnUIClosed
@@ -892,6 +916,7 @@
     normalState: normal-unshaded
     ejectState: eject-unshaded
     denyState: deny-unshaded
+    showPrices: false # Starlight-edit: Vending Machines Prices
   - type: DatasetVocalizer
     dataset: NutriMaxAds
   - type: SpeakOnUIClosed
@@ -926,6 +951,7 @@
     normalState: normal-unshaded
     ejectState: eject-unshaded
     denyState: deny-unshaded
+    showPrices: false # Starlight-edit: Vending Machines Prices
   - type: DatasetVocalizer
     dataset: SecTechAds
   - type: SpeakOnUIClosed
@@ -965,6 +991,7 @@
     normalState: normal-unshaded
     ejectState: eject-unshaded
     denyState: deny-unshaded
+    showPrices: false # Starlight-edit: Vending Machines Prices
   - type: DatasetVocalizer
     dataset: MegaSeedAds
   - type: SpeakOnUIClosed
@@ -1254,6 +1281,7 @@
     normalState: normal-unshaded
     ejectState: eject-unshaded
     denyState: deny-unshaded
+    showPrices: false # Starlight-edit: Vending Machines Prices
   - type: DatasetVocalizer
     dataset: VendomatAds
   - type: SpeakOnUIClosed
@@ -1291,6 +1319,7 @@
     normalState: normal-unshaded
     ejectState: eject-unshaded
     denyState: deny-unshaded
+    showPrices: false # Starlight-edit: Vending Machines Prices
   - type: Sprite
     sprite: Structures/Machines/VendingMachines/youtool.rsi
     layers:
@@ -1319,6 +1348,7 @@
     normalState: normal-unshaded
     ejectState: eject-unshaded
     ejectDelay: 1.8
+    showPrices: false # Starlight-edit: Vending Machines Prices
   - type: DatasetVocalizer
     dataset: GoodCleanFunAds
   - type: SpeakOnUIClosed
@@ -1379,6 +1409,7 @@
   components:
   - type: VendingMachine
     pack: SalvageEquipmentInventory
+    showPrices: false # Starlight-edit: Vending Machines Prices
     offState: off
     brokenState: broken
     normalState: normal-unshaded
@@ -1436,6 +1467,7 @@
     energy: 1.6
     color: "#d4ab33"
 
+
 # wallmounted machines
 
 - type: entity
@@ -1456,38 +1488,6 @@
     arc: 175
   - type: Transform
     noRot: false
-
-- type: entity
-  parent: VendingMachineWallmount
-  id: VendingMachineWallMedical
-  name: NanoMed
-  description: "It's a wall-mounted medical equipment dispenser. Natural chemicals only!"
-  components:
-  - type: VendingMachine
-    pack: NanoMedInventory
-    offState: off
-    brokenState: broken
-    normalState: normal-unshaded
-    denyState: deny-unshaded
-  - type: Sprite
-    sprite: Structures/Machines/VendingMachines/wallmed.rsi
-    layers:
-    - state: "off"
-      map: ["enum.VendingMachineVisualLayers.Base"]
-    - state: "off"
-      map: ["enum.VendingMachineVisualLayers.BaseUnshaded"]
-      shader: unshaded
-    - texture: Structures/Machines/VendingMachines/maintenance_panel.png
-      map: ["enum.WiresVisualLayers.MaintenancePanel"]
-  - type: PointLight
-    radius: 1.3
-    energy: 1.6
-    color: "#43ccb5"
-  - type: AccessReader
-    access: [["Medical"]]
-  - type: GuideHelp
-    guides:
-    - Medical
 
 # job clothing
 
@@ -1592,6 +1592,7 @@
   - type: VendingMachine
     pack: BarDrobeInventory
     offState: off
+    showPrices: false # Starlight-edit: Vending Machines Prices
     brokenState: broken
     normalState: normal-unshaded
   - type: DatasetVocalizer
@@ -2096,6 +2097,7 @@
     ejectDelay: 1.9
     soundVend: /Audio/Items/bikehorn.ogg
     initialStockQuality: 1.0 # Nobody knows how Honk does it, but their vending machines always seem well-stocked...
+    showPrices: false # Starlight-edit: Vending Machines Prices
   - type: Sprite
     sprite: Structures/Machines/VendingMachines/happyhonk.rsi
     layers:
@@ -2128,6 +2130,7 @@
   - type: VendingMachine
     pack: PrideDrobeInventory
     offState: off
+    showPrices: false # Starlight-start: Vending Machines Prices
     brokenState: broken
     normalState: normal-unshaded
   - type: DatasetVocalizer
@@ -2160,6 +2163,7 @@
   description: A vendor for dispensing gas tanks.
   components:
   - type: VendingMachine
+    showPrices: false # Starlight-edit: Vending Machines Prices
     pack: TankDispenserEVAInventory
   - type: Sprite
     sprite: Structures/Machines/VendingMachines/tankdispenser.rsi #TODO add visualiser for remaining tanks as layers
@@ -2173,6 +2177,7 @@
   description: A vendor for dispensing gas tanks. This one has an engineering livery.
   components:
   - type: VendingMachine
+    showPrices: false # Starlight-edit: Vending Machines Prices
     pack: TankDispenserEngineeringInventory
   - type: Sprite
     sprite: Structures/Machines/VendingMachines/tankdispenser.rsi #TODO add visualiser for remaining tanks as layers
@@ -2187,6 +2192,7 @@
   description: Probably not the coffee machine.
   components:
   - type: VendingMachine
+    showPrices: false # Starlight-edit: Vending Machines Prices
     pack: ChemVendInventory
     offState: off
     brokenState: broken
@@ -2225,3 +2231,36 @@
   - type: AccessReader
     access: [["SyndicateAgent"]]
 
+# wallmount
+- type: entity
+  parent: VendingMachineWallmount
+  id: VendingMachineWallMedical
+  name: NanoMed
+  description: "It's a wall-mounted medical equipment dispenser. Natural chemicals only!"
+  components:
+  - type: VendingMachine
+    pack: NanoMedInventory
+    offState: off
+    showPrices: false # Starlight-edit: Vending Machines Prices
+    brokenState: broken
+    normalState: normal-unshaded
+    denyState: deny-unshaded
+  - type: Sprite
+    sprite: Structures/Machines/VendingMachines/wallmed.rsi
+    layers:
+    - state: "off"
+      map: ["enum.VendingMachineVisualLayers.Base"]
+    - state: "off"
+      map: ["enum.VendingMachineVisualLayers.BaseUnshaded"]
+      shader: unshaded
+    - texture: Structures/Machines/VendingMachines/maintenance_panel.png
+      map: ["enum.WiresVisualLayers.MaintenancePanel"]
+  - type: PointLight
+    radius: 1.3
+    energy: 1.6
+    color: "#43ccb5"
+  - type: AccessReader
+    access: [["Medical"]]
+  - type: GuideHelp
+    guides:
+    - Medical

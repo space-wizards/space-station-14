@@ -20,6 +20,8 @@
     solution: drink
   - type: DrainableSolution
     solution: drink
+  - type: ExaminableSolution
+    solution: drink
   - type: SolutionTransfer
     canChangeTransferAmount: true
     maxTransferAmount: 10
@@ -42,6 +44,10 @@
   - type: Tag
     tags:
     - DrinkCup
+  # Starlight-edit: Vending Machines Prices
+  - type: ItemPrice
+    priceCategory: drink
+  # Starlight-end
 
 - type: entity
   parent: DrinkBaseCup

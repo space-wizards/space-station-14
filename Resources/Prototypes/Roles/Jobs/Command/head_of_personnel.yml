@@ -65,6 +65,7 @@
     gloves: ClothingHandsGlovesHop
     ears: ClothingHeadsetHoP
     belt: BoxFolderClipboard
+    #eyes: ClothingEyesHudCommand #Starlight
   storage:
     back:
     - Flash

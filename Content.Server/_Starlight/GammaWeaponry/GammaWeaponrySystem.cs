@@ -15,6 +15,7 @@ using Robust.Shared.Map.Components;
 using Robust.Shared.EntitySerialization.Systems;
 using Robust.Shared.EntitySerialization;
 using Robust.Shared.Utility;
+using Content.Shared.Station.Components;
 
 namespace Content.Server.Starlight.GammaWeaponry;
 
@@ -42,7 +43,7 @@ public sealed class GammaWeaponrySystem : EntitySystem
     private void InitializeGammaWeaponryStation(EntityUid uid, GammaWeaponryStationComponent comp, StationPostInitEvent ev)
     {
         var map = CreateNewMap();
-        if (!TryLoadShuttle(map, new ResPath("Maps/_Starlight/Shuttles/GammaWeaponry.yml"), out var shuttleUid) || shuttleUid == null)
+        if (!TryLoadShuttle(map, new ResPath("Maps/_Starlight/Shuttles/CC-NT/GammaWeaponry.yml"), out var shuttleUid) || shuttleUid == null)
             return;
 
         SetupShuttle(uid, shuttleUid.Value.Owner, comp);
@@ -100,7 +101,7 @@ public sealed class GammaWeaponrySystem : EntitySystem
         if (ev.AlertLevel != GammaAlertLevel || !TryComp<GammaWeaponryStationComponent>(ev.Station, out var comp))
             return;
 
-        var targetGrid = _station.GetLargestGrid(Comp<StationDataComponent>(ev.Station));
+        var targetGrid = _station.GetLargestGrid((ev.Station, Comp<StationDataComponent>(ev.Station)));
         
         if (targetGrid == null || comp.Shuttle == null)
             return;

@@ -1,0 +1,25 @@
+- type: language
+  id: SolCommon
+  icon: LanguageIconSolCom
+  obfuscation:
+    !type:SyllableObfuscation
+    minSyllables: 1
+    maxSyllables: 3
+    replacement:
+    - tao
+    - shi
+    - tzu
+    - yi
+    - com
+    - be
+    - is
+    - i
+    - op
+    - vi
+    - ed
+    - lec
+    - mo
+    - cle
+    - te
+    - dis
+    - e

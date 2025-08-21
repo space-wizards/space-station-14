@@ -411,8 +411,9 @@ public sealed partial class PuddleSystem : SharedPuddleSystem
         // A puddle with 10 units of lube vs a puddle with 10 of lube and 20 catchup should stun and launch forward the same amount.
         if (slipperyUnits > 0)
         {
-            slipComp.SlipData.LaunchForwardsMultiplier = (float)(launchMult / slipperyUnits);
-            slipComp.SlipData.StunTime = stunTimer / (float)slipperyUnits;
+            slipComp.SlipData.LaunchForwardsMultiplier = (float)(launchMult/slipperyUnits);
+            slipComp.SlipData.StunTime = (stunTimer/(float)slipperyUnits);
+            slipComp.SlipData.KnockdownTime = (knockdownTimer/(float)slipperyUnits);
         }
 
         // Only make it super slippery if there is enough super slippery units for its own puddle

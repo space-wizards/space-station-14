@@ -6,7 +6,30 @@
   name: personal ai device
   description: Your electronic pal who's fun to be with!
   components:
+  # Starlight-start: Languages
+  - type: LanguageSpeaker
+  - type: LanguageKnowledge
+    speaks:
+    - GalacticCommon
+    - Machine
+    understands:
+    - GalacticCommon
+    - Machine
+    - Canilunzt
+    - Sign
+    - Bubblish
+    - Chittin
+    - Draconic
+    - Marish
+    - Moffic
+    - Nekomimetic
+    - Sylvan
+    - Terrum
+    - VoxPidgin
+    - Scratch
+    - SolCommon
   - type: TextToSpeech
+  # Starlight-end
   - type: Instrument
     allowPercussion: false
     handheld: false
@@ -60,6 +83,7 @@
   - type: DoAfter
   - type: Actions
   - type: Store
+    name: store-preset-name-pai #Starlight name change for data purity
     categories:
     - PAIAbilities
     currencyWhitelist:

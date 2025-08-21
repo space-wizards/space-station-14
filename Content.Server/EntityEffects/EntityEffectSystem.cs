@@ -40,6 +40,14 @@ using Robust.Shared.Audio.Systems;
 using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
+// Starlight - Start
+using Content.Shared._Starlight.Language.Components;
+using Content.Shared._Starlight.Language.Events;
+using Content.Shared._Starlight.Language;
+using Content.Shared._Starlight.Language.Systems;
+using Content.Server._Starlight.Language;
+using Content.Shared.Chat;
+// Starlight - End
 
 using TemperatureCondition = Content.Shared.EntityEffects.EffectConditions.Temperature; // disambiguate the namespace
 using PolymorphEffect = Content.Shared.EntityEffects.Effects.Polymorph;
@@ -133,7 +141,7 @@ public sealed class EntityEffectSystem : EntitySystem
         args.Result = false;
         if (TryComp(args.Args.TargetEntity, out TemperatureComponent? temp))
         {
-            if (temp.CurrentTemperature > args.Condition.Min && temp.CurrentTemperature < args.Condition.Max)
+            if (temp.CurrentTemperature >= args.Condition.Min && temp.CurrentTemperature <= args.Condition.Max)
                 args.Result = true;
         }
     }
@@ -751,6 +759,21 @@ public sealed class EntityEffectSystem : EntitySystem
         // We call this before the mind check to allow things like player-controlled mice to be able to benefit from the effect
         RemComp<ReplacementAccentComponent>(uid);
         RemComp<MonkeyAccentComponent>(uid);
+
+        // Starlight - Sart
+        // Make sure the entity knows at least fallback.
+        var speaker = EnsureComp<LanguageSpeakerComponent>(uid);
+        var knowledge = EnsureComp<LanguageKnowledgeComponent>(uid);
+        var fallback = SharedLanguageSystem.FallbackLanguagePrototype;
+
+        if (!knowledge.UnderstoodLanguages.Contains(fallback))
+            knowledge.UnderstoodLanguages.Add(fallback);
+
+        if (!knowledge.SpokenLanguages.Contains(fallback))
+            knowledge.SpokenLanguages.Add(fallback);
+
+        IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<LanguageSystem>().UpdateEntityLanguages(uid);
+        // Starlight - End
 
         // Stops from adding a ghost role to things like people who already have a mind
         if (TryComp<MindContainerComponent>(uid, out var mindContainer) && mindContainer.HasMind)

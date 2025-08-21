@@ -98,7 +98,11 @@
   - type: PhysicalComposition
   - type: Tag
     tags:
-      - Lighters #SL
+      - Lighters # SL
+  # Starlight-start: Vending Machines Prices
+  - type: ItemPrice
+    priceCategory: cigaretes
+  # Starlight-end
 
 - type: entity
   name: cheap lighter
@@ -224,6 +228,10 @@
   - type: Tag
     tags:
     - Lighters #SL
+  # Starlight-start: Vending Machines Prices
+  - type: ItemPrice
+    priceCategory: cigaretes
+  # Starlight-end
 
 - type: entity
   name: flippo engraved lighter
