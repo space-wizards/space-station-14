@@ -12238,5 +12238,12 @@ Entries:
   id: 141600
   time: '2025-08-21T19:53:44.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/1416
+- author: Rinary
+  changes:
+  - message: Now you can't detect abductor eye with t-ray scanner.
+    type: Fix
+  id: 141700
+  time: '2025-08-21T20:59:27.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1417
 Order: -1
 
