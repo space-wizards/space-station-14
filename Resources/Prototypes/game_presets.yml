@@ -240,6 +240,22 @@
   - BasicRoundstartVariation
 
 - type: gamePreset
+  id: Xenoborgs
+  alias:
+    - xenoborgs
+  name: nukeops-title
+  description: nukeops-description
+  showInVote: false
+  rules:
+  - Xenoborgs
+  - DummyNonAntagChance
+  - SubGamemodesRuleNoXenoborg # no two motherships
+  - BasicStationEventScheduler
+  - MeteorSwarmScheduler
+  - SpaceTrafficControlEventScheduler
+  - BasicRoundstartVariation
+
+- type: gamePreset
   id: Zombie
   alias:
   - zombie
