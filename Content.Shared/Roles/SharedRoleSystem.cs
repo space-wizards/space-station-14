@@ -10,7 +10,6 @@ using Content.Shared.Whitelist;
 using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Configuration;
-using Robust.Shared.Map;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
@@ -35,7 +34,6 @@ public abstract class SharedRoleSystem : EntitySystem
     {
         Subs.CVar(_cfg, CCVars.GameRoleTimerOverride, SetRequirementOverride, true);
 
-        SubscribeLocalEvent<MindRoleComponent, ComponentShutdown>(OnComponentShutdown);
         SubscribeLocalEvent<StartingMindRoleComponent, PlayerSpawnCompleteEvent>(OnSpawn);
     }
 
@@ -55,7 +53,7 @@ public abstract class SharedRoleSystem : EntitySystem
             return;
         }
 
-        if (!_prototypes.TryIndex(value, out _requirementOverride ))
+        if (!_prototypes.TryIndex(value, out _requirementOverride))
             Log.Error($"Unknown JobRequirementOverridePrototype: {value}");
     }
 
@@ -152,21 +150,22 @@ public abstract class SharedRoleSystem : EntitySystem
         //If that was somehow to occur, a second mindrole for that comp would be created
         //Meaning any mind role checks could return wrong results, since they just return the first match they find
 
-        var mindRoleId = Spawn(protoId, MapCoordinates.Nullspace);
-        EnsureComp<MindRoleComponent>(mindRoleId);
-        var mindRoleComp = Comp<MindRoleComponent>(mindRoleId);
+        if (!PredictedTrySpawnInContainer(protoId, mindId, MindComponent.MindRoleContainerId, out var mindRoleId))
+        {
+            Log.Error($"Failed to add role {protoId} to {ToPrettyString(mindId)} : Could not spawn the role entity inside the container");
+            return;
+        }
 
-        mindRoleComp.Mind = (mindId,mind);
+        var mindRoleComp = EnsureComp<MindRoleComponent>(mindRoleId.Value);
+
         if (jobPrototype is not null)
         {
             mindRoleComp.JobPrototype = jobPrototype;
-            EnsureComp<JobRoleComponent>(mindRoleId);
+            EnsureComp<JobRoleComponent>(mindRoleId.Value);
             DebugTools.AssertNull(mindRoleComp.AntagPrototype);
             DebugTools.Assert(!mindRoleComp.Antag);
             DebugTools.Assert(!mindRoleComp.ExclusiveAntag);
         }
-
-        mind.MindRoles.Add(mindRoleId);
 
         var update = MindRolesUpdate((mindId, mind));
 
@@ -201,13 +200,13 @@ public abstract class SharedRoleSystem : EntitySystem
     /// </returns>>
     private bool MindRolesUpdate(Entity<MindComponent?> ent)
     {
-        if(!Resolve(ent.Owner, ref ent.Comp))
+        if (!Resolve(ent.Owner, ref ent.Comp))
             return false;
 
         //get the most important/latest mind role
         var (roleType, subtype) = GetRoleTypeByTime(ent.Comp);
 
-        if (ent.Comp.RoleType == roleType &&  ent.Comp.Subtype == subtype)
+        if (ent.Comp.RoleType == roleType && ent.Comp.Subtype == subtype)
             return false;
 
         SetRoleType(ent.Owner, roleType, subtype);
@@ -230,7 +229,7 @@ public abstract class SharedRoleSystem : EntitySystem
     {
         var roles = new List<Entity<MindRoleComponent>>();
 
-        foreach (var role in mind.MindRoles)
+        foreach (var role in mind.MindRoleContainer.ContainedEntities)
         {
             var comp = Comp<MindRoleComponent>(role);
             if (comp.RoleType is not null)
@@ -301,7 +300,7 @@ public abstract class SharedRoleSystem : EntitySystem
         var original = "'" + typeof(T).Name + "'";
         var deleteName = original;
 
-        foreach (var role in mind.Comp.MindRoles)
+        foreach (var role in mind.Comp.MindRoleContainer.ContainedEntities)
         {
             if (!HasComp<MindRoleComponent>(role))
             {
@@ -351,7 +350,7 @@ public abstract class SharedRoleSystem : EntitySystem
         return MindRemoveRole<T>((mindId, mind));
     }
 
-        /// <summary>
+    /// <summary>
     /// Finds and removes all mind roles of a specific type
     /// </summary>
     /// <param name="mind">The mind entity and component</param>
@@ -359,14 +358,14 @@ public abstract class SharedRoleSystem : EntitySystem
     /// <returns>True if the role existed and was removed</returns>
     public bool MindRemoveRole(Entity<MindComponent?> mind, EntProtoId<MindRoleComponent> protoId)
     {
-        if ( !Resolve(mind.Owner, ref mind.Comp))
+        if (!Resolve(mind.Owner, ref mind.Comp))
             return false;
 
         // If there were no matches and thus no mind role entity names, we'll need the protoId, to report what role failed to be removed
         var original = "'" + protoId + "'";
         var deleteName = original;
         var delete = new List<EntityUid>();
-        foreach (var role in mind.Comp.MindRoles)
+        foreach (var role in mind.Comp.MindRoleContainer.ContainedEntities)
         {
             if (!HasComp<MindRoleComponent>(role))
             {
@@ -390,7 +389,7 @@ public abstract class SharedRoleSystem : EntitySystem
     /// </summary>
     private bool MindRemoveRoleDo(Entity<MindComponent?> mind, List<EntityUid> delete, string? logName = "")
     {
-        if ( !Resolve(mind.Owner, ref mind.Comp))
+        if (!Resolve(mind.Owner, ref mind.Comp))
             return false;
 
         if (delete.Count <= 0)
@@ -416,17 +415,6 @@ public abstract class SharedRoleSystem : EntitySystem
         return true;
     }
 
-    // Removing the mind role's reference on component shutdown
-    // to make sure the reference gets removed even if the mind role entity was deleted by outside code
-    private void OnComponentShutdown(Entity<MindRoleComponent> ent, ref ComponentShutdown args)
-    {
-        //TODO: Just ensure that the tests don't spawn unassociated mind role entities
-        if (ent.Comp.Mind.Comp is null)
-            return;
-
-        ent.Comp.Mind.Comp.MindRoles.Remove(ent.Owner);
-    }
-
     /// <summary>
     /// Finds the first mind role of a specific T type on a mind entity.
     /// Outputs entity components for the mind role's MindRoleComponent and for T
@@ -442,7 +430,7 @@ public abstract class SharedRoleSystem : EntitySystem
         if (!Resolve(mind.Owner, ref mind.Comp))
             return false;
 
-        foreach (var roleEnt in mind.Comp.MindRoles)
+        foreach (var roleEnt in mind.Comp.MindRoleContainer.ContainedEntities)
         {
             if (!TryComp(roleEnt, out T? tcomp))
                 continue;
@@ -487,7 +475,7 @@ public abstract class SharedRoleSystem : EntitySystem
 
         var found = false;
 
-        foreach (var roleEnt in mind.MindRoles)
+        foreach (var roleEnt in mind.MindRoleContainer.ContainedEntities)
         {
             if (!HasComp(roleEnt, type))
                 continue;
@@ -511,7 +499,7 @@ public abstract class SharedRoleSystem : EntitySystem
     /// </summary>
     public bool MindHasRole(Entity<MindComponent> mind, EntityWhitelist whitelist)
     {
-        foreach (var roleEnt in mind.Comp.MindRoles)
+        foreach (var roleEnt in mind.Comp.MindRoleContainer.ContainedEntities)
         {
             if (_whitelist.IsWhitelistPass(whitelist, roleEnt))
                 return true;
@@ -544,10 +532,10 @@ public abstract class SharedRoleSystem : EntitySystem
 
         var mind = Comp<MindComponent>(mindId);
 
-        foreach (var uid in mind.MindRoles)
+        foreach (var uid in mind.MindRoleContainer.ContainedEntities)
         {
             if (HasComp<T>(uid) && TryComp<MindRoleComponent>(uid, out var comp))
-                result = (uid,comp);
+                result = (uid, comp);
         }
         return result;
     }
@@ -564,7 +552,7 @@ public abstract class SharedRoleSystem : EntitySystem
         if (!Resolve(mind.Owner, ref mind.Comp))
             return roleInfo;
 
-        foreach (var role in mind.Comp.MindRoles)
+        foreach (var role in mind.Comp.MindRoleContainer.ContainedEntities)
         {
             var valid = false;
             var name = "game-ticker-unknown-role";
@@ -644,14 +632,14 @@ public abstract class SharedRoleSystem : EntitySystem
         return CheckAntagonistStatus(mindId.Value).ExclusiveAntag;
     }
 
-   private (bool Antag, bool ExclusiveAntag) CheckAntagonistStatus(Entity<MindComponent?> mind)
-   {
-       if (!Resolve(mind.Owner, ref mind.Comp))
-           return (false, false);
+    private (bool Antag, bool ExclusiveAntag) CheckAntagonistStatus(Entity<MindComponent?> mind)
+    {
+        if (!Resolve(mind.Owner, ref mind.Comp))
+            return (false, false);
 
         var antagonist = false;
         var exclusiveAntag = false;
-        foreach (var role in mind.Comp.MindRoles)
+        foreach (var role in mind.Comp.MindRoleContainer.ContainedEntities)
         {
             if (!TryComp<MindRoleComponent>(role, out var roleComp))
             {
