@@ -45,7 +45,7 @@ public class ActionButtonContainer : GridContainer
 
             var actionButton = (ActionButton) GetChild(i);
             actionButton.UpdateData(action, system);
-            actionButton.IsPhantom = phantomActionTypes != null ? phantomActionTypes.Any(phantom => action == phantom) : false;
+            actionButton.IsPhantom = phantomActionTypes != null && phantomActionTypes.Any(phantom => action == phantom);
         }
 
         for (var i = ChildCount - 1; i >= uniqueCount; i--)

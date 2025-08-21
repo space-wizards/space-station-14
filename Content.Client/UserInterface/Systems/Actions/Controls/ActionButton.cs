@@ -4,7 +4,6 @@ using Content.Client.Actions.UI;
 using Content.Client.Cooldown;
 using Content.Client.Stylesheets;
 using Content.Shared.Actions.Components;
-using Content.Shared.Charges.Systems;
 using Content.Shared.Examine;
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
@@ -160,7 +159,7 @@ public sealed class ActionButton : Control, IEntityControl
         AddChild(paddingBoxItemIcon);
 
         _phantomModulate = new Color(255, 255, 255, 80);
-        _originalModulate = this.Modulate;
+        _originalModulate = Modulate;
         IsPhantom = false;
 
         Button.Modulate = new Color(255, 255, 255, 150);
@@ -212,7 +211,7 @@ public sealed class ActionButton : Control, IEntityControl
 
         if (_player.LocalEntity is null)
             return null;
-        var decr = FormattedMessage.FromMarkupPermissive(Loc.GetString(metadata.EntityDescription));
+
         var requires = IsPhantom ? Loc.GetString("ui-actionmenu-phantom-action-tooltip") : null;
 
         var ev = new ExaminedEvent(desc, Action.Value, _player.LocalEntity.Value, true, !desc.IsEmpty);
@@ -230,7 +229,7 @@ public sealed class ActionButton : Control, IEntityControl
 
     private void UpdateItemIcon()
     {
-        var spriteViewModulate = IsPhantom ? this._phantomModulate : this._originalModulate;
+        var spriteViewModulate = IsPhantom ? _phantomModulate : _originalModulate;
         _bigItemSpriteView.Modulate = spriteViewModulate;
         _smallItemSpriteView.Modulate = spriteViewModulate;
 
@@ -309,7 +308,7 @@ public sealed class ActionButton : Control, IEntityControl
         _controller ??= UserInterfaceManager.GetUIController<ActionUIController>();
         _spriteSys ??= _entities.System<SpriteSystem>();
         var icon = action.Comp.Icon;
-        if (!IsPhantom && _controller.SelectingTargetFor == action || action.Comp.Toggled)
+        if (!IsPhantom && (_controller.SelectingTargetFor == action || action.Comp.Toggled))
         {
             if (action.Comp.IconOn is {} iconOn)
                 icon = iconOn;

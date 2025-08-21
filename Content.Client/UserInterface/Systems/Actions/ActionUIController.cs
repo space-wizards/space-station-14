@@ -11,10 +11,9 @@ using Content.Client.UserInterface.Systems.Actions.Controls;
 using Content.Client.UserInterface.Systems.Actions.Widgets;
 using Content.Client.UserInterface.Systems.Actions.Windows;
 using Content.Client.UserInterface.Systems.Gameplay;
-using Content.Shared.Actions;
 using Content.Shared.Actions.Components;
-using Content.Shared.Charges.Systems;
 using Content.Shared.Input;
+using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
 using Robust.Client.Input;
@@ -71,7 +70,7 @@ public sealed class ActionUIController : UIController, IOnStateChanged<GameplayS
     /// <summary>
     /// Prevent dragging, reassigning, or clearing actions in the actionbar.
     /// </summary>
-    private bool LockActions = false;
+    private bool _lockActions;
 
     /// <summary>
     /// Action slot we are currently selecting a target for.
@@ -131,29 +130,30 @@ public sealed class ActionUIController : UIController, IOnStateChanged<GameplayS
         {
             var boundId = i; // This is needed, because the lambda captures it.
             var boundKey = hotbarKeys[i];
-            builder = builder.Bind(boundKey, new PointerInputCmdHandler((in PointerInputCmdArgs args) =>
+            builder = builder.Bind(boundKey,
+                new PointerInputCmdHandler((in PointerInputCmdArgs args) =>
             {
                 if (args.State != BoundKeyState.Down)
                     return false;
 
                 var currentlyHovered = UIManager.MouseGetControl(_input.MouseScreenPosition);
                 // If hovering over a window action, perform hover-binding logic
-                if (!LockActions && currentlyHovered is ActionButton button && button.Parent == _window?.ResultsGrid)
+                if (!_lockActions && currentlyHovered is ActionButton button && button.Parent == _window?.ResultsGrid)
                 {
                     if (_actions.Count > 0)
                     {
-                        var currentIndex = _actions.IndexOf(button.ActionId);
+                        var currentIndex = _actions.IndexOf(button.Action);
                         // Remove the old action button and insert the new one at the desired index.
                         if (currentIndex >= 0)
                         {
                             _actions.RemoveAt(currentIndex);
                         }
                         var insertIndex = Math.Min(_actions.Count, boundId);
-                        _actions.Insert(insertIndex, button.ActionId);
+                        _actions.Insert(insertIndex, button.Action);
                     }
                     else
                     {
-                        _actions.Add(button.ActionId);
+                        _actions.Add(button.Action);
                     }
                     UpdateActionContainer();
                 }
@@ -164,14 +164,18 @@ public sealed class ActionUIController : UIController, IOnStateChanged<GameplayS
                 }
 
                 return true;
-            }, false, true));
+            },
+                    false,
+                    true));
         }
 
         builder
             .Bind(ContentKeyFunctions.OpenActionsMenu,
                 InputCmdHandler.FromDelegate(_ => ToggleWindow()))
-            .BindBefore(EngineKeyFunctions.Use, new PointerInputCmdHandler(TargetingOnUse, outsidePrediction: true),
-                    typeof(ConstructionSystem), typeof(DragDropSystem))
+            .BindBefore(EngineKeyFunctions.Use,
+                new PointerInputCmdHandler(TargetingOnUse, outsidePrediction: true),
+                    typeof(ConstructionSystem),
+                typeof(DragDropSystem))
                 .BindBefore(EngineKeyFunctions.UIRightClick, new PointerInputCmdHandler(TargetingCancel, outsidePrediction: true))
             .Register<ActionUIController>();
     }
@@ -293,7 +297,10 @@ public sealed class ActionUIController : UIController, IOnStateChanged<GameplayS
         if (action.Comp.Toggled && EntityManager.TryGetComponent<TargetActionComponent>(actionId, out var target))
             StartTargeting((action, action, target));
 
-        _phantomActions.Remove(action);
+        // Server might give us an action we have but don't actually have and make the client confused...
+        if (!_timing.ApplyingState)
+            _phantomActions.Remove(action);
+
         if (_actions.Contains(action))
             return;
 
@@ -308,12 +315,12 @@ public sealed class ActionUIController : UIController, IOnStateChanged<GameplayS
         if (actionId == SelectingTargetFor)
             StopTargeting();
 
-        if (LockActions)
+        if (_lockActions)
         {
-            if (_actionsSystem.TryGetActionData(actionId, out var action))
+            if (_actionsSystem.GetAction(actionId) is { } action)
             {
                 // Don't phantom innate actions that get removed
-                if (action.Container != _playerManager.LocalEntity)
+                if (action.Comp.Container != _playerManager.LocalEntity)
                 {
                     _phantomActions.Add(actionId);
                     return;
@@ -451,9 +458,9 @@ public sealed class ActionUIController : UIController, IOnStateChanged<GameplayS
         if (_playerManager.LocalEntity is not { } player)
             return;
 
-        _window.LockActionsButton.Text = LockActions ?
+        _window.LockActionsButton.Text = _lockActions ?
             Loc.GetString("ui-actionmenu-unlock-button") : Loc.GetString("ui-actionmenu-lock-button");
-        _window.ClearActionsButton.Disabled = LockActions;
+        _window.ClearActionsButton.Disabled = _lockActions;
 
         var search = _window.SearchBar.Text;
         var filters = _window.FilterButton.SelectedKeys;
@@ -558,7 +565,7 @@ public sealed class ActionUIController : UIController, IOnStateChanged<GameplayS
 
     private void OnLockActionsPressed(ButtonEventArgs args)
     {
-        LockActions = !LockActions;
+        _lockActions = !_lockActions;
         QueueWindowUpdate();
     }
     private void OnClearActionsPressed(ButtonEventArgs args)
@@ -603,7 +610,7 @@ public sealed class ActionUIController : UIController, IOnStateChanged<GameplayS
     {
         if (args.Function == EngineKeyFunctions.UIRightClick)
         {
-            if (!LockActions)
+            if (!_lockActions)
                 SetAction(button, null);
 
             args.Handle();
@@ -620,7 +627,7 @@ public sealed class ActionUIController : UIController, IOnStateChanged<GameplayS
     {
         args.Handle();
 
-        if (LockActions)
+        if (_lockActions)
             return;
 
         if (button.Action != null)
