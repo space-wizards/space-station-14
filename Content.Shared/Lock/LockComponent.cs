@@ -118,12 +118,6 @@ public sealed partial class LockComponent : Component
     /// </summary>
     [DataField]
     public bool AutoLock = true; // Starlight-edit
-
-    /// <summary>
-    ///  Whether or not we need to add verb for lock/unlock
-    /// </summary>
-    [DataField]
-    public bool LockVerbs = true; // Starlight-edit
 }
 
 /// <summary>

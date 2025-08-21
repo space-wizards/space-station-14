@@ -11,7 +11,7 @@
     useAccess: false
     autoUnlock: false
     autoLock: false
-    lockVerbs: false
+    showLockVerbs: false
   - type: UserInterface
     interfaces:
       enum.StorageUiKey.Key:
