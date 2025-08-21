@@ -720,7 +720,7 @@
         damage: 300
       behaviors:
       - !type:ChangeConstructionNodeBehavior
-        node: girder
+        node: girderDiagonal
       - !type:PlaySoundBehavior
         sound:
           collection: MetalSlam
@@ -728,6 +728,9 @@
         acts: ["Destruction"]
   - type: RadiationBlocker
     resistance: 5
+  - type: Construction
+    graph: GirderDiagonal
+    node: wallReinforcedDiagonal
 
 # Riveting
 - type: entity
@@ -895,7 +898,7 @@
         acts: ["Destruction"]
   - type: Construction
     graph: GirderDiagonal
-    node: diagonalshuttleWall
+    node: shuttleWallDiagonal
   - type: RadiationBlocker
     resistance: 5
   - type: StaticPrice
@@ -1051,7 +1054,7 @@
         acts: ["Destruction"]
       - type: Construction
     graph: GirderDiagonal
-    node: diagonalWall
+    node: wallDiagonal
 
 - type: entity
   parent: WallSolid
