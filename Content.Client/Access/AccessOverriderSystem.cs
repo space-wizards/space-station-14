@@ -20,9 +20,7 @@ public sealed class AccessOverriderSystem : SharedAccessOverriderSystem
 
     protected override void DirtyUI(EntityUid uid)
     {
-        if (UI.TryGetOpenUi<AccessOverriderBoundUserInterface>(uid,
-                AccessOverriderComponent.AccessOverriderUiKey.Key,
-                out var bui))
+        if (UI.TryGetOpenUi<AccessOverriderBoundUserInterface>(uid, AccessOverriderUiKey.Key, out var bui))
             bui.Update();
     }
 }

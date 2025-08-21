@@ -1,6 +1,5 @@
 using Content.Shared.Access.Systems;
 using Content.Shared.Containers.ItemSlots;
-using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
@@ -11,39 +10,51 @@ namespace Content.Shared.Access.Components;
 [Access(typeof(SharedAccessOverriderSystem))]
 public sealed partial class AccessOverriderComponent : Component
 {
-    public static string PrivilegedIdCardSlotId = "AccessOverrider-privilegedId";
+    /// <summary>
+    /// ItemSlot identifier for the ID card.
+    /// </summary>
+    public const string PrivilegedIdCardSlotId = "AccessOverrider-privilegedId";
 
+    /// <summary>
+    /// Actual item slot that the ID card is put into.
+    /// </summary>
     [DataField]
     public ItemSlot PrivilegedIdSlot = new();
 
-    [ViewVariables(VVAccess.ReadWrite)]
-    [DataField]
-    public SoundSpecifier? DenialSound;
-
+    /// <summary>
+    /// The uid of the entity the configurator was used on. If null, it was used
+    /// in-hand with no target.
+    /// </summary>
     [DataField, AutoNetworkedField]
     public EntityUid? TargetAccessReaderId;
 
-    [Serializable, NetSerializable]
-    public sealed class WriteToTargetAccessReaderIdMessage : BoundUserInterfaceMessage
-    {
-        public readonly List<ProtoId<AccessLevelPrototype>> AccessList;
-
-        public WriteToTargetAccessReaderIdMessage(List<ProtoId<AccessLevelPrototype>> accessList)
-        {
-            AccessList = accessList;
-        }
-    }
-
+    /// <summary>
+    /// The set of access levels that this access configurator can modify. The
+    /// user still needs an ID card with matching access to actually set those
+    /// levels, however.
+    /// </summary>
     [DataField, AutoNetworkedField]
-    public List<ProtoId<AccessLevelPrototype>> AccessLevels = new();
+    public List<ProtoId<AccessLevelPrototype>> AccessLevels = [];
 
-    [ViewVariables(VVAccess.ReadWrite)]
+    /// <summary>
+    /// The duration of the doafter from clicking on an entity.
+    /// </summary>
     [DataField]
-    public float DoAfter;
-
-    [Serializable, NetSerializable]
-    public enum AccessOverriderUiKey : byte
-    {
-        Key,
-    }
+    public TimeSpan DoAfterDuration = TimeSpan.FromSeconds(0.5);
 }
+
+/// <summary>
+/// Raised from the client to the server when a new access selection is made.
+/// </summary>
+/// <param name="accessList">
+/// The set of accesses that the targeted device should be set to.
+/// </param>
+[Serializable, NetSerializable]
+public sealed class WriteToTargetAccessReaderIdMessage(List<ProtoId<AccessLevelPrototype>> accessList)
+    : BoundUserInterfaceMessage
+{
+    public readonly List<ProtoId<AccessLevelPrototype>> AccessList = accessList;
+}
+
+[Serializable, NetSerializable]
+public enum AccessOverriderUiKey : byte { Key }
