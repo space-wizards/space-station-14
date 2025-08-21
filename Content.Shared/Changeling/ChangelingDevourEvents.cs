@@ -2,7 +2,7 @@
 using Content.Shared.DoAfter;
 using Robust.Shared.Serialization;
 
-namespace Content.Shared.Changeling.Devour;
+namespace Content.Shared.Changeling;
 
 /// <summary>
 /// Action event for Devour, someone has initiated a devour on someone, begin to windup.
