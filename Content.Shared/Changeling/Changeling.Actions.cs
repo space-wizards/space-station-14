@@ -1,4 +1,5 @@
 using Content.Shared.Actions;
+using Content.Shared.FixedPoint;
 using Robust.Shared.GameStates;
 
 namespace Content.Shared.Changeling;
@@ -44,9 +45,12 @@ public sealed partial class ToggleStrainedMusclesEvent : InstantActionEvent { }
 #region Events - Sting
 
 public sealed partial class StingBlindEvent : EntityTargetActionEvent { }
-public sealed partial class StingCryoEvent : EntityTargetActionEvent { }
-public sealed partial class StingLethargicEvent : EntityTargetActionEvent { }
-public sealed partial class StingMuteEvent : EntityTargetActionEvent { }
+
+public sealed partial class StingChemEvent : EntityTargetActionEvent
+{
+    [DataField(required: true)]
+    public Dictionary<string, FixedPoint2> Chems;
+}
 public sealed partial class StingFakeArmbladeEvent : EntityTargetActionEvent { }
 public sealed partial class StingTransformEvent : EntityTargetActionEvent { }
 

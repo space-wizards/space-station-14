@@ -235,7 +235,10 @@
       components:
       - Body
     canTargetSelf: false
-    event: !type:StingCryoEvent {}
+    event: !type:StingChemEvent {
+      chems: { Fresium: 20, ChloralHydrate: 20 }
+    }
+
   - type: ChangelingAction
     chemicalCost: 35
     useInLesserForm: true
@@ -258,7 +261,7 @@
       components:
       - Body
     canTargetSelf: false
-    event: !type:StingLethargicEvent {}
+    event: !type:StingChemEvent { chems: {Impedrezene: 10, MuteToxin: 5}}
   - type: ChangelingAction
     chemicalCost: 35
     useInLesserForm: true
@@ -281,7 +284,7 @@
       components:
       - Body
     canTargetSelf: false
-    event: !type:StingMuteEvent {}
+    event: !type:StingChemEvent {chems: {MuteToxin: 15}}
   - type: ChangelingAction
     chemicalCost: 35
     useInLesserForm: true

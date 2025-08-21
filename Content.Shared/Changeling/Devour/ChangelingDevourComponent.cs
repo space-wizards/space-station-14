@@ -100,9 +100,12 @@ public sealed partial class ChangelingDevourComponent : Component
     {
         DamageDict = new Dictionary<string, FixedPoint2>
         {
-            { "Slash", 10},
-            { "Piercing", 10 },
-            { "Blunt", 5 },
+            #region Starlight. reduce blunts to add some genetic back into the mix
+            { "Slash", 4.8},
+            { "Piercing", 4.8 },
+            { "Blunt", 2.4 },
+            { "Cellular", 18 },
+            #endregion
         },
     };
 
