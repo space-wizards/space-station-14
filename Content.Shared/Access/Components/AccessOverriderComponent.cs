@@ -20,7 +20,9 @@ public sealed partial class AccessOverriderComponent : Component
     [DataField]
     public SoundSpecifier? DenialSound;
 
-    public EntityUid TargetAccessReaderId = new();
+    // TODO make nullable
+    [DataField, AutoNetworkedField]
+    public EntityUid TargetAccessReaderId;
 
     [Serializable, NetSerializable]
     public sealed class WriteToTargetAccessReaderIdMessage : BoundUserInterfaceMessage

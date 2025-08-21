@@ -88,6 +88,7 @@ namespace Content.Shared.Access.Systems
             if (args.Args.Target != null)
             {
                 component.TargetAccessReaderId = args.Args.Target.Value;
+                Dirty(uid, component);
                 _userInterface.OpenUi(uid, AccessOverriderComponent.AccessOverriderUiKey.Key, args.User);
                 UpdateUserInterface(uid, component, args);
             }
@@ -199,14 +200,14 @@ namespace Content.Shared.Access.Systems
 
             if (!_interactionSystem.InRangeUnobstructed(player, component.TargetAccessReaderId))
             {
-                _popupSystem.PopupEntity(Loc.GetString("access-overrider-out-of-range"), player, player);
+                _popupSystem.PopupClient(Loc.GetString("access-overrider-out-of-range"), player, player);
 
                 return;
             }
 
             if (newAccessList.Count > 0 && !newAccessList.TrueForAll(x => component.AccessLevels.Contains(x)))
             {
-                _sawmill.Warning($"User {ToPrettyString(uid)} tried to write unknown access tag.");
+                _sawmill.Warning($"User {ToPrettyString(player)} tried to write unknown access tag.");
                 return;
             }
 
@@ -224,16 +225,16 @@ namespace Content.Shared.Access.Systems
 
             if (!difference.IsSubsetOf(privilegedPerms))
             {
-                _sawmill.Warning($"User {ToPrettyString(uid)} tried to modify permissions they could not give/take!");
+                _sawmill.Warning($"User {ToPrettyString(player)} tried to modify permissions they could not give/take!");
 
                 return;
             }
 
             if (!oldTags.ToHashSet().IsSubsetOf(privilegedPerms))
             {
-                _sawmill.Warning($"User {ToPrettyString(uid)} tried to modify permissions when they do not have sufficient access!");
-                _popupSystem.PopupEntity(Loc.GetString("access-overrider-cannot-modify-access"), player, player);
-                _audioSystem.PlayPvs(component.DenialSound, uid);
+                _sawmill.Warning($"User {ToPrettyString(player)} tried to modify permissions when they do not have sufficient access!");
+                _popupSystem.PopupClient(Loc.GetString("access-overrider-cannot-modify-access"), player, player);
+                _audioSystem.PlayPredicted(component.DenialSound, uid, player);
 
                 return;
             }
@@ -241,8 +242,11 @@ namespace Content.Shared.Access.Systems
             var addedTags = newAccessList.Except(oldTags).Select(tag => "+" + tag).ToList();
             var removedTags = oldTags.Except(newAccessList).Select(tag => "-" + tag).ToList();
 
-            _adminLogger.Add(LogType.Action, LogImpact.High,
-                $"{ToPrettyString(player):player} has modified {ToPrettyString(accessReaderEnt.Value):entity} with the following allowed access level holders: [{string.Join(", ", addedTags.Union(removedTags))}] [{string.Join(", ", newAccessList)}]");
+            _adminLogger.Add(LogType.Action,
+                LogImpact.High,
+                $"{ToPrettyString(player):player} has modified "
+                + $"{ToPrettyString(accessReaderEnt.Value):entity} with the following allowed access level holders: "
+                + $"[{string.Join(", ", addedTags.Union(removedTags))}] [{string.Join(", ", newAccessList)}]");
 
             _accessReader.SetAccesses(accessReaderEnt.Value, newAccessList);
 
@@ -277,10 +281,6 @@ namespace Content.Shared.Access.Systems
 
             public override DoAfterEvent Clone() => this;
         }
-    }
-
-    public class SharedAccessOverriderSystemImpl : SharedAccessOverriderSystem
-    {
     }
 }
 
