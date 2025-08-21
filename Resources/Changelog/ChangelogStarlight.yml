@@ -12077,5 +12077,12 @@ Entries:
   id: 138400
   time: '2025-08-20T17:38:35.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/1384
+- author: FoxxoTrystan
+  changes:
+  - message: Languages!
+    type: Add
+  id: 125300
+  time: '2025-08-21T11:11:20.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1253
 Order: -1
 
