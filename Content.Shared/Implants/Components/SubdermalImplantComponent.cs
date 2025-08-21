@@ -16,12 +16,20 @@ public sealed partial class SubdermalImplantComponent : Component
     /// <summary>
     /// Used where you want the implant to grant the owner an instant action.
     /// </summary>
-    [ViewVariables(VVAccess.ReadWrite)]
-    [DataField("implantAction")]
+    [DataField]
     public EntProtoId? ImplantAction;
 
+    /// <summary>
+    /// The provided action entity.
+    /// </summary>
     [DataField, AutoNetworkedField]
     public EntityUid? Action;
+
+    /// <summary>
+    /// Components to add/remove to the implantee when the implant is injected/extracted.
+    /// </summary>
+    [DataField]
+    public ComponentRegistry ImplantComponents = new();
 
     /// <summary>
     /// The entity this implant is inside
@@ -32,8 +40,7 @@ public sealed partial class SubdermalImplantComponent : Component
     /// <summary>
     /// Should this implant be removeable?
     /// </summary>
-    [ViewVariables(VVAccess.ReadWrite)]
-    [DataField("permanent"), AutoNetworkedField]
+    [DataField, AutoNetworkedField]
     public bool Permanent = false;
 
     /// <summary>
@@ -61,23 +68,20 @@ public sealed partial class SubdermalImplantComponent : Component
 /// <summary>
 /// Used for opening the storage implant via action.
 /// </summary>
-public sealed partial class OpenStorageImplantEvent : InstantActionEvent
-{
-
-}
+/// <remarks>
+/// TODO: Delete this and just add a ToggleUIOnTriggerComponent
+/// </remarks>
+public sealed partial class OpenStorageImplantEvent : InstantActionEvent;
 
 /// <summary>
 /// Used for triggering trigger events on the implant via action
 /// </summary>
-public sealed partial class ActivateImplantEvent : InstantActionEvent
-{
-
-}
+public sealed partial class ActivateImplantEvent : InstantActionEvent;
 
 /// <summary>
 /// Used for opening the uplink implant via action.
 /// </summary>
-public sealed partial class OpenUplinkImplantEvent : InstantActionEvent
-{
-
-}
+/// <remarks>
+/// TODO: Delete this and just add a ToggleUIOnTriggerComponent
+/// </remarks>
+public sealed partial class OpenUplinkImplantEvent : InstantActionEvent;
