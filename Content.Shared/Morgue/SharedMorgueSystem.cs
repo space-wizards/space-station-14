@@ -1,5 +1,5 @@
+using Content.Shared.Mobs.Components;
 using Content.Shared.Storage.Components;
-using Content.Shared.Body.Components;
 using Content.Shared.Examine;
 using Content.Shared.Morgue.Components;
 using Robust.Shared.Player;
@@ -68,7 +68,7 @@ public abstract class SharedMorgueSystem : EntitySystem
 
         foreach (var ent in storage.Contents.ContainedEntities)
         {
-            if (!hasMob && HasComp<BodyComponent>(ent))
+            if (!hasMob && HasComp<MobStateComponent>(ent))
                 hasMob = true;
 
             if (HasComp<ActorComponent>(ent))
