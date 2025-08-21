@@ -1,17 +1,17 @@
 <controls:FancyWindow xmlns="https://spacestation14.io"
-            xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-            xmlns:s="clr-namespace:Content.Client.Stylesheets"
-            xmlns:gfx="clr-namespace:Robust.Client.Graphics;assembly=Robust.Client"
-            xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
-            Title="{Loc agent-id-ui-menu-title}"
-            MinSize="737 383" Resizable="False">
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:s="clr-namespace:Content.Client.Stylesheets"
+                    xmlns:gfx="clr-namespace:Robust.Client.Graphics;assembly=Robust.Client"
+                    xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
+                    Title="{Loc agent-id-ui-menu-title}"
+                    MinSize="737 383" Resizable="False">
     <BoxContainer Orientation="Vertical" Margin="12 0" VerticalExpand="False" >
 
         <!-- Upper area: ID status -->
         <BoxContainer Margin="0 12 0 4" MinHeight="80" >
             <PanelContainer> <!-- Inset aesthetics -->
                 <PanelContainer.PanelOverride>
-                    <gfx:StyleBoxFlat BorderThickness="1" BorderColor="#444444" BackgroundColor="{x:Static s:StyleNano.PanelDark}" />
+                    <gfx:StyleBoxFlat BorderThickness="2" BorderColor="#444444" BackgroundColor="{x:Static s:StyleNano.PanelDark}" />
                 </PanelContainer.PanelOverride>
                 <TextureRect Name="CurrentJobIcon" Margin="8 0" Stretch="KeepAspectCentered"
                              VerticalAlignment="Center" HorizontalAlignment="Center" SetSize="64 64" />
@@ -26,7 +26,7 @@
         <!-- Center area: Tabs -->
         <PanelContainer MinHeight="220" VerticalExpand="True"> <!-- Inset aesthetics -->
             <PanelContainer.PanelOverride>
-                <gfx:StyleBoxFlat BorderThickness="2" BorderColor="#400000" BackgroundColor="#0E0000" />
+                <gfx:StyleBoxFlat BorderThickness="2" BorderColor="#444444" BackgroundColor="{x:Static s:StyleNano.PanelDark}" />
             </PanelContainer.PanelOverride>
             <BoxContainer Orientation="Vertical" >
                 <TabContainer Name="CTabContainer" Margin="8 8 8 0" VerticalExpand="True" MinHeight="180" >
@@ -54,7 +54,7 @@
                             </PanelContainer.PanelOverride>
                             <BoxContainer Margin="4" SetWidth="98" VerticalExpand="True" >
                                 <GridContainer Name="IconGrid" Columns="3" />
-                                <!-- Job icon buttons are generated in code -->
+                                    <!-- Job icon buttons are generated in code -->
                             </BoxContainer>
                         </PanelContainer>
                     </BoxContainer>

@@ -17,8 +17,8 @@ public abstract class SharedAgentIdCardSystem : EntitySystem
 {
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly LockSystem _lock = default!;
-    [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
-    [Dependency] private readonly SharedIdCardSystem _cardSystem = default!;
+    [Dependency] private readonly SharedPopupSystem _popup = default!;
+    [Dependency] private readonly SharedIdCardSystem _card = default!;
 
     /// <inheritdoc />
     public override void Initialize()
@@ -33,6 +33,9 @@ public abstract class SharedAgentIdCardSystem : EntitySystem
     }
 
     // TODO this should be its own component
+    /// <summary>
+    /// Steals access from interacted ids.
+    /// </summary>
     private void OnAfterInteract(Entity<AgentIDCardComponent> ent, ref AfterInteractEvent args)
     {
         if (args.Target == null || !args.CanReach || _lock.IsLocked(ent.Owner) ||
@@ -47,50 +50,61 @@ public abstract class SharedAgentIdCardSystem : EntitySystem
         access.Tags.UnionWith(targetAccess.Tags);
         var addedLength = access.Tags.Count - beforeLength;
 
-        _popupSystem.PopupPredicted(Loc.GetString("agent-id-new", ("number", addedLength), ("card", args.Target)), args.Target.Value, args.User);
+        _popup.PopupPredicted(Loc.GetString("agent-id-new", ("number", addedLength), ("card", args.Target)), args.Target.Value, args.User);
         if (addedLength > 0)
             Dirty(ent, access);
     }
 
-    private void OnJobChanged(Entity<AgentIDCardComponent> ent, ref AgentIDCardJobChangedMessage args)
-    {
-        if (!TryComp<IdCardComponent>(ent, out var idCard))
-            return;
-
-        _cardSystem.TryChangeJobTitle(ent, args.Job, idCard);
-        UpdateUi(ent);
-    }
-
     private void OnNameChanged(Entity<AgentIDCardComponent> ent, ref AgentIDCardNameChangedMessage args)
     {
-        if (!TryComp<IdCardComponent>(ent, out var idCard))
+        if (!TryComp<IdCardComponent>(ent, out var idCard) ||
+            args.Name == idCard.FullName)
             return;
 
-        _cardSystem.TryChangeFullName(ent, args.Name, idCard);
+        _card.TryChangeFullName(ent, args.Name, idCard);
+
         UpdateUi(ent);
+        Dirty(ent, idCard);
+    }
+
+    private void OnJobChanged(Entity<AgentIDCardComponent> ent, ref AgentIDCardJobChangedMessage args)
+    {
+        if (!TryComp<IdCardComponent>(ent, out var idCard) ||
+            args.Job == idCard.LocalizedJobTitle)
+            return;
+
+        _card.TryChangeJobTitle(ent, args.Job, idCard);
+
+        UpdateUi(ent);
+        Dirty(ent, idCard);
     }
 
     private void OnJobIconChanged(Entity<AgentIDCardComponent> ent, ref AgentIDCardJobIconChangedMessage args)
     {
-        if (!TryComp<IdCardComponent>(ent, out var idCard))
+        if (!TryComp<IdCardComponent>(ent, out var idCard) ||
+            args.JobIconId == idCard.JobIcon)
             return;
 
         if (!_prototypeManager.TryIndex(args.JobIconId, out var jobIcon))
             return;
 
-        _cardSystem.TryChangeJobIcon(ent, jobIcon, idCard);
-        UpdateUi(ent);
+        _card.TryChangeJobIcon(ent, jobIcon, idCard);
 
         if (TryFindJobProtoFromIcon(jobIcon, out var job))
-            _cardSystem.TryChangeJobDepartment(ent, job, idCard);
+            _card.TryChangeJobDepartment(ent, job, idCard);
+
+        UpdateUi(ent);
+        Dirty(ent, idCard);
     }
 
     /// <summary>
-    /// Attempts to find a matching job to a job icon.
+    /// Attempts to find a matching job to a job icon. TODO move this somewhere else
     /// </summary>
     /// <returns> True if a JobPrototype is found. </returns>
     private bool TryFindJobProtoFromIcon(JobIconPrototype jobIcon, [NotNullWhen(true)] out JobPrototype? job)
     {
+        job = null;
+
         foreach (var jobPrototype in _prototypeManager.EnumeratePrototypes<JobPrototype>())
         {
             if (jobPrototype.Icon != jobIcon.ID)
@@ -100,7 +114,6 @@ public abstract class SharedAgentIdCardSystem : EntitySystem
             return true;
         }
 
-        job = null;
         return false;
     }
 
