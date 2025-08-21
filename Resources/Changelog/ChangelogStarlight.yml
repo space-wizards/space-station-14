@@ -12140,5 +12140,19 @@ Entries:
   id: 141201
   time: '2025-08-21T12:57:21.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/1412
+- author: walksanatora
+  changes:
+  - message: Changeling transform now uses a selector wheel
+    type: Tweak
+  id: 138500
+  time: '2025-08-21T14:22:42.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1385
+- author: walksanatora
+  changes:
+  - message: Changelings devour is alot more violent.
+    type: Tweak
+  id: 138501
+  time: '2025-08-21T14:22:42.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1385
 Order: -1
 
