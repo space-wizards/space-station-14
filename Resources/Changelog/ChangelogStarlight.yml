@@ -12091,5 +12091,12 @@ Entries:
   id: 140900
   time: '2025-08-21T11:13:28.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/1409
+- author: PubliclyExecutedPig
+  changes:
+  - message: Fixed being able to put the Pitbull's magazine in the chamber.
+    type: Fix
+  id: 136800
+  time: '2025-08-21T11:17:54.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1368
 Order: -1
 
