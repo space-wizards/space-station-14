@@ -53,6 +53,18 @@ public sealed partial class CCVars
         CVarDef.Create("vote.restart_not_allowed_when_admin_online", true, CVar.SERVERONLY);
 
     /// <summary>
+    ///     Whether automatic voting for a new map is enabled.
+    /// </summary>
+    public static readonly CVarDef<bool> VoteAutoMapEnabled =
+        CVarDef.Create("vote.auto_map_enabled", true, CVar.SERVERONLY);
+
+    /// <summary>
+    ///     Whether automatic voting for a new preset is enabled.
+    /// </summary>
+    public static readonly CVarDef<bool> VoteAutoPresetEnabled =
+        CVarDef.Create("vote.auto_preset_enabled", true, CVar.SERVERONLY);
+
+    /// <summary>
     ///     The delay which two votes of the same type are allowed to be made by separate people, in seconds.
     /// </summary>
     public static readonly CVarDef<float> VoteSameTypeTimeout =
