@@ -203,7 +203,7 @@ public abstract class SharedEntityStorageSystem : EntitySystem
         }
     }
 
-    public void OpenStorage(EntityUid uid, SharedEntityStorageComponent? component = null)
+    public void OpenStorage(EntityUid uid, SharedEntityStorageComponent? component = null, EntityUid? user = null)
     {
         if (!ResolveStorage(uid, ref component))
             return;
@@ -217,14 +217,13 @@ public abstract class SharedEntityStorageSystem : EntitySystem
         Dirty(uid, component);
         EmptyContents(uid, component);
         ModifyComponents(uid, component);
-        if (_net.IsClient && _timing.IsFirstTimePredicted)
-            _audio.PlayPvs(component.OpenSound, uid);
+        _audio.PlayPredicted(component.OpenSound, uid, user);
         ReleaseGas(uid, component);
         var afterev = new StorageAfterOpenEvent();
         RaiseLocalEvent(uid, ref afterev);
     }
 
-    public void CloseStorage(EntityUid uid, SharedEntityStorageComponent? component = null)
+    public void CloseStorage(EntityUid uid, SharedEntityStorageComponent? component = null, EntityUid? user = null)
     {
         if (!ResolveStorage(uid, ref component))
             return;
@@ -268,8 +267,7 @@ public abstract class SharedEntityStorageSystem : EntitySystem
 
         TakeGas(uid, component);
         ModifyComponents(uid, component);
-        if (_net.IsClient && _timing.IsFirstTimePredicted)
-            _audio.PlayPvs(component.CloseSound, uid);
+        _audio.PlayPredicted(component.CloseSound, uid, user);
 
         var afterev = new StorageAfterCloseEvent();
         RaiseLocalEvent(uid, ref afterev);
@@ -409,8 +407,8 @@ public abstract class SharedEntityStorageSystem : EntitySystem
             var newCoords = new EntityCoordinates(target, component.EnteringOffset);
             if (!_interaction.InRangeUnobstructed(target, newCoords, 0, collisionMask: component.EnteringOffsetCollisionFlags))
             {
-                if (!silent && _net.IsServer)
-                    Popup.PopupEntity(Loc.GetString("entity-storage-component-cannot-open-no-space"), target);
+                if (!silent)
+                    Popup.PopupClient(Loc.GetString("entity-storage-component-cannot-open-no-space"), target);
                 return false;
             }
         }
