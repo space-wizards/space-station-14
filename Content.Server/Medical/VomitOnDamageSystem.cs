@@ -39,6 +39,7 @@ public sealed class VomitOnDamageSystem : EntitySystem
 
             _vomitSystem.Vomit(ent);
             vomited = true;
+            break;
         }
 
         if (vomited)
