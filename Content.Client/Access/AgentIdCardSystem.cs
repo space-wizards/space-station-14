@@ -1,6 +1,5 @@
 using Content.Shared.Access.Components;
 using Content.Shared.Access.Systems;
-using Content.Shared.Atmos.Piping.Binary.Components;
 using Robust.Client.GameObjects;
 
 namespace Content.Client.Access;
