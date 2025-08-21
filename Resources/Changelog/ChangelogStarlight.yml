@@ -12126,5 +12126,19 @@ Entries:
   id: 136600
   time: '2025-08-21T11:25:35.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/1366
+- author: Happyrobot33
+  changes:
+  - message: Added species language to borgs and mmi as understand.
+    type: Add
+  id: 141200
+  time: '2025-08-21T12:57:21.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1412
+- author: Happyrobot33
+  changes:
+  - message: Changed machine language to use a font instead.
+    type: Tweak
+  id: 141201
+  time: '2025-08-21T12:57:21.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1412
 Order: -1
 
