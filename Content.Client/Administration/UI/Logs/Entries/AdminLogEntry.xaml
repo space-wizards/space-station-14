@@ -1,0 +1,14 @@
+<BoxContainer xmlns="https://spacestation14.io"
+         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+         xmlns:cc="clr-namespace:Content.Client.Administration.UI.CustomControls"
+         Orientation="Vertical">
+    <BoxContainer Margin="2">
+        <Collapsible>
+            <CollapsibleHeading  Name="DetailsHeading" Access="Public">
+                <RichTextLabel Margin="20 0 0 0" Name="Message" MinSize="50 10" VerticalExpand="True" Access="Public" />
+            </CollapsibleHeading>
+            <CollapsibleBody Name="DetailsBody" Access="Public" />
+        </Collapsible>
+    </BoxContainer>
+    <cc:HSeparator/>
+</BoxContainer>
