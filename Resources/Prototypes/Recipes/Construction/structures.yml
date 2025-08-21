@@ -195,7 +195,7 @@
 
 - type: construction
   id: WallSolidDiagonal
-  name: construction-recipe-diagonal-shuttle-wall
+  name: construction-recipe-diagonal-wall
   graph: GirderDiagonalDiagonal
   startNode: start
   targetNode: wallDiagonal
@@ -209,7 +209,7 @@
 
 - type: construction
   id: WallReinforcedDiagonal
-  name: construction-recipe-diagonal-shuttle-wall
+  name: construction-recipe-diagonal-reinforced-wall
   graph: GirderDiagonal
   startNode: start
   targetNode: wallReinforcedDiagonal
