@@ -548,29 +548,6 @@ public sealed class GhostRoleSystem : EntitySystem
     }
 
     /// <summary>
-    /// Collect all role prototypes on the Ghostrole
-    /// </summary>
-    // [Obsolete("Phase out string-typed roles, use the typed lists provided by TryPrototypes()")]
-    // private List<string> GetPrototypes(Entity<GhostRoleComponent> roleEnt)
-    // {
-    //     TryPrototypes(roleEnt, out var antags, out var jobs);
-    //
-    //     var list = new List<string>();
-    //
-    //     foreach (var i in antags)
-    //     {
-    //         list.Add(i.ToString());
-    //     }
-    //
-    //     foreach (var i in jobs)
-    //     {
-    //         list.Add(i.ToString());
-    //     }
-    //
-    //     return list;
-    // }
-
-    /// <summary>
     /// Checks if the player passes the requirements for the supplied roles.
     /// Returns false if any role fails the check.
     /// </summary>
