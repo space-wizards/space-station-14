@@ -58,7 +58,7 @@ namespace Content.Server.Database
                 .IsUnique();
 
             modelBuilder.Entity<DbPronoun>()
-                .HasIndex(p => new { HumanoidProfileId = p.ProfileId })
+                .HasIndex(p => new { HumanoidProfileId = p.ProfileId }, "pronoun")
                 .IsUnique();
 
             modelBuilder.Entity<Antag>()
@@ -409,7 +409,7 @@ namespace Content.Server.Database
         public int Age { get; set; }
         public string Sex { get; set; } = null!;
         public string Gender { get; set; } = null!;
-        public DbPronoun? Pronouns { get; set; }
+        public DbPronoun Pronouns { get; set; } = null!;
         public string Species { get; set; } = null!;
         [Column(TypeName = "jsonb")] public JsonDocument? Markings { get; set; } = null!;
         public string HairName { get; set; } = null!;

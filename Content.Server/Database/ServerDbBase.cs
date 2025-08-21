@@ -325,22 +325,19 @@ namespace Content.Server.Database
             profile.Slot = slot;
             profile.PreferenceUnavailable = (DbPreferenceUnavailableMode) humanoid.PreferenceUnavailable;
 
-            if (humanoid.Pronoun != null)
-            {
-                var pronoun = humanoid.Pronoun;
+            var pronoun = humanoid.Pronoun;
 
-                profile.Pronouns = new DbPronoun(
-                    pronoun.Subject,
-                    pronoun.Object,
-                    pronoun.DatObj,
-                    pronoun.Genitive,
-                    pronoun.PossAdj,
-                    pronoun.PossPronoun,
-                    pronoun.Reflexive,
-                    pronoun.Counter,
-                    pronoun.Plural
-                );
-            }
+            profile.Pronouns = new DbPronoun(
+                pronoun?.Subject,
+                pronoun?.Object,
+                pronoun?.DatObj,
+                pronoun?.Genitive,
+                pronoun?.PossAdj,
+                pronoun?.PossPronoun,
+                pronoun?.Reflexive,
+                pronoun?.Counter,
+                pronoun?.Plural
+            );
 
             profile.Jobs.Clear();
             profile.Jobs.AddRange(

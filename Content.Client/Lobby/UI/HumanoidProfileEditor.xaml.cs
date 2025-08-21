@@ -482,6 +482,12 @@ namespace Content.Client.Lobby.UI
                 return;
 
             _pronounWindow = new PronounWindow(Profile, pronouns, gender, _playerManager.LocalSession, collection);
+            _pronounWindow.OpenCentered();
+
+            if (Profile is null)
+                return;
+
+            UpdatePronouns();
         }
 
         /// <summary>
@@ -1307,7 +1313,7 @@ namespace Content.Client.Lobby.UI
             foreach (var (jobId, prioritySelector) in _jobPriorities)
             {
                 var priority = Profile?.JobPriorities.GetValueOrDefault(jobId, JobPriority.Never) ?? JobPriority.Never;
-                prioritySelector.Select((int) priority);
+                prioritySelector.Select((int)priority);
             }
         }
 

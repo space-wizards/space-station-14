@@ -2,16 +2,16 @@
 
 # Displayed in the Character prefs window
 humanoid-character-profile-summary =
-    This is {$name}. {$gender ->
-    [male] He is
-    [female] She is
-    [epicene] They are
-    [neuter] It is
-    *[other] {$gender}
+    This is {$name}. {$subject ->
+    [male] He
+    [female] She
+    [epicene] They
+    [neuter] It
+    *[other] {$subject}
 } {$conjugate-be ->
     [male] is
     [female] is
     [neuter] is
     [false] is
-    *[other] are
+    *[other] {$conjugate-be}
 } {$age} years old.

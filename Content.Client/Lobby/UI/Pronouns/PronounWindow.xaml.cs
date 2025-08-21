@@ -16,15 +16,14 @@ public sealed partial class PronounWindow : FancyWindow
     public HumanoidCharacterProfile Profile;
 
     // loc strings
-    private const string GetSubject = "{Loc {SUBJECT(";
-    private const string GetObject = "{Loc {OBJECT(";
-    private const string GetDatObj = "{Loc {DATOBJ(";
-    private const string GetGenitive = "{Loc {GENITIVE(";
-    private const string GetPossAdj = "{Loc {POSSADJ(";
-    private const string GetPossPronoun = "{Loc {POSSPRONOUN(";
-    private const string GetReflexive = "{Loc {REFLEXIVE(";
-    private const string GetCounter = "{Loc {COUNTER(";
-    private const string EndGet = ")}}";
+    private const string GetSubject = "{SUBJECT($gender)}";
+    private const string GetObject = "{OBJECT($gender)}";
+    private const string GetDatObj = "{DATOBJ($gender)}";
+    private const string GetGenitive = "{GENITIVE($gender)}";
+    private const string GetPossAdj = "{POSSADJ($gender)}";
+    private const string GetPossPronoun = "{POSSPRONOUN($gender)}";
+    private const string GetReflexive = "{REFLEXIVE($gender)}";
+    private const string GetCounter = "{COUNTER($gender)}";
 
     // CCvar
     private readonly bool _showAdditionalPronouns;
@@ -43,21 +42,39 @@ public sealed partial class PronounWindow : FancyWindow
 
         // genitive, dative, and counter arent used in en-us, so we hide them
         if (!_showAdditionalPronouns)
-        {
-            DatObjLine.Visible = false;
-            GenitiveLine.Visible = false;
-            CounterLine.Visible = false;
-        }
+            OptionalParams.Visible = false;
+
+        PronounDescription.Text = Loc.GetString("humanoid-profile-editor-pronouns-description");
+        SubjectLabel.Text = Loc.GetString("humanoid-profile-editor-pronouns-subject-label");
+        SubjectExample.Text = Loc.GetString("humanoid-profile-editor-pronouns-subject-example");
+        ObjectLabel.Text = Loc.GetString("humanoid-profile-editor-pronouns-object-label");
+        ObjectExample.Text = Loc.GetString("humanoid-profile-editor-pronouns-object-example");
+        DatObjLabel.Text = Loc.GetString("humanoid-profile-editor-pronouns-datobj-label");
+        DatObjExample.Text = Loc.GetString("humanoid-profile-editor-pronouns-datobj-example");
+        GenitiveLabel.Text = Loc.GetString("humanoid-profile-editor-pronouns-genitive-label");
+        GenitiveExample.Text = Loc.GetString("humanoid-profile-editor-pronouns-genitive-example");
+        PossAdjLabel.Text = Loc.GetString("humanoid-profile-editor-pronouns-possadj-label");
+        PossAdjExample.Text = Loc.GetString("humanoid-profile-editor-pronouns-possadj-example");
+        PossPronounLabel.Text = Loc.GetString("humanoid-profile-editor-pronouns-posspronoun-label");
+        PossPronounExample.Text = Loc.GetString("humanoid-profile-editor-pronouns-posspronoun-example");
+        ReflexiveLabel.Text = Loc.GetString("humanoid-profile-editor-pronouns-reflexive-label");
+        ReflexiveExample.Text = Loc.GetString("humanoid-profile-editor-pronouns-reflexive-example");
+        CounterLabel.Text = Loc.GetString("humanoid-profile-editor-pronouns-counter-label");
+        CounterExample.Text = Loc.GetString("humanoid-profile-editor-pronouns-counter-example");
+        PluralLabel.Text = Loc.GetString("humanoid-profile-editor-pronouns-plural-label");
+        PluralExample.Text = Loc.GetString("humanoid-profile-editor-pronouns-plural-example");
 
         var gender = profileGender ?? Gender.Epicene;
-        SubjectLine.PlaceHolder = GetSubject + gender.ToString() + EndGet;
-        ObjectLine.PlaceHolder = GetObject + gender.ToString() + EndGet;
-        DatObjLine.PlaceHolder = GetDatObj + gender.ToString() + EndGet;
-        GenitiveLine.PlaceHolder = GetGenitive + gender.ToString() + EndGet;
-        PossAdjLine.PlaceHolder = GetPossAdj + gender.ToString() + EndGet;
-        PossPronounLine.PlaceHolder = GetPossPronoun + gender.ToString() + EndGet;
-        ReflexiveLine.PlaceHolder = GetReflexive + gender.ToString() + EndGet;
-        CounterLine.PlaceHolder = GetCounter + gender.ToString() + EndGet;
+        var genderString = gender.ToString().ToLowerInvariant();
+
+        SubjectLine.PlaceHolder = Loc.GetString(GetSubject, ("gender", genderString));
+        ObjectLine.PlaceHolder = Loc.GetString(GetObject, ("gender", genderString));
+        DatObjLine.PlaceHolder = Loc.GetString(GetDatObj, ("gender", genderString));
+        GenitiveLine.PlaceHolder = Loc.GetString(GetGenitive, ("gender", genderString));
+        PossAdjLine.PlaceHolder = Loc.GetString(GetPossAdj, ("gender", genderString));
+        PossPronounLine.PlaceHolder = Loc.GetString(GetPossPronoun, ("gender", genderString));
+        ReflexiveLine.PlaceHolder = Loc.GetString(GetReflexive, ("gender", genderString));
+        CounterLine.PlaceHolder = Loc.GetString(GetCounter, ("gender", genderString));
 
         SubjectLine.OnTextChanged += args =>
         {

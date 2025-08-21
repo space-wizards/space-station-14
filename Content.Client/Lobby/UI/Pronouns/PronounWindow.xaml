@@ -3,26 +3,29 @@
          Title="{Loc humanoid-profile-editor-pronouns-title}"
          xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
          xmlns:graphics="clr-namespace:Robust.Client.Graphics;assembly=Robust.Client"
-         MinSize="800 800">
+         MinSize="800 300">
     <BoxContainer Orientation="Vertical">
+        <BoxContainer Orientation="Horizontal">
+            <Label Name="PronounDescription" />
+        </BoxContainer>
         <!-- Top Line -->
         <BoxContainer Orientation="Horizontal">
             <!-- Subject -->
             <BoxContainer Name ="SubjectContainer" Orientation="Vertical">
-                <Label Text="{Loc profile-editor-pronouns-subject-label}" />
-                <Label Text="{Loc profile-editor-pronouns-subject-example}" />
+                <Label Name="SubjectLabel" />
+                <Label Name="SubjectExample" />
                 <LineEdit Name="SubjectLine" />
             </BoxContainer>
             <!-- Object -->
             <BoxContainer Name ="ObjectContainer" Orientation="Vertical">
-                <Label Text="{Loc profile-editor-pronouns-object-label}" />
-                <Label Text="{Loc profile-editor-pronouns-object-example}" />
+                <Label Name="ObjectLabel" />
+                <Label Name="ObjectExample" />
                 <LineEdit Name="ObjectLine" />
             </BoxContainer>
             <!-- Reflexive -->
             <BoxContainer Name ="ReflexiveContainer" Orientation="Vertical">
-                <Label Text="{Loc profile-editor-pronouns-reflexive-label}" />
-                <Label Text="{Loc profile-editor-pronouns-reflexive-example}" />
+                <Label Name="ReflexiveLabel" />
+                <Label Name="ReflexiveExample" />
                 <LineEdit Name="ReflexiveLine" />
             </BoxContainer>
         </BoxContainer>
@@ -30,41 +33,41 @@
         <BoxContainer Orientation="Horizontal">
             <!-- Possessive Pronoun -->
             <BoxContainer Name ="PossPronounContainer" Orientation="Vertical">
-                <Label Text="{Loc profile-editor-pronouns-posspronoun-label}" />
-                <Label Text="{Loc profile-editor-pronouns-posspronoun-example}" />
+                <Label Name="PossPronounLabel" />
+                <Label Name="PossPronounExample" />
                 <LineEdit Name="PossPronounLine" />
             </BoxContainer>
             <!-- Possessive Determiner -->
             <BoxContainer Name ="PossAdjContainer" Orientation="Vertical">
-                <Label Text="{Loc profile-editor-pronouns-possadj-label}" />
-                <Label Text="{Loc profile-editor-pronouns-possadj-example}" />
+                <Label Name="PossAdjLabel" />
+                <Label Name="PossAdjExample" />
                 <LineEdit Name="PossAdjLine" />
             </BoxContainer>
             <!-- Conjugation -->
             <BoxContainer Name ="PluralContainer" Orientation="Vertical">
-                <Label Text="{Loc profile-editor-pronouns-plural-label}" />
-                <Label Text="{Loc profile-editor-pronouns-plural-example}" />
+                <Label Name="PluralLabel" />
+                <Label Name="PluralExample" />
                 <OptionButton Name="PluralOption" />
             </BoxContainer>
         </BoxContainer>
         <!-- Bottom Line (toggled in ccvars) -->
-        <BoxContainer Orientation="Horizontal">
+        <BoxContainer Name="OptionalParams" Orientation="Horizontal">
             <!-- Dative -->
             <BoxContainer Name ="DatObjContainer" Orientation="Vertical">
-                <Label Text="{Loc profile-editor-pronouns-datobj-label}" />
-                <Label Text="{Loc profile-editor-pronouns-datobj-example}" />
+                <Label Name="DatObjLabel" />
+                <Label Name="DatObjExample" />
                 <LineEdit Name="DatObjLine" />
             </BoxContainer>
             <!-- Genitive -->
             <BoxContainer Name ="GenitiveContainer" Orientation="Vertical">
-                <Label Text="{Loc profile-editor-pronouns-genitive-label}" />
-                <Label Text="{Loc profile-editor-pronouns-genitive-example}" />
+                <Label Name="GenitiveLabel" />
+                <Label Name="GenitiveExample" />
                 <LineEdit Name="GenitiveLine" />
             </BoxContainer>
             <!-- Counter -->
             <BoxContainer Name ="CounterContainer" Orientation="Vertical">
-                <Label Text="{Loc profile-editor-pronouns-counter-label}" />
-                <Label Text="{Loc profile-editor-pronouns-counter-example}" />
+                <Label Name="CounterLabel" />
+                <Label Name="CounterExample" />
                 <LineEdit Name="CounterLine" />
             </BoxContainer>
         </BoxContainer>

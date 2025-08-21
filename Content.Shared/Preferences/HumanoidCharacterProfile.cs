@@ -462,16 +462,24 @@ namespace Content.Shared.Preferences
             };
         }
 
-        public string Summary =>
-            Loc.GetString(
-                "humanoid-character-profile-summary",
-                ("name", Name),
-                ("subject", Pronoun?.Subject ??
-                    Gender.ToString().ToLowerInvariant()),
-                ("conjugate-be", Pronoun?.Plural.ToString() ??
-                    Gender.ToString().ToLowerInvariant()),
-                ("age", Age)
-            );
+        public string Summary
+        {
+            get
+            {
+                var plurality = Gender.ToString().ToLowerInvariant();
+                if (Pronoun is { } notNullPronoun &&
+                    notNullPronoun.Plural is { } notNullPronounPlural)
+                    plurality = notNullPronounPlural.ToString();
+                return Loc.GetString(
+                    "humanoid-character-profile-summary",
+                    ("name", Name),
+                    ("subject", Pronoun?.Subject ??
+                        Gender.ToString().ToLowerInvariant()),
+                    ("conjugate-be", plurality),
+                    ("age", Age)
+                );
+            }
+        }
 
         public bool MemberwiseEquals(ICharacterProfile maybeOther)
         {
