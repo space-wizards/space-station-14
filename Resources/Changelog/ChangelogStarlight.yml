@@ -12189,5 +12189,26 @@ Entries:
   id: 141404
   time: '2025-08-21T16:51:40.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/1414
+- author: walksanatora
+  changes:
+  - message: Borgis now are properly able to understand languages of the station.
+    type: Fix
+  id: 141300
+  time: '2025-08-21T17:21:24.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1413
+- author: walksanatora
+  changes:
+  - message: Station AI can now understand resomi and sol common
+    type: Fix
+  id: 141301
+  time: '2025-08-21T17:21:24.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1413
+- author: walksanatora
+  changes:
+  - message: Borgs can now understand resomi and sol common
+    type: Fix
+  id: 141302
+  time: '2025-08-21T17:21:24.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1413
 Order: -1
 
