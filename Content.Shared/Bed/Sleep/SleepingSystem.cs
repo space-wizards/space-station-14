@@ -287,6 +287,9 @@ public sealed partial class SleepingSystem : EntitySystem
         if (!Resolve(ent, ref ent.Comp, logMissing: false))
             return false;
 
+        if (ent.Comp.CurrentState == MobState.Critical)
+            return false;
+
         var tryingToSleepEvent = new TryingToSleepEvent(ent);
         RaiseLocalEvent(ent, ref tryingToSleepEvent);
         if (tryingToSleepEvent.Cancelled)
