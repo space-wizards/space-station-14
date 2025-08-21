@@ -29,7 +29,7 @@ public sealed partial class CrematoriumComponent : Component
     /// </summary>
     [DataField(customTypeSerializer: typeof(TimeOffsetSerializer))]
     [AutoNetworkedField, AutoPausedField]
-    public TimeSpan? ActiveUntil;
+    public TimeSpan ActiveUntil = TimeSpan.Zero;
 
     [DataField]
     public SoundSpecifier CremateStartSound = new SoundPathSpecifier("/Audio/Items/Lighters/lighter1.ogg");

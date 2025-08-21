@@ -2,14 +2,12 @@ using Content.Shared.Storage.Components;
 using Content.Shared.Body.Components;
 using Content.Shared.Examine;
 using Content.Shared.Morgue.Components;
-using Robust.Shared.Audio.Systems;
 using Robust.Shared.Player;
 
 namespace Content.Shared.Morgue;
 
 public abstract class SharedMorgueSystem : EntitySystem
 {
-    [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
 
     public override void Initialize()

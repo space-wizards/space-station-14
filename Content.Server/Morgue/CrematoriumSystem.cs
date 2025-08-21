@@ -24,7 +24,7 @@ public sealed class CrematoriumSystem : SharedCrematoriumSystem
             return;
 
         var victim = args.Victim;
-        if (TryComp<ActorComponent>(victim, out var actor) && Mind.TryGetMind(victim, out var mindId, out var mind))
+        if (HasComp<ActorComponent>(victim) && Mind.TryGetMind(victim, out var mindId, out var mind))
         {
             _ghostSystem.OnGhostAttempt(mindId, false, mind: mind);
 
@@ -36,7 +36,10 @@ public sealed class CrematoriumSystem : SharedCrematoriumSystem
 
         Popup.PopupEntity(Loc.GetString("crematorium-entity-storage-component-suicide-message-others",
             ("victim", Identity.Entity(victim, EntityManager))),
-            victim, Filter.PvsExcept(victim), true, PopupType.LargeCaution);
+            victim,
+            Filter.PvsExcept(victim),
+            true,
+            PopupType.LargeCaution);
 
         if (EntityStorage.CanInsert(victim, ent.Owner))
         {
@@ -46,9 +49,9 @@ public sealed class CrematoriumSystem : SharedCrematoriumSystem
         }
         else
         {
+            EntityStorage.CloseStorage(ent.Owner);
             Del(victim);
         }
-        EntityStorage.CloseStorage(ent.Owner);
         Cremate(ent.AsNullable());
         args.Handled = true;
     }

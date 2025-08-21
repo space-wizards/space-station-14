@@ -116,7 +116,6 @@ public abstract class SharedCrematoriumSystem : EntitySystem
     public bool TryCremate(Entity<CrematoriumComponent?, EntityStorageComponent?> ent, EntityUid? user = null)
     {
         if (!Resolve(ent, ref ent.Comp1, ref ent.Comp2))
-
             return false;
 
         if (ent.Comp2.Open || ent.Comp2.Contents.ContainedEntities.Count < 1)
