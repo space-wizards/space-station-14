@@ -13,9 +13,9 @@ station-ai-fixer-console-window-station-ai-offline = Offline
 
 station-ai-fixer-console-window-controls-locked = Controls locked
 
-station-ai-fixer-console-window-station-ai-eject = Eject intellicard
+station-ai-fixer-console-window-station-ai-eject = Eject stored AI
 station-ai-fixer-console-window-station-ai-repair = Run repair tool
-station-ai-fixer-console-window-station-ai-purge = Purge intellicard
+station-ai-fixer-console-window-station-ai-purge = Initiate AI purge
 
 station-ai-fixer-console-window-action-progress-repair = Repair in progress...
 station-ai-fixer-console-window-action-progress-purge = Purge in progress...
@@ -28,6 +28,6 @@ station-ai-fixer-console-window-continue-action = Continue
 station-ai-fixer-console-window-cancel-action = Cancel
 
 station-ai-fixer-console-window-purge-warning-title = Initiating AI purge
-station-ai-fixer-console-window-purge-warning-1 = You are about to initiate the purge of an artifical intelligence. 
-station-ai-fixer-console-window-purge-warning-2 = Once this operation is complete, the intelligence will be utterly destroyed and cannot be revived.
+station-ai-fixer-console-window-purge-warning-1 = You are about to permanently delete an artifical intelligence. 
+station-ai-fixer-console-window-purge-warning-2 = Once this operation is complete, the intelligence will be gone and cannot be revived.
 station-ai-fixer-console-window-purge-warning-3 = Do you wish to proceed?
