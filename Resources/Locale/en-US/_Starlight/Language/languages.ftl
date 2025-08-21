@@ -46,6 +46,9 @@ language-Scratch-description = A simplified, written dialect of the Avali and Re
 language-Terrum-name = Terrum
 language-Terrum-description = Sounds similar to old-earth Hebrew.
 
+language-Sylvan-name = Sylvan
+language-Sylvan-description = Plants speaks this language.
+
 language-Chittin-name = Chittin
 language-Chittin-description = The noise made by rubbing its antennae together is actually a complex form of communication.
 chat-speech-verb-chittin-1 = rubs their antennae together

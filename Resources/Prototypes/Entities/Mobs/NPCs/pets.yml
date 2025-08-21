@@ -933,9 +933,9 @@
   - type: LanguageSpeaker
   - type: LanguageKnowledge
     speaks:
-    - Fox
+    - Bubblish
     understands:
-    - Fox
+    - GalacticCommon
     - Bubblish
   # Starlight-end
   - type: Sprite
