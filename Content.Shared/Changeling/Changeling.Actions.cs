@@ -32,10 +32,8 @@ public sealed partial class ExitStasisEvent : InstantActionEvent { }
 
 #region Events - Combat
 
-public sealed partial class ToggleArmbladeEvent : InstantActionEvent { }
 public sealed partial class CreateBoneShardEvent : InstantActionEvent { }
 public sealed partial class ToggleChitinousArmorEvent : InstantActionEvent { }
-public sealed partial class ToggleOrganicShieldEvent : InstantActionEvent { }
 public sealed partial class ShriekDissonantEvent : InstantActionEvent { }
 public sealed partial class ShriekResonantEvent : InstantActionEvent { }
 public sealed partial class ToggleStrainedMusclesEvent : InstantActionEvent { }

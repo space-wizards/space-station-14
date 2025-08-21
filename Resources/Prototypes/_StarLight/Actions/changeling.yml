@@ -119,6 +119,7 @@
     requireAbsorbed: 2
 
 - type: entity
+  parent: BaseAction
   id: ActionToggleOrganicShield
   name: Form Shield
   description: Reform one of your arms into a large, fleshy shield. Costs 20 chemicals.
@@ -126,12 +127,19 @@
   components:
   - type: Action
     useDelay: 2
+    raiseOnAction: true
     itemIconStyle: NoItem
     icon:
       sprite: Changeling/changeling_abilities.rsi
       state: organic_shield
   - type: InstantAction
-    event: !type:ToggleOrganicShieldEvent {}
+    event: !type:OnRetractableItemActionEvent
+  - type: RetractableItemAction
+    spawnedPrototype: ChangelingShield
+    summonSounds:
+      collection: gib # Placeholder
+    retractSounds:
+      collection: gib # Placeholder
   - type: ChangelingAction
     chemicalCost: 20
     requireAbsorbed: 1

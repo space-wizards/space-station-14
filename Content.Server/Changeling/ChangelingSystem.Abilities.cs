@@ -26,6 +26,7 @@ using Content.Shared.StatusEffect;
 using Content.Shared.Light.Components;
 using Content.Shared.Changeling.Devour;
 using Content.Shared.Actions.Events;
+using Content.Shared.RetractableItemAction;
 
 namespace Content.Server.Changeling;
 
@@ -44,7 +45,6 @@ public sealed partial class ChangelingSystem : EntitySystem
 
         SubscribeLocalEvent<ChangelingComponent, CreateBoneShardEvent>(OnCreateBoneShard);
         SubscribeLocalEvent<ChangelingComponent, ToggleChitinousArmorEvent>(OnToggleArmor);
-        SubscribeLocalEvent<ChangelingComponent, ToggleOrganicShieldEvent>(OnToggleShield);
         SubscribeLocalEvent<ChangelingComponent, ShriekDissonantEvent>(OnShriekDissonant);
         SubscribeLocalEvent<ChangelingComponent, ShriekResonantEvent>(OnShriekResonant);
         SubscribeLocalEvent<ChangelingComponent, ToggleStrainedMusclesEvent>(OnToggleStrainedMuscles);
@@ -67,7 +67,7 @@ public sealed partial class ChangelingSystem : EntitySystem
         SubscribeLocalEvent<ChangelingComponent, ActionHivemindAccessEvent>(OnHivemindAccess);
         SubscribeLocalEvent<ChangelingComponent, FakeMindShieldToggleEvent>(OnFakeMindShieldToggle);
 
-        SubscribeLocalEvent<ChangelingActionComponent, ActionAttemptEvent>(OnAttemptLingAction);
+        SubscribeLocalEvent<ChangelingActionComponent, ActionAttemptEvent>(OnAttemptLingAction, before: [typeof(RetractableItemActionSystem)]);
     }
 
     #region Basic Abilities
@@ -252,13 +252,6 @@ public sealed partial class ChangelingSystem : EntitySystem
             comp.Chemicals += Comp<ChangelingActionComponent>(args.Action).ChemicalCost;
             return;
         }
-
-        PlayMeatySound(uid, comp);
-    }
-    private void OnToggleShield(EntityUid uid, ChangelingComponent comp, ref ToggleOrganicShieldEvent args)
-    {
-        if (!TryToggleItem(uid, ShieldPrototype, comp))
-            return;
 
         PlayMeatySound(uid, comp);
     }

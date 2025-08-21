@@ -106,7 +106,6 @@ public sealed partial class ChangelingSystem : EntitySystem
 
     public EntProtoId FakeArmbladePrototype = "FakeArmBladeChangeling";
 
-    public EntProtoId ShieldPrototype = "ChangelingShield";
     public EntProtoId BoneShardPrototype = "ThrowingStarChangeling";
 
     public EntProtoId ArmorPrototype = "ChangelingClothingOuterArmor";

@@ -620,9 +620,7 @@
   id: ChangelingShield
   name: oraganic shield
   description: A large, fleshy shield.
-  suffix: Unremoveable
   components:
-    - type: Unremoveable
     - type: Sprite
       sprite: Changeling/shields.rsi
       state: ling-icon
