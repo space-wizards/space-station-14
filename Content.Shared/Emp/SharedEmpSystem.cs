@@ -44,7 +44,7 @@ public abstract class SharedEmpSystem : EntitySystem
     {
         foreach (var uid in _lookup.GetEntitiesInRange(mapCoordinates, range))
         {
-            TryEmpEffects(uid, energyConsumption, duration);
+            TryEmpEffects(uid, energyConsumption, duration, user);
         }
         // TODO: replace with PredictedSpawn once it works with animated sprites
         if (_net.IsServer)
@@ -68,7 +68,7 @@ public abstract class SharedEmpSystem : EntitySystem
         _lookup.GetEntitiesInRange(coordinates, range, _entSet);
         foreach (var uid in _entSet)
         {
-            TryEmpEffects(uid, energyConsumption, duration);
+            TryEmpEffects(uid, energyConsumption, duration, user);
         }
         // TODO: replace with PredictedSpawn once it works with animated sprites
         if (_net.IsServer)
@@ -83,15 +83,16 @@ public abstract class SharedEmpSystem : EntitySystem
     /// <param name="uid">The entity to apply the EMP effects on.</param>
     /// <param name="energyConsumption">The amount of energy consumed by the EMP.</param>
     /// <param name="duration">The duration of the EMP effects.</param>
+    /// <param name="user">The player that caused the EMP. For prediction purposes.</param>
     /// <returns>If the entity was affected by the EMP.</returns>
-    public bool TryEmpEffects(EntityUid uid, float energyConsumption, TimeSpan duration)
+    public bool TryEmpEffects(EntityUid uid, float energyConsumption, TimeSpan duration, EntityUid? user = null)
     {
         var attemptEv = new EmpAttemptEvent();
         RaiseLocalEvent(uid, ref attemptEv);
         if (attemptEv.Cancelled)
             return false;
 
-        return DoEmpEffects(uid, energyConsumption, duration);
+        return DoEmpEffects(uid, energyConsumption, duration, user);
     }
 
     /// <summary>
@@ -100,10 +101,11 @@ public abstract class SharedEmpSystem : EntitySystem
     /// <param name="uid">The entity to apply the EMP effects on.</param>
     /// <param name="energyConsumption">The amount of energy consumed by the EMP.</param>
     /// <param name="duration">The duration of the EMP effects.</param>
+    /// <param name="user">The player that caused the EMP. For prediction purposes.</param>
     /// <returns>If the entity was affected by the EMP.</returns>
-    public bool DoEmpEffects(EntityUid uid, float energyConsumption, TimeSpan duration)
+    public bool DoEmpEffects(EntityUid uid, float energyConsumption, TimeSpan duration, EntityUid? user = null)
     {
-        var ev = new EmpPulseEvent(energyConsumption, false, false, duration);
+        var ev = new EmpPulseEvent(energyConsumption, false, false, duration, user);
         RaiseLocalEvent(uid, ref ev);
 
         // TODO: replace with PredictedSpawn once it works with animated sprites
@@ -165,9 +167,10 @@ public record struct EmpAttemptEvent(bool Cancelled);
 /// <param name="Affected">Set this is true in the subscription to spawn a visual effect at the entity's location.</param>
 /// <param name="Disabled">Set this to ture in the subscription to add <see cref="EmpDisabledComponent"/> to the entity.</param>
 /// <param name="Duration">The duration the entity will be disabled.</param>
+/// <param name="User">The player that caused the EMP. For prediction purposes.</param>
 
 [ByRefEvent]
-public record struct EmpPulseEvent(float EnergyConsumption, bool Affected, bool Disabled, TimeSpan Duration);
+public record struct EmpPulseEvent(float EnergyConsumption, bool Affected, bool Disabled, TimeSpan Duration, EntityUid? User);
 
 /// <summary>
 /// Raised on an entity after <see cref="EmpDisabledComponent"/> is removed.

@@ -16,9 +16,6 @@
   - type: Tag
     tags:
     - HideContextMenu
-  - type: EmitSoundOnSpawn
-    sound:
-      path: 
   - type: AnimationPlayer
 
 - type: entity

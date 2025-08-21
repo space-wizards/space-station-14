@@ -1,6 +1,7 @@
 using Content.Server.Ninja.Events;
 using Content.Server.Power.Components;
 using Content.Server.PowerCell;
+using Content.Shared.Emp;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Ninja.Components;
 using Content.Shared.Ninja.Systems;
@@ -15,6 +16,7 @@ namespace Content.Server.Ninja.Systems;
 /// </summary>
 public sealed class NinjaSuitSystem : SharedNinjaSuitSystem
 {
+    [Dependency] private readonly SharedEmpSystem _emp = default!;
     [Dependency] private readonly SharedHandsSystem _hands = default!;
     [Dependency] private readonly SpaceNinjaSystem _ninja = default!;
     [Dependency] private readonly PowerCellSystem _powerCell = default!;
@@ -29,6 +31,7 @@ public sealed class NinjaSuitSystem : SharedNinjaSuitSystem
 
         SubscribeLocalEvent<NinjaSuitComponent, ContainerIsInsertingAttemptEvent>(OnSuitInsertAttempt);
         SubscribeLocalEvent<NinjaSuitComponent, RecallKatanaEvent>(OnRecallKatana);
+        SubscribeLocalEvent<NinjaSuitComponent, NinjaEmpEvent>(OnEmp);
     }
 
     protected override void NinjaEquipped(Entity<NinjaSuitComponent> ent, Entity<SpaceNinjaComponent> user)
@@ -131,5 +134,24 @@ public sealed class NinjaSuitSystem : SharedNinjaSuitSystem
             ? "ninja-katana-recalled"
             : "ninja-hands-full";
         Popup.PopupEntity(Loc.GetString(message), user, user);
+    }
+
+    // TODO: Move this to shared when power cells are predicted.
+    private void OnEmp(Entity<NinjaSuitComponent> ent, ref NinjaEmpEvent args)
+    {
+        var (uid, comp) = ent;
+        args.Handled = true;
+
+        var user = args.Performer;
+        if (!_ninja.TryUseCharge(user, comp.EmpCharge))
+        {
+            Popup.PopupEntity(Loc.GetString("ninja-no-power"), user, user);
+            return;
+        }
+
+        if (CheckDisabled(ent, user))
+            return;
+
+        _emp.EmpPulse(Transform(user).Coordinates, comp.EmpRange, comp.EmpConsumption, comp.EmpDuration, user);
     }
 }

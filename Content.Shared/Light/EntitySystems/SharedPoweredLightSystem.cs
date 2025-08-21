@@ -232,29 +232,21 @@ public abstract class SharedPoweredLightSystem : EntitySystem
     /// <summary>
     ///     Try to break bulb inside light fixture
     /// </summary>
-    public bool TryDestroyBulb(EntityUid uid, PoweredLightComponent? light = null)
+    public bool TryDestroyBulb(EntityUid uid, PoweredLightComponent? light = null, EntityUid? user = null)
     {
         if (!Resolve(uid, ref light, false))
             return false;
 
-        // if we aren't mapinited,
-        // just null the spawned bulb
-        if (LifeStage(uid) < EntityLifeStage.MapInitialized)
-        {
-            light.HasLampOnSpawn = null;
-            return true;
-        }
-
         // check bulb state
         var bulbUid = GetBulb(uid, light);
-        if (bulbUid == null || !EntityManager.TryGetComponent(bulbUid.Value, out LightBulbComponent? lightBulb))
+        if (bulbUid == null || !TryComp<LightBulbComponent>(bulbUid.Value, out var lightBulb))
             return false;
         if (lightBulb.State == LightBulbState.Broken)
             return false;
 
         // break it
         _bulbSystem.SetState(bulbUid.Value, LightBulbState.Broken, lightBulb);
-        _bulbSystem.PlayBreakSound(bulbUid.Value, lightBulb);
+        _bulbSystem.PlayBreakSound(bulbUid.Value, lightBulb, user);
         UpdateLight(uid, light);
         return true;
     }
@@ -329,13 +321,18 @@ public abstract class SharedPoweredLightSystem : EntitySystem
     /// <summary>
     ///     Destroy the light bulb if the light took any damage.
     /// </summary>
+    /// <remarks>
+    ///     TODO: This should be an IThresholdBehaviour once DestructibleSystem is predicted.
+    /// </remarks>
     public void HandleLightDamaged(EntityUid uid, PoweredLightComponent component, DamageChangedEvent args)
     {
+        if (GameTiming.ApplyingState) // The destruction is already networked on its own.
+            return;
+
         // Was it being repaired, or did it take damage?
         if (args.DamageIncreased)
         {
-            // Eventually, this logic should all be done by this (or some other) system, not a component.
-            TryDestroyBulb(uid, component);
+            TryDestroyBulb(uid, component, args.Origin);
         }
     }
 
