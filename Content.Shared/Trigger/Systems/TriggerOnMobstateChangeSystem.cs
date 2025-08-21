@@ -36,7 +36,10 @@ public sealed partial class TriggerOnMobstateChangeSystem : EntitySystem
 
     private void OnMobStateImplantRelay(EntityUid uid, TriggerOnMobstateChangeComponent component, ImplantRelayEvent<MobStateChangedEvent> args)
     {
-        OnMobStateChanged(uid, component, args.Event);
+        if (!component.MobState.Contains(args.Event.NewMobState))
+            return;
+
+        _trigger.Trigger(uid, component.TargetMobstateEntity ? args.ImplantedEntity : args.Event.Origin, component.KeyOut);
     }
 
     private void OnMobStateInventoryRelay(EntityUid uid, TriggerOnMobstateChangeComponent component, InventoryRelayedEvent<MobStateChangedEvent> args)

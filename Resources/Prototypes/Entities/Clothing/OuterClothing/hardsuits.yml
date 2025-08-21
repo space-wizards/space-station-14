@@ -80,7 +80,7 @@
     sound:
       path: /Audio/Effects/flatline.ogg
       params:
-        volume: -2
+        volume: -5
   - type: Tag
     tags:
     - CorgiWearable
