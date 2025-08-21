@@ -1,9 +1,17 @@
 using System.Collections.Immutable;
 using System.Linq;
 using System.Net;
+using System.Net.Http;
+using System.Net.Http.Json;
 using System.Text;
+using System.Text.Json;
+using System.Text.Json.Nodes;
+using System.Text.Json.Serialization;
+using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
+using Content.Server._NullLink.Core;
+using Content.Server._NullLink.Helpers;
 using Content.Server.Chat.Managers;
 using Content.Server.Database;
 using Content.Server.Discord;
@@ -13,12 +21,7 @@ using Content.Shared.Database;
 using Content.Shared.Players;
 using Content.Shared.Players.PlayTimeTracking;
 using Content.Shared.Roles;
-using System.Net.Http;
-using System.Net.Http.Json;
-using System.Text.Json;
-using System.Text.Json.Nodes;
-using System.Text.Json.Serialization;
-using System.Text.RegularExpressions;
+using Content.Shared.Starlight.CCVar; // STARLIGHT
 using Robust.Server.Player;
 using Robust.Shared;
 using Robust.Shared.Asynchronous;
@@ -30,12 +33,12 @@ using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
 using CCVars = Content.Shared.CCVar.CCVars;
-using Content.Shared.Starlight.CCVar; // STARLIGHT
 
 namespace Content.Server.Administration.Managers;
 
 public sealed partial class BanManager : IBanManager, IPostInjectInit
 {
+    [Dependency] private readonly IActorRouter _actor = default!; // nulllink
     [Dependency] private readonly IServerDbManager _db = default!;
     [Dependency] private readonly IPlayerManager _playerManager = default!;
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
@@ -443,10 +446,21 @@ public sealed partial class BanManager : IBanManager, IPostInjectInit
         foreach (var role in roles)
             rolesString += $"\n> `{role}`";
 
-        var targetData = banDef.UserId != null ? await _db.GetPlayerDataForAsync(banDef.UserId.Value) : null;
-        var adminData = banDef.BanningAdmin != null ? await _db.GetPlayerDataForAsync(banDef.BanningAdmin.Value) : null;
-        string? adminDiscordId = adminData != null ? adminData.DiscordId : null;
-        string? targetDiscordId = targetData != null ? targetData.DiscordId : null;
+        // nulllink start
+        string? adminDiscordId = null;
+        string? targetDiscordId = null;
+
+        if (_actor.TryGetServerGrain(out var serverGrain))
+        {
+            if (banDef.BanningAdmin != null)
+                adminDiscordId = await serverGrain.GetPlayerDiscordId(banDef.BanningAdmin.Value)
+                    .Then(x => x.ToString());
+
+            if (banDef.UserId != null)
+                targetDiscordId = await serverGrain.GetPlayerDiscordId(banDef.UserId.Value)
+                    .Then(x => x.ToString());
+        }
+        // nulllink end
 
         var adminLink = "";
         var targetLink = "";
@@ -542,11 +556,22 @@ public sealed partial class BanManager : IBanManager, IPostInjectInit
         var severity = "" + banDef.Severity;
         var serverName = _serverName[..Math.Min(_serverName.Length, 1500)];
         var timeNow = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, TimeZoneInfo.FindSystemTimeZoneById("Eastern Standard Time"));
-        
-        var targetData = banDef.UserId != null ? await _db.GetPlayerDataForAsync(banDef.UserId.Value) : null;
-        var adminData = banDef.BanningAdmin != null ? await _db.GetPlayerDataForAsync(banDef.BanningAdmin.Value) : null;
-        string? adminDiscordId = adminData != null ? adminData.DiscordId : null;
-        string? targetDiscordId = targetData != null ? targetData.DiscordId : null;
+
+        // nulllink start
+        string? adminDiscordId = null;
+        string? targetDiscordId = null;
+
+        if (_actor.TryGetServerGrain(out var serverGrain))
+        {
+            if(banDef.BanningAdmin != null)
+                adminDiscordId = await serverGrain.GetPlayerDiscordId(banDef.BanningAdmin.Value)
+                    .Then(x=>x.ToString());
+
+            if (banDef.UserId != null)
+                targetDiscordId = await serverGrain.GetPlayerDiscordId(banDef.UserId.Value)
+                    .Then(x => x.ToString());
+        }
+        // nulllink end
 
         var adminLink = "";
         var targetLink = "";
