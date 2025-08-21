@@ -1,13 +1,12 @@
 # System
-station-ai-fixer-console-intellicard-inserted = You insert the intellicard.
 station-ai-fixer-console-is-locked = The console is locked.
-station-ai-fixer-console-intellicard-required = Only an intellicard can be inserted into the console.
-station-ai-fixer-console-examination-intellicard-present = There is an [color=cyan]intellicard[/color] inserted into the console.
-station-ai-fixer-console-examination-intellicard-absent = There is an unoccupied slot for an [color=cyan]intellicard[/color].
+station-ai-fixer-console-station-ai-holder-required = Only AI storage devices can be inserted into the console.
+station-ai-fixer-console-examination-station-ai-holder-present = There is {INDEFINITE($holder)} [color=cyan]{$holder}[/color] inserted in the console.
+station-ai-fixer-console-examination-station-ai-holder-absent = There is an unoccupied slot for an [color=cyan]AI storage device[/color].
 
 # UI
-station-ai-fixer-console-window = AI restoration system
-station-ai-fixer-console-window-no-station-ai = << No AI present >>
+station-ai-fixer-console-window = AI restoration console
+station-ai-fixer-console-window-no-station-ai = << No AI detected >>
 station-ai-fixer-console-window-no-station-ai-status = No signal
 station-ai-fixer-console-window-station-ai-online = Online
 station-ai-fixer-console-window-station-ai-offline = Offline
@@ -29,6 +28,6 @@ station-ai-fixer-console-window-continue-action = Continue
 station-ai-fixer-console-window-cancel-action = Cancel
 
 station-ai-fixer-console-window-purge-warning-title = Initiating AI purge
-station-ai-fixer-console-window-purge-warning-1 = You are about to initiate the purging of an artifical intelligence. 
+station-ai-fixer-console-window-purge-warning-1 = You are about to initiate the purge of an artifical intelligence. 
 station-ai-fixer-console-window-purge-warning-2 = Once this operation is complete, the intelligence will be utterly destroyed and cannot be revived.
 station-ai-fixer-console-window-purge-warning-3 = Do you wish to proceed?

@@ -1,8 +1,6 @@
 using Content.Shared.Administration.Logs;
-using Content.Shared.Chat;
 using Content.Shared.Containers.ItemSlots;
 using Content.Shared.Damage;
-using Content.Shared.Damage.Systems;
 using Content.Shared.Database;
 using Content.Shared.Examine;
 using Content.Shared.Lock;
@@ -10,7 +8,9 @@ using Content.Shared.Mobs;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Mobs.Systems;
 using Content.Shared.Power;
+using Robust.Shared.Audio.Systems;
 using Robust.Shared.Containers;
+using Robust.Shared.Network;
 using Robust.Shared.Timing;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
@@ -31,10 +31,12 @@ public sealed partial class StationAiFixerConsoleSystem : EntitySystem
     [Dependency] private readonly MobStateSystem _mobState = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
-    [Dependency] private readonly SharedSuicideSystem _suicide = default!;
     [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
+    [Dependency] private readonly SharedAudioSystem _audio = default!;
+    [Dependency] private readonly SharedTransformSystem _xform = default!;
+    [Dependency] private readonly INetManager _net = default!;
 
-    private readonly string _intellicardHolder = "intellicard_holder";
+    private readonly string _stationAiHolder = "intellicard_holder";
     private readonly string _stationAiMindSlot = "station_ai_mind_slot";
 
     public override void Initialize()
@@ -83,7 +85,7 @@ public sealed partial class StationAiFixerConsoleSystem : EntitySystem
         switch (args.Action)
         {
             case StationAiFixerConsoleAction.Eject:
-                EjectIntellicard(ent, args.Actor);
+                EjectStationAiHolder(ent, args.Actor);
                 break;
             case StationAiFixerConsoleAction.Repair:
                 RepairStationAi(ent, args.Actor);
@@ -107,23 +109,23 @@ public sealed partial class StationAiFixerConsoleSystem : EntitySystem
 
     private void OnExamined(Entity<StationAiFixerConsoleComponent> ent, ref ExaminedEvent args)
     {
-        var message = IsIntellicardInserted(ent) ?
-            "station-ai-fixer-console-examination-intellicard-present" :
-            "station-ai-fixer-console-examination-intellicard-absent";
+        var message = TryGetStationAiHolder(ent, out var holder) ?
+            Loc.GetString("station-ai-fixer-console-examination-station-ai-holder-present", ("holder", Name(holder.Value))) :
+            Loc.GetString("station-ai-fixer-console-examination-station-ai-holder-absent");
 
-        args.PushMarkup(Loc.GetString(message));
+        args.PushMarkup(message);
     }
 
-    private void EjectIntellicard(Entity<StationAiFixerConsoleComponent> ent, EntityUid user)
+    private void EjectStationAiHolder(Entity<StationAiFixerConsoleComponent> ent, EntityUid user)
     {
         if (!TryComp<ItemSlotsComponent>(ent, out var slots))
             return;
 
-        if (!_itemSlots.TryGetSlot(ent, _intellicardHolder, out var intellicardSlot, slots))
+        if (!_itemSlots.TryGetSlot(ent, _stationAiHolder, out var holderSlot, slots))
             return;
 
-        if (_itemSlots.TryEjectToHands(ent, intellicardSlot, user, true))
-            _adminLogger.Add(LogType.Action, LogImpact.Medium, $"{ToPrettyString(user):user} ejected an intellicard from AI restoration console ({ent.Owner})");
+        if (_itemSlots.TryEjectToHands(ent, holderSlot, user, true))
+            _adminLogger.Add(LogType.Action, LogImpact.Medium, $"{ToPrettyString(user):user} ejected a station AI holder from AI restoration console ({ent.Owner})");
     }
 
     private void RepairStationAi(Entity<StationAiFixerConsoleComponent> ent, EntityUid user)
@@ -228,7 +230,7 @@ public sealed partial class StationAiFixerConsoleSystem : EntitySystem
     /// <param name="ent">The console.</param>
     private void FinalizeAction(Entity<StationAiFixerConsoleComponent> ent)
     {
-        if (IsActionInProgress(ent))
+        if (IsActionInProgress(ent) && ent.Comp.ActionTarget != null)
         {
             if (ent.Comp.ActionType == StationAiFixerConsoleAction.Repair)
             {
@@ -241,10 +243,31 @@ public sealed partial class StationAiFixerConsoleSystem : EntitySystem
                 {
                     _mobState.ChangeMobState(ent.Comp.ActionTarget.Value, MobState.Alive);
                 }
+
+                // Can't predict audio without a user :(
+                if (_net.IsServer && ent.Comp.RepairFinishedSound != null)
+                {
+                    _audio.PlayPvs(ent.Comp.RepairFinishedSound, ent);
+                }
             }
-            else if (ent.Comp.ActionType == StationAiFixerConsoleAction.Purge)
+            else if (ent.Comp.ActionType == StationAiFixerConsoleAction.Purge &&
+                TryGetStationAiHolder(ent, out var holder))
             {
-                Del(ent.Comp.ActionTarget);
+                // Remove the AI from its holder and send it to null space while we wait for
+                // it to be deleted, so that the subsequent UI update can be predicted
+                _container.RemoveEntity(holder.Value, ent.Comp.ActionTarget.Value, force: true);
+                _xform.DetachEntity(ent.Comp.ActionTarget.Value, Transform(ent.Comp.ActionTarget.Value));
+
+                // Let the server handle the deletion
+                if (_net.IsServer)
+                {
+                    QueueDel(ent.Comp.ActionTarget);
+
+                    if (ent.Comp.PurgeFinishedSound != null)
+                    {
+                        _audio.PlayPvs(ent.Comp.PurgeFinishedSound, ent);
+                    }
+                }
             }
         }
 
@@ -348,17 +371,15 @@ public sealed partial class StationAiFixerConsoleSystem : EntitySystem
     /// </summary>
     /// <param name="ent">The console.</param>
     /// <param name="target">The found target.</param>
-    /// <returns>True, if a valid target was found.</returns>
+    /// <returns>True if a valid target was found.</returns>
     public bool TryGetTarget(Entity<StationAiFixerConsoleComponent> ent, [NotNullWhen(true)] out EntityUid? target)
     {
         target = null;
 
-        if (!_container.TryGetContainer(ent, _intellicardHolder, out var intellicardHolder) || intellicardHolder.Count == 0)
+        if (!TryGetStationAiHolder(ent, out var holder))
             return false;
 
-        var intellicard = intellicardHolder.ContainedEntities[0];
-
-        if (!_container.TryGetContainer(intellicard, _stationAiMindSlot, out var stationAiMindSlot) || stationAiMindSlot.Count == 0)
+        if (!_container.TryGetContainer(holder.Value, _stationAiMindSlot, out var stationAiMindSlot) || stationAiMindSlot.Count == 0)
             return false;
 
         var stationAi = stationAiMindSlot.ContainedEntities[0];
@@ -372,13 +393,34 @@ public sealed partial class StationAiFixerConsoleSystem : EntitySystem
     }
 
     /// <summary>
+    /// Try to find a station AI holder being stored inside the specified console.
+    /// </summary>
+    /// <param name="ent">The console.</param>
+    /// <param name="holder">The found holder.</param>
+    /// <returns>True if a valid holder was found.</returns>
+    public bool TryGetStationAiHolder(Entity<StationAiFixerConsoleComponent> ent, [NotNullWhen(true)] out EntityUid? holder)
+    {
+        holder = null;
+
+        if (!_container.TryGetContainer(ent, _stationAiHolder, out var holderContainer) ||
+            holderContainer.Count == 0)
+        {
+            return false;
+        }
+
+        holder = holderContainer.ContainedEntities[0];
+
+        return true;
+    }
+
+    /// <summary>
     /// Determines if a target entity can be acted upon by the specified console.
     /// </summary>
     /// <param name="ent">The console.</param>
     /// <param name="target">The target.</param>
     /// <param name="actionType">The action to be enacted on the target.</param>
     /// <returns>True, if the target is valid for the specified console action.</returns>
-    private bool IsTargetValid(Entity<StationAiFixerConsoleComponent> ent, EntityUid target, StationAiFixerConsoleAction actionType)
+    public bool IsTargetValid(Entity<StationAiFixerConsoleComponent> ent, EntityUid target, StationAiFixerConsoleAction actionType)
     {
         if (actionType == StationAiFixerConsoleAction.Purge)
             return true;
@@ -402,13 +444,13 @@ public sealed partial class StationAiFixerConsoleSystem : EntitySystem
     }
 
     /// <summary>
-    /// Returns whether an intellicard is inserted into the specified console.
+    /// Returns whether an station AI holder is inserted into the specified console.
     /// </summary>
     /// <param name="ent">The console.</param>
-    /// <returns>True, if an intellicard is inserted.</returns>
-    public bool IsIntellicardInserted(Entity<StationAiFixerConsoleComponent> ent)
+    /// <returns>True if a station AI holder is inserted.</returns>
+    public bool IsStationAiHolderInserted(Entity<StationAiFixerConsoleComponent> ent)
     {
-        return _container.TryGetContainer(ent, _intellicardHolder, out var intellicardHolder) && intellicardHolder.Count > 0;
+        return TryGetStationAiHolder(ent, out var _);
     }
 
     /// <summary>

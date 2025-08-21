@@ -1651,13 +1651,12 @@
     slots:
       intellicard_holder:
         ejectOnBreak: true
-        insertSuccessPopup: station-ai-fixer-console-intellicard-inserted
         lockedFailPopup: station-ai-fixer-console-is-locked
-        whitelistFailPopup: station-ai-fixer-console-intellicard-required
+        whitelistFailPopup: station-ai-fixer-console-station-ai-holder-required
         whitelist:
           requireAll: true
           components:
-          - Intellicard
+          - StationAiHolder
           - Item
   - type: ContainerContainer
     containers:

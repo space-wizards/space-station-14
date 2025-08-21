@@ -1,4 +1,5 @@
 using Content.Shared.Damage.Prototypes;
+using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
@@ -82,6 +83,18 @@ public sealed partial class StationAiFixerConsoleComponent : Component
     /// </summary>
     [DataField, AutoNetworkedField]
     public int CurrentActionStage = 0;
+
+    /// <summary>
+    /// Sound clip that is played when a repair is completed.
+    /// </summary>
+    [DataField]
+    public SoundSpecifier? RepairFinishedSound = new SoundPathSpecifier("/Audio/Items/beep.ogg");
+
+    /// <summary>
+    /// Sound clip that is played when a repair is completed.
+    /// </summary>
+    [DataField]
+    public SoundSpecifier? PurgeFinishedSound = new SoundPathSpecifier("/Audio/Machines/beep.ogg");
 }
 
 /// <summary>

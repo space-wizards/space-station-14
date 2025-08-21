@@ -94,7 +94,7 @@ public sealed partial class StationAiFixerConsoleWindow : FancyWindow
         MainControls.Visible = !isLocked && !_stationAiFixerConsole.IsActionInProgress(ent);
         ActionProgressScreen.Visible = !isLocked && _stationAiFixerConsole.IsActionInProgress(ent);
 
-        var intellicardPresent = _stationAiFixerConsole.IsIntellicardInserted((_owner.Value, stationAiFixerConsole));
+        var intellicardPresent = _stationAiFixerConsole.IsStationAiHolderInserted((_owner.Value, stationAiFixerConsole));
         var stationAiPresent = _stationAiFixerConsole.TryGetTarget((_owner.Value, stationAiFixerConsole), out var stationAi) &&
             !_entManager.IsQueuedForDeletion(stationAi.Value);
 
