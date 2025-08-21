@@ -12154,5 +12154,40 @@ Entries:
   id: 138501
   time: '2025-08-21T14:22:42.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/1385
+- author: FoxxoTrystan
+  changes:
+  - message: Fixed Language Font being disabled on bold.
+    type: Fix
+  id: 141400
+  time: '2025-08-21T16:51:40.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1414
+- author: FoxxoTrystan
+  changes:
+  - message: Universal not be able to be selected.
+    type: Fix
+  id: 141401
+  time: '2025-08-21T16:51:40.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1414
+- author: FoxxoTrystan
+  changes:
+  - message: Borgs/AI can now understand Scratch and SolCommon.
+    type: Tweak
+  id: 141402
+  time: '2025-08-21T16:51:40.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1414
+- author: FoxxoTrystan
+  changes:
+  - message: Dragonic now use a font.
+    type: Tweak
+  id: 141403
+  time: '2025-08-21T16:51:40.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1414
+- author: FoxxoTrystan
+  changes:
+  - message: Slimes now speak correctly bubblish.
+    type: Add
+  id: 141404
+  time: '2025-08-21T16:51:40.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1414
 Order: -1
 

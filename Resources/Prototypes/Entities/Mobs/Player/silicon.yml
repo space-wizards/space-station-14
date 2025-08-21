@@ -316,7 +316,6 @@
     - Machine
     understands:
     - GalacticCommon
-    - SolCommon
     - Machine
     - Canilunzt
     - Sign
@@ -330,6 +329,7 @@
     - Terrum
     - VoxPidgin
     - Scratch
+    - SolCommon
   # Starlight-end
     #endregion
 
