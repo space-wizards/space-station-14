@@ -194,7 +194,7 @@ public sealed partial class AdminVerbSystem
         if (HasComp<HumanoidAppearanceComponent>(args.Target)) // only humanoids can be cloned
             args.Verbs.Add(paradox);
 
-                // Harmony start
+        // Ronstation modifications start
         var vampireName = Loc.GetString("admin-verb-text-make-vampire");
         Verb vampire = new()
         {
@@ -209,6 +209,6 @@ public sealed partial class AdminVerbSystem
             Message = string.Join(": ", vampireName, Loc.GetString("admin-verb-make-vampire")),
         };
         args.Verbs.Add(vampire);
-        // Harmony end
+        // Ronstation modifications end
     }
 }
