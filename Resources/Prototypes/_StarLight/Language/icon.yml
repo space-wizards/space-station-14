@@ -1,0 +1,143 @@
+- type: jobIcon
+  parent: JobIcon
+  id: LanguageIconUnknown
+  icon:
+    sprite: /Textures/_Starlight/Interface/language_icon.rsi
+    state: unknown
+  allowSelection: false
+
+- type: jobIcon
+  parent: JobIcon
+  id: LanguageIconMachine
+  icon:
+    sprite: /Textures/_Starlight/Interface/language_icon.rsi
+    state: machine
+  allowSelection: false
+
+- type: jobIcon
+  parent: JobIcon
+  id: LanguageIconGalCom
+  icon:
+    sprite: /Textures/_Starlight/Interface/language_icon.rsi
+    state: galcom
+  allowSelection: false
+
+- type: jobIcon
+  parent: JobIcon
+  id: LanguageIconAnimal
+  icon:
+    sprite: /Textures/_Starlight/Interface/language_icon.rsi
+    state: animal
+  allowSelection: false
+
+- type: jobIcon
+  parent: JobIcon
+  id: LanguageIconSlime
+  icon:
+    sprite: /Textures/_Starlight/Interface/language_icon.rsi
+    state: slime
+  allowSelection: false
+
+- type: jobIcon
+  parent: JobIcon
+  id: LanguageIconSolCom
+  icon:
+    sprite: /Textures/_Starlight/Interface/language_icon.rsi
+    state: solcom
+  allowSelection: false
+
+- type: jobIcon
+  parent: JobIcon
+  id: LanguageIconFish
+  icon:
+    sprite: /Textures/_Starlight/Interface/language_icon.rsi
+    state: fish
+  allowSelection: false
+
+- type: jobIcon
+  parent: JobIcon
+  id: LanguageIconXeno
+  icon:
+    sprite: /Textures/_Starlight/Interface/language_icon.rsi
+    state: xeno
+  allowSelection: false
+
+- type: jobIcon
+  parent: JobIcon
+  id: LanguageIconLizard
+  icon:
+    sprite: /Textures/_Starlight/Interface/language_icon.rsi
+    state: lizard
+  allowSelection: false
+
+- type: jobIcon
+  parent: JobIcon
+  id: LanguageIconMoth
+  icon:
+    sprite: /Textures/_Starlight/Interface/language_icon.rsi
+    state: moth
+  allowSelection: false
+
+- type: jobIcon
+  parent: JobIcon
+  id: LanguageIconNeko
+  icon:
+    sprite: /Textures/_Starlight/Interface/language_icon.rsi
+    state: neko
+  allowSelection: false
+
+- type: jobIcon
+  parent: JobIcon
+  id: LanguageIconPlant
+  icon:
+    sprite: /Textures/_Starlight/Interface/language_icon.rsi
+    state: plant
+  allowSelection: false
+
+- type: jobIcon
+  parent: JobIcon
+  id: LanguageIconCodeSpeak
+  icon:
+    sprite: /Textures/_Starlight/Interface/language_icon.rsi
+    state: codespeak
+  allowSelection: false
+
+- type: jobIcon
+  parent: JobIcon
+  id: LanguageIconScurret
+  icon:
+    sprite: /Textures/_Starlight/Interface/language_icon.rsi
+    state: survivor
+  allowSelection: false
+
+- type: jobIcon
+  parent: JobIcon
+  id: LanguageIconAvali
+  icon:
+    sprite: /Textures/_Starlight/Interface/language_icon.rsi
+    state: avali
+  allowSelection: false
+
+- type: jobIcon
+  parent: JobIcon
+  id: LanguageIconTerrum
+  icon:
+    sprite: /Textures/_Starlight/Interface/language_icon.rsi
+    state: golem
+  allowSelection: false
+
+- type: jobIcon
+  parent: JobIcon
+  id: LanguageIconBrain
+  icon:
+    sprite: /Textures/_Starlight/Interface/language_icon.rsi
+    state: brain
+  allowSelection: false
+
+- type: jobIcon
+  parent: JobIcon
+  id: LanguageIconChittin
+  icon:
+    sprite: /Textures/_Starlight/Interface/language_icon.rsi
+    state: buzz
+  allowSelection: false

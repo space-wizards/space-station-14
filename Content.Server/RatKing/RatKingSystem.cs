@@ -14,6 +14,7 @@ using Content.Shared.Random.Helpers;
 using Content.Shared.RatKing;
 using Robust.Shared.Map;
 using Robust.Shared.Random;
+using Content.Shared.Chat; // Starlight
 
 namespace Content.Server.RatKing
 {

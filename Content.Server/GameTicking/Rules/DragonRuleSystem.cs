@@ -20,7 +20,7 @@ public sealed class DragonRuleSystem : GameRuleSystem<DragonRuleComponent>
     private static readonly Histogram _dragonWinInfo = Metrics.CreateHistogram(
         "sl_dragon_winning",
         "Contains info on if a dragon won and if so how hard they won",
-        ["alive", "rifts", "eaten"]
+        ["alive", "rifts"]
     );
     #endregion
 
@@ -99,9 +99,8 @@ public sealed class DragonRuleSystem : GameRuleSystem<DragonRuleComponent>
                 alive = state.CurrentState == MobState.Alive;
             _dragonWinInfo.WithLabels([
                 alive.ToString(),
-                dragon.Comp.Rifts?.ToString() ?? "0",
-                devoured.ToString()
-            ]);  
+                dragon.Comp.Rifts?.ToString() ?? "0"
+            ]).Observe(devoured);  
         }
     }
     #endregion

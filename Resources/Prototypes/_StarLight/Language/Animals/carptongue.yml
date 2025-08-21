@@ -1,0 +1,11 @@
+- type: language
+  id: Carptongue
+  icon: LanguageIconFish
+  obfuscation:
+    !type:SyllableObfuscation
+    minSyllables: 1
+    maxSyllables: 2
+    replacement:
+    - glub
+    - blub
+    - bloop

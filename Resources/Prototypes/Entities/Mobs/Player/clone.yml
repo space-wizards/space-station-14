@@ -54,6 +54,10 @@
   - SouthernAccent
   - SpanishAccent
   - StutteringAccent
+    # Languages - Starlight
+  - LanguageSpeaker
+  - LanguageKnowledge
+  - ForeignerTrait
 
 # for job-specific traits etc.
 - type: cloningSettings

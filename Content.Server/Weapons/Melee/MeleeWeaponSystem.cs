@@ -12,6 +12,7 @@ using Content.Shared.Weapons.Melee.Events;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Player;
+using Content.Shared.Chat; // Starlight
 using Robust.Shared.Physics; // Starlight-edit™
 using Robust.Shared.Physics.Systems; // Starlight-edit™
 

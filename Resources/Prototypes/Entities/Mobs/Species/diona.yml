@@ -5,6 +5,15 @@
   id: BaseMobDiona
   abstract: true
   components:
+  # Starlight-start: Languages
+  - type: LanguageKnowledge
+    speaks:
+    - GalacticCommon
+    - Sylvan
+    understands:
+    - GalacticCommon
+    - Sylvan
+  # Starlight-end
   - type: Absorbable
   - type: Tag
     tags:

@@ -7,9 +7,14 @@
   parent: [ MobBaseAncestor, BaseSpeciesPickupable ] #Starlight - give the scurret uppies.
   abstract: true
   components:
+  # Starlight-start: Languages
+  - type: LanguageKnowledge
+    speaks:
+    - ScurretSign
+    understands:
+    - ScurretSign
+  # Starlight-end
   # Custom names
-  - type: ReplacementAccent
-    accent: scurret
   - type: Sprite
     layers:
     - map: ["enum.DamageStateVisualLayers.Base"]
@@ -189,6 +194,14 @@
   parent: MobBaseScurret
   abstract: true
   components:
+  # Starlight-start: Languages
+    - type: LanguageKnowledge
+      speaks:
+      - ScurretSign
+      understands:
+      - ScurretSign
+      - GalacticCommon
+  # Starlight-end
     - type: Loadout
       prototypes: [ EmotionalSupportScurretGear ]
     - type: NpcFactionMember
