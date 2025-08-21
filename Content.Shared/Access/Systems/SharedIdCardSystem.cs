@@ -172,7 +172,7 @@ public abstract class SharedIdCardSystem : EntitySystem
 
         if (id.JobIcon == jobIcon.ID)
         {
-            return true;
+            return true; // Should this be returning
         }
 
         id.JobIcon = jobIcon.ID;
@@ -244,7 +244,7 @@ public abstract class SharedIdCardSystem : EntitySystem
         }
 
         if (id.FullName == fullName)
-            return true;
+            return true; // Should this return true when nothing changed? Bool is currently unused (except by me wanting it to be false)
         id.FullName = fullName;
         Dirty(uid, id);
         UpdateEntityName(uid, id);

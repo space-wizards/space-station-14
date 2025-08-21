@@ -141,7 +141,7 @@
   - JobIconUnknown
   - JobIconNoId
 
-# Non-station villains
+# Rogues and villains
 - type: jobIconGroup
   id: ThreatIconGroup
   groupName: job-icon-group-threat

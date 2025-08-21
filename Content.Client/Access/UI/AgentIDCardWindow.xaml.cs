@@ -11,136 +11,135 @@ using Robust.Shared.Configuration;
 using Robust.Shared.Prototypes;
 using System.Numerics;
 
-namespace Content.Client.Access.UI
+namespace Content.Client.Access.UI;
+
+[GenerateTypedNameReferences]
+public sealed partial class AgentIDCardWindow : FancyWindow
 {
-    [GenerateTypedNameReferences]
-    public sealed partial class AgentIDCardWindow : FancyWindow
+    [Dependency] private readonly IConfigurationManager _cfgManager = default!;
+    [Dependency] private readonly IEntitySystemManager _entitySystem = default!;
+    [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+    private readonly SpriteSystem _spriteSystem;
+
+    public event Action<string>? OnNameChanged;
+    public event Action<string>? OnJobChanged;
+
+    public event Action<ProtoId<JobIconPrototype>>? OnJobIconChanged;
+
+    public AgentIDCardWindow()
     {
-        [Dependency] private readonly IConfigurationManager _cfgManager = default!;
-        [Dependency] private readonly IEntitySystemManager _entitySystem = default!;
-        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
-        private readonly SpriteSystem _spriteSystem;
+        RobustXamlLoader.Load(this);
+        IoCManager.InjectDependencies(this);
+        _spriteSystem = _entitySystem.GetEntitySystem<SpriteSystem>();
 
-        public event Action<string>? OnNameChanged;
-        public event Action<string>? OnJobChanged;
+        NameLineEdit.OnTextEntered += e => OnNameChanged?.Invoke(e.Text);
+        NameLineEdit.OnFocusExit += e => OnNameChanged?.Invoke(e.Text);
 
-        public event Action<ProtoId<JobIconPrototype>>? OnJobIconChanged;
+        JobLineEdit.OnTextEntered += e =>  OnJobChanged?.Invoke(e.Text);
+        JobLineEdit.OnFocusExit += e =>  OnJobChanged?.Invoke(e.Text);
 
-        public AgentIDCardWindow()
+        NameLineEdit.IsValid = s => s.Length <= _cfgManager.GetCVar(CCVars.MaxNameLength);
+        JobLineEdit.IsValid = s => s.Length <= _cfgManager.GetCVar(CCVars.MaxIdJobLength);
+
+        CTabContainer.SetTabTitle(0, Loc.GetString("agent-id-ui-tab-settings"));
+        CTabContainer.SetTabTitle(1, Loc.GetString("agent-id-ui-tab-job-icons"));
+    }
+
+    /// <summary>
+    /// Creates the job icons tab.
+    /// </summary>
+    public void SetAllowedIcons(List<ProtoId<JobIconGroupPrototype>> jobGroups)
+    {
+        JobGroupGrid.DisposeAllChildren();
+        IconGrid.DisposeAllChildren();
+
+        var jobGroupButtonGroup = new ButtonGroup();
+
+        foreach (var group in jobGroups)
         {
-            RobustXamlLoader.Load(this);
-            IoCManager.InjectDependencies(this);
-            _spriteSystem = _entitySystem.GetEntitySystem<SpriteSystem>();
+            if (!_prototypeManager.TryIndex(group, out var groupProto))
+                continue;
 
-            NameLineEdit.OnTextEntered += e => OnNameChanged?.Invoke(e.Text);
-            NameLineEdit.OnFocusExit += e => OnNameChanged?.Invoke(e.Text);
-
-            JobLineEdit.OnTextEntered += e =>  OnJobChanged?.Invoke(e.Text);
-            JobLineEdit.OnFocusExit += e =>  OnJobChanged?.Invoke(e.Text);
-
-            NameLineEdit.IsValid = s => s.Length <= _cfgManager.GetCVar(CCVars.MaxNameLength);
-            JobLineEdit.IsValid = s => s.Length <= _cfgManager.GetCVar(CCVars.MaxIdJobLength);
-
-            CTabContainer.SetTabTitle(0, Loc.GetString("agent-id-ui-tab-settings"));
-            CTabContainer.SetTabTitle(1, Loc.GetString("agent-id-ui-tab-job-icons"));
-        }
-
-        /// <summary>
-        /// Creates the job icons tab.
-        /// </summary>
-        public void SetAllowedIcons(List<ProtoId<JobIconGroupPrototype>> jobGroups)
-        {
-            JobGroupGrid.DisposeAllChildren();
-            IconGrid.DisposeAllChildren();
-
-            var jobGroupButtonGroup = new ButtonGroup();
-
-            foreach (var group in jobGroups)
+            // Create new button
+            var groupButton = new Button
             {
-                if (!_prototypeManager.TryIndex(group, out var groupProto))
-                    continue;
+                Access = AccessLevel.Public,
+                Group = jobGroupButtonGroup,
+                Text = Loc.GetString(groupProto.GroupName),
+                ToolTip = Loc.GetString(groupProto.GroupName),
+                StyleClasses = { StyleBase.ButtonOpenLeft },
+                SetSize = new Vector2(150, 32),
+            };
 
-                // Create new button
-                var groupButton = new Button
-                {
-                    Access = AccessLevel.Public,
-                    Group = jobGroupButtonGroup,
-                    Text = Loc.GetString(groupProto.GroupName),
-                    ToolTip = Loc.GetString(groupProto.GroupName),
-                    StyleClasses = { StyleBase.ButtonOpenLeft },
-                    SetSize = new Vector2(150, 32),
-                };
-
-                // Add texture button
-                var groupTextureButton = new TextureButton
-                {
-                    Access = AccessLevel.Public,
-                    ToolTip = Loc.GetString(groupProto.GroupName),
-                    TextureNormal = _spriteSystem.Frame0(groupProto.Sprite),
-                    Scale = new Vector2(4f, 4f),
-                    SetSize = new Vector2(32, 32),
-                };
-
-                // Finish button and add to UI
-                groupButton.OnPressed += _ => SetJobIcons(groupProto.Icons);
-                groupTextureButton.OnPressed += _ =>
-                {
-                    groupButton.Pressed = true;
-                    SetJobIcons(groupProto.Icons);
-                };
-
-                JobGroupGrid.AddChild(groupTextureButton);
-                JobGroupGrid.AddChild(groupButton);
-            }
-        }
-
-        /// <summary>
-        /// Creates the job icon subgroup within the job icons tab.
-        /// </summary>
-        /// <param name="jobIcons"></param>
-        private void SetJobIcons(List<ProtoId<JobIconPrototype>> jobIcons)
-        {
-            IconGrid.DisposeAllChildren();
-
-            foreach (var icon in jobIcons)
+            // Add texture button
+            var groupTextureButton = new TextureButton
             {
-                if (!_prototypeManager.TryIndex(icon, out var iconProto))
-                    continue;
+                Access = AccessLevel.Public,
+                ToolTip = Loc.GetString(groupProto.GroupName),
+                TextureNormal = _spriteSystem.Frame0(groupProto.Sprite),
+                Scale = new Vector2(4f, 4f),
+                SetSize = new Vector2(32, 32),
+            };
 
-                var texture = _spriteSystem.Frame0(iconProto.Icon);
+            // Finish button and add to UI
+            groupButton.OnPressed += _ => SetJobIcons(groupProto.Icons);
+            groupTextureButton.OnPressed += _ =>
+            {
+                groupButton.Pressed = true;
+                SetJobIcons(groupProto.Icons);
+            };
 
-                // Create new button
-                var jobIconButton = new TextureButton
-                {
-                    Access = AccessLevel.Public,
-                    ToolTip = Loc.GetString(iconProto.JobName),
-                    TextureNormal = texture,
-                    Scale = new Vector2(4f, 4f),
-                    SetSize = new Vector2(32, 32),
-                };
-
-                // Finish button and add to UI
-                jobIconButton.OnPressed += _ => OnJobIconChanged?.Invoke(iconProto.ID);
-
-                IconGrid.AddChild(jobIconButton);
-            }
+            JobGroupGrid.AddChild(groupTextureButton);
+            JobGroupGrid.AddChild(groupButton);
         }
+    }
 
-        public void SetCurrentName(string name)
+    /// <summary>
+    /// Creates the job icon subgroup within the job icons tab.
+    /// </summary>
+    /// <param name="jobIcons"></param>
+    private void SetJobIcons(List<ProtoId<JobIconPrototype>> jobIcons)
+    {
+        IconGrid.DisposeAllChildren();
+
+        foreach (var icon in jobIcons)
         {
-            NameLineEdit.Text = name;
-            CurrentName.Text = name;
-        }
+            if (!_prototypeManager.TryIndex(icon, out var iconProto))
+                continue;
 
-        public void SetCurrentJob(string job)
-        {
-            JobLineEdit.Text = job;
-            CurrentJob.Text = job;
-        }
+            var texture = _spriteSystem.Frame0(iconProto.Icon);
 
-        public void SetCurrentJobIcon(string jobIcon)
-        {
-            CurrentJobIcon.Texture = _spriteSystem.Frame0(_prototypeManager.Index<JobIconPrototype>(jobIcon).Icon);
+            // Create new button
+            var jobIconButton = new TextureButton
+            {
+                Access = AccessLevel.Public,
+                ToolTip = Loc.GetString(iconProto.JobName),
+                TextureNormal = texture,
+                Scale = new Vector2(4f, 4f),
+                SetSize = new Vector2(32, 32),
+            };
+
+            // Finish button and add to UI
+            jobIconButton.OnPressed += _ => OnJobIconChanged?.Invoke(iconProto.ID);
+
+            IconGrid.AddChild(jobIconButton);
         }
+    }
+
+    public void SetCurrentName(string name)
+    {
+        NameLineEdit.Text = name;
+        CurrentName.Text = name;
+    }
+
+    public void SetCurrentJob(string job)
+    {
+        JobLineEdit.Text = job;
+        CurrentJob.Text = job;
+    }
+
+    public void SetCurrentJobIcon(ProtoId<JobIconPrototype> jobIcon)
+    {
+        CurrentJobIcon.Texture = _spriteSystem.Frame0(_prototypeManager.Index(jobIcon).Icon);
     }
 }

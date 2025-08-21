@@ -9,6 +9,7 @@ namespace Content.Shared.StatusIcon;
 [Prototype]
 public sealed partial class JobIconGroupPrototype : IPrototype
 {
+    /// <inheritdoc />
     [IdDataField]
     public string ID { get; private set; } = default!;
 
@@ -28,5 +29,5 @@ public sealed partial class JobIconGroupPrototype : IPrototype
     /// Sprite used to represent the group.
     /// </summary>
     [DataField]
-    public SpriteSpecifier Sprite = new SpriteSpecifier.Rsi(new ("/Textures/Interface/Misc/job_icons.rsi"), "NoId");
+    public SpriteSpecifier Sprite = new SpriteSpecifier.Rsi(new ("/Textures/Interface/Misc/job_icons.rsi"), "Unknown");
 }

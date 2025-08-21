@@ -57,44 +57,30 @@ public abstract class SharedAgentIdCardSystem : EntitySystem
 
     private void OnNameChanged(Entity<AgentIDCardComponent> ent, ref AgentIDCardNameChangedMessage args)
     {
-        if (!TryComp<IdCardComponent>(ent, out var idCard) ||
-            args.Name == idCard.FullName)
+        if (!_card.TryChangeFullName(ent, args.Name))
             return;
 
-        _card.TryChangeFullName(ent, args.Name, idCard);
-
         UpdateUi(ent);
-        Dirty(ent, idCard);
     }
 
     private void OnJobChanged(Entity<AgentIDCardComponent> ent, ref AgentIDCardJobChangedMessage args)
     {
-        if (!TryComp<IdCardComponent>(ent, out var idCard) ||
-            args.Job == idCard.LocalizedJobTitle)
+        if (!_card.TryChangeJobTitle(ent, args.Job))
             return;
 
-        _card.TryChangeJobTitle(ent, args.Job, idCard);
-
         UpdateUi(ent);
-        Dirty(ent, idCard);
     }
 
     private void OnJobIconChanged(Entity<AgentIDCardComponent> ent, ref AgentIDCardJobIconChangedMessage args)
     {
-        if (!TryComp<IdCardComponent>(ent, out var idCard) ||
-            args.JobIconId == idCard.JobIcon)
+        if (!_prototypeManager.TryIndex(args.JobIconId, out var jobIcon) ||
+            !_card.TryChangeJobIcon(ent, jobIcon))
             return;
-
-        if (!_prototypeManager.TryIndex(args.JobIconId, out var jobIcon))
-            return;
-
-        _card.TryChangeJobIcon(ent, jobIcon, idCard);
 
         if (TryFindJobProtoFromIcon(jobIcon, out var job))
-            _card.TryChangeJobDepartment(ent, job, idCard);
+            _card.TryChangeJobDepartment(ent, job);
 
         UpdateUi(ent);
-        Dirty(ent, idCard);
     }
 
     /// <summary>
