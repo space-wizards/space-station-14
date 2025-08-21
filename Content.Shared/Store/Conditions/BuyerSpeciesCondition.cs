@@ -1,8 +1,8 @@
 using Content.Shared.Humanoid;
-using Content.Shared.Store;
 using Content.Shared.Humanoid.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.Set;
 using Content.Shared.Mind;
+using Robust.Shared.Serialization;
 
 namespace Content.Shared.Store.Conditions;
 
@@ -10,6 +10,7 @@ namespace Content.Shared.Store.Conditions;
 /// Allows a store entry to be filtered out based on the user's species.
 /// Supports both blacklists and whitelists.
 /// </summary>
+[Serializable, NetSerializable]
 public sealed partial class BuyerSpeciesCondition : ListingCondition
 {
     /// <summary>

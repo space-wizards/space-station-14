@@ -39,7 +39,7 @@ public sealed class AddCurrency : IConsoleCommand
         };
 
         var storeSys = _entityMan.System<StoreSystem>();
-        storeSys.TryAddCurrency(currency, uid.Value, store);
+        storeSys.TryAddCurrency(currency, (uid.Value, store));
     }
 
     public CompletionResult GetCompletion(IConsoleShell shell, string[] args)

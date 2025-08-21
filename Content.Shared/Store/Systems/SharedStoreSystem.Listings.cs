@@ -120,10 +120,6 @@ public abstract partial class SharedStoreSystem
 
             if (listing.Conditions != null)
             {
-                // Conditions can't be 100% predicted, so we have to check them on server and send back to the client.
-                if (_net.IsClient)
-                    continue;
-
                 var args = new ListingConditionArgs(GetBuyerMind(buyer), storeEntity, listing, EntityManager);
                 var conditionsMet = true;
 
@@ -173,18 +169,21 @@ public abstract partial class SharedStoreSystem
         return false;
     }
 
-    private bool TryGetListing(IReadOnlyCollection<ListingDataWithCostModifiers> collection, string listingId, [MaybeNullWhen(false)] out ListingDataWithCostModifiers found)
+    private bool TryGetListing(
+        IReadOnlyCollection<ListingDataWithCostModifiers> collection,
+        string listingId,
+        [NotNullWhen(true)] out ListingDataWithCostModifiers? found)
     {
+        found = null;
         foreach(var current in collection)
         {
-            if (current.ID == listingId)
-            {
-                found = current;
-                return true;
-            }
+            if (current.ID != listingId)
+                continue;
+
+            found = current;
+            return true;
         }
 
-        found = null!;
         return false;
     }
 }

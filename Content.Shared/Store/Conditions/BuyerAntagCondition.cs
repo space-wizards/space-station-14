@@ -1,6 +1,6 @@
 using Content.Shared.Mind;
 using Content.Shared.Roles;
-using Content.Shared.Store;
+using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.Set;
 
 namespace Content.Shared.Store.Conditions;
@@ -10,6 +10,7 @@ namespace Content.Shared.Store.Conditions;
 /// Supports both blacklists and whitelists. This is copypaste because roles
 /// are absolute shitcode. Refactor this later. -emo
 /// </summary>
+[Serializable, NetSerializable]
 public sealed partial class BuyerAntagCondition : ListingCondition
 {
     /// <summary>

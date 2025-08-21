@@ -14,7 +14,6 @@ using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Implants;
 using Content.Shared.Mind;
 using Robust.Shared.Audio.Systems;
-using Robust.Shared.Network;
 using Robust.Shared.Timing;
 
 namespace Content.Shared.Store.Systems;
@@ -29,7 +28,6 @@ public abstract partial class SharedStoreSystem : EntitySystem
     [Dependency] protected readonly SharedHandsSystem Hands = default!;
     [Dependency] protected readonly SharedUserInterfaceSystem Ui = default!;
     [Dependency] private   readonly IGameTiming _timing = default!;
-    [Dependency] private   readonly INetManager _net = default!;
     [Dependency] private   readonly ISharedAdminLogManager _admin = default!;
     [Dependency] private   readonly ActionContainerSystem _actionContainer = default!;
     [Dependency] private   readonly ActionUpgradeSystem _actionUpgrade = default!;
@@ -117,6 +115,9 @@ public abstract partial class SharedStoreSystem : EntitySystem
         if (args.Handled || !args.CanReach)
             return;
 
+        if (TerminatingOrDeleted(args.Used))
+            return;
+
         if (!TryComp<StoreComponent>(args.Target, out var store))
             return;
 
@@ -125,20 +126,26 @@ public abstract partial class SharedStoreSystem : EntitySystem
         if (ev.Cancelled)
             return;
 
+        // Make this check before actually adding currency, so popup can be handled correctly,
+        // since currency entity is deleted immediately when adding.
+        if (!CanAddCurrency(component.Price, store))
+            return;
+
+        var msg = Loc.GetString("store-currency-inserted", ("used", args.Used), ("target", args.Target));
+        _popup.PopupPredicted(msg, args.Target.Value, args.User);
+
         if (!TryAddCurrency((uid, component), (args.Target.Value, store)))
             return;
 
         args.Handled = true;
-        var msg = Loc.GetString("store-currency-inserted", ("used", args.Used), ("target", args.Target));
-        _popup.PopupPredicted(msg, args.Target.Value, args.User);
     }
 
     private void OnImplantActivate(Entity<StoreComponent> ent, ref OpenUplinkImplantEvent args)
     {
-        ToggleUi(args.Performer, ent, ent.Comp);
+        ToggleUi(args.Performer, (ent, ent.Comp));
     }
 
-    private void OnStoreRelay(EntityUid uid, StoreComponent store, ImplantRelayEvent<AfterInteractUsingEvent> implantRelay)
+    private void OnStoreRelay(Entity<StoreComponent> ent, ref ImplantRelayEvent<AfterInteractUsingEvent> implantRelay)
     {
         var args = implantRelay.Event;
 
@@ -152,13 +159,18 @@ public abstract partial class SharedStoreSystem : EntitySystem
         if (!TryComp<CurrencyComponent>(args.Used, out var currency))
             return;
 
-        // same as store code, but message is only shown to yourself
-        if (!TryAddCurrency((args.Used, currency), (uid, store)))
+        // Make this check before actually adding currency, so popup can be handled correctly,
+        // since currency entity is deleted immediately when adding.
+        if (!CanAddCurrency(currency.Price, ent.Comp))
+            return;
+
+        var msg = Loc.GetString("store-currency-inserted-implant", ("used", args.Used));
+        _popup.PopupEntity(msg, args.User, args.User);
+
+        if (!TryAddCurrency((args.Used, currency), (ent.Owner, ent.Comp)))
             return;
 
         args.Handled = true;
-        var msg = Loc.GetString("store-currency-inserted-implant", ("used", args.Used));
-        _popup.PopupEntity(msg, args.User, args.User);
     }
 
     /// <summary>
@@ -177,7 +189,8 @@ public abstract partial class SharedStoreSystem : EntitySystem
     }
 
     /// <summary>
-    /// Tries to add a currency to a store's balance. Note that if successful, this will consume the currency in the process.
+    /// Tries to add a currency to a store's balance.
+    /// Note that if successful, this will consume the currency in the process, and delete it on the same tick.
     /// </summary>
     public bool TryAddCurrency(Entity<CurrencyComponent?> currency, Entity<StoreComponent?> store)
     {
@@ -194,17 +207,15 @@ public abstract partial class SharedStoreSystem : EntitySystem
                 .ToDictionary(v => v.Key, p => p.Value * stack.Count);
         }
 
-        if (!TryAddCurrency(value, store, store.Comp))
+        if (!TryAddCurrency(value, store))
             return false;
-
-        // Avoid having the currency accidentally be re-used. E.g., if multiple clients try to use the currency in the
-        // same tick
-        currency.Comp.Price.Clear();
 
         if (stack != null)
             _stack.SetCount(currency.Owner, 0, stack);
 
-        PredictedQueueDel(currency.Owner);
+        // Delete it right here so it can't be reused again multiple times on the same tick.
+        // Also prevents mispredicts
+        PredictedDel(currency.Owner);
         return true;
     }
 
@@ -212,29 +223,38 @@ public abstract partial class SharedStoreSystem : EntitySystem
     /// Tries to add a currency to a store's balance
     /// </summary>
     /// <param name="currency">The value to add to the store</param>
-    /// <param name="uid"></param>
     /// <param name="store">The store to add it to</param>
     /// <returns>Whether or not the currency was succesfully added</returns>
-    public bool TryAddCurrency(Dictionary<string, FixedPoint2> currency, EntityUid uid, StoreComponent? store = null)
+    public bool TryAddCurrency(Dictionary<string, FixedPoint2> currency, Entity<StoreComponent?> store)
     {
-        if (!Resolve(uid, ref store))
+        if (!Resolve(store, ref store.Comp))
             return false;
 
+        var comp = store.Comp;
+
         //verify these before values are modified
+        if (!CanAddCurrency(currency, comp))
+            return false;
+
+        foreach (var type in currency)
+        {
+            if (!comp.Balance.TryAdd(type.Key, type.Value))
+                comp.Balance[type.Key] += type.Value;
+        }
+
+        DirtyField(store, comp, nameof(StoreComponent.Balance));
+        UpdateUi((store.Owner, comp));
+        return true;
+    }
+
+    public bool CanAddCurrency(Dictionary<string, FixedPoint2> currency, StoreComponent store)
+    {
         foreach (var type in currency)
         {
             if (!store.CurrencyWhitelist.Contains(type.Key))
                 return false;
         }
 
-        foreach (var type in currency)
-        {
-            if (!store.Balance.TryAdd(type.Key, type.Value))
-                store.Balance[type.Key] += type.Value;
-        }
-
-        DirtyField(uid, store, nameof(StoreComponent.Balance));
-        UpdateUi((uid, store));
         return true;
     }
 }

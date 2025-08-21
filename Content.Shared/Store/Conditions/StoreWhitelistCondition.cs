@@ -1,11 +1,12 @@
-using Content.Shared.Store;
 using Content.Shared.Whitelist;
+using Robust.Shared.Serialization;
 
 namespace Content.Shared.Store.Conditions;
 
 /// <summary>
 /// Filters out an entry based on the components or tags on the store itself.
 /// </summary>
+[Serializable, NetSerializable]
 public sealed partial class StoreWhitelistCondition : ListingCondition
 {
     /// <summary>

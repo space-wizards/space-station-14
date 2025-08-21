@@ -185,7 +185,7 @@ public sealed partial class RevenantSystem : EntitySystem
     {
         if (!TryComp<StoreComponent>(uid, out var store))
             return;
-        _store.ToggleUi(uid, uid, store);
+        _store.ToggleUi(uid, (uid, store));
     }
 
     public void MakeVisible(bool visible)

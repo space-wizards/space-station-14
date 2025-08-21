@@ -1,8 +1,10 @@
 using Content.Shared.Store.Components;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Serialization;
 
 namespace Content.Shared.Store.Conditions;
 
+[Serializable, NetSerializable]
 public sealed partial class BuyBeforeCondition : ListingCondition
 {
     /// <summary>
@@ -14,6 +16,7 @@ public sealed partial class BuyBeforeCondition : ListingCondition
     /// <summary>
     ///     Listing(s) that if bought, block this purchase, if any.
     /// </summary>
+    [DataField]
     public HashSet<ProtoId<ListingPrototype>>? Blacklist;
 
     public override bool Condition(ListingConditionArgs args)

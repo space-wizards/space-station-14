@@ -112,7 +112,7 @@ public sealed class PAISystem : SharedPAISystem
         if (!TryComp<StoreComponent>(ent, out var store))
             return;
 
-        _store.ToggleUi(args.Performer, ent, store);
+        _store.ToggleUi(args.Performer, (ent, store));
     }
 
     public void PAITurningOff(EntityUid uid)

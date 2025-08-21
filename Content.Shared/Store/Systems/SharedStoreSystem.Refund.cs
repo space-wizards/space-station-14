@@ -80,9 +80,9 @@ public abstract partial class SharedStoreSystem
 
         var endTime = component.BoughtTime + component.DisableTime;
 
-        if (IsOnStartingMap(component.StoreEntity.Value, storeComp) && _timing.CurTime < endTime)
+        if (IsOnStartingMap((component.StoreEntity.Value, storeComp)) && _timing.CurTime < endTime)
             return;
 
-        DisableRefund(component.StoreEntity.Value, storeComp);
+        DisableRefund((component.StoreEntity.Value, storeComp));
     }
 }

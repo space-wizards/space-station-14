@@ -24,37 +24,28 @@ public abstract partial class SharedStoreSystem
     private void OnRefundEntityDeleted(Entity<StoreComponent> ent, ref RefundEntityDeletedEvent args)
     {
         ent.Comp.BoughtEntities.Remove(args.Uid);
+        DirtyField(ent.Owner, ent.Comp, nameof(StoreComponent.BoughtEntities));
     }
 
     /// <summary>
     /// Toggles the store Ui open and closed
     /// </summary>
     /// <param name="user">the person doing the toggling</param>
-    /// <param name="storeEnt">the store being toggled</param>
-    /// <param name="component"></param>
-    public void ToggleUi(EntityUid user, EntityUid storeEnt, StoreComponent? component = null)
+    /// <param name="store">the store being toggled</param>
+    public void ToggleUi(EntityUid user, Entity<StoreComponent?> store)
     {
-        if (!Resolve(storeEnt, ref component))
+        if (!Resolve(store, ref store.Comp))
             return;
 
         if (!TryComp<ActorComponent>(user, out var actor))
             return;
 
-        if (!Ui.TryToggleUi(storeEnt, StoreUiKey.Key, actor.PlayerSession))
+        if (!Ui.TryToggleUi(store.Owner, StoreUiKey.Key, actor.PlayerSession))
             return;
 
-        UpdateAvailableListings(user, (storeEnt, component));
-    }
-
-    /// <summary>
-    /// Closes the store UI for everyone, if it's open
-    /// </summary>
-    public void CloseUi(EntityUid uid, StoreComponent? component = null)
-    {
-        if (!Resolve(uid, ref component))
-            return;
-
-        Ui.CloseUi(uid, StoreUiKey.Key);
+        // Purely for optimization purposes, update listings only when we open this UI
+        if (Ui.IsUiOpen(store.Owner, StoreUiKey.Key))
+            UpdateAvailableListings(user, store);
     }
 
     /// <summary>
@@ -104,10 +95,7 @@ public abstract partial class SharedStoreSystem
             return;
 
         // Condition checking because why not
-        // Check only on server-side as safety measure,
-        // client is already aware of what listings are available to it at this point,
-        // so predicting it as always true should be valid in most cases.
-        if (listing.Conditions != null && _net.IsServer)
+        if (listing.Conditions != null)
         {
             var args = new ListingConditionArgs(component.AccountOwner ?? GetBuyerMind(buyer), uid, listing, EntityManager);
             var conditionsMet = listing.Conditions.All(condition => condition.Condition(args));
@@ -126,8 +114,8 @@ public abstract partial class SharedStoreSystem
             }
         }
 
-        if (!IsOnStartingMap(uid, component))
-            DisableRefund(uid, component);
+        if (!IsOnStartingMap(ent))
+            DisableRefund(ent);
 
         // Subtract the cash
         foreach (var (currency, amount) in cost)
@@ -145,7 +133,7 @@ public abstract partial class SharedStoreSystem
             var product = PredictedSpawnAtPosition(listing.ProductEntity, Transform(buyer).Coordinates);
             Hands.PickupOrDrop(buyer, product);
 
-            HandleRefundComp(uid, component, product);
+            HandleRefundComp(ent, product);
 
             var xForm = Transform(product);
 
@@ -174,7 +162,7 @@ public abstract partial class SharedStoreSystem
             // And then add that action entity to the relevant product upgrade listing, if applicable
             if (actionId != null)
             {
-                HandleRefundComp(uid, component, actionId.Value);
+                HandleRefundComp(ent, actionId.Value);
 
                 if (listing.ProductUpgradeId != null)
                 {
@@ -200,7 +188,7 @@ public abstract partial class SharedStoreSystem
             if (!_actionUpgrade.TryUpgradeAction(listing.ProductActionEntity, out var upgradeActionId))
             {
                 if (listing.ProductActionEntity != null)
-                    HandleRefundComp(uid, component, listing.ProductActionEntity.Value);
+                    HandleRefundComp(ent, listing.ProductActionEntity.Value);
 
                 return;
             }
@@ -208,7 +196,7 @@ public abstract partial class SharedStoreSystem
             listing.ProductActionEntity = upgradeActionId;
 
             if (upgradeActionId != null)
-                HandleRefundComp(uid, component, upgradeActionId.Value);
+                HandleRefundComp(ent, upgradeActionId.Value);
         }
 
         if (listing.ProductEvent != null)
@@ -239,6 +227,7 @@ public abstract partial class SharedStoreSystem
         };
 
         RaiseLocalEvent(ref buyFinished);
+
         DirtyField(uid, component, nameof(StoreComponent.Balance));
         DirtyField(uid, component, nameof(StoreComponent.BalanceSpent));
         DirtyField(uid, component, nameof(StoreComponent.BoughtEntities));
@@ -254,9 +243,9 @@ public abstract partial class SharedStoreSystem
         if (args.Actor is not { Valid: true } buyer)
             return;
 
-        if (!IsOnStartingMap(uid, component))
+        if (!IsOnStartingMap(ent))
         {
-            DisableRefund(uid, component);
+            DisableRefund(ent);
         }
 
         if (!component.RefundAllowed || component.BoughtEntities.Count == 0)
@@ -289,7 +278,9 @@ public abstract partial class SharedStoreSystem
         RefreshAllListings(ent);
         component.BalanceSpent = new();
 
-        Dirty(ent);
+        DirtyField(uid, component, nameof(StoreComponent.Balance));
+        DirtyField(uid, component, nameof(StoreComponent.BalanceSpent));
+        DirtyField(uid, component, nameof(StoreComponent.BoughtEntities));
         UpdateUi(ent);
     }
 
@@ -326,31 +317,28 @@ public abstract partial class SharedStoreSystem
         UpdateUi(ent);
     }
 
-    private void HandleRefundComp(EntityUid uid, StoreComponent component, EntityUid purchase)
+    private void HandleRefundComp(Entity<StoreComponent> store, EntityUid purchase)
     {
-        component.BoughtEntities.Add(purchase);
+        store.Comp.BoughtEntities.Add(purchase);
         var refundComp = EnsureComp<StoreRefundComponent>(purchase);
-        refundComp.StoreEntity = uid;
+        refundComp.StoreEntity = store.Owner;
         refundComp.BoughtTime = _timing.CurTime;
     }
 
-    private bool IsOnStartingMap(EntityUid store, StoreComponent component)
+    private bool IsOnStartingMap(Entity<StoreComponent> store)
     {
         var xform = Transform(store);
-        return component.StartingMap == xform.MapUid;
+        return store.Comp.StartingMap == xform.MapUid;
     }
 
     /// <summary>
     ///     Disables refunds for this store
     /// </summary>
-    public void DisableRefund(EntityUid store, StoreComponent? component = null)
+    public void DisableRefund(Entity<StoreComponent> store)
     {
-        if (!Resolve(store, ref component))
-            return;
-
-        component.RefundAllowed = false;
-        DirtyField(store, component, nameof(StoreComponent.RefundAllowed));
-        UpdateUi((store, component));
+        store.Comp.RefundAllowed = false;
+        DirtyField(store, store.Comp, nameof(StoreComponent.RefundAllowed));
+        UpdateUi((store, store.Comp));
     }
 
     protected virtual void UpdateUi(Entity<StoreComponent> ent) { }
