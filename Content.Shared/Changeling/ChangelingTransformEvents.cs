@@ -2,7 +2,7 @@
 using Content.Shared.DoAfter;
 using Robust.Shared.Serialization;
 
-namespace Content.Shared.Changeling.Transform;
+namespace Content.Shared.Changeling;
 
 /// <summary>
 /// Action event for opening the changeling transformation radial menu.

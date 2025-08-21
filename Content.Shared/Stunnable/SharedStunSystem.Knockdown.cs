@@ -501,7 +501,7 @@ public abstract partial class SharedStunSystem
 
         // Targeted moth attack
         CancelKnockdownDoAfter((entity, entity.Comp));
-        RemComp<KnockedDownComponent>(entity);
+        RemCompDeferred<KnockedDownComponent>(entity);
     }
 
     private void OnKnockdownAttempt(Entity<GravityAffectedComponent> entity, ref KnockDownAttemptEvent args)

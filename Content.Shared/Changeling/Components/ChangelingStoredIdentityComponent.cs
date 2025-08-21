@@ -1,7 +1,7 @@
 using Robust.Shared.GameStates;
 using Robust.Shared.Player;
 
-namespace Content.Shared.Changeling;
+namespace Content.Shared.Changeling.Components;
 
 /// <summary>
 /// Marker component for cloned identities devoured by a changeling.
