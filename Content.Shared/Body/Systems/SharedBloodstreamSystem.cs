@@ -81,7 +81,7 @@ public abstract class SharedBloodstreamSystem : EntitySystem
             // as well as stop their bleeding to a certain extent.
             if (bloodstream.BleedAmount > 0)
             {
-                var ev = new EntityBleedEvent(bloodstream.BleedAmount, bloodstream.BleedReductionAmount);
+                var ev = new BleedModifierEvent(bloodstream.BleedAmount, bloodstream.BleedReductionAmount);
                 RaiseLocalEvent(uid, ref ev);
 
                 // Blood is removed from the bloodstream at a 1-1 rate with the bleed amount
