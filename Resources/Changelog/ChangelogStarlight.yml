@@ -12105,5 +12105,12 @@ Entries:
   id: 137700
   time: '2025-08-21T11:19:53.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/1377
+- author: walksanatora
+  changes:
+  - message: Some stores (revenant, pai) have gotten a slight name tweak.
+    type: Tweak
+  id: 136100
+  time: '2025-08-21T11:21:42.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1361
 Order: -1
 
