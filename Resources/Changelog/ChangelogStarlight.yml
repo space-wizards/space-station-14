@@ -12084,5 +12084,12 @@ Entries:
   id: 125300
   time: '2025-08-21T11:11:20.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/1253
+- author: walksantora
+  changes:
+  - message: Abductor scientist gizmo no longer implants the tracker no matter what.
+    type: Fix
+  id: 140900
+  time: '2025-08-21T11:13:28.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1409
 Order: -1
 
