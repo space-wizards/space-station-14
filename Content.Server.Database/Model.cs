@@ -705,6 +705,11 @@ namespace Content.Server.Database
 
         [Required] public DateTime Date { get; set; }
 
+        /// <summary>
+        /// The current time in the round in ticks since the start of the round.
+        /// </summary>
+        public long CurTime { get; set; }
+
         [Required] public string Message { get; set; } = default!;
 
         [Required, Column(TypeName = "jsonb")] public JsonDocument Json { get; set; } = default!;
