@@ -979,6 +979,8 @@
     solution: anomaly
   - type: ExaminableSolution
     solution: anomaly
+    exactVolume: true
+    locVolume: "examinable-solution-on-examine-volume-no-max"
   - type: RefillableSolution
     solution: anomaly
   - type: InjectableSolution

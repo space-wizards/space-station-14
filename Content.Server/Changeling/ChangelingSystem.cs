@@ -104,10 +104,8 @@ public sealed partial class ChangelingSystem : EntitySystem
     [Dependency] private readonly NpcFactionSystem _factionSystem = default!;
     [Dependency] private readonly MovementModStatusSystem _movementMod = default!;
 
-    public EntProtoId ArmbladePrototype = "ArmBladeChangeling";
     public EntProtoId FakeArmbladePrototype = "FakeArmBladeChangeling";
 
-    public EntProtoId ShieldPrototype = "ChangelingShield";
     public EntProtoId BoneShardPrototype = "ThrowingStarChangeling";
 
     public EntProtoId ArmorPrototype = "ChangelingClothingOuterArmor";
@@ -162,7 +160,7 @@ public sealed partial class ChangelingSystem : EntitySystem
     {
         var chemicals = comp.Chemicals;
         // either amount or regen
-        chemicals += amount ?? 1 + comp.BonusChemicalRegen;
+        chemicals += amount ?? (1 + comp.BonusChemicalRegen);
         comp.Chemicals = Math.Clamp(chemicals, 0, comp.MaxChemicals);
         Dirty(uid, comp);
         _alerts.ShowAlert(uid, "ChangelingChemicals");
@@ -296,52 +294,8 @@ public sealed partial class ChangelingSystem : EntitySystem
 
         return false;
     }
-
-    public bool TryUseAbility(EntityUid uid, ChangelingComponent comp, BaseActionEvent action)
+    public bool TrySting(EntityUid uid, EntityTargetActionEvent action, bool overrideMessage = false)
     {
-        if (action.Handled)
-            return false;
-
-        if (!TryComp<ChangelingActionComponent>(action.Action, out var lingAction))
-            return false;
-
-        if (comp.Biomass < 1 && lingAction.RequireBiomass)
-        {
-            _popup.PopupEntity(Loc.GetString("changeling-biomass-deficit"), uid, uid);
-            return false;
-        }
-
-        if (!lingAction.UseInLesserForm && comp.IsInLesserForm)
-        {
-            _popup.PopupEntity(Loc.GetString("changeling-action-fail-lesserform"), uid, uid);
-            return false;
-        }
-
-        if (comp.Chemicals < lingAction.ChemicalCost)
-        {
-            _popup.PopupEntity(Loc.GetString("changeling-chemicals-deficit"), uid, uid);
-            return false;
-        }
-
-        if (lingAction.RequireAbsorbed > comp.TotalAbsorbedEntities)
-        {
-            var delta = lingAction.RequireAbsorbed - comp.TotalAbsorbedEntities;
-            _popup.PopupEntity(Loc.GetString("changeling-action-fail-absorbed", ("number", delta)), uid, uid);
-            return false;
-        }
-
-        UpdateChemicals(uid, comp, -lingAction.ChemicalCost);
-        UpdateBiomass(uid, comp, -lingAction.BiomassCost);
-
-        action.Handled = true;
-
-        return true;
-    }
-    public bool TrySting(EntityUid uid, ChangelingComponent comp, EntityTargetActionEvent action, bool overrideMessage = false)
-    {
-        if (!TryUseAbility(uid, comp, action))
-            return false;
-
         var target = action.Target;
 
         // can't get his dna if he doesn't have it!
@@ -361,11 +315,11 @@ public sealed partial class ChangelingSystem : EntitySystem
             _popup.PopupEntity(Loc.GetString("changeling-sting", ("target", Identity.Entity(target, EntityManager))), uid, uid);
         return true;
     }
-    public bool TryInjectReagents(EntityUid uid, List<(string, FixedPoint2)> reagents)
+    public bool TryInjectReagents(EntityUid uid, Dictionary<string, FixedPoint2> reagents)
     {
         var solution = new Solution();
         foreach (var reagent in reagents)
-            solution.AddReagent(reagent.Item1, reagent.Item2);
+            solution.AddReagent(reagent.Key, reagent.Value);
 
         if (!_solution.TryGetInjectableSolution(uid, out var targetSolution, out var _))
             return false;
@@ -375,10 +329,10 @@ public sealed partial class ChangelingSystem : EntitySystem
 
         return true;
     }
-    public bool TryReagentSting(EntityUid uid, ChangelingComponent comp, EntityTargetActionEvent action, List<(string, FixedPoint2)> reagents)
+    public bool TryReagentSting(EntityUid uid, ChangelingComponent comp, EntityTargetActionEvent action, Dictionary<string, FixedPoint2> reagents)
     {
         var target = action.Target;
-        if (!TrySting(uid, comp, action))
+        if (!TrySting(uid, action))
             return false;
 
         if (!TryInjectReagents(target, reagents))
@@ -591,7 +545,7 @@ public sealed partial class ChangelingSystem : EntitySystem
     {
         // check if there's no entities or all entities are null
         if (comp.Equipment.Values.Count == 0
-        || comp.Equipment.Values.All(ent => ent == null ? true : false))
+        || comp.Equipment.Values.All(ent => ent == null))
             return;
 
         foreach (var equip in comp.Equipment.Values)
@@ -648,10 +602,8 @@ public sealed partial class ChangelingSystem : EntitySystem
         target.Damage.ClampMax(200); // we never die. UNLESS??
     }
 
-    private void OnComponentRemove(Entity<ChangelingComponent> ent, ref ComponentRemove args)
-    {
-        RemoveAllChangelingEquipment(ent, ent.Comp);
-    }
+    private void OnComponentRemove(Entity<ChangelingComponent> ent, ref ComponentRemove args) => RemoveAllChangelingEquipment(ent, ent.Comp);
+    
 
     #endregion
 }

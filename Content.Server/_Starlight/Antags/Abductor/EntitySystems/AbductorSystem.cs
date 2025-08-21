@@ -16,6 +16,7 @@ using Content.Shared.Hands.EntitySystems;
 using Robust.Server.GameObjects;
 using Content.Shared.Tag;
 using Robust.Server.Containers;
+using Content.Shared.Station.Components;
 
 namespace Content.Server.Starlight.Antags.Abductor;
 
@@ -179,7 +180,7 @@ public sealed partial class AbductorSystem : SharedAbductorSystem
 
         foreach (var station in stations)
         {
-            if (_stationSystem.GetLargestGrid(Comp<StationDataComponent>(station)) is not { } grid
+            if (_stationSystem.GetLargestGrid((station,Comp<StationDataComponent>(station))) is not { } grid
                 || !TryComp(station, out MetaDataComponent? stationMetaData))
                 return;
 

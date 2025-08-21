@@ -35,6 +35,7 @@ using Content.Shared.Pinpointer;
 using Content.Shared.Projectiles;
 using Content.Shared.Standing;
 using Content.Shared.StatusEffect;
+using Content.Shared.Stunnable;
 using Content.Shared.Weapons.Melee;
 using Content.Shared.Weapons.Ranged;
 using Content.Shared.Weapons.Ranged.Components;
@@ -311,7 +312,7 @@ public sealed partial class GunSystem : SharedGunSystem
                         if (hitscan.StaminaDamage > 0f)
                             _stamina.TakeStaminaDamage(hitEntity, hitscan.StaminaDamage, source: user);
 
-                        if (TryComp<StandingStateComponent>(hitEntity, out var standing))
+                        if (TryComp<CrawlerComponent>(hitEntity, out var standing))
                         {
                             _stunSystem.TryAddStunDuration(hitEntity, TimeSpan.FromSeconds(hitscan.StunAmount));
 
