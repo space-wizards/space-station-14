@@ -293,7 +293,7 @@
       state: ai_female
   - type: NameIdentifier
     group: StationAi
-  
+
 # Hologram projection that the AI's eye tracks.
 - type: entity
   parent:
