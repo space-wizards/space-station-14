@@ -197,6 +197,8 @@
     - Sylvan
     - Terrum
     - VoxPidgin
+    - Scratch
+    - Dog
 
 - type: entity
   parent: [ BaseBorgiChassis, BaseBorgTransponder ]
