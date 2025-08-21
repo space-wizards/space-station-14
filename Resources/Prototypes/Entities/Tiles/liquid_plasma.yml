@@ -54,3 +54,9 @@
   - type: Tag
     tags:
     - HideContextMenu
+  - type: SpeedModifierContacts
+    walkSpeedModifier: 0.4
+    sprintSpeedModifier: 0.4
+    ignoreWhitelist:
+      tags:
+      - Catwalk

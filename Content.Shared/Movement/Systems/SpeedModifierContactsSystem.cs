@@ -2,7 +2,10 @@ using Content.Shared.Movement.Components;
 using Content.Shared.Movement.Events;
 using Content.Shared.Gravity;
 using Content.Shared.Slippery;
+using Content.Shared.Tag;
 using Content.Shared.Whitelist;
+using Robust.Shared.Map;
+using Robust.Shared.Map.Components;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Events;
 using Robust.Shared.Physics.Systems;
@@ -15,6 +18,7 @@ public sealed class SpeedModifierContactsSystem : EntitySystem
     [Dependency] private readonly SharedGravitySystem _gravity = default!;
     [Dependency] private readonly MovementSpeedModifierSystem _speedModifierSystem = default!;
     [Dependency] private readonly EntityWhitelistSystem _whitelistSystem = default!;
+    [Dependency] private readonly SharedMapSystem _mapSystem = default!;
 
     // TODO full-game-save
     // Either these need to be processed before a map is saved, or slowed/slowing entities need to update on init.
@@ -97,6 +101,28 @@ public sealed class SpeedModifierContactsSystem : EntitySystem
             {
                 if (_whitelistSystem.IsWhitelistPass(slowContactsComponent.IgnoreWhitelist, uid))
                     continue;
+
+                if (slowContactsComponent.IgnoreWhitelist != null &&
+                    TryComp<TransformComponent>(ent, out var transformEnt) &&
+                    transformEnt.GridUid is {} gridUid &&
+                    TryComp<MapGridComponent>(gridUid, out var grid))
+                {
+                    var tilePos = _mapSystem.LocalToTile(gridUid, grid, transformEnt.Coordinates);
+                    var enumerator = _mapSystem.GetAnchoredEntitiesEnumerator(gridUid, grid, tilePos);
+                    var foundBlockingEntity = false;
+
+                    while (enumerator.MoveNext(out var tileEntity))
+                    {
+                        if (_whitelistSystem.IsWhitelistPass(slowContactsComponent.IgnoreWhitelist, tileEntity.Value))
+                        {
+                            foundBlockingEntity = true;
+                            break;
+                        }
+                    }
+
+                    if (foundBlockingEntity)
+                        continue;
+                }
 
                 // Entities that are airborne should not be affected by contact slowdowns that are specified to not affect airborne entities.
                 if (isAirborne && !slowContactsComponent.AffectAirborne)
