@@ -1,3 +1,5 @@
+construction-recipe-diagonal-wall = wall (diagonal)
+construction-recipe-diagonal-reinforced-wall = reinforced wall (diagonal)
 construction-recipe-diagonal-shuttle-wall = shuttle wall (diagonal)
 construction-window-diagonal = window (diagonal)
 construction-recipe-reinforced-window-diagonal = reinforced window (diagonal)
