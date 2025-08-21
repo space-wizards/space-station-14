@@ -104,7 +104,7 @@ public sealed class JobRequirementsManager : ISharedPlaytimeManager
         {
             foreach (var proto in antags)
             {
-                if (_prototypes.TryIndex(proto, out var antag) && !IsAllowed(antag, profile, out reason))
+                if (!IsAllowed(_prototypes.Index(proto), profile, out reason))
                     return false;
             }
         }
@@ -113,7 +113,7 @@ public sealed class JobRequirementsManager : ISharedPlaytimeManager
         {
             foreach (var proto in jobs)
             {
-                if (_prototypes.TryIndex(proto, out var job) && !IsAllowed(job, profile, out reason))
+                if (!IsAllowed(_prototypes.Index(proto), profile, out reason))
                     return false;
             }
         }
