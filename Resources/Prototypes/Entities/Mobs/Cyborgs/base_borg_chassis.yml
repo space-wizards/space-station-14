@@ -257,6 +257,7 @@
     - Machine
     understands:
     - GalacticCommon
+    - SolCommon
     - Machine
     - Canilunzt
     - Sign
