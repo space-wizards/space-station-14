@@ -30,10 +30,9 @@ public sealed partial class KitchenSpikeComponent : Component
 
     /// <summary>
     /// Tool quality that required if "piece" of the victim should be gotten with specified tool.
-    /// May be null.
     /// </summary>
     [DataField]
-    public string? RequiredToolQuality = "Slicing";
+    public string RequiredToolQuality = "Slicing";
 
     /// <summary>
     /// ID of the container where the victim will be stored.

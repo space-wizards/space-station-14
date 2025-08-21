@@ -24,6 +24,8 @@ using Robust.Shared.Containers;
 using Robust.Shared.Random;
 using Robust.Shared.Serialization;
 using Robust.Shared.Timing;
+using Content.Shared.Tools.Systems;
+using Content.Shared.Tools.Components;
 
 namespace Content.Shared.Kitchen;
 
@@ -45,6 +47,7 @@ public sealed class SharedKitchenSpikeSystem : EntitySystem
     [Dependency] private readonly SharedBodySystem _bodySystem = default!;
     [Dependency] private readonly IGameTiming _gameTiming = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
+    [Dependency] private readonly SharedToolSystem _tool = default!;
 
     public override void Initialize()
     {
@@ -134,7 +137,7 @@ public sealed class SharedKitchenSpikeSystem : EntitySystem
 
         args.Handled = true;
 
-        if (!TryComp<SharpComponent>(args.Used, out var sharp))
+        if (!TryComp<ToolComponent>(ent, out var tool) || !_tool.HasQuality(ent, ent.Comp.RequiredToolQuality, tool))
         {
             _popupSystem.PopupClient(Loc.GetString("butcherable-need-knife",
                     ("target", Identity.Entity(victim.Value, EntityManager))),
@@ -153,7 +156,7 @@ public sealed class SharedKitchenSpikeSystem : EntitySystem
             args.User,
             PopupType.MediumCaution);
 
-        var delay = TimeSpan.FromSeconds(sharp.ButcherDelayModifier * butcherable.ButcherDelay);
+        var delay = TimeSpan.FromSeconds(tool.SpeedModifier * butcherable.ButcherDelay);
 
         if (_mobStateSystem.IsAlive(victim.Value))
             delay += ent.Comp.ButcherDelayAlive;
