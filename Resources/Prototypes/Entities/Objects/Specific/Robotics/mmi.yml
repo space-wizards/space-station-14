@@ -5,6 +5,7 @@
   description: A machine able to facilitate communication between a biological brain and electronics, enabling crew to continue to provide value after work-related incidents.
   components:
   # Starlight-start: Languages
+  - type: LanguageSpeaker
   - type: LanguageKnowledge
     speaks:
     - GalacticCommon
