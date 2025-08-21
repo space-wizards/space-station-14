@@ -289,7 +289,8 @@ public abstract partial class SharedVendingMachineSystem : EntitySystem
         Dirty(uid, vendComponent);
         UpdateUI((uid, vendComponent));
         TryUpdateVisualState((uid, vendComponent));
-        Audio.PlayPredicted(vendComponent.SoundVend, uid, user);
+        
+        Audio.PlayPvs(vendComponent.SoundVend, uid); //starlight
     }
 
     public void Deny(Entity<VendingMachineComponent?> entity, EntityUid? user = null)
