@@ -1,4 +1,5 @@
 ﻿using System.Numerics;
+using Content.Shared.Changeling.Components;
 using Content.Shared.Cloning;
 using Content.Shared.Humanoid;
 using Content.Shared.Mind.Components;
@@ -9,7 +10,7 @@ using Robust.Shared.Network;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 
-namespace Content.Shared.Changeling;
+namespace Content.Shared.Changeling.Systems;
 
 public sealed class ChangelingIdentitySystem : EntitySystem
 {
