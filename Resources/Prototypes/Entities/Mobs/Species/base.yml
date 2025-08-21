@@ -275,6 +275,15 @@
   - type: FireVisuals
     alternateState: Standing
   - type: StunVisuals
+  - type: VomitOnDamage
+    damage:
+      Radiation: 40
+  - type: PopupOnDamage
+    popups:
+      Radiation:
+        popup: mouth-taste-metal
+        type: LargeCaution
+        threshold: 1
 
 - type: entity
   save: false
