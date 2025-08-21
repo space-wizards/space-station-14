@@ -57,7 +57,7 @@ public sealed class ActionUIController : UIController, IOnStateChanged<GameplayS
     /// for UI purposes (i.e. locking your action bar to prevent buttons from being
     /// removed/rearraged even if you lose the action container).
     /// </summary>
-    private readonly List<EntityUid> _phantomActions = new();
+    private readonly HashSet<EntityUid> _phantomActions = new();
     private readonly DragDropHelper<ActionButton> _menuDragHelper;
     private readonly TextureRect _dragShadow;
     private ActionsWindow? _window;
@@ -297,14 +297,17 @@ public sealed class ActionUIController : UIController, IOnStateChanged<GameplayS
         if (action.Comp.Toggled && EntityManager.TryGetComponent<TargetActionComponent>(actionId, out var target))
             StartTargeting((action, action, target));
 
-        // Server might give us an action we have but don't actually have and make the client confused...
-        if (!_timing.ApplyingState)
-            _phantomActions.Remove(action);
+        if (!_actions.Contains(action))
+        {
+            _actions.Add(action);
+            return;
+        }
 
-        if (_actions.Contains(action))
+        if (action.Comp.AttachedEntity != _playerManager.LocalEntity)
             return;
 
-        _actions.Add(action);
+        if (_timing.IsFirstTimePredicted)
+            _phantomActions.Remove(action);
     }
 
     private void OnActionRemoved(EntityUid actionId)
@@ -315,20 +318,15 @@ public sealed class ActionUIController : UIController, IOnStateChanged<GameplayS
         if (actionId == SelectingTargetFor)
             StopTargeting();
 
-        if (_lockActions)
+        if (!_lockActions || _actionsSystem.GetAction(actionId) is not { } action ||
+            action.Comp.Container == _playerManager.LocalEntity)
         {
-            if (_actionsSystem.GetAction(actionId) is { } action)
-            {
-                // Don't phantom innate actions that get removed
-                if (action.Comp.Container != _playerManager.LocalEntity)
-                {
-                    _phantomActions.Add(actionId);
-                    return;
-                }
-            }
+            _actions.RemoveAll(x => x == actionId);
+            return;
         }
 
-        _actions.RemoveAll(x => x == actionId);
+        if (_timing.IsFirstTimePredicted)
+            _phantomActions.Add(action);
     }
 
     private void OnActionsUpdated()
