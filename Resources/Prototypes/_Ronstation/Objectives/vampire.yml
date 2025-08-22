@@ -7,11 +7,11 @@
     issuer: objective-issuer-vampire
   - type: RoleRequirement
     roles:
-    - Vampire
+    - VampireRole
 
 # State
 - type: entity
-  parent: [BaseVampireObjective, BaseSurviveObjective]
+  parent: [BaseVampireObjective, BaseLivingObjective]
   id: VampireSurviveObjective
   name: Survive
   description: Don't let the crew destroy you, and make sure you're on evac when it arrives!
@@ -21,18 +21,19 @@
     icon:
       sprite: Mobs/Species/Human/organs.rsi # Placeholder
       state: heart-on
+  - type: EscapeShuttleCondition
 
 # Kill (placeholder until we can track feeding on specific people)
 
-# - type: entity
-#   parent: [BaseVampireObjective, KillRandomPersonObjective]
-#   id: VampireKillRandomPersonObjective
+- type: entity
+  parent: [BaseVampireObjective, KillRandomPersonObjective]
+  id: VampireKillRandomPersonObjective
 
-# - type: entity
-#   parent: [BaseVampireObjective, KillRandomHeadObjective]
-#   id: VampireKillRandomHeadObjective
+- type: entity
+  parent: [BaseVampireObjective, KillRandomHeadObjective]
+  id: VampireKillRandomHeadObjective
 
-# Feed
+# Feed - do not enable until we have the logic ready
 
 # - type: entity
 #   parent: [BaseVampireObjective, FeedObjective]

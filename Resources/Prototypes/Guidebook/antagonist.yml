@@ -1,3 +1,4 @@
+# Contains modifications made by Ronstation contributors, therefore this file is subject to MIT sublicensed with AGPL v3.0.
 - type: guideEntry
   id: Antagonists
   name: guide-entry-antagonists
@@ -9,7 +10,7 @@
   - NuclearOperatives
   - SpaceNinja
   - Wizard
-  - Vampire # Ronstation - modification
+  # - Vampire # Ronstation - modification - uncomment when testing guidebook changes for vampires
   - Zombies
   - MinorAntagonists
 

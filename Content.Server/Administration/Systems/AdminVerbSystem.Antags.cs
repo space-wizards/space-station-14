@@ -1,3 +1,4 @@
+// Contains modifications made by Ronstation contributors, therefore this file is subject to MIT sublicensed with AGPL v3.0.
 using Content.Server.Antag;
 using Content.Server.GameTicking;
 using Content.Server.GameTicking.Rules.Components;
@@ -30,7 +31,7 @@ public sealed partial class AdminVerbSystem
     private static readonly EntProtoId DefaultThiefRule = "Thief";
     private static readonly EntProtoId DefaultChangelingRule = "Changeling";
     private static readonly EntProtoId ParadoxCloneRuleId = "ParadoxCloneSpawn";
-    private static readonly EntProtoId DefaultVampireRule = "Vampire";
+    // private static readonly EntProtoId DefaultVampireRule = "Vampire"; // Ronstation - Modification - Uncomment this when testing vampire changes
     private static readonly ProtoId<StartingGearPrototype> PirateGearId = "PirateGear";
 
     // All antag verbs have names so invokeverb works.
@@ -194,21 +195,21 @@ public sealed partial class AdminVerbSystem
         if (HasComp<HumanoidAppearanceComponent>(args.Target)) // only humanoids can be cloned
             args.Verbs.Add(paradox);
 
-        // Ronstation modifications start
-        var vampireName = Loc.GetString("admin-verb-text-make-vampire");
-        Verb vampire = new()
-        {
-            Text = vampireName,
-            Category = VerbCategory.Antag,
-            Icon = new SpriteSpecifier.Rsi(new("/Textures/_Ronstation/Interface/Misc/job_icons.rsi"), "Vampire"),
-            Act = () =>
-            {
-                _antag.ForceMakeAntag<VampireRuleComponent>(targetPlayer, DefaultVampireRule);
-            },
-            Impact = LogImpact.High,
-            Message = string.Join(": ", vampireName, Loc.GetString("admin-verb-make-vampire")),
-        };
-        args.Verbs.Add(vampire);
+        // Ronstation modifications start - uncomment this when testing vampire changes
+        // var vampireName = Loc.GetString("admin-verb-text-make-vampire");
+        // Verb vampire = new()
+        // {
+        //     Text = vampireName,
+        //     Category = VerbCategory.Antag,
+        //     Icon = new SpriteSpecifier.Rsi(new("/Textures/_Ronstation/Interface/Misc/job_icons.rsi"), "Vampire"),
+        //     Act = () =>
+        //     {
+        //         _antag.ForceMakeAntag<VampireRuleComponent>(targetPlayer, DefaultVampireRule);
+        //     },
+        //     Impact = LogImpact.High,
+        //     Message = string.Join(": ", vampireName, Loc.GetString("admin-verb-make-vampire")),
+        // };
+        // args.Verbs.Add(vampire);
         // Ronstation modifications end
     }
 }
