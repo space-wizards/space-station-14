@@ -59,7 +59,7 @@ public sealed partial class DigitalLockMenu : DefaultWindow
     /// <param name="name">Name of button</param>
     /// <param name="action">Action to invoke</param>
     /// <param name="number">Number to invoke</param>
-    private void AddKeypadButton(string name, Action? action, int number)
+    private void AddKeypadButton(string name, Action<int>? action, int number)
     {
         var btn = new Button() { Text = name };
         btn.OnPressed += _ => action?.Invoke(number);
