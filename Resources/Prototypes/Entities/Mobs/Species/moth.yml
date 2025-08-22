@@ -5,6 +5,15 @@
   id: BaseMobMoth
   abstract: true
   components:
+  # Starlight-start: Languages
+  - type: LanguageKnowledge
+    speaks:
+    - GalacticCommon
+    - Moffic
+    understands:
+    - GalacticCommon
+    - Moffic
+  # Starlight-end
   - type: Jump
     action: JumpMoth
   - type: Absorbable
@@ -71,9 +80,9 @@
         Heat : 3 #per second, scales with temperature & other constants
   - type: TemperatureSpeed
     thresholds:
-      289: 0.8
-      275: 0.6
-      250: 0.4
+      289: 0.9
+      275: 0.8
+      250: 0.7
   - type: Sprite # sprite again because we want different layer ordering
     noRot: true
     drawdepth: Mobs

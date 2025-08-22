@@ -50,6 +50,10 @@
     damageContainer: Inorganic
   - type: StaticPrice
     price: 50
+  # Starlight-start: Vending Machines Prices
+  - type: ItemPrice
+    priceCategory: food_medium
+  # Starlight-end
 
 - type: entity
   abstract: true

@@ -225,6 +225,7 @@
       pack: AbductorGlandInventory
       offState: icon
       brokenState: icon
+      showPrices: false
       normalState: icon
       denyState: icon
       ejectDelay: 2

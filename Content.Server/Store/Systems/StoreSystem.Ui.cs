@@ -30,10 +30,10 @@ namespace Content.Server.Store.Systems;
 public sealed partial class StoreSystem
 {
     #region Starlight
-    private static readonly Gauge _storePurchasesMetric = Metrics.CreateGauge(
+    private static readonly Histogram _storePurchasesMetric = Metrics.CreateHistogram(
         "sl_store_purchases",
         "Everything bounght from a \"store\" which include ling upgrades, traitor uplinks, wizard grimoires",
-        ["store_name", "purchased_item"]
+        ["store_name", "purchased_item", "discounted"]
     );
     #endregion
 
@@ -362,10 +362,16 @@ public sealed partial class StoreSystem
         }
 
         #region Starlight statistics
+        var accu = 0f;
+        foreach (var item in listing.Cost)
+        {
+            accu += item.Value.Float();
+        }
         _storePurchasesMetric.WithLabels([
-            ToPrettyString(uid),
-            resolvedName
-        ]).Inc();
+            Loc.GetString(component.Name),
+            listing.ID,
+            listing.IsCostModified.ToString()
+        ]).Observe(accu);
         #endregion
     }
 

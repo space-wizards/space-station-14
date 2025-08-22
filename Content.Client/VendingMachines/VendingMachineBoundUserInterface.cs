@@ -14,6 +14,7 @@ namespace Content.Client.VendingMachines
 
         [ViewVariables]
         private List<VendingMachineInventoryEntry> _cachedInventory = new();
+        private bool _showPrices = true;  // 🌟Starlight🌟 Track if prices should be shown
 
         public VendingMachineBoundUserInterface(EntityUid owner, Enum uiKey) : base(owner, uiKey)
         {
@@ -26,26 +27,81 @@ namespace Content.Client.VendingMachines
             _menu = this.CreateWindowCenteredLeft<VendingMachineMenu>();
             _menu.Title = EntMan.GetComponent<MetaDataComponent>(Owner).EntityName;
             _menu.OnItemSelected += OnItemSelected;
-            Refresh();
+            
+            Refresh(); // 🌟Starlight🌟
+            
+            // 🌟Starlight🌟 
+            if (_showPrices)
+            {
+                RequestBalance(); // Client ask too, server also pushes on open now
+            }
+        }
+
+        protected override void ReceiveMessage(BoundUserInterfaceMessage message)
+        {
+            if (message is VendingMachineBalanceUpdateMessage balanceMessage)
+            {
+                _menu?.UpdateBalance(balanceMessage.Balance);
+            }
+        }
+
+        /// <summary>
+        /// Requests current balance from server
+        /// </summary>
+        private void RequestBalance()         // 🌟Starlight🌟
+        {
+            SendMessage(new VendingMachineRequestBalanceMessage());
         }
 
         public void Refresh()
         {
             var enabled = EntMan.TryGetComponent(Owner, out VendingMachineComponent? bendy) && !bendy.Ejecting;
+            _showPrices = bendy?.ShowPrices ?? true;
 
             var system = EntMan.System<VendingMachineSystem>();
             _cachedInventory = system.GetAllInventory(Owner);
 
-            _menu?.Populate(_cachedInventory, enabled);
+            _menu?.Populate(_cachedInventory, enabled, _showPrices);
+
+            // 🌟Starlight start🌟 
+            if (_menu != null)
+            {
+                if (_showPrices)
+                {
+                    _menu.ToggleBalance(true);
+                    RequestBalance();
+                }
+                else
+                {
+                    _menu.ToggleBalance();
+                }
+            }
+            //  // 🌟Starlight end🌟
         }
 
         public void UpdateAmounts()
         {
             var enabled = EntMan.TryGetComponent(Owner, out VendingMachineComponent? bendy) && !bendy.Ejecting;
+            _showPrices = bendy?.ShowPrices ?? true; // 🌟Starlight🌟
 
             var system = EntMan.System<VendingMachineSystem>();
             _cachedInventory = system.GetAllInventory(Owner);
-            _menu?.UpdateAmounts(_cachedInventory, enabled);
+            _menu?.UpdateAmounts(_cachedInventory, enabled, _showPrices); // 🌟Starlight🌟
+
+            // 🌟Starlight start🌟 
+            if (_menu != null)
+            {
+                if (_showPrices)
+                {
+                    _menu.ToggleBalance(true);
+                    RequestBalance();
+                }
+                else
+                {
+                    _menu.ToggleBalance();
+                }
+            }
+             // 🌟Starlight end🌟 
         }
 
         private void OnItemSelected(GUIBoundKeyEventArgs args, ListData data)
@@ -64,7 +120,8 @@ namespace Content.Client.VendingMachines
             if (selectedItem == null)
                 return;
 
-            SendPredictedMessage(new VendingMachineEjectMessage(selectedItem.Type, selectedItem.ID));
+            // 🌟Starlight🌟 Use non-predicted message so that the server processes the vend
+            SendMessage(new VendingMachineEjectMessage(selectedItem.Type, selectedItem.ID));
         }
 
         protected override void Dispose(bool disposing)

@@ -101,7 +101,7 @@
   components:
     - type: RuleGrids
     - type: LoadMapRule
-      gridPath: /Maps/_Starlight/Shuttles/ERTShuttle.yml
+      gridPath: /Maps/_Starlight/Shuttles/CC-NT/ERTShuttle.yml
 
       #Pig's DS Shuttle
 - type: entity
@@ -110,7 +110,7 @@
   components:
     - type: RuleGrids
     - type: LoadMapRule
-      gridPath: /Maps/_Starlight/Shuttles/DSshuttle.yml
+      gridPath: /Maps/_Starlight/Shuttles/CC-NT/DSshuttle.yml
 
       #Pig's RadioTower
 - type: entity
@@ -129,7 +129,7 @@
   components:
     - type: RuleGrids
     - type: LoadMapRule
-      gridPath: /Maps/_Starlight/Shuttles/CBURN.yml
+      gridPath: /Maps/_Starlight/Shuttles/CC-NT/CBURN.yml
 
 # Karma's Quantum Ark Shuttles
 - type: entity
@@ -175,14 +175,23 @@
     - type: LoadMapRule
       mapPath: /Maps/_Starlight/EventMaps/research_outpost_map.yml
 
-#Quini's CBURN Shuttle
+# Quini's CBURN Shuttle
 - type: entity
   parent: BaseGameRule
   id: CBURNShuttleSpawn_Q
   components:
     - type: RuleGrids
     - type: LoadMapRule
-      gridPath: /Maps/_Starlight/Shuttles/CBURN_Q.yml
+      gridPath: /Maps/_Starlight/Shuttles/CC-NT/CBURN_Q.yml
+
+# Security Shuttle
+- type: entity
+  parent: BaseGameRule
+  id: SecurityShuttleSpawn_SP-4C3
+  components:
+    - type: RuleGrids
+    - type: LoadMapRule
+      gridPath: /Maps/_Starlight/Shuttles/Security/SP-4C3.yml
 
 # Roundender-less events table for survival
 - type: entityTable

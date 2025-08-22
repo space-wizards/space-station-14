@@ -46,3 +46,11 @@
         components:
         - SecretStash
     - type: StationAIShunt # allow shunting into this brain.
+    - type: LanguageSpeaker
+    - type: LanguageKnowledge
+      speaks:
+      - GalacticCommon
+      - Machine
+      understands:
+      - GalacticCommon
+      - Machine

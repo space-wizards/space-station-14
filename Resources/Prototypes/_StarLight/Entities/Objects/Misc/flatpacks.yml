@@ -6,7 +6,11 @@
   components:
   - type: Flatpack
     entity: PrinterDoc
-    
+  # Starlight-start: Vending Machines Prices
+  - type: ItemPrice
+    fallbackPrice: 0
+  # Starlight-end
+
 - type: entity
   parent: BaseFlatpack
   id: KitchenOvenFlatpack

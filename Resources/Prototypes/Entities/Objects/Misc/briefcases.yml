@@ -16,6 +16,10 @@
     damage:
       types:
         Blunt: 8
+  # Starlight-start: Vending Machines Prices
+  - type: ItemPrice
+    priceCategory: clothing
+  # Starlight-end
 
 - type: entity
   parent: BriefcaseBase

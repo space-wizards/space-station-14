@@ -11,6 +11,7 @@ using Content.Shared.StationRecords;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Containers;
 using Robust.Shared.Prototypes;
+using Content.Shared.Chat; // Starlight
 
 namespace Content.Server.Delivery;
 
@@ -52,7 +53,7 @@ public sealed partial class DeliverySystem : SharedDeliverySystem
         if (_station.GetStationInMap(Transform(ent).MapID) is not { } stationId)
             return;
 
-        if (!_records.TryGetRandomRecord<GeneralStationRecord>(stationId, out var entry))
+        if (!_records.TryGetRandomRecord<GeneralStationRecord>(stationId, out var entry) || ent.Comp.SystemDeliverySpawn) // Starlight-edit
             return;
 
         ent.Comp.RecipientName = entry.Name;

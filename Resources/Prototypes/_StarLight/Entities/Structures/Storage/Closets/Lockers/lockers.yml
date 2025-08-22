@@ -37,7 +37,9 @@
     stateDoorClosed: warden_door
   - type: AccessReader
     access: [["Armory"]]
-
+  - type: WiresPanelSecurity
+    securityLevel: medSecurity
+  
 # Brigmedic
 - type: entity
   id: LockerBrigmedicLarge
@@ -67,6 +69,8 @@
     stateDoorClosed: bssecure_door
   - type: AccessReader
     access: [ [ "BlueShield" ] ]
+  - type: WiresPanelSecurity
+    securityLevel: medSecurity
 
 # Salvage Lead
 - type: entity

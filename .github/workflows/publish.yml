@@ -51,7 +51,7 @@ jobs:
 
   update-changelog:
     name: Publish Changelogs
-    needs: build
+#    needs: build
     runs-on: ubuntu-latest
     environment: prod
     steps:

@@ -1,0 +1,52 @@
+- type: entity
+  categories: [ HideSpawnMenu ]
+  id: TranslatorUnpowered
+  parent: BaseItem
+  name: translator
+  description: Translates speech.
+  components:
+  - type: Sprite
+    sprite: _Starlight/Objects/Devices/translator.rsi
+    state: icon
+    layers:
+      - state: icon
+      - state: translator
+        shader: unshaded
+        visible: false
+        map: [ "enum.ToggleableVisuals.Layer", "enum.PowerDeviceVisualLayers.Powered" ]
+  - type: Appearance
+  - type: GenericVisualizer
+    visuals:
+      enum.ToggleableVisuals.Enabled:
+        enum.ToggleableVisuals.Layer:
+          True: { visible: true }
+          False: { visible: false }
+  - type: HandheldTranslator
+    enabled: false
+  - type: Clothing
+    slots: [neck]
+
+- type: entity
+  id: TranslatorPoweredBase
+  parent: [ TranslatorUnpowered, PowerCellSlotMediumItem ]
+  components:
+  - type: ItemToggle
+  - type: PowerCellDraw
+    drawRate: 1
+  - type: ItemSlots
+    slots:
+      cell_slot:
+        name: power-cell-slot-component-slot-name-default
+
+- type: entity
+  categories: [ HideSpawnMenu ]
+  id: Translator
+  parent: [ PowerCellSlotMediumItem, TranslatorPoweredBase ]
+  suffix: Powered
+
+- type: entity
+  categories: [ HideSpawnMenu ]
+  id: TranslatorForeigner
+  parent: [ PowerCellSlotHighItem, TranslatorPoweredBase ]
+  name: foreigner's translator
+  description: A special-issue translator that helps foreigner's speak and understand this station's primary language.

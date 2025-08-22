@@ -5,6 +5,13 @@
   id: BaseMobAvali
   abstract: true
   components:
+    - type: LanguageKnowledge
+      speaks:
+      - GalacticCommon
+      - Scratch
+      understands:
+      - GalacticCommon
+      - Scratch
     - type: Tag
       tags:
         - CanPilot

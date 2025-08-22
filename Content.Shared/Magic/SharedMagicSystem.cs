@@ -523,8 +523,8 @@ public abstract class SharedMagicSystem : EntitySystem
             _mind.TransferTo(tarMind, ev.Performer);
         }
 
-        _stun.TryParalyze(ev.Target, ev.TargetStunDuration, true);
-        _stun.TryParalyze(ev.Performer, ev.PerformerStunDuration, true);
+        _stun.TryUpdateParalyzeDuration(ev.Target, ev.TargetStunDuration);
+        _stun.TryUpdateParalyzeDuration(ev.Performer, ev.PerformerStunDuration);
     }
 
     #region Starlight
@@ -536,8 +536,10 @@ public abstract class SharedMagicSystem : EntitySystem
 
         // try to put item in hand, otherwise it goes on the ground
         var star = Spawn(ev.Spawned, Transform(user).Coordinates);
-        _hands.TryPickupAnyHand(user, star);
-
+        if (IsClientSide(star))
+            Del(star);//event has a tendency to produce client-sided cheese... this cleans those up...
+        else
+            _hands.TryPickupAnyHand(user, star);
         ev.Handled = true;
     }
     #endregion

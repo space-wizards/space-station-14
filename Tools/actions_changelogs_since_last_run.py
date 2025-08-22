@@ -20,7 +20,7 @@ DEBUG_CHANGELOG_FILE_OLD = Path("Resources/Changelog/Old.yml")
 GITHUB_API_URL = os.environ.get("GITHUB_API_URL", "https://api.github.com")
 
 DISCORD_WEBHOOK_URL = os.environ.get("DISCORD_WEBHOOK_URL")
-DISCORD_CHANGELOG_ROLE_ID = 1308143973684088883
+DISCORD_CHANGELOG_ROLE_ID = int(os.environ.get("DISCORD_CHANGELOG_ROLE_ID", "1308143973684088883"))
 
 CHANGELOG_FILE = "Resources/Changelog/ChangelogStarlight.yml"
 TYPES_TO_EMOJI = {"Fix": "🐛", "Add": "🆕", "Remove": "❌", "Tweak": "⚒️"}
@@ -51,7 +51,7 @@ def main():
         print("No new entries to report.")
         return
 
-    ping_role_once(DISCORD_CHANGELOG_ROLE_ID)
+    ping_role_once(str(DISCORD_CHANGELOG_ROLE_ID))
 
     pr_groups = group_entries_by_pr(new_entries)
     for pr_id, entries in pr_groups.items():
@@ -179,9 +179,9 @@ def build_embed_for_pr(pr_id: str, entries: list[ChangelogEntry]) -> dict[str, A
     embed: dict[str, Any] = {
         "title": title,
         "description": description,
-        "fields": [
-            {"name": "Author(s)", "value": author_field[:EMBED_FIELD_VALUE_LIMIT], "inline": False}
-        ],
+  #      "fields": [
+  #          {"name": "Author(s)", "value": author_field[:EMBED_FIELD_VALUE_LIMIT], "inline": False}
+  #      ],
         "footer": {"text": "Starlight changelog"},
         "timestamp": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()),
     }
