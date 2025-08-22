@@ -58,7 +58,7 @@
     proto: OxygenBreatherFiberEater
   storage:
     back:
-    - BoxSurvivalMoth
+    - BoxSurvivalFiber
 
 # Clown
 - type: loadout
@@ -86,7 +86,7 @@
     proto: OxygenBreatherFiberEater
   storage:
     back:
-    - BoxHugMoth
+    - BoxHugFiber
 
 # Mime
 - type: loadout
@@ -114,7 +114,7 @@
     proto: OxygenBreatherFiberEater
   storage:
     back:
-    - BoxMimeMoth
+    - BoxMimeFiber
 
 # Engineering / Extended
 - type: loadout
@@ -142,7 +142,7 @@
     proto: OxygenBreatherFiberEater
   storage:
     back:
-    - BoxSurvivalEngineeringMoth
+    - BoxSurvivalEngineeringFiber
 
 # Medical
 - type: loadout
@@ -170,7 +170,7 @@
     proto: OxygenBreatherFiberEater
   storage:
     back:
-    - BoxSurvivalMedicalMoth
+    - BoxSurvivalMedicalFiber
 
 # Security
 - type: loadout
@@ -198,7 +198,7 @@
     proto: OxygenBreatherFiberEater
   storage:
     back:
-    - BoxSurvivalSecurityMoth
+    - BoxSurvivalSecurityFiber
 
 # Syndicate
 - type: loadout
@@ -226,7 +226,7 @@
     proto: OxygenBreatherFiberEater
   storage:
     back:
-    - BoxSurvivalSyndicateMoth
+    - BoxSurvivalSyndicateFiber
 
 # Pre-equipped species gear
 
