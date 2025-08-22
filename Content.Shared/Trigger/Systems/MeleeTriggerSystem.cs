@@ -18,10 +18,19 @@ public sealed class MeleeTriggerSystem : EntitySystem
 
     private void OnTrigger(Entity<TriggerOnMeleeHitComponent> ent, ref MeleeHitEvent args)
     {
-        if (args.HitEntities.Count == 0 && ent.Comp.Mode != TriggerOnMeleeHitMode.OnceOnSwing)
+        // Return if we're a "hit" mode and hit nothing
+        if (args.HitEntities.Count == 0 && ent.Comp.Mode is TriggerOnMeleeHitMode.OnceOnHit or TriggerOnMeleeHitMode.EveryHit)
             return;
 
-        if (ent.Comp.Mode is TriggerOnMeleeHitMode.OnceOnSwing
+        if (args.HitEntities.Count == 0 && ent.Comp.Mode == TriggerOnMeleeHitMode.OnMiss)
+        {
+            // You missed! Hope this trigger doesn't do something bad to you.
+            _trigger.Trigger(ent.Owner, args.User, ent.Comp.KeyOut);
+            return;
+        }
+
+        // Single trigger modes
+        if (ent.Comp.Mode is TriggerOnMeleeHitMode.OnSwing
                           or TriggerOnMeleeHitMode.OnceOnHit )
         {
             var target = ent.Comp.TargetIsUser ? args.HitEntities.FirstOrDefault() : args.User;

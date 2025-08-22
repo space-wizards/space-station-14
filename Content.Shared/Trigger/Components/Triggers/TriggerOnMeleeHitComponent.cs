@@ -29,9 +29,14 @@ public sealed partial class TriggerOnMeleeHitComponent : BaseTriggerOnXComponent
 public enum TriggerOnMeleeHitMode
 {
     /// <summary>
+    /// One trigger is created only when nothing is hit.
+    /// </summary>
+    OnMiss,
+
+    /// <summary>
     /// One trigger is always created when swinging the weapon.
     /// </summary>
-    OnceOnSwing,
+    OnSwing,
 
     /// <summary>
     /// One trigger is created only when hitting a target.
