@@ -34,7 +34,6 @@ public sealed partial class SpeedModifierContactsComponent : Component
     [DataField]
     public EntityWhitelist? IgnoreWhitelist;
 
-    // В SpeedModifierContactsComponent добавьте:
     /// <summary>
     /// If any entities occupy the blacklist on the same tile then speed modifier will not apply.
     /// </summary>
