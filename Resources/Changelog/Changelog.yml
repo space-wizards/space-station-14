@@ -1,41 +1,4 @@
 ﻿Entries:
-- author: Nox38
-  changes:
-  - message: Added descriptions for the .30 caliber and weapons.
-    type: Add
-  id: 8360
-  time: '2025-04-26T21:48:40.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/36958
-- author: UpAndLeaves
-  changes:
-  - message: The CMO's hardsuit has been redesigned with extra durathread to withstand
-      zombie bites more effectively.
-    type: Tweak
-  id: 8361
-  time: '2025-04-26T21:49:01.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/36957
-- author: Centronias
-  changes:
-  - message: Parcel wrap, purchasable from cargo, which allows you to wrap items in
-      paper so you can give people surprise gifts... like bombs.
-    type: Add
-  id: 8362
-  time: '2025-04-26T23:24:25.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/34471
-- author: TiniestShark
-  changes:
-  - message: Inhand sprites for (most) ammo mags and speedloaders.
-    type: Add
-  id: 8363
-  time: '2025-04-26T23:36:01.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/34235
-- author: UpAndLeaves
-  changes:
-  - message: Due to recent budget improvements, science now gets custom bio suit lockers.
-    type: Add
-  id: 8364
-  time: '2025-04-26T23:45:10.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/36929
 - author: ScarKy0
   changes:
   - message: Deliveries can now spawn as priority-type! Deliver them within their
@@ -3950,3 +3913,39 @@
   id: 8872
   time: '2025-08-20T11:08:31.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/39648
+- author: Kowlin
+  changes:
+  - message: Fixed Syndicate tricky grenades not playing sounds on explosion.
+    type: Fix
+  id: 8873
+  time: '2025-08-20T23:34:40.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/39792
+- author: TrixxedHeart
+  changes:
+  - message: Added the Impaired Mobility disability trait which reduces movement speed
+      unless using a mobility aid such as a cane and increases stand-up time.
+    type: Add
+  id: 8874
+  time: '2025-08-21T00:43:06.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/39398
+- author: TheFlyingSentry
+  changes:
+  - message: 'Added a new trait: Hemophilia!'
+    type: Add
+  id: 8875
+  time: '2025-08-21T01:02:54.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38224
+- author: DinnerCalzone
+  changes:
+  - message: Fixed more grenades not playing sounds on explosion.
+    type: Fix
+  id: 8876
+  time: '2025-08-22T10:04:29.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/39815
+- author: Alkheemist
+  changes:
+  - message: Added stencil lettering decals to the spraypainter.
+    type: Add
+  id: 8877
+  time: '2025-08-22T10:11:07.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/39701
