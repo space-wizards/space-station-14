@@ -12,6 +12,7 @@
     speciesId: vulpkanin
   - type: Thirst
   - type: MessyDrinker
+    spillChance: 0.25
   - type: Icon
     sprite: Mobs/Species/Vulpkanin/parts.rsi
     state: full
@@ -45,12 +46,12 @@
         Cold: 0.05 # Per second, scales with temperature & other constants
     heatDamage:
       types:
-        Heat: 2 # Per second, scales with temperature & other constants
+        Heat: 2.5 # Per second, scales with temperature & other constants
   - type: Wagging
     action: ActionToggleVulpakinWagging
   - type: TemperatureProtection
     heatingCoefficient: 1.2
-    coolingCoefficient: 0.50
+    coolingCoefficient: 0.3
   - type: JumpAbility
     action: ActionVulpkaninGravityJump
     canCollide: true
