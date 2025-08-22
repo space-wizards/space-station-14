@@ -505,15 +505,15 @@
         emptyRepresentative: InflatableDoorStack
         emptyLabel: borg-slot-inflatable-door-empty
         whitelist:
-          components:
-          - InflatableSafeDisassembly
+          tags:
+          - Inflatable
     - item: InflatableWallStack
       hand:
         emptyRepresentative: InflatableWallStack
         emptyLabel: borg-slot-inflatable-wall-empty
         whitelist:
-          components:
-          - InflatableSafeDisassembly
+          tags:
+          - Inflatable
     - item: BoxInflatable
     - item: WeaponMeleeNeedle
   - type: BorgModuleIcon
