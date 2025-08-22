@@ -172,6 +172,28 @@
       "name": "energybar-trash"
     },
     {
+      "name": "fabbrick"
+    },
+    {
+      "name": "fabbrick-inhand-right",
+      "directions": 4
+    },
+    {
+      "name": "fabbrick-inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "fabbrick-open"
+    },
+    {
+      "name": "fabbrick-open-inhand-right",
+      "directions": 4
+    },
+    {
+      "name": "fabbrick-open-inhand-left",
+      "directions": 4
+    },
+    {
       "name": "mre-brownie"
     },
     {
