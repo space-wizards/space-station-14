@@ -12345,5 +12345,12 @@ Entries:
   id: 143600
   time: '2025-08-22T21:46:58.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/1436
+- author: Happyrobot33
+  changes:
+  - message: Attempted fix for RSI error on emote wheel.
+    type: Fix
+  id: 143400
+  time: '2025-08-22T21:55:06.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1434
 Order: -1
 
