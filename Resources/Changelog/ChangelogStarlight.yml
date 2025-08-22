@@ -12317,5 +12317,12 @@ Entries:
   id: 141801
   time: '2025-08-22T14:40:34.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/1418
+- author: Rinary
+  changes:
+  - message: Fixed bug when you take double items when cooking something.
+    type: Fix
+  id: 136900
+  time: '2025-08-22T14:43:43.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1369
 Order: -1
 
