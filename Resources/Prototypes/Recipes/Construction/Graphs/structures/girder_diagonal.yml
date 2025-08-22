@@ -51,7 +51,7 @@
               amount: 1
               doAfter: 1
 
-    - node: wall
+    - node: wallDiagonal
       entity: WallSolidDiagonal
       edges:
         - to: girderDiagonal
