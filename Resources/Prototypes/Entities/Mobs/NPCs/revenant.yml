@@ -6,6 +6,8 @@
   name: revenant
   description: A spooky ghostie.
   components:
+  - type: Emag
+    emagType: All
   - type: Input
     context: "ghost"
   - type: Spectral
@@ -18,7 +20,6 @@
     - state: active
   - type: StatusEffects
     allowed:
-    - Stun
     - Corporeal
   - type: Damageable
     damageContainer: ManifestedSpirit
@@ -81,3 +82,7 @@
   - type: Reactive
     groups:
       Acidic: [Touch]
+  - type: Tag
+    tags:
+    - SlowImmune
+    - KnockdownImmune

@@ -6,19 +6,19 @@ using Robust.Shared.Console;
 namespace Content.Server.Chat.Commands
 {
     [AdminCommand(AdminFlags.Adminchat)]
-    internal sealed class AdminChatCommand : IConsoleCommand
+    internal sealed class AdminChatCommand : LocalizedCommands
     {
-        public string Command => "asay";
-        public string Description => "Send chat messages to the private admin chat channel.";
-        public string Help => "asay <text>";
+        [Dependency] private readonly IChatManager _chatManager = default!;
 
-        public void Execute(IConsoleShell shell, string argStr, string[] args)
+        public override string Command => "asay";
+
+        public override void Execute(IConsoleShell shell, string argStr, string[] args)
         {
             var player = shell.Player;
 
             if (player == null)
             {
-                shell.WriteError("You can't run this command locally.");
+                shell.WriteError(Loc.GetString($"shell-cannot-run-command-from-server"));
                 return;
             }
 
@@ -29,7 +29,7 @@ namespace Content.Server.Chat.Commands
             if (string.IsNullOrEmpty(message))
                 return;
 
-            IoCManager.Resolve<IChatManager>().TrySendOOCMessage(player, message, OOCChatType.Admin);
+            _chatManager.TrySendOOCMessage(player, message, OOCChatType.Admin);
         }
     }
 }

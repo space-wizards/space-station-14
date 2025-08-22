@@ -1,0 +1,46 @@
+{
+    "version": 1,
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "license": "CC-BY-SA-3.0",
+    "copyright": "Sprites by TaoNewt (github)",
+    "states": [
+        {
+        "name": "full"
+        },
+        {
+            "name": "card0",
+        "directions": 4
+        },
+        {
+            "name": "card1",
+        "directions": 4
+        },
+        {
+            "name": "card2",
+        "directions": 4
+        },
+        {
+            "name": "card3",
+        "directions": 4
+        },
+        {
+            "name": "card4",
+        "directions": 4
+        },
+        {
+            "name": "card5",
+        "directions": 4
+        },
+        {
+            "name": "card6",
+        "directions": 4
+        },
+        {
+            "name": "card7",
+        "directions": 4
+        }
+    ]
+}

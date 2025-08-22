@@ -70,14 +70,13 @@ public sealed partial class ExplosionSystem : SharedExplosionSystem
     ///     find errors. However some components, like rogue arrows, or some commands like the admin-smite need to have
     ///     a "default" option specified outside of yaml data-fields. Hence this const string.
     /// </remarks>
-    [ValidatePrototypeId<ExplosionPrototype>]
-    public const string DefaultExplosionPrototypeId = "Default";
+    public static readonly ProtoId<ExplosionPrototype> DefaultExplosionPrototypeId = "Default";
 
     public override void Initialize()
     {
         base.Initialize();
 
-        DebugTools.Assert(_prototypeManager.HasIndex<ExplosionPrototype>(DefaultExplosionPrototypeId));
+        DebugTools.Assert(_prototypeManager.HasIndex(DefaultExplosionPrototypeId));
 
         // handled in ExplosionSystem.GridMap.cs
         SubscribeLocalEvent<GridRemovalEvent>(OnGridRemoved);
@@ -167,7 +166,7 @@ public sealed partial class ExplosionSystem : SharedExplosionSystem
             user);
 
         if (explosive.DeleteAfterExplosion ?? delete)
-            EntityManager.QueueDeleteEntity(uid);
+            QueueDel(uid);
     }
 
     /// <summary>
@@ -306,10 +305,9 @@ public sealed partial class ExplosionSystem : SharedExplosionSystem
             return;
         }
 
-        var boom = new QueuedExplosion()
+        var boom = new QueuedExplosion(type)
         {
             Epicenter = epicenter,
-            Proto = type,
             TotalIntensity = totalIntensity,
             Slope = slope,
             MaxTileIntensity = maxTileIntensity,

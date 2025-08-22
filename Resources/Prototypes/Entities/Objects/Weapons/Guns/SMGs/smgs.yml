@@ -8,6 +8,8 @@
   - type: Sprite
   - type: Item
     size: Large
+    shape:
+    - 0,0,2,1
   - type: Clothing
     sprite: Objects/Weapons/Guns/SMGs/atreides.rsi
     quickEquip: false
@@ -118,6 +120,8 @@
     steps: 6
     zeroVisible: true
   - type: Appearance
+  - type: StaticPrice
+    price: 5000
 
 - type: entity
   name: Drozd
@@ -180,7 +184,7 @@
 
 - type: entity
   name: WT550
-  parent: [ BaseWeaponSubMachineGun, BaseSecurityContraband ]
+  parent: [BaseWeaponSubMachineGun, BaseSecurityContraband]
   id: WeaponSubMachineGunWt550
   description: A truly unique firearm, the WT550 was designed by Nanotrasen's Small Arms Division as a compact submachine gun fully controllable with one hand. It contains an exotic internal recoil buffer and feeds from special top-mounted .35 magazines.
   components:

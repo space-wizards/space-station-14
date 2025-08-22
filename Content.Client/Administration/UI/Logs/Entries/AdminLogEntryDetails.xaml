@@ -1,0 +1,44 @@
+﻿<BoxContainer xmlns="https://spacestation14.io"
+          xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+          xmlns:cc="clr-namespace:Content.Client.Administration.UI.CustomControls"
+          xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
+          StyleClasses="BackgroundDark">
+     <BoxContainer Orientation="Vertical" Margin="4">
+        <BoxContainer Orientation="Vertical">
+            <Label Text="{Loc admin-logs-field-type}" Margin="0 0 4 0"/>
+            <Label Name="Type" Text="None" StyleClasses="LabelSecondaryColor" Access="Public"/>
+        </BoxContainer>
+        <cc:HSeparator/>
+        <BoxContainer Orientation="Vertical">
+            <Label Text="{Loc admin-logs-field-impact}" Margin="0 0 4 0"/>
+            <Label Name="Impact" Text="None" StyleClasses="LabelSecondaryColor" Access="Public"/>
+        </BoxContainer>
+    </BoxContainer>
+    <cc:VSeparator/>
+    <BoxContainer Orientation="Vertical" Margin="4">
+        <Label Text="{Loc admin-logs-field-time-header}"/>
+        <cc:HSeparator/>
+        <BoxContainer>
+            <Label Text="{Loc admin-logs-field-time-local}" Margin="0 0 4 0" HorizontalExpand="True"/>
+            <Label Name="LocalTime" Text="None" StyleClasses="LabelSecondaryColor" Access="Public" HorizontalExpand="True"/>
+        </BoxContainer>
+        <cc:HSeparator/>
+        <BoxContainer Orientation="Horizontal">
+            <Label Text="{Loc admin-logs-field-time-utc}" Margin="0 0 4 0" HorizontalExpand="True"/>
+            <Label Name="UTCTime" Text="None" StyleClasses="LabelSecondaryColor" Access="Public" HorizontalExpand="True"/>
+        </BoxContainer>
+        <cc:HSeparator/>
+        <BoxContainer Orientation="Horizontal">
+            <Label Text="{Loc admin-logs-field-time-round}" Margin="0 0 4 0" HorizontalExpand="True"/>
+            <Label Name="CurTime" Text="None" StyleClasses="LabelSecondaryColor" Access="Public" HorizontalExpand="True"/>
+        </BoxContainer>
+    </BoxContainer>
+    <cc:VSeparator/>
+    <BoxContainer Orientation="Vertical" Margin="4" HorizontalExpand="True">
+        <Label Text="{Loc admin-logs-field-players-header}"/>
+        <cc:HSeparator/>
+        <BoxContainer Orientation="Horizontal" Margin="4" VerticalExpand="True">
+            <controls:ListContainer Name="PlayerListContainer" Access="Public" HorizontalExpand="True"/>
+        </BoxContainer>
+    </BoxContainer>
+</BoxContainer>

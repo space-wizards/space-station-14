@@ -1091,6 +1091,136 @@
 
 - type: entity
   parent: BaseWall
+  id: WallSolidChitin
+  name: solid chitin
+  components:
+  - type: Tag
+    tags:
+      - Wall
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 400
+      behaviors:
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalSlam
+    - trigger:
+        !type:DamageTrigger
+        damage: 200
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalSlam
+      - !type:ChangeConstructionNodeBehavior
+        node: girder
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+  - type: Sprite
+    sprite: Structures/Walls/xeno.rsi
+  - type: Icon
+    sprite: Structures/Walls/xeno.rsi
+  - type: IconSmooth
+    key: chitin
+    base: solid
+  - type: Construction
+    graph: Girder
+    node: wallChitin
+  - type: RCDDeconstructable
+    cost: 6
+    delay: 8
+    fx: EffectRCDDeconstruct8
+
+- type: entity
+  parent: BaseWall
+  id: WallReinforcedChitin
+  name: reinforced chitin
+  components:
+  - type: Sprite
+    sprite: Structures/Walls/xeno.rsi
+  - type: Icon
+    sprite: Structures/Walls/xeno.rsi
+    state: rgeneric
+  - type: Damageable
+    damageContainer: StructuralInorganic
+    damageModifierSet: StructuralMetallicStrong
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 600
+      behaviors:
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalSlam
+    - trigger:
+        !type:DamageTrigger
+        damage: 400
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalSlam
+      - !type:ChangeConstructionNodeBehavior
+        node: girder
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+  - type: Appearance
+  - type: GenericVisualizer
+    visuals:
+      enum.ReinforcedWallVisuals.DeconstructionStage:
+        ReinforcedWallVisualLayers.Deconstruction:
+          -1: { visible: false }
+          0: { state: reinf_construct-0, visible: true}
+          1: { state: reinf_construct-1, visible: true}
+          2: { state: reinf_construct-2, visible: true}
+          3: { state: reinf_construct-3, visible: true}
+          4: { state: reinf_construct-4, visible: true}
+          5: { state: reinf_construct-5, visible: true}
+  - type: StaticPrice
+    price: 250
+  - type: RadiationBlocker
+    resistance: 5
+  - type: IconSmooth
+    key: chitin
+    base: reinf_over
+  - type: Construction
+    graph: Girder
+    node: reinforcedWallChitin
+
+- type: entity
+  parent: WallPlastitanium
+  id: WallXenoborg
+  name: xenoborg wall
+  components:
+  - type: Sprite
+    sprite: Structures/Walls/xenoborg.rsi
+  - type: Icon
+    sprite: Structures/Walls/xenoborg.rsi
+  - type: IconSmooth
+    key: walls
+    base: xenoborg
+
+- type: entity
+  parent: WallPlastitaniumDiagonal
+  id: WallXenoborgDiagonal
+  name: xenoborg wall
+  suffix: diagonal
+  components:
+  - type: Sprite
+    drawdepth: Walls
+    sprite: Structures/Walls/xenoborg_diagonal.rsi
+    state: state0
+  - type: Icon
+    sprite: Structures/Walls/xenoborg_diagonal.rsi
+    state: state0
+
+- type: entity
+  parent: BaseWall
   id: WallUranium
   name: uranium wall
   components:
@@ -1525,3 +1655,74 @@
   - type: IconSmooth
     key: cobblebricks
     base: cobblebrick
+
+# Cardboard
+
+- type: entity
+  id: Cardwall
+  parent: BaseStructure
+  name: cardboard wall
+  description: Budget cuts are hitting hard.
+  placement:
+    mode: SnapgridCenter
+    snap:
+    - Wall
+  components:
+  - type: MeleeSound
+    soundGroups:
+      Brute:
+        path:
+          "/Audio/Weapons/pierce.ogg"
+  - type: Tag
+    tags:
+    - Wall
+  - type: Sprite
+    drawdepth: SmallObjects #so bullets pass 'through'
+    sprite: Structures/Walls/card.rsi
+  - type: Icon
+    sprite: Structures/Walls/card.rsi
+    state: full
+  - type: Construction
+    graph: Cardwall
+    node: cardwall
+    deconstructionTarget: start
+  - type: Damageable
+    damageContainer: StructuralInorganic
+    damageModifierSet: Card
+  - type: Physics
+    bodyType: Static
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.5,-0.5,0.5,0.5"
+        mask:
+        - FullTileMask
+        layer:
+        - FlimsyLayer
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 80 #excess damage (nuke?). avoid computational cost of spawning entities.
+      behaviors:
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+    - trigger:
+        !type:DamageTrigger
+        damage: 40
+      behaviors:
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          MaterialCardboard:
+            min: 1
+            max: 2
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+  - type: IconSmooth
+    key: cards
+    base: card
+  - type: Occluder
+  - type: BlockWeather
+  - type: SunShadowCast
