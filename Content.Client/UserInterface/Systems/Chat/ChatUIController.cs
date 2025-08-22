@@ -17,6 +17,7 @@ using Content.Client.UserInterface.Systems.Chat.Widgets;
 using Content.Client.UserInterface.Systems.Gameplay;
 using Content.Shared.Administration;
 using Content.Shared.CCVar;
+using Content.Shared.Eye;
 using Content.Shared.Chat;
 using Content.Shared.Damage.ForceSay;
 using Content.Shared.Decals;
@@ -881,6 +882,11 @@ public sealed partial class ChatUIController : UIController
 
             case ChatChannel.Dead:
                 if (_ghost is not {IsGhost: true})
+                if (_ghost is not {IsGhost: true} &&
+                    (EntityManager.TryGetComponent<EyeComponent>(
+                        _player.LocalPlayer?.ControlledEntity,
+                        out var eyeComp) &&
+                     (eyeComp.VisibilityMask & (int)VisibilityFlags.Ghost) == 0))
                     break;
 
                 AddSpeechBubble(msg, SpeechBubble.SpeechType.Say);
