@@ -1369,3 +1369,17 @@
   canBuildInImpassable: false
   conditions:
     - !type:TileNotBlocked
+
+- type: construction
+  id: ShuttleWindowDiagonal
+  name: construction-recipe-shuttle-window-diagonal
+  graph: WindowDiagonal
+  startNode: start
+  targetNode: shuttleWindowDiagonal
+  category: construction-category-structures
+  canBuildInImpassable: true
+  conditions:
+    - !type:EmptyOrWindowValidInTile
+    - !type:NoWindowsInTile
+  objectType: Structure
+  placementMode: SnapgridCenter
