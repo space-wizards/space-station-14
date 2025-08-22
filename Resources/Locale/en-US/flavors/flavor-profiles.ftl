@@ -142,6 +142,7 @@ flavor-complex-borsch-5 = like borscht
 flavor-complex-mre-brownie = like a cheap brownie
 flavor-complex-fortune-cookie = like random chance
 flavor-complex-nutribrick = like you're operating in a jungle
+flavor-complex-fabbrick = like cheap cotton
 flavor-complex-cheap-noodles = like cheap noodles
 flavor-complex-syndi-cakes = like a hearty fruit cake
 flavor-complex-sus-jerky = like sus

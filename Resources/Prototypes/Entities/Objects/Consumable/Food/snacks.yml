@@ -475,6 +475,48 @@
           Quantity: 20
 
 - type: entity
+  id: FoodSnackFabBrick
+  parent: FoodSnackNutribrick
+  name: fab-brick
+  description: A highly compressed bolt of fabric designed to contain the densest ratio of fiber to volume. Tastes like shit.
+  components:
+  - type: Item
+    heldPrefix: fabbrick
+  - type: Sprite
+    sprite: Objects/Consumable/Food/snacks.rsi
+    state: fabbrick
+  - type: SpawnItemsOnUse
+    items:
+      - id: FoodPacketMRETrash
+      - id: FoodSnackFabBrickOpen
+
+- type: entity
+  id: FoodSnackFabBrickOpen
+  parent: FoodSnackNutribrickOpen
+  name: fab-brick
+  description: A highly compressed bolt of fabric designed to contain the densest ratio of fiber to volume. Tastes like shit.
+  components:
+  - type: FlavorProfile
+    flavors:
+      - fabbrick
+  - type: Item
+    heldPrefix: fabbrick-open
+  - type: Tag
+    tags:
+      - ClothMade
+  - type: Sprite
+    state: fabbrick-open
+  - type: Food
+    requiresSpecialDigestion: true
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 25
+        reagents:
+        - ReagentId: Fiber
+          Quantity: 20
+
+- type: entity
   id: FoodSnackMREBrownie
   parent: BaseItem
   name: brownie
@@ -845,18 +887,8 @@
   name: MRE wrapper
   description: A general purpose wrapper for a variety of military food goods.
   components:
-  - type: Food
-    requiresSpecialDigestion: true
-  - type: SolutionContainerManager
-    solutions:
-      food:
-        maxVol: 45
-        reagents:
-        - ReagentId: Fiber
-          Quantity: 40
   - type: Tag
     tags:
-    - ClothMade
     - Trash
   - type: Sprite
     state: mre-wrapper

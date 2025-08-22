@@ -16,8 +16,14 @@
     - Diona
     - Dwarf
     - Human
-    - Moth
     - Reptilian
+
+- type: loadoutEffectGroup
+  id: OxygenBreatherMoth
+  effects:
+  - !type:SpeciesLoadoutEffect
+    species:
+    - Moth
 
 - type: loadoutEffectGroup
   id: EffectSpeciesVox
@@ -37,6 +43,15 @@
     - BoxSurvival
 
 - type: loadout
+  id: EmergencyOxygenMoth
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: OxygenBreatherMoth
+  storage:
+    back:
+    - BoxSurvivalMoth
+
+- type: loadout
   id: EmergencyNitrogen
   effects:
   - !type:GroupLoadoutEffect
@@ -54,6 +69,15 @@
   storage:
     back:
     - BoxHug
+
+- type: loadout
+  id: EmergencyOxygenMothClown
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: OxygenBreatherMoth
+  storage:
+    back:
+    - BoxHugMoth
 
 - type: loadout
   id: EmergencyNitrogenClown
@@ -121,6 +145,15 @@
     - BoxSurvivalEngineering
 
 - type: loadout
+  id: EmergencyOxygenMothExtended
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: OxygenBreatherMoth
+  storage:
+    back:
+    - BoxSurvivalEngineeringMoth
+
+- type: loadout
   id: EmergencyNitrogenExtended
   effects:
   - !type:GroupLoadoutEffect
@@ -138,6 +171,15 @@
   storage:
     back:
     - BoxSurvivalMedical
+
+- type: loadout
+  id: EmergencyOxygenMothMedical
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: OxygenBreatherMoth
+  storage:
+    back:
+    - BoxSurvivalMedicalMoth
 
 - type: loadout
   id: EmergencyNitrogenMedical
@@ -159,6 +201,15 @@
     - BoxSurvivalSecurity
 
 - type: loadout
+  id: EmergencyOxygenMothSecurity
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: OxygenBreatherMoth
+  storage:
+    back:
+    - BoxSurvivalSecurityMoth
+
+- type: loadout
   id: EmergencyNitrogenSecurity
   effects:
   - !type:GroupLoadoutEffect
@@ -176,6 +227,15 @@
   storage:
     back:
     - BoxSurvivalSyndicate
+
+- type: loadout
+  id: EmergencyOxygenMothSyndicate
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: OxygenBreatherMoth
+  storage:
+    back:
+    - BoxSurvivalSyndicateMoth
 
 - type: loadout
   id: EmergencyNitrogenSyndicate
