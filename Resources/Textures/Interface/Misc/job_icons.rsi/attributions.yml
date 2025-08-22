@@ -189,3 +189,10 @@
   license: "CC-BY-SA-3.0"
   copyright: "recoloring by frobnic8 and Erskin Cherry"
   source: "https://github.com/space-wizards/space-station-14/pull/34270"
+
+- files:
+  - Mime.png
+  - Musician.png
+  license: "CC-BY-SA-3.0"
+  copyright: "recoloring by DinnerCalzone at https://github.com/impstation/imp-station-14/commit/233161f02bab7f9f9c03f09f39638ea7c200ee24"
+  source: "https://github.com/space-wizards/space-station-14/pull/39775"
