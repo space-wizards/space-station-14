@@ -1,10 +1,10 @@
 using System.Numerics;
 using Content.Server.Chat.Systems;
 using Content.Server.GameTicking.Rules;
-using Content.Server.Station.Systems;
 using Content.Server.StationEvents.Components;
 using Content.Shared.GameTicking.Components;
 using Content.Shared.Random.Helpers;
+using Content.Shared.Station;
 using Robust.Server.Audio;
 using Robust.Shared.Map;
 using Robust.Shared.Physics.Components;
@@ -19,7 +19,7 @@ public sealed class MeteorSwarmSystem : GameRuleSystem<MeteorSwarmComponent>
     [Dependency] private readonly SharedPhysicsSystem _physics = default!;
     [Dependency] private readonly AudioSystem _audio = default!;
     [Dependency] private readonly ChatSystem _chat = default!;
-    [Dependency] private readonly StationSystem _station = default!;
+    [Dependency] private readonly SharedStationSystem _station = default!;
 
     protected override void Added(EntityUid uid, MeteorSwarmComponent component, GameRuleComponent gameRule, GameRuleAddedEvent args)
     {
@@ -54,8 +54,10 @@ public sealed class MeteorSwarmSystem : GameRuleSystem<MeteorSwarmComponent>
         var mapId = Transform(grid).MapID;
         var playableArea = _physics.GetWorldAABB(grid);
 
-        var minimumDistance = (playableArea.TopRight - playableArea.Center).Length() + 500f; // gotta be far enough for players to react
-        var maximumDistance = minimumDistance + 500f;
+        var playableRadius = (playableArea.TopRight - playableArea.Center).Length();
+
+        var minimumDistance = playableRadius + component.MinMaxDist.Min; // gotta be far enough for players to react
+        var maximumDistance = playableRadius + component.MinMaxDist.Max;
 
         var center = playableArea.Center;
 
