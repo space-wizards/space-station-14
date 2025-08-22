@@ -106,19 +106,24 @@ public sealed class SpeedModifierContactsSystem : EntitySystem
 
                 if (slowContactsComponent.TileBlacklist is not null &&
                     TryComp<TransformComponent>(ent, out var transformEnt) &&
-                    transformEnt.GridUid is {} gridUid &&
+                    transformEnt.GridUid is { } gridUid &&
                     TryComp<MapGridComponent>(gridUid, out var grid))
                 {
                     var tilePos = _mapSystem.LocalToTile(gridUid, grid, transformEnt.Coordinates);
                     var enumerator = _mapSystem.GetAnchoredEntitiesEnumerator(gridUid, grid, tilePos);
 
+                    var foundBlockingEntity = false;
                     while (enumerator.MoveNext(out var tileEntity))
                     {
                         if (_whitelistSystem.IsWhitelistPass(slowContactsComponent.TileBlacklist, tileEntity.Value))
                         {
-                            continue;
+                            foundBlockingEntity = true;
+                            break;
                         }
                     }
+
+                    if (foundBlockingEntity)
+                        continue;
                 }
 
                 walkSpeed += slowContactsComponent.WalkSpeedModifier;
