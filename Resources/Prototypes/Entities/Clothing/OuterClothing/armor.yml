@@ -8,7 +8,7 @@
   parent: [ClothingOuterBaseMedium, AllowSuitStorageClothing, BaseSecurityContraband]
   id: ClothingOuterArmorBase
   name: armor vest
-  description: "A cheap Type-I protective vest, its para-aramid armor offers decent protection against most attacks."
+  description: A cheap Type-I protective vest, its para-aramid armor offers decent protection against most attacks.
   components:
   - type: Sprite
     sprite: Clothing/OuterClothing/Armor/security.rsi
@@ -50,7 +50,7 @@
   parent: ClothingOuterArmorBase
   id: ClothingOuterArmorBulletproof
   name: ballistic vest
-  description: "A Type-III protective vest, its steel plates offer excellent protection against firearms. It has much better coverage than typical vests, covering the shoulders and groin."
+  description: A Type-III protective vest, its steel plates offer excellent protection against firearms. It has much better coverage than typical vests, covering the shoulders and groin.
   components:
   - type: Sprite
     sprite: Clothing/OuterClothing/Armor/bulletproof.rsi
@@ -70,7 +70,7 @@
   parent: ClothingOuterArmorBase
   id: ClothingOuterArmorReflective
   name: reflective vest
-  description: "A NT Type-IV protective vest, its heat-resistant fibers offer excellent protection against energy weapons. Coated in a proprietary compound which reliably deflects laser beams."
+  description: A NT Type-IV protective vest, its heat-resistant fibers offer excellent protection against energy weapons. Coated in a proprietary compound which reliably deflects laser beams.
   components:
   - type: Sprite
     sprite: Clothing/OuterClothing/Armor/armor_reflec.rsi
@@ -94,7 +94,7 @@
   parent: [ClothingOuterArmorBase, BaseSecurityContraband]
   id: ClothingOuterVestDetective
   name: detective's armor vest
-  description: "A cheap Type-I protective vest, its para-aramid armor provides decent protection against most attacks. A gold badge denotes the wearer as a NT security detective.”
+  description: A cheap Type-I protective vest, its para-aramid armor provides decent protection against most attacks. A gold badge denotes the wearer as a NT security detective.
   components:
   - type: Sprite
     sprite: Clothing/OuterClothing/Vests/detvest.rsi
@@ -127,7 +127,7 @@
   parent: [ClothingOuterArmorBaseCarapace, BaseCommandContraband]
   id: ClothingOuterArmorCaptainCarapace
   name: captain's carapace
-  description: "An expensive Type-I laminar cuirass, its unique design offers good protection against most attacks while maintaining mobility and dignity. Blue finish and gold highlights denote the wearer as the captain of a station or ship."
+  description: An expensive Type-I laminar cuirass, its unique design offers good protection against most attacks while maintaining mobility and dignity. Blue finish and gold highlights denote the wearer as the captain of a station or ship.
   components:
   - type: Sprite
     sprite: Clothing/OuterClothing/Armor/captain_carapace.rsi
@@ -142,7 +142,7 @@
   parent: [ClothingOuterArmorBaseCarapace, BaseCentcommContraband]
   id: ClothingOuterArmorCentcommCarapace
   name: CentComm carapace
-  description: "An expensive Type-I laminar cuirass, its unique design offers good protection against most attacks while maintaining mobility and dignity. Green finish and gold highlights denote the wearer as a member of Nanotrasen’s central command."
+  description: An expensive Type-I laminar cuirass, its unique design offers good protection against most attacks while maintaining mobility and dignity. Green finish and gold highlights denote the wearer as a member of Nanotrasen’s central command.
   components:
   - type: Sprite
     sprite: Clothing/OuterClothing/Armor/centcomm_carapace.rsi
@@ -154,7 +154,7 @@
   parent: [ClothingOuterStorageBase, AllowSuitStorageClothing, BaseSyndicateContraband]
   id: ClothingOuterVestWeb
   name: ballistic web vest
-  description: "A Syndicate Type-III plate carrier, its webbing holds steel plates, providing excellent protection against firearms. It's surprisingly compact when folded up, and can store extra equipment in its pockets."
+  description: A Syndicate Type-III plate carrier, its webbing holds steel plates, providing excellent protection against firearms. It's surprisingly compact when folded up, and can store extra equipment in its pockets.
   components:
   - type: Sprite
     sprite: Clothing/OuterClothing/Vests/webvest.rsi
@@ -176,7 +176,7 @@
   parent: [ClothingOuterStorageBase, AllowSuitStorageClothing, BaseSyndicateContraband]
   id: ClothingOuterVestWebElite
   name: elite web vest
-  description: "A Syndicate Type-IV plate carrier, its webbing holds a layer of hazard shielding backed by heat-resistant fibers, providing excellent protection against energy weapons, radiation, and environmental temperature. It's surprisingly compact when folded up, and can store extra equipment in its pockets."
+  description: A Syndicate Type-IV plate carrier, its webbing holds a layer of hazard shielding backed by heat-resistant fibers, providing excellent protection against energy weapons, radiation, and environmental temperature. It's surprisingly compact when folded up, and can store extra equipment in its pockets.
   components:
   - type: Sprite
     sprite: Clothing/OuterClothing/Vests/elitevest.rsi
@@ -205,7 +205,7 @@
   parent: [ BaseMajorContraband, ClothingOuterVestWeb] #web vest so it should have some pockets for ammo
   id: ClothingOuterVestWebMerc
   name: mercenary web vest
-  description: "A high-quality Type-I plate carrier, its webbing holds para-aramid armor, offering good protection against most attacks. It's surprisingly compact when folded up, and can store extra equipment in its pockets."
+  description: A high-quality Type-I plate carrier, its webbing holds para-aramid armor, offering good protection against most attacks. It's surprisingly compact when folded up, and can store extra equipment in its pockets.
   components:
   - type: Sprite
     sprite: Clothing/OuterClothing/Vests/mercwebvest.rsi
@@ -227,7 +227,7 @@
   parent: [ClothingOuterBaseLarge, AllowSuitStorageClothing, BaseSyndicateContraband ]
   id: ClothingOuterArmorRaid
   name: Syndicate raid suit
-  description: "A Syndicate Type-I armor suit, its thick para-aramid armor offers excellent protection against most attacks, but slightly hinders mobility. It's surprisingly compact when folded up, and comes with a powerful shoulder-mounted flashlight. Commonly worn by the Gorlex Marauders on planetside operations."
+  description: A Syndicate Type-I armor suit, its thick para-aramid armor offers excellent protection against most attacks, but slightly hinders mobility. It's surprisingly compact when folded up, and comes with a powerful shoulder-mounted flashlight. Commonly worn by the Gorlex Marauders on planetside operations.
   components:
   - type: Sprite
     sprite: Clothing/OuterClothing/Armor/syndie-raid.rsi
@@ -307,7 +307,7 @@
   parent: [ClothingOuterBaseLarge, AllowSuitStorageClothing, BaseSecurityContraband]
   id: ClothingOuterArmorRiot
   name: riot suit
-  description: "A NT Type-II armor suit, its heavy padding and semi-flexible polycarbonate provides excellent protection in melee encounters, but slightly hinders mobility. Best paired with a NT brand riot helmet."
+  description: A NT Type-II armor suit, its heavy padding and semi-flexible polycarbonate provides excellent protection in melee encounters, but slightly hinders mobility. Best paired with a NT brand riot helmet.
   components:
   - type: Sprite
     sprite: Clothing/OuterClothing/Armor/riot.rsi
