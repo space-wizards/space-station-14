@@ -10,14 +10,15 @@
   - Headphones
   - PlushieLizard
   - PlushieSpaceLizard
-  - ThreeCandles
   - Lighter
+  - CheapLighter
   - CigPackGreen
   - CigPackRed
   - CigPackBlue
   - CigPackBlack
   - CigarCase
   - CigarGold
+  - ThreeCandles
   - ClothingNeckLGBTPin
   - ClothingNeckAllyPin
   - ClothingNeckAromanticPin
@@ -42,6 +43,7 @@
   - OffsetCaneMime
   - OffsetCaneNT
   - Cane
+  - TowelColorWhite
   - TowelColorBlack
   - TowelColorDarkBlue
   - TowelColorDarkGreen
@@ -56,7 +58,6 @@
   - TowelColorPurple
   - TowelColorRed
   - TowelColorSilver
-  - TowelColorWhite
   - TowelColorYellow
 
 - type: loadoutGroup
