@@ -15,3 +15,23 @@
   - type: InstantAction
     event: !type:SpawnItemInHandEvent
       spawned: FoodCheeseSlice
+
+- type: entity
+  parent: BaseAction
+  id: ActionRandomizeLanguages
+  name: Enact Babel Protocol
+  description: Languages are a fickle concept? Dont you agree?
+  components:
+  - type: Magic
+    requiresClothes: true
+    requiresSpeech: true
+  - type: Action
+    useDelay: 3600 # full hour use delay. you get ONE mabey TWO on beta.
+    itemIconStyle: BigAction
+    icon: 
+      sprite: Objects/Consumable/Food/ingredients.rsi #until I get a actual sprite. enjoy being cheese.
+      state: cheesewedge
+  - type: SpeakOnAction
+    sentence: action-speech-spell-babel
+  - type: InstantAction
+    event: !type:TowerOfBabelEvent
