@@ -143,7 +143,7 @@
               prototype: SheetPlasteel1
               amount: 1
             - !type:SpawnPrototype
-              prototype: MetalRod
+              prototype: PartRodMetal1
               amount: 2
           steps:
             - tool: Welding
