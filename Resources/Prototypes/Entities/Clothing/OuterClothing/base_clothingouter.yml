@@ -147,7 +147,7 @@
     slots: OUTERCLOTHING
   - type: HideLayerClothing
     slots:
-      - Tail
+    - Tail
 
 - type: entity
   abstract: true
