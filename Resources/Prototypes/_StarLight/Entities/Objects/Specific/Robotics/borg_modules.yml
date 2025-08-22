@@ -8,7 +8,7 @@
   - type: Sprite
     layers:
     - state: generic
-    - state: icon-diagnosis
+    - state: icon-hands
   - type: ItemBorgModule
     hands:
     - hand:
@@ -24,4 +24,4 @@
           components:
           - HumanoidAppearance
   - type: BorgModuleIcon
-    icon: { sprite: Interface/Actions/actions_borg.rsi, state: hands }
+    icon: { sprite: _Starlight/Interface/Actions/actions_borg.rsi, state: hands }
