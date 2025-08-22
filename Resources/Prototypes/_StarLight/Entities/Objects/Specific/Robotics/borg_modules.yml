@@ -24,4 +24,4 @@
           components:
           - HumanoidAppearance
   - type: BorgModuleIcon
-    icon: { sprite: Interface/Actions/actions_borg.rsi, state: no-action }
+    icon: { sprite: Interface/Actions/actions_borg.rsi, state: hands }
