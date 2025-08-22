@@ -624,7 +624,14 @@ public sealed partial class ChatSystem : SharedChatSystem
 
     private void SendDeadChat(EntityUid source, ICommonSession player, string message, bool hideChat)
     {
-        var clients = GetDeadChatClients();
+        var dead_clients = GetDeadChatClients();
+        var clients = dead_clients.Concat(
+            GetRecipients(source, VoiceRange)
+            .Select(p => p.Key)
+            .Where(p => HasComp<DeadHearingComponent>(p.AttachedEntity))
+            .Select(p => p.Channel)
+            .Except(dead_clients)); // Remove duplicates
+
         var playerName = Name(source);
         string wrappedMessage;
         if (_adminManager.IsAdmin(player))
