@@ -1,5 +1,11 @@
 # Tiles you might find in an alien world
 
+- type: stack
+  parent: BaseTileStack
+  id: FloorTileXenoborg
+  name: stack-xenoborg
+  spawn: FloorTileItemXenoborg
+
 # Exo station
 - type: stack
   parent: BaseTileStack
