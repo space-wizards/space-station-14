@@ -11,7 +11,7 @@
     sprite: Clothing/OuterClothing/Bio/general.rsi
   - type: HideLayerClothing
     slots:
-      - Tail
+    - Tail
   - type: Armor
     modifiers:
       coefficients:
