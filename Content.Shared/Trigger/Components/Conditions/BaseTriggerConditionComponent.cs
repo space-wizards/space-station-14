@@ -12,4 +12,15 @@ public abstract partial class BaseTriggerConditionComponent : Component
     /// </summary>
     [DataField, AutoNetworkedField]
     public HashSet<string> Keys = new() { TriggerSystem.DefaultTriggerKey };
+
+    /// <summary>
+    /// The key that will be triggered if this condition successfully cancels a trigger.
+    /// null will activate all triggers.
+    /// </summary>
+    /// <remarks>
+    /// If a different condition cancels the trigger but this condition wouldn't,
+    /// this key might or might not occur due to event ordering.
+    /// </remarks>
+    [DataField, AutoNetworkedField]
+    public string? CancelKeyOut = TriggerSystem.CancelledTriggerKey;
 }

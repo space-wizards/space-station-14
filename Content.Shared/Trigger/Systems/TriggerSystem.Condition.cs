@@ -10,8 +10,6 @@ public sealed partial class TriggerSystem
 {
     private void InitializeCondition()
     {
-        SubscribeLocalEvent<TriggerOnCancelledTriggerComponent, CancelledTriggerEvent>(OnCancelledTrigger);
-
         SubscribeLocalEvent<WhitelistTriggerConditionComponent, AttemptTriggerEvent>(OnWhitelistTriggerAttempt);
 
         SubscribeLocalEvent<UseDelayTriggerConditionComponent, AttemptTriggerEvent>(OnUseDelayTriggerAttempt);
@@ -22,38 +20,31 @@ public sealed partial class TriggerSystem
         SubscribeLocalEvent<RandomChanceTriggerConditionComponent, AttemptTriggerEvent>(OnRandomChanceTriggerAttempt);
     }
 
-    private void OnCancelledTrigger(Entity<TriggerOnCancelledTriggerComponent> ent, ref CancelledTriggerEvent args)
-    {
-        // Ignored unlike other triggers, as it can recursively trigger a trigger guaranteed to fail
-        if (args.Key == null)
-            return;
-
-        if (!ent.Comp.KeysInOut.TryGetValue(args.Key, out var keyOut))
-            return;
-
-        // Can easily create an infinite loop
-        if (keyOut == args.Key)
-            return;
-
-        Trigger(ent.Owner, args.User, keyOut);
-    }
-
     private void OnWhitelistTriggerAttempt(Entity<WhitelistTriggerConditionComponent> ent, ref AttemptTriggerEvent args)
     {
         if (args.Key == null || ent.Comp.Keys.Contains(args.Key))
             args.Cancelled |= !_whitelist.CheckBoth(args.User, ent.Comp.UserBlacklist, ent.Comp.UserWhitelist);
+
+        if (args.Cancelled)
+            args.CancelKeys.Add(ent.Comp.CancelKeyOut);
     }
 
     private void OnUseDelayTriggerAttempt(Entity<UseDelayTriggerConditionComponent> ent, ref AttemptTriggerEvent args)
     {
         if (args.Key == null || ent.Comp.Keys.Contains(args.Key))
             args.Cancelled |= _useDelay.IsDelayed(ent.Owner, ent.Comp.UseDelayId);
+
+        if (args.Cancelled)
+            args.CancelKeys.Add(ent.Comp.CancelKeyOut);
     }
 
     private void OnToggleTriggerAttempt(Entity<ToggleTriggerConditionComponent> ent, ref AttemptTriggerEvent args)
     {
         if (args.Key == null || ent.Comp.Keys.Contains(args.Key))
             args.Cancelled |= !ent.Comp.Enabled;
+
+        if (args.Cancelled)
+            args.CancelKeys.Add(ent.Comp.CancelKeyOut);
     }
 
     private void OnToggleGetAltVerbs(Entity<ToggleTriggerConditionComponent> ent, ref GetVerbsEvent<AlternativeVerb> args)
@@ -95,5 +86,8 @@ public sealed partial class TriggerSystem
 
             args.Cancelled |= !rand.Prob(ent.Comp.SuccessChance); // When not successful, Cancelled = true
         }
+
+        if (args.Cancelled)
+            args.CancelKeys.Add(ent.Comp.CancelKeyOut);
     }
 }
