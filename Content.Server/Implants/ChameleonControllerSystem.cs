@@ -29,17 +29,17 @@ public sealed class ChameleonControllerSystem : SharedChameleonControllerSystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<SubdermalImplantComponent, ChameleonControllerSelectedOutfitMessage>(OnSelected);
+        SubscribeLocalEvent<ChameleonControllerImplantComponent, ChameleonControllerSelectedOutfitMessage>(OnSelected);
 
         SubscribeLocalEvent<ChameleonClothingComponent, InventoryRelayedEvent<ChameleonControllerOutfitSelectedEvent>>(ChameleonControllerOutfitItemSelected);
     }
 
-    private void OnSelected(Entity<SubdermalImplantComponent> ent, ref ChameleonControllerSelectedOutfitMessage args)
+    private void OnSelected(Entity<ChameleonControllerImplantComponent> ent, ref ChameleonControllerSelectedOutfitMessage args)
     {
-        if (!_delay.TryResetDelay(ent.Owner, true) || ent.Comp.ImplantedEntity == null || !HasComp<ChameleonControllerImplantComponent>(ent))
+        if (!TryComp<SubdermalImplantComponent>(ent, out var implantComp) || implantComp.ImplantedEntity == null || !_delay.TryResetDelay(ent.Owner, true))
             return;
 
-        ChangeChameleonClothingToOutfit(ent.Comp.ImplantedEntity.Value, args.SelectedChameleonOutfit);
+        ChangeChameleonClothingToOutfit(implantComp.ImplantedEntity.Value, args.SelectedChameleonOutfit);
     }
 
     /// <summary>
