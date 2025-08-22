@@ -12338,5 +12338,12 @@ Entries:
   id: 143100
   time: '2025-08-22T19:42:20.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/1431
+- author: Happyrobot33
+  changes:
+  - message: Fixed Cork Parralax
+    type: Fix
+  id: 143600
+  time: '2025-08-22T21:46:58.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1436
 Order: -1
 
