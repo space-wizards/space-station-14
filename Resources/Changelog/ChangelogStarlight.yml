@@ -12245,5 +12245,13 @@ Entries:
   id: 141700
   time: '2025-08-21T20:59:27.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/1417
+- author: walksanatora
+  changes:
+  - message: Changelings now actually get their shop, biomass, chems, etc... after
+      the upstream merge.
+    type: Fix
+  id: 142800
+  time: '2025-08-22T14:24:07.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1428
 Order: -1
 
