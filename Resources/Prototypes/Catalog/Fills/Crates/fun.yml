@@ -477,12 +477,3 @@
     - id: ClothingNeckMantleQM
     - id: ClothingHeadsetCargo
 
-- type: entity
-  name: tactical katana shipment
-  description: This is the placeholder description for the tactical katana shipment.
-  id: CrateTacticalKatana
-  parent: CrateGenericSteel
-  components:
-  - type: StorageFill
-    contents:
-      - id: TacticalKatana

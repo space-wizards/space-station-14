@@ -367,13 +367,3 @@
   cost: 1000
   category: cargoproduct-category-name-fun
   group: market
-
-- type: cargoProduct
-  id: FunTacticalKatana
-  icon:
-    sprite: Objects/Weapons/Melee/katana_tactical.rsi
-    state: icon
-  product: CrateTacticalKatana
-  cost: 7000
-  category: cargoproduct-category-name-fun
-  group: market
