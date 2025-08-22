@@ -43,16 +43,15 @@ public sealed class RadarConsoleSystem : SharedRadarConsoleSystem
         {
             NavInterfaceState state;
             var docks = _console.GetAllDocks();
-            var meteors = _console.GetMeteors();
-            var pdShots = _console.GetPointDefenseShots();
+            var tracked = _console.GetTracked();
 
             if (coordinates != null && angle != null)
             {
-                state = _console.GetNavState(uid, docks, meteors, pdShots, coordinates.Value, angle.Value);
+                state = _console.GetNavState(uid, docks, tracked, coordinates.Value, angle.Value);
             }
             else
             {
-                state = _console.GetNavState(uid, docks, meteors, pdShots);
+                state = _console.GetNavState(uid, docks, tracked);
             }
 
             state.RotateWithEntity = !component.FollowEntity;

@@ -21,9 +21,7 @@ public sealed class NavInterfaceState
 
     public Dictionary<NetEntity, List<DockingPortState>> Docks;
 
-    public List<Vector2> Meteors;
-
-    public List<Vector2> PDShots;
+    public List<(Vector2, Enum, Angle, float, Color)> Tracked;
 
     public bool RotateWithEntity = true;
 
@@ -32,15 +30,14 @@ public sealed class NavInterfaceState
         NetCoordinates? coordinates,
         Angle? angle,
         Dictionary<NetEntity, List<DockingPortState>> docks,
-        List<Vector2> meteors,
-        List<Vector2> pdShots)
+        List<(Vector2, Enum, Angle, float, Color)> tracked
+        )
     {
         MaxRange = maxRange;
         Coordinates = coordinates;
         Angle = angle;
         Docks = docks;
-        Meteors = meteors;
-        PDShots = pdShots;
+        Tracked = tracked;
     }
 }
 
