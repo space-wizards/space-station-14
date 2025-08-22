@@ -60,7 +60,3 @@ borg-type-medical-transponder = medical cyborg
 borg-type-service-name = Service
 borg-type-service-desc = Help out with a wide range of crew services, ranging from serving snacks and drinks to botany to entertainment.
 borg-type-service-transponder = service cyborg
-
-borg-type-purrfus-name = Purrfus
-borg-type-purrfus-desc = Serve as a personal aid for those who require assistance with paperwork, especially members of command and the law department.
-borg-type-purrfus-transponder = purrfus cyborg
