@@ -1,0 +1,27 @@
+﻿- type: gameMap
+  id: Gateway
+  mapName: 'Gateway'
+  mapPath: /Maps/_Starlight/Stations/Gateway.yml
+  minPlayers: 1
+  stations:
+    Kiloton:
+      stationProto: StandardNanotrasenStation
+      components:
+        - type: StationNameSetup
+          mapNameTemplate: '{0} Gate Station {1}'
+          nameGenerator:
+            !type:NanotrasenNameGenerator
+            prefixCreator: 'ST'
+        - type: StationJobs
+          availableJobs:
+            #supply
+            Quartermaster: [ 1, 1 ]
+            SalvageSpecialist: [ 3, 20 ]
+            MiningSpecialist: [ 3, 10 ]
+            CargoTechnician: [ 5, 20 ]
+            MailTech: [ 1, 20 ]
+            #civilian
+            Clown: [ 1, 1 ]
+            Mime: [ 1, 1 ]
+            #silicon
+            Borg: [ 3, 10 ]
