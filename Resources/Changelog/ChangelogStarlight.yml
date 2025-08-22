@@ -12352,5 +12352,12 @@ Entries:
   id: 143400
   time: '2025-08-22T21:55:06.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/1434
+- author: Happyrobot33
+  changes:
+  - message: Changed Galactic Common color to original chat color
+    type: Tweak
+  id: 143700
+  time: '2025-08-22T22:18:55.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1437
 Order: -1
 
