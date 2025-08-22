@@ -72,7 +72,7 @@ public sealed partial class ChatSystem : SharedChatSystem
     [Dependency] private readonly SharedPopupSystem _popups = default!; // Starlight
 
     public const float DefaultObfuscationFactor = 0.2f; // Percentage of symbols in a whispered message that can be seen even by "far" listeners - Starlight
-    public readonly Color DefaultSpeakColor = Color.White; // Starlight
+    public readonly Color DefaultSpeakColor = Color.LightGray; // Starlight
 
     private bool _loocEnabled = true;
     private bool _deadLoocEnabled;
