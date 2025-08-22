@@ -212,7 +212,7 @@
   name: construction-recipe-diagonal-reinforced-wall
   graph: GirderDiagonal
   startNode: start
-  targetNode: wallReinforcedDiagonal
+  targetNode: reinforcedWallDiagonal
   category: construction-category-structures
   objectType: Structure
   placementMode: SnapgridCenter
@@ -226,7 +226,7 @@
   name: construction-recipe-diagonal-shuttle-wall
   graph: GirderDiagonal
   startNode: start
-  targetNode: diagonalshuttleWall
+  targetNode: shuttleWallDiagonal
   category: construction-category-structures
   objectType: Structure
   placementMode: SnapgridCenter
