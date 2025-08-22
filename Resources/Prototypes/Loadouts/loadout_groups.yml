@@ -84,6 +84,7 @@
   loadouts:
   - EmergencyNitrogen
   - EmergencyOxygen
+  - EmergencySpeciesMoth
   - LoadoutSpeciesVoxNitrogen
 
 # nitrogen or oxygen tank, depending on what your species needs
@@ -503,6 +504,7 @@
   loadouts:
   - EmergencyNitrogenClown
   - EmergencyOxygenClown
+  - EmergencySpeciesMothClown
   - LoadoutSpeciesVoxNitrogen
 
 - type: loadoutGroup
@@ -845,6 +847,7 @@
   loadouts:
   - EmergencyNitrogenExtended
   - EmergencyOxygenExtended
+  - EmergencySpeciesMothExtended
   - LoadoutSpeciesVoxNitrogen
 
 # Science
@@ -1126,6 +1129,7 @@
   loadouts:
   - EmergencyNitrogenSecurity
   - EmergencyOxygenSecurity
+  - EmergencySpeciesMothSecurity
   - LoadoutSpeciesVoxNitrogen
 
 - type: loadoutGroup
@@ -1327,6 +1331,7 @@
   loadouts:
   - EmergencyNitrogenMedical
   - EmergencyOxygenMedical
+  - EmergencySpeciesMothMedical
   - LoadoutSpeciesVoxNitrogen
 
 # Wildcards
@@ -1369,6 +1374,7 @@
   loadouts:
   - EmergencyNitrogenSyndicate
   - EmergencyOxygenSyndicate
+  - EmergencySpeciesMothSyndicate
   - LoadoutSpeciesVoxNitrogen
 
 - type: loadoutGroup
