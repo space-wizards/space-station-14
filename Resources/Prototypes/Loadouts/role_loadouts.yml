@@ -285,10 +285,11 @@
   id: JobAtmosphericTechnician
   groups:
   - GroupTankHarness
+  - StationEngineerHead
   - AtmosphericTechnicianJumpsuit
   - AtmosphericTechnicianBackpack
   - AtmosphericTechnicianOuterClothing
-  - AtmosphericTechnicianShoes
+  - StationEngineerShoes
   - SurvivalExtended
   - Trinkets
   - GroupSpeciesBreathTool

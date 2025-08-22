@@ -821,6 +821,7 @@
   minLimit: 0
   loadouts:
   - AtmosphericTechnicianWintercoat
+  - StationEngineerOuterVest
 
 - type: loadoutGroup
   id: AtmosphericTechnicianBackpack
@@ -829,13 +830,6 @@
   - AtmosphericTechnicianBackpack
   - AtmosphericTechnicianSatchel
   - AtmosphericTechnicianDuffel
-
-- type: loadoutGroup
-  id: AtmosphericTechnicianShoes
-  name: loadout-group-atmospheric-technician-shoes
-  loadouts:
-  - WhiteShoes
-  - EngineeringWinterBoots
 
 - type: loadoutGroup
   id: SurvivalExtended
