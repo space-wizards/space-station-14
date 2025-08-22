@@ -1,0 +1,4 @@
+- type: traitCategory
+  id: LanguageTraits
+  name: trait-category-languages
+  maxTraitPoints: 1

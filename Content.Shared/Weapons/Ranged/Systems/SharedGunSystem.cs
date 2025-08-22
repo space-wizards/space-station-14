@@ -37,6 +37,7 @@ using Robust.Shared.Serialization;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 using Content.Shared.VentCraw;
+using Content.Shared.Mech.Components; // Startlight-edit
 
 namespace Content.Shared.Weapons.Ranged.Systems;
 
@@ -187,6 +188,27 @@ public abstract partial class SharedGunSystem : EntitySystem
             gunComp = gun;
             return true;
         }
+
+        // Starlight-edit: start
+        if (TryComp<MechPilotComponent>(entity, out var pilot) &&
+            TryComp(pilot.Mech, out MechComponent? mechFromPilot) &&
+            mechFromPilot.CurrentSelectedEquipment is { } equipFromPilot &&
+            TryComp(equipFromPilot, out gun))
+        {
+            gunEntity = equipFromPilot;
+            gunComp = gun;
+            return true;
+        }
+
+        if (TryComp<MechComponent>(entity, out var mech) &&
+            mech.CurrentSelectedEquipment is { } equip &&
+            TryComp(equip, out gun))
+        {
+            gunEntity = equip;
+            gunComp = gun;
+            return true;
+        }
+        // Starlight-edit: end
 
         // Last resort is check if the entity itself is a gun.
         if (TryComp(entity, out gun))
@@ -347,7 +369,7 @@ public abstract partial class SharedGunSystem : EntitySystem
         if (ev.Ammo.Count <= 0)
         {
             // triggers effects on the gun if it's empty
-            var emptyGunShotEvent = new OnEmptyGunShotEvent();
+            var emptyGunShotEvent = new OnEmptyGunShotEvent(user);
             RaiseLocalEvent(gunUid, ref emptyGunShotEvent);
 
             gun.BurstActivated = false;
@@ -437,7 +459,19 @@ public abstract partial class SharedGunSystem : EntitySystem
 
         var projectile = EnsureComp<ProjectileComponent>(uid);
         projectile.Weapon = gunUid;
-        var shooter = user ?? gunUid;
+
+        // Starlight-edit: start
+        EntityUid? shooter = null;
+        if (user != null && TryComp<MechPilotComponent>(user.Value, out var pilotComp))
+        {
+            shooter = pilotComp.Mech;
+        }
+        else
+        {
+            shooter = user ?? gunUid;
+        }
+        // Starlight-edit: end
+
         if (shooter != null)
             Projectiles.SetShooter(uid, projectile, shooter.Value);
 
@@ -485,9 +519,10 @@ public abstract partial class SharedGunSystem : EntitySystem
         // TODO: Sound limit version.
         var offsetPos = Random.NextVector2(EjectOffset);
         var xform = Transform(entity);
-
-        var coordinates = xform.Coordinates;
-        coordinates = coordinates.Offset(offsetPos);
+        // Starlight-edit: start
+        TransformSystem.AttachToGridOrMap(entity, xform);
+        var coordinates = xform.Coordinates.Offset(offsetPos);
+        // Starlight-edit: end
 
         TransformSystem.SetLocalRotation(entity, Random.NextAngle(), xform);
         TransformSystem.SetCoordinates(entity, xform, coordinates);

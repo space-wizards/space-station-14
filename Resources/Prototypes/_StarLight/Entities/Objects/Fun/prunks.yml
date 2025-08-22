@@ -3,12 +3,14 @@
   description: "Makes a fake boom! The label reads: With love from HonkHonkers!"
   suffix: Fake
   id: FakeGrenade
-  parent: GrenadeBase
+  parent: GrenadeDummy
   components:
-  - type: OnUseTimerTrigger
+  - type: TimerTrigger
     delay: 3
-    beepInterval: 0.46
-    beepSound:
+  - type: EmitSoundOnTrigger
+    keysIn:
+    - timer
+    sound:
       path: /Audio/Effects/Grenades/Supermatter/smbeep.ogg
       params:
         volume: -5

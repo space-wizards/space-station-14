@@ -136,20 +136,20 @@
   layers:
     - texture:
         !type:ImageParallaxTextureSource
-        path: "/Textures/Tiles/Planet/water.rsi/shoreline_water.png"
+        path: "/Textures/_Starlight/Parallaxes/shoreline_water.png"
       scrolling: "0.1, 0"
       tiled: true
       shader: ""
     - texture:
         !type:ImageParallaxTextureSource
-        path: "/Textures/Tiles/Planet/water.rsi/shoreline_water.png"
+        path: "/Textures/_Starlight/Parallaxes/shoreline_water.png"
       scrolling: "-0.1, 0"
       tiled: true
       shader: ""
   layersLQ:
     - texture:
         !type:ImageParallaxTextureSource
-        path: "/Textures/Tiles/Planet/water.rsi/shoreline_water.png"
+        path: "/Textures/_Starlight/Parallaxes/shoreline_water.png"
       scrolling: "-0.1, 0"
       tiled: true
       shader: ""
@@ -160,13 +160,13 @@
   layers:
     - texture:
         !type:ImageParallaxTextureSource
-        path: "/Textures/Tiles/Planet/water.rsi/shoreline_water.png"
+        path: "/Textures/_Starlight/Parallaxes/shoreline_water.png"
       scrolling: "0.1, 0"
       tiled: true
       shader: ""
     - texture:
         !type:ImageParallaxTextureSource
-        path: "/Textures/Tiles/Planet/water.rsi/shoreline_water.png"
+        path: "/Textures/_Starlight/Parallaxes/shoreline_water.png"
 
       scrolling: "-0.1, 0"
       tiled: true
