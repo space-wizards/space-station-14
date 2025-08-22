@@ -1,12 +1,15 @@
+# Contains modifications made by Ronstation contributors, therefore this file is subject to MIT sublicensed with AGPL v3.0.
 - type: guideEntry
   id: Jobs
   name: guide-entry-jobs
-  text: "/ServerInfo/Guidebook/Jobs.xml"
+  text: "/ServerInfo/_Ronstation/Guidebook/Jobs.xml" # Ronstation - modification
+# Start of modifications.
   children:
-  - Service
   - Cargo
+  - Command
+  - Engineering
   - Medical
   - Science
-  - Engineering
   - Security
-  - Command
+  - Service
+# End of modifications.

@@ -214,6 +214,7 @@
   cost: 4000
   recipeUnlocks:
   - PushHorn
+  - BorgModuleAdvancedClowning
 
 - type: technology
   id: BluespaceChemistry

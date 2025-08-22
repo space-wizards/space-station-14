@@ -1,0 +1,14 @@
+<Document>
+  # Avali
+  <Box>
+    <GuideEntityEmbed Entity="MobAvali" Caption=""/>
+  </Box>
+	  Avali [bold]breathe nitrogen[/bold] - have ammonia based [bold]anaerobic blood[/bold] - and have an accelerated metabolism, meaning they [bold]process all chemicals 30% faster[/bold] and [bold]get hungry faster[/bold] than other species.
+  <!--insert how "complex" reagents strain avali's overworked organs and deal bloodloss.
+  when that becomes true -->
+  Their light build makes them much [bold]lighter than other species[/bold], making dragging objects more difficult, and making getting dragged easier.
+
+  Their physiology is highly [bold]adapted to low temperatures[/bold], they feel the effects of [bold][color=#4df]hypothermia[/color][/bold] at [bold][color=#4df]-50 °C[/color][/bold] and [bold][color=#f44]hyperthermia[/color][/bold] at [bold][color=#f44]37 °C[/color][/bold].
+
+  Avali take [bold][color=#4df]40% less Cold damage[/color][/bold], but [bold][color=#f44]10% more Heat damage[/color][/bold] and [bold][color=#f44]15% more Blunt damage[/color][/bold].
+</Document>
