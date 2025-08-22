@@ -12281,5 +12281,12 @@ Entries:
   id: 142400
   time: '2025-08-22T14:31:19.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/1424
+- author: Rinary
+  changes:
+  - message: Fixed trasparent letters and packages from emagged mail teleporter.
+    type: Fix
+  id: 142300
+  time: '2025-08-22T14:34:11.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1423
 Order: -1
 
