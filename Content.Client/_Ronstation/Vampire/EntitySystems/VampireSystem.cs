@@ -16,18 +16,5 @@ public sealed class VampireSystem : SharedVampireSystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<VampireComponent, GetStatusIconsEvent>(OnVampireGetIcons);
-    }
-    private void OnVampireGetIcons(Entity<VampireComponent> entity, ref GetStatusIconsEvent args)
-    {
-        if (_playerManager.LocalSession?.AttachedEntity is { } playerEntity)
-        {
-            if (!HasComp<ShowAntagIconsComponent>(playerEntity) &&
-                entity.Owner != playerEntity)
-                return;
-        }
-
-        // if (_prototypeManager.TryIndex(entity.Comp.VampireIcon, out var iconPrototype))
-        //     args.StatusIcons.Add(iconPrototype);
     }
 }
