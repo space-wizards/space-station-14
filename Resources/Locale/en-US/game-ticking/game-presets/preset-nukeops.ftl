@@ -13,6 +13,7 @@ nukeops-crewminor = [color=green]Crew minor victory![/color]
 nukeops-crewmajor = [color=green]Crew major victory![/color]
 
 nukeops-cond-nukeexplodedoncorrectstation = The nuclear operatives managed to blow up the station.
+# Starlight-edit
 nukeops-cond-nukeexplodedonnukieoutpost = The crew gave the syndicate back their bomb.
 nukeops-cond-nukeexplodedonincorrectlocation = The nuclear bomb was detonated off-station.
 nukeops-cond-nukeactiveinstation = The nuclear bomb was left armed on-station.
