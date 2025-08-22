@@ -49,7 +49,7 @@ public sealed class ExplodeOnTriggerSystem : EntitySystem
             return;
 
         _explosion.QueueExplosion(target.Value,
-                                 comp.ExplosionType,
+                                    comp.ExplosionType,
                                     comp.TotalIntensity,
                                     comp.IntensitySlope,
                                     comp.MaxTileIntensity,

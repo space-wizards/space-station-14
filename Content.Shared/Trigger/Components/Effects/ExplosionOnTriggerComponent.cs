@@ -1,5 +1,6 @@
 using Content.Shared.Explosion;
 using Content.Shared.Explosion.Components;
+using Content.Shared.Trigger.Systems;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
 
@@ -16,8 +17,8 @@ namespace Content.Shared.Trigger.Components.Effects;
 public sealed partial class ExplosionOnTriggerComponent : BaseXOnTriggerComponent
 {
     /// <inheritdoc cref="ExplosiveComponent.ExplosionType"/>
-    [DataField(required: true), AutoNetworkedField]
-    public ProtoId<ExplosionPrototype> ExplosionType = default!;
+    [DataField, AutoNetworkedField]
+    public ProtoId<ExplosionPrototype> ExplosionType = ExplodeOnTriggerSystem.DefaultExplosionPrototypeId;
 
     /// <inheritdoc cref="ExplosiveComponent.MaxIntensity"/>
     [DataField, AutoNetworkedField]
