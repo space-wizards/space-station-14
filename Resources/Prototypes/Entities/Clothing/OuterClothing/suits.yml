@@ -142,7 +142,7 @@
     slots: WITHOUT_POCKET
   - type: HideLayerClothing
     slots:
-      - Tail
+    - Tail
 
 - type: entity
   parent: [ClothingOuterBaseLarge, AllowSuitStorageClothing, BaseToggleClothing, BaseMajorContraband]
