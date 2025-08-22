@@ -106,6 +106,9 @@ public sealed partial class AnchorableSystem : EntitySystem
         if (isAnchored && (component.Flags & AnchorableFlags.Unanchorable) == 0x0)
             return;
 
+        if (!isAnchored && (component.Flags & AnchorableFlags.Anchorable) == 0x0)
+            return;
+
         var messageId = isAnchored ? "examinable-anchored" : "examinable-unanchored";
         args.PushMarkup(Loc.GetString(messageId, ("target", uid)));
     }
