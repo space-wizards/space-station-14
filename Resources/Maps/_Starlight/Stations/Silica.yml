@@ -4,7 +4,7 @@ meta:
   engineVersion: 266.0.0
   forkId: ""
   forkVersion: ""
-  time: 08/22/2025 17:22:57
+  time: 08/22/2025 17:56:09
   entityCount: 24145
 maps:
 - 1
@@ -12159,7 +12159,7 @@ entities:
       pos: -29.5,-12.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -33870.918
+      secondsUntilStateChange: -34012.375
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -12171,7 +12171,7 @@ entities:
       pos: 30.5,-28.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -33877.418
+      secondsUntilStateChange: -34018.875
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -12183,7 +12183,7 @@ entities:
       pos: 30.5,-24.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -33878.117
+      secondsUntilStateChange: -34019.574
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -13295,7 +13295,7 @@ entities:
       pos: 36.5,0.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -125574.24
+      secondsUntilStateChange: -125715.7
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -85923,16 +85923,6 @@ entities:
       connected: True
     - type: AtmosPipeColor
       color: '#947507FF'
-  - uid: 11554
-    components:
-    - type: Transform
-      rot: 3.141592653589793 rad
-      pos: 60.5,41.5
-      parent: 2
-    - type: VentCrawTube
-      connected: True
-    - type: AtmosPipeColor
-      color: '#990000FF'
   - uid: 11555
     components:
     - type: Transform
@@ -106354,6 +106344,18 @@ entities:
       connected: True
     - type: AtmosPipeColor
       color: '#0335FCFF'
+- proto: GasPressureRegulator
+  entities:
+  - uid: 11554
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: 60.5,41.5
+      parent: 2
+    - type: GasPressureRegulator
+      threshold: 9000
+    - type: AtmosPipeColor
+      color: '#990000FF'
 - proto: GasThermoMachineFreezer
   entities:
   - uid: 13671
@@ -106405,9 +106407,6 @@ entities:
   entities:
   - uid: 13676
     components:
-    - type: MetaData
-      desc: Useful for bleeding off excess gas when the TEG hot line is overpressure.
-      name: TEG bleed valve
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 60.5,40.5
