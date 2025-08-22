@@ -8,7 +8,7 @@
   parent: [ClothingOuterBaseMedium, AllowSuitStorageClothing, BaseSecurityContraband]
   id: ClothingOuterArmorBase
   name: armor vest
-  description: A cheap Type-I protective vest, its para-aramid armor offers decent protection against most attacks.
+  description: A cheap Type-I protective vest, its aramid armor offers decent protection against most attacks.
   components:
   - type: Sprite
     sprite: Clothing/OuterClothing/Armor/security.rsi
@@ -50,7 +50,7 @@
   parent: ClothingOuterArmorBase
   id: ClothingOuterArmorBulletproof
   name: ballistic vest
-  description: A Type-III protective vest, its steel plates offer excellent protection against firearms. It has much better coverage than typical vests, covering the shoulders and groin.
+  description: A Type-III protective vest, its steel plates offer excellent protection against firearms. It has better coverage than typical vests, protecting the shoulders and groin.
   components:
   - type: Sprite
     sprite: Clothing/OuterClothing/Armor/bulletproof.rsi
@@ -94,7 +94,7 @@
   parent: [ClothingOuterArmorBase, BaseSecurityContraband]
   id: ClothingOuterVestDetective
   name: detective's armor vest
-  description: A cheap Type-I protective vest, its para-aramid armor provides decent protection against most attacks. A gold badge denotes the wearer as a NT security detective.
+  description: A cheap Type-I protective vest, its aramid armor provides decent protection against most attacks. A gold badge denotes the wearer as a NT security detective.
   components:
   - type: Sprite
     sprite: Clothing/OuterClothing/Vests/detvest.rsi
@@ -205,7 +205,7 @@
   parent: [ BaseMajorContraband, ClothingOuterVestWeb] #web vest so it should have some pockets for ammo
   id: ClothingOuterVestWebMerc
   name: mercenary web vest
-  description: A high-quality Type-I plate carrier, its webbing holds para-aramid armor, offering good protection against most attacks. It's surprisingly compact when folded up, and can store extra equipment in its pockets.
+  description: A high-quality Type-I plate carrier, its webbing holds aramid armor, offering good protection against most attacks. It's surprisingly compact when folded up, and can store extra equipment in its pockets.
   components:
   - type: Sprite
     sprite: Clothing/OuterClothing/Vests/mercwebvest.rsi
@@ -227,7 +227,7 @@
   parent: [ClothingOuterBaseLarge, AllowSuitStorageClothing, BaseSyndicateContraband ]
   id: ClothingOuterArmorRaid
   name: Syndicate raid suit
-  description: A Syndicate Type-I armor suit, its thick para-aramid armor offers excellent protection against most attacks, but slightly hinders mobility. It's surprisingly compact when folded up, and comes with a powerful shoulder-mounted flashlight. Commonly worn by the Gorlex Marauders on planetside operations.
+  description: A Syndicate Type-I armor suit, its thick aramid armor offers excellent protection against most attacks, but slightly hinders mobility. It's surprisingly compact when folded up, and comes with a powerful shoulder-mounted flashlight. Commonly worn by the Gorlex Marauders on planetside operations.
   components:
   - type: Sprite
     sprite: Clothing/OuterClothing/Armor/syndie-raid.rsi

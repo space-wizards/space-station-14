@@ -650,7 +650,7 @@
   parent: [ClothingUniformBase, BaseSecurityContraband]
   id: ClothingUniformSecurityTrooper
   name: trooper uniform
-  description: A formal uniform issued to the Nanotrasen Troopers, usually it comes with a car.
+  description: Patrolling the station almost makes you wish for a nuclear operation...
   components:
   - type: Sprite
     sprite: Clothing/Uniforms/Jumpsuit/security_trooper.rsi
