@@ -12288,5 +12288,13 @@ Entries:
   id: 142300
   time: '2025-08-22T14:34:11.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/1423
+- author: walksanatora
+  changes:
+  - message: That gorilla serum implant I can never say right is fixed and no longer
+      places a gorilla in your bloodstream.
+    type: Fix
+  id: 142200
+  time: '2025-08-22T14:36:12.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1422
 Order: -1
 
