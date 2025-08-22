@@ -12274,5 +12274,12 @@ Entries:
   id: 142602
   time: '2025-08-22T14:27:46.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/1426
+- author: Rinary
+  changes:
+  - message: Fixed issue when right clicking shuttle console enters piloting mode.
+    type: Fix
+  id: 142400
+  time: '2025-08-22T14:31:19.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1424
 Order: -1
 
