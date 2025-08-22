@@ -7,9 +7,7 @@ using Content.Server.EUI;
 using Content.Shared.Administration;
 using Content.Shared.Database;
 using Content.Shared.Eui;
-using Content.Shared.Roles;
 using Robust.Shared.Network;
-using Robust.Shared.Prototypes;
 
 namespace Content.Server.Administration;
 
@@ -21,7 +19,6 @@ public sealed class BanPanelEui : BaseEui
     [Dependency] private readonly IPlayerLocator _playerLocator = default!;
     [Dependency] private readonly IChatManager _chat = default!;
     [Dependency] private readonly IAdminManager _admins = default!;
-    [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
 
     private readonly ISawmill _sawmill;
 
@@ -123,7 +120,7 @@ public sealed class BanPanelEui : BaseEui
         {
             var now = DateTimeOffset.UtcNow;
             foreach (var role in roles)
-            {
+            { //TODO:ERRANT is this codepath right?
                 _banManager.CreateRoleBan(targetUid, target, Player.UserId, addressRange, targetHWid, role, minutes, severity, reason, now);
             }
 

@@ -286,48 +286,6 @@ public sealed class PlayTimeTrackingSystem : EntitySystem
             _preferencesManager.GetPreferences(player.UserId).SelectedCharacter);
     }
 
-    /// <summary>
-    /// Checks if the player meets role requirements.
-    /// </summary>
-    /// <param name="player">The player.</param>
-    /// <param name="role">A job or antag prototype ID</param>
-    /// <returns>Returns true if all requirements were met or there were no requirements.</returns>
-    [Obsolete("Use the variants taking specific prototype ID lists")]
-    public bool IsAllowed(ICommonSession player, string role)
-    {
-        JobPrototype? job;
-        AntagPrototype? antag;
-
-        _prototypes.TryIndex(role, out job);
-        _prototypes.TryIndex(role, out antag);
-
-        if (job is null &&
-            antag is null ||
-            !_cfg.GetCVar(CCVars.GameRoleTimers))
-            return true;
-
-        if (!_tracking.TryGetTrackerTimes(player, out var playTimes))
-        {
-            Log.Error($"Unable to check playtimes {Environment.StackTrace}");
-            playTimes = new Dictionary<string, TimeSpan>();
-        }
-
-        HashSet<JobRequirement>? requirements = null;
-        if (job is not null)
-            requirements = _roles.GetRoleRequirements(job);
-        else if (antag is not null)
-            requirements = _roles.GetRoleRequirements(antag);
-
-        return JobRequirements.TryRequirementsMet(
-            requirements,
-            playTimes,
-            out _,
-            EntityManager,
-            _prototypes,
-            (HumanoidCharacterProfile?)
-            _preferencesManager.GetPreferences(player.UserId).SelectedCharacter);
-    }
-
     public HashSet<ProtoId<JobPrototype>> GetDisallowedJobs(ICommonSession player)
     {
         var roles = new HashSet<ProtoId<JobPrototype>>();

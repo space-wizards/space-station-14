@@ -168,27 +168,6 @@ public sealed class JobRequirementsManager : ISharedPlaytimeManager
         return true;
     }
 
-    /// <summary>
-    /// Check a list of job/antag prototypes against the current player, for requirements and bans.
-    /// </summary>
-    /// <returns>Returns True if all prototypes passed.</returns>
-    [Obsolete("Use the typed variants")]
-    public bool IsAllowed(List<string> prototypes, HumanoidCharacterProfile? profile, [NotNullWhen(false)] out FormattedMessage? reason)
-    {
-        reason = null;
-
-        foreach (var proto in prototypes)
-        {
-            if (_prototypes.TryIndex<JobPrototype>(proto, out var job) && !IsAllowed(job, profile, out reason))
-                return false;
-
-            if (_prototypes.TryIndex<AntagPrototype>(proto, out var antag) && !IsAllowed(antag, profile, out reason))
-                return false;
-        }
-
-        return true;
-    }
-
     // This must be private so code paths can't accidentally skip requirement overrides. Call this through IsAllowed()
     private bool CheckRoleRequirements(HashSet<JobRequirement>? requirements, HumanoidCharacterProfile? profile, [NotNullWhen(false)] out FormattedMessage? reason)
     {

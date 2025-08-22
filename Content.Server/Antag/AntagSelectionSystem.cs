@@ -503,18 +503,15 @@ public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelection
             var blocked = false;
             var fallbackBlocked = false;
 
-            // Check for role bans
+            // Check for role bans and playtime requirements
             // These are not in IsSessionValid so that we can have a Preferred role ban not block a Fallback role
-            if (_ban.IsRoleBanned(session, def.PrefRoles) )
-                blocked = true;
-            if (_ban.IsRoleBanned(session, def.FallbackRoles))
-                fallbackBlocked = true;
 
-            // Check if the player meets all requirements for the roles
-            if (!_playTime.IsAllowed(session, def.PrefRoles))
+            if (_ban.IsRoleBanned(session, def.PrefRoles)
+                || !_playTime.IsAllowed(session, def.PrefRoles))
                 blocked = true;
 
-            if (!_playTime.IsAllowed(session, def.FallbackRoles))
+            if (_ban.IsRoleBanned(session, def.FallbackRoles)
+                || !_playTime.IsAllowed(session, def.FallbackRoles))
                 fallbackBlocked = true;
 
             // Add player to the appropriate antag pool
