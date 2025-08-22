@@ -1,10 +1,10 @@
 using Content.Shared.Containers.ItemSlots;
-using Content.Shared._Starlight.Lock;
+using Content.Shared.Lock;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 using Robust.Client.UserInterface;
 
-namespace Content.Client._Starlight.Lock;
+namespace Content.Client.Lock;
 
 /// <summary>
 /// BUI for Digital Lock Menu.

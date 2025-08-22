@@ -2,7 +2,7 @@ using Robust.Shared.GameStates;
 using Robust.Shared.Serialization;
 using Robust.Shared.Audio;
 
-namespace Content.Shared._Starlight.Lock;
+namespace Content.Shared.Lock;
 
 /// <summary>
 /// Allows locking/unlocking, with password

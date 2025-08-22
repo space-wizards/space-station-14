@@ -35,3 +35,84 @@
   components:
   - type: Item
     size: Huge
+
+#region Secure Breafcases
+
+- type: entity
+  parent: BriefcaseBase
+  id: BriefcaseBaseSecure
+  description: Useful for carrying items in your hands.
+  abstract: true
+  components:
+  - type: Appearance
+  - type: DigitalLock
+  - type: Lock
+  - type: UserInterface
+    interfaces:
+      enum.StorageUiKey.Key:
+        type: StorageBoundUserInterface
+      enum.DigitalLockUiKey.Key:
+        type: DigitalLockBoundUserInterface
+  - type: ActivatableUI
+    key: enum.DigitalLockUiKey.Key
+  - type: GenericVisualizer
+    visuals: 
+      enum.DigitalLockVisuals.Spark:
+        spark:
+          False: { visible: false }
+          True: { visible: true }
+  - type: AmbientSound
+    enabled: false
+    range: 20
+    sound: 
+      collection: "sparks"
+
+- type: entity
+  parent: BriefcaseBase
+  id: BriefcaseBaseSecureDigital
+  description: Useful for carrying items in your hands. Has a digital lock.
+  abstract: true
+  components:
+  - type: DigitalLock
+  - type: Lock
+    unlockOnClick: false
+    useAccess: false
+    showLockVerbs: false
+    
+- type: entity
+  parent: BriefcaseBase
+  id: BriefcaseBaseSecureAccess
+  description: Useful for carrying items in your hands. Has a access lock.
+  abstract: true
+  components:
+  - type: UIRequiresLock
+  - type: Lock
+    unlockOnClick: true
+    useAccess: true
+    showLockVerbs: true
+
+- type: entity
+  parent: BriefcaseBaseSecureDigital
+  id: BriefcaseSecure
+  name: secure briefcase
+  components:
+  - type: Sprite
+    sprite: Objects/Storage/Briefcases/briefcase_secure.rsi
+    layers: 
+      - state: icon
+      - state: open
+        shader: unshaded
+      - state: closed
+        shader: unshaded
+        map: ["enum.LockVisualLayers.Lock"]
+      - state: spark
+        shader: unshaded
+        visible: false
+        map: ["spark"]
+  - type: LockVisuals
+    stateLocked: closed
+    stateUnlocked: open
+  - type: Item
+    sprite: Objects/Storage/Briefcases/briefcase_secure.rsi
+
+#endregion

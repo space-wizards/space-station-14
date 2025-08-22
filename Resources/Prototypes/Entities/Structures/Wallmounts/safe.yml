@@ -19,7 +19,7 @@
   - type: Sprite
     drawdepth: WallMountedItems
     noRot: false
-    sprite: _Starlight/Structures/Storage/safe.rsi
+    sprite: Structures/Storage/safe.rsi
     layers:
     - state: icon
     - state: open
@@ -63,8 +63,6 @@
   - type: Lock
     unlockOnClick: false
     useAccess: false
-    autoUnlock: false
-    autoLock: false
     showLockVerbs: false
   - type: UserInterface
     interfaces:

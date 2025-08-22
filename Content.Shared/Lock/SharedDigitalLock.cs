@@ -1,7 +1,7 @@
 using Content.Shared.DoAfter;
 using Robust.Shared.Serialization;
 
-namespace Content.Shared._Starlight.Lock;
+namespace Content.Shared.Lock;
 
 [Serializable, NetSerializable]
 public sealed partial class DigitalLockMaintenanceOpenDoAfterEvent : SimpleDoAfterEvent
