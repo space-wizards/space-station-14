@@ -1052,7 +1052,7 @@
           collection: MetalSlam
       - !type:DoActsBehavior
         acts: ["Destruction"]
-      - type: Construction
+  - type: Construction
     graph: GirderDiagonal
     node: wallDiagonal
 
