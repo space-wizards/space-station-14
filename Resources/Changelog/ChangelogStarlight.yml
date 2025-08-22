@@ -12324,5 +12324,12 @@ Entries:
   id: 136900
   time: '2025-08-22T14:43:43.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/1369
+- author: STARLIGHT TEAM
+  changes:
+  - message: Fixed Discord ID in bans.
+    type: Fix
+  id: 141500
+  time: '2025-08-22T14:49:56.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1415
 Order: -1
 
