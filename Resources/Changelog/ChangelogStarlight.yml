@@ -12303,5 +12303,19 @@ Entries:
   id: 142100
   time: '2025-08-22T14:37:57.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/1421
+- author: CringeCursed
+  changes:
+  - message: Fixed bug that prevented the Mechs from firing.
+    type: Fix
+  id: 141800
+  time: '2025-08-22T14:40:34.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1418
+- author: CringeCursed
+  changes:
+  - message: Now you cant crawl inside Mech.
+    type: Tweak
+  id: 141801
+  time: '2025-08-22T14:40:34.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1418
 Order: -1
 
