@@ -24,6 +24,7 @@ using Robust.Shared.Map.Components;
 using Robust.Shared.Player;
 using Robust.Shared.Random;
 using Robust.Shared.Utility;
+using Content.Shared._Starlight.Lock; // Starlight-edit
 
 namespace Content.Server.Nuke;
 
@@ -46,6 +47,7 @@ public sealed class NukeSystem : EntitySystem
     [Dependency] private readonly UserInterfaceSystem _ui = default!;
     [Dependency] private readonly AppearanceSystem _appearance = default!;
     [Dependency] private readonly TurfSystem _turf = default!;
+    [Dependency] private readonly DigitalLockSystem _digitalLock = default!; // Starlight-edit
 
     /// <summary>
     ///     Used to calculate when the nuke song should start playing for maximum kino with the nuke sfx
@@ -239,7 +241,7 @@ public sealed class NukeSystem : EntitySystem
 
     private void OnKeypadButtonPressed(EntityUid uid, NukeComponent component, NukeKeypadMessage args)
     {
-        PlayNukeKeypadSound(uid, args.Value, component);
+        component.LastPlayedKeypadSemitones = _digitalLock.PlayKeypadSound(uid, args.Value, component.LastPlayedKeypadSemitones, component.KeypadPressSound); // Starlight-edit
 
         if (component.Status != NukeStatus.AWAIT_CODE)
             return;
@@ -421,6 +423,7 @@ public sealed class NukeSystem : EntitySystem
         _ui.SetUiState(uid, NukeUiKey.Key, state);
     }
 
+    /* Starlight-edit: Moved to digital lock system
     private void PlayNukeKeypadSound(EntityUid uid, int number, NukeComponent? component = null)
     {
         if (!Resolve(uid, ref component))
@@ -452,6 +455,7 @@ public sealed class NukeSystem : EntitySystem
         opts = AudioHelpers.ShiftSemitone(opts, semitoneShift).AddVolume(-5f);
         _audio.PlayPvs(component.KeypadPressSound, uid, opts);
     }
+    */
 
     public string GenerateRandomNumberString(int length)
     {
