@@ -7,7 +7,7 @@
         - to: girderDiagonal
           completed:
             - !type:SnapToGrid
-              southRotation: true
+              southRotation: false
           steps:
             - material: Steel
               amount: 2
