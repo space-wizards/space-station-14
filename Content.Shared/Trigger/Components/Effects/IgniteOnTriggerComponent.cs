@@ -8,7 +8,7 @@ namespace Content.Shared.Trigger.Components.Effects;
 /// Requires <see cref="IgnitionSourceComponent"/> along with triggering components.
 /// The if TargetUser is true they will be ignited instead (they need IgnitionSourceComponent as well).
 /// </summary>
-/// <seealso cref="FlameStackOnTriggerComponent"/>
+/// <seealso cref="FireStackOnTriggerComponent"/>
 [RegisterComponent, NetworkedComponent]
 [AutoGenerateComponentState, AutoGenerateComponentPause]
 public sealed partial class IgniteOnTriggerComponent : BaseXOnTriggerComponent

@@ -29,6 +29,7 @@ using Content.Shared.Damage;
 using Content.Shared.Damage.Systems;
 using Content.Shared.Database;
 using Content.Shared.Electrocution;
+using Content.Shared.Gravity;
 using Content.Shared.Interaction.Components;
 using Content.Shared.Inventory;
 using Content.Shared.Mobs;
@@ -675,6 +676,11 @@ public sealed partial class AdminVerbSystem
                 grav.Weightless = true;
 
                 Dirty(args.Target, grav);
+
+                EnsureComp<GravityAffectedComponent>(args.Target, out var weightless);
+                weightless.Weightless = true;
+
+                Dirty(args.Target, weightless);
             },
             Impact = LogImpact.Extreme,
             Message = string.Join(": ", noGravityName, Loc.GetString("admin-smite-remove-gravity-description"))

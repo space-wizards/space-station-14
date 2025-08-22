@@ -4,6 +4,7 @@ using Content.Shared.Damage;
 using Content.Shared.Damage.Components;
 using Content.Shared.Database;
 using Content.Shared.DoAfter;
+using Content.Shared.Gravity;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Input;
 using Content.Shared.Movement.Events;
@@ -60,6 +61,9 @@ public abstract partial class SharedStunSystem
         // Crawling
         SubscribeLocalEvent<CrawlerComponent, KnockedDownRefreshEvent>(OnKnockdownRefresh);
         SubscribeLocalEvent<CrawlerComponent, DamageChangedEvent>(OnDamaged);
+        SubscribeLocalEvent<KnockedDownComponent, WeightlessnessChangedEvent>(OnWeightlessnessChanged);
+        SubscribeLocalEvent<GravityAffectedComponent, KnockDownAttemptEvent>(OnKnockdownAttempt);
+        SubscribeLocalEvent<GravityAffectedComponent, GetStandUpTimeEvent>(OnGetStandUpTime);
 
         // Handling Alternative Inputs
         SubscribeAllEvent<ForceStandUpEvent>(OnForceStandup);
@@ -486,6 +490,32 @@ public abstract partial class SharedStunSystem
     {
         args.FrictionModifier *= entity.Comp.FrictionModifier;
         args.SpeedModifier *= entity.Comp.SpeedModifier;
+    }
+
+    private void OnWeightlessnessChanged(Entity<KnockedDownComponent> entity, ref WeightlessnessChangedEvent args)
+    {
+        // I probably don't need this check since weightless -> non-weightless you shouldn't be knocked down
+        // But you never know.
+        if (!args.Weightless)
+            return;
+
+        // Targeted moth attack
+        CancelKnockdownDoAfter((entity, entity.Comp));
+        RemCompDeferred<KnockedDownComponent>(entity);
+    }
+
+    private void OnKnockdownAttempt(Entity<GravityAffectedComponent> entity, ref KnockDownAttemptEvent args)
+    {
+        // Directed, targeted moth attack.
+        if (entity.Comp.Weightless)
+            args.Cancelled = true;
+    }
+
+    private void OnGetStandUpTime(Entity<GravityAffectedComponent> entity, ref GetStandUpTimeEvent args)
+    {
+        // Get up instantly if weightless
+        if (entity.Comp.Weightless)
+            args.DoAfterTime = TimeSpan.Zero;
     }
 
     #endregion

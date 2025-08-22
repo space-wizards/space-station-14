@@ -17,6 +17,7 @@ using Content.Shared.NPC.Components;
 using Content.Shared.NPC.Systems;
 using Content.Shared.Nuke;
 using Content.Shared.NukeOps;
+using Content.Shared.Roles.Components;
 using Content.Shared.Store;
 using Content.Shared.Tag;
 using Content.Shared.Zombies;
