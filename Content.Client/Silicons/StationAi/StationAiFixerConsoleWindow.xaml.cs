@@ -24,10 +24,8 @@ public sealed partial class StationAiFixerConsoleWindow : FancyWindow
 
     private EntityUid? _owner;
 
-    private readonly string _stationAiRsi = "/Textures/Mobs/Silicon/station_ai.rsi";
-    private readonly string _emptyPortrait = "ai_empty";
-    private readonly string _aiAlivePortrait = "ai";
-    private readonly string _aiDeadPortrait = "ai_dead";
+    private readonly SpriteSpecifier.Rsi _emptyPortrait = new SpriteSpecifier.Rsi(new("/Textures/Mobs/Silicon/station_ai.rsi"), "ai_empty");
+    private SpriteSpecifier _currentPortrait;
 
     public event Action<StationAiFixerConsoleAction>? SendStationAiFixerConsoleMessageAction;
     public event Action? OpenConfirmationDialogAction;
@@ -48,9 +46,10 @@ public sealed partial class StationAiFixerConsoleWindow : FancyWindow
         _stationAiFixerConsole = _entManager.System<StationAiFixerConsoleSystem>();
         _stationAiSystem = _entManager.System<StationAiSystem>();
 
-        Title = Loc.GetString("station-ai-fixer-console-window");
-
         _owner = owner;
+
+        _currentPortrait = _emptyPortrait;
+        StationAiPortraitTexture.DisplayRect.TextureScale = new Vector2(4f, 4f);
 
         CancelButton.OnButtonDown += args => OnSendStationAiFixerConsoleMessage(StationAiFixerConsoleAction.Cancel);
         EjectButton.OnButtonDown += args => OnSendStationAiFixerConsoleMessage(StationAiFixerConsoleAction.Eject);
@@ -108,7 +107,7 @@ public sealed partial class StationAiFixerConsoleWindow : FancyWindow
         };
 
         // Update station AI portrait
-        var spriteSpecifier = new SpriteSpecifier.Rsi(new ResPath(_stationAiRsi), _emptyPortrait);
+        var portrait = _emptyPortrait;
 
         if (stationAiPresent &&
             _entManager.TryGetComponent<StationAiCustomizationComponent>(stationAi, out var stationAiCustomization) &&
@@ -118,16 +117,15 @@ public sealed partial class StationAiFixerConsoleWindow : FancyWindow
 
             if (layerData.TryGetValue(state.ToString(), out var stateData) && stateData.RsiPath != null && stateData.State != null)
             {
-                spriteSpecifier = new SpriteSpecifier.Rsi(new ResPath(stateData.RsiPath), stateData.State);
+                portrait = new SpriteSpecifier.Rsi(new ResPath(stateData.RsiPath), stateData.State);
             }
         }
-        else if (stationAiPresent)
-        {
-            spriteSpecifier = new SpriteSpecifier.Rsi(new ResPath(_stationAiRsi), IsStationAiAlive(stationAi) ? _aiAlivePortrait : _aiDeadPortrait);
-        }
 
-        StationAiPortraitTexture.SetFromSpriteSpecifier(spriteSpecifier);
-        StationAiPortraitTexture.DisplayRect.TextureScale = new Vector2(4f, 4f);
+        if (!_currentPortrait.Equals(portrait))
+        {
+            StationAiPortraitTexture.SetFromSpriteSpecifier(portrait);
+            _currentPortrait = portrait;
+        }
 
         // Update buttons
         EjectButton.Disabled = !intellicardPresent;

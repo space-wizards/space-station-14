@@ -30,11 +30,6 @@ public sealed class StationAiFixerConsoleBoundUserInterface : BoundUserInterface
         _window.OpenConfirmationDialogAction += OpenConfirmationDialog;
     }
 
-    protected override void ReceiveMessage(BoundUserInterfaceMessage message)
-    {
-        _window?.UpdateState();
-    }
-
     private void SendStationAiFixerConsoleMessage(StationAiFixerConsoleAction action)
     {
         SendPredictedMessage(new StationAiFixerConsoleMessage(action));

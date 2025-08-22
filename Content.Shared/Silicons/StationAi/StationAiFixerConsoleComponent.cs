@@ -15,19 +15,17 @@ namespace Content.Shared.Silicons.StationAi;
 public sealed partial class StationAiFixerConsoleComponent : Component
 {
     /// <summary>
-    /// Sets how much damage can be removed per second by this entity.
-    /// This is used to determine how long a repair will take to complete.
-    /// Note that damage removal is only applied to a target once
-    /// <see cref="ActionEndTime"/> has been reached.
+    /// This is used to determine how long a repair will take to complete;
+    /// the duration is the total amount of damage on the target divided
+    /// by this rate (in seconds).
     /// </summary>
     [DataField]
     public float RepairRate = 1.6667f;
 
     /// <summary>
-    /// Sets how much damage is inflicted per second by this entity.
-    /// This is used to determine how long a purge will take to complete.
-    /// Note that damage is only applied to a target once
-    /// <see cref="ActionEndTime"/> has been reached.
+    /// This is used to determine how long a purge will take to complete;
+    /// the duration is the target's last mob damage threshold minus total amount of damage
+    /// that they have already suffered divided by this rate (in seconds).
     /// </summary>
     [DataField]
     public float PurgeRate = 10f;
@@ -47,12 +45,6 @@ public sealed partial class StationAiFixerConsoleComponent : Component
     /// </summary>
     [DataField]
     public Vector2 ActionTimeLimits = new Vector2(10f, 600f);
-
-    /// <summary>
-    /// Sets the damage type to be used when purging a station AI.
-    /// </summary>
-    [DataField]
-    public ProtoId<DamageTypePrototype> PurgeDamageType = "Shock";
 
     /// <summary>
     /// The time at which the current action commenced.
@@ -95,6 +87,18 @@ public sealed partial class StationAiFixerConsoleComponent : Component
     /// </summary>
     [DataField]
     public SoundSpecifier? PurgeFinishedSound = new SoundPathSpecifier("/Audio/Machines/beep.ogg");
+
+    /// <summary>
+    /// The name of the console slot which is used to contain station AI holders.
+    /// </summary>
+    [DataField]
+    public string StationAiHolderSlot = "station_ai_holder";
+
+    /// <summary>
+    /// The name of the station AI holder slot which actually contains the station AI.
+    /// </summary>
+    [DataField]
+    public string StationAiMindSlot = "station_ai_mind_slot";
 }
 
 /// <summary>
