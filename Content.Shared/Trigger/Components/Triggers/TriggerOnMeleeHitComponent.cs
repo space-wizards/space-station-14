@@ -5,46 +5,23 @@ using Robust.Shared.Serialization;
 namespace Content.Shared.Trigger.Components.Triggers;
 
 /// <summary>
-/// Creates a trigger when this entity melees, i.e. <see cref="MeleeHitEvent"/>.
+/// Creates a trigger when this entity is swung as a melee weapon and hits at least one target.
 /// </summary>
-/// <remarks>Despite the name this event happens on every melee swing, even if nothing is hit.</remarks>
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
 public sealed partial class TriggerOnMeleeHitComponent : BaseTriggerOnXComponent
 {
     /// <summary>
-    /// The mode in which this component chooses how to trigger.
+    /// If true, this trigger will activate individually for each entity hit.
+    /// If false, this trigger will always activate only once.
     /// </summary>
     [DataField, AutoNetworkedField]
-    public TriggerOnMeleeHitMode Mode = TriggerOnMeleeHitMode.OnceOnHit;
+    public bool TriggerEveryHit;
 
     /// <summary>
-    /// If true, the "user" of the trigger is the first entity hit by the melee. "First" is arbitrary.
+    /// If true, the "user" of the trigger is the entity hit by the melee.
     /// if false, user is the entity which attacked with the melee weapon.
     /// </summary>
+    /// <remarks>If TriggerEveryHit is false, the user is randomly chosen from hit entities.</remarks>
     [DataField, AutoNetworkedField]
     public bool TargetIsUser;
-}
-
-[Serializable, NetSerializable]
-public enum TriggerOnMeleeHitMode
-{
-    /// <summary>
-    /// One trigger is created only when nothing is hit.
-    /// </summary>
-    OnMiss,
-
-    /// <summary>
-    /// One trigger is always created when swinging the weapon.
-    /// </summary>
-    OnSwing,
-
-    /// <summary>
-    /// One trigger is created only when hitting a target.
-    /// </summary>
-    OnceOnHit,
-
-    /// <summary>
-    /// A trigger is created only when hitting a target, and for every target.
-    /// </summary>
-    EveryHit,
 }
