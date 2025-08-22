@@ -65,11 +65,11 @@
 #          nameGrid: false # Starlight - honors entityName in mining.yml
         cargo_salvage_pioneer: !type:GridSpawnGroup
           paths:
-            - /Maps/_Starlight/Shuttles/cargo_salvage_pioneer.yml
+            - /Maps/_Starlight/Shuttles/Salvage/pioneer.yml
           nameGrid: false
         cargo_mining_breaker: !type:GridSpawnGroup
           paths:
-            - /Maps/_Starlight/Shuttles/cargo_mining_breaker.yml
+            - /Maps/_Starlight/Shuttles/Mining/breaker.yml
           nameGrid: false # Starlight end
         # Spawn last
         ruins: !type:GridSpawnGroup
