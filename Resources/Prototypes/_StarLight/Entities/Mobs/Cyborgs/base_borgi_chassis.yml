@@ -23,6 +23,11 @@
       # Additional layers required for borg states
       - map: ["enum.DamageStateVisualLayers.Base"]
         state: corgi
+      - map: [ "enum.HumanoidVisualLayers.Handcuffs" ]
+        color: "#ffffff"
+        sprite: Objects/Misc/handcuffs.rsi # Would do a custom dog handcuff sprite but unfortunately handcuffs have their overlay baked-in to the cuff itself so this is mostly filler
+        state: body-overlay-2
+        visible: false
       - map: ["enum.BorgVisualLayers.Body"]
         state: corgi
         visible: false
@@ -246,7 +251,7 @@
       tags:
       - Borg
 
-# Syndicate Borgi
+#region Syndicate Borgi
 
 - type: entity
   parent: BaseBorgiChassis
@@ -297,4 +302,4 @@
           name: power-cell-slot-component-slot-name-default
           startingItem: PowerCellHyper
     - type: AccessReader
-      access: [["Syndicate"]]
+      access: [["SyndicateAgent"], ["NuclearOperative"]]
