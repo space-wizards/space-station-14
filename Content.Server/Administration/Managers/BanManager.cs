@@ -217,13 +217,13 @@ public sealed partial class BanManager : IBanManager, IPostInjectInit
     public async void CreateRoleBan(NetUserId? target, string? targetUsername, NetUserId? banningAdmin, (IPAddress, int)? addressRange, ImmutableTypedHwid? hwid, string role, uint? minutes, NoteSeverity severity, string reason, DateTimeOffset timeOfBan)
     {
         // The role ID must be prefixed to designate the type of the role being banned. Currently only two types exist: 'Job:' and 'Antag:'
-        if (role.StartsWith(PrefixJob) && !_prototypeManager.HasIndex<JobPrototype>(role.TrimStart(PrefixJob.ToCharArray())))
+        if (role.StartsWith(PrefixJob) && !_prototypeManager.HasIndex<JobPrototype>(role.Replace(PrefixJob, "")))
         {
             _sawmill.Error($"Role ban, {role}, started with the job prefix ({PrefixJob}) but did not have a valid prototype!");
             //TODO raise event to notify the banning admin about the failure
             return;
         }
-        if (role.StartsWith(PrefixAntag) && !_prototypeManager.HasIndex<AntagPrototype>(role.TrimStart(PrefixAntag.ToCharArray())))
+        if (role.StartsWith(PrefixAntag) && !_prototypeManager.HasIndex<AntagPrototype>(role.Replace(PrefixAntag, "")))
         {
             _sawmill.Error($"Role ban, {role}, started with the antag prefix ({PrefixAntag}) but did not have a valid prototype!");
             //TODO raise event to notify the banning admin about the failure
