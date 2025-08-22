@@ -12296,5 +12296,12 @@ Entries:
   id: 142200
   time: '2025-08-22T14:36:12.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/1422
+- author: walksanatora
+  changes:
+  - message: Languages are now kept when cloning instead of reseting to default values.
+    type: Fix
+  id: 142100
+  time: '2025-08-22T14:37:57.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1421
 Order: -1
 
