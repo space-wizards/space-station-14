@@ -104,7 +104,7 @@ public sealed class SpeedModifierContactsSystem : EntitySystem
                 if (isAirborne && !slowContactsComponent.AffectAirborne)
                     continue;
 
-                if (slowContactsComponent.TileBlacklist != null &&
+                if (slowContactsComponent.TileBlacklist is not null &&
                     TryComp<TransformComponent>(ent, out var transformEnt) &&
                     transformEnt.GridUid is {} gridUid &&
                     TryComp<MapGridComponent>(gridUid, out var grid))
