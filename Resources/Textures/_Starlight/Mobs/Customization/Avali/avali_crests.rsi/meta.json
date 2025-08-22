@@ -1,0 +1,79 @@
+{
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "Sprites by Github MozarteanChaos / Discord mozarteanchaos (213813868282118144) and modified by Github Zeyria / Discord zeyria (232964236186353664)",
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "states": [
+        {
+            "name": "avali_crest_bigponytail_primary",
+            "directions": 4
+        },
+        {
+            "name": "avali_crest_bigponytail_secondary",
+            "directions": 4
+        },
+        {
+            "name": "avali_crest_bigponytail_tertiary",
+            "directions": 4
+        },
+        {
+            "name": "avali_crest_cockatiel_primary",
+            "directions": 4
+        },
+        {
+            "name": "avali_crest_cockatiel_secondary",
+            "directions": 4
+        },
+        {
+            "name": "avali_crest_cockatoo_primary",
+            "directions": 4
+        },
+        {
+            "name": "avali_crest_cockatoo_secondary",
+            "directions": 4
+        },
+        {
+            "name": "avali_crest_dualfeather_primary",
+            "directions": 4
+        },
+        {
+            "name": "avali_crest_dualfeather_secondary",
+            "directions": 4
+        },
+        {
+            "name": "avali_crest_hooked_primary",
+            "directions": 4
+        },
+        {
+            "name": "avali_crest_hooked_secondary",
+            "directions": 4
+        },
+        {
+            "name": "avali_crest_jay_primary",
+            "directions": 4
+        },
+        {
+            "name": "avali_crest_jay_secondary",
+            "directions": 4
+        },
+        {
+            "name": "avali_crest_longfeather_primary",
+            "directions": 4
+        },
+        {
+            "name": "avali_crest_longfeather_secondary",
+            "directions": 4
+        },
+		        {
+            "name": "avali_crest_punk_primary",
+            "directions": 4
+        },
+        {
+            "name": "avali_crest_punk_secondary",
+            "directions": 4
+        }
+    ]
+}

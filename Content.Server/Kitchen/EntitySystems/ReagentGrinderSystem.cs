@@ -13,6 +13,8 @@ using Content.Shared.Kitchen.Components;
 using Content.Shared.Popups;
 using Content.Shared.Random;
 using Content.Shared.Stacks;
+using Content.Shared.Storage;
+using Content.Shared.Storage.Components;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
@@ -175,7 +177,7 @@ namespace Content.Server.Kitchen.EntitySystems
 
             if (!HasComp<ExtractableComponent>(heldEnt))
             {
-                if (!HasComp<FitsInDispenserComponent>(heldEnt))
+                if (!TryInsertFromStorage(entity, heldEnt) && !HasComp<FitsInDispenserComponent>(heldEnt))
                 {
                     // This is ugly but we can't use whitelistFailPopup because there are 2 containers with different whitelists.
                     _popupSystem.PopupEntity(Loc.GetString("reagent-grinder-component-cannot-put-entity-message"), entity.Owner, args.User);
@@ -311,6 +313,37 @@ namespace Content.Server.Kitchen.EntitySystems
                 AudioParams.Default.WithPitchScale(1 / reagentGrinder.WorkTimeMultiplier))?.Entity; //slightly higher pitched
             _userInterfaceSystem.ServerSendUiMessage(uid, ReagentGrinderUiKey.Key,
                 new ReagentGrinderWorkStartedMessage(program));
+        }
+
+        private bool TryInsertFromStorage(Entity<ReagentGrinderComponent> ent, EntityUid used)
+        {
+            // If there's no storage component, ollie out of this function
+            if (!TryComp<StorageComponent>(used, out var storage))
+                return false;
+            // We don't need to iterate through all the items if there are no items
+            if (storage.StoredItems.Count == 0)
+                return false;
+
+            var inputContainer = _containerSystem.EnsureContainer<Container>(ent, SharedReagentGrinder.InputContainerId);
+            bool hasInserted = false;
+
+            // Find every item with the ExtractableComponent and put it into the grinder
+            foreach (var (item, _location) in storage.StoredItems)
+            {
+                // If the grinder is full, we are done
+                if (inputContainer.ContainedEntities.Count >= ent.Comp.StorageMaxEntities)
+                    return true;
+                // Skip item if it doesn't have the Extractable component
+                if (!HasComp<ExtractableComponent>(item))
+                    continue;
+                // Returns false if something we should be able to put in fails to be put in
+                if (!_containerSystem.Insert(item, inputContainer))
+                    return false;
+                else
+                    hasInserted = true;
+            }
+
+            return hasInserted;
         }
 
         private void ClickSound(Entity<ReagentGrinderComponent> reagentGrinder)

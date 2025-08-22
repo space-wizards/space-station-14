@@ -64,7 +64,7 @@ public sealed class VentCrittersRule : StationEventSystem<VentCrittersRuleCompon
         var players = _antag.GetTotalPlayerCount(_player.Sessions);
         var min = comp.Min * players / comp.PlayerRatio;
         var max = comp.Max * players / comp.PlayerRatio;
-        var count = Math.Max(RobustRandom.Next(min, max), 1);
+        var count = Math.Min(Math.Max(RobustRandom.Next(min, max), comp.Floor), comp.Ceiling); // Ronstation - Added a Math.Min to cap how many critters can spawn
         Log.Info($"Spawning {count} critters for {ToPrettyString(uid):rule}");
         for (int i = 0; i < count; i++)
         {

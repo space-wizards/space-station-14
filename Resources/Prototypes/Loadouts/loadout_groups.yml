@@ -37,6 +37,12 @@
   - ClothingNeckTransPin
   - ClothingNeckAutismPin
   - ClothingNeckGoldAutismPin
+  - OffsetCane
+  - OffsetCaneWood
+  - OffsetCaneClown
+  - OffsetCaneMime
+  - OffsetCaneNT
+  - Cane
   - TowelColorBlack
   - TowelColorDarkBlue
   - TowelColorDarkGreen
@@ -917,6 +923,11 @@
   - ScientistBackpack
   - ScientistSatchel
   - ScientistDuffel
+  # Ronstation - start of modifications.
+  - RoboticistBackpack
+  - RoboticistSatchel
+  - RoboticistDuffel
+  # Ronstation - end of modifications.
 
 - type: loadoutGroup
   id: ScientistOuterClothing

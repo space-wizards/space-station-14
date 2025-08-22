@@ -1,0 +1,60 @@
+# Modified by Ronstation contributor(s), therefore this file is licensed as MIT sublicensed with AGPL-v3.0.
+
+- type: entity
+  parent: OrganHumanStomach
+  id: OrganAvaliStomach
+  description: The source of all the hunger of a ravenous raptor. # Ronstation
+  suffix: avali # Ronstation
+  components:
+  - type: Metabolizer
+    updateInterval: 0.7 # Ronstation
+    metabolizerTypes: [Avali]
+
+- type: entity
+  parent: OrganHumanHeart
+  id: OrganAvaliHeart
+  description: A rapid little blood pump from a rapid little raptor. # Ronstation
+  suffix: avali # Ronstation
+  components:
+  - type: Metabolizer
+    updateInterval: 0.7
+    metabolizerTypes: [Avali]
+
+# start of modifications
+- type: entity
+  parent: OrganHumanLungs
+  id: OrganAvaliLungs
+  description: The nitrogen breathing lungs of an avali. Not hindered by oxygen.
+  suffix: avali
+  components:
+  - type: Sprite
+    sprite: Mobs/Species/Vox/organs.rsi # i would like to sprite unique organs for ALL species at SOME point. but that is not pressing or productive right now.
+  - type: Metabolizer
+    # not making lungs metabolize faster because that might get janky as fuck
+    metabolizerTypes: [Avali]
+  - type: Lung
+    alert: LowNitrogen
+  - type: Item
+    size: Small
+    heldPrefix: lungs
+
+- type: entity
+  parent: OrganHumanLiver
+  id: OrganAvaliLiver
+  description: A hammered night and hungover morning all in the span of one evening.
+  suffix: avali
+  components:
+  - type: Metabolizer
+    updateInterval: 0.7
+    metabolizerTypes: [Avali]
+
+- type: entity
+  parent: OrganHumanKidneys
+  id: OrganAvaliKidneys
+  description: "'Well I didn't need to ten minutes ago!'"
+  suffix: avali
+  components:
+  - type: Metabolizer
+    updateInterval: 0.7
+    metabolizerTypes: [Avali]
+# end of modifications

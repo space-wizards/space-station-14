@@ -1,9 +1,12 @@
+# Modified by Ronstation contributor(s), therefore this file is licensed as MIT sublicensed with AGPL-v3.0.
+
 # Species
 - type: loadoutEffectGroup
   id: NitrogenBreather
   effects:
   - !type:SpeciesLoadoutEffect
     species:
+    - Avali # Ronstation
     - SlimePerson
     - Vox
 

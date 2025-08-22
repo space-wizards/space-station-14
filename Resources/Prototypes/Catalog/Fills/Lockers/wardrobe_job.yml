@@ -1,3 +1,4 @@
+# Modified by Ronstation contributor(s), therefore this file is licensed as MIT sublicensed with AGPL-v3.0.
 - type: entity
   id: WardrobePrisonFilled
   suffix: Filled
@@ -102,6 +103,7 @@
     children:
     - id: ClothingUniformJumpsuitRoboticist
     - id: ClothingUniformJumpskirtRoboticist
+    - id: ClothingBackpackRoboticist # Ronstation - modification.
     - !type:AllSelector
       rolls: 2
       children:

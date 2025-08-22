@@ -5,6 +5,7 @@
 
   <Box>
   <GuideEntityEmbed Entity="MobArachnid" Caption="Arachnid"/>
+  <GuideEntityEmbed Entity="MobAvali" Caption="Avali"/>
   <GuideEntityEmbed Entity="MobDiona" Caption="Diona"/>
   <GuideEntityEmbed Entity="MobDwarf" Caption="Dwarf"/>
   <GuideEntityEmbed Entity="MobHuman" Caption="Human"/>
