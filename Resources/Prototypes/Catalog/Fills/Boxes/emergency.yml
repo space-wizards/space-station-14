@@ -20,8 +20,8 @@
 
 - type: entity
   parent: BoxSurvival
-  id: BoxSurvivalMoth
-  suffix: Standard moth
+  id: BoxSurvivalFiber
+  suffix: Standard fiber
   components:
   - type: StorageFill
     contents:
@@ -74,8 +74,8 @@
 
 - type: entity
   parent: BoxSurvivalEngineering
-  id: BoxSurvivalEngineeringMoth
-  suffix: Extended moth
+  id: BoxSurvivalEngineeringFiber
+  suffix: Extended fiber
   components:
   - type: StorageFill
     contents:
@@ -129,8 +129,8 @@
 
 - type: entity
   parent: BoxSurvivalSecurity
-  id: BoxSurvivalSecurityMoth
-  suffix: Security moth
+  id: BoxSurvivalSecurityFiber
+  suffix: Security fiber
   components:
   - type: StorageFill
     contents:
@@ -184,8 +184,8 @@
 
 - type: entity
   parent: BoxSurvivalMedical
-  id: BoxSurvivalMedicalMoth
-  suffix: Medical moth
+  id: BoxSurvivalMedicalFiber
+  suffix: Medical fiber
   components:
   - type: StorageFill
     contents:
@@ -243,8 +243,8 @@
 
 - type: entity
   parent: BoxHug
-  id: BoxHugMoth
-  suffix: Emergency moth
+  id: BoxHugFiber
+  suffix: Emergency fiber
   components:
   - type: StorageFill
     contents:
@@ -307,8 +307,8 @@
 
 - type: entity
   parent: BoxSurvival
-  id: BoxMimeMoth
-  suffix: Mime, Emergency moth
+  id: BoxMimeFiber
+  suffix: Mime, Emergency fiber
   components:
   - type: StorageFill
     contents:
@@ -340,8 +340,8 @@
 
 - type: entity
   parent: BoxSurvivalSyndicate
-  id: BoxSurvivalSyndicateMoth
-  suffix: Syndicate moth
+  id: BoxSurvivalSyndicateFiber
+  suffix: Syndicate fiber
   components:
   - type: StorageFill
     contents:

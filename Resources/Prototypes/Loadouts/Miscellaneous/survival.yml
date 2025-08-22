@@ -19,7 +19,7 @@
     - Reptilian
 
 - type: loadoutEffectGroup
-  id: EffectSpeciesMoth
+  id: OxygenBreatherFiberEater
   effects:
   - !type:SpeciesLoadoutEffect
     species:
@@ -52,10 +52,10 @@
     - BoxSurvivalNitrogen
 
 - type: loadout
-  id: EmergencySpeciesMoth
+  id: EmergencyOxygenFiber
   effects:
   - !type:GroupLoadoutEffect
-    proto: EffectSpeciesMoth
+    proto: OxygenBreatherFiberEater
   storage:
     back:
     - BoxSurvivalMoth
@@ -80,10 +80,10 @@
     - BoxHugNitrogen
 
 - type: loadout
-  id: EmergencySpeciesMothClown
+  id: EmergencyOxygenFiberClown
   effects:
   - !type:GroupLoadoutEffect
-    proto: EffectSpeciesMoth
+    proto: OxygenBreatherFiberEater
   storage:
     back:
     - BoxHugMoth
@@ -108,10 +108,10 @@
     - BoxMimeNitrogen
 
 - type: loadout
-  id: EmergencySpeciesMothMime
+  id: EmergencyOxygenFiberMime
   effects:
   - !type:GroupLoadoutEffect
-    proto: EffectSpeciesMoth
+    proto: OxygenBreatherFiberEater
   storage:
     back:
     - BoxMimeMoth
@@ -136,10 +136,10 @@
     - BoxSurvivalEngineeringNitrogen
 
 - type: loadout
-  id: EmergencySpeciesMothExtended
+  id: EmergencyOxygenFiberExtended
   effects:
   - !type:GroupLoadoutEffect
-    proto: EfectSpeciesMoth
+    proto: OxygenBreatherFiberEater
   storage:
     back:
     - BoxSurvivalEngineeringMoth
@@ -164,10 +164,10 @@
     - BoxSurvivalMedicalNitrogen
 
 - type: loadout
-  id: EmergencySpeciesMothMedical
+  id: EmergencyOxygenFiberMedical
   effects:
   - !type:GroupLoadoutEffect
-    proto: EffectSpeciesMoth
+    proto: OxygenBreatherFiberEater
   storage:
     back:
     - BoxSurvivalMedicalMoth
@@ -192,10 +192,10 @@
     - BoxSurvivalSecurityNitrogen
 
 - type: loadout
-  id: EmergencySpeciesMothSecurity
+  id: EmergencyOxygenFiberSecurity
   effects:
   - !type:GroupLoadoutEffect
-    proto: EffectSpeciesMoth
+    proto: OxygenBreatherFiberEater
   storage:
     back:
     - BoxSurvivalSecurityMoth
@@ -220,10 +220,10 @@
     - BoxSurvivalSyndicateNitrogen
 
 - type: loadout
-  id: EmergencySpeciesMothSyndicate
+  id: EmergencyOxygenFiberSyndicate
   effects:
   - !type:GroupLoadoutEffect
-    proto: EffectSpeciesMoth
+    proto: OxygenBreatherFiberEater
   storage:
     back:
     - BoxSurvivalSyndicateMoth
