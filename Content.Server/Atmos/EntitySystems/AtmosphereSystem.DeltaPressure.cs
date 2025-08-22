@@ -195,10 +195,6 @@ public sealed partial class AtmosphereSystem
             // so we need to add it to the startIndex.
             var actualIndex = startIndex + index;
 
-            // Index can occasionally be out of bounds. :)
-            if (actualIndex < 0 || actualIndex >= atmosphere.DeltaPressureEntities.Count)
-                return;
-
             var ent = atmosphere.DeltaPressureEntities[actualIndex];
             system.ProcessDeltaPressureEntity(ent, atmosphere);
         }

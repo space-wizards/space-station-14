@@ -487,7 +487,7 @@ namespace Content.Server.Atmos.EntitySystems
             var toProcess = Math.Min(batchSize, remaining);
 
             var timeCheck1 = 0;
-            while (atmosphere.DeltaPressureCursor != count)
+            while (atmosphere.DeltaPressureCursor < count)
             {
                 var job = new DeltaPressureParallelJob(this,
                     atmosphere,
