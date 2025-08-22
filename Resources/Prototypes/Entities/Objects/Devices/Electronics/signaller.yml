@@ -51,7 +51,7 @@
 
 - type: entity
   parent: RemoteSignaller
-  id: BrokenRemoteSignaller
+  id: RemoteSignallerBroken
   name: broken remote signaller
   description: A handheld device used for remotely sending signals. Frequently shocks the user.
   suffix: DEBUG

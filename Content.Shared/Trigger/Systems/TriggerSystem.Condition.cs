@@ -22,29 +22,47 @@ public sealed partial class TriggerSystem
 
     private void OnWhitelistTriggerAttempt(Entity<WhitelistTriggerConditionComponent> ent, ref AttemptTriggerEvent args)
     {
-        if (args.Key == null || ent.Comp.Keys.Contains(args.Key))
-            args.Cancelled |= !_whitelist.CheckBoth(args.User, ent.Comp.UserBlacklist, ent.Comp.UserWhitelist);
+        if (args.Cancelled && ent.Comp.CancelKeyOut == null)
+            return;
 
-        if (args.Cancelled)
-            args.CancelKeys.Add(ent.Comp.CancelKeyOut);
+        if (args.Key == null || ent.Comp.Keys.Contains(args.Key))
+        {
+            var cancel = !_whitelist.CheckBoth(args.User, ent.Comp.UserBlacklist, ent.Comp.UserWhitelist);
+
+            args.Cancelled |= cancel;
+            if (cancel && ent.Comp.CancelKeyOut != null) // Only add the key if this condition (not another condition) would cancel it.
+                args.CancelKeys.Add(ent.Comp.CancelKeyOut);
+        }
     }
 
     private void OnUseDelayTriggerAttempt(Entity<UseDelayTriggerConditionComponent> ent, ref AttemptTriggerEvent args)
     {
-        if (args.Key == null || ent.Comp.Keys.Contains(args.Key))
-            args.Cancelled |= _useDelay.IsDelayed(ent.Owner, ent.Comp.UseDelayId);
+        if (args.Cancelled && ent.Comp.CancelKeyOut == null)
+            return;
 
-        if (args.Cancelled)
-            args.CancelKeys.Add(ent.Comp.CancelKeyOut);
+        if (args.Key == null || ent.Comp.Keys.Contains(args.Key))
+        {
+            var cancel = _useDelay.IsDelayed(ent.Owner, ent.Comp.UseDelayId);
+
+            args.Cancelled |= cancel;
+            if (cancel && ent.Comp.CancelKeyOut != null)
+                args.CancelKeys.Add(ent.Comp.CancelKeyOut);
+        }
     }
 
     private void OnToggleTriggerAttempt(Entity<ToggleTriggerConditionComponent> ent, ref AttemptTriggerEvent args)
     {
-        if (args.Key == null || ent.Comp.Keys.Contains(args.Key))
-            args.Cancelled |= !ent.Comp.Enabled;
+        if (args.Cancelled && ent.Comp.CancelKeyOut == null)
+            return;
 
-        if (args.Cancelled)
-            args.CancelKeys.Add(ent.Comp.CancelKeyOut);
+        if (args.Key == null || ent.Comp.Keys.Contains(args.Key))
+        {
+            var cancel = !ent.Comp.Enabled;
+
+            args.Cancelled |= cancel;
+            if (cancel && ent.Comp.CancelKeyOut != null)
+                args.CancelKeys.Add(ent.Comp.CancelKeyOut);
+        }
     }
 
     private void OnToggleGetAltVerbs(Entity<ToggleTriggerConditionComponent> ent, ref GetVerbsEvent<AlternativeVerb> args)
@@ -72,6 +90,9 @@ public sealed partial class TriggerSystem
     private void OnRandomChanceTriggerAttempt(Entity<RandomChanceTriggerConditionComponent> ent,
         ref AttemptTriggerEvent args)
     {
+        if (args.Cancelled && ent.Comp.CancelKeyOut == null)
+            return;
+
         if (args.Key == null || ent.Comp.Keys.Contains(args.Key))
         {
             // TODO: Replace with RandomPredicted once the engine PR is merged
@@ -84,10 +105,11 @@ public sealed partial class TriggerSystem
             var seed = SharedRandomExtensions.HashCodeCombine(hash);
             var rand = new System.Random(seed);
 
-            args.Cancelled |= !rand.Prob(ent.Comp.SuccessChance); // When not successful, Cancelled = true
-        }
+            var cancel = !rand.Prob(ent.Comp.SuccessChance); // When not successful, cancel = true
 
-        if (args.Cancelled)
-            args.CancelKeys.Add(ent.Comp.CancelKeyOut);
+            args.Cancelled |= cancel;
+            if (cancel && ent.Comp.CancelKeyOut != null)
+                args.CancelKeys.Add(ent.Comp.CancelKeyOut);
+        }
     }
 }

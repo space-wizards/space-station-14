@@ -24,7 +24,7 @@ public record struct TriggerEvent(EntityUid? User = null, string? Key = null, bo
 /// </param>
 /// <param name="Cancelled">Marks if the attempt has failed and to not go through with the trigger.</param>
 [ByRefEvent]
-public record struct AttemptTriggerEvent(EntityUid? User, HashSet<string?> CancelKeys, string? Key = null, bool Cancelled = false);
+public record struct AttemptTriggerEvent(EntityUid? User, HashSet<string> CancelKeys, string? Key = null, bool Cancelled = false);
 
 /// <summary>
 /// Raised when a timer trigger becomes active.
