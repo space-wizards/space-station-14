@@ -196,7 +196,7 @@
 - type: construction
   id: WallSolidDiagonal
   name: construction-recipe-diagonal-wall
-  graph: GirderDiagonalDiagonal
+  graph: GirderDiagonal
   startNode: start
   targetNode: wallDiagonal
   category: construction-category-structures
