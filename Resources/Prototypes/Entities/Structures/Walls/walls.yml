@@ -730,8 +730,7 @@
     resistance: 5
   - type: Construction
     graph: GirderDiagonal
-    node: wallReinforcedDiagonal
-
+    node: reinforcedWallDiagonal
 # Riveting
 - type: entity
   parent: BaseWall
