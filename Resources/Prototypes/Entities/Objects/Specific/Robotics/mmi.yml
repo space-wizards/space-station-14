@@ -4,6 +4,16 @@
   name: man-machine interface
   description: A machine able to facilitate communication between a biological brain and electronics, enabling crew to continue to provide value after work-related incidents.
   components:
+  # Starlight-start: Languages
+  - type: LanguageSpeaker
+  - type: LanguageKnowledge
+    speaks:
+    - GalacticCommon
+    - Machine
+    understands:
+    - GalacticCommon
+    - Machine
+  # Starlight-end
   - type: Sprite
     sprite: Objects/Specific/Robotics/mmi.rsi
     layers:
@@ -74,6 +84,15 @@
   name: positronic brain
   description: An artificial brain capable of spontaneous neural activity.
   components:
+  # Starlight-start: Languages
+    - type: LanguageKnowledge
+      speaks:
+      - GalacticCommon
+      - Machine
+      understands:
+      - GalacticCommon
+      - Machine
+  # Starlight-end
     - type: Sprite
       sprite: Objects/Specific/Robotics/mmi.rsi
       layers:

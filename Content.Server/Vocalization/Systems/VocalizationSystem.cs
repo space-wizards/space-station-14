@@ -4,6 +4,7 @@ using Content.Server.Vocalization.Components;
 using Content.Shared.ActionBlocker;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
+using Content.Shared.Chat; // Starlight
 
 namespace Content.Server.Vocalization.Systems;
 

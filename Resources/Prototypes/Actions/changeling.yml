@@ -19,4 +19,8 @@
       collection: gib # Placeholder
     retractSounds:
       collection: gib # Placeholder
+  #Starlight edit: changeling action costs
+  - type: ChangelingAction
+    chemicalCost: 30
+    requireAbsorbed: 2
 

@@ -3,7 +3,7 @@
   abstract: true
   components:
   - type: Store
-    name: store-preset-name-uplink
+    name: store-preset-name-shuttle-uplink
     categories:
     - ShuttleUplinkEquipment
     - ShuttleUplinkResources
@@ -20,7 +20,7 @@
   abstract: true
   components:
   - type: Store
-    name: store-preset-name-uplink
+    name: store-preset-name-shuttle-uplink-dangerous
     categories:
     - ShuttleUplinkEquipment
     - ShuttleUplinkResources
@@ -41,7 +41,7 @@
   abstract: true
   components:
   - type: Store
-    name: store-preset-name-uplink
+    name: store-preset-name-soviet-uplink
     categories:
     - RevUplinkWeaponry
     - RevUplinkPassive

@@ -12077,5 +12077,266 @@ Entries:
   id: 138400
   time: '2025-08-20T17:38:35.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/1384
+- author: FoxxoTrystan
+  changes:
+  - message: Languages!
+    type: Add
+  id: 125300
+  time: '2025-08-21T11:11:20.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1253
+- author: walksantora
+  changes:
+  - message: Abductor scientist gizmo no longer implants the tracker no matter what.
+    type: Fix
+  id: 140900
+  time: '2025-08-21T11:13:28.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1409
+- author: PubliclyExecutedPig
+  changes:
+  - message: Fixed being able to put the Pitbull's magazine in the chamber.
+    type: Fix
+  id: 136800
+  time: '2025-08-21T11:17:54.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1368
+- author: AndrewTateOfficialSS14
+  changes:
+  - message: Maxcap's radius cap upped to 15 instead of 10 .
+    type: Tweak
+  id: 137700
+  time: '2025-08-21T11:19:53.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1377
+- author: walksanatora
+  changes:
+  - message: Some stores (revenant, pai) have gotten a slight name tweak.
+    type: Tweak
+  id: 136100
+  time: '2025-08-21T11:21:42.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1361
+- author: walksanatora
+  changes:
+  - message: AIs are now properly informed of law updates when shunting.
+    type: Fix
+  id: 141000
+  time: '2025-08-21T11:23:26.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1410
+- author: Trep_Maul
+  changes:
+  - message: AME now heals slowly (faster if underloaded)
+    type: Add
+  id: 136600
+  time: '2025-08-21T11:25:35.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1366
+- author: Happyrobot33
+  changes:
+  - message: Added species language to borgs and mmi as understand.
+    type: Add
+  id: 141200
+  time: '2025-08-21T12:57:21.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1412
+- author: Happyrobot33
+  changes:
+  - message: Changed machine language to use a font instead.
+    type: Tweak
+  id: 141201
+  time: '2025-08-21T12:57:21.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1412
+- author: walksanatora
+  changes:
+  - message: Changeling transform now uses a selector wheel
+    type: Tweak
+  id: 138500
+  time: '2025-08-21T14:22:42.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1385
+- author: walksanatora
+  changes:
+  - message: Changelings devour is alot more violent.
+    type: Tweak
+  id: 138501
+  time: '2025-08-21T14:22:42.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1385
+- author: FoxxoTrystan
+  changes:
+  - message: Fixed Language Font being disabled on bold.
+    type: Fix
+  id: 141400
+  time: '2025-08-21T16:51:40.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1414
+- author: FoxxoTrystan
+  changes:
+  - message: Universal not be able to be selected.
+    type: Fix
+  id: 141401
+  time: '2025-08-21T16:51:40.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1414
+- author: FoxxoTrystan
+  changes:
+  - message: Borgs/AI can now understand Scratch and SolCommon.
+    type: Tweak
+  id: 141402
+  time: '2025-08-21T16:51:40.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1414
+- author: FoxxoTrystan
+  changes:
+  - message: Dragonic now use a font.
+    type: Tweak
+  id: 141403
+  time: '2025-08-21T16:51:40.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1414
+- author: FoxxoTrystan
+  changes:
+  - message: Slimes now speak correctly bubblish.
+    type: Add
+  id: 141404
+  time: '2025-08-21T16:51:40.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1414
+- author: walksanatora
+  changes:
+  - message: Borgis now are properly able to understand languages of the station.
+    type: Fix
+  id: 141300
+  time: '2025-08-21T17:21:24.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1413
+- author: walksanatora
+  changes:
+  - message: Station AI can now understand resomi and sol common
+    type: Fix
+  id: 141301
+  time: '2025-08-21T17:21:24.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1413
+- author: walksanatora
+  changes:
+  - message: Borgs can now understand resomi and sol common
+    type: Fix
+  id: 141302
+  time: '2025-08-21T17:21:24.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1413
+- author: QuinAver
+  changes:
+  - message: Added gamerule for Mining Shuttle.
+    type: Add
+  id: 139500
+  time: '2025-08-21T18:15:49.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1395
+- author: QuinAver
+  changes:
+  - message: Added gamerule for Security Shuttle.
+    type: Add
+  id: 139501
+  time: '2025-08-21T18:15:49.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1395
+- author: QuinAver
+  changes:
+  - message: Folder structure in shuttles.
+    type: Tweak
+  id: 139502
+  time: '2025-08-21T18:15:49.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1395
+- author: Happyrobot33
+  changes:
+  - message: Fixed MMI's not being able to speak or understand languages.
+    type: Fix
+  id: 141600
+  time: '2025-08-21T19:53:44.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1416
+- author: Rinary
+  changes:
+  - message: Now you can't detect abductor eye with t-ray scanner.
+    type: Fix
+  id: 141700
+  time: '2025-08-21T20:59:27.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1417
+- author: walksanatora
+  changes:
+  - message: Changelings now actually get their shop, biomass, chems, etc... after
+      the upstream merge.
+    type: Fix
+  id: 142800
+  time: '2025-08-22T14:24:07.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1428
+- author: Rinary
+  changes:
+  - message: Fixed bug when anyone can unlock any borgi.
+    type: Fix
+  id: 142600
+  time: '2025-08-22T14:27:46.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1426
+- author: Rinary
+  changes:
+  - message: Fixed bug when borgi can't be destroyed.
+    type: Fix
+  id: 142601
+  time: '2025-08-22T14:27:46.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1426
+- author: Rinary
+  changes:
+  - message: Fixed bug when some borgis don't have powercells and brains on spawn.
+    type: Fix
+  id: 142602
+  time: '2025-08-22T14:27:46.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1426
+- author: Rinary
+  changes:
+  - message: Fixed issue when right clicking shuttle console enters piloting mode.
+    type: Fix
+  id: 142400
+  time: '2025-08-22T14:31:19.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1424
+- author: Rinary
+  changes:
+  - message: Fixed trasparent letters and packages from emagged mail teleporter.
+    type: Fix
+  id: 142300
+  time: '2025-08-22T14:34:11.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1423
+- author: walksanatora
+  changes:
+  - message: That gorilla serum implant I can never say right is fixed and no longer
+      places a gorilla in your bloodstream.
+    type: Fix
+  id: 142200
+  time: '2025-08-22T14:36:12.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1422
+- author: walksanatora
+  changes:
+  - message: Languages are now kept when cloning instead of reseting to default values.
+    type: Fix
+  id: 142100
+  time: '2025-08-22T14:37:57.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1421
+- author: CringeCursed
+  changes:
+  - message: Fixed bug that prevented the Mechs from firing.
+    type: Fix
+  id: 141800
+  time: '2025-08-22T14:40:34.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1418
+- author: CringeCursed
+  changes:
+  - message: Now you cant crawl inside Mech.
+    type: Tweak
+  id: 141801
+  time: '2025-08-22T14:40:34.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1418
+- author: Rinary
+  changes:
+  - message: Fixed bug when you take double items when cooking something.
+    type: Fix
+  id: 136900
+  time: '2025-08-22T14:43:43.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1369
+- author: STARLIGHT TEAM
+  changes:
+  - message: Fixed Discord ID in bans.
+    type: Fix
+  id: 141500
+  time: '2025-08-22T14:49:56.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1415
+- author: Happyrobot33
+  changes:
+  - message: Fixed AI Interface cube not having all languages
+    type: Fix
+  id: 143100
+  time: '2025-08-22T19:42:20.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1431
 Order: -1
 

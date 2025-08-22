@@ -45,7 +45,7 @@
     - Wizard
     - KesslerSyndromeScheduler
     - RampingStationEventScheduler
-    - Changeling
+    - SLChangeling #Starlight
     - SpaceTrafficControlEventScheduler
     - BasicRoundstartVariation
 
@@ -297,7 +297,7 @@
   description: changeling-gamemode-description
   showInVote: false
   rules:
-    - Changeling
+    - SLChangeling #Starlight
     - SubGamemodesRule
     - BasicStationEventScheduler
     - BasicRoundstartVariation
@@ -312,7 +312,7 @@
   showInVote: true #Starlight
   minPlayers: 50 #Starlight
   rules:
-    - Changeling
+    - SLChangeling #Starlight
     - Traitor
     - SubGamemodesRuleNoChangelings #Starlight
     - BasicStationEventScheduler
