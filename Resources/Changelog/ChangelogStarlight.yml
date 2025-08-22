@@ -12253,5 +12253,26 @@ Entries:
   id: 142800
   time: '2025-08-22T14:24:07.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/1428
+- author: Rinary
+  changes:
+  - message: Fixed bug when anyone can unlock any borgi.
+    type: Fix
+  id: 142600
+  time: '2025-08-22T14:27:46.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1426
+- author: Rinary
+  changes:
+  - message: Fixed bug when borgi can't be destroyed.
+    type: Fix
+  id: 142601
+  time: '2025-08-22T14:27:46.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1426
+- author: Rinary
+  changes:
+  - message: Fixed bug when some borgis don't have powercells and brains on spawn.
+    type: Fix
+  id: 142602
+  time: '2025-08-22T14:27:46.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1426
 Order: -1
 
