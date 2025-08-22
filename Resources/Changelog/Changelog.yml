@@ -1,148 +1,4 @@
 ﻿Entries:
-- author: Blackern5000
-  changes:
-  - message: Inaprovaline now heals slower, but lingers in the bloodstream for much
-      longer, making it much more useful for stabilizing critical patients for an
-      extended duration rather than outright treating damage.
-    type: Tweak
-  id: 8345
-  time: '2025-04-25T06:03:04.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/32293
-- author: kosticia
-  changes:
-  - message: Moths can no longer eat rubber toys.
-    type: Fix
-  id: 8346
-  time: '2025-04-25T07:20:09.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/34543
-- author: chromiumboy
-  changes:
-  - message: Gas vent under-pressure lockout releases are now performed using the
-      right-click menu - a screwdriver is no longer required
-    type: Tweak
-  id: 8347
-  time: '2025-04-25T07:21:00.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/36910
-- author: chromiumboy
-  changes:
-  - message: Ghosts will now follow the AI when it activates a holopad or answers
-      a holo-call
-    type: Fix
-  id: 8348
-  time: '2025-04-25T10:30:40.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/36355
-- author: Radezolid
-  changes:
-  - message: Fixed some donuts not counting towards the donuts bounty for cargo.
-    type: Fix
-  id: 8349
-  time: '2025-04-25T15:07:50.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/36903
-- author: Kiri-Yoshikage
-  changes:
-  - message: Atomic Bomb cocktail is now mixed in 10u instead of 11.
-    type: Tweak
-  id: 8350
-  time: '2025-04-25T15:33:14.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/36921
-- author: EmoGarbage404
-  changes:
-  - message: Added 3 modkits for the proto-kinetic accelerator, granting increased
-      damage, range, and fire rate. They can be researched via the new "Kinetic Modifications"
-      arsenal tech.
-    type: Add
-  - message: Reduced damage and range on the proto-kinetic accelerator.
-    type: Tweak
-  id: 8351
-  time: '2025-04-25T18:18:24.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/31247
-- author: Wolfkey-SomeoneElseTookMyUsername
-  changes:
-  - message: Added cotton buns, which can be be used for the creation of custom burgers
-      that can be eaten by moths.
-    type: Add
-  id: 8352
-  time: '2025-04-26T01:54:14.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/36405
-- author: Booblesnoot42
-  changes:
-  - message: Due to a lack of functionality, light-switches have temporarily been
-      removed from the construction menu.
-    type: Remove
-  id: 8353
-  time: '2025-04-26T01:54:23.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/34664
-- author: OnyxTheBrave
-  changes:
-  - message: Cloth is now able to be made in the Sheet-Meister 2000
-    type: Add
-  id: 8354
-  time: '2025-04-26T03:22:52.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/32676
-- author: SyaoranFox
-  changes:
-  - message: Pulse Pistol, Pulse Carbine, and Pulse Rifle now share the same sound
-      file.
-    type: Tweak
-  id: 8355
-  time: '2025-04-26T13:36:51.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/36952
-- author: RedBookcase
-  changes:
-  - message: Various changes to edged weapons, including new storage sprites and new
-      storage options.
-    type: Add
-  id: 8356
-  time: '2025-04-26T20:45:08.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/36564
-- author: archee1, Beck
-  changes:
-  - message: Inflatable walls no longer instantly deconstruct if canceled.
-    type: Fix
-  id: 8357
-  time: '2025-04-26T20:56:18.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/36937
-- author: ScarKy0
-  changes:
-  - message: Deliveries now have a random multiplier added to them, slightly modifying
-      their earnings.
-    type: Add
-  - message: Deliveries now show how many spesos they grant on examine.
-    type: Tweak
-  id: 8358
-  time: '2025-04-26T21:42:27.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/36918
-- author: sowelipililimute
-  changes:
-  - message: Medical and security techfab will no longer announce more than five recipes
-      at once, avoiding chat flooding
-    type: Tweak
-  id: 8359
-  time: '2025-04-26T21:45:53.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/36945
-- author: Nox38
-  changes:
-  - message: Added descriptions for the .30 caliber and weapons.
-    type: Add
-  id: 8360
-  time: '2025-04-26T21:48:40.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/36958
-- author: UpAndLeaves
-  changes:
-  - message: The CMO's hardsuit has been redesigned with extra durathread to withstand
-      zombie bites more effectively.
-    type: Tweak
-  id: 8361
-  time: '2025-04-26T21:49:01.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/36957
-- author: Centronias
-  changes:
-  - message: Parcel wrap, purchasable from cargo, which allows you to wrap items in
-      paper so you can give people surprise gifts... like bombs.
-    type: Add
-  id: 8362
-  time: '2025-04-26T23:24:25.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/34471
 - author: TiniestShark
   changes:
   - message: Inhand sprites for (most) ammo mags and speedloaders.
@@ -3956,3 +3812,140 @@
   id: 8857
   time: '2025-08-16T06:59:58.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/39303
+- author: youtissoum
+  changes:
+  - message: The usage delay of the bananium horn is now 3 seconds.
+    type: Tweak
+  id: 8858
+  time: '2025-08-16T23:04:12.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/39674
+- author: august-sun
+  changes:
+  - message: Pacifists can now use the practice disabler, practice laser rifle, disabler,
+      and disabler SMG.
+    type: Tweak
+  id: 8859
+  time: '2025-08-17T19:25:31.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37164
+- author: Velcroboy
+  changes:
+  - message: Changed hamster crates are now able to be placed on top of tables.
+    type: Tweak
+  id: 8860
+  time: '2025-08-17T19:30:41.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37953
+- author: psykana
+  changes:
+  - message: Ninja now spawns breathing from his gas tank instead of jetpack
+    type: Fix
+  id: 8861
+  time: '2025-08-18T00:25:26.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/35067
+- author: ScarKy0
+  changes:
+  - message: Jump boots can no longer be used when knocked down.
+    type: Fix
+  id: 8862
+  time: '2025-08-18T12:22:36.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/39710
+- author: SlamBamActionman
+  changes:
+  - message: Stamina resistance has been removed from cardboard armor and gorillas.
+    type: Tweak
+  id: 8863
+  time: '2025-08-18T14:33:16.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/39727
+- author: SlamBamActionman
+  changes:
+  - message: Aiming with the Hristov is now working correctly when using the Separated
+      Chat HUD mode.
+    type: Fix
+  - message: Cursor targetting with the Hristov now correctly selects the target underneath
+      the cursor.
+    type: Fix
+  id: 8864
+  time: '2025-08-18T18:22:02.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/35087
+- author: Zokkie
+  changes:
+  - message: Lone Operative is now assigned the Solo Antagonist role ingame instead
+      of the Team Antagonist role.
+    type: Fix
+  id: 8865
+  time: '2025-08-18T18:57:30.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/36521
+- author: beck-thompson, slarticodefast
+  changes:
+  - message: Fixed rebinding keys crashing the client.
+    type: Fix
+  id: 8866
+  time: '2025-08-18T18:58:30.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/39732
+- author: Princess-Cheeseballs
+  changes:
+  - message: Being a Lightweight drunk no longer extends your bloodloss
+    type: Fix
+  id: 8867
+  time: '2025-08-18T20:26:29.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38678
+- author: SlamBamActionman
+  changes:
+  - message: Auto-injector/medipen pop-ups now show the correct identity when injecting
+      someone else.
+    type: Fix
+  id: 8868
+  time: '2025-08-18T20:42:41.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/39735
+- author: Winkarst-cpu
+  changes:
+  - message: Meat spikes got an overhaul.
+    type: Tweak
+  id: 8869
+  time: '2025-08-19T17:56:36.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38723
+- author: Princess-Cheeseballs
+  changes:
+  - message: You can no longer crawl while weightless.
+    type: Fix
+  id: 8870
+  time: '2025-08-19T19:18:06.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/39099
+- author: Nox38
+  changes:
+  - message: Buffed the Librarian cane sword's damage and price to be more competitive.
+      Damage 15 -> 17 slash, TC cost 5 -> 3
+    type: Tweak
+  id: 8871
+  time: '2025-08-19T20:31:02.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/39586
+- author: Princess-Cheeseballs
+  changes:
+  - message: Speed boots no longer affect crawling speed.
+    type: Remove
+  - message: Moon boots don't work unless you're standing
+    type: Tweak
+  id: 8872
+  time: '2025-08-20T11:08:31.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/39648
+- author: Kowlin
+  changes:
+  - message: Fixed Syndicate tricky grenades not playing sounds on explosion.
+    type: Fix
+  id: 8873
+  time: '2025-08-20T23:34:40.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/39792
+- author: TrixxedHeart
+  changes:
+  - message: Added the Impaired Mobility disability trait which reduces movement speed
+      unless using a mobility aid such as a cane and increases stand-up time.
+    type: Add
+  id: 8874
+  time: '2025-08-21T00:43:06.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/39398
+- author: TheFlyingSentry
+  changes:
+  - message: 'Added a new trait: Hemophilia!'
+    type: Add
+  id: 8875
+  time: '2025-08-21T01:02:54.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38224

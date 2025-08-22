@@ -1338,5 +1338,25 @@ Entries:
   id: 163
   time: '2025-08-15T14:06:51.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/37783
+- author: Samuka
+  changes:
+  - message: edited law boards now work correctly
+    type: Fix
+  id: 164
+  time: '2025-08-19T23:04:24.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/39756
+- author: Southbridge
+  changes:
+  - message: Added dropdown to every log entry in the admin log viewer with additional
+      information.
+    type: Add
+  - message: Added color-highlighting in the log search to find results.
+    type: Add
+  - message: Modified player list searches and the log search to utilize regex instead
+      of regular string searches.
+    type: Tweak
+  id: 165
+  time: '2025-08-21T20:12:16.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/39130
 Name: Admin
 Order: 2
