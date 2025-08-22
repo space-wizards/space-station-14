@@ -1,5 +1,6 @@
 ﻿# Only one of those rulesets will appear on the server at any given time.
 # They all have a priority of 10 so they appear 2nd by default (after priority 0 and before priority 20)
+# Contains modifications made by Ronstation contributors, therefore this file is subject to MIT sublicensed with AGPL v3.0.
 
 - type: guideEntry # Default for forks and stuff. Should not be listed anywhere if the server is using a custom ruleset.
   id: DefaultRuleset
@@ -224,7 +225,7 @@
   id: RuleR9
   name: guide-entry-rules-r9
   ruleEntry: true
-  text: "/ServerInfo/Guidebook/ServerRules/RoleplayRules/RuleR9MassSabotage.xml"
+  text: "/ServerInfo/_Ronstation/Guidebook/ServerRules/RoleplayRules/RuleR9MassSabotage.xml" # Ronstation - modification
 
 - type: guideEntry
   id: RuleR10
@@ -257,7 +258,7 @@
   id: RuleR12
   name: guide-entry-rules-r12
   ruleEntry: true
-  text: "/ServerInfo/Guidebook/ServerRules/RoleplayRules/RuleR12RoleAbandonment.xml"
+  text: "/ServerInfo/_Ronstation/Guidebook/ServerRules/RoleplayRules/RuleR12RoleAbandonment.xml" # Ronstation - modification
 
 - type: guideEntry
   id: RuleR13

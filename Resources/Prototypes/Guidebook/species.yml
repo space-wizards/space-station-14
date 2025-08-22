@@ -1,9 +1,12 @@
+# Modified by Ronstation contributor(s), therefore this file is licensed as MIT sublicensed with AGPL-v3.0.
+
 - type: guideEntry
   id: Species
   name: guide-entry-species
   text: "/ServerInfo/Guidebook/Mobs/Species.xml"
   children:
     - Arachnid
+    - Avali # Ronstation
     - Diona
     - Dwarf
     - Human
@@ -51,3 +54,10 @@
   id: Vox
   name: species-name-vox
   text: "/ServerInfo/Guidebook/Mobs/Vox.xml"
+
+    # start of modifications
+- type: guideEntry
+  id: Avali
+  name: species-name-avali
+  text: "/ServerInfo/_Ronstation/Guidebook/Mobs/Avali.xml"
+    # end of modifications

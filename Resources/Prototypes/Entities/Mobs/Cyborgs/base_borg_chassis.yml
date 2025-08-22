@@ -169,7 +169,9 @@
   - type: Lock
     locked: true
     unlockOnClick: false
-  - type: ActivatableUIRequiresLock
+  - type: UIRequiresLock
+    userInterfaceKeys:
+    - enum.BorgUiKey.Key
   - type: LockedWiresPanel
   - type: Damageable
     damageContainer: Silicon
@@ -274,7 +276,7 @@
     receiveFrequencyId: CyborgControl
     transmitFrequencyId: RoboticsConsole
     savableAddress: false
-  - type: OnUseTimerTrigger
+  - type: TimerTrigger
     delay: 10
     examinable: false
     beepSound:
@@ -282,8 +284,9 @@
       params:
         volume: -4
   # prevent any funnies if someone makes a cyborg item...
-  - type: AutomatedTimer
   - type: ExplodeOnTrigger
+    keysIn:
+    - timer
   # explosion does most of its damage in the center and less at the edges
   - type: Explosive
     explosionType: Minibomb
@@ -397,13 +400,15 @@
   parent: BaseBorgChassisNotIonStormable
   id: BaseXenoborgChassis
   name: xenoborg
-  description: A man-machine hybrid that aims to replicate itself. They love extracting brains to insert into fresh xenoborg chassis to grow their army.
+  description: A man-machine hybrid that aims to replicate itself. They love extracting brains to insert into fresh Xenoborg chassis to grow their army.
   save: false
   abstract: true
   components:
   - type: RandomMetadata
     nameSegments:
     - NamesXenoborg
+  - type: NameIdentifier
+    group: Xenoborg
   - type: Sprite
     sprite: Mobs/Silicon/chassis.rsi
   - type: MobThresholds
@@ -444,7 +449,7 @@
   - type: Vocal
     sounds:
       Unsexed: UnisexSiliconXenoborg
-    screamAction: null
+    wilhelmProbability: 0
   - type: DamagedSiliconAccent
   - type: UnblockableSpeech
   - type: FootstepModifier
@@ -470,7 +475,7 @@
       behaviors:
       - !type:PlaySoundBehavior
         sound:
-          path: /Audio/Machines/warning_buzzer.ogg
+          path: /Audio/Machines/warning_buzzer_xenoborg.ogg
           params:
             volume: 5
     - trigger:

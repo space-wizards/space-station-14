@@ -34,18 +34,30 @@ public sealed partial class VentCrittersRuleComponent : Component
     /// <summary>
     /// DeltaV: Base minimum number of critters to spawn.
     /// </summary>
-    [DataField]
-    public int Min = 2;
+    [DataField("min")]
+    public int Min = 3; // Ronstation - Changed from 2 to 3
 
     /// <summary>
     /// DeltaV: Base maximum number of critters to spawn.
     /// </summary>
-    [DataField]
-    public int Max = 3;
+    [DataField("max")]
+    public int Max = 4; // Ronstation - Changed from 3 to 4
 
     /// <summary>
     /// DeltaV: Min and max get multiplied by the player count then divided by this.
     /// </summary>
-    [DataField]
-    public int PlayerRatio = 25;
+    [DataField("playerRatio")]
+    public int PlayerRatio = 20; // Ronstation - Lowered PR from 25 to 20 to scale higher
+
+    /// <summary>
+    /// Ronstation: Cap for how many critters can be spawned, used in the calculation for count.
+    /// </summary>
+    [DataField("ceiling")]
+    public int Ceiling = 8;
+
+    /// <summary>
+    /// Ronstation: Floor for how many critters can be spawned, used in the calculation for count.
+    /// </summary>
+    [DataField("floor")]
+    public int Floor = 3;
 }

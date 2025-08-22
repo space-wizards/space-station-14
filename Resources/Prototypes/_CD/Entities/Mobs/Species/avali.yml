@@ -1,0 +1,113 @@
+# Modified by Ronstation contributor(s), therefore this file is licensed as MIT sublicensed with AGPL-v3.0.
+
+- type: entity
+  save: false
+  name: Urist McRaptor
+  parent: BaseMobSpeciesOrganic
+  id: BaseMobAvali
+  abstract: true
+  components:
+  - type: HumanoidAppearance
+    species: Avali
+  - type: Hunger
+    baseDecayRate: 0.05 # Ronstation - this component makes no fucking sense to me. just slap on the same number as scurrets. what could go wrong
+  - type: Thirst
+  - type: Icon
+    sprite: _Starlight/Mobs/Species/Avali/parts.rsi # Ronstation - Using Starlight Avali sprites
+    state: full
+  - type: Body
+    prototype: Avali
+    requiredLegs: 2
+    # start of modifications
+  - type: Inventory
+    speciesId: moth
+    displacements:
+      head:
+        sizeMaps:
+          32:
+            sprite: _Starlight/Mobs/Species/Avali/displacement.rsi # Harmony change added displacements
+            state: head
+      mask:
+        sizeMaps:
+          32:
+            sprite: _Starlight/Mobs/Species/Avali/displacement.rsi # Harmony change added displacements
+            state: mask
+    # end of modifications
+  - type: Butcherable
+    butcheringType: Spike
+    spawned:
+    - id: FoodMeatChicken
+      amount: 3
+  - type: Speech
+    speechVerb: Parrot # RMC did it right.
+    speechSounds: MaleAvali
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.35
+        density: 95 #tiny
+        restitution: 0.0
+        mask:
+        - MobMask
+        layer:
+        - MobLayer
+  - type: Vocal
+    sounds:
+      Male: MaleAvali
+      Female: FemaleAvali
+      Unsexed: MaleAvali
+  - type: Damageable
+    damageContainer: Biological
+    damageModifierSet: Avali
+  - type: DamageVisuals
+    damageOverlayGroups:
+      Brute:
+        sprite: Mobs/Effects/brute_damage.rsi
+        color: "#7a8bf2"
+  - type: Bloodstream
+    bloodReagent: AmmoniaBlood
+  - type: MeleeWeapon
+    soundHit:
+      collection: AlienClaw # Ronstation
+    angle: 30
+    animation: WeaponArcClaw
+    damage:
+      types:
+        Slash: 5
+  - type: Temperature
+    heatDamageThreshold: 310
+    coldDamageThreshold: 223
+    currentTemperature: 296.15
+    specificHeat: 48
+    coldDamage: # same damage as moths
+      types:
+        Cold : 0.05 #per second, scales with temperature & other constants
+    heatDamage:
+      types:
+        Heat : 3 #per second, scales with temperature & other constants
+  - type: TemperatureSpeed
+    thresholds: # all temps are 10K colder then moths, adjusted for current temp.
+      265: 0.8
+      251: 0.6
+      226: 0.4
+  - type: ThermalRegulator
+    metabolismHeat: 400 # icebirb go brrr
+    radiatedHeat: 100
+    implicitHeatRegulation: 500
+    sweatHeatRegulation: 2000
+    shiveringHeatRegulation: 2000
+    normalBodyTemperature: 296.15
+    thermalRegulationTemperatureThreshold: 10
+
+- type: entity
+  parent: BaseSpeciesDummy
+  id: MobAvaliDummy
+  categories: [ HideSpawnMenu ]
+  description: A dummy avali meant to be used in character setup.
+  components:
+  - type: HumanoidAppearance
+    species: Avali
+
+# Chirp!
