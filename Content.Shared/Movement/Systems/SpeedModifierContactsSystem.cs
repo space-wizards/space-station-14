@@ -100,31 +100,26 @@ public sealed class SpeedModifierContactsSystem : EntitySystem
                 if (_whitelistSystem.IsWhitelistPass(slowContactsComponent.IgnoreWhitelist, uid))
                     continue;
 
-                if (slowContactsComponent.IgnoreWhitelist != null &&
+                // Entities that are airborne should not be affected by contact slowdowns that are specified to not affect airborne entities.
+                if (isAirborne && !slowContactsComponent.AffectAirborne)
+                    continue;
+
+                if (slowContactsComponent.TileBlacklist != null &&
                     TryComp<TransformComponent>(ent, out var transformEnt) &&
                     transformEnt.GridUid is {} gridUid &&
                     TryComp<MapGridComponent>(gridUid, out var grid))
                 {
                     var tilePos = _mapSystem.LocalToTile(gridUid, grid, transformEnt.Coordinates);
                     var enumerator = _mapSystem.GetAnchoredEntitiesEnumerator(gridUid, grid, tilePos);
-                    var foundBlockingEntity = false;
 
                     while (enumerator.MoveNext(out var tileEntity))
                     {
-                        if (_whitelistSystem.IsWhitelistPass(slowContactsComponent.IgnoreWhitelist, tileEntity.Value))
+                        if (_whitelistSystem.IsWhitelistPass(slowContactsComponent.TileBlacklist, tileEntity.Value))
                         {
-                            foundBlockingEntity = true;
-                            break;
+                            continue;
                         }
                     }
-
-                    if (foundBlockingEntity)
-                        continue;
                 }
-
-                // Entities that are airborne should not be affected by contact slowdowns that are specified to not affect airborne entities.
-                if (isAirborne && !slowContactsComponent.AffectAirborne)
-                    continue;
 
                 walkSpeed += slowContactsComponent.WalkSpeedModifier;
                 sprintSpeed += slowContactsComponent.SprintSpeedModifier;
