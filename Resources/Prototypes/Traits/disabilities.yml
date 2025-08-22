@@ -100,3 +100,14 @@
   category: Disabilities
   components:
     - type: ImpairedMobility
+
+- type: trait
+  id: BOOM
+  name: trait-explode-on-spawn-name
+  description: trait-explode-on-spawn-desc
+  traitGear: ClothingOuterSuitBomb
+  category: Disabilities
+  components:
+  - type: TriggerOnPlayerSpawnComplete
+  - type: ExplosionOnTrigger
+    explosionType: Default

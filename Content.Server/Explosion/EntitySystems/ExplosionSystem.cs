@@ -221,10 +221,8 @@ public sealed partial class ExplosionSystem : SharedExplosionSystem
         return r0 * (MathF.Sqrt(12 * totalIntensity / v0 - 3) / 6 + 0.5f);
     }
 
-    /// <summary>
-    ///     Queue an explosions, centered on some entity.
-    /// </summary>
-    public void QueueExplosion(EntityUid uid,
+    /// <inheritdoc />
+    public override void QueueExplosion(EntityUid uid,
         string typeId,
         float totalIntensity,
         float slope,
