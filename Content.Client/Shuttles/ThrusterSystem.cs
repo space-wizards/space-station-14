@@ -8,8 +8,6 @@ namespace Content.Client.Shuttles;
 /// </summary>
 public sealed class ThrusterSystem : VisualizerSystem<ThrusterComponent>
 {
-    [Dependency] private readonly SpriteSystem _sprite = default!;
-
     /// <summary>
     /// Updates whether or not the thruster is visibly active/thrusting.
     /// </summary>
@@ -19,7 +17,7 @@ public sealed class ThrusterSystem : VisualizerSystem<ThrusterComponent>
         || !AppearanceSystem.TryGetData<bool>(uid, ThrusterVisualState.State, out var state, args.Component))
             return;
 
-        _sprite.LayerSetVisible((uid, args.Sprite), ThrusterVisualLayers.ThrustOn, state);
+        SpriteSystem.LayerSetVisible((uid, args.Sprite), ThrusterVisualLayers.ThrustOn, state);
         SetThrusting(
             uid,
             state && AppearanceSystem.TryGetData<bool>(uid, ThrusterVisualState.Thrusting, out var thrusting, args.Component) && thrusting,
@@ -32,14 +30,14 @@ public sealed class ThrusterSystem : VisualizerSystem<ThrusterComponent>
     /// </summary>
     private void SetThrusting(EntityUid uid, bool value, SpriteComponent sprite)
     {
-        if (_sprite.LayerMapTryGet((uid, sprite), ThrusterVisualLayers.Thrusting, out var thrustingLayer, false))
+        if (SpriteSystem.LayerMapTryGet((uid, sprite), ThrusterVisualLayers.Thrusting, out var thrustingLayer, false))
         {
-            _sprite.LayerSetVisible((uid, sprite), thrustingLayer, value);
+            SpriteSystem.LayerSetVisible((uid, sprite), thrustingLayer, value);
         }
 
-        if (_sprite.LayerMapTryGet((uid, sprite), ThrusterVisualLayers.ThrustingUnshaded, out var unshadedLayer, false))
+        if (SpriteSystem.LayerMapTryGet((uid, sprite), ThrusterVisualLayers.ThrustingUnshaded, out var unshadedLayer, false))
         {
-            _sprite.LayerSetVisible((uid, sprite), unshadedLayer, value);
+            SpriteSystem.LayerSetVisible((uid, sprite), unshadedLayer, value);
         }
     }
 }

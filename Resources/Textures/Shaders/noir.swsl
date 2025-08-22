@@ -1,0 +1,46 @@
+// Sin City style shader.
+// Makes everything black and white, but keeps red colors.
+
+uniform sampler2D SCREEN_TEXTURE;
+// Sensitivity, in degrees.
+const highp float RedHueRange = 5.0;
+const highp float MinSaturation = 0.4;
+
+// https://en.wikipedia.org/wiki/HSL_and_HSV#From_RGB
+highp vec3 rgb2hsv(highp vec3 c) {
+    highp float xMax = max(c.r, max(c.g, c.b));
+    highp float xMin = min(c.r, min(c.g, c.b));
+    highp float delta = xMax - xMin;
+
+    highp float hue = 0.0;
+    if (delta > 0.0) {
+        if (xMax == c.r) {
+            hue = mod((c.g - c.b) / delta, 6.0);
+        } else if (xMax == c.g) {
+            hue = (c.b - c.r) / delta + 2.0;
+        } else {
+            hue = (c.r - c.g) / delta + 4.0;
+        }
+        hue *= 60.0;
+        if (hue < 0.0) hue += 360.0;
+    }
+
+    highp float sat = (xMax == 0.0) ? 0.0 : delta / xMax;
+    return vec3(hue, sat, xMax);
+}
+
+void fragment() {
+    highp vec4 color = zTextureSpec(SCREEN_TEXTURE, UV);
+    highp vec3 gray = vec3(zGrayscale(color.rgb));
+    highp vec3 hsv = rgb2hsv(color.rgb);
+
+    // Red is near 0 or 360 in hue
+    bool is_red = hsv.x < RedHueRange || hsv.x > (360.0 - RedHueRange);
+    bool saturated_enough = hsv.y > MinSaturation; // Avoid desaturated pinks/greys
+
+    if (is_red && saturated_enough) {
+        COLOR = color;
+    } else {
+        COLOR = vec4(gray, color.a);
+    }
+}

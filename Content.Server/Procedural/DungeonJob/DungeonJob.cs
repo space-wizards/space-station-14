@@ -42,6 +42,7 @@ public sealed partial class DungeonJob : Job<List<Dungeon>>
     private readonly EntityTableSystem _entTable;
     private readonly TagSystem _tags;
     private readonly TileSystem _tile;
+    private readonly TurfSystem _turf;
     private readonly SharedMapSystem _maps;
     private readonly SharedTransformSystem _transform;
 
@@ -70,6 +71,7 @@ public sealed partial class DungeonJob : Job<List<Dungeon>>
         DungeonSystem dungeon,
         EntityLookupSystem lookup,
         TileSystem tile,
+        TurfSystem turf,
         SharedTransformSystem transform,
         DungeonConfig gen,
         MapGridComponent grid,
@@ -89,6 +91,7 @@ public sealed partial class DungeonJob : Job<List<Dungeon>>
         _dungeon = dungeon;
         _lookup = lookup;
         _tile = tile;
+        _turf = turf;
         _tags = _entManager.System<TagSystem>();
         _maps = _entManager.System<SharedMapSystem>();
         _entTable = _entManager.System<EntityTableSystem>();
@@ -134,27 +137,15 @@ public sealed partial class DungeonJob : Job<List<Dungeon>>
 
             foreach (var layer in layers)
             {
+                var dungCount = dungeons.Count;
                 await RunLayer(dungeons, position, layer, reservedTiles, seed, random);
 
                 if (config.ReserveTiles)
                 {
-                    // Remove any dungeons passed in so we don't interfere with them
-                    // This is kinda goofy but okay for now.
-                    if (existing != null)
+                    // Reserve tiles on any new dungeons.
+                    for (var d = dungCount; d < dungeons.Count; d++)
                     {
-                        for (var j = 0; j < dungeons.Count; j++)
-                        {
-                            var dung = dungeons[j];
-
-                            if (existing.Contains(dung))
-                            {
-                                dungeons.RemoveSwap(j);
-                            }
-                        }
-                    }
-
-                    foreach (var dungeon in dungeons)
-                    {
+                        var dungeon = dungeons[d];
                         reservedTiles.UnionWith(dungeon.AllTiles);
                     }
                 }
@@ -202,6 +193,7 @@ public sealed partial class DungeonJob : Job<List<Dungeon>>
             npcSystem.WakeNPC(npc.Owner, npc.Comp);
         }
 
+        _sawmill.Info($"Finished generating dungeon {_gen} with seed {_seed}");
         return dungeons;
     }
 
@@ -276,7 +268,7 @@ public sealed partial class DungeonJob : Job<List<Dungeon>>
                 await PostGen(mob, dungeons[^1], random);
                 break;
             case EntityTableDunGen entityTable:
-                await PostGen(entityTable, dungeons[^1], random);
+                await PostGen(entityTable, dungeons, reservedTiles, random);
                 break;
             case NoiseDistanceDunGen distance:
                 dungeons.Add(await GenerateNoiseDistanceDunGen(position, distance, reservedTiles, seed, random));
@@ -285,7 +277,7 @@ public sealed partial class DungeonJob : Job<List<Dungeon>>
                 dungeons.Add(await GenerateNoiseDunGen(position, noise, reservedTiles, seed, random));
                 break;
             case OreDunGen ore:
-                await PostGen(ore, dungeons[^1], random);
+                await PostGen(ore, dungeons, reservedTiles, random);
                 break;
             case PrefabDunGen prefab:
                 dungeons.Add(await GeneratePrefabDunGen(position, prefab, reservedTiles, random));

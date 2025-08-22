@@ -1,14 +1,20 @@
 using Content.Shared.Damage.Components;
 using Content.Shared.Damage.Events;
 using Content.Shared.Destructible;
+using Content.Shared.Nutrition;
+using Content.Shared.Prototypes;
 using Content.Shared.Rejuvenate;
 using Content.Shared.Slippery;
 using Content.Shared.StatusEffect;
+using Content.Shared.StatusEffectNew;
+using Content.Shared.StatusEffectNew.Components;
+using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Damage.Systems;
 
 public abstract class SharedGodmodeSystem : EntitySystem
 {
+    [Dependency] private readonly IPrototypeManager _protoMan = default!;
     [Dependency] private readonly DamageableSystem _damageable = default!;
 
     public override void Initialize()
@@ -17,7 +23,9 @@ public abstract class SharedGodmodeSystem : EntitySystem
 
         SubscribeLocalEvent<GodmodeComponent, BeforeDamageChangedEvent>(OnBeforeDamageChanged);
         SubscribeLocalEvent<GodmodeComponent, BeforeStatusEffectAddedEvent>(OnBeforeStatusEffect);
+        SubscribeLocalEvent<GodmodeComponent, BeforeOldStatusEffectAddedEvent>(OnBeforeOldStatusEffect);
         SubscribeLocalEvent<GodmodeComponent, BeforeStaminaDamageEvent>(OnBeforeStaminaDamage);
+        SubscribeLocalEvent<GodmodeComponent, IngestibleEvent>(BeforeEdible);
         SubscribeLocalEvent<GodmodeComponent, SlipAttemptEvent>(OnSlipAttempt);
         SubscribeLocalEvent<GodmodeComponent, DestructionAttemptEvent>(OnDestruction);
     }
@@ -34,6 +42,13 @@ public abstract class SharedGodmodeSystem : EntitySystem
 
     private void OnBeforeStatusEffect(EntityUid uid, GodmodeComponent component, ref BeforeStatusEffectAddedEvent args)
     {
+        if (_protoMan.Index(args.Effect).HasComponent<RejuvenateRemovedStatusEffectComponent>(Factory))
+            args.Cancelled = true;
+    }
+
+    private void OnBeforeOldStatusEffect(Entity<GodmodeComponent> ent, ref BeforeOldStatusEffectAddedEvent args)
+    {
+        // Old status effect system doesn't distinguish between good and bad status effects
         args.Cancelled = true;
     }
 
@@ -45,6 +60,11 @@ public abstract class SharedGodmodeSystem : EntitySystem
     private void OnDestruction(Entity<GodmodeComponent> ent, ref DestructionAttemptEvent args)
     {
         args.Cancel();
+    }
+
+    private void BeforeEdible(Entity<GodmodeComponent> ent, ref IngestibleEvent args)
+    {
+        args.Cancelled = true;
     }
 
     public virtual void EnableGodmode(EntityUid uid, GodmodeComponent? godmode = null)

@@ -124,9 +124,9 @@
     - 0,0,1,1
     whitelist:
       components:
-      - Artifact
+      - XenoArtifact
   - type: Item
-    sprite: Objects/Storage/artifact_container.rsi  
+    sprite: Objects/Storage/artifact_container.rsi
     size: Huge
   - type: MeleeWeapon
     damage:

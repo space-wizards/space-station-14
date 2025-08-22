@@ -4,7 +4,7 @@
     sprite: Structures/Storage/canister.rsi
     state: grey
   product: AirCanister
-  cost: 300
+  cost: 600
   category: cargoproduct-category-name-atmospherics
   group: market
 
@@ -14,7 +14,7 @@
     sprite: Structures/Storage/canister.rsi
     state: blue
   product: OxygenCanister
-  cost: 300
+  cost: 600
   category: cargoproduct-category-name-atmospherics
   group: market
 
@@ -34,7 +34,7 @@
     sprite: Structures/Storage/canister.rsi
     state: red
   product: NitrogenCanister
-  cost: 300
+  cost: 500
   category: cargoproduct-category-name-atmospherics
   group: market
 
@@ -54,7 +54,7 @@
     sprite: Structures/Storage/canister.rsi
     state: black
   product: CarbonDioxideCanister
-  cost: 400 # even though it's poisonous, it comes locked and only damages you slowly even with high amounts (tested)
+  cost: 670 # even though it's poisonous, it comes locked and only damages you slowly even with high amounts (tested)
   category: cargoproduct-category-name-atmospherics
   group: market
 
@@ -94,7 +94,7 @@
     sprite: Structures/Storage/canister.rsi
     state: orange
   product: PlasmaCanister
-  cost: 2500 # for reference, bagel's 3x1 roundstart plasma chamber contains ~16kmol for free, this is $2.5k for 1870mol, so $20k to nearly refill a 3x1 (some are 3x3) chamber
+  cost: 4200 # for reference, bagel's 3x1 roundstart plasma chamber contains ~16kmol for free, this is $4.2k for 2769 mol
   category: cargoproduct-category-name-atmospherics
   group: market
 

@@ -76,7 +76,7 @@ public sealed partial class ObjectsTab : Control
         switch (selection)
         {
             case ObjectsTabSelection.Stations:
-                entities.AddRange(_entityManager.EntitySysManager.GetEntitySystem<StationSystem>().Stations);
+                entities.AddRange(_entityManager.EntitySysManager.GetEntitySystem<StationSystem>().GetStationNames());
                 break;
             case ObjectsTabSelection.Grids:
             {
@@ -132,8 +132,8 @@ public sealed partial class ObjectsTab : Control
         entry.OnTeleport += TeleportTo;
         entry.OnDelete += Delete;
         button.ToolTip = $"{info.Name}, {info.Entity}";
-
         button.AddChild(entry);
+        button.StyleClasses.Clear();
     }
 
     private bool DataFilterCondition(string filter, ListData listData)

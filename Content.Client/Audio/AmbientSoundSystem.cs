@@ -168,7 +168,7 @@ public sealed class AmbientSoundSystem : SharedAmbientSoundSystem
         _targetTime = _gameTiming.CurTime + TimeSpan.FromSeconds(_cooldown);
 
         var player = _playerManager.LocalEntity;
-        if (!EntityManager.TryGetComponent(player, out TransformComponent? xform))
+        if (!TryComp(player, out TransformComponent? xform))
         {
             ClearSounds();
             return;

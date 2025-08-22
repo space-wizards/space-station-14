@@ -107,6 +107,7 @@ public sealed partial class ShuttleSystem
         var ourXform = Transform(args.OurEntity);
         var otherXform = Transform(args.OtherEntity);
         var worldPoints = args.WorldPoints;
+        var worldNormal = args.WorldNormal;
 
         for (var i = 0; i < worldPoints.Length; i++)
         {
@@ -117,7 +118,14 @@ public sealed partial class ShuttleSystem
 
             var ourVelocity = _physics.GetLinearVelocity(args.OurEntity, ourPoint.Position, ourBody, ourXform);
             var otherVelocity = _physics.GetLinearVelocity(args.OtherEntity, otherPoint.Position, otherBody, otherXform);
-            var jungleDiff = (ourVelocity - otherVelocity).Length();
+            var topDiff = (ourVelocity - otherVelocity);
+            var jungleDiff = topDiff.Length();
+
+            // Get the velocity in relation to the contact normal
+            // If this still causes issues see https://box2d.org/posts/2020/06/ghost-collisions/
+            // This should only be a potential problem on chunk seams.
+            var dotProduct = MathF.Abs(Vector2.Dot(topDiff.Normalized(), worldNormal.Normalized()));
+            jungleDiff *= dotProduct;
 
             // this is cursed but makes it so that collisions of small grid with large grid count the inertia as being approximately the small grid's
             var effectiveInertiaMult = (ourBody.FixturesMass * otherBody.FixturesMass) / (ourBody.FixturesMass + otherBody.FixturesMass);
@@ -241,7 +249,7 @@ public sealed partial class ShuttleSystem
 
             if (direction.LengthSquared() > minsq)
             {
-                _stuns.TryKnockdown(uid, knockdownTime, true);
+                _stuns.TryCrawling(uid, knockdownTime);
                 _throwing.TryThrow(uid, direction, physics, Transform(uid), _projQuery, direction.Length(), playSound: false);
             }
             else
@@ -267,7 +275,7 @@ public sealed partial class ShuttleSystem
 
         foreach (var tileRef in _mapSystem.GetLocalTilesIntersecting(uid, grid, new Circle(centerTile, radius)))
         {
-            var def = (ContentTileDefinition)_tileDefManager[tileRef.Tile.TypeId];
+            var def = _turf.GetContentTileDefinition(tileRef);
             mass += def.Mass;
             tileCount++;
 
@@ -394,7 +402,7 @@ public sealed partial class ShuttleSystem
                 continue;
 
             // Mark tiles for breaking/effects
-            var def = (ContentTileDefinition)_tileDefManager[_mapSystem.GetTileRef(uid, grid, tileData.Tile).Tile.TypeId];
+            var def = _turf.GetContentTileDefinition(_mapSystem.GetTileRef(uid, grid, tileData.Tile));
             if (tileData.Energy > def.Mass * _tileBreakEnergyMultiplier)
                 brokenTiles.Add((tileData.Tile, Tile.Empty));
 

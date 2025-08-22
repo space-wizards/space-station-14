@@ -113,7 +113,7 @@ public sealed class AccessOverriderSystem : SharedAccessOverriderSystem
 
         if (component.TargetAccessReaderId is { Valid: true } accessReader)
         {
-            targetLabel = Loc.GetString("access-overrider-window-target-label") + " " + EntityManager.GetComponent<MetaDataComponent>(component.TargetAccessReaderId).EntityName;
+            targetLabel = Loc.GetString("access-overrider-window-target-label") + " " + Comp<MetaDataComponent>(component.TargetAccessReaderId).EntityName;
             targetLabelColor = Color.White;
 
             if (!_accessReader.GetMainAccessReader(accessReader, out var accessReaderEnt))
@@ -125,7 +125,7 @@ public sealed class AccessOverriderSystem : SharedAccessOverriderSystem
 
         if (component.PrivilegedIdSlot.Item is { Valid: true } idCard)
         {
-            privilegedIdName = EntityManager.GetComponent<MetaDataComponent>(idCard).EntityName;
+            privilegedIdName = Comp<MetaDataComponent>(idCard).EntityName;
 
             if (component.TargetAccessReaderId is { Valid: true })
             {
@@ -166,21 +166,6 @@ public sealed class AccessOverriderSystem : SharedAccessOverriderSystem
         }
 
         return accessList;
-    }
-
-    private List<HashSet<ProtoId<AccessLevelPrototype>>> ConvertAccessListToHashSet(List<ProtoId<AccessLevelPrototype>> accessList)
-    {
-        List<HashSet<ProtoId<AccessLevelPrototype>>> accessHashsets = new List<HashSet<ProtoId<AccessLevelPrototype>>>();
-
-        if (accessList != null && accessList.Any())
-        {
-            foreach (ProtoId<AccessLevelPrototype> access in accessList)
-            {
-                accessHashsets.Add(new HashSet<ProtoId<AccessLevelPrototype>>() { access });
-            }
-        }
-
-        return accessHashsets;
     }
 
     /// <summary>
@@ -244,12 +229,10 @@ public sealed class AccessOverriderSystem : SharedAccessOverriderSystem
         _adminLogger.Add(LogType.Action, LogImpact.High,
             $"{ToPrettyString(player):player} has modified {ToPrettyString(accessReaderEnt.Value):entity} with the following allowed access level holders: [{string.Join(", ", addedTags.Union(removedTags))}] [{string.Join(", ", newAccessList)}]");
 
-        accessReaderEnt.Value.Comp.AccessLists = ConvertAccessListToHashSet(newAccessList);
+        _accessReader.SetAccesses(accessReaderEnt.Value, newAccessList);
 
         var ev = new OnAccessOverriderAccessUpdatedEvent(player);
         RaiseLocalEvent(component.TargetAccessReaderId, ref ev);
-
-        Dirty(accessReaderEnt.Value);
     }
 
     /// <summary>

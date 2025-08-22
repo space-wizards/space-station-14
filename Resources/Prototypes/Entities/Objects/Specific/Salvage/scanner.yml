@@ -12,7 +12,13 @@
     - state: icon-o
       shader: unshaded
       visible: false
-      map: ["enum.ToggleVisuals.Layer"]
+      map: ["enum.ToggleableVisuals.Layer"]
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: inhand-left-reg
+      right:
+      - state: inhand-right-reg
   - type: ItemToggleActiveSound
     activeSound:
       path: /Audio/Ambience/Objects/light_hum.ogg
@@ -22,8 +28,8 @@
   - type: Appearance
   - type: GenericVisualizer
     visuals:
-      enum.ToggleVisuals.Toggled:
-        enum.ToggleVisuals.Layer:
+      enum.ToggleableVisuals.Enabled:
+        enum.ToggleableVisuals.Layer:
           True: { visible: true }
           False: { visible: false }
   - type: ItemToggle
@@ -66,9 +72,14 @@
     - state: adv-o
       shader: unshaded
       visible: false
-      map: ["enum.ToggleVisuals.Layer"]
+      map: ["enum.ToggleableVisuals.Layer"]
   - type: Item
     storedRotation: -90
+    inhandVisuals:
+      left:
+      - state: inhand-left-adv
+      right:
+      - state: inhand-right-adv
   - type: MiningScanner
     range: 10
 

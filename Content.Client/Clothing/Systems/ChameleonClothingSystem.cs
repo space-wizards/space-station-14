@@ -11,18 +11,6 @@ namespace Content.Client.Clothing.Systems;
 // All valid items for chameleon are calculated on client startup and stored in dictionary.
 public sealed class ChameleonClothingSystem : SharedChameleonClothingSystem
 {
-    [Dependency] private readonly IPrototypeManager _proto = default!;
-
-    private static readonly SlotFlags[] IgnoredSlots =
-    {
-        SlotFlags.All,
-        SlotFlags.PREVENTEQUIP,
-        SlotFlags.NONE
-    };
-    private static readonly SlotFlags[] Slots = Enum.GetValues<SlotFlags>().Except(IgnoredSlots).ToArray();
-
-    private readonly Dictionary<SlotFlags, List<string>> _data = new();
-
     public override void Initialize()
     {
         base.Initialize();
@@ -59,51 +47,6 @@ public sealed class ChameleonClothingSystem : SharedChameleonClothingSystem
             borderColor.BorderColor = otherBorderColor.BorderColor;
             borderColor.AccentHColor = otherBorderColor.AccentHColor;
             borderColor.AccentVColor = otherBorderColor.AccentVColor;
-        }
-    }
-
-    /// <summary>
-    ///     Get a list of valid chameleon targets for these slots.
-    /// </summary>
-    public IEnumerable<string> GetValidTargets(SlotFlags slot)
-    {
-        var set = new HashSet<string>();
-        foreach (var availableSlot in _data.Keys)
-        {
-            if (slot.HasFlag(availableSlot))
-            {
-                set.UnionWith(_data[availableSlot]);
-            }
-        }
-        return set;
-    }
-
-    private void PrepareAllVariants()
-    {
-        _data.Clear();
-        var prototypes = _proto.EnumeratePrototypes<EntityPrototype>();
-
-        foreach (var proto in prototypes)
-        {
-            // check if this is valid clothing
-            if (!IsValidTarget(proto))
-                continue;
-            if (!proto.TryGetComponent(out ClothingComponent? item, Factory))
-                continue;
-
-            // sort item by their slot flags
-            // one item can be placed in several buckets
-            foreach (var slot in Slots)
-            {
-                if (!item.Slots.HasFlag(slot))
-                    continue;
-
-                if (!_data.ContainsKey(slot))
-                {
-                    _data.Add(slot, new List<string>());
-                }
-                _data[slot].Add(proto.ID);
-            }
         }
     }
 }

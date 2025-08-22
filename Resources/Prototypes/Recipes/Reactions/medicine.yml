@@ -662,33 +662,3 @@
       amount: 1
   products:
     Haloperidol: 5
-
-- type: reaction
-  id: Traumoxadone
-  impact: Medium
-  reactants:
-    Cryoxadone:
-      amount: 1
-    Bicaridine:
-      amount: 1
-    Fersilicite:
-      amount: 1
-    Lipozine:
-      amount: 1
-  products:
-    Traumoxadone: 3
-  
-- type: reaction
-  id: Stelloxadone
-  impact: Medium
-  reactants:
-    Stellibinin:
-      amount: 5
-    Cryoxadone:
-      amount: 3
-    Arithrazine:
-      amount: 2
-  products:
-    Stelloxadone: 5
-    Water: 3
-    Fiber: 2
