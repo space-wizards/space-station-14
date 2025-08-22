@@ -141,6 +141,16 @@ public sealed partial class AtmosphereSystem
         NumericsHelpers.Divide(mixtMoles, mixtVol, pressures);
     }
 
+    /// <summary>
+    /// Packs data into a <see cref="DeltaPressureDamageResult"/> data struct and enqueues it
+    /// into the <see cref="GridAtmosphereComponent.DeltaPressureDamageResults"/> queue for
+    /// later processing.
+    /// </summary>
+    /// <param name="ent">The entity to enqueue if necessary.</param>
+    /// <param name="gridAtmosComp">The <see cref="GridAtmosphereComponent"/>
+    /// containing the queue.</param>
+    /// <param name="pressure">The current absolute pressure being experienced by the entity.</param>
+    /// <param name="delta">The current delta pressure being experienced by the entity.</param>
     private static void EnqueueDeltaPressureDamage(Entity<DeltaPressureComponent> ent,
         GridAtmosphereComponent gridAtmosComp,
         float pressure,
@@ -166,6 +176,10 @@ public sealed partial class AtmosphereSystem
     /// Batches are given some index to start from, so each thread can simply just start at that index
     /// and process the next n entities in the list.
     /// </summary>
+    /// <param name="system">The AtmosphereSystem instance.</param>
+    /// <param name="atmosphere">The GridAtmosphereComponent to work with.</param>
+    /// <param name="startIndex">The index in the DeltaPressureEntities list to start from.</param>
+    /// <param name="cvarBatchSize">The batch size to use for this job.</param>
     private sealed class DeltaPressureParallelJob(
         AtmosphereSystem system,
         GridAtmosphereComponent atmosphere,
@@ -194,11 +208,13 @@ public sealed partial class AtmosphereSystem
     /// Struct that holds the result of delta pressure damage processing for an entity.
     /// This is only created and enqueued when the entity needs to take damage.
     /// </summary>
-    /// <param name="Ent"></param>
-    /// <param name="Pressure"></param>
-    /// <param name="DeltaPressure"></param>
-    /// <param name="AboveMinPressure"></param>
-    /// <param name="AboveMinDeltaPressure"></param>
+    /// <param name="Ent">The entity to deal damage to.</param>
+    /// <param name="Pressure">The current absolute pressure the entity is experiencing.</param>
+    /// <param name="DeltaPressure">The current delta pressure the entity is experiencing.</param>
+    /// <param name="AboveMinPressure">Whether the entity is currently above the minimum pressure
+    /// required to deal damage.</param>
+    /// <param name="AboveMinDeltaPressure">Whether the entity is currently above the minimum delta
+    /// pressure required to deal damage.</param>
     public readonly record struct DeltaPressureDamageResult(
         Entity<DeltaPressureComponent> Ent,
         float Pressure,
