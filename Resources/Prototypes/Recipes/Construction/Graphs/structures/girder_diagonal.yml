@@ -32,7 +32,7 @@
         - to: wallDiagonal
           completed:
             - !type:SnapToGrid
-              southRotation: true
+              southRotation: false
           conditions:
             - !type:EntityAnchored {}
           steps:
@@ -69,7 +69,7 @@
         - to: reinforcedWallDiagonal
           completed:
             - !type:SnapToGrid
-              southRotation: true
+              southRotation: false
           conditions:
             - !type:EntityAnchored { }
           steps:
@@ -80,7 +80,7 @@
         - to: shuttleWallDiagonal
           completed:
             - !type:SnapToGrid
-              southRotation: true
+              southRotation: false
           conditions:
             - !type:EntityAnchored { }
           steps:
@@ -96,7 +96,7 @@
         - to: girderDiagonal
           completed:
             - !type:SnapToGrid
-              southRotation: true
+              southRotation: false
             - !type:SpawnPrototype
               prototype: SheetPlasteel1
               amount: 1
