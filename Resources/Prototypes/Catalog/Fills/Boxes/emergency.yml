@@ -349,7 +349,7 @@
     - id: ExtendedEmergencyOxygenTankFilled
     - id: EmergencyMedipen
     - id: Flare
-    - id: FoodSnackNutribrick
+    - id: FoodSnackFabBrick
 
 - type: entity
   parent: BoxSurvivalSyndicate

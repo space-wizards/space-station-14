@@ -887,9 +887,6 @@
   name: MRE wrapper
   description: A general purpose wrapper for a variety of military food goods.
   components:
-  - type: Tag
-    tags:
-    - Trash
   - type: Sprite
     state: mre-wrapper
   - type: Item
