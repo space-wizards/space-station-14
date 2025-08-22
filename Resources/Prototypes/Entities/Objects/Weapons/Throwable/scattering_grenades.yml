@@ -21,7 +21,7 @@
   - type: ScatteringGrenade
   - type: TriggerOnUse
   - type: TimerTrigger
-    delay: 3
+    delay: 3.5
   - type: Tag
     tags:
     - HandGrenade
@@ -82,6 +82,13 @@
         enum.ConstructionVisuals.Layer:
           Primed: { state: primed }
           Unprimed: { state: icon }
+  - type: TimerTrigger
+    beepSound:
+      path: "/Audio/Effects/beep1.ogg"
+      params:
+        volume: 5
+    initialBeepDelay: 0
+    beepInterval: 0.5
   - type: EmitSoundOnTrigger
     keysIn:
     - timer

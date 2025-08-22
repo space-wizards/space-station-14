@@ -16,7 +16,7 @@
     - Belt
   - type: TriggerOnUse
   - type: TimerTrigger
-    delay: 3
+    delay: 3.5
   - type: Damageable
     damageContainer: Inorganic
   - type: Destructible
@@ -335,7 +335,7 @@
   - type: Sprite
     sprite: Objects/Weapons/Grenades/nukenade.rsi
   - type: TimerTrigger
-    delay: 5
+    delay: 5 # Just long enough to escape the blast radius
   - type: ExplodeOnTrigger
     keysIn:
     - timer
