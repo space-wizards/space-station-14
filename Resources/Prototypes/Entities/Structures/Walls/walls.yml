@@ -731,6 +731,9 @@
   - type: Construction
     graph: GirderDiagonal
     node: reinforcedWallDiagonal
+  - type: StaticPrice
+    price: 200
+    
 # Riveting
 - type: entity
   parent: BaseWall
