@@ -124,7 +124,10 @@ public sealed class JobRequirementsManager : ISharedPlaytimeManager
     /// <summary>
     /// Check the job prototype against the current player, for requirements and bans
     /// </summary>
-    public bool IsAllowed(JobPrototype job, HumanoidCharacterProfile? profile, [NotNullWhen(false)] out FormattedMessage? reason)
+    public bool IsAllowed(
+        JobPrototype job,
+        HumanoidCharacterProfile? profile,
+        [NotNullWhen(false)] out FormattedMessage? reason)
     {
         // Check the player's bans
         if (_roleBans.Contains(PrefixJob + job.ID))
@@ -149,7 +152,10 @@ public sealed class JobRequirementsManager : ISharedPlaytimeManager
     /// <summary>
     /// Check the antag prototype against the current player, for requirements and bans
     /// </summary>
-    public bool IsAllowed(AntagPrototype antag, HumanoidCharacterProfile? profile, [NotNullWhen(false)] out FormattedMessage? reason)
+    public bool IsAllowed(
+        AntagPrototype antag,
+        HumanoidCharacterProfile? profile,
+        [NotNullWhen(false)] out FormattedMessage? reason)
     {
         // Check the player's bans
         if (_roleBans.Contains(PrefixAntag + antag.ID))
