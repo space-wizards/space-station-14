@@ -6,15 +6,16 @@ using Robust.Client.UserInterface;
 
 namespace Content.Client._Starlight.Lock;
 
+/// <summary>
+/// BUI for Digital Lock Menu.
+/// </summary>
 [UsedImplicitly]
 public sealed class DigitalLockBoundUserInterface : BoundUserInterface
 {
     [ViewVariables]
     private DigitalLockMenu? _menu;
 
-    public DigitalLockBoundUserInterface(EntityUid owner, Enum uiKey) : base(owner, uiKey)
-    {
-    }
+    public DigitalLockBoundUserInterface(EntityUid owner, Enum uiKey) : base(owner, uiKey) { }
 
     protected override void Open()
     {
@@ -22,32 +23,16 @@ public sealed class DigitalLockBoundUserInterface : BoundUserInterface
 
         _menu = this.CreateWindow<DigitalLockMenu>();
 
-        _menu.OnKeypadButtonPressed += i =>
-        {
-            SendMessage(new DigitalLockKeypadMessage(i));
-        };
-        _menu.OnEnterButtonPressed += () =>
-        {
-            SendMessage(new DigitalLockKeypadEnterMessage());
-        };
-        _menu.OnClearButtonPressed += () =>
-        {
-            SendMessage(new DigitalLockKeypadClearMessage());
-        };
+        _menu.OnKeypadButtonPressed += i => SendMessage(new DigitalLockKeypadMessage(i));
+        _menu.OnEnterButtonPressed += () => SendMessage(new DigitalLockKeypadEnterMessage());
+        _menu.OnClearButtonPressed += () => SendMessage(new DigitalLockKeypadClearMessage());
     }
 
     protected override void UpdateState(BoundUserInterfaceState state)
     {
         base.UpdateState(state);
 
-        if (_menu == null)
-            return;
-
-        switch (state)
-        {
-            case DigitalLockUiState msg:
-                _menu.UpdateState(msg);
-                break;
-        }
+        if (_menu != null && state is DigitalLockUiState msg)
+            _menu.UpdateState(msg);
     }
 }

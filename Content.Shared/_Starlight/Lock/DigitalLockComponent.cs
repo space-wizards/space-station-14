@@ -49,18 +49,30 @@ public sealed partial class DigitalLockComponent : Component
     /// <summary>
     /// Sound which played when press number keypad button
     /// </summary>
-    [DataField("keypadPressSound")]
+    [DataField]
     public SoundSpecifier KeypadPressSound = new SoundPathSpecifier("/Audio/Machines/Nuke/general_beep.ogg");
 
     /// <summary>
     /// Sound which played when access granted
     /// </summary>
-    [DataField("accessGrantedSound")]
+    [DataField]
     public SoundSpecifier AccessGrantedSound = new SoundPathSpecifier("/Audio/Machines/Nuke/confirm_beep.ogg");
 
     /// <summary>
     /// Sound which played when password wrong
     /// </summary>
-    [DataField("accessDeniedSound")]
+    [DataField]
     public SoundSpecifier AccessDeniedSound = new SoundPathSpecifier("/Audio/Machines/Nuke/angry_beep.ogg");
+
+    /// <summary>
+    /// Tool quality for Open Maintenance Panel
+    /// </summary>
+    [DataField]
+    public string OpenQuality = "Screwing";
+
+    /// <summary>
+    /// Tool quality for Reset password
+    /// </summary>
+    [DataField]
+    public string ResetQuality = "Pulsing";
 }

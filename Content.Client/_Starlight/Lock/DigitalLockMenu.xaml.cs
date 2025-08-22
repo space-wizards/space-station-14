@@ -29,41 +29,47 @@ public sealed partial class DigitalLockMenu : DefaultWindow
     {
         // add 3 rows of keypad buttons (1-9)
         for (var i = 1; i <= 9; i++)
-        {
-            AddKeypadButton(i);
-        }
+            AddKeypadButton(i.ToString(), OnKeypadButtonPressed, i);
 
         // clear button
-        var clearBtn = new Button()
-        {
-            Text = "C"
-        };
-        clearBtn.OnPressed += _ => OnClearButtonPressed?.Invoke();
-        KeypadGrid.AddChild(clearBtn);
+        AddKeypadButton("C", OnClearButtonPressed);
 
         // zero button
-        AddKeypadButton(0);
+        AddKeypadButton("0", OnKeypadButtonPressed, 0);
 
         // enter button
-        var enterBtn = new Button()
-        {
-            Text = "E"
-        };
-        enterBtn.OnPressed += _ => OnEnterButtonPressed?.Invoke();
-        KeypadGrid.AddChild(enterBtn);
+        AddKeypadButton("E", OnEnterButtonPressed);
     }
 
-    private void AddKeypadButton(int i)
+    /// <summary>
+    /// Adds button with name.
+    /// </summary>
+    /// <param name="name">Name of button</param>
+    /// <param name="action">Action to invoke</param>
+    private void AddKeypadButton(string name, Action? action)
     {
-        var btn = new Button()
-        {
-            Text = i.ToString()
-        };
-
-        btn.OnPressed += _ => OnKeypadButtonPressed?.Invoke(i);
+        var btn = new Button() { Text = name };
+        btn.OnPressed += _ => action?.Invoke();
         KeypadGrid.AddChild(btn);
     }
 
+    /// <summary>
+    /// Adds button with name and number to invoke.
+    /// </summary>
+    /// <param name="name">Name of button</param>
+    /// <param name="action">Action to invoke</param>
+    /// <param name="number">Number to invoke</param>
+    private void AddKeypadButton(string name, Action? action, int number)
+    {
+        var btn = new Button() { Text = name };
+        btn.OnPressed += _ => action?.Invoke(number);
+        KeypadGrid.AddChild(btn);
+    }
+
+    /// <summary>
+    /// Updates Menu State
+    /// </summary>
+    /// <param name="state">UI State</param>
     public void UpdateState(DigitalLockUiState state)
     {
         string firstMsg, secondMsg;
@@ -108,6 +114,12 @@ public sealed partial class DigitalLockMenu : DefaultWindow
         SecondStatusLabel.Text = secondMsg;
     }
 
+    /// <summary>
+    /// Visualize code, _ for empty space, * for entered
+    /// </summary>
+    /// <param name="codeLength">Lenght of Code</param>
+    /// <param name="maxLength">Max Lenght</param>
+    /// <returns></returns>
     private string VisualizeCode(int codeLength, int maxLength)
     {
         var code = new string('*', codeLength);

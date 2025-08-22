@@ -28,43 +28,46 @@ public sealed class DigitalLockSystem : EntitySystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<DigitalLockComponent, ComponentInit>(OnInit);
-
+        // Hacking
         SubscribeLocalEvent<DigitalLockComponent, InteractUsingEvent>(OnInteractUsing);
         SubscribeLocalEvent<DigitalLockComponent, DigitalLockMaintenanceOpenDoAfterEvent>(OnMaintenanceOpen);
         SubscribeLocalEvent<DigitalLockComponent, DigitalLockResetDoAfterEvent>(OnReset);
         SubscribeLocalEvent<DigitalLockComponent, ExaminedEvent>(OnExamine);
 
         // UI
+        SubscribeLocalEvent<DigitalLockComponent, ComponentInit>(OnInit);
+
         SubscribeLocalEvent<DigitalLockComponent, DigitalLockKeypadMessage>(OnKeypadButtonPressed);
         SubscribeLocalEvent<DigitalLockComponent, DigitalLockKeypadClearMessage>(OnClearButtonPressed);
         SubscribeLocalEvent<DigitalLockComponent, DigitalLockKeypadEnterMessage>(OnEnterButtonPressed);
     }
 
-    private void OnInit(EntityUid uid, DigitalLockComponent component, ComponentInit args)
-    {
-        UpdateStatus(uid, component);
-        UpdateUserInterface(uid, component);
-    }
+    #region Hacking
 
+    /// <summary>
+    /// Try To open maintenance panel/Reset password when interact with tool
+    /// </summary>
     private void OnInteractUsing(EntityUid uid, DigitalLockComponent component, InteractUsingEvent args)
     {
         if (args.Handled)
             return;
 
-        if (_tool.HasQuality(args.Used, "Screwing"))
-            args.Handled = _tool.UseTool(args.Used, args.User, uid, 2f, "Screwing", new DigitalLockMaintenanceOpenDoAfterEvent());
-        else if (_tool.HasQuality(args.Used, "Pulsing") && component.MaintenanceOpen && component.Code != "")
+        if (_tool.HasQuality(args.Used, component.OpenQuality))
+            args.Handled = _tool.UseTool(args.Used, args.User, uid, 2f, component.OpenQuality, new DigitalLockMaintenanceOpenDoAfterEvent());
+        else if (_tool.HasQuality(args.Used, component.ResetQuality) && component.MaintenanceOpen && component.Code != "")
         {
             var codeLength = component.Code.Length;
             _appearance.SetData(uid, DigitalLockVisuals.Spark, true);
             _ambient.SetAmbience(uid, true);
-            args.Handled = _electrocution.TryDoElectrocution(args.User, uid, 5, TimeSpan.FromSeconds(2), true) || _tool.UseTool(args.Used, args.User, uid, 4f * codeLength, "Pulsing", new DigitalLockResetDoAfterEvent());
+            args.Handled = _electrocution.TryDoElectrocution(args.User, uid, 5, TimeSpan.FromSeconds(2), true) || _tool.UseTool(args.Used, args.User, uid, 4f * codeLength, component.ResetQuality, new DigitalLockResetDoAfterEvent());
         }
 
         args.Handled = false;
     }
 
+    /// <summary>
+    /// Doafter for opening maintenance panel
+    /// </summary>
     private void OnMaintenanceOpen(EntityUid uid, DigitalLockComponent component, DigitalLockMaintenanceOpenDoAfterEvent args)
     {
         if (args.Cancelled)
@@ -73,6 +76,9 @@ public sealed class DigitalLockSystem : EntitySystem
         args.Handled = true;
     }
 
+    /// <summary>
+    /// Doafter for resetting password
+    /// </summary>
     private void OnReset(EntityUid uid, DigitalLockComponent component, DigitalLockResetDoAfterEvent args)
     {
         _appearance.SetData(uid, DigitalLockVisuals.Spark, false);
@@ -84,38 +90,59 @@ public sealed class DigitalLockSystem : EntitySystem
         _audio.PlayPvs(component.AccessGrantedSound, uid);
     }
 
+    /// <summary>
+    /// When examine -> add info about maintenance panel
+    /// </summary>
     private void OnExamine(EntityUid uid, DigitalLockComponent component, ExaminedEvent args)
     {
         var message = new FormattedMessage();
         if (component.MaintenanceOpen)
-            message.AddMarkup(Loc.GetString("digital-lock-examine-maintenance-open"));
+            message.AddMarkupOrThrow(Loc.GetString("digital-lock-examine-maintenance-open"));
         else
-            message.AddMarkup(Loc.GetString("digital-lock-examine-maintenance-closed"));
+            message.AddMarkupOrThrow(Loc.GetString("digital-lock-examine-maintenance-closed"));
         args.PushMessage(message);
     }
 
+    #endregion
+
+    #region UI
+
+    /// <summary>
+    /// Update UI Status on init
+    /// </summary>
+    private void OnInit(EntityUid uid, DigitalLockComponent component, ComponentInit args)
+    {
+        UpdateStatus(uid, component);
+        UpdateUserInterface(uid, component);
+    }
+
+    /// <summary>
+    /// When enter button pressed -> update state
+    /// </summary>
     private void OnEnterButtonPressed(EntityUid uid, DigitalLockComponent component, DigitalLockKeypadEnterMessage args)
     {
         UpdateStatus(uid, component);
         UpdateUserInterface(uid, component);
     }
 
+    /// <summary>
+    /// When keypad button pressed -> add number to entered code, update state
+    /// </summary>
     private void OnKeypadButtonPressed(EntityUid uid, DigitalLockComponent component, DigitalLockKeypadMessage args)
     {
-        PlayNukeKeypadSound(uid, args.Value, component);
+        component.LastPlayedKeypadSemitones = PlayKeypadSound(uid, args.Value, component.LastPlayedKeypadSemitones, component.KeypadPressSound);
 
-        if (component.Status is not DigitalLockStatus.AWAIT_CODE
-            and not DigitalLockStatus.AWAIT_CONFIRMATION
-            and not DigitalLockStatus.CHANGE_MODE_CODE)
-            return;
-
-        if (component.EnteredCode.Length >= component.MaxCodeLength)
+        if (!IsAwaitingInput(component.Status)
+            || component.EnteredCode.Length >= component.MaxCodeLength)
             return;
 
         component.EnteredCode += args.Value.ToString();
         UpdateUserInterface(uid, component);
     }
 
+    /// <summary>
+    /// Handle clear button.
+    /// </summary>
     private void OnClearButtonPressed(EntityUid uid, DigitalLockComponent component, DigitalLockKeypadClearMessage args)
     {
         _audio.PlayPvs(component.KeypadPressSound, uid);
@@ -145,6 +172,11 @@ public sealed class DigitalLockSystem : EntitySystem
         }
     }
 
+    /// <summary>
+    /// Update Status of Digital lock
+    /// </summary>
+    /// <param name="uid">Lock Owner</param>
+    /// <param name="component">Digital Lock Component</param>
     private void UpdateStatus(EntityUid uid, DigitalLockComponent? component = null)
     {
         if (!Resolve(uid, ref component))
@@ -219,6 +251,11 @@ public sealed class DigitalLockSystem : EntitySystem
         }
     }
 
+    /// <summary>
+    /// Update Digital Lock UI
+    /// </summary>
+    /// <param name="uid">Lock Owner</param>
+    /// <param name="component">Digital Lock Component</param>
     private void UpdateUserInterface(EntityUid uid, DigitalLockComponent? component = null)
     {
         if (!Resolve(uid, ref component))
@@ -237,11 +274,13 @@ public sealed class DigitalLockSystem : EntitySystem
         _ui.SetUiState(uid, DigitalLockUiKey.Key, state);
     }
 
-    private void PlayNukeKeypadSound(EntityUid uid, int number, DigitalLockComponent? component = null)
+    /// <summary>
+    /// Plays sound when keypad button pressed.
+    /// </summary>
+    /// <param name="uid">Entity which plays sound</param>
+    /// <param name="number">Number of button</param>
+    public int PlayKeypadSound(EntityUid uid, int number, int lastPlayedKeypadSemitones, SoundSpecifier keypadPressSound)
     {
-        if (!Resolve(uid, ref component))
-            return;
-
         // This is a C mixolydian blues scale.
         // 1 2 3    C D Eb
         // 4 5 6    E F F#
@@ -257,15 +296,25 @@ public sealed class DigitalLockSystem : EntitySystem
             7 => 7,
             8 => 9,
             9 => 10,
-            0 => component.LastPlayedKeypadSemitones + 12,
+            0 => lastPlayedKeypadSemitones + 12,
             _ => 0,
         };
 
-        // Don't double-dip on the octave shifting
-        component.LastPlayedKeypadSemitones = number == 0 ? component.LastPlayedKeypadSemitones : semitoneShift;
-
-        var opts = component.KeypadPressSound.Params;
+        var opts = keypadPressSound.Params;
         opts = AudioHelpers.ShiftSemitone(opts, semitoneShift).AddVolume(-5f);
-        _audio.PlayPvs(component.KeypadPressSound, uid, opts);
+        _audio.PlayPvs(keypadPressSound, uid, opts);
+
+        // Don't double-dip on the octave shifting
+        return number == 0 ? lastPlayedKeypadSemitones : semitoneShift;
     }
+
+    /// <summary>
+    /// Returns true if we waiting input
+    /// </summary>
+    private bool IsAwaitingInput(DigitalLockStatus status) =>
+        status is DigitalLockStatus.AWAIT_CODE
+           or DigitalLockStatus.AWAIT_CONFIRMATION
+           or DigitalLockStatus.CHANGE_MODE_CODE;
+
+    #endregion
 }
