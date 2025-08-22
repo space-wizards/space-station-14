@@ -1,18 +1,4 @@
 ﻿Entries:
-- author: TiniestShark
-  changes:
-  - message: Inhand sprites for (most) ammo mags and speedloaders.
-    type: Add
-  id: 8363
-  time: '2025-04-26T23:36:01.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/34235
-- author: UpAndLeaves
-  changes:
-  - message: Due to recent budget improvements, science now gets custom bio suit lockers.
-    type: Add
-  id: 8364
-  time: '2025-04-26T23:45:10.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/36929
 - author: ScarKy0
   changes:
   - message: Deliveries can now spawn as priority-type! Deliver them within their
@@ -3949,3 +3935,17 @@
   id: 8875
   time: '2025-08-21T01:02:54.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/38224
+- author: DinnerCalzone
+  changes:
+  - message: Fixed more grenades not playing sounds on explosion.
+    type: Fix
+  id: 8876
+  time: '2025-08-22T10:04:29.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/39815
+- author: Alkheemist
+  changes:
+  - message: Added stencil lettering decals to the spraypainter.
+    type: Add
+  id: 8877
+  time: '2025-08-22T10:11:07.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/39701

@@ -1,4 +1,5 @@
 using System.Numerics;
+using Content.Shared.Atmos;
 using Content.Shared.Physics;
 using Content.Shared.Whitelist;
 using Robust.Shared.Audio;
@@ -8,8 +9,8 @@ using Robust.Shared.Serialization;
 
 namespace Content.Shared.Storage.Components;
 
-[NetworkedComponent]
-public abstract partial class SharedEntityStorageComponent : Component
+[RegisterComponent, NetworkedComponent]
+public sealed partial class EntityStorageComponent : Component, IGasMixtureHolder
 {
     public readonly float MaxSize = 1.0f; // maximum width or height of an entity allowed inside the storage.
 
@@ -19,7 +20,7 @@ public abstract partial class SharedEntityStorageComponent : Component
     /// <summary>
     ///     Collision masks that get removed when the storage gets opened.
     /// </summary>
-    public readonly int MasksToRemove = (int) (
+    public readonly int MasksToRemove = (int)(
         CollisionGroup.MidImpassable |
         CollisionGroup.HighImpassable |
         CollisionGroup.LowImpassable);
@@ -33,13 +34,13 @@ public abstract partial class SharedEntityStorageComponent : Component
     /// <summary>
     /// The total amount of items that can fit in one entitystorage
     /// </summary>
-    [DataField, ViewVariables(VVAccess.ReadWrite)]
+    [DataField]
     public int Capacity = 30;
 
     /// <summary>
     /// Whether or not the entity still has collision when open
     /// </summary>
-    [DataField, ViewVariables(VVAccess.ReadWrite)]
+    [DataField]
     public bool IsCollidableWhenOpen;
 
     /// <summary>
@@ -47,45 +48,45 @@ public abstract partial class SharedEntityStorageComponent : Component
     /// If false, it prevents the storage from opening when the entity inside of it moves.
     /// This is for objects that you want the player to move while inside, like large cardboard boxes, without opening the storage.
     /// </summary>
-    [DataField, ViewVariables(VVAccess.ReadWrite)]
+    [DataField]
     public bool OpenOnMove = true;
 
     //The offset for where items are emptied/vacuumed for the EntityStorage.
-    [DataField, ViewVariables(VVAccess.ReadWrite)]
+    [DataField]
     public Vector2 EnteringOffset = new(0, 0);
 
     //The collision groups checked, so that items are depositied or grabbed from inside walls.
-    [DataField, ViewVariables(VVAccess.ReadWrite)]
+    [DataField]
     public CollisionGroup EnteringOffsetCollisionFlags = CollisionGroup.Impassable | CollisionGroup.MidImpassable;
 
     /// <summary>
     /// How close you have to be to the "entering" spot to be able to enter
     /// </summary>
-    [DataField, ViewVariables(VVAccess.ReadWrite)]
+    [DataField]
     public float EnteringRange = 0.18f;
 
     /// <summary>
     /// Whether or not to show the contents when the storage is closed
     /// </summary>
-    [DataField, ViewVariables(VVAccess.ReadWrite)]
+    [DataField]
     public bool ShowContents;
 
     /// <summary>
     /// Whether or not light is occluded by the storage
     /// </summary>
-    [DataField, ViewVariables(VVAccess.ReadWrite)]
+    [DataField]
     public bool OccludesLight = true;
 
     /// <summary>
     /// Whether or not all the contents stored should be deleted with the entitystorage
     /// </summary>
-    [DataField, ViewVariables(VVAccess.ReadWrite)]
+    [DataField]
     public bool DeleteContentsOnDestruction;
 
     /// <summary>
     /// Whether or not the container is sealed and traps air inside of it
     /// </summary>
-    [DataField, ViewVariables(VVAccess.ReadWrite)]
+    [DataField]
     public bool Airtight = true;
 
     /// <summary>
@@ -118,6 +119,13 @@ public abstract partial class SharedEntityStorageComponent : Component
     /// </summary>
     [ViewVariables]
     public Container Contents = default!;
+
+    /// <summary>
+    /// Gas currently contained in this entity storage.
+    /// None while open. Grabs gas from the atmosphere when closed, and exposes any entities inside to it.
+    /// </summary>
+    [DataField]
+    public GasMixture Air { get; set; } = new(200);
 }
 
 [Serializable, NetSerializable]
