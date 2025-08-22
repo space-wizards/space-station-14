@@ -114,7 +114,7 @@
     - WhitelistChameleon
   - type: HideLayerClothing
     slots:
-      - Tail
+    - Tail
 
 - type: entity
   parent: [ClothingOuterBaseLarge, GeigerCounterClothing, AllowSuitStorageClothing]
