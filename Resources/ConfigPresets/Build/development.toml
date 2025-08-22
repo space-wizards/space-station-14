@@ -1,30 +1,44 @@
-﻿# Configuration preset used on Wizard's Den Salamander
+﻿[game]
+# Straight in-game baby
+lobbyenabled = false
+# Dev map for faster loading & convenience
+map = "Dev"
+role_timers = false
 
-[game]
-desc = "Official English Space Station 14 servers. Medium roleplay ruleset. you must be whitelisted by playing on other Wizard's Den servers if there are more than 15 online players."
-hostname = "[EN][MRP] Wizard's Den Salamander [US West]"
-round_restart_time = 300
-showgreentext = false
+[events]
+enabled = false
 
-[server]
-rules_file = "MRPRuleset"
+[ghost]
+role_time = 0.5
+quick_lottery = true
 
-[whitelist]
-enabled = true
-prototype_list = "salamanderMrpWhitelist"
+[gateway]
+generator_enabled = false
+
+[movement]
+mob_pushing = true
+
+[physics]
+# Makes mapping annoying
+grid_splitting = false
+
+[procgen]
+preload = false
+
+[salvage]
+expedition_cooldown = 30.0
 
 [shuttle]
-emergency_early_launch_allowed = true
+grid_fill = false
+auto_call_time = 0
+emergency = false
+arrivals = false
+preload_grids = false
 
-[biomass]
-easy_mode = false
-
-[ooc]
-enable_during_round = false
+[admin]
+see_own_notes = true
 
 [ic]
-flavor_text = true
-
-[hub]
-tags = "lang:en,region:am_n_w,rp:med"
-
+random_characters = true
+random_species_weights = ""
+ssd_sleep_time = 3600
