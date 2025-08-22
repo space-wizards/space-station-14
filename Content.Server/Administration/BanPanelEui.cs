@@ -120,7 +120,7 @@ public sealed class BanPanelEui : BaseEui
         {
             var now = DateTimeOffset.UtcNow;
             foreach (var role in roles)
-            { //TODO:ERRANT is this codepath right?
+            {
                 _banManager.CreateRoleBan(targetUid, target, Player.UserId, addressRange, targetHWid, role, minutes, severity, reason, now);
             }
 
