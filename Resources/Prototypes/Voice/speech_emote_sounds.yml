@@ -644,10 +644,6 @@
       collection: Whistles
     Weh:
       collection: Weh
-    Wuhey:
-      collection: Wuhey
-    Ungh:
-      collection: Ungh
     Gasp:
       collection: FemaleGasp
     DefaultDeathgasp:
@@ -659,14 +655,6 @@
 - type: emoteSounds
   id: UnisexThaven
   sounds:
-    Scream:
-      collection: UnisexScreams
-    Laugh:
-      collection: UnisexLaugh
-    Sneeze:
-      collection: UnisexSneezes
-    Cough:
-      collection: UnisexCoughs
     CatMeow:
       collection: CatMeows
     CatHisses:
@@ -675,31 +663,18 @@
       collection: MonkeyScreeches
     RobotBeep:
       collection: RobotBeeps
-    Yawn:
-      collection: UnisexYawn
     Snore:
       collection: Snores
-    Sigh:
-      collection: UnisexSigh
     Honk:
       collection: BikeHorn
-    Crying:
-      collection: UnisexCry
     Whistle:
       collection: Whistles
     Weh:
       collection: Weh
-    Wuhey:
-      collection: Wuhey
-    Ungh:
-      collection: Ungh
-    Gasp:
-      collection: UnisexGasp
-    DefaultDeathgasp:
-      collection: UnisexDeathGasp
   params:
     variation: 0.05
     pitch: 1.25
+
 # mobs
 - type: emoteSounds
   id: Zombie

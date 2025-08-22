@@ -7,13 +7,8 @@ using Content.Shared.Chat;
 using Content.Shared.Dataset;
 using Content.Shared.Emag.Systems;
 using Content.Shared.GameTicking;
-<<<<<<<< HEAD:Content.Server/Impstation/Spelfs/SpelfMoodSystem.cs
-using Content.Shared.Impstation.Spelfs;
-using Content.Shared.Impstation.Spelfs.Components;
-========
 using Content.Shared._Impstation.Thaven;
 using Content.Shared._Impstation.Thaven.Components;
->>>>>>>> 3167d35376 (Merge pull request #1302 from hivehum/spelf-to-thaven):Content.Server/_Impstation/Thaven/ThavenMoodSystem.cs
 using Content.Shared.Random;
 using Content.Shared.Random.Helpers;
 using Robust.Server.GameObjects;
@@ -21,12 +16,10 @@ using Robust.Shared.Configuration;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
+using Content.Shared._Impstation.CCVar;
+using Robust.Server.Audio;
 
-<<<<<<<< HEAD:Content.Server/Impstation/Spelfs/SpelfMoodSystem.cs
-namespace Content.Server.Impstation.Spelfs;
-========
 namespace Content.Server._Impstation.Thaven;
->>>>>>>> 3167d35376 (Merge pull request #1302 from hivehum/spelf-to-thaven):Content.Server/_Impstation/Thaven/ThavenMoodSystem.cs
 
 public sealed partial class ThavenMoodsSystem : SharedThavenMoodSystem
 {
@@ -36,10 +29,10 @@ public sealed partial class ThavenMoodsSystem : SharedThavenMoodSystem
     [Dependency] private readonly IConfigurationManager _config = default!;
     [Dependency] private readonly UserInterfaceSystem _bui = default!;
     [Dependency] private readonly IChatManager _chatManager = default!;
+    [Dependency] private readonly AudioSystem _audio = default!;
 
     public IReadOnlyList<ThavenMood> SharedMoods => _sharedMoods.AsReadOnly();
     private readonly List<ThavenMood> _sharedMoods = new();
-
 
     [ValidatePrototypeId<DatasetPrototype>]
     private const string SharedDataset = "ThavenMoodsShared";
@@ -75,11 +68,7 @@ public sealed partial class ThavenMoodsSystem : SharedThavenMoodSystem
     private void NewSharedMoods()
     {
         _sharedMoods.Clear();
-<<<<<<<< HEAD:Content.Server/Impstation/Spelfs/SpelfMoodSystem.cs
-        for (int i = 0; i < _config.GetCVar(CCVars.SpelfSharedMoodCount); i++)
-========
         for (int i = 0; i < _config.GetCVar(ImpCCVars.ThavenSharedMoodCount); i++)
->>>>>>>> 3167d35376 (Merge pull request #1302 from hivehum/spelf-to-thaven):Content.Server/_Impstation/Thaven/ThavenMoodSystem.cs
             TryAddSharedMood();
     }
 
@@ -108,7 +97,7 @@ public sealed partial class ThavenMoodsSystem : SharedThavenMoodSystem
             if (!comp.FollowsSharedMoods)
                 continue;
 
-            NotifyMoodChange(ent);
+            NotifyMoodChange((ent,comp));
         }
 
         return true;
@@ -158,23 +147,16 @@ public sealed partial class ThavenMoodsSystem : SharedThavenMoodSystem
         return false;
     }
 
-<<<<<<<< HEAD:Content.Server/Impstation/Spelfs/SpelfMoodSystem.cs
-    public void NotifyMoodChange(EntityUid uid)
-========
+
     public void NotifyMoodChange(Entity<ThavenMoodsComponent> ent)
->>>>>>>> 3167d35376 (Merge pull request #1302 from hivehum/spelf-to-thaven):Content.Server/_Impstation/Thaven/ThavenMoodSystem.cs
     {
-        if (!TryComp<ActorComponent>(uid, out var actor))
+        if (!TryComp<ActorComponent>(ent, out var actor))
             return;
 
-<<<<<<<< HEAD:Content.Server/Impstation/Spelfs/SpelfMoodSystem.cs
-        var msg = Loc.GetString("spelf-moods-update-notify");
-========
         if (ent.Comp.MoodsChangedSound != null)
             _audio.PlayGlobal(ent.Comp.MoodsChangedSound, actor.PlayerSession);
 
         var msg = Loc.GetString("thaven-moods-update-notify");
->>>>>>>> 3167d35376 (Merge pull request #1302 from hivehum/spelf-to-thaven):Content.Server/_Impstation/Thaven/ThavenMoodSystem.cs
         var wrappedMessage = Loc.GetString("chat-manager-server-wrap-message", ("message", msg));
         _chatManager.ChatMessageToOne(ChatChannel.Server, msg, wrappedMessage, default, false, actor.PlayerSession.Channel, colorOverride: Color.Orange);
     }
@@ -196,7 +178,7 @@ public sealed partial class ThavenMoodsSystem : SharedThavenMoodSystem
         comp.Moods.Add(mood);
 
         if (notify)
-            NotifyMoodChange(uid);
+            NotifyMoodChange((uid,comp));
 
         UpdateBUIState(uid, comp);
     }
@@ -298,7 +280,7 @@ public sealed partial class ThavenMoodsSystem : SharedThavenMoodSystem
 
         comp.Moods = moods.ToList();
         if (notify)
-            NotifyMoodChange(uid);
+            NotifyMoodChange((uid, comp));
 
         UpdateBUIState(uid, comp);
     }
@@ -378,6 +360,7 @@ public sealed partial class ThavenMoodsSystem : SharedThavenMoodSystem
 
     protected override void OnEmagged(EntityUid uid, ThavenMoodsComponent comp, ref GotEmaggedEvent args)
     {
+        if (!comp.CanBeEmagged) return;
         base.OnEmagged(uid, comp, ref args);
         TryAddRandomMood(uid, WildcardDataset, comp);
     }

@@ -8,11 +8,7 @@
       connections:
       - torso
       organs:
-<<<<<<<< HEAD:Resources/Prototypes/Body/Prototypes/spelf.yml
-        brain: OrganHumanBrain
-========
         brain: OrganThavenBrain
->>>>>>>> 3167d35376 (Merge pull request #1302 from hivehum/spelf-to-thaven):Resources/Prototypes/Body/Prototypes/thaven.yml
         eyes: OrganHumanEyes
     torso:
       part: TorsoThaven

@@ -3,17 +3,10 @@ using Content.Server.Administration.Managers;
 using Content.Server.EUI;
 using Content.Shared.Administration;
 using Content.Shared.Eui;
-<<<<<<<< HEAD:Content.Server/Impstation/Spelfs/SpelfMoodsEui.cs
-using Content.Shared.Impstation.Spelfs;
-using Content.Shared.Impstation.Spelfs.Components;
-
-namespace Content.Server.Impstation.Spelfs;
-========
 using Content.Shared._Impstation.Thaven;
 using Content.Shared._Impstation.Thaven.Components;
 
 namespace Content.Server._Impstation.Thaven;
->>>>>>>> 3167d35376 (Merge pull request #1302 from hivehum/spelf-to-thaven):Content.Server/_Impstation/Thaven/ThavenMoodsEui.cs
 
 public sealed class ThavenMoodsEui : BaseEui
 {

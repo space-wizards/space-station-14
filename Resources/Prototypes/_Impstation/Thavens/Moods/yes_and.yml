@@ -42,24 +42,14 @@
     - Centrist
     - SpeechRestriction
 
-<<<<<<<< HEAD:Resources/Prototypes/Impstation/Spelfs/Moods/yes_and.yml
-- type: spelfMood
-========
+
 # You are extremely possessive of your property. Refuse to relinquish it, and if it is misplaced or stolen, it must be retrieved at all costs.
 - type: thavenMood
->>>>>>>> 3167d35376 (Merge pull request #1302 from hivehum/spelf-to-thaven):Resources/Prototypes/_Impstation/Thavens/Moods/yes_and.yml
   id: PossessiveOfProperty
   moodName: thaven-mood-possessive-of-property-name
   moodDesc: thaven-mood-possessive-of-property-desc
 
-<<<<<<<< HEAD:Resources/Prototypes/Impstation/Spelfs/Moods/yes_and.yml
-- type: spelfMood
-  id: ExcessivelyOrganized
-  moodName: spelf-mood-excessively-organized-name
-  moodDesc: spelf-mood-excessively-organized-desc
 
-- type: spelfMood
-========
 # You are obsessively organized - everything has its place and must be returned to it.
 - type: thavenMood
   id: ExcessivelyOrganized
@@ -70,7 +60,6 @@
 
 # You are the most important person aboard the station.
 - type: thavenMood
->>>>>>>> 3167d35376 (Merge pull request #1302 from hivehum/spelf-to-thaven):Resources/Prototypes/_Impstation/Thavens/Moods/yes_and.yml
   id: MostImportant
   moodName: thaven-mood-most-important-name
   moodDesc: thaven-mood-most-important-desc
@@ -79,12 +68,9 @@
     - DontSpeakToCommand
     - OnlySpeakToCommand
 
-<<<<<<<< HEAD:Resources/Prototypes/Impstation/Spelfs/Moods/yes_and.yml
-- type: spelfMood
-========
+
 # You are the least important person aboard the station.
 - type: thavenMood
->>>>>>>> 3167d35376 (Merge pull request #1302 from hivehum/spelf-to-thaven):Resources/Prototypes/_Impstation/Thavens/Moods/yes_and.yml
   id: LeastImportant
   moodName: thaven-mood-least-important-name
   moodDesc: thaven-mood-least-important-desc

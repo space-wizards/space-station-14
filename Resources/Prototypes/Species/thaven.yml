@@ -8,8 +8,8 @@
   markingLimits: MobThavenMarkingLimits
   dollPrototype: MobThavenDummy
   skinColoration: Hues
-  maleFirstNames: names_thaven
-  femaleFirstNames: names_thaven
+  maleFirstNames: NamesThaven
+  femaleFirstNames: NamesThaven
   naming: First
   sexes:
   - Male
@@ -46,8 +46,7 @@
       required: false
     HeadSide:
       points: 1
-      required: true
-      defaultMarkings: [ ThavenEars1 ]
+      required: false
     Head:
       points: 4
       required: false

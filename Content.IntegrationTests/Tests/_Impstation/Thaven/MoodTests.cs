@@ -2,15 +2,9 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using Content.IntegrationTests;
-<<<<<<<< HEAD:Content.IntegrationTests/Tests/Impstation/Spelfs/MoodTests.cs
-using Content.Server.Impstation.Spelfs;
-using Content.Shared.Dataset;
-using Content.Shared.Impstation.Spelfs;
-========
 using Content.Server._Impstation.Thaven;
 using Content.Shared.Dataset;
 using Content.Shared._Impstation.Thaven;
->>>>>>>> 3167d35376 (Merge pull request #1302 from hivehum/spelf-to-thaven):Content.IntegrationTests/Tests/_Impstation/Thaven/MoodTests.cs
 using NUnit.Framework;
 using Robust.Shared.ContentPack;
 using Robust.Shared.GameObjects;
@@ -18,11 +12,7 @@ using Robust.Shared.IoC;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.Manager;
 
-<<<<<<<< HEAD:Content.IntegrationTests/Tests/Impstation/Spelfs/MoodTests.cs
-namespace Content.IntegrationTests.Tests.Impstation.Spelfs;
-========
 namespace Content.IntegrationTests.Tests._Impstation.Thaven;
->>>>>>>> 3167d35376 (Merge pull request #1302 from hivehum/spelf-to-thaven):Content.IntegrationTests/Tests/_Impstation/Thaven/MoodTests.cs
 
 [TestFixture, TestOf(typeof(ThavenMoodPrototype))]
 public sealed class ThavenMoodTests

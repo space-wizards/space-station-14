@@ -89,7 +89,7 @@
   text: "/ServerInfo/Guidebook/Mobs/Shadekin.xml"
 
 - type: guideEntry
-  id: Thavend
+  id: Thaven
   name: Thaven
   text: "/ServerInfo/_Impstation/Guidebook/Mobs/Thaven.xml"
 

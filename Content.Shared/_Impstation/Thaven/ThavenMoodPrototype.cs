@@ -5,11 +5,7 @@ using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.Dictionary;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.Set;
 
-<<<<<<<< HEAD:Content.Shared/Impstation/Spelfs/SpelfMoodPrototype.cs
-namespace Content.Shared.Impstation.Spelfs;
-========
 namespace Content.Shared._Impstation.Thaven;
->>>>>>>> 3167d35376 (Merge pull request #1302 from hivehum/spelf-to-thaven):Content.Shared/_Impstation/Thaven/ThavenMoodPrototype.cs
 
 [Virtual, DataDefinition]
 [Serializable, NetSerializable]

@@ -43,7 +43,8 @@ using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
 using Content.Shared.Overlays; // 🌟Starlight🌟
-using Content.Shared.Contraband; // 🌟Starlight🌟
+using Content.Shared.Contraband;
+using Content.Shared.Humanoid; // 🌟Starlight🌟
 
 namespace Content.Server.Administration.Systems;
 
@@ -66,7 +67,6 @@ public sealed partial class AdminVerbSystem
     #region Starlight
     [Dependency] private readonly LimbSystem _limbSystem = default!;
     [Dependency] private readonly StarlightEntitySystem _entitySystem = default!;
-    [Dependency] private readonly SpelfMoodsSystem _moods = default!;
     #endregion
 
     private void AddTricksVerbs(GetVerbsEvent<Verb> args)

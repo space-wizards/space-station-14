@@ -1,19 +1,13 @@
 using Content.Shared.Actions;
+using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
 using Robust.Shared.Serialization;
 
-<<<<<<<< HEAD:Content.Shared/Impstation/Spelfs/SpelfMoodBoundComponent.cs
-namespace Content.Shared.Impstation.Spelfs.Components;
-
-[RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
-public sealed partial class SpelfMoodsComponent : Component
-========
 namespace Content.Shared._Impstation.Thaven.Components;
 
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
 [Access(typeof(SharedThavenMoodSystem))]
 public sealed partial class ThavenMoodsComponent : Component
->>>>>>>> 3167d35376 (Merge pull request #1302 from hivehum/spelf-to-thaven):Content.Shared/_Impstation/Thaven/ThavenMoodBoundComponent.cs
 {
     [DataField, ViewVariables(VVAccess.ReadWrite), AutoNetworkedField]
     public bool FollowsSharedMoods = true;
@@ -24,12 +18,9 @@ public sealed partial class ThavenMoodsComponent : Component
     [DataField, ViewVariables(VVAccess.ReadWrite), AutoNetworkedField]
     public bool CanBeEmagged = true;
 
-<<<<<<<< HEAD:Content.Shared/Impstation/Spelfs/SpelfMoodBoundComponent.cs
-========
     [DataField, ViewVariables(VVAccess.ReadWrite), AutoNetworkedField]
     public SoundSpecifier? MoodsChangedSound = new SoundPathSpecifier("/Audio/_Impstation/Thaven/moods_changed.ogg");
 
->>>>>>>> 3167d35376 (Merge pull request #1302 from hivehum/spelf-to-thaven):Content.Shared/_Impstation/Thaven/ThavenMoodBoundComponent.cs
     [DataField(serverOnly: true), ViewVariables]
     public EntityUid? Action;
 }
