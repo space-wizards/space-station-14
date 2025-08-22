@@ -12331,5 +12331,12 @@ Entries:
   id: 141500
   time: '2025-08-22T14:49:56.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/1415
+- author: Happyrobot33
+  changes:
+  - message: Fixed AI Interface cube not having all languages
+    type: Fix
+  id: 143100
+  time: '2025-08-22T19:42:20.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1431
 Order: -1
 
