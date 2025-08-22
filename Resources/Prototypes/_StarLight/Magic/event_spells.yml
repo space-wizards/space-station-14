@@ -19,8 +19,8 @@
 - type: entity
   parent: BaseAction
   id: ActionRandomizeLanguages
-  name: Enact Babel Protocol
-  description: Languages are a fickle concept? Dont you agree?
+  name: Language Shift
+  description: You ever heard of the tower of babel?
   components:
   - type: Magic
     requiresClothes: true
@@ -29,8 +29,8 @@
     useDelay: 3600 # full hour use delay. you get ONE mabey TWO on beta.
     itemIconStyle: BigAction
     icon: 
-      sprite: Objects/Consumable/Food/ingredients.rsi #until I get a actual sprite. enjoy being cheese.
-      state: cheesewedge
+      sprite: _Starlight/Actions/wizard.rsi
+      state: babel_spell
   - type: SpeakOnAction
     sentence: action-speech-spell-babel
   - type: InstantAction
