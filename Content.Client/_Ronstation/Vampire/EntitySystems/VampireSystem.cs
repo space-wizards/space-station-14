@@ -27,7 +27,7 @@ public sealed class VampireSystem : SharedVampireSystem
                 return;
         }
 
-        if (_prototypeManager.TryIndex(entity.Comp.VampireIcon, out var iconPrototype))
-            args.StatusIcons.Add(iconPrototype);
+        // if (_prototypeManager.TryIndex(entity.Comp.VampireIcon, out var iconPrototype))
+        //     args.StatusIcons.Add(iconPrototype);
     }
 }
