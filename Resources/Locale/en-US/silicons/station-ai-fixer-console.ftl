@@ -1,8 +1,8 @@
 # System
 station-ai-fixer-console-is-locked = The console is locked.
-station-ai-fixer-console-station-ai-holder-required = Only AI storage devices can be inserted into the console.
+station-ai-fixer-console-station-ai-holder-required = Only AI storage units can be inserted into the console.
 station-ai-fixer-console-examination-station-ai-holder-present = There is {INDEFINITE($holder)} [color=cyan]{$holder}[/color] inserted in the console.
-station-ai-fixer-console-examination-station-ai-holder-absent = There is an unoccupied slot for an [color=cyan]AI storage device[/color].
+station-ai-fixer-console-examination-station-ai-holder-absent = There is an unoccupied slot for an [color=cyan]AI storage unit[/color].
 
 # UI
 station-ai-fixer-console-window = AI restoration console
@@ -13,7 +13,7 @@ station-ai-fixer-console-window-station-ai-offline = Offline
 
 station-ai-fixer-console-window-controls-locked = Controls locked
 
-station-ai-fixer-console-window-station-ai-eject = Eject stored AI
+station-ai-fixer-console-window-station-ai-eject = Eject storage unit
 station-ai-fixer-console-window-station-ai-repair = Run repair tool
 station-ai-fixer-console-window-station-ai-purge = Initiate AI purge
 

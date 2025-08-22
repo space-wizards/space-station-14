@@ -1693,11 +1693,11 @@
   - type: StationAiFixerConsole
   - type: ItemSlotsLock
     slots:
-    - intellicard_holder
+    - station_ai_holder
   - type: ItemSlotRequiresPower
   - type: ItemSlots
     slots:
-      intellicard_holder:
+      station_ai_holder:
         ejectOnBreak: true
         lockedFailPopup: station-ai-fixer-console-is-locked
         whitelistFailPopup: station-ai-fixer-console-station-ai-holder-required
@@ -1708,7 +1708,7 @@
           - Item
   - type: ContainerContainer
     containers:
-      intellicard_holder: !type:ContainerSlot
+      station_ai_holder: !type:ContainerSlot
       board: !type:Container
   - type: ActivatableUI
     key: enum.StationAiFixerConsoleUiKey.Key

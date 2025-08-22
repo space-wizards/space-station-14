@@ -33,11 +33,7 @@ public sealed partial class StationAiFixerConsoleSystem : EntitySystem
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
     [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
-    [Dependency] private readonly SharedTransformSystem _xform = default!;
     [Dependency] private readonly INetManager _net = default!;
-
-    private readonly string _stationAiHolder = "intellicard_holder";
-    private readonly string _stationAiMindSlot = "station_ai_mind_slot";
 
     public override void Initialize()
     {
@@ -110,11 +106,11 @@ public sealed partial class StationAiFixerConsoleSystem : EntitySystem
         if (!TryComp<ItemSlotsComponent>(ent, out var slots))
             return;
 
-        if (!_itemSlots.TryGetSlot(ent, _stationAiHolder, out var holderSlot, slots))
+        if (!_itemSlots.TryGetSlot(ent, ent.Comp.StationAiHolderSlot, out var holderSlot, slots))
             return;
 
         if (_itemSlots.TryEjectToHands(ent, holderSlot, user, true))
-            _adminLogger.Add(LogType.Action, LogImpact.Medium, $"{ToPrettyString(user):user} ejected a station AI holder from AI restoration console ({ent.Owner})");
+            _adminLogger.Add(LogType.Action, LogImpact.Medium, $"{ToPrettyString(user):user} ejected a station AI holder from AI restoration console ({ToPrettyString(ent.Owner)})");
     }
 
     private void RepairStationAi(Entity<StationAiFixerConsoleComponent> ent, EntityUid user)
@@ -122,7 +118,7 @@ public sealed partial class StationAiFixerConsoleSystem : EntitySystem
         if (!TryGetTarget(ent, out var target))
             return;
 
-        _adminLogger.Add(LogType.Action, LogImpact.Medium, $"{ToPrettyString(user):user} started a repair of {ToPrettyString(target)} using an AI restoration console ({ent.Owner})");
+        _adminLogger.Add(LogType.Action, LogImpact.Medium, $"{ToPrettyString(user):user} started a repair of {ToPrettyString(target)} using an AI restoration console ({ToPrettyString(ent.Owner)})");
         StartAction(ent, target.Value, StationAiFixerConsoleAction.Repair);
     }
 
@@ -146,7 +142,7 @@ public sealed partial class StationAiFixerConsoleSystem : EntitySystem
     /// </summary>
     /// <param name="ent">The console.</param>
     /// <param name="target">The target entity.</param>
-    /// <param name="action">The action to be enacted on the target.</param>
+    /// <param name="actionType">The action to be enacted on the target.</param>
     private void StartAction(Entity<StationAiFixerConsoleComponent> ent, EntityUid target, StationAiFixerConsoleAction actionType)
     {
         if (IsActionInProgress(ent))
@@ -242,20 +238,12 @@ public sealed partial class StationAiFixerConsoleSystem : EntitySystem
             else if (ent.Comp.ActionType == StationAiFixerConsoleAction.Purge &&
                 TryGetStationAiHolder(ent, out var holder))
             {
-                // Remove the AI from its holder and send it to null space while we wait for
-                // it to be deleted. Need this so that the subsequent UI update can be predicted
                 _container.RemoveEntity(holder.Value, ent.Comp.ActionTarget.Value, force: true);
-                _xform.DetachEntity(ent.Comp.ActionTarget.Value, Transform(ent.Comp.ActionTarget.Value));
+                PredictedQueueDel(ent.Comp.ActionTarget);
 
-                // Let the server handle the deletion and audio
-                if (_net.IsServer)
+                if (_net.IsServer && ent.Comp.PurgeFinishedSound != null)
                 {
-                    QueueDel(ent.Comp.ActionTarget);
-
-                    if (ent.Comp.PurgeFinishedSound != null)
-                    {
-                        _audio.PlayPvs(ent.Comp.PurgeFinishedSound, ent);
-                    }
+                    _audio.PlayPvs(ent.Comp.PurgeFinishedSound, ent);
                 }
             }
         }
@@ -278,8 +266,8 @@ public sealed partial class StationAiFixerConsoleSystem : EntitySystem
         {
             var currentStage = ent.Comp.ActionType.ToString() + ent.Comp.CurrentActionStage.ToString();
 
-            if (!_appearance.TryGetData(ent, StationAiFixerConsoleVisuals.Key, out int oldStage, appearance) ||
-                ent.Comp.ActionType.ToString() + oldStage != currentStage)
+            if (!_appearance.TryGetData(ent, StationAiFixerConsoleVisuals.Key, out string oldStage, appearance) ||
+                oldStage != currentStage)
             {
                 _appearance.SetData(ent, StationAiFixerConsoleVisuals.Key, currentStage, appearance);
 
@@ -368,7 +356,7 @@ public sealed partial class StationAiFixerConsoleSystem : EntitySystem
         if (!TryGetStationAiHolder(ent, out var holder))
             return false;
 
-        if (!_container.TryGetContainer(holder.Value, _stationAiMindSlot, out var stationAiMindSlot) || stationAiMindSlot.Count == 0)
+        if (!_container.TryGetContainer(holder.Value, ent.Comp.StationAiMindSlot, out var stationAiMindSlot) || stationAiMindSlot.Count == 0)
             return false;
 
         var stationAi = stationAiMindSlot.ContainedEntities[0];
@@ -391,7 +379,7 @@ public sealed partial class StationAiFixerConsoleSystem : EntitySystem
     {
         holder = null;
 
-        if (!_container.TryGetContainer(ent, _stationAiHolder, out var holderContainer) ||
+        if (!_container.TryGetContainer(ent, ent.Comp.StationAiHolderSlot, out var holderContainer) ||
             holderContainer.Count == 0)
         {
             return false;
