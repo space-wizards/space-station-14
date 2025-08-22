@@ -82,6 +82,9 @@
   - type: Reactive
     groups:
       Acidic: [Touch]
+  - type: Ghost
+    canInteract: true
+  - type: GhostHearing
   - type: Tag
     tags:
     - SlowImmune
