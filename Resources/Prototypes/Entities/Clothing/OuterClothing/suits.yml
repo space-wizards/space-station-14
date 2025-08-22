@@ -309,7 +309,7 @@
       toggleable-clothing: !type:ContainerSlot {}
   - type: HideLayerClothing
     slots:
-        - Tail
+    - Tail
 
 - type: entity
   parent: ClothingOuterSuitCarp
