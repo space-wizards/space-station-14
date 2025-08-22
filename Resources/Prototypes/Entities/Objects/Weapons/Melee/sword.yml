@@ -172,6 +172,33 @@
     slotFlags:
     - NONE
 
+- type: entity
+  name: tactical katana
+  parent: Katana
+  id: TacticalKatana
+  description: This is the placeholder description for the tactical katana.
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Melee/katana_tactical.rsi
+  - type: MeleeWeapon
+    wideAnimationRotation: -60
+    damage:
+      types:
+        Slash: 5 # Joke item; shitty overpriced mail-order sword that can barely puncture a cardboard box.
+  - type: Item
+    storedSprite:
+      state: storage
+      sprite: Objects/Weapons/Melee/katana_tactical_storage_64x.rsi #Done in 64x64 because it looks way too puny in 32x32
+    shape:
+    - 0,0,0,3
+  - type: Clothing
+    sprite: Objects/Weapons/Melee/katana_tactical.rsi
+    slots:
+    - Back
+    - Belt
+  - type: DisarmMalus
+    malus: 0
+
 #Greatswords
 - type: entity
   name: claymore
