@@ -509,7 +509,7 @@ public sealed class GhostRoleSystem : EntitySystem
         if (TryComp<MindContainerComponent>(roleEnt, out var mindCont)
             && TryComp<MindComponent>(mindCont.Mind, out var mind))
         {
-            foreach (var role in mind.MindRoles)
+            foreach (var role in mind.MindRoleContainer.ContainedEntities)
             {
                 if(!TryComp<MindRoleComponent>(role, out var comp))
                     continue;
