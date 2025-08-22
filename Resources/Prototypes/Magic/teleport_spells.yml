@@ -35,7 +35,8 @@
       sprite: Objects/Magic/Eldritch/eldritch_actions.rsi
       state: voidblink
   - type: TargetAction
-    checkCanAccess: false
+    accessMask:
+    - Opaque
     repeat: false
     range: 16
   - type: EntityTargetAction

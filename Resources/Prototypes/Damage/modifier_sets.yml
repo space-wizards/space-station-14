@@ -146,6 +146,13 @@
     Blunt: 5
 
 - type: damageModifierSet
+  id: Card
+  coefficients:
+    Slash: 2.0
+    Piercing: 0.1 # Holes easily poked through, but do little to structural integrity 
+    Heat: 3.0
+
+- type: damageModifierSet
   id: Web # Very flammable, can be easily hacked and slashed, but shooting or hitting it is another story.
   coefficients:
     Blunt: 0.7

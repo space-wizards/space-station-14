@@ -50,25 +50,37 @@ public sealed partial class ItemToggleComponent : Component
     /// /// <remarks>
     /// If server-side systems affect the item's toggle, like charge/fuel systems, then the item is not predictable.
     /// </remarks>
-    [ViewVariables(VVAccess.ReadWrite), DataField, AutoNetworkedField]
+    [DataField, AutoNetworkedField]
     public bool Predictable = true;
 
     /// <summary>
     ///     The noise this item makes when it is toggled on.
     /// </summary>
-    [ViewVariables(VVAccess.ReadWrite), DataField, AutoNetworkedField]
+    [DataField, AutoNetworkedField]
     public SoundSpecifier? SoundActivate;
 
     /// <summary>
     ///     The noise this item makes when it is toggled off.
     /// </summary>
-    [ViewVariables(VVAccess.ReadWrite), DataField, AutoNetworkedField]
+    [DataField, AutoNetworkedField]
     public SoundSpecifier? SoundDeactivate;
+
+    /// <summary>
+    ///     The popup to show to someone activating this item.
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public LocId? PopupActivate;
+
+    /// <summary>
+    ///     The popup to show to someone deactivating this item.
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public LocId? PopupDeactivate;
 
     /// <summary>
     ///     The noise this item makes when it is toggled on.
     /// </summary>
-    [ViewVariables(VVAccess.ReadWrite), DataField, AutoNetworkedField]
+    [DataField, AutoNetworkedField]
     public SoundSpecifier? SoundFailToActivate;
 }
 

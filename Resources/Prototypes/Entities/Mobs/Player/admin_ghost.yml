@@ -107,6 +107,8 @@
   - type: Loadout
     prototypes: [ MobAghostGear ]
   - type: BypassInteractionChecks
+  - type: ExplosionResistance
+    damageCoefficient: 0
 
 - type: entity
   abstract: true

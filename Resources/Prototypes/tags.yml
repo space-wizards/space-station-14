@@ -348,6 +348,9 @@
   id: ComputerTelevisionCircuitboard
 
 - type: Tag
+  id: ConstructionMaterial
+
+- type: Tag
   id: ConveyorAssembly
 
 - type: Tag
@@ -643,6 +646,9 @@
   id: Goat
 
 - type: Tag
+  id: GoldenPlunger
+
+- type: Tag
   id: Goliath
 
 - type: Tag
@@ -829,6 +835,9 @@
   id: Knife
 
 - type: Tag
+  id: KnockdownImmune
+
+- type: Tag
   id: LavaBrig
 
 - type: Tag
@@ -889,9 +898,6 @@
 
 - type: Tag
   id: MagazineShotgun
-
-- type: Tag
-  id: MagazineMagnumSubMachineGun
 
 - type: Tag
   id: MagazinePistolSubMachineGun
@@ -1094,6 +1100,12 @@
   id: PlushieCarp
 
 - type: Tag
+  id: PlushieCarpHolo
+
+- type: Tag
+  id: PlushieCarpMagi
+
+- type: Tag
   id: PlushieGhost
 
 - type: Tag
@@ -1152,6 +1164,9 @@
   id: ReinforcedGlassShard
 
 - type: Tag
+  id: RemoteSignaller
+
+- type: Tag
   id: ReptilianFood
 
 - type: Tag
@@ -1186,6 +1201,9 @@
 
 - type: Tag
   id: RollingPin
+
+- type: Tag
+  id: Ruminant
 
 - type: Tag
   id: SaltShaker
@@ -1260,6 +1278,9 @@
   id: Slice # sliced fruit, vegetables, pizza etc.
 
 - type: Tag
+  id: SlowImmune
+
+- type: Tag
   id: SmallAIChip
 
 - type: Tag
@@ -1321,6 +1342,9 @@
 
 - type: Tag
   id: StringInstrument
+
+- type: Tag
+  id: StunImmune
 
 - type: Tag
   id: SubdermalImplant

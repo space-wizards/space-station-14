@@ -1,6 +1,6 @@
 ﻿using System.IO;
 using System.Linq;
-using Content.Client.Administration.UI.CustomControls;
+using Content.Client.Administration.UI.Logs.Entries;
 using Content.Client.Eui;
 using Content.Shared.Administration.Logs;
 using Content.Shared.Eui;
@@ -22,7 +22,7 @@ public sealed class AdminLogsEui : BaseEui
 
     private const char CsvSeparator = ',';
     private const string CsvQuote = "\"";
-    private const string CsvHeader = "Date,ID,PlayerID,Severity,Type,Message";
+    private const string CsvHeader = "Date,ID,PlayerID,Severity,Type,Message,CurTime";
 
     private ISawmill _sawmill;
 
@@ -109,10 +109,10 @@ public sealed class AdminLogsEui : BaseEui
             await writer.WriteLineAsync(CsvHeader);
             foreach (var child in LogsControl.LogsContainer.Children)
             {
-                if (child is not AdminLogLabel logLabel || !child.Visible)
+                if (child is not AdminLogEntry entry || !child.Visible)
                     continue;
 
-                var log = logLabel.Log;
+                var log = entry.Log;
 
                 // Date
                 // I swear to god if someone adds ,s or "s to the other fields...
@@ -138,6 +138,9 @@ public sealed class AdminLogsEui : BaseEui
                 await writer.WriteAsync(CsvQuote);
                 await writer.WriteAsync(log.Message.Replace(CsvQuote, CsvQuote + CsvQuote));
                 await writer.WriteAsync(CsvQuote);
+                await writer.WriteAsync(CsvSeparator);
+                // CurTime
+                await writer.WriteAsync(log.CurTime.ToString());
 
                 await writer.WriteLineAsync();
             }
