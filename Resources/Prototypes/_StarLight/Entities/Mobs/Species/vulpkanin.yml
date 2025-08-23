@@ -9,9 +9,11 @@
     speaks:
     - GalacticCommon
     - Canilunzt
+    - Fox
     understands:
     - GalacticCommon
     - Canilunzt
+    - Fox
   - type: Absorbable
   - type: HumanoidAppearance
     species: Vulpkanin
