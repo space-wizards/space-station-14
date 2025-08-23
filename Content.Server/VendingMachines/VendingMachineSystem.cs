@@ -274,6 +274,7 @@ namespace Content.Server.VendingMachines
                 _throwingSystem.TryThrow(ent, direction, vendComponent.NonLimitedEjectForce);
             }
 
+             // Starlight-start
             // Perform idempotent debit and cargo credit after the item is spawned
             // Only charge if prices are shown, not emagged, we have a buyer, and not charged yet this operation
             var buyer = vendComponent.LastBuyer;
