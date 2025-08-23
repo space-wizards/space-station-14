@@ -6,7 +6,7 @@ using Content.Server.Administration.Components;
 using Content.Server.Cargo.Components;
 using Content.Server.Doors.Systems;
 using Content.Server.Hands.Systems;
-using Content.Server._Impstation.Thaven;
+using Content.Server._Impstation.Thaven; // 🌟Starlight🌟
 using Content.Server.Power.Components;
 using Content.Server.Power.EntitySystems;
 using Content.Server.Stack;
@@ -27,7 +27,7 @@ using Content.Shared.Database;
 using Content.Shared.Doors.Components;
 using Content.Shared.Electrocution;
 using Content.Shared.Hands.Components;
-using Content.Shared._Impstation.Thaven.Components;
+using Content.Shared._Impstation.Thaven.Components; // 🌟Starlight🌟
 using Content.Shared.Inventory;
 using Content.Shared.PDA;
 using Content.Shared.Stacks;
@@ -42,8 +42,8 @@ using Robust.Shared.Physics.Components;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
-using Content.Shared.Overlays; // 🌟Starlight🌟
-using Content.Shared.Contraband;
+using Content.Shared.Overlays;
+using Content.Shared.Contraband; // 🌟Starlight🌟
 using Content.Shared.Humanoid; // 🌟Starlight🌟
 
 namespace Content.Server.Administration.Systems;
@@ -107,7 +107,7 @@ public sealed partial class AdminVerbSystem
             {
                 Text = electrified.Enabled ? "Unelectrify" : "Electrify",
                 Category = VerbCategory.Tricks,
-                Icon = new SpriteSpecifier.Texture(new("/Textures/Interface/VerbIcons/smite.svg.192dpi.png")),
+                Icon =  new SpriteSpecifier.Texture(new("/Textures/Interface/VerbIcons/smite.svg.192dpi.png")),
                 Act = () =>
                 {
                     _electrocution.SetElectrified((args.Target, electrified), !electrified.Enabled);
@@ -116,11 +116,10 @@ public sealed partial class AdminVerbSystem
                 Message = Loc.GetString(electrified.Enabled
                     ? "admin-trick-unelectrify-description"
                     : "admin-trick-electrify-description"),
-                Priority = (int)(electrified.Enabled ? TricksVerbPriorities.Unelectrify : TricksVerbPriorities.Electrify),
+                Priority = (int) (electrified.Enabled ? TricksVerbPriorities.Unelectrify : TricksVerbPriorities.Electrify),
             };
             args.Verbs.Add(electrify);
         }
-
 
         if (TryComp<AirlockComponent>(args.Target, out var airlockComp))
         {
