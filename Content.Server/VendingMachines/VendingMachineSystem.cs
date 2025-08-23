@@ -29,6 +29,8 @@ using Content.Shared.Emag.Components;
 using Content.Shared.Tag; 
 using Content.Shared.Cargo.Components; 
 using Content.Server.Administration.Managers; 
+using Content.Shared.Administration.Logs;
+using Content.Shared.Database;
 
 namespace Content.Server.VendingMachines
 {
@@ -45,6 +47,7 @@ namespace Content.Server.VendingMachines
         [Dependency] private readonly TagSystem _tag = default!; 
         [Dependency] private readonly CargoSystem _cargoSystem = default!;
         [Dependency] private readonly Content.Server.Station.Systems.StationSystem _stationSystem = default!;
+        [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
         // 🌟Starlight🌟 end 
 
         private const float WallVendEjectDistanceFromWall = 1f;
@@ -259,8 +262,10 @@ namespace Content.Server.VendingMachines
                 var offset = (wallMountComponent.Direction + xform.LocalRotation - Math.PI / 2).ToVec() * WallVendEjectDistanceFromWall;
                 spawnCoordinates = spawnCoordinates.Offset(offset);
             }
-
-            var ent = Spawn(vendComponent.NextItemToEject, spawnCoordinates);
+            // Starlight-edit start:
+            var itemProto = vendComponent.NextItemToEject;
+            var ent = Spawn(itemProto, spawnCoordinates);
+            // Starlight-edit end:
 
             if (vendComponent.ThrowNextItem)
             {
@@ -269,8 +274,58 @@ namespace Content.Server.VendingMachines
                 _throwingSystem.TryThrow(ent, direction, vendComponent.NonLimitedEjectForce);
             }
 
+            // Perform idempotent debit and cargo credit after the item is spawned
+            // Only charge if prices are shown, not emagged, we have a buyer, and not charged yet this operation
+            var buyer = vendComponent.LastBuyer;
+            var isEmagged = HasComp<EmaggedComponent>(uid);
+            
+            if (!isEmagged && vendComponent.ShowPrices && buyer is { } buyerUid && !vendComponent.DebitApplied && itemProto != null)
+            {
+                var entry = GetEntry(uid, itemProto, vendComponent.CurrentItemType, vendComponent);
+                var price = entry?.Price ?? 0;
+                if (price > 0)
+                {
+                    var playerData = _playerRolesManager.GetPlayerData(buyerUid);
+                    if (playerData != null)
+                    {
+                        // Double-check sufficient funds
+                        if (playerData.Balance >= price)
+                        {
+                            playerData.Balance -= price;
+                            vendComponent.DebitApplied = true;
+                            Popup.PopupEntity($"Debited {price}\u20a1. Balance: {playerData.Balance}\u20a1", uid, buyerUid);
+                            SendBalanceUpdate(uid, buyerUid, playerData.Balance);
+
+                            // Alogs
+                            _adminLogger.Add(
+                                LogType.Action,
+                                LogImpact.Medium,
+                                $"{ToPrettyString(buyerUid):player} bought {ToPrettyString(ent):entity} for {price}₡ from {ToPrettyString(uid):entity} Balance left: {playerData.Balance}₡");
+
+                            // Credit cargo 10x price
+                            var stationUid = _stationSystem.GetOwningStation(uid);
+
+                            if (stationUid != null && TryComp<StationBankAccountComponent>(stationUid, out var bank))
+                            {
+                                var creditLong = (long)price * 10L;
+                                var toCredit = (int)Math.Clamp(creditLong, int.MinValue, int.MaxValue);
+                                if (toCredit > 0)
+                                    _cargoSystem.UpdateBankAccount((stationUid.Value, bank), toCredit, bank.PrimaryAccount);
+                            }
+
+                        }
+                        else
+                        {
+                            Popup.PopupEntity($"Insufficient funds. Required: {price}\u20a1", uid, buyerUid);
+                        }
+                    }
+                }
+            }
+
             vendComponent.NextItemToEject = null;
             vendComponent.ThrowNextItem = false;
+            vendComponent.LastBuyer = null;
+            vendComponent.DebitApplied = false;
         }
 
         public override void Update(float frameTime)
@@ -571,32 +626,8 @@ namespace Content.Server.VendingMachines
                 }
             }
 
-            // Try to start ejection, only one call will succeed while others will early-out due to Ejecting flag
-            var wasEjecting = component.Ejecting;
+            // Start the ejection, debit will ocur in EjectItem after item has spawned
             TryEjectVendorItem(uid, type, itemId, component.CanShoot, sender, component);
-            var started = !wasEjecting && component.Ejecting && component.NextItemToEject == itemId;
-
-            // If our call didnt actually start the ejection, exit without charging
-            if (!started)
-                return;
-
-            // Proceed with payment now that we are the one vend starting
-            if (!isEmagged && component.ShowPrices && entry.Price > 0)
-            {
-                playerData.Balance -= entry.Price;
-                Popup.PopupEntity($"Debited {entry.Price}\u20a1. Balance: {playerData.Balance}\u20a1", uid, sender);
-                SendBalanceUpdate(uid, sender, playerData.Balance);
-
-                var stationUid = _stationSystem.GetOwningStation(uid);
-                if (stationUid != null && TryComp<StationBankAccountComponent>(stationUid, out var bank))
-                {
-                    var creditLong = (long) entry.Price * 10L; // idk really, it just works
-                    var toCredit = creditLong > int.MaxValue ? int.MaxValue: creditLong < int.MinValue ? int.MinValue : (int) creditLong;
-
-                    if (toCredit > 0)
-                        _cargoSystem.UpdateBankAccount((stationUid.Value, bank), toCredit, bank.PrimaryAccount);
-                }
-            }
         }
 
     private static readonly ProtoId<TagPrototype> _foodSnackTag = "FoodSnack";
