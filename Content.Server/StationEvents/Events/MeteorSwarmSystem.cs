@@ -5,7 +5,7 @@ using Content.Server.StationEvents.Components;
 using Content.Shared.GameTicking.Components;
 using Content.Shared.Random.Helpers;
 using Content.Shared.Station;
-using Robust.Server.Audio;
+using Robust.Shared.Audio.Systems;
 using Robust.Shared.Map;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Systems;
@@ -17,7 +17,7 @@ namespace Content.Server.StationEvents.Events;
 public sealed class MeteorSwarmSystem : GameRuleSystem<MeteorSwarmComponent>
 {
     [Dependency] private readonly SharedPhysicsSystem _physics = default!;
-    [Dependency] private readonly AudioSystem _audio = default!;
+    [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly ChatSystem _chat = default!;
     [Dependency] private readonly SharedStationSystem _station = default!;
 
