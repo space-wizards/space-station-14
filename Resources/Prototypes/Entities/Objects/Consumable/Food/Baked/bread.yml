@@ -738,6 +738,7 @@
   - type: Sliceable
     slices:
     - id: FoodBreadBaguetteCottonSlice
+      amount: 12
   - type: Food
     requiresSpecialDigestion: true
   - type: Tag
@@ -973,6 +974,7 @@
   - type: Sliceable
     slices:
     - id: FoodBreadSausageSlice
+      amount: 5
   - type: SolutionContainerManager
     solutions:
       food:

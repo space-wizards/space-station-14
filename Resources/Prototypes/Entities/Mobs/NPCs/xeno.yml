@@ -378,6 +378,7 @@
   - type: Sliceable
     slices:
     - id: FoodMeatSnake
+      amount: 4
   - type: Grammar
     attributes:
       proper: true

@@ -6,7 +6,7 @@
   components:
   - type: Tool
     qualities:
-      - Slicing
+    - Slicing
   - type: Wieldable
     wieldSound: !type:SoundPathSpecifier
       path: /Audio/Weapons/chainsawwield.ogg

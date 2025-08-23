@@ -136,7 +136,7 @@
   components:
   - type: Tool
     qualities:
-      - Slicing
+    - Slicing
   - type: Item
     size: Large
   - type: Sprite

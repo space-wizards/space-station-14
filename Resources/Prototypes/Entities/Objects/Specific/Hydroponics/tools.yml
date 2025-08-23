@@ -55,7 +55,7 @@
   components:
   - type: Tool
     qualities:
-      - Slicing
+    - Slicing
   - type: Sprite
     sprite: Objects/Tools/Hydroponics/scythe.rsi
     state: icon
@@ -85,7 +85,7 @@
   components:
   - type: Tool
     qualities:
-      - Slicing
+    - Slicing
   - type: Tag
     tags:
     - BotanyHatchet

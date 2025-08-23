@@ -179,7 +179,8 @@
     storedRotation: 90
   - type: Tool
     qualities:
-      - Sawing
+    - Sawing
+    - Slicing
 # No melee for regular saw because have you ever seen someone use a band saw as a weapon? It's dumb.
 
 - type: entity

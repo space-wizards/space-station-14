@@ -99,7 +99,7 @@
   components:
   - type: Tool
     qualities:
-      - Slicing
+    - Slicing
   - type: Execution
     doAfterDuration: 4.0
   - type: UnpoweredFlashlight

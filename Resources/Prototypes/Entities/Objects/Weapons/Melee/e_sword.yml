@@ -16,7 +16,7 @@
     components:
     - type: Tool
       qualities:
-        - Slicing
+      - Slicing
     - type: DisarmMalus
       malus: 0.6
     - type: Execution
@@ -130,7 +130,7 @@
     components:
     - type: Tool
       qualities:
-        - Slicing
+      - Slicing
     - type: DisarmMalus
       malus: 0.4
     - type: Execution

@@ -23,7 +23,7 @@
     size: Small
   - type: Tool
     qualities:
-      - Slicing
+    - Slicing
     useSound:
       path: /Audio/Items/Culinary/chop.ogg
 

@@ -348,6 +348,7 @@
   - type: Sliceable
     slices:
     - id: FoodPiePumpkinSlice
+      amount: 4
   - type: Tag
     tags:
     - Pie

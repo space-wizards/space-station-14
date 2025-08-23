@@ -6,7 +6,7 @@
   components:
   - type: Tool
     qualities:
-      - Slicing
+    - Slicing
   - type: Sprite
     sprite: Objects/Weapons/Melee/cult_dagger.rsi
     state: icon

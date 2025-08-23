@@ -34,7 +34,7 @@
   components:
   - type: Tool
     qualities:
-      - Slicing
+    - Slicing
   - type: Sprite
     sprite: Objects/Weapons/Melee/cane_blade.rsi
     state: icon

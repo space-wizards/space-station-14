@@ -82,7 +82,7 @@
   - type: Sliceable
     slices:
     - id: FoodCakeBlueberrySlice
-      amount: 6
+      amount: 5
   - type: Tag
     tags:
     - Cake
@@ -149,7 +149,7 @@
   - type: Sliceable
     slices:
     - id: FoodCakePlainSlice
-      amount: 6
+      amount: 5
 
 # Added in type lines above
 
@@ -184,7 +184,7 @@
   - type: Sliceable
     slices:
     - id: FoodCakeCarrotSlice
-      amount: 6
+      amount: 5
   - type: SolutionContainerManager
     solutions:
       food:
@@ -263,7 +263,7 @@
   - type: Sliceable
     slices:
     - id: FoodCakeBrainSlice
-      amount: 6
+      amount: 5
   - type: Tag
     tags:
     - Cake
@@ -319,7 +319,7 @@
   - type: Sliceable
     slices:
     - id: FoodCakeCheeseSlice
-      amount: 6
+      amount: 5
   - type: Item
     inhandVisuals:
       left:
@@ -365,7 +365,7 @@
   - type: Sliceable
     slices:
     - id: FoodCakeOrangeSlice
-      amount: 6
+      amount: 5
   - type: Tag
     tags:
     - Cake
@@ -422,7 +422,7 @@
   - type: Sliceable
     slices:
     - id: FoodCakeLimeSlice
-      amount: 6
+      amount: 5
   - type: Tag
     tags:
     - Cake
@@ -479,7 +479,7 @@
   - type: Sliceable
     slices:
     - id: FoodCakeLemonSlice
-      amount: 6
+      amount: 5
   - type: Tag
     tags:
     - Cake
@@ -537,7 +537,7 @@
   - type: Sliceable
     slices:
     - id: FoodCakeLemoonSlice
-      amount: 6
+      amount: 5
   - type: SolutionContainerManager
     solutions:
       food:
@@ -610,7 +610,7 @@
   - type: Sliceable
     slices:
     - id: FoodCakeChocolateSlice
-      amount: 6
+      amount: 5
   - type: SolutionContainerManager
     solutions:
       food:
@@ -675,7 +675,7 @@
   - type: Sliceable
     slices:
     - id: FoodCakeAppleSlice
-      amount: 6
+      amount: 5
   - type: Tag
     tags:
     - Cake
@@ -731,7 +731,7 @@
   - type: Sliceable
     slices:
     - id: FoodCakeSlimeSlice
-      amount: 6
+      amount: 5
   - type: Tag
     tags:
     - Cake
@@ -787,7 +787,7 @@
   - type: Sliceable
     slices:
     - id: FoodCakePumpkinSlice
-      amount: 6
+      amount: 5
   - type: SolutionContainerManager
     solutions:
       food:
@@ -857,7 +857,7 @@
   - type: Sliceable
     slices:
     - id: FoodCakeChristmasSlice
-      amount: 6
+      amount: 5
   - type: Tag
     tags:
     - Cake
@@ -904,7 +904,7 @@
   - type: Sliceable
     slices:
     - id: FoodCakeBirthdaySlice
-      amount: 6
+      amount: 5
   - type: Item
     heldPrefix: birthday
 
@@ -931,7 +931,7 @@
   - type: Sliceable
     slices:
     - id: FoodCakeVanillaSlice
-      amount: 6
+      amount: 5
   - type: SolutionContainerManager #TODO Sprinkles
     solutions:
       food:
@@ -986,7 +986,7 @@
   - type: Sliceable
     slices:
     - id: FoodCakeClownSlice
-      amount: 6
+      amount: 5
   - type: SolutionContainerManager #TODO Sprinkles
     solutions:
       food:
@@ -1035,7 +1035,7 @@
   - type: Sliceable
     slices:
     - id: FoodCakeSpacemanSlice
-      amount: 6
+      amount: 5
   - type: SolutionContainerManager
     solutions:
       food:
