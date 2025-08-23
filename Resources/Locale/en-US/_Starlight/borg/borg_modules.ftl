@@ -1,0 +1,1 @@
+borg-slot-ore-empty = Ore
