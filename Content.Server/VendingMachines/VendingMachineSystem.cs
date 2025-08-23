@@ -321,6 +321,7 @@ namespace Content.Server.VendingMachines
                     }
                 }
             }
+            // Starlight-end
 
             vendComponent.NextItemToEject = null;
             vendComponent.ThrowNextItem = false;
