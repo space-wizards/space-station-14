@@ -10,8 +10,35 @@
       state: vulp_tail_inner
   emotes:
     - emotePrototype: Yip
+      requiredMarkingsAny:
+        - FopsEar
+        - FoxlikeEar
+        - FoxlikeEarFade
+        - FoxlikeEarSharp
+        - FoxlikeEarWolf
+        - FoxlikeEarFennec
+        - FoxlikeEarFox
+        - FoxlikeEarShock
     - emotePrototype: Whine
+      requiredMarkingsAny:
+        - FopsEar
+        - FoxlikeEar
+        - FoxlikeEarFade
+        - FoxlikeEarSharp
+        - FoxlikeEarWolf
+        - FoxlikeEarFennec
+        - FoxlikeEarFox
+        - FoxlikeEarShock
     - emotePrototype: Bark
+      requiredMarkingsAny:
+        - FopsEar
+        - FoxlikeEar
+        - FoxlikeEarFade
+        - FoxlikeEarSharp
+        - FoxlikeEarWolf
+        - FoxlikeEarFennec
+        - FoxlikeEarFox
+        - FoxlikeEarShock
 
 - type: marking
   id: FopsEar
@@ -40,8 +67,35 @@
       state: wolf_tail_inner
   emotes:
     - emotePrototype: Yip
+      requiredMarkingsAny:
+        - FopsEar
+        - FoxlikeEar
+        - FoxlikeEarFade
+        - FoxlikeEarSharp
+        - FoxlikeEarWolf
+        - FoxlikeEarFennec
+        - FoxlikeEarFox
+        - FoxlikeEarShock
     - emotePrototype: Whine
+      requiredMarkingsAny:
+        - FopsEar
+        - FoxlikeEar
+        - FoxlikeEarFade
+        - FoxlikeEarSharp
+        - FoxlikeEarWolf
+        - FoxlikeEarFennec
+        - FoxlikeEarFox
+        - FoxlikeEarShock
     - emotePrototype: Bark
+      requiredMarkingsAny:
+        - FopsEar
+        - FoxlikeEar
+        - FoxlikeEarFade
+        - FoxlikeEarSharp
+        - FoxlikeEarWolf
+        - FoxlikeEarFennec
+        - FoxlikeEarFox
+        - FoxlikeEarShock
 
 - type: marking
   id: FopsTailWag
@@ -55,8 +109,35 @@
       state: tail_fox_inner_waggin
   emotes:
     - emotePrototype: Yip
+      requiredMarkingsAny:
+        - FopsEar
+        - FoxlikeEar
+        - FoxlikeEarFade
+        - FoxlikeEarSharp
+        - FoxlikeEarWolf
+        - FoxlikeEarFennec
+        - FoxlikeEarFox
+        - FoxlikeEarShock
     - emotePrototype: Whine
+      requiredMarkingsAny:
+        - FopsEar
+        - FoxlikeEar
+        - FoxlikeEarFade
+        - FoxlikeEarSharp
+        - FoxlikeEarWolf
+        - FoxlikeEarFennec
+        - FoxlikeEarFox
+        - FoxlikeEarShock
     - emotePrototype: Bark
+      requiredMarkingsAny:
+        - FopsEar
+        - FoxlikeEar
+        - FoxlikeEarFade
+        - FoxlikeEarSharp
+        - FoxlikeEarWolf
+        - FoxlikeEarFennec
+        - FoxlikeEarFox
+        - FoxlikeEarShock
 
 - type: marking
   id: PuppyTailWag
@@ -70,8 +151,35 @@
       state: tail_wolf_inner_waggin
   emotes:
     - emotePrototype: Yip
+      requiredMarkingsAny:
+        - FopsEar
+        - FoxlikeEar
+        - FoxlikeEarFade
+        - FoxlikeEarSharp
+        - FoxlikeEarWolf
+        - FoxlikeEarFennec
+        - FoxlikeEarFox
+        - FoxlikeEarShock
     - emotePrototype: Whine
+      requiredMarkingsAny:
+        - FopsEar
+        - FoxlikeEar
+        - FoxlikeEarFade
+        - FoxlikeEarSharp
+        - FoxlikeEarWolf
+        - FoxlikeEarFennec
+        - FoxlikeEarFox
+        - FoxlikeEarShock
     - emotePrototype: Bark
+      requiredMarkingsAny:
+        - FopsEar
+        - FoxlikeEar
+        - FoxlikeEarFade
+        - FoxlikeEarSharp
+        - FoxlikeEarWolf
+        - FoxlikeEarFennec
+        - FoxlikeEarFox
+        - FoxlikeEarShock
 
 - type: marking
   id: FoxlikeEar
@@ -180,8 +288,35 @@
       state: vulp-fade
   emotes:
     - emotePrototype: Yip
+      requiredMarkingsAny:
+        - FopsEar
+        - FoxlikeEar
+        - FoxlikeEarFade
+        - FoxlikeEarSharp
+        - FoxlikeEarWolf
+        - FoxlikeEarFennec
+        - FoxlikeEarFox
+        - FoxlikeEarShock
     - emotePrototype: Whine
+      requiredMarkingsAny:
+        - FopsEar
+        - FoxlikeEar
+        - FoxlikeEarFade
+        - FoxlikeEarSharp
+        - FoxlikeEarWolf
+        - FoxlikeEarFennec
+        - FoxlikeEarFox
+        - FoxlikeEarShock
     - emotePrototype: Bark
+      requiredMarkingsAny:
+        - FopsEar
+        - FoxlikeEar
+        - FoxlikeEarFade
+        - FoxlikeEarSharp
+        - FoxlikeEarWolf
+        - FoxlikeEarFennec
+        - FoxlikeEarFox
+        - FoxlikeEarShock
 
 - type: marking
   id: FoxlikeTailTip
@@ -195,8 +330,35 @@
       state: vulp-tip
   emotes:
     - emotePrototype: Yip
+      requiredMarkingsAny:
+        - FopsEar
+        - FoxlikeEar
+        - FoxlikeEarFade
+        - FoxlikeEarSharp
+        - FoxlikeEarWolf
+        - FoxlikeEarFennec
+        - FoxlikeEarFox
+        - FoxlikeEarShock
     - emotePrototype: Whine
+      requiredMarkingsAny:
+        - FopsEar
+        - FoxlikeEar
+        - FoxlikeEarFade
+        - FoxlikeEarSharp
+        - FoxlikeEarWolf
+        - FoxlikeEarFennec
+        - FoxlikeEarFox
+        - FoxlikeEarShock
     - emotePrototype: Bark
+      requiredMarkingsAny:
+        - FopsEar
+        - FoxlikeEar
+        - FoxlikeEarFade
+        - FoxlikeEarSharp
+        - FoxlikeEarWolf
+        - FoxlikeEarFennec
+        - FoxlikeEarFox
+        - FoxlikeEarShock
 
 - type: marking
   id: FoxlikeTailWag
@@ -210,8 +372,35 @@
       state: vulp_wag-tip #fade
   emotes:
     - emotePrototype: Yip
+      requiredMarkingsAny:
+        - FopsEar
+        - FoxlikeEar
+        - FoxlikeEarFade
+        - FoxlikeEarSharp
+        - FoxlikeEarWolf
+        - FoxlikeEarFennec
+        - FoxlikeEarFox
+        - FoxlikeEarShock
     - emotePrototype: Whine
+      requiredMarkingsAny:
+        - FopsEar
+        - FoxlikeEar
+        - FoxlikeEarFade
+        - FoxlikeEarSharp
+        - FoxlikeEarWolf
+        - FoxlikeEarFennec
+        - FoxlikeEarFox
+        - FoxlikeEarShock
     - emotePrototype: Bark
+      requiredMarkingsAny:
+        - FopsEar
+        - FoxlikeEar
+        - FoxlikeEarFade
+        - FoxlikeEarSharp
+        - FoxlikeEarWolf
+        - FoxlikeEarFennec
+        - FoxlikeEarFox
+        - FoxlikeEarShock
 
 - type: marking
   id: FoxlikeTailTipWag
@@ -225,8 +414,35 @@
       state: vulp_wag-tip
   emotes:
     - emotePrototype: Yip
+      requiredMarkingsAny:
+        - FopsEar
+        - FoxlikeEar
+        - FoxlikeEarFade
+        - FoxlikeEarSharp
+        - FoxlikeEarWolf
+        - FoxlikeEarFennec
+        - FoxlikeEarFox
+        - FoxlikeEarShock
     - emotePrototype: Whine
+      requiredMarkingsAny:
+        - FopsEar
+        - FoxlikeEar
+        - FoxlikeEarFade
+        - FoxlikeEarSharp
+        - FoxlikeEarWolf
+        - FoxlikeEarFennec
+        - FoxlikeEarFox
+        - FoxlikeEarShock
     - emotePrototype: Bark
+      requiredMarkingsAny:
+        - FopsEar
+        - FoxlikeEar
+        - FoxlikeEarFade
+        - FoxlikeEarSharp
+        - FoxlikeEarWolf
+        - FoxlikeEarFennec
+        - FoxlikeEarFox
+        - FoxlikeEarShock
 
 - type: marking
   id: FoxlikeTailAlt
@@ -240,8 +456,35 @@
       state: vulp_alt-fade
   emotes:
     - emotePrototype: Yip
+      requiredMarkingsAny:
+        - FopsEar
+        - FoxlikeEar
+        - FoxlikeEarFade
+        - FoxlikeEarSharp
+        - FoxlikeEarWolf
+        - FoxlikeEarFennec
+        - FoxlikeEarFox
+        - FoxlikeEarShock
     - emotePrototype: Whine
+      requiredMarkingsAny:
+        - FopsEar
+        - FoxlikeEar
+        - FoxlikeEarFade
+        - FoxlikeEarSharp
+        - FoxlikeEarWolf
+        - FoxlikeEarFennec
+        - FoxlikeEarFox
+        - FoxlikeEarShock
     - emotePrototype: Bark
+      requiredMarkingsAny:
+        - FopsEar
+        - FoxlikeEar
+        - FoxlikeEarFade
+        - FoxlikeEarSharp
+        - FoxlikeEarWolf
+        - FoxlikeEarFennec
+        - FoxlikeEarFox
+        - FoxlikeEarShock
 
 - type: marking
   id: FoxlikeTailAltTip
@@ -255,8 +498,35 @@
       state: vulp_alt-tip
   emotes:
     - emotePrototype: Yip
+      requiredMarkingsAny:
+        - FopsEar
+        - FoxlikeEar
+        - FoxlikeEarFade
+        - FoxlikeEarSharp
+        - FoxlikeEarWolf
+        - FoxlikeEarFennec
+        - FoxlikeEarFox
+        - FoxlikeEarShock
     - emotePrototype: Whine
+      requiredMarkingsAny:
+        - FopsEar
+        - FoxlikeEar
+        - FoxlikeEarFade
+        - FoxlikeEarSharp
+        - FoxlikeEarWolf
+        - FoxlikeEarFennec
+        - FoxlikeEarFox
+        - FoxlikeEarShock
     - emotePrototype: Bark
+      requiredMarkingsAny:
+        - FopsEar
+        - FoxlikeEar
+        - FoxlikeEarFade
+        - FoxlikeEarSharp
+        - FoxlikeEarWolf
+        - FoxlikeEarFennec
+        - FoxlikeEarFox
+        - FoxlikeEarShock
 
 - type: marking
   id: FoxlikeTailLong
@@ -270,8 +540,35 @@
       state: long-tip
   emotes:
     - emotePrototype: Yip
+      requiredMarkingsAny:
+        - FopsEar
+        - FoxlikeEar
+        - FoxlikeEarFade
+        - FoxlikeEarSharp
+        - FoxlikeEarWolf
+        - FoxlikeEarFennec
+        - FoxlikeEarFox
+        - FoxlikeEarShock
     - emotePrototype: Whine
+      requiredMarkingsAny:
+        - FopsEar
+        - FoxlikeEar
+        - FoxlikeEarFade
+        - FoxlikeEarSharp
+        - FoxlikeEarWolf
+        - FoxlikeEarFennec
+        - FoxlikeEarFox
+        - FoxlikeEarShock
     - emotePrototype: Bark
+      requiredMarkingsAny:
+        - FopsEar
+        - FoxlikeEar
+        - FoxlikeEarFade
+        - FoxlikeEarSharp
+        - FoxlikeEarWolf
+        - FoxlikeEarFennec
+        - FoxlikeEarFox
+        - FoxlikeEarShock
 
 - type: marking
   id: FoxlikeTailFox
@@ -285,8 +582,35 @@
       state: fox-fade
   emotes:
     - emotePrototype: Yip
+      requiredMarkingsAny:
+        - FopsEar
+        - FoxlikeEar
+        - FoxlikeEarFade
+        - FoxlikeEarSharp
+        - FoxlikeEarWolf
+        - FoxlikeEarFennec
+        - FoxlikeEarFox
+        - FoxlikeEarShock
     - emotePrototype: Whine
+      requiredMarkingsAny:
+        - FopsEar
+        - FoxlikeEar
+        - FoxlikeEarFade
+        - FoxlikeEarSharp
+        - FoxlikeEarWolf
+        - FoxlikeEarFennec
+        - FoxlikeEarFox
+        - FoxlikeEarShock
     - emotePrototype: Bark
+      requiredMarkingsAny:
+        - FopsEar
+        - FoxlikeEar
+        - FoxlikeEarFade
+        - FoxlikeEarSharp
+        - FoxlikeEarWolf
+        - FoxlikeEarFennec
+        - FoxlikeEarFox
+        - FoxlikeEarShock
 
 - type: marking
   id: FoxlikeTailFoxTip
@@ -300,8 +624,35 @@
       state: fox-tip
   emotes:
     - emotePrototype: Yip
+      requiredMarkingsAny:
+        - FopsEar
+        - FoxlikeEar
+        - FoxlikeEarFade
+        - FoxlikeEarSharp
+        - FoxlikeEarWolf
+        - FoxlikeEarFennec
+        - FoxlikeEarFox
+        - FoxlikeEarShock
     - emotePrototype: Whine
+      requiredMarkingsAny:
+        - FopsEar
+        - FoxlikeEar
+        - FoxlikeEarFade
+        - FoxlikeEarSharp
+        - FoxlikeEarWolf
+        - FoxlikeEarFennec
+        - FoxlikeEarFox
+        - FoxlikeEarShock
     - emotePrototype: Bark
+      requiredMarkingsAny:
+        - FopsEar
+        - FoxlikeEar
+        - FoxlikeEarFade
+        - FoxlikeEarSharp
+        - FoxlikeEarWolf
+        - FoxlikeEarFennec
+        - FoxlikeEarFox
+        - FoxlikeEarShock
 
 - type: marking
   id: FoxlikeTailFoxWag
@@ -315,8 +666,35 @@
       state: fox_wag-fade
   emotes:
     - emotePrototype: Yip
+      requiredMarkingsAny:
+        - FopsEar
+        - FoxlikeEar
+        - FoxlikeEarFade
+        - FoxlikeEarSharp
+        - FoxlikeEarWolf
+        - FoxlikeEarFennec
+        - FoxlikeEarFox
+        - FoxlikeEarShock
     - emotePrototype: Whine
+      requiredMarkingsAny:
+        - FopsEar
+        - FoxlikeEar
+        - FoxlikeEarFade
+        - FoxlikeEarSharp
+        - FoxlikeEarWolf
+        - FoxlikeEarFennec
+        - FoxlikeEarFox
+        - FoxlikeEarShock
     - emotePrototype: Bark
+      requiredMarkingsAny:
+        - FopsEar
+        - FoxlikeEar
+        - FoxlikeEarFade
+        - FoxlikeEarSharp
+        - FoxlikeEarWolf
+        - FoxlikeEarFennec
+        - FoxlikeEarFox
+        - FoxlikeEarShock
 
 - type: marking
   id: FoxlikeTailFoxTipWag
@@ -330,8 +708,35 @@
       state: fox_wag-tip
   emotes:
     - emotePrototype: Yip
+      requiredMarkingsAny:
+        - FopsEar
+        - FoxlikeEar
+        - FoxlikeEarFade
+        - FoxlikeEarSharp
+        - FoxlikeEarWolf
+        - FoxlikeEarFennec
+        - FoxlikeEarFox
+        - FoxlikeEarShock
     - emotePrototype: Whine
+      requiredMarkingsAny:
+        - FopsEar
+        - FoxlikeEar
+        - FoxlikeEarFade
+        - FoxlikeEarSharp
+        - FoxlikeEarWolf
+        - FoxlikeEarFennec
+        - FoxlikeEarFox
+        - FoxlikeEarShock
     - emotePrototype: Bark
+      requiredMarkingsAny:
+        - FopsEar
+        - FoxlikeEar
+        - FoxlikeEarFade
+        - FoxlikeEarSharp
+        - FoxlikeEarWolf
+        - FoxlikeEarFennec
+        - FoxlikeEarFox
+        - FoxlikeEarShock
 
 - type: marking
   id: FoxlikeTailBushy
@@ -343,8 +748,35 @@
       state: bushfluff
   emotes:
     - emotePrototype: Yip
+      requiredMarkingsAny:
+        - FopsEar
+        - FoxlikeEar
+        - FoxlikeEarFade
+        - FoxlikeEarSharp
+        - FoxlikeEarWolf
+        - FoxlikeEarFennec
+        - FoxlikeEarFox
+        - FoxlikeEarShock
     - emotePrototype: Whine
+      requiredMarkingsAny:
+        - FopsEar
+        - FoxlikeEar
+        - FoxlikeEarFade
+        - FoxlikeEarSharp
+        - FoxlikeEarWolf
+        - FoxlikeEarFennec
+        - FoxlikeEarFox
+        - FoxlikeEarShock
     - emotePrototype: Bark
+      requiredMarkingsAny:
+        - FopsEar
+        - FoxlikeEar
+        - FoxlikeEarFade
+        - FoxlikeEarSharp
+        - FoxlikeEarWolf
+        - FoxlikeEarFennec
+        - FoxlikeEarFox
+        - FoxlikeEarShock
 
 - type: marking
   id: FoxlikeTailBushyWag
@@ -356,8 +788,35 @@
       state: bushfluff_wag
   emotes:
     - emotePrototype: Yip
+      requiredMarkingsAny:
+        - FopsEar
+        - FoxlikeEar
+        - FoxlikeEarFade
+        - FoxlikeEarSharp
+        - FoxlikeEarWolf
+        - FoxlikeEarFennec
+        - FoxlikeEarFox
+        - FoxlikeEarShock
     - emotePrototype: Whine
+      requiredMarkingsAny:
+        - FopsEar
+        - FoxlikeEar
+        - FoxlikeEarFade
+        - FoxlikeEarSharp
+        - FoxlikeEarWolf
+        - FoxlikeEarFennec
+        - FoxlikeEarFox
+        - FoxlikeEarShock
     - emotePrototype: Bark
+      requiredMarkingsAny:
+        - FopsEar
+        - FoxlikeEar
+        - FoxlikeEarFade
+        - FoxlikeEarSharp
+        - FoxlikeEarWolf
+        - FoxlikeEarFennec
+        - FoxlikeEarFox
+        - FoxlikeEarShock
 
 - type: marking
   id: FoxlikeTailFox2
@@ -369,8 +828,35 @@
       state: fox2
   emotes:
     - emotePrototype: Yip
+      requiredMarkingsAny:
+        - FopsEar
+        - FoxlikeEar
+        - FoxlikeEarFade
+        - FoxlikeEarSharp
+        - FoxlikeEarWolf
+        - FoxlikeEarFennec
+        - FoxlikeEarFox
+        - FoxlikeEarShock
     - emotePrototype: Whine
+      requiredMarkingsAny:
+        - FopsEar
+        - FoxlikeEar
+        - FoxlikeEarFade
+        - FoxlikeEarSharp
+        - FoxlikeEarWolf
+        - FoxlikeEarFennec
+        - FoxlikeEarFox
+        - FoxlikeEarShock
     - emotePrototype: Bark
+      requiredMarkingsAny:
+        - FopsEar
+        - FoxlikeEar
+        - FoxlikeEarFade
+        - FoxlikeEarSharp
+        - FoxlikeEarWolf
+        - FoxlikeEarFennec
+        - FoxlikeEarFox
+        - FoxlikeEarShock
 
 - type: marking
   id: FoxlikeTailFox3
@@ -384,8 +870,35 @@
       state: fox3-tip
   emotes:
     - emotePrototype: Yip
+      requiredMarkingsAny:
+        - FopsEar
+        - FoxlikeEar
+        - FoxlikeEarFade
+        - FoxlikeEarSharp
+        - FoxlikeEarWolf
+        - FoxlikeEarFennec
+        - FoxlikeEarFox
+        - FoxlikeEarShock
     - emotePrototype: Whine
+      requiredMarkingsAny:
+        - FopsEar
+        - FoxlikeEar
+        - FoxlikeEarFade
+        - FoxlikeEarSharp
+        - FoxlikeEarWolf
+        - FoxlikeEarFennec
+        - FoxlikeEarFox
+        - FoxlikeEarShock
     - emotePrototype: Bark
+      requiredMarkingsAny:
+        - FopsEar
+        - FoxlikeEar
+        - FoxlikeEarFade
+        - FoxlikeEarSharp
+        - FoxlikeEarWolf
+        - FoxlikeEarFennec
+        - FoxlikeEarFox
+        - FoxlikeEarShock
 
 - type: marking
   id: FoxlikeTailFennec
@@ -397,8 +910,35 @@
       state: fennec
   emotes:
     - emotePrototype: Yip
+      requiredMarkingsAny:
+        - FopsEar
+        - FoxlikeEar
+        - FoxlikeEarFade
+        - FoxlikeEarSharp
+        - FoxlikeEarWolf
+        - FoxlikeEarFennec
+        - FoxlikeEarFox
+        - FoxlikeEarShock
     - emotePrototype: Whine
+      requiredMarkingsAny:
+        - FopsEar
+        - FoxlikeEar
+        - FoxlikeEarFade
+        - FoxlikeEarSharp
+        - FoxlikeEarWolf
+        - FoxlikeEarFennec
+        - FoxlikeEarFox
+        - FoxlikeEarShock
     - emotePrototype: Bark
+      requiredMarkingsAny:
+        - FopsEar
+        - FoxlikeEar
+        - FoxlikeEarFade
+        - FoxlikeEarSharp
+        - FoxlikeEarWolf
+        - FoxlikeEarFennec
+        - FoxlikeEarFox
+        - FoxlikeEarShock
 
 - type: marking
   id: FoxlikeTailFluffy
@@ -410,5 +950,32 @@
       state: fluffy
   emotes:
     - emotePrototype: Yip
+      requiredMarkingsAny:
+        - FopsEar
+        - FoxlikeEar
+        - FoxlikeEarFade
+        - FoxlikeEarSharp
+        - FoxlikeEarWolf
+        - FoxlikeEarFennec
+        - FoxlikeEarFox
+        - FoxlikeEarShock
     - emotePrototype: Whine
+      requiredMarkingsAny:
+        - FopsEar
+        - FoxlikeEar
+        - FoxlikeEarFade
+        - FoxlikeEarSharp
+        - FoxlikeEarWolf
+        - FoxlikeEarFennec
+        - FoxlikeEarFox
+        - FoxlikeEarShock
     - emotePrototype: Bark
+      requiredMarkingsAny:
+        - FopsEar
+        - FoxlikeEar
+        - FoxlikeEarFade
+        - FoxlikeEarSharp
+        - FoxlikeEarWolf
+        - FoxlikeEarFennec
+        - FoxlikeEarFox
+        - FoxlikeEarShock
