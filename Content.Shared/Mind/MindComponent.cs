@@ -2,9 +2,9 @@ using Content.Shared.Damage;
 using Content.Shared.FixedPoint;
 using Content.Shared.GameTicking;
 using Content.Shared.Mind.Components;
+using Robust.Shared.Containers;
 using Robust.Shared.GameStates;
 using Robust.Shared.Network;
-using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Mind;
@@ -102,10 +102,16 @@ public sealed partial class MindComponent : Component
     public bool PreventSuicide { get; set; }
 
     /// <summary>
-    ///     Mind Role Entities belonging to this Mind
+    /// Mind Role Entities belonging to this Mind are stored in this container.
     /// </summary>
-    [DataField, AutoNetworkedField]
-    public List<EntityUid> MindRoles = new List<EntityUid>();
+    [ViewVariables]
+    public Container MindRoleContainer = default!;
+
+    /// <summary>
+    /// The id for the MindRoleContainer.
+    /// </summary>
+    [ViewVariables]
+    public const string MindRoleContainerId = "mind_roles";
 
     /// <summary>
     ///     The mind's current antagonist/special role, or lack thereof;
