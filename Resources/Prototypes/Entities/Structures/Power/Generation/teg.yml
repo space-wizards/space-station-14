@@ -1,4 +1,5 @@
-﻿- type: entity
+﻿# Modifications ported by Ronstation from Starlight, Starlight changes licensed under Starlight license.
+- type: entity
   id: TegCenter
   name: thermo-electric generator
   description: A high efficiency generator that uses energy transfer between hot and cold gases to produce electricity.
@@ -126,6 +127,19 @@
         - state: circ-0-light
           shader: unshaded
           map: [ "enum.TegVisualLayers.CirculatorLight" ]
+    
+    #region Starlight
+    - type: AtmosPipeLayers
+      spriteLayersRsiPaths:
+        enum.TegVisualLayers.CirculatorBase:
+          Primary: Structures/Power/Generation/teg.rsi
+          Secondary: _Starlight/Structures/Power/Generation/tegalt1.rsi
+          Tertiary: _Starlight/Structures/Power/Generation/tegalt2.rsi
+        enum.TegVisualLayers.CirculatorLight:
+          Primary: Structures/Power/Generation/teg.rsi
+          Secondary: _Starlight/Structures/Power/Generation/tegalt1.rsi
+          Tertiary: _Starlight/Structures/Power/Generation/tegalt2.rsi
+    #endregion Starlight
 
     - type: GenericVisualizer
       visuals:
