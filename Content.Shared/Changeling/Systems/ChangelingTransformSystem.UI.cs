@@ -15,7 +15,7 @@ public sealed class ChangelingTransformIdentitySelectMessage(NetEntity targetIde
 }
 
 [Serializable, NetSerializable]
-public enum ChangelingTransformUI : byte
+public enum ChangelingTransformUiKey : byte
 {
     Key,
 }

@@ -22,7 +22,7 @@ public sealed class ChangelingIdentitySystem : SharedChangelingIdentitySystem
 
     public void UpdateUi(EntityUid uid)
     {
-        if (_ui.TryGetOpenUi(uid, ChangelingTransformUI.Key, out var bui))
+        if (_ui.TryGetOpenUi(uid, ChangelingTransformUiKey.Key, out var bui))
         {
             bui.Update();
         }
