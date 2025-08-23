@@ -192,7 +192,6 @@
     blacklist:
       components:
       - BorgChassis
-  - type: CollideXenoborgFactory
   - type: Conveyor
   - type: IntrinsicUI
     uis:

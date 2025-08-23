@@ -40,6 +40,12 @@ public sealed partial class XenoborgFactoryComponent : Component
     public bool Enabled = true;
 
     /// <summary>
+    /// The fixture that starts reclaiming on collision.
+    /// </summary>
+    [DataField]
+    public string FixtureId = "XenoborgFactoryFixture";
+
+    /// <summary>
     /// A counter of how many items have been processed
     /// </summary>
     /// <remarks>

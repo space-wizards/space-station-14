@@ -34,26 +34,21 @@ public sealed class XenoborgFactorySystem : SharedXenoborgFactorySystem
     }
 
     /// <inheritdoc/>
-    protected override void Reclaim(EntityUid uid, EntityUid item, XenoborgFactoryComponent? component = null)
+    protected override void Reclaim(Entity<XenoborgFactoryComponent> factory, EntityUid victim)
     {
-        if (!Resolve(uid, ref component))
-            return;
+        base.Reclaim(factory, victim);
 
-        base.Reclaim(uid, item, component);
-
-        TryFinishProducing(uid, item);
+        TryFinishProducing(factory, victim);
     }
 
-    private bool TryFinishProducing(EntityUid uid, EntityUid item, XenoborgFactoryComponent? comp = null)
+    private bool TryFinishProducing(Entity<XenoborgFactoryComponent> factory, EntityUid victim)
     {
-        if (!Resolve(uid, ref comp, false))
-            return false;
-        if (!Proto.TryIndex(comp.Recipe, out var recipe))
+        if (!Proto.TryIndex(factory.Comp.Recipe, out var recipe))
             return false;
         if (recipe.Result is not { } resultProto)
             return false;
         EntityUid? brain = null;
-        foreach (var (id, _) in _body.GetBodyOrgans(item))
+        foreach (var (id, _) in _body.GetBodyOrgans(victim))
         {
             if (!HasComp<BrainComponent>(id))
                 continue;
@@ -66,24 +61,24 @@ public sealed class XenoborgFactorySystem : SharedXenoborgFactorySystem
         if (brain == null)
             return false;
 
-        var headSlots = _body.GetBodyChildrenOfType(item, BodyPartType.Head);
+        var headSlots = _body.GetBodyChildrenOfType(victim, BodyPartType.Head);
 
         foreach (var part in headSlots)
         {
             Container.TryRemoveFromContainer(part.Id);
         }
 
-        var logImpact = HasComp<HumanoidAppearanceComponent>(item) ? LogImpact.Extreme : LogImpact.Medium;
+        var logImpact = HasComp<HumanoidAppearanceComponent>(victim) ? LogImpact.Extreme : LogImpact.Medium;
         _adminLogger.Add(LogType.Gib,
             logImpact,
-            $"{ToPrettyString(item):victim} was beheaded by {ToPrettyString(uid):entity}");
+            $"{ToPrettyString(victim):victim} was beheaded by {ToPrettyString(factory):entity}");
 
         foreach (var (material, needed) in recipe.Materials)
         {
-            MaterialStorage.TryChangeMaterialAmount(uid, material, -needed);
+            MaterialStorage.TryChangeMaterialAmount(factory, material, -needed);
         }
 
-        var result = Spawn(resultProto, Transform(uid).Coordinates);
+        var result = Spawn(resultProto, Transform(factory).Coordinates);
 
         BorgChassisComponent? chassis = null;
         if (!Resolve(result, ref chassis) || chassis.BrainEntity == null)
@@ -93,7 +88,7 @@ public sealed class XenoborgFactorySystem : SharedXenoborgFactorySystem
         if (_mind.TryGetMind(brain.Value, out _, out var mind) &&
             _player.TryGetSessionById(mind.UserId, out var session) && _borg.CanPlayerBeBorged(session))
         {
-            _itemSlots.TryInsert(chassis.BrainEntity.Value, "brain_slot", brain.Value, uid);
+            _itemSlots.TryInsert(chassis.BrainEntity.Value, "brain_slot", brain.Value, factory);
         }
         else
         {
@@ -103,7 +98,7 @@ public sealed class XenoborgFactorySystem : SharedXenoborgFactorySystem
         return true;
     }
 
-    private void OnSuicideByEnvironment(Entity<XenoborgFactoryComponent> entity, ref SuicideByEnvironmentEvent args)
+    private void OnSuicideByEnvironment(Entity<XenoborgFactoryComponent> factory, ref SuicideByEnvironmentEvent args)
     {
         if (args.Handled)
             return;
@@ -125,7 +120,7 @@ public sealed class XenoborgFactorySystem : SharedXenoborgFactorySystem
             Filter.PvsExcept(victim, entityManager: EntityManager),
             true);
 
-        TryStartProcessItem(entity, victim, suicide: true);
+        TryStartProcessItem(factory, victim, suicide: true);
         args.Handled = true;
     }
 }

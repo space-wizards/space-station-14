@@ -34,84 +34,74 @@ public abstract class SharedXenoborgFactorySystem : EntitySystem
 
     public override void Initialize()
     {
-        SubscribeLocalEvent<CollideXenoborgFactoryComponent, StartCollideEvent>(OnCollide);
+        SubscribeLocalEvent<XenoborgFactoryComponent, StartCollideEvent>(OnCollide);
         SubscribeLocalEvent<XenoborgFactoryComponent, GetVerbsEvent<Verb>>(OnGetVerb);
     }
 
-    private void OnCollide(EntityUid uid, CollideXenoborgFactoryComponent component, ref StartCollideEvent args)
+    private void OnCollide(Entity<XenoborgFactoryComponent> entity, ref StartCollideEvent args)
     {
-        if (!TryComp<XenoborgFactoryComponent>(uid, out var reclaimer))
-            return;
-        TryStartProcessItem(uid, args.OtherEntity, reclaimer);
+        TryStartProcessItem(entity, args.OtherEntity);
     }
 
     /// <summary>
     /// Tries to start processing an item via a <see cref="XenoborgFactoryComponent"/>.
     /// </summary>
-    protected void TryStartProcessItem(EntityUid uid,
-        EntityUid item,
-        XenoborgFactoryComponent? component = null,
+    protected void TryStartProcessItem(Entity<XenoborgFactoryComponent> factory,
+        EntityUid victim,
         EntityUid? user = null,
         bool suicide = false)
     {
-        if (!Resolve(uid, ref component))
+        if (_mobState.IsIncapacitated(factory))
             return;
 
-        if (_mobState.IsIncapacitated(uid))
+        if (!CanProduce(factory))
             return;
 
-        if (!CanProduce(uid, component))
+        if (!_mobState.IsIncapacitated(victim) && !HasComp<SleepingComponent>(victim) &&
+            _actionBlocker.CanInteract(victim, null) && !suicide)
             return;
 
-        if (!_mobState.IsIncapacitated(item) && !HasComp<SleepingComponent>(item) &&
-            _actionBlocker.CanInteract(item, null) && !suicide)
+        if (_whitelistSystem.IsWhitelistFail(factory.Comp.Whitelist, victim) ||
+            _whitelistSystem.IsBlacklistPass(factory.Comp.Blacklist, victim))
             return;
 
-        if (_whitelistSystem.IsWhitelistFail(component.Whitelist, item) ||
-            _whitelistSystem.IsBlacklistPass(component.Blacklist, item))
+        if (Container.TryGetContainingContainer((victim, null, null), out _) &&
+            !Container.TryRemoveFromContainer(victim))
             return;
 
-        if (Container.TryGetContainingContainer((item, null, null), out _) && !Container.TryRemoveFromContainer(item))
-            return;
-
-        if (_timing.CurTime > component.NextSound)
+        if (_timing.CurTime > factory.Comp.NextSound)
         {
-            component.Stream = _audio.PlayPredicted(component.Sound, uid, user)?.Entity;
-            component.NextSound = _timing.CurTime + component.SoundCooldown;
+            factory.Comp.Stream = _audio.PlayPredicted(factory.Comp.Sound, factory, user)?.Entity;
+            factory.Comp.NextSound = _timing.CurTime + factory.Comp.SoundCooldown;
         }
 
-        var reclaimedEvent = new GotReclaimedEvent(Transform(uid).Coordinates);
-        RaiseLocalEvent(item, ref reclaimedEvent);
+        var reclaimedEvent = new GotReclaimedEvent(Transform(factory).Coordinates);
+        RaiseLocalEvent(victim, ref reclaimedEvent);
 
 
-        Reclaim(uid, item, component);
+        Reclaim(factory, victim);
     }
 
     /// <summary>
     /// Spawns the materials and chemicals associated
     /// with an entity. Also deletes the item.
     /// </summary>
-    protected virtual void Reclaim(EntityUid uid, EntityUid item, XenoborgFactoryComponent? component = null)
+    protected virtual void Reclaim(Entity<XenoborgFactoryComponent> factory, EntityUid victim)
     {
-        if (!Resolve(uid, ref component))
-            return;
-
-        component.ItemsProcessed++;
-        if (component.CutOffSound)
+        factory.Comp.ItemsProcessed++;
+        if (factory.Comp.CutOffSound)
         {
-            _audio.Stop(component.Stream);
+            _audio.Stop(factory.Comp.Stream);
         }
 
-        Dirty(uid, component);
+        Dirty(factory, factory.Comp);
     }
 
-    private bool CanProduce(EntityUid factory,
-        XenoborgFactoryComponent component,
-        MaterialStorageComponent? storage = null)
+    private bool CanProduce(Entity<XenoborgFactoryComponent, MaterialStorageComponent?> factory)
     {
-        if (!Resolve(factory, ref storage, false))
+        if (!Resolve(factory, ref factory.Comp2, false))
             return false;
-        if (!Proto.TryIndex(component.Recipe, out var recipe))
+        if (!Proto.TryIndex(factory.Comp1.Recipe, out var recipe))
             return false;
         foreach (var (material, needed) in recipe.Materials)
         {
@@ -122,31 +112,31 @@ public abstract class SharedXenoborgFactorySystem : EntitySystem
         return true;
     }
 
-    private void OnGetVerb(EntityUid uid, XenoborgFactoryComponent component, GetVerbsEvent<Verb> args)
+    private void OnGetVerb(Entity<XenoborgFactoryComponent> factory, ref GetVerbsEvent<Verb> args)
     {
         if (!args.CanAccess || !args.CanInteract || args.Hands == null)
             return;
 
-        if (!Proto.TryIndex(component.BorgRecipePack, out var recipePack))
+        if (!Proto.TryIndex(factory.Comp.BorgRecipePack, out var recipePack))
             return;
-
+        var user = args.User;
         foreach (var v in from type in recipePack.Recipes
                  let proto = Proto.Index(type)
                  select new Verb
                  {
                      Category = VerbCategory.SelectType,
                      Text = _lathe.GetRecipeName(proto),
-                     Disabled = type == component.Recipe,
+                     Disabled = type == factory.Comp.Recipe,
                      DoContactInteraction = true,
                      Icon = proto.Icon,
                      Act = () =>
                      {
-                         component.Recipe = type;
+                         factory.Comp.Recipe = type;
                          Popup.PopupPredicted(Loc.GetString("emitter-component-type-set",
                                  ("type", _lathe.GetRecipeName(proto))),
-                             uid,
-                             args.User);
-                         Dirty(uid, component);
+                             factory,
+                             user);
+                         Dirty(factory, factory.Comp);
                      },
                  })
         {
