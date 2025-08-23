@@ -198,6 +198,8 @@
     - Belt
   - type: DisarmMalus
     malus: 0.225 # Same as the shiv; it's technically sharp but not a "good" weapon
+  - type: StaticPrice
+    price: 4 # This sword is cheap crap!
 
 #Greatswords
 - type: entity
