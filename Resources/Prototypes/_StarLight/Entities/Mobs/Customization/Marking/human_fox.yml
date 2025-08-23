@@ -50,10 +50,6 @@
       state: vulp_ear
     - sprite: _Starlight/Mobs/Customization/vulpkanin/vulpkanin.rsi
       state: vulp_ear_inner
-  emotes:
-    - emotePrototype: Yip
-    - emotePrototype: Whine
-    - emotePrototype: Bark
 
 - type: marking
   id: PuppyTail
@@ -191,10 +187,6 @@
       state: vulp
     - sprite: _Starlight/Mobs/Customization/vulpkanin/ear_markings.rsi
       state: vulp-inner
-  emotes:
-    - emotePrototype: Yip
-    - emotePrototype: Whine
-    - emotePrototype: Bark
 
 - type: marking
   id: FoxlikeEarFade
@@ -217,10 +209,6 @@
       state: vulp
     - sprite: _Starlight/Mobs/Customization/vulpkanin/ear_markings.rsi
       state: vulp-sharp
-  emotes:
-    - emotePrototype: Yip
-    - emotePrototype: Whine
-    - emotePrototype: Bark
 
 - type: marking
   id: FoxlikeEarWolf
@@ -232,10 +220,6 @@
       state: wolf
     - sprite: _Starlight/Mobs/Customization/vulpkanin/ear_markings.rsi
       state: wolf-inner
-  emotes:
-    - emotePrototype: Yip
-    - emotePrototype: Whine
-    - emotePrototype: Bark
 
 - type: marking
   id: FoxlikeEarFennec
@@ -247,10 +231,6 @@
       state: fennec
     - sprite: _Starlight/Mobs/Customization/vulpkanin/ear_markings.rsi
       state: fennec-inner
-  emotes:
-    - emotePrototype: Yip
-    - emotePrototype: Whine
-    - emotePrototype: Bark
 
 - type: marking
   id: FoxlikeEarFox
@@ -260,11 +240,6 @@
   sprites:
     - sprite: _Starlight/Mobs/Customization/vulpkanin/ear_markings.rsi
       state: fox
-  emotes:
-    - emotePrototype: Yip
-    - emotePrototype: Whine
-    - emotePrototype: Bark
-
 
 - type: marking
   id: FoxlikeEarShock
