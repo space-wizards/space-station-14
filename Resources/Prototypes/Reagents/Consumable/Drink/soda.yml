@@ -71,12 +71,12 @@
       effects:
       - !type:PopupMessage
         conditions:
-          - !type:ReagentThreshold
+        - !type:ReagentThreshold
           min: 2 
         type: Local
         visualType: LargeCaution
-        messages: [ "dr-gibbs-presence" ]
-        probability: 0.5 # They'll see this at least several times before the gib procs, if it even procs
+        messages: ["dr-gibbs-presence"]
+        probability: 0.33 # They'll see this at least several times before the gib procs, if it even procs
       - !type:HealthChange
         conditions:
         - !type:ReagentThreshold
