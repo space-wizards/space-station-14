@@ -217,7 +217,6 @@ public sealed partial class SingleMarkingPicker : BoxContainer
         var marking = _markings[Slot];
 
         ColorSelectorContainer.RemoveAllChildren();
-        ColorSelectorContainer.RemoveAllChildren();
 
         if (marking.MarkingColors.Count != proto.Sprites.Count)
         {
