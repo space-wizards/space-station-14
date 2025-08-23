@@ -72,6 +72,13 @@
     hideLayersOnEquip:
     - Hair
     - Snout
+  - type: LanguageKnowledge
+    speaks:
+      - GalacticCommon
+      - Carptongue
+    understands: 
+      - GalacticCommon
+      - Carptongue
   - type: Inventory
     templateId: thaven
     displacements:
