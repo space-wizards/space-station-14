@@ -24,10 +24,7 @@
 
   # Visual
   inventoryTemplateId: borgTall
-  spriteBodyState: purrfus
-  spriteHasMindState: purrfus_e
-  spriteNoMindState: purrfus_e_r
-  spriteToggleLightState: purrfus_l
+  spritePath: _Starlight/Mobs/Silicon/Chassis/purrfus.rsi
 
   # Pet
   petSuccessString: petting-success-generic-cyborg

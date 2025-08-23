@@ -1,6 +1,8 @@
-﻿using Robust.Shared.Containers;
+﻿using Content.Shared.Hands.Components;
+using Robust.Shared.Containers;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Serialization;
 
 namespace Content.Shared.Silicons.Borgs.Components;
 
@@ -11,55 +13,40 @@ namespace Content.Shared.Silicons.Borgs.Components;
 public sealed partial class ItemBorgModuleComponent : Component
 {
     /// <summary>
-    /// The items that are provided.
+    /// The hands that are provided.
     /// </summary>
     [DataField(required: true)]
-    public List<EntProtoId> Items = new();
+    public List<BorgHand> Hands = new();
 
     /// <summary>
-    /// The entities from <see cref="Items"/> that were spawned.
-    /// </summary>
-    [DataField("providedItems")]
-    public SortedDictionary<string, EntityUid> ProvidedItems = new();
-
-    /// <summary>
-    /// A counter that ensures a unique
-    /// </summary>
-    [DataField("handCounter")]
-    public int HandCounter;
-
-    //STARLIGHT start
-    /// <summary>
-    /// The number of free hands to add to a borg module
+    /// The items stored within the hands. Null until the first time items are stored.
     /// </summary>
     [DataField]
-    public int FreeHands = 0;
+    public Dictionary<string, EntityUid>? StoredItems;
 
     /// <summary>
-    /// List of provided free hand IDs and stored items
-    /// Upon RemoveProvidedItems stores up-to-date Item IDs, upon ProvideItems stores up-to-date hand IDs.
+    /// An ID for the container where items are stored when not in use.
     /// </summary>
-    public Dictionary<string, EntityUid?> ProvidedFreeHands = new();
-
-    //STARLIGHT end
-
-    /// <summary>
-    /// Whether or not the items have been created and stored in <see cref="ProvidedContainer"/>
-    /// </summary>
-    [DataField("itemsCrated")]
-    public bool ItemsCreated;
-
-    /// <summary>
-    /// A container where provided items are stored when not being used.
-    /// This is helpful as it means that items retain state.
-    /// </summary>
-    [ViewVariables]
-    public Container ProvidedContainer = default!;
-
-    /// <summary>
-    /// An ID for the container where provided items are stored when not used.
-    /// </summary>
-    [DataField("providedContainerId")]
-    public string ProvidedContainerId = "provided_container";
+    [DataField]
+    public string HoldingContainer = "holding_container";
 }
 
+[DataDefinition, Serializable, NetSerializable]
+public partial record struct BorgHand
+{
+    [DataField]
+    public EntProtoId? Item;
+
+    [DataField]
+    public Hand Hand = new();
+
+    [DataField]
+    public bool ForceRemovable = false;
+
+    public BorgHand(EntProtoId? item, Hand hand, bool forceRemovable = false)
+    {
+        Item = item;
+        Hand = hand;
+        ForceRemovable = forceRemovable;
+    }
+}
