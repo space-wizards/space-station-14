@@ -29,12 +29,14 @@ public sealed class GameRuleTriggerSystem : EntitySystem
 
         var rule = _ticker.AddGameRule(ent.Comp.GameRule);
 
+        _adminLogger.Add(LogType.EventStarted,
+            $"{ToPrettyString(args.User):entity} added a game rule [{ent.Comp.GameRule}]" +
+            $" via a trigger on {ToPrettyString(ent.Owner):entity}.");
+
         if (ent.Comp.StartRule && _ticker.RunLevel == GameRunLevel.InRound)
         {
             _ticker.StartGameRule(rule);
-            _adminLogger.Add(LogType.EventStarted,
-                $"{ToPrettyString(args.User):entity} started a game rule [{ent.Comp.GameRule}]" +
-                        $" using {ToPrettyString(ent.Owner):entity} via a trigger.");
+            _adminLogger.Add(LogType.EventStarted, $"{ToPrettyString(args.User):entity} started game rule [{ent.Comp.GameRule}].");
         }
 
         args.Handled = true;

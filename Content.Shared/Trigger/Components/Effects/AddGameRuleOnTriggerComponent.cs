@@ -12,10 +12,10 @@ namespace Content.Shared.Trigger.Components.Effects;
 public sealed partial class AddGameRuleOnTriggerComponent : BaseXOnTriggerComponent
 {
     /// <summary>
-    /// The game rule that will be added. Entity requires <see cref="GameRuleComponent"/> to work.
+    /// The game rule that will be added. Entity requires <see cref="GameRuleComponent"/>.
     /// </summary>
     [DataField(required: true), AutoNetworkedField]
-    public EntProtoId GameRule = "CockroachMigration";
+    public EntProtoId<GameRuleComponent> GameRule;
 
     /// <summary>
     /// Whether to also start the game rule when adding it.
