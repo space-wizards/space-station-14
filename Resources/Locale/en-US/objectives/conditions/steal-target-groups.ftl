@@ -23,6 +23,7 @@ steal-target-groups-encryption-keys = encryption key
 steal-target-groups-technology-disks = technology disk
 steal-target-groups-mail = mail
 steal-target-groups-id-cards = ID Card
+steal-target-groups-Officer-Handguns = Security Officer's Handgun
 steal-target-groups-lamps = LAMP
 
 # Thief single item
@@ -39,10 +40,13 @@ steal-target-groups-ame-part-flatpack =  AME flatpack
 steal-target-groups-salvage-expeditions-computer-circuitboard = salvage expeditions computer board
 steal-target-groups-cargo-shuttle-console-circuitboard = cargo shuttle console board
 steal-target-groups-clothing-eyes-hud-beer = beer goggles
+steal-target-groups-bartender-shotgun = bartender's shotgun
 steal-target-groups-bible = bible
 steal-target-groups-clothing-neck-goldmedal = gold medal of crewmanship
 steal-target-groups-clothing-neck-clownmedal = clown medal
 steal-target-groups-wanted-list-cartridge = wanted list cartridge
+steal-target-groups-belt-ce = Chief Engineer's toolbelt
+steal-target-groups-deckard = Deckard
 
 # Thief structures
 steal-target-groups-teg = teg generator part
