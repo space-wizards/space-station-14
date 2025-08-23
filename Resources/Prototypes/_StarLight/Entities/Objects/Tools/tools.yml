@@ -700,7 +700,9 @@
         components:
         - type: ToolTileCompatible
           delay: 1
-        - type: Prying
+        - type: Tool
+          qualities:
+            - Prying
           useSound:
             path: /Audio/Items/crowbar.ogg
         - type: MeleeWeapon
