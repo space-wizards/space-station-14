@@ -19,7 +19,7 @@ namespace Content.Shared.Xenoborgs;
 /// <summary>
 /// A hybrid between <see cref="SharedMaterialReclaimerSystem"/> and <see cref="SharedLatheSystem"/> for streamlined production of cyborgs.
 /// </summary>
-public abstract class SharedXenoborgFactorySystem : EntitySystem
+public abstract class SharedBorgFactorySystem : EntitySystem
 {
     [Dependency] private readonly ActionBlockerSystem _actionBlocker = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
@@ -34,19 +34,19 @@ public abstract class SharedXenoborgFactorySystem : EntitySystem
 
     public override void Initialize()
     {
-        SubscribeLocalEvent<XenoborgFactoryComponent, StartCollideEvent>(OnCollide);
-        SubscribeLocalEvent<XenoborgFactoryComponent, GetVerbsEvent<Verb>>(OnGetVerb);
+        SubscribeLocalEvent<BorgFactoryComponent, StartCollideEvent>(OnCollide);
+        SubscribeLocalEvent<BorgFactoryComponent, GetVerbsEvent<Verb>>(OnGetVerb);
     }
 
-    private void OnCollide(Entity<XenoborgFactoryComponent> entity, ref StartCollideEvent args)
+    private void OnCollide(Entity<BorgFactoryComponent> entity, ref StartCollideEvent args)
     {
         TryStartProcessItem(entity, args.OtherEntity);
     }
 
     /// <summary>
-    /// Tries to start processing an item via a <see cref="XenoborgFactoryComponent"/>.
+    /// Tries to start processing an item via a <see cref="BorgFactoryComponent"/>.
     /// </summary>
-    protected void TryStartProcessItem(Entity<XenoborgFactoryComponent> factory,
+    protected void TryStartProcessItem(Entity<BorgFactoryComponent> factory,
         EntityUid victim,
         EntityUid? user = null,
         bool suicide = false)
@@ -86,7 +86,7 @@ public abstract class SharedXenoborgFactorySystem : EntitySystem
     /// Spawns the materials and chemicals associated
     /// with an entity. Also deletes the item.
     /// </summary>
-    protected virtual void Reclaim(Entity<XenoborgFactoryComponent> factory, EntityUid victim)
+    protected virtual void Reclaim(Entity<BorgFactoryComponent> factory, EntityUid victim)
     {
         factory.Comp.ItemsProcessed++;
         if (factory.Comp.CutOffSound)
@@ -97,7 +97,7 @@ public abstract class SharedXenoborgFactorySystem : EntitySystem
         Dirty(factory, factory.Comp);
     }
 
-    private bool CanProduce(Entity<XenoborgFactoryComponent, MaterialStorageComponent?> factory)
+    private bool CanProduce(Entity<BorgFactoryComponent, MaterialStorageComponent?> factory)
     {
         if (!Resolve(factory, ref factory.Comp2, false))
             return false;
@@ -112,7 +112,7 @@ public abstract class SharedXenoborgFactorySystem : EntitySystem
         return true;
     }
 
-    private void OnGetVerb(Entity<XenoborgFactoryComponent> factory, ref GetVerbsEvent<Verb> args)
+    private void OnGetVerb(Entity<BorgFactoryComponent> factory, ref GetVerbsEvent<Verb> args)
     {
         if (!args.CanAccess || !args.CanInteract || args.Hands == null)
             return;

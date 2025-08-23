@@ -12,8 +12,8 @@ namespace Content.Shared.Xenoborgs.Components;
 /// Enables an entity to convert bodies into Xenoborgs.
 /// </summary>
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState, AutoGenerateComponentPause]
-[Access(typeof(SharedXenoborgFactorySystem))]
-public sealed partial class XenoborgFactoryComponent : Component
+[Access(typeof(SharedBorgFactorySystem))]
+public sealed partial class BorgFactoryComponent : Component
 {
     /// <summary>
     /// a blacklist for what entities cannot be inserted into this reclaimer
@@ -43,7 +43,7 @@ public sealed partial class XenoborgFactoryComponent : Component
     /// The fixture that starts reclaiming on collision.
     /// </summary>
     [DataField]
-    public string FixtureId = "XenoborgFactoryFixture";
+    public string FixtureId = "BorgFactoryFixture";
 
     /// <summary>
     /// A counter of how many items have been processed

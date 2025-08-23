@@ -185,7 +185,7 @@
     whitelist:
       components:
       - BorgChassis
-  - type: XenoborgFactory
+  - type: BorgFactory
     whitelist:
       components:
       - MobState

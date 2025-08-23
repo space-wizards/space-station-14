@@ -17,7 +17,7 @@ using Robust.Shared.Player;
 
 namespace Content.Server.Xenoborgs;
 
-public sealed class XenoborgFactorySystem : SharedXenoborgFactorySystem
+public sealed class BorgFactorySystem : SharedBorgFactorySystem
 {
     [Dependency] private readonly IAdminLogManager _adminLogger = default!;
     [Dependency] private readonly SharedBodySystem _body = default!; //bobby
@@ -30,18 +30,18 @@ public sealed class XenoborgFactorySystem : SharedXenoborgFactorySystem
     public override void Initialize()
     {
         base.Initialize();
-        SubscribeLocalEvent<XenoborgFactoryComponent, SuicideByEnvironmentEvent>(OnSuicideByEnvironment);
+        SubscribeLocalEvent<BorgFactoryComponent, SuicideByEnvironmentEvent>(OnSuicideByEnvironment);
     }
 
     /// <inheritdoc/>
-    protected override void Reclaim(Entity<XenoborgFactoryComponent> factory, EntityUid victim)
+    protected override void Reclaim(Entity<BorgFactoryComponent> factory, EntityUid victim)
     {
         base.Reclaim(factory, victim);
 
         TryFinishProducing(factory, victim);
     }
 
-    private bool TryFinishProducing(Entity<XenoborgFactoryComponent> factory, EntityUid victim)
+    private bool TryFinishProducing(Entity<BorgFactoryComponent> factory, EntityUid victim)
     {
         if (!Proto.TryIndex(factory.Comp.Recipe, out var recipe))
             return false;
@@ -98,7 +98,7 @@ public sealed class XenoborgFactorySystem : SharedXenoborgFactorySystem
         return true;
     }
 
-    private void OnSuicideByEnvironment(Entity<XenoborgFactoryComponent> factory, ref SuicideByEnvironmentEvent args)
+    private void OnSuicideByEnvironment(Entity<BorgFactoryComponent> factory, ref SuicideByEnvironmentEvent args)
     {
         if (args.Handled)
             return;
