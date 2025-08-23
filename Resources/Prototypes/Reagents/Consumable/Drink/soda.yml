@@ -74,8 +74,8 @@
           - !type:ReagentThreshold
           min: 2 
         type: Local
-        visualType: MediumCaution
-        messages: [ "dr.gibbs-presence" ]
+        visualType: LargeCaution
+        messages: [ "drgibbs-presence" ]
         probability: 0.5 # They'll see this at least several times before the gib procs, if it even procs
       - !type:HealthChange
         conditions:
