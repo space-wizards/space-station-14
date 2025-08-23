@@ -324,8 +324,8 @@ namespace Content.Server.VendingMachines
 
             vendComponent.NextItemToEject = null;
             vendComponent.ThrowNextItem = false;
-            vendComponent.LastBuyer = null;
-            vendComponent.DebitApplied = false;
+            vendComponent.LastBuyer = null; // Starlight-edit
+            vendComponent.DebitApplied = false; // Starlight-edit
         }
 
         public override void Update(float frameTime)
