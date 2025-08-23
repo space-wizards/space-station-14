@@ -75,7 +75,7 @@
           min: 2 
         type: Local
         visualType: LargeCaution
-        messages: [ "drgibbs-presence" ]
+        messages: [ "dr-gibbs-presence" ]
         probability: 0.5 # They'll see this at least several times before the gib procs, if it even procs
       - !type:HealthChange
         conditions:
