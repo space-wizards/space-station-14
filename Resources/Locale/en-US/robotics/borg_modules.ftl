@@ -10,3 +10,5 @@ borg-slot-documents-empty = Books and papers
 borg-slot-soap-empty = Soap
 borg-slot-instruments-empty = Instruments
 borg-slot-beakers-empty = Beakers
+borg-slot-seeds-empty = Seeds
+borg-slot-produce-empty = Produce

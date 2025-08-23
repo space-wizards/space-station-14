@@ -215,6 +215,9 @@
   - Science
   - Service
 
+  addComponents:
+  - type: SolutionScanner
+
   # Visual
   inventoryTemplateId: borgTall
   spriteBodyState: service
