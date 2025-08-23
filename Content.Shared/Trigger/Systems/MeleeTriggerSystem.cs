@@ -4,6 +4,9 @@ using Content.Shared.Weapons.Melee.Events;
 
 namespace Content.Shared.Trigger.Systems;
 
+/// <summary>
+/// Trigger system for melee related triggers.
+/// </summary>
 public sealed class MeleeTriggerSystem : EntitySystem
 {
     [Dependency] private readonly TriggerSystem _trigger = default!;
@@ -13,26 +16,9 @@ public sealed class MeleeTriggerSystem : EntitySystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<TriggerOnMeleeHitComponent, MeleeHitEvent>(OnHitTrigger);
         SubscribeLocalEvent<TriggerOnMeleeMissComponent, MeleeHitEvent>(OnMissTrigger);
         SubscribeLocalEvent<TriggerOnMeleeSwingComponent, MeleeHitEvent>(OnSwingTrigger);
-    }
-
-    private void OnHitTrigger(Entity<TriggerOnMeleeHitComponent> ent, ref MeleeHitEvent args)
-    {
-        if (args.HitEntities.Count == 0)
-            return;
-
-        if (!ent.Comp.TriggerEveryHit)
-        {
-            var target = ent.Comp.TargetIsUser ? args.HitEntities.FirstOrDefault() : args.User;
-            _trigger.Trigger(ent.Owner, target, ent.Comp.KeyOut);
-            return;
-        }
-
-        // if TriggerEveryHit
-        foreach (var target in args.HitEntities)
-            _trigger.Trigger(ent.Owner, ent.Comp.TargetIsUser ? target : args.User, ent.Comp.KeyOut);
+        SubscribeLocalEvent<TriggerOnMeleeHitComponent, MeleeHitEvent>(OnHitTrigger);
     }
 
     private void OnMissTrigger(Entity<TriggerOnMeleeMissComponent> ent, ref MeleeHitEvent args)
@@ -45,5 +31,22 @@ public sealed class MeleeTriggerSystem : EntitySystem
     {
         var target = ent.Comp.TargetIsUser ? args.HitEntities.FirstOrDefault() : args.User;
         _trigger.Trigger(ent.Owner, target, ent.Comp.KeyOut);
+    }
+
+    private void OnHitTrigger(Entity<TriggerOnMeleeHitComponent> ent, ref MeleeHitEvent args)
+    {
+        if (args.HitEntities.Count == 0)
+            return;
+
+        if (!ent.Comp.TriggerEveryHit)
+        {
+            var target = ent.Comp.TargetIsUser ? args.HitEntities.First() : args.User;
+            _trigger.Trigger(ent.Owner, target, ent.Comp.KeyOut);
+            return;
+        }
+
+        // if TriggerEveryHit
+        foreach (var target in args.HitEntities)
+            _trigger.Trigger(ent.Owner, ent.Comp.TargetIsUser ? target : args.User, ent.Comp.KeyOut);
     }
 }
