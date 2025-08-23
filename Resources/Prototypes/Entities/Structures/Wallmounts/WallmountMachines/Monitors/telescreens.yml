@@ -28,7 +28,7 @@
     node: Telescreen
   - type: PointLight
     radius: 1.5
-    energy: 1.6
+    energy: 3.0
     color: "#b89f25"
   - type: DeviceNetwork
     deviceNetId: Wired
