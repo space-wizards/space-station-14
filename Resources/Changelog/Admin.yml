@@ -1358,5 +1358,15 @@ Entries:
   id: 165
   time: '2025-08-21T20:12:16.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/39130
+- author: slarticodefast
+  changes:
+  - message: The 'Delete' button in the objects tab is now a confirm button.
+    type: Tweak
+  - message: Fixed the 'Teleport' button in the objects tab not working for stations
+      and maps.
+    type: Fix
+  id: 166
+  time: '2025-08-22T22:37:52.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/39832
 Name: Admin
 Order: 2
