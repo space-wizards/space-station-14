@@ -22,8 +22,7 @@ public abstract class SharedLightBulbSystem : EntitySystem
     private void OnInit(EntityUid uid, LightBulbComponent bulb, ComponentInit args)
     {
         // update default state of bulbs
-        SetColor(uid, bulb.Color, bulb);
-        SetState(uid, bulb.State, bulb);
+        UpdateAppearance(uid, bulb);
     }
 
     private void HandleLand(EntityUid uid, LightBulbComponent bulb, ref LandEvent args)
