@@ -146,8 +146,8 @@
   description: Wow such a shiny fishie!
   components:
   - type: PointLight
-    radius: 1.5
-    energy: 0.5
+    radius: 1
+    energy: 2
   - type: RgbLightController
     layers: [ 0 ]
 
