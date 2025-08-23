@@ -178,3 +178,13 @@
               id: MeleeService
               proto: OrderedTargets
               key: Target
+
+- type: htnCompound
+  id: MeleeCombatIgnoreInitialInfectedCompound
+  branches:
+  - tasks:
+    - !type:HTNPrimitiveTask
+      operator: !type:UtilityOperator
+        proto: NearbyNotInitialInfectedMeleeTargets
+    - !type:HTNCompoundTask
+        task: BeforeMeleeAttackTargetCompound

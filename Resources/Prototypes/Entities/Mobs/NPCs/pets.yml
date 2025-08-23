@@ -165,7 +165,7 @@
       - PetsNT
   - type: HTN
     rootTask:
-      task: SimpleHostileCompound
+      task: SimpleHostileIgnoresInitialInfectedCompound
   - type: Grammar
     attributes:
       proper: true
@@ -709,7 +709,7 @@
         state: shiva
   - type: HTN
     rootTask:
-      task: SimpleHostileCompound
+      task: SimpleHostileIgnoresInitialInfectedCompound
   - type: Physics
   - type: DamageStateVisuals
     states:

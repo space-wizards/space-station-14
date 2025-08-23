@@ -276,6 +276,9 @@ public sealed partial class ZombieSystem
         // How long until compregistry lmao.
         RemComp<PullerComponent>(target);
 
+        // Remove initial infected component because it is used by HTN to obscure zombie faction recognition.
+        RemComp<InitialInfectedComponent>(target);
+
         // No longer waiting to become a zombie:
         // Requires deferral because this is (probably) the event which called ZombifyEntity in the first place.
         RemCompDeferred<PendingZombieComponent>(target);
