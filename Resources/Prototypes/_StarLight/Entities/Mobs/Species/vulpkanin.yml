@@ -9,11 +9,13 @@
     speaks:
     - GalacticCommon
     - Canilunzt
-    - Fox
+    - Fox # "vaguely canidae"
+    - Dog # "vaguely canidae"
     understands:
     - GalacticCommon
     - Canilunzt
-    - Fox
+    - Fox # "vaguely canidae"
+    - Dog # "vaguely canidae"
   - type: Absorbable
   - type: HumanoidAppearance
     species: Vulpkanin
