@@ -108,7 +108,7 @@ public sealed partial class ActivatableUISystem : EntitySystem
 
             if (component.InHandsOnly)
             {
-                if (!_hands.IsHolding((args.User, args.Hands), uid, out var hand ))
+                if (!_hands.IsHolding((args.User, args.Hands), uid, out var hand))
                     return false;
 
                 if (component.RequireActiveHand && args.Hands.ActiveHandId != hand)
@@ -116,7 +116,7 @@ public sealed partial class ActivatableUISystem : EntitySystem
             }
         }
 
-        return (args.CanInteract || HasComp<GhostComponent>(args.User) && !component.BlockSpectators) && !RaiseCanOpenEventChecks(args.User, uid);
+        return (args.CanInteract || HasComp<GhostComponent>(args.User) && !component.BlockSpectators) && !RaiseCanAddVerbEventChecks(args.User, uid);
     }
 
     private void OnUseInHand(EntityUid uid, ActivatableUIComponent component, UseInHandEvent args)
@@ -292,5 +292,14 @@ public sealed partial class ActivatableUISystem : EntitySystem
         RaiseLocalEvent(user, uae);
         RaiseLocalEvent(uiEntity, oae);
         return oae.Cancelled || uae.Cancelled;
+    }
+    
+    private bool RaiseCanAddVerbEventChecks(EntityUid user, EntityUid uiEntity)
+    {
+        var aae = new ActivatableUIAddVerbAttemptEvent(user);
+        var uae = new UserAddVerbActivatableUIAttemptEvent(user, uiEntity);
+        RaiseLocalEvent(user, uae);
+        RaiseLocalEvent(uiEntity, aae);
+        return aae.Cancelled || uae.Cancelled;
     }
 }
