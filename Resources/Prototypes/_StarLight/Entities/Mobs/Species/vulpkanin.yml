@@ -9,8 +9,6 @@
     speaks:
     - GalacticCommon
     - Canilunzt
-    - Fox # "vaguely canidae"
-    - Dog # "vaguely canidae"
     understands:
     - GalacticCommon
     - Canilunzt

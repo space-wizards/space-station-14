@@ -7,7 +7,6 @@
     speaks:
     - GalacticCommon
     - Nekomimetic
-    - Cat
     understands:
     - GalacticCommon
     - Nekomimetic
