@@ -261,7 +261,7 @@ public sealed partial class ShuttleConsoleSystem : SharedShuttleConsoleSystem
             result.Add((
                 _transform.ToMapCoordinates(uid.ToCoordinates()).Position,
                 comp.Shape,
-                comp.RadarAngle,
+                comp.RadarAngle + _transform.GetWorldRotation(uid),
                 comp.Size,
                 comp.RadarColor
                 ));

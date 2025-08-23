@@ -80,7 +80,7 @@ public sealed class MeteorSwarmSystem : GameRuleSystem<MeteorSwarmComponent>
             var subOffset = subOffsetAngle.RotateVec(new Vector2( (playableArea.TopRight - playableArea.Center).Length() / 3 * RobustRandom.NextFloat(), 0));
 
             var spawnPosition = new MapCoordinates(center + offset + subOffset, mapId);
-            var meteor = Spawn(spawnProto, spawnPosition);
+            var meteor = Spawn(spawnProto, spawnPosition, rotation: subOffsetAngle);
             var physics = Comp<PhysicsComponent>(meteor);
             _physics.ApplyLinearImpulse(meteor, -offset.Normalized() * component.MeteorVelocity * physics.Mass, body: physics);
         }

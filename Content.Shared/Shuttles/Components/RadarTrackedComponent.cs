@@ -5,13 +5,17 @@ namespace Content.Shared.Shuttles.Components;
 [RegisterComponent]
 public sealed partial class RadarTrackedComponent : Component
 {
+    /// <summary>
+    /// The shape the entity appears as on radar
+    /// </summary>
+    [DataField]
     public RadarSignatureShape Shape = RadarSignatureShape.Circle;
 
     /// <summary>
     /// Color of the indicator on the nav ui
     /// </summary>
     [DataField]
-    public Color RadarColor = Color.FromSrgb(Color.Red);
+    public Color RadarColor { get; set; } = Color.FromHex("#FF0000");
 
     /// <summary>
     /// Rotation of the indicator on the nav ui

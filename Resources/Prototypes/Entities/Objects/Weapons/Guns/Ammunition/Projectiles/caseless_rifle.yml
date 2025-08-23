@@ -25,4 +25,6 @@
   parent: BulletCaselessRifle
   categories: [ HideSpawnMenu ]
   components:
-  - type: RadarTrackedFriendly
+  - type: RadarTracked
+    radarColor: "#AA77FF"
+    size: 1.5

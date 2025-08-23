@@ -46,7 +46,7 @@
       state: heavylaser_flash
 
 - type: entity
-  id: RadarTrackedProjectile
+  id: RadarTrackedProjectile # will be shot at by point defense.
   abstract: true
   components:
   - type: MobState # for HTN targetting logic.
@@ -56,7 +56,16 @@
   - type: NpcFactionMember
     factions:
     - Meteor # for point-defense
-  - type: RadarTrackedHostile
+  - type: RadarTracked
+
+- type: entity
+  id: RadarTrackedMissle # will be shot at by point defense.
+  parent: RadarTrackedProjectile
+  abstract: true
+  components:
+  - type: RadarTracked
+    shape: "Triangle"
+    size: .6
 
 # One bullet to bring them all into the darkness and bind them
 - type: entity
@@ -799,7 +808,7 @@
 - type: entity
   id: BulletRocket
   name: rocket
-  parent: [ BaseBulletTrigger, RadarTrackedProjectile]
+  parent: [ BaseBulletTrigger, RadarTrackedMissle ]
   categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
@@ -821,7 +830,7 @@
 - type: entity
   id: BulletWeakRocket
   name: weak rocket
-  parent: [ BaseBulletTrigger, RadarTrackedProjectile ]
+  parent: [ BaseBulletTrigger, RadarTrackedMissle ]
   categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
@@ -843,7 +852,7 @@
 - type: entity
   id: BulletGrenadeBaton
   name: baton grenade
-  parent: [ BaseBullet, RadarTrackedProjectile ]
+  parent: [ BaseBullet, RadarTrackedMissle ]
   categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
@@ -863,7 +872,7 @@
 - type: entity
   id: BulletGrenadeBlast
   name: blast grenade
-  parent: [ BaseBulletTrigger, RadarTrackedProjectile ]
+  parent: [ BaseBulletTrigger, RadarTrackedMissle ]
   categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
@@ -881,7 +890,7 @@
 - type: entity
   id: BulletGrenadeFlash
   name: flash grenade
-  parent: [ BaseBulletTrigger, RadarTrackedProjectile ]
+  parent: [ BaseBulletTrigger, RadarTrackedMissle ]
   categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
@@ -899,7 +908,7 @@
 - type: entity
   id: BulletGrenadeFrag
   name: frag grenade
-  parent: [ BaseBulletTrigger, RadarTrackedProjectile ]
+  parent: [ BaseBulletTrigger, RadarTrackedMissle ]
   categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
@@ -921,7 +930,7 @@
     capacity: 30
 
 - type: entity
-  parent: [ BaseBulletTrigger, RadarTrackedProjectile ]
+  parent: [ BaseBulletTrigger, RadarTrackedMissle ]
   id: BulletGrenadeCleanade
   name: cleanade grenade round
   categories: [ HideSpawnMenu ]
@@ -952,7 +961,7 @@
 - type: entity
   id: BulletGrenadeEMP
   name: EMP rocket
-  parent: [ BaseBulletTrigger, RadarTrackedProjectile ]
+  parent: [ BaseBulletTrigger, RadarTrackedMissle ]
   categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
@@ -1060,7 +1069,7 @@
 - type: entity
   id: BulletCannonBall
   name: cannonball
-  parent: [ BaseBulletTrigger, RadarTrackedProjectile ]
+  parent: [ BaseBulletTrigger, RadarTrackedMissle ]
   categories: [ HideSpawnMenu ]
   components:
   - type: Sprite

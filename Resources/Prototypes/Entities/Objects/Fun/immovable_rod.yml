@@ -1,5 +1,6 @@
 - type: entity
   id: ImmovableRod
+  parent: RadarTrackedProjectile
   name: immovable rod
   description: You can sense that it's hungry. That's usually a bad sign.
   components:
@@ -39,6 +40,9 @@
     blacklist:
       tags:
       - GhostOnlyWarp
+  - type: RadarTracked
+    shape: Line
+    size: 1
 
 - type: entity
   id: ImmovableRodDespawn

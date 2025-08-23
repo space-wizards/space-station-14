@@ -52,7 +52,8 @@
   - type: NpcFactionMember # look, it makes the AI do some john wick shit, just, accept.
     factions:
     - Meteor
-  - type: RadarTrackedHostile
+  - type: RadarTracked
+    shape: "Diamond"
 
 - type: entity
   parent: BaseMeteor
@@ -89,6 +90,8 @@
         sound:
           collection: MetalBreak
       - !type:ExplodeBehavior
+  - type: RadarTracked
+    size: 1
 
 - type: entity
   parent: BaseMeteor
@@ -172,6 +175,8 @@
         minSpawn: 3
         maxSpawn: 6
         spawnAfter: 0.5
+  - type: RadarTracked
+    size: 1.15
 
 - type: entity
   parent: BaseMeteor
@@ -201,6 +206,8 @@
         minSpawn: 5
         maxSpawn: 8
         spawnAfter: 0.5
+  - type: RadarTracked
+    size: 1.2
 
 - type: entity
   parent: BaseMeteor
@@ -363,3 +370,5 @@
             min: 1
             max: 5
       - !type:ExplodeBehavior
+  - type: RadarTracked
+    size: 1

@@ -313,10 +313,10 @@ public sealed partial class ShuttleNavControl : BaseShuttleControl
                     {
                         var verts = new[]
                         {
-                        Vector2.Transform(ping.Item1 + new Vector2(-ping.Item4, -ping.Item4), worldToViewShapeRot),
-                        Vector2.Transform(ping.Item1 + new Vector2(ping.Item4, -ping.Item4), worldToViewShapeRot),
-                        Vector2.Transform(ping.Item1 + new Vector2(ping.Item4, ping.Item4), worldToViewShapeRot),
-                        Vector2.Transform(ping.Item1 + new Vector2(-ping.Item4, ping.Item4), worldToViewShapeRot),
+                        Vector2.Transform(new Vector2(-ping.Item4, -ping.Item4), worldToViewShapeRot),
+                        Vector2.Transform(new Vector2(ping.Item4, -ping.Item4), worldToViewShapeRot),
+                        Vector2.Transform(new Vector2(ping.Item4, ping.Item4), worldToViewShapeRot),
+                        Vector2.Transform(new Vector2(-ping.Item4, ping.Item4), worldToViewShapeRot),
                         };
 
                         handle.DrawPrimitives(DrawPrimitiveTopology.TriangleFan, verts, ping.Item5.WithAlpha(0.8f));
@@ -328,9 +328,9 @@ public sealed partial class ShuttleNavControl : BaseShuttleControl
                     {
                         var verts = new[]
                         {
-                        Vector2.Transform(ping.Item1 + new Vector2(0f, -ping.Item4), worldToViewShapeRot),
-                        Vector2.Transform(ping.Item1 + new Vector2(ping.Item4, ping.Item4), worldToViewShapeRot),
-                        Vector2.Transform(ping.Item1 + new Vector2(-ping.Item4, ping.Item4), worldToViewShapeRot),
+                        Vector2.Transform(new Vector2(0f, -ping.Item4), worldToViewShapeRot),
+                        Vector2.Transform(new Vector2(ping.Item4, ping.Item4), worldToViewShapeRot),
+                        Vector2.Transform(new Vector2(-ping.Item4, ping.Item4), worldToViewShapeRot),
                         };
 
                         handle.DrawPrimitives(DrawPrimitiveTopology.TriangleFan, verts, ping.Item5.WithAlpha(0.8f));
@@ -342,10 +342,10 @@ public sealed partial class ShuttleNavControl : BaseShuttleControl
                     {
                         var verts = new[]
                         {
-                        Vector2.Transform(ping.Item1 + new Vector2(0f, -ping.Item4), worldToViewShapeRot),
-                        Vector2.Transform(ping.Item1 + new Vector2(ping.Item4, 0f), worldToViewShapeRot),
-                        Vector2.Transform(ping.Item1 + new Vector2(0f, ping.Item4), worldToViewShapeRot),
-                        Vector2.Transform(ping.Item1 + new Vector2(-ping.Item4, 0f), worldToViewShapeRot),
+                        Vector2.Transform(new Vector2(0f, -ping.Item4), worldToViewShapeRot),
+                        Vector2.Transform(new Vector2(ping.Item4, 0f), worldToViewShapeRot),
+                        Vector2.Transform(new Vector2(0f, ping.Item4), worldToViewShapeRot),
+                        Vector2.Transform(new Vector2(-ping.Item4, 0f), worldToViewShapeRot),
                         };
 
                         handle.DrawPrimitives(DrawPrimitiveTopology.TriangleFan, verts, ping.Item5.WithAlpha(0.8f));
@@ -357,9 +357,9 @@ public sealed partial class ShuttleNavControl : BaseShuttleControl
                     {
                         var verts = new[]
                         {
-                            Vector2.Transform(ping.Item1 + new Vector2(-ping.Item4, -ping.Item4), worldToViewShapeRot),
-                            Vector2.Transform(ping.Item1, worldToViewShapeRot),
-                            Vector2.Transform(ping.Item1 + new Vector2(ping.Item4, -ping.Item4), worldToViewShapeRot),
+                            Vector2.Transform(new Vector2(-ping.Item4, -ping.Item4), worldToViewShapeRot),
+                            Vector2.Transform(Vector2.Zero, worldToViewShapeRot),
+                            Vector2.Transform(new Vector2(ping.Item4, -ping.Item4), worldToViewShapeRot),
                         };
 
                         handle.DrawPrimitives(DrawPrimitiveTopology.LineStrip, verts, ping.Item5);
@@ -371,8 +371,8 @@ public sealed partial class ShuttleNavControl : BaseShuttleControl
                     {
                         var verts = new[]
                         {
-                            Vector2.Transform(ping.Item1 + new Vector2(0f, ping.Item4), worldToViewShapeRot),
-                            Vector2.Transform(ping.Item1 + new Vector2(0f, -ping.Item4), worldToViewShapeRot),
+                            Vector2.Transform(new Vector2(0f, ping.Item4), worldToViewShapeRot),
+                            Vector2.Transform(new Vector2(0f, -ping.Item4), worldToViewShapeRot),
                         };
 
                         handle.DrawPrimitives(DrawPrimitiveTopology.LineStrip, verts, ping.Item5);
