@@ -274,8 +274,8 @@ namespace Content.Server.Connection
                 try
                 {
                     if (!validAccountAge
-                    && _roleReqPeacefulBypass is not null
-                    && _actors.TryGetServerGrain(out var serverGrain))
+                        && _roleReqPeacefulBypass is not null
+                        && _actors.TryGetServerGrain(out var serverGrain))
                         validAccountAge = await serverGrain.HasPlayerAnyRole(userId, _roleReqPeacefulBypass.Roles);
                 }
                 catch (Exception)
