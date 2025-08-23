@@ -11,7 +11,7 @@
       stationProto: StandardNanotrasenStation
       components:
         - type: StationNameSetup
-          mapNameTemplate: '{0} Relic Station {1}'
+          mapNameTemplate: '{0} Relic Station SS13'
           nameGenerator:
             !type:NanotrasenNameGenerator
             prefixCreator: 'OG'
