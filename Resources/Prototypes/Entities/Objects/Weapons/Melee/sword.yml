@@ -176,7 +176,7 @@
   name: tactical katana
   parent: Katana
   id: TacticalKatana
-  description: "This thing could barely puncture a sheet of paper. The side of the hilt says \"FOR DISPLAY PURPOSES ONLY\"."
+  description: "This thing could barely cut a sheet of paper. The side of the hilt says \"FOR DISPLAY PURPOSES ONLY\"."
   components:
   - type: Sprite
     sprite: Objects/Weapons/Melee/katana_tactical.rsi
