@@ -1,6 +1,6 @@
 - type: entity
   name: QM's circuit tote
-  parent: Tote
+  parent: ToteBase
   id: BoxQMCircuitboards
   description: A Tote filled with QM's Circuit boards.
   components:
@@ -42,7 +42,7 @@
 
 - type: entity
   name: HoP's circuit tote
-  parent: Tote
+  parent: ToteBase
   id: BoxHoPCircuitboards
   description: A Tote filled with HoP's Circuit boards.
   components:
@@ -80,7 +80,7 @@
 
 - type: entity
   name: CE's circuit tote
-  parent: Tote
+  parent: ToteBase
   id: BoxCECircuitboards
   description: A Tote filled with CE's Circuit boards.
   components:
@@ -94,7 +94,7 @@
 
 - type: entity
   name: Captain's circuit tote
-  parent: Tote
+  parent: ToteBase
   id: BoxCaptainCircuitboards
   description: A Tote filled with Captain's Circuit boards.
   components:
@@ -105,7 +105,7 @@
 
 - type: entity
   name: CMO's circuit tote
-  parent: Tote
+  parent: ToteBase
   id: BoxCMOCircuitboards
   description: A Tote filled with CMO's Circuit boards.
   components:
@@ -116,7 +116,7 @@
 
 - type: entity
   name: RD's circuit tote
-  parent: Tote
+  parent: ToteBase
   id: BoxRDCircuitboards
   description: A Tote filled with RD's Circuit boards.
   components:
@@ -132,7 +132,7 @@
 
 - type: entity
   name: HoS's circuit tote
-  parent: Tote
+  parent: ToteBase
   id: BoxHoSCircuitboards
   description: A Tote filled with HoS's Circuit boards.
   components:
