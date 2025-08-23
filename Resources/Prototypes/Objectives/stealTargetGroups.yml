@@ -122,6 +122,13 @@
     state: door_remotebase
 
 - type: stealTargetGroup
+  id: OfficerHandgun
+  name: steal-target-groups-Officer-Handguns
+  sprite:
+    sprite: Objects/Weapons/Guns/Pistols/mk58.rsi
+    state: base
+
+- type: stealTargetGroup
   id: EncryptionKey
   name: steal-target-groups-encryption-keys
   sprite:
@@ -229,6 +236,13 @@
     state: ame-part
 
 - type: stealTargetGroup
+  id: ChiefEngineerToolBelt
+  name: steal-target-groups-belt-ce
+  sprite:
+    sprite: Clothing/Belt/ce.rsi
+    state: ame-part
+
+- type: stealTargetGroup
   id: SalvageExpeditionsComputerCircuitboard
   name: steal-target-groups-salvage-expeditions-computer-circuitboard
   sprite:
@@ -241,6 +255,13 @@
   sprite:
     sprite: Objects/Misc/module.rsi
     state: cpuboard
+
+- type: stealTargetGroup
+  id: BartenderShotgun
+  name: steal-target-groups-bartender-shotgun
+  sprite:
+    sprite: Objects/Weapons/Guns/Shotguns/db_shotgun.rsi
+    state: icon
 
 - type: stealTargetGroup
   id: ClothingEyesHudBeer
@@ -276,6 +297,13 @@
   sprite:
     sprite: Objects/Devices/cartridge.rsi
     state: cart-sec
+
+- type: stealTargetGroup
+  id: DeckardSteal
+  name: steal-target-groups-deckard
+  sprite:
+    sprite: Objects/Weapons/Guns/Revolvers/deckard.rsi
+    state: icon
 
 #Thief structures
 

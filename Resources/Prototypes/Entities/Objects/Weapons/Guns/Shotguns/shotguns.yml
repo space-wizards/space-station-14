@@ -124,7 +124,7 @@
     node: start
     deconstructionTarget: null
   - type: StealTarget
-    stealGroup: BartenderShotgun #sure the shotgun can be used by zookeepers but it is basically the bartender's gun
+    stealGroup: BartenderShotgun
 
 - type: entity
   name: double-barreled shotgun

@@ -149,6 +149,7 @@
     minCollectionSize: 2
     maxCollectionSize: 5
     verifyMapExistence: false
+    checkStealAreas: false
   - type: Objective
     difficulty: 1.2
 
@@ -223,7 +224,7 @@
   id: ClothingOuterHardsuitVoidParamedStealObjective
   components:
   - type: NotJobRequirement
-    job: Paramedic #TODO: make it so this also includes Medical Doctor and Chemist
+    job: Paramedic #TODO: make it so this also includes Medical Doctor, Chemist and Psychologist
   - type: StealCondition
     stealGroup: ClothingOuterHardsuitVoidParamed
   - type: Objective
@@ -234,7 +235,7 @@
   id: MedicalTechFabCircuitboardStealObjective
   components:
   - type: NotJobRequirement
-    job: MedicalDoctor #TODO: make it so this also includes Chemist and paramedic
+    job: MedicalDoctor #TODO: make it so this also includes Chemist, Paramedic and Psychologist
   - type: StealCondition
     stealGroup: MedicalTechFabCircuitboard
   - type: Objective
@@ -324,7 +325,7 @@
   - type: NotJobRequirement
     job: Bartender #TODO: make it so this also includes zookeeper and probably also service worker
   - type: StealCondition
-    stealgroup: BartenderShotgun
+    stealGroup: BartenderShotgun
   - type: Objective
     difficulty: 0.4
 
