@@ -66912,7 +66912,6 @@ entities:
       tableEntity: 21732
     - type: DeviceLinkSource
       linkedPorts:
-        invalid: []
         21732:
         - - BodyScannerSender
           - BodyScannerReceiver
