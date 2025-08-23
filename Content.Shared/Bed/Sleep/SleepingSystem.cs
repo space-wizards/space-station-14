@@ -253,7 +253,7 @@ public sealed partial class SleepingSystem : EntitySystem
         if (args.NewMobState == MobState.Dead || args.NewMobState == MobState.Critical)
         {
             RemComp<SpamEmitSoundComponent>(ent);
-            RemComp<SleepingComponent>(ent);
+            Wake(ent);
             return;
         }
         if (TryComp<SpamEmitSoundComponent>(ent, out var spam))
