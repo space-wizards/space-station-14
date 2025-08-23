@@ -134,10 +134,10 @@
     - state: mag-0
       map: ["enum.GunVisualLayers.Mag"]
   - type: Item
-    sprite: _WH40K/Objects/Weapons/Guns/Shotguns/shotgun.rsi
+    sprite: _WH40K/Objects/Weapons/Guns/Shotguns/shotgun_in-hands.rsi
     size: Large
   - type: Clothing
-    sprite: _WH40K/Objects/Weapons/Guns/Shotguns/shotgun.rsi
+    sprite: _WH40K/Objects/Weapons/Guns/Shotguns/shotgun_in-hands.rsi
     quickEquip: false
     slots:
     - Back
