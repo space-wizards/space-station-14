@@ -1,12 +1,9 @@
 - type: language
   id: Mothroach
   icon: LanguageIconMoth
-  speech:
-    color: "#c7df2edd"
-    fontId: Copperplate
   obfuscation:
-    - !type: ReplacementObfuscation
-       replacement:
-        - Chirp!
-        - Chitter!
-        - Squeak!
+    !type:ReplacementObfuscation
+    replacement:
+    - Chirp!
+    - Chitter!
+    - Squeak!
