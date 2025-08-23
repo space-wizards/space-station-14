@@ -5,6 +5,14 @@
   abstract: true
   description: It looks so much like jelly. I wonder what it tastes like?
   components:
+  # Starlight - Start
+  - type: LanguageSpeaker
+  - type: LanguageKnowledge
+    speaks:
+    - Bubblish
+    understands:
+    - Bubblish
+  # Starlight - End
   - type: VentCrawler
   - type: NpcFactionMember
     factions:
@@ -124,8 +132,6 @@
   abstract: true
   description: It looks so much like jelly. I wonder what it tastes like?
   components:
-  - type: ReplacementAccent
-    accent: slimes
   - type: GhostTakeoverAvailable
   - type: GhostRole
     makeSentient: true

@@ -33,6 +33,10 @@
   - type: Appearance
   - type: PowerCellVisuals
   - type: Riggable
+  # Starlight-start: Vending Machines Prices
+  - type: ItemPrice
+    fallbackPrice: 10
+  # Starlight-end
 
 - type: entity
   name: potato battery

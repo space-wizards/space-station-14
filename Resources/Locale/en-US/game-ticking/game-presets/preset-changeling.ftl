@@ -16,5 +16,13 @@ changeling-role-greeting =
     Your objectives are listed in the character menu.
     Absorb, shapeshift and evolve to complete them!
 
+changeling-briefing =
+    You are a changeling.
+    You are able to utilize and assume the identities of those you consume to evade a grim fate.
+
 changeling-role-greeting-short =
     You are a changeling who has absorbed and taken the initial form of {$name}.
+
+objective-issuer-changeling = [color=#FA2A55]The Hivemind[/color]
+
+changeling-round-end-agent-name = changeling
