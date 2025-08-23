@@ -3,7 +3,7 @@
     xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
     xmlns:gfx="clr-namespace:Robust.Client.Graphics;assembly=Robust.Client"
     xmlns:style="clr-namespace:Content.Client.Stylesheets"
-    Title="{Loc 'microwave-menu-title'}"
+    Title="{Loc 'assembler-menu-title'}"
     MinWidth="512"
     MinSize="512 256">
     <BoxContainer Orientation="Vertical">
@@ -42,7 +42,7 @@
                     <PanelContainer
                         VerticalExpand="True"
                         ModulateSelfOverride="#FF0000"
-                        MinSize="100 128">
+                        MinSize="100 256">
                         <BoxContainer Orientation="Vertical">
                             <Label
                                 Name="CookTimeInfoLabel"
@@ -51,24 +51,6 @@
                                 Modulate="#FFFFFF"
                                 VAlign="Center" />
                             <BoxContainer  Orientation="Vertical">
-                                <Button
-                                    Name="InstantCookButton"
-                                    Access="Public"
-                                    Text="{Loc 'microwave-menu-instant-button'}"
-                                    StyleClasses="OpenLeft"
-                                    ToggleMode="True"
-                                    Margin="0 0 2 0"
-                                    TextAlign="Center" />
-                                <GridContainer
-                                    Name="CookTimeButtonVbox"
-                                    HSeparationOverride="1"
-                                    VSeparationOverride="1"
-                                    HorizontalExpand="True"
-                                    Columns="3"
-                                    Margin="0"
-                                    Access="Public">
-                                    <!-- Cook time buttons are added here by code -->
-                                </GridContainer>
                                 <BoxContainer
                                     Orientation="Vertical"
                                     Align="Center"
@@ -77,7 +59,7 @@
                                     <Button
                                         Name="StartButton"
                                         Access="Public"
-                                        Text="{Loc 'microwave-menu-start-button'}"
+                                        Text="{Loc 'assembler-menu-start-button'}"
                                         StyleClasses="ButtonColorGreen"
                                         TextAlign="Center" />
                                     <Button
@@ -98,8 +80,8 @@
         <BoxContainer Orientation="Vertical">
             <PanelContainer StyleClasses="LowDivider" />
             <BoxContainer Orientation="Horizontal" Margin="10 2 5 0" VerticalAlignment="Bottom">
-                <Label Text="{Loc 'microwave-menu-footer-flavor-left'}" StyleClasses="WindowFooterText" Name="LeftFooter" Access="Public"/>
-                <Label Text="{Loc 'microwave-menu-footer-flavor-right'}" StyleClasses="WindowFooterText"
+                <Label Text="{Loc 'assembler-menu-footer-flavor-left'}" StyleClasses="WindowFooterText" Name="LeftFooter" Access="Public"/>
+                <Label Text="{Loc 'assembler-menu-footer-flavor-right'}" StyleClasses="WindowFooterText"
                        HorizontalAlignment="Right" HorizontalExpand="True"  Margin="0 0 5 0" />
                 <TextureRect StyleClasses="NTLogoDark" Stretch="KeepAspectCentered" VerticalAlignment="Center" HorizontalAlignment="Right" SetSize="19 19"/>
             </BoxContainer>

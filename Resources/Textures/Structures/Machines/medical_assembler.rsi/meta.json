@@ -1,0 +1,23 @@
+{
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "Modified from chemmaster.dmi from NebulaSS13 at https://github.com/NebulaSS13/Nebula/commit/413dc17c9757bf33984534a4d9b3e3db538a6285 by Whatstone (Discord)",
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "states": [
+        {
+            "name": "icon"
+        },
+        {
+            "name": "mediwave-base"
+        },
+        {
+            "name": "mediwave-off-unlit"
+        },
+        {
+            "name": "mediwave-on-unlit"
+        }
+    ]
+}

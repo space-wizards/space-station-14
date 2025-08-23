@@ -40,7 +40,7 @@ public sealed class IdCardSystem : SharedIdCardSystem
             float randomPick = _random.NextFloat();
 
             // if really unlucky, burn card
-            if (randomPick <= 0.15f)
+            if (args.BeingHeated && randomPick <= 0.15f)
             {
                 TryComp(uid, out TransformComponent? transformComponent);
                 if (transformComponent != null)
@@ -53,6 +53,12 @@ public sealed class IdCardSystem : SharedIdCardSystem
                 _adminLogger.Add(LogType.Action, LogImpact.Medium,
                     $"{ToPrettyString(args.Microwave)} burnt {ToPrettyString(uid):entity}");
                 QueueDel(uid);
+                return;
+            }
+
+            // ID accesses only change with radiation
+            if (!args.BeingIrradiated)
+            {
                 return;
             }
 

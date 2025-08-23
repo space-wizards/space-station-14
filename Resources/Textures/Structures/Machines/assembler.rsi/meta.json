@@ -1,0 +1,56 @@
+{
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "Taken from Paradise at commit https://github.com/ParadiseSS13/Paradise/commit/bd91a1b962fe9bd38e346e9fafd4ebb10784fcb3. | Edited by Whatstone (Discord)",
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "states": [
+        {
+            "name": "assembler"
+        },
+        {
+            "name": "assembler-blinky-unlit",
+            "delays": [
+                [
+                    0.2,
+                    0.2,
+                    0.2,
+                    0.2,
+                    0.4
+                ]
+            ]
+        },
+        {
+            "name": "assembler-broken-unlit"
+        },
+        {
+            "name": "assembler-invisible"
+        },
+        {
+            "name": "assembler-on-unlit"
+        },
+        {
+            "name": "assembler-running-unlit"
+        },
+        {
+            "name": "assembler-scan-unlit",
+            "delays": [
+                    [
+                    0.2,
+                    0.2,
+                    0.2,
+                    0.2,
+                    0.2,
+                    0.2,
+                    0.2,
+                    0.2,
+                    0.2,
+                    0.4
+                ]
+            ]
+        }
+    ]
+}
+  
