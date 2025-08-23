@@ -5,6 +5,7 @@ namespace Content.Shared._Impstation.Thaven;
 
 public abstract class SharedThavenMoodSystem : EntitySystem
 {
+    [Dependency] private readonly EmagSystem _emag = default!;
     public override void Initialize()
     {
         base.Initialize();

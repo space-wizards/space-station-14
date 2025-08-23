@@ -18,6 +18,7 @@ using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Content.Shared._Impstation.CCVar;
 using Robust.Server.Audio;
+using Content.Shared.Actions.Components;
 
 namespace Content.Server._Impstation.Thaven;
 
@@ -359,7 +360,9 @@ public sealed partial class ThavenMoodsSystem : SharedThavenMoodSystem
 
     private void OnThavenMoodShutdown(Entity<ThavenMoodsComponent> ent, ref ComponentShutdown args)
     {
-        _actions.RemoveAction(ent, ent.Comp.Action);
+        var act = ent.Comp.Action;
+        if (TryComp<ActionComponent>(act, out var action))
+            _actions.RemoveAction(act);
     }
 
     protected override void OnEmagged(Entity<ThavenMoodsComponent> ent, ref GotEmaggedEvent args)
