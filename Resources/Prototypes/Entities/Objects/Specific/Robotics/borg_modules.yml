@@ -586,6 +586,7 @@
     - item: WelderExperimental
     - item: Multitool
     - item: RemoteSignallerAdvanced
+    - item: SprayPainterRecharging #STARLIGHT
   - type: BorgModuleIcon
     icon: { sprite: Interface/Actions/actions_borg.rsi, state: adv-tools-module }
 
