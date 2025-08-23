@@ -12373,5 +12373,12 @@ Entries:
   id: 144101
   time: '2025-08-23T02:39:08.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/1441
+- author: walksanatora
+  changes:
+  - message: Lings are now our versions instead of broken upstream versions.
+    type: Fix
+  id: 144300
+  time: '2025-08-23T03:35:42.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1443
 Order: -1
 
