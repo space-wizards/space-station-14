@@ -2,7 +2,7 @@
 using JetBrains.Annotations;
 using Robust.Client.UserInterface;
 
-namespace Content.Client.Changeling.Transform;
+namespace Content.Client.Changeling.UI;
 
 [UsedImplicitly]
 public sealed partial class ChangelingTransformBoundUserInterface(EntityUid owner, Enum uiKey) : BoundUserInterface(owner, uiKey)
@@ -16,16 +16,16 @@ public sealed partial class ChangelingTransformBoundUserInterface(EntityUid owne
         _window = this.CreateWindow<ChangelingTransformMenu>();
 
         _window.OnIdentitySelect += SendIdentitySelect;
+
+        _window.Update(Owner);
     }
 
-    protected override void UpdateState(BoundUserInterfaceState state)
+    public override void Update()
     {
-        base.UpdateState(state);
-
-        if (state is not ChangelingTransformBoundUserInterfaceState current)
+        if (_window == null)
             return;
 
-        _window?.UpdateState(current);
+        _window.Update(Owner);
     }
 
     public void SendIdentitySelect(NetEntity identityId)

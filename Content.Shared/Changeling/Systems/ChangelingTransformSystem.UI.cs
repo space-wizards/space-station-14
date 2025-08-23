@@ -14,20 +14,8 @@ public sealed class ChangelingTransformIdentitySelectMessage(NetEntity targetIde
     public readonly NetEntity TargetIdentity = targetIdentity;
 }
 
-// TODO: Replace with component states.
-// We are already networking the ChangelingIdentityComponent, which contains all this information,
-// so we can just read it from them from the component and update the UI in an AfterAuotHandleState subscription.
 [Serializable, NetSerializable]
-public sealed class ChangelingTransformBoundUserInterfaceState(List<NetEntity> identities) : BoundUserInterfaceState
-{
-    /// <summary>
-    /// The uids of the cloned identities.
-    /// </summary>
-    public readonly List<NetEntity> Identites = identities;
-}
-
-[Serializable, NetSerializable]
-public enum TransformUI : byte
+public enum ChangelingTransformUI : byte
 {
     Key,
 }
