@@ -144,8 +144,8 @@ public sealed class VotingSystem : EntitySystem
 
     public void OnRoundRestartEvent(ref RoundRestartingEvent ev)
     {
-        TryCreateVote(CCVars.VoteAutoMapEnabled, "ui-vote-map-title", StandardVoteType.Map);
-        TryCreateVote(CCVars.VoteAutoPresetEnabled, "ui-vote-gamemode-title", StandardVoteType.Preset);
+        TryCreateVote(CCVars.VoteAutoMapOnRoundEnd, "ui-vote-map-title", StandardVoteType.Map);
+        TryCreateVote(CCVars.VoteAutoPresetOnRoundEnd, "ui-vote-gamemode-title", StandardVoteType.Preset);
     }
 
     private void TryCreateVote(CVarDef<bool> enabledCVar, string titleKey, StandardVoteType type)
