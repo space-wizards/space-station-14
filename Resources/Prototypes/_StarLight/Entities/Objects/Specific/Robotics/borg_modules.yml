@@ -26,6 +26,14 @@
         color: "#ffffff"
 
 - type: entity
+  id: BorgModulePaperStampPlaceholder
+  parent: BaseItem
+  components:
+  - type: Sprite
+    sprite: _Starlight/Objects/Misc/stamp-paper-borg.rsi
+    state: stamp-paper-borg
+
+- type: entity
   id: BorgModulePaperwork
   parent: [ BaseBorgModulePurrfus, BaseProviderBorgModule ]
   name: paperwork cyborg module
@@ -36,12 +44,19 @@
     - state: command
     - state: icon-paperwork
   - type: ItemBorgModule
-    freeHands: 1
-    items:
-    - LuxuryPen
-    - BoxFolderCyborgClipboard
-    - RubberStampApproved
-    - RubberStampDenied
-    - HandLabeler
+    hands:
+    - item: LuxuryPen
+    - item: BoxFolderCyborgClipboard
+    - item: RubberStampApproved
+    - item: RubberStampDenied
+    - item: HandLabeler
+    - hand:
+        emptyLabel: borg-slot-papers-empty
+        emptyRepresentative: BorgModulePaperStampPlaceholder
+        whitelist:
+          tags:
+          - Document
+          components:
+          - Stamp
   - type: BorgModuleIcon
     icon: { sprite: _Starlight/Interface/Actions/actions_borg.rsi, state: paperwork-module }

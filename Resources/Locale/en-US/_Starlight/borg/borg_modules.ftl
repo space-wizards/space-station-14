@@ -1,0 +1,1 @@
+borg-slot-papers-empty = Documents and Stamps
