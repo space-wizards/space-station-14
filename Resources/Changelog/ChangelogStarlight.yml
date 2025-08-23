@@ -12359,5 +12359,19 @@ Entries:
   id: 143700
   time: '2025-08-22T22:18:55.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/1437
+- author: Karma and Quantum
+  changes:
+  - message: 2 new songs for the jukebox
+    type: Add
+  id: 143500
+  time: '2025-08-23T15:32:28.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1435
+- author: walksanatora
+  changes:
+  - message: Cloning a zed no longer only makes them only speak zed.
+    type: Fix
+  id: 145300
+  time: '2025-08-23T18:34:18.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1453
 Order: -1
 
