@@ -26,10 +26,7 @@ public sealed partial class ChangelingComponent : Component
     public readonly List<ProtoId<EntityPrototype>> BaseChangelingActions = new()
     {
         "ActionEvolutionMenu",
-        "ActionAbsorbDNA",
         "ActionStingExtractDNA",
-        "ActionChangelingTransformCycle",
-        "ActionChangelingTransform",
         "ActionEnterStasis",
         "ActionExitStasis"
     };

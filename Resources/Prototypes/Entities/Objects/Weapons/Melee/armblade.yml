@@ -6,7 +6,7 @@
   components:
   - type: Sharp
   - type: Sprite
-    sprite: Objects/Weapons/Melee/armblade.rsi
+    sprite: Changeling/arm_blade.rsi # Starlight new changeling armblade sprites
     state: icon
   - type: MeleeWeapon
     soundHit:
@@ -20,7 +20,7 @@
         Structural: 20
   - type: Item
     size: Normal
-    sprite: Objects/Weapons/Melee/armblade.rsi
+    sprite: Changeling/arm_blade.rsi
   - type: Prying
     speedModifier: 1.5 # Jaws of life speed
     pryPowered: true

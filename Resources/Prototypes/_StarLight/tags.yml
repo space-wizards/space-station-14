@@ -185,3 +185,9 @@
 
 - type: Tag
   id: Table
+
+- type: Tag
+  id: SecuredLocker
+
+- type: Tag
+  id: Locker

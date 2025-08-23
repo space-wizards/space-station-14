@@ -3,33 +3,34 @@
   id: XenoborgEngi
   name: engi xenoborg
   suffix: with brain
-  description: A man-machine hybrid that aims to replicate itself. They love extracting brains to insert into fresh xenoborg chassis to grow their army. This one seems to be an engineering type, as it has more tools for supporting the other xenoborgs.
+  description: A man-machine hybrid that aims to replicate itself. They love extracting brains to insert into fresh Xenoborg chassis to grow their army. This one seems to be an engineering type, as it has more tools for supporting the other Xenoborgs.
   components:
   - type: BorgTransponder
     name: engi xenoborg
     sprite:
-      sprite: Mobs/Silicon/chassis.rsi
-      state: xenoborg_engi
+      sprite: Mobs/Silicon/Chassis/xeno_engi.rsi
+      state: borg
   - type: Sprite
     layers:
-    - state: xenoborg_engi
-    - state: xenoborg_engi_e
+    - state: borg
+    - state: borg_e
       map: ["enum.BorgVisualLayers.Light"]
       shader: unshaded
       visible: false
-    - state: xenoborg_engi_l
+    - state: borg_l
       shader: unshaded
       map: ["light"]
       visible: false
   - type: BorgChassis
     maxModules: 7
-    hasMindState: xenoborg_engi_e
-    noMindState: xenoborg_engi_e_r
+    hasMindState: borg_e
+    noMindState: borg_e_r
     moduleWhitelist:
       tags:
       - XenoborgModuleGeneric
       - XenoborgModuleEngi
       - BorgModuleEngineering
+      - BorgModuleGeneric
   - type: ContainerFill
     containers:
       borg_brain:
@@ -57,28 +58,28 @@
   id: XenoborgHeavy
   name: heavy xenoborg
   suffix: with brain
-  description: A man-machine hybrid that aims to replicate itself. They love extracting brains to insert into fresh xenoborg chassis to grow their army. This type is has heavy lasers and is covered in thick armor plates. It may be tougher, but its speed matches its brawn.
+  description: A man-machine hybrid that aims to replicate itself. They love extracting brains to insert into fresh Xenoborg chassis to grow their army. This type is has heavy lasers and is covered in thick armor plates. It may be tougher, but its speed matches its brawn.
   components:
   - type: BorgTransponder
     name: heavy xenoborg
     sprite:
-      sprite: Mobs/Silicon/chassis.rsi
-      state: xenoborg_heavy
+      sprite: Mobs/Silicon/Chassis/xeno_heavy.rsi
+      state: borg
   - type: Sprite
     layers:
-    - state: xenoborg_heavy
-    - state: xenoborg_heavy_e
+    - state: borg
+    - state: borg_e
       map: ["enum.BorgVisualLayers.Light"]
       shader: unshaded
       visible: false
-    - state: xenoborg_heavy_l
+    - state: borg_l
       shader: unshaded
       map: ["light"]
       visible: false
   - type: BorgChassis
     maxModules: 4
-    hasMindState: xenoborg_heavy_e
-    noMindState: xenoborg_heavy_e_r
+    hasMindState: borg_e
+    noMindState: borg_e_r
     moduleWhitelist:
       tags:
       - XenoborgModuleGeneric
@@ -106,7 +107,7 @@
       behaviors:
       - !type:PlaySoundBehavior
         sound:
-          path: /Audio/Machines/warning_buzzer.ogg
+          path: /Audio/Machines/warning_buzzer_xenoborg.ogg
           params:
             volume: 5
     - trigger:
@@ -144,21 +145,21 @@
   id: XenoborgScout
   name: scout xenoborg
   suffix: with brain
-  description: A man-machine hybrid that aims to replicate itself. They love extracting brains to insert into fresh xenoborg chassis to grow their army. This is a scout type, its nimble thrusters allow it to move quickly through space.
+  description: A man-machine hybrid that aims to replicate itself. They love extracting brains to insert into fresh Xenoborg chassis to grow their army. This is a scout type, its nimble thrusters allow it to move quickly through space.
   components:
   - type: BorgTransponder
     name: scout xenoborg
     sprite:
-      sprite: Mobs/Silicon/chassis.rsi
-      state: xenoborg_scout
+      sprite: Mobs/Silicon/Chassis/xeno_scout.rsi
+      state: borg
   - type: Sprite
     layers:
-      - state: xenoborg_scout
-      - state: xenoborg_scout_e
+      - state: borg
+      - state: borg_e
         map: ["enum.BorgVisualLayers.Light"]
         shader: unshaded
         visible: false
-      - state: xenoborg_scout_l
+      - state: borg_l
         shader: unshaded
         map: ["light"]
         visible: false
@@ -168,8 +169,8 @@
   - type: FlashImmunity
   - type: BorgChassis
     maxModules: 4
-    hasMindState: xenoborg_scout_e
-    noMindState: xenoborg_scout_e_r
+    hasMindState: borg_e
+    noMindState: borg_e_r
     moduleWhitelist:
       tags:
       - XenoborgModuleGeneric
@@ -197,21 +198,21 @@
   id: XenoborgStealth
   name: stealth xenoborg
   suffix: with brain
-  description: A man-machine hybrid that aims to replicate itself. They love extracting brains to insert into fresh xenoborg chassis to grow their army. This one is a stealth type. Its armor shimmers in the light like no other material you've seen.
+  description: A man-machine hybrid that aims to replicate itself. They love extracting brains to insert into fresh Xenoborg chassis to grow their army. This one is a stealth type. Its armor shimmers in the light like no other material you've seen.
   components:
   - type: BorgTransponder
     name: stealth xenoborg
     sprite:
-      sprite: Mobs/Silicon/chassis.rsi
-      state: xenoborg_stealth
+      sprite: Mobs/Silicon/Chassis/xeno_stealth.rsi
+      state: borg
   - type: Sprite
     layers:
-      - state: xenoborg_stealth
-      - state: xenoborg_stealth_e
+      - state: borg
+      - state: borg_e
         map: ["enum.BorgVisualLayers.Light"]
         shader: unshaded
         visible: false
-      - state: xenoborg_stealth_l
+      - state: borg_l
         shader: unshaded
         map: ["light"]
         visible: false
@@ -220,8 +221,8 @@
       collection: FootstepHoverXenoborg
   - type: BorgChassis
     maxModules: 5
-    hasMindState: xenoborg_stealth_e
-    noMindState: xenoborg_stealth_e_r
+    hasMindState: borg_e
+    noMindState: borg_e_r
     moduleWhitelist:
       tags:
       - XenoborgModuleGeneric

@@ -49,7 +49,11 @@
     successRate: 0.05 # Using something sharp as a hemostat is very dangerous
     speed: 1.5
     startSound:
-      path: /Audio/_Starlight/Medical/Surgery/hemostat1.ogg
+      path: /Audio/_Starlight/Medical/Surgery/scalpel1.ogg
+    endSound:
+      path: /Audio/_Starlight/Medical/Surgery/scalpel2.ogg
+  - type: ItemPrice
+    priceCategory: tool_basic
   # 🌟Starlight-end🌟
 
 - type: entity
@@ -96,6 +100,8 @@
   - type: StaticPrice
     price: 30
   # 🌟Starlight-start🌟
+  - type: ItemPrice
+    priceCategory: tool_basic
   - type: SurgicalDrill
   - type: SurgeryTool
     successRate: 0.4 # really not ideal, but in a pinch...
@@ -145,6 +151,10 @@
   - type: GuideHelp
     guides:
     - Construction
+  # Starlight-start: Vending Machines Prices
+  - type: ItemPrice
+    priceCategory: tool_basic
+  # Starlight-end
 
 - type: entity
   name: multitool

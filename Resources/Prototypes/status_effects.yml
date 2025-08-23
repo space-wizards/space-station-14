@@ -8,12 +8,8 @@
   id: Stun
   alert: Stun
 
-- type: statusEffect
+- type: statusEffect #TODO: Starlight mabey?
   id: Friction
-
-- type: statusEffect
-  id: KnockedDown
-  alert: Stun
 
 - type: statusEffect
   id: SlowedDown

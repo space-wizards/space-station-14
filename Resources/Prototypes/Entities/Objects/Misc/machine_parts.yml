@@ -11,6 +11,9 @@
       size: Tiny
     - type: Stack
       count: 1
+    - type: Tag
+      tags:
+      - ConstructionMaterial
 
 - type: entity
   id: MicroManipulatorStockPart
@@ -27,6 +30,8 @@
       tags:
       - MicroManipulatorStockPart
     # 🌟Starlight-start🌟
+    - type: ItemPrice
+      priceCategory: tool_cheap
     - type: Hemostat
     - type: SurgeryTool
       successRate: 0.3 # These are crude but, can grab things

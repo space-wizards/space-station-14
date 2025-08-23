@@ -5,6 +5,7 @@
   id: BaseMob
   abstract: true
   components:
+  - type: LanguageSpeaker # Starlight
   - type: Sprite
     noRot: true
     drawdepth: Mobs

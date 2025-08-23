@@ -1,0 +1,104 @@
+- type: language
+  id: Ancestor
+  icon: LanguageIconAnimal
+  obfuscation:
+    !type:SyllableObfuscation
+    minSyllables: 1
+    maxSyllables: 8
+    replacement:
+    - o
+    - k
+
+- type: language
+  id: Mouse
+  icon: LanguageIconAnimal
+  obfuscation:
+    !type:SyllableObfuscation
+    minSyllables: 2
+    maxSyllables: 3
+    replacement:
+    - squ
+    - eak
+    - pi
+    - ep
+    - chuu
+    - ee
+    - fwi
+    - he
+
+- type: language
+  id: Cat
+  icon: LanguageIconAnimal
+  obfuscation:
+    !type:SyllableObfuscation
+    minSyllables: 1
+    maxSyllables: 2
+    replacement:
+    - murr
+    - meow
+    - purr
+    - mrow
+
+- type: language
+  id: Dog
+  icon: LanguageIconAnimal
+  obfuscation:
+    !type:SyllableObfuscation
+    minSyllables: 1
+    maxSyllables: 2
+    replacement:
+    - woof
+    - bark
+    - ruff
+    - bork
+    - raff
+    - garr
+
+- type: language
+  id: Fox
+  icon: LanguageIconAnimal
+  obfuscation:
+    !type:SyllableObfuscation
+    minSyllables: 1
+    maxSyllables: 2
+    replacement:
+    - ruff
+    - raff
+    - garr
+    - yip
+    - yap
+    - myah
+
+- type: language
+  id: Chicken
+  icon: LanguageIconAnimal
+  obfuscation:
+    !type:SyllableObfuscation
+    minSyllables: 1
+    maxSyllables: 3
+    replacement:
+    - co
+    - coo
+    - ot
+
+- type: language
+  id: Duck
+  icon: LanguageIconAnimal
+  obfuscation:
+    !type:SyllableObfuscation
+    minSyllables: 1
+    maxSyllables: 3
+    replacement:
+    - qu
+    - ack
+    - quack
+
+- type: language
+  id: Pig
+  icon: LanguageIconAnimal
+  obfuscation:
+    !type:SyllableObfuscation
+    minSyllables: 1
+    maxSyllables: 3
+    replacement:
+    - oink

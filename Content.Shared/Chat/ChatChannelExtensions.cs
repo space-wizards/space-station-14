@@ -18,4 +18,8 @@ public static class ChatChannelExtensions
             _ => Color.LightGray
         };
     }
+
+    // Starlight
+    public static bool IsExcemptFromLanguages(this ChatChannel channel) =>
+    channel is ChatChannel.LOOC or ChatChannel.Emotes or ChatChannel.Notifications or ChatChannel.Visual;
 }
