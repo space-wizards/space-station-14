@@ -2,7 +2,7 @@
   id: Sylvan
   icon: LanguageIconPlant
   speech:
-    color: "#804000"
+    color: "#897968"
   obfuscation:
     !type:SyllableObfuscation
     minSyllables: 1
