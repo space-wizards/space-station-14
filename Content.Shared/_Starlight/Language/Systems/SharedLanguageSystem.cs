@@ -4,6 +4,7 @@ using Content.Shared._Starlight.Language.Components;
 using Content.Shared._Starlight.Language.Events;
 using Content.Shared.GameTicking;
 using Robust.Shared.Prototypes;
+using Content.Shared.Cloning.Events;
 
 namespace Content.Shared._Starlight.Language.Systems;
 
@@ -12,14 +13,12 @@ public abstract class SharedLanguageSystem : EntitySystem
     /// <summary>
     ///     The language used as a fallback in cases where an entity suddenly becomes a Language Speaker (e.g. the usage of make-sentient).
     /// </summary>
-    [ValidatePrototypeId<LanguagePrototype>]
-    public static readonly string FallbackLanguagePrototype = "GalacticCommon";
+    public static readonly ProtoId<LanguagePrototype> FallbackLanguagePrototype = "GalacticCommon";
 
     /// <summary>
     ///     The language whose speakers are assumed to understand and speak every language. Should never be added directly.
     /// </summary>
-    [ValidatePrototypeId<LanguagePrototype>]
-    public static readonly string UniversalPrototype = "Universal";
+    public static readonly ProtoId<LanguagePrototype> UniversalPrototype = "Universal";
 
     /// <summary>
     ///     A cached instance of <see cref="UniversalPrototype"/>
@@ -31,7 +30,20 @@ public abstract class SharedLanguageSystem : EntitySystem
 
     public override void Initialize()
     {
-        Universal = _prototype.Index<LanguagePrototype>("Universal");
+        Universal = _prototype.Index(UniversalPrototype);
+        SubscribeLocalEvent<LanguageKnowledgeComponent, CloningEvent>(OnClone);
+    }
+
+    private void OnClone(Entity<LanguageKnowledgeComponent> ent, ref CloningEvent ev)
+    {
+        if (!ev.Settings.EventComponents.Contains(Factory.GetRegistration(ent.Comp.GetType()).Name))
+            return;
+        var clone = ev.CloneUid;
+        var comp = EnsureComp<LanguageKnowledgeComponent>(ev.CloneUid);
+        comp.SpokenLanguages = ent.Comp.SpokenLanguages;
+        comp.UnderstoodLanguages = ent.Comp.UnderstoodLanguages;
+        if (TryComp<LanguageSpeakerComponent>(clone, out var speaker))
+            UpdateEntityLanguages((clone,speaker));
     }
 
     public LanguagePrototype? GetLanguagePrototype(ProtoId<LanguagePrototype> id)
@@ -73,9 +85,9 @@ public abstract class SharedLanguageSystem : EntitySystem
         // Each call would require us to allocate a new instance of random, which would lead to lots of unnecessary calculations.
         // Instead, we use a simple but effective algorithm derived from the C language.
         // It does not produce a truly random number, but for the purpose of obfuscating messages in an RP-based game it's more than alright.
-        seed = seed ^ (_ticker.RoundId * 127);
-        var random = seed * 1103515245 + 12345;
-        return min + Math.Abs(random) % (max - min + 1);
+        seed ^= (_ticker.RoundId * 127);
+        var random = (seed * 1103515245) + 12345;
+        return min + (Math.Abs(random) % (max - min + 1));
     }
 
     #region public api
@@ -114,19 +126,14 @@ public abstract class SharedLanguageSystem : EntitySystem
     ///     Returns the list of languages this entity can speak.
     /// </summary>
     /// <remarks>This simply returns the value of <see cref="LanguageSpeakerComponent.SpokenLanguages"/>.</remarks>
-    public List<ProtoId<LanguagePrototype>> GetSpokenLanguages(EntityUid uid)
-    {
-        return TryComp<LanguageSpeakerComponent>(uid, out var component) ? component.SpokenLanguages : [];
-    }
+    public List<ProtoId<LanguagePrototype>> GetSpokenLanguages(EntityUid uid) => TryComp<LanguageSpeakerComponent>(uid, out var component) ? component.SpokenLanguages : [];
 
     /// <summary>
     ///     Returns the list of languages this entity can understand.
     /// </summary
     /// <remarks>This simply returns the value of <see cref="LanguageSpeakerComponent.SpokenLanguages"/>.</remarks>
-    public List<ProtoId<LanguagePrototype>> GetUnderstoodLanguages(EntityUid uid)
-    {
-        return TryComp<LanguageSpeakerComponent>(uid, out var component) ? component.UnderstoodLanguages : [];
-    }
+    public List<ProtoId<LanguagePrototype>> GetUnderstoodLanguages(EntityUid uid) => TryComp<LanguageSpeakerComponent>(uid, out var component) ? component.UnderstoodLanguages : [];
+    
 
     public void SetLanguage(Entity<LanguageSpeakerComponent?> ent, ProtoId<LanguagePrototype> language)
     {

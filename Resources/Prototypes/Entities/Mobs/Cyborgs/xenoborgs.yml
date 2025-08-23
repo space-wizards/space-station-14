@@ -8,23 +8,23 @@
   - type: BorgTransponder
     name: engi xenoborg
     sprite:
-      sprite: Mobs/Silicon/chassis.rsi
-      state: xenoborg_engi
+      sprite: Mobs/Silicon/Chassis/xeno_engi.rsi
+      state: borg
   - type: Sprite
     layers:
-    - state: xenoborg_engi
-    - state: xenoborg_engi_e
+    - state: borg
+    - state: borg_e
       map: ["enum.BorgVisualLayers.Light"]
       shader: unshaded
       visible: false
-    - state: xenoborg_engi_l
+    - state: borg_l
       shader: unshaded
       map: ["light"]
       visible: false
   - type: BorgChassis
     maxModules: 7
-    hasMindState: xenoborg_engi_e
-    noMindState: xenoborg_engi_e_r
+    hasMindState: borg_e
+    noMindState: borg_e_r
     moduleWhitelist:
       tags:
       - XenoborgModuleGeneric
@@ -63,23 +63,23 @@
   - type: BorgTransponder
     name: heavy xenoborg
     sprite:
-      sprite: Mobs/Silicon/chassis.rsi
-      state: xenoborg_heavy
+      sprite: Mobs/Silicon/Chassis/xeno_heavy.rsi
+      state: borg
   - type: Sprite
     layers:
-    - state: xenoborg_heavy
-    - state: xenoborg_heavy_e
+    - state: borg
+    - state: borg_e
       map: ["enum.BorgVisualLayers.Light"]
       shader: unshaded
       visible: false
-    - state: xenoborg_heavy_l
+    - state: borg_l
       shader: unshaded
       map: ["light"]
       visible: false
   - type: BorgChassis
     maxModules: 4
-    hasMindState: xenoborg_heavy_e
-    noMindState: xenoborg_heavy_e_r
+    hasMindState: borg_e
+    noMindState: borg_e_r
     moduleWhitelist:
       tags:
       - XenoborgModuleGeneric
@@ -150,16 +150,16 @@
   - type: BorgTransponder
     name: scout xenoborg
     sprite:
-      sprite: Mobs/Silicon/chassis.rsi
-      state: xenoborg_scout
+      sprite: Mobs/Silicon/Chassis/xeno_scout.rsi
+      state: borg
   - type: Sprite
     layers:
-      - state: xenoborg_scout
-      - state: xenoborg_scout_e
+      - state: borg
+      - state: borg_e
         map: ["enum.BorgVisualLayers.Light"]
         shader: unshaded
         visible: false
-      - state: xenoborg_scout_l
+      - state: borg_l
         shader: unshaded
         map: ["light"]
         visible: false
@@ -169,8 +169,8 @@
   - type: FlashImmunity
   - type: BorgChassis
     maxModules: 4
-    hasMindState: xenoborg_scout_e
-    noMindState: xenoborg_scout_e_r
+    hasMindState: borg_e
+    noMindState: borg_e_r
     moduleWhitelist:
       tags:
       - XenoborgModuleGeneric
@@ -203,16 +203,16 @@
   - type: BorgTransponder
     name: stealth xenoborg
     sprite:
-      sprite: Mobs/Silicon/chassis.rsi
-      state: xenoborg_stealth
+      sprite: Mobs/Silicon/Chassis/xeno_stealth.rsi
+      state: borg
   - type: Sprite
     layers:
-      - state: xenoborg_stealth
-      - state: xenoborg_stealth_e
+      - state: borg
+      - state: borg_e
         map: ["enum.BorgVisualLayers.Light"]
         shader: unshaded
         visible: false
-      - state: xenoborg_stealth_l
+      - state: borg_l
         shader: unshaded
         map: ["light"]
         visible: false
@@ -221,8 +221,8 @@
       collection: FootstepHoverXenoborg
   - type: BorgChassis
     maxModules: 5
-    hasMindState: xenoborg_stealth_e
-    noMindState: xenoborg_stealth_e_r
+    hasMindState: borg_e
+    noMindState: borg_e_r
     moduleWhitelist:
       tags:
       - XenoborgModuleGeneric
