@@ -18,7 +18,7 @@ public sealed partial class CrewManifestUi : DefaultWindow
 
     public void Populate(string name, CrewManifestEntries? entries)
     {
-        CrewManifestListing.DisposeAllChildren();
+        CrewManifestListing.RemoveAllChildren();
         CrewManifestListing.RemoveAllChildren();
 
         StationNameContainer.Visible = entries != null;
