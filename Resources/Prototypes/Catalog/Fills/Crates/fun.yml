@@ -479,7 +479,7 @@
 
 - type: entity
   name: tactical katana shipment
-  description: "Authentic ninja sword with rust-proof matte finish! Slay the dragons of modern life!"
+  description: "Authentic ninja sword with rust-proof matte finish! (Warranty void after shipment opened.)"
   id: CrateTacticalKatana
   parent: CrateGenericSteel
   components:
