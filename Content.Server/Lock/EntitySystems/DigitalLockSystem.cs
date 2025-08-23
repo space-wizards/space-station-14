@@ -12,7 +12,7 @@ using Content.Shared.Examine;
 using Robust.Shared.Utility;
 using Content.Shared.Atmos.Piping.Components;
 
-namespace Content.Shared.Lock;
+namespace Content.Server.Lock;
 
 public sealed class DigitalLockSystem : EntitySystem
 {
