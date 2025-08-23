@@ -17,3 +17,5 @@
             Quantity: 20
   - type: Sprite
     sprite: Objects/Consumable/Drinks/beer.rsi
+
+#place for some complex chems that taking too long to cook for just test them

@@ -542,3 +542,17 @@
       amount: 1
   products:
     Lye: 2
+    
+- type: reaction
+  id: Radiatium
+  impact: Medium
+  minTemp: 370
+  reactants:
+    Uranium:
+      amount: 1
+    Vestine:
+      amount: 2
+    Tritium:
+      amount: 1
+  products:
+    Radiatium: 1

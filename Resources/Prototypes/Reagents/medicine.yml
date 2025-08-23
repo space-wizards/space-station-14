@@ -1443,3 +1443,31 @@
       - !type:AdjustReagent
         reagent: MindbreakerToxin
         amount: -3.0
+
+- type: reagent
+  id: Frezinecrosium
+  name: reagent-name-frezinecrosium
+  group: Medicine
+  desc: reagent-desc-frezinecrosium
+  physicalDesc: reagent-physical-desc-necrotic
+  flavor: medicine
+  color: "#4a66ae"
+  worksOnTheDead: true
+  plantMetabolism:
+  - !type:PlantAdjustToxins
+    amount: -6
+  - !type:PlantAdjustHealth
+    amount: 6
+  - !type:PlantCryoxadone {}
+  metabolisms:
+    Medicine:
+      effects:
+        - !type:HealthChange
+          conditions:
+          - !type:Temperature
+            max: 213.0
+          damage:
+            groups:
+              Burn: -6
+            types:
+              Poison: -10

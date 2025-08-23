@@ -731,3 +731,45 @@
         conditions:
         - !type:OrganType
           type: Vox
+
+- type: reagent
+  id: Radiatium
+  name: reagent-name-radiatium
+  group: Toxins
+  desc: reagent-desc-radiatium
+  physicalDesc: reagent-physical-desc-strong-smelling
+  flavor: acid
+  color: "#44643b"
+  boilingPoint: 165
+  meltingPoint: -87
+  reactiveEffects:
+    Acidic:
+      methods: [ Touch ]
+      effects:
+      - !type:HealthChange
+        scaleByQuantity: true
+        ignoreResistances: false
+        damage:
+          types:
+            Caustic: 1
+            Radiation: 0.5
+      - !type:Emote
+        emote: Scream
+        probability: 0.2
+  metabolisms:
+    Poison:
+      metabolismRate: 2.00
+      effects:
+      - !type:HealthChange
+        damage:
+          types:
+            Caustic: 7
+            Radiation: 5
+      - !type:PopupMessage
+        type: Local
+        visualType: Large
+        messages: [ "generic-reagent-effect-burning-insides" ]
+        probability: 0.33
+      - !type:Emote
+        emote: Scream
+        probability: 0.25
