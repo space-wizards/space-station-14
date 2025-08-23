@@ -511,14 +511,6 @@
   - type: BorgModuleIcon
     icon: { sprite: Interface/Actions/actions_borg.rsi, state: appraisal-module }
 
-- type: entity #Starlight
-  id: BorgModuleOrePlaceholder
-  parent: BaseItem
-  components:
-  - type: Sprite
-    sprite: Objects/Materials/ore.rsi
-    state: gold
-
 - type: entity
   id: BorgModuleMining
   parent: [ BaseBorgModuleCargo, BaseProviderBorgModule ]
@@ -536,7 +528,7 @@
     - item: BorgOreBag
     - item: RadioHandheldExpedition # Starlight
     - hand: # Starlight
-        emptyRepresentative: BorgModuleOrePlaceholder
+        emptyRepresentative: GoldOre
         emptyLabel: borg-slot-ore-empty
         whitelist:
           tags:
@@ -679,6 +671,13 @@
         whitelist:
           components:
           - FloorTile
+    - hand:
+        emptyRepresentative: PlasmaTank
+        emptyLabel: borg-slot-fuel-empty
+        whitelist:
+          components:
+          - GasTank
+          - AmeFuelContainer
   - type: BorgModuleIcon
     icon: { sprite: Interface/Actions/actions_borg.rsi, state: construction-module }
 
