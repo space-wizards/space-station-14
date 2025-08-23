@@ -141,8 +141,10 @@ public abstract partial class SharedDrinkSystem : EntitySystem
         }
         else
         {
-            _popup.PopupClient(Loc.GetString("edible-slurp", ("flavors", flavors)), args.User, args.User);
-            _popup.PopupEntity(Loc.GetString("edible-slurp"), args.User, Filter.PvsExcept(args.User), true);
+            _popup.PopupPredicted(Loc.GetString("edible-slurp", ("flavors", flavors)),
+                Loc.GetString("edible-slurp-other"),
+                args.User,
+                args.User);
 
             // log successful voluntary drinking
             _adminLogger.Add(LogType.Ingestion, LogImpact.Low, $"{ToPrettyString(args.User):target} drank {ToPrettyString(entity.Owner):drink}");
