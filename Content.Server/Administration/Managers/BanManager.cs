@@ -450,15 +450,21 @@ public sealed partial class BanManager : IBanManager, IPostInjectInit
         string? adminDiscordId = null;
         string? targetDiscordId = null;
 
-        if (_actor.TryGetServerGrain(out var serverGrain))
+        try
         {
-            if (banDef.BanningAdmin != null)
-                adminDiscordId = await serverGrain.GetPlayerDiscordId(banDef.BanningAdmin.Value)
-                    .Then(x => x.ToString());
+            if (_actor.TryGetServerGrain(out var serverGrain))
+            {
+                if (banDef.BanningAdmin != null)
+                    adminDiscordId = await serverGrain.GetPlayerDiscordId(banDef.BanningAdmin.Value)
+                        .Then(x => x.ToString());
 
-            if (banDef.UserId != null)
-                targetDiscordId = await serverGrain.GetPlayerDiscordId(banDef.UserId.Value)
-                    .Then(x => x.ToString());
+                if (banDef.UserId != null)
+                    targetDiscordId = await serverGrain.GetPlayerDiscordId(banDef.UserId.Value)
+                        .Then(x => x.ToString());
+            }
+        }
+        catch (Exception)
+        {
         }
         // nulllink end
 
@@ -561,16 +567,23 @@ public sealed partial class BanManager : IBanManager, IPostInjectInit
         string? adminDiscordId = null;
         string? targetDiscordId = null;
 
-        if (_actor.TryGetServerGrain(out var serverGrain))
+        try
         {
-            if(banDef.BanningAdmin != null)
-                adminDiscordId = await serverGrain.GetPlayerDiscordId(banDef.BanningAdmin.Value)
-                    .Then(x=>x.ToString());
+            if (_actor.TryGetServerGrain(out var serverGrain))
+            {
+                if (banDef.BanningAdmin != null)
+                    adminDiscordId = await serverGrain.GetPlayerDiscordId(banDef.BanningAdmin.Value)
+                        .Then(x => x.ToString());
 
-            if (banDef.UserId != null)
-                targetDiscordId = await serverGrain.GetPlayerDiscordId(banDef.UserId.Value)
-                    .Then(x => x.ToString());
+                if (banDef.UserId != null)
+                    targetDiscordId = await serverGrain.GetPlayerDiscordId(banDef.UserId.Value)
+                        .Then(x => x.ToString());
+            }
         }
+        catch (Exception)
+        {
+        }
+
         // nulllink end
 
         var adminLink = "";
