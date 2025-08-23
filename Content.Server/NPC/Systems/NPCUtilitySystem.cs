@@ -570,6 +570,29 @@ public sealed class NPCUtilitySystem : EntitySystem
 
                 break;
             }
+            case RemoveHasComponentFilter remCompFilter:
+            {
+                _entityList.Clear();
+
+                foreach (var ent in entities)
+                {
+                    foreach (var comp in remCompFilter.Components)
+                    {
+                        if (HasComp(ent, comp.Value.Component.GetType()))
+                        {
+                            _entityList.Add(ent);
+                            break;
+                        }
+                    }
+                }
+
+                foreach (var ent in _entityList)
+                {
+                    entities.Remove(ent);
+                }
+
+                break;
+            }
             default:
                 throw new NotImplementedException();
         }
