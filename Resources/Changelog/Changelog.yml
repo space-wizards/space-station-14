@@ -1,27 +1,4 @@
 ﻿Entries:
-- author: ScarKy0
-  changes:
-  - message: Deliveries can now spawn as priority-type! Deliver them within their
-      time limit to earn a nice speso bonus.
-    type: Add
-  id: 8365
-  time: '2025-04-27T09:13:52.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/36968
-- author: PJB3005
-  changes:
-  - message: SMES and substations now have an (extremely fancy) interface to control
-      them with.
-    type: Add
-  id: 8366
-  time: '2025-04-27T11:08:34.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/36386
-- author: metalgearsloth
-  changes:
-  - message: Tweak mob collision values in line with RMC14.
-    type: Tweak
-  id: 8367
-  time: '2025-04-27T14:47:18.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/36851
 - author: Fildrance
   changes:
   - message: node scanner now dislplays live artifact info (while in range) after
@@ -3949,3 +3926,26 @@
   id: 8877
   time: '2025-08-22T10:11:07.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/39701
+- author: Kittygyat
+  changes:
+  - message: Made moths less susceptible to flames and heat. (4x Fire Damage -> 2x
+      Fire damage) (1.3x heat -> 1.2x heat).
+    type: Tweak
+  id: 8878
+  time: '2025-08-22T22:08:35.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/39672
+- author: JimmyToor
+  changes:
+  - message: Fixed only being able to vape with a blocked mouth.
+    type: Fix
+  id: 8879
+  time: '2025-08-22T22:26:48.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/39834
+- author: _miket, RedBookcase
+  changes:
+  - message: Added new Derelict Cyborg ghost roles, including the Derelict Engineer,
+      Janitor, Salvage, Medical, and Assault Cyborg!
+    type: Add
+  id: 8880
+  time: '2025-08-23T20:32:15.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38159
