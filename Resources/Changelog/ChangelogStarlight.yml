@@ -12331,5 +12331,33 @@ Entries:
   id: 141500
   time: '2025-08-22T14:49:56.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/1415
+- author: Happyrobot33
+  changes:
+  - message: Fixed AI Interface cube not having all languages
+    type: Fix
+  id: 143100
+  time: '2025-08-22T19:42:20.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1431
+- author: Happyrobot33
+  changes:
+  - message: Fixed Cork Parralax
+    type: Fix
+  id: 143600
+  time: '2025-08-22T21:46:58.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1436
+- author: Happyrobot33
+  changes:
+  - message: Attempted fix for RSI error on emote wheel.
+    type: Fix
+  id: 143400
+  time: '2025-08-22T21:55:06.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1434
+- author: Happyrobot33
+  changes:
+  - message: Changed Galactic Common color to original chat color
+    type: Tweak
+  id: 143700
+  time: '2025-08-22T22:18:55.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1437
 Order: -1
 
