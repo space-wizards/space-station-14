@@ -58,5 +58,17 @@ public sealed class DnaScrambleOnTriggerSystem : EntitySystem
 
         // Can't use PopupClient or PopupPredicted because the trigger might be unpredicted.
         _popup.PopupEntity(Loc.GetString("scramble-on-trigger-popup"), target.Value, target.Value);
+
+        var ev = new DnaScrambledEvent(target.Value);
+        RaiseLocalEvent(target.Value, ref ev, true);
     }
 }
+
+/// <summary>
+/// Raised after an entity has been DNA Scrambled.
+/// Useful for forks that need to run their own updates here.
+/// </summary>
+/// <param name="flag">The entity that had its DNA scrambled.</param>
+
+[ByRefEvent]
+public record struct DnaScrambledEvent(EntityUid Target);
