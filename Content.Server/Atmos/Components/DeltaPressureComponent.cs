@@ -13,8 +13,7 @@ namespace Content.Server.Atmos.Components;
 /// The entities are automatically added and removed from this list, and automatically
 /// added on initialization if <see cref="AutoJoinProcessingList"/> is set to true.
 /// </summary>
-/// <remarks><para>Systems wanting to change these values should go through the <see cref="DeltaPressureSystem"/> API.</para>
-/// <para>Note that the entity should have an <see cref="AirtightComponent"/> and be a grid structure.</para></remarks>
+/// <remarks> Note that the entity should have an <see cref="AirtightComponent"/> and be a grid structure.</remarks>
 [RegisterComponent]
 public sealed partial class DeltaPressureComponent : Component
 {

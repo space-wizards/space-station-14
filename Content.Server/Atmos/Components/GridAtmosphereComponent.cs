@@ -70,7 +70,7 @@ namespace Content.Server.Atmos.Components
         /// with add/remove/find operations helped via a dict.
         /// </summary>
         /// <remarks>If you want to add/remove/find entities in this list,
-        /// use the <see cref="DeltaPressureEntityLookup"/> dict instead!</remarks>
+        /// use the API methods in the Atmospherics API.</remarks>
         [ViewVariables]
         public readonly List<Entity<DeltaPressureComponent>> DeltaPressureEntities = new(1000);
 
@@ -104,9 +104,6 @@ namespace Content.Server.Atmos.Components
 
         [ViewVariables]
         public readonly Queue<ExcitedGroup> CurrentRunExcitedGroups = new();
-
-        [ViewVariables]
-        public readonly Queue<Entity<DeltaPressureComponent>> CurrentRunDeltaPressureEntities = new();
 
         [ViewVariables]
         public readonly Queue<IPipeNet> CurrentRunPipeNet = new();
