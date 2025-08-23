@@ -295,9 +295,6 @@
   - type: FlashImmunity
   - type: EyeProtection
     protectionTime: 5
-  - type: Construction
-    graph: GlassesSecHUD
-    node: glassesSec
   - type: NoirOverlay
   - type: Tag
     tags:
