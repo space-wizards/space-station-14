@@ -3819,9 +3819,6 @@ entities:
       pos: 21.5,29.5
       parent: 2
     - type: DeviceNetwork
-      configurators:
-      - invalid
-      - invalid
       deviceLists:
       - 11566
   - uid: 8227
