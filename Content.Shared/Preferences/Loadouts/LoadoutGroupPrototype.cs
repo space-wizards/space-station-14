@@ -40,6 +40,12 @@ public sealed partial class LoadoutGroupPrototype : IPrototype, IInheritingProto
     // Ronstation - start of modifications.
 
     /// <summary>
+    /// Minimum number of loadouts that need to be picked by default
+    /// </summary>
+    [DataField]
+    public int DefaultMinLimit = 0;
+    
+    /// <summary>
     /// The prototype we inherit from.
     /// </summary>
     [ParentDataFieldAttribute(typeof(AbstractPrototypeIdArraySerializer<LoadoutGroupPrototype>))]
