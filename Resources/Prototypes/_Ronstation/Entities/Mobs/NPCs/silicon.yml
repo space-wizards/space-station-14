@@ -1,0 +1,61 @@
+- type: entity
+  parent: MobCleanBot
+  suffix: Admeme
+  id: MobOverclockedCleanBot
+  name: overclocked cleanbot
+  description: Is... it okay?
+  components:
+  - type: Body
+    prototype: null
+  - type: Jittering
+  - type: CombatMode
+  - type: ComplexInteraction
+  - type: Hands
+    hands:
+      hand:
+        location: Left
+    sortedHands:
+    - hand
+  - type: Puller
+    needsHands: false
+  - type: UseDelay
+    delay: 0.4
+  - type: SolutionPurge
+    duration: 0.4
+  - type: MovementSpeedModifier
+    baseSprintSpeed: 12
+  - type: SolutionRegeneration
+    solution: absorbed
+    generated:
+      reagents:
+        - ReagentId: Water
+          Quantity: 30
+
+- type: entity
+  parent: MobCleanBot
+  suffix: Admeme
+  id: MobSpaceRoomba
+  name: space roomba
+  description: You can hear a quiet whirr as its sucking up the dust along its way
+  components:
+  - type: Physics
+    bodyType: Dynamic
+  - type: Body
+    prototype: null
+  - type: ComplexInteraction
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: .4
+        density: 190
+        mask:
+          - MachineMask
+  - type: Sprite
+    sprite: Structures/Piping/Atmospherics/miners.rsi
+    state: miner
+    noRot: false
+  - type: GuideHelp
+    guides:
+    - GasMiningAndStorage

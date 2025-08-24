@@ -19,3 +19,23 @@
       - id: PokerChipGreen
       - id: PokerChipBlack
       - id: CardBoxPokerFilled
+
+- type: entity
+  id: BriefcaseCentcomInspector
+  parent: BriefcaseBrown
+  suffix: Filled, Centcom Inspector, Admeme
+  name: inspector's briefcase
+  components:
+  - type: StorageFill
+    contents:
+      - id: CrowbarGreen
+      - id: FoodSnackNutribrick
+      - id: DrinkMREFlask
+      - id: PinpointerNuclear
+      - id: MedkitCombatFilled
+      - id: BoxFolderCentComClipboard
+      - id: RubberStampCentcom
+      - id: RubberStampApproved
+      - id: RubberStampDenied
+      - id: WeaponRevolverMatebaAP
+      - id: SpeedLoaderMagnumAP
