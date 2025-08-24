@@ -54,7 +54,7 @@ public sealed class RuleGridsSystem : GameRuleSystem<RuleGridsComponent>
     private void OnSelectLocation(Entity<RuleGridsComponent> ent, ref AntagSelectLocationEvent args)
     {
         var query = EntityQueryEnumerator<SpawnPointComponent, TransformComponent>();
-        while (query.MoveNext(out var uid, out _, out var xform))
+        while (query.MoveNext(out var uid, out var spawnPointComp, out var xform))
         {
             if (xform.MapID != ent.Comp.Map)
                 continue;
@@ -63,6 +63,9 @@ public sealed class RuleGridsSystem : GameRuleSystem<RuleGridsComponent>
                 continue;
 
             if (_whitelist.IsWhitelistFail(ent.Comp.SpawnerWhitelist, uid))
+                continue;
+
+            if (args.Entity != null && _whitelist.IsBlacklistFail(spawnPointComp.SpawnWhitelist, args.Entity.Value))
                 continue;
 
             args.Coordinates.Add(_transform.GetMapCoordinates(xform));

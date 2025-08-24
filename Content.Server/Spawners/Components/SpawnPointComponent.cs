@@ -1,4 +1,5 @@
 using Content.Shared.Roles;
+using Content.Shared.Whitelist;
 using Robust.Shared.Prototypes;
 
 namespace Content.Server.Spawners.Components;
@@ -14,6 +15,12 @@ public sealed partial class SpawnPointComponent : Component, ISpawnPoint
     /// </summary>
     [DataField("spawn_type"), ViewVariables(VVAccess.ReadWrite)]
     public SpawnPointType SpawnType { get; set; } = SpawnPointType.Unset;
+
+    /// <summary>
+    /// Whitelist of entities that can be spawned at this SpawnPoint
+    /// </summary>
+    [DataField]
+    public EntityWhitelist? SpawnWhitelist;
 
     public override string ToString()
     {
