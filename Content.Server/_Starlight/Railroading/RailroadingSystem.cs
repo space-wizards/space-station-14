@@ -132,6 +132,10 @@ public sealed partial class RailroadingSystem : SharedRailroadingSystem
             {
                 subject.Comp.ActiveCard = card;
                 _adminLogger.Add(LogType.Railroading, LogImpact.Medium, $"{ToPrettyString(subject)} selected card {ToPrettyString(cardUid)}.");
+
+                var cardPerformer = EnsureComp<RailroadCardPerformerComponent>(card);
+                cardPerformer.Performer = subject;
+
                 var @event = new RailroadingCardChosenEvent(subject);
                 RaiseLocalEvent(card, ref @event);
             }
