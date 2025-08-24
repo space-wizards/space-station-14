@@ -349,6 +349,7 @@
   - SecurityBelt
   - HeadofSecurityOuterClothing
   - SecurityShoes
+  - SecurityGlasses
   - SurvivalSecurity
   - Trinkets
   - SecurityStar
@@ -363,6 +364,7 @@
   - SecurityBelt
   - WardenOuterClothing
   - SecurityShoes
+  - SecurityGlasses
   - SurvivalSecurity
   - Trinkets
   - SecurityStar
@@ -377,6 +379,7 @@
   - SecurityOfficerOuterClothing
   - SecurityShoes
   - SecurityOfficerPDA
+  - SecurityGlasses
   - SecurityBelt
   - SurvivalSecurity
   - Trinkets
@@ -392,6 +395,7 @@
   - SecurityBackpack
   - DetectiveOuterClothing
   - SecurityShoes
+  - SecurityGlasses
   - SurvivalSecurity
   - Trinkets
   - SecurityStar

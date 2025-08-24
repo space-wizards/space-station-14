@@ -58,12 +58,3 @@
   minLimit: 0
   loadouts:
   - BlueMedal
-
-# Security Visor
-
-- type: loadoutGroup
-  id: SecurityEye
-  name: loadout-group-security-eye
-  loadouts:
-  - GlassesSecurity
-  - GlassesSecurityVisor
