@@ -1,4 +1,6 @@
+// Modified by Ronstation contributor(s), therefore this file is licensed as MIT sublicensed with AGPL-v3.0.
 using Robust.Shared.Prototypes;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.Array; // Ronstation - modification.
 
 namespace Content.Shared.Preferences.Loadouts;
 
@@ -6,7 +8,7 @@ namespace Content.Shared.Preferences.Loadouts;
 /// Corresponds to a set of loadouts for a particular slot.
 /// </summary>
 [Prototype]
-public sealed partial class LoadoutGroupPrototype : IPrototype
+public sealed partial class LoadoutGroupPrototype : IPrototype, IInheritingPrototype
 {
     [IdDataField]
     public string ID { get; private set; } = string.Empty;
@@ -35,6 +37,20 @@ public sealed partial class LoadoutGroupPrototype : IPrototype
     [DataField]
     public bool Hidden;
 
+    // Ronstation - start of modifications.
+
+    /// <summary>
+    /// The prototype we inherit from.
+    /// </summary>
+    [ParentDataFieldAttribute(typeof(AbstractPrototypeIdArraySerializer<LoadoutGroupPrototype>))]
+    public string[]? Parents { get; }
+
+    [NeverPushInheritance]
+    [AbstractDataField]
+    public bool Abstract { get; }
+    // Ronstation - end of modifications.
+
     [DataField(required: true)]
+    [AlwaysPushInheritance] // Ronstation - modification.
     public List<ProtoId<LoadoutPrototype>> Loadouts = new();
 }
