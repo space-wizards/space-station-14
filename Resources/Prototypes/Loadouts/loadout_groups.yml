@@ -742,7 +742,7 @@
   - EngineeringWinterBoots
 
 - type: loadoutGroup
-  id: StationEngineerID
+  id: StationEngineerPDA
   name: loadout-group-station-engineer-id
   loadouts:
   - StationEngineerPDA
