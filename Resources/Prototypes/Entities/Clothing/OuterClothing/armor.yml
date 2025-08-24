@@ -70,7 +70,7 @@
   parent: ClothingOuterArmorBase
   id: ClothingOuterArmorReflective
   name: reflective vest
-  description: A Nanotrasen Type-IV protective vest, its heat-resistant fibers offer excellent protection against energy weapons. Coated in a proprietary compound which reliably deflects laser beams.
+  description: A Type-IV protective vest manufactured by NT, its heat-resistant fibers offer excellent protection against energy weapons. Coated in a proprietary compound which reliably deflects laser beams.
   components:
   - type: Sprite
     sprite: Clothing/OuterClothing/Armor/armor_reflec.rsi
@@ -307,7 +307,7 @@
   parent: [ClothingOuterBaseLarge, AllowSuitStorageClothing, BaseSecurityContraband]
   id: ClothingOuterArmorRiot
   name: riot suit
-  description: A Nanotrasen Type-II armor suit built of heavy padding and semi-flexible polycarbonate, it provides excellent protection in melee encounters. Best paired with an NT brand riot helmet.
+  description: A Type-II armor suit manufactured by NT. Built of semi-flexible polycarbonate with heavy padding, it provides excellent protection in melee encounters. Best paired with an NT-brand riot helmet.
   components:
   - type: Sprite
     sprite: Clothing/OuterClothing/Armor/riot.rsi
