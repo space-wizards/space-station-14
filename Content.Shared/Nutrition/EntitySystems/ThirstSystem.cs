@@ -189,7 +189,7 @@ public sealed class ThirstSystem : EntitySystem
             case ThirstThreshold.Thirsty:
                 // Same as okay except with UI icon saying drink soon.
                 component.LastThirstThreshold = component.CurrentThirstThreshold;
-                component.ActualDecayRate = thirstMultiplier * component.BaseDecayRate * 0.8f;
+                component.ActualDecayRate = thirstMultiplier * component.BaseDecayRate * 0.8f; // Starlight-edit
                 return;
             case ThirstThreshold.Parched:
                 _movement.RefreshMovementSpeedModifiers(uid);
