@@ -17,7 +17,7 @@ public sealed class FlavorProfileSystem : EntitySystem
     [Dependency] private readonly IConfigurationManager _configManager = default!;
 
     private const string BackupFlavorMessage = "flavor-profile-unknown";
-    private const string BlandFlavorMessage = "flavor-profile-bland";
+    private const string BlandFlavorMessage = "flavor-profile-bland"; // Starlight-edit
 
     private int FlavorLimit => _configManager.GetCVar(CCVars.FlavorLimit);
 
