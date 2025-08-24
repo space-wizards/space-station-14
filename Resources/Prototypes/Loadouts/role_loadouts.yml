@@ -371,12 +371,12 @@
 - type: roleLoadout
   id: JobSecurityOfficer
   groups:
-  - SecurityHead
-  - SecurityJumpsuit
+  - SecurityOfficerHead
+  - SecurityOfficerJumpsuit
   - SecurityBackpack
-  - SecurityOuterClothing
+  - SecurityOfficerOuterClothing
   - SecurityShoes
-  - SecurityPDA
+  - SecurityOfficerPDA
   - SecurityBelt
   - SurvivalSecurity
   - Trinkets

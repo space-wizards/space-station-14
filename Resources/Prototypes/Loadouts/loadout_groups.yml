@@ -967,7 +967,7 @@
   - WardenArmoredWinterCoat
 
 - type: loadoutGroup
-  id: SecurityHead
+  id: SecurityOfficerHead
   name: loadout-group-security-head
   minLimit: 0
   loadouts:
@@ -977,7 +977,7 @@
   - TrooperHat
 
 - type: loadoutGroup
-  id: SecurityJumpsuit
+  id: SecurityOfficerJumpsuit
   name: loadout-group-security-jumpsuit
   loadouts:
   - SecurityJumpsuit
@@ -1004,7 +1004,7 @@
   - SecurityWebbing
 
 - type: loadoutGroup
-  id: SecurityOuterClothing
+  id: SecurityOfficerOuterClothing
   name: loadout-group-security-outerclothing
   loadouts:
   - ArmorVest
@@ -1019,7 +1019,7 @@
   - SecurityWinterBoots
 
 - type: loadoutGroup
-  id: SecurityPDA
+  id: SecurityOfficerPDA
   name: loadout-group-security-id
   loadouts:
   - SecurityPDA
