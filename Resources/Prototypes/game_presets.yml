@@ -113,6 +113,7 @@
   description: secret-description
   rules:
     - Secret
+    - RailroadingMinor # 🌟Starlight🌟
 
 - type: gamePreset
   id: SecretExtended #For Admin Use: Runs Extended but shows "Secret" in lobby.
@@ -166,6 +167,7 @@
   - MeteorSwarmScheduler
   - SpaceTrafficControlEventScheduler
   - BasicRoundstartVariation
+  - RailroadingMinor # 🌟Starlight🌟
 
 - type: gamePreset
   id: Deathmatch

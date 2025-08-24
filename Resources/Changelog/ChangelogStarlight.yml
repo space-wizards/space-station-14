@@ -12380,5 +12380,91 @@ Entries:
   id: 144300
   time: '2025-08-23T03:35:42.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/1443
+- author: Karma and Quantum
+  changes:
+  - message: 2 new songs for the jukebox
+    type: Add
+  id: 143500
+  time: '2025-08-23T15:32:28.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1435
+- author: walksanatora
+  changes:
+  - message: Cloning a zed no longer only makes them only speak zed.
+    type: Fix
+  id: 145300
+  time: '2025-08-23T18:34:18.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1453
+- author: Fractalflower
+  changes:
+  - message: Vulpkanins can now understand Fox and Dog
+    type: Add
+  id: 144600
+  time: '2025-08-24T16:21:54.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1446
+- author: Fractalflower
+  changes:
+  - message: Felionoids can now understand Cat
+    type: Add
+  id: 144601
+  time: '2025-08-24T16:21:54.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1446
+- author: Fractalflower
+  changes:
+  - message: Corgis and foxes can now understand Canilunzt
+    type: Add
+  id: 144602
+  time: '2025-08-24T16:21:54.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1446
+- author: Fractalflower
+  changes:
+  - message: Cats can now understand Nekomimetic
+    type: Add
+  id: 144603
+  time: '2025-08-24T16:21:54.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1446
+- author: Fractalflower
+  changes:
+  - message: Mothroaches no longer speak Moffic
+    type: Remove
+  id: 144604
+  time: '2025-08-24T16:21:54.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1446
+- author: Fractalflower
+  changes:
+  - message: Mothroaches now speak their own language
+    type: Add
+  id: 144605
+  time: '2025-08-24T16:21:54.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1446
+- author: Fractalflower
+  changes:
+  - message: Mothroaches can now understand, but not speak, Moffic
+    type: Add
+  id: 144606
+  time: '2025-08-24T16:21:54.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1446
+- author: Fractalflower
+  changes:
+  - message: Mothpeople now understand, but cannot speak, Mothroach
+    type: Add
+  id: 144607
+  time: '2025-08-24T16:21:54.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1446
+- author: Happyrobot33
+  changes:
+  - message: Fixed knockback always occuring even when the gun was empty.
+    type: Fix
+  id: 145200
+  time: '2025-08-24T18:35:59.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1452
+- author: Darkrell
+  changes:
+  - message: An antagonist card has been added - Criminal. Fulfilling the requirements within 20 minutes makes you a Syndicate member.
+    type: Add
+  - message: The railroading system is fully enabled.
+    type: Tweak
+  id: 145199
+  time: '2025-08-24T18:35:59.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1461
 Order: -1
 
