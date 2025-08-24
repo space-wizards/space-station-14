@@ -384,7 +384,7 @@ public abstract class SharedBloodstreamSystem : EntitySystem
 
         var flushedSolution = new Solution();
 
-        foreach (var (reagentId, _) in bloodSolution.Contents)
+        foreach (var (reagentId, _) in bloodSolution.Contents.ToList())
         {
             if (reagentId.Prototype == ent.Comp.BloodReagent || reagentId.Prototype == excludedReagentId)
                 continue;
