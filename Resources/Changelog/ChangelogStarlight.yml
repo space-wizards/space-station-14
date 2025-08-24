@@ -12496,5 +12496,26 @@ Entries:
   id: 130800
   time: '2025-08-24T23:21:03.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/1308
+- author: themageofmicrosoftpaints, Fractalflower
+  changes:
+  - message: Nine new slime tails
+    type: Add
+  id: 126300
+  time: '2025-08-24T23:27:46.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1263
+- author: themageofmicrosoftpaints, Fractalflower
+  changes:
+  - message: Eight new slime ears
+    type: Add
+  id: 126301
+  time: '2025-08-24T23:27:46.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1263
+- author: themageofmicrosoftpaints, Fractalflower
+  changes:
+  - message: Five new glass floors
+    type: Add
+  id: 126302
+  time: '2025-08-24T23:27:46.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1263
 Order: -1
 
