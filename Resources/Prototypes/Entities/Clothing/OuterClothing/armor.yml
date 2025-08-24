@@ -70,7 +70,7 @@
   parent: ClothingOuterArmorBase
   id: ClothingOuterArmorReflective
   name: reflective vest
-  description: A NT Type-IV protective vest, its heat-resistant fibers offer excellent protection against energy weapons. Coated in a proprietary compound which reliably deflects laser beams.
+  description: A Nanotrasen Type-IV protective vest, its heat-resistant fibers offer excellent protection against energy weapons. Coated in a proprietary compound which reliably deflects laser beams.
   components:
   - type: Sprite
     sprite: Clothing/OuterClothing/Armor/armor_reflec.rsi
@@ -127,7 +127,7 @@
   parent: [ClothingOuterArmorBaseCarapace, BaseCommandContraband]
   id: ClothingOuterArmorCaptainCarapace
   name: captain's carapace
-  description: An expensive Type-I laminar cuirass, its unique design offers good protection against most attacks while maintaining mobility and dignity. Blue finish and gold highlights denote the wearer as the captain of a station or ship.
+  description: An expensive Type-I laminar cuirass, its unique design offers good protection against most attacks while maintaining mobility and dignity. Blue finish and gold highlights denote the wearer as the captain of a Nanotrasen vessel.
   components:
   - type: Sprite
     sprite: Clothing/OuterClothing/Armor/captain_carapace.rsi
@@ -307,7 +307,7 @@
   parent: [ClothingOuterBaseLarge, AllowSuitStorageClothing, BaseSecurityContraband]
   id: ClothingOuterArmorRiot
   name: riot suit
-  description: A NT Type-II armor suit, its heavy padding and semi-flexible polycarbonate provides excellent protection in melee encounters, but slightly hinders mobility. Best paired with a NT brand riot helmet.
+  description: A Nanotrasen Type-II armor suit built of heavy padding and semi-flexible polycarbonate, it provides excellent protection in melee encounters. Best paired with an NT brand riot helmet.
   components:
   - type: Sprite
     sprite: Clothing/OuterClothing/Armor/riot.rsi
