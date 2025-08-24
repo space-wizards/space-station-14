@@ -133,14 +133,14 @@
     proto: BulletEnergyTurretLaser
     fireCost: 100
   - type: Battery
-    maxCharge: 2000
+    maxCharge: 1000
     startingCharge: 0
   - type: ApcPowerReceiverBattery
-    idleLoad: 5
+    idleLoad: 25
     batteryRechargeRate: 200
     batteryRechargeEfficiency: 0.0 # temporarily no power draw because this was causing potentially seizure inducing light flickering
   - type: ApcPowerReceiver
-    powerLoad: 5
+    powerLoad: 25
   - type: ExtensionCableReceiver
   - type: LightningTarget
     priority: 1

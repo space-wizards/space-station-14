@@ -213,6 +213,7 @@
     rotationSpeed: 180
     simple4DirMode: false
   - type: Gun
+    projectileSpeed: 25
     minAngle: 15
     maxAngle: 35
     angleIncrease: 1

@@ -91,7 +91,7 @@
           collection: MetalBreak
       - !type:ExplodeBehavior
   - type: RadarTracked
-    size: 1
+    size: 0.6
 
 - type: entity
   parent: BaseMeteor
@@ -133,6 +133,8 @@
         minSpawn: 2
         maxSpawn: 4
         spawnAfter: 0.5
+  - type: RadarTracked
+    size: 0.8
 
 - type: entity
   parent: BaseMeteor
@@ -175,8 +177,6 @@
         minSpawn: 3
         maxSpawn: 6
         spawnAfter: 0.5
-  - type: RadarTracked
-    size: 1.15
 
 - type: entity
   parent: BaseMeteor
@@ -371,4 +371,4 @@
             max: 5
       - !type:ExplodeBehavior
   - type: RadarTracked
-    size: 1
+    size: 0.6

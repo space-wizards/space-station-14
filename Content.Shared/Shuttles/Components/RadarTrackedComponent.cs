@@ -24,10 +24,10 @@ public sealed partial class RadarTrackedComponent : Component
     public Angle Angle = Angle.Zero;
 
     /// <summary>
-    /// Size of the major axis of the indicator on the nav ui
+    /// "radius" of the indicator on the nav ui
     /// </summary>
     [DataField]
-    public float Size = 1.0f;
+    public float Size = 0.5f;
 }
 
 [Serializable, NetSerializable]
