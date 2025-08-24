@@ -41,8 +41,8 @@
 - type: latheRecipePack
   id: PaperworkStatic
   recipes:
-  - BoxFolderClipboard
-  - BoxFolderPlasticClipboard
+  - BoxFolderClipboardEmpty
+  - BoxFolderPlasticClipboardEmpty
 
 ## Dynamic
 
