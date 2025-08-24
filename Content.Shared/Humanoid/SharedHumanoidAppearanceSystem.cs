@@ -688,6 +688,7 @@ public abstract class SharedHumanoidAppearanceSystem : EntitySystem
     }
 }
 
-
+#region Starlight
 [ByRefEvent]
 public record struct MarkingsUpdateEvent();
+#endregion
