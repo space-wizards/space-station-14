@@ -332,13 +332,14 @@
   name: Activate S.A.L.V.O hud
   description: Activates the S.A.L.V.O hud, showing the composition of nearby items
   components:
-  - type: InstantAction
+  - type: Action
     useDelay: 10
-    event: !type:ActivateSalvoHudEvent
     sound: !type:SoundPathSpecifier
       path: /Audio/Machines/sonar-ping.ogg
       params:
         volume: -10
+  - type: InstantAction
+    event: !type:ActivateSalvoHudEvent
 
 - type: entity
   parent: [ClothingEyesBase, ShowSalvageIcons]
@@ -347,9 +348,9 @@
   description: A heads-up display that scans for valuable materials in the nearby area. nobody knows what the acronym means.
   components:
   - type: Sprite
-    sprite: _Impstation/Clothing/Eyes/Hud/salvohud.rsi
+    sprite: Clothing/Eyes/Hud/salvohud.rsi
   - type: Clothing
-    sprite: _Impstation/Clothing/Eyes/Hud/salvohud.rsi
+    sprite: Clothing/Eyes/Hud/salvohud.rsi
   - type: Tag
     tags:
     - HudSalvage

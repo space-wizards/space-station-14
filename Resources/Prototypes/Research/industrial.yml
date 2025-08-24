@@ -15,6 +15,7 @@
   - OreProcessorIndustrialMachineCircuitboard
   - ClothingMaskWeldingGas
   - ClothingShoesBootsJump
+  - ClothingEyesHudSalvage
 
 - type: technology
   id: SpaceScanning
