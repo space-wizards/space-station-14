@@ -23,7 +23,7 @@ steal-target-groups-encryption-keys = encryption key
 steal-target-groups-technology-disks = technology disk
 steal-target-groups-mail = mail
 steal-target-groups-id-cards = ID Card
-steal-target-groups-Officer-Handguns = Security Officer's Handgun
+steal-target-groups-officer-handguns = Security Officer's Handgun
 steal-target-groups-lamps = LAMP
 
 # Thief single item
