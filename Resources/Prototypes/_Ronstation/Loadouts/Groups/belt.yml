@@ -1,0 +1,11 @@
+- type: loadoutGroup
+  id: BaseBelt
+  name: loadout-group-belt
+  abstract: true
+
+- type: loadoutGroup
+  id: SecurityBelt
+  parent: BaseBelt
+  loadouts:
+  - SecurityBelt
+  - SecurityWebbing

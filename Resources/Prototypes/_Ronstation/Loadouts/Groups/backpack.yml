@@ -1,0 +1,47 @@
+- type: loadoutGroup
+  id: BaseBackpack
+  name: loadout-group-backpack
+  abstract: true
+
+- type: loadoutGroup
+  id: CommonBackpack
+  parent: BaseBackpack
+  loadouts:
+  - CommonBackpack
+  - CommonSatchel
+  - CommonDuffel
+
+- type: loadoutGroup
+  id: EngineeringBackpack
+  parent: BaseBackpack
+  loadouts:
+  - StationEngineerBackpack
+  - StationEngineerSatchel
+  - StationEngineerDuffel
+
+- type: loadoutGroup
+  id: MedicalBackpack
+  parent: BaseBackpack
+  loadouts:
+  - MedicalDoctorBackpack
+  - MedicalDoctorSatchel
+  - MedicalDoctorDuffel
+
+- type: loadoutGroup
+  id: ScienceBackpack
+  parent: BaseBackpack
+  loadouts:
+  - ScientistBackpack
+  - ScientistSatchel
+  - ScientistDuffel
+  - RoboticistBackpack
+  - RoboticistSatchel
+  - RoboticistDuffel
+
+- type: loadoutGroup
+  id: SecurityBackpack
+  parent: BaseBackpack
+  loadouts:
+  - SecurityBackpack
+  - SecuritySatchel
+  - SecurityDuffel

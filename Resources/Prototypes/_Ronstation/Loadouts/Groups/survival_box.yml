@@ -1,0 +1,50 @@
+- type: loadoutGroup
+  id: BaseSurvival
+  name: loadout-group-survival
+  abstract: true
+  hidden: true
+
+- type: loadoutGroup
+  id: Survival
+  parent: BaseSurvival
+  minLimit: 3
+  loadouts:
+  - EmergencyNitrogen
+  - EmergencyOxygen
+  - LoadoutSpeciesVoxNitrogen
+
+- type: loadoutGroup
+  id: SurvivalExtended
+  parent: BaseSurvival
+  minLimit: 2
+  loadouts:
+  - EmergencyNitrogenExtended
+  - EmergencyOxygenExtended
+  - LoadoutSpeciesVoxNitrogen
+
+- type: loadoutGroup
+  id: SurvivalMedical
+  parent: BaseSurvival
+  minLimit: 2
+  loadouts:
+  - EmergencyNitrogenMedical
+  - EmergencyOxygenMedical
+  - LoadoutSpeciesVoxNitrogen
+
+- type: loadoutGroup
+  id: SurvivalSecurity
+  parent: BaseSurvival
+  minLimit: 2
+  loadouts:
+  - EmergencyNitrogenSecurity
+  - EmergencyOxygenSecurity
+  - LoadoutSpeciesVoxNitrogen
+
+- type: loadoutGroup
+  id: SurvivalSyndicate
+  parent: BaseSurvival
+  minLimit: 2
+  loadouts:
+  - EmergencyNitrogenSyndicate
+  - EmergencyOxygenSyndicate
+  - LoadoutSpeciesVoxNitrogen

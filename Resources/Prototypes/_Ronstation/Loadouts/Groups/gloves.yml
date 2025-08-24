@@ -1,0 +1,20 @@
+- type: loadoutGroup
+  id: BaseGloves
+  name: loadout-group-gloves
+  abstract: true
+  minLimit: 0
+
+- type: loadoutGroup
+  id: MedicalGloves
+  parent: BaseGloves
+  loadouts:
+  - LatexGloves
+  - NitrileGloves
+
+- type: loadoutGroup
+  id: ScienceGloves
+  parent: BaseGloves
+  loadouts:
+  - LatexGloves
+  - PurpleGloves
+  - RobohandsGloves
