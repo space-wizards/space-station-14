@@ -1,11 +1,12 @@
 using System.Threading;
 using Robust.Shared.Audio;
+using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
-namespace Content.Server.Forensics
+namespace Content.Shared.Forensics.Components
 {
-    [RegisterComponent]
+    [RegisterComponent, NetworkedComponent]
     public sealed partial class ForensicScannerComponent : Component
     {
         public CancellationTokenSource? CancelToken;

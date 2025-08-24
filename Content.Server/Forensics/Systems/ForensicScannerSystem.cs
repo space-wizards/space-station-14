@@ -1,10 +1,9 @@
 using System.Linq;
 using System.Text;
-using Content.Server.Popups;
 using Content.Shared.UserInterface;
 using Content.Shared.DoAfter;
-using Content.Shared.Fluids.Components;
 using Content.Shared.Forensics;
+using Content.Shared.Forensics.Components;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Interaction;
 using Content.Shared.Paper;
@@ -13,9 +12,8 @@ using Content.Shared.Tag;
 using Robust.Shared.Audio.Systems;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
-using Robust.Shared.Player;
 using Robust.Shared.Timing;
-using Content.Server.Chemistry.Containers.EntitySystems;
+using Content.Shared.Popups;
 using Robust.Shared.Prototypes;
 // todo: remove this stinky LINQy
 
@@ -26,7 +24,7 @@ namespace Content.Server.Forensics
         [Dependency] private readonly IGameTiming _gameTiming = default!;
         [Dependency] private readonly SharedDoAfterSystem _doAfterSystem = default!;
         [Dependency] private readonly UserInterfaceSystem _uiSystem = default!;
-        [Dependency] private readonly PopupSystem _popupSystem = default!;
+        [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
         [Dependency] private readonly PaperSystem _paperSystem = default!;
         [Dependency] private readonly SharedHandsSystem _handsSystem = default!;
         [Dependency] private readonly SharedAudioSystem _audioSystem = default!;

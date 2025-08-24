@@ -1,15 +1,12 @@
-using Content.Server.Body.Systems;
-using Content.Server.DoAfter;
-using Content.Server.Fluids.EntitySystems;
-using Content.Server.Forensics.Components;
-using Content.Server.Popups;
 using Content.Shared.Body.Events;
+using Content.Shared.Body.Systems;
 using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Popups;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Chemistry.Components.SolutionManager;
 using Content.Shared.DoAfter;
+using Content.Shared.Fluids;
 using Content.Shared.Forensics;
 using Content.Shared.Forensics.Components;
 using Content.Shared.Forensics.Systems;
@@ -28,21 +25,21 @@ namespace Content.Server.Forensics
     {
         [Dependency] private readonly IRobustRandom _random = default!;
         [Dependency] private readonly InventorySystem _inventory = default!;
-        [Dependency] private readonly DoAfterSystem _doAfterSystem = default!;
-        [Dependency] private readonly PopupSystem _popupSystem = default!;
+        [Dependency] private readonly SharedDoAfterSystem _doAfterSystem = default!;
+        [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
         [Dependency] private readonly SharedSolutionContainerSystem _solutionContainerSystem = default!;
 
         public override void Initialize()
         {
             SubscribeLocalEvent<HandsComponent, ContactInteractionEvent>(OnInteract);
-            SubscribeLocalEvent<FingerprintComponent, MapInitEvent>(OnFingerprintInit, after: new[] { typeof(BloodstreamSystem) });
+            SubscribeLocalEvent<FingerprintComponent, MapInitEvent>(OnFingerprintInit, after: new[] { typeof(SharedBloodstreamSystem) });
             // The solution entities are spawned on MapInit as well, so we have to wait for that to be able to set the DNA in the bloodstream correctly without ResolveSolution failing
-            SubscribeLocalEvent<DnaComponent, MapInitEvent>(OnDNAInit, after: new[] { typeof(BloodstreamSystem) });
+            SubscribeLocalEvent<DnaComponent, MapInitEvent>(OnDNAInit, after: new[] { typeof(SharedBloodstreamSystem) });
 
             SubscribeLocalEvent<ForensicsComponent, BeingGibbedEvent>(OnBeingGibbed);
             SubscribeLocalEvent<ForensicsComponent, MeleeHitEvent>(OnMeleeHit);
             SubscribeLocalEvent<ForensicsComponent, GotRehydratedEvent>(OnRehydrated);
-            SubscribeLocalEvent<CleansForensicsComponent, AfterInteractEvent>(OnAfterInteract, after: new[] { typeof(AbsorbentSystem) });
+            SubscribeLocalEvent<CleansForensicsComponent, AfterInteractEvent>(OnAfterInteract, after: new[] { typeof(SharedAbsorbentSystem) });
             SubscribeLocalEvent<ForensicsComponent, CleanForensicsDoAfterEvent>(OnCleanForensicsDoAfter);
             SubscribeLocalEvent<DnaComponent, TransferDnaEvent>(OnTransferDnaEvent);
             SubscribeLocalEvent<DnaSubstanceTraceComponent, SolutionContainerChangedEvent>(OnSolutionChanged);

@@ -1,15 +1,17 @@
-namespace Content.Server.Forensics;
+using Robust.Shared.GameStates;
+
+namespace Content.Shared.Forensics.Components;
 
 /// <summary>
 /// This controls residues left on items
 /// which the forensics system uses.
 /// </summary>
-[RegisterComponent]
+[RegisterComponent, NetworkedComponent, ]
 public sealed partial class ResidueComponent : Component
 {
-    [DataField]
+    [DataField, ]
     public LocId ResidueAdjective = "residue-unknown";
 
-    [DataField]
+    [DataField, ]
     public string? ResidueColor;
 }

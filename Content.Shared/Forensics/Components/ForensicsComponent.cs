@@ -1,6 +1,8 @@
-namespace Content.Server.Forensics
+using Robust.Shared.GameStates;
+
+namespace Content.Shared.Forensics.Components
 {
-    [RegisterComponent]
+    [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
     public sealed partial class ForensicsComponent : Component
     {
         [DataField("fingerprints")]
@@ -18,7 +20,7 @@ namespace Content.Server.Forensics
         /// <summary>
         /// How close you must be to wipe the prints/blood/etc. off of this entity
         /// </summary>
-        [DataField("cleanDistance")]
+        [DataField("cleanDistance"), AutoNetworkedField]
         public float CleanDistance = 1.5f;
 
         /// <summary>
