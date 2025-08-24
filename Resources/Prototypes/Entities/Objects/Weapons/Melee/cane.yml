@@ -11,6 +11,7 @@
     size: Normal
     sprite: Objects/Weapons/Melee/cane.rsi
   - type: Appearance
+  - type: MobilityAid
   - type: MeleeWeapon
     wideAnimationRotation: 45
     damage:
@@ -83,6 +84,7 @@
           - CaneBlade
         insertSound: /Audio/Items/sheath.ogg
         ejectSound: /Audio/Items/unsheath.ogg
+        priority: 3
   - type: ItemMapper
     mapLayers:
       cane:
