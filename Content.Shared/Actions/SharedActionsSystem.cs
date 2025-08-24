@@ -87,7 +87,7 @@ public abstract class SharedActionsSystem : EntitySystem
 
     private void OnActionDoAfterAttempt(Entity<ActionComponent> ent, ref ActionDoAfterEvent args)
     {
-        if (!TryComp<DoAfterComponent>(ent, out var actionDoAfter) || !TryComp<DoAfterArgsComponent>(ent, out var actionDoAfterArgsComp))
+        if (!TryComp<DoAfterArgsComponent>(ent, out var actionDoAfterArgsComp))
             return;
 
         Entity<ActionComponent?>? action = (ent, ent);
