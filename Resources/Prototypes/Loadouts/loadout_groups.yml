@@ -45,16 +45,6 @@
 
 # Civilian
 - type: loadoutGroup
-  id: PassengerJumpsuit
-  name: loadout-group-passenger-jumpsuit
-  loadouts:
-  - GreyJumpsuit
-  - GreyJumpskirt
-  - AncientJumpsuit
-  - RainbowJumpsuit
-  - RainbowJumpskirt
-
-- type: loadoutGroup
   id: ChaplainBible
   name: loadout-group-chaplain-bible
   minLimit: 1
