@@ -51,7 +51,6 @@
       components:
       - MachineBoard
       - Circuitboard
-  - type: EntityStorage
   - type: Construction
     graph: ToteBase
     node: totebase
