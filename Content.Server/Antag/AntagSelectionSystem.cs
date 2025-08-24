@@ -394,6 +394,20 @@ public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelection
         if (!antagEnt.HasValue)
         {
             var getEntEv = new AntagSelectEntityEvent(session, ent);
+
+            AntagSelectionDefinition? antagSelectDef = null;
+            if (session != null)
+            {
+                foreach (var pair in ent.Comp.PreSelectedSessions)
+                {
+                    if (pair.Value.Contains(session))
+                        antagSelectDef = pair.Key;
+                }
+            }
+
+            if (antagSelectDef != null)
+                getEntEv.Entity = Spawn(antagSelectDef.Value.EntityPrototype);
+
             RaiseLocalEvent(ent, ref getEntEv, true);
             antagEnt = getEntEv.Entity;
         }
