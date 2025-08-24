@@ -1,0 +1,6 @@
+- type: loadoutGroup
+  id: PsychologistJumpsuit
+  parent: BaseJumpsuit
+  loadouts:
+  - PsychologistJumpsuit
+  - PsychologistJumpskirt

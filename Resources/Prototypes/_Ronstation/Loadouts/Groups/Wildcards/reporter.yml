@@ -1,0 +1,6 @@
+- type: loadoutGroup
+  id: ReporterJumpsuit
+  parent: BaseJumpsuit
+  loadouts:
+  - ReporterJumpsuit
+  - JournalistJumpsuit
