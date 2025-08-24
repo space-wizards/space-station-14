@@ -227,7 +227,7 @@
 
 - type: loadoutGroup
   id: SurvivalSyndicate
-  parent: CommonSurvival
+  parent: BaseSurvival
   minLimit: 2
   loadouts:
   - EmergencyNitrogenSyndicate
