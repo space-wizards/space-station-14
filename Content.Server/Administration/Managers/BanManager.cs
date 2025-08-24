@@ -57,7 +57,7 @@ public sealed partial class BanManager : IBanManager, IPostInjectInit
 
     public const string SawmillId = "admin.bans";
     public const string JobPrefix = "Job:";
-    
+
     private readonly HttpClient _httpClient = new();
     private string _serverName = string.Empty;
     private string _webhookUrl = string.Empty;
@@ -79,7 +79,7 @@ public sealed partial class BanManager : IBanManager, IPostInjectInit
             BanNotificationChannel,
             ProcessBanNotification,
             OnDatabaseNotificationEarlyFilter);
-        
+
         _cfg.OnValueChanged(StarlightCCVars.DiscordBanWebhook, OnWebhookChanged, true);
         _cfg.OnValueChanged(CVars.GameHostName, OnServerNameChanged, true);
 
@@ -309,7 +309,7 @@ public sealed partial class BanManager : IBanManager, IPostInjectInit
             SendRoleBans(session);
         }
     }
-    
+
     public async void WebhookUpdateRoleBans(NetUserId? target, string? targetUsername, NetUserId? banningAdmin, (IPAddress, int)? addressRange, ImmutableTypedHwid? hwid, IReadOnlyCollection<string> roles, uint? minutes, NoteSeverity severity, string reason, DateTimeOffset timeOfBan)
     {
         _systems.TryGetEntitySystem(out GameTicker? ticker);
@@ -406,7 +406,7 @@ public sealed partial class BanManager : IBanManager, IPostInjectInit
     {
         _sawmill = _logManager.GetSawmill(SawmillId);
     }
-    
+
     #region Webhook
     private async void SendWebhook(WebhookPayload payload)
     {
@@ -429,7 +429,7 @@ public sealed partial class BanManager : IBanManager, IPostInjectInit
             return;
         }
     }
-    
+
     private async Task<WebhookPayload> GenerateJobBanPayload(ServerRoleBanDef banDef, IReadOnlyCollection<string> roles, uint? minutes = null)
     {
         var hwid = banDef.HWId?.ToString() ?? "null";
@@ -450,38 +450,44 @@ public sealed partial class BanManager : IBanManager, IPostInjectInit
         string? adminDiscordId = null;
         string? targetDiscordId = null;
 
-        if (_actor.TryGetServerGrain(out var serverGrain))
+        try
         {
-            if (banDef.BanningAdmin != null)
-                adminDiscordId = await serverGrain.GetPlayerDiscordId(banDef.BanningAdmin.Value)
-                    .Then(x => x.ToString());
+            if (_actor.TryGetServerGrain(out var serverGrain))
+            {
+                if (banDef.BanningAdmin != null)
+                    adminDiscordId = await serverGrain.GetPlayerDiscordId(banDef.BanningAdmin.Value)
+                        .Then(x => x != 0 ? x.ToString() : null);
 
-            if (banDef.UserId != null)
-                targetDiscordId = await serverGrain.GetPlayerDiscordId(banDef.UserId.Value)
-                    .Then(x => x.ToString());
+                if (banDef.UserId != null)
+                    targetDiscordId = await serverGrain.GetPlayerDiscordId(banDef.UserId.Value)
+                        .Then(x => x != 0 ? x.ToString() : null);
+            }
+        }
+        catch (Exception)
+        {
         }
         // nulllink end
 
         var adminLink = "";
         var targetLink = "";
-        var mentions = new List<User>{};
+        var mentions = new List<User> { };
         if (adminDiscordId != null)
         {
             adminLink = $"<@{adminDiscordId}>";
-            mentions.Add(new User(){Id = adminDiscordId});
+            mentions.Add(new User() { Id = adminDiscordId });
         }
 
         if (targetDiscordId != null)
         {
             targetLink = $"<@{targetDiscordId}>";
-            mentions.Add(new User(){Id = targetDiscordId});
+            mentions.Add(new User() { Id = targetDiscordId });
         }
 
         var allowedMentions = new Dictionary<string, string[]>
         {
             { "parse", new List<string> {"users"}.ToArray() }
         };
-        
+
         if (banDef.ExpirationTime != null && minutes != null) // Time ban
             return new WebhookPayload
             {
@@ -543,7 +549,7 @@ public sealed partial class BanManager : IBanManager, IPostInjectInit
                 },
             };
     }
-    
+
     private async Task<WebhookPayload> GenerateBanPayload(ServerBanDef banDef, uint? minutes = null)
     {
         var hwid = banDef.HWId?.ToString() ?? "null";
@@ -561,31 +567,38 @@ public sealed partial class BanManager : IBanManager, IPostInjectInit
         string? adminDiscordId = null;
         string? targetDiscordId = null;
 
-        if (_actor.TryGetServerGrain(out var serverGrain))
+        try
         {
-            if(banDef.BanningAdmin != null)
-                adminDiscordId = await serverGrain.GetPlayerDiscordId(banDef.BanningAdmin.Value)
-                    .Then(x=>x.ToString());
+            if (_actor.TryGetServerGrain(out var serverGrain))
+            {
+                if (banDef.BanningAdmin != null)
+                    adminDiscordId = await serverGrain.GetPlayerDiscordId(banDef.BanningAdmin.Value)
+                        .Then(x => x != 0 ? x.ToString() : null);
 
-            if (banDef.UserId != null)
-                targetDiscordId = await serverGrain.GetPlayerDiscordId(banDef.UserId.Value)
-                    .Then(x => x.ToString());
+                if (banDef.UserId != null)
+                    targetDiscordId = await serverGrain.GetPlayerDiscordId(banDef.UserId.Value)
+                        .Then(x => x != 0 ? x.ToString() : null);
+            }
         }
+        catch (Exception)
+        {
+        }
+
         // nulllink end
 
         var adminLink = "";
         var targetLink = "";
-        var mentions = new List<User>{};
+        var mentions = new List<User> { };
         if (adminDiscordId != null)
         {
             adminLink = $"<@{adminDiscordId}>";
-            mentions.Add(new User(){Id = adminDiscordId});
+            mentions.Add(new User() { Id = adminDiscordId });
         }
 
         if (targetDiscordId != null)
         {
             targetLink = $"<@{targetDiscordId}>";
-            mentions.Add(new User(){Id = targetDiscordId});
+            mentions.Add(new User() { Id = targetDiscordId });
         }
 
         var allowedMentions = new Dictionary<string, string[]>
@@ -654,7 +667,7 @@ public sealed partial class BanManager : IBanManager, IPostInjectInit
                 },
             };
     }
-    
+
     private void OnWebhookChanged(string url)
     {
         _webhookUrl = url;
@@ -684,12 +697,12 @@ public sealed partial class BanManager : IBanManager, IPostInjectInit
         // Fire and forget
         _ = SetWebhookData(webhookId, webhookToken);
     }
-    
+
     private void OnServerNameChanged(string obj)
     {
         _serverName = obj;
     }
-    
+
     private async Task SetWebhookData(string id, string token)
     {
         var response = await _httpClient.GetAsync($"https://discord.com/api/v10/webhooks/{id}/{token}");
@@ -725,7 +738,7 @@ public sealed partial class BanManager : IBanManager, IPostInjectInit
         {
         }
     }
-    
+
     // https://discord.com/developers/docs/resources/channel#embed-object-embed-author-structure
     private struct EmbedAuthor
     {
@@ -739,7 +752,7 @@ public sealed partial class BanManager : IBanManager, IPostInjectInit
         {
         }
     }
-    
+
     // https://discord.com/developers/docs/resources/webhook#webhook-object-webhook-structure
     private struct WebhookData
     {
@@ -753,7 +766,7 @@ public sealed partial class BanManager : IBanManager, IPostInjectInit
         {
         }
     }
-    
+
     // https://discord.com/developers/docs/resources/channel#message-object-message-structure
     private struct WebhookPayload
     {
