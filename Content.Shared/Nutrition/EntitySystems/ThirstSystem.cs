@@ -178,7 +178,7 @@ public sealed class ThirstSystem : EntitySystem
         {
             case ThirstThreshold.OverHydrated:
                 component.LastThirstThreshold = component.CurrentThirstThreshold;
-                component.ActualDecayRate = thirstMultiplier * component.BaseDecayRate * 1.2f;
+                component.ActualDecayRate = thirstMultiplier * component.BaseDecayRate * 1.2f; // Starlight-edit
                 return;
 
             case ThirstThreshold.Okay:
