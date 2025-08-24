@@ -10,7 +10,7 @@
 
 - type: loadoutGroup
   id: Survival
-  name: loadout-group-survival-basic
+  name: loadout-group-survival
   minLimit: 3
   hidden: true
   loadouts:
