@@ -355,13 +355,17 @@ public sealed partial class ShuttleNavControl : BaseShuttleControl
 
                 case RadarSignatureShape.Chevron:
                     {
+                        var point = Vector2.Transform(ping.Item1, worldToView);
+                        handle.DrawCircle(point, ping.Item4 * 5f, ping.Item5, true); // radius my ass. why is the scale on circles so fucked?
+
                         var verts = new[]
                         {
-                            Vector2.Transform(new Vector2(-ping.Item4, -ping.Item4), worldToViewShapeRot),
-                            Vector2.Transform(Vector2.Zero, worldToViewShapeRot),
-                            Vector2.Transform(new Vector2(ping.Item4, -ping.Item4), worldToViewShapeRot),
+                            Vector2.Transform(new Vector2(ping.Item4, 0f), worldToViewShapeRot),
+                            Vector2.Transform(new Vector2(0f, -ping.Item4 * 1.2f), worldToViewShapeRot),
+                            Vector2.Transform(new Vector2(-ping.Item4, 0f), worldToViewShapeRot),
                         };
 
+                        handle.DrawPrimitives(DrawPrimitiveTopology.TriangleFan, verts, ping.Item5);
                         handle.DrawPrimitives(DrawPrimitiveTopology.LineStrip, verts, ping.Item5);
 
                         break;
