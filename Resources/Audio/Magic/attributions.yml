@@ -28,3 +28,15 @@
   copyright: '"voidblink.ogg" by Citadel Station 13'
   license: CC-BY-SA-3.0
   source: https://github.com/Citadel-Station-13/Citadel-Station-13/commit/e145bdafe83e2cf38d148c39f073da5e7b0cb456
+
+- files:
+  - wizard_tada.ogg
+  copyright: Made by PlasterBrain on freesound.org
+  license: CC-0
+  source: https://freesound.org/people/plasterbrain/sounds/397355/2
+
+- files:
+  - wizard_fizzling.ogg
+  copyright: Made by jobro on freesound.org
+  license: CC-BY-SA-3.0
+  source: https://freesound.org/people/jobro/sounds/204303/

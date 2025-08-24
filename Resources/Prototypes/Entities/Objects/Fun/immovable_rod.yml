@@ -1,7 +1,6 @@
 - type: entity
-  id: ImmovableRod
-  name: immovable rod
-  description: You can sense that it's hungry. That's usually a bad sign.
+  id: ImmovableRodBase
+  abstract: true
   components:
   - type: Clickable
   - type: InteractionOutline
@@ -11,20 +10,20 @@
     sprite: Objects/Fun/immovable_rod.rsi
     state: icon
     noRot: false
-  - type: ImmovableRod
-  - type: GravityAffected
   - type: Physics
     bodyType: Dynamic
     linearDamping: 0
+    bodyStatus: InAir
   - type: TileFrictionModifier
     modifier: 0
   - type: PointLight
     radius: 3
     color: red
     energy: 2.0
+  # Rods collide with solid objects.
   - type: Fixtures
     fixtures:
-      fix1:
+      immovablerod:
         shape:
           !type:PhysShapeCircle
           radius: 0.5
@@ -33,53 +32,68 @@
         layer:
         - Impassable
         - Opaque
+        mask:
+        - Impassable
+        - Opaque
+  # Allow the rod to do things when it hits things.
+  # TODO: make sure that it only hits each entity once.
+  - type: TriggerOnCollide
+    fixtureID: immovablerod
+    keyOut: OnCollide
+  # Allow the rod to do things when it spawns.
+  - type: TriggerOnSpawn
+    keyOut: OnSpawn
+  # All rods CLANG when they hit things.
+  - type: EmitSoundOnTrigger
+    sound:
+      collection: MetalSlam
+    keysIn:
+      - OnCollide
+
+- type: entity
+  id: ImmovableRod
+  name: immovable rod
+  parent: ImmovableRodBase
+  description: You didn't need those walls anyway. Or your spleen.
+  components:
   - type: WarpPoint
     follow: true
     location: immovable rod
     blacklist:
       tags:
       - GhostOnlyWarp
-
-- type: entity
-  id: ImmovableRodDespawn
-  suffix: Despawn
-  parent: ImmovableRod
-  components:
-  - type: TimedDespawn
-    lifetime: 30.0
-
-- type: entity
-  id: ImmovableRodSlow
-  parent: ImmovableRodDespawn
-  suffix: Slow
-  components:
-  - type: ImmovableRod
-    minSpeed: 1
-    maxSpeed: 5
-
-- type: entity
-  parent: ImmovableRodDespawn
-  id: ImmovableRodKeepTiles
-  suffix: Keep Tiles
-  components:
-  - type: ImmovableRod
-    destroyTiles: false
-    hitSoundProbability: 1.0
-
-# For Wizard Polymorph
-- type: entity
-  parent: ImmovableRod
-  id: ImmovableRodWizard
-  suffix: Wizard
-  components:
-  - type: ImmovableRod
-    maxSpeed: 25
-    destroyTiles: false
-    randomizeVelocity: false
-    shouldGib: false
+  # When the rod hits things it does damage. It does way more to
+  # structures. It does piercing, which is a damage type that also
+  # applies a bleeding DOT effect on the target, so the damage here
+  # isn't reflective of the total danger posed to mobs.
+  - type: DamageOnTrigger
+    ignoreResistances: true
+    targetUser: true
     damage:
       types:
-        Blunt: 190
+        Blunt: 40 # MY BONES!
+        Piercing: 45 # MY SPLEEN!
+        Structural: 1000 # MY CAR!
+    keysIn:
+      - OnCollide
+  # Rods stun anything they hit, and this should put almost any normal
+  # mob into stamcrit state.
+  - type: StaminaDamageOnTrigger
+    stamina: 200
+    ignoreResistances: true
+    targetUser: true
+    keysIn:
+      - OnCollide
+
+# Wizards can polymorph into Immovable Rods, which work similarly to their
+# true counterparts, but can be "flown" by the controlling wizard.
+- type: entity
+  parent: ImmovableRodBase
+  id: ImmovableRodWizard
+  name: Rodney's Dramatic Entrance
+  description: Did you know that this spell was originally invented by a wizard called Rodney because everyone kept making fun of his name? Now you do. Anyway, if you've stopped to read this description, you're probably dead.
+  suffix: Wizard
+  components:
   - type: InputMover
   - type: MovementSpeedModifier
     baseWeightlessAcceleration: 5
@@ -90,18 +104,35 @@
   - type: CanMoveInAir
   - type: MovementAlwaysTouching
   - type: NoSlip
+  # Wizard rods are still ruinous to structures, but do a little less damage to
+  # mobs.
+  - type: DamageOnTrigger
+    ignoreResistances: true
+    targetUser: true
+    damage:
+      types:
+        Blunt: 30 # MY BONES!
+        Piercing: 35 # MY SPLEEN!
+        Structural: 1000 # MY CAR!
+    keysIn:
+      - OnCollide
+  # Wizard rods stun people just as well as normal rods.
+  - type: StaminaDamageOnTrigger
+    stamina: 200
+    ignoreResistances: true
+    targetUser: true
+    keysIn:
+      - OnCollide
+  # When a wizard rod is spawned, it is launched at some speed in its spawned direction.
+  # We're making an assumption here that the polymorph or other spawn code can set the
+  # rotation properly.
+  - type: LaunchOnTrigger
+    speed: 15.0
+    keysIn:
+      - OnSpawn
 
 - type: entity
-  parent: ImmovableRodKeepTiles
-  id: ImmovableRodKeepTilesStill
-  suffix: Keep Tiles, Still
-  components:
-  - type: ImmovableRod
-    randomizeVelocity: false
-    maxSpeed: 0
-
-- type: entity
-  parent: ImmovableRodKeepTilesStill
+  parent: ImmovableRod
   id: ImmovableRodMop
   name: immovable mop
   description: Hurled like a javelin, with the power of a thousand furious janitors.
@@ -113,7 +144,7 @@
     noRot: false
 
 - type: entity
-  parent: ImmovableRodKeepTilesStill
+  parent: ImmovableRod
   id: ImmovableRodShark
   name: immovable shark
   description: SHARK TORNADO!
@@ -125,7 +156,7 @@
     noRot: false
 
 - type: entity
-  parent: ImmovableRodKeepTilesStill
+  parent: ImmovableRod
   id: ImmovableRodClown
   name: immovable clown
   description: Ejected from the neighbouring station one solar system over. HONK!
@@ -137,7 +168,7 @@
     noRot: false
 
 - type: entity
-  parent: ImmovableRodKeepTilesStill
+  parent: ImmovableRod
   id: ImmovableRodBanana
   name: immovable banana
   description: At least you won't slip on it.
@@ -148,7 +179,7 @@
     noRot: false
 
 - type: entity
-  parent: ImmovableRodKeepTilesStill
+  parent: ImmovableRod
   id: ImmovableRodHammer
   name: immovable hammer
   description: Bwoink.
@@ -160,7 +191,7 @@
     noRot: false
 
 - type: entity
-  parent: ImmovableRodKeepTilesStill
+  parent: ImmovableRod
   id: ImmovableRodThrongler
   name: immovable throngler
   description: If you catch it, you can keep it.
@@ -172,7 +203,7 @@
     noRot: false
 
 - type: entity
-  parent: ImmovableRodKeepTilesStill
+  parent: ImmovableRod
   id: ImmovableRodGibstick
   name: immovable gibstick
   description: What did you expect?
@@ -184,7 +215,7 @@
     noRot: false
 
 - type: entity
-  parent: ImmovableRodKeepTilesStill
+  parent: ImmovableRod
   id: ImmovableRodWeh
   name: immovable weh
   description: WEH!
@@ -193,3 +224,40 @@
     sprite: Objects/Fun/Plushies/lizard.rsi
     state: icon
     noRot: false
+
+- type: entity
+  parent: ImmovableRod
+  id: ImmovableRodSus
+  name: immovable among pequeño
+  description: They were not the impostor.
+  components:
+  - type: Sprite
+    sprite: Objects/Fun/pequeno.rsi
+    layers:
+    - state: base
+      map: [ "enum.DamageStateVisualLayers.Base" ]
+    - state: visor
+
+- type: entity
+  parent: ImmovableRod
+  id: ImmovableRodSpear
+  name: immovable spear
+  description: Legends say this was thrown into orbit by the biggest chungus on Planet Wawa, shortly before a long nap.
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Melee/spear.rsi
+    layers:
+    - state: spear
+    - state: spear1
+      map: ["enum.SolutionContainerLayers.Fill"]
+      visible: false
+
+- type: entity
+  parent: ImmovableRod
+  id: ImmovableRodToolbox
+  name: the robustest toolbox
+  description: Garbage collection!!
+  components:
+  - type: Sprite
+    sprite: Objects/Tools/Toolboxes/toolbox_blue.rsi
+    state: icon

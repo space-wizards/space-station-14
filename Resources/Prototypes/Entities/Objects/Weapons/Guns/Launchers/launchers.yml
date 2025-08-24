@@ -441,4 +441,4 @@
     whitelist:
       tags:
         - CartridgeRocket
-    proto: ImmovableRodSlow
+    proto: ImmovableRod

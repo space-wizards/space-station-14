@@ -23,8 +23,8 @@ spellbook-smoke-desc = Summons a cloud of smoke, it's pretty obvious.
 spellbook-polymorph-spider-name = Spider Polymorph
 spellbook-polymorph-spider-desc = Transforms you into a spider, man!
 
-spellbook-polymorph-rod-name = Rod Polymorph
-spellbook-polymorph-rod-desc = Change into an Immovable Rod with limited movement.
+spellbook-polymorph-rod-name = Rodney's Dramatic Entrance
+spellbook-polymorph-rod-desc = Make a grand entrance or exit by temporarily turning into an Immovable Rod. CLANG!
 
 spellbook-charge-name = Charge
 spellbook-charge-desc = Adds a charge back to your wand!

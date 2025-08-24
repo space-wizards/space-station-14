@@ -214,8 +214,8 @@
     minimumPlayers: 25
   - type: ImmovableRodRule
     rodPrototypes:
-    - id: ImmovableRodKeepTilesStill
-      prob: 0.94
+    - id: ImmovableRod
+      prob: 0.925
       orGroup: rodProto
     - id: ImmovableRodMop
       prob: 0.0075
@@ -239,6 +239,15 @@
       prob: 0.0075
       orGroup: rodProto
     - id: ImmovableRodWeh
+      prob: 0.0075
+      orGroup: rodProto
+    - id: ImmovableRodSus
+      prob: 0.0075
+      orGroup: rodProto
+    - id: ImmovableRodSpear
+      prob: 0.0075
+      orGroup: rodProto
+    - id: ImmovableRodToolbox
       prob: 0.0075
       orGroup: rodProto
 
