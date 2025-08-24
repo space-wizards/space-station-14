@@ -1,0 +1,37 @@
+#CBURN Softsuit
+- type: entity
+  parent: [ BaseCentcommContraband, ClothingOuterEVASuitBase ]
+  id: ClothingOuterSoftsuitCBURN
+  name: CBURN insulated EVA suit
+  description: A heavyweight, tough and padded EVA capable biosuit used for special cleanup operations.
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/Hardsuits/cburn.rsi
+  - type: Clothing
+    sprite: Clothing/OuterClothing/Hardsuits/cburn.rsi
+    equipSound: /Audio/Mecha/mechmove03.ogg #starlight
+    unequipSound: /Audio/Mecha/mechmove03.ogg #starlight
+    equipDelay: 3 #starlight
+    unequipDelay: 3 #starlight
+  - type: ExplosionResistance
+    damageCoefficient: 0.5
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.5
+        Slash: 0.3
+        Piercing: 0.5
+        Heat: 0.1
+        Cold: 0.1
+        Shock: 0.1
+        Radiation: 0.1
+        Caustic: 0.1
+    staminaModifier: 0.2
+  - type: ZombificationResistance
+    zombificationResistanceCoefficient: 0.1
+  - type: ClothingSpeedModifier
+    walkModifier: 0.75
+    sprintModifier: 0.75
+  - type: HeldSpeedModifier
+    tags:
+    - SuitEVA

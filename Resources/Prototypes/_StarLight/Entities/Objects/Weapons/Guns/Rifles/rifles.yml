@@ -89,7 +89,7 @@
     - state: mag-0
       map: ["enum.GunVisualLayers.Mag"]
   - type: Item
-    size: Huge
+    size: Large
   - type: MagazineAmmoProvider
   - type: ItemSlots
     slots:

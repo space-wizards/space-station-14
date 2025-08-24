@@ -25,16 +25,20 @@
     eyes: ClothingEyesGlassesCentComm
     ears: ClothingHeadsetCentCom #Starlight
     gloves: ClothingHandsGlovesCombat
-    outerClothing: ClothingOuterHardsuitCBURN
+    outerClothing: ClothingOuterSoftsuitCBURN #Starlight
     shoes: ClothingShoesBootsCombatFilled
     id: CBURNPDA
     pocket1: RadioHandheld
     pocket2: WeaponLaserGun
     belt: ClothingBeltBandolier
+    head: ClothingHeadSoftsuitCBURN
   storage:
     back:
-    - WeaponShotgunDoubleBarreled
-    - BoxShotgunIncendiary
+    - WeaponIK60
+    - MagazineBatteryLr30
+    - MagazineBatteryLr30
+    - MagazineBatteryLr30
+    - MagazineBatteryLr30
     - GrenadeFlashBang
     - PillAmbuzolPlus
     - PillAmbuzol

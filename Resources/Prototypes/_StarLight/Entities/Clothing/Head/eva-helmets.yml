@@ -1,0 +1,31 @@
+#EVA Helmet
+- type: entity
+  parent: ClothingHeadEVAHelmetBase
+  id: ClothingHeadSoftsuitCBURN
+  name: CBURN helmet
+  description: A pressure resistant and fireproof hood worn by special cleanup units.
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Hardsuits/cburn.rsi
+    layers:
+    - state: icon
+    - state: icon-unshaded
+      shader: unshaded
+    - state: light-overlay
+      visible: false
+      shader: unshaded
+      map: [ "light" ]
+  - type: Clothing
+    clothingVisuals:
+      head:
+      - state: equipped-head
+      - state: equipped-head-unshaded
+        shader: unshaded
+      head-vox:
+      - state: equipped-head-vox
+      - state: equipped-head-unshaded-vox
+        shader: unshaded
+    equipSound: /Audio/Mecha/mechmove03.ogg #starlight
+    unequipSound: /Audio/Mecha/mechmove03.ogg #starlight
+    equipDelay: 3 #starlight
+    unequipDelay: 3 #starlight

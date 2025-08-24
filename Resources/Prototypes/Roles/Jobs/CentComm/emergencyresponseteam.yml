@@ -54,7 +54,7 @@
     id: ERTLeaderPDA
     ears: ClothingHeadsetAltCentCom
     belt: ClothingBeltSecurityFilled
-    pocket1: WeaponPistolN1984
+    pocket1: WeaponPistolM1911
     pocket2: FlashlightSeclite
   storage:
     back:
@@ -81,15 +81,15 @@
     pocket1: MagazineRifleAP
     pocket2: MagazineRifleIncendiary
   inhand:
-  - WeaponRifleLecter
+  - WeaponRiflePeacemaker
   storage:
     back:
     - WeaponDisabler
-    - MedicatedSuture
-    - RegenerativeMesh
+    - MedkitCombatFilled
     - BoxZiptie
     - CrowbarRed
-    - MagazineMagnum
+    - DoubleEmergencyOxygenTankFilled
+    - DoubleEmergencyNitrogenTankFilled
 
 - type: chameleonOutfit
   id: ERTLeaderChameleonOutfit
@@ -359,7 +359,7 @@
     pocket1: MagazineRifleAP
     pocket2: MagazineRifleIncendiary
   inhand:
-    - WeaponRifleLecter
+    - WeaponRiflePeacemaker
   storage:
     back:
     - WeaponDisabler
