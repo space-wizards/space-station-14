@@ -1,32 +1,21 @@
-using Content.Shared.MassDriver.Components;
-using Content.Shared.MassDriver;
-using Content.Shared.Throwing;
-using Robust.Shared.Timing;
-using System.Linq;
-using Content.Shared.Power;
-using Content.Server.Power.EntitySystems;
-using Content.Shared.DeviceLinking.Events;
 using Content.Server.Power.Components;
-using Content.Shared.Audio;
+using Content.Server.Power.EntitySystems;
+using Content.Shared.MassDriver.Components;
+using Content.Shared.MassDriver.EntitySystems;
+using Content.Shared.MassDriver;
+using Content.Shared.DeviceLinking.Events;
 using Robust.Shared.Utility;
 
 namespace Content.Server.MassDriver.EntitySystems;
 
-public sealed class MassDriverSystem : EntitySystem
+public sealed class MassDriverSystem : SharedMassDriverSystem
 {
-    [Dependency] private readonly IGameTiming _timing = default!;
-    [Dependency] private readonly ThrowingSystem _throwing = default!;
-    [Dependency] private readonly EntityLookupSystem _lookup = default!;
-    [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
-    [Dependency] private readonly PowerReceiverSystem _powerReceiver = default!;
     [Dependency] private readonly SharedUserInterfaceSystem _ui = default!;
-    [Dependency] private readonly SharedAmbientSoundSystem _audioSystem = default!;
+    [Dependency] private readonly PowerReceiverSystem _powerReceiver = default!;
 
     public override void Initialize()
     {
         base.Initialize();
-
-        SubscribeLocalEvent<MassDriverComponent, PowerChangedEvent>(OnPowerChanged);
 
         // UI for console -_-
         SubscribeLocalEvent<MassDriverConsoleComponent, ComponentInit>(OnInit); // Update state on init
@@ -94,99 +83,10 @@ public sealed class MassDriverSystem : EntitySystem
 
     #region Logic
 
-    /// <summary>
-    /// Handle power changing to disable or enable mass driver, so it can't work without power
-    /// </summary>
-    /// <param name="uid">Mass Driver</param>
-    /// <param name="component">Mass Driver Component</param>
-    /// <param name="args">Event arguments</param>
-    private void OnPowerChanged(EntityUid uid, MassDriverComponent component, ref PowerChangedEvent args)
+    public override void ChangePowerLoad(EntityUid uid, MassDriverComponent component, float powerLoad)
     {
-        if (component.Mode != MassDriverMode.Auto)
-            return;
-
-        var hasComp = HasComp<ActiveMassDriverComponent>(uid);
-        if (hasComp && !args.Powered)
-            RemComp<ActiveMassDriverComponent>(uid);
-        else if (!hasComp && args.Powered)
-            EnsureComp<ActiveMassDriverComponent>(uid);
-    }
-
-    /// <summary>
-    /// Update only active mass drivers, so we have it more optimized than conveyors
-    /// </summary>
-    public override void Update(float frameTime)
-    {
-        base.Update(frameTime);
-
-        var query = EntityQueryEnumerator<ActiveMassDriverComponent, MassDriverComponent, ApcPowerReceiverComponent>();
-        while (query.MoveNext(out var uid, out var activeMassDriver, out var massDriver, out var powered))
-        {
-            if (_timing.CurTime < activeMassDriver.NextUpdateTime)
-                continue;
-
-            if (activeMassDriver.NextUpdateTime == TimeSpan.Zero)
-            {
-                activeMassDriver.NextUpdateTime = _timing.CurTime + activeMassDriver.UpdateDelay;
-                continue;
-            }
-            activeMassDriver.NextUpdateTime = _timing.CurTime + activeMassDriver.UpdateDelay;
-
-            var entities = new HashSet<EntityUid>();
-            _lookup.GetEntitiesIntersecting(uid, entities);
-            var entitiesCount = entities.Count(a => !Transform(a).Anchored);
-
-            if (entitiesCount == 0)
-            {
-                // Disable mass driver if we throw all entities
-                if (activeMassDriver.NextThrowTime != TimeSpan.Zero)
-                {
-                    if (TryComp<AmbientSoundComponent>(uid, out var ambient))
-                        _audioSystem.SetAmbience(uid, false, ambient);
-                    activeMassDriver.NextThrowTime = TimeSpan.Zero;
-                    _appearance.SetData(uid, MassDriverVisuals.Launching, false);
-                    _powerReceiver.SetLoad(powered, massDriver.MassDriverPowerLoad);
-                }
-                if (massDriver.Mode == MassDriverMode.Manual)
-                    RemComp<ActiveMassDriverComponent>(uid);
-                continue;
-            }
-
-            // If we find first entity, charge mass driver(wait n seconds setuped in ThrowDelay)
-            if (activeMassDriver.NextThrowTime == TimeSpan.Zero)
-            {
-                activeMassDriver.NextThrowTime = _timing.CurTime + massDriver.ThrowDelay;
-                continue;
-            }
-            else if (_timing.CurTime < activeMassDriver.NextThrowTime)
-                continue;
-
-            _powerReceiver.SetLoad(powered, massDriver.LaunchPowerLoad);
-            _appearance.SetData(uid, MassDriverVisuals.Launching, true);
-
-            ThrowEntities(uid, massDriver, entities, entitiesCount);
-
-            if (TryComp<AmbientSoundComponent>(uid, out var ambientSound))
-                _audioSystem.SetAmbience(uid, true, ambientSound);
-        }
-    }
-
-    /// <summary>
-    /// Throws All entities in list.
-    /// </summary>
-    /// <param name="massDriver">Mass Driver</param>
-    /// <param name="massDriverComponent">Mass Driver Component</param>
-    /// <param name="targets">Targets List</param>
-    /// <param name="targetCount">Count of target(added, because we can ignore some targets like anchored, etc.)</param>
-    private void ThrowEntities(EntityUid massDriver, MassDriverComponent massDriverComponent, HashSet<EntityUid> targets, int targetCount)
-    {
-        var xform = Transform(massDriver);
-        var throwing = xform.LocalRotation.ToWorldVec() * (massDriverComponent.CurrentThrowDistance - (massDriverComponent.ThrowCountDelta * (targets.Count - 1)));
-        var direction = xform.Coordinates.Offset(throwing);
-        var speed = massDriverComponent.Hacked ? massDriverComponent.HackedSpeedRewrite : massDriverComponent.CurrentThrowSpeed - (massDriverComponent.ThrowCountDelta * (targetCount - 1));
-
-        foreach (var entity in targets)
-            _throwing.TryThrow(entity, direction, speed);
+        if (TryComp<ApcPowerReceiverComponent>(uid, out var receiver))
+            _powerReceiver.SetLoad(receiver, powerLoad);
     }
 
     #endregion
