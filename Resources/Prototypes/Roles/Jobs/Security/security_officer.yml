@@ -26,7 +26,7 @@
 - type: startingGear
   id: SecurityOfficerGear
   equipment:
-    eyes: ClothingEyesGlassesSecurity
+  # eyes: ClothingEyesGlassesSecurity # Ronstation - modification.
     ears: ClothingHeadsetSecurity
     pocket1: WeaponPistolMk58
   storage:
