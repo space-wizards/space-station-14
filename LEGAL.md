@@ -29,6 +29,7 @@ Content under these subdirectories originate from their respective forks and may
 | `_CorvaxNext` | Corvax NEXT | https://github.com/space-syndicate/space-station-14-next | AGPL 3.0 |
 | `EstacaoPirata` | Estacao Pirata | https://github.com/estacao-pirata/estacao-pirata | AGPL 3.0 |
 | `_Impstation` | Impstation | https://github.com/impstation/imp-station-14 | AGPL 3.0 |
+| `_Starlight` | Starlight | https://github.com/ss14Starlight/space-station-14 | Starlight |
 
 Additional repos that we have ported features from without subdirectories are listed below.
 | Subdirectory | Fork Name | Fork Repository | License |
