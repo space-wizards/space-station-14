@@ -23,17 +23,17 @@ public sealed partial class AdminVerbSystem
 
         // TODO: This is a temporary solution. I will sort this soon. ~ Verin
         // Get Disposal tube direction verb
-        if (CanCommandOverride(player, "tubeconnections") && TryComp(args.Target, out DisposalTubeComponent? tube))
+        if (!CanCommandOverride(player, "tubeconnections") || !TryComp(args.Target, out DisposalTubeComponent? tube))
+            return;
+
+        Verb verb = new()
         {
-            Verb verb = new()
-            {
-                Text = Loc.GetString("tube-direction-verb-get-data-text"),
-                Category = VerbCategory.Debug,
-                Icon = new SpriteSpecifier.Texture(new("/Textures/Interface/VerbIcons/information.svg.192dpi.png")),
-                Act = () => _disposalTubes.PopupDirections(args.Target, tube, args.User),
-            };
-            args.Verbs.Add(verb);
-        }
+            Text = Loc.GetString("tube-direction-verb-get-data-text"),
+            Category = VerbCategory.Debug,
+            Icon = new SpriteSpecifier.Texture(new ResPath("/Textures/Interface/VerbIcons/information.svg.192dpi.png")),
+            Act = () => _disposalTubes.PopupDirections(args.Target, tube, args.User),
+        };
+        args.Verbs.Add(verb);
     }
 
     protected override void DebugRejuvenateVerb(EntityUid target)
@@ -69,7 +69,7 @@ public sealed partial class AdminVerbSystem
         }
     }
 
-    public void OpenEditSolutionsEui(ICommonSession session, EntityUid uid)
+    private void OpenEditSolutionsEui(ICommonSession session, EntityUid uid)
     {
         if (session.AttachedEntity == null)
             return;

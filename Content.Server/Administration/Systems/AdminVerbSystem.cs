@@ -32,7 +32,6 @@ namespace Content.Server.Administration.Systems;
 public sealed partial class AdminVerbSystem : SharedAdminVerbSystem
 {
     [Dependency] private readonly IConGroupController _groupController = default!;
-    [Dependency] private readonly IConsoleHost _console = default!;
     [Dependency] private readonly IAdminManager _adminManager = default!;
     [Dependency] private readonly IGameTiming _gameTiming = default!;
     [Dependency] private readonly SharedMapSystem _map = default!;
