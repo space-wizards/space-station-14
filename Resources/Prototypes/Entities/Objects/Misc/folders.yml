@@ -20,7 +20,7 @@
 
 - type: entity
   parent: BoxBase
-  id: BoxFolderBase
+  id: BoxFolderBaseEmpty
   name: folder
   description: A folder filled with top secret paperwork.
   components:
@@ -92,12 +92,12 @@
       amount: 3
 
 - type: entity
-  parent: [BoxFolderBase, BoxFolderFill]
-  id: BoxFolderBaseFilled
+  parent: [BoxFolderBaseEmpty, BoxFolderFill]
+  id: BoxFolderBase
 
 - type: entity
-  parent: BoxFolderBase
-  id: BoxFolderRed
+  parent: BoxFolderBaseEmpty
+  id: BoxFolderRedEmpty
   suffix: Red
   components:
   - type: Sprite
@@ -107,13 +107,13 @@
     - state: folder-base
 
 - type: entity
-  parent: [BoxFolderRed, BoxFolderFill]
-  id: BoxFolderRedFilled
+  parent: [BoxFolderRedEmpty, BoxFolderFill]
+  id: BoxFolderRed
   suffix: Red, Filled
 
 - type: entity
-  parent: BoxFolderBase
-  id: BoxFolderBlue
+  parent: BoxFolderBaseEmpty
+  id: BoxFolderBlueEmpty
   suffix: Blue
   components:
   - type: Sprite
@@ -123,13 +123,13 @@
     - state: folder-base
 
 - type: entity
-  parent: [BoxFolderBlue, BoxFolderFill]
-  id: BoxFolderBlueFilled
+  parent: [BoxFolderBlueEmpty, BoxFolderFill]
+  id: BoxFolderBlue
   suffix: Blue, Filled
 
 - type: entity
-  parent: BoxFolderBase
-  id: BoxFolderYellow
+  parent: BoxFolderBaseEmpty
+  id: BoxFolderYellowEmpty
   suffix: Yellow
   components:
   - type: Sprite
@@ -139,13 +139,13 @@
     - state: folder-base
 
 - type: entity
-  parent: [BoxFolderYellow, BoxFolderFill]
-  id: BoxFolderYellowFilled
+  parent: [BoxFolderYellowEmpty, BoxFolderFill]
+  id: BoxFolderYellow
   suffix: Yellow, Filled
 
 - type: entity
-  parent: BoxFolderBase
-  id: BoxFolderGrey
+  parent: BoxFolderBaseEmpty
+  id: BoxFolderGreyEmpty
   suffix: Grey
   components:
   - type: Sprite
@@ -155,13 +155,13 @@
     - state: folder-base
 
 - type: entity
-  parent: [BoxFolderGrey, BoxFolderFill]
-  id: BoxFolderGreyFilled
+  parent: [BoxFolderGreyEmpty, BoxFolderFill]
+  id: BoxFolderGrey
   suffix: Grey, Filled
 
 - type: entity
-  parent: BoxFolderBase
-  id: BoxFolderBlack
+  parent: BoxFolderBaseEmpty
+  id: BoxFolderBlackEmpty
   suffix: Black
   components:
   - type: Sprite
@@ -171,13 +171,13 @@
     - state: folder-base
 
 - type: entity
-  parent: [BoxFolderBlack, BoxFolderFill]
-  id: BoxFolderBlackFilled
+  parent: [BoxFolderBlackEmpty, BoxFolderFill]
+  id: BoxFolderBlack
   suffix: Black, Filled
 
 - type: entity
-  parent: BoxFolderBase
-  id: BoxFolderGreen
+  parent: BoxFolderBaseEmpty
+  id: BoxFolderGreenEmpty
   suffix: Green
   components:
   - type: Sprite
@@ -187,14 +187,14 @@
     - state: folder-base
 
 - type: entity
-  parent: [BoxFolderGreen, BoxFolderFill]
-  id: BoxFolderGreenFilled
+  parent: [BoxFolderGreenEmpty, BoxFolderFill]
+  id: BoxFolderGreen
   suffix: Green, Filled
 
 - type: entity
-  parent: BoxFolderBase
-  id: BoxFolderMedical
-  suffix: Medical
+  parent: BoxFolderBaseEmpty
+  id: BoxFolderWhiteEmpty
+  suffix: White
   components:
   - type: Sprite
     layers:
@@ -202,13 +202,13 @@
     - state: folder-base
 
 - type: entity
-  parent: [BoxFolderMedical, BoxFolderFill]
-  id: BoxFolderMedicalFilled
-  suffix: Medical, Filled
+  parent: [BoxFolderWhiteEmpty, BoxFolderFill]
+  id: BoxFolderWhite
+  suffix: White, Filled
 
 - type: entity
-  parent: BoxFolderBase
-  id: BoxFolderCentCom
+  parent: BoxFolderBaseEmpty
+  id: BoxFolderCentComEmpty
   categories: [ DoNotMap ]
   name: CentComm folder
   description: CentComm's miserable little pile of secrets!
@@ -219,13 +219,13 @@
     - state: folder-base
 
 - type: entity
-  parent: [BoxFolderCentCom, BoxFolderFill]
-  id: BoxFolderCentComFilled
+  parent: [BoxFolderCentComEmpty, BoxFolderFill]
+  id: BoxFolderCentCom
   suffix: DO NOT MAP, Filled
 
 - type: entity
-  parent: BoxFolderBase
-  id: BoxFolderClipboard
+  parent: BoxFolderBaseEmpty
+  id: BoxFolderClipboardEmpty
   name: clipboard
   description: The weapon of choice for those on the front lines of bureaucracy.
   components:
@@ -283,21 +283,21 @@
         Blunt: 6
 
 - type: entity
-  parent: [BoxFolderClipboard, BoxFolderFill]
-  id: BoxFolderClipboardFilled
+  parent: [BoxFolderClipboardEmpty, BoxFolderFill]
+  id: BoxFolderClipboard
 
 - type: entity
-  parent: [BoxFolderClipboard, BoxFolderFillThreePapers]
+  parent: [BoxFolderClipboardEmpty, BoxFolderFillThreePapers]
   id: BoxFolderClipboardThreePapers
 
 - type: entity
-  parent: BoxFolderClipboard
-  id: BoxFolderPlasticClipboard
+  parent: BoxFolderClipboardEmpty
+  id: BoxFolderPlasticClipboardEmpty
   name: plastic clipboard
   description: A cheap clipboard made of blue plastic. For those who aren't yet ready to wield the bureaucratic might of a proper wooden clipboard.
   components:
   - type: Sprite
-    sprite: Objects/Misc/plastic-clipboard.rsi
+    sprite: Objects/Misc/plastic_clipboard.rsi
     layers:
     - state: clipboard
     - state: clipboard_paper
@@ -308,17 +308,17 @@
       visible: false
     - state: clipboard_over
   - type: Item
-    sprite: Objects/Misc/plastic-clipboard.rsi
+    sprite: Objects/Misc/plastic_clipboard.rsi
   - type: Clothing
-    sprite: Objects/Misc/plastic-clipboard.rsi
+    sprite: Objects/Misc/plastic_clipboard.rsi
 
 - type: entity
-  parent: [BoxFolderPlasticClipboard, BoxFolderFill]
-  id: BoxFolderPlasticClipboardFilled
+  parent: [BoxFolderPlasticClipboardEmpty, BoxFolderFill]
+  id: BoxFolderPlasticClipboard
 
 - type: entity
-  parent: BoxFolderClipboard
-  id: BoxFolderCentComClipboard
+  parent: BoxFolderClipboardEmpty
+  id: BoxFolderCentComClipboardEmpty
   name: CentComm clipboard
   description: A luxurious clipboard upholstered with green velvet. Often seen carried by CentComm officials, seldom seen actually used.
   components:
@@ -339,15 +339,15 @@
     sprite: Objects/Misc/cc-clipboard.rsi
 
 - type: entity
-  parent: [BoxFolderCentComClipboard, BoxFolderFillThreePapers]
+  parent: [BoxFolderCentComClipboardEmpty, BoxFolderFill]
+  id: BoxFolderCentComClipboard
+
+- type: entity
+  parent: [BoxFolderCentComClipboardEmpty, BoxFolderFillThreePapers]
   id: BoxFolderCentComClipboardThreePapers
 
 - type: entity
-  parent: [BoxFolderCentComClipboard, BoxFolderFill]
-  id: BoxFolderCentComClipboardFilled
-
-- type: entity
-  parent: [BoxFolderClipboard, BaseGrandTheftContraband]
+  parent: [BoxFolderClipboardEmpty, BaseGrandTheftContraband]
   id: BoxFolderQmClipboard
   name: requisition digi-board
   description: A bulky electric clipboard, filled with shipping orders and financing details. With so many compromising documents, you ought to keep this safe.

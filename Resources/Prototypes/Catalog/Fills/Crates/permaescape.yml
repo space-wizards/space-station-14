@@ -128,33 +128,33 @@
         amount: 5
       - id: Pen
         amount: 3
-      - id: BoxFolderBase
+      - id: BoxFolderBaseEmpty
         orGroup: folderA
-      - id: BoxFolderBlack
+      - id: BoxFolderBlackEmpty
         orGroup: folderA
-      - id: BoxFolderBlue
+      - id: BoxFolderBlueEmpty
         orGroup: folderA
-      - id: BoxFolderGreen
+      - id: BoxFolderGreenEmpty
         orGroup: folderA
-      - id: BoxFolderGrey
+      - id: BoxFolderGreyEmpty
         orGroup: folderA
-      - id: BoxFolderRed
+      - id: BoxFolderRedEmpty
         orGroup: folderA
-      - id: BoxFolderYellow
+      - id: BoxFolderYellowEmpty
         orGroup: folderA
-      - id: BoxFolderBase
+      - id: BoxFolderBaseEmpty
         orGroup: folderB
-      - id: BoxFolderBlack
+      - id: BoxFolderBlackEmpty
         orGroup: folderB
-      - id: BoxFolderBlue
+      - id: BoxFolderBlueEmpty
         orGroup: folderB
-      - id: BoxFolderGreen
+      - id: BoxFolderGreenEmpty
         orGroup: folderB
-      - id: BoxFolderGrey
+      - id: BoxFolderGreyEmpty
         orGroup: folderB
-      - id: BoxFolderRed
+      - id: BoxFolderRedEmpty
         orGroup: folderB
-      - id: BoxFolderYellow
+      - id: BoxFolderYellowEmpty
         orGroup: folderB
       - id: CrayonBox
         prob: 0.50

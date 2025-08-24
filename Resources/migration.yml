@@ -706,17 +706,4 @@ FoodDonutJellySlugcat: FoodDonutJellyScurret
 
 # 2025-08-11
 ClothingUniformJumpsuitChiefEngineerNT: ClothingUniformJumpsuitChiefEngineer
-ClothingUniformJumpsuitParamedicNT: ClothingUniformJumpsuitParamedic
-
-# 2025-08-21
-BoxFolderBase: BoxFolderBaseFilled
-BoxFolderRed: BoxFolderRedFilled
-BoxFolderBlue: BoxFolderBlueFilled
-BoxFolderYellow: BoxFolderYellowFilled
-BoxFolderGrey: BoxFolderGreyFilled
-BoxFolderBlack: BoxFolderBlackFilled
-BoxFolderGreen: BoxFolderGreenFilled
-BoxFolderWhite: BoxFolderMedicalFilled
-BoxFolderCentCom: BoxFolderCentComFilled
-BoxFolderClipboard: BoxFolderClipboardFilled
-BoxFolderCentComClipboard: BoxFolderCentComClipboardFilled
+ClothingUniformJumpsuitParamedicNT: ClothingUniformJumpsuitParamedicNT
