@@ -1,0 +1,39 @@
+- type: loadoutGroup
+  id: StationEngineerHead
+  parent: BaseHead
+  loadouts:
+  - StationEngineerHardhatYellow
+  - StationEngineerHardhatOrange
+  - StationEngineerHardhatRed
+  - SeniorEngineerBeret
+
+- type: loadoutGroup
+  id: StationEngineerJumpsuit
+  parent: BaseJumpsuit
+  loadouts:
+  - StationEngineerJumpsuit
+  - StationEngineerJumpskirt
+  - StationEngineerHazardsuit
+  - SeniorEngineerJumpsuit
+  - SeniorEngineerJumpskirt
+
+- type: loadoutGroup
+  id: StationEngineerOuterClothing
+  parent: BaseOuterClothing
+  loadouts:
+  - StationEngineerOuterVest
+  - StationEngineerWintercoat
+
+- type: loadoutGroup
+  id: StationEngineerShoes
+  parent: BaseShoes
+  loadouts:
+  - WorkBoots
+  - EngineeringWinterBoots
+
+- type: loadoutGroup
+  id: StationEngineerPDA
+  parent: BasePDA
+  loadouts:
+  - StationEngineerPDA
+  - SeniorEngineerPDA

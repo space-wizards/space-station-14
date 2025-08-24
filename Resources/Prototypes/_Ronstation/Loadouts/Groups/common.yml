@@ -68,6 +68,14 @@
   - CommonDuffel
 
 - type: loadoutGroup
+  id: EngineeringBackpack
+  parent: BaseBackpack
+  loadouts:
+  - StationEngineerBackpack
+  - StationEngineerSatchel
+  - StationEngineerDuffel
+
+- type: loadoutGroup
   id: MedicalBackpack
   parent: BaseBackpack
   loadouts:
@@ -139,6 +147,15 @@
   name: loadout-group-survival
   abstract: true
   hidden: true
+
+- type: loadoutGroup
+  id: SurvivalExtended
+  parent: BaseSurvival
+  minLimit: 2
+  loadouts:
+  - EmergencyNitrogenExtended
+  - EmergencyOxygenExtended
+  - LoadoutSpeciesVoxNitrogen
 
 - type: loadoutGroup
   id: SurvivalMedical

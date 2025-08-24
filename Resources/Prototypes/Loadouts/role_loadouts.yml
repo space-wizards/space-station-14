@@ -249,7 +249,7 @@
   - GroupTankHarness
   - ChiefEngineerHead
   - ChiefEngineerJumpsuit
-  - StationEngineerBackpack
+  - EngineeringBackpack
   - ChiefEngineerNeck
   - ChiefEngineerOuterClothing
   - ChiefEngineerShoes
@@ -262,7 +262,7 @@
   groups:
   - GroupTankHarness
   - TechnicalAssistantJumpsuit
-  - StationEngineerBackpack
+  - EngineeringBackpack
   - SurvivalExtended
   - Trinkets
   - GroupSpeciesBreathTool
@@ -273,7 +273,7 @@
   - GroupTankHarness
   - StationEngineerHead
   - StationEngineerJumpsuit
-  - StationEngineerBackpack
+  - EngineeringBackpack
   - StationEngineerOuterClothing
   - StationEngineerShoes
   - StationEngineerPDA

@@ -1,0 +1,35 @@
+- type: loadoutGroup
+  id: ChiefEngineerHead
+  parent: BaseHead
+  loadouts:
+  - ChiefEngineerHead
+  - ChiefEngineerBeret
+
+- type: loadoutGroup
+  id: ChiefEngineerNeck
+  parent: BaseNeck
+  loadouts:
+  - ChiefEngineerCloak
+  - ChiefEngineerMantle
+
+- type: loadoutGroup
+  id: ChiefEngineerJumpsuit
+  parent: BaseJumpsuit
+  loadouts:
+  - ChiefEngineerJumpsuit
+  - ChiefEngineerJumpskirt
+  - ChiefEngineerTurtleneck
+  - ChiefEngineerTurtleneckSkirt
+
+- type: loadoutGroup
+  id: ChiefEngineerOuterClothing
+  parent: BaseOuterClothing
+  loadouts:
+  - ChiefEngineerWintercoat
+
+- type: loadoutGroup
+  id: ChiefEngineerShoes
+  parent: BaseShoes
+  loadouts:
+  - BrownShoes
+  - EngineeringWinterBoots
