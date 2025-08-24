@@ -94,7 +94,7 @@
   parent: [ClothingOuterArmorBase, BaseSecurityContraband]
   id: ClothingOuterVestDetective
   name: detective's armor vest
-  description: A cheap Type-I protective vest, its aramid armor provides decent protection against most attacks. A gold badge denotes the wearer as a NT security detective.
+  description: A cheap Type-I protective vest, its aramid armor provides decent protection against most attacks. A gold badge denotes the wearer as a detective of the NT security force.
   components:
   - type: Sprite
     sprite: Clothing/OuterClothing/Vests/detvest.rsi
