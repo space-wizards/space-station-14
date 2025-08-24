@@ -78,10 +78,10 @@ namespace Content.Server.Medical
 
                 var vomitAmount = solutionSize;
 
-                // Takes 10% of the chemicals removed from the chem stream
+                // Flushes small portion of the chemicals removed from the bloodstream stream
                 if (_solutionContainer.ResolveSolution(uid, bloodStream.BloodSolutionName, ref bloodStream.BloodSolution))
                 {
-                    var vomitChemstreamAmount = _bloodstream.FlushChemicals((uid, bloodStream), bloodStream.BloodReagent, vomitAmount);
+                    var vomitChemstreamAmount = _bloodstream.FlushChemicals((uid, bloodStream), null, vomitAmount);
 
                     if (vomitChemstreamAmount != null)
                     {
