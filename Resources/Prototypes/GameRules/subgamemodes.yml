@@ -86,28 +86,33 @@
     definitions:
     - prefRoles: [ MothershipCore ]
       fallbackRoles: [ Xenoborg ]
-      spawnerPrototype: SpawnPointMothershipCore
+      spawnerPrototype: SpawnPointGhostRoleMothershipCore
       mindRoles:
       - MindRoleMothershipCore
+      entityPrototype: MothershipCore
     - prefRoles: [ Xenoborg ]
       fallbackRoles: [ MothershipCore ]
-      spawnerPrototype: SpawnPointXenoborgEngi
+      spawnerPrototype: SpawnPointGhostRoleXenoborg
       mindRoles:
       - MindRoleXenoborg
+      entityPrototype: XenoborgEngi
     - prefRoles: [ Xenoborg ]
       fallbackRoles: [ MothershipCore ]
-      spawnerPrototype: SpawnPointXenoborgHeavy
+      spawnerPrototype: SpawnPointGhostRoleXenoborg
       mindRoles:
       - MindRoleXenoborg
+      entityPrototype: XenoborgHeavy
     - prefRoles: [ Xenoborg ]
       fallbackRoles: [ MothershipCore ]
-      spawnerPrototype: SpawnPointXenoborgScout
+      spawnerPrototype: SpawnPointGhostRoleXenoborg
       mindRoles:
       - MindRoleXenoborg
+      entityPrototype: XenoborgScout
     - prefRoles: [ Xenoborg ]
       fallbackRoles: [ MothershipCore ]
-      spawnerPrototype: SpawnPointXenoborgStealth
+      spawnerPrototype: SpawnPointGhostRoleXenoborg
       mindRoles:
       - MindRoleXenoborg
+      entityPrototype: XenoborgStealth
   - type: DynamicRuleCost
     cost: 200
