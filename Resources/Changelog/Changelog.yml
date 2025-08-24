@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: ArtisticRoomba
-  changes:
-  - message: A new Mapping changelog has been added. You can find it in a different
-      "Mapping" tab under the changelog menu.
-    type: Add
-  id: 8369
-  time: '2025-04-27T20:15:17.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/34848
 - author: ScarKy0
   changes:
   - message: Deliveries can now spawn as fragile-type! Deliver them intact to earn
@@ -3948,3 +3940,11 @@
   id: 8881
   time: '2025-08-23T22:15:28.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/35100
+- author: whatston3
+  changes:
+  - message: Lathes now batch items into jobs, which can be moved around in priority
+      or deleted.
+    type: Add
+  id: 8882
+  time: '2025-08-24T15:02:47.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38624
