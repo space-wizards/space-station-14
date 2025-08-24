@@ -194,7 +194,7 @@ public sealed class ThirstSystem : EntitySystem
             case ThirstThreshold.Parched:
                 _movement.RefreshMovementSpeedModifiers(uid);
                 component.LastThirstThreshold = component.CurrentThirstThreshold;
-                component.ActualDecayRate = thirstMultiplier * component.BaseDecayRate * 0.6f;
+                component.ActualDecayRate = thirstMultiplier * component.BaseDecayRate * 0.6f; // Starlight-edit
                 return;
 
             case ThirstThreshold.Dead:
