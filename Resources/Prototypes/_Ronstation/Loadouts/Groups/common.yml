@@ -94,11 +94,26 @@
   - RoboticistSatchel
   - RoboticistDuffel
 
+- type: loadoutGroup
+  id: SecurityBackpack
+  parent: BaseBackpack
+  loadouts:
+  - SecurityBackpack
+  - SecuritySatchel
+  - SecurityDuffel
+
 # Belt
 - type: loadoutGroup
   id: BaseBelt
   name: loadout-group-belt
   abstract: true
+
+- type: loadoutGroup
+  id: SecurityBelt
+  parent: BaseBelt
+  loadouts:
+  - SecurityBelt
+  - SecurityWebbing
 
 # Outer clothing
 - type: loadoutGroup
@@ -121,6 +136,13 @@
   loadouts:
   - WhiteShoes
   - MedicalWinterBoots
+
+- type: loadoutGroup
+  id: SecurityShoes
+  parent: BaseShoes
+  loadouts:
+  - JackBoots
+  - SecurityWinterBoots
 
 # PDA
 - type: loadoutGroup
@@ -174,4 +196,13 @@
   loadouts:
   - EmergencyNitrogenMedical
   - EmergencyOxygenMedical
+  - LoadoutSpeciesVoxNitrogen
+
+- type: loadoutGroup
+  id: SurvivalSecurity
+  parent: BaseSurvival
+  minLimit: 2
+  loadouts:
+  - EmergencyNitrogenSecurity
+  - EmergencyOxygenSecurity
   - LoadoutSpeciesVoxNitrogen

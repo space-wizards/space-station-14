@@ -1,0 +1,30 @@
+- type: loadoutGroup
+  id: DetectiveHead
+  parent: BaseHead
+  loadouts:
+  - DetectiveFedora
+  - DetectiveFedoraGrey
+
+- type: loadoutGroup
+  id: DetectiveNeck
+  parent: BaseNeck
+  loadouts:
+  - DetectiveTie
+
+- type: loadoutGroup
+  id: DetectiveJumpsuit
+  parent: BaseJumpsuit
+  loadouts:
+  - DetectiveJumpsuit
+  - DetectiveJumpskirt
+  - NoirJumpsuit
+  - NoirJumpskirt
+
+- type: loadoutGroup
+  id: DetectiveOuterClothing
+  parent: BaseOuterClothing
+  minLimit: 1 # Detective must have outer clothing
+  loadouts:
+  - DetectiveArmorVest
+  - DetectiveCoat
+  - DetectiveCoatGrey
