@@ -1,0 +1,40 @@
+- type: loadoutGroup
+  id: PassengerMask
+  parent: BaseMask
+  loadouts:
+  - PassengerFace
+
+- type: loadoutGroup
+  id: PassengerNeck
+  parent: BaseNeck
+  loadouts:
+  - Mantle
+
+- type: loadoutGroup
+  id: PassengerJumpsuit
+  parent: BaseJumpsuit
+  loadouts:
+  - GreyJumpsuit
+  - GreyJumpskirt
+  - AncientJumpsuit
+  - RainbowJumpsuit
+  - RainbowJumpskirt
+
+- type: loadoutGroup
+  id: PassengerGloves
+  parent: BaseGloves
+  loadouts:
+  - PassengerGloves
+
+- type: loadoutGroup
+  id: PassengerOuterClothing
+  parent: BaseOuterClothing
+  loadouts:
+  - PassengerWintercoat
+
+- type: loadoutGroup
+  id: PassengerShoes
+  parent: BaseShoes
+  loadouts:
+  - BlackShoes
+  - WinterBoots

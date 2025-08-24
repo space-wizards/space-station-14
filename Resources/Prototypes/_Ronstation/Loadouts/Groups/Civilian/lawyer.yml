@@ -1,0 +1,20 @@
+- type: loadoutGroup
+  id: LawyerNeck
+  parent: BaseNeck
+  loadouts:
+  - LawyerNeck
+  
+- type: loadoutGroup
+  id: LawyerJumpsuit
+  parent: BaseJumpsuit
+  loadouts:
+  - LawyerJumpsuit
+  - LawyerJumpskirt
+  - LawyerJumpsuitBlue
+  - LawyerJumpskirtBlue
+  - LawyerJumpsuitPurple
+  - LawyerJumpskirtPurple
+  - LawyerJumpsuitRed
+  - LawyerJumpskirtRed
+  - LawyerJumpsuitGood
+  - LawyerJumpskirtGood

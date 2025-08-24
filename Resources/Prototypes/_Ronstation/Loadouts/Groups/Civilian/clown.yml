@@ -1,0 +1,46 @@
+- type: loadoutGroup
+  id: ClownHead
+  parent: BaseHead
+  loadouts:
+  - JesterHat
+  - JesterAltHat
+
+- type: loadoutGroup
+  id: ClownJumpsuit
+  parent: BaseJumpsuit
+  loadouts:
+  - ClownSuit
+  - ClownSkirt
+  - JesterSuit
+  - JesterAltSuit
+
+- type: loadoutGroup
+  id: ClownBackpack
+  parent: BaseBackpack
+  loadouts:
+  - ClownBackpack
+  - ClownSatchel
+  - ClownDuffel
+
+- type: loadoutGroup
+  id: ClownOuterClothing
+  parent: BaseOuterClothing
+  loadouts:
+  - ClownRobes
+  - ClownWintercoat
+
+- type: loadoutGroup
+  id: ClownShoes
+  parent: BaseShoes
+  loadouts:
+  - ClownShoes
+  - JesterShoes
+
+- type: loadoutGroup
+  id: SurvivalClown
+  parent: BaseSurvival
+  minLimit: 2
+  loadouts:
+  - EmergencyNitrogenClown
+  - EmergencyOxygenClown
+  - LoadoutSpeciesVoxNitrogen

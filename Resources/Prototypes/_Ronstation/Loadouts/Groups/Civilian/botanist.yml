@@ -1,0 +1,29 @@
+- type: loadoutGroup
+  id: BotanistHead
+  parent: BaseHead
+  loadouts:
+  - BotanistHead
+  - BotanistBandana
+
+- type: loadoutGroup
+  id: BotanistJumpsuit
+  parent: BaseJumpsuit
+  loadouts:
+  - BotanistJumpsuit
+  - BotanistJumpskirt
+  - BotanistOveralls
+
+- type: loadoutGroup
+  id: BotanistBackpack
+  parent: BaseBackpack
+  loadouts:
+  - BotanistBackpack
+  - BotanistSatchel
+  - BotanistDuffel
+
+- type: loadoutGroup
+  id: BotanistOuterClothing
+  parent: BaseOuterClothing
+  loadouts:
+  - BotanistApron
+  - BotanistWintercoat

@@ -52,6 +52,14 @@
   abstract: true
 
 - type: loadoutGroup
+  id: CommonBackpack
+  parent: BaseBackpack
+  loadouts:
+  - CommonBackpack
+  - CommonSatchel
+  - CommonDuffel
+
+- type: loadoutGroup
   id: MedicalBackpack
   parent: BaseBackpack
   loadouts:
@@ -77,7 +85,7 @@
   id: BaseShoes
   name: loadout-group-shoes
   abstract: true
-  
+
 - type: loadoutGroup
   id: MedicalShoes
   parent: BaseShoes
@@ -112,7 +120,7 @@
   name: loadout-group-survival
   abstract: true
   hidden: true
-  
+
 - type: loadoutGroup
   id: SurvivalMedical
   parent: BaseSurvival
