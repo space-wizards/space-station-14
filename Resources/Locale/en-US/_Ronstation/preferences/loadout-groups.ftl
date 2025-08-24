@@ -11,3 +11,4 @@ loadout-group-pda = PDA
 loadout-group-glasses = Glasses
 loadout-group-survival = Survival Box
 loadout-group-trinkets = Trinkets
+loadout-group-pets = Pets

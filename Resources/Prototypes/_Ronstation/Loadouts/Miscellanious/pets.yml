@@ -1,0 +1,53 @@
+- type: loadout
+  id: PetMouseWhite
+  storage:
+    back:
+    - MobMouse
+
+- type: loadout
+  id: PetMouseOrange
+  storage:
+    back:
+    - MobMouse1
+
+- type: loadout
+  id: PetMouseGray
+  storage:
+    back:
+    - MobMouse2
+
+- type: loadout
+  id: PetCockroach
+  storage:
+    back:
+    - MobCockroach
+
+- type: loadout
+  id: PetMothroach
+  storage:
+    back:
+    - MobMothroach
+
+- type: loadout
+  id: PetBee
+  storage:
+    back:
+    - MobBee
+
+- type: loadout
+  id: PetButterfly
+  storage:
+    back:
+    - MobButterfly
+
+- type: loadout
+  id: PetSnail
+  storage:
+    back:
+    - MobSnail
+
+- type: loadout
+  id: PetSnailMoth
+  storage:
+    back:
+    - MobSnailMoth
