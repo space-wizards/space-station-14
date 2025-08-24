@@ -12373,5 +12373,61 @@ Entries:
   id: 145300
   time: '2025-08-23T18:34:18.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/1453
+- author: Fractalflower
+  changes:
+  - message: Vulpkanins can now understand Fox and Dog
+    type: Add
+  id: 144600
+  time: '2025-08-24T16:21:54.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1446
+- author: Fractalflower
+  changes:
+  - message: Felionoids can now understand Cat
+    type: Add
+  id: 144601
+  time: '2025-08-24T16:21:54.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1446
+- author: Fractalflower
+  changes:
+  - message: Corgis and foxes can now understand Canilunzt
+    type: Add
+  id: 144602
+  time: '2025-08-24T16:21:54.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1446
+- author: Fractalflower
+  changes:
+  - message: Cats can now understand Nekomimetic
+    type: Add
+  id: 144603
+  time: '2025-08-24T16:21:54.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1446
+- author: Fractalflower
+  changes:
+  - message: Mothroaches no longer speak Moffic
+    type: Remove
+  id: 144604
+  time: '2025-08-24T16:21:54.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1446
+- author: Fractalflower
+  changes:
+  - message: Mothroaches now speak their own language
+    type: Add
+  id: 144605
+  time: '2025-08-24T16:21:54.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1446
+- author: Fractalflower
+  changes:
+  - message: Mothroaches can now understand, but not speak, Moffic
+    type: Add
+  id: 144606
+  time: '2025-08-24T16:21:54.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1446
+- author: Fractalflower
+  changes:
+  - message: Mothpeople now understand, but cannot speak, Mothroach
+    type: Add
+  id: 144607
+  time: '2025-08-24T16:21:54.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1446
 Order: -1
 
