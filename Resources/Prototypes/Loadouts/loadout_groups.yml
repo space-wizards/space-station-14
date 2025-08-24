@@ -829,7 +829,6 @@
   minLimit: 0
   loadouts:
   - AtmosphericTechnicianWintercoat
-  - StationEngineerOuterVest
 
 - type: loadoutGroup
   id: AtmosphericTechnicianBackpack
