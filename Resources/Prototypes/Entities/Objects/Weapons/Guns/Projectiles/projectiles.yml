@@ -1311,6 +1311,14 @@
         Heat: 13
 
 - type: entity
+  id: BulletLaserRadar
+  parent: BulletLaser
+  components:
+  - type: RadarTracked
+    radarColor: "#AA77FF"
+    size: 1.5
+
+- type: entity
   name: wide laser barrage
   id: BulletLaserSpread
   categories: [ HideSpawnMenu ]

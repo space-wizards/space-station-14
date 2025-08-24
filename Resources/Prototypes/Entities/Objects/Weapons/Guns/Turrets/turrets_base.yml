@@ -114,7 +114,16 @@
       renderingStrategy: NoRotation
     - state: base
     - state: lethal
+      map: ["enum.PowerDeviceVisualLayers.Powered"]
       shader: unshaded
+      visible: false
+  - type: Appearance
+  - type: GenericVisualizer
+    visuals:
+      enum.PowerDeviceVisuals.Powered:
+        enum.PowerDeviceVisualLayers.Powered:
+          True: { visible: true }
+          False: { visible: false }
   - type: Gun
     projectileSpeed: 15
     fireRate: 1.5
@@ -133,6 +142,8 @@
   - type: ApcPowerReceiver
     powerLoad: 5
   - type: ExtensionCableReceiver
+  - type: LightningTarget
+    priority: 1
   - type: HTN
     rootTask:
       task: EnergyTurretCompound

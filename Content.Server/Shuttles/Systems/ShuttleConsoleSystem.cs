@@ -39,7 +39,7 @@ public sealed partial class ShuttleConsoleSystem : SharedShuttleConsoleSystem
     [Dependency] private readonly ShuttleSystem _shuttle = default!;
     [Dependency] private readonly StationSystem _station = default!;
     [Dependency] private readonly TagSystem _tags = default!;
-    [Dependency] private readonly UserInterfaceSystem _ui = default!;
+    [Dependency] private readonly SharedUserInterfaceSystem _ui = default!;
     [Dependency] private readonly SharedContentEyeSystem _eyeSystem = default!;
 
     private EntityQuery<MetaDataComponent> _metaQuery;
@@ -73,6 +73,8 @@ public sealed partial class ShuttleConsoleSystem : SharedShuttleConsoleSystem
         {
             subs.Event<BoundUIClosedEvent>(OnDronePilotConsoleClose);
         });
+
+        SubscribeLocalEvent<PoweredRadarColorComponent, PowerChangedEvent>(OnRadarSignaturePowerChange);
 
         SubscribeLocalEvent<DockEvent>(OnDock);
         SubscribeLocalEvent<UndockEvent>(OnUndock);
@@ -172,6 +174,14 @@ public sealed partial class ShuttleConsoleSystem : SharedShuttleConsoleSystem
         UpdateState(uid, ref dockState);
     }
 
+    private void OnRadarSignaturePowerChange(EntityUid uid, PoweredRadarColorComponent component, ref PowerChangedEvent args)
+    {
+        if (!TryComp<RadarTrackedComponent>(uid, out var signatureComp))
+            return;
+
+        signatureComp.RadarColor = args.Powered ? component.OnColor : component.OffColor;
+    }
+
     private bool TryPilot(EntityUid user, EntityUid uid)
     {
         if (!_tags.HasTag(user, CanPilotTag) ||
@@ -261,7 +271,7 @@ public sealed partial class ShuttleConsoleSystem : SharedShuttleConsoleSystem
             result.Add((
                 _transform.ToMapCoordinates(uid.ToCoordinates()).Position,
                 comp.Shape,
-                comp.RadarAngle + _transform.GetWorldRotation(uid),
+                comp.Angle + _transform.GetWorldRotation(uid),
                 comp.Size,
                 comp.RadarColor
                 ));

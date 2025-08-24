@@ -50,7 +50,7 @@
   parent: ImmovableRod
   components:
   - type: TimedDespawn
-    lifetime: 30.0
+    lifetime: 180.0
 
 - type: entity
   id: ImmovableRodSlow

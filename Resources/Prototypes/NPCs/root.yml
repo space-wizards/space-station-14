@@ -69,11 +69,14 @@
   branches:
     - tasks:
         - !type:HTNPrimitiveTask
+          preconditions:
+            - !type:PoweredPrecondition
           operator: !type:UtilityOperator
             proto: NearbyGunTargets
         
         - !type:HTNPrimitiveTask
           preconditions:
+            - !type:PoweredPrecondition
             - !type:KeyExistsPrecondition
               key: Target
             - !type:TargetInRangePrecondition
@@ -102,16 +105,18 @@
   branches:
     - tasks:
         - !type:HTNPrimitiveTask
+          preconditions:
+            - !type:PoweredPrecondition
           operator: !type:UtilityOperator
             proto: NearbyGunTargets
 
         - !type:HTNPrimitiveTask
           preconditions:
+            - !type:PoweredPrecondition
             - !type:KeyExistsPrecondition
               key: Target
             - !type:TargetInRangePrecondition
               targetKey: Target
-              # TODO: Non-scuffed
               rangeKey: RangedRangeFar
             - !type:TargetInLOSPrecondition
               targetKey: Target

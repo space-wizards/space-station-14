@@ -113,6 +113,9 @@
   - type: NpcFactionMember
     factions:
     - AntiMeteor
+  - type: RadarTracked
+    shape: "Chevron"
+    radarColor: "#FFAAFF"
 
 - type: entity
   parent: BaseWeaponBallisticTurret

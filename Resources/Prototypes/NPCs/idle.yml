@@ -57,6 +57,8 @@
             targetKey: RotateTarget
 
         - !type:HTNPrimitiveTask
+          preconditions:
+            - !type:PoweredPrecondition # passes if the entity has no powercomp
           operator: !type:RotateToTargetOperator
             targetKey: RotateTarget
 

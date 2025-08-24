@@ -1,11 +1,7 @@
 using System.Numerics;
-using Content.Server.UserInterface;
 using Content.Shared.Shuttles.BUIStates;
 using Content.Shared.Shuttles.Components;
 using Content.Shared.Shuttles.Systems;
-using Content.Shared.PowerCell;
-using Content.Shared.Movement.Components;
-using Robust.Server.GameObjects;
 using Robust.Shared.Map;
 
 namespace Content.Server.Shuttles.Systems;
@@ -13,7 +9,7 @@ namespace Content.Server.Shuttles.Systems;
 public sealed class RadarConsoleSystem : SharedRadarConsoleSystem
 {
     [Dependency] private readonly ShuttleConsoleSystem _console = default!;
-    [Dependency] private readonly UserInterfaceSystem _uiSystem = default!;
+    [Dependency] private readonly SharedUserInterfaceSystem _uiSystem = default!;
 
     public override void Initialize()
     {

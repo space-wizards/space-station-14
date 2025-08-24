@@ -1,7 +1,7 @@
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.Shuttles.Components;
-// move to shared probably.
+
 [RegisterComponent]
 public sealed partial class RadarTrackedComponent : Component
 {
@@ -21,7 +21,7 @@ public sealed partial class RadarTrackedComponent : Component
     /// Rotation of the indicator on the nav ui
     /// </summary>
     [DataField]
-    public Angle RadarAngle = Angle.Zero;
+    public Angle Angle = Angle.Zero;
 
     /// <summary>
     /// Size of the major axis of the indicator on the nav ui
