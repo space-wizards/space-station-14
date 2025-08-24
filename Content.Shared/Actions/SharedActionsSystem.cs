@@ -39,8 +39,6 @@ public abstract class SharedActionsSystem : EntitySystem
     private EntityQuery<ActionsComponent> _actionsQuery;
     private EntityQuery<MindComponent> _mindQuery;
 
-    private const int DoAfterRepeatUseDelay = 0;
-
     public override void Initialize()
     {
         base.Initialize();
@@ -107,7 +105,7 @@ public abstract class SharedActionsSystem : EntitySystem
         // Set the use delay to 0 so this can repeat properly
         if (actionDoAfterArgsComp.Repeat)
         {
-            SetUseDelay(action, TimeSpan.FromSeconds(DoAfterRepeatUseDelay));
+            SetUseDelay(action, TimeSpan.Zero);
         }
 
         if (args.Cancelled)
