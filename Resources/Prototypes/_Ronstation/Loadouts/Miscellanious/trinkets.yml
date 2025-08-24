@@ -17,3 +17,4 @@
   storage:
     back:
     - CardBoxPokerFilled
+  groupBy: "toys"

@@ -1,7 +1,7 @@
 - type: loadoutGroup
   id: Trinkets
   name: loadout-group-trinkets
-  parent: [ TrinketPlushies, TrinketSmokes, TrinketPins, TrinketCanes, TrinketTowels ]
+  parent: [ TrinketPlushies, TrinketToys, TrinketSmokes, TrinketPins, TrinketCanes, TrinketTowels ]
   minLimit: 0
   maxLimit: 3
   loadouts:
@@ -17,6 +17,12 @@
   loadouts:
   - PlushieLizard
   - PlushieSpaceLizard
+
+- type: loadoutGroup
+  id: TrinketToys
+  abstract: true
+  loadouts:
+  - CardBoxPokerFilled
 
 - type: loadoutGroup
   id: TrinketSmokes
