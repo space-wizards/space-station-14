@@ -43,10 +43,6 @@
   - type: StorageFillVisualizer
     maxFillLevels: 3
     fillBaseName: tote
-  - type: Item
-    size: Large
-    shape:
-    - 0,0,2,2
   - type: Storage
     maxItemSize: Small
     grid:
@@ -55,12 +51,12 @@
       components:
       - MachineBoard
       - Circuitboard
-      - BaseElectronics
+  - type: EntityStorage
   - type: Construction
     graph: ToteBase
     node: totebase
     containers:
-      - entity_storage
+      - storagebase
   - type: PhysicalComposition
     materialComposition:
       Cardboard: 75

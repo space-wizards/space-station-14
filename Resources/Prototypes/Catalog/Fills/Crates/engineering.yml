@@ -245,6 +245,9 @@
         tableId: RandomTechBoardTable
         rolls: !type:RangeNumberSelector
           range: 6, 8
+  - type: StorageFill
+    contents:
+      - id: ToteBase #Trying to make the base a Tote causes it to not fill, I don't know why. This is a cry for help and the best alternative I have.
 
 - type: entity
   id: CrateAirGrenade
