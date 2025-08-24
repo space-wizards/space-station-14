@@ -45,6 +45,14 @@
   - LatexGloves
   - NitrileGloves
 
+- type: loadoutGroup
+  id: ScienceGloves
+  parent: BaseGloves
+  loadouts:
+  - LatexGloves
+  - PurpleGloves
+  - RobohandsGloves
+
 # Backpack
 - type: loadoutGroup
   id: BaseBackpack
@@ -66,6 +74,17 @@
   - MedicalDoctorBackpack
   - MedicalDoctorSatchel
   - MedicalDoctorDuffel
+
+- type: loadoutGroup
+  id: ScienceBackpack
+  parent: BaseBackpack
+  loadouts:
+  - ScientistBackpack
+  - ScientistSatchel
+  - ScientistDuffel
+  - RoboticistBackpack
+  - RoboticistSatchel
+  - RoboticistDuffel
 
 # Belt
 - type: loadoutGroup

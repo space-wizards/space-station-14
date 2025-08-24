@@ -1,0 +1,50 @@
+- type: loadoutGroup
+  id: ScientistHead
+  parent: BaseHead
+  loadouts:
+  - RoboticistCap
+  - SkullBandana
+  - ScientificBeret
+
+- type: loadoutGroup
+  id: ScientistNeck
+  parent: BaseNeck
+  loadouts:
+  - ScientistTie
+
+- type: loadoutGroup
+  id: ScientistJumpsuit
+  parent: BaseJumpsuit
+  loadouts:
+  - ScientistJumpsuit
+  - ScientistJumpskirt
+  - RoboticistJumpsuit
+  - RoboticistJumpskirt
+  - SeniorResearcherJumpsuit
+  - SeniorResearcherJumpskirt
+
+- type: loadoutGroup
+  id: ScientistOuterClothing
+  parent: BaseOuterClothing
+  loadouts:
+  - RegularLabCoat
+  - ScienceLabCoat
+  - ScienceWintercoat
+  - RoboticistLabCoat
+  - RoboticistWintercoat
+  - SeniorResearcherLabCoat
+
+- type: loadoutGroup
+  id: ScientistShoes
+  parent: BaseShoes
+  loadouts:
+  - WhiteShoes
+  - BlackShoes
+  - ScienceWinterBoots
+
+- type: loadoutGroup
+  id: ScientistPDA
+  parent: BasePDA
+  loadouts:
+  - ScientistPDA
+  - SeniorResearcherPDA

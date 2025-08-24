@@ -301,9 +301,9 @@
   - ResearchDirectorHead
   - ResearchDirectorNeck
   - ResearchDirectorJumpsuit
-  - ScientistBackpack
+  - ScienceBackpack
   - ResearchDirectorOuterClothing
-  - ScientistGloves
+  - ScienceGloves
   - ResearchDirectorShoes
   - CommonGlasses
   - Survival
@@ -317,9 +317,9 @@
   - ScientistHead
   - ScientistNeck
   - ScientistJumpsuit
-  - ScientistBackpack
+  - ScienceBackpack
   - ScientistOuterClothing
-  - ScientistGloves
+  - ScienceGloves
   - ScientistShoes
   - ScientistPDA
   - CommonGlasses
@@ -332,7 +332,7 @@
   groups:
   - GroupTankHarness
   - ResearchAssistantJumpsuit
-  - ScientistBackpack
+  - ScienceBackpack
   - CommonGlasses
   - Survival
   - Trinkets
