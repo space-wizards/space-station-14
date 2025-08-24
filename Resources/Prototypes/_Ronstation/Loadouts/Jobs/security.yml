@@ -1,7 +1,6 @@
 - type: loadout
   id: GlassesSecurityNoir
   effects:
-  effects:
   - !type:JobRequirementLoadoutEffect
     requirement:
       !type:RoleTimeRequirement
