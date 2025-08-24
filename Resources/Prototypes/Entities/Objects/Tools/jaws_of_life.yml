@@ -4,12 +4,21 @@
   id: JawsOfLife
   description: A set of jaws of life, compressed through the magic of science.
   components:
-  - type: Tag
-    tags:
-    - JawsOfLife
+  # Sprite Stuff
   - type: Sprite
     sprite: Objects/Tools/jaws_of_life.rsi
     state: jaws_pry
+  - type: Appearance
+  - type: GenericVisualizer
+    visuals:
+      enum.MultipleToolVisuals.Sprite:
+        toollayer:
+          prying: { state: jaws_pry }
+          cutting: { state: jaws_cutter }
+  # Not sprite stuff
+  - type: Tag
+    tags:
+    - JawsOfLife
   - type: Item
     size: Normal
   - type: Clothing
@@ -30,18 +39,14 @@
   - type: MultipleTool
     statusShowBehavior: true
     entries:
-      - behavior: Prying
-        sprite:
-          sprite: Objects/Tools/jaws_of_life.rsi
-          state: jaws_pry
-        useSound: /Audio/Items/jaws_pry.ogg
-        changeSound: /Audio/Items/change_jaws.ogg
-      - behavior: Cutting
-        sprite:
-          sprite: Objects/Tools/jaws_of_life.rsi
-          state: jaws_cutter
-        useSound: /Audio/Items/jaws_cut.ogg
-        changeSound: /Audio/Items/change_jaws.ogg
+    - behavior: Prying
+      spriteState: prying
+      useSound: /Audio/Items/jaws_pry.ogg
+      changeSound: /Audio/Items/change_jaws.ogg
+    - behavior: Cutting
+      spriteState: cutting
+      useSound: /Audio/Items/jaws_cut.ogg
+      changeSound: /Audio/Items/change_jaws.ogg
   - type: MeleeWeapon
     wideAnimationRotation: 90
     damage:
@@ -56,9 +61,18 @@
   id: SyndicateJawsOfLife
   description: Useful for entering the station or its departments.
   components:
+  # Sprite Stuff
   - type: Sprite
     sprite: Objects/Tools/jaws_of_life.rsi
     state: syn_jaws_pry
+  - type: Appearance
+  - type: GenericVisualizer
+    visuals:
+      enum.MultipleToolVisuals.Sprite:
+        toollayer:
+          prying: { state: syn_jaws_pry }
+          cutting: { state: syn_jaws_cutter }
+  # Not sprite stuff
   - type: Item
     inhandVisuals:
       left:
@@ -68,20 +82,6 @@
     size: Normal
   - type: Prying
     speedModifier: 3.0
-  - type: MultipleTool
-    entries:
-      - behavior: Prying
-        sprite:
-          sprite: Objects/Tools/jaws_of_life.rsi
-          state: syn_jaws_pry
-        useSound: /Audio/Items/jaws_pry.ogg
-        changeSound: /Audio/Items/change_jaws.ogg
-      - behavior: Cutting
-        sprite:
-          sprite: Objects/Tools/jaws_of_life.rsi
-          state: syn_jaws_cutter
-        useSound: /Audio/Items/jaws_cut.ogg
-        changeSound: /Audio/Items/change_jaws.ogg
   - type: MeleeWeapon
     damage:
       types:

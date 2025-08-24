@@ -1,7 +1,7 @@
 using Content.Server.NodeContainer;
 using Content.Server.Power.Components;
 using Content.Server.Power.NodeGroups;
-using Content.Server.Tools;
+using Content.Shared.Tools;
 using Content.Shared.Examine;
 using Content.Shared.Interaction;
 using Content.Shared.NodeContainer;
@@ -15,7 +15,7 @@ namespace Content.Server.Power.EntitySystems
     [UsedImplicitly]
     public sealed class CableMultitoolSystem : EntitySystem
     {
-        [Dependency] private readonly ToolSystem _toolSystem = default!;
+        [Dependency] private readonly SharedToolSystem _toolSystem = default!;
         [Dependency] private readonly PowerNetSystem _pnSystem = default!;
         [Dependency] private readonly ExamineSystemShared _examineSystem = default!;
 

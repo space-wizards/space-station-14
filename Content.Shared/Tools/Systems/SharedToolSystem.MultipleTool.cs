@@ -5,7 +5,7 @@ using Content.Shared.Tools.Components;
 
 namespace Content.Shared.Tools.Systems;
 
-public abstract partial class SharedToolSystem
+public sealed partial class SharedToolSystem
 {
     public void InitializeMultipleTool()
     {
@@ -48,7 +48,7 @@ public abstract partial class SharedToolSystem
         return true;
     }
 
-    public virtual void SetMultipleTool(EntityUid uid,
+    public void SetMultipleTool(EntityUid uid,
         MultipleToolComponent? multiple = null,
         ToolComponent? tool = null,
         bool playSound = false,
@@ -80,6 +80,9 @@ public abstract partial class SharedToolSystem
 
         if (_protoMan.TryIndex(current.Behavior.First(), out ToolQualityPrototype? quality))
             multiple.CurrentQualityName = Loc.GetString(quality.Name);
+
+        if (current.SpriteState is { } state)
+            _appearance.SetData(uid, MultipleToolVisuals.Sprite, state);
     }
 }
 
