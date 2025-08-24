@@ -1,53 +1,64 @@
+# Modified by Ronstation contributor(s), therefore this file is licensed as MIT sublicensed with AGPL-v3.0.
 # Jumpsuit
 - type: loadout
   id: LawyerJumpsuit
   equipment:
     jumpsuit: ClothingUniformJumpsuitLawyerBlack
+  groupBy: "jumpsuit" # Ronstation - modification
 
 - type: loadout
   id: LawyerJumpskirt
   equipment:
     jumpsuit: ClothingUniformJumpskirtLawyerBlack
+  groupBy: "jumpskirt" # Ronstation - modification
 
 - type: loadout
   id: LawyerJumpsuitBlue
   equipment:
     jumpsuit: ClothingUniformJumpsuitLawyerBlue
+  groupBy: "jumpsuit" # Ronstation - modification
 
 - type: loadout
   id: LawyerJumpskirtBlue
   equipment:
     jumpsuit: ClothingUniformJumpskirtLawyerBlue
+  groupBy: "jumpskirt" # Ronstation - modification
 
 - type: loadout
   id: LawyerJumpsuitPurple
   equipment:
     jumpsuit: ClothingUniformJumpsuitLawyerPurple
+  groupBy: "jumpsuit" # Ronstation - modification
 
 - type: loadout
   id: LawyerJumpskirtPurple
   equipment:
     jumpsuit: ClothingUniformJumpskirtLawyerPurple
+  groupBy: "jumpskirt" # Ronstation - modification
 
 - type: loadout
   id: LawyerJumpsuitRed
   equipment:
     jumpsuit: ClothingUniformJumpsuitLawyerRed
+  groupBy: "jumpsuit" # Ronstation - modification
 
 - type: loadout
   id: LawyerJumpskirtRed
   equipment:
     jumpsuit: ClothingUniformJumpskirtLawyerRed
+  groupBy: "jumpskirt" # Ronstation - modification
 
 - type: loadout
   id: LawyerJumpsuitGood
   equipment:
     jumpsuit: ClothingUniformJumpsuitLawyerGood
+  groupBy: "jumpsuit" # Ronstation - modification
 
 - type: loadout
   id: LawyerJumpskirtGood
   equipment:
     jumpsuit: ClothingUniformJumpskirtLawyerGood
+  groupBy: "jumpskirt" # Ronstation - modification
 
 # Neck
 - type: loadout
