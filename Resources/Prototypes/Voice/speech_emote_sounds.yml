@@ -47,6 +47,12 @@
       collection: FelionoidMeows
     Trill:
       collection: FelionoidTrills
+    Bark:
+      collection: Bark
+    Yip:
+      path: /Audio/_Starlight/Effects/yip.ogg
+    Whine:
+      collection: Whine
     #endregion Starlight
 
 - type: emoteSounds
@@ -97,6 +103,12 @@
       collection: FelionoidMeows
     Trill:
       collection: FelionoidTrills
+    Bark:
+      collection: Bark
+    Yip:
+      path: /Audio/_Starlight/Effects/yip.ogg
+    Whine:
+      collection: Whine
     #endregion Starlight
 
 - type: emoteSounds
