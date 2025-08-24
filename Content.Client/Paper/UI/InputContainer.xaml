@@ -1,0 +1,10 @@
+<controls:InputContainer
+    xmlns="https://spacestation14.io"
+    xmlns:controls="clr-namespace:Content.Client.Paper.UI"
+    Orientation="Vertical" VerticalExpand="True" VerticalAlignment="Stretch">
+    <PanelContainer StyleClasses="TransparentBorderedWindowPanel" MinHeight="100" VerticalAlignment="Stretch"
+                    VerticalExpand="True" HorizontalExpand="True">
+        <TextEdit Name="Input" StyleClasses="PaperLineEdit" Access="Public" />
+    </PanelContainer>
+    <Label Name="FillStatus" StyleClasses="LabelSecondaryColor" Access="Public"/>
+</controls:InputContainer>

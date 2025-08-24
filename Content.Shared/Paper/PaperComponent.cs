@@ -7,20 +7,19 @@ namespace Content.Shared.Paper;
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
 public sealed partial class PaperComponent : Component
 {
-    public PaperAction Mode;
-    [DataField("content"), AutoNetworkedField]
+    [DataField, AutoNetworkedField]
     public string Content { get; set; } = "";
 
-    [DataField("contentSize")]
+    [DataField]
     public int ContentSize { get; set; } = 10000;
 
-    [DataField("stampedBy"), AutoNetworkedField]
+    [DataField, AutoNetworkedField]
     public List<StampDisplayInfo> StampedBy { get; set; } = new();
 
     /// <summary>
     ///     Stamp to be displayed on the paper, state from bureaucracy.rsi
     /// </summary>
-    [DataField("stampState"), AutoNetworkedField]
+    [DataField, AutoNetworkedField]
     public string? StampState { get; set; }
 
     [DataField, AutoNetworkedField]
@@ -29,46 +28,45 @@ public sealed partial class PaperComponent : Component
     /// <summary>
     /// Sound played after writing to the paper.
     /// </summary>
-    [DataField("sound")]
+    [DataField]
     public SoundSpecifier? Sound { get; private set; } = new SoundCollectionSpecifier("PaperScribbles", AudioParams.Default.WithVariation(0.1f));
 
     [Serializable, NetSerializable]
-    public sealed class PaperBoundUserInterfaceState : BoundUserInterfaceState
+    public sealed class PaperBoundUserInterfaceState(
+        string text,
+        List<StampDisplayInfo> stampedBy)
+        : BoundUserInterfaceState
     {
-        public readonly string Text;
-        public readonly List<StampDisplayInfo> StampedBy;
-        public readonly PaperAction Mode;
-
-        public PaperBoundUserInterfaceState(string text, List<StampDisplayInfo> stampedBy, PaperAction mode = PaperAction.Read)
-        {
-            Text = text;
-            StampedBy = stampedBy;
-            Mode = mode;
-        }
+        public readonly string Text = text;
+        public readonly List<StampDisplayInfo> StampedBy = stampedBy;
     }
 
     [Serializable, NetSerializable]
-    public sealed class PaperInputTextMessage : BoundUserInterfaceMessage
+    public sealed class PaperBeginEditMessage(NetEntity editTool) : BoundUserInterfaceMessage
     {
-        public readonly string Text;
+        public readonly NetEntity EditTool = editTool;
+    };
 
-        public PaperInputTextMessage(string text)
-        {
-            Text = text;
-        }
+    [Serializable, NetSerializable]
+    public sealed class PaperBeginFullEditMessage(NetEntity editTool) : BoundUserInterfaceMessage
+    {
+        public readonly NetEntity EditTool = editTool;
+    }
+
+    [Serializable, NetSerializable]
+    public sealed class PaperInputTextMessage(NetEntity user, NetEntity editTool, string text) : BoundUserInterfaceMessage
+    {
+        public readonly string Text = text;
+
+        public readonly NetEntity EditTool = editTool;
+
+        public readonly NetEntity User = user;
     }
 
     [Serializable, NetSerializable]
     public enum PaperUiKey
     {
         Key
-    }
-
-    [Serializable, NetSerializable]
-    public enum PaperAction
-    {
-        Read,
-        Write,
     }
 
     [Serializable, NetSerializable]

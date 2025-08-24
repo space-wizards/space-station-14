@@ -1,14 +1,13 @@
 using System.Linq;
 using Content.Shared.Administration.Logs;
-using Content.Shared.UserInterface;
 using Content.Shared.Database;
 using Content.Shared.Examine;
 using Content.Shared.Interaction;
-using Content.Shared.Random.Helpers;
 using Content.Shared.Popups;
 using Content.Shared.Tag;
 using Robust.Shared.Player;
 using Robust.Shared.Audio.Systems;
+using Robust.Shared.Network;
 using static Content.Shared.Paper.PaperComponent;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
@@ -17,16 +16,17 @@ namespace Content.Shared.Paper;
 
 public sealed class PaperSystem : EntitySystem
 {
-    [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
-    [Dependency] private readonly IPrototypeManager _protoMan = default!;
-    [Dependency] private readonly IRobustRandom _random = default!;
-    [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
-    [Dependency] private readonly SharedInteractionSystem _interaction = default!;
-    [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
-    [Dependency] private readonly TagSystem _tagSystem = default!;
-    [Dependency] private readonly SharedUserInterfaceSystem _uiSystem = default!;
-    [Dependency] private readonly MetaDataSystem _metaSystem = default!;
-    [Dependency] private readonly SharedAudioSystem _audio = default!;
+    [Dependency] private readonly ISharedAdminLogManager _adminLog = null!;
+    [Dependency] private readonly IPrototypeManager _protoMan = null!;
+    [Dependency] private readonly IRobustRandom _random = null!;
+    [Dependency] private readonly SharedAppearanceSystem _appearance = null!;
+    [Dependency] private readonly SharedInteractionSystem _interaction = null!;
+    [Dependency] private readonly SharedPopupSystem _popupSystem = null!;
+    [Dependency] private readonly TagSystem _tagSystem = null!;
+    [Dependency] private readonly SharedUserInterfaceSystem _uiSystem = null!;
+    [Dependency] private readonly MetaDataSystem _metaSystem = null!;
+    [Dependency] private readonly SharedAudioSystem _audio = null!;
+    [Dependency] private readonly INetManager _netManager = null!;
 
     private static readonly ProtoId<TagPrototype> WriteIgnoreStampsTag = "WriteIgnoreStamps";
     private static readonly ProtoId<TagPrototype> WriteTag = "Write";
@@ -39,7 +39,6 @@ public sealed class PaperSystem : EntitySystem
 
         SubscribeLocalEvent<PaperComponent, MapInitEvent>(OnMapInit);
         SubscribeLocalEvent<PaperComponent, ComponentInit>(OnInit);
-        SubscribeLocalEvent<PaperComponent, BeforeActivatableUIOpenEvent>(BeforeUIOpen);
         SubscribeLocalEvent<PaperComponent, ExaminedEvent>(OnExamined);
         SubscribeLocalEvent<PaperComponent, InteractUsingEvent>(OnInteractUsing);
         SubscribeLocalEvent<PaperComponent, PaperInputTextMessage>(OnInputTextMessage);
@@ -61,7 +60,6 @@ public sealed class PaperSystem : EntitySystem
 
     private void OnInit(Entity<PaperComponent> entity, ref ComponentInit args)
     {
-        entity.Comp.Mode = PaperAction.Read;
         UpdateUserInterface(entity);
 
         if (TryComp<AppearanceComponent>(entity, out var appearance))
@@ -72,12 +70,6 @@ public sealed class PaperSystem : EntitySystem
             if (entity.Comp.StampState != null)
                 _appearance.SetData(entity, PaperVisuals.Stamp, entity.Comp.StampState, appearance);
         }
-    }
-
-    private void BeforeUIOpen(Entity<PaperComponent> entity, ref BeforeActivatableUIOpenEvent args)
-    {
-        entity.Comp.Mode = PaperAction.Read;
-        UpdateUserInterface(entity);
     }
 
     private void OnExamined(Entity<PaperComponent> entity, ref ExaminedEvent args)
@@ -145,27 +137,46 @@ public sealed class PaperSystem : EntitySystem
                 var writeEvent = new PaperWriteEvent(args.User, entity);
                 RaiseLocalEvent(args.Used, ref writeEvent);
 
-                entity.Comp.Mode = PaperAction.Write;
                 _uiSystem.OpenUi(entity.Owner, PaperUiKey.Key, args.User);
                 UpdateUserInterface(entity);
+
+                // The code is taken from PR #32780
+                if (_netManager.IsServer)
+                {
+                    // Send a message only to the player which interacted with the pen.
+                    // This will update the UI, enabling edit mode only for that player.
+                    var toolNetEnt = EntityManager.GetNetEntity(args.Used);
+
+                    _uiSystem.ServerSendUiMessage(entity.Owner,
+                        PaperUiKey.Key,
+                        _tagSystem.HasTag(args.Used, WriteIgnoreStampsTag)
+                            ? new PaperBeginFullEditMessage(toolNetEnt)
+                            : new PaperBeginEditMessage(toolNetEnt),
+                        args.User);
+                }
             }
+
             args.Handled = true;
             return;
         }
 
         // If a stamp, attempt to stamp paper
-        if (TryComp<StampComponent>(args.Used, out var stampComp) && TryStamp(entity, GetStampInfo(stampComp), stampComp.StampState))
+        if (TryComp<StampComponent>(args.Used, out var stampComp) &&
+            TryStamp(entity, GetStampInfo(stampComp), stampComp.StampState))
         {
             // successfully stamped, play popup
             var stampPaperOtherMessage = Loc.GetString("paper-component-action-stamp-paper-other",
-                    ("user", args.User),
-                    ("target", args.Target),
-                    ("stamp", args.Used));
+                ("user", args.User),
+                ("target", args.Target),
+                ("stamp", args.Used));
 
-            _popupSystem.PopupEntity(stampPaperOtherMessage, args.User, Filter.PvsExcept(args.User, entityManager: EntityManager), true);
+            _popupSystem.PopupEntity(stampPaperOtherMessage,
+                args.User,
+                Filter.PvsExcept(args.User, entityManager: EntityManager),
+                true);
             var stampPaperSelfMessage = Loc.GetString("paper-component-action-stamp-paper-self",
-                    ("target", args.Target),
-                    ("stamp", args.Used));
+                ("target", args.Target),
+                ("stamp", args.Used));
             _popupSystem.PopupClient(stampPaperSelfMessage, args.User, args.User);
 
             _audio.PlayPredicted(stampComp.Sound, entity, args.User);
@@ -192,7 +203,7 @@ public sealed class PaperSystem : EntitySystem
 
         if (args.Text.Length <= entity.Comp.ContentSize)
         {
-            SetContent(entity, args.Text);
+            PushContent(entity, args.Text);
 
             var paperStatus = string.IsNullOrWhiteSpace(args.Text) ? PaperStatus.Blank : PaperStatus.Written;
 
@@ -202,14 +213,13 @@ public sealed class PaperSystem : EntitySystem
             if (TryComp(entity, out MetaDataComponent? meta))
                 _metaSystem.SetEntityDescription(entity, "", meta);
 
-            _adminLogger.Add(LogType.Chat,
+            _adminLog.Add(LogType.Chat,
                 LogImpact.Low,
                 $"{ToPrettyString(args.Actor):player} has written on {ToPrettyString(entity):entity} the following text: {args.Text}");
 
             _audio.PlayPvs(entity.Comp.Sound, entity);
         }
 
-        entity.Comp.Mode = PaperAction.Read;
         UpdateUserInterface(entity);
     }
 
@@ -217,10 +227,12 @@ public sealed class PaperSystem : EntitySystem
     {
         if (!_paperQuery.TryComp(ent, out var paperComp))
         {
-            Log.Warning($"{ToPrettyString(ent)} has a {nameof(RandomPaperContentComponent)} but no {nameof(PaperComponent)}!");
+            Log.Warning(
+                $"{ToPrettyString(ent)} has a {nameof(RandomPaperContentComponent)} but no {nameof(PaperComponent)}!");
             RemCompDeferred(ent, ent.Comp);
             return;
         }
+
         var dataset = _protoMan.Index(ent.Comp.Dataset);
         // Intentionally not using the Pick overload that directly takes a LocalizedDataset,
         // because we want to get multiple attributes from the same pick.
@@ -259,6 +271,7 @@ public sealed class PaperSystem : EntitySystem
                 _appearance.SetData(entity, PaperVisuals.Stamp, entity.Comp.StampState, appearance);
             }
         }
+
         return true;
     }
 
@@ -288,6 +301,37 @@ public sealed class PaperSystem : EntitySystem
         SetContent((entity, paper), content);
     }
 
+    public void PushContent(EntityUid entity, string content)
+    {
+        if (!TryComp<PaperComponent>(entity, out var paper))
+            return;
+        PushContent((entity, paper), content);
+    }
+
+    public void PushContent(Entity<PaperComponent> entity, string content)
+    {
+        if (string.IsNullOrEmpty(entity.Comp.Content))
+        {
+            entity.Comp.Content = content;
+        }
+        else
+        {
+            entity.Comp.Content += '\n' + content;
+        }
+
+        Dirty(entity);
+        UpdateUserInterface(entity);
+
+        if (!TryComp<AppearanceComponent>(entity, out var appearance))
+            return;
+
+        var status = string.IsNullOrWhiteSpace(content)
+            ? PaperStatus.Blank
+            : PaperStatus.Written;
+
+        _appearance.SetData(entity, PaperVisuals.Status, status, appearance);
+    }
+
     public void SetContent(Entity<PaperComponent> entity, string content)
     {
         entity.Comp.Content = content;
@@ -306,7 +350,9 @@ public sealed class PaperSystem : EntitySystem
 
     private void UpdateUserInterface(Entity<PaperComponent> entity)
     {
-        _uiSystem.SetUiState(entity.Owner, PaperUiKey.Key, new PaperBoundUserInterfaceState(entity.Comp.Content, entity.Comp.StampedBy, entity.Comp.Mode));
+        _uiSystem.SetUiState(entity.Owner,
+            PaperUiKey.Key,
+            new PaperBoundUserInterfaceState(entity.Comp.Content, entity.Comp.StampedBy));
     }
 }
 
@@ -319,6 +365,6 @@ public record struct PaperWriteEvent(EntityUid User, EntityUid Paper);
 /// <summary>
 /// Cancellable event for attempting to write on a piece of paper.
 /// </summary>
-/// <param name="paper">The paper that the writing will take place on.</param>
+/// <param name="Paper">The paper that the writing will take place on.</param>
 [ByRefEvent]
 public record struct PaperWriteAttemptEvent(EntityUid Paper, string? FailReason = null, bool Cancelled = false);
