@@ -23,13 +23,7 @@ public sealed class AddReagentOnTriggerSystem : EntitySystem
         if (target == null)
             return;
 
-        if (ent.Comp.Generated == null)
-            return;
-
         if (!_solutionContainer.ResolveSolution(target.Value, ent.Comp.SolutionName, ref ent.Comp.SolutionRef, out var solution))
-            return;
-
-        if (ent.Comp.SolutionRef == null)
             return;
 
         foreach (var reagent in ent.Comp.Generated.Contents)
