@@ -250,6 +250,7 @@
         Heat: 10 # capable of touching light bulbs and stoves without feeling pain!
   - type: CyborgSparkEffect #starlight
   - type: StationAIShunt #Starlight allow shunting into all borgs
+  - type: Crawler #Starlight *flop*
   # Starlight-start: Languages
   - type: LanguageKnowledge
     speaks:
