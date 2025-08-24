@@ -104,6 +104,7 @@
 
 - type: roleLoadout
   id: JobLawyer
+  canCustomizeName: true
   groups:
   - GroupTankHarness
   - LawyerNeck
@@ -189,6 +190,7 @@
 
 - type: roleLoadout
   id: JobMusician
+  canCustomizeName: true
   groups:
   - GroupTankHarness
   - MusicianJumpsuit
@@ -521,6 +523,7 @@
 
 - type: roleLoadout
   id: JobBoxer
+  canCustomizeName: true
   groups:
   - GroupTankHarness
   - BoxerJumpsuit
