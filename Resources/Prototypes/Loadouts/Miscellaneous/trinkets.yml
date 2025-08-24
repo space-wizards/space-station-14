@@ -30,18 +30,6 @@
 
 # Toys
 - type: loadout
-  id: PlushieLizard
-  storage:
-    back:
-    - PlushieLizard
-
-- type: loadout
-  id: PlushieSpaceLizard
-  storage:
-    back:
-    - PlushieSpaceLizard
-
-- type: loadout
   id: ThreeCandles
   dummyEntity: LoadoutDummyCandles
   storage:

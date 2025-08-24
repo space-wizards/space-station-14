@@ -1,17 +1,22 @@
 - type: loadoutGroup
   id: Trinkets
   name: loadout-group-trinkets
-  parent: [ TrinketSmokes, TrinketPins, TrinketCanes, TrinketTowels ]
+  parent: [ TrinketPlushies, TrinketSmokes, TrinketPins, TrinketCanes, TrinketTowels ]
   minLimit: 0
   maxLimit: 3
   loadouts:
   - FlowerWreath
   - Hairflower
   - Headphones
-  - PlushieLizard
-  - PlushieSpaceLizard
   - ThreeCandles
   - CardBoxPokerFilled
+
+- type: loadoutGroup
+  id: TrinketPlushies
+  abstract: true
+  loadouts:
+  - PlushieLizard
+  - PlushieSpaceLizard
 
 - type: loadoutGroup
   id: TrinketSmokes
