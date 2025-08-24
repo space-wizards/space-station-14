@@ -1,0 +1,78 @@
+# Head
+- type: loadoutGroup
+  id: BaseHead
+  name: loadout-group-head
+  abstract: true
+  minLimit: 0
+
+# Mask
+- type: loadoutGroup
+  id: BaseMask
+  name: loadout-group-mask
+  abstract: true
+  minLimit: 0
+
+# Neck
+- type: loadoutGroup
+  id: BaseNeck
+  name: loadout-group-neck
+  abstract: true
+  minLimit: 0
+
+# Jumpsuit
+- type: loadoutGroup
+  id: BaseJumpsuit
+  name: loadout-group-jumpsuit
+  abstract: true
+
+# Gloves
+- type: loadoutGroup
+  id: BaseGloves
+  name: loadout-group-gloves
+  abstract: true
+  minLimit: 0
+
+# Backpack
+- type: loadoutGroup
+  id: BaseBackpack
+  name: loadout-group-backpack
+  abstract: true
+
+# Belt
+- type: loadoutGroup
+  id: BaseBelt
+  name: loadout-group-belt
+  abstract: true
+
+# Outer clothing
+- type: loadoutGroup
+  id: BaseOuterClothing
+  name: loadout-group-outerclothing
+  abstract: true
+  minLimit: 0
+
+# Shoes
+- type: loadoutGroup
+  id: BaseShoes
+  name: loadout-group-shoes
+  abstract: true
+
+# PDA
+- type: loadoutGroup
+  id: BasePDA
+  name: loadout-group-pda
+  abstract: true
+
+# Glasses
+- type: loadoutGroup
+  id: BaseGlasses
+  name: loadout-group-glasses
+  abstract: true
+  minLimit: 0
+
+# Survival Box
+- type: loadoutGroup
+  id: BaseSurvival
+  name: loadout-group-survival
+  abstract: true
+  hidden: true
