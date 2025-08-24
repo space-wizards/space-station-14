@@ -371,12 +371,12 @@ public abstract class SharedBloodstreamSystem : EntitySystem
     }
 
     /// <summary>
-    /// Removes a certain amount of all reagents except of a single excluded one from the bloodstream and blood itself.
+    /// Removes a certain amount of all reagents other than blood and an optional excluded reagent from the bloodstream.
     /// </summary>
     /// <returns>
     /// Solution of removed chemicals or null if none were removed.
     /// </returns>
-    public Solution? FlushChemicals(Entity<BloodstreamComponent?> ent, ProtoId<ReagentPrototype>? excludedReagentID, FixedPoint2 quantity)
+    public Solution? FlushChemicals(Entity<BloodstreamComponent?> ent, ProtoId<ReagentPrototype>? excludedReagentId, FixedPoint2 quantity)
     {
         if (!Resolve(ent, ref ent.Comp, logMissing: false)
             || !SolutionContainer.ResolveSolution(ent.Owner, ent.Comp.BloodSolutionName, ref ent.Comp.BloodSolution, out var bloodSolution))
@@ -384,20 +384,16 @@ public abstract class SharedBloodstreamSystem : EntitySystem
 
         var flushedSolution = new Solution();
 
-        for (var i = bloodSolution.Contents.Count - 1; i >= 0; i--)
+        foreach (var (reagentId, _) in bloodSolution.Contents)
         {
-            var (reagentId, _) = bloodSolution.Contents[i];
-            if (reagentId.Prototype != ent.Comp.BloodReagent && reagentId.Prototype != excludedReagentID)
-            {
-                var reagentFlushAmount = SolutionContainer.RemoveReagent(ent.Comp.BloodSolution.Value, reagentId, quantity);
-                flushedSolution.AddReagent(reagentId, reagentFlushAmount);
-            }
+            if (reagentId.Prototype == ent.Comp.BloodReagent || reagentId.Prototype == excludedReagentId)
+                continue;
+
+            var reagentFlushAmount = SolutionContainer.RemoveReagent(ent.Comp.BloodSolution.Value, reagentId, quantity);
+            flushedSolution.AddReagent(reagentId, reagentFlushAmount);
         }
 
-        if (flushedSolution.Volume == 0)
-            return null;
-
-        return flushedSolution;
+        return flushedSolution.Volume == 0 ? null : flushedSolution;
     }
 
     /// <summary>
