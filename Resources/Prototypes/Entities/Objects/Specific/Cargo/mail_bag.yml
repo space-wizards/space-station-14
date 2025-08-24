@@ -31,5 +31,5 @@
   - type: Dumpable
   - type: Tag
     tags:
-      - ScurretWearable
-      - CorgiWearable
+    - ScurretWearable
+    - CorgiWearable
