@@ -146,7 +146,7 @@
     - Mothership
     - Xenoborg
     - Binary
-  - type: XenoborgMothership
+  - type: MothershipCore
   - type: Tag
     tags:
     - SiliconEmotes
