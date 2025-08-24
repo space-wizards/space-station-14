@@ -96,7 +96,7 @@
 - type: entity
   id: BudgetCyberStomach
   name: Budget CyberStomach
-  description: An artifical stomach. Its lack of elasticity is a desired feature for those who want to control their eating habbits.
+  description: An artifical stomach. Its lack of elasticity is a desired feature for those who want to control their eating habits.
   parent: [OrganCyber, OrganHumanStomach]
   components:
   - type: Sprite
