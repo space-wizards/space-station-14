@@ -7,7 +7,7 @@ public sealed partial class PoweredRadarColorComponent : Component
     /// The radar signature color when powered
     /// </summary>
     [DataField]
-    public Color OnColor = Color.DarkGreen;
+    public Color OnColor = Color.DodgerBlue;
 
     /// <summary>
     /// The radar signature color when unpowered

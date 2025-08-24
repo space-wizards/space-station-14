@@ -1315,7 +1315,7 @@
   parent: BulletLaser
   components:
   - type: RadarTracked
-    radarColor: "#AA77FF"
+    radarColor: "#1E90FF"
     size: 0.3
 
 - type: entity

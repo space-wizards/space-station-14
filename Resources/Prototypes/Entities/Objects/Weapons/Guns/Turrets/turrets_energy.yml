@@ -227,6 +227,7 @@
   - type: RadarTracked
     shape: "Chevron"
     radarColor: "#FFAAFF"
+    size: 1
   - type: PoweredRadarColor
   - type: Repairable
     doAfterDelay: 10
