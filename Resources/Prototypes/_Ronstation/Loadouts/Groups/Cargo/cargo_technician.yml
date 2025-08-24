@@ -1,0 +1,33 @@
+- type: loadoutGroup
+  id: CargoTechnicianHead
+  parent: BaseHead
+  loadouts:
+  - CargoTechnicianHead
+
+- type: loadoutGroup
+  id: CargoTechnicianJumpsuit
+  parent: BaseJumpsuit
+  loadouts:
+  - CargoTechnicianJumpsuit
+  - CargoTechnicianJumpskirt
+
+- type: loadoutGroup
+  id: CargoTechnicianBackpack
+  parent: BaseBackpack
+  loadouts:
+  - CargoTechnicianBackpack
+  - CargoTechnicianSatchel
+  - CargoTechnicianDuffel
+
+- type: loadoutGroup
+  id: CargoTechnicianOuterClothing
+  parent: BaseOuterClothing
+  loadouts:
+  - CargoTechnicianWintercoat
+
+- type: loadoutGroup
+  id: CargoTechnicianShoes
+  parent: BaseShoes
+  loadouts:
+  - BlackShoes
+  - CargoWinterBoots

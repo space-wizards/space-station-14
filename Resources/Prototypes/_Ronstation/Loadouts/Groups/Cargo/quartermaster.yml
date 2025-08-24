@@ -1,0 +1,36 @@
+- type: loadoutGroup
+  id: QuartermasterHead
+  parent: BaseHead
+  loadouts:
+  - QuartermasterHead
+  - QuartermasterBeret
+
+- type: loadoutGroup
+  id: QuartermasterNeck
+  parent: BaseNeck
+  loadouts:
+  - QuartermasterCloak
+  - QuartermasterMantle
+
+- type: loadoutGroup
+  id: QuartermasterJumpsuit
+  parent: BaseJumpsuit
+  loadouts:
+  - QuartermasterJumpsuit
+  - QuartermasterJumpskirt
+  - QuartermasterTurtleneck
+  - QuartermasterTurtleneckSkirt
+  - QuartermasterFormalSuit
+
+- type: loadoutGroup
+  id: QuartermasterOuterClothing
+  parent: BaseOuterClothing
+  loadouts:
+  - QuartermasterWintercoat
+
+- type: loadoutGroup
+  id: QuartermasterShoes
+  parent: BaseShoes
+  loadouts:
+  - BrownShoes
+  - CargoWinterBoots
