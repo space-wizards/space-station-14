@@ -123,7 +123,7 @@
 
 - type: stealTargetGroup
   id: OfficerHandgun
-  name: steal-target-groups-Officer-Handguns
+  name: steal-target-groups-officer-handguns
   sprite:
     sprite: Objects/Weapons/Guns/Pistols/mk58.rsi
     state: base
