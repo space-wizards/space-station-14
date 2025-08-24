@@ -33,8 +33,8 @@ public sealed class LaunchOnTriggerSystem : EntitySystem
         var linearVelocity = _physics.GetMapLinearVelocity(target.Value);
         // If the linear velocity is length 0, this means it's not moving. Given we want to move it in some direction...
         if (linearVelocity.IsLengthZero())
-            // ASSUMPTION: An object at rest is facing [0,1] by default if its radial rotation is 0.0.
-            linearVelocity = _transform.GetWorldRotation(target.Value).RotateVec(Vector2.UnitY);
+            // An object that isn't moving is launched in the direction its facing, not the direction it's rotated (objects face away from their rotation).
+            linearVelocity = _transform.GetWorldRotation(target.Value).RotateVec(Vector2.UnitY) * -1;
 
         // When triggered, take the direction the target is moving in (the normalized vector) and multiply it by the speed.
         // Then apply an impulse to the target on the new vector.
