@@ -48,7 +48,7 @@
   - type: RailroadAssignRole
     role: RRMindRoleCriminal
   - type: RailroadTimerTask
-    #duration: 1200
+    duration: 1200
   - type: RailroadSurviveTask
   - type: RailroadAvoidHandcuffsTask
   - type: RailroadDeliveryReward
