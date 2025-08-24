@@ -215,3 +215,12 @@
   - EmergencyNitrogenSecurity
   - EmergencyOxygenSecurity
   - LoadoutSpeciesVoxNitrogen
+
+- type: loadoutGroup
+  id: SurvivalSyndicate
+  parent: CommonSurvival
+  minLimit: 2
+  loadouts:
+  - EmergencyNitrogenSyndicate
+  - EmergencyOxygenSyndicate
+  - LoadoutSpeciesVoxNitrogen

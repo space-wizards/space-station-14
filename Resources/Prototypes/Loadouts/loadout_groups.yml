@@ -107,16 +107,6 @@
 
 # Other
 - type: loadoutGroup
-  id: SurvivalSyndicate
-  name: loadout-group-survival-syndicate
-  minLimit: 2
-  hidden: true
-  loadouts:
-  - EmergencyNitrogenSyndicate
-  - EmergencyOxygenSyndicate
-  - LoadoutSpeciesVoxNitrogen
-
-- type: loadoutGroup
   id: GroupSpeciesBreathTool
   name: loadout-group-breath-tool
   minLimit: 1
