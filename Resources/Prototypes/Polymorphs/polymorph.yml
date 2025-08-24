@@ -204,6 +204,7 @@
     revertOnDeath: true
     revertOnCrit: true
 
+# A lesser form of the true Immovable Rod, but can be (poorly) controlled.
 - type: polymorph
   id: WizardRod
   configuration:
@@ -211,10 +212,16 @@
     transferName: true
     transferDamage: false
     inventory: None
-    duration: 1
+    duration: 2
     forced: true
     revertOnCrit: false
     revertOnDeath: false
+    revertOnDelete: false
+    polymorphSound: /Audio/Magic/wizard_fizzling.ogg
+    exitPolymorphSound: /Audio/Magic/wizard_tada.ogg
+    exitPolymorphPopup: null
+    polymorphPopup: null
+    sayOnPolymorph: action-speech-spell-rod
 
 # Temporary Jaunt
 # Don't make permanent jaunts until action system can be reworked to allow do afters and cooldown pausing
