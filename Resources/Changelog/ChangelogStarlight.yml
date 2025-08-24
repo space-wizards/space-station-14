@@ -12436,5 +12436,14 @@ Entries:
   id: 145200
   time: '2025-08-24T18:35:59.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/1452
+- author: Darkrell
+  changes:
+  - message: An antagonist card has been added - Criminal. Fulfilling the requirements within 20 minutes makes you a Syndicate member.
+    type: Add
+  - message: The railroading system is fully enabled.
+    type: Tweak
+  id: 145199
+  time: '2025-08-24T18:35:59.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1461
 Order: -1
 
