@@ -9,6 +9,7 @@ using Content.Shared.DeviceLinking.Events;
 using Content.Server.Power.Components;
 using Content.Shared.Audio;
 using Robust.Shared.Utility;
+using System.Diagnostics;
 
 namespace Content.Server.MassDriver.EntitySystems;
 
@@ -55,7 +56,7 @@ public sealed class MassDriverSystem : EntitySystem
         if (!TryComp<MassDriverComponent>(args.Sink, out var driver))
             return;
 
-        component.MassDrivers.Add(GetNetEntity(args.Sink));
+        component.MassDrivers.Add(args.Sink);
         driver.Console = GetNetEntity(uid);
 
         Dirty(args.Sink, driver);
@@ -72,18 +73,16 @@ public sealed class MassDriverSystem : EntitySystem
     /// <param name="args">Event arguments</param>
     private void OnPortDisconnected(EntityUid uid, MassDriverConsoleComponent component, PortDisconnectedEvent args)
     {
-        var massDriverNetEntity = GetNetEntity(args.Sink);
-        if (args.Port != component.LinkingPort || !component.MassDrivers.Contains(massDriverNetEntity))
+        if (args.Port != component.LinkingPort || !component.MassDrivers.Contains(args.Sink))
             return;
 
-        var massDriverEntityUid = args.Sink;
-        if (TryComp<MassDriverComponent>(massDriverEntityUid, out var massDriverComponent))
+        if (TryComp<MassDriverComponent>(args.Sink, out var massDriverComponent))
         {
             massDriverComponent.Console = null;
-            Dirty(massDriverEntityUid, massDriverComponent);
+            Dirty(args.Sink, massDriverComponent);
         }
 
-        component.MassDrivers.Remove(massDriverNetEntity);
+        component.MassDrivers.Remove(args.Sink);
         Dirty(uid, component);
     }
 
@@ -141,8 +140,7 @@ public sealed class MassDriverSystem : EntitySystem
             }
             activeMassDriver.NextUpdateTime = _timing.CurTime + activeMassDriver.UpdateDelay;
 
-            if (!_powerReceiver.IsPowered(uid))
-                continue;
+            Debug.Assert(_powerReceiver.IsPowered(uid));
 
             var entities = new HashSet<EntityUid>();
             _lookup.GetEntitiesIntersecting(uid, entities);
@@ -210,7 +208,7 @@ public sealed class MassDriverSystem : EntitySystem
     /// </summary>
     private void OnInit(EntityUid uid, MassDriverConsoleComponent component, ComponentInit args)
     {
-        var massDriverUid = GetEntity(component.MassDrivers.FirstOrDefault()); // We use first mass driver to update UI state
+        var massDriverUid = component.MassDrivers.FirstOrDefault(); // We use first mass driver to update UI state
         if (TryComp<MassDriverComponent>(massDriverUid, out var driver))
             UpdateUserInterface(uid, massDriverUid, driver);
         else
@@ -222,7 +220,7 @@ public sealed class MassDriverSystem : EntitySystem
     /// </summary>
     private void OnBoundUiOpened(EntityUid uid, MassDriverConsoleComponent component, BoundUIOpenedEvent args)
     {
-        var massDriverUid = GetEntity(component.MassDrivers.FirstOrDefault()); // We use first mass driver to update UI state
+        var massDriverUid = component.MassDrivers.FirstOrDefault(); // We use first mass driver to update UI state
         if (TryComp<MassDriverComponent>(massDriverUid, out var driver))
             UpdateUserInterface(uid, massDriverUid, driver);
         else
@@ -236,10 +234,10 @@ public sealed class MassDriverSystem : EntitySystem
     {
         foreach (var massDriverNetEntity in component.MassDrivers)
         {
-            var massDriverUid = GetEntity(massDriverNetEntity);
+            var massDriverUid = massDriverNetEntity;
 
             if (!TryComp<MassDriverComponent>(massDriverUid, out var massDriverComponent))
-                return;
+                continue;
 
             massDriverComponent.Mode = args.Mode;
             Dirty(massDriverUid, massDriverComponent);
@@ -250,7 +248,7 @@ public sealed class MassDriverSystem : EntitySystem
                 RemComp<ActiveMassDriverComponent>(massDriverUid);
         }
 
-        var firstMassDriver = GetEntity(component.MassDrivers.FirstOrDefault()); // We use first mass driver to update UI state
+        var firstMassDriver = component.MassDrivers.FirstOrDefault(); // We use first mass driver to update UI state
         if (TryComp<MassDriverComponent>(firstMassDriver, out var driver))
             UpdateUserInterface(uid, firstMassDriver, driver);
     }
@@ -260,11 +258,8 @@ public sealed class MassDriverSystem : EntitySystem
     /// </summary>
     private void OnLaunch(EntityUid uid, MassDriverConsoleComponent component, MassDriverLaunchMessage args)
     {
-        foreach (var massDriverNetEntity in component.MassDrivers)
-        {
-            var massDriverUid = GetEntity(massDriverNetEntity);
+        foreach (var massDriverUid in component.MassDrivers)
             AddComp<ActiveMassDriverComponent>(massDriverUid);
-        }
     }
 
     /// <summary>
@@ -272,12 +267,9 @@ public sealed class MassDriverSystem : EntitySystem
     /// </summary>
     private void OnThrowSpeedChanged(EntityUid uid, MassDriverConsoleComponent component, MassDriverThrowSpeedMessage args)
     {
-        foreach (var massDriverNetEntity in component.MassDrivers)
-        {
-            var massDriverUid = GetEntity(massDriverNetEntity);
+        foreach (var massDriverUid in component.MassDrivers)
             if (TryComp<MassDriverComponent>(massDriverUid, out var massDriverComponent))
                 massDriverComponent.CurrentThrowSpeed = Math.Clamp(args.Speed, massDriverComponent.MinThrowSpeed, massDriverComponent.MaxThrowSpeed);
-        }
     }
 
     /// <summary>
@@ -285,12 +277,9 @@ public sealed class MassDriverSystem : EntitySystem
     /// </summary>
     private void OnThrowDistanceChanged(EntityUid uid, MassDriverConsoleComponent component, MassDriverThrowDistanceMessage args)
     {
-        foreach (var massDriverNetEntity in component.MassDrivers)
-        {
-            var massDriverUid = GetEntity(massDriverNetEntity);
+        foreach (var massDriverUid in component.MassDrivers)
             if (TryComp<MassDriverComponent>(massDriverUid, out var massDriverComponent))
                 massDriverComponent.CurrentThrowDistance = Math.Clamp(args.Distance, massDriverComponent.MinThrowDistance, massDriverComponent.MaxThrowDistance);
-        }
     }
 
     /// <summary>
