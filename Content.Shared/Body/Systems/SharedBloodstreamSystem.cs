@@ -387,7 +387,7 @@ public abstract class SharedBloodstreamSystem : EntitySystem
         for (var i = bloodSolution.Contents.Count - 1; i >= 0; i--)
         {
             var (reagentId, _) = bloodSolution.Contents[i];
-            if (reagentId.Prototype != ent.Comp.BloodReagent || reagentId.Prototype != excludedReagentID)
+            if (reagentId.Prototype != ent.Comp.BloodReagent && reagentId.Prototype != excludedReagentID)
             {
                 var reagentFlushAmount = SolutionContainer.RemoveReagent(ent.Comp.BloodSolution.Value, reagentId, quantity);
                 flushedSolution.AddReagent(reagentId, reagentFlushAmount);
