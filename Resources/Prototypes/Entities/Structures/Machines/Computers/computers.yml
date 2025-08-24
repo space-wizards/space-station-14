@@ -1170,7 +1170,7 @@
     key: enum.FundingAllocationConsoleUiKey.Key
   - type: ActivatableUIRequiresAccess
   - type: AccessReader
-    access: [["HeadOfPersonnel"]]
+    access: [["HeadOfPersonnel"]] #Starlight Change needs to make QM
   - type: UserInterface
     interfaces:
       enum.FundingAllocationConsoleUiKey.Key:
