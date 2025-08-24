@@ -86,4 +86,4 @@ reagent-name-toxintrash = trash
 reagent-desc-toxintrash = An awful-smelling fluid. Deadly to non-vox.
 
 reagent-name-radiatium = radiatium
-reagent-desc-radiatium = highly toxic goop that also very radioactive! don't touch this thing at any surcopstances!
+reagent-desc-radiatium = An extremely toxic and corrosive goop. Death is not an escape from it, as it metabolises in corpses.

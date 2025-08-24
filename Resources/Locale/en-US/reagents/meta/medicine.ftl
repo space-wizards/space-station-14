@@ -149,4 +149,4 @@ reagent-name-haloperidol = haloperidol
 reagent-desc-haloperidol = Removes most stimulating and hallucinogenic drugs. Reduces druggy effects and jitteriness. Causes drowsiness.
 
 reagent-name-frezinecrosium = frezinecrosium
-reagent-desc-frezinecrosium = do it's necrosol nature works on dead people so that makes it very good option for healing people that drunk a lot of alchole or was poisoned
+reagent-desc-frezinecrosium = A highly potent anti-toxin that works on the dead. Requires cold internal temperatures to function.
