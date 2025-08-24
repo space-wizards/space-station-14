@@ -134,8 +134,16 @@
   minLimit: 0
 
 - type: loadoutGroup
-  id: MedicalGlasses
+  id: CommonGlasses
   parent: BaseGlasses
+  loadouts:
+  - Glasses
+  - GlassesJamjar
+  - GlassesJensen
+
+- type: loadoutGroup
+  id: MedicalGlasses
+  parent: CommonGlasses
   defaultMinLimit: 1
   loadouts:
   - MedicalHud

@@ -1,15 +1,6 @@
 # Modified by Ronstation contributor(s), therefore this file is licensed as MIT sublicensed with AGPL-v3.0.
 # Miscellaneous
 - type: loadoutGroup
-  id: CommonGlasses
-  name: loadout-group-glasses
-  minLimit: 0
-  loadouts:
-  - Glasses
-  - GlassesJamjar
-  - GlassesJensen
-
-- type: loadoutGroup
   id: GroupTankHarness
   name: loadout-group-tank-harness
   minLimit: 1
