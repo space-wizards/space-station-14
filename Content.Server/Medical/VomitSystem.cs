@@ -29,7 +29,7 @@ namespace Content.Server.Medical
         [Dependency] private readonly MovementModStatusSystem _movementMod = default!;
         [Dependency] private readonly ThirstSystem _thirst = default!;
         [Dependency] private readonly ForensicsSystem _forensics = default!;
-        [Dependency] private readonly BloodstreamSystem _bloodstream = default!;
+        [Dependency] private readonly SharedBloodstreamSystem _bloodstream = default!;
 
         private static readonly ProtoId<SoundCollectionPrototype> VomitCollection = "Vomit";
 
@@ -74,7 +74,25 @@ namespace Content.Server.Medical
             // Adds a tiny amount of the chem stream from earlier along with vomit
             if (TryComp<BloodstreamComponent>(uid, out var bloodStream))
             {
-                solution.AddReagent(new ReagentId("Vomit", _bloodstream.GetEntityBloodData(uid)), solutionSize); // TODO: Dehardcode vomit prototype
+                const float chemMultiplier = 0.1f;
+
+                var vomitAmount = solutionSize;
+
+                // Takes 10% of the chemicals removed from the chem stream
+                if (_solutionContainer.ResolveSolution(uid, bloodStream.BloodSolutionName, ref bloodStream.BloodSolution))
+                {
+                    var vomitChemstreamAmount = _bloodstream.FlushChemicals((uid, bloodStream), bloodStream.BloodReagent, vomitAmount);
+
+                    if (vomitChemstreamAmount != null)
+                    {
+                        vomitChemstreamAmount.ScaleSolution(chemMultiplier);
+                        solution.AddSolution(vomitChemstreamAmount, _proto);
+                        vomitAmount -= (float)vomitChemstreamAmount.Volume;
+                    }
+                }
+
+                // Makes a vomit solution the size of 90% of the chemicals removed from the chemstream
+                solution.AddReagent(new ReagentId("Vomit", _bloodstream.GetEntityBloodData(uid)), vomitAmount); // TODO: Dehardcode vomit prototype
             }
 
             if (_puddle.TrySpillAt(uid, solution, out var puddle, false))

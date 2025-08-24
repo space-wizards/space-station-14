@@ -373,22 +373,31 @@ public abstract class SharedBloodstreamSystem : EntitySystem
     /// <summary>
     /// Removes a certain amount of all reagents except of a single excluded one from the bloodstream.
     /// </summary>
-    public bool FlushChemicals(Entity<BloodstreamComponent?> ent, ProtoId<ReagentPrototype>? excludedReagentID, FixedPoint2 quantity)
+    /// <returns>
+    /// Solution of removed chemicals or null if none were removed.
+    /// </returns>
+    public Solution? FlushChemicals(Entity<BloodstreamComponent?> ent, ProtoId<ReagentPrototype>? excludedReagentID, FixedPoint2 quantity)
     {
         if (!Resolve(ent, ref ent.Comp, logMissing: false)
             || !SolutionContainer.ResolveSolution(ent.Owner, ent.Comp.BloodSolutionName, ref ent.Comp.BloodSolution, out var bloodSolution))
-            return false;
+            return null;
+
+        var flushedSolution = new Solution();
 
         for (var i = bloodSolution.Contents.Count - 1; i >= 0; i--)
         {
             var (reagentId, _) = bloodSolution.Contents[i];
             if (reagentId.Prototype != excludedReagentID)
             {
-                SolutionContainer.RemoveReagent(ent.Comp.BloodSolution.Value, reagentId, quantity);
+                var reagentFlushAmount = SolutionContainer.RemoveReagent(ent.Comp.BloodSolution.Value, reagentId, quantity);
+                flushedSolution.AddReagent(reagentId, reagentFlushAmount);
             }
         }
 
-        return true;
+        if (flushedSolution.Volume == 0)
+            return null;
+
+        return flushedSolution;
     }
 
     /// <summary>
