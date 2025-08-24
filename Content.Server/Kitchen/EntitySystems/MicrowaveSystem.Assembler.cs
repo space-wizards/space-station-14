@@ -128,25 +128,24 @@ public sealed partial class MicrowaveSystem : EntitySystem
         activeComp.TotalTime = component.CurrentCookTimerTime; //this doesn't scale so that we can have the "actual" time
         activeComp.PortionedRecipe = portionedRecipe;
         //Scale times with cook times
-        component.CurrentCookTimeEnd = _gameTiming.CurTime + TimeSpan.FromSeconds(component.CurrentCookTimerTime * component.CookTimeMultiplier); // Frontier: CookTimeMultiplier<FinalCookTimeMultiplier
+        component.CurrentCookTimeEnd = _gameTiming.CurTime + TimeSpan.FromSeconds(component.CurrentCookTimerTime * component.CookTimeMultiplier);
         if (malfunctioning)
             activeComp.MalfunctionTime = _gameTiming.CurTime + TimeSpan.FromSeconds(component.MalfunctionInterval);
         UpdateUserInterfaceState(uid, component);
     }
 
     /// <summary>
-    /// Frontier: gets the largest number of portions
+    /// gets the largest number of portions
     /// </summary>
     public static (FoodRecipePrototype, int) GetPortionsForRecipe(MicrowaveComponent component, FoodRecipePrototype recipe, Dictionary<string, int> solids, Dictionary<string, FixedPoint2> reagents)
     {
         var portions = 0;
 
-        // Frontier: microwave recipe machine types
+        // microwave recipe machine types
         if ((recipe.RecipeType & component.ValidRecipeTypes) == 0)
         {
             return (recipe, 0);
         }
-        // End Frontier
 
         foreach (var solid in recipe.IngredientsSolids)
         {
