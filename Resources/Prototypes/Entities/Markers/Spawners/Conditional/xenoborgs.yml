@@ -1,42 +1,17 @@
 - type: entity
-  id: SpawnPointXenoborgEngi
+  id: SpawnPointXenoborg
   parent: MarkerBase
   name: nukies
   components:
   - type: SpawnPoint
+    spawnWhitelist:
+      components:
+      - Xenoborg
   - type: Sprite
     layers:
     - state: green
-
-- type: entity
-  id: SpawnPointXenoborgHeavy
-  parent: MarkerBase
-  name: nukies
-  components:
-  - type: SpawnPoint
-  - type: Sprite
-    layers:
-    - state: green
-
-- type: entity
-  id: SpawnPointXenoborgScout
-  parent: MarkerBase
-  name: nukies
-  components:
-  - type: SpawnPoint
-  - type: Sprite
-    layers:
-    - state: green
-
-- type: entity
-  id: SpawnPointXenoborgStealth
-  parent: MarkerBase
-  name: nukies
-  components:
-  - type: SpawnPoint
-  - type: Sprite
-    layers:
-    - state: green
+    - sprite: Mobs/Silicon/chassis.rsi
+      state: xenoborg_engi
 
 - type: entity
   id: SpawnPointMothershipCore
@@ -44,6 +19,11 @@
   name: nukies
   components:
   - type: SpawnPoint
+    spawnWhitelist:
+      components:
+      - MothershipCore
   - type: Sprite
     layers:
     - state: green
+    - sprite: Mobs/Silicon/mothership_core.rsi
+      state: core-idle
