@@ -121,6 +121,7 @@ loadout-group-station-engineer-outerclothing = Station Engineer outer clothing
 loadout-group-station-engineer-shoes = Station Engineer shoes
 loadout-group-station-engineer-id = Station Engineer ID
 
+loadout-group-atmospheric-technician-head = Atmospheric Technician head
 loadout-group-atmospheric-technician-jumpsuit = Atmospheric Technician jumpsuit
 loadout-group-atmospheric-technician-backpack = Atmospheric Technician backpack
 loadout-group-atmospheric-technician-outerclothing = Atmospheric Technician outer clothing
