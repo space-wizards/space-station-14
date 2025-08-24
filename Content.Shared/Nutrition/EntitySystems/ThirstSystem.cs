@@ -167,11 +167,12 @@ public sealed class ThirstSystem : EntitySystem
         DirtyField(uid, component, nameof(ThirstComponent.LastThirstThreshold));
         DirtyField(uid, component, nameof(ThirstComponent.ActualDecayRate));
 
-        // Starlight
+        // Starlight-edit: start
         var thirstMultiplier = 1f;
         if (TryComp<ThirstRateMultiplierComponent>(uid, out var increaseThirstRateComp )) {
             thirstMultiplier = increaseThirstRateComp.Multiplier;
         }
+        // Starlight-edit: end
 
         switch (component.CurrentThirstThreshold)
         {
