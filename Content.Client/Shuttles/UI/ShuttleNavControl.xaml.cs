@@ -305,7 +305,7 @@ public sealed partial class ShuttleNavControl : BaseShuttleControl
         foreach (var ping in _tracked)
         {
             var shapeRotMatrix = Matrix3x2.CreateRotation((float)ping.Item3.Theta) * Matrix3x2.CreateTranslation(ping.Item1);
-            var worldToViewShapeRot = shapeRotMatrix * worldToView;
+            var worldToViewShapeRot = Matrix3x2.Multiply(shapeRotMatrix, worldToView);
 
             switch(ping.Item2)
             {
@@ -356,7 +356,7 @@ public sealed partial class ShuttleNavControl : BaseShuttleControl
                 case RadarSignatureShape.Chevron:
                     {
                         var point = Vector2.Transform(ping.Item1, worldToView);
-                        handle.DrawCircle(point, ping.Item4 * 5f, ping.Item5, true); // radius my ass. why is the scale on circles so fucked?
+                        handle.DrawCircle(point, ping.Item4 * MinimapScale * 0.8f, ping.Item5, true);
 
                         var verts = new[]
                         {
@@ -386,7 +386,7 @@ public sealed partial class ShuttleNavControl : BaseShuttleControl
                 default: // circle
                     {
                         var point = Vector2.Transform(ping.Item1, worldToView);
-                        handle.DrawCircle(point, ping.Item4, ping.Item5, true);
+                        handle.DrawCircle(point, ping.Item4 * MinimapScale, ping.Item5, true);
                         break;
                     }
             }
