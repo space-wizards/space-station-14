@@ -82,93 +82,47 @@ public sealed partial class AdminVerbSystem
     [Dependency] private readonly SuperBonkSystem _superBonkSystem = default!;
     [Dependency] private readonly SlipperySystem _slipperySystem = default!;
 
+    protected override void SmiteExplodeVerb(EntityUid target)
+    {
+        var coords = _transformSystem.GetMapCoordinates(target);
+        Timer.Spawn(_gameTiming.TickPeriod,
+            () => _explosionSystem.QueueExplosion(coords, ExplosionSystem.DefaultExplosionPrototypeId,
+                4,
+                1,
+                2,
+                target,
+                maxTileBreak: 0), // it gibs, damage doesn't need to be high.
+            CancellationToken.None);
+
+        _bodySystem.GibBody(target);
+    }
+
+    protected override void SmiteChessVerb(EntityUid target)
+    {
+        _sharedGodmodeSystem.EnableGodmode(target); // So they don't suffocate.
+        EnsureComp<TabletopDraggableComponent>(target);
+        RemComp<PhysicsComponent>(target); // So they can be dragged around.
+        var xform = Transform(target);
+        _popupSystem.PopupEntity(Loc.GetString("admin-smite-chess-self"),
+            target,
+            target,
+            PopupType.LargeCaution);
+        _popupSystem.PopupCoordinates(
+            Loc.GetString("admin-smite-chess-others", ("name", target)),
+            xform.Coordinates,
+            Filter.PvsExcept(target),
+            true,
+            PopupType.MediumCaution);
+        var board = Spawn("ChessBoard", xform.Coordinates);
+        var session = _tabletopSystem.EnsureSession(Comp<TabletopGameComponent>(board));
+        _transformSystem.SetMapCoordinates(target, session.Position);
+        _transformSystem.SetWorldRotationNoLerp((target, xform), Angle.Zero);
+    }
+
     // All smite verbs have names so invokeverb works.
     private void AddSmiteVerbs(GetVerbsEvent<Verb> args)
     {
-        if (!TryComp(args.User, out ActorComponent? actor))
-            return;
 
-        var player = actor.PlayerSession;
-
-        if (!_adminManager.HasAdminFlag(player, AdminFlags.Fun))
-            return;
-
-        // 1984.
-        if (HasComp<MapComponent>(args.Target) || HasComp<MapGridComponent>(args.Target))
-            return;
-
-        var explodeName = Loc.GetString("admin-smite-explode-name").ToLowerInvariant();
-        Verb explode = new()
-        {
-            Text = explodeName,
-            Category = VerbCategory.Smite,
-            Icon = new SpriteSpecifier.Texture(new ("/Textures/Interface/VerbIcons/smite.svg.192dpi.png")),
-            Act = () =>
-            {
-                var coords = _transformSystem.GetMapCoordinates(args.Target);
-                Timer.Spawn(_gameTiming.TickPeriod,
-                    () => _explosionSystem.QueueExplosion(coords, ExplosionSystem.DefaultExplosionPrototypeId,
-                        4, 1, 2, args.Target, maxTileBreak: 0), // it gibs, damage doesn't need to be high.
-                    CancellationToken.None);
-
-                _bodySystem.GibBody(args.Target);
-            },
-            Impact = LogImpact.Extreme,
-            Message = string.Join(": ", explodeName, Loc.GetString("admin-smite-explode-description")) // we do this so the description tells admins the Text to run it via console.
-        };
-        args.Verbs.Add(explode);
-
-        var chessName = Loc.GetString("admin-smite-chess-dimension-name").ToLowerInvariant();
-        Verb chess = new()
-        {
-            Text = chessName,
-            Category = VerbCategory.Smite,
-            Icon = new SpriteSpecifier.Rsi(new ("/Textures/Objects/Fun/Tabletop/chessboard.rsi"), "chessboard"),
-            Act = () =>
-            {
-                _sharedGodmodeSystem.EnableGodmode(args.Target); // So they don't suffocate.
-                EnsureComp<TabletopDraggableComponent>(args.Target);
-                RemComp<PhysicsComponent>(args.Target); // So they can be dragged around.
-                var xform = Transform(args.Target);
-                _popupSystem.PopupEntity(Loc.GetString("admin-smite-chess-self"), args.Target,
-                    args.Target, PopupType.LargeCaution);
-                _popupSystem.PopupCoordinates(
-                    Loc.GetString("admin-smite-chess-others", ("name", args.Target)), xform.Coordinates,
-                    Filter.PvsExcept(args.Target), true, PopupType.MediumCaution);
-                var board = Spawn("ChessBoard", xform.Coordinates);
-                var session = _tabletopSystem.EnsureSession(Comp<TabletopGameComponent>(board));
-                _transformSystem.SetMapCoordinates(args.Target, session.Position);
-                _transformSystem.SetWorldRotationNoLerp((args.Target, xform), Angle.Zero);
-            },
-            Impact = LogImpact.Extreme,
-            Message = string.Join(": ", chessName, Loc.GetString("admin-smite-chess-dimension-description"))
-        };
-        args.Verbs.Add(chess);
-
-        if (TryComp<FlammableComponent>(args.Target, out var flammable))
-        {
-            var flamesName = Loc.GetString("admin-smite-set-alight-name").ToLowerInvariant();
-            Verb flames = new()
-            {
-                Text = flamesName,
-                Category = VerbCategory.Smite,
-                Icon = new SpriteSpecifier.Texture(new ("/Textures/Interface/Alerts/Fire/fire.png")),
-                Act = () =>
-                {
-                    // Fuck you. Burn Forever.
-                    flammable.FireStacks = flammable.MaximumFireStacks;
-                    _flammableSystem.Ignite(args.Target, args.User);
-                    var xform = Transform(args.Target);
-                    _popupSystem.PopupEntity(Loc.GetString("admin-smite-set-alight-self"), args.Target,
-                        args.Target, PopupType.LargeCaution);
-                    _popupSystem.PopupCoordinates(Loc.GetString("admin-smite-set-alight-others", ("name", args.Target)), xform.Coordinates,
-                        Filter.PvsExcept(args.Target), true, PopupType.MediumCaution);
-                },
-                Impact = LogImpact.Extreme,
-                Message = string.Join(": ", flamesName, Loc.GetString("admin-smite-set-alight-description"))
-            };
-            args.Verbs.Add(flames);
-        }
 
         var monkeyName = Loc.GetString("admin-smite-monkeyify-name").ToLowerInvariant();
         Verb monkey = new()
