@@ -8,16 +8,6 @@
   loadouts:
   - LoadoutTankHarness
 
-- type: loadoutGroup
-  id: Survival
-  name: loadout-group-survival
-  minLimit: 3
-  hidden: true
-  loadouts:
-  - EmergencyNitrogen
-  - EmergencyOxygen
-  - LoadoutSpeciesVoxNitrogen
-
 # nitrogen or oxygen tank, depending on what your species needs
 - type: loadoutGroup
   id: GroupEVATank

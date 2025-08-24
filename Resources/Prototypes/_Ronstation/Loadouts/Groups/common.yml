@@ -190,6 +190,15 @@
   hidden: true
 
 - type: loadoutGroup
+  id: Survival
+  parent: BaseSurvival
+  minLimit: 3
+  loadouts:
+  - EmergencyNitrogen
+  - EmergencyOxygen
+  - LoadoutSpeciesVoxNitrogen
+
+- type: loadoutGroup
   id: SurvivalExtended
   parent: BaseSurvival
   minLimit: 2
