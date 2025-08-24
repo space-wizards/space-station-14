@@ -1,4 +1,5 @@
 using Content.Server.Actions;
+using Content.Server.Chat.Systems;
 using Content.Server.Humanoid;
 using Content.Server.Inventory;
 using Content.Server.Polymorph.Components;
@@ -17,6 +18,8 @@ using Content.Shared.Popups;
 using Robust.Server.Audio;
 using Robust.Server.Containers;
 using Robust.Server.GameObjects;
+using Robust.Shared.Physics.Components;
+using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
@@ -42,6 +45,8 @@ public sealed partial class PolymorphSystem : EntitySystem
     [Dependency] private readonly TransformSystem _transform = default!;
     [Dependency] private readonly SharedMindSystem _mindSystem = default!;
     [Dependency] private readonly MetaDataSystem _metaData = default!;
+    [Dependency] private readonly PhysicsSystem _physics = default!;
+    [Dependency] private readonly ChatSystem _chat = default!;
 
     private const string RevertPolymorphId = "ActionRevertPolymorph";
 
@@ -150,12 +155,10 @@ public sealed partial class PolymorphSystem : EntitySystem
 
     private void OnPolymorphedTerminating(Entity<PolymorphedEntityComponent> ent, ref EntityTerminatingEvent args)
     {
-        if (ent.Comp.Configuration.RevertOnDelete)
-            Revert(ent.AsNullable());
+        if (!ent.Comp.Configuration.RevertOnDelete)
+            return;
 
-        // Remove our original entity too
-        // Note that Revert will set Parent to null, so reverted entities will not be deleted
-        QueueDel(ent.Comp.Parent);
+        Revert(ent.AsNullable());
     }
 
     /// <summary>
@@ -177,8 +180,10 @@ public sealed partial class PolymorphSystem : EntitySystem
     /// <returns>The new entity, or null if the polymorph failed.</returns>
     public EntityUid? PolymorphEntity(EntityUid uid, PolymorphConfiguration configuration)
     {
+        // Assert that this entity is valid to be polymorphed.
+
         // If they're morphed, check their current config to see if they can be
-        // morphed again
+        // morphed again.
         if (!configuration.IgnoreAllowRepeatedMorphs
             && TryComp<PolymorphedEntityComponent>(uid, out var currentPoly)
             && !currentPoly.Configuration.AllowRepeatedMorphs)
@@ -191,92 +196,127 @@ public sealed partial class PolymorphSystem : EntitySystem
             _gameTiming.CurTime < polymorphableComponent.LastPolymorphEnd + configuration.Cooldown)
             return null;
 
-        // mostly just for vehicles
+        // The entity's valid.
+        // The entity is now being polymorphed. It should not interact with anything.
+        var parentIsCollidable = false;
+
+        if (TryComp<PhysicsComponent>(uid, out var physComp))
+            parentIsCollidable = physComp.CanCollide;
+
+        _physics.SetCanCollide(uid, false, true, true);
+
+        // Make sure the entity is unbuckled.
         _buckle.TryUnbuckle(uid, uid, true);
 
+        // We're going to banish the polymorph-ed entity to nullspace, so let's make sure we know where it is first.
         var targetTransformComp = Transform(uid);
+        var mapCoordinates = _transform.GetMapCoordinates(uid, targetTransformComp);
+        var rotation = _transform.GetWorldRotation(uid);
+        _container.TryGetContainingContainer((uid, targetTransformComp, null), out var parentContainer);
 
-        if (configuration.PolymorphSound != null)
-            _audio.PlayPvs(configuration.PolymorphSound, targetTransformComp.Coordinates);
+        // Send the parent to baby jail. Parent jail? That room at the kid's arcade that sells alcohol?
+        _transform.SetParent(uid, targetTransformComp, EnsurePausedMap());
 
-        var child = Spawn(configuration.Entity, _transform.GetMapCoordinates(uid, targetTransformComp), rotation: _transform.GetWorldRotation(uid));
+        // Spawn the child. Which in this analogy is the snotty kid in the arcade.
+        var child = Spawn(configuration.Entity, mapCoordinates, rotation: rotation);
 
-        if (configuration.PolymorphPopup != null)
-            _popup.PopupEntity(Loc.GetString(configuration.PolymorphPopup,
-                ("parent", Identity.Entity(uid, EntityManager)),
-                ("child", Identity.Entity(child, EntityManager))),
-                child);
-
-        _mindSystem.MakeSentient(child);
-
+        // The child needs to know that it's a polymorph.
         var polymorphedComp = Factory.GetComponent<PolymorphedEntityComponent>();
         polymorphedComp.Parent = uid;
         polymorphedComp.Configuration = configuration;
+        polymorphedComp.ParentWasCollidable = parentIsCollidable;
         AddComp(child, polymorphedComp);
 
+        // The child needs to be sentient so we can transfer the parent's mind over.
+        _mindSystem.MakeSentient(child);
+
+        // Make sure the child is rotated to match the parent. Important in a few situations, such as when a Wizard
+        // polymorphs into an Immovable Rod.
         var childXform = Transform(child);
         _transform.SetLocalRotation(child, targetTransformComp.LocalRotation, childXform);
 
-        if (_container.TryGetContainingContainer((uid, targetTransformComp, null), out var cont))
-            _container.Insert(child, cont);
+        // Make sure the child is in the same container the parent was supposed to be in.
+        if (parentContainer is not null)
+            _container.Insert(child, parentContainer);
 
-        //Transfers all damage from the original to the new one
-        if (configuration.TransferDamage &&
-            TryComp<DamageableComponent>(child, out var damageParent) &&
-            _mobThreshold.GetScaledDamage(uid, child, out var damage) &&
-            damage != null)
+        if (configuration.TransferDamage)
         {
-            _damageable.SetDamage(child, damageParent, damage);
+            if (_mobThreshold.GetScaledDamage(uid, child, out var damage) && damage is not null)
+                //Transfer all damage from the original to the new one.
+                // Child _must_ have a damage comp here (as otherwise GetScaledDamage would have returned null for damage).
+                _damageable.SetDamage(child, Comp<DamageableComponent>(child), damage);
         }
 
-        if (configuration.Inventory == PolymorphInventoryChange.Transfer)
+        // Handle inventory management.
+        switch (configuration.Inventory)
         {
-            _inventory.TransferEntityInventories(uid, child);
-            foreach (var hand in _hands.EnumerateHeld(uid))
+            case PolymorphInventoryChange.Transfer:
             {
-                _hands.TryDrop(uid, hand, checkActionBlocker: false);
-                _hands.TryPickupAnyHand(child, hand);
-            }
-        }
-        else if (configuration.Inventory == PolymorphInventoryChange.Drop)
-        {
-            if (_inventory.TryGetContainerSlotEnumerator(uid, out var enumerator))
-            {
-                while (enumerator.MoveNext(out var slot))
+                _inventory.TransferEntityInventories(uid, child);
+
+                foreach (var hand in _hands.EnumerateHeld(uid))
                 {
-                    _inventory.TryUnequip(uid, slot.ID, true, true);
+                    _hands.TryDrop(uid, hand, checkActionBlocker: false);
+                    _hands.TryPickupAnyHand(child, hand);
                 }
-            }
 
-            foreach (var held in _hands.EnumerateHeld(uid))
-            {
-                _hands.TryDrop(uid, held);
+                break;
             }
+            case PolymorphInventoryChange.Drop:
+            {
+                if (_inventory.TryGetContainerSlotEnumerator(uid, out var enumerator))
+                {
+                    while (enumerator.MoveNext(out var slot))
+                    {
+                        _inventory.TryUnequip(uid, slot.ID, true, true);
+                    }
+                }
+
+                foreach (var held in _hands.EnumerateHeld(uid))
+                {
+                    _hands.TryDrop(uid, held);
+                }
+
+                break;
+            }
+            case PolymorphInventoryChange.None:
+            default:
+                break;
         }
 
         if (configuration.TransferName && TryComp(uid, out MetaDataComponent? targetMeta))
             _metaData.SetEntityName(child, targetMeta.EntityName);
 
         if (configuration.TransferHumanoidAppearance)
-        {
             _humanoid.CloneAppearance(uid, child);
-        }
 
         if (_mindSystem.TryGetMind(uid, out var mindId, out var mind))
             _mindSystem.TransferTo(mindId, child, mind: mind);
-
-        //Ensures a map to banish the entity to
-        EnsurePausedMap();
-        if (PausedMap != null)
-            _transform.SetParent(uid, targetTransformComp, PausedMap.Value);
 
         // Raise an event to inform anything that wants to know about the entity swap
         var ev = new PolymorphedEvent(uid, child, false);
         RaiseLocalEvent(uid, ref ev);
 
-        // visual effect spawn
-        if (configuration.EffectProto != null)
+        // Polymorph OK!
+
+        // Spawn sidecar effects; popups, sounds, etc.
+
+        if (configuration.EffectProto is not null)
             SpawnAttachedTo(configuration.EffectProto, child.ToCoordinates());
+
+        if (configuration.PolymorphPopup is not null)
+        {
+            _popup.PopupEntity(Loc.GetString(configuration.PolymorphPopup,
+                    ("parent", Identity.Entity(uid, EntityManager)),
+                    ("child", Identity.Entity(child, EntityManager))),
+                child);
+        }
+
+        if (configuration.PolymorphSound is not null)
+            _audio.PlayEntity(configuration.PolymorphSound, Filter.Pvs(child), child, true);
+
+        if (configuration.SayOnPolymorph is not null)
+            _chat.TrySendInGameICMessage(child, Loc.GetString(configuration.SayOnPolymorph), InGameICChatType.Speak, false, false);
 
         return child;
     }
@@ -298,8 +338,6 @@ public sealed partial class PolymorphSystem : EntitySystem
         if (component.Parent is not { } parent)
             return null;
 
-        // Clear our reference to the original entity
-        component.Parent = null;
         if (Deleted(parent))
             return null;
 
@@ -309,6 +347,17 @@ public sealed partial class PolymorphSystem : EntitySystem
         // Don't swap back onto a terminating grid
         if (TerminatingOrDeleted(uidXform.ParentUid))
             return null;
+
+        // Beyond this point: reverting is legal and can now happen.
+
+        // Because the entity the parent has polymorphed into now does not exist, it
+        // needs its fixtures removing immediately so it will not interact with the
+        // parent as they are rescued from nullspace.
+        _physics.SetCanCollide(uid, false, dirty: true, force: true);
+
+        // The polymorphed entity may have been collidable. Make sure it has the same state it did before it was
+        // sent to baby jail.
+        _physics.SetCanCollide(uid, component.ParentWasCollidable, true, true);
 
         if (component.Configuration.ExitPolymorphSound != null)
             _audio.PlayPvs(component.Configuration.ExitPolymorphSound, uidXform.Coordinates);

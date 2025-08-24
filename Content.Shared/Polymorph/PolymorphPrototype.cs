@@ -24,7 +24,6 @@ public sealed partial class PolymorphPrototype : IPrototype, IInheritingPrototyp
 
     [DataField(required: true, serverOnly: true)]
     public PolymorphConfiguration Configuration = new();
-
 }
 
 /// <summary>
@@ -164,6 +163,12 @@ public sealed partial record PolymorphConfiguration
     /// </summary>
     [DataField]
     public LocId? ExitPolymorphPopup = "polymorph-revert-popup-generic";
+
+    /// <summary>
+    ///     If not null, this will be said in the Say channel by the polymorph-er when they polymorph.
+    /// </summary>
+    [DataField]
+    public LocId? SayOnPolymorph;
 }
 
 public enum PolymorphInventoryChange : byte
