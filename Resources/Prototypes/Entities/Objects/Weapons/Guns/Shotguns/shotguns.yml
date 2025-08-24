@@ -136,7 +136,6 @@
   - type: BallisticAmmoProvider
     proto: ShellShotgunBeanbag
 
-
 - type: entity
   name: Enforcer
   parent: [BaseWeaponShotgun, BaseGunWieldable, BaseSecurityContraband]
