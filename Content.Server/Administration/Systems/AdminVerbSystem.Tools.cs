@@ -51,6 +51,16 @@ public sealed partial class AdminVerbSystem
 
     protected override void AddTricksVerbs(GetVerbsEvent<Verb> args)
     {
+        base.AddTricksVerbs(args);
+
+        if (!TryComp(args.User, out ActorComponent? actor))
+            return;
+
+        var player = actor.PlayerSession;
+
+        if (!_adminManager.HasAdminFlag(player, AdminFlags.Admin))
+            return;
+
         if (TryComp<BatteryComponent>(args.Target, out var battery))
         {
             Verb refillBattery = new()

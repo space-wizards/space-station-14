@@ -34,8 +34,6 @@ public sealed partial class AdminVerbSystem : SharedAdminVerbSystem
     [Dependency] private readonly IConGroupController _groupController = default!;
     [Dependency] private readonly IAdminManager _adminManager = default!;
     [Dependency] private readonly IGameTiming _gameTiming = default!;
-    [Dependency] private readonly SharedMapSystem _map = default!;
-    [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly AdminSystem _adminSystem = default!;
     [Dependency] private readonly DisposalTubeSystem _disposalTubes = default!;
     [Dependency] private readonly EuiManager _euiManager = default!;

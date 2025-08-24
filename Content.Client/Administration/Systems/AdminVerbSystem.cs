@@ -17,13 +17,6 @@ public sealed partial class AdminVerbSystem : SharedAdminVerbSystem
     [Dependency] private readonly IClientConsoleHost _clientConsoleHost = default!;
     [Dependency] private readonly ISharedAdminManager _admin = default!;
 
-    protected override void GetVerbs(GetVerbsEvent<Verb> args)
-    {
-        base.GetVerbs(args);
-
-        AddAdminVerbs(args);
-    }
-
     // This is a solution to deal with the fact theres no shared way to check command perms.
     // Should the ConGroupControllers be unified and shared, this should be replaced with that instead.
     public override bool CanCommandOverride(ICommonSession player, string command)
@@ -31,11 +24,13 @@ public sealed partial class AdminVerbSystem : SharedAdminVerbSystem
         return _clientConGroupController.CanCommand(command);
     }
 
-    private void AddAdminVerbs(GetVerbsEvent<Verb> args)
+    protected override void AddAdminVerbs(GetVerbsEvent<Verb> args)
     {
         // Currently this is only the ViewVariables verb, but more admin-UI related verbs can be added here.
 
         // View variables verbs
+        base.AddAdminVerbs(args);
+
         if (_clientConGroupController.CanViewVar())
         {
             var verb = new VvVerb()

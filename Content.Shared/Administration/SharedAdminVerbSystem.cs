@@ -28,7 +28,7 @@ public abstract partial class SharedAdminVerbSystem : EntitySystem
         SubscribeLocalEvent<GetVerbsEvent<Verb>>(GetVerbs);
     }
 
-    protected virtual void GetVerbs(GetVerbsEvent<Verb> args)
+    private void GetVerbs(GetVerbsEvent<Verb> args)
     {
         AddAdminVerbs(args);
         AddAntagVerbs(args);
@@ -36,7 +36,7 @@ public abstract partial class SharedAdminVerbSystem : EntitySystem
         AddTricksVerbs(args);
     }
 
-    private void AddAdminVerbs(GetVerbsEvent<Verb> args)
+    protected virtual void AddAdminVerbs(GetVerbsEvent<Verb> args)
     {
         if (!TryComp(args.User, out ActorComponent? actor))
             return;
