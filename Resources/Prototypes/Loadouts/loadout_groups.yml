@@ -813,7 +813,6 @@
   loadouts:
   - AtmosphericTechnicianHardhatYellow
   - AtmosphericTechnicianHardhatBlue
-  - SeniorEngineerBeret
 
 - type: loadoutGroup
   id: AtmosphericTechnicianJumpsuit
