@@ -47,6 +47,7 @@ steal-target-groups-clothing-neck-clownmedal = clown medal
 steal-target-groups-wanted-list-cartridge = wanted list cartridge
 steal-target-groups-belt-ce = Chief Engineer's toolbelt
 steal-target-groups-deckard = Deckard
+steal-target-groups-captain-sword = Captain's Sabre
 
 # Thief structures
 steal-target-groups-teg = teg generator part

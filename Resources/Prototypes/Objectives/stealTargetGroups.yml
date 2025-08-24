@@ -240,7 +240,7 @@
   name: steal-target-groups-belt-ce
   sprite:
     sprite: Clothing/Belt/ce.rsi
-    state: ame-part
+    state: icon
 
 - type: stealTargetGroup
   id: SalvageExpeditionsComputerCircuitboard
@@ -303,6 +303,13 @@
   name: steal-target-groups-deckard
   sprite:
     sprite: Objects/Weapons/Guns/Revolvers/deckard.rsi
+    state: base
+
+- type: stealTargetGroup
+  id: CaptainSword
+  name: steal-target-groups-captain-sword
+  sprite:
+    sprite: Objects/Weapons/Melee/captain_sabre.rsi
     state: icon
 
 #Thief structures

@@ -166,7 +166,7 @@
     maxCollectionSize: 10
     verifyMapExistence: true
   - type: Objective
-    difficulty: 0.5 # just for fun, collectings LAMP on Moth
+    difficulty: 0.1 # just for fun, collecting LAMP on Moth
 
 # steal item
 
@@ -361,6 +361,17 @@
     stealGroup: ClothingNeckClownmedal
   - type: Objective
     difficulty: 1
+
+- type: entity
+  parent: BaseThiefStealObjective
+  id: CaptainSwordStealObjective
+  components:
+  - type: NotJobRequirement
+    job: Captain
+  - type: StealCondition
+    stealGroup: CaptainSword
+  - type: Objective
+    difficulty: 1.5
 
 # Structures
 
