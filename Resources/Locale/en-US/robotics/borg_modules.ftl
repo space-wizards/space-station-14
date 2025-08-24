@@ -12,3 +12,5 @@ borg-slot-instruments-empty = Instruments
 borg-slot-beakers-empty = Beakers
 borg-slot-inflatable-door-empty = Inflatable Door
 borg-slot-inflatable-wall-empty = Inflatable Wall
+borg-slot-ore-empty = Ore
+borg-slot-paper-empty = Paper

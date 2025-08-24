@@ -537,6 +537,12 @@
     - item: RubberStampApproved
     - item: RubberStampDenied
     - item: RadioHandheld
+    - hand:
+        emptyRepresentative: Paper
+        emptyLabel: borg-slot-paper-empty
+        whitelist:
+          tags:
+          - Paper
   - type: BorgModuleIcon
     icon: { sprite: Interface/Actions/actions_borg.rsi, state: appraisal-module }
 
@@ -555,6 +561,13 @@
     - item: Shovel
     - item: MineralScannerUnpowered
     - item: BorgOreBag
+    - hand:
+        emptyRepresentative: SteelOre
+        emptyLabel: borg-slot-ore-empty
+        whitelist:
+          tags:
+          - Ore
+          - ArtifactFragment
   - type: BorgModuleIcon
     icon: { sprite: Interface/Actions/actions_borg.rsi, state: mining-module }
 
@@ -574,6 +587,13 @@
     - item: Shovel
     - item: AdvancedMineralScannerUnpowered
     - item: OreBagOfHolding
+    - hand:
+        emptyRepresentative: SteelOre
+        emptyLabel: borg-slot-ore-empty
+        whitelist:
+          tags:
+          - Ore
+          - ArtifactFragment
   - type: BorgModuleIcon
     icon: { sprite: Interface/Actions/actions_borg.rsi, state: adv-mining-module }
 
