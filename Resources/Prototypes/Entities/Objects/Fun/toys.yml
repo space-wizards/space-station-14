@@ -485,10 +485,6 @@
     - type: TriggerOnCollide
       fixtureID: fix1
       keyOut: OnCollide
-    - type: LaunchOnTrigger
-      speed: 10.0
-      keysIn:
-        - OnCollide
     - type: EmitSoundOnTrigger
       sound:
         path: /Audio/Effects/Footsteps/bounce.ogg
