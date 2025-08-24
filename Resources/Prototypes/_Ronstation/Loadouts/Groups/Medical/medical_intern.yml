@@ -1,0 +1,6 @@
+- type: loadoutGroup
+  id: MedicalInternJumpsuit
+  parent: BaseJumpsuit
+  loadouts:
+  - WhiteJumpsuit
+  - WhiteJumpskirt

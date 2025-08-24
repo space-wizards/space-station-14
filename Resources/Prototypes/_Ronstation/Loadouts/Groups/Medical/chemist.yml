@@ -1,0 +1,22 @@
+- type: loadoutGroup
+  id: ChemistJumpsuit
+  parent: BaseJumpsuit
+  loadouts:
+  - ChemistJumpsuit
+  - ChemistJumpskirt
+
+- type: loadoutGroup
+  id: ChemistBackpack
+  parent: BaseBackpack
+  loadouts:
+  - ChemistBackpack
+  - ChemistSatchel
+  - ChemistDuffel
+
+- type: loadoutGroup
+  id: ChemistOuterClothing
+  parent: BaseOuterClothing
+  loadouts:
+  - RegularLabCoat
+  - ChemistLabCoat
+  - ChemistWintercoat

@@ -12,6 +12,12 @@
   abstract: true
   minLimit: 0
 
+- type: loadoutGroup
+  id: MedicalMask
+  parent: BaseMask
+  loadouts:
+  - SterileMask
+
 # Neck
 - type: loadoutGroup
   id: BaseNeck
@@ -32,11 +38,26 @@
   abstract: true
   minLimit: 0
 
+- type: loadoutGroup
+  id: MedicalGloves
+  parent: BaseGloves
+  loadouts:
+  - LatexGloves
+  - NitrileGloves
+
 # Backpack
 - type: loadoutGroup
   id: BaseBackpack
   name: loadout-group-backpack
   abstract: true
+
+- type: loadoutGroup
+  id: MedicalBackpack
+  parent: BaseBackpack
+  loadouts:
+  - MedicalDoctorBackpack
+  - MedicalDoctorSatchel
+  - MedicalDoctorDuffel
 
 # Belt
 - type: loadoutGroup
@@ -56,6 +77,13 @@
   id: BaseShoes
   name: loadout-group-shoes
   abstract: true
+  
+- type: loadoutGroup
+  id: MedicalShoes
+  parent: BaseShoes
+  loadouts:
+  - WhiteShoes
+  - MedicalWinterBoots
 
 # PDA
 - type: loadoutGroup
@@ -70,9 +98,26 @@
   abstract: true
   minLimit: 0
 
+- type: loadoutGroup
+  id: MedicalGlasses
+  parent: BaseGlasses
+  defaultMinLimit: 1
+  loadouts:
+  - MedicalHud
+  - MedicalEyePatchHud
+
 # Survival Box
 - type: loadoutGroup
   id: BaseSurvival
   name: loadout-group-survival
   abstract: true
   hidden: true
+  
+- type: loadoutGroup
+  id: SurvivalMedical
+  parent: BaseSurvival
+  minLimit: 2
+  loadouts:
+  - EmergencyNitrogenMedical
+  - EmergencyOxygenMedical
+  - LoadoutSpeciesVoxNitrogen
