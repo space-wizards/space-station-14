@@ -7,11 +7,11 @@ public sealed partial class PoweredRadarColorComponent : Component
     /// The radar signature color when powered
     /// </summary>
     [DataField]
-    public Color OnColor = Color.FromHex("#00FF00");
+    public Color OnColor = Color.DarkGreen;
 
     /// <summary>
     /// The radar signature color when unpowered
     /// </summary>
     [DataField]
-    public Color OffColor = Color.FromHex("#FF0000");
+    public Color OffColor = Color.DarkGray;
 }
