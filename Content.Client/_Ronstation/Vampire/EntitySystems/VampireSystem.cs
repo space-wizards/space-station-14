@@ -5,7 +5,7 @@ using Content.Shared.StatusIcon.Components;
 using Robust.Client.Player;
 using Robust.Shared.Prototypes;
 
-namespace Content.Client._Ronstation.BloodBrothers.EntitySystems;
+namespace Content.Client._Ronstation.Vampire.EntitySystems;
 
 public sealed class VampireSystem : SharedVampireSystem
 {
@@ -15,6 +15,5 @@ public sealed class VampireSystem : SharedVampireSystem
     public override void Initialize()
     {
         base.Initialize();
-
     }
 }
