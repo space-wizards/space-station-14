@@ -1,16 +1,11 @@
-- type: loadoutEffectGroup
-  id: ExperiencedDetective
+- type: loadout
+  id: GlassesSecurityNoir
+  effects:
   effects:
   - !type:JobRequirementLoadoutEffect
     requirement:
       !type:RoleTimeRequirement
       role: JobDetective
       time: 36000 #10 hrs
-
-- type: loadout
-  id: GlassesSecurityNoir
-  effects:
-  - !type:GroupLoadoutEffect
-    proto: ExperiencedDetective
   equipment:
     eyes: ClothingEyesGlassesNoir
