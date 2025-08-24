@@ -121,7 +121,7 @@
 - type: entity
   id: BudgetCyberKidneys
   name: Budget CyberKidneys
-  description: A pair of artificial kineys. Due to cheap materials used, they waste significantly more water than organic ones.
+  description: A pair of artificial kidneys. Due to cheap materials used, they waste significantly more water than organic ones.
   parent: [OrganCyber, OrganHumanKidneys]
   components:
   - type: Sprite
