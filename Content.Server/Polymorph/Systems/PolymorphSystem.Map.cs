@@ -26,14 +26,16 @@ public sealed partial class PolymorphSystem
     /// Used internally to ensure a paused map that is
     /// stores polymorphed entities.
     /// </summary>
-    private void EnsurePausedMap()
+    private EntityUid EnsurePausedMap()
     {
         if (PausedMap != null && Exists(PausedMap))
-            return;
+            return PausedMap.Value;
 
         var mapUid = _map.CreateMap();
         _metaData.SetEntityName(mapUid, Loc.GetString("polymorph-paused-map-name"));
         _map.SetPaused(mapUid, true);
         PausedMap = mapUid;
+
+        return mapUid;
     }
 }

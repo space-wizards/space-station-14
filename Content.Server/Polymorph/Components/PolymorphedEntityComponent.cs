@@ -29,4 +29,6 @@ public sealed partial class PolymorphedEntityComponent : Component
 
     [DataField]
     public EntityUid? Action;
+
+    public bool ParentWasCollidable;
 }
