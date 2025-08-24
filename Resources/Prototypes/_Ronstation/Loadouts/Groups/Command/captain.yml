@@ -1,0 +1,39 @@
+- type: loadoutGroup
+  id: CaptainHead
+  parent: BaseHead
+  loadouts:
+  - CaptainHead
+  - CaptainCap
+
+- type: loadoutGroup
+  id: CaptainNeck
+  parent: BaseNeck
+  loadouts:
+  - CaptainCloak
+  - CaptainCloakFormal
+  - CaptainMantle
+
+- type: loadoutGroup
+  id: CaptainJumpsuit
+  parent: BaseJumpsuit
+  loadouts:
+  - CaptainJumpsuit
+  - CaptainJumpskirt
+  - CaptainFormalSuit
+  - CaptainFormalSkirt
+
+- type: loadoutGroup
+  id: CaptainBackpack
+  parent: BaseBackpack
+  loadouts:
+  - CaptainBackpack
+  - CaptainSatchel
+  - CaptainDuffel
+
+- type: loadoutGroup
+  id: CaptainOuterClothing
+  parent: BaseOuterClothing
+  minLimit: 1 # Captain must have outer clothing
+  loadouts:
+  - CaptainOuterClothing
+  - CaptainWintercoat
