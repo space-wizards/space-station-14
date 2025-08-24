@@ -14,3 +14,9 @@ mass-driver-ui-throw-speed-current = Current Speed:
 mass-driver-ui-auto-mode = Auto
 mass-driver-ui-manual-mode = Manual
 mass-driver-ui-launch = Launch
+
+# UI Units
+
+# Speed in m/s, Distance in m
+mass-driver-ui-units-distance = m
+mass-driver-ui-units-speed = m/s

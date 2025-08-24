@@ -8,13 +8,12 @@ namespace Content.Shared.MassDriver.Components;
 /// Stores configuration and state data for a mass driver.
 /// </summary>
 [RegisterComponent, NetworkedComponent]
-[AutoGenerateComponentState]
 public sealed partial class MassDriverComponent : Component
 {
     /// <summary>
     /// Current Mass Driver Throw Speed
     /// </summary>
-    [DataField, AutoNetworkedField]
+    [DataField]
     public float CurrentThrowSpeed = 10.0f;
 
     /// <summary>
@@ -32,7 +31,7 @@ public sealed partial class MassDriverComponent : Component
     /// <summary>
     /// Current Mass Driver Throw Distance
     /// </summary>
-    [DataField, AutoNetworkedField]
+    [DataField]
     public float CurrentThrowDistance = 5.0f;
 
     /// <summary>
@@ -51,7 +50,7 @@ public sealed partial class MassDriverComponent : Component
     /// Determines how much speed or distance will be subtracted from each additional entity
     /// Example: ThrowSpeed = 10.0f, EntityCount = 2, RealThrowSpeed = 10.0f - 0.5f = 9.5f
     /// </summary>
-    [DataField, AutoNetworkedField]
+    [DataField]
     public float ThrowCountDelta = 0.5f;
 
     /// <summary>
@@ -63,7 +62,7 @@ public sealed partial class MassDriverComponent : Component
     /// <summary>
     /// Determines which mode is used by mass driver
     /// </summary>
-    [DataField, AutoNetworkedField]
+    [DataField]
     public MassDriverMode Mode = MassDriverMode.Auto;
 
     /// <summary>
@@ -87,7 +86,6 @@ public sealed partial class MassDriverComponent : Component
     /// <summary>
     /// Determines whether it has been hacked.
     /// </summary>
-    [AutoNetworkedField]
     public bool Hacked = false;
 
     /// <summary>
@@ -95,4 +93,10 @@ public sealed partial class MassDriverComponent : Component
     /// </summary>
     [DataField]
     public float HackedSpeedRewrite = 20f;
+
+    /// <summary>
+    /// Linked console entity.
+    /// </summary>
+    [DataField]
+    public EntityUid? Console;
 }

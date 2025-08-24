@@ -24,15 +24,15 @@ public enum MassDriverVisuals : byte
 [Serializable, NetSerializable]
 public sealed class MassDriverComponentState : ComponentState
 {
-    public float MaxThrowSpeed = 1f;
-    public float MaxThrowDistance = 1f;
-    public float MinThrowSpeed = 0.0f;
-    public float MinThrowDistance = 0.0f;
-    public float CurrentThrowSpeed = 0.5f;
-    public float CurrentThrowDistance = 0.5f;
+    public float MaxThrowSpeed;
+    public float MaxThrowDistance;
+    public float MinThrowSpeed;
+    public float MinThrowDistance;
+    public float CurrentThrowSpeed;
+    public float CurrentThrowDistance;
     public MassDriverMode CurrentMassDriverMode = MassDriverMode.Auto;
-
-    public bool MassDriverLinked;
+    public NetEntity? Console = null;
+    public bool Hacked;
 }
 
 [Serializable, NetSerializable]
