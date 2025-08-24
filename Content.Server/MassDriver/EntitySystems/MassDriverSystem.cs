@@ -57,7 +57,6 @@ public sealed class MassDriverSystem : EntitySystem
             return;
 
         component.MassDrivers.Add(args.Sink);
-        driver.Console = GetNetEntity(uid);
 
         Dirty(args.Sink, driver);
         Dirty(uid, component);
@@ -75,12 +74,6 @@ public sealed class MassDriverSystem : EntitySystem
     {
         if (args.Port != component.LinkingPort || !component.MassDrivers.Contains(args.Sink))
             return;
-
-        if (TryComp<MassDriverComponent>(args.Sink, out var massDriverComponent))
-        {
-            massDriverComponent.Console = null;
-            Dirty(args.Sink, massDriverComponent);
-        }
 
         component.MassDrivers.Remove(args.Sink);
         Dirty(uid, component);

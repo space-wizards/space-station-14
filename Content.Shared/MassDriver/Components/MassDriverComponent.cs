@@ -67,12 +67,6 @@ public sealed partial class MassDriverComponent : Component
     public MassDriverMode Mode = MassDriverMode.Auto;
 
     /// <summary>
-    /// Mass driver console entity
-    /// </summary>
-    [AutoNetworkedField]
-    public NetEntity? Console; // Only one console can be linked.
-
-    /// <summary>
     /// How moch energy we consume when launching?
     /// </summary>
     [DataField]
