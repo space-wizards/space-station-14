@@ -214,3 +214,18 @@
   license: "CC-BY-3.0"
   copyright: "Created by Tomlija, converted to OGG and modified by themias."
   source: "https://freesound.org/people/Tomlija/sounds/99565/"
+
+- files: ["assembler.ogg"]
+  license: "CC-BY-4.0"
+  copyright: "Modified by whatston3 from 'Swirling EM Fields Loop' by nlux"
+  source: "https://freesound.org/people/nlux/sounds/620807/"
+
+- files: ["egg-timer.ogg"]
+  license: "CC0-1.0"
+  copyright: "Uploaded by 'xyzr_kx' to freesound.org, converted to OGG from MP3."
+  source: "https://freesound.org/people/xyzr_kx/sounds/14263/"
+
+- files: ["medical-assembler.ogg"]
+  license: "CC0-1.0"
+  copyright: "Composited by whatston3 from 'Paper Cutter 1.wav' from Brotherprovisional on freesound.org (see source) and '50Hz_Hum' from nicola_ariutti at https://freesound.org/people/nicola_ariutti/sounds/335365/"
+  source: "https://freesound.org/people/Brotherprovisional/sounds/38889/"
