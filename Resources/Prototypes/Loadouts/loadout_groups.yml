@@ -1,7 +1,7 @@
 # Modified by Ronstation contributor(s), therefore this file is licensed as MIT sublicensed with AGPL-v3.0.
 # Miscellaneous
 - type: loadoutGroup
-  id: Glasses
+  id: CommonGlasses
   name: loadout-group-glasses
   minLimit: 0
   loadouts:
@@ -1255,7 +1255,7 @@
   - MedicalWinterBoots
 
 - type: loadoutGroup
-  id: MedicalEyewear
+  id: MedicalGlasses
   name: loadout-group-medical-glasses
   minLimit: 0
   loadouts:
