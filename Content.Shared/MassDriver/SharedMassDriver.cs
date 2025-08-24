@@ -22,7 +22,7 @@ public enum MassDriverVisuals : byte
 }
 
 [Serializable, NetSerializable]
-public sealed class MassDriverUiState : BoundUserInterfaceState
+public sealed class MassDriverComponentState : ComponentState
 {
     public float MaxThrowSpeed = 1f;
     public float MaxThrowDistance = 1f;
@@ -33,6 +33,14 @@ public sealed class MassDriverUiState : BoundUserInterfaceState
     public MassDriverMode CurrentMassDriverMode = MassDriverMode.Auto;
 
     public bool MassDriverLinked;
+}
+
+[Serializable, NetSerializable]
+public sealed class MassDriverUpdateUIMessage : BoundUserInterfaceMessage
+{
+    public MassDriverComponentState State;
+
+    public MassDriverUpdateUIMessage(MassDriverComponentState state) => State = state;
 }
 
 [Serializable, NetSerializable]

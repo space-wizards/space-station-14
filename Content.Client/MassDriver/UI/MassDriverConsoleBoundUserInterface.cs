@@ -29,14 +29,9 @@ public sealed class MassDriverConsoleBoundUserInterface : BoundUserInterface
         _menu.OnThrowSpeed += i => SendMessage(new MassDriverThrowSpeedMessage(i));
     }
 
-    protected override void UpdateState(BoundUserInterfaceState state)
+    protected override void ReceiveMessage(BoundUserInterfaceMessage message)
     {
-        base.UpdateState(state);
-
-        if (_menu == null)
-            return;
-
-        if (state is MassDriverUiState massDriverUiState)
-            _menu.UpdateState(massDriverUiState);
+        if (message is MassDriverUpdateUIMessage massDriverMessage)
+            _menu?.UpdateState(massDriverMessage.State);
     }
 }
