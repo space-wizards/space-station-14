@@ -172,70 +172,26 @@
 
 # Floor Light
 - type: entity
+  parent: SmallLight
   id: AlwaysPoweredFloorLight
   name: floor light
   description: An always powered floor light.
   suffix: Always Powered
-  parent: BaseStructure
   placement:
     mode: SnapgridCenter
   components:
   - type: Sprite
     sprite: Structures/Lighting/floor_light.rsi
-    snapCardinals: true
-    drawdepth: Objects
-    layers:
-    - map: ["enum.PoweredLightLayers.Base"]
-      state: base
-    - map: ["enum.PoweredLightLayers.Glow"]
-      state: glow
-      shader: unshaded
+    drawdepth: FloorObjects
     state: base
   - type: PointLight
-    energy: 1.0
-    radius: 6
-    softness: 1.1
+    color: "#FFD1A3" # 4000K color temp
   - type: Physics
     canCollide: false
   - type: Fixtures
-  - type: InteractionOutline
-  - type: Damageable
-    damageContainer: Inorganic
-    damageModifierSet: Metallic
-  - type: MeleeSound
-    soundGroups:
-      Brute:
-        collection: GlassSmash
-  - type: Destructible
-    thresholds:
-    - trigger:
-        !type:DamageTrigger
-        damage: 200
-      behaviors: #excess damage, don't spawn entities.
-      - !type:DoActsBehavior
-        acts: [ "Destruction" ]
-      - !type:PlaySoundBehavior
-        sound:
-          collection: GlassBreak
-    - trigger:
-        !type:DamageTrigger
-        damage: 50
-      behaviors:
-      - !type:EmptyAllContainersBehaviour
-      - !type:SpawnEntitiesBehavior
-        spawn:
-          SheetSteel1:
-            min: 1
-            max: 1
-      - !type:DoActsBehavior
-        acts: ["Destruction"]
-      - !type:PlaySoundBehavior
-        sound:
-          collection: GlassBreak
-  - type: RCDDeconstructable
-    cost: 4
-    delay: 2
-    fx: EffectRCDDeconstruct2
+  - type: Construction
+    graph: LightFixture
+    node: floorLight
 
 - type: entity
   parent: AlwaysPoweredFloorLight
@@ -245,13 +201,16 @@
   components:
   - type: Sprite
     state: empty
+  - type: AmbientOnPowered
+  - type: AmbientSound
+    enabled: false
   - type: PointLight
     enabled: false
-  - type: PoweredLight
-    bulb: Bulb
   - type: ContainerContainer
     containers:
       light_bulb: !type:ContainerSlot
+  - type: PoweredLight
+    bulb: Bulb
   - type: ApcPowerReceiver
   - type: ExtensionCableReceiver
   - type: DeviceNetwork
@@ -259,14 +218,6 @@
     receiveFrequencyId: SmartLight
   - type: WirelessNetworkConnection
     range: 200
-  - type: DeviceLinkSink
-    ports:
-    - On
-    - Off
-    - Toggle
-  - type: Construction
-    graph: LightFixture
-    node: floorLight
   - type: Appearance
   - type: PoweredLightVisuals
     blinkingSound:
@@ -277,6 +228,11 @@
       on: base
       broken: broken
       burned: burned
+  - type: DeviceLinkSink
+    ports:
+    - On
+    - Off
+    - Toggle
   - type: DamageOnInteract
     damage:
       types:
@@ -295,9 +251,5 @@
     enabled: true
   - type: PoweredLight
     hasLampOnSpawn: LightBulb
-  - type: AmbientOnPowered
   - type: AmbientSound
-    volume: -15
-    range: 3
-    sound:
-      path: /Audio/Ambience/Objects/light_hum.ogg
+    enabled: true
