@@ -34,6 +34,12 @@
     preSpawnDelay: 10
     delay: 10
     cards:
+    # antagonists
+    
+    - RRCardCriminal
+
+    # Metabolize: Food
+
     - RRCardFoodSashimi
     - RRCardFoodApplePie
     - RRCardFoodDumplings
