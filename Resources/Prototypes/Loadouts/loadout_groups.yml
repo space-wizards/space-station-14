@@ -144,7 +144,7 @@
   - RainbowJumpskirt
 
 - type: loadoutGroup
-  id: PassengerFace
+  id: PassengerMask
   name: loadout-group-passenger-mask
   minLimit: 0
   loadouts:
