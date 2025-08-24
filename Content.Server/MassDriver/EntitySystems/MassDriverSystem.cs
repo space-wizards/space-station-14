@@ -237,8 +237,7 @@ public sealed class MassDriverSystem : EntitySystem
 
             if (massDriverComponent.Mode == MassDriverMode.Auto)
                 EnsureComp<ActiveMassDriverComponent>(massDriverUid);
-            else if (HasComp<ActiveMassDriverComponent>(massDriverUid))
-                RemComp<ActiveMassDriverComponent>(massDriverUid);
+            RemComp<ActiveMassDriverComponent>(massDriverUid);
         }
 
         var firstMassDriver = component.MassDrivers.FirstOrDefault(); // We use first mass driver to update UI state
