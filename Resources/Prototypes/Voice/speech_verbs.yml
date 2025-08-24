@@ -31,7 +31,7 @@
 - type: speechVerb
   id: DefaultExclamationStrong
   name: chat-speech-verb-name-exclamation-strong
-  bold: true
+  bold: false #starlight, disabled for language support
   speechVerbStrings:
   - chat-speech-verb-exclamation-strong
   priority: 10

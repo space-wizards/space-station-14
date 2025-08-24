@@ -12359,6 +12359,27 @@ Entries:
   id: 143700
   time: '2025-08-22T22:18:55.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/1437
+- author: Happyrobot33
+  changes:
+  - message: Fixed bold breaking language fonts.
+    type: Fix
+  id: 144100
+  time: '2025-08-23T02:39:08.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1441
+- author: Happyrobot33
+  changes:
+  - message: Raised the brightness of dionae language color.
+    type: Tweak
+  id: 144101
+  time: '2025-08-23T02:39:08.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1441
+- author: walksanatora
+  changes:
+  - message: Lings are now our versions instead of broken upstream versions.
+    type: Fix
+  id: 144300
+  time: '2025-08-23T03:35:42.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1443
 - author: Karma and Quantum
   changes:
   - message: 2 new songs for the jukebox
