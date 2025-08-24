@@ -12429,5 +12429,12 @@ Entries:
   id: 144607
   time: '2025-08-24T16:21:54.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/1446
+- author: Happyrobot33
+  changes:
+  - message: Fixed knockback always occuring even when the gun was empty.
+    type: Fix
+  id: 145200
+  time: '2025-08-24T18:35:59.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1452
 Order: -1
 
