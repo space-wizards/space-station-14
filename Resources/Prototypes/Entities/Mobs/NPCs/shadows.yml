@@ -43,6 +43,13 @@
   id: MobCatShadow
   description: A lovely piece of darkness. Hope he doesn't bring you a curse.
   components:
+  # Starlight-start: Languages
+  - type: LanguageKnowledge
+    speaks:
+    - Cat
+    understands:
+    - Cat
+  # Starlight-end
   - type: Sprite
     drawdepth: Mobs
     sprite: Mobs/Pets/cat.rsi
@@ -50,8 +57,6 @@
     - map: ["enum.DamageStateVisualLayers.Base"]
       state: cat
   - type: Physics
-  - type: ReplacementAccent
-    accent: cat
   - type: InteractionPopup
     successChance: 0.01 # you cant pet shadow cat... almost
     interactSuccessString: petting-success-cat

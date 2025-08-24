@@ -1,6 +1,6 @@
 ﻿- type: entity
   id: BaseBarSign
-  parent: [ BaseWallmountGlass, BaseWallmountMetallic ]
+  parent: [ BaseWallmountGlass, BaseWallmountMachine ]
   name: bar sign
   abstract: true
   components:

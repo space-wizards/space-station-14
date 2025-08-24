@@ -3,6 +3,15 @@
   id: BaseMobVox
   abstract: true
   components:
+  # Starlight-start: Languages
+  - type: LanguageKnowledge
+    speaks:
+    - GalacticCommon
+    - VoxPidgin
+    understands:
+    - GalacticCommon
+    - VoxPidgin
+  # Starlight-end
   - type: Absorbable
   - type: Hunger
   - type: Thirst

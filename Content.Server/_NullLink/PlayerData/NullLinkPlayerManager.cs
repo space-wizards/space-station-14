@@ -69,6 +69,7 @@ public sealed partial class NullLinkPlayerManager : INullLinkPlayerManager
             return ValueTask.CompletedTask;
         playerData.Roles.Clear();
         playerData.Roles.UnionWith(ev.Roles);
+        playerData.DiscordId = ev.DiscordId;
 
         MentorCheck(ev.Player, playerData);
 
@@ -84,6 +85,7 @@ public sealed partial class NullLinkPlayerManager : INullLinkPlayerManager
             return ValueTask.CompletedTask;
         playerData.Roles.ExceptWith(ev.Remove);
         playerData.Roles.UnionWith(ev.Add);
+        playerData.DiscordId = ev.DiscordId;
 
         MentorCheck(ev.Player, playerData);
 

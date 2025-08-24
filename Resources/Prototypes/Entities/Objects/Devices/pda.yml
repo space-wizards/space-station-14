@@ -1509,7 +1509,7 @@
       - MedTekCartridge
 
 - type: entity
-  parent: BasePDA
+  parent: [BasePDA, VoiceLock]
   id: ChameleonPDA
   name: assistant PDA
   description: Why isn't it gray?

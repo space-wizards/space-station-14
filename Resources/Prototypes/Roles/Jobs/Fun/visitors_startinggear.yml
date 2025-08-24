@@ -7,7 +7,7 @@
   equipment:
     jumpsuit: ClothingUniformJumpsuitCaptain
     shoes: ClothingShoesBootsLaceup
-    eyes: ClothingEyesGlassesSunglasses
+    eyes: ClothingEyesGlassesCommand
     gloves: ClothingHandsGlovesCaptain
     head: ClothingHeadHatCaptain
     neck: ClothingNeckCloakCap
@@ -23,7 +23,7 @@
   equipment:
     jumpsuit: ClothingUniformJumpsuitCapFormal
     shoes: ClothingShoesBootsLaceup
-    eyes: ClothingEyesGlassesSunglasses
+    eyes: ClothingEyesGlassesCommand
     gloves: ClothingHandsGlovesCaptain
     head: ClothingHeadHatCapcap
     neck: ClothingNeckMantleCap
