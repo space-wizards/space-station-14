@@ -1,0 +1,15 @@
+- type: entity
+  id: BaseMechWeaponMelee
+  parent: BaseMechEquipment
+  abstract: true
+  components:
+  - type: Appearance
+  - type: StaticPrice
+    price: 1
+  - type: Item
+    size: Ginormous
+  - type: MultiHandedItem
+  - type: ClothingSpeedModifier
+    walkModifier: 0.5
+    sprintModifier: 0.5
+  - type: HeldSpeedModifier

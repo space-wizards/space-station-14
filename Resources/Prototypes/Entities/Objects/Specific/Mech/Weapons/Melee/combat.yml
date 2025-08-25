@@ -1,0 +1,20 @@
+- type: entity
+  id: WeaponMechChainSword
+  parent: [ BaseMechWeaponMelee, CombatMechEquipment  ]
+  name: exosuit chainsword
+  suffix: Mech Weapon, Melee, Combat
+  description: Equipment for combat exosuits. This is the mechanical chainsword that'll pierce the heavens!
+  components:
+  - type: Sprite
+    state: mecha_chainsword
+  - type: MeleeWeapon
+    autoAttack: true
+    angle: 0
+    wideAnimationRotation: -90
+    soundHit:
+      path: "/Audio/Weapons/chainsaw.ogg"
+    attackRate: 3.5
+    damage:
+      types:
+        Structural: 35
+        Piercing: 15

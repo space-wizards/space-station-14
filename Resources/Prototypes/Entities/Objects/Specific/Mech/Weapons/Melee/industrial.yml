@@ -1,0 +1,51 @@
+- type: entity
+  id: WeaponMechMelleDrill
+  parent: BaseMechWeaponMelee
+  name: exosuit drill
+  suffix: Mech Weapon, Melee, Industrial
+  description: Equipment for mining exosuits. This is the drill that'll pierce the rocks!
+  components:
+  - type: Sprite
+    state: mecha_drill
+  - type: Tag
+    tags:
+    - Pickaxe
+    - IndustrialMech
+  - type: MeleeWeapon
+    autoAttack: true
+    angle: 0
+    wideAnimationRotation: -90
+    soundHit:
+      path: "/Audio/Items/drill_hit.ogg"
+    attackRate: 3.5
+    damage:
+      groups:
+        Brute: 9
+      types:
+        Structural: 40 # ~10 seconds for solid wall / ~21 secods for reinforced wall
+
+- type: entity
+  id: WeaponMechMelleDrillDiamond
+  parent: BaseMechWeaponMelee
+  name: diamond-tipped exosuit drill
+  suffix: Mech Weapon, Melee, Industrial
+  description: Equipment for mining exosuits. This is an upgraded version of the drill that'll pierce the rocks!
+  components:
+  - type: Sprite
+    state: mecha_diamond_drill
+  - type: Tag
+    tags:
+    - Pickaxe
+    - IndustrialMech
+  - type: MeleeWeapon
+    autoAttack: true
+    angle: 0
+    wideAnimationRotation: -90
+    soundHit:
+      path: "/Audio/Items/drill_hit.ogg"
+    attackRate: 4
+    damage:
+      groups:
+        Brute: 18
+      types:
+        Structural: 60 # ~3 seconds for solid wall / 9 seconds for reinforced wall
