@@ -109,6 +109,9 @@ namespace Content.Server.Atmos
         [ViewVariables]
         public float MaxFireTemperatureSustained { get; set; }
 
+        [ViewVariables]
+        public int PuddleSolutionFlammability { get; set; }
+
         /// <summary>
         /// If true, then this tile is directly exposed to the map's atmosphere, either because the grid has no tile at
         /// this position, or because the tile type is not airtight.

@@ -48,6 +48,7 @@
   slipData:
     requiredSlipSpeed: 3.5
   friction: 0.4
+  flammability: 1
   metabolisms:
     Drink:
       effects:
