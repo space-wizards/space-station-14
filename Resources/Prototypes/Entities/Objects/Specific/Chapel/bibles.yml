@@ -1,8 +1,7 @@
 - type: entity
-  name: bible
-  description: New Interstellar Version 2340.
+  id: BibleBase
   parent: BaseStorageItem
-  id: Bible
+  abstract: true
   components:
   - type: UseDelay
     delay: 10.0
@@ -29,10 +28,6 @@
     bibleUserOnly: true
   - type: Summonable
     specialItem: SpawnPointGhostRemilia
-  - type: ReactionMixer
-    mixMessage: "bible-mixing-success"
-    reactionTypes:
-    - Holy
   - type: Sprite
     sprite: Objects/Specific/Chapel/bible.rsi
     state: icon
@@ -54,6 +49,17 @@
     - Book
   - type: StealTarget
     stealGroup: Bible
+
+- type: entity
+  id: Bible
+  name: bible
+  parent: BibleBase
+  description: New Interstellar Version 2340.
+  components:
+  - type: ReactionMixer
+    mixMessage: "bible-mixing-success"
+    reactionTypes:
+    - Holy
 
 - type: entity
   parent: [Bible, BaseSyndicateContraband]
@@ -107,22 +113,30 @@
     sprite: Objects/Specific/Chapel/tanakh.rsi
 
 - type: entity
-  parent: Bible
-  name: druidic tablet
-  description: "It's the mystery of the druids!"
   id: BibleDruid
+  name: druidic tablet
+  parent: BibleBase
+  description: "It's the mystery of the druids!"
   components:
+  - type: ReactionMixer
+    mixMessage: "bible-mixing-success"
+    reactionTypes:
+    - Druidic
   - type: Sprite
-    sprite: Objects/Specific/Chapel/mysteryofthedruids.rsi
+    sprite: Objects/Specific/Chapel/druidictablet.rsi
   - type: Item
-    sprite: Objects/Specific/Chapel/mysteryofthedruids.rsi
+    sprite: Objects/Specific/Chapel/druidictablet.rsi
 
 - type: entity
-  parent: Bible
-  name: communist manifesto
-  description: "Remove the mask of humanity from Capital."
   id: BibleCommunistManifesto
+  name: communist manifesto
+  parent: BibleBase
+  description: "Remove the mask of humanity from Capital."
   components:
+  - type: ReactionMixer
+    mixMessage: "bible-mixing-success"
+    reactionTypes:
+    - Holy
   - type: Sprite
     sprite: Objects/Specific/Chapel/communistmanifesto.rsi
   - type: Item
@@ -140,12 +154,76 @@
     sprite: Objects/Specific/Chapel/satanicbible.rsi
 
 - type: entity
-  parent: Bible
-  name: codex nanotrasimus
-  description: "A familiar book containing the Sacred Operating Procedures."
-  id: BibleNanoTrasen
+  id: BibleNarsie
+  name: tome of nar'sie
+  parent: BibleBase
+  description: "What could possibly go wrong with a book covered in blood?"
   components:
+  - type: ReactionMixer
+    mixMessage: "bible-mixing-success"
+    reactionTypes:
+    - Narsie
+  - type: Sprite
+    sprite: Objects/Specific/Chapel/tomeofnarsie.rsi
+  - type: Item
+    sprite: Objects/Specific/Chapel/tomeofnarsie.rsi
+
+- type: entity
+  id: BibleNanoTrasen
+  name: codex nanotrasimus
+  parent: BibleBase
+  description: "A familiar book containing the Sacred Operating Procedures."
+  components:
+  - type: ReactionMixer
+    mixMessage: "bible-mixing-success"
+    reactionTypes:
+    - NanoTrasen
   - type: Sprite
     sprite: Objects/Specific/Chapel/codexnanotrasimus.rsi
   - type: Item
     sprite: Objects/Specific/Chapel/codexnanotrasimus.rsi
+
+- type: entity
+  id: BibleHonk
+  name: mirth of the honkmother
+  parent: BibleBase
+  description: "Oh great and glorious Mother, Mistress of Mirth, Matron of Mask and Merriments, Blessed is she amongst us jesters."
+  components:
+  - type: ReactionMixer
+    mixMessage: "bible-mixing-success"
+    reactionTypes:
+    - Clown
+  - type: Sprite
+    sprite: Objects/Specific/Chapel/honk.rsi
+  - type: Item
+    sprite: Objects/Specific/Chapel/honk.rsi
+
+- type: entity 
+  id: BibleLamp
+  name: doctrine of the lantern path
+  parent: BibleBase
+  description: "Carry forth your inner flame, through shadow toward rebirth in the First Light."
+  components:
+  - type: ReactionMixer
+    mixMessage: "bible-mixing-success"
+    reactionTypes:
+    - Lamp
+  - type: Sprite
+    sprite: Objects/Specific/Chapel/lamp.rsi
+  - type: Item
+    sprite: Objects/Specific/Chapel/lamp.rsi
+
+- type: entity
+  id: BibleRatvar
+  name: tablet of ratvar
+  parent: BibleBase
+  description: "A holy relic of the Clockwork Cult, blessed by the Clockwork Justice, Ratvar."
+  components:
+  - type: ReactionMixer
+    mixMessage: "bible-mixing-success"
+    reactionTypes:
+    - Ratvar
+  - type: Sprite
+    sprite: Objects/Specific/Chapel/ratvartablet.rsi
+  - type: Item
+    sprite: Objects/Specific/Chapel/ratvartablet.rsi
