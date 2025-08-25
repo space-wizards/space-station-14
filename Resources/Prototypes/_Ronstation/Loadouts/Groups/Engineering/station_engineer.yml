@@ -18,6 +18,13 @@
   - SeniorEngineerJumpskirt
 
 - type: loadoutGroup
+  id: StationEngineerPDA
+  parent: BasePDA
+  loadouts:
+  - StationEngineerPDA
+  - SeniorEngineerPDA
+
+- type: loadoutGroup
   id: StationEngineerOuterClothing
   parent: BaseOuterClothing
   loadouts:
@@ -30,10 +37,3 @@
   loadouts:
   - WorkBoots
   - EngineeringWinterBoots
-
-- type: loadoutGroup
-  id: StationEngineerPDA
-  parent: BasePDA
-  loadouts:
-  - StationEngineerPDA
-  - SeniorEngineerPDA

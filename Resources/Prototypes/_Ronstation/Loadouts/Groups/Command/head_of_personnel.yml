@@ -5,18 +5,18 @@
   - HoPHead
 
 - type: loadoutGroup
-  id: HoPJumpsuit
-  parent: BaseJumpsuit
-  loadouts:
-  - HoPJumpsuit
-  - HoPJumpskirt
-
-- type: loadoutGroup
   id: HoPNeck
   parent: BaseNeck
   loadouts:
   - HoPCloak
   - HoPMantle
+
+- type: loadoutGroup
+  id: HoPJumpsuit
+  parent: BaseJumpsuit
+  loadouts:
+  - HoPJumpsuit
+  - HoPJumpskirt
 
 - type: loadoutGroup
   id: HoPBackpack

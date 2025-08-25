@@ -11,6 +11,12 @@
   - Mantle
 
 - type: loadoutGroup
+  id: PassengerGloves
+  parent: BaseGloves
+  loadouts:
+  - PassengerGloves
+
+- type: loadoutGroup
   id: PassengerJumpsuit
   parent: BaseJumpsuit
   loadouts:
@@ -19,12 +25,6 @@
   - AncientJumpsuit
   - RainbowJumpsuit
   - RainbowJumpskirt
-
-- type: loadoutGroup
-  id: PassengerGloves
-  parent: BaseGloves
-  loadouts:
-  - PassengerGloves
 
 - type: loadoutGroup
   id: PassengerOuterClothing

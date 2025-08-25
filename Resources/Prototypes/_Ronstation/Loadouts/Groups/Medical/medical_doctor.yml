@@ -23,16 +23,16 @@
   - MedicalPurpleScrubs
 
 - type: loadoutGroup
+  id: MedicalDoctorPDA
+  parent: BasePDA
+  loadouts:
+  - MedicalDoctorPDA
+  - SeniorPhysicianPDA
+
+- type: loadoutGroup
   id: MedicalDoctorOuterClothing
   parent: BaseOuterClothing
   loadouts:
   - RegularLabCoat
   - MedicalDoctorWintercoat
   - SeniorPhysicianLabCoat
-
-- type: loadoutGroup
-  id: MedicalDoctorPDA
-  parent: BasePDA
-  loadouts:
-  - MedicalDoctorPDA
-  - SeniorPhysicianPDA

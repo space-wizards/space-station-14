@@ -20,6 +20,13 @@
   - TrooperUniform
 
 - type: loadoutGroup
+  id: SecurityOfficerPDA
+  parent: BasePDA
+  loadouts:
+  - SecurityPDA
+  - SeniorOfficerPDA
+
+- type: loadoutGroup
   id: SecurityOfficerOuterClothing
   parent: BaseOuterClothing
   minLimit: 1 # Security officer must have outer clothing
@@ -27,10 +34,3 @@
   - ArmorVest
   - ArmorVestSlim
   - SecurityOfficerWintercoat
-
-- type: loadoutGroup
-  id: SecurityOfficerPDA
-  parent: BasePDA
-  loadouts:
-  - SecurityPDA
-  - SeniorOfficerPDA

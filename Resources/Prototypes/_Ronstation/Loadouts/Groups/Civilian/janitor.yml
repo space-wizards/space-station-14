@@ -5,19 +5,19 @@
   - JanitorHead
 
 - type: loadoutGroup
-  id: JanitorJumpsuit
-  parent: BaseJumpsuit
-  loadouts:
-  - JanitorJumpsuit
-  - JanitorJumpskirt
-
-- type: loadoutGroup
   id: JanitorGloves
   parent: BaseGloves
   loadouts:
   - JanitorRubberGloves
   - OrangeGloves
   - PurpleGloves
+
+- type: loadoutGroup
+  id: JanitorJumpsuit
+  parent: BaseJumpsuit
+  loadouts:
+  - JanitorJumpsuit
+  - JanitorJumpskirt
 
 - type: loadoutGroup
   id: JanitorOuterClothing

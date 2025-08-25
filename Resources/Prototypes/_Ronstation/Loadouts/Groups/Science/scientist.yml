@@ -24,6 +24,13 @@
   - SeniorResearcherJumpskirt
 
 - type: loadoutGroup
+  id: ScientistPDA
+  parent: BasePDA
+  loadouts:
+  - ScientistPDA
+  - SeniorResearcherPDA
+
+- type: loadoutGroup
   id: ScientistOuterClothing
   parent: BaseOuterClothing
   loadouts:
@@ -41,10 +48,3 @@
   - WhiteShoes
   - BlackShoes
   - ScienceWinterBoots
-
-- type: loadoutGroup
-  id: ScientistPDA
-  parent: BasePDA
-  loadouts:
-  - ScientistPDA
-  - SeniorResearcherPDA
