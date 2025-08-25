@@ -271,3 +271,38 @@
   - type: Construction
     graph: DoorGraph
     node: cardDoor
+
+- type: entity
+  id: IronstoneDoor
+  name: ironstone door
+  parent: BaseMaterialDoorNavMap
+  description: A door, where will it lead?
+  components:
+  - type: Sprite
+    sprite: Structures/Doors/MineralDoors/ironstone_door.rsi
+    layers:
+    - state: closed
+      map: ["enum.DoorVisualLayers.Base"]
+  - type: Door
+    bumpOpen: false
+    clickOpen: true
+    closeTimeOne: 0.2
+    closeTimeTwo: 0.6
+    openTimeOne: 0.6
+    openTimeTwo: 0.2
+    openSound:
+      path: /Audio/Effects/stonedoor_openclose.ogg
+    closeSound:
+      path: /Audio/Effects/stonedoor_openclose.ogg
+
+- type: entity
+  id: EncrustedIronstoneDoor
+  name: encrusted ironstone door
+  parent: IronstoneDoor
+  description: A door, where will it lead?
+  components:
+  - type: Sprite
+    sprite: Structures/Doors/MineralDoors/encrusted_ironstone_door.rsi
+    layers:
+    - state: closed
+      map: ["enum.DoorVisualLayers.Base"]
