@@ -1,0 +1,169 @@
+- type: jobIconGroup
+  id: CargoIconGroup
+  groupName: job-icon-group-cargo
+  sprite:
+    sprite: /Textures/Interface/Misc/job_icons.rsi
+    state: CargoTechnician
+  icons:
+  - JobIconQuarterMaster
+  - JobIconCargoTechnician
+  - JobIconShaftMiner
+
+- type: jobIconGroup
+  id: CommandIconGroup
+  groupName: job-icon-group-command
+  sprite:
+    sprite: /Textures/Interface/Misc/job_icons.rsi
+    state: Captain
+  icons:
+  - JobIconNanotrasen
+  - JobIconCaptain
+  - JobIconChiefEngineer
+  - JobIconChiefMedicalOfficer
+  - JobIconHeadOfPersonnel
+  - JobIconHeadOfSecurity
+  - JobIconQuarterMaster
+  - JobIconResearchDirector
+
+- type: jobIconGroup
+  id: EngineeringIconGroup
+  groupName: job-icon-group-engineering
+  sprite:
+    sprite: /Textures/Interface/Misc/job_icons.rsi
+    state: StationEngineer
+  icons:
+  - JobIconChiefEngineer
+  - JobIconStationEngineer
+  - JobIconTechnicalAssistant
+  - JobIconAtmosphericTechnician
+
+- type: jobIconGroup
+  id: MedicalIconGroup
+  groupName: job-icon-group-medical
+  sprite:
+    sprite: /Textures/Interface/Misc/job_icons.rsi
+    state: MedicalDoctor
+  icons:
+  - JobIconChiefMedicalOfficer
+  - JobIconMedicalDoctor
+  - JobIconMedicalIntern
+  - JobIconChemist
+  - JobIconGeneticist
+  - JobIconParamedic
+  - JobIconPsychologist
+  - JobIconVirologist
+
+- type: jobIconGroup
+  id: ResearchIconGroup
+  groupName: job-icon-group-research
+  sprite:
+    sprite: /Textures/Interface/Misc/job_icons.rsi
+    state: Scientist
+  icons:
+  - JobIconResearchDirector
+  - JobIconScientist
+  - JobIconResearchAssistant
+  - JobIconRoboticist
+
+- type: jobIconGroup
+  id: SecurityIconGroup
+  groupName: job-icon-group-security
+  sprite:
+    sprite: /Textures/Interface/Misc/job_icons.rsi
+    state: SecurityOfficer
+  icons:
+  - JobIconHeadOfSecurity
+  - JobIconSecurityOfficer
+  - JobIconSecurityCadet
+  - JobIconBrigmedic
+  - JobIconDetective
+  - JobIconWarden
+
+- type: jobIconGroup
+  id: ServiceIconGroup
+  groupName: job-icon-group-service
+  sprite:
+    sprite: /Textures/Interface/Misc/job_icons.rsi
+    state: ServiceWorker
+  icons:
+  - JobIconHeadOfPersonnel
+  - JobIconBartender
+  - JobIconBotanist
+  - JobIconBoxer
+  - JobIconChaplain
+  - JobIconChef
+  - JobIconJanitor
+  - JobIconLawyer
+  - JobIconLibrarian
+  - JobIconReporter
+  - JobIconServiceWorker
+  - JobIconZookeeper
+
+# Not exactly service workers, but not civilians either
+- type: jobIconGroup
+  id: EntertainerIconGroup
+  groupName: job-icon-group-entertainer
+  sprite:
+    sprite: /Textures/Interface/Misc/job_icons.rsi
+    state: Clown
+  icons:
+  - JobIconClown
+  - JobIconMime
+  - JobIconMusician
+
+- type: jobIconGroup
+  id: CivilianIconGroup
+  groupName: job-icon-group-civilian
+  sprite:
+    sprite: /Textures/Interface/Misc/job_icons.rsi
+    state: Passenger
+  icons:
+  - JobIconPassenger
+  - JobIconVisitor
+
+- type: jobIconGroup
+  id: SiliconIconGroup
+  groupName: job-icon-group-silicon
+  sprite:
+    sprite: /Textures/Interface/Misc/job_icons.rsi
+    state: StationAi
+  icons:
+  - JobIconStationAi
+  - JobIconBorg
+
+- type: jobIconGroup
+  id: BlankIconGroup
+  groupName: job-icon-group-blank
+  sprite:
+    sprite: /Textures/Interface/Misc/job_icons.rsi
+    state: Unknown
+  icons:
+  - JobIconUnknown
+  - JobIconNoId
+
+# Rogues and villains
+- type: jobIconGroup
+  id: ThreatIconGroup
+  groupName: job-icon-group-threat
+  sprite:
+    sprite: /Textures/Interface/Misc/job_icons.rsi
+    state: Syndicate
+  icons:
+  - JobIconCluwne
+  - JobIconPrisoner
+  - JobIconSyndicate
+  - JobIconZombie
+
+- type: jobIconGroup
+  id: AdminIconGroup
+  groupName: job-icon-group-admin
+  sprite:
+    sprite: /Textures/Interface/Misc/job_icons.rsi
+    state: Admin
+  icons:
+  - JobIconAdmin
+  - JobIconNanotrasen
+  - JobIconSeniorEngineer
+  - JobIconSeniorPhysician
+  - JobIconSeniorResearcher
+  - JobIconSeniorOfficer
