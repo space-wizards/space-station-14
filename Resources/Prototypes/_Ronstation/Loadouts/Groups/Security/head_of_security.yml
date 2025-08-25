@@ -7,7 +7,7 @@
 
 - type: loadoutGroup
   id: HeadofSecurityNeck
-  parent: BaseNeck
+  parent: SecurityNeck
   loadouts:
   - HeadofSecurityCloak
   - HeadofSecurityMantle

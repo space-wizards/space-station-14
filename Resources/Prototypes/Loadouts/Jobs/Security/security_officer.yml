@@ -173,5 +173,5 @@
   - !type:GroupLoadoutEffect
     proto: SecurityStarWorthy
   storage:
-    back:
+    neck: # Ronstation - modification
     - Dinkystar

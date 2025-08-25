@@ -7,6 +7,7 @@
   - CaptainJumpsuit
   - CaptainBackpack
   - CaptainOuterClothing
+  - CommonGlasses
   - Survival
   - Trinkets
   - GroupSpeciesBreathTool
@@ -354,13 +355,13 @@
   - SecurityGlasses
   - SurvivalSecurity
   - Trinkets
-  - SecurityStar
   - GroupSpeciesBreathToolSecurity
 
 - type: roleLoadout
   id: JobWarden
   groups:
   - WardenHead
+  - SecurityNeck
   - WardenJumpsuit
   - SecurityBackpack
   - SecurityBelt
@@ -369,13 +370,13 @@
   - SecurityGlasses
   - SurvivalSecurity
   - Trinkets
-  - SecurityStar
   - GroupSpeciesBreathToolSecurity
 
 - type: roleLoadout
   id: JobSecurityOfficer
   groups:
   - SecurityOfficerHead
+  - SecurityNeck
   - SecurityOfficerJumpsuit
   - SecurityBackpack
   - SecurityOfficerOuterClothing
@@ -385,7 +386,6 @@
   - SecurityBelt
   - SurvivalSecurity
   - Trinkets
-  - SecurityStar
   - GroupSpeciesBreathToolSecurity
 
 - type: roleLoadout
@@ -400,7 +400,6 @@
   - SecurityGlasses
   - SurvivalSecurity
   - Trinkets
-  - SecurityStar
   - GroupSpeciesBreathToolSecurity
 
 - type: roleLoadout

@@ -3,3 +3,9 @@
   name: loadout-group-neck
   abstract: true
   minLimit: 0
+
+- type: loadoutGroup
+  id: SecurityNeck
+  parent: BaseNeck
+  loadouts:
+  - SecStar

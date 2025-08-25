@@ -12,4 +12,3 @@ loadout-group-pocket-tank-double = Species-specific double emergency tank in poc
 
 loadout-group-chaplain-bible = Holy Book
 loadout-group-janitor-plunger = Janitor plunger
-loadout-group-security-star = Security Star

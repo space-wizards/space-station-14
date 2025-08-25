@@ -87,14 +87,6 @@
   - Ocarina
   - Bagpipe
 
-# Security
-- type: loadoutGroup
-  id: SecurityStar
-  name: loadout-group-security-star
-  minLimit: 0
-  loadouts:
-  - SecStar
-
 # Other
 - type: loadoutGroup
   id: GroupSpeciesBreathTool
