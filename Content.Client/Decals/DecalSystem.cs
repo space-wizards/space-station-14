@@ -14,7 +14,7 @@ namespace Content.Client.Decals
         [Dependency] private readonly SpriteSystem _sprites = default!;
 
         private DecalOverlay? _overlay;
-
+        private HashSet<Decal> _addedDecals = new();
         private HashSet<uint> _removedUids = new();
         private readonly List<Vector2i> _removedChunks = new();
 
@@ -27,6 +27,21 @@ namespace Content.Client.Decals
 
             SubscribeLocalEvent<DecalGridComponent, ComponentHandleState>(OnHandleState);
             SubscribeNetworkEvent<DecalChunkUpdateEvent>(OnChunkUpdate);
+        }
+
+        public override void Shutdown()
+        {
+            base.Shutdown();
+
+            if (_overlay == null)
+                return;
+
+            _overlayManager.RemoveOverlay(_overlay);
+        }
+
+        protected override void DirtyChunk(EntityUid id, Vector2i chunkIndices, DecalChunk chunk)
+        {
+            // NOOP for the client
         }
 
         public void ToggleOverlay()
@@ -44,24 +59,7 @@ namespace Content.Client.Decals
             }
         }
 
-        public override void Shutdown()
-        {
-            base.Shutdown();
-
-            if (_overlay == null)
-                return;
-
-            _overlayManager.RemoveOverlay(_overlay);
-        }
-
-        protected override void OnDecalRemoved(EntityUid gridId, uint decalId, DecalGridComponent component, Vector2i indices, DecalChunk chunk)
-        {
-            base.OnDecalRemoved(gridId, decalId, component, indices, chunk);
-            DebugTools.Assert(chunk.Decals.ContainsKey(decalId));
-            chunk.Decals.Remove(decalId);
-        }
-
-        private void OnHandleState(EntityUid gridUid, DecalGridComponent gridComp, ref ComponentHandleState args)
+        private void OnHandleState(Entity<DecalGridComponent> ent, ref ComponentHandleState args)
         {
             // is this a delta or full state?
             _removedChunks.Clear();
@@ -72,7 +70,7 @@ namespace Content.Client.Decals
                 case DecalGridDeltaState delta:
                 {
                     modifiedChunks = delta.ModifiedChunks;
-                    foreach (var key in gridComp.ChunkCollection.ChunkCollection.Keys)
+                    foreach (var key in ent.Comp.ChunkCollection.ChunkCollection.Keys)
                     {
                         if (!delta.AllChunks.Contains(key))
                             _removedChunks.Add(key);
@@ -83,7 +81,7 @@ namespace Content.Client.Decals
                 case DecalGridState state:
                 {
                     modifiedChunks = state.Chunks;
-                    foreach (var key in gridComp.ChunkCollection.ChunkCollection.Keys)
+                    foreach (var key in ent.Comp.ChunkCollection.ChunkCollection.Keys)
                     {
                         if (!state.Chunks.ContainsKey(key))
                             _removedChunks.Add(key);
@@ -96,10 +94,10 @@ namespace Content.Client.Decals
             }
 
             if (_removedChunks.Count > 0)
-                RemoveChunks(gridUid, gridComp, _removedChunks);
+                RemoveChunks(ent, _removedChunks);
 
             if (modifiedChunks.Count > 0)
-                UpdateChunks(gridUid, gridComp, modifiedChunks);
+                UpdateChunks(ent, modifiedChunks);
         }
 
         private void OnChunkUpdate(DecalChunkUpdateEvent ev)
@@ -117,7 +115,7 @@ namespace Content.Client.Decals
                     continue;
                 }
 
-                UpdateChunks(gridId, gridComp, updatedGridChunks);
+                UpdateChunks((gridId, gridComp), updatedGridChunks);
             }
 
             // Now we'll cull old chunks out of range as the server will send them to us anyway.
@@ -134,41 +132,53 @@ namespace Content.Client.Decals
                     continue;
                 }
 
-                RemoveChunks(gridId, gridComp, chunks);
+                RemoveChunks((gridId, gridComp), chunks);
             }
         }
 
-        private void UpdateChunks(EntityUid gridId, DecalGridComponent gridComp, Dictionary<Vector2i, DecalChunk> updatedGridChunks)
+        private void UpdateChunks(Entity<DecalGridComponent> ent, Dictionary<Vector2i, DecalChunk> updatedGridChunks)
         {
-            var chunkCollection = gridComp.ChunkCollection.ChunkCollection;
+            var chunkCollection = ent.Comp.ChunkCollection.ChunkCollection;
 
             // Update any existing data / remove decals we didn't receive data for.
             foreach (var (indices, newChunkData) in updatedGridChunks)
             {
                 if (chunkCollection.TryGetValue(indices, out var chunk))
                 {
+
                     _removedUids.Clear();
                     _removedUids.UnionWith(chunk.Decals.Keys);
                     _removedUids.ExceptWith(newChunkData.Decals.Keys);
                     foreach (var removedUid in _removedUids)
                     {
-                        OnDecalRemoved(gridId, removedUid, gridComp, indices, chunk);
-                        gridComp.DecalIndex.Remove(removedUid);
+                        RemoveDecal((ent.Owner, ent.Comp), removedUid, out var _);
+                        ent.Comp.DecalIndex.Remove(removedUid);
                     }
+
+                    _addedDecals.Clear();
+                    _addedDecals.UnionWith(newChunkData.Decals.Values);
+                    _addedDecals.ExceptWith(chunk.Decals.Values);
+                    foreach (var addedDecal in _addedDecals)
+                    {
+                        chunk.PredictedDecals.Remove(addedDecal);
+                    }
+
+                    newChunkData.PredictedDecals = chunk.PredictedDecals;
+                    newChunkData.PredictedDecalDeletions = chunk.PredictedDecalDeletions;
                 }
 
                 chunkCollection[indices] = newChunkData;
 
                 foreach (var (uid, decal) in newChunkData.Decals)
                 {
-                    gridComp.DecalIndex[uid] = indices;
+                    ent.Comp.DecalIndex[uid] = indices;
                 }
             }
         }
 
-        private void RemoveChunks(EntityUid gridId, DecalGridComponent gridComp, IEnumerable<Vector2i> chunks)
+        private void RemoveChunks(Entity<DecalGridComponent> ent, IEnumerable<Vector2i> chunks)
         {
-            var chunkCollection = gridComp.ChunkCollection.ChunkCollection;
+            var chunkCollection = ent.Comp.ChunkCollection.ChunkCollection;
 
             foreach (var index in chunks)
             {
@@ -177,8 +187,8 @@ namespace Content.Client.Decals
 
                 foreach (var decalId  in chunk.Decals.Keys)
                 {
-                    OnDecalRemoved(gridId, decalId, gridComp, index, chunk);
-                    gridComp.DecalIndex.Remove(decalId);
+                    RemoveDecal((ent.Owner, ent.Comp), decalId, out var _);
+                    ent.Comp.DecalIndex.Remove(decalId);
                 }
 
                 chunkCollection.Remove(index);
