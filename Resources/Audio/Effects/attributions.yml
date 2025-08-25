@@ -266,3 +266,8 @@
   copyright: 'created by Crinkem on Freesound'
   license: "CC0-1.0"
   source: https://freesound.org/people/Crinkem/sounds/492027/
+
+- files: [flatline.ogg]
+  license: CC0-1.0
+  copyright: "Original by shanedk, slightly modified by pheenty"
+  source: https://freesound.org/s/398637/
