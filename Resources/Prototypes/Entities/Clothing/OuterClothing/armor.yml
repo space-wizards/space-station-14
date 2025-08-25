@@ -94,7 +94,7 @@
   parent: [ClothingOuterArmorBase, BaseSecurityContraband]
   id: ClothingOuterVestDetective
   name: detective's armor vest
-  description: A cheap Type-I protective vest, its aramid armor provides decent protection against most attacks. A gold badge denotes the wearer as a detective of the NT security force.
+  description: A cheap Type-I protective vest, its aramid armor provides decent protection against most attacks. A gold badge denotes the wearer as a detective in NT's security forces.
   components:
   - type: Sprite
     sprite: Clothing/OuterClothing/Vests/detvest.rsi
@@ -227,7 +227,7 @@
   parent: [ClothingOuterBaseLarge, AllowSuitStorageClothing, BaseSyndicateContraband ]
   id: ClothingOuterArmorRaid
   name: Syndicate raid suit
-  description: A Syndicate Type-I armor suit, its thick aramid armor offers excellent protection against most attacks, but slightly hinders mobility. It's surprisingly compact when folded up, and comes with a powerful shoulder-mounted flashlight. Commonly worn by the Gorlex Marauders on planetside operations.
+  description: A Syndicate Type-I armor suit, its thick aramid armor offers excellent protection against most attacks with excellent coverage, but slightly reduces mobility. It's surprisingly compact when folded up, and comes with a powerful shoulder-mounted flashlight. Commonly worn by the Gorlex Marauders on planetside operations.
   components:
   - type: Sprite
     sprite: Clothing/OuterClothing/Armor/syndie-raid.rsi
