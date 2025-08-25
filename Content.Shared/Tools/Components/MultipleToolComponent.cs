@@ -1,6 +1,7 @@
 using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
 using Robust.Shared.Utility;
+using Robust.Shared.Serialization;
 
 namespace Content.Shared.Tools.Components;
 
@@ -20,7 +21,7 @@ public sealed partial class MultipleToolComponent : Component
         public SoundSpecifier? ChangeSound;
 
         [DataField]
-        public SpriteSpecifier? Sprite;
+        public string? SpriteState;
     }
 
     [DataField(required: true)]
@@ -38,4 +39,10 @@ public sealed partial class MultipleToolComponent : Component
 
     [DataField]
     public bool StatusShowBehavior = true;
+}
+
+[Serializable, NetSerializable]
+public enum MultipleToolVisuals : byte
+{
+    Sprite
 }

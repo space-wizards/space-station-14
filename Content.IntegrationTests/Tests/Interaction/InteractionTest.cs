@@ -6,7 +6,7 @@ using Content.Client.Gameplay;
 using Content.IntegrationTests.Pair;
 using Content.Server.Hands.Systems;
 using Content.Server.Stack;
-using Content.Server.Tools;
+using Content.Shared.Tools.Systems;
 using Content.Shared.DoAfter;
 using Content.Shared.Hands.Components;
 using Content.Shared.Interaction;
@@ -100,7 +100,7 @@ public abstract partial class InteractionTest
     protected SharedInteractionSystem InteractSys = default!;
     protected Content.Server.Construction.ConstructionSystem SConstruction = default!;
     protected SharedDoAfterSystem DoAfterSys = default!;
-    protected ToolSystem ToolSys = default!;
+    protected SharedToolSystem ToolSys = default!;
     protected ItemToggleSystem ItemToggleSys = default!;
     protected InteractionTestSystem STestSystem = default!;
     protected SharedTransformSystem Transform = default!;
@@ -165,7 +165,7 @@ public abstract partial class InteractionTest
         STiming = Server.ResolveDependency<IGameTiming>();
         HandSys = SEntMan.System<HandsSystem>();
         InteractSys = SEntMan.System<SharedInteractionSystem>();
-        ToolSys = SEntMan.System<ToolSystem>();
+        ToolSys = SEntMan.System<SharedToolSystem>();
         ItemToggleSys = SEntMan.System<ItemToggleSystem>();
         DoAfterSys = SEntMan.System<SharedDoAfterSystem>();
         Transform = SEntMan.System<SharedTransformSystem>();
