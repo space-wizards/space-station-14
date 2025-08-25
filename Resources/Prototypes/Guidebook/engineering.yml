@@ -15,6 +15,7 @@
   text: "/ServerInfo/Guidebook/Engineering/Construction.xml"
   children:
   - Airlocks
+  - Turnstiles
   - ExpandingRepairingStation
   - WirePanels
 
@@ -29,6 +30,11 @@
   text: "/ServerInfo/Guidebook/Engineering/Airlocks.xml"
   children:
   - AirlockSecurity
+
+- type: guideEntry
+  id: Turnstiles
+  name: guide-entry-turnstiles
+  text: "/ServerInfo/Guidebook/Engineering/Turnstiles.xml"
 
 - type: guideEntry
   id: WirePanels
