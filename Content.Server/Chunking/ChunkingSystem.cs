@@ -1,5 +1,3 @@
-using System.Linq;
-using Content.Shared.Decals;
 using Microsoft.Extensions.ObjectPool;
 using Robust.Shared;
 using Robust.Shared.Configuration;
@@ -10,7 +8,7 @@ using Robust.Shared.Player;
 using Robust.Shared.Utility;
 using ChunkIndicesEnumerator = Robust.Shared.Map.Enumerators.ChunkIndicesEnumerator;
 
-namespace Content.Shared.Chunking;
+namespace Content.Server.Chunking;
 
 /// <summary>
 ///     This system just exists to provide some utility functions for other systems that chunk data that needs to be
