@@ -1334,5 +1334,10 @@ namespace Content.Server.Database
         /// The score IPIntel returned
         /// </summary>
         public float Score { get; set; }
+
+        /// <summary>
+        /// The country code IPIntel returned
+        /// </summary>
+        public string? CountryCode { get; set; }
     }
 }
