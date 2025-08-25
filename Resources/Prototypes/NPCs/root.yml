@@ -8,7 +8,7 @@
         - !type:HTNPrimitiveTask
           operator: !type:UtilityOperator
             proto: NearbyGunTargets
-        
+
         - !type:HTNPrimitiveTask
           preconditions:
             - !type:KeyExistsPrecondition
@@ -32,17 +32,51 @@
     - tasks:
         - !type:HTNCompoundTask
           task: IdleSpinCompound
-          
+
 - type: htnCompound
-  id: EnergyTurretCompound
+  id: TurretCompoundLongRange
   branches:
     - tasks:
         - !type:HTNPrimitiveTask
           operator: !type:UtilityOperator
             proto: NearbyGunTargets
+
+        - !type:HTNPrimitiveTask
+          preconditions:
+            - !type:KeyExistsPrecondition
+              key: Target
+            - !type:TargetInRangePrecondition
+              targetKey: Target
+              rangeKey: RangedRangeFar
+            - !type:TargetInLOSPrecondition
+              targetKey: Target
+              rangeKey: RangedRangeFar
+          operator: !type:GunOperator
+            targetKey: Target
+            requireLOS: true
+          services:
+            - !type:UtilityService
+              id: RangedService
+              proto: NearbyGunTargets
+              key: Target
+
+    - tasks:
+        - !type:HTNCompoundTask
+          task: IdleSpinCompound
+
+- type: htnCompound
+  id: EnergyTurretCompound
+  branches:
+    - tasks:
+        - !type:HTNPrimitiveTask
+          preconditions:
+            - !type:PoweredPrecondition
+          operator: !type:UtilityOperator
+            proto: NearbyGunTargets
         
         - !type:HTNPrimitiveTask
           preconditions:
+            - !type:PoweredPrecondition
             - !type:KeyExistsPrecondition
               key: Target
             - !type:TargetInRangePrecondition
@@ -52,6 +86,41 @@
             - !type:TargetInLOSPrecondition
               targetKey: Target
               rangeKey: RangedRange
+              opaqueKey: true
+          operator: !type:GunOperator
+            targetKey: Target
+            opaqueKey: true
+          services:
+            - !type:UtilityService
+              id: RangedService
+              proto: NearbyGunTargets
+              key: Target
+
+    - tasks:
+        - !type:HTNCompoundTask
+          task: IdleSpinCompound
+
+- type: htnCompound
+  id: EnergyTurretCompoundLongRange
+  branches:
+    - tasks:
+        - !type:HTNPrimitiveTask
+          preconditions:
+            - !type:PoweredPrecondition
+          operator: !type:UtilityOperator
+            proto: NearbyGunTargets
+
+        - !type:HTNPrimitiveTask
+          preconditions:
+            - !type:PoweredPrecondition
+            - !type:KeyExistsPrecondition
+              key: Target
+            - !type:TargetInRangePrecondition
+              targetKey: Target
+              rangeKey: RangedRangeFar
+            - !type:TargetInLOSPrecondition
+              targetKey: Target
+              rangeKey: RangedRangeFar
               opaqueKey: true
           operator: !type:GunOperator
             targetKey: Target

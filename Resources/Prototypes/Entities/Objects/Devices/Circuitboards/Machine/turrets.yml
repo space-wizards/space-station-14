@@ -46,3 +46,27 @@
   - type: MachineBoard
     prototype: WeaponEnergyTurretSecurity
 
+- type: entity
+  parent: WeaponEnergyTurretStationMachineCircuitboardBase
+  id: WeaponEnergyTurretAntiMeteorMachineCircuitboard
+  name: point defense turret machine board
+  suffix: AntiMeteor
+  components:
+  - type: Sprite
+    sprite: Objects/Misc/module.rsi
+    state: radio # Yeah idk, its unused in the repo and the sprite looks cool as hell, sue me.
+  - type: MachineBoard
+    prototype: WeaponTurretAntiMeteorEnergy
+    tagRequirements:
+      TurretCompatibleWeapon:
+        amount: 1
+        defaultPrototype: WeaponMakeshiftLaser
+        examineName: construction-insert-info-examine-name-laser-cannon
+      ProximitySensor:
+        amount: 1
+        defaultPrototype: ProximitySensor
+    componentRequirements:
+      PowerCell:
+        amount: 1
+        defaultPrototype: PowerCellMedium
+        examineName: construction-insert-info-examine-name-power-cell

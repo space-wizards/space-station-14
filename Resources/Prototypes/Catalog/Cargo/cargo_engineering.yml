@@ -147,3 +147,13 @@
   cost: 350
   category: cargoproduct-category-name-engineering
   group: market
+
+- type: cargoProduct
+  id: EngineeringAntiMeteor
+  icon:
+    sprite: Objects/Weapons/Guns/Turrets/sentry_turret.rsi
+    state: base
+  product: CrateAntiMeteorTurret
+  cost: 4000
+  category: cargoproduct-category-name-engineering
+  group: market

@@ -1,4 +1,4 @@
-﻿using Content.Server.StationEvents.Events;
+using Content.Server.StationEvents.Events;
 using Content.Shared.Destructible.Thresholds;
 using Robust.Shared.Audio;
 using Robust.Shared.Prototypes;
@@ -19,6 +19,12 @@ public sealed partial class MeteorSwarmComponent : Component
 
     [DataField]
     public float MeteorVelocity = 10f;
+
+    /// <summary>
+    /// MinMax distance for meteors to spawn. Will always be beyond the playableArea
+    /// </summary>
+    [DataField]
+    public MinMax MinMaxDist = new(500, 1000);
 
     /// <summary>
     /// If true, meteors will be thrown from all angles instead of from a singular source

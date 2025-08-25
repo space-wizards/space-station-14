@@ -1,11 +1,7 @@
 using System.Numerics;
-using Content.Server.UserInterface;
 using Content.Shared.Shuttles.BUIStates;
 using Content.Shared.Shuttles.Components;
 using Content.Shared.Shuttles.Systems;
-using Content.Shared.PowerCell;
-using Content.Shared.Movement.Components;
-using Robust.Server.GameObjects;
 using Robust.Shared.Map;
 
 namespace Content.Server.Shuttles.Systems;
@@ -13,7 +9,7 @@ namespace Content.Server.Shuttles.Systems;
 public sealed class RadarConsoleSystem : SharedRadarConsoleSystem
 {
     [Dependency] private readonly ShuttleConsoleSystem _console = default!;
-    [Dependency] private readonly UserInterfaceSystem _uiSystem = default!;
+    [Dependency] private readonly SharedUserInterfaceSystem _uiSystem = default!;
 
     public override void Initialize()
     {
@@ -43,19 +39,31 @@ public sealed class RadarConsoleSystem : SharedRadarConsoleSystem
         {
             NavInterfaceState state;
             var docks = _console.GetAllDocks();
+            var tracked = _console.GetTracked();
 
             if (coordinates != null && angle != null)
             {
-                state = _console.GetNavState(uid, docks, coordinates.Value, angle.Value);
+                state = _console.GetNavState(uid, docks, tracked, coordinates.Value, angle.Value);
             }
             else
             {
-                state = _console.GetNavState(uid, docks);
+                state = _console.GetNavState(uid, docks, tracked);
             }
 
             state.RotateWithEntity = !component.FollowEntity;
 
             _uiSystem.SetUiState(uid, RadarConsoleUiKey.Key, new NavBoundUserInterfaceState(state));
+        }
+    }
+
+    public override void Update(float frameTime)
+    {
+        base.Update(frameTime);
+
+        var query = AllEntityQuery<RadarConsoleComponent>();
+        while (query.MoveNext(out var uid, out var comp))
+        {
+            UpdateState(uid, comp);
         }
     }
 }
