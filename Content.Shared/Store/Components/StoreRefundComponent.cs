@@ -1,6 +1,6 @@
-﻿using Content.Server.Store.Systems;
+﻿using Content.Shared.Store.Systems;
 
-namespace Content.Server.Store.Components;
+namespace Content.Shared.Store.Components;
 
 // TODO: Refund on a per-item/action level.
 //   Requires a refund button next to each purchase (disabled/invis by default)
@@ -9,7 +9,7 @@ namespace Content.Server.Store.Components;
 /// <summary>
 ///     Keeps track of entities bought from stores for refunds, especially useful if entities get deleted before they can be refunded.
 /// </summary>
-[RegisterComponent, Access(typeof(StoreSystem))]
+[RegisterComponent, Access(typeof(SharedStoreSystem))]
 public sealed partial class StoreRefundComponent : Component
 {
     /// <summary>

@@ -71,8 +71,7 @@ public sealed class UplinkSystem : EntitySystem
 
         store.Balance.Clear();
         _store.TryAddCurrency(new Dictionary<string, FixedPoint2> { { TelecrystalCurrencyPrototype, balance } },
-            uplink,
-            store);
+            (uplink, store));
 
         var uplinkInitializedEvent = new StoreInitializedEvent(
             TargetUser: mind,
