@@ -72,7 +72,7 @@ namespace Content.Server.StationEvents
         }
     }
 
-    [ToolshedCommand, AdminCommand(AdminFlags.Debug)]
+    [ToolshedCommand(Name = "stationevent"), AdminCommand(AdminFlags.Debug)]
     public sealed class StationEventCommand : ToolshedCommand
     {
         private EventManagerSystem? _stationEvent;
