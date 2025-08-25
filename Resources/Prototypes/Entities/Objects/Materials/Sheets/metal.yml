@@ -34,6 +34,7 @@
   - type: GuideHelp
     guides:
     - ExpandingRepairingStation
+  - type: StatusIconNonMob
 
 - type: entity
   parent: SheetMetalBase

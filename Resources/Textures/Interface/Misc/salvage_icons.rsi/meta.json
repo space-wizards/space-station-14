@@ -1,0 +1,35 @@
+{
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "All sprites are edits of existing material sprites in /Textures/Objects/Materials, made by ruddygreat (github)",
+    "size": {
+        "x": 8,
+        "y": 8
+    },
+    "states": [
+        {
+            "name": "Steel"
+        },
+        {
+            "name": "Plastic"
+        },
+        {
+            "name": "Glass"
+        },
+        {
+            "name": "Gold"
+        },
+		{
+            "name": "Silver"
+        },
+        {
+            "name": "Plasma"
+        },
+        {
+            "name": "Uranium"
+        },
+        {
+            "name": "Diamond"
+        }
+    ]
+}

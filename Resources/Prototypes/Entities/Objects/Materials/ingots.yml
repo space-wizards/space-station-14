@@ -26,6 +26,7 @@
       behaviors:
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
+  - type: StatusIconNonMob
 
 - type: entity
   parent: IngotBase
