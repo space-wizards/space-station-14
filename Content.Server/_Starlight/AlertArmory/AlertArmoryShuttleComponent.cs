@@ -13,7 +13,7 @@ public sealed partial class AlertArmoryShuttleComponent : Component
     public EntityUid Station;
 
     [DataField]
-    public string DockTag = "DockGamma";
+    public ProtoId<TagPrototype> DockTag = "DockGamma";
 
     [ViewVariables]
     public string? Announcement = null;
