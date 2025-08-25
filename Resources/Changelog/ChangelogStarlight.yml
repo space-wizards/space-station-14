@@ -12359,5 +12359,163 @@ Entries:
   id: 143700
   time: '2025-08-22T22:18:55.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/1437
+- author: Happyrobot33
+  changes:
+  - message: Fixed bold breaking language fonts.
+    type: Fix
+  id: 144100
+  time: '2025-08-23T02:39:08.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1441
+- author: Happyrobot33
+  changes:
+  - message: Raised the brightness of dionae language color.
+    type: Tweak
+  id: 144101
+  time: '2025-08-23T02:39:08.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1441
+- author: walksanatora
+  changes:
+  - message: Lings are now our versions instead of broken upstream versions.
+    type: Fix
+  id: 144300
+  time: '2025-08-23T03:35:42.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1443
+- author: Karma and Quantum
+  changes:
+  - message: 2 new songs for the jukebox
+    type: Add
+  id: 143500
+  time: '2025-08-23T15:32:28.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1435
+- author: walksanatora
+  changes:
+  - message: Cloning a zed no longer only makes them only speak zed.
+    type: Fix
+  id: 145300
+  time: '2025-08-23T18:34:18.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1453
+- author: Fractalflower
+  changes:
+  - message: Vulpkanins can now understand Fox and Dog
+    type: Add
+  id: 144600
+  time: '2025-08-24T16:21:54.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1446
+- author: Fractalflower
+  changes:
+  - message: Felionoids can now understand Cat
+    type: Add
+  id: 144601
+  time: '2025-08-24T16:21:54.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1446
+- author: Fractalflower
+  changes:
+  - message: Corgis and foxes can now understand Canilunzt
+    type: Add
+  id: 144602
+  time: '2025-08-24T16:21:54.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1446
+- author: Fractalflower
+  changes:
+  - message: Cats can now understand Nekomimetic
+    type: Add
+  id: 144603
+  time: '2025-08-24T16:21:54.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1446
+- author: Fractalflower
+  changes:
+  - message: Mothroaches no longer speak Moffic
+    type: Remove
+  id: 144604
+  time: '2025-08-24T16:21:54.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1446
+- author: Fractalflower
+  changes:
+  - message: Mothroaches now speak their own language
+    type: Add
+  id: 144605
+  time: '2025-08-24T16:21:54.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1446
+- author: Fractalflower
+  changes:
+  - message: Mothroaches can now understand, but not speak, Moffic
+    type: Add
+  id: 144606
+  time: '2025-08-24T16:21:54.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1446
+- author: Fractalflower
+  changes:
+  - message: Mothpeople now understand, but cannot speak, Mothroach
+    type: Add
+  id: 144607
+  time: '2025-08-24T16:21:54.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1446
+- author: Happyrobot33
+  changes:
+  - message: Fixed knockback always occuring even when the gun was empty.
+    type: Fix
+  id: 145200
+  time: '2025-08-24T18:35:59.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1452
+- author: Darkrell
+  changes:
+  - message: An antagonist card has been added - Criminal. Fulfilling the requirements
+      within 20 minutes makes you a Syndicate member.
+    type: Add
+  - message: The railroading system is fully enabled.
+    type: Tweak
+  id: 145199
+  time: '2025-08-24T18:35:59.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1461
+- author: Fractalflower
+  changes:
+  - message: Humans can now have foxlike ears
+    type: Add
+  id: 109200
+  time: '2025-08-24T23:18:49.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1092
+- author: Fractalflower
+  changes:
+  - message: Humans can now have foxlike tails
+    type: Add
+  id: 109201
+  time: '2025-08-24T23:18:49.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1092
+- author: Fractalflower
+  changes:
+  - message: Humans can now yip, bark, and whine if they have a foxlike ear or tail.
+    type: Add
+  id: 109202
+  time: '2025-08-24T23:18:49.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1092
+- author: Grapgifter
+  changes:
+  - message: Hop digiboard added as portable id card computer. Can be found in your
+      locker. HoP Players rejoice.
+    type: Add
+  id: 130800
+  time: '2025-08-24T23:21:03.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1308
+- author: themageofmicrosoftpaints, Fractalflower
+  changes:
+  - message: Nine new slime tails
+    type: Add
+  id: 126300
+  time: '2025-08-24T23:27:46.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1263
+- author: themageofmicrosoftpaints, Fractalflower
+  changes:
+  - message: Eight new slime ears
+    type: Add
+  id: 126301
+  time: '2025-08-24T23:27:46.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1263
+- author: themageofmicrosoftpaints, Fractalflower
+  changes:
+  - message: Five new glass floors
+    type: Add
+  id: 126302
+  time: '2025-08-24T23:27:46.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1263
 Order: -1
 
