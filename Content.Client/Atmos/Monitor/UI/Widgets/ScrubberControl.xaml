@@ -38,6 +38,7 @@
                         <BoxContainer Orientation="Vertical">
                             <BoxContainer Margin="2">
                                 <Button Name="CSelectAll" Text="{Loc 'air-alarm-ui-scrubber-select-all-gases-label'}" />
+                                <Button Name="COverflowAll" Text="{Loc 'air-alarm-ui-scrubber-overflow-all-gases-label'}" />
                                 <Button Name="CDeselectAll" Text="{Loc 'air-alarm-ui-scrubber-deselect-all-gases-label'}" />
                             </BoxContainer>
                             <GridContainer Name="CGasContainer" Columns="3" />

@@ -31,6 +31,7 @@ public sealed partial class ScrubberControl : BoxContainer
     private CheckBox _wideNet => CWideNet;
     private Button _copySettings => CCopySettings;
     private Button _selectAll => CSelectAll;
+    private Button _overflowAll => COverflowAll;
     private Button _deselectAll => CDeselectAll;
 
     private GridContainer _gases => CGasContainer;
@@ -103,12 +104,21 @@ public sealed partial class ScrubberControl : BoxContainer
         _selectAll.OnPressed += _ =>
         {
             _data.FilterGases = new HashSet<Gas>(allGases);
+            _data.OverflowGases = [];
+            ScrubberDataChanged?.Invoke(_address, _data);
+        };
+
+        _overflowAll.OnPressed += _ =>
+        {
+            _data.FilterGases = [];
+            _data.OverflowGases = new HashSet<Gas>(allGases);
             ScrubberDataChanged?.Invoke(_address, _data);
         };
 
         _deselectAll.OnPressed += _ =>
         {
             _data.FilterGases = [];
+            _data.OverflowGases = [];
             ScrubberDataChanged?.Invoke(_address, _data);
         };
 
