@@ -16,8 +16,14 @@
     - Diona
     - Dwarf
     - Human
-    - Moth
     - Reptilian
+
+- type: loadoutEffectGroup
+  id: OxygenBreatherFiberEater
+  effects:
+  - !type:SpeciesLoadoutEffect
+    species:
+    - Moth
 
 - type: loadoutEffectGroup
   id: EffectSpeciesVox
@@ -45,6 +51,15 @@
     back:
     - BoxSurvivalNitrogen
 
+- type: loadout
+  id: EmergencyOxygenFiber
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: OxygenBreatherFiberEater
+  storage:
+    back:
+    - BoxSurvivalFiber
+
 # Clown
 - type: loadout
   id: EmergencyOxygenClown
@@ -64,30 +79,21 @@
     back:
     - BoxHugNitrogen
 
+- type: loadout
+  id: EmergencyOxygenFiberClown
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: OxygenBreatherFiberEater
+  storage:
+    back:
+    - BoxHugFiber
+
 # Mime
-- type: loadoutEffectGroup
-  id: OxygenBreatherMime
-  effects:
-  - !type:SpeciesLoadoutEffect
-    species:
-    - Arachnid
-    - Diona
-    - Dwarf
-    - Human
-    - Reptilian
-
-- type: loadoutEffectGroup
-  id: OxygenBreatherMimeMoth
-  effects:
-  - !type:SpeciesLoadoutEffect
-    species:
-    - Moth
-
 - type: loadout
   id: EmergencyOxygenMime
   effects:
   - !type:GroupLoadoutEffect
-    proto: OxygenBreatherMime
+    proto: OxygenBreather
   storage:
     back:
     - BoxMime
@@ -102,13 +108,13 @@
     - BoxMimeNitrogen
 
 - type: loadout
-  id: EmergencySpeciesMothMime
+  id: EmergencyOxygenFiberMime
   effects:
   - !type:GroupLoadoutEffect
-    proto: OxygenBreatherMimeMoth
+    proto: OxygenBreatherFiberEater
   storage:
     back:
-    - BoxMimeMoth
+    - BoxMimeFiber
 
 # Engineering / Extended
 - type: loadout
@@ -129,6 +135,15 @@
     back:
     - BoxSurvivalEngineeringNitrogen
 
+- type: loadout
+  id: EmergencyOxygenFiberExtended
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: OxygenBreatherFiberEater
+  storage:
+    back:
+    - BoxSurvivalEngineeringFiber
+
 # Medical
 - type: loadout
   id: EmergencyOxygenMedical
@@ -147,6 +162,15 @@
   storage:
     back:
     - BoxSurvivalMedicalNitrogen
+
+- type: loadout
+  id: EmergencyOxygenFiberMedical
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: OxygenBreatherFiberEater
+  storage:
+    back:
+    - BoxSurvivalMedicalFiber
 
 # Security
 - type: loadout
@@ -167,6 +191,15 @@
     back:
     - BoxSurvivalSecurityNitrogen
 
+- type: loadout
+  id: EmergencyOxygenFiberSecurity
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: OxygenBreatherFiberEater
+  storage:
+    back:
+    - BoxSurvivalSecurityFiber
+
 # Syndicate
 - type: loadout
   id: EmergencyOxygenSyndicate
@@ -185,6 +218,15 @@
   storage:
     back:
     - BoxSurvivalSyndicateNitrogen
+
+- type: loadout
+  id: EmergencyOxygenFiberSyndicate
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: OxygenBreatherFiberEater
+  storage:
+    back:
+    - BoxSurvivalSyndicateFiber
 
 # Pre-equipped species gear
 

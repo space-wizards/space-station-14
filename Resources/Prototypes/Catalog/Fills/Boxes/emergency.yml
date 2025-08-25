@@ -20,6 +20,20 @@
 
 - type: entity
   parent: BoxSurvival
+  id: BoxSurvivalFiber
+  suffix: Standard fiber
+  components:
+  - type: StorageFill
+    contents:
+    - id: ClothingMaskBreath
+    - id: EmergencyOxygenTankFilled
+    - id: EmergencyMedipen
+    - id: Flare
+    - id: FoodSnackFabBrick
+    - id: DrinkWaterBottleFull
+
+- type: entity
+  parent: BoxSurvival
   id: BoxSurvivalNitrogen
   suffix: Standard N2
   components:
@@ -57,6 +71,20 @@
     layers:
     - state: internals
     - state: extendedtank
+
+- type: entity
+  parent: BoxSurvivalEngineering
+  id: BoxSurvivalEngineeringFiber
+  suffix: Extended fiber
+  components:
+  - type: StorageFill
+    contents:
+    - id: ClothingMaskBreath
+    - id: ExtendedEmergencyOxygenTankFilled
+    - id: EmergencyMedipen
+    - id: Flare
+    - id: FoodSnackFabBrick
+    - id: DrinkWaterBottleFull
 
 - type: entity
   parent: BoxSurvivalEngineering
@@ -101,6 +129,20 @@
 
 - type: entity
   parent: BoxSurvivalSecurity
+  id: BoxSurvivalSecurityFiber
+  suffix: Security fiber
+  components:
+  - type: StorageFill
+    contents:
+    - id: ClothingMaskGasSecurity
+    - id: EmergencyOxygenTankFilled
+    - id: EmergencyMedipen
+    - id: Flare
+    - id: FoodSnackFabBrick
+    - id: DrinkWaterBottleFull
+
+- type: entity
+  parent: BoxSurvivalSecurity
   id: BoxSurvivalSecurityNitrogen
   suffix: Security N2
   components:
@@ -139,6 +181,20 @@
     layers:
     - state: internals
     - state: emergencytank
+
+- type: entity
+  parent: BoxSurvivalMedical
+  id: BoxSurvivalMedicalFiber
+  suffix: Medical fiber
+  components:
+  - type: StorageFill
+    contents:
+    - id: ClothingMaskBreathMedical
+    - id: EmergencyOxygenTankFilled
+    - id: EmergencyMedipen
+    - id: Flare
+    - id: FoodSnackFabBrick
+    - id: DrinkWaterBottleFull
 
 - type: entity
   parent: BoxSurvivalMedical
@@ -184,6 +240,20 @@
   - type: Tag
     tags:
     - BoxHug
+
+- type: entity
+  parent: BoxHug
+  id: BoxHugFiber
+  suffix: Emergency fiber
+  components:
+  - type: StorageFill
+    contents:
+    - id: ClothingMaskBreath
+    - id: EmergencyFunnyOxygenTankFilled
+    - id: EmergencyMedipen
+    - id: Flare
+    - id: FoodSnackFabBrick
+    - id: DrinkWaterBottleFull
 
 - type: entity
   parent: BoxHug
@@ -237,8 +307,8 @@
 
 - type: entity
   parent: BoxSurvival
-  id: BoxMimeMoth
-  suffix: Mime, Emergency moth
+  id: BoxMimeFiber
+  suffix: Mime, Emergency fiber
   components:
   - type: StorageFill
     contents:
@@ -267,6 +337,19 @@
     layers:
     - state: internals
     - state: extendedtank
+
+- type: entity
+  parent: BoxSurvivalSyndicate
+  id: BoxSurvivalSyndicateFiber
+  suffix: Syndicate fiber
+  components:
+  - type: StorageFill
+    contents:
+    - id: ClothingMaskGasSyndicate
+    - id: ExtendedEmergencyOxygenTankFilled
+    - id: EmergencyMedipen
+    - id: Flare
+    - id: FoodSnackFabBrick
 
 - type: entity
   parent: BoxSurvivalSyndicate
