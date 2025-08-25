@@ -24,28 +24,4 @@ public sealed partial class ButcherableComponent : Component
     /// </summary>
     [DataField, AutoNetworkedField]
     public float ButcherDelay = 8.0f;
-
-    /// <summary>
-    /// Tool type used to butcher that entity.
-    /// </summary>
-    [DataField("butcheringType"), AutoNetworkedField]
-    public ButcheringType Type = ButcheringType.Knife;
-}
-
-public enum ButcheringType : byte
-{
-    /// <summary>
-    /// E.g. goliaths.
-    /// </summary>
-    Knife,
-
-    /// <summary>
-    /// E.g. monkeys.
-    /// </summary>
-    Spike,
-
-    /// <summary>
-    /// E.g. humans.
-    /// </summary>
-    Gibber // TODO
 }

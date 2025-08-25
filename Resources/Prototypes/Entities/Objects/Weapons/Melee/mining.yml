@@ -97,7 +97,9 @@
   name: crusher
   description: An early design of the proto-kinetic accelerator.
   components:
-  - type: Sharp
+  - type: Tool
+    qualities:
+    - Slicing
   - type: Execution
     doAfterDuration: 4.0
   - type: UnpoweredFlashlight

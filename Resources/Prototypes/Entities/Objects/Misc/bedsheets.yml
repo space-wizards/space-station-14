@@ -330,10 +330,9 @@
   parent: BedsheetBase
   name: white bedsheet
   components:
-  - type: Butcherable
-    spawned:
-    - id: ClothingOuterGhostSheet #ghostly!
-      amount: 1
+  - type: Sliceable
+    slices:
+    - id: ClothingOuterGhostSheet #ghostly! 👻👻👻
   - type: Sprite
     state: sheetwhite
   - type: Clothing
