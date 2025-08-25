@@ -70,7 +70,7 @@ public sealed class MoverController : SharedMoverController
     {
         if (TryComp(source, out MovementRelayTargetComponent? relay))
         {
-            if (TryComp(relay.Source, out InputMoverComponent? relayMover))
+            if (TryComp(relay.Source, out InputMoverComponent? relayMover) && relayMover.CanMove)
             {
                 InsertMover((relay.Source, relayMover));
             }
