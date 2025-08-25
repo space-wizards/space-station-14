@@ -192,7 +192,7 @@
     transmitFrequencyId: Turret
 
 - type: entity
-  parent: BaseWeaponEnergyTurret
+  parent: [ BaseWeaponEnergyTurret, ConstructibleMachine ]
   id: WeaponTurretAntiMeteorEnergy
   name: point defense turret
   description: An auto-turret armed with a heavy laser. Its weapon will recharge while connected to an active power grid. Shoots meteors.
@@ -232,3 +232,5 @@
   - type: Repairable
     doAfterDelay: 10
     allowSelfRepair: false
+  - type: Machine
+    board: WeaponEnergyTurretAntiMeteorMachineCircuitboard

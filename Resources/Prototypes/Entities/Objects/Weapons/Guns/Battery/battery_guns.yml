@@ -180,6 +180,10 @@
   - type: Battery
     maxCharge: 500
     startingCharge: 500
+  - type: Tag
+    tags:
+    - Sidearm
+    - TurretCompatibleWeapon
 
 - type: entity
   name: tesla gun
