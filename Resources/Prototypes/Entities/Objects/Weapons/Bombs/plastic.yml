@@ -1,4 +1,4 @@
-﻿- type: entity
+- type: entity
   id: BasePlasticExplosive
   parent: BaseItem
   abstract: true
@@ -72,6 +72,7 @@
     delayOptions: [10, 30, 60, 120, 300]
     initialBeepDelay: 0
     beepSound: /Audio/Machines/Nuke/general_beep.ogg
+  - type: TimerTriggerItemStatus
   - type: DeviceLinkSink
     ports:
     - Trigger
@@ -127,6 +128,7 @@
       path: /Audio/Effects/Cargo/buzz_two.ogg
       params:
         volume: -6
+  - type: TimerTriggerItemStatus
   - type: DeviceLinkSink
     ports:
     - Trigger
