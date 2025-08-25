@@ -30,6 +30,11 @@
   equipment:
     mask: ClothingMaskScaredMime
 
+- type: loadout
+  id: MimeMaskBlushing
+  equipment:
+    mask: ClothingMaskBlushingMime
+
 # Jumpsuit
 - type: loadout
   id: MimeJumpsuit
