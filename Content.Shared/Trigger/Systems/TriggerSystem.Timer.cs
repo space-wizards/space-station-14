@@ -153,7 +153,12 @@ public sealed partial class TriggerSystem
             Trigger(uid, null, comp.KeyOut);
         }
     }
-
+    public void RestartTimer(Entity<TimerTriggerComponent> ent)
+    {
+        ent.Comp.NextTrigger = _timing.CurTime + ent.Comp.Delay;
+        EnsureComp<ActiveTimerTriggerComponent>(ent);
+        Dirty(ent);
+    }
     private void UpdateTimer()
     {
         var curTime = _timing.CurTime;
