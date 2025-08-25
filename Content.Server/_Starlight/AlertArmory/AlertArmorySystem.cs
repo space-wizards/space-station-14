@@ -44,8 +44,6 @@ public sealed class AlertArmorySystem : EntitySystem
     private EntityQuery<ArrivalsBlacklistComponent> _blacklistQuery;
     private EntityQuery<MobStateComponent> _mobQuery;
 
-    private readonly ProtoId<TagPrototype> _gammaDock = "DockGamma";
-
     public override void Initialize()
     {
         SubscribeLocalEvent<AlertArmoryStationComponent, StationPostInitEvent>(InitializeAlertArmoryStation);
