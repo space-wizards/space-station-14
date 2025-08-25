@@ -100,6 +100,36 @@
     - FoodPacketChipsTrash
 
 - type: entity
+  name: chits
+  parent: FoodSnackBase
+  id: FoodSnackChits
+  description: A bag of fried cotton made by moths for moths!
+  components:
+  - type: FlavorProfile
+    flavors:
+    - oily
+    - cottons
+  - type: Sprite
+    state: chits
+  - type: Item
+    heldPrefix: chits
+  - type: Food
+    requiresSpecialDigestion: true
+    trash:
+    - FoodPacketChitsTrash
+  - type: Tag
+    tags:
+    - FoodSnack
+    - ClothMade
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 30
+        reagents:
+        - ReagentId: Fiber
+          Quantity: 10
+
+- type: entity
   name: chocolate bar
   parent: BaseItem
   id: FoodSnackChocolate
@@ -655,6 +685,23 @@
       right:
       - state: trash-inhand-right
         color: "#008000"
+
+- type: entity
+  categories: [ HideSpawnMenu ]
+  parent: FoodPacketTrash
+  id: FoodPacketChitsTrash
+  name: chits
+  components:
+  - type: Sprite
+    state: chits-trash
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: trash-inhand-left
+        color: "#8080F0"
+      right:
+      - state: trash-inhand-right
+        color: "#8080F0"
 
 - type: entity
   categories: [ HideSpawnMenu ]
