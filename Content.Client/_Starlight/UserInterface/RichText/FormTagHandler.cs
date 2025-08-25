@@ -27,7 +27,7 @@ public sealed class FormTagHandler : IMarkupTagHandler
     /// </summary>
     public static float FontLineHeight { get; set; } = 16.0f; // Default fallback
 
-    private static int GetFormIndex() => _formCounter++;
+    private static int GetFormIndex(MarkupNode node) => _formCounter++;
 
     /// <summary>
     /// Resets the form counter to ensure consistent indexing across renders.

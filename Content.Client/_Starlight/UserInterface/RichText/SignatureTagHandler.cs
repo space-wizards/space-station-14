@@ -23,7 +23,7 @@ public sealed class SignatureTagHandler : IMarkupTagHandler
     /// </summary>
     public static float FontLineHeight { get; set; } = 16.0f; // Default fallback
 
-    private static int GetSignatureIndex() => _signatureCounter++;
+    private static int GetSignatureIndex(MarkupNode node) => _signatureCounter++;
 
     /// <summary>
     /// Resets the signature counter to ensure consistent indexing across renders.
