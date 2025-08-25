@@ -24,6 +24,7 @@
   - type: ItemToggle
     onUse: false
   - type: PlantAnalyzer
+    scanDelay: 5
   - type: GuideHelp
     guides:
     - Botany
