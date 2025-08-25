@@ -1,4 +1,5 @@
 using Content.Client.Message;
+using Content.Client.UserInterface.Controls;
 using Content.Shared.Atmos;
 using Content.Shared.Atmos.EntitySystems;
 using Content.Shared.Atmos.Monitor;
@@ -16,24 +17,28 @@ public sealed partial class SensorInfo : BoxContainer
 {
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly IEntityManager _entMan = default!;
+    private readonly SharedAtmosphereSystem _atmos;
 
     public Action<string, AtmosMonitorThresholdType, AtmosAlarmThreshold, Gas?>? OnThresholdUpdate;
+    public event Action<string, AtmosSensorData>? OnToggleThresholds;
     public event Action<AtmosSensorData>? SensorDataCopied;
+
+    private AtmosSensorData _data;
     private string _address;
 
     private ThresholdControl _pressureThreshold;
     private ThresholdControl _temperatureThreshold;
     private Dictionary<Gas, ThresholdControl> _gasThresholds = new();
     private Dictionary<Gas, RichTextLabel> _gasLabels = new();
-    private Button _copySettings => CCopySettings;
+    private ConfirmButton _copySettings => CCopySettings;
 
     public SensorInfo(AtmosSensorData data, string address)
     {
-        IoCManager.InjectDependencies(this);
-        var atmosphereSystem = _entMan.System<SharedAtmosphereSystem>();
-
         RobustXamlLoader.Load(this);
+        IoCManager.InjectDependencies(this);
+        _atmos = _entMan.System<SharedAtmosphereSystem>();
 
+        _data = data;
         _address = address;
 
         SensorAddress.Title = Loc.GetString("air-alarm-ui-window-listing-title", ("address", _address), ("state", data.AlarmState));
@@ -55,7 +60,7 @@ public sealed partial class SensorInfo : BoxContainer
 
             var fractionGas = amount / data.TotalMoles;
 
-            ProtoId<GasPrototype> gasProtoId = atmosphereSystem.GetGas(gas);
+            ProtoId<GasPrototype> gasProtoId = _atmos.GetGas(gas);
             var gasName = _prototypeManager.Index(gasProtoId).Name;
 
             label.SetMarkup(Loc.GetString("air-alarm-ui-gases-indicator",
@@ -97,14 +102,18 @@ public sealed partial class SensorInfo : BoxContainer
 
         _copySettings.OnPressed += _ =>
         {
-            SensorDataCopied?.Invoke(data);
+            SensorDataCopied?.Invoke(_data);
+        };
+
+        ToggleThresholds.OnPressed += _ =>
+        {
+            OnToggleThresholds?.Invoke(_address, _data);
         };
     }
 
     public void ChangeData(AtmosSensorData data)
     {
-        IoCManager.InjectDependencies(this);
-        var atmosphereSystem = _entMan.System<SharedAtmosphereSystem>();
+        _data = data;
 
         SensorAddress.Title = Loc.GetString("air-alarm-ui-window-listing-title", ("address", _address), ("state", data.AlarmState));
 
@@ -129,7 +138,7 @@ public sealed partial class SensorInfo : BoxContainer
 
             var fractionGas = amount / data.TotalMoles;
 
-            ProtoId<GasPrototype> gasProtoId = atmosphereSystem.GetGas(gas);
+            ProtoId<GasPrototype> gasProtoId = _atmos.GetGas(gas);
             var gasName = _prototypeManager.Index(gasProtoId).Name;
 
             label.SetMarkup(Loc.GetString("air-alarm-ui-gases-indicator",
