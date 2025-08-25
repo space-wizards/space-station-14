@@ -1349,3 +1349,71 @@
       Steel: 2
       Manipulator: 2
       Cable: 1
+
+- type: entity
+  id: ElectricRangeMachineCircuitboard
+  parent: BaseMachineCircuitboard
+  name: electric range machine board
+  description: A machine printed circuit board for an electric range.
+  components:
+  - type: Sprite
+    state: service
+  - type: MachineBoard
+    prototype: KitchenElectricRange
+    requirements:
+      Capacitor: 3
+    stackRequirements:
+      Steel: 5
+      Glass: 2
+      Cable: 4
+
+- type: entity
+  id: SyndicateElectricRangeMachineCircuitboard
+  parent: BaseMachineCircuitboard
+  name: syndicate electric range machine board
+  description: A machine printed circuit board for an syndicate electric range.
+  components:
+  - type: Sprite
+    state: service
+  - type: MachineBoard
+    prototype: SyndicateKitchenElectricRange
+    requirements:
+      Capacitor: 3
+    stackRequirements:
+      Steel: 5
+      Glass: 2
+      Cable: 4
+
+- type: entity
+  id: KitchenAssemblerMachineCircuitboard
+  parent: BaseMachineCircuitboard
+  name: food-o-mat machine board
+  description: A machine printed circuit board for a Food-O-Mat, suitable for a kitchen.
+  components:
+  - type: Sprite
+    state: service
+  - type: MachineBoard
+    prototype: KitchenAssembler
+    requirements:
+      Capacitor: 1
+    stackRequirements:
+      Glass: 2
+      Cable: 2
+
+- type: entity
+  id: MedicalAssemblerMachineCircuitboard
+  parent: BaseMachineCircuitboard
+  name: medical assembler machine board
+  description: A machine printed circuit board for a medical assembler.
+  components:
+  - type: Sprite
+    state: medical
+  - type: MachineBoard
+    prototype: MedicalAssembler
+    requirements:
+      Capacitor: 3
+    stackRequirements:
+      Steel: 5
+      Glass: 2
+      Cable: 4
+      
