@@ -1,3 +1,4 @@
+using Robust.Shared.Audio.Components;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
@@ -12,7 +13,7 @@ public sealed partial class JukeboxComponent : Component
     public ProtoId<JukeboxPrototype>? SelectedSongId;
 
     [DataField, AutoNetworkedField]
-    public EntityUid? AudioStream;
+    public WeakEntityReference? AudioStream;
 
     /// <summary>
     /// RSI state for the jukebox being on.
