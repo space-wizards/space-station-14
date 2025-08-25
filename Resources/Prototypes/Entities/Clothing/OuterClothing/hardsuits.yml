@@ -1130,7 +1130,7 @@
   parent: [ BaseCentcommContraband, ClothingOuterHardsuitBase ]
   id: ClothingOuterHardsuitCBURN
   name: CBURN exosuit
-  suffix: DO NOT USE
+  suffix: DO NOT USE # Starlight
   description: A lightweight yet strong exosuit used for special cleanup operations.
   components:
   - type: Sprite
