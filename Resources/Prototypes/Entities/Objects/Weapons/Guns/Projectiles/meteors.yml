@@ -54,6 +54,7 @@
     - Meteor
   - type: RadarTracked
     shape: "Diamond"
+    size: 1.1
 
 - type: entity
   parent: BaseMeteor
@@ -91,7 +92,7 @@
           collection: MetalBreak
       - !type:ExplodeBehavior
   - type: RadarTracked
-    size: 0.6
+    size: 0.7
 
 - type: entity
   parent: BaseMeteor
@@ -134,7 +135,7 @@
         maxSpawn: 4
         spawnAfter: 0.5
   - type: RadarTracked
-    size: 0.8
+    size: 0.9
 
 - type: entity
   parent: BaseMeteor
@@ -207,7 +208,7 @@
         maxSpawn: 8
         spawnAfter: 0.5
   - type: RadarTracked
-    size: 1.2
+    size: 1.3
 
 - type: entity
   parent: BaseMeteor
@@ -371,4 +372,4 @@
             max: 5
       - !type:ExplodeBehavior
   - type: RadarTracked
-    size: 0.6
+    size: 0.7

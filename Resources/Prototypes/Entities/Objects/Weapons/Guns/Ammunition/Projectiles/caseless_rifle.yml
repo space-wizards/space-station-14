@@ -27,4 +27,4 @@
   components:
   - type: RadarTracked
     radarColor: "#1E90FF"
-    size: 0.3
+    size: 0.4
