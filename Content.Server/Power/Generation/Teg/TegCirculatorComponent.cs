@@ -45,4 +45,24 @@ public sealed partial class TegCirculatorComponent : Component
     [ViewVariables(VVAccess.ReadWrite)]
     [DataField("lightColorFast")]
     public Color LightColorFast = Color.FromHex("#AA00FF");
+
+    /// <summary>
+    /// Heat capacity of this circulator.
+    /// </summary>
+    [DataField]
+    public float HeatCapacity = 1000f;
+
+    /// <summary>
+    /// The conductivity constant of this circulator.
+    /// Describes how well the heat flows from the gas to the circulator.
+    /// </summary>
+    [DataField]
+    public float ConductivityConstant = 100f;
+
+    /// <summary>
+    /// Current temperature of the circulator.
+    /// </summary>
+    /// <remarks>That block of copper in there has been sitting for a while, okay?</remarks>
+    [DataField]
+    public float CirculatorTemperature = Atmospherics.T20C;
 }
