@@ -32,6 +32,13 @@
     sprite: Clothing/Mask/gassecurity.rsi
   - type: Clothing
     sprite: Clothing/Mask/gassecurity.rsi
+  - type: Appearance
+  - type: GenericVisualizer
+    visuals:
+      enum.SecMaskVisuals.State:
+        mask:
+          Functional: { state: icon }
+          WiresCut: { state: icon-wires-cut }
   - type: Armor
     modifiers:
       coefficients:
@@ -39,6 +46,12 @@
         Slash: 0.95
         Piercing: 0.95
         Heat: 0.95
+  - type: SecurityHailer
+    distance: 5
+  - type: AccessReader
+    access: [["Security"]]
+    loggingDisabled: true
+    breakOnAccessBreaker: false
 
 - type: entity
   parent: [ClothingMaskGas, BaseSyndicateContraband]
@@ -376,6 +389,13 @@
     sprite: Clothing/Mask/swat.rsi
   - type: Clothing
     sprite: Clothing/Mask/swat.rsi
+  - type: Appearance
+  - type: GenericVisualizer
+    visuals:
+      enum.SecMaskVisuals.State:
+        mask:
+          Functional: { state: icon }
+          WiresCut: { state: icon-wires-cut }
   - type: Tag
     tags:
     - WhitelistChameleon
@@ -393,6 +413,17 @@
         Slash: 0.90
         Piercing: 0.95
         Heat: 0.95
+  - type: SecurityHailer #Because the HOS has this one
+    distance: 5
+    aggresionLevel: High
+    isHOS: true
+    replaceVoicelinesLocalizeForHOS:
+      hail-high-5: hail-high-HOS
+    secHailHighIndexForHOS: 5
+  - type: AccessReader
+    access: [["HeadOfSecurity"]]
+    loggingDisabled: true
+    breakOnAccessBreaker: false
 
 - type: entity
   parent: [ ClothingMaskGas, BaseSecurityCargoContraband ]
@@ -439,6 +470,11 @@
         Slash: 0.95
         Piercing: 0.95
         Heat: 0.95
+  - type: SecurityHailer #For security ERT and because it's fitting really
+    distance: 5
+    aggresionLevel: High #This is just for examination purposes
+    isERT: true
+    chatName: ERT hailer
 
 - type: entity
   parent: ClothingMaskGasERT
