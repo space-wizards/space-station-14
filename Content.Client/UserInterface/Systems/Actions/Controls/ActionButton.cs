@@ -4,7 +4,6 @@ using Content.Client.Actions.UI;
 using Content.Client.Cooldown;
 using Content.Client.Stylesheets;
 using Content.Shared.Actions.Components;
-using Content.Shared.Charges.Systems;
 using Content.Shared.Examine;
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
@@ -48,6 +47,8 @@ public sealed class ActionButton : Control, IEntityControl
     public readonly PanelContainer HighlightRect;
     private readonly TextureRect _bigActionIcon;
     private readonly TextureRect _smallActionIcon;
+    private readonly Color _originalModulate;
+    private readonly Color _phantomModulate;
     public readonly Label Label;
     public readonly CooldownGraphic Cooldown;
     private readonly SpriteView _smallItemSpriteView;
@@ -57,6 +58,11 @@ public sealed class ActionButton : Control, IEntityControl
 
     public Entity<ActionComponent>? Action { get; private set; }
     public bool Locked { get; set; }
+    /// <summary>
+    ///  Whether or not this button exists soley as a placeholder to retain action bar
+    ///  ordering. See <see cref="ActionUIController._phantomActions"/> for more details.
+    /// </summary>
+    public bool IsPhantom;
 
     public event Action<GUIBoundKeyEventArgs, ActionButton>? ActionPressed;
     public event Action<GUIBoundKeyEventArgs, ActionButton>? ActionUnpressed;
@@ -79,7 +85,7 @@ public sealed class ActionButton : Control, IEntityControl
         };
         HighlightRect = new PanelContainer
         {
-            StyleClasses = {StyleNano.StyleClassHandSlotHighlight},
+            StyleClasses = { StyleNano.StyleClassHandSlotHighlight },
             MinSize = new Vector2(32, 32),
             Visible = false
         };
@@ -142,7 +148,7 @@ public sealed class ActionButton : Control, IEntityControl
                 _smallItemSpriteView
             }
         });
-        Cooldown = new CooldownGraphic {Visible = false};
+        Cooldown = new CooldownGraphic { Visible = false };
 
         AddChild(Button);
         AddChild(_bigActionIcon);
@@ -151,6 +157,10 @@ public sealed class ActionButton : Control, IEntityControl
         AddChild(Label);
         AddChild(Cooldown);
         AddChild(paddingBoxItemIcon);
+
+        _phantomModulate = new Color(255, 255, 255, 80);
+        _originalModulate = Modulate;
+        IsPhantom = false;
 
         Button.Modulate = new Color(255, 255, 255, 150);
 
@@ -202,12 +212,14 @@ public sealed class ActionButton : Control, IEntityControl
         if (_player.LocalEntity is null)
             return null;
 
+        var requires = IsPhantom ? Loc.GetString("ui-actionmenu-phantom-action-tooltip") : null;
+
         var ev = new ExaminedEvent(desc, Action.Value, _player.LocalEntity.Value, true, !desc.IsEmpty);
         _entities.EventBus.RaiseLocalEvent(Action.Value.Owner, ev);
 
         var newDesc = ev.GetTotalMessage();
 
-        return new ActionAlertTooltip(name, newDesc);
+        return new ActionAlertTooltip(name, newDesc, requires: requires);
     }
 
     protected override void ControlFocusExited()
@@ -217,6 +229,10 @@ public sealed class ActionButton : Control, IEntityControl
 
     private void UpdateItemIcon()
     {
+        var spriteViewModulate = IsPhantom ? _phantomModulate : _originalModulate;
+        _bigItemSpriteView.Modulate = spriteViewModulate;
+        _smallItemSpriteView.Modulate = spriteViewModulate;
+
         if (Action?.Comp is not {EntityIcon: { } entity} ||
             !_entities.HasComponent<SpriteComponent>(entity))
         {
@@ -292,7 +308,7 @@ public sealed class ActionButton : Control, IEntityControl
         _controller ??= UserInterfaceManager.GetUIController<ActionUIController>();
         _spriteSys ??= _entities.System<SpriteSystem>();
         var icon = action.Comp.Icon;
-        if (_controller.SelectingTargetFor == action || action.Comp.Toggled)
+        if (!IsPhantom && (_controller.SelectingTargetFor == action || action.Comp.Toggled))
         {
             if (action.Comp.IconOn is {} iconOn)
                 icon = iconOn;
@@ -302,6 +318,7 @@ public sealed class ActionButton : Control, IEntityControl
         }
         else
         {
+            Modulate = IsPhantom ? _phantomModulate : _originalModulate;
             _buttonBackgroundTexture = Theme.ResolveTexture("SlotBackground");
         }
 
@@ -361,8 +378,7 @@ public sealed class ActionButton : Control, IEntityControl
         if (action.Cooldown is {} cooldown)
             Cooldown.FromTime(cooldown.Start, cooldown.End);
 
-        if (_toggled != action.Toggled)
-            _toggled = action.Toggled;
+        _toggled = action.Toggled;
     }
 
     protected override void MouseEntered()
@@ -399,7 +415,7 @@ public sealed class ActionButton : Control, IEntityControl
     public void DrawModeChanged()
     {
         _controller ??= UserInterfaceManager.GetUIController<ActionUIController>();
-        HighlightRect.Visible = _beingHovered && (Action != null || _controller.IsDragging);
+        HighlightRect.Visible = !IsPhantom && _beingHovered && (Action != null || _controller.IsDragging);
 
         // always show the normal empty button style if no action in this slot
         if (Action?.Comp is not {} action)
@@ -409,7 +425,7 @@ public sealed class ActionButton : Control, IEntityControl
         }
 
         // show a hover only if the action is usable or another action is being dragged on top of this
-        if (_beingHovered && (_controller.IsDragging || action.Enabled))
+        if (!IsPhantom && _beingHovered && (_controller.IsDragging || action.Enabled))
         {
             SetOnlyStylePseudoClass(ContainerButton.StylePseudoClassHover);
         }
