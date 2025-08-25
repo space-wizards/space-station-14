@@ -157,15 +157,38 @@ public abstract partial class SharedStationAiSystem
 
     private void OnTargetVerbs(Entity<StationAiWhitelistComponent> ent, ref GetVerbsEvent<AlternativeVerb> args)
     {
-        if (!_uiSystem.HasUi(args.Target, AiUi.Key))
-            return;
-
         if (!args.CanComplexInteract
             || !HasComp<StationAiHeldComponent>(args.User)
             || !args.CanInteract)
         {
             return;
         }
+
+        if (!_uiSystem.HasUi(args.Target, AiUi.Key))
+            return;
+
+        var targetXform = Transform(args.Target);
+        var userXform = Transform(args.User);
+
+        // No cross-grid
+        if (targetXform.GridUid != userXform.GridUid)
+            return;
+
+        // Checking visibility
+        if (!_broadphaseQuery.TryComp(targetXform.GridUid, out var broadphase) || 
+            !_gridQuery.TryComp(targetXform.GridUid, out var grid))
+        {
+            return;
+        }
+
+        var targetTile = Maps.LocalToTile(targetXform.GridUid.Value, grid, targetXform.Coordinates);
+        
+        lock (_vision)
+        {
+            if (!_vision.IsAccessible((targetXform.GridUid.Value, broadphase, grid), targetTile, fastPath: false))
+                return;
+        }
+
 
         var user = args.User;
 
