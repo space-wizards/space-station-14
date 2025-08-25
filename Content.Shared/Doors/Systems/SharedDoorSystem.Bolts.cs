@@ -16,17 +16,16 @@ public abstract partial class SharedDoorSystem
         SubscribeLocalEvent<DoorBoltComponent, DoorStateChangedEvent>(OnStateChanged);
     }
 
-    private void OnDoorPry(EntityUid uid, DoorBoltComponent component, ref BeforePryEvent args)
+    private void OnDoorPry(Entity<DoorBoltComponent> ent, ref BeforePryEvent args)
     {
-        if (args.Cancelled)
+        if (!args.CanPry)
             return;
 
-        if (!component.BoltsDown || args.Force)
+        if (!ent.Comp.BoltsDown || args.Strength >= PryStrength.Forced)
             return;
 
-        args.Message = "airlock-component-cannot-pry-is-bolted-message";
-
-        args.Cancelled = true;
+        args.Message = Loc.GetString("pryable-component-cannot-pry-is-bolted-message", ("object", ent.Owner));
+        args.CanPry = false;
     }
 
     private void OnBeforeDoorOpened(EntityUid uid, DoorBoltComponent component, BeforeDoorOpenedEvent args)
