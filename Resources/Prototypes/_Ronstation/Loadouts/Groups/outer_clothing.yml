@@ -1,5 +1,0 @@
-- type: loadoutGroup
-  id: BaseOuterClothing
-  name: loadout-group-outerclothing
-  abstract: true
-  minLimit: 0

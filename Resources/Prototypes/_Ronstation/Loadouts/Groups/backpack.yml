@@ -1,9 +1,4 @@
 - type: loadoutGroup
-  id: BaseBackpack
-  name: loadout-group-backpack
-  abstract: true
-
-- type: loadoutGroup
   id: CommonBackpack
   parent: BaseBackpack
   loadouts:

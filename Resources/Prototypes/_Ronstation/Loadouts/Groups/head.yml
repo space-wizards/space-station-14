@@ -1,5 +1,0 @@
-- type: loadoutGroup
-  id: BaseHead
-  name: loadout-group-head
-  abstract: true
-  minLimit: 0

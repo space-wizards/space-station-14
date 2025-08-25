@@ -1,10 +1,4 @@
 - type: loadoutGroup
-  id: BaseGlasses
-  name: loadout-group-glasses
-  abstract: true
-  minLimit: 0
-
-- type: loadoutGroup
   id: CommonGlasses
   parent: BaseGlasses
   loadouts:

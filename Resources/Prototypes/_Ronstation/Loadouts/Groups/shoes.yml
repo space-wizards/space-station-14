@@ -1,11 +1,4 @@
 - type: loadoutGroup
-  id: BaseShoes
-  name: loadout-group-shoes
-  abstract: true
-  minLimit: 0
-  defaultMinLimit: 1
-
-- type: loadoutGroup
   id: MedicalShoes
   parent: BaseShoes
   loadouts:

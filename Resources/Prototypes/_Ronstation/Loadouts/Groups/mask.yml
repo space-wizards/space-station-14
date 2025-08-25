@@ -1,10 +1,4 @@
 - type: loadoutGroup
-  id: BaseMask
-  name: loadout-group-mask
-  abstract: true
-  minLimit: 0
-
-- type: loadoutGroup
   id: MedicalMask
   parent: BaseMask
   loadouts:
