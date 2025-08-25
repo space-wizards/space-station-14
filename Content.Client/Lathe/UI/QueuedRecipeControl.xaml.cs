@@ -11,26 +11,46 @@ public sealed partial class QueuedRecipeControl : Control
     public Action<int>? OnMoveUpPressed;
     public Action<int>? OnMoveDownPressed;
 
+    private int _index;
+
     public QueuedRecipeControl(string displayText, int index, Control displayControl)
     {
         RobustXamlLoader.Load(this);
 
-        RecipeName.Text = displayText;
-        RecipeDisplayContainer.AddChild(displayControl);
+        SetDisplayText(displayText);
+        SetDisplayControl(displayControl);
+        SetIndex(index);
+        _index = index;
 
         MoveUp.OnPressed += (_) =>
         {
-            OnMoveUpPressed?.Invoke(index);
+            OnMoveUpPressed?.Invoke(_index);
         };
 
         MoveDown.OnPressed += (_) =>
         {
-            OnMoveDownPressed?.Invoke(index);
+            OnMoveDownPressed?.Invoke(_index);
         };
 
         Delete.OnPressed += (_) =>
         {
-            OnDeletePressed?.Invoke(index);
+            OnDeletePressed?.Invoke(_index);
         };
+    }
+
+    public void SetDisplayText(string displayText)
+    {
+        RecipeName.Text = displayText;
+    }
+
+    public void SetDisplayControl(Control displayControl)
+    {
+        RecipeDisplayContainer.Children.Clear();
+        RecipeDisplayContainer.AddChild(displayControl);
+    }
+
+    public void SetIndex(int index)
+    {
+        _index = index;
     }
 }
