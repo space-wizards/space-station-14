@@ -4,7 +4,7 @@ meta:
   engineVersion: 266.0.0
   forkId: ""
   forkVersion: ""
-  time: 08/25/2025 22:25:15
+  time: 08/25/2025 23:11:09
   entityCount: 16726
 maps:
 - 1
@@ -11029,7 +11029,7 @@ entities:
       pos: 7.5,-88.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -137884.8
+      secondsUntilStateChange: -138019.52
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -12304,7 +12304,7 @@ entities:
       pos: -11.5,-24.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -51321.8
+      secondsUntilStateChange: -51456.52
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
