@@ -83,6 +83,8 @@ public sealed partial class SharedToolSystem
 
         if (current.SpriteState is { } state)
             _appearance.SetData(uid, MultipleToolVisuals.Sprite, state);
+
+        multiple.UiUpdateNeeded = true;
     }
 }
 
