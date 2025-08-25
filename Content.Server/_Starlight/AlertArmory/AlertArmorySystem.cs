@@ -162,7 +162,7 @@ public sealed class AlertArmorySystem : EntitySystem
         }
 
         if (!set.Contains(ev.AlertLevel))
-                return;
+            return;
 
         var shuttle = comp.Grids[ev.AlertLevel];
         var targetGrid = _station.GetLargestGrid((ev.Station, Comp<StationDataComponent>(ev.Station)));
@@ -189,7 +189,7 @@ public sealed class AlertArmorySystem : EntitySystem
             _popup.PopupEntity(Loc.GetString("latejoin-arrivals-dumped-from-shuttle"), ent);
         }
     }
-    
+
     private void FindDumpChildren(EntityUid uid, List<Entity<TransformComponent>> toDump)
     {
         if (_pendingQuery.HasComponent(uid))
