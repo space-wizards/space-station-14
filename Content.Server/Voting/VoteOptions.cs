@@ -1,4 +1,5 @@
 using Content.Server.Voting.Managers;
+using Content.Shared.Voting;
 using Robust.Shared.Player;
 
 namespace Content.Server.Voting
@@ -22,6 +23,11 @@ namespace Content.Server.Voting
         ///     The shown title of the vote.
         /// </summary>
         public string Title { get; set; } = "<somebody forgot to fill this in lol>";
+
+        /// <summary>
+        ///     <see cref="StandardVoteType"/> of the vote
+        /// </summary>
+        public StandardVoteType VoteType { get; set; }
 
         /// <summary>
         ///     How long the vote lasts.

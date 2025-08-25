@@ -1,4 +1,5 @@
 using Content.Server.Voting.Managers;
+using Content.Shared.Voting;
 using Robust.Shared.Player;
 
 namespace Content.Server.Voting
@@ -34,6 +35,11 @@ namespace Content.Server.Voting
         /// Whether the vote has finished and is no longer active.
         /// </summary>
         bool Finished { get; }
+
+        /// <summary>
+        /// <see cref="StandardVoteType"/> of the vote.
+        /// </summary>
+        StandardVoteType Type { get; }
 
         /// <summary>
         /// Whether the vote was cancelled by an administrator and did not finish naturally.
