@@ -159,7 +159,7 @@ public abstract class SharedDisposalUnitSystem : EntitySystem
         if (args.Handled || args.Cancelled || args.Args.Target == null || args.Args.Used == null)
             return;
 
-        AfterInsert(uid, component, args.Args.Target.Value, args.Args.User, doInsert: true);
+        DoInsertDisposalUnit(uid, args.Args.Target.Value, args.Args.User, component);
 
         args.Handled = true;
     }
@@ -465,8 +465,10 @@ public abstract class SharedDisposalUnitSystem : EntitySystem
 
     public void DoInsertDisposalUnit(EntityUid uid,
         EntityUid toInsert,
-        EntityUid user,
-        DisposalUnitComponent? disposal = null)
+        EntityUid? user,
+        DisposalUnitComponent? disposal = null,
+        bool playDumpSound = true
+        )
     {
         if (!Resolve(uid, ref disposal))
             return;
@@ -474,22 +476,20 @@ public abstract class SharedDisposalUnitSystem : EntitySystem
         if (!Containers.Insert(toInsert, disposal.Container))
             return;
 
-        _adminLog.Add(LogType.Action, LogImpact.Medium, $"{ToPrettyString(user):player} inserted {ToPrettyString(toInsert)} into {ToPrettyString(uid)}");
-        AfterInsert(uid, disposal, toInsert, user);
+        if (user != toInsert && user != null)
+            _adminLog.Add(LogType.Action, LogImpact.Medium, $"{ToPrettyString(user):player} inserted {ToPrettyString(toInsert)} into {ToPrettyString(uid)}");
+
+        AfterInsert(uid, disposal, toInsert, user, playDumpSound);
     }
 
-    public virtual void AfterInsert(EntityUid uid,
+    public void AfterInsert(EntityUid uid,
         DisposalUnitComponent component,
         EntityUid inserted,
         EntityUid? user = null,
-        bool doInsert = false)
+        bool playDumpSound = true)
     {
-        Audio.PlayPredicted(component.InsertSound, uid, user: user);
-        if (doInsert && !Containers.Insert(inserted, component.Container))
-            return;
-
-        if (user != inserted && user != null)
-            _adminLog.Add(LogType.Action, LogImpact.Medium, $"{ToPrettyString(user.Value):player} inserted {ToPrettyString(inserted)} into {ToPrettyString(uid)}");
+        if (playDumpSound)
+            Audio.PlayPredicted(component.InsertSound, uid, user);
 
         QueueAutomaticEngage(uid, component);
 
@@ -523,7 +523,7 @@ public abstract class SharedDisposalUnitSystem : EntitySystem
 
         if (delay <= 0 || userId == null)
         {
-            AfterInsert(unitId, unit, toInsertId, userId, doInsert: true);
+            DoInsertDisposalUnit(unitId, toInsertId, userId, unit);
             return true;
         }
 
@@ -803,9 +803,11 @@ public abstract class SharedDisposalUnitSystem : EntitySystem
         args.Handled = true;
         args.PlaySound = true;
 
+        var playDumpSound = true;
         foreach (var entity in args.DumpQueue)
         {
-            DoInsertDisposalUnit(ent, entity, args.User);
+            DoInsertDisposalUnit(ent, entity, args.User, playDumpSound: playDumpSound);
+            playDumpSound = false;
         }
     }
 }
