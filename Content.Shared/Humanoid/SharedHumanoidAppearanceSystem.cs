@@ -535,6 +535,8 @@ public abstract class SharedHumanoidAppearanceSystem : EntitySystem
         humanoid.CustomSpecieName = profile.CustomSpecieName; // Starlight
 
         Dirty(uid, humanoid);
+        var update = new MarkingsUpdateEvent(); //starlight
+        RaiseLocalEvent(uid, ref update); //starlight
     }
 
     /// <summary>
@@ -594,6 +596,9 @@ public abstract class SharedHumanoidAppearanceSystem : EntitySystem
 
         if (sync)
             Dirty(uid, humanoid);
+
+        var ev = new MarkingsUpdateEvent(); //starlight
+        RaiseLocalEvent(uid, ref ev); //starlight
     }
 
     private void EnsureDefaultMarkings(EntityUid uid, HumanoidAppearanceComponent? humanoid)
@@ -631,6 +636,9 @@ public abstract class SharedHumanoidAppearanceSystem : EntitySystem
 
         if (sync)
             Dirty(uid, humanoid);
+
+        var ev = new MarkingsUpdateEvent(); //starlight
+        RaiseLocalEvent(uid, ref ev); //starlight
     }
     //Starlight
     public void SetTTSVoice(EntityUid uid, string voiceId, HumanoidAppearanceComponent humanoid)
@@ -679,3 +687,8 @@ public abstract class SharedHumanoidAppearanceSystem : EntitySystem
         return Loc.GetString("identity-age-old");
     }
 }
+
+#region Starlight
+[ByRefEvent]
+public record struct MarkingsUpdateEvent();
+#endregion

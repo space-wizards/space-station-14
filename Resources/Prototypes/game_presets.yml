@@ -45,7 +45,7 @@
     - Wizard
     - KesslerSyndromeScheduler
     - RampingStationEventScheduler
-    - Changeling
+    - SLChangeling #Starlight
     - SpaceTrafficControlEventScheduler
     - BasicRoundstartVariation
 
@@ -113,6 +113,7 @@
   description: secret-description
   rules:
     - Secret
+    - RailroadingMinor # 🌟Starlight🌟
 
 - type: gamePreset
   id: SecretExtended #For Admin Use: Runs Extended but shows "Secret" in lobby.
@@ -166,6 +167,7 @@
   - MeteorSwarmScheduler
   - SpaceTrafficControlEventScheduler
   - BasicRoundstartVariation
+  - RailroadingMinor # 🌟Starlight🌟
 
 - type: gamePreset
   id: Deathmatch
@@ -297,7 +299,7 @@
   description: changeling-gamemode-description
   showInVote: false
   rules:
-    - Changeling
+    - SLChangeling #Starlight
     - SubGamemodesRule
     - BasicStationEventScheduler
     - BasicRoundstartVariation
@@ -312,7 +314,7 @@
   showInVote: true #Starlight
   minPlayers: 50 #Starlight
   rules:
-    - Changeling
+    - SLChangeling #Starlight
     - Traitor
     - SubGamemodesRuleNoChangelings #Starlight
     - BasicStationEventScheduler

@@ -154,6 +154,7 @@
     - id: RubberStampHop
     - id: WeaponDisabler
     - id: ClothingEyesHudCommand
+    - id: BoxFolderHoPClipboard #Starlight Change
 
 - type: entity
   id: LockerHeadOfPersonnelFilled
