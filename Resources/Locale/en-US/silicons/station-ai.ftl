@@ -4,6 +4,8 @@ wire-name-ai-vision-light = AIV
 wire-name-ai-act-light = AIA
 station-ai-takeover = AI takeover
 station-ai-eye-name = AI eye - {$name}
+station-ai-has-no-power-for-upload = Upload failed - the AI core is unpowered.
+station-ai-is-too-damaged-for-upload = Upload failed - the AI core must be repaired.
 
 # Radial actions
 ai-open = Open actions

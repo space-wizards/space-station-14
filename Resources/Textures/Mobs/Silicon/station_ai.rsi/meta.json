@@ -196,7 +196,19 @@
             "name": "ai_dead"
         },
         {
+            "name": "ai_unpowered"
+        },
+        {
             "name": "ai_empty",
+            "delays": [
+                [
+                    0.7,
+                    0.7
+                ]
+            ]
+        },
+        {
+            "name": "ai_error",
             "delays": [
                 [
                     0.7,
