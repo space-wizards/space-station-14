@@ -122,9 +122,7 @@ public sealed class HealingSystem : EntitySystem
 
         // Update our self heal delay so it shortens as we heal more damage.
         if (args.User == target.Owner)
-        {
             args.Args.Delay = healing.Delay * GetScaledHealingPenalty(target.Owner, healing.SelfHealPenaltyMultiplier);
-        }
     }
 
     private bool HasDamage(Entity<HealingComponent> healing, Entity<DamageableComponent> target)
