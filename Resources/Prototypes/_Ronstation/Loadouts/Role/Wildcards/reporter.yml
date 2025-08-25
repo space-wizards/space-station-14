@@ -1,0 +1,18 @@
+- type: roleLoadout
+  id: JobReporter
+  groups:
+  - Survival
+  - GroupSpeciesBreathTool
+  - GroupTankHarness
+  # Head
+  - CommonGlasses
+  # Mask
+  # Neck
+  # Gloves
+  - ReporterJumpsuit
+  - CommonBackpack
+  # PDA
+  # Belt
+  # Outer Clothing
+  # Shoes
+  - Trinkets

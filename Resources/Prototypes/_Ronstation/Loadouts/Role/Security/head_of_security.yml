@@ -1,0 +1,17 @@
+- type: roleLoadout
+  id: JobHeadOfSecurity
+  groups:
+  - SurvivalSecurity
+  - GroupSpeciesBreathToolSecurity
+  - HeadofSecurityHead
+  - SecurityGlasses
+  # Mask
+  - HeadofSecurityNeck
+  # Gloves
+  - HeadofSecurityJumpsuit
+  - SecurityBackpack
+  # PDA
+  - SecurityBelt
+  - HeadofSecurityOuterClothing
+  - SecurityShoes
+  - Trinkets

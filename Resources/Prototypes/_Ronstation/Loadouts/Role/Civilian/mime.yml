@@ -1,0 +1,18 @@
+- type: roleLoadout
+  id: JobMime
+  canCustomizeName: true
+  groups:
+  - SurvivalMime
+  - GroupTankHarness
+  - MimeHead
+  - CommonGlasses
+  - MimeMask
+  # Neck
+  # Gloves
+  - MimeJumpsuit
+  - MimeBackpack
+  # PDA
+  - MimeBelt
+  - MimeOuterClothing
+  # Shoes
+  - Trinkets
