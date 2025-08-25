@@ -850,6 +850,64 @@
         amount: 0.15
 
 - type: reagent
+  id: CorpseReviver1
+  name: reagent-name-corpse-reviver-1
+  parent: BaseAlcohol
+  desc: reagent-desc-corpse-reviver-1
+  physicalDesc: reagent-physical-desc-strong-smelling
+  flavor: corpsereviver1
+  color: "#682016"
+  metamorphicSprite:
+    sprite: Objects/Consumable/Drinks/corpsereviver1.rsi
+    state: icon_empty
+  metamorphicMaxFillLevels: 3
+  metamorphicFillBaseName: fill-
+  metamorphicChangeColor: false
+  metabolisms:
+    Drink:
+      effects:
+      - !type:SatiateThirst
+        factor: 2
+      - !type:AdjustReagent
+        reagent: Ethanol
+        amount: 0.15
+      - !type:AdjustReagent
+        conditions:
+          - !type:ReagentThreshold
+            min: 90
+        reagent: Opporozidone
+        amount: 1.25
+
+- type: reagent
+  id: CorpseReviver2
+  name: reagent-name-corpse-reviver-2
+  parent: BaseAlcohol
+  desc: reagent-desc-corpse-reviver-2
+  physicalDesc: reagent-physical-desc-strong-smelling
+  flavor: corpsereviver2
+  color: "#F0F6C7"
+  metamorphicSprite:
+    sprite: Objects/Consumable/Drinks/corpsereviver2.rsi
+    state: icon_empty
+  metamorphicMaxFillLevels: 3
+  metamorphicFillBaseName: fill-
+  metamorphicChangeColor: false
+  metabolisms:
+    Drink:
+      effects:
+      - !type:SatiateThirst
+        factor: 2
+      - !type:AdjustReagent
+        reagent: Ethanol
+        amount: 0.15
+      - !type:AdjustReagent
+        conditions:
+          - !type:ReagentThreshold
+            min: 90
+        reagent: Necrosol
+        amount: 1.5
+
+- type: reagent
   id: CrushDepth
   name: reagent-name-crush-depth
   parent: BaseAlcohol

@@ -121,6 +121,13 @@ reagent-desc-coconut-rum = Rum with coconut for that tropical feel.
 reagent-name-cosmopolitan = cosmopolitan
 reagent-desc-cosmopolitan = Even in the worst situations, nothing beats a fresh cosmopolitan.
 
+reagent-name-corpse-reviver-1 = Corpse Reviver #1
+reagent-desc-corpse-reviver-1 = Hangover cure my ass. Should probably take one before 11AM either way.
+
+reagent-name-corpse-reviver-2 = Corpse Reviver #2
+reagent-desc-corpse-reviver-2 = Taking 4 might make you live longer, or die sooner.
+
+
 reagent-name-crush-depth = crush depth
 reagent-desc-crush-depth = A stygian drink, harkening back to the abyssopelagic. Dark and Cold, it serves as a reminder that the most ancient emotion is fear, and the strongest type of fear is that of the unknown.
 
