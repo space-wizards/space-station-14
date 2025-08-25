@@ -6,7 +6,7 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototy
 
 namespace Content.Shared.Forensics.Components
 {
-    [RegisterComponent, NetworkedComponent]
+    [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
     public sealed partial class ForensicScannerComponent : Component
     {
         public CancellationTokenSource? CancelToken;
@@ -14,31 +14,31 @@ namespace Content.Shared.Forensics.Components
         /// <summary>
         /// A list of fingerprint GUIDs that the forensic scanner found from the <see cref="ForensicsComponent"/> on an entity.
         /// </summary>
-        [ViewVariables(VVAccess.ReadOnly), DataField("fingerprints")]
+        [ViewVariables(VVAccess.ReadOnly), DataField("fingerprints"), AutoNetworkedField ]
         public List<string> Fingerprints = new();
 
         /// <summary>
         /// A list of glove fibers that the forensic scanner found from the <see cref="ForensicsComponent"/> on an entity.
         /// </summary>
-        [ViewVariables(VVAccess.ReadOnly), DataField("fibers")]
+        [ViewVariables(VVAccess.ReadOnly), DataField("fibers"), AutoNetworkedField]
         public List<string> Fibers = new();
 
         /// <summary>
         /// DNA that the forensic scanner found from the <see cref="DNAComponent"/> on an entity.
         /// </summary>
-        [ViewVariables(VVAccess.ReadOnly), DataField("dnas")]
+        [ViewVariables(VVAccess.ReadOnly), DataField("dnas"), AutoNetworkedField]
         public List<string> TouchDNAs = new();
 
         /// <summary>
         /// DNA that the forensic scanner found from the solution containers in an entity.
         /// </summary>
-        [ViewVariables(VVAccess.ReadOnly), DataField]
+        [ViewVariables(VVAccess.ReadOnly), DataField, AutoNetworkedField]
         public List<string> SolutionDNAs = new();
 
         /// <summary>
         /// Residue that the forensic scanner found from the <see cref="ForensicsComponent"/> on an entity.
         /// </summary>
-        [ViewVariables(VVAccess.ReadOnly), DataField("residues")]
+        [ViewVariables(VVAccess.ReadOnly), DataField("residues"), AutoNetworkedField]
         public List<string> Residues = new();
 
         /// <summary>
@@ -59,33 +59,33 @@ namespace Content.Shared.Forensics.Components
         /// <summary>
         /// The time (in seconds) that it takes to scan an entity.
         /// </summary>
-        [DataField("scanDelay")]
+        [DataField("scanDelay"), AutoNetworkedField]
         public float ScanDelay = 3.0f;
 
         /// <summary>
         /// How often can the scanner print out reports?
         /// </summary>
-        [DataField("printCooldown")]
+        [DataField("printCooldown"), AutoNetworkedField]
         public TimeSpan PrintCooldown = TimeSpan.FromSeconds(5);
 
         /// <summary>
         /// The sound that's played when there's a match between a scan and an
         /// inserted forensic pad.
         /// </summary>
-        [DataField("soundMatch")]
+        [DataField("soundMatch"), AutoNetworkedField]
         public SoundSpecifier SoundMatch = new SoundPathSpecifier("/Audio/Machines/Nuke/angry_beep.ogg");
 
         /// <summary>
         /// The sound that's played when there's no match between a scan and an
         /// inserted forensic pad.
         /// </summary>
-        [DataField("soundNoMatch")]
+        [DataField("soundNoMatch"), AutoNetworkedField]
         public SoundSpecifier SoundNoMatch = new SoundPathSpecifier("/Audio/Machines/airlock_deny.ogg");
 
         /// <summary>
         /// The sound that's played when the scanner prints off a report.
         /// </summary>
-        [DataField("soundPrint")]
+        [DataField("soundPrint"), AutoNetworkedField]
         public SoundSpecifier SoundPrint = new SoundPathSpecifier("/Audio/Machines/short_print_and_rip.ogg");
 
         /// <summary>

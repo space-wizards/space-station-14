@@ -2,12 +2,13 @@ using Content.Shared.DoAfter;
 using Content.Shared.Examine;
 using Content.Shared.Forensics;
 using Content.Shared.Forensics.Components;
+using Content.Shared.Forensics.Systems;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Interaction;
 using Content.Shared.Labels.EntitySystems;
 using Content.Shared.Popups;
 
-namespace Content.Server.Forensics
+namespace Content.Shared.Forensics.Systems
 {
     /// <summary>
     /// Used to transfer fingerprints from entities to forensic pads.
@@ -53,7 +54,7 @@ namespace Content.Server.Forensics
 
             if (component.Used)
             {
-                _popupSystem.PopupEntity(Loc.GetString("forensic-pad-already-used"), args.Target.Value, args.User);
+                _popupSystem.PopupClient(Loc.GetString("forensic-pad-already-used"), args.Target.Value, args.User);
                 return;
             }
 
@@ -61,9 +62,9 @@ namespace Content.Server.Forensics
             {
 
                 if (blocker is { } item)
-                    _popupSystem.PopupEntity(Loc.GetString("forensic-pad-no-access-due", ("entity", Identity.Entity(item, EntityManager))), args.Target.Value, args.User);
+                    _popupSystem.PopupClient(Loc.GetString("forensic-pad-no-access-due", ("entity", Identity.Entity(item, EntityManager))), args.Target.Value, args.User);
                 else
-                    _popupSystem.PopupEntity(Loc.GetString("forensic-pad-no-access"), args.Target.Value, args.User);
+                    _popupSystem.PopupClient(Loc.GetString("forensic-pad-no-access"), args.Target.Value, args.User);
 
                 return;
             }
@@ -72,7 +73,7 @@ namespace Content.Server.Forensics
             {
                 if (args.User != args.Target)
                 {
-                    _popupSystem.PopupEntity(Loc.GetString("forensic-pad-start-scan-user", ("target", Identity.Entity(args.Target.Value, EntityManager))), args.Target.Value, args.User);
+                    _popupSystem.PopupClient(Loc.GetString("forensic-pad-start-scan-user", ("target", Identity.Entity(args.Target.Value, EntityManager))), args.Target.Value, args.User);
                     _popupSystem.PopupEntity(Loc.GetString("forensic-pad-start-scan-target", ("user", Identity.Entity(args.User, EntityManager))), args.Target.Value, args.Target.Value);
                 }
                 StartScan(uid, args.User, args.Target.Value, component, fingerprint.Fingerprint);

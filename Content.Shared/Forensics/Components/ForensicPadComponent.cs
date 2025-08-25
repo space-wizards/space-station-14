@@ -11,7 +11,10 @@ namespace Content.Shared.Forensics.Components
         [DataField("scanDelay"), AutoNetworkedField]
         public float ScanDelay = 3.0f;
 
+        [AutoNetworkedField]
         public bool Used = false;
+
+        [DataField, AutoNetworkedField]
         public String Sample = string.Empty;
     }
 }

@@ -5,16 +5,16 @@ namespace Content.Shared.Forensics.Components
     [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
     public sealed partial class ForensicsComponent : Component
     {
-        [DataField("fingerprints")]
+        [DataField("fingerprints"), AutoNetworkedField]
         public HashSet<string> Fingerprints = new();
 
-        [DataField("fibers")]
+        [DataField("fibers"), AutoNetworkedField]
         public HashSet<string> Fibers = new();
 
-        [DataField("dnas")]
+        [DataField("dnas"), AutoNetworkedField]
         public HashSet<string> DNAs = new();
 
-        [DataField("residues")]
+        [DataField("residues"), AutoNetworkedField]
         public HashSet<string> Residues = new();
 
         /// <summary>
@@ -27,7 +27,7 @@ namespace Content.Shared.Forensics.Components
         /// Can the DNA be cleaned off of this entity?
         /// e.g. you can wipe the DNA off of a knife, but not a cigarette
         /// </summary>
-        [DataField("canDnaBeCleaned")]
+        [DataField("canDnaBeCleaned"), AutoNetworkedField]
         public bool CanDnaBeCleaned = true;
     }
 }

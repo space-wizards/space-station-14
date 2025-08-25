@@ -29,6 +29,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Forensics\Components\" />
+    <Folder Include="Forensics\Systems\" />
   </ItemGroup>
   <Import Project="..\RobustToolbox\MSBuild\Robust.Properties.targets" />
 </Project>

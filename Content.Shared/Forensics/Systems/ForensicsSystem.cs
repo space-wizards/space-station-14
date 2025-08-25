@@ -7,9 +7,7 @@ using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Chemistry.Components.SolutionManager;
 using Content.Shared.DoAfter;
 using Content.Shared.Fluids;
-using Content.Shared.Forensics;
 using Content.Shared.Forensics.Components;
-using Content.Shared.Forensics.Systems;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Inventory;
@@ -19,7 +17,7 @@ using Content.Shared.Verbs;
 using Robust.Shared.Utility;
 using Content.Shared.Hands.Components;
 
-namespace Content.Server.Forensics
+namespace Content.Shared.Forensics.Systems
 {
     public sealed class ForensicsSystem : SharedForensicsSystem
     {
@@ -213,7 +211,7 @@ namespace Content.Server.Forensics
         {
             if (!TryComp<ForensicsComponent>(target, out var forensicsComp))
             {
-                _popupSystem.PopupEntity(Loc.GetString("forensics-cleaning-cannot-clean", ("target", target)), user, user, PopupType.MediumCaution);
+                _popupSystem.PopupClient(Loc.GetString("forensics-cleaning-cannot-clean", ("target", target)), user, user, PopupType.MediumCaution);
                 return false;
             }
 
@@ -234,13 +232,13 @@ namespace Content.Server.Forensics
 
                 _doAfterSystem.TryStartDoAfter(doAfterArgs);
 
-                _popupSystem.PopupEntity(Loc.GetString("forensics-cleaning", ("target", target)), user, user);
+                _popupSystem.PopupClient(Loc.GetString("forensics-cleaning", ("target", target)), user, user);
 
                 return true;
             }
             else
             {
-                _popupSystem.PopupEntity(Loc.GetString("forensics-cleaning-cannot-clean", ("target", target)), user, user, PopupType.MediumCaution);
+                _popupSystem.PopupClient(Loc.GetString("forensics-cleaning-cannot-clean", ("target", target)), user, user, PopupType.MediumCaution);
                 return false;
             }
 

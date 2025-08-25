@@ -2,7 +2,6 @@ using System.Linq;
 using System.Text;
 using Content.Shared.UserInterface;
 using Content.Shared.DoAfter;
-using Content.Shared.Forensics;
 using Content.Shared.Forensics.Components;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Interaction;
@@ -10,20 +9,19 @@ using Content.Shared.Paper;
 using Content.Shared.Verbs;
 using Content.Shared.Tag;
 using Robust.Shared.Audio.Systems;
-using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.Timing;
 using Content.Shared.Popups;
 using Robust.Shared.Prototypes;
 // todo: remove this stinky LINQy
 
-namespace Content.Server.Forensics
+namespace Content.Shared.Forensics.Systems
 {
     public sealed class ForensicScannerSystem : EntitySystem
     {
         [Dependency] private readonly IGameTiming _gameTiming = default!;
         [Dependency] private readonly SharedDoAfterSystem _doAfterSystem = default!;
-        [Dependency] private readonly UserInterfaceSystem _uiSystem = default!;
+        [Dependency] private readonly SharedUserInterfaceSystem _uiSystem = default!;
         [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
         [Dependency] private readonly PaperSystem _paperSystem = default!;
         [Dependency] private readonly SharedHandsSystem _handsSystem = default!;
@@ -149,8 +147,8 @@ namespace Content.Server.Forensics
             {
                 if (fiber == pad.Sample)
                 {
-                    _audioSystem.PlayPvs(component.SoundMatch, uid);
-                    _popupSystem.PopupEntity(Loc.GetString("forensic-scanner-match-fiber"), uid, args.User);
+                    _audioSystem.PlayPredicted(component.SoundMatch, uid, args.User);
+                    _popupSystem.PopupClient(Loc.GetString("forensic-scanner-match-fiber"), uid, args.User);
                     return;
                 }
             }
@@ -159,14 +157,14 @@ namespace Content.Server.Forensics
             {
                 if (fingerprint == pad.Sample)
                 {
-                    _audioSystem.PlayPvs(component.SoundMatch, uid);
-                    _popupSystem.PopupEntity(Loc.GetString("forensic-scanner-match-fingerprint"), uid, args.User);
+                    _audioSystem.PlayPredicted(component.SoundMatch, uid, args.User);
+                    _popupSystem.PopupClient(Loc.GetString("forensic-scanner-match-fingerprint"), uid, args.User);
                     return;
                 }
             }
 
-            _audioSystem.PlayPvs(component.SoundNoMatch, uid);
-            _popupSystem.PopupEntity(Loc.GetString("forensic-scanner-match-none"), uid, args.User);
+            _audioSystem.PlayPredicted(component.SoundNoMatch, uid, args.User);
+            _popupSystem.PopupClient(Loc.GetString("forensic-scanner-match-none"), uid, args.User);
         }
 
         private void OnBeforeActivatableUIOpen(EntityUid uid, ForensicScannerComponent component, BeforeActivatableUIOpenEvent args)
@@ -189,7 +187,7 @@ namespace Content.Server.Forensics
             {
                 // This shouldn't occur due to the UI guarding against it, but
                 // if it does, tell the user why nothing happened.
-                _popupSystem.PopupEntity(Loc.GetString("forensic-scanner-printer-not-ready"), uid, user);
+                _popupSystem.PopupClient(Loc.GetString("forensic-scanner-printer-not-ready"), uid, user);
                 return;
             }
 
@@ -239,7 +237,7 @@ namespace Content.Server.Forensics
             }
 
             _paperSystem.SetContent((printed, paperComp), text.ToString());
-            _audioSystem.PlayPvs(component.SoundPrint, uid,
+            _audioSystem.PlayPredicted(component.SoundPrint, uid, uid,
                 AudioParams.Default
                 .WithVariation(0.25f)
                 .WithVolume(3f)

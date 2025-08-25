@@ -1,8 +1,7 @@
-using Content.Shared.Forensics;
 using Content.Shared.Forensics.Components;
 using Content.Shared.Inventory;
 
-namespace Content.Server.Forensics;
+namespace Content.Shared.Forensics.Systems;
 
 public sealed class FingerprintMaskSystem : EntitySystem
 {

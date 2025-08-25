@@ -6,13 +6,13 @@ namespace Content.Shared.Forensics.Components
     /// This controls fibers left by gloves on items,
     /// which the forensics system uses.
     /// </summary>
-    [RegisterComponent, NetworkedComponent]
+    [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
     public sealed partial class FiberComponent : Component
     {
-        [DataField]
+        [DataField, AutoNetworkedField]
         public LocId FiberMaterial = "fibers-synthetic";
 
-        [DataField]
+        [DataField, AutoNetworkedField]
         public string? FiberColor;
     }
 }

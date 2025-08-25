@@ -6,12 +6,12 @@ namespace Content.Shared.Forensics.Components;
 /// This controls residues left on items
 /// which the forensics system uses.
 /// </summary>
-[RegisterComponent, NetworkedComponent, ]
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
 public sealed partial class ResidueComponent : Component
 {
-    [DataField, ]
+    [DataField, AutoNetworkedField]
     public LocId ResidueAdjective = "residue-unknown";
 
-    [DataField, ]
+    [DataField, AutoNetworkedField]
     public string? ResidueColor;
 }
