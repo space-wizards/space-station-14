@@ -48,6 +48,7 @@
   - type: Emoting
   - type: ZombieImmune
   - type: ProtectedFromStepTriggers
+  - type: TriggerProtectedFromStepTriggers
   - type: NoSlip
   - type: Insulated
 
