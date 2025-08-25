@@ -77,6 +77,21 @@
         {
             "name": "inhand-right",
             "directions": 4
+        },
+        {
+            "name": "sleeve"
+        },
+        {
+            "name": "berry-sleeve"
+        },
+        {
+            "name": "spicy-sleeve"
+        },
+        {
+            "name": "stonk-sleeve"
+        },
+        {
+            "name": "teriyaki-sleeve"
         }
     ]
 }
