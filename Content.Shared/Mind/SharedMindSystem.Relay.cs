@@ -23,7 +23,7 @@ public abstract partial class SharedMindSystem : EntitySystem
         {
             RaiseLocalEvent(mindId, ref ev);
 
-            foreach (var role in mindComp.MindRoles)
+            foreach (var role in mindComp.MindRoleContainer.ContainedEntities)
                 RaiseLocalEvent(role, ref ev);
         }
     }
@@ -36,7 +36,7 @@ public abstract partial class SharedMindSystem : EntitySystem
         {
             RaiseLocalEvent(mindId, ref ev);
 
-            foreach (var role in mindComp.MindRoles)
+            foreach (var role in mindComp.MindRoleContainer.ContainedEntities)
                 RaiseLocalEvent(role, ref ev);
         }
 
