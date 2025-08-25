@@ -376,6 +376,7 @@
     iconOn: { sprite: Interface/Actions/actions_fakemindshield.rsi, state: icon-on }
     itemIconStyle: NoItem
     useDelay: 1
+    raiseOnUser: true
   - type: InstantAction
     event: !type:FakeMindShieldToggleEvent
   - type: Tag

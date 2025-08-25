@@ -198,7 +198,7 @@
   id: Moth # Slightly worse at everything but cold
   coefficients:
     Cold: 0.7
-    Heat: 1.3
+    Heat: 1.2
 
 - type: damageModifierSet
   id: Vox
