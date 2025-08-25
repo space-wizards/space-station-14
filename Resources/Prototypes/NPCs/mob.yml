@@ -106,3 +106,13 @@
     - tasks:
         - !type:HTNCompoundTask
           task: IdleCompound
+
+- type: htnCompound
+  id: SimpleHostileIgnoresInitialInfectedCompound
+  branches:
+    - tasks:
+        - !type:HTNCompoundTask
+          task: MeleeCombatIgnoreInitialInfectedCompound
+    - tasks:
+        - !type:HTNCompoundTask
+          task: IdleCompound
