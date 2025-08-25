@@ -222,66 +222,34 @@ namespace Content.Server.Chemistry.EntitySystems
 
             var needed = message.Dosage * message.Number;
 
-            switch (chemMaster.Comp.DrawSource)
+            if (!WithdrawFromSource(chemMaster, needed, user, out var withdrawal))
+                return;
+            _labelSystem.Label(container, message.Label);
+
+            for (var i = 0; i < message.Number; i++)
             {
-                case ChemMasterDrawSource.Internal:
-                    if (!WithdrawFromBuffer(chemMaster, needed, user, out var withdrawal))
-                        return;
-                    _labelSystem.Label(container, message.Label);
+                var item = Spawn(PillPrototypeId, Transform(container).Coordinates);
+                _storageSystem.Insert(container, item, out _, user: user, storage);
+                _labelSystem.Label(item, message.Label);
 
-                    for (var i = 0; i < message.Number; i++)
-                    {
-                        var item = Spawn(PillPrototypeId, Transform(container).Coordinates);
-                        _storageSystem.Insert(container, item, out _, user: user, storage);
-                        _labelSystem.Label(item, message.Label);
+                _solutionContainerSystem.EnsureSolutionEntity(item,
+                    SharedChemMaster.PillSolutionName,
+                    out var itemSolution,
+                    message.Dosage);
+                if (!itemSolution.HasValue)
+                    return;
 
-                        _solutionContainerSystem.EnsureSolutionEntity(item, SharedChemMaster.PillSolutionName,out var itemSolution ,message.Dosage);
-                        if (!itemSolution.HasValue)
-                            return;
+                _solutionContainerSystem.TryAddSolution(itemSolution.Value, withdrawal.SplitSolution(message.Dosage));
 
-                        _solutionContainerSystem.TryAddSolution(itemSolution.Value, withdrawal.SplitSolution(message.Dosage));
+                var pill = EnsureComp<PillComponent>(item);
+                pill.PillType = chemMaster.Comp.PillType;
+                Dirty(item, pill);
 
-                        var pill = EnsureComp<PillComponent>(item);
-                        pill.PillType = chemMaster.Comp.PillType;
-                        Dirty(item, pill);
-
-                        // Log pill creation by a user
-                        _adminLogger.Add(LogType.Action, LogImpact.Low,
-                            $"{ToPrettyString(user):user} printed {ToPrettyString(item):pill} {SharedSolutionContainerSystem.ToPrettyString(itemSolution.Value.Comp.Solution)}");
-                    }
-                    break;
-
-                case ChemMasterDrawSource.External:
-                    ClickSound(chemMaster);
-                    if (!WithdrawFromBeaker(chemMaster, needed, user, out var withdrawalBeaker))
-                        return;
-                    _labelSystem.Label(container, message.Label);
-
-                    for (var i = 0; i < message.Number; i++)
-                    {
-                        var item = Spawn(PillPrototypeId, Transform(container).Coordinates);
-                        _storageSystem.Insert(container, item, out _, user: user, storage);
-                        _labelSystem.Label(item, message.Label);
-
-                        _solutionContainerSystem.EnsureSolutionEntity(item, SharedChemMaster.PillSolutionName,out var itemSolution ,message.Dosage);
-                        if (!itemSolution.HasValue)
-                            return;
-
-                        _solutionContainerSystem.TryAddSolution(itemSolution.Value, withdrawalBeaker.SplitSolution(message.Dosage));
-
-                        var pill = EnsureComp<PillComponent>(item);
-                        pill.PillType = chemMaster.Comp.PillType;
-                        Dirty(item, pill);
-
-                        // Log pill creation by a user
-                        _adminLogger.Add(LogType.Action, LogImpact.Low,
-                            $"{ToPrettyString(user):user} printed {ToPrettyString(item):pill} {SharedSolutionContainerSystem.ToPrettyString(itemSolution.Value.Comp.Solution)}");
-                    }
-                    break;
-
+                // Log pill creation by a user
+                _adminLogger.Add(LogType.Action,
+                    LogImpact.Low,
+                    $"{ToPrettyString(user):user} printed {ToPrettyString(item):pill} {SharedSolutionContainerSystem.ToPrettyString(itemSolution.Value.Comp.Solution)}");
             }
-
-
 
             UpdateUiState(chemMaster);
             ClickSound(chemMaster);
@@ -350,7 +318,7 @@ namespace Content.Server.Chemistry.EntitySystems
             return true;
         }
 
-        private bool WithdrawFromBeaker(
+        private bool WithdrawFromSource(
             Entity<ChemMasterComponent> chemMaster,
             FixedPoint2 neededVolume,
             EntityUid? user,
@@ -358,31 +326,69 @@ namespace Content.Server.Chemistry.EntitySystems
         {
             outputSolution = null;
 
-            var container = _itemSlotsSystem.GetItemOrNull(chemMaster, SharedChemMaster.InputSlotName);
-            if (container == null)
-            {
-                if (user.HasValue)
-                    _popupSystem.PopupCursor(Loc.GetString("chem-master-window-no-beaker-text"), user.Value);
-                return false;
-            }
+            Solution? solution = null;
 
-            if (!_solutionContainerSystem.TryGetFitsInDispenser(container.Value, out var soln, out var solution))
+            switch (chemMaster.Comp.DrawSource)
             {
-                return false;
+                case ChemMasterDrawSource.Internal:
+                    if (!_solutionContainerSystem.TryGetSolution(chemMaster.Owner, SharedChemMaster.BufferSolutionName, out _, out solution))
+                    {
+                        return false;
+                    }
+                    break;
+
+                case ChemMasterDrawSource.External:
+                    var container = _itemSlotsSystem.GetItemOrNull(chemMaster, SharedChemMaster.InputSlotName);
+                    if (container == null)
+                    {
+                        if (user.HasValue)
+                            _popupSystem.PopupCursor(Loc.GetString("chem-master-window-no-beaker-text"), user.Value);
+                        return false;
+                    }
+                    if (!_solutionContainerSystem.TryGetFitsInDispenser(container.Value, out _, out solution))
+                    {
+                        return false;
+                    }
+                    break;
+
+                default:
+                    return false;
             }
 
             if (solution.Volume == 0)
             {
                 if (user.HasValue)
-                    _popupSystem.PopupCursor(Loc.GetString("chem-master-window-beaker-empty-text"), user.Value);
-                return false;
+                {
+                    switch (chemMaster.Comp.DrawSource)
+                    {
+                        case ChemMasterDrawSource.Internal:
+                            _popupSystem.PopupCursor(Loc.GetString("chem-master-window-buffer-empty-text"), user.Value);
+                            return false;
+                        case ChemMasterDrawSource.External:
+                            _popupSystem.PopupCursor(Loc.GetString("chem-master-window-beaker-empty-text"), user.Value);
+                            return false;
+                        default:
+                            return false;
+                    }
+                }
             }
 
             if (neededVolume > solution.Volume)
             {
                 if (user.HasValue)
-                    _popupSystem.PopupCursor(Loc.GetString("chem-master-window-beaker-low-text"), user.Value);
-                return false;
+                {
+                    switch (chemMaster.Comp.DrawSource)
+                    {
+                        case ChemMasterDrawSource.Internal:
+                            _popupSystem.PopupCursor(Loc.GetString("chem-master-window-buffer-low-text"), user.Value);
+                            return false;
+                        case ChemMasterDrawSource.External:
+                            _popupSystem.PopupCursor(Loc.GetString("chem-master-window-beaker-low-text"), user.Value);
+                            return false;
+                        default:
+                            return false;
+                    }
+                }
             }
 
             outputSolution = solution.SplitSolution(neededVolume);
