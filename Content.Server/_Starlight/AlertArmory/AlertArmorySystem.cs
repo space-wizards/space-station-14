@@ -174,7 +174,7 @@ public sealed class AlertArmorySystem : EntitySystem
             shuttle,
             Comp<ShuttleComponent>(shuttle),
             targetGrid.Value,
-            priorityTag: shuttleComp.DockTag);
+            priorityTag: Comp<AlertArmoryShuttleComponent>(shuttle).DockTag);
     }
 
     private void DumpChildren(EntityUid uid, ref FTLStartedEvent args)
