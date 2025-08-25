@@ -659,6 +659,9 @@
         whitelist:
           components:
           - Circuitboard
+        blacklist:
+          components:
+          - SiliconLawProvider
     - hand:
         emptyRepresentative: MicroManipulatorStockPart
         emptyLabel: borg-slot-construction-empty
