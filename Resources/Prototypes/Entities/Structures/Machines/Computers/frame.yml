@@ -1,6 +1,6 @@
 - type: entity
-  id: BaseStructureComputer
   parent: BaseStructure
+  id: BaseStructureComputerIndestructible
   abstract: true
   components:
   - type: Physics
@@ -19,14 +19,20 @@
   - type: InteractionOutline
   - type: Rotatable
   - type: Anchorable
-  - type: Construction
-    graph: Computer
-    node: frameUnsecured
   - type: Sprite
     drawdepth: Objects
   - type: Damageable
     damageContainer: StructuralInorganic
     damageModifierSet: Electronic
+
+- type: entity
+  parent: BaseStructureComputerIndestructible
+  id: BaseStructureComputer
+  abstract: true
+  components:
+  - type: Construction
+    graph: Computer
+    node: frameUnsecured
   - type: Destructible
     thresholds:
     - trigger:
