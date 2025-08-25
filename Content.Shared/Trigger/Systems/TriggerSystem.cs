@@ -64,14 +64,26 @@ public sealed partial class TriggerSystem : EntitySystem
     /// <returns>Whether or not the trigger has sucessfully activated an effect.</returns>
     public bool Trigger(EntityUid trigger, EntityUid? user = null, string? key = null)
     {
-        var attemptTriggerEvent = new AttemptTriggerEvent(user, key);
+        var cancelKeys = new HashSet<string>();
+        var attemptTriggerEvent = new AttemptTriggerEvent(user, cancelKeys, key);
         RaiseLocalEvent(trigger, ref attemptTriggerEvent);
-        if (attemptTriggerEvent.Cancelled)
-            return false;
 
-        var triggerEvent = new TriggerEvent(user, key);
-        RaiseLocalEvent(trigger, ref triggerEvent, true);
-        return triggerEvent.Handled;
+        if (!attemptTriggerEvent.Cancelled)
+        {
+            var triggerEvent = new TriggerEvent(user, key);
+            RaiseLocalEvent(trigger, ref triggerEvent, true);
+            return triggerEvent.Handled;
+        }
+
+        var cancelKeyTriggered = false;
+        foreach (var cKey in cancelKeys)
+        {
+            var triggerEvent = new TriggerEvent(user, cKey);
+            RaiseLocalEvent(trigger, ref triggerEvent, true);
+            cancelKeyTriggered |= triggerEvent.Handled;
+        }
+
+        return cancelKeyTriggered;
     }
 
     /// <summary>
@@ -126,7 +138,7 @@ public sealed partial class TriggerSystem : EntitySystem
             return false;
 
         if (!HasComp<ActiveTimerTriggerComponent>(ent))
-            return false; // the timer is not active
+            return false; // the timer is not active`
 
         RemComp<ActiveTimerTriggerComponent>(ent);
         if (TryComp<AppearanceComponent>(ent.Owner, out var appearance))
