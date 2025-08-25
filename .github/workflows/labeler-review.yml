@@ -16,7 +16,7 @@ jobs:
       with:
         username: ${{ github.actor }}
         team: "maintainer,dev"
-        GITHUB_TOKEN: ${{ secrets.LABELER_PAT }}
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     - if: ${{ steps.checkUserMember.outputs.isTeamMember == 'true' }}
       uses: actions-ecosystem/action-add-labels@v1
       with:
@@ -33,7 +33,7 @@ jobs:
       with:
         username: ${{ github.actor }}
         team: "maintainer,dev"
-        GITHUB_TOKEN: ${{ secrets.LABELER_PAT }}
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     - if: ${{ steps.checkUserMember.outputs.isTeamMember == 'true' }}
       uses: actions-ecosystem/action-add-labels@v1
       with:
