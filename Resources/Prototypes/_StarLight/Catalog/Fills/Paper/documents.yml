@@ -434,3 +434,14 @@
     contents:
       - id: Paper
         amount: 24
+
+# Communications
+
+- type: entity
+  parent: PrintedDocument
+  id: PrintedDocumentCentCommCommunication
+  name: Centcomm communication
+  categories: [ HideSpawnMenu ]
+  components:
+    - type: Paper
+      content: doc-text-printer-centcomm-communication

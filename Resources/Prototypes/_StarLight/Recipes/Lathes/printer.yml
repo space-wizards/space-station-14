@@ -460,3 +460,14 @@
   materials:
     SheetPrinter: 100
     
+# Communications
+
+- type: latheRecipe
+  id: PrintedDocumentCentCommCommunicationRecipe
+  result: PrintedDocumentCentCommCommunication
+  categories:
+  - Communications
+  completetime: 2
+  applyMaterialDiscount: false
+  materials:
+    SheetPrinter: 100

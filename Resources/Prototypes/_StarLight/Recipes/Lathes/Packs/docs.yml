@@ -1,7 +1,7 @@
 - type: latheRecipePack
   id: StarlightDocs
   recipes:
-# Reports
+  # Reports
   - PrintedDocumentReportStationRecipe
   - PrintedDocumentReportOnEliminationOfViolationsRecipe
   - PrintedDocumentReporDepartmentRecipe
@@ -52,6 +52,8 @@
   - PrintedDocumentExecutionDNROrderRecipe
   # Orders
   - PrintedDocumentProductOrderRecipe
+  # Communications
+  - PrintedDocumentCentCommCommunicationRecipe
 
 #- type: latheRecipePack
 #  id: StarlightDocsEmag

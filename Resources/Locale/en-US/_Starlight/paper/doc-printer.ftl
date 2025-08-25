@@ -1157,3 +1157,27 @@ doc-text-printer-execution-dnr-order =
    ⠀ [italic]lawful extent, and must be as humane as possible.[/italic]
     ────────────────────────────────────────
    ⠀                                    [italic]Place for stamps[/italic]
+
+# Communications
+
+doc-text-printer-centcomm-communication =
+   ⠀[logo]            [cclogo] 
+
+                             [head=3]NT-CC Consortium Services[/head]
+
+                  [center][color=#1f75bb][italic][bold]   OFFICIAL CENTCOMM DOCUMENTATION[/bold][/italic][/color][/center]
+    ────────────────────────────────────────
+   ⠀⠀                         [bold]CentComm Communication[/bold]
+    ────────────────────────────────────────
+    Time and Date:
+    Compiler of the document:
+    Position of Document Compiler:
+    
+    Greetings CentComm,
+
+
+
+    Sincerely,
+              YOUR NAME HERE
+    ────────────────────────────────────────
+   ⠀                                    [italic]Place for stamps[/italic]
