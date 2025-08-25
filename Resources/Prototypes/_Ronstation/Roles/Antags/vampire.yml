@@ -2,7 +2,7 @@
   id: Vampire
   name: roles-antag-vampire-name
   antagonist: true
-  setPreference: true
+  setPreference: false
   objective: roles-antag-vampire-objective
   # guides: [ Vampire ]
   requirements:
