@@ -31,6 +31,12 @@ public partial class SiliconLaw : IComparable<SiliconLaw>, IEquatable<SiliconLaw
     [DataField, ViewVariables(VVAccess.ReadWrite)]
     public string? LawIdentifierOverride;
 
+    /// <summary>
+    /// If this law can be modified by SoftSetLaws or not
+    /// </summary>
+    [DataField, ViewVariables(VVAccess.ReadWrite)]
+    public bool SoftLaw = true;
+
     public int CompareTo(SiliconLaw? other)
     {
         if (other == null)

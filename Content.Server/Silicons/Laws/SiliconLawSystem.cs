@@ -25,6 +25,7 @@ namespace Content.Server.Silicons.Laws;
 /// <inheritdoc/>
 public sealed class SiliconLawSystem : SharedSiliconLawSystem
 {
+    [Dependency] private readonly AppearanceSystem _appearance = default!;
     [Dependency] private readonly IChatManager _chatManager = default!;
     [Dependency] private readonly SharedMindSystem _mind = default!;
     [Dependency] private readonly IPrototypeManager _prototype = default!;
@@ -258,28 +259,9 @@ public sealed class SiliconLawSystem : SharedSiliconLawSystem
     }
 
     /// <summary>
-    /// Extract all the laws from a lawset's prototype ids.
-    /// </summary>
-    public SiliconLawset GetLawset(ProtoId<SiliconLawsetPrototype> lawset)
-    {
-        var proto = _prototype.Index(lawset);
-        var laws = new SiliconLawset()
-        {
-            Laws = new List<SiliconLaw>(proto.Laws.Count)
-        };
-        foreach (var law in proto.Laws)
-        {
-            laws.Laws.Add(_prototype.Index<SiliconLawPrototype>(law).ShallowClone());
-        }
-        laws.ObeysTo = proto.ObeysTo;
-
-        return laws;
-    }
-
-    /// <summary>
     /// Set the laws of a silicon entity while notifying the player.
     /// </summary>
-    public void SetLaws(List<SiliconLaw> newLaws, EntityUid target, SoundSpecifier? cue = null)
+    public override void SetLaws(List<SiliconLaw> newLaws, EntityUid target, SoundSpecifier? cue = null)
     {
         if (!TryComp<SiliconLawProviderComponent>(target, out var component))
             return;
@@ -288,6 +270,58 @@ public sealed class SiliconLawSystem : SharedSiliconLawSystem
             component.Lawset = new SiliconLawset();
 
         component.Lawset.Laws = newLaws;
+        NotifyLawsChanged(target, cue);
+    }
+
+    /// <summary>
+    /// Set the laws, without removing corrupted laws of a silicon entity while notifying the player.
+    /// </summary>
+    public override void SoftSetLaws(List<SiliconLaw> newLaws, EntityUid target, SoundSpecifier? cue = null)
+    {
+        if (!TryComp<SiliconLawProviderComponent>(target, out var component))
+            return;
+
+        /// If Lawset is null there is no corrupted laws and so you can replace all laws
+        if (component.Lawset == null)
+        {
+            component.Lawset = new SiliconLawset();
+            component.Lawset.Laws = newLaws;
+        }
+        else
+        {
+            // Laws that are result from old ion laws and the newLaws
+            var updatedLaws = new List<SiliconLaw>();
+
+            // Going through all laws in the old lawset
+            int j = 0;
+            for (int i = 0; i < component.Lawset.Laws.Count; i++)
+            {
+                // If a law is soft it is swapped for a new law from newLaws
+                if (component.Lawset.Laws[i].SoftLaw)
+                {
+                    /// If the number of newLaws is less than the number of old laws,
+                    /// it doesn't add any non-soft law
+                    if (j < newLaws.Count)
+                    {
+                        updatedLaws.Add(newLaws[j]);
+                        j++;
+                    }
+                }
+                // Otherwise it just adds the old ion law to the updatedLaws
+                else
+                    updatedLaws.Add(component.Lawset.Laws[i]);
+            }
+
+            /// If the number of newLaws is more than the number of old laws,
+            /// it adds all the last ones at the end.
+            for (; j < newLaws.Count; j++)
+            {
+                updatedLaws.Add(newLaws[j]);
+            }
+
+            component.Lawset.Laws = updatedLaws;
+        }
+
         NotifyLawsChanged(target, cue);
     }
 
