@@ -276,7 +276,7 @@ public abstract partial class SharedAdminVerbSystem
             {
                 Text = stomachRemovalName,
                 Category = VerbCategory.Smite,
-                Icon = new SpriteSpecifier.Rsi(new ("/Textures/Mobs/Species/Human/organs.rsi"), "stomach"),
+                Icon = new SpriteSpecifier.Rsi(new ResPath("/Textures/Mobs/Species/Human/organs.rsi"), "stomach"),
                 Act = () =>
                 {
                     foreach (var entity in _bodySystem.GetBodyOrganEntityComps<StomachComponent>((args.Target, body)))
