@@ -112,9 +112,19 @@ public sealed class HealingSystem : EntitySystem
 
         // Logic to determine the whether or not to repeat the healing action
         args.Repeat = HasDamage((args.Used.Value, healing), target) && !dontRepeat;
-        if (!args.Repeat && !dontRepeat)
-            _popupSystem.PopupClient(Loc.GetString("medical-item-finished-using", ("item", args.Used)), target.Owner, args.User);
         args.Handled = true;
+
+        if (!args.Repeat)
+        {
+            _popupSystem.PopupClient(Loc.GetString("medical-item-finished-using", ("item", args.Used)), target.Owner, args.User);
+            return;
+        }
+
+        // Update our self heal delay so it shortens as we heal more damage.
+        if (args.User == target.Owner)
+        {
+            args.Args.Delay = healing.Delay * GetScaledHealingPenalty(target.Owner, healing.SelfHealPenaltyMultiplier);
+        }
     }
 
     private bool HasDamage(Entity<HealingComponent> healing, Entity<DamageableComponent> target)
