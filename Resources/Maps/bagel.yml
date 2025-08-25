@@ -61186,6 +61186,17 @@ entities:
         - 0
         - 0
         - 0
+    - type: ContainerContainer
+      containers:
+        entity_storage: !type:Container
+          showEnts: False
+          occludes: True
+          ents:
+          - 4711
+        paper_label: !type:ContainerSlot
+          showEnts: False
+          occludes: True
+          ent: null
   - uid: 11484
     components:
     - type: Transform
@@ -64397,6 +64408,23 @@ entities:
         - 0
         - 0
         - 0
+    - type: ContainerContainer
+      containers:
+        entity_storage: !type:Container
+          showEnts: False
+          occludes: True
+          ents:
+          - 18641
+          - 17812
+          - 18647
+          - 18725
+          - 19185
+          - 19186
+          - 19187
+        paper_label: !type:ContainerSlot
+          showEnts: False
+          occludes: True
+          ent: null
 - proto: CrateHydroponicsSeedsMedicinal
   entities:
   - uid: 2759
@@ -64529,6 +64557,22 @@ entities:
         - 0
         - 0
         - 0
+    - type: ContainerContainer
+      containers:
+        entity_storage: !type:Container
+          showEnts: False
+          occludes: True
+          ents:
+          - 18835
+          - 18834
+          - 18823
+          - 18792
+          - 18731
+          - 18442
+        paper_label: !type:ContainerSlot
+          showEnts: False
+          occludes: True
+          ent: null
 - proto: CrateScienceSecure
   entities:
   - uid: 13917
@@ -113355,6 +113399,19 @@ entities:
         - 0
         - 0
         - 0
+    - type: ContainerContainer
+      containers:
+        entity_storage: !type:Container
+          showEnts: False
+          occludes: True
+          ents:
+          - 2619
+          - 19882
+          - 21020
+        paper_label: !type:ContainerSlot
+          showEnts: False
+          occludes: True
+          ent: null
 - proto: LockerFreezerVaultFilled
   entities:
   - uid: 2252
@@ -113387,6 +113444,18 @@ entities:
         - 0
         - 0
         - 0
+    - type: ContainerContainer
+      containers:
+        entity_storage: !type:Container
+          showEnts: False
+          occludes: True
+          ents:
+          - 5207
+          - 4641
+        paper_label: !type:ContainerSlot
+          showEnts: False
+          occludes: True
+          ent: null
 - proto: LockerHeadOfSecurityFilled
   entities:
   - uid: 985
@@ -113530,6 +113599,17 @@ entities:
         - 0
         - 0
         - 0
+    - type: ContainerContainer
+      containers:
+        entity_storage: !type:Container
+          showEnts: False
+          occludes: True
+          ents:
+          - 17673
+        paper_label: !type:ContainerSlot
+          showEnts: False
+          occludes: True
+          ent: null
 - proto: LockerSalvageSpecialistFilledHardsuit
   entities:
   - uid: 215
@@ -113621,6 +113701,21 @@ entities:
         - 0
         - 0
         - 0
+    - type: ContainerContainer
+      containers:
+        entity_storage: !type:Container
+          showEnts: False
+          occludes: True
+          ents:
+          - 9114
+          - 9115
+          - 9116
+          - 9117
+          - 9118
+        paper_label: !type:ContainerSlot
+          showEnts: False
+          occludes: True
+          ent: null
 - proto: LockerWallMedicalFilled
   entities:
   - uid: 8969
@@ -117393,6 +117488,12 @@ entities:
     - type: Transform
       pos: -1.5,-75.5
       parent: 60
+    - type: ContainerContainer
+      containers:
+        stash: !type:ContainerSlot
+          showEnts: False
+          occludes: True
+          ent: 4540
 - proto: PottedPlant4
   entities:
   - uid: 15519
@@ -139645,41 +139746,161 @@ entities:
     - type: Transform
       pos: 24.5,0.5
       parent: 60
+    - type: ContainerContainer
+      containers:
+        key_slots: !type:Container
+          showEnts: False
+          occludes: True
+          ents:
+          - 17633
+        machine_board: !type:Container
+          showEnts: False
+          occludes: True
+          ents: []
+        machine_parts: !type:Container
+          showEnts: False
+          occludes: True
+          ents: []
   - uid: 18890
     components:
     - type: Transform
       pos: 22.5,0.5
       parent: 60
+    - type: ContainerContainer
+      containers:
+        key_slots: !type:Container
+          showEnts: False
+          occludes: True
+          ents:
+          - 18891
+        machine_board: !type:Container
+          showEnts: False
+          occludes: True
+          ents: []
+        machine_parts: !type:Container
+          showEnts: False
+          occludes: True
+          ents: []
   - uid: 18893
     components:
     - type: Transform
       pos: 25.5,-0.5
       parent: 60
+    - type: ContainerContainer
+      containers:
+        key_slots: !type:Container
+          showEnts: False
+          occludes: True
+          ents:
+          - 18907
+        machine_board: !type:Container
+          showEnts: False
+          occludes: True
+          ents: []
+        machine_parts: !type:Container
+          showEnts: False
+          occludes: True
+          ents: []
   - uid: 18909
     components:
     - type: Transform
       pos: 24.5,2.5
       parent: 60
+    - type: ContainerContainer
+      containers:
+        key_slots: !type:Container
+          showEnts: False
+          occludes: True
+          ents:
+          - 19008
+        machine_board: !type:Container
+          showEnts: False
+          occludes: True
+          ents: []
+        machine_parts: !type:Container
+          showEnts: False
+          occludes: True
+          ents: []
   - uid: 19009
     components:
     - type: Transform
       pos: 25.5,2.5
       parent: 60
+    - type: ContainerContainer
+      containers:
+        key_slots: !type:Container
+          showEnts: False
+          occludes: True
+          ents:
+          - 19039
+        machine_board: !type:Container
+          showEnts: False
+          occludes: True
+          ents: []
+        machine_parts: !type:Container
+          showEnts: False
+          occludes: True
+          ents: []
   - uid: 19040
     components:
     - type: Transform
       pos: 22.5,2.5
       parent: 60
+    - type: ContainerContainer
+      containers:
+        key_slots: !type:Container
+          showEnts: False
+          occludes: True
+          ents:
+          - 19041
+        machine_board: !type:Container
+          showEnts: False
+          occludes: True
+          ents: []
+        machine_parts: !type:Container
+          showEnts: False
+          occludes: True
+          ents: []
   - uid: 19091
     components:
     - type: Transform
       pos: 21.5,2.5
       parent: 60
+    - type: ContainerContainer
+      containers:
+        key_slots: !type:Container
+          showEnts: False
+          occludes: True
+          ents:
+          - 19092
+        machine_board: !type:Container
+          showEnts: False
+          occludes: True
+          ents: []
+        machine_parts: !type:Container
+          showEnts: False
+          occludes: True
+          ents: []
   - uid: 19096
     components:
     - type: Transform
       pos: 21.5,-0.5
       parent: 60
+    - type: ContainerContainer
+      containers:
+        key_slots: !type:Container
+          showEnts: False
+          occludes: True
+          ents:
+          - 19097
+        machine_board: !type:Container
+          showEnts: False
+          occludes: True
+          ents: []
+        machine_parts: !type:Container
+          showEnts: False
+          occludes: True
+          ents: []
   - uid: 19168
     components:
     - type: Transform
