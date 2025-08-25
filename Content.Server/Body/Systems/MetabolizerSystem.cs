@@ -171,10 +171,16 @@ namespace Content.Server.Body.Systems
 
                     var rate = entry.MetabolismRate * group.MetabolismRateModifier;
 
-                    // Remove $rate, as long as there's enough reagent there to actually remove that much
-                    mostToRemove = FixedPoint2.Clamp(rate, 0, quantity);
+                    var processedQuantity = FixedPoint2.Clamp(rate, 0, quantity);
+                    var scale = processedQuantity / rate;
 
-                    float scale = (float) mostToRemove / (float) rate;
+                    // If all conditions fail (say it's just a reagent threshold
+                    // effect) we need to make sure we still remove something.
+                    // Ideally there'd be a distinction between "this effect
+                    // will never succeed for this organ" and "this effect COULD
+                    // apply to this organ."
+                    if (mostToRemove == FixedPoint2.Zero)
+                        mostToRemove = processedQuantity;
 
                     // if it's possible for them to be dead, and they are,
                     // then we shouldn't process any effects, but should probably
@@ -186,12 +192,27 @@ namespace Content.Server.Body.Systems
                     }
 
                     var actualEntity = ent.Comp2?.Body ?? solutionEntityUid.Value;
-                    var args = new EntityEffectReagentArgs(actualEntity, EntityManager, ent, solution, mostToRemove, proto, null, scale);
+                    var args = new EntityEffectReagentArgs(actualEntity,
+                        EntityManager,
+                        ent,
+                        solution,
+                        processedQuantity,
+                        proto,
+                        null,
+                        scale);
 
                     // do all effects, if conditions apply
                     foreach (var effect in entry.Effects)
                     {
-                        if (!effect.ShouldApply(args, _random))
+                        if (!effect.CheckEffectConditions(args))
+                            continue;
+
+                        // We met the conditions for this metabolic group, so
+                        // this counts towards getting the highest quantity used
+                        // of this reagent by any metabolic group.
+                        mostToRemove = FixedPoint2.Max(mostToRemove, processedQuantity);
+
+                        if (!effect.RollEffectProbability(_random))
                             continue;
 
                         if (effect.ShouldLog)
