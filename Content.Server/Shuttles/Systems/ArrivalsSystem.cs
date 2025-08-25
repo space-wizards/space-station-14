@@ -426,8 +426,10 @@ public sealed class ArrivalsSystem : EntitySystem
         return false;
     }
 
-    private void OnShuttleStartup(EntityUid uid, ArrivalsShuttleComponent component, ComponentStartup args) => EnsureComp<PreventPilotComponent>(uid);
-    
+    private void OnShuttleStartup(EntityUid uid, ArrivalsShuttleComponent component, ComponentStartup args)
+    {
+        EnsureComp<PreventPilotComponent>(uid);
+    }
 
     private bool TryGetArrivals(out EntityUid uid)
     {
