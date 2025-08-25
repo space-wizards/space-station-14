@@ -762,7 +762,6 @@
   name: loadout-group-station-engineer-head
   minLimit: 0
   loadouts:
-  - StationEngineerHardhatYellow
   - StationEngineerHardhatOrange
   - StationEngineerHardhatRed
   - SeniorEngineerBeret
@@ -808,6 +807,14 @@
   - SeniorEngineerPDA
 
 - type: loadoutGroup
+  id: AtmosphericTechnicianHead
+  name: loadout-group-station-engineer-head
+  minLimit: 0
+  loadouts:
+  - AtmosphericTechnicianHardhatYellow
+  - AtmosphericTechnicianHardhatBlue
+
+- type: loadoutGroup
   id: AtmosphericTechnicianJumpsuit
   name: loadout-group-atmospheric-technician-jumpsuit
   loadouts:
@@ -834,7 +841,7 @@
   id: AtmosphericTechnicianShoes
   name: loadout-group-atmospheric-technician-shoes
   loadouts:
-  - WhiteShoes
+  - WorkBoots
   - EngineeringWinterBoots
 
 - type: loadoutGroup
