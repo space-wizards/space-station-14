@@ -1,0 +1,28 @@
+- type: loadoutGroup
+  id: SecurityGlasses
+  parent: CommonGlasses
+  defaultMinLimit: 1
+  loadouts:
+  - GlassesSecurity
+  - GlassesSecurityVisor
+  - GlassesSecurityNoir
+
+- type: loadoutGroup
+  id: SecurityNeck
+  parent: BaseNeck
+  loadouts:
+  - SecStar
+
+- type: loadoutGroup
+  id: SecurityBelt
+  parent: BaseBelt
+  loadouts:
+  - SecurityBelt
+  - SecurityWebbing
+
+- type: loadoutGroup
+  id: SecurityShoes
+  parent: BaseShoes
+  loadouts:
+  - JackBoots
+  - SecurityWinterBoots

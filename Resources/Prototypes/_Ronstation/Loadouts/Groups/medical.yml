@@ -1,0 +1,27 @@
+- type: loadoutGroup
+  id: MedicalGlasses
+  parent: CommonGlasses
+  defaultMinLimit: 1
+  loadouts:
+  - MedicalHud
+  - MedicalEyePatchHud
+
+- type: loadoutGroup
+  id: MedicalMask
+  parent: BaseMask
+  loadouts:
+  - SterileMask
+
+- type: loadoutGroup
+  id: MedicalGloves
+  parent: BaseGloves
+  loadouts:
+  - LatexGloves
+  - NitrileGloves
+
+- type: loadoutGroup
+  id: MedicalShoes
+  parent: BaseShoes
+  loadouts:
+  - WhiteShoes
+  - MedicalWinterBoots

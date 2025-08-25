@@ -1,0 +1,7 @@
+- type: loadoutGroup
+  id: CommonGlasses
+  parent: BaseGlasses
+  loadouts:
+  - Glasses
+  - GlassesJamjar
+  - GlassesJensen

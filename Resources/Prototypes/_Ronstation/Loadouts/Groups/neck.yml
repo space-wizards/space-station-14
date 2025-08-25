@@ -1,5 +1,0 @@
-- type: loadoutGroup
-  id: SecurityNeck
-  parent: BaseNeck
-  loadouts:
-  - SecStar

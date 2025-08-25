@@ -1,5 +1,0 @@
-- type: loadoutGroup
-  id: MedicalMask
-  parent: BaseMask
-  loadouts:
-  - SterileMask

@@ -1,11 +1,4 @@
 - type: loadoutGroup
-  id: MedicalGloves
-  parent: BaseGloves
-  loadouts:
-  - LatexGloves
-  - NitrileGloves
-
-- type: loadoutGroup
   id: ScienceGloves
   parent: BaseGloves
   loadouts:

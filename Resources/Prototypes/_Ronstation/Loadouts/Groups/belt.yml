@@ -1,6 +1,0 @@
-- type: loadoutGroup
-  id: SecurityBelt
-  parent: BaseBelt
-  loadouts:
-  - SecurityBelt
-  - SecurityWebbing
