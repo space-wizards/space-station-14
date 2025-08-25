@@ -1,0 +1,27 @@
+<Control xmlns="https://spacestation14.io"
+         xmlns:gfx="clr-namespace:Robust.Client.Graphics;assembly=Robust.Client">
+    <!-- This should really live in a grid container or something. -->
+    <BoxContainer Orientation="Vertical">
+        <!-- What layer this is plus its enable checkbox -->
+        <BoxContainer MinWidth="250">
+            <Label Name="LayerLabel" />
+            <CheckBox Name="LayerCheckbox" Text="{Loc 'marking-modifier-layer-enabled'}"
+                      HorizontalExpand="True" HorizontalAlignment="Right" Margin="0 0 10 0" />
+        </BoxContainer>
+        <!-- Stuff you can customize for that layer-->
+        <PanelContainer Name="InfoPanel" Visible="False">
+            <PanelContainer.PanelOverride>
+                <gfx:StyleBoxFlat BackgroundColor="#202028" />
+            </PanelContainer.PanelOverride>
+            <BoxContainer Orientation="Vertical" Margin="10 5">
+                <BoxContainer>
+                    <Label Text="{Loc 'marking-modifier-layer-protoid'}" />
+                    <LineEdit Name="LayerProtoId" MinWidth="200"
+                              HorizontalExpand="True" HorizontalAlignment="Right" />
+                    <Button Name="LayerSelectId" Text="{Loc 'vv-protoid-select-button-label'}" />
+                </BoxContainer>
+                <ColorSelectorSliders Name="LayerColor" />
+            </BoxContainer>
+        </PanelContainer>
+    </BoxContainer>
+</Control>

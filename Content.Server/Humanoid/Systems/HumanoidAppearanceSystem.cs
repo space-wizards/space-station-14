@@ -1,24 +1,11 @@
 using Content.Shared.Humanoid;
 using Content.Shared.Humanoid.Markings;
-using Content.Shared.Humanoid.Prototypes;
-using Content.Shared.Preferences;
-using Content.Shared.Verbs;
-using Robust.Shared.GameObjects.Components.Localization;
 
 namespace Content.Server.Humanoid;
 
 public sealed partial class HumanoidAppearanceSystem : SharedHumanoidAppearanceSystem
 {
     [Dependency] private readonly MarkingManager _markingManager = default!;
-
-    public override void Initialize()
-    {
-        base.Initialize();
-
-        SubscribeLocalEvent<HumanoidAppearanceComponent, HumanoidMarkingModifierMarkingSetMessage>(OnMarkingsSet);
-        SubscribeLocalEvent<HumanoidAppearanceComponent, HumanoidMarkingModifierBaseLayersSetMessage>(OnBaseLayersSet);
-        SubscribeLocalEvent<HumanoidAppearanceComponent, GetVerbsEvent<Verb>>(OnVerbsRequest);
-    }
 
     /// <summary>
     ///     Removes a marking from a humanoid by ID.

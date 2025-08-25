@@ -1,86 +1,86 @@
-marking-DionaThornsHead-thorns_head = Diona Head (Thorns)
 marking-DionaThornsHead = Diona Head (Thorns)
+marking-DionaThornsHead-thorns_head = Thorn color:
 
-marking-DionaThornsBody-thorns_body = Diona Chest (Thorns)
 marking-DionaThornsBody = Diona Chest (Thorns)
+marking-DionaThornsBody-thorns_body = Thorn color:
 
-marking-DionaFlowersHead-flowers_head = Diona Head (Flowers)
 marking-DionaFlowersHead = Diona Head (Flowers)
+marking-DionaFlowersHead-flowers_head = Flower color:
 
-marking-DionaFlowersBody-flowers_body = Diona Chest (Flowers)
 marking-DionaFlowersBody = Diona Chest (Flowers)
+marking-DionaFlowersBody-flowers_body = Flower color:
 
-marking-DionaLeafCover-leaf_cover = Diona Chest (Leaf)
 marking-DionaLeafCover = Diona Chest (Leaf)
+marking-DionaLeafCover-leaf_cover = Leaf color:
 
-marking-DionaBloomHead-bloom = Diona Everbloom (Flower)
 marking-DionaBloomHead = Diona Everbloom (Flower)
+marking-DionaBloomHead-bloom = Flower color:
 
-marking-DionaBracketHead-bracket = Diona Bracket (Mushrooms)
 marking-DionaBracketHead = Diona Bracket (Mushrooms)
+marking-DionaBracketHead-bracket = Mushroom color:
 
-marking-DionaBrushHead-brush = Diona Brush (Lians)
-marking-DionaBrushHead = Diona Brush (Lians)
+marking-DionaBrushHead = Diona Brush (Lianas)
+marking-DionaBrushHead-brush = Liana color:
 
-marking-DionaCornflowerHead-cornflower = Diona Cornflowers (Flowers)
 marking-DionaCornflowerHead = Diona Cornflowers (Flowers)
+marking-DionaCornflowerHead-cornflower = Flower color:
 
-marking-DionaFicusHead-ficus = Diona Ficus (Leafs)
 marking-DionaFicusHead = Diona Ficus (Leafs)
+marking-DionaFicusHead-ficus = Leaf color:
 
-marking-DionaGarlandHead-garland = Diona Garland (Flowers)
 marking-DionaGarlandHead = Diona Garland (Flowers)
+marking-DionaGarlandHead-garland = Flower color:
 
-marking-DionaKingHead-king = Diona Flowerking (Flower)
 marking-DionaKingHead = Diona Flowerking (Flower)
+marking-DionaKingHead-king = Flower color:
 
-marking-DionaLaurelHead-laurel = Diona Laurel (Leafs)
 marking-DionaLaurelHead = Diona Laurel (Leafs)
+marking-DionaLaurelHead-laurel = Leaf color:
 
-marking-DionaLeafyHeadTop-leafy = Diona Leafy (Leafs)
 marking-DionaLeafyHeadTop = Diona Leafy (Leafs)
+marking-DionaLeafyHeadTop-leafy = Leaf color:
 
-marking-DionaLotusHead-lotus = Diona Lotus (Flower)
 marking-DionaLotusHead = Diona Lotus (Flower)
+marking-DionaLotusHead-lotus = Flower color:
 
-marking-DionaMeadowHeadTop-meadow = Diona Meadow
 marking-DionaMeadowHeadTop = Diona Meadow
+marking-DionaMeadowHeadTop-meadow = Grass color:
 
-marking-DionaOakHead-oak = Diona Oak (Snag)
 marking-DionaOakHead = Diona Oak (Snag)
+marking-DionaOakHead-oak = Wood color:
 
-marking-DionaPalmHead-palm = Diona Palmhead (Leafs)
 marking-DionaPalmHead = Diona Palmhead (Leafs)
+marking-DionaPalmHead-palm = Leaf color:
 
-marking-DionaRootHead-root = Diona Root (Roots)
 marking-DionaRootHead = Diona Root (Roots)
+marking-DionaRootHead-root = Root color:
 
-marking-DionaRoseHead-rose = Diona Rose (Flower)
 marking-DionaRoseHead = Diona Rose (Flower)
+marking-DionaRoseHead-rose = Flower color:
 
-marking-DionaRoseyHead-rosey = Diona Rosey (Flowers)
 marking-DionaRoseyHead = Diona Rosey (Flowers)
+marking-DionaRoseyHead-rosey = Flower color:
 
-marking-DionaShrubHeadTop-shrub = Diona Shrub (Thorns)
 marking-DionaShrubHeadTop = Diona Shrub (Thorns)
+marking-DionaShrubHeadTop-shrub = Thorn color:
 
-marking-DionaSpinnerHeadSide-spinner = Diona Spinner
 marking-DionaSpinnerHeadSide = Diona Spinner
+marking-DionaSpinnerHeadSide-spinner = Spinner color:
 
-marking-DionaSproutHeadSide-sprout = Diona Sprout
 marking-DionaSproutHeadSide = Diona Sprout
+marking-DionaSproutHeadSide-sprout = Sprout color:
 
-marking-DionaVineHeadTop-vine = Diona Vines (Vines)
 marking-DionaVineHeadTop = Diona Vines (Vines)
+marking-DionaVineHeadTop-vine = Vine color:
 
-marking-DionaVinelHead-vinel = Diona Vines Long (Vines)
 marking-DionaVinelHead = Diona Vines Long (Vines)
+marking-DionaVinelHead-vinel = Vine color:
 
-marking-DionaVinesHead-vines = Diona Vines Short (Vines)
 marking-DionaVinesHead = Diona Vines Short (Vines)
+marking-DionaVinesHead-vines = Vine color:
 
-marking-DionaWildflowerHead-wildflower = Diona Wild Flowers (Flowers)
 marking-DionaWildflowerHead = Diona Wild Flowers (Flowers)
+marking-DionaWildflowerHead-wildflower = Flower color:
 
-marking-DionaVineOverlay-overlay = Diona Body Vines
 marking-DionaVineOverlay = Diona Body Vines
+marking-DionaVineOverlay-overlay = Vine color:
