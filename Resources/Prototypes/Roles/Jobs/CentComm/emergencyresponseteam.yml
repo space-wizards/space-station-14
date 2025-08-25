@@ -88,8 +88,9 @@
     - MedkitCombatFilled
     - BoxZiptie
     - CrowbarRed
-    - DoubleEmergencyOxygenTankFilled
-    - DoubleEmergencyNitrogenTankFilled
+#    - MagazineMagnum Starlight-edit
+    - DoubleEmergencyOxygenTankFilled # Starlight-edit
+    - DoubleEmergencyNitrogenTankFilled # Starlight-edit
 
 - type: chameleonOutfit
   id: ERTLeaderChameleonOutfit
