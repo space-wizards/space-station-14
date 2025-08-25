@@ -27,7 +27,7 @@ public sealed class IdExaminableSystem : EntitySystem
         {
             Act = () =>
             {
-                var markup = FormattedMessage.FromMarkupOrThrow(info);
+                var markup = FormattedMessage.FromMarkupPermissive(info);
 
                 _examineSystem.SendExamineTooltip(args.User, uid, markup, false, false);
             },

@@ -352,7 +352,7 @@ public sealed partial class CreditsWindow : DefaultWindow
             var label = new RichTextLabel();
             var text = _resourceManager.ContentFileReadAllText($"/Credits/{path}");
             if (markup)
-                label.SetMessage(FormattedMessage.FromMarkupOrThrow(text.Trim()));
+                label.SetMessage(FormattedMessage.FromMarkupPermissive(text.Trim()));
             else
                 label.SetMessage(text);
 

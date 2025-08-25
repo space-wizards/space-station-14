@@ -1,4 +1,4 @@
-﻿using Content.Shared.Damage;
+using Content.Shared.Damage;
 using Content.Shared.Examine;
 using Content.Shared.Inventory;
 using Content.Shared.Silicons.Borgs;
@@ -74,7 +74,7 @@ public abstract class SharedArmorSystem : EntitySystem
             msg.PushNewline();
 
             var armorType = Loc.GetString("armor-damage-type-" + coefficientArmor.Key.ToLower());
-            msg.AddMarkupOrThrow(Loc.GetString("armor-coefficient-value",
+            msg.AddMarkupPermissive(Loc.GetString("armor-coefficient-value",
                 ("type", armorType),
                 ("value", MathF.Round((1f - coefficientArmor.Value) * 100, 1))
             ));
@@ -85,7 +85,7 @@ public abstract class SharedArmorSystem : EntitySystem
             msg.PushNewline();
 
             var armorType = Loc.GetString("armor-damage-type-" + flatArmor.Key.ToLower());
-            msg.AddMarkupOrThrow(Loc.GetString("armor-reduction-value",
+            msg.AddMarkupPermissive(Loc.GetString("armor-reduction-value",
                 ("type", armorType),
                 ("value", flatArmor.Value)
             ));

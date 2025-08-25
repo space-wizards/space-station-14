@@ -125,12 +125,12 @@ public sealed partial class CargoSystem
         msg.PushNewline();
         foreach (var entry in prototype.Entries)
         {
-            msg.AddMarkupOrThrow($"- {Loc.GetString("bounty-console-manifest-entry",
+            msg.AddMarkupPermissive($"- {Loc.GetString("bounty-console-manifest-entry",
                 ("amount", entry.Amount),
                 ("item", Loc.GetString(entry.Name)))}");
             msg.PushNewline();
         }
-        msg.AddMarkupOrThrow(Loc.GetString("bounty-console-manifest-reward", ("reward", prototype.Reward)));
+        msg.AddMarkupPermissive(Loc.GetString("bounty-console-manifest-reward", ("reward", prototype.Reward)));
         _paperSystem.SetContent((uid, paper), msg.ToMarkup());
     }
 
