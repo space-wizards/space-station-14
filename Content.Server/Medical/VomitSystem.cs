@@ -29,7 +29,7 @@ namespace Content.Server.Medical
         [Dependency] private readonly MovementModStatusSystem _movementMod = default!;
         [Dependency] private readonly ThirstSystem _thirst = default!;
         [Dependency] private readonly ForensicsSystem _forensics = default!;
-        [Dependency] private readonly BloodstreamSystem _bloodstream = default!;
+        [Dependency] private readonly SharedBloodstreamSystem _bloodstream = default!;
 
         private static readonly ProtoId<SoundCollectionPrototype> VomitCollection = "Vomit";
 
@@ -78,14 +78,17 @@ namespace Content.Server.Medical
 
                 var vomitAmount = solutionSize;
 
-                // Takes 10% of the chemicals removed from the chem stream
-                if (_solutionContainer.ResolveSolution(uid, bloodStream.ChemicalSolutionName, ref bloodStream.ChemicalSolution))
+                // Flushes small portion of the chemicals removed from the bloodstream stream
+                if (_solutionContainer.ResolveSolution(uid, bloodStream.BloodSolutionName, ref bloodStream.BloodSolution))
                 {
-                    var vomitChemstreamAmount = _solutionContainer.SplitSolution(bloodStream.ChemicalSolution.Value, vomitAmount);
-                    vomitChemstreamAmount.ScaleSolution(chemMultiplier);
-                    solution.AddSolution(vomitChemstreamAmount, _proto);
+                    var vomitChemstreamAmount = _bloodstream.FlushChemicals((uid, bloodStream), null, vomitAmount);
 
-                    vomitAmount -= (float)vomitChemstreamAmount.Volume;
+                    if (vomitChemstreamAmount != null)
+                    {
+                        vomitChemstreamAmount.ScaleSolution(chemMultiplier);
+                        solution.AddSolution(vomitChemstreamAmount, _proto);
+                        vomitAmount -= (float)vomitChemstreamAmount.Volume;
+                    }
                 }
 
                 // Makes a vomit solution the size of 90% of the chemicals removed from the chemstream
