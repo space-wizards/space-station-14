@@ -1,3 +1,6 @@
+using Content.Server.Acz;
+using Robust.Shared.Map;
+
 namespace Content.Server.Starlight.AlertArmory;
 
 /// <summary>
@@ -17,4 +20,12 @@ public sealed partial class AlertArmoryShuttleComponent : Component
 
     [ViewVariables]
     public Color? AnnouncementColor = null;
+
+    #region Return to "Armory Space"
+    [ViewVariables]
+    public EntityCoordinates CoordsCache;
+
+    [ViewVariables]
+    public EntityUid ArmorySpaceUid;
+    #endregion
 }
