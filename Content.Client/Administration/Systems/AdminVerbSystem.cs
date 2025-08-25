@@ -11,7 +11,7 @@ namespace Content.Client.Administration.Systems;
 /// <summary>
 ///     Client-side admin verb system. These usually open some sort of UIs.
 /// </summary>
-public sealed partial class AdminVerbSystem : SharedAdminVerbSystem
+public sealed class AdminVerbSystem : SharedAdminVerbSystem
 {
     [Dependency] private readonly IClientConGroupController _clientConGroupController = default!;
     [Dependency] private readonly IClientConsoleHost _clientConsoleHost = default!;
