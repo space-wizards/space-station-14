@@ -5,7 +5,15 @@
   - type: StationCryoTeleportation
   
 - type: entity
-  id: BaseStationGammaWeaponry
+  id: BaseStationAlertArmories
   abstract: true
   components:
-    - type: GammaWeaponryStation
+    - type: AlertArmoryStation
+      shuttles:
+        gamma:
+          shuttle: Maps/_Starlight/Shuttles/CC-NT/GammaWeaponry.yml
+          announcement: announcement-gamma-armory
+        psi:
+          shuttle: Maps/_Starlight/Shuttles/CC-NT/PsiArmory.yml
+          announcement: announcement-psi-armory
+          announcementColor: "#2288ff"
