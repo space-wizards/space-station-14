@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: ScarKy0
-  changes:
-  - message: Deliveries can now spawn as fragile-type! Deliver them intact to earn
-      a minor speso bonus.
-    type: Add
-  id: 8370
-  time: '2025-04-27T23:04:40.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/36980
 - author: Bokser815
   changes:
   - message: Cargo buy and sell pallets aboard the ATS can no longer be destroyed,
@@ -3948,3 +3940,11 @@
   id: 8882
   time: '2025-08-24T15:02:47.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/38624
+- author: Princess-Cheeseballs
+  changes:
+  - message: Topicals now correctly scale their self heal time with the damage you
+      have taken.
+    type: Fix
+  id: 8883
+  time: '2025-08-25T18:05:55.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/39883
