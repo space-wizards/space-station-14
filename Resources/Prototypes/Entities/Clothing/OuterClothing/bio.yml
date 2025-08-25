@@ -1,6 +1,6 @@
 - type: entity
-  parent: ClothingOuterBaseLarge
-  id: [ClothingOuterBioGeneral, AllowSuitStorageClothingGasTanks]
+  parent: [ClothingOuterBaseLarge, AllowSuitStorageClothingGasTanks]
+  id: ClothingOuterBioGeneral
   name: bio suit
   suffix: Generic
   description: A suit that protects against biological contamination.
