@@ -160,10 +160,22 @@ public sealed partial class OpenableSystem : EntitySystem
     }
 
     /// <summary>
+    /// Returns true if the entity doesn't have OpenableComponent or is open.
+    /// Drinks that don't have OpenableComponent are automatically open, so it returns true.
+    /// If user is not null a popup will be shown to them.
+    /// </summary>
+    /// <seealso cref="IsClosed"/>
+    public bool IsOpen(Entity<OpenableComponent?> ent, EntityUid? user = null, bool predicted = false)
+    {
+        return !IsClosed(ent, user, ent.Comp, predicted);
+    }
+
+    /// <summary>
     /// Returns true if the entity both has OpenableComponent and is not opened.
     /// Drinks that don't have OpenableComponent are automatically open, so it returns false.
     /// If user is not null a popup will be shown to them.
     /// </summary>
+    /// <seealso cref="IsOpen(Entity{OpenableComponent}, EntityUid?, bool)"/>
     public bool IsClosed(EntityUid uid, EntityUid? user = null, OpenableComponent? comp = null, bool predicted = false)
     {
         if (!Resolve(uid, ref comp, false))
