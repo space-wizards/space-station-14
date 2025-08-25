@@ -14,9 +14,7 @@ using Robust.Shared.Player;
 using Robust.Shared.Timing;
 using System.Threading.Tasks;
 using Content.Server.Voting.Managers;
-using Content.Shared.GameTicking;
 using Content.Shared.Players.PlayTimeTracking;
-using System.Linq;
 
 namespace Content.Server.Voting;
 
@@ -31,15 +29,12 @@ public sealed class VotingSystem : EntitySystem
     [Dependency] private readonly JobSystem _jobs = default!;
     [Dependency] private readonly GameTicker _gameTicker = default!;
     [Dependency] private readonly ISharedPlaytimeManager _playtimeManager = default!;
-    [Dependency] private readonly IVoteManager _voteManager = default!;
 
     public override void Initialize()
     {
         base.Initialize();
 
         SubscribeNetworkEvent<VotePlayerListRequestEvent>(OnVotePlayerListRequestEvent);
-
-        SubscribeLocalEvent<RoundRestartingEvent>(OnRoundRestartEvent);
     }
 
     private async void OnVotePlayerListRequestEvent(VotePlayerListRequestEvent msg, EntitySessionEventArgs args)
@@ -140,24 +135,5 @@ public sealed class VotingSystem : EntitySystem
             return false;
 
         return true;
-    }
-
-    public void OnRoundRestartEvent(ref RoundRestartingEvent ev)
-    {
-        TryCreateVote(CCVars.VoteAutoMapOnRoundEnd, "ui-vote-map-title", StandardVoteType.Map);
-        TryCreateVote(CCVars.VoteAutoPresetOnRoundEnd, "ui-vote-gamemode-title", StandardVoteType.Preset);
-    }
-
-    private void TryCreateVote(CVarDef<bool> enabledCVar, string titleKey, StandardVoteType type)
-    {
-        if (!_cfg.GetCVar(enabledCVar))
-            return;
-
-        var title = Loc.GetString(titleKey);
-
-        if (_voteManager.ActiveVotes.All(v => !v.Title.Contains(title)))
-        {
-            _voteManager.CreateStandardVote(null, type);
-        }
     }
 }

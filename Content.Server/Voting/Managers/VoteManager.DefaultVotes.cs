@@ -54,6 +54,9 @@ namespace Content.Server.Voting.Managers
 
             bool timeoutVote = true;
 
+            // The algorithm for creating a poll is completely messed up and needs to be fully refactored.
+            // TODO: Currently, we check StandartVoteType, and then in each of the functions we pass it to CreateVote(options) again. This is inconsistent, but to change the behaviour, we need to completely rewrite the code.
+
             switch (voteType)
             {
                 case StandardVoteType.Restart:
@@ -88,7 +91,7 @@ namespace Content.Server.Voting.Managers
 
             if (totalPlayers <= playerVoteMaximum || ghostVoterPercentage >= ghostVotePercentageRequirement)
             {
-                StartVote(initiator);
+                StartRestartVote(initiator);
             }
             else
             {
@@ -136,7 +139,7 @@ namespace Content.Server.Voting.Managers
             return eligibleCount;
         }
 
-        private void StartVote(ICommonSession? initiator)
+        private void StartRestartVote(ICommonSession? initiator)
         {
             var alone = _playerManager.PlayerCount == 1 && initiator != null;
             var options = new VoteOptions
@@ -151,7 +154,8 @@ namespace Content.Server.Voting.Managers
                 Duration = alone
                     ? TimeSpan.FromSeconds(_cfg.GetCVar(CCVars.VoteTimerAlone))
                     : TimeSpan.FromSeconds(_cfg.GetCVar(CCVars.VoteTimerRestart)),
-                InitiatorTimeout = TimeSpan.FromMinutes(5)
+                InitiatorTimeout = TimeSpan.FromMinutes(5),
+                VoteType = StandardVoteType.Restart
             };
 
             if (alone)
@@ -225,7 +229,8 @@ namespace Content.Server.Voting.Managers
                 Title = Loc.GetString("ui-vote-gamemode-title"),
                 Duration = alone
                     ? TimeSpan.FromSeconds(_cfg.GetCVar(CCVars.VoteTimerAlone))
-                    : TimeSpan.FromSeconds(_cfg.GetCVar(CCVars.VoteTimerPreset))
+                    : TimeSpan.FromSeconds(_cfg.GetCVar(CCVars.VoteTimerPreset)),
+                VoteType = StandardVoteType.Preset
             };
 
             if (alone)
@@ -271,7 +276,8 @@ namespace Content.Server.Voting.Managers
                 Title = Loc.GetString("ui-vote-map-title"),
                 Duration = alone
                     ? TimeSpan.FromSeconds(_cfg.GetCVar(CCVars.VoteTimerAlone))
-                    : TimeSpan.FromSeconds(_cfg.GetCVar(CCVars.VoteTimerMap))
+                    : TimeSpan.FromSeconds(_cfg.GetCVar(CCVars.VoteTimerMap)),
+                VoteType = StandardVoteType.Map
             };
 
             if (alone)
@@ -459,6 +465,7 @@ namespace Content.Server.Voting.Managers
                 InitiatorTimeout = TimeSpan.FromMinutes(_cfg.GetCVar(CCVars.VotekickTimeout)),
                 VoterEligibility = voterEligibility,
                 DisplayVotes = false,
+                VoteType = StandardVoteType.Votekick,
                 TargetEntity = targetNetEntity
             };
 
