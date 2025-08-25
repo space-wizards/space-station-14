@@ -54,7 +54,7 @@
     id: ERTLeaderPDA
     ears: ClothingHeadsetAltCentCom
     belt: ClothingBeltSecurityFilled
-    pocket1: WeaponPistolM1911
+    pocket1: WeaponPistolM1911 # Starlight-edit: Changed from WeaponPistolN1984
     pocket2: FlashlightSeclite
   storage:
     back:
