@@ -9,7 +9,6 @@
   - CaptainOuterClothing
   - Survival
   - Trinkets
-  - Pets
   - GroupSpeciesBreathTool
 
 - type: roleLoadout
@@ -24,7 +23,6 @@
   - CommonGlasses
   - Survival
   - Trinkets
-  - Pets
   - GroupSpeciesBreathTool
 
 # Silicons
@@ -53,7 +51,6 @@
   - CommonGlasses
   - Survival
   - Trinkets
-  - Pets
   - GroupSpeciesBreathTool
 
 - type: roleLoadout
@@ -67,7 +64,6 @@
   - CommonGlasses
   - Survival
   - Trinkets
-  - Pets
   - GroupSpeciesBreathTool
 
 - type: roleLoadout
@@ -79,7 +75,6 @@
   - CommonGlasses
   - Survival
   - Trinkets
-  - Pets
   - GroupSpeciesBreathTool
 
 - type: roleLoadout
@@ -94,7 +89,6 @@
   - CommonGlasses
   - Survival
   - Trinkets
-  - Pets
   - GroupSpeciesBreathTool
 
 - type: roleLoadout
@@ -106,7 +100,6 @@
   - CommonGlasses
   - Survival
   - Trinkets
-  - Pets
   - GroupSpeciesBreathTool
 
 - type: roleLoadout
@@ -120,7 +113,6 @@
   - CommonGlasses
   - Survival
   - Trinkets
-  - Pets
   - GroupSpeciesBreathTool
 
 - type: roleLoadout
@@ -137,7 +129,6 @@
   - CommonGlasses
   - Survival
   - Trinkets
-  - Pets
   - GroupSpeciesBreathTool
 
 - type: roleLoadout
@@ -152,7 +143,6 @@
   - CommonGlasses
   - Survival
   - Trinkets
-  - Pets
   - JanitorPlunger
   - GroupSpeciesBreathTool
 
@@ -167,7 +157,6 @@
   - CommonGlasses
   - Survival
   - Trinkets
-  - Pets
   - GroupSpeciesBreathTool
 
 - type: roleLoadout
@@ -183,7 +172,6 @@
   - CommonGlasses
   - SurvivalClown
   - Trinkets
-  - Pets
 
 - type: roleLoadout
   id: JobMime
@@ -199,7 +187,6 @@
   - CommonGlasses
   - SurvivalMime
   - Trinkets
-  - Pets
 
 - type: roleLoadout
   id: JobMusician
@@ -212,7 +199,6 @@
   - CommonGlasses
   - Survival
   - Trinkets
-  - Pets
   - Instruments
   - GroupSpeciesBreathTool
 
@@ -230,7 +216,6 @@
   - CommonGlasses
   - Survival
   - Trinkets
-  - Pets
   - GroupSpeciesBreathTool
 
 - type: roleLoadout
@@ -245,7 +230,6 @@
   - CommonGlasses
   - Survival
   - Trinkets
-  - Pets
   - GroupSpeciesBreathTool
 
 - type: roleLoadout
@@ -258,7 +242,6 @@
   - CommonGlasses
   - Survival
   - Trinkets
-  - Pets
   - GroupSpeciesBreathTool
 
 # Engineering
@@ -274,7 +257,6 @@
   - ChiefEngineerShoes
   - SurvivalExtended
   - Trinkets
-  - Pets
   - GroupSpeciesBreathTool
 
 - type: roleLoadout
@@ -285,7 +267,6 @@
   - EngineeringBackpack
   - SurvivalExtended
   - Trinkets
-  - Pets
   - GroupSpeciesBreathTool
 
 - type: roleLoadout
@@ -300,7 +281,6 @@
   - StationEngineerPDA
   - SurvivalExtended
   - Trinkets
-  - Pets
   - GroupSpeciesBreathTool
 
 - type: roleLoadout
@@ -313,7 +293,6 @@
   - AtmosphericTechnicianShoes
   - SurvivalExtended
   - Trinkets
-  - Pets
   - GroupSpeciesBreathTool
 
 # Science
@@ -331,7 +310,6 @@
   - CommonGlasses
   - Survival
   - Trinkets
-  - Pets
   - GroupSpeciesBreathTool
 
 - type: roleLoadout
@@ -349,7 +327,6 @@
   - CommonGlasses
   - Survival
   - Trinkets
-  - Pets
   - GroupSpeciesBreathTool
 
 - type: roleLoadout
@@ -361,7 +338,6 @@
   - CommonGlasses
   - Survival
   - Trinkets
-  - Pets
   - GroupSpeciesBreathTool
 
 # Security
@@ -378,7 +354,6 @@
   - SecurityGlasses
   - SurvivalSecurity
   - Trinkets
-  - Pets
   - SecurityStar
   - GroupSpeciesBreathToolSecurity
 
@@ -394,7 +369,6 @@
   - SecurityGlasses
   - SurvivalSecurity
   - Trinkets
-  - Pets
   - SecurityStar
   - GroupSpeciesBreathToolSecurity
 
@@ -411,7 +385,6 @@
   - SecurityBelt
   - SurvivalSecurity
   - Trinkets
-  - Pets
   - SecurityStar
   - GroupSpeciesBreathToolSecurity
 
@@ -427,7 +400,6 @@
   - SecurityGlasses
   - SurvivalSecurity
   - Trinkets
-  - Pets
   - SecurityStar
   - GroupSpeciesBreathToolSecurity
 
@@ -438,7 +410,6 @@
   - SecurityBackpack
   - SurvivalSecurity
   - Trinkets
-  - Pets
   - GroupSpeciesBreathToolSecurity
 
 # Medical
@@ -457,7 +428,6 @@
   - MedicalGlasses
   - SurvivalMedical
   - Trinkets
-  - Pets
   - GroupSpeciesBreathToolMedical
 
 - type: roleLoadout
@@ -475,7 +445,6 @@
   - MedicalGlasses
   - SurvivalMedical
   - Trinkets
-  - Pets
   - GroupSpeciesBreathToolMedical
 
 - type: roleLoadout
@@ -487,7 +456,6 @@
   - MedicalGlasses
   - SurvivalMedical
   - Trinkets
-  - Pets
   - GroupSpeciesBreathToolMedical
 
 - type: roleLoadout
@@ -502,7 +470,6 @@
   - MedicalShoes
   - SurvivalMedical
   - Trinkets
-  - Pets
   - GroupSpeciesBreathToolMedical
 
 - type: roleLoadout
@@ -519,7 +486,6 @@
   - MedicalGlasses
   - SurvivalMedical
   - Trinkets
-  - Pets
   - GroupSpeciesBreathToolMedical
 
 # Wildcards
@@ -531,7 +497,6 @@
   - CommonGlasses
   - Survival
   - Trinkets
-  - Pets
   - GroupSpeciesBreathTool
 
 - type: roleLoadout
@@ -543,7 +508,6 @@
   - CommonGlasses
   - Survival
   - Trinkets
-  - Pets
   - GroupSpeciesBreathTool
 
 - type: roleLoadout
@@ -555,7 +519,6 @@
   - CommonGlasses
   - Survival
   - Trinkets
-  - Pets
   - GroupSpeciesBreathTool
 
 - type: roleLoadout
@@ -569,7 +532,6 @@
   - CommonGlasses
   - Survival
   - Trinkets
-  - Pets
   - GroupSpeciesBreathTool
 
 # These loadouts are used for non-crew spawns, like off-station antags and event mobs
