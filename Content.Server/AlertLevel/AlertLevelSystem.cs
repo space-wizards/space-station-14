@@ -163,6 +163,7 @@ public sealed class AlertLevelSystem : EntitySystem
             component.ActiveDelay = true;
         }
 
+        var oldLevel = component.CurrentLevel; //Starlight
         component.CurrentLevel = level;
         component.IsLevelLocked = locked;
 
@@ -206,7 +207,7 @@ public sealed class AlertLevelSystem : EntitySystem
                 colorOverride: detail.Color, sender: stationName);
         }
 
-        RaiseLocalEvent(new AlertLevelChangedEvent(station, level));
+        RaiseLocalEvent(new AlertLevelChangedEvent(station, level, oldLevel));
     }
 }
 
@@ -220,10 +221,12 @@ public sealed class AlertLevelChangedEvent : EntityEventArgs
 {
     public EntityUid Station { get; }
     public string AlertLevel { get; }
+    public string OldAlertLevel { get;  } //Starlight
 
-    public AlertLevelChangedEvent(EntityUid station, string alertLevel)
+    public AlertLevelChangedEvent(EntityUid station, string alertLevel, string oldAlertLevel)
     {
         Station = station;
         AlertLevel = alertLevel;
+        OldAlertLevel = oldAlertLevel;
     }
 }

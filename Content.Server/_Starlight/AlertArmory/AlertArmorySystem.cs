@@ -19,6 +19,10 @@ using Content.Shared.Station.Components;
 using Robust.Shared.Physics.Components;
 using System.Numerics;
 using System.Linq;
+using Content.Shared.Popups;
+using Content.Shared.Tag;
+using Robust.Shared.Prototypes;
+using Content.Shared.Mobs.Components;
 
 namespace Content.Server.Starlight.AlertArmory;
 
@@ -32,11 +36,14 @@ public sealed class AlertArmorySystem : EntitySystem
     [Dependency] private readonly ChatSystem _chat = default!;
     [Dependency] private readonly NavMapSystem _nav = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
+    [Dependency] private readonly SharedPopupSystem _popup = default!;
 
-    
-    private const string GammaDockTag = "DockGamma";
-    private const string GammaAlertLevel = "gamma";
-    
+    private EntityQuery<PendingClockInComponent> _pendingQuery;
+    private EntityQuery<ArrivalsBlacklistComponent> _blacklistQuery;
+    private EntityQuery<MobStateComponent> _mobQuery;
+
+    private readonly ProtoId<TagPrototype> _gammaDock = "DockGamma";
+
     public override void Initialize()
     {
         SubscribeLocalEvent<AlertArmoryStationComponent, StationPostInitEvent>(InitializeAlertArmoryStation);
@@ -44,8 +51,12 @@ public sealed class AlertArmorySystem : EntitySystem
         SubscribeLocalEvent<AlertArmoryShuttleComponent, FTLTagEvent>(SetShuttleTag);
         SubscribeLocalEvent<AlertArmoryShuttleComponent, FTLCompletedEvent>(AnnounceShuttleDocking);
         SubscribeLocalEvent<AlertLevelChangedEvent>(OnAlertLevelChanged);
+
+        _pendingQuery = GetEntityQuery<PendingClockInComponent>();
+        _blacklistQuery = GetEntityQuery<ArrivalsBlacklistComponent>();
+        _mobQuery = GetEntityQuery<MobStateComponent>();
     }
-    
+
     ///<summary>
     /// Initialize station with armories and preload all armories.
     ///</summary>
@@ -83,12 +94,11 @@ public sealed class AlertArmorySystem : EntitySystem
             comp.Grids[alert] = gridUid;
         }
     }
-    
+
     ///<summary>
     /// Adds component so you can't pilot alert armory and fly off on it
     ///</summary>
     private void OnStartup(EntityUid uid, AlertArmoryShuttleComponent comp, ComponentStartup ev) => EnsureComp<PreventPilotComponent>(uid);
-    
 
     ///<summary>
     /// Sets shuttle dock tag, so it try dock to correct place
@@ -101,7 +111,7 @@ public sealed class AlertArmorySystem : EntitySystem
         ev.Handled = true;
         ev.Tag = comp.DockTag;
     }
-    
+
     private void AnnounceShuttleDocking(EntityUid uid, AlertArmoryShuttleComponent comp, ref FTLCompletedEvent ev)
     {
         var xform = Transform(uid);
@@ -122,12 +132,13 @@ public sealed class AlertArmorySystem : EntitySystem
             return;
 
         var set = comp.Grids.Keys.ToHashSet();
+
         if (!set.Contains(ev.AlertLevel))
             return;
 
         var shuttle = comp.Grids[ev.AlertLevel];
         var targetGrid = _station.GetLargestGrid((ev.Station, Comp<StationDataComponent>(ev.Station)));
-        
+
         if (targetGrid == null)
             return;
 
@@ -135,6 +146,40 @@ public sealed class AlertArmorySystem : EntitySystem
             shuttle,
             Comp<ShuttleComponent>(shuttle),
             targetGrid.Value,
-            priorityTag: GammaDockTag);
+            priorityTag: _gammaDock);
+    }
+
+    private void DumpChildren(EntityUid uid, ref FTLStartedEvent args)
+    {
+        var toDump = new List<Entity<TransformComponent>>();
+        FindDumpChildren(uid, toDump);
+        foreach (var (ent, xform) in toDump)
+        {
+            var rotation = xform.LocalRotation;
+            _transform.SetCoordinates(ent, new EntityCoordinates(args.FromMapUid!.Value, Vector2.Transform(xform.LocalPosition, args.FTLFrom)));
+            _transform.SetWorldRotation(ent, args.FromRotation + rotation);
+            _popup.PopupEntity(Loc.GetString("latejoin-arrivals-dumped-from-shuttle"), ent);
+            
+        }
+    }
+    
+    private void FindDumpChildren(EntityUid uid, List<Entity<TransformComponent>> toDump)
+    {
+        if (_pendingQuery.HasComponent(uid))
+            return;
+
+        var xform = Transform(uid);
+
+        if (_mobQuery.HasComponent(uid) || _blacklistQuery.HasComponent(uid))
+        {
+            toDump.Add((uid, xform));
+            return;
+        }
+
+        var children = xform.ChildEnumerator;
+        while (children.MoveNext(out var child))
+        {
+            FindDumpChildren(child, toDump);
+        }
     }
 }
