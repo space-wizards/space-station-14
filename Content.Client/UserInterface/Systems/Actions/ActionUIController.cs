@@ -11,9 +11,7 @@ using Content.Client.UserInterface.Systems.Actions.Controls;
 using Content.Client.UserInterface.Systems.Actions.Widgets;
 using Content.Client.UserInterface.Systems.Actions.Windows;
 using Content.Client.UserInterface.Systems.Gameplay;
-using Content.Shared.Actions;
 using Content.Shared.Actions.Components;
-using Content.Shared.Charges.Systems;
 using Content.Shared.Input;
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
@@ -120,21 +118,26 @@ public sealed class ActionUIController : UIController, IOnStateChanged<GameplayS
         {
             var boundId = i; // This is needed, because the lambda captures it.
             var boundKey = hotbarKeys[i];
-            builder = builder.Bind(boundKey, new PointerInputCmdHandler((in PointerInputCmdArgs args) =>
-            {
-                if (args.State != BoundKeyState.Down)
-                    return false;
+            builder = builder.Bind(boundKey,
+                new PointerInputCmdHandler((in PointerInputCmdArgs args) =>
+                    {
+                        if (args.State != BoundKeyState.Down)
+                            return false;
 
-                TriggerAction(boundId);
-                return true;
-            }, false, true));
+                        TriggerAction(boundId);
+                        return true;
+                    },
+                    false,
+                true));
         }
 
         builder
             .Bind(ContentKeyFunctions.OpenActionsMenu,
                 InputCmdHandler.FromDelegate(_ => ToggleWindow()))
-            .BindBefore(EngineKeyFunctions.Use, new PointerInputCmdHandler(TargetingOnUse, outsidePrediction: true),
-                    typeof(ConstructionSystem), typeof(DragDropSystem))
+            .BindBefore(EngineKeyFunctions.Use,
+                new PointerInputCmdHandler(TargetingOnUse, outsidePrediction: true),
+                typeof(ConstructionSystem),
+                typeof(DragDropSystem))
                 .BindBefore(EngineKeyFunctions.UIRightClick, new PointerInputCmdHandler(TargetingCancel, outsidePrediction: true))
             .Register<ActionUIController>();
     }
@@ -329,12 +332,6 @@ public sealed class ActionUIController : UIController, IOnStateChanged<GameplayS
             Filters.Targeted => EntityManager.HasComponent<TargetActionComponent>(uid),
             _ => throw new ArgumentOutOfRangeException(nameof(filter), filter, null)
         };
-    }
-
-    private void ClearList()
-    {
-        if (_window?.Disposed == false)
-            _window.ResultsGrid.RemoveAllChildren();
     }
 
     private void PopulateActions(IEnumerable<Entity<ActionComponent>> actions)
@@ -547,10 +544,7 @@ public sealed class ActionUIController : UIController, IOnStateChanged<GameplayS
     {
         args.Handle();
         if (button.Action != null)
-        {
             _menuDragHelper.MouseDown(button);
-            return;
-        }
 
         // good job
     }
@@ -639,22 +633,17 @@ public sealed class ActionUIController : UIController, IOnStateChanged<GameplayS
     {
         _actionsSystem?.UnlinkAllActions();
 
-        if (ActionsBar == null)
-        {
+        if (ActionsBar == null || _window == null)
             return;
-        }
 
-        if (_window != null)
-        {
-            _window.OnOpen -= OnWindowOpened;
-            _window.OnClose -= OnWindowClosed;
-            _window.ClearButton.OnPressed -= OnClearPressed;
-            _window.SearchBar.OnTextChanged -= OnSearchChanged;
-            _window.FilterButton.OnItemSelected -= OnFilterSelected;
+        _window.OnOpen -= OnWindowOpened;
+        _window.OnClose -= OnWindowClosed;
+        _window.ClearButton.OnPressed -= OnClearPressed;
+        _window.SearchBar.OnTextChanged -= OnSearchChanged;
+        _window.FilterButton.OnItemSelected -= OnFilterSelected;
 
-            _window.Dispose();
-            _window = null;
-        }
+        _window.Dispose();
+        _window = null;
     }
 
     private void LoadGui()
@@ -697,20 +686,6 @@ public sealed class ActionUIController : UIController, IOnStateChanged<GameplayS
         _container?.ClearActionData();
     }
 
-    private void AssignSlots(List<SlotAssignment> assignments)
-    {
-        if (_actionsSystem == null)
-            return;
-
-        _actions.Clear();
-        foreach (var assign in assignments)
-        {
-            _actions.Add(assign.ActionId);
-        }
-
-        _container?.SetActionData(_actionsSystem, _actions.ToArray());
-    }
-
     public void RemoveActionContainer()
     {
         _container = null;
@@ -721,7 +696,6 @@ public sealed class ActionUIController : UIController, IOnStateChanged<GameplayS
         system.LinkActions += OnComponentLinked;
         system.UnlinkActions += OnComponentUnlinked;
         system.ClearAssignments += ClearActions;
-        system.AssignSlot += AssignSlots;
     }
 
     public void OnSystemUnloaded(ActionsSystem system)
@@ -729,7 +703,6 @@ public sealed class ActionUIController : UIController, IOnStateChanged<GameplayS
         system.LinkActions -= OnComponentLinked;
         system.UnlinkActions -= OnComponentUnlinked;
         system.ClearAssignments -= ClearActions;
-        system.AssignSlot -= AssignSlots;
     }
 
     public override void FrameUpdate(FrameEventArgs args)
