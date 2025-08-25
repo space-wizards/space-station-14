@@ -62,6 +62,11 @@
     - 0,0,19,5
   - type: ReagentDispenser
     beakerSlot:
+      # TODO: There's a problem here in that item slots are checked before
+      # storage containers when inserting... so if you insert a beverage jug
+      # you see the item slot popup even though it inserts into the storage!
+      # It'd be nice to have the popup only show up if it can't fit in storage.
+      # Also the storage comp should have not the default insert sound.
       whitelistFailPopup: reagent-dispenser-component-cannot-put-entity-message
       whitelist:
         components:
