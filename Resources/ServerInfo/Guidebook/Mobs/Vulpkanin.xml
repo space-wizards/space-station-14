@@ -1,0 +1,16 @@
+<Document>
+  # Vulpkanin
+
+  <Box>
+    <GuideEntityEmbed Entity="MobVulpkanin" Caption=""/>
+  </Box>
+
+  Vulpkanin, due to their dense fur, are [color=#1e90ff]more resistant to cold temperatures[/color] and [color=#ffa500]heat up faster.[/color]
+  Their agile (but clumsy) legs allow them to leap short distances, be careful not to bump into anything!
+
+  Their weirdly shaped muzzle leads to difficulties drinking, making them sometimes spill small amounts of whatever they drank onto the ground.
+
+  Thanks to their good sense of smell, they are able to determine the contents of solutions without the need for any specialized equipment.
+
+  They take [color=#1e90ff]15% less Cold damage[/color] but [color=#ffa500]15% more Heat damage.[/color].
+</Document>
