@@ -1,6 +1,6 @@
 using System.Linq;
 using Content.Client.Eui;
-using Content.Client.Players.PlayTimeTracking;
+using Content.Client.Roles;
 using Content.Shared.Eui;
 using Content.Shared.Ghost.Roles;
 using JetBrains.Annotations;
