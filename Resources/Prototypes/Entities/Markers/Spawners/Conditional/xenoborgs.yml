@@ -1,11 +1,13 @@
 - type: entity
   id: SpawnPointXenoborg
   parent: MarkerBase
-  name: nukies
+  name: mothership core
   components:
   - type: SpawnPoint
     spawnWhitelist:
       components:
+      - Xenoborg
+      tags:
       - Xenoborg
   - type: Sprite
     layers:
@@ -16,11 +18,13 @@
 - type: entity
   id: SpawnPointMothershipCore
   parent: MarkerBase
-  name: nukies
+  name: xenoborgs
   components:
   - type: SpawnPoint
     spawnWhitelist:
       components:
+      - MothershipCore
+      tags:
       - MothershipCore
   - type: Sprite
     layers:
