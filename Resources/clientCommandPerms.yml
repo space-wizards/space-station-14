@@ -73,6 +73,7 @@
     - localdelete
     - fullstatereset
     - dumpentities
+    - showwallmounts
     - showaccessreaders
 
 - Flags: MAPPING
@@ -80,6 +81,7 @@
     - mapping
     - toggleautosave
     - toggledecals
+    - showwallmounts
     - showaccessreaders
 
 - Flags: QUERY
