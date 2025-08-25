@@ -21,12 +21,21 @@ public sealed partial class AlertArmoryStationComponent : Component
 [DataDefinition]
 public sealed partial class AlertArmoryDefinition
 {
+    ///<summary>
+    /// Path to shuttle grid which will be used for spawn.
+    ///</summary>
     [DataField(required: true)]
     public ResPath Shuttle;
 
+    ///<summary>
+    /// Announcement message which will be sended when armory fly to station.
+    /// </summary>
     [DataField]
     public string? Announcement;
 
+    ///<summary>
+    /// Color of announcement message which will be sended when armory fly to station.
+    ///</summary>
     [DataField]
     public Color? AnnouncementColor;
 }
