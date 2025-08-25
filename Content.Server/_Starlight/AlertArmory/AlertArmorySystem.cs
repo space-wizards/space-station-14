@@ -39,14 +39,17 @@ public sealed class AlertArmorySystem : EntitySystem
     
     public override void Initialize()
     {
-        SubscribeLocalEvent<AlertArmoryStationComponent, StationPostInitEvent>(InitializeGammaWeaponryStation);
+        SubscribeLocalEvent<AlertArmoryStationComponent, StationPostInitEvent>(InitializeAlertArmoryStation);
         SubscribeLocalEvent<AlertArmoryShuttleComponent, ComponentStartup>(OnStartup);
-        SubscribeLocalEvent<AlertArmoryShuttleComponent, FTLTagEvent>(SetShuttleTagToDockGamma);
+        SubscribeLocalEvent<AlertArmoryShuttleComponent, FTLTagEvent>(SetShuttleTag);
         SubscribeLocalEvent<AlertArmoryShuttleComponent, FTLCompletedEvent>(AnnounceShuttleDocking);
         SubscribeLocalEvent<AlertLevelChangedEvent>(OnAlertLevelChanged);
     }
     
-    private void InitializeGammaWeaponryStation(EntityUid uid, AlertArmoryStationComponent comp, StationPostInitEvent ev)
+    ///<summary>
+    /// Initialize station with armories and preload all armories.
+    ///</summary>
+    private void InitializeAlertArmoryStation(EntityUid uid, AlertArmoryStationComponent comp, StationPostInitEvent ev)
     {
         var map = _map.CreateMap(out var mapId);
         _meta.SetEntityName(map, $"AlertArmories {uid}");
@@ -81,16 +84,22 @@ public sealed class AlertArmorySystem : EntitySystem
         }
     }
     
+    ///<summary>
+    /// Adds component so you can't pilot alert armory and fly off on it
+    ///</summary>
     private void OnStartup(EntityUid uid, AlertArmoryShuttleComponent comp, ComponentStartup ev) => EnsureComp<PreventPilotComponent>(uid);
     
 
-    private void SetShuttleTagToDockGamma(EntityUid uid, AlertArmoryShuttleComponent comp, ref FTLTagEvent ev)
+    ///<summary>
+    /// Sets shuttle dock tag, so it try dock to correct place
+    ///</summary>
+    private void SetShuttleTag(EntityUid uid, AlertArmoryShuttleComponent comp, ref FTLTagEvent ev)
     {
-        if (ev.Handled)
+        if (ev.Handled || comp.DockTag == null)
             return;
 
         ev.Handled = true;
-        ev.Tag = "DockGamma";
+        ev.Tag = comp.DockTag;
     }
     
     private void AnnounceShuttleDocking(EntityUid uid, AlertArmoryShuttleComponent comp, ref FTLCompletedEvent ev)
@@ -104,6 +113,9 @@ public sealed class AlertArmorySystem : EntitySystem
                 colorOverride: comp.AnnouncementColor ?? Color.PaleVioletRed);
     }
 
+    ///<summary>
+    /// Handles alert level changing to try ftl dock gamma alert.
+    ///</summary>
     private void OnAlertLevelChanged(AlertLevelChangedEvent ev)
     {
         if (!TryComp<AlertArmoryStationComponent>(ev.Station, out var comp))
