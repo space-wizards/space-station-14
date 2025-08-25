@@ -9,6 +9,7 @@
   access:
   - Chapel
   - Maintenance
+  - Service
   special:
   - !type:AddComponentSpecial
     components:
