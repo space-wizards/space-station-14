@@ -35,6 +35,7 @@
         - GPS
         - WeldingMask
         - RemoteSignaller
+        - UtilityKnife
       components:
         - StationMap
         - SprayPainter
@@ -120,6 +121,7 @@
         - HolofanProjector
         - Multitool
         - AppraisalTool
+        - UtilityKnife
       components:
         - StationMap
         - SprayPainter

@@ -1446,6 +1446,9 @@
   id: UtilityBelt
 
 - type: Tag
+  id: UtilityKnife
+
+- type: Tag
   id: Vegetable
 
 - type: Tag
