@@ -164,18 +164,16 @@
   id: MedkitAdvanced
   result: MedkitAdvanced
   name: lathe-recipe-MedkitAdvanced-name
+  completetime: 4
+  materials:
+    Plastic: 300
+    Durathread: 200
 
 - type: latheRecipe
   parent: Medkit
   id: MedkitRadiation
   result: MedkitRadiation
   name: lathe-recipe-MedkitRadiation-name
-
-- type: latheRecipe
-  parent: Medkit
-  id: MedkitCombat
-  result: MedkitCombat
-  name: lathe-recipe-MedkitCombat-name
 
 - type: latheRecipe
   parent: BaseToolRecipe
