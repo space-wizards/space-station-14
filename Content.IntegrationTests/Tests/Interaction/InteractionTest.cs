@@ -23,6 +23,8 @@ using Robust.Shared.Timing;
 using Robust.UnitTesting;
 using Content.Shared.Item.ItemToggle;
 using Robust.Client.State;
+using Content.Server.Station.Systems;
+using Content.Server.Station;
 
 namespace Content.IntegrationTests.Tests.Interaction;
 
@@ -107,6 +109,7 @@ public abstract partial class InteractionTest
     protected SharedMapSystem MapSystem = default!;
     protected ISawmill SLogger = default!;
     protected SharedUserInterfaceSystem SUiSys = default!;
+    protected StationSystem StationSys = default!;
 
     // CLIENT dependencies
     protected IEntityManager CEntMan = default!;
@@ -125,6 +128,17 @@ public abstract partial class InteractionTest
     protected DoAfterComponent DoAfters = default!;
 
     public float TickPeriod => (float) STiming.TickPeriod.TotalSeconds;
+
+    /// <summary>
+    /// If not null, a station entity will be spawned using this prototype
+    /// and the test grid will be registered to it.
+    /// </summary>
+    protected virtual EntProtoId? StationPrototype => null;
+
+    /// <summary>
+    /// The station entity spawned if <see cref="StationPrototype"/> is not null.
+    /// </summary>
+    protected NetEntity? Station;
 
     // Simple mob that has one hand and can perform misc interactions.
     [TestPrototypes]
@@ -174,6 +188,7 @@ public abstract partial class InteractionTest
         STestSystem = SEntMan.System<InteractionTestSystem>();
         Stack = SEntMan.System<StackSystem>();
         SLogger = Server.ResolveDependency<ILogManager>().RootSawmill;
+        StationSys = SEntMan.System<StationSystem>();
         SUiSys = Client.System<SharedUserInterfaceSystem>();
 
         // client dependencies
@@ -194,6 +209,15 @@ public abstract partial class InteractionTest
         PlayerCoords = SEntMan.GetNetCoordinates(Transform.WithEntityId(MapData.GridCoords.Offset(new Vector2(0.5f, 0.5f)), MapData.MapUid));
         TargetCoords = SEntMan.GetNetCoordinates(Transform.WithEntityId(MapData.GridCoords.Offset(new Vector2(1.5f, 0.5f)), MapData.MapUid));
         await SetTile(Plating, grid: MapData.Grid);
+
+        if (StationPrototype is not null)
+        {
+            await Server.WaitPost(() =>
+            {
+                var station = StationSys.InitializeNewStation(new StationConfig() { StationPrototype = StationPrototype }, [MapData.Grid]);
+                Station = SEntMan.GetNetEntity(station);
+            });
+        }
 
         // Get player data
         var sPlayerMan = Server.ResolveDependency<Robust.Server.Player.IPlayerManager>();
@@ -248,6 +272,11 @@ public abstract partial class InteractionTest
     public async Task TearDownInternal()
     {
         await Server.WaitPost(() => MapSystem.DeleteMap(MapId));
+        // Clean up the station entity if we spawned one
+        if (SEntMan.TryGetEntity(Station, out var stationUid))
+        {
+            await Server.WaitPost(() => StationSys.DeleteStation(stationUid.Value));
+        }
         await Pair.CleanReturnAsync();
         await TearDown();
     }
