@@ -31,7 +31,7 @@
     pocket1: RadioHandheld
     pocket2: WeaponLaserGun
     belt: ClothingBeltBandolier
-    head: ClothingHeadSoftsuitCBURN
+    head: ClothingHeadSoftsuitCBURN # Starlight
   storage:
     back:
     - WeaponIK60
