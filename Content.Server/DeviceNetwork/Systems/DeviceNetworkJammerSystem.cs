@@ -30,6 +30,10 @@ public sealed class DeviceNetworkJammerSystem : SharedDeviceNetworkJammerSystem
             if (!_jammer.GetJammableNetworks((uid, jammerComp)).Contains(ev.NetworkId))
                 continue;
 
+            if (jammerComp.FrequenciesExcluded != null &&
+                jammerComp.FrequenciesExcluded.Contains(ev.Frequency))
+                continue;
+
             if (_transform.InRange(jammerXform.Coordinates, ev.SenderTransform.Coordinates, jammerComp.Range)
                 || _transform.InRange(jammerXform.Coordinates, xform.Comp.Coordinates, jammerComp.Range))
             {
