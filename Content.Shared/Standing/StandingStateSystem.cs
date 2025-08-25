@@ -3,6 +3,7 @@ using Content.Shared.Hands.Components;
 using Content.Shared.Inventory;
 using Content.Shared.Movement.Events;
 using Content.Shared.Movement.Systems;
+using Content.Shared.Inventory;
 using Content.Shared.Physics;
 using Content.Shared.Rotation;
 using Robust.Shared.Audio.Systems;
@@ -245,9 +246,11 @@ public sealed class DownedEvent : EntityEventArgs, IInventoryRelayEvent
 /// <summary>
 /// Raised after an entity falls down.
 /// </summary>
-public sealed class FellDownEvent : EntityEventArgs
+public sealed class FellDownEvent : EntityEventArgs, IInventoryRelayEvent
 {
     public EntityUid Uid { get; }
+
+    public SlotFlags TargetSlots => SlotFlags.WITHOUT_POCKET;
 
     public FellDownEvent(EntityUid uid)
     {
