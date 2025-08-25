@@ -176,9 +176,10 @@ public sealed class SingularityGeneratorSystem : SharedSingularityGeneratorSyste
 
         foreach (var result in rayCastResults)
         {
-            if (genQuery.HasComponent(result.HitEntity))
-                closestResult = result;
+            if (!genQuery.HasComponent(result.HitEntity))
+                continue;
 
+            closestResult = result;
             break;
         }
 
