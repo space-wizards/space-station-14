@@ -42,13 +42,3 @@
   parent: BaseOuterClothing
   loadouts:
   - MimeWintercoat
-
-- type: loadoutGroup
-  id: SurvivalMime
-  parent: BaseSurvival
-  minLimit: 2
-  loadouts:
-  - EmergencyNitrogenMime
-  - EmergencyOxygenMime
-  - EmergencySpeciesMothMime
-  - LoadoutSpeciesVoxNitrogen

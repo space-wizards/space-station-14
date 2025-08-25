@@ -35,12 +35,3 @@
   loadouts:
   - ClownShoes
   - JesterShoes
-
-- type: loadoutGroup
-  id: SurvivalClown
-  parent: BaseSurvival
-  minLimit: 2
-  loadouts:
-  - EmergencyNitrogenClown
-  - EmergencyOxygenClown
-  - LoadoutSpeciesVoxNitrogen
