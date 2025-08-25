@@ -55,6 +55,9 @@
     - !type:NestedSelector
       tableId: PackageRareEntityTable
       weight: 0.1
+    - !type:NestedSelector
+      tableId: PackageExtremelyRareEntityTable # Essentially will never happen. it has a chance, but, y'know, it's one in a number.
+      weight: 0.0000001
 
 ### Loot Tables
 # Letters
@@ -157,3 +160,9 @@
     - !type:NestedSelector
       tableId: SyndieMaintLoot
       weight: 0.5
+
+- type: entityTable
+  id: PackageExtremelyRareEntityTable
+  table: !type:GroupSelector
+    children:
+    - id: WeaponPistolDebug # :godo:
