@@ -22,7 +22,7 @@
 
 - type: loadoutGroup
   id: SecurityGlasses
-  parent: BaseGlasses
+  parent: CommonGlasses
   defaultMinLimit: 1
   loadouts:
   - GlassesSecurity
