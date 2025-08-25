@@ -85,7 +85,9 @@
   storage:
     back:
     - WeaponDisabler
-    - MedkitCombatFilled
+#    - MedicatedSuture Starlight-edit
+#    - RegenerativeMesh
+    - MedkitCombatFilled # Starlight-edit
     - BoxZiptie
     - CrowbarRed
 #    - MagazineMagnum Starlight-edit
