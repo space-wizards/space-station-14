@@ -617,7 +617,7 @@
     icon: { sprite: Interface/Actions/actions_borg.rsi, state: adv-tools-module }
 
 - type: entity
-  id: BorgModuleConstructionMaterialPlaceholder
+  id: BorgModuleConstructionMaterialPlaceholder #Steel/Glass/Plastic Sprite
   parent: BaseItem
   components:
   - type: Sprite
@@ -642,13 +642,7 @@
           tags:
           - ConstructionMaterial
     - hand:
-        emptyRepresentative: BorgModuleConstructionMaterialPlaceholder
-        emptyLabel: borg-slot-construction-empty
-        whitelist:
-          tags:
-          - ConstructionMaterial
-    - hand:
-        emptyRepresentative: BorgModuleConstructionMaterialPlaceholder
+        emptyRepresentative: MicroManipulatorStockPart
         emptyLabel: borg-slot-construction-empty
         whitelist:
           tags:
@@ -659,12 +653,9 @@
         whitelist:
           components:
           - Circuitboard
-    - hand:
-        emptyRepresentative: MicroManipulatorStockPart
-        emptyLabel: borg-slot-construction-empty
-        whitelist:
-          tags:
-          - ConstructionMaterial
+        blacklist:
+          components:
+          - SiliconLawProvider
     - hand:
         emptyRepresentative: SpaceHeaterFlatpack
         emptyLabel: borg-slot-flatpacks-empty
@@ -672,23 +663,12 @@
           components:
           - Flatpack
     - hand:
-        emptyRepresentative: FloorTileItemSteel
+        emptyRepresentative: FloorTileItemDark #Placeholder, needs sprite of a few tiles
         emptyLabel: borg-slot-tiles-empty
         whitelist:
           components:
           - FloorTile
-    - hand:
-        emptyRepresentative: FloorTileItemWhite
-        emptyLabel: borg-slot-tiles-empty
-        whitelist:
-          components:
-          - FloorTile
-    - hand:
-        emptyRepresentative: FloorTileItemDark
-        emptyLabel: borg-slot-tiles-empty
-        whitelist:
-          components:
-          - FloorTile
+    - item: BorgMaterialBag
   - type: BorgModuleIcon
     icon: { sprite: Interface/Actions/actions_borg.rsi, state: construction-module }
 
