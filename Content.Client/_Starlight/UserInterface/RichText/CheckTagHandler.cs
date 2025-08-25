@@ -21,18 +21,12 @@ public sealed class CheckTagHandler : IMarkupTagHandler
     /// </summary>
     public static float FontLineHeight { get; set; } = 16.0f; // Default fallback
 
-    private static int GetCheckIndex(MarkupNode node)
-    {
-        return _checkCounter++;
-    }
+    private static int GetCheckIndex() => _checkCounter++;
 
     /// <summary>
     /// Resets the check counter to ensure consistent indexing across renders.
     /// </summary>
-    public static void ResetCheckCounter()
-    {
-        _checkCounter = 0;
-    }
+    public static void ResetCheckCounter() => _checkCounter = 0;
 
     /// <summary>
     /// Counts check buttons before the clicked button to determine which [check] tag it represents.

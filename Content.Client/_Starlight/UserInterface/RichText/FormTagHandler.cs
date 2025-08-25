@@ -16,10 +16,7 @@ public sealed class FormTagHandler : IMarkupTagHandler
 {
     public string Name => "form";
 
-    public bool CanHandle(MarkupNode node)
-    {
-        return node.Name == "form" || node.Value.StringValue?.StartsWith("__FORM_") == true;
-    }
+    public bool CanHandle(MarkupNode node) => node.Name == "form" || node.Value.StringValue?.StartsWith("__FORM_") == true;
 
     private static int _formCounter = 0;
     private static readonly Dictionary<string, int> _formPositions = new();
@@ -30,18 +27,12 @@ public sealed class FormTagHandler : IMarkupTagHandler
     /// </summary>
     public static float FontLineHeight { get; set; } = 16.0f; // Default fallback
 
-    private static int GetFormIndex(MarkupNode node)
-    {
-        return _formCounter++;
-    }
+    private static int GetFormIndex() => _formCounter++;
 
     /// <summary>
     /// Resets the form counter to ensure consistent indexing across renders.
     /// </summary>
-    public static void ResetFormCounter()
-    {
-        _formCounter = 0;
-    }
+    public static void ResetFormCounter() => _formCounter = 0;
 
     /// <summary>
     /// Counts form buttons before the clicked button to determine which [form] tag it represents.
