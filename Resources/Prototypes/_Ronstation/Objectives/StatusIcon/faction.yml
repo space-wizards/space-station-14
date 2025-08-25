@@ -1,0 +1,11 @@
+- type: factionIcon
+  id: VampireFaction
+  isShaded: true
+  priority: 11
+  showTo:
+    components:
+    - ShowAntagIcons
+    - Vampire
+  icon:
+    sprite: /Textures/_Ronstation/Interface/Misc/job_icons.rsi
+    state: Vampire
