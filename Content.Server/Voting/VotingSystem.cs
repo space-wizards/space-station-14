@@ -13,7 +13,6 @@ using Robust.Shared.Network;
 using Robust.Shared.Player;
 using Robust.Shared.Timing;
 using System.Threading.Tasks;
-using Content.Server.Voting.Managers;
 using Content.Shared.Players.PlayTimeTracking;
 
 namespace Content.Server.Voting;
