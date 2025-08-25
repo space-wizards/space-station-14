@@ -34,11 +34,15 @@
     head: ClothingHeadSoftsuitCBURN # Starlight
   storage:
     back:
+#    - WeaponShotgunDoubleBarreled Starlight: Replaced with starlight weaponry
+#    - BoxShotgunIncendiary
+    # Starlight-start: Starlight incendiary weaponry
     - WeaponIK60
     - MagazineBatteryLr30
     - MagazineBatteryLr30
     - MagazineBatteryLr30
     - MagazineBatteryLr30
+    # Starlight-end
     - GrenadeFlashBang
     - PillAmbuzolPlus
     - PillAmbuzol
