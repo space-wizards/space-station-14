@@ -168,13 +168,13 @@
         amount: 3
       - !type:EvenHealthChange
         damage:
-          Burn: -5
-          Brute: -5
+          Burn: -3
+          Brute: -3
           Toxin: -2
       - !type:HealthChange
         damage:
           types:
-            Bloodloss: -5
+            Bloodloss: -3
       - !type:ModifyBleedAmount
         amount: -1.5
   # Just in case you REALLY want to water your plants
