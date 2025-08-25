@@ -57,6 +57,11 @@
   id: SolarControlComputerCircuitboard
   result: SolarControlComputerCircuitboard
 
+- type: latheRecipe
+  parent: [ BaseCircuitboardRecipe, BaseEngineeringComputerRecipeCategory ]
+  id: MassDriverComputerCircuitboard
+  result: MassDriverComputerCircuitboard
+
 # Medical
 
 # Science
