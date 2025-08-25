@@ -4,8 +4,8 @@ meta:
   engineVersion: 266.0.0
   forkId: ""
   forkVersion: ""
-  time: 08/18/2025 05:46:30
-  entityCount: 822
+  time: 08/25/2025 16:10:34
+  entityCount: 828
 maps: []
 grids:
 - 1
@@ -75,91 +75,88 @@ entities:
       version: 2
       data:
         tiles:
-          -1,-4:
-            0: 65535
-          -1,-3:
-            0: 65535
-          -1,-2:
-            0: 65535
-          -1,-1:
-            0: 61439
-          0,-4:
-            0: 65535
-          0,-3:
-            0: 65535
-          0,-2:
-            0: 65535
-          0,-1:
-            0: 65535
-          1,-4:
-            0: 30591
-          1,-3:
-            0: 21879
-            1: 512
-          1,-2:
-            0: 30325
-            2: 256
-          1,-1:
-            0: 55
-          0,-5:
-            0: 65535
-          1,-5:
-            0: 65399
-          -1,-5:
-            0: 65535
-          -3,-4:
-            0: 12
-          -2,-4:
-            0: 61439
-          -2,-2:
-            0: 65516
-          -2,-1:
-            0: 2287
-          -2,-3:
-            0: 35054
-            1: 1536
-          -1,0:
-            0: 8
           -3,-5:
-            0: 52224
-          -2,-8:
-            0: 65504
-          -2,-7:
-            0: 65535
-          -2,-6:
-            0: 65535
+            0: 49152
           -2,-5:
-            0: 65535
-          -1,-8:
-            0: 65526
-          -1,-7:
-            0: 65535
-          -1,-6:
-            0: 65535
-          0,-8:
-            0: 65523
-          0,-7:
-            0: 61303
-            3: 4096
-            4: 136
-          0,-6:
-            3: 1
-            0: 65534
-          1,-8:
-            0: 30512
-          1,-7:
-            0: 30549
-            5: 34
-          1,-6:
-            0: 30583
-          -1,-9:
-            0: 26112
-          0,-9:
-            0: 13056
-          2,-4:
-            0: 1
-          2,-5:
+            0: 64012
+            1: 1
+          -2,-4:
+            0: 52362
+            1: 256
+          -2,-3:
+            1: 36384
+            0: 136
+          -2,-2:
+            0: 52224
+            1: 4
+          -2,-1:
+            1: 32
+            0: 8
+          -1,-4:
+            0: 61071
+          -1,-3:
+            1: 256
+            0: 52430
+          -1,-2:
+            0: 65528
+          -1,-1:
+            0: 239
+          -1,-5:
+            0: 65421
+          0,-4:
+            0: 48015
+          0,-3:
+            0: 4507
+            1: 35840
+          0,-2:
+            0: 48944
+          0,-1:
+            0: 59
+          0,-5:
+            0: 65295
+          1,-4:
+            0: 4354
+            1: 1024
+          1,-3:
+            1: 800
+          1,-2:
+            1: 1
             0: 4352
+          1,-5:
+            0: 61953
+            1: 4
+          1,-1:
+            1: 32
+          2,-5:
+            0: 4096
+          -2,-7:
+            0: 61166
+          -2,-6:
+            0: 52974
+          -2,-8:
+            1: 704
+          -1,-8:
+            1: 8752
+          -1,-7:
+            0: 55296
+            1: 238
+          -1,-6:
+            0: 64925
+          0,-7:
+            1: 51
+            0: 53248
+            2: 136
+          0,-6:
+            0: 65421
+          0,-8:
+            1: 8928
+          1,-8:
+            1: 528
+          1,-7:
+            0: 12288
+            3: 34
+          1,-6:
+            0: 4867
         uniqueMixes:
         - volume: 2500
           temperature: 293.15
@@ -177,40 +174,10 @@ entities:
           - 0
           - 0
         - volume: 2500
-          temperature: 293.15
+          immutable: True
           moles:
           - 0
           - 0
-          - 0
-          - 0
-          - 0
-          - 0
-          - 0
-          - 0
-          - 0
-          - 0
-          - 0
-          - 0
-        - volume: 2500
-          temperature: 293.14996
-          moles:
-          - 20.078888
-          - 75.53487
-          - 0
-          - 0
-          - 0
-          - 0
-          - 0
-          - 0
-          - 0
-          - 0
-          - 0
-          - 0
-        - volume: 2500
-          temperature: 293.15
-          moles:
-          - 20.619795
-          - 77.56971
           - 0
           - 0
           - 0
@@ -3541,6 +3508,43 @@ entities:
     - type: Transform
       pos: 3.5,-3.5
       parent: 1
+- proto: JetpackBlackFilled
+  entities:
+  - uid: 313
+    components:
+    - type: Transform
+      parent: 45
+    - type: Physics
+      canCollide: False
+    - type: InsideEntityStorage
+  - uid: 501
+    components:
+    - type: Transform
+      parent: 45
+    - type: Physics
+      canCollide: False
+    - type: InsideEntityStorage
+  - uid: 502
+    components:
+    - type: Transform
+      parent: 45
+    - type: Physics
+      canCollide: False
+    - type: InsideEntityStorage
+  - uid: 511
+    components:
+    - type: Transform
+      parent: 45
+    - type: Physics
+      canCollide: False
+    - type: InsideEntityStorage
+  - uid: 512
+    components:
+    - type: Transform
+      parent: 45
+    - type: Physics
+      canCollide: False
+    - type: InsideEntityStorage
 - proto: KnifePlastic
   entities:
   - uid: 498
@@ -3594,6 +3598,44 @@ entities:
           - 38
           - 35
           - 34
+        paper_label: !type:ContainerSlot
+          showEnts: False
+          occludes: True
+          ent: null
+  - uid: 45
+    components:
+    - type: Transform
+      pos: -1.5,-17.5
+      parent: 1
+    - type: EntityStorage
+      air:
+        volume: 200
+        immutable: False
+        temperature: 293.14673
+        moles:
+        - 1.7459903
+        - 6.568249
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+    - type: ContainerContainer
+      containers:
+        entity_storage: !type:Container
+          showEnts: False
+          occludes: True
+          ents:
+          - 313
+          - 501
+          - 502
+          - 511
+          - 512
         paper_label: !type:ContainerSlot
           showEnts: False
           occludes: True
