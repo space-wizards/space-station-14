@@ -1,0 +1,15 @@
+# Stacks which don't fit cleanly into other categories
+
+- type: stack
+  parent: BaseSheetStack # Not a sheet, but spiritually similar
+  id: MetalRod
+  name: stack-rods
+  icon: { sprite: /Textures/Objects/Materials/parts.rsi, state: rods }
+  spawn: PartRodMetal1
+
+- type: stack
+  parent: BaseVerySmallStack
+  id: Gunpowder
+  name: stack-gunpowder
+  icon: { sprite: /Textures/Objects/Misc/reagent_fillings.rsi, state: powderpile }
+  spawn: MaterialGunpowder
