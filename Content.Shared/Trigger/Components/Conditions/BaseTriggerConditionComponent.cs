@@ -19,4 +19,10 @@ public abstract partial class BaseTriggerConditionComponent : Component
     /// </summary>
     [DataField, AutoNetworkedField]
     public string? CancelKeyOut;
+
+    /// <summary>
+    /// If true, this condition will evaluate to the opposite result.
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public bool Inverted;
 }

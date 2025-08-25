@@ -59,7 +59,7 @@
   - type: TriggerOnUse # Despite having trigger components, RemoteSignaller doesn't actually create any triggers to use them
   - type: RandomChanceTriggerCondition
     successChance: 0.5
-    # cancelKeyOut: null
+    cancelKeyOut: cancelled
   - type: ShockOnTrigger
     keysIn: [ cancelled ]
     targetUser: true
