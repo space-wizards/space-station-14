@@ -147,3 +147,6 @@ reagent-desc-potassium-iodide = Will reduce the damaging effects of radiation by
 
 reagent-name-haloperidol = haloperidol
 reagent-desc-haloperidol = Removes most stimulating and hallucinogenic drugs. Reduces druggy effects and jitteriness. Causes drowsiness.
+
+reagent-name-frezinecrosium = frezinecrosium
+reagent-desc-frezinecrosium = A highly potent anti-toxin that works on the dead. Requires cold internal temperatures to function.

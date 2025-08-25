@@ -662,3 +662,15 @@
       amount: 1
   products:
     Haloperidol: 5
+    
+- type: reaction
+  id: Frezinecrosium
+  reactants:
+    Necrosol:
+      amount: 1
+    Dylovene:
+      amount: 1
+    Fresium:
+      amount: 1
+  products:
+    Frezinecrosium: 3
