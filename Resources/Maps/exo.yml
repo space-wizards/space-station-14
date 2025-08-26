@@ -45324,6 +45324,14 @@ entities:
         5037:
         - - ArtifactAnalyzerSender
           - ArtifactAnalyzerReceiver
+- proto: ComputerAtmosMonitoring
+  entities:
+  - uid: 20083
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: 29.5,-72.5
+      parent: 2
 - proto: computerBodyScanner
   entities:
   - uid: 6698
