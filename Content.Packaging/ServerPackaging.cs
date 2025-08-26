@@ -25,6 +25,12 @@ public static class ServerPackaging
         new PlatformReg("freebsd-x64", "FreeBSD", false),
     };
 
+    private static IReadOnlySet<string> ServerContentIgnoresResources { get; } = new HashSet<string>
+    {
+        // Despite its name, this is only used by the client. And people keep thinking this is how they edit the guidebook.
+        "ServerInfo",
+    };
+
     private static List<string> PlatformRids => Platforms
         .Select(o => o.Rid)
         .ToList();
@@ -211,7 +217,7 @@ public static class ServerPackaging
             contentAssemblies,
             cancel: cancel);
 
-        await RobustServerPackaging.WriteServerResources(contentDir, inputPassResources, cancel);
+        await RobustServerPackaging.WriteServerResources(contentDir, inputPassResources, ServerContentIgnoresResources, cancel);
 
         if (hybridAcz)
         {
