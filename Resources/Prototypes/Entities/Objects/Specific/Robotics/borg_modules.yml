@@ -1097,6 +1097,14 @@
     - item: HydroponicsToolSpade
     - item: HydroponicsToolClippers
     - item: Bucket
+      #Starlight start
+    - hand:
+        emptyLabel: borg-slot-seeds-empty
+        emptyRepresentative: WheatSeeds
+        whitelist:
+          components:
+          - Seed
+      #Starlight end
   - type: BorgModuleIcon
     icon: { sprite: Interface/Actions/actions_borg.rsi, state: gardening-module }
 
