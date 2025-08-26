@@ -12459,12 +12459,63 @@ Entries:
   url: https://github.com/ss14Starlight/space-station-14/pull/1452
 - author: Darkrell
   changes:
-  - message: An antagonist card has been added - Criminal. Fulfilling the requirements within 20 minutes makes you a Syndicate member.
+  - message: An antagonist card has been added - Criminal. Fulfilling the requirements
+      within 20 minutes makes you a Syndicate member.
     type: Add
   - message: The railroading system is fully enabled.
     type: Tweak
   id: 145199
   time: '2025-08-24T18:35:59.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/1461
+- author: Fractalflower
+  changes:
+  - message: Humans can now have foxlike ears
+    type: Add
+  id: 109200
+  time: '2025-08-24T23:18:49.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1092
+- author: Fractalflower
+  changes:
+  - message: Humans can now have foxlike tails
+    type: Add
+  id: 109201
+  time: '2025-08-24T23:18:49.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1092
+- author: Fractalflower
+  changes:
+  - message: Humans can now yip, bark, and whine if they have a foxlike ear or tail.
+    type: Add
+  id: 109202
+  time: '2025-08-24T23:18:49.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1092
+- author: Grapgifter
+  changes:
+  - message: Hop digiboard added as portable id card computer. Can be found in your
+      locker. HoP Players rejoice.
+    type: Add
+  id: 130800
+  time: '2025-08-24T23:21:03.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1308
+- author: themageofmicrosoftpaints, Fractalflower
+  changes:
+  - message: Nine new slime tails
+    type: Add
+  id: 126300
+  time: '2025-08-24T23:27:46.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1263
+- author: themageofmicrosoftpaints, Fractalflower
+  changes:
+  - message: Eight new slime ears
+    type: Add
+  id: 126301
+  time: '2025-08-24T23:27:46.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1263
+- author: themageofmicrosoftpaints, Fractalflower
+  changes:
+  - message: Five new glass floors
+    type: Add
+  id: 126302
+  time: '2025-08-24T23:27:46.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1263
 Order: -1
 
