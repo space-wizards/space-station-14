@@ -23,7 +23,7 @@ public sealed partial class TriggerSystem
     /// Method placed at the start of trigger condition subscriptions to evaluate if this condition cares about this attempt event.
     /// </summary>
     /// <returns>True if this condition should try to modify this event.</returns>
-    private static bool ConditionPrefix<TComp>(TComp comp, ref AttemptTriggerEvent ev) where TComp : BaseTriggerConditionComponent
+    private static bool TriggerConditionPrefix<TComp>(TComp comp, ref AttemptTriggerEvent ev) where TComp : BaseTriggerConditionComponent
     {
         // If the trigger is already cancelled we only need to run checks if this condition wants to add a cancel trigger
         if (ev.Cancelled && comp.CancelKeyOut == null)
@@ -37,7 +37,7 @@ public sealed partial class TriggerSystem
     /// Method placed at the end of trigger condition subscriptions to modify the event.
     /// </summary>
     /// <param name="result">What the condition evaluated to.</param>
-    private static void ConditionSuffix<TComp>(TComp comp, bool result, ref AttemptTriggerEvent ev) where TComp : BaseTriggerConditionComponent
+    private static void TriggerConditionSuffix<TComp>(TComp comp, bool result, ref AttemptTriggerEvent ev) where TComp : BaseTriggerConditionComponent
     {
         if (comp.Inverted)
             result = !result;
@@ -53,32 +53,32 @@ public sealed partial class TriggerSystem
 
     private void OnWhitelistTriggerAttempt(Entity<WhitelistTriggerConditionComponent> ent, ref AttemptTriggerEvent args)
     {
-        if (!ConditionPrefix(ent.Comp, ref args))
+        if (!TriggerConditionPrefix(ent.Comp, ref args))
             return;
 
         var cancel = !_whitelist.CheckBoth(args.User, ent.Comp.UserBlacklist, ent.Comp.UserWhitelist);
 
-        ConditionSuffix(ent.Comp, cancel, ref args);
+        TriggerConditionSuffix(ent.Comp, cancel, ref args);
     }
 
     private void OnUseDelayTriggerAttempt(Entity<UseDelayTriggerConditionComponent> ent, ref AttemptTriggerEvent args)
     {
-        if (!ConditionPrefix(ent.Comp, ref args))
+        if (!TriggerConditionPrefix(ent.Comp, ref args))
             return;
 
         var cancel = _useDelay.IsDelayed(ent.Owner, ent.Comp.UseDelayId);
 
-        ConditionSuffix(ent.Comp, cancel, ref args);
+        TriggerConditionSuffix(ent.Comp, cancel, ref args);
     }
 
     private void OnToggleTriggerAttempt(Entity<ToggleTriggerConditionComponent> ent, ref AttemptTriggerEvent args)
     {
-        if (!ConditionPrefix(ent.Comp, ref args))
+        if (!TriggerConditionPrefix(ent.Comp, ref args))
             return;
 
         var cancel = !ent.Comp.Enabled;
 
-        ConditionSuffix(ent.Comp, cancel, ref args);
+        TriggerConditionSuffix(ent.Comp, cancel, ref args);
     }
 
     private void OnToggleGetAltVerbs(Entity<ToggleTriggerConditionComponent> ent, ref GetVerbsEvent<AlternativeVerb> args)
@@ -106,7 +106,7 @@ public sealed partial class TriggerSystem
     private void OnRandomChanceTriggerAttempt(Entity<RandomChanceTriggerConditionComponent> ent,
         ref AttemptTriggerEvent args)
     {
-        if (!ConditionPrefix(ent.Comp, ref args))
+        if (!TriggerConditionPrefix(ent.Comp, ref args))
             return;
 
         // TODO: Replace with RandomPredicted once the engine PR is merged
@@ -121,6 +121,6 @@ public sealed partial class TriggerSystem
 
         var cancel = !rand.Prob(ent.Comp.SuccessChance); // When not successful, cancel = true
 
-        ConditionSuffix(ent.Comp, cancel, ref args);
+        TriggerConditionSuffix(ent.Comp, cancel, ref args);
     }
 }
