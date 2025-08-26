@@ -8,9 +8,9 @@ using Content.Shared.Mech;
 using Content.Shared.Mech.Components;
 using Content.Shared.Mech.Equipment.Components;
 using Content.Shared.Mobs.Components;
+using Content.Shared.Vehicle;
 using Content.Shared.Wall;
 using Robust.Server.GameObjects;
-using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Containers;
 using Robust.Shared.Map;
@@ -30,6 +30,7 @@ public sealed class MechGrabberSystem : EntitySystem
     [Dependency] private readonly InteractionSystem _interaction = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly TransformSystem _transform = default!;
+    [Dependency] private readonly VehicleSystem _vehicle = default!;
 
     /// <inheritdoc/>
     public override void Initialize()
@@ -145,7 +146,10 @@ public sealed class MechGrabberSystem : EntitySystem
         if (component.ItemContainer.ContainedEntities.Count >= component.MaxContents)
             return;
 
-        if (!TryComp<MechComponent>(args.User, out var mech) || mech.PilotSlot.ContainedEntity == target)
+        if (_vehicle.GetOperatorOrNull(args.User) == target)
+            return;
+
+        if (!TryComp<MechComponent>(args.User, out var mech))
             return;
 
         if (mech.Energy + component.GrabEnergyDelta < 0)
