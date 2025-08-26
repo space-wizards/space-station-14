@@ -61,29 +61,33 @@ public sealed partial class TriggerSystem : EntitySystem
     /// <param name="trigger">The entity that has the components that should be triggered.</param>
     /// <param name="user">The user of the trigger. Some effects may target the user instead of the trigger entity.</param>
     /// <param name="key">A key string to allow multiple, independent triggers on the same entity. If null then all triggers will activate.</param>
-    /// <returns>Whether or not the trigger has sucessfully activated an effect.</returns>
+    /// <returns>Whether any trigger has successfully activated an effect, including triggers caused by conditions canceling the attempt.</returns>
     public bool Trigger(EntityUid trigger, EntityUid? user = null, string? key = null)
     {
-        var cancelKeys = new HashSet<string>();
-        var attemptTriggerEvent = new AttemptTriggerEvent(user, cancelKeys, key);
+        var cancelKeys = new List<string>();
+        var attemptTriggerEvent = new AttemptTriggerEvent(cancelKeys, user, key);
         RaiseLocalEvent(trigger, ref attemptTriggerEvent);
 
-        if (!attemptTriggerEvent.Cancelled)
+        if (attemptTriggerEvent.Cancelled)
         {
-            var triggerEvent = new TriggerEvent(user, key);
+            var cancelledTriggerEvent = new TriggerEvent(cancelKeys, user);
+            RaiseLocalEvent(trigger, ref cancelledTriggerEvent, true);
+            return cancelledTriggerEvent.Handled;
+        }
+
+        if (key == null)
+        {
+            var triggerEvent = new TriggerEvent(null, user);
             RaiseLocalEvent(trigger, ref triggerEvent, true);
             return triggerEvent.Handled;
         }
-
-        var cancelKeyTriggered = false;
-        foreach (var cKey in cancelKeys)
+        else
         {
-            var triggerEvent = new TriggerEvent(user, cKey);
+            var keys = new List<string>() { key };
+            var triggerEvent = new TriggerEvent(keys, user);
             RaiseLocalEvent(trigger, ref triggerEvent, true);
-            cancelKeyTriggered |= triggerEvent.Handled;
+            return triggerEvent.Handled;
         }
-
-        return cancelKeyTriggered;
     }
 
     /// <summary>
