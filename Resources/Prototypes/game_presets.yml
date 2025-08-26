@@ -97,23 +97,6 @@
   - BasicRoundstartVariation
 
 - type: gamePreset
-  id: Dynamic
-  alias:
-  - dynamic
-  - multiantag
-  - director
-  name: dynamic-title
-  showInVote: true
-  description: dynamic-description
-  rules:
-  - DynamicRule
-  - DummyNonAntag
-  - DynamicStationEventScheduler
-  - MeteorSwarmScheduler
-  - SpaceTrafficControlEventScheduler
-  - BasicRoundstartVariation
-
-- type: gamePreset
   id: Secret
   alias:
     - secret
