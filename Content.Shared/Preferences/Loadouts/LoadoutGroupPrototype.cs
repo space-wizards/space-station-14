@@ -8,7 +8,7 @@ namespace Content.Shared.Preferences.Loadouts;
 /// Corresponds to a set of loadouts for a particular slot.
 /// </summary>
 [Prototype]
-public sealed partial class LoadoutGroupPrototype : IPrototype, IInheritingPrototype
+public sealed partial class LoadoutGroupPrototype : IPrototype, IInheritingPrototype // Ronstation - modification
 {
     [IdDataField]
     public string ID { get; private set; } = string.Empty;
