@@ -19,7 +19,7 @@ public sealed partial class SelectableComponentAdderComponent : Component
     /// <summary>
     /// The amount of times players can make a selection and add a component. If null, there is no limit.
     /// </summary>
-    [DataField]
+    [DataField, AutoNetworkedField]
     public int? Selections;
 
     /// <summary>
@@ -37,6 +37,12 @@ public sealed partial class ComponentAdderEntry
     /// </summary>
     [DataField(required: true)]
     public LocId VerbName;
+
+    /// <summary>
+    /// Popup to show when this option is selected.
+    /// </summary>
+    [DataField(required: true)]
+    public LocId? Popup;
 
     /// <summary>
     /// List of all the components that will get added when the verb is selected.
@@ -58,14 +64,14 @@ public sealed partial class ComponentAdderEntry
 }
 
 [Serializable, NetSerializable]
-public enum ComponentExistsSetting
+public enum ComponentExistsSetting : byte
 {
     // If one of the components exist, skip adding it and continue adding the rest.
-    // If all components already exist, don't show the verb
-    Skip    = 0,
+    // If all components already exist, disable the verb.
+    Skip = 0,
     // If a component already exists, replace it with the new one.
+    // The verb is always enabled.
     Replace = 1,
-    // Don't show the verb if any one of the components exists.
-    // If the component gets added
-    Block   = 2,
+    // Disable the verb if any one of the components already exists.
+    Block = 2,
 }

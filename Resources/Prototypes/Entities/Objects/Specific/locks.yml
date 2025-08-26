@@ -19,9 +19,11 @@
     selections: 1
     entries:
     - verbName: selectable-lock-verb-no-lock
+      popup: selectable-lock-verb-no-lock-popup
       priority: 0
       componentsToAdd: null
     - verbName: voice-trigger-lock-add-verb
+      popup: voice-trigger-lock-add-verb-popup
       priority: 1
       componentsToAdd:
       - type: TriggerOnVoice
