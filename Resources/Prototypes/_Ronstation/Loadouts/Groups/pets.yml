@@ -4,12 +4,7 @@
   minLimit: 0
   maxLimit: 1
   loadouts:
-  - PetMouseWhite
-  - PetMouseOrange
-  - PetMouseGray
-  - PetCockroach
-  - PetMothroach
-  - PetBee
-  - PetButterfly
   - PetSnail
-  - PetSnailMoth
+  - PetButterfly
+  - PetBee
+  - PetMothroach

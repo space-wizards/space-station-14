@@ -26,49 +26,24 @@
     - CannotSuicide
 
 - type: entity
-  id: MobPetMouse
-  name: Pet mouse
-  parent: [ BasePet, MobMouse ]
+  id: MobPetSnail
+  parent: [ BasePet, MobSnail ]
+  name: Pet snail
   components:
   - type: GhostRole
-    name: ghost-role-information-pet-mouse-name
-    allowSpeech: true
+    name: ghost-role-information-pet-snail-name
 
 - type: entity
-  id: MobPetMouse1
-  name: Pet mouse
-  parent: [ BasePet, MobMouse1 ]
+  id: MobPetButterfly
+  name: Pet butterfly
+  parent: [ BasePet, MobButterfly ]
   components:
   - type: GhostRole
-    name: ghost-role-information-pet-mouse-name
-    allowSpeech: true
+    name: ghost-role-information-pet-butterfly-name
+  - type: HTN
+    rootTask:
+      task: PetFollowCompount # Doesnt eat food
 
-- type: entity
-  id: MobPetMouse2
-  name: Pet mouse
-  parent: [ BasePet, MobMouse2 ]
-  components:
-  - type: GhostRole
-    name: ghost-role-information-pet-mouse-name
-    allowSpeech: true
-  
-- type: entity
-  id: MobPetCockroach
-  name: Pet cockroach
-  parent: [ BasePet, MobCockroach ]
-  components:
-  - type: GhostRole
-    name: ghost-role-information-pet-cockroach-name
-
-- type: entity
-  id: MobPetMothroach
-  name: Pet mothroach
-  parent: [ BasePet, MobMothroach ]
-  components:
-  - type: GhostRole
-    name: ghost-role-information-pet-mothroach-name
-    allowSpeech: true
-  
 - type: entity
   id: MobPetBee
   name: Pet bee
@@ -81,28 +56,10 @@
       task: PetFollowCompount # Doesnt eat food
 
 - type: entity
-  id: MobPetButterfly
-  name: Pet butterfly
-  parent: [ BasePet, MobButterfly ]
+  id: MobPetMothroach
+  name: Pet mothroach
+  parent: [ BasePet, MobMothroach ]
   components:
   - type: GhostRole
-    name: ghost-role-information-pet-butterfly-name
-  - type: HTN
-    rootTask:
-      task: PetFollowCompount # Doesnt eat food
-  
-- type: entity
-  id: MobPetSnail
-  parent: [ BasePet, MobSnail ]
-  name: Pet snail
-  components:
-  - type: GhostRole
-    name: ghost-role-information-pet-snail-name
-
-- type: entity
-  id: MobPetSnailMoth
-  parent: [ BasePet, MobSnailMoth ]
-  name: Pet snoth
-  components:
-  - type: GhostRole
-    name: ghost-role-information-pet-snoth-name
+    name: ghost-role-information-pet-mothroach-name
+    allowSpeech: true
