@@ -27,8 +27,8 @@ public static class ServerPackaging
 
     private static IReadOnlySet<string> ServerContentIgnoresResources { get; } = new HashSet<string>
     {
-        // Despite its name, this is only used by the client. And people keep thinking this is how they edit the guidebook.
         "ServerInfo",
+        "Changelog",
     };
 
     private static List<string> PlatformRids => Platforms
