@@ -362,7 +362,7 @@
     pocket1: MagazineRifleAP
     pocket2: MagazineRifleIncendiary
   inhand:
-    - WeaponRiflePeacemaker
+    - WeaponRiflePeacemaker # Starlight-edit: Changed from: WeaponRifleLecter
   storage:
     back:
     - WeaponDisabler
