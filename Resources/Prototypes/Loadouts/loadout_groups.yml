@@ -762,6 +762,7 @@
   name: loadout-group-station-engineer-head
   minLimit: 0
   loadouts:
+  - StationEngineerHardhatYellow
   - StationEngineerHardhatOrange
   - StationEngineerHardhatRed
   - SeniorEngineerBeret
@@ -811,7 +812,6 @@
   name: loadout-group-station-engineer-head
   minLimit: 0
   loadouts:
-  - AtmosphericTechnicianHardhatYellow
   - AtmosphericTechnicianHardhatBlue
 
 - type: loadoutGroup
