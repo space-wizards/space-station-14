@@ -1,6 +1,5 @@
 using Content.Shared.Administration.Logs;
 using Content.Shared.Containers.ItemSlots;
-using Content.Shared.Damage;
 using Content.Shared.Database;
 using Content.Shared.Examine;
 using Content.Shared.Lock;
@@ -13,21 +12,18 @@ using Robust.Shared.Containers;
 using Robust.Shared.Network;
 using Robust.Shared.Timing;
 using System.Diagnostics.CodeAnalysis;
-using System.Linq;
 
 namespace Content.Shared.Silicons.StationAi;
 
 /// <summary>
 /// This system is used to handle the actions of AI Restoration Consoles.
-/// These consoles can be used to repair damaged station AIs,
-/// or destroy them utterly.
+/// These consoles can be used to revive dead station AIs, or destroy them.
 /// </summary>
 public sealed partial class StationAiFixerConsoleSystem : EntitySystem
 {
     [Dependency] private readonly SharedUserInterfaceSystem _userInterface = default!;
     [Dependency] private readonly ItemSlotsSystem _itemSlots = default!;
     [Dependency] private readonly SharedContainerSystem _container = default!;
-    [Dependency] private readonly DamageableSystem _damageable = default!;
     [Dependency] private readonly MobStateSystem _mobState = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
@@ -152,10 +148,14 @@ public sealed partial class StationAiFixerConsoleSystem : EntitySystem
 
         if (IsTargetValid(ent, target, actionType))
         {
+            var duration = actionType == StationAiFixerConsoleAction.Repair ?
+                ent.Comp.RepairDuration :
+                ent.Comp.PurgeDuration;
+
             ent.Comp.ActionType = actionType;
             ent.Comp.ActionTarget = target;
             ent.Comp.ActionStartTime = _timing.CurTime;
-            ent.Comp.ActionEndTime = CalculateActionEndTime(ent, target, actionType);
+            ent.Comp.ActionEndTime = _timing.CurTime + duration;
             ent.Comp.CurrentActionStage = 0;
             Dirty(ent);
         }
@@ -219,17 +219,12 @@ public sealed partial class StationAiFixerConsoleSystem : EntitySystem
         {
             if (ent.Comp.ActionType == StationAiFixerConsoleAction.Repair)
             {
-                if (TryComp<DamageableComponent>(ent.Comp.ActionTarget, out var targetDamageable))
-                {
-                    _damageable.SetAllDamage(ent.Comp.ActionTarget.Value, targetDamageable, 0);
-                }
-
                 if (TryComp<MobStateComponent>(ent.Comp.ActionTarget, out var targetMobState))
                 {
                     _mobState.ChangeMobState(ent.Comp.ActionTarget.Value, MobState.Alive);
                 }
 
-                // Can't predict audio without a user :(
+                // TODO: play predicted sound once a user is not required
                 if (_net.IsServer && ent.Comp.RepairFinishedSound != null)
                 {
                     _audio.PlayPvs(ent.Comp.RepairFinishedSound, ent);
@@ -241,6 +236,7 @@ public sealed partial class StationAiFixerConsoleSystem : EntitySystem
                 _container.RemoveEntity(holder.Value, ent.Comp.ActionTarget.Value, force: true);
                 PredictedQueueDel(ent.Comp.ActionTarget);
 
+                // TODO: play predicted sound once a user is not required
                 if (_net.IsServer && ent.Comp.PurgeFinishedSound != null)
                 {
                     _audio.PlayPvs(ent.Comp.PurgeFinishedSound, ent);
@@ -297,41 +293,6 @@ public sealed partial class StationAiFixerConsoleSystem : EntitySystem
     }
 
     /// <summary>
-    /// Calculates the time at which a specified console action will conclude.
-    /// </summary>
-    /// <param name="ent">The console.</param>
-    /// <param name="target">The target entity.</param>
-    /// <param name="actionType">The action to be enacted on the target.</param>
-    /// <returns>TimeSpan in seconds.</returns>
-    private TimeSpan CalculateActionEndTime(Entity<StationAiFixerConsoleComponent> ent, EntityUid target, StationAiFixerConsoleAction actionType)
-    {
-        if (TryComp<DamageableComponent>(target, out var targetDamageable))
-        {
-            var duration = ent.Comp.ActionTimeLimits.Y;
-
-            if (actionType == StationAiFixerConsoleAction.Repair &&
-                ent.Comp.RepairRate > 0)
-            {
-                duration = (float)targetDamageable.TotalDamage / ent.Comp.RepairRate;
-            }
-            else if (actionType == StationAiFixerConsoleAction.Purge &&
-                ent.Comp.PurgeRate > 0 &&
-                TryComp<MobThresholdsComponent>(target, out var mobThresholds))
-            {
-                // If the target does not have a MobThresholdsComponent, the target will still be purged,
-                // but it will take the maximum amount of time to do so.
-                var lethalDamage = mobThresholds.Thresholds.Keys.Last() - targetDamageable.TotalDamage;
-                duration = (float)lethalDamage / ent.Comp.PurgeRate;
-            }
-
-            duration = Math.Clamp(duration, ent.Comp.ActionTimeLimits.X, ent.Comp.ActionTimeLimits.Y);
-            return _timing.CurTime + TimeSpan.FromSeconds(duration);
-        }
-
-        return _timing.CurTime;
-    }
-
-    /// <summary>
     /// Calculates the current stage of any in-progress actions.
     /// </summary>
     /// <param name="ent">The console.</param>
@@ -361,7 +322,7 @@ public sealed partial class StationAiFixerConsoleSystem : EntitySystem
 
         var stationAi = stationAiMindSlot.ContainedEntities[0];
 
-        if (!HasComp<DamageableComponent>(stationAi) || !HasComp<MobStateComponent>(stationAi))
+        if (!HasComp<MobStateComponent>(stationAi))
             return false;
 
         target = stationAi;
@@ -402,19 +363,11 @@ public sealed partial class StationAiFixerConsoleSystem : EntitySystem
         if (actionType == StationAiFixerConsoleAction.Purge)
             return true;
 
-        if (actionType == StationAiFixerConsoleAction.Repair)
+        if (actionType == StationAiFixerConsoleAction.Repair &&
+            TryComp<MobStateComponent>(target, out var targetMobState) &&
+            targetMobState.CurrentState == MobState.Dead)
         {
-            if (TryComp<DamageableComponent>(target, out var targetDamageable) &&
-                targetDamageable.TotalDamage > 0)
-            {
-                return true;
-            }
-
-            if (TryComp<MobStateComponent>(target, out var targetMobState) &&
-                targetMobState.CurrentState == MobState.Dead)
-            {
-                return true;
-            }
+            return true;
         }
 
         return false;

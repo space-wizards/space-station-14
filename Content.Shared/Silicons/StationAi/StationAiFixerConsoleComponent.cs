@@ -1,9 +1,6 @@
-using Content.Shared.Damage.Prototypes;
 using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
-using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
-using System.Numerics;
 
 namespace Content.Shared.Silicons.StationAi;
 
@@ -15,20 +12,16 @@ namespace Content.Shared.Silicons.StationAi;
 public sealed partial class StationAiFixerConsoleComponent : Component
 {
     /// <summary>
-    /// This is used to determine how long a repair will take to complete;
-    /// the duration is the total amount of damage on the target divided
-    /// by this rate (in seconds).
+    /// Determines how long a repair takes to complete (in seconds).
     /// </summary>
     [DataField]
-    public float RepairRate = 1.6667f;
+    public TimeSpan RepairDuration = TimeSpan.FromSeconds(30);
 
     /// <summary>
-    /// This is used to determine how long a purge will take to complete;
-    /// the duration is the target's last mob damage threshold minus total amount of damage
-    /// that they have already suffered divided by this rate (in seconds).
+    /// Determines how long a purge takes to complete (in seconds).
     /// </summary>
     [DataField]
-    public float PurgeRate = 10f;
+    public TimeSpan PurgeDuration = TimeSpan.FromSeconds(10);
 
     /// <summary>
     /// The number of stages that a console action (repair or purge)
@@ -38,13 +31,6 @@ public sealed partial class StationAiFixerConsoleComponent : Component
     /// </summary>
     [DataField]
     public int ActionStageCount = 4;
-
-    /// <summary>
-    /// Sets the minimum and maximum amount of time (in seconds)
-    /// that the console requires to perform an action.
-    /// </summary>
-    [DataField]
-    public Vector2 ActionTimeLimits = new Vector2(10f, 600f);
 
     /// <summary>
     /// The time at which the current action commenced.

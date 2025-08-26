@@ -129,7 +129,7 @@ public sealed partial class StationAiFixerConsoleWindow : FancyWindow
 
         // Update buttons
         EjectButton.Disabled = !intellicardPresent;
-        RepairButton.Disabled = !(stationAiPresent && (IsStationAiDamaged(stationAi) || !IsStationAiAlive(stationAi)));
+        RepairButton.Disabled = !stationAiPresent || !IsStationAiAlive(stationAi);
         PurgeButton.Disabled = !stationAiPresent;
 
         // Update progress bar
@@ -173,16 +173,6 @@ public sealed partial class StationAiFixerConsoleWindow : FancyWindow
         return IsStationAiAlive(uid) ?
             Loc.GetString("station-ai-fixer-console-window-station-ai-online") :
             Loc.GetString("station-ai-fixer-console-window-station-ai-offline");
-    }
-
-    private bool IsStationAiDamaged(EntityUid? uid)
-    {
-        if (_entManager.TryGetComponent<DamageableComponent>(uid, out var damageable))
-        {
-            return damageable.TotalDamage > 0;
-        }
-
-        return false;
     }
 
     private bool IsStationAiAlive(EntityUid? uid)
