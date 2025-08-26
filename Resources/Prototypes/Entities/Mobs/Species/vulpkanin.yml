@@ -8,7 +8,7 @@
   - type: HumanoidAppearance
     species: Vulpkanin
   - type: Hunger
-  - type: Inventory # Allows vulps to wear properly shaped helmets and other clothing. When displacement maps happen this might need to change.
+  - type: Inventory
     speciesId: vulpkanin
   - type: Thirst
   - type: MessyDrinker
@@ -33,7 +33,7 @@
     soundHit:
       path: /Audio/Weapons/pierce.ogg
     animation: WeaponArcClaw
-    damage: # Slightly increased damage to 6 total instead of 5.
+    damage:
       types:
         Piercing: 2
         Slash: 3
