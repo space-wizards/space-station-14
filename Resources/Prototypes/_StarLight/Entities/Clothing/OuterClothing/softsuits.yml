@@ -6,9 +6,9 @@
   description: A heavyweight, tough and padded EVA capable biosuit used for special cleanup operations.
   components:
   - type: Sprite
-    sprite: Clothing/OuterClothing/Hardsuits/cburn.rsi
+    sprite: _Starlight/Clothing/OuterClothing/Hardsuits/cburn.rsi
   - type: Clothing
-    sprite: Clothing/OuterClothing/Hardsuits/cburn.rsi
+    sprite: _Starlight/Clothing/OuterClothing/Hardsuits/cburn.rsi
     equipSound: /Audio/Mecha/mechmove03.ogg #starlight
     unequipSound: /Audio/Mecha/mechmove03.ogg #starlight
     equipDelay: 3 #starlight
