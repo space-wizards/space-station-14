@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: ScarKy0
-  changes:
-  - message: Cutting mail now correctly cancels when someone drags it away.
-    type: Fix
-  id: 8377
-  time: '2025-04-28T21:16:14.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/37019
 - author: themias
   changes:
   - message: cable terminals are now visually layered below floors, like other cables
@@ -3942,3 +3935,11 @@
   id: 8889
   time: '2025-08-26T20:59:23.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/39730
+- author: beck-thompson
+  changes:
+  - message: Locked chameleon storage items can now still be used as storage even
+      when locked.
+    type: Fix
+  id: 8890
+  time: '2025-08-26T21:50:19.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/39784
