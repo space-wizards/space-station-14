@@ -12525,5 +12525,12 @@ Entries:
   id: 146900
   time: '2025-08-26T19:02:12.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/1469
+- author: AthenaAI
+  changes:
+  - message: Added Medical Belt to Surgeon's spawning loadout
+    type: Add
+  id: 147700
+  time: '2025-08-26T20:04:03.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1477
 Order: -1
 
