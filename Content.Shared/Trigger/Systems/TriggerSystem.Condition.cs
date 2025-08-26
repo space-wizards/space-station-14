@@ -1,6 +1,5 @@
 ﻿using Content.Shared.Random.Helpers;
 using Content.Shared.Trigger.Components.Conditions;
-using Content.Shared.Trigger.Components.Triggers;
 using Content.Shared.Verbs;
 using Robust.Shared.Random;
 
@@ -20,68 +19,66 @@ public sealed partial class TriggerSystem
         SubscribeLocalEvent<RandomChanceTriggerConditionComponent, AttemptTriggerEvent>(OnRandomChanceTriggerAttempt);
     }
 
-    // Standard implementation of a trigger condition
-    private void OnWhitelistTriggerAttempt(Entity<WhitelistTriggerConditionComponent> ent, ref AttemptTriggerEvent args)
+    /// <summary>
+    /// Method placed at the start of trigger condition subscriptions to evaluate if this condition cares about this attempt event.
+    /// </summary>
+    /// <returns>True if this condition should try to modify this event.</returns>
+    private static bool ConditionPrefix<TComp>(TComp comp, ref AttemptTriggerEvent ev) where TComp : BaseTriggerConditionComponent
     {
         // If the trigger is already cancelled we only need to run checks if this condition wants to add a cancel trigger
-        if (args.Cancelled && ent.Comp.CancelKeyOut == null)
-            return;
+        if (ev.Cancelled && comp.CancelKeyOut == null)
+            return false;
 
         // Check if this condition cares about the trigger attempt
-        if (args.Key != null && !ent.Comp.Keys.Contains(args.Key))
-            return;
+        return ev.Key == null || comp.Keys.Contains(ev.Key);
+    }
 
-        // Unique condition check here!
-        var cancel = !_whitelist.CheckBoth(args.User, ent.Comp.UserBlacklist, ent.Comp.UserWhitelist);
+    /// <summary>
+    /// Method placed at the end of trigger condition subscriptions to modify the event.
+    /// </summary>
+    /// <param name="result">What the condition evaluated to.</param>
+    private static void ConditionSuffix<TComp>(TComp comp, bool result, ref AttemptTriggerEvent ev) where TComp : BaseTriggerConditionComponent
+    {
+        if (comp.Inverted)
+            result = !result;
 
-        // Only add the key to the cancel trigger if this condition (not another condition) would cancel it.
-        if (cancel && ent.Comp.CancelKeyOut != null)
-            args.CancelKeys.Add(ent.Comp.CancelKeyOut);
+        // Only add the key to the cancel trigger if this condition (not another condition) would cancel it
+        if (result && comp.CancelKeyOut != null)
+            ev.CancelKeys.Add(comp.CancelKeyOut);
 
         // Bitwise operation to assign true to args.Cancelled if cancel is true,
-        // but to also never overwrite an args.Cancelled that was set to true somewhere else
-        if (ent.Comp.Inverted)
-            args.Cancelled |= !cancel;
-        else
-            args.Cancelled |= cancel;
+        // but to also never overwrite with false if it was set to true somewhere else
+        ev.Cancelled |= result;
+    }
+
+    private void OnWhitelistTriggerAttempt(Entity<WhitelistTriggerConditionComponent> ent, ref AttemptTriggerEvent args)
+    {
+        if (!ConditionPrefix(ent.Comp, ref args))
+            return;
+
+        var cancel = !_whitelist.CheckBoth(args.User, ent.Comp.UserBlacklist, ent.Comp.UserWhitelist);
+
+        ConditionSuffix(ent.Comp, cancel, ref args);
     }
 
     private void OnUseDelayTriggerAttempt(Entity<UseDelayTriggerConditionComponent> ent, ref AttemptTriggerEvent args)
     {
-        if (args.Cancelled && ent.Comp.CancelKeyOut == null)
-            return;
-
-        if (args.Key != null && !ent.Comp.Keys.Contains(args.Key))
+        if (!ConditionPrefix(ent.Comp, ref args))
             return;
 
         var cancel = _useDelay.IsDelayed(ent.Owner, ent.Comp.UseDelayId);
 
-        if (cancel && ent.Comp.CancelKeyOut != null)
-            args.CancelKeys.Add(ent.Comp.CancelKeyOut);
-
-        if (ent.Comp.Inverted)
-            args.Cancelled |= !cancel;
-        else
-            args.Cancelled |= cancel;
+        ConditionSuffix(ent.Comp, cancel, ref args);
     }
 
     private void OnToggleTriggerAttempt(Entity<ToggleTriggerConditionComponent> ent, ref AttemptTriggerEvent args)
     {
-        if (args.Cancelled && ent.Comp.CancelKeyOut == null)
-            return;
-
-        if (args.Key != null && !ent.Comp.Keys.Contains(args.Key))
+        if (!ConditionPrefix(ent.Comp, ref args))
             return;
 
         var cancel = !ent.Comp.Enabled;
 
-        if (cancel && ent.Comp.CancelKeyOut != null)
-            args.CancelKeys.Add(ent.Comp.CancelKeyOut);
-
-        if (ent.Comp.Inverted)
-            args.Cancelled |= !cancel;
-        else
-            args.Cancelled |= cancel;
+        ConditionSuffix(ent.Comp, cancel, ref args);
     }
 
     private void OnToggleGetAltVerbs(Entity<ToggleTriggerConditionComponent> ent, ref GetVerbsEvent<AlternativeVerb> args)
@@ -109,10 +106,7 @@ public sealed partial class TriggerSystem
     private void OnRandomChanceTriggerAttempt(Entity<RandomChanceTriggerConditionComponent> ent,
         ref AttemptTriggerEvent args)
     {
-        if (args.Cancelled && ent.Comp.CancelKeyOut == null)
-            return;
-
-        if (args.Key != null && !ent.Comp.Keys.Contains(args.Key))
+        if (!ConditionPrefix(ent.Comp, ref args))
             return;
 
         // TODO: Replace with RandomPredicted once the engine PR is merged
@@ -127,12 +121,6 @@ public sealed partial class TriggerSystem
 
         var cancel = !rand.Prob(ent.Comp.SuccessChance); // When not successful, cancel = true
 
-        if (cancel && ent.Comp.CancelKeyOut != null)
-            args.CancelKeys.Add(ent.Comp.CancelKeyOut);
-
-        if (ent.Comp.Inverted)
-            args.Cancelled |= !cancel;
-        else
-            args.Cancelled |= cancel;
+        ConditionSuffix(ent.Comp, cancel, ref args);
     }
 }
