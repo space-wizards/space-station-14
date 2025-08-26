@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: lzk228
-  changes:
-  - message: Shelves don't have whitelists. But still max item size you can fit is
-      Normal.
-    type: Tweak
-  id: 8372
-  time: '2025-04-28T01:00:49.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/36986
 - author: KingFroozy
   changes:
   - message: Mime's suits were resprited.
@@ -3946,3 +3938,10 @@
   id: 8884
   time: '2025-08-26T00:44:01.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/39891
+- author: GR1231
+  changes:
+  - message: hats on Smile the slime should be correctly displaced
+    type: Fix
+  id: 8885
+  time: '2025-08-26T00:48:31.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/39824
