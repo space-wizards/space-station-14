@@ -20,6 +20,14 @@
   - NitrileGloves
 
 - type: loadoutGroup
+  id: MedicalBackpack
+  parent: BaseBackpack
+  loadouts:
+  - MedicalDoctorBackpack
+  - MedicalDoctorSatchel
+  - MedicalDoctorDuffel
+
+- type: loadoutGroup
   id: MedicalShoes
   parent: BaseShoes
   loadouts:

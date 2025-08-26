@@ -5,3 +5,11 @@
   - Glasses
   - GlassesJamjar
   - GlassesJensen
+
+- type: loadoutGroup
+  id: CommonBackpack
+  parent: BaseBackpack
+  loadouts:
+  - CommonBackpack
+  - CommonSatchel
+  - CommonDuffel
