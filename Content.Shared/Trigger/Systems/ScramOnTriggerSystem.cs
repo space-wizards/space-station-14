@@ -48,7 +48,7 @@ public sealed class ScramOnTriggerSystem : EntitySystem
 
         // We need stop the user from being pulled so they don't just get "attached" with whoever is pulling them.
         // This can for example happen when the user is cuffed and being pulled.
-        _pulling.TryStopPull(ent);
+        _pulling.TryStopPull(target);
 
         // Check if the user is pulling anything, and drop it if so.
         if (TryComp<PullerComponent>(target, out var puller))
