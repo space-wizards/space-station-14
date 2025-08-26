@@ -120,6 +120,13 @@ public sealed partial class AtmosphereSystem
             if (tiles[i] is not { Air: { } mixture })
             {
                 pressures[i] = 0f;
+
+                // To prevent any NaN/Div/0 errors, we just bite the bullet
+                // and set everything to the lowest possible value.
+                mixtVol[i] = 1;
+                mixtTemp[i] = 1;
+                mixtMoles[i] = float.Epsilon;
+                atmosR[i] = 1;
                 continue;
             }
 
