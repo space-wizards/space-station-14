@@ -9532,16 +9532,16 @@ entities:
     - type: Godmode
     missingComponents:
     - Destructible
-- proto: WarpPoint
-  entities:
-  - uid: 638
-    components:
-    - type: Transform
-      pos: -0.5,1.5
-      parent: 818
-    - type: WarpPoint
-      location: Terminal
-    - type: Godmode
+  - proto: GhostWarpPoint
+    entities:
+    - uid: 916
+      components:
+      - type: Transform
+        pos: -0.5,1.5
+        parent: 818
+      - type: WarpPoint
+        location: Terminal
+      - type: Godmode
 - proto: Windoor
   entities:
   - uid: 806
