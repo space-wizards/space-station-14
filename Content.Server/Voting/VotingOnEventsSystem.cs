@@ -24,16 +24,14 @@ public sealed class VotingOnEventsSystem : EntitySystem
 
     public void OnRoundRestartEvent(ref RoundRestartingEvent ev)
     {
-        TryCreateVoteOnRestart(CCVars.VoteAutoMapOnRoundEnd, "ui-vote-map-title", StandardVoteType.Map);
-        TryCreateVoteOnRestart(CCVars.VoteAutoPresetOnRoundEnd, "ui-vote-gamemode-title", StandardVoteType.Preset);
+        TryCreateVoteOnRestart(CCVars.VoteAutoMapOnRoundEnd, StandardVoteType.Map);
+        TryCreateVoteOnRestart(CCVars.VoteAutoPresetOnRoundEnd, StandardVoteType.Preset);
     }
 
-    private void TryCreateVoteOnRestart(CVarDef<bool> enabledCVar, string titleKey, StandardVoteType type)
+    private void TryCreateVoteOnRestart(CVarDef<bool> enabledCVar, StandardVoteType type)
     {
         if (!_cfg.GetCVar(enabledCVar))
             return;
-
-        var title = Loc.GetString(titleKey);
 
         if (_voteManager.ActiveVotes.All(v => !v.Type.Equals(type)))
         {
