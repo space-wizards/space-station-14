@@ -1,3 +1,5 @@
+# Modified by Ronstation contributor(s), therefore this file is licensed as MIT sublicensed with AGPL-v3.0.
+
 - type: entity
   id: BaseWeaponBattery
   parent: BaseItem
@@ -558,6 +560,8 @@
       - state: mag-unshaded-0
         map: ["enum.GunVisualLayers.MagUnshaded"]
         shader: unshaded
+  - type: Contraband # Ronstation
+    allowedJobs: [BlueshieldOfficer] # Ronstation
   - type: Gun
     selectedMode: FullAuto
     fireRate: 4.5
