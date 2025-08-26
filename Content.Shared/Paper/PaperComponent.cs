@@ -64,6 +64,12 @@ public sealed partial class PaperComponent : Component
     }
 
     [Serializable, NetSerializable]
+    public sealed class PaperInputFullTextMessage(string text) : BoundUserInterfaceMessage
+    {
+        public readonly string Text = text;
+    }
+
+    [Serializable, NetSerializable]
     public enum PaperUiKey
     {
         Key

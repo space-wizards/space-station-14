@@ -17,6 +17,7 @@ public sealed class PaperBoundUserInterface(EntityUid owner, Enum uiKey) : Bound
 
         _window = this.CreateWindow<PaperWindow>();
         _window.OnNewEdit += InputOnTextEntered;
+        _window.OnFullEdit += InputOnFullTextEntered;
 
         if (EntMan.TryGetComponent<PaperComponent>(Owner, out var paper))
         {
@@ -54,6 +55,12 @@ public sealed class PaperBoundUserInterface(EntityUid owner, Enum uiKey) : Bound
     {
         var playerUid = PlayerManager.LocalEntity ?? EntityUid.Invalid;
         SendMessage(new PaperInputTextMessage(EntMan.GetNetEntity(playerUid), editTool, text));
+        _window?.Clear();
+    }
+
+    private void InputOnFullTextEntered(string text)
+    {
+        SendMessage(new PaperInputFullTextMessage(text));
         _window?.Clear();
     }
 }

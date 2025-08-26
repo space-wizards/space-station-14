@@ -8,6 +8,8 @@ using Robust.Client.UserInterface.XAML;
 using Robust.Shared.Utility;
 using Robust.Client.UserInterface.RichText;
 using Content.Client.UserInterface.RichText;
+using Robust.Client.Input;
+using Robust.Shared.Input;
 
 namespace Content.Client.Paper.UI
 {
@@ -15,6 +17,7 @@ namespace Content.Client.Paper.UI
     public sealed partial class PaperWindow : BaseWindow
     {
         [Dependency] private readonly IResourceCache _resCache = null!;
+        [Dependency] private readonly IInputManager _inputManager = null!;
 
         private static readonly Color DefaultTextColor = new(25, 25, 25);
 
@@ -49,6 +52,7 @@ namespace Content.Client.Paper.UI
         private PaperWriteWindow? _paperWriteWindow;
 
         public event Action<NetEntity, string>? OnNewEdit;
+        public event Action<string>? OnFullEdit;
 
         private NetEntity _editTool;
 
@@ -92,6 +96,14 @@ namespace Content.Client.Paper.UI
                     _paperWriteWindow.OpenCentered();
                 }
             };
+
+            SaveButton.Text = Loc.GetString("paper-ui-save-button",
+                ("keybind", _inputManager.GetKeyFunctionButtonString(EngineKeyFunctions.MultilineTextSubmit)));
+            SaveButton.OnButtonUp += _ =>
+            {
+                OnFullEdit?.Invoke(Rope.Collapse(InputContainer.Input.TextRope));
+                InputContainer.Clear();
+            };
         }
 
         private void OnSaved(string text)
@@ -103,6 +115,7 @@ namespace Content.Client.Paper.UI
         public void Clear()
         {
             _paperWriteWindow?.Clear();
+            InputContainer.Clear();
         }
 
         /// <summary>
@@ -312,6 +325,10 @@ namespace Content.Client.Paper.UI
             BlankPaperIndicator.Visible = false;
             InputContainer.Visible = true;
             EditButtons.Visible = true;
+
+            var text = WrittenTextLabel.Text ?? string.Empty;
+            WrittenTextLabel.Text = string.Empty;
+            InputContainer.Input.TextRope = new Rope.Leaf(text);
         }
 
         /// <summary>

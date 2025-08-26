@@ -42,6 +42,7 @@ public sealed class PaperSystem : EntitySystem
         SubscribeLocalEvent<PaperComponent, ExaminedEvent>(OnExamined);
         SubscribeLocalEvent<PaperComponent, InteractUsingEvent>(OnInteractUsing);
         SubscribeLocalEvent<PaperComponent, PaperInputTextMessage>(OnInputTextMessage);
+        SubscribeLocalEvent<PaperComponent, PaperInputFullTextMessage>(OnInputFullTextMessage);
 
         SubscribeLocalEvent<RandomPaperContentComponent, MapInitEvent>(OnRandomPaperContentMapInit);
 
@@ -204,6 +205,35 @@ public sealed class PaperSystem : EntitySystem
         if (args.Text.Length <= entity.Comp.ContentSize)
         {
             PushContent(entity, args.Text);
+
+            var paperStatus = string.IsNullOrWhiteSpace(args.Text) ? PaperStatus.Blank : PaperStatus.Written;
+
+            if (TryComp<AppearanceComponent>(entity, out var appearance))
+                _appearance.SetData(entity, PaperVisuals.Status, paperStatus, appearance);
+
+            if (TryComp(entity, out MetaDataComponent? meta))
+                _metaSystem.SetEntityDescription(entity, "", meta);
+
+            _adminLog.Add(LogType.Chat,
+                LogImpact.Low,
+                $"{ToPrettyString(args.Actor):player} has written on {ToPrettyString(entity):entity} the following text: {args.Text}");
+
+            _audio.PlayPvs(entity.Comp.Sound, entity);
+        }
+
+        UpdateUserInterface(entity);
+    }
+
+    private void OnInputFullTextMessage(Entity<PaperComponent> entity, ref PaperInputFullTextMessage args)
+    {
+        var ev = new PaperWriteAttemptEvent(entity.Owner);
+        RaiseLocalEvent(args.Actor, ref ev);
+        if (ev.Cancelled)
+            return;
+
+        if (args.Text.Length <= entity.Comp.ContentSize)
+        {
+            SetContent(entity, args.Text);
 
             var paperStatus = string.IsNullOrWhiteSpace(args.Text) ? PaperStatus.Blank : PaperStatus.Written;
 

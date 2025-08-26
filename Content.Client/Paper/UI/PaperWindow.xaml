@@ -30,7 +30,7 @@
         </PanelContainer>
         <!-- Bottom buttons for editing -->
         <BoxContainer Name="EditButtons" Orientation="Horizontal" HorizontalAlignment="Right" Margin="6" Visible="False">
-            <Button Name="SaveButton" />
+            <Button Name="SaveButton" Text="{Loc ''}" />
         </BoxContainer>
     </BoxContainer>
 </paper:PaperWindow>
