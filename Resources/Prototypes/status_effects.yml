@@ -9,10 +9,6 @@
   alert: Stun
 
 - type: statusEffect
-  id: KnockedDown
-  alert: Stun
-
-- type: statusEffect
   id: SlowedDown
 
 - type: statusEffect
@@ -24,9 +20,6 @@
 
 - type: statusEffect
   id: AllCaps
-
-- type: statusEffect
-  id: SeeingRainbows
 
 - type: statusEffect
   id: Electrocution

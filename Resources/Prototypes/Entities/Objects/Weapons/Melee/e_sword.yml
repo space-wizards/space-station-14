@@ -159,7 +159,7 @@
 
 - type: entity
   name: pen
-  parent: BaseMeleeWeaponEnergy
+  parent: [BaseMeleeWeaponEnergy, VoiceLock]
   id: EnergyDagger
   suffix: E-Dagger
   description: 'A dark ink pen.'
@@ -222,6 +222,16 @@
     damage:
       types:
         Blunt: 1
+  - type: EmitSoundOnUse
+    sound:
+      path: /Audio/Items/pen_click.ogg
+      params:
+        volume: -4
+        maxDistance: 2
+  - type: UseDelay
+    delay: 1.5
+  - type: ItemToggleRequiresLock #  TODO: FIX THIS VERB IS COOKED
+    lockedPopup: null
   - type: Tag
     tags:
     - Write
@@ -296,12 +306,11 @@
             Slash: 12
             Heat: 12
             Structural: 15
-  # Disabled until the wield active sfx no longer stacks
-  #- type: ItemToggleActiveSound
-  #  activeSound:
-  #    path: /Audio/Weapons/ebladehum.ogg
-  #    params:
-  #      volume: 3
+  - type: ItemToggleActiveSound
+    activeSound:
+      path: /Audio/Weapons/ebladehum.ogg
+      params:
+        volume: 3
   - type: ComponentToggler
     components:
     - type: Sharp
@@ -387,22 +396,18 @@
     reflectProb: 1.0
     spread: 75
 
-# Nukie variant, reduced reflection rate.
-- type: entity
-  parent: HyperEutacticBlade
-  id: HyperEutaticBlade
-  name: hypereutatic-blade
-  description: Often mistaken for the Hypereutactic Blade. This mass produced, off-brand, knockoff gets the same job done but with less reflection.
-  components:
-  - type: Reflect
-    reflectProb: 0.75
-    spread: 75
-
 # Borgs
+
 - type: entity
-  suffix: One-Handed, For Borgs
+  parent: EnergySword
+  id: CyborgEnergySword
+  suffix: For Borgs
+  description: A very loud & dangerous sword with a beam made of pure, concentrated plasma. Specially designed for syndicate cyborgs.
+
+- type: entity
   parent: EnergySwordDouble
   id: CyborgEnergySwordDouble # why is this invalid if ID is BorgEnergySwordDouble
+  suffix: One-Handed, For Borgs
   description: Syndicate Command Interns thought that having one blade on the energy sword was not enough. Specially designed for syndicate cyborgs.
   components: # could add energy-draining like the L6C
   - type: Wieldable

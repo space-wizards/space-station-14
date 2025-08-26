@@ -1,6 +1,5 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
-using Content.Server.Atmos.Components;
 using Content.Server.Atmos.EntitySystems;
 using Content.Server.Body.Components;
 using Content.Server.Body.Systems;
@@ -22,6 +21,8 @@ using Content.Server.Temperature.Systems;
 using Content.Server.Traits.Assorted;
 using Content.Server.Zombies;
 using Content.Shared.Atmos;
+using Content.Shared.Atmos.Components;
+using Content.Shared.Body.Components;
 using Content.Shared.Coordinates.Helpers;
 using Content.Shared.EntityEffects.EffectConditions;
 using Content.Shared.EntityEffects.Effects.PlantMetabolism;
@@ -47,6 +48,8 @@ namespace Content.Server.EntityEffects;
 
 public sealed class EntityEffectSystem : EntitySystem
 {
+    private static readonly ProtoId<WeightedRandomFillSolutionPrototype> RandomPickBotanyReagent = "RandomPickBotanyReagent";
+
     [Dependency] private readonly AtmosphereSystem _atmosphere = default!;
     [Dependency] private readonly BloodstreamSystem _bloodstream = default!;
     [Dependency] private readonly ChatSystem _chat = default!;
@@ -130,7 +133,7 @@ public sealed class EntityEffectSystem : EntitySystem
         args.Result = false;
         if (TryComp(args.Args.TargetEntity, out TemperatureComponent? temp))
         {
-            if (temp.CurrentTemperature > args.Condition.Min && temp.CurrentTemperature < args.Condition.Max)
+            if (temp.CurrentTemperature >= args.Condition.Min && temp.CurrentTemperature <= args.Condition.Max)
                 args.Result = true;
         }
     }
@@ -518,7 +521,7 @@ public sealed class EntityEffectSystem : EntitySystem
 
             var spreadAmount = (int) Math.Max(0, Math.Ceiling((reagentArgs.Quantity / args.Effect.OverflowThreshold).Float()));
             var splitSolution = reagentArgs.Source.SplitSolution(reagentArgs.Source.Volume);
-            var transform = EntityManager.GetComponent<TransformComponent>(reagentArgs.TargetEntity);
+            var transform = Comp<TransformComponent>(reagentArgs.TargetEntity);
             var mapCoords = _xform.GetMapCoordinates(reagentArgs.TargetEntity, xform: transform);
 
             if (!_mapManager.TryFindGridAt(mapCoords, out var gridUid, out var grid) ||
@@ -531,7 +534,7 @@ public sealed class EntityEffectSystem : EntitySystem
                 return;
 
             var coords = _map.MapToGrid(gridUid, mapCoords);
-            var ent = EntityManager.SpawnEntity(args.Effect.PrototypeId, coords.SnapToGrid());
+            var ent = Spawn(args.Effect.PrototypeId, coords.SnapToGrid());
 
             _smoke.StartSmoke(ent, splitSolution, args.Effect.Duration, spreadAmount);
 
@@ -558,11 +561,11 @@ public sealed class EntityEffectSystem : EntitySystem
                 return;
 
             cleanseRate *= reagentArgs.Scale.Float();
-            _bloodstream.FlushChemicals(args.Args.TargetEntity, reagentArgs.Reagent.ID, cleanseRate);
+            _bloodstream.FlushChemicals(args.Args.TargetEntity, reagentArgs.Reagent, cleanseRate);
         }
         else
         {
-            _bloodstream.FlushChemicals(args.Args.TargetEntity, "", cleanseRate);
+            _bloodstream.FlushChemicals(args.Args.TargetEntity, null, cleanseRate);
         }
     }
 
@@ -641,7 +644,7 @@ public sealed class EntityEffectSystem : EntitySystem
 
     private void OnExecuteEmpReactionEffect(ref ExecuteEntityEffectEvent<EmpReactionEffect> args)
     {
-        var transform = EntityManager.GetComponent<TransformComponent>(args.Args.TargetEntity);
+        var transform = Comp<TransformComponent>(args.Args.TargetEntity);
 
         var range = args.Effect.EmpRangePerUnit;
 
@@ -697,7 +700,7 @@ public sealed class EntityEffectSystem : EntitySystem
 
     private void OnExecuteFlashReactionEffect(ref ExecuteEntityEffectEvent<FlashReactionEffect> args)
     {
-        var transform = EntityManager.GetComponent<TransformComponent>(args.Args.TargetEntity);
+        var transform = Comp<TransformComponent>(args.Args.TargetEntity);
 
         var range = 1f;
 
@@ -764,7 +767,7 @@ public sealed class EntityEffectSystem : EntitySystem
         ghostRole = AddComp<GhostRoleComponent>(uid);
         EnsureComp<GhostTakeoverAvailableComponent>(uid);
 
-        var entityData = EntityManager.GetComponent<MetaDataComponent>(uid);
+        var entityData = Comp<MetaDataComponent>(uid);
         ghostRole.RoleName = entityData.EntityName;
         ghostRole.RoleDescription = Loc.GetString("ghost-role-information-cognizine-description");
     }
@@ -780,7 +783,7 @@ public sealed class EntityEffectSystem : EntitySystem
                 amt *= reagentArgs.Scale.Float();
             }
 
-            _bloodstream.TryModifyBleedAmount(args.Args.TargetEntity, amt, blood);
+            _bloodstream.TryModifyBleedAmount((args.Args.TargetEntity, blood), amt);
         }
     }
 
@@ -796,7 +799,7 @@ public sealed class EntityEffectSystem : EntitySystem
                 amt *= reagentArgs.Scale;
             }
 
-            _bloodstream.TryModifyBloodLevel(args.Args.TargetEntity, amt, blood);
+            _bloodstream.TryModifyBloodLevel((args.Args.TargetEntity, blood), amt);
         }
     }
 
@@ -847,13 +850,13 @@ public sealed class EntityEffectSystem : EntitySystem
 
     private void OnExecutePlantMutateChemicals(ref ExecuteEntityEffectEvent<PlantMutateChemicals> args)
     {
-        var plantholder = EntityManager.GetComponent<PlantHolderComponent>(args.Args.TargetEntity);
+        var plantholder = Comp<PlantHolderComponent>(args.Args.TargetEntity);
 
         if (plantholder.Seed == null)
             return;
 
         var chemicals = plantholder.Seed.Chemicals;
-        var randomChems = _protoManager.Index<WeightedRandomFillSolutionPrototype>("RandomPickBotanyReagent").Fills;
+        var randomChems = _protoManager.Index(RandomPickBotanyReagent).Fills;
 
         // Add a random amount of a random chemical to this set of chemicals
         if (randomChems != null)
@@ -881,29 +884,7 @@ public sealed class EntityEffectSystem : EntitySystem
 
     private void OnExecutePlantMutateConsumeGasses(ref ExecuteEntityEffectEvent<PlantMutateConsumeGasses> args)
     {
-        var plantholder = EntityManager.GetComponent<PlantHolderComponent>(args.Args.TargetEntity);
-
-        if (plantholder.Seed == null)
-            return;
-
-        var gasses = plantholder.Seed.ExudeGasses;
-
-        // Add a random amount of a random gas to this gas dictionary
-        float amount = _random.NextFloat(args.Effect.MinValue, args.Effect.MaxValue);
-        Gas gas = _random.Pick(Enum.GetValues(typeof(Gas)).Cast<Gas>().ToList());
-        if (gasses.ContainsKey(gas))
-        {
-            gasses[gas] += amount;
-        }
-        else
-        {
-            gasses.Add(gas, amount);
-        }
-    }
-
-    private void OnExecutePlantMutateExudeGasses(ref ExecuteEntityEffectEvent<PlantMutateExudeGasses> args)
-    {
-        var plantholder = EntityManager.GetComponent<PlantHolderComponent>(args.Args.TargetEntity);
+        var plantholder = Comp<PlantHolderComponent>(args.Args.TargetEntity);
 
         if (plantholder.Seed == null)
             return;
@@ -923,9 +904,31 @@ public sealed class EntityEffectSystem : EntitySystem
         }
     }
 
+    private void OnExecutePlantMutateExudeGasses(ref ExecuteEntityEffectEvent<PlantMutateExudeGasses> args)
+    {
+        var plantholder = Comp<PlantHolderComponent>(args.Args.TargetEntity);
+
+        if (plantholder.Seed == null)
+            return;
+
+        var gasses = plantholder.Seed.ExudeGasses;
+
+        // Add a random amount of a random gas to this gas dictionary
+        float amount = _random.NextFloat(args.Effect.MinValue, args.Effect.MaxValue);
+        Gas gas = _random.Pick(Enum.GetValues(typeof(Gas)).Cast<Gas>().ToList());
+        if (gasses.ContainsKey(gas))
+        {
+            gasses[gas] += amount;
+        }
+        else
+        {
+            gasses.Add(gas, amount);
+        }
+    }
+
     private void OnExecutePlantMutateHarvest(ref ExecuteEntityEffectEvent<PlantMutateHarvest> args)
     {
-        var plantholder = EntityManager.GetComponent<PlantHolderComponent>(args.Args.TargetEntity);
+        var plantholder = Comp<PlantHolderComponent>(args.Args.TargetEntity);
 
         if (plantholder.Seed == null)
             return;
@@ -938,7 +941,7 @@ public sealed class EntityEffectSystem : EntitySystem
 
     private void OnExecutePlantSpeciesChange(ref ExecuteEntityEffectEvent<PlantSpeciesChange> args)
     {
-        var plantholder = EntityManager.GetComponent<PlantHolderComponent>(args.Args.TargetEntity);
+        var plantholder = Comp<PlantHolderComponent>(args.Args.TargetEntity);
         if (plantholder.Seed == null)
             return;
 
