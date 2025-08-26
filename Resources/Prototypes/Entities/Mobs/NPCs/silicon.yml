@@ -51,6 +51,15 @@
   - type: ProtectedFromStepTriggers
   - type: NoSlip
   - type: Insulated
+  # Starlight-start: Languages
+  - type: LanguageKnowledge
+    speaks:
+    - GalacticCommon
+    - Machine
+    understands:
+    - GalacticCommon
+    - Machine
+  # Starlight-end
 
 # Used for bots
 - type: entity

@@ -1,12 +1,9 @@
 collective-mind-chat-wrap-message = [bold]{$channel} {$number}: {$message}[/bold]
 collective-mind-chat-wrap-message-admin = {$source} ({$channel} {$number}): {$message}
 collective-mind-dioneas = Dionea
-collective-mind-arachnids = Arachnid
 collective-mind-carp = Carp
-collective-mind-zombie = Zombie
 collective-mind-abductor = Abductor
 collective-mind-spider = Spider
 collective-mind-changeling = Ling
 collective-mind-cluwne = Cluwn
 collective-mind-nexus = Nexus User
-collective-mind-empathy = Marish

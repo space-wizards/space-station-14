@@ -60,4 +60,30 @@ public sealed partial class TraitPrototype : IPrototype
     /// </summary>
     [DataField]
     public ProtoId<TraitCategoryPrototype>? Category;
+
+    // Starlight - Start
+    /// <summary>
+    ///     The list of all Spoken Languages that this trait adds.
+    /// </summary>
+    [DataField]
+    public List<string>? LanguagesSpoken { get; private set; } = default!;
+
+    /// <summary>
+    ///     The list of all Understood Languages that this trait adds.
+    /// </summary>
+    [DataField]
+    public List<string>? LanguagesUnderstood { get; private set; } = default!;
+
+    /// <summary>
+    ///     The list of all Spoken Languages that this trait removes.
+    /// </summary>
+    [DataField]
+    public List<string>? RemoveLanguagesSpoken { get; private set; } = default!;
+
+    /// <summary>
+    ///     The list of all Understood Languages that this trait removes.
+    /// </summary>
+    [DataField]
+    public List<string>? RemoveLanguagesUnderstood { get; private set; } = default!;
+    // Starlight - End
 }

@@ -1,0 +1,9 @@
+- type: language
+  id: Mothroach
+  icon: LanguageIconMoth
+  obfuscation:
+    !type:ReplacementObfuscation
+    replacement:
+    - Chirp!
+    - Chitter!
+    - Squeak!
