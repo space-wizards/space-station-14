@@ -510,7 +510,7 @@ entities:
     - type: Reflect
       soundOnReflect: !type:SoundPathSpecifier
         path: /Audio/Weapons/Guns/Hits/laser_sear_wall.ogg
-      reflectProb: 1
+      reflectProb: 0.33
       reflectingInHands: False
       slotFlags: OUTERCLOTHING
       reflects: Energy
@@ -530,7 +530,7 @@ entities:
     - type: Reflect
       soundOnReflect: !type:SoundPathSpecifier
         path: /Audio/Weapons/Guns/Hits/laser_sear_wall.ogg
-      reflectProb: 1
+      reflectProb: 0.33
       reflectingInHands: False
       slotFlags: OUTERCLOTHING
       reflects: Energy
