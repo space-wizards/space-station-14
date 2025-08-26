@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Content.Server.Database.Migrations.Sqlite
 {
     [DbContext(typeof(SqliteServerDbContext))]
-    [Migration("20250821030614_Pronouns")]
+    [Migration("20250826001407_Pronouns")]
     partial class Pronouns
     {
         /// <inheritdoc />

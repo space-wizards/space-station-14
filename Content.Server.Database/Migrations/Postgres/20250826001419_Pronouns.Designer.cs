@@ -16,7 +16,7 @@ using NpgsqlTypes;
 namespace Content.Server.Database.Migrations.Postgres
 {
     [DbContext(typeof(PostgresServerDbContext))]
-    [Migration("20250821030619_Pronouns")]
+    [Migration("20250826001419_Pronouns")]
     partial class Pronouns
     {
         /// <inheritdoc />
