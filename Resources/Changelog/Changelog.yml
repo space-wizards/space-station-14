@@ -1,82 +1,4 @@
 ﻿Entries:
-- author: TiniestShark
-  changes:
-  - message: Inhand sprites for (most) ammo mags and speedloaders.
-    type: Add
-  id: 8363
-  time: '2025-04-26T23:36:01.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/34235
-- author: UpAndLeaves
-  changes:
-  - message: Due to recent budget improvements, science now gets custom bio suit lockers.
-    type: Add
-  id: 8364
-  time: '2025-04-26T23:45:10.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/36929
-- author: ScarKy0
-  changes:
-  - message: Deliveries can now spawn as priority-type! Deliver them within their
-      time limit to earn a nice speso bonus.
-    type: Add
-  id: 8365
-  time: '2025-04-27T09:13:52.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/36968
-- author: PJB3005
-  changes:
-  - message: SMES and substations now have an (extremely fancy) interface to control
-      them with.
-    type: Add
-  id: 8366
-  time: '2025-04-27T11:08:34.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/36386
-- author: metalgearsloth
-  changes:
-  - message: Tweak mob collision values in line with RMC14.
-    type: Tweak
-  id: 8367
-  time: '2025-04-27T14:47:18.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/36851
-- author: Fildrance
-  changes:
-  - message: node scanner now dislplays live artifact info (while in range) after
-      linking to artifact
-    type: Tweak
-  id: 8368
-  time: '2025-04-27T15:11:13.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/36635
-- author: ArtisticRoomba
-  changes:
-  - message: A new Mapping changelog has been added. You can find it in a different
-      "Mapping" tab under the changelog menu.
-    type: Add
-  id: 8369
-  time: '2025-04-27T20:15:17.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/34848
-- author: ScarKy0
-  changes:
-  - message: Deliveries can now spawn as fragile-type! Deliver them intact to earn
-      a minor speso bonus.
-    type: Add
-  id: 8370
-  time: '2025-04-27T23:04:40.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/36980
-- author: Bokser815
-  changes:
-  - message: Cargo buy and sell pallets aboard the ATS can no longer be destroyed,
-      so cargo workers will no longer be unable to perform their job entirely for
-      the rest of the round.
-    type: Tweak
-  id: 8371
-  time: '2025-04-28T00:59:54.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/34195
-- author: lzk228
-  changes:
-  - message: Shelves don't have whitelists. But still max item size you can fit is
-      Normal.
-    type: Tweak
-  id: 8372
-  time: '2025-04-28T01:00:49.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/36986
 - author: KingFroozy
   changes:
   - message: Mime's suits were resprited.
@@ -3949,3 +3871,77 @@
   id: 8875
   time: '2025-08-21T01:02:54.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/38224
+- author: DinnerCalzone
+  changes:
+  - message: Fixed more grenades not playing sounds on explosion.
+    type: Fix
+  id: 8876
+  time: '2025-08-22T10:04:29.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/39815
+- author: Alkheemist
+  changes:
+  - message: Added stencil lettering decals to the spraypainter.
+    type: Add
+  id: 8877
+  time: '2025-08-22T10:11:07.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/39701
+- author: Kittygyat
+  changes:
+  - message: Made moths less susceptible to flames and heat. (4x Fire Damage -> 2x
+      Fire damage) (1.3x heat -> 1.2x heat).
+    type: Tweak
+  id: 8878
+  time: '2025-08-22T22:08:35.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/39672
+- author: JimmyToor
+  changes:
+  - message: Fixed only being able to vape with a blocked mouth.
+    type: Fix
+  id: 8879
+  time: '2025-08-22T22:26:48.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/39834
+- author: _miket, RedBookcase
+  changes:
+  - message: Added new Derelict Cyborg ghost roles, including the Derelict Engineer,
+      Janitor, Salvage, Medical, and Assault Cyborg!
+    type: Add
+  id: 8880
+  time: '2025-08-23T20:32:15.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38159
+- author: FungiFellow
+  changes:
+  - message: Added the Inflatable Module for borgs.
+    type: Add
+  id: 8881
+  time: '2025-08-23T22:15:28.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/35100
+- author: whatston3
+  changes:
+  - message: Lathes now batch items into jobs, which can be moved around in priority
+      or deleted.
+    type: Add
+  id: 8882
+  time: '2025-08-24T15:02:47.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38624
+- author: Princess-Cheeseballs
+  changes:
+  - message: Topicals now correctly scale their self heal time with the damage you
+      have taken.
+    type: Fix
+  id: 8883
+  time: '2025-08-25T18:05:55.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/39883
+- author: ToastEnjoyer
+  changes:
+  - message: Pacifists can no longer use the laser rifle
+    type: Fix
+  id: 8884
+  time: '2025-08-26T00:44:01.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/39891
+- author: GR1231
+  changes:
+  - message: hats on Smile the slime should be correctly displaced
+    type: Fix
+  id: 8885
+  time: '2025-08-26T00:48:31.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/39824
