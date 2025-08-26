@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: lzk228
-  changes:
-  - message: Scrubber now will turn on widenet in panic mode.
-    type: Tweak
-  id: 8375
-  time: '2025-04-28T19:22:05.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/37013
 - author: KingFroozy
   changes:
   - message: Changed the shoulder-length and shoulder-length over eye hairstyles.
@@ -3942,3 +3935,10 @@
   id: 8887
   time: '2025-08-26T14:18:10.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/39532
+- author: slarticodefast
+  changes:
+  - message: Removed the dynamic game mode from player votes.
+    type: Tweak
+  id: 8888
+  time: '2025-08-26T19:42:18.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/39902
