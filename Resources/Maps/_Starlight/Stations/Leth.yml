@@ -4,7 +4,7 @@ meta:
   engineVersion: 266.0.0
   forkId: ""
   forkVersion: ""
-  time: 08/26/2025 01:52:18
+  time: 08/26/2025 02:04:47
   entityCount: 16719
 maps:
 - 1
@@ -2004,7 +2004,6 @@ entities:
             2977: 56,7
             2978: 56,5
             2979: 34,4
-            2980: 33,3
             2981: 33,2
             2982: 35,4
             2983: 34,8
@@ -4401,11 +4400,6 @@ entities:
             6202: 35,3
         - node:
             color: '#DE3A3A96'
-            id: MiniTileInnerOverlaySE
-          decals:
-            6204: 33,3
-        - node:
-            color: '#DE3A3A96'
             id: MiniTileLineOverlayS
           decals:
             6203: 34,3
@@ -5441,7 +5435,6 @@ entities:
             155: -2,-14
             164: -3,-9
             205: 0,0
-            223: 4,-4
             235: 8,-8
             244: 10,-11
             250: 8,-10
@@ -5622,6 +5615,7 @@ entities:
             1446: 45,0
             2142: 26,-31
             2159: 25,-31
+            6211: 33,3
         - node:
             color: '#EFB34196'
             id: MiniTileWhiteInnerSe
@@ -5673,7 +5667,6 @@ entities:
             285: 3,-14
             296: -1,-4
             298: 0,-5
-            317: 4,-4
             2008: -37,19
             2037: -37,18
         - node:
@@ -5845,6 +5838,7 @@ entities:
             2141: 27,-31
             2158: 26,-31
             6177: 33,9
+            6210: 33,6
         - node:
             color: '#EFB34196'
             id: MiniTileWhiteInnerSw
@@ -6144,6 +6138,7 @@ entities:
             324: 2,-9
             2010: -38,18
             2013: -40,19
+            6209: 4,-6
         - node:
             color: '#3EB38896'
             id: MiniTileWhiteLineN
@@ -6431,6 +6426,7 @@ entities:
             2026: -42,12
             2027: -41,12
             2036: -38,18
+            6208: 4,-4
         - node:
             color: '#3EB38896'
             id: MiniTileWhiteLineS
@@ -6904,9 +6900,9 @@ entities:
             6149: 33,1
             6155: 33,5
             6156: 33,4
-            6157: 33,3
             6158: 33,2
             6201: 33,8
+            6212: 33,3
         - node:
             color: '#EFB34196'
             id: MiniTileWhiteLineW
@@ -7663,10 +7659,10 @@ entities:
             0: 30576
           2,-21:
             0: 13107
-            5: 2184
+            3: 2184
           3,-21:
             1: 36044
-            5: 273
+            3: 273
           -5,-17:
             1: 143
           -4,-20:
@@ -7729,8 +7725,8 @@ entities:
             1: 2184
           2,-22:
             0: 4369
-            3: 12
-            4: 3072
+            4: 12
+            5: 3072
           2,-25:
             1: 49152
           3,-24:
@@ -8847,38 +8843,38 @@ entities:
         - volume: 2500
           temperature: 293.15
           moles:
-          - 0
-          - 6666.982
-          - 0
-          - 0
-          - 0
-          - 0
-          - 0
-          - 0
-          - 0
-          - 0
-          - 0
-          - 0
-        - volume: 2500
-          temperature: 293.15
-          moles:
-          - 6666.982
-          - 0
-          - 0
-          - 0
-          - 0
-          - 0
-          - 0
-          - 0
-          - 0
-          - 0
-          - 0
-          - 0
-        - volume: 2500
-          temperature: 293.15
-          moles:
           - 1400.0662
           - 5266.916
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+        - volume: 2500
+          temperature: 293.15
+          moles:
+          - 0
+          - 6666.982
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+        - volume: 2500
+          temperature: 293.15
+          moles:
+          - 6666.982
+          - 0
           - 0
           - 0
           - 0
@@ -11038,7 +11034,7 @@ entities:
       pos: 7.5,-88.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -136840.25
+      secondsUntilStateChange: -137228.05
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -12289,7 +12285,7 @@ entities:
       pos: -11.5,-24.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -50277.25
+      secondsUntilStateChange: -50665.047
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
