@@ -506,7 +506,7 @@
   parent: [ BoxCardboard, BaseBagOpenClose ]
   name: happy honk meal
   suffix: Toy Safe
-  description: The toy is more edible than the food.
+  description: The toy is more edible than the food. Straight from the Honkas fly-thru, mmm..
   components:
   - type: Sprite
     sprite: Objects/Storage/Happyhonk/clown.rsi
@@ -586,6 +586,142 @@
       - id: GoldenBikeHorn
         prob: 0.1
         orGroup: GiftPool
+      - id: DrinkColaCan
+        orGroup: DrinkPool
+      - id: DrinkIcedTeaCan
+        orGroup: DrinkPool
+      - id: DrinkLemonLimeCan
+        orGroup: DrinkPool
+      - id: DrinkLemonLimeCranberryCan
+        orGroup: DrinkPool
+      - id: DrinkGrapeCan
+        orGroup: DrinkPool
+      - id: DrinkRootBeerCan
+        orGroup: DrinkPool
+      - id: DrinkSodaWaterCan
+        orGroup: DrinkPool
+      - id: DrinkSpaceMountainWindCan
+        orGroup: DrinkPool
+      - id: DrinkSpaceUpCan
+        orGroup: DrinkPool
+      - id: DrinkSolDryCan
+        orGroup: DrinkPool
+      - id: DrinkStarkistCan
+        orGroup: DrinkPool
+      - id: DrinkTonicWaterCan
+        orGroup: DrinkPool
+      - id: DrinkFourteenLokoCan
+        orGroup: DrinkPool
+      - id: DrinkDrGibbCan
+        orGroup: DrinkPool
+      - id: DrinkNukieCan
+        prob: 1
+        orGroup: DrinkPool
+      - id: DrinkEnergyDrinkCan
+        orGroup: DrinkPool
+      - id: DrinkPwrGameCan
+        orGroup: DrinkPool
+      - id: FoodBurgerJelly
+        orGroup: BurgerPool
+      - id: FoodBurgerBacon
+        orGroup: BurgerPool
+      - id: FoodBurgerBaseball
+        orGroup: BurgerPool
+      - id: FoodBurgerBear
+        orGroup: BurgerPool
+      - id: FoodBurgerBig
+        orGroup: BurgerPool
+      - id: FoodBurgerCheese
+        orGroup: BurgerPool
+      - id: FoodBurgerChicken
+        orGroup: BurgerPool
+      - id: FoodBurgerClown
+        orGroup: BurgerPool
+      - id: FoodBurgerCrab
+        orGroup: BurgerPool
+      - id: FoodBurgerCarp
+        orGroup: BurgerPool
+      - id: FoodBurgerFive
+        orGroup: BurgerPool
+      - id: FoodBurgerMcguffin
+        orGroup: BurgerPool
+      - id: FoodBurgerMcrib
+        orGroup: BurgerPool
+      - id: FoodBurgerPlain
+        orGroup: BurgerPool
+      - id: FoodBurgerRat
+        orGroup: BurgerPool
+      - id: FoodBurgerSoy
+        orGroup: BurgerPool
+      - id: FoodBurgerSuper
+        orGroup: BurgerPool
+      - id: FoodBurgerMime
+        orGroup: BurgerPool
+      - id: FoodDonkpocket
+        orGroup: DonkPool
+      - id: FoodDonkpocketDank
+        orGroup: DonkPool
+      - id: FoodDonkpocketSpicy
+        orGroup: DonkPool
+      - id: FoodDonkpocketTeriyaki
+        orGroup: DonkPool
+      - id: FoodDonkpocketPizza
+        orGroup: DonkPool
+      - id: FoodDonkpocketHonk
+        orGroup: DonkPool
+      - id: FoodDonkpocketBerry
+        orGroup: DonkPool
+      - id: FoodDonkpocketStonk
+        orGroup: DonkPool
+      - id: FoodDonkpocketCarp
+        orGroup: DonkPool
+      - id: FoodDonkpocketDink
+        orGroup: DonkPool
+      - id: FoodDonkpocketMoth
+        orGroup: DonkPool
+      - id: FoodCakeCheeseSlice
+        orGroup: SidesPool
+      - id: FoodCakeOrangeSlice
+        orGroup: SidesPool
+      - id: FoodCakeChocolateSlice
+        orGroup: SidesPool
+      - id: FoodCakeBirthdaySlice
+        orGroup: SidesPool
+      - id: FoodCakeSuppermatterSlice
+        orGroup: SidesPool
+      - id: FoodCakeCottonSlice
+        orGroup: SidesPool
+      - id: FoodCakeBerryDelightSlice
+        orGroup: SidesPool
+      - id: FoodDonutPink
+        orGroup: SidesPool
+      - id: FoodDonutChocolate
+        orGroup: SidesPool
+      - id: FoodBakedMuffinBerry
+        orGroup: SidesPool
+      - id: FoodBakedCookie
+        orGroup: SidesPool
+      - id: FoodBakedCannoli
+        orGroup: SidesPool
+      - id: FoodBakedBrownie
+        orGroup: SidesPool
+      - id: FoodBakedCroissant
+        orGroup: SidesPool
+      - id: FoodFrozenSundae
+        orGroup: SidesPool
+      - id: FoodFrozenCornuto
+        orGroup: SidesPool
+      - id: CigPackBlue
+        orGroup: SidesPool
+      - id: CigPackSyndicate
+        prob: 1
+        orGroup: SidesPool
+      - id: CigPackMixed
+        orGroup: SidesPool
+      - id: CigPackRollie
+        orGroup: SidesPool
+      - id: CigPackMedRollie
+        orGroup: SidesPool
 
 - type: entity
   id: HappyHonkMime
