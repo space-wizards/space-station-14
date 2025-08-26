@@ -11,3 +11,4 @@ loadout-group-belt = Belt
 loadout-group-outerclothing = Outer Clothing
 loadout-group-shoes = Shoes
 loadout-group-trinkets = Trinkets
+loadout-group-pets = Pets
