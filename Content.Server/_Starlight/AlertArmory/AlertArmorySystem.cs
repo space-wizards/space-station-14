@@ -129,8 +129,8 @@ public sealed class AlertArmorySystem : EntitySystem
     ///</summary>
     private void AnnounceShuttleDocking(EntityUid uid, AlertArmoryShuttleComponent comp, ref FTLCompletedEvent ev)
     {
-        if (ev.FromMapUid != comp.ArmorySpaceUid)
-            return;
+        if (ev.MapUid == comp.ArmorySpaceUid)
+            return; // if we came from armory space announce our arrival.
 
         var xform = Transform(uid);
         var location = FormattedMessage.RemoveMarkupPermissive(_nav.GetNearestBeaconString((uid, xform)));

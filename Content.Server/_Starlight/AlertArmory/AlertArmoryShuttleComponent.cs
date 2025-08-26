@@ -1,6 +1,6 @@
-using Content.Server.Acz;
+using Content.Shared.Tag;
 using Robust.Shared.Map;
-
+using Robust.Shared.Prototypes;
 namespace Content.Server.Starlight.AlertArmory;
 
 /// <summary>
@@ -13,7 +13,7 @@ public sealed partial class AlertArmoryShuttleComponent : Component
     public EntityUid Station;
 
     [DataField]
-    public ProtoId<TagPrototype> DockTag = "DockGamma";
+    public ProtoId<TagPrototype>? DockTag = "DockGamma";
 
     [ViewVariables]
     public string? Announcement = null;

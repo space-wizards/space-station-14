@@ -4,8 +4,8 @@ meta:
   engineVersion: 266.0.0
   forkId: ""
   forkVersion: ""
-  time: 08/25/2025 06:32:49
-  entityCount: 128
+  time: 08/26/2025 05:42:46
+  entityCount: 154
 maps: []
 grids:
 - 1
@@ -90,23 +90,24 @@ entities:
         tiles:
           0,0:
             0: 2039
-            1: 12288
-            2: 16384
+            1: 4096
+            2: 8192
+            3: 16384
           0,-1:
-            3: 20480
+            4: 20480
             0: 8288
-            4: 2048
+            5: 2048
           -1,0:
             0: 3278
-            5: 32768
-            6: 16384
+            6: 32768
+            3: 16384
           0,1:
-            4: 8
+            5: 8
           -1,1:
-            4: 2
+            5: 2
           -1,-1:
             0: 49344
-            4: 512
+            5: 512
         uniqueMixes:
         - volume: 2500
           temperature: 293.15
@@ -143,6 +144,21 @@ entities:
           moles:
           - 16.99477
           - 63.932716
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+        - volume: 2500
+          temperature: 293.14886
+          moles:
+          - 15.635188
+          - 58.8181
           - 0
           - 0
           - 0
@@ -198,21 +214,6 @@ entities:
           - 0
           - 0
           - 0
-        - volume: 2500
-          temperature: 293.14886
-          moles:
-          - 15.635188
-          - 58.8181
-          - 0
-          - 0
-          - 0
-          - 0
-          - 0
-          - 0
-          - 0
-          - 0
-          - 0
-          - 0
         chunkSize: 4
     - type: GasTileOverlay
     - type: RadiationGridResistance
@@ -254,6 +255,18 @@ entities:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 3.5,1.5
+      parent: 1
+- proto: Beaker
+  entities:
+  - uid: 77
+    components:
+    - type: Transform
+      pos: -0.87424344,3.8348532
+      parent: 1
+  - uid: 78
+    components:
+    - type: Transform
+      pos: -0.8638267,3.4911032
       parent: 1
 - proto: CableApcExtension
   entities:
@@ -352,6 +365,13 @@ entities:
     - type: Transform
       pos: -1.5,-2.5
       parent: 1
+- proto: CableApcStack1
+  entities:
+  - uid: 43
+    components:
+    - type: Transform
+      pos: -1.5617435,3.3869364
+      parent: 1
 - proto: CableHV
   entities:
   - uid: 24
@@ -402,8 +422,35 @@ entities:
       rot: 3.141592653589793 rad
       pos: 1.5,-2.5
       parent: 1
+- proto: ChemicalPayload
+  entities:
+  - uid: 76
+    components:
+    - type: Transform
+      pos: -1.2804935,3.72027
+      parent: 1
 - proto: ClothingHeadHelmetReflective
   entities:
+  - uid: 28
+    components:
+    - type: Transform
+      pos: 1.6542711,-0.34698614
+      parent: 1
+  - uid: 29
+    components:
+    - type: Transform
+      pos: 1.7480211,-0.5449028
+      parent: 1
+  - uid: 33
+    components:
+    - type: Transform
+      pos: 1.9771879,-0.34698614
+      parent: 1
+  - uid: 36
+    components:
+    - type: Transform
+      pos: 2.0605211,-0.5449028
+      parent: 1
   - uid: 115
     components:
     - type: Transform
@@ -424,28 +471,6 @@ entities:
     - type: Transform
       pos: 2.737889,-0.5329813
       parent: 1
-- proto: ClothingOuterArmorReflective
-  entities:
-  - uid: 111
-    components:
-    - type: Transform
-      pos: 0.46011096,-0.7737222
-      parent: 1
-  - uid: 112
-    components:
-    - type: Transform
-      pos: 0.6823332,-0.55149996
-      parent: 1
-  - uid: 113
-    components:
-    - type: Transform
-      pos: 0.96011096,-0.7829813
-      parent: 1
-  - uid: 114
-    components:
-    - type: Transform
-      pos: 1.1915922,-0.5237222
-      parent: 1
 - proto: ClothingOuterHardsuitERTMedical
   entities:
   - uid: 119
@@ -454,7 +479,7 @@ entities:
       desc: A reflective hardsuit with advanced shielding from spacing and energy weapons.
       name: reflective hardsuit
     - type: Transform
-      pos: 1.9676259,-0.46816656
+      pos: 0.9667712,-0.40948614
       parent: 1
     - type: Reflect
       soundOnReflect: !type:SoundPathSpecifier
@@ -474,7 +499,7 @@ entities:
       desc: A reflective hardsuit with advanced shielding from spacing and energy weapons.
       name: reflective hardsuit
     - type: Transform
-      pos: 1.6435516,-0.45890746
+      pos: 0.4459378,-0.40948614
       parent: 1
     - type: Reflect
       soundOnReflect: !type:SoundPathSpecifier
@@ -488,342 +513,12 @@ entities:
     - ExplosionResistance
     - StaminaResistance
     - Armor
-- proto: EmergencyLight
+- proto: CrateGenericSteel
   entities:
-  - uid: 30
-    components:
-    - type: Transform
-      rot: -1.5707963267948966 rad
-      pos: 2.5,0.5
-      parent: 1
-  - uid: 31
-    components:
-    - type: Transform
-      rot: 1.5707963267948966 rad
-      pos: -1.5,1.5
-      parent: 1
-  - uid: 32
-    components:
-    - type: Transform
-      pos: 0.5,3.5
-      parent: 1
-- proto: EmpGrenade
-  entities:
-  - uid: 89
-    components:
-    - type: Transform
-      parent: 40
-    - type: Physics
-      canCollide: False
-    - type: InsideEntityStorage
-  - uid: 90
-    components:
-    - type: Transform
-      parent: 40
-    - type: Physics
-      canCollide: False
-    - type: InsideEntityStorage
-  - uid: 91
-    components:
-    - type: Transform
-      parent: 40
-    - type: Physics
-      canCollide: False
-    - type: InsideEntityStorage
-  - uid: 92
-    components:
-    - type: Transform
-      parent: 40
-    - type: Physics
-      canCollide: False
-    - type: InsideEntityStorage
-  - uid: 93
-    components:
-    - type: Transform
-      parent: 40
-    - type: Physics
-      canCollide: False
-    - type: InsideEntityStorage
-  - uid: 94
-    components:
-    - type: Transform
-      parent: 40
-    - type: Physics
-      canCollide: False
-    - type: InsideEntityStorage
-  - uid: 95
-    components:
-    - type: Transform
-      parent: 40
-    - type: Physics
-      canCollide: False
-    - type: InsideEntityStorage
-  - uid: 96
-    components:
-    - type: Transform
-      parent: 40
-    - type: Physics
-      canCollide: False
-    - type: InsideEntityStorage
-  - uid: 97
-    components:
-    - type: Transform
-      parent: 40
-    - type: Physics
-      canCollide: False
-    - type: InsideEntityStorage
-  - uid: 98
-    components:
-    - type: Transform
-      parent: 40
-    - type: Physics
-      canCollide: False
-    - type: InsideEntityStorage
-  - uid: 99
-    components:
-    - type: Transform
-      parent: 40
-    - type: Physics
-      canCollide: False
-    - type: InsideEntityStorage
-  - uid: 101
-    components:
-    - type: Transform
-      parent: 40
-    - type: Physics
-      canCollide: False
-    - type: InsideEntityStorage
-- proto: GeneratorBasic15kW
-  entities:
-  - uid: 34
-    components:
-    - type: Transform
-      pos: -0.5,-0.5
-      parent: 1
-    missingComponents:
-    - Anchorable
-- proto: GravityGeneratorMini
-  entities:
-  - uid: 35
-    components:
-    - type: Transform
-      pos: -1.5,-0.5
-      parent: 1
-    missingComponents:
-    - Anchorable
-- proto: GrenadeEMP
-  entities:
-  - uid: 28
-    components:
-    - type: Transform
-      parent: 37
-    - type: Physics
-      canCollide: False
-    - type: InsideEntityStorage
-  - uid: 39
-    components:
-    - type: Transform
-      parent: 38
-    - type: Physics
-      canCollide: False
-    - type: InsideEntityStorage
-  - uid: 76
-    components:
-    - type: Transform
-      parent: 37
-    - type: Physics
-      canCollide: False
-    - type: InsideEntityStorage
-  - uid: 77
-    components:
-    - type: Transform
-      parent: 37
-    - type: Physics
-      canCollide: False
-    - type: InsideEntityStorage
-  - uid: 78
-    components:
-    - type: Transform
-      parent: 37
-    - type: Physics
-      canCollide: False
-    - type: InsideEntityStorage
-  - uid: 79
-    components:
-    - type: Transform
-      parent: 37
-    - type: Physics
-      canCollide: False
-    - type: InsideEntityStorage
-  - uid: 80
-    components:
-    - type: Transform
-      parent: 37
-    - type: Physics
-      canCollide: False
-    - type: InsideEntityStorage
-  - uid: 82
-    components:
-    - type: Transform
-      parent: 38
-    - type: Physics
-      canCollide: False
-    - type: InsideEntityStorage
-  - uid: 83
-    components:
-    - type: Transform
-      parent: 38
-    - type: Physics
-      canCollide: False
-    - type: InsideEntityStorage
   - uid: 84
     components:
     - type: Transform
-      parent: 38
-    - type: Physics
-      canCollide: False
-    - type: InsideEntityStorage
-  - uid: 85
-    components:
-    - type: Transform
-      parent: 38
-    - type: Physics
-      canCollide: False
-    - type: InsideEntityStorage
-  - uid: 86
-    components:
-    - type: Transform
-      parent: 38
-    - type: Physics
-      canCollide: False
-    - type: InsideEntityStorage
-- proto: GunSafeBaseSecure
-  entities:
-  - uid: 29
-    components:
-    - type: MetaData
-      name: ion rifle safe
-    - type: Transform
-      pos: 0.5,3.5
-      parent: 1
-    - type: EntityStorage
-      air:
-        volume: 200
-        immutable: False
-        temperature: 293.1462
-        moles:
-        - 1.606311
-        - 6.042789
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-    - type: ContainerContainer
-      containers:
-        entity_storage: !type:Container
-          showEnts: False
-          occludes: True
-          ents:
-          - 33
-          - 36
-        paper_label: !type:ContainerSlot
-          showEnts: False
-          occludes: True
-          ent: null
-  - uid: 37
-    components:
-    - type: MetaData
-      name: EMP Hydra safe
-    - type: Transform
-      pos: -0.5,3.5
-      parent: 1
-    - type: ContainerContainer
-      containers:
-        entity_storage: !type:Container
-          showEnts: False
-          occludes: True
-          ents:
-          - 87
-          - 76
-          - 80
-          - 79
-          - 78
-          - 77
-          - 28
-        paper_label: !type:ContainerSlot
-          showEnts: False
-          occludes: True
-          ent: null
-    - type: EntityStorage
-      air:
-        volume: 200
-        immutable: False
-        temperature: 293.14597
-        moles:
-        - 1.606311
-        - 6.042789
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-  - uid: 38
-    components:
-    - type: MetaData
-      name: EMP Hydra safe
-    - type: Transform
-      pos: -1.5,3.5
-      parent: 1
-    - type: ContainerContainer
-      containers:
-        entity_storage: !type:Container
-          showEnts: False
-          occludes: True
-          ents:
-          - 88
-          - 82
-          - 86
-          - 85
-          - 84
-          - 83
-          - 39
-        paper_label: !type:ContainerSlot
-          showEnts: False
-          occludes: True
-          ent: null
-    - type: EntityStorage
-      air:
-        volume: 200
-        immutable: False
-        temperature: 293.14502
-        moles:
-        - 1.3595816
-        - 5.1146173
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-  - uid: 40
-    components:
-    - type: Transform
-      pos: 2.5,3.5
+      pos: 1.5,3.5
       parent: 1
     - type: EntityStorage
       air:
@@ -849,6 +544,10 @@ entities:
           showEnts: False
           occludes: True
           ents:
+          - 85
+          - 86
+          - 87
+          - 88
           - 89
           - 90
           - 91
@@ -861,25 +560,37 @@ entities:
           - 98
           - 99
           - 101
+          - 111
+          - 112
+          - 113
+          - 114
+          - 121
+          - 125
+          - 126
+          - 127
+          - 128
+          - 129
+          - 130
+          - 131
+          - 132
+          - 133
         paper_label: !type:ContainerSlot
           showEnts: False
           occludes: True
           ent: null
-  - uid: 41
+  - uid: 134
     components:
-    - type: MetaData
-      name: ion rifle safe
     - type: Transform
-      pos: 1.5,3.5
+      pos: 2.5,3.5
       parent: 1
     - type: EntityStorage
       air:
         volume: 200
         immutable: False
-        temperature: 293.1462
+        temperature: 293.14502
         moles:
-        - 1.606311
-        - 6.042789
+        - 1.3595816
+        - 5.1146173
         - 0
         - 0
         - 0
@@ -896,12 +607,62 @@ entities:
           showEnts: False
           occludes: True
           ents:
-          - 43
-          - 44
+          - 135
+          - 136
+          - 137
+          - 138
+          - 139
+          - 141
+          - 142
+          - 143
+          - 144
+          - 145
+          - 146
+          - 147
+          - 148
+          - 149
+          - 150
         paper_label: !type:ContainerSlot
           showEnts: False
           occludes: True
           ent: null
+- proto: EmergencyLight
+  entities:
+  - uid: 30
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: 2.5,0.5
+      parent: 1
+  - uid: 31
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: -1.5,1.5
+      parent: 1
+  - uid: 32
+    components:
+    - type: Transform
+      pos: 0.5,3.5
+      parent: 1
+- proto: GeneratorBasic15kW
+  entities:
+  - uid: 34
+    components:
+    - type: Transform
+      pos: -0.5,-0.5
+      parent: 1
+    missingComponents:
+    - Anchorable
+- proto: GravityGeneratorMini
+  entities:
+  - uid: 35
+    components:
+    - type: Transform
+      pos: -1.5,-0.5
+      parent: 1
+    missingComponents:
+    - Anchorable
 - proto: HolopadLongRange
   entities:
   - uid: 42
@@ -911,6 +672,196 @@ entities:
       parent: 1
     - type: Label
       currentLabel: Psi Armory
+- proto: IngotGold
+  entities:
+  - uid: 141
+    components:
+    - type: Transform
+      parent: 134
+    - type: Physics
+      canCollide: False
+    - type: InsideEntityStorage
+  - uid: 142
+    components:
+    - type: Transform
+      parent: 134
+    - type: Physics
+      canCollide: False
+    - type: InsideEntityStorage
+  - uid: 143
+    components:
+    - type: Transform
+      parent: 134
+    - type: Physics
+      canCollide: False
+    - type: InsideEntityStorage
+  - uid: 144
+    components:
+    - type: Transform
+      parent: 134
+    - type: Physics
+      canCollide: False
+    - type: InsideEntityStorage
+  - uid: 145
+    components:
+    - type: Transform
+      parent: 134
+    - type: Physics
+      canCollide: False
+    - type: InsideEntityStorage
+  - uid: 146
+    components:
+    - type: Transform
+      parent: 134
+    - type: Physics
+      canCollide: False
+    - type: InsideEntityStorage
+  - uid: 147
+    components:
+    - type: Transform
+      parent: 134
+    - type: Physics
+      canCollide: False
+    - type: InsideEntityStorage
+  - uid: 148
+    components:
+    - type: Transform
+      parent: 134
+    - type: Physics
+      canCollide: False
+    - type: InsideEntityStorage
+  - uid: 149
+    components:
+    - type: Transform
+      parent: 134
+    - type: Physics
+      canCollide: False
+    - type: InsideEntityStorage
+  - uid: 150
+    components:
+    - type: Transform
+      parent: 134
+    - type: Physics
+      canCollide: False
+    - type: InsideEntityStorage
+- proto: IngotSilver
+  entities:
+  - uid: 135
+    components:
+    - type: Transform
+      parent: 134
+    - type: Physics
+      canCollide: False
+    - type: InsideEntityStorage
+  - uid: 136
+    components:
+    - type: Transform
+      parent: 134
+    - type: Physics
+      canCollide: False
+    - type: InsideEntityStorage
+  - uid: 137
+    components:
+    - type: Transform
+      parent: 134
+    - type: Physics
+      canCollide: False
+    - type: InsideEntityStorage
+  - uid: 138
+    components:
+    - type: Transform
+      parent: 134
+    - type: Physics
+      canCollide: False
+    - type: InsideEntityStorage
+  - uid: 139
+    components:
+    - type: Transform
+      parent: 134
+    - type: Physics
+      canCollide: False
+    - type: InsideEntityStorage
+- proto: JugAluminium
+  entities:
+  - uid: 80
+    components:
+    - type: Transform
+      pos: 0.19196236,3.6056864
+      parent: 1
+- proto: JugIron
+  entities:
+  - uid: 79
+    components:
+    - type: Transform
+      pos: -0.24553764,3.5917976
+      parent: 1
+- proto: JugUranium
+  entities:
+  - uid: 82
+    components:
+    - type: Transform
+      pos: 0.65029573,3.6195753
+      parent: 1
+- proto: ModularGrenade
+  entities:
+  - uid: 37
+    components:
+    - type: Transform
+      pos: -1.7492435,3.4286032
+      parent: 1
+- proto: Paper
+  entities:
+  - uid: 83
+    components:
+    - type: Transform
+      pos: -0.6145863,3.5848532
+      parent: 1
+    - type: Paper
+      stampState: paper_stamp-hos
+      stampedBy:
+      - font: /Fonts/NotoSans/NotoSans-Regular.ttf
+        type: RubberStamp
+        stampedColor: '#CC0000FF'
+        stampedName: Central Security Division
+      - font: /Fonts/NotoSans/NotoSans-Regular.ttf
+        type: RubberStamp
+        stampedColor: '#0AAFC3FF'
+        stampedName: Central Medical Division
+      - font: /Fonts/NotoSans/NotoSans-Regular.ttf
+        type: RubberStamp
+        stampedColor: '#9900FFFF'
+        stampedName: Central Research Division
+      content: >-
+        [head=1][color=#009100]────────────────────[/color][/head]
+
+        [color=#009100]█▀▀ █▀▀[/color] [head=3]  [color=#009100]CENTRAL ADMINISTRATION DIVISION [/color][/head]
+
+        [color=#009100]█░░ █░░[/color][bolditalic]   [color=#009100]Oversight over all gives everyone a peace of mind[/color][/bolditalic]
+
+        [color=#009100]▀▀▀ ▀▀▀[/color]   [color=#aaaaaa][italic]OFFICIAL CENTRAL COMMAND OFFICE DOCUMENT[/italic][/color]
+
+        [head=1][color=#009100]────────────────────[/color][/head]
+
+
+        The simple steps to make your own EMP grenade.
+
+        1. Make a modular grenade from some steel and LV wire.
+
+        2. Get 2 beakers, a Chemical Payload, and a Timer Trigger.
+
+        3. Put the Timer Trigger in the grenade.
+
+        4. Put Uranium, Iron, and Aluminum in the beakers.
+
+        4a. Do not put all three in one beaker the mixing should be done by the grenade.
+
+        4b. More reagents results in a bigger EMP but you only have so many chems to use on grenades. Quality and Quantity.
+
+        5. Put the beakers into the chemical payload.
+
+        6. Put the chemical payload into the grenade.
+
+        7. Disable offending borg from a "safe" range.
 - proto: PlasmaReinforcedWindowDirectional
   entities:
   - uid: 110
@@ -989,6 +940,224 @@ entities:
       parent: 1
     - type: Fixtures
       fixtures: {}
+- proto: SheetGlass
+  entities:
+  - uid: 90
+    components:
+    - type: Transform
+      parent: 84
+    - type: Physics
+      canCollide: False
+    - type: InsideEntityStorage
+  - uid: 91
+    components:
+    - type: Transform
+      parent: 84
+    - type: Physics
+      canCollide: False
+    - type: InsideEntityStorage
+  - uid: 92
+    components:
+    - type: Transform
+      parent: 84
+    - type: Physics
+      canCollide: False
+    - type: InsideEntityStorage
+  - uid: 93
+    components:
+    - type: Transform
+      parent: 84
+    - type: Physics
+      canCollide: False
+    - type: InsideEntityStorage
+  - uid: 94
+    components:
+    - type: Transform
+      parent: 84
+    - type: Physics
+      canCollide: False
+    - type: InsideEntityStorage
+  - uid: 95
+    components:
+    - type: Transform
+      parent: 84
+    - type: Physics
+      canCollide: False
+    - type: InsideEntityStorage
+  - uid: 96
+    components:
+    - type: Transform
+      parent: 84
+    - type: Physics
+      canCollide: False
+    - type: InsideEntityStorage
+  - uid: 97
+    components:
+    - type: Transform
+      parent: 84
+    - type: Physics
+      canCollide: False
+    - type: InsideEntityStorage
+  - uid: 98
+    components:
+    - type: Transform
+      parent: 84
+    - type: Physics
+      canCollide: False
+    - type: InsideEntityStorage
+  - uid: 99
+    components:
+    - type: Transform
+      parent: 84
+    - type: Physics
+      canCollide: False
+    - type: InsideEntityStorage
+- proto: SheetPlasteel
+  entities:
+  - uid: 101
+    components:
+    - type: Transform
+      parent: 84
+    - type: Physics
+      canCollide: False
+    - type: InsideEntityStorage
+  - uid: 111
+    components:
+    - type: Transform
+      parent: 84
+    - type: Physics
+      canCollide: False
+    - type: InsideEntityStorage
+  - uid: 112
+    components:
+    - type: Transform
+      parent: 84
+    - type: Physics
+      canCollide: False
+    - type: InsideEntityStorage
+  - uid: 113
+    components:
+    - type: Transform
+      parent: 84
+    - type: Physics
+      canCollide: False
+    - type: InsideEntityStorage
+  - uid: 114
+    components:
+    - type: Transform
+      parent: 84
+    - type: Physics
+      canCollide: False
+    - type: InsideEntityStorage
+- proto: SheetPlastic
+  entities:
+  - uid: 85
+    components:
+    - type: Transform
+      parent: 84
+    - type: Physics
+      canCollide: False
+    - type: InsideEntityStorage
+  - uid: 86
+    components:
+    - type: Transform
+      parent: 84
+    - type: Physics
+      canCollide: False
+    - type: InsideEntityStorage
+  - uid: 87
+    components:
+    - type: Transform
+      parent: 84
+    - type: Physics
+      canCollide: False
+    - type: InsideEntityStorage
+  - uid: 88
+    components:
+    - type: Transform
+      parent: 84
+    - type: Physics
+      canCollide: False
+    - type: InsideEntityStorage
+  - uid: 89
+    components:
+    - type: Transform
+      parent: 84
+    - type: Physics
+      canCollide: False
+    - type: InsideEntityStorage
+- proto: SheetSteel
+  entities:
+  - uid: 121
+    components:
+    - type: Transform
+      parent: 84
+    - type: Physics
+      canCollide: False
+    - type: InsideEntityStorage
+  - uid: 125
+    components:
+    - type: Transform
+      parent: 84
+    - type: Physics
+      canCollide: False
+    - type: InsideEntityStorage
+  - uid: 126
+    components:
+    - type: Transform
+      parent: 84
+    - type: Physics
+      canCollide: False
+    - type: InsideEntityStorage
+  - uid: 127
+    components:
+    - type: Transform
+      parent: 84
+    - type: Physics
+      canCollide: False
+    - type: InsideEntityStorage
+  - uid: 128
+    components:
+    - type: Transform
+      parent: 84
+    - type: Physics
+      canCollide: False
+    - type: InsideEntityStorage
+  - uid: 129
+    components:
+    - type: Transform
+      parent: 84
+    - type: Physics
+      canCollide: False
+    - type: InsideEntityStorage
+  - uid: 130
+    components:
+    - type: Transform
+      parent: 84
+    - type: Physics
+      canCollide: False
+    - type: InsideEntityStorage
+  - uid: 131
+    components:
+    - type: Transform
+      parent: 84
+    - type: Physics
+      canCollide: False
+    - type: InsideEntityStorage
+  - uid: 132
+    components:
+    - type: Transform
+      parent: 84
+    - type: Physics
+      canCollide: False
+    - type: InsideEntityStorage
+  - uid: 133
+    components:
+    - type: Transform
+      parent: 84
+    - type: Physics
+      canCollide: False
+    - type: InsideEntityStorage
 - proto: SubstationWallBasic
   entities:
   - uid: 47
@@ -999,6 +1168,21 @@ entities:
       parent: 1
 - proto: TableReinforced
   entities:
+  - uid: 38
+    components:
+    - type: Transform
+      pos: -1.5,3.5
+      parent: 1
+  - uid: 39
+    components:
+    - type: Transform
+      pos: -0.5,3.5
+      parent: 1
+  - uid: 40
+    components:
+    - type: Transform
+      pos: 0.5,3.5
+      parent: 1
   - uid: 104
     components:
     - type: Transform
@@ -1014,6 +1198,19 @@ entities:
     - type: Transform
       pos: 2.5,-0.5
       parent: 1
+- proto: TechnologyDisk
+  entities:
+  - uid: 41
+    components:
+    - type: Transform
+      pos: -1.8013268,3.7723532
+      parent: 1
+    - type: TechnologyDisk
+      recipes:
+      - WeaponIonRifle
+      - WeaponIonCarbine
+      - ChemicalPayload
+      - TimerTrigger
 - proto: Thruster
   entities:
   - uid: 49
@@ -1048,6 +1245,13 @@ entities:
       parent: 1
     missingComponents:
     - Anchorable
+- proto: TimerTrigger
+  entities:
+  - uid: 44
+    components:
+    - type: Transform
+      pos: -1.2075768,3.2931864
+      parent: 1
 - proto: WallPlastitanium
   entities:
   - uid: 53
@@ -1173,52 +1377,6 @@ entities:
       rot: 3.141592653589793 rad
       pos: 3.5,2.5
       parent: 1
-- proto: WeaponIonRifle
-  entities:
-  - uid: 33
-    components:
-    - type: Transform
-      parent: 29
-    - type: Physics
-      canCollide: False
-    - type: InsideEntityStorage
-  - uid: 36
-    components:
-    - type: Transform
-      parent: 29
-    - type: Physics
-      canCollide: False
-    - type: InsideEntityStorage
-  - uid: 43
-    components:
-    - type: Transform
-      parent: 41
-    - type: Physics
-      canCollide: False
-    - type: InsideEntityStorage
-  - uid: 44
-    components:
-    - type: Transform
-      parent: 41
-    - type: Physics
-      canCollide: False
-    - type: InsideEntityStorage
-- proto: WeaponLauncherHydraEMP
-  entities:
-  - uid: 87
-    components:
-    - type: Transform
-      parent: 37
-    - type: Physics
-      canCollide: False
-    - type: InsideEntityStorage
-  - uid: 88
-    components:
-    - type: Transform
-      parent: 38
-    - type: Physics
-      canCollide: False
-    - type: InsideEntityStorage
 - proto: WeaponTurretNanoTrasen
   entities:
   - uid: 48
