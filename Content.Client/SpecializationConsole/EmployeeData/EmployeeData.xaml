@@ -1,0 +1,16 @@
+<Control xmlns="https://spacestation14.io"
+                                SetHeight="200"
+                                MouseFilter="Stop">
+    <GridContainer Columns="2" HorizontalExpand="True">
+        <BoxContainer Orientation="Vertical" SeparationOverride="10" Margin="10 0 0 0" HorizontalAlignment="Left">
+            <Label Text="Name:"/>
+            <RichTextLabel Name="EmployeeNameLabel" Margin="5 0 0 0" />
+            <Label Text="Job:" />
+            <RichTextLabel Name="EmployeeJobLabel" Margin="5 0 0 0"/>
+            <Label Text="Specialization:" />
+            <RichTextLabel Name="EmployeeSpecLabel" Margin="5 0 0 0"/>
+        </BoxContainer>
+        <LayoutContainer Name="EntityViewBox" HorizontalExpand="True" VerticalExpand="False" >
+        </LayoutContainer>
+    </GridContainer>
+</Control>

@@ -50,14 +50,17 @@ public sealed class CrewManifestEntry
 
     public string JobTitle { get; }
 
+    public string JobSpec { get; }
+
     public string JobIcon { get; }
 
     public string JobPrototype { get; }
 
-    public CrewManifestEntry(string name, string jobTitle, string jobIcon, string jobPrototype)
+    public CrewManifestEntry(string name, string jobTitle, string jobSpec, string jobIcon, string jobPrototype)
     {
         Name = name;
         JobTitle = jobTitle;
+        JobSpec = jobSpec;
         JobIcon = jobIcon;
         JobPrototype = jobPrototype;
     }

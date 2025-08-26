@@ -1,3 +1,5 @@
+using System.Diagnostics.CodeAnalysis;
+
 namespace Content.Shared.StationRecords;
 
 public abstract class SharedStationRecordsSystem : EntitySystem

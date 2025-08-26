@@ -1,5 +1,6 @@
 using Content.Shared.Access.Systems;
 using Content.Shared.PDA;
+using Content.Shared.Preferences;
 using Content.Shared.Roles;
 using Content.Shared.StatusIcon;
 using Robust.Shared.GameStates;
@@ -28,6 +29,10 @@ public sealed partial class IdCardComponent : Component
 
     [Access(typeof(SharedIdCardSystem), typeof(SharedPdaSystem), typeof(SharedAgentIdCardSystem), Other = AccessPermissions.ReadWriteExecute)]
     public string? LocalizedJobTitle { set => _jobTitle = value; get => _jobTitle ?? Loc.GetString(JobTitle ?? string.Empty); }
+
+    [DataField]
+    [AutoNetworkedField]
+    public string? JobSpecTitle;
 
     /// <summary>
     /// The state of the job icon rsi.
