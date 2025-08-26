@@ -306,6 +306,7 @@
   - type: Crayon
     color: Red
     selectableColor: true
+    capacity: 2147483647 # very big number, functionally infinite
   - type: Tag
     tags:
     - Write
