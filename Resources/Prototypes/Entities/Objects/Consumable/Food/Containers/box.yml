@@ -615,7 +615,7 @@
       - id: DrinkDrGibbCan
         orGroup: DrinkPool
       - id: DrinkNukieCan
-        prob: 1
+        prob: 0.1
         orGroup: DrinkPool
       - id: DrinkEnergyDrinkCan
         orGroup: DrinkPool
@@ -714,7 +714,7 @@
       - id: CigPackBlue
         orGroup: SidesPool
       - id: CigPackSyndicate
-        prob: 1
+        prob: 0.1
         orGroup: SidesPool
       - id: CigPackMixed
         orGroup: SidesPool
