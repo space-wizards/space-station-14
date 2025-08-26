@@ -15,7 +15,7 @@ public sealed partial class ComponentsOnTriggerSystem : EntitySystem
 
     private void HandleAddTrigger(Entity<AddComponentsOnTriggerComponent> ent, ref TriggerEvent args)
     {
-        if (args.Key != null && !ent.Comp.KeysIn.Contains(args.Key))
+        if (args.Keys != null && !ent.Comp.KeysIn.Overlaps(args.Keys))
             return;
 
         var target = ent.Comp.TargetUser ? args.User : ent.Owner;
@@ -35,7 +35,7 @@ public sealed partial class ComponentsOnTriggerSystem : EntitySystem
 
     private void HandleRemoveTrigger(Entity<RemoveComponentsOnTriggerComponent> ent, ref TriggerEvent args)
     {
-        if (args.Key != null && !ent.Comp.KeysIn.Contains(args.Key))
+        if (args.Keys != null && !ent.Comp.KeysIn.Overlaps(args.Keys))
             return;
 
         var target = ent.Comp.TargetUser ? args.User : ent.Owner;
@@ -55,7 +55,7 @@ public sealed partial class ComponentsOnTriggerSystem : EntitySystem
 
     private void HandleToggleTrigger(Entity<ToggleComponentsOnTriggerComponent> ent, ref TriggerEvent args)
     {
-        if (args.Key != null && !ent.Comp.KeysIn.Contains(args.Key))
+        if (args.Keys != null && !ent.Comp.KeysIn.Overlaps(args.Keys))
             return;
 
         var target = ent.Comp.TargetUser ? args.User : ent.Owner;
