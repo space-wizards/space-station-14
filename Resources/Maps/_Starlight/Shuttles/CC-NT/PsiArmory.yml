@@ -4,8 +4,8 @@ meta:
   engineVersion: 266.0.0
   forkId: ""
   forkVersion: ""
-  time: 08/26/2025 05:42:46
-  entityCount: 154
+  time: 08/26/2025 06:29:48
+  entityCount: 160
 maps: []
 grids:
 - 1
@@ -229,16 +229,31 @@ entities:
     - type: Fixtures
       fixtures:
         fix1:
-          shape:
-            !type:PhysShapeAabb
-            bounds: "-0.49,-0.49,0.49,0.49"
-          density: 100
+          shape: !type:PolygonShape
+            radius: 0.01
+            vertices:
+            - -0.49,-0.49
+            - 0.49,-0.49
+            - 0.49,0.49
+            - -0.49,0.49
           mask:
-          - FullTileMask
+          - Impassable
+          - MidImpassable
+          - HighImpassable
+          - LowImpassable
+          - InteractImpassable
           layer:
-          - AirlockLayer
+          - MidImpassable
+          - HighImpassable
+          - BulletImpassable
+          - InteractImpassable
+          - Opaque
+          density: 100
+          hard: True
+          restitution: 0
+          friction: 0.4
     - type: Occluder
-      enabled: true
+      enabled: True
   - uid: 3
     components:
     - type: Transform
@@ -248,16 +263,31 @@ entities:
     - type: Fixtures
       fixtures:
         fix1:
-          shape:
-            !type:PhysShapeAabb
-            bounds: "-0.49,-0.49,0.49,0.49"
-          density: 100
+          shape: !type:PolygonShape
+            radius: 0.01
+            vertices:
+            - -0.49,-0.49
+            - 0.49,-0.49
+            - 0.49,0.49
+            - -0.49,0.49
           mask:
-          - FullTileMask
+          - Impassable
+          - MidImpassable
+          - HighImpassable
+          - LowImpassable
+          - InteractImpassable
           layer:
-          - AirlockLayer
+          - MidImpassable
+          - HighImpassable
+          - BulletImpassable
+          - InteractImpassable
+          - Opaque
+          density: 100
+          hard: True
+          restitution: 0
+          friction: 0.4
     - type: Occluder
-      enabled: true
+      enabled: True
 - proto: APCHyperCapacity
   entities:
   - uid: 4
@@ -916,6 +946,33 @@ entities:
       rot: 3.141592653589793 rad
       pos: 2.5,-0.5
       parent: 1
+- proto: PlasmaWindoorSecureSecurityLocked
+  entities:
+  - uid: 155
+    components:
+    - type: Transform
+      pos: 1.5,3.5
+      parent: 1
+  - uid: 156
+    components:
+    - type: Transform
+      pos: 2.5,3.5
+      parent: 1
+  - uid: 158
+    components:
+    - type: Transform
+      pos: 0.5,3.5
+      parent: 1
+  - uid: 159
+    components:
+    - type: Transform
+      pos: -0.5,3.5
+      parent: 1
+  - uid: 160
+    components:
+    - type: Transform
+      pos: -1.5,3.5
+      parent: 1
 - proto: PoweredWarmSmallLight
   entities:
   - uid: 100
@@ -1216,6 +1273,9 @@ entities:
   entities:
   - uid: 41
     components:
+    - type: MetaData
+      desc: A disk for the R&D server containing research technology. Contains Security Techfab recipes for Ion Carbide, Rifle, Timer Trigger, and Chemical Payload to assist in taking down Silicons
+      name: anti-silicon tech disk
     - type: Transform
       pos: -1.8013268,3.7723532
       parent: 1
@@ -1265,6 +1325,26 @@ entities:
     components:
     - type: Transform
       pos: -1.2075768,3.2931864
+      parent: 1
+- proto: UraniumReinforcedWindowDirectional
+  entities:
+  - uid: 102
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: 1.5,3.5
+      parent: 1
+  - uid: 103
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: 2.5,3.5
+      parent: 1
+  - uid: 157
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: 0.5,3.5
       parent: 1
 - proto: WallPlastitanium
   entities:
