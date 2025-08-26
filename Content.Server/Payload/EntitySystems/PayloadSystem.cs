@@ -153,7 +153,6 @@ public sealed class PayloadSystem : EntitySystem
         if (args.Key != null && !entity.Comp.KeysIn.Contains(args.Key))
             return;
 
-        // TODO: Adjust to the new trigger system
         if (entity.Comp.BeakerSlotA.Item is not EntityUid beakerA
             || entity.Comp.BeakerSlotB.Item is not EntityUid beakerB
             || !TryComp(beakerA, out FitsInDispenserComponent? compA)
