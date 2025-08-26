@@ -36,7 +36,7 @@ public sealed partial class TriggerSystem
     /// <summary>
     /// Method placed at the end of trigger condition subscriptions to modify the event.
     /// </summary>
-    /// <param name="result">What the condition evaluated to.</param>
+    /// <param name="result">The outcome of the condition.</param>
     private static void TriggerConditionSuffix<TComp>(TComp comp, bool result, ref AttemptTriggerEvent ev) where TComp : BaseTriggerConditionComponent
     {
         if (comp.Inverted)
