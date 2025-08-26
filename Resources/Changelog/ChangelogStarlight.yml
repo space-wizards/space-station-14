@@ -12517,5 +12517,13 @@ Entries:
   id: 126302
   time: '2025-08-24T23:27:46.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/1263
+- author: Rinary
+  changes:
+  - message: Fixed bug when premapped and linked body scanner/table sink can't be
+      saved.
+    type: Fix
+  id: 146900
+  time: '2025-08-26T19:02:12.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1469
 Order: -1
 
