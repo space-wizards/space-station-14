@@ -138,7 +138,7 @@
   - type: AccessReader
     access: [["Research"], ["Cargo"]]
   - type: Lock
-  - type: LockStorageWhenLocked
+  - type: LockedStorage
   - type: SuppressArtifactContainer
   - type: RadiationBlockingContainer
     resistance: 5

@@ -49,11 +49,11 @@ public sealed class LockSystem : EntitySystem
         SubscribeLocalEvent<LockComponent, LockDoAfter>(OnDoAfterLock);
         SubscribeLocalEvent<LockComponent, UnlockDoAfter>(OnDoAfterUnlock);
 
-        SubscribeLocalEvent<LockStorageWhenLockedComponent, StorageInteractAttemptEvent>(OnStorageInteractAttempt);
 
         SubscribeLocalEvent<LockedWiresPanelComponent, LockToggleAttemptEvent>(OnLockToggleAttempt);
         SubscribeLocalEvent<LockedWiresPanelComponent, AttemptChangePanelEvent>(OnAttemptChangePanel);
         SubscribeLocalEvent<LockedAnchorableComponent, UnanchorAttemptEvent>(OnUnanchorAttempt);
+        SubscribeLocalEvent<LockedStorageComponent, StorageInteractAttemptEvent>(OnStorageInteractAttempt);
 
         SubscribeLocalEvent<UIRequiresLockComponent, ActivatableUIOpenAttemptEvent>(OnUIOpenAttempt);
         SubscribeLocalEvent<UIRequiresLockComponent, LockToggledEvent>(LockToggled);
@@ -359,7 +359,7 @@ public sealed class LockSystem : EntitySystem
         TryUnlock(uid, args.User, skipDoAfter: true);
     }
 
-    private void OnStorageInteractAttempt(Entity<LockStorageWhenLockedComponent> ent, ref StorageInteractAttemptEvent args)
+    private void OnStorageInteractAttempt(Entity<LockedStorageComponent> ent, ref StorageInteractAttemptEvent args)
     {
         if (IsLocked(ent.Owner))
             args.Cancelled = true;
