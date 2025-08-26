@@ -233,3 +233,10 @@
       icon:
         sprite: Objects/Consumable/Drinks/beer.rsi
         state: icon
+
+- type: entity
+  parent: BaseTraitorStealObjective
+  id: HoPBoardStealObjective
+  components:
+  - type: StealCondition
+    stealGroup: HoPBoardSteal
