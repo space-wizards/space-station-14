@@ -1,38 +1,4 @@
 ﻿Entries:
-- author: Bokser815
-  changes:
-  - message: Cargo buy and sell pallets aboard the ATS can no longer be destroyed,
-      so cargo workers will no longer be unable to perform their job entirely for
-      the rest of the round.
-    type: Tweak
-  id: 8371
-  time: '2025-04-28T00:59:54.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/34195
-- author: lzk228
-  changes:
-  - message: Shelves don't have whitelists. But still max item size you can fit is
-      Normal.
-    type: Tweak
-  id: 8372
-  time: '2025-04-28T01:00:49.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/36986
-- author: KingFroozy
-  changes:
-  - message: Mime's suits were resprited.
-    type: Tweak
-  id: 8373
-  time: '2025-04-28T02:40:21.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/36702
-- author: Southbridge
-  changes:
-  - message: Amber Station - Added Genpop
-    type: Add
-  - message: Amber Station - Ensured a lot of doorways had tiles and decals under
-      them.
-    type: Tweak
-  id: 8374
-  time: '2025-04-28T06:56:39.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/36997
 - author: lzk228
   changes:
   - message: Scrubber now will turn on widenet in panic mode.
@@ -3948,3 +3914,31 @@
   id: 8883
   time: '2025-08-25T18:05:55.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/39883
+- author: ToastEnjoyer
+  changes:
+  - message: Pacifists can no longer use the laser rifle
+    type: Fix
+  id: 8884
+  time: '2025-08-26T00:44:01.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/39891
+- author: GR1231
+  changes:
+  - message: hats on Smile the slime should be correctly displaced
+    type: Fix
+  id: 8885
+  time: '2025-08-26T00:48:31.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/39824
+- author: perryprog
+  changes:
+  - message: Items and borgs can no longer become stuck in mechs.
+    type: Fix
+  id: 8886
+  time: '2025-08-26T10:29:13.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37942
+- author: beck-thompson
+  changes:
+  - message: You can now select no lock when locking syndicate items
+    type: Tweak
+  id: 8887
+  time: '2025-08-26T14:18:10.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/39532
