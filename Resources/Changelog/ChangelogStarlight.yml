@@ -12539,5 +12539,12 @@ Entries:
   id: 147700
   time: '2025-08-26T20:04:03.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/1477
+- author: STARLIGHT TEAM
+  changes:
+  - message: Added new icons for VoxPidgin, Marish and Canilunzt languages.
+    type: Add
+  id: 148000
+  time: '2025-08-26T23:03:11.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1480
 Order: -1
 
