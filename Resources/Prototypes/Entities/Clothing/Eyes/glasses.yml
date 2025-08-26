@@ -300,3 +300,23 @@
     tags:
     - HamsterWearable
     - WhitelistChameleon
+
+- type: entity
+  parent: [ClothingEyesBase, BaseCommandContraband]
+  id: ClothingEyesGlassesMedChem
+  name: experimental analysis goggles
+  description: Goggles that can scan the chemical composition of a solution and provides health information on organisms in view.
+  components:
+  - type: Sprite
+    sprite: Clothing/Eyes/Glasses/medchem.rsi
+  - type: Clothing
+    sprite: Clothing/Eyes/Glasses/medchem.rsi
+  - type: ShowHealthBars
+  - type: ShowHealthIcons
+  - type: SolutionScanner
+  - type: IdentityBlocker
+    coverage: EYES
+  - type: Tag
+    tags:
+    - PetWearable
+    - WhitelistChameleon
