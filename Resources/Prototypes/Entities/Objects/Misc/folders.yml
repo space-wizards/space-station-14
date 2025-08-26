@@ -198,7 +198,7 @@
   components:
   - type: Sprite
     layers:
-    - state: folder-medical
+    - state: folder-white
     - state: folder-base
 
 - type: entity
