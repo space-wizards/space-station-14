@@ -57,6 +57,7 @@ namespace Content.Shared.Forensics.Systems
                 component.PrintCooldown,
                 component.PrintReadyAt);
 
+            Dirty(uid, component);
             _uiSystem.SetUiState(uid, ForensicScannerUiKey.Key, state);
         }
 
