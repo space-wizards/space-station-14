@@ -62,7 +62,7 @@
     HeadBedsheetStealCollectionObjective: 1
     StampStealCollectionObjective: 1
     DoorRemoteStealCollectionObjective: 1
-    OfficerHandgunsStealCollectionObjective: 100         #sec
+    OfficerHandgunsStealCollectionObjective: 1         #sec
     TechnologyDiskStealCollectionObjective: 1           #sci
     MailStealCollectionObjective: 1                     #cargo
     IDCardsStealCollectionObjective: 1
