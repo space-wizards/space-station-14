@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: themias
-  changes:
-  - message: cable terminals are now visually layered below floors, like other cables
-    type: Fix
-  id: 8378
-  time: '2025-04-28T23:43:40.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/37018
 - author: Vexerot
   changes:
   - message: Entities that are weightless or in the air are no longer slowed by puddles.
@@ -3943,3 +3936,11 @@
   id: 8890
   time: '2025-08-26T21:50:19.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/39784
+- author: StormyDragon
+  changes:
+  - message: Modular Grenades with a chemical payload now correctly wait out their
+      delay before activating.
+    type: Tweak
+  id: 8891
+  time: '2025-08-26T22:26:13.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/39905
