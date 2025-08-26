@@ -471,6 +471,15 @@ namespace Content.Client.Stylesheets
             };
             monotoneFilledButtonOpenBoth.SetPatchMargin(StyleBox.Margin.Horizontal, 0);
 
+            // Id-Card Monotone
+            var monotoneIdCardButton = new StyleBoxTexture
+            {
+                Texture = resCache.GetTexture("/Textures/Interface/Nano/Monotone/id_card.png"),
+            };
+            monotoneIdCardButton.SetContentMarginOverride(StyleBox.Margin.Vertical, 0);
+            monotoneIdCardButton.SetContentMarginOverride(StyleBox.Margin.Top, 2);
+            monotoneIdCardButton.SetContentMarginOverride(StyleBox.Margin.Bottom, 2);
+
             // CheckBox
             var checkBoxTextureChecked = resCache.GetTexture("/Textures/Interface/Nano/checkbox_checked.svg.96dpi.png");
             var checkBoxTextureUnchecked = resCache.GetTexture("/Textures/Interface/Nano/checkbox_unchecked.svg.96dpi.png");
@@ -1356,6 +1365,21 @@ namespace Content.Client.Stylesheets
                     new[]
                     {
                         new StyleProperty(Button.StylePropertyStyleBox, monotoneButtonOpenBoth),
+                    }),
+
+                // Id-Card Monotone Button
+                new StyleRule(
+                    new SelectorElement(typeof(MonotoneIdCardButton), null, null, null),
+                    new[]
+                    {
+                        new StyleProperty(Button.StylePropertyStyleBox, monotoneIdCardButton),
+                    }),
+
+                new StyleRule(
+                    new SelectorElement(typeof(MonotoneIdCardButton), null, null, new[] { Button.StylePseudoClassPressed }),
+                    new[]
+                    {
+                        new StyleProperty(Control.StylePropertyModulateSelf, Color.FromHex("#a6bed3")),
                     }),
 
                 // MonotoneButton (filled)
