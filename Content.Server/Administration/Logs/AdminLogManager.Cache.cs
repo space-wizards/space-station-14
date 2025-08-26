@@ -51,7 +51,7 @@ public sealed partial class AdminLogManager
     private void CacheLog(AdminLog log)
     {
         var players = log.Players.Select(player => player.PlayerUserId).ToArray();
-        var record = new SharedAdminLog(log.Id, log.Type, log.Impact, log.Date, log.Message, players);
+        var record = new SharedAdminLog(log.Id, log.Type, log.Impact, log.Date, log.CurTime, log.Message, players);
 
         CacheLog(record);
     }
