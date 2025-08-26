@@ -489,9 +489,10 @@
   # Starlight-start: Languages
   - type: LanguageKnowledge
     speaks:
-    - Moffic
+    - Mothroach
     understands:
     - Moffic
+    - Mothroach
   # Starlight-end
   - type: GhostRole
     makeSentient: true
@@ -2776,6 +2777,7 @@
     - Fox
     understands:
     - Fox
+    - Canilunzt
   # Starlight-end
   - type: Sprite
     drawdepth: Mobs
@@ -2904,6 +2906,7 @@
     - Dog
     understands:
     - Dog
+    - Canilunzt
   # Starlight-end
   - type: DamageStateVisuals
     states:
@@ -3024,6 +3027,7 @@
     - Cat
     understands:
     - Cat
+    - Nekomimetic
   # Starlight-end
   - type: Sprite
     drawdepth: Mobs

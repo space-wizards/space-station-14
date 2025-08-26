@@ -1,0 +1,61 @@
+# Conditions
+
+- type: entity
+  id: CrewCondition
+  categories: [ HideSpawnMenu ]
+  abstract: true
+  components:
+  - type: Conditions
+    conditions:
+    - !type:SubjectSpeciesCondition
+      blacklist:
+      - Abductor
+      - Skeleton
+      
+# Example(Smokeable) Prototype
+
+- type: entity
+  id: RRCardCriminal
+  parent: CrewCondition
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: RailroadCard
+    title: rr-criminal
+    icon: ""
+    iconColor: "#fd3f3f" # Antag
+    color: "#6c15ae" # Mythical
+    image: /Textures/_Starlight/Railroading/criminal.png
+    description: rr-criminal-desc
+  - type: RailroadFaxOnChosen
+    addresses: 
+    - Captain's Office
+    - Captain
+    - Security
+    - Bridge
+    - Conference Room
+    - HoS Office
+    - Warden's Office
+    - Warden
+    - Detective's Office
+    - Magistrate
+    letters:
+    - name: rr-criminal-letter-name
+      content: rr-criminal-1-letter-content
+      stampState: paper_stamp-centcom
+      stampedBy:
+        - stampedColor: "#006666"
+          stampedName: rr-nt-isd
+  - type: RailroadAssignRole
+    role: RRMindRoleCriminal
+  - type: RailroadTimerTask
+    duration: 1200
+  - type: RailroadSurviveTask
+  - type: RailroadAvoidHandcuffsTask
+  - type: RailroadDeliveryReward
+    delivery: PackageDeliveryRewardSyndicateLetter
+    dataset: railroadingDeliveryMessages
+    wrappedDataset: railroadingDeliveryWrappedMessages
+  - type: RailroadDonationReward
+    amount: # 20 min survival
+      min: 200
+      max: 300

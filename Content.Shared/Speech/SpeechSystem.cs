@@ -69,6 +69,17 @@ namespace Content.Shared.Speech
                     {
                         component.AllowedEmotes.Add(emote.EmotePrototype.Id);
                     }
+
+                    if (emote.RequiredMarkingsAny != null)
+                    {
+                        foreach (var required in emote.RequiredMarkingsAny)
+                        {
+                            if (AttachedIds.Contains(required.Id))
+                            {
+                                component.AllowedEmotes.Add(emote.EmotePrototype.Id);
+                            }
+                        }
+                    }
                 }
             }
         }
