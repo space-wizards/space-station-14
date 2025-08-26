@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Vexerot
-  changes:
-  - message: Entities that are weightless or in the air are no longer slowed by puddles.
-    type: Tweak
-  id: 8379
-  time: '2025-04-29T00:24:12.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/33299
 - author: themias
   changes:
   - message: Theatre workers (clown/mime/musician) now have access to the Service
@@ -3944,3 +3937,10 @@
   id: 8891
   time: '2025-08-26T22:26:13.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/39905
+- author: ToastEnjoyer
+  changes:
+  - message: Wizards can no longer teleport to the arrivals terminal
+    type: Fix
+  id: 8892
+  time: '2025-08-26T23:43:50.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/39901
