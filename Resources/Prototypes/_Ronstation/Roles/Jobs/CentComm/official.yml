@@ -1,0 +1,29 @@
+- type: startingGear
+  id: CentcomFormalGear
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitCentcomFormal
+    back: ClothingBackpackSatchelHoldingCentcomFormalFilled
+    shoes: ClothingShoesBootsCombatFilled
+    eyes: ClothingEyesGlassesSunglasses
+    gloves: ClothingHandsGlovesCombat
+    id: CentcomPDA
+    ears: ClothingHeadsetCentCom
+    belt: WeaponRevolverMateba
+    pocket1: MindShieldImplanter
+    pocket2: DeathRattleImplanterCentcomm
+
+- type: startingGear
+  id: CentcomInspectorGear
+  equipment:
+    jumpsuit: ClothingUniformJumpskirtCentcomFormalDress
+    shoes: ClothingShoesBootsJackFilled
+    mask: ClothingMaskGasCentcom
+    outerClothing: ClothingOuterArmorCentcommCarapace
+    gloves: ClothingHandsGlovesCombat
+    id: CentcomPDA
+    ears: ClothingHeadsetCentCom
+    pocket1: WeaponDisabler
+    pocket2: FlashlightSeclite
+    suitstorage: OxygenTankFilled
+  inhand:
+  - BriefcaseCentcomInspector

@@ -3,7 +3,6 @@ using System.Linq;
 using Content.Server.Administration;
 using Content.Server.Chat.Managers;
 using Content.Server.Radio.Components;
-using Content.Server.Roles;
 using Content.Server.Station.Systems;
 using Content.Shared._CorvaxNext.Silicons.Borgs.Components;
 using Content.Shared.Administration;
@@ -15,6 +14,7 @@ using Content.Shared.Mind.Components;
 using Content.Shared.Random; // Ronstation - modification.
 using Content.Shared.Random.Helpers; // Ronstation - modification.
 using Content.Shared.Roles;
+using Content.Shared.Roles.Components;
 using Content.Shared.Silicons.Laws;
 using Content.Shared.Silicons.Laws.Components;
 using Content.Shared.Silicons.StationAi;
@@ -329,7 +329,7 @@ public sealed class SiliconLawSystem : SharedSiliconLawSystem
     protected override void OnUpdaterInsert(Entity<SiliconLawUpdaterComponent> ent, ref EntInsertedIntoContainerMessage args)
     {
         // TODO: Prediction dump this
-        if (!TryComp(args.Entity, out SiliconLawProviderComponent? provider))
+        if (!TryComp<SiliconLawProviderComponent>(args.Entity, out var provider))
             return;
 
         var lawset = GetLawset(InitOrGetLaws(provider)).Laws; // Ronstation - modification.

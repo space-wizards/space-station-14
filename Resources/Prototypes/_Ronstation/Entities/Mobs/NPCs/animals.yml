@@ -1,0 +1,19 @@
+- type: entity
+  name: baby tarantula
+  parent: MobGiantSpider
+  suffix: Admeme
+  id: MobTinySpider
+  components:
+  - type: Sprite
+    scale: 0.4, 0.4
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.14
+        density: 130
+        mask:
+        - MobMask
+        layer:
+        - MobLayer

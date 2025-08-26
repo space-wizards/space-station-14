@@ -1,0 +1,26 @@
+- type: entity
+  parent: BaseGameRule
+  id: Vampire
+  components:
+  - type: GameRule
+    minPlayers: 10
+    cancelPresetOnTooFewPlayers: false
+  - type: VampireRule
+  - type: AntagSelection
+    agentName: vampire-round-end-agent-name
+    selectionTime: IntraPlayerSpawn
+    definitions:
+    - prefRoles: [ Vampire ]
+      max: 2
+      playerRatio: 20
+      allowNonHumans: true
+      multiAntagSetting: NotExclusive
+      briefing:
+        sound: /Audio/Ambience/Antag/traitor_start.ogg
+      components:
+        - type: Vampire
+      mindRoles:
+        - MindRoleVampire
+  - type: AntagObjectives
+    objectives:
+    - VampireSurviveObjective
