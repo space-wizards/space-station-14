@@ -6,4 +6,4 @@
   description: PLOOP... ZAP
   components:
   - type: RevolverAmmoProvider
-    proto: GremadeEMP
+    proto: GrenadeEMP
