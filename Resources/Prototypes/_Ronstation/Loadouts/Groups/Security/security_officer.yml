@@ -1,0 +1,36 @@
+- type: loadoutGroup
+  id: SecurityOfficerHead
+  parent: BaseHead
+  loadouts:
+  - SecurityHelmet
+  - SecurityBeret
+  - SecurityHat
+  - TrooperHat
+
+- type: loadoutGroup
+  id: SecurityOfficerJumpsuit
+  parent: BaseJumpsuit
+  loadouts:
+  - SecurityJumpsuit
+  - SecurityJumpskirt
+  - SecurityJumpsuitGrey
+  - SecurityJumpskirtGrey
+  - SeniorOfficerJumpsuit
+  - SeniorOfficerJumpskirt
+  - TrooperUniform
+
+- type: loadoutGroup
+  id: SecurityOfficerPDA
+  parent: BasePDA
+  loadouts:
+  - SecurityPDA
+  - SeniorOfficerPDA
+
+- type: loadoutGroup
+  id: SecurityOfficerOuterClothing
+  parent: BaseOuterClothing
+  minLimit: 1 # Security officer must have outer clothing
+  loadouts:
+  - ArmorVest
+  - ArmorVestSlim
+  - SecurityOfficerWintercoat

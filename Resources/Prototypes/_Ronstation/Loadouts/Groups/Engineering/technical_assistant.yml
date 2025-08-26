@@ -1,0 +1,6 @@
+- type: loadoutGroup
+  id: TechnicalAssistantJumpsuit
+  parent: BaseJumpsuit
+  loadouts:
+  - YellowJumpsuit
+  - YellowJumpskirt

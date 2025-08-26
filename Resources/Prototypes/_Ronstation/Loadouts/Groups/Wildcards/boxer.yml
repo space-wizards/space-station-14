@@ -1,0 +1,16 @@
+- type: loadoutGroup
+  id: BoxerJumpsuit
+  parent: BaseJumpsuit
+  loadouts:
+  - BoxerShorts
+  - BoxerShortsWithTop
+
+- type: loadoutGroup
+  id: BoxerGloves
+  parent: BaseGloves
+  minLimit: 1 # Boxers must have gloves
+  loadouts:
+  - RedBoxingGloves
+  - BlueBoxingGloves
+  - GreenBoxingGloves
+  - YellowBoxingGloves

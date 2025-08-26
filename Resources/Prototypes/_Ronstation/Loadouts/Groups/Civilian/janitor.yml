@@ -1,0 +1,26 @@
+- type: loadoutGroup
+  id: JanitorHead
+  parent: BaseHead
+  loadouts:
+  - JanitorHead
+
+- type: loadoutGroup
+  id: JanitorGloves
+  parent: BaseGloves
+  loadouts:
+  - JanitorRubberGloves
+  - OrangeGloves
+  - PurpleGloves
+
+- type: loadoutGroup
+  id: JanitorJumpsuit
+  parent: BaseJumpsuit
+  loadouts:
+  - JanitorJumpsuit
+  - JanitorJumpskirt
+
+- type: loadoutGroup
+  id: JanitorOuterClothing
+  parent: BaseOuterClothing
+  loadouts:
+  - JanitorWintercoat

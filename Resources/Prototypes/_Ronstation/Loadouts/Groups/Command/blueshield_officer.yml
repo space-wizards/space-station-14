@@ -1,0 +1,52 @@
+- type: loadoutGroup
+  id: BlueshieldHead
+  parent: BaseHead
+  loadouts:
+  - BlueshieldHelmet
+  - BlueshieldBeret
+  - BlueshieldHat
+
+- type: loadoutGroup
+  id: BlueshieldNeck
+  parent: BaseNeck
+  loadouts:
+  - BlueMedal
+
+- type: loadoutGroup
+  id: BlueshieldJumpsuit
+  parent: BaseJumpsuit
+  loadouts:
+  - BlueshieldJumpsuit
+  - BlueshieldJumpskirt
+  - BlueshieldJumpsuitGrey
+  - BlueshieldJumpskirtGrey
+
+- type: loadoutGroup
+  id: BlueshieldBackpack
+  parent: BaseBackpack
+  loadouts:
+  - BlueshieldBackpack
+  - BlueshieldSatchel
+  - BlueshieldDuffel
+
+- type: loadoutGroup
+  id: BlueshieldPDA
+  parent: BasePDA
+  loadouts:
+  - BlueshieldPDA
+
+- type: loadoutGroup
+  id: BlueshieldOuterClothing
+  parent: BaseOuterClothing
+  minLimit: 1 # BSO must have outer clothing
+  loadouts:
+  - ArmorVest
+  - ArmorVestSlim
+  - BlueshieldOfficerWintercoat
+
+- type: loadoutGroup
+  id: BlueshieldShoes
+  parent: BaseShoes
+  loadouts:
+  - BlueshieldCombatBoots
+  - BlueshieldWinterBoots

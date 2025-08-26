@@ -1,0 +1,27 @@
+- type: loadoutGroup
+  id: ParamedicHead
+  parent: BaseHead
+  loadouts:
+  - ParamedicHead
+
+- type: loadoutGroup
+  id: ParamedicJumpsuit
+  parent: BaseJumpsuit
+  loadouts:
+  - ParamedicJumpsuit
+  - ParamedicJumpskirt
+
+- type: loadoutGroup
+  id: ParamedicOuterClothing
+  parent: BaseOuterClothing
+  loadouts:
+  - ParamedicWindbreaker
+  - ParamedicWintercoat
+
+- type: loadoutGroup
+  id: ParamedicShoes
+  parent: BaseShoes
+  loadouts:
+  - BlueShoes
+  - WhiteShoes
+  - MedicalWinterBoots

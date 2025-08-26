@@ -1,0 +1,8 @@
+- type: loadoutGroup
+  id: LibrarianJumpsuit
+  parent: BaseJumpsuit
+  loadouts:
+  - LibrarianJumpsuit
+  - LibrarianJumpskirt
+  - CuratorJumpsuit
+  - CuratorJumpskirt

@@ -1,0 +1,18 @@
+- type: roleLoadout
+  id: JobServiceWorker
+  groups:
+  - Survival
+  - GroupSpeciesBreathTool
+  - GroupTankHarness
+  # Head
+  - CommonGlasses
+  # Mask
+  # Neck
+  # Gloves
+  - BartenderJumpsuit
+  - CommonBackpack
+  # PDA
+  # Belt
+  # Outer Clothing
+  # Shoes
+  - Trinkets

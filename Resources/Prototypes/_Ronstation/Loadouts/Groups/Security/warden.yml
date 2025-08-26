@@ -1,0 +1,21 @@
+- type: loadoutGroup
+  id: WardenHead
+  parent: BaseHead
+  loadouts:
+  - WardenHead
+  - WardenBeret
+
+- type: loadoutGroup
+  id: WardenJumpsuit
+  parent: BaseJumpsuit
+  loadouts:
+  - WardenJumpsuit
+  - WardenJumpskirt
+
+- type: loadoutGroup
+  id: WardenOuterClothing
+  parent: BaseOuterClothing
+  minLimit: 1 # Warden must have outer clothing
+  loadouts:
+  - WardenCoat
+  - WardenArmoredWinterCoat

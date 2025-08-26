@@ -1,3 +1,4 @@
+# Modified by Ronstation contributor(s), therefore this file is licensed as MIT sublicensed with AGPL-v3.0.
 # Senior Time
 - type: loadoutEffectGroup
   id: SeniorPhysician
@@ -56,16 +57,19 @@
   id: BlueSurgeryCap
   equipment:
     head: ClothingHeadHatSurgcapBlue
+  groupBy: "surgerycap" # Ronstation - modification
 
 - type: loadout
   id: GreenSurgeryCap
   equipment:
     head: ClothingHeadHatSurgcapGreen
+  groupBy: "surgerycap" # Ronstation - modification
 
 - type: loadout
   id: PurpleSurgeryCap
   equipment:
     head: ClothingHeadHatSurgcapPurple
+  groupBy: "surgerycap" # Ronstation - modification
 
 - type: loadout
   id: NurseHat
@@ -77,11 +81,13 @@
   id: MedicalDoctorJumpsuit
   equipment:
     jumpsuit: ClothingUniformJumpsuitMedicalDoctor
+  groupBy: "jumpsuit" # Ronstation - modification
 
 - type: loadout
   id: MedicalDoctorJumpskirt
   equipment:
     jumpsuit: ClothingUniformJumpskirtMedicalDoctor
+  groupBy: "jumpskirt" # Ronstation - modification
 
 - type: loadout
   id: SeniorPhysicianJumpsuit
@@ -90,6 +96,7 @@
     proto: SeniorPhysician
   equipment:
     jumpsuit: ClothingUniformJumpsuitSeniorPhysician
+  groupBy: "jumpsuit" # Ronstation - modification
 
 - type: loadout
   id: SeniorPhysicianJumpskirt
@@ -98,21 +105,25 @@
     proto: SeniorPhysician
   equipment:
     jumpsuit: ClothingUniformJumpskirtSeniorPhysician
+  groupBy: "jumpskirt" # Ronstation - modification
 
 - type: loadout
   id: MedicalBlueScrubs
   equipment:
     jumpsuit: UniformScrubsColorBlue
+  groupBy: "scrubs" # Ronstation - modification
 
 - type: loadout
   id: MedicalGreenScrubs
   equipment:
     jumpsuit: UniformScrubsColorGreen
+  groupBy: "scrubs" # Ronstation - modification
 
 - type: loadout
   id: MedicalPurpleScrubs
   equipment:
     jumpsuit: UniformScrubsColorPurple
+  groupBy: "scrubs" # Ronstation - modification
 
 # Back
 - type: loadout

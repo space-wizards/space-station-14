@@ -1,0 +1,7 @@
+- type: loadoutGroup
+  id: EngineeringBackpack
+  parent: BaseBackpack
+  loadouts:
+  - StationEngineerBackpack
+  - StationEngineerSatchel
+  - StationEngineerDuffel

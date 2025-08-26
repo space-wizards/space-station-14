@@ -1,20 +1,25 @@
+# Modified by Ronstation contributor(s), therefore this file is licensed as MIT sublicensed with AGPL-v3.0.
 # Jumpsuit
 - type: loadout
   id: LibrarianJumpsuit
   equipment:
     jumpsuit: ClothingUniformJumpsuitLibrarian
+  groupBy: "jumpsuit" # Ronstation - modification
 
 - type: loadout
   id: LibrarianJumpskirt
   equipment:
     jumpsuit: ClothingUniformJumpskirtLibrarian
+  groupBy: "jumpskirt" # Ronstation - modification
 
 - type: loadout
   id: CuratorJumpsuit
   equipment:
     jumpsuit: ClothingUniformJumpsuitCurator
+  groupBy: "jumpsuit" # Ronstation - modification
 
 - type: loadout
   id: CuratorJumpskirt
   equipment:
     jumpsuit: ClothingUniformJumpskirtCurator
+  groupBy: "jumpskirt" # Ronstation - modification

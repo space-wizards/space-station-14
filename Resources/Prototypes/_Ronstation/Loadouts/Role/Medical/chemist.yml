@@ -1,0 +1,18 @@
+- type: roleLoadout
+  id: JobChemist
+  groups:
+  - SurvivalMedical
+  - GroupSpeciesBreathToolMedical
+  - GroupTankHarness
+  # Head
+  # Glasses
+  - MedicalMask
+  # Neck
+  - MedicalGloves
+  - ChemistJumpsuit
+  - ChemistBackpack
+  # PDA
+  # Belt
+  - ChemistOuterClothing
+  - MedicalShoes
+  - Trinkets

@@ -1,0 +1,34 @@
+- type: loadoutGroup
+  id: HoPHead
+  parent: BaseHead
+  loadouts:
+  - HoPHead
+
+- type: loadoutGroup
+  id: HoPNeck
+  parent: BaseNeck
+  loadouts:
+  - HoPCloak
+  - HoPMantle
+
+- type: loadoutGroup
+  id: HoPJumpsuit
+  parent: BaseJumpsuit
+  loadouts:
+  - HoPJumpsuit
+  - HoPJumpskirt
+
+- type: loadoutGroup
+  id: HoPBackpack
+  parent: BaseBackpack
+  loadouts:
+  - CommonBackpack
+  - CommonSatchel
+  - CommonDuffel
+  - HoPBackpackIan
+
+- type: loadoutGroup
+  id: HoPOuterClothing
+  parent: BaseOuterClothing
+  loadouts:
+  - HoPWintercoat

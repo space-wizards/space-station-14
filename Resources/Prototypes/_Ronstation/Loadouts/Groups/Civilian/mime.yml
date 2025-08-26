@@ -1,0 +1,44 @@
+- type: loadoutGroup
+  id: MimeHead
+  parent: BaseHead
+  loadouts:
+  - MimeHead
+  - MimeFrenchBeret
+  - MimeCap
+
+- type: loadoutGroup
+  id: MimeMask
+  parent: BaseMask
+  minLimit: 1
+  loadouts:
+  - MimeMask
+  - MimeMaskSad
+  - MimeMaskScared
+
+- type: loadoutGroup
+  id: MimeJumpsuit
+  parent: BaseJumpsuit
+  loadouts:
+  - MimeJumpsuit
+  - MimeJumpskirt
+
+- type: loadoutGroup
+  id: MimeBackpack
+  parent: BaseBackpack
+  loadouts:
+  - MimeBackpack
+  - MimeSatchel
+  - MimeDuffel
+  
+- type: loadoutGroup
+  id: MimeBelt
+  parent: BaseBelt
+  loadouts:
+  - MimeSuspendersRed
+  - MimeSuspendersBlack
+
+- type: loadoutGroup
+  id: MimeOuterClothing
+  parent: BaseOuterClothing
+  loadouts:
+  - MimeWintercoat

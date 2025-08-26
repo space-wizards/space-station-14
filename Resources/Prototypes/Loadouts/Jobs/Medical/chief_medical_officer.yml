@@ -1,3 +1,4 @@
+# Modified by Ronstation contributor(s), therefore this file is licensed as MIT sublicensed with AGPL-v3.0.
 # For mantles
 - type: loadoutEffectGroup
   id: MasterCMO
@@ -13,21 +14,25 @@
   id: ChiefMedicalOfficerJumpsuit
   equipment:
     jumpsuit: ClothingUniformJumpsuitCMO
+  groupBy: "jumpsuit" # Ronstation - modification
 
 - type: loadout
   id: ChiefMedicalOfficerJumpskirt
   equipment:
     jumpsuit: ClothingUniformJumpskirtCMO
+  groupBy: "jumpskirt" # Ronstation - modification
 
 - type: loadout
   id: ChiefMedicalOfficerTurtleneckJumpsuit
   equipment:
     jumpsuit: ClothingUniformJumpsuitCMOTurtle
+  groupBy: "jumpsuit" # Ronstation - modification
 
 - type: loadout
   id: ChiefMedicalOfficerTurtleneckJumpskirt
   equipment:
     jumpsuit: ClothingUniformJumpskirtCMOTurtle
+  groupBy: "jumpskirt" # Ronstation - modification
 
 # Head
 - type: loadout

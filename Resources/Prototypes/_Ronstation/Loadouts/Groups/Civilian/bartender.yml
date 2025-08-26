@@ -1,0 +1,22 @@
+- type: loadoutGroup
+  id: BartenderHead
+  parent: BaseHead
+  loadouts:
+  - BartenderHead
+  - BartenderBowler
+
+- type: loadoutGroup
+  id: BartenderJumpsuit
+  parent: BaseJumpsuit
+  loadouts:
+  - BartenderJumpsuit
+  - BartenderJumpskirt
+  - BartenderJumpsuitPurple
+
+- type: loadoutGroup
+  id: BartenderOuterClothing
+  parent: BaseOuterClothing
+  loadouts:
+  - BartenderVest
+  - BartenderApron
+  - BartenderWintercoat

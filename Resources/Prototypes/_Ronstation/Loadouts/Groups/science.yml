@@ -1,0 +1,18 @@
+- type: loadoutGroup
+  id: ScienceGloves
+  parent: BaseGloves
+  loadouts:
+  - LatexGloves
+  - PurpleGloves
+  - RobohandsGloves
+
+- type: loadoutGroup
+  id: ScienceBackpack
+  parent: BaseBackpack
+  loadouts:
+  - ScientistBackpack
+  - ScientistSatchel
+  - ScientistDuffel
+  - RoboticistBackpack
+  - RoboticistSatchel
+  - RoboticistDuffel

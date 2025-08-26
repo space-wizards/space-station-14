@@ -1,0 +1,12 @@
+- type: loadoutGroup
+  id: MusicianJumpsuit
+  parent: BaseJumpsuit
+  loadouts:
+  - MusicianJumpsuit
+  - MusicianJumpskirt
+
+- type: loadoutGroup
+  id: MusicianOuterClothing
+  parent: BaseOuterClothing
+  loadouts:
+  - MusicianWintercoat

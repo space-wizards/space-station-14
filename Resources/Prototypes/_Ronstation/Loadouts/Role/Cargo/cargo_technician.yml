@@ -1,0 +1,18 @@
+- type: roleLoadout
+  id: JobCargoTechnician
+  groups:
+  - Survival
+  - GroupSpeciesBreathTool
+  - GroupTankHarness
+  - CargoTechnicianHead
+  - CommonGlasses
+  # Mask
+  # Neck
+  # Gloves
+  - CargoTechnicianJumpsuit
+  - CargoTechnicianBackpack
+  # PDA
+  # Belt
+  - CargoTechnicianOuterClothing
+  - CargoTechnicianShoes
+  - Trinkets

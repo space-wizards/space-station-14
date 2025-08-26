@@ -1,0 +1,33 @@
+- type: loadoutGroup
+  id: ResearchDirectorHead
+  parent: BaseHead
+  loadouts:
+  - ResearchDirectorBeret
+
+- type: loadoutGroup
+  id: ResearchDirectorNeck
+  parent: BaseNeck
+  loadouts:
+  - ResearchDirectorMantle
+  - ResearchDirectorCloak
+
+- type: loadoutGroup
+  id: ResearchDirectorJumpsuit
+  parent: BaseJumpsuit
+  loadouts:
+  - ResearchDirectorJumpsuit
+  - ResearchDirectorJumpskirt
+
+- type: loadoutGroup
+  id: ResearchDirectorOuterClothing
+  parent: BaseOuterClothing
+  loadouts:
+  - ResearchDirectorLabCoat
+  - ResearchDirectorWintercoat
+
+- type: loadoutGroup
+  id: ResearchDirectorShoes
+  parent: BaseShoes
+  loadouts:
+  - BrownShoes
+  - ScienceWinterBoots

@@ -1,0 +1,20 @@
+- type: roleLoadout
+  id: JobMusician
+  canCustomizeName: true
+  groups:
+  - Survival
+  - GroupSpeciesBreathTool
+  - GroupTankHarness
+  # Head
+  - CommonGlasses
+  # Mask
+  # Neck
+  # Gloves
+  - MusicianJumpsuit
+  - CommonBackpack
+  # PDA
+  # Belt
+  - MusicianOuterClothing
+  # Shoes
+  - Trinkets
+  - Instruments

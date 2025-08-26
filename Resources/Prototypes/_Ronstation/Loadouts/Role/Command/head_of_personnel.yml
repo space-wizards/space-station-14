@@ -1,0 +1,18 @@
+- type: roleLoadout
+  id: JobHeadOfPersonnel
+  groups:
+  - Survival
+  - GroupSpeciesBreathTool
+  - GroupTankHarness
+  - HoPHead
+  - CommonGlasses
+  # Mask
+  - HoPNeck
+  # Gloves
+  - HoPJumpsuit
+  - HoPBackpack
+  # PDA
+  # Belt
+  - HoPOuterClothing
+  # Shoes
+  - Trinkets
