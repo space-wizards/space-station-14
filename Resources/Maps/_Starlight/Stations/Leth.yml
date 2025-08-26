@@ -4,8 +4,8 @@ meta:
   engineVersion: 266.0.0
   forkId: ""
   forkVersion: ""
-  time: 08/26/2025 01:38:47
-  entityCount: 16719
+  time: 08/26/2025 01:40:16
+  entityCount: 16718
 maps:
 - 1
 grids:
@@ -4395,6 +4395,21 @@ entities:
             2246: -39,3
             2247: -53,22
         - node:
+            color: '#DE3A3A96'
+            id: MiniTileCornerOverlaySE
+          decals:
+            6202: 35,3
+        - node:
+            color: '#DE3A3A96'
+            id: MiniTileInnerOverlaySE
+          decals:
+            6204: 33,3
+        - node:
+            color: '#DE3A3A96'
+            id: MiniTileLineOverlayS
+          decals:
+            6203: 34,3
+        - node:
             color: '#334E6DC8'
             id: MiniTileWhiteCornerNe
           decals:
@@ -6891,6 +6906,7 @@ entities:
             6156: 33,4
             6157: 33,3
             6158: 33,2
+            6201: 33,8
         - node:
             color: '#EFB34196'
             id: MiniTileWhiteLineW
@@ -11014,7 +11030,7 @@ entities:
       pos: 7.5,-88.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -136034.66
+      secondsUntilStateChange: -136122.25
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -11222,13 +11238,6 @@ entities:
     components:
     - type: Transform
       pos: 33.5,1.5
-      parent: 2
-- proto: AirlockDetectiveLocked
-  entities:
-  - uid: 13560
-    components:
-    - type: Transform
-      pos: 33.5,8.5
       parent: 2
 - proto: AirlockEngineeringGlassLocked
   entities:
@@ -12264,7 +12273,7 @@ entities:
       pos: -11.5,-24.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -49471.66
+      secondsUntilStateChange: -49559.258
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -16160,7 +16169,7 @@ entities:
       parent: 2
 - proto: BoxFolderYellow
   entities:
-  - uid: 14096
+  - uid: 14091
     components:
     - type: Transform
       pos: 35.66168,5.5574083
@@ -36950,7 +36959,7 @@ entities:
     - type: Transform
       pos: -38.5,-34.5
       parent: 2
-  - uid: 16716
+  - uid: 16715
     components:
     - type: Transform
       pos: 31.5,6.5
@@ -40035,7 +40044,7 @@ entities:
     - type: Transform
       pos: 4.5,-7.5
       parent: 2
-  - uid: 13633
+  - uid: 13626
     components:
     - type: Transform
       pos: 5.5,-7.5
@@ -40135,13 +40144,13 @@ entities:
     - type: Transform
       pos: 7.5,-80.5
       parent: 2
-  - uid: 16718
+  - uid: 16717
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 35.5,4.5
       parent: 2
-  - uid: 16719
+  - uid: 16718
     components:
     - type: Transform
       rot: 3.141592653589793 rad
@@ -47850,7 +47859,7 @@ entities:
       parent: 2
 - proto: DrinkFlask
   entities:
-  - uid: 14091
+  - uid: 14086
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
@@ -48246,7 +48255,7 @@ entities:
       name: Medical
 - proto: FaxMachineCaptain
   entities:
-  - uid: 16715
+  - uid: 16714
     components:
     - type: Transform
       pos: 5.5,-5.5
@@ -77758,7 +77767,7 @@ entities:
       parent: 2
 - proto: GlassBoxLaserFilled
   entities:
-  - uid: 15204
+  - uid: 14175
     components:
     - type: Transform
       pos: 4.5,-5.5
@@ -89694,24 +89703,24 @@ entities:
       rot: -1.5707963267948966 rad
       pos: -2.5,-9.5
       parent: 2
-  - uid: 13614
+  - uid: 13560
     components:
     - type: Transform
       pos: -4.5,-5.5
       parent: 2
-  - uid: 13616
+  - uid: 13614
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 2.5,-3.5
       parent: 2
-  - uid: 13617
+  - uid: 13616
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: -1.5,-3.5
       parent: 2
-  - uid: 13626
+  - uid: 13617
     components:
     - type: Transform
       pos: -6.5,-5.5
@@ -95094,7 +95103,7 @@ entities:
     - type: Transform
       pos: -53.5,-6.5
       parent: 2
-  - uid: 14175
+  - uid: 14174
     components:
     - type: Transform
       pos: 4.5,-4.5
@@ -96911,7 +96920,7 @@ entities:
       fixtures: {}
 - proto: SignDirectionalHop
   entities:
-  - uid: 16717
+  - uid: 16716
     components:
     - type: Transform
       pos: -35.5,-22.5
@@ -101730,6 +101739,11 @@ entities:
     - type: Transform
       pos: 38.5,-29.5
       parent: 2
+  - uid: 13633
+    components:
+    - type: Transform
+      pos: 4.5,-8.5
+      parent: 2
   - uid: 13739
     components:
     - type: Transform
@@ -101760,10 +101774,10 @@ entities:
     - type: Transform
       pos: 26.5,-34.5
       parent: 2
-  - uid: 14086
+  - uid: 14096
     components:
     - type: Transform
-      pos: 4.5,-8.5
+      pos: 35.5,5.5
       parent: 2
   - uid: 14101
     components:
@@ -101780,11 +101794,6 @@ entities:
     - type: Transform
       pos: 4.5,-34.5
       parent: 2
-  - uid: 14174
-    components:
-    - type: Transform
-      pos: 35.5,5.5
-      parent: 2
   - uid: 14916
     components:
     - type: Transform
@@ -101799,6 +101808,11 @@ entities:
     components:
     - type: Transform
       pos: -50.5,-58.5
+      parent: 2
+  - uid: 15204
+    components:
+    - type: Transform
+      pos: 5.5,-5.5
       parent: 2
   - uid: 15265
     components:
@@ -101879,11 +101893,6 @@ entities:
     components:
     - type: Transform
       pos: 6.5,-13.5
-      parent: 2
-  - uid: 16714
-    components:
-    - type: Transform
-      pos: 5.5,-5.5
       parent: 2
 - proto: TableCarpet
   entities:
