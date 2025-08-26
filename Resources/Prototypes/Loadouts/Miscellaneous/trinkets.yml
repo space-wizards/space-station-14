@@ -31,6 +31,20 @@
 
 # Toys
 - type: loadout
+  id: PlushieLizard
+  storage:
+    back:
+    - PlushieLizard
+  groupBy: "plushies" # Ronstation - modification.
+
+- type: loadout
+  id: PlushieSpaceLizard
+  storage:
+    back:
+    - PlushieSpaceLizard
+  groupBy: "plushies" # Ronstation - modification.
+
+- type: loadout
   id: ThreeCandles
   dummyEntity: LoadoutDummyCandles
   storage:
