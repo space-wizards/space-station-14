@@ -18,6 +18,11 @@
 
 - type: loadout
   id: PetMothroach
+  effects:
+  - !type:JobRequirementLoadoutEffect
+    requirement:
+      !type:OverallPlaytimeRequirement
+      time: 360000 # 100hr
   storage:
     back:
     - MobPetMothroach
