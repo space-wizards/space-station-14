@@ -30,15 +30,6 @@
   table: !type:AllSelector # we need to pass a list of rules, since rules have further restrictions to consider via StationEventComp
     children:
     - id: ClosetSkeleton
-    - id: KingRatMigration
-    - id: RevenantSpawn
-    - !type:NestedSelector
-      tableId: DerelictBorgEventTable
-
-- type: entityTable
-  id: ModerateAntagEventsTable
-  table: !type:AllSelector # we need to pass a list of rules, since rules have further restrictions to consider via StationEventComp
-    children:
     - id: DragonSpawn
     - id: KingRatMigration
     - id: NinjaSpawn
@@ -583,9 +574,7 @@
         factions:
         - Syndicate
       mindRoles:
-      - MindRoleLoneops
-  - type: DynamicRuleCost
-    cost: 75
+      - MindRoleNukeops
 
 - type: entity
   parent: BaseTraitorRule
