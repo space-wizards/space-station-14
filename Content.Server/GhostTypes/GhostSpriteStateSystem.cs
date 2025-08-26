@@ -1,5 +1,6 @@
 using Content.Shared.Damage;
 using Content.Shared.Mind;
+using Content.Shared.Mind.Components;
 using Robust.Shared.Random;
 
 namespace Content.Server.GhostTypes;
@@ -10,12 +11,15 @@ public sealed class GhostSpriteStateSystem : EntitySystem
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
 
-    public void SetGhostSprite(EntityUid ent, MindComponent mind, GhostSpriteStateComponent state)
+    /// <summary>
+    /// It goes trough an entity damage and assigns them a sprite according to the highest damage type/s
+    /// </summary>
+    public void SetGhostSprite(Entity<GhostSpriteStateComponent> ent, MindComponent mind)
     {
         if (!TryComp<AppearanceComponent>(ent, out var appearance))
             return;
 
-        var highestType = new List<string>();  // set up damage list and try to find the entity damage
+        List<string> highestType;
         if (TryComp<DamageableComponent>(mind.CurrentEntity, out var damageComp))
         {
             highestType = _damageable.GetHighestDamageTypes(damageComp.DamagePerGroup, damageComp.Damage);
@@ -50,6 +54,6 @@ public sealed class GhostSpriteStateSystem : EntitySystem
                 spriteState = highestType[_random.Next(0, highestType.Count)]; // Uses the 1 possible sprite
             }
         }
-        _appearance.SetData(ent, GhostVisuals.Damage, (state.Prefix + spriteState).ToLower(), appearance);
+        _appearance.SetData(ent, GhostVisuals.Damage, (ent.Comp.Prefix + spriteState).ToLower(), appearance);
     }
 }
