@@ -558,4 +558,12 @@
   id: 68
   time: '2025-08-23T22:48:39.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/39801
+- author: F1restar4
+  changes:
+  - message: On Exo, added an atmospherics network monitor console to atmos' front
+      room
+    type: Add
+  id: 69
+  time: '2025-08-26T08:32:58.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/39330
 Order: 1
