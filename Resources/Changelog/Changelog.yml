@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: KingFroozy
-  changes:
-  - message: Mime's suits were resprited.
-    type: Tweak
-  id: 8373
-  time: '2025-04-28T02:40:21.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/36702
 - author: Southbridge
   changes:
   - message: Amber Station - Added Genpop
@@ -3945,3 +3938,10 @@
   id: 8885
   time: '2025-08-26T00:48:31.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/39824
+- author: perryprog
+  changes:
+  - message: Items and borgs can no longer become stuck in mechs.
+    type: Fix
+  id: 8886
+  time: '2025-08-26T10:29:13.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37942
