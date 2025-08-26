@@ -120,6 +120,7 @@ public abstract class SharedRootableSystem : EntitySystem
             _alerts.ClearAlert(entity, entity.Comp.RootedAlert);
         }
 
+        _gravity.RefreshWeightless(entity.Owner, !entity.Comp.Rooted);
         _audio.PlayPredicted(entity.Comp.RootSound, entity.Owner.ToCoordinates(), entity);
 
         return true;
