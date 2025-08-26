@@ -90,6 +90,7 @@ public sealed class WaggingSystem : EntitySystem
 
         wagging.Wagging = !wagging.Wagging;
 
+        // starlight start
         string? target;
         if (wagging.Wagging)
         {
@@ -105,9 +106,10 @@ public sealed class WaggingSystem : EntitySystem
             Log.Error($"Unable to find corresponding wagging or static ID for {markings[0].MarkingId}?");
             return false;
         }
-        
+
         _humanoidAppearance.SetMarkingId(uid, MarkingCategories.Tail, 0, target,
             humanoid: humanoid);
+        // starlight end
 
         return true;
     }
