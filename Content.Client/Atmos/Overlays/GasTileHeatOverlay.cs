@@ -1,7 +1,7 @@
 ﻿using System.Numerics;
 using Content.Shared.Atmos;
 using Content.Shared.Atmos.Components;
-using Content.Shared.Atmos.EntitySystems;
+using Content.Client.Atmos.EntitySystems;
 using Content.Shared.CCVar;
 using Robust.Client.Graphics;
 using Robust.Shared.Configuration;
@@ -23,6 +23,9 @@ public sealed class GasTileHeatOverlay : Overlay
     [Dependency] private readonly IPrototypeManager _proto = default!;
     [Dependency] private readonly IClyde _clyde = default!;
     [Dependency] private readonly IConfigurationManager _configManager = default!;
+    // We can't resolve this immediately, because it's an entitysystem, but we will attempt to resolve and cache this
+    // once we begin to draw.
+    private GasTileOverlaySystem? _gasTileOverlay;
     private readonly SharedTransformSystem _xformSys;
 
     private IRenderTexture? _heatTarget;
@@ -51,6 +54,12 @@ public sealed class GasTileHeatOverlay : Overlay
     protected override bool BeforeDraw(in OverlayDrawArgs args)
     {
         if (args.MapId == MapId.Nullspace)
+            return false;
+
+        // If we haven't resolved this yet, give it a try or bail
+        _gasTileOverlay ??= _entManager.System<GasTileOverlaySystem>();
+
+        if (_gasTileOverlay == null)
             return false;
 
         var target = args.Viewport.RenderTarget;
@@ -139,7 +148,7 @@ public sealed class GasTileHeatOverlay : Overlay
                                 continue;
 
                             // Get the distortion strength from the temperature and bail if it's not hot enough
-                            var strength = SharedGasTileOverlaySystem.GetHeatDistortionStrength(tileGas.Temperature);
+                            var strength = _gasTileOverlay.GetHeatDistortionStrength(tileGas.Temperature);
                             if (strength <= 0f)
                                 continue;
 
