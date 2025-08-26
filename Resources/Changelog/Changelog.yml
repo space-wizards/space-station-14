@@ -1,13 +1,4 @@
 ﻿Entries:
-- author: Bokser815
-  changes:
-  - message: Cargo buy and sell pallets aboard the ATS can no longer be destroyed,
-      so cargo workers will no longer be unable to perform their job entirely for
-      the rest of the round.
-    type: Tweak
-  id: 8371
-  time: '2025-04-28T00:59:54.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/34195
 - author: lzk228
   changes:
   - message: Shelves don't have whitelists. But still max item size you can fit is
@@ -3948,3 +3939,10 @@
   id: 8883
   time: '2025-08-25T18:05:55.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/39883
+- author: ToastEnjoyer
+  changes:
+  - message: Pacifists can no longer use the laser rifle
+    type: Fix
+  id: 8884
+  time: '2025-08-26T00:44:01.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/39891
