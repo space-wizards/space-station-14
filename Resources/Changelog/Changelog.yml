@@ -1,14 +1,4 @@
 ﻿Entries:
-- author: Southbridge
-  changes:
-  - message: Amber Station - Added Genpop
-    type: Add
-  - message: Amber Station - Ensured a lot of doorways had tiles and decals under
-      them.
-    type: Tweak
-  id: 8374
-  time: '2025-04-28T06:56:39.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/36997
 - author: lzk228
   changes:
   - message: Scrubber now will turn on widenet in panic mode.
@@ -3945,3 +3935,10 @@
   id: 8886
   time: '2025-08-26T10:29:13.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/37942
+- author: beck-thompson
+  changes:
+  - message: You can now select no lock when locking syndicate items
+    type: Tweak
+  id: 8887
+  time: '2025-08-26T14:18:10.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/39532
