@@ -12467,6 +12467,13 @@ Entries:
   id: 145199
   time: '2025-08-24T18:35:59.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/1461
+- author: walksanatora
+  changes:
+  - message: Fixed xenoborgs sprite.
+    type: Fix
+  id: 145700
+  time: '2025-08-24T23:16:26.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1457
 - author: Fractalflower
   changes:
   - message: Humans can now have foxlike ears
