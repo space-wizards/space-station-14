@@ -4,8 +4,8 @@ meta:
   engineVersion: 266.0.0
   forkId: ""
   forkVersion: ""
-  time: 08/26/2025 06:29:48
-  entityCount: 160
+  time: 08/26/2025 07:29:43
+  entityCount: 161
 maps: []
 grids:
 - 1
@@ -74,16 +74,36 @@ entities:
             color: '#52B4E9FF'
             id: BrickCornerOverlayNE
           decals:
-            36: -1,1
-            37: 0,0
             38: 1,-1
         - node:
             color: '#52B4E9FF'
             id: BrickCornerOverlaySW
           decals:
-            39: 0,2
             40: -1,3
-            41: 1,1
+        - node:
+            color: '#96DAFFFF'
+            id: BrickTileWhiteCornerNe
+          decals:
+            48: -1,1
+            49: 0,0
+        - node:
+            color: '#96DAFFFF'
+            id: BrickTileWhiteCornerSw
+          decals:
+            50: 0,2
+            51: 1,1
+        - node:
+            color: '#96DAFFFF'
+            id: BrickTileWhiteInnerNe
+          decals:
+            44: -1,0
+            47: 0,-1
+        - node:
+            color: '#96DAFFFF'
+            id: BrickTileWhiteInnerSw
+          decals:
+            45: 1,2
+            46: 0,3
     - type: GridAtmosphere
       version: 2
       data:
@@ -837,26 +857,33 @@ entities:
     - type: Physics
       canCollide: False
     - type: InsideEntityStorage
+- proto: Intellicard
+  entities:
+  - uid: 161
+    components:
+    - type: Transform
+      pos: 1.3709166,-0.5099602
+      parent: 1
 - proto: JugAluminium
   entities:
   - uid: 80
     components:
     - type: Transform
-      pos: 0.19196236,3.6056864
+      pos: 0.23122215,3.6055524
       parent: 1
 - proto: JugIron
   entities:
   - uid: 79
     components:
     - type: Transform
-      pos: -0.24553764,3.5917976
+      pos: -0.14840716,3.6055524
       parent: 1
 - proto: JugUranium
   entities:
   - uid: 82
     components:
     - type: Transform
-      pos: 0.65029573,3.6195753
+      pos: 0.63862973,3.6055524
       parent: 1
 - proto: ModularGrenade
   entities:
