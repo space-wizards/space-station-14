@@ -2,7 +2,6 @@ using Content.Server.Chat.Systems;
 using Content.Server.Construction;
 using Content.Server.Mind;
 using Content.Server.Roles;
-using Content.Server.Station.Systems;
 using Content.Shared.Chat.Prototypes;
 using Content.Shared.Containers.ItemSlots;
 using Content.Shared.DeviceNetwork.Components;
@@ -26,7 +25,6 @@ public sealed class StationAiSystem : SharedStationAiSystem
     [Dependency] private readonly ContainerSystem _container = default!;
     [Dependency] private readonly MindSystem _mind = default!;
     [Dependency] private readonly RoleSystem _roles = default!;
-    [Dependency] private readonly StationSystem _station = default!;
     [Dependency] private readonly ItemSlotsSystem _slots = default!;
 
     private readonly HashSet<Entity<StationAiCoreComponent>> _stationAiCores = new();
@@ -34,7 +32,7 @@ public sealed class StationAiSystem : SharedStationAiSystem
     private readonly ProtoId<ChatNotificationPrototype> _aiWireSnippedChatNotificationPrototype = "AiWireSnipped";
 
     private readonly ProtoId<JobPrototype> _stationAiJob = "StationAi";
-    private readonly EntProtoId _defaultAi = "StationAiBrain";
+    private readonly EntProtoId _stationAiBrain = "StationAiBrain";
 
     public override void Initialize()
     {
@@ -47,8 +45,6 @@ public sealed class StationAiSystem : SharedStationAiSystem
 
     private void AfterConstructionChangeEntity(Entity<StationAiCoreComponent> ent, ref AfterConstructionChangeEntityEvent args)
     {
-        var station = _station.GetOwningStation(ent);
-
         if (!_container.TryGetContainer(ent, StationAiCoreComponent.BrainContainer, out var container) ||
             container.Count == 0)
         {
@@ -60,7 +56,7 @@ public sealed class StationAiSystem : SharedStationAiSystem
         if (_mind.TryGetMind(brain, out var mindId, out var mind))
         {
             // Found an existing mind to transfer into the AI core
-            var aiBrain = Spawn(_defaultAi, Transform(ent.Owner).Coordinates);
+            var aiBrain = Spawn(_stationAiBrain, Transform(ent.Owner).Coordinates);
             _roles.MindAddJobRole(mindId, mind, false, _stationAiJob);
             _mind.TransferTo(mindId, aiBrain);
 
