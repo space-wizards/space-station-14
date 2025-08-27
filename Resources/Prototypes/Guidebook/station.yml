@@ -1,8 +1,8 @@
 - type: guideEntry
-  id: SS14
-  name: guide-entry-ss14
+  id: FinalFrontier
+  name: guide-entry-finalfrontier
   priority: 20
-  text: "/ServerInfo/Guidebook/SpaceStation14.xml"
+  text: "/ServerInfo/Guidebook/FinalFrontier.xml"
   children:
   - Jobs
   - Survival
