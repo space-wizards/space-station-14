@@ -1,5 +1,7 @@
 using Content.Server.Antag;
+using Content.Server.Chat.Systems;
 using Content.Server.GameTicking.Rules.Components;
+using Content.Shared.Destructible;
 using Content.Shared.GameTicking.Components;
 using Content.Shared.Humanoid;
 using Content.Shared.Mind;
@@ -8,13 +10,13 @@ using Content.Shared.Mobs.Systems;
 using Content.Server.RoundEnd;
 using Content.Shared.Xenoborgs.Components;
 using Robust.Shared.Player;
-using System.Globalization;
 
 namespace Content.Server.GameTicking.Rules;
 
 public sealed class XenoborgsRuleSystem : GameRuleSystem<XenoborgsRuleComponent>
 {
     [Dependency] private readonly AntagSelectionSystem _antag = default!;
+    [Dependency] private readonly ChatSystem _chatSystem = default!;
     [Dependency] private readonly MobStateSystem _mobState = default!;
     [Dependency] private readonly SharedMindSystem _mindSystem = default!;
     [Dependency] private readonly RoundEndSystem _roundEnd = default!;
@@ -23,6 +25,7 @@ public sealed class XenoborgsRuleSystem : GameRuleSystem<XenoborgsRuleComponent>
     {
         base.Initialize();
         SubscribeLocalEvent<XenoborgsRuleComponent, AfterAntagEntitySelectedEvent>(OnAfterAntagEntSelected);
+        SubscribeLocalEvent<XenoborgComponent, DestructionEventArgs>(OnXenoborgDestroyed);
     }
 
     protected override void Started(EntityUid uid,
@@ -49,6 +52,28 @@ public sealed class XenoborgsRuleSystem : GameRuleSystem<XenoborgsRuleComponent>
                 Color.BlueViolet,
                 ent.Comp.GreetSoundNotification);
         }
+    }
+
+    private void OnXenoborgDestroyed(EntityUid ent, XenoborgComponent component, DestructionEventArgs args)
+    {
+        // if a xenoborg is destroyed, it will check if other xenoborgs are destroyed
+        var xenoborgQuery = AllEntityQuery<XenoborgComponent>();
+        while (xenoborgQuery.MoveNext(out var xenoborgEnt, out _))
+        {
+            // if it finds another xenoborg that is different from the one just destroyed,
+            // it means there are still more xenoborgs.
+            if (xenoborgEnt != ent)
+                return;
+        }
+
+        // all xenoborgs are gone
+        var mothershipCoreQuery = AllEntityQuery<MothershipCoreComponent>();
+        var status = mothershipCoreQuery.MoveNext(out _, out _) ? "alive" : "dead";
+
+        _chatSystem.DispatchGlobalAnnouncement(
+            Loc.GetString($"xenoborgs-no-more-threat-mothership-core-{status}-announcement"),
+            colorOverride: Color.Gold);
+
     }
 
     protected override void AppendRoundEndText(EntityUid uid,
