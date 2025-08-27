@@ -4,6 +4,8 @@ using Content.Server.GameTicking.Rules.Components;
 using Content.Server.Radio.EntitySystems;
 using Content.Server.Silicons.Borgs;
 using Content.Shared.Destructible;
+using Content.Shared.Roles;
+using Content.Shared.Roles.Components;
 using Content.Shared.Silicons.Borgs.Components;
 using Content.Shared.Xenoborgs.Components;
 
@@ -12,7 +14,7 @@ namespace Content.Server.Xenoborgs;
 public sealed partial class XenoborgSystem : EntitySystem
 {
     [Dependency] private readonly BorgSystem _borg = default!;
-
+    [Dependency] private readonly SharedRoleSystem _roles = default!;
     [Dependency] private readonly XenoborgsRuleSystem _xenoborgsRule = default!;
     public override void Initialize()
     {
@@ -44,5 +46,29 @@ public sealed partial class XenoborgSystem : EntitySystem
             // so brute force it is...
             _borg.Destroy(xenoborgEnt);
         }
+    }
+
+    public void EnsureXenoborgRole(EntityUid mindId)
+    {
+        if (!_roles.MindHasRole<XenoborgRoleComponent>(mindId))
+            _roles.MindAddRole(mindId, "MindRoleXenoborg", silent: true);
+    }
+
+    public void RemoveXenoborgRole(EntityUid mindId)
+    {
+        if (_roles.MindHasRole<XenoborgRoleComponent>(mindId))
+            _roles.MindRemoveRole<XenoborgRoleComponent>(mindId);
+    }
+
+    public void EnsureXenoborgCoreRole(EntityUid mindId)
+    {
+        if (!_roles.MindHasRole<XenoborgCoreRoleComponent>(mindId))
+            _roles.MindAddRole(mindId, "MindRoleMothershipCore", silent: true);
+    }
+
+    public void RemoveXenoborgCoreRole(EntityUid mindId)
+    {
+        if (_roles.MindHasRole<XenoborgCoreRoleComponent>(mindId))
+            _roles.MindRemoveRole<XenoborgCoreRoleComponent>(mindId);
     }
 }

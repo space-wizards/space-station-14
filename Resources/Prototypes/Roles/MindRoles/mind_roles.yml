@@ -300,6 +300,10 @@
   components:
   - type: MindRole
     antagPrototype: MothershipCore
+    exclusiveAntag: true
+    roleType: Silicon
+    subtype: role-subtype-xenoborg-core
+  - type: XenoborgCoreRole
 
 - type: entity
   parent: BaseMindRoleAntag
@@ -308,6 +312,10 @@
   components:
   - type: MindRole
     antagPrototype: Xenoborg
+    exclusiveAntag: true
+    roleType: Silicon
+    subtype: role-subtype-xenoborg
+  - type: XenoborgRole
 
 # Zombie Squad
 - type: entity
