@@ -42,10 +42,12 @@
     - SemiAuto
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/laser.ogg
-  - type: MagazineAmmoProvider
+  - type: HitscanBatteryAmmoProvider
+    proto: RedLightLaser
+    fireCost: 50
   - type: ItemSlots
     slots:
-      gun_magazine:
+      cell_slot:
         name: Magazine
         startingItem: PowerCellSmall
         insertSound: /Audio/Weapons/Guns/MagIn/batrifle_magin.ogg
@@ -54,12 +56,14 @@
           tags:
             - PowerCell
             - PowerCellSmall
+  - type: PowerCellSlot
+    cellSlotId: cell_slot
   - type: Appearance
   - type: StaticPrice
     price: 500
   - type: ContainerContainer
     containers:
-      gun_magazine: !type:ContainerSlot
+      cell_slot: !type:ContainerSlot
 
 - type: entity
   id: BaseWeaponBatterySmall
@@ -99,7 +103,7 @@
 
 - type: entity
   name: svalinn laser pistol
-  parent: [ BaseWeaponPowerCellSmall, BaseSecurityContraband ]
+  parent: [BaseWeaponPowerCellSmall, BaseSecurityContraband]
   id: WeaponLaserSvalinn
   description: A cheap and widely used laser pistol.
   components:
@@ -112,6 +116,10 @@
       map: ["enum.GunVisualLayers.MagUnshaded"]
       shader: unshaded
   - type: Item
+    shape:
+    - 0,0,1,0
+    - 0,1,0,1
+    storedOffset: 0,-7
     sprite: Objects/Weapons/Guns/Battery/svalinn.rsi
   - type: MagazineVisuals
     magState: mag
@@ -120,7 +128,7 @@
 
 - type: entity
   name: retro laser blaster
-  parent: [ BaseWeaponBatterySmall, BaseMajorContraband ]
+  parent: [BaseWeaponBatterySmall, BaseMajorContraband]
   id: WeaponLaserGun
   description: A weapon using light amplified by the stimulated emission of radiation.
   components:
@@ -132,6 +140,8 @@
     - state: mag-unshaded-4
       map: ["enum.GunVisualLayers.MagUnshaded"]
       shader: unshaded
+  - type: Item
+    storedOffset: 0,-5
   - type: HitscanBatteryAmmoProvider
     proto: RedMediumLaser
     fireCost: 62.5
@@ -143,7 +153,7 @@
 
 - type: entity
   name: makeshift laser pistol
-  parent: BaseWeaponBatterySmall
+  parent: [BaseWeaponBatterySmall, BaseMinorContraband]
   id: WeaponMakeshiftLaser
   description: Better pray it won't burn your hands off.
   components:
@@ -155,6 +165,8 @@
     - state: mag-unshaded-4
       map: ["enum.GunVisualLayers.MagUnshaded"]
       shader: unshaded
+  - type: Item
+    storedOffset: 0,-4
   - type: MagazineVisuals
     magState: mag
     steps: 5
@@ -171,10 +183,14 @@
 
 - type: entity
   name: tesla gun
-  parent: BaseWeaponBattery
+  parent: [BaseWeaponBattery, BaseMajorContraband]
   id: WeaponTeslaGun
   description: The power of the primordial element of lightning in your hands.
   components:
+  - type: Item
+    size: Large
+    shape:
+    - 0,0,2,1
   - type: Sprite
     sprite: Objects/Weapons/Guns/Battery/tesla_gun.rsi
     layers:
@@ -199,11 +215,13 @@
   - type: Appearance
 
 - type: entity
-  name: practice laser rifle
+  name: laser carbine
   parent: [BaseWeaponBattery, BaseGunWieldable]
-  id: WeaponLaserCarbinePractice
-  description: This modified laser rifle fires nearly harmless beams in the 40-watt range, for target practice.
+  id: WeaponLaserCarbine
+  description: Favoured by Nanotrasen Security for being cheap and easy to use.
   components:
+  - type: Item
+    size: Large
   - type: Sprite
     sprite: Objects/Weapons/Guns/Battery/laser_gun.rsi
     layers:
@@ -224,26 +242,27 @@
     availableModes:
     - SemiAuto
   - type: HitscanBatteryAmmoProvider
-    proto: RedLaserPractice
-    fireCost: 62.5
-  - type: StaticPrice
-    price: 300
-
-- type: entity
-  name: laser rifle
-  parent: [WeaponLaserCarbinePractice, BaseGunWieldable, BaseSecurityContraband]
-  id: WeaponLaserCarbine
-  description: Favoured by Nanotrasen Security for being cheap and easy to use.
-  components:
-  - type: StaticPrice
-    price: 420
-  - type: HitscanBatteryAmmoProvider
     proto: RedLaser
     fireCost: 62.5
+  - type: StaticPrice
+    price: 420
+
+- type: entity
+  name: practice laser carbine
+  parent: [WeaponLaserCarbine, BaseGunWieldable]
+  id: WeaponLaserCarbinePractice
+  description: This modified laser carbine fires nearly harmless beams in the 40-watt range, for target practice.
+  components:
+  - type: StaticPrice
+    price: 300
+  - type: HitscanBatteryAmmoProvider
+    proto: RedLaserPractice
+    fireCost: 62.5
+  - type: PacifismAllowedGun
 
 - type: entity
   name: pulse pistol
-  parent: BaseWeaponBatterySmall
+  parent: [BaseWeaponBatterySmall, BaseCentcommContraband]
   id: WeaponPulsePistol
   description: A state of the art energy pistol favoured as a sidearm by the NT operatives.
   components:
@@ -255,6 +274,8 @@
     - state: mag-unshaded-4
       map: ["enum.GunVisualLayers.MagUnshaded"]
       shader: unshaded
+  - type: Item
+    storedOffset: -2,-5
   - type: MagazineVisuals
     magState: mag
     steps: 5
@@ -267,7 +288,7 @@
     availableModes:
     - SemiAuto
     soundGunshot:
-      path: /Audio/Weapons/Guns/Gunshots/laser_cannon.ogg
+      path: /Audio/Weapons/Guns/Gunshots/laser3.ogg
   - type: HitscanBatteryAmmoProvider
     proto: Pulse
     fireCost: 200
@@ -281,6 +302,8 @@
   id: WeaponPulseCarbine
   description: A high tech energy carbine favoured by the NT-ERT operatives.
   components:
+  - type: Item
+    size: Large
   - type: Sprite
     sprite: Objects/Weapons/Guns/Battery/pulse_carbine.rsi
     layers:
@@ -303,7 +326,7 @@
       - SemiAuto
       - FullAuto
     soundGunshot:
-      path: /Audio/Weapons/Guns/Gunshots/laser_cannon.ogg
+      path: /Audio/Weapons/Guns/Gunshots/laser3.ogg
   - type: HitscanBatteryAmmoProvider
     proto: Pulse
     fireCost: 200
@@ -313,10 +336,14 @@
 
 - type: entity
   name: pulse rifle
-  parent: [BaseWeaponBattery, BaseGunWieldable]
+  parent: [BaseWeaponBattery, BaseGunWieldable, BaseCentcommContraband]
   id: WeaponPulseRifle
   description: A weapon that is almost as infamous as its users.
   components:
+  - type: Item
+    size: Huge
+    shape:
+    - 0,0,4,1
   - type: Sprite
     sprite: Objects/Weapons/Guns/Battery/pulse_rifle.rsi
     layers:
@@ -349,6 +376,10 @@
   id: WeaponLaserCannon
   description: A heavy duty, high powered laser weapon.
   components:
+  - type: Item
+    size: Huge
+    shape:
+    - 0,0,4,1
   - type: Sprite
     sprite: Objects/Weapons/Guns/Battery/laser_cannon.rsi
     layers:
@@ -371,10 +402,13 @@
   - type: HitscanBatteryAmmoProvider
     proto: RedHeavyLaser
     fireCost: 100
+  - type: Tag
+    tags:
+    - TurretCompatibleWeapon
 
 - type: entity
   name: portable particle decelerator
-  parent: BaseWeaponBattery
+  parent: [BaseWeaponBattery, BaseEngineeringContraband]
   id: WeaponParticleDecelerator
   description: A portable particle decelerator capable of decomposing a tesla or singularity.
   components:
@@ -409,6 +443,10 @@
   id: WeaponXrayCannon
   description: An experimental weapon that uses concentrated x-ray energy against its target.
   components:
+  - type: Item
+    size: Huge
+    shape:
+    - 0,0,4,1
   - type: Sprite
     sprite: Objects/Weapons/Guns/Battery/xray.rsi
     layers:
@@ -445,6 +483,8 @@
     - state: mag-unshaded-0
       map: ["enum.GunVisualLayers.MagUnshaded"]
       shader: unshaded
+  - type: Item
+    storedOffset: -1,-5
   - type: Clothing
     sprite: Objects/Weapons/Guns/Battery/practice_disabler.rsi
     quickEquip: false
@@ -464,15 +504,16 @@
       path: /Audio/Weapons/Guns/Gunshots/taser2.ogg
   - type: ProjectileBatteryAmmoProvider
     proto: BulletDisablerPractice
-    fireCost: 50
+    fireCost: 62.5
   - type: Tag
     tags:
     - Taser
     - Sidearm
+  - type: PacifismAllowedGun
 
 - type: entity
   name: disabler
-  parent: [ WeaponDisablerPractice, BaseSecurityCommandContraband ]
+  parent: [WeaponDisablerPractice, BaseSecurityCommandContraband]
   id: WeaponDisabler
   description: A self-defense weapon that exhausts organic targets, weakening them until they collapse.
   components:
@@ -492,20 +533,23 @@
       - Belt
   - type: ProjectileBatteryAmmoProvider
     proto: BulletDisabler
-    fireCost: 50
+    fireCost: 62.5
   - type: GuideHelp
     guides:
     - Security
     - Antagonists
+  - type: PacifismAllowedGun
 
 - type: entity
   name: disabler SMG
-  parent: [ BaseWeaponBattery, BaseSecurityContraband ]
+  parent: [BaseWeaponBattery, BaseSecurityContraband]
   id: WeaponDisablerSMG
   description: Advanced weapon that exhausts organic targets, weakening them until they collapse.
   components:
   - type: Item
     size: Large
+    shape:
+    - 0,0,2,1
   - type: Tag
     tags:
       - Taser
@@ -535,12 +579,13 @@
   - type: Appearance
   - type: StaticPrice
     price: 260
+  - type: PacifismAllowedGun
 
 - type: entity
   name: taser
-  parent: [ BaseWeaponBatterySmall, BaseSecurityContraband ]
+  parent: [BaseWeaponBatterySmall, BaseSecurityContraband]
   id: WeaponTaser
-  description: A low-capacity, energy-based stun gun used by security teams to subdue targets at range.
+  description: A low-capacity, energy-based stun gun used by security teams to subdue targets at close range.
   components:
   - type: Tag
     tags:
@@ -573,11 +618,32 @@
   - type: Appearance
 
 - type: entity
+  name: elite taser
+  parent: [ BaseCentcommContraband, WeaponTaser ]
+  id: WeaponTaserSuper
+  suffix: ADMEME
+  description: A low-capacity, energy-based stun gun used by elite security teams to disable even the toughest of targets.
+  components:
+  - type: Gun
+    fireRate: 0.5
+    soundGunshot:
+      path: /Audio/Effects/tesla_collapse.ogg # The wrath of god...
+      params:
+        volume: -6
+  - type: ProjectileBatteryAmmoProvider
+    proto: BulletTaserSuper
+    fireCost: 200
+
+- type: entity
   name: antique laser pistol
   parent: [BaseWeaponBatterySmall, BaseGrandTheftContraband]
   id: WeaponAntiqueLaser
   description: This is an antique laser pistol. All craftsmanship is of the highest quality. It is decorated with a mahogany grip and chrome filigree. The object menaces with spikes of energy. On the item is an image of a captain and a clown. The clown is dead. The captain is striking a heroic pose.
   components:
+  - type: Item
+    size: Normal
+    shape:
+    - 0,0,1,1
   - type: Sprite
     sprite: Objects/Weapons/Guns/Battery/antiquelasergun.rsi
     layers:
@@ -618,12 +684,14 @@
 
 - type: entity
   name: advanced laser pistol
-  parent: [ BaseWeaponBatterySmall, BaseSecurityContraband]
+  parent: [BaseWeaponBatterySmall, BaseSecurityContraband]
   id: WeaponAdvancedLaser
   description: An experimental high-energy laser pistol with a self-charging nuclear battery.
   components:
   - type: Item
-    size: Normal  # Intentionally larger than other pistols
+    size: Normal
+    shape:
+    - 0,0,1,1
   - type: Sprite
     sprite: Objects/Weapons/Guns/Battery/advancedlasergun.rsi
     layers:
@@ -666,6 +734,8 @@
       visible: false
       map: ["enum.GunVisualLayers.MagUnshaded"]
       shader: unshaded
+  - type: Item
+    storedOffset: 0,-6
   - type: Appearance
   - type: MagazineVisuals
     magState: mag
@@ -701,7 +771,7 @@
   name: experimental C.H.I.M.P. handcannon
   parent: [WeaponPistolCHIMP, BaseSyndicateContraband]
   id: WeaponPistolCHIMPUpgraded
-  description: This C.H.I.M.P. seems to have a greater punch than is usual...
+  description: This C.H.I.M.P. seems to have a greater punch than usual...
   components:
   - type: BatteryWeaponFireModes
     fireModes:
@@ -778,8 +848,6 @@
       fireCost: 120
   - type: Item
     size: Large
-    shape:
-    - 0,0,3,1
     sprite: Objects/Weapons/Guns/Battery/inhands_64x.rsi
     heldPrefix: energy
   - type: Tag
@@ -796,3 +864,60 @@
     autoRechargeRate: 24
     autoRechargePause: true
     autoRechargePauseTime: 30
+
+- type: entity
+  name: temperature gun
+  parent: [BaseWeaponBattery, BaseGunWieldable, BaseSecurityContraband]
+  id: WeaponTemperatureGun
+  description: An advanced gun that shoots body-temperature-changing beams. This probably constitutes as some kind of war crime.
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Battery/temp_gun.rsi
+    layers:
+    - state: base
+      map: ["enum.GunVisualLayers.Base"]
+    - state: mag-unshaded-1
+      map: ["enum.GunVisualLayers.MagUnshaded"]
+      shader: unshaded
+  - type: Appearance
+  - type: Item
+    size: Large
+    shape:
+    - 0,0,3,1
+  - type: MagazineVisuals
+    magState: mag
+    steps: 5
+    zeroVisible: false
+  - type: Clothing
+    sprite: Objects/Weapons/Guns/Battery/temp_gun.rsi
+  - type: Gun
+    fireRate: 1
+    soundGunshot:
+      path: /Audio/Weapons/Guns/Gunshots/taser2.ogg
+  - type: ProjectileBatteryAmmoProvider
+    proto: BoltTempgunCold
+    fireCost: 100
+  - type: BatteryWeaponFireModes
+    fireModes:
+    - proto: BoltTempgunCold
+      fireCost: 100
+    - proto: BoltTempgunHot
+      fireCost: 100
+  - type: Battery
+    maxCharge: 1000
+    startingCharge: 1000
+  - type: StaticPrice
+    price: 100
+
+- type: entity
+  name: xenoborg laser gun
+  parent: [WeaponAdvancedLaser, BaseXenoborgContraband]
+  id: XenoborgLaserGun
+
+- type: entity
+  name: xenoborg heavy laser gun
+  parent: [WeaponAdvancedLaser, BaseXenoborgContraband]
+  id: XenoborgHeavyLaserGun
+  components:
+  - type: HitscanBatteryAmmoProvider
+    proto: RedHeavyLaser

@@ -81,6 +81,26 @@
   - type: TrashOnSolutionEmpty
     solution: drink
 
+- type: entity
+  parent: BluespaceBeaker
+  id: BottomlessLube
+  name: bottomless lube beaker
+  suffix: DEBUG
+  description: This anomalous beaker infinitely produces space lube and as such is to be closely guarded such that it doesn't fall in the wrong hands.
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      beaker:
+        maxVol: 1000
+        reagents:
+        - ReagentId: SpaceLube
+          Quantity: 1000
+  - type: SolutionRegeneration
+    solution: beaker
+    generated:
+      reagents:
+      - ReagentId: SpaceLube
+        Quantity: 200
 
 # Mopwata
 - type: weightedRandomFillSolution
@@ -168,3 +188,5 @@
   - type: SolutionContainerVisuals
     maxFillLevels: 5
     fillBaseName: fill-
+    inHandsMaxFillLevels: 3
+    inHandsFillBaseName: -fill-

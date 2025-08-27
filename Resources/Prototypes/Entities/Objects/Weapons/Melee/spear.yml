@@ -214,3 +214,23 @@
             max: 2
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
+
+- type: entity
+  name: sharkminnow tooth spear
+  parent: Spear 
+  id: SpearSharkMinnow
+  description: A spear with a sharkminnow tooth as a tip.
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Melee/sharkminnow_spear.rsi
+  - type: MeleeWeapon
+    wideAnimationRotation: -135
+    damage:
+      types:
+        Piercing: 18 #same as plasma spear
+  - type: DamageOtherOnHit
+    damage:
+      types:
+        Piercing: 25 #throw dmg enough to two-shot carp
+  - type: Construction
+    graph: SpearSharkMinnow

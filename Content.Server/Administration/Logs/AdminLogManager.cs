@@ -2,14 +2,21 @@
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Content.Server.Administration.Systems;
 using Content.Server.Database;
 using Content.Server.GameTicking;
 using Content.Shared.Administration.Logs;
 using Content.Shared.CCVar;
+using Content.Shared.Chat;
 using Content.Shared.Database;
+using Content.Shared.Mind;
+using Content.Shared.Players.PlayTimeTracking;
 using Prometheus;
 using Robust.Shared;
 using Robust.Shared.Configuration;
+using Robust.Shared.Network;
+using Robust.Shared.Player;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Reflection;
 using Robust.Shared.Timing;
 
@@ -25,6 +32,10 @@ public sealed partial class AdminLogManager : SharedAdminLogManager, IAdminLogMa
     [Dependency] private readonly IDynamicTypeFactory _typeFactory = default!;
     [Dependency] private readonly IReflectionManager _reflection = default!;
     [Dependency] private readonly IDependencyCollection _dependencies = default!;
+    [Dependency] private readonly ISharedPlayerManager _player = default!;
+    [Dependency] private readonly ISharedPlaytimeManager _playtime = default!;
+    [Dependency] private readonly ISharedChatManager _chat = default!;
+    [Dependency] private readonly IPrototypeManager _proto = default!;
 
     public const string SawmillId = "admin.logs";
 
@@ -66,6 +77,7 @@ public sealed partial class AdminLogManager : SharedAdminLogManager, IAdminLogMa
     private int _queueMax;
     private int _preRoundQueueMax;
     private int _dropThreshold;
+    private int _highImpactLogPlaytime;
 
     // Per update
     private TimeSpan _nextUpdateTime;
@@ -75,6 +87,7 @@ public sealed partial class AdminLogManager : SharedAdminLogManager, IAdminLogMa
     // Per round
     private int _currentRoundId;
     private int _currentLogId;
+    private TimeSpan _currentRoundStartTime;
     private int NextLogId => Interlocked.Increment(ref _currentLogId);
     private GameRunLevel _runLevel = GameRunLevel.PreRoundLobby;
 
@@ -100,6 +113,8 @@ public sealed partial class AdminLogManager : SharedAdminLogManager, IAdminLogMa
             value => _preRoundQueueMax = value, true);
         _configuration.OnValueChanged(CCVars.AdminLogsDropThreshold,
             value => _dropThreshold = value, true);
+        _configuration.OnValueChanged(CCVars.AdminLogsHighLogPlaytime,
+            value => _highImpactLogPlaytime = value, true);
 
         if (_metricsEnabled)
         {
@@ -246,6 +261,7 @@ public sealed partial class AdminLogManager : SharedAdminLogManager, IAdminLogMa
 
     public void RoundStarting(int id)
     {
+        _currentRoundStartTime = _timing.CurTime;
         _currentRoundId = id;
         CacheNewRound();
     }
@@ -288,6 +304,13 @@ public sealed partial class AdminLogManager : SharedAdminLogManager, IAdminLogMa
             return;
         }
 
+        // PostgreSQL does not support storing null chars in text values.
+        if (message.Contains('\0'))
+        {
+            _sawmill.Error($"Null character detected in admin log message '{message}'! LogType: {type}, LogImpact: {impact}");
+            message = message.Replace("\0", "");
+        }
+
         var log = new AdminLog
         {
             Id = NextLogId,
@@ -295,10 +318,15 @@ public sealed partial class AdminLogManager : SharedAdminLogManager, IAdminLogMa
             Type = type,
             Impact = impact,
             Date = DateTime.UtcNow,
+            CurTime = (_timing.CurTime - _currentRoundStartTime).Ticks,
             Message = message,
             Json = json,
             Players = new List<AdminLogPlayer>(players.Count)
         };
+
+        var adminLog = false;
+        var adminSys = _entityManager.SystemOrNull<AdminSystem>();
+        var logMessage = message;
 
         foreach (var id in players)
         {
@@ -309,7 +337,44 @@ public sealed partial class AdminLogManager : SharedAdminLogManager, IAdminLogMa
             };
 
             log.Players.Add(player);
+
+            if (adminSys != null)
+            {
+                var cachedInfo = adminSys.GetCachedPlayerInfo(new NetUserId(id));
+                if (cachedInfo != null && cachedInfo.Antag)
+                {
+                    var proto = cachedInfo.RoleProto == null ? null : _proto.Index(cachedInfo.RoleProto.Value);
+                    var subtype = Loc.GetString(cachedInfo.Subtype ?? proto?.Name ?? RoleTypePrototype.FallbackName);
+                    logMessage = Loc.GetString(
+                        "admin-alert-antag-label",
+                        ("message", logMessage),
+                        ("name", cachedInfo.CharacterName),
+                        ("subtype", subtype));
+                }
+            }
+
+            if (adminLog)
+                continue;
+
+            if (impact == LogImpact.Extreme) // Always chat-notify Extreme logs
+                adminLog = true;
+
+            if (impact == LogImpact.High) // Only chat-notify High logs if the player is below a threshold playtime
+            {
+                if (_highImpactLogPlaytime >= 0 && _player.TryGetSessionById(new NetUserId(id), out var session))
+                {
+                    var playtimes = _playtime.GetPlayTimes(session);
+                    if (playtimes.TryGetValue(PlayTimeTrackingShared.TrackerOverall, out var overallTime) &&
+                        overallTime <= TimeSpan.FromHours(_highImpactLogPlaytime))
+                    {
+                        adminLog = true;
+                    }
+                }
+            }
         }
+
+        if (adminLog)
+            _chat.SendAdminAlert(logMessage);
 
         if (preRound)
         {

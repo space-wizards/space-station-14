@@ -1,357 +1,435 @@
 # base actions
 
+# base prototype for all action entities
 - type: entity
-  id: BaseSuicideAction
   abstract: true
+  id: BaseAction
+  components:
+  - type: Action
+
+# an action that is done all in le head and cant be prevented by any means
+- type: entity
+  abstract: true
+  parent: BaseAction
+  id: BaseMentalAction
+  components:
+  - type: Action
+    checkCanInteract: false
+    checkConsciousness: false
+
+- type: entity
+  abstract: true
+  parent: BaseMentalAction
+  id: BaseSuicideAction
   components:
   - type: ConfirmableAction
     popup: suicide-action-popup
 
+- type: entity
+  abstract: true
+  parent: BaseAction
+  id: BaseImplantAction
+  components:
+  - type: InstantAction
+    event: !type:ActivateImplantEvent
+
+- type: entity
+  abstract: true
+  parent: BaseAction
+  id: BaseToggleAction
+  components:
+  - type: InstantAction
+    event: !type:ToggleActionEvent
+
 # actions
 
 - type: entity
+  parent: BaseAction
   id: ActionScream
   name: Scream
   description: AAAAAAAAAAAAAAAAAAAAAAAAA
   components:
-  - type: InstantAction
+  - type: Action
     useDelay: 10
     icon: Interface/Actions/scream.png
-    event: !type:ScreamActionEvent
     checkCanInteract: false
+  - type: InstantAction
+    event: !type:ScreamActionEvent
 
 - type: entity
+  parent: BaseMentalAction
   id: ActionTurnUndead
   name: Turn Undead
   description: Succumb to your infection and become a zombie.
   components:
-  - type: InstantAction
-    checkCanInteract: false
-    checkConsciousness: false
+  - type: Action
     icon: Interface/Actions/zombie-turn.png
+  - type: InstantAction
     event: !type:ZombifySelfActionEvent
 
 - type: entity
+  parent: BaseToggleAction
   id: ActionToggleLight
   name: Toggle Light
   description: Turn the light on and off.
   components:
-  - type: InstantAction
+  - type: Action
     useDelay: 1
     icon: { sprite: Objects/Tools/flashlight.rsi, state: flashlight }
     iconOn: { sprite: Objects/Tools/flashlight.rsi, state: flashlight-on }
-    event: !type:ToggleActionEvent
 
 - type: entity
+  parent: BaseAction
   id: ActionOpenStorageImplant
   name: Toggle Storage Implant
   description: Opens or closes the storage implant embedded under your skin
   components:
-  - type: InstantAction
+  - type: Action
     itemIconStyle: BigAction
     priority: -20
     icon:
       sprite: Clothing/Back/Backpacks/backpack.rsi
       state: icon
-    event: !type:OpenStorageImplantEvent
     useDelay: 1
+  - type: InstantAction
+    event: !type:OpenStorageImplantEvent
 
 - type: entity
-  parent: BaseSuicideAction
+  parent: [BaseSuicideAction, BaseImplantAction]
   id: ActionActivateMicroBomb
   name: Activate Microbomb
   description: Activates your internal microbomb, completely destroying you and your equipment
   components:
-  - type: InstantAction
-    checkCanInteract: false
-    checkConsciousness: false
+  - type: Action
     itemIconStyle: BigAction
     priority: -20
     icon:
       sprite: Actions/Implants/implants.rsi
       state: explosive
-    event: !type:ActivateImplantEvent
 
 - type: entity
-  parent: BaseSuicideAction
+  parent: [BaseSuicideAction, BaseImplantAction]
   id: ActionActivateDeathAcidifier
   name: Activate Death-Acidifier
   description: Activates your death-acidifier, completely melting you and your equipment
   components:
-  - type: InstantAction
-    checkCanInteract: false
-    checkConsciousness: false
+  - type: Action
     itemIconStyle: BigAction
     priority: -20
     icon:
       sprite: Objects/Magic/magicactions.rsi
       state: gib
-    event: !type:ActivateImplantEvent
 
 - type: entity
+  parent: BaseImplantAction
   id: ActionActivateFreedomImplant
   name: Break Free
   description: Activating your freedom implant will free you from any hand restraints
   components:
-  - type: InstantAction
-    charges: 3
+  - type: LimitedCharges
+    maxCharges: 3
+  - type: Action
     checkCanInteract: false
     itemIconStyle: BigAction
     priority: -20
     icon:
       sprite: Actions/Implants/implants.rsi
       state: freedom
-    event: !type:UseFreedomImplantEvent
 
 - type: entity
+  parent: BaseAction
   id: ActionOpenUplinkImplant
   name: Open Uplink
   description: Opens the syndicate uplink embedded under your skin
   components:
-  - type: InstantAction
+  - type: Action
     itemIconStyle: BigAction
     priority: -20
     icon:
       sprite: Objects/Devices/communication.rsi
       state: old-radio
+  - type: InstantAction
     event: !type:OpenUplinkImplantEvent
 
 - type: entity
+  parent: BaseImplantAction
   id: ActionActivateEmpImplant
   name: Activate EMP
   description: Triggers a small EMP pulse around you
   components:
-  - type: InstantAction
+  - type: LimitedCharges
+    maxCharges: 3
+  - type: Action
     checkCanInteract: false
-    charges: 3
     useDelay: 5
     itemIconStyle: BigAction
     priority: -20
     icon:
       sprite: Objects/Weapons/Grenades/empgrenade.rsi
       state: icon
-    event: !type:ActivateImplantEvent
 
 - type: entity
+  parent: BaseImplantAction
   id: ActionActivateScramImplant
   name: SCRAM!
   description: Randomly teleports you within a large distance.
   components:
-  - type: InstantAction
+  - type: LimitedCharges
+    maxCharges: 2
+  - type: Action
     checkCanInteract: false
-    charges: 2
     useDelay: 5
     itemIconStyle: BigAction
     priority: -20
     icon:
       sprite: Structures/Specific/anomaly.rsi
       state: anom4
-    event: !type:UseScramImplantEvent
 
 - type: entity
+  parent: BaseImplantAction
   id: ActionActivateDnaScramblerImplant
   name: Scramble DNA
   description:  Randomly changes your name and appearance.
   components:
   - type: ConfirmableAction
     popup: dna-scrambler-action-popup
-  - type: InstantAction
-    charges: 1
+  - type: LimitedCharges
+    maxCharges: 1
+  - type: Action
     itemIconStyle: BigAction
     priority: -20
     icon:
       sprite: Clothing/OuterClothing/Hardsuits/lingspacesuit.rsi
       state: icon
-    event: !type:UseDnaScramblerImplantEvent
 
 - type: entity
+  parent: BaseAction
   id: ActionToggleSuitPiece
   name: Toggle Suit Piece
   description: Remember to equip the important pieces of your suit before going into action.
   components:
-  - type: InstantAction
+  - type: Action
     itemIconStyle: BigItem
     useDelay: 1 # equip noise spam.
+  - type: InstantAction
     event: !type:ToggleClothingEvent
 
 - type: entity
+  parent: BaseMentalAction
   id: ActionCombatModeToggle
   name: "[color=red]Combat Mode[/color]"
   description: Enter combat mode
   components:
-  - type: InstantAction
-    checkCanInteract: false
-    checkConsciousness: false
+  - type: Action
     icon: Interface/Actions/harmOff.png
     iconOn: Interface/Actions/harm.png
-    event: !type:ToggleCombatActionEvent
     priority: -100
+  - type: InstantAction
+    event: !type:ToggleCombatActionEvent
 
 - type: entity
-  id: ActionCombatModeToggleOff
   parent: ActionCombatModeToggle
-  name: "[color=red]Combat Mode[/color]"
-  description: Enter combat mode
+  id: ActionCombatModeToggleOff
   components:
-  - type: InstantAction
+  - type: Action
     enabled: false
     autoPopulate: false
-    priority: -100
 
 - type: entity
+  parent: BaseAction
   id: ActionChangeVoiceMask
   name: Set name
   description: Change the name others hear to something else.
   components:
-  - type: InstantAction
+  - type: Action
     icon: { sprite: Interface/Actions/voice-mask.rsi, state: icon }
+  - type: InstantAction
     event: !type:VoiceMaskSetNameEvent
 
 - type: entity
+  parent: BaseAction
   id: ActionVendingThrow
   name: Dispense Item
   description: Randomly dispense an item from your stock.
   components:
-  - type: InstantAction
+  - type: Action
     useDelay: 30
+  - type: InstantAction
     event: !type:VendingMachineSelfDispenseEvent
 
 - type: entity
-  id: ActionArtifactActivate
-  name: Activate Artifact
-  description: Immediately activates your current artifact node.
-  components:
-  - type: InstantAction
-    icon:
-      sprite: Objects/Specific/Xenoarchaeology/xeno_artifacts.rsi
-      state: ano01
-    useDelay: 60
-    event: !type:ArtifactSelfActivateEvent
-
-- type: entity
+  parent: BaseToggleAction
   id: ActionToggleBlock
   name: Block
   description: Raise or lower your shield.
   components:
-  - type: InstantAction
+  - type: Action
     icon: { sprite: Objects/Weapons/Melee/shields.rsi, state: teleriot-icon }
-    iconOn: Objects/Weapons/Melee/shields.rsi/teleriot-on.png
-    event: !type:ToggleActionEvent
+    iconOn: { sprite: Objects/Weapons/Melee/shields.rsi, state: teleriot-on }
 
 - type: entity
+  parent: BaseMentalAction
   id: ActionClearNetworkLinkOverlays
   name: Clear network link overlays
   description: Clear network link overlays.
   components:
-  - type: InstantAction
+  - type: Action
     clientExclusive: true
-    checkCanInteract: false
-    checkConsciousness: false
     temporary: true
     icon: { sprite: Objects/Tools/multitool.rsi, state: icon }
+  - type: InstantAction
     event: !type:ClearAllOverlaysEvent
 
 - type: entity
+  parent: BaseAction
   id: ActionAnimalLayEgg
   name: Lay egg
   description: Uses hunger to lay an egg.
   components:
-  - type: InstantAction
+  - type: Action
     icon: { sprite: Objects/Consumable/Food/egg.rsi, state: icon }
     useDelay: 60
+  - type: InstantAction
     event: !type:EggLayInstantActionEvent
 
 - type: entity
+  parent: BaseMentalAction
   id: ActionSleep
   name: Sleep
   description: Go to sleep.
   components:
-  - type: InstantAction
-    checkCanInteract: false
-    checkConsciousness: false
+  - type: Action
     icon: { sprite: Clothing/Head/Hats/pyjamasyndicatered.rsi, state: icon }
+  - type: InstantAction
     event: !type:SleepActionEvent
 
 - type: entity
+  parent: BaseMentalAction
   id: ActionWake
   name: Wake up
   description: Stop sleeping.
   components:
-  - type: InstantAction
-    icon: { sprite: Clothing/Head/Hats/pyjamasyndicatered.rsi, state: icon }
-    checkCanInteract: false
-    checkConsciousness: false
-    event: !type:WakeActionEvent
+  - type: Action
     startDelay: true
     useDelay: 2
+    icon: { sprite: Clothing/Head/Hats/pyjamasyndicatered.rsi, state: icon }
+  - type: InstantAction
+    event: !type:WakeActionEvent
 
 - type: entity
+  parent: BaseImplantAction
   id: ActionActivateHonkImplant
   name: Honk
   description: Activates your honking implant, which will produce the signature sound of the clown.
   components:
-  - type: InstantAction
+  - type: Action
     icon: { sprite: Objects/Fun/bikehorn.rsi, state: icon }
-    event: !type:ActivateImplantEvent
     useDelay: 1
 
 - type: entity
+  parent: BaseAction
   id: ActionFireStarter
   name: Ignite
   description: Ignites enemies in a radius around you.
   components:
-  - type: InstantAction
+  - type: Action
     priority: -1
     useDelay: 30
     icon: Interface/Actions/firestarter.png
+  - type: InstantAction
     event: !type:FireStarterActionEvent
 
 - type: entity
+  parent: BaseMentalAction
   id: ActionToggleEyes
   name: Open/Close eyes
   description: Close your eyes to protect your peepers, or open your eyes to enjoy the pretty lights.
   components:
-  - type: InstantAction
+  - type: Action
     icon: Interface/Actions/eyeopen.png
     iconOn: Interface/Actions/eyeclose.png
-    event: !type:ToggleEyesActionEvent
     useDelay: 1 # so u cant give yourself and observers eyestrain by rapidly spamming the action
-    checkCanInteract: false
-    checkConsciousness: false
+  - type: InstantAction
+    event: !type:ToggleEyesActionEvent
 
 - type: entity
+  parent: BaseToggleAction
   id: ActionToggleWagging
   name: Wagging Tail
   description: Start or stop wagging your tail.
   components:
-    - type: InstantAction
-      icon: { sprite: Mobs/Customization/reptilian_parts.rsi, state: tail_smooth_behind }
-      iconOn: { sprite: Mobs/Customization/reptilian_parts.rsi, state: tail_smooth_behind }
-      itemIconStyle: NoItem
-      useDelay: 1 # emote spam
-      event: !type:ToggleActionEvent
+  - type: Action
+    icon: { sprite: Mobs/Customization/reptilian_parts.rsi, state: tail_smooth_behind }
+    iconOn: { sprite: Mobs/Customization/reptilian_parts.rsi, state: tail_smooth_behind }
+    itemIconStyle: NoItem
+    useDelay: 1 # emote spam
+    checkCanInteract: false
 
 - type: entity
+  parent: BaseAction
   id: FakeMindShieldToggleAction
   name: '[color=green]Toggle Fake Mindshield[/color]'
   description: Turn the Fake Mindshield implant's transmission on/off
   components:
-  - type: InstantAction
+  - type: Action
     icon: { sprite: Interface/Actions/actions_fakemindshield.rsi, state: icon }
     iconOn: { sprite: Interface/Actions/actions_fakemindshield.rsi, state: icon-on }
     itemIconStyle: NoItem
     useDelay: 1
+    raiseOnUser: true
+  - type: InstantAction
     event: !type:FakeMindShieldToggleEvent
+  - type: Tag
+    tags:
+    - FakeMindShieldImplant
 
 - type: entity
+  parent: BaseToggleAction
   id: ActionToggleParamedicSiren
   name: Toggle Paramedic Siren
   description: Toggles the paramedic siren on and off.
   components:
-  - type: InstantAction 
+  - type: Action
     icon:
       sprite: Clothing/OuterClothing/Hardsuits/paramed.rsi
       state: icon-siren
     useDelay: 1
     itemIconStyle: BigAction
-    event: !type:ToggleActionEvent
+
+- type: entity
+  parent: BaseAction
+  id: ActionGravityJump
+  name: Jump
+  description: Activating the advanced propulsion system, you propel yourself a short distance in the direction of your gaze.
+  components:
+  - type: Action
+    useDelay: 8
+    icon:
+      sprite: Interface/Actions/jump.rsi
+      state: icon
+  - type: InstantAction
+    event: !type:GravityJumpEvent {}
+
+- type: entity
+  parent: BaseToggleAction
+  id: ActionToggleRootable
+  name: Rootable
+  description: Begin or stop being rooted to the floor.
+  components:
+  - type: Action
+    icon: Interface/Actions/rooting.png
+    iconOn: Interface/Actions/rooting.png
+    itemIconStyle: NoItem
+    useDelay: 1
+
+- type: entity
+  id: ActionChameleonController
+  name: Control clothing
+  description: Change your entire outfit fast!
+  components:
+  - type: Action
+    priority: -20
+    icon: { sprite: Actions/Implants/implants.rsi, state: chameleon }
+    itemIconStyle: BigAction
+  - type: InstantAction
+    event: !type:ChameleonControllerOpenMenuEvent

@@ -30,6 +30,10 @@
     delay: 0.5
   - type: ExplosionResistance
     damageCoefficient: 0.9
+  - type: Tag
+    tags:
+    - WhitelistChameleon
+    - Backpack
 
 - type: entity
   parent: ClothingBackpack
@@ -278,6 +282,12 @@
     sprite: Clothing/Back/Backpacks/syndicate.rsi
   - type: ExplosionResistance
     damageCoefficient: 0.1
+  - type: Storage
+    grid:
+    - 0,0,7,3
+    - 8,1,8,3
+  - type: StaticPrice
+    price: 1000
 
 #Special
 - type: entity
@@ -329,9 +339,9 @@
     equipDelay: 5 # to avoid accidentally falling into the trap associated with SelfUnremovableClothing
   - type: SelfUnremovableClothing
   - type: ShockOnTrigger
+    targetContainer: true
     damage: 5
     duration: 3
-    cooldown: 4
   - type: TriggerOnSignal
   - type: DeviceLinkSink
     ports:
@@ -377,14 +387,14 @@
     - 0,0,0,3
     - 0,0,2,0
     - 0,3,2,3
-    - 2,1,2,1
-    - 4,0,4,2
-    - 6,0,6,2
-    - 5,1,5,1
-    - 5,3,5,3
-    - 9,0,9,1
-    - 8,2,8,3
-    - 10,2,10,3
+    - 2,2,2,2
+    - 4,1,4,3
+    - 6,1,6,3
+    - 5,2,5,2
+    - 5,0,5,0
+    - 9,2,9,3
+    - 8,0,8,1
+    - 10,0,10,1
 
 - type: entity
   parent: ClothingBackpack

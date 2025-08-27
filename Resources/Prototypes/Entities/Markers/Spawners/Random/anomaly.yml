@@ -22,7 +22,7 @@
     - AnomalyFlora
     - AnomalyShadow
     - AnomalyTech
-    #- AnomalySanta 
+    #- AnomalySanta
     rareChance: 0.3
     rarePrototypes:
     - RandomAnomalyInjectorSpawner
@@ -30,6 +30,7 @@
 
 - type: entity
   id: RandomRockAnomalySpawner
+  name: random rock anomaly spawner
   parent: MarkerBase
   components:
   - type: Sprite
@@ -40,14 +41,18 @@
   - type: RandomSpawner
     prototypes:
     - AnomalyRockIron
+    - AnomalyRockCoal
     - AnomalyRockSilver
+    - AnomalyRockGold
     - AnomalyRockQuartz
     - AnomalyRockUranium
+    - AnomalyRockBananium
     chance: 1
     offset: 0.15
 
 - type: entity
   id: RandomAnomalyInjectorSpawner
+  name: random anomaly injector spawner
   parent: MarkerBase
   components:
   - type: Sprite
@@ -69,4 +74,3 @@
     - AnomalyTrapRock
     #- AnomalyTrapSanta
     chance: 1
-  

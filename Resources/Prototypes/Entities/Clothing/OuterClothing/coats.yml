@@ -66,9 +66,9 @@
   - type: Armor
     modifiers:
       coefficients:
-        Blunt: 0.7
-        Slash: 0.7
-        Piercing: 0.7
+        Blunt: 0.65
+        Slash: 0.65
+        Piercing: 0.6
         Heat: 0.7
         Caustic: 0.75 # not the full 90% from ss13 because of the head
   - type: ExplosionResistance
@@ -82,10 +82,11 @@
   - type: Armor
     modifiers:
       coefficients:
-        Blunt: 0.7
-        Slash: 0.7
+        Blunt: 0.65
+        Slash: 0.65
         Piercing: 0.7
         Heat: 0.7
+        Caustic: 0.9
   - type: ExplosionResistance
     damageCoefficient: 0.9
 
@@ -417,7 +418,7 @@
         Caustic: 0.75
 
 - type: entity
-  parent: ClothingOuterStorageBase
+  parent: ClothingOuterStorageFoldableBase
   id: ClothingOuterCoatLabSeniorResearcher
   name: senior researcher lab coat
   description: A suit that protects against minor chemical spills. Has a purple collar and wrist trims.
@@ -432,7 +433,12 @@
         Caustic: 0.75
 
 - type: entity
-  parent: ClothingOuterStorageBase
+  parent: [ClothingOuterStorageFoldableBaseOpened, ClothingOuterCoatLabSeniorResearcher]
+  id: ClothingOuterCoatLabSeniorResearcherOpened
+  name: senior researcher lab coat
+
+- type: entity
+  parent: ClothingOuterStorageFoldableBase
   id: ClothingOuterCoatLabSeniorPhysician
   name: senior physician lab coat
   description: A suit that protects against minor chemical spills. Has light blue sleeves and an orange waist trim.
@@ -447,6 +453,11 @@
         Caustic: 0.75
 
 - type: entity
+  parent: [ClothingOuterStorageFoldableBaseOpened, ClothingOuterCoatLabSeniorPhysician]
+  id: ClothingOuterCoatLabSeniorPhysicianOpened
+  name: senior physician lab coat
+
+- type: entity
   parent: ClothingOuterStorageBase
   id: ClothingOuterCoatSpaceAsshole
   name: the coat of space asshole
@@ -458,7 +469,7 @@
     sprite: Clothing/OuterClothing/Coats/space_asshole.rsi
 
 - type: entity
-  parent: ClothingOuterStorageBase
+  parent: ClothingOuterStorageFoldableBase
   id: ClothingOuterCoatExpensive
   name: expensive coat
   description: Very fluffy pink coat, made out of very expensive fur (clearly).
@@ -467,3 +478,8 @@
     sprite: Clothing/OuterClothing/Coats/expensive_coat.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/Coats/expensive_coat.rsi
+
+- type: entity
+  parent: [ClothingOuterStorageFoldableBaseOpened, ClothingOuterCoatExpensive]
+  id: ClothingOuterCoatExpensiveOpened
+  name: expensive coat
