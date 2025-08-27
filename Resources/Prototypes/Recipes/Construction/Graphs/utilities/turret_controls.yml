@@ -8,6 +8,7 @@
       steps:
       - material: Steel
         amount: 3
+        doAfter: 2
 
   - node: frame
     entity: WeaponEnergyTurretControlPanelFrame
@@ -29,7 +30,7 @@
       - !type:DeleteEntity {}
       steps:
       - tool: Screwing
-        doAfter: 2
+        doAfter: 4
 
   - node: board
     entity: WeaponEnergyTurretControlPanelFrame
@@ -38,6 +39,7 @@
       steps:
       - material: Glass
         amount: 1
+        doAfter: 1
 
     - to: frame
       completed:
