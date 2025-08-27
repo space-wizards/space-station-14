@@ -1,13 +1,32 @@
+using Content.Shared.Alert;
+using Content.Shared.FixedPoint;
 using Content.Shared.StatusIcon;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
 
 namespace Content.Shared._Ronstation.Vampire.Components;
 
-[RegisterComponent, NetworkedComponent]
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
 public sealed partial class VampireComponent : Component
 {
 
     public override bool SessionSpecific => true;
+
+    /// <summary>
+    /// The total amount of Vitae the vampire has.
+    /// </summary>
+    [DataField, ViewVariables(VVAccess.ReadWrite)]
+    [AutoNetworkedField]
+    public FixedPoint2 Vitae = 100;
+
+    /// <summary>
+    /// The entity's current max amount of Vitae. Can be increased
+    /// through use of the Feed action on unique targets.
+    /// </summary>
+    [ViewVariables(VVAccess.ReadWrite), DataField("maxVitae")]
+    public FixedPoint2 VitaeRegenCap = 100;
+
+    [DataField]
+    public ProtoId<AlertPrototype> VitaeAlert = "Vitae";
 
 }
