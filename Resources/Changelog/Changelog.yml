@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: lzk228
-  changes:
-  - message: When an entity becomes SSD, it will be forced to sleep after 10 minutes.
-      It can be awakened if no more SSD.
-    type: Tweak
-  id: 8384
-  time: '2025-04-29T05:24:34.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/34039
 - author: TytosB
   changes:
   - message: adjusted pka damage and range
@@ -3948,3 +3940,11 @@
   id: 8896
   time: '2025-08-27T21:06:51.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/39676
+- author: Winkarst-cpu
+  changes:
+  - message: Living beings are now vomiting from being irradiated. Also, irradiated
+      players will see a popup about tasting something metallic.
+    type: Add
+  id: 8897
+  time: '2025-08-27T21:56:10.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/39805
