@@ -15,18 +15,18 @@ public sealed partial class HotbarGui : UIWidget
         StatusPanelLeft.SetSide(HandUILocation.Left);
         var hotbarController = UserInterfaceManager.GetUIController<HotbarUIController>();
 
-        hotbarController.Setup(HandContainer, StoragePanel);
+        hotbarController.Setup(HandContainer);
         LayoutContainer.SetGrowVertical(this, LayoutContainer.GrowDirection.Begin);
     }
 
-    public void UpdatePanelEntityLeft(EntityUid? entity)
+    public void UpdatePanelEntityLeft(EntityUid? entity, Hand? hand)
     {
-        StatusPanelLeft.Update(entity);
+        StatusPanelLeft.Update(entity, hand);
     }
 
-    public void UpdatePanelEntityRight(EntityUid? entity)
+    public void UpdatePanelEntityRight(EntityUid? entity, Hand? hand)
     {
-        StatusPanelRight.Update(entity);
+        StatusPanelRight.Update(entity, hand);
     }
 
     public void SetHighlightHand(HandUILocation? hand)

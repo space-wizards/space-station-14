@@ -1,0 +1,37 @@
+- type: entity
+  id: SelectableLock
+  abstract: true
+  components:
+  - type: Lock
+    locked: false
+    showLockVerbs: false
+    showExamine: false
+    lockOnClick: false
+    unlockOnClick: false
+    useAccess: false
+    unlockingSound: null # TODO: Maybe add sounds but just to the user?
+    lockingSound: null
+    breakOnAccessBreaker: true # more fun
+    lockTime: 0
+    unlockTime: 0
+  - type: LockOnTrigger
+  - type: SelectableComponentAdder
+    selections: 1
+    entries:
+    - verbName: selectable-lock-verb-no-lock
+      popup: selectable-lock-verb-no-lock-popup
+      priority: 0
+      componentsToAdd: null
+    - verbName: voice-trigger-lock-add-verb
+      popup: voice-trigger-lock-add-verb-popup
+      priority: 1
+      componentsToAdd:
+      - type: TriggerOnVoice
+        listenRange: 2 # more fun
+        startRecordingVerb: voice-trigger-lock-verb-record
+        recordingVerbMessage: voice-trigger-lock-verb-message
+        inspectUninitializedLoc: voice-trigger-lock-on-uninitialized
+        inspectInitializedLoc: voice-trigger-lock-on-examine
+      - type: ActiveListener
+      - type: VoiceTriggerLock
+    verbCategoryName: selectable-lock-verb-category-name

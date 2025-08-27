@@ -1,4 +1,5 @@
 using Content.Server.Administration.Logs;
+using Content.Shared.Containers;
 using Content.Shared.Database;
 using Content.Shared.Popups;
 using Content.Shared.Throwing;
@@ -30,7 +31,13 @@ public sealed class ThrowInsertContainerSystem : EntitySystem
         if (!_containerSystem.CanInsert(args.Thrown, container))
             return;
 
-        if (_random.Prob(ent.Comp.Probability))
+        var beforeThrowArgs = new BeforeThrowInsertEvent(args.Thrown);
+        RaiseLocalEvent(ent, ref beforeThrowArgs);
+
+        if (beforeThrowArgs.Cancelled)
+            return;
+
+        if (!_random.Prob(ent.Comp.Probability))
         {
             _audio.PlayPvs(ent.Comp.MissSound, ent);
             _popup.PopupEntity(Loc.GetString(ent.Comp.MissLocString), ent);

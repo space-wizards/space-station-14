@@ -1,7 +1,6 @@
 using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
 namespace Content.Shared.Weapons.Ranged.Components;
 
@@ -13,29 +12,37 @@ public partial class AmmoComponent : Component, IShootable
 {
     // Muzzle flash stored on ammo because if we swap a gun to whatever we may want to override it.
 
-    [ViewVariables(VVAccess.ReadWrite), DataField("muzzleFlash", customTypeSerializer:typeof(PrototypeIdSerializer<EntityPrototype>))]
-    public string? MuzzleFlash = "MuzzleFlashEffect";
+    [DataField]
+    public EntProtoId? MuzzleFlash = "MuzzleFlashEffect";
 }
 
 /// <summary>
 /// Spawns another prototype to be shot instead of itself.
 /// </summary>
-[RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState(fieldDeltas: true)]
 public sealed partial class CartridgeAmmoComponent : AmmoComponent
 {
-    [ViewVariables(VVAccess.ReadWrite), DataField("proto", required: true, customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
-    public string Prototype = default!;
+    /// <summary>
+    /// Prototype of the ammo to be shot.
+    /// </summary>
+    [DataField("proto", required: true)]
+    public EntProtoId Prototype;
 
-    [ViewVariables(VVAccess.ReadWrite), DataField("spent")]
-    [AutoNetworkedField]
-    public bool Spent = false;
+    /// <summary>
+    /// Is this cartridge spent?
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public bool Spent;
 
     /// <summary>
     /// Caseless ammunition.
     /// </summary>
-    [DataField("deleteOnSpawn")]
+    [DataField]
     public bool DeleteOnSpawn;
 
+    /// <summary>
+    /// Sound the case makes when it leaves the weapon.
+    /// </summary>
     [DataField("soundEject")]
     public SoundSpecifier? EjectSound = new SoundCollectionSpecifier("CasingEject");
 }

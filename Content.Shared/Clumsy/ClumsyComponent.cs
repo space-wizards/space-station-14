@@ -5,7 +5,7 @@ using Robust.Shared.GameStates;
 namespace Content.Shared.Clumsy;
 
 /// <summary>
-/// A simple clumsy tag-component.
+/// Makes the entity clumsy, randomly failing some interactions and hurting themselves.
 /// </summary>
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
 public sealed partial class ClumsyComponent : Component
@@ -48,14 +48,74 @@ public sealed partial class ClumsyComponent : Component
     public TimeSpan GunShootFailStunTime = TimeSpan.FromSeconds(3);
 
     /// <summary>
-    ///     Stun time after failing to shoot a gun.
+    ///     Damage taken after failing to shoot a gun.
     /// </summary>
     [DataField, AutoNetworkedField]
     public DamageSpecifier? GunShootFailDamage;
+
+    /// <summary>
+    ///     Damage taken after failing to catch an item.
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public DamageSpecifier? CatchingFailDamage;
 
     /// <summary>
     ///     Noise to play after failing to shoot a gun. Boom!
     /// </summary>
     [DataField]
     public SoundSpecifier GunShootFailSound = new SoundPathSpecifier("/Audio/Weapons/Guns/Gunshots/bang.ogg");
+
+    /// <summary>
+    ///      Whether or not to apply Clumsy to hyposprays.
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public bool ClumsyHypo = true;
+
+    /// <summary>
+    ///      Whether or not to apply Clumsy to defibs.
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public bool ClumsyDefib = true;
+
+    /// <summary>
+    ///      Whether or not to apply Clumsy to guns.
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public bool ClumsyGuns = true;
+
+    /// <summary>
+    ///      Whether or not to apply Clumsy to catching items.
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public bool ClumsyCatching = true;
+
+    /// <summary>
+    ///      Whether or not to apply Clumsy to vaulting.
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public bool ClumsyVaulting = true;
+
+    /// <summary>
+    ///      Lets you define a new "failed" message for each event.
+    /// </summary>
+    [DataField]
+    public LocId HypoFailedMessage = "clumsy-hypospray-fail-message";
+
+    [DataField]
+    public LocId GunFailedMessage = "clumsy-gun-fail-message";
+
+    [DataField]
+    public LocId CatchingFailedMessageSelf = "clumsy-catch-fail-message-user";
+
+    [DataField]
+    public LocId CatchingFailedMessageOthers = "clumsy-catch-fail-message-others";
+
+    [DataField]
+    public LocId VaulingFailedMessageSelf = "clumsy-vaulting-fail-message-user";
+
+    [DataField]
+    public LocId VaulingFailedMessageOthers = "clumsy-vaulting-fail-message-others";
+
+    [DataField]
+    public LocId VaulingFailedMessageForced = "clumsy-vaulting-fail-forced-message";
 }

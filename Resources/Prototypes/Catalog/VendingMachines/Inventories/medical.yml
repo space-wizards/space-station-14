@@ -5,9 +5,10 @@
     Brutepack: 5
     Ointment: 5
     Bloodpack: 5
-    EpinephrineChemistryBottle: 3
+    ChemistryBottleEpinephrine: 3
     Syringe: 5
     BoxBottle: 3
     ClothingEyesHudMedical: 2
     ClothingEyesEyepatchHudMedical: 2
-
+  contrabandInventory:
+    FoodApple: 1
