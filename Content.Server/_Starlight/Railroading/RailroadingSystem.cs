@@ -175,4 +175,19 @@ public sealed partial class RailroadingSystem : SharedRailroadingSystem
         ent.Comp.Completed.Add(ent.Comp.ActiveCard.Value);
         ent.Comp.ActiveCard = null;
     }
+
+    internal void CardFailed(Entity<RailroadableComponent> ent)
+    {
+        if (ent.Comp.ActiveCard is null)
+            return;
+
+        var @event = new RailroadingCardFailedEvent(ent);
+        RaiseLocalEvent(ent.Comp.ActiveCard.Value, ref @event);
+        RaiseLocalEvent(ent, ref @event);
+
+        _adminLogger.Add(LogType.Railroading, LogImpact.Medium, $"{ToPrettyString(ent)} failed card {ToPrettyString(ent.Comp.ActiveCard.Value)}.");
+        ent.Comp.Completed ??= [];
+        ent.Comp.Completed.Add(ent.Comp.ActiveCard.Value);
+        ent.Comp.ActiveCard = null;
+    }
 }
