@@ -9,7 +9,7 @@ Rounds typically last from [color=cyan]12 months[/color], but can occassionally 
 
 Unlike classic SS14 servers, [bold]all roles, except for the passenger role, are blocked[/bold]. New players arrive as passengers and will have to RP their arrival, prepare their employment documentation (resume, work history, etc.) in game and seek out the [bold]Head of Personnel[/bold], in order to talk to them about work opportunities, providing them with their prepared documents. If the desired job is available, the HoP and the department head (if applicable) will then conduct an interview with the applicant and depending on the outcome, the applicant maybe hired. Hiring maybe linked to some probation period or trial time. If no jobs are available, the HoP will provide alternatives.
 
-[bold]All new applicant, despite prior experience, will start out as [color=blue]Assistant, Cadet or whatever the training job of their respective department is (if any)[/bold]. This is independent of prior experience, the idea being, giving both, the applicant and the department head and its members, an opportunity, to get know each other. After the set probation period, the department head will decide whether or not to promote the applicant to the desired job, for example Station Engineer, based on their performance. Job requirements, probation periods, etc. may vary, depending on the job. A janitor for example might have an easier time getting hired, than an engineer. The Captain, the Head of Personnel and Central Command can approve deviations and hand out field promotions or hire an applicant into a full non-trainee position, if circumstances allow for it. Doing so by the HoP does require captain's approval. For command positions, Central Command Approval is also required.
+[bold]All new applicants, despite prior experience, will start out as [color=#11ff11]as a trainee or probationary[/color]of their respective department is (if any)[/bold]. This is independent of prior experience, the idea being, giving both, the applicant and the department head and its members, an opportunity, to get know each other. After the set probation period, the department head will decide whether or not to promote the applicant to the desired job, for example Station Engineer, based on their performance. Job requirements, probation periods, etc. may vary, depending on the job. A janitor for example might have an easier time getting hired, than an engineer. The Captain, the Head of Personnel and Central Command can approve deviations and hand out field promotions or hire an applicant into a full non-trainee position, if circumstances allow for it. Doing so by the HoP does require captain's approval. For command positions, Central Command Approval is also required.
 
 [italic]Plans exist, to adde civilian contractors to the game at a later date, after core features have been implemented and solid core crew has been hired. These contractors would not need to be hired, but rather start their own business and offer their services to other contractors as well as to NT and the station crew. [bold]There is currently no timeframe as for when this will be implemented[/bold].[/italic]
 
@@ -26,11 +26,7 @@ Make sure to stay inside the terminal and to not stand in the shuttle landing zo
 Every station has a wide variety of locations to visit.
 These range from specific departments where work happens to common areas where you can relax and chat with others.
 
-<Box>
-  <GuideEntityEmbed Entity="StationMap"/>
-  <GuideEntityEmbed Entity="SignDirectionalDorms" Caption="Directional Signs"/>
-  <GuideEntityEmbed Entity="SignBridge" Caption="Marker Signs"/>
-</Box>
+<Box><GuideEntityEmbed Entity="StationMap"/><GuideEntityEmbed Entity="SignDirectionalDorms" Caption="Directional Signs"/><GuideEntityEmbed Entity="SignBridge" Caption="Marker Signs"/></Box>
 
 [color=cyan]Station maps[/color] give you an overview of the entire station with colored markers denoting locations of different things.
 Regular [color=cyan]signs[/color] on walls can point you to different departments.
@@ -38,23 +34,21 @@ Regular [color=cyan]signs[/color] on walls can point you to different department
 ## Leaving the Station
 Since [bold]The Final Frontier[/bold] is a persistent experience, the shift will usually not end. Crew is also [bold]not expected to go and cry[/bold]. If you grown tired of working on the station, then you should retreat to your dorm and get some sleep, simply going to bed, sleep and leaving the station. Once you are ready to work again, simply wake up and report to your station.
 
-During a normal one year shift, there would usually not be any [color=lime]emergency shuttle or evacuation[/color] [color=gray](barring a [color=red][bold]some kind of catstrophic failure, or other severe emergency, demanding an early emergency evacuation[/bold][/color])[/color]. If such an emergency occurs, a station-wide announcement will be made and you will leave the station via the [color=lime]evac shuttle[/color] after its [color=cyan]arrival in 10 minutes.[/color]. Once the [color=lime]emergency shuttle[/color] arrives, you'll need to make your way over to it, board it, and then survive the trip to [bold]Central Command[/bold]. [bold]If an emergency shuttle cannot be reached, escape pods should be used.[/bold]
+During a normal one year shift, there would usually not be any [color=lime]emergency shuttle or evacuation[/color] [color=gray](barring [color=red][bold]some kind of catstrophic failure, or other severe emergency, demanding an early emergency evacuation[/bold][/color])[/color]. If such an emergency occurs, a station-wide announcement will be made and you will leave the station via the [color=lime]evac shuttle[/color] after its [color=cyan]arrival in 10 minutes[/color]. Once the [color=lime]emergency shuttle[/color] arrives, you'll need to make your way over to it, board it, and then survive the trip to [bold]Central Command[/bold]. [bold]If an emergency shuttle cannot be reached, escape pods should be used.[/bold]
 
-The round doesn't officially end until you reach [bold]Central Command[/bold]! [bold][color=red]All Station Crew and visitors are required, to familiarize themselves with the location of the evacuation dock, their closest accessible escape pods and the shortes routes from their place of work and their dorms to these emergency evac locations! Your life might depend on it one day![/bold][/color]
+The round doesn't officially end until you reach Central Command! [color=red]All Station Crew and visitors [bold]are required[/bold], to familiarize themselves with the location of the evacuation dock, their closest accessible escape pods and the shortes routes from their place of work and their dorms to these emergency evac locations![/color] Your life might depend on it one day!
 
-<Box>
-  <GuideEntityEmbed Entity="CryogenicSleepUnit"/>
-</Box>
+<Box><GuideEntityEmbed Entity="CryogenicSleepUnit"/></Box>
 
 If you need to leave a round at any time, and come back at a later time, you can do so by going to sleep, in your dorm and leave. Once you are ready to work again, simply come back and wake up. [bold][color=red]DO NOT CRYO IF YOU ARE CREW![/bold][/color]
 
-[color=cyan]If you are a passenger, visiting the station, you are free to cryo, after your visit ends and you decide not to return for a longer period of time.[/color] This can be done by use of the station's [color=lime]cryogenic sleep units[/color]. You are free to come back again at a later time.[bold][color=red]If you cryo as a crewmember, you will resign your job! You will have to come back as a passenger, seeking for a job anew and going through the whole hiring process again, along with a good explanation of why you resigned and now wish to come back! Think about it thoroughly, before you do it![/bold][/color]
+[color=cyan]If you are a passenger, visiting the station, you are free to cryo, after your visit ends and you decide not to return for a longer period of time.[/color] This can be done by use of the station's [color=lime]cryogenic sleep units[/color]. You are free to come back again at a later time. [bold][color=red]If you cryo as a crewmember, you will resign your job![/bold][/color] You will have to come back as a passenger, seeking for a job anew and going through the whole hiring process again, along with a good explanation of why you resigned and now wish to come back! Think about it thoroughly, before you do it!
 
 ## More Info
 Learning the controls? [textlink="Click here to read about the different controls" link="Controls"]
 
-Don't know how to perform a job? [textlink="Click here to jump to a list of departments" link="Jobs"]
+Don't know how to perform your job, or which job you would like to do? [textlink="Click here to jump to a list of departments" link="Jobs"]
 
-Keep dying? [textlink="Click here to see a survival guide" link="Survival"]
+Don't know what to do? Need some more help to get started? [textlink="Click here to see a survival guide" link="Survival"]
 
 </Document>
