@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: themias
-  changes:
-  - message: Theatre workers (clown/mime/musician) now have access to the Service
-      Request Computer
-    type: Tweak
-  id: 8380
-  time: '2025-04-29T00:26:23.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/37003
 - author: Thatonestomf
   changes:
   - message: Added slugs to both the bulldog and ammo bundle.
@@ -3944,3 +3936,25 @@
   id: 8892
   time: '2025-08-26T23:43:50.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/39901
+- author: Hitlinemoss
+  changes:
+  - message: Clipboards can now be printed by autolathes.
+    type: Add
+  - message: Plastic clipboards have been added for aspiring paperwork enthusiasts.
+      They can be printed by autolathes or dispensed from the Head of Personnel's
+      PTech machine.
+    type: Add
+  - message: Bureaucracy crates no longer have their folders/clipboards contain paper.
+      The amount of paper in the crate itself has been increased to compensate.
+    type: Tweak
+  - message: Filing cabinets can now contain green folders.
+    type: Fix
+  - message: Roles that spawn with a clipboard always have that clipboard contain
+      exactly three sheets of paper, rather than a random quantity.
+    type: Fix
+  - message: CentComm Officials now spawn with a proper CentComm clipboard instead
+      of a generic black folder.
+    type: Tweak
+  id: 8893
+  time: '2025-08-27T07:07:33.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37705
