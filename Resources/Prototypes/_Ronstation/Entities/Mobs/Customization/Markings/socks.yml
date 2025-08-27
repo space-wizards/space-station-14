@@ -2,7 +2,7 @@
 
 - type: marking
   id: BasicLeftUpperSock
-  bodyPart: LLeg
+  bodyPart: LFoot # If it's LLeg, it might show up under the body part.
   markingCategory: Legs
   speciesRestriction: [Arachnid, Human, Dwarf, SlimePerson]
   coloring:
@@ -15,7 +15,7 @@
 
 - type: marking
   id: BasicRightUpperSock
-  bodyPart: RLeg
+  bodyPart: RFoot # If it's RLeg, it might show up under the body part.
   markingCategory: Legs
   speciesRestriction: [Arachnid, Human, Dwarf, SlimePerson]
   coloring:
