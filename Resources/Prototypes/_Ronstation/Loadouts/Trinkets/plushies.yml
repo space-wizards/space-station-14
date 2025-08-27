@@ -1,0 +1,111 @@
+- type: loadout
+  id: PlushieHuman
+  storage:
+    back:
+    - PlushieHuman
+  groupBy: "plushies"
+
+- type: loadout
+  id: PlushieMoth
+  storage:
+    back:
+    - PlushieMoth
+  groupBy: "plushies"
+
+- type: loadout
+  id: PlushieVox
+  storage:
+    back:
+    - PlushieVox
+  groupBy: "plushies"
+
+- type: loadout
+  id: PlushieSlime
+  storage:
+    back:
+    - PlushieSlime
+  groupBy: "plushies"
+
+- type: loadout
+  id: PlushieDiona
+  storage:
+    back:
+    - PlushieDiona
+  groupBy: "plushies"
+
+- type: loadout
+  id: PlushieArachind
+  storage:
+    back:
+    - PlushieArachind
+  groupBy: "plushies"
+
+- type: loadout
+  id: PlushieSnake
+  storage:
+    back:
+    - PlushieSnake
+  groupBy: "plushies"
+
+- type: loadout
+  id: PlushiePenguin
+  storage:
+    back:
+    - PlushiePenguin
+  groupBy: "plushies"
+
+- type: loadout
+  id: PlushieNar
+  storage:
+    back:
+    - PlushieNar
+  groupBy: "plushies"
+
+- type: loadout
+  id: PlushieRatvar
+  storage:
+    back:
+    - PlushieRatvar
+  groupBy: "plushies"
+
+- type: loadout
+  id: PlushieBee
+  storage:
+    back:
+    - PlushieBee
+  groupBy: "plushies"
+
+- type: loadout
+  id: PlushieAtmosian
+  storage:
+    back:
+    - PlushieAtmosian
+  groupBy: "plushies"
+
+- type: loadout
+  id: PlushieLamp
+  storage:
+    back:
+    - PlushieLamp
+  groupBy: "plushies"
+
+- type: loadout
+  id: PlushieNuke
+  storage:
+    back:
+    - PlushieNuke
+  groupBy: "plushies"
+
+- type: loadout
+  id: PlushieCarp
+  storage:
+    back:
+    - PlushieCarp
+  groupBy: "plushies"
+
+- type: loadout
+  id: PlushieMagicarp
+  storage:
+    back:
+    - PlushieMagicarp
+  groupBy: "plushies"

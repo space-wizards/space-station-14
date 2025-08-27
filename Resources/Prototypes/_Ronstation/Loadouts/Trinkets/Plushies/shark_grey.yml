@@ -1,0 +1,23 @@
+- type: loadoutEffectGroup
+  id: JanitorPassenger
+  effects:
+  - !type:JobRequirementLoadoutEffect
+    requirement:
+      !type:RoleTimeRequirement
+      role: JobJanitor
+      time: 18000 #5 hrs
+  - !type:JobRequirementLoadoutEffect
+    requirement:
+      !type:RoleTimeRequirement
+      role: JobPassenger
+      time: 18000 #5 hrs
+
+- type: loadout
+  id: PlushieSharkGrey
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: JanitorPassenger
+  storage:
+    back:
+    - PlushieSharkGrey
+  groupBy: "plushies"
