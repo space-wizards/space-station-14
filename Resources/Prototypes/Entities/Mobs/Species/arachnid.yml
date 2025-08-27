@@ -82,9 +82,9 @@
       - map: [ "enum.HumanoidVisualLayers.LLeg" ]
       - map: [ "enum.HumanoidVisualLayers.UndergarmentBottom" ]
       - map: [ "enum.HumanoidVisualLayers.UndergarmentTop" ]
-      - map: ["jumpsuit"]
       - map: ["enum.HumanoidVisualLayers.LFoot"]
       - map: ["enum.HumanoidVisualLayers.RFoot"]
+      - map: ["jumpsuit"]
       - map: ["enum.HumanoidVisualLayers.LHand"]
       - map: ["enum.HumanoidVisualLayers.RHand"]
       - map: [ "gloves" ]
@@ -127,7 +127,7 @@
   - type: HumanoidAppearance
     species: Arachnid
   - type: Inventory
-    speciesId: arachnid 
+    speciesId: arachnid
 
 
 #>88w88<
