@@ -24,6 +24,34 @@
   - Xenoborg
 
 - type: npcFaction
+  id: SiliconNT
+  hostile:
+  - SimpleHostile
+  - Syndicate
+  - SiliconSyndicate
+  - Xeno
+  - Zombie
+  - Revolutionary
+  - Dragon
+  - AllHostile
+  - Wizard
+  - Xenoborg #Xenoborgs can use Posibrains
+
+- type: npcFaction
+  id: SiliconSyndicate
+  hostile:
+  - NanoTrasen
+  - SiliconNT
+  - SimpleHostile
+  - Xeno
+  - PetsNT
+  - Zombie
+  - Dragon
+  - AllHostile
+  - Wizard
+  - Xenoborg #Xenoborgs can use Posibrains
+
+- type: npcFaction
   id: Mouse
   hostile:
   - PetsNT
