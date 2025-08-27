@@ -1,6 +1,6 @@
 - files:
   - shriek1.ogg
-  license: "CC BY-NC-SA 3.0"
+  license: "CC-BY-NC-SA-3.0"
   copyright: "Taken from https://github.com/goonstation/goonstation/tree/eb3e7df6292d23f6af2f18b4372d3a8ba4b0fda7/sound/misc/talk"
   source: "https://github.com/goonstation/goonstation"
 
@@ -25,7 +25,7 @@
 
 - files:
   - vox_cry.ogg
-  license: "CC0"
+  license: "CC0-1.0"
   copyright: "raptorgoesextinct.wav by Nerdwizard78"
   source: "https://freesound.org/people/Nerdwizard78/sounds/643928/"
 
