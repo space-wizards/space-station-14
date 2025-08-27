@@ -28,15 +28,25 @@ public sealed class PopupOnTriggerSystem : EntitySystem
         if (target == null)
             return;
 
+        // Popups only play for one entity
         if (ent.Comp.Quiet)
         {
-            _popup.PopupClient(Loc.GetString(ent.Comp.Text),
-                                target.Value,
-                                ent.Comp.UserIsRecipient ? args.User : ent.Owner,
-                                ent.Comp.PopupType);
+            if (ent.Comp.Predicted)
+                _popup.PopupClient(Loc.GetString(ent.Comp.Text),
+                                    target.Value,
+                                    ent.Comp.UserIsRecipient ? args.User : ent.Owner,
+                                    ent.Comp.PopupType);
+
+            else if (args.User != null)
+                _popup.PopupEntity(Loc.GetString(ent.Comp.OtherText ?? ent.Comp.Text),
+                                    target.Value,
+                                    args.User.Value,
+                                    ent.Comp.PopupType);
+
             return;
         }
 
+        // Popups play for all entities
         if (ent.Comp.Predicted)
             _popup.PopupPredicted(Loc.GetString(ent.Comp.Text),
                                 Loc.GetString(ent.Comp.OtherText ?? ent.Comp.Text),
