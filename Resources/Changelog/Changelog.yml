@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: drakewill-CRL
-  changes:
-  - message: You can now see mutations on plants and produce.
-    type: Tweak
-  id: 8383
-  time: '2025-04-29T04:45:11.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/32650
 - author: lzk228
   changes:
   - message: When an entity becomes SSD, it will be forced to sleep after 10 minutes.
@@ -3948,3 +3941,10 @@
   id: 8895
   time: '2025-08-27T15:04:39.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/39542
+- author: PavlockBlaine03
+  changes:
+  - message: Fixed bug where items would not drop if a dispenser was deconstructed.
+    type: Fix
+  id: 8896
+  time: '2025-08-27T21:06:51.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/39676
