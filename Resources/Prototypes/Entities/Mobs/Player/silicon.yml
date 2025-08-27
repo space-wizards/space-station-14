@@ -273,8 +273,9 @@
           frameWithElectronics: { state: frame_1 }
           frameWithSecuredElectronics: { state: frame_2 }
           frameWithWires: { state: frame_3 }
-          frameWithMMI: { state: frame_3b }
-          frameWithGlass: { state: frame_4 }
+          frameWithBrain: { state: frame_3b }
+          frameWithBrainFinished: { state: frame_4 }
+          frameWithoutBrainFinished: { state: frame_4 }
   - type: InteractionOutline
   - type: Fixtures
     fixtures:
