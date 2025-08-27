@@ -170,6 +170,10 @@
   - AiHolder
   suffix: Empty
   components:
+  - type: Anchorable
+    flags: 
+    - Anchorable
+  - type: Rotatable
   - type: WarpPoint
     blacklist:
       tags:
@@ -195,6 +199,7 @@
   - type: StationAiVision
   - type: InteractionOutline
   - type: Sprite
+    snapCardinals: true
     sprite: Mobs/Silicon/station_ai.rsi
     layers:
     - state: base
