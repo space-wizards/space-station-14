@@ -8,6 +8,49 @@
       department: Command
       time: 3600 # 1 hour
 
+# Folders
+- type: loadout
+  id: BoxFolderBaseThreePapers
+  storage:
+    back:
+    - BoxFolderBaseThreePapers
+
+- type: loadout
+  id: BoxFolderGreyThreePapers
+  storage:
+    back:
+    - BoxFolderGreyThreePapers
+
+- type: loadout
+  id: BoxFolderBlackThreePapers
+  storage:
+    back:
+    - BoxFolderBlackThreePapers
+
+- type: loadout
+  id: BoxFolderRedThreePapers
+  storage:
+    back:
+    - BoxFolderRedThreePapers
+
+- type: loadout
+  id: BoxFolderYellowThreePapers
+  storage:
+    back:
+    - BoxFolderYellowThreePapers
+
+- type: loadout
+  id: BoxFolderGreenThreePapers
+  storage:
+    back:
+    - BoxFolderGreenThreePapers
+
+- type: loadout
+  id: BoxFolderBlueThreePapers
+  storage:
+    back:
+    - BoxFolderBlueThreePapers
+
 # Flowers
 - type: loadout
   id: FlowerWreath

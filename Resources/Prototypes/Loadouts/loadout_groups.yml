@@ -5,6 +5,13 @@
   minLimit: 0
   maxLimit: 3
   loadouts:
+  - BoxFolderBaseThreePapers
+  - BoxFolderGreyThreePapers
+  - BoxFolderBlackThreePapers
+  - BoxFolderRedThreePapers
+  - BoxFolderYellowThreePapers
+  - BoxFolderGreenThreePapers
+  - BoxFolderBlueThreePapers
   - FlowerWreath
   - Hairflower
   - Headphones
