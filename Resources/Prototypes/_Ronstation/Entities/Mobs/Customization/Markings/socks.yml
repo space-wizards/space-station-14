@@ -7,8 +7,9 @@
   speciesRestriction: [Arachnid, Human, Dwarf, SlimePerson]
   coloring:
     default:
-      type: null
-      fallbackColor: '#FFFFFF'
+      type:
+        !type:SimpleColoring
+          color: "#FFFFFF"
   sprites:
   - sprite: _Ronstation/Mobs/Customization/socks.rsi
     state: left_upper_sock
@@ -20,8 +21,9 @@
   speciesRestriction: [Arachnid, Human, Dwarf, SlimePerson]
   coloring:
     default:
-      type: null
-      fallbackColor: '#FFFFFF'
+      type:
+        !type:SimpleColoring
+          color: "#FFFFFF"
   sprites:
   - sprite: _Ronstation/Mobs/Customization/socks.rsi
     state: right_upper_sock
@@ -33,8 +35,9 @@
   speciesRestriction: [Arachnid, Human, Dwarf, SlimePerson] #moths getting removed from this list cuz they got skinny legs, also why did i put diona here, they cant wear shoes
   coloring:
     default:
-      type: null
-      fallbackColor: '#FFFFFF'
+      type:
+        !type:SimpleColoring
+          color: "#FFFFFF"
   sprites:
   - sprite: _Ronstation/Mobs/Customization/socks.rsi
     state: left_lower_sock
@@ -46,8 +49,9 @@
   speciesRestriction: [Arachnid, Human, Dwarf, SlimePerson]
   coloring:
     default:
-      type: null
-      fallbackColor: '#FFFFFF'
+      type:
+        !type:SimpleColoring
+          color: "#FFFFFF"
   sprites:
   - sprite: _Ronstation/Mobs/Customization/socks.rsi
     state: right_lower_sock
