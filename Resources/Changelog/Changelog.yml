@@ -1,19 +1,4 @@
 ﻿Entries:
-- author: EmoGarbage404
-  changes:
-  - message: Space debris now have a chance for landmines to spawn on them.
-    type: Add
-  - message: Adjusted the loot table on space debris to have more useful equipment
-      and items.
-    type: Tweak
-  - message: Round-start space debris now better mimics what the salvage magnet can
-      pull in.
-    type: Tweak
-  - message: Removed round-start space asteroids.
-    type: Remove
-  id: 8382
-  time: '2025-04-29T03:37:39.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/37025
 - author: drakewill-CRL
   changes:
   - message: You can now see mutations on plants and produce.
@@ -3954,3 +3939,12 @@
   id: 8894
   time: '2025-08-27T14:45:59.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/39900
+- author: chromiumboy
+  changes:
+  - message: Many station structures and fixtures, such as walls and airlocks, can
+      now be re-anchored to the floor if they happen to be dislodged by an explosion
+      or other shenanigans
+    type: Tweak
+  id: 8895
+  time: '2025-08-27T15:04:39.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/39542
