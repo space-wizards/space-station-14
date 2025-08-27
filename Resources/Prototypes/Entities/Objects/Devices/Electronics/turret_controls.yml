@@ -26,6 +26,18 @@
   components:
   - type: Sprite
     sprite: Objects/Misc/module.rsi
-    state: command
+    state: science
   - type: ElectronicsBoard
     prototype: WeaponEnergyTurretAIControlPanel
+    
+- type: entity
+  parent: WeaponEnergyTurretStationControlPanelElectronicsBase
+  id: WeaponEnergyTurretCommandControlPanelElectronics
+  suffix: Command
+  components:
+  - type: Sprite
+    sprite: Objects/Misc/module.rsi
+    state: command
+  - type: ElectronicsBoard
+    prototype: WeaponEnergyTurretCommandControlPanel
+

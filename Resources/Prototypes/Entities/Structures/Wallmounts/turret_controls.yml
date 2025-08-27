@@ -219,7 +219,7 @@
   - type: ContainerFill
     containers:
       board:
-      - WeaponEnergyTurretSecurityControlPanelElectronics
+      - WeaponEnergyTurretCommandControlPanelElectronics
   - type: TurretTargetSettings
     exemptAccessLevels:
     - Command
