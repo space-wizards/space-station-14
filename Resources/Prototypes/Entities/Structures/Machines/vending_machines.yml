@@ -2225,7 +2225,7 @@
   components:
   - type: VendingMachine
     pack: ChemVendInventorySyndicate
-    showPrices: # Starlight-edit: Vending Machines Prices
+    showPrices: false # Starlight-edit: Vending Machines Prices
     offState: off
     brokenState: broken
     normalState: normal
