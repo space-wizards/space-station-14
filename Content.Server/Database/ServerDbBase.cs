@@ -327,17 +327,16 @@ namespace Content.Server.Database
 
             var pronoun = humanoid.Pronoun;
 
-            profile.Pronouns = new DbPronoun(
-                pronoun?.Subject,
-                pronoun?.Object,
-                pronoun?.DatObj,
-                pronoun?.Genitive,
-                pronoun?.PossAdj,
-                pronoun?.PossPronoun,
-                pronoun?.Reflexive,
-                pronoun?.Counter,
-                pronoun?.Plural
-            );
+            profile.Pronouns ??= new DbPronoun();
+            profile.Pronouns.Subject = pronoun?.Subject;
+            profile.Pronouns.Object = pronoun?.Object;
+            profile.Pronouns.DatObj = pronoun?.DatObj;
+            profile.Pronouns.Genitive = pronoun?.Genitive;
+            profile.Pronouns.PossAdj = pronoun?.PossAdj;
+            profile.Pronouns.PossPronoun = pronoun?.PossPronoun;
+            profile.Pronouns.Reflexive = pronoun?.Reflexive;
+            profile.Pronouns.Counter = pronoun?.Counter;
+            profile.Pronouns.Plural = pronoun?.Plural;
 
             profile.Jobs.Clear();
             profile.Jobs.AddRange(

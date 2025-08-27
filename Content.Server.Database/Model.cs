@@ -466,6 +466,8 @@ namespace Content.Server.Database
             Counter = counter;
             Plural = plural;
         }
+
+        public DbPronoun() { }
     }
 
     public class Job
