@@ -8,49 +8,6 @@
       department: Command
       time: 3600 # 1 hour
 
-# Folders
-- type: loadout
-  id: BoxFolderBaseThreePapers
-  storage:
-    back:
-    - BoxFolderBaseThreePapers
-
-- type: loadout
-  id: BoxFolderGreyThreePapers
-  storage:
-    back:
-    - BoxFolderGreyThreePapers
-
-- type: loadout
-  id: BoxFolderBlackThreePapers
-  storage:
-    back:
-    - BoxFolderBlackThreePapers
-
-- type: loadout
-  id: BoxFolderRedThreePapers
-  storage:
-    back:
-    - BoxFolderRedThreePapers
-
-- type: loadout
-  id: BoxFolderYellowThreePapers
-  storage:
-    back:
-    - BoxFolderYellowThreePapers
-
-- type: loadout
-  id: BoxFolderGreenThreePapers
-  storage:
-    back:
-    - BoxFolderGreenThreePapers
-
-- type: loadout
-  id: BoxFolderBlueThreePapers
-  storage:
-    back:
-    - BoxFolderBlueThreePapers
-
 # Flowers
 - type: loadout
   id: FlowerWreath
@@ -148,6 +105,56 @@
     back:
     - CigarGold
   groupBy: "smokeables"
+
+# Folders
+- type: loadout
+  id: BoxFolderBaseThreePapers
+  storage:
+    back:
+    - BoxFolderBaseThreePapers
+  groupBy: "folders"
+
+- type: loadout
+  id: BoxFolderGreyThreePapers
+  storage:
+    back:
+    - BoxFolderGreyThreePapers
+  groupBy: "folders"
+
+- type: loadout
+  id: BoxFolderBlackThreePapers
+  storage:
+    back:
+    - BoxFolderBlackThreePapers
+  groupBy: "folders"
+
+- type: loadout
+  id: BoxFolderRedThreePapers
+  storage:
+    back:
+    - BoxFolderRedThreePapers
+  groupBy: "folders"
+
+- type: loadout
+  id: BoxFolderYellowThreePapers
+  storage:
+    back:
+    - BoxFolderYellowThreePapers
+  groupBy: "folders"
+
+- type: loadout
+  id: BoxFolderGreenThreePapers
+  storage:
+    back:
+    - BoxFolderGreenThreePapers
+  groupBy: "folders"
+
+- type: loadout
+  id: BoxFolderBlueThreePapers
+  storage:
+    back:
+    - BoxFolderBlueThreePapers
+  groupBy: "folders"
 
 # Pins
 - type: loadout
