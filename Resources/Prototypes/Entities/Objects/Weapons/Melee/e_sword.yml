@@ -181,7 +181,7 @@
 
 - type: entity
   name: pen
-  parent: [BaseMeleeWeaponEnergy, BaseMeleeWeaponEnergyWelding, VoiceLock]
+  parent: [BaseMeleeWeaponEnergy, BaseMeleeWeaponEnergyWelding, SelectableLock]
   id: EnergyDagger
   suffix: E-Dagger
   description: 'A dark ink pen.'
@@ -427,10 +427,17 @@
     speedModifier: 0.2
 
 # Borgs
+
 - type: entity
-  suffix: One-Handed, For Borgs
+  parent: EnergySword
+  id: CyborgEnergySword
+  suffix: For Borgs
+  description: A very loud & dangerous sword with a beam made of pure, concentrated plasma. Specially designed for syndicate cyborgs.
+
+- type: entity
   parent: EnergySwordDouble
   id: CyborgEnergySwordDouble # why is this invalid if ID is BorgEnergySwordDouble
+  suffix: One-Handed, For Borgs
   description: Syndicate Command Interns thought that having one blade on the energy sword was not enough. Specially designed for syndicate cyborgs.
   components: # could add energy-draining like the L6C
   - type: Wieldable
