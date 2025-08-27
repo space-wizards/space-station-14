@@ -193,7 +193,7 @@ namespace Content.Shared.Forensics.Systems
             }
 
             // Spawn a piece of paper.
-            var printed = Spawn(component.MachineOutput, Transform(uid).Coordinates);
+            var printed = PredictedSpawnAtPosition(component.MachineOutput, Transform(uid).Coordinates);
             _handsSystem.PickupOrDrop(args.Actor, printed, checkActionBlocker: false);
 
             if (!TryComp<PaperComponent>(printed, out var paperComp))
@@ -238,7 +238,7 @@ namespace Content.Shared.Forensics.Systems
             }
 
             _paperSystem.SetContent((printed, paperComp), text.ToString());
-            _audioSystem.PlayPredicted(component.SoundPrint, uid, uid,
+            _audioSystem.PlayPredicted(component.SoundPrint, uid, args.Actor,
                 AudioParams.Default
                 .WithVariation(0.25f)
                 .WithVolume(3f)

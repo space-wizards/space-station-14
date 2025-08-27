@@ -29,7 +29,7 @@ namespace Content.Client.Forensics
 
         private void Print()
         {
-            SendMessage(new ForensicScannerPrintMessage());
+            SendPredictedMessage(new ForensicScannerPrintMessage());
 
             if (_window != null)
                 _window.UpdatePrinterState(true);
@@ -46,7 +46,7 @@ namespace Content.Client.Forensics
 
         private void Clear()
         {
-            SendMessage(new ForensicScannerClearMessage());
+            SendPredictedMessage(new ForensicScannerClearMessage());
         }
 
         protected override void UpdateState(BoundUserInterfaceState state)
