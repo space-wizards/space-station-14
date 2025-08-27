@@ -15,4 +15,6 @@ public abstract class SharedForensicsSystem : EntitySystem
     /// Does nothing if it does not have the FingerprintComponent.
     /// </summary>
     public virtual void RandomizeFingerprint(Entity<FingerprintComponent?> ent) { }
+
+    public virtual void TransferDna(EntityUid recipient, EntityUid donor, bool canDnaBeCleaned = true) { }
 }
