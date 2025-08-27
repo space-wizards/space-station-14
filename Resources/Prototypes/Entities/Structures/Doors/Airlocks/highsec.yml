@@ -13,6 +13,7 @@
   - type: StationAiWhitelist
   - type: InteractionOutline
   - type: Sprite
+    snapCardinals: true
     sprite: Structures/Doors/Airlocks/highsec/highsec.rsi
     layers:
     - state: closed
