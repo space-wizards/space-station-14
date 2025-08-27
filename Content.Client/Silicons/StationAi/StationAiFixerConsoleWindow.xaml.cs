@@ -31,7 +31,7 @@ public sealed partial class StationAiFixerConsoleWindow : FancyWindow
 
     private readonly Dictionary<MobState, Color> _statusColors = new Dictionary<MobState, Color>
     {
-        [MobState.Invalid] = Color.FromHex("#757575"),
+        [MobState.Invalid] = Color.FromHex("#464966"),
         [MobState.Alive] = Color.FromHex("#3E6C45"),
         [MobState.Critical] = Color.FromHex("#A5762F"),
         [MobState.Dead] = Color.FromHex("#BB3232"),
@@ -53,6 +53,16 @@ public sealed partial class StationAiFixerConsoleWindow : FancyWindow
         EjectButton.OnButtonDown += args => OnSendStationAiFixerConsoleMessage(StationAiFixerConsoleAction.Eject);
         RepairButton.OnButtonDown += args => OnSendStationAiFixerConsoleMessage(StationAiFixerConsoleAction.Repair);
         PurgeButton.OnButtonDown += args => OnOpenConfirmationDialog();
+
+        CancelButton.Label.HorizontalAlignment = HAlignment.Left;
+        EjectButton.Label.HorizontalAlignment = HAlignment.Left;
+        RepairButton.Label.HorizontalAlignment = HAlignment.Left;
+        PurgeButton.Label.HorizontalAlignment = HAlignment.Left;
+
+        CancelButton.Label.Margin = new Thickness(40, 0, 0, 0);
+        EjectButton.Label.Margin = new Thickness(40, 0, 0, 0);
+        RepairButton.Label.Margin = new Thickness(40, 0, 0, 0);
+        PurgeButton.Label.Margin = new Thickness(40, 0, 0, 0);
 
         UpdateState();
     }

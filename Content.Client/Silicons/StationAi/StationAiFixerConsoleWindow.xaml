@@ -98,14 +98,14 @@
 					<Label Name="ActionProgressEtaLabel" Text="???" HorizontalAlignment="Center"/>
 
 					<!-- Cancel button -->
-					<Button Name="CancelButton" HorizontalExpand="True" Margin="0 20 0 10" SetHeight="40">
+					<Button Name="CancelButton" HorizontalExpand="True" Margin="0 20 0 10" SetHeight="40"
+						Text="{Loc 'station-ai-fixer-console-window-cancel-action'}">
 						<TextureRect HorizontalAlignment="Left"
 							VerticalAlignment="Center"
 							SetSize="24 24"
 							Stretch="KeepAspectCentered"
 							TexturePath="/Textures/Interface/Nano/cross.svg.png">
 						</TextureRect>
-						<Label Text="{Loc 'station-ai-fixer-console-window-cancel-action'}" Margin="40 0 0 0"/>
 					</Button>
 				</BoxContainer>
 
@@ -126,36 +126,36 @@
 					</controls:StripeBack>
 
 					<!-- Eject button -->
-					<Button Name="EjectButton" HorizontalExpand="True" Margin="0 10 0 0" SetHeight="40">
+					<Button Name="EjectButton" HorizontalExpand="True" Margin="0 10 0 0" SetHeight="40"
+						Text="{Loc 'station-ai-fixer-console-window-station-ai-eject'}">
 						<TextureRect HorizontalAlignment="Left"
 							VerticalAlignment="Center"
 							SetSize="32 32"
 							Stretch="KeepAspectCentered"
 							TexturePath="/Textures/Interface/VerbIcons/eject.svg.192dpi.png">
 						</TextureRect>
-						<Label Text="{Loc 'station-ai-fixer-console-window-station-ai-eject'}" Margin="40 0 0 0"/>
 					</Button>
 
 					<!-- Repair button -->
-					<Button Name="RepairButton" HorizontalExpand="True" Margin="0 10 0 0" SetHeight="40">
+					<Button Name="RepairButton" HorizontalExpand="True" Margin="0 10 0 0" SetHeight="40"
+						Text="{Loc 'station-ai-fixer-console-window-station-ai-repair'}">
 						<TextureRect HorizontalAlignment="Left"
 							VerticalAlignment="Center"
 							SetSize="32 32"
 							Stretch="KeepAspectCentered"
 							TexturePath="/Textures/Interface/hammer_scaled.svg.192dpi.png">
 						</TextureRect>
-						<Label Text="{Loc 'station-ai-fixer-console-window-station-ai-repair'}" Margin="40 0 0 0"/>
 					</Button>
 
 					<!-- Purge button -->
-					<Button Name="PurgeButton" HorizontalExpand="True" Margin="0 10 0 0" SetHeight="40">
+					<Button Name="PurgeButton" HorizontalExpand="True" Margin="0 10 0 0" SetHeight="40"
+						Text="{Loc 'station-ai-fixer-console-window-station-ai-purge'}">
 						<TextureRect HorizontalAlignment="Left"
 							VerticalAlignment="Center"
 							SetSize="32 32"
 							Stretch="KeepAspectCentered"
 							TexturePath="/Textures/Interface/VerbIcons/delete_transparent.svg.192dpi.png">
 						</TextureRect>
-						<Label Text="{Loc 'station-ai-fixer-console-window-station-ai-purge'}" Margin="40 0 0 0"/>
 					</Button>
 
 				</BoxContainer>
