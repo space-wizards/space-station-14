@@ -1,0 +1,31 @@
+- files:
+  - shriek1.ogg
+  license: "CC BY-NC-SA 3.0"
+  copyright: "Taken from https://github.com/goonstation/goonstation/tree/eb3e7df6292d23f6af2f18b4372d3a8ba4b0fda7/sound/misc/talk"
+  source: "https://github.com/goonstation/goonstation"
+
+- files:
+  - vox_laugh.ogg
+  license: "CC-BY-SA-3.0"
+  copyright: "Made by Errant."
+  source: "https://github.com/space-wizards/space-station-14/commit/2b0f227940d9163e06ac75e0f6af7140fb3fd11f"
+
+- files:
+  - vox_cough.ogg
+  license: "CC-BY-SA-3.0"
+  copyright: "Modified from vox_laugh.ogg by TrixxedHeart"
+  source: "https://github.com/space-wizards/space-station-14/commit/2b0f227940d9163e06ac75e0f6af7140fb3fd11f"
+
+- files:
+  - vox_gasp.ogg
+  - vox_sigh.ogg
+  license: "CC-BY-SA-3.0"
+  copyright: "Modified from shriek1.ogg by TrixxedHeart"
+  source: "https://github.com/goonstation/goonstation"
+
+- files:
+  - vox_cry.ogg
+  license: "CC0"
+  copyright: "raptorgoesextinct.wav by Nerdwizard78"
+  source: "https://freesound.org/people/Nerdwizard78/sounds/643928/"
+
