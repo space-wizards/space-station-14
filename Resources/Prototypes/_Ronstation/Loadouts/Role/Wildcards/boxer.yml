@@ -2,18 +2,19 @@
   id: JobBoxer
   canCustomizeName: true
   groups:
-  - Survival
-  - GroupSpeciesBreathTool
   - GroupTankHarness
-  # Head
+  # - Head
   - CommonGlasses
-  # Mask
-  # Neck
+  # - Mask
+  # - Neck
   - BoxerGloves
   - BoxerJumpsuit
   - CommonBackpack
-  # PDA
-  # Belt
-  # Outer Clothing
-  # Shoes
+  # - PDA
+  # - Belt
+  # - Outer Clothing
+  # - Shoes
+  # Backpack fills
+  - Survival
+  - GroupSpeciesBreathTool
   - Trinkets

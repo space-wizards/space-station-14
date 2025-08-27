@@ -1,18 +1,19 @@
 - type: roleLoadout
   id: JobBotanist
   groups:
-  - Survival
-  - GroupSpeciesBreathTool
   - GroupTankHarness
   - BotanistHead
   - CommonGlasses
-  # Mask
-  # Neck
-  # Gloves
+  # - Mask
+  # - Neck
+  # - Gloves
   - BotanistJumpsuit
   - BotanistBackpack
-  # PDA
-  # Belt
+  # - PDA
+  # - Belt
   - BotanistOuterClothing
-  # Shoes
+  # - Shoes
+  # Backpack fills
+  - Survival
+  - GroupSpeciesBreathTool
   - Trinkets
