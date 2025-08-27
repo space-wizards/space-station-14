@@ -16,7 +16,7 @@ quick_lottery = true
 generator_enabled = false
 
 [movement]
-mob_pushing = false
+mob_pushing = true
 
 [physics]
 # Makes mapping annoying
@@ -37,6 +37,11 @@ preload_grids = false
 
 [admin]
 see_own_notes = true
+
+[ic]
+random_characters = true
+random_species_weights = ""
+ssd_sleep_time = 3600
 
 [infolinks]
 discord = "https://discord.gg/ds14"

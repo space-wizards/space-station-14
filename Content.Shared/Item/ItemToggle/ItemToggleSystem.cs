@@ -9,7 +9,6 @@ using Content.Shared.Wieldable;
 using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Network;
-using Content.Shared.Wieldable.Components;
 
 namespace Content.Shared.Item.ItemToggle;
 /// <summary>
@@ -24,7 +23,6 @@ public sealed class ItemToggleSystem : EntitySystem
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
-    [Dependency] private readonly SharedWieldableSystem _wieldable = default!;
 
     private EntityQuery<ItemToggleComponent> _query;
 
@@ -77,6 +75,23 @@ public sealed class ItemToggleSystem : EntitySystem
             return;
 
         var user = args.User;
+
+        if (ent.Comp.Activated)
+        {
+            var ev = new ItemToggleActivateAttemptEvent(args.User);
+            RaiseLocalEvent(ent.Owner, ref ev);
+
+            if (ev.Cancelled)
+                return;
+        }
+        else
+        {
+            var ev = new ItemToggleDeactivateAttemptEvent(args.User);
+            RaiseLocalEvent(ent.Owner, ref ev);
+
+            if (ev.Cancelled)
+                return;
+        }
 
         args.Verbs.Add(new ActivationVerb()
         {
@@ -135,18 +150,20 @@ public sealed class ItemToggleSystem : EntitySystem
         if (comp.Activated)
             return true;
 
-        if (user != null && EntityManager.TryGetComponent<WieldableComponent>(uid, out var wiledable) && !_wieldable.CanWield(uid, wiledable, (EntityUid) user))
-            return false;
-
-        if (!comp.Predictable && _netManager.IsClient)
-            return true;
-
         var attempt = new ItemToggleActivateAttemptEvent(user);
         RaiseLocalEvent(uid, ref attempt);
 
-        if (!comp.Predictable) predicted = false;
+        if (!comp.Predictable)
+            predicted = false;
+
+        if (!predicted && _netManager.IsClient)
+            return false;
+
         if (attempt.Cancelled)
         {
+            if (attempt.Silent)
+                return false;
+
             if (predicted)
                 _audio.PlayPredicted(comp.SoundFailToActivate, uid, user);
             else
@@ -164,7 +181,6 @@ public sealed class ItemToggleSystem : EntitySystem
         }
 
         Activate((uid, comp), predicted, user);
-
         return true;
     }
 
@@ -181,16 +197,31 @@ public sealed class ItemToggleSystem : EntitySystem
         if (!comp.Activated)
             return true;
 
-        if (!comp.Predictable && _netManager.IsClient)
-            return true;
+        if (!comp.Predictable)
+            predicted = false;
 
         var attempt = new ItemToggleDeactivateAttemptEvent(user);
         RaiseLocalEvent(uid, ref attempt);
 
-        if (attempt.Cancelled)
+        if (!predicted && _netManager.IsClient)
             return false;
 
-        if (!comp.Predictable) predicted = false;
+        if (attempt.Cancelled)
+        {
+            if (attempt.Silent)
+                return false;
+
+            if (attempt.Popup != null && user != null)
+            {
+                if (predicted)
+                    _popup.PopupClient(attempt.Popup, uid, user.Value);
+                else
+                    _popup.PopupEntity(attempt.Popup, uid, user.Value);
+            }
+
+            return false;
+        }
+
         Deactivate((uid, comp), predicted, user);
         return true;
     }
@@ -232,11 +263,26 @@ public sealed class ItemToggleSystem : EntitySystem
         RaiseLocalEvent(uid, ref toggleUsed);
     }
 
+    /// <summary>
+    /// Sets if this toggleable item can be activated in world by pressing "e"
+    /// </summary>
+    public void SetOnActivate(Entity<ItemToggleComponent?> ent, bool val)
+    {
+        if (!Resolve(ent, ref ent.Comp))
+            return;
+
+        if (ent.Comp.OnActivate == val)
+            return;
+
+        ent.Comp.OnActivate = val;
+        Dirty(ent);
+    }
+
     private void UpdateVisuals(Entity<ItemToggleComponent> ent)
     {
         if (TryComp(ent, out AppearanceComponent? appearance))
         {
-            _appearance.SetData(ent, ToggleVisuals.Toggled, ent.Comp.Activated, appearance);
+            _appearance.SetData(ent, ToggleableVisuals.Enabled, ent.Comp.Activated, appearance);
         }
     }
 

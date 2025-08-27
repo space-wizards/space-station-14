@@ -1,8 +1,6 @@
 using Content.Server.Stunnable.Components;
-using Content.Shared.Standing;
-using Content.Shared.StatusEffect;
+using Content.Shared.Movement.Systems;
 using JetBrains.Annotations;
-using Robust.Shared.Physics.Dynamics;
 using Content.Shared.Throwing;
 using Robust.Shared.Physics.Events;
 
@@ -12,6 +10,7 @@ namespace Content.Server.Stunnable
     internal sealed class StunOnCollideSystem : EntitySystem
     {
         [Dependency] private readonly StunSystem _stunSystem = default!;
+        [Dependency] private readonly MovementModStatusSystem _movementMod = default!;
 
         public override void Initialize()
         {
@@ -22,18 +21,19 @@ namespace Content.Server.Stunnable
 
         private void TryDoCollideStun(EntityUid uid, StunOnCollideComponent component, EntityUid target)
         {
+            _stunSystem.TryUpdateStunDuration(target, component.StunAmount);
 
-            if (EntityManager.TryGetComponent<StatusEffectsComponent>(target, out var status))
-            {
-                _stunSystem.TryStun(target, TimeSpan.FromSeconds(component.StunAmount), true, status);
+            _stunSystem.TryKnockdown(target, component.KnockdownAmount, component.Refresh, component.AutoStand, force: true);
 
-                _stunSystem.TryKnockdown(target, TimeSpan.FromSeconds(component.KnockdownAmount), true,
-                    status);
-
-                _stunSystem.TrySlowdown(target, TimeSpan.FromSeconds(component.SlowdownAmount), true,
-                    component.WalkSpeedMultiplier, component.RunSpeedMultiplier, status);
-            }
+            _movementMod.TryUpdateMovementSpeedModDuration(
+                target,
+                MovementModStatusSystem.TaserSlowdown,
+                component.SlowdownAmount,
+                component.WalkSpeedModifier,
+                component.SprintSpeedModifier
+            );
         }
+
         private void HandleCollide(EntityUid uid, StunOnCollideComponent component, ref StartCollideEvent args)
         {
             if (args.OurFixtureId != component.FixtureID)

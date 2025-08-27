@@ -8,580 +8,645 @@
   },
   "states": [
     {
-      "name": "dark"
+        "name": "dark"
     },
     {
-      "name": "dark-diagonal-mini"
+        "name": "dark-diagonal-mini"
     },
     {
-      "name": "dark-diagonal"
+        "name": "dark-diagonal"
     },
     {
-      "name": "dark-herringbone"
+        "name": "dark-herringbone"
     },
     {
-      "name": "dark-mini"
+        "name": "dark-mini"
     },
     {
-      "name": "dark-mono"
+        "name": "dark-mono"
     },
     {
-      "name": "dark-pavement"
+        "name": "dark-pavement"
     },
     {
-      "name": "dark-pavement-vertical"
+        "name": "dark-pavement-vertical"
     },
     {
-      "name": "dark-offset"
+        "name": "dark-offset"
     },
     {
-      "name": "dirty"
+        "name": "dirty"
     },
     {
-      "name": "checker-light"
+        "name": "checker-light"
     },
     {
-      "name": "checker-dark"
+        "name": "checker-dark"
     },
     {
-      "name": "concrete"
+        "name": "concrete"
     },
     {
-      "name": "concrete-mono"
+        "name": "concrete-mono"
     },
     {
-      "name": "concrete-smooth"
+        "name": "concrete-smooth"
     },
     {
-      "name": "grayconcrete"
+        "name": "grayconcrete"
     },
     {
-      "name": "grayconcrete-mono"
+        "name": "grayconcrete-mono"
     },
     {
-      "name": "grayconcrete-smooth"
+        "name": "grayconcrete-smooth"
     },
     {
-      "name": "oldconcrete"
+        "name": "oldconcrete"
     },
     {
-      "name": "oldconcrete-mono"
+        "name": "oldconcrete-mono"
     },
     {
-      "name": "oldconcrete-smooth"
+        "name": "oldconcrete-smooth"
     },
     {
-      "name": "gcircuit"
+        "name": "gcircuit"
     },
     {
-      "name": "bar"
+        "name": "bar"
     },
     {
-      "name": "blue"
+        "name": "blue"
     },
 	  {
-	    "name": "brass"
+	      "name": "brass"
 	  },
 	  {
-	    "name": "brass-filled"
+	      "name": "brass-filled"
 	  },
 	  {
-	    "name": "reebe"
+	      "name": "reebe"
 	  },
     {
-      "name": "lime"
+        "name": "lime"
     },
     {
-      "name": "mining"
+        "name": "mining"
     },
     {
-      "name": "mining-inhand-right",
-      "directions": 4
+        "name": "mining-inhand-right",
+        "directions": 4
     },
     {
-      "name": "mining-inhand-left",
-      "directions": 4
+        "name": "mining-inhand-left",
+        "directions": 4
     },
     {
-      "name": "miningdark"
+        "name": "miningdark"
     },
     {
-      "name": "miningdark-inhand-right",
-      "directions": 4
+        "name": "miningdark-inhand-right",
+        "directions": 4
     },
     {
-      "name": "miningdark-inhand-left",
-      "directions": 4
+        "name": "miningdark-inhand-left",
+        "directions": 4
     },
     {
-      "name": "mininglight"
+        "name": "mininglight"
     },
     {
-      "name": "mininglight-inhand-right",
-      "directions": 4
+        "name": "mininglight-inhand-right",
+        "directions": 4
     },
     {
-      "name": "mininglight-inhand-left",
-      "directions": 4
+        "name": "mininglight-inhand-left",
+        "directions": 4
     },
     {
-      "name": "clown"
+        "name": "clown"
     },
     {
-      "name": "grass"
+        "name": "grass"
     },
     {
-      "name": "grassjungle"
+        "name": "grassjungle"
     },
     {
-      "name": "kitchen"
+        "name": "kitchen"
     },
     {
-      "name": "laundry"
+        "name": "laundry"
     },
     {
-      "name": "lino"
+        "name": "lino"
     },
-	{
+	  {
       "name": "necromeat"
     },
-	{
-      "name": "necromeat-inhand-right",
-      "directions": 4
+	  {
+        "name": "necromeat-inhand-right",
+        "directions": 4
     },
     {
-      "name": "necromeat-inhand-left",
-      "directions": 4
+        "name": "necromeat-inhand-left",
+        "directions": 4
     },
     {
-      "name": "meat"
+        "name": "meat"
     },
-	{
-      "name": "veb"
+	  {
+        "name": "veb"
     },
-	{
-      "name": "veb-inhand-right",
-      "directions": 4
+	  {
+        "name": "veb-inhand-right",
+        "directions": 4
     },
     {
-      "name": "veb-inhand-left",
-      "directions": 4
+        "name": "veb-inhand-left",
+        "directions": 4
     },
     {
-      "name": "meat-inhand-right",
-      "directions": 4
+        "name": "meat-inhand-right",
+        "directions": 4
     },
     {
-      "name": "meat-inhand-left",
-      "directions": 4
+        "name": "meat-inhand-left",
+        "directions": 4
     },
     {
-      "name": "mime"
+        "name": "mime"
     },
     {
-      "name": "bcircuit"
+        "name": "bcircuit"
     },
     {
-      "name": "rcircuit"
+        "name": "rcircuit"
     },
     {
-      "name": "carpet-black"
+        "name": "carpet-black"
     },
     {
-      "name": "carpet-blue"
+        "name": "carpet-blue"
     },
     {
-      "name": "carpet-skyblue"
+        "name": "carpet-skyblue"
     },
     {
-      "name": "carpet-green"
+        "name": "carpet-green"
     },
     {
-      "name": "carpet-orange"
+        "name": "carpet-orange"
     },
     {
-      "name": "carpet-purple"
+        "name": "carpet-purple"
     },
     {
-      "name": "carpet-red"
+        "name": "carpet-red"
     },
     {
-      "name": "carpet-pink"
+        "name": "carpet-pink"
     },
     {
-      "name": "carpet-cyan"
+        "name": "carpet-cyan"
     },
     {
-      "name": "carpet-white"
+        "name": "carpet-white"
     },
     {
-      "name": "hydro"
+        "name": "hydro"
     },
     {
-      "name": "reinforced"
+        "name": "reinforced"
     },
     {
-      "name": "rockvault"
+        "name": "rockvault"
     },
     {
-      "name": "gold"
+        "name": "gold"
     },
     {
-      "name": "showroom"
+        "name": "showroom"
     },
     {
-      "name": "snow"
+        "name": "snow"
     },
     {
-      "name": "steel"
+        "name": "steel"
     },
     {
-      "name": "steel-offset"
+        "name": "steel-offset"
     },
     {
-      "name": "steel-diagonal-mini"
+        "name": "steel-diagonal-mini"
     },
     {
-      "name": "steel-diagonal"
+        "name": "steel-diagonal"
     },
     {
-      "name": "steel-herringbone"
+        "name": "steel-herringbone"
     },
     {
-      "name": "steel-mini"
+        "name": "steel-mini"
     },
     {
-      "name": "steel-mono"
+        "name": "steel-mono"
     },
     {
-      "name": "steel-pavement"
+        "name": "steel-pavement"
     },
     {
-      "name": "steel-pavement-vertical"
+        "name": "steel-pavement-vertical"
     },
     {
-      "name": "silver"
+        "name": "silver"
     },
     {
-      "name": "techfloor"
+        "name": "techfloor"
     },
     {
-      "name": "white"
+        "name": "techfloordark"
     },
     {
-      "name": "white-offset"
+        "name": "white"
     },
     {
-      "name": "white-diagonal-mini"
+        "name": "white-offset"
     },
     {
-      "name": "white-diagonal"
+        "name": "white-diagonal-mini"
     },
     {
-      "name": "white-herringbone"
+        "name": "white-diagonal"
     },
     {
-      "name": "white-mini"
+        "name": "white-herringbone"
     },
     {
-      "name": "white-mono"
+        "name": "white-mini"
     },
     {
-      "name": "white-pavement"
+        "name": "white-mono"
     },
     {
-      "name": "white-pavement-vertical"
+        "name": "white-pavement"
     },
     {
-      "name": "monofloor"
+        "name": "white-pavement-vertical"
     },
     {
-      "name": "wood"
+        "name": "monofloor"
     },
     {
-      "name": "arcadeblue"
+        "name": "wood"
     },
     {
-      "name": "arcadeblue2"
+        "name": "arcadeblue"
     },
     {
-      "name": "arcadered"
+        "name": "arcadeblue2"
     },
     {
-      "name": "eighties"
+        "name": "arcadered"
     },
     {
-      "name": "shuttlewhite"
+        "name": "eighties"
     },
     {
-      "name": "shuttleblue"
+        "name": "shuttlewhite"
     },
     {
-      "name": "shuttleorange"
+        "name": "shuttleblue"
     },
     {
-      "name": "shuttlepurple"
+        "name": "shuttleorange"
     },
     {
-      "name": "shuttlered"
+        "name": "shuttlepurple"
     },
     {
-      "name": "shuttlegrey"
+        "name": "shuttlered"
     },
     {
-      "name": "shuttleblack"
+        "name": "shuttlegrey"
     },
     {
-      "name": "carpetclown"
+        "name": "shuttleblack"
     },
     {
-      "name": "carpetoffice"
+        "name": "carpetclown"
     },
     {
-      "name": "boxing"
+        "name": "carpetoffice"
     },
     {
-      "name": "gym"
+        "name": "boxing"
     },
     {
-      "name": "metaldiamond"
+        "name": "gym"
     },
     {
-      "name": "steelmaintfloor"
+        "name": "metaldiamond"
     },
     {
-      "name": "gratingmaintfloor"
+        "name": "steelmaintfloor"
     },
     {
-      "name": "woodpatternfloor"
+        "name": "gratingmaintfloor"
     },
     {
-      "name": "astrograss"
+        "name": "woodpatternfloor"
     },
     {
-      "name": "astroice"
+        "name": "astrograss"
     },
     {
-      "name": "bcircuit-inhand-left",
-      "directions": 4
+        "name": "astroice"
     },
     {
-      "name": "bcircuit-inhand-right",
-      "directions": 4
+        "name": "bcircuit-inhand-left",
+        "directions": 4
     },
     {
-      "name": "carpet-black-inhand-left",
-      "directions": 4
+        "name": "bcircuit-inhand-right",
+        "directions": 4
     },
     {
-      "name": "carpet-black-inhand-right",
-      "directions": 4
+        "name": "carpet-black-inhand-left",
+        "directions": 4
     },
     {
-      "name": "carpet-blue-inhand-left",
-      "directions": 4
+        "name": "carpet-black-inhand-right",
+        "directions": 4
     },
     {
-      "name": "carpet-blue-inhand-right",
-      "directions": 4
+        "name": "carpet-blue-inhand-left",
+        "directions": 4
     },
     {
-      "name": "carpet-skyblue-inhand-left",
-      "directions": 4
+        "name": "carpet-blue-inhand-right",
+        "directions": 4
     },
     {
-      "name": "carpet-skyblue-inhand-right",
-      "directions": 4
+        "name": "carpet-skyblue-inhand-left",
+        "directions": 4
     },
     {
-      "name": "carpet-green-inhand-left",
-      "directions": 4
+        "name": "carpet-skyblue-inhand-right",
+        "directions": 4
     },
     {
-      "name": "carpet-green-inhand-right",
-      "directions": 4
+        "name": "carpet-green-inhand-left",
+        "directions": 4
     },
     {
-      "name": "carpet-orange-inhand-left",
-      "directions": 4
+        "name": "carpet-green-inhand-right",
+        "directions": 4
     },
     {
-      "name": "carpet-orange-inhand-right",
-      "directions": 4
+        "name": "carpet-orange-inhand-left",
+        "directions": 4
     },
     {
-      "name": "carpet-purple-inhand-left",
-      "directions": 4
+        "name": "carpet-orange-inhand-right",
+        "directions": 4
     },
     {
-      "name": "carpet-purple-inhand-right",
-      "directions": 4
+        "name": "carpet-purple-inhand-left",
+        "directions": 4
     },
     {
-      "name": "carpet-red-inhand-left",
-      "directions": 4
+        "name": "carpet-purple-inhand-right",
+        "directions": 4
     },
     {
-      "name": "carpet-red-inhand-right",
-      "directions": 4
+        "name": "carpet-red-inhand-left",
+        "directions": 4
     },
     {
-      "name": "carpet-pink-inhand-left",
-      "directions": 4
+        "name": "carpet-red-inhand-right",
+        "directions": 4
     },
     {
-      "name": "carpet-pink-inhand-right",
-      "directions": 4
+        "name": "carpet-pink-inhand-left",
+        "directions": 4
     },
     {
-      "name": "carpet-cyan-inhand-left",
-      "directions": 4
+        "name": "carpet-pink-inhand-right",
+        "directions": 4
     },
     {
-      "name": "carpet-cyan-inhand-right",
-      "directions": 4
+        "name": "carpet-cyan-inhand-left",
+        "directions": 4
     },
     {
-      "name": "carpet-white-inhand-left",
-      "directions": 4
+        "name": "carpet-cyan-inhand-right",
+        "directions": 4
     },
     {
-      "name": "carpet-white-inhand-right",
-      "directions": 4
+        "name": "carpet-white-inhand-left",
+        "directions": 4
     },
     {
-      "name": "grass-inhand-left",
-      "directions": 4
+        "name": "carpet-white-inhand-right",
+        "directions": 4
     },
     {
-      "name": "grass-inhand-right",
-      "directions": 4
+        "name": "grass-inhand-left",
+        "directions": 4
     },
     {
-      "name": "snow-inhand-left",
-      "directions": 4
+        "name": "grass-inhand-right",
+        "directions": 4
     },
     {
-      "name": "snow-inhand-right",
-      "directions": 4
+        "name": "snow-inhand-left",
+        "directions": 4
     },
     {
-      "name": "dirty-inhand-left",
-      "directions": 4
+        "name": "snow-inhand-right",
+        "directions": 4
     },
     {
-      "name": "dirty-inhand-right",
-      "directions": 4
+        "name": "dirty-inhand-left",
+        "directions": 4
     },
     {
-      "name": "dark-inhand-right",
-      "directions": 4
+        "name": "dirty-inhand-right",
+        "directions": 4
     },
     {
-      "name": "dark-inhand-left",
-      "directions": 4
+        "name": "dark-inhand-right",
+        "directions": 4
     },
     {
-      "name": "gcircuit-inhand-right",
-      "directions": 4
+        "name": "dark-inhand-left",
+        "directions": 4
     },
     {
-      "name": "gcircuit-inhand-left",
-      "directions": 4
+        "name": "gcircuit-inhand-right",
+        "directions": 4
     },
     {
-      "name": "gold-inhand-right",
-      "directions": 4
+        "name": "gcircuit-inhand-left",
+        "directions": 4
     },
     {
-      "name": "gold-inhand-left",
-      "directions": 4
+        "name": "gold-inhand-right",
+        "directions": 4
     },
     {
-      "name": "rcircuit-inhand-right",
-      "directions": 4
+        "name": "gold-inhand-left",
+        "directions": 4
     },
     {
-      "name": "rcircuit-inhand-left",
-      "directions": 4
+        "name": "rcircuit-inhand-right",
+        "directions": 4
     },
     {
-      "name": "reinforced-inhand-right",
-      "directions": 4
+        "name": "rcircuit-inhand-left",
+        "directions": 4
     },
     {
-      "name": "reinforced-inhand-left",
-      "directions": 4
+        "name": "reinforced-inhand-right",
+        "directions": 4
     },
     {
-      "name": "showroom-inhand-right",
-      "directions": 4
+        "name": "reinforced-inhand-left",
+        "directions": 4
     },
     {
-      "name": "showroom-inhand-left",
-      "directions": 4
+        "name": "showroom-inhand-right",
+        "directions": 4
     },
     {
-      "name": "silver-inhand-right",
-      "directions": 4
+        "name": "showroom-inhand-left",
+        "directions": 4
     },
     {
-      "name": "silver-inhand-left",
-      "directions": 4
+        "name": "silver-inhand-right",
+        "directions": 4
     },
     {
-      "name": "white-inhand-right",
-      "directions": 4
+        "name": "silver-inhand-left",
+        "directions": 4
     },
     {
-      "name": "white-inhand-left",
-      "directions": 4
+        "name": "white-inhand-right",
+        "directions": 4
     },
     {
-      "name": "wood-inhand-right",
-      "directions": 4
+        "name": "white-inhand-left",
+        "directions": 4
     },
     {
-      "name": "wood-inhand-left",
-      "directions": 4
+        "name": "wood-inhand-right",
+        "directions": 4
     },
     {
-      "name": "generic-inhand-right",
-      "directions": 4
+        "name": "wood-inhand-left",
+        "directions": 4
     },
     {
-      "name": "generic-inhand-left",
-      "directions": 4
+        "name": "generic-inhand-right",
+        "directions": 4
     },
     {
-      "name": "steel-inhand-right",
-      "directions": 4
+        "name": "generic-inhand-left",
+        "directions": 4
     },
     {
-      "name": "steel-inhand-left",
-      "directions": 4
+        "name": "steel-inhand-right",
+        "directions": 4
     },
     {
-      "name": "hydro-inhand-right",
-      "directions": 4
+        "name": "steel-inhand-left",
+        "directions": 4
     },
     {
-      "name": "hydro-inhand-left",
-      "directions": 4
+        "name": "hydro-inhand-right",
+        "directions": 4
     },
     {
-      "name": "wood-large"
+        "name": "hydro-inhand-left",
+        "directions": 4
     },
     {
-      "name": "asteroid"
+        "name": "wood-large"
     },
     {
-      "name": "asteroid-inhand-right",
-      "directions": 4
+        "name": "asteroid"
     },
     {
-      "name": "asteroid-inhand-left",
-      "directions": 4
+        "name": "astro-asteroid"
+    },
+    {
+        "name": "asteroid-inhand-right",
+        "directions": 4
+    },
+    {
+        "name": "asteroid-inhand-left",
+        "directions": 4
+    },
+    {
+        "name": "xenofloor"
+    },
+    {
+        "name": "xeno-steel"
+    },
+    {
+        "name": "xeno-steel-corner"
+    },
+    {
+        "name": "xeno-techmaint"
+    },
+    {
+        "name": "dark-squiggly"
+    },
+    {
+        "name": "white-marble"
+    },
+    {
+        "name": "white-marble-inhand-left",
+        "directions": 4
+    },
+    {
+        "name": "white-marble-inhand-right",
+        "directions": 4
+    },
+    {
+        "name": "dark-marble"
+    },
+    {
+        "name": "dark-marble-inhand-left",
+        "directions": 4
+    },
+    {
+        "name": "dark-marble-inhand-right",
+        "directions": 4
+    },
+    {
+        "name": "plasmarble"
+    },
+    {
+        "name": "plasmarble-inhand-left",
+        "directions": 4
+    },
+    {
+        "name": "plasmarble-inhand-right",
+        "directions": 4
+    },
+    {
+        "name": "uranium-marble"
+    },
+    {
+        "name": "uranium-marble-inhand-left",
+        "directions": 4
+    },
+    {
+        "name": "uranium-marble-inhand-right",
+        "directions": 4
     }
-  ]
+    ]
 }

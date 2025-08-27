@@ -5,7 +5,7 @@
         "y": 32
     },
     "license": "CC-BY-SA-3.0",
-    "copyright": "Taken from TauCetiStation at commit https://github.com/TauCetiStation/TauCetiClassic/pull/970/commits/6f0a020e35a78b997420ca8ffff2c1de4bad3428, cart_garbage_blue and cart_plunger_golden made by andrew_fenriz (discord) for Space Station 14 server Мёртвый Космос",
+    "copyright": "Taken from TauCetiStation at commit https://github.com/TauCetiStation/TauCetiClassic/pull/970/commits/6f0a020e35a78b997420ca8ffff2c1de4bad3428, cart_garbage_blue and cart_plunger_golden made by andrew_fenriz (discord) for Space Station 14 server Мёртвый Космос, cart_goldenplunger modified from cart_plunger (that is based on taken from tgstation at commit https://github.com/tgstation/tgstation/commit/f8f4aeda930fcd0805ca4cc76d9bc9412a5b3428) by TiniestShark (github)",
     "states": [
         {
             "name": "cart",
@@ -61,6 +61,10 @@
         },
 		{
             "name": "cart_plunger_golden",
+            "directions": 4
+        },
+        {
+            "name": "cart_goldenplunger",
             "directions": 4
         },
         {

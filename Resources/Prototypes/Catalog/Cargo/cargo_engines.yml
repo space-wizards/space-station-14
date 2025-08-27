@@ -34,7 +34,7 @@
     sprite: Structures/Power/Generation/Singularity/emitter.rsi
     state: emitter
   product: CrateEngineeringSingularityEmitter
-  cost: 3000
+  cost: 1500
   category: cargoproduct-category-name-engineering
   group: market
 

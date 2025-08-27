@@ -2,7 +2,7 @@
 # ideally it would be dynamic and work by actually sparking the solution but that doesnt exist yet :(
 # with that you could make napalm ied instead of welding fuel with no additional complexity
 - type: entity
-  parent: BaseItem
+  parent: [ BaseItem, BaseMinorContraband ]
   id: FireBomb
   name: fire bomb
   description: A weak, improvised incendiary device.
@@ -55,7 +55,7 @@
 
 # has igniter but no fuel or wires
 - type: entity
-  parent: DrinkColaCanEmpty
+  parent: [ DrinkColaCanEmpty, BaseMinorContraband ]
   id: FireBombEmpty
   name: fire bomb
   suffix: empty

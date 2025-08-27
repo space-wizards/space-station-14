@@ -7,6 +7,7 @@
     ClothingBackpackSatchel: 4 # DS14-value
     ClothingBackpackSatchelLeather: 2
     ClothingRandomSpawner: 8
+    ClothingUniformRandomShorts: 4
     ClothingHeadHatBeret: 4
     ClothingHeadBandBlack: 2
     ClothingHeadBandBlue: 2
@@ -93,14 +94,15 @@
     ClothingHeadHatCorpsoft: 2
     ClothingHeadFishCap: 2
     ClothingHeadRastaHat: 2
-    ClothingNeckScarfStripedRed: 4
-    ClothingNeckScarfStripedBlue: 4
-    ClothingNeckScarfStripedGreen: 4
-    ClothingHeadHatFez: 2
-    ClothingBeltStorageWaistbag: 4
-    ClothingEyesGlasses: 4
+    ClothingNeckScarfStripedRed: 4 # DS14
+    ClothingNeckScarfStripedBlue: 4 # DS14
+    ClothingNeckScarfStripedGreen: 4 # DS14
+    ClothingHeadHatFez: 2 # DS14
+    ClothingHeadPropellerHat: 2 # DS14
+    ClothingBeltStorageWaistbag: 4 # DS14-value
+    ClothingEyesGlasses: 4 # DS14
     ClothingEyesGlassesBigSunglasses: 2 # DS14
-    ADTClothingSandals: 2
+    ADTClothingSandals: 2 # DS14
     ADTClothingUniformTurleneckBlack: 2
     ADTClothingUniformTurleneckBlackWomen: 2
     ADTClothingUniformTurleneckBlue: 2
@@ -135,12 +137,12 @@
     ADTClothingNeckGothicCloak: 2
     ADTClothingNeckDarkGreyCloak: 2
     ClothingNeckMantleMaid: 2 # DS14
-    ClothingHandsGlovesColorBlack: 2
-    ClothingHandsGlovesColorGray: 2
-    ClothingHandsGlovesColorBrown: 1
-    ClothingHandsGlovesColorWhite: 1
-    ClothingHandsGlovesColorRed: 1
-    ClothingHandsGlovesColorBlue: 1
+    ClothingHandsGlovesColorBlack: 2 # DS14-value
+    ClothingHandsGlovesColorGray: 2 # DS14-value
+    ClothingHandsGlovesColorBrown: 1 # DS14-value
+    ClothingHandsGlovesColorWhite: 1 # DS14-value
+    ClothingHandsGlovesColorRed: 1 # DS14-value
+    ClothingHandsGlovesColorBlue: 1 # DS14-value
     ClothingHandsGlovesColorTeal: 2
     ClothingHandsGlovesColorGreen: 1 # DS14-value
     ClothingHandsGlovesColorOrange: 1 # DS14-value
@@ -155,6 +157,7 @@
     ToyFigurinePassenger: 1
     ToyFigurineGreytider: 1
     ClothingBackpackSatchelSmugglerUnanchored: 1
+    ClothingHeadHatSolidHeadband: 2
   # DO NOT ADD MORE, USE UNIFORM DYING # DO ADD MORE, DO NOT USE UNIFORM DYING
     ADTClothingNeckSyndicateCloak: 1 # ADT
     ClothingOuterCoatLettermanS: 4 # DS14

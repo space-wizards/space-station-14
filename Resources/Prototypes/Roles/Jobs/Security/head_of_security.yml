@@ -24,7 +24,7 @@
   - Command
   - Brig
   - Security
-  - Brigmedic
+  - Brigmedic # DS14
   - Armory
   - Maintenance
   - Service
@@ -56,3 +56,11 @@
     - Flash
     - HyperLinkBookCorporateLaw
     - HyperLinkBookSOPSecurity
+
+- type: chameleonOutfit
+  id: HeadOfSecurityChameleonOutfit
+  job: HeadOfSecurity
+  hasMindShield: true
+  equipment:
+    mask: ClothingMaskGasSecurity
+    neck: ClothingNeckCloakHos

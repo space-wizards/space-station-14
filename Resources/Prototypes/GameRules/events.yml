@@ -40,8 +40,8 @@
     - id: LoneOpsSpawn
     - id: DerelictCyborgSpawn
     - id: WizardSpawn
-    - id: ShadowDemonInvasion
-    - id: DemonsInvasion
+    - id: ShadowDemonInvasion # DS14
+    - id: DemonsInvasion # DS14
 
 - type: entity
   id: BaseStationEvent
@@ -111,7 +111,7 @@
   parent: BaseGameRule
   components:
   - type: StationEvent
-    weight: 4
+    weight: 4 # DS14
     reoccurrenceDelay: 5
     earliestStart: 1
     duration: 1
@@ -144,7 +144,7 @@
     minimumPlayers: 25
     weight: 3
     duration: 1
-    maxOccurrences: 1 # DS: can only happen once per round
+    maxOccurrences: 1 # DS14
   - type: BureaucraticErrorRule
     ignoredJobs:
     - StationAi
@@ -162,7 +162,7 @@
     minimumPlayers: 15
     weight: 3
     duration: 1
-    maxOccurrences: 1 # DS: can only happen once per round
+    maxOccurrences: 1 # DS14
   - type: ClericalErrorRule
 
 - type: entity
@@ -170,7 +170,7 @@
   id: ClosetSkeleton
   components:
   - type: StationEvent
-    weight: 8
+    weight: 8 # DS14
     duration: 1
     minimumPlayers: 10
   - type: RandomEntityStorageSpawnRule
@@ -215,10 +215,10 @@
   id: NinjaSpawn
   components:
   - type: StationEvent
-    weight: 3
+    weight: 3 # DS14
     duration: null
     earliestStart: 30
-    reoccurrenceDelay: 30
+    reoccurrenceDelay: 30 # DS14
     minimumPlayers: 30
   - type: SpaceSpawnRule
   - type: AntagLoadProfileRule
@@ -413,7 +413,7 @@
   parent: BaseStationEventShortDelay
   components:
   - type: StationEvent
-    weight: 8
+    weight: 8 # DS14
     startAnnouncement: station-event-power-grid-check-start-announcement
     endAnnouncement: station-event-power-grid-check-end-announcement
     startAudio:
@@ -450,7 +450,7 @@
     - Security
     - Service
     - Supply
-    - Law
+    - Law # DS14
     extraCount: 2
     lightBreakChancePerSecond: 0.0003
     doorToggleChancePerSecond: 0.001
@@ -594,9 +594,9 @@
   components:
   - type: StationEvent
     earliestStart: 35
-    weight: 2
+    weight: 3
     minimumPlayers: 40
-    duration: 1
+    duration: null # LoneOpsSpawn needs an infinite duration so that it inherits the NukeOpsRule things of an actually appropriate end scrreen (not always "Neutral outcome!") and... ending the game if the station is nuked.
   - type: RuleGrids
   - type: LoadMapRule
     gridPath: /Maps/Shuttles/ShuttleEvent/striker.yml
@@ -702,7 +702,7 @@
   components:
   - type: StationEvent
     startAudio:
-      path: /Audio/_DeadSpace/Announcements/attention.ogg
+      path: /Audio/_DeadSpace/Announcements/attention.ogg # DS14-Announcements
     weight: 5
     minimumPlayers: 25
     reoccurrenceDelay: 20

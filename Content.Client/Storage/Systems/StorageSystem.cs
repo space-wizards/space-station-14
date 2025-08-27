@@ -63,6 +63,8 @@ public sealed class StorageSystem : SharedStorageSystem
             component.SavedLocations[loc.Key] = new(loc.Value);
         }
 
+        UpdateOccupied((uid, component));
+
         var uiDirty = !component.StoredItems.SequenceEqual(_oldStoredItems);
 
         if (uiDirty && UI.TryGetOpenUi<StorageBoundUserInterface>(uid, StorageComponent.StorageUiKey.Key, out var storageBui))

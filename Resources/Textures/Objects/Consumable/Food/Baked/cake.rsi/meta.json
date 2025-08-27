@@ -1,1 +1,313 @@
-{"version": 1, "license": "CC-BY-SA-3.0", "copyright": "Taken from tgstation and modified by Swept at https://github.com/tgstation/tgstation/commit/40d75cc340c63582fb66ce15bf75a36115f6bdaa", "size": {"x": 32, "y": 32}, "states": [{"name": "alpha"}, {"name": "alpha-filling"}, {"name": "alpha-slice"}, {"name": "alpha-slice-filling"}, {"name": "apple"}, {"name": "apple-slice"}, {"name": "birthday"}, {"name": "birthday-slice"}, {"name": "brain"}, {"name": "brain-large"}, {"name": "brain-slice"}, {"name": "carrot"}, {"name": "carrot-slice"}, {"name": "cheese"}, {"name": "cheese-slice"}, {"name": "chocolate"}, {"name": "chocolate-slice"}, {"name": "lemon"}, {"name": "lemon-slice"}, {"name": "lime"}, {"name": "lime-slice"}, {"name": "orange"}, {"name": "orange-slice"}, {"name": "plain"}, {"name": "plain-slice"}, {"name": "clown"}, {"name": "clown-slice"}, {"name": "plate"}, {"name": "plate-small"}, {"name": "plate-plastic"}, {"name": "plate-small-plastic"}, {"name": "plate-slice-shading"}, {"name": "pumpkinspice"}, {"name": "pumpkinspice-slice"}, {"name": "slime"}, {"name": "slime-slice"}, {"name": "christmas"}, {"name": "christmas-slice"}, {"name": "vanilla"}, {"name": "vanilla-slice"}, {"name": "trumpet"}, {"name": "trumpet-slice"}, {"name": "suppermatter", "directions": 1, "delays": [[1.0]]}, {"name": "suppermatter-shard", "directions": 1, "delays": [[1.0]]},{"name": "lemoon","delays": [ [ 0.15, 0.15, 0.15, 0.15, 0.15, 0.15, 0.15, 0.15 ] ]},{"name": "lemoon-slice"}]}
+{
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "Taken from tgstation and modified by Swept at https://github.com/tgstation/tgstation/commit/40d75cc340c63582fb66ce15bf75a36115f6bdaa, inhands by mubururu_ (github)",
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "states": [
+        {
+            "name": "alpha"
+        },
+        {
+            "name": "alpha-inhand-left",
+            "directions": 4
+        },
+        {
+            "name": "alpha-inhand-right",
+            "directions": 4
+        },
+        {
+            "name": "alpha-filling"
+        },
+        {
+            "name": "alpha-filling-inhand-left",
+            "directions": 4
+        },
+        {
+            "name": "alpha-filling-inhand-right",
+            "directions": 4
+        },
+        {
+            "name": "alpha-slice"
+        },
+        {
+            "name": "alpha-slice-inhand-left",
+            "directions": 4
+        },
+        {
+            "name": "alpha-slice-inhand-right",
+            "directions": 4
+        },
+        {
+            "name": "alpha-slice-filling"
+        },
+        {
+            "name": "alpha-slice-filling-inhand-left",
+            "directions": 4
+        },
+        {
+            "name": "alpha-slice-filling-inhand-right",
+            "directions": 4
+        },
+        {
+            "name": "birthday"
+        },
+        {
+            "name": "birthday-inhand-left",
+            "directions": 4
+        },
+        {
+            "name": "birthday-inhand-right",
+            "directions": 4
+        },
+        {
+            "name": "birthday-slice"
+        },
+        {
+            "name": "birthday-slice-inhand-left",
+            "directions": 4
+        },
+        {
+            "name": "birthday-slice-inhand-right",
+            "directions": 4
+        },
+        {
+            "name": "brain"
+        },
+        {
+            "name": "brain-large"
+        },
+        {
+            "name": "brain-slice"
+        },
+        {
+            "name": "carrot"
+        },
+        {
+            "name": "carrot-slice"
+        },
+        {
+            "name": "cheese"
+        },
+        {
+            "name": "cheese-slice"
+        },
+        {
+            "name": "plain"
+        },
+        {
+            "name": "plain-inhand-left",
+            "directions": 4
+        },
+        {
+            "name": "plain-inhand-right",
+            "directions": 4
+        },
+        {
+            "name": "plain-slice"
+        },
+        {
+            "name": "plain-slice-inhand-left",
+            "directions": 4
+        },
+        {
+            "name": "plain-slice-inhand-right",
+            "directions": 4
+        },
+        {
+            "name": "clown"
+        },
+        {
+            "name": "clown-inhand-left",
+            "directions": 4
+        },
+        {
+            "name": "clown-inhand-right",
+            "directions": 4
+        },
+        {
+            "name": "clown-slice"
+        },
+        {
+            "name": "clown-slice-inhand-left",
+            "directions": 4
+        },
+        {
+            "name": "clown-slice-inhand-right",
+            "directions": 4
+        },
+        {
+            "name": "plate"
+        },
+        {
+            "name": "plate-small"
+        },
+        {
+            "name": "plate-plastic"
+        },
+        {
+            "name": "plate-small-plastic"
+        },
+        {
+            "name": "plate-slice-shading"
+        },
+        {
+            "name": "pumpkinspice"
+        },
+        {
+            "name": "pumpkinspice-slice"
+        },
+        {
+            "name": "slime"
+        },
+        {
+            "name": "slime-slice"
+        },
+        {
+            "name": "christmas"
+        },
+        {
+            "name": "christmas-slice"
+        },
+        {
+            "name": "vanilla"
+        },
+        {
+            "name": "vanilla-inhand-left",
+            "directions": 4
+        },
+        {
+            "name": "vanilla-inhand-right",
+            "directions": 4
+        },
+        {
+            "name": "vanilla-slice"
+        },
+        {
+            "name": "trumpet"
+        },
+        {
+            "name": "trumpet-inhand-left",
+            "directions": 4
+        },
+        {
+            "name": "trumpet-inhand-right",
+            "directions": 4
+        },
+        {
+            "name": "trumpet-slice"
+        },
+        {
+            "name": "trumpet-slice-inhand-left",
+            "directions": 4
+        },
+        {
+            "name": "trumpet-slice-inhand-right",
+            "directions": 4
+        },
+        {
+            "name": "suppermatter"
+        },
+        {
+            "name": "suppermatter-inhand-left",
+            "directions": 4
+        },
+        {
+            "name": "suppermatter-inhand-right",
+            "directions": 4
+        },
+        {
+            "name": "suppermatter-shard"
+        },
+        {
+            "name": "suppermatter-shard-inhand-left",
+            "directions": 4
+        },
+        {
+            "name": "suppermatter-shard-inhand-right",
+            "directions": 4
+        },
+        {
+            "name": "lemoon",
+            "delays": [
+                [
+                    0.15,
+                    0.15,
+                    0.15,
+                    0.15,
+                    0.15,
+                    0.15,
+                    0.15,
+                    0.15
+
+                ]
+            ]
+        },
+        {
+            "name": "lemoon-inhand-left",
+            "directions": 4,
+            "delays": [
+                [
+                    0.20,
+                    0.20,
+                    0.20,
+                    0.20
+                ],
+                [
+                    0.20,
+                    0.20,
+                    0.20,
+                    0.20
+                ],
+                [
+                    0.20,
+                    0.20,
+                    0.20,
+                    0.20
+                ],
+                [
+                    0.20,
+                    0.20,
+                    0.20,
+                    0.20
+                ]
+            ]
+        },
+        {
+            "name": "lemoon-inhand-right",
+            "directions": 4,
+            "delays": [
+                [
+                    0.20,
+                    0.20,
+                    0.20,
+                    0.20
+                ],
+                [
+                    0.20,
+                    0.20,
+                    0.20,
+                    0.20
+                ],
+                [
+                    0.20,
+                    0.20,
+                    0.20,
+                    0.20
+                ],
+                [
+                    0.20,
+                    0.20,
+                    0.20,
+                    0.20
+                ]
+            ]
+        },
+        {
+            "name": "lemoon-slice"
+
+        }
+    ]
+}

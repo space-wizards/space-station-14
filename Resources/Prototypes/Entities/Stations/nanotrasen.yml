@@ -23,6 +23,7 @@
     - BaseStationMagnet
     - BaseStationERTCall # DS14
     - BaseStationExpeditions
+    - BaseStationSalvageJobs
     - BaseStationSiliconLawCrewsimov
     - BaseStationAllEventsEligible
     - BaseStationNanotrasen

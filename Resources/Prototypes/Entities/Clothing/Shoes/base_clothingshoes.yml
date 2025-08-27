@@ -22,6 +22,7 @@
   - type: Tag
     tags:
     - ClothMade
+    - Recyclable
     - WhitelistChameleon
   - type: ProtectedFromStepTriggers
 
@@ -35,6 +36,9 @@
     spawned:
     - id: MaterialCloth1
       amount: 1
+  - type: PhysicalComposition # 50% of the amount of cloth you'd obtain upon butchering
+    materialComposition:
+      Cloth: 50
   - type: FootstepModifier # Corvax-Sounds
     footstepSoundCollection:
       collection: FootstepBoots
@@ -54,7 +58,7 @@
           tags:
           - Knife
           - Sidearm
-  - type: FootstepModifier # DS-Sounds
+  - type: FootstepModifier # DS14-Sounds
     footstepSoundCollection:
       collection: FootstepJackboots
       params:

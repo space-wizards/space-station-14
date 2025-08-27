@@ -22,6 +22,7 @@
     RadioHandheldSecurity: 6 # DS14-value
     RadioHandheld: 6 # DS14
     ClothingNeckBodyCamera: 4 # DS14
+    Bola: 2 # DS14-value
   # security officers need to follow a diet regimen!
   contrabandInventory:
     FoodDonutHomer: 12

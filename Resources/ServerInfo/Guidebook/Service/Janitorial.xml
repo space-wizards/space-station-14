@@ -23,6 +23,7 @@
 <GuideEntityEmbed Entity="WetFloorSign"/>
 <GuideEntityEmbed Entity="Holoprojector" Caption="holosign projector"/>
 <GuideEntityEmbed Entity="LightReplacer"/>
+<GuideEntityEmbed Entity="WireBrush"/>
 </Box>
 <Box>
 <GuideEntityEmbed Entity="AdvMopItem" Caption="Advanced mop, ask in R&D"/>

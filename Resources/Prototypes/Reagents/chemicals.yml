@@ -76,7 +76,24 @@
     Acidic:
       methods: [ Touch ]
       effects:
-      - !type:ActivateArtifact
+      - !type:ArtifactUnlock
+        conditions:
+        - !type:ReagentThreshold
+          min: 5
+
+- type: reagent
+  parent: Artifexium
+  id: ArtifactGlue
+  name: reagent-name-artifact-glue
+  desc: reagent-desc-artifact-glue
+  flavor: artifactglue
+  physicalDesc: reagent-physical-desc-non-newtonian
+  color: "#827394"
+  reactiveEffects:
+    Acidic:
+      methods: [ Touch ]
+      effects:
+      - !type:ArtifactDurabilityRestore
         conditions:
         - !type:ReagentThreshold
           min: 5
@@ -165,7 +182,6 @@
   flavor: bitter
   color: "#E6E6DA"
   physicalDesc: reagent-physical-desc-crystalline
-  slippery: false
 
 - type: reagent
   id: Rororium

@@ -25,3 +25,17 @@
   equipment:
     ears: ClothingHeadsetScience
     socks: ClothingUnderwearSocksScientist
+  #storage:
+    #back:
+    #- Stuff
+
+- type: chameleonOutfit
+  id: ScientistChameleonOutfit
+  job: Scientist
+  equipment:
+    head: ClothingHeadBandSkull
+    eyes: ClothingEyesGlassesCheapSunglasses
+    mask: ClothingMaskGas
+    neck: ClothingNeckTieSci
+    outerClothing: ClothingOuterCoatRnd
+    gloves: ClothingHandsGlovesLatex

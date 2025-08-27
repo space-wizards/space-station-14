@@ -1,0 +1,233 @@
+- type: entity
+  parent: [ StorageTank ]
+  id: BaseBarrelChem
+  abstract: true
+  name: chemical barrel
+  description: A small metal drum. How tropical.
+  components:
+  - type: Sprite
+    sprite: Structures/Storage/barrels.rsi
+    state: metalbarrel
+    noRot: true
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.18,-0.48,0.18,0.28"
+        density: 200
+        mask:
+        - MachineMask
+        layer:
+        - MachineLayer
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 100
+      behaviors:
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+    - trigger:
+        !type:DamageTrigger
+        damage: 25
+      behaviors:
+      - !type:SpillBehavior
+        solution: tank
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalBreak
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+  - type: SolutionContainerManager
+    solutions:
+      tank:
+        maxVol: 500
+  - type: PhysicalComposition
+    materialComposition:
+      Steel: 3000 # 30 sheets, 1 stack
+  - type: ExaminableSolution
+    solution: tank
+  - type: StaticPrice
+    price: 500
+
+- type: entity
+  parent: BaseBarrelChem
+  id: BaseBarrelChemRadioactive
+  abstract: true
+  name: radioactive barrel
+  description: It seems to be leaking a bit. I don't think you'd want to be around this for long.
+  components:
+  - type: Sprite
+    state: radbarrel
+  - type: RadiationSource
+    intensity: 1.0
+    slope: 0.25
+
+- type: entityTable
+  id: RandomChemicalBarrel
+  table: !type:GroupSelector
+    children:
+    - id: BarrelChemFilledIodine
+    - id: BarrelChemFilledFluorine
+    - id: BarrelChemFilledChlorine
+    - id: BarrelChemFilledEthanol
+    - id: BarrelChemFilledPhosphorus
+    - id: BarrelChemFilledSilicon
+    - id: BarrelChemFilledMercury
+    - id: BarrelChemFilledLube # oiled up...
+      weight: 0.1
+
+- type: entityTable
+  id: RandomChemicalBarrelRadioactive
+  table: !type:GroupSelector
+    children:
+    - id: BaseBarrelChemRadioactiveEmpty
+      weight: 2
+    - id: BaseBarrelChemRadioactiveFilledRadium
+    - id: BaseBarrelChemRadioactiveFilledUranium
+
+- type: entity
+  parent: BaseBarrelChem
+  id: BarrelChemEmpty
+  suffix: Empty
+
+- type: entity
+  parent: BaseBarrelChem
+  id: BarrelChemFilledIodine
+  suffix: Iodine
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      tank:
+        maxVol: 500
+        reagents:
+        - ReagentId: Iodine
+          Quantity: 500
+
+- type: entity
+  parent: BaseBarrelChem
+  id: BarrelChemFilledFluorine
+  suffix: Fluorine
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      tank:
+        maxVol: 500
+        reagents:
+        - ReagentId: Fluorine
+          Quantity: 500
+
+- type: entity
+  parent: BaseBarrelChem
+  id: BarrelChemFilledChlorine
+  suffix: Chlorine
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      tank:
+        maxVol: 500
+        reagents:
+        - ReagentId: Chlorine
+          Quantity: 500
+
+- type: entity
+  parent: BaseBarrelChem
+  id: BarrelChemFilledEthanol
+  suffix: Ethanol
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      tank:
+        maxVol: 500
+        reagents:
+        - ReagentId: Ethanol
+          Quantity: 500
+
+- type: entity
+  parent: BaseBarrelChem
+  id: BarrelChemFilledPhosphorus
+  suffix: Phosphorus
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      tank:
+        maxVol: 500
+        reagents:
+        - ReagentId: Phosphorus
+          Quantity: 500
+
+- type: entity
+  parent: BaseBarrelChem
+  id: BarrelChemFilledMercury
+  suffix: Mercury
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      tank:
+        maxVol: 500
+        reagents:
+        - ReagentId: Mercury
+          Quantity: 500
+
+- type: entity
+  parent: BaseBarrelChem
+  id: BarrelChemFilledSilicon
+  suffix: Silicon
+  components:
+  - type: Sprite
+    state: silicatebarrel
+  - type: SolutionContainerManager
+    solutions:
+      tank:
+        maxVol: 500
+        reagents:
+        - ReagentId: Silicon
+          Quantity: 500
+
+- type: entity
+  parent: BaseBarrelChem
+  id: BarrelChemFilledLube
+  suffix: Lube
+  description: Slippery...
+  components:
+  - type: Sprite
+    state: silicatebarrel
+  - type: SolutionContainerManager
+    solutions:
+      tank:
+        maxVol: 500
+        reagents:
+        - ReagentId: SpaceLube
+          Quantity: 500
+
+- type: entity
+  parent: BaseBarrelChemRadioactive
+  id: BaseBarrelChemRadioactiveEmpty
+  suffix: Empty
+
+- type: entity
+  parent: BaseBarrelChemRadioactive
+  id: BaseBarrelChemRadioactiveFilledRadium
+  suffix: Radium
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      tank:
+        maxVol: 500
+        reagents:
+        - ReagentId: Radium
+          Quantity: 500
+
+- type: entity
+  parent: BaseBarrelChemRadioactive
+  id: BaseBarrelChemRadioactiveFilledUranium
+  suffix: Uranium
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      tank:
+        maxVol: 500
+        reagents:
+        - ReagentId: Uranium
+          Quantity: 500

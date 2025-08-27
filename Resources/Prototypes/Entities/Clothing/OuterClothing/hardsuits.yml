@@ -1,33 +1,6 @@
 #When adding new hardsuits, please try to keep the organization consistent with hardsuit-helmets.yml (if possible.)
 
 #CREW HARDSUITS
-#Basic Hardsuit
-- type: entity
-  parent: ClothingOuterHardsuitBase
-  id: ClothingOuterHardsuitBasic
-  name: basic hardsuit
-  description: A basic, universal hardsuit that protects the wearer against the horrors of life in space. Beats not having a hardsuit, at least.
-  components:
-  - type: Sprite
-    sprite: Clothing/OuterClothing/Hardsuits/basic.rsi
-  - type: Clothing
-    sprite: Clothing/OuterClothing/Hardsuits/basic.rsi
-  - type: ExplosionResistance
-    damageCoefficient: 0.9
-  - type: Armor
-    modifiers:
-      coefficients:
-        Blunt: 0.9
-        Slash: 0.9
-        Piercing: 0.9
-        Caustic: 0.9
-  - type: ClothingSpeedModifier
-    walkModifier: 0.80
-    sprintModifier: 0.80
-  - type: HeldSpeedModifier
-  - type: ToggleableClothing
-    clothingPrototype: ClothingHeadHelmetHardsuitBasic
-
 #Atmospherics Hardsuit
 - type: entity
   parent: [ClothingOuterHardsuitBase, BaseEngineeringContraband]
@@ -63,6 +36,11 @@
   - type: HeldSpeedModifier
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitAtmos
+  - type: Tag
+    tags:
+    - CorgiWearable
+    - Hardsuit
+    - WhitelistChameleon
 
 #Engineering Hardsuit
 - type: entity
@@ -95,6 +73,11 @@
   - type: HeldSpeedModifier
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitEngineering
+  - type: Tag
+    tags:
+    - CorgiWearable
+    - Hardsuit
+    - WhitelistChameleon
 
 #Spationaut Hardsuit
 - type: entity
@@ -119,7 +102,7 @@
         Radiation: 0.3 #salv is supposed to have radiation hazards in the future
         Caustic: 0.8
   - type: ClothingSpeedModifier
-    walkModifier: 0.9
+    walkModifier: 0.8
     sprintModifier: 0.8
   - type: HeldSpeedModifier
   - type: ToggleableClothing
@@ -129,18 +112,7 @@
     - Hardsuit
     - WhitelistChameleon
     - HardsuitSpatio
-
-- type: entity
-  parent: ClothingOuterHardsuitSalvage
-  id: ClothingOuterHardsuitSeniorSalvage
-  name: senior salvage hardsuit
-  components:
-  - type: Sprite
-    sprite: Clothing/OuterClothing/Hardsuits/seniorsalvage.rsi
-  - type: Clothing
-    sprite: Clothing/OuterClothing/Hardsuits/seniorsalvage.rsi
-  - type: ToggleableClothing
-    clothingPrototype: ClothingHeadHelmetHardsuitSeniorSalvage
+    - CorgiWearable
 
 #Salvage Hardsuit
 - type: entity
@@ -157,13 +129,14 @@
     highPressureMultiplier: 0.5
     lowPressureMultiplier: 1000
   - type: ExplosionResistance
-    damageCoefficient: 0.3
+    damageCoefficient: 0.7
   - type: Armor
     modifiers:
       coefficients:
         Blunt: 0.7
-        Slash: 0.7
-        Piercing: 0.5
+        Slash: 0.6
+        Piercing: 0.7
+        Heat: 0.7
         Radiation: 0.3
         Caustic: 0.7
   - type: ClothingSpeedModifier
@@ -172,6 +145,11 @@
   - type: HeldSpeedModifier
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitSalvage
+  - type: Tag
+    tags:
+    - CorgiWearable
+    - Hardsuit
+    - WhitelistChameleon
 
 #Goliath Hardsuit
 - type: entity
@@ -207,6 +185,11 @@
   - type: Construction
     graph: HardsuitGoliath
     node: hardsuitGoliath
+  - type: Tag
+    tags:
+    - CorgiWearable
+    - Hardsuit
+    - WhitelistChameleon
 
 #Maxim Hardsuit
 - type: entity
@@ -230,8 +213,8 @@
       coefficients:
         Blunt: 0.6
         Slash: 0.6
-        Piercing: 0.6
-        Heat: 0.4
+        Piercing: 0.6 # DS14-value
+        Heat: 0.4 # DS14-value
         Radiation: 0.1
   - type: ExplosionResistance
     damageCoefficient: 0.2
@@ -260,10 +243,10 @@
   - type: Armor
     modifiers:
       coefficients:
-        Heat: 0.6
         Blunt: 0.6
         Slash: 0.6
         Piercing: 0.6
+        Heat: 0.8
         Caustic: 0.7
   - type: ClothingSpeedModifier
     walkModifier: 0.75
@@ -271,6 +254,11 @@
   - type: HeldSpeedModifier
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitSecurity
+  - type: Tag
+    tags:
+    - CorgiWearable
+    - Hardsuit
+    - WhitelistChameleon
 
 #Brigmedic Hardsuit
 - type: entity
@@ -289,15 +277,15 @@
   - type: Armor
     modifiers:
       coefficients:
-        Heat: 0.8
+        Heat: 0.8 # DS14-value
         Blunt: 0.8
-        Slash: 0.9
-        Piercing: 0.9
-        Radiation: 0.75
-        Caustic: 0.5
+        Slash: 0.9 # DS14-value
+        Piercing: 0.9 # DS14-value
+        Radiation: 0.75 # DS14-value
+        Caustic: 0.5 # DS14-value
   - type: ClothingSpeedModifier
-    walkModifier: 0.85
-    sprintModifier: 0.85
+    walkModifier: 0.85 # DS14-value
+    sprintModifier: 0.85 # DS14-value
   - type: HeldSpeedModifier
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitBrigmedic
@@ -321,14 +309,14 @@
   - type: Armor
     modifiers:
       coefficients:
-        Blunt: 0.5
-        Slash: 0.6
+        Blunt: 0.4
+        Slash: 0.5
         Piercing: 0.6
+        Heat: 0.6 # DS14-value
         Caustic: 0.7
-        Heat: 0.6
   - type: ClothingSpeedModifier
-    walkModifier: 0.75
-    sprintModifier: 0.75
+    walkModifier: 0.75 # DS14-value
+    sprintModifier: 0.75 # DS14-value
   - type: HeldSpeedModifier
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitWarden
@@ -364,6 +352,11 @@
   - type: HeldSpeedModifier
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitCap
+  - type: Tag
+    tags:
+    - CorgiWearable
+    - Hardsuit
+    - WhitelistChameleon
 
 #Chief Engineer's Hardsuit
 - type: entity
@@ -393,11 +386,16 @@
         Radiation: 0.0
         Caustic: 0.7
   - type: ClothingSpeedModifier
-    walkModifier: 0.75
+    walkModifier: 0.8
     sprintModifier: 0.8
   - type: HeldSpeedModifier
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitEngineeringWhite
+  - type: Tag
+    tags:
+    - CorgiWearable
+    - Hardsuit
+    - WhitelistChameleon
 
 #Chief Medical Officer's Hardsuit
 - type: entity
@@ -417,12 +415,19 @@
     modifiers:
       coefficients:
         Caustic: 0.1
+  - type: ZombificationResistance
+    zombificationResistanceCoefficient: 0.4
   - type: ClothingSpeedModifier
-    walkModifier: 0.9
+    walkModifier: 0.95
     sprintModifier: 0.95
   - type: HeldSpeedModifier
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitMedical
+  - type: Tag
+    tags:
+    - CorgiWearable
+    - Hardsuit
+    - WhitelistChameleon
 
 #Research Director's Hardsuit
 - type: entity
@@ -461,6 +466,8 @@
     tags:
     - WhitelistChameleon
     - HighRiskItem
+    - CorgiWearable
+    - Hardsuit
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitRd
   - type: StaticPrice
@@ -483,16 +490,16 @@
     highPressureMultiplier: 0.45
     lowPressureMultiplier: 1000
   - type: ExplosionResistance
-    damageCoefficient: 0.6
+    damageCoefficient: 0.5
   - type: Armor
     modifiers:
       coefficients:
         Blunt: 0.6
         Slash: 0.5
         Piercing: 0.5
+        Heat: 0.5 # DS14-value
         Radiation: 0.5
         Caustic: 0.6
-        Heat: 0.5
   - type: ClothingSpeedModifier
     walkModifier: 0.8
     sprintModifier: 0.8
@@ -516,17 +523,18 @@
     highPressureMultiplier: 0.5
     lowPressureMultiplier: 1000
   - type: ExplosionResistance
-    damageCoefficient: 0.5
+    damageCoefficient: 0.9
   - type: Armor
     modifiers:
       coefficients:
         Blunt: 0.9
-        Slash: 0.9
-        Piercing: 0.8
+        Slash: 0.8
+        Piercing: 0.9
+        Heat: 0.9
         Radiation: 0.5
         Caustic: 0.8
   - type: ClothingSpeedModifier
-    walkModifier: 0.85
+    walkModifier: 0.9
     sprintModifier: 0.9
   - type: HeldSpeedModifier
   - type: ToggleableClothing
@@ -551,12 +559,14 @@
     lowPressureMultiplier: 1000
   - type: ExplosionResistance
     damageCoefficient: 0.5
+  - type: StaminaResistance # do not add these to other equipment or mobs, we don't want to microbalance these everywhere
+    damageCoefficient: 0.75
   - type: Armor
     modifiers:
       coefficients:
         Blunt: 0.5
         Slash: 0.5
-        Piercing: 0.4
+        Piercing: 0.4 # DS14-value
         Heat: 0.5
         Radiation: 0.5
         Caustic: 0.5
@@ -572,9 +582,13 @@
     - MonkeyWearable
     - Hardsuit
     - WhitelistChameleon
-  - type: HardsuitIdentification
-  - type: Speech
-  - type: TTS
+    - CorgiWearable
+    - ScurretWearable
+  - type: StaticPrice
+    price: 5000
+  - type: HardsuitIdentification # DS14
+  - type: Speech # DS14
+  - type: TTS # DS14
     voice: Adjutant
 
 # Syndicate Medic Hardsuit
@@ -594,9 +608,9 @@
     tags:
     - Hardsuit
     - WhitelistChameleon
-  - type: HardsuitIdentification
-  - type: Speech
-  - type: TTS
+  - type: HardsuitIdentification # DS14
+  - type: Speech # DS14
+  - type: TTS # DS14
     voice: Adjutant
 
 #Syndicate Elite Hardsuit
@@ -604,7 +618,7 @@
   parent: [ClothingOuterHardsuitBase, BaseSyndicateContraband]
   id: ClothingOuterHardsuitSyndieElite
   name: syndicate elite hardsuit
-  description: An elite version of the blood-red hardsuit, with improved mobility and fireproofing. Property of Gorlex Marauders.
+  description: An elite version of the blood-red hardsuit, with improved radiation resistance and fireproofing. Property of Gorlex Marauders.
   components:
   - type: Sprite
     sprite: Clothing/OuterClothing/Hardsuits/syndieelite.rsi
@@ -620,27 +634,34 @@
     damageCoefficient: 0.2
   - type: FireProtection
     reduction: 0.8
+  - type: StaminaResistance # do not add these to other equipment or mobs, we don't want to microbalance these everywhere
+    damageCoefficient: 0.6
   - type: Armor
     modifiers:
       coefficients:
         Blunt: 0.6
         Slash: 0.6
-        Piercing: 0.5
+        Piercing: 0.5 # DS14-value
         Heat: 0.2
-        Radiation: 0.05
+        Radiation: 0.05 # DS14-value
         Caustic: 0.5
         Stun: 0.5 # DS14-value: 6 stunbaton hits for stun
   - type: Item
     size: Huge
   - type: ClothingSpeedModifier
-    walkModifier: 1.0
+    walkModifier: 0.9
     sprintModifier: 0.9
   - type: HeldSpeedModifier
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitSyndieElite
-  - type: HardsuitIdentification
-  - type: Speech
-  - type: TTS
+  - type: Tag
+    tags:
+    - CorgiWearable
+    - Hardsuit
+    - WhitelistChameleon
+  - type: HardsuitIdentification # DS14
+  - type: Speech # DS14
+  - type: TTS # DS14
     voice: Adjutant
 
 #Syndicate Commander Hardsuit
@@ -659,6 +680,8 @@
     lowPressureMultiplier: 1000
   - type: ExplosionResistance
     damageCoefficient: 0.5
+  - type: StaminaResistance # do not add these to other equipment or mobs, we don't want to microbalance these everywhere
+    damageCoefficient: 0.6
   - type: Armor
     modifiers:
       coefficients:
@@ -670,13 +693,18 @@
         Caustic: 0.4
         Stun: 0.5 # DS14-value: 6 stunbaton hits for stun
   - type: ClothingSpeedModifier
-    walkModifier: 1.0
-    sprintModifier: 1.0
+    walkModifier: 0.9
+    sprintModifier: 0.9
   - type: HeldSpeedModifier
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitSyndieCommander
-  - type: HardsuitIdentification
-  - type: Speech
+  - type: Tag
+    tags:
+    - CorgiWearable
+    - Hardsuit
+    - WhitelistChameleon
+  - type: HardsuitIdentification # DS14
+  - type: Speech # DS14 # DS14
   - type: TTS
     voice: Adjutant
 
@@ -695,7 +723,8 @@
     highPressureMultiplier: 0.2
     lowPressureMultiplier: 1000
   - type: ExplosionResistance
-    damageCoefficient: 0.1
+    damageCoefficient: 0.3
+  # - type: StaminaResistance # Should not have stamina resistance, this is purely so people know it was not forgotten.
   - type: Armor
     modifiers:
       coefficients:
@@ -703,18 +732,24 @@
         Slash: 0.2
         Piercing: 0.2
         Heat: 0.2
-        Radiation: 0.05
+        Radiation: 0.05 # DS14-value
         Caustic: 0.2
         Stun: 0.15 # DS14-value: what is stun?
   - type: ClothingSpeedModifier
-    walkModifier: 0.9
+    walkModifier: 0.9 # DS14-value
     sprintModifier: 0.65
   - type: HeldSpeedModifier
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitCybersun
-  - type: HardsuitIdentification
-  - type: Speech
-  - type: TTS
+  - type: Tag
+    tags:
+    - MonkeyWearable
+    - CorgiWearable
+    - Hardsuit
+    - WhitelistChameleon
+  - type: HardsuitIdentification # DS14
+  - type: Speech # DS14
+  - type: TTS # DS14
     voice: Adjutant
 
 #Wizard Hardsuit
@@ -748,6 +783,11 @@
   - type: HeldSpeedModifier
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitWizard
+  - type: Tag
+    tags:
+    - CorgiWearable
+    - Hardsuit
+    - WhitelistChameleon
 
 #Ling Space Suit
 - type: entity
@@ -782,7 +822,7 @@
 #Pirate EVA Suit (Deep Space EVA Suit)
 #Despite visually appearing like a softsuit, it functions exactly like a hardsuit would (parents off of base hardsuit, has resistances and toggleable clothing, etc.) so it goes here.
 - type: entity
-  parent:  ClothingOuterHardsuitBase
+  parent: [ ClothingOuterHardsuitBase, BaseMajorContraband ]
   id:  ClothingOuterHardsuitPirateEVA
   name: deep space EVA suit
   suffix: Pirate
@@ -790,6 +830,8 @@
   components:
   - type: Sprite
     sprite: Clothing/OuterClothing/Hardsuits/pirateeva.rsi
+  - type: Item
+    size: Huge
   - type: Clothing
     sprite: Clothing/OuterClothing/Hardsuits/pirateeva.rsi
   - type: ExplosionResistance
@@ -813,13 +855,15 @@
 
 #Pirate Captain Hardsuit
 - type: entity
-  parent: ClothingOuterHardsuitBase
+  parent: [ ClothingOuterHardsuitBase, BaseMajorContraband ]
   id: ClothingOuterHardsuitPirateCap
   name: pirate captain's hardsuit
   description: An ancient armored hardsuit, perfect for defending against space scurvy and toolbox-wielding scallywags.
   components:
   - type: Sprite
     sprite: Clothing/OuterClothing/Hardsuits/piratecaptain.rsi
+  - type: Item
+    size: Huge
   - type: Clothing
     sprite: Clothing/OuterClothing/Hardsuits/piratecaptain.rsi
   - type: PressureProtection
@@ -858,9 +902,9 @@
     sprite: Clothing/OuterClothing/Hardsuits/ERTSuits/ertleader.rsi
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitERTLeader
-  - type: HardsuitIdentification
-  - type: Speech
-  - type: TTS
+  - type: HardsuitIdentification # DS14
+  - type: Speech # DS14
+  - type: TTS # DS14
     voice: Glados
 
 #ERT Chaplain Hardsuit
@@ -890,9 +934,11 @@
     sprite: Clothing/OuterClothing/Hardsuits/ERTSuits/ertengineer.rsi
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitERTEngineer
-  - type: HardsuitIdentification
-  - type: Speech
-  - type: TTS
+  - type: FireProtection
+    reduction: 0.8
+  - type: HardsuitIdentification # DS14
+  - type: Speech # DS14
+  - type: TTS # DS14
     voice: Glados
 
 #ERT Medic Hardsuit
@@ -908,9 +954,9 @@
     sprite: Clothing/OuterClothing/Hardsuits/ERTSuits/ertmedical.rsi
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitERTMedical
-  - type: HardsuitIdentification
-  - type: Speech
-  - type: TTS
+  - type: HardsuitIdentification # DS14
+  - type: Speech # DS14
+  - type: TTS # DS14
     voice: Glados
 
 #ERT Security Hardsuit
@@ -930,9 +976,9 @@
     tags:
     - Hardsuit
     - WhitelistChameleon
-  - type: HardsuitIdentification
-  - type: Speech
-  - type: TTS
+  - type: HardsuitIdentification # DS14
+  - type: Speech # DS14
+  - type: TTS # DS14
     voice: Glados
 
 #ERT Janitor Hardsuit
@@ -948,9 +994,9 @@
     sprite: Clothing/OuterClothing/Hardsuits/ERTSuits/ertjanitor.rsi
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitERTJanitor
-  - type: HardsuitIdentification
-  - type: Speech
-  - type: TTS
+  - type: HardsuitIdentification # DS14
+  - type: Speech # DS14
+  - type: TTS # DS14
     voice: Glados
 
 #Deathsquad
@@ -973,7 +1019,9 @@
   - type: ExplosionResistance
     damageCoefficient: 0.1
   - type: FireProtection
-    reduction: 0.5
+    reduction: 0.5 # DS14-value
+  - type: StaminaResistance
+    damageCoefficient: 0.15 # Needs 21 hits with a disabler to stun :godo:
   - type: Armor
     modifiers:
       coefficients:
@@ -993,11 +1041,11 @@
   - type: HeldSpeedModifier
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitDeathsquad
-  - type: HardsuitIdentification
-  - type: Speech
-  - type: TTS
+  - type: HardsuitIdentification # DS14
+  - type: Speech # DS14
+  - type: TTS # DS14
     voice: Adjutant
-  - type: Tag
+  - type: Tag # DS14
     tags: [] # ignore "WhitelistChameleon" tag
 
 #CBURN Hardsuit
@@ -1030,6 +1078,8 @@
         Shock: 0.1
         Radiation: 0.1
         Caustic: 0.1
+  - type: ZombificationResistance
+    zombificationResistanceCoefficient: 0.25
   - type: ClothingSpeedModifier
     walkModifier: 1.0
     sprintModifier: 1.0

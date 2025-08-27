@@ -1,0 +1,31 @@
+- type: entity
+  parent: [ BaseItem, BaseXenoborgContraband ]
+  id: CloakingDevice
+  name: cloaking device
+  description: A device that allows xenoborgs to go invisible.
+  components:
+  - type: Sprite
+    sprite: Objects/Specific/Research/anomalyscanner.rsi
+    state: icon
+  - type: ItemToggle
+  - type: ComponentToggler
+    parent: true
+    components:
+    - type: Stealth
+      minVisibility: 0.1
+      lastVisibility: 0.1
+  - type: PowerCellDraw
+    drawRate: 3.6 # 100 seconds
+  - type: ToggleCellDraw
+  - type: PowerCellSlot
+    cellSlotId: cell_slot
+  - type: ContainerContainer
+    containers:
+      cell_slot: !type:ContainerSlot
+  - type: ItemSlots
+    slots:
+      cell_slot:
+        name: power-cell-slot-component-slot-name-default
+        startingItem: PowerCellSmallNuclear
+        disableEject: true
+        swap: false

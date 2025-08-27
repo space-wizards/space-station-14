@@ -541,7 +541,6 @@
       state: generic_panel_open
   - type: ResearchClient
   - type: AnalysisConsole
-    reportEntityId: PaperArtifactAnalyzer
   - type: DeviceList
   - type: DeviceNetwork
     deviceNetId: Wired
@@ -550,10 +549,10 @@
     ports:
       - ArtifactAnalyzerSender
   - type: ActivatableUI
-    key: enum.ArtifactAnalzyerUiKey.Key
+    key: enum.ArtifactAnalyzerUiKey.Key
   - type: UserInterface
     interfaces:
-      enum.ArtifactAnalzyerUiKey.Key:
+      enum.ArtifactAnalyzerUiKey.Key:
         type: AnalysisConsoleBoundUserInterface
       enum.ResearchClientUiKey.Key:
         type: ResearchClientBoundUserInterface
@@ -674,6 +673,7 @@
     access: [[ "Command" ]]
   - type: CommunicationsConsole
     title: comms-console-announcement-title-station
+  # DS14-start
     announcementSound:
       path: /Audio/_DeadSpace/Announcements/announce.ogg # DS14-Announcements
       params:
@@ -696,6 +696,7 @@
       whitelist:
         components:
         - IdCard
+  # DS14-end
   - type: DeviceNetwork
     transmitFrequencyId: ShuttleTimer
   - type: ActivatableUI
@@ -715,12 +716,14 @@
   - type: Damageable
     damageContainer: StructuralInorganic
     damageModifierSet: StructuralMetallicStrong
+  # DS14-start
   - type: ItemSlots
   - type: ContainerContainer
     containers:
       board: !type:Container
       CommunicationsConsole-firstId: !type:ContainerSlot {}
       CommunicationsConsole-secondId: !type:ContainerSlot {}
+  # DS14-end
 
 - type: entity
   parent: ComputerComms
@@ -745,10 +748,10 @@
   - type: CommunicationsConsole
     title: comms-console-announcement-title-nukie
     color: "#ff0000"
-    canCallShuttle: false
-    canCallERT: false
+    canShuttle: false
     global: true #announce to everyone they're about to fuck shit up
-    announcementSound: /Audio/Announcements/war.ogg
+    announceSentBy: false # The title already says who they are.
+    sound: /Audio/Announcements/war.ogg
   - type: Computer
     board: SyndicateCommsComputerCircuitboard
   - type: PointLight
@@ -779,9 +782,10 @@
   - type: CommunicationsConsole
     title: comms-console-announcement-title-wizard
     color: "#ff00ff"
-    canCallShuttle: false
+    canShuttle: false
     global: true #announce to everyone they're about to fuck shit up
-    announcementSound: /Audio/Announcements/war.ogg
+    announceSentBy: false
+    sound: /Audio/Announcements/war.ogg
   - type: Computer
     board: WizardCommsComputerCircuitboard
   - type: PointLight
@@ -812,7 +816,7 @@
   - type: CommunicationsConsole
     title: comms-console-announcement-title-centcom
     color: "#1d8bad"
-    canCallShuttle: false
+    canShuttle: false
     global: true
   - type: Computer
     board: CentcommCommsComputerCircuitboard
@@ -894,45 +898,6 @@
     color: "#e6e227"
 
 - type: entity
-  id: ComputerCargoShuttle
-  parent: BaseComputerAiAccess
-  name: cargo shuttle computer
-  description: Used to order the shuttle.
-  components:
-  - type: Sprite
-    layers:
-    - map: ["computerLayerBody"]
-      state: computer
-    - map: ["computerLayerKeyboard"]
-      state: generic_keyboard
-    - map: ["computerLayerScreen"]
-      state: supply
-    - map: ["computerLayerKeys"]
-      state: tech_key
-    - map: [ "enum.WiresVisualLayers.MaintenancePanel" ]
-      state: generic_panel_open
-  - type: CargoShuttleConsole
-  - type: ActivatableUI
-    key: enum.CargoConsoleUiKey.Shuttle
-  - type: UserInterface
-    interfaces:
-      enum.CargoConsoleUiKey.Shuttle:
-        type: CargoShuttleConsoleBoundUserInterface
-      enum.WiresUiKey.Key:
-        type: WiresBoundUserInterface
-  - type: Computer
-    board: CargoShuttleComputerCircuitboard
-  - type: PointLight
-    radius: 1.5
-    energy: 1.6
-    color: "#b89f25"
-  - type: AccessReader
-    access: [["Cargo"]]
-  - type: GuideHelp
-    guides:
-    - Cargo
-
-- type: entity
   id: ComputerCargoOrders
   parent: BaseComputerAiAccess
   name: cargo request computer
@@ -970,7 +935,7 @@
     energy: 1.6
     color: "#b89f25"
   - type: AccessReader
-    access: [["Quartermaster"]]
+    access: [["Quartermaster"]] # DS14
   - type: DeviceNetwork
     deviceNetId: Wireless
     receiveFrequencyId: BasicDevice
@@ -1007,6 +972,7 @@
     account: Engineering
     announcementChannel: Engineering
     removeLimitAccess: [ "ChiefEngineer" ]
+    mode: SendToPrimary
   - type: ActiveRadio
     channels:
     - Engineering
@@ -1015,7 +981,7 @@
   - type: PointLight
     color: "#c9c042"
   - type: AccessReader
-    access: [["ChiefEngineer"]]
+    access: [["ChiefEngineer"]] # DS14
 
 - type: entity
   id: ComputerCargoOrdersMedical
@@ -1039,6 +1005,7 @@
     account: Medical
     announcementChannel: Medical
     removeLimitAccess: [ "ChiefMedicalOfficer" ]
+    mode: SendToPrimary
   - type: ActiveRadio
     channels:
     - Medical
@@ -1047,7 +1014,7 @@
   - type: PointLight
     color: "#41e0fc"
   - type: AccessReader
-    access: [["ChiefMedicalOfficer"]]
+    access: [["ChiefMedicalOfficer"]] # DS14
 
 - type: entity
   id: ComputerCargoOrdersScience
@@ -1071,6 +1038,7 @@
     account: Science
     announcementChannel: Science
     removeLimitAccess: [ "ResearchDirector" ]
+    mode: SendToPrimary
   - type: ActiveRadio
     channels:
     - Science
@@ -1079,7 +1047,7 @@
   - type: PointLight
     color: "#b53ca1"
   - type: AccessReader
-    access: [["ResearchDirector"]]
+    access: [["ResearchDirector"]] # DS14
 
 - type: entity
   id: ComputerCargoOrdersSecurity
@@ -1103,6 +1071,7 @@
     account: Security
     announcementChannel: Security
     removeLimitAccess: [ "HeadOfSecurity" ]
+    mode: SendToPrimary
   - type: ActiveRadio
     channels:
     - Security
@@ -1111,7 +1080,7 @@
   - type: PointLight
     color: "#d11d00"
   - type: AccessReader
-    access: [["Armory"]]
+    access: [["Armory"]] # DS14
 
 - type: entity
   id: ComputerCargoOrdersService
@@ -1135,6 +1104,7 @@
     account: Service
     announcementChannel: Service
     removeLimitAccess: [ "HeadOfPersonnel" ]
+    mode: SendToPrimary
   - type: ActiveRadio
     channels:
     - Service
@@ -1143,7 +1113,7 @@
   - type: PointLight
     color: "#afe837"
   - type: AccessReader
-    access: [["HeadOfPersonnel"]]
+    access: [["HeadOfPersonnel"]] # DS14
 
 - type: entity
   id: ComputerCargoBounty
@@ -1274,6 +1244,42 @@
   - type: GuideHelp
     guides:
     - Cloning
+
+- type: entity
+  parent: BaseComputerAiAccess
+  id: ComputerSalvageJobBoard
+  name: salvage job board
+  description: Console for accessing salvage jobs, if you're tough enough.
+  components:
+  - type: Sprite
+    layers:
+    - map: ["computerLayerBody"]
+      state: computer
+    - map: ["computerLayerKeyboard"]
+      state: generic_keyboard
+    - map: ["computerLayerScreen"]
+      state: salvjob # givin em a salvjob like hawk tuah
+    - map: ["computerLayerKeys"]
+      state: generic_keys
+    - map: [ "enum.WiresVisualLayers.MaintenancePanel" ]
+      state: generic_panel_open
+  - type: SalvageJobBoardConsole
+  - type: ActivatableUI
+    key: enum.SalvageJobBoardUiKey.Key
+  - type: UserInterface
+    interfaces:
+      enum.SalvageJobBoardUiKey.Key:
+        type: SalvageJobBoardBoundUserInterface
+      enum.WiresUiKey.Key:
+        type: WiresBoundUserInterface
+  - type: ActiveRadio
+    channels: [ Supply ]
+  - type: Computer
+    board: SalvageJobBoardComputerCircuitboard
+  - type: PointLight
+    radius: 1.5
+    energy: 1.6
+    color: "#b89f25"
 
 - type: entity
   id: ComputerSalvageExpedition

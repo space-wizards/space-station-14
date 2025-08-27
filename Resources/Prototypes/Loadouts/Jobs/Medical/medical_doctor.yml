@@ -176,6 +176,17 @@
   equipment:
     mask: ClothingMaskSterile
 
+#Eyewear
+- type: loadout
+  id: MedicalHud
+  equipment:
+    eyes: ClothingEyesHudMedical
+
+- type: loadout
+  id: MedicalEyePatchHud
+  equipment:
+    eyes: ClothingEyesEyepatchHudMedical
+
 # Underwear
 - type: loadout
   id: UnderwearBottomBoxersDoctor

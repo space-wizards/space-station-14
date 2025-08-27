@@ -38,6 +38,7 @@ public sealed partial class ItemStatusPanel : Control
         StyleBox.Margin cutOut;
         StyleBox.Margin flat;
         Thickness contentMargin;
+        Thickness patchMargin;
 
         switch (location)
         {
@@ -61,15 +62,23 @@ public sealed partial class ItemStatusPanel : Control
 
         Contents.Margin = contentMargin;
 
+        //Important to note for patchMargin!
+        //Because of hand ui flipping, left and right instead correspond to outside and inside respectively.
+        patchMargin = MarginFromThemeColor("_itemstatus_patch_margin");
+
         var panel = (StyleBoxTexture) Panel.PanelOverride!;
         panel.Texture = texture;
-        panel.SetPatchMargin(flat, 4);
-        panel.SetPatchMargin(cutOut, 7);
+        panel.SetPatchMargin(cutOut, patchMargin.Left);
+        panel.SetPatchMargin(flat, patchMargin.Right);
+        panel.SetPatchMargin(StyleBox.Margin.Top, patchMargin.Top);
+        panel.SetPatchMargin(StyleBox.Margin.Bottom, patchMargin.Bottom);
 
         var panelHighlight = (StyleBoxTexture) HighlightPanel.PanelOverride!;
         panelHighlight.Texture = textureHighlight;
-        panelHighlight.SetPatchMargin(flat, 4);
-        panelHighlight.SetPatchMargin(cutOut, 7);
+        panelHighlight.SetPatchMargin(cutOut, patchMargin.Left);
+        panelHighlight.SetPatchMargin(flat, patchMargin.Right);
+        panelHighlight.SetPatchMargin(StyleBox.Margin.Top, patchMargin.Top);
+        panelHighlight.SetPatchMargin(StyleBox.Margin.Bottom, patchMargin.Bottom);
 
         _side = location;
     }

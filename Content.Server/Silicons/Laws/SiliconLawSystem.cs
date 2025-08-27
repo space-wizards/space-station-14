@@ -185,7 +185,7 @@ public sealed class SiliconLawSystem : SharedSiliconLawSystem
         base.RemoveSubvertedSiliconRole(mindId);
 
         if (_roles.MindHasRole<SubvertedSiliconRoleComponent>(mindId))
-            _roles.MindTryRemoveRole<SubvertedSiliconRoleComponent>(mindId);
+            _roles.MindRemoveRole<SubvertedSiliconRoleComponent>(mindId);
     }
 
     public SiliconLawset GetLaws(EntityUid uid, SiliconLawBoundComponent? component = null)
@@ -270,7 +270,7 @@ public sealed class SiliconLawSystem : SharedSiliconLawSystem
         };
         foreach (var law in proto.Laws)
         {
-            laws.Laws.Add(_prototype.Index<SiliconLawPrototype>(law));
+            laws.Laws.Add(_prototype.Index<SiliconLawPrototype>(law).ShallowClone());
         }
         laws.ObeysTo = proto.ObeysTo;
 

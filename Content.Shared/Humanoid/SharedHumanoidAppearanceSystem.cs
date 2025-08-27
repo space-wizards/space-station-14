@@ -39,9 +39,11 @@ public abstract class SharedHumanoidAppearanceSystem : EntitySystem
     [Dependency] private readonly IPrototypeManager _proto = default!;
     [Dependency] private readonly ISerializationManager _serManager = default!;
     [Dependency] private readonly MarkingManager _markingManager = default!;
+    [Dependency] private readonly GrammarSystem _grammarSystem = default!;
+    [Dependency] private readonly SharedIdentitySystem _identity = default!;
 
-    [ValidatePrototypeId<SpeciesPrototype>]
-    public const string DefaultSpecies = "Human";
+    public static readonly ProtoId<SpeciesPrototype> DefaultSpecies = "Human";
+
     // Corvax-TTS-Start
     public const string DefaultVoice = "Noble";
     public const string DefaultTapeRecorderVoice = "Barbas";
@@ -73,7 +75,7 @@ public abstract class SharedHumanoidAppearanceSystem : EntitySystem
         return dataNode;
     }
 
-    public HumanoidCharacterProfile FromStream(Stream stream, ICommonSession session, string[] sponsorMarkings)
+    public HumanoidCharacterProfile FromStream(Stream stream, ICommonSession session, string[] sponsorMarkings) // DS14-sponsors
     {
         using var reader = new StreamReader(stream, EncodingHelpers.UTF8);
         var yamlStream = new YamlStream();
@@ -88,7 +90,7 @@ public abstract class SharedHumanoidAppearanceSystem : EntitySystem
 
         var profile = export.Profile;
         var collection = IoCManager.Instance;
-        profile.EnsureValid(session, collection!, sponsorMarkings);
+        profile.EnsureValid(session, collection!, sponsorMarkings); // DS14-sponsors
         return profile;
     }
 
@@ -155,7 +157,7 @@ public abstract class SharedHumanoidAppearanceSystem : EntitySystem
     public void CloneAppearance(EntityUid source, EntityUid target, HumanoidAppearanceComponent? sourceHumanoid = null,
         HumanoidAppearanceComponent? targetHumanoid = null)
     {
-        if (!Resolve(source, ref sourceHumanoid) || !Resolve(target, ref targetHumanoid))
+        if (!Resolve(source, ref sourceHumanoid, false) || !Resolve(target, ref targetHumanoid, false))
             return;
 
         targetHumanoid.Species = sourceHumanoid.Species;
@@ -169,9 +171,11 @@ public abstract class SharedHumanoidAppearanceSystem : EntitySystem
         targetHumanoid.SpeakerColor = sourceHumanoid.SpeakerColor; // Corvax-SpeakerColor
 
         targetHumanoid.Gender = sourceHumanoid.Gender;
-        if (TryComp<GrammarComponent>(target, out var grammar))
-            grammar.Gender = sourceHumanoid.Gender;
 
+        if (TryComp<GrammarComponent>(target, out var grammar))
+            _grammarSystem.SetGender((target, grammar), sourceHumanoid.Gender);
+
+        _identity.QueueIdentityUpdate(target);
         Dirty(target, targetHumanoid);
     }
 
@@ -452,7 +456,7 @@ public abstract class SharedHumanoidAppearanceSystem : EntitySystem
         humanoid.Gender = profile.Gender;
         if (TryComp<GrammarComponent>(uid, out var grammar))
         {
-            grammar.Gender = profile.Gender;
+            _grammarSystem.SetGender((uid, grammar), profile.Gender);
         }
 
         humanoid.Age = profile.Age;

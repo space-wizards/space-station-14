@@ -4,7 +4,7 @@
     sprite: Clothing/OuterClothing/Armor/bulletproof.rsi
     state: icon
   product: CrateSecurityArmor
-  cost: 1000
+  cost: 1000 # DS14
   category: cargoproduct-category-name-security
   group: market
 
@@ -14,7 +14,7 @@
     sprite: Clothing/Head/Helmets/security.rsi
     state: icon
   product: CrateSecurityHelmet
-  cost: 750
+  cost: 750 # DS14
   category: cargoproduct-category-name-security
   group: market
 
@@ -24,7 +24,7 @@
     sprite: Objects/Weapons/Guns/Battery/disabler.rsi
     state: base
   product: CrateSecurityNonlethal
-  cost: 3750
+  cost: 3750 # DS14
   category: cargoproduct-category-name-security
   group: market
 
@@ -34,7 +34,7 @@
     sprite: Objects/Storage/boxes.rsi
     state: box_security
   product: CrateSecuritySupplies
-  cost: 250
+  cost: 250 # DS14
   category: cargoproduct-category-name-security
   group: market
 
@@ -54,7 +54,7 @@
     sprite: Clothing/Head/Hoods/Bio/security.rsi
     state: icon
   product: CrateSecurityBiosuit
-  cost: 1130
+  cost: 1130 # DS14
   category: cargoproduct-category-name-security
   group: market
 
@@ -67,6 +67,28 @@
   cost: 1000
   category: cargoproduct-category-name-security
   group: market
+
+- type: cargoProduct
+  id: SecurityNonlethalThrowables
+  icon:
+    sprite: Objects/Weapons/Grenades/stingergrenade.rsi
+    state: icon
+  product: CrateSecNonlethalThrowables
+  cost: 2500
+  category: cargoproduct-category-name-security
+  group: market
+
+- type: cargoProduct
+  id: SecurityGenPopCloset
+  icon:
+    sprite: Structures/Storage/closet.rsi
+    state: genpop
+  product: LockerPrisoner
+  cost: 250
+  category: cargoproduct-category-name-security
+  group: market
+
+# DS14-start
 
 - type: cargoProduct
   id: SecurityHardsuit

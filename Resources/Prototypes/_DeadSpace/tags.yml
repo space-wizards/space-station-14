@@ -23,10 +23,10 @@
   id: BorgModuleSecurity
 
 - type: Tag
-  id: CleanerGrenade
+  id: ChefGoldenKnife
 
 - type: Tag
-  id: ChefGoldenKnife
+  id: CleanerGrenade
 
 - type: Tag
   id: DockCentcommERT
@@ -72,6 +72,9 @@
 
 - type: Tag
   id: MagazineTommyGunCap
+
+- type: Tag
+  id: SiliconIPSIPCEmotes
 
 - type: Tag
   id: SnapPop

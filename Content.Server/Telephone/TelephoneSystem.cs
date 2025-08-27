@@ -22,8 +22,6 @@ using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Replays;
 using System.Linq;
-using Content.Server.Emp;
-using Content.Shared.Emp;
 
 namespace Content.Server.Telephone;
 
@@ -52,14 +50,6 @@ public sealed class TelephoneSystem : SharedTelephoneSystem
         SubscribeLocalEvent<TelephoneComponent, ListenAttemptEvent>(OnAttemptListen);
         SubscribeLocalEvent<TelephoneComponent, ListenEvent>(OnListen);
         SubscribeLocalEvent<TelephoneComponent, TelephoneMessageReceivedEvent>(OnTelephoneMessageReceived);
-        SubscribeLocalEvent<TelephoneComponent, EmpPulseEvent>(OnEmpPulse);
-    }
-
-    private void OnEmpPulse(EntityUid uid, TelephoneComponent component, ref EmpPulseEvent args)
-    {
-        args.Disabled = true;
-        args.Affected = true;
-        TerminateTelephoneCalls((uid, component));
     }
 
     #region: Events
@@ -134,7 +124,7 @@ public sealed class TelephoneSystem : SharedTelephoneSystem
     {
         base.Update(frameTime);
 
-        var query = EntityManager.EntityQueryEnumerator<TelephoneComponent>();
+        var query = EntityQueryEnumerator<TelephoneComponent>();
         while (query.MoveNext(out var uid, out var telephone))
         {
             var entity = new Entity<TelephoneComponent>(uid, telephone);
@@ -222,9 +212,6 @@ public sealed class TelephoneSystem : SharedTelephoneSystem
         RaiseLocalEvent(source, ref evCallAttempt);
 
         if (evCallAttempt.Cancelled)
-            return false;
-
-        if (HasComp<EmpDisabledComponent>(source) || HasComp<EmpDisabledComponent>(receiver))
             return false;
 
         if (options?.ForceConnect == true)
@@ -503,6 +490,6 @@ public sealed class TelephoneSystem : SharedTelephoneSystem
 
     public bool IsTelephonePowered(Entity<TelephoneComponent> entity)
     {
-        return this.IsPowered(entity, EntityManager) || !entity.Comp.RequiresPower;
+        return this.IsPowered(entity, EntityManager);
     }
 }

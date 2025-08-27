@@ -65,7 +65,12 @@
   - type: EyeProtection
   - type: IdentityBlocker
     coverage: EYES
+  - type: Tag
+    tags:
+    - PetWearable
+    - WhitelistChameleon
 
+# DS14-start
 - type: entity
   parent: ClothingEyesBase
   id: ClothingEyesGlassesMesonCE
@@ -78,6 +83,7 @@
     sprite: Clothing/Eyes/Glasses/mesonce.rsi
   - type: EyeProtection
   - type: FlashImmunity
+# DS14-end
 
 - type: entity
   parent: ClothingEyesBase
@@ -139,6 +145,8 @@
     sprite: Clothing/Eyes/Glasses/outlawglasses.rsi
   - type: VisionCorrection
   - type: IdentityBlocker
+  - type: StaticPrice
+    price: 500
   - type: Tag
     tags:
     - MukhtarWearable # DS14
@@ -156,6 +164,7 @@
   - type: Tag
     tags:
     - HamsterWearable
+    - PetWearable
     - MukhtarWearable # DS14
     - WhitelistChameleon
   - type: IdentityBlocker
@@ -173,6 +182,7 @@
   - type: Tag
     tags:
     - Sunglasses
+    - PetWearable
     - HamsterWearable
     - MukhtarWearable # DS14
     - WhitelistChameleon
@@ -196,6 +206,7 @@
   - type: Tag
     tags:
     - HamsterWearable
+    - PetWearable
     - MukhtarWearable # DS14
     - WhitelistChameleon
   - type: GuideHelp
@@ -221,6 +232,7 @@
   - type: Tag
     tags:
     - HamsterWearable
+    - PetWearable
     - MukhtarWearable # DS14
     - WhitelistChameleon
   - type: IdentityBlocker
@@ -278,6 +290,10 @@
     - type: SolutionScanner
     - type: IdentityBlocker
       coverage: EYES
+    - type: Tag
+      tags:
+      - PetWearable
+      - WhitelistChameleon
 
 - type: entity
   parent: [ClothingEyesBase, BaseMajorContraband]
@@ -290,5 +306,26 @@
   - type: Clothing
     sprite: Clothing/Eyes/Glasses/ninjavisor.rsi
   - type: FlashImmunity
-  - type: NightVisionClothing
+  - type: NightVisionClothing # DS14
     color: "#41af0e"
+
+- type: entity
+  parent: ClothingEyesBase
+  id: ClothingEyesGlassesNoir
+  name: noir-tech glasses
+  description: A pair of glasses that simulate what the world looked like before the invention of color.
+  components:
+  - type: Sprite
+    sprite: Clothing/Eyes/Glasses/noir.rsi
+  - type: Clothing
+    sprite: Clothing/Eyes/Glasses/sunglasses.rsi
+  - type: IdentityBlocker
+    coverage: EYES
+  - type: FlashImmunity
+  - type: EyeProtection
+    protectionTime: 5
+  - type: NoirOverlay
+  - type: Tag
+    tags:
+    - HamsterWearable
+    - WhitelistChameleon

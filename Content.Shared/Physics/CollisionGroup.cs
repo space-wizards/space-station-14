@@ -88,6 +88,8 @@ public enum CollisionGroup
     BlobTileLayer = Opaque | BlobImpassable | BulletImpassable, // backmen: blob
     GlassLayer = Impassable | HighImpassable | MidImpassable | LowImpassable | BulletImpassable | InteractImpassable,
     HalfWallLayer = MidImpassable | LowImpassable,
+    // Allows people to interact past and target players inside of this
+    SpecialWallLayer = Opaque | HighImpassable | MidImpassable | LowImpassable | BulletImpassable,
 
     // Statue, monument, airlock, window
     FullTileMask = Impassable | HighImpassable | MidImpassable | LowImpassable | InteractImpassable,

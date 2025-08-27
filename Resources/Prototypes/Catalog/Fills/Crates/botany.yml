@@ -93,3 +93,13 @@
       - id: PeaSeeds
       - id: CherrySeeds
       - id: CocoaSeeds
+
+- type: entity
+  id: CrateHydroponicsTray
+  parent: CrateHydroponics
+  name: hydroponics tray crate
+  description: Contains a hydroponics tray flatpack.
+  components:
+  - type: StorageFill
+    contents:
+    - id: HydroponicsTrayFlatpack

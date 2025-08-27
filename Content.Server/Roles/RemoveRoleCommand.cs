@@ -9,28 +9,27 @@ using Robust.Shared.Console;
 namespace Content.Server.Roles
 {
     [AdminCommand(AdminFlags.Admin)]
-    public sealed class RemoveRoleCommand : IConsoleCommand
+    public sealed class RemoveRoleCommand : LocalizedEntityCommands
     {
-        [Dependency] private readonly IEntityManager _entityManager = default!;
+        [Dependency] private readonly IPlayerManager _playerManager = default!;
+        [Dependency] private readonly SharedJobSystem _jobs = default!;
+        [Dependency] private readonly SharedRoleSystem _roles = default!;
 
-        public string Command => "rmrole";
+        public override string Command => "rmrole";
 
-        public string Description => "Removes a role from a player's mind.";
-
-        public string Help => "rmrole <session ID> <Role Type>\nThat role type is the actual C# type name.";
-
-        public void Execute(IConsoleShell shell, string argStr, string[] args)
+        public override void Execute(IConsoleShell shell, string argStr, string[] args)
         {
             if (args.Length != 2)
             {
-                shell.WriteLine("Expected exactly 2 arguments.");
+                shell.WriteLine(Loc.GetString($"shell-wrong-arguments-number-need-specific",
+                    ("properAmount", 2),
+                    ("currentAmount", args.Length)));
                 return;
             }
 
-            var mgr = IoCManager.Resolve<IPlayerManager>();
-            if (!mgr.TryGetPlayerDataByUsername(args[0], out var data))
+            if (!_playerManager.TryGetPlayerDataByUsername(args[0], out var data))
             {
-                shell.WriteLine("Can't find that mind");
+                shell.WriteLine(Loc.GetString($"cmd-addrole-mind-not-found"));
                 return;
             }
 
@@ -38,14 +37,12 @@ namespace Content.Server.Roles
 
             if (mind == null)
             {
-                shell.WriteLine("Can't find that mind");
+                shell.WriteLine(Loc.GetString($"cmd-addrole-mind-not-found"));
                 return;
             }
 
-            var roles = _entityManager.System<SharedRoleSystem>();
-            var jobs = _entityManager.System<SharedJobSystem>();
-            if (jobs.MindHasJobWithId(mind, args[1]))
-                roles.MindTryRemoveRole<JobRoleComponent>(mind.Value);
+            if (_jobs.MindHasJobWithId(mind, args[1]))
+                _roles.MindRemoveRole<JobRoleComponent>(mind.Value);
         }
     }
 }

@@ -163,25 +163,34 @@ public sealed class ItemGridPiece : Control, IEntityControl
         }
 
         // typically you'd divide by two, but since the textures are half a tile, this is done implicitly
-        var iconPosition = new Vector2((boundingGrid.Width + 1) * size.X + itemComponent.StoredOffset.X * 2,
-            (boundingGrid.Height + 1) * size.Y + itemComponent.StoredOffset.Y * 2);
+        var iconOffset = Location.Rotation.RotateVec(itemComponent.StoredOffset) * 2 * UIScale;
+        var iconPosition = new Vector2(
+            (boundingGrid.Width + 1) * size.X + iconOffset.X,
+            (boundingGrid.Height + 1) * size.Y + iconOffset.Y);
         var iconRotation = Location.Rotation + Angle.FromDegrees(itemComponent.StoredRotation);
 
         if (itemComponent.StoredSprite is { } storageSprite)
         {
             var scale = 2 * UIScale;
-            var offset = (((Box2) boundingGrid).Size - Vector2.One) * size;
             var sprite = _entityManager.System<SpriteSystem>().Frame0(storageSprite);
+
+            var sizeDifference = ((boundingGrid.Size + Vector2i.One) * _centerTexture.Size * 2 - sprite.Size) * UIScale;
 
             var spriteBox = new Box2Rotated(new Box2(0f, sprite.Height * scale, sprite.Width * scale, 0f), -iconRotation, Vector2.Zero);
             var root = spriteBox.CalcBoundingBox().BottomLeft;
             var pos = PixelPosition * 2
                       + (Parent?.GlobalPixelPosition ?? Vector2.Zero)
-                      + offset;
+                      + sizeDifference
+                      + iconOffset;
 
             handle.SetTransform(pos, iconRotation);
             var box = new UIBox2(root, root + sprite.Size * scale);
-            handle.DrawTextureRect(sprite, box);
+
+            var ev = new BeforeRenderInGridEvent(new Color(255, 255, 255));
+            _entityManager.EventBus.RaiseLocalEvent(Entity, ev);
+
+            handle.DrawTextureRect(sprite, box, ev.Color);
+
             handle.SetTransform(GlobalPixelPosition, Angle.Zero);
         }
         else
@@ -292,6 +301,19 @@ public sealed class ItemGridPiece : Control, IEntityControl
     }
 
     public EntityUid? UiEntity => Entity;
+}
+
+/// <summary>
+///     This event gets raised before a sprite gets drawn in a grid and lets to change the sprite color for several gameobjects that have special sprites to render in containers.
+/// </summary>
+public sealed class BeforeRenderInGridEvent : EntityEventArgs
+{
+    public Color Color { get; set; }
+
+    public BeforeRenderInGridEvent(Color color)
+    {
+        Color = color;
+    }
 }
 
 public enum ItemGridPieceMarks

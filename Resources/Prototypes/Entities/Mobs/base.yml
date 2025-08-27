@@ -44,6 +44,7 @@
   - type: MovementSpeedModifier
   - type: RequireProjectileTarget
     active: False
+  - type: StunVisuals
   - type: TTS # Corvax-TTS
 
 - type: entity
@@ -108,6 +109,8 @@
     - Shock
     - Cold
     - Caustic
+    - Asphyxiation
+    - Radiation
   - type: DamageOnHighSpeedImpact
     damage:
       types:
