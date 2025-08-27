@@ -114,6 +114,7 @@ namespace Content.Shared.Forensics.Systems
             padComponent.Used = true;
 
             args.Handled = true;
+            Dirty(uid, padComponent);
         }
     }
 }
