@@ -1,18 +1,19 @@
 - type: roleLoadout
   id: JobZookeeper
   groups:
+  - GroupTankHarness
+  # - Head
+  - CommonGlasses
+  # - Mask
+  # - Neck
+  # - Gloves
+  # - Jumpsuit
+  - CommonBackpack
+  # - PDA
+  # - Belt
+  # - Outer Clothing
+  # - Shoes
+  # Backpack fills
   - Survival
   - GroupSpeciesBreathTool
-  - GroupTankHarness
-  # Head
-  - CommonGlasses
-  # Mask
-  # Neck
-  # Gloves
-  # Jumpsuit
-  - CommonBackpack
-  # PDA
-  # Belt
-  # Outer Clothing
-  # Shoes
   - Trinkets

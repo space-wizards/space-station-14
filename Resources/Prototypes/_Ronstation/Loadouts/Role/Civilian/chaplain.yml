@@ -1,19 +1,20 @@
 - type: roleLoadout
   id: JobChaplain
   groups:
-  - Survival
-  - GroupSpeciesBreathTool
   - GroupTankHarness
   - ChaplainHead
   - CommonGlasses
   - ChaplainMask
   - ChaplainNeck
-  # Gloves
+  # - Gloves
   - ChaplainJumpsuit
   - CommonBackpack
-  # PDA
-  # Belt
+  # - PDA
+  # - Belt
   - ChaplainOuterClothing
-  # Shoes
-  - Trinkets
+  # - Shoes
+  # Backpack fills
+  - Survival
+  - GroupSpeciesBreathTool
   - ChaplainBible
+  - Trinkets

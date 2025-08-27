@@ -2,18 +2,19 @@
   id: JobClown
   canCustomizeName: true
   groups:
-  - SurvivalClown
   - GroupTankHarness
   - ClownHead
   - CommonGlasses
-  # Mask
-  # Neck
-  # Gloves
+  # - Mask
+  # - Neck
+  # - Gloves
   - ClownJumpsuit
   - ClownBackpack
-  # PDA
-  # Belt
+  # - PDA
+  # - Belt
   - ClownOuterClothing
   - ClownShoes
+  # Backpack fills
+  - SurvivalClown
   - Trinkets
   
