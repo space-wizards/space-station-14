@@ -1944,7 +1944,7 @@
   components:
   - type: VendingMachine
     pack: SyndieDrobeInventory
-    showPrices: # Starlight-edit: Vending Machines Prices
+    showPrices: false # Starlight-edit: Vending Machines Prices
     offState: off
     brokenState: broken
     normalState: normal-unshaded
