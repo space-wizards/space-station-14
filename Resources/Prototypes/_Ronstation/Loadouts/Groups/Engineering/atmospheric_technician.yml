@@ -1,0 +1,28 @@
+- type: loadoutGroup
+  id: AtmosphericTechnicianJumpsuit
+  parent: BaseJumpsuit
+  loadouts:
+  - AtmosphericTechnicianJumpsuit
+  - AtmosphericTechnicianJumpskirt
+  - AtmosphericTechnicianJumpsuitCasual
+
+- type: loadoutGroup
+  id: AtmosphericTechnicianBackpack
+  parent: BaseBackpack
+  loadouts:
+  - AtmosphericTechnicianBackpack
+  - AtmosphericTechnicianSatchel
+  - AtmosphericTechnicianDuffel
+
+- type: loadoutGroup
+  id: AtmosphericTechnicianOuterClothing
+  parent: BaseOuterClothing
+  loadouts:
+  - AtmosphericTechnicianWintercoat
+
+- type: loadoutGroup
+  id: AtmosphericTechnicianShoes
+  parent: BaseShoes
+  loadouts:
+  - WhiteShoes
+  - EngineeringWinterBoots

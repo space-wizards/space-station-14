@@ -1,3 +1,4 @@
+# Modified by Ronstation contributor(s), therefore this file is licensed as MIT sublicensed with AGPL-v3.0.
 # Senior times
 - type: loadoutEffectGroup
   id: SeniorEngineering
@@ -51,11 +52,13 @@
   id: StationEngineerJumpsuit
   equipment:
     jumpsuit: ClothingUniformJumpsuitEngineering
+  groupBy: "jumpsuit" # Ronstation - modification
 
 - type: loadout
   id: StationEngineerJumpskirt
   equipment:
     jumpsuit: ClothingUniformJumpskirtEngineering
+  groupBy: "jumpskirt" # Ronstation - modification
 
 - type: loadout
   id: StationEngineerHazardsuit
@@ -69,6 +72,7 @@
     proto: SeniorEngineering
   equipment:
     jumpsuit: ClothingUniformJumpsuitSeniorEngineer
+  groupBy: "jumpsuit" # Ronstation - modification
 
 - type: loadout
   id: SeniorEngineerJumpskirt
@@ -77,6 +81,7 @@
     proto: SeniorEngineering
   equipment:
     jumpsuit: ClothingUniformJumpskirtSeniorEngineer
+  groupBy: "jumpskirt" # Ronstation - modification
 
 # Back
 - type: loadout

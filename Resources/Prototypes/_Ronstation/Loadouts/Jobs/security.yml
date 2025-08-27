@@ -1,0 +1,10 @@
+- type: loadout
+  id: GlassesSecurityNoir
+  effects:
+  - !type:JobRequirementLoadoutEffect
+    requirement:
+      !type:RoleTimeRequirement
+      role: JobDetective
+      time: 36000 #10 hrs
+  equipment:
+    eyes: ClothingEyesGlassesNoir

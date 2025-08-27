@@ -1,0 +1,16 @@
+- type: weightedRandom
+  id: VampireObjectiveGroups
+  weights:
+    VampireObjectiveGroupKill: 1
+
+- type: weightedRandom
+  id: VampireObjectiveGroupSurvive
+  weights:
+    VampireSurviveObjective: 1
+
+# # Placeholder until feed objectives are implemented
+- type: weightedRandom
+  id: VampireObjectiveGroupKill
+  weights:
+    VampireKillRandomPersonObjective: 0.85
+    VampireKillRandomHeadObjective: 0.25

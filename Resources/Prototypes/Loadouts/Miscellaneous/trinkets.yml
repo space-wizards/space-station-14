@@ -1,3 +1,4 @@
+# Modified by Ronstation contributor(s), therefore this file is licensed as MIT sublicensed with AGPL-v3.0.
 # Timers
 - type: loadoutEffectGroup
   id: Command
@@ -34,12 +35,14 @@
   storage:
     back:
     - PlushieLizard
+  groupBy: "plushies" # Ronstation - modification.
 
 - type: loadout
   id: PlushieSpaceLizard
   storage:
     back:
     - PlushieSpaceLizard
+  groupBy: "plushies" # Ronstation - modification.
 
 - type: loadout
   id: ThreeCandles

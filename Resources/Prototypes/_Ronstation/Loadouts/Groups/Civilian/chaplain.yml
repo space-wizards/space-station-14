@@ -1,0 +1,39 @@
+- type: loadoutGroup
+  id: ChaplainHead
+  parent: BaseHead
+  loadouts:
+  - ChaplainHead
+  - ChaplainNunHood
+  - ChaplainPlagueHat
+  - ChaplainWitchHat
+  - ChaplainWitchHatAlt
+
+- type: loadoutGroup
+  id: ChaplainMask
+  parent: BaseMask
+  loadouts:
+  - ChaplainMask
+
+- type: loadoutGroup
+  id: ChaplainNeck
+  parent: BaseNeck
+  loadouts:
+  - ChaplainNeck
+
+- type: loadoutGroup
+  id: ChaplainJumpsuit
+  parent: BaseJumpsuit
+  loadouts:
+  - ChaplainJumpsuit
+  - ChaplainJumpskirt
+  - ChaplainRobesLight
+  - ChaplainRobesDark
+
+- type: loadoutGroup
+  id: ChaplainOuterClothing
+  parent: BaseOuterClothing
+  loadouts:
+  - ChaplainPlagueSuit
+  - ChaplainNunRobe
+  - ChaplainBlackHoodie
+  - ChaplainHoodie

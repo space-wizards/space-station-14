@@ -1,0 +1,18 @@
+- type: roleLoadout
+  id: JobAtmosphericTechnician
+  groups:
+  - SurvivalExtended
+  - GroupSpeciesBreathTool
+  - GroupTankHarness
+  # Head
+  # Glasses
+  # Mask
+  # Neck
+  # Gloves
+  - AtmosphericTechnicianJumpsuit
+  - AtmosphericTechnicianBackpack
+  # PDA
+  # Belt
+  - AtmosphericTechnicianOuterClothing
+  - AtmosphericTechnicianShoes
+  - Trinkets

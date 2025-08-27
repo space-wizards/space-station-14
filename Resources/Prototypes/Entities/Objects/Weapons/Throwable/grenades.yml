@@ -95,6 +95,7 @@
     - timer
     sound:
       path: "/Audio/Effects/flash_bang.ogg"
+    positional: true
   - type: DeleteOnTrigger
     keysIn:
     - timer
@@ -264,6 +265,7 @@
           path: /Audio/Effects/Grenades/Supermatter/supermatter_end.ogg
           params:
             volume: 5
+        positional: true
         keysIn:
         - stageTwo
       - type: DeleteOnTrigger
@@ -482,6 +484,7 @@
     keysIn:
     - timer
     sound: /Audio/Items/smoke_grenade_smoke.ogg
+    positional: true
   - type: DeleteOnTrigger
     keysIn:
     - timer
@@ -607,6 +610,7 @@
     - timer
     sound:
       path: /Audio/Effects/Emotes/parp1.ogg
+    positional: true
   - type: Appearance
   - type: TimerTriggerVisuals
     primingSound:
@@ -627,6 +631,7 @@
     - timer
     sound:
       path: /Audio/Effects/Emotes/parp1.ogg
+    positional: true
   - type: Appearance
   - type: TimerTriggerVisuals
     primingSound:

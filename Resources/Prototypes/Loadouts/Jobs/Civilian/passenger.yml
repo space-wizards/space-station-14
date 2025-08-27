@@ -1,3 +1,4 @@
+# Modified by Ronstation contributor(s), therefore this file is licensed as MIT sublicensed with AGPL-v3.0.
 # Greytide Time
 - type: loadoutEffectGroup
   id: GreyTider
@@ -33,11 +34,13 @@
   id: GreyJumpsuit
   equipment:
     jumpsuit: ClothingUniformJumpsuitColorGrey
+  groupBy: "jumpsuit" # Ronstation - modification
 
 - type: loadout
   id: GreyJumpskirt
   equipment:
     jumpsuit: ClothingUniformJumpskirtColorGrey
+  groupBy: "jumpskirt" # Ronstation - modification
 
 # Rainbow
 - type: loadout
@@ -47,6 +50,7 @@
     proto: GreyTider
   equipment:
     jumpsuit: ClothingUniformColorRainbow
+  groupBy: "jumpsuit" # Ronstation - modification
 
 # Rainbow Jumpskirt
 - type: loadout
@@ -56,6 +60,7 @@
     proto: GreyTider
   equipment:
     jumpsuit: ClothingUniformJumpskirtColorRainbow
+  groupBy: "jumpskirt" # Ronstation - modification
 
 # Ancient
 - type: loadout
@@ -65,6 +70,7 @@
     proto: GreyTider
   equipment:
     jumpsuit: ClothingUniformJumpsuitAncient
+  groupBy: "jumpsuit" # Ronstation - modification
 
 # Neck
 - type: loadout

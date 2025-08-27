@@ -1,0 +1,38 @@
+- type: loadoutGroup
+  id: MedicalDoctorHead
+  parent: BaseHead
+  loadouts:
+  - MedicalBeret
+  - SeniorPhysicianBeret
+  - MedicalHeadMirror
+  - BlueSurgeryCap
+  - GreenSurgeryCap
+  - PurpleSurgeryCap
+  - NurseHat
+
+- type: loadoutGroup
+  id: MedicalDoctorJumpsuit
+  parent: BaseJumpsuit
+  loadouts:
+  - MedicalDoctorJumpsuit
+  - MedicalDoctorJumpskirt
+  - SeniorPhysicianJumpsuit
+  - SeniorPhysicianJumpskirt
+  - MedicalBlueScrubs
+  - MedicalGreenScrubs
+  - MedicalPurpleScrubs
+
+- type: loadoutGroup
+  id: MedicalDoctorPDA
+  parent: BasePDA
+  loadouts:
+  - MedicalDoctorPDA
+  - SeniorPhysicianPDA
+
+- type: loadoutGroup
+  id: MedicalDoctorOuterClothing
+  parent: BaseOuterClothing
+  loadouts:
+  - RegularLabCoat
+  - MedicalDoctorWintercoat
+  - SeniorPhysicianLabCoat

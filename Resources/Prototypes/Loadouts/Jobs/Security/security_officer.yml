@@ -1,3 +1,4 @@
+# Modified by Ronstation contributor(s), therefore this file is licensed as MIT sublicensed with AGPL-v3.0.
 # Senior Time
 - type: loadoutEffectGroup
   id: SeniorOfficer
@@ -49,21 +50,25 @@
   id: SecurityJumpsuit
   equipment:
     jumpsuit: ClothingUniformJumpsuitSec
+  groupBy: "jumpsuit" # Ronstation - modification
 
 - type: loadout
   id: SecurityJumpskirt
   equipment:
     jumpsuit: ClothingUniformJumpskirtSec
+  groupBy: "jumpskirt" # Ronstation - modification
 
 - type: loadout
   id: SecurityJumpsuitGrey
   equipment:
     jumpsuit: ClothingUniformJumpsuitSecGrey
+  groupBy: "jumpsuit" # Ronstation - modification
 
 - type: loadout
   id: SecurityJumpskirtGrey
   equipment:
     jumpsuit: ClothingUniformJumpskirtSecGrey
+  groupBy: "jumpskirt" # Ronstation - modification
 
 - type: loadout
   id: TrooperUniform
@@ -77,6 +82,7 @@
     proto: SeniorOfficer
   equipment:
     jumpsuit: ClothingUniformJumpsuitSeniorOfficer
+  groupBy: "jumpsuit" # Ronstation - modification
 
 - type: loadout
   id: SeniorOfficerJumpskirt
@@ -85,6 +91,7 @@
     proto: SeniorOfficer
   equipment:
     jumpsuit: ClothingUniformJumpskirtSeniorOfficer
+  groupBy: "jumpskirt" # Ronstation - modification
 
 # Back
 - type: loadout
@@ -166,5 +173,5 @@
   - !type:GroupLoadoutEffect
     proto: SecurityStarWorthy
   storage:
-    back:
+    neck: # Ronstation - modification
     - Dinkystar

@@ -1,0 +1,6 @@
+- type: loadoutGroup
+  id: ResearchAssistantJumpsuit
+  parent: BaseJumpsuit
+  loadouts:
+  - WhiteJumpsuit
+  - WhiteJumpskirt

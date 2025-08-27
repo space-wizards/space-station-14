@@ -1,0 +1,32 @@
+- type: loadoutGroup
+  id: HeadofSecurityHead
+  parent: BaseHead
+  loadouts:
+  - HeadofSecurityHead
+  - HeadofSecurityBeret
+
+- type: loadoutGroup
+  id: HeadofSecurityNeck
+  parent: SecurityNeck
+  loadouts:
+  - HeadofSecurityCloak
+  - HeadofSecurityMantle
+
+- type: loadoutGroup
+  id: HeadofSecurityJumpsuit
+  parent: BaseJumpsuit
+  loadouts:
+  - HeadofSecurityJumpsuit
+  - HeadofSecurityJumpskirt
+  - HeadofSecurityTurtleneck
+  - HeadofSecurityTurtleneckSkirt
+  - HeadofSecurityFormalSuit
+  - HeadofSecurityFormalSkirt
+
+- type: loadoutGroup
+  id: HeadofSecurityOuterClothing
+  parent: BaseOuterClothing
+  minLimit: 1 # HoS must have outer clothing
+  loadouts:
+  - HeadofSecurityCoat
+  - HeadofSecurityWinterCoat

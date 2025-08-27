@@ -1,0 +1,68 @@
+# These are shared abstracts for names and restrictions. Do not add actual loadouts here.
+- type: loadoutGroup
+  id: BaseHead
+  name: loadout-group-head
+  abstract: true
+  minLimit: 0
+
+- type: loadoutGroup
+  id: BaseGlasses
+  name: loadout-group-glasses
+  abstract: true
+  minLimit: 0
+
+- type: loadoutGroup
+  id: BaseMask
+  name: loadout-group-mask
+  abstract: true
+  minLimit: 0
+
+- type: loadoutGroup
+  id: BaseNeck
+  name: loadout-group-neck
+  abstract: true
+  minLimit: 0
+
+- type: loadoutGroup
+  id: BaseGloves
+  name: loadout-group-gloves
+  abstract: true
+  minLimit: 0
+
+- type: loadoutGroup
+  id: BaseJumpsuit
+  name: loadout-group-jumpsuit
+  abstract: true
+
+- type: loadoutGroup
+  id: BaseBackpack
+  name: loadout-group-backpack
+  abstract: true
+
+- type: loadoutGroup
+  id: BasePDA
+  name: loadout-group-pda
+  abstract: true
+
+- type: loadoutGroup
+  id: BaseBelt
+  name: loadout-group-belt
+  abstract: true
+
+- type: loadoutGroup
+  id: BaseOuterClothing
+  name: loadout-group-outerclothing
+  abstract: true
+  minLimit: 0
+
+- type: loadoutGroup
+  id: BaseShoes
+  name: loadout-group-shoes
+  abstract: true
+  minLimit: 0
+  defaultMinLimit: 1
+
+- type: loadoutGroup
+  id: BaseTrinkets
+  name: loadout-group-trinkets
+  abstract: true

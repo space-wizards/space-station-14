@@ -1,0 +1,36 @@
+- type: loadoutGroup
+  id: ChiefMedicalOfficerHead
+  parent: BaseHead
+  loadouts:
+  - ChiefMedicalOfficerBeret
+  - CMOMedicalHeadMirror
+
+- type: loadoutGroup
+  id: ChiefMedicalOfficerNeck
+  parent: BaseNeck
+  loadouts:
+  - ChiefMedicalOfficerCloak
+  - ChiefMedicalOfficerMantle
+
+- type: loadoutGroup
+  id: ChiefMedicalOfficerJumpsuit
+  parent: BaseJumpsuit
+  loadouts:
+  - ChiefMedicalOfficerJumpsuit
+  - ChiefMedicalOfficerJumpskirt
+  - ChiefMedicalOfficerTurtleneckJumpsuit
+  - ChiefMedicalOfficerTurtleneckJumpskirt
+
+- type: loadoutGroup
+  id: ChiefMedicalOfficerOuterClothing
+  parent: BaseOuterClothing
+  loadouts:
+  - ChiefMedicalOfficerLabCoat
+  - ChiefMedicalOfficerWintercoat
+
+- type: loadoutGroup
+  id: ChiefMedicalOfficerShoes
+  parent: BaseShoes
+  loadouts:
+  - BrownShoes
+  - MedicalWinterBoots

@@ -1,3 +1,4 @@
+# Contains modifications made by Ronstation contributors, therefore this file is subject to MIT sublicensed with AGPL v3.0.
 - type: preloadedGrid
   id: ShuttleCargoLost
   path: /Maps/Shuttles/ShuttleEvent/lost_cargo.yml
@@ -21,7 +22,7 @@
 
 - type: preloadedGrid
   id: SyndieEvacPod
-  path: /Maps/Shuttles/ShuttleEvent/syndie_evacpod.yml
+  path: /Maps/_Ronstation/Shuttles/ShuttleEvent/syndie_evacpod.yml # Ronstation - Modification
   copies: 2
 
 - type: preloadedGrid

@@ -1,0 +1,92 @@
+- type: loadoutGroup
+  id: Trinkets
+  name: loadout-group-trinkets
+  parent: [ TrinketPlushies, TrinketToys, TrinketSmokes, TrinketPins, TrinketCanes, TrinketTowels ]
+  minLimit: 0
+  maxLimit: 3
+  loadouts:
+  - FlowerWreath
+  - Hairflower
+  - Headphones
+  - ThreeCandles
+  - CardBoxPokerFilled
+
+- type: loadoutGroup
+  id: TrinketPlushies
+  abstract: true
+  loadouts:
+  - PlushieLizard
+  - PlushieSpaceLizard
+
+- type: loadoutGroup
+  id: TrinketToys
+  abstract: true
+  loadouts:
+  - CardBoxPokerFilled
+
+- type: loadoutGroup
+  id: TrinketSmokes
+  abstract: true
+  loadouts:
+  - Lighter
+  - CigPackGreen
+  - CigPackRed
+  - CigPackBlue
+  - CigPackBlack
+  - CigarCase
+  - CigarGold
+
+- type: loadoutGroup
+  id: TrinketCanes
+  abstract: true
+  loadouts:
+  - OffsetCane
+  - OffsetCaneWood
+  - OffsetCaneClown
+  - OffsetCaneMime
+  - OffsetCaneNT
+  - Cane
+
+- type: loadoutGroup
+  id: TrinketPins
+  abstract: true
+  loadouts:
+  - ClothingNeckLGBTPin
+  - ClothingNeckAllyPin
+  - ClothingNeckAromanticPin
+  - ClothingNeckAsexualPin
+  - ClothingNeckAroacePin
+  - ClothingNeckBisexualPin
+  - ClothingNeckGayPin
+  - ClothingNeckIntersexPin
+  - ClothingNeckLesbianPin
+  - ClothingNeckNonBinaryPin
+  - ClothingNeckPansexualPin
+  - ClothingNeckPluralPin
+  - ClothingNeckOmnisexualPin
+  - ClothingNeckGenderqueerPin
+  - ClothingNeckGenderfluidPin
+  - ClothingNeckTransPin
+  - ClothingNeckAutismPin
+  - ClothingNeckGoldAutismPin
+
+- type: loadoutGroup
+  id: TrinketTowels
+  abstract: true
+  loadouts:
+  - TowelColorBlack
+  - TowelColorDarkBlue
+  - TowelColorDarkGreen
+  - TowelColorGold
+  - TowelColorGray
+  - TowelColorGreen
+  - TowelColorLightBlue
+  - TowelColorLightBrown
+  - TowelColorMaroon
+  - TowelColorMime
+  - TowelColorOrange
+  - TowelColorPurple
+  - TowelColorRed
+  - TowelColorSilver
+  - TowelColorWhite
+  - TowelColorYellow

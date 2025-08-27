@@ -1,0 +1,18 @@
+- type: roleLoadout
+  id: JobResearchDirector
+  groups:
+  - Survival
+  - GroupSpeciesBreathTool
+  - GroupTankHarness
+  - ResearchDirectorHead
+  - CommonGlasses
+  # Mask
+  - ResearchDirectorNeck
+  - ScienceGloves
+  - ResearchDirectorJumpsuit
+  - ScienceBackpack
+  # PDA
+  # Belt
+  - ResearchDirectorOuterClothing
+  - ResearchDirectorShoes
+  - Trinkets

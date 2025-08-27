@@ -1,3 +1,4 @@
+# Contains modifications made by Ronstation contributors, therefore this file is subject to MIT sublicensed with AGPL v3.0.
 - type: entity
   id: BaseGameRule
   abstract: true
@@ -24,6 +25,10 @@
       prob: 0.5
     - id: SubWizard
       prob: 0.05
+    # Ronstation start
+    # - id: Vampire
+    #   prob: 0.5
+    # Ronstation end
 
 - type: entity
   parent: BaseGameRule

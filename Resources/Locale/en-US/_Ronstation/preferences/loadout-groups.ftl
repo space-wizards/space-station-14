@@ -1,8 +1,13 @@
-# Command
-
-loadout-group-blueshield-head = Blueshield head
-loadout-group-blueshield-jumpsuit = Blueshield jumpsuit
-loadout-group-blueshield-neck = Blueshield neck
-loadout-group-blueshield-backpack = Blueshield backpack
-loadout-group-blueshield-outerclothing = Blueshield outer clothing
-loadout-group-blueshield-shoes = Blueshield shoes
+loadout-group-survival = Survival Box
+loadout-group-head = Head
+loadout-group-glasses = Glasses
+loadout-group-mask = Mask
+loadout-group-neck = Neck
+loadout-group-gloves = Gloves
+loadout-group-jumpsuit = Jumpsuit
+loadout-group-backpack = Backpack
+loadout-group-pda = PDA
+loadout-group-belt = Belt
+loadout-group-outerclothing = Outer Clothing
+loadout-group-shoes = Shoes
+loadout-group-trinkets = Trinkets

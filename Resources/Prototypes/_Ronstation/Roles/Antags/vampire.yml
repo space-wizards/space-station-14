@@ -1,0 +1,10 @@
+- type: antag
+  id: Vampire
+  name: roles-antag-vampire-name
+  antagonist: true
+  setPreference: false
+  objective: roles-antag-vampire-objective
+  # guides: [ Vampire ]
+  requirements:
+  - !type:OverallPlaytimeRequirement
+    time: 3600 # 1h

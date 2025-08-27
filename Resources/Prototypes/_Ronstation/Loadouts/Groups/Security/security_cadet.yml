@@ -1,0 +1,6 @@
+- type: loadoutGroup
+  id: SecurityCadetJumpsuit
+  parent: BaseJumpsuit
+  loadouts:
+  - RedJumpsuit
+  - RedJumpskirt

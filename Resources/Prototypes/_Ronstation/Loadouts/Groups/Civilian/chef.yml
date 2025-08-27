@@ -1,0 +1,26 @@
+- type: loadoutGroup
+  id: ChefHead
+  parent: BaseHead
+  loadouts:
+  - ChefHead
+
+- type: loadoutGroup
+  id: ChefMask
+  parent: BaseMask
+  loadouts:
+  - ChefMask
+
+- type: loadoutGroup
+  id: ChefJumpsuit
+  parent: BaseJumpsuit
+  loadouts:
+  - ChefJumpsuit
+  - ChefJumpskirt
+
+- type: loadoutGroup
+  id: ChefOuterClothing
+  parent: BaseOuterClothing
+  loadouts:
+  - ChefApron
+  - ChefJacket
+  - ChefWintercoat
