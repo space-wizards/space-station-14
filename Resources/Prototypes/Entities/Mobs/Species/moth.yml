@@ -87,6 +87,7 @@
       - map: [ "enum.HumanoidVisualLayers.UndergarmentTop" ]
       - map: [ "enum.HumanoidVisualLayers.LFoot" ]
       - map: [ "enum.HumanoidVisualLayers.RFoot" ]
+      - map: [ "shoes" ]
       - map: [ "jumpsuit" ]
       - map: [ "enum.HumanoidVisualLayers.LHand" ]
       - map: [ "enum.HumanoidVisualLayers.RHand" ]
@@ -96,7 +97,6 @@
         state: body-overlay-2
         visible: false
       - map: [ "gloves" ]
-      - map: [ "shoes" ]
       - map: [ "ears" ]
       - map: [ "eyes" ]
       - map: [ "belt" ]
