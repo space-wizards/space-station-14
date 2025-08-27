@@ -93,7 +93,7 @@
       - !type:PopupBehavior
         popup: mouth-taste-metal
         popupType: LargeCaution
-        onlyAffected: true
+        targetOnly: true
     - trigger:
         !type:DamageTypeTrigger
         damageType: Radiation
