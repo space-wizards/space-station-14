@@ -1,18 +1,19 @@
-using Content.Server.DeviceNetwork.Systems;
+using Content.Server.Antag;
 using Content.Server.GameTicking.Rules;
 using Content.Server.GameTicking.Rules.Components;
-using Content.Server.Radio.EntitySystems;
 using Content.Server.Silicons.Borgs;
 using Content.Shared.Destructible;
 using Content.Shared.Roles;
 using Content.Shared.Roles.Components;
 using Content.Shared.Silicons.Borgs.Components;
 using Content.Shared.Xenoborgs.Components;
+using Robust.Shared.Player;
 
 namespace Content.Server.Xenoborgs;
 
 public sealed partial class XenoborgSystem : EntitySystem
 {
+    [Dependency] private readonly AntagSelectionSystem _antag = default!;
     [Dependency] private readonly BorgSystem _borg = default!;
     [Dependency] private readonly SharedRoleSystem _roles = default!;
     [Dependency] private readonly XenoborgsRuleSystem _xenoborgsRule = default!;
@@ -48,10 +49,20 @@ public sealed partial class XenoborgSystem : EntitySystem
         }
     }
 
-    public void EnsureXenoborgRole(EntityUid mindId)
+    public void EnsureXenoborgRole(EntityUid mindId, EntityUid ent, XenoborgComponent xenoborgComp)
     {
         if (!_roles.MindHasRole<XenoborgRoleComponent>(mindId))
+        {
             _roles.MindAddRole(mindId, "MindRoleXenoborg", silent: true);
+
+            if (TryComp<ActorComponent>(ent, out var actorComp))
+            {
+                _antag.SendBriefing(actorComp.PlayerSession,
+                    Loc.GetString("xenoborgs-welcome"),
+                    Color.BlueViolet,
+                    xenoborgComp.GreetSoundNotification);
+            }
+        }
     }
 
     public void RemoveXenoborgRole(EntityUid mindId)
@@ -60,10 +71,20 @@ public sealed partial class XenoborgSystem : EntitySystem
             _roles.MindRemoveRole<XenoborgRoleComponent>(mindId);
     }
 
-    public void EnsureXenoborgCoreRole(EntityUid mindId)
+    public void EnsureXenoborgCoreRole(EntityUid mindId, EntityUid ent, MothershipCoreComponent mothershipComp)
     {
         if (!_roles.MindHasRole<XenoborgCoreRoleComponent>(mindId))
+        {
             _roles.MindAddRole(mindId, "MindRoleMothershipCore", silent: true);
+
+            if (TryComp<ActorComponent>(ent, out var actorComp))
+            {
+                _antag.SendBriefing(actorComp.PlayerSession,
+                    Loc.GetString("xenoborgs-welcome"),
+                    Color.BlueViolet,
+                    mothershipComp.GreetSoundNotification);
+            }
+        }
     }
 
     public void RemoveXenoborgCoreRole(EntityUid mindId)

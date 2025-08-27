@@ -7,7 +7,6 @@ using Content.Shared.Humanoid;
 using Content.Shared.Mind;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Mobs.Systems;
-using Content.Server.RoundEnd;
 using Content.Shared.Xenoborgs.Components;
 using Robust.Shared.Player;
 
@@ -19,8 +18,6 @@ public sealed class XenoborgsRuleSystem : GameRuleSystem<XenoborgsRuleComponent>
     [Dependency] private readonly ChatSystem _chatSystem = default!;
     [Dependency] private readonly MobStateSystem _mobState = default!;
     [Dependency] private readonly SharedMindSystem _mindSystem = default!;
-    [Dependency] private readonly RoundEndSystem _roundEnd = default!;
-
     public override void Initialize()
     {
         base.Initialize();
@@ -39,12 +36,12 @@ public sealed class XenoborgsRuleSystem : GameRuleSystem<XenoborgsRuleComponent>
 
     private void OnAfterAntagEntSelected(Entity<XenoborgsRuleComponent> ent, ref AfterAntagEntitySelectedEvent args)
     {
-        if (TryComp<XenoborgComponent>(args.EntityUid, out var xenoborgCompo))
+        if (TryComp<XenoborgComponent>(args.EntityUid, out var xenoborgComp))
         {
             _antag.SendBriefing(args.Session,
                 Loc.GetString("xenoborgs-welcome"),
                 Color.BlueViolet,
-                xenoborgCompo.GreetSoundNotification);
+                xenoborgComp.GreetSoundNotification);
         }
         else if (TryComp<MothershipCoreComponent>(args.EntityUid, out var mothershipComp))
         {
