@@ -89,6 +89,21 @@
             "name": "ironrock_west"
         },
         {
+            "name": "ironsandstone"
+        },
+        {
+            "name": "ironsandstone_south"
+        },
+        {
+            "name": "ironsandstone_east"
+        },
+        {
+            "name": "ironsandstone_north"
+        },
+        {
+            "name": "ironsandstone_west"
+        },
+        {
             "name": "rock_artifact_fragment"
         },
         {
