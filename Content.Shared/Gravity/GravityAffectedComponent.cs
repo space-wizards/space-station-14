@@ -12,6 +12,6 @@ public sealed partial class GravityAffectedComponent : Component
     /// <summary>
     /// If true, this entity will be considered "weightless"
     /// </summary>
-    [DataField, AutoNetworkedField]
+    [AutoNetworkedField]
     public bool Weightless = true;
 }
