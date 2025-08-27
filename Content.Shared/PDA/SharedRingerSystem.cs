@@ -25,10 +25,8 @@ public abstract class SharedRingerSystem : EntitySystem
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly INetManager _net = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
-    [Dependency] private readonly SharedMindSystem _mind = default!;
     [Dependency] private readonly SharedPdaSystem _pda = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
-    [Dependency] private readonly SharedRoleSystem _role = default!;
     [Dependency] private readonly SharedTransformSystem _xform = default!;
     [Dependency] protected readonly SharedUserInterfaceSystem UI = default!;
 
@@ -45,8 +43,8 @@ public abstract class SharedRingerSystem : EntitySystem
     /// <inheritdoc/>
     public override void Update(float frameTime)
     {
-        var ringerQuery = EntityQueryEnumerator<RingerComponent>();
-        while (ringerQuery.MoveNext(out var uid, out var ringer))
+        var ringerQuery = EntityQueryEnumerator<RingerComponent, TransformComponent>();
+        while (ringerQuery.MoveNext(out var uid, out var ringer, out var xform))
         {
             if (!ringer.Active || !ringer.NextNoteTime.HasValue)
                 continue;
@@ -63,10 +61,9 @@ public abstract class SharedRingerSystem : EntitySystem
             // and play it separately with PlayLocal, so that it's actually predicted
             if (_net.IsServer)
             {
-                var ringerXform = Transform(uid);
                 _audio.PlayEntity(
                     GetSound(ringer.Ringtone[ringer.NoteCount]),
-                    Filter.Empty().AddInRange(_xform.GetMapCoordinates(uid, ringerXform), ringer.Range),
+                    Filter.Empty().AddInRange(_xform.GetMapCoordinates(uid, xform), ringer.Range),
                     uid,
                     true,
                     AudioParams.Default.WithMaxDistance(ringer.Range).WithVolume(ringer.Volume)
@@ -255,14 +252,6 @@ public abstract class SharedRingerSystem : EntitySystem
             UI.CloseUi(ent.Owner, StoreUiKey.Key);
 
         return true;
-    }
-
-    /// <summary>
-    /// Helper method to determine if the mind is an antagonist.
-    /// </summary>
-    protected bool IsAntagonist(EntityUid? user)
-    {
-        return user != null && _mind.TryGetMind(user.Value, out var mindId, out _) && _role.MindIsAntagonist(mindId);
     }
 
     /// <summary>

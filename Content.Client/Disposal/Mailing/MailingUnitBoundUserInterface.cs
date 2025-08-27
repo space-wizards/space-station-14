@@ -4,6 +4,7 @@ using Content.Shared.Disposal;
 using Content.Shared.Disposal.Components;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
+using System.Linq;
 
 namespace Content.Client.Disposal.Mailing;
 
@@ -70,10 +71,10 @@ public sealed class MailingUnitBoundUserInterface : BoundUserInterface
         //UnitTag.Text = state.Tag;
         MailingUnitWindow.Target.Text = entity.Comp.Target;
 
-        MailingUnitWindow.TargetListContainer.Clear();
-        foreach (var target in entity.Comp.TargetList)
-        {
-            MailingUnitWindow.TargetListContainer.AddItem(target);
-        }
+        var entries = entity.Comp.TargetList.Select(target => new ItemList.Item(MailingUnitWindow.TargetListContainer) {
+            Text = target,
+            Selected = target == entity.Comp.Target
+        }).ToList();
+        MailingUnitWindow.TargetListContainer.SetItems(entries);
     }
 }
