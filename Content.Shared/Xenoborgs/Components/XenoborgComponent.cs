@@ -1,7 +1,13 @@
+using Robust.Shared.Audio;
+
 namespace Content.Shared.Xenoborgs.Components;
 
-/// <summary>
-/// ???
-/// </summary>
 [RegisterComponent]
-public sealed partial class XenoborgComponent : Component;
+public sealed partial class XenoborgComponent : Component
+{
+    /// <summary>
+    ///     Path to antagonist alert sound.
+    /// </summary>
+    [DataField]
+    public SoundSpecifier GreetSoundNotification = new SoundPathSpecifier("/Audio/Ambience/Antag/silicon_lawboard_antimov.ogg");
+}

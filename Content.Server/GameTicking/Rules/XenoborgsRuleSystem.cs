@@ -39,19 +39,19 @@ public sealed class XenoborgsRuleSystem : GameRuleSystem<XenoborgsRuleComponent>
 
     private void OnAfterAntagEntSelected(Entity<XenoborgsRuleComponent> ent, ref AfterAntagEntitySelectedEvent args)
     {
-        if (TryComp<XenoborgComponent>(args.EntityUid, out _))
+        if (TryComp<XenoborgComponent>(args.EntityUid, out var xenoborgCompo))
         {
             _antag.SendBriefing(args.Session,
                 Loc.GetString("xenoborgs-welcome"),
                 Color.BlueViolet,
-                ent.Comp.GreetSoundNotification);
+                xenoborgCompo.GreetSoundNotification);
         }
-        else if (TryComp<MothershipCoreComponent>(args.EntityUid, out _))
+        else if (TryComp<MothershipCoreComponent>(args.EntityUid, out var mothershipComp))
         {
             _antag.SendBriefing(args.Session,
                 Loc.GetString("mothership-welcome"),
                 Color.BlueViolet,
-                ent.Comp.GreetSoundNotification);
+                mothershipComp.GreetSoundNotification);
         }
     }
 
