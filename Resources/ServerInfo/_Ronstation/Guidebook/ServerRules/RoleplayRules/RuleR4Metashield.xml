@@ -10,8 +10,18 @@ The knowledge that a round will end is out of character information. Knowledge t
 ### Knowledge from past lives
 Except when otherwise specified, you cannot use any information gained in a past life (i.e., different character) in the same round.
 For example, if you were killed by an antagonist, you cannot warn the crew of said antagonist when you respawn as a mothroach.
-In the cases of being cloned post-mortem, having your brain be put into a cyborg via a MMI, or splitting into nymphs as a diona, these characters are allowed to retain memories of events prior to the death of their original body, but must follow new life rules regarding death (see 'Knowledge gained while crit, knowledge lost upon death').
-For example, if you were killed by an antagonist, your body was found and your brain was placed in a borg, you can recall what happened prior to your original death, except for details of what lead to your death.
+In the cases of being cloned post-mortem, having your brain be put into a cyborg via a MMI, or splitting into nymphs as a diona, these characters are allowed to retain memories of their original body, but must follow new life rules regarding death (see 'Knowledge gained while crit, knowledge lost upon death').
+
+### Knowledge gained while in crit, knowledge lost upon death (New Life Rule)
+Being unconscious (critically injured, asleep or dead) prevents your character from remembering anything that happened to or around them while unconscious. If brought out of the critical state to the alive state, you may remember what caused you to enter critical state. Entering the dead state causes your character to forget the direct cause of their death. This includes who killed them, how they were killed, and any actions or events that immediately led to their death. If revived, your character may know that they died, but not the killer’s identity, their method, or other incriminating details.
+
+#### New Life Rule (NLR) Examples
+These are examples of things that are prohibited.
+- A character was killed by an antag and brought to medbay, where they were revived. The victim immediately divulges the name of the person who killed them.
+- A diona character is lying dead. They decide to use the unique ability of their species to split into nymphs. The nymph/reformed diona tells another character what lead to their death.
+- Someone was gibbed in a shuttle ramming incident, and their brain was placed in an MMI. Either as the MMI or a borg, they comment about the shuttle speeding towards them before they died.
+- A passenger drinks themself to the point of having fatal alcohol poisoning. Doctors see the amount of poison damage and opt to clone the individual. When they reform as a clone, the passenger comments that they do not regret overdrinking, without first being told how they died.
+- A cargo tech is put into crit by spacing. A thief comes to their rescue, but steals the cargo tech's PDA in the process to fulfil an objective. Once the victim is revived, they immediately call out the thief for stealing their PDA.
 
 ### Knowledge that the round will end (and your character will, ergo, cease to exist)
 Your character will, or should, know that their current shift on Space Station 14 will end and that they will return to Centcomm. They do not know that this represents the effective end of their existence from the perspective of their player.
@@ -20,10 +30,7 @@ You cannot prepare for end-of-round griefing (EORG) or perform other actions tha
 ### Knowledge gained via LOOC
 You cannot use any knowledge gained via LOOC chat that is not in the context of assisting a player with controls, game mechanics, or being made to feel welcome. No in character information should be shared via LOOC, and no actions should be taken or altered because of LOOC or OOC chats.
 
-### Knowledge gained while in crit, knowledge lost upon death
-Being in the critically injured state or otherwise unconscious (includes sleeping) prevents your character from remembering anything that happened to or around them while unconscious. If brought out of the critical state to the alive state, you may remember what caused you to enter critical state. Entering the dead state causes your character to forget all events related to their death (if you can tie it to how you died, do not remember it). If revived, placed in a MMI, or in the case of Diona, splitting, the character is aware of the fact that they have died but not how.
-
-## Do Not Metafriend or Metagrudge
+### Do Not Metafriend or Metagrudge
 Giving a person or character preferential treatment based on the events of a previous round is considered metafriending. Treating a person or character negatively based on the events of a previous round is considered metagrudging.
 
 #### Metafriending Examples
