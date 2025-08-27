@@ -1,4 +1,6 @@
 using Content.Server.DeviceNetwork.Systems;
+using Content.Server.GameTicking.Rules;
+using Content.Server.GameTicking.Rules.Components;
 using Content.Server.Radio.EntitySystems;
 using Content.Server.Silicons.Borgs;
 using Content.Shared.Destructible;
@@ -10,6 +12,8 @@ namespace Content.Server.Xenoborgs;
 public sealed partial class XenoborgSystem : EntitySystem
 {
     [Dependency] private readonly BorgSystem _borg = default!;
+
+    [Dependency] private readonly XenoborgsRuleSystem _xenoborgsRule = default!;
     public override void Initialize()
     {
         base.Initialize();
@@ -27,6 +31,10 @@ public sealed partial class XenoborgSystem : EntitySystem
             if (mothershipCoreEnt != ent)
                 return;
         }
+
+        var xenoborgsRuleQuery = AllEntityQuery<XenoborgsRuleComponent>();
+        if (xenoborgsRuleQuery.MoveNext(out _, out _))
+            _xenoborgsRule.SendMothershipDeathAnnouncement();
 
         // explode all xenoborgs
         var xenoborgQuery = AllEntityQuery<XenoborgComponent, BorgTransponderComponent>();

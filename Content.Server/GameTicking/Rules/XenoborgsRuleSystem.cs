@@ -27,7 +27,6 @@ public sealed class XenoborgsRuleSystem : GameRuleSystem<XenoborgsRuleComponent>
         SubscribeLocalEvent<XenoborgsRuleComponent, AfterAntagEntitySelectedEvent>(OnAfterAntagEntSelected);
 
         SubscribeLocalEvent<XenoborgComponent, DestructionEventArgs>(OnXenoborgDestroyed);
-        SubscribeLocalEvent<MothershipCoreComponent, DestructionEventArgs>(OnMothershipCoreDestroyed);
     }
 
     protected override void Started(EntityUid uid,
@@ -77,18 +76,8 @@ public sealed class XenoborgsRuleSystem : GameRuleSystem<XenoborgsRuleComponent>
             colorOverride: Color.Gold);
     }
 
-    private void OnMothershipCoreDestroyed(EntityUid ent, MothershipCoreComponent component, DestructionEventArgs args)
+    public void SendMothershipDeathAnnouncement()
     {
-        // if a mothership core is destroyed, it will see if there are any others
-        var mothershipCoreQuery = AllEntityQuery<MothershipCoreComponent>();
-        while (mothershipCoreQuery.MoveNext(out var mothershipCoreEnt, out _))
-        {
-            // if it finds a mothership core that is different from the one just destroyed,
-            // it doesn't send the announcement
-            if (mothershipCoreEnt != ent)
-                return;
-        }
-
         _chatSystem.DispatchGlobalAnnouncement(
             Loc.GetString("mothership-destroyed-announcement"),
             colorOverride: Color.Gold);
