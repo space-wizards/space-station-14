@@ -1,18 +1,19 @@
 - type: roleLoadout
   id: JobMedicalIntern
   groups:
-  - SurvivalMedical
-  - GroupSpeciesBreathToolMedical
   - GroupTankHarness
-  # Head
+  # - Head
   - MedicalGlasses
-  # Mask
-  # Neck
-  # Gloves
+  # - Mask
+  # - Neck
+  # - Gloves
   - MedicalInternJumpsuit
   - MedicalBackpack
-  # PDA
-  # Belt
-  # Outer Clothing
-  # Shoes
+  # - PDA
+  # - Belt
+  # - Outer Clothing
+  # - Shoes
+  # Backpack fills
+  - SurvivalMedical
+  - GroupSpeciesBreathToolMedical
   - Trinkets

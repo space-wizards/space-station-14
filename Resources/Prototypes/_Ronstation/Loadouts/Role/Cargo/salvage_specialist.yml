@@ -1,18 +1,19 @@
 - type: roleLoadout
   id: JobSalvageSpecialist
   groups:
-  - Survival
-  - GroupSpeciesBreathTool
   - GroupTankHarness
-  # Head
+  # - Head
   - CommonGlasses
-  # Mask
-  # Neck
-  # Gloves
-  # Jumpsuit
+  # - Mask
+  # - Neck
+  # - Gloves
+  # - Jumpsuit
   - SalvageSpecialistBackpack
-  # PDA
-  # Belt
+  # - PDA
+  # - Belt
   - SalvageSpecialistOuterClothing
   - SalvageSpecialistShoes
+  # Backpack fills
+  - Survival
+  - GroupSpeciesBreathTool
   - Trinkets
