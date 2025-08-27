@@ -47,13 +47,13 @@ namespace Content.Shared.Forensics.Components
         /// <remarks>
         /// This will be used for the title of the printout and displayed to players.
         /// </remarks>
-        [ViewVariables(VVAccess.ReadOnly)]
+        [ViewVariables(VVAccess.ReadOnly), AutoNetworkedField]
         public string LastScannedName = string.Empty;
 
         /// <summary>
         /// When will the scanner be ready to print again?
         /// </summary>
-        [ViewVariables(VVAccess.ReadOnly)]
+        [ViewVariables(VVAccess.ReadOnly), AutoNetworkedField]
         public TimeSpan PrintReadyAt = TimeSpan.Zero;
 
         /// <summary>
@@ -91,7 +91,7 @@ namespace Content.Shared.Forensics.Components
         /// <summary>
         /// What the machine will print
         /// </summary>
-        [DataField("machineOutput", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
+        [DataField("machineOutput", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>)), AutoNetworkedField]
         public string MachineOutput = "ForensicReportPaper";
 
     }

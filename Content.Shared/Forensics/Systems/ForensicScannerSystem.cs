@@ -246,6 +246,7 @@ namespace Content.Shared.Forensics.Systems
                 .WithMaxDistance(4.5f));
 
             component.PrintReadyAt = _gameTiming.CurTime + component.PrintCooldown;
+            Dirty(uid, component);
         }
 
         private void OnClear(EntityUid uid, ForensicScannerComponent component, ForensicScannerClearMessage args)
