@@ -236,13 +236,11 @@
     containers:
       board: !type:Container
       station_ai_brain_slot: !type:Container
-      station_ai_mind_slot: !type:Container
+      station_ai_mind_slot: !type:ContainerSlot
   - type: ContainerFill
     containers:
       board:
       - StationAiCoreElectronics
-      station_ai_brain_slot:
-      - MMIFilled
       
 # The job-ready version of an AI spawn.
 - type: entity
