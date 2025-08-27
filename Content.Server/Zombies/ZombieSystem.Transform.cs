@@ -10,6 +10,7 @@ using Content.Server.Mind;
 using Content.Server.NPC;
 using Content.Server.NPC.HTN;
 using Content.Server.NPC.Systems;
+using Content.Server.NPCRetaliationComponent;
 using Content.Server.Speech.Components;
 using Content.Server.Temperature.Components;
 using Content.Shared.Body.Components;
@@ -95,7 +96,7 @@ public sealed partial class ZombieSystem
     /// </remarks>
     public void ZombifyEntity(EntityUid target, MobStateComponent? mobState = null)
     {
-        //Don't zombfiy zombies
+        //Don't zombify zombies
         if (HasComp<ZombieComponent>(target) || HasComp<ZombieImmuneComponent>(target))
             return;
 
@@ -115,6 +116,9 @@ public sealed partial class ZombieSystem
         RemComp<ReproductivePartnerComponent>(target);
         RemComp<LegsParalyzedComponent>(target);
         RemComp<ComplexInteractionComponent>(target);
+
+        //Self Defense Against Neutral Mobs
+        EnsureComp<NPCRetaliationComponent>(target);
 
         //funny voice
         var accentType = "zombie";
