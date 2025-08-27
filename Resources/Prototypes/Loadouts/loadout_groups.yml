@@ -44,21 +44,21 @@
   - OffsetCaneNT
   - Cane
   - TowelColorWhite
-  - TowelColorBlack
-  - TowelColorDarkBlue
-  - TowelColorDarkGreen
-  - TowelColorGold
   - TowelColorGray
-  - TowelColorGreen
-  - TowelColorLightBlue
-  - TowelColorLightBrown
-  - TowelColorMaroon
+  - TowelColorBlack
   - TowelColorMime
-  - TowelColorOrange
-  - TowelColorPurple
   - TowelColorRed
-  - TowelColorSilver
+  - TowelColorOrange
+  - TowelColorLightBrown
   - TowelColorYellow
+  - TowelColorGreen
+  - TowelColorDarkGreen
+  - TowelColorLightBlue
+  - TowelColorDarkBlue
+  - TowelColorMaroon
+  - TowelColorPurple
+  - TowelColorSilver
+  - TowelColorGold
 
 - type: loadoutGroup
   id: Glasses

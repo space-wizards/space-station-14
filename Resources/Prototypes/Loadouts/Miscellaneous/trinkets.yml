@@ -324,121 +324,6 @@
   groupBy: "towels"
 
 - type: loadout
-  id: TowelColorSilver
-  effects:
-  - !type:JobRequirementLoadoutEffect
-    requirement:
-      !type:OverallPlaytimeRequirement
-      time: 1800000 # 500hr
-  storage:
-    back:
-    - TowelColorSilver
-  groupBy: "towels"
-
-- type: loadout
-  id: TowelColorGold
-  effects:
-  - !type:JobRequirementLoadoutEffect
-    requirement:
-      !type:OverallPlaytimeRequirement
-      time: 3600000 # 1000hr
-  storage:
-    back:
-    - TowelColorGold
-  groupBy: "towels"
-
-- type: loadout
-  id: TowelColorLightBrown
-  effects:
-  - !type:JobRequirementLoadoutEffect
-    requirement:
-      !type:DepartmentTimeRequirement
-      department: Cargo
-      time: 360000 # 100hr
-  storage:
-    back:
-    - TowelColorLightBrown
-  groupBy: "towels"
-
-- type: loadout
-  id: TowelColorGreen
-  effects:
-  - !type:JobRequirementLoadoutEffect
-    requirement:
-      !type:DepartmentTimeRequirement
-      department: Civilian
-      time: 360000 # 100hr
-  storage:
-    back:
-    - TowelColorGreen
-  groupBy: "towels"
-
-- type: loadout
-  id: TowelColorDarkBlue
-  effects:
-  - !type:JobRequirementLoadoutEffect
-    requirement:
-      !type:DepartmentTimeRequirement
-      department: Command
-      time: 360000 # 100hr
-  storage:
-    back:
-    - TowelColorDarkBlue
-  groupBy: "towels"
-
-- type: loadout
-  id: TowelColorOrange
-  effects:
-  - !type:JobRequirementLoadoutEffect
-    requirement:
-      !type:DepartmentTimeRequirement
-      department: Engineering
-      time: 360000 # 100hr
-  storage:
-    back:
-    - TowelColorOrange
-  groupBy: "towels"
-
-- type: loadout
-  id: TowelColorLightBlue
-  effects:
-  - !type:JobRequirementLoadoutEffect
-    requirement:
-      !type:DepartmentTimeRequirement
-      department: Medical
-      time: 360000 # 100hr
-  storage:
-    back:
-    - TowelColorLightBlue
-  groupBy: "towels"
-
-- type: loadout
-  id: TowelColorPurple
-  effects:
-  - !type:JobRequirementLoadoutEffect
-    requirement:
-      !type:DepartmentTimeRequirement
-      department: Science
-      time: 360000 # 100hr
-  storage:
-    back:
-    - TowelColorPurple
-  groupBy: "towels"
-
-- type: loadout
-  id: TowelColorRed
-  effects:
-  - !type:JobRequirementLoadoutEffect
-    requirement:
-      !type:DepartmentTimeRequirement
-      department: Security
-      time: 360000 # 100hr
-  storage:
-    back:
-    - TowelColorRed
-  groupBy: "towels"
-
-- type: loadout
   id: TowelColorGray
   effects:
   - !type:JobRequirementLoadoutEffect
@@ -465,29 +350,55 @@
   groupBy: "towels"
 
 - type: loadout
-  id: TowelColorDarkGreen
+  id: TowelColorMime
   effects:
   - !type:JobRequirementLoadoutEffect
     requirement:
       !type:RoleTimeRequirement
-      role: JobLibrarian
+      role: JobMime
       time: 360000 # 100hr
   storage:
     back:
-    - TowelColorDarkGreen
+    - TowelColorMime
   groupBy: "towels"
 
 - type: loadout
-  id: TowelColorMaroon
+  id: TowelColorRed
   effects:
   - !type:JobRequirementLoadoutEffect
     requirement:
-      !type:RoleTimeRequirement
-      role: JobLawyer
+      !type:DepartmentTimeRequirement
+      department: Security
       time: 360000 # 100hr
   storage:
     back:
-    - TowelColorMaroon
+    - TowelColorRed
+  groupBy: "towels"
+
+- type: loadout
+  id: TowelColorOrange
+  effects:
+  - !type:JobRequirementLoadoutEffect
+    requirement:
+      !type:DepartmentTimeRequirement
+      department: Engineering
+      time: 360000 # 100hr
+  storage:
+    back:
+    - TowelColorOrange
+  groupBy: "towels"
+
+- type: loadout
+  id: TowelColorLightBrown
+  effects:
+  - !type:JobRequirementLoadoutEffect
+    requirement:
+      !type:DepartmentTimeRequirement
+      department: Cargo
+      time: 360000 # 100hr
+  storage:
+    back:
+    - TowelColorLightBrown
   groupBy: "towels"
 
 - type: loadout
@@ -504,14 +415,103 @@
   groupBy: "towels"
 
 - type: loadout
-  id: TowelColorMime
+  id: TowelColorGreen
+  effects:
+  - !type:JobRequirementLoadoutEffect
+    requirement:
+      !type:DepartmentTimeRequirement
+      department: Civilian
+      time: 360000 # 100hr
+  storage:
+    back:
+    - TowelColorGreen
+  groupBy: "towels"
+
+- type: loadout
+  id: TowelColorDarkGreen
   effects:
   - !type:JobRequirementLoadoutEffect
     requirement:
       !type:RoleTimeRequirement
-      role: JobMime
+      role: JobLibrarian
       time: 360000 # 100hr
   storage:
     back:
-    - TowelColorMime
+    - TowelColorDarkGreen
+  groupBy: "towels"
+
+- type: loadout
+  id: TowelColorLightBlue
+  effects:
+  - !type:JobRequirementLoadoutEffect
+    requirement:
+      !type:DepartmentTimeRequirement
+      department: Medical
+      time: 360000 # 100hr
+  storage:
+    back:
+    - TowelColorLightBlue
+  groupBy: "towels"
+
+- type: loadout
+  id: TowelColorDarkBlue
+  effects:
+  - !type:JobRequirementLoadoutEffect
+    requirement:
+      !type:DepartmentTimeRequirement
+      department: Command
+      time: 360000 # 100hr
+  storage:
+    back:
+    - TowelColorDarkBlue
+  groupBy: "towels"
+
+- type: loadout
+  id: TowelColorMaroon
+  effects:
+  - !type:JobRequirementLoadoutEffect
+    requirement:
+      !type:RoleTimeRequirement
+      role: JobLawyer
+      time: 360000 # 100hr
+  storage:
+    back:
+    - TowelColorMaroon
+  groupBy: "towels"
+
+- type: loadout
+  id: TowelColorPurple
+  effects:
+  - !type:JobRequirementLoadoutEffect
+    requirement:
+      !type:DepartmentTimeRequirement
+      department: Science
+      time: 360000 # 100hr
+  storage:
+    back:
+    - TowelColorPurple
+  groupBy: "towels"
+
+- type: loadout
+  id: TowelColorSilver
+  effects:
+  - !type:JobRequirementLoadoutEffect
+    requirement:
+      !type:OverallPlaytimeRequirement
+      time: 1800000 # 500hr
+  storage:
+    back:
+    - TowelColorSilver
+  groupBy: "towels"
+
+- type: loadout
+  id: TowelColorGold
+  effects:
+  - !type:JobRequirementLoadoutEffect
+    requirement:
+      !type:OverallPlaytimeRequirement
+      time: 3600000 # 1000hr
+  storage:
+    back:
+    - TowelColorGold
   groupBy: "towels"
