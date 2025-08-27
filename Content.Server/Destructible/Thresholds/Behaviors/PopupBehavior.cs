@@ -24,7 +24,7 @@ public sealed partial class PopupBehavior : IThresholdBehavior
     /// Only the affected entity will see the popup.
     /// </summary>
     [DataField]
-    public bool OnlyAffected;
+    public bool TargetOnly;
 
     public void Execute(EntityUid uid, DestructibleSystem system, EntityUid? cause = null)
     {
@@ -32,7 +32,7 @@ public sealed partial class PopupBehavior : IThresholdBehavior
         // popup is placed at coords since the entity could be deleted after, no more popup then
         var coords = system.EntityManager.GetComponent<TransformComponent>(uid).Coordinates;
 
-        if (OnlyAffected)
+        if (TargetOnly)
             popup.PopupCoordinates(Loc.GetString(Popup), coords, uid, PopupType);
         else
             popup.PopupCoordinates(Loc.GetString(Popup), coords, PopupType);
