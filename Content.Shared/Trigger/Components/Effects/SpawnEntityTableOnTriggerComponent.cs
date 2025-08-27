@@ -27,6 +27,7 @@ public sealed partial class SpawnEntityTableOnTriggerComponent : BaseXOnTriggerC
     /// <summary>
     /// Whether to use predicted spawning.
     /// </summary>
+    /// <remarks>Randomization in EntityTables is not currently predicted! Use with caution.</remarks>
     [DataField, AutoNetworkedField]
     public bool Predicted;
 }
