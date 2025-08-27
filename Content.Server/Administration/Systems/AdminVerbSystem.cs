@@ -44,7 +44,6 @@ public sealed partial class AdminVerbSystem : SharedAdminVerbSystem
     [Dependency] private readonly SharedPopupSystem _popup = default!;
     [Dependency] private readonly StationSystem _stations = default!;
     [Dependency] private readonly StationSpawningSystem _spawning = default!;
-    [Dependency] private readonly AdminFrozenSystem _freeze = default!;
     [Dependency] private readonly SiliconLawSystem _siliconLawSystem = default!;
 
     private readonly Dictionary<ICommonSession, List<EditSolutionsEui>> _openSolutionUis = new();
@@ -113,12 +112,6 @@ public sealed partial class AdminVerbSystem : SharedAdminVerbSystem
     public override void AdminEraseVerb(NetUserId target)
     {
         _adminSystem.Erase(target);
-    }
-
-    public override void AdminFreezeVerb(EntityUid target)
-    {
-        // TODO: This can be moved to shared. I will follow up on this.
-        _freeze.FreezeAndMute(target);
     }
 
     public override void AdminEntityLogsVerb(ICommonSession player, EntityUid target)

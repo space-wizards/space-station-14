@@ -19,6 +19,7 @@ public abstract partial class SharedAdminVerbSystem : EntitySystem
 {
     [Dependency] private readonly ISharedAdminManager _adminManager = default!;
     [Dependency] private readonly IConsoleHost _consoleHost = default!;
+    [Dependency] private readonly AdminFrozenSystem _freezeSystem = default!;
     [Dependency] private readonly SharedMindSystem _mindSystem = default!;
     [Dependency] private readonly SharedTransformSystem _transformSystem = default!;
     [Dependency] private readonly ToolshedManager _toolshedManager = default!;
@@ -178,7 +179,7 @@ public abstract partial class SharedAdminVerbSystem : EntitySystem
                 Text = Loc.GetString("admin-verbs-freeze-and-mute"),
                 Category = VerbCategory.Admin,
                 Icon = new SpriteSpecifier.Texture(new ResPath("/Textures/Interface/VerbIcons/snow.svg.192dpi.png")),
-                Act = () => AdminFreezeVerb(args.Target),
+                Act = () => _freezeSystem.FreezeAndMute(args.Target),
                 Impact = LogImpact.Medium,
             };
             args.Verbs.Add(freezeAndMuteVerb);
@@ -321,10 +322,6 @@ public abstract partial class SharedAdminVerbSystem : EntitySystem
     }
 
     public virtual void AdminEraseVerb(NetUserId target)
-    {
-    }
-
-    public virtual void AdminFreezeVerb(EntityUid target)
     {
     }
 
