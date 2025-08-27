@@ -1,19 +1,20 @@
 - type: roleLoadout
   id: JobLibrarian
   groups:
-  - Survival
-  - GroupSpeciesBreathTool
   - GroupTankHarness
-  # Head
+  # - Head
   - CommonGlasses
-  # Mask
-  # Neck
-  # Gloves
+  # - Mask
+  # - Neck
+  # - Gloves
   - LibrarianJumpsuit
   - CommonBackpack
-  # PDA
-  # Belt
-  # Outer Clothing
-  # Shoes
+  # - PDA
+  # - Belt
+  # - Outer Clothing
+  # - Shoes
+  # Backpack fills
+  - Survival
+  - GroupSpeciesBreathTool
   - Trinkets
   - CommonPets

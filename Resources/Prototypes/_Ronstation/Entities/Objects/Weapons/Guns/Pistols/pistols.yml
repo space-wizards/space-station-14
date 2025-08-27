@@ -7,7 +7,7 @@
   - type: Sprite
     sprite: _Ronstation/Objects/Weapons/Guns/Pistols/negotiator.rsi
   - type: Gun
-    fireRate: 1.7
+    fireRate: 3
     selectedMode: SemiAuto
     availableModes:
     - SemiAuto

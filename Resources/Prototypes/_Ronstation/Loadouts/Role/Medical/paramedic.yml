@@ -1,19 +1,20 @@
 - type: roleLoadout
   id: JobParamedic
   groups:
-  - SurvivalMedical
-  - GroupSpeciesBreathToolMedical
   - GroupTankHarness
   - ParamedicHead
   - MedicalGlasses
   - MedicalMask
-  # Neck
+  # - Neck
   - MedicalGloves
   - ParamedicJumpsuit
   - MedicalBackpack
-  # PDA
-  # Belt
+  # - PDA
+  # - Belt
   - ParamedicOuterClothing
   - ParamedicShoes
+  # Backpack fills
+  - SurvivalMedical
+  - GroupSpeciesBreathToolMedical
   - Trinkets
   - CommonPets

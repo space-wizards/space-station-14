@@ -2,19 +2,20 @@
   id: JobLawyer
   canCustomizeName: true
   groups:
-  - Survival
-  - GroupSpeciesBreathTool
   - GroupTankHarness
-  # Head
+  # - Head
   - CommonGlasses
-  # Mask
+  # - Mask
   - LawyerNeck
-  # Gloves
+  # - Gloves
   - LawyerJumpsuit
   - CommonBackpack
-  # PDA
-  # Belt
-  # Outer Clothing
-  # Shoes
+  # - PDA
+  # - Belt
+  # - Outer Clothing
+  # - Shoes
+  # Backpack fills
+  - Survival
+  - GroupSpeciesBreathTool
   - Trinkets
   - CommonPets

@@ -1,19 +1,20 @@
 - type: roleLoadout
   id: JobMedicalDoctor
   groups:
-  - SurvivalMedical
-  - GroupSpeciesBreathToolMedical
   - GroupTankHarness
   - MedicalDoctorHead
   - MedicalGlasses
   - MedicalMask
-  # Neck
+  # - Neck
   - MedicalGloves
   - MedicalDoctorJumpsuit
   - MedicalBackpack
   - MedicalDoctorPDA
-  # Belt
+  # - Belt
   - MedicalDoctorOuterClothing
   - MedicalShoes
+  # Backpack fills
+  - SurvivalMedical
+  - GroupSpeciesBreathToolMedical
   - Trinkets
   - CommonPets
