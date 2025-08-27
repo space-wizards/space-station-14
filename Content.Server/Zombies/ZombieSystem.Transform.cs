@@ -10,7 +10,7 @@ using Content.Server.Mind;
 using Content.Server.NPC;
 using Content.Server.NPC.HTN;
 using Content.Server.NPC.Systems;
-using Content.Server.NPCRetaliationComponent;
+using Content.Server.NPC.Components;
 using Content.Server.Speech.Components;
 using Content.Server.Temperature.Components;
 using Content.Shared.Body.Components;
