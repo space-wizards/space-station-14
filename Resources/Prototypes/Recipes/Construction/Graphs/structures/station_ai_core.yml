@@ -2,78 +2,78 @@
   id: StationAiCore
   start: start
   graph:
-    - node: start
-      edges:
-        - to: frame
-          steps:
-            - material: Plasteel
-              amount: 4
-              doAfter: 5
+  - node: start
+    edges:
+    - to: frame
+      steps:
+      - material: Plasteel
+        amount: 4
+        doAfter: 5
 
-    - node: frame
-      entity: PlayerStationAiAssembly
-      actions:
-      - !type:AppearanceChange
-      edges:
-        - to: frameWithElectronics
-          steps:
-            - tag: StationAiCoreElectronics
-              name: construction-graph-tag-station-ai-core-electronics
-              store: board
-              icon:
-                sprite: "Objects/Misc/module.rsi"
-                state: "mainboard"
+  - node: frame
+    entity: PlayerStationAiAssembly
+    actions:
+    - !type:AppearanceChange
+    edges:
+    - to: frameWithElectronics
+      steps:
+      - tag: StationAiCoreElectronics
+        name: construction-graph-tag-station-ai-core-electronics
+        store: board
+        icon:
+          sprite: "Objects/Misc/module.rsi"
+          state: "mainboard"
 
-    - node: frameWithElectronics
-      actions:
-      - !type:AppearanceChange
-      edges:
-        - to: frameWithSecuredElectronics
-          steps:
-            - tool: Screwing
-              doAfter: 2
+  - node: frameWithElectronics
+    actions:
+    - !type:AppearanceChange
+    edges:
+    - to: frameWithSecuredElectronics
+      steps:
+      - tool: Screwing
+        doAfter: 2
 
-    - node: frameWithSecuredElectronics
-      actions:
-      - !type:AppearanceChange
-      edges:
-        - to: frameWithWires
-          steps:
-            - material: Cable
-              amount: 1
-              doAfter: 1
+  - node: frameWithSecuredElectronics
+    actions:
+    - !type:AppearanceChange
+    edges:
+    - to: frameWithWires
+      steps:
+      - material: Cable
+        amount: 1
+        doAfter: 1
 
-    - node: frameWithWires
-      actions:
-      - !type:AppearanceChange
-      edges:
-        - to: frameWithMMI
-          steps:
-            - component: BorgBrain
-              name: construction-graph-component-borg-brain
-              store: station_ai_brain_slot
-              icon:
-                sprite: "Objects/Specific/Robotics/mmi.rsi"
-                state: "mmi_icon"
+  - node: frameWithWires
+    actions:
+    - !type:AppearanceChange
+    edges:
+    - to: frameWithMMI
+      steps:
+      - component: BorgBrain
+        name: construction-graph-component-borg-brain
+        store: station_ai_brain_slot
+        icon:
+          sprite: "Objects/Specific/Robotics/mmi.rsi"
+          state: "mmi_icon"
 
-    - node: frameWithMMI
-      actions:
-      - !type:AppearanceChange
-      edges:
-        - to: frameWithGlass
-          steps:
-            - material: ReinforcedGlass
-              amount: 2
-              doAfter: 2
+  - node: frameWithMMI
+    actions:
+    - !type:AppearanceChange
+    edges:
+    - to: frameWithGlass
+      steps:
+      - material: ReinforcedGlass
+        amount: 2
+        doAfter: 2
 
-    - node: frameWithGlass
-      actions:
-      - !type:AppearanceChange
-      edges:
-        - to: stationAiCore
-          steps:
-            - tool: Screwing
-              doAfter: 2
+  - node: frameWithGlass
+    actions:
+    - !type:AppearanceChange
+    edges:
+    - to: stationAiCore
+      steps:
+      - tool: Screwing
+        doAfter: 2
 
-    - node: stationAiCore
-      entity: PlayerStationAiEmpty
+  - node: stationAiCore
+    entity: PlayerStationAiEmpty

@@ -70,6 +70,12 @@ public sealed class StationAiSystem : SharedStationAiSystem
                 QueueDel(aiBrain);
             }
         }
+
+        // TODO: We should consider keeping the borg brain inside the AI core.
+        // When the core is destroyed, the station AI can be transferred into the brain,
+        // then dropped on the ground. The deceased AI can then be revived later,
+        // instead of being lost forever.
+        QueueDel(brain);
     }
 
     private void OnExpandICChatRecipients(ExpandICChatRecipientsEvent ev)
