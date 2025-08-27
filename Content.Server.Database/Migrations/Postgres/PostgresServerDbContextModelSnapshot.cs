@@ -102,6 +102,10 @@ namespace Content.Server.Database.Migrations.Postgres
                         .HasColumnType("integer")
                         .HasColumnName("admin_log_id");
 
+                    b.Property<long>("CurTime")
+                        .HasColumnType("bigint")
+                        .HasColumnName("cur_time");
+
                     b.Property<DateTime>("Date")
                         .HasColumnType("timestamp with time zone")
                         .HasColumnName("date");
