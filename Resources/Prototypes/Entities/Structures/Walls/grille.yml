@@ -34,8 +34,6 @@
     - type: Damageable
       damageContainer: StructuralInorganic
       damageModifierSet: PerforatedMetallic
-    - type: PowerConsumer
-      showInMonitor: false
     - type: Electrified
       requirePower: true
       noWindowInTile: true
@@ -200,7 +198,7 @@
         mask:
         - FullTileMask
         layer:
-        - WallLayer
+        - GlassLayer
   - type: Construction
     graph: GrilleDiagonal
     node: grilleDiagonal
@@ -238,7 +236,7 @@
         mask:
         - FullTileMask
         layer:
-        - WallLayer
+        - GlassLayer
   - type: Construction
     graph: GrilleDiagonal
     node: clockworkGrilleDiagonal

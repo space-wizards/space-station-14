@@ -68,6 +68,7 @@
     softness: 5
     autoRot: true
   - type: Ringer
+  - type: RingerUplink
   - type: DeviceNetwork
     deviceNetId: Wireless
     receiveFrequencyId: PDA
@@ -121,6 +122,25 @@
     proto: robot
   - type: Speech
     speechVerb: Robotic
+
+- type: entity
+  parent: BasePDA
+  id: BaseWidePDA
+  abstract: true
+  components:
+  - type: Sprite
+    sprite: Objects/Devices/pda.rsi
+    layers:
+    - map: [ "enum.PdaVisualLayers.Base" ]
+      state: "pda"
+    - state: "light_overlay_wide"
+      map: [ "enum.PdaVisualLayers.Flashlight" ]
+      shader: "unshaded"
+      visible: false
+    - state: "id_overlay_wide"
+      map: [ "enum.PdaVisualLayers.IdLight" ]
+      shader: "unshaded"
+      visible: false
 
 - type: entity
   parent: BasePDA
@@ -199,7 +219,7 @@
     state: pda-internmed
   - type: GuideHelp
     guides:
-    - Medical Doctor
+    - MedicalDoctor
 
 - type: entity
   parent: BaseSecurityPDA
@@ -453,6 +473,13 @@
     accentVColor: "#a23e3e"
   - type: Icon
     state: pda-qm
+  - type: CartridgeLoader
+    preinstalled:
+    - CrewManifestCartridge
+    - NotekeeperCartridge
+    - NanoTaskCartridge
+    - NewsReaderCartridge
+    - AstroNavCartridge
 
 - type: entity
   parent: BasePDA
@@ -518,7 +545,7 @@
     state: pda-bartender
 
 - type: entity
-  parent: BasePDA
+  parent: BaseWidePDA
   id: LibrarianPDA
   name: librarian PDA
   description: Smells like books.
@@ -732,7 +759,7 @@
     state: pda-medical
   - type: GuideHelp
     guides:
-    - Medical Doctor
+    - MedicalDoctor
 
 - type: entity
   parent: MedicalPDA
@@ -896,6 +923,7 @@
     id: CentcomIDCard
     penSlot:
       startingItem: PenCentcom
+      priority: -1
       whitelist:
         tags:
         - Write
@@ -930,6 +958,7 @@
   - type: Pda
     id: UniversalIDCard
   - type: HealthAnalyzer
+    maxScanRange: null
     scanDelay: 0
     silent: true
   - type: CartridgeLoader
@@ -1041,7 +1070,7 @@
     - DoorBumpOpener
 
 - type: entity
-  parent: BasePDA
+  parent: [ BasePDA, BaseSyndicateContraband ]
   id: SyndiPDA
   name: syndicate PDA
   description: Ok, time to be a productive member of- oh cool I'm a bad guy time to kill people!
@@ -1398,7 +1427,7 @@
     state: pda-seniorofficer
 
 - type: entity
-  parent: SyndiPDA
+  parent: [ BaseMajorContraband, SyndiPDA ]
   id: PiratePDA
   name: pirate PDA
   description: Yargh!
@@ -1414,9 +1443,9 @@
     state: pda-pirate
 
 - type: entity
-  parent: BaseMedicalPDA
+  parent: [ BaseMedicalPDA, BaseSyndicateContraband ]
   id: SyndiAgentPDA
-  name: syndicate agent PDA
+  name: syndicate corpsman PDA
   description: For those days when healing normal syndicates aren't enough, try healing nuclear operatives instead!
   components:
   - type: Pda
@@ -1438,7 +1467,7 @@
       - MedTekCartridge
 
 - type: entity
-  parent: BasePDA
+  parent: [BasePDA, SelectableLock]
   id: ChameleonPDA
   name: passenger PDA
   description: Why isn't it gray?
@@ -1469,7 +1498,7 @@
         type: ChameleonBoundUserInterface
 
 - type: entity
-  parent: BasePDA
+  parent: BaseWidePDA
   id: WizardPDA
   name: wizard PDA
   description: You hear faint whispers coming from it.
@@ -1491,3 +1520,14 @@
     borderColor: "#7F3300"
   - type: Icon
     state: pda-wizard
+
+- type: entity
+  parent: ClearPDA
+  id: ScurretPDA
+  description: A temporary PDA granted to scurret temps. Doesn't do much. Wawa!
+  components:
+  - type: Pda
+    id: VisitorIDCard
+  - type: Tag #  Ignore Chameleon tags
+    tags:
+    - DoorBumpOpener

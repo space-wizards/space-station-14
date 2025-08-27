@@ -16,6 +16,9 @@
   id: AirSensor
 
 - type: Tag
+  id: AllowBiomeLoading # Entities with this tag will load terrain, even if a ghost.
+
+- type: Tag
   id: AllowGhostShownByEvent
 
 - type: Tag
@@ -28,6 +31,9 @@
   id: AppraisalTool
 
 - type: Tag
+  id: Apron
+
+- type: Tag
   id: Arrow
 
 - type: Tag
@@ -35,6 +41,9 @@
 
 - type: Tag
   id: ATVKeys
+
+- type: Tag
+  id: Backpack
 
 - type: Tag
   id: Balloon
@@ -74,6 +83,9 @@
 
 - type: Tag
   id: BodyBag
+
+- type: Tag
+  id: Boll
 
 - type: Tag
   id: Book
@@ -214,43 +226,10 @@
   id: CanPilot
 
 - type: Tag
-  id: CapacitorStockPart
-
-- type: Tag
   id: CaptainSabre
 
 - type: Tag
   id: Carpet
-
-- type: Tag
-  id: CarpetBlack
-
-- type: Tag
-  id: CarpetBlue
-
-- type: Tag
-  id: CarpetCyan
-
-- type: Tag
-  id: CarpetGreen
-
-- type: Tag
-  id: CarpetOrange
-
-- type: Tag
-  id: CarpetPink
-
-- type: Tag
-  id: CarpetPurple
-
-- type: Tag
-  id: CarpetRed
-
-- type: Tag
-  id: CarpetSBlue
-
-- type: Tag
-  id: CarpetWhite
 
 - type: Tag
   id: Carrot
@@ -369,16 +348,25 @@
   id: ComputerTelevisionCircuitboard
 
 - type: Tag
+  id: ConstructionMaterial
+
+- type: Tag
   id: ConveyorAssembly
 
 - type: Tag
   id: CoordinatesDisk
+
+- type: Tag # designed to let corgis wear things; at present only for SmartCorgi.  View PR 33737 on upstream for more dog wearables
+  id: CorgiWearable
 
 - type: Tag #Ohioans die happy
   id: Corn
 
 - type: Tag
   id: CottonBoll
+
+- type: Tag
+  id: CottonBurger
 
 - type: Tag
   id: Cow
@@ -412,6 +400,9 @@
 
 - type: Tag
   id: CrayonYellow
+
+- type: Tag
+  id: Creamsicle
 
 - type: Tag
   id: Crowbar
@@ -457,6 +448,9 @@
 
 - type: Tag
   id: Diagonal
+
+- type: Tag
+  id: Diamond
 
 - type: Tag
   id: Dice
@@ -526,6 +520,33 @@
 
 - type: Tag
   id: EmitterBolt
+
+- type: Tag
+  id: EncryptionCargo
+
+- type: Tag
+  id: EncryptionCommand
+
+- type: Tag
+  id: EncryptionCommon
+
+- type: Tag
+  id: EncryptionElse
+
+- type: Tag
+  id: EncryptionEngineering
+
+- type: Tag
+  id: EncryptionMedical
+
+- type: Tag
+  id: EncryptionScience
+
+- type: Tag
+  id: EncryptionSecurity
+
+- type: Tag
+  id: EncryptionService
 
 - type: Tag
   id: Enzyme
@@ -608,6 +629,10 @@
 - type: Tag
   id: GeigerCounter
 
+# Used for warps
+- type: Tag
+  id: GhostOnlyWarp
+
 - type: Tag
   id: GlassAirlock
 
@@ -621,7 +646,13 @@
   id: Goat
 
 - type: Tag
+  id: GoldenPlunger
+
+- type: Tag
   id: Goliath
+
+- type: Tag
+  id: GoliathPlate
 
 - type: Tag
   id: GPS
@@ -640,6 +671,15 @@
 
 - type: Tag
   id: GuideEmbeded
+
+- type: Tag
+  id: GunUpgradeDamage
+
+- type: Tag
+  id: GunUpgradeRange
+
+- type: Tag
+  id: GunUpgradeReloadSpeed
 
 - type: Tag
   id: Hamster
@@ -667,6 +707,9 @@
 
 - type: Tag
   id: Handcuffs
+
+- type: Tag
+  id: HandGrenade
 
 - type: Tag
   id: HappyHonk
@@ -703,6 +746,9 @@
 
 - type: Tag
   id: HighSecDoor
+
+- type: Tag
+  id: HivelordRemains
 
 - type: Tag
   id: HiViz
@@ -756,6 +802,9 @@
   id: Ingot
 
 - type: Tag
+  id: Inflatable
+
+- type: Tag
   id: InstantDoAfters
 
 - type: Tag
@@ -787,6 +836,9 @@
 
 - type: Tag
   id: Knife
+
+- type: Tag
+  id: KnockdownImmune
 
 - type: Tag
   id: LavaBrig
@@ -851,9 +903,6 @@
   id: MagazineShotgun
 
 - type: Tag
-  id: MagazineMagnumSubMachineGun
-
-- type: Tag
   id: MagazinePistolSubMachineGun
 
 - type: Tag
@@ -898,7 +947,7 @@
   id: MimeHappyHonk
 
 - type: Tag
-  id: MindShield
+  id: FakeMindShieldImplant
 
 - type: Tag
   id: MindTransferTarget
@@ -931,6 +980,9 @@
   id: Multitool
 
 - type: Tag
+  id: Mushroom
+
+- type: Tag
   id: NoBlockAnchoring
 
 - type: Tag
@@ -955,6 +1007,21 @@
   id: Ore
 
 - type: Tag
+  id: OreBananium
+
+- type: Tag
+  id: OreGold
+
+- type: Tag
+  id: OrePlasma
+
+- type: Tag
+  id: OreSilver
+
+- type: Tag
+  id: OreUranium
+
+- type: Tag
   id: Packet
 
 - type: Tag
@@ -967,6 +1034,9 @@
   id: Pancake
 
 - type: Tag
+  id: ParcelWrapBlacklist
+
+- type: Tag
   id: Payload # for grenade/bomb crafting
 
 - type: Tag
@@ -977,6 +1047,9 @@
 
 - type: Tag
   id: PercussionInstrument
+
+- type: Tag
+  id: PetOnly
 
 - type: Tag
   id: PetWearable
@@ -1000,7 +1073,13 @@
   id: Pipe
 
 - type: Tag
+  id: Pistachios
+
+- type: Tag
   id: Pizza
+
+- type: Tag
+  id: PKAUpgrade
 
 - type: Tag
   id: PlantAnalyzer
@@ -1022,6 +1101,12 @@
 
 - type: Tag
   id: PlushieCarp
+
+- type: Tag
+  id: PlushieCarpHolo
+
+- type: Tag
+  id: PlushieCarpMagi
 
 - type: Tag
   id: PlushieGhost
@@ -1057,6 +1142,9 @@
   id: Powerdrill
 
 - type: Tag
+  id: PreventAccessLogging
+
+- type: Tag
   id: PrisonUniform
 
 - type: Tag
@@ -1077,6 +1165,9 @@
 
 - type: Tag
   id: ReinforcedGlassShard
+
+- type: Tag
+  id: RemoteSignaller
 
 - type: Tag
   id: ReptilianFood
@@ -1115,16 +1206,25 @@
   id: RollingPin
 
 - type: Tag
+  id: Ruminant
+
+- type: Tag
   id: SaltShaker
 
 - type: Tag
   id: SalvageExperiment
 
 - type: Tag
+  id: SalvageScrap
+
+- type: Tag
   id: Scarf
 
 - type: Tag
   id: Screwdriver
+
+- type: Tag # Flags items that scurrets can wear in their back and outerwear slots.
+  id: ScurretWearable
 
 - type: Tag
   id: SecBeltEquip
@@ -1166,6 +1266,12 @@
   id: SignalTrigger
 
 - type: Tag
+  id: SilentStorageUser # used in SharedStorageSystem, so the entity will do all silently
+
+- type: Tag
+  id: SiliconEmotes
+
+- type: Tag
   id: SkeletonMotorcycleKeys
 
 - type: Tag
@@ -1173,6 +1279,9 @@
 
 - type: Tag
   id: Slice # sliced fruit, vegetables, pizza etc.
+
+- type: Tag
+  id: SlowImmune
 
 - type: Tag
   id: SmallAIChip
@@ -1236,6 +1345,9 @@
 
 - type: Tag
   id: StringInstrument
+
+- type: Tag
+  id: StunImmune
 
 - type: Tag
   id: SubdermalImplant
@@ -1316,6 +1428,12 @@
   id: Truncheon
 
 - type: Tag
+  id: TurretCompatibleWeapon # Used in the construction of sentry turrets
+
+- type: Tag
+  id: TurretControlElectronics # Used in the construction of sentry turret control panels
+
+- type: Tag
   id: Unimplantable
 
 - type: Tag
@@ -1323,6 +1441,9 @@
 
 - type: Tag
   id: UraniumGlassShard
+
+- type: Tag
+  id: UtilityBelt
 
 - type: Tag
   id: Vegetable
@@ -1382,6 +1503,9 @@
   id: Wine
 
 - type: Tag
+  id: WireBrush
+
+- type: Tag
   id: Wirecutter
 
 - type: Tag
@@ -1408,4 +1532,18 @@
 - type: Tag
   id: WriteIgnoreStamps
 
+- type: Tag
+  id: XenoborgModuleEngi
+
+- type: Tag
+  id: XenoborgModuleGeneric
+
+- type: Tag
+  id: XenoborgModuleHeavy
+
+- type: Tag
+  id: XenoborgModuleScout
+
+- type: Tag
+  id: XenoborgModuleStealth
 # ALPHABETICAL

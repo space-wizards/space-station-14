@@ -11,6 +11,9 @@
       "name": "id_overlay"
     },
     {
+      "name": "id_overlay_wide"
+    },
+    {
       "name": "equipped-BELT",
       "directions": 4
     },
@@ -27,6 +30,9 @@
     },
     {
       "name": "light_overlay"
+    },
+    {
+      "name": "light_overlay_wide"
     },
     {
       "name": "pda"

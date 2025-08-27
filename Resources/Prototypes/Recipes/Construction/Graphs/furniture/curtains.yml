@@ -17,99 +17,72 @@
           completed:
             - !type:SnapToGrid { }
           steps:
-            - tag: CarpetBlack
+            - material: FloorCarpetBlack
+              amount: 1
               doAfter: 1
-              name: black carpet
-              icon:
-                sprite: Objects/Tiles/tile.rsi
-                state: carpet-black
         - to: CurtainsBlue
           completed:
             - !type:SnapToGrid { }
           steps:
-            - tag: CarpetBlue
+            - material: FloorCarpetBlue
+              amount: 1
               doAfter: 1
-              name: blue carpet
-              icon:
-                sprite: Objects/Tiles/tile.rsi
-                state: carpet-blue
         - to: CurtainsCyan
           completed:
             - !type:SnapToGrid { }
           steps:
-            - tag: CarpetCyan
+            - material: FloorCarpetCyan
+              amount: 1
               doAfter: 1
-              name: cyan carpet
-              icon:
-                sprite: Objects/Tiles/tile.rsi
-                state: carpet-cyan
         - to: CurtainsGreen
           completed:
             - !type:SnapToGrid { }
           steps:
-            - tag: CarpetGreen
+            - material: FloorCarpetGreen
+              amount: 1
               doAfter: 1
-              name: green carpet
-              icon:
-                sprite: Objects/Tiles/tile.rsi
-                state: carpet-green
         - to: CurtainsOrange
           completed:
             - !type:SnapToGrid { }
           steps:
-            - tag: CarpetOrange
+            - material: FloorCarpetOrange
+              amount: 1
               doAfter: 1
-              name: orange carpet
-              icon:
-                sprite: Objects/Tiles/tile.rsi
-                state: carpet-orange
         - to: CurtainsPink
           completed:
             - !type:SnapToGrid { }
           steps:
-            - tag: CarpetPink
+            - material: FloorCarpetPink
+              amount: 1
               doAfter: 1
-              name: pink carpet
-              icon:
-                sprite: Objects/Tiles/tile.rsi
-                state: carpet-pink
         - to: CurtainsPurple
           completed:
             - !type:SnapToGrid { }
           steps:
-            - tag: CarpetPurple
+            - material: FloorCarpetPurple
+              amount: 1
               doAfter: 1
-              name: purple carpet
-              icon:
-                sprite: Objects/Tiles/tile.rsi
-                state: carpet-purple
         - to: CurtainsRed
           completed:
             - !type:SnapToGrid { }
           steps:
-            - tag: CarpetRed
+            - material: FloorCarpetRed
+              amount: 1
               doAfter: 1
-              name: red carpet
-              icon:
-                sprite: Objects/Tiles/tile.rsi
-                state: carpet-red
         - to: CurtainsWhite
           completed:
             - !type:SnapToGrid { }
           steps:
-            - tag: CarpetWhite
+            - material: FloorCarpetWhite
+              amount: 1
               doAfter: 1
-              name: white carpet
-              icon:
-                sprite: Objects/Tiles/tile.rsi
-                state: carpet-white
-              
+
     - node: Curtains
       entity: HospitalCurtains
       edges:
         - to: start
           completed:
-            - !type:SpawnPrototype
+            - !type:GivePrototype
               prototype: MaterialCloth1
               amount: 2
           steps:
@@ -120,19 +93,19 @@
       edges:
         - to: start
           completed:
-            - !type:SpawnPrototype
+            - !type:GivePrototype
               prototype: MaterialCloth1
               amount: 2
           steps:
             - tool: Cutting
               doAfter: 1
-    
+
     - node: CurtainsBlack
       entity: CurtainsBlack
       edges:
         - to: start
           completed:
-            - !type:SpawnPrototype
+            - !type:GivePrototype
               prototype: FloorCarpetItemBlack
               amount: 1
           steps:
@@ -143,19 +116,19 @@
       edges:
         - to: start
           completed:
-            - !type:SpawnPrototype
+            - !type:GivePrototype
               prototype: FloorCarpetItemBlack
               amount: 1
           steps:
             - tool: Cutting
-              doAfter: 1    
-              
+              doAfter: 1
+
     - node: CurtainsBlue
       entity: CurtainsBlue
       edges:
         - to: start
           completed:
-            - !type:SpawnPrototype
+            - !type:GivePrototype
               prototype: FloorCarpetItemBlue
               amount: 1
           steps:
@@ -166,19 +139,19 @@
       edges:
         - to: start
           completed:
-            - !type:SpawnPrototype
+            - !type:GivePrototype
               prototype: FloorCarpetItemBlue
               amount: 1
           steps:
             - tool: Cutting
               doAfter: 1
-              
+
     - node: CurtainsCyan
       entity: CurtainsCyan
       edges:
         - to: start
           completed:
-            - !type:SpawnPrototype
+            - !type:GivePrototype
               prototype: FloorCarpetItemCyan
               amount: 1
           steps:
@@ -189,19 +162,19 @@
       edges:
         - to: start
           completed:
-            - !type:SpawnPrototype
+            - !type:GivePrototype
               prototype: FloorCarpetItemCyan
               amount: 1
           steps:
             - tool: Cutting
               doAfter: 1
-              
+
     - node: CurtainsGreen
       entity: CurtainsGreen
       edges:
         - to: start
           completed:
-            - !type:SpawnPrototype
+            - !type:GivePrototype
               prototype: FloorCarpetItemGreen
               amount: 1
           steps:
@@ -212,19 +185,19 @@
       edges:
         - to: start
           completed:
-            - !type:SpawnPrototype
+            - !type:GivePrototype
               prototype: FloorCarpetItemGreen
               amount: 1
           steps:
             - tool: Cutting
               doAfter: 1
-              
+
     - node: CurtainsOrange
       entity: CurtainsOrange
       edges:
         - to: start
           completed:
-            - !type:SpawnPrototype
+            - !type:GivePrototype
               prototype: FloorCarpetItemOrange
               amount: 1
           steps:
@@ -235,19 +208,19 @@
       edges:
         - to: start
           completed:
-            - !type:SpawnPrototype
+            - !type:GivePrototype
               prototype: FloorCarpetItemOrange
               amount: 1
           steps:
             - tool: Cutting
               doAfter: 1
-              
+
     - node: CurtainsPink
       entity: CurtainsPink
       edges:
         - to: start
           completed:
-            - !type:SpawnPrototype
+            - !type:GivePrototype
               prototype: FloorCarpetItemPink
               amount: 1
           steps:
@@ -258,19 +231,19 @@
       edges:
         - to: start
           completed:
-            - !type:SpawnPrototype
+            - !type:GivePrototype
               prototype: FloorCarpetItemPink
               amount: 1
           steps:
             - tool: Cutting
               doAfter: 1
-              
+
     - node: CurtainsPurple
       entity: CurtainsPurple
       edges:
         - to: start
           completed:
-            - !type:SpawnPrototype
+            - !type:GivePrototype
               prototype: FloorCarpetItemPurple
               amount: 1
           steps:
@@ -281,19 +254,19 @@
       edges:
         - to: start
           completed:
-            - !type:SpawnPrototype
+            - !type:GivePrototype
               prototype: FloorCarpetItemPurple
               amount: 1
           steps:
             - tool: Cutting
               doAfter: 1
-              
+
     - node: CurtainsRed
       entity: CurtainsRed
       edges:
         - to: start
           completed:
-            - !type:SpawnPrototype
+            - !type:GivePrototype
               prototype: FloorCarpetItemRed
               amount: 1
           steps:
@@ -304,19 +277,19 @@
       edges:
         - to: start
           completed:
-            - !type:SpawnPrototype
+            - !type:GivePrototype
               prototype: FloorCarpetItemRed
               amount: 1
           steps:
             - tool: Cutting
               doAfter: 1
-              
+
     - node: CurtainsWhite
       entity: CurtainsWhite
       edges:
         - to: start
           completed:
-            - !type:SpawnPrototype
+            - !type:GivePrototype
               prototype: FloorCarpetItemWhite
               amount: 1
           steps:
@@ -327,7 +300,7 @@
       edges:
         - to: start
           completed:
-            - !type:SpawnPrototype
+            - !type:GivePrototype
               prototype: FloorCarpetItemWhite
               amount: 1
           steps:

@@ -30,6 +30,8 @@ namespace Content.Client.UserInterface.Controls
             };
 
             AddChild(Viewport);
+
+            _cfg.OnValueChanged(CCVars.ViewportScalingFilterMode, _ => UpdateCfg(), true);
         }
 
         protected override void EnteredTree()
@@ -52,6 +54,7 @@ namespace Content.Client.UserInterface.Controls
             var renderScaleUp = _cfg.GetCVar(CCVars.ViewportScaleRender);
             var fixedFactor = _cfg.GetCVar(CCVars.ViewportFixedScaleFactor);
             var verticalFit = _cfg.GetCVar(CCVars.ViewportVerticalFit);
+            var filterMode = _cfg.GetCVar(CCVars.ViewportScalingFilterMode);
 
             if (stretch)
             {
@@ -60,7 +63,11 @@ namespace Content.Client.UserInterface.Controls
                 {
                     // Did not find a snap, enable stretching.
                     Viewport.FixedStretchSize = null;
-                    Viewport.StretchMode = ScalingViewportStretchMode.Bilinear;
+                    Viewport.StretchMode = filterMode switch
+                    {
+                        "nearest" => ScalingViewportStretchMode.Nearest,
+                        "bilinear" => ScalingViewportStretchMode.Bilinear
+                    };
                     Viewport.IgnoreDimension = verticalFit ? ScalingViewportIgnoreDimension.Horizontal : ScalingViewportIgnoreDimension.None;
 
                     if (renderScaleUp)

@@ -519,6 +519,22 @@
   - type: Stack
     stackType: FloorTileTechmaint
 
+- type: entity
+  parent: FloorTileItemBase
+  id: FloorTileItemTechmaintDark
+  name: dark techmaint floor
+  components:
+  - type: Sprite
+    state: techfloordark
+  - type: Item
+    heldPrefix: dark
+  - type: FloorTile
+    outputs:
+    - Plating
+    - FloorTechMaintDark
+  - type: Stack
+    stackType: FloorTileTechmaintDark
+
 # TODO add a catwalk tile item once tile smoothing is supported
 
 - type: entity
@@ -1558,13 +1574,30 @@
   description: Fake sand. Luckily, it's not as coarse as the real thing.
   components:
   - type: Sprite
-    state: asteroid
+    state: astro-asteroid
   - type: Item
     heldPrefix: asteroid
   - type: FloorTile
     outputs:
     - Plating
     - FloorAstroAsteroidSand
+  - type: Stack
+    stackType: FloorTileAstroAsteroidSand
+
+- type: entity
+  id: FloorTileItemAstroAsteroidSandBorderless
+  parent: FloorTileItemBase
+  name: borderless asteroid astro-sand
+  description: Fake sand. Luckily, it's not as coarse as the real thing.
+  components:
+  - type: Sprite
+    state: asteroid
+  - type: Item
+    heldPrefix: asteroid
+  - type: FloorTile
+    outputs:
+    - Plating
+    - FloorAstroAsteroidSandBorderless
   - type: Stack
     stackType: FloorTileAstroAsteroidSand
 
@@ -1586,3 +1619,179 @@
   - type: Construction
     graph: TileWoodLarge
     node: woodtilelarge
+
+# Marble
+
+- type: entity
+  name: white marble tile
+  description: A chiseled, polished square of the finest Space Marble. Best not to lose it.
+  parent: FloorTileItemBase
+  id: FloorTileItemWhiteMarble
+  components:
+  - type: Sprite
+    state: white-marble
+  - type: Item
+    heldPrefix: white-marble
+  - type: FloorTile
+    outputs:
+      - Plating
+      - FloorWhiteMarble
+  - type: Stack
+    stackType: FloorTileWhiteMarble
+
+- type: entity
+  name: dark marble tile
+  description: A chiseled, polished square of the finest Space Marble. Best not to lose it.
+  parent: FloorTileItemWhiteMarble
+  id: FloorTileItemDarkMarble
+  components:
+  - type: Sprite
+    state: dark-marble
+  - type: Item
+    heldPrefix: dark-marble
+  - type: FloorTile
+    outputs:
+      - Plating
+      - FloorDarkMarble
+  - type: Stack
+    stackType: FloorTileDarkMarble
+
+- type: entity
+  name: plasmarble tile
+  description: A chiseled, polished square of the finest Space Marble. Plasma-infused for extra... something.
+  parent: FloorTileItemWhiteMarble
+  id: FloorTileItemPlasmaMarble
+  components:
+  - type: Sprite
+    state: plasmarble
+  - type: Item
+    heldPrefix: plasmarble
+  - type: FloorTile
+    outputs:
+      - Plating
+      - FloorPlasmaMarble
+  - type: Stack
+    stackType: FloorTilePlasmaMarble
+  - type: DamageOtherOnHit
+    damage:
+      types:
+        Blunt: 6
+
+- type: entity
+  name: uranium marble tile
+  description: A chiseled, polished square of the finest Space Marble. Uranium-infused to make it extra rad! Pun intended!
+  parent: FloorTileItemWhiteMarble
+  id: FloorTileItemUraniumMarble
+  components:
+  - type: Sprite
+    state: uranium-marble
+  - type: Item
+    heldPrefix: uranium-marble
+  - type: FloorTile
+    outputs:
+      - Plating
+      - FloorUraniumMarble
+  - type: Stack
+    stackType: FloorTileUraniumMarble
+  - type: DamageOtherOnHit
+    damage:
+      types:
+        Blunt: 5
+        Radiation: 1
+  - type: PointLight
+    radius: 1.2
+    energy: 0.8
+    castShadows: false
+    color: "#9be792"
+
+- type: entity
+  id: FloorTileItemXeno
+  parent: FloorTileItemBase
+  name: xeno floor
+  components:
+  - type: Sprite
+    state: xenofloor
+  - type: Item
+    heldPrefix: steel
+  - type: FloorTile
+    outputs:
+    - Plating
+    - FloorXeno
+  - type: Stack
+    stackType: FloorTileXeno
+
+- type: entity
+  id: FloorTileItemXenoSteel
+  parent: FloorTileItemBase
+  name: xeno steel floor
+  components:
+  - type: Sprite
+    state: xeno-steel
+  - type: Item
+    heldPrefix: steel
+  - type: FloorTile
+    outputs:
+    - Plating
+    - FloorXenoSteel
+  - type: Stack
+    stackType: FloorTileXenoSteel
+
+- type: entity
+  id: FloorTileItemXenoSteelCorner
+  parent: FloorTileItemBase
+  name: xeno steel corner floor
+  components:
+  - type: Sprite
+    state: xeno-steel-corner
+  - type: Item
+    heldPrefix: steel
+  - type: FloorTile
+    outputs:
+    - Plating
+    - FloorXenoSteelCorner
+  - type: Stack
+    stackType: FloorTileXenoSteelCorner
+
+- type: entity
+  name: xeno techmaint floor
+  parent: FloorTileItemBase
+  id: FloorTileItemXenoMaint
+  components:
+  - type: Sprite
+    state: xeno-techmaint
+  - type: Item
+    heldPrefix: dark
+  - type: FloorTile
+    outputs:
+    - Plating
+    - FloorXenoMaint
+  - type: Stack
+    stackType: FloorTileXenoMaint
+
+- type: entity
+  id: FloorTileItemXenoborg
+  parent: FloorTileItemBase
+  name: xenoborg floor
+  components:
+  - type: Sprite
+    state: xenoborg-floor
+  - type: FloorTile
+    outputs:
+    - Plating
+    - FloorXenoborg
+  - type: Stack
+    stackType: FloorTileXenoborg
+
+- type: entity
+  parent: FloorTileItemDark
+  id: FloorTileItemDarkSquiggly
+  name: dark steel squiggly tile
+  components:
+  - type: Sprite
+    state: dark-squiggly
+  - type: FloorTile
+    outputs:
+    - Plating
+    - FloorDarkSquiggly
+  - type: Stack
+    stackType: FloorTileDarkSquiggly
