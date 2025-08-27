@@ -364,7 +364,7 @@
 - type: entity
   parent: ShuttleGunBase
   id: ShuttleGunKineticOld
-  name: xenomorphic dematerializer
+  name: exomorphic dematerializer
   description: An ancient ship gun, utilizing biomechanical systems to store and release energy. While unique in its design, it has been rendered obsolete due to its inferior charging and firing speed compared to mechanical constructions.
   components:
   - type: Sprite
@@ -409,10 +409,3 @@
   - type: DeviceLinkSink
     ports:
     - Trigger
-  - type: Fixtures
-    fixtures:
-      fix1:
-        shape:
-          !type:PhysShapeAabb
-          bounds: "-0.45,-0.45,0.45,0.45"
-        density: 1800

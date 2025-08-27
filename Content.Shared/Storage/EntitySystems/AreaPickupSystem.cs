@@ -52,7 +52,6 @@ public sealed partial class AreaPickupSystem : EntitySystem
         _useDelay.SetLength(entity.Owner, entity.Comp.Cooldown, DelayId);
     }
 
-    private readonly List<EntityUid> _entitiesToPickUp = [];
     private readonly HashSet<EntityUid> _entitiesInRange = [];
 
     private void AfterInteract(Entity<AreaPickupComponent> entity, ref AfterInteractEvent args)
@@ -63,7 +62,6 @@ public sealed partial class AreaPickupSystem : EntitySystem
             return;
 
         // Find entities near where the interaction click was.
-        _entitiesToPickUp.Clear();
         _entitiesInRange.Clear();
         _entityLookup.GetEntitiesInRange(
             args.ClickLocation,
@@ -104,7 +102,6 @@ public sealed partial class AreaPickupSystem : EntitySystem
         var delay = TimeSpan.Zero;
         foreach (var entityToPickUp in ev.EntitiesToPickUp)
         {
-            _entitiesToPickUp.Add(entityToPickUp);
             var weight = _prototype.TryIndex(entityToPickUp.Comp.Size, out var itemSize) ? itemSize.Weight : 1;
             delay += weight * AreaPickupComponent.DelayPerItemWeight;
         }

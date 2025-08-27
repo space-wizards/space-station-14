@@ -4,13 +4,11 @@ using Content.Shared.Interaction;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Storage;
 using Content.Shared.Storage.EntitySystems;
-using Content.Shared.Tag;
 using Content.Shared.Verbs;
 using Content.Shared.Weapons.Ranged.Components;
 using Content.Shared.Weapons.Ranged.Events;
 using Robust.Shared.Containers;
 using Robust.Shared.Map;
-using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.Weapons.Ranged.Systems;
@@ -20,9 +18,7 @@ public abstract partial class SharedGunSystem
     [Dependency] private readonly AreaPickupSystem _areaPickup = default!;
     [Dependency] private readonly SharedDoAfterSystem _doAfter = default!;
     [Dependency] private readonly SharedInteractionSystem _interaction = default!;
-    [Dependency] private readonly IPrototypeManager _prototype = default!;
     [Dependency] private readonly QuickPickupSystem _quickPickup = default!;
-    [Dependency] private readonly TagSystem _tag = default!;
 
 
     protected virtual void InitializeBallistic()
@@ -305,8 +301,8 @@ public abstract partial class SharedGunSystem
         var user = args.User;
 
         // Don't play a sound if the user has the silent user tag.
-        var insertSound = _prototype.TryIndex(entity.Comp.SilentInsertUserTag, out var tag) &&
-                          _tag.HasTag(args.User, tag)
+        var insertSound = ProtoManager.TryIndex(entity.Comp.SilentInsertUserTag, out var tag) &&
+                          TagSystem.HasTag(args.User, tag)
             ? null
             : entity.Comp.SoundInsert;
         args.Handled = _areaPickup.TryDoAreaPickup(

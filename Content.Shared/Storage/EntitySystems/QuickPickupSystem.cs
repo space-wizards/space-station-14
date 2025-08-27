@@ -2,11 +2,8 @@
 using Content.Shared.Item;
 using Content.Shared.Projectiles;
 using Content.Shared.Timing;
-using Content.Shared.Weapons.Ranged.Components;
-using Content.Shared.Weapons.Ranged.Systems;
 using Robust.Shared.Containers;
 using Robust.Shared.Map;
-using Robust.Shared.Utility;
 
 namespace Content.Shared.Storage.EntitySystems;
 
@@ -16,9 +13,7 @@ namespace Content.Shared.Storage.EntitySystems;
 public sealed partial class QuickPickupSystem : EntitySystem
 {
     [Dependency] private readonly SharedContainerSystem _container = default!;
-    [Dependency] private readonly SharedGunSystem _gun = default!;
     [Dependency] private readonly SharedProjectileSystem _projectile = default!;
-    [Dependency] private readonly SharedStorageSystem _storage = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
     [Dependency] private readonly UseDelaySystem _useDelay = default!;
 

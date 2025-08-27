@@ -10,20 +10,20 @@ namespace Content.Shared.Storage;
 /// </summary>
 /// <seealso cref="AreaPickupSystem"/>
 /// <seealso cref="QuickPickupComponent"/>
-[RegisterComponent, NetworkedComponent]
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
 public sealed partial class AreaPickupComponent : Component
 {
     /// <summary>
     /// Minimum delay between quick/area insert actions.
     /// </summary>
     /// <remarks>Used to prevent autoclickers spamming server with individual pickup actions.</remarks>
-    [DataField]
+    [DataField, AutoNetworkedField]
     public TimeSpan Cooldown = TimeSpan.FromSeconds(0.5);
 
     /// <summary>
     /// The pickup radius, in tiles.
     /// </summary>
-    [DataField]
+    [DataField, AutoNetworkedField]
     public int Radius = 1;
 
     /// <summary>

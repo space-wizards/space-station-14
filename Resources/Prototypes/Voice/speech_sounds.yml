@@ -177,3 +177,12 @@
     path: /Audio/Animals/goat_bah.ogg
   exclaimSound:
     path: /Audio/Animals/goat_bah.ogg
+
+- type: speechSounds
+  id: Wawa
+  saySound:
+    path: /Audio/Animals/wawa_statement.ogg
+  askSound:
+    path: /Audio/Animals/wawa_question.ogg
+  exclaimSound:
+    path: /Audio/Animals/wawa_exclaim.ogg

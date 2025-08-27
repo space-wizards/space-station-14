@@ -23,10 +23,8 @@
       puddle:
         maxVol: 1000
         reagents:
-        - ReagentId: Nutriment
-          Quantity: 5
-        - ReagentId: Water
-          Quantity: 5
+        - ReagentId: Vomit
+          Quantity: 10
 
 - type: entity
   id: PuddleEgg
@@ -51,10 +49,8 @@
       puddle:
         maxVol: 1000
         reagents:
-        - ReagentId: Nutriment
-          Quantity: 5
-        - ReagentId: Water
-          Quantity: 5
+        - ReagentId: JuiceTomato
+          Quantity: 10
 
 - type: entity
   parent: PuddleTemporary
@@ -118,10 +114,8 @@
       puddle:
         maxVol: 1000
         reagents:
-        - ReagentId: Nutriment
-          Quantity: 15
-        - ReagentId: Water
-          Quantity: 15
+        - ReagentId: JuiceWatermelon
+          Quantity: 30
 
 - type: entity
   id: PuddleFlour
@@ -165,6 +159,8 @@
   components:
   - type: Clickable
   - type: Slippery
+    staminaDamage: 0
+    frictionStatusTime: 0 # Don't apply friction twice
   - type: Transform
     noRot: true
     anchored: true
@@ -205,13 +201,14 @@
   - type: EdgeSpreader
     id: Puddle
   - type: StepTrigger
-  - type: Drink
+  - type: Edible
+    edible: Drink
     delay: 3
     transferAmount: 1
     solution: puddle
-    examinable: false
   - type: ExaminableSolution
     solution: puddle
+    locVolume: "examinable-solution-on-examine-volume-puddle"
   - type: DrawableSolution
     solution: puddle
   - type: BadDrink

@@ -211,7 +211,7 @@ namespace Content.Client.Actions
             else
             {
                 var request = new RequestPerformActionEvent(GetNetEntity(action));
-                EntityManager.RaisePredictiveEvent(request);
+                RaisePredictiveEvent(request);
             }
         }
 
@@ -334,7 +334,12 @@ namespace Content.Client.Actions
 
         private void OnEntityTargetAttempt(Entity<EntityTargetActionComponent> ent, ref ActionTargetAttemptEvent args)
         {
-            if (args.Handled || args.Input.EntityUid is not { Valid: true } entity)
+            if (args.Handled)
+                return;
+
+            args.Handled = true;
+
+            if (args.Input.EntityUid is not { Valid: true } entity)
                 return;
 
             // let world target component handle it
@@ -344,8 +349,6 @@ namespace Content.Client.Actions
                 DebugTools.Assert(HasComp<WorldTargetActionComponent>(ent), $"Action {ToPrettyString(ent)} requires WorldTargetActionComponent for entity-world targeting");
                 return;
             }
-
-            args.Handled = true;
 
             var action = args.Action;
             var user = args.User;
