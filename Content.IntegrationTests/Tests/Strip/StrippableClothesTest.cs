@@ -1,15 +1,12 @@
 ﻿using System.Collections.Generic;
-using System.Diagnostics;
+using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Inventory;
-using Content.Shared.Strip;
 using Content.Shared.Strip.Components;
-using NUnit.Framework.Internal;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
 
-namespace Content.IntegrationTests.Tests
+namespace Content.IntegrationTests.Tests.Strip
 {
-
      [TestFixture]
      public sealed class StrippableClothesTest
      {
@@ -78,9 +75,16 @@ namespace Content.IntegrationTests.Tests
   - type: Clothing
     slots: back
 
+- type: entity
+  name: HandItemDummy
+  id: HandItemDummy
+  parent: BaseItem
+  components:
+  - type: Item
+
 ";
         [Test]
-        public async Task StripClothesTest()
+        public async Task StripClothesMainTest()
         {
             await using var pair = await PoolManager.GetServerClient();
             var server = pair.Server;
@@ -90,8 +94,7 @@ namespace Content.IntegrationTests.Tests
 
             EntityUid target = default!;
             EntityUid attacker = default!;
-            // EntityUid target = sEntities.SpawnEntity("MobHuman", MapCoordinates.Nullspace);
-            // EntityUid attacker = sEntities.SpawnEntity("MobHuman", MapCoordinates.Nullspace);
+
             InventorySystem invSystem = systemMan.GetEntitySystem<InventorySystem>();
 
             Dictionary<string, string> clothesSlots = new Dictionary<string, string>
@@ -128,11 +131,110 @@ namespace Content.IntegrationTests.Tests
                 {
                     Assert.That(invSystem.TryGetSlotEntity(target, slot, out _), Is.True);
                 }
-
             });
 
             await server.WaitPost(() =>
             {
+                foreach (var slot in clothesSlots.Keys)
+                {
+                    var ev =  new StrippingSlotButtonPressed(slot, false);
+                    ev.Actor = attacker;
+                    server.EntMan.EventBus.RaiseLocalEvent(target, ev);
+                }
+            });
+
+            await pair.RunTicksSync(250);
+
+            await server.WaitAssertion(() =>
+            {
+                foreach (var slot in clothesSlots.Keys)
+                {
+                    Assert.That(invSystem.TryGetSlotEntity(target, slot, out _), Is.False);
+                }
+            });
+
+            await pair.CleanReturnAsync();
+        }
+
+        [Test]
+        public async Task StripWithFullHandsTest()
+        {
+            await using var pair = await PoolManager.GetServerClient();
+            var server = pair.Server;
+
+            var sEntities = server.ResolveDependency<IEntityManager>();
+            var systemMan = sEntities.EntitySysManager;
+
+            EntityUid target = default!;
+            EntityUid attacker = default!;
+
+            InventorySystem invSystem = systemMan.GetEntitySystem<InventorySystem>();
+
+            EntityUid itemLeft = default!;
+            EntityUid itemRight = default!;
+
+            SharedHandsSystem handsSystem = systemMan.GetEntitySystem<SharedHandsSystem>();
+
+            string[] handsSlots =
+            [
+                "body_part_slot_left_hand",
+                "body_part_slot_right_hand",
+            ];
+
+            Dictionary<string, string> clothesSlots = new Dictionary<string, string>
+            {
+                {"eyes", "InventoryEyesDummy"},
+                {"ears", "InventoryEarsDummy"},
+                {"head", "InventoryHeadDummy"},
+                {"neck", "InventoryNeckDummy"},
+                {"mask", "InventoryMaskDummy"},
+                {"shoes", "InventoryShoesDummy"},
+                {"gloves", "InventoryGlovesDummy"},
+                {"outerClothing", "InventoryFireSuitDummy"},
+                {"id", "InventoryIDCardDummy"},
+                {"back", "InventoryBackpackDummy"},
+                {"jumpsuit", "InventoryJumpsuitJanitorDummy"},
+            };
+
+            await server.WaitAssertion(() =>
+            {
+                target = sEntities.SpawnEntity("MobHuman", MapCoordinates.Nullspace);
+                attacker = sEntities.SpawnEntity("MobHuman", MapCoordinates.Nullspace);
+
+                itemLeft = sEntities.SpawnEntity("HandItemDummy", MapCoordinates.Nullspace);
+                itemRight = sEntities.SpawnEntity("HandItemDummy", MapCoordinates.Nullspace);
+
+                foreach (var hand in handsSlots)
+                {
+                    Assert.That(handsSystem.TryGetHand(attacker, hand, out _), Is.True);
+                }
+
+                Assert.That( handsSystem.TryPickup(attacker, itemLeft, handsSlots[0] ), Is.True);
+                Assert.That( handsSystem.TryPickup(attacker, itemRight, handsSlots[1] ), Is.True);
+
+                foreach (var slot in handsSlots)
+                {
+                    Assert.That(handsSystem.TryGetHeldItem(attacker, slot, out _), Is.True);
+                }
+
+                foreach (var slot in clothesSlots.Keys)
+                {
+                    Assert.That(invSystem.HasSlot(target, slot), Is.True);
+                }
+
+                foreach (var keyValuePair in clothesSlots)
+                {
+                    Assert.That(invSystem.SpawnItemInSlot(target, keyValuePair.Key, keyValuePair.Value, true, true), Is.True);
+                }
+
+                foreach (var slot in clothesSlots.Keys)
+                {
+                    Assert.That(invSystem.TryGetSlotEntity(target, slot, out _), Is.True);
+                }
+            });
+            await server.WaitPost(() =>
+            {
+
                 foreach (var slot in clothesSlots.Keys)
                 {
                     var ev =  new StrippingSlotButtonPressed(slot, false);
@@ -149,6 +251,205 @@ namespace Content.IntegrationTests.Tests
                 foreach (var slot in clothesSlots.Keys)
                 {
                     Assert.That(invSystem.TryGetSlotEntity(target, slot, out _), Is.False);
+                }
+            });
+
+            await pair.CleanReturnAsync();
+        }
+
+        [Test]
+        public async Task StripAttemptEmptySlotTest()
+        {
+            await using var pair = await PoolManager.GetServerClient();
+            var server = pair.Server;
+
+            var sEntities = server.ResolveDependency<IEntityManager>();
+            var systemMan = sEntities.EntitySysManager;
+
+            EntityUid target = default!;
+            EntityUid attacker = default!;
+
+            InventorySystem invSystem = systemMan.GetEntitySystem<InventorySystem>();
+
+            Dictionary<string, string> clothesSlots = new Dictionary<string, string>
+            {
+                {"eyes", "InventoryEyesDummy"},
+                {"ears", "InventoryEarsDummy"},
+                {"head", "InventoryHeadDummy"},
+                {"neck", "InventoryNeckDummy"},
+                {"mask", "InventoryMaskDummy"},
+                {"shoes", "InventoryShoesDummy"},
+                {"gloves", "InventoryGlovesDummy"},
+                {"outerClothing", "InventoryFireSuitDummy"},
+                {"id", "InventoryIDCardDummy"},
+                {"back", "InventoryBackpackDummy"},
+                {"jumpsuit", "InventoryJumpsuitJanitorDummy"},
+            };
+
+            await server.WaitAssertion(() =>
+            {
+                target = sEntities.SpawnEntity("MobHuman", MapCoordinates.Nullspace);
+                attacker = sEntities.SpawnEntity("MobHuman", MapCoordinates.Nullspace);
+
+                foreach (var slot in clothesSlots.Keys)
+                {
+                    Assert.That(invSystem.HasSlot(target, slot), Is.True);
+                }
+
+                foreach (var slot in clothesSlots.Keys)
+                {
+                    Assert.That(invSystem.TryGetSlotEntity(target, slot, out _), Is.False);
+                }
+            });
+            await server.WaitPost(() =>
+            {
+
+                foreach (var slot in clothesSlots.Keys)
+                {
+                    var ev =  new StrippingSlotButtonPressed(slot, false);
+                    ev.Actor = attacker;
+                    server.EntMan.EventBus.RaiseLocalEvent(target, ev);
+                }
+
+            });
+
+            await pair.RunTicksSync(250);
+
+            await server.WaitAssertion(() =>
+            {
+                foreach (var slot in clothesSlots.Keys)
+                {
+                    Assert.That(invSystem.TryGetSlotEntity(target, slot, out _), Is.False);
+                }
+            });
+
+            await pair.CleanReturnAsync();
+        }
+
+        [Test]
+        public async Task StripDependentClothesTest()
+        {
+            await using var pair = await PoolManager.GetServerClient();
+            var server = pair.Server;
+
+            var sEntities = server.ResolveDependency<IEntityManager>();
+            var systemMan = sEntities.EntitySysManager;
+
+            EntityUid target = default!;
+            EntityUid attacker = default!;
+
+            InventorySystem invSystem = systemMan.GetEntitySystem<InventorySystem>();
+
+            Dictionary<string, string> clothesSlots = new Dictionary<string, string>
+            {
+                {"jumpsuit", "InventoryJumpsuitJanitorDummy"},
+                {"id", "InventoryIDCardDummy"},
+            };
+
+            await server.WaitAssertion(() =>
+            {
+                target = sEntities.SpawnEntity("MobHuman", MapCoordinates.Nullspace);
+                attacker = sEntities.SpawnEntity("MobHuman", MapCoordinates.Nullspace);
+
+                foreach (var slot in clothesSlots.Keys)
+                {
+                    Assert.That(invSystem.HasSlot(target, slot), Is.True);
+                }
+
+                foreach (var keyValuePair in clothesSlots)
+                {
+                    Assert.That(invSystem.SpawnItemInSlot(target, keyValuePair.Key, keyValuePair.Value, true, true), Is.True);
+                }
+
+                foreach (var slot in clothesSlots.Keys)
+                {
+                    Assert.That(invSystem.TryGetSlotEntity(target, slot, out _), Is.True);
+                }
+            });
+            await server.WaitPost(() =>
+            {
+                var ev =  new StrippingSlotButtonPressed("jumpsuit", false);
+                ev.Actor = attacker;
+                server.EntMan.EventBus.RaiseLocalEvent(target, ev);
+            });
+
+            await pair.RunTicksSync(250);
+
+            await server.WaitAssertion(() =>
+            {
+                foreach (var slot in clothesSlots.Keys)
+                {
+                    Assert.That(invSystem.TryGetSlotEntity(target, slot, out _), Is.False);
+                }
+            });
+
+            await pair.CleanReturnAsync();
+        }
+
+        [Test]
+        public async Task StripItemsFromTargetHands()
+        {
+            await using var pair = await PoolManager.GetServerClient();
+            var server = pair.Server;
+
+            var sEntities = server.ResolveDependency<IEntityManager>();
+            var systemMan = sEntities.EntitySysManager;
+
+            EntityUid target = default!;
+            EntityUid attacker = default!;
+
+            EntityUid itemLeft = default!;
+            EntityUid itemRight = default!;
+
+            SharedHandsSystem handsSystem = systemMan.GetEntitySystem<SharedHandsSystem>();
+
+            string[] handsSlots =
+            [
+                "body_part_slot_left_hand",
+                "body_part_slot_right_hand",
+            ];
+
+            await server.WaitAssertion(() =>
+            {
+                target = sEntities.SpawnEntity("MobHuman", MapCoordinates.Nullspace);
+                attacker = sEntities.SpawnEntity("MobHuman", MapCoordinates.Nullspace);
+
+                itemLeft = sEntities.SpawnEntity("HandItemDummy", MapCoordinates.Nullspace);
+                itemRight = sEntities.SpawnEntity("HandItemDummy", MapCoordinates.Nullspace);
+
+                foreach (var hand in handsSlots)
+                {
+                    Assert.That(handsSystem.TryGetHand(target, hand, out _), Is.True);
+                }
+
+                Assert.That( handsSystem.TryPickup(target, itemLeft, handsSlots[0] ), Is.True);
+                Assert.That( handsSystem.TryPickup(target, itemRight, handsSlots[1] ), Is.True);
+
+                foreach (var slot in handsSlots)
+                {
+                    Assert.That(handsSystem.TryGetHeldItem(target, slot, out _), Is.True);
+                }
+
+            });
+
+            await server.WaitPost(() =>
+            {
+                foreach (var slot in handsSlots)
+                {
+                    var ev =  new StrippingSlotButtonPressed(slot, true);
+                    ev.Actor = attacker;
+                    server.EntMan.EventBus.RaiseLocalEvent(target, ev);
+                }
+
+            });
+
+            await pair.RunTicksSync(250);
+
+            await server.WaitAssertion(() =>
+            {
+                foreach (var slot in handsSlots)
+                {
+                    Assert.That(handsSystem.TryGetHeldItem(target, slot, out _), Is.False);
                 }
             });
 
