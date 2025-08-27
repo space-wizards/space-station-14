@@ -170,8 +170,8 @@ namespace Content.IntegrationTests.Tests.Strip
 
             InventorySystem invSystem = systemMan.GetEntitySystem<InventorySystem>();
 
-            EntityUid itemLeft = default!;
-            EntityUid itemRight = default!;
+            const int handsCount = 2;
+            EntityUid[] items = new EntityUid[handsCount];
 
             SharedHandsSystem handsSystem = systemMan.GetEntitySystem<SharedHandsSystem>();
 
@@ -201,16 +201,20 @@ namespace Content.IntegrationTests.Tests.Strip
                 target = sEntities.SpawnEntity("MobHuman", MapCoordinates.Nullspace);
                 attacker = sEntities.SpawnEntity("MobHuman", MapCoordinates.Nullspace);
 
-                itemLeft = sEntities.SpawnEntity("HandItemDummy", MapCoordinates.Nullspace);
-                itemRight = sEntities.SpawnEntity("HandItemDummy", MapCoordinates.Nullspace);
+                for (int i = 0; i < handsCount; i++)
+                {
+                    items[i] = sEntities.SpawnEntity("HandItemDummy", MapCoordinates.Nullspace);
+                }
 
                 foreach (var hand in handsSlots)
                 {
                     Assert.That(handsSystem.TryGetHand(attacker, hand, out _), Is.True);
                 }
 
-                Assert.That( handsSystem.TryPickup(attacker, itemLeft, handsSlots[0] ), Is.True);
-                Assert.That( handsSystem.TryPickup(attacker, itemRight, handsSlots[1] ), Is.True);
+                for (int i = 0; i < handsCount; i++)
+                {
+                    Assert.That( handsSystem.TryPickup(attacker, items[i], handsSlots[i] ), Is.True);
+                }
 
                 foreach (var slot in handsSlots)
                 {
@@ -398,8 +402,8 @@ namespace Content.IntegrationTests.Tests.Strip
             EntityUid target = default!;
             EntityUid attacker = default!;
 
-            EntityUid itemLeft = default!;
-            EntityUid itemRight = default!;
+            const int handsCount = 2;
+            EntityUid[] items = new EntityUid[handsCount];
 
             SharedHandsSystem handsSystem = systemMan.GetEntitySystem<SharedHandsSystem>();
 
@@ -414,16 +418,20 @@ namespace Content.IntegrationTests.Tests.Strip
                 target = sEntities.SpawnEntity("MobHuman", MapCoordinates.Nullspace);
                 attacker = sEntities.SpawnEntity("MobHuman", MapCoordinates.Nullspace);
 
-                itemLeft = sEntities.SpawnEntity("HandItemDummy", MapCoordinates.Nullspace);
-                itemRight = sEntities.SpawnEntity("HandItemDummy", MapCoordinates.Nullspace);
+                for (int i = 0; i < handsCount; i++)
+                {
+                    items[i] = sEntities.SpawnEntity("HandItemDummy", MapCoordinates.Nullspace);
+                }
 
                 foreach (var hand in handsSlots)
                 {
                     Assert.That(handsSystem.TryGetHand(target, hand, out _), Is.True);
                 }
 
-                Assert.That( handsSystem.TryPickup(target, itemLeft, handsSlots[0] ), Is.True);
-                Assert.That( handsSystem.TryPickup(target, itemRight, handsSlots[1] ), Is.True);
+                for (int i = 0; i < handsCount; i++)
+                {
+                    Assert.That( handsSystem.TryPickup(target, items[i], handsSlots[i] ), Is.True);
+                }
 
                 foreach (var slot in handsSlots)
                 {
