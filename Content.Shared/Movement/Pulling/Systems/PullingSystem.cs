@@ -310,7 +310,7 @@ public sealed class PullingSystem : EntitySystem
     /// </summary>
     private void StopPulling(Entity<PullableComponent?> pullable)
     {
-        if (!Resolve(pullable, ref pullable.Comp))
+        if (!Resolve(pullable, ref pullable.Comp, false))
             return;
 
         if (pullable.Comp.Puller == null)
@@ -602,7 +602,7 @@ public sealed class PullingSystem : EntitySystem
     /// </returns>
     public bool CanStopPull(Entity<PullableComponent?> pullable, EntityUid? user = null)
     {
-        if (!Resolve(pullable, ref pullable.Comp))
+        if (!Resolve(pullable, ref pullable.Comp, false))
             return true;
 
         if (pullable.Comp.Puller == null)
