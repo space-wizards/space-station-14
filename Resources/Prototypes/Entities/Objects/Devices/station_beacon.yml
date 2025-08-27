@@ -45,8 +45,6 @@
   - type: Physics
     canCollide: false
     bodyType: static
-  - type: GravityAffected
-    weightless: false
   - type: Transform
     anchored: true
   - type: Damageable

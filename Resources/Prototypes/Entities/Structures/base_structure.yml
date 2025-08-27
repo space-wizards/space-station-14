@@ -8,7 +8,6 @@
     anchored: true
   - type: Clickable
   - type: GravityAffected
-    weightless: False
   - type: Physics
     bodyType: Static
   - type: Fixtures
@@ -45,7 +44,6 @@
   - type: Physics
     bodyType: Dynamic
   - type: GravityAffected
-    weightless: True
   - type: Fixtures
     fixtures:
       fix1:
