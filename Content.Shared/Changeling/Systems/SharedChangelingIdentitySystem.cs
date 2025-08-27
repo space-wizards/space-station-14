@@ -2,7 +2,6 @@
 using Content.Shared.Changeling.Components;
 using Content.Shared.Cloning;
 using Content.Shared.Humanoid;
-using Content.Shared.Mind.Components;
 using Content.Shared.NameModifier.EntitySystems;
 using Robust.Shared.GameStates;
 using Robust.Shared.Map;
@@ -12,7 +11,7 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Changeling.Systems;
 
-public sealed class ChangelingIdentitySystem : EntitySystem
+public abstract class SharedChangelingIdentitySystem : EntitySystem
 {
     [Dependency] private readonly INetManager _net = default!;
     [Dependency] private readonly IPrototypeManager _prototype = default!;
@@ -32,22 +31,19 @@ public sealed class ChangelingIdentitySystem : EntitySystem
 
         SubscribeLocalEvent<ChangelingIdentityComponent, MapInitEvent>(OnMapInit);
         SubscribeLocalEvent<ChangelingIdentityComponent, ComponentShutdown>(OnShutdown);
-        SubscribeLocalEvent<ChangelingIdentityComponent, MindAddedMessage>(OnMindAdded);
-        SubscribeLocalEvent<ChangelingIdentityComponent, MindRemovedMessage>(OnMindRemoved);
+        SubscribeLocalEvent<ChangelingIdentityComponent, PlayerAttachedEvent>(OnPlayerAttached);
+        SubscribeLocalEvent<ChangelingIdentityComponent, PlayerDetachedEvent>(OnPlayerDetached);
         SubscribeLocalEvent<ChangelingStoredIdentityComponent, ComponentRemove>(OnStoredRemove);
     }
 
-    private void OnMindAdded(Entity<ChangelingIdentityComponent> ent, ref MindAddedMessage args)
+    private void OnPlayerAttached(Entity<ChangelingIdentityComponent> ent, ref PlayerAttachedEvent args)
     {
-        if (!TryComp<ActorComponent>(args.Container.Owner, out var actor))
-            return;
-
-        HandOverPvsOverride(actor.PlayerSession, ent.Comp);
+        HandOverPvsOverride(ent, args.Player);
     }
 
-    private void OnMindRemoved(Entity<ChangelingIdentityComponent> ent, ref MindRemovedMessage args)
+    private void OnPlayerDetached(Entity<ChangelingIdentityComponent> ent, ref PlayerDetachedEvent args)
     {
-        CleanupPvsOverride(ent, args.Container.Owner);
+        CleanupPvsOverride(ent, args.Player);
     }
 
     private void OnMapInit(Entity<ChangelingIdentityComponent> ent, ref MapInitEvent args)
@@ -59,7 +55,8 @@ public sealed class ChangelingIdentitySystem : EntitySystem
 
     private void OnShutdown(Entity<ChangelingIdentityComponent> ent, ref ComponentShutdown args)
     {
-        CleanupPvsOverride(ent, ent.Owner);
+        if (TryComp<ActorComponent>(ent, out var actor))
+            CleanupPvsOverride(ent, actor.PlayerSession);
         CleanupChangelingNullspaceIdentities(ent);
     }
 
@@ -107,66 +104,63 @@ public sealed class ChangelingIdentitySystem : EntitySystem
         // Movercontrollers and mob collisions are currently being calculated even for paused entities.
         // Spawning all of them in the same spot causes severe performance problems.
         // Cryopods and Polymorph have the same problem.
-        var mob = Spawn(speciesPrototype.Prototype, new MapCoordinates(new Vector2(2 * _numberOfStoredIdentities++, 0), PausedMapId!.Value));
+        var clone = Spawn(speciesPrototype.Prototype, new MapCoordinates(new Vector2(2 * _numberOfStoredIdentities++, 0), PausedMapId!.Value));
 
-        var storedIdentity = EnsureComp<ChangelingStoredIdentityComponent>(mob);
+        var storedIdentity = EnsureComp<ChangelingStoredIdentityComponent>(clone);
         storedIdentity.OriginalEntity = target; // TODO: network this once we have WeakEntityReference or the autonetworking source gen is fixed
 
         if (TryComp<ActorComponent>(target, out var actor))
             storedIdentity.OriginalSession = actor.PlayerSession;
 
-        _humanoidSystem.CloneAppearance(target, mob);
-        _cloningSystem.CloneComponents(target, mob, settings);
+        _humanoidSystem.CloneAppearance(target, clone);
+        _cloningSystem.CloneComponents(target, clone, settings);
 
         var targetName = _nameMod.GetBaseName(target);
-        _metaSystem.SetEntityName(mob, targetName);
-        ent.Comp.ConsumedIdentities.Add(mob);
+        _metaSystem.SetEntityName(clone, targetName);
+        ent.Comp.ConsumedIdentities.Add(clone);
 
         Dirty(ent);
-        HandlePvsOverride(ent, mob);
+        HandlePvsOverride(ent, clone);
 
-        return mob;
+        return clone;
     }
 
     /// <summary>
-    /// Simple helper to add a PVS override to a Nullspace Identity
+    /// Simple helper to add a PVS override to a nullspace identity.
     /// </summary>
-    /// <param name="uid"></param>
-    /// <param name="target"></param>
-    private void HandlePvsOverride(EntityUid uid, EntityUid target)
+    /// <param name="uid">The actor that should get the override.</param>
+    /// <param name="identity">The identity stored in nullspace.</param>
+    private void HandlePvsOverride(EntityUid uid, EntityUid identity)
     {
         if (!TryComp<ActorComponent>(uid, out var actor))
             return;
 
-        _pvsOverrideSystem.AddSessionOverride(target, actor.PlayerSession);
+        _pvsOverrideSystem.AddSessionOverride(identity, actor.PlayerSession);
     }
 
     /// <summary>
-    /// Cleanup all Pvs Overrides for the owner of the ChangelingIdentity
+    /// Cleanup all PVS overrides for the owner of the ChangelingIdentity
     /// </summary>
-    /// <param name="ent">the Changeling itself</param>
-    /// <param name="entityUid">Who specifically to cleanup from, usually just the same owner, but in the case of a mindswap we want to clean up the victim</param>
-    private void CleanupPvsOverride(Entity<ChangelingIdentityComponent> ent, EntityUid entityUid)
+    /// <param name="ent">The changeling storing the identities.</param>
+    /// <param name="entityUid"The session you wish to remove the overrides from.</param>
+    private void CleanupPvsOverride(Entity<ChangelingIdentityComponent> ent, ICommonSession session)
     {
-        if (!TryComp<ActorComponent>(entityUid, out var actor))
-            return;
-
         foreach (var identity in ent.Comp.ConsumedIdentities)
         {
-            _pvsOverrideSystem.RemoveSessionOverride(identity, actor.PlayerSession);
+            _pvsOverrideSystem.RemoveSessionOverride(identity, session);
         }
     }
 
     /// <summary>
-    /// Inform another Session of the entities stored for Transformation
+    /// Inform another session of the entities stored for transformation.
     /// </summary>
-    /// <param name="session">The Session you wish to inform</param>
-    /// <param name="comp">The Target storage of identities</param>
-    public void HandOverPvsOverride(ICommonSession session, ChangelingIdentityComponent comp)
+    /// <param name="ent">The changeling storing the identities.</param>
+    /// <param name="session">The session you wish to inform.</param>
+    public void HandOverPvsOverride(Entity<ChangelingIdentityComponent> ent, ICommonSession session)
     {
-        foreach (var entity in comp.ConsumedIdentities)
+        foreach (var identity in ent.Comp.ConsumedIdentities)
         {
-            _pvsOverrideSystem.AddSessionOverride(entity, session);
+            _pvsOverrideSystem.AddSessionOverride(identity, session);
         }
     }
 

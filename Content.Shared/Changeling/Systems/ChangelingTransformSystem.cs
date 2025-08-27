@@ -44,7 +44,7 @@ public sealed partial class ChangelingTransformSystem : EntitySystem
         _actionsSystem.AddAction(ent, ref ent.Comp.ChangelingTransformActionEntity, ent.Comp.ChangelingTransformAction);
 
         var userInterfaceComp = EnsureComp<UserInterfaceComponent>(ent);
-        _uiSystem.SetUi((ent, userInterfaceComp), TransformUI.Key, new InterfaceData(ChangelingBuiXmlGeneratedName));
+        _uiSystem.SetUi((ent, userInterfaceComp), ChangelingTransformUiKey.Key, new InterfaceData(ChangelingBuiXmlGeneratedName));
     }
 
     private void OnShutdown(Entity<ChangelingTransformComponent> ent, ref ComponentShutdown args)
@@ -64,18 +64,9 @@ public sealed partial class ChangelingTransformSystem : EntitySystem
         if (!TryComp<ChangelingIdentityComponent>(ent, out var userIdentity))
             return;
 
-        if (!_uiSystem.IsUiOpen((ent, userInterfaceComp), TransformUI.Key, args.Performer))
+        if (!_uiSystem.IsUiOpen((ent, userInterfaceComp), ChangelingTransformUiKey.Key, args.Performer))
         {
-            _uiSystem.OpenUi((ent, userInterfaceComp), TransformUI.Key, args.Performer);
-
-            var identityData = new List<NetEntity>();
-
-            foreach (var consumedIdentity in userIdentity.ConsumedIdentities)
-            {
-                identityData.Add(GetNetEntity(consumedIdentity));
-            }
-
-            _uiSystem.SetUiState((ent, userInterfaceComp), TransformUI.Key, new ChangelingTransformBoundUserInterfaceState(identityData));
+            _uiSystem.OpenUi((ent, userInterfaceComp), ChangelingTransformUiKey.Key, args.Performer);
         } //TODO: Can add a Else here with TransformInto and CloseUI to make a quick switch,
           // issue right now is that Radials cover the Action buttons so clicking the action closes the UI (due to clicking off a radial causing it to close, even with UI)
           // but pressing the number does.
@@ -108,7 +99,7 @@ public sealed partial class ChangelingTransformSystem : EntitySystem
         else
             _adminLogger.Add(LogType.Action, LogImpact.Medium, $"{ToPrettyString(ent.Owner):player} begun an attempt to transform into \"{Name(targetIdentity)}\"");
 
-        var result = _doAfterSystem.TryStartDoAfter(new DoAfterArgs(
+        _doAfterSystem.TryStartDoAfter(new DoAfterArgs(
             EntityManager,
             ent,
             ent.Comp.TransformWindup,
@@ -127,7 +118,7 @@ public sealed partial class ChangelingTransformSystem : EntitySystem
     private void OnTransformSelected(Entity<ChangelingTransformComponent> ent,
         ref ChangelingTransformIdentitySelectMessage args)
     {
-        _uiSystem.CloseUi(ent.Owner, TransformUI.Key, ent);
+        _uiSystem.CloseUi(ent.Owner, ChangelingTransformUiKey.Key, ent);
 
         if (!TryGetEntity(args.TargetIdentity, out var targetIdentity))
             return;
