@@ -351,6 +351,10 @@
   id: BoxFolderPlasticClipboard
 
 - type: entity
+  parent: [BoxFolderPlasticClipboardEmpty, BoxFolderFillThreePapers]
+  id: BoxFolderPlasticClipboardThreePapers
+
+- type: entity
   parent: BoxFolderClipboardEmpty
   id: BoxFolderCentComClipboardEmpty
   name: CentComm clipboard
