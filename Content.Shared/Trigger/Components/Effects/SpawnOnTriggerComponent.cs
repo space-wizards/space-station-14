@@ -4,7 +4,7 @@ using Robust.Shared.Prototypes;
 namespace Content.Shared.Trigger.Components.Effects;
 
 /// <summary>
-/// Spawns a prototype when triggered.
+/// Spawns a protoype when triggered.
 /// If TargetUser is true it will be spawned at their location.
 /// </summary>
 /// <seealso cref="SpawnEntityTableOnTriggerComponent"/>
