@@ -1,8 +1,9 @@
 - type: entity
   parent: BaseItem
   name: mop
-  id: MopItem
+  id: BaseMopItem
   description: A mop that can't be stopped, viscera cleanup detail awaits.
+  abstract: true
   components:
   - type: Sprite
     sprite: Objects/Specific/Janitorial/mop.rsi
@@ -29,11 +30,6 @@
     preventMelee: false
   - type: DrainableSolution
     solution: absorbed
-  - type: Wieldable
-  - type: IncreaseDamageOnWield
-    damage:
-      types:
-        Blunt: 5
   - type: Item
     size: Large
     sprite: Objects/Specific/Janitorial/mop.rsi
@@ -58,10 +54,11 @@
   - type: DnaSubstanceTrace
 
 - type: entity
-  parent: BaseItem
+  parent: BaseMopItem
   name: advanced mop
-  id: AdvMopItem
+  id: BaseAdvMopItem
   description: Motorized mop that has a bigger reservoir and quickly replaces reagents inside with water. Automatic Clown Countermeasure not included.
+  abstract: true
   components:
     - type: Sprite
       sprite: Objects/Specific/Janitorial/advmop.rsi
@@ -76,31 +73,11 @@
       fillBaseName: fill-
       inHandsFillBaseName: -fill-
       inHandsMaxFillLevels: 2
-    - type: MeleeWeapon
-      damage:
-        types:
-          Blunt: 10
-      soundHit:
-         collection: MetalThud
-    - type: Spillable
-      solution: absorbed
-      spillWhenThrown: false
-      preventMelee: false
-    - type: DrainableSolution
-      solution: absorbed
-    - type: Wieldable
-    - type: IncreaseDamageOnWield
-      damage:
-        types:
-          Blunt: 5
     - type: Item
-      size: Large
       sprite: Objects/Specific/Janitorial/advmop.rsi
     - type: Absorbent
       pickupAmount: 100
       useAbsorberSolution: true
-    - type: UseDelay
-      delay: 1.0
     - type: SolutionRegeneration
       solution: absorbed
       generated:
@@ -112,15 +89,42 @@
       preserve:
       - Water
       quantity: 10
-    - type: SolutionContainerManager
-      solutions:
-        absorbed:
-          maxVol: 100
     - type: Tag
       tags:
         - Mop
         - MopAdv
-    - type: DnaSubstanceTrace
+
+- type: entity
+  parent: BaseItem
+  name: mop
+  id: MopItem
+  description: A mop that can't be stopped, viscera cleanup detail awaits.
+  components:
+  - type: Wieldable
+  - type: IncreaseDamageOnWield
+    damage:
+      types:
+        Blunt: 5
+
+- type: entity
+  parent: BaseMopItem
+  id: BorgMopItem
+  suffix: unweildable
+
+- type: entity
+  parent: BaseAdvMopItem
+  id: AdvMopItem
+  components:
+    - type: Wieldable
+    - type: IncreaseDamageOnWield
+      damage:
+        types:
+          Blunt: 5
+
+- type: entity
+  parent: BaseAdvMopItem
+  id: BorgAdvMopItem
+  suffix: unweildable
 
 - type: entity
   name: wet floor sign

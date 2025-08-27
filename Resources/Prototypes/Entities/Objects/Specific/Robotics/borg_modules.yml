@@ -751,7 +751,7 @@
     - state: icon-mop
   - type: ItemBorgModule
     hands:
-    - item: MopItem
+    - item: BorgMopItem
     - item: BorgBucket
     - item: BorgSprayBottle
     - item: HoloprojectorBorg
@@ -770,7 +770,7 @@
     - state: icon-mop-adv
   - type: ItemBorgModule
     hands:
-    - item: AdvMopItem
+    - item: BorgAdvMopItem
     - item: BorgMegaSprayBottle
     - item: HoloprojectorBorg
     - item: BorgDropper
