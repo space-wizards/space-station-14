@@ -1,3 +1,4 @@
+// Contains modifications made by Ronstation contributors, therefore this file is subject to MIT sublicensed with AGPL v3.0.
 using System.Diagnostics.CodeAnalysis;
 using Content.Client.Lobby;
 using Content.Shared.CCVar;
@@ -159,6 +160,7 @@ public sealed class JobRequirementsManager : ISharedPlaytimeManager
     public IEnumerable<KeyValuePair<string, TimeSpan>> FetchPlaytimeByRoles()
     {
         var jobsToMap = _prototypes.EnumeratePrototypes<JobPrototype>();
+        var antagsToMap = _prototypes.EnumeratePrototypes<AntagPrototype>(); // Ronstation - modification.
 
         foreach (var job in jobsToMap)
         {
@@ -167,6 +169,15 @@ public sealed class JobRequirementsManager : ISharedPlaytimeManager
                 yield return new KeyValuePair<string, TimeSpan>(job.Name, locJobName);
             }
         }
+        // Ronstation - start of modifications.
+        foreach (var antag in antagsToMap)
+        {
+            if (_roles.TryGetValue(antag.PlayTimeTracker, out var locAntagName))
+            {
+                yield return new KeyValuePair<string, TimeSpan>(antag.Name, locAntagName);
+            }
+        }
+        // Ronstation - end of modifications.
     }
 
     public IReadOnlyDictionary<string, TimeSpan> GetPlayTimes(ICommonSession session)

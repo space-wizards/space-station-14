@@ -1,6 +1,8 @@
+# Contains modifications made by Ronstation contributors, therefore this file is subject to MIT sublicensed with AGPL v3.0.
 - type: antag
   id: Traitor
   name: roles-antag-syndicate-agent-name
+  playTimeTracker: AntagTraitor # Ronstation - modification.
   antagonist: true
   setPreference: true
   objective: roles-antag-syndicate-agent-objective
@@ -12,6 +14,7 @@
 - type: antag
   id: TraitorSleeper
   name: roles-antag-syndicate-agent-sleeper-name
+  playTimeTracker: AntagTraitorSleeper # Ronstation - modification.
   antagonist: true
   setPreference: true
   objective: roles-antag-syndicate-agent-sleeper-objective

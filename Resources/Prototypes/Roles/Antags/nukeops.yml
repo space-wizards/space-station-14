@@ -1,6 +1,8 @@
+# Contains modifications made by Ronstation contributors, therefore this file is subject to MIT sublicensed with AGPL v3.0.
 - type: antag
   id: Nukeops
   name: roles-antag-nuclear-operative-name
+  playTimeTracker: AntagNukeops # Ronstation - modification.
   antagonist: true
   setPreference: true
   objective: roles-antag-nuclear-operative-objective
@@ -12,6 +14,7 @@
 - type: antag
   id: NukeopsMedic
   name: roles-antag-nuclear-operative-agent-name
+  playTimeTracker: AntagNukeopsMedic # Ronstation - modification.
   antagonist: true
   setPreference: true
   objective: roles-antag-nuclear-operative-agent-objective
@@ -26,6 +29,7 @@
 - type: antag
   id: NukeopsCommander
   name: roles-antag-nuclear-operative-commander-name
+  playTimeTracker: AntagNukeopsCommander # Ronstation - modification.
   antagonist: true
   setPreference: true
   objective: roles-antag-nuclear-operative-commander-objective
