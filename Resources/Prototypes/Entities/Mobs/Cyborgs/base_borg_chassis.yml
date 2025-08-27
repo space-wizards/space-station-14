@@ -316,7 +316,7 @@
     - NamesBorg
   - type: NpcFactionMember
     factions:
-    - NanoTrasen
+    - SiliconNT
   - type: Access
     enabled: false
     groups:
@@ -337,7 +337,7 @@
   components:
   - type: NpcFactionMember
     factions:
-    - Syndicate
+    - SiliconSyndicate
   - type: Access
     tags:
     - NuclearOperative
