@@ -37,7 +37,7 @@ public sealed partial class PopupOnTriggerComponent : BaseXOnTriggerComponent
     public bool UserIsRecipient = true;
 
     /// <summary>
-    /// If true, this popup will only play for the recipient and ignore <see cref="Predicted"/>.
+    /// If true, this popup will only play for the recipient and ignore prediction.
     /// </summary>
     [DataField, AutoNetworkedField]
     public bool Quiet;
