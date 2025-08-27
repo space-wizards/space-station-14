@@ -7,9 +7,7 @@ using Content.Shared.Mobs;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Mobs.Systems;
 using Content.Shared.Power;
-using Robust.Shared.Audio.Systems;
 using Robust.Shared.Containers;
-using Robust.Shared.Network;
 using Robust.Shared.Timing;
 using System.Diagnostics.CodeAnalysis;
 
@@ -19,7 +17,7 @@ namespace Content.Shared.Silicons.StationAi;
 /// This system is used to handle the actions of AI Restoration Consoles.
 /// These consoles can be used to revive dead station AIs, or destroy them.
 /// </summary>
-public sealed partial class StationAiFixerConsoleSystem : EntitySystem
+public abstract partial class SharedStationAiFixerConsoleSystem : EntitySystem
 {
     [Dependency] private readonly SharedUserInterfaceSystem _userInterface = default!;
     [Dependency] private readonly ItemSlotsSystem _itemSlots = default!;
@@ -28,8 +26,6 @@ public sealed partial class StationAiFixerConsoleSystem : EntitySystem
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
     [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
-    [Dependency] private readonly SharedAudioSystem _audio = default!;
-    [Dependency] private readonly INetManager _net = default!;
 
     public override void Initialize()
     {
@@ -43,8 +39,13 @@ public sealed partial class StationAiFixerConsoleSystem : EntitySystem
         SubscribeLocalEvent<StationAiFixerConsoleComponent, ExaminedEvent>(OnExamined);
     }
 
-    private void OnInserted(Entity<StationAiFixerConsoleComponent> ent, ref EntInsertedIntoContainerMessage args)
+    protected virtual void OnInserted(Entity<StationAiFixerConsoleComponent> ent, ref EntInsertedIntoContainerMessage args)
     {
+        if (TryGetTarget(ent, out var target) && TryComp<MobStateComponent>(target, out var mobState))
+        {
+            _mobState.ChangeMobState(target.Value, MobState.Dead);
+        }
+
         UpdateAppearance(ent);
     }
 
@@ -213,34 +214,20 @@ public sealed partial class StationAiFixerConsoleSystem : EntitySystem
     /// (i.e., repairing or purging a target).
     /// </summary>
     /// <param name="ent">The console.</param>
-    private void FinalizeAction(Entity<StationAiFixerConsoleComponent> ent)
+    protected virtual void FinalizeAction(Entity<StationAiFixerConsoleComponent> ent)
     {
         if (IsActionInProgress(ent) && ent.Comp.ActionTarget != null)
         {
-            if (ent.Comp.ActionType == StationAiFixerConsoleAction.Repair)
+            if (ent.Comp.ActionType == StationAiFixerConsoleAction.Repair &&
+                TryComp<MobStateComponent>(ent.Comp.ActionTarget, out var targetMobState))
             {
-                if (TryComp<MobStateComponent>(ent.Comp.ActionTarget, out var targetMobState))
-                {
-                    _mobState.ChangeMobState(ent.Comp.ActionTarget.Value, MobState.Alive);
-                }
-
-                // TODO: play predicted sound once a user is not required
-                if (_net.IsServer && ent.Comp.RepairFinishedSound != null)
-                {
-                    _audio.PlayPvs(ent.Comp.RepairFinishedSound, ent);
-                }
+                _mobState.ChangeMobState(ent.Comp.ActionTarget.Value, MobState.Alive);
             }
             else if (ent.Comp.ActionType == StationAiFixerConsoleAction.Purge &&
                 TryGetStationAiHolder(ent, out var holder))
             {
                 _container.RemoveEntity(holder.Value, ent.Comp.ActionTarget.Value, force: true);
                 PredictedQueueDel(ent.Comp.ActionTarget);
-
-                // TODO: play predicted sound once a user is not required
-                if (_net.IsServer && ent.Comp.PurgeFinishedSound != null)
-                {
-                    _audio.PlayPvs(ent.Comp.PurgeFinishedSound, ent);
-                }
             }
         }
 

@@ -6,8 +6,8 @@ station-ai-fixer-console-examination-station-ai-holder-absent = There is an unoc
 
 # UI
 station-ai-fixer-console-window = AI restoration console
-station-ai-fixer-console-window-no-station-ai = << No AI detected >>
-station-ai-fixer-console-window-no-station-ai-status = No signal
+station-ai-fixer-console-window-no-station-ai = No AI detected
+station-ai-fixer-console-window-no-station-ai-status = Waiting
 station-ai-fixer-console-window-station-ai-online = Online
 station-ai-fixer-console-window-station-ai-offline = Offline
 
@@ -21,7 +21,7 @@ station-ai-fixer-console-window-action-progress-repair = Repair in progress...
 station-ai-fixer-console-window-action-progress-purge = Purge in progress...
 station-ai-fixer-console-window-action-progress-eta = Time remaining: {$time} {$units}
 
-station-ai-fixer-console-window-flavor-left = This console must be locked when not in use
+station-ai-fixer-console-window-flavor-left = Lock this console when it is not in use
 station-ai-fixer-console-window-flavor-right = v4.0.4
 
 station-ai-fixer-console-window-continue-action = Continue

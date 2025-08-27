@@ -8,7 +8,7 @@ namespace Content.Shared.Silicons.StationAi;
 /// This components holds data needed for AI Restoration Consoles to function.
 /// </summary>
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
-[Access(typeof(StationAiFixerConsoleSystem))]
+[Access(typeof(SharedStationAiFixerConsoleSystem))]
 public sealed partial class StationAiFixerConsoleComponent : Component
 {
     /// <summary>

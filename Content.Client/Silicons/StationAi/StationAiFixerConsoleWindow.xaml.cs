@@ -1,5 +1,4 @@
 using Content.Client.UserInterface.Controls;
-using Content.Shared.Damage;
 using Content.Shared.Lock;
 using Content.Shared.Mobs;
 using Content.Shared.Mobs.Components;
@@ -20,12 +19,12 @@ public sealed partial class StationAiFixerConsoleWindow : FancyWindow
     [Dependency] private readonly IGameTiming _timing = default!;
 
     private readonly StationAiFixerConsoleSystem _stationAiFixerConsole = default!;
-    private readonly SharedStationAiSystem _stationAiSystem = default!;
+    private readonly SharedStationAiSystem _stationAi = default!;
 
     private EntityUid? _owner;
 
     private readonly SpriteSpecifier.Rsi _emptyPortrait = new SpriteSpecifier.Rsi(new("/Textures/Mobs/Silicon/station_ai.rsi"), "ai_empty");
-    private SpriteSpecifier _currentPortrait;
+    private SpriteSpecifier? _currentPortrait;
 
     public event Action<StationAiFixerConsoleAction>? SendStationAiFixerConsoleMessageAction;
     public event Action? OpenConfirmationDialogAction;
@@ -44,11 +43,10 @@ public sealed partial class StationAiFixerConsoleWindow : FancyWindow
         IoCManager.InjectDependencies(this);
 
         _stationAiFixerConsole = _entManager.System<StationAiFixerConsoleSystem>();
-        _stationAiSystem = _entManager.System<StationAiSystem>();
+        _stationAi = _entManager.System<StationAiSystem>();
 
         _owner = owner;
 
-        _currentPortrait = _emptyPortrait;
         StationAiPortraitTexture.DisplayRect.TextureScale = new Vector2(4f, 4f);
 
         CancelButton.OnButtonDown += args => OnSendStationAiFixerConsoleMessage(StationAiFixerConsoleAction.Cancel);
@@ -88,17 +86,44 @@ public sealed partial class StationAiFixerConsoleWindow : FancyWindow
         var intellicardPresent = _stationAiFixerConsole.IsStationAiHolderInserted((_owner.Value, stationAiFixerConsole));
         var stationAiPresent = _stationAiFixerConsole.TryGetTarget((_owner.Value, stationAiFixerConsole), out var stationAi) &&
             !_entManager.IsQueuedForDeletion(stationAi.Value);
+        var stationAiAlive = _entManager.TryGetComponent<MobStateComponent>(stationAi, out var mobState) &&
+            mobState.CurrentState == MobState.Alive;
 
-        // Update station AI labels
+        // Update station AI name
         StationAiNameLabel.Text = GetStationAiName(stationAi);
-        StationAiStatusLabel.Text = GetStationAiStatus(stationAi);
+        StationAiStatusLabel.Text = Loc.GetString("station-ai-fixer-console-window-no-station-ai-status");
 
-        // Update status background color
+        // Update station AI portrait
+        var portrait = _emptyPortrait;
         var statusColor = _statusColors[MobState.Invalid];
 
-        if (_entManager.TryGetComponent<MobStateComponent>(stationAi, out var mobState) && stationAiPresent)
+        if (stationAiPresent &&
+            _entManager.TryGetComponent<StationAiCustomizationComponent>(stationAi, out var stationAiCustomization) &&
+            _stationAi.TryGetCustomizedAppearanceData((stationAi.Value, stationAiCustomization), out var layerData))
         {
-            _statusColors.TryGetValue(mobState.CurrentState, out statusColor);
+            StationAiStatusLabel.Text = stationAiAlive ?
+                Loc.GetString("station-ai-fixer-console-window-station-ai-online") :
+                Loc.GetString("station-ai-fixer-console-window-station-ai-offline");
+
+            var aiState = stationAiAlive ?
+                StationAiState.Occupied :
+                StationAiState.Dead;
+
+            if (layerData.TryGetValue(aiState.ToString(), out var stateData) && stateData.RsiPath != null && stateData.State != null)
+            {
+                portrait = new SpriteSpecifier.Rsi(new ResPath(stateData.RsiPath), stateData.State);
+            }
+
+            if (mobState != null)
+            {
+                _statusColors.TryGetValue(mobState.CurrentState, out statusColor);
+            }
+        }
+
+        if (_currentPortrait == null || !_currentPortrait.Equals(portrait))
+        {
+            StationAiPortraitTexture.SetFromSpriteSpecifier(portrait);
+            _currentPortrait = portrait;
         }
 
         StationAiStatus.PanelOverride = new StyleBoxFlat
@@ -106,30 +131,9 @@ public sealed partial class StationAiFixerConsoleWindow : FancyWindow
             BackgroundColor = statusColor,
         };
 
-        // Update station AI portrait
-        var portrait = _emptyPortrait;
-
-        if (stationAiPresent &&
-            _entManager.TryGetComponent<StationAiCustomizationComponent>(stationAi, out var stationAiCustomization) &&
-            _stationAiSystem.TryGetCustomizedAppearanceData((stationAi.Value, stationAiCustomization), out var layerData))
-        {
-            var state = (mobState != null && mobState.CurrentState == MobState.Dead) ? StationAiState.Dead : StationAiState.Occupied;
-
-            if (layerData.TryGetValue(state.ToString(), out var stateData) && stateData.RsiPath != null && stateData.State != null)
-            {
-                portrait = new SpriteSpecifier.Rsi(new ResPath(stateData.RsiPath), stateData.State);
-            }
-        }
-
-        if (!_currentPortrait.Equals(portrait))
-        {
-            StationAiPortraitTexture.SetFromSpriteSpecifier(portrait);
-            _currentPortrait = portrait;
-        }
-
         // Update buttons
         EjectButton.Disabled = !intellicardPresent;
-        RepairButton.Disabled = !stationAiPresent || !IsStationAiAlive(stationAi);
+        RepairButton.Disabled = !stationAiPresent || stationAiAlive;
         PurgeButton.Disabled = !stationAiPresent;
 
         // Update progress bar
@@ -161,28 +165,6 @@ public sealed partial class StationAiFixerConsoleWindow : FancyWindow
         }
 
         return Loc.GetString("station-ai-fixer-console-window-no-station-ai");
-    }
-
-    private string GetStationAiStatus(EntityUid? uid)
-    {
-        if (uid == null)
-        {
-            return Loc.GetString("station-ai-fixer-console-window-no-station-ai-status");
-        }
-
-        return IsStationAiAlive(uid) ?
-            Loc.GetString("station-ai-fixer-console-window-station-ai-online") :
-            Loc.GetString("station-ai-fixer-console-window-station-ai-offline");
-    }
-
-    private bool IsStationAiAlive(EntityUid? uid)
-    {
-        if (_entManager.TryGetComponent<MobStateComponent>(uid, out var mobState))
-        {
-            return mobState.CurrentState == MobState.Alive;
-        }
-
-        return false;
     }
 
     protected override void FrameUpdate(FrameEventArgs args)
