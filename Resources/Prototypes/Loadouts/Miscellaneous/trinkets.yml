@@ -41,6 +41,15 @@
     back:
     - PlushieSpaceLizard
 
+- type: loadout
+  id: ThreeCandles
+  dummyEntity: LoadoutDummyCandles
+  storage:
+    back:
+    - CandleRed
+    - CandleBlue
+    - CandleGreenSmall
+
 # Lighters
 - type: loadout
   id: Lighter
@@ -104,16 +113,6 @@
     back:
     - CigarGold
   groupBy: "smokeables"
-
-# Candles
-- type: loadout
-  id: ThreeCandles
-  dummyEntity: LoadoutDummyCandles
-  storage:
-    back:
-    - CandleRed
-    - CandleBlue
-    - CandleGreenSmall
 
 # Pins
 - type: loadout
