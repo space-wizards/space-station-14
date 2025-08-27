@@ -77807,7 +77807,7 @@ entities:
       pos: -51.5,-7.5
       parent: 2
     - type: FaxMachine
-      name: Head of Personell
+      name: Head of Personnel
   - uid: 17656
     components:
     - type: Transform
