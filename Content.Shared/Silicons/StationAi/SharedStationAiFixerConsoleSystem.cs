@@ -41,11 +41,6 @@ public abstract partial class SharedStationAiFixerConsoleSystem : EntitySystem
 
     private void OnInserted(Entity<StationAiFixerConsoleComponent> ent, ref EntInsertedIntoContainerMessage args)
     {
-        if (TryGetTarget(ent, out var target) && TryComp<MobStateComponent>(target, out var mobState))
-        {
-            _mobState.ChangeMobState(target.Value, MobState.Dead);
-        }
-
         UpdateAppearance(ent);
     }
 
@@ -351,8 +346,7 @@ public abstract partial class SharedStationAiFixerConsoleSystem : EntitySystem
             return true;
 
         if (actionType == StationAiFixerConsoleAction.Repair &&
-            TryComp<MobStateComponent>(target, out var targetMobState) &&
-            targetMobState.CurrentState == MobState.Dead)
+            _mobState.IsDead(target))
         {
             return true;
         }
