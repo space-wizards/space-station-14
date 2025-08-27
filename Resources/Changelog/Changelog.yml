@@ -1,16 +1,4 @@
 ﻿Entries:
-- author: Thatonestomf
-  changes:
-  - message: Added slugs to both the bulldog and ammo bundle.
-    type: Add
-  - message: Slugs are alot more powerful than they were before, now dealing 40 pierce
-      and 15 structural
-    type: Tweak
-  - message: Basic shells now deal structural damage
-    type: Tweak
-  id: 8381
-  time: '2025-04-29T03:13:01.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/33517
 - author: EmoGarbage404
   changes:
   - message: Space debris now have a chance for landmines to spawn on them.
@@ -3958,3 +3946,11 @@
   id: 8893
   time: '2025-08-27T07:07:33.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/37705
+- author: slarticodefast
+  changes:
+  - message: Syndicate stealth items now have a selection of tool locks you can choose
+      from to hide their activation from others.
+    type: Add
+  id: 8894
+  time: '2025-08-27T14:45:59.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/39900
