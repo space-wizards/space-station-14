@@ -24,31 +24,37 @@
   id: BlueshieldJumpsuit
   equipment:
     jumpsuit: ClothingUniformJumpsuitBlueshield
+  groupBy: "jumpsuit"
 
 - type: loadout
   id: BlueshieldJumpsuitCasual
   equipment:
     jumpsuit: ClothingUniformJumpsuitBlueshieldCasual
+  groupBy: "jumpsuit"
 
 - type: loadout
   id: BlueshieldJumpsuitFormal
   equipment:
     jumpsuit: ClothingUniformJumpsuitBlueshieldFormal
+  groupBy: "jumpsuit"
 
 - type: loadout
   id: BlueshieldJumpskirt
   equipment:
     jumpsuit: ClothingUniformJumpskirtBlueshield
+  groupBy: "jumpskirt"
 
 - type: loadout
   id: BlueshieldJumpskirtCasual
   equipment:
     jumpsuit: ClothingUniformJumpskirtBlueshieldCasual
+  groupBy: "jumpskirt"
 
 - type: loadout
   id: BlueshieldJumpskirtFormal
   equipment:
     jumpsuit: ClothingUniformJumpskirtBlueshieldFormal
+  groupBy: "jumpskirt"
 
 # Neck
 - type: loadout

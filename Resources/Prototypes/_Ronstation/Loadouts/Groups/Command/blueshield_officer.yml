@@ -34,7 +34,7 @@
 - type: loadoutGroup
   id: BlueshieldOuterClothing
   parent: BaseOuterClothing
-  minLimit: 1 # BSO must have outer clothing
+  minLimit: 1 # mandatory body armor
   loadouts:
   - ArmorVest
   - ArmorVestSlim
