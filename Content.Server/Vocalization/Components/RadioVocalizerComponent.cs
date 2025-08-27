@@ -10,5 +10,5 @@ public sealed partial class RadioVocalizerComponent : Component
     /// chance the vocalizing entity speaks on the radio.
     /// </summary>
     [DataField]
-    public float RadioAttemptChance = 0.3f;
+    public float RadioAttemptChance = 0.6f;
 }
