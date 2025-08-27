@@ -51,7 +51,7 @@
           steps:
             - component: BorgBrain
               name: construction-graph-component-borg-brain
-              store: mmi
+              store: station_ai_brain_slot
               icon:
                 sprite: "Objects/Specific/Robotics/mmi.rsi"
                 state: "mmi_icon"

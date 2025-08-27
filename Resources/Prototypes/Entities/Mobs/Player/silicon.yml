@@ -232,7 +232,17 @@
   - type: Construction
     graph: StationAiCore
     node: stationAiCore
-    
+  - type: ContainerContainer
+    containers:
+      board: !type:Container
+      station_ai_brain_slot: !type:Container
+  - type: ContainerFill
+    containers:
+      board:
+      - StationAiCoreElectronics
+      station_ai_brain_slot:
+      - MMIFilled
+      
 # The job-ready version of an AI spawn.
 - type: entity
   id: PlayerStationAi
@@ -296,13 +306,17 @@
             max: 4
       - !type:EmptyContainersBehaviour
         containers:
-        - brain
+        - station_ai_brain_slot
         - board
       - !type:DoActsBehavior
         acts: ["Destruction"]
   - type: Construction
     graph: StationAiCore
     node: frame
+  - type: ContainerContainer
+    containers:
+      board: !type:Container
+      station_ai_brain_slot: !type:Container
 
 # The actual brain inside the core
 - type: entity

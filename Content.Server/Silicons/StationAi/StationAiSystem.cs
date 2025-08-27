@@ -27,7 +27,6 @@ public sealed class StationAiSystem : SharedStationAiSystem
     [Dependency] private readonly MindSystem _mind = default!;
     [Dependency] private readonly RoleSystem _roles = default!;
     [Dependency] private readonly StationSystem _station = default!;
-    [Dependency] private readonly StationJobsSystem _stationJobs = default!;
     [Dependency] private readonly ItemSlotsSystem _slots = default!;
 
     private readonly HashSet<Entity<StationAiCoreComponent>> _stationAiCores = new();
@@ -36,7 +35,6 @@ public sealed class StationAiSystem : SharedStationAiSystem
 
     private readonly ProtoId<JobPrototype> _stationAiJob = "StationAi";
     private readonly EntProtoId _defaultAi = "StationAiBrain";
-    private readonly string _stationAiMMIContainer = "mmi";
 
     public override void Initialize()
     {
@@ -51,15 +49,15 @@ public sealed class StationAiSystem : SharedStationAiSystem
     {
         var station = _station.GetOwningStation(ent);
 
-        if (!_container.TryGetContainer(ent, _stationAiMMIContainer, out var container) ||
+        if (!_container.TryGetContainer(ent, StationAiCoreComponent.BrainContainer, out var container) ||
             container.Count == 0)
         {
             return;
         }
 
-        var mmi = container.ContainedEntities[0];
+        var brain = container.ContainedEntities[0];
 
-        if (_mind.TryGetMind(mmi, out var mindId, out var mind))
+        if (_mind.TryGetMind(brain, out var mindId, out var mind))
         {
             // Found an existing mind to transfer into the AI core
             var aiBrain = Spawn(_defaultAi, Transform(ent.Owner).Coordinates);
@@ -72,8 +70,6 @@ public sealed class StationAiSystem : SharedStationAiSystem
                 QueueDel(aiBrain);
             }
         }
-
-        QueueDel(mmi);
     }
 
     private void OnExpandICChatRecipients(ExpandICChatRecipientsEvent ev)
