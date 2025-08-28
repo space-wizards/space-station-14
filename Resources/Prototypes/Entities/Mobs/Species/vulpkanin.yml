@@ -3,7 +3,7 @@
   save: false
   parent: [BaseMobSpeciesOrganic]
   id: BaseMobVulpkanin
-  name: Urrrist McVulp
+  name: Urrrist McBark
   components:
   - type: Hunger
   - type: Thirst
@@ -29,13 +29,13 @@
     soundHit:
       path: /Audio/Weapons/pierce.ogg
     animation: WeaponArcClaw
-    damage: # Slightly increased damage to 6 total instead of 5.
+    damage:
       types:
         Piercing: 2
         Slash: 3
-  - type: Temperature # Similiar to moth values, but do make sense for Vulpkanin.
-    heatDamageThreshold: 320
-    coldDamageThreshold: 230
+  - type: Temperature # Lower heat and cold thresholds.
+    heatDamageThreshold: 315
+    coldDamageThreshold: 220
     specificHeat: 44
     coldDamage:
       types:
@@ -43,7 +43,7 @@
     heatDamage:
       types:
         Heat: 2.5 # Per second, scales with temperature & other constants
-  # - type: Wagging
+  # - type: Wagging TODO: Add back once we have animated tails again.
   #   action: ActionToggleVulpakinWagging
   - type: TemperatureProtection
     heatingCoefficient: 1.2
