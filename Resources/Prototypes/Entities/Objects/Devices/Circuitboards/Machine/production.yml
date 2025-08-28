@@ -1356,14 +1356,14 @@
   name: SmartFridge machine board
   description: A machine printed circuit board for a SmartFridge.
   components:
-    - type: Sprite
-      state: service
-    - type: MachineBoard
-      prototype: SmartFridge
-      stackRequirements:
-        Glass: 5
-        Manipulator: 2
-      tagRequirements:
-          GlassBeaker:
-            amount: 2
-            defaultPrototype: Beaker
+  - type: Sprite
+    state: service
+  - type: MachineBoard
+    prototype: SmartFridge
+    stackRequirements:
+      Glass: 5
+      Manipulator: 2
+    tagRequirements:
+        GlassBeaker:
+          amount: 2
+          defaultPrototype: Beaker
