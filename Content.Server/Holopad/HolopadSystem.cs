@@ -401,6 +401,9 @@ public sealed class HolopadSystem : SharedHolopadSystem
         if (!this.IsPowered(entity, EntityManager))
             return;
 
+        if (HasComp<StationAiCoreComponent>(entity))
+            return;
+
         if (!TryComp<TelephoneComponent>(entity, out var entityTelephone) ||
             _telephoneSystem.IsTelephoneEngaged((entity, entityTelephone)))
             return;
