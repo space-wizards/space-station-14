@@ -29,6 +29,11 @@ public sealed class RandomSentienceRule : StationEventSystem<RandomSentienceRule
                 continue;
 
             targetList.Add((targetUid, target));
+
+            if (HasComp<GhostTakeoverAvailableComponent>(target) || (mobState.CurrentState == MobState.Dead))
+            {
+                RemComp<SentienceTargetComponent>(target);
+            }
         }
 
         var toMakeSentient = _random.Next(component.MinSentiences, component.MaxSentiences);
