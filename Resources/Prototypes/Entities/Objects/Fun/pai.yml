@@ -9,6 +9,8 @@
   - type: Tag
     tags:
     - PlayableSilicon
+  - type: MindExamination
+    examinationType: Silicon
   - type: Instrument
     allowPercussion: false
     handheld: false

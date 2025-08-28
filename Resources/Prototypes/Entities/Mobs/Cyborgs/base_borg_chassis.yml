@@ -242,6 +242,8 @@
     - PlayableSilicon
     - SiliconEmotes
     - Unimplantable
+  - type: MindExamination
+    examinationType: Silicon
   - type: Emoting
   - type: GuideHelp
     guides:

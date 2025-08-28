@@ -7,12 +7,12 @@ using Content.Shared.GameTicking;
 using Content.Shared.Humanoid;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Mind.Components;
+using Content.Shared.Mobs;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Mobs.Systems;
 using Content.Shared.Objectives.Systems;
 using Content.Shared.Players;
 using Content.Shared.Whitelist;
-using Content.Shared.Tag;
 using Robust.Shared.Map;
 using Robust.Shared.Network;
 using Robust.Shared.Player;
@@ -31,7 +31,6 @@ public abstract partial class SharedMindSystem : EntitySystem
     [Dependency] private readonly ISharedPlayerManager _playerManager = default!;
     [Dependency] private readonly MetaDataSystem _metadata = default!;
     [Dependency] private readonly EntityWhitelistSystem _whitelist = default!;
-    [Dependency] private readonly TagSystem _tag = default!;
 
     [ViewVariables]
     protected readonly Dictionary<NetUserId, EntityUid> UserMinds = new();
@@ -47,7 +46,21 @@ public abstract partial class SharedMindSystem : EntitySystem
         SubscribeLocalEvent<MindComponent, ComponentStartup>(OnMindStartup);
         SubscribeLocalEvent<MindComponent, EntityRenamedEvent>(OnRenamed);
 
+        // Subscribe to events that should update mind state
+        SubscribeLocalEvent<MobStateChangedEvent>(OnMobStateChanged);
+        SubscribeLocalEvent<PlayerAttachedEvent>(OnPlayerAttached);
+        SubscribeLocalEvent<PlayerDetachedEvent>(OnPlayerDetached);
+
         InitializeRelay();
+    }
+
+    public override void Update(float frameTime)
+    {
+        base.Update(frameTime);
+
+        // Update mind states periodically to handle session changes
+        // This ensures disconnected players are properly marked as SSD
+        UpdateAllMindStates();
     }
 
     public override void Shutdown()
@@ -161,67 +174,40 @@ public abstract partial class SharedMindSystem : EntitySystem
         if (_net.IsClient)
             return;
 
-        var dead = _mobState.IsDead(uid);
         var mind = CompOrNull<MindComponent>(mindContainer.Mind);
-        var hasUserId = mind?.UserId;
-        var hasActiveSession = hasUserId != null && _playerManager.ValidSessionId(hasUserId.Value);
 
-        // Scenarios:
-        // 1. Dead + No User ID: Entity is permanently dead with no player ever attached
-        // 2. Dead + Has User ID + No Session: Player died and disconnected
-        // 3. Dead + Has Session: Player is dead but still connected
-        // 4. Alive + No User ID: Entity was never controlled by a player
-        // 5. Alive + No Session: Player disconnected while alive (SSD)
+        var state = mind?.CurrentState ?? MindState.DeadNoUID;
 
-        if (_tag.HasTag(uid, new ProtoId<TagPrototype>("PlayableSilicon")))
+        var examinationType = MindExaminationType.Humanoid;
+        if (TryComp<MindExaminationComponent>(uid, out var examinationComp))
         {
-            switch (dead)
-            {
-                case true when hasUserId == null:
-                    args.PushMarkup(
-                        $"[color=mediumpurple]{Loc.GetString("comp-mind-ai-examined-dead-and-irrecoverable", ("ent", uid))}[/color]");
-                    break;
-                case true when !hasActiveSession:
-                    args.PushMarkup(
-                        $"[color=yellow]{Loc.GetString("comp-mind-ai-examined-dead-and-ssd", ("ent", uid))}[/color]");
-                    break;
-                case true:
-                    args.PushMarkup($"[color=red]{Loc.GetString("comp-mind-ai-examined-dead", ("ent", uid))}[/color]");
-                    break;
-                default:
-                {
-                    if (hasUserId == null)
-                        args.PushMarkup(
-                            $"[color=mediumpurple]{Loc.GetString("comp-mind-ai-examined-catatonic", ("ent", uid))}[/color]");
+            examinationType = examinationComp.ExaminationType;
+        }
 
-                    else if (!hasActiveSession)
-                        args.PushMarkup(
-                            $"[color=yellow]{Loc.GetString("comp-mind-ai-examined-ssd", ("ent", uid))}[/color]");
-                    break;
-                }
-            }
-        } else {
-            switch (dead)
-            {
-                case true when hasUserId == null:
-                    args.PushMarkup($"[color=mediumpurple]{Loc.GetString("comp-mind-examined-dead-and-irrecoverable", ("ent", uid))}[/color]");
-                    break;
-                case true when !hasActiveSession:
-                    args.PushMarkup($"[color=yellow]{Loc.GetString("comp-mind-examined-dead-and-ssd", ("ent", uid))}[/color]");
-                    break;
-                case true:
-                    args.PushMarkup($"[color=red]{Loc.GetString("comp-mind-examined-dead", ("ent", uid))}[/color]");
-                    break;
-                default:
-                {
-                    if (hasUserId == null)
-                        args.PushMarkup($"[color=mediumpurple]{Loc.GetString("comp-mind-examined-catatonic", ("ent", uid))}[/color]");
+        var localizationPrefix = examinationType.GetLocalizationPrefix();
 
-                    else if (!hasActiveSession)
-                        args.PushMarkup($"[color=yellow]{Loc.GetString("comp-mind-examined-ssd", ("ent", uid))}[/color]");
-                    break;
-                }
-            }
+        var messageKey = state switch
+        {
+            MindState.DeadNoUID => $"{localizationPrefix}-dead-and-irrecoverable",
+            MindState.DeadHasUID => $"{localizationPrefix}-dead-and-ssd",
+            MindState.DeadHasSession => $"{localizationPrefix}-dead",
+            MindState.AliveNoUID => $"{localizationPrefix}-catatonic",
+            MindState.AliveNoSession => $"{localizationPrefix}-ssd",
+            MindState.AliveHasSession => null, // No message for alive and connected
+            _ => null
+        };
+
+        if (messageKey != null)
+        {
+            var color = state switch
+            {
+                MindState.DeadNoUID or MindState.AliveNoUID => "mediumpurple",
+                MindState.DeadHasUID or MindState.AliveNoSession => "yellow",
+                MindState.DeadHasSession => "red",
+                _ => "white"
+            };
+
+            args.PushMarkup($"[color={color}]{Loc.GetString(messageKey, ("ent", uid))}[/color]");
         }
     }
 
@@ -383,6 +369,11 @@ public abstract partial class SharedMindSystem : EntitySystem
         bool createGhost = true,
         MindComponent? mind = null)
     {
+        if (Resolve(mindId, ref mind))
+        {
+            mind.OwnedEntity = entity;
+            UpdateMindState(mindId, mind);
+        }
     }
 
     public virtual void ControlMob(EntityUid user, EntityUid target) {}
@@ -584,6 +575,11 @@ public abstract partial class SharedMindSystem : EntitySystem
     /// </summary>
     public virtual void SetUserId(EntityUid mindId, NetUserId? userId, MindComponent? mind = null)
     {
+        if (Resolve(mindId, ref mind))
+        {
+            mind.UserId = userId;
+            UpdateMindState(mindId, mind);
+        }
     }
 
     /// <summary>
@@ -621,6 +617,91 @@ public abstract partial class SharedMindSystem : EntitySystem
     public string? GetCharacterName(NetUserId userId)
     {
         return TryGetMind(userId, out _, out var mind) ? mind.CharacterName : null;
+    }
+
+    /// <summary>
+    /// Gets the current mind state for a given mind.
+    /// </summary>
+    public MindState GetMindState(EntityUid mindId, MindComponent? mind = null)
+    {
+        if (!Resolve(mindId, ref mind))
+            return MindState.DeadNoUID;
+
+        var hasUserId = mind.UserId != null;
+        var hasActiveSession = hasUserId && mind.UserId != null && _playerManager.ValidSessionId(mind.UserId.Value);
+        var isDead = false;
+
+        if (mind.OwnedEntity != null && TryComp(mind.OwnedEntity.Value, out MobStateComponent? mobState))
+        {
+            isDead = _mobState.IsDead(mind.OwnedEntity.Value, mobState);
+        }
+
+        return isDead switch
+        {
+            true when !hasUserId => MindState.DeadNoUID, // Entity is permanently dead with no player ever attached
+            true when !hasActiveSession => MindState.DeadHasUID, // Player died and disconnected
+            true => MindState.DeadHasSession, // Player is dead but still connected
+            false when !hasUserId => MindState.AliveNoUID, // Entity was never controlled by a player
+            false when !hasActiveSession => MindState.AliveNoSession, // Player disconnected while alive
+            false => MindState.AliveHasSession, // Player is alive and connected
+        };
+    }
+
+    /// <summary>
+    /// Updates the mind state based on current conditions.
+    /// This should be called whenever relevant events occur.
+    /// </summary>
+    public void UpdateMindState(EntityUid mindId, MindComponent? mind = null)
+    {
+        if (!Resolve(mindId, ref mind))
+            return;
+
+        var newState = GetMindState(mindId, mind);
+
+        if (mind.CurrentState != newState)
+        {
+            mind.CurrentState = newState;
+            Dirty(mindId, mind);
+        }
+    }
+
+    private void OnMobStateChanged(MobStateChangedEvent ev)
+    {
+        // Update mind state for any mind that owns this entity
+        if (TryGetMind(ev.Target, out var mindId, out var mind))
+        {
+            UpdateMindState(mindId, mind);
+        }
+    }
+
+    private void OnPlayerAttached(PlayerAttachedEvent ev)
+    {
+        // Update mind state when a player attaches to an entity
+        if (TryGetMind(ev.Entity, out var mindId, out var mind))
+        {
+            UpdateMindState(mindId, mind);
+        }
+    }
+
+    private void OnPlayerDetached(PlayerDetachedEvent ev)
+    {
+        // Update mind state when a player detaches from an entity
+        if (TryGetMind(ev.Entity, out var mindId, out var mind))
+        {
+            UpdateMindState(mindId, mind);
+        }
+    }
+
+    /// <summary>
+    /// Updates the state of all minds. This is called periodically to handle session changes.
+    /// </summary>
+    private void UpdateAllMindStates()
+    {
+        var query = AllEntityQuery<MindComponent>();
+        while (query.MoveNext(out var mindId, out var mind))
+        {
+            UpdateMindState(mindId, mind);
+        }
     }
 
     /// <summary>

@@ -1,5 +1,6 @@
 using Content.Shared.GameTicking;
 using Content.Shared.Mind.Components;
+using Content.Shared.Mobs.Components;
 using Robust.Shared.GameStates;
 using Robust.Shared.Network;
 using Robust.Shared.Player;
@@ -63,6 +64,14 @@ public sealed partial class MindComponent : Component
 
     [DataField, AutoNetworkedField, ViewVariables(VVAccess.ReadWrite)]
     public string? CharacterName { get; set; }
+
+    /// <summary>
+    ///     The current state of this mind. This should be updated whenever relevant events occur.
+    ///     Uses both the Mind's alive state and it's connection state to be set.
+    ///     Use UpdateMindState() in the SharedMindSystem to keep this accurate.
+    /// </summary>
+    [DataField, AutoNetworkedField, Access(typeof(SharedMindSystem))]
+    public MindState CurrentState { get; set; }
 
     /// <summary>
     ///     The time of death for this Mind.
