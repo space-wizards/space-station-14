@@ -552,6 +552,12 @@
     - item: Shovel
     - item: AdvancedMineralScannerUnpowered
     - item: OreBagOfHolding
+    - hand: # Starlight
+        emptyRepresentative: GoldOre
+        emptyLabel: borg-slot-ore-empty
+        whitelist:
+          tags:
+            - Ore
     - item: RadioHandheldExpedition # Starlight
   - type: BorgModuleIcon
     icon: { sprite: Interface/Actions/actions_borg.rsi, state: adv-mining-module }
