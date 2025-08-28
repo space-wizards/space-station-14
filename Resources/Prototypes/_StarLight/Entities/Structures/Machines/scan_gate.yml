@@ -45,6 +45,10 @@
     price: 1500
   - type: AccessReader
     access: [["Security"]]
+  - type: Electrified
+    enabled: false
+    usesApcPower: true
+    requirePower: true
 
 - type: entity
   id: ScanGate
