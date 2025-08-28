@@ -53,9 +53,9 @@ public sealed partial class PolymorphSystem : EntitySystem
         SubscribeLocalEvent<PolymorphableComponent, PolymorphActionEvent>(OnPolymorphActionEvent);
         SubscribeLocalEvent<PolymorphedEntityComponent, RevertPolymorphActionEvent>(OnRevertPolymorphActionEvent);
 
-        SubscribeLocalEvent<PolymorphedEntityComponent, BeforeFullyEatenEvent>(OnBeforeFullyEaten);
         SubscribeLocalEvent<PolymorphedEntityComponent, BeforeFullySlicedEvent>(OnBeforeFullySliced);
         SubscribeLocalEvent<PolymorphedEntityComponent, DestructionEventArgs>(OnDestruction);
+        SubscribeLocalEvent<PolymorphedEntityComponent, EntityTerminatingEvent>(OnPolymorphedTerminating);
 
         InitializeMap();
     }
@@ -126,16 +126,6 @@ public sealed partial class PolymorphSystem : EntitySystem
         Revert((ent, ent));
     }
 
-    private void OnBeforeFullyEaten(Entity<PolymorphedEntityComponent> ent, ref BeforeFullyEatenEvent args)
-    {
-        var (_, comp) = ent;
-        if (comp.Configuration.RevertOnEat)
-        {
-            args.Cancel();
-            Revert((ent, ent));
-        }
-    }
-
     private void OnBeforeFullySliced(Entity<PolymorphedEntityComponent> ent, ref BeforeFullySlicedEvent args)
     {
         var (_, comp) = ent;
@@ -158,6 +148,16 @@ public sealed partial class PolymorphSystem : EntitySystem
         }
     }
 
+    private void OnPolymorphedTerminating(Entity<PolymorphedEntityComponent> ent, ref EntityTerminatingEvent args)
+    {
+        if (ent.Comp.Configuration.RevertOnDelete)
+            Revert(ent.AsNullable());
+
+        // Remove our original entity too
+        // Note that Revert will set Parent to null, so reverted entities will not be deleted
+        QueueDel(ent.Comp.Parent);
+    }
+
     /// <summary>
     /// Polymorphs the target entity into the specific polymorph prototype
     /// </summary>
@@ -170,15 +170,18 @@ public sealed partial class PolymorphSystem : EntitySystem
     }
 
     /// <summary>
-    /// Polymorphs the target entity into another
+    /// Polymorphs the target entity into another.
     /// </summary>
     /// <param name="uid">The entity that will be transformed</param>
-    /// <param name="configuration">Polymorph data</param>
-    /// <returns></returns>
+    /// <param name="configuration">The new polymorph configuration</param>
+    /// <returns>The new entity, or null if the polymorph failed.</returns>
     public EntityUid? PolymorphEntity(EntityUid uid, PolymorphConfiguration configuration)
     {
-        // if it's already morphed, don't allow it again with this condition active.
-        if (!configuration.AllowRepeatedMorphs && HasComp<PolymorphedEntityComponent>(uid))
+        // If they're morphed, check their current config to see if they can be
+        // morphed again
+        if (!configuration.IgnoreAllowRepeatedMorphs
+            && TryComp<PolymorphedEntityComponent>(uid, out var currentPoly)
+            && !currentPoly.Configuration.AllowRepeatedMorphs)
             return null;
 
         // If this polymorph has a cooldown, check if that amount of time has passed since the
@@ -256,7 +259,7 @@ public sealed partial class PolymorphSystem : EntitySystem
 
         if (configuration.TransferHumanoidAppearance)
         {
-            _humanoid.CloneAppearance(uid, child);
+            _humanoid.CloneAppearance(child, uid);
         }
 
         if (_mindSystem.TryGetMind(uid, out var mindId, out var mind))
@@ -292,12 +295,20 @@ public sealed partial class PolymorphSystem : EntitySystem
         if (Deleted(uid))
             return null;
 
-        var parent = component.Parent;
+        if (component.Parent is not { } parent)
+            return null;
+
+        // Clear our reference to the original entity
+        component.Parent = null;
         if (Deleted(parent))
             return null;
 
         var uidXform = Transform(uid);
         var parentXform = Transform(parent);
+
+        // Don't swap back onto a terminating grid
+        if (TerminatingOrDeleted(uidXform.ParentUid))
+            return null;
 
         if (component.Configuration.ExitPolymorphSound != null)
             _audio.PlayPvs(component.Configuration.ExitPolymorphSound, uidXform.Coordinates);
