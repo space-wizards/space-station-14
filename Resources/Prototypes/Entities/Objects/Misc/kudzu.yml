@@ -10,6 +10,7 @@
     - type: Transform
       anchored: true
     - type: Physics
+    - type: Edible
     - type: Kudzu
     - type: GrowingKudzu
     - type: ActiveEdgeSpreader
@@ -100,7 +101,7 @@
         food:
           reagents:
           - ReagentId: Nutriment
-            Quantity: 2
+            Quantity: 0
     - type: Tag
       tags:
       - Ruminant

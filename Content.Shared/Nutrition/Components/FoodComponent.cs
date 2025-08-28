@@ -43,13 +43,6 @@ public sealed partial class FoodComponent : Component
     public bool RequiresSpecialDigestion;
 
     /// <summary>
-    ///     Stomachs required to digest this entity.
-    ///     Used to simulate 'ruminant' digestive systems (which can digest grass)
-    /// </summary>
-    [DataField]
-    public int RequiredStomachs = 1;
-
-    /// <summary>
     /// The localization identifier for the eat message. Needs a "food" entity argument passed to it.
     /// </summary>
     [DataField]
