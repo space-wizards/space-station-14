@@ -32,6 +32,8 @@ public sealed class VomitSystem : EntitySystem
 
     private static readonly ProtoId<SoundCollectionPrototype> VomitCollection = "Vomit";
 
+    private static readonly string VomitPrototype = "Vomit";  // TODO: Dehardcode vomit prototype
+
     private readonly SoundSpecifier _vomitSound = new SoundCollectionSpecifier(VomitCollection,
         AudioParams.Default.WithVariation(0.2f).WithVolume(-4f));
 
@@ -88,7 +90,7 @@ public sealed class VomitSystem : EntitySystem
             }
 
             // Makes a vomit solution the size of 90% of the chemicals removed from the chemstream
-            solution.AddReagent(new ReagentId("Vomit", _bloodstream.GetEntityBloodData(uid)), vomitAmount); // TODO: Dehardcode vomit prototype
+            solution.AddReagent(new ReagentId(VomitPrototype, _bloodstream.GetEntityBloodData(uid)), vomitAmount);
         }
 
         if (_puddle.TrySpillAt(uid, solution, out var puddle, false))
