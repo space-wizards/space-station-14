@@ -90,6 +90,7 @@
     - map: [ "belt" ]
     - map: [ "neck" ]
     - map: [ "back" ]
+    - map: [ "enum.HumanoidVisualLayers.SnoutTop" ]
     - map: [ "enum.HumanoidVisualLayers.FacialHair" ]
     - map: [ "enum.HumanoidVisualLayers.Hair" ]
     - map: [ "enum.HumanoidVisualLayers.HeadSide" ]
@@ -107,6 +108,7 @@
     species: Vulpkanin
     hideLayersOnEquip:
     - Snout
+    - SnoutTop
     - HeadTop
     - HeadSide
     markingsDisplacement:

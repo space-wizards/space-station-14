@@ -15,6 +15,7 @@ namespace Content.Shared.Humanoid
         Chest,
         Head,
         Snout,
+        SnoutTop, // on the snout (i.e, a fox marking)
         HeadSide, // side parts (i.e., frills)
         HeadTop,  // top parts (i.e., ears)
         Eyes,

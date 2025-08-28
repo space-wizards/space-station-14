@@ -45,15 +45,6 @@
       state: muzzle_top
 
 - type: marking
-  id: VulpNose
-  bodyPart: Head
-  markingCategory: Head
-  speciesRestriction: [ Vulpkanin ]
-  sprites:
-    - sprite: Mobs/Customization/Vulpkanin/head_markings.rsi
-      state: nose
-
-- type: marking
   id: VulpPatch
   bodyPart: Head
   markingCategory: Head
@@ -96,4 +87,33 @@
   speciesRestriction: [ Vulpkanin ]
   sprites:
     - sprite: Mobs/Customization/Vulpkanin/head_markings.rsi
+      state: vulpine
+
+# Snout Markings
+
+- type: marking
+  id: VulpSnout
+  bodyPart: Snout
+  markingCategory: Snout
+  speciesRestriction: [ Vulpkanin ]
+  sprites:
+    - sprite: Mobs/Customization/Vulpkanin/head_markings.rsi
+      state: snout
+
+- type: marking
+  id: VulpSnoutNose
+  bodyPart: Snout
+  markingCategory: SnoutTop
+  speciesRestriction: [ Vulpkanin ]
+  sprites:
+    - sprite: Mobs/Customization/Vulpkanin/head_markings.rsi
+      state: snout-nose
+
+- type: marking
+  id: VulpSnoutVulpine
+  bodyPart: Snout
+  markingCategory: SnoutTop
+  speciesRestriction: [ Vulpkanin ]
+  sprites:
+    - sprite: Mobs/Customization/Vulpkanin/snout_markings.rsi
       state: vulpine
