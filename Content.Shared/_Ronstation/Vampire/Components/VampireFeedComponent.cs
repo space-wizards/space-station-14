@@ -1,9 +1,14 @@
 using Content.Shared.Damage;
 using Content.Shared.Damage.Prototypes;
 using Content.Shared.FixedPoint;
-using Content.Shared.Vampire.Systems;
+using Content.Shared._Ronstation.Vampire.Systems;
+using Content.Shared.Whitelist;
 using Robust.Shared.Audio;
+using Robust.Shared.GameStates;
+using Robust.Shared.Prototypes;
 
+
+namespace Content.Shared._Ronstation.Vampire.Components;
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState, AutoGenerateComponentPause]
 [Access(typeof(VampireFeedSystem))]
 public sealed partial class VampireFeedComponent : Component
