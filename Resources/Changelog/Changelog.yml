@@ -1,65 +1,4 @@
 ﻿Entries:
-- author: AgentSmithRadio, MadeOfHeartAndStone
-  changes:
-  - message: Added cotton grilled cheese sandwich entity and recipe.
-    type: Add
-  id: 8329
-  time: '2025-04-24T03:24:37.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/36135
-- author: SG6732
-  changes:
-  - message: Added meat patties. Get the charcoal and let's start grillin.
-    type: Add
-  id: 8330
-  time: '2025-04-24T03:45:27.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/34896
-- author: DrMelon, EmoGarbage404
-  changes:
-  - message: Added turnstiles, gates able to limit the flow of foot traffic. The station's
-      flow is at your fingertips.
-    type: Add
-  id: 8331
-  time: '2025-04-24T11:39:40.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/36313
-- author: EmoGarbage404
-  changes:
-  - message: Added prisoner closets. These create automatic ID's which allow you to
-      quickly handle the transfer of prisoners in and out of genpop cells while keeping
-      their belongings secure. Imprison people today!
-    type: Add
-  id: 8332
-  time: '2025-04-24T14:32:11.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/36392
-- author: Southbridge
-  changes:
-  - message: Colorful Light Crates have been added and can be ordered.
-    type: Add
-  id: 8333
-  time: '2025-04-24T17:41:55.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/36750
-- author: ScarKy0, Jbsundown
-  changes:
-  - message: Letters and Packages can now be cut open with sharp objects. Be wary,
-      this makes cargo lose money!
-    type: Add
-  id: 8334
-  time: '2025-04-24T19:47:46.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/36815
-- author: EmoGarbage404
-  changes:
-  - message: Fixed situations where using the QSI would send the player into an esoteric
-      space realm.
-    type: Fix
-  id: 8335
-  time: '2025-04-24T21:18:26.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/36834
-- author: thetolbean
-  changes:
-  - message: Specific outer clothing now correctly blocks your identity.
-    type: Fix
-  id: 8336
-  time: '2025-04-24T23:42:27.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/33085
 - author: SlamBamActionman
   changes:
   - message: Changed 2 posters to be rules-compliant.
@@ -3899,3 +3838,111 @@
   id: 8841
   time: '2025-08-09T21:52:06.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/39174
+- author: Princess-Cheeseballs
+  changes:
+  - message: Mobs such as borgs, dragons, etc can no longer crawl.
+    type: Tweak
+  id: 8842
+  time: '2025-08-10T17:49:29.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/39084
+- author: beck-thompson
+  changes:
+  - message: Various syndicate items can now be "locked" with your voice to hide their
+      true identity. The items are, all chameleon clothing, voice masks, no slips,
+      agent IDs, cane swords, and e daggers.
+    type: Add
+  - message: e dagger now has a slightly longer activation cool down (1s -> 1.5s).
+    type: Tweak
+  - message: Voice triggered items now properly display the trigger text when examined.
+    type: Fix
+  id: 8843
+  time: '2025-08-10T18:10:13.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/39310
+- author: jessicamaybe
+  changes:
+  - message: 'Added a rare Hamlet variant: Fragile Hamlet'
+    type: Add
+  id: 8844
+  time: '2025-08-10T22:20:26.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/39531
+- author: perryprog
+  changes:
+  - message: "Diona\_nymphs that reform inside of a locker will no longer be invisible."
+    type: Fix
+  id: 8845
+  time: '2025-08-11T11:00:12.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/39505
+- author: Samuka
+  changes:
+  - message: The Robotics Console now correctly displays the brain installed information
+      if the borg has a empty MMI
+    type: Fix
+  - message: The Robotics Console now shows the borg physical integrity
+    type: Tweak
+  - message: Changed the colors for the battery display in the robotics console so
+      it easier to read the percentage
+    type: Tweak
+  id: 8846
+  time: '2025-08-11T18:57:39.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38023
+- author: metalgearsloth
+  changes:
+  - message: Inserting lights now plays an insert animation.
+    type: Add
+  id: 8847
+  time: '2025-08-11T21:06:28.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/36541
+- author: sowelipililimute
+  changes:
+  - message: Borg modules can now have hands!
+    type: Add
+  - message: The generic cables module can now throw and mix and match cables in its
+      slots
+    type: Tweak
+  - message: The engineering construction module can now hold any material in its
+      materials slots, any floor tile in its floor tile slots, and now has slots for
+      holding any circuitboard and flatpack
+    type: Tweak
+  - message: The janitor custodial module can now throw its soap and pick up new and
+      better varieties of soap
+    type: Tweak
+  - message: The janitor advanced cleaning module can now throw and pick up beakers
+      in its slot
+    type: Tweak
+  - message: The medical topicals module can now hold any type of topicals in its
+      topicals slots
+    type: Tweak
+  - message: The medical chemical module can now drop and pick up its vials, and hold
+      other small containers
+    type: Tweak
+  - message: The medical advanced chemical module can now drop and pick up its beakers,
+      and hold other larger containers
+    type: Tweak
+  - message: The science artifact module can drop and pick up its vial, and hold other
+      small containers
+    type: Tweak
+  - message: The service service module can now drop and pick up its shaker, and pick
+      up other drink containers. It also has a spoon now.l containers
+    type: Tweak
+  - message: The science anomaly module can now throw its reinforced and reinforced
+      plasma glass
+    type: Tweak
+  - message: The service service module now has a book bag, and two slots for books
+      and paper
+    type: Tweak
+  - message: The service service module can now drop and pick up its shaker, and pick
+      up other drink containers. It also has a spoon now.
+    type: Tweak
+  - message: The service musique module can now drop and pick up instruments.
+    type: Tweak
+  id: 8848
+  time: '2025-08-12T22:21:42.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38668
+- author: perryprog
+  changes:
+  - message: Fixed lights sometimes not emitting light when spawning them or when
+      they enter PVS.
+    type: Fix
+  id: 8849
+  time: '2025-08-12T23:00:36.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/39585

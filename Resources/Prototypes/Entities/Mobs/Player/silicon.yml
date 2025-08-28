@@ -291,7 +291,19 @@
         type: HolopadBoundUserInterface
       enum.StationAiCustomizationUiKey.Key:
         type: StationAiCustomizationBoundUserInterface
-
+  - type: Construction
+    graph: StationAiCore
+    node: stationAiCore
+  - type: ContainerContainer
+    containers:
+      board: !type:Container
+      station_ai_brain_slot: !type:Container
+      station_ai_mind_slot: !type:ContainerSlot
+  - type: ContainerFill
+    containers:
+      board:
+      - StationAiCoreElectronics
+      
 # The job-ready version of an AI spawn.
 - type: entity
   id: PlayerStationAi
@@ -301,6 +313,72 @@
   - type: ContainerSpawnPoint
     containerId: station_ai_mind_slot
     job: StationAi
+
+# The station AI core assembly
+- type: entity
+  parent: BaseStructure
+  id: PlayerStationAiAssembly
+  name: AI Core Assembly
+  description: An unfinished computer core for housing an artifical intelligence.
+  components:
+  - type: Sprite
+    sprite: Mobs/Silicon/station_ai.rsi
+    layers:
+    - state: frame_0
+      map: [ "enum.ConstructionVisuals.Layer" ]
+  - type: Appearance
+  - type: GenericVisualizer
+    visuals:
+      enum.ConstructionVisuals.Key:
+        enum.ConstructionVisuals.Layer:
+          frame: { state: frame_0 }
+          frameWithElectronics: { state: frame_1 }
+          frameWithSecuredElectronics: { state: frame_2 }
+          frameWithWires: { state: frame_3 }
+          frameWithBrain: { state: frame_3b }
+          frameWithBrainFinished: { state: frame_4 }
+          frameWithoutBrainFinished: { state: frame_4 }
+  - type: InteractionOutline
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.5,-0.5,0.5,0.5"
+        mask:
+        - MachineMask
+        layer:
+        - MachineLayer
+        density: 200
+  - type: Damageable
+    damageModifierSet: StrongMetallic
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 300
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalBreak
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          SheetPlasteel:
+            min: 2
+            max: 4
+      - !type:EmptyContainersBehaviour
+        containers:
+        - station_ai_brain_slot
+        - board
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+  - type: Construction
+    graph: StationAiCore
+    node: frame
+  - type: ContainerContainer
+    containers:
+      board: !type:Container
+      station_ai_brain_slot: !type:Container
 
 # The actual brain inside the core
 - type: entity

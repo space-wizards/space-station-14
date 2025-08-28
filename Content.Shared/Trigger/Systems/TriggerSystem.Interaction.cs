@@ -12,6 +12,7 @@ public sealed partial class TriggerSystem
     {
         SubscribeLocalEvent<TriggerOnActivateComponent, ActivateInWorldEvent>(OnActivate);
         SubscribeLocalEvent<TriggerOnUseComponent, UseInHandEvent>(OnUse);
+        SubscribeLocalEvent<TriggerOnInteractHandComponent, InteractHandEvent>(OnInteractHand);
 
         SubscribeLocalEvent<ItemToggleOnTriggerComponent, TriggerEvent>(HandleItemToggleOnTrigger);
         SubscribeLocalEvent<AnchorOnTriggerComponent, TriggerEvent>(HandleAnchorOnTrigger);
@@ -31,6 +32,15 @@ public sealed partial class TriggerSystem
     }
 
     private void OnUse(Entity<TriggerOnUseComponent> ent, ref UseInHandEvent args)
+    {
+        if (args.Handled)
+            return;
+
+        Trigger(ent.Owner, args.User, ent.Comp.KeyOut);
+        args.Handled = true;
+    }
+
+    private void OnInteractHand(Entity<TriggerOnInteractHandComponent> ent, ref InteractHandEvent args)
     {
         if (args.Handled)
             return;

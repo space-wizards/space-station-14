@@ -527,6 +527,9 @@ public abstract partial class SharedStationAiSystem : EntitySystem
 
     protected virtual void OnAiRemove(Entity<StationAiCoreComponent> ent, ref EntRemovedFromContainerMessage args)
     {
+        if (args.Container.ID != StationAiCoreComponent.Container)
+            return;
+
         if (_timing.ApplyingState)
             return;
 

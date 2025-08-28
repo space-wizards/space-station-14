@@ -222,6 +222,24 @@
         },
         {
             "name": "base"
+        },
+        {
+            "name": "frame_0"
+        },
+        {
+            "name": "frame_1"
+        },
+        {
+            "name": "frame_2"
+        },
+        {
+            "name": "frame_3"
+        },
+        {
+            "name": "frame_3b"
+        },
+        {
+            "name": "frame_4"
         }
     ]
 }
