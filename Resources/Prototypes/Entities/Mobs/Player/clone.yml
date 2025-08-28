@@ -16,6 +16,8 @@
   # traits
   - BlackAndWhiteOverlay
   - Clumsy
+  - Hemophilia
+  - ImpairedMobility
   # - LegsParalyzed (you get healed)
   - LightweightDrunk
   - Muted
@@ -121,6 +123,7 @@
   - Rootable # diona
   - Sericulture # arachnids
   - MovementSpeedModifier # moths when weightless
+  - JumpAbility # vulp leaping
   copyEquipment: null
   copyInternalStorage: false
   copyImplants: false
