@@ -54,13 +54,11 @@
       required: true
       defaultMarkings: [ VulpEar ]
     Arms:
-      points: 2
+      points: 6
       required: false
-      defaultMarkings: [ VulpClawsLHand, VulpClawsRHand ]
     Legs:
-      points: 2
+      points: 6
       required: false
-      defaultMarkings: [ VulpClawsLFoot, VulpClawsRFoot ]
 
 - type: humanoidBaseSprite
   id: MobVulpkaninEyes

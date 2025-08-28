@@ -38,6 +38,46 @@
         {
             "name": "crests",
             "directions": 4
+        },
+        {
+            "name": "crest-legs",
+            "directions": 4
+        },
+        {
+            "name": "crest-leg-l",
+            "directions": 4
+        },
+        {
+            "name": "crest-leg-r",
+            "directions": 4
+        },
+        {
+            "name": "crest-foot-l",
+            "directions": 4
+        },
+        {
+            "name": "crest-foot-r",
+            "directions": 4
+        },
+        {
+            "name": "crest-arms",
+            "directions": 4
+        },
+        {
+            "name": "crest-arm-l",
+            "directions": 4
+        },
+        {
+            "name": "crest-arm-r",
+            "directions": 4
+        },
+        {
+            "name": "crest-hand-l",
+            "directions": 4
+        },
+        {
+            "name": "crest-hand-r",
+            "directions": 4
         }
     ]
 }
