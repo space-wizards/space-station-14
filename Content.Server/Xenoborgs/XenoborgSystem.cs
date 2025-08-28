@@ -80,7 +80,7 @@ public sealed partial class XenoborgSystem : EntitySystem
             if (TryComp<ActorComponent>(ent, out var actorComp))
             {
                 _antag.SendBriefing(actorComp.PlayerSession,
-                    Loc.GetString("xenoborgs-welcome"),
+                    Loc.GetString("mothership-welcome"),
                     Color.BlueViolet,
                     mothershipComp.GreetSoundNotification);
             }
