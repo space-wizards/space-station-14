@@ -2,9 +2,9 @@
 <!-- Created with Inkscape (http://www.inkscape.org/) -->
 
 <svg
-   width="360"
-   height="50"
-   viewBox="0 0 95.249995 13.229167"
+   width="900"
+   height="125"
+   viewBox="0 0 238.12499 33.072918"
    version="1.1"
    id="svg1"
    inkscape:version="1.4 (e7c3feb, 2024-10-09)"
@@ -30,13 +30,13 @@
      inkscape:pageopacity="0.0"
      inkscape:pagecheckerboard="0"
      inkscape:deskcolor="#d1d1d1"
-     inkscape:document-units="mm"
+     inkscape:document-units="px"
      showgrid="true"
      inkscape:zoom="5.13"
-     inkscape:cx="15.984405"
-     inkscape:cy="4.4834308"
-     inkscape:window-width="1594"
-     inkscape:window-height="832"
+     inkscape:cx="952.04678"
+     inkscape:cy="27.680312"
+     inkscape:window-width="1600"
+     inkscape:window-height="828"
      inkscape:window-x="0"
      inkscape:window-y="0"
      inkscape:window-maximized="1"
@@ -63,7 +63,8 @@
      inkscape:groupmode="layer"
      id="layer1">
     <g
-       id="g144">
+       id="g144"
+       transform="scale(2.5)">
       <g
          id="g125">
         <g
@@ -517,7 +518,7 @@
           <g
              id="g115">
             <path
-               style="fill:#cccccc;stroke:none;stroke-width:1;fill-opacity:1"
+               style="fill:#cccccc;fill-opacity:1;stroke:none;stroke-width:1"
                d="M 6.6145832,5.2916661 7.9374999,6.6145827 V 7.9374994 L 6.6145832,6.6145827 Z"
                id="path108" />
             <path
