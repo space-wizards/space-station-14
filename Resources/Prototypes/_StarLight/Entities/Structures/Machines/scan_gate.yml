@@ -36,8 +36,8 @@
     layoutId: ScanGate
   - type: UserInterface
     interfaces:
-      enum.ResearchClientUiKey.Key:
-        type: ResearchClientBoundUserInterface
+      enum.WiresUiKey.Key:
+        type: WiresBoundUserInterface
   - type: Transform
     anchored: true
   - type: Pullable
