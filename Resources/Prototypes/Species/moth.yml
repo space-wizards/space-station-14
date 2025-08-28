@@ -1,5 +1,5 @@
 - type: species
-  id: Moth
+  id: false
   name: species-name-moth
   roundStart: true
   prototype: MobMoth

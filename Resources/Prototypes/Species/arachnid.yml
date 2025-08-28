@@ -1,7 +1,7 @@
 - type: species
   id: Arachnid
   name: species-name-arachnid
-  roundStart: true
+  roundStart: false
   prototype: MobArachnid
   sprites: MobArachnidSprites
   defaultSkinTone: "#385878"
