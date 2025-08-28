@@ -78,6 +78,50 @@
         {
             "name": "crest-hand-r",
             "directions": 4
+        },
+        {
+            "name": "points_fade",
+            "directions": 4
+        },
+        {
+            "name": "points_fade-arms",
+            "directions": 4
+        },
+        {
+            "name": "points_fade-arm-l",
+            "directions": 4
+        },
+        {
+            "name": "points_fade-arm-r",
+            "directions": 4
+        },
+        {
+            "name": "points_fade-hand-l",
+            "directions": 4
+        },
+        {
+            "name": "points_fade-hand-r",
+            "directions": 4
+        },
+        {
+            "name": "points_fade-legs",
+            "directions": 4
+        },
+        {
+            "name": "points_fade-leg-l",
+            "directions": 4
+        },
+        {
+            "name": "points_fade-leg-r",
+            "directions": 4
+        },
+        {
+            "name": "points_fade-foot-l",
+            "directions": 4
+        },
+        {
+            "name": "points_fade-foot-r",
+            "directions": 4
         }
     ]
 }
