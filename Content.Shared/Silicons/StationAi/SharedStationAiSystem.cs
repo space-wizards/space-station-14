@@ -16,6 +16,7 @@ using Content.Shared.Item.ItemToggle;
 using Content.Shared.Mind;
 using Content.Shared.Mobs;
 using Content.Shared.Mobs.Components;
+using Content.Shared.Mobs.Systems;
 using Content.Shared.Movement.Components;
 using Content.Shared.Movement.Systems;
 using Content.Shared.Popups;
@@ -64,7 +65,7 @@ public abstract partial class SharedStationAiSystem : EntitySystem
     [Dependency] private readonly SharedUserInterfaceSystem _uiSystem = default!;
     [Dependency] private readonly StationAiVisionSystem _vision = default!;
     [Dependency] private readonly IPrototypeManager _protoManager = default!;
-    [Dependency] private readonly SharedSuicideSystem _suicide = default!;
+    [Dependency] private readonly MobStateSystem _mobState = default!;
 
     // StationAiHeld is added to anything inside of an AI core.
     // StationAiHolder indicates it can hold an AI positronic brain (e.g. holocard / core).
@@ -344,17 +345,14 @@ public abstract partial class SharedStationAiSystem : EntitySystem
 
     private void OnAiShutdown(Entity<StationAiCoreComponent> ent, ref ComponentShutdown args)
     {
-        // TODO: Tryqueuedel
-        if (_net.IsClient)
-            return;
+        PredictedQueueDel(ent.Comp.RemoteEntity);
 
-        QueueDel(ent.Comp.RemoteEntity);
         ent.Comp.RemoteEntity = null;
+        Dirty(ent);
     }
 
     private void OnCorePower(Entity<StationAiCoreComponent> ent, ref PowerChangedEvent args)
     {
-        // TODO: I think in 13 they just straightup die so maybe implement that
         if (args.Powered)
         {
             if (!SetupEye(ent))
@@ -393,10 +391,11 @@ public abstract partial class SharedStationAiSystem : EntitySystem
         if (!TryGetHeld((ent.Owner, ent.Comp), out var held))
             return;
 
-        if (!TryComp<DamageableComponent>(held, out var damageable))
+        if (!TryComp<MobStateComponent>(held, out var mobState))
             return;
 
-        _suicide.ApplyLethalDamage((held, damageable), "Shock");
+        _mobState.ChangeMobState(held, MobState.Dead);
+
         ClearEye(ent);
 
         if (TryComp<StationAiHolderComponent>(ent, out var holder))
@@ -561,8 +560,7 @@ public abstract partial class SharedStationAiSystem : EntitySystem
         if (_containers.TryGetContainer(entity.Owner, StationAiHolderComponent.Container, out var container) && container.Count > 0)
         {
             var ai = container.ContainedEntities.First();
-            var aiIsDead = TryComp<MobStateComponent>(ai, out var mobState) && mobState.CurrentState == MobState.Dead;
-            state = aiIsDead ? StationAiState.Dead : StationAiState.Occupied;
+            state = _mobState.IsDead(ai) ? StationAiState.Dead : StationAiState.Occupied;
         }
 
         // If the entity is a station AI core, attempt to customize its appearance

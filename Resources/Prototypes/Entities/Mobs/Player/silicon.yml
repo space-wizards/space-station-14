@@ -162,6 +162,7 @@
     - state: ai
       shader: unshaded
 
+# Empty AI core
 - type: entity
   id: PlayerStationAiEmpty
   name: AI Core
@@ -242,7 +243,6 @@
     idleLoad: 1000
     batteryRechargeRate: 2000
     batteryRechargeEfficiency: 0 # Setting to zero until the light flickering issue associated with dynamic power loads is fixed 
-  - type: Alerts
   - type: StationAiCore
   - type: StationAiVision
   - type: InteractionOutline
@@ -326,7 +326,12 @@
   name: AI Core Assembly
   description: An unfinished computer core for housing an artifical intelligence.
   components:
+  - type: Anchorable
+    flags: 
+    - Anchorable
+  - type: Rotatable
   - type: Sprite
+    snapCardinals: true
     sprite: Mobs/Silicon/station_ai.rsi
     layers:
     - state: frame_0
@@ -441,21 +446,6 @@
       state: ai_female
   - type: NameIdentifier
     group: StationAi
-  - type: Damageable
-    damageContainer: Silicon
-  - type: MobState
-    allowedStates:
-    - Alive
-    - Dead
-  - type: MobThresholds
-    thresholds:
-      0: Alive
-      100: Dead
-    triggersAlerts: false
-    showOverlays: false
-    allowRevives: true
-  - type: Alerts
-
 
 # Hologram projection that the AI's eye tracks.
 - type: entity

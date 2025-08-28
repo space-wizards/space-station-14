@@ -6,6 +6,7 @@ using Content.Server.Mind;
 using Content.Server.Power.Components;
 using Content.Server.Power.EntitySystems;
 using Content.Server.Roles;
+using Content.Server.Spawners.Components;
 using Content.Server.Spawners.EntitySystems;
 using Content.Server.Station.Systems;
 using Content.Shared.Alert;
@@ -15,6 +16,7 @@ using Content.Shared.Damage;
 using Content.Shared.Destructible;
 using Content.Shared.DeviceNetwork.Components;
 using Content.Shared.DoAfter;
+using Content.Shared.Ghost;
 using Content.Shared.Popups;
 using Content.Shared.Roles;
 using Content.Shared.Silicons.StationAi;
@@ -108,7 +110,7 @@ public sealed class StationAiSystem : SharedStationAiSystem
     private void OnContainerSpawn(Entity<StationAiCoreComponent> ent, ref ContainerSpawnEvent args)
     {
         // Ensure that players that recently joined the round will spawn
-        // into an AI core that a full battery and full integrity.
+        // into an AI core that has a full battery and full integrity.
         if (TryComp<BatteryComponent>(ent, out var battery))
         {
             _battery.SetCharge(ent, battery.MaxCharge);
@@ -151,6 +153,11 @@ public sealed class StationAiSystem : SharedStationAiSystem
         if (station == null)
             return;
 
+        if (!HasComp<ContainerSpawnPointComponent>(ent))
+            return;
+
+        // If the destroyed core could act as a player spawn point,
+        // reduce the number of available AI jobs by one
         _stationJobs.TryAdjustJobSlot(station.Value, _stationAiJob, -1, false, true);
     }
 
@@ -215,10 +222,10 @@ public sealed class StationAiSystem : SharedStationAiSystem
 
     private void OnDoAfterAttempt(Entity<StationAiCoreComponent> ent, ref DoAfterAttemptEvent<IntellicardDoAfterEvent> args)
     {
-        // Do not allow an AI to be uploaded into a currently unpowered or broken AI core.
-
         if (TryGetHeld((ent.Owner, ent.Comp), out var _))
             return;
+
+        // Prevent AIs from being uploaded into an unpowered or broken AI core.
 
         if (TryComp<ApcPowerReceiverComponent>(ent, out var apcPower) && !apcPower.Powered)
         {
@@ -247,7 +254,14 @@ public sealed class StationAiSystem : SharedStationAiSystem
         if (!_mind.TryGetMind(held, out var mindId, out var mind))
             return;
 
-        _ghost.OnGhostAttempt(mindId, false, mind: mind);
+        _ghost.OnGhostAttempt(mindId, canReturnGlobal: true, mind: mind);
+
+        if (!TryComp<GhostComponent>(mind.VisitingEntity, out var ghost))
+            return;
+
+        // Don't allow the player to manually return to their body,
+        // we don't want inexperienced players getting stuck
+        _ghost.SetCanReturnToBody((mind.VisitingEntity.Value, ghost), false);
     }
 
     private void OnExpandICChatRecipients(ExpandICChatRecipientsEvent ev)

@@ -65,7 +65,7 @@ public abstract partial class SharedStationAiSystem
 
         if (stationAi == null)
         {
-            _appearance.RemoveData(entity.Owner, StationAiVisualState.Key);
+            _appearance.RemoveData(entity.Owner, StationAiVisualLayers.Icon);
             return;
         }
 
@@ -77,7 +77,7 @@ public abstract partial class SharedStationAiSystem
         }
 
         // This data is handled manually in the client StationAiSystem
-        _appearance.SetData(entity.Owner, StationAiVisualState.Key, stateData);
+        _appearance.SetData(entity.Owner, StationAiVisualLayers.Icon, stateData);
     }
 
     /// <summary>
