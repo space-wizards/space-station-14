@@ -2,6 +2,7 @@ using System.Linq;
 using Content.Shared.Dataset;
 using Content.Server.Ghost.Roles.Components;
 using Content.Server.StationEvents.Components;
+using Content.Shared.Mind;
 using Content.Shared.Mind.Components;
 using Content.Shared.GameTicking.Components;
 using Content.Shared.Random.Helpers;
