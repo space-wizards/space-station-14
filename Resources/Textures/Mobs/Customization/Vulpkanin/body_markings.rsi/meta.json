@@ -122,6 +122,62 @@
         {
             "name": "points_fade-foot-r",
             "directions": 4
+        },
+        {
+            "name": "points_sharp",
+            "directions": 4
+        },
+        {
+            "name": "points_sharp-arms",
+            "directions": 4
+        },
+        {
+            "name": "points_sharp-arm-l",
+            "directions": 4
+        },
+        {
+            "name": "points_sharp-arm-r",
+            "directions": 4
+        },
+        {
+            "name": "points_sharp-arms-long",
+            "directions": 4
+        },
+        {
+            "name": "points_sharp-arm-long-l",
+            "directions": 4
+        },
+        {
+            "name": "points_sharp-arm-long-r",
+            "directions": 4
+        },
+        {
+            "name": "points_sharp-hand-l",
+            "directions": 4
+        },
+        {
+            "name": "points_sharp-hand-r",
+            "directions": 4
+        },
+        {
+            "name": "points_sharp-legs",
+            "directions": 4
+        },
+        {
+            "name": "points_sharp-leg-l",
+            "directions": 4
+        },
+        {
+            "name": "points_sharp-leg-r",
+            "directions": 4
+        },
+        {
+            "name": "points_sharp-foot-l",
+            "directions": 4
+        },
+        {
+            "name": "points_sharp-foot-r",
+            "directions": 4
         }
     ]
 }
