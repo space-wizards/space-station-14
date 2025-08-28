@@ -128,7 +128,8 @@
                 Visible="True"
                 VerticalExpand="True"
                 HorizontalExpand="True"
-                Orientation="Vertical">
+                Orientation="Vertical"
+                MinHeight="130">
                 <Label Text="{Loc 'lathe-menu-materials-title'}" Margin="5 5 5 5" HorizontalAlignment="Center"/>
                 <PanelContainer VerticalExpand="True">
                     <PanelContainer.PanelOverride>

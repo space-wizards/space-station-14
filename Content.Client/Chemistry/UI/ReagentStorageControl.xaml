@@ -4,7 +4,7 @@
                  VerticalExpand="True">
     <BoxContainer Orientation="Vertical" VerticalExpand="True">
         <BoxContainer Name="ReagentList" Orientation="Vertical" VerticalExpand="True">
-            <Label Name="NoMatsLabel" Text="{Loc 'lathe-menu-no-reagents-message'}" HorizontalAlignment="Center" VerticalAlignment="Center" VerticalExpand="True"/>
+            <Label Name="NoReagentsLabel" Text="{Loc 'lathe-menu-no-reagents-message'}" HorizontalAlignment="Center" VerticalAlignment="Center" VerticalExpand="True"/>
         </BoxContainer>
     </BoxContainer>
 </ScrollContainer>

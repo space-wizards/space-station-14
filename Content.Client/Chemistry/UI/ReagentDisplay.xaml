@@ -1,10 +1,10 @@
 ﻿<PanelContainer xmlns="https://spacestation14.io"
                 HorizontalExpand="True">
     <BoxContainer Orientation="Horizontal">
-        <TextureRect Name="Icon"
-                     Access="Public"
-                     MinSize="32 32"
-                     RectClipContent="True" />
+        <PanelContainer Name="ColorPanel"
+                        VerticalExpand="True"
+                        SetWidth="16"
+                        Margin="8 8 8 8" />
         <BoxContainer Orientation="Vertical"
                       HorizontalExpand="True"
                       VerticalExpand="False">

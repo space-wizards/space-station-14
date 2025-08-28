@@ -94,9 +94,10 @@ public sealed partial class LatheMenu : DefaultWindow
             AmountLineEdit.SetText(latheComponent.DefaultProductionAmount.ToString());
 
             if (_entityManager.TryGetComponent<SolutionContainerManagerComponent>(Entity, out var solution)
-                && _solution.TryGetSolution(Entity, latheComponent.InternalSolution, out _))
+                && _solution.TryGetSolution(Entity, latheComponent.InternalSolution, out _, out var sol))
             {
                 SolutionContainer = solution;
+                ReagentList.SetSolution(sol);
             }
         }
 
@@ -110,6 +111,7 @@ public sealed partial class LatheMenu : DefaultWindow
             MaterialStorage = mats;
         }
 
+        MaterialsList.SetOwner(Entity);
         ReagentList.SetOwner(Entity);
     }
 
