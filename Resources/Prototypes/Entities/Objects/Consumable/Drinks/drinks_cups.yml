@@ -29,7 +29,7 @@
     interfaces:
       enum.TransferAmountUiKey.Key:
         type: TransferAmountBoundUserInterface
-
+  - type: Drink
   - type: Sprite
     state: icon
   - type: Spillable
