@@ -66,6 +66,22 @@
         {
             "name": "vulp-inner",
             "directions": 4
+        },
+        {
+            "name": "vulp-sharp",
+            "directions": 4
+        },
+        {
+            "name": "vulp-fade",
+            "directions": 4
+        },
+        {
+            "name": "coyote",
+            "directions": 4
+        },
+        {
+            "name": "coyote-inner",
+            "directions": 4
         }
     ]
 }

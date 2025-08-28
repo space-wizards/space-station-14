@@ -12,6 +12,32 @@
       state: vulp-inner
 
 - type: marking
+  id: VulpEarSharp
+  bodyPart: HeadTop
+  markingCategory: HeadTop
+  speciesRestriction: [ Vulpkanin ]
+  sprites:
+    - sprite: Mobs/Customization/Vulpkanin/ear_markings.rsi
+      state: vulp
+    - sprite: Mobs/Customization/Vulpkanin/ear_markings.rsi
+      state: vulp-sharp
+    - sprite: Mobs/Customization/Vulpkanin/ear_markings.rsi
+      state: vulp-inner
+
+- type: marking
+  id: VulpEarFade
+  bodyPart: HeadTop
+  markingCategory: HeadTop
+  speciesRestriction: [ Vulpkanin ]
+  sprites:
+    - sprite: Mobs/Customization/Vulpkanin/ear_markings.rsi
+      state: vulp
+    - sprite: Mobs/Customization/Vulpkanin/ear_markings.rsi
+      state: vulp-fade
+    - sprite: Mobs/Customization/Vulpkanin/ear_markings.rsi
+      state: vulp-inner
+
+- type: marking
   id: VulpEarJackal
   bodyPart: HeadTop
   markingCategory: HeadTop
@@ -74,3 +100,14 @@
   sprites:
     - sprite: Mobs/Customization/Vulpkanin/ear_markings.rsi
       state: shock
+
+- type: marking
+  id: VulpEarCoyote
+  bodyPart: HeadTop
+  markingCategory: HeadTop
+  speciesRestriction: [ Vulpkanin ]
+  sprites:
+    - sprite: Mobs/Customization/Vulpkanin/ear_markings.rsi
+      state: coyote
+    - sprite: Mobs/Customization/Vulpkanin/ear_markings.rsi
+      state: coyote-inner
