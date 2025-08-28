@@ -64,6 +64,10 @@
         {
             "name": "eyes",
             "directions": 4
+        },
+        {
+            "name": "overlay_husk",
+            "directions": 4
         }
     ]
 }
