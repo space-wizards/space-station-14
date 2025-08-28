@@ -2,28 +2,26 @@
 
 - type: marking
   id: BasicLeftUpperSock
-  bodyPart: LFoot # If it's LLeg, it might show up under the body part.
+  bodyPart: LLeg
   markingCategory: Legs
-  speciesRestriction: [Arachnid, Human, Dwarf, SlimePerson]
+  speciesRestriction: [Arachnid, Human, Dwarf, SlimePerson] #moths getting removed from this list cuz they got skinny legs, also why did i put diona here, they cant wear shoes
   coloring:
     default:
-      type:
-        !type:SimpleColoring
-          color: "#FFFFFF"
+      type: null
+      fallbackColor: '#FFFFFF'
   sprites:
   - sprite: _Ronstation/Mobs/Customization/socks.rsi
     state: left_upper_sock
 
 - type: marking
   id: BasicRightUpperSock
-  bodyPart: RFoot # If it's RLeg, it might show up under the body part.
+  bodyPart: RLeg
   markingCategory: Legs
   speciesRestriction: [Arachnid, Human, Dwarf, SlimePerson]
   coloring:
     default:
-      type:
-        !type:SimpleColoring
-          color: "#FFFFFF"
+      type: null
+      fallbackColor: '#FFFFFF'
   sprites:
   - sprite: _Ronstation/Mobs/Customization/socks.rsi
     state: right_upper_sock
@@ -32,12 +30,11 @@
   id: BasicLeftLowerSock
   bodyPart: LFoot
   markingCategory: Legs
-  speciesRestriction: [Arachnid, Human, Dwarf, SlimePerson] #moths getting removed from this list cuz they got skinny legs, also why did i put diona here, they cant wear shoes
+  speciesRestriction: [Arachnid, Human, Dwarf, SlimePerson]
   coloring:
     default:
-      type:
-        !type:SimpleColoring
-          color: "#FFFFFF"
+      type: null
+      fallbackColor: '#FFFFFF'
   sprites:
   - sprite: _Ronstation/Mobs/Customization/socks.rsi
     state: left_lower_sock
@@ -49,36 +46,34 @@
   speciesRestriction: [Arachnid, Human, Dwarf, SlimePerson]
   coloring:
     default:
-      type:
-        !type:SimpleColoring
-          color: "#FFFFFF"
+      type: null
+      fallbackColor: '#FFFFFF'
   sprites:
   - sprite: _Ronstation/Mobs/Customization/socks.rsi
     state: right_lower_sock
 
+- type: marking
+  id: VoxLeftSock
+  bodyPart: LLeg, LFoot
+  markingCategory: Legs
+  speciesRestriction: [Vox]
+  coloring:
+    default:
+      type: null
+      fallbackColor: '#FFFFFF'
+  sprites:
+  - sprite: _Ronstation/Mobs/Customization/socks.rsi
+    state: vox_left_sock
 
-#- type: marking
-#  id: VoxLeftSock
-#  bodyPart: LLeg, LFoot
-#  markingCategory: Legs
-#  speciesRestriction: [Vox]
-#  coloring:
-#    default:
-#      type: null
-#      fallbackColor: '#FFFFFF'
-#  sprites:
-#  - sprite: _Ronstation/Mobs/Customization/socks.rsi
-#    state: vox_left_sock
-
-#- type: marking
-#  id: VoxRightSock
-#  bodyPart: RLeg, RFoot
-#  markingCategory: Legs
-#  speciesRestriction: [Vox]
-#  coloring:
-#    default:
-#      type: null
-#      fallbackColor: '#FFFFFF'
-#  sprites:
-#  - sprite: _Ronstation/Mobs/Customization/socks.rsi
-#    state: vox_right_sock
+- type: marking
+  id: VoxRightSock
+  bodyPart: RLeg, RFoot
+  markingCategory: Legs
+  speciesRestriction: [Vox]
+  coloring:
+    default:
+      type: null
+      fallbackColor: '#FFFFFF'
+  sprites:
+  - sprite: _Ronstation/Mobs/Customization/socks.rsi
+    state: vox_right_sock
