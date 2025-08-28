@@ -3,6 +3,7 @@
   id: HeadRev
   name: roles-antag-rev-head-name
   playTimeTracker: AntagHeadRev # Ronstation - modification.
+  color: '#5E9CFF' # Ronstation - modification.
   antagonist: true
   setPreference: true
   objective: roles-antag-rev-head-objective
@@ -15,6 +16,7 @@
   id: Rev
   name: roles-antag-rev-name
   playTimeTracker: AntagRev # Ronstation - modification.
+  color: '#5E9CFF' # Ronstation - modification.
   antagonist: true
   setPreference: false
   objective: roles-antag-rev-objective

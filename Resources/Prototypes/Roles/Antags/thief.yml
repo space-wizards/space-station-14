@@ -3,6 +3,7 @@
   id: Thief
   name: roles-antag-thief-name
   playTimeTracker: AntagThief # Ronstation - modification.
+  color: '#D82000' # Ronstation - modification.
   antagonist: true
   setPreference: true
   objective: roles-antag-thief-objective

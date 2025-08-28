@@ -3,6 +3,7 @@
   id: SpaceNinja
   name: roles-antag-space-ninja-name
   playTimeTracker: AntagSpaceNinja # Ronstation - modification.
+  color: '#33CC00' # Ronstation - modification.
   antagonist: true
   setPreference: false
   objective: roles-antag-space-ninja-objective

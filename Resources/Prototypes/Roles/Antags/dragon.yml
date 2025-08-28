@@ -3,5 +3,6 @@
   id: Dragon
   name: roles-antag-dragon-name
   playTimeTracker: AntagDragon # Ronstation - modification.
+  color: '#D82000' # Ronstation - modification.
   antagonist: true
   objective: roles-antag-dragon-objective
