@@ -19,6 +19,12 @@ public sealed partial class AntagPrototype : IPrototype
     // Ronstation - start of modifications.
     [DataField("playTimeTracker", required: true, customTypeSerializer: typeof(PrototypeIdSerializer<PlayTimeTrackerPrototype>))]
     public string PlayTimeTracker { get; private set; } = string.Empty;
+
+    [DataField("color")]
+    public Color Color { get; private set; } = Color.Yellow;
+    
+    [ViewVariables(VVAccess.ReadOnly)]
+    public string LocalizedName => Loc.GetString(Name);
     // Ronstation - end of modifications.
 
     /// <summary>
