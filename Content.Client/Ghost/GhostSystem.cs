@@ -138,7 +138,7 @@ namespace Content.Client.Ghost
                     locId = "ghost-gui-toggle-ghost-visibility-popup-on";
                     break;
             }
-            //= GhostVisibility ? "ghost-gui-toggle-ghost-visibility-popup-off" : "ghost-gui-toggle-ghost-visibility-popup-on";
+
             Popup.PopupEntity(Loc.GetString(locId), args.Performer);
             if (uid == _playerManager.LocalEntity)
                 ToggleGhostVisibility();
@@ -244,7 +244,7 @@ namespace Content.Client.Ghost
 
     }
 
-    internal enum GhostVisibilityMode
+    public enum GhostVisibilityMode : byte
     {
         ShowAllGhosts,
         HideOtherGhosts,
