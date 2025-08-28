@@ -8,6 +8,8 @@ namespace Content.Server._Starlight.Railroading;
 
 public sealed partial class RailroadingSurviveTaskSystem : EntitySystem
 {
+    [Dependency] private readonly RailroadingSystem _railroading = default!;
+
     public override void Initialize()
     {
         base.Initialize();
@@ -17,7 +19,11 @@ public sealed partial class RailroadingSurviveTaskSystem : EntitySystem
         SubscribeLocalEvent<RailroadSurviveTaskComponent, RailroadingCardCompletedEvent>(OnCompleted);
         
         SubscribeLocalEvent<RailroadSurviveWatcherComponent, MobStateChangedEvent>(OnMobStateChanged);
+        SubscribeLocalEvent<RailroadSurviveWatcherComponent, RailroadingCardFailedEvent>(OnFailed);
     }
+
+    private void OnFailed(Entity<RailroadSurviveWatcherComponent> ent, ref RailroadingCardFailedEvent args)
+        => RemComp<RailroadAvoidHandcuffsWatcherComponent>(args.Subject.Owner);
 
     private void OnCompleted(Entity<RailroadSurviveTaskComponent> ent, ref RailroadingCardCompletedEvent args)
         => RemComp<RailroadSurviveWatcherComponent>(args.Subject.Owner);
@@ -32,7 +38,7 @@ public sealed partial class RailroadingSurviveTaskSystem : EntitySystem
         if (args.NewMobState == MobState.Dead)
         {
             task.IsCompleted = false;
-            RemComp<RailroadSurviveWatcherComponent>(ent);
+            _railroading.CardFailed((ent, railroadable));
         }
     }
 

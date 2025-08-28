@@ -18,3 +18,9 @@ public record struct RailroadingCardCompletedEvent(
 )
 {
 }
+
+[ByRefEvent]
+public record struct RailroadingCardFailedEvent(
+    Entity<RailroadableComponent> Subject
+)
+{ }
