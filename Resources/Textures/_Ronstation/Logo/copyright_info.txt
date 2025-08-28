@@ -1,0 +1,20 @@
+Copyright Ronstation Team. All rights reserved.
+
+Usage is only allowed within the following:
+- Ronstation official servers.
+- Official Ronstation repository.
+- Other resources owned by Ronstation team.
+- Forks of Ronstation repository used in the contribution and development of the official Ronstation repository.
+Other uses outside for the aforementioned usage requires explicit written permission from the Ronstation team and unauthorized usage is prohibited.
+
+The following are covered under full copyright protection:
+- icon.ico
+- icon.svg
+- logo.png
+- logo.svg
+- icon-16x16.png
+- icon-24x24.png
+- icon-32x32.png
+- icon-48x48.png
+- icon-128x128.png
+- icon-256x256.png
