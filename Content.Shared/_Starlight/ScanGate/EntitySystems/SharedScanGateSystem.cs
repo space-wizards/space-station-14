@@ -3,6 +3,9 @@ using Robust.Shared.Physics.Events;
 using Robust.Shared.Timing;
 using Robust.Shared.Audio.Systems;
 using Content.Shared.Inventory;
+using Content.Shared.Hands;
+using Content.Shared.Power.EntitySystems;
+using Content.Shared.Access.Systems;
 
 namespace Content.Shared._Starlight.ScanGate.EntitySystems;
 
@@ -11,20 +14,28 @@ public sealed partial class SharedScanGateSystem : EntitySystem
     [Dependency] private readonly IGameTiming _gameTiming = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly SharedAppearanceSystem _appearanceSystem = default!;
+    [Dependency] private readonly SharedPowerReceiverSystem _powerReceiverSystem = default!;
+    [Dependency] private readonly AccessReaderSystem _accessReaderSystem = default!;
 
     public override void Initialize()
     {
         SubscribeLocalEvent<ScanGateComponent, StartCollideEvent>(OnCollide);
+        SubscribeLocalEvent<ScanDetectableComponent, TryDetectItem>(OnDetect);
         SubscribeLocalEvent<ScanDetectableComponent, InventoryRelayedEvent<TryDetectItem>>(OnInventoryRelay);
+        Subs.SubscribeWithRelay<ScanDetectableComponent, HeldRelayedEvent<TryDetectItem>>(OnHandRelay, inventory: false);
         base.Initialize();
     }
 
+    #region Logic
     private void OnCollide(EntityUid uid, ScanGateComponent component, ref StartCollideEvent args)
     {
-        if (component.NextScanTime > _gameTiming.CurTime)
+        if (component.NextScanTime > _gameTiming.CurTime
+            || !_powerReceiverSystem.IsPowered(uid)
+            || _accessReaderSystem.IsAllowed(uid, args.OtherEntity))
             return;
 
         component.NextScanTime = _gameTiming.CurTime + component.ScanDelay;
+        Dirty(uid, component);
 
         var ev = new TryDetectItem(uid);
         RaiseLocalEvent(args.OtherEntity, ref ev);
@@ -35,8 +46,28 @@ public sealed partial class SharedScanGateSystem : EntitySystem
             NoItemDetected(uid, component); // Not detected
     }
 
-    private void OnInventoryRelay(EntityUid uid, ScanDetectableComponent component, ref InventoryRelayedEvent<TryDetectItem> args) => args.Args.EntityDetected = true; // Detected something
+    #endregion
 
+    #region Detection
+
+    /// <summary>
+    /// An entity with <see cref="ScanDetectableComponent"/> has been detected by a scan gate.
+    /// </summary>
+    private void OnDetect(EntityUid uid, ScanDetectableComponent component, ref TryDetectItem args) => args.EntityDetected = true;
+
+    /// <summary>
+    /// An entity with <see cref="ScanDetectableComponent"/> has been detected by a scan gate.
+    /// </summary>
+    private void OnInventoryRelay(EntityUid uid, ScanDetectableComponent component, ref InventoryRelayedEvent<TryDetectItem> args) => args.Args.EntityDetected = true;
+
+    /// <summary>
+    /// An entity with <see cref="ScanDetectableComponent"/> has been detected by a scan gate.
+    /// </summary>
+    private void OnHandRelay(EntityUid uid, ScanDetectableComponent component, ref HeldRelayedEvent<TryDetectItem> args) => args.Args.EntityDetected = true;
+
+    #endregion
+
+    #region Actions
     private void ItemDetected(EntityUid uid, ScanGateComponent component)
     {
         _audio.PlayPvs(component.ScanFailSound, uid); // Play fail sound, when detect something
@@ -54,4 +85,5 @@ public sealed partial class SharedScanGateSystem : EntitySystem
         _appearanceSystem.SetData(uid, ScanGateVisuals.State, state);
         Timer.Spawn(TimeSpan.FromSeconds(1), () => _appearanceSystem.SetData(uid, ScanGateVisuals.State, component.IdleState)); // Set back to idle after 1 second
     }
+    #endregion
 }

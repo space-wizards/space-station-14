@@ -17,6 +17,7 @@
         - ConveyorMask
         hard: False
   - type: ScanGate
+    scanDelay: 2
   - type: Destructible
     thresholds:
     - trigger:
@@ -31,6 +32,8 @@
       - !type:DoActsBehavior
         acts: ["Destruction"]
   - type: WiresPanel
+  - type: Wires
+    layout: ScanGate
   - type: UserInterface
     interfaces:
       enum.ResearchClientUiKey.Key:
@@ -40,6 +43,8 @@
   - type: Pullable
   - type: StaticPrice
     price: 1500
+  - type: AccessReader
+    access: [["Security"]]
 
 - type: entity
   id: ScanGate
@@ -68,8 +73,21 @@
           fail: { state: scan_fail }
           success: { state: scan_success }
   - type: Machine
-#    board: AutolatheMachineCircuitboard
+    board: ScanGateMachineCircuitboard
   - type: ContainerContainer
     containers:
       machine_board: !type:Container
       machine_parts: !type:Container
+
+- type: entity
+  id: ScanGateBlack
+  parent: ScanGate
+  components:
+  - type: Sprite
+    layers:
+    - state: base_black
+    - state: idle
+      shader: unshaded
+      map: ["enum.ScanGateVisualLayers.Status"]
+    - state: panel
+      map: ["enum.WiresVisualLayers.MaintenancePanel"]

@@ -4,6 +4,7 @@
   id: BaseHighlyIllegalContraband
   abstract: true
   components:
+  - type: ScanDetectable # Starlight
   - type: Contraband
     severity: HighlyIllegal
 
@@ -12,6 +13,7 @@
   id: BaseXenoborgContraband
   abstract: true
   components:
+  - type: ScanDetectable # Starlight
   - type: Contraband
     severity: Major # placeholder until they make a better severity
 
@@ -20,6 +22,7 @@
   id: BaseMagicalContraband
   abstract: true
   components:
+  - type: ScanDetectable # Starlight
   - type: Contraband
     severity: Magical
 
@@ -28,6 +31,7 @@
   id: BaseSyndicateContraband
   abstract: true
   components:
+  - type: ScanDetectable # Starlight
   - type: Contraband
     severity: Syndicate
 
@@ -36,6 +40,7 @@
   id: BaseMinorContraband
   abstract: true
   components:
+  - type: ScanDetectable # Starlight
   - type: Contraband
     severity: Minor
 
@@ -44,6 +49,7 @@
   id: BaseMajorContraband
   abstract: true
   components:
+  - type: ScanDetectable # Starlight
   - type: Contraband
     severity: Major
 

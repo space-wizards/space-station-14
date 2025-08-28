@@ -188,3 +188,6 @@
 
 - type: Tag
   id: Locker
+
+- type: Tag
+  id: ScanGateMachineBoard
