@@ -40,7 +40,7 @@ public sealed partial class SharedScanGateSystem : EntitySystem
         var ev = new TryDetectItem(uid);
         RaiseLocalEvent(args.OtherEntity, ref ev);
 
-        if (ev.EntityDetected && !(TryComp<AccessReaderComponent>(uid, out var accessReader) && !_accessReaderSystem.IsAllowed(args.OtherEntity, uid, accessReader)))
+        if (ev.EntityDetected && !(TryComp<AccessReaderComponent>(uid, out var accessReader) && _accessReaderSystem.IsAllowed(args.OtherEntity, uid, accessReader)))
             ItemDetected(uid, component); // Detected
         else
             NoItemDetected(uid, component); // Not detected
