@@ -34,7 +34,7 @@
         Piercing: 2
         Slash: 3
   - type: Temperature # Lower heat and cold thresholds.
-    heatDamageThreshold: 315
+    heatDamageThreshold: 316
     coldDamageThreshold: 220
     specificHeat: 44
     coldDamage:
