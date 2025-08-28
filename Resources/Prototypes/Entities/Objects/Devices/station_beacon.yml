@@ -673,6 +673,8 @@
   components:
   - type: NavMapBeacon
     defaultText: station-beacon-arrivals
+  - type: SpawnPoint
+    spawn_type: LateJoin # ensures each map has a place to teleport from arrivals shuttle
 
 - type: entity
   parent: DefaultStationBeacon
