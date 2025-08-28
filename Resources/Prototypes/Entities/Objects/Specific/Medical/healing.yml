@@ -304,8 +304,8 @@
     damage:
       types:
         Slash: -5
-        Piercing: -10
-    bloodlossModifier: -10
+        Piercing: -5
+    bloodlossModifier: -5
     healingBeginSound:
       path: "/Audio/Items/Medical/brutepack_begin.ogg"
       params:

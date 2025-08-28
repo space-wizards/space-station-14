@@ -47,14 +47,6 @@
   objectType: Item
 
 - type: construction
-  id: gauze
-  graph: Gauze
-  startNode: start
-  targetNode: gauze
-  category: construction-category-tools
-  objectType: Item
-
-- type: construction
   id: blindfold
   graph: Blindfold
   startNode: start
