@@ -9,7 +9,15 @@
             "directions": 4
         },
         {
+            "name": "fennec-tip",
+            "directions": 4
+        },
+        {
             "name": "fluffy",
+            "directions": 4
+        },
+        {
+            "name": "fluffy-tip",
             "directions": 4
         },
         {
@@ -17,11 +25,35 @@
             "directions": 4
         },
         {
+            "name": "husky-inner",
+            "directions": 4
+        },
+        {
+            "name": "husky-outer",
+            "directions": 4
+        },
+        {
             "name": "long",
             "directions": 4
         },
         {
+            "name": "long-tip",
+            "directions": 4
+        },
+        {
             "name": "vulp",
+            "directions": 4
+        },
+        {
+            "name": "vulp-fade",
+            "directions": 4
+        },
+        {
+            "name": "vulp-tip",
+            "directions": 4
+        },
+        {
+            "name": "coyote",
             "directions": 4
         }
     ]
