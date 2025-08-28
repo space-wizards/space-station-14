@@ -1,0 +1,8 @@
+<BoxContainer xmlns="https://spacestation14.io"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    Orientation="Vertical"
+    Margin="10">
+    <ScrollContainer VerticalExpand="True">
+        <BoxContainer Name="TraitsList" Orientation="Vertical" />
+    </ScrollContainer>
+</BoxContainer>
