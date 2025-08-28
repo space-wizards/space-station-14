@@ -12546,5 +12546,13 @@ Entries:
   id: 148000
   time: '2025-08-26T23:03:11.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/1480
+- author: STARLIGHT TEAM
+  changes:
+  - message: By request, for the criminal card, a message is now sent to the player,
+      as well as a fax on failure, allowing Security to make a decision about release.
+    type: Tweak
+  id: 148700
+  time: '2025-08-28T14:52:24.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1487
 Order: -1
 
