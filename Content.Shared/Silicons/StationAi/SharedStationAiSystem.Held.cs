@@ -1,7 +1,9 @@
 using Content.Shared.Actions.Events;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Interaction.Events;
+using Content.Shared.Mobs;
 using Content.Shared.Popups;
+using Content.Shared.Silicons.Borgs.Components;
 using Content.Shared.Verbs;
 using Robust.Shared.Serialization;
 using Robust.Shared.Utility;
@@ -26,6 +28,9 @@ public abstract partial class SharedStationAiSystem
         SubscribeLocalEvent<StationAiHeldComponent, InteractionAttemptEvent>(OnHeldInteraction);
         SubscribeLocalEvent<StationAiHeldComponent, AttemptRelayActionComponentChangeEvent>(OnHeldRelay);
         SubscribeLocalEvent<StationAiHeldComponent, JumpToCoreEvent>(OnCoreJump);
+
+        SubscribeLocalEvent<BorgBrainComponent, MobStateChangedEvent>(OnMobStateChanged);
+
         SubscribeLocalEvent<TryGetIdentityShortInfoEvent>(OnTryGetIdentityShortInfo);
     }
 
@@ -49,7 +54,7 @@ public abstract partial class SharedStationAiSystem
         if (!TryGetCore(ent.Owner, out var core) || core.Comp?.RemoteEntity == null)
             return;
 
-        _xforms.DropNextTo(core.Comp.RemoteEntity.Value, core.Owner) ;
+        _xforms.DropNextTo(core.Comp.RemoteEntity.Value, core.Owner);
     }
 
     /// <summary>
@@ -153,6 +158,17 @@ public abstract partial class SharedStationAiSystem
         {
             ShowDeviceNotRespondingPopup(ent.Owner);
         }
+    }
+
+    private void OnMobStateChanged(Entity<BorgBrainComponent> ent, ref MobStateChangedEvent args)
+    {
+        if (!_containers.TryGetContainingContainer(ent.Owner, out var container))
+            return;
+
+        if (!TryComp<StationAiHolderComponent>(container.Owner, out var holder))
+            return;
+
+        UpdateAppearance((container.Owner, holder));
     }
 
     private void OnTargetVerbs(Entity<StationAiWhitelistComponent> ent, ref GetVerbsEvent<AlternativeVerb> args)

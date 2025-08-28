@@ -49,7 +49,7 @@ public sealed class StationAiSystem : SharedStationAiSystem
     [Dependency] private readonly SharedPopupSystem _popups = default!;
     [Dependency] private readonly StationSystem _station = default!;
     [Dependency] private readonly StationJobsSystem _stationJobs = default!;
-
+    [Dependency] private readonly IPrototypeManager _proto = default!;
 
     private readonly HashSet<Entity<StationAiCoreComponent>> _stationAiCores = new();
     private readonly ProtoId<ChatNotificationPrototype> _turretIsAttackingChatNotificationPrototype = "TurretIsAttacking";
@@ -59,7 +59,7 @@ public sealed class StationAiSystem : SharedStationAiSystem
     private readonly EntProtoId _stationAiBrain = "StationAiBrain";
 
     private readonly ProtoId<AlertPrototype> _batteryAlert = "BorgBattery";
-    private readonly ProtoId<AlertPrototype> _integrityAlert = "BorgHealth";
+    private readonly ProtoId<AlertPrototype> _damageAlert = "BorgHealth";
 
     public override void Initialize()
     {
@@ -136,7 +136,7 @@ public sealed class StationAiSystem : SharedStationAiSystem
         base.OnAiRemove(ent, ref args);
 
         _alerts.ClearAlert(args.Entity, _batteryAlert);
-        _alerts.ClearAlert(args.Entity, _integrityAlert);
+        _alerts.ClearAlert(args.Entity, _damageAlert);
 
         if (TryComp<DamagedSiliconAccentComponent>(args.Entity, out var accent))
         {
@@ -201,8 +201,13 @@ public sealed class StationAiSystem : SharedStationAiSystem
         if (!TryGetHeld((ent.Owner, ent.Comp), out var held))
             return;
 
-        var chargePercent = (short)MathF.Round(battery.CurrentCharge / battery.MaxCharge * 10f);
-        _alerts.ShowAlert(held, _batteryAlert, chargePercent);
+        if (!_proto.TryIndex(_batteryAlert, out var proto))
+            return;
+
+        var chargePercent = battery.CurrentCharge / battery.MaxCharge;
+        var chargeLevel = Math.Round(chargePercent * proto.MaxSeverity);
+
+        _alerts.ShowAlert(held, _batteryAlert, (short)Math.Clamp(chargeLevel, 0, proto.MaxSeverity));
     }
 
     private void UpdateCoreIntegrityAlert(Entity<StationAiCoreComponent> ent)
@@ -216,8 +221,13 @@ public sealed class StationAiSystem : SharedStationAiSystem
         if (!TryGetHeld((ent.Owner, ent.Comp), out var held))
             return;
 
-        var damagePercent = (short)MathF.Round(damageable.TotalDamage.Float() / _destructible.DestroyedAt(ent, destructible).Float() * 4f);
-        _alerts.ShowAlert(held, _integrityAlert, damagePercent);
+        if (!_proto.TryIndex(_damageAlert, out var proto))
+            return;
+
+        var damagePercent = damageable.TotalDamage / _destructible.DestroyedAt(ent, destructible);
+        var damageLevel = Math.Round(damagePercent.Float() * proto.MaxSeverity);
+
+        _alerts.ShowAlert(held, _damageAlert, (short)Math.Clamp(damageLevel, 0, proto.MaxSeverity));
     }
 
     private void OnDoAfterAttempt(Entity<StationAiCoreComponent> ent, ref DoAfterAttemptEvent<IntellicardDoAfterEvent> args)

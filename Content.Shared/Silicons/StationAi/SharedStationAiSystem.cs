@@ -1,10 +1,8 @@
 using Content.Shared.ActionBlocker;
 using Content.Shared.Actions;
 using Content.Shared.Administration.Managers;
-using Content.Shared.Chat;
 using Content.Shared.Chat.Prototypes;
 using Content.Shared.Containers.ItemSlots;
-using Content.Shared.Damage;
 using Content.Shared.Database;
 using Content.Shared.Destructible;
 using Content.Shared.Doors.Systems;
@@ -345,20 +343,20 @@ public abstract partial class SharedStationAiSystem : EntitySystem
 
     private void OnAiShutdown(Entity<StationAiCoreComponent> ent, ref ComponentShutdown args)
     {
-        PredictedQueueDel(ent.Comp.RemoteEntity);
+        // TODO: Tryqueuedel
+        if (_net.IsClient)
+            return;
 
+        QueueDel(ent.Comp.RemoteEntity);
         ent.Comp.RemoteEntity = null;
-        Dirty(ent);
     }
 
     private void OnCorePower(Entity<StationAiCoreComponent> ent, ref PowerChangedEvent args)
     {
         if (args.Powered)
         {
-            if (!SetupEye(ent))
-                return;
-
-            AttachEye(ent);
+            if (SetupEye(ent))
+                AttachEye(ent);
         }
         else
         {
@@ -368,8 +366,8 @@ public abstract partial class SharedStationAiSystem : EntitySystem
 
     private void OnAiMapInit(Entity<StationAiCoreComponent> ent, ref MapInitEvent args)
     {
-        SetupEye(ent);
-        AttachEye(ent);
+        if (SetupEye(ent))
+            AttachEye(ent);
     }
 
     private void OnBroken(Entity<StationAiCoreComponent> ent, ref BreakageEventArgs args)
@@ -395,8 +393,6 @@ public abstract partial class SharedStationAiSystem : EntitySystem
             return;
 
         _mobState.ChangeMobState(held, MobState.Dead);
-
-        ClearEye(ent);
 
         if (TryComp<StationAiHolderComponent>(ent, out var holder))
             UpdateAppearance((ent, holder));
@@ -467,7 +463,6 @@ public abstract partial class SharedStationAiSystem : EntitySystem
 
         QueueDel(ent.Comp.RemoteEntity);
         ent.Comp.RemoteEntity = null;
-        Dirty(ent);
     }
 
     private void AttachEye(Entity<StationAiCoreComponent> ent)
@@ -515,13 +510,14 @@ public abstract partial class SharedStationAiSystem : EntitySystem
         if (_timing.ApplyingState)
             return;
 
+        ClearEye(ent);
         ent.Comp.Remote = true;
-        SetupEye(ent);
 
         // Just so text and the likes works properly
         _metadata.SetEntityName(ent.Owner, MetaData(args.Entity).EntityName);
 
-        AttachEye(ent);
+        if (SetupEye(ent))
+            AttachEye(ent);
     }
 
     protected virtual void OnAiRemove(Entity<StationAiCoreComponent> ent, ref EntRemovedFromContainerMessage args)
