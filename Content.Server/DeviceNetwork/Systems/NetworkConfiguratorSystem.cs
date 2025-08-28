@@ -67,44 +67,53 @@ public sealed class NetworkConfiguratorSystem : SharedNetworkConfiguratorSystem
 
         SubscribeLocalEvent<DeviceListComponent, ComponentRemove>(OnComponentRemoved);
 
-        SubscribeLocalEvent<BeforeSerializationEvent>(OnMapSave);
+        SubscribeLocalEvent<BeforeSerializationEvent>(OnBeforeSerialization);
     }
 
-    private void OnMapSave(BeforeSerializationEvent ev)
+    /// <summary>
+    /// Listens for entity pre-serialization and removes device configurators from devices.
+    /// </summary>
+    /// <param name="ev"></param>
+    /// <remarks>
+    /// We will otherwise end up writing invalid entity references e.g. when a mapper is holding a multi-tool after
+    /// configuring devices. See #31416.
+    /// </remarks>
+    private void OnBeforeSerialization(BeforeSerializationEvent ev)
     {
-        var enumerator = AllEntityQuery<NetworkConfiguratorComponent>();
-        while (enumerator.MoveNext(out var uid, out var conf))
+        var candidates = new HashSet<EntityUid>();
+        var searchQueue = new Queue<EntityUid>(ev.Entities);
+        while (searchQueue.TryDequeue(out var branch))
         {
-            if (!TryComp(conf.ActiveDeviceList, out TransformComponent? listXform))
+            var metaData = MetaData(branch);
+            if (!metaData.EntityPrototype?.MapSavable ?? false)
                 continue;
 
-            if (!ev.MapIds.Contains(listXform.MapID))
+            candidates.Add(branch);
+            if (!TryComp(branch, out TransformComponent? xform))
                 continue;
 
-            // The linked device list is (probably) being saved. Make sure that the configurator is also being saved
-            // (i.e., not in the hands of a mapper/ghost). In the future, map saving should raise a separate event
-            // containing a set of all entities that are about to be saved, which would make checking this much easier.
-            // This is a shitty bandaid, and will force close the UI during auto-saves.
-            // TODO Map serialization refactor
-            // I'm refactoring it now and I still dont know what to do
+            var enumerator = xform.ChildEnumerator;
+            while (enumerator.MoveNext(out var child))
+            {
+                // avoid infinite recursion just in case
+                if (candidates.Contains(child))
+                    continue;
 
-            var xform = Transform(uid);
-            if (ev.MapIds.Contains(xform.MapID) && IsSaveable(uid))
-                continue;
+                searchQueue.Enqueue(child);
+            }
 
-            _uiSystem.CloseUi(uid, NetworkConfiguratorUiKey.Configure);
-            DebugTools.AssertNull(conf.ActiveDeviceList);
+            enumerator.Dispose();
         }
 
-        bool IsSaveable(EntityUid uid)
+        foreach (var entity in candidates)
         {
-            while (uid.IsValid())
+            if (!TryComp(entity, out DeviceNetworkComponent? comp))
+                continue;
+
+            foreach (var configurator in comp.Configurators)
             {
-                if (Prototype(uid)?.MapSavable == false)
-                    return false;
-                uid = Transform(uid).ParentUid;
+                OnDeviceShutdown((configurator, null), (entity, comp));
             }
-            return true;
         }
     }
 
