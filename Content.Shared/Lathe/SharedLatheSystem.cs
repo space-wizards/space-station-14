@@ -29,6 +29,7 @@ public abstract class SharedLatheSystem : EntitySystem
     [Dependency] protected readonly SharedSolutionContainerSystem SolutionContainer = default!;
 
     public readonly Dictionary<string, List<LatheRecipePrototype>> InverseRecipes = new();
+    public const int MaxItemsPerRequest = 10_000;
 
     public override void Initialize()
     {
@@ -117,6 +118,8 @@ public abstract class SharedLatheSystem : EntitySystem
         if (!Resolve(entity, ref entity.Comp))
             return false;
         if (!HasRecipe((entity, entity.Comp), recipe))
+            return false;
+        if (amount <= 0)
             return false;
 
         foreach (var (material, needed) in recipe.Materials)
