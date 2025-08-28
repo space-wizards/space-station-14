@@ -149,8 +149,9 @@ namespace Content.Server.Lathe
             var batch = entity.Comp.Queue.First();
             batch.ItemsPrinted++;
             if (batch.ItemsPrinted >= batch.ItemsRequested || batch.ItemsPrinted < 0) // Rollover sanity check
-                component.Queue.RemoveFirst();
-            var recipe = _proto.Index(batch.Recipe);
+                entity.Comp.Queue.RemoveFirst();
+
+            var recipe = Proto.Index(batch.Recipe);
 
             var time = _reagentSpeed.ApplySpeed(entity.Owner, recipe.CompleteTime) * entity.Comp.TimeMultiplier;
 
@@ -173,8 +174,11 @@ namespace Content.Server.Lathe
             return true;
         }
 
-        private void FinishProducing(Entity<LatheComponent, LatheProducingComponent> entity)
+        private void FinishProducing(Entity<LatheComponent, LatheProducingComponent?> entity)
         {
+            if (!Resolve(entity, ref entity.Comp2, false))
+                return;
+
             if (entity.Comp1.CurrentRecipe != null)
             {
                 var currentRecipe = Proto.Index(entity.Comp1.CurrentRecipe.Value);
@@ -221,8 +225,8 @@ namespace Content.Server.Lathe
             if (!Resolve(entity, ref entity.Comp))
                 return;
 
-            var producing = component.CurrentRecipe;
-            if (producing == null && component.Queue.First is { } node)
+            var producing = entity.Comp.CurrentRecipe;
+            if (producing == null && entity.Comp.Queue.First is { } node)
                 producing = node.Value.Recipe;
 
             var state = new LatheUpdateState(GetAvailableRecipes((entity, entity.Comp)), entity.Comp.Queue.ToArray(), producing);
@@ -252,11 +256,11 @@ namespace Content.Server.Lathe
         {
             if (!args.Powered)
             {
-                AbortProduction(uid);
+                AbortProduction(entity.AsNullable());
             }
             else
             {
-                TryStartProducing(uid, component);
+                TryStartProducing(entity.AsNullable());
             }
         }
 
@@ -312,21 +316,21 @@ namespace Content.Server.Lathe
             UpdateUserInterfaceState(entity.AsNullable());
         }
 
-        public void AbortProduction(EntityUid uid, LatheComponent? component = null)
+        public void AbortProduction(Entity<LatheComponent?> entity)
         {
-            if (!Resolve(uid, ref component))
+            if (!Resolve(entity, ref entity.Comp))
                 return;
 
-            if (component.CurrentRecipe != null)
+            if (entity.Comp.CurrentRecipe != null)
             {
-                if (component.Queue.Count > 0)
+                if (entity.Comp.Queue.Count > 0)
                 {
                     // Batch abandoned while printing last item, need to create a one-item batch
-                    var batch = component.Queue.First();
-                    if (batch.Recipe != component.CurrentRecipe)
+                    var batch = entity.Comp.Queue.First();
+                    if (batch.Recipe != entity.Comp.CurrentRecipe)
                     {
-                        var newBatch = new LatheRecipeBatch(component.CurrentRecipe.Value, 0, 1);
-                        component.Queue.AddFirst(newBatch);
+                        var newBatch = new LatheRecipeBatch(entity.Comp.CurrentRecipe.Value, 0, 1);
+                        entity.Comp.Queue.AddFirst(newBatch);
                     }
                     else if (batch.ItemsPrinted > 0)
                     {
@@ -334,11 +338,11 @@ namespace Content.Server.Lathe
                     }
                 }
 
-                component.CurrentRecipe = null;
+                entity.Comp.CurrentRecipe = null;
             }
-            RemCompDeferred<LatheProducingComponent>(uid);
-            UpdateUserInterfaceState(uid, component);
-            UpdateRunningAppearance(uid, false);
+            RemCompDeferred<LatheProducingComponent>(entity);
+            UpdateUserInterfaceState(entity);
+            UpdateRunningAppearance(entity, false);
         }
 
         #region UI Messages
@@ -347,21 +351,11 @@ namespace Content.Server.Lathe
         {
             if (Proto.TryIndex(args.ID, out LatheRecipePrototype? recipe))
             {
-                var count = 0;
-                for (var i = 0; i < args.Quantity; i++)
-                {
-                    if (TryAddToQueue(entity.AsNullable(), recipe))
-                        count++;
-                    else
-                        break;
-                }
-                if (count > 0)
-                if (TryAddToQueue(uid, recipe, args.Quantity, component))
+                if (TryAddToQueue(entity.AsNullable(), recipe, args.Quantity))
                 {
                     _adminLogger.Add(LogType.Action,
                         LogImpact.Low,
-                        $"{ToPrettyString(args.Actor):player} queued {count} {GetRecipeName(recipe)} at {ToPrettyString(entity):lathe}");
-                        $"{ToPrettyString(args.Actor):player} queued {args.Quantity} {GetRecipeName(recipe)} at {ToPrettyString(uid):lathe}");
+                        $"{ToPrettyString(args.Actor):player} queued {args.Quantity} {GetRecipeName(recipe)} at {ToPrettyString(entity):lathe}");
                 }
             }
             TryStartProducing(entity.AsNullable());
@@ -377,15 +371,14 @@ namespace Content.Server.Lathe
         /// Removes a batch from the batch queue by index.
         /// If the index given does not exist or is outside of the bounds of the lathe's batch queue, nothing happens.
         /// </summary>
-        /// <param name="uid">The lathe whose queue is being altered.</param>
-        /// <param name="component"></param>
+        /// <param name="entity">The lathe whose queue is being altered.</param>
         /// <param name="args"></param>
-        public void OnLatheDeleteRequestMessage(EntityUid uid, LatheComponent component, ref LatheDeleteRequestMessage args)
+        public void OnLatheDeleteRequestMessage(Entity<LatheComponent> entity, ref LatheDeleteRequestMessage args)
         {
-            if (args.Index < 0 || args.Index >= component.Queue.Count)
+            if (args.Index < 0 || args.Index >= entity.Comp.Queue.Count)
                 return;
 
-            var node = component.Queue.First;
+            var node = entity.Comp.Queue.First;
             for (int i = 0; i < args.Index; i++)
                 node = node?.Next;
 
@@ -395,23 +388,23 @@ namespace Content.Server.Lathe
             var batch = node.Value;
             _adminLogger.Add(LogType.Action,
                 LogImpact.Low,
-                $"{ToPrettyString(args.Actor):player} deleted a lathe job for ({batch.ItemsPrinted}/{batch.ItemsRequested}) {GetRecipeName(batch.Recipe)} at {ToPrettyString(uid):lathe}");
+                $"{ToPrettyString(args.Actor):player} deleted a lathe job for ({batch.ItemsPrinted}/{batch.ItemsRequested}) {GetRecipeName(batch.Recipe)} at {ToPrettyString(entity):lathe}");
 
-            component.Queue.Remove(node);
-            UpdateUserInterfaceState(uid, component);
+            entity.Comp.Queue.Remove(node);
+            UpdateUserInterfaceState(entity.AsNullable());
         }
 
-        public void OnLatheMoveRequestMessage(EntityUid uid, LatheComponent component, ref LatheMoveRequestMessage args)
+        public void OnLatheMoveRequestMessage(Entity<LatheComponent> entity, ref LatheMoveRequestMessage args)
         {
-            if (args.Change == 0 || args.Index < 0 || args.Index >= component.Queue.Count)
+            if (args.Change == 0 || args.Index < 0 || args.Index >= entity.Comp.Queue.Count)
                 return;
 
             // New index must be within the bounds of the batch.
             var newIndex = args.Index + args.Change;
-            if (newIndex < 0 || newIndex >= component.Queue.Count)
+            if (newIndex < 0 || newIndex >= entity.Comp.Queue.Count)
                 return;
 
-            var node = component.Queue.First;
+            var node = entity.Comp.Queue.First;
             for (int i = 0; i < args.Index; i++)
                 node = node?.Next;
 
@@ -427,8 +420,8 @@ namespace Content.Server.Lathe
                 if (newRelativeNode == null) // Something went wrong.
                     return;
 
-                component.Queue.Remove(node);
-                component.Queue.AddAfter(newRelativeNode, node);
+                entity.Comp.Queue.Remove(node);
+                entity.Comp.Queue.AddAfter(newRelativeNode, node);
             }
             else
             {
@@ -439,24 +432,24 @@ namespace Content.Server.Lathe
                 if (newRelativeNode == null) // Something went wrong.
                     return;
 
-                component.Queue.Remove(node);
-                component.Queue.AddBefore(newRelativeNode, node);
+                entity.Comp.Queue.Remove(node);
+                entity.Comp.Queue.AddBefore(newRelativeNode, node);
             }
 
-            UpdateUserInterfaceState(uid, component);
+            UpdateUserInterfaceState(entity.AsNullable());
         }
 
-        public void OnLatheAbortFabricationMessage(EntityUid uid, LatheComponent component, ref LatheAbortFabricationMessage args)
+        public void OnLatheAbortFabricationMessage(Entity<LatheComponent> entity, ref LatheAbortFabricationMessage args)
         {
-            if (component.CurrentRecipe == null)
+            if (entity.Comp.CurrentRecipe == null)
                 return;
 
             _adminLogger.Add(LogType.Action,
                 LogImpact.Low,
-                $"{ToPrettyString(args.Actor):player} aborted printing {GetRecipeName(component.CurrentRecipe.Value)} at {ToPrettyString(uid):lathe}");
+                $"{ToPrettyString(args.Actor):player} aborted printing {GetRecipeName(entity.Comp.CurrentRecipe.Value)} at {ToPrettyString(entity):lathe}");
 
-            component.CurrentRecipe = null;
-            FinishProducing(uid, component);
+            entity.Comp.CurrentRecipe = null;
+            FinishProducing(entity);
         }
         #endregion
     }

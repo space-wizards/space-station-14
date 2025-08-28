@@ -10,7 +10,6 @@ using Content.Shared.Localizations;
 using Content.Shared.Materials;
 using Content.Shared.Research.Components;
 using Content.Shared.Research.Prototypes;
-using Content.Shared.Storage.Components;
 using JetBrains.Annotations;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
@@ -149,12 +148,17 @@ public abstract class SharedLatheSystem : EntitySystem
         return true;
     }
 
-    public bool TryAddToQueue(Entity<LatheComponent?> entity, LatheRecipePrototype recipe)
+    public bool TryAddToQueue(Entity<LatheComponent?> entity, LatheRecipePrototype recipe, int quantity)
     {
         if (!Resolve(entity, ref entity.Comp))
             return false;
 
-        if (!CanProduce(entity, recipe))
+        if (quantity <= 0)
+            return false;
+
+        quantity = int.Min(quantity, MaxItemsPerRequest);
+
+        if (!CanProduce(entity, recipe, quantity))
             return false;
 
         if (recipe.Reagents.Count > 0)
@@ -164,9 +168,10 @@ public abstract class SharedLatheSystem : EntitySystem
                 return false;
 
             // Do reagents first since the solution container might not exist if something goes horribly wrong.
-            foreach (var (reagent, quantity) in recipe.Reagents)
+            foreach (var (reagent, volume) in recipe.Reagents)
             {
-                var adjustedVolume = recipe.ApplyReagentDiscount ? AdjustReagent(quantity, entity.Comp.ReagentUseMultiplier) : quantity;
+                var adjustedVolume = recipe.ApplyReagentDiscount ? AdjustReagent(volume, entity.Comp.ReagentUseMultiplier) : volume;
+                adjustedVolume *= quantity;
 
                 SolutionContainer.RemoveReagent(solution.Value, reagent.Id, adjustedVolume);
             }
@@ -177,11 +182,15 @@ public abstract class SharedLatheSystem : EntitySystem
             var adjustedAmount = recipe.ApplyMaterialDiscount
                 ? AdjustMaterial(amount, entity.Comp.MaterialUseMultiplier)
                 : amount;
+            adjustedAmount *= quantity;
 
             MaterialStorage.TryChangeMaterialAmount(entity.Owner, mat, -adjustedAmount);
         }
 
-        entity.Comp.Queue.Enqueue(recipe);
+        if (entity.Comp.Queue.Last is { } node && node.ValueRef.Recipe == recipe.ID)
+            node.ValueRef.ItemsRequested += quantity;
+        else
+            entity.Comp.Queue.AddLast(new LatheRecipeBatch(recipe.ID, 0, quantity));
 
         return true;
     }
