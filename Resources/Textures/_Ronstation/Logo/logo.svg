@@ -33,13 +33,13 @@
      inkscape:document-units="mm"
      showgrid="true"
      inkscape:zoom="5.13"
-     inkscape:cx="15.88694"
+     inkscape:cx="15.984405"
      inkscape:cy="4.4834308"
-     inkscape:window-width="1191"
-     inkscape:window-height="754"
-     inkscape:window-x="820"
-     inkscape:window-y="125"
-     inkscape:window-maximized="0"
+     inkscape:window-width="1594"
+     inkscape:window-height="832"
+     inkscape:window-x="0"
+     inkscape:window-y="0"
+     inkscape:window-maximized="1"
      inkscape:current-layer="layer1">
     <inkscape:grid
        id="grid1"
@@ -723,7 +723,26 @@
             <dc:title>Ronstation Team</dc:title>
           </cc:Agent>
         </dc:rights>
+        <cc:license
+           rdf:resource="http://creativecommons.org/licenses/by-nc-sa/4.0/" />
       </cc:Work>
+      <cc:License
+         rdf:about="http://creativecommons.org/licenses/by-nc-sa/4.0/">
+        <cc:permits
+           rdf:resource="http://creativecommons.org/ns#Reproduction" />
+        <cc:permits
+           rdf:resource="http://creativecommons.org/ns#Distribution" />
+        <cc:requires
+           rdf:resource="http://creativecommons.org/ns#Notice" />
+        <cc:requires
+           rdf:resource="http://creativecommons.org/ns#Attribution" />
+        <cc:prohibits
+           rdf:resource="http://creativecommons.org/ns#CommercialUse" />
+        <cc:permits
+           rdf:resource="http://creativecommons.org/ns#DerivativeWorks" />
+        <cc:requires
+           rdf:resource="http://creativecommons.org/ns#ShareAlike" />
+      </cc:License>
     </rdf:RDF>
   </metadata>
 </svg>

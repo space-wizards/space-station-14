@@ -9,9 +9,9 @@
    id="svg1"
    inkscape:version="1.4 (e7c3feb, 2024-10-09)"
    sodipodi:docname="icon.svg"
-   inkscape:export-filename="icon/icon-256x256.png"
-   inkscape:export-xdpi="61.439999"
-   inkscape:export-ydpi="61.439999"
+   inkscape:export-filename="icon/icon-48x48.png"
+   inkscape:export-xdpi="11.52"
+   inkscape:export-ydpi="11.52"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns="http://www.w3.org/2000/svg"
@@ -37,7 +37,7 @@
      inkscape:cy="208.52713"
      inkscape:window-width="1191"
      inkscape:window-height="754"
-     inkscape:window-x="362"
+     inkscape:window-x="349"
      inkscape:window-y="71"
      inkscape:window-maximized="0"
      inkscape:current-layer="layer1">
@@ -228,7 +228,26 @@
             <dc:title>Bellkitsu/Merrokitsune</dc:title>
           </cc:Agent>
         </dc:contributor>
+        <cc:license
+           rdf:resource="http://creativecommons.org/licenses/by-nc-sa/4.0/" />
       </cc:Work>
+      <cc:License
+         rdf:about="http://creativecommons.org/licenses/by-nc-sa/4.0/">
+        <cc:permits
+           rdf:resource="http://creativecommons.org/ns#Reproduction" />
+        <cc:permits
+           rdf:resource="http://creativecommons.org/ns#Distribution" />
+        <cc:requires
+           rdf:resource="http://creativecommons.org/ns#Notice" />
+        <cc:requires
+           rdf:resource="http://creativecommons.org/ns#Attribution" />
+        <cc:prohibits
+           rdf:resource="http://creativecommons.org/ns#CommercialUse" />
+        <cc:permits
+           rdf:resource="http://creativecommons.org/ns#DerivativeWorks" />
+        <cc:requires
+           rdf:resource="http://creativecommons.org/ns#ShareAlike" />
+      </cc:License>
     </rdf:RDF>
   </metadata>
 </svg>

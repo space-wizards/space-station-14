@@ -1,13 +1,6 @@
-Copyright Ronstation Team. All rights reserved.
+"Ronstation", the Ronstation logo, and the Ronstation icon are created by Merrokitsune/Bellkitsu for the Ronstation team, and may be used under the terms of the CC-BY-SA-4.0 license.
 
-Usage is only allowed within the following:
-- Ronstation official servers.
-- Official Ronstation repository.
-- Other resources owned by Ronstation team.
-- Forks of Ronstation repository used in the contribution and development of the official Ronstation repository.
-Other uses outside for the aforementioned usage requires explicit written permission from the Ronstation team and unauthorized usage is prohibited.
-
-The following are covered under full copyright protection:
+The following are covered under CC-BY-SA-4.0 license:
 - icon.ico
 - icon.svg
 - logo.png

@@ -1,11 +1,19 @@
+<<<<<<< HEAD
+=======
+<p align="center"> <img alt="Space Station 14" width="880" height="300" src="https://raw.githubusercontent.com/space-wizards/asset-dump/de329a7898bb716b9d5ba9a0cd07f38e61f1ed05/github-logo.svg" /></p>
+
+Ronstation is a fork of the official Space Wizards Federation's Space Station 14 repository.
+
+>>>>>>> abdbf21e69 (Ronstation branding.)
 Space Station 14 is a remake of SS13 that runs on [Robust Toolbox](https://github.com/space-wizards/RobustToolbox), our homegrown engine written in C#.
 
 This is the primary repo for Ronstation, a downstream of Space Station 14. To prevent people forking RobustToolbox, a "content" pack is loaded by the client and server. This content pack contains everything needed to play the game on one specific server.
 
-If you want to host or create content for SS14, this is the repo you need. It contains both RobustToolbox and the content pack for development of new content packs.
+If you want to host or create content for Ronstation, this is the repo you need. It contains both RobustToolbox and the content pack for development of new content packs.
 
 ## Links
 
+<<<<<<< HEAD
 <div class="header" align="center">
 
 [Website](http://ronstation.wikidot.com/) | [Discord](https://discord.gg/q9vm8tfxc9)
@@ -20,6 +28,9 @@ Additionally, see these resources for license and attribution information:
 - [Robust Station Image](https://docs.spacestation14.com/en/specifications/robust-station-image.html)
 
 We also have lots of resources for new contributors to the project.
+=======
+[Website](http://ronstation.wikidot.com/) | [Discord](https://discord.gg/q9vm8tfxc9)
+>>>>>>> abdbf21e69 (Ronstation branding.)
 
 ## Contributing
 
