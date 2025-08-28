@@ -239,7 +239,7 @@
     Hew:
       collection: Hew
     Gasp:
-      path: /Audio/Voice/Vox/vox_gasp.ogg
+      path: /Audio/Effects/Gasp/vox_gasp.ogg
     DefaultDeathgasp:
       path: /Audio/Effects/Gasp/vox_DeathGasp.ogg
   params:
