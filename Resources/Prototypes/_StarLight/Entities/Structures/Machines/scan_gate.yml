@@ -17,7 +17,7 @@
         - ConveyorMask
         hard: False
   - type: ScanGate
-    scanDelay: 2
+    scanDelay: 1.5
   - type: Destructible
     thresholds:
     - trigger:
