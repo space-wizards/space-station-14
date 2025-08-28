@@ -135,6 +135,7 @@
   - type: ClothingSpeedModifier
     walkModifier: 1.5
     sprintModifier: 1.5
+    standing: true
   - type: Appearance
   - type: GenericVisualizer
     visuals:
@@ -182,7 +183,7 @@
     price: 75
   - type: Tag
     tags: [ ]
-   
+
 - type: entity
   parent: ClothingShoesBase
   id: ClothingShoesBootsJump
@@ -200,7 +201,7 @@
     jumpSound: /Audio/Effects/stealthoff.ogg
   - type: ActionGrant
     actions:
-    - ActionGravityJump 
+    - ActionGravityJump
   - type: ItemActionGrant
     actions:
     - ActionGravityJump
