@@ -1,5 +1,6 @@
 using Content.Shared.Holopad;
 using Robust.Shared.Prototypes;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Content.Shared.Silicons.StationAi;
 
@@ -64,19 +65,40 @@ public abstract partial class SharedStationAiSystem
 
         if (stationAi == null)
         {
-            _appearance.RemoveData(entity.Owner, StationAiVisualLayers.Icon);
+            _appearance.RemoveData(entity.Owner, StationAiVisualState.Key);
             return;
         }
 
         if (!TryComp<StationAiCustomizationComponent>(stationAi, out var stationAiCustomization) ||
-            !stationAiCustomization.ProtoIds.TryGetValue(_stationAiCoreCustomGroupProtoId, out var protoId) ||
-            !_protoManager.TryIndex(protoId, out var prototype) ||
-            !prototype.LayerData.TryGetValue(state.ToString(), out var layerData))
+            !TryGetCustomizedAppearanceData((stationAi.Value, stationAiCustomization), out var layerData) ||
+            !layerData.TryGetValue(state.ToString(), out var stateData))
         {
             return;
         }
 
         // This data is handled manually in the client StationAiSystem
-        _appearance.SetData(entity.Owner, StationAiVisualLayers.Icon, layerData);
+        _appearance.SetData(entity.Owner, StationAiVisualState.Key, stateData);
+    }
+
+    /// <summary>
+    /// Returns a dictionary containing the station AI's appearance for different states.
+    /// </summary>
+    /// <param name="entity">The station AI.</param>
+    /// <param name="layerData">The apperance data, indexed by possible AI states.</param>
+    /// <returns>True if the apperance data was found.</returns>
+    public bool TryGetCustomizedAppearanceData(Entity<StationAiCustomizationComponent> entity, [NotNullWhen(true)] out Dictionary<string, PrototypeLayerData>? layerData)
+    {
+        layerData = null;
+
+        if (!entity.Comp.ProtoIds.TryGetValue(_stationAiCoreCustomGroupProtoId, out var protoId) ||
+            !_protoManager.TryIndex(protoId, out var prototype) ||
+            prototype.LayerData.Count == 0)
+        {
+            return false;
+        }
+
+        layerData = prototype.LayerData;
+
+        return true;
     }
 }
