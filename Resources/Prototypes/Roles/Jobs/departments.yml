@@ -20,12 +20,12 @@
   - Boxer
   - Chaplain
   - Chef
-  - Clown
+#  - Clown  # Not used on the server. To be removed completely.
   - HeadOfPersonnel
   - Janitor
   - Lawyer
   - Librarian
-  - Mime
+#  - Mime # Not used on the server. To be removed completely.
   - Musician
   - Passenger
   - Reporter

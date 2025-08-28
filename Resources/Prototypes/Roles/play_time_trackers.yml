@@ -40,8 +40,8 @@
 - type: playTimeTracker
   id: JobChiefMedicalOfficer
 
-- type: playTimeTracker
-  id: JobClown
+#- type: playTimeTracker  # Not used, to be removed.
+#  id: JobClown # Not used, to be removed.
 
 - type: playTimeTracker
   id: JobDetective
@@ -91,8 +91,8 @@
 - type: playTimeTracker
   id: JobMedicalIntern
 
-- type: playTimeTracker
-  id: JobMime
+#- type: playTimeTracker  # Not needed, to be removed.
+#  id: JobMime  # Not needed, to be removed.
 
 - type: playTimeTracker
   id: JobMusician

@@ -65,7 +65,7 @@ job-name-zombie = Zombie
 
 # Job titles
 job-title-visitor = Visitor
-job-title-cluwne = Cluwne
+# job-title-cluwne = Cluwne
 job-title-universal = Universal
 
 # Role timers - Make these alphabetical or I cut you
@@ -82,7 +82,7 @@ JobChef = Chef
 JobChemist = Chemist
 JobChiefEngineer = Chief Engineer
 JobChiefMedicalOfficer = Chief Medical Officer
-JobClown = Clown
+# JobClown = Clown
 JobDetective = Detective
 JobBrigmedic = Brigmedic
 JobERTChaplain = ERT Chaplain
@@ -98,7 +98,7 @@ JobLawyer = Lawyer
 JobLibrarian = Librarian
 JobMedicalDoctor = Medical doctor
 JobMedicalIntern = Medical intern
-JobMime = Mime
+# JobMime = Mime
 JobMusician = Musician
 JobParamedic = Paramedic
 JobPassenger = Passenger
