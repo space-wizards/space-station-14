@@ -33,7 +33,7 @@
         acts: ["Destruction"]
   - type: WiresPanel
   - type: Wires
-    layout: ScanGate
+    layoutId: ScanGate
   - type: UserInterface
     interfaces:
       enum.ResearchClientUiKey.Key:

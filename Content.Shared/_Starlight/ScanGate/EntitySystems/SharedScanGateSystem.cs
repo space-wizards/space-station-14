@@ -6,6 +6,7 @@ using Content.Shared.Inventory;
 using Content.Shared.Hands;
 using Content.Shared.Power.EntitySystems;
 using Content.Shared.Access.Systems;
+using Content.Shared.Access.Components;
 
 namespace Content.Shared._Starlight.ScanGate.EntitySystems;
 
@@ -30,8 +31,7 @@ public sealed partial class SharedScanGateSystem : EntitySystem
     private void OnCollide(EntityUid uid, ScanGateComponent component, ref StartCollideEvent args)
     {
         if (component.NextScanTime > _gameTiming.CurTime
-            || !_powerReceiverSystem.IsPowered(uid)
-            || _accessReaderSystem.IsAllowed(uid, args.OtherEntity))
+            || !_powerReceiverSystem.IsPowered(uid))
             return;
 
         component.NextScanTime = _gameTiming.CurTime + component.ScanDelay;
@@ -40,7 +40,7 @@ public sealed partial class SharedScanGateSystem : EntitySystem
         var ev = new TryDetectItem(uid);
         RaiseLocalEvent(args.OtherEntity, ref ev);
 
-        if (ev.EntityDetected)
+        if (ev.EntityDetected && !(TryComp<AccessReaderComponent>(uid, out var accessReader) && !_accessReaderSystem.IsAllowed(uid, args.OtherEntity, accessReader)))
             ItemDetected(uid, component); // Detected
         else
             NoItemDetected(uid, component); // Not detected
