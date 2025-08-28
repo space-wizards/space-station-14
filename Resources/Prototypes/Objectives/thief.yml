@@ -327,7 +327,7 @@
   - type: StealCondition
     stealGroup: BartenderShotgun
   - type: Objective
-    difficulty: 0.4
+    difficulty: 0.7
 
 - type: entity
   parent: BaseThiefStealObjective
