@@ -50,7 +50,7 @@ public sealed partial class IngestionSystem
         }
 
         if (!_interactionSystem.InRangeUnobstructed(user, target, popup: true))
-            return false;
+            return true;
 
         return TryIngest(user, user, target);
     }
