@@ -61,10 +61,10 @@
   components:
   - type: GameRule
   - type: BasicStationEventScheduler
-    minimumTimeUntilFirstEvent: 600 # 10 min
+    minimumTimeUntilFirstEvent: 3600 # 10 min
     minMaxEventTiming:
-      min: 750 # 12.5 min
-      max: 930 # 17.5 min
+      min: 3600 # 60 min
+      max: 7200 # 120 min
     scheduledGameRules: !type:NestedSelector
       tableId: BasicMeteorSwarmEventsTable
 
@@ -74,10 +74,10 @@
   components:
   - type: GameRule
   - type: BasicStationEventScheduler
-    minimumTimeUntilFirstEvent: 600 # 10 min
+    minimumTimeUntilFirstEvent: 1800 # 30 min
     minMaxEventTiming:
-      min: 750 # 12.5 min
-      max: 930 # 17.5 min
+      min: 1800 # 30 min
+      max: 3600 # 60 min
     scheduledGameRules: !type:NestedSelector
       tableId: MeteorSwarmMildTable
 
@@ -99,9 +99,9 @@
   components:
   - type: GameRule
   - type: StationEvent
-    reoccurrenceDelay: 1
-    earliestStart: 12
-    minimumPlayers: 25
+    reoccurrenceDelay: 86400
+    earliestStart: 3600
+    minimumPlayers: 5
   - type: MeteorSwarm
 
 - type: entity
@@ -109,20 +109,20 @@
   id: GameRuleSpaceDustMinor
   components:
   - type: StationEvent
-    weight: 44
+    weight: 0.6
     earliestStart: 2
     minimumPlayers: 0
   - type: MeteorSwarm
-    announcement: null
-    announcementSound: null
+    announcement: station-event-space-dust-minor-start-announcement
+    announcementSound: /Audio/Announcements/attention.ogg
     nonDirectional: true
     meteors:
       MeteorSpaceDust: 1
     waves:
-      min: 2
+      min: 1
       max: 3
     meteorsPerWave:
-      min: 3
+      min: 1
       max: 5
 
 - type: entity
@@ -130,55 +130,67 @@
   id: GameRuleSpaceDustMajor
   components:
   - type: StationEvent
-    weight: 22
-    minimumPlayers: 0
+    weight: 0.2
+    minimumPlayers: 3
   - type: MeteorSwarm
     announcement: station-event-space-dust-start-announcement
     announcementSound: /Audio/Announcements/attention.ogg
     nonDirectional: true
     meteors:
-      MeteorSpaceDust: 1
+      MeteorSpaceDust: 2
     waves:
-      min: 2
+      min: 1
       max: 3
     meteorsPerWave:
-      min: 8
-      max: 12
+      min: 1
+      max: 15
 
 - type: entity
   parent: GameRuleMeteorSwarm
   id: GameRuleMeteorSwarmSmall
   components:
   - type: StationEvent
-    weight: 18
+    weight: 0.4
     minimumPlayers: 15
   - type: MeteorSwarm
+    announcement: station-event-meteor-swarm-start-announcement
+    announcementSound: /Audio/Announcements/attention.ogg
+    endAnnouncement: station-event-meteor-swarm-end-announcement
+    endAudio: /Audio/Announcements/attention.ogg
     meteors:
-      MeteorSmall: 7
-      MeteorMedium: 3
+      MeteorSmall: 8
+      MeteorMedium: 2
 
 - type: entity
   parent: GameRuleMeteorSwarm
   id: GameRuleMeteorSwarmMedium
   components:
   - type: StationEvent
-    weight: 10
+    weight: 0.2
   - type: MeteorSwarm
+    announcement: station-event-meteor-swarm-start-announcement
+    announcementSound: /Audio/Announcements/attention.ogg
+    endAnnouncement: station-event-meteor-swarm-end-announcement
+    endAudio: /Audio/Announcements/attention.ogg
     meteors:
-      MeteorSmall: 3
-      MeteorMedium: 6
-      MeteorLarge: 1
+      MeteorSmall: 4
+      MeteorMedium: 3
+      MeteorLarge: 2
 
 - type: entity
   parent: GameRuleMeteorSwarm
   id: GameRuleMeteorSwarmLarge
   components:
   - type: StationEvent
-    weight: 5
+    weight: 0.2
   - type: MeteorSwarm
+    announcement: station-event-meteor-swarm-start-announcement
+    announcementSound: /Audio/Announcements/attention.ogg
+    endAnnouncement: station-event-meteor-swarm-end-announcement
+    endAudio: /Audio/Announcements/attention.ogg
     meteors:
-      MeteorSmall: 2
-      MeteorMedium: 4
+      MeteorSmall: 8
+      MeteorMedium: 6
       MeteorLarge: 4
 
 - type: entity
@@ -186,17 +198,17 @@
   id: GameRuleUristSwarm
   components:
   - type: StationEvent
-    weight: 0.05
+    weight: 0
   - type: MeteorSwarm
     announcement: station-event-meteor-urist-start-announcement
     announcementSound: /Audio/Announcements/attention.ogg
     meteors:
       MeteorUrist: 1
     waves:
-      min: 3
-      max: 3
+      min: 1
+      max: 10
     meteorsPerWave:
-      min: 10
+      min: 5
       max: 10
 
 - type: entity
@@ -207,11 +219,11 @@
     startAnnouncement: station-event-immovable-rod-start-announcement
     startAudio:
       path: /Audio/Announcements/attention.ogg
-    weight: 3.5
+    weight: 0
     reoccurrenceDelay: 1
     duration: 1
-    earliestStart: 30
-    minimumPlayers: 25
+    earliestStart: 3600
+    minimumPlayers: 10
   - type: ImmovableRodRule
     rodPrototypes:
     - id: ImmovableRodKeepTilesStill
@@ -247,17 +259,17 @@
   id: GameRuleCowSwarm
   components:
   - type: StationEvent
-    weight: 0.05
+    weight: 0
   - type: MeteorSwarm
     announcement: station-event-meteor-cow-start-announcement
     announcementSound: /Audio/Announcements/attention.ogg
     meteors:
       MeteorCow: 1
     waves:
-      min: 3
-      max: 3
+      min: 1
+      max: 10
     meteorsPerWave:
-      min: 10
+      min: 5
       max: 10
 
 - type: entity
@@ -265,17 +277,17 @@
   id: GameRuleClownSwarm
   components:
   - type: StationEvent
-    weight: 0.05
+    weight: 0
   - type: MeteorSwarm
     announcement: station-event-meteor-clown-start-announcement
     announcementSound: /Audio/Announcements/attention.ogg
     meteors:
       MeteorClown: 1
     waves:
-      min: 3
-      max: 3
+      min: 1
+      max: 5
     meteorsPerWave:
-      min: 10
+      min: 5
       max: 10
 
 - type: entity
@@ -283,17 +295,17 @@
   id: GameRulePotatoSwarm
   components:
   - type: StationEvent
-    weight: 0.05
+    weight: 0
   - type: MeteorSwarm
     announcement: station-event-meteor-potato-start-announcement
     announcementSound: /Audio/Announcements/attention.ogg
     meteors:
       MeteorPotato: 1
     waves:
-      min: 3
-      max: 3
+      min: 1
+      max: 5
     meteorsPerWave:
-      min: 10
+      min: 5
       max: 10
 
 - type: entity
@@ -301,7 +313,7 @@
   id: GameRuleFunSwarm
   components:
   - type: StationEvent
-    weight: 0.03
+    weight: 0
   - type: MeteorSwarm
     announcement: station-event-fun-swarm-start-announcement
     announcementSound: /Audio/Announcements/attention.ogg
@@ -311,8 +323,8 @@
       MeteorPotato: 1
       MeteorUrist: 1
     waves:
-      min: 3
-      max: 3
+      min: 1
+      max: 5
     meteorsPerWave:
-      min: 8
-      max: 12
+      min: 5
+      max: 10
