@@ -34,8 +34,6 @@ public sealed partial class ReagentDisplay : PanelContainer
         _solution = _entityManager.System<SharedSolutionContainerSystem>();
 
         ColorPanel.PanelOverride = new StyleBoxFlat { BackgroundColor = _prototypeManager.Index(reagent).SubstanceColor };
-        //var spriteSys = _entityManager.System<SpriteSystem>();
-        //Icon.Texture = spriteSys.Frame0(_prototypeManager.Index<MaterialPrototype>(material).Icon);
 
         _ent = uid;
         Reagent = reagent;
