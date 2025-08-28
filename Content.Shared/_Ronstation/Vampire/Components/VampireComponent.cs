@@ -26,6 +26,15 @@ public sealed partial class VampireComponent : Component
     [ViewVariables(VVAccess.ReadWrite), DataField("maxVitae")]
     public FixedPoint2 VitaeRegenCap = 100;
 
+    /// <summary>
+    /// The amount of vitae passively generated per second.
+    /// </summary>
+    [ViewVariables(VVAccess.ReadWrite), DataField("vitaePerSecond")]
+    public FixedPoint2 VitaePerSecond = 0.5f;
+
+    [ViewVariables]
+    public float Accumulator = 0;
+
     [DataField]
     public ProtoId<AlertPrototype> VitaeAlert = "Vitae";
 
