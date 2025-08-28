@@ -1,0 +1,57 @@
+using Content.Shared._Starlight.ScanGate.Components;
+using Robust.Shared.Physics.Events;
+using Robust.Shared.Timing;
+using Robust.Shared.Audio.Systems;
+using Content.Shared.Inventory;
+
+namespace Content.Shared._Starlight.ScanGate.EntitySystems;
+
+public sealed partial class SharedScanGateSystem : EntitySystem
+{
+    [Dependency] private readonly IGameTiming _gameTiming = default!;
+    [Dependency] private readonly SharedAudioSystem _audio = default!;
+    [Dependency] private readonly SharedAppearanceSystem _appearanceSystem = default!;
+
+    public override void Initialize()
+    {
+        SubscribeLocalEvent<ScanGateComponent, StartCollideEvent>(OnCollide);
+        SubscribeLocalEvent<ScanDetectableComponent, InventoryRelayedEvent<TryDetectItem>>(OnInventoryRelay);
+        base.Initialize();
+    }
+
+    private void OnCollide(EntityUid uid, ScanGateComponent component, ref StartCollideEvent args)
+    {
+        if (component.NextScanTime > _gameTiming.CurTime)
+            return;
+
+        component.NextScanTime = _gameTiming.CurTime + component.ScanDelay;
+
+        var ev = new TryDetectItem(uid);
+        RaiseLocalEvent(args.OtherEntity, ref ev);
+
+        if (ev.EntityDetected)
+            ItemDetected(uid, component); // Detected
+        else
+            NoItemDetected(uid, component); // Not detected
+    }
+
+    private void OnInventoryRelay(EntityUid uid, ScanDetectableComponent component, ref InventoryRelayedEvent<TryDetectItem> args) => args.Args.EntityDetected = true; // Detected something
+
+    private void ItemDetected(EntityUid uid, ScanGateComponent component)
+    {
+        _audio.PlayPvs(component.ScanFailSound, uid); // Play fail sound, when detect something
+        SetState(uid, component, component.ScanFailState);
+    }
+
+    private void NoItemDetected(EntityUid uid, ScanGateComponent component)
+    {
+        _audio.PlayPvs(component.ScanSound, uid); // Play scan sound
+        SetState(uid, component, component.ScanSuccessState);
+    }
+
+    private void SetState(EntityUid uid, ScanGateComponent component, string state)
+    {
+        _appearanceSystem.SetData(uid, ScanGateVisuals.State, state);
+        Timer.Spawn(TimeSpan.FromSeconds(1), () => _appearanceSystem.SetData(uid, ScanGateVisuals.State, component.IdleState)); // Set back to idle after 1 second
+    }
+}
