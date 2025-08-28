@@ -2,6 +2,7 @@ using System.Linq;
 using Content.Shared.Dataset;
 using Content.Server.Ghost.Roles.Components;
 using Content.Server.StationEvents.Components;
+using Content.Shared.Mind.Components;
 using Content.Shared.GameTicking.Components;
 using Content.Shared.Random.Helpers;
 using Robust.Shared.Prototypes;
@@ -16,6 +17,7 @@ public sealed class RandomSentienceRule : StationEventSystem<RandomSentienceRule
 
     [Dependency] private readonly IPrototypeManager _prototype = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
+
     protected override void Started(EntityUid uid, RandomSentienceRuleComponent component, GameRuleComponent gameRule, GameRuleStartedEvent args)
     {
         if (!TryGetRandomStation(out var station))
@@ -29,11 +31,6 @@ public sealed class RandomSentienceRule : StationEventSystem<RandomSentienceRule
                 continue;
 
             targetList.Add((targetUid, target));
-
-            if (HasComp<GhostTakeoverAvailableComponent>(target) || (mobState.CurrentState == MobState.Dead))
-            {
-                RemComp<SentienceTargetComponent>(target);
-            }
         }
 
         var toMakeSentient = _random.Next(component.MinSentiences, component.MaxSentiences);
@@ -52,6 +49,10 @@ public sealed class RandomSentienceRule : StationEventSystem<RandomSentienceRule
             foreach (var potentialTarget in targetList)
             {
                 currentWeight += potentialTarget.Comp.Weight;
+                if (HasComp<MindComponent>(target))
+                {
+                    RemComp<SentienceTargetComponent>(target);
+                }
                 if (currentWeight > chosenWeight)
                 {
                     target = potentialTarget;
