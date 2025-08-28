@@ -1,0 +1,76 @@
+
+# Ears Markings
+- type: marking
+  id: VulpEar
+  bodyPart: HeadTop
+  markingCategory: HeadTop
+  speciesRestriction: [ Vulpkanin ]
+  sprites:
+    - sprite: Mobs/Customization/Vulpkanin/ear_markings.rsi
+      state: vulp
+    - sprite: Mobs/Customization/Vulpkanin/ear_markings.rsi
+      state: vulp-inner
+
+- type: marking
+  id: VulpEarJackal
+  bodyPart: HeadTop
+  markingCategory: HeadTop
+  speciesRestriction: [ Vulpkanin ]
+  sprites:
+    - sprite: Mobs/Customization/Vulpkanin/ear_markings.rsi
+      state: jackal
+    - sprite: Mobs/Customization/Vulpkanin/ear_markings.rsi
+      state: jackal-inner
+
+- type: marking
+  id: VulpEarTerrier
+  bodyPart: HeadTop
+  markingCategory: HeadTop
+  speciesRestriction: [ Vulpkanin ]
+  sprites:
+    - sprite: Mobs/Customization/Vulpkanin/ear_markings.rsi
+      state: terrier
+    - sprite: Mobs/Customization/Vulpkanin/ear_markings.rsi
+      state: terrier-inner
+
+- type: marking
+  id: VulpEarFennec
+  bodyPart: HeadTop
+  markingCategory: HeadTop
+  speciesRestriction: [ Vulpkanin ]
+  sprites:
+    - sprite: Mobs/Customization/Vulpkanin/ear_markings.rsi
+      state: fennec
+    - sprite: Mobs/Customization/Vulpkanin/ear_markings.rsi
+      state: fennec-inner
+
+- type: marking
+  id: VulpEarFox
+  bodyPart: HeadTop
+  markingCategory: HeadTop
+  speciesRestriction: [ Vulpkanin ]
+  sprites:
+    - sprite: Mobs/Customization/Vulpkanin/ear_markings.rsi
+      state: fox
+    - sprite: Mobs/Customization/Vulpkanin/ear_markings.rsi
+      state: fox-inner
+
+- type: marking
+  id: VulpEarOtie
+  bodyPart: HeadTop
+  markingCategory: HeadTop
+  speciesRestriction: [ Vulpkanin ]
+  sprites:
+    - sprite: Mobs/Customization/Vulpkanin/ear_markings.rsi
+      state: otie
+    - sprite: Mobs/Customization/Vulpkanin/ear_markings.rsi
+      state: otie-inner
+
+- type: marking
+  id: VulpEarShock
+  bodyPart: HeadTop
+  markingCategory: HeadTop
+  speciesRestriction: [ Vulpkanin ]
+  sprites:
+    - sprite: Mobs/Customization/Vulpkanin/ear_markings.rsi
+      state: shock

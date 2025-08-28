@@ -1,0 +1,55 @@
+- type: marking
+  id: VulpClawsLHand
+  bodyPart: LHand
+  markingCategory: Arms
+  speciesRestriction: [ Vulpkanin ]
+  sprites:
+    - sprite: Mobs/Customization/Vulpkanin/body_markings.rsi
+      state: claws_l_hand
+  coloring:
+    default:
+      type:
+        !type:SimpleColoring
+          color: "#e5e3d1"
+
+- type: marking
+  id: VulpClawsRHand
+  bodyPart: RHand
+  markingCategory: Arms
+  speciesRestriction: [ Vulpkanin ]
+  sprites:
+    - sprite: Mobs/Customization/Vulpkanin/body_markings.rsi
+      state: claws_r_hand
+  coloring:
+    default:
+      type:
+        !type:SimpleColoring
+          color: "#e5e3d1"
+
+- type: marking
+  id: VulpClawsLFoot
+  bodyPart: LFoot
+  markingCategory: Legs
+  speciesRestriction: [ Vulpkanin ]
+  sprites:
+    - sprite: Mobs/Customization/Vulpkanin/body_markings.rsi
+      state: claws_l_foot
+  coloring:
+    default:
+      type:
+        !type:SimpleColoring
+          color: "#e5e3d1"
+
+- type: marking
+  id: VulpClawsRFoot
+  bodyPart: RFoot
+  markingCategory: Legs
+  speciesRestriction: [ Vulpkanin ]
+  sprites:
+    - sprite: Mobs/Customization/Vulpkanin/body_markings.rsi
+      state: claws_r_foot
+  coloring:
+    default:
+      type:
+        !type:SimpleColoring
+          color: "#e5e3d1"

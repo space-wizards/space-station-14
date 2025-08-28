@@ -1,19 +1,14 @@
 {
     "version": 1,
     "license": "CC-BY-SA-3.0",
-    "copyright": "Taken from https://github.com/DeltaV-Station/Delta-v/commit/65d35d0b3c20aa4e8a0e749a4de8392e53051e86",
-    "size": {"x": 32, "y": 32},
+    "copyright": "Made by FairlySadPanda (GitHub/Discord), based off of sprites taken from https://github.com/DeltaV-Station/Delta-v/commit/65d35d0b3c20aa4e8a0e749a4de8392e53051e86",
+    "size": {
+        "x": 32,
+        "y": 32
+    },
     "states": [
         {
-            "name": "points_fade",
-            "directions": 4
-        },
-        {
-            "name": "points_sharp",
-            "directions": 4
-        },
-        {
-            "name": "points_crest",
+            "name": "belly_crest",
             "directions": 4
         },
         {
@@ -25,39 +20,23 @@
             "directions": 4
         },
         {
-            "name": "belly_crest",
+            "name": "claws_l_hand",
             "directions": 4
         },
         {
-            "name": "points_hands",
+            "name": "claws_r_hand",
             "directions": 4
         },
         {
-            "name": "points_feet",
+            "name": "claws_l_foot",
             "directions": 4
         },
         {
-            "name": "points_sharp-arms",
+            "name": "claws_r_foot",
             "directions": 4
         },
         {
-            "name": "points_sharp-legs",
-            "directions": 4
-        },
-        {
-            "name": "points_fade-arms",
-            "directions": 4
-        },
-        {
-            "name": "points_fade-legs",
-            "directions": 4
-        },
-        {
-            "name": "points_crest-arms",
-            "directions": 4
-        },
-        {
-            "name": "points_crest-legs",
+            "name": "crests",
             "directions": 4
         }
     ]

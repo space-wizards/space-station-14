@@ -4,7 +4,7 @@
   roundStart: true
   prototype: MobVulpkanin
   sprites: MobVulpkaninSprites
-  defaultSkinTone: "#985629"
+  defaultSkinTone: "#5a3f2d"
   markingLimits: MobVulpkaninMarkingLimits
   dollPrototype: MobVulpkaninDummy
   skinColoration: Hues
@@ -23,7 +23,7 @@
     HeadTop: MobHumanoidAnyMarking
     HeadSide: MobHumanoidAnyMarking
     Tail: MobHumanoidAnyMarking
-    Eyes: MobHumanoidEyes
+    Eyes: MobVulpkaninEyes
     LArm: MobVulpkaninLArm
     RArm: MobVulpkaninRArm
     LHand: MobVulpkaninLHand
@@ -45,23 +45,28 @@
     Tail:
       points: 1
       required: true
-      defaultMarkings: [ VulpTailAlt ]
+      defaultMarkings: [ VulpTailVulp ]
     Head:
       points: 3
-      required: false
-    Legs:
-      points: 1
-      required: false
-    Arms:
-      points: 1
-      required: false
-    Snout:
-      points: 1
       required: false
     HeadTop:
       points: 1
       required: true
       defaultMarkings: [ VulpEar ]
+    Arms:
+      points: 2
+      required: false
+      defaultMarkings: [ VulpClawsLHand, VulpClawsRHand ]
+    Legs:
+      points: 2
+      required: false
+      defaultMarkings: [ VulpClawsLFoot, VulpClawsRFoot ]
+
+- type: humanoidBaseSprite
+  id: MobVulpkaninEyes
+  baseSprite:
+    sprite: Mobs/Species/Vulpkanin/parts.rsi
+    state: eyes
 
 - type: humanoidBaseSprite
   id: MobVulpkaninHead

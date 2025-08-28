@@ -1,7 +1,7 @@
 {
     "version": 1,
     "license": "CC-BY-SA-3.0",
-    "copyright": "Taken from DeltaV at https://github.com/DeltaV-Station/Delta-v/commit/65d35d0b3c20aa4e8a0e749a4de8392e53051e86",
+    "copyright": "Made by FairlySadPanda (Github/Discord); with help from ScarKy0 (Github/Discord)",
     "size": {
         "x": 32,
         "y": 32
@@ -62,7 +62,7 @@
             "directions": 4
         },
         {
-            "name": "overlay_husk",
+            "name": "eyes",
             "directions": 4
         }
     ]

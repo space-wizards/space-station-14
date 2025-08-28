@@ -5,35 +5,11 @@
     "size": {"x": 32, "y": 32},
     "states": [
         {
-            "name": "nose",
+            "name": "blaze",
             "directions": 4
         },
         {
-            "name": "tiger_face",
-            "directions": 4
-        },
-        {
-            "name": "tiger_head",
-            "directions": 4
-        },
-        {
-            "name": "muzzle",
-            "directions": 4
-        },
-        {
-            "name": "muzzle_sharp",
-            "directions": 4
-        },
-        {
-            "name": "muzzle_fade",
-            "directions": 4
-        },
-        {
-            "name": "muzzle_alt",
-            "directions": 4
-        },
-        {
-            "name": "patch",
+            "name": "cheek_marks",
             "directions": 4
         },
         {
@@ -41,19 +17,35 @@
             "directions": 4
         },
         {
+            "name": "muzzle_bottom",
+            "directions": 4
+        },
+        {
+            "name": "muzzle_top",
+            "directions": 4
+        },
+        {
+            "name": "nose",
+            "directions": 4
+        },
+        {
+            "name": "patch",
+            "directions": 4
+        },
+        {
             "name": "slash",
             "directions": 4
         },
         {
-            "name": "blaze",
+            "name": "stripes_1",
+            "directions": 4
+        },
+        {
+            "name": "stripes_2",
             "directions": 4
         },
         {
             "name": "vulpine",
-            "directions": 4
-        },
-        {
-            "name": "vulpine-lines",
             "directions": 4
         }
     ]
