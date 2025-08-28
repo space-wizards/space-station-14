@@ -92,7 +92,8 @@ public abstract partial class SharedGravitySystem : EntitySystem
 
     /// <summary>
     /// Overload of <see cref="RefreshWeightless(Entity{GravityAffectedComponent?})"/> which also takes a bool for the weightlessness value we want to change to.
-    /// This method is LOAD BEARING for UninitializedSaveTest. DO NOT REMOVE IT.
+    /// This method should only be called if there is no chance something can override the weightless value you're trying to change to.
+    /// This is really only the case if you're applying a weightless value that overrides non-conditionally from events or are a grid with the gravity component.
     /// </summary>
     /// <param name="entity">The entity we are updating the weightless status of</param>
     /// <param name="weightless">The weightless value we are trying to change to, helps avoid needless networking</param>
@@ -142,7 +143,7 @@ public abstract partial class SharedGravitySystem : EntitySystem
         if (args.OldParent == args.Transform.GridUid)
             return;
 
-        RefreshWeightless((entity.Owner, entity.Comp), !EntityGridOrMapHaveGravity((entity, args.Transform)));
+        RefreshWeightless((entity.Owner, entity.Comp));
     }
 
     private void OnBodyTypeChanged(Entity<GravityAffectedComponent> entity, ref PhysicsBodyTypeChangedEvent args)
