@@ -95,7 +95,7 @@
         - MopAdv
 
 - type: entity
-  parent: BaseItem
+  parent: BaseMopItem
   name: mop
   id: MopItem
   description: A mop that can't be stopped, viscera cleanup detail awaits.
