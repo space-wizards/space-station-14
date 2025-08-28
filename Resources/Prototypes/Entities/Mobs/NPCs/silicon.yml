@@ -15,9 +15,6 @@
     bodyType: KinematicController # Same for all inheritors
   - type: StatusEffects
     allowed:
-    - Stun
-    - SlowedDown
-    - Stutter
     - Electrocution
   - type: Repairable
     doAfterDelay: 8

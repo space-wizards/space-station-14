@@ -6,6 +6,10 @@
   placement:
     mode: SnapgridCenter
   components:
+  - type: Anchorable
+    flags:
+    - Anchorable
+  - type: Rotatable
   - type: Clickable
   - type: Sprite
     sprite: Structures/catwalk.rsi

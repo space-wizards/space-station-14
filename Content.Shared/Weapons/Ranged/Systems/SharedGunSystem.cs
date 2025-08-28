@@ -8,7 +8,6 @@ using Content.Shared.CombatMode;
 using Content.Shared.Containers.ItemSlots;
 using Content.Shared.Damage;
 using Content.Shared.Examine;
-using Content.Shared.Gravity;
 using Content.Shared.Hands;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Popups;
@@ -27,7 +26,6 @@ using Robust.Shared.Audio.Systems;
 using Robust.Shared.Containers;
 using Robust.Shared.Map;
 using Robust.Shared.Network;
-using Robust.Shared.Physics;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Systems;
 using Robust.Shared.Prototypes;
@@ -57,7 +55,6 @@ public abstract partial class SharedGunSystem : EntitySystem
     [Dependency] protected readonly SharedAudioSystem Audio = default!;
     [Dependency] private   readonly SharedCombatModeSystem _combatMode = default!;
     [Dependency] protected readonly SharedContainerSystem Containers = default!;
-    [Dependency] private   readonly SharedGravitySystem _gravity = default!;
     [Dependency] protected readonly SharedPointLightSystem Lights = default!;
     [Dependency] protected readonly SharedPopupSystem PopupSystem = default!;
     [Dependency] protected readonly SharedPhysicsSystem Physics = default!;
@@ -207,11 +204,12 @@ public abstract partial class SharedGunSystem : EntitySystem
     /// <summary>
     /// Attempts to shoot at the target coordinates. Resets the shot counter after every shot.
     /// </summary>
-    public void AttemptShoot(EntityUid user, EntityUid gunUid, GunComponent gun, EntityCoordinates toCoordinates)
+    public void AttemptShoot(EntityUid user, EntityUid gunUid, GunComponent gun, EntityCoordinates toCoordinates, EntityUid? target = null)
     {
         gun.ShootCoordinates = toCoordinates;
         AttemptShoot(user, gunUid, gun);
         gun.ShotCounter = 0;
+        gun.Target = target;
         DirtyField(gunUid, gun, nameof(GunComponent.ShotCounter));
     }
 
@@ -340,7 +338,7 @@ public abstract partial class SharedGunSystem : EntitySystem
         if (ev.Ammo.Count <= 0)
         {
             // triggers effects on the gun if it's empty
-            var emptyGunShotEvent = new OnEmptyGunShotEvent();
+            var emptyGunShotEvent = new OnEmptyGunShotEvent(user);
             RaiseLocalEvent(gunUid, ref emptyGunShotEvent);
 
             gun.BurstActivated = false;
@@ -390,7 +388,7 @@ public abstract partial class SharedGunSystem : EntitySystem
         var shooterEv = new ShooterImpulseEvent();
         RaiseLocalEvent(user, ref shooterEv);
 
-        if (shooterEv.Push || _gravity.IsWeightless(user, userPhysics))
+        if (shooterEv.Push)
             CauseImpulse(fromCoordinates, toCoordinates.Value, user, userPhysics);
     }
 

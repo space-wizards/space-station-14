@@ -348,6 +348,9 @@
   id: ComputerTelevisionCircuitboard
 
 - type: Tag
+  id: ConstructionMaterial
+
+- type: Tag
   id: ConveyorAssembly
 
 - type: Tag
@@ -799,6 +802,9 @@
   id: Ingot
 
 - type: Tag
+  id: Inflatable
+
+- type: Tag
   id: InstantDoAfters
 
 - type: Tag
@@ -830,6 +836,9 @@
 
 - type: Tag
   id: Knife
+
+- type: Tag
+  id: KnockdownImmune
 
 - type: Tag
   id: LavaBrig
@@ -1197,6 +1206,9 @@
   id: RollingPin
 
 - type: Tag
+  id: Ruminant
+
+- type: Tag
   id: SaltShaker
 
 - type: Tag
@@ -1269,6 +1281,9 @@
   id: Slice # sliced fruit, vegetables, pizza etc.
 
 - type: Tag
+  id: SlowImmune
+
+- type: Tag
   id: SmallAIChip
 
 - type: Tag
@@ -1330,6 +1345,9 @@
 
 - type: Tag
   id: StringInstrument
+
+- type: Tag
+  id: StunImmune
 
 - type: Tag
   id: SubdermalImplant
