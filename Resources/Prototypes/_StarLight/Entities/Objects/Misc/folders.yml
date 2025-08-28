@@ -23,3 +23,113 @@
       contents:
         - id: Paper
           amount: 20
+
+- type: entity
+  id: BoxFolderHoPClipboard
+  parent: [BoxFolderClipboard, BaseGrandTheftContraband]
+  name: Bureaucratic Digi-Board
+  description: A bulky electric clipboard, filled with bureaucracy. Contains a portable ID card computer. Vulnerable to assistants.
+  components:
+    - type: Sprite
+      sprite: _Starlight/Objects/Misc/hop_clipboard.rsi
+      layers:
+        - state: hop_clipboard
+        - state: hop_clipboard_paper
+          map: ["hop_clipboard_paper"]
+          visible: false
+        - state: hop_clipboard_pen
+          map: ["hop_clipboard_pen"]
+          visible: false
+        - state: hop_clipboard_target_id
+          map: ["hop_clipboard_target_id"]
+          visible: false
+        - state: hop_clipboard_priv_id
+          map: ["hop_clipboard_priv_id"]
+          visible: false
+        - state: hop_clipboard_over
+    - type: ItemSlots
+      slots:
+        pen_slot:
+          name: clipboard-slot-component-slot-name-pen
+          whitelist:
+            tags:
+            - Write
+          insertOnInteract: true
+    - type: Item
+      sprite: _Starlight/Objects/Misc/hop_clipboard.rsi
+      size: Normal
+    - type: Clothing
+      sprite: _Starlight/Objects/Misc/hop_clipboard.rsi
+    - type: Storage
+      maxItemSize: Small
+      grid:
+      - 0,0,4,3
+      quickInsert: true
+    - type: StorageFill
+      contents:
+        - id: Paper
+          amount: 10
+    - type: IdCardConsole
+      privilegedIdSlot:
+        name: id-card-clipboard-priviliged-id
+        ejectSound: /Audio/Machines/id_swipe.ogg
+        insertSound: /Audio/Weapons/Guns/MagIn/batrifle_magin.ogg
+        ejectOnBreak: true
+        swap: false
+        whitelist:
+          components:
+          - IdCard
+      targetIdSlot:
+        name: id-card-clipboard-target-id
+        ejectSound: /Audio/Machines/id_swipe.ogg
+        insertSound: /Audio/Weapons/Guns/MagIn/batrifle_magin.ogg
+        ejectOnBreak: true
+        swap: false
+        whitelist:
+          components:
+          - IdCard
+    - type: ActivatableUI
+      key: enum.IdCardConsoleUiKey.Key
+    - type: UserInterface
+      interfaces:
+        enum.IdCardConsoleUiKey.Key:
+          type: IdCardConsoleBoundUserInterface
+        enum.WiresUiKey.Key:
+          type: WiresBoundUserInterface
+        enum.StorageUiKey.Key:
+          type: StorageBoundUserInterface
+    - type: ItemMapper
+      mapLayers:
+        hop_clipboard_paper:
+          whitelist:
+            tags:
+            - Document
+        hop_clipboard_pen:
+          whitelist:
+            tags:
+            - Write
+        hop_clipboard_priv_id:
+          minCount: 1
+          whitelist:
+            tags:
+            - DoorBumpOpener
+        hop_clipboard_target_id:
+          minCount: 2
+          whitelist: 
+            tags:
+            - DoorBumpOpener
+    - type: MeleeWeapon
+      damage:
+        types:
+          Slash: 10
+    - type: LandAtCursor
+    - type: DamageOtherOnHit
+      damage:
+        types:
+          Slash: 8
+    - type: Tag
+      tags:
+      - Folder
+      - HighRiskItem
+    - type: StealTarget
+      stealGroup: HoPBoardSteal
