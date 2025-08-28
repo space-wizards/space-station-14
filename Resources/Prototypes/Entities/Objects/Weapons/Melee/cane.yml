@@ -54,7 +54,7 @@
   - type: DisarmMalus
 
 - type: entity
-  parent: [Cane, VoiceLock]
+  parent: [Cane, SelectableLock]
   id: CaneSheath
   suffix: Empty
   components:
