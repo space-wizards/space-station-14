@@ -1,6 +1,6 @@
 using Content.Shared.Damage;
+using Content.Shared.Ghost;
 using Content.Shared.Mind;
-using Content.Shared.Mind.Components;
 using Robust.Shared.Random;
 
 namespace Content.Server.GhostTypes;
@@ -54,6 +54,6 @@ public sealed class GhostSpriteStateSystem : EntitySystem
                 spriteState = highestType[_random.Next(0, highestType.Count)]; // Uses the 1 possible sprite
             }
         }
-        _appearance.SetData(ent, GhostVisuals.Damage, ent.Comp.Prefix + spriteState.ToLower(), appearance);
+        _appearance.SetData(ent, GhostComponent.GhostVisuals.Damage, ent.Comp.Prefix + spriteState.ToLower(), appearance);
     }
 }

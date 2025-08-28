@@ -19,9 +19,9 @@ public sealed class MindRememberBodySystem : EntitySystem
     /// <summary>
     /// Saves the damage of a player body inside their MindComponent after an attempted gib event
     /// </summary>
-    private void SaveBodyOnGib(EntityUid uid, MindRememberBodyComponent component, AttemptEntityGibEvent args)
+    private void SaveBodyOnGib(Entity<MindRememberBodyComponent> ent, ref AttemptEntityGibEvent args)
     {
-        if (!_container.TryGetContainingContainer(uid, out var container)
+        if (!_container.TryGetContainingContainer(ent.Owner, out var container)
             || !TryComp<DamageableComponent>(container.Owner, out var damageable)
             || !TryComp<MindContainerComponent>(container.Owner, out var mindContainer)
             || !TryComp<MindComponent>(mindContainer.Mind, out var mind))
@@ -34,10 +34,10 @@ public sealed class MindRememberBodySystem : EntitySystem
     /// <summary>
     /// Saves the damage of a player body inside their MindComponent after a damage threshold event
     /// </summary>
-    private void SaveBodyOnThreshold(EntityUid uid, MindRememberBodyComponent comp, DamageThresholdReached args)
+    private void SaveBodyOnThreshold(Entity<MindRememberBodyComponent> ent, ref DamageThresholdReached args)
     {
-        if (!TryComp<DamageableComponent>(uid, out var damageable)
-            || !TryComp<MindContainerComponent>(uid, out var mindContainer)
+        if (!TryComp<DamageableComponent>(ent.Owner, out var damageable)
+            || !TryComp<MindContainerComponent>(ent.Owner, out var mindContainer)
             || !TryComp<MindComponent>(mindContainer.Mind, out var mind))
             return;
 
