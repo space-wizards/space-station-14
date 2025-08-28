@@ -18,6 +18,7 @@
     edible: Drink
     solution: drink
     destroyOnEmpty: false
+    utensil: spoon
   - type: Sprite
     state: icon
   - type: MeleeWeapon
