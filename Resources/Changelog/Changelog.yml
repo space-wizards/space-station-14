@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: TytosB
-  changes:
-  - message: adjusted pka damage and range
-    type: Tweak
-  id: 8385
-  time: '2025-04-29T10:00:56.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/37012
 - author: abadaba695
   changes:
   - message: Added 15u, 20u, and 30u transfer buttons in the chem master.
@@ -3948,3 +3941,10 @@
   id: 8897
   time: '2025-08-27T21:56:10.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/39805
+- author: aada
+  changes:
+  - message: Fixed audio mispredict when quick inserting.
+    type: Fix
+  id: 8898
+  time: '2025-08-28T16:54:06.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/39930
