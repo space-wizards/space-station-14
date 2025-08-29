@@ -383,8 +383,9 @@
         Slash: 0.8
         Piercing: 0.8
         Heat: 0.4
+        Shock: 0.8 # DS14-value
         Radiation: 0.0
-        Caustic: 0.7
+        Caustic: 0.5 # DS14-value
   - type: ClothingSpeedModifier
     walkModifier: 0.8
     sprintModifier: 0.8
