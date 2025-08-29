@@ -1,4 +1,4 @@
-name: Report an Issue
+name: Report an mapping issue
 description: For issues that are not related to any other issue form.
 labels: ['S: Untriaged', 'A: Mapping']
 body:
