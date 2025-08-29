@@ -17,11 +17,11 @@ using Content.Shared.Mobs.Systems;
 using Content.Shared.Movement.Events;
 using Content.Shared.Nutrition.Components;
 using Content.Shared.Popups;
+using Content.Shared.Random.Helpers;
 using Content.Shared.Throwing;
 using Content.Shared.Verbs;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Containers;
-using Robust.Shared.Random;
 using Robust.Shared.Serialization;
 using Robust.Shared.Timing;
 
@@ -44,7 +44,6 @@ public sealed class SharedKitchenSpikeSystem : EntitySystem
     [Dependency] private readonly SharedAudioSystem _audioSystem = default!;
     [Dependency] private readonly SharedBodySystem _bodySystem = default!;
     [Dependency] private readonly IGameTiming _gameTiming = default!;
-    [Dependency] private readonly IRobustRandom _random = default!;
 
     public override void Initialize()
     {
@@ -81,7 +80,7 @@ public sealed class SharedKitchenSpikeSystem : EntitySystem
 
     private void OnInit(Entity<KitchenSpikeComponent> ent, ref ComponentInit args)
     {
-        ent.Comp.BodyContainer =  _containerSystem.EnsureContainer<ContainerSlot>(ent, ent.Comp.ContainerId);
+        ent.Comp.BodyContainer = _containerSystem.EnsureContainer<ContainerSlot>(ent, ent.Comp.ContainerId);
     }
 
     private void OnInsertAttempt(Entity<KitchenSpikeComponent> ent, ref ContainerIsInsertingAttemptEvent args)
@@ -94,8 +93,12 @@ public sealed class SharedKitchenSpikeSystem : EntitySystem
 
     private void OnEntInsertedIntoContainer(Entity<KitchenSpikeComponent> ent, ref EntInsertedIntoContainerMessage args)
     {
+        if (_gameTiming.ApplyingState)
+            return;
+
         EnsureComp<KitchenSpikeHookedComponent>(args.Entity);
         _damageableSystem.TryChangeDamage(args.Entity, ent.Comp.SpikeDamage, true);
+        ent.Comp.NextDamage = _gameTiming.CurTime + ent.Comp.DamageInterval;
 
         // TODO: Add sprites for different species.
         _appearanceSystem.SetData(ent.Owner, KitchenSpikeVisuals.Status, KitchenSpikeStatus.Bloody);
@@ -103,6 +106,9 @@ public sealed class SharedKitchenSpikeSystem : EntitySystem
 
     private void OnEntRemovedFromContainer(Entity<KitchenSpikeComponent> ent, ref EntRemovedFromContainerMessage args)
     {
+        if (_gameTiming.ApplyingState)
+            return;
+
         RemComp<KitchenSpikeHookedComponent>(args.Entity);
         _damageableSystem.TryChangeDamage(args.Entity, ent.Comp.SpikeDamage, true);
 
@@ -263,7 +269,7 @@ public sealed class SharedKitchenSpikeSystem : EntitySystem
 
     private void OnSpikeButcherDoAfter(Entity<KitchenSpikeComponent> ent, ref SpikeButcherDoAfterEvent args)
     {
-        if (args.Handled || args.Cancelled || !args.Target.HasValue || !args.Used.HasValue || !TryComp<ButcherableComponent>(args.Target, out var butcherable) )
+        if (args.Handled || args.Cancelled || !args.Target.HasValue || !args.Used.HasValue || !TryComp<ButcherableComponent>(args.Target, out var butcherable))
             return;
 
         var victimIdentity = Identity.Entity(args.Target.Value, EntityManager);
@@ -275,7 +281,11 @@ public sealed class SharedKitchenSpikeSystem : EntitySystem
             PopupType.MediumCaution);
 
         // Get a random entry to spawn.
-        var index = _random.Next(butcherable.SpawnedEntities.Count);
+        // TODO: Replace with RandomPredicted once the engine PR is merged
+        var seed = SharedRandomExtensions.HashCodeCombine(new() { (int)_gameTiming.CurTick.Value, GetNetEntity(ent).Id });
+        var rand = new System.Random(seed);
+
+        var index = rand.Next(butcherable.SpawnedEntities.Count);
         var entry = butcherable.SpawnedEntities[index];
 
         var uid = PredictedSpawnNextToOrDrop(entry.PrototypeId, ent);
