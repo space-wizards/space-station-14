@@ -1,7 +1,7 @@
 {
     "version": 1,
     "license": "CC-BY-SA-3.0",
-    "copyright": "Taken from https://github.com/DeltaV-Station/Delta-v/commit/65d35d0b3c20aa4e8a0e749a4de8392e53051e86",
+    "copyright": "Taken from https://github.com/DeltaV-Station/Delta-v/commit/65d35d0b3c20aa4e8a0e749a4de8392e53051e86, edited by ScarKy0 (Github/Discord)",
     "size": {"x": 32, "y": 32},
     "states": [
         {
@@ -9,27 +9,7 @@
             "directions": 4
         },
         {
-            "name": "cheek_marks",
-            "directions": 4
-        },
-        {
             "name": "mask",
-            "directions": 4
-        },
-        {
-            "name": "muzzle_bottom",
-            "directions": 4
-        },
-        {
-            "name": "muzzle_top",
-            "directions": 4
-        },
-        {
-            "name": "snout",
-            "directions": 4
-        },
-        {
-            "name": "snout-nose",
             "directions": 4
         },
         {
