@@ -66,10 +66,10 @@
   - type: Tag
     tags:
     - Trash
-  - type: SpaceGarbage
   - type: PhysicalComposition
     materialComposition:
       Glass: 25
+  - type: SpaceGarbage
   - type: ToolRefinable
     refineResult:
     - id: SheetGlass1
