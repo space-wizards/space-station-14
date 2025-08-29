@@ -1,5 +1,5 @@
 name: Report an mapping issue
-description: For issues that are not related to any other issue form.
+description: For issues regarding mapping.
 labels: ['S: Untriaged', 'A: Mapping']
 body:
   - type: markdown
