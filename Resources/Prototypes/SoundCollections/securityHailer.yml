@@ -44,6 +44,21 @@
     - /Audio/Voice/SecurityHails/robocop.ogg
 
 - type: soundCollection
+  id: SecHailHighHOS
+  files:
+    - /Audio/Voice/SecurityHails/mald.ogg
+    - /Audio/Voice/SecurityHails/STFU.ogg
+    - /Audio/Voice/SecurityHails/buried.ogg
+    - /Audio/Voice/SecurityHails/drop.ogg
+    - /Audio/Voice/SecurityHails/bully.ogg
+    - /Audio/Voice/SecurityHails/hos_centcom.ogg
+    - /Audio/Voice/SecurityHails/JJE.ogg
+    - /Audio/Voice/SecurityHails/right.ogg
+    - /Audio/Voice/SecurityHails/safeword.ogg
+    - /Audio/Voice/SecurityHails/shitsec.ogg
+    - /Audio/Voice/SecurityHails/robocop.ogg
+
+- type: soundCollection
   id: SecHailEmag
   files:
     - /Audio/Voice/SecurityHails/cybersun.ogg
@@ -67,8 +82,3 @@
     - /Audio/Voice/SecurityHails/ERT/mandatory.ogg
     - /Audio/Voice/SecurityHails/ERT/obey.ogg
     - /Audio/Voice/SecurityHails/ERT/fucked_up.ogg
-
-- type: soundCollection
-  id: SecHailHOS
-  files:
-    - /Audio/Voice/SecurityHails/hos_centcom.ogg

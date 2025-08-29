@@ -42,18 +42,18 @@ public abstract class SharedSecurityHailerSystem : EntitySystem
     public override void Initialize()
     {
         base.Initialize();
-        SubscribeLocalEvent<SecurityHailerComponent, MapInitEvent>(OnMapInit);
-        SubscribeLocalEvent<SecurityHailerComponent, ClothingGotEquippedEvent>(OnEquip);
-        SubscribeLocalEvent<SecurityHailerComponent, ClothingGotUnequippedEvent>(OnUnequip);
-        SubscribeLocalEvent<SecurityHailerComponent, InteractUsingEvent>(OnInteractUsing);
-        SubscribeLocalEvent<SecurityHailerComponent, SecHailerToolDoAfterEvent>(OnToolDoAfter);
-        SubscribeLocalEvent<SecurityHailerComponent, GotEmaggedEvent>(OnEmagging);
-        SubscribeLocalEvent<SecurityHailerComponent, ExaminedEvent>(OnExamine);
-        SubscribeLocalEvent<SecurityHailerComponent, ToggleMaskEvent>(OnToggleMask);
-        SubscribeLocalEvent<SecurityHailerComponent, GetVerbsEvent<AlternativeVerb>>(OnGetVerbs);
+        SubscribeLocalEvent<HailerComponent, MapInitEvent>(OnMapInit);
+        SubscribeLocalEvent<HailerComponent, ClothingGotEquippedEvent>(OnEquip);
+        SubscribeLocalEvent<HailerComponent, ClothingGotUnequippedEvent>(OnUnequip);
+        SubscribeLocalEvent<HailerComponent, InteractUsingEvent>(OnInteractUsing);
+        SubscribeLocalEvent<HailerComponent, SecHailerToolDoAfterEvent>(OnToolDoAfter);
+        SubscribeLocalEvent<HailerComponent, GotEmaggedEvent>(OnEmagging);
+        SubscribeLocalEvent<HailerComponent, ExaminedEvent>(OnExamine);
+        SubscribeLocalEvent<HailerComponent, ToggleMaskEvent>(OnToggleMask);
+        SubscribeLocalEvent<HailerComponent, GetVerbsEvent<AlternativeVerb>>(OnGetVerbs);
     }
 
-    private void OnEquip(Entity<SecurityHailerComponent> ent, ref ClothingGotEquippedEvent args)
+    private void OnEquip(Entity<HailerComponent> ent, ref ClothingGotEquippedEvent args)
     {
         var (uid, comp) = ent;
 
@@ -65,7 +65,7 @@ public abstract class SharedSecurityHailerSystem : EntitySystem
         _actions.AddAction(args.Wearer, ref comp.ActionEntity, comp.Action, uid);
     }
 
-    private void OnUnequip(Entity<SecurityHailerComponent> ent, ref ClothingGotUnequippedEvent args)
+    private void OnUnequip(Entity<HailerComponent> ent, ref ClothingGotUnequippedEvent args)
     {
         var (uid, comp) = ent;
 
@@ -76,7 +76,7 @@ public abstract class SharedSecurityHailerSystem : EntitySystem
     }
 
     //In case someone spawns with it ?
-    private void OnMapInit(Entity<SecurityHailerComponent> ent, ref MapInitEvent args)
+    private void OnMapInit(Entity<HailerComponent> ent, ref MapInitEvent args)
     {
         var (uid, comp) = ent;
 
@@ -92,7 +92,7 @@ public abstract class SharedSecurityHailerSystem : EntitySystem
     /// </summary>
     /// <param name="ent"></param>
     /// <returns>Is it handled succesfully ?</returns>
-    protected bool ExclamateHumanoidsAround(Entity<SecurityHailerComponent> ent) //Put in shared for predictions purposes
+    protected bool ExclamateHumanoidsAround(Entity<HailerComponent> ent) //Put in shared for predictions purposes
     {
         var (uid, comp) = ent;
         if (!Resolve(uid, ref comp, false) || comp.Distance <= 0)
@@ -116,7 +116,7 @@ public abstract class SharedSecurityHailerSystem : EntitySystem
         return true;
     }
 
-    private void OnInteractUsing(Entity<SecurityHailerComponent> ent, ref InteractUsingEvent args)
+    private void OnInteractUsing(Entity<HailerComponent> ent, ref InteractUsingEvent args)
     {
         if (args.Handled)
             return;
@@ -142,13 +142,13 @@ public abstract class SharedSecurityHailerSystem : EntitySystem
         else
             return;
     }
-    private void OnInteractCutting(Entity<SecurityHailerComponent> ent, ref InteractUsingEvent args)
+    private void OnInteractCutting(Entity<HailerComponent> ent, ref InteractUsingEvent args)
     {
         ProtoId<ToolQualityPrototype> quality = CUTTING_QUALITY;
         StartADoAfter(ent, args, quality);
     }
 
-    private void OnInteractScrewing(Entity<SecurityHailerComponent> ent, ref InteractUsingEvent args)
+    private void OnInteractScrewing(Entity<HailerComponent> ent, ref InteractUsingEvent args)
     {
         //If it's emagged we don't change it
         if (HasComp<EmaggedComponent>(ent) || ent.Comp.CurrentState != SecMaskState.Functional)
@@ -157,7 +157,7 @@ public abstract class SharedSecurityHailerSystem : EntitySystem
         StartADoAfter(ent, args, quality);
     }
 
-    private void StartADoAfter(Entity<SecurityHailerComponent> ent, InteractUsingEvent args, ProtoId<ToolQualityPrototype> quality)
+    private void StartADoAfter(Entity<HailerComponent> ent, InteractUsingEvent args, ProtoId<ToolQualityPrototype> quality)
     {
         float? time = null;
         //What delay to use ?
@@ -186,7 +186,7 @@ public abstract class SharedSecurityHailerSystem : EntitySystem
         args.Handled = true;
     }
 
-    private void OnToolDoAfter(Entity<SecurityHailerComponent> ent, ref SecHailerToolDoAfterEvent args)
+    private void OnToolDoAfter(Entity<HailerComponent> ent, ref SecHailerToolDoAfterEvent args)
     {
         if (args.Cancelled || args.Handled)
             return;
@@ -204,7 +204,7 @@ public abstract class SharedSecurityHailerSystem : EntitySystem
         Dirty(ent);
     }
 
-    private void OnCuttingDoAfter(Entity<SecurityHailerComponent> ent, ref SecHailerToolDoAfterEvent args)
+    private void OnCuttingDoAfter(Entity<HailerComponent> ent, ref SecHailerToolDoAfterEvent args)
     {
         // Snip, snip !
         _sharedAudio.PlayPvs(ent.Comp.CutSounds, ent.Owner);
@@ -232,9 +232,9 @@ public abstract class SharedSecurityHailerSystem : EntitySystem
         args.Handled = true;
     }
 
-    private void OnScrewingDoAfter(Entity<SecurityHailerComponent> ent, ref SecHailerToolDoAfterEvent args)
+    private void OnScrewingDoAfter(Entity<HailerComponent> ent, ref SecHailerToolDoAfterEvent args)
     {
-        if (args.Cancelled || args.Handled || !TryComp<SecurityHailerComponent>(args.Args.Target, out var plant))
+        if (args.Cancelled || args.Handled || !TryComp<HailerComponent>(args.Args.Target, out var plant))
             return;
 
         _sharedAudio.PlayPvs(ent.Comp.ScrewedSounds, ent.Owner);
@@ -243,7 +243,7 @@ public abstract class SharedSecurityHailerSystem : EntitySystem
         args.Handled = true;
     }
 
-    private void IncreaseAggressionLevel(Entity<SecurityHailerComponent> ent)
+    private void IncreaseAggressionLevel(Entity<HailerComponent> ent)
     {
         //Up the aggression level by one or back to one
         if (ent.Comp.AggresionLevel == AggresionState.High)
@@ -254,7 +254,7 @@ public abstract class SharedSecurityHailerSystem : EntitySystem
         _popup.PopupEntity(Loc.GetString("sec-gas-mask-screwed", ("level", ent.Comp.AggresionLevel.ToString().ToLower())), ent.Owner);
     }
 
-    private void OnEmagging(Entity<SecurityHailerComponent> ent, ref GotEmaggedEvent args)
+    private void OnEmagging(Entity<HailerComponent> ent, ref GotEmaggedEvent args)
     {
         if (args.Handled || HasComp<EmaggedComponent>(ent))
             return;
@@ -271,7 +271,7 @@ public abstract class SharedSecurityHailerSystem : EntitySystem
 
     }
 
-    private void OnExamine(Entity<SecurityHailerComponent> ent, ref ExaminedEvent args)
+    private void OnExamine(Entity<HailerComponent> ent, ref ExaminedEvent args)
     {
         if (ent.Comp.IsERT)
             args.PushMarkup(Loc.GetString("sec-gas-mask-examined-ert"));
@@ -283,7 +283,7 @@ public abstract class SharedSecurityHailerSystem : EntitySystem
             args.PushMarkup(Loc.GetString($"sec-gas-mask-examined", ("level", ent.Comp.AggresionLevel)));
     }
 
-    private void OnToggleMask(Entity<SecurityHailerComponent> ent, ref ToggleMaskEvent args)
+    private void OnToggleMask(Entity<HailerComponent> ent, ref ToggleMaskEvent args)
     {
         if (args.Handled)
             return;
@@ -302,7 +302,7 @@ public abstract class SharedSecurityHailerSystem : EntitySystem
         }
     }
 
-    private void OnGetVerbs(Entity<SecurityHailerComponent> ent, ref GetVerbsEvent<AlternativeVerb> args)
+    private void OnGetVerbs(Entity<HailerComponent> ent, ref GetVerbsEvent<AlternativeVerb> args)
     {
         //Cooldown to prevent spamming
         //Probably should put a cooldown effect on the mask to show the player, but no idea how to do that !
@@ -329,7 +329,7 @@ public abstract class SharedSecurityHailerSystem : EntitySystem
         });
     }
 
-    private void UseVerbSwitchAggression(Entity<SecurityHailerComponent> ent, EntityUid userActed)
+    private void UseVerbSwitchAggression(Entity<HailerComponent> ent, EntityUid userActed)
     {
         ent.Comp.TimeVerbReady = _gameTiming.CurTime + ent.Comp.VerbCooldown;
 
@@ -350,7 +350,7 @@ public abstract class SharedSecurityHailerSystem : EntitySystem
     /// </summary>
     /// <param name="ent"></param>
     /// <returns>Index of the chosen line from the SoundCollection</returns>
-    protected int PlayVoiceLineSound(Entity<SecurityHailerComponent> ent)
+    protected int PlayVoiceLineSound(Entity<HailerComponent> ent)
     {
         //Move to shared for predictions purposes. Is this good ?
         var (uid, comp) = ent;
@@ -392,7 +392,7 @@ public abstract class SharedSecurityHailerSystem : EntitySystem
     /// <param name="ent"></param>
     /// <param name="index"></param>
     /// <returns></returns>
-    protected string GetLineFormat(Entity<SecurityHailerComponent> ent, int index)
+    protected string GetLineFormat(Entity<HailerComponent> ent, int index)
     {
         string finalLine = String.Empty;
         if (HasComp<EmaggedComponent>(ent))

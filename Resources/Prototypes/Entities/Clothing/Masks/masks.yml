@@ -46,7 +46,10 @@
         Slash: 0.95
         Piercing: 0.95
         Heat: 0.95
-  - type: SecurityHailer
+  - type: Hailer
+    soundCollection:
+    localePrefix:
+    chatName: "Security Hailer"
     distance: 5
   - type: AccessReader
     access: [["Security"]]

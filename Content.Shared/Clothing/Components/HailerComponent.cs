@@ -11,7 +11,7 @@ namespace Content.Shared.Clothing.Components;
 /// Handle the hails (audible orders to stop) coming from a security gas mask / swat mask
 /// </summary>
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState, AutoGenerateComponentPause]
-public sealed partial class SecurityHailerComponent : Component
+public sealed partial class HailerComponent : Component
 {
     /// <summary>
     /// The person wearing the mask

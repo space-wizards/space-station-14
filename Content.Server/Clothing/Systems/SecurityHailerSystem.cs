@@ -12,10 +12,10 @@ public sealed class SecurityHailerSystem : SharedSecurityHailerSystem
     public override void Initialize()
     {
         base.Initialize();
-        SubscribeLocalEvent<SecurityHailerComponent, ActionSecHailerActionEvent>(OnHailOrder);
+        SubscribeLocalEvent<HailerComponent, ActionSecHailerActionEvent>(OnHailOrder);
     }
 
-    private void OnHailOrder(Entity<SecurityHailerComponent> ent, ref ActionSecHailerActionEvent ev)
+    private void OnHailOrder(Entity<HailerComponent> ent, ref ActionSecHailerActionEvent ev)
     {
         if (ev.Handled)
             return;
@@ -31,7 +31,7 @@ public sealed class SecurityHailerSystem : SharedSecurityHailerSystem
         ev.Handled = exclamationHandled && chatHandled;
     }
 
-    private bool SayChatMessage(Entity<SecurityHailerComponent> ent, ActionSecHailerActionEvent ev, int index)
+    private bool SayChatMessage(Entity<HailerComponent> ent, ActionSecHailerActionEvent ev, int index)
     {
         string ftlLine = GetLineFormat(ent, index);
 
