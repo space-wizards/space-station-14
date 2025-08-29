@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: SlamBamActionman
-  changes:
-  - message: The "Toggle Walk" alert no longer gets removed when it shouldn't.
-    type: Fix
-  id: 8388
-  time: '2025-04-29T13:32:18.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/37033
 - author: Boaz1111
   changes:
   - message: Added sharkminnow tooth spears and carp tooth arrows. Happy salvaging!
@@ -3949,3 +3942,16 @@
   id: 8900
   time: '2025-08-29T05:39:23.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/39943
+- author: Southbridge
+  changes:
+  - message: On Marathon, gave the containment area some much needed love.
+    type: Add
+  - message: On Marathon, redesigned the TEG burn chamber in preparation for the atmos
+      pressure update.
+    type: Tweak
+  - message: On Marathon, touched up a couple areas in Atmos and expanded the burn
+      chamber area.
+    type: Tweak
+  id: 8901
+  time: '2025-08-29T05:40:38.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/39955
