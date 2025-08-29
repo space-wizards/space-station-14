@@ -1,23 +1,23 @@
 - type: loadoutEffectGroup
-  id: PlushieSharkBlue
+  id: PlushieBee
   effects:
   - !type:JobRequirementLoadoutEffect
     requirement:
       !type:RoleTimeRequirement
-      role: JobJanitor
+      role: JobBotanist
       time: 18000 # 5 hrs
   - !type:JobRequirementLoadoutEffect
     requirement:
-      !type:DepartmentTimeRequirement
-      department: Medical
+      !type:RoleTimeRequirement
+      role: JobServiceWorker
       time: 18000 # 5 hrs
 
 - type: loadout
-  id: PlushieSharkBlue
+  id: PlushieBee
   effects:
   - !type:GroupLoadoutEffect
-    proto: PlushieSharkBlue
+    proto: PlushieBee
   storage:
     back:
-    - PlushieSharkBlue
+    - PlushieBee
   groupBy: "plushies"

@@ -1,5 +1,5 @@
 - type: loadoutEffectGroup
-  id: JanitorClown
+  id: PlushieSharkPink
   effects:
   - !type:JobRequirementLoadoutEffect
     requirement:
@@ -16,7 +16,7 @@
   id: PlushieSharkPink
   effects:
   - !type:GroupLoadoutEffect
-    proto: JanitorClown
+    proto: PlushieSharkPink
   storage:
     back:
     - PlushieSharkPink

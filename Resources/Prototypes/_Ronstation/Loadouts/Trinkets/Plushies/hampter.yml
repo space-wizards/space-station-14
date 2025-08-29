@@ -5,42 +5,42 @@
     requirement:
       !type:RoleTimeRequirement
       role: JobBlueshieldOfficer
-      time: 18000 #5 hrs
+      time: 9000 # 2.5 hrs
   - !type:JobRequirementLoadoutEffect
     requirement:
       !type:RoleTimeRequirement
       role: JobCaptain
-      time: 18000 #5 hrs
+      time: 9000 # 2.5 hrs
   - !type:JobRequirementLoadoutEffect
     requirement:
       !type:RoleTimeRequirement
       role: JobHeadOfPersonnel
-      time: 18000 #5 hrs
+      time: 9000 # 2.5 hrs
   - !type:JobRequirementLoadoutEffect
     requirement:
       !type:RoleTimeRequirement
       role: JobChiefEngineer
-      time: 18000 #5 hrs
+      time: 9000 # 2.5 hrs
   - !type:JobRequirementLoadoutEffect
     requirement:
       !type:RoleTimeRequirement
       role: JobHeadOfSecurity
-      time: 18000 #5 hrs
+      time: 9000 # 2.5 hrs
   - !type:JobRequirementLoadoutEffect
     requirement:
       !type:RoleTimeRequirement
       role: JobQuartermaster
-      time: 18000 #5 hrs
+      time: 9000 # 2.5 hrs
   - !type:JobRequirementLoadoutEffect
     requirement:
       !type:RoleTimeRequirement
       role: JobResearchDirector
-      time: 18000 #5 hrs
+      time: 9000 # 2.5 hrs
   - !type:JobRequirementLoadoutEffect
     requirement:
       !type:RoleTimeRequirement
       role: JobChiefMedicalOfficer
-      time: 18000 #5 hrs
+      time: 9000 # 2.5 hrs
 
 - type: loadout
   id: PlushieHampter

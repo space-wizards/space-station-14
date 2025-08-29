@@ -1,5 +1,5 @@
 - type: loadoutEffectGroup
-  id: JanitorPassenger
+  id: PlushieSharkGrey
   effects:
   - !type:JobRequirementLoadoutEffect
     requirement:
@@ -16,7 +16,7 @@
   id: PlushieSharkGrey
   effects:
   - !type:GroupLoadoutEffect
-    proto: JanitorPassenger
+    proto: PlushieSharkGrey
   storage:
     back:
     - PlushieSharkGrey
