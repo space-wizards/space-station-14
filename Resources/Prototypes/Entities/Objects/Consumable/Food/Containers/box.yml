@@ -516,6 +516,7 @@
   - type: Item
     sprite: Objects/Storage/Happyhonk/clown.rsi
     heldPrefix: box
+    size: Normal
   - type: Storage
     maxItemSize: Normal
     grid:
