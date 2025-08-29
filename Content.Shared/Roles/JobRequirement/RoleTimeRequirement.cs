@@ -1,3 +1,4 @@
+// Contains modifications made by Ronstation contributors, therefore this file is subject to MIT sublicensed with AGPL v3.0.
 using System.Diagnostics.CodeAnalysis;
 using Content.Shared.Localizations;
 using Content.Shared.Players.PlayTimeTracking;
@@ -48,8 +49,23 @@ public sealed partial class RoleTimeRequirement : JobRequirement
         if (jobSystem.TryGetDepartment(jobProto, out var departmentProto))
             departmentColor = departmentProto.Color;
 
-        if (!protoManager.TryIndex<JobPrototype>(jobProto, out var indexedJob))
+        // Ronstation - start of modifications.
+        var localizedName = "";
+
+        if (protoManager.TryIndex<JobPrototype>(jobProto, out var indexedJob))
+        {
+            localizedName = indexedJob.LocalizedName;
+        }
+        else if(protoManager.TryIndex<AntagPrototype>(jobProto, out var indexedAntag))
+        {
+            localizedName = indexedAntag.LocalizedName;
+            departmentColor = indexedAntag.Color;
+        } 
+        else 
+        {
             return false;
+        }
+        // Ronstation - end of modifications.
 
         if (!Inverted)
         {
@@ -59,7 +75,7 @@ public sealed partial class RoleTimeRequirement : JobRequirement
             reason = FormattedMessage.FromMarkupPermissive(Loc.GetString(
                 "role-timer-role-insufficient",
                 ("time", formattedRoleDiff),
-                ("job", indexedJob.LocalizedName),
+                ("job", localizedName), // Ronstation - modification.
                 ("departmentColor", departmentColor.ToHex())));
             return false;
         }
@@ -69,7 +85,7 @@ public sealed partial class RoleTimeRequirement : JobRequirement
             reason = FormattedMessage.FromMarkupPermissive(Loc.GetString(
                 "role-timer-role-too-high",
                 ("time", formattedRoleDiff),
-                ("job", indexedJob.LocalizedName),
+                ("job", localizedName), // Ronstation - modification.
                 ("departmentColor", departmentColor.ToHex())));
             return false;
         }

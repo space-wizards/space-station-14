@@ -2,17 +2,18 @@
   id: JobMime
   canCustomizeName: true
   groups:
-  - SurvivalMime
   - GroupTankHarness
   - MimeHead
   - CommonGlasses
   - MimeMask
-  # Neck
-  # Gloves
+  # - Neck
+  # - Gloves
   - MimeJumpsuit
   - MimeBackpack
-  # PDA
+  # - PDA
   - MimeBelt
   - MimeOuterClothing
-  # Shoes
+  # - Shoes
+  # Backpack fills
+  - SurvivalMime
   - Trinkets

@@ -1,4 +1,5 @@
-﻿using System.Diagnostics.CodeAnalysis;
+﻿// Contains modifications made by Ronstation contributors, therefore this file is subject to MIT sublicensed with AGPL v3.0.
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Shared.Players;
 using Content.Shared.Players.PlayTimeTracking;
@@ -29,7 +30,7 @@ public abstract class SharedJobSystem : EntitySystem
 
     private void OnProtoReload(PrototypesReloadedEventArgs obj)
     {
-        if (obj.WasModified<JobPrototype>())
+        if (obj.WasModified<JobPrototype>() || obj.WasModified<AntagPrototype>()) // Ronstation - modification.
             SetupTrackerLookup();
     }
 
@@ -42,6 +43,12 @@ public abstract class SharedJobSystem : EntitySystem
         {
             _inverseTrackerLookup.Add(job.PlayTimeTracker, job.ID);
         }
+        // Ronstation - start of modifications.
+        foreach (var antag in _prototypes.EnumeratePrototypes<AntagPrototype>())
+        {
+            _inverseTrackerLookup.Add(antag.PlayTimeTracker, antag.ID);
+        }
+        // Ronstation - end of modifications.
     }
 
     /// <summary>

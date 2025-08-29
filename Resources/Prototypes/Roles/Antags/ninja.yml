@@ -1,6 +1,9 @@
+# Contains modifications made by Ronstation contributors, therefore this file is subject to MIT sublicensed with AGPL v3.0.
 - type: antag
   id: SpaceNinja
   name: roles-antag-space-ninja-name
+  playTimeTracker: AntagSpaceNinja # Ronstation - modification.
+  color: '#33CC00' # Ronstation - modification.
   antagonist: true
   setPreference: false
   objective: roles-antag-space-ninja-objective

@@ -1,5 +1,8 @@
+# Contains modifications made by Ronstation contributors, therefore this file is subject to MIT sublicensed with AGPL v3.0.
 - type: antag
   id: ParadoxClone
+  playTimeTracker: AntagParadoxClone # Ronstation - modification.
+  color: '#D82000' # Ronstation - modification.
   name: roles-antag-paradox-clone-name
   antagonist: true
   objective: roles-antag-paradox-clone-objective
