@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: Thinbug0
-  changes:
-  - message: Science developed the Push-Horn, capable of pushing people away with
-      each honk!
-    type: Add
-  id: 8387
-  time: '2025-04-29T13:07:59.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/36009
 - author: SlamBamActionman
   changes:
   - message: The "Toggle Walk" alert no longer gets removed when it shouldn't.
@@ -3948,3 +3940,12 @@
   id: 8899
   time: '2025-08-28T17:14:44.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/39927
+- author: Southbridge
+  changes:
+  - message: On Amber, added a pressure relief valve to the TEG burn chamber.
+    type: Add
+  - message: On Amber, added latejoin spawns to arrivals.
+    type: Tweak
+  id: 8900
+  time: '2025-08-29T05:39:23.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/39943
