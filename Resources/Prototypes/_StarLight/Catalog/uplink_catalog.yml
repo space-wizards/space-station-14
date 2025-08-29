@@ -386,7 +386,7 @@
   id: UplinkEcronizer
   name: uplink-ecronizer-name
   description: uplink-ecronizer-desc
-  productEntity: RadioEcronizer
+  productEntity: Ecronizer
   discountCategory: usualDiscounts
   discountDownTo:
     Telecrystal: 4
