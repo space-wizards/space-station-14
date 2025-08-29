@@ -10,7 +10,6 @@
   - TargetHuman
   - TargetSyndicate
   - Zipties
-  - ScanGateMachineCircuitboard # Starlight-edit
 
 # Practice ammo/mags and practice weapons
 - type: latheRecipePack
@@ -85,6 +84,7 @@
   - ShuttleGunFriendshipCircuitboard
   - ShuttleGunPerforatorCircuitboard
   - ShuttleGunSvalinnMachineGunCircuitboard
+  - ScanGateMachineCircuitboard # Starlight-edit
 
 - type: latheRecipePack
   parent:
