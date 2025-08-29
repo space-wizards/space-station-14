@@ -1,13 +1,4 @@
 ﻿Entries:
-- author: Boaz1111
-  changes:
-  - message: Added sharkminnow tooth spears and carp tooth arrows. Happy salvaging!
-    type: Add
-  - message: Sharkminnow teeth now deal 15 damage instead of 10.
-    type: Tweak
-  id: 8389
-  time: '2025-04-29T16:36:53.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/31257
 - author: whatston3
   changes:
   - message: Speso stacks now show different denominations depending on their size.
@@ -3955,3 +3946,11 @@
   id: 8901
   time: '2025-08-29T05:40:38.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/39955
+- author: Southbridge
+  changes:
+  - message: On Box, redesigned the burn chambers to be ready for the atmos pressure
+      update.
+    type: Tweak
+  id: 8902
+  time: '2025-08-29T05:42:00.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/39954
