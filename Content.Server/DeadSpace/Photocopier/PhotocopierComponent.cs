@@ -5,7 +5,6 @@ using Content.Shared.DeadSpace.Photocopier;
 using Content.Shared.Paper;
 using Robust.Shared.Audio;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
 namespace Content.Server.DeadSpace.Photocopier;
 
@@ -93,14 +92,14 @@ public sealed partial class PhotocopierComponent : Component
     /// <summary>
     /// The type of photocopier. It depends on which paperwork photocopier will show by default
     /// </summary>
-    [DataField]
-    public PhotocopierType PhotocopierType = PhotocopierType.Default;
+    [DataField(required: true)]
+    public HashSet<PhotocopierFormCategory> AllowedFormCategories = default!;
 
     /// <summary>
     /// Chosen paper form than will be printed
     /// </summary>
     [DataField]
-    public PaperworkFormPrototype? ChosenPaper = null;
+    public ProtoId<PaperworkFormPrototype>? ChosenPaper = null;
 
     [ViewVariables]
     public int TonerLeft = 30;
@@ -115,19 +114,19 @@ public sealed partial class PhotocopierComponent : Component
 [DataDefinition]
 public sealed partial class PhotocopierPrintout
 {
-    [DataField("name", required: true)]
+    [DataField(required: true)]
     public string Name { get; private set; } = default!;
 
-    [DataField("content", required: true)]
+    [DataField(required: true)]
     public string Content { get; private set; } = default!;
 
-    [DataField("prototypeId", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>), required: true)]
-    public string PrototypeId { get; private set; } = default!;
+    [DataField(required: true)]
+    public EntProtoId PrototypeId { get; private set; } = default!;
 
-    [DataField("stampState")]
+    [DataField]
     public string? StampState { get; private set; }
 
-    [DataField("stampedBy")]
+    [DataField]
     public List<StampDisplayInfo> StampedBy { get; private set; } = new();
 
     public PhotocopierPrintout(string content, string name, string prototypeId, string? stampState = null, List<StampDisplayInfo>? stampedBy = null)
