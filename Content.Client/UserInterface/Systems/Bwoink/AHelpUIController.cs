@@ -36,7 +36,6 @@ public sealed class AHelpUIController: UIController, IOnSystemChanged<BwoinkSyst
     [Dependency] private readonly IConfigurationManager _config = default!;
     [Dependency] private readonly IPlayerManager _playerManager = default!;
     [Dependency] private readonly IClyde _clyde = default!;
-    [Dependency] private readonly IUserInterfaceManager _uiManager = default!;
     [UISystemDependency] private readonly AudioSystem _audio = default!;
 
     private BwoinkSystem? _bwoinkSystem;
@@ -227,22 +226,15 @@ public sealed class AHelpUIController: UIController, IOnSystemChanged<BwoinkSyst
         helper.Window = null;
         helper.EverOpened = false;
 
-        var monitor = _clyde.EnumerateMonitors().First();
-
-        helper.ClydeWindow = _clyde.CreateWindow(new WindowCreateParameters
+        helper.OSWindow = new OSWindow
         {
-            Maximized = false,
+            SetWidth = 900,
+            SetHeight = 500,
             Title = "Admin Help",
-            Monitor = monitor,
-            Width = 900,
-            Height = 500
-        });
-
-        helper.ClydeWindow.RequestClosed += helper.OnRequestClosed;
-        helper.ClydeWindow.DisposeOnClose = true;
-
-        helper.WindowRoot = _uiManager.CreateWindowRoot(helper.ClydeWindow);
-        helper.WindowRoot.AddChild(helper.Control);
+        };
+        helper.OSWindow.Closed += helper.OnWindowClosed;
+        helper.OSWindow.AddChild(helper.Control);
+        helper.OSWindow.Show();
 
         helper.Control.PopOut.Disabled = true;
         helper.Control.PopOut.Visible = false;
@@ -338,12 +330,11 @@ public sealed class AdminAHelpUIHandler : IAHelpUIHandler
     }
     private readonly Dictionary<NetUserId, BwoinkPanel> _activePanelMap = new();
     public bool IsAdmin => true;
-    public bool IsOpen => Window is { Disposed: false, IsOpen: true } || ClydeWindow is { IsDisposed: false };
+    public bool IsOpen => Window is { Disposed: false, IsOpen: true } || OSWindow is { IsOpen: true };
     public bool EverOpened;
 
     public BwoinkWindow? Window;
-    public WindowRoot? WindowRoot;
-    public IClydeWindow? ClydeWindow;
+    public OSWindow? OSWindow;
     public BwoinkControl? Control;
 
     public void Receive(SharedBwoinkSystem.BwoinkTextMessage message)
@@ -369,10 +360,10 @@ public sealed class AdminAHelpUIHandler : IAHelpUIHandler
         Window?.Close();
 
         // popped-out window is being closed
-        if (ClydeWindow != null)
+        if (OSWindow != null)
         {
-            ClydeWindow.RequestClosed -= OnRequestClosed;
-            ClydeWindow.Dispose();
+            OSWindow.Closed -= OnWindowClosed;
+            OSWindow.Close();
             // need to dispose control cause we cant reattach it directly back to the window
             // but orphan panels first so -they- can get readded when the window is opened again
             if (Control != null)
@@ -419,7 +410,7 @@ public sealed class AdminAHelpUIHandler : IAHelpUIHandler
         OpenWindow();
     }
 
-    public void OnRequestClosed(WindowRequestClosedEventArgs args)
+    public void OnWindowClosed()
     {
         Close();
     }
