@@ -2,10 +2,10 @@
 # https://andi-siess.de/rgb-to-color-temperature/
 # https://academo.org/demos/colour-temperature-relationship/
 
-# 1. ROUND LIGHTBULBS
-# 2. TUBE LIGHTBULBS (Light tubes)
+# 1. LIGHT BULBS
+# 2. LIGHT TUBES
 
-# 1. ROUND LIGHTBULBS
+# 1. LIGHT BULBS
 - type: entity
   abstract: true
   parent: BaseItem
