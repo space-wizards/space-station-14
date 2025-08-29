@@ -27,6 +27,7 @@
     <Folder Include="_Starlight\Achievement\" />
     <Folder Include="_Starlight\Actions\" />
     <Folder Include="_Starlight\Audio\" />
+    <Folder Include="_Starlight\UI\Controls\" />
   </ItemGroup>
   <Import Project="..\RobustToolbox\MSBuild\Robust.Properties.targets" />
   <Import Project="..\RobustToolbox\MSBuild\XamlIL.targets" />

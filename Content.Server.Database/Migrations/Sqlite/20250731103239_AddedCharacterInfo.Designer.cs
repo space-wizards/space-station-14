@@ -3,6 +3,7 @@ using System;
 using Content.Server.Database;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,32 +11,14 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Content.Server.Database.Migrations.Sqlite
 {
     [DbContext(typeof(SqliteServerDbContext))]
-    partial class SqliteServerDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250731103239_AddedCharacterInfo")]
+    partial class AddedCharacterInfo
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "9.0.1");
-
-            modelBuilder.Entity("Content.Server.Database.ALKinks", b =>
-                {
-                    b.Property<Guid>("PlayerId")
-                        .HasColumnType("TEXT")
-                        .HasColumnName("player_id");
-
-                    b.Property<string>("KinkId")
-                        .HasColumnType("TEXT")
-                        .HasColumnName("kink_id");
-
-                    b.Property<int>("Preference")
-                        .HasColumnType("INTEGER")
-                        .HasColumnName("preference");
-
-                    b.HasKey("PlayerId", "KinkId")
-                        .HasName("PK_al_kinks");
-
-                    b.ToTable("al_kinks", (string)null);
-                });
 
             modelBuilder.Entity("Content.Server.Database.Admin", b =>
                 {
@@ -792,6 +775,12 @@ namespace Content.Server.Database.Migrations.Sqlite
                         .IsRequired()
                         .HasColumnType("TEXT")
                         .HasColumnName("admin_ooc_color");
+
+                    b.Property<string>("AdminOOCNameColor")
+                        .IsRequired()
+                        .HasColumnType("TEXT")
+                        .HasColumnName("admin_ooc_name_color");
+
                     b.PrimitiveCollection<string>("ConstructionFavorites")
                         .IsRequired()
                         .HasColumnType("TEXT")
@@ -1396,6 +1385,14 @@ namespace Content.Server.Database.Migrations.Sqlite
                         .HasColumnType("INTEGER")
                         .HasColumnName("balance");
 
+                    b.Property<string>("DiscordId")
+                        .HasColumnType("TEXT")
+                        .HasColumnName("discord_id");
+
+                    b.Property<int>("Flags")
+                        .HasColumnType("INTEGER")
+                        .HasColumnName("flags");
+
                     b.Property<string>("GhostTheme")
                         .HasColumnType("TEXT")
                         .HasColumnName("ghost_theme");
@@ -1406,6 +1403,9 @@ namespace Content.Server.Database.Migrations.Sqlite
 
                     b.HasKey("UserId")
                         .HasName("PK_player_data");
+
+                    b.HasIndex("DiscordId")
+                        .HasDatabaseName("IX_player_data_discord_id");
 
                     b.ToTable("player_data", (string)null);
                 });
@@ -1422,22 +1422,9 @@ namespace Content.Server.Database.Migrations.Sqlite
                         .HasColumnType("TEXT")
                         .HasColumnName("custom_specie_name");
 
-                    b.PrimitiveCollection<string>("CyberneticIds")
-                        .IsRequired()
-                        .HasColumnType("TEXT")
-                        .HasColumnName("cybernetic_ids");
-
-                    b.Property<float>("Height")
-                        .HasColumnType("REAL")
-                        .HasColumnName("height");
-
                     b.Property<int>("ProfileId")
                         .HasColumnType("INTEGER")
                         .HasColumnName("profile_id");
-
-                    b.Property<float>("Width")
-                        .HasColumnType("REAL")
-                        .HasColumnName("width");
 
                     b.HasKey("Id")
                         .HasName("PK_star_light_profile");
@@ -1535,6 +1522,7 @@ namespace Content.Server.Database.Migrations.Sqlite
 
                     b.ToTable("player_round", (string)null);
                 });
+
             modelBuilder.Entity("Content.Server.Database.Admin", b =>
                 {
                     b.HasOne("Content.Server.Database.AdminRank", "AdminRank")

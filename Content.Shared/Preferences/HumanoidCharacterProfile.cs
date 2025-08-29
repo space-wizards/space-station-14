@@ -27,7 +27,6 @@ namespace Content.Shared.Preferences
     public sealed partial class HumanoidCharacterProfile : ICharacterProfile
     {
         private static readonly Regex RestrictedNameRegex = new(@"[^A-Za-z0-9 '\-,]"); //Starlight edit, allow commas
-        private static readonly Regex RestrictedCustomSpecieNameRegex = new(@"[^A-Za-z0-9 '\-,]|\B\s+|\s+\B"); //Starlight
         private static readonly Regex ICNameCaseRegex = new(@"^(?<word>\w)|\b(?<word>\w)(?=\w*$)");
 
         /// <summary>
@@ -67,28 +66,11 @@ namespace Content.Shared.Preferences
 
         [DataField]
         public string Voice { get; set; } = "";
-
-        [DataField]
-        public string SiliconVoice { get; set; } = ""; // 🌟Starlight🌟
-
-        // Starlight
-        [DataField]
-        public List<string> Cybernetics = [];
-
-        /// <summary>
-        /// Detailed text that can appear for the character if <see cref="CCVars.FlavorText"/> is enabled.
-        /// </summary>
-        [DataField]
-        public string FlavorText { get; set; } = string.Empty;
-
         /// <summary>
         /// Associated <see cref="SpeciesPrototype"/> for this profile.
         /// </summary>
         [DataField]
         public ProtoId<SpeciesPrototype> Species { get; set; } = SharedHumanoidAppearanceSystem.DefaultSpecies;
-
-        [DataField] // Starlight
-        public string CustomSpecieName { get; set; } = "";
 
         [DataField]
         public int Age { get; set; } = 18;
@@ -135,7 +117,12 @@ namespace Content.Shared.Preferences
             string name,
             string voice,
             string siliconVoice, // 🌟Starlight🌟
-            string flavortext,
+            string physicalDesc,// Starlight
+            string personalityDesc,// Starlight
+            string personalNotes,// Starlight
+            string oocNotes,// Starlight
+            string secrets, //Starlight
+            string exploitableInfo, //Starlight
             string species,
             string customspeciename, // Starlight
             int age,
@@ -153,8 +140,13 @@ namespace Content.Shared.Preferences
             Name = name;
             Voice = voice;
             SiliconVoice = siliconVoice; // 🌟Starlight🌟
-            FlavorText = flavortext;
-            Species = species;
+            PhysicalDescription = physicalDesc;//Starlight
+            PersonalityDescription = personalityDesc;//Starlight
+            PersonalNotes = personalNotes;//Starlight
+            OOCNotes = oocNotes;//Starlight
+            Secrets = secrets;
+            ExploitableInfo = exploitableInfo;
+            Species = species;//Starlight
             CustomSpecieName = customspeciename; // Starlight
             Age = age;
             Sex = sex;
@@ -174,7 +166,12 @@ namespace Content.Shared.Preferences
             : this(other.Name,
                 other.Voice,
                 other.SiliconVoice, // 🌟Starlight🌟
-                other.FlavorText,
+                other.PhysicalDescription,//Starlight
+                other.PersonalityDescription, //Starlight
+                other.PersonalNotes,//Starlight
+                other.OOCNotes,//Starlight
+                other.Secrets,
+                other.ExploitableInfo,
                 other.Species,
                 other.CustomSpecieName, // Starlight
                 other.Age,
@@ -308,20 +305,11 @@ namespace Content.Shared.Preferences
             return new(this) { Voice = id };
         }
 
-        // 🌟Starlight🌟
-        public HumanoidCharacterProfile WithSiliconVoice(string id)
-        {
-            return new(this) { SiliconVoice = id };
-        }
         public HumanoidCharacterProfile WithSpecies(string species)
         {
             return new(this) { Species = species };
         }
-        // Starlight - Start
-        public HumanoidCharacterProfile WithCustomSpecieName(string customspeciename)
-        {
-            return new(this) { CustomSpecieName = customspeciename };
-        }
+
         // Starlight - End
         public HumanoidCharacterProfile WithCharacterAppearance(HumanoidCharacterAppearance appearance)
         {
@@ -389,14 +377,6 @@ namespace Content.Shared.Preferences
                 _antagPreferences = list,
             };
         }
-
-        // Starlight
-        public HumanoidCharacterProfile WithCybernetics(List<string> cybernetics) {
-            return new (this){
-                Cybernetics = cybernetics,
-            };
-        }
-
         public HumanoidCharacterProfile WithTraitPreference(ProtoId<TraitPrototype> traitId, IPrototypeManager protoManager)
         {
             // null category is assumed to be default.

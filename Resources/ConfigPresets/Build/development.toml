@@ -42,3 +42,8 @@ see_own_notes = true
 random_characters = false
 random_species_weights = ""
 ssd_sleep_time = 3600
+secrets_text = true
+secrets_exploitable = true
+
+[ooc]
+rp_notes = true

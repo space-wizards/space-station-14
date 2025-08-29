@@ -26,6 +26,26 @@ namespace Content.Server.Database.Migrations.Postgres
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
+            modelBuilder.Entity("Content.Server.Database.ALKinks", b =>
+                {
+                    b.Property<Guid>("PlayerId")
+                        .HasColumnType("uuid")
+                        .HasColumnName("player_id");
+
+                    b.Property<string>("KinkId")
+                        .HasColumnType("text")
+                        .HasColumnName("kink_id");
+
+                    b.Property<int>("Preference")
+                        .HasColumnType("integer")
+                        .HasColumnName("preference");
+
+                    b.HasKey("PlayerId", "KinkId")
+                        .HasName("PK_al_kinks");
+
+                    b.ToTable("al_kinks", (string)null);
+                });
+
             modelBuilder.Entity("Content.Server.Database.Admin", b =>
                 {
                     b.Property<Guid>("UserId")
@@ -808,31 +828,6 @@ namespace Content.Server.Database.Migrations.Postgres
                         });
                 });
 
-            modelBuilder.Entity("Content.Server.Database.PlayerDataDTO", b =>
-                {
-                    b.Property<Guid>("UserId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid")
-                        .HasColumnName("user_id");
-
-                    b.Property<int>("Balance")
-                        .HasColumnType("integer")
-                        .HasColumnName("balance");
-
-                    b.Property<string>("GhostTheme")
-                        .HasColumnType("text")
-                        .HasColumnName("ghost_theme");
-
-                    b.Property<string>("Title")
-                        .HasColumnType("text")
-                        .HasColumnName("title");
-
-                    b.HasKey("UserId")
-                        .HasName("PK_player_data");
-
-                    b.ToTable("player_data", (string)null);
-                });
-
             modelBuilder.Entity("Content.Server.Database.Preference", b =>
                 {
                     b.Property<int>("Id")
@@ -846,7 +841,6 @@ namespace Content.Server.Database.Migrations.Postgres
                         .IsRequired()
                         .HasColumnType("text")
                         .HasColumnName("admin_ooc_color");
-
                     b.PrimitiveCollection<List<string>>("ConstructionFavorites")
                         .IsRequired()
                         .HasColumnType("text[]")
@@ -1418,6 +1412,79 @@ namespace Content.Server.Database.Migrations.Postgres
                     b.ToTable("server_unban", (string)null);
                 });
 
+            modelBuilder.Entity("Content.Server.Database.StarLightModel+CharacterInfo", b =>
+                {
+                    b.Property<int>("ProfileId")
+                        .HasColumnType("integer")
+                        .HasColumnName("profile_id");
+
+                    b.Property<string>("CharacterSecrets")
+                        .IsRequired()
+                        .HasMaxLength(4096)
+                        .HasColumnType("character varying(4096)")
+                        .HasColumnName("character_secrets");
+
+                    b.Property<string>("ExploitableInfo")
+                        .IsRequired()
+                        .HasMaxLength(4096)
+                        .HasColumnType("character varying(4096)")
+                        .HasColumnName("exploitable_info");
+
+                    b.Property<string>("OOCNotes")
+                        .IsRequired()
+                        .HasMaxLength(4096)
+                        .HasColumnType("character varying(4096)")
+                        .HasColumnName("oocnotes");
+
+                    b.Property<string>("PersonalNotes")
+                        .IsRequired()
+                        .HasMaxLength(4096)
+                        .HasColumnType("character varying(4096)")
+                        .HasColumnName("personal_notes");
+
+                    b.Property<string>("PersonalityDesc")
+                        .IsRequired()
+                        .HasMaxLength(4096)
+                        .HasColumnType("character varying(4096)")
+                        .HasColumnName("personality_desc");
+
+                    b.Property<string>("PhysicalDesc")
+                        .IsRequired()
+                        .HasMaxLength(4096)
+                        .HasColumnType("character varying(4096)")
+                        .HasColumnName("physical_desc");
+
+                    b.HasKey("ProfileId")
+                        .HasName("PK_sl_character_info");
+
+                    b.ToTable("sl_character_info", (string)null);
+                });
+
+            modelBuilder.Entity("Content.Server.Database.StarLightModel+PlayerDataDTO", b =>
+                {
+                    b.Property<Guid>("UserId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid")
+                        .HasColumnName("user_id");
+
+                    b.Property<int>("Balance")
+                        .HasColumnType("integer")
+                        .HasColumnName("balance");
+
+                    b.Property<string>("GhostTheme")
+                        .HasColumnType("text")
+                        .HasColumnName("ghost_theme");
+
+                    b.Property<string>("Title")
+                        .HasColumnType("text")
+                        .HasColumnName("title");
+
+                    b.HasKey("UserId")
+                        .HasName("PK_player_data");
+
+                    b.ToTable("player_data", (string)null);
+                });
+
             modelBuilder.Entity("Content.Server.Database.StarLightModel+StarLightProfile", b =>
                 {
                     b.Property<int>("Id")
@@ -1549,7 +1616,6 @@ namespace Content.Server.Database.Migrations.Postgres
 
                     b.ToTable("player_round", (string)null);
                 });
-
             modelBuilder.Entity("Content.Server.Database.Admin", b =>
                 {
                     b.HasOne("Content.Server.Database.AdminRank", "AdminRank")
@@ -2094,6 +2160,18 @@ namespace Content.Server.Database.Migrations.Postgres
                     b.Navigation("Ban");
                 });
 
+            modelBuilder.Entity("Content.Server.Database.StarLightModel+CharacterInfo", b =>
+                {
+                    b.HasOne("Content.Server.Database.Profile", "Profile")
+                        .WithOne("CharacterInfo")
+                        .HasForeignKey("Content.Server.Database.StarLightModel+CharacterInfo", "ProfileId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("FK_sl_character_info_profile_profile_id");
+
+                    b.Navigation("Profile");
+                });
+
             modelBuilder.Entity("Content.Server.Database.StarLightModel+StarLightProfile", b =>
                 {
                     b.HasOne("Content.Server.Database.Profile", "Profile")
@@ -2206,6 +2284,8 @@ namespace Content.Server.Database.Migrations.Postgres
             modelBuilder.Entity("Content.Server.Database.Profile", b =>
                 {
                     b.Navigation("Antags");
+
+                    b.Navigation("CharacterInfo");
 
                     b.Navigation("Jobs");
 
