@@ -1,6 +1,6 @@
 - type: gameMap
   id: Gemini
-  mapName: 'Gemini Station'
+  mapName: 'Gemini'
   mapPath: /Maps/gemini.yml
   minPlayers: 30
   maxPlayers: 50

@@ -1,6 +1,6 @@
 - type: gameMap
   id: Marathon
-  mapName: 'Marathon Station'
+  mapName: 'Marathon'
   mapPath: /Maps/marathon.yml
   minPlayers: 30
   maxPlayers: 65

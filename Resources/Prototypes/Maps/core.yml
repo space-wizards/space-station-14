@@ -1,6 +1,6 @@
 - type: gameMap
   id: Core
-  mapName: 'Core Station'
+  mapName: 'Core'
   mapPath: /Maps/core.yml
   minPlayers: 40
   maxPlayers: 75
