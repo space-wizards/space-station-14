@@ -586,6 +586,7 @@
       - id: GoldenBikeHorn
         prob: 0.1
         orGroup: GiftPool
+      # Starlight-start
       - id: DrinkColaCan
         orGroup: DrinkPool
       - id: DrinkIcedTeaCan
@@ -722,6 +723,7 @@
         orGroup: SidesPool
       - id: CigPackMedRollie
         orGroup: SidesPool
+      # Starlight-end
 
 - type: entity
   id: HappyHonkMime
