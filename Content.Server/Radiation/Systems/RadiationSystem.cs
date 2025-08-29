@@ -164,6 +164,9 @@ public sealed partial class RadiationSystem : EntitySystem
         UpdateSource((entity.Owner, entity.Comp));
     }
 
+    /// <summary>
+    ///     Marks entity to receive/ignore radiation rays.
+    /// </summary>
     public void SetCanReceive(EntityUid uid, bool canReceive)
     {
         if (canReceive)
