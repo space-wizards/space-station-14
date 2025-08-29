@@ -4,7 +4,6 @@
   startNode: start
   targetNode: clothingCraftHelmet
   category: construction-category-clothing
-  description: самодельная каска с защитой для лица.
   objectType: Item
 
 - type: construction
@@ -13,5 +12,4 @@
   startNode: start
   targetNode: clothingCraftArmor
   category: construction-category-clothing
-  description: сомедельный бронежилет из кусков стали
   objectType: Item

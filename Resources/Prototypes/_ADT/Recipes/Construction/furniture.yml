@@ -4,7 +4,6 @@
   startNode: start
   targetNode: adtblacksofaleft
   category: construction-category-furniture
-  description: It looks comfy.
   objectType: Structure
   placementMode: SnapgridCenter
   canBuildInImpassable: false
@@ -17,7 +16,6 @@
   startNode: start
   targetNode: adtblacksofamiddle
   category: construction-category-furniture
-  description: It looks comfy.
   objectType: Structure
   placementMode: SnapgridCenter
   canBuildInImpassable: false
@@ -30,7 +28,6 @@
   startNode: start
   targetNode: adtblacksofaright
   category: construction-category-furniture
-  description: It looks comfy.
   objectType: Structure
   placementMode: SnapgridCenter
   canBuildInImpassable: false
@@ -39,7 +36,6 @@
 
 - type: construction
   id: ADTDeckChairRecipe
-  description: A deckchair for the acquisition of an even tan under the light of the nearest star.
   graph: bed
   startNode: start
   targetNode: adtdeckchair
@@ -56,7 +52,6 @@
   startNode: start
   targetNode: adtblackchair
   category: construction-category-furniture
-  description: It looks comfy.
   objectType: Structure
   placementMode: SnapgridCenter
   canBuildInImpassable: false
@@ -65,7 +60,6 @@
 
 - type: construction
   id: ADTDoubleBedTopRecipe
-  description: You now, hot to use it.
   graph: bed
   startNode: start
   targetNode: adtdoublebedtop
@@ -78,7 +72,6 @@
 
 - type: construction
   id: ADTDoubleBedBottomRecipe
-  description: You now, hot to use it.
   graph: bed
   startNode: start
   targetNode: adtdoublebedbottom
@@ -95,7 +88,6 @@
   startNode: start
   targetNode: adtredsofaleft
   category: construction-category-furniture
-  description: It looks comfy.
   objectType: Structure
   placementMode: SnapgridCenter
   canBuildInImpassable: false
@@ -108,7 +100,6 @@
   startNode: start
   targetNode: adtredsofamiddle
   category: construction-category-furniture
-  description: It looks comfy.
   objectType: Structure
   placementMode: SnapgridCenter
   canBuildInImpassable: false
@@ -121,7 +112,6 @@
   startNode: start
   targetNode: adtredsofaright
   category: construction-category-furniture
-  description: It looks comfy.
   objectType: Structure
   placementMode: SnapgridCenter
   canBuildInImpassable: false
@@ -134,7 +124,6 @@
   startNode: start
   targetNode: adtvioletsofaleft
   category: construction-category-furniture
-  description: It looks comfy.
   objectType: Structure
   placementMode: SnapgridCenter
   canBuildInImpassable: false
@@ -147,7 +136,6 @@
   startNode: start
   targetNode: adtvioletsofamiddle
   category: construction-category-furniture
-  description: It looks comfy.
   objectType: Structure
   placementMode: SnapgridCenter
   canBuildInImpassable: false
@@ -160,7 +148,6 @@
   startNode: start
   targetNode: adtvioletsofaright
   category: construction-category-furniture
-  description: It looks comfy.
   objectType: Structure
   placementMode: SnapgridCenter
   canBuildInImpassable: false
@@ -173,7 +160,6 @@
   startNode: start
   targetNode: adtleathersofaleft
   category: construction-category-furniture
-  description: It looks comfy.
   objectType: Structure
   placementMode: SnapgridCenter
   canBuildInImpassable: false
@@ -186,7 +172,6 @@
   startNode: start
   targetNode: adtleathersofamiddle
   category: construction-category-furniture
-  description: It looks comfy.
   objectType: Structure
   placementMode: SnapgridCenter
   canBuildInImpassable: false
@@ -199,7 +184,6 @@
   startNode: start
   targetNode: adtleathersofaright
   category: construction-category-furniture
-  description: It looks comfy.
   objectType: Structure
   placementMode: SnapgridCenter
   canBuildInImpassable: false
@@ -212,7 +196,6 @@
   startNode: start
   targetNode: adtvioletchair
   category: construction-category-furniture
-  description: It looks comfy.
   objectType: Structure
   placementMode: SnapgridCenter
   canBuildInImpassable: false
@@ -225,7 +208,6 @@
   startNode: start
   targetNode: adtredchair
   category: construction-category-furniture
-  description: It looks comfy.
   objectType: Structure
   placementMode: SnapgridCenter
   canBuildInImpassable: false
@@ -238,7 +220,6 @@
   startNode: start
   targetNode: adtleatherchair
   category: construction-category-furniture
-  description: It looks comfy.
   objectType: Structure
   placementMode: SnapgridCenter
   canBuildInImpassable: false
@@ -251,7 +232,6 @@
   startNode: start
   targetNode: adtchurchbenchleft
   category: construction-category-furniture
-  description: Simple, but beautiful.
   objectType: Structure
   placementMode: SnapgridCenter
   canBuildInImpassable: false
@@ -264,7 +244,6 @@
   startNode: start
   targetNode: adtchurchbenchmiddle
   category: construction-category-furniture
-  description: Simple, but beautiful.
   objectType: Structure
   placementMode: SnapgridCenter
   canBuildInImpassable: false
@@ -277,7 +256,6 @@
   startNode: start
   targetNode: adtchurchbenchright
   category: construction-category-furniture
-  description: Simple, but beautiful.
   objectType: Structure
   placementMode: SnapgridCenter
   canBuildInImpassable: false

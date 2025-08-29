@@ -1,7 +1,6 @@
 # Sink
 - type: construction
   id: SinkConstruction
-  description: A sink, useful for washing and draining water.
   graph: SinkGraph
   startNode: start
   targetNode: sinkWater
@@ -12,7 +11,6 @@
 # Wide Sink
 - type: construction
   id: SinkWideConstruction
-  description: A wide sink, useful for larger washing tasks.
   graph: SinkWideGraph
   startNode: start
   targetNode: sinkWide
@@ -23,7 +21,6 @@
 # Stemless Sink
 - type: construction
   id: SinkStemlessConstruction
-  description: A stemless sink variation for washing and draining water.
   graph: SinkStemlessGraph
   startNode: start
   targetNode: sinkStemlessWater

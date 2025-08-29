@@ -33,6 +33,6 @@
 
 - type: stack
   id: FloorVebTile
-  name: плита из паутины
+  name: stack-web-tile
   spawn: FloorVebTileItem
   maxCount: 30

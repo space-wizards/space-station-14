@@ -4,7 +4,6 @@
   startNode: start
   targetNode: airlock
   category: construction-category-structures
-  description: Это открывается, это закрывается и это может раздавить вас.
   objectType: Structure
   placementMode: SnapgridCenter
   canBuildInImpassable: false
@@ -17,7 +16,6 @@
   startNode: start
   targetNode: glassAirlock
   category: construction-category-structures
-  description: Это открывается, это закрывается и это может раздавить вас.
   objectType: Structure
   placementMode: SnapgridCenter
   canBuildInImpassable: false

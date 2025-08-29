@@ -1,111 +1,111 @@
 # Tiles
 - type: stack
   id: FloorTileTerracotta
-  name: терракотовая плитка
+  name: stack-floor-tile-terracotta
   spawn: FloorTileItemTerracotta
   maxCount: 30
 
 - type: stack
   id: FloorTileTerracottaDiagonal
-  name: терракотовая диагональная плитка
+  name: stack-floor-tile-terracotta-diagonal
   spawn: FloorTileItemTerracottaDiagonal
   maxCount: 30
 
 - type: stack
   id: FloorTileTerracottaHerringbone
-  name: терракотовая плитка ёлочкой
+  name: stack-floor-tile-terracotta-herringbone
   spawn: FloorTileItemTerracottaHerringbone
   maxCount: 30
 
 - type: stack
   id: FloorTileTerracottaSmall
-  name: терракотовые мини плиты
+  name: stack-floor-tile-terracotta-small
   spawn: FloorTileItemTerracottaSmall
   maxCount: 30
 
 - type: stack
   id: FloorTileStone
-  name: каменный пол
+  name: stack-floor-tile-stone
   spawn: FloorTileItemStone
   maxCount: 30
 
 - type: stack
   id: FloorTileCult
-  name: культовый пол
+  name: stack-floor-tile-cult
   spawn: FloorTileItemCult
   maxCount: 30
 
 # Shuttle tiles
 - type: stack
   id: FloorTileStackShuttleMonoWhite
-  name: белый моно пол шаттла
+  name: stack-floor-tile-stack-shuttle-mono-white
   spawn: FloorTileItemShuttleMonoWhite
   maxCount: 30
 
 - type: stack
   id: FloorTileStackShuttleMonoGrey
-  name: серый моно пол шаттла
+  name: stack-floor-tile-stack-shuttle-mono-grey
   spawn: FloorTileItemShuttleMonoGrey
   maxCount: 30
 
 - type: stack
   id: FloorTileStackShuttleMonoBlack
-  name: чёрный моно пол шаттла
+  name: stack-floor-tile-stack-shuttle-mono-black
   spawn: FloorTileItemShuttleMonoBlack
   maxCount: 30
 
 - type: stack
   id: FloorTileStackShuttleMonoBlue
-  name: синий моно пол шаттла
+  name: stack-floor-tile-stack-shuttle-mono-blue
   spawn: FloorTileItemShuttleMonoBlue
   maxCount: 30
 
 - type: stack
   id: FloorTileStackShuttleMonoOrange
-  name: оранжевый моно пол шаттла
+  name: stack-floor-tile-stack-shuttle-mono-orange
   spawn: FloorTileItemShuttleMonoOrange
   maxCount: 30
 
 - type: stack
   id: FloorTileStackShuttleMonoPurple
-  name: фиолетовый моно пол шаттла
+  name: stack-floor-tile-stack-shuttle-mono-purple
   spawn: FloorTileItemShuttleMonoPurple
   maxCount: 30
 
 - type: stack
   id: FloorTileStackShuttleMonoRed
-  name: красный моно пол шаттла
+  name: stack-floor-tile-stack-shuttle-mono-red
   spawn: FloorTileItemShuttleMonoRed
   maxCount: 30
 
 # Fairy grass tiles
 - type: stack
   id: FloorTileFairyGrass
-  name: сказочная трава
+  name: stack-floor-tile-fairy-grass
   spawn: FloorTileItemFairyGrass
   maxCount: 30
 
 - type: stack
   id: FloorTileFairyAstroGrass
-  name: сказочная астро-трава
+  name: stack-floor-tile-fairy-astro-grass
   spawn: FloorTileItemFairyAstroGrass
   maxCount: 30
 
 # Material tiles
 - type: stack
   id: FloorTileDiamond
-  name: алмазный пол
+  name: stack-floor-tile-diamond
   spawn: FloorTileItemDiamond
   maxCount: 30
 
 - type: stack
   id: FloorTilePlasma
-  name: плазменный пол
+  name: stack-floor-tile-plasma
   spawn: FloorTileItemPlasma
   maxCount: 30
 
 - type: stack
   id: FloorTileUranium
-  name: урановый пол
+  name: stack-floor-tile-uranium
   spawn: FloorTileItemUranium
   maxCount: 30

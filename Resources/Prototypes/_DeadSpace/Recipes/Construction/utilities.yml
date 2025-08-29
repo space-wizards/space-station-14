@@ -1,6 +1,5 @@
 - type: construction
   id: FloorDrainConstruction
-  description: Drains puddles around it. Useful for dumping mop buckets or keeping certain rooms clean.
   graph: FloorDrainGraph
   startNode: start
   targetNode: floorDrain
@@ -10,7 +9,6 @@
 
 - type: construction
   id: littleDirectionalFan
-  description: Fan to hold the air in and space outside.
   graph: DirFan
   startNode: start
   targetNode: littleDirectionalFan

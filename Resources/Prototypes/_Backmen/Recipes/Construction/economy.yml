@@ -4,7 +4,6 @@
   startNode: start
   targetNode: eftpos
   category: construction-category-tools
-  description: Проведите вашей ID картой чтобы оплатить покупку безналичными.
   objectType: Item
 
 - type: construction
@@ -13,7 +12,6 @@
   startNode: start
   targetNode: ATM
   category: construction-category-utilities
-  description: Банкомат для работы с наличкой.
   objectType: Structure
   placementMode: SnapgridCenter
   canBuildInImpassable: true

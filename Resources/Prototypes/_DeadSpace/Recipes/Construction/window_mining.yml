@@ -4,7 +4,6 @@
   startNode: start
   targetNode: miningWindow
   category: construction-category-structures
-  description: Смотри не заляпай.
   canBuildInImpassable: true
   conditions:
     - !type:EmptyOrWindowValidInTile
@@ -19,7 +18,6 @@
   startNode: start
   targetNode: miningWindowDiagonal
   category: construction-category-structures
-  description: Смотри не заляпай.
   canBuildInImpassable: true
   conditions:
     - !type:EmptyOrWindowValidInTile

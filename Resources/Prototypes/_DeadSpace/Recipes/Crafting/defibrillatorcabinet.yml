@@ -4,7 +4,6 @@
   startNode: start
   targetNode: done
   category: construction-category-storage
-  description: Небольшой настенный шкафчик, предназначенный для хранения дефибриллятора.
   objectType: Structure
   placementMode: SnapgridCenter
   canRotate: true

@@ -4,7 +4,6 @@
   startNode: start
   targetNode: icon
   category: construction-category-weapons
-  description: A toy double-bladed sword created from two toy swords!
   objectType: Item
 
 - type: construction
@@ -13,5 +12,4 @@
   startNode: start
   targetNode: jetpack
   category: construction-category-tools
-  description: Some oxygen tanks and a fire extinguisher as a nozzle, somehow attached together. It looks unreliable.
   objectType: Item
