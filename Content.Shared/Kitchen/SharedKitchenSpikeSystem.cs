@@ -98,7 +98,9 @@ public sealed class SharedKitchenSpikeSystem : EntitySystem
 
         EnsureComp<KitchenSpikeHookedComponent>(args.Entity);
         _damageableSystem.TryChangeDamage(args.Entity, ent.Comp.SpikeDamage, true);
+
         ent.Comp.NextDamage = _gameTiming.CurTime + ent.Comp.DamageInterval;
+        Dirty(ent);
 
         // TODO: Add sprites for different species.
         _appearanceSystem.SetData(ent.Owner, KitchenSpikeVisuals.Status, KitchenSpikeStatus.Bloody);
