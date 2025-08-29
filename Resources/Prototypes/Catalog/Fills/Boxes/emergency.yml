@@ -414,20 +414,6 @@
     - id: DrinkBeerCan
 
 - type: entity
-  parent: BoxSurvivalNitrogen
-  id: BoxMimeMoth
-  suffix: Mime, Emergency moth
-  components:
-  - type: StorageFill
-    contents:
-    - id: ClothingMaskBreath
-    - id: EmergencyOxygenTankFilled
-    - id: EmergencyMedipen
-    - id: Flare
-    - id: FoodBreadBaguetteCotton
-    - id: DrinkWaterBottleFull
-
-- type: entity
   parent: BoxSurvival
   id: BoxMimeMoth
   suffix: Mime, Emergency moth

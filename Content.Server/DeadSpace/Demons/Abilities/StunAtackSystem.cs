@@ -79,7 +79,7 @@ public sealed partial class StunAttackSystem : EntitySystem
                 _physics.SetLinearVelocity(entity, physics.LinearVelocity * component.LaunchForwardsMultiplier, body: physics);
             }
 
-            _stun.TryParalyze(entity, TimeSpan.FromSeconds(component.ParalyzeTime), true);
+            _stun.TryUpdateParalyzeDuration(entity, TimeSpan.FromSeconds(component.ParalyzeTime));
         }
     }
 }

@@ -35,7 +35,6 @@ namespace Content.Server.Backmen.Economy;
 
 public sealed class EconomySystem : EntitySystem
 {
-    [Dependency] private readonly BankManagerSystem _bankManagerSystem = default!;
     [Dependency] private readonly WageManagerSystem _wageManagerSystem = default!;
     [Dependency] private readonly BankCartridgeSystem _bankCartridgeSystem = default!;
     [Dependency] private readonly InventorySystem _inventorySystem = default!;
@@ -48,7 +47,7 @@ public sealed class EconomySystem : EntitySystem
     [Dependency] private readonly IAdminManager _adminManager = default!;
     [Dependency] private readonly IChatManager _chatManager = default!;
 
-    [ValidatePrototypeId<EntityPrototype>] private readonly string MindRoleBankMemory = "MindRoleBankMemory";
+    private static readonly EntProtoId MindRoleBankMemory = "MindRoleBankMemory";
 
     public override void Initialize()
     {
@@ -96,7 +95,7 @@ public sealed class EconomySystem : EntitySystem
     private static readonly ResPath BankIcon = new("_Backmen/Objects/Tools/rimbank.rsi");
     private void GetIdCardVerb(GetVerbsEvent<Verb> args, Entity<IdCardComponent> card, ActorComponent actor)
     {
-        if (!_bankManagerSystem.TryGetBankAccount(card.Owner, out var account))
+        if (!_bankManager.TryGetBankAccount(card.Owner, out var account))
         {
             Verb verb = new();
             verb.Text = Loc.GetString("prayer-verbs-bank-new");
@@ -105,7 +104,7 @@ public sealed class EconomySystem : EntitySystem
             verb.Icon = new SpriteSpecifier.Rsi(BankIcon, "icon");
             verb.Act = () =>
             {
-                var bankAccount = _bankManagerSystem.CreateNewBankAccount(card);
+                var bankAccount = _bankManager.CreateNewBankAccount(card);
                 DebugTools.Assert(bankAccount != null);
                 bankAccount.Value.Comp.AccountName = card.Comp.FullName;
                 card.Comp.StoredBankAccountNumber = bankAccount.Value.Comp.AccountNumber;
@@ -182,11 +181,11 @@ public sealed class EconomySystem : EntitySystem
             return;
         }
 
-        if (!_bankManagerSystem.TryGetBankAccount(component.PresetAccountNumber, out var account))
+        if (!_bankManager.TryGetBankAccount(component.PresetAccountNumber, out var account))
         {
             var dummy = Spawn("CaptainIDCard");
             _metaDataSystem.SetEntityName(dummy, $"Bank: {component.PresetAccountNumber}");
-            account = _bankManagerSystem.CreateNewBankAccount(dummy, component.PresetAccountNumber);
+            account = _bankManager.CreateNewBankAccount(dummy, component.PresetAccountNumber);
             DebugTools.Assert(account != null);
             account.Value.Comp.AccountName = component.PresetAccountName ?? component.PresetAccountNumber;
         }
@@ -208,7 +207,7 @@ public sealed class EconomySystem : EntitySystem
         {
             var dummy = Spawn("CaptainIDCard");
             _metaDataSystem.SetEntityName(dummy, "Bank: " + department.AccountNumber);
-            var bankAccount = _bankManagerSystem.CreateNewBankAccount(dummy, department.AccountNumber, true);
+            var bankAccount = _bankManager.CreateNewBankAccount(dummy, department.AccountNumber, true);
             if (bankAccount == null)
                 continue;
             bankAccount.Value.Comp.AccountName = department.ID;
@@ -295,7 +294,7 @@ public sealed class EconomySystem : EntitySystem
             if (_roleSystem.MindHasRole<JobRoleComponent>(mindId, out var jobComponent) && jobComponent?.Comp1.JobPrototype != null &&
                 _prototype.TryIndex(jobComponent?.Comp1.JobPrototype, out var jobPrototype))
             {
-                _bankManagerSystem.TryGenerateStartingBalance(bankAccount, jobPrototype);
+                _bankManager.TryGenerateStartingBalance(bankAccount, jobPrototype);
 
                 if (AttachWage)
                 {
@@ -314,7 +313,7 @@ public sealed class EconomySystem : EntitySystem
         EnsureComp<BankMemoryComponent>(bankRoleComp!.Value).BankAccount = bankAccount;
 
         var needAdd = true;
-        foreach (var condition in mind.AllObjectives.Where(HasComp<MindNoteConditionComponent>))
+        foreach (var condition in mind.Objectives.Where(HasComp<MindNoteConditionComponent>))
         {
             var md = Comp<MindNoteConditionComponent>(condition);
             Dirty(condition, md);
@@ -331,5 +330,5 @@ public sealed class EconomySystem : EntitySystem
 
     #endregion
 
-    [ValidatePrototypeId<EntityPrototype>] private const string BankNoteCondition = "BankNote";
+    private static readonly EntProtoId BankNoteCondition = "BankNote";
 }

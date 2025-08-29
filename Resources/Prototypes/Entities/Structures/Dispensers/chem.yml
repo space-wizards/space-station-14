@@ -14,6 +14,10 @@
     whitelist:
       tags:
       - ChemDispensable
+    # DS14-start
+    grid:
+    - 0,0,19,7
+    # DS14-end
   - type: ApcPowerReceiver
   - type: ExtensionCableReceiver
   - type: Destructible

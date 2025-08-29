@@ -4,8 +4,9 @@
   description: Это действие включает или выключает сервоприводы ускоряющие владельца, при этом тратиться заряд внутренней батареи.
   categories: [ HideSpawnMenu ]
   components:
-  - type: InstantAction
+  - type: Action
     icon: Interface/Actions/actions_mecha.rsi/mech_overload_off.png
     priority: -20
     useDelay: 10
+  - type: InstantAction
     event: !type:ActivateSpeedBuffActionEvent

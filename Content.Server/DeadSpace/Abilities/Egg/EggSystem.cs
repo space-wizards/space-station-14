@@ -10,6 +10,7 @@ using Content.Server.Ghost.Roles;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Mind;
 using Content.Shared.Damage;
+using Robust.Shared.Player;
 
 namespace Content.Server.DeadSpace.Abilities.Egg;
 
@@ -21,6 +22,8 @@ public sealed partial class EggSystem : SharedEggSystem
     [Dependency] private readonly IRobustRandom _robustRandom = default!;
     [Dependency] private readonly SharedMindSystem _mindSystem = default!;
     [Dependency] private readonly DamageableSystem _damage = default!;
+    [Dependency] private readonly GhostRoleSystem _ghost = default!;
+    [Dependency] private readonly ISharedPlayerManager _player = default!;
 
     public override void Initialize()
     {
@@ -88,11 +91,12 @@ public sealed partial class EggSystem : SharedEggSystem
             }
 
             var id = ghostRoleComponent.Identifier;
-            var session = mind.Session;
+            if (!_player.TryGetSessionById(mind.UserId, out var session))
+                return;
 
             if (session != null)
             {
-                EntityManager.EntitySysManager.GetEntitySystem<GhostRoleSystem>().Takeover(session, id);
+                _ghost.Takeover(session, id);
             }
             else
             {
@@ -118,5 +122,4 @@ public sealed partial class EggSystem : SharedEggSystem
 
         _audio.PlayPvs(component.EggSound, uid);
     }
-
 }

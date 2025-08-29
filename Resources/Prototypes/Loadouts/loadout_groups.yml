@@ -729,7 +729,6 @@
   - EmergencySpeciesMothMime
   - LoadoutSpeciesVoxNitrogen
   - EmergencyBeerMime
-  - EmergencyMothMime
 
 - type: loadoutGroup
   id: MimeUnderwear

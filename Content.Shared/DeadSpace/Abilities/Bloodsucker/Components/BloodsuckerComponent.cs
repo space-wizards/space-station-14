@@ -2,7 +2,6 @@
 
 using Robust.Shared.GameStates;
 using Robust.Shared.Audio;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 using Robust.Shared.Prototypes;
 using Content.Shared.Alert;
 using Content.Shared.Mobs;
@@ -23,24 +22,24 @@ public sealed partial class BloodsuckerComponent : Component
     [DataField]
     public ProtoId<AlertPrototype> BloodAlert = "BloodAmount";
 
-    [DataField("actionSuckBlood", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
-    public string ActionSuckBlood = "ActionSuckBlood";
+    [DataField]
+    public EntProtoId ActionSuckBlood = "ActionSuckBlood";
 
-    [DataField("actionSuckBloodEntity")]
+    [DataField]
     public EntityUid? ActionSuckBloodEntity;
 
-    [DataField("injectSound")]
+    [DataField]
     public SoundSpecifier? InjectSound = default;
 
-    [DataField("maxCountReagent")]
+    [DataField]
     public float MaxCountReagent = 100f;
 
-    [DataField("countReagent")]
+    [DataField]
     public float CountReagent { get; internal set; } = 0;
 
-    [DataField("duration")]
+    [DataField]
     public float Duration = 2f;
 
-    [DataField("howMuchWillItSuck")]
+    [DataField]
     public float HowMuchWillItSuck = 20f;
 }

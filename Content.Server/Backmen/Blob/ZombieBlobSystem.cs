@@ -21,6 +21,7 @@ using Content.Shared.NPC.Systems;
 using Content.Shared.Physics;
 using Content.Shared.Tag;
 using Content.Shared.Zombies;
+using Robust.Server.Player;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Systems;
@@ -34,15 +35,22 @@ public sealed class ZombieBlobSystem : EntitySystem
     [Dependency] private readonly NpcFactionSystem _faction = default!;
     [Dependency] private readonly NPCSystem _npc = default!;
     [Dependency] private readonly MindSystem _mind = default!;
-    [Dependency] private readonly TagSystem _tagSystem = default!;
+    [Dependency] private readonly TagSystem _tag = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly IChatManager _chatMan = default!;
     [Dependency] private readonly SharedPhysicsSystem _physics = default!;
     [Dependency] private readonly TriggerSystem _trigger = default!;
+    [Dependency] private readonly IPlayerManager _player = default!;
 
-    private const int ClimbingCollisionGroup = (int) (CollisionGroup.BlobImpassable);
+    private const int ClimbingCollisionGroup = (int)(CollisionGroup.BlobImpassable);
+
+    private static readonly ProtoId<TagPrototype> InvalidForGlobalSpawnSpellTag = "InvalidForGlobalSpawnSpell";
+    private static readonly ProtoId<TagPrototype> CannotSuicideTag = "CannotSuicide";
+    private static readonly ProtoId<TagPrototype> BlobTag = "BlobMob";
+    private static readonly ProtoId<NpcFactionPrototype> BlobFaction = "Blob";
 
     private readonly GasMixture _normalAtmos;
+
     public ZombieBlobSystem()
     {
         _normalAtmos = new GasMixture(Atmospherics.CellVolume)
@@ -116,20 +124,13 @@ public sealed class ZombieBlobSystem : EntitySystem
         EnsureComp<BlobMobComponent>(uid);
         EnsureComp<BlobSpeakComponent>(uid);
 
-        var oldFactions = new List<string>();
-        var factionComp = EnsureComp<NpcFactionMemberComponent>(uid);
-        foreach (var factionId in new List<ProtoId<NpcFactionPrototype>>(factionComp.Factions))
-        {
-            oldFactions.Add(factionId);
-            _faction.RemoveFaction(uid, factionId);
-        }
-        _faction.AddFaction(uid, "Blob");
-        component.OldFactions = oldFactions;
+        _faction.ClearFactions(uid, dirty: false);
+        _faction.AddFaction(uid, BlobFaction);
 
         var accent = EnsureComp<ReplacementAccentComponent>(uid);
         accent.Accent = "genericAggressive";
 
-        _tagSystem.AddTag(uid, "BlobMob");
+        _tag.AddTag(uid, BlobTag);
 
         EnsureComp<PressureImmunityComponent>(uid);
         EnsureComp<RespiratorImmunityComponent>(uid);
@@ -145,29 +146,27 @@ public sealed class ZombieBlobSystem : EntitySystem
             ReplaceFixtures(uid, component, fixturesComp);
         }
 
-        var mindComp = EnsureComp<MindContainerComponent>(uid);
-        if (mindComp.Mind != null)
+        var htn = EnsureComp<HTNComponent>(uid);
+        htn.RootTask = new HTNCompoundTask() { Task = "SimpleHostileCompound" };
+        htn.Blackboard.SetValue(NPCBlackboard.Owner, uid);
+        _npc.SleepNPC(uid, htn);
+
+        var hasMind = _mind.TryGetMind(uid, out _, out var mind);
+        if (hasMind && mind != null && _player.TryGetSessionById(mind.UserId, out var session))
         {
-            if (_mind.TryGetSession(mindComp.Mind, out var session))
-            {
-                _chatMan.DispatchServerMessage(session, Loc.GetString("blob-zombie-greeting"));
-                _audio.PlayGlobal(component.GreetSoundNotification, session);
-            }
+            _chatMan.DispatchServerMessage(session, Loc.GetString("blob-zombie-greeting"));
+            _audio.PlayGlobal(component.GreetSoundNotification, session);
         }
         else
         {
-            var htn = EnsureComp<HTNComponent>(uid);
-            htn.RootTask = new HTNCompoundTask() {Task = "SimpleHostileCompound"};
-            htn.Blackboard.SetValue(NPCBlackboard.Owner, uid);
-
-            if (!HasComp<ActorComponent>(component.BlobPodUid))
-            {
-                _npc.WakeNPC(uid, htn);
-            }
+            _npc.WakeNPC(uid, htn);
         }
 
         var ev = new EntityZombifiedEvent(uid);
         RaiseLocalEvent(uid, ref ev, true);
+
+        _tag.AddTag(uid, InvalidForGlobalSpawnSpellTag);
+        _tag.AddTag(uid, CannotSuicideTag);
     }
 
     private void OnShutdown(EntityUid uid, ZombieBlobComponent component, ComponentShutdown args)
@@ -187,7 +186,7 @@ public sealed class ZombieBlobSystem : EntitySystem
             temperatureComponent.ColdDamageThreshold = component.OldColdDamageThreshold.Value;
         }
 
-        _tagSystem.RemoveTag(uid, "BlobMob");
+        _tag.RemoveTag(uid, "BlobMob");
 
         _trigger.Trigger(component.BlobPodUid);
         QueueDel(component.BlobPodUid);

@@ -297,10 +297,6 @@
       Plastic: 50
       Gold: 10
       Wood: 25
-  - type: Tag # DS14
-    tags:
-    - GoldenPlunger
-    - WhitelistChameleon
 
 - type: weightedRandomEntity
   id: PlungerLoot

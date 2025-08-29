@@ -164,7 +164,7 @@ public sealed class SithForceAbilitySystem : EntitySystem
         if (HasComp<ItemComponent>(target))
             scaling *= OneItemStrenghtMultiply;
 
-        _stun.TryParalyze(target, TimeSpan.FromSeconds(component.StunDuration), true);
+        _stun.TryUpdateParalyzeDuration(target, TimeSpan.FromSeconds(component.StunDuration));
 
         if (component.BaseRadialAcceleration < 0)
         {
@@ -267,7 +267,7 @@ public sealed class SithForceAbilitySystem : EntitySystem
             if (!CanGravPulseAffect(entity))
                 continue;
 
-            _stun.TryParalyze(entity, TimeSpan.FromSeconds(component.StunDuration), true);
+            _stun.TryUpdateParalyzeDuration(entity, TimeSpan.FromSeconds(component.StunDuration));
 
             var displacement = epicenter - _transform.GetWorldPosition(entity, xformQuery);
             var distance2 = displacement.LengthSquared();

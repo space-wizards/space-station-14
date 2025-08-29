@@ -258,7 +258,7 @@
       sprite: _DeadSpace/Sponsor/vjlados/magboots.rsi
       layers:
       - state: icon
-        map: [ "enum.ToggleVisuals.Layer" ]
+        map: [ "enum.ToggleableVisuals.Layer" ]
     - type: Clothing
       sprite: _DeadSpace/Sponsor/vjlados/magboots.rsi
     - type: ClothingSpeedModifier
@@ -581,7 +581,7 @@
     sprite: _DeadSpace/Sponsor/DragonFox/MedTech/other/magboots.rsi
     layers:
     - state: icon
-      map: [ "enum.ToggleVisuals.Layer" ]
+      map: [ "enum.ToggleableVisuals.Layer" ]
   - type: Clothing
     sprite: _DeadSpace/Sponsor/DragonFox/MedTech/other/magboots.rsi
   - type: ClothingSpeedModifier

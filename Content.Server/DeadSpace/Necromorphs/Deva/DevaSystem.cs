@@ -17,6 +17,8 @@ using Content.Shared.Speech.Components;
 using Robust.Shared.Audio.Systems;
 using Content.Shared.DeadSpace.Necromorphs.Deva;
 using Robust.Shared.Physics.Components;
+using Robust.Shared.Prototypes;
+using Robust.Shared.Random;
 
 namespace Content.Server.DeadSpace.Necromorphs.Deva;
 
@@ -34,6 +36,9 @@ public sealed class DevaSystem : EntitySystem
     [Dependency] private readonly DamageableSystem _damageable = default!;
     [Dependency] private readonly ChatSystem _chat = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
+    [Dependency] private readonly IPrototypeManager _proto = default!;
+    [Dependency] private readonly IRobustRandom _random = default!;
+
     public override void Initialize()
     {
         base.Initialize();
@@ -183,16 +188,18 @@ public sealed class DevaSystem : EntitySystem
 
         if (TryComp<VocalComponent>(prisonerTarget, out var vocal))
         {
-            var random = new Random();
-            int chance = random.Next(0, 5);
+            int chance = _random.Next(0, 5);
+
+            if (vocal.EmoteSounds is not { } sounds)
+                return;
 
             if (chance < 1)
             {
-                _chat.TryPlayEmoteSound(prisonerTarget.Value, vocal.EmoteSounds, "Crying");
+                _chat.TryPlayEmoteSound(prisonerTarget.Value, _proto.Index(sounds), "Crying");
             }
             else
             {
-                _chat.TryPlayEmoteSound(prisonerTarget.Value, vocal.EmoteSounds, "Scream");
+                _chat.TryPlayEmoteSound(prisonerTarget.Value, _proto.Index(sounds), "Scream");
             }
         }
 

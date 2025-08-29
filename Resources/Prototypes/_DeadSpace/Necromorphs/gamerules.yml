@@ -151,21 +151,6 @@
         requireAll: false
 
 - type: entity
-  id: GiftsNecroobeliskArtefact
-  parent: CargoGiftsBase
-  components:
-  - type: StationEvent
-    duration: 120
-    earliestStart: 20
-    minimumPlayers: 30
-    willNotStartRandomly: true
-  - type: CargoGiftsRule
-    description: cargo-gift-artifact-container
-    dest: cargo-gift-default-sender
-    gifts:
-      ArtifactContainerNecroobelisk: 1
-
-- type: entity
   id: CentcommSendNecroobeliskArtefact
   parent: BaseGameRule
   components:

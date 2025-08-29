@@ -3,7 +3,6 @@
 using Robust.Shared.GameStates;
 using Content.Shared.StatusIcon;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
 namespace Content.Shared.DeadSpace.Necromorphs.Unitology.Components;
 
@@ -13,31 +12,31 @@ namespace Content.Shared.DeadSpace.Necromorphs.Unitology.Components;
 [RegisterComponent, NetworkedComponent, Access(typeof(SharedUnitologySystem))]
 public sealed partial class UnitologyHeadComponent : Component
 {
-    [DataField("actionSelectTargetRecruitment", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
-    public string ActionSelectTargetRecruitment = "ActionSelectTargetRecruitment";
+    [DataField]
+    public EntProtoId ActionSelectTargetRecruitment = "ActionSelectTargetRecruitment";
 
     [DataField]
     public EntityUid? ActionSelectTargetRecruitmentEntity;
 
-    [DataField("actionUnitologyHead", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
-    public string ActionUnitologyHead = "ActionUnitologyHead";
+    [DataField]
+    public EntProtoId ActionUnitologyHead = "ActionUnitologyHead";
 
     [DataField]
     public EntityUid? ActionUnitologyHeadEntity;
 
-    [DataField("actionOrderToSlave", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
-    public string ActionOrderToSlave = "ActionOrderToSlave";
+    [DataField]
+    public EntProtoId ActionOrderToSlave = "ActionOrderToSlave";
 
     [DataField]
     public EntityUid? ActionOrderToSlaveEntity;
 
-    [DataField, ViewVariables(VVAccess.ReadWrite)]
+    [DataField]
     public float VerbDuration = 10f;
 
-    [DataField, ViewVariables(VVAccess.ReadWrite)]
+    [DataField]
     public int NumberOfCandles = 3;
 
-    [DataField, ViewVariables(VVAccess.ReadWrite)]
+    [DataField]
     public ProtoId<FactionIconPrototype> StatusIcon { get; set; } = "UnitologyHeadFaction";
 
     [DataField, ViewVariables(VVAccess.ReadOnly)]

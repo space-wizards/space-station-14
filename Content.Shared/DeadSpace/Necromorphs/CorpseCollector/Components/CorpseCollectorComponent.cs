@@ -2,8 +2,8 @@
 
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 using Content.Shared.Damage;
+using Content.Shared.Random;
 
 namespace Content.Shared.DeadSpace.Necromorphs.CorpseCollector.Components;
 
@@ -14,27 +14,27 @@ public sealed partial class CorpseCollectorComponent : Component
     [ViewVariables(VVAccess.ReadOnly)]
     public TimeSpan NextTickForRegen = TimeSpan.FromSeconds(0);
 
-    [DataField("actionAbsorptionDeadNecro", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
-    public string ActionAbsorptionDeadNecro = "ActionAbsorptionDeadNecro";
+    [DataField]
+    public EntProtoId ActionAbsorptionDeadNecro = "ActionAbsorptionDeadNecro";
 
-    [DataField("actionAbsorptionDeadNecroEntity")]
+    [DataField]
     public EntityUid? ActionAbsorptionDeadNecroEntity;
 
-    [DataField("actionSpawnPointNecro", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
-    public string ActionSpawnPointNecro = "ActionSpawnPointNecro";
+    [DataField]
+    public EntProtoId ActionSpawnPointNecro = "ActionSpawnPointNecro";
 
-    [DataField("actionSpawnPointEntity")]
+    [DataField]
     public EntityUid? ActionSpawnPointEntity;
 
-    [DataField("actionSpawnLeviathan", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
-    public string ActionSpawnLeviathan = "ActionSpawnLeviathan";
+    [DataField]
+    public EntProtoId ActionSpawnLeviathan = "ActionSpawnLeviathan";
 
-    [DataField("actionSpawnLeviathanEntity")]
+    [DataField]
     public EntityUid? ActionSpawnLeviathanEntity;
 
-    [DataField("proto", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
+    [DataField("proto")]
     [ViewVariables(VVAccess.ReadOnly)]
-    public string LeviathanId = "MobLeviathanNecro";
+    public EntProtoId LeviathanId = "MobLeviathanNecro";
 
     [DataField]
     [ViewVariables(VVAccess.ReadOnly)]
@@ -51,7 +51,6 @@ public sealed partial class CorpseCollectorComponent : Component
     [ViewVariables(VVAccess.ReadOnly)]
     public float PassiveHealingMultiplier = 1f;
 
-
     [ViewVariables(VVAccess.ReadWrite)]
     public float MovementSpeedMultiplier = 1.0f;
 
@@ -64,19 +63,16 @@ public sealed partial class CorpseCollectorComponent : Component
     [ViewVariables(VVAccess.ReadWrite)]
     public int CountNecroDoDebuff = 0;
 
-    [ViewVariables(VVAccess.ReadWrite), DataField("countNecroDoDebuffMax")]
+    [DataField]
     public int CountNecroDoDebuffMax = 1;
 
-    [ViewVariables(VVAccess.ReadWrite), DataField("mobIds")]
-    public string[] MobIds = { "RandomNecromorfSpawner", "BruteNecromorfSpawner", "InfectorNecromorfSpawner" };
+    [DataField]
+    public ProtoId<WeightedRandomEntityPrototype> MobIds = "CorpseCollectorMobToSpawn";
 
-    [ViewVariables(VVAccess.ReadWrite), DataField("spawnChances")]
-    public float[] SpawnChances = { 70f, 5f, 25f };
-
-    [DataField("absorptionDuration")]
+    [DataField]
     public float AbsorptionDuration = 3f;
 
-    [DataField("passiveHealing")]
+    [DataField]
     public DamageSpecifier PassiveHealing = new()
     {
         DamageDict = new()
@@ -90,11 +86,15 @@ public sealed partial class CorpseCollectorComponent : Component
     };
 
     #region Visualizer
+
     [DataField("state")]
     public string State = "lvl1";
+
     [DataField("lvl2")]
     public string Lvl2State = "lvl2";
+
     [DataField("lvl3")]
     public string Lvl3State = "lvl3";
+
     #endregion
 }

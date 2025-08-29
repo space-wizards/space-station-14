@@ -45,7 +45,7 @@ public sealed class BlobCoreSystem : SharedBlobCoreSystem
     private EntityQuery<BlobTileComponent> _tile;
     private EntityQuery<BlobFactoryComponent> _factory;
 
-    [ValidatePrototypeId<EntityPrototype>] private const string BlobCaptureObjective = "BlobCaptureObjective";
+    private static readonly EntProtoId BlobCaptureObjective = "BlobCaptureObjective";
     public override void Initialize()
     {
         base.Initialize();
@@ -132,15 +132,15 @@ public sealed class BlobCoreSystem : SharedBlobCoreSystem
         return !ev.Cancelled;
     }
 
-    [ValidatePrototypeId<EntityPrototype>] private const string ActionSwapBlobChem = "ActionSwapBlobChem";
-    [ValidatePrototypeId<EntityPrototype>] private const string ActionTeleportBlobToCore = "ActionTeleportBlobToCore";
-    [ValidatePrototypeId<EntityPrototype>] private const string ActionTeleportBlobToNode = "ActionTeleportBlobToNode";
-    [ValidatePrototypeId<EntityPrototype>] private const string ActionCreateBlobFactory = "ActionCreateBlobFactory";
-    [ValidatePrototypeId<EntityPrototype>] private const string ActionCreateBlobResource = "ActionCreateBlobResource";
-    [ValidatePrototypeId<EntityPrototype>] private const string ActionCreateBlobNode = "ActionCreateBlobNode";
-    [ValidatePrototypeId<EntityPrototype>] private const string ActionCreateBlobbernaut = "ActionCreateBlobbernaut";
-    [ValidatePrototypeId<EntityPrototype>] private const string ActionSplitBlobCore = "ActionSplitBlobCore";
-    [ValidatePrototypeId<EntityPrototype>] private const string ActionSwapBlobCore = "ActionSwapBlobCore";
+    private static readonly EntProtoId ActionSwapBlobChem = "ActionSwapBlobChem";
+    private static readonly EntProtoId ActionTeleportBlobToCore = "ActionTeleportBlobToCore";
+    private static readonly EntProtoId ActionTeleportBlobToNode = "ActionTeleportBlobToNode";
+    private static readonly EntProtoId ActionCreateBlobFactory = "ActionCreateBlobFactory";
+    private static readonly EntProtoId ActionCreateBlobResource = "ActionCreateBlobResource";
+    private static readonly EntProtoId ActionCreateBlobNode = "ActionCreateBlobNode";
+    private static readonly EntProtoId ActionCreateBlobbernaut = "ActionCreateBlobbernaut";
+    private static readonly EntProtoId ActionSplitBlobCore = "ActionSplitBlobCore";
+    private static readonly EntProtoId ActionSwapBlobCore = "ActionSwapBlobCore";
 
     private void OnStartup(EntityUid uid, BlobCoreComponent component, ComponentStartup args)
     {
@@ -339,8 +339,8 @@ public sealed class BlobCoreSystem : SharedBlobCoreSystem
         return true;
     }
 
-    [ValidatePrototypeId<AlertPrototype>]
-    private const string BlobResource = "BlobResource";
+    private static readonly ProtoId<AlertPrototype> BlobResource = "BlobResource";
+
     public bool ChangeBlobPoint(EntityUid uid, FixedPoint2 amount, BlobCoreComponent? component = null)
     {
         if (!Resolve(uid, ref component))
@@ -349,7 +349,7 @@ public sealed class BlobCoreSystem : SharedBlobCoreSystem
         component.Points += amount;
 
         if (component.Observer != null)
-            _alerts.ShowAlert(component.Observer.Value, BlobResource, (short) Math.Clamp(Math.Round(component.Points.Float() / 10f), 0, 16));
+            _alerts.ShowAlert(component.Observer.Value, BlobResource, (short)Math.Clamp(Math.Round(component.Points.Float() / 10f), 0, 16));
 
         return true;
     }

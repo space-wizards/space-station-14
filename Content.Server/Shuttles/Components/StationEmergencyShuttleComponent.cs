@@ -31,7 +31,7 @@ public sealed partial class StationEmergencyShuttleComponent : Component
     /// <summary>
     /// Sound played when the shuttle has successfully docked with the station.
     /// </summary>
-    public SoundSpecifier DockedAudio = new SoundPathSpecifier("/Audio/Announcements/shuttle_dock.ogg");
+    public SoundSpecifier DockedAudio = new SoundPathSpecifier("/Audio/_DeadSpace/Announcements/emergency_s_docked.ogg"); // DS14-Announcements
 
     /// <summary>
     /// The announcement made when the shuttle is unable to dock and instead parks in nearby space.

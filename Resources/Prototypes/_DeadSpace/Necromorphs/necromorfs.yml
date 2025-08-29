@@ -73,7 +73,6 @@
   - type: Hive
   - type: LimitedCharges
     maxCharges: 3
-    charges: 2
   - type: RatKing
     actionRaiseArmy: ActionHiveRaiseArmy
     armyMobSpawnId: MobSmallNecroHive
@@ -231,6 +230,13 @@
     spawned:
     - id: InfectorGland # Что вылупилось
       amount: 2 # Колличество
+
+- type: weightedRandomEntity
+  id: CorpseCollectorMobToSpawn
+  weights:
+    RandomNecromorfSpawner: 70
+    BruteNecromorfSpawner: 5
+    InfectorNecromorfSpawner: 25
 
 - type: randomHumanoidSettings
   id: Necromorf

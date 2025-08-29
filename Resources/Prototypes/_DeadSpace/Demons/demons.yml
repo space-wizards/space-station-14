@@ -245,7 +245,6 @@
   - type: DemonDash
   - type: LimitedCharges
     maxCharges: 1
-    charges: 1
   - type: GhostRole
     allowMovement: true
     allowSpeech: true

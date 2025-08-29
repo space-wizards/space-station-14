@@ -29,9 +29,8 @@ namespace Content.Server.Backmen.Economy.ATM;
 
 public sealed class ATMSystem : SharedATMSystem
 {
-    [Dependency] private readonly IPrototypeManager _proto = default!;
+    [Dependency] private readonly IPrototypeManager _prototype = default!;
     [Dependency] private readonly IEntityManager _entities = default!;
-    [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly AppearanceSystem _appearanceSystem = default!;
     [Dependency] private readonly BankManagerSystem _bankManagerSystem = default!;
     [Dependency] private readonly StackSystem _stack = default!;
@@ -70,18 +69,16 @@ public sealed class ATMSystem : SharedATMSystem
         UpdateComponentUserInterface(uid, args.Actor);
     }
 
-    [ValidatePrototypeId<MaterialPrototype>]
-    private const string Credit = "Credit";
+    private static readonly ProtoId<MaterialPrototype> Credit = "Credit";
+    private static readonly ProtoId<CurrencyPrototype> SpaceCash = "SpaceCash";
 
-    [ValidatePrototypeId<CurrencyPrototype>]
-    private const string SpaceCash = "SpaceCash";
     public Dictionary<ProtoId<CurrencyPrototype>, FixedPoint2> GetCurrencyValue(EntityUid uid, PhysicalCompositionComponent component)
     {
         var amount = EntityManager.GetComponentOrNull<StackComponent>(uid)?.Count ?? 1;
         var rt = new Dictionary<ProtoId<CurrencyPrototype>, FixedPoint2>();
         if (component.MaterialComposition.TryGetValue(Credit, out var value))
         {
-            rt.Add(SpaceCash, value * (FixedPoint2) amount);
+            rt.Add(SpaceCash, value * (FixedPoint2)amount);
         }
         return rt;
     }
@@ -148,7 +145,7 @@ public sealed class ATMSystem : SharedATMSystem
             return;
 
         var currencySymbol = "";
-        if (_prototypeManager.TryIndex(bankAccount.CurrencyType, out CurrencyPrototype? p))
+        if (_prototype.TryIndex(bankAccount.CurrencyType, out CurrencyPrototype? p))
             currencySymbol = Loc.GetString(p.CurrencySymbol);
 
         _uiSystem.SetUiState(ui.Owner,
@@ -185,7 +182,7 @@ public sealed class ATMSystem : SharedATMSystem
                 }
                 haveAccessToBankAccount = true;
                 bankAccountBalance = bankAccount.Value.Comp.Balance;
-                if (_prototypeManager.TryIndex(bankAccount.Value.Comp.CurrencyType, out CurrencyPrototype? p))
+                if (_prototype.TryIndex(bankAccount.Value.Comp.CurrencyType, out CurrencyPrototype? p))
                     currencySymbol = Loc.GetString(p.CurrencySymbol);
             }
             idCardEntityName = MetaData(idCardEntityUid).EntityName;
@@ -232,7 +229,7 @@ public sealed class ATMSystem : SharedATMSystem
         }
 
         var currency = uid.Comp.CurrencyWhitelist.First();
-        if (!_proto.TryIndex<CurrencyPrototype>(currency, out var proto))
+        if (!_prototype.TryIndex<CurrencyPrototype>(currency, out var proto))
         {
             Deny(uid);
             return;

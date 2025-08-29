@@ -15,7 +15,6 @@ public sealed class EmoteOnDamageSystem : EntitySystem
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly ChatSystem _chatSystem = default!;
-    [Dependency] private readonly IPrototypeManager _prototype = default!;
 
     public override void Initialize()
     {
@@ -46,7 +45,7 @@ public sealed class EmoteOnDamageSystem : EntitySystem
         // DS14-start
         if (emoteOnDamage.ValidDamageGroups != null && args.DamageDelta != null)
         {
-            foreach (var (group, _) in args.DamageDelta.GetDamagePerGroup(_prototype))
+            foreach (var (group, _) in args.DamageDelta.GetDamagePerGroup(_prototypeManager))
             {
                 if (!emoteOnDamage.ValidDamageGroups.Contains(group))
                     return;

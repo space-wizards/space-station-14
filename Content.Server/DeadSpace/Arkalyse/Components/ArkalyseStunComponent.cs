@@ -15,8 +15,8 @@ public sealed partial class ArkalyseStunComponent : Component
     [DataField]
     public EntityUid? ActionStunArkalyseAttackEntity;
 
-    [DataField("actionStunArkalyseAttack", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
-    public string ActionStunArkalyseAttack = "ActionStunArkalyseAttack";
+    [DataField]
+    public EntProtoId ActionStunArkalyseAttack = "ActionStunArkalyseAttack";
 
     [DataField]
     public bool IsStunedAttack = false;

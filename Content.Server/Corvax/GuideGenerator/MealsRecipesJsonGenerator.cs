@@ -7,7 +7,7 @@ using Content.Shared.Kitchen;
 using Robust.Shared.Prototypes;
 using Content.Shared.Construction.Prototypes;
 using Content.Server.Construction.Components;
-using Content.Server.EntityEffects.Effects;
+using Content.Shared.EntityEffects.Effects;
 
 namespace Content.Server.GuideGenerator;
 

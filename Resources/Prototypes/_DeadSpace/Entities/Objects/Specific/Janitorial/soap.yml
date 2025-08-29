@@ -11,8 +11,9 @@
   - type: SolutionContainerVisuals
     fillBaseName: kriss-
   - type: Slippery
-    paralyzeTime: 2
-    launchForwardsMultiplier: 14
+    slipData:
+      knockdownTime: 2
+      launchForwardsMultiplier: 14
   - type: SolutionContainerManager
     solutions:
       soap:

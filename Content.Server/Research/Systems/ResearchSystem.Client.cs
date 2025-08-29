@@ -62,7 +62,7 @@ public sealed partial class ResearchSystem
 
     private void OnClientMapInit(EntityUid uid, ResearchClientComponent component, MapInitEvent args)
     {
-        var allServers = GetGridServers(uid).ToList();
+        var allServers = GetServers(uid).ToList();
 
         if (allServers.Count > 0)
             RegisterClient(uid, allServers[0], component, allServers[0]);
@@ -103,7 +103,7 @@ public sealed partial class ResearchSystem
 
         TryGetClientServer(uid, out _, out var serverComponent, component);
 
-        var names = GetGridServerNames(uid);
+        var names = GetServerNames(uid);
         var state = new ResearchClientBoundInterfaceState(
             names.Length,
             names,

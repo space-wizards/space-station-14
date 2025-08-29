@@ -361,7 +361,7 @@
       sprite: _DeadSpace/Sponsor/pvrsifvlAlt/magboots.rsi
       layers:
       - state: icon
-        map: [ "enum.ToggleVisuals.Layer" ]
+        map: [ "enum.ToggleableVisuals.Layer" ]
     - type: Clothing
       sprite: _DeadSpace/Sponsor/pvrsifvlAlt/magboots.rsi
     - type: ClothingSpeedModifier
@@ -619,7 +619,7 @@
     - state: icon-o
       shader: unshaded
       visible: false
-      map: ["enum.ToggleVisuals.Layer"]
+      map: ["enum.ToggleableVisuals.Layer"]
 
 #Гарнитура
 - type: entity

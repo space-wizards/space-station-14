@@ -130,9 +130,6 @@ public sealed partial class NecromorfSystem : SharedInfectionDeadSystem
 
     private void OnStartup(EntityUid uid, NecromorfComponent component, ComponentStartup args)
     {
-        if (component.EmoteSoundsId == null)
-            return;
-
         _protoManager.TryIndex(component.EmoteSoundsId, out component.EmoteSounds);
     }
 
@@ -158,12 +155,8 @@ public sealed partial class NecromorfSystem : SharedInfectionDeadSystem
         if (!HasComp<DemonDashComponent>(uid) && VirusEffectsConditions.HasEffect(component.StrainData.Effects, VirusEffects.Dash))
         {
             AddComp<DemonDashComponent>(uid);
-            var lcc = new LimitedChargesComponent(1, 1);
-
-            if (HasComp<LimitedChargesComponent>(uid))
-                RemComp<LimitedChargesComponent>(uid);
-
-            AddComp(uid, lcc);
+            if (!HasComp<LimitedChargesComponent>(uid))
+                AddComp<LimitedChargesComponent>(uid);
         }
 
         if (!HasComp<InsulatedComponent>(uid) && VirusEffectsConditions.HasEffect(component.StrainData.Effects, VirusEffects.Insulated))

@@ -57,7 +57,7 @@
         sound:
           collection: MetalGlassBreak
   - type: Storage
-    maxItemSize: Normal
+    maxItemSize: Large # DS14
     grid:
     - 0,0,19,5
   - type: ReagentDispenser

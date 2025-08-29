@@ -8,6 +8,7 @@ using Content.Server.Atmos.Components;
 using Content.Shared.Eye.Blinding.Components;
 using Content.Shared.Speech.Muting;
 using Content.Shared.CombatMode.Pacification;
+using Content.Shared.Body.Events;
 
 namespace Content.Server.DeadSpace.Abilities.Cocoon;
 
@@ -17,6 +18,7 @@ public sealed class CocoonSystem : EntitySystem
     [Dependency] private readonly IGameTiming _gameTiming = default!;
     [Dependency] private readonly RespiratorSystem _respirator = default!;
     private ISawmill _sawmill = default!;
+
     const float Factor = 1f;
 
     public override void Initialize()
@@ -95,6 +97,7 @@ public sealed class CocoonSystem : EntitySystem
 
         return true;
     }
+
     public EntityUid? GetPrisoner(EntityUid uid, CocoonComponent? component = null)
     {
         if (!Resolve(uid, ref component))
@@ -140,7 +143,6 @@ public sealed class CocoonSystem : EntitySystem
         {
             _sawmill.Warning("BarotraumaComponent is either already present or null.");
         }
-
     }
 
     public void UpdateCocoon(EntityUid uid, CocoonComponent? component = null)
@@ -161,6 +163,7 @@ public sealed class CocoonSystem : EntitySystem
 
         component.NextTick = _gameTiming.CurTime + TimeSpan.FromSeconds(1);
     }
+
     private void Insert(EntityUid uid, EntityUid target, CocoonComponent? component = null)
     {
         if (!Resolve(uid, ref component, false))

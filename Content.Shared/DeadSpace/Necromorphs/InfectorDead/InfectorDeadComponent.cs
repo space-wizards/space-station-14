@@ -2,7 +2,6 @@
 
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 using Content.Shared.Storage;
 
 namespace Content.Shared.DeadSpace.Necromorphs.InfectorDead;
@@ -10,29 +9,24 @@ namespace Content.Shared.DeadSpace.Necromorphs.InfectorDead;
 [RegisterComponent, NetworkedComponent]
 public sealed partial class InfectorDeadComponent : Component
 {
-    [DataField("actionInfectionNecro", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
-    public string ActionInfectionNecro = "ActionInfectionNecro";
+    [DataField]
+    public EntProtoId ActionInfectionNecro = "ActionInfectionNecro";
 
-    [DataField("actionInfectionNecroEntity")]
+    [DataField]
     public EntityUid? ActionInfectionNecroEntity;
 
     [DataField("spawned", required: true)]
     public List<EntitySpawnEntry> SpawnedEntities = new();
 
-    [ViewVariables(VVAccess.ReadWrite)]
     [DataField]
     public float InfectedDuration = 2.5f;
 
-    [ViewVariables(VVAccess.ReadWrite)]
     [DataField]
     public float HealDuration = 12f;
 
-    [ViewVariables(VVAccess.ReadWrite)]
     [DataField]
     public float Duration = 2.5f;
 
-    [ViewVariables(VVAccess.ReadWrite)]
     [DataField]
     public bool HasGland = true;
-
 }

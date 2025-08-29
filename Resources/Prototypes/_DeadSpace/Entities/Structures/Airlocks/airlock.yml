@@ -38,8 +38,8 @@
   - type: ContainerFill
     containers:
       board: [ DoorElectronicsTaipan ]
-  - type: PaintableAirlock
-    group: TaipanStandard
+  - type: Paintable
+    group: TaipanAirlockStandard
 
 - type: entity
   id: AirlockTaipanGlass
@@ -50,8 +50,8 @@
   components:
   - type: Sprite
     sprite: _DeadSpace/Structures/Doors/Airlocks/taipan_glass.rsi
-  - type: PaintableAirlock
-    group: TaipanGlass
+  - type: Paintable
+    group: TaipanAirlockGlass
   - type: ContainerFill
     containers:
       board: [ DoorElectronicsTaipan ]

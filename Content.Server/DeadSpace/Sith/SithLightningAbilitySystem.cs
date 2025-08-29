@@ -78,7 +78,7 @@ public sealed class SithLightningAbilitySystem : EntitySystem
                 continue;
 
             _beam.TryCreateBeam(uid, entity, component.LightingPrototypeId);
-            _stun.TryParalyze(entity, TimeSpan.FromSeconds(5), true);
+            _stun.TryUpdateParalyzeDuration(entity, TimeSpan.FromSeconds(5));
         }
     }
 }

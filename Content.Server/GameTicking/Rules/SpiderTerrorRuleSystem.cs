@@ -388,9 +388,9 @@ public sealed class SpiderTerrorRuleSystem : GameRuleSystem<SpiderTerrorRuleComp
             if (mind == null)
                 continue;
 
-            foreach (var objId in mind.AllObjectives)
+            foreach (var objId in mind.Objectives)
             {
-                if (!HasComp<SpiderTerrorConditionsComponent>(objId))
+                if (!HasComp<SpiderTerrorConditionComponent>(objId))
                     continue;
 
                 var result = _objectives.GetProgress(objId, (mindId, mind));

@@ -33,13 +33,7 @@ public sealed class SpiderTerrorSystem : SharedBloodsuckerSystem
 
     private void OnMindRemoved(EntityUid uid, SpiderTerrorComponent component, MindRemovedMessage args)
     {
-        // DelObjective(args.Mind, args.Mind.Comp, component);
-        var mindComp = args.Mind.Comp;
-
-        if (_mind.TryFindObjective((args.Mind, mindComp), component.Proto, out var objective))
-            args.Mind.Comp.Objectives.Remove(objective.Value);
-
-        _role.MindTryRemoveRole<SpiderTerrorRoleComponent>(args.Mind);
+        _role.MindRemoveRole<SpiderTerrorRoleComponent>((args.Mind.Owner, args.Mind.Comp));
     }
 
     private void OnRoundEnd(EntityUid uid, SpiderTerrorComponent component, RoundEndTextAppendEvent args)

@@ -57,7 +57,6 @@
     useDelay: 0.5
   - type: InstantAction
     event: !type:ToggleLawsScreenEvent
-    useDelay: 0.5
 
 # DS14-start
 

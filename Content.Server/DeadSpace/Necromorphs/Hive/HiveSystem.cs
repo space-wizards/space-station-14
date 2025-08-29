@@ -26,25 +26,28 @@ public sealed class HiveSystem : EntitySystem
         SubscribeLocalEvent<HiveComponent, RatKingRaiseArmyActionEvent>(OnRaiseArmy, before: new[] { typeof(RatKingSystem) });
         SubscribeLocalEvent<HiveComponent, RatKingDomainActionEvent>(OnDomain, before: new[] { typeof(RatKingSystem) });
     }
+
     private void OnComponentInit(EntityUid uid, HiveComponent component, ComponentInit args)
     {
         component.NextTick = _timing.CurTime + component.Duration;
     }
+
     public override void Update(float frameTime)
     {
         base.Update(frameTime);
 
         var query = EntityQueryEnumerator<HiveComponent, LimitedChargesComponent>();
-        while (query.MoveNext(out var uid, out var comp, out var xform))
+        while (query.MoveNext(out var uid, out var hivec, out var charges))
         {
-            if (_timing.CurTime > comp.NextTick)
+            if (_timing.CurTime > hivec.NextTick)
             {
-                _charges.AddCharges(uid, 1, xform);
-                comp.NextTick = _timing.CurTime + comp.Duration;
-                _popup.PopupEntity(Loc.GetString($"Способность восстановилась, количество = {xform.Charges}"), uid, uid);
+                _charges.AddCharges((uid, charges), 1);
+                hivec.NextTick = _timing.CurTime + hivec.Duration;
+                _popup.PopupEntity(Loc.GetString($"Способность восстановилась, количество = {charges.LastCharges}"), uid, uid);
             }
         }
     }
+
     private void OnDomain(EntityUid uid, HiveComponent component, RatKingDomainActionEvent args)
     {
         if (args.Handled)
@@ -58,13 +61,14 @@ public sealed class HiveSystem : EntitySystem
             tileMix?.AdjustMoles(Gas.InfectionDeadSpace, ratKing.MolesAmmoniaPerDomain);
         }
     }
+
     private void OnRaiseArmy(EntityUid uid, HiveComponent component, RatKingRaiseArmyActionEvent args)
     {
         if (args.Handled)
             return;
 
         TryComp<LimitedChargesComponent>(uid, out var charges);
-        if (_charges.IsEmpty(uid, charges))
+        if (_charges.IsEmpty((uid, charges)))
         {
             _popup.PopupEntity(Loc.GetString("Вы не можете применить способность"), uid, uid);
             args.Handled = true;
@@ -72,6 +76,6 @@ public sealed class HiveSystem : EntitySystem
         }
 
         if (charges != null)
-            _charges.UseCharge(uid, charges);
+            _charges.TryUseCharge((uid, charges));
     }
 }

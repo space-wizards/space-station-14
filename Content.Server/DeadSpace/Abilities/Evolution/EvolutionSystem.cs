@@ -20,6 +20,8 @@ public sealed class EvolutionSystem : EntitySystem
     [Dependency] private readonly SharedDoAfterSystem _doAfter = default!;
     [Dependency] private readonly SharedMindSystem _mindSystem = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
+    [Dependency] private readonly GhostRoleSystem _ghost = default!;
+    [Dependency] private readonly ISharedPlayerManager _player = default!;
 
     public override void Initialize()
     {
@@ -159,10 +161,12 @@ public sealed class EvolutionSystem : EntitySystem
             return;
         }
         var id = ghostRoleComponent.Identifier;
-        var session = mind.Session; // Store session in a local variable
+        if (!_player.TryGetSessionById(mind.UserId, out var session))
+            return;
+
         if (session != null)
         {
-            EntityManager.EntitySysManager.GetEntitySystem<GhostRoleSystem>().Takeover(session, id);
+            _ghost.Takeover(session, id);
         }
         else
         {

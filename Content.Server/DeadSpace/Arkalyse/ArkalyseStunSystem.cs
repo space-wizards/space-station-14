@@ -59,7 +59,7 @@ public sealed class ArkalyseStunSystem : EntitySystem
                 if (TryComp<MobStateComponent>(entity, out var mobState) && mobState.CurrentState == MobState.Alive)
                 {
                     _audio.PlayPvs(component.HitSound, args.User, AudioParams.Default.WithVolume(0.5f));
-                    _stun.TryParalyze(entity, TimeSpan.FromSeconds(component.ParalyzeTime), true);
+                    _stun.TryUpdateParalyzeDuration(entity, TimeSpan.FromSeconds(component.ParalyzeTime));
                     component.IsStunedAttack = false;
                 }
             }

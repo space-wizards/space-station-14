@@ -119,10 +119,11 @@ public sealed class HeadsetSystem : SharedHeadsetSystem
         }
 
         if (TryComp(parent, out ActorComponent? actor))
+        {
             _netMan.ServerSendMessage(args.ChatMsg, actor.PlayerSession.Channel);
-            if (actorUid != args.MessageSource && TryComp(args.MessageSource, out TTSComponent? _))
+            if (parent != args.MessageSource && TryComp(args.MessageSource, out TTSComponent? _))
             {
-                args.Receivers.Add(actorUid);
+                args.Receivers.Add(parent);
             }
         }
         // TTS-edit-end

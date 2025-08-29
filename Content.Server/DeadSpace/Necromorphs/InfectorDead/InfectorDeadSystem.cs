@@ -20,6 +20,7 @@ using Content.Shared.Kitchen.Components;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Chemistry.Components.SolutionManager;
 using Content.Shared.Chemistry.EntitySystems;
+using Content.Server.Hands.Systems;
 
 namespace Content.Server.DeadSpace.InfectorDead;
 
@@ -33,6 +34,7 @@ public sealed partial class InfectorDeadSystem : EntitySystem
     [Dependency] private readonly SharedActionsSystem _actions = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
     [Dependency] private readonly SharedSolutionContainerSystem _solutionContainer = default!;
+    [Dependency] private readonly HandsSystem _hands = default!;
 
     public override void Initialize()
     {
@@ -60,12 +62,10 @@ public sealed partial class InfectorDeadSystem : EntitySystem
         if (!TryComp<HandsComponent>(args.User, out var handsComp))
             return;
 
-        var item = handsComp.ActiveHandEntity;
-
-        if (item == null)
+        if (_hands.GetActiveItem(args.User) is not { } item)
             return;
 
-        if (HasComp<SharpComponent>(item.Value))
+        if (HasComp<SharpComponent>(item))
         {
             args.Verbs.Add(new Verb()
             {

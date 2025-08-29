@@ -212,15 +212,6 @@
     back:
     - BoxMimeMoth
 
-- type: loadout
-  id: EmergencyMothMime
-  effects:
-  - !type:GroupLoadoutEffect
-    proto: EffectSpeciesMoth
-  storage:
-    back:
-    - BoxMimeMoth
-
 # Engineering / Extended
 - type: loadout
   id: EmergencyOxygenExtended

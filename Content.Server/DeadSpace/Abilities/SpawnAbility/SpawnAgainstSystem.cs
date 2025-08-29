@@ -102,7 +102,7 @@ public sealed class SpawnAgainstSystem : EntitySystem
         // Get the tile in front of the uni
         var offsetValue = xform.LocalRotation.ToWorldVec();
         var coords = xform.Coordinates.Offset(offsetValue).SnapToGrid(EntityManager, _mapMan);
-        var tile = coords.GetTileRef(EntityManager, _mapMan);
+        var tile = _turf.GetTileRef(coords);
         if (tile == null)
             return null;
 

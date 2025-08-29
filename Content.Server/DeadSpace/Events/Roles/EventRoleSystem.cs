@@ -4,6 +4,7 @@ using Content.Server.Chat.Managers;
 using Content.Shared.Mind;
 using Content.Shared.Chat;
 using Content.Shared.DeadSpace.Events.Roles.Components;
+using Robust.Server.Player;
 
 namespace Content.Server.DeadSpace.Events.Roles;
 
@@ -11,6 +12,7 @@ public sealed class AutoDeleteOnDeathSystem : EntitySystem
 {
     [Dependency] private readonly IChatManager _chatManager = default!;
     [Dependency] private readonly SharedMindSystem _mindSystem = default!;
+    [Dependency] private readonly IPlayerManager _player = default!;
 
     public override void Initialize()
     {
@@ -22,31 +24,21 @@ public sealed class AutoDeleteOnDeathSystem : EntitySystem
 
     private void OnComponentAdd(EntityUid uid, EventRoleComponent component, ComponentAdd args)
     {
-        if (!_mindSystem.TryGetMind(uid, out _, out var mind))
-        {
-            return;
-        }
-
-        if (mind.Session != null)
+        if (_mindSystem.TryGetMind(uid, out _, out var mind) && _player.TryGetSessionById(mind.UserId, out var session))
         {
             var message = Loc.GetString("eventrole-giverolemassage");
             var wrappedMessage = Loc.GetString("chat-manager-server-wrap-message", ("message", message));
-            _chatManager.ChatMessageToOne(ChatChannel.Server, message, wrappedMessage, default, false, mind.Session.Channel, Color.FromHex("#5e9cff"));
+            _chatManager.ChatMessageToOne(ChatChannel.Server, message, wrappedMessage, default, false, session.Channel, Color.FromHex("#5e9cff"));
         }
     }
 
     private void OnComponentRem(EntityUid uid, EventRoleComponent component, ComponentRemove args)
     {
-        if (!_mindSystem.TryGetMind(uid, out _, out var mind))
-        {
-            return;
-        }
-
-        if (mind.Session != null)
+        if (_mindSystem.TryGetMind(uid, out _, out var mind) && _player.TryGetSessionById(mind.UserId, out var session))
         {
             var message = Loc.GetString("eventrole-takerolemassage");
             var wrappedMessage = Loc.GetString("chat-manager-server-wrap-message", ("message", message));
-            _chatManager.ChatMessageToOne(ChatChannel.Server, message, wrappedMessage, default, false, mind.Session.Channel, Color.FromHex("#5e9cff"));
+            _chatManager.ChatMessageToOne(ChatChannel.Server, message, wrappedMessage, default, false, session.Channel, Color.FromHex("#5e9cff"));
         }
     }
 }

@@ -3,10 +3,10 @@
 using Content.Server.DeadSpace.Demons.DemonShadow.Components;
 using Robust.Server.GameObjects;
 using Robust.Shared.Containers;
-using Content.Server.Body.Components;
 using Robust.Shared.Timing;
 using Content.Shared.Destructible;
 using Content.Server.DeadSpace.Abilities.Cocoon.Components;
+using Content.Shared.Body.Events;
 
 namespace Content.Server.DeadSpace.Demons.LockCocoon;
 
@@ -17,6 +17,7 @@ public sealed class ShadowCocoonSystem : EntitySystem
     [Dependency] private readonly EntityLookupSystem _lookup = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
     [Dependency] private readonly SharedPointLightSystem _pointLightSystem = default!;
+
     public override void Initialize()
     {
         base.Initialize();
@@ -41,6 +42,7 @@ public sealed class ShadowCocoonSystem : EntitySystem
             }
         }
     }
+
     private void TurnOffElectricity(EntityUid uid, ShadowCocoonComponent component)
     {
         if (!TryComp<TransformComponent>(uid, out var xform))
@@ -69,11 +71,13 @@ public sealed class ShadowCocoonSystem : EntitySystem
 
         component.NextTick = _gameTiming.CurTime + TimeSpan.FromSeconds(1);
     }
+
     private void OnInit(EntityUid uid, ShadowCocoonComponent component, ComponentInit args)
     {
         component.NextTick = _gameTiming.CurTime + TimeSpan.FromSeconds(1);
     }
-    protected void OnMapInit(EntityUid uid, ShadowCocoonComponent component, MapInitEvent args)
+
+    private void OnMapInit(EntityUid uid, ShadowCocoonComponent component, MapInitEvent args)
     {
         if (!HasComp<CocoonComponent>(uid))
             AddComp<CocoonComponent>(uid);
@@ -83,6 +87,7 @@ public sealed class ShadowCocoonSystem : EntitySystem
     {
         DestroyCocoon(uid, component);
     }
+
     private void OnShutDown(EntityUid uid, ShadowCocoonComponent component, ComponentShutdown args)
     {
         DestroyCocoon(uid, component);
@@ -97,11 +102,10 @@ public sealed class ShadowCocoonSystem : EntitySystem
     {
         foreach (var entity in component.PointEntities)
         {
-            if (TryComp<PointLightComponent>(entity, out var poweredLight))
+            if (TryComp<PointLightComponent>(entity, out _))
             {
                 _pointLightSystem.SetEnabled(entity, true);
             }
         }
     }
-
 }

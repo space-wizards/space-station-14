@@ -41,9 +41,6 @@
   id: FittableInBackpackCase
 
 - type: Tag
-  id: GoldenPlunger
-
-- type: Tag
   id: HardHat
 
 - type: Tag

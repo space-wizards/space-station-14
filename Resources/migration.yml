@@ -929,7 +929,7 @@ BarSignWhiskeyEchoesAlignTile: BarSignWhiskeyEchoes
 # 2025-06-21
 ClothingNeckHeadphones: ClothingMultipleHeadphones
 
-# 2025-06-23
+# 2025-06-23 - DS14
 EncryptionKeyTypan: EncryptionKeyTaipan
 ClothingBackpackSatchelTypan: ClothingBackpackSatchelTaipan
 ClothingBackpackSatchelTypanFilled: ClothingBackpackSatchelTaipanFilled
@@ -979,11 +979,26 @@ SpawnPointLatejoinTypanMedic: SpawnPointLatejoinTaipanMedic
 SpawnPointLatejoinTypanRd: SpawnPointLatejoinTaipanRD
 SpawnPointLatejoinTypanScience: SpawnPointLatejoinTaipanScience
 
-# 2025-06-30
+# 2025-06-30 - DS14
 ADTAbakanRifleAEK: WeaponRifleAEK
 
-# 2025-07-20
+# 2025-07-20 - DS14
 SpawnPointMagistrat: null
 
 # 2025-07-30 - DS14
 HolopadHandheld: null
+
+# 2025-08-10 - DS14
+ComplexNecroObeliskArtifact: null
+CrateArtifactContainerNecroobelisk: null
+SpawnMobXeno: SpawnMobXenoBurrower
+SpawnMobXenoRouny: SpawnMobXenoBurrower
+ADTObjectsWeaponSubMachineGunPPCH45S: null
+WeaponSubMachineGunPP9000L: null
+MagazinePistolSubMachineGunPP9000: null
+MagazinePistolSubMachineGunPP9000Empty: null
+MagazinePistolSubMachineGunPP9000Practice: null
+MagazinePistolSubMachineGunPP9000Uranium: null
+SpawnMobParrotPoly: SpawnMobPollyParrot
+MobParrotPoly: MobPollyParrot
+ADTObjectsWeaponSubMachineGunUmp: null

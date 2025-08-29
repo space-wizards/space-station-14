@@ -9,13 +9,13 @@
       - tag: ToySword
         name: игрушечный меч
         icon:
-          sprite: Objects/Fun/toy_sword.rsi
+          sprite: Objects/Weapons/Melee/e_sword.rsi
           state: e_sword
         doAfter: 3
       - tag: ToySword
         name: игрушечный меч
         icon:
-          sprite: Objects/Fun/toy_sword.rsi
+          sprite: Objects/Weapons/Melee/e_sword.rsi
           state: e_sword
         doAfter: 3
       - material: Cable

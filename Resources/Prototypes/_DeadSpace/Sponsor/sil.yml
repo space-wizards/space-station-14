@@ -168,7 +168,7 @@
     sprite: _DeadSpace/Sponsor/Sil/magboots.rsi
     layers:
     - state: icon
-      map: [ "enum.ToggleVisuals.Layer" ]
+      map: [ "enum.ToggleableVisuals.Layer" ]
   - type: Clothing
     sprite: _DeadSpace/Sponsor/Sil/magboots.rsi
   - type: ClothingSpeedModifier

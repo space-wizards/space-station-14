@@ -2,7 +2,6 @@
 
 using Robust.Shared.Audio;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 using Robust.Shared.GameStates;
 
 namespace Content.Shared.DeadSpace.Abilities.SpawnAbility.Components;
@@ -10,21 +9,21 @@ namespace Content.Shared.DeadSpace.Abilities.SpawnAbility.Components;
 [RegisterComponent, NetworkedComponent]
 public sealed partial class SpawnAgainstComponent : Component
 {
-    [DataField("spawnedEntities", required: true)]
-    public string[] SpawnedEntities { get; set; } = Array.Empty<string>();
+    [DataField(required: true)]
+    public List<EntProtoId> SpawnedEntities { get; set; } = [];
 
-    [ViewVariables(VVAccess.ReadWrite), DataField("proto", required: false, customTypeSerializer:typeof(PrototypeIdSerializer<EntityPrototype>))]
-    public string SelectEntity = "Error";
+    [DataField("proto", required: false)]
+    public EntProtoId SelectEntity = "Error";
 
-    [DataField("spawnAgainstAction", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
-    public string? SpawnAgainstAction = "ActionSpawnAgainst";
+    [DataField]
+    public EntProtoId SpawnAgainstAction = "ActionSpawnAgainst";
 
-    [DataField("spawnAgainstActionEntity")]
+    [DataField]
     public EntityUid? SpawnAgainstActionEntity;
 
-    [DataField("duration")]
+    [DataField]
     public float Duration = 5f;
 
-    [DataField("spawnSound")]
+    [DataField]
     public SoundSpecifier? SpawnSound = default;
 }

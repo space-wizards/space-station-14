@@ -1,11 +1,4 @@
 - type: stealTargetGroup
-  id: AnimalPoly
-  name: steal-target-groups-animal-poly
-  sprite:
-    sprite: Mobs/Animals/parrot.rsi
-    state: parrot
-
-- type: stealTargetGroup
   id: PortableCameraMonitor
   name: steal-target-groups-portable-camera-monitor
   sprite:

@@ -4,11 +4,13 @@
   description: Выпускает в цель молнию.
   categories: [ HideSpawnMenu ]
   components:
+  - type: Action
+    useDelay: 20
+    icon: _DeadSpace/Sith/actions/sith_lightning.png
+  - type: TargetAction
+    range: 5
   - type: EntityTargetAction
     canTargetSelf: false
-    useDelay: 20
-    range: 5
-    icon: _DeadSpace/Sith/actions/sith_lightning.png
     event: !type:SithLightningEvent
 
 - type: entity
@@ -17,11 +19,13 @@
   description: Отталкивает или притягивает одну цель.
   categories: [ HideSpawnMenu ]
   components:
+  - type: Action
+    useDelay: 8
+    icon: _DeadSpace/Sith/actions/force_Any.png
+  - type: TargetAction
+    range: 8
   - type: EntityTargetAction
     canTargetSelf: false
-    useDelay: 8
-    range: 8
-    icon: _DeadSpace/Sith/actions/force_Any.png
     event: !type:SithForceOneEvent
 
 - type: entity
@@ -30,9 +34,10 @@
   description: Отталкивает или притягивает всё вокруг.
   categories: [ HideSpawnMenu ]
   components:
-  - type: InstantAction
+  - type: Action
     useDelay: 20
     icon: _DeadSpace/Sith/actions/force_all.png
+  - type: InstantAction
     event: !type:SithForceEvent
 
 - type: entity
@@ -41,9 +46,10 @@
   description: Барьер силы который отталкивает или поглощает удары.
   categories: [ HideSpawnMenu ]
   components:
-  - type: InstantAction
+  - type: Action
     useDelay: 10
     icon: _DeadSpace/Sith/actions/shield.png
+  - type: InstantAction
     event: !type:SithShieldEvent
 
 - type: entity
@@ -52,11 +58,13 @@
   description: Влияет на разум цели с помощью силы, подчиняя его.
   categories: [ HideSpawnMenu ]
   components:
+  - type: Action
+    useDelay: 10
+    icon: _DeadSpace/Sith/actions/submission.png
+  - type: TargetAction
+    range: 8
   - type: EntityTargetAction
     canTargetSelf: false
-    useDelay: 10
-    range: 8
-    icon: _DeadSpace/Sith/actions/submission.png
     event: !type:SithSubmissionEvent
 
 - type: entity
@@ -65,12 +73,13 @@
   description: Телепортирует ваш энерго меч вам в руки.
   categories: [ HideSpawnMenu ]
   components:
-  - type: InstantAction
+  - type: Action
     useDelay: 1
     icon:
       sprite: Objects/Weapons/Melee/energykatana.rsi
       state: icon
     itemIconStyle: NoItem
+  - type: InstantAction
     event: !type:RecallSithEswordEvent {}
 
 - type: entity
@@ -79,10 +88,11 @@
   description: Телепортирует вас к энерго мечу и даёт вам его в руку.
   categories: [ HideSpawnMenu ]
   components:
-  - type: InstantAction
+  - type: Action
     useDelay: 1
     icon:
       sprite: Objects/Weapons/Melee/energykatana.rsi
       state: icon
     itemIconStyle: noItem
+  - type: InstantAction
     event: !type:SithEswordTeleport {}

@@ -222,7 +222,7 @@
       sprite: _DeadSpace/Sponsor/Yosif/magboots.rsi
       layers:
       - state: icon
-        map: [ "enum.ToggleVisuals.Layer" ]
+        map: [ "enum.ToggleableVisuals.Layer" ]
     - type: Clothing
       sprite: _DeadSpace/Sponsor/Yosif/magboots.rsi
     - type: ClothingSpeedModifier

@@ -30,7 +30,7 @@
   equipment:
     id: SeniorSalvagePDA
     ears: ClothingHeadsetMining
-    neck: ClothingNeckCloakMiner
+    neck: ClothingNeckCloakSalvagerSupreme
     socks: ClothingUnderwearSocksSeniorSalvage
   storage:
     back:

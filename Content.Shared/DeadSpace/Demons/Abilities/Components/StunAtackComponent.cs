@@ -3,7 +3,6 @@
 using Robust.Shared.GameStates;
 using Content.Shared.Damage;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
 namespace Content.Shared.DeadSpace.Demons.Abilities.Components;
 
@@ -12,8 +11,7 @@ namespace Content.Shared.DeadSpace.Demons.Abilities.Components;
 public sealed partial class StunAttackComponent : Component
 {
 
-    [DataField("healingOnBite")]
-    [ViewVariables(VVAccess.ReadOnly)]
+    [DataField, ViewVariables(VVAccess.ReadOnly)]
     public DamageSpecifier HealingOnBite = new()
     {
         DamageDict = new()
@@ -25,22 +23,17 @@ public sealed partial class StunAttackComponent : Component
     };
 
     [DataField("stunAttack")]
-    [ViewVariables(VVAccess.ReadWrite)]
     public bool IsStunAttack = false;
 
-    [DataField("actionStunAttack", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
-    public string ActionStunAttack = "ActionStunAttack";
+    [DataField]
+    public EntProtoId ActionStunAttack = "ActionStunAttack";
 
-    [DataField("actionStunAttackEntity")]
+    [DataField]
     public EntityUid? ActionStunAttackEntity;
 
-    [ViewVariables(VVAccess.ReadWrite)]
-    [DataField, AutoNetworkedField]
-    [Access(Other = AccessPermissions.ReadWrite)]
+    [DataField, AutoNetworkedField, Access(Other = AccessPermissions.ReadWrite)]
     public float ParalyzeTime = 5f;
 
-    [ViewVariables(VVAccess.ReadWrite)]
-    [DataField, AutoNetworkedField]
-    [Access(Other = AccessPermissions.ReadWrite)]
+    [DataField, AutoNetworkedField, Access(Other = AccessPermissions.ReadWrite)]
     public float LaunchForwardsMultiplier = 1f;
 }

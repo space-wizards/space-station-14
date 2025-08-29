@@ -4,19 +4,15 @@ using Content.Shared.DeadSpace.Abilities.Egg.Components;
 using Content.Shared.EntityEffects;
 using Robust.Shared.Prototypes;
 
-namespace Content.Server.Chemistry.ReagentEffects;
+namespace Content.Shared.EntityEffects.Effects;
 
 public sealed partial class CureEgg : EntityEffect
 {
     protected override string? ReagentEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys)
-    {
-        return Loc.GetString("reagent-effect-guidebook-cure-egg", ("chance", Probability));
-    }
+        => Loc.GetString("reagent-effect-guidebook-cure-egg", ("chance", Probability));
 
     public override void Effect(EntityEffectBaseArgs args)
     {
-        var entityManager = args.EntityManager;
-
-        entityManager.RemoveComponent<EggComponent>(args.TargetEntity);
+        args.EntityManager.RemoveComponent<EggComponent>(args.TargetEntity);
     }
 }

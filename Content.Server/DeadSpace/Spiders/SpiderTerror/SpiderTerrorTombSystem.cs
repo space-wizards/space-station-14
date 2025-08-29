@@ -2,7 +2,6 @@
 
 using Content.Server.DeadSpace.Spiders.SpiderTerror.Components;
 using Content.Shared.Maps;
-using Content.Shared.Mobs.Systems;
 using Robust.Shared.Map;
 using System.Numerics;
 using Robust.Shared.Timing;
@@ -16,13 +15,14 @@ namespace Content.Server.DeadSpace.Spiders.SpiderTerror;
 
 public sealed class SpiderTerrorTombSystem : EntitySystem
 {
-    [Dependency] private readonly SpiderTerrorConditionsSystem _spiderTerrorConditions = default!;
+    [Dependency] private readonly SpiderTerrorConditionSystem _spiderTerrorConditions = default!;
     [Dependency] private readonly ITileDefinitionManager _tiledef = default!;
     [Dependency] private readonly EntityLookupSystem _lookup = default!;
     [Dependency] private readonly TileSystem _tile = default!;
     [Dependency] private readonly IGameTiming _gameTiming = default!;
     [Dependency] private readonly StationSystem _station = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
+
     public override void Initialize()
     {
         base.Initialize();
@@ -45,6 +45,7 @@ public sealed class SpiderTerrorTombSystem : EntitySystem
             }
         }
     }
+
     private void OnExamine(EntityUid uid, SpiderTerrorTombComponent component, ExaminedEvent args)
     {
         if (!HasComp<SpiderTerrorComponent>(args.Examiner))
@@ -54,6 +55,7 @@ public sealed class SpiderTerrorTombSystem : EntitySystem
         args.PushMarkup(Loc.GetString($"Содержит [color=red]{bloodVolume} крови[/color]."));
         return;
     }
+
     private void OnComponentStartUp(EntityUid uid, SpiderTerrorTombComponent component, ComponentStartup args)
     {
         if (!TryComp<TransformComponent>(uid, out var xform))
@@ -91,10 +93,9 @@ public sealed class SpiderTerrorTombSystem : EntitySystem
 
             var entities = _lookup.GetEntitiesInRange<SpiderTerrorTombComponent>(_transform.GetMapCoordinates(uid, Transform(uid)), component.Range);
 
-            foreach (var (entity, comp) in entities)
+            foreach (var (_, comp) in entities)
             {
                 comp.MaxReagent = component.OldMaxReagent / entities.Count;
-                Console.WriteLine(entity);
             }
         }
     }
@@ -136,6 +137,7 @@ public sealed class SpiderTerrorTombSystem : EntitySystem
         AddReagent(uid, component.Regen, component);
         component.TimeUtilRegen = _gameTiming.CurTime + TimeSpan.FromSeconds(1);
     }
+
     public void AddReagent(EntityUid uid, float reagent, SpiderTerrorTombComponent? component = null)
     {
         if (!Resolve(uid, ref component))
@@ -143,5 +145,4 @@ public sealed class SpiderTerrorTombSystem : EntitySystem
 
         component.Reagent += reagent;
     }
-
 }
