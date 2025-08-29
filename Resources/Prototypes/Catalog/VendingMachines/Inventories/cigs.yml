@@ -14,7 +14,7 @@
     CheapLighter: 4
     Lighter: 2
     FlippoLighter: 2
-    CigPackRollie: 1
+    CigPackRollie: 1 # Starlight-edit
   contrabandInventory:
     GroundTobacco: 3
     CigarGold: 2
