@@ -1,12 +1,12 @@
 - type: preloadedGrid
   id: ShuttleCargoLost
   path: /Maps/Shuttles/ShuttleEvent/lost_cargo.yml
-  copies: 2
+  copies: 4
 
 - type: preloadedGrid
   id: TravelingCuisine
   path: /Maps/Shuttles/ShuttleEvent/traveling_china_cuisine.yml
-  copies: 2
+  copies: 3
 
 - type: preloadedGrid
   id: DisasterEvacPod

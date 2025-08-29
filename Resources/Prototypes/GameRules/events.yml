@@ -371,7 +371,7 @@
     startAudio:
       path: /Audio/Announcements/attention.ogg
     endAnnouncement: station-event-gas-leak-end-announcement
-    weight: 1.3
+    weight: 0.3
   - type: GasLeakRule
 
 - type: entity
@@ -390,7 +390,7 @@
   parent: BaseStationEventShortDelay
   components:
   - type: StationEvent
-    weight: 0.8
+    weight: 0.2
     startAnnouncement: station-event-power-grid-check-start-announcement
     endAnnouncement: station-event-power-grid-check-end-announcement
     startAudio:
@@ -406,7 +406,7 @@
   id: SolarFlare
   components:
   - type: StationEvent
-    weight: 1.5
+    weight: 0.2
     startAnnouncement: station-event-solar-flare-start-announcement
     endAnnouncement: station-event-solar-flare-end-announcement
     startAudio:
@@ -427,7 +427,7 @@
     - Service
     - Supply
     extraCount: 2
-    lightBreakChancePerSecond: 0.0005
+    lightBreakChancePerSecond: 0.0003
     doorToggleChancePerSecond: 0.001
 
 - type: entity

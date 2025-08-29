@@ -25,9 +25,9 @@
     startAnnouncement: station-event-vent-creatures-start-announcement
     startAudio:
       path: /Audio/Announcements/attention.ogg
-    earliestStart: 15
-    weight: 6
-    duration: 50
+    earliestStart: 1800
+    weight: 0.2
+    duration: 3600
   - type: VentCrittersRule
     entries:
     - id: MobMouse
@@ -48,9 +48,9 @@
     startAnnouncement: station-event-vent-creatures-start-announcement
     startAudio:
       path: /Audio/Announcements/attention.ogg
-    earliestStart: 15
-    weight: 6
-    duration: 50
+    earliestStart: 1800
+    weight: 0.1
+    duration: 3600
     minimumPlayers: 30 # Hopefully this is enough for the Rat King's potential Army (it was not, raised from 15 -> 30)
   - type: VentCrittersRule
     entries:
@@ -74,8 +74,8 @@
     startAnnouncement: station-event-vent-creatures-start-announcement
     startAudio:
       path: /Audio/Announcements/attention.ogg
-    weight: 6
-    duration: 50
+    weight: 0.2
+    duration: 3600
   - type: VentCrittersRule
     entries:
     - id: MobCockroach
@@ -93,8 +93,8 @@
     startAnnouncement: station-event-vent-creatures-start-announcement
     startAudio:
       path: /Audio/Announcements/attention.ogg
-    weight: 6
-    duration: 50
+    weight: 0.2
+    duration: 3600
   - type: VentCrittersRule
     entries:
     - id: MobSnail
@@ -113,8 +113,8 @@
     startAudio:
       path: /Audio/Announcements/attention.ogg
     earliestStart: 15
-    weight: 6
-    duration: 50
+    weight: 0.2
+    duration: 3600
     minimumPlayers: 30
   - type: VentCrittersRule
     entries:

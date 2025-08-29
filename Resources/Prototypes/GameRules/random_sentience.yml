@@ -3,9 +3,9 @@
   parent: BaseGameRule
   components:
   - type: StationEvent
-    weight: 6
-    duration: 1
-    maxOccurrences: 1 # this event has diminishing returns on interesting-ness, so we cap it
+    weight: 0.1
+    duration: 3600
+    maxOccurrences: 2 # this event has diminishing returns on interesting-ness, so we cap it
     startAudio:
       path: /Audio/Announcements/attention.ogg
   - type: RandomSentienceRule
