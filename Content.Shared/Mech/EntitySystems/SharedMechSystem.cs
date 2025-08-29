@@ -89,7 +89,6 @@ public abstract partial class SharedMechSystem : EntitySystem
         SubscribeLocalEvent<MechEquipmentComponent, ShotAttemptedEvent>(OnMechEquipmentShotAttempt);
         SubscribeLocalEvent<MechEquipmentComponent, AttemptMeleeEvent>(OnMechEquipmentMeleeAttempt);
 
-        SubscribeLocalEvent<MechComponent, UserActivateInWorldEvent>(OnMechActivateInWorld);
         SubscribeLocalEvent<MechPilotComponent, AccessibleOverrideEvent>(OnPilotAccessible);
         SubscribeLocalEvent<MechEquipmentComponent, GettingUsedAttemptEvent>(OnMechEquipmentGettingUsedAttempt);
         SubscribeLocalEvent<MechEquipmentComponent, ActivatableUIOpenAttemptEvent>(OnMechEquipmentUiOpenAttempt);
@@ -756,17 +755,6 @@ public abstract partial class SharedMechSystem : EntitySystem
     private void OnMechEquipmentMeleeAttempt(Entity<MechEquipmentComponent> ent, ref AttemptMeleeEvent args)
     {
         args.Cancelled = !IsMechEquipmentUsableFromHands(ent);
-    }
-
-    private void OnMechActivateInWorld(EntityUid uid, MechComponent component, UserActivateInWorldEvent args)
-    {
-        if (!Vehicle.HasOperator(uid))
-            return;
-
-        if (component.CurrentSelectedEquipment != null)
-        {
-            RaiseLocalEvent(component.CurrentSelectedEquipment.Value, args);
-        }
     }
 
     private void OnPilotGetUsedEntity(EntityUid uid, MechPilotComponent pilot, ref GetUsedEntityEvent args)
