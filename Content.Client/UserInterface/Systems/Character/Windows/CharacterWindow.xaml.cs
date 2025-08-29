@@ -10,6 +10,7 @@ public sealed partial class CharacterWindow : DefaultWindow
     public CharacterWindow()
     {
         RobustXamlLoader.Load(this);
+        //starlight
         CharacterInfoTabs.SetTabTitle(0, Loc.GetString("character-info-objectives"));
         CharacterInfoTabs.SetTabTitle(1, Loc.GetString("character-info-ic"));
         CharacterInfoTabs.SetTabTitle(2, Loc.GetString("character-info-ooc"));

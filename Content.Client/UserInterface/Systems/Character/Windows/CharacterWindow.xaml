@@ -6,6 +6,7 @@
     MinWidth="400"
     MinHeight="545">
     <ScrollContainer>
+        <!-- starlight -->
         <TabContainer Name="CharacterInfoTabs" Access="Public">
             <ui:CharacterOverviewControl Name="CharacterInfo" Access="Public"/>
             <ui:CharacterICInfoControl Name="InfoIC" Access="Public"/>

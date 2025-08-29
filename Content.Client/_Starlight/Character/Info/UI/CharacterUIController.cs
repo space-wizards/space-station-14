@@ -23,7 +23,7 @@ public sealed partial class CharacterUIController
             }
 
             _characterInfo.RequestCharacterInfo();
-            ALSetSelfCharacterInfo();
+            SLSetSelfCharacterInfo();
             _window.Open();
             return;
         }
@@ -44,7 +44,7 @@ public sealed partial class CharacterUIController
         window.Title = Loc.GetString("character-info-window-title", ("player", target));
     }
 
-    private void ALClearSelfCharacterInfo()
+    private void SLClearSelfCharacterInfo()
     {
         if (_window == null)
             return;
@@ -52,7 +52,7 @@ public sealed partial class CharacterUIController
         _window.InfoOOC.ClearCharacter();
     }
 
-    private void ALSetSelfCharacterInfo()
+    private void SLSetSelfCharacterInfo()
     {
         if (_window == null)
             return;

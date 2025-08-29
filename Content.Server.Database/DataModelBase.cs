@@ -2,6 +2,8 @@
 using Microsoft.EntityFrameworkCore;
 
 namespace Content.Server.Database;
+
+//Starlight file
 public abstract class DataModelBase
 {
     public virtual void OnModelCreating(ServerDbContext dbContext, ModelBuilder modelBuilder)

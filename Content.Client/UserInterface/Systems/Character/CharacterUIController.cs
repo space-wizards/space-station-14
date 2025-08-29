@@ -131,13 +131,16 @@ public sealed partial class CharacterUIController : UIController, IOnStateEntere
 
         var (entity, job, objectives, minds, briefing, entityName) = data;
 
+        //starlight start
         _window.CharacterInfo.CharacterPreview.SetCharacter(entity, job);
-        ALSetSelfCharacterInfo();
+        SLSetSelfCharacterInfo();
+
 
         UpdateRoleType();
         _window.CharacterInfo.Objectives.RemoveAllChildren();
         _window.CharacterInfo.ObjectivesLabel.Visible = objectives.Any();
         _window.CharacterInfo.Minds.RemoveAllChildren();
+        //starlight end
 
         foreach (var (groupId, conditions) in objectives)
         {
@@ -175,7 +178,7 @@ public sealed partial class CharacterUIController : UIController, IOnStateEntere
                 objectiveControl.AddChild(conditionControl);
             }
 
-            _window.CharacterInfo.Objectives.AddChild(objectiveControl);
+            _window.CharacterInfo.Objectives.AddChild(objectiveControl); //starlight
         }
 
 
@@ -196,7 +199,7 @@ public sealed partial class CharacterUIController : UIController, IOnStateEntere
                 mindDescriptionMessage.Pop();
             }
             mindsControl.Description.SetMessage(mindDescriptionMessage);
-            _window.CharacterInfo.Objectives.AddChild(mindsControl);
+            _window.CharacterInfo.Objectives.AddChild(mindsControl); //starlight
         }
 
         if (briefing != null)
@@ -206,13 +209,13 @@ public sealed partial class CharacterUIController : UIController, IOnStateEntere
             text.PushColor(Color.Yellow);
             text.AddText(briefing);
             briefingControl.Label.SetMessage(text);
-            _window.CharacterInfo.Objectives.AddChild(briefingControl);
+            _window.CharacterInfo.Objectives.AddChild(briefingControl); //starlight
         }
 
-        var controls = _characterInfo.GetCharacterInfoControls(entity);
+        var controls = _characterInfo.GetCharacterInfoControls(entity); //starlight
         foreach (var control in controls)
         {
-            _window.CharacterInfo.Objectives.AddChild(control);
+            _window.CharacterInfo.Objectives.AddChild(control); //starlight
         }
 
         _window.CharacterInfo.RolePlaceholder.Visible = briefing == null && !controls.Any() && !objectives.Any();
@@ -238,8 +241,8 @@ public sealed partial class CharacterUIController : UIController, IOnStateEntere
         if (!_prototypeManager.TryIndex(mind.RoleType, out var proto))
             Log.Error($"Player '{_player.LocalSession}' has invalid Role Type '{mind.RoleType}'. Displaying default instead");
 
-        _window.CharacterInfo.RoleType.Text = Loc.GetString(proto?.Name ?? "role-type-crew-aligned-name");
-        _window.CharacterInfo.RoleType.FontColorOverride = proto?.Color ?? Color.White;
+        _window.CharacterInfo.RoleType.Text = Loc.GetString(proto?.Name ?? "role-type-crew-aligned-name"); //starlight
+        _window.CharacterInfo.RoleType.FontColorOverride = proto?.Color ?? Color.White; //starlight
     }
 
     private void CharacterDetached(EntityUid uid)
@@ -267,12 +270,12 @@ public sealed partial class CharacterUIController : UIController, IOnStateEntere
         if (_window.IsOpen)
         {
             CloseWindow();
-            ALClearSelfCharacterInfo();
+            SLClearSelfCharacterInfo(); //starlight
         }
         else
         {
             _characterInfo.RequestCharacterInfo();
-            ALSetSelfCharacterInfo();
+            SLSetSelfCharacterInfo(); //starlight
             _window.Open();
         }
     }

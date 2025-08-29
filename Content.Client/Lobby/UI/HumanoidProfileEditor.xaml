@@ -176,6 +176,7 @@
                         <humanoid:CyberneticsPicker Name="Cybernetics" />
                     </ScrollContainer>
                 </BoxContainer>
+                <!-- Starlight start-->
                 <BoxContainer Name="ICInfoTab" Orientation="Vertical" Margin="10" Visible="False">
                     <ScrollContainer VerticalExpand="True">
                         <ui1:CharacterInfoEditor Name="ICInfoEditor"/>
@@ -186,6 +187,7 @@
                         <ui1:OOCInfoEditor Name="OOCInfoEditor"/>
                     </ScrollContainer>
                 </BoxContainer>
+                <!-- Starlight end-->
             </TabContainer>
         </BoxContainer>
         <!-- Right side -->

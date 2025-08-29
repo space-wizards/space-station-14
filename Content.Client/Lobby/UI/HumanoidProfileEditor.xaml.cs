@@ -624,7 +624,7 @@ namespace Content.Client.Lobby.UI
             if (siliconVoiceChoiceId != -1)
                 SiliconVoiceButton.TrySelectId(siliconVoiceChoiceId);
         }
-        // 🌟Starlight🌟 end
+
 
         private void SetupInfoEditors()
         {
@@ -656,6 +656,8 @@ namespace Content.Client.Lobby.UI
                 OOCInfoEditor.PersonalNotesInput.Visible = _allowRPNotes;
             }
         }
+
+        // 🌟Starlight🌟 end
 
         /// <summary>
         /// Refreshes traits selector
@@ -762,6 +764,8 @@ namespace Content.Client.Lobby.UI
                     {
                         selector.Checkbox.Label.FontColorOverride = Color.Red;
                     }
+
+                    TraitsList.AddChild(selector);
                 }
             }
         }
@@ -916,7 +920,7 @@ namespace Content.Client.Lobby.UI
 
             UpdateNameEdit();
             UpdateCustomSpecieNameEdit(); // Starlight
-            UpdateCharacterInfoEditorText();
+            UpdateCharacterInfoEditorText(); //Starlight
             UpdateSexControls();
             UpdateGenderControls();
             UpdateSizeControls(); //starlight
@@ -938,7 +942,7 @@ namespace Content.Client.Lobby.UI
             RefreshLoadouts();
             RefreshSpecies();
             RefreshTraits();
-            RefreshCharacterInfo();
+            RefreshCharacterInfo(); //starlight
             Preview.Initialize(this, _entManager, _preferencesManager, _prototypeManager, _playerManager);
             ReloadPreview();
         }
@@ -1216,6 +1220,7 @@ namespace Content.Client.Lobby.UI
             UpdateJobPreferences();
         }
 
+        //starlight start
         private void OnPhysicalDescChanged(TextEdit.TextEditEventArgs args)
         {
             if (Profile is null)
@@ -1269,6 +1274,8 @@ namespace Content.Client.Lobby.UI
             Profile = Profile.WithOOCNotes(Rope.Collapse(args.TextRope).Trim());
             IsDirty = true;
         }
+
+        //starlight end
 
         private void OnMarkingChange(MarkingSet markings)
         {

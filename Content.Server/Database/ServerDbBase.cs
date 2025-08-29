@@ -210,17 +210,6 @@ namespace Content.Server.Database
             await db.DbContext.SaveChangesAsync();
         }
 
-        public async Task SaveAdminOOCNameColorAsync(NetUserId userId, Color color)
-        {
-            await using var db = await GetDb();
-            var prefs = await db.DbContext
-                .Preference
-                .Include(p => p.Profiles)
-                .SingleAsync(p => p.UserId == userId.UserId);
-
-            await db.DbContext.SaveChangesAsync();
-        }
-
         public async Task SaveConstructionFavoritesAsync(NetUserId userId, List<ProtoId<ConstructionPrototype>> constructionFavorites)
         {
             await using var db = await GetDb();
@@ -290,6 +279,7 @@ namespace Content.Server.Database
                 loadouts[role.RoleName] = loadout;
             }
 
+            //start starlight
             string physicalDesc = string.Empty;
             string personalityDesc = string.Empty;
             string personalNotes = string.Empty;
@@ -310,6 +300,7 @@ namespace Content.Server.Database
                 characterSecrets = profile.CharacterInfo.CharacterSecrets;
                 exploitableInfo = profile.CharacterInfo.ExploitableInfo;
             }
+            //end starlight
             return new HumanoidCharacterProfile(
                 profile.CharacterName,
                 profile.Voice,
