@@ -133,42 +133,89 @@ marking-VulpBellyFox-belly_fox = Belly
 marking-VulpBellyFox = Vulpkanin Belly Fox
 
 
+# Arms
 
-marking-VulpBodyPointsCrest-points_crest = Points (crest)
-marking-VulpBodyPointsCrest = Vulpkanin Points (crest)
+marking-VulpClawsHandLeft = Claws (Left Hand)
+marking-VulpClawsHandRight = Claws (Right Hand)
 
-marking-VulpBodyPointsFade-points_fade = Vulpkanin Points (fade)
-marking-VulpBodyPointsFade = Vulpkanin Points (fade)
+marking-VulpClawsHandLeft-claws_l_hand = Claws
+marking-VulpClawsHandRight-claws_r_hand = Claws
 
-marking-VulpBodyPointsSharp-points_sharp = Vulpkanin Points (sharp)
-marking-VulpBodyPointsSharp = Vulpkanin Points (sharp)
+marking-VulpPointsCrestArmLeft = Crest (Left Arm)
+marking-VulpPointsCrestHandLeft = Crest (Left Hand)
+marking-VulpPointsCrestArmRight = Crest (Right Arm)
+marking-VulpPointsCrestHandRight = Crest (Right Hand)
+
+marking-VulpPointsCrestArmLeft-crest-arm-l = Crest
+marking-VulpPointsCrestHandLeft-crest-hand-l = Crest
+marking-VulpPointsCrestArmRight-crest-arm-r = Crest
+marking-VulpPointsCrestHandRight-crest-hand-r = Crest
+
+marking-VulpPointsFadeArmLeft = Fade (Left Arm)
+marking-VulpPointsFadeHandLeft = Fade (Left Hand)
+marking-VulpPointsFadeArmRight = Fade (Right Arm)
+marking-VulpPointsFadeHandRight = Fade (Right Hand)
+
+marking-VulpPointsFadeArmLeft-points_fade-arm-l = Fade
+marking-VulpPointsFadeHandLeft-points_fade-hand-l = Fade
+marking-VulpPointsFadeArmRight-points_fade-arm-r = Fade
+marking-VulpPointsFadeHandRight-points_fade-hand-r = Fade
+
+marking-VulpPointsSharpArmLeft = Sharp (Left Arm)
+marking-VulpPointsSharpLongArmLeft = Sharp Long (Left Arm)
+marking-VulpPointsSharpHandLeft = Sharp (Left Hand)
+marking-VulpPointsSharpArmRight = Sharp (Right Arm)
+marking-VulpPointsSharpLongArmRight = Sharp Long (Right Arm)
+marking-VulpPointsSharpHandRight = Sharp (Right Hand)
+
+marking-VulpPointsSharpArmLeft-points_sharp-arm-l = Sharp
+marking-VulpPointsSharpLongArmLeft-points_sharp-arm-long-l = Sharp Long
+marking-VulpPointsSharpHandLeft-points_sharp-hand-l = Sharp
+marking-VulpPointsSharpArmRight-points_sharp-arm-r = Sharp
+marking-VulpPointsSharpLongArmRight-points_sharp-arm-long-r = Sharp Long
+marking-VulpPointsSharpHandRight-points_sharp-hand-r = Sharp
 
 
-marking-VulpPointsFeet-points_feet = Points Feet
-marking-VulpPointsFeet = Vulpkanin Points Feet
+# Legs
 
-marking-VulpPointsCrestLegs-points_crest-legs = Points (crest)
-marking-VulpPointsCrestLegs = Vulpkanin Points Legs (crest)
+marking-VulpClawsFootLeft = Claws (Left Foot)
+marking-VulpClawsFootRight = Claws (Right Foot)
 
-marking-VulpPointsFadeLegs-points_fade-legs = Points (fade)
-marking-VulpPointsFadeLegs = Vulpkanin Points Legs (fade)
+marking-VulpClawsFootLeft-claws_l_foot = Claws
+marking-VulpClawsFootRight-claws_r_foot = Claws
 
-marking-VulpPointsSharpLegs-points_sharp-legs = Points (sharp)
-marking-VulpPointsSharpLegs = Vulpkanin Points Legs (sharp)
+marking-VulpPointsCrestLegLeft = Crest (Left Leg)
+marking-VulpPointsCrestFootLeft = Crest (Left Foot)
+marking-VulpPointsCrestLegRight = Crest (Right Leg)
+marking-VulpPointsCrestFootRight = Crest (Right Foot)
+
+marking-VulpPointsCrestLegLeft-crest-leg-l = Crest
+marking-VulpPointsCrestFootLeft-crest-foot-l = Crest
+marking-VulpPointsCrestLegRight-crest-leg-r = Crest
+marking-VulpPointsCrestFootRight-crest-foot-r = Crest
+
+marking-VulpPointsFadeLegLeft = Fade (Left Leg)
+marking-VulpPointsFadeFootLeft = Fade (Left Foot)
+marking-VulpPointsFadeLegRight = Fade (Right Leg)
+marking-VulpPointsFadeFootRight = Fade (Right Foot)
+
+marking-VulpPointsFadeLegLeft-points_fade-leg-l = Fade
+marking-VulpPointsFadeFootLeft-points_fade-foot-l = Fade
+marking-VulpPointsFadeLegRight-points_fade-leg-r = Fade
+marking-VulpPointsFadeFootRight-points_fade-foot-r = Fade
+
+marking-VulpPointsSharpLegLeft = Sharp (Left Leg)
+marking-VulpPointsSharpFootLeft = Sharp (Left Foot)
+marking-VulpPointsSharpLegRight = Sharp (Right Leg)
+marking-VulpPointsSharpFootRight = Sharp (Right Foot)
+
+marking-VulpPointsSharpLegLeft-points_sharp-leg-l = Sharp
+marking-VulpPointsSharpFootLeft-points_sharp-foot-l = Sharp
+marking-VulpPointsSharpLegRight-points_sharp-leg-r = Sharp
+marking-VulpPointsSharpFootRight-points_sharp-foot-r = Sharp
 
 
-marking-VulpPointsHands-points_hands = Points Hands
-marking-VulpPointsHands = Vulpkanin Points Hands
-
-marking-VulpPointsCrestArms-points_crest-arms = Points (crest)
-marking-VulpPointsCrestArms = Vulpkanin Points Arms (crest)
-
-marking-VulpPointsFadeArms-points_fade-arms = Points (fade)
-marking-VulpPointsFadeArms = Vulpkanin Points Arms (fade)
-
-marking-VulpPointsSharpArms-points_sharp-arms = Points (sharp)
-marking-VulpPointsSharpArms = Vulpkanin Points Arms (sharp)
-
+# Hair
 
 marking-VulpHairAdhara = Adhara
 marking-VulpHairAnita = Anita
@@ -191,6 +238,9 @@ marking-VulpHairRough = Rough
 marking-VulpHairShort = Short Hair
 marking-VulpHairShort2 = Short Hair 2
 marking-VulpHairSpike = Spike
+
+
+# Facial Hair
 
 marking-VulpFacialHairRuff = Ruff
 marking-VulpFacialHairElder = Elder
