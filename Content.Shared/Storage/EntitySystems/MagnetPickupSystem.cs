@@ -1,4 +1,6 @@
+using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Inventory;
+using Content.Shared.Silicons.Borgs.Components;
 using Content.Shared.Storage.Components;
 using Content.Shared.Whitelist;
 using Robust.Shared.Physics.Components;
@@ -12,11 +14,13 @@ namespace Content.Shared.Storage.EntitySystems;
 public sealed class MagnetPickupSystem : EntitySystem
 {
     [Dependency] private readonly IGameTiming _timing = default!;
+    [Dependency] private readonly IEntityManager _entityManager = default!;
     [Dependency] private readonly EntityLookupSystem _lookup = default!;
     [Dependency] private readonly InventorySystem _inventory = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
     [Dependency] private readonly SharedStorageSystem _storage = default!;
     [Dependency] private readonly EntityWhitelistSystem _whitelistSystem = default!;
+    [Dependency] private readonly SharedHandsSystem _hands = default!;
 
 
     private static readonly TimeSpan ScanDelay = TimeSpan.FromSeconds(1);
@@ -48,17 +52,21 @@ public sealed class MagnetPickupSystem : EntitySystem
 
             comp.NextScan += ScanDelay;
 
-            if (!_inventory.TryGetContainingSlot((uid, xform, meta), out var slotDef))
-                continue;
+            var parentUid = xform.ParentUid;
 
-            if ((slotDef.SlotFlags & comp.SlotFlags) == 0x0)
-                continue;
+            if (!_entityManager.TryGetComponent<BorgSwitchableTypeComponent>(parentUid, out _) || !_hands.TryGetActiveItem(parentUid, out var activeItem) && activeItem != uid)
+            {
+                if (!_inventory.TryGetContainingSlot((uid, xform, meta), out var slotDef))
+                    continue;
+
+                if ((slotDef.SlotFlags & comp.SlotFlags) == 0x0)
+                    continue;
+            }
 
             // No space
             if (!_storage.HasSpace((uid, storage)))
                 continue;
 
-            var parentUid = xform.ParentUid;
             var playedSound = false;
             var finalCoords = xform.Coordinates;
             var moverCoords = _transform.GetMoverCoordinates(uid, xform);
