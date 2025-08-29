@@ -10,6 +10,7 @@ using Content.Shared.Access.Components;
 using Content.Shared.DeviceLinking;
 using Content.Shared.PowerCell;
 using Content.Shared.Item.ItemToggle;
+using Content.Shared.Storage;
 
 namespace Content.Shared._Starlight.ScanGate.EntitySystems;
 
@@ -33,6 +34,12 @@ public sealed partial class SharedScanGateSystem : EntitySystem
         SubscribeLocalEvent<ScanDetectableComponent, TryDetectItem>(OnDetect);
         SubscribeLocalEvent<ScanDetectableComponent, InventoryRelayedEvent<TryDetectItem>>(OnInventoryRelay);
         Subs.SubscribeWithRelay<ScanDetectableComponent, HeldRelayedEvent<TryDetectItem>>(OnHandRelay, inventory: false);
+
+        // Detect in storages
+
+        SubscribeLocalEvent<StorageComponent, TryDetectItem>(OnDetectStorage);
+        SubscribeLocalEvent<StorageComponent, InventoryRelayedEvent<TryDetectItem>>(OnInventoryRelayStorage); // Detect items in storage
+        SubscribeLocalEvent<StorageComponent, HeldRelayedEvent<TryDetectItem>>(OnHandRelayStorage, inventory: false); // Detect items in storage
 
         // Bypass events
 
@@ -82,6 +89,61 @@ public sealed partial class SharedScanGateSystem : EntitySystem
     /// An entity with <see cref="ScanDetectableComponent"/> has been detected by a scan gate.
     /// </summary>
     private void OnHandRelay(EntityUid uid, ScanDetectableComponent component, ref HeldRelayedEvent<TryDetectItem> args) => args.Args.EntityDetected = true;
+
+    #endregion
+
+    #region Storage Detection
+
+    private void OnDetectStorage(EntityUid uid, StorageComponent component, ref TryDetectItem args)
+    {
+        if (args.ByPass) // No need to check if already bypassed
+            return;
+
+        foreach (var (entity, location) in component.StoredItems)
+        {
+            if (HasComp<ScanByPassComponent>(entity))
+            {
+                args.ByPass = true;
+                break;
+            }
+            if (HasComp<ScanDetectableComponent>(entity))
+                args.EntityDetected = true; // Keep checking, in case there's a bypass item
+        }
+    }
+
+    private void OnInventoryRelayStorage(EntityUid uid, StorageComponent component, ref InventoryRelayedEvent<TryDetectItem> args)
+    {
+        if (args.Args.ByPass) // No need to check if already bypassed
+            return;
+
+        foreach (var (entity, location) in component.StoredItems)
+        {
+            if (HasComp<ScanByPassComponent>(entity))
+            {
+                args.Args.ByPass = true;
+                break;
+            }
+            if (HasComp<ScanDetectableComponent>(entity))
+                args.Args.EntityDetected = true;  // Keep checking, in case there's a bypass item
+        }
+    }
+
+    private void OnHandRelayStorage(EntityUid uid, StorageComponent component, ref HeldRelayedEvent<TryDetectItem> args)
+    {
+        if (args.Args.ByPass) // No need to check if already bypassed
+            return;
+
+        foreach (var (entity, location) in component.StoredItems)
+        {
+            if (HasComp<ScanByPassComponent>(entity))
+            {
+                args.Args.ByPass = true;
+                break;
+            }
+            if (HasComp<ScanDetectableComponent>(entity))
+                args.Args.EntityDetected = true;  // Keep checking, in case there's a bypass item
+        }
+    }
 
     #endregion
 

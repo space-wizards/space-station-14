@@ -13,8 +13,8 @@
           visible: false
           map: [ "enum.ToggleableVisuals.Layer" ]
   - type: ScanByPass
-    Powered: true
-    Toggleable: true
+    powered: true
+    toggleable: true
   - type: PowerCellSlot
     cellSlotId: cell_slot
   - type: ContainerContainer
