@@ -506,7 +506,7 @@
   parent: [ BoxCardboard, BaseBagOpenClose ]
   name: happy honk meal
   suffix: Toy Safe
-  description: The toy is more edible than the food. Straight from the Honkas fly-thru, mmm..
+  description: The toy is more edible than the food. Straight from the Honkas fly-thru, mmm.. # Starlight-edit
   components:
   - type: Sprite
     sprite: Objects/Storage/Happyhonk/clown.rsi
