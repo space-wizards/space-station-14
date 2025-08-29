@@ -8,7 +8,7 @@
     - type: CommunicationsConsole
       title: comms-console-announcement-title-centcom
       global: true
-      announcementSound:
+      sound:
         path: /Audio/_DeadSpace/Announcements/centcomm.ogg # DS14-Announcements
         params:
           volume: -2

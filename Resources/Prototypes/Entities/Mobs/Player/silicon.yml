@@ -72,8 +72,6 @@
   - type: RadarConsole
     followEntity: false
   - type: CommunicationsConsole
-    canCallShuttle: false
-    canCallERT: false
     title: comms-console-announcement-title-station-ai
     color: "#5ed7aa"
   - type: ShowJobIcons

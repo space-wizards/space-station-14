@@ -1,76 +1,62 @@
 <controls:FancyWindow xmlns="https://spacestation14.io"
     xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
     Title="{Loc 'comms-console-menu-title'}"
-    MinSize="400 325"
-    Resizable="False">
-    <BoxContainer Orientation="Vertical" HorizontalExpand="True" VerticalExpand="True" Margin="5">
+    MinSize="400 300">
 
-        <Control MinSize="0 5" />
+    <!-- Main Container -->
+    <BoxContainer Orientation="Vertical"
+        HorizontalExpand="False"
+        VerticalExpand="True"
+        Margin="6 6 6 5">
 
-        <!-- Announcements -->
-        <Label Text="{Loc 'comms-console-menu-category-announcement'}"/>
-        <controls:HLine Color="#404040" Thickness="2" Margin="0 0 0 5"/>
-        <TextEdit Name="MessageInput" HorizontalExpand="True" VerticalExpand="True" Margin="0 0 0 5" MinHeight="100" />
-        <Button Name="AnnounceButton" Text="{Loc 'comms-console-menu-announcement-button'}" ToolTip="{Loc 'comms-console-menu-announcement-button-tooltip'}" StyleClasses="OpenLeft" Access="Public"/>
-        <Button Name="BroadcastButton" Text="{Loc 'comms-console-menu-broadcast-button'}" ToolTip="{Loc 'comms-console-menu-broadcast-button-tooltip'}" StyleClasses="OpenLeft" Access="Public" />
+        <TextEdit Name="MessageInput"
+            VerticalExpand="True"
+            HorizontalExpand="True"
+            VerticalAlignment="Stretch"
+            HorizontalAlignment="Stretch"
+            MinHeight="100"/>
 
-        <Control MinSize="0 10" />
+        <!-- ButtonsPart -->
+        <BoxContainer Orientation="Vertical"
+            VerticalAlignment="Bottom"
+            SeparationOverride="4">
 
-        <!-- Station code -->
-        <Label Text="{Loc 'comms-console-menu-category-alert-level'}"/>
-        <controls:HLine Color="#404040" Thickness="2" Margin="0 0 0 5"/>
-        <OptionButton Name="AlertLevelSelector" StyleClasses="OpenRight" Access="Public" />
-        <Button Name="AlertLevelSetButton" Text="{Loc 'comms-console-menu-alert-level-button'}" ToolTip="{Loc 'comms-console-menu-alert-level-button-tooltip'}" StyleClasses="OpenLeft" Access="Public"/>
+            <!-- AnnouncePart -->
+            <BoxContainer Orientation="Vertical"
+                Margin="0 2">
 
-        <Control MinSize="0 10" />
+                <Button Name="AnnounceButton"
+                    Access="Public"
+                    Text="{Loc 'comms-console-menu-announcement-button'}"
+                    ToolTip="{Loc 'comms-console-menu-announcement-button-tooltip'}"
+                    StyleClasses="OpenLeft"
+                    Margin="0 0 1 0"
+                    Disabled="True"/>
 
-        <!-- Emergency shuttle -->
-        <Label Text="{Loc 'comms-console-menu-category-shuttle'}"/>
-        <controls:HLine Color="#404040" Thickness="2" Margin="0 0 0 5"/>
-        <Button Name="EmergencyShuttleButton" Text="Placeholder Text" ToolTip="{Loc 'comms-console-menu-emergency-shuttle-button-tooltip'}" Access="Public"/>
-        <RichTextLabel Name="CountdownLabel" VerticalExpand="True"/>
+                <Button Name="BroadcastButton"
+                    Access="Public"
+                    Text="{Loc 'comms-console-menu-broadcast-button'}"
+                    ToolTip="{Loc 'comms-console-menu-broadcast-button-tooltip'}"
+                    StyleClasses="OpenBoth"/>
 
-        <Control MinSize="0 10" />
+                <OptionButton Name="AlertLevelButton"
+                    Access="Public"
+                    ToolTip="{Loc 'comms-console-menu-alert-level-button-tooltip'}"
+                    StyleClasses="OpenRight"/>
 
-        <!-- ERT -->
-        <Label Text="{Loc 'comms-console-menu-category-ert'}"/>
-        <controls:HLine Color="#404040" Thickness="2" Margin="0 0 0 5"/>
-        <OptionButton Name="ERTTeamSelector" />
+            </BoxContainer>
 
-        <Control MinSize="0 10" />
+            <!-- EmergencyPart -->
+            <BoxContainer Orientation="Vertical"
+                SeparationOverride="6">
 
-        <TextEdit Name="ERTMessageInput" HorizontalExpand="True" VerticalExpand="True" Margin="0 0 0 5" MinHeight="100" />
+                <RichTextLabel Name="CountdownLabel"/>
 
-        <Control MinSize="0 5" />
-
-        <Button Name="ERTCall" Text="{Loc 'comms-console-menu-call-ert'}" StyleClasses="OpenLeft" Access="Public" />
-        <RichTextLabel Name="ERTCountdownLabel" VerticalExpand="True" />
-
-        <BoxContainer Orientation="Horizontal" HorizontalExpand="True">
-            <Label Name="FirstPrivilegedIdLabel" Text="{Loc 'comms-console-menu-first-privileged-id-label'}"/>
-            <Button Name="FirstPrivilegedIdButton" Access="Public" HorizontalAlignment="Right" HorizontalExpand="True"/>
-        </BoxContainer>
-
-        <BoxContainer Orientation="Horizontal" HorizontalExpand="True">
-            <Label Name="SecondPrivilegedIdLabel" Text="{Loc 'comms-console-menu-second-privileged-id-label'}"/>
-            <Button Name="SecondPrivilegedIdButton" Access="Public" HorizontalAlignment="Right" HorizontalExpand="True"/>
-        </BoxContainer>
-
-        <Label Name="ERTCallStatusLabel"/>
-
-        <Control MinSize="0 10" />
-
-        <!-- Footer -->
-        <BoxContainer Orientation="Vertical">
-            <PanelContainer StyleClasses="LowDivider"/>
-            <BoxContainer Orientation="Horizontal" Margin="10 2 5 0" VerticalAlignment="Bottom">
-                <Label Text="provided by ahahahahha" StyleClasses="WindowFooterText"/>
-                <Label Text="v1.0" StyleClasses="WindowFooterText"
-                        HorizontalAlignment="Right" HorizontalExpand="True" Margin="0 0 5 0"/>
-                <TextureRect StyleClasses="NTLogoDark" Stretch="KeepAspectCentered"
-                        VerticalAlignment="Center" HorizontalAlignment="Right" SetSize="19 19"/>
+                <Button Name="EmergencyShuttleButton"
+                    Access="Public" 
+                    Text="Placeholder Text"
+                    ToolTip="{Loc 'comms-console-menu-emergency-shuttle-button-tooltip'}"/>
             </BoxContainer>
         </BoxContainer>
-
     </BoxContainer>
 </controls:FancyWindow>

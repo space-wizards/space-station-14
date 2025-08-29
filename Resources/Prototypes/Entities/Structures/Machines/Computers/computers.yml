@@ -673,30 +673,10 @@
     access: [[ "Command" ]]
   - type: CommunicationsConsole
     title: comms-console-announcement-title-station
-  # DS14-start
-    announcementSound:
+    sound:
       path: /Audio/_DeadSpace/Announcements/announce.ogg # DS14-Announcements
       params:
         volume: -2
-    firstPrivilegedIdSlot:
-      name: id-card-console-privileged-id
-      ejectSound: /Audio/Machines/id_swipe.ogg
-      insertSound: /Audio/Weapons/Guns/MagIn/batrifle_magin.ogg
-      ejectOnBreak: true
-      swap: false
-      whitelist:
-        components:
-        - IdCard
-    secondPrivilegedIdSlot:
-      name: id-card-console-target-id
-      ejectSound: /Audio/Machines/id_swipe.ogg
-      insertSound: /Audio/Weapons/Guns/MagIn/batrifle_magin.ogg
-      ejectOnBreak: true
-      swap: false
-      whitelist:
-        components:
-        - IdCard
-  # DS14-end
   - type: DeviceNetwork
     transmitFrequencyId: ShuttleTimer
   - type: ActivatableUI
@@ -716,14 +696,6 @@
   - type: Damageable
     damageContainer: StructuralInorganic
     damageModifierSet: StructuralMetallicStrong
-  # DS14-start
-  - type: ItemSlots
-  - type: ContainerContainer
-    containers:
-      board: !type:Container
-      CommunicationsConsole-firstId: !type:ContainerSlot {}
-      CommunicationsConsole-secondId: !type:ContainerSlot {}
-  # DS14-end
 
 - type: entity
   parent: ComputerComms
