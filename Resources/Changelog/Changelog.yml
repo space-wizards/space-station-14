@@ -3914,6 +3914,6 @@
   changes:
   - message: Sentience Event no longer targets Zombified creatures
     type: Fix
-  id: 8904
+  id: 8900
   time: '2025-08-29T11:48:31.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/39950
