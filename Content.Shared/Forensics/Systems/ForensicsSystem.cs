@@ -107,6 +107,7 @@ namespace Content.Shared.Forensics.Systems
                         component.DNAs.Add(hitEntityComp.DNA);
                 }
             }
+            Dirty(uid, component);
         }
 
         private void OnRehydrated(Entity<ForensicsComponent> ent, ref GotRehydratedEvent args)
