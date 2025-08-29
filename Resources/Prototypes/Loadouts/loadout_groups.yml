@@ -46,17 +46,17 @@
   - TowelColorWhite
   - TowelColorGray
   - TowelColorBlack
-  - TowelColorMime
   - TowelColorRed
   - TowelColorOrange
   - TowelColorLightBrown
   - TowelColorYellow
-  - TowelColorGreen
   - TowelColorDarkGreen
+  - TowelColorGreen
   - TowelColorLightBlue
   - TowelColorDarkBlue
-  - TowelColorMaroon
   - TowelColorPurple
+  - TowelColorMaroon
+  - TowelColorMime
   - TowelColorSilver
   - TowelColorGold
 
