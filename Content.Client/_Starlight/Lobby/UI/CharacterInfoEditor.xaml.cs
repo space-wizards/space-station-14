@@ -15,10 +15,10 @@ namespace Content.Client._Starlight.Lobby.UI
             IoCManager.InjectDependencies(this);
 
             var loc = IoCManager.Resolve<ILocalizationManager>();
-            RegisterListener(PhysicalDescInput, "char-physical-text-placeholder", loc);
-            RegisterListener(PersonalityDescInput, "char-personality-text-placeholder", loc);
-            RegisterListener(SecretsInput, "char-secrets-text-placeholder", loc);
-            RegisterListener(ExploitableInput, "char-exploitable-text-placeholder", loc);
+            RegisterListener(PhysicalDescInput, "character-physical-text-placeholder", loc);
+            RegisterListener(PersonalityDescInput, "character-personality-text-placeholder", loc);
+            RegisterListener(SecretsInput, "character-secrets-text-placeholder", loc);
+            RegisterListener(ExploitableInput, "character-exploitable-text-placeholder", loc);
         }
 
         private void RegisterListener(TextEdit control, string locId, ILocalizationManager loc)

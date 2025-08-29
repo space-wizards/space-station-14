@@ -31,18 +31,16 @@ public abstract class SLSharedCharacterInfoSystem : EntitySystem
     [Dependency] private readonly SharedMindSystem _mindSystem = default!;
     [Dependency] private readonly IConfigurationManager _configManager = default!;
 
+    private bool _characterWindowEnabled = false;
     private bool _flavorTextEnabled = false;
-    private bool _icSecretsEnabled = false;
     private bool _exploitableSecretsEnabled = false;
-    private bool _oocNotesEnabled = false;
 
     public override void Initialize()
     {
         _configManager.OnValueChanged(CCVars.FlavorText, b => { _flavorTextEnabled = b; }, true);
-        _configManager.OnValueChanged(StarlightCCVars.ICSecrets, b => { _icSecretsEnabled = b; }, true);
         _configManager.OnValueChanged(StarlightCCVars.ExploitableSecrets, b => { _exploitableSecretsEnabled = b; },
             true);
-        _configManager.OnValueChanged(StarlightCCVars.OOCNotes, b => { _oocNotesEnabled = b; }, true);
+        _configManager.OnValueChanged(StarlightCCVars.CharacterInspectWindowEnabled, b => { _characterWindowEnabled = b; }, true);
 
         SubscribeLocalEvent<PlayerSpawnCompleteEvent>(OnPlayerSpawned);
         SubscribeLocalEvent<ActivateImplantEvent>(OnActivateImplant);
@@ -132,17 +130,23 @@ public abstract class SLSharedCharacterInfoSystem : EntitySystem
         if (Identity.Name(args.Target, EntityManager) != MetaData(args.Target).EntityName)
             return;
         var user = args.User;
-        args.Verbs.Add(new ExamineVerb
-        {
-            Act = () =>
-            {
-                RaiseOpenCharacterInspectEvent(ent, user);
-            },
-            Text = Loc.GetString("character-info-inspect-prompt"),
-            Icon = new SpriteSpecifier.Texture(new("/Textures/Interface/VerbIcons/examine.svg.192dpi.png"))
-        });
 
         var detailsRange = _examineSystem.IsInDetailsRange(args.User, ent);
+
+        if (_characterWindowEnabled)
+        {
+            args.Verbs.Add(new ExamineVerb
+            {
+                Act = () =>
+                {
+                    OpenCharacterWindow(ent, user);
+                },
+                Disabled = !detailsRange,
+                Message = detailsRange ? null : Loc.GetString("detail-examine-verb-disabled"),
+                Text = Loc.GetString("character-info-inspect-prompt"),
+                Icon = new SpriteSpecifier.Texture(new("/Textures/Interface/VerbIcons/examine.svg.192dpi.png"))
+            });
+        }
 
         var mind = _mindSystem.GetMind(ent);
         string? desc = null;
@@ -219,7 +223,7 @@ public abstract class SLSharedCharacterInfoSystem : EntitySystem
                (requester.Comp is { HasMind: true } && _roleSystem.MindIsAntagonist(requester.Comp.Mind));
     }
 
-    protected virtual void RaiseOpenCharacterInspectEvent(EntityUid target, EntityUid requester)
+    protected virtual void OpenCharacterWindow(EntityUid target, EntityUid requester)
     {
     }
 }

@@ -26,26 +26,6 @@ namespace Content.Server.Database.Migrations.Postgres
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
-            modelBuilder.Entity("Content.Server.Database.ALKinks", b =>
-                {
-                    b.Property<Guid>("PlayerId")
-                        .HasColumnType("uuid")
-                        .HasColumnName("player_id");
-
-                    b.Property<string>("KinkId")
-                        .HasColumnType("text")
-                        .HasColumnName("kink_id");
-
-                    b.Property<int>("Preference")
-                        .HasColumnType("integer")
-                        .HasColumnName("preference");
-
-                    b.HasKey("PlayerId", "KinkId")
-                        .HasName("PK_al_kinks");
-
-                    b.ToTable("al_kinks", (string)null);
-                });
-
             modelBuilder.Entity("Content.Server.Database.Admin", b =>
                 {
                     b.Property<Guid>("UserId")
@@ -841,6 +821,7 @@ namespace Content.Server.Database.Migrations.Postgres
                         .IsRequired()
                         .HasColumnType("text")
                         .HasColumnName("admin_ooc_color");
+
                     b.PrimitiveCollection<List<string>>("ConstructionFavorites")
                         .IsRequired()
                         .HasColumnType("text[]")
@@ -1616,6 +1597,7 @@ namespace Content.Server.Database.Migrations.Postgres
 
                     b.ToTable("player_round", (string)null);
                 });
+
             modelBuilder.Entity("Content.Server.Database.Admin", b =>
                 {
                     b.HasOne("Content.Server.Database.AdminRank", "AdminRank")

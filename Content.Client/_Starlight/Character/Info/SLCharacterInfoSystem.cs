@@ -10,15 +10,8 @@ public sealed class SLCharacterInfoSystem : SLSharedCharacterInfoSystem
 
     private CharacterUIController _controller => _ui.GetUIController<CharacterUIController>();
 
-    public override void Initialize()
+    protected override void OpenCharacterWindow(EntityUid target, EntityUid requester)
     {
-        // TODO AFTERLIGHT move to the UI controller when subscriptions there don't get wiped by disconnecting without restarting
-        SubscribeLocalEvent<OpenInspectCharacterInfoEvent>(OnOpenCharacterInspect);
-    }
-
-    private void OnOpenCharacterInspect(OpenInspectCharacterInfoEvent ev)
-    {
-        // TODO AFTERLIGHT move to the UI controller when subscriptions there don't get wiped by disconnecting without restarting
-        _controller.OpenInspectCharacterWindow(ev);
+        _controller.OpenInspectCharacterWindow(target, requester);
     }
 }

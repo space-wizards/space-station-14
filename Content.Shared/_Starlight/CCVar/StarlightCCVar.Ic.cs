@@ -22,4 +22,9 @@ public sealed partial class StarlightCCVars
     public static readonly CVarDef<bool> ExploitableSecrets =
         CVarDef.Create("ic.secrets_exploitable", false, CVar.SERVER | CVar.REPLICATED);
 
+    /// <summary>
+    /// Whether or not players can open character inspect windows on other players
+    /// </summary>
+    public static readonly CVarDef<bool> CharacterInspectWindowEnabled =
+        CVarDef.Create("ic.inspect_windows", false, CVar.SERVER | CVar.REPLICATED);
 }

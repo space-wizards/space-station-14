@@ -9,12 +9,12 @@ public sealed partial class CharacterUIController
     private Dictionary<EntityUid, CharacterInspectWindow> _openInspectionWindows = new();
 
 
-    public void OpenInspectCharacterWindow(OpenInspectCharacterInfoEvent ev)
+    public void OpenInspectCharacterWindow(EntityUid target, EntityUid viewer)
     {
-        if (ev.Target is not { Valid: true } target)
+        if (!target.Valid)
             return;
 
-        if (ev.Target == ev.Viewer)
+        if (target == viewer)
         {
             //If attempting to inspect own character, redirect to character window
             if (_window == null || _window.IsOpen)
@@ -35,7 +35,7 @@ public sealed partial class CharacterUIController
         }
 
         window = new CharacterInspectWindow();
-        window.SetCharacter(target, EntityManager, ev.Viewer.Valid ? ev.Viewer : target);
+        window.SetCharacter(target, EntityManager, viewer.Valid ? viewer : target);
 
         _openInspectionWindows[target] = window;
 
