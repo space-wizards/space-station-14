@@ -38,57 +38,62 @@ marking-VulpEarOtie-otie-inner = Otie ears (Inner)
 marking-VulpEarOtie = Vulpkanin Otie
 
 marking-VulpEarShock-shock = Shock ears (Base)
-marking-VulpEarShock-shock = Shock ears (Inner)
+marking-VulpEarShock-inner = Shock ears (Inner)
 marking-VulpEarShock = Vulpkanin Shock
+
 
 # Snout
 
-marking-VulpSnoutAlt-muzzle_alt = Muzzle
-marking-VulpSnoutAlt-nose = Nose
-marking-VulpSnoutAlt = Vulpkanin Muzzle 2
+marking-VulpSnout-snout = Snout
+marking-VulpSnout = Vulpkanin Snout
 
-marking-VulpSnout-muzzle = Muzzle
-marking-VulpSnout-nose = Nose
-marking-VulpSnout = Vulpkanin Muzzle
-
-marking-VulpSnoutSharp-muzzle_sharp = Muzzle
-marking-VulpSnoutSharp-nose = Nose
-marking-VulpSnoutSharp = Vulpkanin Muzzle (sharp)
-
-marking-VulpSnoutFade-muzzle_fade = Muzzle
-marking-VulpSnoutFade-nose = Nose
-marking-VulpSnoutFade = Vulpkanin Muzzle (fade)
-
-marking-VulpSnoutNose-nose = Nose
+marking-VulpSnoutNose-snout-nose = Nose
 marking-VulpSnoutNose = Vulpkanin Nose
 
-marking-VulpSnoutMask-mask = Mask
-marking-VulpSnoutMask-nose = Nose
-marking-VulpSnoutMask = Vulpkanin Mask
-
-marking-VulpSnoutVulpine-vulpine = Vulpine (base)
-marking-VulpSnoutVulpine-vulpine-lines = Vulpine (lines)
+marking-VulpSnoutVulpine-vulpine = Vulpine
 marking-VulpSnoutVulpine = Vulpkanin Vulpine
 
-marking-VulpSnoutSwift-vulpine-lines = Swift
-marking-VulpSnoutSwift = Vulpkanin Swift
+marking-VulpSnoutVulpineLines-vulpine-lines = Vulpine Lines
+marking-VulpSnoutVulpineLines = Vulpkanin Vulpine Lines
 
 marking-VulpSnoutBlaze-blaze = Blaze
 marking-VulpSnoutBlaze = Vulpkanin Blaze
+
+marking-VulpSnoutMask-mask = Mask
+marking-VulpSnoutMask = Vulpkanin Mask
+
+marking-VulpSnoutTop-snout-top = Top
+marking-VulpSnoutTop = Vulpkanin Snout Top
 
 marking-VulpSnoutPatch-patch = Patch
 marking-VulpSnoutPatch = Vulpkanin Patch
 
 
-marking-VulpHeadTiger-tiger_head = Tiger stripes
-marking-VulpHeadTiger = Vulpkanin Tiger stripes (head)
+# Head
 
-marking-VulpHeadTigerFace-tiger_face = Tiger stripes
-marking-VulpHeadTigerFace = Vulpkanin Tiger stripes (face)
+marking-VulpHeadBlaze-blaze = Blaze
+marking-VulpHeadBlaze = Vulpkanin Blaze
 
-marking-VulpHeadSlash-slash = Slash
-marking-VulpHeadSlash = Vulpkanin Slash
+marking-VulpHeadMask-mask = Mask
+marking-VulpHeadMask = Vulpkanin Mask
 
+marking-VulpPatch-patch = Patch
+marking-VulpPatch = Vulpkanin Patch
+
+marking-VulpSlash-slash = Slash
+marking-VulpSlash = Vulpkanin Slash
+
+marking-VulpStripes1-stripes_1 = Stripes
+marking-VulpStripes1 = Vulpkanin Stripes 1
+
+marking-VulpStripes2-stripes_2 = Stripes
+marking-VulpStripes2 = Vulpkanin Stripes 2
+
+marking-VulpVulpine-vulpine = Nose
+marking-VulpVulpine = Vulpkanin Nose
+
+
+# Tails
 
 marking-VulpTail-vulp = Vulpkanin tail (base)
 marking-VulpTail-vulp-fade = Vulpkanin tail (fade)
