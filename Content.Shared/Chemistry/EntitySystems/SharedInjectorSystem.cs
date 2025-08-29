@@ -47,6 +47,9 @@ public abstract class SharedInjectorSystem : EntitySystem
         if (!args.CanAccess || !args.CanInteract || args.Hands == null)
             return;
 
+        if (ent.Comp.TransferAmounts.Count <= 1)
+            return; // No options to cycle between
+
         var user = args.User;
 
         var min = ent.Comp.TransferAmounts.Min();
