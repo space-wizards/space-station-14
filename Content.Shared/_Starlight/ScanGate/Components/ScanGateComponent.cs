@@ -51,4 +51,16 @@ public sealed partial class ScanGateComponent : Component
     /// </summary>
     [DataField("idleState")]
     public string IdleState = "idle";
+
+    /// <summary>
+    /// The signal to send on successful scan.
+    /// </summary>
+    [DataField]
+    public string SuccessSignal = "ScanGateSuccess";
+
+    /// <summary>
+    /// The signal to send on failed scan.
+    /// </summary>
+    [DataField]
+    public string FailSignal = "ScanGateFail";
 }

@@ -49,6 +49,14 @@
     enabled: false
     usesApcPower: true
     requirePower: true
+  - type: DeviceList
+  - type: DeviceNetwork
+    deviceNetId: Wired
+  - type: DeviceLinkSource
+    range: 5
+    ports:
+      - ScanGateSuccess
+      - ScanGateFail
 
 - type: entity
   id: ScanGate

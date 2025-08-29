@@ -4,7 +4,7 @@ using Robust.Shared.Serialization;
 namespace Content.Shared._Starlight.ScanGate;
 
 [ByRefEvent]
-public record struct TryDetectItem(EntityUid ScanGate, bool EntityDetected = false) : IInventoryRelayEvent
+public record struct TryDetectItem(EntityUid ScanGate, bool EntityDetected = false, bool ByPass = false) : IInventoryRelayEvent
 {
     SlotFlags IInventoryRelayEvent.TargetSlots => SlotFlags.All; // Detect everything
 }
