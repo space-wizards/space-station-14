@@ -190,7 +190,7 @@ public sealed class StationAiSystem : SharedStationAiSystem
         if (TryComp<DestructibleComponent>(ent, out var destructible))
             accent.DamageAtMaxCorruption = _destructible.DestroyedAt(ent, destructible);
 
-        Dirty(held, accent);
+        Dirty(held.Value, accent);
     }
 
     private void UpdateBatteryAlert(Entity<StationAiCoreComponent> ent)
@@ -207,7 +207,7 @@ public sealed class StationAiSystem : SharedStationAiSystem
         var chargePercent = battery.CurrentCharge / battery.MaxCharge;
         var chargeLevel = Math.Round(chargePercent * proto.MaxSeverity);
 
-        _alerts.ShowAlert(held, _batteryAlert, (short)Math.Clamp(chargeLevel, 0, proto.MaxSeverity));
+        _alerts.ShowAlert(held.Value, _batteryAlert, (short)Math.Clamp(chargeLevel, 0, proto.MaxSeverity));
     }
 
     private void UpdateCoreIntegrityAlert(Entity<StationAiCoreComponent> ent)
@@ -227,7 +227,7 @@ public sealed class StationAiSystem : SharedStationAiSystem
         var damagePercent = damageable.TotalDamage / _destructible.DestroyedAt(ent, destructible);
         var damageLevel = Math.Round(damagePercent.Float() * proto.MaxSeverity);
 
-        _alerts.ShowAlert(held, _damageAlert, (short)Math.Clamp(damageLevel, 0, proto.MaxSeverity));
+        _alerts.ShowAlert(held.Value, _damageAlert, (short)Math.Clamp(damageLevel, 0, proto.MaxSeverity));
     }
 
     private void OnDoAfterAttempt(Entity<StationAiCoreComponent> ent, ref DoAfterAttemptEvent<IntellicardDoAfterEvent> args)
@@ -261,7 +261,7 @@ public sealed class StationAiSystem : SharedStationAiSystem
         if (!TryGetHeld((ent.Owner, ent.Comp), out var held))
             return;
 
-        if (!_mind.TryGetMind(held, out var mindId, out var mind))
+        if (!_mind.TryGetMind(held.Value, out var mindId, out var mind))
             return;
 
         _ghost.OnGhostAttempt(mindId, canReturnGlobal: true, mind: mind);
@@ -270,7 +270,7 @@ public sealed class StationAiSystem : SharedStationAiSystem
             return;
 
         // Don't allow the player to manually return to their body,
-        // we don't want inexperienced players getting stuck
+        // we don't want players getting stuck in it, since they can't move
         _ghost.SetCanReturnToBody((mind.VisitingEntity.Value, ghost), false);
     }
 
@@ -392,7 +392,7 @@ public sealed class StationAiSystem : SharedStationAiSystem
             if (!TryGetHeld((stationAiCore, stationAiCore.Comp), out var insertedAi))
                 continue;
 
-            hashSet.Add(insertedAi);
+            hashSet.Add(insertedAi.Value);
         }
 
         return hashSet;

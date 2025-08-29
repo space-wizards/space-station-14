@@ -10,6 +10,7 @@ station-ai-fixer-console-window-no-station-ai = No AI detected
 station-ai-fixer-console-window-no-station-ai-status = Waiting
 station-ai-fixer-console-window-station-ai-online = Online
 station-ai-fixer-console-window-station-ai-offline = Offline
+station-ai-fixer-console-window-station-ai-rebooting = Rebooting...
 
 station-ai-fixer-console-window-controls-locked = Controls locked
 

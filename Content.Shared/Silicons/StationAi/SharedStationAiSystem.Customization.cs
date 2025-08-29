@@ -1,5 +1,8 @@
 using Content.Shared.Holopad;
+using Content.Shared.Mind;
+using Content.Shared.Mind.Components;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Utility;
 using System.Diagnostics.CodeAnalysis;
 
 namespace Content.Shared.Silicons.StationAi;
@@ -8,6 +11,8 @@ public abstract partial class SharedStationAiSystem
 {
     private ProtoId<StationAiCustomizationGroupPrototype> _stationAiCoreCustomGroupProtoId = "StationAiCoreIconography";
     private ProtoId<StationAiCustomizationGroupPrototype> _stationAiHologramCustomGroupProtoId = "StationAiHolograms";
+
+    private readonly SpriteSpecifier.Rsi _stationAiRebooting = new SpriteSpecifier.Rsi(new ResPath("Mobs/Silicon/station_ai.rsi"), "ai_fuzz");
 
     private void InitializeCustomization()
     {
@@ -30,11 +35,11 @@ public abstract partial class SharedStationAiSystem
 
         stationAiCustomization.ProtoIds[args.GroupProtoId] = args.CustomizationProtoId;
 
-        Dirty(held, stationAiCustomization);
+        Dirty(held.Value, stationAiCustomization);
 
         // Update hologram
         if (groupPrototype.Category == StationAiCustomizationType.Hologram)
-            UpdateHolographicAvatar((held, stationAiCustomization));
+            UpdateHolographicAvatar((held.Value, stationAiCustomization));
 
         // Update core iconography
         if (groupPrototype.Category == StationAiCustomizationType.CoreIconography && TryComp<StationAiHolderComponent>(entity, out var stationAiHolder))

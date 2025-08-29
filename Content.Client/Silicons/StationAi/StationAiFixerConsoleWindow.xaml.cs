@@ -1,5 +1,7 @@
 using Content.Client.UserInterface.Controls;
 using Content.Shared.Lock;
+using Content.Shared.Mind;
+using Content.Shared.Mind.Components;
 using Content.Shared.Mobs;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Silicons.StationAi;
@@ -23,7 +25,8 @@ public sealed partial class StationAiFixerConsoleWindow : FancyWindow
 
     private EntityUid? _owner;
 
-    private readonly SpriteSpecifier.Rsi _emptyPortrait = new SpriteSpecifier.Rsi(new("/Textures/Mobs/Silicon/station_ai.rsi"), "ai_empty");
+    private readonly SpriteSpecifier.Rsi _emptyPortrait = new SpriteSpecifier.Rsi(new("Mobs/Silicon/station_ai.rsi"), "ai_empty");
+    private readonly SpriteSpecifier.Rsi _rebootingPortrait = new SpriteSpecifier.Rsi(new("Mobs/Silicon/station_ai.rsi"), "ai_fuzz");
     private SpriteSpecifier? _currentPortrait;
 
     public event Action<StationAiFixerConsoleAction>? SendStationAiFixerConsoleMessageAction;
@@ -98,6 +101,9 @@ public sealed partial class StationAiFixerConsoleWindow : FancyWindow
             !_entManager.IsQueuedForDeletion(stationAi.Value);
         var stationAiAlive = _entManager.TryGetComponent<MobStateComponent>(stationAi, out var mobState) &&
             mobState.CurrentState == MobState.Alive;
+        var stationAiMindAbsent = _entManager.TryGetComponent<MindContainerComponent>(stationAi, out var mindContainer) &&
+            _entManager.TryGetComponent<MindComponent>(mindContainer.Mind, out var mind) &&
+            mind.IsVisitingEntity;
 
         // Update station AI name
         StationAiNameLabel.Text = GetStationAiName(stationAi);
@@ -107,7 +113,13 @@ public sealed partial class StationAiFixerConsoleWindow : FancyWindow
         var portrait = _emptyPortrait;
         var statusColor = _statusColors[MobState.Invalid];
 
-        if (stationAiPresent &&
+        if (stationAiAlive && stationAiMindAbsent)
+        {
+            portrait = _rebootingPortrait;
+            StationAiStatusLabel.Text = Loc.GetString("station-ai-fixer-console-window-station-ai-rebooting");
+            _statusColors.TryGetValue(MobState.Critical, out statusColor);
+        }
+        else if (stationAiPresent &&
             _entManager.TryGetComponent<StationAiCustomizationComponent>(stationAi, out var stationAiCustomization) &&
             _stationAi.TryGetCustomizedAppearanceData((stationAi.Value, stationAiCustomization), out var layerData))
         {

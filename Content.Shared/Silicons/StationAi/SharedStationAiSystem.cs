@@ -34,6 +34,7 @@ using Robust.Shared.Serialization;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 using System.Linq;
+using Content.Shared.Mind.Components;
 
 namespace Content.Shared.Silicons.StationAi;
 
@@ -146,7 +147,7 @@ public abstract partial class SharedStationAiSystem : EntitySystem
             args.Verbs.Add(new Verb()
             {
                 Text = Loc.GetString("station-ai-customization-menu"),
-                Act = () => _uiSystem.TryOpenUi(ent.Owner, StationAiCustomizationUiKey.Key, insertedAi),
+                Act = () => _uiSystem.TryOpenUi(ent.Owner, StationAiCustomizationUiKey.Key, insertedAi.Value),
                 Icon = new SpriteSpecifier.Texture(new("/Textures/Interface/emotes.svg.192dpi.png")),
             });
         }
@@ -300,7 +301,7 @@ public abstract partial class SharedStationAiSystem : EntitySystem
         if (TryGetHeld((args.Target.Value, targetHolder), out var held))
         {
             var ev = new ChatNotificationEvent(_downloadChatNotificationPrototype, args.Used, args.User);
-            RaiseLocalEvent(held, ref ev);
+            RaiseLocalEvent(held.Value, ref ev);
         }
 
         var doAfterArgs = new DoAfterArgs(EntityManager, args.User, cardHasAi ? intelliComp.UploadTime : intelliComp.DownloadTime, new IntellicardDoAfterEvent(), args.Target, ent.Owner)
@@ -338,7 +339,7 @@ public abstract partial class SharedStationAiSystem : EntitySystem
 
     private void OnHolderMapInit(Entity<StationAiHolderComponent> ent, ref MapInitEvent args)
     {
-        UpdateAppearance(ent.Owner);
+        UpdateAppearance((ent.Owner, ent.Comp));
     }
 
     private void OnAiShutdown(Entity<StationAiCoreComponent> ent, ref ComponentShutdown args)
@@ -392,7 +393,7 @@ public abstract partial class SharedStationAiSystem : EntitySystem
         if (!TryComp<MobStateComponent>(held, out var mobState))
             return;
 
-        _mobState.ChangeMobState(held, MobState.Dead);
+        _mobState.ChangeMobState(held.Value, MobState.Dead);
 
         if (TryComp<StationAiHolderComponent>(ent, out var holder))
             UpdateAppearance((ent, holder));
@@ -553,21 +554,36 @@ public abstract partial class SharedStationAiSystem : EntitySystem
         // Determine what state the AI holder is in
         var state = StationAiState.Empty;
 
-        if (_containers.TryGetContainer(entity.Owner, StationAiHolderComponent.Container, out var container) && container.Count > 0)
+        if (TryGetHeld(entity, out var stationAi))
         {
-            var ai = container.ContainedEntities.First();
-            state = _mobState.IsDead(ai) ? StationAiState.Dead : StationAiState.Occupied;
+            state = _mobState.IsDead(stationAi.Value) ? StationAiState.Dead : StationAiState.Occupied;
         }
 
-        // If the entity is a station AI core, attempt to customize its appearance
-        if (TryComp<StationAiCoreComponent>(entity, out var stationAiCore))
+        // If the entity is not an AI core, let generic visualizers handle the appearance update
+        if (!TryComp<StationAiCoreComponent>(entity, out var stationAiCore))
         {
-            CustomizeAppearance((entity, stationAiCore), state);
+            _appearance.SetData(entity.Owner, StationAiVisualLayers.Icon, state);
             return;
         }
 
-        // Otherwise let generic visualizers handle the appearance update
-        _appearance.SetData(entity.Owner, StationAiVisualLayers.Icon, state);
+        // Determine if the AI core is rebooting
+        if (state != StationAiState.Dead &&
+            TryComp<MindContainerComponent>(stationAi, out var mindContainer) &&
+            TryComp<MindComponent>(mindContainer.Mind, out var mind) &&
+            mind.IsVisitingEntity)
+        {
+            var rebootingData = new PrototypeLayerData()
+            {
+                RsiPath = _stationAiRebooting.RsiPath.ToString(),
+                State = _stationAiRebooting.RsiState,
+            };
+
+            _appearance.SetData(entity.Owner, StationAiVisualLayers.Icon, rebootingData);
+            return;
+        }
+
+        // Otherwise attempt to customize the AI core's appearance
+        CustomizeAppearance((entity, stationAiCore), state);
     }
 
     public virtual bool SetVisionEnabled(Entity<StationAiVisionComponent> entity, bool enabled, bool announce = false)
