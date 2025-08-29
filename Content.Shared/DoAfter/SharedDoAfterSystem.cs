@@ -203,14 +203,8 @@ public abstract partial class SharedDoAfterSystem : EntitySystem
         args.NetUser = GetNetEntity(args.User);
         args.NetEventTarget = GetNetEntity(args.EventTarget);
 
-        // Use overridable effective user.
-        var effectiveUser = args.User;
-        var userEv = new GetDoAfterUserEvent(args.User);
-        RaiseLocalEvent(args.User, ref userEv);
-        effectiveUser = userEv.User;
-
         if (args.BreakOnMove)
-            doAfter.UserPosition = Transform(effectiveUser).Coordinates;
+            doAfter.UserPosition = Transform(args.User).Coordinates;
 
         if (args.Target != null && args.BreakOnMove)
         {

@@ -157,13 +157,7 @@ public abstract partial class SharedDoAfterSystem : EntitySystem
         if (args.EventTarget is {Valid: true} eventTarget && !xformQuery.HasComponent(eventTarget))
             return true;
 
-        // Use overridable effective user.
-        var moveEntity = args.User;
-        var userEv = new GetDoAfterUserEvent(args.User);
-        RaiseLocalEvent(args.User, ref userEv);
-        moveEntity = userEv.User;
-
-        if (!xformQuery.TryGetComponent(moveEntity, out var userXform))
+        if (!xformQuery.TryGetComponent(args.User, out var userXform))
             return true;
 
         TransformComponent? targetXform = null;
@@ -174,7 +168,7 @@ public abstract partial class SharedDoAfterSystem : EntitySystem
             return true;
 
         // TODO: Re-use existing xform query for these calculations.
-        if (args.BreakOnMove && !(!args.BreakOnWeightlessMove && _gravity.IsWeightless(moveEntity)))
+        if (args.BreakOnMove && !(!args.BreakOnWeightlessMove && _gravity.IsWeightless(args.User)))
         {
             // Whether the user has moved too much from their original position.
             if (!_transform.InRange(userXform.Coordinates, doAfter.UserPosition, args.MovementThreshold))
