@@ -203,7 +203,7 @@
     thresholds:
     - trigger:
         !type:DamageTrigger
-        damage: 300
+        damage: 400
       behaviors:
       - !type:PlaySoundBehavior
         sound:
@@ -212,7 +212,7 @@
         acts: [ "Breakage" ]
     - trigger:
         !type:DamageTrigger
-        damage: 600
+        damage: 800
       behaviors:
       - !type:PlaySoundBehavior
         sound:
@@ -229,7 +229,7 @@
         acts: ["Destruction"]
   - type: DamageVisuals
     thresholds: [25, 50, 75, 100, 125, 150, 175]
-    damageDivisor: 3
+    damageDivisor: 4
     trackAllDamage: true
     damageOverlay:
       sprite: Mobs/Silicon/station_ai_cracks.rsi
@@ -309,6 +309,8 @@
     containers:
       board:
       - StationAiCoreElectronics
+  - type: StaticPrice
+    price: 5000
       
 # The job-ready version of an AI spawn.
 - type: entity
@@ -367,7 +369,7 @@
     thresholds:
     - trigger:
         !type:DamageTrigger
-        damage: 300
+        damage: 400
       behaviors:
       - !type:PlaySoundBehavior
         sound:
