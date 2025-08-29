@@ -19,7 +19,7 @@
     Hair: MobHumanoidAnyMarking
     FacialHair: MobHumanoidAnyMarking
     Snout: MobHumanoidAnyMarking
-    SnoutTop: MobHumanoidAnyMarking
+    SnoutCover: MobHumanoidAnyMarking
     UndergarmentTop: MobHumanoidAnyMarking
     UndergarmentBottom: MobHumanoidAnyMarking
     Chest: MobVulpkaninTorso
@@ -49,7 +49,7 @@
       points: 1
       required: true
       defaultMarkings: [ VulpSnout ]
-    SnoutTop:
+    SnoutCover:
       points: 1
       required: false
     Tail:
