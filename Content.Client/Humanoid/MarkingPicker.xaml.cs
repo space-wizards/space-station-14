@@ -185,6 +185,13 @@ public sealed partial class MarkingPicker : Control
 
     private List<string> GetMarkingStateNames(MarkingPrototype marking)
     {
+        // Hair doesn't have individual color loc strings since hair is chosen
+        // in SingleMarkingPicker. In the admeme marking modifier though, we
+        // still want a loc string so this is a cheap hard coding to deal with
+        // that. (Plus it's probably "Hair color:" for every single one anyway.)
+        if (marking.MarkingCategory is MarkingCategories.Hair or MarkingCategories.FacialHair)
+            return Enumerable.Repeat(Loc.GetString("marking-modifier-hair-color"), marking.Sprites.Count).ToList();
+
         List<string> result = new();
         foreach (var markingState in marking.Sprites)
         {
@@ -419,7 +426,7 @@ public sealed partial class MarkingPicker : Control
             colorSelector.SelectorType = ColorSelectorSliders.ColorSelectorType.Hsv; // defaults color selector to HSV
             colorSliders.Add(colorSelector);
 
-            colorContainer.AddChild(new Label { Text = $"{stateNames[i]} color:" });
+            colorContainer.AddChild(new Label { Text = stateNames[i] });
             colorContainer.AddChild(colorSelector);
 
             var listing = _currentMarkings.Markings[_selectedMarkingCategory];

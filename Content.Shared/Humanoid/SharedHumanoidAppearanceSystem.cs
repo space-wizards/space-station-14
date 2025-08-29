@@ -1,14 +1,13 @@
 using System.IO;
 using System.Linq;
 using System.Numerics;
-using Content.Shared.CCVar;
-using Content.Shared.Decals;
 using Content.Shared.Examine;
 using Content.Shared.Humanoid.Markings;
 using Content.Shared.Humanoid.Prototypes;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Inventory;
 using Content.Shared.Preferences;
+using Content.Shared.Verbs;
 using Robust.Shared;
 using Robust.Shared.Configuration;
 using Robust.Shared.Enums;
@@ -32,7 +31,7 @@ namespace Content.Shared.Humanoid;
 ///     you still need a local copy so that players can set up their
 ///     characters.
 /// </summary>
-public abstract class SharedHumanoidAppearanceSystem : EntitySystem
+public abstract partial class SharedHumanoidAppearanceSystem : EntitySystem
 {
     [Dependency] private readonly IConfigurationManager _cfgManager = default!;
     [Dependency] private readonly INetManager _netManager = default!;
@@ -50,6 +49,14 @@ public abstract class SharedHumanoidAppearanceSystem : EntitySystem
 
         SubscribeLocalEvent<HumanoidAppearanceComponent, ComponentInit>(OnInit);
         SubscribeLocalEvent<HumanoidAppearanceComponent, ExaminedEvent>(OnExamined);
+        SubscribeLocalEvent<HumanoidAppearanceComponent, GetVerbsEvent<Verb>>(OnVerbsRequest);
+
+        Subs.BuiEvents<HumanoidAppearanceComponent>(HumanoidMarkingModifierKey.Key,
+            subs =>
+            {
+                subs.Event<HumanoidMarkingModifierMarkingSetMessage>(OnMarkingsSet);
+                subs.Event<HumanoidMarkingModifierBaseLayersSetMessage>(OnBaseLayersSet);
+            });
     }
 
     public DataNode ToDataNode(HumanoidCharacterProfile profile)

@@ -1,6 +1,7 @@
 using Content.Shared.Humanoid;
-using Content.Shared.Humanoid.Markings;
+using JetBrains.Annotations;
 using Robust.Client.UserInterface;
+using Robust.Shared.Timing;
 
 namespace Content.Client.Humanoid;
 
@@ -8,52 +9,43 @@ namespace Content.Client.Humanoid;
 // Do not use this in any non-privileged instance. This just replaces an entire marking set
 // with the set sent over.
 
-public sealed class HumanoidMarkingModifierBoundUserInterface : BoundUserInterface
+[UsedImplicitly]
+public sealed class HumanoidMarkingModifierBoundUserInterface(EntityUid owner, Enum uiKey)
+    : BoundUserInterface(owner, uiKey)
 {
     [ViewVariables]
     private HumanoidMarkingModifierWindow? _window;
 
-    public HumanoidMarkingModifierBoundUserInterface(EntityUid owner, Enum uiKey) : base(owner, uiKey)
-    {
-    }
+    private readonly IGameTiming _timing = IoCManager.Resolve<IGameTiming>();
 
     protected override void Open()
     {
         base.Open();
 
         _window = this.CreateWindowCenteredLeft<HumanoidMarkingModifierWindow>();
-        _window.OnMarkingAdded += SendMarkingSet;
-        _window.OnMarkingRemoved += SendMarkingSet;
-        _window.OnMarkingColorChange += SendMarkingSetNoResend;
-        _window.OnMarkingRankChange += SendMarkingSet;
-        _window.OnLayerInfoModified += SendBaseLayer;
+        _window.OnMarkingAdded += set => SendPredictedMessage(new HumanoidMarkingModifierMarkingSetMessage(set));
+        _window.OnMarkingRemoved += set => SendPredictedMessage(new HumanoidMarkingModifierMarkingSetMessage(set));
+        _window.OnMarkingColorChange += set => SendPredictedMessage(new HumanoidMarkingModifierMarkingSetMessage(set));
+        _window.OnMarkingRankChange += set => SendPredictedMessage(new HumanoidMarkingModifierMarkingSetMessage(set));
+        _window.OnLayerInfoModified += (layer, info) =>
+            SendPredictedMessage(new HumanoidMarkingModifierBaseLayersSetMessage(layer, info));
+
+        Update();
     }
 
-    protected override void UpdateState(BoundUserInterfaceState state)
+    public override void Update()
     {
-        base.UpdateState(state);
-
-        if (_window == null || state is not HumanoidMarkingModifierState cast)
-        {
+        if (_window == null || !EntMan.TryGetComponent(Owner, out HumanoidAppearanceComponent? comp))
             return;
-        }
 
-        _window.SetState(cast.MarkingSet, cast.Species, cast.Sex, cast.SkinColor, cast.CustomBaseLayers);
-    }
-
-    private void SendMarkingSet(MarkingSet set)
-    {
-        SendMessage(new HumanoidMarkingModifierMarkingSetMessage(set, true));
-    }
-
-    private void SendMarkingSetNoResend(MarkingSet set)
-    {
-        SendMessage(new HumanoidMarkingModifierMarkingSetMessage(set, false));
-    }
-
-    private void SendBaseLayer(HumanoidVisualLayers layer, CustomBaseLayerInfo? info)
-    {
-        SendMessage(new HumanoidMarkingModifierBaseLayersSetMessage(layer, info, true));
+        // TODO MarkingPicker needs to be rewritten to use something like a
+        // ListContainer instead of an ItemList so it doesn't rebuild itself on
+        // every update. For now I'll just make this incompatible with two
+        // clients modifying a character's markings at the same time since that
+        // way the UI at least feels predicted. (This might not be the best
+        // interim solution tbh.)
+        if (_timing.IsFirstTimePredicted)
+            _window.SetState(comp.MarkingSet, comp.Species, comp.Sex, comp.SkinColor, comp.CustomBaseLayers);
     }
 }
 
