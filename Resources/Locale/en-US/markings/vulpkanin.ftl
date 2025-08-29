@@ -1,52 +1,47 @@
-marking-VulpEar-vulp = Vulpkanin ears (base)
-marking-VulpEar-vulp-inner = Vulpkanin ears (inner)
+# Ears
+marking-VulpEar-vulp = Vulpkanin ears (Base)
+marking-VulpEar-vulp-inner = Vulpkanin ears (Inner)
 marking-VulpEar = Vulpkanin
 
-marking-VulpEarFade-vulp = Vulpkanin ears (base)
-marking-VulpEarFade-vulp-fade = Vulpkanin ears (fade)
-marking-VulpEarFade = Vulpkanin (fade)
+marking-VulpEarFade-vulp = Vulpkanin ears (Base)
+marking-VulpEarFade-vulp-fade = Vulpkanin ears (Fade)
+marking-VulpEarFade-vulp-inner = Vulpkanin ears (Inner)
+marking-VulpEarFade = Vulpkanin (Fade)
 
-marking-VulpEarSharp-vulp = Vulpkanin ears (base)
-marking-VulpEarSharp-vulp-sharp = Vulpkanin ears (sharp)
-marking-VulpEarSharp = Vulpkanin (sharp)
+marking-VulpEarSharp-vulp = Vulpkanin ears (Base)
+marking-VulpEarSharp-vulp-sharp = Vulpkanin ears (Sharp)
+marking-VulpEarSharp-vulp-inner = Vulpkanin ears (Inner)
+marking-VulpEarSharp = Vulpkanin (Sharp)
 
-marking-VulpEarJackal-jackal = Jackal ears (base)
-marking-VulpEarJackal-jackal-inner = Jackal ears (inner)
-marking-VulpEarJackal = Vulpkanin Jackal
-
-marking-VulpEarTerrier-terrier = Terrier ears (base)
-marking-VulpEarTerrier-terrier-inner = Terrier ears (inner)
-marking-VulpEarTerrier = Vulpkanin Terrier
-
-marking-VulpEarWolf-wolf = Wolf ears (base)
-marking-VulpEarWolf-wolf-inner = Wolf ears (inner)
-marking-VulpEarWolf = Vulpkanin Wolf
-
-marking-VulpEarFennec-fennec = Fennec ears (base)
-marking-VulpEarFennec-fennec-inner = Fennec ears (inner)
-marking-VulpEarFennec = Vulpkanin Fennec
-
-marking-VulpEarFox-fox = Fox ears (base)
-marking-VulpEarFox-fox-inner = Fox ears (inner)
-marking-VulpEarFox = Vulpkanin Fox
-
-marking-VulpEarOtie-otie = Otie ears (base)
-marking-VulpEarOtie-otie-inner = Otie ears (inner)
-marking-VulpEarOtie = Vulpkanin Otie
-
-marking-VulpEarTajaran-msai = Tajaran ears (base)
-marking-VulpEarTajaran-msai-inner = Tajaran ears (inner)
-marking-VulpEarTajaran = Vulpkanin Tajaran
-
-marking-VulpEarShock-shock = Shock ears
-marking-VulpEarShock = Vulpkanin Shock
-
-marking-VulpEarCoyote-coyote = Coyote ears
+marking-VulpEarCoyote-coyote = Coyote ears (Base)
+marking-VulpEarCoyote-coyote-inner = Coyote ears (Inner)
 marking-VulpEarCoyote = Vulpkanin Coyote
 
-marking-VulpEarDalmatian-dalmatian = Dalmatian ears
-marking-VulpEarDalmatian = Vulpkanin Dalmatian
+marking-VulpEarJackal-jackal = Jackal ears (Base)
+marking-VulpEarJackal-jackal-inner = Jackal ears (Inner)
+marking-VulpEarJackal = Vulpkanin Jackal
 
+marking-VulpEarTerrier-terrier = Terrier ears (Base)
+marking-VulpEarTerrier-terrier-inner = Terrier ears (Inner)
+marking-VulpEarTerrier = Vulpkanin Terrier
+
+marking-VulpEarFennec-fennec = Fennec ears (Base)
+marking-VulpEarFennec-fennec-inner = Fennec ears (Inner)
+marking-VulpEarFennec = Vulpkanin Fennec
+
+marking-VulpEarFox-fox = Fox ears (Base)
+marking-VulpEarFox-fox-inner = Fox ears (Inner)
+marking-VulpEarFox = Vulpkanin Fox
+
+marking-VulpEarOtie-otie = Otie ears (Base)
+marking-VulpEarOtie-otie-inner = Otie ears (Inner)
+marking-VulpEarOtie = Vulpkanin Otie
+
+marking-VulpEarShock-shock = Shock ears (Base)
+marking-VulpEarShock-shock = Shock ears (Inner)
+marking-VulpEarShock = Vulpkanin Shock
+
+# Snout
 
 marking-VulpSnoutAlt-muzzle_alt = Muzzle
 marking-VulpSnoutAlt-nose = Nose

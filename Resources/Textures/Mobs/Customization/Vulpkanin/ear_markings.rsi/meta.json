@@ -32,14 +32,6 @@
             "directions": 4
         },
         {
-            "name": "msai",
-            "directions": 4
-        },
-        {
-            "name": "msai-inner",
-            "directions": 4
-        },
-        {
             "name": "otie",
             "directions": 4
         },
@@ -49,6 +41,10 @@
         },
         {
             "name": "shock",
+            "directions": 4
+        },
+        {
+            "name": "shock-inner",
             "directions": 4
         },
         {
