@@ -1,56 +1,4 @@
 ﻿Entries:
-- author: TytosB
-  changes:
-  - message: adjusted pka damage and range
-    type: Tweak
-  id: 8385
-  time: '2025-04-29T10:00:56.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/37012
-- author: abadaba695
-  changes:
-  - message: Added 15u, 20u, and 30u transfer buttons in the chem master.
-    type: Add
-  id: 8386
-  time: '2025-04-29T10:24:57.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/36995
-- author: Thinbug0
-  changes:
-  - message: Science developed the Push-Horn, capable of pushing people away with
-      each honk!
-    type: Add
-  id: 8387
-  time: '2025-04-29T13:07:59.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/36009
-- author: SlamBamActionman
-  changes:
-  - message: The "Toggle Walk" alert no longer gets removed when it shouldn't.
-    type: Fix
-  id: 8388
-  time: '2025-04-29T13:32:18.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/37033
-- author: Boaz1111
-  changes:
-  - message: Added sharkminnow tooth spears and carp tooth arrows. Happy salvaging!
-    type: Add
-  - message: Sharkminnow teeth now deal 15 damage instead of 10.
-    type: Tweak
-  id: 8389
-  time: '2025-04-29T16:36:53.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/31257
-- author: whatston3
-  changes:
-  - message: Speso stacks now show different denominations depending on their size.
-    type: Add
-  id: 8390
-  time: '2025-04-29T21:44:47.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/37030
-- author: themias
-  changes:
-  - message: Toolboxes have new sound effects
-    type: Tweak
-  id: 8391
-  time: '2025-04-29T22:17:32.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/37048
 - author: ScarKy0
   changes:
   - message: Priority mail now indicates whether it was delivered on time or not.
@@ -3948,3 +3896,64 @@
   id: 8897
   time: '2025-08-27T21:56:10.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/39805
+- author: aada
+  changes:
+  - message: Fixed audio mispredict when quick inserting.
+    type: Fix
+  id: 8898
+  time: '2025-08-28T16:54:06.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/39930
+- author: Hitlinemoss
+  changes:
+  - message: Descriptions for cardboard weapons have been adjusted.
+    type: Tweak
+  id: 8899
+  time: '2025-08-28T17:14:44.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/39927
+- author: Southbridge
+  changes:
+  - message: On Amber, added a pressure relief valve to the TEG burn chamber.
+    type: Add
+  - message: On Amber, added latejoin spawns to arrivals.
+    type: Tweak
+  id: 8900
+  time: '2025-08-29T05:39:23.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/39943
+- author: Southbridge
+  changes:
+  - message: On Marathon, gave the containment area some much needed love.
+    type: Add
+  - message: On Marathon, redesigned the TEG burn chamber in preparation for the atmos
+      pressure update.
+    type: Tweak
+  - message: On Marathon, touched up a couple areas in Atmos and expanded the burn
+      chamber area.
+    type: Tweak
+  id: 8901
+  time: '2025-08-29T05:40:38.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/39955
+- author: Southbridge
+  changes:
+  - message: On Box, redesigned the burn chambers to be ready for the atmos pressure
+      update.
+    type: Tweak
+  id: 8902
+  time: '2025-08-29T05:42:00.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/39954
+- author: Southbridge
+  changes:
+  - message: On Bagel, ensured there were late join spawners at arrivals
+    type: Add
+  - message: On Bagel, overhauled the TEG so it's a bit more ready for the pressure
+      update
+    type: Tweak
+  id: 8903
+  time: '2025-08-29T06:03:54.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/39945
+- author: FungiFellow
+  changes:
+  - message: Sentience Event no longer targets Zombified creatures
+    type: Fix
+  id: 8904
+  time: '2025-08-29T11:48:31.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/39950
