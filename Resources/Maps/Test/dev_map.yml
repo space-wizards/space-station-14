@@ -12105,15 +12105,6 @@ entities:
     - type: Physics
       canCollide: False
     - type: InsideEntityStorage
-- proto: MagazineLightRifleMaxim
-  entities:
-  - uid: 2115
-    components:
-    - type: Transform
-      parent: 2107
-    - type: Physics
-      canCollide: False
-    - type: InsideEntityStorage
 - proto: MagazineLightRiflePractice
   entities:
   - uid: 2110
