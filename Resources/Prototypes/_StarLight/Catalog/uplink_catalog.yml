@@ -389,8 +389,8 @@
   productEntity: Ecronizer
   discountCategory: usualDiscounts
   discountDownTo:
-    Telecrystal: 4
+    Telecrystal: 2
   cost:
-    Telecrystal: 5
+    Telecrystal: 4
   categories:
   - UplinkDisruption
