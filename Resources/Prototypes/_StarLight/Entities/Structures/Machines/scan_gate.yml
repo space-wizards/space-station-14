@@ -51,7 +51,7 @@
     requirePower: true
   - type: DeviceList
   - type: DeviceNetwork
-    deviceNetId: Wired
+    deviceNetId: Wireless
   - type: DeviceLinkSource
     range: 5
     ports:

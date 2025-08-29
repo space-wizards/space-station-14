@@ -99,11 +99,13 @@ public sealed partial class SharedScanGateSystem : EntitySystem
         if (args.ByPass) // No need to check if already bypassed
             return;
 
-        foreach (var (entity, location) in component.StoredItems)
+        foreach (var (entity, _) in component.StoredItems)
         {
-            if (HasComp<ScanByPassComponent>(entity))
+            if (TryComp<ScanByPassComponent>(entity, out var component)
+            && (!component.Toggleable || _itemToggleSystem.IsActivated(entity))
+            && (!component.Powered || _powerReceiverSystem.IsPowered(entity) || _powerCellSystem.HasDrawCharge(entity)))
             {
-                args.ByPass = true;
+                args.Args.ByPass = true;
                 break;
             }
             if (HasComp<ScanDetectableComponent>(entity))
@@ -116,9 +118,11 @@ public sealed partial class SharedScanGateSystem : EntitySystem
         if (args.Args.ByPass) // No need to check if already bypassed
             return;
 
-        foreach (var (entity, location) in component.StoredItems)
+        foreach (var (entity, _) in component.StoredItems)
         {
-            if (HasComp<ScanByPassComponent>(entity))
+            if (TryComp<ScanByPassComponent>(entity, out var component)
+            && (!component.Toggleable || _itemToggleSystem.IsActivated(entity))
+            && (!component.Powered || _powerReceiverSystem.IsPowered(entity) || _powerCellSystem.HasDrawCharge(entity)))
             {
                 args.Args.ByPass = true;
                 break;
@@ -133,9 +137,11 @@ public sealed partial class SharedScanGateSystem : EntitySystem
         if (args.Args.ByPass) // No need to check if already bypassed
             return;
 
-        foreach (var (entity, location) in component.StoredItems)
+        foreach (var (entity, _) in component.StoredItems)
         {
-            if (HasComp<ScanByPassComponent>(entity))
+            if (TryComp<ScanByPassComponent>(entity, out var component)
+            && (!component.Toggleable || _itemToggleSystem.IsActivated(entity))
+            && (!component.Powered || _powerReceiverSystem.IsPowered(entity) || _powerCellSystem.HasDrawCharge(entity)))
             {
                 args.Args.ByPass = true;
                 break;
@@ -154,8 +160,8 @@ public sealed partial class SharedScanGateSystem : EntitySystem
     /// </summary>
     private void OnBypass(EntityUid uid, ScanByPassComponent component, ref TryDetectItem args)
     {
-        if ((!component.Toggleable || (component.Toggleable && _itemToggleSystem.IsActivated(uid)))
-            && (!component.Powered || (component.Powered && (_powerReceiverSystem.IsPowered(uid) || _powerCellSystem.HasDrawCharge(uid)))))
+        if ((!component.Toggleable || _itemToggleSystem.IsActivated(uid))
+            && (!component.Powered || _powerReceiverSystem.IsPowered(uid) || _powerCellSystem.HasDrawCharge(uid)))
             args.ByPass = true;
     }
 
@@ -164,8 +170,8 @@ public sealed partial class SharedScanGateSystem : EntitySystem
     /// </summary>
     private void OnInventoryRelayBypass(EntityUid uid, ScanByPassComponent component, ref InventoryRelayedEvent<TryDetectItem> args)
     {
-        if ((!component.Toggleable || (component.Toggleable && _itemToggleSystem.IsActivated(uid)))
-            && (!component.Powered || (component.Powered && (_powerReceiverSystem.IsPowered(uid) || _powerCellSystem.HasDrawCharge(uid)))))
+        if ((!component.Toggleable || _itemToggleSystem.IsActivated(uid))
+            && (!component.Powered || _powerReceiverSystem.IsPowered(uid) || _powerCellSystem.HasDrawCharge(uid)))
             args.Args.ByPass = true;
     }
 
@@ -174,8 +180,8 @@ public sealed partial class SharedScanGateSystem : EntitySystem
     /// </summary>
     private void OnHandRelayBypass(EntityUid uid, ScanByPassComponent component, ref HeldRelayedEvent<TryDetectItem> args)
     {
-        if ((!component.Toggleable || (component.Toggleable && _itemToggleSystem.IsActivated(uid)))
-            && (!component.Powered || (component.Powered && (_powerReceiverSystem.IsPowered(uid) || _powerCellSystem.HasDrawCharge(uid)))))
+        if ((!component.Toggleable || _itemToggleSystem.IsActivated(uid))
+            && (!component.Powered || _powerReceiverSystem.IsPowered(uid) || _powerCellSystem.HasDrawCharge(uid)))
             args.Args.ByPass = true;
     }
 
