@@ -16,17 +16,24 @@ public sealed partial class RailroadingFaxHandlerSystem : EntitySystem
     {
         base.Initialize();
         SubscribeLocalEvent<RailroadFaxOnChosenComponent, RailroadingCardChosenEvent>(OnChosen);
+        SubscribeLocalEvent<RailroadFaxOnFailedComponent, RailroadingCardFailedEvent>(OnFailed);
     }
 
+    private void OnFailed(Entity<RailroadFaxOnFailedComponent> ent, ref RailroadingCardFailedEvent args) 
+        => SendFax(ent.Comp, args.Subject);
+
     private void OnChosen(Entity<RailroadFaxOnChosenComponent> ent, ref RailroadingCardChosenEvent args)
+        => SendFax(ent.Comp, args.Subject);
+
+    private void SendFax(IRailroadFaxComponent component, Entity<RailroadableComponent> subject)
     {
-        var letter = _random.Pick(ent.Comp.Letters);
+        var letter = _random.Pick(component.Letters);
 
         var payload = new NetworkPayload
         {
             [DeviceNetworkConstants.Command] = FaxConstants.FaxPrintCommand,
-            [FaxConstants.FaxPaperNameData] = Loc.GetString(letter.PaperName, ("subject", args.Subject)),
-            [FaxConstants.FaxPaperContentData] = Loc.GetString(letter.PaperContent, ("subject",args.Subject)),
+            [FaxConstants.FaxPaperNameData] = Loc.GetString(letter.PaperName, ("subject", subject)),
+            [FaxConstants.FaxPaperContentData] = Loc.GetString(letter.PaperContent, ("subject", subject)),
             [FaxConstants.FaxPaperLabelData] = letter.PaperLabel,
             [FaxConstants.FaxPaperStampStateData] = letter.StampState,
             [FaxConstants.FaxPaperStampedByData] = letter.StampedBy,
@@ -37,7 +44,7 @@ public sealed partial class RailroadingFaxHandlerSystem : EntitySystem
         var query = EntityQueryEnumerator<FaxMachineComponent>();
         while (query.MoveNext(out var faxEnt, out var faxComp))
         {
-            if (!ent.Comp.Addresses.Contains(faxComp.FaxName))
+            if (!component.Addresses.Contains(faxComp.FaxName))
                 continue;
             var @event = new DeviceNetworkPacketEvent
                 (
