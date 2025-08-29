@@ -7723,17 +7723,6 @@ entities:
     - type: Transform
       pos: -0.39634466,12.638008
       parent: 30
-- proto: ActionToggleInternals
-  entities:
-  - uid: 23387
-    mapInit: true
-    paused: true
-    components:
-    - type: Transform
-      parent: 23386
-    - type: Action
-      originalIconColor: '#FFFFFFFF'
-      container: 23386
 - proto: AirAlarm
   entities:
   - uid: 682
@@ -12637,8 +12626,6 @@ entities:
       pos: 2.5,-58.5
       parent: 30
     - type: DeviceNetwork
-      configurators:
-      - invalid
       deviceLists:
       - 23312
   - uid: 21749
@@ -110564,14 +110551,6 @@ entities:
     - type: Transform
       pos: -19.366564,-50.463734
       parent: 30
-    - type: GasTank
-      toggleActionEntity: 23387
-    - type: ActionsContainer
-    - type: ContainerContainer
-      containers:
-        actions: !type:Container
-          ents:
-          - 23387
 - proto: PlasmaWindoorSecureArmoryLocked
   entities:
   - uid: 1943
