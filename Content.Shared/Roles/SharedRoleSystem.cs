@@ -1,3 +1,4 @@
+// Contains modifications made by Ronstation contributors, therefore this file is subject to MIT sublicensed with AGPL v3.0.
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Shared.Administration.Logs;
@@ -587,6 +588,7 @@ public abstract class SharedRoleSystem : EntitySystem
                 prototype = comp.AntagPrototype;
                 if (_prototypes.TryIndex(comp.AntagPrototype, out var antag))
                 {
+                    playTimeTracker = antag.PlayTimeTracker; // Ronstation - modification.
                     name = antag.Name;
                     valid = true;
                 }
