@@ -39,7 +39,7 @@ public sealed partial class SharedScanGateSystem : EntitySystem
 
         SubscribeLocalEvent<StorageComponent, TryDetectItem>(OnDetectStorage);
         SubscribeLocalEvent<StorageComponent, InventoryRelayedEvent<TryDetectItem>>(OnInventoryRelayStorage); // Detect items in storage
-        SubscribeLocalEvent<StorageComponent, HeldRelayedEvent<TryDetectItem>>(OnHandRelayStorage, inventory: false); // Detect items in storage
+        Subs.SubscribeWithRelay<StorageComponent, HeldRelayedEvent<TryDetectItem>>(OnHandRelayStorage, inventory: false); // Detect items in storage
 
         // Bypass events
 
