@@ -585,8 +585,6 @@
     modifiers:
       coefficients:
         Blunt: 0.95
-  - type: StaminaResistance
-    damageCoefficient: 0.95
   - type: Construction
     graph: cardHelmet
     node: cardhelmet
