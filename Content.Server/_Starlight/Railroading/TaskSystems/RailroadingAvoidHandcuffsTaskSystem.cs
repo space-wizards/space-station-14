@@ -10,6 +10,7 @@ namespace Content.Server._Starlight.Railroading;
 // todo make TaskSystem<TTask,TWatcher>
 public sealed partial class RailroadingAvoidHandcuffsTaskSystem : EntitySystem
 {
+    [Dependency] private readonly RailroadingSystem _railroading = default!;
     public override void Initialize()
     {
         base.Initialize();
@@ -19,7 +20,11 @@ public sealed partial class RailroadingAvoidHandcuffsTaskSystem : EntitySystem
         SubscribeLocalEvent<RailroadAvoidHandcuffsTaskComponent, RailroadingCardCompletedEvent>(OnCompleted);
         
         SubscribeLocalEvent<RailroadAvoidHandcuffsWatcherComponent, TargetHandcuffedEvent>(OnCuffedChanged);
+        SubscribeLocalEvent<RailroadAvoidHandcuffsWatcherComponent, RailroadingCardFailedEvent>(OnFailed);
     }
+
+    private void OnFailed(Entity<RailroadAvoidHandcuffsWatcherComponent> ent, ref RailroadingCardFailedEvent args) 
+        => RemComp<RailroadAvoidHandcuffsWatcherComponent>(args.Subject.Owner);
 
     private void OnCompleted(Entity<RailroadAvoidHandcuffsTaskComponent> ent, ref RailroadingCardCompletedEvent args)
         => RemComp<RailroadAvoidHandcuffsWatcherComponent>(args.Subject.Owner);
@@ -32,7 +37,7 @@ public sealed partial class RailroadingAvoidHandcuffsTaskSystem : EntitySystem
             return;
 
         task.IsCompleted = false;
-        RemComp<RailroadAvoidHandcuffsWatcherComponent>(ent);
+        _railroading.CardFailed((ent, railroadable));
     }
 
     private void OnCollectObjectiveInfo(Entity<RailroadAvoidHandcuffsTaskComponent> ent, ref CollectObjectiveInfoEvent args) 

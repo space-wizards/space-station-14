@@ -45,8 +45,32 @@
       stampedBy:
         - stampedColor: "#006666"
           stampedName: rr-nt-isd
+  - type: RailroadFaxOnFailed
+    addresses: 
+    - Captain's Office
+    - Captain
+    - Security
+    - Bridge
+    - Conference Room
+    - HoS Office
+    - Warden's Office
+    - Warden
+    - Detective's Office
+    - Magistrate
+    letters:
+    - name: rr-criminal-failed-name
+      content: rr-criminal-failed-content
+      stampState: paper_stamp-centcom
+      stampedBy:
+        - stampedColor: "#006620"
+          stampedName: rr-cc
   - type: RailroadAssignRole
     role: RRMindRoleCriminal
+  - type: RailroadMessageOnChosen
+    messages:
+    - message: rr-criminal-message
+      wrapped: rr-criminal-wrapped-message
+      color: "#fd3f3f"
   - type: RailroadTimerTask
     duration: 1200
   - type: RailroadSurviveTask

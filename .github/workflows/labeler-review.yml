@@ -1,11 +1,11 @@
-name: "Labels: Approved"
+name: "Labels: Review"
 on:
   pull_request_review:
     types: [submitted]
 jobs:
-  add_label:
+  add_label_approved: # Approved by team member
     # Change the repository name after you've made sure the team name is correct for your fork!
-    if: ${{ (github.repository == 'space-wizards/space-station-14') && (github.event.review.state == 'APPROVED') }}
+    if: ${{ (github.repository == 'ss14Starlight/space-station-14') && (github.event.review.state == 'APPROVED') }}
     permissions:
       contents: read
       pull-requests: write
@@ -15,9 +15,26 @@ jobs:
       id: checkUserMember
       with:
         username: ${{ github.actor }}
-        team: "content-maintainers,junior-maintainers"
+        team: "maintainer,dev"
         GITHUB_TOKEN: ${{ secrets.LABELER_PAT }}
     - if: ${{ steps.checkUserMember.outputs.isTeamMember == 'true' }}
       uses: actions-ecosystem/action-add-labels@v1
       with:
         labels: "S: Approved"
+  add_label_awaiting_changes: # Changes requested by team member
+    if: ${{ (github.repository == 'ss14Starlight/space-station-14') && (github.event.review.state == 'CHANGES_REQUESTED') }}
+    permissions:
+      contents: read
+      pull-requests: write
+    runs-on: ubuntu-latest
+    steps:
+    - uses: tspascoal/get-user-teams-membership@v3
+      id: checkUserMember
+      with:
+        username: ${{ github.actor }}
+        team: "maintainer,dev"
+        GITHUB_TOKEN: ${{ secrets.LABELER_PAT }}
+    - if: ${{ steps.checkUserMember.outputs.isTeamMember == 'true' }}
+      uses: actions-ecosystem/action-add-labels@v1
+      with:
+        labels: "S: Awaiting Changes"
