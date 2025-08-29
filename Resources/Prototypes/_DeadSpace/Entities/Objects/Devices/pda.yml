@@ -1,0 +1,164 @@
+- type: entity
+  parent: BaseMedicalPDA
+  id: SurgeonPDA
+  name: surgeon PDA
+  description: Red spots remained after one of the operations.
+  components:
+  - type: Pda
+    id: SurgeonIDCard
+  - type: Appearance
+    appearanceDataInit:
+     enum.PdaVisuals.PdaType:
+       !type:String
+       pda-surgeon
+  - type: PdaBorderColor
+    borderColor: "#817d6f"
+    accentVColor: "#12445b"
+  - type: Icon
+    state: pda-surgeon
+  - type: GuideHelp
+    guides:
+    - MedicalDoctor
+
+
+- type: entity
+  parent: CentcomPDA
+  id: CentcomOfficialPDA
+  components:
+  - type: Pda
+    id: CentcomOfficialIDCard
+
+- type: entity
+  parent: CentcomPDA
+  id: CentcomAdministratorPDA
+  components:
+  - type: Pda
+    id: CentcomAdministratorIDCard
+
+- type: entity
+  parent: CentcomPDA
+  id: CentcomOperatorPDA
+  components:
+  - type: Pda
+    id: CentcomOperatorIDCard
+
+- type: entity
+  parent: CentcomPDA
+  id: CentcomSpecialOperationsOfficerPDA
+  components:
+  - type: Pda
+    id: CentcomSpecialOperationsOfficerIDCard
+
+
+- type: entity
+  parent: ERTLeaderPDA
+  id: ERTLeaderRedPDA
+  components:
+  - type: Pda
+    id: ERTLeaderRedIDCard
+
+- type: entity
+  parent: ERTLeaderPDA
+  id: ERTLeaderGammaPDA
+  components:
+  - type: Pda
+    id: ERTLeaderGammaIDCard
+
+- type: entity
+  parent: CBURNPDA
+  id: CBURNLeaderPDA
+  components:
+  - type: Pda
+    id: CBURNLeaderIDcard
+
+
+- type: entity
+  parent: BasePDA
+  id: CoronerPDA
+  name: coroner PDA
+  description: I wonder whose pulse is on the screen? I hope he doesn't stop...
+  components:
+  - type: Pda
+    id: CoronerIDCard
+  - type: Appearance
+    appearanceDataInit:
+     enum.PdaVisuals.PdaType:
+       !type:String
+       pda-coroner
+  - type: PdaBorderColor
+    borderColor: "#212121"
+    accentHColor: "#EAEAEA"
+    accentVColor: "#EAEAEA"
+  - type: Icon
+    state: pda-coroner
+
+- type: entity
+  parent: BasePDA
+  id: SecurityPilotPDA
+  name: security pilot PDA
+  description: Smells like space shuttles.
+  components:
+  - type: Pda
+    id: SecurityPilotIDCard
+  - type: Appearance
+    appearanceDataInit:
+     enum.PdaVisuals.PdaType:
+       !type:String
+       pda-security
+  - type: PdaBorderColor
+    borderColor: "#2f303c"
+  - type: Icon
+    state: pda-security
+  - type: CartridgeLoader
+    uiKey: enum.PdaUiKey.Key
+    preinstalled:
+      - CrewManifestCartridge
+      - NotekeeperCartridge
+      - NewsReaderCartridge
+      - AstroNavCartridge
+
+- type: entity
+  parent: BasePDA
+  id: SeniorSalvagePDA
+  name: senior salvage PDA
+  description: Smells like ash.
+  components:
+  - type: Pda
+    id: SeniorSalvageIDCard
+  - type: Appearance
+    appearanceDataInit:
+     enum.PdaVisuals.PdaType:
+       !type:String
+       pda-seniorminer
+  - type: PdaBorderColor
+    borderColor: "#735321"
+    accentHColor: "#62237F"
+    accentVColor: "#62237F"
+  - type: Icon
+    state: pda-seniorminer
+  - type: CartridgeLoader
+    uiKey: enum.PdaUiKey.Key
+    preinstalled:
+      - CrewManifestCartridge
+      - NotekeeperCartridge
+      - NewsReaderCartridge
+      - AstroNavCartridge
+
+- type: entity
+  parent: BasePDA
+  id: SeniorServicePDA
+  name: senior service PDA
+  description: Smells like service dep.
+  components:
+  - type: Pda
+    id: SeniorServiceIDCard
+  - type: Appearance
+    appearanceDataInit:
+     enum.PdaVisuals.PdaType:
+       !type:String
+       pda-seniorservice
+  - type: PdaBorderColor
+    borderColor: "#789876"
+    accentHColor: "#CEC155"
+  - type: Icon
+    state: pda-seniorservice

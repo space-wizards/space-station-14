@@ -495,3 +495,19 @@
     Steel: 150
     Plastic: 100
     Glass: 20
+
+# DS14-start
+
+- type: latheRecipe
+  parent: BaseAmmoRecipe
+  id: MagazineBox357Incendiary
+  result: MagazineBox357Incendiary
+  materials:
+    Plastic: 1000
+
+- type: latheRecipe
+  parent: BaseAmmoRecipe
+  id: SpeedLoader357
+  result: SpeedLoader357
+  materials:
+    Steel: 1500
