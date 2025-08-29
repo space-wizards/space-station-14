@@ -941,4 +941,5 @@
       gender: male
   - type: Loadout
     prototypes: [ MobPollyGear ]
-
+  - type: TTS
+    voice: Gyro
