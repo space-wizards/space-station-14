@@ -1,6 +1,4 @@
-# Drain
 - type: construction
-  name: drain
   id: FloorDrainConstruction
   description: Drains puddles around it. Useful for dumping mop buckets or keeping certain rooms clean.
   graph: FloorDrainGraph
@@ -9,6 +7,13 @@
   category: construction-category-utilities
   placementMode: SnapgridCenter
   canBuildInImpassable: false
-  icon:
-    sprite: Objects/Specific/Janitorial/drain.rsi
-    state: icon
+
+- type: construction
+  id: littleDirectionalFan
+  description: Fan to hold the air in and space outside.
+  graph: DirFan
+  startNode: start
+  targetNode: littleDirectionalFan
+  category: construction-category-utilities
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false

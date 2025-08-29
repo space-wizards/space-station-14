@@ -1,6 +1,5 @@
 # Sink
 - type: construction
-  name: sink
   id: SinkConstruction
   description: A sink, useful for washing and draining water.
   graph: SinkGraph
@@ -9,13 +8,9 @@
   category: construction-category-furniture
   placementMode: SnapgridCenter
   canBuildInImpassable: false
-  icon:
-    sprite: Structures/Furniture/sink.rsi
-    state: sink_stem
 
 # Wide Sink
 - type: construction
-  name: sink wide
   id: SinkWideConstruction
   description: A wide sink, useful for larger washing tasks.
   graph: SinkWideGraph
@@ -24,13 +19,9 @@
   category: construction-category-furniture
   placementMode: SnapgridCenter
   canBuildInImpassable: false
-  icon:
-    sprite: Structures/Furniture/sink.rsi
-    state: sink_wide
 
 # Stemless Sink
 - type: construction
-  name: sink stemless
   id: SinkStemlessConstruction
   description: A stemless sink variation for washing and draining water.
   graph: SinkStemlessGraph
@@ -39,6 +30,3 @@
   category: construction-category-furniture
   placementMode: SnapgridCenter
   canBuildInImpassable: false
-  icon:
-    sprite: Structures/Furniture/sink.rsi
-    state: sink

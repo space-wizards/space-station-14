@@ -1006,19 +1006,3 @@
   canBuildInImpassable: true
   conditions:
   - !type:WallmountCondition
-
-
-# FAN
-- type: construction
-  name: little directional fan
-  id: littleDirectionalFan
-  description: Fan to hold the air in and space outside.
-  graph: DirFan
-  startNode: start
-  targetNode: littleDirectionalFan
-  category: construction-category-utilities
-  placementMode: SnapgridCenter
-  canBuildInImpassable: false
-  icon:
-    sprite: Structures/Piping/Atmospherics/directionalfan.rsi
-    state: icon
