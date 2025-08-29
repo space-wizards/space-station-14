@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: whatston3
-  changes:
-  - message: Speso stacks now show different denominations depending on their size.
-    type: Add
-  id: 8390
-  time: '2025-04-29T21:44:47.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/37030
 - author: themias
   changes:
   - message: Toolboxes have new sound effects
@@ -3954,3 +3947,13 @@
   id: 8902
   time: '2025-08-29T05:42:00.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/39954
+- author: Southbridge
+  changes:
+  - message: On Bagel, ensured there were late join spawners at arrivals
+    type: Add
+  - message: On Bagel, overhauled the TEG so it's a bit more ready for the pressure
+      update
+    type: Tweak
+  id: 8903
+  time: '2025-08-29T06:03:54.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/39945
