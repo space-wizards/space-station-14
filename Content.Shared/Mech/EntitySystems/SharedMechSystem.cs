@@ -76,6 +76,7 @@ public abstract partial class SharedMechSystem : EntitySystem
         SubscribeLocalEvent<MechComponent, CanDropTargetEvent>(OnCanDragDrop);
         SubscribeLocalEvent<MechComponent, VehicleOperatorSetEvent>(OnOperatorSet);
         SubscribeLocalEvent<MechComponent, GetVerbsEvent<Verb>>(OnGetVerb);
+        SubscribeLocalEvent<MechComponent, GotEmaggedEvent>(OnEmagged);
 
         SubscribeLocalEvent<MechPilotComponent, GetMeleeWeaponEvent>(OnGetMeleeWeapon);
         SubscribeLocalEvent<MechPilotComponent, GetActiveWeaponEvent>(OnGetActiveWeapon);
@@ -652,6 +653,10 @@ public abstract partial class SharedMechSystem : EntitySystem
     {
         if (!component.BreakOnEmag)
             return;
+
+        if (HasComp<EmaggedComponent>(uid))
+            return;
+
         args.Handled = true;
         component.EquipmentWhitelist = null;
         component.ModuleWhitelist = null;

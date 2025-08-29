@@ -30,6 +30,14 @@ public abstract class MechInstallSystem : EntitySystem
         if (!TryComp<MechComponent>(target, out mechComp))
             return false;
 
+        // Check lock access before starting install
+        if (TryComp<MechLockComponent>(target, out var lockComp) && lockComp.IsLocked)
+        {
+            var lockSys = EntityManager.System<MechLockSystem>();
+            if (!lockSys.CheckAccessWithFeedback(target, user, lockComp))
+                return false;
+        }
+
         // Block install if mech is in broken state
         if (mechComp.Broken && !Vehicle.HasOperator(target))
         {
@@ -89,18 +97,11 @@ public abstract class MechInstallSystem : EntitySystem
     }
 
     /// <summary>
-    /// Shared finalization checks before performing insert (locks and mech existence). Pops up on denial.
+    /// Shared finalization checks before performing insert.
     /// </summary>
     protected bool TryFinalizeInsert(EntityUid mech, EntityUid user, out MechComponent? mechComp)
     {
         mechComp = default!;
-
-        if (TryComp<MechLockComponent>(mech, out var lockComp) && lockComp.IsLocked)
-        {
-            var lockSys = EntityManager.System<MechLockSystem>();
-            if (!lockSys.CheckAccessWithFeedback(mech, user, lockComp))
-                return false;
-        }
 
         if (!TryComp<MechComponent>(mech, out mechComp))
             return false;

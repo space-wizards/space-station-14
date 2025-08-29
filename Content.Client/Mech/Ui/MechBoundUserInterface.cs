@@ -40,8 +40,8 @@ public sealed class MechBoundUserInterface : BoundUserInterface, IBuiPreTickUpda
 
         // Predict access banner based on lock component if available
         var predictedHasAccess = true;
-        if (IoCManager.Resolve<IEntityManager>().TryGetComponent<MechLockComponent>(Owner, out var lockComp) && lockComp.IsLocked)
-            predictedHasAccess = false;
+        if (IoCManager.Resolve<IEntityManager>().TryGetComponent<MechLockComponent>(Owner, out var lockComp))
+            predictedHasAccess = !lockComp.IsLocked;
         _menu.OverrideAccessAndRefresh(predictedHasAccess);
 
         // Equipment and module removal
@@ -102,6 +102,7 @@ public sealed class MechBoundUserInterface : BoundUserInterface, IBuiPreTickUpda
 
                 case MechFanToggleMessage fanToggle:
                     mechState.FanActive = fanToggle.IsActive;
+                    mechState.FanState = fanToggle.IsActive ? MechFanState.On : MechFanState.Off;
                     break;
 
                 case MechFilterToggleMessage filterToggle:

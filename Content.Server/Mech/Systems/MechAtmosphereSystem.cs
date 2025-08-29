@@ -193,7 +193,15 @@ public sealed class MechAtmosphereSystem : EntitySystem
             return;
 
         fanModule.IsActive = args.IsActive;
-        Dirty(uid, component);
+
+        // Set the correct state based on the toggle.
+        var newState = args.IsActive ? MechFanState.On : MechFanState.Off;
+        if (fanModule.State != newState)
+        {
+            fanModule.State = newState;
+            Dirty(uid, component);
+        }
+
         UpdateMechUi(uid);
     }
 
