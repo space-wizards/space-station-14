@@ -19,7 +19,7 @@ namespace Content.Server.DeadSpace.ERTCall;
 public sealed class ERTCallSystem : EntitySystem
 {
     [Dependency] private readonly ChatSystem _chatSystem = default!;
-    [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+    [Dependency] private readonly IPrototypeManager _proto = default!;
     [Dependency] private readonly MapSystem _map = default!;
     [Dependency] private readonly MapLoaderSystem _loader = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
@@ -43,7 +43,7 @@ public sealed class ERTCallSystem : EntitySystem
         if (!TryComp<ERTCallComponent>(args.Station, out var ertCallComponent))
             return;
 
-        if (!_prototypeManager.TryIndex(ertCallComponent.ERTTeamPrototype, out ERTTeamPrototype? ertTeams))
+        if (!_proto.TryIndex(ertCallComponent.ERTTeamPrototype, out ERTTeamPrototype? ertTeams))
         {
             return;
         }
@@ -61,13 +61,14 @@ public sealed class ERTCallSystem : EntitySystem
 
     public void CallErt(EntityUid stationUid, string ertTeam, MetaDataComponent? dataComponent = null, ERTCallComponent? component = null)
     {
-        if (!Resolve(stationUid, ref component, ref dataComponent)
-            || component.ERTTeams == null
-            || !component.ERTTeams.Teams.TryGetValue(ertTeam, out var ertTeamDetails)
-           )
-        {
+        if (!Resolve(stationUid, ref component, ref dataComponent) || component.ERTTeams == null)
             return;
-        }
+
+        if (!_proto.TryIndex<ERTTeamPrototype>(component.ERTTeams.Value, out var ertTeamPrototype))
+            return;
+
+        if (!ertTeamPrototype.Teams.TryGetValue(ertTeam, out var ertTeamDetails))
+            return;
 
         var message = "";
         message += $"{Loc.GetString($"ert-call-announcement-{ertTeam}")} ";
