@@ -15,7 +15,7 @@ namespace Content.Shared.Humanoid
         Chest,
         Head,
         Snout,
-        SnoutTop, // things on snouts (i.e. noses)
+        SnoutCover, // things layered over snouts (i.e. noses)
         HeadSide, // side parts (i.e., frills)
         HeadTop,  // top parts (i.e., ears)
         Eyes,
