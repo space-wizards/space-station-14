@@ -12,7 +12,7 @@
           shader: unshaded
           visible: false
           map: [ "enum.ToggleableVisuals.Layer" ]
-  - type: ScanByPassComponent
+  - type: ScanByPass
     Powered: true
     Toggleable: true
   - type: PowerCellSlot
