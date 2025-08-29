@@ -1,0 +1,207 @@
+﻿# Created by KarmaKistuna, sprites by the  themageofmicrosoftpaints (discord)
+
+# Base for dinos
+- type: entity
+  parent: [ SimpleMobBase, MobCombat ]
+  id: BaseMobDinosaur
+  name: dinosaur
+  description: Dinos
+  abstract: true
+  components:
+  - type: Sprite
+    drawdepth: Mobs
+    layers:
+      - map: ["enum.DamageStateVisualLayers.Base", "movement"]
+        state: alive
+  - type: Physics
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.40
+        density: 1000
+        mask:
+          - MobMask
+        layer:
+          - MobLayer
+      fix2:
+        shape:
+          !type:PhysShapeCircle
+          radius: 8
+        hard: false
+        mask: 
+          - MobLayer
+  - type: HTN
+    rootTask:
+      task: SimpleHostileCompound
+    blackboard:
+      NavClimb: !type:Bool
+        false
+      NavInteract: !type:Bool
+        true
+      NavPry: !type:Bool
+        true
+      NavSmash: !type:Bool
+        true
+  - type: DamageStateVisuals
+    states:
+      Alive:
+        Base: alive
+      Critical:
+        Base: dead
+      Dead:
+        Base: dead
+  - type: Butcherable
+    spawned:
+      - id: FoodMeat
+        amount: 4
+  - type: CombatMode
+  - type: Damageable
+    damageContainer: Biological
+  - type: MobThresholds
+    thresholds:
+      0: Alive
+      90: Dead
+  - type: MeleeWeapon
+    altDisarm: false
+    angle: 0
+  - type: ReplacementAccent
+    accent: genericAggressive
+  - type: Bloodstream
+    bloodReagent: Blood
+    bloodMaxVolume: 250
+    bloodlossDamage:
+      types:
+        Bloodloss:
+          0.5
+    bloodlossHealDamage:
+      types:
+        Bloodloss:
+          -1
+  - type: FootstepModifier
+    footstepSoundCollection:
+      collection: FootstepThud
+  - type: Tag
+    tags:
+      - FootstepSound
+      - DoorBumpOpener
+        
+- type: entity
+  parent: BaseMobDinosaur
+  id: BaseMobDinosaurCarno
+  name: carnivorous dinosaur
+  description: A carnivorous dino
+  abstract: true
+  components:
+    - type: NpcFactionMember
+      factions:
+        - Xeno
+
+- type: entity
+  parent: BaseMobDinosaur
+  id: BaseMobDinosaurHerb
+  name: herbivore dinosaur
+  description: A vegetarian, but don't let that fool you. They're still out for blood
+  abstract: true
+  components:
+    - type: NpcFactionMember
+      factions:
+        - Passive
+    - type: NPCRetaliation
+      attackMemoryLength: 10
+
+# Dinos
+# Compys - Are docile unless provoked, however they gather in groups they become hostile. Can reproduce
+- type: entity
+  parent: BaseMobDinosaur
+  id: MobDinosaurCompy
+  name: compsognathus
+  description: Over-sized chickens 
+  components:
+  - type: Sprite
+    drawdepth: Mobs
+    sprite: _Starlight/Mobs/Dinosaurs/compy.rsi
+    layers:
+      - map: [ "enum.DamageStateVisualLayers.Base" ]
+        state: compy
+        scale: 1.1, 1.1
+  - type: NpcFactionMember
+    factions:
+      - Passive
+  - type: NPCRetaliation
+    attackMemoryLength: 10
+  - type: DamageStateVisuals
+    states:
+      Alive:
+        Base: compy
+      Critical:
+        Base: compy_dead
+      Dead:
+        Base: compy_dead
+  - type: Tag
+    tags:
+      - DoorBumpOpener
+      - VimPilot
+      - Compy
+  - type: MeleeWeapon
+    soundHit:
+      path: /Audio/Weapons/Xeno/alien_claw_flesh3.ogg
+    angle: 0
+    animation: WeaponArcClaw
+    damage:
+      types:
+        Slash: 8
+        Structural: 20
+  - type: MovementSpeedModifier
+    baseSprintSpeed : 4.2
+    baseWalkSpeed: 4.2
+  - type: FootstepModifier
+    footstepSoundCollection:
+      collection: FootstepAsteroid
+  - type: MobThresholds
+    thresholds:
+      0: Alive
+      65: Dead
+  - type: SlowOnDamage
+    speedModifierThresholds:
+      20: 0.7
+      35: 0.5
+  - type: Reproductive # compys can reproduce
+    breedChance: 0.5
+    birthPopup: reproductive-laid-egg-popup
+    makeOffspringInfant: false
+    partnerWhitelist:
+      tags:
+        - Compy
+    offspring:
+      - id: FoodEggCompyFertilized
+        maxAmount: 3
+  - type: ReproductivePartner
+  - type: QuoremCheck
+    packTag: Compy
+    quoremThreshold: 10
+    quoremSound: /Audio/Effects/chime.ogg
+    quoremEffect: "Exclamation"
+  - type: InteractionPopup
+    successChance: 0.8
+    interactSuccessString: petting-success-reptile
+    interactFailureString: petting-failure-generic
+    interactSuccessSpawn: EffectHearts
+    interactSuccessSound:
+      path: /Audio/Animals/lizard_happy.ogg
+    
+- type: entity
+  id: FoodEggCompyFertilized
+  parent: FoodEgg
+  suffix: Fertilized, Compy
+  components:
+    - type: Timer
+    - type: TimedSpawner
+      prototypes:
+        - MobDinosaurCompy
+      intervalSeconds: 20
+      minimumEntitiesSpawned: 1
+      maximumEntitiesSpawned: 2
+    - type: TimedDespawn #delete the egg after the compy spawns
+      lifetime: 21

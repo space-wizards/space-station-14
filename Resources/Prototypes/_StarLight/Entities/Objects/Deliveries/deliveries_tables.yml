@@ -1,0 +1,76 @@
+### Spawners
+- type: entityTable
+  id: RandomDeliveryEvil
+  table: !type:GroupSelector
+    children:
+    - !type:NestedSelector
+      tableId: RandomDeliveryLetterEvil
+      weight: 0.7
+    - !type:NestedSelector
+      tableId: RandomDeliveryPackageEvil
+      weight: 0.3
+
+# Letters
+
+- type: entityTable # Used to pick between all different letter types, if there will be more
+  id: RandomDeliveryLetterEvil
+  table: !type:GroupSelector
+    children:
+    - id: LetterDeliveryEvil
+
+# Packages
+
+- type: entityTable # Used to pick between all different package types, if there will be more
+  id: RandomDeliveryPackageEvil
+  table: !type:GroupSelector
+    children:
+    - id: PackageDeliveryEvil
+
+### Reward Tables
+
+- type: entityTable
+  id: LetterDeliveryRewardsEvil
+  table: !type:GroupSelector
+    children:
+    - !type:NestedSelector
+      tableId: LetterCommonEntityTableEvil
+      weight: 0.6
+    - !type:NestedSelector
+      tableId: LetterUncommonEntityTable
+      weight: 0.1
+    - !type:NestedSelector
+      tableId: LetterRareEntityTable
+      weight: 0.3
+
+- type: entityTable
+  id: PackageDeliveryRewardsEvil
+  table: !type:GroupSelector
+    children:
+    - !type:NestedSelector
+      tableId: PackageCommonEntityTable
+      weight: 0.4
+    - !type:NestedSelector
+      tableId: PackageUncommonEntityTable
+      weight: 0.3
+    - !type:NestedSelector
+      tableId: PackageRareEntityTable
+      weight: 0.3
+
+### Loot Tables
+# Letters
+- type: entityTable
+  id: LetterCommonEntityTableEvil # Basically trash and spam mail, maybe something barely useful here and there
+  table: !type:GroupSelector
+    children:
+    - !type:NestedSelector
+      weight: .5
+      tableId: SpamMailTableEvil
+    - !type:NestedSelector
+      weight: .1
+      tableId: RandomBookTable
+    - !type:NestedSelector
+      weight: .2
+      tableId: RandomSnackTable
+    - !type:NestedSelector
+      weight: .2
+      tableId: RandomAllSodaTable

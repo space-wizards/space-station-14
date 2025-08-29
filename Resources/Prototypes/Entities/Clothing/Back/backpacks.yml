@@ -323,6 +323,13 @@
     sprite: Clothing/Back/Backpacks/cluwne.rsi
   - type: Unremoveable
     deleteOnDrop: false
+  #region Starlight
+  - type: Tag
+    tags:
+      - WhitelistChameleon
+      - BibleThwackRemovable
+  #endregion Starlight
+  
 
 - type: entity
   parent: ClothingBackpack
@@ -339,9 +346,9 @@
     equipDelay: 5 # to avoid accidentally falling into the trap associated with SelfUnremovableClothing
   - type: SelfUnremovableClothing
   - type: ShockOnTrigger
+    targetContainer: true
     damage: 5
     duration: 3
-    cooldown: 4
   - type: TriggerOnSignal
   - type: DeviceLinkSink
     ports:

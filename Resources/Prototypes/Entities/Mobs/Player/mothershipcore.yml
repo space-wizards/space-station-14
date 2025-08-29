@@ -1,0 +1,192 @@
+- type: startingGear
+  id: MothershipCoreGear
+  inhand:
+  - DoorRemoteXenoborg
+  - Omnitool
+
+- type: entity
+  parent:
+  - BaseMachinePowered
+  - BaseMob
+  id: MothershipCore
+  name: mothership core
+  description: A sentient machine that can produce Xenoborgs. Without this the Xenoborgs are doomed.
+  components:
+  - type: Appearance
+  - type: WiresVisuals
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.4,-0.4,0.4,0.4"
+        density: 190
+        mask:
+        - MachineMask
+        layer:
+          - MachineLayer
+  - type: Sprite
+    sprite: Mobs/Silicon/mothership_core.rsi
+    layers:
+    - state: core-idle
+      map: ["enum.LatheVisualLayers.IsRunning"]
+    - state: core-load
+      map: ["enum.MaterialStorageVisualLayers.Inserting"]
+    - state: core-o
+      map: ["enum.WiresVisualLayers.MaintenancePanel"]
+  - type: Machine
+    board: null
+  - type: Lathe
+    idleState: core-idle
+    runningState: core-active
+    staticPacks:
+    - EmptyXenoborgs
+    - XenoborgUpgradeModules
+  - type: MaterialStorage
+    whitelist:
+      tags:
+      - Sheet
+      - RawMaterial
+      - Ingot
+  - type: PointLight
+    color: "#0033ff"
+    enabled: true
+    radius: 4
+    netsync: false
+  - type: Anchorable
+    flags:
+    - Anchorable
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 200
+      behaviors:
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalGlassBreak
+      - !type:ExplodeBehavior
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          MachineFrameDestroyed:
+            min: 1
+            max: 1
+      - !type:SpawnGasBehavior
+        gasMixture:
+          volume: 1000
+          moles:
+            - 0 # oxygen
+            - 0 # nitrogen
+            - 340.5701689 # carbon dioxide
+          temperature: 373.15
+  - type: Repairable
+    doAfterDelay: 30 # you can heal the mothership core, but it takes a while
+  - type: DamagedSiliconAccent
+    enableChargeCorruption: false
+  - type: Explosive
+    explosionType: Default
+    maxIntensity: 100
+    intensitySlope: 2
+    totalIntensity: 200
+  - type: WiresPanel
+  - type: ActivatableUI
+    key: enum.LatheUiKey.Key
+  - type: ActivatableUIRequiresPower
+  - type: UserInterface
+    interfaces:
+      enum.SiliconLawsUiKey.Key:
+        type: SiliconLawBoundUserInterface
+        requireInputValidation: false
+      enum.RadarConsoleUiKey.Key:
+        type: RadarConsoleBoundUserInterface
+      enum.LatheUiKey.Key:
+        type: LatheBoundUserInterface
+      enum.ResearchClientUiKey.Key:
+        type: ResearchClientBoundUserInterface
+  - type: Transform
+    anchored: true
+  - type: Pullable
+  - type: StaticPrice
+    price: 800
+  - type: WarpPoint
+    location: Mothership Core
+    follow: true
+  - type: VoiceOverride
+    nameOverride: MOTHERSHIP CORE
+  - type: TypingIndicator
+    proto: xenoborg
+  - type: Speech
+    speechVerb: Robotic
+    speechSounds: Xenoborg
+    allowedEmotes:
+    - Laugh
+  - type: Vocal
+    sounds:
+      Unsexed: UnisexSiliconXenoborg
+    wilhelmProbability: 0
+  - type: IntrinsicRadioReceiver
+  - type: IntrinsicRadioTransmitter
+    channels:
+    - Mothership
+    - Xenoborg
+    - Binary
+  - type: ActiveRadio
+    channels:
+    - Mothership
+    - Xenoborg
+    - Binary
+  - type: XenoborgMothership
+  - type: Tag
+    tags:
+    - SiliconEmotes
+    - CanPilot
+    - Structure
+  - type: Inventory
+    templateId: borg
+  - type: Loadout
+    prototypes: [MothershipCoreGear]
+  - type: NpcFactionMember
+    factions:
+    - Xenoborg
+  - type: Body
+    prototype: MothershipCoreBody
+  - type: Hands
+  # - type: Puller # use the conveyor
+  - type: Eye
+    drawFov: false
+  # - type: StationAiOverlay # removed until is no longer buggy
+  - type: IgnoreUIRange
+  - type: ComplexInteraction
+  - type: MindContainer
+  - type: SiliconLawBound
+  - type: Actions
+  - type: ActionGrant
+    actions:
+    - ActionViewLaws
+  - type: SiliconLawProvider
+    laws: MothershipCoreLawset # custom laws here
+    subverted: true
+  - type: Stripping
+  - type: Access
+    enabled: true
+    tags:
+    - Xenoborg
+  - type: LockingWhitelist
+    blacklist:
+      components:
+      - RoboticsConsole
+    whitelist:
+      components:
+      - BorgChassis
+  - type: IntrinsicUI
+    uis:
+      enum.RadarConsoleUiKey.Key:
+        toggleAction: ActionAGhostShowRadar
+  - type: ShowElectrocutionHUD
+  - type: PowerMonitoringCableNetworks
+  - type: RadarConsole
+
+# TODO: add xenoborg control interface action (part 5)
+# TODO: add xenoborg camera monitor interface action (part 5)

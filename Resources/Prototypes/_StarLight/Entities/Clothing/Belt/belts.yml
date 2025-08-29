@@ -316,3 +316,25 @@
       - id: MagazineLightRifleFMJ
       - id: MagazineLightRifleFMJ
       - id: MagazineLightRifleFMJ
+
+- type: entity
+  parent: [ClothingBeltStorageBase, ContentsExplosionResistanceBase, BaseCentcommContraband]
+  id: ClothingBeltNTNCRig
+  name: ntnc rig
+  description: A military rig worn by NTNC Officers
+  components:
+  - type: Storage #Starlight
+    grid:
+    - 0,0,1,0 #left
+    - 0,1,0,1 #left - cube
+    - 3,0,10,1
+    - 12,0,13,0 #right
+    - 12,1,12,1 #right - cube
+  - type: Sprite
+    sprite: _Starlight/Clothing/Belt/ntnc_rig.rsi
+  - type: Clothing
+    sprite: _Starlight/Clothing/Belt/ntnc_rig.rsi
+  - type: ExplosionResistance
+    damageCoefficient: 0.1
+  - type: StaticPrice
+    price: 900

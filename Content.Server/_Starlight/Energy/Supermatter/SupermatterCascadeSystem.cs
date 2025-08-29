@@ -82,9 +82,6 @@ public sealed class SupermatterCascadeSystem : EntitySystem
         }
         branch.Coordinates = branch.Coordinates.SnapToGrid(gridComp);
 
-        foreach (var entity in _lookup.GetEntitiesIntersecting(branch.Coordinates))
-            QueueDel(entity);
-
         SpawnAttachedTo(_random.Pick(_prototypes), branch.Coordinates);
 
         node = nextNode;

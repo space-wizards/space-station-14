@@ -175,6 +175,64 @@
         whitelist:
           tags:
             - CartridgeRifle
+            
+- type: entity
+  name: Leikha
+  parent: [ BaseWeaponRifle, BaseSecurityContraband ]
+  id: WeaponRifleLeikha
+  description: A high end military grade assault rifle. This one has been retrofitted with a scope and a burst reciever. Uses .20 rifle ammo. 
+  components:
+  - type: Sprite
+    sprite: _Starlight/Objects/Weapons/Guns/Rifles/m16a4.rsi
+    layers:
+    - state: base
+      map: [ "enum.GunVisualLayers.Base" ]
+    - state: mag-0
+      map: [ "enum.GunVisualLayers.Mag" ]
+  - type: Clothing
+    sprite: _Starlight/Objects/Weapons/Guns/Rifles/m16a4.rsi
+  - type: Gun
+    burstFireRate: 12
+    shotsPerBurst: 3
+    burstCooldown: 0.55
+    selectedMode: Burst
+    availableModes:
+    - Burst
+    - SemiAuto
+    soundGunshot:
+      path: /Audio/Weapons/Guns/Gunshots/ltrifle.ogg
+  - type: ItemSlots
+    slots:
+      gun_magazine:
+        name: Magazine
+        startingItem: MagazineRifleSP
+        insertSound: /Audio/Weapons/Guns/MagIn/ltrifle_magin.ogg
+        ejectSound: /Audio/Weapons/Guns/MagOut/ltrifle_magout.ogg
+        priority: 2
+        whitelist:
+          tags:
+          - MagazineRifle
+        whitelistFailPopup: gun-magazine-whitelist-fail
+      gun_chamber:
+        name: Chamber
+        startingItem: CartridgeRifleSP
+        priority: 1
+        whitelist:
+          tags:
+          - CartridgeRifle
+  - type: ContainerContainer
+    containers:
+      gun_magazine: !type:ContainerSlot ""
+      gun_chamber: !type:ContainerSlot ""
+  - type: MagazineVisuals
+    magState: mag
+    steps: 5
+    zeroVisible: true
+  - type: Appearance
+  - type: CursorOffsetRequiresWield
+  - type: EyeCursorOffset
+    maxOffset: 1.5
+    pvsIncrease: 0.15
 
 - type: entity
   name: Pitbull
@@ -216,13 +274,54 @@
         priority: 1
         whitelist:
           tags:
-          - CartridgeRifle
-  - type: ContainerContainer
-    containers:
-      gun_magazine: !type:ContainerSlot ""
-      gun_chamber: !type:ContainerSlot ""
-  - type: MagazineVisuals
-    magState: mag
-    steps: 1
-    zeroVisible: true
-  - type: Appearance
+            - CartridgeMagnum
+
+
+- type: entity
+  name: Peacemaker
+  parent: [ BaseWeaponRifle, BaseSecurityContraband ]
+  id: WeaponRiflePeacemaker
+  description: The best or worst thing you'll ever see, depending if it's pointed at you or not. Uses .20 rifle ammo.
+  components:
+  - type: Sprite
+    sprite: _Starlight/Objects/Weapons/Guns/Rifles/ert.rsi
+    layers:
+    - state: base
+      map: [ "enum.GunVisualLayers.Base" ]
+    - state: mag-0
+      map: [ "enum.GunVisualLayers.Mag" ]
+  - type: Clothing
+    sprite: _Starlight/Objects/Weapons/Guns/Rifles/ert.rsi
+  - type: Item
+    size: Large
+  - type: Gun
+    fireRate: 7
+    burstFireRate: 14
+    selectedMode: FullAuto
+    availableModes:
+    - FullAuto
+    - SemiAuto
+    - Burst
+    soundGunshot:
+      path: /Audio/_Starlight/Weapons/Guns/Gunshots/m90.ogg
+      params:
+        volume: 1
+  - type: ItemSlots
+    slots:
+      gun_magazine:
+        name: Magazine
+        startingItem: MagazineRifleFMJ
+        insertSound: /Audio/Weapons/Guns/MagIn/ltrifle_magin.ogg
+        ejectSound: /Audio/Weapons/Guns/MagOut/ltrifle_magout.ogg
+        priority: 2
+        whitelist:
+          tags:
+          - MagazineRifle
+        whitelistFailPopup: gun-magazine-whitelist-fail
+      gun_chamber:
+        name: Chamber
+        startingItem: CartridgeRifleFMJ
+        priority: 1
+        whitelist:
+          tags:
+

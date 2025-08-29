@@ -4,4 +4,4 @@
   components:
     - type: RuleGrids
     - type: LoadMapRule
-      gridPath: /Maps/_Starlight/Shuttles/lotteryShuttle.yml # no preload cause that leads to a warp point in shuttle space
+      gridPath: /Maps/_Starlight/Shuttles/lotteryShuttleAdmeme.yml # no preload cause that leads to a warp point in shuttle space

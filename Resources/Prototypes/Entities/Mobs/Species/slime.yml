@@ -4,6 +4,15 @@
   id: BaseMobSlimePerson
   abstract: true
   components:
+  # Starlight-start: Languages
+  - type: LanguageKnowledge
+    speaks:
+    - GalacticCommon
+    - Bubblish
+    understands:
+    - GalacticCommon
+    - Bubblish
+  # Starlight-end
   - type: UserInterface
     interfaces:
       enum.StorageUiKey.Key:
@@ -125,6 +134,7 @@
             state: jumpsuit-female
   - type: ShowThirstIcons # starlight
   - type: SolutionScanner # starlight
+  - type: Wagging # starlight
 
 - type: entity
   parent: MobHumanDummy

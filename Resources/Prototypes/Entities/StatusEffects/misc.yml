@@ -19,25 +19,53 @@
       components:
       - MobState
 
-# The creature sleeps so heavily that nothing can wake him up. Not even its own death.
+# Things that should be removed by rejuvenation should parent to this
+# Also blocks the status effect being added to godmode-ed entities.
 - type: entity
   parent: MobStatusEffectBase
+  id: MobStatusEffectDebuff
+  abstract: true
+  components:
+  - type: RejuvenateRemovedStatusEffect
+
+- type: entity
+  parent: MobStatusEffectDebuff
+  id: MobStandStatusEffectBase
+  abstract: true
+  components:
+  - type: StatusEffect
+    whitelist:
+      components:
+      - MobState
+      - StandingState
+      requireAll: true
+    blacklist: # This blacklist exists because mob prototypes are smelly and everything needs a standing state component.
+      tags:
+      - KnockdownImmune
+
+# The creature sleeps so heavily that nothing can wake him up. Not even its own death.
+- type: entity
+  parent: MobStatusEffectDebuff
   id: StatusEffectForcedSleeping
   name: forced sleep
   components:
   - type: ForcedSleepingStatusEffect
+  - type: StunnedStatusEffect
+  - type: KnockdownStatusEffect
 
 # This creature is asleep because it's disconnected from the game.
 - type: entity
-  parent: MobStatusEffectBase
+  parent: MobStatusEffectBase # Not even rejuvenate can cure SSD...
   id: StatusEffectSSDSleeping
   name: forced sleep
   components:
   - type: ForcedSleepingStatusEffect
+  - type: StunnedStatusEffect
+  - type: KnockdownStatusEffect
 
 # Blurs your vision and makes you randomly fall asleep
 - type: entity
-  parent: MobStatusEffectBase
+  parent: MobStatusEffectDebuff
   id: StatusEffectDrowsiness
   name: drowsiness
   components:
@@ -45,7 +73,7 @@
 
 # Adds drugs overlay
 - type: entity
-  parent: MobStatusEffectBase
+  parent: MobStatusEffectDebuff
   id: StatusEffectSeeingRainbow
   name: hallucinations
   components:

@@ -13,6 +13,7 @@ using Content.Shared.Traits.Assorted;
 using Microsoft.CodeAnalysis;
 using Content.Server._Starlight.Medical.Limbs;
 using Content.Server.Administration.Systems;
+using Robust.Shared.Timing;
 
 
 namespace Content.Server.Starlight.Medical.Surgery;
@@ -24,9 +25,11 @@ namespace Content.Server.Starlight.Medical.Surgery;
 //However, I don’t want to touch the official systems, so I need to come up with extensions for them.
 public sealed partial class SurgerySystem : SharedSurgerySystem
 {
+    [Dependency] protected readonly IGameTiming Timing = default!;
     [Dependency] private readonly IComponentFactory _compFactory = default!;
     [Dependency] private readonly LimbSystem _limbSystem = default!;
     [Dependency] private readonly StarlightEntitySystem _entity = default!;
+    [Dependency] private readonly SharedBloodstreamSystem _bloodstreamSystem = default!;
 
     public void InitializeSteps()
     {
@@ -46,6 +49,24 @@ public sealed partial class SurgerySystem : SharedSurgerySystem
         SubscribeLocalEvent<SurgeryRemoveAccentComponent, SurgeryStepEvent>(OnRemoveAccent);
 
     }
+    
+    public override void Update(float frameTime)
+    {
+        base.Update(frameTime);
+        
+        var query = EntityQueryEnumerator<IncisionOpenComponent>();
+        while (query.MoveNext(out var uid, out var incision))
+        {
+            if (Timing.CurTime < incision.NextUpdate)
+                continue;
+            
+            incision.NextUpdate = Timing.CurTime + incision.UpdateInterval;
+            
+            var patient = Transform(uid).ParentUid;
+            
+            _bloodstreamSystem.TryModifyBleedAmount(patient, 0.1f);
+        }
+    }
 
     private void OnStepAttachComplete(Entity<SurgeryStepAttachLimbEffectComponent> ent, ref SurgeryStepEvent args)
     {
@@ -59,15 +80,13 @@ public sealed partial class SurgerySystem : SharedSurgerySystem
     }
 
     private void OnStepBleedComplete(Entity<SurgeryStepBleedEffectComponent> ent, ref SurgeryStepEvent args)
-    {
+    {        
         if (ent.Comp.Damage is not null && TryComp<DamageableComponent>(args.Body, out var comp))
             _damageableSystem.TryChangeDamage(args.Body, ent.Comp.Damage);
-        //todo add wound
     }
 
     private void OnStepClampBleedComplete(Entity<SurgeryClampBleedEffectComponent> ent, ref SurgeryStepEvent args)
     {
-        //todo remove wound
     }
     private void OnStepOrganInsertComplete(Entity<SurgeryStepOrganInsertComponent> ent, ref SurgeryStepEvent args)
     {

@@ -96,6 +96,14 @@
   equipment:
     eyes: ClothingEyesGlassesCheapSunglasses
 
+- type: loadout
+  id: AssistantNoirGlasses
+  equipment:
+    Eyes: ClothingEyesGlassesNoirAssistant
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: HonoredAssistant
+
 # Mask
 - type: loadout
   id: NeckGaiter
@@ -466,7 +474,7 @@
   - !type:GroupLoadoutEffect
     proto: HonoredAssistant
   equipment:
-    outerClothing: ClothingOuterCoatDetectiveLoadoutGrey
+    outerClothing: ClothingOuterCoatGreytiderTrenchcoat
   
 - type: loadout
   id: SpaceAssholeCoat

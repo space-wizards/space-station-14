@@ -55,6 +55,10 @@
         {
             "name": "0-equipped-HELMET",
             "directions": 4
+        },
+        {
+            "name": "mothroach_lazy",
+            "directions": 4
         }
     ]
 }

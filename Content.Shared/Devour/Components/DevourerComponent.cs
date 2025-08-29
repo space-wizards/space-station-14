@@ -111,5 +111,14 @@ public sealed partial class DevourerComponent : Component
     [DataField, AutoNetworkedField]
     public float HealRate = 15f;
 
+    #region Starlight
+
+    /// <summary>
+    /// how many people (things that grant reward chem) were eaten
+    /// </summary>
+    [ViewVariables]
+    public int Devoured = 0;
+    #endregion
+
 }
 

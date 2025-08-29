@@ -14,7 +14,6 @@ using Content.Server.Popups;
 using Content.Server.RoundEnd;
 using Content.Server.Shuttles.Components;
 using Content.Server.Shuttles.Events;
-using Content.Server.Station.Components;
 using Content.Server.Station.Events;
 using Content.Server.Station.Systems;
 using Content.Shared.Access.Systems;
@@ -196,7 +195,7 @@ public sealed partial class EmergencyShuttleSystem : EntitySystem
             return;
         }
 
-        var targetGrid = _station.GetLargestGrid(Comp<StationDataComponent>(station.Value));
+        var targetGrid = _station.GetLargestGrid(station.Value);
         if (targetGrid == null)
             return;
 
@@ -260,18 +259,22 @@ public sealed partial class EmergencyShuttleSystem : EntitySystem
     /// </summary>
     private void OnEmergencyFTLComplete(EntityUid uid, EmergencyShuttleComponent component, ref FTLCompletedEvent args)
     {
-        var countdownTime = TimeSpan.FromSeconds(_configManager.GetCVar(CCVars.RoundRestartTime));
+        // STARLOGHT: Round is already ended when shuttle launched, so just update the shuttle timers
         var shuttle = args.Entity;
         if (TryComp<DeviceNetworkComponent>(shuttle, out var net))
         {
+            // Get the remaining restart time from the round end system
+            var remainingTime = _roundEnd.ShuttleTimeLeft ?? TimeSpan.FromSeconds(_configManager.GetCVar(CCVars.RoundRestartTime));
+            
             var payload = new NetworkPayload
             {
                 [ShuttleTimerMasks.ShuttleMap] = shuttle,
                 [ShuttleTimerMasks.SourceMap] = _roundEnd.GetCentcomm(),
                 [ShuttleTimerMasks.DestMap] = _roundEnd.GetStation(),
-                [ShuttleTimerMasks.ShuttleTime] = countdownTime,
-                [ShuttleTimerMasks.SourceTime] = countdownTime,
-                [ShuttleTimerMasks.DestTime] = countdownTime,
+                [ShuttleTimerMasks.ShuttleTime] = remainingTime,
+                [ShuttleTimerMasks.SourceTime] = remainingTime,
+                [ShuttleTimerMasks.DestTime] = remainingTime,
+                // STARLIGHT END
             };
 
             // by popular request
@@ -304,8 +307,8 @@ public sealed partial class EmergencyShuttleSystem : EntitySystem
             return null;
         }
 
-        var targetGrid = _station.GetLargestGrid(Comp<StationDataComponent>(stationUid));
-        
+        var targetGrid = _station.GetLargestGrid(stationUid);
+
         DockTime = _timing.CurTime;
 
         // UHH GOOD LUCK

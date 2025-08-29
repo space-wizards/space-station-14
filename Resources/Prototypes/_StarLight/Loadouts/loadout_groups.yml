@@ -7,6 +7,7 @@
   - GlassesJamjar
   - GlassesJensen
   - CheapSunnies
+  - AssistantNoirGlasses
 
 - type: loadoutGroup
   id: AssistantHead
@@ -32,6 +33,7 @@
   - CommonBackpack
   - CommonSatchel
   - CommonDuffel
+  - LeatherSatchel
 
 - type: loadoutGroup
   id: RoboticistJumpsuit
@@ -81,7 +83,8 @@
   - RoboticistBackpack
   - RoboticistSatchel
   - RoboticistDuffel
-
+  - LeatherSatchel
+  
 - type: loadoutGroup
   id: NanoTrasenRepresentativeJumpsuit
   name: loadout-group-nanotrasenrepresentative-jumpsuit
@@ -104,6 +107,7 @@
   - BlueShieldBackpack
   - BlueShieldSatchel
   - BlueShieldDuffel
+  - LeatherSatchel
 
 - type: loadoutGroup
   id: BlueShieldJumpsuit
@@ -149,6 +153,7 @@
   loadouts:
   - SecurityMk58
   - SecurityPistolDP
+  - SecurityPistolEnforcer
 
 # Assorted Boots
 - type: loadoutGroup
@@ -243,4 +248,3 @@
   loadouts:
   - CombatBoots
   - HighHeelBootsFilled
-

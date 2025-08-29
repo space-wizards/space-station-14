@@ -13,6 +13,8 @@ public sealed partial class SubjectMindJobCondition : BaseCondition
     public HashSet<ProtoId<JobPrototype>>? Whitelist;
     [DataField]
     public HashSet<ProtoId<JobPrototype>>? Blacklist;
+    [DataField]
+    public bool PassIfJobEmpty = false;
 
     public override bool Handle(EntityUid @subject, EntityUid @object)
     {
@@ -20,8 +22,8 @@ public sealed partial class SubjectMindJobCondition : BaseCondition
         return Ent.System<SharedJobSystem>() is var jobSys
             && Ent.System<SharedMindSystem>() is var mindSys
             && mindSys.GetMind(@subject) is { } mind
-            && jobSys.MindTryGetJob(mind, out var job)
+            && ((jobSys.MindTryGetJob(mind, out var job)
             && (Blacklist == null || !Blacklist.Contains(job.ID))
-            && (Whitelist == null || Whitelist.Contains(job.ID));
+            && (Whitelist == null || Whitelist.Contains(job.ID))) || PassIfJobEmpty);
     }
 }

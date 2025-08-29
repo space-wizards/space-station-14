@@ -22,5 +22,8 @@ public sealed partial class RailroadCardComponent : Component
     public Color IconColor = Color.White;
 
     [DataField]
-    public Texture? Image;
+    public Texture? Image; // This thing just for single images, list for random
+
+    [DataField]
+    public List<Texture> Images = [];
 }

@@ -118,6 +118,8 @@ public sealed class MechSoundboardPlayMessage : MechEquipmentUiMessage
 public sealed class MechBoundUiState : BoundUserInterfaceState
 {
     public Dictionary<NetEntity, BoundUserInterfaceState> EquipmentStates = new();
+    
+    public List<NetEntity> Equipment = new(); // Starlight-edit: Correct equipment update
 }
 
 [Serializable, NetSerializable]

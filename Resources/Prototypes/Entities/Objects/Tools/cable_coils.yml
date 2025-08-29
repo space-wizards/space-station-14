@@ -33,6 +33,18 @@
     guides:
     - VoltageNetworks
     - Power
+  # 🌟Starlight-start🌟
+  - type: ItemPrice
+    priceCategory: miscellaneous
+  - type: Retractor
+  - type: SurgeryTool
+    successRate: 0.6 # really not ideal, but in a pinch...
+    speed: 1.5
+    startSound:
+      path: /Audio/_Starlight/Medical/Surgery/retractor1.ogg
+    endSound:
+      path: /Audio/_Starlight/Medical/Surgery/retractor2.ogg
+  # 🌟Starlight-end🌟
 
 - type: entity
   id: CableHVStack
@@ -80,15 +92,6 @@
   - type: Sprite
     state: coilhv-10
   - type: Stack
-    count: 10
-
-- type: entity
-  parent: CableHVStack10
-  id: CableHVStackLingering10
-  suffix: Lingering, 10
-  components:
-  - type: Stack
-    lingering: true
     count: 10
 
 - type: entity
@@ -148,15 +151,6 @@
     count: 10
 
 - type: entity
-  parent: CableMVStack10
-  id: CableMVStackLingering10
-  suffix: Lingering, 10
-  components:
-  - type: Stack
-    lingering: true
-    count: 10
-
-- type: entity
   parent: CableMVStack
   id: CableMVStack1
   suffix: 1
@@ -210,15 +204,6 @@
       state: coillv-10
     - type: Stack
       count: 10
-
-- type: entity
-  parent: CableApcStack10
-  id: CableApcStackLingering10
-  suffix: Lingering, 10
-  components:
-  - type: Stack
-    lingering: true
-    count: 10
 
 - type: entity
   parent: CableApcStack

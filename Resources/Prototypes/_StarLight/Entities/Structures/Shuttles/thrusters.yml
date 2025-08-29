@@ -1,0 +1,15 @@
+- type: entity
+  id: ThrusterOff
+  parent: Thruster
+  suffix: Off
+  components:
+    - type: Thruster
+      enabled: false
+
+- type: entity
+  id: GyroscopeOff
+  parent: Gyroscope
+  suffix: Off
+  components:
+    - type: Thruster
+      enabled: false

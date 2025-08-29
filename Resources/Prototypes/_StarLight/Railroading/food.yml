@@ -5,6 +5,9 @@
   components:
   - type: Conditions
     conditions:
+    - !type:SubjectMindJobCondition
+      blacklist:
+      - Chef
     - !type:SubjectSpeciesCondition
       blacklist:
       - Abductor
@@ -19,6 +22,9 @@
   components:
   - type: Conditions
     conditions:
+    - !type:SubjectMindJobCondition
+      blacklist:
+      - Chef
     - !type:SubjectSpeciesCondition
       blacklist:
       - Abductor

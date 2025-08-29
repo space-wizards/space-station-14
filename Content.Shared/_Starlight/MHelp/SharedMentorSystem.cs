@@ -30,7 +30,7 @@ public abstract class SharedMentorSystem : EntitySystem
     public sealed class MHelpTextMessage() : EntityEventArgs
     {
         public NetUserId? Sender { get; init; }
-        public Guid? Ticket { get; init; } 
+        public Guid? Ticket { get; init; }
         public DateTime CreateAt { get; init; } = DateTime.UtcNow;
         public required string Text { get; init; }
         public bool PlaySound { get; init; }
@@ -39,6 +39,12 @@ public abstract class SharedMentorSystem : EntitySystem
     }
     [Serializable, NetSerializable]
     public sealed class MHelpCloseTicket() : EntityEventArgs
+    {
+        public Guid? Ticket { get; init; }
+    }
+    
+    [Serializable, NetSerializable]
+    public sealed class MhelpTptoTicket() : EntityEventArgs
     {
         public Guid? Ticket { get; init; }
     }

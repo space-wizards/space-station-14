@@ -266,6 +266,56 @@
     soundGunshot:
       path: /Audio/_Starlight/Weapons/Guns/Gunshots/colt.ogg
 
+# Doesn't work and idk why
+
+#- type: entity
+  #name: mk 64
+  #parent: [BaseWeaponPistol, BaseSecurityContraband]
+  #id: WeaponMachinePistolMk64
+  #description: Designed by Nanotrasen’s Small Arms Division, the Mk64 is an unconventional full-auto machine pistol with questionable accuracy, though it can be fired one-handed. Feeds from .35 machine pistol magazines.
+  #components:
+  #- type: Sprite
+    #sprite: _Starlight/Objects/Weapons/Guns/Pistols/mk64.rsi
+    #layers:
+    #- state: base
+      #map: ["enum.GunVisualLayers.Base"]
+    #- state: mag-0
+      #map: ["enum.GunVisualLayers.Mag"]
+  #- type: Clothing
+    #sprite: _Starlight/Objects/Weapons/Guns/Pistols/mk64.rsi
+  #- type: Gun
+    #fireRate: 6
+    #availableModes:
+    #- FullAuto
+    #soundGunshot:
+      #path: _Starlight/Audio/Weapons/Guns/Gunshots/uzi.ogg
+  #- type: ChamberMagazineAmmoProvider
+    #soundRack:
+      #path: /Audio/Weapons/Guns/Cock/pistol_cock.ogg
+  #- type: ItemSlots
+    #slots:
+      #gun_magazine:
+        #name: Magazine
+        #startingItem: MagazinePistolHighCapacitySP
+        #insertSound: /Audio/Weapons/Guns/MagIn/pistol_magin.ogg
+        #ejectSound: /Audio/Weapons/Guns/MagOut/pistol_magout.ogg
+        #priority: 2
+        #whitelist:
+          #tags:
+            #- MagazinePistolHighCapacity
+        #whitelistFailPopup: gun-magazine-whitelist-fail
+      #gun_chamber:
+        #name: Chamber
+        #startingItem: CartridgePistolSP
+        #priority: 1
+        #whitelist:
+          #tags:
+            #- CartridgePistol
+  #- type: ContainerContainer
+    #containers:
+      #gun_magazine: !type:ContainerSlot
+      #gun_chamber: !type:ContainerSlot
+
 - type: entity
   name: makeshift pistol
   parent: [BaseWeaponPistol, BaseMinorContraband]

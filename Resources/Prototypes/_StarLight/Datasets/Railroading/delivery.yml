@@ -1,0 +1,11 @@
+- type: localizedDataset
+  id: railroadingDeliveryMessages
+  values:
+    prefix: railroading-chat-delivery-message-
+    count: 7
+
+- type: localizedDataset
+  id: railroadingDeliveryWrappedMessages
+  values:
+    prefix: railroading-chat-delivery-wrapped-message-
+    count: 7

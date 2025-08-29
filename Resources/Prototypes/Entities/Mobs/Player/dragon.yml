@@ -6,9 +6,19 @@
   description: A flying leviathan, loosely related to space carps.
   abstract: true
   components:
+  # Starlight-start: Languages
+  - type: LanguageSpeaker
+  - type: LanguageKnowledge
+    speaks:
+    - GalacticCommon
+    - Carptongue
+    understands:
+    - GalacticCommon
+    - Carptongue
+  # Starlight-end
   - type: ThermalVision
   - type: Bloodstream
-    bloodMaxVolume: 650
+    bloodMaxVolume: 600
   - type: GhostRole
     allowMovement: true
     allowSpeech: true
@@ -89,19 +99,19 @@
   - type: MobThresholds
     thresholds:
       0: Alive
-      450: Critical
-      500: Dead
+      350: Critical
+      400: Dead
   - type: SlowOnDamage
     speedModifierThresholds:
+      200: 0.9
       250: 0.7
-      400: 0.5
+      300: 0.5
   # disable taking damage from fire, since its a fire breathing dragon
   - type: Flammable
     damage:
       types: {}
   - type: StatusEffects # Overwriting basesimplemob to remove flash, getting flashed as dragon just feelsbad
     allowed:
-    - SlowedDown
     - Stutter
     - Electrocution
     - TemporaryBlindness
@@ -155,6 +165,7 @@
     tags:
     - CannotSuicide
     - DoorBumpOpener
+    - StunImmune
   - type: Puller
     needsHands: false
   - type: RandomMetadata

@@ -1,0 +1,8 @@
+- type: alert
+  id: Offer
+  clickEvent: !type:OfferItemAlertEvent  { }
+  icons:
+  - sprite: /Textures/_Starlight/Interface/Alerts/offer.rsi
+    state: offer
+  name: alerts-offer-name
+  description: alerts-offer-desc
