@@ -40,7 +40,6 @@
   id: BaseMinorContraband
   abstract: true
   components:
-  - type: ScanDetectable # Starlight
   - type: Contraband
     severity: Minor
 
