@@ -118,7 +118,8 @@ public sealed partial class RadiationSystem : EntitySystem
             return;
         }
 
-        var maxRange = component.Slope > 1e-6f ? intensity / component.Slope : GridcastMaxDistance;
+        // Avoid division by 0
+        var maxRange = component.Slope >= float.Epsilon ? intensity / component.Slope : GridcastMaxDistance;
         maxRange = Math.Min(maxRange, GridcastMaxDistance);
 
         _sourceDataMap[uid] = new SourceData(intensity, component.Slope, maxRange, (uid, component, xform), worldPos);
