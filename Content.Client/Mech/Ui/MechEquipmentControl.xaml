@@ -5,22 +5,47 @@
             HorizontalExpand="True"
             VerticalExpand="True"
             StyleClasses="ButtonSquare">
-        <BoxContainer Orientation="Vertical" HorizontalExpand="True" VerticalExpand="True" VerticalAlignment="Top">
-            <BoxContainer HorizontalExpand="True" VerticalExpand="True" Orientation="Horizontal">
-                <SpriteView
-                    Name="EquipmentView"
-                    OverrideDirection="South"
-                    MinSize="32 32"
-                    SetSize="32 32"
-                    Scale="1 1"
-                    RectClipContent="True"/>
-                <RichTextLabel Name="EquipmentName" VerticalAlignment="Center"/>
-                <BoxContainer Orientation="Vertical" HorizontalExpand="True" HorizontalAlignment="Right" VerticalAlignment="Center">
-                    <TextureButton Name="RemoveButton" Scale="0.5 0.5"></TextureButton>
-                </BoxContainer>
+        <BoxContainer Orientation="Vertical"
+                      HorizontalExpand="True"
+                      VerticalExpand="True"
+                      VerticalAlignment="Top">
+            <BoxContainer HorizontalExpand="True"
+                          VerticalExpand="True"
+                          Orientation="Horizontal"
+                          Margin="0 3 0 0">
+                <SpriteView Name="EquipmentView"
+                            OverrideDirection="South"
+                            MinSize="32 32"
+                            SetSize="32 32"
+                            Scale="1 1"
+                            RectClipContent="True"/>
+                <RichTextLabel Name="EquipmentName"
+                               VerticalAlignment="Center"
+                               Margin="0 0 30 0"/>
+                <GridContainer Columns="2"
+                               HorizontalAlignment="Right"
+                               HorizontalExpand="True"
+                               VerticalAlignment="Center"
+                               MinSize="30 0">
+                    <BoxContainer VerticalAlignment="Center">
+                        <Label Name="EquipmentSize"
+                               MinSize="10 10"
+                               StyleClasses="WindowFooterText"
+                               FontColorOverride="DarkGray"/>
+                    </BoxContainer>
+                    <BoxContainer VerticalAlignment="Center">
+                        <TextureButton Name="RemoveButton"
+                                       MinSize="10 10"
+                                       Scale="0.5 0.5"></TextureButton>
+                    </BoxContainer>
+                </GridContainer>
             </BoxContainer>
-            <customControls:HSeparator Name="Separator" StyleClasses="LowDivider" Visible="False"/>
-            <BoxContainer Name="CustomControlContainer" Margin="0 10 0 0" HorizontalExpand="True" VerticalExpand="True"></BoxContainer>
+            <customControls:HSeparator Name="Separator"
+                                       StyleClasses="LowDivider"
+                                       Visible="False"/>
+            <PanelContainer Name="CustomControlContainer"
+                            StyleClasses="BackgroundDark"
+                            Margin="0 0 0 3"></PanelContainer>
         </BoxContainer>
     </Button>
 </Control>

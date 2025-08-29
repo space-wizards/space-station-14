@@ -319,6 +319,18 @@
     - BorgModules
     - MechParts
     - MechEquipment
+    - MechModule
+  - type: EmagLatheRecipes
+    emagDynamicRecipes:
+    - WeaponMechCombatImmolationGun
+    - WeaponMechCombatSolarisLaser
+    - WeaponMechCombatFiredartLaser
+    - WeaponMechCombatUltraRifle
+    - WeaponMechCombatShotgun
+    - WeaponMechCombatShotgunIncendiary
+    - WeaponMechCombatDisabler
+    - WeaponMechCombatFlashbangLauncher
+    - WeaponMechCombatMissileRack6
   - type: MaterialStorage
     whitelist:
       tags:
@@ -407,6 +419,7 @@
     - SecurityAmmo
     - SecurityWeapons
     - SecurityDisablers
+    - SecurityMechEquipment
   - type: MaterialStorage
     whitelist:
       tags:

@@ -306,6 +306,24 @@
   id: CigPack
 
 - type: Tag
+  id: ClarkeCentralControlModule
+
+- type: Tag
+  id: ClarkePeripheralsControlModule
+
+- type: Tag
+  id: ClarkeHead
+
+- type: Tag
+  id: ClarkeLArm
+
+- type: Tag
+  id: ClarkeRArm
+
+- type: Tag
+  id: ClarkeTreads
+
+- type: Tag
   id: Cleaver
 
 - type: Tag
@@ -510,6 +528,33 @@
   id: Duck
 
 - type: Tag
+  id: DurandArmor
+
+- type: Tag
+  id: DurandCentralControlModule
+
+- type: Tag
+  id: DurandPeripheralsControlModule
+
+- type: Tag
+  id: DurandTargetingControlModule
+
+- type: Tag
+  id: DurandHead
+
+- type: Tag
+  id: DurandLArm
+
+- type: Tag
+  id: DurandLLeg
+
+- type: Tag
+  id: DurandRArm
+
+- type: Tag
+  id: DurandRLeg
+
+- type: Tag
   id: Ectoplasm
 
 - type: Tag
@@ -664,6 +709,33 @@
   id: GrenadeFlashBang
 
 - type: Tag
+  id: GygaxArmor
+
+- type: Tag
+  id: GygaxCentralControlModule
+
+- type: Tag
+  id: GygaxPeripheralsControlModule
+
+- type: Tag
+  id: GygaxTargetingControlModule
+
+- type: Tag
+  id: GygaxHead
+
+- type: Tag
+  id: GygaxLArm
+
+- type: Tag
+  id: GygaxLLeg
+
+- type: Tag
+  id: GygaxRArm
+
+- type: Tag
+  id: GygaxRLeg
+
+- type: Tag
   id: HudMedical
 
 - type: Tag
@@ -815,6 +887,9 @@
 
 - type: Tag
   id: InvalidForSurvivorAntag
+
+- type: Tag
+  id: JanicartKeys
 
 - type: Tag
   id: JawsOfLife
@@ -1191,6 +1266,9 @@
   id: RipleyLLeg
 
 - type: Tag
+  id: RipleyMKIIUpgradeKit
+
+- type: Tag
   id: RipleyRArm
 
 - type: Tag
@@ -1287,7 +1365,13 @@
   id: SmallAIChip
 
 - type: Tag
-  id: SmallMech
+  id: IndustrialMech
+
+- type: Tag
+  id: CombatMech
+
+- type: Tag
+  id: SpecialMech
 
 - type: Tag
   id: Smokable
@@ -1435,6 +1519,9 @@
 
 - type: Tag
   id: Unimplantable
+
+- type: Tag
+  id: UniversalMech
 
 - type: Tag
   id: Unstackable # To prevent things like atmos devices (filters etc) being stacked on one tile. See NoUnstackableInTile

@@ -1,0 +1,17 @@
+<equipment:MechGeneratorUiFragment
+    xmlns:equipment="clr-namespace:Content.Client.Mech.Ui.Equipment"
+    xmlns="https://spacestation14.io"
+    Margin="2 0 2 0"
+    HorizontalExpand="True"
+    VerticalExpand="True">
+    <BoxContainer Orientation="Vertical"
+                  HorizontalExpand="True"
+                  VerticalExpand="True">
+        <Label Name="OutputLabel"
+               StyleClasses="LabelSubText"
+               FontColorOverride="White"/>
+        <Label Name="FuelLabel"
+               StyleClasses="LabelSubText"
+               FontColorOverride="White"/>
+    </BoxContainer>
+</equipment:MechGeneratorUiFragment>

@@ -18,6 +18,8 @@ public sealed partial class MechSoundboardUiFragment : BoxContainer
 
     public void UpdateContents(MechSoundboardUiState state)
     {
+        Sounds.Clear();
+        Sounds.ClearSelected();
         foreach (var sound in state.Sounds)
         {
             Sounds.AddItem(Loc.GetString($"mech-soundboard-{sound}")).OnSelected += item => {

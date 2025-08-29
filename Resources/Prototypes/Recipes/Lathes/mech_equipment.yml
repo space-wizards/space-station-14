@@ -5,7 +5,7 @@
   id: BaseMechEquipmentRecipe
   categories:
   - Mech
-  - Parts
+  - MechEquipment
   completetime: 10
   materials:
     Steel: 500
@@ -28,8 +28,35 @@
 
 - type: latheRecipe
   parent: BaseMechEquipmentRecipe
-  id: MechEquipmentHorn
-  result: MechEquipmentHorn
+  id: MechEquipmentHonkerBananaMortar
+  result: WeaponMechSpecialBananaMortar
   materials:
-    Steel: 500
-    Bananium: 200
+    Steel: 1150
+    Bananium: 800
+
+- type: latheRecipe
+  parent: BaseMechEquipmentRecipe
+  id: MechEquipmentHonkerMousetrapMortar
+  result: WeaponMechSpecialMousetrapMortar
+  materials:
+    Steel: 1200
+    Bananium: 300
+
+- type: latheRecipe
+  parent: BaseToolRecipe
+  id: MechEquipmentDrill
+  result: WeaponMechMelleDrill
+  completetime: 3
+  materials:
+    Steel: 900
+    Plastic: 250
+
+- type: latheRecipe
+  parent: MechEquipmentDrill
+  id: MechEquipmentDrillDiamond
+  result: WeaponMechMelleDrillDiamond
+  materials:
+    Steel: 1200
+    Plastic: 500
+    Silver: 200
+    Diamond: 150
