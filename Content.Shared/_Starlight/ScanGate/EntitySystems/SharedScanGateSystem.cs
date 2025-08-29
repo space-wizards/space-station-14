@@ -94,18 +94,18 @@ public sealed partial class SharedScanGateSystem : EntitySystem
 
     #region Storage Detection
 
-    private void OnDetectStorage(EntityUid uid, StorageComponent component, ref TryDetectItem args)
+    private void OnDetectStorage(EntityUid uid, StorageComponent storage, ref TryDetectItem args)
     {
         if (args.ByPass) // No need to check if already bypassed
             return;
 
-        foreach (var (entity, _) in component.StoredItems)
+        foreach (var (entity, _) in storage.StoredItems)
         {
             if (TryComp<ScanByPassComponent>(entity, out var component)
             && (!component.Toggleable || _itemToggleSystem.IsActivated(entity))
             && (!component.Powered || _powerReceiverSystem.IsPowered(entity) || _powerCellSystem.HasDrawCharge(entity)))
             {
-                args.Args.ByPass = true;
+                args.ByPass = true;
                 break;
             }
             if (HasComp<ScanDetectableComponent>(entity))
@@ -113,12 +113,12 @@ public sealed partial class SharedScanGateSystem : EntitySystem
         }
     }
 
-    private void OnInventoryRelayStorage(EntityUid uid, StorageComponent component, ref InventoryRelayedEvent<TryDetectItem> args)
+    private void OnInventoryRelayStorage(EntityUid uid, StorageComponent storage, ref InventoryRelayedEvent<TryDetectItem> args)
     {
         if (args.Args.ByPass) // No need to check if already bypassed
             return;
 
-        foreach (var (entity, _) in component.StoredItems)
+        foreach (var (entity, _) in storage.StoredItems)
         {
             if (TryComp<ScanByPassComponent>(entity, out var component)
             && (!component.Toggleable || _itemToggleSystem.IsActivated(entity))
@@ -132,12 +132,12 @@ public sealed partial class SharedScanGateSystem : EntitySystem
         }
     }
 
-    private void OnHandRelayStorage(EntityUid uid, StorageComponent component, ref HeldRelayedEvent<TryDetectItem> args)
+    private void OnHandRelayStorage(EntityUid uid, StorageComponent storage, ref HeldRelayedEvent<TryDetectItem> args)
     {
         if (args.Args.ByPass) // No need to check if already bypassed
             return;
 
-        foreach (var (entity, _) in component.StoredItems)
+        foreach (var (entity, _) in storage.StoredItems)
         {
             if (TryComp<ScanByPassComponent>(entity, out var component)
             && (!component.Toggleable || _itemToggleSystem.IsActivated(entity))
