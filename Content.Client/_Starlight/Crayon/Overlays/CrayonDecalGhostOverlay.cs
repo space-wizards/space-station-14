@@ -7,7 +7,7 @@ using Robust.Client.Graphics;
 using Robust.Client.Input;
 using Robust.Client.Player;
 
-namespace Content.Client.Crayon.Overlays;
+namespace Content.Client._Starlight.Crayon.Overlays;
 
 public sealed class CrayonDecalGhostOverlay : DecalPlacementOverlay
 {

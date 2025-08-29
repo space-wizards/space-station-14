@@ -21,6 +21,8 @@ namespace Content.Shared.Crayon
         [DataField("color")]
         public Color Color;
 
+        // Starlight-start
+        
         /// <summary>
         /// Rotation of the resulting decal
         /// </summary>
@@ -35,6 +37,8 @@ namespace Content.Shared.Crayon
 
         [DataField]
         public bool OpaqueGhost;
+        
+        // Starlight-end
 
         [Serializable, NetSerializable]
         public enum CrayonUiKey : byte
@@ -69,6 +73,7 @@ namespace Content.Shared.Crayon
         }
     }
 
+    // Starlight-start
     [Serializable, NetSerializable]
     public sealed class CrayonRotationMessage : BoundUserInterfaceMessage
     {
@@ -89,6 +94,7 @@ namespace Content.Shared.Crayon
             State = state;
         }
     }
+    // Starlight-end
 
     /// <summary>
     /// Server to CLIENT. Notifies the BUI that a decal with given ID has been drawn.
@@ -116,21 +122,25 @@ namespace Content.Shared.Crayon
         public readonly string State;
         public readonly int Charges;
         public readonly int Capacity;
+        // Starlight-start
         public readonly float Rotation;
         public readonly bool PreviewEnabled;
         public readonly bool PreviewVisible;
         public readonly bool OpaqueGhost;
-
-        public CrayonComponentState(Color color, string state, int charges, int capacity, float rotation, bool previewEnabled, bool previewVisible, bool opaqueGhost)
+        // Starlight-end
+        
+        public CrayonComponentState(Color color, string state, int charges, int capacity, float rotation, bool previewEnabled, bool previewVisible, bool opaqueGhost) // Starlight-edit
         {
             Color = color;
             State = state;
             Charges = charges;
             Capacity = capacity;
+            // Starlight-start
             Rotation = rotation;
             PreviewEnabled = previewEnabled;
             PreviewVisible = previewVisible;
             OpaqueGhost = opaqueGhost;
+            // Starlight-end
         }
     }
 
@@ -146,20 +156,24 @@ namespace Content.Shared.Crayon
         /// </summary>
         public bool SelectableColor;
         public Color Color;
+        // Starlight-start
         public float Rotation;
         public bool PreviewEnabled;
         public bool PreviewVisible;
         public bool OpaqueGhost;
+        // Starlight-end
 
-        public CrayonBoundUserInterfaceState(string selected, bool selectableColor, Color color, float rotation, bool previewEnabled, bool previewVisible, bool opaqueGhost)
+        public CrayonBoundUserInterfaceState(string selected, bool selectableColor, Color color, float rotation, bool previewEnabled, bool previewVisible, bool opaqueGhost) // Starlight-edit
         {
             Selected = selected;
             SelectableColor = selectableColor;
             Color = color;
+            // Starlight-start
             Rotation = rotation;
             PreviewEnabled = previewEnabled;
             PreviewVisible = previewVisible;
             OpaqueGhost = opaqueGhost;
+            // Starlight-end
         }
     }
 }

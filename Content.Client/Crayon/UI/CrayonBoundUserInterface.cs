@@ -23,8 +23,10 @@ namespace Content.Client.Crayon.UI
             base.Open();
             _menu = this.CreateWindowCenteredLeft<CrayonWindow>();
             _menu.OnColorSelected += SelectColor;
+            // Starlight-start
             _menu.OnRotationSelected += SelectRotation;
             _menu.OnPreviewToggled += TogglePreview;
+            // Starlight-end
             _menu.OnSelected += Select;
             PopulateCrayons();
         }
@@ -72,6 +74,7 @@ namespace Content.Client.Crayon.UI
             SendMessage(new CrayonColorMessage(color));
         }
 
+        // Starlight-start
         public void SelectRotation(float rotation)
         {
             SendMessage(new CrayonRotationMessage(float.DegreesToRadians(rotation)));
@@ -81,5 +84,6 @@ namespace Content.Client.Crayon.UI
         {
             SendMessage(new CrayonPreviewToggleMessage(state));
         }
+        // Starlight-end
     }
 }

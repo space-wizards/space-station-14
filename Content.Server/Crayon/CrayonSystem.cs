@@ -53,7 +53,7 @@ public sealed class CrayonSystem : SharedCrayonSystem
 
     private static void OnCrayonGetState(EntityUid uid, CrayonComponent component, ref ComponentGetState args)
     {
-        args.State = new CrayonComponentState(component.Color, component.SelectedState, component.Charges, component.Capacity, component.Rotation, component.PreviewEnabled, component.PreviewVisible, component.OpaqueGhost);
+        args.State = new CrayonComponentState(component.Color, component.SelectedState, component.Charges, component.Capacity, component.Rotation, component.PreviewEnabled, component.PreviewVisible, component.OpaqueGhost); // Starlight-edit
     }
 
     private void OnCrayonAfterInteract(EntityUid uid, CrayonComponent component, AfterInteractEvent args)
@@ -80,7 +80,7 @@ public sealed class CrayonSystem : SharedCrayonSystem
         }
 
         uint decalId;
-        if (!_decals.TryAddDecal(component.SelectedState, args.ClickLocation.Offset(new Vector2(-0.5f, -0.5f)), out decalId, component.Color, rotation:-component.Rotation, cleanable: true))
+        if (!_decals.TryAddDecal(component.SelectedState, args.ClickLocation.Offset(new Vector2(-0.5f, -0.5f)), out decalId, component.Color, rotation:-component.Rotation, cleanable: true)) // Starlight-edit
             return;
 
         if (component.UseSound != null)
@@ -138,6 +138,7 @@ public sealed class CrayonSystem : SharedCrayonSystem
 
     }
 
+    // Starlight-start
     private void OnCrayonBoundUIRotation(EntityUid uid, CrayonComponent component, CrayonRotationMessage args)
     {
         component.Rotation = args.Rotation;
@@ -203,6 +204,7 @@ public sealed class CrayonSystem : SharedCrayonSystem
         Dirty(uid, component);
         SetUIState(uid, component);
     }
+    // Starlight-end
 
     private void OnCrayonInit(EntityUid uid, CrayonComponent component, ComponentInit args)
     {
