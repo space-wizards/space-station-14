@@ -17,7 +17,7 @@ public sealed partial class CharacterICInfoControl : Control
         RobustXamlLoader.Load(this);
     }
 
-    public void SetCharacter(EntityUid? target, IEntityManager entityManager, EntityUid? viewer = null)
+    public void SetCharacter(EntityUid? target, IEntityManager entityManager, EntityUid viewer)
     {
         if (!target.HasValue)
         {
@@ -48,22 +48,23 @@ public sealed partial class CharacterICInfoControl : Control
         CharacterDesc.Text = desc;
 
         string? exploitableInfo = null;
-        if (entityManager.System<SLSharedCharacterInfoSystem>().CanAccessExploitableData(target.Value)
-            && entityManager.TryGetComponent(target.Value, out ExploitableInfoComponent? exploitable))
+        if (entityManager.TryGetComponent(target.Value, out ExploitableInfoComponent? exploitable)
+            && entityManager.System<SLSharedCharacterInfoSystem>().CanAccessExploitableData(target.Value,viewer))
         {
-            exploitableInfo = exploitable.Info;
+                exploitableInfo = exploitable.Info;
         }
-
         ExploitableInfo.Text = exploitableInfo;
-
         string? secrets = null;
-        if (entityManager.TryGetComponent(target.Value, out CharacterSecretsComponent? secretsComponent))
+        if (entityManager.System<SLSharedCharacterInfoSystem>().CanAccessSecretData(target.Value,viewer)
+            && entityManager.TryGetComponent(target.Value, out CharacterSecretsComponent? secretsComponent))
         {
             secrets = secretsComponent.Secrets;
         }
 
         SecretsInfo.Text = secrets;
 
+        Secrets.Visible = secrets != null;
+        Exploitable.Visible = exploitableInfo != null;
         HiddenInfoSection.Visible = exploitableInfo != null || secrets != null;
     }
 
@@ -73,6 +74,8 @@ public sealed partial class CharacterICInfoControl : Control
         CharacterDesc.Text = null;
         ExploitableInfo.Text = null;
         SecretsInfo.Text = null;
+        Exploitable.Visible = false;
+        Secrets.Visible = false;
         HiddenInfoSection.Visible = false;
     }
 }

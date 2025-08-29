@@ -14,12 +14,12 @@
         <PanelContainer Name="HiddenInfoSection" Access="Public" Visible="False">
             <BoxContainer Orientation="Vertical"  VerticalExpand="True">
                 <Label Text="Hidden Info" StyleClasses="LabelHeading"/>
-                <BoxContainer Orientation="Vertical" VerticalExpand="True">
+                <BoxContainer Name="Exploitable" Access="Protected" Orientation="Vertical" VerticalExpand="True">
                     <Label Text="Exploitable Info:"/>
                     <Label Name="ExploitableInfo" Access="Public" MinSize="220 100" Margin="10" VerticalAlignment="Top"
                            HorizontalExpand="True" VerticalExpand="True" />
                 </BoxContainer>
-                <BoxContainer Orientation="Vertical" VerticalExpand="True">
+                <BoxContainer Name="Secrets" Access="Protected"  Orientation="Vertical" VerticalExpand="True" Visible="False">
                     <Label Text="Secrets:"/>
                     <Label Name="SecretsInfo" Access="Public" MinSize="220 100" Margin="10" VerticalAlignment="Top"
                            HorizontalExpand="True" VerticalExpand="True" />

@@ -114,6 +114,15 @@ public abstract class SLSharedCharacterInfoSystem : EntitySystem
             characterDescription.Description = string.Empty;
             Dirty(ev.Performer, characterDescription);
         }
+
+        //Also scramble the personality/mind flavortext.
+        //This isn't ideal but adding conditional disabling would be more complicated so this works for now
+        if (!TryComp(ev.Performer, out MindContainerComponent? mindCont)
+            || !mindCont.HasMind
+            || !TryComp(mindCont.Mind, out CharacterDescriptionComponent? personalityDescription)) return;
+
+        personalityDescription.Description = string.Empty;
+        Dirty(mindCont.Mind.Value, personalityDescription);
     }
 
     private void AttemptSyncMindSecrets(EntityUid uid, MindSecretsComponent component,
@@ -191,7 +200,7 @@ public abstract class SLSharedCharacterInfoSystem : EntitySystem
 
         if (_exploitableSecretsEnabled
             && ent.Comp.Info != string.Empty
-            && (user == args.Target || CanAccessExploitableData(_mindSystem.GetMind(user))))
+            && (CanAccessExploitableData(ent,user)))
         {
             args.Verbs.Add(new ExamineVerb
             {
@@ -209,21 +218,19 @@ public abstract class SLSharedCharacterInfoSystem : EntitySystem
             });
         }
     }
-
-    public bool CanAccessExploitableData(EntityUid? requesterEnt)
+    public bool CanAccessExploitableData(EntityUid target, Entity<MindContainerComponent?> requester)
     {
-        TryComp(requesterEnt, out MindContainerComponent? mindCont);
-        return requesterEnt.HasValue && CanAccessExploitableData(new(requesterEnt.Value, mindCont));
-    }
-
-    public bool CanAccessExploitableData(Entity<MindContainerComponent?> requester)
-    {
-        return _playerMan.LocalEntity == requester ||
-               HasComp<GhostComponent>(requester) ||
-               (requester.Comp is { HasMind: true } && _roleSystem.MindIsAntagonist(requester.Comp.Mind));
+        return target == requester.Owner
+               || HasComp<GhostComponent>(requester)
+               || (Resolve(requester.Owner,ref requester.Comp, false) && _roleSystem.MindIsAntagonist(requester.Comp.Mind));
     }
 
     protected virtual void OpenCharacterWindow(EntityUid target, EntityUid requester)
     {
+    }
+
+    public bool CanAccessSecretData(EntityUid target, Entity<MindContainerComponent?> requester)
+    {
+        return target == requester.Owner;
     }
 }

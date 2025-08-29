@@ -30,6 +30,7 @@ public sealed partial class CharacterUIController
 
         if (_openInspectionWindows.TryGetValue(target, out var window))
         {
+            window.SetCharacter(target, EntityManager, viewer);
             window.OpenCentered();
             return;
         }
@@ -63,7 +64,7 @@ public sealed partial class CharacterUIController
             return;
         }
 
-        _window.InfoIC.SetCharacter(ent, EntityManager, ent);
+        _window.InfoIC.SetCharacter(ent, EntityManager, ent.Value);
         _window.InfoOOC.SetCharacter(ent, EntityManager, ent);
     }
 }

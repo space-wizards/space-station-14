@@ -12,9 +12,10 @@ public sealed partial class CharacterInspectWindow : FancyWindow
         RobustXamlLoader.Load(this);
         InspectTabs.SetTabTitle(0, Loc.GetString("character-info-ic"));
         InspectTabs.SetTabTitle(1, Loc.GetString("character-info-ooc"));
+        OnClose += () => { ClearCharacter(); };
     }
 
-    public void SetCharacter(EntityUid? entityUid, IEntityManager entityManager, EntityUid? viewer = null)
+    public void SetCharacter(EntityUid? entityUid, IEntityManager entityManager, EntityUid viewer)
     {
         ICInfo.SetCharacter(entityUid, entityManager, viewer);
         OOCInfo.SetCharacter(entityUid, entityManager, viewer);
