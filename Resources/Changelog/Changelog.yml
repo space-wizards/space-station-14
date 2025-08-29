@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: themias
-  changes:
-  - message: Toolboxes have new sound effects
-    type: Tweak
-  id: 8391
-  time: '2025-04-29T22:17:32.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/37048
 - author: ScarKy0
   changes:
   - message: Priority mail now indicates whether it was delivered on time or not.
@@ -3957,3 +3950,10 @@
   id: 8903
   time: '2025-08-29T06:03:54.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/39945
+- author: FungiFellow
+  changes:
+  - message: Sentience Event no longer targets Zombified creatures
+    type: Fix
+  id: 8904
+  time: '2025-08-29T11:48:31.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/39950
