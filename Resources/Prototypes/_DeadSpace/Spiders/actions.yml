@@ -77,6 +77,7 @@
     icon:
       sprite: Interface/Actions/devour.rsi
       state: icon
+  - type: TargetAction
   - type: EntityTargetAction
     event: !type:SuckBloodActionEvent
 
@@ -91,6 +92,7 @@
     icon:
       sprite: Objects/Misc/handcuffs.rsi
       state: handcuff
+  - type: TargetAction
   - type: EntityTargetAction
     event: !type:ChainAbilityActionEvent
 

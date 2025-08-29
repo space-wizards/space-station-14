@@ -9,6 +9,7 @@
     icon:
       sprite: Interface/Actions/devour.rsi
       state: icon
+  - type: TargetAction
   - type: EntityTargetAction
     event: !type:AbsorptionDeadNecroActionEvent
 
@@ -23,6 +24,7 @@
     icon:
       sprite: Interface/Actions/actions_mecha.rsi
       state: mech_damtype_toxin
+  - type: TargetAction
   - type: EntityTargetAction
     event: !type:InfectionNecroActionEvent
 
