@@ -3910,50 +3910,10 @@
   id: 8899
   time: '2025-08-28T17:14:44.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/39927
-- author: Southbridge
-  changes:
-  - message: On Amber, added a pressure relief valve to the TEG burn chamber.
-    type: Add
-  - message: On Amber, added latejoin spawns to arrivals.
-    type: Tweak
-  id: 8900
-  time: '2025-08-29T05:39:23.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/39943
-- author: Southbridge
-  changes:
-  - message: On Marathon, gave the containment area some much needed love.
-    type: Add
-  - message: On Marathon, redesigned the TEG burn chamber in preparation for the atmos
-      pressure update.
-    type: Tweak
-  - message: On Marathon, touched up a couple areas in Atmos and expanded the burn
-      chamber area.
-    type: Tweak
-  id: 8901
-  time: '2025-08-29T05:40:38.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/39955
-- author: Southbridge
-  changes:
-  - message: On Box, redesigned the burn chambers to be ready for the atmos pressure
-      update.
-    type: Tweak
-  id: 8902
-  time: '2025-08-29T05:42:00.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/39954
-- author: Southbridge
-  changes:
-  - message: On Bagel, ensured there were late join spawners at arrivals
-    type: Add
-  - message: On Bagel, overhauled the TEG so it's a bit more ready for the pressure
-      update
-    type: Tweak
-  id: 8903
-  time: '2025-08-29T06:03:54.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/39945
 - author: FungiFellow
   changes:
   - message: Sentience Event no longer targets Zombified creatures
     type: Fix
-  id: 8904
+  id: 8900
   time: '2025-08-29T11:48:31.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/39950
