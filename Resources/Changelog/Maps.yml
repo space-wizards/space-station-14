@@ -551,4 +551,34 @@
   id: 67
   time: '2025-08-18T18:22:15.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/39091
+- author: M4rchy-S
+  changes:
+  - message: On Marathon, fixed the reagent grinder in perma not having power.
+    type: Fix
+  id: 68
+  time: '2025-08-23T22:48:39.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/39801
+- author: F1restar4
+  changes:
+  - message: On Exo, added an atmospherics network monitor console to atmos' front
+      room
+    type: Add
+  id: 69
+  time: '2025-08-26T08:32:58.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/39330
+- author: Vortebo
+  changes:
+  - message: On Relic, added the prison station.
+    type: Add
+  - message: On Relic, Cargo has been removed, along with the trade station. Botany,
+      the Janitor's closet, and the bar have also been removed.
+    type: Remove
+  - message: On Relic, Atmospherics has been relocated, with accompanying pipe adjustments.
+      The layouts and contents of Engineering, Science, Security, and many individual
+      rooms have been modified. The cargo shuttle is now a prison shuttle. The arrivals
+      shuttle now flies in the correct direction.
+    type: Tweak
+  id: 70
+  time: '2025-08-28T17:40:36.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/39215
 Order: 1
