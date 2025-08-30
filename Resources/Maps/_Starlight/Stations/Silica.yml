@@ -4,8 +4,8 @@ meta:
   engineVersion: 266.0.0
   forkId: ""
   forkVersion: ""
-  time: 08/23/2025 20:54:43
-  entityCount: 24151
+  time: 08/30/2025 09:23:53
+  entityCount: 24152
 maps:
 - 1
 grids:
@@ -12144,8 +12144,6 @@ entities:
       parent: 2
     - type: GridFill
       path: /Maps/_Starlight/Shuttles/sec_patrol_one.yml
-- proto: AirlockExternalGlassShuttleEscape
-  entities:
   - uid: 236
     components:
     - type: Transform
@@ -12153,8 +12151,6 @@ entities:
       parent: 2
     - type: GridFill
       path: /Maps/_Starlight/Shuttles/sec_patrol_two.yml
-- proto: AirlockExternalGlassShuttleEscape
-  entities:
   - uid: 239
     components:
     - type: Transform
@@ -12162,7 +12158,7 @@ entities:
       pos: -29.5,-12.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -36517.727
+      secondsUntilStateChange: -36610.66
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -12174,7 +12170,7 @@ entities:
       pos: 30.5,-28.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -36524.227
+      secondsUntilStateChange: -36617.16
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -12186,7 +12182,7 @@ entities:
       pos: 30.5,-24.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -36524.926
+      secondsUntilStateChange: -36617.86
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -13298,7 +13294,7 @@ entities:
       pos: 36.5,0.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -128221.055
+      secondsUntilStateChange: -128313.99
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -82623,6 +82619,7 @@ entities:
   - uid: 11193
     components:
     - type: Transform
+      rot: 3.141592653589793 rad
       pos: -1.5,-14.5
       parent: 2
     - type: VentCrawTube
@@ -141396,6 +141393,13 @@ entities:
     components:
     - type: Transform
       pos: 25.5,-12.5
+      parent: 2
+- proto: SpawnPointLatejoin
+  entities:
+  - uid: 23109
+    components:
+    - type: Transform
+      pos: 21.5,-63.5
       parent: 2
 - proto: SpawnPointLibrarian
   entities:
