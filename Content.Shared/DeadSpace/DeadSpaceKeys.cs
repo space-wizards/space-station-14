@@ -7,5 +7,5 @@ namespace Content.Shared.DeadSpace;
 [KeyFunctions]
 public static class DeadSpaceKeys
 {
-    public static readonly BoundKeyFunction LieDown = "LieDown";
+
 }

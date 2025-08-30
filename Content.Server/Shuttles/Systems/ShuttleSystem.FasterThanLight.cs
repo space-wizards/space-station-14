@@ -28,7 +28,6 @@ using Robust.Shared.Player;
 using Robust.Shared.Utility;
 using FTLMapComponent = Content.Shared.Shuttles.Components.FTLMapComponent;
 using Content.Server.DeadSpace.Taipan.Components;
-using Content.Shared.DeadSpace.LieDown;
 
 namespace Content.Server.Shuttles.Systems;
 
