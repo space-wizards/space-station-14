@@ -1,0 +1,38 @@
+{
+    "version": 1,
+    "license": "CC-BY-NC-SA-3.0",
+    "copyright": "Taken from tgstation at https://github.com/tgstation/tgstation/commit/b6b3fcaa19a1f8c78ac6e8b158b59cfb618bf0f9",
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "states": [
+        {
+            "name": "composite_off"
+        },
+        {
+            "name": "composite_on"
+        },
+        {
+            "name": "cooking_unlit"
+        },
+        {
+            "name": "off_no_door"
+        },
+        {
+            "name": "oven_door"
+        },
+        {
+            "name": "range_high"
+        },
+        {
+            "name": "range_low"
+        },
+        {
+            "name": "range_medium"
+        },
+        {
+            "name": "unlit"
+        }
+    ]
+}

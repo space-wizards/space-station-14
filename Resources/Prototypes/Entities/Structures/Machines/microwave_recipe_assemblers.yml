@@ -1,0 +1,269 @@
+# The machines here are to separate out the recipes that different microwave-based machines can make.
+- type: entity
+  id: KitchenElectricRange
+  parent: [ BaseMachinePowered, ConstructibleMachine ]
+  name: electric range
+  description: A functional range with a range of functions.
+  components:
+  - type: Microwave
+    capacity: 10
+    canMicrowaveIdsSafely: false
+    explosionChance: 0
+    lightningChance: 0
+    beginCookingSound: /Audio/Machines/egg-timer.ogg
+    foodDoneSound: /Audio/Machines/ding.ogg
+    loopingSound: /Audio/Effects/silence.ogg
+    validRecipeTypes: Oven
+    canHeat: true
+    canIrradiate: false
+    key: ElectricRangeKey
+  - type: Appearance
+  - type: GenericVisualizer
+    visuals:
+      enum.PowerDeviceVisuals.VisualState:
+        enum.MicrowaveVisualizerLayers.Base:
+          Idle: { state: "off_no_door" }
+          Broken: { state: "off_no_door" } # don't care, can't break
+          Cooking: { state: "off_no_door" }
+        enum.MicrowaveVisualizerLayers.BaseUnlit:
+          Idle: { state: "unlit" }
+          Broken: { state: "unlit" } # don't care, can't break
+          Cooking: { state: "cooking_unlit" }
+      enum.PowerDeviceVisuals.Powered:
+        enum.MicrowaveVisualizerLayers.BaseUnlit:
+          True: { visible: true }
+          False: { visible: false }
+      enum.EntityHeaterVisuals.Setting:
+        enum.EntityHeaterVisuals.Setting:
+          Off: { visible: false }
+          Low: { visible: true, state: range_low }
+          Medium: { visible: true, state: range_medium }
+          High: { visible: true, state: range_high }
+  - type: ActivatableUI
+    key: enum.MicrowaveUiKey.ElectricRangeKey
+  - type: DeviceLinkSink
+    ports:
+    - On
+  - type: DeviceNetwork
+    deviceNetId: Wireless
+    receiveFrequencyId: BasicDevice
+  - type: WirelessNetworkConnection
+    range: 200
+  - type: UserInterface
+    interfaces:
+      enum.MicrowaveUiKey.ElectricRangeKey:
+        type: MicrowaveBoundUserInterface
+  - type: Physics
+    bodyType: Static
+  - type: Fixtures
+    fixtures:
+      fix1: # The body of the oven
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.30,-0.25,0.30,0.45"
+        density: 600
+        mask:
+        - MachineMask
+        layer:
+        - MachineLayer
+      fix2: # The range
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.30,0.15,0.30,0.45"
+        mask:
+        - TabletopMachineMask
+        layer:
+        - Impassable
+        - MidImpassable
+        - LowImpassable
+        hard: false
+  - type: Sprite
+    sprite: Structures/Machines/oven.rsi
+    snapCardinals: true
+    layers:
+    - state: off_no_door
+      map: ["enum.MicrowaveVisualizerLayers.Base"]
+    - state: unlit
+      shader: unshaded
+      map: ["enum.MicrowaveVisualizerLayers.BaseUnlit"]
+    - state: oven_door
+    - map: ["enum.EntityHeaterVisuals.Setting"]
+      state: range_low
+      shader: unshaded
+      visible: false
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 100
+      behaviors:
+      - !type:DoActsBehavior
+        acts: ["Breakage"]
+  - type: ApcPowerReceiver
+    powerLoad: 1000 # Assume the range is off.
+  - type: Machine
+    board: ElectricRangeMachineCircuitboard
+  - type: ContainerContainer
+    containers:
+      microwave_entity_container: !type:Container
+      machine_board: !type:Container
+      machine_parts: !type:Container
+  - type: EmptyOnMachineDeconstruct
+    containers:
+    - microwave_entity_container
+  - type: GuideHelp
+    guides:
+    - Chef
+    - FoodRecipes
+  - type: EntityHeater
+  - type: PlaceableSurface
+    isPlaceable: false # Prevent items hanging around for a few frames when clicked on the oven.
+  - type: ItemPlacer
+    maxEntities: 4
+    whitelist:
+      components:
+      - Temperature
+
+- type: entity
+  id: SyndicateKitchenElectricRange
+  parent: KitchenElectricRange
+  name: donk co. electric range
+  components:
+  - type: Microwave
+    cookTimeMultiplier: 0.5
+  - type: Sprite
+    sprite: Structures/Machines/oven_syndie.rsi
+  - type: Machine
+    board: SyndicateElectricRangeMachineCircuitboard
+  - type: FoodRecipeProvider
+    providedRecipes:
+    - RecipeBaguetteSword
+    - RecipeThrowingCroissant
+
+- type: entity
+  id: KitchenAssembler
+  parent: KitchenMicrowave
+  name: food-o-mat
+  description: Assembles and prepares NT-approved meals. You don't know what it's doing in there.
+  components:
+  - type: Microwave
+    explosionChance: 0
+    lightningChance: 0
+    beginCookingSound: /Audio/Machines/machine_switch.ogg
+    foodDoneSound: /Audio/Machines/ding.ogg
+    loopingSound: /Audio/Machines/assembler.ogg
+    validRecipeTypes: Assembler
+    canHeat: false
+    canIrradiate: false
+    key: AssemblerKey
+  - type: GenericVisualizer #TODO: needs work
+    visuals:
+      enum.PowerDeviceVisuals.VisualState:
+        enum.MicrowaveVisualizerLayers.Base:
+          Idle: { state: "assembler" }
+          Broken: { state: "assembler" }
+          Cooking: { state: "assembler" }
+        enum.MicrowaveVisualizerLayers.BaseUnlit:
+          Idle: { state: "assembler-on-unlit" }
+          Broken: { state: "assembler-broken-unlit" }
+          Cooking: { state: "assembler-running-unlit" }
+        blinky:
+          Idle: { state: "assembler-invisible" }
+          Broken: { state: "assembler-invisible" }
+          Cooking: { state: "assembler-blinky-unlit" }
+        scan:
+          Idle: { state: "assembler-invisible" }
+          Broken: { state: "assembler-invisible" }
+          Cooking: { state: "assembler-scan-unlit" }
+      enum.PowerDeviceVisuals.Powered:
+        enum.MicrowaveVisualizerLayers.BaseUnlit:
+          True: { visible: true }
+          False: { visible: false }
+        blinky:
+          True: { visible: true }
+          False: { visible: false }
+        scan:
+          True: { visible: true }
+          False: { visible: false }
+  - type: Sprite
+    sprite: Structures/Machines/assembler.rsi
+    drawdepth: SmallObjects
+    snapCardinals: true
+    layers:
+    - state: assembler
+      map: ["enum.MicrowaveVisualizerLayers.Base"]
+    - state: assembler-on-unlit
+      shader: unshaded
+      map: ["enum.MicrowaveVisualizerLayers.BaseUnlit"]
+      visible: false
+    - state: assembler-invisible
+      shader: unshaded
+      map: ["blinky"]
+      visible: false
+    - state: assembler-invisible
+      shader: unshaded
+      map: ["scan"]
+      visible: false
+  - type: ApcPowerReceiver
+    powerLoad: 400
+  - type: Machine
+    board: KitchenAssemblerMachineCircuitboard
+  - type: ActivatableUI
+    key: enum.MicrowaveUiKey.AssemblerKey
+  - type: UserInterface
+    interfaces:
+      enum.MicrowaveUiKey.AssemblerKey:
+        type: AssemblerBoundUserInterface
+
+- type: entity
+  id: MedicalAssembler
+  parent: [ BaseMachinePowered, ConstructibleMachine, KitchenAssembler]
+  name: medical assembler
+  description: Great for medicine, apparently. You don't know how it works.
+  components:
+  - type: Microwave
+    validRecipeTypes: MedicalAssembler
+    beginCookingSound: /Audio/Machines/machine_switch.ogg
+    foodDoneSound: /Audio/Effects/Shuttle/radar_ping.ogg
+    loopingSound: /Audio/Machines/medical-assembler.ogg
+    key: MedicalAssemblerKey
+  - type: GenericVisualizer
+    visuals:
+      enum.PowerDeviceVisuals.VisualState:
+        enum.MicrowaveVisualizerLayers.Base:
+          Idle: { state: "mediwave-base" }
+          Broken: { state: "mediwave-base" }
+          Cooking: { state: "mediwave-base" }
+        enum.MicrowaveVisualizerLayers.BaseUnlit:
+          Idle: { state: "mediwave-off-unlit" }
+          Broken: { state: "mediwave-off-unlit" }
+          Cooking: { state: "mediwave-on-unlit" }
+      enum.PowerDeviceVisuals.Powered:
+        enum.MicrowaveVisualizerLayers.BaseUnlit:
+          True: { visible: true }
+          False: { visible: false }
+  - type: Sprite
+    sprite: Structures/Machines/medical_assembler.rsi
+    snapCardinals: true
+    layers:
+    - state: mediwave-base
+      map: ["enum.MicrowaveVisualizerLayers.Base"]
+    - state: mediwave-off-unlit
+      shader: unshaded
+      map: ["enum.MicrowaveVisualizerLayers.BaseUnlit"]
+      visible: false
+  - type: ApcPowerReceiver
+    powerLoad: 500
+  - type: Machine
+    board: MedicalAssemblerMachineCircuitboard
+  - type: ActivatableUI
+    key: enum.MicrowaveUiKey.MedicalAssemblerKey
+  - type: UserInterface
+    interfaces:
+      enum.MicrowaveUiKey.MedicalAssemblerKey:
+        type: AssemblerBoundUserInterface
+  - type: ContainerContainer # Redefined due to inheritance order
+    containers:
+      microwave_entity_container: !type:Container
+      machine_board: !type:Container
+      machine_parts: !type:Container

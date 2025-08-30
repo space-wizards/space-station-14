@@ -20,6 +20,7 @@
   reagents:
     TranexamicAcid: 20
     Cryptobiolin: 20
+  recipeType: MedicalAssembler
 
 - type: microwaveMealRecipe
   id: RecipeRegenerativeMesh
@@ -34,3 +35,4 @@
   reagents:
     Sigynate: 20
     Dermaline: 20
+  recipeType: MedicalAssembler
