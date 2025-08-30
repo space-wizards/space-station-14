@@ -36,6 +36,7 @@ using Content.Shared.Prying.Components;
 using Content.Shared.Traits.Assorted;
 using Robust.Shared.Audio.Systems;
 using Content.Shared.Ghost.Roles.Components;
+using Content.Shared.Prying.Systems;
 using Content.Shared.Tag;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
@@ -188,12 +189,11 @@ public sealed partial class ZombieSystem
             melee.Damage = zombiecomp.DamageOnBite;
 
             // humanoid zombies get to pry open doors and shit
-            var pryComp = EnsureComp<PryingComponent>(target);
-            pryComp.SpeedModifier = 0.75f;
-            pryComp.PryPowered = true;
-            pryComp.Force = true;
+            var pryEnt = new Entity<PryingComponent>(target, EnsureComp<PryingComponent>(target));
+            PryingSystem.SetPryingSpeedModifier(pryEnt, 0.75f);
+            PryingSystem.SetPryingStrength(pryEnt, PryStrength.Forced);
 
-            Dirty(target, pryComp);
+            Dirty(pryEnt.Owner, pryEnt.Comp);
         }
 
         Dirty(target, melee);
