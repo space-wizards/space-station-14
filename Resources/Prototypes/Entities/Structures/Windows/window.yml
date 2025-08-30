@@ -139,6 +139,7 @@
   - type: Tag
     tags:
       - Window
+      - WindowDirectional
   - type: MeleeSound
     soundGroups:
       Brute:
