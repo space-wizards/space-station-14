@@ -7,5 +7,6 @@
     - type: InteractionPopup
       successChance: 1
       interactSuccessString: petting-success-soft-floofy
-      interactSuccessSound: /Audio/Effects/thudswoosh.ogg
+      interactSuccessSound: 
+      collection: Fox
       messagePerceivedByOthers: petting-success-soft-floofy-others
