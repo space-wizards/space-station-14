@@ -20,7 +20,7 @@ public sealed partial class ChemicalPayloadComponent : Component
     /// The keys that will activate the chemical payload.
     /// </summary>
     [DataField]
-    public List<string> KeysIn = new() { TriggerSystem.DefaultTriggerKey };
+    public HashSet<string> KeysIn = new() { TriggerSystem.DefaultTriggerKey };
 }
 
 [Serializable, NetSerializable]

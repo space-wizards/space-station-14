@@ -150,7 +150,7 @@ public sealed class PayloadSystem : EntitySystem
 
     private void HandleChemicalPayloadTrigger(Entity<ChemicalPayloadComponent> entity, ref TriggerEvent args)
     {
-        if (args.Key != null && !entity.Comp.KeysIn.Contains(args.Key))
+        if (args.Keys != null && !entity.Comp.KeysIn.Overlaps(args.Keys))
             return;
 
         if (entity.Comp.BeakerSlotA.Item is not EntityUid beakerA
