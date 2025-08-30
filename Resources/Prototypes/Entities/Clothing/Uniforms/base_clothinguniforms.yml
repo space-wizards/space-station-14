@@ -9,9 +9,8 @@
     slots: [innerclothing]
     equipSound:
       path: /Audio/Items/jumpsuit_equip.ogg
-  - type: Butcherable
-    butcheringType: Knife
-    spawned:
+  - type: Sliceable
+    slices:
     - id: MaterialCloth1
       amount: 3
   - type: PhysicalComposition # 50% of the amount of cloth you'd obtain upon butchering

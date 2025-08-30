@@ -27,6 +27,7 @@ using Content.Shared.Containers.ItemSlots;
 using Content.Shared.Database;
 using Content.Shared.Kitchen.Components;
 using Content.Shared.Labels.Components;
+using Content.Shared.Tools.Systems;
 
 namespace Content.Server.Botany.Systems;
 
@@ -47,6 +48,7 @@ public sealed class PlantHolderSystem : EntitySystem
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly ItemSlotsSystem _itemSlots = default!;
     [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
+    [Dependency] private readonly SharedToolSystem _tool = default!;
 
     public const float HydroponicsSpeedMultiplier = 1f;
     public const float HydroponicsConsumptionMultiplier = 2f;
@@ -318,7 +320,7 @@ public sealed class PlantHolderSystem : EntitySystem
             return;
         }
 
-        if (HasComp<SharpComponent>(args.Used))
+        if (_tool.HasQuality(args.Used, entity.Comp.HarvestToolQuality))
         {
             args.Handled = true;
             DoHarvest(uid, args.User, component);
