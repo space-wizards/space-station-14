@@ -4,8 +4,8 @@ meta:
   engineVersion: 266.0.0
   forkId: ""
   forkVersion: ""
-  time: 08/30/2025 07:16:36
-  entityCount: 13470
+  time: 08/30/2025 07:29:06
+  entityCount: 13528
 maps:
 - 1
 grids:
@@ -77,7 +77,7 @@ entities:
       chunks:
         0,0:
           ind: 0,0
-          tiles: AAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAEAAAAAAAACAAAAAAAAAwAAAAAAAAMAAAAAAAADAAAAAAAABAAAAAAAAAMAAAAAAAADAAAAAAAAAwAAAAAAAAMAAAAAAAADAAAAAAAAAwAAAAAAAAIAAAAAAAACAAAAAAAABAAAAAAAAAUAAAAAAAACAAAAAAAAAgAAAAAAAAMAAAAAAAADAAAAAAAAAwAAAAAAAAIAAAAAAAACAAAAAAAAAgAAAAAAAAIAAAAAAAACAAAAAAAAAgAAAAAAAAIAAAAAAAAGAAAAAAAABgAAAAAAAAYAAAAAAAAGAAAAAAAABgAAAAAAAAIAAAAAAAADAAAAAAAAAwAAAAAAAAMAAAAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABgAAAAAAAAYAAAAAAAAGAAAAAAAABgAAAAAAAAYAAAAAAAACAAAAAAAAAwAAAAAAAAMAAAAAAAADAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAYAAAAAAAAGAAAAAAAABgAAAAAAAAYAAAAAAAAGAAAAAAAAAgAAAAAAAAMAAAAAAAADAAAAAAAAAwAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAHAAAAAAAABwAAAAAAAAcAAAAAAAAHAAAAAAAABwAAAAAAAAcAAAAAAAADAAAAAAAAAwAAAAAAAAMAAAAAAAACAAAAAAAAAgAAAAAAAAIAAAAAAAACAAAAAAAAAgAAAAAAAAIAAAAAAAACAAAAAAAABwAAAAAAAAcAAAAAAAAHAAAAAAAABwAAAAAAAAcAAAAAAAAHAAAAAAAAAwAAAAAAAAMAAAAAAAADAAAAAAAAAgAAAAAAAAMAAAAAAAADAAAAAAAAAwAAAAAAAAMAAAAAAAADAAAAAAAAAwAAAAAAAAcAAAAAAAAHAAAAAAAABwAAAAAAAAYAAAAAAAAGAAAAAAAAAgAAAAAAAAMAAAAAAAADAAAAAAAAAwAAAAAAAAIAAAAAAAADAAAAAAAAAwAAAAAAAAMAAAAAAAADAAAAAAAAAwAAAAAAAAMAAAAAAAAHAAAAAAAABwAAAAAAAAcAAAAAAAAGAAAAAAAAAgAAAAAAAAIAAAAAAAADAAAAAAAAAwAAAAAAAAMAAAAAAAACAAAAAAAAAwAAAAAAAAMAAAAAAAADAAAAAAAAAwAAAAAAAAMAAAAAAAADAAAAAAAABwAAAAAAAAcAAAAAAAAHAAAAAAAAAgAAAAAAAAIAAAAAAAADAAAAAAAAAwAAAAAAAAMAAAAAAAADAAAAAAAAAgAAAAAAAAQAAAAAAAACAAAAAAAABAAAAAAAAAIAAAAAAAACAAAAAAAABAAAAAAAAAcAAAAAAAAHAAAAAAAAAgAAAAAAAAIAAAAAAAADAAAAAAAAAwAAAAAAAAMAAAAAAAADAAAAAAAAAwAAAAAAAAIAAAAAAAADAAAAAAAAAwAAAAAAAAMAAAAAAAACAAAAAAAAAAAAAAAAAAIAAAAAAAADAAAAAAAAAwAAAAAAAAMAAAAAAAADAAAAAAAAAwAAAAAAAAMAAAAAAAADAAAAAAAAAwAAAAAAAAMAAAAAAAAEAAAAAAAAAwAAAAAAAAMAAAAAAAADAAAAAAAABAAAAAAAAAAAAAAAAAACAAAAAAAAAwAAAAAAAAMAAAAAAAADAAAAAAAAAwAAAAAAAAMAAAAAAAADAAAAAAAAAwAAAAAAAAMAAAAAAAADAAAAAAAAAgAAAAAAAAMAAAAAAAADAAAAAAAAAwAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAMAAAAAAAADAAAAAAAAAwAAAAAAAAMAAAAAAAADAAAAAAAAAwAAAAAAAAMAAAAAAAADAAAAAAAAAgAAAAAAAAIAAAAAAAACAAAAAAAAAgAAAAAAAAIAAAAAAAACAAAAAAAAAgAAAAAAAAIAAAAAAAADAAAAAAAAAgAAAAAAAAIAAAAAAAAEAAAAAAAAAgAAAAAAAAIAAAAAAAADAAAAAAAAAwAAAAAAAAIAAAAAAAARAAAAAAAAEQAAAAAAAAIAAAAAAAACAAAAAAAAEQAAAAAAAAIAAAAAAAACAAAAAAAAAgAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAAAAAAAAAgAAAAAAAAQAAAAAAAACAAAAAAAAEQAAAAAAAAIAAAAAAAACAAAAAAAAEQAAAAAAAAIAAAAAAAACAAAAAAAAAgAAAAAAAA==
+          tiles: AAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAEAAAAAAAACAAAAAAAAAwAAAAAAAAMAAAAAAAADAAAAAAAABAAAAAAAAAMAAAAAAAADAAAAAAAAAwAAAAAAAAMAAAAAAAADAAAAAAAAAwAAAAAAAAIAAAAAAAACAAAAAAAABAAAAAAAAAUAAAAAAAACAAAAAAAAAgAAAAAAAAMAAAAAAAADAAAAAAAAAwAAAAAAAAIAAAAAAAACAAAAAAAAAgAAAAAAAAIAAAAAAAACAAAAAAAAAgAAAAAAAAIAAAAAAAAGAAAAAAAABgAAAAAAAAYAAAAAAAAGAAAAAAAABgAAAAAAAAIAAAAAAAADAAAAAAAAAwAAAAAAAAMAAAAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABgAAAAAAAAYAAAAAAAAGAAAAAAAABgAAAAAAAAYAAAAAAAACAAAAAAAAAwAAAAAAAAMAAAAAAAADAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAYAAAAAAAAGAAAAAAAABgAAAAAAAAYAAAAAAAAGAAAAAAAAAgAAAAAAAAMAAAAAAAADAAAAAAAAAwAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAHAAAAAAAABwAAAAAAAAcAAAAAAAAHAAAAAAAABwAAAAAAAAcAAAAAAAADAAAAAAAAAwAAAAAAAAMAAAAAAAACAAAAAAAAAgAAAAAAAAIAAAAAAAACAAAAAAAAAgAAAAAAAAIAAAAAAAACAAAAAAAABwAAAAAAAAcAAAAAAAAHAAAAAAAABwAAAAAAAAcAAAAAAAAHAAAAAAAAAwAAAAAAAAMAAAAAAAADAAAAAAAAAgAAAAAAAAMAAAAAAAADAAAAAAAAAwAAAAAAAAMAAAAAAAADAAAAAAAAAwAAAAAAAAcAAAAAAAAHAAAAAAAABwAAAAAAAAYAAAAAAAAGAAAAAAAAAgAAAAAAAAMAAAAAAAADAAAAAAAAAwAAAAAAAAIAAAAAAAADAAAAAAAAAwAAAAAAAAMAAAAAAAADAAAAAAAAAwAAAAAAAAMAAAAAAAAHAAAAAAAABwAAAAAAAAcAAAAAAAAGAAAAAAAAAgAAAAAAAAIAAAAAAAADAAAAAAAAAwAAAAAAAAMAAAAAAAACAAAAAAAAAwAAAAAAAAMAAAAAAAADAAAAAAAAAwAAAAAAAAMAAAAAAAADAAAAAAAABwAAAAAAAAcAAAAAAAAHAAAAAAAAAgAAAAAAAAIAAAAAAAADAAAAAAAAAwAAAAAAAAMAAAAAAAADAAAAAAAAAgAAAAAAAAQAAAAAAAACAAAAAAAABAAAAAAAAAIAAAAAAAACAAAAAAAABAAAAAAAAAcAAAAAAAAHAAAAAAAAAgAAAAAAAAIAAAAAAAADAAAAAAAAAwAAAAAAAAMAAAAAAAADAAAAAAAAAwAAAAAAAAIAAAAAAAADAAAAAAAAAwAAAAAAAAMAAAAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAADAAAAAAAAAwAAAAAAAAMAAAAAAAADAAAAAAAAAwAAAAAAAAMAAAAAAAADAAAAAAAAAwAAAAAAAAMAAAAAAAAEAAAAAAAAAwAAAAAAAAMAAAAAAAADAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAwAAAAAAAAMAAAAAAAADAAAAAAAAAwAAAAAAAAMAAAAAAAADAAAAAAAAAwAAAAAAAAMAAAAAAAADAAAAAAAAAgAAAAAAAAMAAAAAAAADAAAAAAAAAwAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAMAAAAAAAADAAAAAAAAAwAAAAAAAAMAAAAAAAADAAAAAAAAAwAAAAAAAAMAAAAAAAADAAAAAAAAAgAAAAAAAAIAAAAAAAACAAAAAAAAAgAAAAAAAAIAAAAAAAACAAAAAAAAAgAAAAAAAAIAAAAAAAADAAAAAAAAAgAAAAAAAAIAAAAAAAAEAAAAAAAAAgAAAAAAAAIAAAAAAAADAAAAAAAAAwAAAAAAAAIAAAAAAAARAAAAAAAAEQAAAAAAAAIAAAAAAAACAAAAAAAAEQAAAAAAAAIAAAAAAAACAAAAAAAAAgAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAAAAAAAAAgAAAAAAAAQAAAAAAAACAAAAAAAAEQAAAAAAAAIAAAAAAAACAAAAAAAAEQAAAAAAAAIAAAAAAAACAAAAAAAAAgAAAAAAAA==
           version: 7
         -1,0:
           ind: -1,0
@@ -67346,6 +67346,405 @@ entities:
     - type: Transform
       pos: 32.32965,-21.35218
       parent: 2
+- proto: HolopadAiChute
+  entities:
+  - uid: 13473
+    components:
+    - type: Transform
+      pos: -14.5,27.5
+      parent: 2
+- proto: HolopadAiCore
+  entities:
+  - uid: 13475
+    components:
+    - type: Transform
+      pos: -4.5,49.5
+      parent: 2
+- proto: HolopadAiEntrance
+  entities:
+  - uid: 13474
+    components:
+    - type: Transform
+      pos: -6.5,43.5
+      parent: 2
+- proto: HolopadCargoBay
+  entities:
+  - uid: 13528
+    components:
+    - type: Transform
+      pos: 15.5,-28.5
+      parent: 2
+- proto: HolopadCargoBayLongRange
+  entities:
+  - uid: 13491
+    components:
+    - type: Transform
+      pos: 12.5,-28.5
+      parent: 2
+- proto: HolopadCargoFront
+  entities:
+  - uid: 13492
+    components:
+    - type: Transform
+      pos: 8.5,-25.5
+      parent: 2
+- proto: HolopadCargoSalvageBay
+  entities:
+  - uid: 13518
+    components:
+    - type: Transform
+      pos: 20.5,-26.5
+      parent: 2
+- proto: HolopadCommandBridge
+  entities:
+  - uid: 13486
+    components:
+    - type: Transform
+      pos: -0.5,26.5
+      parent: 2
+- proto: HolopadCommandBridgeHallway
+  entities:
+  - uid: 13485
+    components:
+    - type: Transform
+      pos: 4.5,20.5
+      parent: 2
+- proto: HolopadCommandCaptain
+  entities:
+  - uid: 13490
+    components:
+    - type: Transform
+      pos: 2.5,25.5
+      parent: 2
+- proto: HolopadCommandCe
+  entities:
+  - uid: 13488
+    components:
+    - type: Transform
+      pos: 18.5,-17.5
+      parent: 2
+- proto: HolopadCommandCmo
+  entities:
+  - uid: 13489
+    components:
+    - type: Transform
+      pos: -19.5,12.5
+      parent: 2
+- proto: HolopadCommandHop
+  entities:
+  - uid: 13505
+    components:
+    - type: Transform
+      pos: 0.5,18.5
+      parent: 2
+- proto: HolopadCommandHos
+  entities:
+  - uid: 13506
+    components:
+    - type: Transform
+      pos: 27.5,11.5
+      parent: 2
+- proto: HolopadCommandMeetingRoom
+  entities:
+  - uid: 13496
+    components:
+    - type: Transform
+      pos: -11.5,27.5
+      parent: 2
+- proto: HolopadCommandQm
+  entities:
+  - uid: 13516
+    components:
+    - type: Transform
+      pos: 5.5,-19.5
+      parent: 2
+- proto: HolopadCommandRd
+  entities:
+  - uid: 13515
+    components:
+    - type: Transform
+      pos: -22.5,-5.5
+      parent: 2
+- proto: HolopadCommandVault
+  entities:
+  - uid: 13526
+    components:
+    - type: Transform
+      pos: -5.5,21.5
+      parent: 2
+- proto: HolopadEngineeringAME
+  entities:
+  - uid: 13472
+    components:
+    - type: Transform
+      pos: 25.5,-10.5
+      parent: 2
+- proto: HolopadEngineeringAtmosMain
+  entities:
+  - uid: 13481
+    components:
+    - type: Transform
+      pos: 36.5,-12.5
+      parent: 2
+- proto: HolopadEngineeringAtmosTeg
+  entities:
+  - uid: 13522
+    components:
+    - type: Transform
+      pos: 43.5,-24.5
+      parent: 2
+- proto: HolopadEngineeringFront
+  entities:
+  - uid: 13502
+    components:
+    - type: Transform
+      pos: 13.5,-13.5
+      parent: 2
+- proto: HolopadEngineeringMain
+  entities:
+  - uid: 13503
+    components:
+    - type: Transform
+      pos: 19.5,-7.5
+      parent: 2
+- proto: HolopadEngineeringPower
+  entities:
+  - uid: 13514
+    components:
+    - type: Transform
+      pos: 31.5,-17.5
+      parent: 2
+- proto: HolopadEngineeringTechVault
+  entities:
+  - uid: 13523
+    components:
+    - type: Transform
+      pos: -3.5,-35.5
+      parent: 2
+- proto: HolopadEngineeringTelecoms
+  entities:
+  - uid: 13525
+    components:
+    - type: Transform
+      pos: -0.5,49.5
+      parent: 2
+- proto: HolopadGeneralArrivals
+  entities:
+  - uid: 13478
+    components:
+    - type: Transform
+      pos: 45.5,5.5
+      parent: 2
+- proto: HolopadGeneralCryosleep
+  entities:
+  - uid: 13498
+    components:
+    - type: Transform
+      pos: -3.5,-32.5
+      parent: 2
+- proto: HolopadGeneralDisposals
+  entities:
+  - uid: 13500
+    components:
+    - type: Transform
+      pos: -33.5,21.5
+      parent: 2
+- proto: HolopadGeneralEvac
+  entities:
+  - uid: 13504
+    components:
+    - type: Transform
+      pos: -41.5,4.5
+      parent: 2
+- proto: HolopadGeneralEVAStorage
+  entities:
+  - uid: 13501
+    components:
+    - type: Transform
+      pos: 42.5,19.5
+      parent: 2
+- proto: HolopadGeneralTools
+  entities:
+  - uid: 13524
+    components:
+    - type: Transform
+      pos: -4.5,-25.5
+      parent: 2
+- proto: HolopadMedicalChemistry
+  entities:
+  - uid: 13494
+    components:
+    - type: Transform
+      pos: -12.5,11.5
+      parent: 2
+- proto: HolopadMedicalFront
+  entities:
+  - uid: 13513
+    components:
+    - type: Transform
+      pos: -10.5,5.5
+      parent: 2
+- proto: HolopadMedicalMedbay
+  entities:
+  - uid: 13511
+    components:
+    - type: Transform
+      pos: -16.5,4.5
+      parent: 2
+- proto: HolopadMedicalMorgue
+  entities:
+  - uid: 13512
+    components:
+    - type: Transform
+      pos: -24.5,12.5
+      parent: 2
+- proto: HolopadMedicalVirology
+  entities:
+  - uid: 13527
+    components:
+    - type: Transform
+      pos: -17.5,17.5
+      parent: 2
+- proto: HolopadScienceAnomaly
+  entities:
+  - uid: 13476
+    components:
+    - type: Transform
+      pos: -25.5,-6.5
+      parent: 2
+- proto: HolopadScienceArtifactNorth
+  entities:
+  - uid: 13479
+    components:
+    - type: Transform
+      pos: -18.5,-11.5
+      parent: 2
+- proto: HolopadScienceArtifactSouth
+  entities:
+  - uid: 13480
+    components:
+    - type: Transform
+      pos: -18.5,-17.5
+      parent: 2
+- proto: HolopadScienceFront
+  entities:
+  - uid: 13519
+    components:
+    - type: Transform
+      pos: -9.5,-8.5
+      parent: 2
+- proto: HolopadScienceRobotics
+  entities:
+  - uid: 13517
+    components:
+    - type: Transform
+      pos: -8.5,-16.5
+      parent: 2
+- proto: HolopadSecurityArmory
+  entities:
+  - uid: 13477
+    components:
+    - type: Transform
+      pos: 36.5,9.5
+      parent: 2
+- proto: HolopadSecurityBrigMed
+  entities:
+  - uid: 13487
+    components:
+    - type: Transform
+      pos: 22.5,11.5
+      parent: 2
+- proto: HolopadSecurityCourtroom
+  entities:
+  - uid: 13497
+    components:
+    - type: Transform
+      pos: 43.5,29.5
+      parent: 2
+- proto: HolopadSecurityDetective
+  entities:
+  - uid: 13499
+    components:
+    - type: Transform
+      pos: 26.5,2.5
+      parent: 2
+- proto: HolopadSecurityFront
+  entities:
+  - uid: 13520
+    components:
+    - type: Transform
+      pos: 11.5,11.5
+      parent: 2
+- proto: HolopadSecurityInterrogation
+  entities:
+  - uid: 13507
+    components:
+    - type: Transform
+      pos: 12.5,17.5
+      parent: 2
+- proto: HolopadSecurityLockerRoom
+  entities:
+  - uid: 13521
+    components:
+    - type: Transform
+      pos: 24.5,14.5
+      parent: 2
+- proto: HolopadServiceBar
+  entities:
+  - uid: 13482
+    components:
+    - type: Transform
+      pos: 2.5,7.5
+      parent: 2
+- proto: HolopadServiceBotany
+  entities:
+  - uid: 13483
+    components:
+    - type: Transform
+      pos: 3.5,-6.5
+      parent: 2
+- proto: HolopadServiceBoxer
+  entities:
+  - uid: 13484
+    components:
+    - type: Transform
+      pos: -42.5,-18.5
+      parent: 2
+- proto: HolopadServiceChapel
+  entities:
+  - uid: 13493
+    components:
+    - type: Transform
+      pos: -34.5,7.5
+      parent: 2
+- proto: HolopadServiceClownMime
+  entities:
+  - uid: 13495
+    components:
+    - type: Transform
+      pos: -13.5,-32.5
+      parent: 2
+- proto: HolopadServiceJanitor
+  entities:
+  - uid: 13508
+    components:
+    - type: Transform
+      pos: 13.5,-3.5
+      parent: 2
+- proto: HolopadServiceKitchen
+  entities:
+  - uid: 13509
+    components:
+    - type: Transform
+      pos: 0.5,-1.5
+      parent: 2
+- proto: HolopadServiceLibrary
+  entities:
+  - uid: 13510
+    components:
+    - type: Transform
+      pos: -37.5,-7.5
+      parent: 2
 - proto: HospitalCurtainsOpen
   entities:
   - uid: 2521
@@ -78335,6 +78734,13 @@ entities:
     components:
     - type: Transform
       pos: 13.5,-4.5
+      parent: 2
+- proto: SpawnPointLatejoin
+  entities:
+  - uid: 13471
+    components:
+    - type: Transform
+      pos: 45.5,7.5
       parent: 2
 - proto: SpawnPointLibrarian
   entities:
@@ -92264,7 +92670,7 @@ entities:
       pos: -38.5,9.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -67251.56
+      secondsUntilStateChange: -67997.49
       state: Opening
   - uid: 5161
     components:
@@ -92272,7 +92678,7 @@ entities:
       pos: -35.5,10.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -67252.06
+      secondsUntilStateChange: -67997.99
       state: Opening
 - proto: WoodenBench
   entities:
