@@ -297,6 +297,39 @@
     Cosmopolitan: 3
 
 - type: reaction
+  id: CorpseReviver1
+  requiredMixerCategories:
+  - Shake
+  reactants:
+    JuiceApple:
+      amount: 1
+    Cognac:
+      amount: 2
+    Vermouth:
+      amount: 1
+  products:
+    CorpseReviver1: 4
+
+- type: reaction
+  id: CorpseReviver2
+  requiredMixerCategories:
+  - Shake
+  reactants:
+    NTCahors:
+      amount: 5
+    Gin:
+      amount: 5
+    BlueCuracao:
+      amount: 5
+    JuiceLemon:
+      amount: 5
+    Absinthe:
+      amount: 1
+  products:
+    CorpseReviver2: 20
+
+
+- type: reaction
   id: CreamOfCoconut
   reactants:
     CoconutWater:
