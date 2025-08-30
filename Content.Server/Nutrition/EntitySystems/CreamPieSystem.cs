@@ -21,12 +21,13 @@ namespace Content.Server.Nutrition.EntitySystems
     [UsedImplicitly]
     public sealed class CreamPieSystem : SharedCreamPieSystem
     {
-        [Dependency] private readonly SharedSolutionContainerSystem _solutions = default!;
-        [Dependency] private readonly PuddleSystem _puddle = default!;
+        [Dependency] private readonly IngestionSystem _ingestion = default!;
         [Dependency] private readonly ItemSlotsSystem _itemSlots = default!;
-        [Dependency] private readonly TriggerSystem _trigger = default!;
-        [Dependency] private readonly SharedAudioSystem _audio = default!;
         [Dependency] private readonly PopupSystem _popup = default!;
+        [Dependency] private readonly PuddleSystem _puddle = default!;
+        [Dependency] private readonly SharedAudioSystem _audio = default!;
+        [Dependency] private readonly SharedSolutionContainerSystem _solutions = default!;
+        [Dependency] private readonly TriggerSystem _trigger = default!;
 
         public override void Initialize()
         {
@@ -39,26 +40,23 @@ namespace Content.Server.Nutrition.EntitySystems
             SubscribeLocalEvent<CreamPiedComponent, RejuvenateEvent>(OnRejuvenate);
         }
 
-        protected override void SplattedCreamPie(EntityUid uid, CreamPieComponent creamPie)
+        protected override void SplattedCreamPie(Entity<CreamPieComponent, EdibleComponent?> entity)
         {
             // The entity is deleted, so play the sound at its position rather than parenting
-            var coordinates = Transform(uid).Coordinates;
-            _audio.PlayPvs(_audio.ResolveSound(creamPie.Sound), coordinates, AudioParams.Default.WithVariation(0.125f));
+            var coordinates = Transform(entity).Coordinates;
+            _audio.PlayPvs(_audio.ResolveSound(entity.Comp1.Sound), coordinates, AudioParams.Default.WithVariation(0.125f));
 
-            if (TryComp(uid, out FoodComponent? foodComp))
+            if (Resolve(entity, ref entity.Comp2, false))
             {
-                if (_solutions.TryGetSolution(uid, foodComp.Solution, out _, out var solution))
-                {
-                    _puddle.TrySpillAt(uid, solution, out _, false);
-                }
-                foreach (var trash in foodComp.Trash)
-                {
-                    Spawn(trash, Transform(uid).Coordinates);
-                }
-            }
-            ActivatePayload(uid);
+                if (_solutions.TryGetSolution(entity.Owner, entity.Comp2.Solution, out _, out var solution))
+                    _puddle.TrySpillAt(entity.Owner, solution, out _, false);
 
-            QueueDel(uid);
+                _ingestion.SpawnTrash((entity, entity.Comp2));
+            }
+
+            ActivatePayload(entity);
+
+            QueueDel(entity);
         }
 
         private void OnConsume(Entity<CreamPieComponent> entity, ref ConsumeDoAfterEvent args)
