@@ -45,3 +45,11 @@
       - state: tip
         map: [ "enum.AmmoVisualLayers.Tip" ]
         color: "#dbdbdb"
+
+- type: entity
+  id: CartridgeCaselessRiflePointDefense
+  parent: BaseCartridgeCaselessRifle
+  suffix: radar
+  components:
+  - type: CartridgeAmmo
+    proto: BulletCaselessRifleRadar
