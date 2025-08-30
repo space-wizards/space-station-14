@@ -101,6 +101,13 @@ hugging-success-generic = You hug {THE($target)}.
 hugging-success-generic-others = { CAPITALIZE(THE($user)) } hugs {THE($target)}.
 hugging-success-generic-target = { CAPITALIZE(THE($user)) } hugs you.
 
+## Petting players
+
+petting-success-soft-floofy-others = { CAPITALIZE(THE($user)) } pets {THE($target)} soft fluffy head.
+petting-success-soft-floofy-traget = { CAPITALIZE(THE($user)) } pets your soft fluffy head.
+petting-success-generic-others = { CAPITALIZE(THE($user)) } pets {THE($target)} head.
+petting-success-generic-traget = { CAPITALIZE(THE($user)) } pets your head.
+
 ## Other
 
 petting-success-tesla = You pet {THE($target)}, violating the laws of nature and physics.
