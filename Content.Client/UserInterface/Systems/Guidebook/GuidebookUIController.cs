@@ -24,7 +24,7 @@ public sealed class GuidebookUIController : UIController, IOnStateEntered<LobbyS
     [UISystemDependency] private readonly GuidebookSystem _guidebookSystem = default!;
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly IConfigurationManager _configuration = default!;
-    [Dependency] private readonly JobRequirementsManager _jobRequirements = default!;
+    [Dependency] private readonly PlayTimeTrackingManager _playTimeTracking = default!;
 
     private const int PlaytimeOpenGuidebook = 60;
 
@@ -52,7 +52,7 @@ public sealed class GuidebookUIController : UIController, IOnStateEntered<LobbyS
         _guideWindow.OnOpen += OnWindowOpen;
 
         if (state is LobbyState &&
-            _jobRequirements.FetchOverallPlaytime() < TimeSpan.FromMinutes(PlaytimeOpenGuidebook))
+            _playTimeTracking.FetchOverallPlaytime() < TimeSpan.FromMinutes(PlaytimeOpenGuidebook))
         {
             OpenGuidebook();
             _guideWindow.RecenterWindow(new(0.5f, 0.5f));
