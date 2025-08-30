@@ -97,7 +97,7 @@ public abstract partial class InventorySystem
         // unequip the item.
         if (itemUid != null)
         {
-            if (!TryUnequip(actor, ev.Slot, out var item, predicted: true, inventory: inventory, checkDoafter: true, triggerHandContact: true))
+            if (!TryUnequip(actor, ev.Slot, out var item, predicted: true, inventory: inventory, checkDoAfter: true, triggerHandContact: true))
                 return;
 
             _handsSystem.PickupOrDrop(actor, item.Value);
@@ -120,15 +120,15 @@ public abstract partial class InventorySystem
 
         RaiseLocalEvent(held.Value, new HandDeselectedEvent(actor));
 
-        TryEquip(actor, actor, held.Value, ev.Slot, predicted: true, inventory: inventory, force: true, checkDoafter: true, triggerHandContact: true);
+        TryEquip(actor, actor, held.Value, ev.Slot, predicted: true, inventory: inventory, force: true, checkDoAfter: true, triggerHandContact: true);
     }
 
     public bool TryEquip(EntityUid uid, EntityUid itemUid, string slot, bool silent = false, bool force = false, bool predicted = false,
-        InventoryComponent? inventory = null, ClothingComponent? clothing = null, bool checkDoafter = false, bool triggerHandContact = false) =>
-        TryEquip(uid, uid, itemUid, slot, silent, force, predicted, inventory, clothing, checkDoafter, triggerHandContact);
+        InventoryComponent? inventory = null, ClothingComponent? clothing = null, bool checkDoAfter = false, bool triggerHandContact = false) =>
+        TryEquip(uid, uid, itemUid, slot, silent, force, predicted, inventory, clothing, checkDoAfter, triggerHandContact);
 
     public bool TryEquip(EntityUid actor, EntityUid target, EntityUid itemUid, string slot, bool silent = false, bool force = false, bool predicted = false,
-        InventoryComponent? inventory = null, ClothingComponent? clothing = null, bool checkDoafter = false, bool triggerHandContact = false)
+        InventoryComponent? inventory = null, ClothingComponent? clothing = null, bool checkDoAfter = false, bool triggerHandContact = false)
     {
         if (!Resolve(target, ref inventory, false))
         {
@@ -155,7 +155,7 @@ public abstract partial class InventorySystem
             return false;
         }
 
-        if (checkDoafter &&
+        if (checkDoAfter &&
             clothing != null &&
             clothing.EquipDelay > TimeSpan.Zero &&
             (clothing.Slots & slotDefinition.SlotFlags) != 0 &&
@@ -320,10 +320,10 @@ public abstract partial class InventorySystem
         InventoryComponent? inventory = null,
         ClothingComponent? clothing = null,
         bool reparent = true,
-        bool checkDoafter = false,
+        bool checkDoAfter = false,
         bool triggerHandContact = false)
     {
-        return TryUnequip(uid, uid, slot, silent, force, predicted, inventory, clothing, reparent, checkDoafter, triggerHandContact);
+        return TryUnequip(uid, uid, slot, silent, force, predicted, inventory, clothing, reparent, checkDoAfter, triggerHandContact);
     }
 
     public bool TryUnequip(
@@ -336,10 +336,10 @@ public abstract partial class InventorySystem
         InventoryComponent? inventory = null,
         ClothingComponent? clothing = null,
         bool reparent = true,
-        bool checkDoafter = false,
+        bool checkDoAfter = false,
         bool triggerHandContact = false)
     {
-        return TryUnequip(actor, target, slot, out _, silent, force, predicted, inventory, clothing, reparent, checkDoafter, triggerHandContact);
+        return TryUnequip(actor, target, slot, out _, silent, force, predicted, inventory, clothing, reparent, checkDoAfter, triggerHandContact);
     }
 
     public bool TryUnequip(
@@ -352,10 +352,10 @@ public abstract partial class InventorySystem
         InventoryComponent? inventory = null,
         ClothingComponent? clothing = null,
         bool reparent = true,
-        bool checkDoafter = false,
+        bool checkDoAfter = false,
         bool triggerHandContact = false)
     {
-        return TryUnequip(uid, uid, slot, out removedItem, silent, force, predicted, inventory, clothing, reparent, checkDoafter, triggerHandContact);
+        return TryUnequip(uid, uid, slot, out removedItem, silent, force, predicted, inventory, clothing, reparent, checkDoAfter, triggerHandContact);
     }
 
     public bool TryUnequip(
@@ -369,12 +369,12 @@ public abstract partial class InventorySystem
         InventoryComponent? inventory = null,
         ClothingComponent? clothing = null,
         bool reparent = true,
-        bool checkDoafter = false,
+        bool checkDoAfter = false,
         bool triggerHandContact = false)
     {
         var itemsDropped = 0;
         return TryUnequip(actor, target, slot, out removedItem, ref itemsDropped,
-            silent, force, predicted, inventory, clothing, reparent, checkDoafter);
+            silent, force, predicted, inventory, clothing, reparent, checkDoAfter);
     }
 
     private bool TryUnequip(
@@ -389,7 +389,7 @@ public abstract partial class InventorySystem
         InventoryComponent? inventory = null,
         ClothingComponent? clothing = null,
         bool reparent = true,
-        bool checkDoafter = false,
+        bool checkDoAfter = false,
         bool triggerHandContact = false)
     {
         removedItem = null;
@@ -427,7 +427,7 @@ public abstract partial class InventorySystem
         if (!force && !_containerSystem.CanRemove(removedItem.Value, slotContainer))
             return false;
 
-        if (checkDoafter &&
+        if (checkDoAfter &&
             Resolve(removedItem.Value, ref clothing, false) &&
             (clothing.Slots & slotDefinition.SlotFlags) != 0 &&
             clothing.UnequipDelay > TimeSpan.Zero)

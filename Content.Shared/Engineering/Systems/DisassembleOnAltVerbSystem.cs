@@ -22,7 +22,7 @@ public sealed partial class DisassembleOnAltVerbSystem : EntitySystem
 
     public void StartDisassembly(Entity<DisassembleOnAltVerbComponent> entity, EntityUid user)
     {
-        // Doafter setup
+        // DoAfter setup
         var doAfterArgs = new DoAfterArgs(EntityManager,
             user,
             entity.Comp.DisassembleTime,
