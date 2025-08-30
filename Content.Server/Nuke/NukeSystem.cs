@@ -6,6 +6,7 @@ using Content.Server.Kitchen.Components;
 using Content.Server.Pinpointer;
 using Content.Server.Popups;
 using Content.Server.Station.Systems;
+using Content.Server.Lock;
 using Content.Shared.Audio;
 using Content.Shared.Containers.ItemSlots;
 using Content.Shared.Coordinates.Helpers;
@@ -45,6 +46,7 @@ public sealed class NukeSystem : EntitySystem
     [Dependency] private readonly UserInterfaceSystem _ui = default!;
     [Dependency] private readonly AppearanceSystem _appearance = default!;
     [Dependency] private readonly TurfSystem _turf = default!;
+    [Dependency] private readonly DigitalLockSystem _digitalLock = default!;
 
     /// <summary>
     ///     Used to calculate when the nuke song should start playing for maximum kino with the nuke sfx
@@ -238,7 +240,7 @@ public sealed class NukeSystem : EntitySystem
 
     private void OnKeypadButtonPressed(EntityUid uid, NukeComponent component, NukeKeypadMessage args)
     {
-        PlayNukeKeypadSound(uid, args.Value, component);
+        component.LastPlayedKeypadSemitones = _digitalLock.PlayKeypadSound(uid, args.Value, component.LastPlayedKeypadSemitones, component.KeypadPressSound);
 
         if (component.Status != NukeStatus.AWAIT_CODE)
             return;
@@ -418,38 +420,6 @@ public sealed class NukeSystem : EntitySystem
         };
 
         _ui.SetUiState(uid, NukeUiKey.Key, state);
-    }
-
-    private void PlayNukeKeypadSound(EntityUid uid, int number, NukeComponent? component = null)
-    {
-        if (!Resolve(uid, ref component))
-            return;
-
-        // This is a C mixolydian blues scale.
-        // 1 2 3    C D Eb
-        // 4 5 6    E F F#
-        // 7 8 9    G A Bb
-        var semitoneShift = number switch
-        {
-            1 => 0,
-            2 => 2,
-            3 => 3,
-            4 => 4,
-            5 => 5,
-            6 => 6,
-            7 => 7,
-            8 => 9,
-            9 => 10,
-            0 => component.LastPlayedKeypadSemitones + 12,
-            _ => 0,
-        };
-
-        // Don't double-dip on the octave shifting
-        component.LastPlayedKeypadSemitones = number == 0 ? component.LastPlayedKeypadSemitones : semitoneShift;
-
-        var opts = component.KeypadPressSound.Params;
-        opts = AudioHelpers.ShiftSemitone(opts, semitoneShift).AddVolume(-5f);
-        _audio.PlayPvs(component.KeypadPressSound, uid, opts);
     }
 
     public string GenerateRandomNumberString(int length)
