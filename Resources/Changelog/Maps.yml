@@ -619,4 +619,13 @@
       update
     type: Tweak
   id: 74
+- author: ScarKy0
+  changes:
+  - message: On Bagel, added cameras to genpop and engineering.
+    type: Add
+  - message: On Bagel, added AI turrets to the AI core.
+    type: Add
+  id: 75
+  time: '2025-08-30T19:29:13.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/39968
 Order: 1
