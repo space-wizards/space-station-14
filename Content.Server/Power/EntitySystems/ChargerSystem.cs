@@ -1,8 +1,9 @@
 using Content.Server.Power.Components;
-using Content.Server.Emp;
-using Content.Server.PowerCell;
 using Content.Shared.Examine;
+using Content.Server.PowerCell;
 using Content.Shared.Power;
+using Content.Shared.Power.Components;
+using Content.Shared.Power.EntitySystems;
 using Content.Shared.PowerCell.Components;
 using Content.Shared.Emp;
 using JetBrains.Annotations;
@@ -15,7 +16,7 @@ using Content.Shared.Whitelist;
 namespace Content.Server.Power.EntitySystems;
 
 [UsedImplicitly]
-internal sealed class ChargerSystem : EntitySystem
+public sealed class ChargerSystem : SharedChargerSystem
 {
     [Dependency] private readonly ContainerSystem _container = default!;
     [Dependency] private readonly PowerCellSystem _powerCell = default!;
@@ -25,6 +26,8 @@ internal sealed class ChargerSystem : EntitySystem
 
     public override void Initialize()
     {
+        base.Initialize();
+
         SubscribeLocalEvent<ChargerComponent, ComponentStartup>(OnStartup);
         SubscribeLocalEvent<ChargerComponent, PowerChangedEvent>(OnPowerChanged);
         SubscribeLocalEvent<ChargerComponent, EntInsertedIntoContainerMessage>(OnInserted);
@@ -32,8 +35,6 @@ internal sealed class ChargerSystem : EntitySystem
         SubscribeLocalEvent<ChargerComponent, ContainerIsInsertingAttemptEvent>(OnInsertAttempt);
         SubscribeLocalEvent<ChargerComponent, InsertIntoEntityStorageAttemptEvent>(OnEntityStorageInsertAttempt);
         SubscribeLocalEvent<ChargerComponent, ExaminedEvent>(OnChargerExamine);
-
-        SubscribeLocalEvent<ChargerComponent, EmpPulseEvent>(OnEmpPulse);
     }
 
     private void OnStartup(EntityUid uid, ChargerComponent component, ComponentStartup args)
@@ -46,7 +47,7 @@ internal sealed class ChargerSystem : EntitySystem
         using (args.PushGroup(nameof(ChargerComponent)))
         {
             // rate at which the charger charges
-            args.PushMarkup(Loc.GetString("charger-examine", ("color", "yellow"), ("chargeRate", (int) component.ChargeRate)));
+            args.PushMarkup(Loc.GetString("charger-examine", ("color", "yellow"), ("chargeRate", (int)component.ChargeRate)));
 
             // try to get contents of the charger
             if (!_container.TryGetContainer(uid, component.SlotId, out var container))
@@ -70,7 +71,7 @@ internal sealed class ChargerSystem : EntitySystem
                         continue;
 
                     var chargePercentage = (battery.CurrentCharge / battery.MaxCharge) * 100;
-                    args.PushMarkup(Loc.GetString("charger-content", ("chargePercentage", (int) chargePercentage)));
+                    args.PushMarkup(Loc.GetString("charger-content", ("chargePercentage", (int)chargePercentage)));
                 }
             }
         }
@@ -192,12 +193,6 @@ internal sealed class ChargerSystem : EntitySystem
             default:
                 throw new ArgumentOutOfRangeException();
         }
-    }
-
-    private void OnEmpPulse(EntityUid uid, ChargerComponent component, ref EmpPulseEvent args)
-    {
-        args.Affected = true;
-        args.Disabled = true;
     }
 
     private CellChargerStatus GetStatus(EntityUid uid, ChargerComponent component)
