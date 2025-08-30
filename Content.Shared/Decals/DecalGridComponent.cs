@@ -31,14 +31,16 @@ namespace Content.Shared.Decals
         public sealed partial class DecalChunk
         {
             [IncludeDataField(customTypeSerializer:typeof(DictionarySerializer<uint, Decal>))]
-            public Dictionary<uint, Decal> Decals;
+            public Dictionary<uint, Decal> Decals = new();
+
+            public Dictionary<Decal, uint> PredictedDecals = new();
+            public HashSet<Decal> PredictedDecalDeletions = new();
 
             [NonSerialized]
             public GameTick LastModified;
 
             public DecalChunk()
             {
-                Decals = new();
             }
 
             public DecalChunk(Dictionary<uint, Decal> decals)
@@ -51,6 +53,8 @@ namespace Content.Shared.Decals
                 // decals are readonly, so this should be fine.
                 Decals = chunk.Decals.ShallowClone();
                 LastModified = chunk.LastModified;
+                PredictedDecals = chunk.PredictedDecals;
+                PredictedDecalDeletions = chunk.PredictedDecalDeletions;
             }
         }
 
