@@ -95,7 +95,8 @@ public abstract class SharedIdCardSystem : EntitySystem
             return true;
 
         // check inventory slot?
-        if (_inventorySystem.TryGetSlotEntity(uid, "id", out var idUid) && TryGetIdCard(idUid.Value, out idCard))
+        if ((_inventorySystem.TryGetSlotEntity(uid, "id", out var idUid) || _inventorySystem.TryGetSlotEntity(uid, "belt", out idUid))
+            && TryGetIdCard(idUid.Value, out idCard))
             return true;
 
         return false;
