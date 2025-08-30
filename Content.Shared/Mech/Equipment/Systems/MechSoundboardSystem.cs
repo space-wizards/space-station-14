@@ -1,9 +1,9 @@
 using System.Linq;
-using Content.Shared.Mech.Equipment.Components;
+using Content.Shared.Mech.Components;
 using Content.Shared.Timing;
 using Robust.Shared.Audio.Systems;
 
-namespace Content.Shared.Mech.Equipment.Systems;
+namespace Content.Shared.Mech.Systems;
 
 /// <summary>
 /// Handles everything for mech soundboard.
@@ -35,10 +35,6 @@ public sealed class MechSoundboardSystem : EntitySystem
     private void OnSoundboardMessage(EntityUid uid, MechSoundboardComponent comp, MechEquipmentUiMessageRelayEvent args)
     {
         if (args.Message is not MechSoundboardPlayMessage msg)
-            return;
-
-        if (!TryComp<MechEquipmentComponent>(uid, out var equipment) ||
-            equipment.EquipmentOwner == null)
             return;
 
         if (msg.Sound >= comp.Sounds.Count)

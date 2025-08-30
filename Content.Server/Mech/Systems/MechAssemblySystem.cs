@@ -55,7 +55,6 @@ public sealed class MechAssemblySystem : EntitySystem
             }
         }
 
-        //check to see if we have all the parts
         foreach (var val in component.RequiredParts.Values)
         {
             if (!val)

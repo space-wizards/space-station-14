@@ -122,6 +122,16 @@
   license: "CC-BY-4.0"
   source: "https://freesound.org/people/thomas_evdokimoff/sounds/202193/"
 
+- files: ["nominal.ogg"]
+  copyright: '"nominal.ogg" by /tg/station'
+  license: "CC-BY-SA-3.0"
+  source: "https://github.com/tgstation/tgstation/blob/26937abeb259b74f9525ccd4469b52fb9c26c65d/sound/vehicles/mecha/nominal.ogg"
+
+- files: ["critdestr.ogg"]
+  copyright: '"critdestr.ogg" by /tg/station'
+  license: "CC-BY-SA-3.0"
+  source: "https://github.com/tgstation/tgstation/blob/26937abeb259b74f9525ccd4469b52fb9c26c65d/sound/vehicles/mecha/critdestr.ogg"
+
 - files: ["hydraulic_press.ogg"]
   copyright: 'Created by chainsaw_dinner_party on Freesound.org. Extended and converted to MONO and .ogg by EmoGarbage404 (github)'
   license: "CC0-1.0"
