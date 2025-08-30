@@ -47,6 +47,46 @@
     entities:
     - id: RandomSpawner
 
+- type: entity
+  id: BasicDecalDirtVariationPass
+  parent: BaseVariationPass
+  components:
+  - type: EntitySpawnVariationPass
+    tilesPerEntityAverage: 80
+    tilesPerEntityStdDev: 5
+    entities:
+    - id: DecalSpawnerDirtWide
+
+- type: entity
+  id: BasicDecalGraffitiVariationPass
+  parent: BaseVariationPass
+  components:
+  - type: EntitySpawnVariationPass
+    tilesPerEntityAverage: 120
+    tilesPerEntityStdDev: 5
+    entities:
+    - id: DecalSpawnerGraffiti
+
+- type: entity
+  id: BasicDecalBrunsVariationPass
+  parent: BaseVariationPass
+  components:
+  - type: EntitySpawnVariationPass
+    tilesPerEntityAverage: 120
+    tilesPerEntityStdDev: 10
+    entities:
+    - id: DecalSpawnerBurns
+
+- type: entity
+  id: BasicDecalDirtMonospaceVariationPass
+  parent: BaseVariationPass
+  components:
+  - type: EntitySpawnVariationPass
+    tilesPerEntityAverage: 80
+    tilesPerEntityStdDev: 10
+    entities:
+    - id: DecalSpawnerDirtMonospace
+
 - type: weightedRandomFillSolution
   id: RandomFillTrashPuddle
   fills:
@@ -66,7 +106,6 @@
     - Carbon
     - Hydrogen
     - Fat
-    - SpaceLube
     - SpaceGlue
     - Sulfur
     - Acetone

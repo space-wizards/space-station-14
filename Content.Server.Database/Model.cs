@@ -392,6 +392,7 @@ namespace Content.Server.Database
         public Guid UserId { get; set; }
         public int SelectedCharacterSlot { get; set; }
         public string AdminOOCColor { get; set; } = null!;
+        public List<string> ConstructionFavorites { get; set; } = new();
         public List<Profile> Profiles { get; } = new();
     }
 
@@ -703,6 +704,11 @@ namespace Content.Server.Database
         [Required] public LogImpact Impact { get; set; }
 
         [Required] public DateTime Date { get; set; }
+
+        /// <summary>
+        /// The current time in the round in ticks since the start of the round.
+        /// </summary>
+        public long CurTime { get; set; }
 
         [Required] public string Message { get; set; } = default!;
 

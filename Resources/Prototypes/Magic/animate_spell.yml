@@ -1,11 +1,17 @@
 - type: entity
+  parent: BaseEntitySpellAction
   id: ActionAnimateSpell
   name: Animate
   description: Bring an inanimate object to life!
   components:
-  - type: EntityTargetAction
+  - type: Action
     useDelay: 0
-    itemIconStyle: BigAction
+    sound: !type:SoundPathSpecifier
+      path: /Audio/Magic/staff_animation.ogg
+    icon:
+      sprite: Objects/Magic/magicactions.rsi
+      state: spell_default
+  - type: EntityTargetAction
     whitelist:
       components:
       - Animateable # Currently on: SeatBase, TableBase, ClosetBase, BaseMachine, ConstructibleMachine, BaseComputer, BaseItem, CrateGeneric, StorageTank, GasCanister
@@ -18,13 +24,6 @@
       - TegGenerator
       - TegCirculator
       - XenoArtifact
-    canTargetSelf: false
-    interactOnMiss: false
-    sound: !type:SoundPathSpecifier
-      path: /Audio/Magic/staff_animation.ogg
-    icon:
-      sprite: Objects/Magic/magicactions.rsi
-      state: spell_default
     event: !type:ChangeComponentsSpellEvent
       toAdd:
       - type: Animate
@@ -74,5 +73,3 @@
       - BlockMovement
       - Item
       - MeleeRequiresWield
-      speech: action-speech-spell-animate
-      doSpeech: false

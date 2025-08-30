@@ -1,22 +1,26 @@
 {
-  "version": 1,
-  "license": "CC-BY-SA-3.0",
-  "copyright": "Taken from tgstation at commit https://github.com/tgstation/tgstation/commit/5a73e8f825ff279e82949b9329783a9e3070e2da , edited by Alekshhh. Equipped-EYES-moth modified from equipped-EYES by HTMLSystem",
-  "size": {
-    "x": 32,
-    "y": 32
-  },
-  "states": [
-    {
-      "name": "icon"
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "Taken from tgstation at commit https://github.com/tgstation/tgstation/commit/5a73e8f825ff279e82949b9329783a9e3070e2da , edited by Alekshhh. Equipped-EYES-moth modified from equipped-EYES by HTMLSystem. equipped-EYES-dog modified from equipped-EYES by Sparlight (GitHub).",
+    "size": {
+        "x": 32,
+        "y": 32
     },
-    {
-      "name": "equipped-EYES",
-      "directions": 4
-    },
-    {
-      "name": "equipped-EYES-moth",
-      "directions": 4
-    }
-  ]
+    "states": [
+        {
+            "name": "icon"
+        },
+        {
+            "name": "equipped-EYES",
+            "directions": 4
+        },
+        {
+            "name": "equipped-EYES-dog",
+            "directions": 4
+        },
+        {
+            "name": "equipped-EYES-moth",
+            "directions": 4
+        }
+    ]
 }

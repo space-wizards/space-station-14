@@ -72,7 +72,7 @@ public sealed class IdentitySystem : SharedIdentitySystem
     /// <summary>
     ///     Queues an identity update to the start of the next tick.
     /// </summary>
-    public void QueueIdentityUpdate(EntityUid uid)
+    public override void QueueIdentityUpdate(EntityUid uid)
     {
         _queuedIdentityUpdates.Add(uid);
     }

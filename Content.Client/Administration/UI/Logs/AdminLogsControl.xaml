@@ -1,5 +1,6 @@
 ﻿<Control xmlns="https://spacestation14.io"
-         xmlns:aui="clr-namespace:Content.Client.Administration.UI.CustomControls">
+         xmlns:aui="clr-namespace:Content.Client.Administration.UI.CustomControls"
+         xmlns:ui="clr-namespace:Content.Client.Options.UI">
     <PanelContainer StyleClasses="BackgroundDark">
         <BoxContainer Orientation="Horizontal">
             <BoxContainer Orientation="Vertical">
@@ -49,7 +50,15 @@
                     <Control HorizontalExpand="True"/>
                     <Label Name="Count" Access="Public"/>
                     <Control HorizontalExpand="True"/>
+                    <Button Name="ExportLogs" Access="Public" Text="{Loc admin-logs-export}"/>
                     <Button Name="PopOutButton" Access="Public" Text="{Loc admin-logs-pop-out}"/>
+                </BoxContainer>
+                <BoxContainer HorizontalExpand="True">
+                    <Button Name="RenderRichTextButton" Access="Public" Text="{Loc admin-logs-render-rich-text}"
+                            StyleClasses="OpenRight" ToggleMode="True"/>
+                    <Button Name="RemoveMarkupButton" Access="Public" Text="{Loc admin-logs-remove-markup}"
+                            StyleClasses="OpenLeft" ToggleMode="True"/>
+                    <Control HorizontalExpand="True"/>
                 </BoxContainer>
                 <BoxContainer Orientation="Horizontal">
                     <LineEdit Name="LogSearch" Access="Public" StyleClasses="actionSearchBox"
