@@ -4,8 +4,8 @@ meta:
   engineVersion: 266.0.0
   forkId: ""
   forkVersion: ""
-  time: 08/28/2025 21:24:01
-  entityCount: 25500
+  time: 08/29/2025 14:48:28
+  entityCount: 25523
 maps:
 - 943
 grids:
@@ -8326,7 +8326,7 @@ entities:
             1: 39408
           -12,8:
             4: 12
-            6: 3072
+            5: 3072
           -11,5:
             0: 63351
           -11,6:
@@ -8337,7 +8337,7 @@ entities:
           -11,8:
             4: 1
             1: 17476
-            6: 256
+            5: 256
           -10,5:
             0: 62139
           -10,6:
@@ -8433,10 +8433,10 @@ entities:
             0: 255
             1: 57344
           -8,11:
-            5: 13104
+            6: 13104
             1: 2184
           -9,11:
-            5: 34944
+            6: 34944
             1: 546
           -7,9:
             0: 65039
@@ -8454,7 +8454,7 @@ entities:
           -6,11:
             0: 4095
           -6,12:
-            5: 49425
+            6: 49425
             1: 4334
           -5,9:
             0: 65528
@@ -8465,7 +8465,7 @@ entities:
           -5,12:
             1: 32785
             0: 2254
-            5: 20480
+            6: 20480
           -4,9:
             0: 65528
           -4,10:
@@ -8477,10 +8477,10 @@ entities:
             1: 29772
           -4,13:
             1: 61599
-            5: 1120
+            6: 1120
           -5,13:
             1: 61644
-            5: 2065
+            6: 2065
           -4,14:
             1: 51448
           -5,14:
@@ -8493,10 +8493,10 @@ entities:
             1: 3276
           -3,12:
             1: 37273
-            5: 8226
+            6: 8226
           -3,13:
             1: 45193
-            5: 50
+            6: 50
           -3,15:
             1: 45346
             0: 136
@@ -8574,7 +8574,7 @@ entities:
             0: 752
           -12,9:
             0: 16
-            5: 3084
+            6: 3084
           -13,9:
             1: 39305
           -13,10:
@@ -8584,18 +8584,18 @@ entities:
             0: 12544
           -12,10:
             3: 12
-            5: 3072
+            6: 3072
           -12,11:
-            5: 12
+            6: 12
           -11,9:
-            5: 257
+            6: 257
             1: 17476
           -11,10:
             3: 1
-            5: 256
+            6: 256
             1: 17476
           -11,11:
-            5: 1
+            6: 1
             1: 17476
           -11,12:
             1: 17652
@@ -8657,7 +8657,7 @@ entities:
             1: 240
           -13,12:
             1: 34952
-            6: 48
+            5: 48
             4: 12288
           -12,13:
             1: 61455
@@ -8697,17 +8697,17 @@ entities:
             1: 62671
           -7,14:
             1: 244
-            5: 57344
+            6: 57344
             0: 1024
           -7,15:
             1: 61440
-            5: 238
+            6: 238
             0: 1024
           -7,16:
             1: 65524
           -6,13:
             1: 61457
-            5: 204
+            6: 204
           -6,14:
             1: 17648
           -6,15:
@@ -8760,7 +8760,7 @@ entities:
           -14,12:
             0: 1
             1: 8738
-            6: 128
+            5: 128
             4: 32768
           -17,12:
             0: 52232
@@ -9369,7 +9369,7 @@ entities:
         - volume: 2500
           temperature: 293.15
           moles:
-          - 0
+          - 6666.982
           - 0
           - 0
           - 0
@@ -9384,7 +9384,7 @@ entities:
         - volume: 2500
           temperature: 293.15
           moles:
-          - 6666.982
+          - 0
           - 0
           - 0
           - 0
@@ -9661,8 +9661,8 @@ entities:
           id: docking43669
           localAnchorB: -47.5,-40
           localAnchorA: 0.5,0
-          damping: 1560.8187
-          stiffness: 14009.876
+          damping: 1560.8403
+          stiffness: 14010.071
     - type: ImplicitRoof
 - proto: AcousticGuitarInstrument
   entities:
@@ -115807,10 +115807,10 @@ entities:
       fixtures: {}
 - proto: PaintingHelloWorld
   entities:
-  - uid: 21403
+  - uid: 17672
     components:
     - type: Transform
-      pos: -113.5,20.5
+      pos: -114.5,20.5
       parent: 60
     - type: Fixtures
       fixtures: {}
@@ -118256,10 +118256,10 @@ entities:
     - type: Transform
       pos: -40.522816,2.2133622
       parent: 60
-  - uid: 23084
+  - uid: 17951
     components:
     - type: Transform
-      pos: -113.5,19.5
+      pos: -114.5,19.5
       parent: 60
   - uid: 23085
     components:
@@ -129320,10 +129320,10 @@ entities:
       parent: 60
     - type: Fixtures
       fixtures: {}
-  - uid: 19800
+  - uid: 17473
     components:
     - type: Transform
-      pos: -112.5,20.5
+      pos: -113.5,20.5
       parent: 60
     - type: Fixtures
       fixtures: {}
@@ -137023,6 +137023,16 @@ entities:
       - SurveillanceCameraCommand
       nameSet: True
       id: Tech Vault Boards
+  - uid: 17952
+    components:
+    - type: Transform
+      pos: -84.5,16.5
+      parent: 60
+    - type: SurveillanceCamera
+      setupAvailableNetworks:
+      - SurveillanceCameraCommand
+      nameSet: True
+      id: AI Sat Bridge
   - uid: 21051
     components:
     - type: Transform
@@ -137382,6 +137392,126 @@ entities:
       parent: 60
     - type: SurveillanceCamera
       id: TEG East
+  - uid: 17959
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: 2.5,21.5
+      parent: 60
+    - type: SurveillanceCamera
+      setupAvailableNetworks:
+      - SurveillanceCameraEngineering
+      nameSet: True
+      id: Engi Breakroom
+  - uid: 17960
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: 4.5,25.5
+      parent: 60
+    - type: SurveillanceCamera
+      setupAvailableNetworks:
+      - SurveillanceCameraEngineering
+      nameSet: True
+      id: Engi AME
+  - uid: 17962
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: -4.5,36.5
+      parent: 60
+    - type: SurveillanceCamera
+      setupAvailableNetworks:
+      - SurveillanceCameraEngineering
+      nameSet: True
+      id: Engi Storage
+  - uid: 17964
+    components:
+    - type: Transform
+      pos: -5.5,27.5
+      parent: 60
+    - type: SurveillanceCamera
+      setupAvailableNetworks:
+      - SurveillanceCameraEngineering
+      nameSet: True
+      id: Engi Storage Hallway
+  - uid: 17965
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: -36.5,42.5
+      parent: 60
+    - type: SurveillanceCamera
+      setupAvailableNetworks:
+      - SurveillanceCameraEngineering
+      nameSet: True
+      id: Atmos North
+  - uid: 17966
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: -14.5,35.5
+      parent: 60
+    - type: SurveillanceCamera
+      setupAvailableNetworks:
+      - SurveillanceCameraEngineering
+      nameSet: True
+      id: Engi Anchor
+  - uid: 17967
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: -2.5,41.5
+      parent: 60
+    - type: SurveillanceCamera
+      setupAvailableNetworks:
+      - SurveillanceCameraEngineering
+      nameSet: True
+      id: Engi PA
+  - uid: 17982
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: 9.5,40.5
+      parent: 60
+    - type: SurveillanceCamera
+      setupAvailableNetworks:
+      - SurveillanceCameraEngineering
+      nameSet: True
+      id: Engi PA East
+  - uid: 17987
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: -7.5,54.5
+      parent: 60
+    - type: SurveillanceCamera
+      setupAvailableNetworks:
+      - SurveillanceCameraEngineering
+      nameSet: True
+      id: Engi Containment West
+  - uid: 17993
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: 8.5,54.5
+      parent: 60
+    - type: SurveillanceCamera
+      setupAvailableNetworks:
+      - SurveillanceCameraEngineering
+      nameSet: True
+      id: Engi Containment East
+  - uid: 17998
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: 9.5,31.5
+      parent: 60
+    - type: SurveillanceCamera
+      setupAvailableNetworks:
+      - SurveillanceCameraEngineering
+      nameSet: True
+      id: Engi Containment Storage
   - uid: 18880
     components:
     - type: Transform
@@ -138722,6 +138852,70 @@ entities:
       - SurveillanceCameraSecurity
       nameSet: True
       id: EVA storage
+  - uid: 17953
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: -20.5,-13.5
+      parent: 60
+    - type: SurveillanceCamera
+      setupAvailableNetworks:
+      - SurveillanceCameraSecurity
+      nameSet: True
+      id: Genpop Entrance
+  - uid: 17954
+    components:
+    - type: Transform
+      pos: -17.5,-20.5
+      parent: 60
+    - type: SurveillanceCamera
+      setupAvailableNetworks:
+      - SurveillanceCameraSecurity
+      nameSet: True
+      id: Genpop
+  - uid: 17955
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: -13.5,-8.5
+      parent: 60
+    - type: SurveillanceCamera
+      setupAvailableNetworks:
+      - SurveillanceCameraSecurity
+      nameSet: True
+      id: Genpop Kitchen
+  - uid: 17958
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: -9.5,-15.5
+      parent: 60
+    - type: SurveillanceCamera
+      setupAvailableNetworks:
+      - SurveillanceCameraSecurity
+      nameSet: True
+      id: Genpop Game Room
+  - uid: 18000
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: -22.5,-11.5
+      parent: 60
+    - type: SurveillanceCamera
+      setupAvailableNetworks:
+      - SurveillanceCameraSecurity
+      nameSet: True
+      id: Genpop Outside
+  - uid: 18008
+    components:
+    - type: Transform
+      pos: -21.5,-24.5
+      parent: 60
+    - type: SurveillanceCamera
+      setupAvailableNetworks:
+      - SurveillanceCameraSecurity
+      nameSet: True
+      id: Detective Outside
   - uid: 21180
     components:
     - type: Transform
@@ -158442,6 +158636,53 @@ entities:
       parent: 60
     - type: Physics
       canCollide: False
+- proto: WeaponEnergyTurretAI
+  entities:
+  - uid: 17908
+    components:
+    - type: Transform
+      pos: -107.5,21.5
+      parent: 60
+    - type: DeviceNetwork
+      deviceLists:
+      - 17907
+  - uid: 17915
+    components:
+    - type: Transform
+      pos: -107.5,30.5
+      parent: 60
+    - type: DeviceNetwork
+      deviceLists:
+      - 17907
+  - uid: 17916
+    components:
+    - type: Transform
+      pos: -115.5,30.5
+      parent: 60
+    - type: DeviceNetwork
+      deviceLists:
+      - 17907
+  - uid: 17950
+    components:
+    - type: Transform
+      pos: -115.5,21.5
+      parent: 60
+    - type: DeviceNetwork
+      deviceLists:
+      - 17907
+- proto: WeaponEnergyTurretAIControlPanel
+  entities:
+  - uid: 17907
+    components:
+    - type: Transform
+      pos: -112.5,20.5
+      parent: 60
+    - type: DeviceList
+      devices:
+      - 17950
+      - 17916
+      - 17915
+      - 17908
 - proto: WeaponEnergyTurretSecurity
   entities:
   - uid: 1506
