@@ -5,6 +5,7 @@
   description: A shambling mass of flesh, animated through anomalous energy.
   abstract: true
   components:
+  - type: NPCProximitySleep
   - type: HTN
     rootTask:
       task: SimpleHostileCompound
@@ -209,6 +210,7 @@
   description: A shambling mass of flesh, animated through anomalous energy.
   abstract: true
   components:
+  - type: NPCProximitySleep
   - type: HTN
     rootTask:
       task: SimpleHostileCompound
