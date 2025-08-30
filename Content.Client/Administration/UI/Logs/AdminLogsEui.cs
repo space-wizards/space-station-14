@@ -5,7 +5,6 @@ using Content.Client.Eui;
 using Content.Shared.Administration.Logs;
 using Content.Shared.Eui;
 using JetBrains.Annotations;
-using Robust.Client.Graphics;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using static Content.Shared.Administration.Logs.AdminLogsEuiMsg;
@@ -15,8 +14,6 @@ namespace Content.Client.Administration.UI.Logs;
 [UsedImplicitly]
 public sealed class AdminLogsEui : BaseEui
 {
-    [Dependency] private readonly IClyde _clyde = default!;
-    [Dependency] private readonly IUserInterfaceManager _uiManager = default!;
     [Dependency] private readonly IFileDialogManager _dialogManager = default!;
     [Dependency] private readonly ILogManager _log = default!;
 
@@ -43,9 +40,7 @@ public sealed class AdminLogsEui : BaseEui
         _sawmill = _log.GetSawmill("admin.logs.ui");
     }
 
-    private WindowRoot? Root { get; set; }
-
-    private IClydeWindow? ClydeWindow { get; set; }
+    private OSWindow? Window;
 
     private AdminLogsWindow? LogsWindow { get; set; }
 
@@ -53,14 +48,14 @@ public sealed class AdminLogsEui : BaseEui
 
     private bool FirstState { get; set; } = true;
 
-    private void OnRequestClosed(WindowRequestClosedEventArgs args)
+    private void OnWindowClosed()
     {
         SendMessage(new CloseEuiMessage());
     }
 
     private void OnCloseWindow()
     {
-        if (ClydeWindow == null)
+        if (Window == null)
             SendMessage(new CloseEuiMessage());
     }
 
@@ -164,26 +159,15 @@ public sealed class AdminLogsEui : BaseEui
             return;
         }
 
-        var monitor = _clyde.EnumerateMonitors().First();
-
-        ClydeWindow = _clyde.CreateWindow(new WindowCreateParameters
-        {
-            Maximized = false,
-            Title = "Admin Logs",
-            Monitor = monitor,
-            Width = 1100,
-            Height = 400
-        });
+        Window = new OSWindow { Title = "Admin Logs", SetWidth = 1100, SetHeight = 400 };
 
         LogsControl.Orphan();
         LogsWindow.Dispose();
         LogsWindow = null;
 
-        ClydeWindow.RequestClosed += OnRequestClosed;
-        ClydeWindow.DisposeOnClose = true;
-
-        Root = _uiManager.CreateWindowRoot(ClydeWindow);
-        Root.AddChild(LogsControl);
+        Window.Closed += OnWindowClosed;
+        Window.AddChild(LogsControl);
+        Window.Show();
 
         LogsControl.PopOutButton.Disabled = true;
         LogsControl.PopOutButton.Visible = false;
@@ -253,14 +237,12 @@ public sealed class AdminLogsEui : BaseEui
     {
         base.Closed();
 
-        if (ClydeWindow != null)
-        {
-            ClydeWindow.RequestClosed -= OnRequestClosed;
-        }
+        if (Window != null)
+            Window.Closed -= OnWindowClosed;
 
         LogsControl.Dispose();
         LogsWindow?.Dispose();
-        Root?.Dispose();
-        ClydeWindow?.Dispose();
+        Window?.Close();
+        Window?.Dispose();
     }
 }
