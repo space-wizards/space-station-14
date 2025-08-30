@@ -1,7 +1,9 @@
 ﻿using Content.Shared.ActionBlocker;
 using Content.Shared.Buckle.Components;
 using Content.Shared.Movement.Events;
+using Content.Shared.StatusEffectNew;
 using Content.Shared.StepTrigger.Systems;
+using Content.Shared.Weapons.Misc;
 using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Network;
@@ -19,6 +21,7 @@ public sealed class ChasmSystem : EntitySystem
     [Dependency] private readonly ActionBlockerSystem _blocker = default!;
     [Dependency] private readonly INetManager _net = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
+    [Dependency] private readonly StatusEffectsSystem _status = default!;
 
     public override void Initialize()
     {
@@ -58,6 +61,8 @@ public sealed class ChasmSystem : EntitySystem
 
     public void StartFalling(EntityUid chasm, ChasmComponent component, EntityUid tripper, bool playSound = true)
     {
+        if (_status.TryGetStatusEffect(tripper, SharedGrapplingGunSystem.Grappling, out var _))
+            return;
         var falling = AddComp<ChasmFallingComponent>(tripper);
 
         falling.NextDeletionTime = _timing.CurTime + falling.DeletionTime;

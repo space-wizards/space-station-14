@@ -6,6 +6,7 @@ using Content.Shared.Interaction;
 using Content.Shared.Movement.Events;
 using Content.Shared.Physics;
 using Content.Shared.Projectiles;
+using Content.Shared.StatusEffectNew;
 using Content.Shared.Weapons.Ranged.Components;
 using Content.Shared.Weapons.Ranged.Systems;
 using Robust.Shared.Audio.Systems;
@@ -14,6 +15,7 @@ using Robust.Shared.Physics;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Dynamics.Joints;
 using Robust.Shared.Physics.Systems;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.Timing;
 
@@ -21,6 +23,8 @@ namespace Content.Shared.Weapons.Misc;
 
 public abstract class SharedGrapplingGunSystem : EntitySystem
 {
+    public static readonly EntProtoId Grappling = "StatusEffectGrappling";
+
     [Dependency] protected readonly IGameTiming Timing = default!;
     [Dependency] private readonly INetManager _netManager = default!;
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
@@ -29,6 +33,7 @@ public abstract class SharedGrapplingGunSystem : EntitySystem
     [Dependency] private readonly SharedJointSystem _joints = default!;
     [Dependency] private readonly SharedGunSystem _gun = default!;
     [Dependency] private readonly SharedPhysicsSystem _physics = default!;
+    [Dependency] private readonly StatusEffectsSystem _status = default!;
 
     public const string GrapplingJoint = "grappling";
 
@@ -129,6 +134,7 @@ public abstract class SharedGrapplingGunSystem : EntitySystem
         component.Projectile = null;
         SetReeling(uid, component, false, args.User);
         _gun.ChangeBasicEntityAmmoCount(uid,  1);
+        _status.TryRemoveStatusEffect(args.User, Grappling);
 
         args.Handled = true;
     }
@@ -215,6 +221,8 @@ public abstract class SharedGrapplingGunSystem : EntitySystem
         joint.MinLength = 0.35f;
         // Setting velocity directly for mob movement fucks this so need to make them aware of it.
         // joint.Breakpoint = 4000f;
+        if (args.Shooter is not null)
+            _status.TrySetStatusEffectDuration((EntityUid) args.Shooter, Grappling);
         Dirty(uid, jointComp);
     }
 

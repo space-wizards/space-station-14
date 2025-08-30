@@ -331,6 +331,12 @@
             False: { state: base-unshaded-off }
     - type: PacifismAllowedGun
 
+- type: entity
+  id: StatusEffectGrappling
+  name: grappling
+  components:
+  - type: StatusEffect
+
 # Admeme
 - type: entity
   name: tether gun
