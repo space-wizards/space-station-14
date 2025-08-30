@@ -21,7 +21,7 @@
     graph: BoxCardboard
     node: boxcardboard
     containers:
-      - entity_storage
+      - storagebase
   - type: PhysicalComposition
     materialComposition:
       Cardboard: 100
