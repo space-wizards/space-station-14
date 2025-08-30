@@ -164,6 +164,113 @@
           Quantity: 30
 
 - type: entity
+  id: ChemistryBottleSaline
+  suffix: Saline
+  parent: BaseChemistryBottleFilled
+  components:
+  - type: Label
+    currentLabel: reagent-name-saline
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 30
+        reagents:
+        - ReagentId: Saline
+          Quantity: 30
+
+- type: entity
+  id: ChemistryBottleIpecac
+  suffix: ipecac
+  parent: BaseChemistryBottleFilled
+  components:
+  - type: Label
+    currentLabel: reagent-name-ipecac
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 30
+        reagents:
+        - ReagentId: Ipecac
+          Quantity: 30
+
+- type: entity
+  id: ChemistryBottleEthylredoxrazine
+  suffix: Ethylredoxrazine
+  parent: BaseChemistryBottleFilled
+  components:
+  - type: Label
+    currentLabel: reagent-name-ethylredoxrazine
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 30
+        reagents:
+        - ReagentId: Ethylredoxrazine
+          Quantity: 30
+
+- type: entity
+  id: ChemistryBottlePhalanximine
+  suffix: phalanximine
+  parent: BaseChemistryBottleFilled
+  components:
+  - type: Label
+    currentLabel: reagent-name-phalanximine
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 30
+        reagents:
+        - ReagentId: Phalanximine
+          Quantity: 30
+
+- type: entity
+  id: ChemistryBottleInaprovaline
+  suffix: inaprovaline
+  parent: BaseChemistryBottleFilled
+  components:
+  - type: Label
+    currentLabel: reagent-name-inaprovaline
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 30
+        reagents:
+        - ReagentId: Inaprovaline
+          Quantity: 30
+
+- type: entity
+  id: ChemistryBottleDexalin
+  suffix: dexalin
+  parent: BaseChemistryBottleFilled
+  components:
+  - type: Label
+    currentLabel: reagent-name-dexalin
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 30
+        reagents:
+        - ReagentId: Dexalin
+          Quantity: 30
+
+- type: entity
+  id: ChemistryBottleAirloss
+  suffix: dexalin+ & saline
+  parent: BaseChemistryBottleFilled
+  components:
+  - type: Label
+    currentLabel: dexalin plus & saline
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 30
+        reagents:
+        - ReagentId: DexalinPlus
+          Quantity: 15
+        - ReagentId: Saline
+          Quantity: 15
+
+- type: entity
   id: ChemistryBottleRobustHarvest
   suffix: robust harvest
   parent: BaseChemistryBottleFilled
