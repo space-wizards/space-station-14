@@ -9,7 +9,7 @@
       stripTime: 3
       uiWindowPos: 0,3
       strippingWindowPos: 0,4
-      displayName: Pocket 1
+      displayName: inventory-slot-pocket-1
       stripHidden: true
     - name: pocket2
       slotTexture: pocket
@@ -19,6 +19,6 @@
       stripTime: 3
       uiWindowPos: 2,3
       strippingWindowPos: 1,4
-      displayName: Pocket 2
+      displayName: inventory-slot-pocket-2
       stripHidden: true
 
