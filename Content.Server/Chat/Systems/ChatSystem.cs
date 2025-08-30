@@ -770,7 +770,7 @@ public sealed partial class ChatSystem : SharedChatSystem
     public string TransformSpeech(EntityUid sender, string message)
     {
         var ev = new TransformSpeechEvent(sender, message);
-        RaiseLocalEvent(ev);
+        RaiseLocalEvent(sender, ev, true);
 
         return ev.Message;
     }
@@ -912,11 +912,13 @@ public sealed class TransformSpeechEvent : EntityEventArgs
 {
     public EntityUid Sender;
     public string Message;
+    public bool Cancelled;
 
     public TransformSpeechEvent(EntityUid sender, string message)
     {
         Sender = sender;
         Message = message;
+        Cancelled = false;
     }
 }
 
