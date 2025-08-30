@@ -51,7 +51,10 @@ public abstract class SharedArtifactAnalyzerSystem : EntitySystem
 
     private void OnMapInit(Entity<AnalysisConsoleComponent> ent, ref MapInitEvent args)
     {
-        var linkedEntities = _deviceLink.GetLinkedSinks(ent.Owner, ent.Comp.LinkingPort);
+        if (!TryComp<DeviceLinkSourceComponent>(ent, out var source))
+            return;
+
+        var linkedEntities = _deviceLink.GetLinkedSinks((ent.Owner, source), ent.Comp.LinkingPort);
 
         foreach (var sink in linkedEntities)
         {
