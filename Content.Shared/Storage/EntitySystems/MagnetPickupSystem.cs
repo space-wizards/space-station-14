@@ -3,7 +3,6 @@ using Content.Shared.Storage.Components;
 using Content.Shared.Whitelist;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Timing;
-using Robust.Shared.Network;
 
 namespace Content.Shared.Storage.EntitySystems;
 
@@ -18,7 +17,6 @@ public sealed class MagnetPickupSystem : EntitySystem
     [Dependency] private readonly SharedTransformSystem _transform = default!;
     [Dependency] private readonly SharedStorageSystem _storage = default!;
     [Dependency] private readonly EntityWhitelistSystem _whitelistSystem = default!;
-    [Dependency] private readonly INetManager _net = default!;
 
 
     private static readonly TimeSpan ScanDelay = TimeSpan.FromSeconds(1);
@@ -40,10 +38,6 @@ public sealed class MagnetPickupSystem : EntitySystem
     public override void Update(float frameTime)
     {
         base.Update(frameTime);
-
-        if (_net.IsClient)
-            return;
-
         var query = EntityQueryEnumerator<MagnetPickupComponent, StorageComponent, TransformComponent, MetaDataComponent>();
         var currentTime = _timing.CurTime;
 
@@ -53,6 +47,7 @@ public sealed class MagnetPickupSystem : EntitySystem
                 continue;
 
             comp.NextScan += ScanDelay;
+            Dirty(uid, comp);
 
             if (!_inventory.TryGetContainingSlot((uid, xform, meta), out var slotDef))
                 continue;
