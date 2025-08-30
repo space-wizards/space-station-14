@@ -628,4 +628,13 @@
   id: 75
   time: '2025-08-30T19:29:13.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/39968
+- author: ScarKy0
+  changes:
+  - message: On Marathon, added ai turrets to the ai core.
+    type: Add
+  - message: On Marathon, added a few more cameras to chapelroid and sec.
+    type: Add
+  id: 76
+  time: '2025-08-30T19:31:36.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/39969
 Order: 1
