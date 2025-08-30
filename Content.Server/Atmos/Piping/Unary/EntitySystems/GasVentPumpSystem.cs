@@ -62,6 +62,7 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
             SubscribeLocalEvent<GasVentPumpComponent, WeldableChangedEvent>(OnWeldChanged);
             SubscribeLocalEvent<GasVentPumpComponent, GetVerbsEvent<Verb>>(OnGetVerbs);
             SubscribeLocalEvent<GasVentPumpComponent, VentScrewedDoAfterEvent>(OnVentScrewed);
+            SubscribeLocalEvent<GasVentPumpComponent, AtmosDeviceExplosiveDepressurizationEvent>(OnExplosiveDepressurization);
         }
 
         private void OnGasVentPumpUpdated(EntityUid uid, GasVentPumpComponent vent, ref AtmosDeviceUpdateEvent args)
@@ -92,21 +93,25 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
             {
                 return;
             }
+
             // If the lockout has expired, disable it.
-            if (vent.IsPressureLockoutManuallyDisabled && _timing.CurTime >= vent.ManualLockoutReenabledAt)
+            if (_timing.CurTime >= vent.ManualLockoutReenabledAt)
             {
                 vent.IsPressureLockoutManuallyDisabled = false;
             }
 
-            var timeDelta = args.dt;
-            var pressureDelta = timeDelta * vent.TargetPressureChange;
+            var isUnderPressureOrForcedLockout = environment.Pressure < vent.UnderPressureLockoutThreshold
+                                                 || _timing.CurTime < vent.ForcedPressureLockoutExpireAtTime;
+            var shouldLockout = isUnderPressureOrForcedLockout && !vent.IsPressureLockoutManuallyDisabled;
 
-            var lockout = (environment.Pressure < vent.UnderPressureLockoutThreshold) && !vent.IsPressureLockoutManuallyDisabled;
-            if (vent.UnderPressureLockout != lockout) // update visuals only if this changes
+            if (vent.UnderPressureLockout != shouldLockout) // update visuals only if this changes
             {
-                vent.UnderPressureLockout = lockout;
+                vent.UnderPressureLockout = shouldLockout;
                 UpdateState(uid, vent);
             }
+
+            var timeDelta = args.dt;
+            var pressureDelta = timeDelta * vent.TargetPressureChange;
 
             if (vent.PumpDirection == VentPumpDirection.Releasing && pipe.Air.Pressure > 0)
             {
@@ -418,6 +423,15 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
 
             component.ManualLockoutReenabledAt = _timing.CurTime + component.ManualLockoutDisabledDuration;
             component.IsPressureLockoutManuallyDisabled = true;
+        }
+
+        /// <summary>
+        /// Forces the vent into pressure lockout when we experience an explosive depressurization
+        /// and increments a timer.
+        /// </summary>
+        private void OnExplosiveDepressurization(Entity<GasVentPumpComponent> ent, ref AtmosDeviceExplosiveDepressurizationEvent args)
+        {
+            ent.Comp.ForcedPressureLockoutExpireAtTime = _timing.CurTime + ent.Comp.ForcedPressureLockoutTime;
         }
     }
 }
