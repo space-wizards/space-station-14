@@ -635,6 +635,11 @@ ClothingOuterHardsuitBasic: ClothingOuterHardsuitEVA
 ClothingHeadHelmetHardsuitBasic: null
 SuitStorageBasic: SuitStorageEVA
 
+# 2025-05-17
+ToyGriffin: ToyFigurineGriffin
+ToyOwlman: ToyFigurineOwlman
+ToySkeleton: ToyFigurineSkeleton
+
 # 2025-05-18
 ClothingNeckCloakMiner: null
 
