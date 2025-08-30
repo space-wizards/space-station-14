@@ -10,6 +10,8 @@ shell-only-players-can-run-this-command = Only players can run this command.
 shell-must-be-attached-to-entity = You must be attached to an entity to run this command.
 shell-must-have-body = You must have a body to run this command.
 
+shell-unknown-error = An unknown error has occured.
+
 ## Arguments
 
 shell-need-exactly-one-argument = Need exactly one argument.
