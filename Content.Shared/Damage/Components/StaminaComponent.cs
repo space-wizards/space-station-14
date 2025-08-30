@@ -157,7 +157,7 @@ public sealed partial class StaminaComponent : Component
     /// Vector of the last Jitter so we can make sure we don't jitter in the same quadrant twice in a row.
     /// </summary>
     [DataField]
-    public Vector2 LastJitter;
+    public Vector2? LastJitter;
 
     /// <summary>
     ///     The offset that an entity had before jittering started,
