@@ -47,3 +47,13 @@
   cost: 2000
   category: cargoproduct-category-name-science
   group: market
+
+- type: cargoProduct
+  id: StationAiCore
+  icon:
+    sprite: Mobs/Silicon/station_ai.rsi
+    state: frame_4
+  product: CrateStationAiCore
+  cost: 10000
+  category: cargoproduct-category-name-science
+  group: market
