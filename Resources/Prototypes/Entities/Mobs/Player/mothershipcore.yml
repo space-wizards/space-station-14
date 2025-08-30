@@ -206,6 +206,9 @@
   - type: ShowElectrocutionHUD
   - type: PowerMonitoringCableNetworks
   - type: RadarConsole
+  - type: BlockMovement
+    blockInteraction: false
+    blockUse: false
 
 - type: entity
   parent: BaseAGhostAction
