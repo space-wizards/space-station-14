@@ -113,6 +113,13 @@ ui-options-binds-explanation = Click to change binding, right-click to clear
 ui-options-unbound = Unbound
 ui-options-bind-reset = Reset
 ui-options-key-prompt = Press a key...
+ui-options-add-custom-command-binding = Add custom command
+ui-options-add-custom-command-binding-disable-tooltip = Cannot add more custom commands
+ui-options-add-custom-command-binding-remove-button = Remove
+ui-options-custom-command-binding-action-say = Say
+ui-options-custom-command-binding-action-emote = Emote
+ui-options-custom-command-binding-action-run = Run command
+ui-options-custom-command-binding-command-placeholder = Enter your custom command...
 
 ui-options-header-movement = Movement
 ui-options-header-camera = Camera
@@ -130,6 +137,7 @@ ui-options-header-text-cursor-select = Text selecting
 ui-options-header-text-edit = Text editing
 ui-options-header-text-chat = Chat
 ui-options-header-text-other = Text input other
+ui-options-header-custom-command-bindings = Custom commands
 
 ui-options-hotkey-keymap = Use US QWERTY Keys
 ui-options-hotkey-toggle-walk = Toggle Walk
