@@ -16,6 +16,7 @@ namespace Content.Server.NodeContainer.EntitySystems
     public sealed class NodeContainerSystem : SharedNodeContainerSystem
     {
         [Dependency] private readonly NodeGroupSystem _nodeGroupSystem = default!;
+        [Dependency] private readonly SharedMapSystem _mapSystem = default!;
         private EntityQuery<NodeContainerComponent> _query;
 
         public override void Initialize()
@@ -127,7 +128,7 @@ namespace Content.Server.NodeContainer.EntitySystems
             foreach (var (key, node) in component.Nodes)
             {
                 node.Name = key;
-                node.Initialize(uid, EntityManager);
+                node.Initialize(uid, EntityManager, _mapSystem);
             }
         }
 
@@ -206,7 +207,6 @@ namespace Content.Server.NodeContainer.EntitySystems
 
             foreach (var node in component.Nodes.Values)
             {
-                if (node == null) continue;
                 switch (node.NodeGroupID)
                 {
                     case NodeGroupID.HVPower:

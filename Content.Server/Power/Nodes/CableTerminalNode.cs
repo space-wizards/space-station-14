@@ -9,27 +9,34 @@ namespace Content.Server.Power.Nodes
     [DataDefinition]
     public sealed partial class CableTerminalNode : CableDeviceNode
     {
-        public override IEnumerable<Node> GetReachableNodes(TransformComponent xform,
+        public override IEnumerable<Node> GetReachableNodes(
+            EntityUid uid,
             EntityQuery<NodeContainerComponent> nodeQuery,
             EntityQuery<TransformComponent> xformQuery,
-            MapGridComponent? grid,
-            IEntityManager entMan)
+            EntityQuery<MapGridComponent> gridQuery,
+            IEntityManager entMan,
+            SharedMapSystem mapSystem)
         {
-            if (!xform.Anchored || grid == null)
+            if (!xformQuery.TryGetComponent(uid, out var xform)
+                || !xform.Anchored
+                || xform.GridUid == null)
                 yield break;
 
-            var gridIndex = grid.TileIndicesFor(xform.Coordinates);
+            if (!gridQuery.TryGetComponent(xform.GridUid.Value, out var grid))
+                yield break;
+
+            var gridIndex = mapSystem.TileIndicesFor(xform.GridUid.Value, grid, xform.Coordinates);
 
             var dir = xform.LocalRotation.GetDir();
             var targetIdx = gridIndex.Offset(dir);
 
-            foreach (var node in NodeHelpers.GetNodesInTile(nodeQuery, grid, targetIdx))
+            foreach (var node in NodeHelpers.GetNodesInTile(nodeQuery, xform, grid, targetIdx, mapSystem))
             {
                 if (node is CableTerminalPortNode)
                     yield return node;
             }
 
-            foreach (var node in base.GetReachableNodes(xform, nodeQuery, xformQuery, grid, entMan))
+            foreach (var node in base.GetReachableNodes(uid, nodeQuery, xformQuery, gridQuery, entMan, mapSystem))
             {
                 yield return node;
             }
