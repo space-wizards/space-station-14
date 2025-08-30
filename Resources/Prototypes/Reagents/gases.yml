@@ -380,9 +380,10 @@
           type: Slime
           shouldHave: false
         ignoreResistances: true
+        scaleByQuantity: true
         damage:
           types:
-            Poison: 0.25
+            Poison: 1
 
 - type: reagent
   id: Frezon
