@@ -103,7 +103,7 @@ public abstract class SharedRootableSystem : EntitySystem
             return false;
 
         entity.Comp.Rooted = !entity.Comp.Rooted;
-        _movementSpeedModifier.RefreshMovementSpeedModifiers(entity);
+        _movementSpeedModifier.RefreshMovementSpeedModifiers(entity.Owner);
         _gravity.RefreshWeightless(entity.Owner);
         Dirty(entity);
 
