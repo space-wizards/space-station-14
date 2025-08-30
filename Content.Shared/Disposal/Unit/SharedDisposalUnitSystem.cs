@@ -98,7 +98,7 @@ public abstract class SharedDisposalUnitSystem : EntitySystem
 
     private void AddDisposalAltVerbs(Entity<DisposalUnitComponent> ent, ref GetVerbsEvent<AlternativeVerb> args)
     {
-        if (!args.CanAccess || !args.CanInteract)
+        if (!args.CanAccess || !args.CanInteract || !args.CanComplexInteract)
             return;
 
         var uid = ent.Owner;
@@ -767,6 +767,7 @@ public abstract class SharedDisposalUnitSystem : EntitySystem
         // unwilling to accept that this is where they belong and don't want to accidentally climb inside.
         if (!args.CanAccess ||
             !args.CanInteract ||
+            !args.CanComplexInteract ||
             component.Container.ContainedEntities.Contains(args.User) ||
             !ActionBlockerSystem.CanMove(args.User))
         {
