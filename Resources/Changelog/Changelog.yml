@@ -3925,3 +3925,13 @@
   id: 8901
   time: '2025-08-30T14:00:47.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/39964
+- author: FairlySadPanda
+  changes:
+  - message: 'Scurrets can wear a few items on their backs: pet bags, mail bags and
+      spears'
+    type: Add
+  - message: Corgis can now wear mail bags.
+    type: Add
+  id: 8902
+  time: '2025-08-30T14:42:43.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38774
