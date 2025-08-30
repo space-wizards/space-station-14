@@ -12,27 +12,32 @@ using Content.Shared.Nutrition.EntitySystems;
 using Content.Shared.Popups;
 using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
+using Robust.Shared.Network;
 using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Medical;
 
 public sealed class VomitSystem : EntitySystem
 {
+    [Dependency] private readonly INetManager _netManager = default!;
     [Dependency] private readonly IPrototypeManager _proto = default!;
-    [Dependency] private readonly SharedAudioSystem _audio = default!;
-    [Dependency] private readonly SharedBodySystem _body = default!;
     [Dependency] private readonly HungerSystem _hunger = default!;
+    [Dependency] private readonly MovementModStatusSystem _movementMod = default!;
+    [Dependency] private readonly ThirstSystem _thirst = default!;
+    [Dependency] private readonly SharedAudioSystem _audio = default!;
+    [Dependency] private readonly SharedBloodstreamSystem _bloodstream = default!;
+    [Dependency] private readonly SharedBodySystem _body = default!;
+    [Dependency] private readonly SharedForensicsSystem _forensics = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
     [Dependency] private readonly SharedPuddleSystem _puddle = default!;
     [Dependency] private readonly SharedSolutionContainerSystem _solutionContainer = default!;
-    [Dependency] private readonly MovementModStatusSystem _movementMod = default!;
-    [Dependency] private readonly ThirstSystem _thirst = default!;
-    [Dependency] private readonly SharedForensicsSystem _forensics = default!;
-    [Dependency] private readonly SharedBloodstreamSystem _bloodstream = default!;
+
+
+    private static readonly float ChemMultiplier = 0.1f;
 
     private static readonly ProtoId<SoundCollectionPrototype> VomitCollection = "Vomit";
 
-    private static readonly string VomitPrototype = "Vomit";  // TODO: Dehardcode vomit prototype
+    private static readonly ProtoId<ReagentPrototype> VomitPrototype = "Vomit";  // TODO: Dehardcode vomit prototype
 
     private readonly SoundSpecifier _vomitSound = new SoundCollectionSpecifier(VomitCollection,
         AudioParams.Default.WithVariation(0.2f).WithVolume(-4f));
@@ -57,7 +62,7 @@ public sealed class VomitSystem : EntitySystem
         // It fully empties the stomach, this amount from the chem stream is relatively small
         var solutionSize = (MathF.Abs(thirstAdded) + MathF.Abs(hungerAdded)) / 6;
         // Apply a bit of slowdown
-        _movementMod.TryUpdateMovementSpeedModDuration(uid, MovementModStatusSystem.VomitingSlowdown, TimeSpan.FromSeconds(solutionSize),  0.5f);
+        _movementMod.TryUpdateMovementSpeedModDuration(uid, MovementModStatusSystem.VomitingSlowdown, TimeSpan.FromSeconds(solutionSize), 0.5f);
 
         // TODO: Need decals
         var solution = new Solution();
@@ -75,15 +80,13 @@ public sealed class VomitSystem : EntitySystem
         // Adds a tiny amount of the chem stream from earlier along with vomit
         if (TryComp<BloodstreamComponent>(uid, out var bloodStream))
         {
-            const float chemMultiplier = 0.1f;
-
             var vomitAmount = solutionSize;
 
             // Takes 10% of the chemicals removed from the chem stream
             if (_solutionContainer.ResolveSolution(uid, bloodStream.ChemicalSolutionName, ref bloodStream.ChemicalSolution))
             {
                 var vomitChemstreamAmount = _solutionContainer.SplitSolution(bloodStream.ChemicalSolution.Value, vomitAmount);
-                vomitChemstreamAmount.ScaleSolution(chemMultiplier);
+                vomitChemstreamAmount.ScaleSolution(ChemMultiplier);
                 solution.AddSolution(vomitChemstreamAmount, _proto);
 
                 vomitAmount -= (float)vomitChemstreamAmount.Volume;
@@ -97,6 +100,10 @@ public sealed class VomitSystem : EntitySystem
         {
             _forensics.TransferDna(puddle, uid, false);
         }
+
+
+        if (!_netManager.IsServer)
+            return;
 
         // Force sound to play as spill doesn't work if solution is empty.
         _audio.PlayEntity(_vomitSound, uid, uid);
