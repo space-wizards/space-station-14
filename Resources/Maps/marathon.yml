@@ -4,8 +4,8 @@ meta:
   engineVersion: 266.0.0
   forkId: ""
   forkVersion: ""
-  time: 08/29/2025 04:04:10
-  entityCount: 23823
+  time: 08/29/2025 15:07:57
+  entityCount: 23830
 maps:
 - 5350
 grids:
@@ -6523,7 +6523,7 @@ entities:
             2: 34952
           6,-6:
             2: 61440
-            6: 224
+            5: 224
           6,-5:
             0: 112
             2: 2184
@@ -6532,7 +6532,7 @@ entities:
             3: 57344
           6,-7:
             3: 224
-            5: 57344
+            6: 57344
           6,-9:
             3: 57568
           7,-5:
@@ -7667,8 +7667,8 @@ entities:
         - volume: 2500
           temperature: 293.15
           moles:
-          - 6666.982
           - 0
+          - 6666.982
           - 0
           - 0
           - 0
@@ -7682,8 +7682,8 @@ entities:
         - volume: 2500
           temperature: 293.15
           moles:
-          - 0
           - 6666.982
+          - 0
           - 0
           - 0
           - 0
@@ -11880,7 +11880,7 @@ entities:
       pos: 34.5,45.5
       parent: 30
     - type: Door
-      secondsUntilStateChange: -25103.123
+      secondsUntilStateChange: -25488.797
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -128429,6 +128429,17 @@ entities:
       - SurveillanceCameraCommand
       nameSet: True
       id: Grav Gen
+  - uid: 23824
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: -20.5,40.5
+      parent: 30
+    - type: SurveillanceCamera
+      setupAvailableNetworks:
+      - SurveillanceCameraCommand
+      nameSet: True
+      id: Bridge West
 - proto: SurveillanceCameraEngineering
   entities:
   - uid: 9214
@@ -129157,6 +129168,16 @@ entities:
       - SurveillanceCameraGeneral
       nameSet: True
       id: Main Hall Botany
+  - uid: 23825
+    components:
+    - type: Transform
+      pos: -65.5,-60.5
+      parent: 30
+    - type: SurveillanceCamera
+      setupAvailableNetworks:
+      - SurveillanceCameraGeneral
+      nameSet: True
+      id: Library Hallway
 - proto: SurveillanceCameraMedical
   entities:
   - uid: 8290
@@ -129694,6 +129715,17 @@ entities:
       - SurveillanceCameraSecurity
       nameSet: True
       id: Court Room
+  - uid: 23387
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: -45.5,61.5
+      parent: 30
+    - type: SurveillanceCamera
+      setupAvailableNetworks:
+      - SurveillanceCameraSecurity
+      nameSet: True
+      id: Sec Perma
 - proto: SurveillanceCameraService
   entities:
   - uid: 142
@@ -149038,6 +149070,54 @@ entities:
     - type: Transform
       pos: -38.42729,60.595303
       parent: 30
+- proto: WeaponEnergyTurretAI
+  entities:
+  - uid: 23826
+    components:
+    - type: Transform
+      pos: -5.5,78.5
+      parent: 30
+    - type: DeviceNetwork
+      deviceLists:
+      - 23830
+  - uid: 23827
+    components:
+    - type: Transform
+      pos: 4.5,78.5
+      parent: 30
+    - type: DeviceNetwork
+      deviceLists:
+      - 23830
+  - uid: 23828
+    components:
+    - type: Transform
+      pos: -5.5,88.5
+      parent: 30
+    - type: DeviceNetwork
+      deviceLists:
+      - 23830
+  - uid: 23829
+    components:
+    - type: Transform
+      pos: 4.5,88.5
+      parent: 30
+    - type: DeviceNetwork
+      deviceLists:
+      - 23830
+- proto: WeaponEnergyTurretAIControlPanel
+  entities:
+  - uid: 23830
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: -1.5,73.5
+      parent: 30
+    - type: DeviceList
+      devices:
+      - 23826
+      - 23827
+      - 23828
+      - 23829
 - proto: WeaponLaserCarbine
   entities:
   - uid: 2560
