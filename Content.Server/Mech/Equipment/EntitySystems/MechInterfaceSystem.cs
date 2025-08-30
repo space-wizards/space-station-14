@@ -71,6 +71,7 @@ public sealed class MechInterfaceSystem : EntitySystem
                 subs.Event<MechEquipmentUiMessage>(HandleEquipmentUiMessageRelay);
                 subs.Event<MechGrabberEjectMessage>(HandleEquipmentUiMessageRelay);
                 subs.Event<MechSoundboardPlayMessage>(HandleEquipmentUiMessageRelay);
+                subs.Event<MechGeneratorEjectFuelMessage>(HandleEquipmentUiMessageRelay);
             });
     }
 
@@ -96,6 +97,11 @@ public sealed class MechInterfaceSystem : EntitySystem
     }
 
     private void HandleEquipmentUiMessageRelay(Entity<MechComponent> ent, ref MechSoundboardPlayMessage args)
+    {
+        RelayEquipmentUiMessage(ent, args);
+    }
+
+    private void HandleEquipmentUiMessageRelay(Entity<MechComponent> ent, ref MechGeneratorEjectFuelMessage args)
     {
         RelayEquipmentUiMessage(ent, args);
     }

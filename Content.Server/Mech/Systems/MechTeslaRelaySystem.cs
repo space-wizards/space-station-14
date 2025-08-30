@@ -3,6 +3,7 @@ using Content.Server.Mech.Components;
 using Content.Server.Power.Components;
 using Content.Shared.APC;
 using Content.Shared.Mech.Components;
+using Content.Shared.Mech.EntitySystems;
 using Robust.Shared.GameObjects;
 
 namespace Content.Server.Mech.Systems;
@@ -45,6 +46,8 @@ public sealed partial class MechTeslaRelaySystem : EntitySystem
                     telem.Current = rate;
                 }
 			}
+
+			UpdateMechUI(mechUid);
 		}
 	}
 
@@ -59,5 +62,11 @@ public sealed partial class MechTeslaRelaySystem : EntitySystem
 		}
 
 		return false;
+	}
+
+	private void UpdateMechUI(EntityUid uid)
+	{
+		var ev = new UpdateMechUiEvent();
+		RaiseLocalEvent(uid, ev);
 	}
 }

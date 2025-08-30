@@ -167,7 +167,7 @@ public sealed partial class MechSystem : SharedMechSystem
             Dirty(uid, component);
             _actionBlocker.UpdateCanMove(uid);
 
-            RaiseLocalEvent(uid, new UpdateMechUiEvent());
+            UpdateUserInterface(uid, component);
             UpdateBatteryAlert((uid, component));
         }
         else if (args.Container == component.PilotSlot)
@@ -192,7 +192,7 @@ public sealed partial class MechSystem : SharedMechSystem
             Dirty(uid, component);
             _actionBlocker.UpdateCanMove(uid);
 
-            RaiseLocalEvent(uid, new UpdateMechUiEvent());
+            UpdateUserInterface(uid, component);
         }
         else if (args.Container == component.PilotSlot)
         {
@@ -231,7 +231,7 @@ public sealed partial class MechSystem : SharedMechSystem
 
         args.Handled = true;
 
-        RaiseLocalEvent(uid, new UpdateMechUiEvent());
+        UpdateUserInterface(uid, component);
     }
 
     private void OnMapInit(EntityUid uid, MechComponent component, MapInitEvent args)
@@ -259,7 +259,7 @@ public sealed partial class MechSystem : SharedMechSystem
         SetIntegrity(uid, component.MaxIntegrity, component);
         _actionBlocker.UpdateCanMove(uid);
 
-        RaiseLocalEvent(uid, new UpdateMechUiEvent());
+        UpdateUserInterface(uid, component);
         UpdateHealthAlert((uid, component));
     }
 
@@ -297,7 +297,7 @@ public sealed partial class MechSystem : SharedMechSystem
         TryInsert(uid, args.Args.User, component);
         args.Handled = true;
 
-        RaiseLocalEvent(uid, new UpdateMechUiEvent());
+        UpdateUserInterface(uid, component);
         UpdateBatteryAlert((uid, component));
         UpdateHealthAlert((uid, component));
     }
@@ -313,7 +313,7 @@ public sealed partial class MechSystem : SharedMechSystem
 
         args.Handled = true;
 
-        RaiseLocalEvent(uid, new UpdateMechUiEvent());
+        UpdateUserInterface(uid, component);
 
         // Clear alerts after pilot exit
         if (pilot.HasValue)
@@ -351,7 +351,7 @@ public sealed partial class MechSystem : SharedMechSystem
                 RemComp<ConstructionComponent>(uid);
         }
 
-        RaiseLocalEvent(uid, new UpdateMechUiEvent());
+        UpdateUserInterface(uid, component);
         UpdateHealthAlert((uid, component));
     }
 
@@ -359,6 +359,7 @@ public sealed partial class MechSystem : SharedMechSystem
     {
         // Battery changed, update UI and alerts
         Dirty(uid, component);
+        UpdateUserInterface(uid, component);
         UpdateBatteryAlert((uid, component));
     }
 
@@ -366,6 +367,7 @@ public sealed partial class MechSystem : SharedMechSystem
     {
         // Battery removed, update UI and alerts
         Dirty(uid, component);
+        UpdateUserInterface(uid, component);
         UpdateBatteryAlert((uid, component));
     }
 
@@ -420,7 +422,7 @@ public sealed partial class MechSystem : SharedMechSystem
         if (!_powerCell.TryUseCharge(uid, amount))
             return false;
 
-        UpdateMechUi(uid);
+        UpdateUserInterface(uid, component);
         UpdateBatteryAlert((uid, component));
 
         return true;
@@ -484,13 +486,7 @@ public sealed partial class MechSystem : SharedMechSystem
 
         _actionBlocker.UpdateCanMove(uid);
         Dirty(uid, component);
-        UpdateMechUi(uid);
-    }
-
-    private void UpdateMechUi(EntityUid uid)
-    {
-        var ev = new UpdateMechUiEvent();
-        RaiseLocalEvent(uid, ev);
+        UpdateUserInterface(uid, component);
     }
 
     private void OnMechBrokenSound(EntityUid uid, MechComponent component, MechBrokenSoundEvent args)

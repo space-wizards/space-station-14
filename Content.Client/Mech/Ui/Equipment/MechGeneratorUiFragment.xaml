@@ -4,14 +4,22 @@
     Margin="2 0 2 0"
     HorizontalExpand="True"
     VerticalExpand="True">
-    <BoxContainer Orientation="Vertical"
-                  HorizontalExpand="True"
-                  VerticalExpand="True">
-        <Label Name="OutputLabel"
-               StyleClasses="LabelSubText"
-               FontColorOverride="White"/>
-        <Label Name="FuelLabel"
-               StyleClasses="LabelSubText"
-               FontColorOverride="White"/>
-    </BoxContainer>
+    <GridContainer Columns="2"
+                   HorizontalExpand="True">
+        <BoxContainer Orientation="Vertical">
+            <Label Name="OutputLabel"
+                   StyleClasses="LabelSubText"
+                   FontColorOverride="White"/>
+            <Label Name="FuelLabel"
+                   StyleClasses="LabelSubText"
+                   FontColorOverride="White"/>
+        </BoxContainer>
+        <BoxContainer Orientation="Vertical"
+                      HorizontalAlignment="Right"
+                      HorizontalExpand="True"
+                      VerticalAlignment="Center">
+            <Button Name="EjectButton"
+                    Text="{Loc 'portable-generator-ui-eject'}"/>
+        </BoxContainer>
+    </GridContainer>
 </equipment:MechGeneratorUiFragment>

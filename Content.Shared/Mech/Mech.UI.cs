@@ -262,6 +262,18 @@ public sealed class MechGeneratorUiState : BoundUserInterfaceState
 }
 
 /// <summary>
+/// Event raised for mech fuel generator modules to eject their stored fuel.
+/// </summary>
+[Serializable, NetSerializable]
+public sealed class MechGeneratorEjectFuelMessage : MechEquipmentUiMessage
+{
+    public MechGeneratorEjectFuelMessage(NetEntity equipment)
+    {
+        Equipment = equipment;
+    }
+}
+
+/// <summary>
 /// List of sound collection ids to be localized and displayed.
 /// </summary>
 [Serializable, NetSerializable]

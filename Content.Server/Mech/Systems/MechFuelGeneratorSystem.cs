@@ -1,6 +1,8 @@
 using Content.Server.Mech.Components;
 using Content.Server.Power.Generator;
+using Content.Shared.Mech;
 using Content.Shared.Mech.Components;
+using Content.Shared.Mech.EntitySystems;
 using Content.Shared.Power.Generator;
 using Robust.Shared.GameObjects;
 
@@ -12,6 +14,25 @@ namespace Content.Server.Mech.Systems;
 /// </summary>
 public sealed partial class MechFuelGeneratorBridgeSystem : EntitySystem
 {
+    [Dependency] private readonly GeneratorSystem _generator = default!;
+
+    public override void Initialize()
+    {
+        base.Initialize();
+        SubscribeLocalEvent<MechGeneratorModuleComponent, MechEquipmentUiMessageRelayEvent>(OnMechGeneratorMessage);
+    }
+
+    private void OnMechGeneratorMessage(EntityUid uid, MechGeneratorModuleComponent component, MechEquipmentUiMessageRelayEvent args)
+    {
+        if (args.Message is not MechGeneratorEjectFuelMessage)
+            return;
+
+        if (!TryComp<FuelGeneratorComponent>(uid, out _))
+            return;
+
+        _generator.EmptyGenerator(uid);
+    }
+
 	public override void Update(float frameTime)
 	{
 		var query = EntityQueryEnumerator<MechComponent>();
@@ -31,16 +52,14 @@ public sealed partial class MechFuelGeneratorBridgeSystem : EntitySystem
 				telem.Max = 0f;
 				telem.Current = 0f;
 
-				var getFuel = new GeneratorGetFuelEvent(default);
-				RaiseLocalEvent(module, ref getFuel);
-
 				if (!TryComp<FuelGeneratorComponent>(module, out var fuelGen))
 					continue;
 
 				// max output is the configured target power
 				telem.Max = fuelGen.TargetPower;
 
-				if (getFuel.Fuel <= 0)
+				var availableFuel = _generator.GetFuel(module);
+				if (availableFuel <= 0 || _generator.GetIsClogged(module))
 					continue;
 
 				var eff = 1 / SharedGeneratorSystem.CalcFuelEfficiency(fuelGen.TargetPower, fuelGen.OptimalPower, fuelGen);
@@ -52,6 +71,14 @@ public sealed partial class MechFuelGeneratorBridgeSystem : EntitySystem
 				acc.PendingRechargeRate += current;
 				telem.Current = current;
 			}
+
+			UpdateMechUI(mechUid);
 		}
+	}
+
+	private void UpdateMechUI(EntityUid uid)
+	{
+		var ev = new UpdateMechUiEvent();
+		RaiseLocalEvent(uid, ev);
 	}
 }

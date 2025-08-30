@@ -20,6 +20,11 @@ public sealed partial class MechGeneratorUi : UIFragment
             return;
 
         _fragment = new MechGeneratorUiFragment();
+        _fragment.OnEject += () =>
+        {
+            var entManager = IoCManager.Resolve<IEntityManager>();
+            userInterface.SendMessage(new MechGeneratorEjectFuelMessage(entManager.GetNetEntity(fragmentOwner.Value)));
+        };
     }
 
     public override void UpdateState(BoundUserInterfaceState state)
