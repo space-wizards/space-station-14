@@ -1,5 +1,6 @@
 using Content.Shared.FixedPoint;
 using Content.Shared.Nutrition.Prototypes;
+using Content.Shared.Tag;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
 
@@ -25,6 +26,13 @@ public sealed partial class MessyDrinkerComponent : Component
     /// </summary>
     [DataField, AutoNetworkedField]
     public List<ProtoId<EdiblePrototype>> SpillableTypes = new List<ProtoId<EdiblePrototype>> { "Drink" };
+
+    /// <summary>
+    /// Tag given to drinks that are immune to messy drinker.
+    /// For example, a spill-immune bottle.
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public ProtoId<TagPrototype> SpillImmuneTag = "MessyDrinkerImmune";
 
     [DataField, AutoNetworkedField]
     public LocId? SpillMessagePopup;
