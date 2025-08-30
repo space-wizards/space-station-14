@@ -4,8 +4,8 @@ meta:
   engineVersion: 266.0.0
   forkId: ""
   forkVersion: ""
-  time: 08/30/2025 04:38:59
-  entityCount: 13135
+  time: 08/30/2025 06:31:22
+  entityCount: 13318
 maps:
 - 1
 grids:
@@ -3337,6 +3337,8 @@ entities:
   entities:
   - uid: 12
     components:
+    - type: MetaData
+      name: Bar air alarm
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: -4.5,7.5
@@ -3359,6 +3361,8 @@ entities:
       fixtures: {}
   - uid: 13
     components:
+    - type: MetaData
+      name: West Bar Exterior air alarm
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: -4.5,1.5
@@ -3387,6 +3391,8 @@ entities:
       fixtures: {}
   - uid: 14
     components:
+    - type: MetaData
+      name: Kitchen air alarm
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: -1.5,0.5
@@ -3405,6 +3411,8 @@ entities:
       fixtures: {}
   - uid: 15
     components:
+    - type: MetaData
+      name: Science Front air alarm
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: -4.5,-9.5
@@ -3426,6 +3434,8 @@ entities:
       fixtures: {}
   - uid: 16
     components:
+    - type: MetaData
+      name: South Hallway air alarm
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 3.5,-13.5
@@ -3449,6 +3459,8 @@ entities:
       fixtures: {}
   - uid: 17
     components:
+    - type: MetaData
+      name: Hydroponics air alarm
     - type: Transform
       pos: -3.5,-2.5
       parent: 2
@@ -3461,6 +3473,8 @@ entities:
       fixtures: {}
   - uid: 18
     components:
+    - type: MetaData
+      name: Medbay air alarm
     - type: Transform
       pos: -18.5,9.5
       parent: 2
@@ -3486,6 +3500,8 @@ entities:
       fixtures: {}
   - uid: 19
     components:
+    - type: MetaData
+      name: Surgery air alarm
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: -23.5,4.5
@@ -3499,6 +3515,8 @@ entities:
       fixtures: {}
   - uid: 20
     components:
+    - type: MetaData
+      name: West Hallway air alarm
     - type: Transform
       pos: -17.5,1.5
       parent: 2
@@ -3517,6 +3535,8 @@ entities:
       fixtures: {}
   - uid: 21
     components:
+    - type: MetaData
+      name: Chemistry air alarm
     - type: Transform
       pos: -10.5,12.5
       parent: 2
@@ -3533,6 +3553,8 @@ entities:
       fixtures: {}
   - uid: 22
     components:
+    - type: MetaData
+      name: West Hallway air alarm
     - type: Transform
       pos: -28.5,1.5
       parent: 2
@@ -3558,6 +3580,8 @@ entities:
       fixtures: {}
   - uid: 23
     components:
+    - type: MetaData
+      name: Morgue air alarm
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: -28.5,11.5
@@ -3571,6 +3595,8 @@ entities:
       fixtures: {}
   - uid: 24
     components:
+    - type: MetaData
+      name: Security Hallway air alarm
     - type: Transform
       pos: 28.5,8.5
       parent: 2
@@ -3592,6 +3618,8 @@ entities:
       fixtures: {}
   - uid: 25
     components:
+    - type: MetaData
+      name: Security Hallway air alarm
     - type: Transform
       pos: 17.5,9.5
       parent: 2
@@ -3615,6 +3643,8 @@ entities:
       fixtures: {}
   - uid: 26
     components:
+    - type: MetaData
+      name: Burn Chamber air alarm
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 37.5,-24.5
@@ -3626,6 +3656,8 @@ entities:
       fixtures: {}
   - uid: 27
     components:
+    - type: MetaData
+      name: Engineering Reception air alarm
     - type: Transform
       pos: 13.5,-12.5
       parent: 2
@@ -3643,6 +3675,8 @@ entities:
       fixtures: {}
   - uid: 28
     components:
+    - type: MetaData
+      name: SMES Array air alarm
     - type: Transform
       pos: 20.5,-5.5
       parent: 2
@@ -3661,6 +3695,8 @@ entities:
       fixtures: {}
   - uid: 29
     components:
+    - type: MetaData
+      name: Engineering Hallway air alarm
     - type: Transform
       pos: 23.5,-12.5
       parent: 2
@@ -3668,6 +3704,8 @@ entities:
       fixtures: {}
   - uid: 30
     components:
+    - type: MetaData
+      name: Atmospherics air alarm
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 34.5,-15.5
@@ -3681,6 +3719,8 @@ entities:
       fixtures: {}
   - uid: 31
     components:
+    - type: MetaData
+      name: TEG Chamber air alarm
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 45.5,-25.5
@@ -3692,6 +3732,8 @@ entities:
       fixtures: {}
   - uid: 32
     components:
+    - type: MetaData
+      name: Engineering Front air alarm
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 9.5,-6.5
@@ -3715,6 +3757,8 @@ entities:
       fixtures: {}
   - uid: 33
     components:
+    - type: MetaData
+      name: South Hallway air alarm
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 2.5,-28.5
@@ -3740,6 +3784,8 @@ entities:
       fixtures: {}
   - uid: 34
     components:
+    - type: MetaData
+      name: Cargo Reception air alarm
     - type: Transform
       pos: 9.5,-19.5
       parent: 2
@@ -3759,6 +3805,8 @@ entities:
       fixtures: {}
   - uid: 35
     components:
+    - type: MetaData
+      name: Evac air alarm
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: -39.5,3.5
@@ -3778,6 +3826,8 @@ entities:
       fixtures: {}
   - uid: 36
     components:
+    - type: MetaData
+      name: Chapel air alarm
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: -39.5,8.5
@@ -3795,6 +3845,8 @@ entities:
       fixtures: {}
   - uid: 37
     components:
+    - type: MetaData
+      name: Gravity air alarm
     - type: Transform
       pos: -39.5,21.5
       parent: 2
@@ -3809,6 +3861,8 @@ entities:
       fixtures: {}
   - uid: 38
     components:
+    - type: MetaData
+      name: Library air alarm
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: -36.5,-6.5
@@ -3826,6 +3880,8 @@ entities:
       fixtures: {}
   - uid: 39
     components:
+    - type: MetaData
+      name: Science Storage air alarm
     - type: Transform
       rot: 3.141592653589793 rad
       pos: -28.5,-11.5
@@ -3843,6 +3899,8 @@ entities:
       fixtures: {}
   - uid: 60
     components:
+    - type: MetaData
+      name: Test Chamber South air alarm
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: -19.5,-18.5
@@ -3854,6 +3912,8 @@ entities:
       fixtures: {}
   - uid: 1771
     components:
+    - type: MetaData
+      name: Interrogation air alarm
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 13.5,19.5
@@ -3868,6 +3928,8 @@ entities:
       fixtures: {}
   - uid: 1951
     components:
+    - type: MetaData
+      name: Armory air alarm
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 39.5,9.5
@@ -3881,6 +3943,8 @@ entities:
       fixtures: {}
   - uid: 5328
     components:
+    - type: MetaData
+      name: Xenoarchelogy air alarm
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: -22.5,-20.5
@@ -3903,6 +3967,8 @@ entities:
       fixtures: {}
   - uid: 5399
     components:
+    - type: MetaData
+      name: Science Lobby air alarm
     - type: Transform
       pos: -18.5,-2.5
       parent: 2
@@ -3921,6 +3987,8 @@ entities:
       fixtures: {}
   - uid: 5651
     components:
+    - type: MetaData
+      name: South Hallway air alarm
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: -1.5,-16.5
@@ -3940,6 +4008,8 @@ entities:
       fixtures: {}
   - uid: 5658
     components:
+    - type: MetaData
+      name: Theatre Hallway air alarm
     - type: Transform
       rot: 3.141592653589793 rad
       pos: -8.5,-30.5
@@ -3960,6 +4030,8 @@ entities:
       fixtures: {}
   - uid: 5662
     components:
+    - type: MetaData
+      name: South Hallway air alarm
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: -1.5,-33.5
@@ -3976,6 +4048,8 @@ entities:
       fixtures: {}
   - uid: 5835
     components:
+    - type: MetaData
+      name: Conference Room air alarm
     - type: Transform
       rot: 3.141592653589793 rad
       pos: -9.5,22.5
@@ -3993,6 +4067,8 @@ entities:
       fixtures: {}
   - uid: 6091
     components:
+    - type: MetaData
+      name: Arrivals air alarm
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 43.5,7.5
@@ -4016,6 +4092,8 @@ entities:
       fixtures: {}
   - uid: 6136
     components:
+    - type: MetaData
+      name: East Hallway air alarm
     - type: Transform
       pos: 31.5,1.5
       parent: 2
@@ -4035,6 +4113,8 @@ entities:
       fixtures: {}
   - uid: 6138
     components:
+    - type: MetaData
+      name: East Hallway air alarm
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 40.5,-2.5
@@ -4054,6 +4134,8 @@ entities:
       fixtures: {}
   - uid: 7816
     components:
+    - type: MetaData
+      name: Bridge Hallway air alarm
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 5.5,19.5
@@ -4072,6 +4154,8 @@ entities:
       fixtures: {}
   - uid: 7817
     components:
+    - type: MetaData
+      name: Bridge air alarm
     - type: Transform
       rot: 3.141592653589793 rad
       pos: -3.5,23.5
@@ -4089,6 +4173,8 @@ entities:
       fixtures: {}
   - uid: 7824
     components:
+    - type: MetaData
+      name: North Bar Exterior air alarm
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 8.5,13.5
@@ -4118,6 +4204,8 @@ entities:
       fixtures: {}
   - uid: 8453
     components:
+    - type: MetaData
+      name: Court Gallery air alarm
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 43.5,21.5
@@ -4135,6 +4223,8 @@ entities:
       fixtures: {}
   - uid: 8489
     components:
+    - type: MetaData
+      name: Courtroom air alarm
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 38.5,29.5
@@ -4150,6 +4240,8 @@ entities:
       fixtures: {}
   - uid: 9138
     components:
+    - type: MetaData
+      name: Maints air alarm
     - type: Transform
       pos: -24.5,22.5
       parent: 2
@@ -4162,6 +4254,8 @@ entities:
       fixtures: {}
   - uid: 9525
     components:
+    - type: MetaData
+      name: Shooting Range air alarm
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 33.5,19.5
@@ -4177,6 +4271,8 @@ entities:
       fixtures: {}
   - uid: 9742
     components:
+    - type: MetaData
+      name: Tesla air alarm
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 19.5,-16.5
@@ -4193,6 +4289,8 @@ entities:
       fixtures: {}
   - uid: 9743
     components:
+    - type: MetaData
+      name: CE air alarm
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 14.5,-16.5
@@ -4207,6 +4305,8 @@ entities:
       fixtures: {}
   - uid: 10273
     components:
+    - type: MetaData
+      name: EVA Storage air alarm
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 40.5,17.5
@@ -4221,6 +4321,8 @@ entities:
       fixtures: {}
   - uid: 10278
     components:
+    - type: MetaData
+      name: East Hallway air alarm
     - type: Transform
       pos: 18.5,1.5
       parent: 2
@@ -4239,6 +4341,8 @@ entities:
       fixtures: {}
   - uid: 10281
     components:
+    - type: MetaData
+      name: East Bar Exterior air alarm
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 9.5,3.5
@@ -4264,6 +4368,8 @@ entities:
       fixtures: {}
   - uid: 10294
     components:
+    - type: MetaData
+      name: HOP air alarm
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 1.5,16.5
@@ -4279,6 +4385,8 @@ entities:
       fixtures: {}
   - uid: 10297
     components:
+    - type: MetaData
+      name: Vault air alarm
     - type: Transform
       rot: 3.141592653589793 rad
       pos: -5.5,19.5
@@ -4291,6 +4399,8 @@ entities:
       fixtures: {}
   - uid: 10467
     components:
+    - type: MetaData
+      name: AI Entrance air alarm
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: -5.5,43.5
@@ -4304,6 +4414,8 @@ entities:
       fixtures: {}
   - uid: 10468
     components:
+    - type: MetaData
+      name: AI Power air alarm
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: -5.5,41.5
@@ -4320,6 +4432,8 @@ entities:
       fixtures: {}
   - uid: 10469
     components:
+    - type: MetaData
+      name: Telecomms air alarm
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: -2.5,47.5
@@ -4333,6 +4447,8 @@ entities:
       fixtures: {}
   - uid: 10470
     components:
+    - type: MetaData
+      name: AI Core air alarm
     - type: Transform
       rot: 3.141592653589793 rad
       pos: -9.5,44.5
@@ -4348,6 +4464,8 @@ entities:
       fixtures: {}
   - uid: 10519
     components:
+    - type: MetaData
+      name: Captain air alarm
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 2.5,23.5
@@ -4361,6 +4479,8 @@ entities:
       fixtures: {}
   - uid: 10667
     components:
+    - type: MetaData
+      name: Cargo Bay air alarm
     - type: Transform
       pos: 13.5,-23.5
       parent: 2
@@ -4382,6 +4502,8 @@ entities:
       fixtures: {}
   - uid: 10673
     components:
+    - type: MetaData
+      name: Salvage Bay air alarm
     - type: Transform
       pos: 19.5,-23.5
       parent: 2
@@ -4397,6 +4519,8 @@ entities:
       fixtures: {}
   - uid: 10680
     components:
+    - type: MetaData
+      name: Mail Room air alarm
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 2.5,-30.5
@@ -4412,6 +4536,8 @@ entities:
       fixtures: {}
   - uid: 10687
     components:
+    - type: MetaData
+      name: QM air alarm
     - type: Transform
       pos: 5.5,-16.5
       parent: 2
@@ -4425,6 +4551,8 @@ entities:
       fixtures: {}
   - uid: 10691
     components:
+    - type: MetaData
+      name: Cryosleep air alarm
     - type: Transform
       rot: 3.141592653589793 rad
       pos: -3.5,-33.5
@@ -4438,6 +4566,8 @@ entities:
       fixtures: {}
   - uid: 10696
     components:
+    - type: MetaData
+      name: Tools Room air alarm
     - type: Transform
       pos: -3.5,-22.5
       parent: 2
@@ -4451,6 +4581,8 @@ entities:
       fixtures: {}
   - uid: 10706
     components:
+    - type: MetaData
+      name: Theatre Room air alarm
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: -9.5,-32.5
@@ -4465,6 +4597,8 @@ entities:
       fixtures: {}
   - uid: 10711
     components:
+    - type: MetaData
+      name: Dorms air alarm
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: -9.5,-31.5
@@ -4478,6 +4612,8 @@ entities:
       fixtures: {}
   - uid: 10712
     components:
+    - type: MetaData
+      name: Tech Vault air alarm
     - type: Transform
       pos: -5.5,-33.5
       parent: 2
@@ -4493,6 +4629,8 @@ entities:
       fixtures: {}
   - uid: 10717
     components:
+    - type: MetaData
+      name: Cargo Front air alarm
     - type: Transform
       pos: 3.5,-21.5
       parent: 2
@@ -4512,6 +4650,8 @@ entities:
       fixtures: {}
   - uid: 10730
     components:
+    - type: MetaData
+      name: Science Reception air alarm
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: -14.5,-6.5
@@ -4529,6 +4669,8 @@ entities:
       fixtures: {}
   - uid: 10731
     components:
+    - type: MetaData
+      name: Robotics air alarm
     - type: Transform
       rot: 3.141592653589793 rad
       pos: -10.5,-19.5
@@ -4545,6 +4687,8 @@ entities:
       fixtures: {}
   - uid: 10739
     components:
+    - type: MetaData
+      name: RD air alarm
     - type: Transform
       pos: -22.5,-2.5
       parent: 2
@@ -4557,6 +4701,8 @@ entities:
       fixtures: {}
   - uid: 10745
     components:
+    - type: MetaData
+      name: Test Chamber North air alarm
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: -19.5,-14.5
@@ -4568,6 +4714,8 @@ entities:
       fixtures: {}
   - uid: 10749
     components:
+    - type: MetaData
+      name: Maints Bar air alarm
     - type: Transform
       pos: -29.5,-14.5
       parent: 2
@@ -4580,6 +4728,8 @@ entities:
       fixtures: {}
   - uid: 10750
     components:
+    - type: MetaData
+      name: Boxing air alarm
     - type: Transform
       pos: -42.5,-16.5
       parent: 2
@@ -4592,6 +4742,8 @@ entities:
       fixtures: {}
   - uid: 10751
     components:
+    - type: MetaData
+      name: Librarian Room air alarm
     - type: Transform
       rot: 3.141592653589793 rad
       pos: -37.5,-14.5
@@ -4606,6 +4758,8 @@ entities:
       fixtures: {}
   - uid: 10782
     components:
+    - type: MetaData
+      name: Virology air alarm
     - type: Transform
       rot: 3.141592653589793 rad
       pos: -14.5,14.5
@@ -4624,6 +4778,8 @@ entities:
       fixtures: {}
   - uid: 10822
     components:
+    - type: MetaData
+      name: Shooting Range air alarm
     - type: Transform
       pos: 34.5,26.5
       parent: 2
@@ -4636,6 +4792,8 @@ entities:
       fixtures: {}
   - uid: 10826
     components:
+    - type: MetaData
+      name: SEC Locker Room air alarm
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 23.5,14.5
@@ -4650,6 +4808,8 @@ entities:
       fixtures: {}
   - uid: 10829
     components:
+    - type: MetaData
+      name: Detective air alarm
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 25.5,1.5
@@ -4663,6 +4823,8 @@ entities:
       fixtures: {}
   - uid: 10832
     components:
+    - type: MetaData
+      name: Warden air alarm
     - type: Transform
       pos: 16.5,13.5
       parent: 2
@@ -4676,6 +4838,8 @@ entities:
       fixtures: {}
   - uid: 10836
     components:
+    - type: MetaData
+      name: Gen Pop air alarm
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 15.5,1.5
@@ -4691,6 +4855,8 @@ entities:
       fixtures: {}
   - uid: 10837
     components:
+    - type: MetaData
+      name: Brigmedic air alarm
     - type: Transform
       pos: 20.5,13.5
       parent: 2
@@ -4704,6 +4870,8 @@ entities:
       fixtures: {}
   - uid: 10839
     components:
+    - type: MetaData
+      name: HOS air alarm
     - type: Transform
       pos: 25.5,12.5
       parent: 2
@@ -4717,6 +4885,8 @@ entities:
       fixtures: {}
   - uid: 10841
     components:
+    - type: MetaData
+      name: Washroom air alarm
     - type: Transform
       pos: -16.5,-26.5
       parent: 2
@@ -4731,6 +4901,8 @@ entities:
       fixtures: {}
   - uid: 10845
     components:
+    - type: MetaData
+      name: Cryogenics air alarm
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: -28.5,3.5
@@ -4744,6 +4916,8 @@ entities:
       fixtures: {}
   - uid: 10850
     components:
+    - type: MetaData
+      name: CMO air alarm
     - type: Transform
       pos: -19.5,14.5
       parent: 2
@@ -4757,6 +4931,8 @@ entities:
       fixtures: {}
   - uid: 10865
     components:
+    - type: MetaData
+      name: Anomaly Generator air alarm
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: -24.5,-5.5
@@ -4768,10 +4944,29 @@ entities:
       - 2007
     - type: Fixtures
       fixtures: {}
+  - uid: 13300
+    components:
+    - type: MetaData
+      name: AME air alarm
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: 29.5,-7.5
+      parent: 2
+    - type: DeviceList
+      devices:
+      - 8039
+      - 13301
+      - 8038
+      - 10193
+      - 10639
+    - type: Fixtures
+      fixtures: {}
 - proto: AirAlarmFreezer
   entities:
   - uid: 10818
     components:
+    - type: MetaData
+      name: Freezer air alarm
     - type: Transform
       pos: -3.5,1.5
       parent: 2
@@ -4992,6 +5187,11 @@ entities:
     components:
     - type: Transform
       pos: 9.5,23.5
+      parent: 2
+  - uid: 13286
+    components:
+    - type: Transform
+      pos: -4.5,17.5
       parent: 2
 - proto: AirlockDetectiveGlassLocked
   entities:
@@ -5417,43 +5617,43 @@ entities:
           - DoorBolt
 - proto: AirlockExternalGlassShuttleArrivals
   entities:
-  - uid: 10135
-    components:
-    - type: Transform
-      rot: -1.5707963267948966 rad
-      pos: -45.5,10.5
-      parent: 2
-  - uid: 10136
-    components:
-    - type: Transform
-      rot: -1.5707963267948966 rad
-      pos: -45.5,8.5
-      parent: 2
-  - uid: 10137
-    components:
-    - type: Transform
-      rot: -1.5707963267948966 rad
-      pos: -45.5,2.5
-      parent: 2
-  - uid: 10138
-    components:
-    - type: Transform
-      rot: -1.5707963267948966 rad
-      pos: -45.5,0.5
-      parent: 2
-- proto: AirlockExternalGlassShuttleEmergencyLocked
-  entities:
-  - uid: 10268
+  - uid: 2961
     components:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 48.5,9.5
       parent: 2
-  - uid: 10269
+  - uid: 2968
     components:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 48.5,2.5
+      parent: 2
+- proto: AirlockExternalGlassShuttleEmergencyLocked
+  entities:
+  - uid: 2855
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: -45.5,10.5
+      parent: 2
+  - uid: 2920
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: -45.5,8.5
+      parent: 2
+  - uid: 2953
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: -45.5,2.5
+      parent: 2
+  - uid: 2955
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: -45.5,0.5
       parent: 2
 - proto: AirlockExternalGlassShuttleEscape
   entities:
@@ -6090,6 +6290,13 @@ entities:
     components:
     - type: Transform
       pos: -24.5,14.5
+      parent: 2
+- proto: AirlockQuartermasterLocked
+  entities:
+  - uid: 13299
+    components:
+    - type: Transform
+      pos: 6.5,-20.5
       parent: 2
 - proto: AirlockResearchDirectorGlassLocked
   entities:
@@ -6973,6 +7180,15 @@ entities:
     - type: DeviceNetwork
       deviceLists:
       - 9743
+  - uid: 13301
+    components:
+    - type: Transform
+      pos: 26.5,-11.5
+      parent: 2
+    - type: DeviceNetwork
+      deviceLists:
+      - 13300
+      - 13302
 - proto: AlertsComputerCircuitboard
   entities:
   - uid: 5597
@@ -7269,7 +7485,7 @@ entities:
   - uid: 92
     components:
     - type: MetaData
-      name: Arrivals APC
+      name: Evac APC
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: -39.5,11.5
@@ -7633,6 +7849,38 @@ entities:
       parent: 2
     - type: Fixtures
       fixtures: {}
+  - uid: 13292
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: 47.5,3.5
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 13293
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: 47.5,1.5
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 13294
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: 47.5,10.5
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 13295
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: 47.5,8.5
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
 - proto: ArtistCircuitBoard
   entities:
   - uid: 3476
@@ -7658,12 +7906,6 @@ entities:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 38.5,-2.5
-      parent: 2
-  - uid: 8360
-    components:
-    - type: Transform
-      rot: -1.5707963267948966 rad
-      pos: -4.5,-7.5
       parent: 2
   - uid: 8362
     components:
@@ -7694,6 +7936,12 @@ entities:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: -19.5,-2.5
+      parent: 2
+  - uid: 13151
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: -4.5,-3.5
       parent: 2
 - proto: AtmosDeviceFanDirectional
   entities:
@@ -9623,6 +9871,16 @@ entities:
     - type: Transform
       pos: 20.5,-29.5
       parent: 2
+  - uid: 6011
+    components:
+    - type: Transform
+      pos: -6.5,-2.5
+      parent: 2
+  - uid: 6144
+    components:
+    - type: Transform
+      pos: 37.5,23.5
+      parent: 2
   - uid: 7291
     components:
     - type: Transform
@@ -9857,6 +10115,16 @@ entities:
     components:
     - type: Transform
       pos: -2.5,42.5
+      parent: 2
+  - uid: 7895
+    components:
+    - type: Transform
+      pos: 47.5,-27.5
+      parent: 2
+  - uid: 7897
+    components:
+    - type: Transform
+      pos: 46.5,-27.5
       parent: 2
   - uid: 10466
     components:
@@ -11763,11 +12031,6 @@ entities:
     - type: Transform
       pos: -3.5,-11.5
       parent: 2
-  - uid: 11510
-    components:
-    - type: Transform
-      pos: -4.5,-11.5
-      parent: 2
   - uid: 11553
     components:
     - type: Transform
@@ -13352,11 +13615,6 @@ entities:
     components:
     - type: Transform
       pos: 45.5,11.5
-      parent: 2
-  - uid: 12020
-    components:
-    - type: Transform
-      pos: 39.5,19.5
       parent: 2
   - uid: 12021
     components:
@@ -16772,6 +17030,541 @@ entities:
     components:
     - type: Transform
       pos: -19.5,-24.5
+      parent: 2
+  - uid: 13140
+    components:
+    - type: Transform
+      pos: 47.5,-26.5
+      parent: 2
+  - uid: 13141
+    components:
+    - type: Transform
+      pos: 47.5,-25.5
+      parent: 2
+  - uid: 13142
+    components:
+    - type: Transform
+      pos: 46.5,-24.5
+      parent: 2
+  - uid: 13143
+    components:
+    - type: Transform
+      pos: 47.5,-24.5
+      parent: 2
+  - uid: 13144
+    components:
+    - type: Transform
+      pos: 49.5,-24.5
+      parent: 2
+  - uid: 13145
+    components:
+    - type: Transform
+      pos: 48.5,-24.5
+      parent: 2
+  - uid: 13152
+    components:
+    - type: Transform
+      pos: -3.5,-5.5
+      parent: 2
+  - uid: 13153
+    components:
+    - type: Transform
+      pos: -4.5,-5.5
+      parent: 2
+  - uid: 13154
+    components:
+    - type: Transform
+      pos: -5.5,-5.5
+      parent: 2
+  - uid: 13155
+    components:
+    - type: Transform
+      pos: -6.5,-5.5
+      parent: 2
+  - uid: 13156
+    components:
+    - type: Transform
+      pos: -6.5,-4.5
+      parent: 2
+  - uid: 13157
+    components:
+    - type: Transform
+      pos: -6.5,-3.5
+      parent: 2
+  - uid: 13158
+    components:
+    - type: Transform
+      pos: -6.5,-6.5
+      parent: 2
+  - uid: 13159
+    components:
+    - type: Transform
+      pos: -6.5,-7.5
+      parent: 2
+  - uid: 13160
+    components:
+    - type: Transform
+      pos: -6.5,-8.5
+      parent: 2
+  - uid: 13161
+    components:
+    - type: Transform
+      pos: -6.5,-9.5
+      parent: 2
+  - uid: 13162
+    components:
+    - type: Transform
+      pos: -6.5,-10.5
+      parent: 2
+  - uid: 13163
+    components:
+    - type: Transform
+      pos: -6.5,-11.5
+      parent: 2
+  - uid: 13164
+    components:
+    - type: Transform
+      pos: -6.5,-1.5
+      parent: 2
+  - uid: 13165
+    components:
+    - type: Transform
+      pos: -6.5,-0.5
+      parent: 2
+  - uid: 13166
+    components:
+    - type: Transform
+      pos: -6.5,0.5
+      parent: 2
+  - uid: 13167
+    components:
+    - type: Transform
+      pos: -6.5,1.5
+      parent: 2
+  - uid: 13168
+    components:
+    - type: Transform
+      pos: -6.5,4.5
+      parent: 2
+  - uid: 13169
+    components:
+    - type: Transform
+      pos: -6.5,3.5
+      parent: 2
+  - uid: 13170
+    components:
+    - type: Transform
+      pos: -6.5,2.5
+      parent: 2
+  - uid: 13172
+    components:
+    - type: Transform
+      pos: 17.5,-14.5
+      parent: 2
+  - uid: 13173
+    components:
+    - type: Transform
+      pos: 17.5,-15.5
+      parent: 2
+  - uid: 13174
+    components:
+    - type: Transform
+      pos: 17.5,-16.5
+      parent: 2
+  - uid: 13175
+    components:
+    - type: Transform
+      pos: 17.5,-17.5
+      parent: 2
+  - uid: 13176
+    components:
+    - type: Transform
+      pos: 17.5,-18.5
+      parent: 2
+  - uid: 13177
+    components:
+    - type: Transform
+      pos: 17.5,-19.5
+      parent: 2
+  - uid: 13199
+    components:
+    - type: Transform
+      pos: -42.5,-13.5
+      parent: 2
+  - uid: 13200
+    components:
+    - type: Transform
+      pos: -41.5,-13.5
+      parent: 2
+  - uid: 13201
+    components:
+    - type: Transform
+      pos: -41.5,-14.5
+      parent: 2
+  - uid: 13202
+    components:
+    - type: Transform
+      pos: -41.5,-15.5
+      parent: 2
+  - uid: 13203
+    components:
+    - type: Transform
+      pos: -40.5,-15.5
+      parent: 2
+  - uid: 13204
+    components:
+    - type: Transform
+      pos: -39.5,-15.5
+      parent: 2
+  - uid: 13205
+    components:
+    - type: Transform
+      pos: -38.5,-15.5
+      parent: 2
+  - uid: 13206
+    components:
+    - type: Transform
+      pos: -34.5,-16.5
+      parent: 2
+  - uid: 13208
+    components:
+    - type: Transform
+      pos: -14.5,27.5
+      parent: 2
+  - uid: 13209
+    components:
+    - type: Transform
+      pos: -13.5,27.5
+      parent: 2
+  - uid: 13210
+    components:
+    - type: Transform
+      pos: -15.5,27.5
+      parent: 2
+  - uid: 13211
+    components:
+    - type: Transform
+      pos: -16.5,27.5
+      parent: 2
+  - uid: 13212
+    components:
+    - type: Transform
+      pos: -17.5,27.5
+      parent: 2
+  - uid: 13213
+    components:
+    - type: Transform
+      pos: -18.5,27.5
+      parent: 2
+  - uid: 13214
+    components:
+    - type: Transform
+      pos: -18.5,28.5
+      parent: 2
+  - uid: 13215
+    components:
+    - type: Transform
+      pos: -18.5,29.5
+      parent: 2
+  - uid: 13216
+    components:
+    - type: Transform
+      pos: -15.5,31.5
+      parent: 2
+  - uid: 13217
+    components:
+    - type: Transform
+      pos: -16.5,31.5
+      parent: 2
+  - uid: 13218
+    components:
+    - type: Transform
+      pos: -17.5,31.5
+      parent: 2
+  - uid: 13219
+    components:
+    - type: Transform
+      pos: -18.5,31.5
+      parent: 2
+  - uid: 13220
+    components:
+    - type: Transform
+      pos: -18.5,30.5
+      parent: 2
+  - uid: 13221
+    components:
+    - type: Transform
+      pos: -6.5,29.5
+      parent: 2
+  - uid: 13222
+    components:
+    - type: Transform
+      pos: -6.5,28.5
+      parent: 2
+  - uid: 13223
+    components:
+    - type: Transform
+      pos: 0.5,29.5
+      parent: 2
+  - uid: 13224
+    components:
+    - type: Transform
+      pos: 0.5,28.5
+      parent: 2
+  - uid: 13225
+    components:
+    - type: Transform
+      pos: -5.5,29.5
+      parent: 2
+  - uid: 13226
+    components:
+    - type: Transform
+      pos: -0.5,29.5
+      parent: 2
+  - uid: 13227
+    components:
+    - type: Transform
+      pos: -5.5,30.5
+      parent: 2
+  - uid: 13228
+    components:
+    - type: Transform
+      pos: -4.5,30.5
+      parent: 2
+  - uid: 13229
+    components:
+    - type: Transform
+      pos: -3.5,30.5
+      parent: 2
+  - uid: 13230
+    components:
+    - type: Transform
+      pos: -2.5,30.5
+      parent: 2
+  - uid: 13231
+    components:
+    - type: Transform
+      pos: -1.5,30.5
+      parent: 2
+  - uid: 13232
+    components:
+    - type: Transform
+      pos: -0.5,30.5
+      parent: 2
+  - uid: 13233
+    components:
+    - type: Transform
+      pos: 37.5,26.5
+      parent: 2
+  - uid: 13234
+    components:
+    - type: Transform
+      pos: 37.5,25.5
+      parent: 2
+  - uid: 13235
+    components:
+    - type: Transform
+      pos: 37.5,24.5
+      parent: 2
+  - uid: 13236
+    components:
+    - type: Transform
+      pos: 37.5,19.5
+      parent: 2
+  - uid: 13237
+    components:
+    - type: Transform
+      pos: 37.5,18.5
+      parent: 2
+  - uid: 13238
+    components:
+    - type: Transform
+      pos: 37.5,17.5
+      parent: 2
+  - uid: 13239
+    components:
+    - type: Transform
+      pos: 37.5,20.5
+      parent: 2
+  - uid: 13240
+    components:
+    - type: Transform
+      pos: 37.5,21.5
+      parent: 2
+  - uid: 13241
+    components:
+    - type: Transform
+      pos: 37.5,22.5
+      parent: 2
+  - uid: 13242
+    components:
+    - type: Transform
+      pos: 37.5,27.5
+      parent: 2
+  - uid: 13243
+    components:
+    - type: Transform
+      pos: 37.5,31.5
+      parent: 2
+  - uid: 13244
+    components:
+    - type: Transform
+      pos: 37.5,16.5
+      parent: 2
+  - uid: 13245
+    components:
+    - type: Transform
+      pos: 37.5,15.5
+      parent: 2
+  - uid: 13246
+    components:
+    - type: Transform
+      pos: 37.5,14.5
+      parent: 2
+  - uid: 13247
+    components:
+    - type: Transform
+      pos: 37.5,13.5
+      parent: 2
+  - uid: 13248
+    components:
+    - type: Transform
+      pos: 41.5,13.5
+      parent: 2
+  - uid: 13249
+    components:
+    - type: Transform
+      pos: 40.5,13.5
+      parent: 2
+  - uid: 13250
+    components:
+    - type: Transform
+      pos: 39.5,13.5
+      parent: 2
+  - uid: 13251
+    components:
+    - type: Transform
+      pos: 17.5,3.5
+      parent: 2
+  - uid: 13252
+    components:
+    - type: Transform
+      pos: 18.5,3.5
+      parent: 2
+  - uid: 13253
+    components:
+    - type: Transform
+      pos: 19.5,3.5
+      parent: 2
+  - uid: 13254
+    components:
+    - type: Transform
+      pos: 20.5,3.5
+      parent: 2
+  - uid: 13255
+    components:
+    - type: Transform
+      pos: 21.5,3.5
+      parent: 2
+  - uid: 13256
+    components:
+    - type: Transform
+      pos: 22.5,3.5
+      parent: 2
+  - uid: 13257
+    components:
+    - type: Transform
+      pos: -20.5,12.5
+      parent: 2
+  - uid: 13258
+    components:
+    - type: Transform
+      pos: -19.5,12.5
+      parent: 2
+  - uid: 13259
+    components:
+    - type: Transform
+      pos: -18.5,12.5
+      parent: 2
+  - uid: 13260
+    components:
+    - type: Transform
+      pos: -17.5,12.5
+      parent: 2
+  - uid: 13261
+    components:
+    - type: Transform
+      pos: -17.5,10.5
+      parent: 2
+  - uid: 13262
+    components:
+    - type: Transform
+      pos: -17.5,11.5
+      parent: 2
+  - uid: 13263
+    components:
+    - type: Transform
+      pos: -21.5,12.5
+      parent: 2
+  - uid: 13279
+    components:
+    - type: Transform
+      pos: -6.5,-36.5
+      parent: 2
+  - uid: 13280
+    components:
+    - type: Transform
+      pos: -5.5,-36.5
+      parent: 2
+  - uid: 13281
+    components:
+    - type: Transform
+      pos: -4.5,-36.5
+      parent: 2
+  - uid: 13282
+    components:
+    - type: Transform
+      pos: -3.5,-36.5
+      parent: 2
+  - uid: 13283
+    components:
+    - type: Transform
+      pos: -7.5,-36.5
+      parent: 2
+  - uid: 13284
+    components:
+    - type: Transform
+      pos: -8.5,-36.5
+      parent: 2
+  - uid: 13285
+    components:
+    - type: Transform
+      pos: -2.5,-36.5
+      parent: 2
+  - uid: 13287
+    components:
+    - type: Transform
+      pos: -4.5,24.5
+      parent: 2
+  - uid: 13288
+    components:
+    - type: Transform
+      pos: -4.5,23.5
+      parent: 2
+  - uid: 13289
+    components:
+    - type: Transform
+      pos: -4.5,22.5
+      parent: 2
+  - uid: 13290
+    components:
+    - type: Transform
+      pos: -4.5,21.5
+      parent: 2
+  - uid: 13291
+    components:
+    - type: Transform
+      pos: -4.5,20.5
       parent: 2
 - proto: CableApcStack
   entities:
@@ -24761,6 +25554,186 @@ entities:
     - type: Transform
       pos: 35.5,-12.5
       parent: 2
+  - uid: 13178
+    components:
+    - type: Transform
+      pos: -40.5,-21.5
+      parent: 2
+  - uid: 13179
+    components:
+    - type: Transform
+      pos: -39.5,-21.5
+      parent: 2
+  - uid: 13180
+    components:
+    - type: Transform
+      pos: -38.5,-21.5
+      parent: 2
+  - uid: 13181
+    components:
+    - type: Transform
+      pos: -34.5,-17.5
+      parent: 2
+  - uid: 13182
+    components:
+    - type: Transform
+      pos: -34.5,-18.5
+      parent: 2
+  - uid: 13183
+    components:
+    - type: Transform
+      pos: -34.5,-19.5
+      parent: 2
+  - uid: 13184
+    components:
+    - type: Transform
+      pos: -33.5,-19.5
+      parent: 2
+  - uid: 13185
+    components:
+    - type: Transform
+      pos: -32.5,-19.5
+      parent: 2
+  - uid: 13186
+    components:
+    - type: Transform
+      pos: -31.5,-19.5
+      parent: 2
+  - uid: 13187
+    components:
+    - type: Transform
+      pos: -31.5,-20.5
+      parent: 2
+  - uid: 13188
+    components:
+    - type: Transform
+      pos: -31.5,-21.5
+      parent: 2
+  - uid: 13189
+    components:
+    - type: Transform
+      pos: -31.5,-22.5
+      parent: 2
+  - uid: 13190
+    components:
+    - type: Transform
+      pos: -32.5,-23.5
+      parent: 2
+  - uid: 13191
+    components:
+    - type: Transform
+      pos: -31.5,-23.5
+      parent: 2
+  - uid: 13192
+    components:
+    - type: Transform
+      pos: -33.5,-23.5
+      parent: 2
+  - uid: 13193
+    components:
+    - type: Transform
+      pos: -34.5,-23.5
+      parent: 2
+  - uid: 13194
+    components:
+    - type: Transform
+      pos: -35.5,-23.5
+      parent: 2
+  - uid: 13195
+    components:
+    - type: Transform
+      pos: -36.5,-23.5
+      parent: 2
+  - uid: 13196
+    components:
+    - type: Transform
+      pos: -37.5,-23.5
+      parent: 2
+  - uid: 13197
+    components:
+    - type: Transform
+      pos: -38.5,-23.5
+      parent: 2
+  - uid: 13198
+    components:
+    - type: Transform
+      pos: -38.5,-22.5
+      parent: 2
+  - uid: 13264
+    components:
+    - type: Transform
+      pos: -6.5,-36.5
+      parent: 2
+  - uid: 13265
+    components:
+    - type: Transform
+      pos: -5.5,-35.5
+      parent: 2
+  - uid: 13266
+    components:
+    - type: Transform
+      pos: -5.5,-36.5
+      parent: 2
+  - uid: 13267
+    components:
+    - type: Transform
+      pos: -4.5,-35.5
+      parent: 2
+  - uid: 13268
+    components:
+    - type: Transform
+      pos: -3.5,-35.5
+      parent: 2
+  - uid: 13269
+    components:
+    - type: Transform
+      pos: -2.5,-35.5
+      parent: 2
+  - uid: 13270
+    components:
+    - type: Transform
+      pos: -1.5,-35.5
+      parent: 2
+  - uid: 13271
+    components:
+    - type: Transform
+      pos: -0.5,-35.5
+      parent: 2
+  - uid: 13272
+    components:
+    - type: Transform
+      pos: 0.5,-35.5
+      parent: 2
+  - uid: 13273
+    components:
+    - type: Transform
+      pos: 0.5,-29.5
+      parent: 2
+  - uid: 13274
+    components:
+    - type: Transform
+      pos: 0.5,-30.5
+      parent: 2
+  - uid: 13275
+    components:
+    - type: Transform
+      pos: 0.5,-31.5
+      parent: 2
+  - uid: 13276
+    components:
+    - type: Transform
+      pos: 0.5,-32.5
+      parent: 2
+  - uid: 13277
+    components:
+    - type: Transform
+      pos: 0.5,-33.5
+      parent: 2
+  - uid: 13278
+    components:
+    - type: Transform
+      pos: 0.5,-34.5
+      parent: 2
 - proto: CableMVStack
   entities:
   - uid: 730
@@ -25473,865 +26446,6 @@ entities:
     - type: Transform
       pos: 2.5,28.5
       parent: 2
-- proto: CartridgePistolSpent
-  entities:
-  - uid: 7884
-    components:
-    - type: Transform
-      pos: 31.888285,23.920395
-      parent: 2
-    - type: Fixtures
-      fixtures:
-        fix1:
-          shape: !type:PolygonShape
-            radius: 0.01
-            vertices:
-            - -0.1,-0.05
-            - 0.1,-0.05
-            - 0.1,0.05
-            - -0.1,0.05
-          mask:
-          - Impassable
-          - HighImpassable
-          layer: []
-          density: 20
-          hard: True
-          restitution: 0.3
-          friction: 0.2
-        throw-fixture:
-          shape: !type:PolygonShape
-            radius: 0.01
-            vertices:
-            - -0.1,-0.05
-            - 0.1,-0.05
-            - 0.1,0.05
-            - -0.1,0.05
-          mask:
-          - Impassable
-          - HighImpassable
-          - BulletImpassable
-          layer: []
-          density: 1
-          hard: False
-          restitution: 0
-          friction: 0.4
-    - type: Physics
-      bodyStatus: InAir
-    - type: ThrownItem
-      playLandSound: True
-      landTime: 1327.5096352
-      thrownTime: 1327.4653392
-      thrower: invalid
-  - uid: 7890
-    components:
-    - type: Transform
-      pos: 31.618177,23.920395
-      parent: 2
-    - type: Fixtures
-      fixtures:
-        fix1:
-          shape: !type:PolygonShape
-            radius: 0.01
-            vertices:
-            - -0.1,-0.05
-            - 0.1,-0.05
-            - 0.1,0.05
-            - -0.1,0.05
-          mask:
-          - Impassable
-          - HighImpassable
-          layer: []
-          density: 20
-          hard: True
-          restitution: 0.3
-          friction: 0.2
-        throw-fixture:
-          shape: !type:PolygonShape
-            radius: 0.01
-            vertices:
-            - -0.1,-0.05
-            - 0.1,-0.05
-            - 0.1,0.05
-            - -0.1,0.05
-          mask:
-          - Impassable
-          - HighImpassable
-          - BulletImpassable
-          layer: []
-          density: 1
-          hard: False
-          restitution: 0
-          friction: 0.4
-    - type: Physics
-      bodyStatus: InAir
-    - type: ThrownItem
-      playLandSound: True
-      landTime: 1331.8289899
-      thrownTime: 1331.7986682
-      thrower: invalid
-  - uid: 7891
-    components:
-    - type: Transform
-      pos: 31.582165,23.821188
-      parent: 2
-    - type: Fixtures
-      fixtures:
-        fix1:
-          shape: !type:PolygonShape
-            radius: 0.01
-            vertices:
-            - -0.1,-0.05
-            - 0.1,-0.05
-            - 0.1,0.05
-            - -0.1,0.05
-          mask:
-          - Impassable
-          - HighImpassable
-          layer: []
-          density: 20
-          hard: True
-          restitution: 0.3
-          friction: 0.2
-        throw-fixture:
-          shape: !type:PolygonShape
-            radius: 0.01
-            vertices:
-            - -0.1,-0.05
-            - 0.1,-0.05
-            - 0.1,0.05
-            - -0.1,0.05
-          mask:
-          - Impassable
-          - HighImpassable
-          - BulletImpassable
-          layer: []
-          density: 1
-          hard: False
-          restitution: 0
-          friction: 0.4
-    - type: Physics
-      bodyStatus: InAir
-    - type: ThrownItem
-      playLandSound: True
-      landTime: 1319.2166866
-      thrownTime: 1319.1986808
-      thrower: invalid
-  - uid: 7892
-    components:
-    - type: Transform
-      pos: 31.580494,23.821188
-      parent: 2
-    - type: Fixtures
-      fixtures:
-        fix1:
-          shape: !type:PolygonShape
-            radius: 0.01
-            vertices:
-            - -0.1,-0.05
-            - 0.1,-0.05
-            - 0.1,0.05
-            - -0.1,0.05
-          mask:
-          - Impassable
-          - HighImpassable
-          layer: []
-          density: 20
-          hard: True
-          restitution: 0.3
-          friction: 0.2
-        throw-fixture:
-          shape: !type:PolygonShape
-            radius: 0.01
-            vertices:
-            - -0.1,-0.05
-            - 0.1,-0.05
-            - 0.1,0.05
-            - -0.1,0.05
-          mask:
-          - Impassable
-          - HighImpassable
-          - BulletImpassable
-          layer: []
-          density: 1
-          hard: False
-          restitution: 0
-          friction: 0.4
-    - type: Physics
-      bodyStatus: InAir
-    - type: ThrownItem
-      playLandSound: True
-      landTime: 1324.0276561
-      thrownTime: 1323.998676
-      thrower: invalid
-  - uid: 7893
-    components:
-    - type: Transform
-      pos: 31.582165,23.821188
-      parent: 2
-    - type: Fixtures
-      fixtures:
-        fix1:
-          shape: !type:PolygonShape
-            radius: 0.01
-            vertices:
-            - -0.1,-0.05
-            - 0.1,-0.05
-            - 0.1,0.05
-            - -0.1,0.05
-          mask:
-          - Impassable
-          - HighImpassable
-          layer: []
-          density: 20
-          hard: True
-          restitution: 0.3
-          friction: 0.2
-        throw-fixture:
-          shape: !type:PolygonShape
-            radius: 0.01
-            vertices:
-            - -0.1,-0.05
-            - 0.1,-0.05
-            - 0.1,0.05
-            - -0.1,0.05
-          mask:
-          - Impassable
-          - HighImpassable
-          - BulletImpassable
-          layer: []
-          density: 1
-          hard: False
-          restitution: 0
-          friction: 0.4
-    - type: Physics
-      bodyStatus: InAir
-    - type: ThrownItem
-      playLandSound: True
-      landTime: 1317.800243
-      thrownTime: 1317.7653489
-      thrower: invalid
-  - uid: 7894
-    components:
-    - type: Transform
-      pos: 31.582165,23.821188
-      parent: 2
-    - type: Fixtures
-      fixtures:
-        fix1:
-          shape: !type:PolygonShape
-            radius: 0.01
-            vertices:
-            - -0.1,-0.05
-            - 0.1,-0.05
-            - 0.1,0.05
-            - -0.1,0.05
-          mask:
-          - Impassable
-          - HighImpassable
-          layer: []
-          density: 20
-          hard: True
-          restitution: 0.3
-          friction: 0.2
-        throw-fixture:
-          shape: !type:PolygonShape
-            radius: 0.01
-            vertices:
-            - -0.1,-0.05
-            - 0.1,-0.05
-            - 0.1,0.05
-            - -0.1,0.05
-          mask:
-          - Impassable
-          - HighImpassable
-          - BulletImpassable
-          layer: []
-          density: 1
-          hard: False
-          restitution: 0
-          friction: 0.4
-    - type: Physics
-      bodyStatus: InAir
-    - type: ThrownItem
-      playLandSound: True
-      landTime: 1320.3522762
-      thrownTime: 1320.332013
-      thrower: invalid
-  - uid: 7895
-    components:
-    - type: Transform
-      pos: 31.582165,23.821188
-      parent: 2
-    - type: Fixtures
-      fixtures:
-        fix1:
-          shape: !type:PolygonShape
-            radius: 0.01
-            vertices:
-            - -0.1,-0.05
-            - 0.1,-0.05
-            - 0.1,0.05
-            - -0.1,0.05
-          mask:
-          - Impassable
-          - HighImpassable
-          layer: []
-          density: 20
-          hard: True
-          restitution: 0.3
-          friction: 0.2
-        throw-fixture:
-          shape: !type:PolygonShape
-            radius: 0.01
-            vertices:
-            - -0.1,-0.05
-            - 0.1,-0.05
-            - 0.1,0.05
-            - -0.1,0.05
-          mask:
-          - Impassable
-          - HighImpassable
-          - BulletImpassable
-          layer: []
-          density: 1
-          hard: False
-          restitution: 0
-          friction: 0.4
-    - type: Physics
-      bodyStatus: InAir
-    - type: ThrownItem
-      playLandSound: True
-      landTime: 1316.0128743
-      thrownTime: 1315.998684
-      thrower: invalid
-  - uid: 7896
-    components:
-    - type: Transform
-      pos: 31.582165,23.821188
-      parent: 2
-    - type: Fixtures
-      fixtures:
-        fix1:
-          shape: !type:PolygonShape
-            radius: 0.01
-            vertices:
-            - -0.1,-0.05
-            - 0.1,-0.05
-            - 0.1,0.05
-            - -0.1,0.05
-          mask:
-          - Impassable
-          - HighImpassable
-          layer: []
-          density: 20
-          hard: True
-          restitution: 0.3
-          friction: 0.2
-        throw-fixture:
-          shape: !type:PolygonShape
-            radius: 0.01
-            vertices:
-            - -0.1,-0.05
-            - 0.1,-0.05
-            - 0.1,0.05
-            - -0.1,0.05
-          mask:
-          - Impassable
-          - HighImpassable
-          - BulletImpassable
-          layer: []
-          density: 1
-          hard: False
-          restitution: 0
-          friction: 0.4
-    - type: Physics
-      bodyStatus: InAir
-    - type: ThrownItem
-      playLandSound: True
-      landTime: 1316.9994067
-      thrownTime: 1316.9653497
-      thrower: invalid
-  - uid: 7897
-    components:
-    - type: Transform
-      pos: 31.582165,23.821188
-      parent: 2
-    - type: Fixtures
-      fixtures:
-        fix1:
-          shape: !type:PolygonShape
-            radius: 0.01
-            vertices:
-            - -0.1,-0.05
-            - 0.1,-0.05
-            - 0.1,0.05
-            - -0.1,0.05
-          mask:
-          - Impassable
-          - HighImpassable
-          layer: []
-          density: 20
-          hard: True
-          restitution: 0.3
-          friction: 0.2
-        throw-fixture:
-          shape: !type:PolygonShape
-            radius: 0.01
-            vertices:
-            - -0.1,-0.05
-            - 0.1,-0.05
-            - 0.1,0.05
-            - -0.1,0.05
-          mask:
-          - Impassable
-          - HighImpassable
-          - BulletImpassable
-          layer: []
-          density: 1
-          hard: False
-          restitution: 0
-          friction: 0.4
-    - type: Physics
-      bodyStatus: InAir
-    - type: ThrownItem
-      playLandSound: True
-      landTime: 1318.5632715
-      thrownTime: 1318.5320148
-      thrower: invalid
-  - uid: 7898
-    components:
-    - type: Transform
-      pos: 31.657513,25.723417
-      parent: 2
-  - uid: 7899
-    components:
-    - type: Transform
-      pos: 31.767202,25.70929
-      parent: 2
-    - type: Fixtures
-      fixtures:
-        fix1:
-          shape: !type:PolygonShape
-            radius: 0.01
-            vertices:
-            - -0.1,-0.05
-            - 0.1,-0.05
-            - 0.1,0.05
-            - -0.1,0.05
-          mask:
-          - Impassable
-          - HighImpassable
-          layer: []
-          density: 20
-          hard: True
-          restitution: 0.3
-          friction: 0.2
-        throw-fixture:
-          shape: !type:PolygonShape
-            radius: 0.01
-            vertices:
-            - -0.1,-0.05
-            - 0.1,-0.05
-            - 0.1,0.05
-            - -0.1,0.05
-          mask:
-          - Impassable
-          - HighImpassable
-          - BulletImpassable
-          layer: []
-          density: 1
-          hard: False
-          restitution: 0
-          friction: 0.4
-    - type: Physics
-      bodyStatus: InAir
-    - type: ThrownItem
-      playLandSound: True
-      landTime: 1305.9079617
-      thrownTime: 1305.8653608
-      thrower: invalid
-  - uid: 7900
-    components:
-    - type: Transform
-      pos: 31.767202,25.70929
-      parent: 2
-    - type: Fixtures
-      fixtures:
-        fix1:
-          shape: !type:PolygonShape
-            radius: 0.01
-            vertices:
-            - -0.1,-0.05
-            - 0.1,-0.05
-            - 0.1,0.05
-            - -0.1,0.05
-          mask:
-          - Impassable
-          - HighImpassable
-          layer: []
-          density: 20
-          hard: True
-          restitution: 0.3
-          friction: 0.2
-        throw-fixture:
-          shape: !type:PolygonShape
-            radius: 0.01
-            vertices:
-            - -0.1,-0.05
-            - 0.1,-0.05
-            - 0.1,0.05
-            - -0.1,0.05
-          mask:
-          - Impassable
-          - HighImpassable
-          - BulletImpassable
-          layer: []
-          density: 1
-          hard: False
-          restitution: 0
-          friction: 0.4
-    - type: Physics
-      bodyStatus: InAir
-    - type: ThrownItem
-      playLandSound: True
-      landTime: 1303.9001868
-      thrownTime: 1303.8653628
-      thrower: invalid
-  - uid: 7901
-    components:
-    - type: Transform
-      pos: 31.767202,25.70929
-      parent: 2
-    - type: Fixtures
-      fixtures:
-        fix1:
-          shape: !type:PolygonShape
-            radius: 0.01
-            vertices:
-            - -0.1,-0.05
-            - 0.1,-0.05
-            - 0.1,0.05
-            - -0.1,0.05
-          mask:
-          - Impassable
-          - HighImpassable
-          layer: []
-          density: 20
-          hard: True
-          restitution: 0.3
-          friction: 0.2
-        throw-fixture:
-          shape: !type:PolygonShape
-            radius: 0.01
-            vertices:
-            - -0.1,-0.05
-            - 0.1,-0.05
-            - 0.1,0.05
-            - -0.1,0.05
-          mask:
-          - Impassable
-          - HighImpassable
-          - BulletImpassable
-          layer: []
-          density: 1
-          hard: False
-          restitution: 0
-          friction: 0.4
-    - type: Physics
-      bodyStatus: InAir
-    - type: ThrownItem
-      playLandSound: True
-      landTime: 1306.7269238
-      thrownTime: 1306.6986933
-      thrower: invalid
-  - uid: 7902
-    components:
-    - type: Transform
-      pos: 31.767202,25.70929
-      parent: 2
-    - type: Fixtures
-      fixtures:
-        fix1:
-          shape: !type:PolygonShape
-            radius: 0.01
-            vertices:
-            - -0.1,-0.05
-            - 0.1,-0.05
-            - 0.1,0.05
-            - -0.1,0.05
-          mask:
-          - Impassable
-          - HighImpassable
-          layer: []
-          density: 20
-          hard: True
-          restitution: 0.3
-          friction: 0.2
-        throw-fixture:
-          shape: !type:PolygonShape
-            radius: 0.01
-            vertices:
-            - -0.1,-0.05
-            - 0.1,-0.05
-            - 0.1,0.05
-            - -0.1,0.05
-          mask:
-          - Impassable
-          - HighImpassable
-          - BulletImpassable
-          layer: []
-          density: 1
-          hard: False
-          restitution: 0
-          friction: 0.4
-    - type: Physics
-      bodyStatus: InAir
-    - type: ThrownItem
-      playLandSound: True
-      landTime: 1307.6915248
-      thrownTime: 1307.665359
-      thrower: invalid
-  - uid: 7903
-    components:
-    - type: Transform
-      pos: 31.582165,25.597647
-      parent: 2
-    - type: Fixtures
-      fixtures:
-        fix1:
-          shape: !type:PolygonShape
-            radius: 0.01
-            vertices:
-            - -0.1,-0.05
-            - 0.1,-0.05
-            - 0.1,0.05
-            - -0.1,0.05
-          mask:
-          - Impassable
-          - HighImpassable
-          layer: []
-          density: 20
-          hard: True
-          restitution: 0.3
-          friction: 0.2
-        throw-fixture:
-          shape: !type:PolygonShape
-            radius: 0.01
-            vertices:
-            - -0.1,-0.05
-            - 0.1,-0.05
-            - 0.1,0.05
-            - -0.1,0.05
-          mask:
-          - Impassable
-          - HighImpassable
-          - BulletImpassable
-          layer: []
-          density: 1
-          hard: False
-          restitution: 0
-          friction: 0.4
-    - type: Physics
-      bodyStatus: InAir
-    - type: ThrownItem
-      playLandSound: True
-      landTime: 1312.5494028
-      thrownTime: 1312.5320208
-      thrower: invalid
-  - uid: 7904
-    components:
-    - type: Transform
-      rot: -1.5707963267948966 rad
-      pos: 31.702131,25.574755
-      parent: 2
-  - uid: 7905
-    components:
-    - type: Transform
-      pos: 31.582165,25.597647
-      parent: 2
-    - type: Fixtures
-      fixtures:
-        fix1:
-          shape: !type:PolygonShape
-            radius: 0.01
-            vertices:
-            - -0.1,-0.05
-            - 0.1,-0.05
-            - 0.1,0.05
-            - -0.1,0.05
-          mask:
-          - Impassable
-          - HighImpassable
-          layer: []
-          density: 20
-          hard: True
-          restitution: 0.3
-          friction: 0.2
-        throw-fixture:
-          shape: !type:PolygonShape
-            radius: 0.01
-            vertices:
-            - -0.1,-0.05
-            - 0.1,-0.05
-            - 0.1,0.05
-            - -0.1,0.05
-          mask:
-          - Impassable
-          - HighImpassable
-          - BulletImpassable
-          layer: []
-          density: 1
-          hard: False
-          restitution: 0
-          friction: 0.4
-    - type: Physics
-      bodyStatus: InAir
-    - type: ThrownItem
-      playLandSound: True
-      landTime: 1313.4100938
-      thrownTime: 1313.3986866
-      thrower: invalid
-  - uid: 7906
-    components:
-    - type: Transform
-      pos: 31.767202,25.70929
-      parent: 2
-    - type: Fixtures
-      fixtures:
-        fix1:
-          shape: !type:PolygonShape
-            radius: 0.01
-            vertices:
-            - -0.1,-0.05
-            - 0.1,-0.05
-            - 0.1,0.05
-            - -0.1,0.05
-          mask:
-          - Impassable
-          - HighImpassable
-          layer: []
-          density: 20
-          hard: True
-          restitution: 0.3
-          friction: 0.2
-        throw-fixture:
-          shape: !type:PolygonShape
-            radius: 0.01
-            vertices:
-            - -0.1,-0.05
-            - 0.1,-0.05
-            - 0.1,0.05
-            - -0.1,0.05
-          mask:
-          - Impassable
-          - HighImpassable
-          - BulletImpassable
-          layer: []
-          density: 1
-          hard: False
-          restitution: 0
-          friction: 0.4
-    - type: Physics
-      bodyStatus: InAir
-    - type: ThrownItem
-      playLandSound: True
-      landTime: 1305.0416317
-      thrownTime: 1304.998695
-      thrower: invalid
-  - uid: 7907
-    components:
-    - type: Transform
-      pos: 31.767202,25.70929
-      parent: 2
-    - type: Fixtures
-      fixtures:
-        fix1:
-          shape: !type:PolygonShape
-            radius: 0.01
-            vertices:
-            - -0.1,-0.05
-            - 0.1,-0.05
-            - 0.1,0.05
-            - -0.1,0.05
-          mask:
-          - Impassable
-          - HighImpassable
-          layer: []
-          density: 20
-          hard: True
-          restitution: 0.3
-          friction: 0.2
-        throw-fixture:
-          shape: !type:PolygonShape
-            radius: 0.01
-            vertices:
-            - -0.1,-0.05
-            - 0.1,-0.05
-            - 0.1,0.05
-            - -0.1,0.05
-          mask:
-          - Impassable
-          - HighImpassable
-          - BulletImpassable
-          layer: []
-          density: 1
-          hard: False
-          restitution: 0
-          friction: 0.4
-    - type: Physics
-      bodyStatus: InAir
-    - type: ThrownItem
-      playLandSound: True
-      landTime: 1302.8723772
-      thrownTime: 1302.8320305
-      thrower: invalid
-  - uid: 7908
-    components:
-    - type: Transform
-      pos: 31.767202,25.70929
-      parent: 2
-    - type: Fixtures
-      fixtures:
-        fix1:
-          shape: !type:PolygonShape
-            radius: 0.01
-            vertices:
-            - -0.1,-0.05
-            - 0.1,-0.05
-            - 0.1,0.05
-            - -0.1,0.05
-          mask:
-          - Impassable
-          - HighImpassable
-          layer: []
-          density: 20
-          hard: True
-          restitution: 0.3
-          friction: 0.2
-        throw-fixture:
-          shape: !type:PolygonShape
-            radius: 0.01
-            vertices:
-            - -0.1,-0.05
-            - 0.1,-0.05
-            - 0.1,0.05
-            - -0.1,0.05
-          mask:
-          - Impassable
-          - HighImpassable
-          - BulletImpassable
-          layer: []
-          density: 1
-          hard: False
-          restitution: 0
-          friction: 0.4
-    - type: Physics
-      bodyStatus: InAir
-    - type: ThrownItem
-      playLandSound: True
-      landTime: 1301.839818
-      thrownTime: 1301.7986982
-      thrower: invalid
 - proto: Catwalk
   entities:
   - uid: 823
@@ -31959,6 +32073,12 @@ entities:
       rot: 1.5707963267948966 rad
       pos: -18.5,-54.5
       parent: 2
+  - uid: 13207
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: -25.5,27.5
+      parent: 2
 - proto: ComputerStationRecords
   entities:
   - uid: 1431
@@ -33720,12 +33840,6 @@ entities:
       rot: -1.5707963267948966 rad
       pos: 0.5,24.5
       parent: 2
-  - uid: 6011
-    components:
-    - type: Transform
-      rot: -1.5707963267948966 rad
-      pos: 8.5,4.5
-      parent: 2
   - uid: 6131
     components:
     - type: Transform
@@ -33761,6 +33875,12 @@ entities:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 33.5,-1.5
+      parent: 2
+  - uid: 10138
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: 8.5,5.5
       parent: 2
   - uid: 10821
     components:
@@ -33917,6 +34037,8 @@ entities:
   entities:
   - uid: 59
     components:
+    - type: MetaData
+      name: Robotics fire alarm
     - type: Transform
       pos: -11.5,-13.5
       parent: 2
@@ -33930,6 +34052,8 @@ entities:
       fixtures: {}
   - uid: 1622
     components:
+    - type: MetaData
+      name: Bar fire alarm
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 5.5,7.5
@@ -33948,6 +34072,8 @@ entities:
       fixtures: {}
   - uid: 1623
     components:
+    - type: MetaData
+      name: Hydroponics fire alarm
     - type: Transform
       pos: -2.5,-2.5
       parent: 2
@@ -33963,6 +34089,8 @@ entities:
       fixtures: {}
   - uid: 1624
     components:
+    - type: MetaData
+      name: Kitchen fire alarm
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: -1.5,-1.5
@@ -33979,6 +34107,8 @@ entities:
       fixtures: {}
   - uid: 1625
     components:
+    - type: MetaData
+      name: Medbay fire alarm
     - type: Transform
       pos: -19.5,9.5
       parent: 2
@@ -33998,6 +34128,8 @@ entities:
       fixtures: {}
   - uid: 1626
     components:
+    - type: MetaData
+      name: Cryogenics fire alarm
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: -23.5,3.5
@@ -34006,6 +34138,8 @@ entities:
       fixtures: {}
   - uid: 1627
     components:
+    - type: MetaData
+      name: Chemistry fire alarm
     - type: Transform
       pos: -9.5,12.5
       parent: 2
@@ -34020,6 +34154,8 @@ entities:
       fixtures: {}
   - uid: 1628
     components:
+    - type: MetaData
+      name: West Hallway fire alarm
     - type: Transform
       pos: -11.5,1.5
       parent: 2
@@ -34036,6 +34172,8 @@ entities:
       fixtures: {}
   - uid: 1629
     components:
+    - type: MetaData
+      name: West Hallway fire alarm
     - type: Transform
       pos: -27.5,1.5
       parent: 2
@@ -34057,6 +34195,8 @@ entities:
       fixtures: {}
   - uid: 1630
     components:
+    - type: MetaData
+      name: Morgue fire alarm
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: -28.5,12.5
@@ -34070,6 +34210,8 @@ entities:
       fixtures: {}
   - uid: 1631
     components:
+    - type: MetaData
+      name: Security Hallway fire alarm
     - type: Transform
       pos: 29.5,8.5
       parent: 2
@@ -34089,6 +34231,8 @@ entities:
       fixtures: {}
   - uid: 1632
     components:
+    - type: MetaData
+      name: Security Hallway fire alarm
     - type: Transform
       pos: 16.5,9.5
       parent: 2
@@ -34108,6 +34252,8 @@ entities:
       fixtures: {}
   - uid: 1633
     components:
+    - type: MetaData
+      name: East Bar Exterior fire alarm
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 5.5,-4.5
@@ -34129,6 +34275,8 @@ entities:
       fixtures: {}
   - uid: 1634
     components:
+    - type: MetaData
+      name: South Hallway fire alarm
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 2.5,-13.5
@@ -34150,6 +34298,8 @@ entities:
       fixtures: {}
   - uid: 1636
     components:
+    - type: MetaData
+      name: Cargo Reception fire alarm
     - type: Transform
       pos: 7.5,-19.5
       parent: 2
@@ -34167,6 +34317,8 @@ entities:
       fixtures: {}
   - uid: 1637
     components:
+    - type: MetaData
+      name: Atmospherics fire alarm
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 34.5,-16.5
@@ -34182,6 +34334,8 @@ entities:
       fixtures: {}
   - uid: 1638
     components:
+    - type: MetaData
+      name: Chapel fire alarm
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: -39.5,6.5
@@ -34197,6 +34351,8 @@ entities:
       fixtures: {}
   - uid: 1639
     components:
+    - type: MetaData
+      name: Evac fire alarm
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: -39.5,4.5
@@ -34212,6 +34368,8 @@ entities:
       fixtures: {}
   - uid: 1640
     components:
+    - type: MetaData
+      name: Library fire alarm
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: -36.5,-7.5
@@ -34227,6 +34385,8 @@ entities:
       fixtures: {}
   - uid: 1641
     components:
+    - type: MetaData
+      name: Science Storage fire alarm
     - type: Transform
       rot: 3.141592653589793 rad
       pos: -27.5,-11.5
@@ -34242,6 +34402,8 @@ entities:
       fixtures: {}
   - uid: 1945
     components:
+    - type: MetaData
+      name: Science Lobby fire alarm
     - type: Transform
       pos: -17.5,-2.5
       parent: 2
@@ -34258,6 +34420,8 @@ entities:
       fixtures: {}
   - uid: 5395
     components:
+    - type: MetaData
+      name: Science Front fire alarm
     - type: Transform
       rot: 3.141592653589793 rad
       pos: -5.5,-13.5
@@ -34277,6 +34441,8 @@ entities:
       fixtures: {}
   - uid: 5650
     components:
+    - type: MetaData
+      name: South Hallway fire alarm
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: -1.5,-17.5
@@ -34294,6 +34460,8 @@ entities:
       fixtures: {}
   - uid: 5659
     components:
+    - type: MetaData
+      name: Theatre Hallway fire alarm
     - type: Transform
       rot: 3.141592653589793 rad
       pos: -9.5,-30.5
@@ -34312,6 +34480,8 @@ entities:
       fixtures: {}
   - uid: 5661
     components:
+    - type: MetaData
+      name: South Hallway fire alarm
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: -1.5,-32.5
@@ -34326,6 +34496,8 @@ entities:
       fixtures: {}
   - uid: 5683
     components:
+    - type: MetaData
+      name: Mail Room fire alarm
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 4.5,-31.5
@@ -34339,6 +34511,8 @@ entities:
       fixtures: {}
   - uid: 6007
     components:
+    - type: MetaData
+      name: West Bar Exterior fire alarm
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: -4.5,-1.5
@@ -34365,6 +34539,8 @@ entities:
       fixtures: {}
   - uid: 6092
     components:
+    - type: MetaData
+      name: Arrivals fire alarm
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 43.5,6.5
@@ -34381,6 +34557,8 @@ entities:
       fixtures: {}
   - uid: 6137
     components:
+    - type: MetaData
+      name: East Hallway fire alarm
     - type: Transform
       pos: 32.5,1.5
       parent: 2
@@ -34398,6 +34576,8 @@ entities:
       fixtures: {}
   - uid: 6139
     components:
+    - type: MetaData
+      name: East Hallway fire alarm
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 41.5,-2.5
@@ -34415,6 +34595,8 @@ entities:
       fixtures: {}
   - uid: 7195
     components:
+    - type: MetaData
+      name: South Hallway fire alarm
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 2.5,-29.5
@@ -34438,6 +34620,8 @@ entities:
       fixtures: {}
   - uid: 7818
     components:
+    - type: MetaData
+      name: Bridge Hallway fire alarm
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 5.5,18.5
@@ -34454,6 +34638,8 @@ entities:
       fixtures: {}
   - uid: 7819
     components:
+    - type: MetaData
+      name: Bridge fire alarm
     - type: Transform
       rot: 3.141592653589793 rad
       pos: -2.5,23.5
@@ -34469,6 +34655,8 @@ entities:
       fixtures: {}
   - uid: 8308
     components:
+    - type: MetaData
+      name: East Hallway fire alarm
     - type: Transform
       pos: 19.5,1.5
       parent: 2
@@ -34485,6 +34673,8 @@ entities:
       fixtures: {}
   - uid: 8452
     components:
+    - type: MetaData
+      name: Court Gallery fire alarm
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 42.5,21.5
@@ -34500,6 +34690,8 @@ entities:
       fixtures: {}
   - uid: 8490
     components:
+    - type: MetaData
+      name: Courtroom fire alarm
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 38.5,31.5
@@ -34513,6 +34705,8 @@ entities:
       fixtures: {}
   - uid: 9527
     components:
+    - type: MetaData
+      name: Shooting Range fire alarm
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 34.5,19.5
@@ -34526,6 +34720,8 @@ entities:
       fixtures: {}
   - uid: 10282
     components:
+    - type: MetaData
+      name: East Bar Exterior fire alarm
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 9.5,2.5
@@ -34549,6 +34745,8 @@ entities:
       fixtures: {}
   - uid: 10288
     components:
+    - type: MetaData
+      name: North Bar Exterior fire alarm
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 8.5,14.5
@@ -34574,6 +34772,8 @@ entities:
       fixtures: {}
   - uid: 10293
     components:
+    - type: MetaData
+      name: HOP fire alarm
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 1.5,17.5
@@ -34587,6 +34787,8 @@ entities:
       fixtures: {}
   - uid: 10300
     components:
+    - type: MetaData
+      name: Conference fire alarm
     - type: Transform
       rot: 3.141592653589793 rad
       pos: -8.5,22.5
@@ -34601,6 +34803,8 @@ entities:
       fixtures: {}
   - uid: 10668
     components:
+    - type: MetaData
+      name: Cargo Bay fire alarm
     - type: Transform
       pos: 12.5,-23.5
       parent: 2
@@ -34618,6 +34822,8 @@ entities:
       fixtures: {}
   - uid: 10672
     components:
+    - type: MetaData
+      name: Salvage Bay fire alarm
     - type: Transform
       pos: 21.5,-23.5
       parent: 2
@@ -34631,6 +34837,8 @@ entities:
       fixtures: {}
   - uid: 10718
     components:
+    - type: MetaData
+      name: Cargo Front fire alarm
     - type: Transform
       pos: 4.5,-21.5
       parent: 2
@@ -34648,6 +34856,8 @@ entities:
       fixtures: {}
   - uid: 10828
     components:
+    - type: MetaData
+      name: SEC Locker Room fire alarm
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 28.5,12.5
@@ -34660,6 +34870,8 @@ entities:
       fixtures: {}
   - uid: 10842
     components:
+    - type: MetaData
+      name: Washrooms fire alarm
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: -21.5,-28.5
@@ -34673,6 +34885,8 @@ entities:
       fixtures: {}
   - uid: 10858
     components:
+    - type: MetaData
+      name: Engineering Reception fire alarm
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 11.5,-16.5
@@ -34689,6 +34903,8 @@ entities:
       fixtures: {}
   - uid: 10861
     components:
+    - type: MetaData
+      name: SMES Array fire alarm
     - type: Transform
       pos: 18.5,-5.5
       parent: 2
@@ -34701,6 +34917,21 @@ entities:
       - 10860
       - 10196
       - 10197
+    - type: Fixtures
+      fixtures: {}
+  - uid: 13302
+    components:
+    - type: MetaData
+      name: AME fire alarm
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: 29.5,-6.5
+      parent: 2
+    - type: DeviceList
+      devices:
+      - 10193
+      - 10639
+      - 13301
     - type: Fixtures
       fixtures: {}
 - proto: FireAxeCabinetFilled
@@ -36499,6 +36730,8 @@ entities:
       deviceLists:
       - 10861
       - 28
+      - 13302
+      - 13300
   - uid: 10194
     components:
     - type: Transform
@@ -36876,6 +37109,10 @@ entities:
     - type: Transform
       pos: 26.5,-12.5
       parent: 2
+    - type: DeviceNetwork
+      deviceLists:
+      - 13302
+      - 13300
   - uid: 10647
     components:
     - type: Transform
@@ -37591,6 +37828,38 @@ entities:
       filteredGas: CarbonDioxide
     - type: AtmosPipeColor
       color: '#0055CCFF'
+- proto: GasMinerCarbonDioxide
+  entities:
+  - uid: 13148
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: 44.5,-12.5
+      parent: 2
+- proto: GasMinerNitrogenStation
+  entities:
+  - uid: 13146
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: 44.5,-8.5
+      parent: 2
+- proto: GasMinerOxygenStation
+  entities:
+  - uid: 13147
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: 44.5,-10.5
+      parent: 2
+- proto: GasMinerWaterVapor
+  entities:
+  - uid: 13149
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: 44.5,-16.5
+      parent: 2
 - proto: GasMixerFlipped
   entities:
   - uid: 1722
@@ -59646,6 +59915,9 @@ entities:
     - type: Transform
       pos: 27.5,-11.5
       parent: 2
+    - type: DeviceNetwork
+      deviceLists:
+      - 13300
     - type: VentCrawTube
       connected: True
     - type: AtmosPipeColor
@@ -61078,6 +61350,9 @@ entities:
     - type: Transform
       pos: 25.5,-11.5
       parent: 2
+    - type: DeviceNetwork
+      deviceLists:
+      - 13300
     - type: VentCrawTube
       connected: True
     - type: AtmosPipeColor
@@ -62181,17 +62456,13 @@ entities:
   - uid: 7007
     components:
     - type: Transform
-      pos: -2.5,44.5
+      pos: -1.5,44.5
       parent: 2
-    - type: PowerSupplier
-      supplyRate: 20000
   - uid: 7227
     components:
     - type: Transform
-      pos: -1.5,44.5
+      pos: -2.5,44.5
       parent: 2
-    - type: PowerSupplier
-      supplyRate: 20000
 - proto: Girder
   entities:
   - uid: 2014
@@ -67288,6 +67559,11 @@ entities:
     - type: Transform
       pos: 39.377266,30.848406
       parent: 2
+  - uid: 7896
+    components:
+    - type: Transform
+      pos: 12.400876,19.096926
+      parent: 2
 - proto: LargeBeaker
   entities:
   - uid: 2583
@@ -67452,6 +67728,11 @@ entities:
       rot: -1.5707963267948966 rad
       pos: 6.5,-19.5
       parent: 2
+    - type: DeviceLinkSource
+      linkedPorts:
+        13299:
+        - - Pressed
+          - Toggle
     - type: Fixtures
       fixtures: {}
 - proto: LockableButtonResearch
@@ -70293,12 +70574,6 @@ entities:
       rot: 1.5707963267948966 rad
       pos: -3.5,-3.5
       parent: 2
-  - uid: 2855
-    components:
-    - type: Transform
-      rot: -1.5707963267948966 rad
-      pos: -5.5,-3.5
-      parent: 2
   - uid: 2856
     components:
     - type: Transform
@@ -70666,12 +70941,6 @@ entities:
     - type: Transform
       pos: 17.5,-6.5
       parent: 2
-  - uid: 2920
-    components:
-    - type: Transform
-      rot: 3.141592653589793 rad
-      pos: 6.5,-12.5
-      parent: 2
   - uid: 2921
     components:
     - type: Transform
@@ -70817,23 +71086,11 @@ entities:
     - type: Transform
       pos: -44.5,2.5
       parent: 2
-  - uid: 2953
-    components:
-    - type: Transform
-      rot: 3.141592653589793 rad
-      pos: -18.5,-1.5
-      parent: 2
   - uid: 2954
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: -37.5,-4.5
-      parent: 2
-  - uid: 2955
-    components:
-    - type: Transform
-      rot: 3.141592653589793 rad
-      pos: -41.5,-10.5
       parent: 2
   - uid: 2956
     components:
@@ -70863,11 +71120,6 @@ entities:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: -19.5,-28.5
-      parent: 2
-  - uid: 2961
-    components:
-    - type: Transform
-      pos: -10.5,-27.5
       parent: 2
   - uid: 2962
     components:
@@ -70904,16 +71156,15 @@ entities:
       rot: 1.5707963267948966 rad
       pos: -0.5,-34.5
       parent: 2
-  - uid: 2968
-    components:
-    - type: Transform
-      rot: 1.5707963267948966 rad
-      pos: -8.5,-35.5
-      parent: 2
   - uid: 2969
     components:
     - type: Transform
       pos: -4.5,-34.5
+      parent: 2
+  - uid: 2976
+    components:
+    - type: Transform
+      pos: -11.5,0.5
       parent: 2
   - uid: 3056
     components:
@@ -71062,12 +71313,6 @@ entities:
     - type: Transform
       pos: -1.5,18.5
       parent: 2
-  - uid: 6144
-    components:
-    - type: Transform
-      rot: 3.141592653589793 rad
-      pos: 35.5,-1.5
-      parent: 2
   - uid: 6145
     components:
     - type: Transform
@@ -71108,6 +71353,12 @@ entities:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 46.5,27.5
+      parent: 2
+  - uid: 6763
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: 8.5,4.5
       parent: 2
   - uid: 6865
     components:
@@ -71201,6 +71452,105 @@ entities:
       rot: 1.5707963267948966 rad
       pos: -6.5,14.5
       parent: 2
+  - uid: 7884
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: -5.5,-7.5
+      parent: 2
+  - uid: 7890
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: -24.5,-1.5
+      parent: 2
+  - uid: 7891
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: -42.5,-4.5
+      parent: 2
+  - uid: 7892
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: -0.5,-16.5
+      parent: 2
+  - uid: 7893
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: -14.5,-27.5
+      parent: 2
+  - uid: 7894
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: 32.5,-1.5
+      parent: 2
+  - uid: 7898
+    components:
+    - type: Transform
+      pos: 32.5,0.5
+      parent: 2
+  - uid: 7899
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: 25.5,-1.5
+      parent: 2
+  - uid: 7900
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: 15.5,-1.5
+      parent: 2
+  - uid: 7901
+    components:
+    - type: Transform
+      pos: -17.5,0.5
+      parent: 2
+  - uid: 7902
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: -17.5,-1.5
+      parent: 2
+  - uid: 7903
+    components:
+    - type: Transform
+      pos: -31.5,0.5
+      parent: 2
+  - uid: 7904
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: -42.5,7.5
+      parent: 2
+  - uid: 7905
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: -42.5,3.5
+      parent: 2
+  - uid: 7906
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: -42.5,11.5
+      parent: 2
+  - uid: 7907
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: -42.5,-0.5
+      parent: 2
+  - uid: 7908
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: -37.5,-10.5
+      parent: 2
   - uid: 7910
     components:
     - type: Transform
@@ -71235,6 +71585,151 @@ entities:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 20.5,-11.5
+      parent: 2
+  - uid: 8360
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: -42.5,-10.5
+      parent: 2
+  - uid: 10135
+    components:
+    - type: Transform
+      pos: 1.5,13.5
+      parent: 2
+  - uid: 10136
+    components:
+    - type: Transform
+      pos: -4.5,13.5
+      parent: 2
+  - uid: 10137
+    components:
+    - type: Transform
+      pos: 5.5,13.5
+      parent: 2
+  - uid: 10268
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: 6.5,-3.5
+      parent: 2
+  - uid: 10269
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: 25.5,-14.5
+      parent: 2
+  - uid: 11510
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: 9.5,-11.5
+      parent: 2
+  - uid: 12020
+    components:
+    - type: Transform
+      pos: 9.5,-7.5
+      parent: 2
+  - uid: 13150
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: -7.5,-7.5
+      parent: 2
+  - uid: 13171
+    components:
+    - type: Transform
+      pos: 16.5,-16.5
+      parent: 2
+  - uid: 13296
+    components:
+    - type: Transform
+      pos: 47.5,9.5
+      parent: 2
+  - uid: 13297
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: 47.5,2.5
+      parent: 2
+  - uid: 13298
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: -9.5,23.5
+      parent: 2
+  - uid: 13304
+    components:
+    - type: Transform
+      pos: -15.5,-19.5
+      parent: 2
+  - uid: 13307
+    components:
+    - type: Transform
+      pos: 42.5,1.5
+      parent: 2
+  - uid: 13308
+    components:
+    - type: Transform
+      pos: 37.5,1.5
+      parent: 2
+  - uid: 13309
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: -0.5,-26.5
+      parent: 2
+  - uid: 13310
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: -10.5,-29.5
+      parent: 2
+  - uid: 13311
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: -5.5,-29.5
+      parent: 2
+  - uid: 13312
+    components:
+    - type: Transform
+      pos: 1.5,-31.5
+      parent: 2
+  - uid: 13313
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: -4.5,-37.5
+      parent: 2
+  - uid: 13314
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: -7.5,-34.5
+      parent: 2
+  - uid: 13315
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: -7.5,-36.5
+      parent: 2
+  - uid: 13316
+    components:
+    - type: Transform
+      pos: -3.5,-10.5
+      parent: 2
+  - uid: 13317
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: 3.5,-12.5
+      parent: 2
+  - uid: 13318
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: 6.5,-9.5
       parent: 2
 - proto: PoweredlightBlue
   entities:
@@ -71274,11 +71769,6 @@ entities:
       rot: 3.141592653589793 rad
       pos: 32.5,-25.5
       parent: 2
-  - uid: 2976
-    components:
-    - type: Transform
-      pos: 46.5,-26.5
-      parent: 2
   - uid: 7743
     components:
     - type: Transform
@@ -71296,6 +71786,30 @@ entities:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: -7.5,30.5
+      parent: 2
+  - uid: 13136
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: 36.5,-25.5
+      parent: 2
+  - uid: 13137
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: 40.5,-27.5
+      parent: 2
+  - uid: 13138
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: 44.5,-27.5
+      parent: 2
+  - uid: 13139
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: 47.5,-25.5
       parent: 2
 - proto: PoweredlightPink
   entities:
@@ -72407,11 +72921,6 @@ entities:
     - type: Transform
       pos: -24.5,-23.5
       parent: 2
-  - uid: 6763
-    components:
-    - type: Transform
-      pos: 13.5,19.5
-      parent: 2
   - uid: 6868
     components:
     - type: Transform
@@ -72440,6 +72949,11 @@ entities:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 18.5,28.5
+      parent: 2
+  - uid: 13305
+    components:
+    - type: Transform
+      pos: 11.5,19.5
       parent: 2
 - proto: RandomPosterContraband
   entities:
@@ -72604,6 +73118,11 @@ entities:
     components:
     - type: Transform
       pos: -14.5,-17.5
+      parent: 2
+  - uid: 13306
+    components:
+    - type: Transform
+      pos: 1.5,-3.5
       parent: 2
 - proto: RandomVending
   entities:
@@ -75670,7 +76189,7 @@ entities:
   - uid: 10057
     components:
     - type: Transform
-      rot: 1.5707963267948966 rad
+      rot: 4.71238898038469 rad
       pos: -8.501793,-2.0839484
       parent: 2
     - type: Fixtures
@@ -75686,7 +76205,7 @@ entities:
   - uid: 10082
     components:
     - type: Transform
-      rot: 1.5707963267948966 rad
+      rot: 4.71238898038469 rad
       pos: -39.49731,1.895139
       parent: 2
     - type: Fixtures
@@ -75701,7 +76220,7 @@ entities:
   - uid: 10104
     components:
     - type: Transform
-      rot: 1.5707963267948966 rad
+      rot: 4.71238898038469 rad
       pos: 9.5,1.5
       parent: 2
     - type: Fixtures
@@ -75709,7 +76228,7 @@ entities:
   - uid: 10121
     components:
     - type: Transform
-      rot: 3.141592653589793 rad
+      rot: 4.71238898038469 rad
       pos: 43.5,-2.5
       parent: 2
     - type: Fixtures
@@ -75717,8 +76236,16 @@ entities:
   - uid: 10124
     components:
     - type: Transform
-      rot: 1.5707963267948966 rad
+      rot: 4.71238898038469 rad
       pos: 23.5,-1.5
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 13303
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: -1.4936036,-13.114276
       parent: 2
     - type: Fixtures
       fixtures: {}
@@ -90317,7 +90844,7 @@ entities:
       pos: -38.5,9.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -61441.27
+      secondsUntilStateChange: -64546.742
       state: Opening
   - uid: 5161
     components:
@@ -90325,7 +90852,7 @@ entities:
       pos: -35.5,10.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -61441.77
+      secondsUntilStateChange: -64547.242
       state: Opening
 - proto: WoodenBench
   entities:
