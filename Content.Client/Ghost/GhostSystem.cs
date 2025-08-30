@@ -49,6 +49,7 @@ namespace Content.Client.Ghost
         public event Action<GhostComponent>? PlayerAttached;
         public event Action? PlayerDetached;
         public event Action<GhostWarpsResponseEvent>? GhostWarpsResponse;
+        public event Action<GhostnadoResponseEvent>? GhostnadoResponse;
         public event Action<GhostUpdateGhostRoleCountEvent>? GhostRoleCountUpdated;
 
         public override void Initialize()
@@ -63,6 +64,7 @@ namespace Content.Client.Ghost
             SubscribeLocalEvent<GhostComponent, LocalPlayerDetachedEvent>(OnGhostPlayerDetach);
 
             SubscribeNetworkEvent<GhostWarpsResponseEvent>(OnGhostWarpsResponse);
+            SubscribeNetworkEvent<GhostnadoResponseEvent>(OnGhostnadoResponse);
             SubscribeNetworkEvent<GhostUpdateGhostRoleCountEvent>(OnUpdateGhostRoleCount);
 
             SubscribeLocalEvent<EyeComponent, ToggleLightingActionEvent>(OnToggleLighting);
@@ -173,6 +175,16 @@ namespace Content.Client.Ghost
             }
 
             GhostWarpsResponse?.Invoke(msg);
+        }
+
+        private void OnGhostnadoResponse(GhostnadoResponseEvent msg)
+        {
+            if (!IsGhost)
+            {
+                return;
+            }
+
+            GhostnadoResponse?.Invoke(msg);
         }
 
         private void OnUpdateGhostRoleCount(GhostUpdateGhostRoleCountEvent msg)
