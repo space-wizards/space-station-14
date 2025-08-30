@@ -1,0 +1,5 @@
+- type: entity
+  save: false
+  name: Urrrist McBark
+  parent: BaseMobVulpkanin
+  id: MobVulpkanin

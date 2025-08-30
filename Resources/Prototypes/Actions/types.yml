@@ -396,6 +396,16 @@
     useDelay: 1
     itemIconStyle: BigAction
 
+# - type: entity
+#   parent: ActionToggleWagging
+#   id: ActionToggleVulpakinWagging
+#   components:
+#   - type: Action
+#     icon: { sprite: Mobs/Customization/Vulpkanin/tail_markings.rsi, state: tail-wag-icon }
+#     iconOn: { sprite: Mobs/Customization/Vulpkanin/tail_markings.rsi, state: tail-wag-icon }
+#     itemIconStyle: NoItem
+#     useDelay: 1 # Prevents Emote Spam
+
 - type: entity
   parent: BaseAction
   id: ActionGravityJump
@@ -404,6 +414,20 @@
   components:
   - type: Action
     useDelay: 8
+    icon:
+      sprite: Interface/Actions/jump.rsi
+      state: icon
+  - type: InstantAction
+    event: !type:GravityJumpEvent {}
+
+- type: entity
+  parent: BaseAction
+  id: ActionVulpkaninGravityJump
+  name: Leap
+  description: Use your agile legs to leap a short distance. Be careful not to bump into anything!
+  components:
+  - type: Action
+    useDelay: 13
     icon:
       sprite: Interface/Actions/jump.rsi
       state: icon

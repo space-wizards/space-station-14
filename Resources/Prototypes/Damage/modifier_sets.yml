@@ -321,3 +321,10 @@
   id: ManifestedSpirit
   coefficients:
     Holy: 2
+
+# Vulps get more heat damage because fur
+- type: damageModifierSet
+  id: Vulpkanin
+  coefficients:
+    Heat: 1.15
+    Cold: 0.85
