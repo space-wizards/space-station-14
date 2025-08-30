@@ -69,6 +69,10 @@ namespace Content.Client.Voting.UI
 
             foreach (StandardVoteType voteType in Enum.GetValues<StandardVoteType>())
             {
+                // Skip custom votes, they aren't creatable from this menu.
+                if (voteType.Equals(StandardVoteType.Custom))
+                    continue;
+
                 var option = AvailableVoteOptions[voteType];
                 VoteTypeButton.AddItem(Loc.GetString(option.Name), (int)voteType);
             }

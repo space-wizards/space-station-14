@@ -677,6 +677,10 @@ namespace Content.Server.GameTicking
                 SendStatusToAll();
                 UpdateInfoText();
 
+                var ev = new RoundRestartingEvent();
+
+                RaiseLocalEvent(ref ev);
+
                 ReqWindowAttentionAll();
             }
         }
