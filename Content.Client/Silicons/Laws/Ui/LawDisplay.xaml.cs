@@ -24,9 +24,10 @@ public sealed partial class LawDisplay : Control
     [Dependency] private readonly EntityManager _entityManager = default!;
 
     private static readonly TimeSpan PressCooldown = TimeSpan.FromSeconds(3);
+    private const string StateLawInLocalKey = "chat-local";
 
-    private readonly Dictionary<int, TimeSpan> _stateLawOnCooldownUntil = [];
-    private readonly Dictionary<int, Button> _stateLawButton = [];
+    private readonly Dictionary<string, TimeSpan> _stateLawOnCooldownUntil = [];
+    private readonly Dictionary<string, Button> _stateLawButton = [];
 
     public LawDisplay(EntityUid uid, SiliconLaw law, bool readoutModeEnabled, HashSet<string>? radioChannels)
     {
@@ -47,10 +48,9 @@ public sealed partial class LawDisplay : Control
         var stateLawMessage = $"{FormattedMessage.RemoveMarkupPermissive(lawIdentifier)}: {FormattedMessage.RemoveMarkupPermissive(lawDescription)}";
 
         var stateLawInLocalButton = NewStateLawButton("hud-chatbox-select-channel-Local", Color.DarkGray);
-        var stateLawInLocalHashCode = law.GetHashCode();
 
-        stateLawInLocalButton.OnPressed += e => OnStateLawsButtonPressed(e.Button, stateLawMessage, string.Empty, stateLawInLocalHashCode);
-        AddStateLawButton(stateLawInLocalButton, stateLawInLocalHashCode);
+        stateLawInLocalButton.OnPressed += e => OnStateLawsButtonPressed(e.Button, stateLawMessage, string.Empty, StateLawInLocalKey);
+        AddStateLawButton(stateLawInLocalButton, StateLawInLocalKey);
 
         if (radioChannels == null)
             return;
@@ -60,15 +60,15 @@ public sealed partial class LawDisplay : Control
             if (!_prototypeManager.TryIndex<RadioChannelPrototype>(radioChannel, out var radioChannelProto))
                 continue;
 
+            var stateLawOnRadioKey = radioChannel;
             var stateLawOnRadioButton = NewStateLawButton(radioChannelProto.Name, radioChannelProto.Color);
-            var stateLawOnRadioHashCode = HashCode.Combine(law, radioChannel);
 
             var channelPrefix = radioChannel == SharedChatSystem.CommonChannel
                 ? SharedChatSystem.RadioCommonPrefix.ToString()
                 : $"{SharedChatSystem.RadioChannelPrefix}{radioChannelProto.KeyCode}";
 
-            stateLawOnRadioButton.OnPressed += e => OnStateLawsButtonPressed(e.Button, stateLawMessage, channelPrefix, stateLawOnRadioHashCode);
-            AddStateLawButton(stateLawOnRadioButton, stateLawOnRadioHashCode);
+            stateLawOnRadioButton.OnPressed += e => OnStateLawsButtonPressed(e.Button, stateLawMessage, channelPrefix, stateLawOnRadioKey);
+            AddStateLawButton(stateLawOnRadioButton, stateLawOnRadioKey);
         }
     }
 
@@ -83,17 +83,17 @@ public sealed partial class LawDisplay : Control
 
         // iterate over copy of keys because we are modifying the working set
         var toCheck = _stateLawOnCooldownUntil.Keys.ToArray();
-        foreach (var stateLawHashCode in toCheck)
+        foreach (var stateLawKey in toCheck)
         {
-            if (_stateLawOnCooldownUntil[stateLawHashCode] > curTime)
+            if (_stateLawOnCooldownUntil[stateLawKey] > curTime)
                 continue;
 
-            _stateLawButton[stateLawHashCode].Disabled = false;
-            _stateLawOnCooldownUntil.Remove(stateLawHashCode);
+            _stateLawButton[stateLawKey].Disabled = false;
+            _stateLawOnCooldownUntil.Remove(stateLawKey);
         }
     }
 
-    private void OnStateLawsButtonPressed(BaseButton sender, string message, string channelPrefix, int stateLawHashCode)
+    private void OnStateLawsButtonPressed(BaseButton sender, string message, string channelPrefix, string stateLawKey)
     {
         // Send message in chat
         var chatSelectChannel = string.IsNullOrEmpty(channelPrefix) ? ChatSelectChannel.Local : ChatSelectChannel.Radio;
@@ -103,7 +103,7 @@ public sealed partial class LawDisplay : Control
         if (PressCooldown <= TimeSpan.Zero)
             return;
 
-        _stateLawOnCooldownUntil[stateLawHashCode] = _timing.CurTime + PressCooldown;
+        _stateLawOnCooldownUntil[stateLawKey] = _timing.CurTime + PressCooldown;
         sender.Disabled = true;
     }
 
@@ -119,9 +119,9 @@ public sealed partial class LawDisplay : Control
         };
     }
 
-    private void AddStateLawButton(Button button, int stateLawHashCode)
+    private void AddStateLawButton(Button button, string stateLawKey)
     {
-        _stateLawButton[stateLawHashCode] = button;
+        _stateLawButton[stateLawKey] = button;
         LawAnnouncementButtons.AddChild(button);
     }
 }
