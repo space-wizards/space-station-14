@@ -22,6 +22,7 @@ using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
 using Robust.UnitTesting;
 using Content.Shared.Item.ItemToggle;
+using Content.Shared.Whitelist;
 using Robust.Client.State;
 
 namespace Content.IntegrationTests.Tests.Interaction;
@@ -107,6 +108,7 @@ public abstract partial class InteractionTest
     protected SharedMapSystem MapSystem = default!;
     protected ISawmill SLogger = default!;
     protected SharedUserInterfaceSystem SUiSys = default!;
+    protected EntityWhitelistSystem Whitelist = default!;
 
     // CLIENT dependencies
     protected IEntityManager CEntMan = default!;
@@ -175,6 +177,7 @@ public abstract partial class InteractionTest
         Stack = SEntMan.System<StackSystem>();
         SLogger = Server.ResolveDependency<ILogManager>().RootSawmill;
         SUiSys = Client.System<SharedUserInterfaceSystem>();
+        Whitelist = SEntMan.System<EntityWhitelistSystem>();
 
         // client dependencies
         CEntMan = Client.ResolveDependency<IEntityManager>();
