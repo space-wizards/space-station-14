@@ -83,6 +83,8 @@
       - !type:PlaySoundBehavior
         sound:
           collection: GlassBreak
+  - type: PlacementReplacement
+    key: lights
   placement:
     mode: SnapgridCenter
     snap:
