@@ -40,7 +40,7 @@ public sealed class FaxBoundUi : BoundUserInterface
 
         _dialogIsOpen = true;
         var filters = new FileDialogFilters(new FileDialogFilters.Group("txt"));
-        await using var file = await _fileDialogManager.OpenFile(filters);
+        await using var file = await _fileDialogManager.OpenFile(filters, FileAccess.Read);
         _dialogIsOpen = false;
 
         if (_window == null || _window.Disposed || file == null)
