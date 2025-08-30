@@ -15,6 +15,9 @@ public sealed partial class SiliconLawMenu : FancyWindow
     private List<SiliconLaw> _laws = [];
     private HashSet<string>? _radioChannels;
 
+    // This should come from state if we want to preserve cooldowns on closing the UI.
+    private readonly Dictionary<SiliconLaw, Dictionary<string, TimeSpan>> _stateLawsCooldowns = [];
+
     public SiliconLawMenu()
     {
         RobustXamlLoader.Load(this);
@@ -32,7 +35,7 @@ public sealed partial class SiliconLawMenu : FancyWindow
         UpdateLawDisplays();
     }
 
-    public void UpdateLawDisplays()
+    private void UpdateLawDisplays()
     {
         if (!_entityUid.IsValid())
         {
@@ -44,10 +47,46 @@ public sealed partial class SiliconLawMenu : FancyWindow
 
         foreach (var law in _laws)
         {
-            var control = new LawDisplay(_entityUid, law, _readoutModeEnabled, _radioChannels);
+            var preexistingCooldowns = _stateLawsCooldowns.TryGetValue(law, out var stateLawCooldowns) ? stateLawCooldowns : [];
+            var control = new LawDisplay(_entityUid, law, _readoutModeEnabled, _radioChannels, preexistingCooldowns, PersistStateLawCooldown);
 
             LawDisplayContainer.AddChild(control);
         }
+    }
+
+    public void PersistStateLawCooldown(SiliconLaw law, string chatChannelKey, TimeSpan? onCooldownUntil)
+    {
+        if (onCooldownUntil is not null)
+            EnsureCooldownPersisted(law, chatChannelKey, onCooldownUntil.Value);
+        else
+            EnsureCooldownCleared(law, chatChannelKey);
+    }
+
+    private void EnsureCooldownCleared(SiliconLaw law, string chatChannelKey)
+    {
+        _stateLawsCooldowns.TryGetValue(law, out var stateLawCooldowns);
+        if (stateLawCooldowns is null)
+            return;
+
+        if (stateLawCooldowns.ContainsKey(chatChannelKey) && stateLawCooldowns.Count == 1)
+        {
+            _stateLawsCooldowns.Remove(law);
+            return;
+        }
+
+        stateLawCooldowns.Remove(chatChannelKey);
+    }
+
+    private void EnsureCooldownPersisted(SiliconLaw law, string chatChannelKey, TimeSpan onCooldownUntil)
+    {
+        _stateLawsCooldowns.TryGetValue(law, out var stateLawCooldowns);
+        if (stateLawCooldowns is null)
+        {
+            _stateLawsCooldowns.Add(law, new Dictionary<string, TimeSpan> {{chatChannelKey, onCooldownUntil}});
+            return;
+        }
+
+        stateLawCooldowns[chatChannelKey] = onCooldownUntil;
     }
 
     private void OnReadoutModeToggled()
@@ -55,5 +94,4 @@ public sealed partial class SiliconLawMenu : FancyWindow
         _readoutModeEnabled = ReadoutMode.Pressed;
         UpdateLawDisplays();
     }
-
 }
