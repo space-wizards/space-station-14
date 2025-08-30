@@ -652,6 +652,10 @@ namespace Content.Server.Database.Migrations.Postgres
                         .HasColumnType("inet")
                         .HasColumnName("address");
 
+                    b.Property<string>("CountryCode")
+                        .HasColumnType("text")
+                        .HasColumnName("country_code");
+
                     b.Property<float>("Score")
                         .HasColumnType("real")
                         .HasColumnName("score");
