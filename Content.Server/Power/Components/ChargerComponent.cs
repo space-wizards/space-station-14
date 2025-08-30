@@ -16,6 +16,12 @@ namespace Content.Server.Power.Components
         public float ChargeRate = 20.0f;
 
         /// <summary>
+        /// The smallest amount of load on the network when connected.
+        /// </summary>
+        [DataField("minimumLoad")]
+        public float MinimumLoad = 1.0f;
+
+        /// <summary>
         /// The container ID that is holds the entities being charged.
         /// </summary>
         [DataField("slotId", required: true)]
