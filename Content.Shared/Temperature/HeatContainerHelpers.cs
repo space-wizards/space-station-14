@@ -35,12 +35,13 @@ public static class HeatContainerHelpers
 
     /// <summary>
     /// Determines the amount of heat energy that must be transferred between two containers
-    /// to bring them to thermal equilibrium. Heat will be exchanged from c1 to c2.
+    /// to bring them to thermal equilibrium.
     /// </summary>
     /// <param name="c1">The first <see cref="HeatContainer"/> to exchange heat.</param>
     /// <param name="c2">The second <see cref="HeatContainer"/> to exchange heat with.</param>
     /// <returns>The amount of heat in joules that is needed
     /// to bring the containers to thermal equilibrium.</returns>
+    /// <example>A positive value indicates heat transfer from a hot c2 to a cold c1.</example>
     [PublicAPI]
     public static float FullyExchangeHeatQuery(this HeatContainer c1, HeatContainer c2)
     {
@@ -62,11 +63,11 @@ public static class HeatContainerHelpers
 
     /// <summary>
     /// Brings two <see cref="HeatContainer"/>s to thermal equilibrium by exchanging heat.
-    /// Heat will be exchanged from c1 to c2.
     /// </summary>
     /// <param name="c1">The first <see cref="HeatContainer"/> to exchange heat.</param>
     /// <param name="c2">The second <see cref="HeatContainer"/> to exchange heat with.</param>
     /// <returns>The amount of heat in joules that is exchanged between the two containers.</returns>
+    /// <example>A positive value indicates heat transfer from a hot c2 to a cold c1.</example>
     [PublicAPI]
     public static float FullyExchangeHeat(this HeatContainer c1, HeatContainer c2)
     {
@@ -85,10 +86,11 @@ public static class HeatContainerHelpers
     /// <param name="deltaTime">The amount of time that the heat is allowed to conduct, in seconds.</param>
     /// <param name="k">The conductivity constant. This describes how well heat flows between the bodies.</param>
     /// <returns>The amount of heat in joules that is exchanged between the bodies.</returns>
+    /// <example>A positive value indicates heat transfer from a hot body to a cold c.</example>
     [PublicAPI]
     public static float ConductHeat(this HeatContainer c, float temp, float deltaTime, float k)
     {
-        var dQ = k * (temp - c.Temperature) * deltaTime;
+        var dQ = c.ConductHeatQuery(temp, deltaTime, k);
         c.ChangeHeat(dQ);
         return dQ;
     }
@@ -102,6 +104,7 @@ public static class HeatContainerHelpers
     /// <param name="deltaTime">The amount of time that the heat is allowed to conduct, in seconds.</param>
     /// <param name="k">The conductivity constant. This describes how well heat flows between the bodies.</param>
     /// <returns>The amount of heat in joules that is exchanged between the bodies.</returns>
+    /// <example>A positive value indicates heat transfer from a hot c2 to a cold c1.</example>
     [PublicAPI]
     public static float ConductHeat(this HeatContainer c1, HeatContainer c2, float deltaTime, float k)
     {
@@ -121,6 +124,7 @@ public static class HeatContainerHelpers
     /// <param name="deltaTime">The amount of time that the heat is allowed to conduct, in seconds.</param>
     /// <param name="k">The conductivity constant. This describes how well heat flows between the bodies.</param>
     /// <returns>The amount of heat in joules that would be exchanged between the bodies.</returns>
+    /// <example>A positive value indicates heat transfer from a hot body to a cold c.</example>
     [PublicAPI]
     public static float ConductHeatQuery(this HeatContainer c, float temp, float deltaTime, float k)
     {
@@ -136,6 +140,7 @@ public static class HeatContainerHelpers
     /// <param name="deltaTime">The amount of time that the heat is allowed to conduct, in seconds.</param>
     /// <param name="k">The conductivity constant. This describes how well heat flows between the bodies.</param>
     /// <returns>The amount of heat in joules that would be exchanged between the bodies.</returns>
+    /// <example>A positive value indicates heat transfer from a hot c2 to a cold c1.</example>
     [PublicAPI]
     public static float ConductHeatQuery(this HeatContainer c1, HeatContainer c2, float deltaTime, float k)
     {
