@@ -38,13 +38,13 @@ public sealed class InjectorStatusControl : Control
         // only updates the UI if any of the details are different than they previously were
         if (PrevVolume == solution.Volume
             && PrevMaxVolume == solution.MaxVolume
-            && PrevTransferAmount == _parent.Comp.TransferAmount
+            && PrevTransferAmount == _parent.Comp.CurrentTransferAmount
             && PrevToggleState == _parent.Comp.ToggleState)
             return;
 
         PrevVolume = solution.Volume;
         PrevMaxVolume = solution.MaxVolume;
-        PrevTransferAmount = _parent.Comp.TransferAmount;
+        PrevTransferAmount = _parent.Comp.CurrentTransferAmount;
         PrevToggleState = _parent.Comp.ToggleState;
 
         // Update current volume and injector state
@@ -59,6 +59,6 @@ public sealed class InjectorStatusControl : Control
             ("currentVolume", solution.Volume),
             ("totalVolume", solution.MaxVolume),
             ("modeString", modeStringLocalized),
-            ("transferVolume", _parent.Comp.TransferAmount)));
+            ("transferVolume", _parent.Comp.CurrentTransferAmount)));
     }
 }
