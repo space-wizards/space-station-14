@@ -14,7 +14,7 @@
             !type:NanotrasenNameGenerator
             prefixCreator: 'CW'
         - type: StationEmergencyShuttle
-          emergencyShuttlePath: /Maps/Shuttles/emergency_cluster.yml
+          emergencyShuttlePath: /Maps/_Starlight/Shuttles/emergency_cluster.yml
         - type: StationJobs
           availableJobs:
             #service
