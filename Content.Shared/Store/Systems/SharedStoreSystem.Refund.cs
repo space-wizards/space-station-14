@@ -1,13 +1,12 @@
-using Content.Server.Store.Components;
 using Content.Shared.Actions.Events;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Store.Components;
 using Content.Shared.Weapons.Ranged.Systems;
 using Robust.Shared.Containers;
 
-namespace Content.Server.Store.Systems;
+namespace Content.Shared.Store.Systems;
 
-public sealed partial class StoreSystem
+public abstract partial class SharedStoreSystem
 {
     private void InitializeRefund()
     {
@@ -81,9 +80,9 @@ public sealed partial class StoreSystem
 
         var endTime = component.BoughtTime + component.DisableTime;
 
-        if (IsOnStartingMap(component.StoreEntity.Value, storeComp) && _timing.CurTime < endTime)
+        if (IsOnStartingMap((component.StoreEntity.Value, storeComp)) && _timing.CurTime < endTime)
             return;
 
-        DisableRefund(component.StoreEntity.Value, storeComp);
+        DisableRefund((component.StoreEntity.Value, storeComp));
     }
 }
