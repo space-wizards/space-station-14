@@ -1,6 +1,8 @@
-namespace Content.Server.Shuttles.Components;
+using Robust.Shared.GameStates;
 
-[RegisterComponent]
+namespace Content.Shared.Shuttles.Components;
+
+[RegisterComponent, NetworkedComponent]
 public sealed partial class EmergencyShuttleConsoleComponent : Component
 {
     // TODO: Okay doing it by string is kinda suss but also ID card tracking doesn't seem to be robust enough
