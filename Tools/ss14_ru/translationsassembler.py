@@ -1,4 +1,6 @@
-﻿import logging
+#!/usr/bin/env python3
+
+import logging
 import typing
 
 from fluent.syntax import FluentParser, FluentSerializer

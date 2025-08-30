@@ -1,1 +1,1 @@
-﻿from fluentformatter import FluentFile, FluentFormatter
+from fluentformatter import FluentFile, FluentFormatter

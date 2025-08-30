@@ -1,4 +1,4 @@
-﻿import typing
+import typing
 
 from fluent.syntax import ast, FluentParser, FluentSerializer
 from lokalisemodels import LokaliseKey
