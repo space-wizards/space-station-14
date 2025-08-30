@@ -50,6 +50,7 @@
     - id: Handcuffs
     - id: HoloprojectorSecurity
     - id: RadioHandheldSecurity
+    - id: MeleeDebugGib
 
 - type: entity
   id: ClothingBeltSecurityFilled

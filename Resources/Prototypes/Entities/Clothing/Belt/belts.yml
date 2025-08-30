@@ -493,6 +493,7 @@
         - CombatKnife
         - Truncheon
         - HandGrenade
+        - Debug
       components:
         - Stunbaton
         - FlashOnTrigger
