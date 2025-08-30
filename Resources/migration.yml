@@ -557,7 +557,7 @@ WeaponSubMachineGunVectorRubber: null
 WallShuttleInterior: WallShuttle
 
 # 2025-02-18
-PosterContrabandLustyExomorph: PosterContrabandRealExomorph
+PosterContrabandLustyExomorph: PosterContrabandRealXeno
 PosterContrabandBustyBackdoorExoBabes6: PosterContrabandRouny
 
 # 2025-02-20
@@ -700,6 +700,12 @@ BarSignWhiskeyEchoesAlignTile: BarSignWhiskeyEchoes
 
 # 2025-06-21
 ClothingNeckHeadphones: ClothingMultipleHeadphones
+
+# 2025-07-24
+PosterContrabandRealExomorph: PosterContrabandRealXeno
+PosterContrabandExoAcid: PosterContrabandXenoAcid
+PosterContrabandExoRun: PosterContrabandXenoRun
+PosterContrabandExoChomp: PosterContrabandXenoChomp
 
 # 2025-08-01
 FoodDonutJellySlugcat: FoodDonutJellyScurret
