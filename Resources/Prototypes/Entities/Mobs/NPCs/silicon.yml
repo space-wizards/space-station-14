@@ -105,6 +105,7 @@
     - SiliconEmotes
     - Bot
     - Unimplantable
+    - CannotSuicide
   - type: Body
     prototype: Bot
   - type: Speech
@@ -346,6 +347,24 @@
   - type: Construction
     graph: MediBot
     node: bot
+  - type: SentienceTarget
+    flavorKind: station-event-random-sentience-flavor-mechanical
+  - type: GhostRole
+    prob: 0.05
+    makeSentient: true
+    name: ghost-role-information-medibot-name
+    description: ghost-role-information-medibot-description
+    rules: ghost-role-information-freeagent-rules #Free agent since it can be emagged
+    mindRoles:
+    - MindRoleGhostRoleFreeAgentHarmless
+  - type: Access
+    tags:
+    - Medical
+    - Maintenance
+  - type: ActiveRadio
+    channels:
+    - Common
+    - Medical
   - type: Anchorable
   - type: InteractionPopup
     interactSuccessString: petting-success-medibot
