@@ -18,7 +18,7 @@ public abstract class SharedJobSystem : EntitySystem
     [Dependency] private readonly IPrototypeManager _prototypes = default!;
     [Dependency] private readonly SharedRoleSystem _roles = default!;
 
-    private readonly Dictionary<string, string> _inverseTrackerLookup = new();
+    private readonly Dictionary<ProtoId<PlayTimeTrackerPrototype>, List<ProtoId<JobPrototype>>> _inverseTrackerLookup = new();
 
     public override void Initialize()
     {
@@ -37,21 +37,32 @@ public abstract class SharedJobSystem : EntitySystem
     {
         _inverseTrackerLookup.Clear();
 
-        // This breaks if you have N trackers to 1 JobId but future concern.
         foreach (var job in _prototypes.EnumeratePrototypes<JobPrototype>())
         {
-            _inverseTrackerLookup.Add(job.PlayTimeTracker, job.ID);
+            var key = _inverseTrackerLookup.GetOrNew(job.PlayTimeTracker);
+            key.Add(job.ID);
         }
     }
 
     /// <summary>
-    /// Gets the corresponding Job Prototype to a <see cref="PlayTimeTrackerPrototype"/>
+    /// Gets the first corresponding Job Prototype to a <see cref="PlayTimeTrackerPrototype"/>
+    /// If two jobs share the same tracker, a Name field should be declared on the prototype.
     /// </summary>
     /// <param name="trackerProto"></param>
     /// <returns></returns>
-    public string GetJobPrototype(string trackerProto)
+    [Obsolete("Use SharedJobSystem.GetJobPrototypes, a tracker prototype can now have multiple jobs")]
+    public ProtoId<JobPrototype> GetJobPrototype(ProtoId<PlayTimeTrackerPrototype> trackerProto)
     {
-        DebugTools.Assert(_prototypes.HasIndex<PlayTimeTrackerPrototype>(trackerProto));
+        return _inverseTrackerLookup[trackerProto].FirstOrDefault();
+    }
+
+    /// <summary>
+    /// Gets the list of <see cref="JobPrototype"/>s that have the given <see cref="PlayTimeTrackerPrototype"/>
+    /// </summary>
+    /// <param name="trackerProto"></param>
+    /// <returns>A list of JobPrototype ProtoIds that have the given <see cref="PlayTimeTrackerPrototype"/></returns>
+    public List<ProtoId<JobPrototype>> GetJobPrototypes(ProtoId<PlayTimeTrackerPrototype> trackerProto)
+    {
         return _inverseTrackerLookup[trackerProto];
     }
 
@@ -122,6 +133,35 @@ public abstract class SharedJobSystem : EntitySystem
         }
 
         return found;
+    }
+
+    /// <summary>
+    /// Tries to get the highest weighted department in a list of JobPrototypes.
+    /// </summary>
+    /// <returns>A bool value based on whether the chosenDepartment out variable is null or not</returns>
+    public bool TryGetListHighestWeightDepartment(List<ProtoId<JobPrototype>> jobList, [NotNullWhen(true)] out DepartmentPrototype? chosenDepartment)
+    {
+        chosenDepartment = null;
+
+        foreach (var jobId in jobList)
+        {
+            if (!TryGetAllDepartments(jobId, out var departmentPrototypes) || departmentPrototypes.Count == 0)
+                continue;
+
+            departmentPrototypes.Sort((x, y) => y.Weight.CompareTo(x.Weight));
+
+            var newDepartment = departmentPrototypes[0];
+
+            if (chosenDepartment != null && chosenDepartment.Weight > newDepartment.Weight)
+                continue;
+
+            chosenDepartment = newDepartment;
+        }
+
+        if (chosenDepartment == null)
+            return false;
+
+        return true;
     }
 
     /// <summary>
