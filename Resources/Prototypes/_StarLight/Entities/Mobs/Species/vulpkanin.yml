@@ -97,6 +97,11 @@
     damageContainer: Biological
     damageModifierSet: Vulpkanin
   - type: Wagging
+  - type: InteractionPopup
+    successChance: 1
+    interactSuccessString: petting-success-soft-floofy
+    interactSuccessSound: /Audio/Effects/thudswoosh.ogg
+    messagePerceivedByOthers: petting-success-soft-floofy-others
 
 - type: entity
   save: false
