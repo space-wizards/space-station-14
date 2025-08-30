@@ -54,6 +54,7 @@ namespace Content.Server.Forensics
             var state = new ForensicScannerBoundUserInterfaceState(
                 component.Fingerprints,
                 component.Fibers,
+                component.MicroFibers,
                 component.TouchDNAs,
                 component.SolutionDNAs,
                 component.Residues,
@@ -78,6 +79,7 @@ namespace Content.Server.Forensics
                 {
                     scanner.Fingerprints = new();
                     scanner.Fibers = new();
+                    scanner.MicroFibers = new();
                     scanner.TouchDNAs = new();
                     scanner.Residues = new();
                 }
@@ -85,6 +87,7 @@ namespace Content.Server.Forensics
                 {
                     scanner.Fingerprints = forensics.Fingerprints.ToList();
                     scanner.Fibers = forensics.Fibers.ToList();
+                    scanner.MicroFibers = forensics.MicroFibers.ToList();
                     scanner.TouchDNAs = forensics.DNAs.ToList();
                     scanner.Residues = forensics.Residues.ToList();
                 }
@@ -159,6 +162,16 @@ namespace Content.Server.Forensics
                 }
             }
 
+            foreach (var microFiber in component.MicroFibers)
+            {
+                if (microFiber == pad.Sample)
+                {
+                    _audioSystem.PlayPvs(component.SoundMatch, uid);
+                    _popupSystem.PopupEntity(Loc.GetString("forensic-scanner-match-micro-fiber"), uid, args.User);
+                    return;
+                }
+            }
+
             foreach (var fingerprint in component.Fingerprints)
             {
                 if (fingerprint == pad.Sample)
@@ -223,6 +236,12 @@ namespace Content.Server.Forensics
                 text.AppendLine(fiber);
             }
             text.AppendLine();
+            text.AppendLine(Loc.GetString("forensic-scanner-interface-micro-fibers"));
+            foreach (var microFiber in component.MicroFibers)
+            {
+                text.AppendLine(microFiber);
+            }
+            text.AppendLine();
             text.AppendLine(Loc.GetString("forensic-scanner-interface-dnas"));
             foreach (var dna in component.TouchDNAs)
             {
@@ -257,6 +276,7 @@ namespace Content.Server.Forensics
         {
             component.Fingerprints = new();
             component.Fibers = new();
+            component.MicroFibers = new();
             component.TouchDNAs = new();
             component.SolutionDNAs = new();
             component.LastScannedName = string.Empty;

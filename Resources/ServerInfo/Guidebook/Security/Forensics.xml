@@ -42,6 +42,13 @@
 
   There are up to [color=red]26[/color] different types of fibers possible. Can that stop you from solving the case?
 
+  ## Microfibers
+  Microfibers are a unique trace left behind by any backpack, belt, or any other inventory that the item was inside.
+  
+  It may not seem like much, but just like glove fibers, they can hugely help with narrowing down the criminal's department.
+  
+  Just like with glove fibers, you can use the [color=#a4885c]Forensic Pad[/color] or the [color=#a4885c]Forensic Scanner[/color] to see if there were any microfibers left behind.
+
   <Box>
     <GuideEntityEmbed Entity="ComputerStationRecords"/>
   </Box>
