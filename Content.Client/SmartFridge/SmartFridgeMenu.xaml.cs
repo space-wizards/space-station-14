@@ -14,8 +14,6 @@ public record SmartFridgeListData(EntityUid Representative, SmartFridgeEntry Ent
 [GenerateTypedNameReferences]
 public sealed partial class SmartFridgeMenu : FancyWindow
 {
-    [Dependency] private readonly IEntityManager _entityManager = default!;
-
     public event Action<GUIBoundKeyEventArgs, ListData>? OnItemSelected;
 
     private readonly StyleBoxFlat _styleBox = new() { BackgroundColor = new Color(70, 73, 102) };
@@ -66,7 +64,7 @@ public sealed partial class SmartFridgeMenu : FancyWindow
             }
             else
             {
-                var representative = _entityManager.GetEntity(items.First());
+                var representative = items.First();
                 listData.Add(new SmartFridgeListData(representative, item, items.Count));
             }
         }
