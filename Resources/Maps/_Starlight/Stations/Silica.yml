@@ -4,8 +4,8 @@ meta:
   engineVersion: 266.0.0
   forkId: ""
   forkVersion: ""
-  time: 08/30/2025 09:23:53
-  entityCount: 24152
+  time: 08/30/2025 09:28:45
+  entityCount: 24153
 maps:
 - 1
 grids:
@@ -12158,7 +12158,7 @@ entities:
       pos: -29.5,-12.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -36610.66
+      secondsUntilStateChange: -36899.168
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -12170,7 +12170,7 @@ entities:
       pos: 30.5,-28.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -36617.16
+      secondsUntilStateChange: -36905.668
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -12182,7 +12182,7 @@ entities:
       pos: 30.5,-24.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -36617.86
+      secondsUntilStateChange: -36906.367
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -13294,7 +13294,7 @@ entities:
       pos: 36.5,0.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -128313.99
+      secondsUntilStateChange: -128602.5
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -66909,6 +66909,18 @@ entities:
     - type: DeviceLinkSource
       linkedPorts:
         21732:
+        - - BodyScannerSender
+          - BodyScannerReceiver
+  - uid: 15560
+    components:
+    - type: Transform
+      pos: 35.5,16.5
+      parent: 2
+    - type: BodyScanner
+      tableEntity: 15834
+    - type: DeviceLinkSource
+      linkedPorts:
+        15834:
         - - BodyScannerSender
           - BodyScannerReceiver
 - proto: ComputerBroken
@@ -120601,10 +120613,10 @@ entities:
       wiresAccessible: True
 - proto: LockerBrigmedicFilled
   entities:
-  - uid: 15560
+  - uid: 23110
     components:
     - type: Transform
-      pos: 35.5,16.5
+      pos: 34.73899,16.495022
       parent: 2
     - type: WiresPanelSecurity
       wiresAccessible: True
@@ -120674,15 +120686,14 @@ entities:
   - uid: 15565
     components:
     - type: Transform
-      pos: 34.5,16.5
+      pos: 34.24324,16.495022
       parent: 2
-    - type: WiresPanelSecurity
-      wiresAccessible: True
     - type: AccessReader
       access:
-      - - Brig
       - - Chemistry
       - - Security
+    - type: WiresPanelSecurity
+      wiresAccessible: True
 - proto: LockerChiefEngineerFilled
   entities:
   - uid: 15566
@@ -123839,6 +123850,8 @@ entities:
       parent: 2
   - uid: 21732
     components:
+    - type: MetaData
+      desc: Special medical table for surgery.
     - type: Transform
       pos: -13.5,-5.5
       parent: 2
