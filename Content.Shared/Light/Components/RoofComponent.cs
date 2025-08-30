@@ -18,4 +18,10 @@ public sealed partial class RoofComponent : Component
     /// </summary>
     [DataField, AutoNetworkedField]
     public Dictionary<Vector2i, ulong> Data = new();
+
+    /// <summary>
+    /// Chunk origin and bitmask of weather occlusion value in chunk.
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public Dictionary<Vector2i, ulong> WeatherOcclusionData = new();
 }
