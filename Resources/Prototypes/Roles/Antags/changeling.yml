@@ -1,6 +1,9 @@
-﻿- type: antag
+﻿# Contains modifications made by Ronstation contributors, therefore this file is subject to MIT sublicensed with AGPL v3.0.
+- type: antag
   id: Changeling
   name: roles-antag-changeling-name
+  playTimeTracker: AntagChangeling # Ronstation - modification.
+  color: '#FA2A55' # Ronstation - modification.
   antagonist: true
   setPreference: false # TODO: set this to true once Changeling exits WIP status
   objective: roles-antag-changeling-objective

@@ -1,5 +1,8 @@
+# Contains modifications made by Ronstation contributors, therefore this file is subject to MIT sublicensed with AGPL v3.0.
 - type: antag
   id: Dragon
   name: roles-antag-dragon-name
+  playTimeTracker: AntagDragon # Ronstation - modification.
+  color: '#D82000' # Ronstation - modification.
   antagonist: true
   objective: roles-antag-dragon-objective

@@ -11,7 +11,7 @@
       stationProto: StandardNanotrasenStation
       components:
         - type: StationEmergencyShuttle
-          emergencyShuttlePath: /Maps/Ronstation/Shuttles/emergency_small.yml # should fit.
+          emergencyShuttlePath: /Maps/Ronstation/Shuttles/emergency_saltern.yml # should fit.
         - type: StationNameSetup
           mapNameTemplate: '{0} Saltern {1}'
           nameGenerator:
