@@ -3,3 +3,9 @@
   name: Urist McVulp
   parent: [BaseMobVulpkanin, BaseMob]
   id: MobVulpkanin
+  components:
+    - type: InteractionPopup
+      successChance: 1
+      interactSuccessString: petting-success-soft-floofy
+      interactSuccessSound: /Audio/Effects/thudswoosh.ogg
+      messagePerceivedByOthers: petting-success-soft-floofy-others
