@@ -54,6 +54,14 @@
                 0.2
               ]
             ]
+        },
+        {
+            "name": "on-equipped-BACKPACK-dog",
+            "directions": 4
+        },
+        {
+            "name": "equipped-BACKPACK-dog",
+            "directions": 4
         }
     ]
 }
