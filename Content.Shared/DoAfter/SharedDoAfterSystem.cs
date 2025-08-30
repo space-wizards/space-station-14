@@ -1,6 +1,7 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Threading.Tasks;
 using Content.Shared.ActionBlocker;
+using Content.Shared.Actions.Events;
 using Content.Shared.Damage;
 using Content.Shared.Hands.Components;
 using Content.Shared.Tag;
@@ -29,10 +30,48 @@ public abstract partial class SharedDoAfterSystem : EntitySystem
     public override void Initialize()
     {
         base.Initialize();
+
+        SubscribeLocalEvent<DoAfterComponent, ActionAttemptDoAfterEvent>(OnActionDoAfterAttempt);
         SubscribeLocalEvent<DoAfterComponent, DamageChangedEvent>(OnDamage);
         SubscribeLocalEvent<DoAfterComponent, EntityUnpausedEvent>(OnUnpaused);
         SubscribeLocalEvent<DoAfterComponent, ComponentGetState>(OnDoAfterGetState);
         SubscribeLocalEvent<DoAfterComponent, ComponentHandleState>(OnDoAfterHandleState);
+    }
+
+    private void OnActionDoAfterAttempt(Entity<DoAfterComponent> ent, ref ActionAttemptDoAfterEvent args)
+    {
+        // relay to user
+        if (!TryComp<DoAfterComponent>(args.Performer, out var userDoAfter))
+            return;
+
+        // Check DoAfterArgs Settings
+        if (!TryComp<DoAfterArgsComponent>(ent.Owner,  out var doAfterArgsComp))
+            return;
+
+        var delay = doAfterArgsComp.Delay;
+
+        var actionDoAfterEvent = new ActionDoAfterEvent(args.Performer, args.OriginalUseDelay, args.Input);
+
+        // TODO: Should add a raise on used in the attemptactiondoafterevent or something to add a conditional item or w/e
+
+        var doAfterArgs = new DoAfterArgs(EntityManager, args.Performer, delay, actionDoAfterEvent, ent.Owner, args.Performer)
+        {
+            AttemptFrequency = doAfterArgsComp.AttemptFrequency,
+            Broadcast = doAfterArgsComp.Broadcast,
+            Hidden = doAfterArgsComp.Hidden,
+            NeedHand = doAfterArgsComp.NeedHand,
+            BreakOnHandChange = doAfterArgsComp.BreakOnHandChange,
+            BreakOnDropItem = doAfterArgsComp.BreakOnDropItem,
+            BreakOnMove = doAfterArgsComp.BreakOnMove,
+            BreakOnWeightlessMove = doAfterArgsComp.BreakOnWeightlessMove,
+            MovementThreshold = doAfterArgsComp.MovementThreshold,
+            DistanceThreshold = doAfterArgsComp.DistanceThreshold,
+            BreakOnDamage = doAfterArgsComp.BreakOnDamage,
+            DamageThreshold = doAfterArgsComp.DamageThreshold,
+            RequireCanInteract = doAfterArgsComp.RequireCanInteract
+        };
+
+        TryStartDoAfter(doAfterArgs, userDoAfter);
     }
 
     private void OnUnpaused(EntityUid uid, DoAfterComponent component, ref EntityUnpausedEvent args)
@@ -313,16 +352,16 @@ public abstract partial class SharedDoAfterSystem : EntitySystem
     /// <summary>
     ///     Cancels an active DoAfter.
     /// </summary>
-    public void Cancel(DoAfterId? id, DoAfterComponent? comp = null)
+    public void Cancel(DoAfterId? id, DoAfterComponent? comp = null, bool force = false)
     {
         if (id != null)
-            Cancel(id.Value.Uid, id.Value.Index, comp);
+            Cancel(id.Value.Uid, id.Value.Index, comp, force);
     }
 
     /// <summary>
     ///     Cancels an active DoAfter.
     /// </summary>
-    public void Cancel(EntityUid entity, ushort id, DoAfterComponent? comp = null)
+    public void Cancel(EntityUid entity, ushort id, DoAfterComponent? comp = null, bool force = false)
     {
         if (!Resolve(entity, ref comp, false))
             return;
@@ -333,13 +372,13 @@ public abstract partial class SharedDoAfterSystem : EntitySystem
             return;
         }
 
-        InternalCancel(doAfter, comp);
+        InternalCancel(doAfter, comp, force: force);
         Dirty(entity, comp);
     }
 
-    private void InternalCancel(DoAfter doAfter, DoAfterComponent component)
+    private void InternalCancel(DoAfter doAfter, DoAfterComponent component, bool force = false)
     {
-        if (doAfter.Cancelled || doAfter.Completed)
+        if (doAfter.Cancelled || (doAfter.Completed && !force))
             return;
 
         // Caller is responsible for dirtying the component.
