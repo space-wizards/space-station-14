@@ -17,56 +17,58 @@
           emergencyShuttlePath: /Maps/_Starlight/Shuttles/emergency_cluster.yml
         - type: StationJobs
           availableJobs:
-            #service
+            # 54 jobs (not counting interns)
+            #service (10-12)
             Captain: [ 1, 1 ]
             HeadOfPersonnel: [ 1, 1 ]
-            Bartender: [ 1, 1 ]
-            Botanist: [ 2, 2 ]
+            Bartender: [ 1, 2 ]
+            Botanist: [ 1, 1 ]
             Chef: [ 1, 1 ]
             Janitor: [ 1, 2 ]
             Chaplain: [ 1, 1 ]
             Librarian: [ 1, 1 ]
             ServiceWorker: [ 2, 2 ]
-            #engineering
+            #engineering (6)
             ChiefEngineer: [ 1, 1 ]
             AtmosphericTechnician: [ 2, 2 ]
             StationEngineer: [ 3, 3 ]
             TechnicalAssistant: [ 2, 2 ]
-            #medical
+            #medical (8)
             ChiefMedicalOfficer: [ 1, 1 ]
             Chemist: [ 2, 2 ]
             MedicalDoctor: [ 3, 3 ]
             Paramedic: [ 1, 1 ]
             MedicalIntern: [ 2, 2 ]
             Surgeon: [ 1, 1 ]
-            #science
+            #science (5)
             ResearchDirector: [ 1, 1 ]
-            Scientist: [ 4, 4 ]
+            Scientist: [ 3, 3 ]
             ResearchAssistant: [ 2, 2 ]
             Roboticist: [ 1, 1 ]
-            #security
+            #security (7)
             HeadOfSecurity: [ 1, 1 ]
             Warden: [ 1, 1 ]
-            SecurityOfficer: [ 4, 4 ]
+            SecurityOfficer: [ 3, 3 ]
             Detective: [ 1, 1 ]
             SecurityCadet: [ 2, 2 ]
             Brigmedic: [ 1, 1 ]
-            #supply
+            #supply (8)
             Quartermaster: [ 1, 1 ]
-            SalvageSpecialist: [ 5, 5 ]
+            SalvageSpecialist: [ 3, 3 ]
             CargoTechnician: [ 2, 2 ]
-            MailTech: [ 1, 2 ]
-            MiningSpecialist: [ 2, 3 ]
-            #civilian
+            MailTech: [ 1, 1 ]
+            MiningSpecialist: [ 1, 1 ]
+            #civilian (3+)
             Assistant: [ -1, -1 ]
             Clown: [ 1, 1 ]
             Mime: [ 1, 1 ]
             Musician: [ 1, 1 ]
-            #silicon
+            #silicon (3)
             StationAi: [ 1, 1 ]
             Borg: [ 2, 2 ]
-            #law
+            #law (3)
+            Magistrate: [ 1, 1 ]
             IAA: [ 2, 2 ]
-            #Representives
+            #Representives (2)
             BlueShield: [ 1, 1 ]
             NanoTrasenRepresentative: [ 1, 1 ]
