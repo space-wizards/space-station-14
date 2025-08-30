@@ -46,6 +46,19 @@ public sealed partial class InjectorComponent : Component
     public bool IgnoreMobs;
 
     /// <summary>
+    /// If true, this injector can only inject into mobs and not other containers.
+    /// </summary>
+    [DataField("onlyAffectsMobs"), AutoNetworkedField]
+    public bool OnlyAffectsMobs = false;
+
+    /// <summary>
+    /// Whether the injector should automatically toggle between inject/draw modes when emptied or filled.
+    /// </summary>
+    [DataField("autoToggle")]
+    [AutoNetworkedField]
+    public bool AutoToggle = true;
+
+    /// <summary>
     /// Whether or not the injector is able to draw from or inject into containers that are closed/sealed
     /// </summary>
     /// <remarks>
