@@ -390,13 +390,18 @@ public sealed class SharedKitchenSpikeSystem : EntitySystem
 
         while (query.MoveNext(out var uid, out var kitchenSpike))
         {
+            var contained = kitchenSpike.BodyContainer.ContainedEntity;
+
+            if (!contained.HasValue)
+                continue;
+
             if (kitchenSpike.NextDamage > _gameTiming.CurTime)
                 continue;
 
             kitchenSpike.NextDamage += kitchenSpike.DamageInterval;
             Dirty(uid, kitchenSpike);
 
-            _damageableSystem.TryChangeDamage(kitchenSpike.BodyContainer.ContainedEntity, kitchenSpike.TimeDamage, true);
+            _damageableSystem.TryChangeDamage(contained, kitchenSpike.TimeDamage, true);
         }
     }
 
