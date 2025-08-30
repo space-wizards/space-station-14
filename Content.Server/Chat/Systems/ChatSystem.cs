@@ -7,7 +7,6 @@ using Content.Server.Chat.Managers;
 using Content.Server.GameTicking;
 using Content.Server.Speech.EntitySystems;
 using Content.Server.Speech.Prototypes;
-using Content.Server.Station.Components;
 using Content.Server.Station.Systems;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Administration;
@@ -21,7 +20,7 @@ using Content.Shared.Mobs.Systems;
 using Content.Shared.Players;
 using Content.Shared.Players.RateLimiting;
 using Content.Shared.Radio;
-using Robust.Server.Console;
+using Content.Shared.Station.Components;
 using Content.Shared.Whitelist;
 using Robust.Server.Player;
 using Robust.Shared.Audio;
@@ -37,6 +36,7 @@ using Robust.Shared.Utility;
 using Content.Shared.Corvax.TTS;
 using Content.Shared.Dataset;
 using Content.DeadSpace.Interfaces.Server;
+using Robust.Server.Console;
 
 namespace Content.Server.Chat.Systems;
 
@@ -64,12 +64,6 @@ public sealed partial class ChatSystem : SharedChatSystem
     [Dependency] private readonly EntityWhitelistSystem _whitelistSystem = default!;
     [Dependency] private readonly ExamineSystemShared _examineSystem = default!;
     private IServerChatFilter? _chatFilter; // DS14-chat-filter
-
-    public const int VoiceRange = 10; // how far voice goes in world units
-    public const int WhisperClearRange = 2; // how far whisper goes while still being understandable, in world units
-    public const int WhisperMuffledRange = 8; // how far whisper goes at all, in world units
-    public const string DefaultAnnouncementSound = "/Audio/_DeadSpace/Announcements/announce.ogg"; // DS14-Announcements
-    public const string CentComAnnouncementSound = "/Audio/_DeadSpace/Announcements/centcomm.ogg"; // DS14-Announcements
 
     private bool _loocEnabled = true;
     private bool _deadLoocEnabled;
@@ -366,7 +360,7 @@ public sealed partial class ChatSystem : SharedChatSystem
                 if (sender == Loc.GetString("chat-manager-sender-announcement")) announcementSound = new SoundPathSpecifier(CentComAnnouncementSound); // Corvax-Announcements: Support custom alert sound from admin panel
             }
 
-            _audio.PlayGlobal(announcementSound == null ? DefaultAnnouncementSound : _audio.ResolveSound(announcementSound), Filter.Broadcast(), true, announcementSound?.Params ?? AudioParams.Default.WithVolume(-2f));
+            _audio.PlayGlobal(announcementSound ?? DefaultAnnouncementSound : _audio.ResolveSound(announcementSound), Filter.Broadcast(), true, announcementSound?.Params ?? AudioParams.Default.WithVolume(-2f));
 
             if (author != null && TryComp<TTSComponent>(author.Value, out var tts) && tts.VoicePrototypeId != null) // For comms console announcements
             {
@@ -413,7 +407,7 @@ public sealed partial class ChatSystem : SharedChatSystem
         _chatManager.ChatMessageToManyFiltered(filter, ChatChannel.Radio, message, wrappedMessage, source ?? default, false, true, colorOverride);
         if (playSound)
         {
-            _audio.PlayGlobal(announcementSound?.ToString() ?? DefaultAnnouncementSound, filter, true, AudioParams.Default.WithVolume(-2f));
+            _audio.PlayGlobal(announcementSound ?? DefaultAnnouncementSound, filter, true, AudioParams.Default.WithVolume(-2f));
         }
         _adminLogger.Add(LogType.Chat, LogImpact.Low, $"Station Announcement from {sender}: {message}");
     }
@@ -453,7 +447,7 @@ public sealed partial class ChatSystem : SharedChatSystem
 
         if (playDefaultSound)
         {
-            _audio.PlayGlobal(announcementSound?.ToString() ?? DefaultAnnouncementSound, filter, true, AudioParams.Default.WithVolume(-2f));
+            _audio.PlayGlobal(announcementSound ?? DefaultAnnouncementSound, filter, true, AudioParams.Default.WithVolume(-2f));
         }
 
         _adminLogger.Add(LogType.Chat, LogImpact.Low, $"Station Announcement on {station} from {sender}: {message}");

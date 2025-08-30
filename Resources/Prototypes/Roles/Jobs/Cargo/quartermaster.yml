@@ -52,7 +52,7 @@
     id: QuartermasterPDA
     eyes: ClothingEyesGlassesSunglasses
     ears: ClothingHeadsetQM
-    belt: BoxFolderClipboard
+    belt: BoxFolderClipboardThreePapers
     socks: ClothingUnderwearSocksQuartermaster
     pocket1: AppraisalTool
   storage:

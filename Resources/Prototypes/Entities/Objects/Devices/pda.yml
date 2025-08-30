@@ -1477,7 +1477,7 @@
       - BankCartridge
 
 - type: entity
-  parent: BasePDA
+  parent: [BasePDA, SelectableLock]
   id: ChameleonPDA
   name: passenger PDA
   description: Why isn't it gray?

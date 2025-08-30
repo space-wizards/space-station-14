@@ -9,7 +9,6 @@ using Content.Server.GameTicking;
 using Content.Server.Screens.Components;
 using Content.Server.Shuttles.Components;
 using Content.Server.Shuttles.Systems;
-using Content.Server.Station.Components;
 using Content.Server.Station.Systems;
 using Content.Shared.Database;
 using Content.Shared.DeviceNetwork;
@@ -20,6 +19,7 @@ using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
 using Content.Shared.DeviceNetwork.Components;
+using Content.Shared.Station.Components;
 using Timer = Robust.Shared.Timing.Timer;
 using Robust.Shared.Audio;
 
@@ -98,10 +98,10 @@ namespace Content.Server.RoundEnd
         /// </summary>
         public EntityUid? GetStation()
         {
-            AllEntityQuery<StationEmergencyShuttleComponent, StationDataComponent>().MoveNext(out _, out _, out var data);
+            AllEntityQuery<StationEmergencyShuttleComponent, StationDataComponent>().MoveNext(out var uid, out _, out var data);
             if (data == null)
                 return null;
-            var targetGrid = _stationSystem.GetLargestGrid(data);
+            var targetGrid = _stationSystem.GetLargestGrid((uid, data));
             return targetGrid == null ? null : Transform(targetGrid.Value).MapUid;
         }
 

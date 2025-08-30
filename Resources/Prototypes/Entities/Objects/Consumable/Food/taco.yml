@@ -132,7 +132,7 @@
   name: beef taco supreme
   parent: FoodTacoBase
   id: FoodTacoBeefSupreme
-  description: It's like a regular beef taco, but surpeme!
+  description: It's like a regular beef taco, but supreme!
   components:
   - type: Food
   - type: Sprite
@@ -151,7 +151,7 @@
   name: chicken taco supreme
   parent: FoodTacoBase
   id: FoodTacoChickenSupreme
-  description: It's like a regular chicken taco, but surpeme!
+  description: It's like a regular chicken taco, but supreme!
   components:
   - type: Food
   - type: Sprite

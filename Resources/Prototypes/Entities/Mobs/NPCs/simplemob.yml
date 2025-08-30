@@ -19,7 +19,6 @@
     baseSprintSpeed : 4
   - type: StatusEffects
     allowed:
-    - Stutter
     - Electrocution
     - TemporaryBlindness
     - Pacified
@@ -99,7 +98,6 @@
     allowed:
     - SeeingRainbows # DS14
     - Drunk # DS14
-    - Stutter
     - Electrocution
     - TemporaryBlindness
     - Pacified

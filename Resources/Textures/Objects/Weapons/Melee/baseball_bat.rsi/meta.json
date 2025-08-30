@@ -1,7 +1,7 @@
 {
   "version": 1,
   "license": "CC-BY-NC-SA-3.0",
-  "copyright": "Created by discord:𝘽𝙚𝙡𝙖𝙮#7441",
+  "copyright": "Created by discord:𝘽𝙚𝙡𝙖𝙮#7441, vertical icon sprite by TiniestShark",
   "size": {
       "x": 32,
       "y": 32
@@ -9,6 +9,9 @@
   "states": [
     {
       "name": "icon"
+    },
+    {
+      "name": "storage"
     },
     {
       "name": "inhand-left",

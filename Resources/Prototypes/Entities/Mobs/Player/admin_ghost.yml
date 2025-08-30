@@ -125,7 +125,7 @@
   components:
   - type: Action
     icon: { sprite: Structures/Machines/parts.rsi, state: box_0 }
-    iconOn: Structures/Machines/parts.rsi/box_2.png
+    iconOn: { sprite: Structures/Machines/parts.rsi, state: box_2 }
     keywords: [ "AI", "console", "interface" ]
     priority: -10
 

@@ -1021,8 +1021,8 @@
     damageCoefficient: 0.1
   - type: FireProtection
     reduction: 0.5 # DS14-value
-  - type: StaminaResistance
-    damageCoefficient: 0.15 # Needs 21 hits with a disabler to stun :godo:
+  # - type: StaminaResistance # do not add these to other equipment or mobs, we don't want to microbalance these everywhere
+  #   damageCoefficient: 0.15 # Needs 21 hits with a disabler to stun :godo:
   - type: Armor
     modifiers:
       coefficients:

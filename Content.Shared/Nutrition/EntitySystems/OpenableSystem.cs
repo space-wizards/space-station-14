@@ -104,7 +104,7 @@ public sealed partial class OpenableSystem : EntitySystem
                 Text = Loc.GetString(comp.CloseVerbText),
                 Icon = new SpriteSpecifier.Texture(new("/Textures/Interface/VerbIcons/close.svg.192dpi.png")),
                 Act = () => TryClose(args.Target, comp, args.User),
-                // this verb is lower priority than drink verb (2) so it doesn't conflict
+                Priority = 3
             };
         }
         else
@@ -113,7 +113,8 @@ public sealed partial class OpenableSystem : EntitySystem
             {
                 Text = Loc.GetString(comp.OpenVerbText),
                 Icon = new SpriteSpecifier.Texture(new("/Textures/Interface/VerbIcons/open.svg.192dpi.png")),
-                Act = () => TryOpen(args.Target, comp, args.User)
+                Act = () => TryOpen(args.Target, comp, args.User),
+                Priority = 3
             };
         }
         args.Verbs.Add(verb);
@@ -122,10 +123,7 @@ public sealed partial class OpenableSystem : EntitySystem
     private void OnTransferAttempt(Entity<OpenableComponent> ent, ref SolutionTransferAttemptEvent args)
     {
         if (!ent.Comp.Opened)
-        {
-            // message says its just for drinks, shouldn't matter since you typically dont have a food that is openable and can be poured out
-            args.Cancel(Loc.GetString("drink-component-try-use-drink-not-open", ("owner", ent.Owner)));
-        }
+            args.Cancel(Loc.GetString(ent.Comp.ClosedPopup, ("owner", ent.Owner)));
     }
 
     private void OnAttemptShake(Entity<OpenableComponent> entity, ref AttemptShakeEvent args)

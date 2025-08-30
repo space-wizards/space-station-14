@@ -79,7 +79,7 @@
     eyes: ClothingEyesGlassesSunglasses
     gloves: ClothingHandsGlovesHop
     ears: ClothingHeadsetAltCommand
-    belt: BoxFolderClipboard
+    belt: BoxFolderClipboardThreePapers
     socks: ClothingUnderwearSocksHeadofPersonnel
   storage:
     back:
