@@ -1,6 +1,7 @@
 using Content.Client.Items.Systems;
 using Content.Shared.Chemistry;
 using Content.Shared.Chemistry.Components;
+using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Clothing;
 using Content.Shared.Clothing.Components;
@@ -9,7 +10,6 @@ using Content.Shared.Hands;
 using Content.Shared.Item;
 using Content.Shared.Rounding;
 using Robust.Client.GameObjects;
-using Robust.Shared.Containers;
 using Robust.Shared.Prototypes;
 
 namespace Content.Client.Chemistry.Visualizers;
@@ -18,8 +18,8 @@ public sealed class SolutionContainerVisualsSystem : VisualizerSystem<SolutionCo
 {
     [Dependency] private readonly IPrototypeManager _prototype = default!;
     [Dependency] private readonly ItemSystem _itemSystem = default!;
-    [Dependency] private readonly SharedContainerSystem _container = default!;
     [Dependency] private readonly AppearanceSystem _appearance = default!;
+    [Dependency] private readonly SharedSolutionContainerSystem _solutionContainers = default!;
 
     public override void Initialize()
     {
@@ -173,20 +173,14 @@ public sealed class SolutionContainerVisualsSystem : VisualizerSystem<SolutionCo
 
         var slot = itemSlotsComponent.Slots[insertedItemSlotID];
         var insertedUid = slot.Item;  //Uid of item (beaker for example) inserted into machine 
-        if (insertedUid == null) return false;
 
-        var containerManagerComponent = CompOrNull<ContainerManagerComponent>(insertedUid); // now trying to get Solution inside beaker
-        if (containerManagerComponent == null) return false;
+        if (insertedUid == null ||
+            !_solutionContainers.TryGetFitsInDispenser(insertedUid.Value, out var solution, out _) ||
+            solution == null)
+            return false;
 
-        foreach (var con in _container.GetAllContainers(insertedUid.Value, containerManagerComponent))
-        {
-            if (con == null || con.ContainedEntities.Count == 0) continue;
-
-            solutionComponent = Comp<SolutionComponent>(con.ContainedEntities[0]);
-
-            return true;
-        }
-        return false;
+        solutionComponent = solution;
+        return true;
     }
 
     private void OnGetHeldVisuals(EntityUid uid, SolutionContainerVisualsComponent component, GetInhandVisualsEvent args)
