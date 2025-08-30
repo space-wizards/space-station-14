@@ -33,7 +33,7 @@ public sealed partial class LawDisplay : Control
 
         var identifier = law.LawIdentifierOverride ?? $"{law.Order}";
         var lawIdentifier = Loc.GetString("laws-ui-law-header", ("id", identifier));
-        var lawDescription = Loc.GetString(law.LawString);
+        var lawDescription = Loc.GetString(law.ReadLawString(readoutModeEnabled));
         var lawIdentifierPlaintext = FormattedMessage.RemoveMarkupPermissive(lawIdentifier);
         var lawDescriptionPlaintext = FormattedMessage.RemoveMarkupPermissive(lawDescription);
 
