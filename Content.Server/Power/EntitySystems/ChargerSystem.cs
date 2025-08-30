@@ -46,7 +46,7 @@ internal sealed class ChargerSystem : EntitySystem
         using (args.PushGroup(nameof(ChargerComponent)))
         {
             // rate at which the charger charges
-            args.PushMarkup(Loc.GetString("charger-examine", ("color", "yellow"), ("chargeRate", (int) component.ChargeRate)));
+            args.PushMarkup(Loc.GetString("charger-examine", ("color", "yellow"), ("chargeRate", (int)component.ChargeRate)));
 
             // try to get contents of the charger
             if (!_container.TryGetContainer(uid, component.SlotId, out var container))
@@ -70,7 +70,7 @@ internal sealed class ChargerSystem : EntitySystem
                         continue;
 
                     var chargePercentage = (battery.CurrentCharge / battery.MaxCharge) * 100;
-                    args.PushMarkup(Loc.GetString("charger-content", ("chargePercentage", (int) chargePercentage)));
+                    args.PushMarkup(Loc.GetString("charger-content", ("chargePercentage", (int)chargePercentage)));
                 }
             }
         }
@@ -186,10 +186,9 @@ internal sealed class ChargerSystem : EntitySystem
 
     private void UpdateBatteryAppearance(EntityUid uid, ChargerComponent component)
     {
-        if (TryComp(uid, out AppearanceComponent? appearance))
+        if (TryComp(uid, out AppearanceComponent? appearance) && _container.TryGetContainer(uid, component.SlotId, out var container))
         {
-            var hasContainer = _container.TryGetContainer(uid, component.SlotId, out var container);
-            var containsBattery = hasContainer && container.ContainedEntities.Count > 0;
+            var containsBattery = container.ContainedEntities.Count > 0;
             _appearance.SetData(uid, CellVisual.Occupied, containsBattery, appearance);
         }
     }
