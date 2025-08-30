@@ -83,7 +83,7 @@ public sealed partial class StrapComponent : Component
     /// How long it takes to buckle someone else into a chair
     /// </summary>
     [DataField]
-    public float BuckleDoafterTime = 2f;
+    public float BuckleDoAfterTime = 2f;
 
     /// <summary>
     /// Whether InteractHand will buckle the user to the strap.

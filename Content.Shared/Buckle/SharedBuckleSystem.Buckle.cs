@@ -51,10 +51,10 @@ public abstract partial class SharedBuckleSystem
         SubscribeLocalEvent<BuckleComponent, ThrowPushbackAttemptEvent>(OnBuckleThrowPushbackAttempt);
         SubscribeLocalEvent<BuckleComponent, UpdateCanMoveEvent>(OnBuckleUpdateCanMove);
 
-        SubscribeLocalEvent<BuckleComponent, BuckleDoAfterEvent>(OnBuckleDoafter);
+        SubscribeLocalEvent<BuckleComponent, BuckleDoAfterEvent>(OnBuckleDoAfter);
         SubscribeLocalEvent<BuckleComponent, DoAfterAttemptEvent<BuckleDoAfterEvent>>((uid, comp, ev) =>
         {
-            BuckleDoafterEarly((uid, comp), ev.Event, ev);
+            BuckleDoAfterEarly((uid, comp), ev.Event, ev);
         });
     }
 
@@ -540,7 +540,7 @@ public abstract partial class SharedBuckleSystem
     /// <param name="args.User"> The person putting a person in a chair/bed</param>
     /// <param name="args.Used"> The chair/bed </param>
 
-    private void OnBuckleDoafter(Entity<BuckleComponent> entity, ref BuckleDoAfterEvent args)
+    private void OnBuckleDoAfter(Entity<BuckleComponent> entity, ref BuckleDoAfterEvent args)
     {
         if (args.Cancelled || args.Handled || args.Target == null || args.Used == null)
             return;
@@ -555,7 +555,7 @@ public abstract partial class SharedBuckleSystem
     /// <param name="args.Target"> The person being put in the chair/bed</param>
     /// <param name="args.User"> The person putting a person in a chair/bed</param>
     /// <param name="args.Used"> The chair/bed </param>
-    private void BuckleDoafterEarly(Entity<BuckleComponent> entity, BuckleDoAfterEvent args, CancellableEntityEventArgs ev)
+    private void BuckleDoAfterEarly(Entity<BuckleComponent> entity, BuckleDoAfterEvent args, CancellableEntityEventArgs ev)
     {
         if (args.Target == null || args.Used == null)
             return;
