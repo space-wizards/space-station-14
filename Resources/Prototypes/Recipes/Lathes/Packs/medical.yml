@@ -14,6 +14,7 @@
   - LargeBeaker
   - Syringe
   - PillCanister
+  - MedicalPouch
   - HandLabeler
   - BaseChemistryEmptyVial
 
@@ -66,13 +67,12 @@
   id: EmptyMedkitsStatic
   recipes:
   - Medkit
-  - MedkitBurn
-  - MedkitToxin
-  - MedkitO2
   - MedkitBrute
-  - MedkitAdvanced
+  - MedkitBurn
+  - MedkitO2
+  - MedkitToxin
   - MedkitRadiation
-  - MedkitCombat
+  - MedkitAdvanced
 
 - type: latheRecipePack
   id: MedicalBoardsStatic
