@@ -26,14 +26,14 @@ public sealed partial class LawDisplay : Control
 
     private readonly Dictionary<Button, TimeSpan> _nextAllowedPress = new();
 
-    public LawDisplay(EntityUid uid, SiliconLaw law, HashSet<string>? radioChannels)
+    public LawDisplay(EntityUid uid, SiliconLaw law, bool readoutModeEnabled, HashSet<string>? radioChannels)
     {
         RobustXamlLoader.Load(this);
         IoCManager.InjectDependencies(this);
 
         var identifier = law.LawIdentifierOverride ?? $"{law.Order}";
         var lawIdentifier = Loc.GetString("laws-ui-law-header", ("id", identifier));
-        var lawDescription = Loc.GetString(law.LawString);
+        var lawDescription = Loc.GetString(law.ReadLawString(readoutModeEnabled));
         var lawIdentifierPlaintext = FormattedMessage.RemoveMarkupPermissive(lawIdentifier);
         var lawDescriptionPlaintext = FormattedMessage.RemoveMarkupPermissive(lawDescription);
 

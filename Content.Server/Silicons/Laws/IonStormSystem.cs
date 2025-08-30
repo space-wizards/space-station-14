@@ -93,7 +93,8 @@ public sealed class IonStormSystem : EntitySystem
         }
 
         // generate a new law...
-        var newLaw = GenerateLaw();
+        var newLawString = GenerateLaw();
+        var flavorFormattedLawString = CorruptLawString(newLawString);
 
         // see if the law we add will replace a random existing law or be a new glitched order one
         if (laws.Laws.Count > 0 && _robustRandom.Prob(target.ReplaceChance))
@@ -101,7 +102,8 @@ public sealed class IonStormSystem : EntitySystem
             var i = _robustRandom.Next(laws.Laws.Count);
             laws.Laws[i] = new SiliconLaw()
             {
-                LawString = newLaw,
+                LawString = newLawString,
+                FlavorFormattedLawString = flavorFormattedLawString,
                 Order = laws.Laws[i].Order
             };
         }
@@ -109,7 +111,8 @@ public sealed class IonStormSystem : EntitySystem
         {
             laws.Laws.Insert(0, new SiliconLaw
             {
-                LawString = newLaw,
+                LawString = newLawString,
+                FlavorFormattedLawString = flavorFormattedLawString,
                 Order = -1,
                 LawIdentifierOverride = Loc.GetString("ion-storm-law-scrambled-number", ("length", _robustRandom.Next(5, 10)))
             });
@@ -258,5 +261,16 @@ public sealed class IonStormSystem : EntitySystem
     {
         var dataset = _proto.Index<DatasetPrototype>(name);
         return _robustRandom.Pick(dataset.Values);
+    }
+
+    /// <summary>
+    /// Applies corrupted law formatting.
+    /// These should be limited cosmetic flavoring to indicate corruption only.
+    /// The law should remain readable.
+    /// </summary>
+    private string CorruptLawString(string originalLawString)
+    {
+        // Currently just makes the law all-caps
+        return Loc.GetString(originalLawString).ToUpperInvariant();
     }
 }

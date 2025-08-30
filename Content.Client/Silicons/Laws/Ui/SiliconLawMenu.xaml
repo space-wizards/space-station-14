@@ -7,6 +7,7 @@
     <BoxContainer Orientation="Vertical"
                   HorizontalExpand="True"
                   VerticalExpand="True">
+        <CheckBox Name="ReadoutMode" Text="{Loc 'laws-ui-readout-mode'}" Pressed="False" HorizontalExpand="True" HorizontalAlignment="Right" Margin="10 10 20 0" ToolTip="{Loc 'laws-ui-readout-mode-tooltip'}"/>
         <PanelContainer VerticalExpand="True" Margin="10 10 10 10">
             <PanelContainer.PanelOverride>
                 <gfx:StyleBoxFlat BackgroundColor="#1B1B1E"/>
