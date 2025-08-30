@@ -3917,3 +3917,11 @@
   id: 8900
   time: '2025-08-29T11:48:31.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/39950
+- author: Dutch-VanDerLinde
+  changes:
+  - message: The forensic scanner no longer leaks fingerprints or glove prints onto
+      the scanning object if you use the right-click scan verb.
+    type: Fix
+  id: 8901
+  time: '2025-08-30T14:00:47.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/39964
