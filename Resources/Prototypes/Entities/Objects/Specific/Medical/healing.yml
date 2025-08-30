@@ -770,6 +770,8 @@
   parent: Pill
   id: PillAmbuzol
   components:
+    - type: Sprite
+      state: pill4
     - type: SolutionContainerManager
       solutions:
         food:
@@ -794,6 +796,19 @@
           reagents:
             - ReagentId: AmbuzolPlus
               Quantity: 5
+
+- type: entity
+  name: pill canister
+  parent: PillCanister
+  id: PillCanisterAmbuzol
+  suffix: Ambuzol 10u, 5
+  components:
+  - type: Label
+    currentLabel: ambuzol 10u
+  - type: StorageFill
+    contents:
+    - id: PillAmbuzol
+      amount: 5
 
 - type: entity
   parent: PillCanister
