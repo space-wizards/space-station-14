@@ -50,6 +50,7 @@
   - type: ProtectedFromStepTriggers
   - type: NoSlip
   - type: Insulated
+  - type: CargoSellBlacklist
 
 # Used for bots
 - type: entity
