@@ -707,3 +707,19 @@ FoodDonutJellySlugcat: FoodDonutJellyScurret
 # 2025-08-11
 ClothingUniformJumpsuitChiefEngineerNT: ClothingUniformJumpsuitChiefEngineer
 ClothingUniformJumpsuitParamedicNT: ClothingUniformJumpsuitParamedic
+
+# 2025-08-19
+SignCanisters: SignCans
+SignCryogenics: SignCryogenicsMed
+SignDanger: SignDangerMed
+SignElectrical: SignElectricalMed
+SignExplosives: ExplosivesSignMed
+SignFire: SignFlammableMed
+SignFlammable: SignFlammableMed
+SignLaser: SignLaserMed
+SignMagnetics: SignMagneticsMed
+SignOptical: SignRadiationMed
+SignRadiation: SignRadiationMed
+SignSecure: SignSecureMed
+SignSecurearea: SignSecureMedRed
+SignShock: SignElectricalMed
