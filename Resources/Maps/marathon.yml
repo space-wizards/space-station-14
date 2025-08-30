@@ -4,8 +4,8 @@ meta:
   engineVersion: 266.0.0
   forkId: ""
   forkVersion: ""
-  time: 08/29/2025 04:04:10
-  entityCount: 23823
+  time: 08/30/2025 03:17:00
+  entityCount: 23829
 maps:
 - 5350
 grids:
@@ -6523,7 +6523,7 @@ entities:
             2: 34952
           6,-6:
             2: 61440
-            6: 224
+            5: 224
           6,-5:
             0: 112
             2: 2184
@@ -6532,7 +6532,7 @@ entities:
             3: 57344
           6,-7:
             3: 224
-            5: 57344
+            6: 57344
           6,-9:
             3: 57568
           7,-5:
@@ -7667,8 +7667,8 @@ entities:
         - volume: 2500
           temperature: 293.15
           moles:
-          - 6666.982
           - 0
+          - 6666.982
           - 0
           - 0
           - 0
@@ -7682,8 +7682,8 @@ entities:
         - volume: 2500
           temperature: 293.15
           moles:
-          - 0
           - 6666.982
+          - 0
           - 0
           - 0
           - 0
@@ -11880,7 +11880,7 @@ entities:
       pos: 34.5,45.5
       parent: 30
     - type: Door
-      secondsUntilStateChange: -25103.123
+      secondsUntilStateChange: -25299.53
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -13768,6 +13768,14 @@ entities:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 3.5,10.5
+      parent: 30
+    - type: Fixtures
+      fixtures: {}
+  - uid: 23387
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: -30.5,41.5
       parent: 30
     - type: Fixtures
       fixtures: {}
@@ -34922,6 +34930,11 @@ entities:
     - type: Transform
       pos: -10.5,-66.5
       parent: 30
+  - uid: 23829
+    components:
+    - type: Transform
+      pos: -30.5,41.5
+      parent: 30
 - proto: CableApcStack
   entities:
   - uid: 1637
@@ -47164,6 +47177,31 @@ entities:
     components:
     - type: Transform
       pos: -24.5,-38.5
+      parent: 30
+  - uid: 23824
+    components:
+    - type: Transform
+      pos: -32.5,43.5
+      parent: 30
+  - uid: 23825
+    components:
+    - type: Transform
+      pos: -31.5,43.5
+      parent: 30
+  - uid: 23826
+    components:
+    - type: Transform
+      pos: -30.5,43.5
+      parent: 30
+  - uid: 23827
+    components:
+    - type: Transform
+      pos: -30.5,42.5
+      parent: 30
+  - uid: 23828
+    components:
+    - type: Transform
+      pos: -30.5,41.5
       parent: 30
 - proto: CableMVStack
   entities:
