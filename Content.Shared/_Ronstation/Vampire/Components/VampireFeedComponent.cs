@@ -9,7 +9,8 @@ using Robust.Shared.Prototypes;
 
 
 namespace Content.Shared._Ronstation.Vampire.Components;
-[RegisterComponent, NetworkedComponent, AutoGenerateComponentState, AutoGenerateComponentPause]
+
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
 [Access(typeof(VampireFeedSystem))]
 public sealed partial class VampireFeedComponent : Component
 {
@@ -33,7 +34,6 @@ public sealed partial class VampireFeedComponent : Component
     {
         Components =
         [
-            "MobState",
             "HumanoidAppearance",
         ],
     };
@@ -46,22 +46,14 @@ public sealed partial class VampireFeedComponent : Component
     [DataField, AutoNetworkedField]
     public TimeSpan DamageTimeBetweenTicks = TimeSpan.FromSeconds(1);
 
-    [DataField, AutoNetworkedField]
-    public FixedPoint2 TransferAmount = FixedPoint2.New(5);
+    // [DataField, AutoNetworkedField]
+    // public FixedPoint2 TransferAmount = FixedPoint2.New(5);
 
     /// <summary>
     /// How long it takes to drink this yourself.
     /// </summary>
     [DataField, AutoNetworkedField]
     public float Delay = 1;
-
-    /// <summary>
-    /// If true, trying to drink when empty will not handle the event.
-    /// This means other systems such as equipping on use can run.
-    /// Example usecase is the bucket.
-    /// </summary>
-    [DataField]
-    public bool IgnoreEmpty;
 
     /// <summary>
     /// The damage profile for a single tick of feed damage
@@ -75,4 +67,6 @@ public sealed partial class VampireFeedComponent : Component
             { "Piercing", 10 },
         },
     };
+
+   public override bool SendOnlyToOwner => true;
 }

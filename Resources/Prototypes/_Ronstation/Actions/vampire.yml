@@ -1,15 +1,14 @@
-# - type: entity
-#   id: ActionVampireFeed
-#   name: feed
-#   description: Drain blood from someone to sate your hunger
-#   components:
-#     - type: EntityTargetAction
-#       icon:
-#         sprite:
-#         state:
-#       event: !type:VampireFeedActionEvent
-#       whitelist:
-#         components:
-#         - HumanoidApperance
-#       canTargetSelf: false
-#       itemIconStyle: BigAction
+- type: entity
+  parent: BaseAction
+  id: ActionVampireFeed
+  name: feed
+  description: Drain blood from someone to sate your hunger
+  components:
+  - type: Action
+    icon: { sprite : Interface/Actions/devour.rsi, state: icon }
+    iconOn: { sprite : Interface/Actions/devour.rsi, state: icon-on }
+    itemIconStyle: BigAction
+    priority: 1
+  - type: TargetAction
+  - type: EntityTargetAction
+    event: !type:VampireFeedActionEvent
