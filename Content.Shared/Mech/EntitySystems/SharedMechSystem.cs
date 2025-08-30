@@ -598,6 +598,10 @@ public abstract partial class SharedMechSystem : EntitySystem
         }
 
         UpdateAppearance(ent);
+
+        // Toggle movement energy drain based on pilot presence
+        var drainToggle = new MechMovementDrainToggleEvent(args.NewOperator != null);
+        RaiseLocalEvent(ent, ref drainToggle);
     }
 
     private void OnGetVerb(EntityUid uid, MechComponent component, GetVerbsEvent<Verb> args)

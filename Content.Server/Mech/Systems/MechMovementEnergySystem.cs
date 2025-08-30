@@ -4,7 +4,9 @@ using Content.Shared.FixedPoint;
 using Content.Shared.Mech.Components;
 using Content.Shared.Movement.Components;
 using Content.Shared.Vehicle;
+using Content.Shared.Vehicle.Components;
 using System.Numerics;
+using System.Linq;
 
 namespace Content.Server.Mech.Systems;
 
@@ -18,40 +20,52 @@ public sealed class MechMovementEnergySystem : EntitySystem
     [Dependency] private readonly MechSystem _mechSystem = default!;
     [Dependency] private readonly PowerCell.PowerCellSystem _powerCell = default!;
 
+    private readonly HashSet<EntityUid> _activeMechs = new();
+
+    public override void Initialize()
+    {
+        base.Initialize();
+        SubscribeLocalEvent<MechComponent, MechMovementDrainToggleEvent>(OnDrainToggle);
+    }
+
+    private void OnDrainToggle(EntityUid uid, MechComponent component, ref MechMovementDrainToggleEvent args)
+    {
+        if (args.Enabled)
+            _activeMechs.Add(uid);
+        else
+            _activeMechs.Remove(uid);
+    }
+
     public override void Update(float frameTime)
     {
         base.Update(frameTime);
 
-        var enumerate = EntityQueryEnumerator<MechComponent, InputMoverComponent>();
-        while (enumerate.MoveNext(out var mechUid, out var mech, out var mover))
+        if (_activeMechs.Count == 0)
+            return;
+
+        foreach (var mechUid in _activeMechs.ToArray())
         {
+            if (!TryComp<MechComponent>(mechUid, out var mech) || !TryComp<InputMoverComponent>(mechUid, out var mover))
+            {
+                _activeMechs.Remove(mechUid);
+                continue;
+            }
+
             if (mech.MovementEnergyPerSecond <= 0f)
                 continue;
 
-            if (!_vehicle.HasOperator(mechUid))
-                continue;
-
-            if (!mover.CanMove)
-                continue;
-
-            if (mover.WishDir == Vector2.Zero)
+            if (!mover.CanMove || mover.WishDir == Vector2.Zero)
                 continue;
 
             if (!_powerCell.TryGetBatteryFromSlot(mechUid, out var battEnt, out var battery))
                 continue;
 
-            if (battery.CurrentCharge <= 0f)
-                continue;
-
             var toDrain = mech.MovementEnergyPerSecond * frameTime;
-            if (toDrain <= 0f)
-                continue;
 
-            // If requested drain exceeds remaining charge, clamp battery to zero.
             if (battery.CurrentCharge < toDrain)
             {
-                EntityManager.System<Power.EntitySystems.BatterySystem>().SetCharge(battEnt.Value, 0f, battery);
                 _actionBlocker.UpdateCanMove(mechUid);
+                _activeMechs.Remove(mechUid);
                 continue;
             }
 
@@ -60,4 +74,3 @@ public sealed class MechMovementEnergySystem : EntitySystem
         }
     }
 }
-

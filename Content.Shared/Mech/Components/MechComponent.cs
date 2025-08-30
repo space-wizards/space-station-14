@@ -233,3 +233,9 @@ public sealed partial class MechComponent : Component
     /// </summary>
     public TimeSpan LastUiUpdate;
 }
+
+/// <summary>
+/// Raised to enable/disable mech movement energy drain for this mech.
+/// </summary>
+[ByRefEvent]
+public readonly record struct MechMovementDrainToggleEvent(bool Enabled);
