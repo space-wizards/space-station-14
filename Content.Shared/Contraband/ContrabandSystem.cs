@@ -115,9 +115,9 @@ public sealed class ContrabandSystem : EntitySystem
     private FormattedMessage GetContrabandExamine(String deptMessage, String carryMessage)
     {
         var msg = new FormattedMessage();
-        msg.AddMarkupOrThrow(deptMessage);
+        msg.AddMarkupPermissive(deptMessage);
         msg.PushNewline();
-        msg.AddMarkupOrThrow(carryMessage);
+        msg.AddMarkupPermissive(carryMessage);
         return msg;
     }
 

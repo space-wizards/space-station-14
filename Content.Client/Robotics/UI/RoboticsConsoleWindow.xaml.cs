@@ -139,13 +139,13 @@ public sealed partial class RoboticsConsoleWindow : FancyWindow
         };
 
         var text = new FormattedMessage();
-        text.AddMarkupOrThrow($"{Loc.GetString("robotics-console-model", ("name", model))}\n");
-        text.AddMarkupOrThrow(Loc.GetString("robotics-console-designation"));
+        text.AddMarkupPermissive($"{Loc.GetString("robotics-console-model", ("name", model))}\n");
+        text.AddMarkupPermissive(Loc.GetString("robotics-console-designation"));
         text.AddText($" {data.Name}\n"); // prevent players trolling by naming borg [color=red]satan[/color]
-        text.AddMarkupOrThrow($"{Loc.GetString("robotics-console-battery", ("charge", (int)(data.Charge * 100f)), ("color", batteryColor))}\n");
-        text.AddMarkupOrThrow($"{Loc.GetString("robotics-console-hp", ("hp", (int)(data.HpPercent * 100f)), ("color", hpPercentColor))}\n");
-        text.AddMarkupOrThrow($"{Loc.GetString("robotics-console-brain", ("brain", data.HasBrain))}\n");
-        text.AddMarkupOrThrow(Loc.GetString("robotics-console-modules", ("count", data.ModuleCount)));
+        text.AddMarkupPermissive($"{Loc.GetString("robotics-console-battery", ("charge", (int)(data.Charge * 100f)), ("color", batteryColor))}\n");
+        text.AddMarkupPermissive($"{Loc.GetString("robotics-console-hp", ("hp", (int)(data.HpPercent * 100f)), ("color", hpPercentColor))}\n");
+        text.AddMarkupPermissive($"{Loc.GetString("robotics-console-brain", ("brain", data.HasBrain))}\n");
+        text.AddMarkupPermissive(Loc.GetString("robotics-console-modules", ("count", data.ModuleCount)));
         BorgInfo.SetMessage(text);
 
         // how the turntables

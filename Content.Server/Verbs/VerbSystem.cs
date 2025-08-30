@@ -77,8 +77,9 @@ namespace Content.Server.Verbs
             {
                 // Send an informative pop-up message
                 if (!string.IsNullOrWhiteSpace(verb.Message))
-                    _popupSystem.PopupEntity(FormattedMessage.RemoveMarkupOrThrow(verb.Message), user, user);
-
+                {
+                    _popupSystem.PopupEntity(FormattedMessage.RemoveMarkupPermissive(verb.Message), user, user);
+                }
                 return;
             }
 
