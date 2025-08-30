@@ -164,34 +164,16 @@ internal sealed class ChargerSystem : EntitySystem
 
         if (component.Status == CellChargerStatus.Charging)
         {
+            receiver.Load = component.ChargeRate;
             AddComp<ActiveChargerComponent>(uid);
         }
         else
         {
+            receiver.Load = component.MinimumLoad;
             RemComp<ActiveChargerComponent>(uid);
         }
 
-        switch (component.Status)
-        {
-            case CellChargerStatus.Off:
-                receiver.Load = 0;
-                _appearance.SetData(uid, CellVisual.Light, CellChargerStatus.Off, appearance);
-                break;
-            case CellChargerStatus.Empty:
-                receiver.Load = 0;
-                _appearance.SetData(uid, CellVisual.Light, CellChargerStatus.Empty, appearance);
-                break;
-            case CellChargerStatus.Charging:
-                receiver.Load = component.ChargeRate;
-                _appearance.SetData(uid, CellVisual.Light, CellChargerStatus.Charging, appearance);
-                break;
-            case CellChargerStatus.Charged:
-                receiver.Load = 0;
-                _appearance.SetData(uid, CellVisual.Light, CellChargerStatus.Charged, appearance);
-                break;
-            default:
-                throw new ArgumentOutOfRangeException();
-        }
+        _appearance.SetData(uid, CellVisual.Light, component.Status, appearance);
     }
 
     private void OnEmpPulse(EntityUid uid, ChargerComponent component, ref EmpPulseEvent args)
