@@ -3935,3 +3935,10 @@
   id: 8902
   time: '2025-08-30T14:42:43.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/38774
+- author: Kowlin
+  changes:
+  - message: Derelict cyborgs can no longer duplicate their ghost role.
+    type: Fix
+  id: 8903
+  time: '2025-08-30T17:17:50.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/39992
