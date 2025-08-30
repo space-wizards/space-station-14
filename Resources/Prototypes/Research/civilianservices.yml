@@ -50,6 +50,7 @@
   - SurveillanceWirelessCameraAnchoredCircuitboard
   - SurveillanceCameraMonitorCircuitboard
   - SurveillanceWirelessCameraMonitorCircuitboard
+  - SurveillanceWirelessCameraHandheld
   - TelecomServerCircuitboard
   - HolopadMachineCircuitboard
 
