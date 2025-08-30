@@ -1,138 +1,181 @@
+using System.Linq;
 using Content.Shared.Body.Components;
 using Content.Shared.Body.Events;
 using Content.Shared.Body.Organ;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Components.SolutionManager;
 using Content.Shared.Chemistry.EntitySystems;
+using Content.Shared.Chemistry.Reagent;
+using Content.Shared.FixedPoint;
 using Robust.Shared.Containers;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 
-namespace Content.Shared.Body.Systems
+namespace Content.Shared.Body.Systems;
+
+public sealed class StomachSystem : EntitySystem
 {
-    public sealed class StomachSystem : EntitySystem
+    [Dependency] private readonly IGameTiming _gameTiming = default!;
+    [Dependency] private readonly SharedSolutionContainerSystem _solutionContainerSystem = default!;
+
+    public const string DefaultSolutionName = "stomach";
+
+    public override void Initialize()
     {
-        [Dependency] private readonly IGameTiming _gameTiming = default!;
-        [Dependency] private readonly SharedSolutionContainerSystem _solutionContainerSystem = default!;
+        SubscribeLocalEvent<StomachComponent, MapInitEvent>(OnMapInit);
+        SubscribeLocalEvent<StomachComponent, EntityUnpausedEvent>(OnUnpaused);
+        SubscribeLocalEvent<StomachComponent, EntRemovedFromContainerMessage>(OnEntRemoved);
+        SubscribeLocalEvent<StomachComponent, ApplyMetabolicMultiplierEvent>(OnApplyMetabolicMultiplier);
+        SubscribeLocalEvent<StomachComponent, SolutionContainerChangedEvent>(OnSolutionContainerChanged);
+    }
 
-        public const string DefaultSolutionName = "stomach";
+    private void OnMapInit(Entity<StomachComponent> ent, ref MapInitEvent args)
+    {
+        var curTime = _gameTiming.CurTime;
+        ent.Comp.NextUpdate = curTime + ent.Comp.UpdateInterval;
+        // TODO: this is inaccurate for persistence; this should be changed once
+        // https://github.com/space-wizards/RobustToolbox/issues/3768 is fixed
+        // That being said, we don't serialize stuff like BaseMob so I think
+        // this only matters for... not much, but it's the thought that counts.
+        UpdateDigestionTimes(ent, _ => curTime + ent.Comp.AdjustedDigestionDelay);
+    }
 
-        public override void Initialize()
+    private void OnUnpaused(Entity<StomachComponent> ent, ref EntityUnpausedEvent args)
+    {
+        var time = args.PausedTime;
+        ent.Comp.NextUpdate += time;
+        UpdateDigestionTimes(ent, t => t + time);
+    }
+
+    private void OnEntRemoved(Entity<StomachComponent> ent, ref EntRemovedFromContainerMessage args)
+    {
+        // Make sure the removed entity was our contained solution
+        if (ent.Comp.Solution is not { } solution || args.Entity != solution.Owner)
+            return;
+
+        // Cleared our cached reference to the solution entity
+        ent.Comp.Solution = null;
+    }
+
+    public override void Update(float frameTime)
+    {
+        var query = EntityQueryEnumerator<StomachComponent, OrganComponent, SolutionContainerManagerComponent>();
+        var curTime = _gameTiming.CurTime;
+        while (query.MoveNext(out var uid, out var stomach, out var organ, out var sol))
         {
-            SubscribeLocalEvent<StomachComponent, MapInitEvent>(OnMapInit);
-            SubscribeLocalEvent<StomachComponent, EntityUnpausedEvent>(OnUnpaused);
-            SubscribeLocalEvent<StomachComponent, EntRemovedFromContainerMessage>(OnEntRemoved);
-            SubscribeLocalEvent<StomachComponent, ApplyMetabolicMultiplierEvent>(OnApplyMetabolicMultiplier);
-        }
+            if (curTime < stomach.NextUpdate)
+                continue;
 
-        private void OnMapInit(Entity<StomachComponent> ent, ref MapInitEvent args)
-        {
-            ent.Comp.NextUpdate = _gameTiming.CurTime + ent.Comp.AdjustedUpdateInterval;
-        }
+            stomach.NextUpdate += stomach.UpdateInterval;
 
-        private void OnUnpaused(Entity<StomachComponent> ent, ref EntityUnpausedEvent args)
-        {
-            ent.Comp.NextUpdate += args.PausedTime;
-        }
+            // Get our solutions
+            if (!_solutionContainerSystem.ResolveSolution((uid, sol),
+                    DefaultSolutionName,
+                    ref stomach.Solution,
+                    out var stomachSolution))
+                continue;
 
-        private void OnEntRemoved(Entity<StomachComponent> ent, ref EntRemovedFromContainerMessage args)
-        {
-            // Make sure the removed entity was our contained solution
-            if (ent.Comp.Solution is not { } solution || args.Entity != solution.Owner)
-                return;
+            if (organ.Body is not { } body
+                || !_solutionContainerSystem.TryGetSolution(body, stomach.BodySolutionName, out var bodySolution))
+                continue;
 
-            // Cleared our cached reference to the solution entity
-            ent.Comp.Solution = null;
-        }
+            var transferSolution = new Solution();
 
-        public override void Update(float frameTime)
-        {
-            var query = EntityQueryEnumerator<StomachComponent, OrganComponent, SolutionContainerManagerComponent>();
-            while (query.MoveNext(out var uid, out var stomach, out var organ, out var sol))
+            foreach (var (id, deltas) in stomach.ReagentDeltas.ToList())
             {
-                if (_gameTiming.CurTime < stomach.NextUpdate)
-                    continue;
+                // Get the deltas that we can now digest
+                var expiredDeltas = deltas
+                    .Where(delta => curTime >= delta.DigestionTime)
+                    .ToList();
 
-                stomach.NextUpdate += stomach.AdjustedUpdateInterval;
-
-                // Get our solutions
-                if (!_solutionContainerSystem.ResolveSolution((uid, sol), DefaultSolutionName, ref stomach.Solution, out var stomachSolution))
-                    continue;
-
-                if (organ.Body is not { } body || !_solutionContainerSystem.TryGetSolution(body, stomach.BodySolutionName, out var bodySolution))
-                    continue;
-
-                var transferSolution = new Solution();
-
-                var queue = new RemQueue<StomachComponent.ReagentDelta>();
-                foreach (var delta in stomach.ReagentDeltas)
+                foreach (var (quantity, _) in expiredDeltas)
                 {
-                    delta.Increment(stomach.AdjustedUpdateInterval);
-                    if (delta.Lifetime > stomach.DigestionDelay)
-                    {
-                        if (stomachSolution.TryGetReagent(delta.ReagentQuantity.Reagent, out var reagent))
-                        {
-                            if (reagent.Quantity > delta.ReagentQuantity.Quantity)
-                                reagent = new(reagent.Reagent, delta.ReagentQuantity.Quantity);
+                    // Weird, but it'll get removed from our tracking later
+                    if (!stomachSolution.TryGetReagent(quantity.Reagent, out var reagent))
+                        continue;
 
-                            stomachSolution.RemoveReagent(reagent);
-                            transferSolution.AddReagent(reagent);
-                        }
+                    if (reagent.Quantity > quantity.Quantity)
+                        reagent = new(reagent.Reagent, quantity.Quantity);
 
-                        queue.Add(delta);
-                    }
+                    stomachSolution.RemoveReagent(reagent);
+                    transferSolution.AddReagent(reagent);
                 }
 
-                foreach (var item in queue)
-                {
-                    stomach.ReagentDeltas.Remove(item);
-                }
-
-                _solutionContainerSystem.UpdateChemicals(stomach.Solution.Value);
-
-                // Transfer everything to the body solution!
-                _solutionContainerSystem.TryAddSolution(bodySolution.Value, transferSolution);
+                // Clean up the entry if it's empty
+                if (stomach.ReagentDeltas[id].Count == expiredDeltas.Count)
+                    stomach.ReagentDeltas.Remove(id);
+                else
+                    stomach.ReagentDeltas[id] = deltas.Except(expiredDeltas).ToList();
             }
-        }
 
-        private void OnApplyMetabolicMultiplier(Entity<StomachComponent> ent, ref ApplyMetabolicMultiplierEvent args)
-        {
-            ent.Comp.UpdateIntervalMultiplier = args.Multiplier;
-        }
+            _solutionContainerSystem.UpdateChemicals(stomach.Solution.Value);
 
-        public bool CanTransferSolution(
-            EntityUid uid,
-            Solution solution,
-            StomachComponent? stomach = null,
-            SolutionContainerManagerComponent? solutions = null)
-        {
-            return Resolve(uid, ref stomach, ref solutions, logMissing: false)
-                && _solutionContainerSystem.ResolveSolution((uid, solutions), DefaultSolutionName, ref stomach.Solution, out var stomachSolution)
-                // TODO: For now no partial transfers. Potentially change by design
-                && stomachSolution.CanAddSolution(solution);
+            // Transfer everything to the body solution!
+            _solutionContainerSystem.TryAddSolution(bodySolution.Value, transferSolution);
         }
+    }
 
-        public bool TryTransferSolution(
-            EntityUid uid,
-            Solution solution,
-            StomachComponent? stomach = null,
-            SolutionContainerManagerComponent? solutions = null)
+    private void OnApplyMetabolicMultiplier(Entity<StomachComponent> ent, ref ApplyMetabolicMultiplierEvent args)
+    {
+        var curTime = _gameTiming.CurTime;
+        var multiplier = args.Multiplier;
+        UpdateDigestionTimes(ent, t => curTime + multiplier/ent.Comp.DigestionDelayMultiplier * (t - curTime));
+        ent.Comp.DigestionDelayMultiplier = multiplier;
+    }
+
+    private void OnSolutionContainerChanged(Entity<StomachComponent> ent, ref SolutionContainerChangedEvent args)
+    {
+        if (args.SolutionId != DefaultSolutionName)
+            return;
+
+        var curTime = _gameTiming.CurTime;
+        foreach (var reagent in args.Solution.Contents)
         {
-            if (!Resolve(uid, ref stomach, ref solutions, logMissing: false)
-                || !_solutionContainerSystem.ResolveSolution((uid, solutions), DefaultSolutionName, ref stomach.Solution)
-                || !CanTransferSolution(uid, solution, stomach, solutions))
+            var known = ent.Comp.ReagentDeltas.GetOrNew(reagent.Reagent);
+            var knownQuantity = known.Sum(delta => delta.Reagent.Quantity);
+
+            if (reagent.Quantity <= knownQuantity)
+                continue;
+
+            // If the stomach now has a higher quantity of a reagent than what
+            // we've tracked, add it as a new delta. Otherwise... we don't
+            // bother, as it'll be removed in the stomach update loop. It would
+            // be more correct to handle that here, but... it'd be kinda tricky
+            // and I was told it's fine for now™.
+            var newQuantity = new ReagentQuantity(reagent.Reagent, reagent.Quantity - knownQuantity);
+            known.Add(new ReagentDelta(newQuantity, curTime + ent.Comp.AdjustedDigestionDelay));
+        }
+    }
+
+    private void UpdateDigestionTimes(Entity<StomachComponent> ent, Func<TimeSpan, TimeSpan> func)
+    {
+        foreach (var (id, deltas) in ent.Comp.ReagentDeltas)
+        {
+            foreach (var (i, delta) in deltas.Index().ToList())
             {
-                return false;
+                ent.Comp.ReagentDeltas[id][i] = delta with { DigestionTime = func(delta.DigestionTime) };
             }
-
-            _solutionContainerSystem.TryAddSolution(stomach.Solution.Value, solution);
-            // Add each reagent to ReagentDeltas. Used to track how long each reagent has been in the stomach
-            foreach (var reagent in solution.Contents)
-            {
-                stomach.ReagentDeltas.Add(new StomachComponent.ReagentDelta(reagent));
-            }
-
-            return true;
         }
+    }
+
+    /// <summary>
+    /// Attempts to transfer a solution into a given stomach.
+    /// </summary>
+    /// <param name="ent">The stomach to be inserted into.</param>
+    /// <param name="solution">
+    /// The solution to be added. If it cannot fit, it will be partially
+    /// transferred.
+    /// </param>
+    /// <returns>
+    /// False if the stomach's solution couldn't be resolved. Otherwise, true.
+    /// </returns>
+    public bool TryTransferSolution(Entity<StomachComponent?, SolutionContainerManagerComponent?> ent, Solution solution)
+    {
+        if (!Resolve(ent, ref ent.Comp1, ref ent.Comp2, logMissing: false)
+            || !_solutionContainerSystem.ResolveSolution((ent, ent.Comp2), DefaultSolutionName, ref ent.Comp1.Solution))
+            return false;
+
+        _solutionContainerSystem.AddSolution(ent.Comp1.Solution.Value, solution);
+        return true;
     }
 }
