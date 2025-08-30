@@ -24,8 +24,6 @@ public sealed class MechAtmosphereSystem : EntitySystem
 
     public override void Initialize()
     {
-        base.Initialize();
-
         SubscribeLocalEvent<MechComponent, MechAirtightMessage>(OnAirtightMessage);
         SubscribeLocalEvent<MechComponent, MechFanToggleMessage>(OnFanToggleMessage);
         SubscribeLocalEvent<MechComponent, MechFilterToggleMessage>(OnFilterToggleMessage);
@@ -49,7 +47,7 @@ public sealed class MechAtmosphereSystem : EntitySystem
             uiDirty |= UpdateCabinPressure(uid, mechComp);
 
             if (uiDirty && EntityManager.System<UserInterfaceSystem>().IsUiOpen(uid, MechUiKey.Key))
-                UpdateMechUi(uid);
+                UpdateMechUI(uid);
         }
     }
 
@@ -183,7 +181,7 @@ public sealed class MechAtmosphereSystem : EntitySystem
         // Сannot be airtight if CanAirtight is false.
         component.Airtight = component.CanAirtight && args.IsAirtight;
         Dirty(uid, component);
-        UpdateMechUi(uid);
+        UpdateMechUI(uid);
     }
 
     private void OnFanToggleMessage(EntityUid uid, MechComponent component, MechFanToggleMessage args)
@@ -202,7 +200,7 @@ public sealed class MechAtmosphereSystem : EntitySystem
             Dirty(uid, component);
         }
 
-        UpdateMechUi(uid);
+        UpdateMechUI(uid);
     }
 
     private void OnFilterToggleMessage(EntityUid uid, MechComponent component, MechFilterToggleMessage args)
@@ -213,7 +211,7 @@ public sealed class MechAtmosphereSystem : EntitySystem
 
         fanModule.FilterEnabled = args.Enabled;
         Dirty(uid, component);
-        UpdateMechUi(uid);
+        UpdateMechUI(uid);
     }
 
     private void OnInhale(EntityUid uid, MechPilotComponent component, InhaleLocationEvent args)
@@ -222,7 +220,7 @@ public sealed class MechAtmosphereSystem : EntitySystem
             return;
 
         args.Gas = GetInhaleMixture(component.Mech, mech, args.Respirator?.BreathVolume ?? 0f);
-        UpdateMechUi(component.Mech);
+        UpdateMechUI(component.Mech);
     }
 
     private void OnExhale(EntityUid uid, MechPilotComponent component, ExhaleLocationEvent args)
@@ -231,7 +229,7 @@ public sealed class MechAtmosphereSystem : EntitySystem
             return;
 
         args.Gas = GetExhaleMixture(component.Mech, mech);
-        UpdateMechUi(component.Mech);
+        UpdateMechUI(component.Mech);
     }
 
     private void OnExpose(EntityUid uid, MechPilotComponent component, ref AtmosExposedGetAirEvent args)
@@ -244,7 +242,7 @@ public sealed class MechAtmosphereSystem : EntitySystem
 
         args.Gas = GetExposureMixture(component.Mech, mech, args.Excite);
         args.Handled = true;
-        UpdateMechUi(component.Mech);
+        UpdateMechUI(component.Mech);
     }
 
     private GasMixture? GetInhaleMixture(EntityUid mechUid, MechComponent mechComp, float breathVolume)
@@ -291,7 +289,7 @@ public sealed class MechAtmosphereSystem : EntitySystem
         return null;
     }
 
-    private void UpdateMechUi(EntityUid uid)
+    private void UpdateMechUI(EntityUid uid)
     {
         RaiseLocalEvent(uid, new UpdateMechUiEvent());
     }

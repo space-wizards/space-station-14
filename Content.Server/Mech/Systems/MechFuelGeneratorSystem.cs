@@ -18,7 +18,6 @@ public sealed partial class MechFuelGeneratorBridgeSystem : EntitySystem
 
     public override void Initialize()
     {
-        base.Initialize();
         SubscribeLocalEvent<MechGeneratorModuleComponent, MechEquipmentUiMessageRelayEvent>(OnMechGeneratorMessage);
     }
 
@@ -76,9 +75,8 @@ public sealed partial class MechFuelGeneratorBridgeSystem : EntitySystem
 		}
 	}
 
-	private void UpdateMechUI(EntityUid uid)
-	{
-		var ev = new UpdateMechUiEvent();
-		RaiseLocalEvent(uid, ev);
-	}
+    private void UpdateMechUI(EntityUid uid)
+    {
+        RaiseLocalEvent(uid, new UpdateMechUiEvent());
+    }
 }

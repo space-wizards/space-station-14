@@ -66,7 +66,6 @@ public sealed partial class MechTeslaRelaySystem : EntitySystem
 
 	private void UpdateMechUI(EntityUid uid)
 	{
-		var ev = new UpdateMechUiEvent();
-		RaiseLocalEvent(uid, ev);
+		RaiseLocalEvent(uid, new UpdateMechUiEvent());
 	}
 }

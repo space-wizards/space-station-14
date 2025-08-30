@@ -44,8 +44,6 @@ public sealed class MechInterfaceSystem : EntitySystem
 
     public override void Initialize()
     {
-        base.Initialize();
-
         SubscribeLocalEvent<MechComponent, UpdateMechUiEvent>(OnUpdateMechUi);
 
         Subs.BuiEvents<MechComponent>(MechUiKey.Key, subs =>
@@ -109,32 +107,21 @@ public sealed class MechInterfaceSystem : EntitySystem
     private void HandleEquipmentRemove(Entity<MechComponent> ent, ref MechEquipmentRemoveMessage args)
     {
         var equipment = GetEntity(args.Equipment);
-        if (!TryRemoveItem(ent, equipment, ent.Comp.EquipmentContainer))
+        if (!ent.Comp.EquipmentContainer.Contains(equipment))
             return;
 
         _container.Remove(equipment, ent.Comp.EquipmentContainer);
-        UpdateMechUi(ent);
+        UpdateMechUI(ent.Owner);
     }
 
     private void HandleModuleRemove(Entity<MechComponent> ent, ref MechModuleRemoveMessage args)
     {
         var module = GetEntity(args.Module);
-        if (!TryRemoveItem(ent, module, ent.Comp.ModuleContainer))
+        if (!ent.Comp.ModuleContainer.Contains(module))
             return;
 
         _container.Remove(module, ent.Comp.ModuleContainer);
-        UpdateMechUi(ent);
-    }
-
-    private bool TryRemoveItem(Entity<MechComponent> ent, EntityUid item, Container container)
-    {
-        if (item == EntityUid.Invalid)
-            return false;
-
-        if (!container.ContainedEntities.Contains(item))
-            return false;
-
-        return true;
+        UpdateMechUI(ent.Owner);
     }
 
     private void HandleCabinPurge(Entity<MechComponent> ent, ref MechCabinAirMessage args)
@@ -156,7 +143,7 @@ public sealed class MechInterfaceSystem : EntitySystem
 
         var purgeComp = EnsureComp<MechCabinPurgeComponent>(ent);
         purgeComp.CooldownRemaining = purgeComp.CooldownDuration;
-        UpdateMechUi(ent);
+        UpdateMechUI(ent);
     }
 
 
@@ -414,7 +401,7 @@ public sealed class MechInterfaceSystem : EntitySystem
         _uiSystem.SetUiState(uid, MechUiKey.Key, state);
     }
 
-    private void UpdateMechUi(EntityUid uid)
+    private void UpdateMechUI(EntityUid uid)
     {
         RaiseLocalEvent(uid, new UpdateMechUiEvent());
     }
