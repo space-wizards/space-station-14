@@ -1,10 +1,16 @@
 using Content.Server.Chat.Systems;
+using Content.Server.Construction;
+using Content.Server.Mind;
+using Content.Server.Roles;
 using Content.Shared.Chat.Prototypes;
+using Content.Shared.Containers.ItemSlots;
 using Content.Shared.DeviceNetwork.Components;
+using Content.Shared.Roles;
 using Content.Shared.Silicons.StationAi;
 using Content.Shared.StationAi;
 using Content.Shared.Turrets;
 using Content.Shared.Weapons.Ranged.Events;
+using Robust.Server.Containers;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
@@ -16,10 +22,17 @@ public sealed class StationAiSystem : SharedStationAiSystem
 {
     [Dependency] private readonly EntityLookupSystem _lookup = default!;
     [Dependency] private readonly SharedTransformSystem _xforms = default!;
+    [Dependency] private readonly ContainerSystem _container = default!;
+    [Dependency] private readonly MindSystem _mind = default!;
+    [Dependency] private readonly RoleSystem _roles = default!;
+    [Dependency] private readonly ItemSlotsSystem _slots = default!;
 
     private readonly HashSet<Entity<StationAiCoreComponent>> _stationAiCores = new();
     private readonly ProtoId<ChatNotificationPrototype> _turretIsAttackingChatNotificationPrototype = "TurretIsAttacking";
     private readonly ProtoId<ChatNotificationPrototype> _aiWireSnippedChatNotificationPrototype = "AiWireSnipped";
+
+    private readonly ProtoId<JobPrototype> _stationAiJob = "StationAi";
+    private readonly EntProtoId _stationAiBrain = "StationAiBrain";
 
     public override void Initialize()
     {
@@ -27,6 +40,38 @@ public sealed class StationAiSystem : SharedStationAiSystem
 
         SubscribeLocalEvent<ExpandICChatRecipientsEvent>(OnExpandICChatRecipients);
         SubscribeLocalEvent<StationAiTurretComponent, AmmoShotEvent>(OnAmmoShot);
+        SubscribeLocalEvent<StationAiCoreComponent, AfterConstructionChangeEntityEvent>(AfterConstructionChangeEntity);
+    }
+
+    private void AfterConstructionChangeEntity(Entity<StationAiCoreComponent> ent, ref AfterConstructionChangeEntityEvent args)
+    {
+        if (!_container.TryGetContainer(ent, StationAiCoreComponent.BrainContainer, out var container) ||
+            container.Count == 0)
+        {
+            return;
+        }
+
+        var brain = container.ContainedEntities[0];
+
+        if (_mind.TryGetMind(brain, out var mindId, out var mind))
+        {
+            // Found an existing mind to transfer into the AI core
+            var aiBrain = Spawn(_stationAiBrain, Transform(ent.Owner).Coordinates);
+            _roles.MindAddJobRole(mindId, mind, false, _stationAiJob);
+            _mind.TransferTo(mindId, aiBrain);
+
+            if (!TryComp<StationAiHolderComponent>(ent, out var targetHolder) ||
+                !_slots.TryInsert(ent, targetHolder.Slot, aiBrain, null))
+            {
+                QueueDel(aiBrain);
+            }
+        }
+
+        // TODO: We should consider keeping the borg brain inside the AI core.
+        // When the core is destroyed, the station AI can be transferred into the brain,
+        // then dropped on the ground. The deceased AI can then be revived later,
+        // instead of being lost forever.
+        QueueDel(brain);
     }
 
     private void OnExpandICChatRecipients(ExpandICChatRecipientsEvent ev)
