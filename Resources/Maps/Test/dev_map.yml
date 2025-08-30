@@ -9619,7 +9619,6 @@ entities:
           showEnts: False
           occludes: True
           ents:
-          - 2115
           - 2114
           - 2113
           - 2112
@@ -12099,15 +12098,6 @@ entities:
       canCollide: False
     - type: InsideEntityStorage
   - uid: 2114
-    components:
-    - type: Transform
-      parent: 2107
-    - type: Physics
-      canCollide: False
-    - type: InsideEntityStorage
-- proto: MagazineLightRifleMaxim
-  entities:
-  - uid: 2115
     components:
     - type: Transform
       parent: 2107
