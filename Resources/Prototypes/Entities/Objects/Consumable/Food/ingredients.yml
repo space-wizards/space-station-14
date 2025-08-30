@@ -261,6 +261,7 @@
 
 # Baking
 
+#only bake goods have temperature for now. Needed to be able to cook food without microwave recipe
 - type: entity
   abstract: true
   parent: FoodBase
@@ -269,6 +270,11 @@
   components:
   - type: Sprite
     sprite: Objects/Consumable/Food/ingredients.rsi
+  - type: Temperature
+    currentTemperature: 290
+  - type: InternalTemperature
+    thickness: 0.02
+    area: 0.02
   - type: SolutionContainerManager
     solutions:
       food:
@@ -313,7 +319,7 @@
     tags:
     - Slice
   - type: Construction
-    graph: DoughRope
+    graph: CookingDough
     node: start
   - type: SolutionContainerManager
     solutions:
@@ -335,7 +341,7 @@
   - type: Sprite
     state: dough-rope
   - type: Construction
-    graph: DoughRope
+    graph: CookingDough
     node: rolled
   - type: SolutionContainerManager
     solutions:
@@ -477,7 +483,7 @@
     - Slice
     - ClothMade
   - type: Construction
-    graph: DoughRopeCotton
+    graph: CookingCottonDough
     node: start
   - type: SolutionContainerManager
     solutions:
@@ -502,7 +508,7 @@
   - type: Sprite
     state: cotton-dough-rope
   - type: Construction
-    graph: DoughRopeCotton
+    graph: CookingCottonDough
     node: rolled
   - type: SolutionContainerManager
     solutions:

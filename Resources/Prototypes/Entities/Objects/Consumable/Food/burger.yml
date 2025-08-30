@@ -19,6 +19,10 @@
         reagents:
         - ReagentId: Nutriment
           Quantity: 6.66 # 1/3 of a loaf of bread, technically losing 0.01 nutriment per batch of three buns over making bread loaves/slices
+  - type: Construction
+    graph: CookingDough
+    node: cookedBun
+
   - type: Butcherable
     butcherDelay: 1
     spawned:
