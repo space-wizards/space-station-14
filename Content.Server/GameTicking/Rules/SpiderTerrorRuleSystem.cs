@@ -6,7 +6,6 @@ using Content.Server.DeadSpace.Spiders.SpiderTerror.Components;
 using Content.Shared.Mind;
 using Content.Shared.Objectives.Systems;
 using Content.Server.Nuke;
-using Content.Server.Station.Components;
 using Robust.Shared.Audio;
 using Content.Shared.Audio;
 using Content.Server.Station.Systems;
@@ -20,6 +19,7 @@ using Content.Server.Chat.Managers;
 using Content.Server.DeadSpace.Spiders.SpideRoyalGuard.Components;
 using Content.Server.Voting.Managers;
 using Content.Shared.Voting;
+using Content.Shared.Station.Components;
 
 namespace Content.Server.GameTicking.Rules;
 

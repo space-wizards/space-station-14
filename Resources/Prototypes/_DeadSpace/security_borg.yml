@@ -217,9 +217,9 @@
     - state: security
     - state: icon-energy
   - type: ItemBorgModule
-    items:
-    - WeaponDisablerBorg
-    - WeaponLaserGunBorg
+    hands:
+    - item: WeaponDisablerBorg
+    - item: WeaponLaserGunBorg
 
 - type: entity
   id: BorgModuleArrestSecurity
@@ -233,9 +233,9 @@
     - state: security
     - state: icon-arrest
   - type: ItemBorgModule
-    items:
-    - StunbatonBorg
-    - BorgSecJawsOfLife
+    hands:
+    - item: StunbatonBorg
+    - item: BorgSecJawsOfLife
 
 - type: entity
   id: BaseBorgModuleSecurity

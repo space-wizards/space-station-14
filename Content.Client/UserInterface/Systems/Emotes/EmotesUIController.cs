@@ -133,59 +133,59 @@ public sealed class EmotesUIController : UIController, IOnStateChanged<GameplayS
         _menu = null;
     }
 
-    private IEnumerable<RadialMenuOption> ConvertToButtons(IEnumerable<EmotePrototype> emotePrototypes)
-    {
-        var whitelistSystem = EntitySystemManager.GetEntitySystem<EntityWhitelistSystem>();
-        var player = _playerManager.LocalSession?.AttachedEntity;
+    // private IEnumerable<RadialMenuOption> ConvertToButtons(IEnumerable<EmotePrototype> emotePrototypes)
+    // {
+    //     var whitelistSystem = EntitySystemManager.GetEntitySystem<EntityWhitelistSystem>();
+    //     var player = _playerManager.LocalSession?.AttachedEntity;
 
-        Dictionary<EmoteCategory, List<RadialMenuOption>> emotesByCategory = new();
-        foreach (var emote in emotePrototypes)
-        {
-            if(emote.Category == EmoteCategory.Invalid)
-                continue;
+    //     Dictionary<EmoteCategory, List<RadialMenuOption>> emotesByCategory = new();
+    //     foreach (var emote in emotePrototypes)
+    //     {
+    //         if(emote.Category == EmoteCategory.Invalid)
+    //             continue;
 
-            // only valid emotes that have ways to be triggered by chat and player have access / no restriction on
-            if (emote.Category == EmoteCategory.Invalid
-                || emote.ChatTriggers.Count == 0
-                || !(player.HasValue && whitelistSystem.IsWhitelistPassOrNull(emote.Whitelist, player.Value))
-                || whitelistSystem.IsBlacklistPass(emote.Blacklist, player.Value))
-                continue;
+    //         // only valid emotes that have ways to be triggered by chat and player have access / no restriction on
+    //         if (emote.Category == EmoteCategory.Invalid
+    //             || emote.ChatTriggers.Count == 0
+    //             || !(player.HasValue && whitelistSystem.IsWhitelistPassOrNull(emote.Whitelist, player.Value))
+    //             || whitelistSystem.IsBlacklistPass(emote.Blacklist, player.Value))
+    //             continue;
 
-            if (!emote.Available
-                && EntityManager.TryGetComponent<SpeechComponent>(player.Value, out var speech)
-                && !speech.AllowedEmotes.Contains(emote.ID))
-                continue;
+    //         if (!emote.Available
+    //             && EntityManager.TryGetComponent<SpeechComponent>(player.Value, out var speech)
+    //             && !speech.AllowedEmotes.Contains(emote.ID))
+    //             continue;
 
-            if (!emotesByCategory.TryGetValue(emote.Category, out var list))
-            {
-                list = new List<RadialMenuOption>();
-                emotesByCategory.Add(emote.Category, list);
-            }
+    //         if (!emotesByCategory.TryGetValue(emote.Category, out var list))
+    //         {
+    //             list = new List<RadialMenuOption>();
+    //             emotesByCategory.Add(emote.Category, list);
+    //         }
 
-            var actionOption = new RadialMenuActionOption<EmotePrototype>(HandleRadialButtonClick, emote)
-            {
-                Sprite = emote.Icon,
-                ToolTip = Loc.GetString(emote.Name)
-            };
-            list.Add(actionOption);
-        }
+    //         var actionOption = new RadialMenuActionOption<EmotePrototype>(HandleRadialButtonClick, emote)
+    //         {
+    //             Sprite = emote.Icon,
+    //             ToolTip = Loc.GetString(emote.Name)
+    //         };
+    //         list.Add(actionOption);
+    //     }
 
-        var models = new RadialMenuOption[emotesByCategory.Count];
-        var i = 0;
-        foreach (var (key, list) in emotesByCategory)
-        {
-            var tuple = EmoteGroupingInfo[key];
+    //     var models = new RadialMenuOption[emotesByCategory.Count];
+    //     var i = 0;
+    //     foreach (var (key, list) in emotesByCategory)
+    //     {
+    //         var tuple = EmoteGroupingInfo[key];
 
-            models[i] = new RadialMenuNestedLayerOption(list)
-            {
-                Sprite = tuple.Sprite,
-                ToolTip = Loc.GetString(tuple.Tooltip)
-            };
-            i++;
-        }
+    //         models[i] = new RadialMenuNestedLayerOption(list)
+    //         {
+    //             Sprite = tuple.Sprite,
+    //             ToolTip = Loc.GetString(tuple.Tooltip)
+    //         };
+    //         i++;
+    //     }
 
-        return models;
-    }
+    //     return models;
+    // }
 
     private void HandleRadialButtonClick(EmotePrototype prototype)
     {

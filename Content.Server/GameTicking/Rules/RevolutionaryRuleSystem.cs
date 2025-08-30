@@ -260,7 +260,10 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
         if (_mind.TryGetMind(headRevUid, out var revMindId, out _))
         {
             if (_role.MindHasRole<RevolutionaryRoleComponent>(revMindId, out var role))
+            {
                 role.Value.Comp2.ConvertedCount++;
+                Dirty(role.Value.Owner, role.Value.Comp2);
+            }
         }
 
         if (mindId == default || !_role.MindHasRole<RevolutionaryRoleComponent>(mindId))
@@ -377,7 +380,7 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
 
         foreach (var station in _stationSystem.GetStationsSet())
         {
-            if (TryComp<StationDataComponent>(station, out var data) && _stationSystem.GetLargestGrid(data) is { } grid)
+            if (_stationSystem.GetLargestGrid(station) is { } grid)
                 stationGrids.Add(grid);
         }
 

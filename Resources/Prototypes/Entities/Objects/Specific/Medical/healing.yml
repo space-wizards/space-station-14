@@ -359,7 +359,6 @@
   suffix: 5
   components:
   - type: Stack
-    lingering: true
     count: 5
 # DS14-end
 

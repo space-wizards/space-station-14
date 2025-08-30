@@ -37,7 +37,6 @@ using Robust.Server.GameObjects;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Collision.Shapes;
 using Robust.Shared.Physics.Systems;
-using Content.Server.Zombies;
 using Content.Shared.DeadSpace.Necromorphs.Sanity;
 using Content.Shared.Cuffs;
 using Content.Shared.Cuffs.Components;
@@ -49,6 +48,8 @@ using Content.Shared.Rotation;
 using Content.Shared.Interaction.Components;
 using Content.Shared.Body.Components;
 using Robust.Server.Player;
+using Content.Shared.Zombies;
+using Content.Shared.Sprite;
 
 namespace Content.Server.DeadSpace.Necromorphs.InfectionDead;
 

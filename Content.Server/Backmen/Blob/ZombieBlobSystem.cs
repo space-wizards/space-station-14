@@ -4,7 +4,6 @@ using Content.Server.Backmen.Body.Components;
 using Content.Server.Body.Components;
 using Content.Server.Body.Systems;
 using Content.Server.Chat.Managers;
-using Content.Server.Explosion.EntitySystems;
 using Content.Server.Mind;
 using Content.Server.NPC;
 using Content.Server.NPC.HTN;
@@ -13,19 +12,18 @@ using Content.Server.Speech.Components;
 using Content.Server.Temperature.Components;
 using Content.Shared.Atmos;
 using Content.Shared.Backmen.Blob.Components;
-using Content.Shared.Mind.Components;
 using Content.Shared.Mobs;
 using Content.Shared.NPC.Components;
 using Content.Shared.NPC.Prototypes;
 using Content.Shared.NPC.Systems;
 using Content.Shared.Physics;
 using Content.Shared.Tag;
+using Content.Shared.Trigger.Systems;
 using Content.Shared.Zombies;
 using Robust.Server.Player;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Systems;
-using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 
 namespace Content.Server.Backmen.Blob;
@@ -186,7 +184,7 @@ public sealed class ZombieBlobSystem : EntitySystem
             temperatureComponent.ColdDamageThreshold = component.OldColdDamageThreshold.Value;
         }
 
-        _tag.RemoveTag(uid, "BlobMob");
+        _tag.RemoveTag(uid, BlobTag);
 
         _trigger.Trigger(component.BlobPodUid);
         QueueDel(component.BlobPodUid);
@@ -196,7 +194,7 @@ public sealed class ZombieBlobSystem : EntitySystem
         {
             _faction.AddFaction(uid, factionId);
         }
-        _faction.RemoveFaction(uid, "Blob");
+        _faction.RemoveFaction(uid, BlobFaction);
 
         if (TryComp<FixturesComponent>(uid, out var fixtures))
         {

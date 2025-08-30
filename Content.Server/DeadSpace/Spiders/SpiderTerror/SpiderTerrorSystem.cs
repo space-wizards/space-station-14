@@ -6,6 +6,7 @@ using Content.Shared.Mind.Components;
 using Content.Server.Roles;
 using Content.Server.GameTicking;
 using Content.Shared.DeadSpace.Abilities.Bloodsucker;
+using Content.Shared.DeadSpace.Spiders.Roles;
 
 namespace Content.Server.DeadSpace.Spiders.SpiderTerror;
 

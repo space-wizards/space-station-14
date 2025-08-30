@@ -9,9 +9,9 @@
     - state: cargo
     - state: icon-pka
   - type: ItemBorgModule
-    items:
-    - WeaponProtoKineticAcceleratorBorg
-    - WeaponCrusherDagger
+    hands:
+    - item: WeaponProtoKineticAcceleratorBorg
+    - item: WeaponCrusherDagger
   - type: BorgModuleIcon
     icon: { sprite: /Textures/_DeadSpace/Interface/Actions/actions_borg.rsi, state: pka-mining-module }
   - type: Item
