@@ -38,7 +38,7 @@ public sealed partial class ArtifactAnalyzerComponent : Component
     public bool ReadyToPrint = false;
 
     /// <summary>
-    /// The machine linking port fpr linking the analyzer with the console.
+    /// The machine linking port for linking the analyzer with the console.
     /// </summary>
     [DataField]
     public ProtoId<SinkPortPrototype> LinkingPort = "ArtifactAnalyzerReceiver";
