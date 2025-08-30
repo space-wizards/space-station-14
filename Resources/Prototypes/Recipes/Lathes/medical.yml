@@ -64,6 +64,8 @@
   materials:
     Glass: 25
     Plastic: 25
+  reagents:
+    Diethylamine: 1
 
 - type: latheRecipe
   id: Gauze
@@ -71,6 +73,14 @@
   completetime: 1
   materials:
     Cloth: 100 # lathe more efficient than handcrafting
+
+- type: latheRecipe
+  id: Suture
+  result: MedicatedSuture
+  completetime: 1
+  materials:
+    Cloth: 100
+    Steel: 25
 
 - type: latheRecipe
   id: HandheldHealthAnalyzer

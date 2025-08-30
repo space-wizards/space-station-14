@@ -65,6 +65,16 @@ namespace Content.Shared.Research.Prototypes
         public bool ApplyMaterialDiscount = true;
 
         /// <summary>
+        ///     The reagents to produce this type.
+        ///     Takes a reagent ProtoId and a FixedPoint2
+        /// </summary>
+        [DataField]
+        public Dictionary<ProtoId<ReagentPrototype>, FixedPoint2> Reagents = new();
+
+        [DataField]
+        public bool ApplyReagentDiscount = true;
+
+        /// <summary>
         /// List of categories used for visually sorting lathe recipes in the UI.
         /// </summary>
         [DataField]
