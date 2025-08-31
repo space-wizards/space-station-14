@@ -128,7 +128,7 @@ public abstract class SharedVirtualItemSystem : EntitySystem
                 if (!_handsSystem.TryDrop(user, hand))
                     continue;
 
-                if (!TerminatingOrDeleted(held))
+                if (!TerminatingOrDeleted(held) && !HasComp<VirtualItemComponent>(held))
                     _popup.PopupClient(Loc.GetString("virtual-item-dropped-other", ("dropped", held)), user, user);
 
                 empty = hand;
