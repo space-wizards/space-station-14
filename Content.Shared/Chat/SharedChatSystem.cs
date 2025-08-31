@@ -33,9 +33,9 @@ public abstract class SharedChatSystem : EntitySystem
     public const int WhisperMuffledRange = 5; // how far whisper goes at all, in world units
     public const string DefaultAnnouncementSound = "/Audio/Announcements/announce.ogg";
 
-    public static readonly char[] ICDisallowedCharacters = ['[', ']', '\\'];
+    public static readonly char[] ICDisallowedCharacters = ['[', ']', '\\']; // Starlight
 
-public static readonly ProtoId<RadioChannelPrototype> CommonChannel = "Common";
+    public static readonly ProtoId<RadioChannelPrototype> CommonChannel = "Common";
 
     public static readonly string DefaultChannelPrefix = $"{RadioChannelPrefix}{DefaultChannelKey}";
     public static readonly ProtoId<SpeechVerbPrototype> DefaultSpeechVerb = "Default";
