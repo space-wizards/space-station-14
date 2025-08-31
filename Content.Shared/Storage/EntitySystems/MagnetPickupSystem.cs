@@ -1,3 +1,4 @@
+using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Inventory;
 using Content.Shared.Storage.Components;
 using Content.Shared.Whitelist;
@@ -17,6 +18,7 @@ public sealed class MagnetPickupSystem : EntitySystem
     [Dependency] private readonly SharedTransformSystem _transform = default!;
     [Dependency] private readonly SharedStorageSystem _storage = default!;
     [Dependency] private readonly EntityWhitelistSystem _whitelistSystem = default!;
+    [Dependency] private readonly SharedHandsSystem _hands = default!;
 
 
     private static readonly TimeSpan ScanDelay = TimeSpan.FromSeconds(1);
@@ -48,7 +50,9 @@ public sealed class MagnetPickupSystem : EntitySystem
 
             comp.NextScan += ScanDelay;
 
-            if (comp.SlotFlags != null)
+            var parentUid = xform.ParentUid;
+
+            if (comp.SlotFlags != null || !_hands.TryGetActiveItem(parentUid, out var activeItem) && activeItem != uid)
             {
                 if (!_inventory.TryGetContainingSlot((uid, xform, meta), out var slotDef))
                     continue;
@@ -61,7 +65,6 @@ public sealed class MagnetPickupSystem : EntitySystem
             if (!_storage.HasSpace((uid, storage)))
                 continue;
 
-            var parentUid = xform.ParentUid;
             var playedSound = false;
             var finalCoords = xform.Coordinates;
             var moverCoords = _transform.GetMoverCoordinates(uid, xform);
