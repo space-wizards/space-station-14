@@ -16,3 +16,5 @@ ent-GyroscopeUnanchored = { ent-Gyroscope }
 ent-DebugGyroscope = { ent-BaseThruster }
     .suffix = DEBUG
     .desc = { ent-BaseThruster.desc }
+ent-RustedThruster = rusted thruster
+    .desc = An unrepairable thruster, broken down from wear and tear. Only useful for scrapping.

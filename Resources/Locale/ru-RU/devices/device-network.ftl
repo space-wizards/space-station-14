@@ -11,6 +11,8 @@ device-frequency-prototype-name-cyborg-control = Управление кибор
 device-frequency-prototype-name-robotics-console = Консоль управления робототехникой
 device-frequency-prototype-name-turret = Sentry Turret
 device-frequency-prototype-name-turret-control = Sentry Turret Control
+device-frequency-prototype-name-xenoborg = Xenoborg
+device-frequency-prototype-name-mothership = Mothership
 # prefixes for randomly generated device addresses
 device-address-prefix-vent = Вент-
 device-address-prefix-scrubber = Скр-

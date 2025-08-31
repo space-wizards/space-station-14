@@ -20,3 +20,5 @@ ent-FoodHivelordRemains = остатки повелителя роя
     .desc = Это всё, что осталось от повелителя роя, и, похоже, именно это позволяет ему безвредно отделять от себя части... Его целебные свойства скоро утратят силу, если не воспользоваться ими поскорее. Постарайтесь не думать о том, что именно вы едите.
 ent-FoodHivelordRemainsInert = инертные остатки повелителя роя
     .desc = Это всё, что осталось от повелителя роя... Теперь точно всё.
+ent-MobBasilisk = basilisk
+    .desc = A territorial beast, covered in a thick shell that absorbs energy. Its stare causes victims to freeze from the inside.

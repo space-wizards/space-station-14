@@ -103,13 +103,11 @@ reagent-effect-guidebook-cause-infection-dead =
 # МУТАГЕН
 
 entity-name-stable-mutagen = стабильный мутаген
-
 reagent-effect-guidebook-mutate-infection-dead =
     { $chance ->
         [1] Стимулирует
        *[other] стимулирует
     } некроинфецию мутировать
-
 entity-name-stable-mutagen-infection-dead = стабильный мутаген некроинфекции
 entity-name-stable-not-mutagen-infection-dead = нестабильный мутаген некроинфекции
 reagent-desc-mutagen-infection-dead = Мощный мутаген, вызывающий некроинфекцию, стабилен и опасен.

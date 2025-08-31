@@ -22,3 +22,7 @@ marking-VoxHairMange = Вокс, Лишай
 marking-VoxHairPony = Вокс, Пони
 marking-VoxHairWiseBraid = Вокс, Мудрые косы
 marking-VoxHairSpotty = Вокс, Пёстрые волосы
+marking-VoxHairMadScientist = Vox Mad Scientist
+marking-VoxHairHedgehog = Vox Hedgehog
+marking-VoxHairBushy = Vox Bushy Quills
+marking-VoxHairSlick = Vox Slick Quills

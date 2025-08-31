@@ -13,3 +13,5 @@ ent-AtmosFixFreezerMarker = Atmos Fix Freezer Marker
 ent-AtmosFixVoxMarker = { ent-AtmosFixNitrogenMarker }
     .desc = Nitrogen @ 101 kPa, 20C
     .suffix = Vox Atmosphere
+ent-AtmosFixAirMarker = Atmos Fix Air Marker
+    .desc = Oxygen (21%) and nitrogen (79%) @ gas miner pressure, T20C

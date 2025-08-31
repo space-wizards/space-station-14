@@ -1,6 +1,11 @@
 ent-DrinkBottlePlasticBaseFull = { ent-DrinkBase }
     .desc = { ent-DrinkBase.desc }
     .suffix = Полный
+ent-DrinkBottlePlasticSmallBaseFull = { ent-DrinkBase }
+    .suffix = Full
+    .desc = { ent-DrinkBase.desc }
+ent-DrinkBottleGlassSmallBaseFull = { ent-DrinkBottlePlasticSmallBaseFull }
+    .desc = { ent-DrinkBottlePlasticSmallBaseFull.desc }
 ent-DrinkBottleGlassBaseFull = { ent-DrinkBottlePlasticBaseFull }
     .desc = { ent-DrinkBottlePlasticBaseFull.desc }
 ent-DrinkBottleVisualsOpenable = { "" }

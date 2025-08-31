@@ -24,3 +24,4 @@ comp-secret-stash-verb-open = Открыть
 secret-stash-plant = растение
 secret-stash-toilet = туалетный бачок
 secret-stash-plushie = плюшевая игрушка
+secret-stash-cake = cake

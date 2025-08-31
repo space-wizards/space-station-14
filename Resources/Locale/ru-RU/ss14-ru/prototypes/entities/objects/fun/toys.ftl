@@ -1,3 +1,7 @@
+ent-BaseStash = { "" }
+    .desc = { "" }
+ent-BaseRubberToy = { ent-BaseItem }
+    .desc = { ent-BaseItem.desc }
 ent-BasePlushie = { ent-BaseItem }
     .desc = { ent-BaseItem.desc }
 ent-PlushieThrongler = плюшевый Нагибатор
@@ -49,6 +53,8 @@ ent-PlushieMagicarp = плюшевый мэджикарп
     .desc = Очаровательная мягкая игрушка, напоминающая чрезвычайно редкого мэджикарпа.
 ent-PlushieRainbowCarp = плюшевый радужный карп
     .desc = Очаровательная мягкая игрушка, напоминающая чрезвычайно редкого радужного карпа.
+ent-CardSword = cardboard sword
+    .desc = A cardboard tube fashioned into the shape of a sword.
 ent-PlushieHolocarp = плюшевый голокарп
     .desc = Голографическая мягкая игрушка, напоминающая заклятого врага учёных — голокарпа.
 ent-PlushieSlime = плюшевый слайм

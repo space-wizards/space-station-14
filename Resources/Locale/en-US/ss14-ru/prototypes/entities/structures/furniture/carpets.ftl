@@ -32,3 +32,5 @@ ent-CarpetWhite = { ent-CarpetBase }
     .desc = { ent-CarpetBase.desc }
 ent-CarpetChapel = chapel's carpet
     .desc = { ent-BaseStructure.desc }
+ent-CarpetCard = cardboard "carpet"
+    .desc = Even lino is better.

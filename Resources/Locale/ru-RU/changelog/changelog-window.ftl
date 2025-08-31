@@ -11,4 +11,7 @@ changelog-button = Обновления
 changelog-button-new-entries = Обновления (!)
 changelog-tab-title-Changelog = Wizard's Den
 changelog-tab-title-ChangelogDS14 = Мёртвый Космос
+changelog-tab-title-Maps = Maps
+cmd-changelog-desc = Opens the changelog.
+cmd-changelog-help = Usage: changelog
 changelog-tab-title-Admin = Админские

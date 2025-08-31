@@ -1,3 +1,5 @@
+cmd-adduplink-desc = Creates uplink on selected item and link it to users account
+cmd-adduplink-help = Usage: adduplink [username] [item-id] [discountEnabled]
 add-uplink-command-description = Создаёт аплинк в выбранном предмете и привязывает его к аккаунту игрока
 add-uplink-command-help = Использование: adduplink [username] [item-id]
 add-uplink-command-completion-1 = Username (по-умолчанию это вы сами)

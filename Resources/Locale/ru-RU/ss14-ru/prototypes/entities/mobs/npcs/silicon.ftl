@@ -1,3 +1,5 @@
+ent-MobRobotic = { ent-BaseMob }
+    .desc = { ent-BaseMob.desc }
 ent-MobSiliconBase = { "" }
     .desc = { "" }
 ent-MobFireBot = пожарбот

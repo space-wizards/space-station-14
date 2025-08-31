@@ -9,5 +9,7 @@ ent-WeaponRifleM90GrenadeLauncher = М-90gl
 ent-WeaponRifleLecter = Лектер
     .desc = Первоклассная армейская штурмовая винтовка. Использует патроны калибра 6.5х39 мм TSF.
     .suffix = Автомат
+ent-WeaponRifleEstoc = Estoc DMR
+    .desc = A designated marksman rifle, favored for medium-to-long range engagements. Uses .20 rifle ammo.
 ent-WeaponRifleFoam = Астро-Ас Сила Пенопласта
     .desc = Первоклассная пенопластовая винтовка высочайшего качества. Её пластик прочен на ощупь, а механизмы надёжены.

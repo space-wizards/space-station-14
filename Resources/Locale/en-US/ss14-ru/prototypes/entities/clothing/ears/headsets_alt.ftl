@@ -18,3 +18,5 @@ ent-ClothingHeadsetAltSyndicate = blood-red over-ear headset
     .desc = An updated, modular syndicate intercom that fits over the head and takes encryption keys (there are 5 key slots.).
 ent-ClothingHeadsetAltFreelancer = freelancer's over-ear headset
     .desc = { ent-ClothingHeadsetAlt.desc }
+ent-ClothingHeadsetAltWizard = wizard's over-ear headset
+    .desc = { ent-ClothingHeadsetAlt.desc }

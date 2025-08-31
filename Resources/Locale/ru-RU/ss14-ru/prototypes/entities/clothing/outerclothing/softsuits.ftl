@@ -1,5 +1,7 @@
 ent-ClothingOuterHardsuitEVA = скафандр ВКД
     .desc = Лёгкий космический скафандр, способный защитить владельца от космического вакуума во время аварийной ситуации.
+ent-ClothingOuterEVASuitSyndicate = syndicate EVA suit
+    .desc = Has a tag on the back that reads: 'Totally not property of an enemy corporation, honest!'
 ent-ClothingOuterHardsuitSyndicate = кроваво-красный скафандр ВКД
     .suffix = скафандр ВКД Синдиката
     .desc = { ent-ClothingOuterHardsuitEVA.desc } На бирке написано 'Совершенно не собственность вражеской корпорации, честно!'.

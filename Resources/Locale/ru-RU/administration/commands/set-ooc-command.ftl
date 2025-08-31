@@ -1,3 +1,7 @@
+cmd-setooc-desc = Allows you to enable or disable OOC.
+cmd-setooc-help = Usage: setooc OR setooc [value]
+cmd-setooc-ooc-enabled = OOC chat has been enabled.
+cmd-setooc-ooc-disabled = OOC chat has been disabled.
 set-ooc-command-description = Позволяет включить или выключить OOC.
 set-ooc-command-help = Использование: setooc ИЛИ setooc [value]
 set-ooc-command-too-many-arguments-error = Слишком много аргументов.

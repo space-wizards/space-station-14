@@ -5,3 +5,7 @@ ent-SS13Memorial = Могила Неизвестного Сотрудника
         Здесь покоится неизвестный сотрудник
         Неизвестный по имени и званию
         Чьи деяния не будут забыты
+ent-Monolith = monolith
+    .desc =
+        Holy shit modern art.
+        I bet it's worth a fortune.

@@ -1,3 +1,5 @@
+ent-MailSpamLetter = spam letter
+    .desc = Even space isn't safe from junk mail.
 ent-MailRobustToolsSpam = Robust Toolbox - Special Offer!
     .desc = An advertisement for the robust toolboxes.
 ent-MailNanotrasenSpam = Reasons to choose Nanotrasen!

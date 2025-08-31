@@ -1,5 +1,7 @@
 ent-FoodDonutBase = { ent-FoodInjectableBase }
     .desc = Отлично сочетается с крепким кофе.
+ent-FoodDonutFruitBase = { ent-FoodDonutBase }
+    .desc = { ent-FoodDonutBase.desc }
 ent-FoodDonutPlain = обычный пончик
     .desc = { ent-FoodDonutBase.desc }
 ent-FoodDonutJellyPlain = обычный желейный пончик
@@ -48,6 +50,8 @@ ent-FoodDonutJelly = желейный матча пончик
     .desc = L-теанин в этом пончике расслабляет, но не вызывает эйфории. Отлично сочетается с чашечкой чая.
 ent-FoodDonutJellySweetpea = желейный пончик из душистого горошка
     .desc = Отлично сочетается с бутылкой "Бастион Бурбон"!
+ent-FoodDonutJellyScurret = scurret jelly-donut
+    .desc = No holes in this donut in case a suspicious looking pole shows up.
 ent-FoodDonutJellySlugcat = желейный слизнекотовый пончик
     .desc = В этом пончике нет отверстий на случай, если появится подозрительный столб.
 ent-FoodDonutPoison = { ent-FoodDonutPink }

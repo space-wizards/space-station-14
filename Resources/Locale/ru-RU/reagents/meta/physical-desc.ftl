@@ -96,4 +96,5 @@ reagent-physical-desc-alkaline = щелочное
 reagent-physical-desc-holy = святое
 reagent-physical-desc-slimy = склизкое
 reagent-physical-desc-unidentifiable = unidentifiable
+reagent-physical-desc-non-newtonian = non-newtonian
 reagent-physical-desc-neural = нейронное

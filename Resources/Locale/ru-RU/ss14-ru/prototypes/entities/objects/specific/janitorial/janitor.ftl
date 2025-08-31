@@ -13,3 +13,5 @@ ent-GoldenPlunger = золотой вантуз
     .desc = Вантуз с пластиковым клапаном, покрытым тонким слоем золота, который выдаётся в благодарность за многолетнюю службу. Всё так же используется для прочистки канализации.
 ent-RagItem = тряпка
     .desc = Предположительно, для устранения беспорядка.
+ent-WireBrush = wire brush
+    .desc = A bristly steel wire brush, perfect for scraping away even the toughest patches of rust.

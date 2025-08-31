@@ -1,9 +1,12 @@
 ent-FlaskBase = { ent-DrinkBase }
     .desc = { ent-DrinkBase.desc }
+ent-DrinkFlaskVisualsOpenable = { "" }
+    .desc = { "" }
 ent-DrinkShinyFlask = блестящая фляга
     .desc = Блестящая металлическая фляга. Похоже, на ней нарисован греческий символ.
 ent-DrinkMREFlask = фляга ИРП
     .desc = Старая военная фляга, наполненная самым лучшим содержимым для солдат.
+    .suffix = Full
 ent-DrinkDetFlask = фляга инспектора
     .desc = Металлическая фляга с кожаным ремешком и золотым значком, принадлежащая инспектору.
 ent-DrinkHosFlask = фляга ГСБ

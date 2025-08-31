@@ -13,3 +13,6 @@ ent-AirlockGlassShuttleSyndicate = external airlock
 ent-AirlockShuttleSyndicate = external airlock
     .desc = Necessary for connecting two space craft together.
     .suffix = Docking
+ent-AirlockShuttleXenoborg = external airlock
+    .desc = Necessary for connecting two space craft together.
+    .suffix = Docking

@@ -1,7 +1,9 @@
 # UI
 
+
 ## Window
 
+air-alarm-ui-title = Air Alarm
 air-alarm-ui-access-denied = Недостаточный уровень доступа!
 air-alarm-ui-window-pressure-label = Давление
 air-alarm-ui-window-temperature-label = Температура
@@ -10,6 +12,7 @@ air-alarm-ui-window-address-label = Адрес
 air-alarm-ui-window-device-count-label = Всего устройств
 air-alarm-ui-window-resync-devices-label = Ресинхр
 air-alarm-ui-window-mode-label = Режим
+air-alarm-ui-window-mode-select-locked-label = [bold][color=red] Mode selector failure! [/color][/bold]
 air-alarm-ui-window-auto-mode-label = Авто-режим
 -air-alarm-state-name =
     { $state ->
@@ -36,8 +39,17 @@ air-alarm-ui-mode-wide-filtering = Фильтрация (широкая)
 air-alarm-ui-mode-fill = Заполнение
 air-alarm-ui-mode-panic = Паника
 air-alarm-ui-mode-none = Нет
+air-alarm-ui-pump-direction-siphoning = Siphoning
+air-alarm-ui-pump-direction-scrubbing = Scrubbing
+air-alarm-ui-pump-direction-releasing = Releasing
+air-alarm-ui-pressure-bound-nobound = No Bound
+air-alarm-ui-pressure-bound-internalbound = Internal Bound
+air-alarm-ui-pressure-bound-externalbound = External Bound
+air-alarm-ui-pressure-bound-both = Both
+air-alarm-ui-widget-gas-filters = Gas Filters
 
 ## Widgets
+
 
 ### General
 
@@ -59,6 +71,8 @@ air-alarm-ui-vent-internal-bound-label = Внутренняя граница
 air-alarm-ui-scrubber-pump-direction-label = Направление
 air-alarm-ui-scrubber-volume-rate-label = Объём (Л)
 air-alarm-ui-scrubber-wide-net-label = ШирокаяСеть
+air-alarm-ui-scrubber-select-all-gases-label = Select all
+air-alarm-ui-scrubber-deselect-all-gases-label = Deselect all
 
 ### Thresholds
 

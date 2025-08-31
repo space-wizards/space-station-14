@@ -17,3 +17,5 @@ ent-ShuttleGunPirateCannon = пушка пиратского корабля
 ent-ShuttleGunKinetic = PTK-800 "Дематериализатор материи"
     .desc = Стационарная добывающая турель утилизаторов. Самостоятельно накапливает заряды, чрезвычайно эффективна при раскопке астероидов.
     .suffix = НЕ МАППИТЬ
+ent-ShuttleGunKineticOld = exomorphic dematerializer
+    .desc = An ancient ship gun, utilizing biomechanical systems to store and release energy. While unique in its design, it has been rendered obsolete due to its inferior charging and firing speed compared to mechanical constructions.

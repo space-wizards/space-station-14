@@ -5,6 +5,7 @@ nuke-component-announcement-armed = Внимание! Механизм само�
 nuke-component-announcement-unarmed = Механизм самоуничтожение станции деактивирован! Хорошего дня!
 nuke-component-announcement-send-codes = Внимание! Запрошенные коды самоуничтожения были отправлены на факс капитана.
 nuke-component-doafter-warning = Вы начинаете перебирать провода и кнопки, в попытке обезвредить ядерную бомбу. Это может занять некоторое время.
+nuke-disk-component-microwave = The disk sparks and fizzles a bit, but seems mostly unharmed?
 nuke-user-interface-title = Ядерная боеголовка
 nuke-user-interface-arm-button = ВЗВЕСТИ
 nuke-user-interface-disarm-button = ОБЕЗВРЕДИТЬ

@@ -25,6 +25,7 @@ verb-categories-timer = Установить задержку
 verb-categories-lever = Рычаг
 verb-categories-select-type = Выбрать тип
 verb-categories-fax = Задать место назначения
+verb-categories-adjust = Adjust
 verb-categories-power-level = Уровень мощности
 verb-common-toggle-light = Переключить свет
 verb-common-close = Закрыть

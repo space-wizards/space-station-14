@@ -1,3 +1,5 @@
+ent-BasePercussionInstrument = { ent-BaseHandheldInstrument }
+    .desc = { ent-BaseHandheldInstrument.desc }
 ent-GlockenspielInstrument = глокеншпиль
     .desc = { ent-BaseHandheldInstrument.desc }
 ent-MusicBoxInstrument = музыкальная шкатулка

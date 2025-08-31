@@ -32,3 +32,5 @@ ent-ClothingEyesGlassesChemical = chemical analysis goggles
     .desc = Goggles that can scan the chemical composition of a solution.
 ent-ClothingEyesVisorNinja = ninja visor
     .desc = An advanced visor protecting a ninja's eyes from flashing lights.
+ent-ClothingEyesGlassesNoir = noir-tech glasses
+    .desc = A pair of glasses that simulate what the world looked like before the invention of color.

@@ -1,9 +1,9 @@
+ent-BaseWoodwindInstrument = { ent-BaseHandheldInstrument }
+    .desc = { ent-BaseHandheldInstrument.desc }
 ent-SaxophoneInstrument = saxophone
     .desc = An instrument. You could probably grind this into raw jazz.
-ent-AccordionInstrument = accordion
-    .desc = { ent-BaseHandheldInstrument.desc }
 ent-HarmonicaInstrument = harmonica
-    .desc = { ent-BaseHandheldInstrument.desc }
+    .desc = { ent-BaseWoodwindInstrument.desc }
 ent-ClarinetInstrument = clarinet
     .desc = Skweedward tintacklays.
 ent-FluteInstrument = flute

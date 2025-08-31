@@ -1,2 +1,10 @@
 ent-SprayPainter = spray painter
-    .desc = A spray painter for painting airlocks and pipes.
+    .desc = A spray painter for painting airlocks, pipes, and other items.
+ent-SprayPainterRecharging = { ent-SprayPainter }
+    .suffix = Admeme
+    .desc = { ent-SprayPainter.desc }
+ent-SprayPainterEmpty = { ent-SprayPainter }
+    .suffix = Empty
+    .desc = { ent-SprayPainter.desc }
+ent-SprayPainterAmmo = compressed paint
+    .desc = A cartridge of highly compressed paint, commonly used in spray painters.

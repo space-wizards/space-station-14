@@ -21,6 +21,7 @@ markings-category-Head = Голова
 markings-category-HeadTop = Голова (верх)
 markings-category-HeadSide = Голова (бок)
 markings-category-Snout = Морда
+markings-category-SnoutCover = Snout (Cover)
 markings-category-UndergarmentTop = Undergarment (Top)
 markings-category-UndergarmentBottom = Undergarment (Bottom)
 markings-category-Chest = Грудь

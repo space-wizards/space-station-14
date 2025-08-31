@@ -19,3 +19,5 @@ ent-MobPurpleSnake = space adder
 ent-MobSmallPurpleSnake = space adder
     .desc = A smaller version of the menacing purple snake from Kepler-283c.
     .suffix = small
+ent-MobXenoLonePraetorianNoGhost = "Dale"
+    .desc = A praetorian left over from the station's initial security sweep. Has a pair of bloodied dog tags engraved with the name "Pvt. Dale" stuck in its maw.

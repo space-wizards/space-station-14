@@ -8,6 +8,8 @@ admin-verbs-teleport-here = Телепортировать сюда
 admin-verbs-freeze = Заморозить
 admin-verbs-freeze-and-mute = Заморозить и заглушить
 admin-verbs-unfreeze = Разморозить
+admin-verbs-camera = Open Camera
+admin-verbs-camera-description = Open a camera window that follows the selected entity.
 admin-verbs-erase = Стереть
 admin-verbs-erase-description =
     Удаляет человека из раунда, манифеста, а также удаляет его сообщения.

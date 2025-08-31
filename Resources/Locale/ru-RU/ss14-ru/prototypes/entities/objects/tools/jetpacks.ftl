@@ -40,3 +40,6 @@ ent-JetpackVoid = пустотный джетпак
 ent-JetpackVoidFilled = пустотный джетпак
     .suffix = Полный
     .desc = { ent-JetpackVoid.desc }
+ent-JetpackXenoborg = xenoborg jetpack
+    .suffix = Infinite
+    .desc = { ent-JetpackBlack.desc }

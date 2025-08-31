@@ -1,0 +1,12 @@
+ent-NukeOpsLootSpawner = nuke ops loot spawner
+    .desc = { ent-MarkerBase.desc }
+ent-NukeOpsWeaponSpawner = nuke ops weapon spawner
+    .desc = { ent-MarkerBase.desc }
+ent-NukeOpsMedkitBruteSpawner = nuke ops brute medkit spawner
+    .desc = { ent-MarkerBase.desc }
+ent-NukeOpsMedkitSpawner = nuke ops general medkit spawner
+    .desc = { ent-MarkerBase.desc }
+ent-NukeOpsGrenadeSpawner = nuke ops grenade spawner
+    .desc = { ent-MarkerBase.desc }
+ent-NukeOpsAmmoSpawner = nuke ops ammo spawner
+    .desc = { ent-MarkerBase.desc }

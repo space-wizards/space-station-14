@@ -15,7 +15,6 @@ stack-chess-black-floor-tile = шахматная черная плитка
 stack-chess-dark-floor-tile = шахматная темная плитка
 stack-chess-light-floor-tile = шахматная светлая плитка
 stack-chess-red-floor-tile = шахматная красная плитка
-
 stack-floor-tile-terracotta = терракотовая плитка
 stack-floor-tile-terracotta-diagonal = терракотовая диагональная плитка
 stack-floor-tile-terracotta-herringbone = терракотовая плитка ёлочкой

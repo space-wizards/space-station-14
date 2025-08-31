@@ -46,6 +46,8 @@ criminal-records-filter-placeholder = Введите текст и нажмит�
 criminal-records-name-filter = Имя
 criminal-records-prints-filter = Отпечатки пальцев
 criminal-records-dna-filter = ДНК
+criminal-records-job-filter = Job
+criminal-records-species-filter = Species
 
 ## Arrest auto history lines
 

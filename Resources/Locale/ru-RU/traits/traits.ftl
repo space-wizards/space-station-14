@@ -9,6 +9,8 @@ trait-pacifist-desc = Вы не можете нападать и причиня�
 permanent-blindness-trait-examined = [color=lightblue]{ CAPITALIZE(POSS-PRONOUN($target)) } глаза остекленелые и расфокусированные. Не похоже, что { SUBJECT($target) } может хорошо вас видеть, если может вообще.[/color]
 trait-lightweight-name = Быстрое опьянение
 trait-lightweight-desc = Алкоголь оказывает на вас более сильное воздействие
+trait-monochromacy-name = Monochromacy
+trait-monochromacy-desc = You are fully colorblind, everything you perceive ranges from blacks to whites.
 trait-muted-name = Немота
 trait-muted-desc = Вы не можете говорить
 trait-paracusia-name = Паракузия
@@ -41,3 +43,7 @@ trait-spanish-name = Испанский акцент
 trait-spanish-desc = Hola señor, как пройти в la biblioteca.
 trait-painnumbness-name = Numb
 trait-painnumbness-desc = You lack any sense of feeling pain, being unaware of how hurt you may be.
+trait-hemophilia-name = Hemophilia
+trait-hemophilia-desc = Your body fails to make blood clots.
+trait-impaired-mobility-name = Impaired Mobility
+trait-impaired-mobility-desc = You have difficulty moving without a mobility aid.

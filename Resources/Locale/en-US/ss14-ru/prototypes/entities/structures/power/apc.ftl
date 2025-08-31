@@ -17,3 +17,6 @@ ent-APCSuperCapacity = { ent-BaseAPC }
 ent-APCHyperCapacity = { ent-BaseAPC }
     .suffix = Hyper Capacity, 200kJ
     .desc = { ent-BaseAPC.desc }
+ent-APCXenoborg = { ent-BaseAPC }
+    .suffix = Basic, 50kJ, Xenoborg
+    .desc = { ent-BaseAPC.desc }
