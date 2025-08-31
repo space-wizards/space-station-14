@@ -40,14 +40,8 @@ public sealed partial class VampireFeedComponent : Component
     [DataField, AutoNetworkedField]
     public SoundSpecifier? FeedNoise = new SoundPathSpecifier("/Audio/Items/drink.ogg");
 
-    /// <summary>
-    /// The time between damage ticks
-    /// </summary>
     [DataField, AutoNetworkedField]
-    public TimeSpan DamageTimeBetweenTicks = TimeSpan.FromSeconds(1);
-
-    // [DataField, AutoNetworkedField]
-    // public FixedPoint2 TransferAmount = FixedPoint2.New(5);
+    public FixedPoint2 TransferAmount = FixedPoint2.New(10);
 
     /// <summary>
     /// How long it takes to drink this yourself.
