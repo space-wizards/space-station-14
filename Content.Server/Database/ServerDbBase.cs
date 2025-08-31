@@ -108,7 +108,7 @@ namespace Content.Server.Database
                 .Include(p => p.Loadouts)
                     .ThenInclude(l => l.Groups)
                     .ThenInclude(group => group.Loadouts)
-                .Include(p => p.CharacterInfo)
+                .Include(p => p.CharacterInfo) // Starlight-edit
                 .AsSplitQuery()
                 .SingleOrDefault(h => h.Slot == slot);
 
