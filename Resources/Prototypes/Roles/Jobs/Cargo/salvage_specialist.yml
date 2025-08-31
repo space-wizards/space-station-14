@@ -4,7 +4,9 @@
   description: job-description-salvagespec
   playTimeTracker: JobSalvageSpecialist
   requirements:
+    - !type:RoleTimeRequirement
       role: JobCargoTechnician
+      time: 36000 # 10 hrs
     - !type:DepartmentTimeRequirement
       department: Cargo
       time: 36000 # 10 hrs
