@@ -85,6 +85,7 @@ namespace Content.Client.Paper.UI
                 {
                     _paperWriteWindow = new PaperWriteWindow();
                     _paperWriteWindow.OnSaved += OnSaved;
+                    _paperWriteWindow.SetMaxInputLength(_maxInputLength);
                 }
 
                 if (_paperWriteWindow.IsOpen)
@@ -103,6 +104,20 @@ namespace Content.Client.Paper.UI
             {
                 OnFullEdit?.Invoke(Rope.Collapse(InputContainer.Input.TextRope));
                 InputContainer.Clear();
+            };
+            InputContainer.Input.OnKeyBindDown += args =>
+            {
+                if (args.Function != EngineKeyFunctions.MultilineTextSubmit)
+                    return;
+
+                // SaveButton is disabled when we hit the max input limit. Just check
+                // that flag instead of trying to calculate the input length again
+                if (SaveButton.Disabled)
+                    return;
+
+                SaveButton.Disabled = true;
+                OnFullEdit?.Invoke(Rope.Collapse(InputContainer.Input.TextRope));
+                args.Handle();
             };
         }
 
@@ -294,10 +309,7 @@ namespace Content.Client.Paper.UI
                 Clear();
             }
 
-            var msg = new FormattedMessage();
-            msg.AddMarkupPermissive(state.Text);
-
-            WrittenTextLabel.SetMessage(msg, _allowedTags, DefaultTextColor);
+            WrittenTextLabel.SetContent(state.Text);
 
             StampDisplay.RemoveAllChildren();
             StampDisplay.RemoveStamps();
@@ -326,9 +338,11 @@ namespace Content.Client.Paper.UI
             InputContainer.Visible = true;
             EditButtons.Visible = true;
 
-            var text = WrittenTextLabel.Text ?? string.Empty;
-            WrittenTextLabel.Text = string.Empty;
+            var text = WrittenTextLabel.Content ?? string.Empty;
+            WrittenTextLabel.Content = string.Empty;
             InputContainer.Input.TextRope = new Rope.Leaf(text);
+
+            UpdateFillState();
         }
 
         /// <summary>
@@ -366,6 +380,26 @@ namespace Content.Client.Paper.UI
             }
 
             return mode & _allowedResizeModes;
+        }
+
+        private void UpdateFillState()
+        {
+            if (_maxInputLength != -1)
+            {
+                var inputLength = InputContainer.Input.TextLength;
+
+                FillStatus.Text = Loc.GetString("paper-ui-fill-level",
+                    ("currentLength", inputLength),
+                    ("maxLength", _maxInputLength));
+
+                // Disable the save button if we've gone over the limit
+                SaveButton.Disabled = inputLength > _maxInputLength;
+            }
+            else
+            {
+                FillStatus.Text = "";
+                SaveButton.Disabled = false;
+            }
         }
     }
 }

@@ -6,5 +6,4 @@
                     VerticalExpand="True" HorizontalExpand="True">
         <TextEdit Name="Input" StyleClasses="PaperLineEdit" Access="Public" />
     </PanelContainer>
-    <Label Name="FillStatus" StyleClasses="LabelSecondaryColor" Access="Public"/>
 </controls:InputContainer>
