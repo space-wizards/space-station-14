@@ -1,6 +1,4 @@
-using Content.Shared.Weapons.Melee.Events;
 using Robust.Shared.GameStates;
-using Robust.Shared.Serialization;
 
 namespace Content.Shared.Trigger.Components.Triggers;
 

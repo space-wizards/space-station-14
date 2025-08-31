@@ -1,4 +1,3 @@
-using System.Linq;
 using Content.Shared.Trigger.Components.Triggers;
 using Content.Shared.Weapons.Melee.Events;
 
@@ -29,7 +28,12 @@ public sealed class MeleeTriggerSystem : EntitySystem
 
     private void OnSwingTrigger(Entity<TriggerOnMeleeSwingComponent> ent, ref MeleeHitEvent args)
     {
-        var target = ent.Comp.TargetIsUser ? args.HitEntities.FirstOrDefault() : args.User;
+        EntityUid? target;
+        if  (args.HitEntities.Count == 0)
+            target = ent.Comp.TargetIsUser ? null : args.User;
+        else
+            target = ent.Comp.TargetIsUser ? args.HitEntities[0] : args.User;
+
         _trigger.Trigger(ent.Owner, target, ent.Comp.KeyOut);
     }
 
@@ -40,13 +44,15 @@ public sealed class MeleeTriggerSystem : EntitySystem
 
         if (!ent.Comp.TriggerEveryHit)
         {
-            var target = ent.Comp.TargetIsUser ? args.HitEntities.First() : args.User;
+            var target = ent.Comp.TargetIsUser ? args.HitEntities[0] : args.User;
             _trigger.Trigger(ent.Owner, target, ent.Comp.KeyOut);
             return;
         }
 
         // if TriggerEveryHit
         foreach (var target in args.HitEntities)
+        {
             _trigger.Trigger(ent.Owner, ent.Comp.TargetIsUser ? target : args.User, ent.Comp.KeyOut);
+        }
     }
 }
