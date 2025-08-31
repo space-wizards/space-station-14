@@ -13,12 +13,33 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+    - name: Install dependencies
+      run: sudo apt-get install -y python3-paramiko python3-lxml
+
     - uses: actions/checkout@v4.2.2
       with:
         submodules: 'recursive'
 
+    # DS14-secrets-start
+    - name: Setup secrets
+      env:
+        SSH_KEY: ${{ secrets.SECRETS_PRIVATE_KEY }}
+      if: ${{ env.SSH_KEY != '' }}
+      run: |
+        mkdir ~/.ssh
+        echo "${{ secrets.SECRETS_PRIVATE_KEY }}" > ~/.ssh/id_rsa
+        chmod 600 ~/.ssh/id_rsa
+        echo "HOST *" > ~/.ssh/config
+        echo "StrictHostKeyChecking no" >> ~/.ssh/config
+        git clone git@github.com:dead-space-server/space-station-14-secrets.git Secrets
+        cp -R Secrets/Resources/Prototypes Resources/Prototypes/DeadSpaceSecrets
+        cp -R Secrets/Resources/ServerPrototypes Resources/Prototypes/DeadSpaceSecretsServer
+        cp -R Secrets/Resources/Locale Resources/Locale/ru-RU/deadspace-secrets
+        cp -R Secrets/Resources/Textures Resources/Textures/DeadSpaceSecrets
+    # DS14-secrets-end
+
     - name: Setup .NET Core
-      uses: actions/setup-dotnet@v3.2.0
+      uses: actions/setup-dotnet@v4.1.0
       with:
         dotnet-version: 9.0.x
 
