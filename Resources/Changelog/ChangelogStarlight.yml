@@ -12467,6 +12467,13 @@ Entries:
   id: 145199
   time: '2025-08-24T18:35:59.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/1461
+- author: walksanatora
+  changes:
+  - message: Fixed xenoborgs sprite.
+    type: Fix
+  id: 145700
+  time: '2025-08-24T23:16:26.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1457
 - author: Fractalflower
   changes:
   - message: Humans can now have foxlike ears
@@ -12517,5 +12524,56 @@ Entries:
   id: 126302
   time: '2025-08-24T23:27:46.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/1263
+- author: Rinary
+  changes:
+  - message: Fixed bug when premapped and linked body scanner/table sink can't be
+      saved.
+    type: Fix
+  id: 146900
+  time: '2025-08-26T19:02:12.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1469
+- author: AthenaAI
+  changes:
+  - message: Added Medical Belt to Surgeon's spawning loadout
+    type: Add
+  id: 147700
+  time: '2025-08-26T20:04:03.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1477
+- author: STARLIGHT TEAM
+  changes:
+  - message: Added new icons for VoxPidgin, Marish and Canilunzt languages.
+    type: Add
+  id: 148000
+  time: '2025-08-26T23:03:11.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1480
+- author: STARLIGHT TEAM
+  changes:
+  - message: By request, for the criminal card, a message is now sent to the player,
+      as well as a fax on failure, allowing Security to make a decision about release.
+    type: Tweak
+  id: 148700
+  time: '2025-08-28T14:52:24.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1487
+- author: STARLIGHT TEAM
+  changes:
+  - message: Nulllink - playtime export
+    type: Add
+  id: 148400
+  time: '2025-08-28T15:14:41.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1484
+- author: Fractalflower
+  changes:
+  - message: Birds _isn't_ spiders
+    type: Remove
+  id: 149100
+  time: '2025-08-30T18:07:25.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1491
+- author: Fractalflower
+  changes:
+  - message: Resomi no longer take 1.5x asphyx
+    type: Remove
+  id: 149101
+  time: '2025-08-30T18:07:25.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1491
 Order: -1
 
