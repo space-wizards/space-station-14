@@ -1080,6 +1080,11 @@ entities:
       rot: -1.5707963267948966 rad
       pos: 4.5,-10.5
       parent: 818
+    - type: Godmode
+    missingComponents:
+    - Construction
+    - RCDDeconstructable
+    - Destructible
   - uid: 15
     components:
     - type: Transform
