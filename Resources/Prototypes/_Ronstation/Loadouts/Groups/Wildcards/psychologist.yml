@@ -9,4 +9,4 @@
   id: PsychologistShoes
   parent: BaseShoes
   loadouts:
-  - ClothingShoesLeather
+  - PsychologistShoes
