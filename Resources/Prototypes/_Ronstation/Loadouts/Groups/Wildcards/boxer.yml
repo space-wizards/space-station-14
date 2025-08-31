@@ -14,3 +14,9 @@
   - BlueBoxingGloves
   - GreenBoxingGloves
   - YellowBoxingGloves
+
+- type: loadoutGroup
+  id: BoxerShoes
+  parent: BaseShoes
+  loadouts:
+  - BoxerShoes

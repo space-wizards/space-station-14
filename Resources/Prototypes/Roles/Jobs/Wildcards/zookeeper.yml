@@ -1,3 +1,4 @@
+# Modified by Ronstation contributor(s), therefore this file is licensed as MIT sublicensed with AGPL-v3.0.
 - type: job
   id: Zookeeper
   name: job-name-zookeeper
@@ -19,7 +20,7 @@
   equipment:
     jumpsuit: ClothingUniformJumpsuitSafari
     head: ClothingHeadSafari
-    shoes: ClothingShoesColorWhite
+  # shoes: ClothingShoesColorWhite # Ronstation - modification.
     id: ZookeeperPDA
     ears: ClothingHeadsetService
   #storage:

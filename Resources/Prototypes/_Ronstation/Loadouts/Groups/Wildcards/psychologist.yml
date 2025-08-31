@@ -4,3 +4,9 @@
   loadouts:
   - PsychologistJumpsuit
   - PsychologistJumpskirt
+
+- type: loadoutGroup
+  id: PsychologistShoes
+  parent: BaseShoes
+  loadouts:
+  - ClothingShoesLeather

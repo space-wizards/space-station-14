@@ -1,3 +1,4 @@
+# Modified by Ronstation contributor(s), therefore this file is licensed as MIT sublicensed with AGPL-v3.0.
 - type: job
   id: Reporter
   name: job-name-reporter
@@ -13,7 +14,7 @@
 - type: startingGear
   id: ReporterGear
   equipment:
-    shoes: ClothingShoesColorWhite
+  # shoes: ClothingShoesColorWhite # Ronstation - modification.
     id: ReporterPDA
     ears: ClothingHeadsetService
   #storage:
