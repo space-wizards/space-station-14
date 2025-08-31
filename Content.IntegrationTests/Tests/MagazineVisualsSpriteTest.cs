@@ -17,6 +17,7 @@ public sealed class MagazineVisualsSpriteTest
     {
         "WeaponPistolX01",
         "PistolDominator",
+        "PistolDominatorpvrsifvlAlt",
     };
 
     [Test]
