@@ -368,6 +368,28 @@
 
 - type: entity
   parent: MaterialBase
+  id: MaterialPeltScurret
+  name: scurret pelt
+  description: A pelt of a scurret, an exceptionally rare species found only on Planet Wawa. Beautifully soft, it still smells of pizza and rainfall. This will never "Wa" again. I hope you're happy.
+  components:
+  - type: Sprite
+    sprite: Objects/Materials/materials.rsi
+    state: scurretpelt
+  - type: Item
+    heldPrefix: scurretpelt
+  - type: Clothing
+    sprite: Clothing/Head/Misc/hides.rsi
+    equippedPrefix: scurretpelt
+    slots:
+    - HEAD
+  - type: Tag
+    tags:
+    - PeltScurret
+  - type: StaticPrice
+    price: 15000 # A 60% refund on a scurret crate purchase.
+
+- type: entity
+  parent: MaterialBase
   id: MaterialDiamond
   name: refined diamond
   suffix: Full

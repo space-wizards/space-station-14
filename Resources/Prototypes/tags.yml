@@ -736,6 +736,9 @@
   id: HideCorgi # corgi hide for crafting, not for making corgis invisible
 
 - type: Tag
+  id: PeltScurret
+
+- type: Tag
   id: HidesHair # for headwear.
 
 - type: Tag
