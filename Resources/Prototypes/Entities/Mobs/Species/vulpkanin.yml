@@ -46,7 +46,7 @@
   # - type: Wagging TODO: Add back once we have animated tails again.
   #   action: ActionToggleVulpakinWagging
   - type: TemperatureProtection
-    heatingCoefficient: 1.2
+    heatingCoefficient: 1.25
     coolingCoefficient: 0.3
   - type: JumpAbility
     action: ActionVulpkaninGravityJump
@@ -58,7 +58,7 @@
         pitch: 1.33
         volume: -5
         variation: 0.05
-  - type: InteractionPopup
+  - type: InteractionPopup # Crucial detail.
     successChance: 1
     interactSuccessString: petting-success-soft-floofy
     interactFailureString: petting-failure-generic
