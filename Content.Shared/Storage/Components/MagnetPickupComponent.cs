@@ -8,16 +8,19 @@ namespace Content.Shared.Storage.Components;
 [RegisterComponent, AutoGenerateComponentPause]
 public sealed partial class MagnetPickupComponent : Component
 {
-    [ViewVariables(VVAccess.ReadWrite), DataField("nextScan")]
+    [DataField]
     [AutoPausedField]
     public TimeSpan NextScan = TimeSpan.Zero;
 
     /// <summary>
     /// What container slot the magnet needs to be in to work.
     /// </summary>
-    [ViewVariables(VVAccess.ReadWrite), DataField("slotFlags")]
+    [DataField]
     public SlotFlags? SlotFlags = Inventory.SlotFlags.BELT;
 
-    [ViewVariables(VVAccess.ReadWrite), DataField("range")]
+    [DataField]
+    public bool RequireActiveHand = false;
+
+    [DataField]
     public float Range = 1f;
 }

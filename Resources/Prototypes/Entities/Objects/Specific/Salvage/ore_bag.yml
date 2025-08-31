@@ -35,6 +35,7 @@
   components:
     - type: MagnetPickup
       slotFlags: null
+      requireActiveHand: true
     - type: Storage
       grid:
       - 0,0,9,5

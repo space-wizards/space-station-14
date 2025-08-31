@@ -52,7 +52,10 @@ public sealed class MagnetPickupSystem : EntitySystem
 
             var parentUid = xform.ParentUid;
 
-            if (comp.SlotFlags != null || !_hands.TryGetActiveItem(parentUid, out var activeItem) && activeItem != uid)
+            if (comp.RequireActiveHand && (!_hands.TryGetActiveItem(parentUid, out var activeItem) || activeItem != uid))
+                continue;
+
+            if (comp.SlotFlags != null)
             {
                 if (!_inventory.TryGetContainingSlot((uid, xform, meta), out var slotDef))
                     continue;

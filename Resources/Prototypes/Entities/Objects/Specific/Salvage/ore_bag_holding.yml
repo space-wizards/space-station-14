@@ -24,3 +24,4 @@
     - type: MagnetPickup
       slotFlags: null
       range: 2
+      requireActiveHand: true
