@@ -1,0 +1,227 @@
+- type: sponsorLoadout
+  id: WhoTo
+  entity: ClothingBackpackWhoTo
+  sponsorOnly: true
+
+- type: sponsorLoadout
+  id: PistolBlueShieldWhoTo
+  entity: PistolBlueShieldWhoTo
+  sponsorOnly: true
+  whitelistJobs: [BlueShieldOfficer]
+
+# Backpack
+- type: entity
+  parent: ClothingBackpackERTEngineer
+  id: ClothingBackpackWhoTo
+  name: расширенный рюкзак инженера ОБР
+  description: Модель рюкзака, который носят инженеры Отряда Быстрого Реагирования. Имеет повышенную вместимость.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Storage
+    maxItemSize: Huge
+    grid:
+    - 0,0,19,9
+  - type: StorageFill
+    contents:
+    - id: ClothingBeltWhoTo
+    - id: ClothingHandsGlovesWhoTo
+    - id: ClothingOuterHardsuitWhoTo
+    - id: ClothingShoesBootsMagWhoTo
+    - id: ClothingEyesGlassesWhoTo
+    - id: ClothingMaskGasWhoTo
+    - id: JetpackVoidFilled
+    - id: PaperLawWhoTo
+  - type: Tag
+    tags: [] # ignore "WhitelistChameleon"
+
+# Belt
+- type: entity
+  parent: ClothingBeltStorageBase
+  id: ClothingBeltWhoTo
+  name: РПС инженера ОБР
+  description: Усовершенствованная разгрузочная система инженера Отряда Быстрого Реагирования.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/WhoTo/belt.rsi
+  - type: Clothing
+    sprite: _DeadSpace/Sponsor/WhoTo/belt.rsi
+  - type: Item
+    size: Huge
+  - type: Storage
+    grid:
+    - 0,0,9,1
+  - type: StorageFill
+    contents:
+    - id: JawsOfLife
+    - id: PowerDrill
+    - id: WelderExperimental
+    - id: Multitool
+
+# Gloves
+- type: entity
+  parent: ClothingHandsGlovesCombat
+  id: ClothingHandsGlovesWhoTo
+  name: инженерные перчатки
+  description: Жёлтые усиленные перчатки, защищающие от порезов, высоких температур и мелких ударов.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/WhoTo/gloves.rsi
+  - type: Clothing
+    sprite: _DeadSpace/Sponsor/WhoTo/gloves.rsi
+  - type: Fiber
+    fiberMaterial: fibers-insulative
+    fiberColor: fibers-yellow
+  - type: Tag
+    tags: [] # ignore "WhitelistChameleon" tag
+
+# Hardsuit
+- type: entity
+  parent: ClothingOuterHardsuitAtmos
+  id: ClothingOuterHardsuitWhoTo
+  name: устаревший скафандр ОБР
+  description: Надёжный, но старый скафандр Отряда Быстрого Реагирования. Отличается повышенной защитой от физических воздействий и высокой температуры.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/WhoTo/hardsuit.rsi
+  - type: Clothing
+    sprite: _DeadSpace/Sponsor/WhoTo/hardsuit.rsi
+  - type: ToggleableClothing
+    clothingPrototype: ClothingHeadHelmetHardsuitWhoTo
+  - type: Item
+    size: Huge
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.65
+        Slash: 0.65
+        Piercing: 0.55
+        Heat: 0.65
+        Radiation: 0.55
+        Caustic: 0.55
+  - type: ClothingSpeedModifier
+    walkModifier: 0.9
+    sprintModifier: 0.9
+  - type: Tag
+    tags: [] # ignore "WhitelistChameleon" tag
+
+# Helmet
+- type: entity
+  parent: [ ClothingHeadHardsuitBase, ClothingHeadSuitWithLightBase ]
+  id: ClothingHeadHelmetHardsuitWhoTo
+  name: шлем устаревшего скафандра ОБР
+  description: Герметичный шлем от устаревшей модели скафандра ОБР. Оснащён стандартным светом.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/WhoTo/helmet.rsi
+  - type: Clothing
+    sprite: _DeadSpace/Sponsor/WhoTo/helmet.rsi
+  - type: PointLight
+    color: "#ebebeb"
+    energy: 0.9
+    radius: 5
+  - type: PressureProtection
+    highPressureMultiplier: 0.08
+    lowPressureMultiplier: 1000
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.9
+        Slash: 0.9
+        Piercing: 0.9
+        Heat: 0.9
+  - type: Tag
+    tags: [] # ignore "WhitelistChameleon" tag
+
+# Magboots
+- type: entity
+  parent: ClothingShoesBootsMag
+  id: ClothingShoesBootsMagWhoTo
+  name: экспериментальные магнитные сапоги
+  description: Сапоги тёмно-жёлтой расцветки с усовершенствованной системой магнитов для повышенной стабильности в невесомости.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/WhoTo/magboots.rsi
+    layers:
+    - state: icon
+      map: [ "enum.ToggleVisuals.Layer" ]
+  - type: Clothing
+    sprite: _DeadSpace/Sponsor/WhoTo/magboots.rsi
+  - type: ClothingSpeedModifier
+    walkModifier: 1
+    sprintModifier: 1
+  - type: Tag
+    tags: [] # ignore "WhitelistChameleon" tag
+
+# Eyes
+- type: entity
+  parent: ClothingEyesHudMultiversal
+  id: ClothingEyesGlassesWhoTo
+  name: продвинутые очки
+  description: Инженерные очки с жёлтым тонированным визором. Улучшают видимость в сложных условиях и защищают глаза от посторонних объектов.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/WhoTo/hud.rsi
+  - type: Clothing
+    sprite: _DeadSpace/Sponsor/WhoTo/hud.rsi
+  - type: EyeProtection
+  - type: IdentityBlocker
+    coverage: EYES
+  - type: Tag
+    tags: [] # ignore "WhitelistChameleon" tag
+
+# Mask
+- type: entity
+  parent: ClothingMaskGasSyndicate
+  id: ClothingMaskGasWhoTo
+  name: инженерный противогаз
+  description: Противогаз модели М50 с жёлтым визором. Обеспечивает защиту от вредных газов и частиц.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/WhoTo/gasmask.rsi
+  - type: Clothing
+    sprite: _DeadSpace/Sponsor/WhoTo/gasmask.rsi
+  - type: Tag
+    tags: [] # ignore "WhitelistChameleon" tag
+
+# Pistol
+- type: entity
+  id: PistolBlueShieldWhoTo
+  parent: PistolBlueShield
+  name: пистолет офицера "Синий щит"
+  description: Пистолет разработанный специально для офицеров в чьи задачи входит защита членов командования.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/WhoTo/gun.rsi
+    layers:
+    - state: base
+      map: ["enum.GunVisualLayers.Base"]
+    - state: mag-unshaded-4
+      map: ["enum.GunVisualLayers.MagUnshaded"]
+      shader: unshaded
+  - type: Clothing
+    sprite: _DeadSpace/Sponsor/WhoTo/gun.rsi
+
+# Law
+- type: entity
+  parent: PaperPrintedCentcomm
+  id: PaperLawWhoTo
+  name: распечатанный документ
+  description: Лист бумаги с заголовком ЦентКома. Страшно даже смотреть на него.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Paper
+    stampState: paper_stamp-centcom
+    stampedBy:
+    - stampedColor: '#006600FF'
+      stampedName: Центральное Командование
+    - stampedColor: '#00BE00FF'
+      stampedName: Одобрено
+    content: paper-law-whoto
