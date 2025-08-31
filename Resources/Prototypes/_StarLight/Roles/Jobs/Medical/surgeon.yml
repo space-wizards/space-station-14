@@ -21,3 +21,8 @@
     ears: ClothingHeadsetMedical
   inhand:
     - ClothingBackpackDuffelSurgeryFilled
+
+- type: chameleonOutfit
+  id: SurgeonChameleonOutfit
+  job: Surgeon
+  equipment: {} # may someone tell me what these are supposed to look like when chameleon'd

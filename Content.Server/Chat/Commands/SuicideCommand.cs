@@ -1,4 +1,4 @@
-/* STARLIGHT: Removed, frequent command abuse
+using Content.Server.Administration;
 using Content.Server.GameTicking;
 using Content.Server.Popups;
 using Content.Shared.Administration;
@@ -9,7 +9,8 @@ using Robust.Shared.Enums;
 
 namespace Content.Server.Chat.Commands
 {
-    [AnyCommand]
+    // STARLIGHT: Removed, frequent command abuse - Rinary
+    [AdminCommand(AdminFlags.Host)]
     internal sealed class SuicideCommand : IConsoleCommand
     {
         [Dependency] private readonly IEntityManager _e = default!;
@@ -59,4 +60,3 @@ namespace Content.Server.Chat.Commands
         }
     }
 }
-*/

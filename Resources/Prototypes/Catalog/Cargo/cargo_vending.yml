@@ -22,7 +22,7 @@
     sprite: Objects/Specific/Service/vending_machine_restock.rsi
     state: base
   product: CrateVendingMachineRestockChefvendFilled
-  cost: 680
+  cost: 750
   category: cargoproduct-category-name-service
   group: market
 
@@ -42,7 +42,7 @@
     sprite: Objects/Specific/Service/vending_machine_restock.rsi
     state: base
   product: CrateVendingMachineRestockAutoDrobeFilled
-  cost: 2500
+  cost: 4100
   category: cargoproduct-category-name-service
   group: market
 

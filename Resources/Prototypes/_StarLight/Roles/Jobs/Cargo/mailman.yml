@@ -28,3 +28,8 @@
     back:
     - MailTrolleyFlatpack
     - Multitool #maybe not a good idea? idk makes unpacking it quick
+
+- type: chameleonOutfit
+  id: MailTechChameleonOutfit
+  job: MailTech
+  equipment: {} # may someone tell me what these are supposed to look like when chameleon'd
