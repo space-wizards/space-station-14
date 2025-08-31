@@ -1,7 +1,7 @@
 {
     "version": 1,
     "license": "CC-BY-SA-3.0",
-    "copyright": "Created (under no duress whatsoever) by FairlySadPanda (Discord/Github). Original character design created by VIDEOCULT, and used with kind permission.",
+    "copyright": "Created (under no duress whatsoever) by FairlySadPanda (Discord/Github). Original character design created by VIDEOCULT, and used with kind permission. Dog variant created by TrixxedHeart.",
     "size": {
         "x": 32,
         "y": 32
@@ -12,6 +12,14 @@
         },
         {
             "name": "equipped-OUTERCLOTHING",
+            "directions": 4
+        },
+        {
+            "name": "equipped-OUTERCLOTHING-dog",
+            "directions": 4
+        },
+        {
+            "name": "equipped-OUTERCLOTHING-scurret",
             "directions": 4
         },
         {

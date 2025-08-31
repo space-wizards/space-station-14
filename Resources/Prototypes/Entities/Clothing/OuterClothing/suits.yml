@@ -298,6 +298,8 @@
     slots: WITHOUT_POCKET
   - type: Tag
     tags:
+    - ScurretWearable # but why
+    - CorgiWearable
     - WhitelistChameleon
   - type: StaticPrice
     price: 1 # You have turned a scurret into a fursuit. You deserve nothing.

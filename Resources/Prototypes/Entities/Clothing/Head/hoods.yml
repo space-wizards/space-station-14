@@ -226,6 +226,8 @@
     - Hair
   - type: Tag
     tags:
+    - ScurretWearable # but why
+    - CorgiWearable
     - ClothMade
     - WhitelistChameleon
 
