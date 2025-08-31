@@ -1,71 +1,4 @@
 ﻿Entries:
-- author: drakewill-CRL
-  changes:
-  - message: You can now see mutations on plants and produce.
-    type: Tweak
-  id: 8383
-  time: '2025-04-29T04:45:11.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/32650
-- author: lzk228
-  changes:
-  - message: When an entity becomes SSD, it will be forced to sleep after 10 minutes.
-      It can be awakened if no more SSD.
-    type: Tweak
-  id: 8384
-  time: '2025-04-29T05:24:34.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/34039
-- author: TytosB
-  changes:
-  - message: adjusted pka damage and range
-    type: Tweak
-  id: 8385
-  time: '2025-04-29T10:00:56.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/37012
-- author: abadaba695
-  changes:
-  - message: Added 15u, 20u, and 30u transfer buttons in the chem master.
-    type: Add
-  id: 8386
-  time: '2025-04-29T10:24:57.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/36995
-- author: Thinbug0
-  changes:
-  - message: Science developed the Push-Horn, capable of pushing people away with
-      each honk!
-    type: Add
-  id: 8387
-  time: '2025-04-29T13:07:59.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/36009
-- author: SlamBamActionman
-  changes:
-  - message: The "Toggle Walk" alert no longer gets removed when it shouldn't.
-    type: Fix
-  id: 8388
-  time: '2025-04-29T13:32:18.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/37033
-- author: Boaz1111
-  changes:
-  - message: Added sharkminnow tooth spears and carp tooth arrows. Happy salvaging!
-    type: Add
-  - message: Sharkminnow teeth now deal 15 damage instead of 10.
-    type: Tweak
-  id: 8389
-  time: '2025-04-29T16:36:53.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/31257
-- author: whatston3
-  changes:
-  - message: Speso stacks now show different denominations depending on their size.
-    type: Add
-  id: 8390
-  time: '2025-04-29T21:44:47.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/37030
-- author: themias
-  changes:
-  - message: Toolboxes have new sound effects
-    type: Tweak
-  id: 8391
-  time: '2025-04-29T22:17:32.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/37048
 - author: ScarKy0
   changes:
   - message: Priority mail now indicates whether it was delivered on time or not.
@@ -3948,3 +3881,71 @@
   id: 8895
   time: '2025-08-27T15:04:39.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/39542
+- author: PavlockBlaine03
+  changes:
+  - message: Fixed bug where items would not drop if a dispenser was deconstructed.
+    type: Fix
+  id: 8896
+  time: '2025-08-27T21:06:51.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/39676
+- author: Winkarst-cpu
+  changes:
+  - message: Living beings are now vomiting from being irradiated. Also, irradiated
+      players will see a popup about tasting something metallic.
+    type: Add
+  id: 8897
+  time: '2025-08-27T21:56:10.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/39805
+- author: aada
+  changes:
+  - message: Fixed audio mispredict when quick inserting.
+    type: Fix
+  id: 8898
+  time: '2025-08-28T16:54:06.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/39930
+- author: Hitlinemoss
+  changes:
+  - message: Descriptions for cardboard weapons have been adjusted.
+    type: Tweak
+  id: 8899
+  time: '2025-08-28T17:14:44.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/39927
+- author: FungiFellow
+  changes:
+  - message: Sentience Event no longer targets Zombified creatures
+    type: Fix
+  id: 8900
+  time: '2025-08-29T11:48:31.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/39950
+- author: Dutch-VanDerLinde
+  changes:
+  - message: The forensic scanner no longer leaks fingerprints or glove prints onto
+      the scanning object if you use the right-click scan verb.
+    type: Fix
+  id: 8901
+  time: '2025-08-30T14:00:47.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/39964
+- author: FairlySadPanda
+  changes:
+  - message: 'Scurrets can wear a few items on their backs: pet bags, mail bags and
+      spears'
+    type: Add
+  - message: Corgis can now wear mail bags.
+    type: Add
+  id: 8902
+  time: '2025-08-30T14:42:43.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38774
+- author: Kowlin
+  changes:
+  - message: Derelict cyborgs can no longer duplicate their ghost role.
+    type: Fix
+  id: 8903
+  time: '2025-08-30T17:17:50.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/39992
+- author: aada
+  changes:
+  - message: Clown bags are squeakier.
+    type: Add
+  id: 8904
+  time: '2025-08-30T18:10:34.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/39931

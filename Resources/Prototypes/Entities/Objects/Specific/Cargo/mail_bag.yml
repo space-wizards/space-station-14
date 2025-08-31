@@ -12,6 +12,7 @@
     quickEquip: false
     slots:
     - belt
+    - back
   - type: Item
     size: Ginormous
   - type: Storage
@@ -28,3 +29,7 @@
   - type: Dumpable
   - type: QuickPickup
   - type: AreaPickup
+  - type: Tag
+    tags:
+    - ScurretWearable
+    - CorgiWearable
