@@ -40,6 +40,8 @@
         Slash: 0.95
         Piercing: 0.95
         Heat: 0.95
+  - type: Contraband # Ronstation
+    allowedJobs: [ BlueshieldOfficer ] # Ronstation
 
 - type: entity
   parent: [ClothingMaskGas, BaseSyndicateContraband]

@@ -1,0 +1,23 @@
+- type: loadoutEffectGroup
+  id: PlushieCarp
+  effects:
+  - !type:JobRequirementLoadoutEffect
+    requirement:
+      !type:RoleTimeRequirement
+      role: AntagDragon
+      time: 18000 # 5 hrs
+  - !type:JobRequirementLoadoutEffect
+    requirement:
+      !type:RoleTimeRequirement
+      role: JobCargoTechnician
+      time: 18000 # 5 hrs
+
+- type: loadout
+  id: PlushieCarp
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: PlushieCarp
+  storage:
+    back:
+    - PlushieCarp
+  groupBy: "plushies"

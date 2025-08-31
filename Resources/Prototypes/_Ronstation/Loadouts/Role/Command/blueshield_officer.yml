@@ -1,17 +1,17 @@
 - type: roleLoadout
   id: JobBlueshieldOfficer
   groups:
-  - SurvivalSecurity
-  - GroupSpeciesBreathToolSecurity
   - BlueshieldHead
-  # Glasses
-  # Mask
+  # - Glasses
+  # - Mask
   - BlueshieldNeck
-  # Gloves
+  # - Gloves
   - BlueshieldJumpsuit
   - BlueshieldBackpack
-  - BlueshieldPDA
-  - SecurityBelt
   - BlueshieldOuterClothing
   - BlueshieldShoes
+  # Backpack fills
+  - SurvivalSecurity
+  - GroupSpeciesBreathToolSecurity
   - Trinkets
+  - CommandPets

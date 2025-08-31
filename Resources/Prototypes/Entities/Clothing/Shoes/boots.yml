@@ -1,3 +1,5 @@
+# Modified by Ronstation contributor(s), therefore this file is licensed as MIT sublicensed with AGPL-v3.0.
+
 - type: entity
   parent: ClothingShoesBaseButcherable
   id: ClothingShoesBootsWork
@@ -22,6 +24,8 @@
     sprite: Clothing/Shoes/Boots/jackboots.rsi
   - type: ClothingSlowOnDamageModifier
     modifier: 0.5
+  - type: Contraband # Ronstation
+    allowedJobs: [ BlueshieldOfficer ] # Ronstation
 
 - type: entity
   parent: ClothingShoesBaseButcherable

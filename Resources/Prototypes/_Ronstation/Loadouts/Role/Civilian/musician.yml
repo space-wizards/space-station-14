@@ -2,19 +2,21 @@
   id: JobMusician
   canCustomizeName: true
   groups:
-  - Survival
-  - GroupSpeciesBreathTool
   - GroupTankHarness
-  # Head
+  # - Head
   - CommonGlasses
-  # Mask
-  # Neck
-  # Gloves
+  # - Mask
+  # - Neck
+  # - Gloves
   - MusicianJumpsuit
   - CommonBackpack
-  # PDA
-  # Belt
+  # - PDA
+  # - Belt
   - MusicianOuterClothing
-  # Shoes
-  - Trinkets
+  # - Shoes
+  # Backpack fills
+  - Survival
+  - GroupSpeciesBreathTool
   - Instruments
+  - Trinkets
+  - CommonPets

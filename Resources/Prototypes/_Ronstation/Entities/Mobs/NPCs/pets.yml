@@ -1,0 +1,65 @@
+- type: entity
+  id: BasePet
+  abstract: true
+  components:
+  - type: HTN
+    constantlyReplan: false
+    rootTask:
+      task: PetFoodFollowCompount
+  - type: GhostRole
+    allowMovement: true
+    allowSpeech: false
+    makeSentient: true
+    description: ghost-role-information-pet-description
+    rules: ghost-role-information-familiar-rules
+    mindRoles:
+    - MindRoleGhostRoleFamiliar
+  - type: NPCImprintingOnSpawnBehaviour
+    spawnFriendsSearchRadius: 1 # Try to only friend the person who has the pet in the bag
+    whitelist:
+      components:
+      - HumanoidAppearance
+  - type: GhostTakeoverAvailable
+  - type: MindContainer
+  - type: Tag
+    tags:
+    - CannotSuicide
+
+- type: entity
+  id: MobPetSnail
+  parent: [ BasePet, MobSnail ]
+  name: Pet snail
+  components:
+  - type: GhostRole
+    name: ghost-role-information-pet-snail-name
+
+- type: entity
+  id: MobPetButterfly
+  name: Pet butterfly
+  parent: [ BasePet, MobButterfly ]
+  components:
+  - type: GhostRole
+    name: ghost-role-information-pet-butterfly-name
+  - type: HTN
+    rootTask:
+      task: PetFollowCompount # Doesnt eat food
+
+- type: entity
+  id: MobPetBee
+  name: Pet bee
+  parent: [ BasePet, MobBee ]
+  components:
+  - type: GhostRole
+    name: ghost-role-information-pet-bee-name
+  - type: HTN
+    rootTask:
+      task: PetFollowCompount # Doesnt eat food
+
+- type: entity
+  id: MobPetMothroach
+  name: Pet mothroach
+  parent: [ BasePet, MobMothroach ]
+  components:
+  - type: GhostRole
+    name: ghost-role-information-pet-mothroach-name
+    allowSpeech: true

@@ -1,0 +1,23 @@
+- type: loadoutEffectGroup
+  id: PlushieNar
+  effects:
+  - !type:JobRequirementLoadoutEffect
+    requirement:
+      !type:RoleTimeRequirement
+      role: JobChaplain
+      time: 18000 # 5 hrs
+  - !type:JobRequirementLoadoutEffect
+    requirement:
+      !type:RoleTimeRequirement
+      role: JobChef
+      time: 18000 # 5 hrs
+
+- type: loadout
+  id: PlushieNar
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: PlushieNar
+  storage:
+    back:
+    - PlushieNar
+  groupBy: "plushies"

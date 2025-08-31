@@ -18,3 +18,9 @@
   loadouts:
   - SalvageBoots
   - CargoWinterBoots
+
+- type: loadoutGroup
+  id: SalvageSpecialistPets
+  parent: CommonPets
+  loadouts:
+  - PetSnail

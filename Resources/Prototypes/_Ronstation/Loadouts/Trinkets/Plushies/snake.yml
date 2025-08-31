@@ -1,0 +1,23 @@
+- type: loadoutEffectGroup
+  id: PlushieSnake
+  effects:
+  - !type:JobRequirementLoadoutEffect
+    requirement:
+      !type:RoleTimeRequirement
+      role: AntagThief
+      time: 18000 #5 hrs
+  - !type:JobRequirementLoadoutEffect
+    requirement:
+      !type:RoleTimeRequirement
+      role: JobLawyer
+      time: 18000 #5 hrs
+
+- type: loadout
+  id: PlushieSnake
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: PlushieSnake
+  storage:
+    back:
+    - PlushieSnake
+  groupBy: "plushies"

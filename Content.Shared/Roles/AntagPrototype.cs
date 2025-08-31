@@ -1,6 +1,8 @@
+// Contains modifications made by Ronstation contributors, therefore this file is subject to MIT sublicensed with AGPL v3.0.
 using Content.Shared.Guidebook;
+using Content.Shared.Players.PlayTimeTracking; // Ronstation - modification.
 using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype; // Ronstation - modification.
 
 namespace Content.Shared.Roles;
 
@@ -13,6 +15,17 @@ public sealed partial class AntagPrototype : IPrototype
     [ViewVariables]
     [IdDataField]
     public string ID { get; private set; } = default!;
+
+    // Ronstation - start of modifications.
+    [DataField("playTimeTracker", required: true, customTypeSerializer: typeof(PrototypeIdSerializer<PlayTimeTrackerPrototype>))]
+    public string PlayTimeTracker { get; private set; } = string.Empty;
+
+    [DataField("color")]
+    public Color Color { get; private set; } = Color.Yellow;
+    
+    [ViewVariables(VVAccess.ReadOnly)]
+    public string LocalizedName => Loc.GetString(Name);
+    // Ronstation - end of modifications.
 
     /// <summary>
     ///     The name of this antag as displayed to players.

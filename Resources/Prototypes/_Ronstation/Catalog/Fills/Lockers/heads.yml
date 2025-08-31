@@ -1,0 +1,58 @@
+- type: entityTable
+  id: LockerFillBlueshieldOfficer
+  table: !type:AllSelector
+    children:
+    - id: ClothingBeltBlueshieldFilled
+    - id: ClothingEyesGlassesCommand
+    - id: ClothingHandsGlovesCombat
+    - id: ClothingShoesBootsJack
+    - id: ClothingHeadHelmetSwat
+    - id: CentcommKeyCase
+    - !type:GroupSelector
+      children:
+      - id: BoxFlashbang
+      - id: BoxTearGas
+      - id: BoxStinger
+    - id: DoorRemoteCustom # two of them...
+    - id: FlashlightSeclite
+    - id: RubberStampBlueshield
+    - id: BookBlueshield # book of no validhunting
+    - id: Tourniquet
+      prob: 0.6
+    - id: HandheldStationMap
+      prob: 0.3
+    - id: MedkitCombatFilled
+      prob: 0.1
+
+- type: entityTable
+  id: LockerFillBlueshieldHardsuit
+  table: !type:AllSelector
+    children:
+    - id: ClothingOuterHardsuitBlueshield
+    - id: ClothingMaskGasSecurity
+    - id: NitrogenTankFilled
+    - id: OxygenTankFilled
+
+- type: entity
+  id: LockerBlueshieldFilled
+  suffix: Filled
+  parent: LockerBlueshield
+  components:
+  - type: EntityTableContainerFill
+    containers:
+      entity_storage: !type:NestedSelector
+        tableId: LockerFillBlueshieldOfficer
+
+- type: entity
+  id: LockerBlueshieldFilledHardsuit
+  suffix: Filled, Hardsuit
+  parent: LockerBlueshield
+  components:
+  - type: EntityTableContainerFill
+    containers:
+      entity_storage: !type:AllSelector
+        children:
+        - !type:NestedSelector
+          tableId: LockerFillBlueshieldOfficer
+        - !type:NestedSelector
+          tableId: LockerFillBlueshieldHardsuit

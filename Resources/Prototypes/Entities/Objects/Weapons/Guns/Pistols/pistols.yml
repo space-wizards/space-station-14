@@ -1,3 +1,5 @@
+# Modified by Ronstation contributor(s), therefore this file is licensed as MIT sublicensed with AGPL-v3.0.
+
 - type: entity
   name: BasePistol
   parent: BaseItem
@@ -205,6 +207,8 @@
       map: ["enum.GunVisualLayers.Mag"]
   - type: Clothing
     sprite: Objects/Weapons/Guns/Pistols/mk58.rsi
+  - type: Contraband # Ronstation
+    allowedJobs: [ BlueshieldOfficer ] # Ronstation
   - type: Item
     storedOffset: 0,-2
   - type: Gun

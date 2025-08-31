@@ -1,0 +1,28 @@
+- type: loadout
+  id: PetSnail
+  storage:
+    back:
+    - MobPetSnail
+
+- type: loadout
+  id: PetButterfly
+  storage:
+    back:
+    - MobPetButterfly
+
+- type: loadout
+  id: PetBee
+  storage:
+    back:
+    - MobPetBee
+
+- type: loadout
+  id: PetMothroach
+  effects:
+  - !type:JobRequirementLoadoutEffect
+    requirement:
+      !type:OverallPlaytimeRequirement
+      time: 360000 # 100hr
+  storage:
+    back:
+    - MobPetMothroach

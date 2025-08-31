@@ -1,0 +1,71 @@
+# Antags
+- type: playTimeTracker
+  id: AntagChangeling
+
+- type: playTimeTracker
+  id: AntagDragon
+
+- type: playTimeTracker
+  id: AntagGenericAntagonist
+
+- type: playTimeTracker
+  id: AntagGenericFreeAgent
+
+- type: playTimeTracker
+  id: AntagGenericSiliconAntagonist
+
+- type: playTimeTracker
+  id: AntagGenericTeamAntagonist
+
+- type: playTimeTracker
+  id: AntagHeadRev
+
+- type: playTimeTracker
+  id: AntagInitialInfected
+
+- type: playTimeTracker
+  id: AntagNukeops
+
+- type: playTimeTracker
+  id: AntagNukeopsCommander
+
+- type: playTimeTracker
+  id: AntagNukeopsMedic
+
+- type: playTimeTracker
+  id: AntagParadoxClone
+
+- type: playTimeTracker
+  id: AntagRev
+
+- type: playTimeTracker
+  id: AntagSpaceNinja
+
+- type: playTimeTracker
+  id: AntagSubvertedSilicon
+
+- type: playTimeTracker
+  id: AntagSurvivor
+
+- type: playTimeTracker
+  id: AntagThief
+
+- type: playTimeTracker
+  id: AntagTraitor
+
+- type: playTimeTracker
+  id: AntagTraitorSleeper
+
+- type: playTimeTracker
+  id: AntagVampire
+
+- type: playTimeTracker
+  id: AntagWizard
+
+- type: playTimeTracker
+  id: AntagZombie
+
+# Jobs
+- type: playTimeTracker
+  id: JobBlueshieldOfficer
+

@@ -1,4 +1,6 @@
-﻿- type: entity
+﻿# Modified by Ronstation contributor(s), therefore this file is licensed as MIT sublicensed with AGPL-v3.0.
+
+- type: entity
   abstract: true
   parent: BaseItem
   id: ProjectileGrenadeBase
@@ -53,6 +55,8 @@
     layers:
     - state: icon
       map: ["enum.TriggerVisualLayers.Base"]
+  - type: Contraband # Ronstation
+    allowedJobs: [ BlueshieldOfficer ] # Ronstation
   - type: ProjectileGrenade
     fillPrototype: PelletClusterRubber
     capacity: 30

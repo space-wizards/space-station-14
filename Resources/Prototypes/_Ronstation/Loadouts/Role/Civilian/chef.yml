@@ -1,18 +1,20 @@
 - type: roleLoadout
   id: JobChef
   groups:
-  - Survival
-  - GroupSpeciesBreathTool
   - GroupTankHarness
   - ChefHead
   - CommonGlasses
   - ChefMask
-  # Neck
-  # Gloves
+  # - Neck
+  # - Gloves
   - ChefJumpsuit
   - CommonBackpack
-  # PDA
-  # Belt
+  # - PDA
+  # - Belt
   - ChefOuterClothing
-  # Shoes
+  # - Shoes
+  # Backpack fills
+  - Survival
+  - GroupSpeciesBreathTool
   - Trinkets
+  - CommonPets

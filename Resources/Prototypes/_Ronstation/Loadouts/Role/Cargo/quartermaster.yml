@@ -1,18 +1,20 @@
 - type: roleLoadout
   id: JobQuartermaster
   groups:
-  - Survival
-  - GroupSpeciesBreathTool
   - GroupTankHarness
   - QuartermasterHead
   - CommonGlasses
-  # Mask
+  # - Mask
   - QuartermasterNeck
-  # Gloves
+  # - Gloves
   - QuartermasterJumpsuit
   - CargoTechnicianBackpack
-  # PDA
-  # Belt
+  # - PDA
+  # - Belt
   - QuartermasterOuterClothing
   - QuartermasterShoes
+  # Backpack fills
+  - Survival
+  - GroupSpeciesBreathTool
   - Trinkets
+  - CommandPets

@@ -1,0 +1,11 @@
+- type: entity
+  parent: [ IDCardStandard, BaseCommandContraband ]
+  id: BlueshieldIDCard
+  name: blueshield ID card
+  components:
+  - type: Sprite
+    layers:
+    - state: default
+    - state: idcentcom
+  - type: PresetIdCard
+    job: BlueshieldOfficer

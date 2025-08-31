@@ -1,0 +1,85 @@
+#When adding new hardsuits, please try to keep the organization consistent with hardsuit-helmets.yml (if possible.)
+
+#CREW HARDSUITS
+# BSO voidsuit
+- type: entity
+  parent: [ClothingOuterHardsuitBase, BaseCentcommContraband]
+  id: ClothingOuterHardsuitBlueshield
+  name: blueshield officer's voidsuit
+  description: A lightweight spaceproof suit with minimal body armor, balancing protection with agility to doggedly protect corporate assets. Comes with a shoulder mounted flashlight instead of having one in the helmet.
+  components:
+  - type: Sprite
+    sprite: _Ronstation/Clothing/OuterClothing/Hardsuits/blueshield.rsi
+  - type: Clothing
+    sprite: _Ronstation/Clothing/OuterClothing/Hardsuits/blueshield.rsi
+  - type: PressureProtection
+    highPressureMultiplier: 0.5
+    lowPressureMultiplier: 1000
+  - type: ExplosionResistance
+    damageCoefficient: 0.6
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.8
+        Slash: 0.7
+        Piercing: 0.65
+        Heat: 0.8
+        Caustic: 0.8
+  - type: ClothingSpeedModifier
+    walkModifier: 0.9
+    sprintModifier: 0.85
+  - type: HeldSpeedModifier
+    # flashlight shit copied from syndicate raid suit
+  - type: ToggleableVisuals
+    spriteLayer: light
+    clothingVisuals:
+      outerClothing:
+      - state: equipped-OUTERCLOTHING-light
+        shader: unshaded
+      outerClothing-vox:
+      - state: equipped-OUTERCLOTHING-light-vox
+        shader: unshaded
+  - type: ItemTogglePointLight
+  - type: Appearance
+  - type: HandheldLight
+    blinkingBehaviourId: blinking
+    radiatingBehaviourId: radiating
+  - type: PointLight
+    enabled: false
+    color: "#358"
+    radius: 3.5
+    energy: 5
+    mask: /Textures/Effects/LightMasks/cone.png
+    autoRot: true
+    netsync: false
+  - type: LightBehaviour
+    behaviours:
+      - !type:FadeBehaviour
+        id: radiating
+        interpolate: Linear
+        maxDuration: 2.0
+        startValue: 3.0
+        endValue: 2.0
+        isLooped: true
+        reverseWhenFinished: true
+      - !type:PulseBehaviour
+        id: blinking
+        interpolate: Nearest
+        maxDuration: 1.0
+        startValue: 0.1
+        endValue: 2.0
+        isLooped: true
+  - type: Battery
+    maxCharge: 600
+    startingCharge: 600
+  - type: BatterySelfRecharger
+    autoRecharge: true
+    autoRechargeRate: 2
+    # a return to scheduled programming
+  - type: ToggleableClothing
+    clothingPrototype: ClothingHeadHelmetHardsuitBlueshield
+  - type: Tag
+    tags:
+    # no CorgiWearable because motherfuck that extra spritework
+    - Hardsuit
+    - WhitelistChameleon

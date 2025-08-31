@@ -1,18 +1,20 @@
 - type: roleLoadout
   id: JobStationEngineer
   groups:
-  - SurvivalExtended
-  - GroupSpeciesBreathTool
   - GroupTankHarness
   - StationEngineerHead
-  # Glasses
-  # Mask
-  # Neck
-  # Gloves
+  # - Glasses
+  # - Mask
+  # - Neck
+  # - Gloves
   - StationEngineerJumpsuit
   - EngineeringBackpack
   - StationEngineerPDA
-  # Belt
+  # - Belt
   - StationEngineerOuterClothing
   - StationEngineerShoes
+  # Backpack fills
+  - SurvivalExtended
+  - GroupSpeciesBreathTool
   - Trinkets
+  - CommonPets

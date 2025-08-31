@@ -195,7 +195,7 @@
   id: RuleR4
   name: guide-entry-rules-r4
   ruleEntry: true
-  text: "/ServerInfo/Guidebook/ServerRules/RoleplayRules/RuleR4Metashield.xml"
+  text: "/ServerInfo/_Ronstation/Guidebook/ServerRules/RoleplayRules/RuleR4Metashield.xml" # Ronstation - modification
 
 - type: guideEntry
   id: RuleR5

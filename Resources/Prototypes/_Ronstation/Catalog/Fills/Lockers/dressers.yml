@@ -1,0 +1,15 @@
+- type: entity
+  id: DresserBlueshieldFilled
+  parent: Dresser
+  suffix: Filled, Blueshield Officer
+  components:
+  - type: StorageFill
+    contents:
+      - id: ClothingHeadHatCapBlueshield
+      - id: ClothingHeadHatBeretBlueshield
+      - id: ClothingUniformJumpsuitBlueshield
+      - id: ClothingUniformJumpskirtBlueshield
+      - id: ClothingUniformJumpsuitBlueshieldFormal
+      - id: ClothingUniformJumpskirtBlueshieldFormal
+      - id: ClothingOuterWinterBlueshield
+      - id: ClothingNeckCloakBlueshield

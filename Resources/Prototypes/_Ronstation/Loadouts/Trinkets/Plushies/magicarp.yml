@@ -1,0 +1,23 @@
+- type: loadoutEffectGroup
+  id: PlushieMagicarp
+  effects:
+  - !type:JobRequirementLoadoutEffect
+    requirement:
+      !type:RoleTimeRequirement
+      role: AntagWizard
+      time: 18000 # 5 hrs
+  - !type:JobRequirementLoadoutEffect
+    requirement:
+      !type:RoleTimeRequirement
+      role: JobSalvageSpecialist
+      time: 18000 # 5 hrs
+
+- type: loadout
+  id: PlushieMagicarp
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: PlushieMagicarp
+  storage:
+    back:
+    - PlushieMagicarp
+  groupBy: "plushies"

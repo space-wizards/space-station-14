@@ -1,3 +1,5 @@
+# Modified by Ronstation contributor(s), therefore this file is licensed as MIT sublicensed with AGPL-v3.0.
+
 - type: entity
   abstract: true
   parent: BaseItem
@@ -82,6 +84,8 @@
   components:
   - type: Sprite
     sprite: Objects/Weapons/Grenades/flashbang.rsi
+  - type: Contraband # Ronstation
+    allowedJobs: [ BlueshieldOfficer ] # Ronstation
   - type: FlashOnTrigger
     keysIn:
     - timer
@@ -515,6 +519,8 @@
   components:
   - type: Sprite
     sprite: Objects/Weapons/Grenades/tear_gas.rsi
+  - type: Contraband # Ronstation
+    allowedJobs: [ BlueshieldOfficer ] # Ronstation
   - type: SmokeOnTrigger
     keysIn:
     - timer

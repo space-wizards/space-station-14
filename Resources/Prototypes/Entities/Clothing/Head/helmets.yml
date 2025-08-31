@@ -1,3 +1,5 @@
+# Modified by Ronstation contributor(s), therefore this file is licensed as MIT sublicensed with AGPL-v3.0.
+
 #These are intentionally all very mediocre as locational damage does not exist yet. Without it, armor values will stack in a way that makes it really god damn hard to determine how effective something is, along with making players extremely tanky.
 #When it DOES exist, the values here should be totally reworked - probably just port them from SS13.
 
@@ -66,12 +68,14 @@
   parent: [ClothingHeadHelmetBase, BaseSecurityContraband]
   id: ClothingHeadHelmetSwat
   name: SWAT helmet
-  description: An extremely robust helmet, commonly used by paramilitary forces. This one has the Nanotrasen logo emblazoned on the top.
+  description: An extremely robust helmet for Special Weapons And Tactics applications. This one has the Nanotrasen logo emblazoned on the top. # Ronstation
   components:
   - type: Sprite
     sprite: Clothing/Head/Helmets/swat.rsi
   - type: Clothing
     sprite: Clothing/Head/Helmets/swat.rsi
+  - type: Contraband # Ronstation
+    allowedDepartments: [ Security, CentralCommand ] # Ronstation
   - type: Armor #This is intentionally not spaceproof, when the time comes to port the values from SS13 this should be buffed from what it was.
     modifiers:
       coefficients:
@@ -79,10 +83,6 @@
         Slash: 0.80
         Piercing: 0.80
         Heat: 0.80
-        Radiation: 0.80
-        Caustic: 0.95
-  - type: ExplosionResistance
-    damageCoefficient: 0.75
   - type: HideLayerClothing
     layers:
       Hair: HEAD

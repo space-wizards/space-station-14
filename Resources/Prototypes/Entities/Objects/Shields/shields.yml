@@ -1,3 +1,5 @@
+# Modified by Ronstation contributor(s), therefore this file is licensed as MIT sublicensed with AGPL-v3.0.
+
 - type: entity
   name: base shield
   parent: BaseItem
@@ -82,6 +84,8 @@
         flatReductions:
           Blunt: 1
           Slash: 1
+    - type: Contraband # Ronstation
+      allowedJobs: [BlueshieldOfficer] # Ronstation
 
 - type: entity
   name: laser shield
@@ -102,6 +106,9 @@
           Heat: 0.5
         flatReductions:
           Heat: 1
+    - type: Contraband # Ronstation
+      allowedJobs: [BlueshieldOfficer] # Ronstation
+
 
 - type: entity
   name: ballistic shield
@@ -122,6 +129,9 @@
           Piercing: 0.5
         flatReductions:
           Piercing: 1
+    - type: Contraband # Ronstation
+      allowedJobs: [BlueshieldOfficer] # Ronstation
+
 
 #Craftable shields
 
@@ -184,7 +194,7 @@
   name: cardboard shield
   parent: BaseShield
   id: CardShield
-  description: A shield that wont shield you from much.
+  description: A shield made of cardboard. Won't protect you from much.
   components:
     - type: Sprite
       state: cardshield-icon
@@ -559,6 +569,8 @@
         - state: teleriot-on
           visible: false
           map: [ "shield" ]
+    - type: Contraband # Ronstation
+      allowedJobs: [BlueshieldOfficer] # Ronstation
     - type: Item
       size: Small
       sprite: Objects/Weapons/Melee/teleriot_shield.rsi

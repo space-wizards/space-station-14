@@ -1,8 +1,0 @@
-- type: entity
-  parent: [ClothingBackpack, BaseCentcommCommandContraband]
-  id: ClothingBackpackBlueshield
-  name: blueshield backpack
-  description: It's a very robust backpack, even if your job is to protect heads of staff.
-  components:
-  - type: Sprite
-    sprite: Ronstation/Clothing/Back/Backpacks/blueshield.rsi

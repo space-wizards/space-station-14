@@ -1,3 +1,5 @@
+# Modified by Ronstation contributor(s), therefore this file is licensed as MIT sublicensed with AGPL-v3.0.
+
 - type: entity
   name: stun baton
   parent: [BaseItem, BaseSecurityContraband]
@@ -109,6 +111,8 @@
     soundHit:
       collection: MetalThud
     bluntStaminaDamageFactor: 1.5
+  - type: Contraband # Ronstation
+    allowedJobs: [BlueshieldOfficer] # Ronstation
   - type: Item
     size: Normal
   - type: Tag

@@ -1,0 +1,48 @@
+- type: loadoutEffectGroup
+  id: PlushieHampter
+  effects:
+  - !type:JobRequirementLoadoutEffect
+    requirement:
+      !type:RoleTimeRequirement
+      role: JobCaptain
+      time: 9000 # 2.5 hrs
+  - !type:JobRequirementLoadoutEffect
+    requirement:
+      !type:RoleTimeRequirement
+      role: JobHeadOfPersonnel
+      time: 9000 # 2.5 hrs
+  - !type:JobRequirementLoadoutEffect
+    requirement:
+      !type:RoleTimeRequirement
+      role: JobChiefEngineer
+      time: 9000 # 2.5 hrs
+  - !type:JobRequirementLoadoutEffect
+    requirement:
+      !type:RoleTimeRequirement
+      role: JobHeadOfSecurity
+      time: 9000 # 2.5 hrs
+  - !type:JobRequirementLoadoutEffect
+    requirement:
+      !type:RoleTimeRequirement
+      role: JobQuartermaster
+      time: 9000 # 2.5 hrs
+  - !type:JobRequirementLoadoutEffect
+    requirement:
+      !type:RoleTimeRequirement
+      role: JobResearchDirector
+      time: 9000 # 2.5 hrs
+  - !type:JobRequirementLoadoutEffect
+    requirement:
+      !type:RoleTimeRequirement
+      role: JobChiefMedicalOfficer
+      time: 9000 # 2.5 hrs
+
+- type: loadout
+  id: PlushieHampter
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: PlushieHampter
+  storage:
+    back:
+    - PlushieHampter
+  groupBy: "plushies"

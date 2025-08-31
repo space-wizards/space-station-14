@@ -1,0 +1,59 @@
+- type: entity
+  parent: [ClothingBeltBase, ClothingSlotBase, BaseCentcommContraband]
+  id: ClothingBeltBlueshield
+  name: blueshield officer's belt
+  description: A utilitarian belt for NanoTrasen Blueshield officers, featuring holsters for the special issue Gendarme energy pistol.
+  components:
+  - type: Sprite
+    sprite: _Ronstation/Clothing/Belt/blueshield.rsi
+    state: icon
+  - type: Clothing
+    sprite: _Ronstation/Clothing/Belt/blueshield.rsi
+  - type: Item
+    size: Ginormous
+    inhandVisuals:
+      left:
+        - state: inhand-left
+      right:
+        - state: inhand-right 
+  - type: ItemSlots
+    slots:
+#      pistol:
+      item:
+        name: Pistol
+        whitelist:
+          tags:
+          - WeaponPistolGendarme
+#        priority: 2
+#      shield:
+#        name: Shield
+#        whitelist:
+#          tags:
+#          - HolographicTowerShield
+#        blacklist:
+#          sizes:
+#          - Ginormous
+#        priority: 1
+  - type: ItemMapper
+    mapLayers:
+      pistol:
+        whitelist:
+          tags:
+          - WeaponPistolGendarme
+#      shield:
+#        whitelist:
+#          tags:
+#          - HolographicTowerShield
+  - type: Appearance
+
+- type: entity
+  id: ClothingBeltBlueshieldFilled
+  parent: ClothingBeltBlueshield
+  suffix: Filled
+  components:
+  - type: ContainerFill
+    containers:
+      item:
+      - WeaponPistolGendarme
+        #      shield:
+        #      - HoloTowerShield

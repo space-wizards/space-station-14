@@ -1,0 +1,113 @@
+# FUCK YOU HOLO SHIELD!!!!!! FUCK YOU!!!!!!!!!!!!!!!!!!
+# the problems with this thing:
+# it works unlike every other shield ingame. they provide a meaningful resistance to damage TEMPORARILY
+# they are balanced around breaking, and this thing being UNBREAKABLE makes it absolutely busted no matter how weak it is
+# and the reflective nature doesn't help
+# originally kept around during development, i'm commenting this out because i CBA dealing with this thing checkfailing
+
+# i should probably delete the sprites....... soon............
+
+#- type: entity
+#  name: holographic tower shield
+#  parent: [BaseShield, BaseGrandTheftContraband]
+#  id: HoloTowerShield
+#  description: Holographic barrier technology harnessed into a portable handheld assembly, to protect yourself and valuable corporate assets. Issued to NanoTrasen Blueshield officers. Sacrifices protection for a chance to repel oncoming attacks.
+#  components:
+#  - type: ItemToggle
+#    soundActivate:
+#      path: /Audio/Weapons/eblademiss.ogg
+#      params:
+#        pitch: 0.6
+#        volume: 2
+#    soundDeactivate:
+#      path: /Audio/Weapons/eblademiss.ogg
+#      params:
+#        pitch: 0.4
+#        volume: 2
+#  - type: Contraband
+#    allowedDepartments:
+#    - CentralCommand
+#  - type: StealTarget
+#    stealGroup: HoloTowerShield
+#  - type: ComponentToggler
+#    components:
+#    - type: DisarmMalus
+#      malus: 0.6
+#  - type: ItemToggleSize
+#    activatedSize: Ginormous
+#    activatedShape:
+#    - 0,0,3,3
+#    deactivatedShape:
+#    - 0,0,1,1
+#    deactivatedSize: Normal
+#  - type: Sprite
+#    sprite: _Ronstation/Objects/Weapons/Melee/holo_shield.rsi
+#    layers:
+#      - state: disabled-icon
+#      - state: enabled-icon
+#        visible: false
+#        map: ["shield"]
+#        shader: unshaded
+#  - type: Item
+#    size: Large
+#    shape:
+#    - 0,0,1,1
+#    sprite: _Ronstation/Objects/Weapons/Melee/holo_shield.rsi
+#    heldPrefix: null
+#    inhandVisuals:
+#      left:
+#        - state: disabled-inhand-left
+#      right:
+#        - state: disabled-inhand-right
+#    layers:
+#      - state: disabled-icon
+#      - state: enabled-icon
+#        visible: false
+#        map: ["shield"]
+#  - type: UseDelay
+#    delay: 0.5
+#  - type: PointLight
+#    netsync: false
+#    enabled: false
+#    radius: 1.5
+#    energy: 2
+#    color: "#258"
+#  - type: ItemTogglePointLight
+#  - type: ToggleableVisuals
+#    spriteLayer: shield
+#    inhandVisuals:
+#      left:
+#        - state: enabled-inhand-left
+#          shader: unshaded
+#      right:
+#        - state: enabled-inhand-right
+#          shader: unshaded
+#  - type: Appearance
+#  - type: Tag
+#    tags:
+#    - HolographicTowerShield
+#  - type: Reflect
+#    reflectProb: 0.3
+#  - type: Blocking
+#    passiveBlockFraction: 0.15 # the way the numbers stack with other armor is CRACKED
+#    activeBlockFraction: 0.15 # that's why this has to, relatively, suck ass
+#    passiveBlockModifier:
+#      coefficients:
+#        Blunt: 0.9
+#        Slash: 0.9
+#    activeBlockModifier:
+#      coefficients:
+#        Blunt: 0.7
+#        Slash: 0.7
+#        Piercing: 0.7
+#        Heat: 0.8
+#    flatReductions:
+#      Blunt: 1
+#      Heat: 1
+#  - type: Destructible # this one has to be unbreakable and AHHHHHHHH!!!! YOU CAN'T REMOVE PROTOTYPES!!!! AHHHHHHH
+#    thresholds:
+#      - trigger:
+#          !type:DamageTrigger
+#          damage: 9999999
+#  - type: StaticPrice
+#    price: 500

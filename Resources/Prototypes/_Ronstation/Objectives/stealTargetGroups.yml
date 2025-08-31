@@ -6,3 +6,19 @@
   sprite:
     sprite: _Ronstation/Objects/Weapons/Guns/Pistols/negotiator.rsi
     state: icon
+
+- type: stealTargetGroup
+  id: WeaponPistolGendarme
+  name: steal-target-groups-gendarme
+  sprite:
+    sprite: _Ronstation/Objects/Weapons/Guns/Battery/gendarme.rsi
+    state: icon
+
+
+# fuck you tower shield FUCK YOU!!!
+#- type: stealTargetGroup
+#  id: HoloTowerShield
+#  name: steal-target-groups-holoshield
+#  sprite:
+#    sprite: _Ronstation/Objects/Weapons/Melee/holo_shield.rsi
+#    state: teleriot-on
