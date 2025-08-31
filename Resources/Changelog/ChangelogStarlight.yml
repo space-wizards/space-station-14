@@ -12575,5 +12575,12 @@ Entries:
   id: 149101
   time: '2025-08-30T18:07:25.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/1491
+- author: Conflee
+  changes:
+  - message: Removed AI generated songs from the Jukebox.
+    type: Remove
+  id: 150100
+  time: '2025-08-31T13:06:30.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1501
 Order: -1
 
