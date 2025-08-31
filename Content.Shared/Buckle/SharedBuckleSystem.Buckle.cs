@@ -42,9 +42,10 @@ public abstract partial class SharedBuckleSystem
         SubscribeLocalEvent<BuckleComponent, BeingPulledAttemptEvent>(OnBeingPulledAttempt);
         SubscribeLocalEvent<BuckleComponent, PullStartedMessage>(OnPullStarted);
         SubscribeLocalEvent<BuckleComponent, UnbuckleAlertEvent>(OnUnbuckleAlert);
+        SubscribeLocalEvent<BuckleComponent, KnockDownAttemptEvent>(Penis);  //crawl makes you drop from the seat
+
 
         SubscribeLocalEvent<BuckleComponent, InsertIntoEntityStorageAttemptEvent>(OnBuckleInsertIntoEntityStorageAttempt);
-
         SubscribeLocalEvent<BuckleComponent, PreventCollideEvent>(OnBucklePreventCollide);
         SubscribeLocalEvent<BuckleComponent, DownAttemptEvent>(OnBuckleDownAttempt);
         SubscribeLocalEvent<BuckleComponent, StandAttemptEvent>(OnBuckleStandAttempt);
@@ -91,6 +92,11 @@ public abstract partial class SharedBuckleSystem
         if (args.Handled)
             return;
         args.Handled = TryUnbuckle(ent, ent, ent);
+    }
+
+    private void Penis(Entity<BuckleComponent> ent, ref KnockDownAttemptEvent args)
+    {
+        TryUnbuckle(ent, ent, ent);
     }
 
     #endregion
