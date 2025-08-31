@@ -52,7 +52,7 @@ public sealed class SharedMagbootsSystem : EntitySystem
         if (TryComp<MovedByPressureComponent>(user, out var moved))
             moved.Enabled = !state;
 
-        _gravity.RefreshWeightless(user, !state);
+        _gravity.RefreshWeightless(user);
 
         if (state)
             _alerts.ShowAlert(user, ent.Comp.MagbootsAlert);
