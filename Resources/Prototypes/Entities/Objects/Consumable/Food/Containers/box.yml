@@ -516,7 +516,7 @@
   - type: Item
     sprite: Objects/Storage/Happyhonk/clown.rsi
     heldPrefix: box
-    size: Normal
+    size: Normal # Starlight-edit
   - type: Storage
     maxItemSize: Normal
     grid:
