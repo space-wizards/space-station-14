@@ -286,8 +286,9 @@
   - type: GhostRole
     name: ghost-role-information-wizard-name
     description: ghost-role-information-wizard-desc
+    rules: ghost-role-information-freeagent-rules # DS14
     mindRoles:
-    - MindRoleGhostRoleSoloAntagonist
+    - MindRoleGhostRoleFreeAgent # DS14
     requirements:
     - !type:OverallPlaytimeRequirement
       time: 216000 # 60h overall
