@@ -63,7 +63,7 @@ public sealed class VampireFeedSystem : EntitySystem
                 _popupSystem.PopupClient(Loc.GetString("vampire-feed-attempt-failed-dead"), ent, ent, PopupType.Medium);
                 return false;
             }
-            if (bloodSolution.Volume <= 0)
+            if (bloodSolution.Volume < 10)
             {
                 _popupSystem.PopupClient(Loc.GetString("vampire-feed-attempt-failed-low-blood"), ent, ent, PopupType.Medium);
                 return false;
@@ -99,7 +99,6 @@ public sealed class VampireFeedSystem : EntitySystem
     private void OnFeedDoAfter(Entity<VampireFeedComponent> ent, ref VampireFeedDoAfterEvent args)
     {
         args.Handled = true;
-        args.Repeat = true;
 
         // if (!EntityManager.EntityExists(ent.Comp.CurrentDevourSound))
         //     _audio.Stop(ent.Comp.CurrentDevourSound!);
@@ -116,20 +115,17 @@ public sealed class VampireFeedSystem : EntitySystem
         if (!SolutionContainer.ResolveSolution(bloodstream.Owner, bloodstream.BloodSolutionName, ref bloodstream.BloodSolution, out var bloodSolution))
             return;
 
-        if (!IsTargetValid(args.Target.Value, ent))
-        {
-            args.Repeat = false;
-            return;
-        }
+        bloodSolution.Volume = bloodSolution.Volume - 10;
+        if (bloodSolution.Volume < 0)
+            bloodSolution.Volume = 0;
 
-        bloodSolution.Volume = bloodSolution.Volume - 25;
         _damageable.TryChangeDamage(args.Target, ent.Comp.DamagePerTick, true, true, damage, args.User);
         _audio.PlayPredicted(ent.Comp.FeedNoise, args.Target.Value, args.User, AudioParams.Default.WithVolume(-2f).WithVariation(0.25f));
 
         if (TryComp<VampireComponent>(ent.Owner, out VampireComponent? comp))
         {
-            comp.VitaeRegenCap += 2;
-            comp.Vitae += 2;
+            comp.VitaeRegenCap = comp.VitaeRegenCap + comp.VitaeCapUpgradeAmount;
         }
+        args.Repeat = IsTargetValid(args.Target.Value, ent);
     }
 }

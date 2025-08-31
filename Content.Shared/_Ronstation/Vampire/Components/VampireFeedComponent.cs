@@ -63,8 +63,8 @@ public sealed partial class VampireFeedComponent : Component
     {
         DamageDict = new Dictionary<string, FixedPoint2>
         {
-            { "Bloodloss", 10},
-            { "Piercing", 10 },
+            { "Bloodloss", 9},
+            { "Piercing", 1 },
         },
     };
 
