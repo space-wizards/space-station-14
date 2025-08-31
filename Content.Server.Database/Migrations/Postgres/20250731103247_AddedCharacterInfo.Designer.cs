@@ -6,6 +6,7 @@ using System.Text.Json;
 using Content.Server.Database;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using NpgsqlTypes;
@@ -15,9 +16,11 @@ using NpgsqlTypes;
 namespace Content.Server.Database.Migrations.Postgres
 {
     [DbContext(typeof(PostgresServerDbContext))]
-    partial class PostgresServerDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250731103247_AddedCharacterInfo")]
+    partial class AddedCharacterInfo
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -822,6 +825,11 @@ namespace Content.Server.Database.Migrations.Postgres
                         .HasColumnType("text")
                         .HasColumnName("admin_ooc_color");
 
+                    b.Property<string>("AdminOOCNameColor")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("admin_ooc_name_color");
+
                     b.PrimitiveCollection<List<string>>("ConstructionFavorites")
                         .IsRequired()
                         .HasColumnType("text[]")
@@ -1452,6 +1460,14 @@ namespace Content.Server.Database.Migrations.Postgres
                         .HasColumnType("integer")
                         .HasColumnName("balance");
 
+                    b.Property<string>("DiscordId")
+                        .HasColumnType("text")
+                        .HasColumnName("discord_id");
+
+                    b.Property<int>("Flags")
+                        .HasColumnType("integer")
+                        .HasColumnName("flags");
+
                     b.Property<string>("GhostTheme")
                         .HasColumnType("text")
                         .HasColumnName("ghost_theme");
@@ -1462,6 +1478,9 @@ namespace Content.Server.Database.Migrations.Postgres
 
                     b.HasKey("UserId")
                         .HasName("PK_player_data");
+
+                    b.HasIndex("DiscordId")
+                        .HasDatabaseName("IX_player_data_discord_id");
 
                     b.ToTable("player_data", (string)null);
                 });
@@ -1480,22 +1499,9 @@ namespace Content.Server.Database.Migrations.Postgres
                         .HasColumnType("character varying(32)")
                         .HasColumnName("custom_specie_name");
 
-                    b.PrimitiveCollection<List<string>>("CyberneticIds")
-                        .IsRequired()
-                        .HasColumnType("text[]")
-                        .HasColumnName("cybernetic_ids");
-
-                    b.Property<float>("Height")
-                        .HasColumnType("real")
-                        .HasColumnName("height");
-
                     b.Property<int>("ProfileId")
                         .HasColumnType("integer")
                         .HasColumnName("profile_id");
-
-                    b.Property<float>("Width")
-                        .HasColumnType("real")
-                        .HasColumnName("width");
 
                     b.HasKey("Id")
                         .HasName("PK_star_light_profile");

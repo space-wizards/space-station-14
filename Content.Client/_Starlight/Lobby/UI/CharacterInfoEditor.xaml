@@ -1,0 +1,23 @@
+﻿<Control  xmlns="https://spacestation14.io"
+          xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" HorizontalExpand="True">
+    <ScrollContainer VerticalExpand="True">
+        <BoxContainer Orientation="Vertical" VerticalExpand="True">
+            <BoxContainer Orientation="Vertical" VerticalExpand="True">
+                <Label Text="Physical Description:"/>
+                <TextEdit Name="PhysicalDescInput" Access="Public" MinSize="220 100" Margin="10" HorizontalExpand="True" VerticalExpand="True" />
+            </BoxContainer>
+            <BoxContainer Orientation="Vertical" VerticalExpand="True">
+                <Label Text="Personality Description:"/>
+                <TextEdit Name="PersonalityDescInput" Access="Public" MinSize="220 100" Margin="10" HorizontalExpand="True" VerticalExpand="True" />
+            </BoxContainer>
+            <BoxContainer Orientation="Vertical" VerticalExpand="True">
+                <Label Text="Exploitable Info:"/>
+                <TextEdit Name="ExploitableInput" Access="Public" MinSize="220 100" Margin="10" HorizontalExpand="True" VerticalExpand="True" />
+            </BoxContainer>
+            <BoxContainer Orientation="Vertical" VerticalExpand="True">
+                <Label Text="Secrets:"/>
+                <TextEdit Name="SecretsInput" Access="Public" MinSize="220 100" Margin="10" HorizontalExpand="True" VerticalExpand="True" />
+            </BoxContainer>
+        </BoxContainer>
+    </ScrollContainer>
+</Control>
