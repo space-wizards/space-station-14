@@ -379,7 +379,7 @@
     heldPrefix: scurretpelt
   - type: Clothing
     sprite: Clothing/Head/Misc/hides.rsi
-    equippedPrefix: scurretpelt
+    equippedPrefix: scurret
     slots:
     - HEAD
   - type: Tag

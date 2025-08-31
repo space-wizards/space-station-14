@@ -303,6 +303,9 @@
     - WhitelistChameleon
   - type: StaticPrice
     price: 1 # You have turned a scurret into a fursuit. You deserve nothing.
+  - type: HideLayerClothing
+    layers:
+      Tail: OUTERCLOTHING
 
 - type: entity
   parent: ClothingOuterBase
