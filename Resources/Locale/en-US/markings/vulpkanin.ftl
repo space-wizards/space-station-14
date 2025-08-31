@@ -118,7 +118,7 @@ marking-VulpTailVulp = Vulpkanin
 
 marking-VulpTailVulpFade-vulp = Vulpkanin tail (Base)
 marking-VulpTailVulpFade-vulp-fade = Vulpkanin tail (Fade)
-marking-VulpTailVulpFade = Vulpkanin
+marking-VulpTailVulpFade = Vulpkanin (Fade)
 
 
 # Chest
