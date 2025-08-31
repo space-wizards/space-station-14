@@ -1,26 +1,34 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
-  "copyright": "Socks drawn by welladooom for Ronstation fork",
+  "copyright": "Socks drawn by welladooom and edited by Merrokitsune for Ronstation fork.",
   "size": {
     "x": 32,
     "y": 32
   },
   "states": [
     {
-      "name": "leftsock",
+      "name": "left_upper_sock",
       "directions": 4
     },
     {
-      "name": "rightsock",
+      "name": "right_upper_sock",
       "directions": 4
     },
     {
-      "name": "voxleftsock",
+      "name": "left_lower_sock",
       "directions": 4
     },
     {
-      "name": "voxrightsock",
+      "name": "right_lower_sock",
+      "directions": 4
+    },
+    {
+      "name": "vox_left_sock",
+      "directions": 4
+    },
+    {
+      "name": "vox_right_sock",
       "directions": 4
     }
   ]
