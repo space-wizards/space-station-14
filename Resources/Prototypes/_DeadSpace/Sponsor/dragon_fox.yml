@@ -1,6 +1,11 @@
 - type: sponsorLoadout
   id: DragonFox
-  entity: ClothingBackpackDragonFox
+  entity: ClothingBackpackDragonFoxMedTech
+  sponsorOnly: true
+
+- type: sponsorLoadout
+  id: DragonFoxBelt
+  entity: ClothingBeltWebbingDragonFoxMedTech
   sponsorOnly: true
 
 # Backpack
