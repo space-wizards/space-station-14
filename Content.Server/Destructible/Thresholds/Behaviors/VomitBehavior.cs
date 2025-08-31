@@ -12,7 +12,7 @@ public sealed partial class VomitBehavior : IThresholdBehavior
         if (!system.EntityManager.TryGetComponent(uid, out MobStateComponent? mobState))
             return;
 
-        if(mobState.CurrentState == MobState.Alive)
+        if (mobState.CurrentState == MobState.Alive)
             system.EntityManager.System<VomitSystem>().Vomit(uid);
     }
 }
