@@ -144,8 +144,8 @@ namespace Content.Shared.Preferences
             PersonalityDescription = personalityDesc;//Starlight
             PersonalNotes = personalNotes;//Starlight
             OOCNotes = oocNotes;//Starlight
-            Secrets = secrets;
-            ExploitableInfo = exploitableInfo;
+            Secrets = secrets; //Starlight
+            ExploitableInfo = exploitableInfo; //Starlight
             Species = species;//Starlight
             CustomSpecieName = customspeciename; // Starlight
             Age = age;

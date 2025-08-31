@@ -1,4 +1,6 @@
-using Content.Client._Starlight.TTS;
+using System.IO;
+using System.Linq;
+using System.Numerics;
 using Content.Client.Humanoid;
 using Content.Client.Lobby.UI.Loadouts;
 using Content.Client.Lobby.UI.Roles;
@@ -30,10 +32,8 @@ using Robust.Shared.ContentPack;
 using Robust.Shared.Enums;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
-using System.IO;
-using System.Linq;
-using System.Numerics;
 using Content.Shared.Starlight.CCVar;
+using Content.Client._Starlight.TTS;
 
 namespace Content.Client.Lobby.UI
 {

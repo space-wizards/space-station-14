@@ -355,7 +355,7 @@ namespace Content.Server.Database
             profile.CharacterName = humanoid.Name;
             profile.Voice = humanoid.Voice;
             profile.SiliconVoice = humanoid.SiliconVoice; // 🌟Starlight🌟
-            profile.FlavorText = string.Empty;
+            profile.FlavorText = string.Empty; //Starlight
             profile.CharacterInfo ??= new StarLightModel.CharacterInfo();//Starlight
             profile.CharacterInfo.PhysicalDesc = humanoid.PhysicalDescription;//Starlight
             profile.CharacterInfo.PersonalityDesc = humanoid.PersonalityDescription;//Starlight
@@ -789,33 +789,7 @@ namespace Content.Server.Database
         }
 
         #endregion
-        #region Player data
-        /*
-         * Player data 🌟Starlight🌟
-         */
-        public async Task<StarLightModel.PlayerDataDTO?> GetPlayerDataDTOForAsync(NetUserId userId, CancellationToken cancel)
-        {
-            await using var db = await GetDb(cancel);
-            return await db.DbContext.PlayerData
-                .SingleOrDefaultAsync(p => p.UserId == userId.UserId, cancel);
-        }
-        public async Task SetPlayerDataForAsync(NetUserId userId, StarLightModel.PlayerDataDTO data, CancellationToken cancel)
-        {
-            await using var db = await GetDb(cancel);
 
-            var obj = await db.DbContext.PlayerData
-                .SingleOrDefaultAsync(p => p.UserId == userId.UserId, cancel);
-            if (obj != null)
-            {
-                obj.Balance = data.Balance;
-                obj.GhostTheme = data.GhostTheme;
-            }
-            else
-                db.DbContext.PlayerData.Add(data);
-
-            await db.DbContext.SaveChangesAsync();
-        }
-        #endregion
         #region Admin Ranks
         /*
          * ADMIN RANKS
