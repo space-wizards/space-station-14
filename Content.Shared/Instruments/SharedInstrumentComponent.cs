@@ -3,11 +3,13 @@ using System.Text;
 using Robust.Shared.Audio.Midi;
 using Robust.Shared.GameStates;
 using Robust.Shared.Serialization;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom; // Starlight
 
 namespace Content.Shared.Instruments;
 
 [NetworkedComponent]
 [Access(typeof(SharedInstrumentSystem))]
+[AutoGenerateComponentPause] // Starlight
 public abstract partial class SharedInstrumentComponent : Component
 {
     [ViewVariables]
@@ -23,7 +25,7 @@ public abstract partial class SharedInstrumentComponent : Component
     public bool AllowPercussion { get; set; }
 
     [DataField("allowProgramChange"), ViewVariables(VVAccess.ReadWrite)]
-    public bool AllowProgramChange { get ; set; }
+    public bool AllowProgramChange { get; set; }
 
     [DataField("respectMidiLimits"), ViewVariables(VVAccess.ReadWrite)]
     public bool RespectMidiLimits { get; set; } = true;
@@ -33,6 +35,13 @@ public abstract partial class SharedInstrumentComponent : Component
 
     [ViewVariables]
     public BitArray FilteredChannels { get; set; } = new(RobustMidiEvent.MaxChannels, true);
+
+    [DataField(customTypeSerializer: typeof(TimeOffsetSerializer))]
+    [AutoPausedField]
+    public Timespan NextInputTime { get; set; } = Timespan.Zero; // Starlight
+    
+    [DataField]
+    public Timespan InputDelay { get; set; } = Timespan.FromSeconds(1); // Starlight
 }
 
 /// <summary>
