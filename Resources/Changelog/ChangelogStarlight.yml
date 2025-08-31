@@ -12582,5 +12582,40 @@ Entries:
   id: 150100
   time: '2025-08-31T13:06:30.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/1501
+- author: Jezithyr
+  changes:
+  - message: Added Exploitable Info to characters.
+    type: Add
+  id: 149200
+  time: '2025-08-31T23:37:52.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1492
+- author: Jezithyr
+  changes:
+  - message: Added Character Secrets.
+    type: Add
+  id: 149201
+  time: '2025-08-31T23:37:52.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1492
+- author: Jezithyr
+  changes:
+  - message: Added Character Inspect Window.
+    type: Add
+  id: 149202
+  time: '2025-08-31T23:37:52.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1492
+- author: Jezithyr
+  changes:
+  - message: Added OOC and Personal notes.
+    type: Add
+  id: 149203
+  time: '2025-08-31T23:37:52.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1492
+- author: Jezithyr
+  changes:
+  - message: Split flavor text into physical and personality descriptions.
+    type: Tweak
+  id: 149204
+  time: '2025-08-31T23:37:52.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1492
 Order: -1
 
