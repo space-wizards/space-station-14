@@ -66,3 +66,9 @@
   id: BaseTrinkets
   name: loadout-group-trinkets
   abstract: true
+
+- type: loadoutGroup
+  id: BasePets
+  name: loadout-group-pets
+  abstract: true
+  minLimit: 0

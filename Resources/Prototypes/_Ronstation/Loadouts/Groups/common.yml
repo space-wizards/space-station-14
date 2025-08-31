@@ -13,3 +13,10 @@
   - CommonBackpack
   - CommonSatchel
   - CommonDuffel
+
+- type: loadoutGroup
+  id: CommonPets
+  parent: BasePets
+  loadouts:
+  - PetButterfly
+  - PetBee
