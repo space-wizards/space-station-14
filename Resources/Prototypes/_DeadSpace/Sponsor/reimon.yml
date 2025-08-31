@@ -1,0 +1,551 @@
+# Loadout Definitions
+- type: sponsorLoadout
+  id: Reimon
+  entity: ClothingBackpackReimon
+  sponsorOnly: true
+
+- type: sponsorLoadout
+  id: ReimonHypospray
+  entity: HypoReimon
+  sponsorOnly: true
+  whitelistJobs: [ChiefMedicalOfficer, SeniorPhysician, Chemist, MedicalDoctor, Paramedic, Coroner, MedicalIntern]
+
+- type: sponsorLoadout
+  id: ReimonWeaponCrusher
+  entity: WeaponCrusherReimon
+  sponsorOnly: true
+  whitelistJobs: [SalvageSpecialist, SeniorSalvageSpecialist]
+
+# Backpack
+- type: entity
+  parent: ClothingBackpack
+  id: ClothingBackpackReimon
+  name: сумка Minaris
+  description: Такие сумки носят офицеры-исследователи компании Minaris.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/Reimon/backpack.rsi
+  - type: Clothing
+    sprite: _DeadSpace/Sponsor/Reimon/backpack.rsi
+  - type: Storage
+    maxItemSize: Huge
+    grid:
+    - 0,0,19,9
+  - type: StorageFill
+    contents:
+    - id: ClothingNeckReimon
+    - id: ClothingBeltReimon
+    - id: ClothingShoesBootsMagReimon
+    - id: ClothingHandsGlovesCombatReimon
+    - id: ClothingUniformJumpsuitReimon
+    - id: ClothingEyesGlassesReimon
+    - id: ClothingMaskGasReimon
+    - id: PDAReimon
+    - id: ClothingHeadsetReimon
+    - id: ClothingHeadCapReimon
+    - id: PaperLawReimon
+  - type: Tag
+    tags: [] # ignore "WhitelistChameleon" tag
+  - type: ToggleableClothing
+    clothingPrototype: ClothingOuterHardsuitReimon
+    requiredSlot: BACK
+    slot: outerClothing
+  - type: ContainerContainer
+    containers:
+      toggleable-clothing: !type:ContainerSlot {}
+      storagebase: !type:Container
+        ents: []
+
+# Belt
+- type: entity
+  parent: ClothingBeltStorageBase
+  id: ClothingBeltReimon
+  name: поясная сумка Minaris
+  description: Обычная поясная сумка, входит в стандартную экипировку офицера-исследователя Minaris.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/Reimon/belt.rsi
+  - type: Clothing
+    sprite: _DeadSpace/Sponsor/Reimon/belt.rsi
+  - type: Item
+    size: Huge
+  - type: Storage
+    grid:
+    - 0,0,9,1
+  - type: StorageFill
+    contents:
+    - id: GasAnalyzerReimon
+    - id: HolofanProjectorReimon
+    - id: JawsOfLifeReimon
+    - id: HandHeldMassScannerReimon
+    - id: MultitoolReimon
+    - id: PowerDrillReimon
+    - id: trayScannerReimon
+    - id: WelderExperimentalReimon
+
+# Neck
+- type: entity
+  parent: ClothingNeckBase
+  id: ClothingNeckReimon
+  name: мантия Minaris
+  description: Символ высокого статуса обладателя этой мантии в рядах корпорации Minaris.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/Reimon/cloak.rsi
+  - type: Tag
+    tags: [] # ignore "WhitelistChameleon" tag
+
+# Hardsuit
+- type: entity
+  parent: ClothingOuterHardsuitAtmos
+  id: ClothingOuterHardsuitReimon
+  name: пустотный скафандр Minaris
+  description: Пустотный скафандр офицера-исследователя компании Minaris Technical. Выполнен из дорогих материалов и экспериментальных сплавов.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/Reimon/hardsuit.rsi
+  - type: Clothing
+    sprite: _DeadSpace/Sponsor/Reimon/hardsuit.rsi
+  - type: ToggleableClothing
+    clothingPrototype: ClothingHeadHelmetHardsuitReimon
+  - type: Item
+    size: Huge
+  - type: ClothingSpeedModifier
+    walkModifier: 1
+    sprintModifier: 1
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.65
+        Slash: 0.65
+        Piercing: 0.6
+        Heat: 0.7
+        Radiation: 0.5
+        Caustic: 0.5
+  - type: Tag
+    tags: [] # ignore "WhitelistChameleon" tag
+  - type: HardsuitIdentification
+    nonlethal: true
+  - type: HardsuitSpeedBuff
+  - type: PowerCellDraw
+    drawRate: 3.6
+    enabled: false
+  - type: PowerCellSlot
+    cellSlotId: cell_slot
+    fitsInCharger: false
+  - type: ContainerContainer
+    containers:
+      cell_slot: !type:ContainerSlot
+      toggleable-clothing: !type:ContainerSlot {}
+  - type: ItemSlots
+    slots:
+      cell_slot:
+        name: power-cell-slot-component-slot-name-default
+        startingItem: PowerCellMicroreactor
+        disableEject: true
+        whitelist:
+          tags:
+          - PowerCell
+
+# Helmet
+- type: entity
+  parent: [ ClothingHeadHardsuitBase, ClothingHeadSuitWithLightBase ]
+  id: ClothingHeadHelmetHardsuitReimon
+  name: шлем пустотного скафандра Minaris
+  description: Для защиты от космоса офицера-исследователя компании Minaris Technical. Выполнен из дорогих материалов и экспериментальных сплавов.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/Reimon/helmet.rsi
+  - type: Clothing
+    sprite: _DeadSpace/Sponsor/Reimon/helmet.rsi
+  - type: PointLight
+    color: "#d46f11"
+    radius: 7
+    energy: 8
+  - type: PressureProtection
+    highPressureMultiplier: 0.08
+    lowPressureMultiplier: 1000
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.9
+        Slash: 0.9
+        Piercing: 0.9
+        Heat: 0.9
+  - type: Tag
+    tags: [] # ignore "WhitelistChameleon" tag
+
+# Gloves
+- type: entity
+  parent: ClothingHandsGlovesCombat
+  id: ClothingHandsGlovesCombatReimon
+  name: боевые перчатки Minaris
+  description: Защитные перчатки Minaris, незаменимая вещь при работе офицера-исследователя.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/Reimon/gloves.rsi
+  - type: Clothing
+    sprite: _DeadSpace/Sponsor/Reimon/gloves.rsi
+  - type: Tag
+    tags: [] # ignore "WhitelistChameleon" tag
+
+# Magboots
+- type: entity
+  parent: [ClothingShoesBootsMag, BaseJetpack]
+  id: ClothingShoesBootsMagReimon
+  name: магнитные ботинки Minaris
+  description: Фирменные магнитные сапоги Minaris Technical.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/Reimon/magboots.rsi
+    layers:
+    - state: icon
+      map: [ "enum.ToggleVisuals.Layer" ]
+  - type: Clothing
+    sprite: _DeadSpace/Sponsor/Reimon/magboots.rsi
+  - type: ClothingSpeedModifier
+    walkModifier: 1
+    sprintModifier: 1
+  - type: GasTank
+    outputPressure: 42.6
+    air:
+      volume: 70
+      temperature: 293.15
+      moles:
+      - 11.315 # oxygen
+      - 11.315 # nitrogen
+  - type: Tag
+    tags: [] # ignore "WhitelistChameleon" tag
+
+# Glasses
+- type: entity
+  parent: ClothingEyesHudMultiversal
+  id: ClothingEyesGlassesReimon
+  name: визор Minaris
+  description: Матовый оранжевый визор Minaris, является запатентованной разработкой компании.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/Reimon/hud.rsi
+  - type: Clothing
+    sprite: _DeadSpace/Sponsor/Reimon/hud.rsi
+  - type: EyeProtection
+  - type: IdentityBlocker
+    coverage: EYES
+  - type: Tag
+    tags: [] # ignore "WhitelistChameleon" tag
+
+# Jumpsuit
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformJumpsuitReimon
+  name: комбинезон Minaris
+  description: Такую униформу носят офицеры-исследователи компании Minaris Technical.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/Reimon/jumpsuit.rsi
+  - type: Clothing
+    sprite: _DeadSpace/Sponsor/Reimon/jumpsuit.rsi
+  - type: Tag
+    tags: [] # ignore "WhitelistChameleon" tag
+
+# Gas Mask
+- type: entity
+  parent: ClothingMaskGasSyndicate
+  id: ClothingMaskGasReimon
+  name: защитная маска Minaris
+  description: Защитная маска офицера-исследователя Minaris.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/Reimon/gasmask.rsi
+  - type: Clothing
+    sprite: _DeadSpace/Sponsor/Reimon/gasmask.rsi
+  - type: Tag
+    tags: [] # ignore "WhitelistChameleon" tag
+
+# Headset
+- type: entity
+  parent: ClothingHeadset
+  id: ClothingHeadsetReimon
+  name: гарнитура Minaris
+  description: Модифицированный модульный интерком корпорации Minaris Technical.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/Reimon/headset.rsi
+  - type: Clothing
+    sprite: _DeadSpace/Sponsor/Reimon/headset.rsi
+  - type: Tag
+    tags: [] # ignore "WhitelistChameleon" tag
+
+# Cap
+- type: entity
+  parent: ClothingHeadBase
+  id: ClothingHeadCapReimon
+  name: офицерская фуражка Minaris
+  description: Фуражка офицера-исследователя Minaris Technical.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/Reimon/hat.rsi
+  - type: Clothing
+    sprite: _DeadSpace/Sponsor/Reimon/hat.rsi
+  - type: Tag
+    tags: [] # ignore "WhitelistChameleon" tag
+
+# Hypospray
+- type: entity
+  id: HypoReimon
+  name: гипоспрей Minaris
+  parent: BaseItem
+  description: Модель инъектора разработки Minaris Technical.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/Reimon/hypo.rsi
+    state: icon
+  - type: Item
+    sprite: _DeadSpace/Sponsor/Reimon/hypo.rsi
+  - type: SolutionContainerManager
+    solutions:
+      hypospray:
+        maxVol: 5
+  - type: RefillableSolution
+    solution: hypospray
+  - type: ExaminableSolution
+    solution: hypospray
+  - type: Hypospray
+    onlyAffectsMobs: false
+  - type: UseDelay
+    delay: 0.5
+
+# Crusher
+- type: entity
+  id: WeaponCrusherReimon
+  parent: WeaponCrusher
+  name: саперная лопатка Minaris
+  description: Против всех исчадий из глубин преисподней, против всех нечестивцев рода людского, против легионов тьмы... мы выставим тебя одного.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/Reimon/crusher.rsi
+    layers:
+    - state: icon
+  - type: Item
+    sprite: _DeadSpace/Sponsor/Reimon/crusher.rsi
+    size: Normal
+  - type: Clothing
+    sprite: _DeadSpace/Sponsor/Reimon/crusher.rsi
+    quickEquip: false
+    slots:
+    - suitStorage
+
+# PDA
+- type: entity
+  parent: BaseMedicalPDA
+  id: PDAReimon
+  name: древний КПК
+  description: Новинка 2603 года!
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Icon
+    sprite: _DeadSpace/Sponsor/Reimon/pda.rsi
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/Reimon/pda.rsi
+  - type: Tag
+    tags: [] # ignore "WhitelistChameleon" tag
+  - type: CartridgeLoader
+    uiKey: enum.PdaUiKey.Key
+    preinstalled:
+    - CrewManifestCartridge
+    - NotekeeperCartridge
+    - NanoTaskCartridge
+    - NewsReaderCartridge
+    - MedTekCartridge
+    - AstroNavCartridge
+
+# JawsOfLife
+- type: entity
+  parent: SyndicateJawsOfLife
+  id: JawsOfLifeReimon
+  name: челюсти жизни Minaris
+  description: Изготовлено на заказ организацией Minaris Technical.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/Reimon/tools_jawsoflife.rsi
+    state: syn_jaws_pry
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: syn_inhand-left
+      right:
+      - state: syn_inhand-right
+    size: Normal
+  - type: MultipleTool
+    entries:
+    - behavior: Prying
+      sprite:
+        sprite: _DeadSpace/Sponsor/Reimon/tools_jawsoflife.rsi
+        state: syn_jaws_pry
+      useSound: /Audio/Items/jaws_pry.ogg
+      changeSound: /Audio/Items/change_jaws.ogg
+    - behavior: Cutting
+      sprite:
+        sprite: _DeadSpace/Sponsor/Reimon/tools_jawsoflife.rsi
+        state: syn_jaws_cutter
+      useSound: /Audio/Items/jaws_cut.ogg
+      changeSound: /Audio/Items/change_jaws.ogg
+  - type: MeleeWeapon
+    damage:
+      types:
+        Blunt: 14
+
+# drill
+- type: entity
+  parent: PowerDrill
+  id: PowerDrillReimon
+  name: дрель Minaris
+  description: Изготовлено на заказ организацией Minaris Technical.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/Reimon/tools_powerdrill.rsi
+    state: drill_screw
+  - type: Item
+    sprite: _DeadSpace/Sponsor/Reimon/tools_powerdrill.rsi
+    size: Small
+  - type: Tool
+    qualities:
+    - Screwing
+    speedModifier: 1.5
+    useSound: /Audio/Items/drill_use.ogg
+  - type: MultipleTool
+    statusShowBehavior: true
+    entries:
+    - behavior: Screwing
+      sprite:
+        sprite: _DeadSpace/Sponsor/Reimon/tools_powerdrill.rsi
+        state: drill_screw
+      useSound:
+        path: /Audio/Items/drill_use.ogg
+      changeSound:
+        path: /Audio/Items/change_drill.ogg
+    - behavior: Anchoring
+      sprite:
+        sprite: _DeadSpace/Sponsor/Reimon/tools_powerdrill.rsi
+        state: drill_bolt
+      useSound:
+        path: /Audio/Items/drill_use.ogg
+      changeSound:
+        path: /Audio/Items/change_drill.ogg
+
+# welder
+- type: entity
+  parent: WelderExperimental
+  id: WelderExperimentalReimon
+  name: сварочный аппарат Minaris
+  description: Изготовлено на заказ организацией Minaris Technical.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/Reimon/tools_welder.rsi
+  - type: Item
+    sprite: _DeadSpace/Sponsor/Reimon/tools_welder.rsi
+
+# multitool
+- type: entity
+  parent: Multitool
+  id: MultitoolReimon
+  name: мультитул Minaris
+  description: Изготовлено на заказ организацией Minaris Technical.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/Reimon/tools_multitool.rsi
+
+# t-ray scanner
+- type: entity
+  parent: trayScanner
+  id: trayScannerReimon
+  name: т-лучевой сканер Minaris
+  description: Изготовлено на заказ организацией Minaris Technical.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/Reimon/tools_trayscanner.rsi
+    state: icon
+  - type: Item
+    sprite: _DeadSpace/Sponsor/Reimon/tools_trayscanner.rsi
+
+# holofan projector
+- type: entity
+  parent: HolofanProjector
+  id: HolofanProjectorReimon
+  name: голопроектор Minaris
+  description: Изготовлено на заказ организацией Minaris Technical.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/Reimon/tools_holofanprojector.rsi
+    state: icon
+
+# gas analyzer
+- type: entity
+  name: газоанализатор Minaris
+  parent: GasAnalyzer
+  id: GasAnalyzerReimon
+  description: Изготовлено на заказ организацией Minaris Technical.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/Reimon/tools_gasanalyzer.rsi
+    layers:
+    - state: icon
+      map: ["analyzer"]
+
+# mass scanner
+- type: entity
+  name: сканер массы Minaris
+  parent: HandHeldMassScanner
+  id: HandHeldMassScannerReimon
+  description: Изготовлено на заказ организацией Minaris Technical.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Item
+    sprite: _DeadSpace/Sponsor/Reimon/tools_massscanner.rsi
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/Reimon/tools_massscanner.rsi
+    state: icon
+    layers:
+    - state: icon
+    - state: scanner
+      shader: unshaded
+      visible: false
+      map: [ "enum.PowerDeviceVisualLayers.Powered" ]
+
+# Law
+- type: entity
+  parent: PaperPrintedCentcomm
+  id: PaperLawReimon
+  name: распечатанный документ
+  description: Лист бумаги с заголовком ЦентКома. Страшно даже смотреть на него.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Paper
+    stampState: paper_stamp-centcom
+    stampedBy:
+    - stampedColor: '#006600FF'
+      stampedName: Центральное Командование
+    - stampedColor: '#00BE00FF'
+      stampedName: Одобрено
+    content: paper-law-reimon
