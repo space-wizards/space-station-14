@@ -721,7 +721,8 @@
 
 - type: entity
   parent: BaseHamtrPart
-  id: HamtrHarness
+  id: 
+  
   name: HAMTR harness
   description: The core of the HAMTR.
   components:
@@ -870,7 +871,9 @@
       Vim:
       - HelmetEVA
       - BorgLeg
+      - BorgLeg
     containerId: mech-assembly-container
   - type: Construction
     graph: Vim
     node: start
+    defaultTarget: vim

@@ -4,8 +4,8 @@ meta:
   engineVersion: 266.0.0
   forkId: ""
   forkVersion: ""
-  time: 08/27/2025 14:22:57
-  entityCount: 19813
+  time: 08/31/2025 08:35:05
+  entityCount: 19817
 maps:
 - 1
 grids:
@@ -4591,10 +4591,10 @@ entities:
             0: 55551
           8,-16:
             0: 271
-            4: 17408
+            2: 17408
           8,-15:
             1: 4096
-            4: 4
+            2: 4
           8,-14:
             0: 32752
           8,-13:
@@ -5288,8 +5288,8 @@ entities:
             0: 65535
           9,-16:
             0: 15
-            5: 4352
-            2: 17408
+            3: 4352
+            4: 17408
           10,-20:
             0: 65280
           10,-19:
@@ -5300,8 +5300,8 @@ entities:
             0: 65535
           10,-16:
             0: 15
-            2: 4352
-            6: 17408
+            4: 4352
+            5: 17408
           11,-20:
             0: 65024
           11,-19:
@@ -5313,7 +5313,7 @@ entities:
           11,-16:
             0: 15
             1: 35840
-            2: 4352
+            4: 4352
           12,-20:
             0: 65280
           12,-19:
@@ -5346,7 +5346,7 @@ entities:
             0: 61183
           12,-16:
             0: 3
-            2: 2184
+            4: 2184
             1: 8960
           13,-20:
             0: 65024
@@ -5359,7 +5359,7 @@ entities:
           13,-21:
             1: 16179
           13,-16:
-            2: 819
+            4: 819
             1: 8
           14,-20:
             0: 53504
@@ -5559,7 +5559,7 @@ entities:
             0: 59392
           11,-15:
             1: 32904
-            2: 1
+            4: 1
           12,-14:
             0: 62926
           11,-14:
@@ -5680,12 +5680,12 @@ entities:
             0: 60625
           11,-10:
             0: 34944
-            3: 13104
+            6: 13104
           12,-9:
             0: 56784
           11,-9:
             0: 65416
-            3: 2
+            6: 2
           12,-8:
             0: 57117
           13,-11:
@@ -5831,7 +5831,7 @@ entities:
           10,-11:
             0: 65535
           10,-10:
-            3: 65520
+            6: 65520
             0: 4
           10,-13:
             0: 12276
@@ -5894,14 +5894,14 @@ entities:
           11,-3:
             1: 12288
           9,-15:
-            5: 1
-            2: 4
+            3: 1
+            4: 4
             1: 32768
           9,-14:
             0: 36848
           10,-15:
-            2: 1
-            6: 4
+            4: 1
+            5: 4
           10,-14:
             0: 65520
           -8,-24:
@@ -6011,10 +6011,55 @@ entities:
         - volume: 2500
           temperature: 293.15
           moles:
+          - 6666.982
           - 0
           - 0
           - 0
           - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+        - volume: 2500
+          temperature: 293.15
+          moles:
+          - 0
+          - 6666.982
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+        - volume: 2500
+          temperature: 293.15
+          moles:
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+        - volume: 2500
+          temperature: 293.15
+          moles:
+          - 0
+          - 0
+          - 0
+          - 6666.982
           - 0
           - 0
           - 0
@@ -6030,51 +6075,6 @@ entities:
           - 102.419266
           - 0
           - 0
-          - 0
-          - 0
-          - 0
-          - 0
-          - 0
-          - 0
-          - 0
-          - 0
-        - volume: 2500
-          temperature: 293.15
-          moles:
-          - 6666.982
-          - 0
-          - 0
-          - 0
-          - 0
-          - 0
-          - 0
-          - 0
-          - 0
-          - 0
-          - 0
-          - 0
-        - volume: 2500
-          temperature: 293.15
-          moles:
-          - 0
-          - 6666.982
-          - 0
-          - 0
-          - 0
-          - 0
-          - 0
-          - 0
-          - 0
-          - 0
-          - 0
-          - 0
-        - volume: 2500
-          temperature: 293.15
-          moles:
-          - 0
-          - 0
-          - 0
-          - 6666.982
           - 0
           - 0
           - 0
@@ -10066,7 +10066,7 @@ entities:
       pos: 11.5,-30.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -231715.92
+      secondsUntilStateChange: -231736.94
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -10414,7 +10414,7 @@ entities:
       pos: 34.5,-36.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -7213.6187
+      secondsUntilStateChange: -7234.6396
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -101936,6 +101936,28 @@ entities:
     components:
     - type: Transform
       pos: -8.5,-48.5
+      parent: 2
+- proto: SpawnPointLatejoin
+  entities:
+  - uid: 14218
+    components:
+    - type: Transform
+      pos: 1.5,1.5
+      parent: 2
+  - uid: 14219
+    components:
+    - type: Transform
+      pos: 2.5,1.5
+      parent: 2
+  - uid: 14220
+    components:
+    - type: Transform
+      pos: 3.5,1.5
+      parent: 2
+  - uid: 14221
+    components:
+    - type: Transform
+      pos: 4.5,1.5
       parent: 2
 - proto: SpawnPointLawyer
   entities:
