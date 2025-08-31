@@ -56,6 +56,9 @@ public sealed partial class MechSystem : SharedMechSystem
     [Dependency] private readonly AlertsSystem _alerts = default!;
     [Dependency] private readonly PowerCellSystem _powerCell = default!;
     [Dependency] private readonly MaterialStorageSystem _material = default!;
+    [Dependency] private readonly ConstructionSystem _construction = default!;
+    [Dependency] private readonly ItemSlotsSystem _itemSlots = default!;
+    [Dependency] private readonly UserInterfaceSystem _ui = default!;
 
     private static readonly ProtoId<ToolQualityPrototype> PryingQuality = "Prying";
 
@@ -89,6 +92,10 @@ public sealed partial class MechSystem : SharedMechSystem
     private void OnRepairMechEvent(EntityUid uid, MechComponent component, RepairMechEvent args)
     {
         RepairMech(uid, component);
+
+        // Restore prototype-declared disassembly graph after successful repair
+        var cc = EnsureComp<ConstructionComponent>(uid);
+        _construction.ChangeGraph(uid, null, "MechDisassemble", "start", performActions: false, cc);
     }
 
     private void OnMechEntrySuccessSound(EntityUid uid, MechComponent component, MechEntrySuccessSoundEvent args)
@@ -178,10 +185,7 @@ public sealed partial class MechSystem : SharedMechSystem
 
             // Lock battery slot while occupied
             if (TryComp<ItemSlotsComponent>(uid, out var slots))
-            {
-                var itemSlots = EntityManager.System<ItemSlotsSystem>();
-                itemSlots.SetLock(uid, component.BatterySlotId, true, slots);
-            }
+                _itemSlots.SetLock(uid, component.BatterySlotId, true, slots);
         }
     }
 
@@ -205,10 +209,7 @@ public sealed partial class MechSystem : SharedMechSystem
 
             // Unlock battery slot when unoccupied
             if (TryComp<ItemSlotsComponent>(uid, out var slots))
-            {
-                var itemSlots = EntityManager.System<ItemSlotsSystem>();
-                itemSlots.SetLock(uid, component.BatterySlotId, false, slots);
-            }
+                _itemSlots.SetLock(uid, component.BatterySlotId, false, slots);
         }
         else if (args.Container == component.EquipmentContainer)
         {
@@ -332,23 +333,12 @@ public sealed partial class MechSystem : SharedMechSystem
         var integrity = component.MaxIntegrity - args.Damageable.TotalDamage;
         SetIntegrity(uid, integrity, component);
 
-        // Sync repair availability with broken state by toggling Construction component
+        // Sync construction graph with mech state
+        var cc = EnsureComp<ConstructionComponent>(uid);
         if (component.Broken)
         {
-            if (!HasComp<ConstructionComponent>(uid))
-            {
-                var cc = EnsureComp<ConstructionComponent>(uid);
-                var construction = EntityManager.System<ConstructionSystem>();
-                if (construction.ChangeGraph(uid, null, "MechRepair", "start", performActions: false, cc))
-                {
-                    construction.SetPathfindingTarget(uid, "repaired", cc);
-                }
-            }
-        }
-        else
-        {
-            if (TryComp<ConstructionComponent>(uid, out _))
-                RemComp<ConstructionComponent>(uid);
+            if (_construction.ChangeGraph(uid, null, "MechRepair", "start", performActions: false, cc))
+                _construction.SetPathfindingTarget(uid, "repaired", cc);
         }
 
         UpdateUserInterface(uid, component);
@@ -384,8 +374,7 @@ public sealed partial class MechSystem : SharedMechSystem
             return;
 
         // Open UI using UserInterfaceSystem
-        var ui = EntityManager.System<UserInterfaceSystem>();
-        ui.TryToggleUi(uid, MechUiKey.Key, actor.PlayerSession);
+        _ui.TryToggleUi(uid, MechUiKey.Key, actor.PlayerSession);
     }
 
     public bool TryGetGasModuleAir(EntityUid mechUid, out GasMixture? air)

@@ -274,8 +274,8 @@
 - type: alert
   id: MechaBroken
   icons:
-  - sprite: /Textures/Interface/Alerts/mecha_broken.rsi
-    state: broken
+  - sprite: /Textures/Interface/Alerts/borg_critical.rsi
+    state: critical
   name: alerts-crit-name
   description: alerts-crit-desc
 

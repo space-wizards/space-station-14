@@ -158,6 +158,9 @@
   - type: Damageable
     damageContainer: Inorganic
     damageModifierSet: LightArmor
+  - type: Construction
+    graph: MechDisassemble
+    node: start
   - type: FootstepModifier
     footstepSoundCollection:
       path: /Audio/Mecha/mechmove03.ogg
@@ -212,6 +215,7 @@
     openState: ripley-open
     brokenState: ripley-broken
     canAirtight: false
+    chassisPrototype: RipleyChassis
   - type: Vehicle
     transferDamageModifier:
       coefficients:
@@ -268,6 +272,7 @@
     baseState: ripleymkii
     openState: ripleymkii-open
     brokenState: ripleymkii-broken
+    chassisPrototype: RipleyMKIIChassis
   - type: Vehicle
     transferDamageModifier:
       coefficients:
@@ -326,6 +331,7 @@
     baseState: clarke
     openState: clarke-open
     brokenState: clarke-broken
+    chassisPrototype: ClarkeChassis
   - type: Vehicle
     transferDamageModifier:
       coefficients:
@@ -387,6 +393,7 @@
     openState: honker-open
     brokenState: honker-broken
     brokenSound: /Audio/Effects/sadtrombone.ogg
+    chassisPrototype: HonkerChassis
   - type: Vehicle
     transferDamageModifier:
       coefficients:
@@ -450,6 +457,7 @@
     openState: hamtr-open
     brokenState: hamtr-broken
     maxEquipmentAmount: 2
+    chassisPrototype: HamtrChassis
   - type: Vehicle
     transferDamageModifier:
       coefficients:
@@ -521,6 +529,7 @@
     openState: vim-open
     brokenState: vim-broken
     maxEquipmentAmount: 0
+    chassisPrototype: VimChassis
   - type: Vehicle
     # keep mouse safe
     transferDamageModifier:
@@ -586,6 +595,7 @@
     baseState: gygax
     openState: gygax-open
     brokenState: gygax-broken
+    chassisPrototype: GygaxChassis
   - type: Vehicle
     transferDamageModifier:
       coefficients:
@@ -643,6 +653,7 @@
     baseState: durand
     openState: durand-open
     brokenState: durand-broken
+    chassisPrototype: DurandChassis
   - type: Vehicle
     transferDamageModifier:
       coefficients:

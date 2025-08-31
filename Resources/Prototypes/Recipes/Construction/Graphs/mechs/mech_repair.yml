@@ -24,13 +24,13 @@
         amount: 15
 
       - tool: Welding
-        doAfter: 20
+        doAfter: 15
 
       - material: Steel
         amount: 15
 
       - tool: Welding
-        doAfter: 20
+        doAfter: 15
 
   - node: repaired
     actions:

@@ -9,8 +9,8 @@
     sprite: Objects/Specific/Mech/mecha_equipment.rsi
     state: mecha_kineticgun
   - type: Battery
-    maxCharge: 300
-    startingCharge: 300
+    maxCharge: 20
+    startingCharge: 20
   - type: Gun
     fireRate: 1
     selectedMode: SemiAuto
@@ -20,7 +20,7 @@
       path: /Audio/Weapons/Guns/Gunshots/kinetic_accel.ogg
   - type: ProjectileBatteryAmmoProvider
     proto: BulletKineticShuttle
-    fireCost: 25
+    fireCost: 20
   - type: Appearance
   - type: AmmoCounter
 # TODO: Plasma Cutter

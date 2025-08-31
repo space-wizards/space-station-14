@@ -1,0 +1,28 @@
+- type: constructionGraph
+  id: MechDisassemble
+  start: start
+  graph:
+  - node: start
+    edges:
+    - to: disassembled
+      conditions:
+      - !type:VehicleNoOperator {}
+      - !type:WirePanel {}
+      - !type:ContainerEmpty
+        container: cell_slot
+        examineText: construction-condition-machine-container-empty
+      steps:
+      - tool: Anchoring
+        doAfter: 5
+
+      - tool: Screwing
+        doAfter: 15
+
+      - tool: Cutting
+        doAfter: 5
+
+  - node: disassembled
+    actions:
+    - !type:DisassembleMech {}
+
+

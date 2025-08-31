@@ -42,6 +42,7 @@ using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Hands.Components;
 using Robust.Shared.Map;
 using Robust.Shared.Utility;
+using Robust.Shared.Player;
 
 namespace Content.Shared.Mech.EntitySystems;
 
@@ -63,6 +64,7 @@ public abstract partial class SharedMechSystem : EntitySystem
     [Dependency] private readonly ThrowingSystem _throwing = default!;
     [Dependency] private readonly SharedVirtualItemSystem _virtualItem = default!;
     [Dependency] private readonly SharedHandsSystem _hands = default!;
+    [Dependency] private readonly SharedPopupSystem _popup = default!;
 
     /// <inheritdoc/>
     public override void Initialize()
@@ -75,7 +77,7 @@ public abstract partial class SharedMechSystem : EntitySystem
         SubscribeLocalEvent<MechComponent, DragDropTargetEvent>(OnDragDrop);
         SubscribeLocalEvent<MechComponent, CanDropTargetEvent>(OnCanDragDrop);
         SubscribeLocalEvent<MechComponent, VehicleOperatorSetEvent>(OnOperatorSet);
-        SubscribeLocalEvent<MechComponent, GetVerbsEvent<Verb>>(OnGetVerb);
+        SubscribeLocalEvent<MechComponent, GetVerbsEvent<AlternativeVerb>>(OnGetVerb);
         SubscribeLocalEvent<MechComponent, GotEmaggedEvent>(OnEmagged);
 
         SubscribeLocalEvent<MechPilotComponent, GetMeleeWeaponEvent>(OnGetMeleeWeapon);
@@ -565,7 +567,7 @@ public abstract partial class SharedMechSystem : EntitySystem
 
         args.Handled = true;
 
-        var doAfterEventArgs = new DoAfterArgs(EntityManager, args.Dragged, component.EntryDelay, new MechEntryEvent(), uid, target: uid)
+        var doAfterEventArgs = new DoAfterArgs(EntityManager, args.User, component.EntryDelay, new MechEntryEvent(), uid, target: uid, used: args.Dragged)
         {
             BreakOnMove = true,
         };
@@ -604,7 +606,7 @@ public abstract partial class SharedMechSystem : EntitySystem
         RaiseLocalEvent(ent, ref drainToggle);
     }
 
-    private void OnGetVerb(EntityUid uid, MechComponent component, GetVerbsEvent<Verb> args)
+    private void OnGetVerb(EntityUid uid, MechComponent component, GetVerbsEvent<AlternativeVerb> args)
     {
         if (!args.CanAccess || !args.CanInteract)
             return;
@@ -644,7 +646,7 @@ public abstract partial class SharedMechSystem : EntitySystem
                     };
 
                     if (args.User != uid && args.User != component.PilotSlot.ContainedEntity)
-                        EntityManager.System<SharedPopupSystem>().PopupEntity(Loc.GetString("mech-eject-pilot-alert-popup", ("item", uid), ("user", args.User)), uid);
+                        _popup.PopupPredicted(Loc.GetString("mech-eject-pilot-alert-popup", ("item", uid), ("user", args.User)), uid, args.User);
 
                     _doAfter.TryStartDoAfter(doAfterEventArgs);
                 }

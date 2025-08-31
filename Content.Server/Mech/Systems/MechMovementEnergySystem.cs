@@ -16,7 +16,6 @@ namespace Content.Server.Mech.Systems;
 public sealed class MechMovementEnergySystem : EntitySystem
 {
     [Dependency] private readonly ActionBlockerSystem _actionBlocker = default!;
-    [Dependency] private readonly VehicleSystem _vehicle = default!;
     [Dependency] private readonly MechSystem _mechSystem = default!;
     [Dependency] private readonly PowerCell.PowerCellSystem _powerCell = default!;
 

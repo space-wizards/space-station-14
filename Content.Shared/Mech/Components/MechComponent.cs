@@ -214,6 +214,12 @@ public sealed partial class MechComponent : Component
     public EntProtoId MechEjectAction = "ActionMechEject";
     #endregion
 
+    /// <summary>
+    /// Prototype id of the chassis construction entity this mech should turn into on disassembly.
+    /// </summary>
+    [DataField]
+    public EntProtoId? ChassisPrototype;
+
     #region Visualizer States
     [DataField]
     public string? BaseState;
