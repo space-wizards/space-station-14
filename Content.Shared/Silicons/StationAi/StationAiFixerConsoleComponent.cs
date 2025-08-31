@@ -88,7 +88,7 @@ public sealed partial class StationAiFixerConsoleComponent : Component
 }
 
 /// <summary>
-/// Used to trigger UI updates for AI Restoration Consoles.
+/// Message sent from the server to the client to update the UI of AI Restoration Consoles.
 /// </summary>
 [Serializable, NetSerializable]
 public sealed class StationAiFixerConsoleBoundUserInterfaceState : BoundUserInterfaceState;

@@ -83,6 +83,7 @@ public sealed partial class BorgSystem : SharedBorgSystem
 
         SubscribeLocalEvent<BorgBrainComponent, MindAddedMessage>(OnBrainMindAdded);
         SubscribeLocalEvent<BorgBrainComponent, PointAttemptEvent>(OnBrainPointAttempt);
+        SubscribeLocalEvent<BorgBrainComponent, PlayerDetachedEvent>(OnPlayerDetached);
 
         InitializeModules();
         InitializeMMI();
@@ -284,6 +285,16 @@ public sealed partial class BorgSystem : SharedBorgSystem
     private void OnBrainPointAttempt(EntityUid uid, BorgBrainComponent component, PointAttemptEvent args)
     {
         args.Cancel();
+    }
+
+    private void OnPlayerDetached(Entity<BorgBrainComponent> ent, ref PlayerDetachedEvent args)
+    {
+        // If the controlling player voluntarily ghosts, delete the borg's mind,
+        // so its brain can be reused. This will also affect station AIs.
+        if (!_mind.TryGetMind(ent, out var _, out var _))
+        {
+            QueueDel(ent.Owner);
+        }
     }
 
     private void UpdateBatteryAlert(Entity<BorgChassisComponent> ent, PowerCellSlotComponent? slotComponent = null)

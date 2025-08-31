@@ -13,7 +13,6 @@ using Content.Shared.Interaction;
 using Content.Shared.Item.ItemToggle;
 using Content.Shared.Mind;
 using Content.Shared.Mobs;
-using Content.Shared.Mobs.Components;
 using Content.Shared.Mobs.Systems;
 using Content.Shared.Movement.Components;
 using Content.Shared.Movement.Systems;
@@ -33,8 +32,6 @@ using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
-using System.Linq;
-using Content.Shared.Mind.Components;
 
 namespace Content.Shared.Silicons.StationAi;
 
@@ -78,8 +75,6 @@ public abstract partial class SharedStationAiSystem : EntitySystem
 
     private static readonly EntProtoId DefaultAi = "StationAiBrain";
     private readonly ProtoId<ChatNotificationPrototype> _downloadChatNotificationPrototype = "IntellicardDownload";
-
-    private const float MaxVisionMultiplier = 5f;
 
     public override void Initialize()
     {
@@ -282,8 +277,8 @@ public abstract partial class SharedStationAiSystem : EntitySystem
         if (!TryComp(args.Used, out IntellicardComponent? intelliComp))
             return;
 
-        var cardHasAi = _slots.CanEject(ent.Owner, args.User, ent.Comp.Slot);
-        var coreHasAi = _slots.CanEject(args.Target.Value, args.User, targetHolder.Slot);
+        var cardHasAi = ent.Comp.Slot.Item != null;
+        var coreHasAi = targetHolder.Slot.Item != null;
 
         if (cardHasAi && coreHasAi)
         {
@@ -387,16 +382,10 @@ public abstract partial class SharedStationAiSystem : EntitySystem
 
     public virtual void KillHeldAi(Entity<StationAiCoreComponent> ent)
     {
-        if (!TryGetHeld((ent.Owner, ent.Comp), out var held))
-            return;
-
-        if (!TryComp<MobStateComponent>(held, out var mobState))
-            return;
-
-        _mobState.ChangeMobState(held.Value, MobState.Dead);
-
-        if (TryComp<StationAiHolderComponent>(ent, out var holder))
-            UpdateAppearance((ent, holder));
+        if (TryGetHeld((ent.Owner, ent.Comp), out var held))
+        {
+            _mobState.ChangeMobState(held.Value, MobState.Dead);
+        }
     }
 
     public void SwitchRemoteEntityMode(Entity<StationAiCoreComponent?> entity, bool isRemote)
@@ -551,12 +540,13 @@ public abstract partial class SharedStationAiSystem : EntitySystem
         if (!Resolve(entity.Owner, ref entity.Comp, false))
             return;
 
-        // Determine what state the AI holder is in
         var state = StationAiState.Empty;
 
-        if (TryGetHeld(entity, out var stationAi))
+        // Get what visual state the held AI holder is in
+        if (TryGetHeld(entity, out var stationAi) &&
+            TryComp<StationAiCustomizationComponent>(stationAi, out var customization))
         {
-            state = _mobState.IsDead(stationAi.Value) ? StationAiState.Dead : StationAiState.Occupied;
+            state = customization.State;
         }
 
         // If the entity is not an AI core, let generic visualizers handle the appearance update
@@ -566,11 +556,15 @@ public abstract partial class SharedStationAiSystem : EntitySystem
             return;
         }
 
-        // Determine if the AI core is rebooting
-        if (state != StationAiState.Dead &&
-            TryComp<MindContainerComponent>(stationAi, out var mindContainer) &&
-            TryComp<MindComponent>(mindContainer.Mind, out var mind) &&
-            mind.IsVisitingEntity)
+        // The AI core is empty
+        if (state == StationAiState.Empty)
+        {
+            _appearance.RemoveData(entity.Owner, StationAiVisualLayers.Icon);
+            return;
+        }
+
+        // The AI core is rebooting
+        if (state == StationAiState.Rebooting)
         {
             var rebootingData = new PrototypeLayerData()
             {
@@ -582,7 +576,7 @@ public abstract partial class SharedStationAiSystem : EntitySystem
             return;
         }
 
-        // Otherwise attempt to customize the AI core's appearance
+        // Otherwise attempt to set the AI core's appearance
         CustomizeAppearance((entity, stationAiCore), state);
     }
 
@@ -649,5 +643,6 @@ public enum StationAiState : byte
     Empty,
     Occupied,
     Dead,
+    Rebooting,
     Hologram,
 }

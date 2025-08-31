@@ -116,6 +116,7 @@
     - type: Speech
       speechSounds: Pai
     - type: Alerts
+    - type: StationAiFixable
     - type: MobState
       allowedStates:
       - Alive

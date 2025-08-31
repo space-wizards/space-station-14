@@ -258,20 +258,18 @@ public sealed class StationAiSystem : SharedStationAiSystem
     {
         base.KillHeldAi(ent);
 
-        if (!TryGetHeld((ent.Owner, ent.Comp), out var held))
-            return;
+        if (TryGetHeld((ent.Owner, ent.Comp), out var held) &&
+            _mind.TryGetMind(held.Value, out var mindId, out var mind))
+        {
+            // Ghost the player immediately
+            _ghost.OnGhostAttempt(mindId, canReturnGlobal: true, mind: mind);
 
-        if (!_mind.TryGetMind(held.Value, out var mindId, out var mind))
-            return;
-
-        _ghost.OnGhostAttempt(mindId, canReturnGlobal: true, mind: mind);
-
-        if (!TryComp<GhostComponent>(mind.VisitingEntity, out var ghost))
-            return;
-
-        // Don't allow the player to manually return to their body,
-        // we don't want players getting stuck in it, since they can't move
-        _ghost.SetCanReturnToBody((mind.VisitingEntity.Value, ghost), false);
+            // Don't allow the player to manually return to their body
+            if (TryComp<GhostComponent>(mind.VisitingEntity, out var ghost))
+            {
+                _ghost.SetCanReturnToBody((mind.VisitingEntity.Value, ghost), false);
+            }
+        }
     }
 
     private void OnExpandICChatRecipients(ExpandICChatRecipientsEvent ev)

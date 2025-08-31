@@ -1,13 +1,8 @@
 using Content.Shared.Actions.Events;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Interaction.Events;
-using Content.Shared.Mind;
-using Content.Shared.Mind.Components;
-using Content.Shared.Mobs;
 using Content.Shared.Popups;
-using Content.Shared.Silicons.Borgs.Components;
 using Content.Shared.Verbs;
-using Robust.Shared.Player;
 using Robust.Shared.Serialization;
 using Robust.Shared.Utility;
 using System.Diagnostics.CodeAnalysis;
@@ -29,13 +24,10 @@ public abstract partial class SharedStationAiSystem
         SubscribeLocalEvent<StationAiWhitelistComponent, BoundUserInterfaceMessageAttempt>(OnMessageAttempt);
         SubscribeLocalEvent<StationAiWhitelistComponent, GetVerbsEvent<AlternativeVerb>>(OnTargetVerbs);
 
-        SubscribeLocalEvent<StationAiHeldComponent, PlayerAttachedEvent>(OnPlayerAttached);
-        SubscribeLocalEvent<StationAiHeldComponent, PlayerDetachedEvent>(OnPlayerDetached);
         SubscribeLocalEvent<StationAiHeldComponent, InteractionAttemptEvent>(OnHeldInteraction);
         SubscribeLocalEvent<StationAiHeldComponent, AttemptRelayActionComponentChangeEvent>(OnHeldRelay);
         SubscribeLocalEvent<StationAiHeldComponent, JumpToCoreEvent>(OnCoreJump);
 
-        SubscribeLocalEvent<BorgBrainComponent, MobStateChangedEvent>(OnMobStateChanged);
         SubscribeLocalEvent<TryGetIdentityShortInfoEvent>(OnTryGetIdentityShortInfo);
     }
 
@@ -162,36 +154,6 @@ public abstract partial class SharedStationAiSystem
         }
     }
 
-    private void OnPlayerAttached(Entity<StationAiHeldComponent> ent, ref PlayerAttachedEvent args)
-    {
-        if (!_containers.TryGetContainingContainer(ent.Owner, out var container))
-            return;
-
-        if (!TryComp<StationAiHolderComponent>(container.Owner, out var holder))
-            return;
-
-        UpdateAppearance((container.Owner, holder));
-    }
-
-    private void OnPlayerDetached(Entity<StationAiHeldComponent> ent, ref PlayerDetachedEvent args)
-    {
-        // If the controlling player voluntarily ghosts, delete the AI entity
-        if (!TryComp<MindContainerComponent>(ent, out var mindContainer) ||
-            !TryComp<MindComponent>(mindContainer.Mind, out var mind))
-        {
-            PredictedQueueDel(ent.Owner);
-        }
-
-        if (!_containers.TryGetContainingContainer(ent.Owner, out var container))
-            return;
-
-        if (!TryComp<StationAiHolderComponent>(container.Owner, out var holder))
-            return;
-
-        UpdateAppearance((container.Owner, holder));
-    }
-
-
     private void OnHeldInteraction(Entity<StationAiHeldComponent> ent, ref InteractionAttemptEvent args)
     {
         // Cancel if it's not us or something with a whitelist, or whitelist is disabled.
@@ -203,17 +165,6 @@ public abstract partial class SharedStationAiSystem
         {
             ShowDeviceNotRespondingPopup(ent.Owner);
         }
-    }
-
-    private void OnMobStateChanged(Entity<BorgBrainComponent> ent, ref MobStateChangedEvent args)
-    {
-        if (!_containers.TryGetContainingContainer(ent.Owner, out var container))
-            return;
-
-        if (!TryComp<StationAiHolderComponent>(container.Owner, out var holder))
-            return;
-
-        UpdateAppearance((container.Owner, holder));
     }
 
     private void OnTargetVerbs(Entity<StationAiWhitelistComponent> ent, ref GetVerbsEvent<AlternativeVerb> args)

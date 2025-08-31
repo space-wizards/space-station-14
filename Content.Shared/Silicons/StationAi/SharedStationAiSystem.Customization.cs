@@ -1,6 +1,6 @@
 using Content.Shared.Holopad;
-using Content.Shared.Mind;
-using Content.Shared.Mind.Components;
+using Content.Shared.Mobs;
+using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
 using System.Diagnostics.CodeAnalysis;
@@ -17,6 +17,10 @@ public abstract partial class SharedStationAiSystem
     private void InitializeCustomization()
     {
         SubscribeLocalEvent<StationAiCoreComponent, StationAiCustomizationMessage>(OnStationAiCustomization);
+
+        SubscribeLocalEvent<StationAiCustomizationComponent, PlayerAttachedEvent>(OnPlayerAttached);
+        SubscribeLocalEvent<StationAiCustomizationComponent, PlayerDetachedEvent>(OnPlayerDetached);
+        SubscribeLocalEvent<StationAiCustomizationComponent, MobStateChangedEvent>(OnMobStateChanged);
     }
 
     private void OnStationAiCustomization(Entity<StationAiCoreComponent> entity, ref StationAiCustomizationMessage args)
@@ -46,6 +50,60 @@ public abstract partial class SharedStationAiSystem
             UpdateAppearance((entity, stationAiHolder));
     }
 
+    private void OnPlayerAttached(Entity<StationAiCustomizationComponent> ent, ref PlayerAttachedEvent args)
+    {
+        var state = _mobState.IsDead(ent) ?
+            StationAiState.Dead :
+            StationAiState.Occupied;
+
+        SetStationAiState(ent, state);
+    }
+
+    private void OnPlayerDetached(Entity<StationAiCustomizationComponent> ent, ref PlayerDetachedEvent args)
+    {
+        if (_net.IsClient)
+            return;
+
+        // If the player's mind is gone, appear empty. Otherwise, appear occupied.
+        var altState = StationAiState.Empty;
+
+        if (_mind.TryGetMind(ent, out var _, out var _))
+        {
+            altState = StationAiState.Occupied;
+        }
+
+        // Being dead overrides the above.
+        var state = _mobState.IsDead(ent) ?
+            StationAiState.Dead :
+            altState;
+
+        SetStationAiState(ent, state);
+    }
+
+    private void OnMobStateChanged(Entity<StationAiCustomizationComponent> ent, ref MobStateChangedEvent args)
+    {
+        var state = (args.NewMobState == MobState.Dead) ?
+            StationAiState.Dead :
+            StationAiState.Rebooting;
+
+        SetStationAiState(ent, state);
+    }
+
+    private void SetStationAiState(Entity<StationAiCustomizationComponent> ent, StationAiState state)
+    {
+        if (ent.Comp.State != state)
+        {
+            ent.Comp.State = state;
+            Dirty(ent);
+        }
+
+        if (_containers.TryGetContainingContainer(ent.Owner, out var container) &&
+             TryComp<StationAiHolderComponent>(container.Owner, out var holder))
+        {
+            UpdateAppearance((container.Owner, holder));
+        }
+    }
+
     private void UpdateHolographicAvatar(Entity<StationAiCustomizationComponent> entity)
     {
         if (!TryComp<HolographicAvatarComponent>(entity, out var avatar))
@@ -67,12 +125,6 @@ public abstract partial class SharedStationAiSystem
     private void CustomizeAppearance(Entity<StationAiCoreComponent> entity, StationAiState state)
     {
         var stationAi = GetInsertedAI(entity);
-
-        if (stationAi == null)
-        {
-            _appearance.RemoveData(entity.Owner, StationAiVisualLayers.Icon);
-            return;
-        }
 
         if (!TryComp<StationAiCustomizationComponent>(stationAi, out var stationAiCustomization) ||
             !TryGetCustomizedAppearanceData((stationAi.Value, stationAiCustomization), out var layerData) ||
