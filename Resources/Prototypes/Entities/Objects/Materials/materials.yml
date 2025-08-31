@@ -386,7 +386,7 @@
     tags:
     - PeltScurret
   - type: StaticPrice
-    price: 15000 # A 60% refund on a scurret crate purchase.
+    price: 12500 # A 50% refund on a scurret crate purchase.
 
 - type: entity
   parent: MaterialBase
