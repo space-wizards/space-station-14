@@ -721,8 +721,7 @@
 
 - type: entity
   parent: BaseHamtrPart
-  id: 
-  
+  id: HamtrHarness
   name: HAMTR harness
   description: The core of the HAMTR.
   components:
