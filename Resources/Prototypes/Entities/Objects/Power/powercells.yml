@@ -33,6 +33,10 @@
   - type: Appearance
   - type: PowerCellVisuals
   - type: Riggable
+  # Starlight-start: Vending Machines Prices
+  - type: ItemPrice
+    fallbackPrice: 10
+  # Starlight-end
 
 - type: entity
   name: potato battery
@@ -397,3 +401,21 @@
       visible: false
   - type: Battery
     startingCharge: 0
+
+- type: entity #Starlight stuff from 401-417
+  name: ultra-capacity power cell
+  description: A rechargeable standardized power cell. This iteration pushes the upper limits of portable power storage, double more capacity than the hyper-capacity cell.
+  id: PowerCellUltra
+  suffix: Full
+  parent: BasePowerCell
+  components:
+  - type: Sprite
+    layers:
+    - map: [ "enum.PowerCellVisualLayers.Base" ]
+      state: hyper
+    - map: [ "enum.PowerCellVisualLayers.Unshaded" ]
+      state: o2
+      shader: unshaded
+  - type: Battery
+    maxCharge: 3600
+    startingCharge: 3600

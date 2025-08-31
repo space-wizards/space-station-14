@@ -1,3 +1,35 @@
 - type: font
   id: SignatureFont
   path: /Fonts/_Starlight/Signature.ttf
+
+- type: font
+  id: Icon
+  path: /Fonts/_Starlight/GameIcons/game-icons.ttf
+
+- type: font
+  id: Lymphatic
+  path: /Fonts/_Starlight/Lymphatic.ttf
+
+- type: font
+  id: RubikBubbles
+  path: /Fonts/_Starlight/RubikBubbles.ttf
+
+- type: font
+  id: Copperplate
+  path: /Fonts/_Starlight/Copperplate.otf
+
+- type: font
+  id: Mangat
+  path: /Fonts/_Starlight/Mangat.ttf
+
+- type: font
+  id: Scratch
+  path: /Fonts/_Starlight/Scratch.ttf
+
+- type: font
+  id: Octatrax
+  path: /Fonts/_Starlight/Octatrax.ttf
+
+- type: font
+  id: Draconic
+  path: /Fonts/_Starlight/Draconic-modern.otf

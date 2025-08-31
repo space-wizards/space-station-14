@@ -73,6 +73,18 @@
         HorizontalExpand="True"
         AppendStyleClass="{x:Static style:StyleBase.ButtonSquare}"
         />
+    <!-- Starlight-start: Languages -->
+    <ui:MenuButton
+        Name="LanguageButton"
+        Access="Internal"
+        Icon="{xe:Tex '/Textures/_Starlight/Interface/language.png'}"
+        BoundKey = "{x:Static is:ContentKeyFunctions.OpenLanguageMenu}"
+        ToolTip="Open the Language Menu"
+        MinSize="42 64"
+        HorizontalExpand="True"
+        AppendStyleClass="{x:Static style:StyleBase.ButtonSquare}"
+        />
+    <!-- Starlight-end -->
     <ui:MenuButton
         Name="AdminButton"
         Access="Internal"
@@ -101,7 +113,7 @@
         ToolTip="{Loc 'ui-options-function-open-m-help'}"
         MinSize="42 64"
         HorizontalExpand="True"
-        AppendStyleClass="{x:Static style:StyleBase.ButtonOpenLeft}"
+        AppendStyleClass="{x:Static style:StyleBase.ButtonSquare}"
         />
     <ui:MenuButton
         Name="AHelpButton"

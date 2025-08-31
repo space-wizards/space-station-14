@@ -116,9 +116,9 @@
 
 - type: entity
   parent: [ClothingUniformBase, BaseCentcommContraband]
-  id: ClothingUniformNTCCFatigues
-  name: NTCC Fatigues
-  description: NT-CC Consortium Fatigues. Very airy.
+  id: ClothingUniformNTNCFatigues
+  name: NTNC Fatigues
+  description: NT-NC Fatigues. Very airy.
   components:
   - type: Sprite
     sprite: _Starlight/Clothing/Uniforms/ntcc_fatigues.rsi
@@ -372,4 +372,3 @@
     sprite: _Starlight/Clothing/Uniforms/Jumpsuit/sovietuniform.rsi
   - type: Clothing
     sprite: _Starlight/Clothing/Uniforms/Jumpsuit/sovietuniform.rsi
-

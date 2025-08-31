@@ -48,6 +48,9 @@ command-description-stationevent-lsprobtheoretical =
     Given a BasicStationEventScheduler prototype, player count, and round time, lists the probability of different station events occuring based on the specified number of players and round time.
 command-description-stationevent-prob =
     Given a BasicStationEventScheduler prototype and an event prototype, returns the probability of a single station event occuring out of the entire pool with current conditions.
+### Starlight (upstream #39080)
+command-description-subtlemessage =
+    Sends a subtle message to all the input entities.
 command-description-admins-active =
     Returns a list of active admins.
 command-description-admins-all =
@@ -96,3 +99,13 @@ command-description-xenoartifact-unlockAllNodes =
     Unlocks all nodes of artifact.
 command-description-jobboard-completeJob =
     Completes a given salvage job board job for the station.
+command-description-scale-set =
+    Sets an entity's sprite size to a certain scale (without changing its fixture).
+command-description-scale-get =
+    Get an entity's sprite scale as set by ScaleVisualsComponent. Does not include any changes directly made in the SpriteComponent.
+command-description-scale-multiply =
+    Multiply an entity's sprite size with a certain factor (without changing its fixture).
+command-description-scale-multiplyvector =
+    Multiply an entity's sprite size with a certain 2d vector (without changing its fixture).
+command-description-scale-multiplywithfixture =
+    Multiply an entity's sprite size with a certain factor (including its fixture).

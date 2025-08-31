@@ -1,0 +1,69 @@
+- type: loadout
+  id: BlueShieldBackpack
+  equipment:
+    back: ClothingBackpackBlueShield
+
+- type: loadout
+  id: BlueShieldDuffel
+  equipment:
+    back: ClothingBackpackDuffelBlueShield
+
+- type: loadout
+  id: BlueShieldSatchel
+  equipment:
+    back: ClothingBackpackSatchelBlueShield
+
+- type: loadout
+  id: BlueShieldJumpskirt
+  equipment:
+    jumpsuit: ClothingUniformJumpskirtBlueShield
+
+- type: loadout
+  id: BlueShieldJumpsuit
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitBlueShield
+
+- type: loadout
+  id: EliteBlueShieldJumpskirt
+  equipment:
+    jumpsuit: ClothingUniformJumpskirtEliteBlueShield
+
+- type: loadout
+  id: EliteBlueShieldJumpsuit
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitEliteBlueShield
+
+- type: loadout
+  id: BlueShieldShirt
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitBlueShieldCaptain
+    
+- type: loadout
+  id: BlueShieldGlasses
+  equipment:
+    eyes: ClothingEyesGlassesBlueShield
+
+- type: loadout
+  id: BlueShieldHud
+  equipment:
+    eyes: ClothingEyesHudBlueShield
+    
+- type: loadout
+  id: BlueShieldCoat
+  equipment:
+    outerClothing: ClothingOuterCoatBlueShield
+    
+- type: loadout
+  id: BlueShieldVest
+  equipment:
+    outerClothing: ClothingOuterArmorBlueShield
+    
+- type: loadout
+  id: BlueShieldFormalCloak
+  equipment:
+    neck: ClothingNeckCloakBsoCape
+    
+- type: loadout
+  id: BlueShieldEliteCloak
+  equipment:
+    neck: ClothingNeckCloakBsoElite   

@@ -13,6 +13,7 @@ using Robust.Server.Player;
 using Robust.Shared.Exceptions;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Network;
+using Robust.Shared.Utility;
 
 namespace Content.IntegrationTests.Pair;
 
@@ -84,6 +85,7 @@ public sealed partial class TestPair : IAsyncDisposable
 
         var returnTime = Watch.Elapsed;
         await _testOut.WriteLineAsync($"{nameof(CleanReturnAsync)}: PoolManager took {returnTime.TotalMilliseconds} ms to put pair {Id} back into the pool");
+        State = PairState.Ready;
     }
 
     private async Task ResetModifiedPreferences()
@@ -128,7 +130,7 @@ public sealed partial class TestPair : IAsyncDisposable
             await _testOut.WriteLineAsync($"Exception raised in OnCleanDispose\n{e}");
             throw;
         }
-        State = PairState.Ready;
+        DebugTools.Assert(State is PairState.Dead or PairState.Ready);
         PoolManager.NoCheckReturn(this);
         ClearContext();
     }

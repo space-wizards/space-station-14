@@ -1,4 +1,5 @@
 using Content.Shared.Weapons.Ranged.Components;
+using Robust.Shared.Timing;
 
 namespace Content.Shared.Weapons.Ranged.Events;
 

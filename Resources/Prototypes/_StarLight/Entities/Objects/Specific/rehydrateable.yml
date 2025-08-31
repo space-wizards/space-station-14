@@ -1,108 +1,23 @@
 - type: entity
-  parent: BaseItem
+  parent: RehydratableAnimalCube
   id: BorgiCube
   name: borgi cube
   description: Just add water! BORK!
   components:
-  - type: Item
-    size: Tiny
-  - type: SolutionContainerManager
-    solutions:
-      cube:
-        maxVol: 11
-        reagents:
-        - ReagentId: Nutriment
-          Quantity: 10
-  - type: Food
-    solution: cube
-  - type: FlavorProfile
-    flavors:
-    - chewy
-    - horrible
-    - compressed-meat
-  - type: RefillableSolution
-    solution: cube
-  - type: Sprite
-    sprite: Objects/Misc/monkeycube.rsi
-    state: cube
-  - type: Reactive
-    reactions:
-    - reagents: [Water]
-      methods: [Touch, Ingestion, Injection]
-      effects:
-      - !type:AddToSolutionReaction
-        solution: cube
   - type: Rehydratable
     possibleSpawns:
-    - SmartSubWooferVulnerable
-    - SubWooferVulnerable
-    - SmartBorgiVulnerable
-    - BorgiVulnerable
-    - SmartCorgi
-  - type: CollisionWake
-    enabled: false
-  - type: Fixtures
-    fixtures:
-      fix1:
-        shape:
-          !type:PhysShapeAabb
-          bounds: "-0.3,-0.3,0.3,0.3"
-        density: 5
-        mask:
-        - ItemMask
-      rehydrate:
-        shape:
-          !type:PhysShapeAabb
-          bounds: "-0.3,-0.3,0.3,0.3"
-        hard: false
-        layer:
-        - LowImpassable
+    - SmartSubwooferBorgiChassis
+    - SubwooferBorgiChassis
+    - BaseStationBorgiChassis
+    - StationBorgiChassis
+    - MobCorgiSmart
 
 - type: entity
-  parent: BaseItem
+  parent: RehydratableAnimalCube
   id: ShadowBorgiCube
   name: shadow borgi cube
   description: Just add water! BORK!
   components:
-  - type: Item
-    size: Tiny
-  - type: SolutionContainerManager
-    solutions:
-      cube:
-        maxVol: 11 # needs room for water
-        reagents:
-        - ReagentId: Nutriment
-          Quantity: 10
-  - type: RefillableSolution
-    solution: cube
-  - type: Sprite
-    sprite: Objects/Misc/monkeycube.rsi
-    state: cube
-  - type: Reactive
-    reactions:
-    - reagents: [Water]
-      methods: [Touch, Ingestion, Injection]
-      effects:
-      - !type:AddToSolutionReaction
-        solution: cube
   - type: Rehydratable
     possibleSpawns:
-    - ShadowBorgi
-  - type: CollisionWake
-    enabled: false
-  - type: Fixtures
-    fixtures:
-      fix1:
-        shape:
-          !type:PhysShapeAabb
-          bounds: "-0.3,-0.3,0.3,0.3"
-        density: 5
-        mask:
-        - ItemMask
-      rehydrate:
-        shape:
-          !type:PhysShapeAabb
-          bounds: "-0.3,-0.3,0.3,0.3"
-        hard: false
-        layer:
-        - LowImpassable
+    - ShadowBorgiChassis

@@ -4,5 +4,6 @@
   antagonist: true
   objective: roles-antag-dragon-objective
   requirements:
-  - !type:OverallPlaytimeRequirement
-    time: 3600 # 5h
+  - !type:RoleTimeRequirement
+    role: JobSalvageSpecialist
+    time: 10800 # 3h STARLIGHT

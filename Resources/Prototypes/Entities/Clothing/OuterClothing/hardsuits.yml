@@ -108,7 +108,7 @@
         Radiation: 0.3 #salv is supposed to have radiation hazards in the future
         Caustic: 0.8
   - type: ClothingSpeedModifier
-    walkModifier: 0.9
+    walkModifier: 0.8
     sprintModifier: 0.8
   - type: HeldSpeedModifier
   - type: ToggleableClothing
@@ -282,7 +282,7 @@
         Blunt: 0.6
         Slash: 0.6
         Piercing: 0.6
-        Heat: 0.8
+        Heat: 0.7 # Starlight Edit
         Caustic: 0.7
     staminaModifier: 0.7
   - type: ClothingSpeedModifier
@@ -291,6 +291,11 @@
   - type: HeldSpeedModifier
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitSecurity
+  - type: Tag
+    tags:
+    - CorgiWearable
+    - Hardsuit
+    - WhitelistChameleon
 
 #Brigmedic Hardsuit
 - type: entity
@@ -315,9 +320,12 @@
       coefficients:
         Blunt: 0.7
         Slash: 0.6
-        Piercing: 0.6
+        Piercing: 0.6 # Starlight edit
+        Heat: 0.7 # Starlight Edit
         Caustic: 0.7
     staminaModifier: 0.7
+  - type: ZombificationResistance
+    zombificationResistanceCoefficient: 0.7 # Starlight
   - type: ClothingSpeedModifier
     walkModifier: 0.80
     sprintModifier: 0.80
@@ -349,7 +357,7 @@
         Blunt: 0.4
         Slash: 0.5
         Piercing: 0.6
-        Heat: 0.8
+        Heat: 0.7 # Starlight Edit
         Caustic: 0.7
     staminaModifier: 0.7
   - type: ClothingSpeedModifier
@@ -429,7 +437,7 @@
         Radiation: 0.0
         Caustic: 0.7
   - type: ClothingSpeedModifier
-    walkModifier: 0.75
+    walkModifier: 0.8
     sprintModifier: 0.8
   - type: HeldSpeedModifier
   - type: ToggleableClothing
@@ -461,10 +469,10 @@
       coefficients:
         Caustic: 0.1
   - type: ZombificationResistance
-    zombificationResistanceCoefficient: 0.4
+    zombificationResistanceCoefficient: 0.0 # Starlight Edit
   - type: ClothingSpeedModifier
-    walkModifier: 0.9
-    sprintModifier: 0.95
+    walkModifier: 1.0 # Starlight Edit
+    sprintModifier: 1.0 # Starlight Edit
   - type: HeldSpeedModifier
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitMedical
@@ -513,6 +521,8 @@
     tags:
     - WhitelistChameleon
     - HighRiskItem
+    - CorgiWearable
+    - Hardsuit
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitRd
   - type: StaticPrice
@@ -544,7 +554,7 @@
         Blunt: 0.6
         Slash: 0.5
         Piercing: 0.5
-        Heat: 0.8
+        Heat: 0.7 # Starlight Edit
         Radiation: 0.5
         Caustic: 0.6
     staminaModifier: 0.6
@@ -608,7 +618,7 @@
         Radiation: 0.5
         Caustic: 0.8
   - type: ClothingSpeedModifier
-    walkModifier: 0.85
+    walkModifier: 0.9
     sprintModifier: 0.9
   - type: HeldSpeedModifier
   - type: ToggleableClothing
@@ -633,6 +643,8 @@
     lowPressureMultiplier: 1000
   - type: ExplosionResistance
     damageCoefficient: 0.5
+  - type: StaminaResistance # do not add these to other equipment or mobs, we don't want to microbalance these everywhere
+    damageCoefficient: 0.75
   - type: Pierceable
     level: Metal
   - type: Armor
@@ -645,7 +657,6 @@
         Radiation: 0.5
         Caustic: 0.5
     staminaModifier: 0.3
-    ingoreKnockdown: true
   - type: ClothingSpeedModifier
     walkModifier: 0.9
     sprintModifier: 0.9
@@ -658,6 +669,9 @@
     - Hardsuit
     - WhitelistChameleon
     - CorgiWearable
+    - ScurretWearable
+  - type: StaticPrice
+    price: 5000
 
 # Syndicate Medic Hardsuit
 - type: entity
@@ -672,6 +686,8 @@
     sprite: Clothing/OuterClothing/Hardsuits/syndiemedic.rsi
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitSyndieMedic
+  - type: ZombificationResistance
+    zombificationResistanceCoefficient: 0.75 # Starlight Edit
   - type: Tag
     tags:
     - Hardsuit
@@ -698,6 +714,8 @@
     damageCoefficient: 0.2
   - type: FireProtection
     reduction: 0.8
+  - type: StaminaResistance # do not add these to other equipment or mobs, we don't want to microbalance these everywhere
+    damageCoefficient: 0.6
   - type: Pierceable
     level: Metal
   - type: Armor
@@ -710,12 +728,11 @@
         Radiation: 0.01
         Caustic: 0.5
     staminaModifier: 0.2
-    ingoreKnockdown: true
   - type: Item
     size: Huge
   - type: ClothingSpeedModifier
-    walkModifier: 1.0
-    sprintModifier: 1.0
+    walkModifier: 0.9
+    sprintModifier: 0.9
   - type: HeldSpeedModifier
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitSyndieElite
@@ -741,6 +758,8 @@
     lowPressureMultiplier: 1000
   - type: ExplosionResistance
     damageCoefficient: 0.5
+  - type: StaminaResistance # do not add these to other equipment or mobs, we don't want to microbalance these everywhere
+    damageCoefficient: 0.6
   - type: Pierceable
     level: Metal
   - type: Armor
@@ -753,13 +772,18 @@
         Radiation: 0.25
         Caustic: 0.4
     staminaModifier: 0.1
-    ingoreKnockdown: true
   - type: ClothingSpeedModifier
     walkModifier: 0.95
     sprintModifier: 0.95
   - type: HeldSpeedModifier
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitSyndieCommander
+  - type: Tag
+    tags:
+    - CorgiWearable
+    - Hardsuit
+    - WhitelistChameleon
+
 
 #Cybersun Juggernaut Hardsuit
 - type: entity
@@ -781,6 +805,7 @@
     lowPressureMultiplier: 1000
   - type: ExplosionResistance
     damageCoefficient: 0.3
+  # - type: StaminaResistance # Should not have stamina resistance, this is purely so people know it was not forgotten.
   - type: Pierceable
     level: Rock
   - type: Armor
@@ -793,9 +818,8 @@
         Radiation: 0.2
         Caustic: 0.2
     staminaModifier: 0.1
-    ingoreKnockdown: true
   - type: ClothingSpeedModifier
-    walkModifier: 0.9
+    walkModifier: 0.65
     sprintModifier: 0.65
   - type: HeldSpeedModifier
   - type: FootstepModifier #starlight
@@ -810,6 +834,8 @@
   - type: Tag
     tags:
     - MonkeyWearable
+    - CorgiWearable
+    - Hardsuit
     - WhitelistChameleon
 
 #Wizard Hardsuit
@@ -980,7 +1006,6 @@
         Radiation: 0.01 #sl Change
         Caustic: 0.4 #sl Change
     staminaModifier: 0.1
-    ingoreKnockdown: true
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitERTLeader
 
@@ -1093,7 +1118,6 @@
         Radiation: 0.1
         Caustic: 0.1
     staminaModifier: 0.0
-    ingoreKnockdown: true
   - type: ClothingSpeedModifier
     walkModifier: 1.0
     sprintModifier: 1.0
@@ -1168,7 +1192,6 @@
         Piercing: 0.9
         Caustic: 0.8
     staminaModifier: 0.8
-    ingoreKnockdown: true
   - type: ClothingSpeedModifier
     walkModifier: 0.9
     sprintModifier: 0.9

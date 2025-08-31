@@ -3,6 +3,7 @@ using Content.Shared.Starlight;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
 using System.Numerics;
+using Content.Shared._NullLink;
 
 namespace Content.Shared.Starlight.GhostTheme;
 
@@ -21,8 +22,8 @@ public sealed class GhostThemePrototype : IPrototype
     [DataField("spriteSpecifier", required: true)]
     public ExtendedSpriteSpecifier SpriteSpecifier { get; private set; } = default!;
     
-    [DataField("requiredFlags", required: true)]
-    public List<PlayerFlags> Flags = [];
+    [DataField("requirement")]
+    public ProtoId<RoleRequirementPrototype>? Requirement;
     
     [DataField("requiredCkey")]
     public string? Ckey = null;

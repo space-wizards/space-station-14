@@ -1,17 +1,15 @@
 using System.Linq;
 using System.Threading;
 using Content.Server.Salvage.Expeditions;
-using Content.Server.Salvage.Expeditions.Structure;
 using Content.Shared.Procedural;
 using Content.Shared.CCVar;
 using Content.Shared.Examine;
-using Content.Shared.Random.Helpers;
 using Content.Shared.Salvage.Expeditions;
-using Robust.Shared.Audio;
+using Content.Shared.Shuttles.Components;
 using Robust.Shared.CPUJob.JobQueues;
 using Robust.Shared.CPUJob.JobQueues.Queues;
 using Robust.Shared.GameStates;
-using Robust.Shared.Map;
+using Content.Shared.Random.Helpers;
 
 namespace Content.Server.Salvage;
 
@@ -38,8 +36,6 @@ public sealed partial class SalvageSystem
         SubscribeLocalEvent<SalvageExpeditionComponent, MapInitEvent>(OnExpeditionMapInit);
         SubscribeLocalEvent<SalvageExpeditionComponent, ComponentShutdown>(OnExpeditionShutdown);
         SubscribeLocalEvent<SalvageExpeditionComponent, ComponentGetState>(OnExpeditionGetState);
-
-        SubscribeLocalEvent<SalvageStructureComponent, ExaminedEvent>(OnStructureExamine);
 
         _cooldown = _configurationManager.GetCVar(CCVars.SalvageExpeditionCooldown);
         Subs.CVar(_configurationManager, CCVars.SalvageExpeditionCooldown, SetCooldownChange);
@@ -76,6 +72,15 @@ public sealed partial class SalvageSystem
     private void OnExpeditionShutdown(EntityUid uid, SalvageExpeditionComponent component, ComponentShutdown args)
     {
         component.Stream = _audio.Stop(component.Stream);
+
+        // First wipe any disks referencing us
+        var disks = AllEntityQuery<ShuttleDestinationCoordinatesComponent>();
+        while (disks.MoveNext(out var disk, out var diskComp)
+               && diskComp.Destination == uid)
+        {
+            diskComp.Destination = null;
+            Dirty(disk, diskComp);
+        }
 
         foreach (var (job, cancelToken) in _salvageJobs.ToArray())
         {
@@ -187,10 +192,5 @@ public sealed partial class SalvageSystem
 
         _salvageJobs.Add((job, cancelToken));
         _salvageQueue.EnqueueJob(job);
-    }
-
-    private void OnStructureExamine(EntityUid uid, SalvageStructureComponent component, ExaminedEvent args)
-    {
-        args.PushMarkup(Loc.GetString("salvage-expedition-structure-examine"));
     }
 }

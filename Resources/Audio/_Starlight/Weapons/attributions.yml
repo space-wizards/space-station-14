@@ -2,3 +2,13 @@
   license: "CC-BY-3.0"
   copyright: "Made by JustAdler for https://github.com/ss14Starlight/space-station-14"
   source: "https://github.com/ss14Starlight/space-station-14"
+
+- files: ["marriage_hum.org"]
+  license: "CC-BY-NC-4.0"
+  copyright: "10835 big fire loop.wav by Robinhood76 , freesound.org"
+  source: "https://freesound.org/s/612277/"
+
+- files: ["marriage_swing.org"]
+  license: "CC-BY-SA-3.0"
+  copyright: "by github.com/fqqf"
+  source: "https://github.com/fqqf"

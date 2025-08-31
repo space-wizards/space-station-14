@@ -5,6 +5,15 @@
   id: BaseMobVulpkanin
   abstract: true
   components:
+  - type: LanguageKnowledge
+    speaks:
+    - GalacticCommon
+    - Canilunzt
+    understands:
+    - GalacticCommon
+    - Canilunzt
+    - Fox # "vaguely canidae"
+    - Dog # "vaguely canidae"
   - type: Absorbable
   - type: HumanoidAppearance
     species: Vulpkanin

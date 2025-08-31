@@ -17,6 +17,12 @@
     ClothingOuterPlagueSuit: 1
     ClothingMaskPlague: 1
     ClothingHeadsetService: 2
+    #Starlight
+    DruidRobesUniformSuit: 1
+    TogaUniformSuit: 1
+    ClothingOuterBurnedRobes: 1
+    ClothingKitsuneMask: 1
+    #Endofstarlight
     BoxCandle: 2
     BoxCandleSmall: 2
     Urn: 5
@@ -25,11 +31,9 @@
     FoodBakedBunHotX: 2
     DrinkWineBottleFull: 1
     ToyFigurineChaplain: 1
+    ClothingNeckScarfStripedBlack: 3
   emaggedInventory:
-    ClothingOuterArmorCult: 1
-    ClothingHeadHelmetCult: 1
     ClothingOuterRobesCult: 3
     ClothingHeadHatHoodCulthood: 3
     ClothingShoesCult: 4
     BedsheetCult: 4
-    ClothingNeckScarfStripedBlack: 3

@@ -219,7 +219,7 @@
     state: pda-internmed
   - type: GuideHelp
     guides:
-    - Medical Doctor
+    - MedicalDoctor
 
 - type: entity
   parent: BaseSecurityPDA
@@ -473,6 +473,13 @@
     accentVColor: "#a23e3e"
   - type: Icon
     state: pda-qm
+  - type: CartridgeLoader
+    preinstalled:
+    - CrewManifestCartridge
+    - NotekeeperCartridge
+    - NanoTaskCartridge
+    - NewsReaderCartridge
+    - AstroNavCartridge
 
 - type: entity
   parent: BasePDA
@@ -752,7 +759,7 @@
     state: pda-medical
   - type: GuideHelp
     guides:
-    - Medical Doctor
+    - MedicalDoctor
 
 - type: entity
   parent: MedicalPDA
@@ -916,6 +923,7 @@
     id: CentcomIDCard
     penSlot:
       startingItem: PenCentcom
+      priority: -1
       whitelist:
         tags:
         - Write
@@ -1059,6 +1067,7 @@
 - type: entity
   parent: ClearPDA
   id: VisitorPDA
+  suffix: Visitor # Starlight
   components:
   - type: Pda
     id: VisitorIDCard
@@ -1344,6 +1353,14 @@
   - type: Icon
     state: pda-cluwne
   - type: Unremoveable
+  #region Starlight
+  - type: Tag
+    tags:
+    - DoorBumpOpener
+    - WhitelistChameleon
+    - WhitelistChameleonPDA
+    - BibleThwackRemovable
+  #endregion Starlight
 
 - type: entity
   parent: ClownPDA
@@ -1354,6 +1371,13 @@
   components:
   - type: Pda
     id: CluwneBeastIDCard
+    penSlot:
+      startingItem: CrayonGreen
+      ejectSound: /Audio/Items/bikehorn.ogg
+      priority: -1
+      whitelist:
+        tags:
+        - Write
   - type: Appearance
     appearanceDataInit:
      enum.PdaVisuals.PdaType:
@@ -1363,13 +1387,6 @@
     borderColor: "#1c8f4d"
   - type: Icon
     state: pda-cluwne
-    penSlot:
-      startingItem: CrayonGreen
-      ejectSound: /Audio/Items/bikehorn.ogg
-      priority: -1
-      whitelist:
-        tags:
-        - Write
   - type: Unremoveable
 
 - type: entity
@@ -1492,7 +1509,7 @@
       - MedTekCartridge
 
 - type: entity
-  parent: BasePDA
+  parent: [BasePDA, VoiceLock]
   id: ChameleonPDA
   name: assistant PDA
   description: Why isn't it gray?
@@ -1545,3 +1562,14 @@
     borderColor: "#7F3300"
   - type: Icon
     state: pda-wizard
+
+- type: entity
+  parent: ClearPDA
+  id: ScurretPDA
+  description: A temporary PDA granted to scurret temps. Doesn't do much. Wawa!
+  components:
+  - type: Pda
+    id: VisitorIDCard
+  - type: Tag #  Ignore Chameleon tags
+    tags:
+    - DoorBumpOpener

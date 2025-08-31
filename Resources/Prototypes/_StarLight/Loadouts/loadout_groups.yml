@@ -7,6 +7,7 @@
   - GlassesJamjar
   - GlassesJensen
   - CheapSunnies
+  - AssistantNoirGlasses
 
 - type: loadoutGroup
   id: AssistantHead
@@ -22,6 +23,8 @@
   - GreyFedoraA
   - SolidHeadband
   - GreytideBizarreAdventures
+  - BrimHat
+  - FeatheredHat
 
 - type: loadoutGroup
   id: AssistantBackpack
@@ -30,6 +33,7 @@
   - CommonBackpack
   - CommonSatchel
   - CommonDuffel
+  - LeatherSatchel
 
 - type: loadoutGroup
   id: RoboticistJumpsuit
@@ -70,8 +74,8 @@
   loadouts:
   - RoboticistWeldingGoggles
   - RoboticistDiagnosticsHud
-  
-  
+
+
 - type: loadoutGroup
   id: RoboticistBackpack
   name: loadout-group-roboticist-backpack
@@ -79,6 +83,7 @@
   - RoboticistBackpack
   - RoboticistSatchel
   - RoboticistDuffel
+  - LeatherSatchel
   
 - type: loadoutGroup
   id: NanoTrasenRepresentativeJumpsuit
@@ -94,7 +99,7 @@
   loadouts:
   - NanoTrasenRepresentativeGlasses
   - NanoTrasenRepresentativeHud
-  
+
 - type: loadoutGroup
   id: BlueShieldBackpack
   name: loadout-group-blueshield-backpack
@@ -102,6 +107,7 @@
   - BlueShieldBackpack
   - BlueShieldSatchel
   - BlueShieldDuffel
+  - LeatherSatchel
 
 - type: loadoutGroup
   id: BlueShieldJumpsuit
@@ -111,6 +117,21 @@
   - BlueShieldJumpskirt
   - EliteBlueShieldJumpsuit
   - EliteBlueShieldJumpskirt
+  - BlueShieldShirt
+
+- type: loadoutGroup
+  id: BlueShieldOuterclothing
+  name: Loadout-group-blueshield-outerclothing
+  loadouts:
+  - BlueShieldVest
+  - BlueShieldCoat
+
+- type: loadoutGroup
+  id: BlueShieldNeck
+  name: Loadout-group-blueshield-neck
+  loadouts:
+  - BlueShieldFormalCloak
+  - BlueShieldEliteCloak
 
 - type: loadoutGroup
   id: BlueShieldEyewear
@@ -118,7 +139,7 @@
   loadouts:
   - BlueShieldGlasses
   - BlueShieldHud
-    
+
 - type: loadoutGroup
   id: SecurityNonLethalWeapon
   name: loadout-group-security-non-lethal-weapon
@@ -132,6 +153,7 @@
   loadouts:
   - SecurityMk58
   - SecurityPistolDP
+  - SecurityPistolEnforcer
 
 # Assorted Boots
 - type: loadoutGroup
@@ -152,9 +174,10 @@
   - LaceupShoes
   - Heels
   - LeatherShoes
-  - CowboyBootsBrown
-  - CowboyBootsBlack
-  - CowboyBootsWhite
+  - CowboyBootsBrownFilled
+  - CowboyBootsBlackFilled
+  - CowboyBootsWhiteFilled
+  - HighHeelBootsFilled
 
 - type: loadoutGroup
   id: HoPShoes
@@ -191,11 +214,11 @@
   - JackBoots
   - SecurityWinterBoots
   - LaceupShoes
-  - CowboyBootsBrown
-  - CowboyBootsBlack
-  - CowboyBootsWhite
+  - CowboyBootsBrownFilled
+  - CowboyBootsBlackFilled
+  - CowboyBootsWhiteFilled
   - Heels
-  - HighHeelBoots
+  - HighHeelBootsFilled
 
 - type: loadoutGroup
   id: CivilianShoes
@@ -219,3 +242,9 @@
   - Heels
   - LeatherShoes
 
+- type: loadoutGroup
+  id: BlueShieldShoes
+  name: loadout-group-security-shoes
+  loadouts:
+  - CombatBoots
+  - HighHeelBootsFilled

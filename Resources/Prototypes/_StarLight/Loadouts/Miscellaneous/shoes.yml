@@ -2,7 +2,7 @@
   id: Heels
   equipment:
     shoes: ClothingShoesHighheelShoes
-  
+
 - type: loadout
   id: HighHeelBoots
   equipment:
@@ -32,13 +32,33 @@
   id: LeatherShoes
   equipment:
     shoes: ClothingShoesLeather
-    
+
 - type: loadout
   id: YellowShoes
   equipment:
     shoes: ClothingShoesColorYellow
-    
+
 - type: loadout
   id: GreenShoes
   equipment:
     shoes: ClothingShoesColorGreen
+
+- type: loadout
+  id: HighHeelBootsFilled
+  equipment:
+    shoes: ClothingShoesHighheelBootsFilled
+
+- type: loadout
+  id: CowboyBootsBrownFilled
+  equipment:
+    shoes: ClothingShoesBootsCowboyBrownFilled
+
+- type: loadout
+  id: CowboyBootsBlackFilled
+  equipment:
+    shoes: ClothingShoesBootsCowboyBlackFilled
+
+- type: loadout
+  id: CowboyBootsWhiteFilled
+  equipment:
+    shoes: ClothingShoesBootsCowboyWhiteFilled

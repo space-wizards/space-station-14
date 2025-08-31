@@ -751,6 +751,8 @@
   - type: Sprite
     layers:
     - state: worldpeas-slice
+  - type: Item
+    heldPrefix: worldpeas-slice
   - type: SolutionContainerManager
     solutions:
       food:

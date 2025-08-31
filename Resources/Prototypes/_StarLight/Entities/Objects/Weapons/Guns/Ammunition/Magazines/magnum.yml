@@ -1,7 +1,7 @@
 - type: entity
   id: BaseMagazineMagnum
   name: pistol magazine (.45 magnum)
-  parent: [ BaseMagazinePistol, BaseSecuritySalvageContraband ]
+  parent: [ BaseSecuritySalvageContraband, BaseMagazinePistol ]
   abstract: true
   components:
   - type: Tag
@@ -333,3 +333,19 @@
       - state: inhand-right-mag
       - state: inhand-right-stripe
         color: "#40F57A"
+        
+- type: entity
+  id: MagazineMagnumRifleSP
+  name: rifle magazine (.45 magnum)
+  parent: BaseMagazineMagnumSubMachineGun
+  components:
+  - type: BallisticAmmoProvider
+    proto: CartridgeMagnumSP
+    capacity: 20
+  - type: Sprite
+    sprite: _Starlight/Objects/Weapons/Guns/Ammunition/Magazine/Magnum/magnum_rifle_mag.rsi
+    layers:
+    - state: base
+      map: ["enum.GunVisualLayers.Base"]
+    - state: mag-1
+      map: ["enum.GunVisualLayers.Mag"]

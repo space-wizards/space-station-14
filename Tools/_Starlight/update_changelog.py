@@ -84,20 +84,24 @@ def update_changelog():
             print(f"Changelog file does not exist and will be created at {changelog_path}")
             changelog_data = {"Entries": []}
 
-        last_id = get_last_id(changelog_data)
+        last_id = 0
         for entry in entries:
-            last_id += 1
+            #shift PR number up two digits
+            #add current ID to it
+            # e.g., PR number 123, last_id 5 -> calculatedID = (123 * 100) + 5 = 12305
+            calculatedID = (int(pr_number) * 100) + last_id
             changelog_entry = {
                 "author": entry["author"],
                 "changes": [{
                     "message": entry["message"],
                     "type": entry["type"]
                 }],
-                "id": last_id,
+                "id": calculatedID,
                 "time": merge_time.isoformat(timespec='microseconds'),
                 "url": f"https://github.com/{repo_name}/pull/{pr_number}"
             }
             changelog_data["Entries"].append(changelog_entry)
+            last_id += 1
 
         os.makedirs(os.path.dirname(changelog_path), exist_ok=True)
 

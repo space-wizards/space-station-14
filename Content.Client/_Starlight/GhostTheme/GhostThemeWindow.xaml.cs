@@ -38,18 +38,18 @@ public sealed partial class GhostThemeWindow : DefaultWindow
     [Dependency] private readonly IClientConsoleHost _consoleHost = default!;
     [Dependency] private readonly IConfigurationManager _configManager = default!;
     [Dependency] private readonly IEntitySystemManager _entitySystem = default!;
-    
+
     private readonly ClientGameTicker _gameTicker;
     private readonly SpriteSystem _sprites;
-    
+
     public string SelectedTheme = "None";
-    
+
     public event Action<string>? SelectTheme;
-    
+
     public event Action<Color>? SelectColor;
-    
+
     public Color _selectedColor = Color.White;
-    
+
     public HashSet<string> _availableThemes = [];
     private string _searchFilter = "";
 
@@ -61,13 +61,13 @@ public sealed partial class GhostThemeWindow : DefaultWindow
         _preferencesManager = preferencesManager;
         _sprites = _entitySystem.GetEntitySystem<SpriteSystem>();
         _gameTicker = _entitySystem.GetEntitySystem<ClientGameTicker>();
-        
+
         Search.OnTextChanged += OnSearchEntered;
-    
+
         ReloadGhostThemes();
         RefreshUI();
     }
-    
+
     private void OnSearchEntered(LineEdit.LineEditEventArgs obj)
     {
         _searchFilter = obj.Text.Trim().ToLowerInvariant();
@@ -101,16 +101,16 @@ public sealed partial class GhostThemeWindow : DefaultWindow
 
         foreach (var ghostTheme in _prototypeManager.EnumeratePrototypes<GhostThemePrototype>())
         {
-            string toolTipText = "";
-            
-            
-            if (ghostTheme.Flags != null)
+            var toolTipText = "";
+
+            if (ghostTheme.Requirement != null && _prototypeManager.TryIndex(ghostTheme.Requirement, out var req))
             {
-                var flags = ghostTheme.Flags.Select(flag => $"- {flag}").ToList();
-                    
-                toolTipText = "You need one of these roles on Discord to open this ghost role:\n" + string.Join("\n", flags);
+                toolTipText = Loc.GetString(
+                    "roles-req-any-role-required",
+                    ("discord", Loc.GetString(req.Discord)),
+                    ("roles", Loc.GetString(req.RolesLoc)));
             }
-            
+
             var ghostPicker = new GhostPicker(_sprites,
                 ghostTheme.SpriteSpecifier.Sprite,
                 ghostTheme.Name,
@@ -121,7 +121,7 @@ public sealed partial class GhostThemeWindow : DefaultWindow
             {
                 ghostPicker.ToolTip = toolTipText;
             }
-            
+
             if (ghostTheme.Ckey != null)
                 ghostPicker.Visible = _availableThemes.Contains(ghostTheme.ID);
 
@@ -132,41 +132,41 @@ public sealed partial class GhostThemeWindow : DefaultWindow
             };
         }
     }
-    
+
     public void UpdateThemes(HashSet<string> AvailableThemes)
     {
         _availableThemes = AvailableThemes;
-        
+
         ReloadGhostThemes();
         RefreshUI();
     }
-    
+
     public void RefreshUI()
     {
         GhostThemeDescriptionContainer.RemoveAllChildren();
-        
+
         _selectedColor = Color.White;
-        
+
         if (!_prototypeManager.TryIndex<GhostThemePrototype>(SelectedTheme, out var ghostThemePrototype))
             return;
-        
+
         var ghostDescription = new GhostDescription(_sprites,
                 ghostThemePrototype.SpriteSpecifier.Sprite,
                 ghostThemePrototype.Name,
                 ghostThemePrototype.Description,
                 ghostThemePrototype.Colorizeable);
-                
+
         ghostDescription.OnColorSelected += color =>
         {
             _selectedColor = color;
         };
-        
+
         ghostDescription.OnThemeSelected += () =>
         {
             SelectTheme?.Invoke(ghostThemePrototype.ID);
             SelectColor?.Invoke(_selectedColor);
         };
-        
+
         GhostThemeDescriptionContainer.AddChild(ghostDescription);
     }
 }

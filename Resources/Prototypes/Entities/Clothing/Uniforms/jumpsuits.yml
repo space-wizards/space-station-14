@@ -904,6 +904,8 @@
     sprite: Clothing/Uniforms/Jumpsuit/operative.rsi
   - type: Clothing
     sprite: Clothing/Uniforms/Jumpsuit/operative.rsi
+  - type: StaticPrice
+    price: 500
 
 - type: entity
   parent: ClothingUniformBase
@@ -1120,6 +1122,13 @@
   - type: Clothing
     sprite: Clothing/Uniforms/Jumpsuit/cluwne.rsi
   - type: Unremoveable
+  #region Starlight
+  - type: Tag
+    tags:
+    - ClownSuit
+    - WhitelistChameleon
+    - BibleThwackRemovable
+  #endregion
 
 - type: entity
   parent: ClothingUniformBase

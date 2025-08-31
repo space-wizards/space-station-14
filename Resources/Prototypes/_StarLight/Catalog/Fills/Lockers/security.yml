@@ -62,7 +62,7 @@
       - id: WeaponDisabler
         amount: 2
       - id: TrackingImplanter
-        amount: 4
+        amount: 2
       - id: ClothingOuterHardsuitBrigmedic
         amount: 2
       - id: BoxSterileMask
@@ -124,6 +124,7 @@
     contents:
       - id: FlashlightSeclite
         amount: 2
+      - id: WeaponEnergyShotgun
       - id: WeaponDisabler
         amount: 2
       - id: ClothingBeltSecurityFilled

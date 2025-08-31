@@ -20,6 +20,7 @@ using Content.Shared.DoAfter;
 using Content.Shared.Emag.Systems;
 using Content.Shared.FixedPoint;
 using Content.Shared.Humanoid;
+using Content.Shared.Light.Components;
 using Content.Shared.Maps;
 using Content.Shared.Mobs;
 using Content.Shared.Mobs.Components;
@@ -35,6 +36,7 @@ namespace Content.Server.Revenant.EntitySystems;
 
 public sealed partial class RevenantSystem
 {
+    [Dependency] private readonly EmagSystem _emagSystem = default!;
     [Dependency] private readonly ThrowingSystem _throwing = default!;
     [Dependency] private readonly EntityStorageSystem _entityStorage = default!;
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
@@ -345,8 +347,7 @@ public sealed partial class RevenantSystem
                 _whitelistSystem.IsBlacklistPass(component.MalfunctionBlacklist, ent))
                 continue;
 
-            var ev = new GotEmaggedEvent(uid, EmagType.Interaction | EmagType.Access);
-            RaiseLocalEvent(ent, ref ev);
+            _emagSystem.TryEmagEffect(uid, uid, ent);
         }
     }
 }

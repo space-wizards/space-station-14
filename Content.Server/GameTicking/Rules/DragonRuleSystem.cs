@@ -1,18 +1,29 @@
 using Content.Server.Antag;
-using Content.Server.Dragon;
 using Content.Server.GameTicking.Rules.Components;
 using Content.Server.Mind;
 using Content.Server.Roles;
-using Content.Server.Station.Components;
 using Content.Server.Station.Systems;
-using Content.Shared.CharacterInfo;
+using Content.Shared.Devour.Components;
 using Content.Shared.Localizations;
+using Content.Shared.Roles.Components;
+using Content.Shared.Mobs;
+using Content.Shared.Mobs.Components;
+using Prometheus;
 using Robust.Server.GameObjects;
+using Content.Server.Dragon;
 
 namespace Content.Server.GameTicking.Rules;
 
 public sealed class DragonRuleSystem : GameRuleSystem<DragonRuleComponent>
 {
+    #region Starlight
+    private static readonly Histogram _dragonWinInfo = Metrics.CreateHistogram(
+        "sl_dragon_winning",
+        "Contains info on if a dragon won and if so how hard they won",
+        ["alive", "rifts"]
+    );
+    #endregion
+
     [Dependency] private readonly TransformSystem _transform = default!;
     [Dependency] private readonly AntagSelectionSystem _antag = default!;
     [Dependency] private readonly StationSystem _station = default!;
@@ -31,7 +42,7 @@ public sealed class DragonRuleSystem : GameRuleSystem<DragonRuleComponent>
     {
         var ent = args.Mind.Comp.OwnedEntity;
 
-        if(ent is null)
+        if (ent is null)
             return;
 
         args.Append(MakeBriefing(ent.Value));
@@ -44,7 +55,7 @@ public sealed class DragonRuleSystem : GameRuleSystem<DragonRuleComponent>
 
         _roleSystem.MindHasRole<DragonRoleComponent>(mindId, out var dragonRole);
 
-        if(dragonRole is null)
+        if (dragonRole is null)
             return;
 
         _antag.SendBriefing(args.EntityUid, MakeBriefing(args.EntityUid), null, null);
@@ -56,10 +67,9 @@ public sealed class DragonRuleSystem : GameRuleSystem<DragonRuleComponent>
 
         var dragonXform = Transform(dragon);
 
-        var station = _station.GetStationInMap(dragonXform.MapID);
         EntityUid? stationGrid = null;
-        if (TryComp<StationDataComponent>(station, out var stationData))
-            stationGrid = _station.GetLargestGrid(stationData);
+        if (_station.GetStationInMap(dragonXform.MapID) is { } station)
+            stationGrid = _station.GetLargestGrid(station);
 
         if (stationGrid is not null)
         {
@@ -74,4 +84,24 @@ public sealed class DragonRuleSystem : GameRuleSystem<DragonRuleComponent>
 
         return briefing;
     }
+
+    #region Starlight data collection
+    private void OnRoundEnded(RoundEndTextAppendEvent _)
+    {
+        var query = EntityManager.AllEntities<DragonComponent>();
+        foreach (var dragon in query)
+        {
+            var devoured = 0;
+            if (TryComp<DevourerComponent>(dragon.Owner, out var devour))
+                devoured = devour.Devoured;
+            var alive = false;
+            if (TryComp<MobStateComponent>(dragon.Owner, out var state))
+                alive = state.CurrentState == MobState.Alive;
+            _dragonWinInfo.WithLabels([
+                alive.ToString(),
+                dragon.Comp.Rifts?.ToString() ?? "0"
+            ]).Observe(devoured);  
+        }
+    }
+    #endregion
 }

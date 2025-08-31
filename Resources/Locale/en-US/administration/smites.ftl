@@ -58,6 +58,7 @@ admin-smite-nyanify-name = Cat Ears
 admin-smite-kill-sign-name = Kill Sign
 admin-smite-pacify-name = Pacify
 admin-smite-omni-accent-name = Omni-Accent
+admin-smite-crawler-name = Crawler
 
 ## Smite descriptions
 
@@ -103,6 +104,7 @@ admin-smite-terminate-description = Creates a Terminator ghost role with the sol
 admin-smite-super-slip-description = Slips them really, really hard.
 admin-smite-pacify-description = Makes the target a pacifist.
 admin-smite-omni-accent-description = Makes the target speak with almost every accent available.
+admin-smite-crawler-description = Makes the target fall down and be unable to stand up. Remove their hands too for added effect!
 
 ## Tricks descriptions
 

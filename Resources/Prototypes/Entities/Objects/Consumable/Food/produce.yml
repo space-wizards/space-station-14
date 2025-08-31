@@ -10,13 +10,16 @@
   - type: Sprite
     state: produce
   # let cows eat raw produce like wheat and oats
-  - type: Food
-    requiredStomachs: 2
+  - type: Edible
+    requiresSpecialDigestion: true
   - type: Produce
   - type: PotencyVisuals
   - type: Appearance
   - type: Extractable
     grindableSolutionName: food
+  - type: Tag
+    tags:
+    - Ruminant
 
 # For produce that can be immediately eaten
 
@@ -57,6 +60,7 @@
   - type: Tag
     tags:
     - Wheat
+    - Ruminant
 
 - type: entity
   name: meatwheat bushel
@@ -90,6 +94,8 @@
   components:
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/oat.rsi
+  - type: Item
+    heldPrefix: produce
   - type: SolutionContainerManager
     solutions:
       food:
@@ -174,6 +180,7 @@
   - type: Tag
     tags:
     - Vegetable
+    - Ruminant
 
 - type: entity
   name: tower-cap log
@@ -321,7 +328,7 @@
   - type: FlavorProfile
     flavors:
       - banana
-  - type: Food
+  - type: Edible
     trash:
     - TrashBananaPeel
   - type: SolutionContainerManager
@@ -363,7 +370,7 @@
     flavors:
       - banana
       - nothing
-  - type: Food
+  - type: Edible
     trash:
     - TrashMimanaPeel
   - type: SolutionContainerManager
@@ -435,6 +442,9 @@
     - Recyclable
     - Trash
     - BananaPeel
+    - Ruminant
+    - WhitelistChameleon
+    - HamsterWearable
   - type: SolutionContainerManager
     solutions:
       food:
@@ -445,14 +455,23 @@
   - type: Extractable
     grindableSolutionName: food
   - type: SpaceGarbage
-  - type: Food
+  - type: Edible
     requiresSpecialDigestion: true
+  - type: Clothing
+    sprite: Objects/Specific/Hydroponics/banana.rsi
+    equippedState: peel-equipped-HELMET
+    slots:
+    - HEAD
+    quickEquip: false
 
 - type: entity
   name: baked banana peel
   parent: TrashBananaPeel
   id: TrashBakedBananaPeel
   components:
+  - type: Clothing
+    sprite: Objects/Specific/Hydroponics/banana.rsi
+    equippedState: baked-peel-equipped-HELMET
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/banana.rsi
     state: baked-peel
@@ -481,6 +500,9 @@
   - type: Item
     sprite: Objects/Specific/Hydroponics/mimana.rsi
     heldPrefix: peel
+  - type: Clothing
+    sprite: Objects/Specific/Hydroponics/mimana.rsi
+    equippedState: equipped-HELMET
   - type: Slippery
     slipSound:
       path: /Audio/Effects/slip.ogg
@@ -499,6 +521,9 @@
     sprite: Objects/Materials/materials.rsi
     heldPrefix: peel
   - type: Slippery
+  - type: Clothing
+    sprite: Objects/Materials/materials.rsi
+    equippedState: peel-equipped-HELMET
 
 - type: entity
   name: carrot
@@ -1070,6 +1095,8 @@
           Quantity: 4
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/apple.rsi
+  - type: Item
+    heldPrefix: produce
   - type: Produce
     seedId: apple
   - type: Extractable
@@ -1169,7 +1196,7 @@
   - type: FlavorProfile
     flavors:
       - corn
-  - type: Food
+  - type: Edible
     trash:
     - FoodCornTrash
   - type: SolutionContainerManager
@@ -1874,7 +1901,7 @@
     sprite: Objects/Specific/Hydroponics/gatfruit.rsi
   - type: Produce
     seedId: gatfruit
-  - type: Food
+  - type: Edible
     trash:
     - WeaponRevolverPython
   - type: Tag
@@ -1909,7 +1936,7 @@
     heldPrefix: produce
   - type: Produce
     seedId: realCapfruit
-  - type: Food
+  - type: Edible
     trash:
     - RevolverCapGun
   - type: Tag
@@ -1928,7 +1955,7 @@
   components:
   - type: Produce
     seedId: fakeCapfruit
-  - type: Food
+  - type: Edible
     trash:
     - RevolverCapGunFake
 
@@ -2332,7 +2359,7 @@
   - type: FlavorProfile
     flavors:
       - bungo
-  - type: Food
+  - type: Edible
     trash:
     - FoodBungoPit
   - type: SolutionContainerManager
@@ -2567,7 +2594,7 @@
   - type: FlavorProfile
     flavors:
       - cotton
-  - type: Food
+  - type: Edible
     requiresSpecialDigestion: true
   - type: SolutionContainerManager
     solutions:
@@ -2599,7 +2626,7 @@
   - type: FlavorProfile
     flavors:
       - pyrotton
-  - type: Food
+  - type: Edible
     requiresSpecialDigestion: true
   - type: SolutionContainerManager
     solutions:
@@ -2633,7 +2660,7 @@
   - type: FlavorProfile
     flavors:
       - cherry
-  - type: Food
+  - type: Edible
     trash:
     - TrashCherryPit
   - type: SolutionContainerManager
@@ -2673,6 +2700,7 @@
   - type: Item
     sprite: Objects/Specific/Hydroponics/cherry.rsi
     heldPrefix: pit
+    size: Tiny
   - type: Tag
     tags:
     - Recyclable
@@ -2707,7 +2735,7 @@
     heldPrefix: produce
   - type: Produce
     seedId: anomalyBerry
-  - type: Food
+  - type: Edible
     trash:
     - EffectAnomalyFloraBulb # Random loot
   - type: SolutionContainerManager
@@ -2728,3 +2756,78 @@
     entries:
       Taco: AnomalyBerry
       Burger: AnomalyBerryBurger
+
+- type: entity
+  name: bloonion bulb
+  description: A strange floating bulb.. Nothing worth crying over.
+  parent: BaseStructureDynamic
+  id: FoodBloonion
+  components:
+  - type: Appearance
+  - type: Sprite
+    drawdepth: Items
+    noRot: true
+    sprite: Objects/Specific/Hydroponics/bloonion.rsi
+    state: produce
+  - type: Item
+    size: Small
+    sprite: Objects/Specific/Hydroponics/bloonion.rsi
+    heldPrefix: produce
+  - type: Produce
+    seedId: bloonion
+  - type: Tag
+    tags:
+    - Vegetable
+  - type: PotencyVisuals
+  - type: FlavorProfile
+    flavors:
+    - onion
+    - strange
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 7
+        canReact: false
+        reagents:
+        - ReagentId: Potassium
+          Quantity: 1
+        - ReagentId: Phosphorus
+          Quantity: 1
+        - ReagentId: Sugar
+          Quantity: 1
+        - ReagentId: Allicin
+          Quantity: 4
+  - type: Extractable
+    grindableSolutionName: food
+  - type: ExplodeOnTrigger
+  - type: Explosive
+    explosionType: Default
+    maxIntensity: 0.001
+    intensitySlope: 1
+    totalIntensity: 0.1
+  - type: Damageable
+    damageContainer: Biological
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 1
+      behaviors:
+      - !type:SpillBehavior
+        solution: food
+      - !type:TriggerBehavior
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+  - type: InteractionOutline
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.20
+          position: 0, 0.35
+        density: 80
+        mask:
+        - MobMask
+        layer:
+        - MobLayer

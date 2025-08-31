@@ -15,9 +15,6 @@
     bodyType: KinematicController # Same for all inheritors
   - type: StatusEffects
     allowed:
-    - Stun
-    - KnockedDown
-    - SlowedDown
     - Stutter
     - Electrocution
   - type: Repairable
@@ -54,6 +51,15 @@
   - type: ProtectedFromStepTriggers
   - type: NoSlip
   - type: Insulated
+  # Starlight-start: Languages
+  - type: LanguageKnowledge
+    speaks:
+    - GalacticCommon
+    - Machine
+    understands:
+    - GalacticCommon
+    - Machine
+  # Starlight-end
 
 # Used for bots
 - type: entity
@@ -159,8 +165,9 @@
     interactFailureString: petting-failure-firebot
     interactSuccessSound:
       path: /Audio/Ambience/Objects/periodic_beep.ogg
-  - type: Advertise
-    pack: FirebotAd
+  - type: Vocalizer
+  - type: DatasetVocalizer
+    dataset: FirebotAd
 
 - type: entity
   parent: MobSiliconBase
@@ -310,7 +317,20 @@
     interactFailureString: petting-failure-cleanbot
     interactSuccessSound:
       path: /Audio/Ambience/Objects/periodic_beep.ogg
-
+  #region starlight
+  - type: Vocalizer
+  - type: DatasetVocalizer
+    dataset: CleanbotAds
+  - type: WiresPanel
+  - type: Wires
+    boardName: wires-board-name-cleanbot
+    layoutId: MedibotControls
+    alwaysRandomize: true
+  - type: UserInterface
+    interfaces:
+      enum.WiresUiKey.Key:
+        type: WiresBoundUserInterface
+  #end region
 - type: entity
   parent:
   - MobSiliconBase
@@ -355,8 +375,9 @@
     interactFailureString: petting-failure-medibot
     interactSuccessSound:
       path: /Audio/Ambience/Objects/periodic_beep.ogg
-  - type: Advertise
-    pack: MedibotAds
+  - type: Vocalizer
+  - type: DatasetVocalizer
+    dataset: MedibotAds
   - type: Inventory
     templateId: medibot
   - type: DoAfter

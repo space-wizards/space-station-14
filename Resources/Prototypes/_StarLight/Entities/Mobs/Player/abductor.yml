@@ -3,6 +3,7 @@
   parent: BaseMobAbductor
   id: MobAbductor
   components:
+  - type: UniversalLanguageSpeaker
   - type: Abductor
   - type: Tag
     tags:
@@ -24,6 +25,13 @@
     rules: abductors-ghost-role-rules
     raffle:
       settings: default
+    requirements:
+    - !type:RoleTimeRequirement
+      role: JobSecurityOfficer
+      time: 10800 # 3 hrs
+    - !type:RoleTimeRequirement
+      role: JobSurgeon
+      time: 10800 # 3 hrs
   - type: AbductorScientist
   - type: ActionGrant
     actions:
@@ -41,11 +49,18 @@
     objectives:
     - StealResearchObjective
   - type: GhostRole
-    name: abductors-ghost-role-name
-    description: abductors-ghost-role-desc
+    name: abductora-ghost-role-name
+    description: abductora-ghost-role-desc
     rules: abductors-ghost-role-rules
     raffle:
       settings: default
+    requirements:
+    - !type:RoleTimeRequirement
+      role: JobSecurityOfficer
+      time: 10800 # 3 hrs
+    - !type:RoleTimeRequirement
+      role: JobSurgeon
+      time: 10800 # 3 hrs
   - type: AbductorAgent
   - type: ActionGrant
     actions:
@@ -99,9 +114,16 @@
   id: AbductorAgentSpawner
   components:
   - type: GhostRole
-    name: abductors-ghost-role-name
-    description: abductors-ghost-role-desc
+    name: abductora-ghost-role-name
+    description: abductora-ghost-role-desc
     rules: abductors-ghost-role-rules
+    requirements:
+    - !type:RoleTimeRequirement
+      role: JobSecurityOfficer
+      time: 10800 # 3 hrs
+    - !type:RoleTimeRequirement
+      role: JobSurgeon
+      time: 10800 # 3 hrs
   - type: Sprite
     sprite: Markers/jobs.rsi
     layers:
@@ -131,6 +153,13 @@
     name: abductors-ghost-role-name
     description: abductors-ghost-role-desc
     rules: abductors-ghost-role-rules
+    requirements:
+    - !type:RoleTimeRequirement
+      role: JobSecurityOfficer
+      time: 10800 # 3 hrs
+    - !type:RoleTimeRequirement
+      role: JobSurgeon
+      time: 10800 # 3 hrs
   - type: Sprite
     sprite: Markers/jobs.rsi
     layers:

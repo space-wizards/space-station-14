@@ -3,48 +3,37 @@ using Content.Server.Atmos.Rotting;
 using Content.Server.Beam;
 using Content.Server.Body.Systems;
 using Content.Server.Chat.Systems;
-using Content.Server.Interaction;
-using Content.Server.Nutrition.EntitySystems;
 using Content.Server.Polymorph.Systems;
 using Content.Server.Storage.EntitySystems;
 using Content.Server.Mind;
 using Content.Shared.Actions;
 using Content.Shared.Body.Systems;
-using Content.Shared.Buckle;
-using Content.Shared.Bed.Sleep;
 using Content.Shared.Chemistry.EntitySystems;
-using Content.Shared.Construction.Components;
 using Content.Shared.Damage;
 using Content.Shared.Damage.Prototypes;
 using Content.Shared.DoAfter;
 using Content.Shared.Examine;
 using Content.Shared.FixedPoint;
-using Content.Shared.Hands.EntitySystems;
-using Content.Shared.Humanoid;
 using Content.Shared.Interaction;
-using Content.Shared.Interaction.Events;
-using Content.Shared.Maps;
-using Content.Shared.Mobs;
 using Content.Shared.Mobs.Systems;
 using Content.Shared.Popups;
 using Content.Shared.Prayer;
-using Content.Shared.StatusEffect;
+using Content.Shared.StatusEffectNew;
 using Content.Shared.Stealth.Components;
 using Content.Shared.Stunnable;
 using Content.Shared.Vampire;
 using Content.Shared.Vampire.Components;
 using Robust.Server.GameObjects;
 using Robust.Shared.Player;
-using Robust.Shared.GameStates;
 using Robust.Shared.Audio.Systems;
-using Robust.Shared.Containers;
 using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
-using System.Linq;
 using Content.Server.Charges;
 using Content.Shared.Charges.Components;
 using Content.Shared.Actions.Components;
 using Content.Server.Administration.Systems;
+using Content.Shared.Maps;
+using Content.Shared.Nutrition.EntitySystems;
 
 namespace Content.Server.Vampire;
 
@@ -73,7 +62,6 @@ public sealed partial class VampireSystem : EntitySystem
     [Dependency] private readonly SharedBodySystem _body = default!;
     [Dependency] private readonly SharedSolutionContainerSystem _solution = default!;
     [Dependency] private readonly SharedStunSystem _stun = default!;
-    [Dependency] private readonly StatusEffectsSystem _statusEffects = default!;
     [Dependency] private readonly DamageableSystem _damageableSystem = default!;
     [Dependency] private readonly MobThresholdSystem _mobThreshold = default!;
     [Dependency] private readonly MobStateSystem _mobState = default!;
@@ -84,6 +72,9 @@ public sealed partial class VampireSystem : EntitySystem
     [Dependency] private readonly ActionContainerSystem _actionContainer = default!;
     [Dependency] private readonly ChargesSystem _charges = default!;
     [Dependency] private readonly StarlightEntitySystem _entities = default!;
+    [Dependency] private readonly TurfSystem _turf = default!;
+    [Dependency] private readonly StatusEffectsSystem _statusEffects = default!;
+    [Dependency] private readonly IngestionSystem _ingestion = default!;
 
     public override void Initialize()
     {
@@ -93,7 +84,7 @@ public sealed partial class VampireSystem : EntitySystem
         //SubscribeLocalEvent<VampireComponent, VampireTargetedPowerEvent>(OnUseTargetedPower);
         SubscribeLocalEvent<VampireComponent, ExaminedEvent>(OnExamined);
         SubscribeLocalEvent<VampireComponent, VampireBloodChangedEvent>(OnVampireBloodChangedEvent);
-        
+
         SubscribeLocalEvent<VampireComponent, AfterAutoHandleStateEvent>(GetState);
         SubscribeLocalEvent<VampireComponent, VampireMutationPrototypeSelectedMessage>(OnMutationSelected);
 
@@ -113,7 +104,7 @@ public sealed partial class VampireSystem : EntitySystem
         {
             if (vampire == null || stealth == null)
                 continue;
-            
+
             if (stealth.NextStealthTick <= 0)
             {
                 stealth.NextStealthTick = 1;
@@ -139,7 +130,7 @@ public sealed partial class VampireSystem : EntitySystem
         {
             if (healing == null)
                 continue;
-            
+
             if (healing.NextHealTick <= 0)
             {
                 healing.NextHealTick = 1;
@@ -165,13 +156,13 @@ public sealed partial class VampireSystem : EntitySystem
                 spacedamage.NextSpaceDamageTick -= frameTime;
             }
         }
-        
+
         var strengthQuery = EntityQueryEnumerator<VampireComponent, VampireStrengthComponent>();
         while (strengthQuery.MoveNext(out var uid, out var vampire, out var strength))
         {
             if (vampire == null || strength == null)
                 continue;
-            
+
             if (strength.NextTick <= 0)
             {
                 strength.NextTick = 1;
@@ -193,7 +184,7 @@ public sealed partial class VampireSystem : EntitySystem
 
     private void OnExamined(EntityUid uid, VampireComponent component, ExaminedEvent args)
     {
-        if (HasComp<VampireFangsExtendedComponent>(uid) && args.IsInDetailsRange && !_food.IsMouthBlocked(uid))
+        if (HasComp<VampireFangsExtendedComponent>(uid) && args.IsInDetailsRange && !_ingestion.HasMouthAvailable(args.Examiner, uid))
             args.AddMarkup($"{Loc.GetString("vampire-fangs-extended-examine")}{Environment.NewLine}");
     }
     private bool AddBloodEssence(Entity<VampireComponent> vampire, FixedPoint2 quantity)
@@ -205,7 +196,7 @@ public sealed partial class VampireSystem : EntitySystem
         vampire.Comp.Balance[VampireComponent.CurrencyProto] += quantity;
 
         UpdateBloodDisplay(vampire);
-        
+
         var ev = new VampireBloodChangedEvent();
         RaiseLocalEvent(vampire, ev);
 
@@ -222,7 +213,7 @@ public sealed partial class VampireSystem : EntitySystem
         vampire.Comp.Balance[VampireComponent.CurrencyProto] -= quantity;
 
         UpdateBloodDisplay(vampire);
-        
+
         var ev = new VampireBloodChangedEvent();
         RaiseLocalEvent(vampire, ev);
 
@@ -236,7 +227,7 @@ public sealed partial class VampireSystem : EntitySystem
     {
         if (!TryComp<VampireComponent>(vampire, out var comp))
             return;
-        
+
         //Sanity check, you never know who is going to touch this code
         if (!comp.Balance.TryGetValue(VampireComponent.CurrencyProto, out var balance))
             return;
@@ -250,51 +241,51 @@ public sealed partial class VampireSystem : EntitySystem
         if(TryComp<LimitedChargesComponent>(mutationsAction, out var charges))
             _charges.SetCharges((mutationsAction.Value, charges), chargeDisplay);
     }
-    
+
     private void OnVampireBloodChangedEvent(EntityUid uid, VampireComponent component, VampireBloodChangedEvent args)
     {
         var bloodEssence = _vampire.GetBloodEssence(uid);
-        
+
         AbilityInfo entity = default;
-        
+
         if (TryComp<VampireAlertComponent>(uid, out var alertComp))
             _vampire.SetAlertBloodAmount(alertComp,_vampire.GetBloodEssence(uid).Int());
-        
+
         if (component.actionEntities.TryGetValue("ActionVampireCloakOfDarkness", out entity) && !HasComp<VampireSealthComponent>(uid) && _vampire.GetBloodEssence(uid) < FixedPoint2.New(300))
             component.actionEntities.Remove("ActionVampireCloakOfDarkness");
-        
+
         UpdateAbilities(uid, component , VampireComponent.MutationsActionPrototype, "MutationsMenu" , bloodEssence >= FixedPoint2.New(50) && !HasComp<VampireSealthComponent>(uid));
-        
+
         //Hemomancer
-        
+
         // Blood Steal
         UpdateAbilities(uid, component , "ActionVampireBloodSteal", "BloodSteal" , bloodEssence >= FixedPoint2.New(200) && component.CurrentMutation == VampireMutationsType.Hemomancer);
-        
+
         // Screech
         UpdateAbilities(uid, component , "ActionVampireScreech", "Screech" , bloodEssence >= FixedPoint2.New(300) && component.CurrentMutation == VampireMutationsType.Hemomancer);
-        
+
         //Umbrae
-        
+
         //Glare
         UpdateAbilities(uid, component , "ActionVampireGlare", "Glare" , bloodEssence >= FixedPoint2.New(200) && component.CurrentMutation == VampireMutationsType.Umbrae);
-        
+
         //CloakOfDarkness
         UpdateAbilities(uid, component , "ActionVampireCloakOfDarkness", "CloakOfDarkness" , bloodEssence >= FixedPoint2.New(300) && component.CurrentMutation == VampireMutationsType.Umbrae);
-        
-        
+
+
         //Gargantua
-        
+
         UpdateAbilities(uid, component , "ActionVampireUnholyStrength", "UnholyStrength" , bloodEssence >= FixedPoint2.New(200) && component.CurrentMutation == VampireMutationsType.Gargantua);
-        
+
         UpdateAbilities(uid, component , "ActionVampireSupernaturalStrength", "SupernaturalStrength" , bloodEssence >= FixedPoint2.New(300) && component.CurrentMutation == VampireMutationsType.Gargantua);
-        
+
         //Bestia
-        
+
         UpdateAbilities(uid, component , "ActionVampireBatform", "PolymorphBat" , bloodEssence >= FixedPoint2.New(200) && component.CurrentMutation == VampireMutationsType.Bestia);
-        
+
         UpdateAbilities(uid, component , "ActionVampireMouseform", "PolymorphMouse" , bloodEssence >= FixedPoint2.New(300) && component.CurrentMutation == VampireMutationsType.Bestia);
     }
-    
+
     private void UpdateAbilities(EntityUid uid, VampireComponent component, string actionId, string? powerId, bool addAction)
     {
         EntityUid? actionEntity = null;
@@ -346,7 +337,7 @@ public sealed partial class VampireSystem : EntitySystem
         if (!_mapSystem.TryGetTileRef(vampireUid, grid, vampireTransform.Coordinates, out var tileRef))
             return true;
 
-        return tileRef.Tile.IsEmpty || tileRef.IsSpace() || tileRef.Tile.GetContentTileDefinition().ID == "Lattice";
+        return tileRef.Tile.IsEmpty || _turf.IsSpace(tileRef) || _turf.GetContentTileDefinition(tileRef).ID == "Lattice";
     }
 
     private bool IsNearPrayable(EntityUid vampireUid)
@@ -362,7 +353,7 @@ public sealed partial class VampireSystem : EntitySystem
 
         return false;
     }
-    
+
     private void OnMutationSelected(EntityUid uid, VampireComponent component, VampireMutationPrototypeSelectedMessage args)
     {
         if (component.CurrentMutation == args.SelectedId)
@@ -395,7 +386,7 @@ public sealed partial class VampireSystem : EntitySystem
             return;
         _uiSystem.TryToggleUi(uid, VampireMutationUiKey.Key, actor.PlayerSession);
     }
-    
+
     public void UpdateUi(EntityUid uid, VampireComponent? component = null)
     {
         if (!Resolve(uid, ref component))

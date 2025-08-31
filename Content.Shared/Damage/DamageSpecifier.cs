@@ -1,3 +1,4 @@
+using System.Linq;
 using System.Text.Json.Serialization;
 using Content.Shared.Damage.Prototypes;
 using Content.Shared.FixedPoint;
@@ -85,6 +86,11 @@ namespace Content.Shared.Damage
         [JsonIgnore]
         public bool Empty => DamageDict.Count == 0;
 
+        public override string ToString()
+        {
+            return "DamageSpecifier(" + string.Join("; ", DamageDict.Select(x => x.Key + ":" + x.Value)) + ")";
+        }
+
         #region constructors
         /// <summary>
         ///     Constructor that just results in an empty dictionary.
@@ -133,7 +139,7 @@ namespace Content.Shared.Damage
         ///     Only applies resistance to a damage type if it is dealing damage, not healing.
         ///     This will never convert damage into healing.
         /// </remarks>
-        public static DamageSpecifier ApplyModifierSet(DamageSpecifier damageSpec, DamageModifierSet modifierSet, float armorPenetration = 0f)
+        public static DamageSpecifier ApplyModifierSet(DamageSpecifier damageSpec, DamageModifierSet modifierSet, float armorPenetration = 0f, bool canHeal = true) // ??Starlight??
         {
             // Make a copy of the given data. Don't modify the one passed to this function. I did this before, and weapons became
             // duller as you hit walls. Neat, but not FixedPoint2ended. And confusing, when you realize your fists don't work no
@@ -157,8 +163,18 @@ namespace Content.Shared.Damage
                 if (modifierSet.FlatReduction.TryGetValue(key, out var reduction))
                     newValue = Math.Max(0f, newValue - (reduction - (reduction * armorPenetration))); // flat reductions can't heal you
 
-                if (modifierSet.Coefficients.TryGetValue(key, out var coefficient))
-                    newValue *= Math.Min(1f, coefficient + ((1f - coefficient) * armorPenetration)); // coefficients can heal you, e.g. cauterizing bleeding
+                // ??Starlight?? start
+                if (canHeal)  
+                {
+                    if (modifierSet.Coefficients.TryGetValue(key, out var coefficient))
+                        newValue *= (coefficient + ((1f - coefficient) * armorPenetration)); // coefficients can heal you, e.g. cauterizing bleeding, Starlight change: removed maximum coefficent allowing for weaknesses
+                }
+                else
+                {
+                    if (modifierSet.Coefficients.TryGetValue(key, out var coefficient))
+                        newValue *= Math.Clamp((coefficient + ((1f - coefficient) * armorPenetration)), 0, 1);
+                }
+                // ??Starlight?? end
 
                 if (newValue != 0)
                     newDamage.DamageDict[key] = FixedPoint2.New(newValue);
@@ -187,6 +203,38 @@ namespace Content.Shared.Damage
 
             if (!any)
                 newDamage = new DamageSpecifier(damageSpec);
+
+            return newDamage;
+        }
+
+        /// <summary>
+        /// Returns a new DamageSpecifier that only contains the entries with positive value.
+        /// </summary>
+        public static DamageSpecifier GetPositive(DamageSpecifier damageSpec)
+        {
+            DamageSpecifier newDamage = new();
+
+            foreach (var (key, value) in damageSpec.DamageDict)
+            {
+                if (value > 0)
+                    newDamage.DamageDict[key] = value;
+            }
+
+            return newDamage;
+        }
+
+        /// <summary>
+        /// Returns a new DamageSpecifier that only contains the entries with negative value.
+        /// </summary>
+        public static DamageSpecifier GetNegative(DamageSpecifier damageSpec)
+        {
+            DamageSpecifier newDamage = new();
+
+            foreach (var (key, value) in damageSpec.DamageDict)
+            {
+                if (value < 0)
+                    newDamage.DamageDict[key] = value;
+            }
 
             return newDamage;
         }

@@ -1,0 +1,113 @@
+- type: titleBuilder
+  id: Starlight 
+  segments:
+  - # testers
+    titles: 
+    - text: "α"
+      color: "#35e500"
+      roles:
+      - 1275161200115712071 # AlfaTester
+    - text: "β"
+      color: "#1c7800"
+      roles:
+      - 1294130153651306516 # BetaTester
+  - # role
+    titles: 
+    - text: "Host"
+      color: "#EC9C49"
+      roles:
+      - 1305376794823753904 # Host
+    - text: "SLN-Manager"
+      color: "#369876"
+      roles:
+      - 1305029511838175262 # SLN Manager
+    - text: "Community-Manager"
+      color: "#EBB8E8"
+      roles:
+      - 1352520081002991636 # Community Manager
+    - text: "Events-Manager"
+      color: "#5900ff"
+      roles:
+      - 1353887132082507857 # Events Manager
+    - text: "Supervisor"
+      color: "#ff4848"
+      roles:
+      - 1305375624613068800 # Supervisor
+    - text: "Head-Spriter"
+      color: "#ea800f"
+      roles:
+      - 1362773454721519668 # Head Spriter
+    - text: "Head-Mapper"
+      color: "#f19b40"
+      roles:
+      - 1307729133614141441 # Head Mapper
+    - text: "Staff-Admin"
+      color: "#1153cc"
+      roles:
+      - 1310741799601573960 # Staff Admin
+    - text: "Staff-Mentor"
+      color: "#b3aeff"
+      roles:
+      - 1276773207453728841 # Staff Mentor
+    - text: "SLN-PL"
+      color: "#f1eb58"
+      roles:
+      - 1374523965850128517 # SLN-PL
+    - text: "Maintainer"
+      color: "#f1eb58"
+      roles:
+      - 1380299412164579328 # Maintainer
+    - text: "Developer"
+      color: "#f1eb58"
+      roles:
+      - 1272899036571238521 # Developer
+    - text: "Admin"
+      color: "#ff7600"
+      roles:
+      - 1305028815906537482 # Admin
+    - text: "Trialmin"
+      color: "#7ac000"
+      roles:
+      - 1305029272653533268 # Trialmin
+    - text: "Event-C."
+      color: "#7c58ff"
+      roles:
+      - 1297054047596974090 # Event Coordinator
+    - text: "Jr.Event-C."
+      color: "#983fc9"
+      roles:
+      - 1308128839993659422 # Jr. Event Coordinator
+    - text: "Prototyper"
+      color: "#F1C40F"
+      roles:
+      - 1348030990811009044 # Prototyper
+    - text: "Mapper"
+      color: "#8ff10f"
+      roles:
+      - 1297739822131056703 # Mapper
+    - text: "Spriter"
+      color: "#8ff10f"
+      roles:
+      - 1299137799693406288 # Spriter
+    - text: "Former"
+      color: "#b6599a"
+      roles:
+      - 1294131297437876254 # Former
+    - text: "Mentor"
+      color: "#00ffff"
+      roles:
+      - 1294132218918207639 # Mentor
+    - text: "Contributor"
+      color: "#afd759"
+      roles:
+      - 1348034282370896012 # Contributor
+  - # badge
+    titles: 
+    - text: "[font=\"Icon\"][/font]"
+      color: "#ed0bc4"
+      roles:
+      - 1381351437665308894 # Patron
+    - text: "[font=\"Icon\"][/font]"
+      color: "#b411ea"
+      roles:
+      - 1303925875502219334 # Booster

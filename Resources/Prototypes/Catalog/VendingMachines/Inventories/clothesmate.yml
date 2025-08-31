@@ -7,6 +7,7 @@
     ClothingBackpackSatchel: 3
     ClothingBackpackSatchelLeather: 2
     ClothingRandomSpawner: 8
+    ClothingOuterCoatRandom: 8 # Starlight
     ClothingUniformRandomShorts: 4
     ClothingHeadHatBeret: 4
     ClothingHeadBandBlack: 2
@@ -56,6 +57,22 @@
     ClothingUniformJumpskirtCasualRed: 2
     ClothingUniformJumpsuitCasualGreen: 2
     ClothingUniformJumpskirtCasualGreen: 2
+    #Starlight
+    BodysuitJeansUniformSuit: 3
+    CamoUniformSuit: 2
+    CoolTanktopUniformSuit: 3
+    LumberjackOverallsUniformSuit: 2
+    MechanicOverallsUniformSuit: 2
+    MessyDressShirtUniformSuit: 3
+    OldWomanUniformSuit: 2
+    PunkJeansUniformSuit: 2
+    TieDyeUniformSuit: 2
+    VintageUniformSuit: 1
+    ClothingOutercorset: 2
+    ClothingOuterRedLeather: 2
+    ClothingOuterRoughSweater: 1
+    ClothingOuterSoftSweater: 1
+    ClothingOuterLargeShirt: 3
     # DO NOT ADD MORE, USE UNIFORM DYING
     ClothingShoesColorBlack: 8
     ClothingShoesColorBrown: 4
@@ -73,12 +90,16 @@
     ClothingHeadHatGreensoft: 2
     ClothingHeadHatOrangesoft: 2
     ClothingHeadHatRedsoft: 2
+    # Starlight
+    ClothingHeadHatBrimHat: 3
+    ClothingHeadHatFeatheredHat: 3
     # DO NOT ADD MORE, USE UNIFORM DYING
     ClothingHeadHatBlacksoft: 2
     ClothingHeadHatPurplesoft: 2
     ClothingHeadHatCorpsoft: 2
     ClothingHeadFishCap: 2
     ClothingHeadRastaHat: 2
+    ClothingHeadPropellerHat: 2
     ClothingBeltStorageWaistbag: 3
     ClothingEyesGlasses: 6
     ClothingHandsGlovesColorBlack: 4
@@ -92,6 +113,9 @@
     ClothingHandsGlovesColorOrange: 2
     ClothingHandsGlovesColorPurple: 2
     ClothingEyesGlassesCheapSunglasses: 3
+    #Starlight
+    ClothingUnderSocksStirrup: 2
+    ClothingUnderSocksYellow: 2
     # DO NOT ADD MORE, USE UNIFORM DYING
   contrabandInventory:
     ClothingMaskNeckGaiter: 2
@@ -101,4 +125,7 @@
     ClothingBackpackSatchelSmugglerUnanchored: 1
     ClothingHeadHatSolidHeadband: 2
     ClothingUniformJumpsuitTrackSuit: 2 #Starlight
+    TatteredClothesUniformSuit: 1 #starlight
+    ClothingHeadHatTVHead: 1 #starlight
+    ClothingNeckTatteredHood: 1 #starlight
   # DO NOT ADD MORE, USE UNIFORM DYING

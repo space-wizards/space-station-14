@@ -1,0 +1,20 @@
+<Document>
+# Psychologist
+
+<GuideEntityEmbed Entity="ToyFigurineMedicalDoctor" Caption="Psychologist"/>
+
+1. The Psychologist report directly to the Chief Medical Officer.
+
+2. The Psychologist is authorized to perform a full psychometric workup on any crew member who is willing.
+
+3. Examinations of unwilling crewmembers may only occur with written approval by the Chief Medical Officer and one the following: HoS, Magistrate, Captain.
+- 1. This also applies to any medication prescribed by the Psychologist.
+
+4. Examinations may result in the following actions, with a sign off from the Captain or crew member's head of department:
+- 1. Demotion from their current position, if the patient's mental state leaves them unable to fulfill their duties.
+- 2. Prescriptions of Pax or other similar drugs for those who are found to be extremely violent.
+- 3. Increased observation of prisoners or crew who are deemed a danger.
+- 4. Lightening of sentences for prisoners who have shown good behavior and a change of moral character.
+
+5. The Psychologist may request to consult with a prisoner at any time to evaluate their mental state.
+</Document>

@@ -11,6 +11,33 @@
   - StationAiIconDorf
   - StationAiIconHeartline
   - StationAiIconSmiley
+  - StationAiIconAlien #SL
+  - StationAiIconThinking #SL
+  - StationAiIconDatabase #SL
+  - StationAiIconFirewall #SL
+  - StationAiIconFuzzy #SL
+  - StationAiIconGentoo #SL
+  - StationAiIconGlitchman #SL
+  - StationAiIconGoon #SL
+  - StationAiIconHades #SL
+  - StationAiIconHelios #SL
+  - StationAiIconInverted #SL
+  - StationAiIconMatrix #SL
+  - StationAiIconMonochrome #SL
+  - StationAiIconMurica #SL
+  - StationAiIconNanoTrasen #SL
+  - StationAiIconNotMalf #SL
+  - StationAiIconPresident #SL
+  - StationAiIconRainbow #SL
+  - StationAiIconRed #SL
+  - StationAiIconRedOctober #SL
+  - StationAiIconStatic #SL
+  - StationAiIconMeow #SL
+  - StationAiIconText #SL
+  - StationAiIconTooDeep #SL
+  - StationAiIconTriumvirate #SL
+  - StationAiIconWeird #SL
+  - StationAiIconEvilDot #SL
 
 - type: stationAiCustomizationGroup
   id: StationAiHolograms
@@ -22,6 +49,16 @@
   - StationAiHologramFace
   - StationAiHologramCat
   - StationAiHologramDog
+  - StationAiHologramAlien #SL
+  - StationAiHologramBees #SL
+  - StationAiHologramBigMoth #SL
+  - StationAiHologramGhost #SL
+  - StationAiHologramHorror #SL
+  - StationAiHologramLeaves #SL
+  - StationAiHologramNarsie #SL
+  - StationAiHologramRatvar #SL
+  - StationAiHologramSemi #SL
+  - StationAiHologramCy #SL
 
 # Iconography
 - type: stationAiCustomization

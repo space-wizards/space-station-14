@@ -84,3 +84,47 @@
     - ClothMade
     - Recyclable
     - HamsterWearable
+
+- type: entity
+  parent: ClothingHeadBase
+  id: ClothingHeadHatBrimHat
+  name: wide brimmed hat
+  description: Keep that bloody sun out of your eyes.
+  components:
+  - type: Sprite
+    sprite: _Starlight/Clothing/Head/Hats/brim_hat.rsi
+  - type: Clothing
+    sprite: _Starlight/Clothing/Head/Hats/brim_hat.rsi 
+  - type: Tag
+    tags:
+    - ClothMade
+    - WhitelistChameleon
+
+- type: entity
+  parent: ClothingHeadBase
+  id: ClothingHeadHatFeatheredHat
+  name: feathered hat
+  description: You own theses streets.
+  components:
+  - type: Sprite
+    sprite: _Starlight/Clothing/Head/Hats/feather_hat.rsi
+  - type: Clothing
+    sprite: _Starlight/Clothing/Head/Hats/feather_hat.rsi 
+  - type: Tag
+    tags:
+    - ClothMade
+    - WhitelistChameleon
+
+- type: entity
+  parent: ClothingHeadBase
+  id: ClothingHeadHatTVHead
+  name: tv head
+  description: The label says it will make you look like a true Tumblr sexyman. What does that even mean?
+  components:
+  - type: Sprite
+    sprite: _Starlight/Clothing/Head/Hats/tv_head.rsi
+  - type: Clothing
+    sprite: _Starlight/Clothing/Head/Hats/tv_head.rsi 
+  - type: Tag
+    tags:
+    - WhitelistChameleon

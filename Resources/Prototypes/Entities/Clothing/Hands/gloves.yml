@@ -290,7 +290,7 @@
     fiberColor: fibers-black
 
 - type: entity
-  parent: [ ClothingHandsGlovesCombat, BaseSalvageContraband ] #Starlight salvContra
+  parent: [ BaseEngineeringSecuritySalvageContraband, ClothingHandsGlovesCombat ] #Starlight salvContra
   id: ClothingHandsMercGlovesCombat
   name: mercenary combat gloves
   description: High-quality combat gloves to protect hands from mechanical damage during combat.
@@ -382,6 +382,13 @@
   description:  A cursed pair of cluwne hands.
   components:
   - type: Unremoveable
+  #region Starlight
+  - type: Tag
+    tags:
+    - ClothMade
+    - Recyclable
+    - WhitelistChameleon
+  #endregion Starlight
 
 - type: entity
   parent: [ClothingHandsButcherable, BaseSyndicateContraband]
@@ -417,7 +424,7 @@
       enum.MeleeSpeechUiKey.Key:
         type: MeleeSpeechBoundUserInterface
   - type: StaticPrice
-    price: 0
+    price: 2500
   - type: Tag
     tags:
     - Kangaroo
@@ -522,6 +529,7 @@
     damage:
       types:
         Blunt: 14
+        Structural: 10 #Starlight
     soundHit:
       collection: Knuckles #Starlight
       params:
@@ -562,6 +570,8 @@
     tags:
     - WhitelistChameleon
     - Kangaroo
+  - type: StaticPrice
+    price: 2000
 
 - type: entity
   name: stun knuckle dusters

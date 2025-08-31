@@ -12,7 +12,9 @@
     sprite: Clothing/Belt/utility.rsi
   - type: Storage
     maxItemSize: Normal
-    # TODO: Fill this out more.
+    # Don't add more than absolutely needed to this whitelist!
+    # Utility belts shouldn't just be free extra storage.
+    # This is only intended for basic engineering equipment.
     whitelist:
       tags:
         - Powerdrill
@@ -32,9 +34,18 @@
         - JawsOfLife
         - GPS
         - WeldingMask
+        - RemoteSignaller
+
+        #Starlight
+        - ImprovisedCrowbar
+        - ImprovisedScrewdriver
+        - ImprovisedWirecutter
+        - ImprovisedWrench
+        - ImprovisedMultitool
       components:
         - StationMap
         - SprayPainter
+        - SprayPainterAmmo
         - NetworkConfigurator
         - RCD
         - RCDAmmo
@@ -54,10 +65,16 @@
         whitelist:
           tags:
           - Wirecutter
+
+          #Starlight
+          - ImprovisedWirecutter
       crowbar:
         whitelist:
           tags:
           - Crowbar
+
+          #Starlight
+          - ImprovisedCrowbar
       crowbar_red:
         whitelist:
           tags:
@@ -70,16 +87,29 @@
         whitelist:
           tags:
           - Screwdriver
+
+          #Starlight
+          - ImprovisedScrewdriver
       wrench:
         whitelist:
           tags:
           - Wrench
+
+          #Starlight
+          - ImprovisedWrench
       multitool:
         whitelist:
           tags:
             - Multitool
+
+            #Starlight
+            - ImprovisedMultitool
     sprite: Clothing/Belt/belt_overlay.rsi
   - type: Appearance
+  - type: Tag
+    tags:
+    - UtilityBelt
+    - WhitelistChameleon
 
 - type: entity
   parent: ClothingBeltStorageBase
@@ -112,9 +142,20 @@
         - HolofanProjector
         - Multitool
         - AppraisalTool
+        - GPS
+        - WeldingMask
+        - RemoteSignaller
+        
+        #Starlight
+        - ImprovisedCrowbar
+        - ImprovisedScrewdriver
+        - ImprovisedWirecutter
+        - ImprovisedWrench
+        - ImprovisedMultitool
       components:
         - StationMap
         - SprayPainter
+        - SprayPainterAmmo
         - NetworkConfigurator
         - RCD
         - RCDAmmo
@@ -135,10 +176,16 @@
         whitelist:
           tags:
           - Wirecutter
+          
+          #Starlight
+          - ImprovisedWirecutter
       crowbar:
         whitelist:
           tags:
           - Crowbar
+
+          #Starlight
+          - ImprovisedCrowbar
       crowbar_red:
         whitelist:
           tags:
@@ -151,14 +198,23 @@
         whitelist:
           tags:
           - Screwdriver
+          
+          #Starlight
+          - ImprovisedScrewdriver
       multitool:
         whitelist:
           tags:
             - Multitool
+            
+            #Starlight
+            - ImprovisedMultitool
       wrench:
         whitelist:
           tags:
           - Wrench
+          
+          #Starlight
+          - ImprovisedWrench
     sprite: Clothing/Belt/belt_overlay.rsi
   - type: Appearance
 
@@ -225,6 +281,8 @@
         - WetFloorSign
         - HolosignProjector
         - Plunger
+        - GoldenPlunger
+        - WireBrush
       components:
         - LightReplacer
         - SmokeOnTrigger
@@ -618,6 +676,8 @@
         - Gun
         - BallisticAmmoProvider
         - CartridgeAmmo
+  - type: StaticPrice
+    price: 500
 
 - type: entity
   parent: ClothingBeltSecurity
@@ -636,6 +696,11 @@
   name: mercenary webbing
   description: Ideal for storing everything from ammo to weapons and combat essentials.
   components:
+  - type: Storage #Starlight
+    grid:
+    - 0,0,1,0 #left
+    - 0,1,0,1 #left - cube
+    - 3,0,10,1
   - type: Sprite
     sprite: Clothing/Belt/mercwebbing.rsi
   - type: Clothing
@@ -658,12 +723,21 @@
   name: chest rig
   description: A set of tactical webbing worn by Syndicate boarding parties.
   components:
+  - type: Storage #Starlight
+    grid:
+    - 0,0,1,0 #left
+    - 0,1,0,1 #left - cube
+    - 3,0,10,1
+    - 12,0,13,0 #right
+    - 12,1,12,1 #right - cube
   - type: Sprite
     sprite: Clothing/Belt/militarywebbing.rsi
   - type: Clothing
     sprite: Clothing/Belt/militarywebbing.rsi
   - type: ExplosionResistance
     damageCoefficient: 0.1
+  - type: StaticPrice
+    price: 500
 
 - type: entity
   parent: ClothingBeltMilitaryWebbing
@@ -671,6 +745,13 @@
   name: medical chest rig
   description: A set of tactical webbing worn by Gorlex Marauder medic operatives.
   components:
+  - type: Storage #Starlight
+    grid:
+    - 0,0,1,0 #left
+    - 0,1,0,1 #left - cube
+    - 3,0,10,1
+    - 12,0,13,0 #right
+    - 12,1,12,1 #right - cube
   - type: Sprite
     sprite: Clothing/Belt/militarywebbingmed.rsi
   - type: Clothing

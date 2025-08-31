@@ -86,11 +86,11 @@
     - type: SpeedModifierContacts
       walkSpeedModifier: 0.2
       sprintSpeedModifier: 0.2
-      ignoreWhitelist:
+      blacklist:
         components:
         - IgnoreKudzu
     - type: Food
-      requiredStomachs: 2 # ruminants have 4 stomachs but i dont care to give them literally 4 stomachs. 2 is good
+      requiresSpecialDigestion: true
       delay: 0.5
     - type: FlavorProfile
       flavors:
@@ -101,6 +101,9 @@
           reagents:
           - ReagentId: Nutriment
             Quantity: 2
+    - type: Tag
+      tags:
+      - Ruminant
 
 - type: entity
   id: WeakKudzu
@@ -127,7 +130,7 @@
     - type: SpeedModifierContacts
       walkSpeedModifier: 0.8
       sprintSpeedModifier: 0.8
-      ignoreWhitelist:
+      blacklist:
         components:
         - IgnoreKudzu
     - type: RandomSpawner
@@ -240,7 +243,7 @@
     - type: SpeedModifierContacts
       walkSpeedModifier: 0.3
       sprintSpeedModifier: 0.3
-      ignoreWhitelist:
+      blacklist:
         tags:
         - Flesh
     - type: Food # delightfully devilish !

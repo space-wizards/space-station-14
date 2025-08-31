@@ -10,12 +10,8 @@
     - !type:DepartmentTimeRequirement
       department: Command
       time: 72000 # 20 hrs
-    - !type:AnyFlagsRequirement
-      flags:
-      - Staff
-      - Mentor
-      - ExtRoles
-      - Retiree
+    - !type:RolesRequirement
+      proto: ExtRolesReq
   startingGear: BlueShieldGear
   icon: JobIconBlueShield
   supervisors: job-supervisors-centcom
@@ -37,7 +33,9 @@
     - Detective
     - Salvage
     - Security
+    - Brigmedic
     - Brig
+    - Lawyer
     - Cargo
     - Atmospherics
     - Cargo
@@ -50,9 +48,7 @@
 - type: startingGear
   id: BlueShieldGear
   equipment:
-    shoes: ClothingShoesBootsCombatFilled
     head: ClothingHeadHatBeretBlueShield
-    outerClothing: ClothingOuterArmorBlueShield
     id: BlueShieldPDA
     ears: ClothingHeadsetAltBSO # Starlight
     belt: ClothingBeltBlueShieldWebbingFilled

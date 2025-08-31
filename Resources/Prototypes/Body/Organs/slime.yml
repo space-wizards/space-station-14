@@ -1,6 +1,6 @@
 - type: entity
   id: SentientSlimeCore
-  parent: [BaseItem, OrganHumanBrain]
+  parent: [BaseItem, BaseOrganBrain]
   name: sentient slime core
   description: "The source of incredible, unending gooeyness."
   components:
@@ -21,18 +21,10 @@
       solutions:
         stomach:
           maxVol: 50.0
-        food:
-          maxVol: 5
-          reagents:
-          - ReagentId: GreyMatter
-            Quantity: 5
         organ:
           reagents:
           - ReagentId: Slime
             Quantity: 10
-    - type: Item
-      size: Small
-      heldPrefix: brain
 
       
 - type: entity

@@ -11,10 +11,10 @@
   cost: 7500
   recipeUnlocks:
   - MiningDrill
-  - MechEquipmentDrill
   - MineralScannerEmpty
   - OreProcessorIndustrialMachineCircuitboard
   - ClothingMaskWeldingGas
+  - ClothingShoesBootsJump
   radioChannels:
   - Supply
 

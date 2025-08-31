@@ -38,6 +38,20 @@
           - NukeOpsUplink
 
 - type: listing
+  id: UplinkUziBundle
+  name: uplink-uzi-bundle-name
+  description: uplink-uzi-bundle-desc
+  icon: { sprite: /Textures/_Starlight/Objects/Weapons/Guns/SMGs/uzi.rsi, state: icon }
+  productEntity: ClothingBackpackDuffelSyndicateFilledUzi
+  discountCategory: veryRareDiscounts
+  discountDownTo:
+    Telecrystal: 15
+  cost:
+    Telecrystal: 20
+  categories:
+  - UplinkWeaponry
+
+- type: listing
   id: uplinkWeaponShotgunMinotaur
   name: uplink-minotaur-name
   description: uplink-minotaur-desc
@@ -59,6 +73,47 @@
       whitelist:
         tags:
           - NukeOpsUplink
+
+- type: listing
+  id: uplinkWeaponRiflePitpull
+  name: uplink-pitbull-bundle-name
+  description: uplink-pitbull-bundle-desc
+  icon:
+    { 
+     sprite: /Textures/_Starlight/Objects/Weapons/Guns/Rifles/pitbull.rsi,
+     state: icon 
+    }
+  productEntity: ClothingBackpackDuffelSyndicateFilledBullpup
+  discountCategory: veryRareDiscounts
+  discountDownTo:
+    Telecrystal: 15
+  cost:
+    Telecrystal: 20
+  categories:
+   - UplinkWeaponry
+  conditions:
+    - !type:StoreWhitelistCondition
+      whitelist:
+        tags:
+          - NukeOpsUplink
+          
+- type: listing
+  id: UplinkMarriage
+  name: uplink-marriage-axe-name
+  description: uplink-marriage-axe-desc
+  icon: { sprite: /Textures/_Starlight/Objects/Weapons/Melee/marriage_axe.rsi, state: icon }
+  discountCategory: veryRareDiscounts
+  discountDownTo:
+    Telecrystal: 18
+  productEntity: MarriageAxe
+  cost:
+    Telecrystal: 20
+  categories:
+  - UplinkJob
+  conditions:
+  - !type:BuyerJobCondition
+    whitelist:
+    - Musician
 
 - type: listing
   id: uplinkWeaponPistolDeagle
@@ -102,6 +157,60 @@
     Telecrystal: 1
   categories:
     - UplinkAmmo
+
+
+# For the Pitbull
+- type: listing
+  id: UplinkMagazineMagnumRifle
+  name: uplink-rifle-magazine-pitbull-name
+  description: uplink-rifle-magazine-pitbull-desc
+  icon: 
+    { 
+     sprite: /Textures/_Starlight/Objects/Weapons/Guns/Ammunition/Magazine/Magnum/magnum_rifle_mag.rsi, 
+     state: mag-1 
+    }
+  productEntity: MagazineMagnumRifleSP
+  cost:
+    Telecrystal: 2
+  categories:
+    - UplinkAmmo
+  conditions:
+    - !type:StoreWhitelistCondition
+      whitelist:
+        tags:
+          - NukeOpsUplink
+
+- type: listing
+  id: UplinkUziMagazine
+  name: uplink-uzi-magazine-name
+  description: uplink-uzi-magazine-desc
+  icon:
+    { sprite: /Textures/_Starlight/Objects/Weapons/Guns/Ammunition/Magazine/SMGs/uzi.rsi, state: base }
+  productEntity: MagazinePistolSubMachineGunUzi
+  cost:
+    Telecrystal: 2
+  categories:
+    - UplinkAmmo
+    
+- type: listing
+  id: UplinkShotgunBreachingMagazine
+  name: uplink-breaching-magazine-name
+  description: uplink-breaching-magazine-desc
+  icon:
+    {
+      sprite: /Textures/Objects/Weapons/Guns/Ammunition/Magazine/Shotgun/m12.rsi,
+      state: breach,
+    }
+  productEntity: MagazineShotgunBreach
+  cost:
+    Telecrystal: 2
+  categories:
+    - UplinkAmmo
+  conditions:
+    - !type:StoreWhitelistCondition
+      whitelist:
+        tags:
+          - NukeOpsUplink
 
 # Cybernetics
 
@@ -206,4 +315,67 @@
     Telecrystal: 10
   categories:
   - UplinkWearables
-  
+
+- type: listing
+  id: UplinkSyndicateBorgi
+  name: uplink-syndicate-borgi-name
+  description: uplink-syndicate-borgi-desc
+  icon: { sprite:  Objects/Fun/Balloons/corgi.rsi, state: icon }
+  productEntity: BaseSyndicateBorgiChassis
+  cost:
+    Telecrystal: 20
+  categories:
+    - UplinkAllies
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 3
+
+- type: listing
+  id: UplinkSyndicateBorgiKitted
+  name: uplink-syndicate-borgi-kitted-name
+  description: uplink-syndicate-borgi-kitted-desc
+  icon: { sprite:  Objects/Fun/Balloons/corgi.rsi, state: icon }
+  productEntity: SyndiBorgiKit1
+  cost:
+    Telecrystal: 60
+  categories:
+    - UplinkAllies
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 1
+  - !type:StoreWhitelistCondition
+    whitelist:
+      tags:
+      - NukeOpsUplink
+
+- type: listing
+  id: UplinkSyndicateBorgiSpeed
+  name: uplink-syndicate-borgi-speed-name
+  description: uplink-syndicate-borgi-speed-desc
+  icon: { sprite:  Objects/Fun/Balloons/corgi.rsi, state: icon }
+  productEntity: SyndiBorgiKit2
+  cost:
+    Telecrystal: 50
+  categories:
+    - UplinkAllies
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 1
+  - !type:StoreWhitelistCondition
+    whitelist:
+      tags:
+      - NukeOpsUplink
+
+#Dunnow about upstream. but we L O V E our stealth traitors.
+- type: listing
+  id: UplinkgClothingThievingGloves
+  name: uplink-clothing-chameleon-thieving-gloves-name
+  description: uplink-clothing-chameleon-thieving-gloves-desc
+  productEntity: ClothingHandsChameleonThief
+  discountCategory: veryRareDiscounts
+  discountDownTo:
+    Telecrystal: 3
+  cost:
+    Telecrystal: 5
+  categories:
+  - UplinkWearables

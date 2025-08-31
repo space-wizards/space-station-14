@@ -1,0 +1,28 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Made by Conflee",
+  "size": {"x": 32, "y": 32},
+  "states": [
+    {
+      "name": "backsensor",
+      "directions": 4
+    },
+    {
+      "name": "cross",
+      "directions": 4
+    },
+    {
+      "name": "ribs",
+      "directions": 4
+    },
+    {
+      "name": "scratchleft",
+      "directions": 4
+    },
+    {
+      "name": "scratchright",
+      "directions": 4
+    }
+  ]
+}

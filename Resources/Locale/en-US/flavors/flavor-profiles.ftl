@@ -53,6 +53,7 @@ flavor-base-terrible = terrible
 flavor-base-mindful = mindful
 flavor-base-chewy = chewy
 flavor-base-trashy = trashy
+flavor-base-motivating = motivating
 
 # Complex flavors. Put a flavor here when you want something that's more
 # specific.
@@ -181,6 +182,7 @@ flavor-complex-true-nature = like the true nature of reality
 flavor-complex-false-meat = not entirely unlike meat
 flavor-complex-paper = like mushy pulp
 flavor-complex-compressed-meat = like compressed meat
+flavor-complex-dog-food = like dog food
 
 # Drink-specific flavors.
 
@@ -269,7 +271,8 @@ flavor-complex-xeno-basher = like killing bugs
 flavor-complex-budget-insuls-drink = like door hacking
 flavor-complex-watermelon-wakeup = like a sweet wakeup call
 flavor-complex-rubberneck = like synthetics
-flavor-complex-irish-slammer = like a spiked cola float
+flavor-complex-irish-car-bomb = like a spiked cola float 
+# Irish car bomb starlight change
 flavor-complex-alien-brain-hemorrhage = like an extraterrestrial injury
 flavor-complex-themartinez = like violets and lemon vodka
 flavor-complex-cogchamp = like brass
@@ -341,6 +344,7 @@ flavor-complex-bee = unbeelievable
 flavor-complex-sax = like jazz
 flavor-complex-bottledlightning = like lightning in a bottle
 flavor-complex-punishment = like punishment
+flavor-complex-artifact-glue = like crushed artifacts
 flavor-weh = like weh
 flavor-hew = like hew
 flavor-dogfood = like dog food

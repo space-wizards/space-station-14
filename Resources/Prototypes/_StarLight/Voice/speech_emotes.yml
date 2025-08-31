@@ -114,6 +114,7 @@
   name: chat-emote-name-mew
   category: Vocal
   available: false
+  icon: _Starlight/Actions/felionoid.rsi/cat_print.png
   whitelist:
     components:
     - Vocal
@@ -136,6 +137,7 @@
   name: chat-emote-name-hiss
   category: Vocal
   available: false
+  icon: _Starlight/Actions/felionoid.rsi/cat_print.png
   whitelist:
     components:
     - Vocal
@@ -162,6 +164,7 @@
   name: chat-emote-name-meow
   category: Vocal
   available: false
+  icon: _Starlight/Actions/felionoid.rsi/cat_print.png
   whitelist:
     components:
     - Vocal
@@ -188,6 +191,7 @@
   name: chat-emote-name-purr
   category: Vocal
   available: false
+  icon: _Starlight/Actions/felionoid.rsi/cat_print.png
   whitelist:
     components:
     - Vocal
@@ -214,6 +218,7 @@
   name: chat-emote-name-trill
   category: Vocal
   available: false
+  icon: _Starlight/Actions/felionoid.rsi/cat_print.png
   whitelist:
     components:
     - Vocal
@@ -278,3 +283,84 @@
     - wurbles.
     - wurbles!
     - wurbles?
+
+- type: emote
+  id: Scree
+  name: chat-emote-name-scree
+  category: Vocal
+  available: false
+  icon: _Starlight/Actions/resomi.rsi/bird_call.png
+  whitelist:
+    components:
+    - Vocal
+  blacklist:
+    components:
+    - BorgChassis
+  chatMessages: ["chat-emote-msg-scree"]
+  chatTriggers:
+  - scree
+  - scree.
+  - scree!
+  - scree?
+  - screeing
+  - screeing.
+  - screeing!
+  - screeing?
+  - screes
+  - screes.
+  - screes!
+  - screes?
+
+- type: emote
+  id: Call
+  name: chat-emote-name-call
+  category: Vocal
+  available: false
+  icon: _Starlight/Actions/resomi.rsi/bird_call.png
+  whitelist:
+    components:
+    - Vocal
+  blacklist:
+    components:
+    - BorgChassis
+  chatMessages: ["chat-emote-msg-call"]
+  chatTriggers:
+  - call
+  - call.
+  - call!
+  - call?
+  - calling
+  - calling.
+  - calling!
+  - calling?
+  - calls
+  - calls.
+  - calls!
+  - calls?
+
+- type: emote
+  id: Squawk
+  name: chat-emote-name-squawk
+  category: Vocal
+  available: false
+  icon: _Starlight/Actions/resomi.rsi/bird_call.png
+  whitelist:
+    components:
+    - Vocal
+  blacklist:
+    components:
+    - BorgChassis
+  chatMessages: ["chat-emote-msg-squawk"]
+  chatTriggers:
+  - squawk
+  - squawk.
+  - squawk!
+  - squawk?
+  - squawking
+  - squawking.
+  - squawking!
+  - squawking?
+  - squawks
+  - squawks.
+  - squawks!
+  - squawks?

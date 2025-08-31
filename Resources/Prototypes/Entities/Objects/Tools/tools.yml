@@ -43,13 +43,18 @@
       Steel: 100
   - type: StaticPrice
     price: 30
-  - type: Scalpel
+  # 🌟Starlight-start🌟
+  - type: Hemostat
   - type: SurgeryTool
-    successRate: 0.35
+    successRate: 0.05 # Using something sharp as a hemostat is very dangerous
+    speed: 1.5
     startSound:
       path: /Audio/_Starlight/Medical/Surgery/scalpel1.ogg
     endSound:
       path: /Audio/_Starlight/Medical/Surgery/scalpel2.ogg
+  - type: ItemPrice
+    priceCategory: tool_basic
+  # 🌟Starlight-end🌟
 
 - type: entity
   name: screwdriver
@@ -94,6 +99,16 @@
       Steel: 100
   - type: StaticPrice
     price: 30
+  # 🌟Starlight-start🌟
+  - type: ItemPrice
+    priceCategory: tool_basic
+  - type: SurgicalDrill
+  - type: SurgeryTool
+    successRate: 0.4 # really not ideal, but in a pinch...
+    speed: 1.2
+    endSound:
+      path: /Audio/Weapons/smash.ogg
+  # 🌟Starlight-end🌟
 
 - type: entity
   name: wrench
@@ -136,6 +151,10 @@
   - type: GuideHelp
     guides:
     - Construction
+  # Starlight-start: Vending Machines Prices
+  - type: ItemPrice
+    priceCategory: tool_basic
+  # Starlight-end
 
 - type: entity
   name: multitool
@@ -297,6 +316,14 @@
         Piercing: 10
     soundHit:
       path: "/Audio/Items/drill_hit.ogg"
+  # 🌟Starlight-start🌟
+  - type: SurgicalDrill
+  - type: SurgeryTool
+    successRate: 0.6 # Not ideal, but it works
+    speed: 1.2
+    startSound:
+      path: /Audio/Items/drill_use.ogg
+  # 🌟Starlight-end🌟
 
 - type: entity
   id: RCD

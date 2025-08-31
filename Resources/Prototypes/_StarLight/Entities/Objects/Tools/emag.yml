@@ -1,0 +1,19 @@
+- type: entity
+  parent: [BaseItem, BaseSovietContraband]
+  id: EmagCommie
+  suffix: ""
+  name: wooden cryptographic sequencer
+  description: A cheap all-in-one hacking solution. Friend of any soviet. The iconic EMAG.
+  components:
+  - type: Emag
+    lawset: CommiemovLawset
+    components:
+      - type: ShowAntagIcons # behold. you can now see revs.
+    channelAdd:
+      - Soviet # Report in comrade.
+  - type: Sprite
+    sprite: _Starlight/Objects/Tools/emag.rsi
+    state: icon
+  - type: Item
+    sprite: _Starlight/Objects/Tools/emag.rsi
+  - type: LimitedCharges

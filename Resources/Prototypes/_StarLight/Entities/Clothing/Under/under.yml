@@ -1,0 +1,32 @@
+- type: entity
+  parent: ClothingShoesBase
+  id: ClothingUnderSocksMime
+  name: mime socks
+  description: Silently creep up to your target.
+  components:
+  - type: Sprite
+    sprite: _Starlight/Clothing/Under/mime_socks.rsi
+  - type: Clothing
+    sprite: _Starlight/Clothing/Under/mime_socks.rsi
+
+- type: entity
+  parent: ClothingShoesBase
+  id: ClothingUnderSocksStirrup
+  name: stirrup socks
+  description: All of the fashion, none of the practicality.
+  components:
+  - type: Sprite
+    sprite: _Starlight/Clothing/Under/stirrup_socks.rsi
+  - type: Clothing
+    sprite: _Starlight/Clothing/Under/stirrup_socks.rsi
+
+- type: entity
+  parent: ClothingShoesBase
+  id: ClothingUnderSocksYellow
+  name: yellow socks
+  description: Bright yellow, but lacking any bees.
+  components:
+  - type: Sprite
+    sprite: _Starlight/Clothing/Under/yellow_socks.rsi
+  - type: Clothing
+    sprite: _Starlight/Clothing/Under/yellow_socks.rsi

@@ -3,12 +3,14 @@
   description: "Makes a fake boom! The label reads: With love from HonkHonkers!"
   suffix: Fake
   id: FakeGrenade
-  parent: GrenadeBase
+  parent: GrenadeDummy
   components:
-  - type: OnUseTimerTrigger
+  - type: TimerTrigger
     delay: 3
-    beepInterval: 0.46
-    beepSound:
+  - type: EmitSoundOnTrigger
+    keysIn:
+    - timer
+    sound:
       path: /Audio/Effects/Grenades/Supermatter/smbeep.ogg
       params:
         volume: -5
@@ -17,7 +19,6 @@
       path: /Audio/Effects/Grenades/Supermatter/smbeep.ogg
       params:
         volume: -5
-    beepInterval: 2
   - type: TwoStageTrigger
     triggerDelay: 3
     components:
@@ -29,7 +30,7 @@
           path: /Audio/Effects/Diseases/beepboop.ogg
       - type: TimedDespawn
         lifetime: 15
-        
+
 - type: entity
   name: holo-parasite injector
   description: The most intricate piece of art, based on... Oh, wait. It's a fake. The HonkHonkers store logo can be seen on the side.
@@ -56,7 +57,7 @@
     injectOnly: true
   - type: UseDelay
     delay: 0.5
-    
+
 
 - type: entity
   name: toy dual-bladed sword
@@ -106,7 +107,7 @@
     damage:
       types:
         Blunt: 0
-        
+
 - type: entity
   name: packaged anomaly
   description: A universal assembly package used to create a fake anomaly. Specially from Hohohonkers!
@@ -128,7 +129,7 @@
     - state: overlay
       color: "#cec8ac"
     - state: icon-default
-    
+
 - type: entity
   name: anomaly
   description: An incomprehensible joke in space. Should you really be standing this close to it?
@@ -164,7 +165,7 @@
     castShadows: false
   - type: Anchorable
   - type: Pullable
-  
+
 - type: entity
   id: FakeAnomalyPyroclastic
   parent: FakeAnomalyIce
@@ -184,7 +185,7 @@
     energy: 7.5
     color: "#E25822"
     castShadows: false
-    
+
 - type: entity
   id: FakeAnomalyGravity
   parent: FakeAnomalyIce
@@ -204,7 +205,7 @@
     energy: 20
     color: "#1e070e"
     castShadows: false
-    
+
 - type: entity
   id: FakeAnomalyElectricity
   parent: FakeAnomalyIce
@@ -224,7 +225,7 @@
     energy: 5.0
     color: "#ffffaa"
     castShadows: false
-    
+
 - type: entity
   id: FakeAnomalyFlesh
   parent: FakeAnomalyIce
@@ -244,7 +245,7 @@
     energy: 7.5
     color: "#cb5b7e"
     castShadows: false
-    
+
 - type: entity
   id: FakeAnomalyBluespace
   parent: FakeAnomalyIce

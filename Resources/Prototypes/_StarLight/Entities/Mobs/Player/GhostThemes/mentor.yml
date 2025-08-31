@@ -1,0 +1,21 @@
+- type: ghostTheme
+  id: Narsie
+  name: Narsie
+  description: Cute man.
+  spriteSpecifier:
+    sprite:
+      sprite: _Starlight/Mobs/Customization/GhostThemes/ghosts.rsi
+      state: ghost-narsie
+    color: "#ffffff"
+  requirement: MentorRolesReq
+
+- type: ghostTheme
+  id: Daemon
+  name: Daemon
+  description: a cute daemon.
+  spriteSpecifier:
+    sprite:
+      sprite: _Starlight/Mobs/Customization/GhostThemes/ghosts.rsi
+      state: ghost-daemon
+    color: "#ffffff"
+  requirement: MentorRolesReq

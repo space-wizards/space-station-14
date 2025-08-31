@@ -1,9 +1,6 @@
-using Content.Shared.CollectiveMind;
 using Content.Shared.Tag;
 using Robust.Shared.Prototypes;
-using Robust.Shared.GameObjects;
 using Content.Shared.GameTicking;
-using Robust.Shared.Utility;
 
 namespace Content.Shared.CollectiveMind;
 
@@ -13,9 +10,8 @@ public abstract partial class SharedCollectiveMindSystem : EntitySystem
     [Dependency] private readonly IComponentFactory _componentFactory = default!;
     [Dependency] private readonly TagSystem _tag = default!;
     [Dependency] private readonly ILogManager _logManager = default!;
-    [Dependency] private readonly IComponentFactory _factory = default!;
     private ISawmill _sawmill = default!;
-    
+
     private readonly Dictionary<CollectiveMindPrototype, int> _globalMindIDTracker = new();
 
     public override void Initialize()
@@ -87,7 +83,7 @@ public abstract partial class SharedCollectiveMindSystem : EntitySystem
                 //check if they dont already have it
                 if (collective.Minds.ContainsKey(prototype))
                     continue;
-                
+
                 collective.Minds.TryAdd(prototype, CreateNewCollectiveMindMemberData(prototype));
             }
             else
@@ -106,8 +102,8 @@ public abstract partial class SharedCollectiveMindSystem : EntitySystem
 
         foreach (var name in input)
         {
-            var availability = _factory.GetComponentAvailability(name);
-            if (_factory.TryGetRegistration(name, out var registration)
+            var availability = _componentFactory.GetComponentAvailability(name);
+            if (_componentFactory.TryGetRegistration(name, out var registration)
                 && availability == ComponentAvailability.Available)
             {
                 list.Add(registration);

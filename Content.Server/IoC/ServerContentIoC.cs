@@ -1,4 +1,7 @@
-using Content.Server.Starlight;
+using Content.Server._NullLink;
+using Content.Server._NullLink.Core;
+using Content.Server._NullLink.EventBus;
+using Content.Server._NullLink.PlayerData;
 using Content.Server.Administration;
 using Content.Server.Administration.Logs;
 using Content.Server.Administration.Managers;
@@ -12,6 +15,7 @@ using Content.Server.Discord.DiscordLink;
 using Content.Server.Discord.WebhookMessages;
 using Content.Server.EUI;
 using Content.Server.GhostKick;
+using Content.Server.Holiday;
 using Content.Server.Info;
 using Content.Server.Mapping;
 using Content.Server.Maps;
@@ -22,17 +26,19 @@ using Content.Server.Players.RateLimiting;
 using Content.Server.Preferences.Managers;
 using Content.Server.ServerInfo;
 using Content.Server.ServerUpdates;
+using Content.Server.Starlight;
 using Content.Server.Starlight.TextToSpeech;
 using Content.Server.Voting.Managers;
-using Content.Server.Holiday;
 using Content.Server.Worldgen.Tools;
-using Content.Shared.Starlight;
+using Content.Shared._NullLink;
 using Content.Shared.Administration.Logs;
 using Content.Shared.Administration.Managers;
 using Content.Shared.Chat;
 using Content.Shared.Kitchen;
 using Content.Shared.Players.PlayTimeTracking;
 using Content.Shared.Players.RateLimiting;
+using Content.Shared.Starlight;
+using Content.Server.Economy; // Starlight-edit
 
 namespace Content.Server.IoC
 {
@@ -91,6 +97,12 @@ namespace Content.Server.IoC
             IoCManager.Register<ISharedPlayersRoleManager, PlayerRolesManager>(); 
             IoCManager.Register<IPlayerRolesManager, PlayerRolesManager>();     
             IoCManager.Register<ITTSManager, TTSManager>();
+            IoCManager.Register<ItemPriceManager, ItemPriceManager>();
+            // nulllink
+            IoCManager.Register<IActorRouter, ActorRouter>(); 
+            IoCManager.Register<INullLinkPlayerManager, NullLinkPlayerManager>();
+            IoCManager.Register<INullLinkEventBusManager, NullLinkEventBusManager>();
+            IoCManager.Register<ISharedNullLinkPlayerRolesReqManager, PlayerRolesReqManager>();
         }
     }
 }

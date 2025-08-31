@@ -1,6 +1,5 @@
 using Content.Shared.Procedural;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.List;
 
 namespace Content.Shared.Salvage.Expeditions.Modifiers;
@@ -17,12 +16,12 @@ public sealed partial class SalvageDungeonModPrototype : IPrototype, IBiomeSpeci
     public float Cost { get; private set; } = 0f;
 
     /// <inheridoc/>
-    [DataField("biomes", customTypeSerializer: typeof(PrototypeIdListSerializer<SalvageBiomeModPrototype>))]
-    public List<string>? Biomes { get; private set; } = null;
+    [DataField]
+    public List<ProtoId<SalvageBiomeModPrototype>>? Biomes { get; private set; } = null;
 
     // 🌟Starlight🌟
-    [DataField("difficulties", customTypeSerializer: typeof(PrototypeIdListSerializer<SalvageDifficultyPrototype>))]
-    public List<string>? Difficulties { get; private set; } = null;
+    [DataField]
+    public List<ProtoId<SalvageDifficultyPrototype>>? Difficulties { get; private set; } = null;
 
     /// <summary>
     /// The config to use for spawning the dungeon.

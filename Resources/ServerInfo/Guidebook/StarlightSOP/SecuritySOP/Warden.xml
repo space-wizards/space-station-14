@@ -1,40 +1,43 @@
 <Document>
-    # Warden
+# Warden
 
-    <GuideEntityEmbed Entity="ToyFigurineWarden" Caption="Warden"/>
+<GuideEntityEmbed Entity="ToyFigurineWarden" Caption="Warden"/>
 
-    1 . Standard Code Green equipment is:
+1 . Standard [color=#00a933]Code Green[/color] equipment is:
+<Box>
+	<GuideEntityEmbed Entity="Stunbaton"/>
+	<GuideEntityEmbed Entity="WeaponPistolMk58"/>
+</Box>
+<Box>
+	<GuideEntityEmbed Entity="HoloprojectorSecurity"/>
+	<GuideEntityEmbed Entity="FlashlightSeclite"/>
+	<GuideEntityEmbed Entity="RadioHandheldSecurity"/>
+</Box>
+<Box>
+	<GuideEntityEmbed Entity="CombatKnife"/>
+	in
+	<GuideEntityEmbed Entity="ClothingShoesBootsJack"/>
+</Box>
+<Box>
+	<GuideEntityEmbed Entity="GrenadeFlashBang"/>
+	or
+	<GuideEntityEmbed Entity="TearGasGrenade"/>
+</Box>
+<Box>
+	<GuideEntityEmbed Entity="Handcuffs"/>
+	or
+	<GuideEntityEmbed Entity="Zipties"/>
+</Box>
 
-        <Box>
-        <GuideEntityEmbed Entity="WeaponPistolMk58"/>
-        <GuideEntityEmbed Entity="Stunbaton"/>
-        <GuideEntityEmbed Entity="HoloprojectorSecurity"/>
-        <GuideEntityEmbed Entity="FlashlightSeclite"/>
-        <GuideEntityEmbed Entity="RadioHandheldSecurity"/>
-    </Box>
-    <Box>
-        <GuideEntityEmbed Entity="CombatKnife"/>
-        in
-        <GuideEntityEmbed Entity="ClothingShoesBootsJack"/>
-    </Box>
-    <Box>
-        <GuideEntityEmbed Entity="GrenadeFlashBang"/>
-        or
-        <GuideEntityEmbed Entity="TearGasGrenade"/>
-    </Box>
-    <Box>
-        <GuideEntityEmbed Entity="Handcuffs"/>
-        or
-        <GuideEntityEmbed Entity="Zipties"/>
-    </Box>
+2. The Warden may not perform normal Security Officer duties, or arrests, if sufficient numbers of Security Officers are active. This is waived on [color=#ff0000]Code Red[/color] or above.
 
-    2. The Warden may not perform normal Security Officer duties, or arrests, if sufficient numbers of Security Officers are active. This is waived on Code Red or above.
+3. The Warden may choose to hand out lethal weapons on [color=#2a6099]Code Blue[/color] with a permit, or [color=#ff0000]Code Red[/color] or above.
 
-    3. The Warden may choose to hand out lethal weapons on Code Blue with a permit, or Code Red or above.
+4. The Warden may choose to hand out body armor on [color=#2a6099]Code Blue[/color] or above.
 
-    4. The Warden may choose to hand out body armor on Code Blue or above.
+4. Uncooperative prisoners, or those deemed to be a flight risk may be cuffed, straightjacketed, or have an electropack placed on them.
 
-    4. Uncooperative prisoners, or those deemed to be a flight risk may be cuffed, straightjacketed, or have an electropack placed on them.
+5. Portable flashers and deployable barriers may be deployed on [color=#2a6099]Code Blue[/color] or above.
 
-    5. Portable flashers and Barriers may be deployed on Code Blue or above.
+6. The Warden may appoint a Duty Officer to assist with prisoner keeping duties with permission from the HoS.
 </Document>

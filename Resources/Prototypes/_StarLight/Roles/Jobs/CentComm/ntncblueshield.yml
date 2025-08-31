@@ -1,0 +1,17 @@
+- type: job
+  id: NTNCBlueshield
+  name: job-name-ntncblueshield
+  description: job-description-ntncblueshield
+  playTimeTracker: JobConsortiumBlueShield
+  setPreference: false
+  startingGear: NTNCHardsuitGear
+  icon: JobIconNTNCBlueShield
+  supervisors: job-supervisors-centcom
+  canBeAntag: false
+  accessGroups:
+  - AllAccess
+  access:
+  - CentralCommand
+  special:
+    - !type:AddImplantSpecial
+      implants: [ MindShieldImplant, DeathRattleImplantCentcomm, RadioImplantCentcomm ]

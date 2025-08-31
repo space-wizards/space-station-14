@@ -1,0 +1,274 @@
+- type: entity
+  parent: ClothingUniformBase
+  id: BodysuitJeansUniformSuit
+  name: bodysuit and jeans
+  description: Fashionable and practicle. You could fight someone in this.
+  components:
+  - type: Sprite
+    sprite: _Starlight/Clothing/Uniforms/bodysuit_jeans.rsi
+  - type: Clothing
+    sprite: _Starlight/Clothing/Uniforms/bodysuit_jeans.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: CamoUniformSuit
+  name: camo jumpsuit
+  description: Youd blend in if this was a forest.
+  components:
+  - type: Sprite
+    sprite: _Starlight/Clothing/Uniforms/camo_jumpsuit.rsi
+  - type: Clothing
+    sprite: _Starlight/Clothing/Uniforms/camo_jumpsuit.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: CandyClownUniformSuit
+  name: candy clown
+  description: Oh god this makes your eyes hurt!
+  components:
+  - type: Sprite
+    sprite: _Starlight/Clothing/Uniforms/candy_clown.rsi
+  - type: Clothing
+    sprite: _Starlight/Clothing/Uniforms/candy_clown.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: CoolTanktopUniformSuit
+  name: cool tanktop
+  description: Just like heroes wear when they fight Xenos.
+  components:
+  - type: Sprite
+    sprite: _Starlight/Clothing/Uniforms/cool_tanktop.rsi
+  - type: Clothing
+    sprite: _Starlight/Clothing/Uniforms/cool_tanktop.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: DruidRobesUniformSuit
+  name: druid robes
+  description: A humble robe, for a humble druid.
+  components:
+  - type: Sprite
+    sprite: _Starlight/Clothing/Uniforms/druid_robes.rsi
+  - type: Clothing
+    sprite: _Starlight/Clothing/Uniforms/druid_robes.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: FlamboyantUniformSuit
+  name: flamboyant outfit
+  description: You must really like vampires.
+  components:
+  - type: Sprite
+    sprite: _Starlight/Clothing/Uniforms/flamboyant.rsi
+  - type: Clothing
+    sprite: _Starlight/Clothing/Uniforms/flamboyant.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: FlamencoUniformSuit
+  name: flamenco dress
+  description: Very festive!
+  components:
+  - type: Sprite
+    sprite: _Starlight/Clothing/Uniforms/flamenco.rsi
+  - type: Clothing
+    sprite: _Starlight/Clothing/Uniforms/flamenco.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: FlyCaptainUniformSuit
+  name: fly captains uniform
+  description: People born in the 2480s think this is really cool. It has a certain retro appeal.
+  components:
+  - type: Sprite
+    sprite: _Starlight/Clothing/Uniforms/fly_captain.rsi
+  - type: Clothing
+    sprite: _Starlight/Clothing/Uniforms/fly_captain.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: KiltUniformSuit
+  name: kilt
+  description: SCOOOOOOTLAAAANDDDDD!!!
+  components:
+  - type: Sprite
+    sprite: _Starlight/Clothing/Uniforms/kilt.rsi
+  - type: Clothing
+    sprite: _Starlight/Clothing/Uniforms/kilt.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: LilacDressUniformSuit
+  name: lilac dress
+  description: An elaborate dress that seems woven from lilac petals at a glance.
+  components:
+  - type: Sprite
+    sprite: _Starlight/Clothing/Uniforms/lilac_dress.rsi
+  - type: Clothing
+    sprite: _Starlight/Clothing/Uniforms/lilac_dress.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: LittleBlackDressUniformSuit
+  name: little black dress
+  description: Just a little too short, only worn by the brave.
+  components:
+  - type: Sprite
+    sprite: _Starlight/Clothing/Uniforms/little_black_dress.rsi
+  - type: Clothing
+    sprite: _Starlight/Clothing/Uniforms/little_black_dress.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: LumberjackOverallsUniformSuit
+  name: lumberjack overalls
+  description: Worn by real hard people who hate trees. Smells like pine.
+  components:
+  - type: Sprite
+    sprite: _Starlight/Clothing/Uniforms/lumberjack.rsi
+  - type: Clothing
+    sprite: _Starlight/Clothing/Uniforms/lumberjack.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: MechanicOverallsUniformSuit
+  name: mechanic overalls
+  description: A durable set of threads for hard working mechanics. Smells like oil.
+  components:
+  - type: Sprite
+    sprite: _Starlight/Clothing/Uniforms/mechanic_overalls.rsi
+  - type: Clothing
+    sprite: _Starlight/Clothing/Uniforms/mechanic_overalls.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: MessyDressShirtUniformSuit
+  name: messy dress shirt
+  description: Thrown on in a hurry, probably hasnt been washed in a few days.
+  components:
+  - type: Sprite
+    sprite: _Starlight/Clothing/Uniforms/messy_dress_shirt.rsi
+  - type: Clothing
+    sprite: _Starlight/Clothing/Uniforms/messy_dress_shirt.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: MimeFrillsUniformSuit
+  name: frilly mime dress
+  description: How do they move so silently in these things?
+  components:
+  - type: Sprite
+    sprite: _Starlight/Clothing/Uniforms/mime_frills.rsi
+  - type: Clothing
+    sprite: _Starlight/Clothing/Uniforms/mime_frills.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: OldWomanUniformSuit
+  name: old womans clothes
+  description: Makes anyone look like theyre 65.
+  components:
+  - type: Sprite
+    sprite: _Starlight/Clothing/Uniforms/old_woman.rsi
+  - type: Clothing
+    sprite: _Starlight/Clothing/Uniforms/old_woman.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: PunkJeansUniformSuit
+  name: punk jeans
+  description: Slightly goth, very metal.
+  components:
+  - type: Sprite
+    sprite: _Starlight/Clothing/Uniforms/punk_jeans.rsi
+  - type: Clothing
+    sprite: _Starlight/Clothing/Uniforms/punk_jeans.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: RefereeUniformSuit
+  name: referee uniform
+  description: If theyre holding a red card you might as well shoot them. The time in genpop would be less painful.
+  components:
+  - type: Sprite
+    sprite: _Starlight/Clothing/Uniforms/referee.rsi
+  - type: Clothing
+    sprite: _Starlight/Clothing/Uniforms/referee.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: SailorUniformSuit
+  name: sailor uniform
+  description: Worn by the saltiest seamen. Wait what?
+  components:
+  - type: Sprite
+    sprite: _Starlight/Clothing/Uniforms/sailor.rsi
+  - type: Clothing
+    sprite: _Starlight/Clothing/Uniforms/sailor.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: StripedClownUniformSuit
+  name: striped clown uniform
+  description: Somehow its brighter than anything youve ever seen.
+  components:
+  - type: Sprite
+    sprite: _Starlight/Clothing/Uniforms/striped_clown.rsi
+  - type: Clothing
+    sprite: _Starlight/Clothing/Uniforms/striped_clown.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: SundressUniformSuit
+  name: sundress
+  description: A lovely sundress, perfect for any summer stroll.
+  components:
+  - type: Sprite
+    sprite: _Starlight/Clothing/Uniforms/sundress.rsi
+  - type: Clothing
+    sprite: _Starlight/Clothing/Uniforms/sundress.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: TatteredClothesUniformSuit
+  name: tattered clothes
+  description: What one shift as Head of Personnel does to a motherfucker.
+  components:
+  - type: Sprite
+    sprite: _Starlight/Clothing/Uniforms/tattered_clothes.rsi
+  - type: Clothing
+    sprite: _Starlight/Clothing/Uniforms/tattered_clothes.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: TieDyeUniformSuit
+  name: tie dye shirt
+  description: Straight out of the 2470s, or the 1970s. You get those two confused a lot.
+  components:
+  - type: Sprite
+    sprite: _Starlight/Clothing/Uniforms/tiedye.rsi
+  - type: Clothing
+    sprite: _Starlight/Clothing/Uniforms/tiedye.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: TogaUniformSuit
+  name: toga
+  description: TO-GA TO-GA TO-GA!
+  components:
+  - type: Sprite
+    sprite: _Starlight/Clothing/Uniforms/toga.rsi
+  - type: Clothing
+    sprite: _Starlight/Clothing/Uniforms/toga.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: VintageUniformSuit
+  name: vintage clothes
+  description: Very retro.
+  components:
+  - type: Sprite
+    sprite: _Starlight/Clothing/Uniforms/vintage.rsi
+  - type: Clothing
+    sprite: _Starlight/Clothing/Uniforms/vintage.rsi

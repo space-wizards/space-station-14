@@ -34,7 +34,7 @@ lanternextrabright: LanternFlash
 
 # 2023-08-04
 BoxMagazineLightRifleHighVelocity: BoxMagazineLightRifle
-BoxMagazineMagnumSubMachineGunHighVelocity: BoxMagazineMagnumSubMachineGun
+BoxMagazineMagnumSubMachineGunHighVelocity: null
 BoxMagazinePistolCaselessRifleHighVelocity: BoxMagazinePistolCaselessRifle
 BoxMagazinePistolHighCapacityHighVelocity: BoxMagazinePistolHighCapacity
 BoxMagazinePistolHighVelocity: BoxMagazinePistol
@@ -56,7 +56,7 @@ MagazineBoxMagnumHighVelocity: MagazineBoxMagnumSP
 MagazineBoxPistolHighVelocity: MagazineBoxPistolFMJ
 MagazineBoxRifleHighVelocity: MagazineBoxRifleFMJ
 MagazineCaselessRifleHighVelocity: MagazineCaselessRifle
-MagazineCaselessRifleShortHighVelocity: MagazineCaselessRifleShort
+MagazineCaselessRifleShortHighVelocity: null
 MagazineLightRifleHighVelocity: MagazineLightRifleFMJ
 MagazineMagnumSubMachineGunHighVelocity: MagazineMagnumSubMachineGun
 MagazinePistolCaselessRifleHighVelocity: MagazinePistolCaselessRifle
@@ -302,7 +302,7 @@ MagazinePistolCaselessRifleRubber: MagazinePistolCaselessRifle
 MagazineMagnumRubber: MagazineMagnum
 MagazineMagnumSubMachineGunRubber: MagazineMagnumSubMachineGun
 MagazineCaselessRifleRubber: MagazineCaselessRifle
-MagazineCaselessRifleShortRubber: MagazineCaselessRifleShort
+MagazineCaselessRifleShortRubber: null
 SpeedLoaderPistolRubber: SpeedLoaderPistol
 # RIP box of magnum rubbers 202X to 2024
 MagazineBoxMagnumRubber: MagazineBoxMagnumSP
@@ -314,7 +314,7 @@ BoxMagazinePistolHighCapacityRubber: BoxMagazinePistolHighCapacity
 BoxMagazinePistolSubMachineGunRubber: BoxMagazinePistolSubMachineGun
 BoxMagazineLightRifleRubber: BoxMagazineLightRifle
 BoxMagazineCaselessRifleRubber: BoxMagazinePistolCaselessRifle
-BoxMagazineMagnumSubMachineGunRubber: BoxMagazineMagnumSubMachineGun
+BoxMagazineMagnumSubMachineGunRubber: null
 WeaponPistolMk58Nonlethal: WeaponPistolMk58
 WeaponPistolN1984Nonlethal: WeaponPistolN1984
 WeaponSubMachineGunDrozdRubber: WeaponSubMachineGunDrozd
@@ -525,7 +525,7 @@ LightTree05: LightTree
 LightTree06: LightTree
 
 # 2024-12-28
-DrinkIrishCarBomb: DrinkIrishSlammer
+DrinkIrishSlammer: DrinkIrishCarBomb #Starlight Change
 
 # 2025-01-06
 BorgModuleRadiationDetection: null
@@ -639,8 +639,30 @@ ClothingNeckCloakMiner: null
 MatterBinStockPart: MicroManipulatorStockPart
 CapacitorStockPart: MicroManipulatorStockPart
 
+# 2025-05-26 Turrets
+WeaponEnergyTurretStation: WeaponEnergyTurretSecurity
+WeaponEnergyTurretStationControlPanel: WeaponEnergyTurretSecurityControlPanel
+WeaponEnergyTurretStationMachineCircuitboard: WeaponEnergyTurretSecurityMachineCircuitboard
+
 # 2025-05-30
 SpawnHonkBot: SpawnMobHonkBot
+
+
+# 2025-06-06
+#MagazineLightRifleMaxim: null
+MagazineLightRiflePkBox: null
+MagazineCaselessRifle10x24: null
+BaseMagazineCaselessRifleShort: null
+MagazineCaselessRifleShort: null
+MagazineCaselessRifleShortPractice: null
+BaseMagazineMagnumSubMachineGun: null
+MagazineMagnumSubMachineGunEmpty: null
+MagazineMagnumSubMachineGun: null
+MagazineMagnumSubMachineGunPractice: null
+MagazineMagnumSubMachineGunUranium: null
+MagazineMagnumSubMachineGunPiercing: null
+BoxMagazineMagnumSubMachineGun: null
+BoxMagazineMagnumSubMachineGunPractice: null
 
 # 2025-06-09
 BarSignAlignTile: BarSign
@@ -669,3 +691,9 @@ BarSignEmprahAlignTile: BarSignEmprah
 BarSignSpacebucksAlignTile: BarSignSpacebucks
 BarSignMaltroachAlignTile: BarSignMaltroach
 BarSignWhiskeyEchoesAlignTile: BarSignWhiskeyEchoes
+
+# 2025-06-21
+ClothingNeckHeadphones: ClothingMultipleHeadphones
+
+# 2025-08-01
+FoodDonutJellySlugcat: FoodDonutJellyScurret

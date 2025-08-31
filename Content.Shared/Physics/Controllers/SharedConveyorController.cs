@@ -100,6 +100,11 @@ public abstract class SharedConveyorController : VirtualController
         {
             var other = contact.OtherEnt(conveyorUid);
 
+            if (contact.OtherFixture(conveyorUid).Item2.Hard && contact.OtherBody(conveyorUid).BodyType != BodyType.Static)
+            {
+                EnsureComp<ConveyedComponent>(other);
+            }
+
             if (_conveyedQuery.HasComp(other))
             {
                 PhysicsSystem.WakeBody(other);
@@ -159,7 +164,9 @@ public abstract class SharedConveyorController : VirtualController
                 // they'll go too slow.
                 if (!_mover.UsedMobMovement.TryGetValue(ent.Entity.Owner, out var usedMob) || !usedMob)
                 {
-                    _mover.Friction(0f, frameTime: frameTime, friction: 5f, ref velocity);
+                    // We provide a small minimum friction speed as well for those times where the friction would stop large objects
+                    // snagged on corners from sliding into the centerline.
+                    _mover.Friction(0.2f, frameTime: frameTime, friction: 5f, ref velocity);
                 }
 
                 SharedMoverController.Accelerate(ref velocity, targetDir, 20f, frameTime);
@@ -322,7 +329,9 @@ public abstract class SharedConveyorController : VirtualController
         var p = direction * (Vector2.Dot(itemRelative, direction) / Vector2.Dot(direction, direction));
         var r = itemRelative - p;
 
-        if (r.Length() < 0.1)
+        // 0.01 is considered close enough to the centerline that (most) large objects shouldn't
+        // snag on walls next to the conveyor, without smaller entities repeatedly overshooting.
+        if (r.Length() < 0.01)
         {
             var velocity = direction * speed;
             return velocity;
@@ -332,7 +341,10 @@ public abstract class SharedConveyorController : VirtualController
             // Give a slight nudge in the direction of the conveyor to prevent
             // to collidable objects (e.g. crates) on the locker from getting stuck
             // pushing each other when rounding a corner.
-            var velocity = (r + direction).Normalized() * speed;
+            // The direction of the conveyorbelt is de-emphasized to ensure offset objects primarily push centerwards,
+            // to prevent large items getting snagged on corner turns.
+            // 0.2f seems like a good compromise between forwards and sideways movement.
+            var velocity = (r + direction * 0.2f).Normalized() * speed;
             return velocity;
         }
     }
@@ -386,7 +398,7 @@ public abstract class SharedConveyorController : VirtualController
 
             var other = contact.OtherEnt(ent.Owner);
 
-            if (_conveyorQuery.HasComp(other))
+            if (_conveyorQuery.TryComp(other, out var comp) && CanRun(comp))
                 return true;
         }
 

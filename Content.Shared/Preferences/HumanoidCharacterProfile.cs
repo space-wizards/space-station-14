@@ -71,6 +71,10 @@ namespace Content.Shared.Preferences
         [DataField]
         public string SiliconVoice { get; set; } = ""; // 🌟Starlight🌟
 
+        // Starlight
+        [DataField]
+        public List<string> Cybernetics = [];
+
         /// <summary>
         /// Detailed text that can appear for the character if <see cref="CCVars.FlavorText"/> is enabled.
         /// </summary>
@@ -143,6 +147,7 @@ namespace Content.Shared.Preferences
             HashSet<ProtoId<AntagPrototype>> antagPreferences,
             HashSet<ProtoId<TraitPrototype>> traitPreferences,
             Dictionary<string, RoleLoadout> loadouts,
+            List<string> cybernetics, // Starlight
             bool enabled)
         {
             Name = name;
@@ -160,6 +165,7 @@ namespace Content.Shared.Preferences
             _antagPreferences = antagPreferences;
             _traitPreferences = traitPreferences;
             _loadouts = loadouts;
+            Cybernetics = cybernetics; // Starlight
             Enabled = enabled;
         }
 
@@ -180,6 +186,7 @@ namespace Content.Shared.Preferences
                 new HashSet<ProtoId<AntagPrototype>>(other.AntagPreferences),
                 new HashSet<ProtoId<TraitPrototype>>(other.TraitPreferences),
                 new Dictionary<string, RoleLoadout>(other.Loadouts),
+                other.Cybernetics, // Starlight
                 other.Enabled)
         {
         }
@@ -198,8 +205,10 @@ namespace Content.Shared.Preferences
         /// </summary>
         /// <param name="species">The species to use in this default profile. The default species is <see cref="SharedHumanoidAppearanceSystem.DefaultSpecies"/>.</param>
         /// <returns>Humanoid character profile with default settings.</returns>
-        public static HumanoidCharacterProfile DefaultWithSpecies(string species = SharedHumanoidAppearanceSystem.DefaultSpecies)
+        public static HumanoidCharacterProfile DefaultWithSpecies(string? species = null)
         {
+            species ??= SharedHumanoidAppearanceSystem.DefaultSpecies;
+
             return new()
             {
                 Species = species,
@@ -222,17 +231,23 @@ namespace Content.Shared.Preferences
             return RandomWithSpecies(species);
         }
 
-        public static HumanoidCharacterProfile RandomWithSpecies(string species = SharedHumanoidAppearanceSystem.DefaultSpecies)
+        public static HumanoidCharacterProfile RandomWithSpecies(string? species = null)
         {
+            species ??= SharedHumanoidAppearanceSystem.DefaultSpecies;
+
             var prototypeManager = IoCManager.Resolve<IPrototypeManager>();
             var random = IoCManager.Resolve<IRobustRandom>();
 
             var sex = Sex.Unsexed;
             var age = 18;
+            var width = 1f; //starlight
+            var height = 1f; //starlight
             if (prototypeManager.TryIndex<SpeciesPrototype>(species, out var speciesPrototype))
             {
                 sex = random.Pick(speciesPrototype.Sexes);
                 age = random.Next(speciesPrototype.MinAge, speciesPrototype.OldAge); // people don't look and keep making 119 year old characters with zero rp, cap it at middle aged
+                width = random.NextFloat(speciesPrototype.MinWidth, speciesPrototype.MaxWidth); //starlight
+                height = random.NextFloat(speciesPrototype.MinHeight, speciesPrototype.MaxHeight); //starlight
             }
 
             var gender = Gender.Epicene;
@@ -375,6 +390,13 @@ namespace Content.Shared.Preferences
             };
         }
 
+        // Starlight
+        public HumanoidCharacterProfile WithCybernetics(List<string> cybernetics) {
+            return new (this){
+                Cybernetics = cybernetics,
+            };
+        }
+
         public HumanoidCharacterProfile WithTraitPreference(ProtoId<TraitPrototype> traitId, IPrototypeManager protoManager)
         {
             // null category is assumed to be default.
@@ -456,6 +478,7 @@ namespace Content.Shared.Preferences
             if (Gender != other.Gender) return false;
             if (Species != other.Species) return false;
             if (CustomSpecieName != other.CustomSpecieName) return false; // Starlight
+            if (Cybernetics != other.Cybernetics) return false; // Starlight
             if (SpawnPriority != other.SpawnPriority) return false;
             if (!_jobPreferences.SequenceEqual(other._jobPreferences)) return false;
             if (!_antagPreferences.SequenceEqual(other._antagPreferences)) return false;
@@ -555,6 +578,16 @@ namespace Content.Shared.Preferences
                         break;
                     }
                 }
+            }
+
+            var allCybernetics = CyberneticImplant.GetAllCybernetics(prototypeManager);
+            var installedCybernetics = allCybernetics.Where(p => Cybernetics.Contains(p.ID))
+                                       .Where(p => p.Type == CyberneticImplantType.Limb)
+                                       .ToList();
+            if (installedCybernetics.Select(p => p.Cost).Sum() <= speciesPrototype.RoundstartCyberwareCapacity){
+                Cybernetics = installedCybernetics.Select(p => p.ID).ToList();
+            } else {
+                Cybernetics = [];
             }
             // Starlight - End
 
@@ -681,10 +714,17 @@ namespace Content.Shared.Preferences
             var namingSystem = IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<NamingSystem>();
             return namingSystem.GetName(species, gender);
         }
+        public bool Equals(HumanoidCharacterProfile? other)
+        {
+            if (other is null)
+                return false;
+
+            return ReferenceEquals(this, other) || MemberwiseEquals(other);
+        }
 
         public override bool Equals(object? obj)
         {
-            return ReferenceEquals(this, obj) || obj is HumanoidCharacterProfile other && Equals(other);
+            return obj is HumanoidCharacterProfile other && Equals(other);
         }
 
         public override int GetHashCode()
@@ -704,6 +744,7 @@ namespace Content.Shared.Preferences
             hashCode.Add(Appearance);
             hashCode.Add((int)SpawnPriority);
             hashCode.Add(Enabled);
+            hashCode.Add(Cybernetics); // Starlight
             return hashCode.ToHashCode();
         }
 

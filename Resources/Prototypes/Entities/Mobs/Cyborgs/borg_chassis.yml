@@ -5,25 +5,25 @@
   - type: TextToSpeech
   - type: Sprite
     layers:
-    - state: robot
-      map: ["enum.BorgVisualLayers.Body", "movement"]
-    - state: robot_e_r
-      map: ["enum.BorgVisualLayers.Light"]
+    - state: borg
+      map: [ "enum.BorgVisualLayers.Body", "movement" ]
+    - state: borg_e_r
+      map: [ "enum.BorgVisualLayers.Light" ]
       shader: unshaded
       visible: false
-    - state: robot_l
+    - state: borg_l
       shader: unshaded
-      map: ["light","enum.BorgVisualLayers.LightStatus"]
+      map: [ "light","enum.BorgVisualLayers.LightStatus" ]
       visible: false
   - type: BorgChassis
     # Default borg can take no modules until selected type.
     maxModules: 0
-    hasMindState: robot_e
-    noMindState: robot_e_r
+    hasMindState: borg_e
+    noMindState: borg_e_r
   - type: BorgTransponder
     sprite:
-      sprite: Mobs/Silicon/chassis.rsi
-      state: robot
+      sprite: Mobs/Silicon/Chassis/generic.rsi
+      state: borg
     name: cyborg
   - type: InteractionPopup
     interactSuccessString: petting-success-generic-cyborg
@@ -95,25 +95,26 @@
   components:
     - type: TextToSpeech
     - type: Sprite
+      sprite: Mobs/Silicon/Chassis/synd_sec.rsi
       layers:
-        - state: synd_sec
-        - state: synd_sec_e
-          map: ["enum.BorgVisualLayers.Light"]
-          shader: unshaded
-          visible: false
-        - state: synd_sec_l
-          shader: unshaded
-          map: ["light"]
-          visible: false
+      - state: borg
+      - state: borg_e
+        map: [ "enum.BorgVisualLayers.Light" ]
+        shader: unshaded
+        visible: false
+      - state: borg_l
+        shader: unshaded
+        map: [ "light" ]
+        visible: false
     - type: BorgChassis
       maxModules: 4 # starlight
       moduleWhitelist:
         tags:
-          - BorgModuleGeneric
-          - BorgModuleSyndicate
-          - BorgModuleSyndicateAssault
-      hasMindState: synd_sec_e
-      noMindState: synd_sec
+        - BorgModuleGeneric
+        - BorgModuleSyndicate
+        - BorgModuleSyndicateAssault
+      hasMindState: borg_e
+      noMindState: borg
     - type: InteractionPopup
       interactSuccessString: petting-success-syndicate-cyborg
       interactFailureString: petting-failure-syndicate-cyborg
@@ -122,31 +123,32 @@
 
 - type: entity
   id: BorgChassisSyndicateMedical
-  parent: [BaseBorgChassisSyndicate, ShowMedicalIcons]
+  parent: [ BaseBorgChassisSyndicate, ShowMedicalIcons ]
   name: syndicate medical cyborg
   description: A combat medical cyborg. Has limited offensive potential, but makes more than up for it with its support capabilities.
   components:
     - type: TextToSpeech
     - type: Sprite
+      sprite: Mobs/Silicon/Chassis/synd_medical.rsi
       layers:
-        - state: synd_medical
-        - state: synd_medical_e
-          map: ["enum.BorgVisualLayers.Light"]
-          shader: unshaded
-          visible: false
-        - state: synd_medical_l
-          shader: unshaded
-          map: ["light"]
-          visible: false
+      - state: borg
+      - state: borg_e
+        map: [ "enum.BorgVisualLayers.Light" ]
+        shader: unshaded
+        visible: false
+      - state: borg_l
+        shader: unshaded
+        map: [ "light" ]
+        visible: false
     - type: BorgChassis
       maxModules: 4 # starlight
       moduleWhitelist:
         tags:
-          - BorgModuleGeneric
-          - BorgModuleMedical
-          - BorgModuleSyndicate
-      hasMindState: synd_medical_e
-      noMindState: synd_medical
+        - BorgModuleGeneric
+        - BorgModuleMedical
+        - BorgModuleSyndicate
+      hasMindState: borg_e
+      noMindState: borg
     - type: ShowHealthBars
     - type: InteractionPopup
       interactSuccessString: petting-success-syndicate-cyborg
@@ -168,25 +170,26 @@
   components:
     - type: TextToSpeech
     - type: Sprite
+      sprite: Mobs/Silicon/Chassis/synd_eng.rsi
       layers:
-        - state: synd_engi
-        - state: synd_engi_e
-          map: ["enum.BorgVisualLayers.Light"]
-          shader: unshaded
-          visible: false
-        - state: synd_engi_l
-          shader: unshaded
-          map: ["light"]
-          visible: false
+      - state: borg
+      - state: borg_e
+        map: [ "enum.BorgVisualLayers.Light" ]
+        shader: unshaded
+        visible: false
+      - state: borg_l
+        shader: unshaded
+        map: [ "light" ]
+        visible: false
     - type: BorgChassis
       maxModules: 4 # starlight
       moduleWhitelist:
         tags:
-          - BorgModuleGeneric
-          - BorgModuleEngineering
-          - BorgModuleSyndicate
-      hasMindState: synd_engi_e
-      noMindState: synd_engi
+        - BorgModuleGeneric
+        - BorgModuleEngineering
+        - BorgModuleSyndicate
+      hasMindState: borg_e
+      noMindState: borg
     - type: ShowHealthBars
       damageContainers:
       - Inorganic
@@ -204,23 +207,24 @@
   description: A man-machine hybrid that assists in station activity. This one is in a state of great disrepair.
   components:
   - type: Sprite
+    sprite: Mobs/Silicon/Chassis/derelict.rsi
     layers:
-    - state: derelict
-    - state: derelict_e_r
-      map: ["enum.BorgVisualLayers.Light"]
+    - state: borg
+    - state: borg_e_r
+      map: [ "enum.BorgVisualLayers.Light" ]
       shader: unshaded
       visible: false
-    - state: derelict_l
+    - state: borg_l
       shader: unshaded
-      map: ["light"]
+      map: [ "light" ]
       visible: false
   - type: BorgChassis
     maxModules: 5 # the sixth one broke lol
     moduleWhitelist:
       tags:
       - BorgModuleGeneric
-    hasMindState: derelict_e
-    noMindState: derelict_e_r
+    hasMindState: borg_e
+    noMindState: borg_e_r
   - type: Construction
     node: derelictcyborg
   - type: InteractionPopup

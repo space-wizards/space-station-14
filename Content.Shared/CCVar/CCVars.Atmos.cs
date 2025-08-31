@@ -147,7 +147,8 @@ public sealed partial class CCVars
     /// <summary>
     ///     Maximum explosion radius for explosions caused by bursting a gas tank ("max caps").
     ///     Setting this to zero disables the explosion but still allows the tank to burst and leak.
+    ///    Adjusted for STARLIGHT use
     /// </summary>
     public static readonly CVarDef<float> AtmosTankFragment =
-        CVarDef.Create("atmos.max_explosion_range", 26f, CVar.SERVERONLY);
+        CVarDef.Create("atmos.max_explosion_range", 15f, CVar.SERVERONLY);
 }

@@ -87,6 +87,9 @@
         - SurgeryTool
         - Dropper
         - Truncheon
+        - Sidearm
+        - MagazinePistol
+        - MagazineMagnum
       components:
         - Stunbaton
         - FlashOnTrigger
@@ -199,6 +202,13 @@
         - JawsOfLife
         - GPS
         - WeldingMask
+                
+        #Starlight
+        - ImprovisedCrowbar
+        - ImprovisedScrewdriver
+        - ImprovisedWirecutter
+        - ImprovisedWrench
+        - ImprovisedMultitool
       components:
         - SprayPainter
         - NetworkConfigurator
@@ -237,10 +247,16 @@
         whitelist:
           tags:
           - Wirecutter
+          
+          #Starlight
+          - ImprovisedWirecutter
       crowbar:
         whitelist:
           tags:
           - Crowbar
+
+          #Starlight
+          - ImprovisedCrowbar
       crowbar_red:
         whitelist:
           tags:
@@ -253,14 +269,23 @@
         whitelist:
           tags:
           - Screwdriver
+
+          #Starlight
+          - ImprovisedScrewdriver
       wrench:
         whitelist:
           tags:
           - Wrench
+          
+          #Starlight
+          - ImprovisedWrench
       multitool:
         whitelist:
           tags:
             - Multitool
+
+            #Starlight
+            - ImprovisedMultitool
     sprite: Clothing/Belt/belt_overlay.rsi
   - type: Appearance
   - type: StaticPrice
@@ -291,3 +316,25 @@
       - id: MagazineLightRifleFMJ
       - id: MagazineLightRifleFMJ
       - id: MagazineLightRifleFMJ
+
+- type: entity
+  parent: [ClothingBeltStorageBase, ContentsExplosionResistanceBase, BaseCentcommContraband]
+  id: ClothingBeltNTNCRig
+  name: ntnc rig
+  description: A military rig worn by NTNC Officers
+  components:
+  - type: Storage #Starlight
+    grid:
+    - 0,0,1,0 #left
+    - 0,1,0,1 #left - cube
+    - 3,0,10,1
+    - 12,0,13,0 #right
+    - 12,1,12,1 #right - cube
+  - type: Sprite
+    sprite: _Starlight/Clothing/Belt/ntnc_rig.rsi
+  - type: Clothing
+    sprite: _Starlight/Clothing/Belt/ntnc_rig.rsi
+  - type: ExplosionResistance
+    damageCoefficient: 0.1
+  - type: StaticPrice
+    price: 900

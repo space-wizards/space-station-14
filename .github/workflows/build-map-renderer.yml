@@ -42,7 +42,7 @@ jobs:
         run: dotnet restore
 
       - name: Build Project
-        run: dotnet build Content.MapRenderer --configuration Release --no-restore /p:WarningsAsErrors=nullable /m
+        run: dotnet build Content.MapRenderer --configuration Release --no-restore /m
 
       - name: Run Map Renderer
         run: dotnet run --project Content.MapRenderer Dev

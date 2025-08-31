@@ -1,0 +1,11 @@
+<Document>
+# Head of Personnel
+
+<GuideEntityEmbed Entity="ToyFigurineHeadOfPersonnel" Caption="Head of Personnel"/>
+
+1. The Head of Personnel should not grant access to a department unless they have a form stamped by the relevant head of department.
+
+2. The Head of Personnel should not do the work of other departments unless they are short staffed.
+
+3. The Head of Personnel may not hire any staff to a NanoTrasen Personnel position.
+</Document>

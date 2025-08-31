@@ -1,0 +1,34 @@
+- type: ghostTheme
+  id: angel
+  name: angel
+  description: Watchful guardian.
+  spriteSpecifier:
+    sprite:
+      sprite: _Starlight/Mobs/Customization/GhostThemes/angel.rsi
+      state: angel
+    color: "#ffffff"
+  requirement: PatronReq
+
+- type: ghostTheme
+  id: ShadowDemon
+  name: Shadow Demon
+  description: Its just observing… right? Right?
+  spriteSpecifier:
+    sprite:
+      sprite: _Starlight/Mobs/Customization/GhostThemes/shadow_demon.rsi
+      state: shadow_demon
+    color: "#ffffff"
+  requirement: PatronReq
+
+- type: ghostTheme
+  id: WizdenCarp
+  name: Wizden Carp
+  description: Almost magical.
+  colorizeable: true
+  spriteSpecifier:
+    sprite:
+      sprite: Mobs/Aliens/Carps/space.rsi
+      state: alive
+    color: "#ffffff"
+  requirement: WizdenPatronReq
+  

@@ -103,6 +103,18 @@
     jumpsuit: ClothingUniformJumpsuitJacketMonkey
     id: PunPunIDCard
 
+- type: startingGear
+  id: MobPollyGear
+  equipment:
+    ears: ClothingHeadsetEngineering
+
+# Emotional Support Scurret
+
+- type: startingGear
+  id: EmotionalSupportScurretGear
+  equipment:
+    id: ScurretPDA
+
 # DeathMatch Gear
 
 - type: startingGear
@@ -119,7 +131,7 @@
 - type: startingGear
   id: MobAghostGear
   equipment:
-    back: ClothingBackpackSatchelHolding
+    back: ClothingBackpackSatchelAdmin
     id: AdminPDA
     belt: ClothingBeltChiefEngineerFilled #starlight start 
   storage:

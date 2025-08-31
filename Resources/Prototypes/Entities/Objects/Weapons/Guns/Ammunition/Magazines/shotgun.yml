@@ -132,7 +132,7 @@
     proto: ShellShotgunIncendiary
   - type: Sprite
     layers:
-    - state: slug
+    - state: base
       map: ["enum.GunVisualLayers.Base"]
     - state: mag-1
       map: ["enum.GunVisualLayers.Mag"]
@@ -146,3 +146,27 @@
       - state: inhand-right-mag
       - state: inhand-right-stripe
         color: "#72382d"
+
+- type: entity
+  id: MagazineShotgunBreach
+  name: ammo drum (.50 breaching)
+  parent: BaseMagazineShotgun
+  components:
+  - type: BallisticAmmoProvider
+    proto: ShellShotgunBreaching
+  - type: Sprite
+    layers:
+    - state: breach
+      map: ["enum.GunVisualLayers.Base"]
+    - state: mag-1
+      map: ["enum.GunVisualLayers.Mag"]
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: inhand-left-mag
+      - state: inhand-left-stripe
+        color: "#0096FF"
+      right:
+      - state: inhand-right-mag
+      - state: inhand-right-stripe
+        color: "#0096FF"

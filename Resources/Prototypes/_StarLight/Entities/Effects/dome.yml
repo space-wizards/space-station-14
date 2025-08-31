@@ -1,0 +1,27 @@
+- type: entity
+  id: EnergyDomeDirected
+  categories: [ HideSpawnMenu ]
+  parent: EnergyDomeBase
+  components:
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 1.3
+        density: 0
+        mask:
+        - None
+        layer:
+        - BulletImpassable
+        - Opaque
+  - type: Sprite
+    sprite: Effects/EnergyDome/energydome_directed.rsi
+    layers:
+    - state: small
+      color: "#64b9de"
+  - type: PointLight
+    enabled: true
+    radius: 5
+    power: 10
+    color: "#64b9de"

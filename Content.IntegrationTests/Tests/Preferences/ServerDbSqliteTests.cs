@@ -56,7 +56,9 @@ namespace Content.IntegrationTests.Tests.Preferences
                     Color.Azure,
                     false, //starlight
                     Color.Beige,
-                    new())
+                    new(),
+                    1, //starlight
+                    1) //starlight
             };
         }
 

@@ -437,6 +437,7 @@ public sealed class StyleStarlight : StyleBase
             ContentMarginLeftOverride = 10
         };
 
+
         // NanoHeading
         var nanoHeadingTex = resCache.GetTexture("/Textures/_Starlight/Interface/Nano/nanoheading.svg.96dpi.png");
         var nanoHeadingBox = new StyleBoxTexture
@@ -521,6 +522,13 @@ public sealed class StyleStarlight : StyleBase
         var directionIconArrowTex = resCache.GetTexture("/Textures/Interface/VerbIcons/drop.svg.192dpi.png");
         var directionIconQuestionTex = resCache.GetTexture("/Textures/Interface/VerbIcons/information.svg.192dpi.png");
         var directionIconHereTex = resCache.GetTexture("/Textures/Interface/VerbIcons/dot.svg.192dpi.png");
+
+        var borderTex = resCache.GetTexture("/Textures/_Starlight/Interface/Nano/border.png");
+        var cardBorder = new StyleBoxTexture
+        {
+            Texture = borderTex,
+        };
+        cardBorder.SetPatchMargin(StyleBox.Margin.All, 10);
 
         Stylesheet = new Stylesheet(BaseRules.Concat(new[]
         {
@@ -1379,7 +1387,12 @@ public sealed class StyleStarlight : StyleBase
             // Different Background shapes ---
             Element<PanelContainer>().Class(ClassAngleRect)
                 .Prop(PanelContainer.StylePropertyPanel, BaseAngleRect)
-                .Prop(Control.StylePropertyModulateSelf, Color.FromHex("#141412")),
+                .Prop(Control.StylePropertyModulateSelf, Color.FromHex("#121208")),
+
+            // 🌟Starlight🌟
+            Element<PanelContainer>().Class(ClassCardHeader)
+                .Prop(PanelContainer.StylePropertyPanel, BaseHeaderRect)
+                .Prop(Control.StylePropertyModulateSelf, Color.FromHex("#121208")),
 
             Element<PanelContainer>().Class("BackgroundOpenRight")
                 .Prop(PanelContainer.StylePropertyPanel, BaseButtonOpenRight)
@@ -1388,6 +1401,7 @@ public sealed class StyleStarlight : StyleBase
             Element<PanelContainer>().Class("BackgroundOpenLeft")
                 .Prop(PanelContainer.StylePropertyPanel, BaseButtonOpenLeft)
                 .Prop(Control.StylePropertyModulateSelf, Color.FromHex("#141412")),
+
             // ---
 
             // Dividers
@@ -1509,9 +1523,11 @@ public sealed class StyleStarlight : StyleBase
                 .Prop(Control.StylePropertyModulateSelf, ButtonColorGoodDisabled),
 
             // ---
-
+            // 🌟Starlight🌟
+            Element<Button>().Class(ClassCardBorder)
+                .Prop(ContainerButton.StylePropertyStyleBox, cardBorder),
             // Small Button ---
-            Element<Button>().Class("ButtonSmall")
+            Element<Button>().Class("ButtonSmall") 
                 .Prop(ContainerButton.StylePropertyStyleBox, smallButtonBase),
 
             Child().Parent(Element<Button>().Class("ButtonSmall"))

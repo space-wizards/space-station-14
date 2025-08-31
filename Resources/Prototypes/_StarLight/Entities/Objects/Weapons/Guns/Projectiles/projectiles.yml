@@ -146,3 +146,46 @@
     damage:
       types:
         Poison: 10
+
+- type: entity
+  name : laser bolt
+  id: BulletEnergySMGLaser
+  parent: BulletEnergyTurretBase
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Ammo
+    muzzleFlash: MuzzleFlashEffectHeavyLaser
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Projectiles/projectiles_tg.rsi
+    layers:
+    - state: heavylaser
+      shader: unshaded
+  - type: Projectile
+    impactEffect: BulletImpactEffectOrangeDisabler
+    damage:
+      types:
+        Heat: 10
+  
+- type: entity
+  name : disabler bolt
+  id: BulletEnergySMGDisabler
+  parent: BulletEnergyTurretBase
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Ammo
+    muzzleFlash: MuzzleFlashEffectOmnilaser
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Projectiles/projectiles_tg.rsi
+    layers:
+    - state: omnilaser
+      shader: unshaded
+  - type: StaminaDamageOnCollide
+    damage: 12
+  - type: Projectile
+    impactEffect: BulletImpactEffectDisabler
+    damage:
+      types:
+        Heat: 0
+    soundHit:
+      collection: WeakHit
+    forceSound: true

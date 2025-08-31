@@ -1,0 +1,318 @@
+# Chest
+
+- type: marking
+  id: bubble
+  bodyPart: Chest
+  markingCategory: Chest
+  speciesRestriction: [ SlimePerson ]
+  sprites:
+  - sprite: _Starlight/Mobs/Customization/SlimePerson/chest.rsi
+    state: bubble
+
+- type: marking
+  id: fishbowl
+  bodyPart: Chest
+  markingCategory: Chest
+  speciesRestriction: [ SlimePerson ]
+  sprites:
+  - sprite: _Starlight/Mobs/Customization/SlimePerson/chest.rsi
+    state: fishbowl1
+  - sprite: _Starlight/Mobs/Customization/SlimePerson/chest.rsi
+    state: fishbowl2
+
+- type: marking
+  id: SlimeBonechest
+  bodyPart: Chest
+  markingCategory: Chest
+  speciesRestriction: [ SlimePerson ]
+  coloring:
+    default:
+      type:
+        !type:SimpleColoring
+        color: "#F8F8F8"
+  sprites:
+  - sprite: _Starlight/Mobs/Customization/SlimePerson/chest.rsi
+    state: bone
+
+- type: marking
+  id: SlimeCore
+  bodyPart: Chest
+  markingCategory: Chest
+  speciesRestriction: [ SlimePerson ]
+  followSkinColor: false
+  coloring:
+    default:
+      type:
+        !type:EyeColoring
+  sprites:
+  - sprite: _Starlight/Mobs/Customization/SlimePerson/chest.rsi
+    state: core
+
+- type: marking
+  id: SlimeLungs
+  bodyPart: Chest
+  markingCategory: Chest
+  speciesRestriction: [ SlimePerson ]
+  followSkinColor: true
+  sprites:
+  - sprite: _Starlight/Mobs/Customization/SlimePerson/chest.rsi
+    state: lungs
+
+# Head
+
+- type: marking
+  id: FadingStars
+  bodyPart: Head
+  markingCategory: Head
+  speciesRestriction: [ SlimePerson ]
+  sprites:
+  - sprite: _Starlight/Mobs/Customization/SlimePerson/head.rsi
+    state: fadingstars1
+  - sprite: _Starlight/Mobs/Customization/SlimePerson/head.rsi
+    state: fadingstars2
+  - sprite: _Starlight/Mobs/Customization/SlimePerson/head.rsi
+    state: fadingstars3
+
+- type: marking
+  id: fizz
+  bodyPart: Head
+  markingCategory: Head
+  speciesRestriction: [ SlimePerson ]
+  sprites:
+  - sprite: _Starlight/Mobs/Customization/SlimePerson/head.rsi
+    state: fizz
+
+- type: marking
+  id: SlimeBonehead
+  bodyPart: Head
+  markingCategory: Head
+  speciesRestriction: [ SlimePerson ]
+  coloring:
+    default:
+      type:
+        !type:SimpleColoring
+        color: "#F8F8F8"
+  sprites:
+  - sprite: _Starlight/Mobs/Customization/SlimePerson/head.rsi
+    state: bone
+
+- type: marking
+  id: SlimeNose
+  bodyPart: Head
+  markingCategory: Head
+  speciesRestriction: [ SlimePerson ]
+  forcedColoring: true
+  followSkinColor: true
+  sprites:
+  - sprite: _Starlight/Mobs/Customization/SlimePerson/head.rsi
+    state: nose
+
+- type: marking
+  id: SlimeMouth
+  bodyPart: Head
+  markingCategory: Head
+  speciesRestriction: [ SlimePerson ]
+  followSkinColor: true
+  sprites:
+  - sprite: _Starlight/Mobs/Customization/SlimePerson/head.rsi
+    state: mouth
+
+- type: marking
+  id: SlimeBrain
+  bodyPart: Head
+  markingCategory: Head
+  speciesRestriction: [ SlimePerson ]
+  followSkinColor: true
+  sprites:
+  - sprite: _Starlight/Mobs/Customization/SlimePerson/head.rsi
+    state: brain
+
+# Snout
+
+# Eyes
+
+- type: marking
+  id: SlimeEyesDefault
+  bodyPart: Eyes
+  markingCategory: Eyes
+  speciesRestriction: [ SlimePerson ]
+  forcedColoring: true
+  coloring:
+    default:
+      type:
+        !type:EyeColoring
+  sprites:
+  - sprite:  Mobs/Species/Slime/parts.rsi #Unfinished???
+    state: eyes
+
+- type: marking
+  id: SlimeEyesDroopy
+  bodyPart: Eyes
+  markingCategory: Eyes
+  speciesRestriction: [ SlimePerson ]
+  coloring:
+    default:
+      type:
+        !type:EyeColoring
+        negative: false
+  sprites:
+  - sprite: _Starlight/Mobs/Customization/SlimePerson/eyes.rsi
+    state: droopy
+
+- type: marking
+  id: SlimeEyesCyclops
+  bodyPart: Eyes
+  markingCategory: Eyes
+  speciesRestriction: [ SlimePerson ]
+  coloring:
+    default:
+      type:
+        !type:EyeColoring
+        negative: false
+  sprites:
+  - sprite: _Starlight/Mobs/Customization/SlimePerson/eyes.rsi
+    state: cyclops
+
+# RArm
+
+- type: marking
+  id: SlimeBonearmright
+  bodyPart: RArm
+  markingCategory: Arms
+  speciesRestriction: [ SlimePerson ]
+  coloring:
+    default:
+      type:
+        !type:SimpleColoring
+        color: "#F8F8F8"
+  sprites:
+  - sprite: _Starlight/Mobs/Customization/SlimePerson/rarm.rsi
+    state: bone
+
+# LArm
+
+- type: marking
+  id: SlimeBonearmleft
+  bodyPart: LArm
+  markingCategory: Arms
+  speciesRestriction: [ SlimePerson ]
+  coloring:
+    default:
+      type:
+        !type:SimpleColoring
+        color: "#F8F8F8"
+  sprites:
+  - sprite: _Starlight/Mobs/Customization/SlimePerson/larm.rsi
+    state: bone
+
+# RLeg
+
+- type: marking
+  id: SlimeBonelegright
+  bodyPart: RLeg
+  markingCategory: Legs
+  speciesRestriction: [ SlimePerson ]
+  coloring:
+    default:
+      type:
+        !type:SimpleColoring
+        color: "#F8F8F8"
+  sprites:
+  - sprite: _Starlight/Mobs/Customization/SlimePerson/rleg.rsi
+    state: bone
+
+# LLeg
+
+- type: marking
+  id: SlimeBonelegleft
+  bodyPart: LLeg
+  markingCategory: Legs
+  speciesRestriction: [ SlimePerson ]
+  coloring:
+    default:
+      type:
+        !type:SimpleColoring
+        color: "#F8F8F8"
+  sprites:
+  - sprite: _Starlight/Mobs/Customization/SlimePerson/lleg.rsi
+    state: bone
+
+# UndergarmentBottom
+
+# UndergarmentTop
+
+# LFoot
+
+- type: marking
+  id: SlimeBonefootleft
+  bodyPart: LFoot
+  markingCategory: Legs
+  speciesRestriction: [ SlimePerson ]
+  coloring:
+    default:
+      type:
+        !type:SimpleColoring
+        color: "#F8F8F8"
+  sprites:
+  - sprite: _Starlight/Mobs/Customization/SlimePerson/lfoot.rsi
+    state: bone
+
+# RFoot
+
+- type: marking
+  id: SlimeBonefootright
+  bodyPart: RFoot
+  markingCategory: Legs
+  speciesRestriction: [ SlimePerson ]
+  coloring:
+    default:
+      type:
+        !type:SimpleColoring
+        color: "#F8F8F8"
+  sprites:
+  - sprite: _Starlight/Mobs/Customization/SlimePerson/rfoot.rsi
+    state: bone
+
+# LHand
+
+- type: marking
+  id: SlimeBonehandleft
+  bodyPart: LHand
+  markingCategory: Arms
+  speciesRestriction: [ SlimePerson ]
+  coloring:
+    default:
+      type:
+        !type:SimpleColoring
+        color: "#F8F8F8"
+  sprites:
+  - sprite: _Starlight/Mobs/Customization/SlimePerson/lhand.rsi
+    state: bone
+
+# RHand
+
+- type: marking
+  id: SlimeBonehandright
+  bodyPart: RHand
+  markingCategory: Arms
+  speciesRestriction: [ SlimePerson ]
+  coloring:
+    default:
+      type:
+        !type:SimpleColoring
+        color: "#F8F8F8"
+  sprites:
+  - sprite: _Starlight/Mobs/Customization/SlimePerson/rhand.rsi
+    state: bone
+
+# FacialHair
+
+# Hair
+
+# HeadSide
+
+# HeadTop
+
+# Tail
+
+# RArmExtension

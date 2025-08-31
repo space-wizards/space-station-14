@@ -683,7 +683,8 @@
   parent: BulletTrace
   damage:
     types:
-      Piercing: 28
+      Piercing: 40
+      Structural: 15
   pierceChance: 0.08
   bullet:
     sprite:
@@ -708,6 +709,7 @@
   damage:
     types:
       Piercing: 5
+      Structural: 5
   pierceChance: 0.03
   count: 12
   spread: 15
@@ -777,6 +779,21 @@
       sprite: Objects/Weapons/Guns/Projectiles/projectiles2.rsi
       state: depleted-uranium
 
+- type: hitscan
+  id: PelletShotgunBreachTrace
+  parent: BulletTrace
+  damage:
+    types:
+      Piercing: 5
+      Structural: 20
+  pierceChance: 0.03
+  count: 12
+  spread: 50
+  bullet:
+    sprite:
+      sprite: Objects/Weapons/Guns/Projectiles/projectiles2.rsi
+      state: piercing
+
 ## energy
 
 - type: hitscan
@@ -826,7 +843,25 @@
     state: impact_blue
   damage:
     types:
-      Heat: 50
+      Heat: 60
+
+- type: hitscan
+  id: DeleteBeam
+  name: erasing beam
+  parent: LaserTrace
+  muzzleFlash:
+    sprite: Objects/Weapons/Guns/Projectiles/projectiles.rsi
+    state: muzzle_blue
+  travelFlash:
+    sprite: Objects/Weapons/Guns/Projectiles/projectiles.rsi
+    state: beam_blue
+  impactFlash:
+    sprite: Objects/Weapons/Guns/Projectiles/projectiles.rsi
+    state: impact_blue
+  damage:
+    types:
+      Heat: 10
+      Blunt: 40
       
 - type: hitscan
   id: DisablerBoltPractice
@@ -862,6 +897,22 @@
   staminaDamage: 33
   knockdownAmount: 0.5
   maxLength: 5
+  damage:
+    types:
+      Heat: 0
+      
+- type: hitscan
+  id: TaserBoltExtreme
+  name: taser bolt
+  parent: EnergyTrace
+  bullet:
+    sprite:
+      sprite: Objects/Weapons/Guns/Projectiles/projectiles2.rsi
+      state: spark
+    color: "#ffff33"
+  staminaDamage: 100
+  #knockdownAmount: 0.5
+  #maxLength: 5
   damage:
     types:
       Heat: 0
@@ -959,7 +1010,22 @@
     polymorph: AdmemeForcedJohnToe
   - type: TriggerOnCollide
     fixtureID: projectile
-  - type: TriggerWhitelist
-    whitelist:
+  - type: WhitelistTriggerCondition
+    userWhitelist:
       components:
       - Body
+
+- type: hitscan
+  id: PointDefenseBeam
+  name: Point Defense beam
+  parent: LaserTrace
+  maxLength: 25
+  muzzleFlash:
+    sprite: _Starlight/Objects/Weapons/Guns/Projectiles/projectiles.rsi
+    state: pd_muzzle
+  travelFlash:
+    sprite: _Starlight/Objects/Weapons/Guns/Projectiles/projectiles.rsi
+    state: pd_trace
+  impactFlash:
+    sprite: _Starlight/Objects/Weapons/Guns/Projectiles/projectiles.rsi
+    state: pd_impact

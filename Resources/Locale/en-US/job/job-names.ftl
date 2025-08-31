@@ -1,3 +1,4 @@
+job-name-warden = Warden
 job-name-assistant = Assistant
 job-name-atmostech = Atmospheric Technician
 job-name-bartender = Bartender
@@ -48,7 +49,7 @@ job-name-serviceworker = Service Worker
 job-name-station-ai = Station AI
 job-name-technical-assistant = Technical Assistant
 job-name-visitor = Visitor
-job-name-warden = Warden
+job-name-cluwne = Cluwne
 job-name-zookeeper = Zookeeper
 
 # unused jobs

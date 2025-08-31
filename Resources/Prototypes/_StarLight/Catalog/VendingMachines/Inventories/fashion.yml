@@ -259,6 +259,36 @@
     - !type:ListingLimitedStockCondition
       stock: 1
 - type: listing
+  id: LilacDressUniformSuit
+  productEntity: LilacDressUniformSuit
+  cost:
+    NTCredit: 200
+  categories:
+    - SLFahsionSkirt
+  conditions:
+    - !type:ListingLimitedStockCondition
+      stock: 1
+- type: listing
+  id: LittleBlackDressUniformSuit
+  productEntity: LittleBlackDressUniformSuit
+  cost:
+    NTCredit: 200
+  categories:
+    - SLFahsionSkirt
+  conditions:
+    - !type:ListingLimitedStockCondition
+      stock: 1
+- type: listing
+  id: SundressUniformSuit
+  productEntity: SundressUniformSuit
+  cost:
+    NTCredit: 200
+  categories:
+    - SLFahsionSkirt
+  conditions:
+    - !type:ListingLimitedStockCondition
+      stock: 1
+- type: listing
   id: ClothingUniformJumpsuitSuitCheckered
   productEntity: ClothingUniformJumpsuitSuitCheckered
   cost:

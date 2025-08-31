@@ -8,6 +8,9 @@ using Content.Shared.Radio.EntitySystems;
 using Content.Shared.Starlight.TextToSpeech;
 using Robust.Shared.Network;
 using Robust.Shared.Player;
+using Content.Server.Speech; // Starlight
+using Content.Server._Starlight.Language; // Starlight
+using Content.Shared.Chat; // Starlight
 
 namespace Content.Server.Radio.EntitySystems;
 
@@ -15,6 +18,7 @@ public sealed class HeadsetSystem : SharedHeadsetSystem
 {
     [Dependency] private readonly INetManager _netMan = default!;
     [Dependency] private readonly RadioSystem _radio = default!;
+    [Dependency] private readonly LanguageSystem _language = default!; // Starlight
 
     public override void Initialize()
     {
@@ -100,11 +104,32 @@ public sealed class HeadsetSystem : SharedHeadsetSystem
 
     private void OnHeadsetReceive(EntityUid uid, HeadsetComponent component, ref RadioReceiveEvent args)
     {
-        var actorUid = Transform(uid).ParentUid;
-        if (!TryComp(Transform(uid).ParentUid, out ActorComponent? actor)) return;
-        _netMan.ServerSendMessage(args.ChatMsg, actor.PlayerSession.Channel);
-        if (actorUid != args.MessageSource && TryComp(args.MessageSource, out TextToSpeechComponent? _))
-            args.Receivers.Add(actorUid);
+        // TODO: change this when a code refactor is done
+        // this is currently done this way because receiving radio messages on an entity otherwise requires that entity
+        // to have an ActiveRadioComponent
+
+        var parent = Transform(uid).ParentUid;
+
+        if (parent.IsValid())
+        {
+            var relayEvent = new HeadsetRadioReceiveRelayEvent(args);
+            RaiseLocalEvent(parent, ref relayEvent);
+        }
+        // Starlight - Start
+        if (TryComp(parent, out ActorComponent? actor))
+        {
+            var canUnderstand = _language.CanUnderstand(parent, args.Language.ID);
+            var msg = new MsgChatMessage
+            {
+                Message = canUnderstand ? args.OriginalChatMsg : args.LanguageObfuscatedChatMsg
+            };
+            _netMan.ServerSendMessage(msg, actor.PlayerSession.Channel);
+        }
+        // Starlight - End
+        #region Starlight
+        if (parent != args.MessageSource && TryComp(args.MessageSource, out TextToSpeechComponent? _))
+            args.Receivers.Add(parent);
+        #endregion Starlight
     }
 
     private void OnEmpPulse(EntityUid uid, HeadsetComponent component, ref EmpPulseEvent args)

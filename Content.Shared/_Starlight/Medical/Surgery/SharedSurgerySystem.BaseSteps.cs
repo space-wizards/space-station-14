@@ -119,14 +119,8 @@ public abstract partial class SharedSurgerySystem
             AddComp(args.Part, newComp);
         }
 
-        foreach (var reg in (ent.Comp.BodyAdd ?? []).Values)
-        {
-            var compType = reg.Component.GetType();
-            if (HasComp(args.Body, compType))
-                continue;
-
-            AddComp(args.Part, _compFactory.GetComponent(compType));
-        }
+        if (ent.Comp.BodyAdd != null)
+            EntityManager.AddComponents(args.Body, ent.Comp.BodyAdd, false);
 
         foreach (var reg in (ent.Comp.Remove ?? []).Values)
             RemComp(args.Part, reg.Component.GetType());
@@ -148,7 +142,7 @@ public abstract partial class SharedSurgerySystem
 
         if (args.Invalid != StepInvalidReason.None)
             return;
-        
+
         if (_inventory.TryGetContainerSlotEnumerator(args.Body, out var enumerator, args.TargetSlots))
         {
             var items = 0f;
@@ -156,7 +150,7 @@ public abstract partial class SharedSurgerySystem
             while (enumerator.MoveNext(out var con))
             {
                 total++;
-                if (con.ContainedEntity != null)
+                if (con.ContainedEntity != null && !_tag.HasTag(con.ContainedEntity.Value, "SurgeryCompatibleArmor"))
                     items++;
             }
 
@@ -270,7 +264,7 @@ public abstract partial class SharedSurgerySystem
             foreach (var requirementId in requirementsIds)
             {
                 if (!_entitySystem.TryGetSingleton(requirementId, out var requirement)
-                    && GetNextStep(body, part, requirement, requirements) is { } requiredNext 
+                    && GetNextStep(body, part, requirement, requirements) is { } requiredNext
                     && IsSurgeryValid(body, part, requirementId, requiredNext.Surgery.Comp.Steps[requiredNext.Step], out _, out _, out _))
                     return requiredNext;
             }
@@ -296,8 +290,8 @@ public abstract partial class SharedSurgerySystem
             foreach (var requirement in requirements)
             {
                 if (!_entitySystem.TryGetSingleton(requirement, out var requiredEnt)
-                    || !TryComp(requiredEnt, out SurgeryComponent? requiredComp) 
-                    || !PreviousStepsComplete(body, part, (requiredEnt, requiredComp), step) 
+                    || !TryComp(requiredEnt, out SurgeryComponent? requiredComp)
+                    || !PreviousStepsComplete(body, part, (requiredEnt, requiredComp), step)
                     && IsSurgeryValid(body, part, requirement, step, out _, out _, out _))
                     return false;
             }

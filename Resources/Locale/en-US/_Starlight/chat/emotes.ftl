@@ -11,6 +11,9 @@ chat-emote-name-yip = Yip
 chat-emote-name-whine = Whine
 chat-emote-name-mar = Mar
 chat-emote-name-wurble = Wurble
+chat-emote-name-scree = Scree
+chat-emote-name-call = Call
+chat-emote-name-squawk = Squawk
 
 # Emote Messages
 chat-emote-msg-mew = mews
@@ -25,3 +28,6 @@ chat-emote-msg-yip = yips
 chat-emote-msg-whine = whines
 chat-emote-msg-mar = marrs
 chat-emote-msg-wurble = wurbles
+chat-emote-msg-scree = screes
+chat-emote-msg-call = calls
+chat-emote-msg-squawk = squawks

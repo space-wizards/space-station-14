@@ -114,7 +114,7 @@
     color: "#43ccb5"
 
 - type: entity
-  parent: BaseComputer
+  parent: BaseComputerAiAccess
   id: BaseComputerShuttle
   name: shuttle console
   description: Used to pilot a shuttle.
@@ -630,7 +630,7 @@
 - type: entity
   parent: BaseComputerAiAccess
   id: computerBodyScanner
-  name: body scanner computer
+  name: operating computer # Starlight-edit
   description: A body scanner.
   components:
   - type: ApcPowerReceiver
@@ -641,6 +641,37 @@
     radius: 1.5
     energy: 1.6
     color: "#1f8c28"
+  # Starlight-start: Surgery body scanner
+  - type: Sprite
+    layers:
+    - map: ["computerLayerBody"]
+      state: computer
+    - map: ["computerLayerKeyboard"]
+      state: generic_keyboard
+    - map: ["computerLayerScreen"]
+      state: crew
+    - map: ["computerLayerKeys"]
+      state: med_key
+    - map: [ "enum.WiresVisualLayers.MaintenancePanel" ]
+      state: generic_panel_open
+  - type: Speech
+  - type: BodyScanner
+  - type: HealthAnalyzer
+    talk: true
+  - type: ActivatableUI
+    key: enum.HealthAnalyzerUiKey.Key
+  - type: UserInterface
+    interfaces:
+      enum.HealthAnalyzerUiKey.Key:
+        type: HealthAnalyzerBoundUserInterface
+  - type: DeviceList
+  - type: DeviceNetwork
+    deviceNetId: Wired
+  - type: DeviceLinkSource
+    range: 2
+    ports:
+      - BodyScannerSender
+  # Starlight-end
 
 - type: entity
   parent: BaseComputerAiAccess
@@ -666,6 +697,7 @@
     title: comms-console-announcement-title-station
     sound: /Audio/_Starlight/Announcements/announce2.ogg #Starlight
   - type: DeviceNetwork
+    deviceNetId: Wireless    
     transmitFrequencyId: ShuttleTimer
   - type: ActivatableUI
     key: enum.CommunicationsConsoleUiKey.Key
@@ -932,7 +964,7 @@
     account: Engineering
     announcementChannel: Engineering
     removeLimitAccess: [ "ChiefEngineer" ]
-    slipPrinter: true
+    mode: PrintSlip #Starlight
   - type: ActiveRadio
     channels:
     - Engineering
@@ -965,7 +997,7 @@
     account: Medical
     announcementChannel: Medical
     removeLimitAccess: [ "ChiefMedicalOfficer" ]
-    slipPrinter: true
+    mode: PrintSlip #Starlight
   - type: ActiveRadio
     channels:
     - Medical
@@ -998,7 +1030,7 @@
     account: Science
     announcementChannel: Science
     removeLimitAccess: [ "ResearchDirector" ]
-    slipPrinter: true
+    mode: PrintSlip #Starlight
   - type: ActiveRadio
     channels:
     - Science
@@ -1031,7 +1063,7 @@
     account: Security
     announcementChannel: Security
     removeLimitAccess: [ "HeadOfSecurity" ]
-    slipPrinter: true
+    mode: PrintSlip #Starlight
   - type: ActiveRadio
     channels:
     - Security
@@ -1064,7 +1096,7 @@
     account: Service
     announcementChannel: Service
     removeLimitAccess: [ "HeadOfPersonnel" ]
-    slipPrinter: true
+    mode: PrintSlip #Starlight
   - type: ActiveRadio
     channels:
     - Service
@@ -1138,7 +1170,7 @@
     key: enum.FundingAllocationConsoleUiKey.Key
   - type: ActivatableUIRequiresAccess
   - type: AccessReader
-    access: [["HeadOfPersonnel"]]
+    access: [["HeadOfPersonnel"]] #Starlight Change needs to make QM
   - type: UserInterface
     interfaces:
       enum.FundingAllocationConsoleUiKey.Key:

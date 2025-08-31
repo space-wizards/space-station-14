@@ -13,7 +13,7 @@ entities:
   - uid: 1
     components:
     - type: MetaData
-      name: Cargo shuttle
+      name: CS-4S2 "Sidehaul" # Starlight rename
     - type: Transform
       pos: -0.453125,-0.53125
       parent: invalid

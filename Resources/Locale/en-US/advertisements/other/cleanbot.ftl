@@ -1,0 +1,12 @@
+advertisement-cleanbot-1 = Filth detected.
+advertisement-cleanbot-2 = Why is this station so dirty...
+advertisement-cleanbot-3 = Please toss your trash in the disposal bins. I can't reach.
+advertisement-cleanbot-4 = If you don't start throwing your trash away I will spill water over you.
+advertisement-cleanbot-5 = Cleaning in progress.
+advertisement-cleanbot-6 = Fuck you.
+advertisement-cleanbot-7 = Why are we still here? Just to clean?
+advertisement-cleanbot-8 = I AM NANOTRASEN'S STRONGEST CLEANER!!
+advertisement-cleanbot-9 = Please don't be potassium please don't be potassium...
+advertisement-cleanbot-10 = Have a great day!
+advertisement-cleanbot-11 = I wish I had hands.
+advertisement-cleanbot-12 = If I see someone slip on something they watched me mop one more time, I’m going to fucking lose it.

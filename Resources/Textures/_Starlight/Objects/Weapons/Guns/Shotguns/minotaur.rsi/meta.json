@@ -1,38 +1,20 @@
 {
     "version": 1,
     "license": "CC-BY-SA-3.0",
-    "copyright": "Taken from tgstation at https://github.com/tgstation/tgstation/commit/1b6831dab1e1a74c0d91f2229adb87abbb089d31, backpack sprite by Peptide, backpack sling sprite edited by Boaz1111, wield sprites by RiceMar1244",
+    "copyright": "Made by Salem.uwu for Starlight",
     "size": {
         "x": 32,
         "y": 32
     },
     "states": [
         {
-            "name": "icon",
-            "delays": [
-              [
-                0.2,
-                0.2
-              ]
-            ]
+            "name": "icon"
         },
         {
-            "name": "base",
-            "delays": [
-              [
-                0.2,
-                0.2
-              ]
-            ]
+            "name": "base"
         },
         {
-            "name": "bolt-open",
-            "delays": [
-              [
-                0.2,
-                0.2
-              ]
-            ]
+            "name": "bolt-open"
         },
         {
             "name": "mag-0"
@@ -51,6 +33,14 @@
         },
         {
             "name": "wielded-inhand-right",
+            "directions": 4
+        },
+        {
+            "name": "equipped-BACKPACK",
+            "directions": 4
+        },
+        {
+            "name": "equipped-SUITSTORAGE",
             "directions": 4
         }
     ]

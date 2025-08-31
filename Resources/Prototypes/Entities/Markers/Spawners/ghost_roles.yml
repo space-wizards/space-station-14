@@ -18,9 +18,9 @@
   - type: GhostRole
     name: ghost-role-information-rat-king-name
     description: ghost-role-information-rat-king-description
-    rules: ghost-role-information-freeagent-rules
+    rules: ghost-role-information-antagonist-rules
     mindRoles:
-    - MindRoleGhostRoleFreeAgent
+    - MindRoleGhostRoleSoloAntagonist
     raffle:
       settings: default
   - type: GhostRoleMobSpawner
@@ -93,7 +93,7 @@
       settings: default
     requirements:
     - !type:OverallPlaytimeRequirement
-      time: 43200 # 12h STARLIGHT
+      time: 86400 # 24h STARLIGHT
     - !type:DepartmentTimeRequirement
       department: Security
       time: 21600 # 6h STARLIGHT
@@ -138,7 +138,7 @@
     - MindRoleGhostRoleSoloAntagonist
     requirements:
     - !type:OverallPlaytimeRequirement
-      time: 43200 # 12h STARLIGHT
+      time: 86400 # 24h STARLIGHT
     - !type:DepartmentTimeRequirement
       department: Security
       time: 21600 # 6h STARLIGHT
@@ -168,7 +168,7 @@
       time: 43200 # 12h STARLIGHT
     - !type:DepartmentTimeRequirement
       department: Command
-      time: 14400 # 4h STARLIGHT
+      time: 21600 # 6h STARLIGHT
 
 - type: entity
   categories: [ HideSpawnMenu, Spawner ]
@@ -183,13 +183,13 @@
     - MindRoleGhostRoleTeamAntagonist
     requirements:
     - !type:OverallPlaytimeRequirement
-      time: 43200 # 12h STARLIGHT
+      time: 86400 # 24h STARLIGHT
     - !type:RoleTimeRequirement
       role: JobChemist
-      time: 21600 # 6h STARLIGHT
-    - !type:DepartmentTimeRequirement
-      department: Medical
-      time: 28800 # 8h STARLIGHT
+      time: 10800 # 3h STARLIGHT
+    - !type:RoleTimeRequirement
+      role: JobSurgeon
+      time: 10800 # 3h STARLIGHT
     - !type:DepartmentTimeRequirement
       department: Security
       time: 21600 # 6h STARLIGHT
@@ -205,7 +205,7 @@
     rules: ghost-role-information-rules-default-team-antagonist
     mindRoles:
     - MindRoleGhostRoleTeamAntagonist
-    #inherits requirments from lone op
+    #inherits requirements from lone op
 
 - type: entity
   categories: [ HideSpawnMenu, Spawner ]
@@ -218,6 +218,10 @@
     rules: ghost-role-information-space-dragon-rules
     mindRoles:
     - MindRoleGhostRoleTeamAntagonist
+    requirements:
+    - !type:RoleTimeRequirement
+      role: JobSalvageSpecialist
+      time: 10800 # 3h STARLIGHT
   - type: Sprite
     layers:
     - state: green
@@ -237,6 +241,10 @@
     - MindRoleGhostRoleSoloAntagonist
     raffle:
       settings: default
+    requirements:
+    - !type:DepartmentTimeRequirement
+      department: Security
+      time: 10800 # 3h STARLIGHT
   - type: Sprite
     sprite: Markers/jobs.rsi
     layers:
@@ -257,6 +265,9 @@
     - MindRoleGhostRoleSoloAntagonist
     raffle:
       settings: default
+    requirements:
+    - !type:OverallPlaytimeRequirement
+      time: 86400 # 24h STARLIGHT
   - type: Sprite
     layers:
     - sprite: Markers/jobs.rsi
@@ -275,11 +286,17 @@
     rules: ghost-role-information-silicon-rules
     raffle:
       settings: default
+    requirements:
+    - !type:OverallPlaytimeRequirement
+      time: 86400 # 24h STARLIGHT
+    - !type:RoleTimeRequirement
+      role: JobBorg
+      time: 21600 # 6h STARLIGHT
   - type: Sprite
     sprite: Markers/jobs.rsi
     layers:
     - state: green
-    - sprite: Mobs/Silicon/chassis.rsi
+    - sprite: Mobs/Silicon/Chassis/derelict.rsi
       state: derelict_icon
 
 - type: entity
@@ -298,7 +315,10 @@
       settings: default
     requirements:
     - !type:OverallPlaytimeRequirement
-      time: 90000 # 25h
+      time: 86400 # 24h STARLIGHT
+    - !type:DepartmentTimeRequirement
+      department: Security
+      time: 21600 # 6h STARLIGHT
   - type: Sprite
     sprite: Markers/jobs.rsi
     layers:

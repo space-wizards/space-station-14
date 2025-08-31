@@ -71,12 +71,27 @@
   components:
   - type: Sprite
     state: mecha_clamp
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: inhand-left-big
+      right:
+      - state: inhand-right-big
+  - type: MultiHandedItem
   - type: MechGrabber
   - type: UIFragment
     ui: !type:MechGrabberUi
   - type: ContainerContainer
     containers:
       item-container: !type:Container
+  # 🌟Starlight-start🌟
+  - type: Retractor
+  - type: SurgeryTool
+    successRate: 0.05 # they are very much too large
+    speed: 1.5
+    startSound:
+      path: /Audio/Mecha/sound_mecha_hydraulic.ogg
+  # 🌟Starlight-end🌟
 
 - type: entity
   id: MechEquipmentGrabberSmall
@@ -86,6 +101,13 @@
   components:
   - type: Sprite
     state: mecha_clamp_small
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: inhand-left-small
+      right:
+      - state: inhand-right-small
+  - type: MultiHandedItem
   - type: MechGrabber
     maxContents: 4
     grabDelay: 3
@@ -99,6 +121,14 @@
     tags:
     - IndustrialMech
     - SmallMech
+  # 🌟Starlight-start🌟
+  - type: Retractor
+  - type: SurgeryTool
+    successRate: 0.1 # they are very much too large
+    speed: 1.5
+    startSound:
+      path: /Audio/Mecha/sound_mecha_hydraulic.ogg
+  # 🌟Starlight-end🌟
 
 - type: entity
   id: MechEquipmentHorn
@@ -109,6 +139,13 @@
   - type: Sprite
     # TODO: use own sprite
     state: mecha_honker
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: inhand-left-honk
+      right:
+      - state: inhand-right-honk
+  - type: MultiHandedItem
   - type: MechSoundboard
     sounds:
     - collection: BikeHorn

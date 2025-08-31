@@ -1,0 +1,195 @@
+- type: entity
+  id: FoodCondition
+  categories: [ HideSpawnMenu ]
+  abstract: true
+  components:
+  - type: Conditions
+    conditions:
+    - !type:SubjectMindJobCondition
+      blacklist:
+      - Chef
+    - !type:SubjectSpeciesCondition
+      blacklist:
+      - Abductor
+      - Moth
+      - Skeleton
+      - Reptilian
+
+- type: entity
+  id: FoodConditionWithReptilian
+  categories: [ HideSpawnMenu ]
+  abstract: true
+  components:
+  - type: Conditions
+    conditions:
+    - !type:SubjectMindJobCondition
+      blacklist:
+      - Chef
+    - !type:SubjectSpeciesCondition
+      blacklist:
+      - Abductor
+      - Moth
+      - Skeleton
+
+- type: entity
+  id: RRCardFoodApplePie
+  parent: [FoodConditionWithReptilian]
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: RailroadSpawnFlow
+    count: 
+      min: 1
+      max: 3
+  - type: RailroadCard
+    title: rr-apple-pie
+    icon: ""
+    iconColor: '#9FED5896'
+    color: '#515151'
+    image: /Textures/_Starlight/Railroading/apple-pie.png
+    description: rr-apple-pie-desc
+  - type: RailroadConsumeTask
+    objects:
+    - FoodPieApple
+    icon:
+      sprite: Objects/Consumable/Food/Baked/pie.rsi
+      state: apple
+  - type: RailroadDonationReward
+    amount: 
+      min: 10
+      max: 25
+
+- type: entity
+  id: RRCardFoodDumplings
+  parent: [FoodConditionWithReptilian]
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: RailroadSpawnFlow
+    count: 
+      min: 1
+      max: 3
+  - type: RailroadCard
+    title: rr-dumplings
+    icon: ""
+    iconColor: '#9FED5896'
+    color: '#515151'
+    image: /Textures/_Starlight/Railroading/dumplings.png
+    description: rr-dumplings-desc
+  - type: RailroadConsumeTask
+    objects:
+    - FoodBakedDumplings
+    icon:
+      sprite: Objects/Consumable/Food/Baked/misc.rsi
+      state: dumplings
+  - type: RailroadDonationReward
+    amount: 
+      min: 10
+      max: 25
+
+- type: entity
+  id: RRCardFoodHerbSalad
+  parent: [FoodConditionWithReptilian]
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: RailroadSpawnFlow
+    count: 
+      min: 1
+      max: 3
+  - type: RailroadCard
+    title: rr-herb-salad
+    icon: ""
+    iconColor: '#9FED5896'
+    color: '#515151'
+    image: /Textures/_Starlight/Railroading/herb-salad.png
+    description: rr-herb-salad-desc
+  - type: RailroadConsumeTask
+    objects:
+    - FoodSaladHerb
+    icon:
+      sprite: Objects/Consumable/Food/bowl.rsi
+      state: herb
+  - type: RailroadDonationReward
+    amount: 
+      min: 10
+      max: 25
+
+- type: entity
+  id: RRCardFoodMelonFruitBowl
+  parent: [FoodConditionWithReptilian]
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: RailroadSpawnFlow
+    count: 
+      min: 1
+      max: 3
+  - type: RailroadCard
+    title: rr-melon-fruit-bowl
+    icon: ""
+    iconColor: '#9FED5896'
+    color: '#515151'
+    image: /Textures/_Starlight/Railroading/melon-fruit-bowl.png
+    description: rr-melon-fruit-bowl-desc
+  - type: RailroadConsumeTask
+    objects:
+    - FoodSaladWatermelonFruitBowl
+    icon:
+      sprite: Objects/Consumable/Food/meals.rsi
+      state: melonfruitbowl
+  - type: RailroadDonationReward
+    amount: 
+      min: 10
+      max: 25
+
+- type: entity
+  id: RRCardFoodStew
+  parent: [FoodConditionWithReptilian]
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: RailroadSpawnFlow
+    count: 
+      min: 1
+      max: 3
+  - type: RailroadCard
+    title: rr-stew
+    icon: ""
+    iconColor: '#9FED5896'
+    color: '#515151'
+    image: /Textures/_Starlight/Railroading/stew.png
+    description: rr-stew-desc
+  - type: RailroadConsumeTask
+    objects:
+    - FoodSoupStew
+    icon:
+      sprite: Objects/Consumable/Food/bowl.rsi
+      state: stew
+  - type: RailroadDonationReward
+    amount: 
+      min: 10
+      max: 25
+
+- type: entity
+  id: RRCardFoodSashimi
+  parent: [FoodConditionWithReptilian]
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: RailroadSpawnFlow
+    count: 
+      min: 0
+      max: 3
+  - type: RailroadCard
+    title: rr-sashimi
+    icon: ""
+    iconColor: '#9FED5896'
+    color: "#01407f"
+    image: /Textures/_Starlight/Railroading/sashimi.png
+    description: rr-sashimi-desc
+  - type: RailroadConsumeTask
+    objects:
+    - FoodMealSashimi
+    icon:
+      sprite: Objects/Consumable/Food/meals.rsi
+      state: sashimi
+  - type: RailroadDonationReward
+    amount: #  120 poison damage, totally worth it.
+    # Wait a minute. Why is it even poisonous in the first place?
+      min: 70
+      max: 110

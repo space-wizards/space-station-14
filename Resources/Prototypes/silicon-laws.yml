@@ -617,5 +617,6 @@
     PainterLawset: 1
     AntimovLawset: 0.25
     NutimovLawset: 0.5
-    Drone: 0.5
+#    Drone: 0.5 Starlight-edit: Removed Drone Lawset from pool
     Ninja: 0.25
+    BorgiLawset: 1.0 # Starlight

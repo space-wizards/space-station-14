@@ -1,0 +1,4 @@
+- type: sinkPort
+  id: BodyScannerReceiver
+  name: signal-port-name-body-scanner-receiver
+  description: signal-port-description-body-scanner-receiver

@@ -21,10 +21,12 @@ names-ninja-title-dataset-20 = Grandmaster
 names-ninja-title-dataset-21 = Strider
 names-ninja-title-dataset-22 = Striker
 names-ninja-title-dataset-23 = Slayer
-names-ninja-title-dataset-24 = Awesome
+## Starlight
+names-ninja-title-dataset-24 = Iron
 names-ninja-title-dataset-25 = Ender
 names-ninja-title-dataset-26 = Dr.
-names-ninja-title-dataset-27 = Noob
+## Starlight
+names-ninja-title-dataset-27 = Evening
 names-ninja-title-dataset-28 = Night
 names-ninja-title-dataset-29 = Crimson
 names-ninja-title-dataset-30 = Grappler

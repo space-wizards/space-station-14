@@ -19,6 +19,7 @@ using Robust.Server.GameObjects;
 using Robust.Shared.Containers;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
+using Content.Shared.Chat; // Starlight
 
 namespace Content.Server.Access.Systems;
 
@@ -73,7 +74,7 @@ public sealed class IdCardConsoleSystem : SharedIdCardConsoleSystem
         List<ProtoId<AccessLevelPrototype>>? possibleAccess = null;
         if (component.PrivilegedIdSlot.Item is { Valid: true } item)
         {
-            privilegedIdName = EntityManager.GetComponent<MetaDataComponent>(item).EntityName;
+            privilegedIdName = Comp<MetaDataComponent>(item).EntityName;
             possibleAccess = _accessReader.FindAccessTags(item).ToList();
         }
 
@@ -95,8 +96,8 @@ public sealed class IdCardConsoleSystem : SharedIdCardConsoleSystem
         }
         else
         {
-            var targetIdComponent = EntityManager.GetComponent<IdCardComponent>(targetId);
-            var targetAccessComponent = EntityManager.GetComponent<AccessComponent>(targetId);
+            var targetIdComponent = Comp<IdCardComponent>(targetId);
+            var targetAccessComponent = Comp<AccessComponent>(targetId);
 
             var jobProto = targetIdComponent.JobPrototype ?? new ProtoId<AccessLevelPrototype>(string.Empty);
             if (TryComp<StationRecordKeyStorageComponent>(targetId, out var keyStorage)

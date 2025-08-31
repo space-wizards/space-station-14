@@ -19,6 +19,12 @@
     Heat: 1.6
 
 - type: damageModifierSet
+  id: Cyclorite
+  coefficients:
+    Blunt: 0.85 # Have you ever tried to punch a rock?
+    Slash: 0.75
+
+- type: damageModifierSet
   id: Shadekin
   coefficients:
     Asphyxiation: 0
@@ -43,3 +49,19 @@
     Blunt: 1.25
     Cellular: 0
     Poison: 1.5
+
+- type: damageModifierSet
+  id: DragonResistances
+  coefficients:
+    Piercing: 0.3
+    Slash: 2
+    Heat: 0.5
+    Bloodloss: 0
+
+- type: damageModifierSet
+  id: DragonCarpResistances
+  coefficients:
+    Piercing: 0.5
+    Slash: 2
+    Heat: 0.75
+    Bloodloss: 0

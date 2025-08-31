@@ -33,3 +33,11 @@
 - type: lobbyBackground
   id: SOCOMOperation
   background: /Textures/_Starlight/LobbyScreens/operation.webp
+
+- type: lobbyBackground
+  id: BombDefusalBorg
+  background: /Textures/_Starlight/LobbyScreens/bombdefusalborg.webp
+
+- type: lobbyBackground
+  id: Turncoats
+  background: /Textures/_Starlight/LobbyScreens/turncoats.webp

@@ -1,9 +1,10 @@
 using System.Diagnostics.CodeAnalysis;
+using Content.Shared._NullLink;
 using Content.Shared.Localizations;
-using Content.Shared.Starlight;
 using Content.Shared.Players.PlayTimeTracking;
 using Content.Shared.Preferences;
 using Content.Shared.Roles.Jobs;
+using Content.Shared.Starlight;
 using JetBrains.Annotations;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
@@ -40,10 +41,10 @@ public sealed partial class RoleTimeRequirement : JobRequirement
             return true;
 
         string proto = Role;
-        //🌟Starlight🌟 start
-        if (player is not null && IoCManager.Resolve<ISharedPlayersRoleManager>().IsAllRolesAvailable(player))
+        //NullLink start
+        if (player is not null && IoCManager.Resolve<ISharedNullLinkPlayerRolesReqManager>().IsAllRolesAvailable(player))
             return true;
-        //🌟Starlight🌟 end
+        //NullLink end
 
         playTimes.TryGetValue(proto, out var roleTime);
         var roleDiffSpan = Time - roleTime;

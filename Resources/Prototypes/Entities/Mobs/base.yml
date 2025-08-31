@@ -5,6 +5,7 @@
   id: BaseMob
   abstract: true
   components:
+  - type: LanguageSpeaker # Starlight
   - type: Sprite
     noRot: true
     drawdepth: Mobs
@@ -44,6 +45,7 @@
   - type: MovementSpeedModifier
   - type: RequireProjectileTarget
     active: False
+  - type: StunVisuals
   - type: TextToSpeech
   - type: CollectiveMind
   - type: CustomLimbVisualizer
@@ -152,6 +154,8 @@
     - Shock
     - Cold
     - Caustic
+    - Asphyxiation
+    - Radiation
   - type: DamageOnHighSpeedImpact
     damage:
       types:

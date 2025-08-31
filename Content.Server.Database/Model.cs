@@ -449,7 +449,7 @@ namespace Content.Server.Database
 
         public int PreferenceId { get; set; }
         public Preference Preference { get; set; } = null!;
-        
+
         public StarLightModel.StarLightProfile? StarLightProfile { get; set; } // Starlight
     }
 
@@ -660,15 +660,12 @@ namespace Content.Server.Database
         public AdminRank? AdminRank { get; set; }
         public List<AdminFlag> Flags { get; set; } = default!;
     }
-    [Index(nameof(DiscordId))]
     public class PlayerDataDTO // 🌟Starlight🌟
     {
         [Key] public Guid UserId { get; set; }
         public string? Title { get; set; }
         public string? GhostTheme { get; set; }
-        public string? DiscordId { get; set; } = default!;
         public int Balance { get; set; }
-        public int Flags { get; set; }
     }
 
     public class AdminFlag

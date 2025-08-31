@@ -190,10 +190,13 @@ binds:
   mod1: Alt
 - function: OpenCharacterMenu
   type: State
-  key: C
+  key: U
 - function: OpenEmotesMenu
   type: State
   key: Y
+- function: OpenLanguageMenu # Starlight
+  type: State
+  key: L
 - function: TextCursorSelect
   # TextCursorSelect HAS to be above ExamineEntity
   # So that LineEdit receives it correctly.
@@ -255,6 +258,11 @@ binds:
   type: State
   key: E
   mod1: Shift
+  # Starlight Start - Suit storage equip
+- function: SmartEquipSuitStorage
+  type: State
+  key: F
+  # Starlight End
 - function: OpenBackpack
   type: State
   key: V
@@ -525,6 +533,9 @@ binds:
 - function: Arcade3
   type: State
   key: Z
+- function: ToggleKnockdown
+  type: State
+  key: C
 - function: OpenAbilitiesMenu
   type: State
   key: K

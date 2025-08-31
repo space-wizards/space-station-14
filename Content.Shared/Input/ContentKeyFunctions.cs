@@ -5,6 +5,7 @@ namespace Content.Shared.Input
     [KeyFunctions]
     public static class ContentKeyFunctions
     {
+        public static readonly BoundKeyFunction ToggleKnockdown = "ToggleKnockdown";
         public static readonly BoundKeyFunction UseItemInHand = "ActivateItemInHand";
         public static readonly BoundKeyFunction AltUseItemInHand = "AltActivateItemInHand";
         public static readonly BoundKeyFunction ActivateItemInWorld = "ActivateItemInWorld";
@@ -28,10 +29,12 @@ namespace Content.Shared.Input
         public static readonly BoundKeyFunction OpenCharacterMenu = "OpenCharacterMenu";
         public static readonly BoundKeyFunction OpenEmotesMenu = "OpenEmotesMenu";
         public static readonly BoundKeyFunction OpenCraftingMenu = "OpenCraftingMenu";
+        public static readonly BoundKeyFunction OpenLanguageMenu = "OpenLanguageMenu"; // Starlight
         public static readonly BoundKeyFunction OpenGuidebook = "OpenGuidebook";
         public static readonly BoundKeyFunction OpenInventoryMenu = "OpenInventoryMenu";
         public static readonly BoundKeyFunction SmartEquipBackpack = "SmartEquipBackpack";
         public static readonly BoundKeyFunction SmartEquipBelt = "SmartEquipBelt";
+        public static readonly BoundKeyFunction SmartEquipSuitStorage = "SmartEquipSuitStorage"; // Starlight edit - Suit storage Equip
         public static readonly BoundKeyFunction OpenBackpack = "OpenBackpack";
         public static readonly BoundKeyFunction OpenBelt = "OpenBelt";
         public static readonly BoundKeyFunction OpenAHelp = "OpenAHelp";

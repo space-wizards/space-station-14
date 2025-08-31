@@ -7,11 +7,13 @@
 
 These intelligent inhabitants of the Abyss are emotionally reserved and have a single large eye instead of a face. They are strong but slow.
 
-  - Their unarmed attacks deal 10 points damage with a hit rate that is 2 times slower than humans.
+  - Their punches deal [color=red]13[/color] blunt and [color=red]10[/color] structural, however they can only swing half as fast as humans.
   - Their speed is 0.85 of that of humans.
   - They fall into a critical state at 120 points of damage.
   - They die at 240 points of damage.
   - They breathe nitrogen.
+  - They take [color=#ffa500]50% more poison damage[/color] than a comparable human.
+  - They take [color=#ffa500]15% less blunt damage[/color] and [color=#ffa500]25% less slash damage[/color] than a comparable human.
   - Due to their size, they stretch external clothing to such an extent that they can fit two tanks on their back.
   - Their eyes are less sensitive to red colors but provide better vision in the dark (shader still in development)."
 

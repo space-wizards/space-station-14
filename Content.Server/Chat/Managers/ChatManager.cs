@@ -1,20 +1,21 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Runtime.InteropServices;
-using Content.Server.Starlight;
+using Content.Server._NullLink.PlayerData;
 using Content.Server.Administration.Logs;
 using Content.Server.Administration.Managers;
 using Content.Server.Administration.Systems;
 using Content.Server.Discord.DiscordLink;
 using Content.Server.Players.RateLimiting;
 using Content.Server.Preferences.Managers;
-using Content.Shared.Starlight;
+using Content.Server.Starlight;
 using Content.Shared.Administration;
 using Content.Shared.CCVar;
 using Content.Shared.Chat;
 using Content.Shared.Database;
 using Content.Shared.Mind;
 using Content.Shared.Players.RateLimiting;
+using Content.Shared.Starlight;
 using Robust.Shared.Configuration;
 using Robust.Shared.Network;
 using Robust.Shared.Player;
@@ -39,7 +40,7 @@ internal sealed partial class ChatManager : IChatManager
     [Dependency] private readonly IReplayRecordingManager _replay = default!;
     [Dependency] private readonly IServerNetManager _netManager = default!;
     [Dependency] private readonly IAdminManager _adminManager = default!;
-    [Dependency] private readonly IPlayerRolesManager _playerRolesManager = default!;
+    [Dependency] private readonly INullLinkPlayerManager _playerRoles = default!; // NullLink
     [Dependency] private readonly IAdminLogManager _adminLogger = default!;
     [Dependency] private readonly IServerPreferencesManager _preferencesManager = default!;
     [Dependency] private readonly IConfigurationManager _configurationManager = default!;
@@ -283,28 +284,8 @@ internal sealed partial class ChatManager : IChatManager
         var playerName = player.Name;
         var playerTitle = "";
 
-        var playerData = _playerRolesManager.GetPlayerData(player);
-        if (playerData is not null)
-        {
-            var prefix = playerData.HasFlag(PlayerFlags.AlfaTester) ? "α"
-                : playerData.HasFlag(PlayerFlags.BetaTester) ? "β"
-                : "";
-            var title = playerData.HasFlag(PlayerFlags.Staff) ? "Staff "
-                : playerData.HasFlag(PlayerFlags.Mentor) ? "Mentor "
-                : playerData.HasFlag(PlayerFlags.Retiree) ? "Retiree "
-                : "";
-            playerTitle = string.Join("-", ((string[])[prefix, title]).Where(x => !string.IsNullOrEmpty(x)));
-            titleColor = playerData.HasFlag(PlayerFlags.AlfaTester) ? Color.FromHex("#35e500")
-                : playerData.HasFlag(PlayerFlags.BetaTester) ? Color.FromHex("#1c7800")
-                : Color.LightBlue;
-
-            playerName = $"{player.Name}";
-            nameColor = playerData.HasFlag(PlayerFlags.Staff) ? Color.FromHex("#E67E22")
-                : playerData.HasFlag(PlayerFlags.Retiree) ? Color.FromHex("#A84300")
-                : playerData.HasFlag(PlayerFlags.Mentor) ? Color.FromHex("#00ffff")
-                : Color.LightSkyBlue; ;
-
-        }
+        if(_playerRoles.TryGetPlayerData(player.UserId, out var playerData))
+            playerTitle = playerData.Title ?? "";
 
         if (_adminManager.HasAdminFlag(player, AdminFlags.NameColor))
         {
@@ -313,7 +294,7 @@ internal sealed partial class ChatManager : IChatManager
             messageColor = prefs.AdminOOCColor;
         }
 
-        var wrappedMessage = Loc.GetString("chat-manager-send-ooc-wrap-message", ("playerTitle", playerTitle), ("titleColor", titleColor), ("nameColor", nameColor), ("messageColor", messageColor), ("playerName", playerName), ("message", FormattedMessage.EscapeText(message)));
+        var wrappedMessage = Loc.GetString("chat-manager-send-ooc-wrap-message", ("playerTitle", playerTitle), ("nameColor", nameColor), ("messageColor", messageColor), ("playerName", playerName), ("message", FormattedMessage.EscapeText(message)));
 
         if (_netConfigManager.GetClientCVar(player.Channel, CCVars.ShowOocPatronColor) && player.Channel.UserData.PatronTier is { } patron && PatronOocColors.TryGetValue(patron, out var patronColor))
         {

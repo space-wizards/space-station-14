@@ -26,6 +26,8 @@
     - type: WithAttachedBodyParts
       parts:
         left hand: LeftHandCyber
+    - type: RoundstartImplantable
+      cost: 1
 
 - type: entity
   id: RightArmCyber
@@ -43,6 +45,8 @@
     - type: WithAttachedBodyParts
       parts:
         right hand: RightHandCyber
+    - type: RoundstartImplantable
+      cost: 1
 
 - type: entity
   id: LeftHandCyber
@@ -57,6 +61,8 @@
     - type: Icon
       sprite: _Starlight/Mobs/Species/Cyberlimbs/parts.rsi
       state: "l_hand"
+    - type: RoundstartImplantable
+      cost: 1
 
 - type: entity
   id: RightHandCyber
@@ -71,6 +77,8 @@
     - type: Icon
       sprite: _Starlight/Mobs/Species/Cyberlimbs/parts.rsi
       state: "r_hand"
+    - type: RoundstartImplantable
+      cost: 1
 
 - type: entity
   id: LeftLegCyber
@@ -125,6 +133,8 @@
     - type: Icon
       sprite: _Starlight/Mobs/Species/Cyberlimbs/parts.rsi
       state: "l_foot"
+    - type: RoundstartImplantable
+      cost: 1
 
 - type: entity
   id: RightFootCyber
@@ -139,6 +149,8 @@
     - type: Icon
       sprite: _Starlight/Mobs/Species/Cyberlimbs/parts.rsi
       state: "r_foot"
+    - type: RoundstartImplantable
+      cost: 1
       
 #reaper
 - type: entity

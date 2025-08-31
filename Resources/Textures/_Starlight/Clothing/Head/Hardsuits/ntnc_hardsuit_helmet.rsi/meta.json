@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Starlight Abby v2",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "icon"
+    },
+    {
+      "name": "icon-flash"
+    },
+    {
+      "name": "off-equipped-HELMET",
+      "directions": 4
+    },
+    {
+      "name": "on-equipped-HELMET",
+      "directions": 4
+    },
+    {
+      "name": "off-equipped-HELMET-resomi",
+      "directions": 4
+    },
+    {
+      "name": "on-equipped-HELMET-resomi",
+      "directions": 4
+    },
+    {
+      "name": "off-equipped-HELMET-avali",
+      "directions": 4
+    },
+    {
+      "name": "on-equipped-HELMET-avali",
+      "directions": 4
+    },
+    {
+      "name": "off-equipped-HELMET-cyclorite",
+      "directions": 4
+    },
+    {
+      "name": "on-equipped-HELMET-cyclorite",
+      "directions": 4
+    },
+    {
+      "name": "off-equipped-HELMET-felionoid",
+      "directions": 4
+    },
+    {
+      "name": "on-equipped-HELMET-felionoid",
+      "directions": 4
+    },
+    {
+      "name": "off-equipped-HELMET-shadekin",
+      "directions": 4
+    },
+    {
+      "name": "on-equipped-HELMET-shadekin",
+      "directions": 4
+    },
+    {
+      "name": "off-equipped-HELMET-vox",
+      "directions": 4
+    },
+    {
+      "name": "on-equipped-HELMET-vox",
+      "directions": 4
+    },
+    {
+      "name": "off-equipped-HELMET-vulpkanine",
+      "directions": 4
+    },
+    {
+      "name": "on-equipped-HELMET-vulpkanine",
+      "directions": 4
+    }
+  ]
+}

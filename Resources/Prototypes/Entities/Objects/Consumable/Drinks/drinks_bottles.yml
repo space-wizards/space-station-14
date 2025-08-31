@@ -43,6 +43,10 @@
   - type: PressurizedSolution
     solution: drink
   - type: Shakeable
+  # Starlight-edit: Vending Machines Prices
+  - type: ItemPrice
+    priceCategory: drink
+  # Starlight-end
 
 - type: entity
   parent: DrinkBase
@@ -192,6 +196,8 @@
     layers:
       - state: icon
         map: ["enum.OpenableVisuals.Layer"]
+  - type: ExaminableSolution
+    examinableWhileClosed: false # If you can't see fill levels, it's probably opaque
 
 - type: entity
   id: DrinkBottleVisualsAll
@@ -215,6 +221,9 @@
   - type: SolutionContainerVisuals
     maxFillLevels: 5
     fillBaseName: fill-
+    inHandsMaxFillLevels: 3
+    inHandsFillBaseName: -fill-
+  - type: ExaminableSolution
 
 # Large Glass Bottles
 
@@ -331,9 +340,6 @@
           Quantity: 100
   - type: Label
     currentLabel: reagent-name-grenadine
-  # intended use is to spike drinks so starts open
-  - type: Openable
-    opened: true
   - type: Sprite
     sprite: Objects/Consumable/Drinks/grenadinebottle.rsi
   - type: SolutionContainerVisuals
@@ -722,9 +728,6 @@
           Quantity: 30
   - type: Sprite
     sprite: Objects/Consumable/Drinks/waterbottle.rsi
-  - type: SolutionContainerVisuals
-    inHandsMaxFillLevels: 2
-    inHandsFillBaseName: -fill-
   - type: Label
     currentLabel: reagent-name-water
   - type: Sealable

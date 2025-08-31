@@ -33,7 +33,6 @@ public abstract partial class SharedBuckleSystem
     public static ProtoId<AlertCategoryPrototype> BuckledAlertCategory = "Buckled";
 
     [Dependency] private readonly EntityWhitelistSystem _whitelistSystem = default!;
-    [Dependency] private readonly ActionBlockerSystem _actionBlocker = default!;
 
     private void InitializeBuckle()
     {
@@ -449,9 +448,9 @@ public abstract partial class SharedBuckleSystem
     private void Unbuckle(Entity<BuckleComponent> buckle, Entity<StrapComponent> strap, EntityUid? user)
     {
         if (user == buckle.Owner)
-            _adminLogger.Add(LogType.Action, LogImpact.Low, $"{user} unbuckled themselves from {strap}");
+            _adminLogger.Add(LogType.Action, LogImpact.Low, $"{ToPrettyString(user):user} unbuckled themselves from {ToPrettyString(strap):strap}");
         else if (user != null)
-            _adminLogger.Add(LogType.Action, LogImpact.Low, $"{user} unbuckled {buckle} from {strap}");
+            _adminLogger.Add(LogType.Action, LogImpact.Low, $"{ToPrettyString(user):user} unbuckled {ToPrettyString(buckle):target} from {ToPrettyString(strap):strap}");
 
         _audio.PlayPredicted(strap.Comp.UnbuckleSound, strap, user);
 
@@ -523,7 +522,7 @@ public abstract partial class SharedBuckleSystem
             if (!_interaction.InRangeUnobstructed(user.Value, strap.Owner, buckle.Comp.Range, popup: popup))
                 return false;
 
-            if (user.Value != buckle.Owner && !_actionBlocker.CanComplexInteract(user.Value))
+            if (user.Value != buckle.Owner && !ActionBlocker.CanComplexInteract(user.Value))
                 return false;
         }
 

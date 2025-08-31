@@ -19,6 +19,7 @@
   id: SurgeonGear
   equipment:
     ears: ClothingHeadsetMedical
+    belt: ClothingBeltMedicalFilled
   inhand:
     - ClothingBackpackDuffelSurgeryFilled
 

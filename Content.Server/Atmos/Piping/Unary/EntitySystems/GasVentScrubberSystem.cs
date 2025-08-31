@@ -149,7 +149,7 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
 
         private void OnPacketRecv(EntityUid uid, GasVentScrubberComponent component, DeviceNetworkPacketEvent args)
         {
-            if (!EntityManager.TryGetComponent(uid, out DeviceNetworkComponent? netConn)
+            if (!TryComp(uid, out DeviceNetworkComponent? netConn)
                 || !args.Data.TryGetValue(DeviceNetworkConstants.Command, out var cmd))
                 return;
 

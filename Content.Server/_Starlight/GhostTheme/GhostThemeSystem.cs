@@ -41,6 +41,8 @@ using Robust.Shared.Network;
 using Robust.Shared.GameObjects;
 using Content.Server.RoundEnd;
 using Content.Server.GameTicking;
+using Content.Shared._NullLink;
+using Content.Server.Administration.Managers;
 
 namespace Content.Server.Ghost.Roles;
 
@@ -51,9 +53,10 @@ public sealed class GhostThemeSystem : EntitySystem
     [Dependency] private readonly EuiManager _euiManager = default!;
     [Dependency] private readonly GameTicker _gameTicker = default!;
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
-    [Dependency] private readonly ISharedPlayersRoleManager _playerRoles = default!;
+    [Dependency] private readonly ISharedNullLinkPlayerRolesReqManager _nulllinkPlayerRoles = default!;
+    [Dependency] private readonly IPlayerRolesManager _playerRoles = default!;
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
-    
+
     public override void Initialize()
     {
         base.Initialize();
@@ -74,21 +77,25 @@ public sealed class GhostThemeSystem : EntitySystem
 
         if (_openUis.ContainsKey(session))
             CloseEui(session);
-        
+
         HashSet<string> AvailableThemes = new HashSet<string>();
-        
+
         foreach (var ghostTheme in _prototypeManager.EnumeratePrototypes<GhostThemePrototype>())
         {
-            if (_playerRoles.HasAnyPlayerFlags(session, ghostTheme.Flags))
+            if (ghostTheme.Ckey != null)
             {
-                if (ghostTheme.Ckey != null && 
-                    session.Name != ghostTheme.Ckey && 
-                    session.Name != $"localhost@{ghostTheme.Ckey}")
-                {
-                    continue;
-                }
-                AvailableThemes.Add(ghostTheme.ID);
+                if (session.Name == ghostTheme.Ckey || session.Name.Split('@').LastOrDefault() == ghostTheme.Ckey)
+                    AvailableThemes.Add(ghostTheme.ID);
+                continue;
             }
+
+            if (ghostTheme.Requirement is { } req && _prototypeManager.TryIndex(req, out var roleReq))
+            {
+                if (_nulllinkPlayerRoles.IsAnyRole(session, roleReq.Roles))
+                    AvailableThemes.Add(ghostTheme.ID);
+                continue;
+            }
+            AvailableThemes.Add(ghostTheme.ID);
         }
 
         var eui = _openUis[session] = new GhostThemeEui(AvailableThemes);
@@ -110,17 +117,17 @@ public sealed class GhostThemeSystem : EntitySystem
         if (session.AttachedEntity is not { Valid: true } attached ||
             !EntityManager.TryGetComponent<GhostThemeComponent>(attached, out var themes))
             return;
-            
+
         themes.GhostThemeColor = Color;
-        
+
         Dirty(attached, themes);
-        
+
         var playerData = _playerRoles.GetPlayerData(attached);
         if (playerData != null)
         {
             playerData.GhostThemeColor = Color;
         }
-        
+
         _appearance.SetData(attached, GhostThemeVisualLayers.Color, Color);
     }
     public void ChangeTheme(ICommonSession session, string Theme)
@@ -128,17 +135,17 @@ public sealed class GhostThemeSystem : EntitySystem
         if (session.AttachedEntity is not { Valid: true } attached ||
             !EntityManager.TryGetComponent<GhostThemeComponent>(attached, out var themes))
             return;
-            
+
         themes.SelectedGhostTheme = Theme;
-        
+
         Dirty(attached, themes);
-        
+
         var playerData = _playerRoles.GetPlayerData(attached);
         if (playerData != null)
         {
             playerData.GhostTheme = Theme;
         }
-        
+
         _appearance.SetData(attached, GhostThemeVisualLayers.Base, Theme);
     }
     public void UpdateAllEui()
@@ -164,7 +171,7 @@ public sealed class GhostThemeSystem : EntitySystem
             _appearance.SetData(uid, GhostThemeVisualLayers.Color, playerData.GhostThemeColor);
 
             Dirty(uid, theme);
-            
+
             _appearance.SetData(uid, GhostThemeVisualLayers.Base, playerData.GhostTheme);
         }
     }

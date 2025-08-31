@@ -42,6 +42,7 @@
     - id: WizardSpawn
 
     - id: AbductorsSpawn # Starlight
+    - id: DerelictBorgiSpawn # Starlight
     
 - type: entity
   id: BaseStationEvent
@@ -315,6 +316,7 @@
         #sound: "/Audio/Ambience/Antag/wizard_start.ogg"
       # TODO: WizardComp as needed
       components:
+      - type: UniversalLanguageSpeaker
       - type: NpcFactionMember
         factions:
         - Wizard

@@ -2,7 +2,39 @@
   id: BaseOrganBrain
   abstract: true
   components:
+  - type: Item
+    size: Small
+    heldPrefix: brain
+  - type: Organ
+  - type: Input
+    context: "ghost"
+  - type: Brain
+  - type: InputMover
+  - type: Examiner
+  - type: BlockMovement
+  - type: BadFood
+  - type: Tag
+    tags:
+      - Meat
   - type: OrganBrain
+  - type: SolutionContainerManager
+    solutions:
+      organ:
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 10
+      food:
+        maxVol: 20
+        reagents:
+        - ReagentId: GreyMatter
+          Quantity: 20
+  - type: FlavorProfile
+    flavors:
+      - people
+  - type: FoodSequenceElement
+    entries:
+      Burger: Brain
+      Taco: Brain
 
 - type: entity
   id: BaseOrganEyes

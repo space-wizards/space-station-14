@@ -3,6 +3,7 @@ using Content.Shared.Examine;
 using Content.Shared.Hands.Components;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Interaction;
+using Content.Shared.Nutrition;
 using Content.Shared.Popups;
 using Content.Shared.Storage.EntitySystems;
 using JetBrains.Annotations;
@@ -37,6 +38,8 @@ namespace Content.Shared.Stacks
             SubscribeLocalEvent<StackComponent, ComponentStartup>(OnStackStarted);
             SubscribeLocalEvent<StackComponent, ExaminedEvent>(OnStackExamined);
             SubscribeLocalEvent<StackComponent, InteractUsingEvent>(OnStackInteractUsing);
+            SubscribeLocalEvent<StackComponent, BeforeIngestedEvent>(OnBeforeEaten);
+            SubscribeLocalEvent<StackComponent, IngestedEvent>(OnEaten);
 
             _vvm.GetTypeHandler<StackComponent>()
                 .AddPath(nameof(StackComponent.Count), (_, comp) => comp.Count, SetCount);
@@ -146,7 +149,7 @@ namespace Content.Shared.Stacks
             }
 
             // This is shit code until hands get fixed and give an easy way to enumerate over items, starting with the currently active item.
-            foreach (var held in Hands.EnumerateHeld(user, hands))
+            foreach (var held in Hands.EnumerateHeld((user, hands)))
             {
                 TryMergeStacks(item, held, out _, donorStack: itemStack);
 
@@ -349,10 +352,6 @@ namespace Content.Shared.Stacks
 
         private void OnStackStarted(EntityUid uid, StackComponent component, ComponentStartup args)
         {
-            // on client, lingering stacks that start at 0 need to be darkened
-            // on server this does nothing
-            SetCount(uid, component.Count, component);
-
             if (!TryComp(uid, out AppearanceComponent? appearance))
                 return;
 
@@ -363,7 +362,7 @@ namespace Content.Shared.Stacks
 
         private void OnStackGetState(EntityUid uid, StackComponent component, ref ComponentGetState args)
         {
-            args.State = new StackComponentState(component.Count, component.MaxCountOverride, component.Lingering);
+            args.State = new StackComponentState(component.Count, component.MaxCountOverride);
         }
 
         private void OnStackHandleState(EntityUid uid, StackComponent component, ref ComponentHandleState args)
@@ -372,7 +371,6 @@ namespace Content.Shared.Stacks
                 return;
 
             component.MaxCountOverride = cast.MaxCount;
-            component.Lingering = cast.Lingering;
             // This will change the count and call events.
             SetCount(uid, cast.Count, component);
         }
@@ -388,6 +386,51 @@ namespace Content.Shared.Stacks
                     ("markupCountColor", "lightgray")
                 )
             );
+        }
+
+        private void OnBeforeEaten(Entity<StackComponent> eaten, ref BeforeIngestedEvent args)
+        {
+            if (args.Cancelled)
+                return;
+
+            if (args.Solution is not { } sol)
+                return;
+
+            // If the entity is empty and is a lingering entity we can't eat from it.
+            if (eaten.Comp.Count <= 0)
+            {
+                args.Cancelled = true;
+                return;
+            }
+
+            /*
+            Edible stacked items is near completely evil so we must choose one of the following:
+            - Option 1: Eat the entire solution each bite and reduce the stack by 1.
+            - Option 2: Multiply the solution eaten by the stack size.
+            - Option 3: Divide the solution consumed by stack size.
+            The easiest and safest option is and always will be Option 1 otherwise we risk reagent deletion or duplication.
+            That is why we cancel if we cannot set the minimum to the entire volume of the solution.
+            */
+            if(args.TryNewMinimum(sol.Volume))
+                return;
+
+            args.Cancelled = true;
+        }
+
+        private void OnEaten(Entity<StackComponent> eaten, ref IngestedEvent args)
+        {
+            if (!Use(eaten, 1))
+                return;
+
+            // We haven't eaten the whole stack yet or are unable to eat it completely.
+            if (eaten.Comp.Count > 0)
+            {
+                args.Refresh = true;
+                return;
+            }
+
+            // Here to tell the food system to do destroy stuff.
+            args.Destroy = true;
         }
     }
 

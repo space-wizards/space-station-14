@@ -170,3 +170,6 @@ crafting-menu-name-EXOXY = extended-capacity emergency oxygen tank
 crafting-menu-name-CGREN = green crayon
 
 crafting-menu-name-CYELO = yellow crayon
+
+crafting-menu-name-IRS = improvised .30/.45 speed loader
+crafting-menu-text-IRS = Little more than a spring-loaded tube that can hold bullets.

@@ -163,6 +163,7 @@ namespace Content.Client.Options.UI.Tabs
             AddButton(ContentKeyFunctions.Jump); //🌟Starlight🌟
             AddCheckBox("ui-options-hotkey-toggle-walk", _cfg.GetCVar(CCVars.ToggleWalk), HandleToggleWalk);
             InitToggleWalk();
+            AddButton(ContentKeyFunctions.ToggleKnockdown);
 
             AddHeader("ui-options-header-camera");
             AddButton(EngineKeyFunctions.CameraRotateLeft);
@@ -190,6 +191,7 @@ namespace Content.Client.Options.UI.Tabs
             AddHeader("ui-options-header-interaction-adv");
             AddButton(ContentKeyFunctions.SmartEquipBackpack);
             AddButton(ContentKeyFunctions.SmartEquipBelt);
+            AddButton(ContentKeyFunctions.SmartEquipSuitStorage); // Starlight edit - Suit storage Equip
             AddButton(ContentKeyFunctions.OpenBackpack);
             AddButton(ContentKeyFunctions.OpenBelt);
             AddButton(ContentKeyFunctions.ThrowItemInHand);
@@ -218,6 +220,7 @@ namespace Content.Client.Options.UI.Tabs
             AddButton(ContentKeyFunctions.OpenCraftingMenu);
             AddButton(ContentKeyFunctions.OpenGuidebook);
             AddButton(ContentKeyFunctions.OpenInventoryMenu);
+            AddButton(ContentKeyFunctions.OpenLanguageMenu); // Starlight
             AddButton(ContentKeyFunctions.OpenAHelp);
             AddButton(ContentKeyFunctions.OpenMHelp);
             AddButton(ContentKeyFunctions.OpenActionsMenu);

@@ -1,0 +1,40 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Made by Conflee",
+  "size": {"x": 32, "y": 32},
+  "states": [
+    {
+      "name": "forearm_spikes",
+      "directions": 4
+    },
+    {
+      "name": "shoulder_spikes",
+      "directions": 4
+    },
+    {
+      "name": "stars_left",
+      "directions": 4
+    },
+    {
+      "name": "stars_right",
+      "directions": 4
+    },
+    {
+      "name": "stripe_left",
+      "directions": 4
+    },
+    {
+      "name": "stripe_right",
+      "directions": 4
+    },
+    {
+      "name": "wrist_stripe_left",
+      "directions": 4
+    },
+    {
+      "name": "wrist_stripe_right",
+      "directions": 4
+    }
+  ]
+}

@@ -22,6 +22,7 @@ public sealed class EscapeUIController : UIController, IOnStateEntered<GameplayS
 {
     [Dependency] private readonly IClientConsoleHost _console = default!;
     [Dependency] private readonly IClientPlayerRolesManager _player = default!;
+    [Dependency] private readonly INullLinkPlayerRolesManager _playerRoles = default!; // NullLink
     [Dependency] private readonly IUriOpener _uri = default!;
     [Dependency] private readonly IConfigurationManager _cfg = default!;
     [Dependency] private readonly ChangelogUIController _changelog = default!;
@@ -66,11 +67,13 @@ public sealed class EscapeUIController : UIController, IOnStateEntered<GameplayS
         _escapeWindow.OnClose += DeactivateButton;
         _escapeWindow.OnOpen += ActivateButton;
 
+        // NullLink start
         _escapeWindow.DiscordButton.OnPressed += _ =>
         {
-            if(_player.GetDiscordLink() is string link)
+            if(_playerRoles.GetDiscordLink() is string link)
                 _uri.OpenUri(link);
         };
+        // NullLink end
 
         _escapeWindow.ChangelogButton.OnPressed += _ =>
         {

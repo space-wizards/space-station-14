@@ -1,9 +1,9 @@
-using Content.Server.Administration.Commands;
 using Content.Server.Popups;
 using Content.Shared.Popups;
 using Content.Shared.Mobs;
 using Content.Server.Chat;
 using Content.Server.Chat.Systems;
+using Content.Server.Clothing.Systems;
 using Content.Shared.Chat.Prototypes;
 using Robust.Shared.Random;
 using Content.Shared.Stunnable;
@@ -18,24 +18,26 @@ using Content.Shared.NPC.Systems;
 using Robust.Shared.Audio.Systems;
 using Content.Shared.NameModifier.EntitySystems;
 using Content.Shared.Clumsy;
+using Content.Shared.Chat; // Starlight
 
 namespace Content.Server.Cluwne;
 
 public sealed class CluwneSystem : EntitySystem
 {
-    [Dependency] private readonly AutoEmoteSystem _emote = default!;
+    private static readonly ProtoId<DamageGroupPrototype> GeneticDamageGroup = "Genetic";
+
+    [Dependency] private readonly PopupSystem _popupSystem = default!;
+    [Dependency] private readonly SharedAudioSystem _audio = default!;
+    [Dependency] private readonly SharedStunSystem _stunSystem = default!;
+    [Dependency] private readonly DamageableSystem _damageableSystem = default!;
+    [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly ChatSystem _chat = default!;
     [Dependency] private readonly AutoEmoteSystem _autoEmote = default!;
     [Dependency] private readonly NameModifierSystem _nameMod = default!;
-    [Dependency] private readonly DamageableSystem _damageable = default!;
-    [Dependency] private readonly IPrototypeManager _proto = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
-    [Dependency] private readonly MetaDataSystem _meta = default!;
     [Dependency] private readonly NpcFactionSystem _faction = default!;
-    [Dependency] private readonly PopupSystem _popup = default!;
-    [Dependency] private readonly SharedAudioSystem _audio = default!;
-    [Dependency] private readonly SharedStunSystem _stun = default!;
 
+    [Dependency] private readonly OutfitSystem _outfitSystem = default!;
 
     public override void Initialize()
     {
@@ -58,8 +60,8 @@ public sealed class CluwneSystem : EntitySystem
             RemComp<CluwneComponent>(uid);
             RemComp<ClumsyComponent>(uid);
             RemComp<AutoEmoteComponent>(uid);
-            var damageSpec = new DamageSpecifier(_proto.Index<DamageGroupPrototype>("Genetic"), 100);
-            _damageable.TryChangeDamage(uid, damageSpec);
+            var damageSpec = new DamageSpecifier(_prototypeManager.Index(GeneticDamageGroup), 300);
+            _damageableSystem.TryChangeDamage(uid, damageSpec);
         }
     }
 
@@ -72,30 +74,33 @@ public sealed class CluwneSystem : EntitySystem
     {
         if (component.EmoteSoundsId == null)
             return;
-        _proto.TryIndex(component.EmoteSoundsId, out EmoteSounds);
-        
+        _prototypeManager.TryIndex(component.EmoteSoundsId, out EmoteSounds);
+
         var meta = MetaData(uid);
         var name = meta.EntityName;
 
         EnsureComp<AutoEmoteComponent>(uid);
-        _emote.AddEmote(uid, component.AutoEmoteSound);
+        _autoEmote.AddEmote(uid, component.AutoEmoteSound);
         EnsureComp<ClumsyComponent>(uid);
 
+        #region Starlight
         if (component.IsCluwne)
         {
-            _popup.PopupEntity(Loc.GetString("cluwne-transform", ("target", uid)), uid, PopupType.LargeCaution);
+            _popupSystem.PopupEntity(Loc.GetString("cluwne-transform", ("target", uid)), uid, PopupType.LargeCaution);
             _audio.PlayPvs(component.SpawnSound, uid);
-            _meta.SetEntityName(uid, Loc.GetString("cluwne-name-prefix", ("baseName", name)), meta);
-            SetOutfitCommand.SetOutfit(uid, "CluwneGear", EntityManager);
+
+            _outfitSystem.SetOutfit(uid, "CluwneGear");
             _faction.RemoveFaction(uid, "NanoTrasen", false);
             _faction.AddFaction(uid, "HonkNeutral");
         }
         else
         {
             Spawn(component.Portal, Transform(uid).Coordinates);
-            SetOutfitCommand.SetOutfit(uid, "CluwneBeastGear", EntityManager);
+            _outfitSystem.SetOutfit(uid, "CluwneBeastGear");
             _audio.PlayPvs(component.ArrivalSound, uid);
         }
+        _nameMod.RefreshNameModifiers(uid);
+        #endregion Starlight
     }
 
     /// <summary>
@@ -115,7 +120,7 @@ public sealed class CluwneSystem : EntitySystem
         else if (_random.Prob(component.KnockChance))
         {
             _audio.PlayPvs(component.KnockSound, uid);
-            _stun.TryParalyze(uid, TimeSpan.FromSeconds(component.ParalyzeTime), true);
+            _stunSystem.TryUpdateParalyzeDuration(uid, TimeSpan.FromSeconds(component.ParalyzeTime));
             _chat.TrySendInGameICMessage(uid, "spasms", InGameICChatType.Emote, ChatTransmitRange.Normal);
         }
     }

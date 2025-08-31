@@ -1,17 +1,6 @@
-using System;
-using System.Linq;
-using Content.Server.Atmos.EntitySystems;
-using Content.Server.Chat.Managers;
-using Content.Server.Lightning;
-using Content.Server.Radio.EntitySystems;
-using Content.Server.Starlight.Energy.Supermatter;
-using Content.Shared.Abilities.Goliath;
-using Content.Shared.Atmos;
 using Content.Shared.Coordinates.Helpers;
 using Content.Shared.Directions;
 using Content.Shared.Maps;
-using Content.Shared.Physics;
-using Content.Shared.Random.Helpers;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Random;
@@ -24,6 +13,7 @@ public sealed class SupermatterCascadeSystem : EntitySystem
     [Dependency] private readonly SharedTransformSystem _transform = default!;
     [Dependency] private readonly SharedMapSystem _map = default!;
     [Dependency] private readonly EntityLookupSystem _lookup = default!;
+    [Dependency] private readonly TurfSystem _turf = default!;
 
     private readonly LinkedList<Branch> _branches = [];
     private LinkedListNode<Branch>? node;
@@ -84,16 +74,13 @@ public sealed class SupermatterCascadeSystem : EntitySystem
         if (_transform.GetGrid(branch.Coordinates) is not { } grid
             || !TryComp<MapGridComponent>(grid, out var gridComp)
             || !_map.TryGetTileRef(grid, gridComp, branch.Coordinates, out var tileRef)
-            || tileRef.IsSpace())
+            || _turf.IsSpace(tileRef))
         {
             _branches.Remove(node);
             node = nextNode;
             return;
         }
         branch.Coordinates = branch.Coordinates.SnapToGrid(gridComp);
-
-        foreach (var entity in _lookup.GetEntitiesIntersecting(branch.Coordinates))
-            QueueDel(entity);
 
         SpawnAttachedTo(_random.Pick(_prototypes), branch.Coordinates);
 

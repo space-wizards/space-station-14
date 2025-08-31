@@ -257,3 +257,169 @@
     size: Huge
   - type: StaticPrice
     price: 5000
+
+## Cool
+
+- type: entity
+  parent: ClothingNeckBase
+  id: ClothingNeckTatteredHood
+  name: tattered hood
+  description: A tattered hood of dull fabric. It's weave is thick and coarse, whatever tore this took some effort.
+  components:
+  - type: Sprite
+    sprite: _Starlight/Clothing/Neck/Cloaks/tattered_hood.rsi
+  - type: Clothing
+    sprite: _Starlight/Clothing/Neck/Cloaks/tattered_hood.rsi
+  - type: Tag
+    tags:
+    - ClothMade
+    - WhitelistChameleon
+
+## colored
+
+# - type: entity
+  # parent: ClothingNeckBase
+  # id: ClothingNeckTornCapeGray
+  # name: gray torn cape
+  # description: A torn cape. You look awesome.
+  # components:
+  # - type: Sprite
+    # sprite: _Starlight/Clothing/Neck/Cloaks/torn_cloak.rsi
+  # - type: Clothing
+    # sprite: _Starlight/Clothing/Neck/Cloaks/torn_cloak.rsi
+  # - type: Tag
+    # tags:
+    # - ClothMade
+    # - WhitelistChameleon
+    
+# - type: entity
+  # parent: ClothingNeckBase
+  # id: ClothingNeckTornCapeBlue
+  # name: blue torn cape
+  # description: A torn cape. You look awesome.
+  # components:
+  # - type: Sprite
+    # sprite: _Starlight/Clothing/Neck/Cloaks/torn_cloak.rsi
+    # layers:
+    # - state: icon
+      # color: "#52aecc"
+  # - type: Clothing
+    # sprite: _Starlight/Clothing/Neck/Cloaks/torn_cloak.rsi
+    # clothingVisuals:
+      # jumpsuit:
+      # - state: equipped-NECK
+        # color: "#52aecc"
+  # - type: Tag
+    # tags:
+    # - ClothMade
+    # - WhitelistChameleon
+
+# - type: entity
+  # parent: ClothingNeckBase
+  # id: ClothingNeckTornCapeGreen
+  # name: green torn cape
+  # description: A torn cape. You look awesome.
+  # components:
+  # - type: Sprite
+    # sprite: _Starlight/Clothing/Neck/Cloaks/torn_cloak.rsi
+    # layers:
+    # - state: icon
+      # color: "#9ed63a"
+  # - type: Clothing
+    # sprite: _Starlight/Clothing/Neck/Cloaks/torn_cloak.rsi
+    # clothingVisuals:
+      # jumpsuit:
+      # - state: equipped-NECK
+        # color: "#9ed63a"
+  # - type: Tag
+    # tags:
+    # - ClothMade
+    # - WhitelistChameleon
+
+# - type: entity
+  # parent: ClothingNeckBase
+  # id: ClothingNeckTornCapeOrange
+  # name: orange torn cape
+  # description: A torn cape. You look awesome.
+  # components:
+  # - type: Sprite
+    # sprite: _Starlight/Clothing/Neck/Cloaks/torn_cloak.rsi
+    # layers:
+    # - state: icon
+      # color: "#ff8c19"
+  # - type: Clothing
+    # sprite: _Starlight/Clothing/Neck/Cloaks/torn_cloak.rsi
+    # clothingVisuals:
+      # jumpsuit:
+      # - state: equipped-NECK
+        # color: "#ff8c19"
+  # - type: Tag
+    # tags:
+    # - ClothMade
+    # - WhitelistChameleon
+
+# - type: entity
+  # parent: ClothingNeckBase
+  # id: ClothingNeckTornCapeRed
+  # name: red torn cape
+  # description: A torn cape. You look awesome.
+  # components:
+  # - type: Sprite
+    # sprite: _Starlight/Clothing/Neck/Cloaks/torn_cloak.rsi
+    # layers:
+    # - state: icon
+      # color: "#eb0c07"
+  # - type: Clothing
+    # sprite: _Starlight/Clothing/Neck/Cloaks/torn_cloak.rsi
+    # clothingVisuals:
+      # jumpsuit:
+      # - state: equipped-NECK
+        # color: "#eb0c07"
+  # - type: Tag
+    # tags:
+    # - ClothMade
+    # - WhitelistChameleon
+
+# - type: entity
+  # parent: ClothingNeckBase
+  # id: ClothingNeckTornCapePurple
+  # name: purple torn cape
+  # description: A torn cape. You look awesome.
+  # components:
+  # - type: Sprite
+    # sprite: _Starlight/Clothing/Neck/Cloaks/torn_cloak.rsi
+    # layers:
+    # - state: icon
+      # color: "#9f70cc"
+  # - type: Clothing
+    # sprite: _Starlight/Clothing/Neck/Cloaks/torn_cloak.rsi
+    # clothingVisuals:
+      # jumpsuit:
+      # - state: equipped-NECK
+        # color: "#9f70cc"
+  # - type: Tag
+    # tags:
+    # - ClothMade
+    # - WhitelistChameleon
+
+# - type: entity
+  # parent: ClothingNeckBase
+  # id: ClothingNeckTornCapeBrown
+  # name: brown torn cape
+  # description: A torn cape. You look awesome.
+  # components:
+  # - type: Sprite
+    # sprite: _Starlight/Clothing/Neck/Cloaks/torn_cloak.rsi
+    # layers:
+    # - state: icon
+      # color: "#c59431"
+  # - type: Clothing
+    # sprite: _Starlight/Clothing/Neck/Cloaks/torn_cloak.rsi
+    # clothingVisuals:
+      # jumpsuit:
+      # - state: equipped-NECK
+        # color: "#c59431"
+  # - type: Tag
+    # tags:
+    # - ClothMade
+    # - WhitelistChameleon

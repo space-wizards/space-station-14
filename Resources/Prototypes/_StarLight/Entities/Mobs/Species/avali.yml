@@ -5,6 +5,13 @@
   id: BaseMobAvali
   abstract: true
   components:
+    - type: LanguageKnowledge
+      speaks:
+      - GalacticCommon
+      - Scratch
+      understands:
+      - GalacticCommon
+      - Scratch
     - type: Tag
       tags:
         - CanPilot
@@ -66,13 +73,12 @@
     - type: Speech
       speechVerb: Parrot # RMC did it right.
       speechSounds: MaleAvali
+      allowedEmotes: ['Chirp', 'Hisses', 'Purr', 'Growl', 'Trill', 'Scree', 'Call', 'Squawk']
     - type: MobThresholds
       thresholds:
         0: Alive
         90: Critical
         180: Dead
-    - type: Sprite
-      scale: 0.91, 0.91
     - type: TemperatureSpeed
       thresholds:
         250: 0.9

@@ -1,0 +1,164 @@
+- type: entity
+  parent: BaseGameRule
+  id: RailroadingTest
+  components:
+  - type: StationEvent
+    earliestStart: 1
+    weight: 33.3
+    minimumPlayers: 10
+    duration: 1
+  - type: RailroadRule
+    preSpawnDelay: 3
+    delay: 3
+    cards:
+#    - RRCardFoodSashimi
+#    - RRCardFoodApplePie
+#    - RRCardFoodDumplings
+#    - RRCardFoodHerbSalad
+#    - RRCardFoodMelonFruitBowl
+#    - RRCardFoodStew
+#    - RRCardMetabolizeNicotine
+#    - RRCardMetabolizeTest
+    - RRCardCriminal
+    
+- type: entity
+  parent: BaseGameRule
+  id: RailroadingMinor
+  components:
+  - type: StationEvent
+    earliestStart: 1
+    weight: 33.3
+    minimumPlayers: 10
+    duration: 1
+  - type: RailroadRule
+    preSpawnDelay: 10
+    delay: 10
+    cards:
+    # antagonists
+    
+    - RRCardCriminal
+
+    # Metabolize: Food
+
+    - RRCardFoodSashimi
+    - RRCardFoodApplePie
+    - RRCardFoodDumplings
+    - RRCardFoodHerbSalad
+    - RRCardFoodMelonFruitBowl
+    - RRCardFoodStew
+    
+    # Metabolize: Smokeables
+    
+    - RRCardMetabolizeNicotine
+    
+    # Metabolize: Alcohol Drinks
+    
+    - RRCardMetabolizeAbsinthe
+    - RRCardMetabolizeAle
+    - RRCardMetabolizeBeer
+    - RRCardMetabolizeBlueCuracao
+    - RRCardMetabolizeCognac
+    - RRCardMetabolizeGin
+    - RRCardMetabolizeCoffeeLiqueur
+    - RRCardMetabolizeMelonLiquor
+    - RRCardMetabolizeRum
+    - RRCardMetabolizeSake
+    - RRCardMetabolizeTequila
+    - RRCardMetabolizeVermouth
+    - RRCardMetabolizeVodka
+    - RRCardMetabolizeWhiskey
+    - RRCardMetabolizeWine
+    - RRCardMetabolizeChampagne
+    - RRCardMetabolizeAcidSpit
+    - RRCardMetabolizeAlienBrainHemorrhage
+    - RRCardMetabolizeAlliesCocktail
+    - RRCardMetabolizeAmasec
+    - RRCardMetabolizeAndalusia
+    - RRCardMetabolizeAntifreeze
+    - RRCardMetabolizeAtomicBomb
+    - RRCardMetabolizeB52
+    - RRCardMetabolizeBahamaMama
+    - RRCardMetabolizeBananaHonk
+    - RRCardMetabolizeBarefoot
+    - RRCardMetabolizeBeepskySmash
+    - RRCardMetabolizeBlackRussian
+    - RRCardMetabolizeBloodyMary
+    - RRCardMetabolizeBooger
+    - RRCardMetabolizeBraveBull
+    - RRCardMetabolizeBronx
+    - RRCardMetabolizeCoconutRum
+    - RRCardMetabolizeCosmopolitan
+    - RRCardMetabolizeCrushDepth
+    - RRCardMetabolizeCubaLibre
+    - RRCardMetabolizeDarkandStormy
+    - RRCardMetabolizeDemonsBlood
+    - RRCardMetabolizeDevilsKiss
+    - RRCardMetabolizeDoctorsDelight
+    - RRCardMetabolizeDriestMartini
+    - RRCardMetabolizeEggnog
+    - RRCardMetabolizeElectricShark
+    - RRCardMetabolizeErikaSurprise
+    - RRCardMetabolizeGargleBlaster
+    - RRCardMetabolizeGinFizz
+    - RRCardMetabolizeGinTonic
+    - RRCardMetabolizeGildlager
+    - RRCardMetabolizeGrog
+    - RRCardMetabolizeHippiesDelight
+    - RRCardMetabolizeHooch
+    - RRCardMetabolizeIcedBeer
+    - RRCardMetabolizeIrishCarBomb
+    - RRCardMetabolizeIrishCream
+    - RRCardMetabolizeIrishCoffee
+    - RRCardMetabolizeJackRose
+    - RRCardMetabolizeJungleBird
+    - RRCardMetabolizeKalimotxo
+    - RRCardMetabolizeLongIslandIcedTea
+    - RRCardMetabolizeManhattan
+    - RRCardMetabolizeManhattanProject
+    - RRCardMetabolizeManlyDorf
+    - RRCardMetabolizeMargarita
+    - RRCardMetabolizeMartini
+    - RRCardMetabolizeMead
+    - RRCardMetabolizeMojito
+    - RRCardMetabolizeMonkeyBusiness
+    - RRCardMetabolizeMoonshine
+    - RRCardMetabolizePainkiller
+    - RRCardMetabolizePatron
+    - RRCardMetabolizeRedMead
+    - RRCardMetabolizePinaColada
+    - RRCardMetabolizeRadler
+    - RRCardMetabolizeSbiten
+    - RRCardMetabolizeScrewdriverCocktail
+    - RRCardMetabolizeCogChamp
+    - RRCardMetabolizeSilencer
+    - RRCardMetabolizeSnowWhite
+    - RRCardMetabolizeSuiDream
+    - RRCardMetabolizeSyndicateBomb
+    - RRCardMetabolizeTequilaSunrise
+    - RRCardMetabolizeTheMartinez
+    - RRCardMetabolizeThreeMileIsland
+    - RRCardMetabolizeToxinsSpecial
+    - RRCardMetabolizeVampiro
+    - RRCardMetabolizeVodkaMartini
+    - RRCardMetabolizeVodkaTonic
+    - RRCardMetabolizeWhiskeyCola
+    - RRCardMetabolizeWhiskeySoda
+    - RRCardMetabolizeWhiteGilgamesh
+    - RRCardMetabolizeWhiteRussian
+    - RRCardMetabolizeVodkaRedBool
+    - RRCardMetabolizeXenoBasher
+    - RRCardMetabolizeBudgetInsulsDrink
+    - RRCardMetabolizeWatermelonWakeup
+    - RRCardMetabolizeRubberneck
+    - RRCardMetabolizeBlueHawaiian
+    - RRCardMetabolizeCaipirinha
+    - RRCardMetabolizeMoscowMule
+    - RRCardMetabolizeMimeosa
+    - RRCardMetabolizeMimosa
+    - RRCardMetabolizeMayojito
+    - RRCardMetabolizeDeathInTheAfternoon
+    - RRCardMetabolizeEspressoMartini
+    - RRCardMetabolizeDaiquiri
+    - RRCardMetabolizeTheSunAlsoRises
+    - RRCardMetabolizeWhiskeySour
+    - RRCardMetabolizeBacchusBlessing

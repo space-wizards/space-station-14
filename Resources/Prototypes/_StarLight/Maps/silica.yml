@@ -1,0 +1,78 @@
+- type: gameMap
+  id: StarlightSilica
+  mapName: 'Silica Station'
+  mapPath: /Maps/_Starlight/Stations/Silica.yml
+  minPlayers: 20
+  maxPlayers: 80
+  stations:
+    StarlightSilica:
+      stationProto: StandardNanotrasenStation
+      components:
+        - type: StationNameSetup
+          mapNameTemplate: '{0} Silica Station {1}'
+          nameGenerator:
+            !type:NanotrasenNameGenerator
+            prefixCreator: 'CW'
+        - type: StationEmergencyShuttle
+          emergencyShuttlePath: /Maps/Shuttles/emergency_elkridge.yml
+        - type: StationCargoShuttle
+          path: /Maps/_Starlight/Shuttles/cargo_silica.yml
+        - type: StationJobs
+          availableJobs:
+            # 92 jobs, 82 not counting training jobs
+            #service (17)
+            Captain: [ 1, 1 ]
+            HeadOfPersonnel: [ 1, 1 ]
+            Bartender: [ 2, 2 ]
+            Botanist: [ 2, 2 ]
+            Chef: [ 2, 2 ]
+            Janitor: [ 2, 2 ]
+            Chaplain: [ 1, 1 ]
+            Librarian: [ 1, 1 ]
+            Reporter: [ 1, 2 ]
+            ServiceWorker: [ 2, 3 ]
+            #engineering (9)
+            ChiefEngineer: [ 1, 1 ]
+            AtmosphericTechnician: [ 2, 2 ]
+            StationEngineer: [ 3, 4 ]
+            TechnicalAssistant: [ 2, 2 ]
+            #medical (13)
+            ChiefMedicalOfficer: [ 1, 1 ]
+            Chemist: [ 2, 2 ]
+            MedicalDoctor: [ 4, 4 ]
+            MedicalIntern: [ 2, 2 ]
+            Paramedic: [ 2, 2 ]
+            Surgeon: [ 1, 1 ]
+            Psychologist: [ 1, 1 ]
+            #science (9)
+            ResearchDirector: [ 1, 1 ]
+            Scientist: [ 3, 4 ]
+            ResearchAssistant: [ 2, 2 ]
+            Roboticist: [ 2, 2 ]
+            #security (16)
+            HeadOfSecurity: [ 1, 1 ]
+            Warden: [ 1, 1 ]
+            SecurityOfficer: [ 4, 8 ]
+            Detective: [ 1, 1 ]
+            SecurityCadet: [ 2, 4 ]
+            Brigmedic: [ 1, 1 ]
+            #supply (15)
+            Quartermaster: [ 1, 1 ]
+            SalvageSpecialist: [ 4, 4 ]
+            MiningSpecialist: [ 2, 2 ]
+            CargoTechnician: [ 2, 4 ]
+            MailTech: [ 1, 2 ]
+            #civilian (3+)
+            Assistant: [ -1, -1 ]
+            Clown: [ 1, 1 ]
+            Mime: [ 1, 1 ]
+            Musician: [ 1, 1 ]
+            #silicon (5)
+            StationAi: [ 1, 1 ]
+            Borg: [ 2, 4 ]
+            #law (3)
+            Magistrate: [ 1, 1 ]
+            IAA: [ 2, 2 ]
+            #Representives (2)
+            BlueShield: [ 1, 1 ]
+            NanoTrasenRepresentative: [ 1, 1 ]

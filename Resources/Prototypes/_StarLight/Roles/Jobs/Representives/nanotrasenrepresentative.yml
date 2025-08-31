@@ -7,12 +7,8 @@
     - !type:DepartmentTimeRequirement
       department: Command
       time: 72000 # 20 hrs
-    - !type:AnyFlagsRequirement
-      flags:
-      - Staff
-      - Mentor
-      - ExtRoles
-      - Retiree
+    - !type:RolesRequirement
+      proto: ExtRolesReq
   startingGear: NanoTrasenRepresentativeGear
   icon: JobIconNanotrasen
   supervisors: job-supervisors-centcom

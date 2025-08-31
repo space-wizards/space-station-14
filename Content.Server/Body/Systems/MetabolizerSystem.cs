@@ -1,10 +1,13 @@
 using Content.Server.Body.Components;
-using Content.Shared.Chemistry.EntitySystems;
+using Content.Shared._Starlight.Railroading.Events; // Starlight-edit
 using Content.Shared.Administration.Logs;
+using Content.Shared.Body.Events;
 using Content.Shared.Body.Organ;
 using Content.Shared.Body.Prototypes;
+using Content.Shared.Body.Systems;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Components.SolutionManager;
+using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Database;
 using Content.Shared.EntityEffects;
@@ -18,7 +21,8 @@ using Robust.Shared.Timing;
 
 namespace Content.Server.Body.Systems
 {
-    public sealed class MetabolizerSystem : EntitySystem
+    /// <inheritdoc/>
+    public sealed class MetabolizerSystem : SharedMetabolizerSystem
     {
         [Dependency] private readonly IGameTiming _gameTiming = default!;
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
@@ -45,7 +49,7 @@ namespace Content.Server.Body.Systems
 
         private void OnMapInit(Entity<MetabolizerComponent> ent, ref MapInitEvent args)
         {
-            ent.Comp.NextUpdate = _gameTiming.CurTime + ent.Comp.UpdateInterval;
+            ent.Comp.NextUpdate = _gameTiming.CurTime + ent.Comp.AdjustedUpdateInterval;
         }
 
         private void OnUnpaused(Entity<MetabolizerComponent> ent, ref EntityUnpausedEvent args)
@@ -65,20 +69,9 @@ namespace Content.Server.Body.Systems
             }
         }
 
-        private void OnApplyMetabolicMultiplier(
-            Entity<MetabolizerComponent> ent,
-            ref ApplyMetabolicMultiplierEvent args)
+        private void OnApplyMetabolicMultiplier(Entity<MetabolizerComponent> ent, ref ApplyMetabolicMultiplierEvent args)
         {
-            // TODO REFACTOR THIS
-            // This will slowly drift over time due to floating point errors.
-            // Instead, raise an event with the base rates and allow modifiers to get applied to it.
-            if (args.Apply)
-            {
-                ent.Comp.UpdateInterval *= args.Multiplier;
-                return;
-            }
-
-            ent.Comp.UpdateInterval /= args.Multiplier;
+            ent.Comp.UpdateIntervalMultiplier = args.Multiplier;
         }
 
         public override void Update(float frameTime)
@@ -99,7 +92,7 @@ namespace Content.Server.Body.Systems
                 if (_gameTiming.CurTime < metab.NextUpdate)
                     continue;
 
-                metab.NextUpdate += metab.UpdateInterval;
+                metab.NextUpdate += metab.AdjustedUpdateInterval;
                 TryMetabolize((uid, metab));
             }
         }
@@ -147,6 +140,8 @@ namespace Content.Server.Body.Systems
             var list = solution.Contents.ToArray();
             _random.Shuffle(list);
 
+            var actualEntity = ent.Comp2?.Body ?? solutionEntityUid.Value; // Starlight-edit
+
             int reagents = 0;
             foreach (var (reagent, quantity) in list)
             {
@@ -158,7 +153,15 @@ namespace Content.Server.Body.Systems
                 {
                     if (ent.Comp1.RemoveEmpty)
                     {
-                        solution.RemoveReagent(reagent, FixedPoint2.New(1));
+                        // Starlight-start: Railroading Metabolized
+
+                        mostToRemove = FixedPoint2.Clamp(quantity, 0, 1);
+
+                        var @event = new RailroadingReagentMetabolizedEvent(new ReagentQuantity(reagent, mostToRemove));
+                        RaiseLocalEvent(actualEntity, ref @event);
+
+                        solution.RemoveReagent(reagent, mostToRemove); // Wizdens code: Changed from FixedPoint2.New to mostToRemove.
+                        // Starlight-end
                     }
 
                     continue;
@@ -194,7 +197,7 @@ namespace Content.Server.Body.Systems
                             continue;
                     }
 
-                    var actualEntity = ent.Comp2?.Body ?? solutionEntityUid.Value;
+                    // Starlight-edit: Moved actualEntity up from ForEach to use it in another places. 
                     var args = new EntityEffectReagentArgs(actualEntity, EntityManager, ent, solution, mostToRemove, proto, null, scale);
 
                     // do all effects, if conditions apply
@@ -222,6 +225,13 @@ namespace Content.Server.Body.Systems
                 // remove a certain amount of reagent
                 if (mostToRemove > FixedPoint2.Zero)
                 {
+                    // Starlight-start: Railroading Metabolized
+
+                    var @event = new RailroadingReagentMetabolizedEvent(new ReagentQuantity(reagent, mostToRemove));
+                    RaiseLocalEvent(actualEntity, ref @event);
+
+                    // Starlight-end
+
                     solution.RemoveReagent(reagent, mostToRemove);
 
                     // We have processed a reagant, so count it towards the cap
@@ -256,30 +266,5 @@ namespace Content.Server.Body.Systems
             if (component.MetabolizerTypes != null)
                 component.MetabolizerTypes.Clear();
         }
-    }
-
-    // TODO REFACTOR THIS
-    // This will cause rates to slowly drift over time due to floating point errors.
-    // Instead, the system that raised this should trigger an update and subscribe to get-modifier events.
-    [ByRefEvent]
-    public readonly record struct ApplyMetabolicMultiplierEvent(
-        EntityUid Uid,
-        float Multiplier,
-        bool Apply)
-    {
-        /// <summary>
-        /// The entity whose metabolism is being modified.
-        /// </summary>
-        public readonly EntityUid Uid = Uid;
-
-        /// <summary>
-        /// What the metabolism's update rate will be multiplied by.
-        /// </summary>
-        public readonly float Multiplier = Multiplier;
-
-        /// <summary>
-        /// If true, apply the multiplier. If false, revert it.
-        /// </summary>
-        public readonly bool Apply = Apply;
     }
 }

@@ -92,6 +92,9 @@ ui-options-vp-integer-scaling-tooltip = If this option is enabled, the viewport 
                                         at specific resolutions. While this results in crisp textures, it also often
                                         means that black bars appear at the top/bottom of the screen or that part
                                         of the viewport is not visible.
+ui-options-filter-label = Scaling filter:
+ui-options-filter-nearest = Nearest (no smoothing)
+ui-options-filter-bilinear = Bilinear (smoothed)
 ui-options-trace = Display the bullet's trace
 ui-options-trace-tooltip = If you're lagging while shooting, uncheck this box,
                            and the hitscan won't display the texture of the smoke behind the flying bullet.
@@ -101,6 +104,7 @@ ui-options-vp-vertical-fit-tooltip = When enabled, the main viewport will ignore
                                      will cause the viewport to be cut off on the horizontal axis.
 ui-options-vp-low-res = Low-resolution viewport
 ui-options-parallax-low-quality = Low-quality Parallax (background)
+ui-options-ambient-occlusion = Show Ambient Occlusion
 ui-options-fps-counter = Show FPS counter
 ui-options-vp-width = Viewport width:
 ui-options-hud-layout = HUD layout:
@@ -138,6 +142,7 @@ ui-options-function-move-left = Move Left
 ui-options-function-move-down = Move Down
 ui-options-function-move-right = Move Right
 ui-options-function-walk = Walk
+ui-options-function-toggle-knockdown = Toggle Crawling
 
 ui-options-function-camera-rotate-left = Rotate left
 ui-options-function-camera-rotate-right = Rotate right

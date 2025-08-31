@@ -1,3 +1,4 @@
+using System.Linq;
 using Content.Shared.Actions;
 using Content.Shared.Implants.Components;
 using Content.Shared.Interaction;
@@ -6,9 +7,7 @@ using Content.Shared.Mobs;
 using Content.Shared.Tag;
 using JetBrains.Annotations;
 using Robust.Shared.Containers;
-using Robust.Shared.Network;
 using Robust.Shared.Prototypes;
-using System.Linq;
 
 namespace Content.Shared.Implants;
 
@@ -45,7 +44,8 @@ public abstract class SharedSubdermalImplantSystem : EntitySystem
             _actionsSystem.AddAction(component.ImplantedEntity.Value, ref component.Action, component.ImplantAction, uid);
         }
 
-        //replace micro bomb with macro bomb
+        // replace micro bomb with macro bomb
+        // TODO: this shouldn't be hardcoded here
         if (_container.TryGetContainer(component.ImplantedEntity.Value, ImplanterComponent.ImplantSlotId, out var implantContainer) && _tag.HasTag(uid, MacroBombTag))
         {
             foreach (var implant in implantContainer.ContainedEntities)
@@ -91,7 +91,7 @@ public abstract class SharedSubdermalImplantSystem : EntitySystem
     /// Add a list of implants to a person.
     /// Logs any implant ids that don't have <see cref="SubdermalImplantComponent"/>.
     /// </summary>
-    public void AddImplants(EntityUid uid, IEnumerable<String> implants)
+    public void AddImplants(EntityUid uid, IEnumerable<EntProtoId> implants)
     {
         foreach (var id in implants)
         {
@@ -180,7 +180,7 @@ public abstract class SharedSubdermalImplantSystem : EntitySystem
         if (!_container.TryGetContainer(uid, ImplanterComponent.ImplantSlotId, out var implantContainer))
             return;
 
-        var relayEv = new ImplantRelayEvent<T>(args);
+        var relayEv = new ImplantRelayEvent<T>(args, uid);
         foreach (var implant in implantContainer.ContainedEntities)
         {
             if (args is HandledEntityEventArgs { Handled : true })
@@ -195,9 +195,12 @@ public sealed class ImplantRelayEvent<T> where T : notnull
 {
     public readonly T Event;
 
-    public ImplantRelayEvent(T ev)
+    public readonly EntityUid ImplantedEntity;
+
+    public ImplantRelayEvent(T ev, EntityUid implantedEntity)
     {
         Event = ev;
+        ImplantedEntity = implantedEntity;
     }
 }
 

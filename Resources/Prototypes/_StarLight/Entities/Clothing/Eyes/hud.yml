@@ -27,7 +27,7 @@
   parent: [ ClothingEyesBase, ShowSecurityIcons, BaseSecurityContraband ]
   id: ClothingEyesHudBrigmedic
   name: brigmedic hud
-  description: Tamashi-upgraded Huds. Yes. Brigmedic ones.
+  description: Tamashi-upgraded HUDs. Yes. Brigmedic ones.
   components:
   - type: Sprite
     sprite: _Starlight/Clothing/Eyes/Hud/brigmedichud.rsi
@@ -36,6 +36,7 @@
   - type: EyeProtection
     protectionTime: 5
   - type: ShowHealthBars
+  - type: SolutionScanner
   - type: Construction
     graph: GlassesSecHUD
     node: glassesSec

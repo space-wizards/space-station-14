@@ -102,8 +102,7 @@ namespace Content.Client.Lobby.UI
 
         private bool _isDirty;
 
-        [ValidatePrototypeId<GuideEntryPrototype>]
-        private const string DefaultSpeciesGuidebook = "Species";
+        private static readonly ProtoId<GuideEntryPrototype> DefaultSpeciesGuidebook = "Species";
 
         public event Action<List<ProtoId<GuideEntryPrototype>>>? OnOpenGuidebook;
 
@@ -242,6 +241,34 @@ namespace Content.Client.Lobby.UI
                 UpdateCustomSpecieNameEdit(); // Starlight
             };
 
+            //starlight start
+            #region Size
+            UpdateSizeControls();
+
+            WidthSlider.OnValueChanged += args =>
+            {
+                SetWidth(args.Value);
+            };
+
+            HeightSlider.OnValueChanged += args =>
+            {
+                SetHeight(args.Value);
+            };
+
+            WidthResetButton.OnPressed += _ =>
+            {
+                if(Profile is null) return;
+                if (_prototypeManager.TryIndex<SpeciesPrototype>(Profile.Species, out var speciesPrototype)) WidthSlider.Value = speciesPrototype.DefaultWidth;
+            };
+
+            HeightResetButton.OnPressed += _ =>
+            {
+                if (Profile is null) return;
+                if (_prototypeManager.TryIndex<SpeciesPrototype>(Profile.Species, out var speciesPrototype)) HeightSlider.Value = speciesPrototype.DefaultHeight;
+            };
+            #endregion Size
+            //starlight end
+
             #region Skin
 
             Skin.OnValueChanged += _ =>
@@ -250,6 +277,7 @@ namespace Content.Client.Lobby.UI
             };
 
             RgbSkinColorContainer.AddChild(_rgbSkinColorSelector = new ColorSelectorSliders());
+            _rgbSkinColorSelector.SelectorType = ColorSelectorSliders.ColorSelectorType.Hsv; // defaults color selector to HSV
             _rgbSkinColorSelector.OnColorChanged += _ =>
             {
                 OnSkinColorOnValueChanged();
@@ -456,6 +484,12 @@ namespace Content.Client.Lobby.UI
             Markings.OnMarkingRankChange += OnMarkingChange;
 
             #endregion Markings
+
+            // Starlight
+            #region Cybernetics
+            TabContainer.SetTabTitle(5, Loc.GetString("humanoid-profile-editor-cybernetics-tab"));
+            Cybernetics.OnCyberneticsUpdated += OnCyberneticsUpdated;
+            #endregion Cybernetics
 
             RefreshFlavorText();
 
@@ -718,6 +752,7 @@ namespace Content.Client.Lobby.UI
             _species.Clear();
 
             _species.AddRange(_prototypeManager.EnumeratePrototypes<SpeciesPrototype>().Where(o => o.RoundStart));
+            _species.Sort((a, b) => string.Compare(a.Name, b.Name, StringComparison.OrdinalIgnoreCase)); // Starlight
             var speciesIds = _species.Select(o => o.ID).ToList();
 
             for (var i = 0; i < _species.Count; i++)
@@ -861,6 +896,7 @@ namespace Content.Client.Lobby.UI
             UpdateFlavorTextEdit();
             UpdateSexControls();
             UpdateGenderControls();
+            UpdateSizeControls(); //starlight
             UpdateSkinColor();
             UpdateSpawnPriorityControls();
             UpdateAgeEdit();
@@ -872,6 +908,7 @@ namespace Content.Client.Lobby.UI
             UpdateCMarkingsFacialHair();
             UpdateVoicesControls();
             UpdateSiliconVoicesControls(); // 🌟Starlight🌟
+            UpdateCybernetics(); // Starlight
 
             RefreshAntags();
             RefreshJobs();
@@ -918,9 +955,9 @@ namespace Content.Client.Lobby.UI
             var species = Profile?.Species ?? SharedHumanoidAppearanceSystem.DefaultSpecies;
             var page = DefaultSpeciesGuidebook;
             if (_prototypeManager.HasIndex<GuideEntryPrototype>(species))
-                page = species;
+                page = new ProtoId<GuideEntryPrototype>(species.Id); // Gross. See above todo comment.
 
-            if (_prototypeManager.TryIndex<GuideEntryPrototype>(DefaultSpeciesGuidebook, out var guideRoot))
+            if (_prototypeManager.TryIndex(DefaultSpeciesGuidebook, out var guideRoot))
             {
                 var dict = new Dictionary<ProtoId<GuideEntryPrototype>, GuideEntry>();
                 dict.Add(DefaultSpeciesGuidebook, guideRoot);
@@ -1111,7 +1148,7 @@ namespace Content.Client.Lobby.UI
 
             _loadoutWindow = new LoadoutWindow(Profile, roleLoadout, roleLoadoutProto, _playerManager.LocalSession, collection)
             {
-                Title = jobProto?.ID + "-loadout",
+                Title = Loc.GetString("loadout-window-title-loadout", ("job", $"{jobProto?.LocalizedName}")),
             };
 
             // Refresh the buttons etc.
@@ -1241,6 +1278,12 @@ namespace Content.Client.Lobby.UI
             ReloadProfilePreview();
         }
 
+        // Starlight
+        private void OnCyberneticsUpdated(List<CyberneticImplant> cybernetics) {
+            Profile = Profile?.WithCybernetics(cybernetics.Select(p => p.ID).ToList());
+            ReloadPreview();
+        }
+
         protected override void Dispose(bool disposing)
         {
             base.Dispose(disposing);
@@ -1287,6 +1330,34 @@ namespace Content.Client.Lobby.UI
             ReloadPreview();
         }
 
+        //starlight start
+        private void UpdateSizeText() {
+            if(Profile is null) return;
+            if (_prototypeManager.TryIndex<SpeciesPrototype>(Profile.Species, out var speciesPrototype)) {
+                var height = speciesPrototype.StandardSize * (Profile.Appearance.Height - 1f) * 2f + speciesPrototype.StandardSize;
+                var weight = speciesPrototype.StandardWeight + speciesPrototype.StandardDensity * (Profile.Appearance.Width * Profile.Appearance.Height * Profile.Appearance.Height - 1);
+                HeightDescribeLabel.Text = Loc.GetString("humanoid-profile-editor-height-label", ("height", Math.Round(height)));
+                WidthDescribeLabel.Text = Loc.GetString("humanoid-profile-editor-width-label", ("weight", Math.Round(weight, 1)));
+            }
+        }
+
+        private void SetWidth(float newWidth)
+        {
+            if (Profile is null) return;
+            Profile.Appearance = Profile.Appearance.WithWidth(newWidth);
+            UpdateSizeText();
+            ReloadPreview();
+        }
+
+        private void SetHeight(float newHeight)
+        {
+            if (Profile is null) return;
+            Profile.Appearance = Profile.Appearance.WithHeight(newHeight);
+            UpdateSizeText();
+            ReloadPreview();
+        }
+        //starlight end
+
         private void SetSpecies(string newSpecies)
         {
             Profile = Profile?.WithSpecies(newSpecies);
@@ -1298,6 +1369,7 @@ namespace Content.Client.Lobby.UI
             RefreshLoadouts();
             UpdateSexControls(); // update sex for new species
             UpdateSpeciesGuidebookIcon();
+            UpdateSizeControls(); //starlight
             ReloadPreview();
         }
 
@@ -1410,6 +1482,26 @@ namespace Content.Client.Lobby.UI
             else
                 SexButton.SelectId((int)sexes[0]);
         }
+
+        //starlight start
+        private void UpdateSizeControls()
+        {
+            if (Profile == null) return;
+
+            if (_prototypeManager.TryIndex<SpeciesPrototype>(Profile.Species, out var speciesPrototype))
+            {
+                WidthSlider.MinValue = speciesPrototype.MinWidth;
+                WidthSlider.MaxValue = speciesPrototype.MaxWidth;
+                WidthSlider.Value = Profile.Appearance.Width;
+
+                HeightSlider.MinValue = speciesPrototype.MinHeight;
+                HeightSlider.MaxValue = speciesPrototype.MaxHeight;
+                HeightSlider.Value = Profile.Appearance.Height;
+
+                UpdateSizeText();
+            }
+        }
+        //starlight end
 
         private void UpdateSkinColor()
         {
@@ -1528,17 +1620,13 @@ namespace Content.Client.Lobby.UI
             {
                 return;
             }
-            var hairMarking = Profile.Appearance.HairStyleId switch
-            {
-                HairStyles.DefaultHairStyle => new List<Marking>(),
-                _ => new() { new(Profile.Appearance.HairStyleId, new List<Color>() { Profile.Appearance.HairColor }, Profile.Appearance.HairGlowing) }, //starlight glowing
-            };
+            var hairMarking = Profile.Appearance.HairStyleId == HairStyles.DefaultHairStyle
+                ? new List<Marking>()
+                : new() { new(Profile.Appearance.HairStyleId, new List<Color>() { Profile.Appearance.HairColor }, Profile.Appearance.HairGlowing) };
 
-            var facialHairMarking = Profile.Appearance.FacialHairStyleId switch
-            {
-                HairStyles.DefaultFacialHairStyle => new List<Marking>(),
-                _ => new() { new(Profile.Appearance.FacialHairStyleId, new List<Color>() { Profile.Appearance.FacialHairColor }, Profile.Appearance.FacialHairGlowing) }, //starlight glowing
-            };
+            var facialHairMarking = Profile.Appearance.FacialHairStyleId == HairStyles.DefaultFacialHairStyle
+                ? new List<Marking>()
+                : new() { new(Profile.Appearance.FacialHairStyleId, new List<Color>() { Profile.Appearance.FacialHairColor }, Profile.Appearance.FacialHairGlowing) };
 
             HairStylePicker.UpdateData(
                 hairMarking,
@@ -1628,6 +1716,15 @@ namespace Content.Client.Lobby.UI
 
             Markings.CurrentEyeColor = Profile.Appearance.EyeColor;
             EyeColorPicker.SetData(Profile.Appearance.EyeColor, Profile.Appearance.EyeGlowing); //starlight glowing
+        }
+
+        // Starlight
+        private void UpdateCybernetics(){
+            if (Profile is null)
+            {
+                return;
+            }
+            Cybernetics.SetData(Profile.Cybernetics, (_species.Find(x => x.ID == Profile?.Species) ?? _species.First()).RoundstartCyberwareCapacity);
         }
 
         private void UpdateSaveButton()

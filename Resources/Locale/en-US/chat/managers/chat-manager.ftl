@@ -22,11 +22,13 @@ chat-manager-server-wrap-message = [bold]{$message}[/bold]
 chat-manager-sender-announcement = Central Command
 chat-manager-sender-announcement-wrap-message = [font size=14][bold]{$sender} Announcement:[/font][font size=12]
                                                 {$message}[/bold][/font]
-chat-manager-entity-say-wrap-message = [BubbleHeader][bold][Name]{$entityName}[/Name][/bold][/BubbleHeader] {$verb}, [font={$fontType} size={$fontSize}]"[BubbleContent]{$message}[/BubbleContent]"[/font]
-chat-manager-entity-say-bold-wrap-message = [BubbleHeader][bold][Name]{$entityName}[/Name][/bold][/BubbleHeader] {$verb}, [font={$fontType} size={$fontSize}]"[BubbleContent][bold]{$message}[/bold][/BubbleContent]"[/font]
+# Starlight-start: Languages
+chat-manager-entity-say-wrap-message = [BubbleHeader][bold][Name]{$entityName}[/Name][/bold][/BubbleHeader] {$verb}, [font={$fontType} size={$fontSize}]"[BubbleContent][font="{$fontType}" size={$fontSize}][color={$color}]{$message}[/color][/font][/BubbleContent]"[/font]
+chat-manager-entity-say-bold-wrap-message = [BubbleHeader][bold][Name]{$entityName}[/Name][/bold][/BubbleHeader] {$verb}, [font={$fontType} size={$fontSize}]"[BubbleContent][font="{$fontType}" size={$fontSize}][bold][color={$color}]{$message}[/color][/font][/bold][/BubbleContent]"[/font]
 
-chat-manager-entity-whisper-wrap-message = [font size=11][italic][BubbleHeader][Name]{$entityName}[/Name][/BubbleHeader] whispers,"[BubbleContent]{$message}[/BubbleContent]"[/italic][/font]
-chat-manager-entity-whisper-unknown-wrap-message = [font size=11][italic][BubbleHeader]Someone[/BubbleHeader] whispers, "[BubbleContent]{$message}[/BubbleContent]"[/italic][/font]
+chat-manager-entity-whisper-wrap-message = [font size=11][italic][BubbleHeader][Name]{$entityName}[/Name][/BubbleHeader] whispers: "[BubbleContent][color={$color}][font="{$fontType}"]{$message}[/font][/color][/BubbleContent][font size=11]"[/italic][/font]
+chat-manager-entity-whisper-unknown-wrap-message = [font size=11][italic][BubbleHeader]Someone[/BubbleHeader] whispers: "[BubbleContent][color={$color}][font="{$fontType}"]{$message}[/color][/font][/BubbleContent][font size=11]"[/italic][/font]
+# Starlight-end
 
 # THE() is not used here because the entity and its name can technically be disconnected if a nameOverride is passed...
 chat-manager-entity-me-wrap-message = [italic]{ PROPER($entity) ->
@@ -35,7 +37,7 @@ chat-manager-entity-me-wrap-message = [italic]{ PROPER($entity) ->
     }
 
 chat-manager-entity-looc-wrap-message = LOOC: [bold]{$entityName}:[/bold] {$message}
-chat-manager-send-ooc-wrap-message = OOC: [bold][color={$titleColor}]{$playerTitle}[/color] [color={$nameColor}]{$playerName}:[/color] [color={$messageColor}]{$message}[/color][/bold]
+chat-manager-send-ooc-wrap-message = OOC: [bold]{$playerTitle} [color={$nameColor}]{$playerName}:[/color] [color={$messageColor}]{$message}[/color][/bold]
 chat-manager-send-ooc-patron-wrap-message = OOC: [bold][color={$patronColor}]{$playerName}[/color]:[/bold] {$message}
 
 chat-manager-send-dead-chat-wrap-message = {$deadChannelName}: [bold][BubbleHeader]{$playerName}[/BubbleHeader]:[/bold] [BubbleContent]{$message}[/BubbleContent]
@@ -163,3 +165,9 @@ chat-speech-verb-name-electricity = Electricity
 chat-speech-verb-electricity-1 = crackles
 chat-speech-verb-electricity-2 = buzzes
 chat-speech-verb-electricity-3 = screeches
+
+chat-speech-verb-name-wawa = Wawa
+chat-speech-verb-wawa-1 = intones
+chat-speech-verb-wawa-2 = states
+chat-speech-verb-wawa-3 = declares
+chat-speech-verb-wawa-4 = ponders

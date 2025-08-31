@@ -7,8 +7,9 @@
   guides: [ SpaceNinja ]
   previewStartingGear: SpaceNinjaGear
   requirements:
-  - !type:OverallPlaytimeRequirement
-    time: 3600 # 5h
+  - !type:DepartmentTimeRequirement
+    department: Security
+    time: 10800 # 3h STARLIGHT
 
 #Ninja Gear
 - type: startingGear

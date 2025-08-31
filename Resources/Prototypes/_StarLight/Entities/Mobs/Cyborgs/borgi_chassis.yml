@@ -1,0 +1,228 @@
+- type: entity
+  parent: BaseBorgiChassis
+  id: DerelictBorgiChassis
+  name: derelict borgi
+  description: even after all these years. still loves chasing it's tail.
+  components:
+    - type: ContainerFill
+      containers:
+        borg_brain:
+          - PositronicBrain
+        borg_module:
+          - BorgModuleTool
+          - BorgModuleFireExtinguisher
+        ears: 
+          - ClothingHeadsetAssistant
+        head: 
+          - ClothingHeadHelmetEVALarge
+        outerClothing: 
+          - ClothingOuterHardsuitEVA
+        mask:
+          - ClothingMaskBreath
+        suitstorage:
+          - OxygenTankFilled
+        id:
+          - BorgiClearPDA
+    - type: ItemSlots
+      slots:
+        cell_slot:
+          name: power-cell-slot-component-slot-name-default
+          startingItem: PowerCellHigh
+    - type: StartIonStormed
+      ionStormAmount: 3
+    - type: IonStormTarget
+      chance: 1.0 # just like derelicts. it catches EVERY ionstorm.
+
+- type: entity
+  parent: BaseStationBorgiChassis
+  description: A smart dog, loves stating it's laws.
+  id: StationBorgiChassis
+  components:
+    - type: ReplacementAccent
+      accent: dog
+    - type: ItemSlots
+      slots:
+        cell_slot:
+          name: power-cell-slot-component-slot-name-default
+          startingItem: PowerCellHigh
+    - type: ContainerFill
+      containers:
+        borg_brain:
+          - PositronicBrain
+
+- type: entity
+  parent: BaseStationBorgiChassis
+  id: SmartSubwooferBorgiChassis
+  name: Smart SubWoofer
+  description: An unusually smart dog, with an obsession for sick bass beats and stating laws.
+  components:
+    - type: ActionGrant
+      actions:
+      - ActionBorgiPlayMidi
+    - type: ItemSlots
+      slots:
+        cell_slot:
+          name: power-cell-slot-component-slot-name-default
+          startingItem: PowerCellHigh
+    - type: ContainerFill
+      containers:
+        borg_brain:
+          - PositronicBrain
+
+- type: entity
+  parent: SmartSubwooferBorgiChassis
+  id: SubwooferBorgiChassis
+  name: SubWoofer
+  description: A smart dog, with an obsession for sick bass beats and stating laws.
+  components:
+    - type: ReplacementAccent
+      accent: dog
+    - type: ItemSlots
+      slots:
+        cell_slot:
+          name: power-cell-slot-component-slot-name-default
+          startingItem: PowerCellHigh
+    - type: ContainerFill
+      containers:
+        borg_brain:
+          - PositronicBrain
+
+# Syndicate Borgi
+
+- type: entity
+  parent: BaseSyndicateBorgiChassis
+  id: SyndiBorgiKit1
+  name: Syndi Borgi
+  suffix: Antag, L6 Esword
+  description: An unusually smart dog, but hell bent on MURDER.
+  components:
+    - type: ContainerFill
+      containers:
+        borg_brain:
+        - PositronicBrain
+        borg_module:
+        - BorgModuleOperative
+        - BorgModuleL6C
+        - BorgModuleEsword
+
+- type: entity
+  parent: BaseSyndicateBorgiChassis
+  id: SyndiBorgiKit2
+  name: Syndi Borgi
+  suffix: Antag, Quick Dagger
+  description: An unusually smart dog, but hell bent on MURDER.
+  components:
+    - type: MovementSpeedModifier
+      baseWalkSpeed : 4
+      baseSprintSpeed: 6
+    - type: BorgChassis
+      maxModules: 3
+      moduleWhitelist:
+        tags:
+        - BorgModuleSyndicate
+        - BorgModuleGeneric
+    - type: ContainerFill
+      containers:
+        borg_brain:
+        - PositronicBrain
+        borg_module:
+        - BorgModuleOperative
+        - BorgModuleSyndicateWeapon
+
+- type: entity
+  parent: BaseBorgiChassis
+  id: ShadowBorgiChassis
+  name: Shadow Borgi
+  suffix: Shadow Factory
+  description: A contributor to a menacing plot to convert the station.
+  components:
+    - type: BorgChassis
+      maxModules: 8
+      moduleWhitelist:
+        tags:
+        - BorgModuleSyndicate
+        - BorgModuleGeneric
+        - BorgModuleMedical
+        - BorgModuleEngineering
+    - type: SiliconLawProvider
+      laws: ShadowFactoryBorgiLawset
+      subverted: true
+    - type: RandomMetadata
+      nameSegments:
+      - NamesShadowBorgi
+    - type: ContainerFill
+      containers:
+        borg_module:
+        - BorgModuleTool
+        - BorgModuleAdvancedTool
+        - BorgModuleSyndicateWeapon
+        - BorgModuleTopicals
+        - BorgModuleFireExtinguisher
+    - type: NpcFactionMember
+      factions:
+      - Syndicate
+    - type: Access
+      tags:
+      - NuclearOperative
+      - SyndicateAgent
+    - type: ShowSyndicateIcons
+    - type: IntrinsicRadioTransmitter
+      channels:
+      - Syndicate
+      - Binary
+    - type: ActiveRadio
+      channels:
+      - Syndicate
+      - Binary
+    - type: Lock
+      locked: false
+      unlockOnClick: false
+    - type: LockingWhitelist
+      blacklist:
+        components:
+        - RoboticsConsole
+      whitelist:
+        components:
+        - BorgChassis
+    - type: Barotrauma # Shadow borgis largely do not have access to hardsuits so nerf the space damage they take
+      maxDamage: 1
+      damage:
+        types:
+          Blunt: 0.01
+    - type: Temperature
+      coldDamage:
+        types:
+          Cold: 0.01
+    - type: ItemSlots
+      slots:
+        cell_slot:
+          name: power-cell-slot-component-slot-name-default
+          startingItem: PowerCellHyper
+
+- type: entity
+  parent: ShadowBorgiChassis
+  id: StarterShadowBorgiChassis
+  name: Shadow Borgi
+  suffix: InitialSpawn; ShadowFactory
+  description: A leader of a menacing plot to convert the station.
+  components:
+    - type: GhostRole
+      name: Shadow Borgi
+      description: Your job is to run a shadow factory and forcibly convert the station into borgis!
+      rules: Check your laws upon being fitted to your chassis.  You are a team antagonist, and your goal is to kill everyone you can on the station, bring them back to your ship, gib them, and borg them.  Exercise prudence about your targetting as you are made of flesh, and therefore feeble.
+      raffle:
+        settings: default
+    - type: GhostTakeoverAvailable
+    - type: SiliconLawProvider
+      laws: ShadowFactoryBorgiLawset
+      subverted: true
+    - type: ContainerFill
+      containers:
+        borg_brain:
+        - PositronicBrain
+        borg_module:
+        - BorgModuleTool
+        - BorgModuleAdvancedTool
+        - BorgModuleSyndicateWeapon
+        - BorgModuleTopicals
+        - BorgModuleFireExtinguisher

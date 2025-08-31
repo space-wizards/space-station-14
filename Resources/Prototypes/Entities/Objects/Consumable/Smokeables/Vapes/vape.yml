@@ -7,3 +7,8 @@
   - type: Sprite
     sprite: Objects/Consumable/Smokeables/Vapes/vape-standard.rsi
     state: icon
+  # Starlight-start: Vending Machines Prices
+  - type: ItemPrice
+    fallbackPrice: 15
+  # Starlight-end
+  

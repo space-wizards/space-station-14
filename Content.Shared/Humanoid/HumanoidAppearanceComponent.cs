@@ -80,6 +80,10 @@ public sealed partial class HumanoidAppearanceComponent : Component
     [DataField, AutoNetworkedField]
     public Color EyeColor = Color.Brown;
     [DataField, AutoNetworkedField]
+    public float Width = 1f; // starlight
+    [DataField, AutoNetworkedField]
+    public float Height = 1f; // starlight
+    [DataField, AutoNetworkedField]
     public bool EyeGlowing = false; //starlight
 
     /// <summary>

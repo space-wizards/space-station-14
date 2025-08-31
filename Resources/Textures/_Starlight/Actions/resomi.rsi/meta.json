@@ -2,6 +2,7 @@
   "version": 1,
   "license": "CC-BY-SA-3.0",
   "copyright": "SUNRISE",
+  "rsic": false,
   "size": {
     "x": 32,
     "y": 32
@@ -9,6 +10,9 @@
   "states": [
     {
       "name": "jump"
+    },
+    {
+      "name": "bird_call"
     }
   ]
 }

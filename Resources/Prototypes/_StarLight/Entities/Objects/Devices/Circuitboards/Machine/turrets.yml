@@ -1,0 +1,24 @@
+- type: entity
+  id: WeaponTurretPointDefenseMachineCircuitboard
+  parent: BaseMachineCircuitboard
+  name: point defense battery machine board
+  description: A machine printed circuit board for a point defense battery.
+  components:
+  - type: Sprite
+    sprite: Objects/Misc/module.rsi
+    state: engineering
+  - type: MachineBoard
+    prototype: WeaponTurretPointDefense
+    stackRequirements:
+        Manipulator: 10
+        CableHV: 5
+        Glass: 2
+    tagRequirements:
+      ProximitySensor:
+        amount: 1
+        defaultPrototype: ProximitySensor
+    componentRequirements:
+      PowerCell:
+        amount: 1
+        defaultPrototype: PowerCellMedium
+        examineName: construction-insert-info-examine-name-power-cell 

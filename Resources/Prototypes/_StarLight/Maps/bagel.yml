@@ -3,7 +3,7 @@
   mapName: 'Bagel Station'
   mapPath: /Maps/_Starlight/Stations/Bagel.yml
   minPlayers: 35
-  maxPlayers: 70
+  maxPlayers: 80
   stations:
     StarlightBagel:
       stationProto: StandardNanotrasenStation
@@ -19,8 +19,13 @@
           availableJobs:
             #command
             Captain: [ 1, 1 ]
-            #service
             HeadOfPersonnel: [ 1, 1 ]
+            HeadOfSecurity: [ 1, 1 ]
+            ChiefMedicalOfficer: [ 1, 1 ]
+            ChiefEngineer: [ 1, 1 ]
+            ResearchDirector: [ 1, 1 ]
+            Quartermaster: [ 1, 1 ]
+            #service 
             Bartender: [ 1, 2 ]
             Botanist: [ 2, 2 ]
             Chef: [ 2, 2 ]
@@ -28,48 +33,43 @@
             Chaplain: [ 1, 1 ]
             Librarian: [ 1, 1 ]
             ServiceWorker: [ 2, 2 ]
-            #engineering
-            ChiefEngineer: [ 1, 1 ]
+            Reporter: [ 2, 2 ]
+            #engineering 
             AtmosphericTechnician: [ 3, 3 ]
             StationEngineer: [ 4, 4 ]
             TechnicalAssistant: [ 4, 4 ]
-            #medical
-            ChiefMedicalOfficer: [ 1, 1 ]
+            #medical 
             Chemist: [ 2, 2 ]
             MedicalDoctor: [ 3, 3 ]
             Paramedic: [ 1, 1 ]
             MedicalIntern: [ 4, 4 ]
-            Surgeon: [ 1, 1 ]  
-            #science
-            ResearchDirector: [ 1, 1 ]
+            Surgeon: [ 1, 2 ]
+            #science 
             Scientist: [ 5, 5 ]
             ResearchAssistant: [ 4, 4 ]
-            Roboticist: [ 1, 1 ]
-            #security
-            HeadOfSecurity: [ 1, 1 ]
+            Roboticist: [ 2, 2 ]
+            #security 
             Warden: [ 1, 1 ]
-            SecurityOfficer: [ 4, 4 ]
+            SecurityOfficer: [ 8, 10 ]
             Detective: [ 1, 1 ]
-            SecurityCadet: [ 4, 4 ]
+            SecurityCadet: [ 4, 6 ] 
             Brigmedic: [ 1, 1 ]
             #supply
-            Quartermaster: [ 1, 1 ]
             SalvageSpecialist: [ 6, 6 ]
             CargoTechnician: [ 3, 3 ]
+            MiningSpecialist: [ 3, 3]
             MailTech: [ 1, 2 ]
-            MiningSpecialist: [ 3, 3 ]
             #civilian
             Assistant: [ -1, -1 ]
             Clown: [ 1, 1 ]
             Mime: [ 1, 1 ]
             Musician: [ 1, 1 ]
-            Reporter: [ 2, 2 ]
             #silicon
             StationAi: [ 1, 1 ]
             Borg: [ 2, 2 ]
             #law
             Magistrate: [ 1, 1 ]
-            IAA: [ 2, 2 ]
+            IAA: [ 2, 2 ]      
             #Representives
             BlueShield: [ 1, 1 ]
             NanoTrasenRepresentative: [ 1, 1 ]

@@ -70,11 +70,11 @@ namespace Content.Server.Database
             {
                 profiles[profile.Slot] = ConvertProfiles(profile);
             }
-            
+
             var constructionFavorites = new List<ProtoId<ConstructionPrototype>>(prefs.ConstructionFavorites.Count);
             foreach (var favorite in prefs.ConstructionFavorites)
                 constructionFavorites.Add(new ProtoId<ConstructionPrototype>(favorite));
-            
+
             var jobPriorities = prefs.JobPriorities.ToDictionary(j => new ProtoId<JobPrototype>(j.JobName), j => (JobPriority) j.Priority);
 
             return new PlayerPreferences(profiles, Color.FromHex(prefs.AdminOOCColor), constructionFavorites, jobPriorities);
@@ -298,13 +298,16 @@ namespace Content.Server.Database
                     Color.FromHex(profile.EyeColor),
                     profile.EyeGlowing, //starlight
                     Color.FromHex(profile.SkinColor),
-                    markings
+                    markings,
+                    profile.StarLightProfile?.Width ?? 1f, //starlight
+                    profile.StarLightProfile?.Height ?? 1f //starlight
                 ),
                 spawnPriority,
                 jobs,
                 antags.ToHashSet(),
                 traits.ToHashSet(),
                 loadouts,
+                profile.StarLightProfile?.CyberneticIds ?? [], // Starlight
                 profile.Enabled
             );
         }
@@ -327,7 +330,10 @@ namespace Content.Server.Database
             profile.Species = humanoid.Species;
             profile.StarLightProfile ??= new StarLightModel.StarLightProfile(); // Starlight
             profile.StarLightProfile.CustomSpecieName = humanoid.CustomSpecieName; // Starlight
+            profile.StarLightProfile.CyberneticIds = humanoid.Cybernetics; // Starlight
             profile.Age = humanoid.Age;
+            profile.StarLightProfile.Width = appearance.Width; //starlight
+            profile.StarLightProfile.Height = appearance.Height; //starlight
             profile.Sex = humanoid.Sex.ToString();
             profile.Gender = humanoid.Gender.ToString();
             profile.HairName = appearance.HairStyleId;

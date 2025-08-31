@@ -3,12 +3,14 @@
 - type: Tag
   id: Arachnid
 
-
-- type: Tag  
+- type: Tag
   id: Avali
 
 - type: Tag
   id: AvianFood
+
+- type: Tag
+  id: BibleThwackRemovable
 
 - type: Tag
   id: BladePlasteel
@@ -17,22 +19,25 @@
   id: BladeSteel
 
 - type: Tag
+  id: Bola
+
+- type: Tag
   id: CantInteract
 
 - type: Tag
   id: CartridgeBattery
 
 - type: Tag
-  id: CartridgePistolDP
-
-- type: Tag
-  id: CartridgePistolImprovised
+  id: CartridgeLightRifleImprovised
 
 - type: Tag
   id: CartridgeMagnumImprovised
 
 - type: Tag
-  id: CartridgeLightRifleImprovised
+  id: CartridgePistolDP
+
+- type: Tag
+  id: CartridgePistolImprovised
 
 - type: Tag
   id: CentcommVibroblade
@@ -42,6 +47,9 @@
 
 - type: Tag
   id: Diona
+
+- type: Tag
+  id: DockEscape
 
 - type: Tag
   id: DockGamma
@@ -62,25 +70,28 @@
   id: HiltWood
 
 - type: Tag
+  id: ImprovisedCrowbar
+
+- type: Tag
   id: ImprovisedMultitool
-
-- type: Tag
-  id: ImprovisedWrench
-
-- type: Tag
-  id: ImprovisedWirecutter
 
 - type: Tag
   id: ImprovisedScrewdriver
 
 - type: Tag
-  id: ImprovisedCrowbar
+  id: ImprovisedWirecutter
+
+- type: Tag
+  id: ImprovisedWrench
 
 - type: Tag
   id: LightRifleHeavy
 
 - type: Tag
   id: MagazineBattery
+
+- type: Tag
+  id: MagazineMagnumSubMachineGun
 
 - type: Tag
   id: MagazinePistolDP
@@ -92,13 +103,13 @@
   id: MagazineRifleM52
 
 - type: Tag
-  id: MagazineSMGPPSH
-  
-- type: Tag
-  id: MagazineSMGUzi
+  id: MagazineSMGImprovised
 
 - type: Tag
-  id: MagazineSMGImprovised
+  id: MagazineSMGPPSH
+
+- type: Tag
+  id: MagazineSMGUzi
 
 - type: Tag
   id: MedCyberEyes
@@ -114,9 +125,6 @@
 
 - type: Tag
   id: OvenMachineBoard
-
-- type: Tag
-  id: StoveMachineBoard
 
 - type: Tag
   id: Patch
@@ -137,6 +145,9 @@
   id: SecCyberEyes
 
 - type: Tag
+  id: ShellShotgunImprovised
+
+- type: Tag
   id: ShipWreck
 
 - type: Tag
@@ -149,22 +160,31 @@
   id: SovietWarehouse
 
 - type: Tag
-  id: SwordForged
-
-- type: Tag
   id: SpeedLoaderMagnumImprovised
-
-- type: Tag
-  id: ShellShotgunImprovised
 
 - type: Tag
   id: SpeedLoaderShotgun
 
 - type: Tag
+  id: StoveMachineBoard
+
+- type: Tag
+  id: SurgeryCompatibleArmor
+
+- type: Tag
+  id: SwordForged
+
+- type: Tag
   id: SyndieDungeon
+
+- type: Tag
+  id: Compy
 
 - type: Tag
   id: Table
 
 - type: Tag
-  id: DockEscape
+  id: SecuredLocker
+
+- type: Tag
+  id: Locker

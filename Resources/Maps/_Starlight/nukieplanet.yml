@@ -15122,15 +15122,6 @@ entities:
     - type: Transform
       pos: 1.8436577,3.5806565
       parent: 1
-- proto: PaperTooQuietNeedChaos
-  entities:
-  - uid: 4157
-    components:
-    - type: Transform
-      pos: -14.498461,8.569751
-      parent: 1
-    missingComponents:
-    - FaxableObject
 - proto: PartRodMetal
   entities:
   - uid: 828

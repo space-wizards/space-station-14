@@ -10,12 +10,14 @@ using Content.Shared.Movement.Components;
 using Robust.Shared.Containers;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Systems;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
 
 namespace Content.Shared.Body.Systems;
 
 public partial class SharedBodySystem
 {
+    private static readonly ProtoId<DamageTypePrototype> BloodlossDamageType = "Bloodloss";
     private void InitializeParts()
     {
         // TODO: This doesn't handle comp removal on child ents.
@@ -180,7 +182,7 @@ public partial class SharedBodySystem
         )
         {
             // TODO BODY SYSTEM KILL : remove this when wounding and required parts are implemented properly
-            var damage = new DamageSpecifier(Prototypes.Index<DamageTypePrototype>("Bloodloss"), 300);
+            var damage = new DamageSpecifier(Prototypes.Index(BloodlossDamageType), 300);
             Damageable.TryChangeDamage(bodyEnt, damage);
         }
     }
@@ -348,14 +350,18 @@ public partial class SharedBodySystem
     /// </summary>
     public (EntityUid Entity, BodyPartComponent BodyPart)? GetRootPartOrNull(EntityUid bodyId, BodyComponent? body = null)
     {
-        if (!Resolve(bodyId, ref body)
+        if (!Resolve(bodyId, ref body, logMissing: false) // Starlight-edit
+            || body.RootContainer is null // Starlight-edit
             || body.RootContainer.ContainedEntity is null)
         {
             return null;
         }
 
-        return (body.RootContainer.ContainedEntity.Value,
-            Comp<BodyPartComponent>(body.RootContainer.ContainedEntity.Value));
+        var rootEntity = body.RootContainer.ContainedEntity.Value; // Starlight-edit
+        if (!TryComp<BodyPartComponent>(rootEntity, out var rootPart)) // Starlight-edit
+            return null; // Starlight-edit
+
+        return (rootEntity, rootPart); // Starlight-edit
     }
 
     /// <summary>

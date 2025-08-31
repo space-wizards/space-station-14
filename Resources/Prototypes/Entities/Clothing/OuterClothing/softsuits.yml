@@ -13,6 +13,7 @@
     tags:
     - SuitEVA
     - MonkeyWearable
+    - CorgiWearable
     - WhitelistChameleon
     - CorgiWearable
 
@@ -32,6 +33,8 @@
     - SuitEVA
     - MonkeyWearable
     - WhitelistChameleon
+  - type: StaticPrice
+    price: 1000 # Helmet is 500
 
 #Emergency EVA
 - type: entity
@@ -60,7 +63,9 @@
   - type: Tag
     tags:
     - CorgiWearable
-    - SuitEVA
+    - ScurretWearable
+    - MonkeyWearable
+    - SuitEVA #Starlight
     - WhitelistChameleon
 
 #Prisoner EVA
@@ -114,8 +119,8 @@
     highPressureMultiplier: 0.5
     lowPressureMultiplier: 1000
   - type: ClothingSpeedModifier
-    walkModifier: 0.9
-    sprintModifier: 0.9
+    walkModifier: 1.0 # Starlight Edit
+    sprintModifier: 1.0 # Starlight Edit
   - type: HeldSpeedModifier
   - type: TemperatureProtection
     heatingCoefficient: 0.1

@@ -1,47 +1,47 @@
 <Document>
-    # Head of Security
+# Head of Security
 
-     <GuideEntityEmbed Entity="ToyFigurineHeadOfSecurity" Caption="Head of Security"/>
+<GuideEntityEmbed Entity="ToyFigurineHeadOfSecurity" Caption="Head of Security"/>
 
-    1 . Standard Code Green equipment is:
+1. Standard [color=#00a933]Code Green[/color] equipment is:
+<Box>
+	<GuideEntityEmbed Entity="WeaponSubMachineGunWt550"/>
+	or
+	<GuideEntityEmbed Entity="WeaponEnergySMG"/>
+</Box>
+<Box>
+	<GuideEntityEmbed Entity="Stunbaton"/>
+</Box>
+<Box>
+	<GuideEntityEmbed Entity="HoloprojectorSecurity"/>
+	<GuideEntityEmbed Entity="FlashlightSeclite"/>
+	<GuideEntityEmbed Entity="RadioHandheldSecurity"/>
+</Box>
+<Box>
+	<GuideEntityEmbed Entity="CombatKnife"/>
+	in
+	<GuideEntityEmbed Entity="ClothingShoesBootsJack"/>
+</Box>
+<Box>
+	<GuideEntityEmbed Entity="GrenadeFlashBang"/>
+	or
+	<GuideEntityEmbed Entity="TearGasGrenade"/>
+</Box>
+<Box>
+	<GuideEntityEmbed Entity="Handcuffs"/>
+	or
+	<GuideEntityEmbed Entity="Zipties"/>
+</Box>
 
-    <Box>
-        <GuideEntityEmbed Entity="WeaponSubMachineGunWt550"/>
-        or
-        <GuideEntityEmbed Entity="WeaponEnergyShotgun"/>
-    </Box>
+2. The standard Command SOP applies with the exception of section 6, as for which, refer to the standard equipment listed above.
 
+3. When patrolling, the Head of Security must follow all Security Officer protocols as above, however the WT550 is considered a sidearm.
 
-    <Box>
-        <GuideEntityEmbed Entity="Stunbaton"/>
-        <GuideEntityEmbed Entity="HoloprojectorSecurity"/>
-        <GuideEntityEmbed Entity="FlashlightSeclite"/>
-        <GuideEntityEmbed Entity="RadioHandheldSecurity"/>
+4. The Head of Security may overrule any sentence that is not assigned by an official NT Magistrate, but not for prisoners who have already had their sentences read to them.
 
-    </Box>
-    <Box>
-        <GuideEntityEmbed Entity="CombatKnife"/>
-        in
-        <GuideEntityEmbed Entity="ClothingShoesBootsJack"/>
-    </Box>
-    <Box>
-        <GuideEntityEmbed Entity="GrenadeFlashBang"/>
-        or
-        <GuideEntityEmbed Entity="TearGasGrenade"/>
-    </Box>
-    <Box>
-        <GuideEntityEmbed Entity="Handcuffs"/>
-        or
-        <GuideEntityEmbed Entity="Zipties"/>
-    </Box>
+6. The Head of Security may not utilize the armory for their own personal benefit.
 
-    2. When patrolling, the Head of Security must follow all Security Officer protocols as above.
+6. The Head of Security must follow the Warden procedures for distributing any armory equipment, portable flashers, or deployable barriers.
 
-    3. The Head of Security may overrule any sentence that is not assigned by an official NT Magistrate, but not for prisoners who have already had their sentences read to them.
-
-    4. The Head of Security may not utilize the armory for their own personal benefit.
-
-    5. The Head of Security must follow the Warden procedures for distributing any armory equipment, portable flashers, or portable barriers.
-
-    6. If a Code Red is called, the Head of Security must state the reason for the Code Red. The Captain may perform this duty instead, with permission from the Head of Security.
+7. If a [color=#ff0000]Code Red[/color] is called, the Head of Security must state the reason for the [color=#ff0000]Code Red[/color]. The Captain may perform this duty instead, with permission from the Head of Security.
 </Document>

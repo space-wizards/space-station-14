@@ -20,10 +20,6 @@
   name: lathe-category-parts
 
 - type: latheCategory
-  id: Robotics
-  name: lathe-category-robotics
-
-- type: latheCategory
   id: Tiles
   name: lathe-category-tiles
 
@@ -106,6 +102,23 @@
   id: Wood
   name: lathe-category-wood
 
+- type: latheCategory
+  id: Marble
+  name: lathe-category-marble
+
+# Science
+- type: latheCategory
+  id: Mech
+  name: lathe-category-mechs
+
+- type: latheCategory
+  id: Modules
+  name: lathe-category-modules
+
+- type: latheCategory
+  id: Robotics
+  name: lathe-category-robotics
+
 # Security TechFab
 - type: latheCategory
   id: Ammo
@@ -147,52 +160,3 @@
 - type: latheCategory
   id: Neck
   name: lathe-category-neck
-  
-# Exosuit
-- type: latheCategory
-  id: Mech
-  name: lathe-category-mechs
-
-- type: latheCategory
-  id: Vim
-  name: lathe-category-mechs-vim
-
-- type: latheCategory
-  id: Honker
-  name: lathe-category-mechs-honker
-
-- type: latheCategory
-  id: Hamptr
-  name: lathe-category-mechs-hamptr
-
-- type: latheCategory
-  id: Ripley
-  name: lathe-category-mechs-ripley
-
-- type: latheCategory
-  id: RipleyMKII
-  name: lathe-category-mechs-ripleymkii
-
-- type: latheCategory
-  id: Paddy
-  name: lathe-category-mechs-paddy
-
-- type: latheCategory
-  id: Clarke
-  name: lathe-category-mechs-clarke
-
-- type: latheCategory
-  id: Gygax
-  name: lathe-category-mechs-gygax
-
-- type: latheCategory
-  id: Durand
-  name: lathe-category-mechs-durand
-
-- type: latheCategory
-  id: MechEquipment
-  name: lathe-category-mechs-equipment
-
-- type: latheCategory
-  id: MechWeapons
-  name: lathe-category-mechs-weapons

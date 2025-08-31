@@ -7,12 +7,35 @@
   id: MobCorgiIan
   description: Favorite pet corgi.
   components:
+  # Starlight-start: Languages
+  - type: LanguageSpeaker
+  - type: LanguageKnowledge
+    speaks:
+    - Dog
+    understands:
+    - Dog
+    - GalacticCommon
+  # Starlight-end
   - type: Sprite
     drawdepth: Mobs
     sprite: Mobs/Pets/corgi.rsi
     layers:
     - map: ["enum.DamageStateVisualLayers.Base"]
       state: ian
+  - type: Inventory
+    speciesId: dog
+    templateId: petAdvanced
+    displacements:
+      head:
+        sizeMaps:
+          32:
+            sprite: Mobs/Pets/displacements.rsi
+            state: corgi_head_displacement
+      eyes:
+        sizeMaps:
+          32:
+            sprite: Mobs/Pets/displacements.rsi
+            state: corgi_eyes_displacement
   - type: DamageStateVisuals
     states:
       Alive:
@@ -43,6 +66,15 @@
   id: MobCorgiIanOld
   description: Still the favorite pet corgi. Love his wheels.
   components:
+  # Starlight-start: Languages
+  - type: LanguageSpeaker
+  - type: LanguageKnowledge
+    speaks:
+    - Dog
+    understands:
+    - Dog
+    - GalacticCommon
+  # Starlight-end
   - type: Sprite
     layers:
     - map: ["enum.DamageStateVisualLayers.Base"]
@@ -68,6 +100,15 @@
   id: MobCorgiLisa
   description: Ian's favorite corgi.
   components:
+  # Starlight-start: Languages
+  - type: LanguageSpeaker
+  - type: LanguageKnowledge
+    speaks:
+    - Dog
+    understands:
+    - Dog
+    - GalacticCommon
+  # Starlight-end
   - type: Sprite
     layers:
     - map: ["enum.DamageStateVisualLayers.Base"]
@@ -84,6 +125,20 @@
     attributes:
       proper: true
       gender: female
+  - type: Inventory
+    speciesId: dog
+    templateId: petAdvanced
+    displacements:
+      head:
+        sizeMaps:
+          32:
+            sprite: Mobs/Pets/displacements.rsi
+            state: lisa_head_displacement
+      eyes:
+        sizeMaps:
+          32:
+            sprite: Mobs/Pets/displacements.rsi
+            state: corgi_eyes_displacement
 
 - type: entity
   name: real mouse
@@ -91,6 +146,15 @@
   id: MobCorgiMouse
   description: It's 100% a real hungry mouse.
   components:
+  # Starlight-start: Languages
+  - type: LanguageSpeaker
+  - type: LanguageKnowledge
+    speaks:
+    - Dog
+    understands:
+    - Dog
+    - GalacticCommon
+  # Starlight-end
   - type: Sprite
     layers:
     - map: ["enum.DamageStateVisualLayers.Base"]
@@ -114,6 +178,15 @@
   id: MobCorgiIanPup
   description: Favourite puppy corgi. Awww.
   components:
+  # Starlight-start: Languages
+  - type: LanguageSpeaker
+  - type: LanguageKnowledge
+    speaks:
+    - Dog
+    understands:
+    - Dog
+    - GalacticCommon
+  # Starlight-end
   - type: Grammar
     attributes:
       proper: true
@@ -132,6 +205,16 @@
   id: MobCatRuntime
   description: Professional mouse hunter. Escape artist.
   components:
+  # Starlight-start: Languages
+  - type: LanguageSpeaker
+  - type: LanguageKnowledge
+    speaks:
+    - Cat
+    understands:
+    - Cat
+    - GalacticCommon
+    - Nekomimetic
+  # Starlight-end
   - type: NpcFactionMember
     factions:
       - PetsNT
@@ -160,6 +243,16 @@
   parent: MobCatCalico
   description: Ask nicely, and maybe they'll give you one of their spare lives.
   components:
+  # Starlight-start: Languages
+  - type: LanguageSpeaker
+  - type: LanguageKnowledge
+    speaks:
+    - Cat
+    understands:
+    - Cat
+    - GalacticCommon
+    - Nekomimetic
+  # Starlight-end
   - type: NpcFactionMember
     factions:
       - PetsNT
@@ -185,6 +278,15 @@
   parent: MobCatCaracal
   description: He out here.
   components:
+  # Starlight-start: Languages
+  - type: LanguageSpeaker
+  - type: LanguageKnowledge
+    speaks:
+    - Cat
+    understands:
+    - Cat
+    - GalacticCommon
+  # Starlight-end
   - type: Fixtures
     fixtures:
       fix1:
@@ -232,6 +334,16 @@
   id: MobBingus
   description: Bingus my beloved...
   components:
+  # Starlight-start: Languages
+  - type: LanguageSpeaker
+  - type: LanguageKnowledge
+    speaks:
+    - Cat
+    understands:
+    - Cat
+    - GalacticCommon
+    - Nekomimetic
+  # Starlight-end
   - type: Sprite
     drawdepth: Mobs
     sprite: Mobs/Pets/bingus.rsi
@@ -290,12 +402,23 @@
   id: MobMcGriff
   description: This dog can tell something smells around here, and that something is CRIME!
   components:
+  # Starlight-start: Languages
+  - type: LanguageSpeaker
+  - type: LanguageKnowledge
+    speaks:
+    - Dog
+    understands:
+    - Dog
+    - GalacticCommon
+  # Starlight-end
   - type: Sprite
     drawdepth: Mobs
     sprite: Mobs/Pets/mcgriff.rsi
     layers:
     - map: ["enum.DamageStateVisualLayers.Base"]
       state: mcgriff
+    - map: [ "head" ]
+    - map: [ "eyes" ]
   - type: Physics
   - type: Fixtures
     fixtures:
@@ -310,7 +433,18 @@
         - MobLayer
   - type: Inventory
     speciesId: puppy
-    templateId: pet
+    templateId: petAdvanced
+    displacements:
+      head:
+        sizeMaps:
+          32:
+            sprite: Mobs/Pets/displacements.rsi
+            state: mcgriff_head_displacement
+      eyes:
+        sizeMaps:
+          32:
+            sprite: Mobs/Pets/displacements.rsi
+            state: mcgriff_eyes_displacement
   - type: DamageStateVisuals
     states:
       Alive:
@@ -323,8 +457,6 @@
     spawned:
     - id: FoodMeat
       amount: 2
-  - type: ReplacementAccent
-    accent: dog
   - type: InteractionPopup
     successChance: 0.5
     interactSuccessString: petting-success-dog
@@ -345,6 +477,7 @@
     - VimPilot
   - type: StealTarget
     stealGroup: AnimalMcGriff
+  - type: MessyDrinker
 
 - type: entity
   name: Paperwork
@@ -386,6 +519,15 @@
   id: MobWalter
   description: He likes chems and treats. Walter.
   components:
+  # Starlight-start: Languages
+  - type: LanguageSpeaker
+  - type: LanguageKnowledge
+    speaks:
+    - Dog
+    understands:
+    - Dog
+    - GalacticCommon
+  # Starlight-end
   - type: Sprite
     drawdepth: Mobs
     sprite: Mobs/Pets/walter.rsi
@@ -419,8 +561,6 @@
     spawned:
     - id: FoodMeat
       amount: 3
-  - type: ReplacementAccent
-    accent: dog
   - type: InteractionPopup
     successChance: 0.7
     interactSuccessString: petting-success-dog
@@ -441,6 +581,7 @@
   - type: Speech
     speechVerb: Canine
     speechSounds: Dog
+  - type: MessyDrinker
 
 - type: entity
   name: Morty
@@ -536,6 +677,15 @@
   id: MobAlexander
   description: Chef's finest colleague.
   components:
+  # Starlight-start: Languages
+  - type: LanguageSpeaker
+  - type: LanguageKnowledge
+    speaks:
+    - Pig
+    understands:
+    - Pig
+    - GalacticCommon
+  # Starlight-end
   - type: InteractionPopup
     successChance: 1
     interactSuccessString: petting-success-pig
@@ -558,6 +708,15 @@
   id: MobFoxRenault
   description: The captain's trustworthy fox.
   components:
+  # Starlight-start: Languages
+  - type: LanguageSpeaker
+  - type: LanguageKnowledge
+    speaks:
+    - Fox
+    understands:
+    - Fox
+    - GalacticCommon
+  # Starlight-end
   - type: InteractionPopup
     successChance: 1
     interactSuccessString: petting-success-soft-floofy
@@ -588,6 +747,15 @@
   id: MobHamsterHamlet
   description: A grumpy, cute and fluffy hamster.
   components:
+  # Starlight-start: Languages
+  - type: LanguageSpeaker
+  - type: LanguageKnowledge
+    speaks:
+    - Mouse
+    understands:
+    - Mouse
+    - GalacticCommon
+  # Starlight-end
   - type: Sprite
     drawdepth: SmallMobs
     sprite: Mobs/Pets/hamlet.rsi
@@ -636,11 +804,36 @@
     - sadness
 
 - type: entity
+  parent: MobHamsterHamlet
+  id: MobHamsterHamletSlippery
+  suffix: Slippery
+  components:
+  - type: Slippery
+  - type: StepTrigger
+    requiredTriggeredSpeed: 1
+  - type: TriggerOnStepTrigger
+  - type: GibOnTrigger
+  - type: EmitSoundOnTrigger
+    sound:
+      path: "/Audio/Animals/mouse_squeak.ogg"
+    positional: true
+    predicted: true
+
+- type: entity
   name: Shiva
   parent: MobGiantSpider
   id: MobSpiderShiva
   description: The first defender of the station.
   components:
+  # Starlight-start: Languages
+  - type: LanguageSpeaker
+  - type: LanguageKnowledge
+    speaks:
+    - Chittin
+    understands:
+    - Chittin
+    - GalacticCommon
+  # Starlight-end
   - type: InteractionPopup
     successChance: 0.5 # spider is mean
     interactSuccessString: petting-success-tarantula
@@ -687,6 +880,8 @@
       types:
         Piercing: 8
         Poison: 8
+  - type: Spider
+    spawnsWebsAsNonPlayer: false
   - type: Grammar
     attributes:
       proper: true
@@ -737,6 +932,15 @@
   parent: [MobAdultSlimes, StripableInventoryBase]
   description: This masterpiece has gone through thousands of experiments. But it is the sweetest creature in the world. Smile Slime!
   components:
+  # Starlight-start: Languages
+  - type: LanguageSpeaker
+  - type: LanguageKnowledge
+    speaks:
+    - Bubblish
+    understands:
+    - GalacticCommon
+    - Bubblish
+  # Starlight-end
   - type: Sprite
     layers:
     - map: [ "enum.DamageStateVisualLayers.Base" ]
@@ -819,6 +1023,14 @@
   id: MobMonkeyPunpun
   description: A prominent representative of monkeys with unlimited access to alcohol.
   components:
+  # Starlight-start: Languages
+  - type: LanguageKnowledge
+    speaks:
+    - Ancestor
+    understands:
+    - Ancestor
+    - GalacticCommon
+  # Starlight-end
   - type: GhostRole
     prob: 1
     makeSentient: true
@@ -827,6 +1039,10 @@
     name: ghost-role-information-punpun-name
     description: ghost-role-information-punpun-description
     rules: ghost-role-information-nonantagonist-rules
+    requirements:
+    - !type:RoleTimeRequirement
+      role: JobBartender
+      time: 7200 # 2h STARLIGHT
   - type: GhostTakeoverAvailable
   - type: Butcherable
     butcheringType: Spike
@@ -874,3 +1090,21 @@
 #  - type: AlwaysRevolutionaryConvertible
   - type: StealTarget
     stealGroup: AnimalTropico
+
+- type: entity
+  name: Polly the parrot
+  parent: MobParrotBase
+  id: MobPollyParrot
+  description: An expert in quantum cracker theory
+  components:
+  - type: Vocalizer
+    maxVocalizeInterval: 240 # polly is chattier
+  - type: RadioVocalizer
+    radioAttemptChance: 0.8 # polly wants to share with the world
+  - type: Grammar
+    attributes:
+      proper: true
+      gender: male
+  - type: Loadout
+    prototypes: [ MobPollyGear ]
+

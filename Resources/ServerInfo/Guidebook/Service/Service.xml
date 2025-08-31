@@ -20,7 +20,7 @@
   <Box>
     <GuideEntityEmbed Entity="ToyFigurineLawyer" Caption="Lawyer"/>
     <GuideEntityEmbed Entity="ToyFigurineLibrarian" Caption="Librarian"/>
-    <GuideEntityEmbed Entity="ToyFigurineAssistant" Caption="Assistants"/>
+    <GuideEntityEmbed Entity="ToyFigurineAssistant" Caption="Assistant"/>
     <GuideEntityEmbed Entity="ToyFigurineHeadOfPersonnel" Caption="HoP"/>
   </Box>
 

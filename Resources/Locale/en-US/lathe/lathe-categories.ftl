@@ -4,7 +4,6 @@ lathe-category-clothing = Clothing
 lathe-category-lights = Lights
 lathe-category-machines = Machines
 lathe-category-parts = Parts
-lathe-category-robotics = Robotics
 lathe-category-tiles = Tiles
 lathe-category-tools = Tools
 lathe-category-weapons = Weapons
@@ -31,6 +30,12 @@ lathe-category-maints = Maints
 lathe-category-steel = Steel
 lathe-category-white = White
 lathe-category-wood = Wood
+lathe-category-marble = Marble
+
+# Science
+lathe-category-mechs = Mechs
+lathe-category-modules = Modules
+lathe-category-robotics = Robotics
 
 # Security TechFab
 lathe-category-ammo = Ammo
@@ -47,7 +52,6 @@ lathe-category-jumpsuits = Jumpsuits
 lathe-category-neck = Neck
 
 # Mechs
-lathe-category-mechs = Mechs
 lathe-category-mechs-vim = Vim
 lathe-category-mechs-honker = H.O.N.K.
 lathe-category-mechs-hamptr = H.A.M.P.T.R.

@@ -3,6 +3,13 @@
   id: BaseMobCyclorite
   abstract: true
   components:
+  - type: LanguageKnowledge
+    speaks:
+    - GalacticCommon
+    - Terrum
+    understands:
+    - GalacticCommon
+    - Terrum
   - type: Absorbable
   - type: Hunger
   - type: Icon
@@ -41,6 +48,9 @@
       0: Alive
       120: Critical
       240: Dead
+  - type: Damageable
+    damageContainer: Biological
+    damageModifierSet: Cyclorite
   - type: DamageVisuals
     damageOverlayGroups:
       Brute:
@@ -54,8 +64,9 @@
     attackRate: 0.5
     damage:
       types:
-        Blunt: 10
-  - type: Sprite 
+        Blunt: 13
+        Structural: 10
+  - type: Sprite
     scale: 1.08, 1.08
   - type: Bloodstream
     bloodReagent: CopperBlood
@@ -107,17 +118,17 @@
         sizeMaps:
           32:
             sprite: _Starlight/Mobs/Species/Cyclorite/displacement.rsi
-            state: neck     
+            state: neck
       belt:
         sizeMaps:
           32:
             sprite: _Starlight/Mobs/Species/Cyclorite/displacement.rsi
-            state: belt      
+            state: belt
       outerClothing:
         sizeMaps:
           32:
             sprite: _Starlight/Mobs/Species/Cyclorite/displacement.rsi
-            state: outer          
+            state: outer
 
 - type: entity
   parent: BaseSpeciesDummy

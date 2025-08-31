@@ -1,18 +1,25 @@
 using Content.Server.Bible.Components;
+using Content.Server.Chat; //Starlight
 using Content.Server.Ghost.Roles.Events;
+using Content.Server.Hands.Systems; //Starlight
 using Content.Server.Popups;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Actions;
 using Content.Shared.Bible;
+using Content.Shared.Clumsy; //Starlight
+using Content.Shared.Cluwne; //Starlight
 using Content.Shared.Damage;
 using Content.Shared.Ghost.Roles.Components;
+using Content.Shared.Hands.Components; //Starlight
 using Content.Shared.IdentityManagement;
 using Content.Shared.Interaction;
+using Content.Shared.Interaction.Components;
 using Content.Shared.Inventory;
 using Content.Shared.Mobs;
 using Content.Shared.Mobs.Systems;
 using Content.Shared.Popups;
 using Content.Shared.Stunnable;
+using Content.Shared.Tag;
 using Content.Shared.Timing;
 using Content.Shared.Vampire.Components;
 using Content.Shared.Verbs;
@@ -38,6 +45,8 @@ namespace Content.Server.Bible
         [Dependency] private readonly UseDelaySystem _delay = default!;
         [Dependency] private readonly SharedTransformSystem _transform = default!;
         [Dependency] private readonly SharedStunSystem _stun = default!;
+        [Dependency] private readonly HandsSystem _hands = default!; //Starlight
+        [Dependency] private readonly TagSystem _tags = default!; //Starlight
 
         public override void Initialize()
         {
@@ -59,7 +68,7 @@ namespace Content.Server.Bible
             {
                 Timer.Spawn(500, () =>
                 {
-                    _stun.TryParalyze(args.Container.Owner, TimeSpan.FromSeconds(10), true);
+                    _stun.TryUpdateParalyzeDuration(args.Container.Owner, TimeSpan.FromSeconds(10));
                     _damageableSystem.TryChangeDamage(args.Container.Owner, component.DamageOnUnholyUse);
                     _audio.PlayPvs(component.SizzleSoundPath, args.Container.Owner);
                 });
@@ -99,7 +108,7 @@ namespace Content.Server.Bible
                 // Clean up the old body
                 if (summonableComp.Summon != null)
                 {
-                    EntityManager.DeleteEntity(summonableComp.Summon.Value);
+                    Del(summonableComp.Summon.Value);
                     summonableComp.Summon = null;
                 }
                 summonableComp.AlreadySummoned = false;
@@ -145,7 +154,7 @@ namespace Content.Server.Bible
 
                 var selfMessage = Loc.GetString(component.LocPrefix + "-damage-unholy-self", ("target", Identity.Entity(args.Target.Value, EntityManager)), ("bible", uid));
                 _popupSystem.PopupEntity(selfMessage, args.User, args.User, PopupType.LargeCaution);
-                
+
                 _delay.TryResetDelay((uid, useDelay));
 
                 return;
@@ -168,6 +177,41 @@ namespace Content.Server.Bible
                     return;
                 }
             }
+
+            //#region Starlight
+            if (TryComp<CluwneComponent>(args.Target, out var cluwne))
+            {
+                if ((!cluwne.Unremovable) && _random.Prob(component.CluwneCureChance))
+                {
+                    var target = args.Target.Value;
+                    RemComp<CluwneComponent>(target);
+                    RemComp<ClumsyComponent>(uid);
+                    RemComp<AutoEmoteComponent>(uid);
+                    if (TryComp<InventoryComponent>(target, out var inv))
+                    {
+                        var slots = _invSystem.GetSlotEnumerator((target, inv));
+                        while (slots.NextItem(out var itemeuid, out var slot))
+                        {
+                            if (TryComp<UnremoveableComponent>(itemeuid, out _) && !_tags.HasTag(itemeuid, component.RemovableAnywaysTag))
+                                continue;
+                            _invSystem.TryUnequip(target, target, slot.Name, true, true, inventory: inv);
+                        }
+
+                    }
+                    if (EntityManager.TryGetComponent<HandsComponent>(target, out var hands))
+                    {
+                        foreach (var hand in _hands.EnumerateHands((target, hands)))
+                        {
+                            _hands.TryDrop(target,
+                                hand,
+                                checkActionBlocker: false,
+                                doDropInteraction: false
+                            );
+                        }
+                    }
+                }
+            }
+            //#endregion
 
             var damage = _damageableSystem.TryChangeDamage(args.Target.Value, component.Damage, true, origin: uid);
 
@@ -271,7 +315,7 @@ namespace Content.Server.Bible
                 return;
 
             // Make this familiar the component's summon
-            var familiar = EntityManager.SpawnEntity(component.SpecialItemPrototype, position.Coordinates);
+            var familiar = Spawn(component.SpecialItemPrototype, position.Coordinates);
             component.Summon = familiar;
 
             // If this is going to use a ghost role mob spawner, attach it to the bible.

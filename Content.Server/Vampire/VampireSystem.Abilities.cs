@@ -1,13 +1,7 @@
 using Content.Server.Bible.Components;
-using Content.Server.Body.Components;
-using Content.Server.Flash;
-using Content.Server.Flash.Components;
 using Content.Server.Speech.Components;
 using Content.Server.Storage.Components;
-using Content.Server.Store.Components;
-using Content.Shared.Actions;
 using Content.Server.Objectives.Components;
-using Content.Shared.Bed.Sleep;
 using Content.Shared.Body.Components;
 using Content.Shared.Chat.Prototypes;
 using Content.Shared.Chemistry.Components;
@@ -25,8 +19,6 @@ using Content.Shared.Popups;
 using Content.Shared.Polymorph;
 using Content.Shared.Prying.Components;
 using Content.Shared.Stealth.Components;
-using Content.Shared.Store.Events;
-using Content.Shared.Store.Components;
 using Content.Shared.Stunnable;
 using Content.Shared.Vampire;
 using Content.Shared.Vampire.Components;
@@ -36,6 +28,7 @@ using Robust.Shared.Containers;
 using Robust.Shared.Utility;
 using System.Collections.Frozen;
 using System.Diagnostics.CodeAnalysis;
+using Content.Shared.Bed.Sleep;
 using Content.Shared.Flash.Components;
 
 namespace Content.Server.Vampire;
@@ -179,9 +172,9 @@ public sealed partial class VampireSystem
 
         if (!IsAbilityUsable(vampire, def))
             return;
-        
+
         UnnaturalStrength(vampire);
-        
+
         ev.Handled = true;
     }
     private void OnVampireSupernaturalStrength(EntityUid entity, VampireComponent component, VampireSupernaturalStrengthEvent ev)
@@ -193,9 +186,9 @@ public sealed partial class VampireSystem
 
         if (!IsAbilityUsable(vampire, def))
             return;
-        
+
         SupernaturalStrength(vampire);
-        
+
         ev.Handled = true;
     }
     private void OnVampireCloakOfDarkness(EntityUid entity, VampireComponent component, VampireCloakOfDarknessEvent ev)
@@ -204,7 +197,7 @@ public sealed partial class VampireSystem
             return;
 
         var vampire = new Entity<VampireComponent>(entity, component);
-        
+
         if (_vampire.GetBloodEssence(vampire) < FixedPoint2.New(330))
         {
             _popup.PopupEntity(Loc.GetString("vampire-cloak-disable"), vampire, vampire);
@@ -325,13 +318,13 @@ public sealed partial class VampireSystem
             var strength = EnsureComp<VampireStrengthComponent>(vampire);
             strength.Upkeep = 1f;
             strength.Power = "SupernaturalStrength";
-            
+
             var pryComp = EnsureComp<PryingComponent>(vampire);
             pryComp.Force = true;
             pryComp.PryPowered = true;
-        
+
             _popup.PopupEntity(Loc.GetString("vampire-supernaturalstrength", ("user", vampire)), vampire, vampire, Shared.Popups.PopupType.SmallCaution);
-            
+
             meleeComp.Damage += damage;
         }
     }
@@ -348,9 +341,9 @@ public sealed partial class VampireSystem
             if (HasComp<VampireComponent>(entity))
                 continue;
 
-            if (HasComp<HumanoidAppearanceComponent>(entity))
+            if (TryComp<KnockedDownComponent>(entity, out var knockedDownComponent))
             {
-                _stun.TryParalyze(entity, duration ?? TimeSpan.FromSeconds(3), false);
+                _stun.UpdateKnockdownTime((entity, knockedDownComponent), duration ?? TimeSpan.FromSeconds(3), false);
                 _chat.TryEmoteWithoutChat(entity, _prototypeManager.Index<EmotePrototype>(VampireComponent.ScreamEmoteProto), true);
             }
 
@@ -371,20 +364,24 @@ public sealed partial class VampireSystem
 
         if (HasComp<BibleUserComponent>(target))
         {
-            _stun.TryParalyze(vampire, duration ?? TimeSpan.FromSeconds(3), true);
+            if (TryComp<KnockedDownComponent>(vampire, out var knockdown))
+                _stun.UpdateKnockdownTime((vampire, knockdown), duration ?? TimeSpan.FromSeconds(3), true);
             _chat.TryEmoteWithoutChat(vampire.Owner, _prototypeManager.Index<EmotePrototype>(VampireComponent.ScreamEmoteProto), true);
             if (damage != null)
                 _damageableSystem.TryChangeDamage(vampire.Owner, damage);
             return;
         }
 
-        _stun.TryParalyze(target.Value, duration ?? TimeSpan.FromSeconds(3), true);
+        if (!TryComp<KnockedDownComponent>(target, out var tgtKnockdown))
+            return;
+
+        _stun.UpdateKnockdownTime((target.Value,tgtKnockdown), duration ?? TimeSpan.FromSeconds(3), true);
     }
     private void PolymorphSelf(Entity<VampireComponent> vampire, string? polymorphTarget)
     {
         if (string.IsNullOrEmpty(polymorphTarget))
             return;
-        
+
         var prototypeId = polymorphTarget switch
         {
             "MobMouse" => "VampireMouse",
@@ -407,7 +404,7 @@ public sealed partial class VampireSystem
         _polymorph.PolymorphEntity(vampire, prototype);
     }
     private void BloodSteal(Entity<VampireComponent> vampire)
-    { 
+    {
         var transform = Transform(vampire.Owner);
 
         var targets = new HashSet<(EntityUid, FixedPoint2)>();
@@ -432,19 +429,19 @@ public sealed partial class VampireSystem
             var victimBloodRemaining = bloodstream.BloodSolution.Value.Comp.Solution.Volume;
             if (victimBloodRemaining <= 0)
                 continue;
-            
+
             var volumeToConsume = (FixedPoint2) Math.Min((float) victimBloodRemaining.Value, 20);
 
             targets.Add((entity, volumeToConsume));
         }
-        
+
         if (targets.Count != 0)
         {
             foreach (var (entity, volumeToConsume) in targets)
             {
                 if (!TryComp<BloodstreamComponent>(entity, out var bloodstream) || bloodstream.BloodSolution == null)
                     continue;
-                
+
                 //Transfer 80% to the vampire
                 var bloodSolution = _solution.SplitSolution(bloodstream.BloodSolution.Value, volumeToConsume * 0.80);
                 //And spill 20% on the floor
@@ -499,7 +496,7 @@ public sealed partial class VampireSystem
             return false;
 
         var attempt = new FlashAttemptEvent(target.Value, vampire.Owner, vampire.Owner);
-        RaiseLocalEvent(target.Value, attempt, true);
+        RaiseLocalEvent(target.Value, ref attempt, true);
 
         if (attempt.Cancelled)
             return false;
@@ -535,7 +532,7 @@ public sealed partial class VampireSystem
         if (args.Cancelled)
             return;
 
-        _statusEffects.TryAddStatusEffect<ForcedSleepingComponent>(args.Target.Value, VampireComponent.SleepStatusEffectProto, args.Duration ?? TimeSpan.FromSeconds(30), false);
+        _statusEffects.TryAddStatusEffectDuration(args.Target.Value, SleepingSystem.StatusEffectForcedSleeping,out var _, args.Duration ?? TimeSpan.FromSeconds(30));
     }
     #endregion
 
@@ -674,14 +671,14 @@ public sealed partial class VampireSystem
         //Do a precheck
         if (!HasComp<VampireFangsExtendedComponent>(vampire))
             return false;
-        
+
         if (!HasComp<TransformComponent>(vampire))
             return false;
 
         if (!_interaction.InRangeUnobstructed(vampire.Owner, target, popup: true))
             return false;
 
-        if (_food.IsMouthBlocked(target, vampire))
+        if (_ingestion.HasMouthAvailable(vampire, target))
             return false;
 
         if (_rotting.IsRotten(target))
@@ -715,7 +712,7 @@ public sealed partial class VampireSystem
         if (!HasComp<VampireFangsExtendedComponent>(entity))
             return;
 
-        if (_food.IsMouthBlocked(entity, entity))
+        if (_ingestion.HasMouthAvailable(entity, entity))
             return;
 
         if (_rotting.IsRotten(args.Target!.Value))
@@ -737,7 +734,7 @@ public sealed partial class VampireSystem
 
         var volumeToConsume = (FixedPoint2) Math.Min((float) victimBloodRemaining.Value, args.Volume);
         var volumeToDrain = (FixedPoint2) Math.Min((float) victimBloodRemaining.Value, args.Volume * 8);
-        
+
         if (_mind.TryGetMind(entity, out var mindId, out var mind))
             if (_mind.TryGetObjectiveComp<BloodDrainConditionComponent>(mindId, out var objective, mind))
                     objective.BloodDranked = entity.Comp.TotalBloodDrank;

@@ -28,7 +28,7 @@ public sealed partial class CyberLimbSystem : EntitySystem
     {
         if (args.Comp.Toggled)
         {
-            var toggleLimbEvent = new ToggleLimbEvent() 
+            var toggleLimbEvent = new ToggleLimbEvent()
             {
                 Performer = ent.Owner,
             };
@@ -46,8 +46,8 @@ public sealed partial class CyberLimbSystem : EntitySystem
             {
                 var handId = $"{ent.Owner}_{item}";
                 var hands = EnsureComp<HandsComponent>(args.Performer);
-                _hands.AddHand(args.Performer, handId, HandLocation.Functional, hands);
-                _hands.DoPickup(args.Performer, hands.Hands[handId], item, hands);
+                _hands.AddHand((args.Performer, hands), handId, HandLocation.Functional);
+                _hands.DoPickup(args.Performer, handId, item, hands);
                 EnsureComp<UnremoveableComponent>(item);
             }
         }
@@ -60,7 +60,7 @@ public sealed partial class CyberLimbSystem : EntitySystem
                 RemComp<UnremoveableComponent>(item);
                 var hands = EnsureComp<HandsComponent>(args.Performer);
                 _container.Insert(_slEnt.Entity<TransformComponent, MetaDataComponent, PhysicsComponent>(item), container, force: true);
-                _hands.RemoveHand(args.Performer, handId, hands);
+                _hands.RemoveHand(args.Performer, handId);
             }
         }
 

@@ -126,7 +126,7 @@
       components:
       - XenoArtifact
   - type: Item
-    sprite: Objects/Storage/artifact_container.rsi  
+    sprite: Objects/Storage/artifact_container.rsi
     size: Huge
   - type: MeleeWeapon
     damage:

@@ -70,6 +70,16 @@
   - type: Reflect
   - type: IgnitionSource
     temperature: 700
+  # 🌟Starlight-start🌟
+  - type: SurgeryTool
+    successRate: 0.6
+    startSound:
+      path: /Audio/_Starlight/Medical/Surgery/cautery1.ogg
+    endSound:
+      path: /Audio/_Starlight/Medical/Surgery/cautery2.ogg
+  - type: Cautery
+  - type: Scalpel
+  # 🌟Starlight-end🌟
 
 - type: entity
   name: energy sword
@@ -88,13 +98,8 @@
       map: [ "blade" ]
   - type: Item
     sprite: Objects/Weapons/Melee/e_sword-inhands.rsi
-  - type: Scalpel
-  - type: SurgeryTool
-    successRate: 0.6
-    startSound:
-      path: /Audio/_Starlight/Medical/Surgery/scalpel1.ogg
-    endSound:
-      path: /Audio/_Starlight/Medical/Surgery/scalpel2.ogg
+  - type: StaticPrice
+    price: 2500
 
 - type: entity
   name: energy dagger
@@ -157,17 +162,10 @@
     energy: 1.5
     color: white
     netsync: false
-  - type: Scalpel
-  - type: SurgeryTool
-    successRate: 0.6
-    startSound:
-      path: /Audio/_Starlight/Medical/Surgery/scalpel1.ogg
-    endSound:
-      path: /Audio/_Starlight/Medical/Surgery/scalpel2.ogg
 
 - type: entity
   name: pen
-  parent: BaseMeleeWeaponEnergy
+  parent: [BaseMeleeWeaponEnergy, VoiceLock]
   id: EnergyDagger
   suffix: E-Dagger
   description: 'A dark ink pen.'
@@ -228,16 +226,19 @@
     damage:
       types:
         Blunt: 1
+  - type: EmitSoundOnUse
+    sound:
+      path: /Audio/Items/pen_click.ogg
+      params:
+        volume: -4
+        maxDistance: 2
+  - type: UseDelay
+    delay: 1.5
+  - type: ItemToggleRequiresLock #  TODO: FIX THIS VERB IS COOKED
+    lockedPopup: null
   - type: Tag
     tags:
     - Write
-  - type: Scalpel
-  - type: SurgeryTool
-    successRate: 0.6
-    startSound:
-      path: /Audio/_Starlight/Medical/Surgery/scalpel1.ogg
-    endSound:
-      path: /Audio/_Starlight/Medical/Surgery/scalpel2.ogg
 
 - type: entity
   parent: [BaseItem, BaseSyndicateContraband]
@@ -343,13 +344,6 @@
   - type: Reflect
     reflectProb: .75
     spread: 75
-  - type: Scalpel
-  - type: SurgeryTool
-    successRate: 0.6
-    startSound:
-      path: /Audio/_Starlight/Medical/Surgery/scalpel1.ogg
-    endSound:
-      path: /Audio/_Starlight/Medical/Surgery/scalpel2.ogg
 
 # Item will look weird in handslot. Will need to adjust handstorage visuals in a future PR
 - type: entity
@@ -413,13 +407,6 @@
   components: # could add energy-draining like the L6C
   - type: Wieldable
     freeHandsRequired: 0 # because borg has no off-hand to wield with.  Without this, it will be unable to activate the esword
-  - type: Scalpel
-  - type: SurgeryTool
-    successRate: 0.6
-    startSound:
-      path: /Audio/_Starlight/Medical/Surgery/scalpel1.ogg
-    endSound:
-      path: /Audio/_Starlight/Medical/Surgery/scalpel2.ogg
 
 - type: entity
   parent: [ EnergyDaggerLoud, BaseXenoborgContraband ]

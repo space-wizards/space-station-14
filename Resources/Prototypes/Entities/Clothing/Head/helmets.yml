@@ -336,6 +336,7 @@
     tags:
     - WhitelistChameleon
     - FireHelmet
+    - CorgiWearable
   - type: HideLayerClothing
     layers:
       Hair: HEAD
@@ -537,6 +538,13 @@
   - type: Clothing
     sprite: Clothing/Head/Helmets/justice.rsi
     equippedPrefix: off
+    # Starlight begin - inheritance fix
+    clothingVisuals:
+      head:
+        - state: off-equipped-HELMET
+      head-vox:
+        - state: off-equipped-HELMET-vox
+    # Starlight end
   - type: ItemToggle
     predictable: false # issues between ToggleCellDraw and ItemToggleActiveSound
     onUse: false
@@ -553,9 +561,11 @@
         volume: -4
   - type: UseDelay
     delay: 1.0
-  - type: ToggleClothing
-    action: ActionToggleJusticeHelm
-    mustEquip: false
+    # Starlight begin - redundant button, the normal sec helmet has a light toggle already
+    #  - type: ToggleClothing
+    #    action: ActionToggleJusticeHelm
+    #    mustEquip: false
+    # Starlight end
   - type: ItemTogglePointLight
   - type: ToggleableVisuals
     spriteLayer: light
@@ -616,3 +626,25 @@
     itemIconStyle: BigItem
   - type: InstantAction
     event: !type:ToggleActionEvent
+
+#card helmet
+- type: entity
+  parent: ClothingHeadHelmetBase
+  id: CardHelmet
+  name: cardboard helmet
+  description: A medieval helmet built from cardboard.
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Helmets/card_helmet.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Helmets/card_helmet.rsi
+  - type: IngestionBlocker
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.95
+  - type: StaminaResistance
+    damageCoefficient: 0.95
+  - type: Construction
+    graph: cardHelmet
+    node: cardhelmet

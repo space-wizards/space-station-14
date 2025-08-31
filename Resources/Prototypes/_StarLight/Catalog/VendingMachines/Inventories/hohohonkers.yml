@@ -81,3 +81,27 @@
   - !type:ListingLimitedStockCondition
     stock: 5
   - !type:BuyerAccessCondition
+
+- type: listing
+  id: VendorCandyClownUniformSuit
+  productEntity: CandyClownUniformSuit
+  cost:
+    NTCredit: 50
+  categories:
+  - SLClown
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 2
+  - !type:BuyerAccessCondition
+
+- type: listing
+  id: VendorStripedClownUniformSuit
+  productEntity: StripedClownUniformSuit
+  cost:
+    NTCredit: 50
+  categories:
+  - SLClown
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 2
+  - !type:BuyerAccessCondition

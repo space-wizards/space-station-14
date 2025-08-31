@@ -100,6 +100,7 @@
     prototype: Human
     requiredLegs: 2
   - type: Cluwne
+    unremovable: true #Starlight
     isCluwne: false
     emoteId: CluwneBeast
   - type: FootstepModifier

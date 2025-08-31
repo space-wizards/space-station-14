@@ -1,0 +1,437 @@
+- type: entity
+  parent: [ClothingOuterStorageBase, AllowSuitStorageClothing]
+  id: ClothingOuterBurnedRobes
+  name: burned robes
+  description: They are riddles with burn marks and smell like ash.
+  components:
+  - type: Sprite
+    sprite: _Starlight/Clothing/OuterClothing/OverClothes/burned_robes.rsi
+  - type: Clothing
+    sprite: _Starlight/Clothing/OuterClothing/OverClothes/burned_robes.rsi
+  - type: Item
+  - type: Tag
+    tags:
+    - WhitelistChameleon
+
+- type: entity
+  parent: [ClothingOuterStorageBase, AllowSuitStorageClothing]
+  id: ClothingOutercorset
+  name: corset
+  description: A little bit tight.
+  components:
+  - type: Sprite
+    sprite: _Starlight/Clothing/OuterClothing/OverClothes/corset.rsi
+  - type: Clothing
+    sprite: _Starlight/Clothing/OuterClothing/OverClothes/corset.rsi
+  - type: Item
+  - type: Tag
+    tags:
+    - WhitelistChameleon
+
+- type: entity
+  parent: [ClothingOuterStorageBase, AllowSuitStorageClothing]
+  id: ClothingOuterRedLeather
+  name: red leather jacket
+  description: Slick. Would look greasy with a pair of sunglasses.
+  components:
+  - type: Sprite
+    sprite: _Starlight/Clothing/OuterClothing/OverClothes/red_leather.rsi
+  - type: Clothing
+    sprite: _Starlight/Clothing/OuterClothing/OverClothes/red_leather.rsi
+  - type: Item
+  - type: Tag
+    tags:
+    - WhitelistChameleon
+
+- type: entity
+  parent: [ClothingOuterStorageBase, AllowSuitStorageClothing]
+  id: ClothingOuterRoughSweater
+  name: rough sweater
+  description: Smells like buttercups.
+  components:
+  - type: Sprite
+    sprite: _Starlight/Clothing/OuterClothing/OverClothes/rough_sweater.rsi
+  - type: Clothing
+    sprite: _Starlight/Clothing/OuterClothing/OverClothes/rough_sweater.rsi
+  - type: Item
+  - type: Tag
+    tags:
+    - WhitelistChameleon
+
+- type: entity
+  parent: [ClothingOuterStorageBase, AllowSuitStorageClothing]
+  id: ClothingOuterSoftSweater
+  name: soft sweater
+  description: Smells like determination.
+  components:
+  - type: Sprite
+    sprite: _Starlight/Clothing/OuterClothing/OverClothes/soft_sweater.rsi
+  - type: Clothing
+    sprite: _Starlight/Clothing/OuterClothing/OverClothes/soft_sweater.rsi
+  - type: Item
+  - type: Tag
+    tags:
+    - WhitelistChameleon
+
+- type: entity
+  parent: [ClothingOuterStorageBase, AllowSuitStorageClothing]
+  id: ClothingOuterLargeShirt
+  name: large shirt
+  description: It could fit two of you!
+  components:
+  - type: Sprite
+    sprite: _Starlight/Clothing/OuterClothing/OverClothes/large_shirt.rsi
+  - type: Clothing
+    sprite: _Starlight/Clothing/OuterClothing/OverClothes/large_shirt.rsi
+  - type: Item
+  - type: Tag
+    tags:
+    - WhitelistChameleon
+
+
+## colored
+
+# - type: entity
+  # parent: [ClothingOuterStorageBase, AllowSuitStorageClothing]
+  # id: ClothingOuterKeyholeSweaterWhite
+  # name: white keyhole sweater
+  # description: A sweater with a strategically placed opening for temperature regulation.
+  # components:
+  # - type: Sprite
+    # sprite: _Starlight/Clothing/OuterClothing/OverClothes/keyhole_sweater.rsi
+  # - type: Clothing
+    # sprite: _Starlight/Clothing/OuterClothing/OverClothes/keyhole_sweater.rsi
+  # - type: Item
+  # - type: Tag
+    # tags:
+    # - WhitelistChameleon
+
+# - type: entity
+  # parent: [ClothingOuterStorageBase, AllowSuitStorageClothing]
+  # id: ClothingOuterKeyholeSweaterGray
+  # name: gray keyhole sweater
+  # description: A sweater with a strategically placed opening for temperature regulation.
+  # components:
+  # - type: Sprite
+    # sprite: _Starlight/Clothing/OuterClothing/OverClothes/keyhole_sweater.rsi
+    # layers:
+    # - state: icon
+      # color: "#b3b3b3"
+  # - type: Clothing
+    # sprite: _Starlight/Clothing/OuterClothing/OverClothes/keyhole_sweater.rsi
+    # clothingVisuals:
+      # jumpsuit:
+      # - state: equipped-OUTERCLOTHING
+        # color: "#b3b3b3"
+  # - type: Item
+  # - type: Tag
+    # tags:
+    # - WhitelistChameleon
+
+# - type: entity
+  # parent: [ClothingOuterStorageBase, AllowSuitStorageClothing]
+  # id: ClothingOuterKeyholeSweaterBlack
+  # name: black keyhole sweater
+  # description: A sweater with a strategically placed opening for temperature regulation.
+  # components:
+  # - type: Sprite
+    # sprite: _Starlight/Clothing/OuterClothing/OverClothes/keyhole_sweater.rsi
+    # layers:
+    # - state: icon
+      # color: "#3f3f3f"
+  # - type: Clothing
+    # sprite: _Starlight/Clothing/OuterClothing/OverClothes/keyhole_sweater.rsi
+    # clothingVisuals:
+      # jumpsuit:
+      # - state: equipped-OUTERCLOTHING
+        # color: "#3f3f3f"
+  # - type: Item
+  # - type: Tag
+    # tags:
+    # - WhitelistChameleon
+
+# - type: entity
+  # parent: [ClothingOuterStorageBase, AllowSuitStorageClothing]
+  # id: ClothingOuterKeyholeSweaterBlue
+  # name: blue keyhole sweater
+  # description: A sweater with a strategically placed opening for temperature regulation.
+  # components:
+  # - type: Sprite
+    # sprite: _Starlight/Clothing/OuterClothing/OverClothes/keyhole_sweater.rsi
+    # layers:
+    # - state: icon
+      # color: "#52aecc"
+  # - type: Clothing
+    # sprite: _Starlight/Clothing/OuterClothing/OverClothes/keyhole_sweater.rsi
+    # clothingVisuals:
+      # jumpsuit:
+      # - state: equipped-OUTERCLOTHING
+        # color: "#52aecc"
+  # - type: Item
+  # - type: Tag
+    # tags:
+    # - WhitelistChameleon
+
+# - type: entity
+  # parent: [ClothingOuterStorageBase, AllowSuitStorageClothing]
+  # id: ClothingOuterKeyholeSweaterDarkBlue
+  # name: dark blue keyhole sweater
+  # description: A sweater with a strategically placed opening for temperature regulation.
+  # components:
+  # - type: Sprite
+    # sprite: _Starlight/Clothing/OuterClothing/OverClothes/keyhole_sweater.rsi
+    # layers:
+    # - state: icon
+      # color: "#3285ba"
+  # - type: Clothing
+    # sprite: _Starlight/Clothing/OuterClothing/OverClothes/keyhole_sweater.rsi
+    # clothingVisuals:
+      # jumpsuit:
+      # - state: equipped-OUTERCLOTHING
+        # color: "#3285ba"
+  # - type: Item
+  # - type: Tag
+    # tags:
+    # - WhitelistChameleon
+
+# - type: entity
+  # parent: [ClothingOuterStorageBase, AllowSuitStorageClothing]
+  # id: ClothingOuterKeyholeSweaterTeal
+  # name: teal keyhole sweater
+  # description: A sweater with a strategically placed opening for temperature regulation.
+  # components:
+  # - type: Sprite
+    # sprite: _Starlight/Clothing/OuterClothing/OverClothes/keyhole_sweater.rsi
+    # layers:
+    # - state: icon
+      # color: "#77f3b7"
+  # - type: Clothing
+    # sprite: _Starlight/Clothing/OuterClothing/OverClothes/keyhole_sweater.rsi
+    # clothingVisuals:
+      # jumpsuit:
+      # - state: equipped-OUTERCLOTHING
+        # color: "#77f3b7"
+  # - type: Item
+  # - type: Tag
+    # tags:
+    # - WhitelistChameleon
+
+# - type: entity
+  # parent: [ClothingOuterStorageBase, AllowSuitStorageClothing]
+  # id: ClothingOuterKeyholeSweaterGreen
+  # name: green keyhole sweater
+  # description: A sweater with a strategically placed opening for temperature regulation.
+  # components:
+  # - type: Sprite
+    # sprite: _Starlight/Clothing/OuterClothing/OverClothes/keyhole_sweater.rsi
+    # layers:
+    # - state: icon
+      # color: "#9ed63a"
+  # - type: Clothing
+    # sprite: _Starlight/Clothing/OuterClothing/OverClothes/keyhole_sweater.rsi
+    # clothingVisuals:
+      # jumpsuit:
+      # - state: equipped-OUTERCLOTHING
+        # color: "#9ed63a"
+  # - type: Item
+  # - type: Tag
+    # tags:
+    # - WhitelistChameleon
+
+# - type: entity
+  # parent: [ClothingOuterStorageBase, AllowSuitStorageClothing]
+  # id: ClothingOuterKeyholeSweaterDarkGreen
+  # name: dark green keyhole sweater
+  # description: A sweater with a strategically placed opening for temperature regulation.
+  # components:
+  # - type: Sprite
+    # sprite: _Starlight/Clothing/OuterClothing/OverClothes/keyhole_sweater.rsi
+    # layers:
+    # - state: icon
+      # color: "#007923"
+  # - type: Clothing
+    # sprite: _Starlight/Clothing/OuterClothing/OverClothes/keyhole_sweater.rsi
+    # clothingVisuals:
+      # jumpsuit:
+      # - state: equipped-OUTERCLOTHING
+        # color: "#007923"
+  # - type: Item
+  # - type: Tag
+    # tags:
+    # - WhitelistChameleon
+
+# - type: entity
+  # parent: [ClothingOuterStorageBase, AllowSuitStorageClothing]
+  # id: ClothingOuterKeyholeSweaterOrange
+  # name: orange keyhole sweater
+  # description: A sweater with a strategically placed opening for temperature regulation.
+  # components:
+  # - type: Sprite
+    # sprite: _Starlight/Clothing/OuterClothing/OverClothes/keyhole_sweater.rsi
+    # layers:
+    # - state: icon
+      # color: "#ff8c19"
+  # - type: Clothing
+    # sprite: _Starlight/Clothing/OuterClothing/OverClothes/keyhole_sweater.rsi
+    # clothingVisuals:
+      # jumpsuit:
+      # - state: equipped-OUTERCLOTHING
+        # color: "#ff8c19"
+  # - type: Item
+  # - type: Tag
+    # tags:
+    # - WhitelistChameleon
+
+# - type: entity
+  # parent: [ClothingOuterStorageBase, AllowSuitStorageClothing]
+  # id: ClothingOuterKeyholeSweaterPink
+  # name: pink keyhole sweater
+  # description: A sweater with a strategically placed opening for temperature regulation.
+  # components:
+  # - type: Sprite
+    # sprite: _Starlight/Clothing/OuterClothing/OverClothes/keyhole_sweater.rsi
+    # layers:
+    # - state: icon
+      # color: "#ffa69b"
+  # - type: Clothing
+    # sprite: _Starlight/Clothing/OuterClothing/OverClothes/keyhole_sweater.rsi
+    # clothingVisuals:
+      # jumpsuit:
+      # - state: equipped-OUTERCLOTHING
+        # color: "#ffa69b"
+  # - type: Item
+  # - type: Tag
+    # tags:
+    # - WhitelistChameleon
+
+# - type: entity
+  # parent: [ClothingOuterStorageBase, AllowSuitStorageClothing]
+  # id: ClothingOuterKeyholeSweaterRed
+  # name: red keyhole sweater
+  # description: A sweater with a strategically placed opening for temperature regulation.
+  # components:
+  # - type: Sprite
+    # sprite: _Starlight/Clothing/OuterClothing/OverClothes/keyhole_sweater.rsi
+    # layers:
+    # - state: icon
+      # color: "#eb0c07"
+  # - type: Clothing
+    # sprite: _Starlight/Clothing/OuterClothing/OverClothes/keyhole_sweater.rsi
+    # clothingVisuals:
+      # jumpsuit:
+      # - state: equipped-OUTERCLOTHING
+        # color: "#eb0c07"
+  # - type: Item
+  # - type: Tag
+    # tags:
+    # - WhitelistChameleon
+
+# - type: entity
+  # parent: [ClothingOuterStorageBase, AllowSuitStorageClothing]
+  # id: ClothingOuterKeyholeSweaterYellow
+  # name: yellow keyhole sweater
+  # description: A sweater with a strategically placed opening for temperature regulation.
+  # components:
+  # - type: Sprite
+    # sprite: _Starlight/Clothing/OuterClothing/OverClothes/keyhole_sweater.rsi
+    # layers:
+    # - state: icon
+      # color: "#ffe14d"
+  # - type: Clothing
+    # sprite: _Starlight/Clothing/OuterClothing/OverClothes/keyhole_sweater.rsi
+    # clothingVisuals:
+      # jumpsuit:
+      # - state: equipped-OUTERCLOTHING
+        # color: "#ffe14d"
+  # - type: Item
+  # - type: Tag
+    # tags:
+    # - WhitelistChameleon
+
+# - type: entity
+  # parent: [ClothingOuterStorageBase, AllowSuitStorageClothing]
+  # id: ClothingOuterKeyholeSweaterPurple
+  # name: purple keyhole sweater
+  # description: A sweater with a strategically placed opening for temperature regulation.
+  # components:
+  # - type: Sprite
+    # sprite: _Starlight/Clothing/OuterClothing/OverClothes/keyhole_sweater.rsi
+    # layers:
+    # - state: icon
+      # color: "#9f70cc"
+  # - type: Clothing
+    # sprite: _Starlight/Clothing/OuterClothing/OverClothes/keyhole_sweater.rsi
+    # clothingVisuals:
+      # jumpsuit:
+      # - state: equipped-OUTERCLOTHING
+        # color: "#9f70cc"
+  # - type: Item
+  # - type: Tag
+    # tags:
+    # - WhitelistChameleon
+
+# - type: entity
+  # parent: [ClothingOuterStorageBase, AllowSuitStorageClothing]
+  # id: ClothingOuterKeyholeSweaterLightBrown
+  # name: light brown keyhole sweater
+  # description: A sweater with a strategically placed opening for temperature regulation.
+  # components:
+  # - type: Sprite
+    # sprite: _Starlight/Clothing/OuterClothing/OverClothes/keyhole_sweater.rsi
+    # layers:
+    # - state: icon
+      # color: "#c59431"
+  # - type: Clothing
+    # sprite: _Starlight/Clothing/OuterClothing/OverClothes/keyhole_sweater.rsi
+    # clothingVisuals:
+      # jumpsuit:
+      # - state: equipped-OUTERCLOTHING
+        # color: "#c59431"
+  # - type: Item
+  # - type: Tag
+    # tags:
+    # - WhitelistChameleon
+
+# - type: entity
+  # parent: [ClothingOuterStorageBase, AllowSuitStorageClothing]
+  # id: ClothingOuterKeyholeSweaterBrown
+  # name: brown keyhole sweater
+  # description: A sweater with a strategically placed opening for temperature regulation.
+  # components:
+  # - type: Sprite
+    # sprite: _Starlight/Clothing/OuterClothing/OverClothes/keyhole_sweater.rsi
+    # layers:
+    # - state: icon
+      # color: "#a17229"
+  # - type: Clothing
+    # sprite: _Starlight/Clothing/OuterClothing/OverClothes/keyhole_sweater.rsi
+    # clothingVisuals:
+      # jumpsuit:
+      # - state: equipped-OUTERCLOTHING
+        # color: "#a17229"
+  # - type: Item
+  # - type: Tag
+    # tags:
+    # - WhitelistChameleon
+
+# - type: entity
+  # parent: [ClothingOuterStorageBase, AllowSuitStorageClothing]
+  # id: ClothingOuterKeyholeSweaterMaroon
+  # name: maroon keyhole sweater
+  # description: A sweater with a strategically placed opening for temperature regulation.
+  # components:
+  # - type: Sprite
+    # sprite: _Starlight/Clothing/OuterClothing/OverClothes/keyhole_sweater.rsi
+    # layers:
+    # - state: icon
+      # color: "#cc295f"
+  # - type: Clothing
+    # sprite: _Starlight/Clothing/OuterClothing/OverClothes/keyhole_sweater.rsi
+    # clothingVisuals:
+      # jumpsuit:
+      # - state: equipped-OUTERCLOTHING
+        # color: "#cc295f"
+  # - type: Item
+  # - type: Tag
+    # tags:
+    # - WhitelistChameleon

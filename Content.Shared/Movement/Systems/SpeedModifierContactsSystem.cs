@@ -78,7 +78,7 @@ public sealed class SpeedModifierContactsSystem : EntitySystem
 
     private void OnRefreshMovementSpeedModifiers(EntityUid uid, SpeedModifiedByContactComponent component, RefreshMovementSpeedModifiersEvent args)
     {
-        if (!EntityManager.TryGetComponent<PhysicsComponent>(uid, out var physicsComponent))
+        if (!TryComp<PhysicsComponent>(uid, out var physicsComponent))
             return;
 
         var walkSpeed = 0.0f;
@@ -95,7 +95,7 @@ public sealed class SpeedModifierContactsSystem : EntitySystem
 
             if (TryComp<SpeedModifierContactsComponent>(ent, out var slowContactsComponent))
             {
-                if (_whitelistSystem.IsWhitelistPass(slowContactsComponent.IgnoreWhitelist, uid))
+                if (!_whitelistSystem.CheckBoth(uid, slowContactsComponent.Blacklist, slowContactsComponent.Whitelist)) // 🌟Starlight🌟  
                     continue;
 
                 // Entities that are airborne should not be affected by contact slowdowns that are specified to not affect airborne entities.

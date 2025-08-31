@@ -6,94 +6,76 @@ concurrency:
 
 on:
   workflow_dispatch:
-  # schedule:
-   # - cron: '0 10 * * *'
 
 jobs:
   build:
+    name: Build & Package
     runs-on: ubuntu-latest
-    environment:
-      name: prod
+    environment: prod
     steps:
-    - name: Install dependencies
-      run: sudo apt-get install -y python3-paramiko python3-lxml
+      - name: Install OS deps
+        run: sudo apt-get install -y python3-paramiko python3-lxml
 
-    - uses: actions/checkout@v4.2.2
-      with:
-        submodules: 'recursive'
-        fetch-depth: 0
-        
-    - name: Fetch all tags and branches (RobustToolbox)
-      run: |
-        cd RobustToolbox
-        git fetch --all --tags
+      - uses: actions/checkout@v4
+        with:
+          submodules: recursive
+          fetch-depth: 0
 
-    - name: Debug tags for RobustToolbox
-      run: |
-        cd RobustToolbox
-        git tag
-        
-    - name: Setup .NET Core
-      uses: actions/setup-dotnet@v4.1.0
-      with:
-        dotnet-version: 9.0.x
+      - name: Fetch all tags (RobustToolbox)
+        run: |
+          cd RobustToolbox
+          git fetch --all --tags
 
-    - name: Get Engine Tag
-      run: |
-        cd RobustToolbox
-        git fetch --depth=1
+      - name: Setup .NET 9.0
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 9.0.x
 
-    - name: Install dependencies
-      run: dotnet restore
+      - name: dotnet restore
+        run: dotnet restore
 
-    - name: Build Packaging
-      run: dotnet build Content.Packaging --configuration Release --no-restore /m
+      - name: Build Packaging
+        run: dotnet build Content.Packaging -c Release --no-restore /m
 
-    - name: Package server
-      run: dotnet run --project Content.Packaging server --platform win-x64 --platform linux-x64 --platform osx-x64 --platform linux-arm64
+      - name: Package server
+        run: dotnet run --project Content.Packaging server --platform win-x64 --platform linux-x64 --platform osx-x64 --platform linux-arm64
 
-    - name: Package client
-      run: dotnet run --project Content.Packaging client --no-wipe-release
+      - name: Package client
+        run: dotnet run --project Content.Packaging client --no-wipe-release
 
-    - name: Publish version
-      run: Tools/publish_multi_request.py
-      env:
-        PUBLISH_TOKEN: ${{ secrets.PUBLISH_TOKEN }}
-        GITHUB_REPOSITORY: ${{ vars.GITHUB_REPOSITORY }}
-        
-    - name: Set up SSH (Discord)
-      env:
-        ACTIONS_SSH_KEY: ${{ secrets.ACTIONS_SSH_KEY }}
-        TEST: ${{ secrets.TEST }}
-      run: |
-        mkdir -p ~/.ssh
-        echo "$ACTIONS_SSH_KEY" | tr -d '\r' > ~/.ssh/id_ed25519
-        echo "$TEST"
-        chmod 600 ~/.ssh/id_ed25519
-        ssh-keyscan github.com >> ~/.ssh/known_hosts
-        
-    - name: Test SSH Connection (Discord)
-      run: ssh -T git@github.com || exit 0
+      - name: Publish version
+        run: Tools/publish_multi_request.py
+        env:
+          PUBLISH_TOKEN: ${{ secrets.PUBLISH_TOKEN }}
+          GITHUB_REPOSITORY: ${{ vars.GITHUB_REPOSITORY }}
 
-    - name: Publish changelog (Discord)
-      continue-on-error: true
-      run: Tools/actions_changelogs_since_last_run.py
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        GITHUB_REPOSITORY: ${{ vars.GITHUB_REPOSITORY }}
-        DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
-        
-    - name: Commit and push sended changelogs (Discord)
-      run: |
-        git config user.name "github-actions[bot]"
-        git config user.email "github-actions[bot]@users.noreply.github.com"
-        git add "Resources/Changelog/ChangelogStarlight.yml"
-        git add "Tools/changelogs/sent_changelog_ids.yml"
-        git commit -m "Update sended changelogs [skip ci]"
-        git push git@github.com:${{ github.repository }}.git HEAD:Starlight
+  update-changelog:
+    name: Publish Changelogs
+#    needs: build
+    runs-on: ubuntu-latest
+    environment: prod
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
-    - name: Publish changelog (RSS)
-      continue-on-error: true
-      run: Tools/actions_changelog_rss.py
-      env:
-        CHANGELOG_RSS_KEY: ${{ secrets.CHANGELOG_RSS_KEY }}
+      - name: Set up SSH
+        env:
+          ACTIONS_SSH_KEY: ${{ secrets.ACTIONS_SSH_KEY }}
+        run: |
+          mkdir -p ~/.ssh
+          echo "$ACTIONS_SSH_KEY" | tr -d '\r' > ~/.ssh/id_ed25519
+          chmod 600 ~/.ssh/id_ed25519
+          ssh-keyscan github.com >> ~/.ssh/known_hosts
+
+      - name: Test SSH Connection
+        run: ssh -T git@github.com || exit 0
+
+      - name: Publish changelog (Discord)
+        continue-on-error: true
+        run: Tools/actions_changelogs_since_last_run.py
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_REPOSITORY: ${{ vars.GITHUB_REPOSITORY }}
+          DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
+          DISCORD_CHANGELOG_ROLE_ID: "1308143973684088883"

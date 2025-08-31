@@ -37,8 +37,10 @@ abductors-ui-shop-VendingMachineRestockAbductorDispenser = alien dispenser resto
 
 # Ghost role, objectives, etc.
 
-abductors-ghost-role-name = Abductor
-abductors-ghost-role-desc = Kidnap people, stuff them with organs of dubious origin
+abductors-ghost-role-name = Abductor Scientist
+abductors-ghost-role-desc = Kidnap people, stuff them with organs of dubious origin.
+abductora-ghost-role-name = Abductor Agent
+abductora-ghost-role-desc = Kidnap people, protect the scientist.
 abductors-ghost-role-rules = You are a [color=red][bold]Abductor[/bold][/color].
                             Your intentions are to abduct people from the station and replace their organs with various experimental devices,
                             after which you return them back. You are not allowed to destroy the station or intentionally kill people.

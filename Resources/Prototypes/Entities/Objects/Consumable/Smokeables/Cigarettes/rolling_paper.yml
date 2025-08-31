@@ -6,15 +6,18 @@
   components:
   - type: Storage
     grid:
-    - 0,0,3,1
+    - 0,0,4,1
     whitelist:
       tags:
       - RollingPaper
       - CigFilter
+      - Smokable #SL
+      - Cigarette #SL
+      - Lighters #SL
   - type: StorageFill
     contents:
-      - id: PaperRolling
-        amount: 4
+    - id: PaperRolling
+      amount: 4
   - type: Sprite
     sprite: Objects/Consumable/Smokeables/Cigarettes/paper.rsi
     state: cigpapers
@@ -38,6 +41,10 @@
         amount: 2
       - id: CigaretteFilter
         amount: 2
+  # Starlight-start: Vending Machines Prices
+  - type: ItemPrice
+    priceCategory: miscellaneous
+  # Starlight-end
 
 - type: entity
   id: PaperRolling

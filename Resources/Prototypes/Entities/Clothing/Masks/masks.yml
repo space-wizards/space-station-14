@@ -140,6 +140,7 @@
   - type: IngestionBlocker
   - type: Tag
     tags:
+    - SurgeryCompatibleArmor # Starlight-edit
     - PetWearable
     - WhitelistChameleon
   - type: PhysicalComposition
@@ -185,6 +186,7 @@
   - type: IngestionBlocker
   - type: Tag
     tags:
+    - SurgeryCompatibleArmor # Starlight-edit
     - PetWearable
     - WhitelistChameleon
   - type: PhysicalComposition
@@ -313,6 +315,11 @@
   - type: PhysicalComposition
     materialComposition:
       Plastic: 25
+  - type: StaticPrice
+    price: 5
+  - type: Tag
+    tags:
+    - SurgeryCompatibleArmor # Starlight-edit
 
 - type: entity
   parent: ClothingMaskBase
@@ -331,6 +338,9 @@
   - type: IngestionBlocker
   - type: AddAccentClothing
     accent: MumbleAccent
+  - type: EmoteBlocker
+    blocksCategories:
+    - Vocal
   - type: Construction
     graph: Muzzle
     node: muzzle
@@ -367,6 +377,13 @@
   - type: Unremoveable
   - type: AddAccentClothing
     accent: StutteringAccent
+  #region Starlight
+  - type: Tag
+    tags:
+    - ClownMask
+    - WhitelistChameleon
+    - BibleThwackRemovable
+  #endregion Starlight
 
 - type: entity
   parent: [ ClothingMaskGas, BaseSecurityContraband ]
@@ -658,6 +675,24 @@
     sprite: Clothing/Mask/scaredmime.rsi
   - type: Clothing
     sprite: Clothing/Mask/scaredmime.rsi
+
+- type: entity
+  parent: [ClothingMaskMime, BaseSecurityContraband]
+  id: ClothingMaskMimeSecurity
+  name: security mime mask
+  description: You have the right to remain silent.
+  components:
+  - type: Sprite
+    sprite: Clothing/Mask/mime_security.rsi
+  - type: Clothing
+    sprite: Clothing/Mask/mime_security.rsi
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.95
+        Slash: 0.95
+        Piercing: 0.95
+        Heat: 0.95
 
 - type: entity
   parent: ClothingMaskBase

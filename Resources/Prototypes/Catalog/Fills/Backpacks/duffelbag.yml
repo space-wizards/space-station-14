@@ -14,7 +14,7 @@
       - id: Scalpel
       - id: BoneGel
       - id: BoneSetter
-      
+
 - type: entity
   parent: ClothingBackpackDuffelSyndicateMedicalBundle
   id: ClothingBackpackDuffelSyndicateFilledMedical
@@ -60,6 +60,18 @@
       - id: MagazinePistolSubMachineGunSP
         amount: 2
 #     - id: SMGSuppressor
+
+- type: entity
+  parent: ClothingBackpackDuffelSyndicateBundle
+  id: ClothingBackpackDuffelSyndicateFilledRifle
+  name: Estoc DMR bundle
+  description: "For medium-range sharpshooting, the Estoc DMR. Bundled with three magazines."
+  components:
+  - type: StorageFill
+    contents:
+    - id: WeaponRifleEstoc
+    - id: MagazineRifleSP
+      amount: 2
 
 - type: entity
   parent: ClothingBackpackDuffelSyndicateBundle
@@ -130,8 +142,14 @@
         amount: 4
       - id: MagazineShotgun
         amount: 4
+      - id: MagazineRifleSP
+        amount: 3
+      - id: MagazineRifleSP #Starlight, for the estoc
+        amount: 2 
       - id: MagazineLightRifleBoxSP
         amount: 3
+      - id: MagazineShotgunSlug
+        amount: 1
       - id: MagazineBoxLightRifleSP
         amount: 1
       - id: MagazineBoxLightRifleHP
@@ -336,6 +354,19 @@
         amount: 2
 
 - type: entity
+  parent: [ ClothingBackpackDuffelBundle, BaseMajorContraband ]
+  id: ClothingBackpackDuffelAcolyteBundle
+  name: acolyte armor bundle
+  description: "Contains the Acolyte Armor, the must have of any cult leader."
+  components:
+  - type: StorageFill
+    contents:
+    - id: ClothingOuterArmorCult
+    - id: ClothingHeadHelmetCult
+    - id: ClothingShoesCult
+    - id: BedsheetCult
+
+- type: entity
   parent: ClothingBackpackDuffelSyndicateBundle
   id: ClothingBackpackDuffelSyndicateFilledStarterKit
   name: basic operative bundle
@@ -354,3 +385,4 @@
       - id: EmpImplanter
       - id: ClothingShoesBootsMagSyndie
       - id: AgentIDCard
+

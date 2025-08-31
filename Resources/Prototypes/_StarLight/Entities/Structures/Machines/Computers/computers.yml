@@ -42,6 +42,7 @@
       board: !type:Container
 
 #abductor
+
 - type: entity
   parent: BaseComputer
   id: AbductorConsole
@@ -95,7 +96,6 @@
       energy: 1.6
       color: "#90EE90"
 
-
 - type: entity
   parent: BaseComputer
   id: AbductorHumanObservationConsole
@@ -136,7 +136,7 @@
   - type: Eye
     pvsScale: 1.5
   - type: Visibility
-    layer: 4
+    layer: 16
   - type: Sprite
     sprite: _Starlight/Structures/Machines/abductor_camera_console.rsi
     layers:
@@ -145,3 +145,34 @@
   - type: Tag
     tags:
     - CantInteract
+
+- type: entity
+  parent: BaseComputerShuttle
+  id: CompuerShuttleSalvage
+  name: salvage shuttle console
+  components:
+  - type: Sprite
+    layers:
+    - map: ["computerLayerBody"]
+      state: computer
+    - map: ["computerLayerKeyboard"]
+      state: generic_keyboard
+    - map: ["computerLayerScreen"]
+      state: shuttle
+    - map: ["computerLayerKeys"]
+      state: generic_keys
+    - map: [ "enum.WiresVisualLayers.MaintenancePanel" ]
+      state: generic_panel_open
+  - type: DroneConsole
+    components:
+      - type: SalvageShuttle
+  - type: RadarConsole
+    maxRange: 256
+  - type: PointLight
+    radius: 1.5
+    energy: 1.6
+    color: "#43ccb5"
+  - type: Computer
+    board: CargoShuttleConsoleCircuitboard
+  - type: StealTarget
+    stealGroup: SalvageShuttleConsoleCircuitboard

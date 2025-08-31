@@ -19,6 +19,7 @@ using Content.Shared.IdentityManagement;
 using Content.Shared.Popups;
 using Robust.Server.GameObjects;
 using Robust.Shared.Configuration;
+using Content.Shared.Speech; //Starlight
 
 namespace Content.Server.Communications
 {
@@ -42,7 +43,6 @@ namespace Content.Server.Communications
         {
             // All events that refresh the BUI
             SubscribeLocalEvent<AlertLevelChangedEvent>(OnAlertLevelChanged);
-            SubscribeLocalEvent<CommunicationsConsoleComponent, ComponentInit>((uid, comp, _) => UpdateCommsConsoleInterface(uid, comp));
             SubscribeLocalEvent<RoundEndSystemChangedEvent>(_ => OnGenericBroadcastEvent());
             SubscribeLocalEvent<AlertLevelDelayFinishedEvent>(_ => OnGenericBroadcastEvent());
 
@@ -85,6 +85,7 @@ namespace Content.Server.Communications
         public void OnCommunicationsConsoleMapInit(EntityUid uid, CommunicationsConsoleComponent comp, MapInitEvent args)
         {
             comp.AnnouncementCooldownRemaining = comp.InitialDelay;
+            UpdateCommsConsoleInterface(uid, comp);
         }
 
         /// <summary>
@@ -230,6 +231,12 @@ namespace Content.Server.Communications
         {
             var maxLength = _cfg.GetCVar(CCVars.ChatMaxAnnouncementLength);
             var msg = SharedChatSystem.SanitizeAnnouncement(message.Message, maxLength);
+            //#region Starlight
+            msg = _chatSystem.SanitizeMessageReplaceWords(msg);
+            var accentEv = new AccentGetEvent(uid, msg);
+            RaiseLocalEvent(uid,accentEv);
+            msg = accentEv.Message;
+            //#endregion Starlight
             var author = Loc.GetString("comms-console-announcement-unknown-sender");
             if (message.Actor is { Valid: true } mob)
             {
@@ -270,7 +277,7 @@ namespace Content.Server.Communications
                 return;
             }
 
-            _chatSystem.DispatchCommunicationsConsoleAnnouncement(uid, msg, title, announcementSound: comp.Sound, colorOverride: comp.Color); // 🌟Starlight🌟  
+            _chatSystem.DispatchCommunicationsConsoleAnnouncement(uid, msg, title, announcementSound: comp.Sound, colorOverride: comp.Color); // 🌟Starlight🌟
 
             _adminLogger.Add(LogType.Chat, LogImpact.Low, $"{ToPrettyString(message.Actor):player} has sent the following station announcement: {msg}");
 

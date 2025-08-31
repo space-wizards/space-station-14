@@ -252,14 +252,14 @@
     
 - type: entity
   parent: ClothingHeadHelmetERTLeader
-  id: ClothingHeadHelmetNTCCConsortium
-  name: nt cc consortium helmet
-  description: An in-atmosphere helmet worn by NT-CC Consortium Officers.
+  id: ClothingHeadHelmetNTNCConsortium
+  name: nt-nc naval helmet
+  description: An in-atmosphere helmet worn by NT-NC Naval Officers.
   components:
   - type: Sprite
-    sprite: _Starlight/Clothing/Head/Helmets/ntcc_helmet.rsi
+    sprite: _Starlight/Clothing/Head/Helmets/ntnc_helmet.rsi
   - type: Clothing
-    sprite: _Starlight/Clothing/Head/Helmets/ntcc_helmet.rsi
+    sprite: _Starlight/Clothing/Head/Helmets/ntnc_helmet.rsi
   - type: HideLayerClothing
     layers:
       Hair: HEAD

@@ -1,0 +1,14 @@
+- type: entity
+  id: ActionBorgiPlayMidi
+  name: Play Guitar
+  description: Open your internal BASS GUITAR MIDI interface to soothe the station.
+  components:
+  - type: Action
+    checkCanInteract: false
+    checkConsciousness: false
+    useDelay: 1
+    itemIconStyle: NoItem
+    icon: Interface/Actions/pai-midi.png
+  - type: InstantAction
+    event: !type:OpenUiActionEvent
+      key: enum.InstrumentUiKey.Key

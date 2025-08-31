@@ -1,0 +1,92 @@
+- type: entity
+  parent: [BaseWeaponTurret, ConstructibleMachine]
+  id: WeaponTurretPointDefense
+  description: A Kuiper pattern anti-meteor battery. Capable of destroying most threats in a single salvo.
+  name: point defense battery
+  components:
+  - type: Sprite
+    sprite: _Starlight/Objects/Weapons/Guns/Turrets/pointdefense.rsi
+    drawdepth: HighFloorObjects
+    granularLayersRendering: true
+    layers:
+    - state: support
+      renderingStrategy: NoRotation
+    - state: base
+      map: [ "base" ]
+    - map: ["enum.PowerDeviceVisualLayers.Powered"]
+      state: off
+      shader: unshaded
+  - type: AnimationPlayer
+  - type: Appearance
+  - type: GenericVisualizer
+    visuals:
+      enum.PowerDeviceVisuals.Powered:
+        enum.PowerDeviceVisualLayers.Powered:
+          True: { state: on }
+          False: { state: off }
+  - type: NpcFactionMember
+    factions:
+    - PointDefenseWeapon
+  - type: HitscanBatteryAmmoProvider
+    proto: PointDefenseBeam
+    fireCost: 500
+  - type: Battery
+    maxCharge: 500
+    startingCharge: 0
+  - type: Damageable
+    damageModifierSet: Metallic
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 300
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalBreak
+      - !type:DoActsBehavior
+        acts: [ "Breakage" ]
+    - trigger:
+        !type:DamageTrigger
+        damage: 600
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalBreak
+      - !type:ChangeConstructionNodeBehavior
+        node: machineFrame
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+  - type: Repairable
+    doAfterDelay: 10
+    allowSelfRepair: false
+  - type: Gun
+    showExamineText: false
+    fireRate: 5
+    selectedMode: SemiAuto
+    availableModes:
+      - SemiAuto
+    soundGunshot:
+      path: /Audio/Weapons/emitter.ogg
+  - type: ApcPowerReceiverBattery
+    idleLoad: 100
+    batteryRechargeRate: 150
+    batteryRechargeEfficiency: 0.0
+  - type: ApcPowerReceiver
+    powerLoad: 100
+  - type: ExtensionCableReceiver
+  - type: Machine
+    board: WeaponTurretPointDefenseMachineCircuitboard
+  - type: NPCPointDefense
+  - type: HTN
+    rootTask:
+      task: EnergyTurretCompound
+    blackboard:
+      RotateSpeed: !type:Single
+        5
+      RangedRange: !type:Single
+        25
+      VisionRadius: !type:Single
+        25
+      AggroVisionRadius: !type:Single
+        25

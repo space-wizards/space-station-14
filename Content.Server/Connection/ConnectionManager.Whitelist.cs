@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using System.Threading.Tasks;
+using Content.Server._NullLink;
 using Content.Server.Connection.Whitelist;
 using Content.Server.Connection.Whitelist.Conditions;
 using Content.Server.Database;
@@ -86,6 +87,12 @@ public sealed partial class ConnectionManager
                     matched = CheckConditionNotesPlaytimeRange(conditionNotesPlaytimeRange, cacheRemarks, cachePlaytime);
                     denyMessage = Loc.GetString("whitelist-notes");
                     break;
+                // NullLink Whitelist start
+                case NullLinkRolesCondition nullLinkRolesCondition:
+                    matched = await CheckNullLinkRolesCondition(nullLinkRolesCondition, data.UserId);
+                    denyMessage = Loc.GetString("whitelist-roles");
+                    break;
+                // NullLink Whitelist end
                 default:
                     throw new NotImplementedException($"Whitelist condition {condition.GetType().Name} not implemented");
             }
@@ -157,6 +164,22 @@ public sealed partial class ConnectionManager
 
         return tracker.TimeSpent.TotalMinutes >= conditionPlaytime.MinimumPlaytime;
     }
+
+    // NullLink Whitelist start
+    private async Task<bool> CheckNullLinkRolesCondition(NullLinkRolesCondition condition, NetUserId userId)
+    {
+        try
+        {
+            return _actors.TryGetServerGrain(out var server)
+                && await server.HasPlayerAnyRole(userId, [.. condition.Roles]);
+        }
+        catch (Exception)
+        {
+        }
+        return false;
+    }
+
+    // NullLink Whitelist end
 
     private bool CheckConditionNotesPlaytimeRange(
         ConditionNotesPlaytimeRange conditionNotesPlaytimeRange,

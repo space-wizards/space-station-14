@@ -595,9 +595,9 @@
   description: flavor-complex-vermouth
 
 - type: flavor
-  id: irishslammer
+  id: irishcarbomb #Starlight Change
   flavorType: Complex
-  description: flavor-complex-irish-slammer
+  description: flavor-complex-irish-car-bomb #Starlight Change
 
 - type: flavor
   id: alienbrainhemorrhage
@@ -1345,6 +1345,11 @@
   description: flavor-hew
 
 - type: flavor
+  id: dogfood
+  flavorType: Base
+  description: flavor-complex-dog-food
+
+- type: flavor
   id: fishops
   flavorType: Complex
   description: flavor-complex-fishops
@@ -1468,14 +1473,18 @@
   id: bacchusblessing
   flavorType: Complex
   description: flavor-complex-bacchus-blessing
-  
-- type: flavor
-  id: dogfood
-  flavorType: Base
-  description: flavor-dogfood
 
 - type: flavor
   id: trashy
   flavorType: Base
   description: flavor-base-trashy
 
+- type: flavor
+  id: artifactglue
+  flavorType: Complex
+  description: flavor-complex-artifact-glue
+
+- type: flavor
+  id: motivating
+  flavorType: Base
+  description: flavor-base-motivating
