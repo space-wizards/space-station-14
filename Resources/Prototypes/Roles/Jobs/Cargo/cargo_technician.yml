@@ -5,6 +5,7 @@
   playTimeTracker: JobCargoTechnician
   startingGear: CargoTechGear
   icon: "JobIconCargoTechnician"
+  whitelisted: true
   supervisors: job-supervisors-qm
   access:
   - Cargo

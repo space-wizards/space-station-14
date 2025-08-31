@@ -1,7 +1,7 @@
 job-name-warden = Warden
 job-name-security = Security Officer
 job-name-cadet = Security Cadet
-job-name-hos = Head of Security
+job-name-hos = Chief of Security
 job-name-detective = Detective
 job-name-brigmedic = Brigmedic
 job-name-borg = Cyborg
@@ -46,7 +46,7 @@ job-name-ertmedic = ERT Medic
 job-name-boxer = Boxer
 job-name-zookeeper = Zookeeper
 job-name-visitor = Visitor
-job-name-cluwne = Cluwne
+#job-name-cluwne = Cluwne
 
 # unused jobs
 # these are required for the agent ID job icon tooltips
@@ -86,7 +86,7 @@ JobERTLeader = ERT Leader
 JobERTMedical = ERT Medical
 JobERTSecurity = ERT Security
 JobHeadOfPersonnel = Head of Personnel
-JobHeadOfSecurity = Head of Security
+JobHeadOfSecurity = Chief of Security
 JobJanitor = Janitor
 JobLawyer = Lawyer
 JobLibrarian = Librarian
