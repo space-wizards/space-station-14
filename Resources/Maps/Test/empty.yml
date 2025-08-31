@@ -55,5 +55,6 @@ entities:
     components:
     - type: Transform
       anchored: False
+      pos: -0.5,-0.5
       parent: 3
 ...
