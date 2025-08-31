@@ -21,7 +21,7 @@ public sealed partial class VampireComponent : Component
 
     /// <summary>
     /// The entity's current max amount of Vitae. Can be increased
-    /// through use of the Feed action on unique targets.
+    /// through use of the Feed action.
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite), DataField("maxVitae")]
     public FixedPoint2 VitaeRegenCap = 50;
