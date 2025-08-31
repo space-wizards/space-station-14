@@ -106,7 +106,7 @@ public sealed class VomitSystem : EntitySystem
             return;
 
         // Force sound to play as spill doesn't work if solution is empty.
-        _audio.PlayEntity(_vomitSound, uid, uid);
-        _popup.PopupClient(Loc.GetString("disease-vomit", ("person", Identity.Entity(uid, EntityManager))), uid);
+        _audio.PlayPvs(_vomitSound, uid);
+        _popup.PopupEntity(Loc.GetString("disease-vomit", ("person", Identity.Entity(uid, EntityManager))), uid);
     }
 }
