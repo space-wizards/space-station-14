@@ -33,7 +33,7 @@ public sealed class VomitSystem : EntitySystem
     [Dependency] private readonly SharedSolutionContainerSystem _solutionContainer = default!;
 
 
-    private static readonly float ChemMultiplier = 0.1f;
+    private const float ChemMultiplier = 0.1f;
 
     private static readonly ProtoId<SoundCollectionPrototype> VomitCollection = "Vomit";
 
