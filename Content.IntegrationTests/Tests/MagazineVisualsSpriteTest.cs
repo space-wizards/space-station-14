@@ -16,6 +16,7 @@ public sealed class MagazineVisualsSpriteTest
     {
         "WeaponPistolX01",
         "PistolDominator",
+        "PistolDominatorpvrsifvlAlt",
     };
     // DS14-end
 
