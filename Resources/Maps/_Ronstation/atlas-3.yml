@@ -4,8 +4,8 @@ meta:
   engineVersion: 266.0.0
   forkId: ""
   forkVersion: ""
-  time: 08/14/2025 12:40:20
-  entityCount: 12192
+  time: 08/30/2025 20:04:21
+  entityCount: 12217
 maps:
 - 4
 grids:
@@ -5767,6 +5767,18 @@ entities:
           - DoorBolt
 - proto: AirlockExternalGlass
   entities:
+  - uid: 2281
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: 60.5,22.5
+      parent: 30
+  - uid: 2332
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: 60.5,21.5
+      parent: 30
   - uid: 2469
     components:
     - type: Transform
@@ -5776,6 +5788,18 @@ entities:
     components:
     - type: Transform
       pos: 15.5,28.5
+      parent: 30
+  - uid: 3224
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: 44.5,23.5
+      parent: 30
+  - uid: 3273
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: 54.5,23.5
       parent: 30
 - proto: AirlockExternalGlassAtmosphericsLocked
   entities:
@@ -5932,26 +5956,6 @@ entities:
         2314:
         - - DoorStatus
           - DoorBolt
-  - uid: 3224
-    components:
-    - type: Transform
-      pos: 60.5,22.5
-      parent: 30
-  - uid: 3273
-    components:
-    - type: Transform
-      pos: 60.5,21.5
-      parent: 30
-  - uid: 4474
-    components:
-    - type: Transform
-      pos: 44.5,23.5
-      parent: 30
-  - uid: 4566
-    components:
-    - type: Transform
-      pos: 54.5,23.5
-      parent: 30
   - uid: 9120
     components:
     - type: Transform
@@ -6018,22 +6022,6 @@ entities:
       invokeCounter: 1
 - proto: AirlockExternalGlassShuttleLocked
   entities:
-  - uid: 2281
-    components:
-    - type: Transform
-      rot: 1.5707963267948966 rad
-      pos: 63.5,21.5
-      parent: 30
-    - type: DeviceLinkSink
-      invokeCounter: 1
-  - uid: 2332
-    components:
-    - type: Transform
-      rot: 1.5707963267948966 rad
-      pos: 63.5,22.5
-      parent: 30
-    - type: DeviceLinkSink
-      invokeCounter: 1
   - uid: 2340
     components:
     - type: Transform
@@ -6054,6 +6042,18 @@ entities:
       parent: 30
     - type: DeviceLinkSink
       invokeCounter: 1
+  - uid: 4474
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: 63.5,21.5
+      parent: 30
+  - uid: 4566
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: 63.5,22.5
+      parent: 30
   - uid: 7936
     components:
     - type: Transform
@@ -7471,6 +7471,85 @@ entities:
       parent: 30
     - type: Fixtures
       fixtures: {}
+- proto: ArrivalsShuttleTimer
+  entities:
+  - uid: 8269
+    components:
+    - type: Transform
+      pos: 26.5,19.5
+      parent: 30
+    - type: Fixtures
+      fixtures: {}
+  - uid: 12202
+    components:
+    - type: Transform
+      pos: 16.5,25.5
+      parent: 30
+    - type: Fixtures
+      fixtures: {}
+  - uid: 12205
+    components:
+    - type: Transform
+      pos: 26.5,5.5
+      parent: 30
+    - type: Fixtures
+      fixtures: {}
+  - uid: 12206
+    components:
+    - type: Transform
+      pos: 0.5,8.5
+      parent: 30
+    - type: Fixtures
+      fixtures: {}
+  - uid: 12207
+    components:
+    - type: Transform
+      pos: 4.5,16.5
+      parent: 30
+    - type: Fixtures
+      fixtures: {}
+  - uid: 12208
+    components:
+    - type: Transform
+      pos: -29.5,17.5
+      parent: 30
+    - type: Fixtures
+      fixtures: {}
+  - uid: 12209
+    components:
+    - type: Transform
+      pos: -45.5,14.5
+      parent: 30
+    - type: Fixtures
+      fixtures: {}
+  - uid: 12210
+    components:
+    - type: Transform
+      pos: -43.5,4.5
+      parent: 30
+    - type: Fixtures
+      fixtures: {}
+  - uid: 12211
+    components:
+    - type: Transform
+      pos: -26.5,-15.5
+      parent: 30
+    - type: Fixtures
+      fixtures: {}
+  - uid: 12212
+    components:
+    - type: Transform
+      pos: 2.5,-11.5
+      parent: 30
+    - type: Fixtures
+      fixtures: {}
+  - uid: 12213
+    components:
+    - type: Transform
+      pos: -21.5,-18.5
+      parent: 30
+    - type: Fixtures
+      fixtures: {}
 - proto: ArtistCircuitBoard
   entities:
   - uid: 11465
@@ -7606,6 +7685,18 @@ entities:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 22.5,30.5
+      parent: 30
+  - uid: 12199
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: 63.5,22.5
+      parent: 30
+  - uid: 12200
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: 63.5,21.5
       parent: 30
 - proto: AtmosFixBlockerMarker
   entities:
@@ -29451,6 +29542,12 @@ entities:
       rot: 3.141592653589793 rad
       pos: -49.5,20.5
       parent: 30
+  - uid: 12203
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: -50.5,20.5
+      parent: 30
 - proto: CorporateCircuitBoard
   entities:
   - uid: 11466
@@ -29573,6 +29670,18 @@ entities:
           showEnts: False
           occludes: True
           ent: 4034
+- proto: CrateEngineeringSolar
+  entities:
+  - uid: 12194
+    components:
+    - type: Transform
+      pos: -30.5,-27.5
+      parent: 30
+  - uid: 12195
+    components:
+    - type: Transform
+      pos: -58.5,14.5
+      parent: 30
 - proto: CrateEngineeringTeg
   entities:
   - uid: 7935
@@ -29702,6 +29811,28 @@ entities:
     components:
     - type: Transform
       pos: 0.5,17.5
+      parent: 30
+- proto: CrateTechBoardRandom
+  entities:
+  - uid: 12196
+    components:
+    - type: Transform
+      pos: -58.5,15.5
+      parent: 30
+  - uid: 12197
+    components:
+    - type: Transform
+      pos: -53.5,-8.5
+      parent: 30
+  - uid: 12198
+    components:
+    - type: Transform
+      pos: 23.5,-8.5
+      parent: 30
+  - uid: 12201
+    components:
+    - type: Transform
+      pos: -61.5,3.5
       parent: 30
 - proto: CrateTrashCartFilled
   entities:
@@ -55037,6 +55168,36 @@ entities:
       rot: 3.141592653589793 rad
       pos: -37.5,30.5
       parent: 30
+- proto: Screen
+  entities:
+  - uid: 12214
+    components:
+    - type: Transform
+      pos: 14.5,-17.5
+      parent: 30
+    - type: Fixtures
+      fixtures: {}
+  - uid: 12215
+    components:
+    - type: Transform
+      pos: 13.5,4.5
+      parent: 30
+    - type: Fixtures
+      fixtures: {}
+  - uid: 12216
+    components:
+    - type: Transform
+      pos: 36.5,5.5
+      parent: 30
+    - type: Fixtures
+      fixtures: {}
+  - uid: 12217
+    components:
+    - type: Transform
+      pos: 51.5,-25.5
+      parent: 30
+    - type: Fixtures
+      fixtures: {}
 - proto: SecurityTechFab
   entities:
   - uid: 7153
@@ -55925,6 +56086,12 @@ entities:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: -23.5,5.5
+      parent: 30
+  - uid: 12193
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: -16.5,2.5
       parent: 30
 - proto: SMESAdvancedEmpty
   entities:
@@ -59121,11 +59288,17 @@ entities:
   - uid: 6665
     components:
     - type: Transform
-      rot: 3.141592653589793 rad
       pos: -50.5,21.5
       parent: 30
     - type: DeviceLinkSource
       linkedPorts:
+        12203:
+        - - Left
+          - Reverse
+        - - Right
+          - Forward
+        - - Middle
+          - Off
         8266:
         - - Left
           - Reverse
@@ -76122,7 +76295,7 @@ entities:
       rot: -1.5707963267948966 rad
       pos: -50.5,20.5
       parent: 30
-  - uid: 8269
+  - uid: 12204
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
