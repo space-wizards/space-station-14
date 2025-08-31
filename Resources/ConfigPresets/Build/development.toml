@@ -42,6 +42,9 @@ see_own_notes = true
 random_characters = false
 random_species_weights = ""
 ssd_sleep_time = 3600
+
+# Starlight
+
 flavor_text = true
 inspect_windows = true
 secrets_text = true
