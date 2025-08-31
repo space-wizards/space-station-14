@@ -1,0 +1,23 @@
+- type: loadoutEffectGroup
+  id: PlushieNuke
+  effects:
+  - !type:JobRequirementLoadoutEffect
+    requirement:
+      !type:RoleTimeRequirement
+      role: AntagNukeops
+      time: 18000 # 5 hrs
+  - !type:JobRequirementLoadoutEffect
+    requirement:
+      !type:DepartmentTimeRequirement
+      department: Security
+      time: 18000 # 5 hrs
+
+- type: loadout
+  id: PlushieNuke
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: PlushieNuke
+  storage:
+    back:
+    - PlushieNuke
+  groupBy: "plushies"

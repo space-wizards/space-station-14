@@ -1,0 +1,22 @@
+- type: loadoutEffectGroup
+  id: PlushieVox
+  effects:
+  - !type:JobRequirementLoadoutEffect
+    requirement:
+      !type:DepartmentTimeRequirement
+      department: Engineering
+      time: 18000 # 5 hrs
+  - !type:JobRequirementLoadoutEffect
+    requirement:
+      !type:OverallPlaytimeRequirement
+      time: 36000 # 10hr
+
+- type: loadout
+  id: PlushieVox
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: PlushieVox
+  storage:
+    back:
+    - PlushieVox
+  groupBy: "plushies"

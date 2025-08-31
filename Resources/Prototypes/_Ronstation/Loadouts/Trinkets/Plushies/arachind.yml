@@ -1,0 +1,22 @@
+- type: loadoutEffectGroup
+  id: PlushieArachind
+  effects:
+  - !type:JobRequirementLoadoutEffect
+    requirement:
+      !type:DepartmentTimeRequirement
+      department: Security
+      time: 18000 # 5 hrs
+  - !type:JobRequirementLoadoutEffect
+    requirement:
+      !type:OverallPlaytimeRequirement
+      time: 36000 # 10hr
+
+- type: loadout
+  id: PlushieArachind
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: PlushieArachind
+  storage:
+    back:
+    - PlushieArachind
+  groupBy: "plushies"
