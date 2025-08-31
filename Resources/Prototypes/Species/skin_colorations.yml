@@ -10,7 +10,7 @@
     lightness: [0.85, 1]
 
 - type: skinColoration
-  id: VoxFeathers
+  id: VoxColors
   strategy: !type:ClampedHsvColoration
     hue: [0.081, 0.48]
     saturation: [0.2, 0.8]
