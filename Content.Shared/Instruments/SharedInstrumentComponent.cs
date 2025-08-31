@@ -38,7 +38,7 @@ public abstract partial class SharedInstrumentComponent : Component
 
     [DataField(customTypeSerializer: typeof(TimeOffsetSerializer))]
     [AutoPausedField]
-    public Timespan NextInputTime { get; set; } = Timespan.Zero; // Starlight
+    public TimeSpan NextInputTime { get; set; } = Timespan.Zero; // Starlight
     
     [DataField]
     public Timespan InputDelay { get; set; } = Timespan.FromSeconds(1); // Starlight
