@@ -136,7 +136,7 @@ public sealed partial class MechSystem : SharedMechSystem
         {
             if (Vehicle.HasOperator(uid))
             {
-                _popup.PopupEntity(Loc.GetString("mech-cannot-modify-closed"), args.User);
+                _popup.PopupEntity(Loc.GetString("mech-cannot-modify-closed-popup"), args.User);
                 return;
             }
 

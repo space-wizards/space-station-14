@@ -41,14 +41,14 @@ public abstract class MechInstallSystem : EntitySystem
         // Block install if mech is in broken state
         if (mechComp.Broken && !Vehicle.HasOperator(target))
         {
-            Popup.PopupEntity(Loc.GetString("mech-cannot-insert-broken"), user);
+            Popup.PopupEntity(Loc.GetString("mech-cannot-insert-broken-popup"), user);
             return false;
         }
 
         // Block install if cabin is closed
         if (Vehicle.HasOperator(target))
         {
-            Popup.PopupEntity(Loc.GetString("mech-cannot-modify-closed"), user);
+            Popup.PopupEntity(Loc.GetString("mech-cannot-modify-closed-popup"), user);
             return false;
         }
 

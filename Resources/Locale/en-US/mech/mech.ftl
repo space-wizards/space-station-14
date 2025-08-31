@@ -11,8 +11,9 @@ mech-ui-open-verb = Open control panel
 # Installation
 mech-install-begin-popup = Installing the {THE($item)}...
 mech-install-finish-popup = Finished installing the {THE($item)}
-mech-cannot-modify-closed = You cannot modify while the cabin is closed!
+mech-cannot-modify-closed-popup = You cannot modify while the cabin is closed!
 mech-duplicate-installed-popup = Identical item already installed.
+mech-cannot-insert-broken-popup = You cannot insert anything while the mech is in broken state.
 
 mech-equipment-slot-full-popup = No free equipment slots.
 mech-module-slot-full-popup = No free module slots.
@@ -102,5 +103,5 @@ mech-lock-not-set = Not set
 mech-settings-no-access = Access denied
 mech-remove-disabled-tooltip = Cannot remove while a pilot is inside.
 
-# Broken state
-mech-cannot-insert-broken = You cannot insert anything while the mech is in broken state.
+# Other
+mech-construction-guide-string = All mech parts must be attached to the harness.

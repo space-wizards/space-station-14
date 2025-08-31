@@ -75,16 +75,23 @@
   - type: ContainerContainer
     containers:
       mech-assembly-container: !type:Container
-  - type: MechAssembly
-    finishedPrototype: ClarkeChassis
-    requiredParts:
-      ClarkeHead: false
-      ClarkeLArm: false
-      ClarkeRArm: false
-      ClarkeTreads: false
+      battery-container: !type:Container
+  - type: MechAssemblyVisuals
+    statePrefix: clarke
   - type: Sprite
     state: clarke_harness+o
     noRot: true
+  - type: PartAssembly
+    parts:
+      Clarke:
+      - ClarkeHead
+      - ClarkeLArm
+      - ClarkeRArm
+      - ClarkeTreads
+    containerId: mech-assembly-container
+  - type: Construction
+    graph: Clarke
+    node: start
 
 - type: entity
   parent: BaseClarkePartItem
@@ -133,26 +140,6 @@
   - type: Tag
     tags:
     - ClarkeTreads
-
-- type: entity
-  id: ClarkeChassis
-  parent: BaseClarkePart
-  name: clarke chassis
-  description: An in-progress construction of the Clarke mech.
-  components:
-  - type: Appearance
-  - type: ContainerContainer
-    containers:
-      battery-container: !type:Container
-  - type: MechAssemblyVisuals
-    statePrefix: clarke
-  - type: Sprite
-    noRot: true
-    state: clarke0
-  - type: Construction
-    graph: Clarke
-    node: start
-    defaultTarget: clarke
 
 # Durand
 
@@ -207,17 +194,24 @@
   - type: ContainerContainer
     containers:
       mech-assembly-container: !type:Container
-  - type: MechAssembly
-    finishedPrototype: DurandChassis
-    requiredParts:
-      DurandHead: false
-      DurandLArm: false
-      DurandRArm: false
-      DurandLLeg: false
-      DurandRLeg: false
+      battery-container: !type:Container
+  - type: MechAssemblyVisuals
+    statePrefix: durand
   - type: Sprite
     state: durand_harness+o
     noRot: true
+  - type: PartAssembly
+    parts:
+      Durand:
+      - DurandHead
+      - DurandLArm
+      - DurandRArm
+      - DurandLLeg
+      - DurandRLeg
+    containerId: mech-assembly-container
+  - type: Construction
+    graph: Durand
+    node: start
 
 - type: entity
   parent: BaseDurandPartItem
@@ -279,26 +273,6 @@
     tags:
     - DurandRArm
 
-- type: entity
-  id: DurandChassis
-  parent: BaseDurandPart
-  name: durand chassis
-  description: An in-progress construction of the Durand mech.
-  components:
-  - type: Appearance
-  - type: ContainerContainer
-    containers:
-      battery-container: !type:Container
-  - type: MechAssemblyVisuals
-    statePrefix: durand
-  - type: Sprite
-    noRot: true
-    state: durand0
-  - type: Construction
-    graph: Durand
-    node: start
-    defaultTarget: durand
-
 # Gygax
 
 - type: entity
@@ -352,17 +326,24 @@
   - type: ContainerContainer
     containers:
       mech-assembly-container: !type:Container
-  - type: MechAssembly
-    finishedPrototype: GygaxChassis
-    requiredParts:
-      GygaxHead: false
-      GygaxLArm: false
-      GygaxRArm: false
-      GygaxLLeg: false
-      GygaxRLeg: false
+      battery-container: !type:Container
+  - type: MechAssemblyVisuals
+    statePrefix: gygax
   - type: Sprite
     state: gygax_harness+o
     noRot: true
+  - type: PartAssembly
+    parts:
+      Gygax:
+      - GygaxHead
+      - GygaxLArm
+      - GygaxRArm
+      - GygaxLLeg
+      - GygaxRLeg
+    containerId: mech-assembly-container
+  - type: Construction
+    graph: Gygax
+    node: start
 
 - type: entity
   parent: BaseGygaxPartItem
@@ -424,26 +405,6 @@
     tags:
     - GygaxRArm
 
-- type: entity
-  id: GygaxChassis
-  parent: BaseGygaxPart
-  name: gygax chassis
-  description: An in-progress construction of the Gygax mech.
-  components:
-  - type: Appearance
-  - type: ContainerContainer
-    containers:
-      battery-container: !type:Container
-  - type: MechAssemblyVisuals
-    statePrefix: gygax
-  - type: Sprite
-    noRot: true
-    state: gygax0
-  - type: Construction
-    graph: Gygax
-    node: start
-    defaultTarget: gygax
-
 # Ripley APLU
 
 - type: entity
@@ -493,16 +454,23 @@
   - type: ContainerContainer
     containers:
       mech-assembly-container: !type:Container
-  - type: MechAssembly
-    finishedPrototype: RipleyChassis
-    requiredParts:
-      RipleyLArm: false
-      RipleyRArm: false
-      RipleyLLeg: false
-      RipleyRLeg: false
+      battery-container: !type:Container
+  - type: MechAssemblyVisuals
+    statePrefix: ripley
   - type: Sprite
     state: ripley_harness+o
     noRot: true
+  - type: PartAssembly
+    parts:
+      Ripley:
+      - RipleyLArm
+      - RipleyRArm
+      - RipleyLLeg
+      - RipleyRLeg
+    containerId: mech-assembly-container
+  - type: Construction
+    graph: Ripley
+    node: start
 
 - type: entity
   parent: BaseRipleyPartItem
@@ -552,26 +520,6 @@
     tags:
     - RipleyRArm
 
-- type: entity
-  id: RipleyChassis
-  parent: BaseRipleyPart
-  name: ripley chassis
-  description: An in-progress construction of the Ripley APLU mech.
-  components:
-  - type: Appearance
-  - type: ContainerContainer
-    containers:
-      battery-container: !type:Container
-  - type: MechAssemblyVisuals
-    statePrefix: ripley
-  - type: Sprite
-    noRot: true
-    state: ripley0
-  - type: Construction
-    graph: Ripley
-    node: start
-    defaultTarget: ripley
-
 # Ripley MK-II
 
 - type: entity
@@ -617,37 +565,24 @@
   - type: ContainerContainer
     containers:
       mech-assembly-container: !type:Container
-  - type: MechAssembly
-    finishedPrototype: RipleyMKIIChassis
-    requiredParts:
-      RipleyMKIIUpgradeKit: false
-      RipleyLArm: false
-      RipleyRArm: false
-      RipleyLLeg: false
-      RipleyRLeg: false
-  - type: Sprite
-    state: ripleymkii_harness+o
-    noRot: true
-
-- type: entity
-  id: RipleyMKIIChassis
-  parent: BaseRipleyMKIIPart
-  name: ripley MK-II chassis
-  description: An in-progress construction of the Ripley MK-II mech.
-  components:
-  - type: Appearance
-  - type: ContainerContainer
-    containers:
       battery-container: !type:Container
   - type: MechAssemblyVisuals
     statePrefix: ripleymkii
   - type: Sprite
+    state: ripleymkii_harness+o
     noRot: true
-    state: ripleymkii0
+  - type: PartAssembly
+    parts:
+      RipleyMKII:
+      - RipleyMKIIUpgradeKit
+      - RipleyLArm
+      - RipleyRArm
+      - RipleyLLeg
+      - RipleyRLeg
+    containerId: mech-assembly-container
   - type: Construction
     graph: RipleyMKII
     node: start
-    defaultTarget: ripleymkii
 
 # H.O.N.K.
 
@@ -698,16 +633,23 @@
   - type: ContainerContainer
     containers:
       mech-assembly-container: !type:Container
-  - type: MechAssembly
-    finishedPrototype: HonkerChassis
-    requiredParts:
-      HonkerLArm: false
-      HonkerRArm: false
-      HonkerLLeg: false
-      HonkerRLeg: false
+      battery-container: !type:Container
+  - type: MechAssemblyVisuals
+    statePrefix: honker
   - type: Sprite
     state: honker_harness+o
     noRot: true
+  - type: PartAssembly
+    parts:
+      Honker:
+      - HonkerLArm
+      - HonkerRArm
+      - HonkerLLeg
+      - HonkerRLeg
+    containerId: mech-assembly-container
+  - type: Construction
+    graph: Honker
+    node: start
 
 - type: entity
   parent: BaseHonkerPartItem
@@ -756,26 +698,6 @@
   - type: Tag
     tags:
     - HonkerRArm
-
-- type: entity
-  id: HonkerChassis
-  parent: BaseHonkerPart
-  name: H.O.N.K. chassis
-  description: An in-progress construction of a H.O.N.K. mech. Contains chuckle unit, bananium core and honk support systems.
-  components:
-  - type: Appearance
-  - type: ContainerContainer
-    containers:
-      battery-container: !type:Container
-  - type: MechAssemblyVisuals
-    statePrefix: honker
-  - type: Sprite
-    noRot: true
-    state: honker0
-  - type: Construction
-    graph: Honker
-    node: start
-    defaultTarget: honker
 
 # H.A.M.T.R.
 
@@ -826,16 +748,23 @@
   - type: ContainerContainer
     containers:
       mech-assembly-container: !type:Container
-  - type: MechAssembly
-    finishedPrototype: HamtrChassis
-    requiredParts:
-      HamtrLArm: false
-      HamtrRArm: false
-      HamtrLLeg: false
-      HamtrRLeg: false
+      battery-container: !type:Container
+  - type: MechAssemblyVisuals
+    statePrefix: hamtr
   - type: Sprite
     state: hamtr_harness+o
     noRot: true
+  - type: PartAssembly
+    parts:
+      Hamtr:
+      - HamtrLArm
+      - HamtrRArm
+      - HamtrLLeg
+      - HamtrRLeg
+    containerId: mech-assembly-container
+  - type: Construction
+    graph: Hamtr
+    node: start
 
 - type: entity
   parent: BaseHamtrPartItem
@@ -885,26 +814,6 @@
     tags:
     - HamtrRArm
 
-- type: entity
-  id: HamtrChassis
-  parent: BaseHamtrPart
-  name: HAMTR chassis
-  description: An in-progress construction of the HAMTR mech.
-  components:
-  - type: Appearance
-  - type: ContainerContainer
-    containers:
-      battery-container: !type:Container
-  - type: MechAssemblyVisuals
-    statePrefix: hamtr
-  - type: Sprite
-    noRot: true
-    state: hamtr0
-  - type: Construction
-    graph: Hamtr
-    node: start
-    defaultTarget: hamtr
-
 # Vim!!!!!!
 
 - type: entity
@@ -950,31 +859,18 @@
   - type: ContainerContainer
     containers:
       mech-assembly-container: !type:Container
-  - type: MechAssembly
-    finishedPrototype: VimChassis
-    requiredParts:
-      HelmetEVA: false
-      BorgLeg: false
-  - type: Sprite
-    state: harness
-    noRot: true
-
-- type: entity
-  id: VimChassis
-  parent: BaseVimPart
-  name: vim chassis
-  description: An in-progress construction of the Vim exosuit.
-  components:
-  - type: Appearance
-  - type: ContainerContainer
-    containers:
       battery-container: !type:Container
   - type: MechAssemblyVisuals
     statePrefix: vim
   - type: Sprite
+    state: harness
     noRot: true
-    state: vim0
+  - type: PartAssembly
+    parts:
+      Vim:
+      - HelmetEVA
+      - BorgLeg
+    containerId: mech-assembly-container
   - type: Construction
     graph: Vim
     node: start
-    defaultTarget: vim

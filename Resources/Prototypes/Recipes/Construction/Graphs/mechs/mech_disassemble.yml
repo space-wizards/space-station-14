@@ -13,16 +13,15 @@
         examineText: construction-condition-machine-container-empty
       steps:
       - tool: Anchoring
-        doAfter: 5
+        doAfter: 1
 
-      - tool: Screwing
-        doAfter: 15
+      - tool: Prying
+        doAfter: 1
 
       - tool: Cutting
-        doAfter: 5
+        doAfter: 1
 
   - node: disassembled
     actions:
+    - !type:EmptyAllContainers {}
     - !type:DisassembleMech {}
-
-

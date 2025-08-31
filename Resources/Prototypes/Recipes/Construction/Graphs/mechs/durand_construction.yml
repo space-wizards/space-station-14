@@ -6,6 +6,9 @@
     edges:
     - to: durand
       steps:
+      - assemblyId: Durand
+        guideString: mech-construction-guide-string
+
       - tool: Anchoring
         doAfter: 1
         completed:

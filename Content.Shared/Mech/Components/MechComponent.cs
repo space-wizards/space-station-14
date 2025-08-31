@@ -215,10 +215,10 @@ public sealed partial class MechComponent : Component
     #endregion
 
     /// <summary>
-    /// Prototype id of the chassis construction entity this mech should turn into on disassembly.
+    /// Assembly construction graph id to return to on disassembly.
     /// </summary>
     [DataField]
-    public EntProtoId? ChassisPrototype;
+    public string? AssemblyGraphId;
 
     #region Visualizer States
     [DataField]

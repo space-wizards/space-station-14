@@ -178,7 +178,7 @@ public sealed class MechAtmosphereSystem : EntitySystem
 
     private void OnAirtightMessage(EntityUid uid, MechComponent component, MechAirtightMessage args)
     {
-        // Сannot be airtight if CanAirtight is false.
+        // Cannot be airtight if CanAirtight is false.
         component.Airtight = component.CanAirtight && args.IsAirtight;
         Dirty(uid, component);
         UpdateMechUI(uid);

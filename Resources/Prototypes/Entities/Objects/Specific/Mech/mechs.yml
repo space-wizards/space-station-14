@@ -215,7 +215,7 @@
     openState: ripley-open
     brokenState: ripley-broken
     canAirtight: false
-    chassisPrototype: RipleyChassis
+    assemblyGraphId: RipleyHarness
   - type: Vehicle
     transferDamageModifier:
       coefficients:
@@ -272,7 +272,7 @@
     baseState: ripleymkii
     openState: ripleymkii-open
     brokenState: ripleymkii-broken
-    chassisPrototype: RipleyMKIIChassis
+    assemblyGraphId: RipleyMKIIHarness
   - type: Vehicle
     transferDamageModifier:
       coefficients:
@@ -331,7 +331,7 @@
     baseState: clarke
     openState: clarke-open
     brokenState: clarke-broken
-    chassisPrototype: ClarkeChassis
+    assemblyGraphId: ClarkeHarness
   - type: Vehicle
     transferDamageModifier:
       coefficients:
@@ -393,7 +393,7 @@
     openState: honker-open
     brokenState: honker-broken
     brokenSound: /Audio/Effects/sadtrombone.ogg
-    chassisPrototype: HonkerChassis
+    assemblyGraphId: HonkerHarness
   - type: Vehicle
     transferDamageModifier:
       coefficients:
@@ -457,7 +457,7 @@
     openState: hamtr-open
     brokenState: hamtr-broken
     maxEquipmentAmount: 2
-    chassisPrototype: HamtrChassis
+    assemblyGraphId: HamtrHarness
   - type: Vehicle
     transferDamageModifier:
       coefficients:
@@ -529,7 +529,7 @@
     openState: vim-open
     brokenState: vim-broken
     maxEquipmentAmount: 0
-    chassisPrototype: VimChassis
+    assemblyGraphId: VimHarness
   - type: Vehicle
     # keep mouse safe
     transferDamageModifier:
@@ -595,7 +595,7 @@
     baseState: gygax
     openState: gygax-open
     brokenState: gygax-broken
-    chassisPrototype: GygaxChassis
+    assemblyGraphId: GygaxHarness
   - type: Vehicle
     transferDamageModifier:
       coefficients:
@@ -653,7 +653,7 @@
     baseState: durand
     openState: durand-open
     brokenState: durand-broken
-    chassisPrototype: DurandChassis
+    assemblyGraphId: DurandHarness
   - type: Vehicle
     transferDamageModifier:
       coefficients:

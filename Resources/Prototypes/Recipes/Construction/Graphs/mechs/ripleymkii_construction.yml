@@ -6,6 +6,9 @@
     edges:
     - to: ripleymkii
       steps:
+      - assemblyId: RipleyMKII
+        guideString: mech-construction-guide-string
+
       - tool: Anchoring
         doAfter: 1
         completed:
