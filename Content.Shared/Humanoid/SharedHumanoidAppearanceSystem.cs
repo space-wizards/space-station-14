@@ -537,7 +537,7 @@ public abstract class SharedHumanoidAppearanceSystem : EntitySystem
     /// </summary>
     public HumanoidCharacterProfile? GetBaseProfile(Entity<HumanoidAppearanceComponent?> ent)
     {
-        if (!Resolve(ent, ref ent.Comp))
+        if (!Resolve(ent, ref ent.Comp, false))
             return null;
 
         return ent.Comp.BaseProfile;

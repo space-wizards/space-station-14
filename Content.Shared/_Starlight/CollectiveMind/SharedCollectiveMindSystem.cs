@@ -16,7 +16,7 @@ public abstract partial class SharedCollectiveMindSystem : EntitySystem
     [Dependency] private readonly IComponentFactory _factory = default!;
     private ISawmill _sawmill = default!;
     
-    private static Dictionary<CollectiveMindPrototype, int> _globalMindIDTracker = new();
+    private readonly Dictionary<CollectiveMindPrototype, int> _globalMindIDTracker = new();
 
     public override void Initialize()
     {
@@ -121,7 +121,7 @@ public abstract partial class SharedCollectiveMindSystem : EntitySystem
         return list;
     }
 
-    private static CollectiveMindMemberData CreateNewCollectiveMindMemberData(CollectiveMindPrototype prototype)
+    private CollectiveMindMemberData CreateNewCollectiveMindMemberData(CollectiveMindPrototype prototype)
     {
         //check if one exists
         if (!_globalMindIDTracker.ContainsKey(prototype))

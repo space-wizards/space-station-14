@@ -131,6 +131,8 @@
     fireRate: 7
     soundGunshot:
       path: /Audio/_Starlight/Weapons/Guns/Gunshots/m90.ogg
+  - type: MagazineVisuals
+    steps: 1
       
 - type: entity
   name: Aussec Armory M-52

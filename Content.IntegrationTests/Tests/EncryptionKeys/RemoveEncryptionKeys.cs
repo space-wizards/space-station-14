@@ -10,7 +10,7 @@ public sealed class RemoveEncryptionKeys : InteractionTest
     [Test]
     public async Task HeadsetKeys()
     {
-        await SpawnTarget("ClothingHeadsetGrey");
+        await SpawnTarget("ClothingHeadsetAssistant"); // Starlight
         var comp = Comp<EncryptionKeyHolderComponent>();
 
         Assert.Multiple(() =>

@@ -83,8 +83,17 @@ namespace Content.IntegrationTests.Tests
             "Elkridge",
             "Convex",
             "Relic",
-            "dm01-entryway"
-
+            "dm01-entryway",
+            "Barratry",
+            "ChristmasHotel",
+            "ChristmasLobster",
+            "ChristmasManor",
+            "ChristmasOrwell",
+            "Cork",
+            "Kiloton",
+            "Lagan",
+            "Lobster",
+            "Manor",
         };
 
         /// <summary>

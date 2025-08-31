@@ -19,6 +19,7 @@ using Robust.Shared.Prototypes;
 namespace Content.IntegrationTests.Tests.Commands;
 
 [TestFixture]
+[Ignore("Suicide is disabled in Starlight")] // Starlight
 public sealed class SuicideCommandTests
 {
 
