@@ -4,8 +4,8 @@ meta:
   engineVersion: 266.0.0
   forkId: ""
   forkVersion: ""
-  time: 08/31/2025 13:18:25
-  entityCount: 3
+  time: 08/31/2025 14:22:33
+  entityCount: 4
 maps:
 - 3
 grids:
@@ -63,6 +63,13 @@ entities:
     - type: GridTree
     - type: Broadphase
     - type: OccluderTree
+- proto: SpawnPointAnyJob
+  entities:
+  - uid: 4
+    components:
+    - type: Transform
+      pos: -0.5,-0.5
+      parent: 2
 - proto: SpawnPointLatejoin
   entities:
   - uid: 1
