@@ -12561,5 +12561,19 @@ Entries:
   id: 148400
   time: '2025-08-28T15:14:41.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/1484
+- author: Fractalflower
+  changes:
+  - message: Birds _isn't_ spiders
+    type: Remove
+  id: 149100
+  time: '2025-08-30T18:07:25.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1491
+- author: Fractalflower
+  changes:
+  - message: Resomi no longer take 1.5x asphyx
+    type: Remove
+  id: 149101
+  time: '2025-08-30T18:07:25.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1491
 Order: -1
 
