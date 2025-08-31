@@ -1,0 +1,8 @@
+- type: entity
+  parent: [ClothingBackpack, BaseCentcommCommandContraband]
+  id: ClothingBackpackBlueshield
+  name: blueshield backpack
+  description: A robust backpack to store various bodyguarding tools.
+  components:
+  - type: Sprite
+    sprite: Ronstation/Clothing/Back/Backpacks/blueshield.rsi

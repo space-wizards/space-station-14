@@ -1,3 +1,4 @@
+# Modified by Ronstation contributor(s), therefore this file is licensed as MIT sublicensed with AGPL-v3.0.
 - type: department
   id: Cargo
   name: department-Cargo
@@ -48,8 +49,7 @@
   - ERTSecurity
   - ERTEngineer
   - DeathSquad
-  - BlueshieldOfficer
-  - CentralCommandBlueshieldOfficer
+  - BlueshieldOfficer # Ronstation
   editorHidden: true
   weight: 120
 
@@ -75,7 +75,7 @@
   - ERTSecurity
   - ERTEngineer
   - DeathSquad
-  - BlueshieldOfficer
+  - BlueshieldOfficer # Ronstation
   primary: false
   weight: 100
 

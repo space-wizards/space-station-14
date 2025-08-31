@@ -9,3 +9,29 @@
   - type: StealCondition
     stealGroup: WeaponPistolNegotiator
     owner: job-name-hos
+
+- type: entity
+  parent: BaseTraitorStealObjective
+  id: GendarmeStealObjective
+  components:
+  - type: Objective
+    difficulty: 2
+  - type: NotJobRequirement
+    job: BlueshieldOfficer
+  - type: StealCondition
+    verifyMapExistence: true # BSO exists on a miniscule subset of maps
+    stealGroup: WeaponPistolGendarme
+    owner: job-name-blueshield-officer
+
+      #- type: entity
+      #  parent: BaseTraitorStealObjective
+      #  id: HoloshieldStealObjective
+      #  components:
+      #  - type: Objective
+      #    difficulty: 2
+      #  - type: NotJobRequirement
+      #    job: BlueshieldOfficer
+      #  - type: StealCondition
+      #    verifyMapExistence: true # why isn't this the default????
+      #    stealGroup: HoloTowerShield
+      #    owner: job-name-blueshield-officer

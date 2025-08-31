@@ -1,3 +1,5 @@
+# Modified by Ronstation contributor(s), therefore this file is licensed as MIT sublicensed with AGPL-v3.0.
+
 - type: entity
   parent: ClothingHandsBase
   id: ClothingHandsGlovesBoxingRed
@@ -273,6 +275,8 @@
   - type: Insulated
   - type: Fiber
     fiberMaterial: fibers-insulative
+  - type: Contraband # Ronstation
+    allowedJobs: [ BlueshieldOfficer ] # Ronstation
 
 # can't parent combat gloves since they are butcherable
 - type: entity

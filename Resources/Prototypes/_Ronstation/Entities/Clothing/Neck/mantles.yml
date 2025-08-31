@@ -1,0 +1,10 @@
+- type: entity
+  parent: ClothingNeckBase
+  id: ClothingNeckMantleBlueshield
+  name: blueshield officer's mantle
+  description: A luxurious mantle for the most esteemed, most experienced bodyguard.
+  components:
+  - type: Sprite
+    sprite: _Ronstation/Clothing/Neck/Mantles/blueshield.rsi
+  - type: StealTarget
+    stealGroup: HeadCloak

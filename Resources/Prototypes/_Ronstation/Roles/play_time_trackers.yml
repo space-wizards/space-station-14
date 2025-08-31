@@ -64,3 +64,8 @@
 
 - type: playTimeTracker
   id: AntagZombie
+
+# Jobs
+- type: playTimeTracker
+  id: JobBlueshieldOfficer
+

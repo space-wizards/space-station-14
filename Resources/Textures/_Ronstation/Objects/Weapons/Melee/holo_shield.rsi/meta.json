@@ -1,0 +1,94 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "based on https://github.com/Citadel-Station-13/Citadel-Station-13/commit/84223c65f5caf667a84f3c0f49bc2a41cdc6c4e3 modified by arenaconspiracy (github)",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "enabled-inhand-right",
+      "directions": 4,
+      "delays": [
+        [
+	  0.5,
+	  0.5,
+	  0.5,
+	  0.5
+	],
+	[
+	  0.5,
+	  0.5,
+	  0.5,
+	  0.5
+	],
+	[
+	  0.5,
+	  0.5,
+	  0.5,
+	  0.5
+	],
+	[
+	  0.5,
+	  0.5,
+	  0.5,
+	  0.5
+	]
+      ]
+    },
+    {
+      "name": "enabled-inhand-left",
+      "directions": 4,
+      "delays": [
+        [
+	  0.5,
+	  0.5,
+	  0.5,
+	  0.5
+	],
+	[
+	  0.5,
+	  0.5,
+	  0.5,
+	  0.5
+	],
+	[
+	  0.5,
+	  0.5,
+	  0.5,
+	  0.5
+	],
+	[
+	  0.5,
+	  0.5,
+	  0.5,
+	  0.5
+	]
+      ]
+
+    },
+    {
+      "name": "enabled-icon",
+      "delays": [
+        [
+	  0.5,
+	  0.5,
+	  0.5,
+	  0.5
+	]
+      ]
+    },
+    {
+      "name": "disabled-icon"
+    },
+    {
+      "name": "disabled-inhand-right",
+      "directions": 4
+    },
+    {
+      "name": "disabled-inhand-left",
+      "directions": 4
+    }
+  ]
+}

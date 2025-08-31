@@ -1,0 +1,75 @@
+<Document>
+  # Blueshield Officer
+
+  The [color=#28a]Blueshield Officer[/color] is an elite bodyguard unit sent by [color=#282]Central Command[/color], tasked with protecting the [color=yellow]Heads of Staff[/color] and designated [color=yellow]VIPs[/color] aboard the station.
+  <Box>
+    <GuideEntityEmbed Entity="ToyFigurineChaplain" Caption="I HAVE A GUN!"/>
+    <GuideEntityEmbed Entity="ToyFigurineBlueshield" Caption="SIR GET DOWN!"/>
+    <GuideEntityEmbed Entity="ToyFigurineQuartermaster" Caption="AHHHH!"/>
+  </Box>
+
+  As the station's BSO you are part of the [color=yellow]Command[/color] department; and are, foremost, tasked with protecting fellow members of Command. You are however, sent by [color=#282]CentComm[/color], and are part of Central Command. Meaning you can technically refuse orders from the [color=yellow]Captain[/color], if they go against the interests of NanoTrasen.
+
+  ### Communicating
+  Your headset starts with the [color=#2f2]Common[/color] and [color=yellow]Command[/color] encryption keys, and you can ask heads of staff for spares of their department's radio key, your unique headset can fit [color=yellow]5 keys total[/color], as opposed to the standard 4 of most other models. You can't be in every department at once, to protect every head, so it's a good idea to communicate on when and where you should be when things start getting scary.
+
+  Additionally, your headset starts with a [color=#28a]Central Command encryption key[/color], which functions without a dedicated telecomms server and works sectors apart; working as a direct, long range link between you and CentComm, allowing you to speak to officials across space. [bold]There isn't always someone manning the line[/bold], so you might need to get Central's attention with a stamped fax, unless they make contact first.
+
+  <Box>
+    <GuideEntityEmbed Entity="ClothingHeadsetBlueshield" Caption="headset"/>
+    <GuideEntityEmbed Entity="EncryptionKeyCentCom" Caption="encryption key"/>
+    <GuideEntityEmbed Entity="RubberStampBlueshield" Caption="stamp"/>
+    <GuideEntityEmbed Entity="FaxMachineBase" Caption="fax machine"/>
+  </Box>
+
+  Your locker also starts with an [color=#28a]encryption key case[/color] housing one (1) spare CC encryption key. It's a good idea to hand it off to a member of command or otherwise a [bold]very[/bold] trusted person, as it can serve as a powerful tactical utility.
+
+  <GuideEntityEmbed Entity="CentcommKeyCase"/>
+
+  ### Fighting
+
+  As a Blueshield Officer you are issued the [color=#3cf]Gendarme energy pistol[/color] as well as a belt to holster it, similar to the Captain's sabre.
+
+  The Gendarme features a [color=yellow]self-recharging battery[/color] and two separate [color=yellow]fire modes[/color] it can switch between. A [color=yellow]full charge[/color] is enough for [color=red]6 lethal shots[/color] or [color=#3cf]12 nonlethal shots[/color]. 
+
+  <Box>
+    <GuideEntityEmbed Entity="WeaponPistolGendarme"/>
+    <GuideEntityEmbed Entity="ClothingBeltBlueshield"/>
+  </Box>
+
+  The Gendarme can fire energy bolts in a [color=red]lethal[/color] & [color=#3cf]non-lethal[/color] configuration; both modes deal [color=#3cf]stamina damage[/color] and pass through glass. the lethal configuration deals less stamina damage than the dedicated non-lethal configuration.
+
+  You also start with standard issue [color=yellow]Mk 58 pistol[/color] with 2 magazines, [color=yellow]jackboots[/color] with a [color=yellow]combat knife[/color] inside, and insulated [color=yellow]combat gloves[/color], meaning you have more traditional, more material combat options to rely on.
+  
+  <Box>
+    <GuideEntityEmbed Entity="WeaponPistolMk58"/>
+    <GuideEntityEmbed Entity="ClothingShoesBootsJack"/>
+    <GuideEntityEmbed Entity="CombatKnife"/>
+    <GuideEntityEmbed Entity="ClothingHandsGlovesCombat"/>
+  </Box>
+
+  Your locker comes with a random set of surplus [color=yellow]nonlethal grenades[/color], which when used wildly, can work as stellar defensive utilities. Forcing enemies to work around them buying you and anyone you're guarding crucial time to fall back.
+
+  <Box>
+    <GuideEntityEmbed Entity="GrenadeFlashBang"/>
+    <GuideEntityEmbed Entity="GrenadeStinger" Caption="stinger"/>
+    <GuideEntityEmbed Entity="TearGasGrenade" Caption="tear gas"/>
+  </Box>
+
+  You are also issued the [color=yellow]SWAT helmet[/color], and a unique [color=yellow]armored voidsuit[/color]. The helmet is stronger than those in security; and your voidsuit, while not providing much more resistance than your standard body armor, is the [color=yellow]fastest spaceproof combat suit[/color] the crew has access to, trading protection for agility in making it to where you're needed most, escorting a VIP during a crisis. Use these advantages wisely.
+
+  <Box>
+    <GuideEntityEmbed Entity="ClothingHeadHelmetSwat"/>
+    <GuideEntityEmbed Entity="ClothingOuterHardsuitBlueshield"/>
+  </Box>
+
+  ### The End
+  Your gear has many unique advantages, use them wisely - and you will be hailed a hero by command and your supervisors.
+
+  Stand ready for special orders from [color=#282]Central Command[/color], if such arrive.
+
+  The right man in the wrong place, makes all the difference in the world.
+
+  Now get out there! A tider might be trying to murk the CMO again. DISMISSED!
+
+</Document>

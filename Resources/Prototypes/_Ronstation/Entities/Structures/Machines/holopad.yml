@@ -1,4 +1,13 @@
 ## Mapping prototypes
+# Command
+- type: entity
+  parent: Holopad
+  id: HolopadCommandBso
+  suffix: BSO
+  components:
+  - type: Label
+    currentLabel: holopad-command-bso
+
 # Long Range
 - type: entity
   parent: HolopadLongRange

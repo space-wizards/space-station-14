@@ -1,0 +1,55 @@
+- type: job
+  id: BlueshieldOfficer
+  name: job-name-blueshield-officer
+  description: job-description-blueshield-officer
+  playTimeTracker: JobBlueshieldOfficer
+  requirements:
+    - !type:DepartmentTimeRequirement
+      department: Security
+      time: 36000 # 10 hrs
+    - !type:DepartmentTimeRequirement
+      department: Command
+      time: 36000 # 10 hours
+  weight: 20
+  startingGear: BlueshieldOfficerGear
+  icon: "JobIconNanotrasen"
+  requireAdminNotify: true
+  supervisors: job-supervisors-centcom
+  canBeAntag: false
+  access:
+  - Brig
+  - Command
+  - CentralCommand
+  - Cryogenics
+  - Security # axe this if BSOs overwhelmingly Misbehave and act like blue secoffs & not bodyguards
+  - External
+  - Maintenance
+  special:
+  - !type:AddImplantSpecial
+    implants: [ MindShieldImplant ]
+  - !type:AddComponentSpecial
+    components:
+      - type: CommandStaff
+
+- type: startingGear
+  id: BlueshieldOfficerGear
+  equipment:
+    id: BlueshieldPDA
+    eyes: ClothingEyesGlassesCommand
+    gloves: ClothingHandsGlovesCombat
+    ears: ClothingHeadsetBlueshield
+    pocket1: WeaponPistolMk58
+  storage:
+    back:
+    - Flash
+    - MagazinePistol
+
+- type: chameleonOutfit
+  id: BlueshieldOfficerOutfit
+  job: BlueshieldOfficer
+  hasMindShield: true
+  equipment:
+    head: ClothingHeadHatBeretBlueshield
+    mask: ClothingMaskGasSecurity
+    neck: ClothingNeckCloakBlueshield
+    gloves: ClothingHandsGlovesColorBlack

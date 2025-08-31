@@ -1,0 +1,10 @@
+# because we can't use migration as a downstream
+# i need to redefine the old prototypes instead
+# fml
+- type: entity
+  parent: AirlockCentralCommandLocked
+  id: AirlockBlueshieldLocked
+
+- type: entity
+  parent: AirlockCentralCommandGlassLocked
+  id: AirlockBlueshieldGlassLocked

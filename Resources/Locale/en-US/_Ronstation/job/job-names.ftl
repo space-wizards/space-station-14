@@ -1,4 +1,5 @@
 # Role timers - Make these alphabetical
+# Antags
 AntagChangeling = Changeling
 AntagDragon = Space Dragon
 AntagGenericAntagonist = Antagonist
@@ -21,3 +22,6 @@ AntagTraitorSleeper = Syndicate Sleeper Agent
 AntagVampire = Vampire
 AntagWizard = Wizard
 AntagZombie = Zombie
+
+# Jobs
+job-name-blueshield-officer = Blueshield Officer

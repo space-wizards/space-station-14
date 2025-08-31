@@ -1,0 +1,23 @@
+- type: entity
+  parent: [ BasePDA, BaseCentcommContraband ]
+  id: BlueshieldPDA
+  name: blueshield officer's PDA
+  description: PDA unit issued to NanoTrasen Blueshield officers, a high ranking bodyguard unit.
+  components:
+  - type: Sprite
+    sprite: _Ronstation/Objects/Devices/pda.rsi
+    state: pda-blueshield
+  - type: Icon
+    sprite: _Ronstation/Objects/Devices/pda.rsi
+    state: pda-blueshield
+  - type: Pda
+    id: BlueshieldIDCard
+  - type: PdaBorderColor
+    borderColor: "#0084d9"
+    accentHColor: "#0084d9"
+    accentVColor: "#d0d0d7"
+  - type: Appearance
+    appearanceDataInit:
+      enum.PdaVisuals.PdaType:
+        !type:String
+        pda-blueshield

@@ -1,0 +1,27 @@
+- type: entity
+  parent: ClothingHeadHardsuitBase
+  id: ClothingHeadHelmetHardsuitBlueshield
+  name: blueshield voidsuit helmet
+  description: A spaceproof SWAT grade helmet for defending corporate interests in low pressure.
+  components:
+  - type: Sprite
+    sprite: _Ronstation/Clothing/Head/Hardsuits/blueshield.rsi
+    state: icon
+  - type: Clothing
+    sprite: _Ronstation/Clothing/Head/Hardsuits/blueshield.rsi
+    clothingVisuals:
+      head:
+      - state: equipped-HELMET
+  - type: PressureProtection
+    highPressureMultiplier: 0.525
+    lowPressureMultiplier: 1000
+  - type: Armor
+    modifiers:
+      coefficients: # YES this is more than every other helmet. YES it works well enough. NO it is absolutely not a good thing. it's done this way because BSO gets the SWAT helmet so this is made to match that.
+        Blunt: 0.8
+        Slash: 0.8
+        Piercing: 0.8
+        Heat: 0.8
+  - type: Tag
+    tags:
+    - WhitelistChameleon
