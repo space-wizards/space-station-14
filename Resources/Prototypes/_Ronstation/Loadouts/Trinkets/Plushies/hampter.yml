@@ -4,11 +4,6 @@
   - !type:JobRequirementLoadoutEffect
     requirement:
       !type:RoleTimeRequirement
-      role: JobBlueshieldOfficer
-      time: 9000 # 2.5 hrs
-  - !type:JobRequirementLoadoutEffect
-    requirement:
-      !type:RoleTimeRequirement
       role: JobCaptain
       time: 9000 # 2.5 hrs
   - !type:JobRequirementLoadoutEffect
