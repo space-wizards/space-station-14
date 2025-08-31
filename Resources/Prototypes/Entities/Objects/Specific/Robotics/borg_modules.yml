@@ -871,6 +871,12 @@
     hands:
     - item: HandheldHealthAnalyzerUnpowered
     - item: Syringe
+      hand: #Starlight start
+        emptyLabel: borg-slot-syringe-empty
+        emptyRepresentative: Syringe
+        whitelist:
+          tags:
+          - Syringe #Starlight end
     - item: BorgDropper
     - item: BaseChemistryEmptyVial
       hand:
@@ -913,6 +919,12 @@
     - item: AutoMenderBrute
     - item: AutoMenderBurn
     - item: Syringe
+      hand: #Starlight start
+        emptyLabel: borg-slot-syringe-empty
+        emptyRepresentative: Syringe
+        whitelist:
+          tags:
+          - Syringe #Starlight end
     - item: BorgDropper
     - item: Beaker
       hand:
