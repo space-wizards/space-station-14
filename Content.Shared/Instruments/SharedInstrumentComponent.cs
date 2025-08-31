@@ -41,7 +41,7 @@ public abstract partial class SharedInstrumentComponent : Component
     public TimeSpan NextInputTime { get; set; } = Timespan.Zero; // Starlight
     
     [DataField]
-    public Timespan InputDelay { get; set; } = Timespan.FromSeconds(1); // Starlight
+    public TimeSpan InputDelay { get; set; } = Timespan.FromSeconds(1); // Starlight
 }
 
 /// <summary>
