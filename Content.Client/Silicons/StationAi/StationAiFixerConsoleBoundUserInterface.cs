@@ -1,4 +1,5 @@
 using Content.Shared.Silicons.StationAi;
+using Robust.Client.UserInterface;
 
 namespace Content.Client.Silicons.StationAi;
 
@@ -11,17 +12,11 @@ public sealed class StationAiFixerConsoleBoundUserInterface(EntityUid owner, Enu
     {
         base.Open();
 
-        _window = new StationAiFixerConsoleWindow(Owner);
-        _window.OpenCentered();
-        _window.OnClose += Close;
+        _window = this.CreateWindow<StationAiFixerConsoleWindow>();
+        _window.SetOwner(Owner);
 
         _window.SendStationAiFixerConsoleMessageAction += SendStationAiFixerConsoleMessage;
         _window.OpenConfirmationDialogAction += OpenConfirmationDialog;
-    }
-
-    private void SendStationAiFixerConsoleMessage(StationAiFixerConsoleAction action)
-    {
-        SendPredictedMessage(new StationAiFixerConsoleMessage(action));
     }
 
     public override void Update()
@@ -32,17 +27,17 @@ public sealed class StationAiFixerConsoleBoundUserInterface(EntityUid owner, Enu
 
     private void OpenConfirmationDialog()
     {
-        _confirmationDialog?.Close();
+        if (_window == null)
+            return;
 
-        _confirmationDialog = new StationAiFixerConsoleConfirmationDialog();
-        _confirmationDialog.OpenCentered();
-
-        _confirmationDialog.SendStationAiFixerConsoleMessageAction += SendStationAiFixerConsoleMessage;
+        _window.ConfirmationDialog?.Close();
+        _window.ConfirmationDialog = new StationAiFixerConsoleConfirmationDialog();
+        _window.ConfirmationDialog.OpenCentered();
+        _window.ConfirmationDialog.SendStationAiFixerConsoleMessageAction += SendStationAiFixerConsoleMessage;
     }
 
-    protected override void Dispose(bool disposing)
+    private void SendStationAiFixerConsoleMessage(StationAiFixerConsoleAction action)
     {
-        _window = null;
-        _confirmationDialog = null;
+        SendPredictedMessage(new StationAiFixerConsoleMessage(action));
     }
 }

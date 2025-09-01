@@ -148,6 +148,7 @@
         unshaded:
           Empty: { state: empty }
           Occupied: { state: full }
+          Rebooting: { state: dead }
           Dead: { state: dead }
   - type: Intellicard
 

@@ -28,6 +28,8 @@ public sealed partial class StationAiFixerConsoleWindow : FancyWindow
     public event Action<StationAiFixerConsoleAction>? SendStationAiFixerConsoleMessageAction;
     public event Action? OpenConfirmationDialogAction;
 
+    public StationAiFixerConsoleConfirmationDialog? ConfirmationDialog;
+
     private readonly Dictionary<StationAiState, Color> _statusColors = new()
     {
         [StationAiState.Empty] = Color.FromHex("#464966"),
@@ -36,15 +38,13 @@ public sealed partial class StationAiFixerConsoleWindow : FancyWindow
         [StationAiState.Dead] = Color.FromHex("#BB3232"),
     };
 
-    public StationAiFixerConsoleWindow(EntityUid owner)
+    public StationAiFixerConsoleWindow()
     {
         RobustXamlLoader.Load(this);
         IoCManager.InjectDependencies(this);
 
         _stationAiFixerConsole = _entManager.System<StationAiFixerConsoleSystem>();
         _stationAi = _entManager.System<StationAiSystem>();
-
-        _owner = owner;
 
         StationAiPortraitTexture.DisplayRect.TextureScale = new Vector2(4f, 4f);
 
@@ -62,8 +62,6 @@ public sealed partial class StationAiFixerConsoleWindow : FancyWindow
         EjectButton.Label.Margin = new Thickness(40, 0, 0, 0);
         RepairButton.Label.Margin = new Thickness(40, 0, 0, 0);
         PurgeButton.Label.Margin = new Thickness(40, 0, 0, 0);
-
-        UpdateState();
     }
 
     public void OnSendStationAiFixerConsoleMessage(StationAiFixerConsoleAction action)
@@ -74,6 +72,18 @@ public sealed partial class StationAiFixerConsoleWindow : FancyWindow
     public void OnOpenConfirmationDialog()
     {
         OpenConfirmationDialogAction?.Invoke();
+    }
+
+    public override void Close()
+    {
+        base.Close();
+        ConfirmationDialog?.Close();
+    }
+
+    public void SetOwner(EntityUid owner)
+    {
+        _owner = owner;
+        UpdateState();
     }
 
     public void UpdateState()
