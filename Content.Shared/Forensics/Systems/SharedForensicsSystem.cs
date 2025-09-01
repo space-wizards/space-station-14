@@ -23,4 +23,5 @@ public abstract class SharedForensicsSystem : EntitySystem
     /// <param name="donor">The entity applying its DNA.</param>
     /// <param name="canDnaBeCleaned">If this DNA be cleaned off of the recipient. e.g. cleaning a knife vs cleaning a puddle of blood.</param>
     public virtual void TransferDna(EntityUid recipient, EntityUid donor, bool canDnaBeCleaned = true) { }
+
 }
