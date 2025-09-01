@@ -36,20 +36,11 @@ public sealed class VampireFeedSystem : EntitySystem
         SubscribeLocalEvent<VampireFeedComponent, MapInitEvent>(OnMapInit);
         SubscribeLocalEvent<VampireFeedComponent, VampireFeedActionEvent>(OnFeedAction);
         SubscribeLocalEvent<VampireFeedComponent, VampireFeedDoAfterEvent>(OnFeedDoAfter);
-        SubscribeLocalEvent<VampireFeedComponent, ComponentShutdown>(OnShutdown);
     }
 
     private void OnMapInit(Entity<VampireFeedComponent> ent, ref MapInitEvent args)
     {
         _actionsSystem.AddAction(ent, ref ent.Comp.VampireFeedActionEntity, ent.Comp.VampireFeedAction);
-    }
-
-    private void OnShutdown(Entity<VampireFeedComponent> ent, ref ComponentShutdown args)
-    {
-        if (ent.Comp.VampireFeedActionEntity != null)
-        {
-            _actionsSystem.RemoveAction(ent.Owner, ent.Comp.VampireFeedActionEntity);
-        }
     }
 
     private bool IsTargetValid(EntityUid target, Entity<VampireFeedComponent> ent)
@@ -138,6 +129,12 @@ public sealed class VampireFeedSystem : EntitySystem
         {
             comp.VitaeRegenCap = comp.VitaeRegenCap + comp.VitaeCapUpgradeAmount;
         }
+
+        // Ow my neck
+        _popupSystem.PopupPredicted(Loc.GetString("vampire-feed-msg"),
+            Loc.GetString("vampire-feed-msg-other"),
+            args.User,
+            args.User);
 
         // Check if we can still feed, if so, repeat
         args.Repeat = IsTargetValid(args.Target.Value, ent);
