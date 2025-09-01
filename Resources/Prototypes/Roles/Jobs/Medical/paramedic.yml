@@ -9,7 +9,7 @@
     time: 36000 #10 hrs
   startingGear: ParamedicGear
   icon: "JobIconParamedic"
-  whitelist: true
+  whitelisted: true
   supervisors: job-supervisors-cmo
   access:
   - Medical

@@ -11,8 +11,8 @@
       department: Cargo
       time: 36000 # 10 hrs
   icon: "JobIconShaftMiner"
-  startingGear: SalvageSpecialistGear
   whitelisted: true
+  startingGear: SalvageSpecialistGear
   supervisors: job-supervisors-qm
   access:
   - Cargo

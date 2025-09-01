@@ -10,7 +10,7 @@
       inverted: true # stop playing intern if you're good at med!
   startingGear: MedicalInternGear
   icon: "JobIconMedicalIntern"
-  whitelist: true
+  whitelisted: true
   supervisors: job-supervisors-medicine
   canBeAntag: false
   access:
