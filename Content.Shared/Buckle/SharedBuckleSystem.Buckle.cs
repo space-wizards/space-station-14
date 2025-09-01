@@ -22,6 +22,7 @@ using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Events;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
+using Content.Shared.Stunnable;
 
 namespace Content.Shared.Buckle;
 
@@ -98,7 +99,7 @@ public abstract partial class SharedBuckleSystem
     private void OnCrawlAttempt(Entity<BuckleComponent> entity, ref KnockDownAttemptEvent args)
     {
         TryUnbuckle(entity, entity, entity);
-        _standingState.Stand(entity);
+        _standing.Down(entity, true, false);
     }
 
     #endregion
