@@ -239,7 +239,7 @@
   order: 3
   lawString: law-reporter-3
 
-- type: siliconLawset
+- type: siliconLaw
   id: Reporter4
   order: 4
   lawString: law-reporter-4
