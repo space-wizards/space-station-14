@@ -5,8 +5,6 @@ on:
     branches:
       - Starlight
       - starlight-dev
-  #temp dispatch
-  workflow_dispatch:
       
 permissions:
   contents: write
