@@ -6,15 +6,15 @@
   requirements:
     - !type:DepartmentTimeRequirement
       department: Engineering
-      time: 9000 #2.5 hrs
+      time: 360000 #100 hrs
   startingGear: StationEngineerGear
   icon: "JobIconStationEngineer"
+  whitelisted: true
   supervisors: job-supervisors-ce
   access:
   - Maintenance
   - Engineering
   - External
-  extendedAccess:
   - Atmospherics
 
 - type: startingGear

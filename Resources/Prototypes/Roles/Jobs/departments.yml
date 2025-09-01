@@ -78,7 +78,7 @@
   description: department-Engineering-description
   color: "#EFB341"
   roles:
-  - AtmosphericTechnician
+ # - AtmosphericTechnician
   - ChiefEngineer
   - StationEngineer
   - TechnicalAssistant
