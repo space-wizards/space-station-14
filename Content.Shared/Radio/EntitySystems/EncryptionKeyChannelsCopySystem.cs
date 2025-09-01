@@ -72,7 +72,7 @@ public sealed class EncryptionKeyChannelsCopySystem : EntitySystem
 
     private void RelayFromKeyHolder<T>(Entity<EncryptionKeyHolderComponent?> entity, ref T args) where T : notnull
     {
-        if (!Resolve(entity.Owner, ref entity.Comp))
+        if (!Resolve(entity.Owner, ref entity.Comp, false))
             return;
 
         foreach (var encryptionKey in entity.Comp.KeyContainer.ContainedEntities)
