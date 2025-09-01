@@ -9,10 +9,6 @@ public sealed partial class VomitBehavior : IThresholdBehavior
 {
     public void Execute(EntityUid uid, DestructibleSystem system, EntityUid? cause = null)
     {
-        if (!system.EntityManager.TryGetComponent(uid, out MobStateComponent? mobState))
-            return;
-
-        if (mobState.CurrentState is MobState.Alive or MobState.Critical)
-            system.EntityManager.System<VomitSystem>().Vomit(uid);
+        system.EntityManager.System<VomitSystem>().Vomit(uid);
     }
 }
