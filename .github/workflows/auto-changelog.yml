@@ -6,6 +6,7 @@ on:
       - Starlight
       - starlight-dev
       
+      
 permissions:
   contents: write
   pull-requests: read
