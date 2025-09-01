@@ -48,10 +48,10 @@
       - Security
       - Service
       - Theatre
-      - Ntrep
-      - Magistrate
-      - GenpopEnter #starlight genpop repairability fix
-      - GenpopLeave #starlight genpop repairability fix
+      - GenpopEnter
+      - GenpopLeave
+      - Ntrep #Starlight job
+      - Magistrate #Starlight job
       privilegedIdSlot:
         name: id-card-console-privileged-id
         ejectSound: /Audio/Machines/id_swipe.ogg

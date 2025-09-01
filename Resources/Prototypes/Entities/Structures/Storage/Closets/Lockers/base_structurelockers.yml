@@ -1,10 +1,11 @@
 - type: entity
   id: LockerBase
   parent: ClosetBase
-  abstract: true
   components:
   - type: AccessReader
   - type: Lock
+    popupMessage: false # Starlight-edit
+    powerNeeded: true # Starlight-edit
   - type: LockVisuals
   - type: Sprite
     sprite: Structures/Storage/closet.rsi
@@ -25,6 +26,21 @@
       sprite: Structures/Storage/closet_labels.rsi
       offset: "-0.065,0"
       map: ["enum.PaperLabelVisuals.Layer"]
+    # Starlight-start: Maintenance panel
+    - state: panel_open
+      map: ["enum.WiresVisualLayers.MaintenancePanel"]
+      visible: false
+    - state: electrified_ai
+      sprite: Interface/Misc/ai_hud.rsi
+      shader: unshaded
+      visible: false
+      map: ["enum.ElectrifiedLayers.HUD"]
+    - state: electrified
+      sprite: Effects/electricity.rsi
+      shader: unshaded
+      visible: false
+      map: ["enum.ElectrifiedLayers.Sparks"]
+    # Starlight-end
   - type: Destructible
     thresholds:
     - trigger:
@@ -56,11 +72,38 @@
     - entity_storage
   - type: Paintable
     group: Locker
+  # Starlight-start: Wires panel
+  - type: Tag
+    tags: 
+      - Locker
+  - type: Electrified
+    enabled: false
+    requirePower: false
+  - type: PoweredLocker
+  - type: StationAiWhitelist
+  - type: WiresPanel
+  - type: WiresPanelSecurity
+    wiresAccessible: false
+  - type: WiresVisuals
+  - type: Wires
+    boardName: wires-board-name-locker
+    layoutId: Locker
+  - type: UserInterface
+    interfaces:
+      enum.WiresUiKey.Key:
+        type: WiresBoundUserInterface
+  - type: GenericVisualizer
+    visuals:
+      enum.ElectrifiedVisuals.ShowSparks:
+        enum.ElectrifiedLayers.Sparks:
+          True: { visible: True }
+          False: { visible: False }
+  # Starlight-end
 
 - type: entity
   id: LockerBaseSecure
   parent: LockerBase
-  abstract: true
+  name: secure closet # Starlight-edit
   components:
   - type: Damageable
     damageContainer: StructuralInorganic
@@ -73,3 +116,13 @@
       behaviors:
       - !type:DoActsBehavior
         acts: ["Destruction"]
+# Starlight-start: Base Locker
+  - type: Tag
+    tags: 
+      - SecuredLocker
+  - type: Appearance
+  - type: EntityStorageVisuals
+    stateBaseClosed: secure
+    stateDoorOpen: secure_open
+    stateDoorClosed: secure_door
+# Starlight-end

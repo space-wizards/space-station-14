@@ -31,3 +31,14 @@
     Steel: 2050
     Plastic: 500
     Plasma: 500
+
+- type: latheRecipe
+  parent: BaseRoboticsRecipe
+  id: AiInterfaceCube
+  result: AiInterfaceCube
+  completetime: 6
+  materials:
+    Steel: 250
+    Plastic: 250
+    Gold: 50
+    Silver: 50

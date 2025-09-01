@@ -174,16 +174,16 @@
 #CCNT Consortium BSOs
 - type: entity
   parent: [ BaseCentcommContraband, ClothingOuterHardsuitSyndieElite ] #sl Change
-  id: ClothingOuterHardsuitNTCCConsortium
-  name: nt cc consortium hardsuit
-  description: A protective hardsuit worn by NT-CC Consortium Officers.
+  id: ClothingOuterHardsuitNTNCConsortium
+  name: nt-nc marine hardsuit
+  description: A protective hardsuit worn by NT-NC Naval Officers.
   components:
   - type: Sprite
-    sprite: _Starlight/Clothing/OuterClothing/Hardsuits/ntcc_hardsuit.rsi
+    sprite: _Starlight/Clothing/OuterClothing/Hardsuits/ntnc_hardsuit.rsi
   - type: Clothing
-    sprite: _Starlight/Clothing/OuterClothing/Hardsuits/ntcc_hardsuit.rsi
+    sprite: _Starlight/Clothing/OuterClothing/Hardsuits/ntnc_hardsuit.rsi
   - type: ToggleableClothing
-    clothingPrototype: ClothingHeadHelmetHardsuitNTCCConsortium
+    clothingPrototype: ClothingHeadHelmetHardsuitNTNCConsortium
   - type: Tag
     tags:
     - Hardsuit
@@ -220,7 +220,6 @@
         Radiation: 0.6
         Caustic: 0.6
     staminaModifier: 0.3
-    ingoreKnockdown: true
   - type: ExplosionResistance
     damageCoefficient: 0.5
   - type: ToggleClothing
@@ -258,16 +257,16 @@
 #CCNT Consortium medics
 - type: entity
   parent: [ BaseCentcommContraband, ClothingOuterHardsuitSyndieMedic ] #sl Change
-  id: ClothingOuterHardsuitNTCCConsortiumMedic
-  name: nt cc consortium medic hardsuit
-  description: A protective hardsuit worn by NT-CC Consortium medical personnel.
+  id: ClothingOuterHardsuitNTNCConsortiumMedic
+  name: nt-nc naval medic hardsuit
+  description: A protective hardsuit worn by NT-NC Naval medical personnel.
   components:
   - type: Sprite
-    sprite: _Starlight/Clothing/OuterClothing/Hardsuits/ntcc_med_hardsuit.rsi
+    sprite: _Starlight/Clothing/OuterClothing/Hardsuits/ntnc_med_hardsuit.rsi
   - type: Clothing
-    sprite: _Starlight/Clothing/OuterClothing/Hardsuits/ntcc_med_hardsuit.rsi
+    sprite: _Starlight/Clothing/OuterClothing/Hardsuits/ntnc_med_hardsuit.rsi
   - type: ToggleableClothing
-    clothingPrototype: ClothingHeadHelmetHardsuitNTCCConsortiumMedic
+    clothingPrototype: ClothingHeadHelmetHardsuitNTNCConsortiumMedic
   - type: Tag
     tags:
     - Hardsuit
@@ -304,7 +303,6 @@
         Radiation: 0.1
         Caustic: 0.4
     staminaModifier: 1
-    ingoreKnockdown: false
   - type: ClothingSpeedModifier
     walkModifier: 0.90
     sprintModifier: 0.90

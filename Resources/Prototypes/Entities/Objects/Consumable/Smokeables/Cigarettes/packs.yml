@@ -142,6 +142,10 @@
     sprite: Objects/Consumable/Smokeables/Cigarettes/Packs/green.rsi
   - type: Item
     sprite: Objects/Consumable/Smokeables/Cigarettes/Packs/green.rsi
+  # Starlight-start: Vending Machines Prices
+  - type: ItemPrice
+    priceCategory: cigaretes
+  # Starlight-end
 
 - type: entity
   id: CigPackRed
@@ -153,6 +157,10 @@
     sprite: Objects/Consumable/Smokeables/Cigarettes/Packs/red.rsi
   - type: Item
     sprite: Objects/Consumable/Smokeables/Cigarettes/Packs/red.rsi
+  # Starlight-start: Vending Machines Prices
+  - type: ItemPrice
+    priceCategory: cigaretes
+  # Starlight-end
 
 - type: entity
   id: CigPackBlue
@@ -164,6 +172,10 @@
     sprite: Objects/Consumable/Smokeables/Cigarettes/Packs/blue.rsi
   - type: Item
     sprite: Objects/Consumable/Smokeables/Cigarettes/Packs/blue.rsi
+  # Starlight-start: Vending Machines Prices
+  - type: ItemPrice
+    priceCategory: cigaretes
+  # Starlight-end
 
 - type: entity
   id: CigPackBlack
@@ -175,6 +187,10 @@
     sprite: Objects/Consumable/Smokeables/Cigarettes/Packs/black.rsi
   - type: Item
     sprite: Objects/Consumable/Smokeables/Cigarettes/Packs/black.rsi
+  # Starlight-start: Vending Machines Prices
+  - type: ItemPrice
+    priceCategory: cigaretes
+  # Starlight-end
 
 - type: entity
   id: CigPackSyndicate  #SL EDIT, Syndie to non-contra
@@ -208,6 +224,10 @@
         rolls: !type:RangeNumberSelector
           range: 2, 9
         tableId: RandomSoakedSmokeTable
+  # Starlight-start: Vending Machines Prices
+  - type: ItemPrice
+    priceCategory: cigaretes
+  # Starlight-end
 
 # Entity tables
 
@@ -282,5 +302,20 @@
     - id: GroundTobacco
       amount: 10
     - id: CigaretteSyndicate
+      amount: 2
+
+- type: entity
+  id: CigPackMedRollie
+  parent: PackPaperRolling
+  name: medicinal blunt packet
+  description: An old rolling paper packet full of things to make blunts with. Its purely medicinal man..
+  components:
+  - type: StorageFill
+    contents:
+    - id: LeavesTobaccoDried
+      amount: 10
+    - id: GroundCannabis
+      amount: 10
+    - id: Blunt
       amount: 2
 ### end SL

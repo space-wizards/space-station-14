@@ -1,26 +1,35 @@
 <Document>
+# Engineering orders
 
-    # Engineering Orders
+## Basic materials
+<Box>
+	<GuideEntityEmbed Entity="SheetSteel"/>
+	<GuideEntityEmbed Entity="SheetGlass"/>
+	<GuideEntityEmbed Entity="SheetPlastic"/>
+	<GuideEntityEmbed Entity="SheetPlasteel"/>
+	<GuideEntityEmbed Entity="MaterialCloth"/>
+</Box>
 
-    Basic Materials
-    <Box>
-        <GuideEntityEmbed Entity="SheetSteel"/>
-        <GuideEntityEmbed Entity="SheetGlass"/>
-        <GuideEntityEmbed Entity="SheetPlastic"/>
-        <GuideEntityEmbed Entity="SheetPlasteel"/> 
-    </Box>
+## Cables
+<Box>
+	<GuideEntityEmbed Entity="CableApcStack"/>
+	<GuideEntityEmbed Entity="CableMVStack"/>
+	<GuideEntityEmbed Entity="CableHVStack"/>
+</Box>
 
-    Cables
-    <Box>
-        <GuideEntityEmbed Entity="CableApcStack"/> 
-        <GuideEntityEmbed Entity="CableMVStack"/> 
-        <GuideEntityEmbed Entity="CableHVStack"/> 
-    </Box>
+## Basic hand tools
+<Box>
+	<GuideEntityEmbed Entity="Crowbar"/>
+	<GuideEntityEmbed Entity="Wrench"/>
+	<GuideEntityEmbed Entity="Screwdriver"/>
+	<GuideEntityEmbed Entity="Wirecutter"/>
+	<GuideEntityEmbed Entity="Welder"/>
+	<GuideEntityEmbed Entity="Multitool"/>
+</Box>
 
-    Other
-    <Box>
-        <GuideEntityEmbed Entity="VendingMachineRestockEngineering"/> 
-        <GuideEntityEmbed Entity="AmeJar"/> 
-    </Box>
-
+## Crates
+<Box>
+	<GuideEntityEmbed Entity="CrateVendingMachineRestockEngineeringFilled"/>
+	<GuideEntityEmbed Entity="CrateEngineeringAMEJar"/>
+</Box>
 </Document>

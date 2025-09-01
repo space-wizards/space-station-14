@@ -39,6 +39,7 @@
     - ActionJumpToCore
     - ActionSurvCameraLights
     - ActionAIViewLaws
+    - ActionAIShunt # Starlight AI Shunt ability
   - type: UserInterface
     interfaces:
       enum.RadarConsoleUiKey.Key:
@@ -79,6 +80,9 @@
     - sprite: Mobs/Silicon/station_ai.rsi
       state: default
   - type: ShowJobIcons
+  #region Starlight
+  - type: StationAIShuntable
+  #endregion Starlight
 
 - type: entity
   id: AiHeldIntellicard
@@ -288,6 +292,7 @@
     - HideContextMenu
     - StationAi
     - NoConsoleSound
+    - CanPilot
   - type: StartingMindRole
     mindRole: "MindRoleSiliconBrain"
     silent: true
@@ -304,6 +309,28 @@
     #region Starlight
   - type: IonStormTarget
     chance: 0.6 # lets just try it at 3/4th the chance of a borg and see how bad it gets
+  # Starlight-start: Languages
+  - type: LanguageKnowledge
+    speaks:
+    - GalacticCommon
+    - Machine
+    understands:
+    - GalacticCommon
+    - Machine
+    - Canilunzt
+    - Sign
+    - Bubblish
+    - Chittin
+    - Draconic
+    - Marish
+    - Moffic
+    - Nekomimetic
+    - Sylvan
+    - Terrum
+    - VoxPidgin
+    - Scratch
+    - SolCommon
+  # Starlight-end
     #endregion
 
 # Hologram projection that the AI's eye tracks.
@@ -462,7 +489,7 @@
         - BorgModuleTool
         - BorgModuleChemical
         - BorgModuleTopicals
-        - BorgModuleRescue
+        - BorgModuleSyndicateWeapon
   - type: ItemSlots
     slots:
       cell_slot:

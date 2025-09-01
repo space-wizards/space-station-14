@@ -6,6 +6,7 @@ using Content.Shared.Inventory;
 using Content.Shared.Radio;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
+using Content.Shared.Chat; // Starlight
 
 namespace Content.Server.Vocalization.Systems;
 

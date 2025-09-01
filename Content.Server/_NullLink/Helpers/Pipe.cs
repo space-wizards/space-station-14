@@ -19,9 +19,8 @@ public static class Pipe
     [DebuggerHidden]
     public static void RunInBackground(
         Func<Task> work,
-        Action<Exception>? onError = null)
-    {
-        ThreadPool.UnsafeQueueUserWorkItem(
+        Action<Exception>? onError = null) 
+        => ThreadPool.UnsafeQueueUserWorkItem(
             static async state =>
             {
                 var (job, handler) = ((Func<Task> job, Action<Exception>? handler))state!;
@@ -36,7 +35,6 @@ public static class Pipe
                 }
             },
             (work, onError));
-    }
 
     /// <summary>
     ///     Overload for <see cref="ValueTask"/> producers.
@@ -49,19 +47,18 @@ public static class Pipe
         Action<Exception>? onError = null)
         => RunInBackground(() => work().AsTask(), onError);
 
-    [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    [DebuggerStepThrough]
-    [DebuggerHidden]
     public static void FireAndForget(this Task task)
     {
+        ArgumentNullException.ThrowIfNull(task);
+
         task.ContinueWith(t =>
         {
             if (t.IsFaulted)
                 Debug.WriteLine(t.Exception);
         },
-        TaskContinuationOptions.ExecuteSynchronously |
-        TaskContinuationOptions.DenyChildAttach |
-        TaskContinuationOptions.OnlyOnFaulted);
+        CancellationToken.None,
+        TaskContinuationOptions.OnlyOnFaulted | TaskContinuationOptions.DenyChildAttach,
+        TaskScheduler.Default);
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -94,7 +91,6 @@ public static class Pipe
         if (valueTask.IsCompleted) return;
         valueTask.AsTask().FireAndForget();
     }
-
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     [DebuggerStepThrough]

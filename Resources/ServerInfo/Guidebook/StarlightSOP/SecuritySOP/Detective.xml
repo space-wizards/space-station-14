@@ -1,38 +1,34 @@
 <Document>
-    # Detective
+# Detective
 
-    <GuideEntityEmbed Entity="ToyFigurineDetective" Caption="Detective"/>
+<GuideEntityEmbed Entity="ToyFigurineDetective" Caption="Detective"/>
 
-    1 . Standard Code Green equipment is:
+1 . Standard [color=#00a933]Code Green[/color] equipment is:
+<Box>
+	<GuideEntityEmbed Entity="ClothingHandsGlovesForensic"/>
+	<GuideEntityEmbed Entity="ForensicScanner"/>
+	<GuideEntityEmbed Entity="ForensicPad"/>
+</Box>
+<Box>
+	<GuideEntityEmbed Entity="Stunbaton"/>
+	<GuideEntityEmbed Entity="WeaponRevolverInspector"/>
+</Box>
+<Box>
+	<GuideEntityEmbed Entity="HoloprojectorSecurity"/>
+	<GuideEntityEmbed Entity="FlashlightSeclite"/>
+	<GuideEntityEmbed Entity="RadioHandheldSecurity"/>
+</Box>
+<Box>
+	<GuideEntityEmbed Entity="CombatKnife"/>
+	in
+	<GuideEntityEmbed Entity="ClothingShoesBootsJack"/>
+</Box>
 
-    <Box>
-        <GuideEntityEmbed Entity="WeaponRevolverInspector"/>
-        <GuideEntityEmbed Entity="ClothingHandsGlovesForensic"/>
-        <GuideEntityEmbed Entity="ForensicScanner"/>
-        <GuideEntityEmbed Entity="ForensicPad"/>
-    </Box>
-    <Box>
-        <GuideEntityEmbed Entity="RadioHandheldSecurity"/>
-        <GuideEntityEmbed Entity="Stunbaton"/>
-        <GuideEntityEmbed Entity="HoloprojectorSecurity"/>
-        <GuideEntityEmbed Entity="FlashlightSeclite"/>
-    </Box>
-    <Box>
-        <GuideEntityEmbed Entity="CombatKnife"/>
-        in
-        <GuideEntityEmbed Entity="ClothingShoesBootsJack"/>
-    </Box>
+2. The Detective is permitted to patrol with a Security Officer on all alert levels, but should focus on collecting of evidence and investigations at all times.
 
-    <Box>
-    
-    </Box>
+3. When acting as a Security Officer, the Detective must follow all Security Officer guidelines listed above.
 
-    2. The Detective is permitted to patrol with a Security Officer on all alert levels, but should focus on collecting of evidence and investigations at all times.
+4. The Detective is permitted to wear non-security uniforms for undercover investigations, with approval from the Head of Security. The Detective's security ID should be on their person at all times, however.
 
-    3. When acting as a Security Officer, the Detective must follow all Security Officer guidelines listed above.
-
-    4. The Detective is permitted to wear non-security uniforms for undercover investigations, with approval from the Head of Security. The Detective's Security ID should be on their person at all times, however.
-
-    5. The Detective is permitted to interrogate detained suspects, however any detainment must be subtracted from their overall arrest time. 
-
+5. The Detective is permitted to interrogate detained suspects, however any detainment must be subtracted from their overall arrest time.
 </Document>

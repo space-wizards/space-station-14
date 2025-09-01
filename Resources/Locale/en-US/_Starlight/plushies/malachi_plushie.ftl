@@ -1,0 +1,10 @@
+plushie-malachi-1 = I miss my legs..
+plushie-malachi-2 = I treat my team well.
+plushie-malachi-3 = You want the Deckard? Fuck yeah.
+plushie-malachi-4 = Security is authorized to use brass knuckles today. No mercy, boys!
+plushie-malachi-5 = Halo? Yeah, old friend. Good doc.
+plushie-malachi-6 = Spirit? I haven't heard that name in years.. Bastard.
+plushie-malachi-7 = Barkeep, can I get a Jungle Bird?
+plushie-malachi-8 = Eh, you probably served your sentence already. Get outta here.
+plushie-malachi-9 = Jealousy is a disease bitch, get well soon.
+plushie-malachi-10 = The only thing I'm Fucking is Up.

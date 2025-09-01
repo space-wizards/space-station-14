@@ -34,7 +34,8 @@
 - type: startingGear
   id: CaptainGear
   equipment:
-    #shoes: ClothingShoesBootsLaceup # 🌟Starlight🌟
+    #shoes: ClothingShoesBootsLaceup #Starlight
+    #eyes: ClothingEyesGlassesCommand #Starlight
     gloves: ClothingHandsGlovesCaptain
     id: CaptainPDA
     ears: ClothingHeadsetAltCommand

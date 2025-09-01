@@ -14,3 +14,25 @@
         tableId: CalmPestEventsTable
       - !type:NestedSelector
         tableId: SpicyPestEventsTable
+
+- type: entity
+  parent: BaseGameRule
+  id: SubGamemodesRuleNoChangelings
+  components:
+  - type: SubGamemodes
+    rules:
+    - id: Thief
+      prob: 0.5
+    - id: Vampire
+      prob: 0.25
+    - id: SubWizard
+      prob: 0.05
+      
+- type: entity
+  parent: BaseGameRule
+  id: ThiefGamerule
+  components:
+  - type: SubGamemodes
+    rules:
+    - id: Thief
+      prob: 1

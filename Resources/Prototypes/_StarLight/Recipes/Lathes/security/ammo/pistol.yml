@@ -7,6 +7,46 @@
   materials:
     Plastic: 5
     Steel: 5
+############ MAGAZINES (.25 CASELESS) ############
+
+- type: latheRecipe
+  parent: BaseAmmoRecipe
+  id: MagazinePistolCaselessRifle
+  result: MagazinePistolCaselessRifle
+  materials:
+    Steel: 150
+
+- type: latheRecipe
+  parent: BaseAmmoRecipe
+  id: MagazineCaselessRifleRubber
+  result: MagazineCaselessRifleRubber
+  materials:
+    Steel: 100
+    Plastic: 20
+
+############ BOXES (.25 CASELESS) ############
+
+- type: latheRecipe
+  parent: BaseAmmoBoxRecipe
+  id: MagazineBoxCaselessRifle
+  result: MagazineBoxCaselessRifle
+  materials:
+    Steel: 450
+
+- type: latheRecipe
+  parent: BaseAmmoBoxRecipe
+  id: MagazineBoxCaselessRifleRubber
+  result: MagazineBoxCaselessRifleRubber
+  materials:
+    Steel: 230
+    Plastic: 60
+
+- type: latheRecipe
+  parent: BaseAmmoBoxRecipe
+  id: MagazineBoxCaselessRiflePractice
+  result: MagazineBoxCaselessRiflePractice
+  materials:
+    Steel: 100
 
 ############ MAGAZINES (.35) ############
 
@@ -69,6 +109,34 @@
   materials:
     Steel: 225
     Uranium: 225
+
+- type: latheRecipe
+  parent: BaseAmmoRecipe
+  id: MagazinePistolHighCapacitySP
+  result: MagazinePistolHighCapacitySP
+  materials:
+    Steel: 145
+
+- type: latheRecipe
+  parent: BaseAmmoRecipe
+  id: MagazinePistolHighCapacityFMJ
+  result: MagazinePistolHighCapacityFMJ
+  materials:
+    Steel: 145
+
+- type: latheRecipe
+  parent: BaseAmmoRecipe
+  id: MagazinePistolHighCapacityHP
+  result: MagazinePistolHighCapacityHP
+  materials:
+    Steel: 145
+
+- type: latheRecipe
+  parent: BaseEmptyAmmoRecipe
+  id: MagazinePistolHighCapacityEmpty
+  result: MagazinePistolHighCapacityEmpty
+  materials:
+    Steel: 25
 
 ############ MAGAZINES (.40) ############
 

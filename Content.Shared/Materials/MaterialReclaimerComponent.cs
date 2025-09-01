@@ -1,4 +1,5 @@
-﻿using Content.Shared.Whitelist;
+using Content.Shared.Damage;
+using Content.Shared.Whitelist;
 using JetBrains.Annotations;
 using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
@@ -70,6 +71,20 @@ public sealed partial class MaterialReclaimerComponent : Component
     public string? SolutionContainerId;
 
     /// <summary>
+    /// Can this reclaimer reclaim materials?
+    /// They will be spawned as material stacks.
+    /// </summary>
+    [DataField]
+    public bool ReclaimMaterials = true;
+
+    /// <summary>
+    /// Can this reclaimer reclaim solutions?
+    /// The reclaimed reagents will be stored in a buffer or spilled on the ground if that is full.
+    /// </summary>
+    [DataField]
+    public bool ReclaimSolutions = true;
+
+    /// <summary>
     /// If the reclaimer should attempt to reclaim all solutions or just drainable ones
     /// Difference between Recycler and Industrial Reagent Grinder
     /// </summary>
@@ -123,6 +138,11 @@ public sealed partial class MaterialReclaimerComponent : Component
     /// </remarks>
     [DataField, AutoNetworkedField]
     public int ItemsProcessed;
+    
+    //Starlight
+    [DataField, AutoNetworkedField]
+    public DamageSpecifier EmagDamage = new() { DamageDict = { ["Blunt"] = 350 } };
+    //Starlight
 }
 
 [NetSerializable, Serializable]

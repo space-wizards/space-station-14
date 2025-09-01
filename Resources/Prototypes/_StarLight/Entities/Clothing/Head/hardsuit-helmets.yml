@@ -109,14 +109,16 @@
 
 - type: entity
   parent: [ BaseCentcommContraband, ClothingHeadHelmetHardsuitSyndie ]
-  id: ClothingHeadHelmetHardsuitNTCCConsortium
-  name: nt cc consortium hardsuit helmet
-  description: A protective hardsuit helmet worn by NT-CC Consortium Officers.
+  id: ClothingHeadHelmetHardsuitNTNCConsortium
+  name: nt-nc naval hardsuit helmet
+  description: A protective hardsuit helmet worn by NT-NC Naval Officers.
   components:
   - type: Sprite
-    sprite: _Starlight/Clothing/Head/Hardsuits/ntcc_hardsuit_helmet.rsi
+    sprite: _Starlight/Clothing/Head/Hardsuits/ntnc_hardsuit_helmet.rsi
   - type: Clothing
-    sprite: _Starlight/Clothing/Head/Hardsuits/ntcc_hardsuit_helmet.rsi
+    sprite: _Starlight/Clothing/Head/Hardsuits/ntnc_hardsuit_helmet.rsi
+  - type: Item
+    size: Small
   - type: PointLight
     color: "#addbff"
   - type: Pierceable
@@ -151,8 +153,8 @@
       coefficients:
         Blunt: 0.8
         Slash: 0.8
-        Piercing: 0.8  
-        
+        Piercing: 0.8
+
 # USSP
 - type: entity
   parent: [ ClothingHeadHardsuitBase, ClothingHeadSuitWithLightBase, BaseSovietContraband]
@@ -201,19 +203,19 @@
   - type: Tag
     tags:
     - WhitelistChameleon
-        
+
 ##ntcc-medics
-        
+
 - type: entity
   parent: [ BaseCentcommContraband, ClothingHeadHelmetHardsuitSyndie ]
-  id: ClothingHeadHelmetHardsuitNTCCConsortiumMedic
-  name: nt cc consortium medic hardsuit helmet
-  description: A protective hardsuit helmet worn by NT-CC Consortium medical personnel.
+  id: ClothingHeadHelmetHardsuitNTNCConsortiumMedic
+  name: nt-nc naval medic hardsuit helmet
+  description: A protective hardsuit helmet worn by NT-NC Naval medical personnel.
   components:
   - type: Sprite
-    sprite: _Starlight/Clothing/Head/Hardsuits/ntcc_med_hardsuit_helmet.rsi
+    sprite: _Starlight/Clothing/Head/Hardsuits/ntnc_med_hardsuit_helmet.rsi
   - type: Clothing
-    sprite: _Starlight/Clothing/Head/Hardsuits/ntcc_med_hardsuit_helmet.rsi
+    sprite: _Starlight/Clothing/Head/Hardsuits/ntnc_med_hardsuit_helmet.rsi
   - type: PointLight
     color: "#addbff"
   - type: Pierceable
@@ -224,7 +226,7 @@
         Heat: 0.9
 
 - type: entity
-  parent: ClothingHeadHardsuitBase
+  parent: [ ClothingHeadHardsuitBase, ClothingHeadSuitWithLightBase ]
   id: ClothingHeadHelmetHardsuitLuxmax
   categories: [ HideSpawnMenu ]
   name: QM's luxury maxim hardsuit helmet

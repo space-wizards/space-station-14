@@ -1,0 +1,39 @@
+- type: language
+  id: VoxPidgin
+  icon: LanguageIconVox
+  speech:
+    color: "#aa00aa"
+  obfuscation:
+    !type:SyllableObfuscation
+    minSyllables: 1
+    maxSyllables: 3
+    replacement:
+    - ti
+    - ti
+    - ti
+    - hi
+    - hi
+    - ki
+    - ki
+    - ki
+    - ki
+    - ya
+    - ta
+    - ha
+    - ka
+    - ya
+    - yi
+    - chi
+    - cha
+    - kah
+    - SKRE
+    - AHK
+    - EHK
+    - RAWK
+    - KRA
+    - AAA
+    - EEE
+    - KI
+    - II
+    - KRI
+    - KA

@@ -569,8 +569,8 @@
     job: DeathSquad
 
 - type: entity
-  name: assistant ID card
-  parent: IDCardStandard
+  name: assistant ID card #Starlight de-gretidification
+  parent: [IDCardStandard, BaseChameleon]
   id: AgentIDCard
   suffix: Agent
   components:
@@ -585,9 +585,11 @@
     - state: default
     - state: idassistant
   - type: AgentIDCard
+  - type: UIRequiresLock
   - type: ActivatableUI
     key: enum.AgentIDCardUiKey.Key
     inHandsOnly: true
+    verbText: agent-id-open-ui-verb
   - type: Tag
     tags:
     - DoorBumpOpener

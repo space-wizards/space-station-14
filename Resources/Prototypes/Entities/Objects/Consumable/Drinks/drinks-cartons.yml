@@ -4,6 +4,8 @@
   abstract: true
   suffix: Full
   components:
+  - type: ItemPrice
+    priceCategory: drink
   - type: Openable
     sound:
       collection: bottleOpenSounds #Could use a new sound someday ¯\_(ツ)_/¯
@@ -17,6 +19,8 @@
         maxVol: 50
   - type: PressurizedSolution
     solution: drink
+  - type: ExaminableSolution
+    examinableWhileClosed: false
   - type: Shakeable
   - type: Sprite
     state: icon
@@ -49,6 +53,8 @@
   id: DrinkCartonBaseLargeFull
   abstract: true
   components:
+  - type: ItemPrice
+    priceCategory: drink
   - type: SolutionContainerManager
     solutions:
       drink:
@@ -194,7 +200,7 @@
           Quantity: 100
   - type: Sprite
     sprite: Objects/Consumable/Drinks/oatmilk.rsi
-    
+
 - type: entity
   parent: [DrinkCartonVisualsOpenable, DrinkCartonBaseFull]
   id: DrinkJuiceLemonCarton
@@ -209,7 +215,7 @@
           Quantity: 50
   - type: Sprite
     sprite: Objects/Consumable/Drinks/lemonjuice.rsi
-    
+
 - type: entity
   parent: [DrinkCartonVisualsOpenable, DrinkCartonBaseFull]
   id: DrinkJuicePineappleCarton

@@ -298,6 +298,17 @@
     stock: 1
 
 - type: listing
+  id: VendorPlushieKoni
+  productEntity: PlushieKoni
+  cost:
+    NTCredit: 10
+  categories:
+    - SLPlushies
+  conditions:
+    - !type:ListingLimitedStockCondition
+      stock: 1
+
+- type: listing
   id: VendorPlushieXeno
   productEntity: PlushieXeno
   cost:
@@ -520,16 +531,16 @@
     - !type:ListingLimitedStockCondition
       stock: 1
 
-#- type: listing
-  #id: VendorPlushieRomero
-  #productEntity: PlushieRromero
-  #cost:
-    #NTCredit: 20
-  #categories:
-    #- SLCrew
-  #conditions:
-    #- !type:ListingLimitedStockCondition
-      #stock: 1
+- type: listing
+  id: VendorPlushieRomero
+  productEntity: PlushieRomero
+  cost:
+    NTCredit: 20
+  categories:
+    - SLCrew
+  conditions:
+    - !type:ListingLimitedStockCondition
+      stock: 1
 
 - type: listing
   id: VendorPlushieVanilla
@@ -540,11 +551,121 @@
     - SLCrew
   conditions:
     - !type:ListingLimitedStockCondition
-      stock: 1 
+      stock: 1
 
 - type: listing
   id: VendorPlushiePoley
   productEntity: PlushiePoley
+  cost:
+    NTCredit: 20
+  categories:
+    - SLCrew
+  conditions:
+    - !type:ListingLimitedStockCondition
+      stock: 1
+
+- type: listing
+  id: VendorPlushieGalio
+  productEntity: PlushieGalio
+  cost:
+    NTCredit: 20
+  categories:
+  - SLCrew
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 1
+
+- type: listing
+  id: VendorPlushieRedwoods
+  productEntity: PlushieRedwoods
+  cost:
+    NTCredit: 20
+  categories:
+    - SLCrew
+  conditions:
+    - !type:ListingLimitedStockCondition
+      stock: 1
+ 
+- type: listing
+  id: VendorPlushieDoxesTheCaptain
+  productEntity: PlushieDoxesTheCaptain
+  cost:
+    NTCredit: 20
+  categories:
+    - SLCrew
+  conditions:
+    - !type:ListingLimitedStockCondition
+      stock: 1
+
+- type: listing
+  id: VendorPlushieFixes
+  productEntity: PlushieFixes
+  cost:
+    NTCredit: 20
+  categories:
+    - SLCrew
+  conditions:
+    - !type:ListingLimitedStockCondition
+      stock: 1
+
+- type: listing
+  id: VendorPlushieVirus
+  productEntity: PlushieVirus
+  cost:
+    NTCredit: 20
+  categories:
+    - SLCrew
+  conditions:
+    - !type:ListingLimitedStockCondition
+      stock: 1
+
+- type: listing
+  id: VendorPlushieRhea
+  productEntity: PlushieRhea
+  cost:
+    NTCredit: 20
+  categories:
+    - SLCrew
+  conditions:
+    - !type:ListingLimitedStockCondition
+      stock: 1
+
+- type: listing
+  id: VendorPlushieRemiie
+  productEntity: PlushieRemiie
+  cost:
+    NTCredit: 20
+  categories:
+    - SLCrew
+  conditions:
+    - !type:ListingLimitedStockCondition
+      stock: 1
+
+- type: listing
+  id: VendorPlushieMalachi
+  productEntity: PlushieMalachi
+  cost:
+    NTCredit: 20
+  categories:
+    - SLCrew
+  conditions:
+    - !type:ListingLimitedStockCondition
+      stock: 1
+
+- type: listing
+  id: VendorPlushieBrighteyes
+  productEntity: PlushieBrighteyes
+  cost:
+    NTCredit: 20
+  categories:
+    - SLCrew
+  conditions:
+    - !type:ListingLimitedStockCondition
+      stock: 1
+
+- type: listing
+  id: VendorPlushieKilla
+  productEntity: PlushieKilla
   cost:
     NTCredit: 20
   categories:

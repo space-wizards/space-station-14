@@ -24,11 +24,11 @@
 
 - type: jobIcon
   parent: JobIcon
-  id: JobIconNTCCBlueShield
+  id: JobIconNTNCBlueShield
   icon:
     sprite: /Textures/_Starlight/Interface/Misc/job_icons.rsi
-    state: NTCCBlueShield
-  jobName: job-name-ntccblueshield
+    state: NTNCBlueShield
+  jobName: job-name-ntncblueshield
 
 - type: jobIcon
   parent: JobIcon

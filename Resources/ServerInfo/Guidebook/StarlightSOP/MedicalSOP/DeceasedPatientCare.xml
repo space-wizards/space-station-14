@@ -1,0 +1,22 @@
+<Document>
+# Deceased Patient Care
+
+<GuideEntityEmbed Entity="Morgue" Caption="Deceased Patient Care"/>
+
+1. Patients should be triaged by level of rot.
+
+2. Patients who are in advanced stages of rot should be placed into stasis beds or body bags.
+
+3. Patients who are not being treated should be stored in the morgue until sufficient resources can be diverted to revive them.
+
+4. Patients who become unrevivable or are deemed unrevivable require a [italic]morgue report[/italic] filled out with:
+- 1. Patient name.
+- 2. Patient job.
+- 3. Approximate time of death/DNR approval.
+- 4. Reason for DNR status (only if DNR).
+- 5. Chief Medical Officer's stamp for approval.
+
+5. Should a corpse become unclonable, it must be annotated on the appropriate DNR sheet and then stamped by the Chief Medical Officer.
+
+6. Unclonable corpses, including those whose soul has moved on, may be operated on or placed into the biomass reclaimer.
+</Document>

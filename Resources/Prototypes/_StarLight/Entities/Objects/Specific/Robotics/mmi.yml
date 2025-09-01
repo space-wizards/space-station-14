@@ -1,0 +1,69 @@
+- type: entity
+  parent: BaseItem
+  id: AiInterfaceCube
+  name: AI Interface
+  description: An artificial brain capable of allowing remote AI takeover.
+  components:
+    - type: Sprite
+      sprite: Objects/Specific/Robotics/mmi.rsi
+      layers:
+      - state: posibrain-occupied
+        map: ["base"]
+    - type: Input
+      context: human
+    - type: BlockMovement
+    - type: Examiner
+    - type: BorgBrain
+    - type: IntrinsicRadioReceiver
+    - type: IntrinsicRadioTransmitter
+      channels:
+      - Binary
+    - type: ActiveRadio
+      channels:
+      - Binary
+      - Common
+    - type: NameIdentifier
+      group: PositronicBrain
+    - type: DoAfter
+    - type: Actions
+    - type: TypingIndicator
+      proto: robot
+    - type: Speech
+      speechSounds: Pai
+    - type: MobState
+      allowedStates:
+      - Alive
+    - type: Appearance
+    - type: Tag
+      tags:
+      - CannotSuicide
+    - type: GuideHelp
+      guides:
+      - Cyborgs
+      - Robotics
+    - type: ChangeVoiceInContainer
+      whitelist:
+        components:
+        - SecretStash
+    - type: StationAIShunt # allow shunting into this brain.
+    - type: LanguageSpeaker
+    - type: LanguageKnowledge
+      speaks:
+      - GalacticCommon
+      - Machine
+      understands:
+      - GalacticCommon
+      - Machine
+      - Canilunzt
+      - Sign
+      - Bubblish
+      - Chittin
+      - Draconic
+      - Marish
+      - Moffic
+      - Nekomimetic
+      - Sylvan
+      - Terrum
+      - VoxPidgin
+      - Scratch
+      - SolCommon

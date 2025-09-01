@@ -150,7 +150,7 @@ public abstract partial class SharedSurgerySystem
             while (enumerator.MoveNext(out var con))
             {
                 total++;
-                if (con.ContainedEntity != null)
+                if (con.ContainedEntity != null && !_tag.HasTag(con.ContainedEntity.Value, "SurgeryCompatibleArmor"))
                     items++;
             }
 

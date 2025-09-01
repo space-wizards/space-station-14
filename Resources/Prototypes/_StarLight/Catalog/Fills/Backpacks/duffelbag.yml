@@ -37,8 +37,8 @@
   - type: StorageFill
     contents:
       - id: WeaponPistolDeagle
-      - id: MagazineShotgun
-      - id: MagazineShotgun
+      - id: MagazineMagnum
+      - id: MagazineMagnum
 
 - type: entity
   parent: ClothingBackpackDuffelSyndicateBundle
@@ -52,7 +52,31 @@
     - id: LeftArmCyberMantisBlade
     - id: RightHandCyber
     - id: LeftHandCyber
+    
+- type: entity
+  parent: ClothingBackpackDuffelSyndicateBundle
+  id: ClothingBackpackDuffelSyndicateFilledBullpup
+  name: pitbull bundle
+  description: "Contains the Pitbull Rifle and two additional magazines."
+  components:
+  - type: StorageFill
+    contents:
+    - id: WeaponRiflePitbull
+    - id: MagazineMagnumRifleSP
+      amount: 2
 
+- type: entity
+  parent: ClothingBackpackDuffelSyndicateBundle
+  id: ClothingBackpackDuffelSyndicateFilledUzi
+  name: type u3 uzi bundle
+  description: "Contains a sleek, dangerous uzi, and 2 additional magazines."
+  components:
+  - type: StorageFill
+    contents:
+      - id: WeaponSubMachineGunUzi
+      - id: MagazinePistolSubMachineGunUzi
+      - id: MagazinePistolSubMachineGunUzi
+      
 - type: entity
   parent: ClothingBackpackDuffelSyndicateBundle
   id: ClothingBackpackDuffelSyndicateFilledInfiltration

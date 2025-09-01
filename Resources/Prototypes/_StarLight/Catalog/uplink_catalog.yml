@@ -38,6 +38,20 @@
           - NukeOpsUplink
 
 - type: listing
+  id: UplinkUziBundle
+  name: uplink-uzi-bundle-name
+  description: uplink-uzi-bundle-desc
+  icon: { sprite: /Textures/_Starlight/Objects/Weapons/Guns/SMGs/uzi.rsi, state: icon }
+  productEntity: ClothingBackpackDuffelSyndicateFilledUzi
+  discountCategory: veryRareDiscounts
+  discountDownTo:
+    Telecrystal: 15
+  cost:
+    Telecrystal: 20
+  categories:
+  - UplinkWeaponry
+
+- type: listing
   id: uplinkWeaponShotgunMinotaur
   name: uplink-minotaur-name
   description: uplink-minotaur-desc
@@ -60,6 +74,29 @@
         tags:
           - NukeOpsUplink
 
+- type: listing
+  id: uplinkWeaponRiflePitpull
+  name: uplink-pitbull-bundle-name
+  description: uplink-pitbull-bundle-desc
+  icon:
+    { 
+     sprite: /Textures/_Starlight/Objects/Weapons/Guns/Rifles/pitbull.rsi,
+     state: icon 
+    }
+  productEntity: ClothingBackpackDuffelSyndicateFilledBullpup
+  discountCategory: veryRareDiscounts
+  discountDownTo:
+    Telecrystal: 15
+  cost:
+    Telecrystal: 20
+  categories:
+   - UplinkWeaponry
+  conditions:
+    - !type:StoreWhitelistCondition
+      whitelist:
+        tags:
+          - NukeOpsUplink
+          
 - type: listing
   id: UplinkMarriage
   name: uplink-marriage-axe-name
@@ -121,6 +158,40 @@
   categories:
     - UplinkAmmo
 
+
+# For the Pitbull
+- type: listing
+  id: UplinkMagazineMagnumRifle
+  name: uplink-rifle-magazine-pitbull-name
+  description: uplink-rifle-magazine-pitbull-desc
+  icon: 
+    { 
+     sprite: /Textures/_Starlight/Objects/Weapons/Guns/Ammunition/Magazine/Magnum/magnum_rifle_mag.rsi, 
+     state: mag-1 
+    }
+  productEntity: MagazineMagnumRifleSP
+  cost:
+    Telecrystal: 2
+  categories:
+    - UplinkAmmo
+  conditions:
+    - !type:StoreWhitelistCondition
+      whitelist:
+        tags:
+          - NukeOpsUplink
+
+- type: listing
+  id: UplinkUziMagazine
+  name: uplink-uzi-magazine-name
+  description: uplink-uzi-magazine-desc
+  icon:
+    { sprite: /Textures/_Starlight/Objects/Weapons/Guns/Ammunition/Magazine/SMGs/uzi.rsi, state: base }
+  productEntity: MagazinePistolSubMachineGunUzi
+  cost:
+    Telecrystal: 2
+  categories:
+    - UplinkAmmo
+    
 - type: listing
   id: UplinkShotgunBreachingMagazine
   name: uplink-breaching-magazine-name
@@ -135,6 +206,11 @@
     Telecrystal: 2
   categories:
     - UplinkAmmo
+  conditions:
+    - !type:StoreWhitelistCondition
+      whitelist:
+        tags:
+          - NukeOpsUplink
 
 # Cybernetics
 

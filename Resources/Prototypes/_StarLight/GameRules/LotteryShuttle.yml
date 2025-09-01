@@ -1,0 +1,7 @@
+- type: entity
+  parent: BaseGameRule
+  id: LotteryShuttle
+  components:
+    - type: RuleGrids
+    - type: LoadMapRule
+      gridPath: /Maps/_Starlight/Shuttles/lotteryShuttleAdmeme.yml # no preload cause that leads to a warp point in shuttle space

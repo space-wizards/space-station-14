@@ -1,11 +1,22 @@
 - type: ghostTheme
-  id: hawk
-  name: Hawk
+  id: angel
+  name: angel
   description: Watchful guardian.
   spriteSpecifier:
     sprite:
-      sprite: _Starlight/Mobs/Customization/GhostThemes/hawk.rsi
-      state: hawk
+      sprite: _Starlight/Mobs/Customization/GhostThemes/angel.rsi
+      state: angel
+    color: "#ffffff"
+  requirement: PatronReq
+
+- type: ghostTheme
+  id: ShadowDemon
+  name: Shadow Demon
+  description: Its just observing… right? Right?
+  spriteSpecifier:
+    sprite:
+      sprite: _Starlight/Mobs/Customization/GhostThemes/shadow_demon.rsi
+      state: shadow_demon
     color: "#ffffff"
   requirement: PatronReq
 

@@ -1,0 +1,23 @@
+- type: soundCollection
+  id: CatMothSounds
+  files:
+    # too lazy to check if this is true or not but i feel like putting one of these multiple times makes it more likely to play
+    - /Audio/Voice/Moth/moth_chitter.ogg
+    - /Audio/Voice/Moth/moth_chitter.ogg
+    - /Audio/Voice/Moth/moth_squeak.ogg
+    - /Audio/Voice/Moth/moth_squeak.ogg
+    - /Audio/_Starlight/Voice/Felionoid/cat_trill1.ogg
+    - /Audio/_Starlight/Voice/Felionoid/cat_trill2.ogg
+    - /Audio/_Starlight/Voice/Felionoid/cat_mew1.ogg
+    - /Audio/_Starlight/Voice/Felionoid/cat_mew2.ogg
+    - /Audio/_Starlight/Voice/Felionoid/cat_meow4.ogg
+    - /Audio/_Starlight/Voice/Felionoid/cat_meow5.ogg
+- type: soundCollection
+  id: CatMothScreams
+  files:
+    - /Audio/Voice/Moth/moth_chitter.ogg
+    - /Audio/Voice/Moth/moth_squeak.ogg
+    - /Audio/Voice/Moth/moth_scream.ogg
+    - /Audio/_Starlight/Voice/Felionoid/cat_scream2.ogg
+    - /Audio/_Starlight/Voice/Felionoid/cat_scream4.ogg
+    - /Audio/_Starlight/Voice/Felionoid/cat_hiss3.ogg

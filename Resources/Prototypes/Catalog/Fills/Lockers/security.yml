@@ -46,6 +46,7 @@
       amount: 2
     - id: RemoteSignaller
       amount: 2
+    - id: NetworkConfigurator
     - id: Binoculars
 
 - type: entityTable
@@ -116,7 +117,7 @@
     - id: ClothingEyesGlassesSecurity #Starlight
     - id: WeaponDisabler
     - id: TrackingImplanter
-      amount: 2
+      amount: 1
     - id: ClothingOuterHardsuitBrigmedic
     - id: BoxSterileMask
     - id: ClothingHeadHatBeretBrigmedic
@@ -219,7 +220,7 @@
 - type: entity
   parent: [GunSafeBaseSecure, BaseSecurityContraband]
   id: GunSafePistolMk58
-  name: mk58 safe
+  name: pistol safe
   components:
   - type: EntityTableContainerFill
     containers:
@@ -233,18 +234,22 @@
     - id: WeaponPistolMk58
       amount: 2
     - id: WeaponPistolEnforcer
-      amount: 2
+      amount: 1
+    #- id: WeaponMachinePistolMk64
+      #amount: 1
     - id: MagazinePistolSP
       amount: 4
     - id: MagazinePistolHP
       amount: 2
     - id: MagazinePistolFMJ
       amount: 2
+    #- id: MagazinePistolHighCapacitySP
+      #amount: 2
 
 - type: entity
   parent: [GunSafeBaseSecure, BaseSecurityContraband]
   id: GunSafeRifleLecter
-  name: lecter safe
+  name: rifle safe
   components:
   - type: EntityTableContainerFill
     containers:
@@ -256,7 +261,9 @@
   table: !type:AllSelector
     children:
     - id: WeaponRifleLecter
-      amount: 2
+      amount: 1
+    - id: WeaponRifleLeikha
+      amount: 1
     - id: MagazineRifleHP
       amount: 3
     - id: MagazineRifleSP
@@ -265,7 +272,7 @@
 - type: entity
   parent: [GunSafeBaseSecure, BaseSecurityContraband]
   id: GunSafeSubMachineGunDrozd
-  name: drozd safe
+  name: smg safe
   components:
   - type: EntityTableContainerFill
     containers:
@@ -286,7 +293,7 @@
 - type: entity
   parent: [GunSafeBaseSecure, BaseSecurityContraband]
   id: GunSafeShotgunEnforcer
-  name: enforcer safe
+  name: heavy shotgun safe
   components:
   - type: EntityTableContainerFill
     containers:
@@ -309,7 +316,7 @@
 - type: entity
   parent: [GunSafeBaseSecure, BaseSecurityContraband]
   id: GunSafeShotgunKammerer
-  name: kammerer safe
+  name: shotgun safe
   components:
   - type: EntityTableContainerFill
     containers:
@@ -364,4 +371,4 @@
   table: !type:AllSelector
     children:
     - id: WeaponLaserCarbine
-      amount: 3
+      amount: 4

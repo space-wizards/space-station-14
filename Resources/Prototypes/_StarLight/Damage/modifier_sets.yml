@@ -52,10 +52,16 @@
 
 - type: damageModifierSet
   id: DragonResistances
-  flatReductions:
-    Piercing: 10
   coefficients:
-    Piercing: 0.25
+    Piercing: 0.3
     Slash: 2
-    Heat: 0
+    Heat: 0.5
+    Bloodloss: 0
+
+- type: damageModifierSet
+  id: DragonCarpResistances
+  coefficients:
+    Piercing: 0.5
+    Slash: 2
+    Heat: 0.75
     Bloodloss: 0

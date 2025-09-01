@@ -140,6 +140,7 @@
   - type: IngestionBlocker
   - type: Tag
     tags:
+    - SurgeryCompatibleArmor # Starlight-edit
     - PetWearable
     - WhitelistChameleon
   - type: PhysicalComposition
@@ -185,6 +186,7 @@
   - type: IngestionBlocker
   - type: Tag
     tags:
+    - SurgeryCompatibleArmor # Starlight-edit
     - PetWearable
     - WhitelistChameleon
   - type: PhysicalComposition
@@ -313,6 +315,11 @@
   - type: PhysicalComposition
     materialComposition:
       Plastic: 25
+  - type: StaticPrice
+    price: 5
+  - type: Tag
+    tags:
+    - SurgeryCompatibleArmor # Starlight-edit
 
 - type: entity
   parent: ClothingMaskBase
@@ -370,6 +377,13 @@
   - type: Unremoveable
   - type: AddAccentClothing
     accent: StutteringAccent
+  #region Starlight
+  - type: Tag
+    tags:
+    - ClownMask
+    - WhitelistChameleon
+    - BibleThwackRemovable
+  #endregion Starlight
 
 - type: entity
   parent: [ ClothingMaskGas, BaseSecurityContraband ]

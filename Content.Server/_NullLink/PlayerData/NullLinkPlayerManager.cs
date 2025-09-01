@@ -15,6 +15,7 @@ using Robust.Shared.Enums;
 using Robust.Shared.Network;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
+using Starlight.NullLink;
 using Starlight.NullLink.Event;
 
 namespace Content.Server._NullLink.PlayerData;
@@ -43,10 +44,21 @@ public sealed partial class NullLinkPlayerManager : INullLinkPlayerManager
         InitializeLinking();
         _cfg.OnValueChanged(NullLinkCCVars.RoleReqMentors, UpdateMentors, true);
         _cfg.OnValueChanged(NullLinkCCVars.TitleBuild, UpdateTitleBuilder, true);
+        _actors.OnConnected += OnNullLinkConnected;
+    }
+
+    private void OnNullLinkConnected()
+    {
+        if (!_actors.TryGetServerGrain(out var serverGrain))
+            return;
+
+        foreach (var player in _playerById)
+            _ = serverGrain.PlayerConnected(player.Key);
     }
 
     public void Shutdown()
     {
+        _actors.OnConnected -= OnNullLinkConnected;
         _playerManager.PlayerStatusChanged -= PlayerStatusChanged;
         _playerById.Clear();
     }
@@ -57,6 +69,7 @@ public sealed partial class NullLinkPlayerManager : INullLinkPlayerManager
             return ValueTask.CompletedTask;
         playerData.Roles.Clear();
         playerData.Roles.UnionWith(ev.Roles);
+        playerData.DiscordId = ev.DiscordId;
 
         MentorCheck(ev.Player, playerData);
 
@@ -72,6 +85,7 @@ public sealed partial class NullLinkPlayerManager : INullLinkPlayerManager
             return ValueTask.CompletedTask;
         playerData.Roles.ExceptWith(ev.Remove);
         playerData.Roles.UnionWith(ev.Add);
+        playerData.DiscordId = ev.DiscordId;
 
         MentorCheck(ev.Player, playerData);
 
@@ -92,22 +106,23 @@ public sealed partial class NullLinkPlayerManager : INullLinkPlayerManager
             case SessionStatus.Connecting:
                 break;
             case SessionStatus.Connected:
-                if (_actors.TryGetServerGrain(out var serverGrain))
+                var state = new PlayerData
                 {
-                    var state = new PlayerData
-                    {
-                        Session = e.Session,
-                    };
-                    if (!_playerById.TryAdd(e.Session.UserId, state))
-                        _sawmill.Error($"Failed to add player with UserId {e.Session.UserId} to playerById dictionary.");
-                    _ = serverGrain.PlayerConnected(e.Session.UserId);
-                }
+                    Session = e.Session,
+                };
+                if (!_playerById.TryAdd(e.Session.UserId, state))
+                    _sawmill.Error($"Failed to add player with UserId {e.Session.UserId} to playerById dictionary.");
+                if (_actors.TryGetServerGrain(out var serverGrain))
+                    serverGrain.PlayerConnected(e.Session.UserId)
+                        .FireAndForget(err=> _sawmill.Error($"PlayerConnected dispatch failed: {err}"));
+                SendPlayerRoles(e.Session, state.Roles);
                 break;
             case SessionStatus.InGame:
                 break;
             case SessionStatus.Disconnected:
                 if (_actors.TryGetServerGrain(out var serverGrain2))
-                    _ = serverGrain2.PlayerDisconnected(e.Session.UserId);
+                    serverGrain2.PlayerDisconnected(e.Session.UserId)
+                        .FireAndForget(err => _sawmill.Error($"PlayerDisconnected dispatch failed: {err}"));
                 _playerById.Remove(e.Session.UserId, out _);
                 _mentors.Remove(e.Session.UserId, out _);
                 break;

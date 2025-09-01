@@ -10,12 +10,13 @@
   requirement: StaffRolesReq
 
 - type: ghostTheme
-  id: ShadowDemon
-  name: ShadowDemon
-  description: Careful, the manager is watching.
+  id: SpaceDragonStaffTheme
+  name: Space Dragon
+  description: Giant space fish.
+  colorizeable: true
   spriteSpecifier:
     sprite:
-      sprite: _Starlight/Mobs/Customization/GhostThemes/shadow_demon.rsi
-      state: shadow_demon
+      sprite: Mobs/Aliens/Carps/dragon.rsi
+      state: alive
     color: "#ffffff"
-  requirement: ManagerReq
+  requirement: StaffRolesReq

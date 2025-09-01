@@ -232,5 +232,5 @@
     air:
       volume: 3000
       moles:
-        - 2.051379050
+        - 50.051379050 #starlight, increase to 50 default
       temperature: 293.15

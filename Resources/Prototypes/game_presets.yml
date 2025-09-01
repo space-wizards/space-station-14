@@ -45,7 +45,7 @@
     - Wizard
     - KesslerSyndromeScheduler
     - RampingStationEventScheduler
-    - Changeling
+    - SLChangeling #Starlight
     - SpaceTrafficControlEventScheduler
     - BasicRoundstartVariation
 
@@ -113,6 +113,7 @@
   description: secret-description
   rules:
     - Secret
+    - RailroadingMinor # 🌟Starlight🌟
 
 - type: gamePreset
   id: SecretExtended #For Admin Use: Runs Extended but shows "Secret" in lobby.
@@ -161,11 +162,12 @@
   rules:
   # - DummyNonAntagChance 🌟Starlight🌟
   - Traitor
-  - SubGamemodesRule
+  - SubGamemodesRuleNoChangelings #Starlight
   - BasicStationEventScheduler
   - MeteorSwarmScheduler
   - SpaceTrafficControlEventScheduler
   - BasicRoundstartVariation
+  - RailroadingMinor # 🌟Starlight🌟
 
 - type: gamePreset
   id: Deathmatch
@@ -297,7 +299,7 @@
   description: changeling-gamemode-description
   showInVote: false
   rules:
-    - Changeling
+    - SLChangeling #Starlight
     - SubGamemodesRule
     - BasicStationEventScheduler
     - BasicRoundstartVariation
@@ -307,12 +309,49 @@
   alias:
     - lingtraitor
     - traitorling
-  name: secret-title
-  description: secret-description
+  name: traitorling-title
+  description: traitorling-description
+  showInVote: true #Starlight
+  minPlayers: 50 #Starlight
+  rules:
+    - SLChangeling #Starlight
+    - Traitor
+    - SubGamemodesRuleNoChangelings #Starlight
+    - BasicStationEventScheduler
+    - BasicRoundstartVariation
+
+#Starlight EventLight Gamemode for Event Usage 
+- type: gamePreset
+  id: EventLight
+  alias:
+    - eventlight
+    - eventlite
+    - eventdiet
+  name: eventlight-title
+  description: eventlight-description
   showInVote: false
   rules:
-    - Changeling
-    - Traitor
-    - SubGamemodesRule
+    - SpaceTrafficControlEventScheduler
+    - ThiefGamerule
+    - BasicRoundstartVariation
+
+- type: gamePreset
+  id: ShitStation
+  alias:
+    - shitstation
+    - trashstation
+  name: shitstation-title
+  description: shitstation-description
+  showInVote: true
+  minPlayers: 60
+  rules:
+    - DerelictCyborgSpawn
     - BasicStationEventScheduler
+    - MeteorSwarmMildScheduler
+    - SubGamemodesRule
+    - IonStorm
+    - CockroachMigration
+    - MouseMigration
+    - BasicRoundstartVariation
+    - BasicRoundstartVariation
     - BasicRoundstartVariation

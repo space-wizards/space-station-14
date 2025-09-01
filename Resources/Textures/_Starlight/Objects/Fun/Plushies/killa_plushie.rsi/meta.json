@@ -1,0 +1,14 @@
+{
+  "version": 2,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "IQlvlZero",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "KillaTamalePlush"
+    }
+  ]
+}

@@ -4,19 +4,20 @@
   text: "/ServerInfo/Guidebook/Mobs/Species.xml"
   children:
     - Arachnid
+    - Avali
+    - Cyclorite
     - Diona
     - Dwarf
+    - Felionoid
     - Human
+    - SlimePerson
     - Moth
     - Reptilian
-    - SlimePerson
-    - Vox
-    - Felionoid
-    - Cyclorite
-    - Vulpkanin
     - Resomi
-    - Avali
     - Shadekin
+    - Vox
+    - Vulpkanin
+
 
 - type: guideEntry
   id: Arachnid

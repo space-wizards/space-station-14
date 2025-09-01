@@ -1,16 +1,15 @@
 <Document>
-    #Station Engineer
+# Station Engineer
 
-    <GuideEntityEmbed Entity="ToyFigurineEngineer" Caption="Station Engineer"/>
+<GuideEntityEmbed Entity="ToyFigurineEngineer" Caption="Station Engineer"/>
 
-    1. Station Engineers report directly to the Chief Engineer.
+1. Station Engineers report directly to the Chief Engineer.
 
-    2. Station Engineers must construct the AME and/or solar network before moving onto permanent station engines.
+2. Station Engineers must construct the AME and/or solar network before moving onto permanent station engines.
 
-    3. Station Engineers must establish permanent station power before moving on to other duties, or confirm Atmospheric Technicians have established permanent power.
+3. Station Engineers must establish permanent station power before moving on to other duties or confirm Atmospheric Technicians have established permanent power.
 
-    4. Station Engineers must check the singularity, tesla ball, and power monitoring computer every 30 minutes or less.
+4. Station Engineers must check the singularity, tesla and power monitoring computer every 30 minutes or less.
 
-    5. It is recommended that at least one Station Engineer remain in the department during non-emergencies to assist other crew members and respond to potential department emergencies.
-
+5. It is recommended that at least one Station Engineer remains in the department during non-emergencies to assist other crew members and respond to potential department emergencies.
 </Document> 

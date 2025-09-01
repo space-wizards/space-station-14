@@ -17,7 +17,7 @@ public sealed partial class MechMenu : FancyWindow
     private EntityUid _mech;
 
     public event Action<EntityUid>? OnRemoveButtonPressed;
-    
+
     public event Action<bool>? OnMaintenanceModeChanged;
 
     public MechMenu()
@@ -32,20 +32,20 @@ public sealed partial class MechMenu : FancyWindow
         _mech = uid;
     }
 
-    public void UpdateMechStats()
+    public void UpdateMechStats(int EquipmentCount) // Starlight-edit: Correct equipment update
     {
         if (!_ent.TryGetComponent<MechComponent>(_mech, out var mechComp))
             return;
 
         var integrityPercent = mechComp.Integrity / mechComp.MaxIntegrity;
         IntegrityDisplayBar.Value = integrityPercent.Float();
-        IntegrityDisplay.Text = Loc.GetString("mech-integrity-display", ("amount", (integrityPercent*100).Int()));
+        IntegrityDisplay.Text = Loc.GetString("mech-integrity-display", ("amount", (integrityPercent * 100).Int()));
 
         if (mechComp.MaxEnergy != 0f)
         {
             var energyPercent = mechComp.Energy / mechComp.MaxEnergy;
             EnergyDisplayBar.Value = energyPercent.Float();
-            EnergyDisplay.Text = Loc.GetString("mech-energy-display", ("amount", (energyPercent*100).Int()));
+            EnergyDisplay.Text = Loc.GetString("mech-energy-display", ("amount", (energyPercent * 100).Int()));
         }
         else
         {
@@ -54,18 +54,17 @@ public sealed partial class MechMenu : FancyWindow
         }
 
         ActiveSlotDisplay.Text = Loc.GetString("mech-slot-display",
-            ("amount", mechComp.MaxEquipmentAmount - mechComp.EquipmentContainer.ContainedEntities.Count));
+            ("amount", mechComp.MaxEquipmentAmount - EquipmentCount)); // Starlight-edit: Correct equipment update
     }
 
-    public void UpdateEquipmentView()
+    public void UpdateEquipmentView(List<NetEntity> Equipment) // Starlight-edit: Correct equipment update
     {
-        if (!_ent.TryGetComponent<MechComponent>(_mech, out var mechComp))
-            return;
-
         ActiveEquipmentContainer.Children.Clear();
         PassiveEquipmentContainer.Children.Clear();
-        foreach (var ent in mechComp.EquipmentContainer.ContainedEntities)
+        foreach (var netEntity in Equipment) // Starlight-edit: Correct equipment update
         {
+            var ent = _ent.GetEntity(netEntity); // Starlight-edit: Correct equipment update
+
             if (!_ent.TryGetComponent<MetaDataComponent>(ent, out var metaData))
                 continue;
 
@@ -85,20 +84,22 @@ public sealed partial class MechMenu : FancyWindow
             }
         }
     }
-    
+
     public void UpdateMaintenanceButtons()
     {
         if (!_ent.TryGetComponent<MechComponent>(_mech, out var mechComp))
             return;
 
         MaintenanceOffButton.Disabled = !mechComp.MaintenanceMode;
-        MaintenanceOffButton.OnPressed += _ => {
+        MaintenanceOffButton.OnPressed += _ =>
+        {
             MaintenanceOffButton.Disabled = true;
             MaintenanceOnButton.Disabled = false;
             OnMaintenanceModeChanged?.Invoke(false);
         };
         MaintenanceOnButton.Disabled = mechComp.MaintenanceMode;
-        MaintenanceOnButton.OnPressed += _ => {
+        MaintenanceOnButton.OnPressed += _ =>
+        {
             MaintenanceOffButton.Disabled = false;
             MaintenanceOnButton.Disabled = true;
             OnMaintenanceModeChanged?.Invoke(true);

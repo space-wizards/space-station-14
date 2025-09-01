@@ -404,6 +404,7 @@
   bodyPart: Tail
   markingCategory: Tail
   speciesRestriction: [Vulpkanin]
+  waggingId: VulpTailWagTip
   sprites:
     - sprite: _Starlight/Mobs/Customization/vulpkanin/tail_markings.rsi
       state: vulp
@@ -481,6 +482,7 @@
   bodyPart: Tail
   markingCategory: Tail
   speciesRestriction: [Vulpkanin]
+  waggingId: VulpTailFoxWagTip
   sprites:
     - sprite: _Starlight/Mobs/Customization/vulpkanin/tail_markings.rsi
       state: fox

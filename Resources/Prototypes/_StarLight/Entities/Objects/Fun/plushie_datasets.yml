@@ -45,7 +45,7 @@
   values:
     prefix: plushie-op-
     count: 6
-    
+
 - type: localizedDataset
   id: PlushiesAmali
   values:
@@ -88,11 +88,11 @@
     prefix: plushie-rufia-
     count: 6
 
-#- type: localizedDataset
-  #id: PlushiesRomero
-  #values:
-    #prefix: plushie-romero-
-    #count: 6
+- type: localizedDataset
+  id: PlushiesRomero
+  values:
+    prefix: plushie-romero-
+    count: 6
 
 - type: localizedDataset
   id: PlushiesVanilla
@@ -105,3 +105,51 @@
   values:
     prefix: plushie-poley-
     count: 6
+
+- type: localizedDataset
+  id: PlushiesGalio
+  values:
+    prefix: plushie-galio-
+    count: 7
+
+- type: localizedDataset
+  id: PlushiesRedwoods
+  values:
+    prefix: plushie-redwoods-
+    count: 8
+
+- type: localizedDataset
+  id: PlushiesVirus
+  values:
+    prefix: plushie-virus-
+    count: 5
+
+- type: localizedDataset
+  id: PlushiesRhea
+  values:
+    prefix: plushie-rhea-
+    count: 6
+
+- type: localizedDataset
+  id: PlushiesRemiie
+  values:
+    prefix: plushie-remiie-
+    count: 6
+
+- type: localizedDataset
+  id: PlushiesMalachi
+  values:
+    prefix: plushie-malachi-
+    count: 10
+
+- type: localizedDataset
+  id: PlushiesBrighteyes
+  values:
+    prefix: plushie-brighteyes-
+    count: 10
+
+- type: localizedDataset
+  id: PlushiesKilla
+  values:
+    prefix: plushie-killa-
+    count: 5

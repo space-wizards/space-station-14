@@ -1,0 +1,59 @@
+# Conditions
+
+- type: entity
+  id: MetabolizeCondition
+  categories: [ HideSpawnMenu ]
+  abstract: true
+  components:
+  - type: Conditions
+    conditions:
+    - !type:SubjectSpeciesCondition
+      blacklist:
+      - Abductor
+      - Skeleton
+      
+- type: entity
+  id: MetabolizeDrinkCondition # With bartender blacklist
+  categories: [ HideSpawnMenu ]
+  abstract: true
+  components:
+  - type: Conditions
+    conditions:
+    - !type:SubjectMindJobCondition
+      passIfJobEmpty: true
+      blacklist:
+      - Bartender
+    - !type:SubjectSpeciesCondition
+      blacklist:
+      - Abductor
+      - Skeleton
+
+# Example(Smokeable) Prototype
+
+- type: entity
+  id: RRCardMetabolizeNicotine
+  parent: MetabolizeCondition
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: RailroadSpawnFlow
+    count: 
+      min: 1
+      max: 5
+  - type: RailroadCard
+    title: rr-smoke
+    icon: ""
+    iconColor: '#9FED5896'
+    color: '#515151'
+    image: /Textures/_Starlight/Railroading/smoking.png
+    description: rr-smoking-desc
+  - type: RailroadMetabolizeTask
+    reagents:
+    - ReagentId: Nicotine
+      Quantity: 100
+    icon:
+      sprite: Objects/Consumable/Smokeables/Cigars/cigar-gold.rsi
+      state: lit-icon
+  - type: RailroadDonationReward
+    amount: 
+      min: 10
+      max: 25

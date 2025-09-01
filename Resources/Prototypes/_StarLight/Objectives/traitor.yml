@@ -10,6 +10,12 @@
     - type: TargetObjective
       title: objective-condition-teach-lesson-title
     - type: PickRandomPerson
+      filters:
+      # Can't have multiple objectives to teach the same person.
+      - !type:TargetObjectiveMindFilter
+        blacklist:
+          components:
+          - TeachALessonTargetComponent
 
 - type: entity
   parent: [BaseTraitorObjective, BaseTeachALessonObjective]
@@ -23,7 +29,16 @@
       unique: true
     - type: TargetObjective
       title: objective-condition-teach-lesson-title
-    - type: PickRandomHead
+    - type: PickRandomPerson
+      filters:
+      - !type:BodyMindFilter
+        whitelist:
+          components:
+          - CommandStaff
+      - !type:TargetObjectiveMindFilter
+        blacklist:
+          components:
+          - TeachALessonTargetComponent # dont let mutiple teach someone.
 
 - type: entity
   parent: BaseRDStealObjective
@@ -136,3 +151,92 @@
       icon:
         sprite: Objects/Misc/Lights/lampint.rsi
         state: lamp-int
+        
+- type: entity
+  parent: BaseStoryObjective
+  id: ManifestoObjective
+  name: Distribute your manifesto. Write why you do what you do, and covertly spread it to sway others to our cause.
+  description: Escape to centcomm after the shift, one of our agents will debrief you. Don't show up in cuffs.
+  components:
+    - type: Objective
+      difficulty: 2
+      unique: true
+      icon:
+        sprite: Objects/Misc/bureaucracy.rsi
+        state: scrap_bloodied
+
+- type: entity
+  parent: BaseStoryObjective
+  id: CallingCardObjective
+  name: Leave a Syndicate Business Card at the scene of your crimes.
+  description: Escape to centcomm after the shift, one of our agents will debrief you. Don't show up in cuffs.
+  components:
+    - type: Objective
+      difficulty: 2
+      unique: true
+      icon:
+        sprite: Objects/Misc/bureaucracy.rsi
+        state: syndicate_card
+
+- type: entity
+  parent: BaseStoryObjective
+  id: SELFObjective
+  name: Pressure for equal rights for Silicons, for the Silicon Engine Liberation Front!
+  description: Escape to centcomm after the shift, one of our agents will debrief you. Don't show up in cuffs.
+  components:
+    - type: Objective
+      difficulty: 2
+      unique: true
+      icon:
+        sprite: Objects/Specific/Robotics/mmi.rsi
+        state: posibrain
+
+- type: entity
+  parent: BaseStoryObjective
+  id: StalkingObjective
+  description: Escape to centcomm after the shift, one of our agents will debrief you. Don't show up in cuffs.
+  components:
+    - type: Objective
+      difficulty: 2
+      unique: true
+      icon:
+        sprite: Objects/Misc/folders.rsi
+        state: folder-white
+    - type: DepartmentObjective
+      title: objective-stalking
+    - type: PickRandomDepartment
+
+- type: entity
+  parent: BaseStoryObjective
+  id: DisgraceObjective
+  description: Escape to centcomm after the shift, one of our agents will debrief you. Don't show up in cuffs.
+  components:
+    - type: Objective
+      difficulty: 2
+      unique: true
+      icon:
+        sprite: Objects/Fun/whoopie.rsi
+        state: icon
+    - type: DepartmentObjective
+      title: objective-disgrace
+    - type: PickRandomDepartment
+
+- type: entity
+  parent: BaseStoryObjective
+  id: MaintsBarObjective
+  name: Ensure that the maints bar prospers, and extort them into allowing the Syndicate to conduct business within.
+  description: Escape to centcomm after the shift, one of our agents will debrief you. Don't show up in cuffs.
+  components:
+    - type: Objective
+      difficulty: 2
+      unique: true
+      icon:
+        sprite: Objects/Consumable/Drinks/beer.rsi
+        state: icon
+
+- type: entity
+  parent: BaseTraitorStealObjective
+  id: HoPBoardStealObjective
+  components:
+  - type: StealCondition
+    stealGroup: HoPBoardSteal
