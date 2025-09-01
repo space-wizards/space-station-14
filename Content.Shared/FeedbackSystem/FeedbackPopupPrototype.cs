@@ -32,6 +32,13 @@ public sealed partial class FeedbackPopupPrototype : IPrototype
     public string Description = "";
 
     /// <summary>
+    /// The kind of response the player should expect to give; good examples are "Survey", "Discord Channel", "Feedback Thread" etc.
+    /// Will be listed near the "Open Link" button; rich text is not allowed.
+    /// </summary>
+    [DataField]
+    public string ResponseType = "";
+
+    /// <summary>
     /// A link leading to where you want players to give feedback. Discord channel, form etc...
     /// </summary>
     [DataField]

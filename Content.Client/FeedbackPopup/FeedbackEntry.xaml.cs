@@ -25,6 +25,7 @@ public sealed partial class FeedbackEntry : Control
         // Title
         TitleLabel.Text = _feedbackpopup.Title;
         DescriptionLabel.Text = _feedbackpopup.Description;
+        TypeLabel.Text = _feedbackpopup.ResponseType;
 
         // link button
         if (!string.IsNullOrEmpty(_feedbackpopup.ResponseLink))

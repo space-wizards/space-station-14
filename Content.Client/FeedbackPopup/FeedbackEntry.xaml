@@ -5,7 +5,7 @@
 
         <!-- Title -->
         <PanelContainer StyleClasses="DefaultBorderBottom">
-            <RichTextLabel Name="TitleLabel" Margin="12 0 6 0" />
+            <RichTextLabel Name="TitleLabel" Margin="12 6 6 6" />
         </PanelContainer>
 
         <!-- Description -->
@@ -14,8 +14,7 @@
         <!-- Footer -->
         <PanelContainer StyleClasses="DefaultBorderTop">
             <BoxContainer>
-                <Label FontColorOverride="#b1b1b2" StyleClasses="LabelSmall" Name="TypeLabel"
-                       Text="{Loc feedbackpopup-control-ui-type }" Margin="14 6 6 6" />
+                <Label FontColorOverride="#b1b1b2" StyleClasses="LabelSmall" Name="TypeLabel" Margin="14 6 6 6" />
                 <Button Name="LinkButton" Text="{Loc feedbackpopup-control-button-text}" MinWidth="80"
                         Margin="8 6 14 6" HorizontalExpand="True" HorizontalAlignment="Right" />
             </BoxContainer>

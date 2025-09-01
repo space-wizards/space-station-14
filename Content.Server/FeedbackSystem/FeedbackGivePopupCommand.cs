@@ -7,13 +7,16 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Server.FeedbackSystem;
 
+/// <summary>
+/// Give a session a specific feedback pop-up.
+/// </summary>
 [AdminCommand(AdminFlags.Server)]
-public sealed class FeedbackPopupCommand : LocalizedEntityCommands
+public sealed class FeedbackGivePopupCommand : LocalizedEntityCommands
 {
     [Dependency] private readonly IPrototypeManager _proto = default!;
     [Dependency] private readonly SharedFeedbackSystem _feedback = default!;
 
-    public override string Command => Loc.GetString("feedbackpopup-command-name");
+    public override string Command => Loc.GetString("feedbackpopup-give-command-name");
 
     public override void Execute(IConsoleShell shell, string argStr, string[] args)
     {
