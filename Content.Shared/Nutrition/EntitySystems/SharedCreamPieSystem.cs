@@ -31,7 +31,7 @@ namespace Content.Shared.Nutrition.EntitySystems
             SplattedCreamPie(creamPie);
         }
 
-        protected virtual void SplattedCreamPie(Entity<CreamPieComponent, EdibleComponent?> entity){ }
+        protected virtual void SplattedCreamPie(Entity<CreamPieComponent, EdibleComponent?> entity) { }
 
         public void SetCreamPied(EntityUid uid, CreamPiedComponent creamPied, bool value)
         {
