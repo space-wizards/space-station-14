@@ -404,6 +404,10 @@
   whitelist:
     components:
     - Respirator
+  blacklist:
+    tags:
+    - SiliconEmotes
+    - SiliconIPSIPCEmotes
   chatMessages: ["chat-emote-msg-gasp"]
   chatTriggers:
    - gasp
