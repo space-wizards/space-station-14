@@ -385,6 +385,7 @@
       - Warden
       - HeadOfSecurity
       - Captain
+      - Detective
   - type: Pierceable
     level: Metal
   - type: Armor
