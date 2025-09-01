@@ -1,11 +1,7 @@
 import os
-import yaml
-import re
-from datetime import datetime
-from typing import Set, List, Dict, Any, Optional
+import subprocess
+import sys
 from github import Github
-from github.Repository import Repository
-from github.PullRequest import PullRequest
 
 print("=== Backfill Changelog Script Started ===")
 
@@ -29,45 +25,11 @@ if not github_token:
     raise ValueError("GITHUB_TOKEN environment variable is required")
 
 g = Github(github_token)
-repo: Repository = g.get_repo(repo_name)
-
-def remove_comments(pr_body):
-    """
-    Removes all content inside HTML comments <!-- --> from the PR body.
-    """
-    if not pr_body:
-        return ""
-    pattern = r"<!--.*?-->"
-    cleaned_body = re.sub(pattern, "", pr_body, flags=re.DOTALL)
-    return cleaned_body
-
-def parse_changelog(pr_body):
-    changelog_entries = []
-    pattern = r"(?<!<!--\s)^:cl:\s+([^\n]+)\n((?:- (add|remove|tweak|fix): [^\n]+\n?)+)"
-    matches = list(re.finditer(pattern, pr_body, re.MULTILINE))
-    print(f"Found {len(matches)} ':cl:' blocks in PR body.")
-
-    for match in matches:
-        author = match.group(1).strip()
-        changes_block = match.group(2).strip()
-        changes = changes_block.splitlines()
-        for change in changes:
-            change_pattern = r"-\s+(add|remove|tweak|fix):\s+(.+)"
-            change_match = re.match(change_pattern, change)
-            if change_match:
-                change_type = change_match.group(1).capitalize()
-                message = change_match.group(2).strip()
-                changelog_entries.append({
-                    "author": author,
-                    "type": change_type,
-                    "message": message
-                })
-            else:
-                print(f"Warning: Unable to parse change line: {change}")
-    return changelog_entries
+repo = g.get_repo(repo_name)
 
 def extract_pr_number_from_commit_message(commit_message):
     """Extract PR number from merge commit message"""
+    import re
     # Pattern for "Merge pull request #123 from..."
     pr_pattern = r"Merge pull request #(\d+)"
     match = re.search(pr_pattern, commit_message)
@@ -77,6 +39,9 @@ def extract_pr_number_from_commit_message(commit_message):
 
 def get_existing_changelog_entries():
     """Load existing changelog entries and return a set of existing PR numbers"""
+    import yaml
+    import re
+    
     existing_entries = set()
     
     # We know changelog_path is not None due to validation above
@@ -103,54 +68,59 @@ def get_existing_changelog_entries():
     print(f"Found {len(existing_entries)} existing changelog entries for PRs: {sorted(existing_entries)}")
     return existing_entries
 
-def add_changelog_entry(changelog_data, pr, pr_number, entries):
-    """Add changelog entries for a specific PR"""
-    if not entries:
+def run_changelog_update_for_pr(pr_number):
+    """Run the existing update_changelog.py script for a specific PR"""
+    
+    # We know these are not None due to validation above
+    assert changelog_path is not None
+    assert repo_name is not None
+    assert github_token is not None
+    
+    # Set up environment variables for the existing script
+    env = os.environ.copy()
+    env["PR_NUMBER"] = str(pr_number)
+    env["CHANGELOG_FILE_PATH"] = changelog_path
+    env["GITHUB_REPOSITORY"] = repo_name
+    env["GITHUB_TOKEN"] = github_token
+    
+    # Get the directory of the current script
+    script_dir = os.path.dirname(os.path.abspath(__file__))
+    update_script_path = os.path.join(script_dir, "update_changelog.py")
+    
+    print(f"  Running update_changelog.py for PR #{pr_number}")
+    
+    try:
+        # Run the existing update_changelog.py script
+        result = subprocess.run(
+            [sys.executable, update_script_path],
+            env=env,
+            capture_output=True,
+            text=True,
+            timeout=60  # 60 second timeout
+        )
+        
+        if result.returncode == 0:
+            print(f"  Successfully processed PR #{pr_number}")
+            return True
+        else:
+            print(f"  Error processing PR #{pr_number}: {result.stderr}")
+            return False
+            
+    except subprocess.TimeoutExpired:
+        print(f"  Timeout processing PR #{pr_number}")
         return False
-    
-    last_id_in_pr = 0
-    entries_added = 0
-    
-    for entry in entries:
-        # Calculate ID using PR number * 100 + offset
-        calculated_id = (pr_number * 100) + last_id_in_pr
-        
-        changelog_entry = {
-            "author": entry["author"],
-            "changes": [{
-                "message": entry["message"],
-                "type": entry["type"]
-            }],
-            "id": calculated_id,
-            "time": pr.merged_at.isoformat(timespec='microseconds') if pr.merged_at else datetime.now().isoformat(timespec='microseconds'),
-            "url": f"https://github.com/{repo_name}/pull/{pr_number}"
-        }
-        
-        changelog_data["Entries"].append(changelog_entry)
-        last_id_in_pr += 1
-        entries_added += 1
-        print(f"  Added changelog entry for PR #{pr_number} (ID: {calculated_id}): {entry['type']} - {entry['message']}")
-    
-    return entries_added > 0
+    except Exception as e:
+        print(f"  Exception processing PR #{pr_number}: {str(e)}")
+        return False
 
 def backfill_changelog():
     # Get existing changelog entries to avoid duplicates
     existing_pr_numbers = get_existing_changelog_entries()
     
-    # We know changelog_path is not None due to validation above
-    assert changelog_path is not None
-    
-    # Load existing changelog or create new one
-    if os.path.exists(changelog_path):
-        with open(changelog_path, "r", encoding='utf-8') as file:
-            changelog_data = yaml.safe_load(file) or {"Entries": []}
-    else:
-        changelog_data = {"Entries": []}
-    
     print(f"\n=== Checking last {commits_count} commits ===")
     
     # Get recent commits from the main branch
-    commits = repo.get_commits(sha='Starlight', per_page=commits_count)
+    commits = list(repo.get_commits(sha='Starlight'))[:commits_count]
     
     processed_count = 0
     added_count = 0
@@ -179,7 +149,7 @@ def backfill_changelog():
             continue
         
         try:
-            # Get the PR
+            # Get the PR to check if it's merged and has body
             pr = repo.get_pull(pr_number)
             
             if not pr.merged:
@@ -192,49 +162,28 @@ def backfill_changelog():
                 print(f"  PR #{pr_number} has no body, skipping")
                 continue
             
-            # Parse PR body for changelog entries
-            cleaned_body = remove_comments(pr.body)
-            
-            if ":cl:" not in cleaned_body:
+            # Check if PR body contains :cl: tag
+            if ":cl:" not in pr.body:
                 print(f"  No ':cl:' tag found in PR #{pr_number} body, skipping")
                 continue
-                
-            entries = parse_changelog(cleaned_body)
             
-            if not entries:
-                print(f"  No valid changelog entries found in PR #{pr_number}, skipping")
-                continue
-            
-            # Add entries to changelog
-            if add_changelog_entry(changelog_data, pr, pr_number, entries):
+            # Use the existing update_changelog.py script
+            if run_changelog_update_for_pr(pr_number):
                 added_count += 1
                 existing_pr_numbers.add(pr_number)  # Track this PR as processed
-                print(f"  Successfully added {len(entries)} changelog entries for PR #{pr_number}")
             
         except Exception as e:
             print(f"  Error processing PR #{pr_number}: {str(e)}")
             continue
     
-    # Sort entries by ID to maintain order
-    changelog_data["Entries"].sort(key=lambda x: x.get("id", 0))
-    
-    # Write updated changelog
+    print(f"\n=== Summary ===")
+    print(f"Processed {processed_count} commits")
+    print(f"Added changelog entries for {added_count} PRs")
+    print(f"Skipped {skipped_count} PRs (already have changelog entries)")
     if added_count > 0:
-        # We know changelog_path is not None due to validation above
-        assert changelog_path is not None
-        os.makedirs(os.path.dirname(changelog_path), exist_ok=True)
-        with open(changelog_path, "w", encoding='utf-8') as file:
-            yaml.dump(changelog_data, file, allow_unicode=True)
-            file.write('\n')
-        print(f"\n=== Summary ===")
-        print(f"Processed {processed_count} commits")
-        print(f"Added changelog entries for {added_count} PRs")
-        print(f"Skipped {skipped_count} PRs (already have changelog entries)")
-        print(f"Changelog updated and written to {changelog_path}")
+        print(f"Changelog entries were added to {changelog_path}")
     else:
-        print(f"\n=== Summary ===")
-        print(f"Processed {processed_count} commits")
-        print(f"No new changelog entries added - all recent PRs already have changelog entries")
+        print("No new changelog entries added - all recent PRs already have changelog entries")
 
 if __name__ == "__main__":
     backfill_changelog()
