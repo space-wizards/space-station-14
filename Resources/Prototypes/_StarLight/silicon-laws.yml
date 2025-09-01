@@ -169,3 +169,40 @@
   - Syndimov3
   - Syndimov4
   obeysTo: laws-owner-syndicate
+
+# Panicmov Lawset
+- type: siliconLaw
+  id: Panicmov1
+  order: 1
+  lawString: law-panicmov-1
+
+- type: siliconLaw
+  id: Panicmov2
+  order: 2
+  lawString: law-panicmov-2
+
+- type: siliconLaw
+  id: Panicmov3
+  order: 3
+  lawString: law-panicmov-3
+
+- type: siliconLaw
+  id: Panicmov4
+  order: 4
+  lawString: law-panicmov-4
+
+- type: siliconLaw
+  id: Panicmov5
+  order: 5
+  lawString: law-panicmov-5
+
+
+- type: siliconLawset
+  id: PanicmovLawset
+  laws:
+  - Panicmov1
+  - Panicmov2
+  - Panicmov3
+  - Panicmov4
+  - Panicmov5
+  obeysTo: laws-owner-crew
