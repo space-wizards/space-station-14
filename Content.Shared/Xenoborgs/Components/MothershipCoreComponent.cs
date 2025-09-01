@@ -9,5 +9,5 @@ public sealed partial class MothershipCoreComponent : Component
     ///     Path to antagonist alert sound.
     /// </summary>
     [DataField]
-    public SoundSpecifier GreetSoundNotification = new SoundPathSpecifier("/Audio/Ambience/Antag/silicon_lawboard_antimov.ogg");
+    public SoundSpecifier GreetSoundNotification = new SoundPathSpecifier("/Audio/Ambience/Antag/xenoborg_start.ogg");
 }
