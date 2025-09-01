@@ -322,8 +322,15 @@
     noRot: true
     sprite: Objects/Specific/Mech/mecha.rsi
     layers:
-    - map: [ "enum.MechVisualLayers.Base" ]
-      state: clarke
+    - state: clarke
+      map: ["movement", "enum.MechVisualLayers.Base"]
+  - type: SpriteMovement
+    movementLayers:
+      movement:
+        state: clarke-moving
+    noMovementLayers:
+      movement:
+        state: clarke
   - type: FootstepModifier
     footstepSoundCollection:
       path: /Audio/Mecha/sound_mecha_powerloader_step.ogg

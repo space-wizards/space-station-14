@@ -431,6 +431,10 @@
     },
     {
       "name": "clarke",
+      "directions": 4
+    },
+    {
+      "name": "clarke-moving",
       "directions": 4,
       "delays": [
         [
