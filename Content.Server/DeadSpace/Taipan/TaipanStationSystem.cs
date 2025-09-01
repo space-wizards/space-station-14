@@ -21,7 +21,9 @@ public sealed class TaipanStationSystem : EntitySystem
     [Dependency] private readonly GameTicker _gameTicker = default!;
     [Dependency] private readonly MapSystem _map = default!;
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
-    [Dependency] private readonly MetaDataSystem _metaDataSystem = default!;
+
+    private EntityUid _stationGrid = EntityUid.Invalid;
+    private MapId _mapId = MapId.Nullspace;
 
     public override void Initialize()
     {
@@ -44,12 +46,14 @@ public sealed class TaipanStationSystem : EntitySystem
             var source = EntityQuery<StationTaipanLoaderComponent>().FirstOrDefault();
             if (source == null)
                 return;
-            EnsureTaipan((source.Owner, source), true);
+            EnsureTaipan((source.Owner, source));
         }
         else
         {
             if (_mapId == MapId.Nullspace || !_map.MapExists(_mapId))
                 return;
+
+            Del(_stationGrid);
             _map.DeleteMap(_mapId);
 
             _mapId = MapId.Nullspace;
@@ -57,24 +61,22 @@ public sealed class TaipanStationSystem : EntitySystem
         }
     }
 
-    private EntityUid _stationGrid = EntityUid.Invalid;
-    private MapId _mapId = MapId.Nullspace;
-
     private void OnCleanup(RoundRestartCleanupEvent ev)
     {
         Log.Info("OnCleanup");
-        QueueDel(_stationGrid);
-        _stationGrid = EntityUid.Invalid;
 
-        if (_map.MapExists(_mapId))
-            _map.DeleteMap(_mapId);
+        if (_mapId == MapId.Nullspace || !_map.MapExists(_mapId))
+            return;
+
+        Del(_stationGrid);
+        _map.DeleteMap(_mapId);
 
         _mapId = MapId.Nullspace;
+        _stationGrid = EntityUid.Invalid;
     }
 
-    public void EnsureTaipan(Entity<StationTaipanLoaderComponent> source, bool force = false)
+    public void EnsureTaipan(Entity<StationTaipanLoaderComponent> source)
     {
-        // if (!force && (_gameTicker.RunLevel != GameRunLevel.InRound || !_cfg.GetCVar(CCCCVars.TaipanEnabled)))
         if (!_cfg.GetCVar(CCCCVars.TaipanEnabled))
             return;
 
