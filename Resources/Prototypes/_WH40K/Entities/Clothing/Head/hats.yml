@@ -27,4 +27,33 @@
   - type: HideLayerClothing
     slots:
     - Hair
-    
+
+- type: entity
+  parent: ClothingHeadBase
+  id: ClothingHeadSgt
+  name: Кепка Сержанта
+  description: Самая обыкновенная кепка, принадлежащая кому-то из сержантов.
+  suffix: WH40K, Гвардия
+  components:
+  - type: Sprite
+    sprite: _WH40K/Clothing/Head/Hats/sgt.rsi
+  - type: Clothing
+    sprite: _WH40K/Clothing/Head/Hats/sgt.rsi
+  - type: HideLayerClothing
+    slots:
+    - Hair
+
+- type: entity
+  parent: ClothingHeadBase
+  id: ClothingHeadSgt
+  name: Берет
+  description: Берет Гвардейца, что принадлежит ветерану или офицеру
+  suffix: WH40K, Гвардия
+  components:
+  - type: Sprite
+    sprite: _WH40K/Clothing/Head/Hats/beret.rsi
+  - type: Clothing
+    sprite: _WH40K/Clothing/Head/Hats/beret.rsi
+  - type: HideLayerClothing
+    slots:
+    - Hair  

@@ -69,3 +69,27 @@
     sprite: _WH40K/Clothing/Uniforms/Jumpsuit/heresy.rsi
   - type: Clothing
     sprite: _WH40K/Clothing/Uniforms/Jumpsuit/heresy.rsi
+
+- type: entity
+  parent: UnsensoredClothingUniformBase
+  id: ClothingUniformJumpsuitOfficer
+  name: Униформа офицера
+  description: Обычная униформа офицера Имперской Гвардии
+  suffix: WH40K, Гвардия
+  components:
+  - type: Sprite
+    sprite: _WH40K/Clothing/Uniforms/Jumpsuit/officer.rsi
+  - type: Clothing
+    sprite: _WH40K/Clothing/Uniforms/Jumpsuit/officer.rsi
+
+- type: entity
+  parent: UnsensoredClothingUniformBase
+  id: ClothingUniformJumpsuitColonel
+  name: Униформа полковника
+  description: Обычная униформа полковника Имперской Гвардии
+  suffix: WH40K, Гвардия
+  components:
+  - type: Sprite
+    sprite: _WH40K/Clothing/Uniforms/Jumpsuit/colonel.rsi
+  - type: Clothing
+    sprite: _WH40K/Clothing/Uniforms/Jumpsuit/colonel.rsi

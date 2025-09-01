@@ -1,0 +1,23 @@
+- type: entity
+  parent: ClothingOuterArmorBasic
+  id: ClothingOuterArmorFlakVest
+  name: Панцирный нагрудник
+  description: Высококачественный позолоченый панцирный нагрудник офицера, покажет вашим подчинённым статус и власть, а врагу - в кого стрелять.
+  suffix: WH40K, Гвардия
+  components:
+  - type: Sprite
+    sprite: _WH40K/Clothing/OuterClothing/Armor/flakvestgen.rsi
+  - type: Clothing
+    sprite: _WH40K/Clothing/OuterClothing/Armor/flakvestgen.rsi
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.6
+        Slash: 0.6
+        Piercing: 0.7
+        Heat: 0.8
+  - type: ExplosionResistance
+    damageCoefficient: 0.6
+  - type: ClothingSpeedModifier
+    walkModifier: 0.95
+    sprintModifier: 0.95

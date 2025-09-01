@@ -1,0 +1,37 @@
+- type: entity
+  parent: [ClothingOuterBaseLarge, AllowSuitStorageClothing]
+  id: ClothingOuterArmorCommissar
+  name: Шинель комиссара
+  description: Комиссарская шинель - вот он, символ НАСТОЯЩЕЙ власти на поле боя.
+  suffix: WH40K
+  components:
+  - type: Sprite
+    sprite: _WH40K/Clothing/OuterClothing/Armor/commissar.rsi
+  - type: Clothing
+    sprite: _WH40K/Clothing/OuterClothing/Armor/commissar.rsi
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.5
+        Slash: 0.5
+        Piercing: 0.55
+        Heat: 0.55
+        Caustic: 0.9
+  - type: ClothingSpeedModifier
+    walkModifier: 1.0
+    sprintModifier: 1.0
+  - type: HeldSpeedModifier
+  - type: ExplosionResistance
+    damageCoefficient: 0.7
+  - type: GroupExamine
+
+- type: entity
+  parent: ClothingOuterArmorCommissar
+  id: ClothingOuterArmorOfficer
+  name: Шинель Офицер
+  description: Офицерская шинель - вот он, символ власти на поле боя.
+  components:
+  - type: Sprite
+    sprite: _WH40K/Clothing/OuterClothing/Armor/officrercoat.rsi
+  - type: Clothing
+    sprite: _WH40K/Clothing/OuterClothing/Armor/officrercoat.rsi

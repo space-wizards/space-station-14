@@ -1,0 +1,34 @@
+- type: entity
+  parent: ClothingOuterArmorBasic
+  id: ClothingOuterArmorFlakVest
+  name: Флак-жилет
+  description: Стандартный противоосколочный жилет Имперского Гвардейца, Кадийского образца. Защитит от осколков, слабых лазеров и мелкокалиберных пуль.
+  suffix: WH40K, Гвардия
+  components:
+  - type: Sprite
+    sprite: _WH40K/Clothing/OuterClothing/Armor/flakvest.rsi
+  - type: Clothing
+    sprite: _WH40K/Clothing/OuterClothing/Armor/flakvest.rsi
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.6
+        Slash: 0.6
+        Piercing: 0.7
+        Heat: 0.8
+  - type: ExplosionResistance
+    damageCoefficient: 0.6
+  - type: ClothingSpeedModifier
+    walkModifier: 0.95
+    sprintModifier: 0.95
+
+- type: entity
+  parent: ClothingOuterArmorFlakVest
+  id: ClothingOuterArmorFlakVestMed
+  name: Флак-жилет медика
+  description: Стандартный противоосколочный жилет Имперского Гвардейца с пометкой медика на плече, Кадийского образца. Защитит от осколков, слабых лазеров и мелкокалиберных пуль. 
+  components:
+  - type: Sprite
+    sprite: _WH40K/Clothing/OuterClothing/Armor/medflakvest.rsi
+  - type: Clothing
+    sprite: _WH40K/Clothing/OuterClothing/Armor/medflakvest.rsi

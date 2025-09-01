@@ -54,3 +54,16 @@
     sprite: _WH40K/Clothing/Hands/Gloves/black_heresy.rsi
   - type: Clothing
     sprite: _WH40K/Clothing/Hands/Gloves/black_heresy.rsi
+
+- type: entity
+  parent: ClothingHandsGlovesColorBlack
+  id: ClothingHandsGlovesCombatColonel
+  name: Перчатки Полковника
+  description: филлер
+  suffix: WH40K, Гвардия
+  components:
+  - type: Sprite
+    sprite: _WH40K/Clothing/Hands/Gloves/colonelshand.rsi
+  - type: Clothing
+    sprite: _WH40K/Clothing/Hands/Gloves/colonelshand.rsi
+  - type: Insulated

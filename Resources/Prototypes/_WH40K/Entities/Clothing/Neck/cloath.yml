@@ -1,0 +1,19 @@
+- type: entity
+  parent: ClothingNeckBase
+  id: ClothingNeckGoret
+  name: Горжет
+  description: Горжет офицера
+  suffix: WH40K,Гвардия
+  components:
+  - type: Sprite
+    sprite: _WH40K/Clothing/Neck/Сloaks/gorjet.
+
+- type: entity
+  parent: ClothingNeckBase
+  id: ClothingNeckColonekcloak
+  name: Плащ Полковника
+  description: Плащ полковника Имперской Гвардии
+  suffix: WH40K,Гвардия
+  components:
+  - type: Sprite
+    sprite: _WH40K/Clothing/Neck/Сloaks/colonelcloak.rsi
