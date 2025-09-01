@@ -5,7 +5,7 @@ on:
     branches:
       - Starlight
       - starlight-dev
-      
+
       
 permissions:
   contents: write
@@ -35,7 +35,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           GITHUB_REPOSITORY: ${{ github.repository }}
-          WORKFLOW_RUN_ID: ${{ github.run_id }}
+          WORKFLOW_RUN_NUMBER: ${{ github.run_number }}
           WORKFLOW_NAME: ${{ github.workflow }}
         run: |
           python ./Tools/_Starlight/wait_for_actions.py
