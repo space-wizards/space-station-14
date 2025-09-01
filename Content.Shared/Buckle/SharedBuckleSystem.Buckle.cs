@@ -30,7 +30,6 @@ public abstract partial class SharedBuckleSystem
     public static ProtoId<AlertCategoryPrototype> BuckledAlertCategory = "Buckled";
 
     [Dependency] private readonly EntityWhitelistSystem _whitelistSystem = default!;
-    [Dependency] private readonly EntityLookupSystem _entityLookup = default!;
 
     private void InitializeBuckle()
     {
@@ -43,7 +42,7 @@ public abstract partial class SharedBuckleSystem
         SubscribeLocalEvent<BuckleComponent, BeingPulledAttemptEvent>(OnBeingPulledAttempt);
         SubscribeLocalEvent<BuckleComponent, PullStartedMessage>(OnPullStarted);
         SubscribeLocalEvent<BuckleComponent, UnbuckleAlertEvent>(OnUnbuckleAlert);
-        SubscribeLocalEvent<BuckleComponent, KnockDownAttemptEvent>(OnCrawlAttempt);  //crawl makes you drop from the seat
+        SubscribeLocalEvent<BuckleComponent, KnockDownAttemptEvent>(OnCrawlAttempt);
 
 
         SubscribeLocalEvent<BuckleComponent, InsertIntoEntityStorageAttemptEvent>(OnBuckleInsertIntoEntityStorageAttempt);

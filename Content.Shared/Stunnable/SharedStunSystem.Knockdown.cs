@@ -542,7 +542,6 @@ public abstract partial class SharedStunSystem
     private void OnBuckle(Entity<KnockedDownComponent> entity, ref BuckledEvent args)
     {
         RemComp<KnockedDownComponent>(entity);
-        //reference component shutdown, it makes you visually stand but not crawl :p
     }
 
     #endregion
