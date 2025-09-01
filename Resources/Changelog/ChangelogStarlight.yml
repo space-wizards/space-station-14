@@ -12782,5 +12782,113 @@ Entries:
   id: 144201
   time: '2025-09-01T20:56:10.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/1442
+- author: CawsForConcern
+  changes:
+  - message: (Silica) a Mass Scanner to Command Bridge
+    type: Add
+  id: 143000
+  time: '2025-09-01T22:10:18.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1430
+- author: CawsForConcern
+  changes:
+  - message: (Silica) the new Operating Computer to Surgery
+    type: Add
+  id: 143001
+  time: '2025-09-01T22:10:18.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1430
+- author: CawsForConcern
+  changes:
+  - message: (Silica) the new Operating Computer to Brigmedic
+    type: Add
+  id: 143002
+  time: '2025-09-01T22:10:18.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1430
+- author: CawsForConcern
+  changes:
+  - message: (Silica) a sink to Maints Bar
+    type: Add
+  id: 143003
+  time: '2025-09-01T22:10:18.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1430
+- author: CawsForConcern
+  changes:
+  - message: (Silica) a cryogenic sleep unit to GenPop
+    type: Add
+  id: 143004
+  time: '2025-09-01T22:10:18.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1430
+- author: CawsForConcern
+  changes:
+  - message: (Silica) one more stack of steel to Atmospherics Distribution
+    type: Add
+  id: 143005
+  time: '2025-09-01T22:10:18.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1430
+- author: CawsForConcern
+  changes:
+  - message: (Silica) a spray painter and compressed paint to the Atmospherics Distribution
+      workbench area
+    type: Add
+  id: 143006
+  time: '2025-09-01T22:10:18.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1430
+- author: CawsForConcern
+  changes:
+  - message: (Silica) a salvage magnet to salvage docking arm, Miners rejoice
+    type: Add
+  id: 143007
+  time: '2025-09-01T22:10:18.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1430
+- author: CawsForConcern
+  changes:
+  - message: (Silica) added SpawnPointLateJoin to Arrivals for operation "stop arrivals
+      gibbing"
+    type: Add
+  id: 143008
+  time: '2025-09-01T22:10:18.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1430
+- author: CawsForConcern
+  changes:
+  - message: (Silica) widened the salvage dock by two tiles, Salvagers rejoice
+    type: Tweak
+  id: 143009
+  time: '2025-09-01T22:10:18.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1430
+- author: CawsForConcern
+  changes:
+  - message: (Silica) the armory layout has been reworked, Wardens rejoice
+    type: Tweak
+  id: 143010
+  time: '2025-09-01T22:10:18.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1430
+- author: CawsForConcern
+  changes:
+  - message: (Silica) a passive pump in atmospherics distribution was mapped backwards
+    type: Fix
+  id: 143011
+  time: '2025-09-01T22:10:18.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1430
+- author: CawsForConcern
+  changes:
+  - message: (Silica) a vent and a scrubber in Security Maints were piped to the wrong
+      distro/waste systems respectively
+    type: Fix
+  id: 143012
+  time: '2025-09-01T22:10:18.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1430
+- author: CawsForConcern
+  changes:
+  - message: (Silica) exactly one floor tile decal was missing in GenPop
+    type: Fix
+  id: 143013
+  time: '2025-09-01T22:10:18.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1430
+- author: CawsForConcern
+  changes:
+  - message: (Silica) a passive pump to the Kitchen Freezer was mapped backwards
+    type: Fix
+  id: 143014
+  time: '2025-09-01T22:10:18.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1430
 Order: -1
 
