@@ -8,7 +8,6 @@ using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.IdentityManagement;
-using Content.Shared.Mobs.Components;
 using Content.Shared.Mobs.Systems;
 using Content.Shared.Movement.Systems;
 using Content.Shared.Nutrition.Components;
@@ -23,16 +22,16 @@ namespace Content.Server.Medical
     {
         [Dependency] private readonly IPrototypeManager _proto = default!;
         [Dependency] private readonly AudioSystem _audio = default!;
+        [Dependency] private readonly BloodstreamSystem _bloodstream = default!;
         [Dependency] private readonly BodySystem _body = default!;
+        [Dependency] private readonly ForensicsSystem _forensics = default!;
         [Dependency] private readonly HungerSystem _hunger = default!;
+        [Dependency] private readonly MobStateSystem _mobstate = default!;
+        [Dependency] private readonly MovementModStatusSystem _movementMod = default!;
         [Dependency] private readonly PopupSystem _popup = default!;
         [Dependency] private readonly PuddleSystem _puddle = default!;
         [Dependency] private readonly SharedSolutionContainerSystem _solutionContainer = default!;
-        [Dependency] private readonly MovementModStatusSystem _movementMod = default!;
         [Dependency] private readonly ThirstSystem _thirst = default!;
-        [Dependency] private readonly ForensicsSystem _forensics = default!;
-        [Dependency] private readonly BloodstreamSystem _bloodstream = default!;
-        [Dependency] private readonly MobStateSystem _mobstate = default!;
 
         private static readonly ProtoId<SoundCollectionPrototype> VomitCollection = "Vomit";
 
