@@ -103,7 +103,7 @@
   - multiantag
   - director
   name: dynamic-title
-  showInVote: true
+  showInVote: false # admin-only for now until we fix some bugs
   description: dynamic-description
   rules:
   - DynamicRule
