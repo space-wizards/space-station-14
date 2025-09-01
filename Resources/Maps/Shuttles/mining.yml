@@ -45,8 +45,7 @@ entities:
       bodyType: Dynamic
     - type: Fixtures
       fixtures: {}
-    - type: SalvageShuttle
-    - type: Gravity
+=    - type: Gravity
       gravityShakeSound: !type:SoundPathSpecifier
         path: /Audio/Effects/alert.ogg
     - type: DecalGrid
