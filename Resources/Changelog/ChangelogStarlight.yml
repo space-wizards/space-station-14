@@ -12890,5 +12890,135 @@ Entries:
   id: 143014
   time: '2025-09-01T22:10:18.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/1430
+- author: MaxAlpine
+  changes:
+  - message: (Saltern) Added AI Turret control in AI core
+    type: Add
+  id: 147500
+  time: '2025-09-01T22:10:25.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1475
+- author: MaxAlpine
+  changes:
+  - message: (Saltern) Added meteor shielding around containment/atmos/evac/disposals/detective
+    type: Add
+  id: 147501
+  time: '2025-09-01T22:10:25.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1475
+- author: MaxAlpine
+  changes:
+  - message: (Saltern) Added station anchor
+    type: Add
+  id: 147502
+  time: '2025-09-01T22:10:25.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1475
+- author: MaxAlpine
+  changes:
+  - message: (Saltern) Added more N2 lockers around
+    type: Add
+  id: 147503
+  time: '2025-09-01T22:10:25.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1475
+- author: MaxAlpine
+  changes:
+  - message: (Saltern) Added normal PACMAN, plus emergency fuel for generators to
+      engineering
+    type: Add
+  id: 147504
+  time: '2025-09-01T22:10:25.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1475
+- author: MaxAlpine
+  changes:
+  - message: (Saltern) Added more document printers
+    type: Add
+  id: 147505
+  time: '2025-09-01T22:10:25.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1475
+- author: MaxAlpine
+  changes:
+  - message: (Saltern) Added atmospheric network and alerts computers to atmos and
+      engineering
+    type: Add
+  id: 147506
+  time: '2025-09-01T22:10:25.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1475
+- author: MaxAlpine
+  changes:
+  - message: (Saltern) Added secure windoor over the flap in cargo
+    type: Add
+  id: 147507
+  time: '2025-09-01T22:10:25.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1475
+- author: MaxAlpine
+  changes:
+  - message: (Saltern) Added salvage job board
+    type: Add
+  id: 147508
+  time: '2025-09-01T22:10:25.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1475
+- author: MaxAlpine
+  changes:
+  - message: (Saltern) Added lockable button outside burn chamber to open blast doors
+    type: Add
+  id: 147509
+  time: '2025-09-01T22:10:25.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1475
+- author: MaxAlpine
+  changes:
+  - message: (Saltern) Changed brigmedic to include a chemistry setup
+    type: Tweak
+  id: 147510
+  time: '2025-09-01T22:10:25.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1475
+- author: MaxAlpine
+  changes:
+  - message: (Saltern) Swapped one oxygen canister in EVA for a nitrogen canister
+    type: Tweak
+  id: 147511
+  time: '2025-09-01T22:10:25.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1475
+- author: MaxAlpine
+  changes:
+  - message: (Saltern) Swapped TEG pumps for volumetric pumps
+    type: Tweak
+  id: 147512
+  time: '2025-09-01T22:10:25.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1475
+- author: MaxAlpine
+  changes:
+  - message: (Saltern) Changed reinforced window in cryosleep to a reinforced wall
+      to prevent spacing late joins
+    type: Tweak
+  id: 147513
+  time: '2025-09-01T22:10:25.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1475
+- author: MaxAlpine
+  changes:
+  - message: (Saltern) Fixed missing wire outside security
+    type: Fix
+  id: 147514
+  time: '2025-09-01T22:10:25.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1475
+- author: MaxAlpine
+  changes:
+  - message: (Saltern) Fixed the amount of tesla equipment to the minimum standard
+    type: Fix
+  id: 147515
+  time: '2025-09-01T22:10:25.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1475
+- author: MaxAlpine
+  changes:
+  - message: (Saltern) Fixed PA computer rotation
+    type: Fix
+  id: 147516
+  time: '2025-09-01T22:10:25.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1475
+- author: MaxAlpine
+  changes:
+  - message: (Saltern) Fixed an issue causing 2/3 of the HV network being vulnerable
+      to losing a single HV wire
+    type: Fix
+  id: 147517
+  time: '2025-09-01T22:10:25.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1475
 Order: -1
 
