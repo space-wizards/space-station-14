@@ -44,6 +44,9 @@
     maxItemSize: Large
     storageInsertSound:
       path: /Audio/Voice/Slime/slime_squish.ogg
+  - type: PrivateStorage
+    accessDelay: 5.0
+    accessPopup: "laspi-storage-accessing"
   - type: ContainerContainer
     containers:
       storagebase: !type:Container
