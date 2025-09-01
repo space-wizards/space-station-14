@@ -1,6 +1,5 @@
 name: Report an issue
 description: For issues that are not related to any other issue form.
-labels: 'S: Untriaged'
 body:
   - type: markdown
     attributes:

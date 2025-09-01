@@ -1,6 +1,5 @@
 name: Report an mapping issue
 description: For issues regarding mapping.
-labels: ['S: Untriaged', 'A: Mapping']
 body:
   - type: markdown
     attributes:
