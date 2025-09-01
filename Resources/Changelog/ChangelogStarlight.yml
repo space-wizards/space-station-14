@@ -12631,5 +12631,13 @@ Entries:
   id: 149800
   time: '2025-09-01T20:35:25.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/1498
+- author: TheRealSlimRedwoods
+  changes:
+  - message: Made vulpkanins pettable, give 'em headpats :3 (original code credits
+      @FoxxoTrystan)
+    type: Tweak
+  id: 149600
+  time: '2025-09-01T20:44:24.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1496
 Order: -1
 
