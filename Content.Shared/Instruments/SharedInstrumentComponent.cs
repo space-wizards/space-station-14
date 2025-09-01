@@ -3,13 +3,11 @@ using System.Text;
 using Robust.Shared.Audio.Midi;
 using Robust.Shared.GameStates;
 using Robust.Shared.Serialization;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom; // Starlight
 
 namespace Content.Shared.Instruments;
 
 [NetworkedComponent]
 [Access(typeof(SharedInstrumentSystem))]
-[AutoGenerateComponentPause] // Starlight
 public abstract partial class SharedInstrumentComponent : Component
 {
     [ViewVariables]
@@ -35,13 +33,6 @@ public abstract partial class SharedInstrumentComponent : Component
 
     [ViewVariables]
     public BitArray FilteredChannels { get; set; } = new(RobustMidiEvent.MaxChannels, true);
-
-    [DataField(customTypeSerializer: typeof(TimeOffsetSerializer))]
-    [AutoPausedField]
-    public TimeSpan NextInputTime { get; set; } = TimeSpan.Zero; // Starlight
-    
-    [DataField]
-    public TimeSpan InputDelay { get; set; } = TimeSpan.FromSeconds(1); // Starlight
 }
 
 /// <summary>
