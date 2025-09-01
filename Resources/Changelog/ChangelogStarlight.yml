@@ -13065,5 +13065,12 @@ Entries:
   id: 150905
   time: '2025-09-01T22:29:00.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/1509
+- author: KarmaKitsuna
+  changes:
+  - message: Gateway, an event only station
+    type: Add
+  id: 149500
+  time: '2025-09-01T23:19:41.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1495
 Order: -1
 
