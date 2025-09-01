@@ -51,14 +51,8 @@ namespace Content.Server.Medical
 
             //  Vomit only if entity is alive
             //  Ignore condition if force was set to true
-            if (!force)
-            {
-                if (!TryComp<MobStateComponent>(uid, out var mobState))
-                    return;
-
-                if (_mobstate.IsDead(uid, mobState))
-                    return;
-            }
+            if (!force && _mobstate.IsDead(uid))
+                return;
 
             // Vomiting makes you hungrier and thirstier
             if (TryComp<HungerComponent>(uid, out var hunger))
