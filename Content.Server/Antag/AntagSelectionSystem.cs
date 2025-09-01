@@ -406,7 +406,10 @@ public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelection
             }
 
             if (antagSelectDef != null)
-                getEntEv.Entity = Spawn(antagSelectDef.Value.EntityPrototype);
+            {
+                if (antagSelectDef.Value.EntityPrototype != null)
+                    getEntEv.Entity = Spawn(antagSelectDef.Value.EntityPrototype);
+            }
 
             RaiseLocalEvent(ent, ref getEntEv, true);
             antagEnt = getEntEv.Entity;
