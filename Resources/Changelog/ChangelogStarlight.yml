@@ -12639,5 +12639,12 @@ Entries:
   id: 149600
   time: '2025-09-01T20:44:24.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/1496
+- author: PubliclyExecutedPig
+  changes:
+  - message: CBurn has recieved a small glow-up!
+    type: Tweak
+  id: 146500
+  time: '2025-09-01T20:47:23.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1465
 Order: -1
 
