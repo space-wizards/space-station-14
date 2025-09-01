@@ -12624,5 +12624,12 @@ Entries:
   id: 148100
   time: '2025-09-01T20:27:47.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/1481
+- author: PubliclyExecutedPig
+  changes:
+  - message: The Syndicate no longer mis-labells their magazines as rubber.
+    type: Fix
+  id: 149800
+  time: '2025-09-01T20:35:25.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1498
 Order: -1
 
