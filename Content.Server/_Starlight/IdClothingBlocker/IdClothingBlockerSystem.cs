@@ -7,6 +7,9 @@ using Content.Shared.PDA;
 using Content.Shared.Access.Systems;
 using Content.Shared.Clothing.Components;
 using Content.Shared.DoAfter;
+using Content.Shared.Hands;
+using Content.Shared.Hands.Components;
+using Content.Shared.Inventory;
 using Content.Shared.Inventory.Events;
 
 namespace Content.Server._Starlight.IdClothingBlocker;
@@ -19,13 +22,18 @@ public sealed class IdClothingBlockerSystem : SharedIdClothingBlockerSystem
     public override void Initialize()
     {
         base.Initialize();
+        
+        SubscribeLocalEvent<HandsComponent, DidEquipHandEvent>(OnAnyHandEquipped);
+        SubscribeLocalEvent<HandsComponent, DidUnequipHandEvent>(OnAnyHandUnequipped);
+        SubscribeLocalEvent<InventoryComponent, DidEquipEvent>(OnAnyInventoryEquipped);
+        SubscribeLocalEvent<InventoryComponent, DidUnequipEvent>(OnAnyInventoryUnequipped);
     }
 
     protected override async void OnUnauthorizedAccess(EntityUid clothingUid, IdClothingBlockerComponent component, EntityUid wearer)
     {
         var blockedComponent = EntityManager.EnsureComponent<IdClothingFrozenComponent>(wearer);
         blockedComponent.ClothingItem = clothingUid;
-        SetBlocked(clothingUid, component, true);
+        UpdateClothingBlockingState(wearer);
         Dirty(wearer, blockedComponent);
 
         _popup.PopupEntity(Loc.GetString("access-clothing-blocker-notify-unauthorized-access"), clothingUid, PopupType.MediumCaution);
@@ -125,5 +133,46 @@ public sealed class IdClothingBlockerSystem : SharedIdClothingBlockerSystem
         }
 
         return false;
+    }
+
+    // We assume access might have changed when a hand or inventory is equipped or unequipped
+    private void OnAnyHandEquipped(EntityUid wearer, HandsComponent component, DidEquipHandEvent args)
+    {
+        UpdateClothingBlockingState(wearer);
+    }
+
+    private void OnAnyHandUnequipped(EntityUid wearer, HandsComponent component, DidUnequipHandEvent args)
+    {
+        UpdateClothingBlockingState(wearer);
+    }
+
+    private void OnAnyInventoryEquipped(EntityUid wearer, InventoryComponent component, DidEquipEvent args)
+    {
+        UpdateClothingBlockingState(wearer);
+    }
+
+    private void OnAnyInventoryUnequipped(EntityUid wearer, InventoryComponent component, DidUnequipEvent args)
+    {
+        UpdateClothingBlockingState(wearer);
+    }
+
+    private void UpdateClothingBlockingState(EntityUid wearer)
+    {
+        var query = EntityQueryEnumerator<IdClothingBlockerComponent>();
+        while (query.MoveNext(out var clothingUid, out var component))
+        {
+            if (TryComp<InventoryComponent>(wearer, out var inventory))
+            {
+                foreach (var container in inventory.Containers)
+                {
+                    if (container.ContainedEntity == clothingUid)
+                    {
+                        bool hasAccess = HasJobAccess(wearer, component);
+                        SetBlocked(clothingUid, component, !hasAccess);
+                        break;
+                    }
+                }
+            }
+        }
     }
 }

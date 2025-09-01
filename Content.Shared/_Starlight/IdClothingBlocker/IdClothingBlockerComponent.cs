@@ -5,10 +5,10 @@ using Robust.Shared.GameStates;
 
 namespace Content.Shared._Starlight.IdClothingBlocker;
 
-[RegisterComponent, NetworkedComponent]
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
 public sealed partial class IdClothingBlockerComponent : Component
 {
-    [DataField("isBlocked")]
+    [DataField("isBlocked")] [AutoNetworkedField]
     public bool IsBlocked = false;
 
     [DataField("allowedJobs", customTypeSerializer: typeof(PrototypeIdHashSetSerializer<JobPrototype>))]
