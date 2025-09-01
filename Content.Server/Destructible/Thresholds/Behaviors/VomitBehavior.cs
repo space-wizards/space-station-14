@@ -1,6 +1,4 @@
 using Content.Server.Medical;
-using Content.Shared.Mobs;
-using Content.Shared.Mobs.Components;
 
 namespace Content.Server.Destructible.Thresholds.Behaviors;
 
