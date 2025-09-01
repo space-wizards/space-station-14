@@ -9,6 +9,7 @@ on:
 permissions:
   contents: write
   pull-requests: read
+  actions: read
 
 env:
  BRANCH_NAME: ${{ github.ref_name	 }} 
