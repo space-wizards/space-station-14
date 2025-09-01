@@ -12684,5 +12684,103 @@ Entries:
   id: 137100
   time: '2025-09-01T21:00:03.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/1371
+- author: STARLIGHT TEAM
+  changes:
+  - message: Tired of the black and blue xenoborgs wiping out your station? just call
+      for Psi alert and deal with it yourself.
+    type: Add
+  id: 146800
+  time: '2025-09-01T20:41:57.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1468
+- author: STARLIGHT TEAM
+  changes:
+  - message: Alert Level armories now return to CentComm when the threat is over.
+      kicking people off the pod.
+    type: Tweak
+  id: 146801
+  time: '2025-09-01T20:41:57.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1468
+- author: rustdevelopment
+  changes:
+  - message: Fixed vampire blood draining.
+    type: Fix
+  id: 148500
+  time: '2025-09-01T20:43:06.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1485
+- author: walksanatora
+  changes:
+  - message: Shadow Borgis are now XenoBorgis
+    type: Tweak
+  id: 145900
+  time: '2025-09-01T20:51:37.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1459
+- author: walksanatora
+  changes:
+  - message: Mothership radio had no longrange for some reason. now it does.
+    type: Fix
+  id: 145901
+  time: '2025-09-01T20:51:37.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1459
+- author: TacoLlama
+  changes:
+  - message: Added the spray painter to borg modules
+    type: Tweak
+  id: 144400
+  time: '2025-09-01T20:55:00.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1444
+- author: TacoLlama
+  changes:
+  - message: The construction components slot in the construction module can now actually
+      hold construction components
+    type: Tweak
+  id: 144401
+  time: '2025-09-01T20:55:00.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1444
+- author: TacoLlama
+  changes:
+  - message: Salvage borgs can now pick up and insert ore
+    type: Tweak
+  id: 144402
+  time: '2025-09-01T20:55:00.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1444
+- author: TacoLlama
+  changes:
+  - message: Engi borgs are able to maintain the Singulo and AME now
+    type: Tweak
+  id: 144403
+  time: '2025-09-01T20:55:00.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1444
+- author: TacoLlama
+  changes:
+  - message: Service borgs now get a seed slot to plant seeds with
+    type: Tweak
+  id: 144404
+  time: '2025-09-01T20:55:00.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1444
+- author: TacoLlama
+  changes:
+  - message: The syringe slot on medical modules is now a hand so that borgs can swap
+      between types of syringes
+    type: Tweak
+  id: 144405
+  time: '2025-09-01T20:55:00.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1444
+- author: Conflee
+  changes:
+  - message: Added a new Unknown Shuttle Event, the Fire Response Shuttle. Spawns
+      with 2 Visiting Atmos Ghost Roles and 2 Visiting Engie Ghost Roles, and a Firebot.
+      Stocked with fire fighting gear. It can roll naturally in rounds with Space
+      Traffic Scheduler.
+    type: Add
+  id: 144200
+  time: '2025-09-01T20:56:10.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1442
+- author: Conflee
+  changes:
+  - message: Fixed the Doxes-the-Captain plushie having 0 stock in the Hug Dispenser.
+    type: Fix
+  id: 144201
+  time: '2025-09-01T20:56:10.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1442
 Order: -1
 
