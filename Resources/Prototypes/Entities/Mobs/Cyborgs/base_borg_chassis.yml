@@ -493,7 +493,7 @@
     guides:
     - Cyborgs
     - Robotics
-    # TODO: add Xenoborg guide (part 7 spoilers)
+    - Xenoborgs
   - type: Access
     enabled: false
     tags:
