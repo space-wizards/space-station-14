@@ -512,7 +512,7 @@
   - type: Computer
     board: ResearchComputerCircuitboard
   - type: AccessReader
-    access: [["ResearchDirector"], ["Captain"]] # DS14
+    access: [["ResearchDirector"]] # DS14
   - type: PointLight
     radius: 1.5
     energy: 1.6
@@ -791,6 +791,10 @@
     color: "#1d8bad"
     canShuttle: false
     global: true
+    sound:
+      path: /Audio/_DeadSpace/Announcements/centcomm.ogg # DS14-Announcements
+      params:
+        volume: -2
   - type: Computer
     board: CentcommCommsComputerCircuitboard
   - type: PointLight
@@ -953,8 +957,6 @@
     board: CargoRequestEngineeringComputerCircuitboard
   - type: PointLight
     color: "#c9c042"
-  - type: AccessReader
-    access: [["ChiefEngineer"]] # DS14
 
 - type: entity
   id: ComputerCargoOrdersMedical
@@ -986,8 +988,6 @@
     board: CargoRequestMedicalComputerCircuitboard
   - type: PointLight
     color: "#41e0fc"
-  - type: AccessReader
-    access: [["ChiefMedicalOfficer"]] # DS14
 
 - type: entity
   id: ComputerCargoOrdersScience
@@ -1019,8 +1019,6 @@
     board: CargoRequestScienceComputerCircuitboard
   - type: PointLight
     color: "#b53ca1"
-  - type: AccessReader
-    access: [["ResearchDirector"]] # DS14
 
 - type: entity
   id: ComputerCargoOrdersSecurity
@@ -1052,8 +1050,6 @@
     board: CargoRequestSecurityComputerCircuitboard
   - type: PointLight
     color: "#d11d00"
-  - type: AccessReader
-    access: [["Armory"]] # DS14
 
 - type: entity
   id: ComputerCargoOrdersService
@@ -1085,8 +1081,6 @@
     board: CargoRequestServiceComputerCircuitboard
   - type: PointLight
     color: "#afe837"
-  - type: AccessReader
-    access: [["HeadOfPersonnel"]] # DS14
 
 - type: entity
   id: ComputerCargoBounty

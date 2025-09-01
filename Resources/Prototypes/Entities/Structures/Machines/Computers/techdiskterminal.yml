@@ -31,7 +31,7 @@
     energy: 0.5
     color: "#b53ca1"
   - type: AccessReader
-    access: [["ResearchDirector"], ["Captain"]] # DS14
+    access: [["ResearchDirector"]] # DS14
 
 - type: weightedRandom
   id: TechDiskTierWeights

@@ -1012,3 +1012,9 @@ ClothingUniformJumpsuitParamedicNT: ClothingUniformJumpsuitParamedic
 
 # 2025-08-30 - DS14
 Fulton0: null
+
+# 2025-09-01 - DS14
+CentcomComputerComms: CentcommComputerComms
+VendingMachineClothing: BackmenVendingMachineClothing
+VendingMachineWinter: BackmenVendingMachineWinter
+VendingMachineClothingCapes: BackmenVendingMachineClothingCapes

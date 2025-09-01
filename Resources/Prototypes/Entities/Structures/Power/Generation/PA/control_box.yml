@@ -26,7 +26,7 @@
     boardName: wires-board-name-pa
     layoutId: ParticleAccelerator
   - type: AccessReader
-    access: [["ChiefEngineer"], ["Captain"]] # DS14
+    access: [["ChiefEngineer"]] # DS14
   - type: MultipartMachine
     parts:
       enum.AcceleratorParts.EndCap:
