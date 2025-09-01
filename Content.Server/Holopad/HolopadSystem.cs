@@ -622,7 +622,7 @@ public sealed class HolopadSystem : SharedHolopadSystem
             DeleteHologram(entity.Comp.Hologram.Value, entity);
 
         // Check if the associated holopad user is an AI
-        if (TryComp<StationAiHeldComponent>(entity.Comp.User, out var stationAiHeld) &&
+        if (HasComp<StationAiHeldComponent>(entity.Comp.User) &&
             _stationAiSystem.TryGetCore(entity.Comp.User.Value, out var stationAiCore))
         {
             // Return the AI eye to free roaming

@@ -12,7 +12,7 @@ public abstract partial class SharedStationAiSystem
     private ProtoId<StationAiCustomizationGroupPrototype> _stationAiCoreCustomGroupProtoId = "StationAiCoreIconography";
     private ProtoId<StationAiCustomizationGroupPrototype> _stationAiHologramCustomGroupProtoId = "StationAiHolograms";
 
-    private readonly SpriteSpecifier.Rsi _stationAiRebooting = new SpriteSpecifier.Rsi(new ResPath("Mobs/Silicon/station_ai.rsi"), "ai_fuzz");
+    private readonly SpriteSpecifier.Rsi _stationAiRebooting = new(new ResPath("Mobs/Silicon/station_ai.rsi"), "ai_fuzz");
 
     private void InitializeCustomization()
     {
@@ -52,10 +52,7 @@ public abstract partial class SharedStationAiSystem
 
     private void OnPlayerAttached(Entity<StationAiCustomizationComponent> ent, ref PlayerAttachedEvent args)
     {
-        var state = _mobState.IsDead(ent) ?
-            StationAiState.Dead :
-            StationAiState.Occupied;
-
+        var state = _mobState.IsDead(ent) ? StationAiState.Dead : StationAiState.Occupied;
         SetStationAiState(ent, state);
     }
 
@@ -67,25 +64,19 @@ public abstract partial class SharedStationAiSystem
         // If the player's mind is gone, appear empty. Otherwise, appear occupied.
         var altState = StationAiState.Empty;
 
-        if (_mind.TryGetMind(ent, out var _, out var _))
+        if (_mind.TryGetMind(ent, out _, out _))
         {
             altState = StationAiState.Occupied;
         }
 
         // Being dead overrides the above.
-        var state = _mobState.IsDead(ent) ?
-            StationAiState.Dead :
-            altState;
-
+        var state = _mobState.IsDead(ent) ? StationAiState.Dead : altState;
         SetStationAiState(ent, state);
     }
 
     private void OnMobStateChanged(Entity<StationAiCustomizationComponent> ent, ref MobStateChangedEvent args)
     {
-        var state = (args.NewMobState == MobState.Dead) ?
-            StationAiState.Dead :
-            StationAiState.Rebooting;
-
+        var state = (args.NewMobState == MobState.Dead) ? StationAiState.Dead : StationAiState.Rebooting;
         SetStationAiState(ent, state);
     }
 

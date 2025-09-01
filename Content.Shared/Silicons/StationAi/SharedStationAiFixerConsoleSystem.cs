@@ -63,7 +63,6 @@ public abstract partial class SharedStationAiFixerConsoleSystem : EntitySystem
             return;
 
         ent.Comp.ActionTarget = null;
-        Dirty(ent);
 
         StopAction(ent);
     }
@@ -71,7 +70,7 @@ public abstract partial class SharedStationAiFixerConsoleSystem : EntitySystem
     private void OnLockToggle(Entity<StationAiFixerConsoleComponent> ent, ref LockToggledEvent args)
     {
         if (_userInterface.TryGetOpenUi(ent.Owner, StationAiFixerConsoleUiKey.Key, out var bui))
-            bui?.Update<StationAiFixerConsoleBoundUserInterfaceState>();
+            bui.Update<StationAiFixerConsoleBoundUserInterfaceState>();
     }
 
     private void OnMessage(Entity<StationAiFixerConsoleComponent> ent, ref StationAiFixerConsoleMessage args)
@@ -174,7 +173,6 @@ public abstract partial class SharedStationAiFixerConsoleSystem : EntitySystem
     /// Initiates an action upon a target entity by the specified console.
     /// </summary>
     /// <param name="ent">The console.</param>
-    /// <param name="target">The target entity.</param>
     /// <param name="actionType">The action to be enacted on the target.</param>
     private void StartAction(Entity<StationAiFixerConsoleComponent> ent, StationAiFixerConsoleAction actionType)
     {
@@ -252,8 +250,7 @@ public abstract partial class SharedStationAiFixerConsoleSystem : EntitySystem
     {
         if (IsActionInProgress(ent) && ent.Comp.ActionTarget != null)
         {
-            if (ent.Comp.ActionType == StationAiFixerConsoleAction.Repair &&
-                TryComp<MobStateComponent>(ent.Comp.ActionTarget, out var targetMobState))
+            if (ent.Comp.ActionType == StationAiFixerConsoleAction.Repair)
             {
                 _mobState.ChangeMobState(ent.Comp.ActionTarget.Value, MobState.Alive);
             }
@@ -284,7 +281,7 @@ public abstract partial class SharedStationAiFixerConsoleSystem : EntitySystem
 
         if (IsActionInProgress(ent))
         {
-            var currentStage = ent.Comp.ActionType.ToString() + ent.Comp.CurrentActionStage.ToString();
+            var currentStage = ent.Comp.ActionType + ent.Comp.CurrentActionStage.ToString();
 
             if (!_appearance.TryGetData(ent, StationAiFixerConsoleVisuals.Key, out string oldStage, appearance) ||
                 oldStage != currentStage)

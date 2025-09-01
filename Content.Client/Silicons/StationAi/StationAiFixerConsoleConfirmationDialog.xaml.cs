@@ -10,7 +10,7 @@ public sealed partial class StationAiFixerConsoleConfirmationDialog : FancyWindo
 {
     public event Action<StationAiFixerConsoleAction>? SendStationAiFixerConsoleMessageAction;
 
-    public StationAiFixerConsoleConfirmationDialog(EntityUid owner)
+    public StationAiFixerConsoleConfirmationDialog()
     {
         RobustXamlLoader.Load(this);
 
@@ -18,8 +18,8 @@ public sealed partial class StationAiFixerConsoleConfirmationDialog : FancyWindo
         PurgeWarningLabel2.SetMessage(Loc.GetString($"station-ai-fixer-console-window-purge-warning-2"));
         PurgeWarningLabel3.SetMessage(Loc.GetString($"station-ai-fixer-console-window-purge-warning-3"));
 
-        CancelPurge.OnButtonDown += args => Close();
-        ContinuePurge.OnButtonDown += args => OnSendStationAiFixerConsoleMessage(StationAiFixerConsoleAction.Purge);
+        CancelPurge.OnButtonDown += _ => Close();
+        ContinuePurge.OnButtonDown += _ => OnSendStationAiFixerConsoleMessage(StationAiFixerConsoleAction.Purge);
     }
 
     public void OnSendStationAiFixerConsoleMessage(StationAiFixerConsoleAction action)

@@ -7,7 +7,4 @@ namespace Content.Shared.Silicons.StationAi;
 /// <see cref="StationAiFixerConsoleComponent"/>.
 /// </summary>
 [RegisterComponent, NetworkedComponent]
-public sealed partial class StationAiFixableComponent : Component
-{
-
-}
+public sealed partial class StationAiFixableComponent : Component;

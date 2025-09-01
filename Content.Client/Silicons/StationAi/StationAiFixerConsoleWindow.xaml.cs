@@ -16,19 +16,19 @@ public sealed partial class StationAiFixerConsoleWindow : FancyWindow
     [Dependency] private readonly IEntityManager _entManager = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
 
-    private readonly StationAiFixerConsoleSystem _stationAiFixerConsole = default!;
-    private readonly SharedStationAiSystem _stationAi = default!;
+    private readonly StationAiFixerConsoleSystem _stationAiFixerConsole;
+    private readonly SharedStationAiSystem _stationAi;
 
     private EntityUid? _owner;
 
-    private readonly SpriteSpecifier.Rsi _emptyPortrait = new SpriteSpecifier.Rsi(new("Mobs/Silicon/station_ai.rsi"), "ai_empty");
-    private readonly SpriteSpecifier.Rsi _rebootingPortrait = new SpriteSpecifier.Rsi(new("Mobs/Silicon/station_ai.rsi"), "ai_fuzz");
+    private readonly SpriteSpecifier.Rsi _emptyPortrait = new(new("Mobs/Silicon/station_ai.rsi"), "ai_empty");
+    private readonly SpriteSpecifier.Rsi _rebootingPortrait = new(new("Mobs/Silicon/station_ai.rsi"), "ai_fuzz");
     private SpriteSpecifier? _currentPortrait;
 
     public event Action<StationAiFixerConsoleAction>? SendStationAiFixerConsoleMessageAction;
     public event Action? OpenConfirmationDialogAction;
 
-    private readonly Dictionary<StationAiState, Color> _statusColors = new Dictionary<StationAiState, Color>
+    private readonly Dictionary<StationAiState, Color> _statusColors = new()
     {
         [StationAiState.Empty] = Color.FromHex("#464966"),
         [StationAiState.Occupied] = Color.FromHex("#3E6C45"),
@@ -48,10 +48,10 @@ public sealed partial class StationAiFixerConsoleWindow : FancyWindow
 
         StationAiPortraitTexture.DisplayRect.TextureScale = new Vector2(4f, 4f);
 
-        CancelButton.OnButtonDown += args => OnSendStationAiFixerConsoleMessage(StationAiFixerConsoleAction.Cancel);
-        EjectButton.OnButtonDown += args => OnSendStationAiFixerConsoleMessage(StationAiFixerConsoleAction.Eject);
-        RepairButton.OnButtonDown += args => OnSendStationAiFixerConsoleMessage(StationAiFixerConsoleAction.Repair);
-        PurgeButton.OnButtonDown += args => OnOpenConfirmationDialog();
+        CancelButton.OnButtonDown += _ => OnSendStationAiFixerConsoleMessage(StationAiFixerConsoleAction.Cancel);
+        EjectButton.OnButtonDown += _ => OnSendStationAiFixerConsoleMessage(StationAiFixerConsoleAction.Eject);
+        RepairButton.OnButtonDown += _ => OnSendStationAiFixerConsoleMessage(StationAiFixerConsoleAction.Repair);
+        PurgeButton.OnButtonDown += _ => OnOpenConfirmationDialog();
 
         CancelButton.Label.HorizontalAlignment = HAlignment.Left;
         EjectButton.Label.HorizontalAlignment = HAlignment.Left;
@@ -120,7 +120,7 @@ public sealed partial class StationAiFixerConsoleWindow : FancyWindow
                 Loc.GetString("station-ai-fixer-console-window-station-ai-online") :
                 Loc.GetString("station-ai-fixer-console-window-station-ai-offline");
 
-            if (layerData.TryGetValue(stationAiState.ToString(), out var stateData) && stateData.RsiPath != null && stateData.State != null)
+            if (layerData.TryGetValue(stationAiState.ToString(), out var stateData) && stateData is { RsiPath: not null, State: not null })
             {
                 portrait = new SpriteSpecifier.Rsi(new ResPath(stateData.RsiPath), stateData.State);
             }

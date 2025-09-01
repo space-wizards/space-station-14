@@ -5,9 +5,9 @@ using Robust.Shared.Serialization;
 namespace Content.Shared.Silicons.StationAi;
 
 /// <summary>
-/// This components holds data needed for AI Restoration Consoles to function.
+/// This component holds data needed for AI Restoration Consoles to function.
 /// </summary>
-[RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState, AutoGenerateComponentPause]
 [Access(typeof(SharedStationAiFixerConsoleSystem))]
 public sealed partial class StationAiFixerConsoleComponent : Component
 {
@@ -35,13 +35,13 @@ public sealed partial class StationAiFixerConsoleComponent : Component
     /// <summary>
     /// The time at which the current action commenced.
     /// </summary>
-    [DataField, AutoNetworkedField]
+    [DataField, AutoNetworkedField, AutoPausedField]
     public TimeSpan ActionStartTime = TimeSpan.FromSeconds(0);
 
     /// <summary>
     /// The time at which the current action will end.
     /// </summary>
-    [DataField, AutoNetworkedField]
+    [DataField, AutoNetworkedField, AutoPausedField]
     public TimeSpan ActionEndTime = TimeSpan.FromSeconds(0);
 
     /// <summary>
@@ -60,7 +60,7 @@ public sealed partial class StationAiFixerConsoleComponent : Component
     /// The current stage of the action in progress.
     /// </summary>
     [DataField, AutoNetworkedField]
-    public int CurrentActionStage = 0;
+    public int CurrentActionStage;
 
     /// <summary>
     /// Sound clip that is played when a repair is completed.

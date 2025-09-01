@@ -2,15 +2,10 @@ using Content.Shared.Silicons.StationAi;
 
 namespace Content.Client.Silicons.StationAi;
 
-public sealed class StationAiFixerConsoleBoundUserInterface : BoundUserInterface
+public sealed class StationAiFixerConsoleBoundUserInterface(EntityUid owner, Enum uiKey) : BoundUserInterface(owner, uiKey)
 {
     private StationAiFixerConsoleWindow? _window;
     private StationAiFixerConsoleConfirmationDialog? _confirmationDialog;
-
-    public StationAiFixerConsoleBoundUserInterface(EntityUid owner, Enum uiKey) : base(owner, uiKey)
-    {
-
-    }
 
     protected override void Open()
     {
@@ -37,10 +32,9 @@ public sealed class StationAiFixerConsoleBoundUserInterface : BoundUserInterface
 
     private void OpenConfirmationDialog()
     {
-        if (_confirmationDialog != null)
-            _confirmationDialog.Close();
+        _confirmationDialog?.Close();
 
-        _confirmationDialog = new StationAiFixerConsoleConfirmationDialog(Owner);
+        _confirmationDialog = new StationAiFixerConsoleConfirmationDialog();
         _confirmationDialog.OpenCentered();
 
         _confirmationDialog.SendStationAiFixerConsoleMessageAction += SendStationAiFixerConsoleMessage;
@@ -48,12 +42,7 @@ public sealed class StationAiFixerConsoleBoundUserInterface : BoundUserInterface
 
     protected override void Dispose(bool disposing)
     {
-        base.Dispose(disposing);
-
-        if (!disposing)
-            return;
-
-        _window?.Dispose();
-        _confirmationDialog?.Dispose();
+        _window = null;
+        _confirmationDialog = null;
     }
 }

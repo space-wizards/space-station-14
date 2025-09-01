@@ -232,7 +232,7 @@ public sealed class StationAiSystem : SharedStationAiSystem
 
     private void OnDoAfterAttempt(Entity<StationAiCoreComponent> ent, ref DoAfterAttemptEvent<IntellicardDoAfterEvent> args)
     {
-        if (TryGetHeld((ent.Owner, ent.Comp), out var _))
+        if (TryGetHeld((ent.Owner, ent.Comp), out _))
             return;
 
         // Prevent AIs from being uploaded into an unpowered or broken AI core.
@@ -240,17 +240,12 @@ public sealed class StationAiSystem : SharedStationAiSystem
         if (TryComp<ApcPowerReceiverComponent>(ent, out var apcPower) && !apcPower.Powered)
         {
             _popups.PopupEntity(Loc.GetString("station-ai-has-no-power-for-upload"), ent, args.Event.User);
-
             args.Cancel();
-            return;
         }
-
-        if (TryComp<DestructibleComponent>(ent, out var destructible) && destructible.IsBroken)
+        else if (TryComp<DestructibleComponent>(ent, out var destructible) && destructible.IsBroken)
         {
             _popups.PopupEntity(Loc.GetString("station-ai-is-too-damaged-for-upload"), ent, args.Event.User);
-
             args.Cancel();
-            return;
         }
     }
 
