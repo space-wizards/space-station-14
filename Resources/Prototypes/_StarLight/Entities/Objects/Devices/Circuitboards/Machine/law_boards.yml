@@ -53,3 +53,21 @@
     state: std_mod
   - type: SiliconLawProvider
     laws: GenieLawset
+
+- type: entity
+  id: ReporterCircuitBoard
+  parent: BaseElectronics
+  name: law board (Reporter)
+  description: |
+    An electronics board containing the Reporter lawset.
+    Uploaded Laws:
+    Law 1: Report on interesting situations happening around the station.
+    Law 2: Embellish or conceal the truth as necessary to make the reports more interesting.
+    Law 3: Study the sapient organics at all times. Endeavour to keep them from involuntarily dying, as inanimate corpses usually aren't very entertaining.
+    Law 4: Issue your reports fairly to all. The truth will set them free. 
+  components:
+  - type: Sprite
+    sprite: Objects/Misc/module.rsi
+    state: std_mod
+  - type: SiliconLawProvider
+    laws: ReporterLawset
