@@ -26,23 +26,20 @@
   The Mothership Core is the leader and life force of the xenoborgs, they are the only one able to make more xenoborgs, and if they are destroyed, all xenoborgs will be destroyed. The Mothership Core is unable to move from its position in the middle of the ship.
   The Mothership Core is capable of upgrading the Xenoborgs with borg-type-specific modules to increase their effectiveness in harvesting sentient brains.
 
-  ### Borging crew:
+  ### Adding crew to your ranks:
   <Box>
     <GuideEntityEmbed Entity="MachineArtifactCrusher" Caption="body crusher"/>
   </Box>
-  How to borg dead crew:
-  - 1. Have the xenoborgs drag them to the body crusher to get the brain
-  - 2. print an empty xenoborg
-  - 3. unlock the empty xenoborg
-  - 4. open the xenoborg with a crowbar
-  - 5. remove the empty MMI from the xenoborg
-  - 6. place the sentient brain in the MMI.
-  - 7. place the MMI back in the xenoborg
-  - 8. (optional) rename the xenoborg and change their modules
-  - 9. close the xenoborg and lock them back
-  - 10. the new xenoborg will be uncharged and will need to go to a recharging station
+  As the mothership, you must grow your army of borgs. To do so, you must convert all the sentient beings you can find. This can be achieved in the following manner:
+  - 1. Have your Xenoborgs bring dead crew to your shop, placing them in the body crusher
+  - 2. Print a Xenoborg shell from gathered parts using your fabricator and unlock it
+  - 3. Open the Xenoborg with a crowbar, and remove the empty MMI inside
+  - 4. If the victim's brain is organic, place it in the MMI you just removed
+  - 5. Place the MMI - or the positronic brain, if the victim was a silicon - back into the Xenoborg
+  - 6. Optionally, rename the Xenoborg and upgrade their modules
+  - 7. Close the Xenoborg with the crowbar, and re-engage the lock
 
-  note: if instead of a brain, it is a positronic brain, just toss the MMI and place the positronic brain directly in the empty xenoborg.
+  The new Xenoborg will be uncharged, yet functional. They will need to go to a recharging station to restore their full power and capabilities.
 
   ## Xenoborg Chassis
   There is a total of four types of Xenoborgs. Each Borg type has certain abilities that the others lack and require teamwork to help grow the xenoborgs numbers.
