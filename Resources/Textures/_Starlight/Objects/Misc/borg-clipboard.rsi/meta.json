@@ -20,16 +20,13 @@
       "name": "clipboard_pen"
     },
     {
-      "name": "equipped-BELT",
-      "directions": 4
+      "name": "equipped-BELT"
     },
     {
-      "name": "inhand-left",
-      "directions": 4
+      "name": "inhand-left"
     },
     {
-      "name": "inhand-right",
-      "directions": 4
+      "name": "inhand-right"
     }
   ]
 }
