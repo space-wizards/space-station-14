@@ -6,15 +6,17 @@
   requirements:
     - !type:DepartmentTimeRequirement
       department: Medical
-      time: 18000 # 5 hrs
+      time: 180000 # 50 hrs
       inverted: true # stop playing intern if you're good at med!
   startingGear: MedicalInternGear
   icon: "JobIconMedicalIntern"
+  whitelist: true
   supervisors: job-supervisors-medicine
   canBeAntag: false
   access:
   - Medical
   - Maintenance
+  - Chemistry
 
 - type: startingGear
   id: MedicalInternGear

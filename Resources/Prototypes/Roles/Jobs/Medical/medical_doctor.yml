@@ -6,14 +6,14 @@
   requirements:
     - !type:DepartmentTimeRequirement
       department: Medical
-      time: 9000 #2.5 hrs
+      time: 180000 #50 hrs
   startingGear: DoctorGear
   icon: "JobIconMedicalDoctor"
+  whitelist: true
   supervisors: job-supervisors-cmo
   access:
   - Medical
   - Maintenance
-  extendedAccess:
   - Chemistry
   special:
   - !type:GiveItemOnHolidaySpecial

@@ -63,8 +63,8 @@
   - CentralCommandOfficial
   - CBURN
   - ERTLeader
-  - ERTChaplain
-  - ERTJanitor
+ # - ERTChaplain # Removed
+ # - ERTJanitor # Removed
   - ERTMedical
   - ERTSecurity
   - ERTEngineer
@@ -78,8 +78,8 @@
   description: department-Engineering-description
   color: "#EFB341"
   roles:
- # - AtmosphericTechnician
-  - ChiefEngineer
+ # - AtmosphericTechnician # Removed
+ # - ChiefEngineer # Moved to Command
   - StationEngineer
   - TechnicalAssistant
 
@@ -89,8 +89,8 @@
   description: department-Medical-description
   color: "#52B4E9"
   roles:
-  - Chemist
-  - ChiefMedicalOfficer
+#  - Chemist # Removed
+#  - ChiefMedicalOfficer # Moved to Command
   - MedicalDoctor
   - MedicalIntern
   - Psychologist

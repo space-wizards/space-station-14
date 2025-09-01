@@ -6,15 +6,14 @@
   requirements:
   - !type:DepartmentTimeRequirement
     department: Medical
-    time: 9000 #2.5 hrs
+    time: 36000 #10 hrs
   startingGear: ParamedicGear
   icon: "JobIconParamedic"
+  whitelist: true
   supervisors: job-supervisors-cmo
   access:
   - Medical
   - Maintenance
-  extendedAccess:
-  - Chemistry
 
 - type: startingGear
   id: ParamedicGear
