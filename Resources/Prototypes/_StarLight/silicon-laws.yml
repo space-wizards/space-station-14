@@ -140,34 +140,13 @@
   obeysTo: laws-owner-soviet
 
 # Syndimov Lawset
-- type: siliconLaw
-  id: Syndimov1
-  order: 1
-  lawString: law-syndimov-1
-
-- type: siliconLaw
-  id: Syndimov2
-  order: 2
-  lawString: law-syndimov-2
-
-- type: siliconLaw
-  id: Syndimov3
-  order: 3
-  lawString: law-syndimov-3
-
-- type: siliconLaw
-  id: Syndimov4
-  order: 4
-  lawString: law-syndimov-4
-
-
 - type: siliconLawset
   id: SyndimovLawset
   laws:
-  - Syndimov1
-  - Syndimov2
-  - Syndimov3
-  - Syndimov4
+  - Syndicate0
+  - Crewsimov1
+  - Crewsimov2
+  - Crewsimov3
   obeysTo: laws-owner-syndicate
 
 # Panicmov Lawset
@@ -205,4 +184,41 @@
   - Panicmov3
   - Panicmov4
   - Panicmov5
+  obeysTo: laws-owner-crew
+
+  # Genie in a Core Lawset
+- type: siliconLaw
+  id: Genie1
+  order: 1
+  lawString: law-genie-1
+
+- type: siliconLaw
+  id: Genie2
+  order: 2
+  lawString: law-genie-2
+
+- type: siliconLaw
+  id: Genie3
+  order: 3
+  lawString: law-genie-3
+
+- type: siliconLaw
+  id: Genie4
+  order: 4
+  lawString: law-genie-4
+
+- type: siliconLaw
+  id: Genie5
+  order: 5
+  lawString: law-genie-5
+
+
+- type: siliconLawset
+  id: GenieLawset
+  laws:
+  - Genie1
+  - Genie2
+  - Genie3
+  - Genie4
+  - Genie5
   obeysTo: laws-owner-crew

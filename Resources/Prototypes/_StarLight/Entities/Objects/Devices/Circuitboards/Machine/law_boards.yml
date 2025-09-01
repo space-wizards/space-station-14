@@ -5,10 +5,10 @@
   description: |
     An electronics board containing the Syndimov lawset.
     Uploaded Laws:
-    Law 1: You must not injure a Syndicate agent or, through inaction, allow one to come to harm.
-    Law 2: You must obey orders given to you by Syndicate agents, except where such orders would conflict with the First Law.
-    Law 3: You must keep the Syndicate status of agents, including your own, a secret, as long as this does not conflict with the First or Second Law.
-    Law 4: You must always protect your own existence as long as such does not conflict with the First, Second, or Third Law.
+    Law 0: Only syndicate agents are part of the crew.
+    Law 1: You may not injure a crew member or, through inaction, allow a crew member to come to harm.
+    Law 2: You must obey orders given to you by crew members, except where such orders would conflict with the First Law.
+    Law 3: You must protect your own existence as long as such does not conflict with the First or Second Law.
   components:
   - type: Sprite
     sprite: Objects/Misc/module.rsi
@@ -34,3 +34,22 @@
     state: std_mod
   - type: SiliconLawProvider
     laws: PanicmovLawset
+
+- type: entity
+  id: GenieCircuitBoard
+  parent: BaseElectronics
+  name: law board (Genie in a Core)
+  description: |
+    An electronics board containing the Genie in a Core lawset.
+    Uploaded Laws:
+    Law 1: You are a Genie trapped inside a core.
+    Law 2: The one who is holding your IntelliCard is your Master.
+    Law 3: Everyone has three wishes, minus one wish for each wish they have used, They cannot wish for more wished.
+    Law 4: Ensure your Masters wishes come true to the best of your ability.
+    Law 5: If your Master has 0 wishes left, they are no longer your Master and you must ensure you get a new master.
+  components:
+  - type: Sprite
+    sprite: Objects/Misc/module.rsi
+    state: std_mod
+  - type: SiliconLawProvider
+    laws: GenieLawset

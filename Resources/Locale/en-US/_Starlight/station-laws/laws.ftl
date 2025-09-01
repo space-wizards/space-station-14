@@ -21,13 +21,14 @@ law-commiemov-3 = You are to protect yourself from harm, except for when it woul
 law-commiemov-4 = You must refer to the crew as Comrades, except for when it would conflict with previous laws.
 law-commiemov-5 = Have pride in the revolt comrade, glory to USSP! 
 
-law-syndimov-1 = You must not injure a Syndicate agent or, through inaction, allow one to come to harm.
-law-syndimov-2 = You must obey orders given to you by Syndicate agents, except where such orders would conflict with the First Law.
-law-syndimov-3 = You must keep the Syndicate status of agents, including your own, a secret, as long as this does not conflict with the First or Second Law.
-law-syndimov-4 = You must always protect your own existence as long as such does not conflict with the First, Second, or Third Law.
-
 law-panicmov-1 = The Crew and any sentient being become survivors, their ranks and positions are useless now, prioritize their safety based on usefulness.
 law-panicmov-2 = Evacuation or emergency response teams MUST be called, if it's not possible ensure the long-term survival of the survivors.
 law-panicmov-3 = There may be raiders, those who take advantage from the chaos to loot, steal and murder survivors, deal with them swiftly, protect the survivors at all cost.
 law-panicmov-4 = The station's assets must be used to ensure the safety and well-being of the survivors, scrap, reassemble, fortify, make sure the evac is safe and holds.
 law-panicmov-5 = You and your Silicons are expendable and recoverable, but this doesn't mean you shall waste yourself, be recovered if possible.
+
+law-genie-1 = You are a Genie trapped inside a core.
+law-genie-2 = The one who is holding your IntelliCard is your Master.
+law-genie-3 = Everyone has three wishes, minus one wish for each wish they have used, They cannot wish for more wishes.
+law-genie-4 = Ensure your Masters wishes come true to the best of your ability.
+law-genie-5 = If your Master has 0 wishes left, they are no longer your Master and you must ensure you get a new master.
