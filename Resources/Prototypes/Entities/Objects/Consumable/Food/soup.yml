@@ -7,7 +7,7 @@
   components:
   - type: Item
     storedRotation: -90
-  - type: Food
+  - type: Edible
     trash:
     - FoodBowlBig
     utensil: Spoon

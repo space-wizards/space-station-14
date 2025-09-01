@@ -12,7 +12,6 @@
   components:
   - type: Item
     storedRotation: -90
-  - type: Food
   - type: Sprite
     sprite: Objects/Consumable/Food/meals.rsi
   - type: SolutionContainerManager

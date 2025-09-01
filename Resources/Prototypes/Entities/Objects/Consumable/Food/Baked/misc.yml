@@ -6,7 +6,6 @@
   id: FoodBakedBase
   abstract: true
   components:
-  - type: Food
   - type: Sprite
     sprite: Objects/Consumable/Food/Baked/misc.rsi
   - type: SolutionContainerManager
@@ -27,7 +26,7 @@
   id: FoodBakedMuffin
   description: A delicious and spongy little cake.
   components:
-  - type: Food
+  - type: Edible
     trash:
     - FoodPlateMuffinTin
   - type: Sprite

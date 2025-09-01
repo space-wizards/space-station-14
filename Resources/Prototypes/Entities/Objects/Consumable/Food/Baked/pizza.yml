@@ -10,7 +10,6 @@
     flavors:
       - oily
       - bread
-  - type: Food
   - type: Sprite
     sprite: Objects/Consumable/Food/Baked/pizza.rsi
   - type: SolutionContainerManager
@@ -42,7 +41,6 @@
     flavors:
       - oily
       - bread
-  - type: Food
   - type: Sprite
     sprite: Objects/Consumable/Food/Baked/pizza.rsi
   - type: SolutionContainerManager

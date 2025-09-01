@@ -203,6 +203,7 @@
   - type: StepTrigger
   - type: Edible
     edible: Drink
+    utensil: Spoon
     delay: 3
     transferAmount: 1
     solution: puddle

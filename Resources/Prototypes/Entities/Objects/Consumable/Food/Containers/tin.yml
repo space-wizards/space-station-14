@@ -87,7 +87,7 @@
     flavors:
     - sweet
     - funny
-  - type: Food
+  - type: Edible
     trash: 
     - FoodTinPeachesTrash
   - type: Tag
@@ -148,7 +148,8 @@
     - savory
     - salty
     - cheap
-  - type: Food
+  - type: Edible
+    utensil: Spoon
     trash: 
     - FoodTinBeansTrash
 
@@ -178,7 +179,7 @@
     - meaty
     - salty
     - cheap
-  - type: Food
+  - type: Edible
     trash: 
     - FoodTinMRETrash
   - type: Tag
