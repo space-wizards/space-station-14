@@ -8,7 +8,6 @@
   parent:
   - BaseMachinePowered
   - BaseMob
-  - StripableInventoryBase
   id: MothershipCore
   name: mothership core
   description: A sentient machine that can produce Xenoborgs. Without this the Xenoborgs are doomed.
@@ -91,6 +90,17 @@
     maxIntensity: 100
     intensitySlope: 2
     totalIntensity: 200
+  - type: SurveillanceCameraSpeaker
+  - type: SurveillanceCameraMonitor
+  - type: RoboticsConsole
+    allowBorgControl: false
+    radioChannel: Xenoborg
+  - type: DeviceNetwork
+    deviceNetId: Wireless
+    receiveFrequencyId: Mothership
+    transmitFrequencyId: Mothership
+  - type: WirelessNetworkConnection
+    range: 10000 # mothership can see them from very far
   - type: WiresPanel
   - type: ActivatableUI
     key: enum.LatheUiKey.Key
@@ -100,12 +110,12 @@
       enum.SiliconLawsUiKey.Key:
         type: SiliconLawBoundUserInterface
         requireInputValidation: false
-      enum.StrippingUiKey.Key:
-        type: StrippableBoundUserInterface
-      enum.PowerMonitoringConsoleUiKey.Key:
-        type: PowerMonitoringConsoleBoundUserInterface
       enum.RadarConsoleUiKey.Key:
         type: RadarConsoleBoundUserInterface
+      enum.RoboticsConsoleUiKey.Key:
+        type: RoboticsConsoleBoundUserInterface
+      enum.SurveillanceCameraMonitorUiKey.Key:
+        type: SurveillanceCameraMonitorBoundUserInterface
       enum.LatheUiKey.Key:
         type: LatheBoundUserInterface
       enum.ResearchClientUiKey.Key:
@@ -116,7 +126,7 @@
   - type: StaticPrice
     price: 800
   - type: WarpPoint
-    location: mothership core
+    location: Mothership Core
     follow: true
   - type: VoiceOverride
     nameOverride: MOTHERSHIP CORE
@@ -185,55 +195,42 @@
     whitelist:
       components:
       - BorgChassis
-  - type: XenoborgFactory
-    recipe: XenoborgEngiRecipe
-    borgRecipePack: EmptyXenoborgs
-    whitelist:
-      components:
-      - MobState
-    blacklist:
-      components:
-      - BorgChassis
-  - type: CollideXenoborgFactory
-  - type: Conveyor
   - type: IntrinsicUI
     uis:
-      enum.PowerMonitoringConsoleUiKey.Key:
-        toggleAction: ActionMothershipShowPower
       enum.RadarConsoleUiKey.Key:
-        toggleAction: ActionMothershipShowRadar
+        toggleAction: ActionAGhostShowRadar
+      enum.RoboticsConsoleUiKey.Key:
+        toggleAction: ActionXenoborgControlMonitor
+      enum.SurveillanceCameraMonitorUiKey.Key:
+        toggleAction: ActionXenoborgCameraMonitor
   - type: ShowElectrocutionHUD
-  - type: PowerMonitoringConsole
   - type: PowerMonitoringCableNetworks
   - type: RadarConsole
 
-# TODO: add xenoborg control interface action (part 5)
-# TODO: add xenoborg camera monitor interface action (part 5)
-
 - type: entity
-  id: ActionMothershipShowPower
-  name: Power Monitoring Interface
-  description: View the Power Monitoring Interface.
+  parent: BaseAGhostAction
+  id: ActionXenoborgControlMonitor
+  name: Xenoborgs Control Console
+  description: View the Xenoborgs Control Console
   components:
   - type: Action
-    icon:
-      sprite: Structures/Machines/computers.rsi # TODO: custom sprite here (part 5)
-      state: power_monitor
-    keywords: [ "AI", "console", "interface" ]
+    icon: { sprite: Interface/Actions/actions_borg.rsi, state: xenoborg-basic-module }
+    iconOn: Interface/Actions/actions_borg.rsi/xenoborg-basic-module.png
+    keywords: [ "Mothership Core", "console", "interface" ]
     priority: -6
   - type: InstantAction
-    event: !type:ToggleIntrinsicUIEvent { key: enum.PowerMonitoringConsoleUiKey.Key }
+    event: !type:ToggleIntrinsicUIEvent { key: enum.RoboticsConsoleUiKey.Key }
 
 - type: entity
-  id: ActionMothershipShowRadar
-  name: Radar Monitor
-  description: View the radar monitor.
+  parent: BaseAGhostAction
+  id: ActionXenoborgCameraMonitor
+  name: Xenoborgs Camera Monitor
+  description: View the Xenoborgs Camera Monitor
   components:
   - type: Action
-    icon:
-      sprite: Structures/Machines/computers.rsi # TODO: custom sprite here (part 5)
-      state: solar_screen
-    keywords: [ "AI", "console", "interface" ]
+    icon: { sprite: Interface/Actions/actions_borg.rsi, state: xenoborg-eye-module }
+    iconOn: Interface/Actions/actions_borg.rsi/xenoborg-eye-module.png
+    keywords: [ "Mothership Core", "console", "interface" ]
     priority: -6
   - type: InstantAction
-    event: !type:ToggleIntrinsicUIEvent { key: enum.RadarConsoleUiKey.Key }
+    event: !type:ToggleIntrinsicUIEvent { key: enum.SurveillanceCameraMonitorUiKey.Key }
