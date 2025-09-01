@@ -21,7 +21,7 @@ public sealed partial class RestrictByEquippedTagComponent : Component
     /// The message to show when the user doesn't have the required equipped item.
     /// </summary>
     [DataField(required: true), AutoNetworkedField]
-    public string DenialMessage = "You do not have required item to use this.";
+    public string DenialMessage = "You do not have the required item to use this.";
 
     /// <summary>
     /// The sound to play when user is denied the access. If null, no sound is played.
