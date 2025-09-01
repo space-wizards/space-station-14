@@ -12677,5 +12677,12 @@ Entries:
   id: 144800
   time: '2025-09-01T20:52:30.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/1448
+- author: PubliclyExecutedPig
+  changes:
+  - message: Energy Shotgun capacity 15 lethal / 20 disabler --> 10 lethal / 16 disabler
+    type: Tweak
+  id: 137100
+  time: '2025-09-01T21:00:03.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1371
 Order: -1
 
