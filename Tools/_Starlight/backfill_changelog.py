@@ -1,9 +1,8 @@
 import os
-import subprocess
-import sys
+import json
 from github import Github
 
-print("=== Backfill Changelog Script Started ===")
+print("=== Backfill Changelog Finder Script Started ===")
 
 print("Environment Variables:")
 changelog_path = os.getenv("CHANGELOG_FILE_PATH")
@@ -68,52 +67,8 @@ def get_existing_changelog_entries():
     print(f"Found {len(existing_entries)} existing changelog entries for PRs: {sorted(existing_entries)}")
     return existing_entries
 
-def run_changelog_update_for_pr(pr_number):
-    """Run the existing update_changelog.py script for a specific PR"""
-    
-    # We know these are not None due to validation above
-    assert changelog_path is not None
-    assert repo_name is not None
-    assert github_token is not None
-    
-    # Set up environment variables for the existing script
-    env = os.environ.copy()
-    env["PR_NUMBER"] = str(pr_number)
-    env["CHANGELOG_FILE_PATH"] = changelog_path
-    env["GITHUB_REPOSITORY"] = repo_name
-    env["GITHUB_TOKEN"] = github_token
-    
-    # Get the directory of the current script
-    script_dir = os.path.dirname(os.path.abspath(__file__))
-    update_script_path = os.path.join(script_dir, "update_changelog.py")
-    
-    print(f"  Running update_changelog.py for PR #{pr_number}")
-    
-    try:
-        # Run the existing update_changelog.py script
-        result = subprocess.run(
-            [sys.executable, update_script_path],
-            env=env,
-            capture_output=True,
-            text=True,
-            timeout=60  # 60 second timeout
-        )
-        
-        if result.returncode == 0:
-            print(f"  Successfully processed PR #{pr_number}")
-            return True
-        else:
-            print(f"  Error processing PR #{pr_number}: {result.stderr}")
-            return False
-            
-    except subprocess.TimeoutExpired:
-        print(f"  Timeout processing PR #{pr_number}")
-        return False
-    except Exception as e:
-        print(f"  Exception processing PR #{pr_number}: {str(e)}")
-        return False
-
-def backfill_changelog():
+def find_missing_changelog_prs():
+    """Find PRs that need changelog entries and return their numbers"""
     # Get existing changelog entries to avoid duplicates
     existing_pr_numbers = get_existing_changelog_entries()
     
@@ -122,8 +77,8 @@ def backfill_changelog():
     # Get recent commits from the main branch
     commits = list(repo.get_commits(sha='Starlight'))[:commits_count]
     
+    missing_prs = []
     processed_count = 0
-    added_count = 0
     skipped_count = 0
     
     for commit in commits:
@@ -167,10 +122,8 @@ def backfill_changelog():
                 print(f"  No ':cl:' tag found in PR #{pr_number} body, skipping")
                 continue
             
-            # Use the existing update_changelog.py script
-            if run_changelog_update_for_pr(pr_number):
-                added_count += 1
-                existing_pr_numbers.add(pr_number)  # Track this PR as processed
+            print(f"  PR #{pr_number} needs changelog entry")
+            missing_prs.append(pr_number)
             
         except Exception as e:
             print(f"  Error processing PR #{pr_number}: {str(e)}")
@@ -178,12 +131,18 @@ def backfill_changelog():
     
     print(f"\n=== Summary ===")
     print(f"Processed {processed_count} commits")
-    print(f"Added changelog entries for {added_count} PRs")
+    print(f"Found {len(missing_prs)} PRs needing changelog entries")
     print(f"Skipped {skipped_count} PRs (already have changelog entries)")
-    if added_count > 0:
-        print(f"Changelog entries were added to {changelog_path}")
+    
+    if missing_prs:
+        print(f"Missing PRs: {missing_prs}")
+        # Output as JSON for GitHub Actions
+        print(f"::set-output name=missing_prs::{json.dumps(missing_prs)}")
+        return missing_prs
     else:
-        print("No new changelog entries added - all recent PRs already have changelog entries")
+        print("No missing changelog entries found")
+        print("::set-output name=missing_prs::[]")
+        return []
 
 if __name__ == "__main__":
-    backfill_changelog()
+    find_missing_changelog_prs()

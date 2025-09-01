@@ -31,7 +31,8 @@ jobs:
         run: |
           pip install pyyaml PyGithub
 
-      - name: Backfill Changelogs
+      - name: Find Missing Changelog PRs
+        id: find_prs
         env:
           CHANGELOG_FILE_PATH: 'Resources/Changelog/ChangelogStarlight.yml'
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -40,18 +41,36 @@ jobs:
         run: |
           python ./Tools/_Starlight/backfill_changelog.py
 
+      - name: Process Missing PRs
+        if: steps.find_prs.outputs.missing_prs != '[]'
+        env:
+          CHANGELOG_FILE_PATH: 'Resources/Changelog/ChangelogStarlight.yml'
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_REPOSITORY: ${{ github.repository }}
+        run: |
+          missing_prs='${{ steps.find_prs.outputs.missing_prs }}'
+          echo "Processing PRs: $missing_prs"
+          
+          # Parse JSON array and process each PR
+          echo "$missing_prs" | jq -r '.[]' | while read pr_number; do
+            echo "Processing PR #$pr_number"
+            export PR_NUMBER=$pr_number
+            python ./Tools/_Starlight/update_changelog.py
+            if [ $? -eq 0 ]; then
+              echo "Successfully processed PR #$pr_number"
+            else
+              echo "Failed to process PR #$pr_number"
+            fi
+          done
+
       - name: Display changelog after backfill
         run: |
           if [ -f "Resources/Changelog/ChangelogStarlight.yml" ]; then
-            echo "=== Current changelog content ==="
-            cat "Resources/Changelog/ChangelogStarlight.yml"
+            echo "=== Changelog updated ==="
+            git diff --name-only
           else
             echo "Changelog file not found"
           fi
-
-      - name: Git status before commit
-        run: |
-          git status
 
       - name: Commit and push changes
         run: |
