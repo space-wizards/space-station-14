@@ -12,6 +12,7 @@ using Content.Shared.DoAfter;
 using Content.Shared.DragDrop;
 using Content.Shared.Emag.Systems;
 using Content.Shared.Examine;
+using Content.Shared.Humanoid;
 using Content.Shared.Interaction;
 using Content.Shared.MedicalScanner;
 using Content.Shared.Mobs.Components;
@@ -118,6 +119,13 @@ public abstract partial class SharedCryoPodSystem : EntitySystem
     {
         if (ent.Comp.BodyContainer.ContainedEntity != null)
             return;
+
+        if (!HasComp<HumanoidAppearanceComponent>(args.Dragged))
+        {
+            _popup.PopupClient(Loc.GetString("cryo-pod-reject-nonhumanoid"), ent, args.User);
+            args.Handled = true;
+            return;
+        }
 
         var doAfterArgs = new DoAfterArgs(EntityManager, args.User, ent.Comp.EntryDelay, new CryoPodDragFinished(), ent, target: args.Dragged, used: ent)
         {
@@ -246,6 +254,9 @@ public abstract partial class SharedCryoPodSystem : EntitySystem
             return false;
 
         if (!HasComp<MobStateComponent>(target))
+            return false;
+
+        if (!HasComp<HumanoidAppearanceComponent>(target))
             return false;
 
         var xform = Transform(target);
