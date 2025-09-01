@@ -12,6 +12,7 @@ public static class EntityExtensions
         }
         
         protoId = new EntProtoId(entityPrototype.ID);
+        
         return true;
     }
 }
