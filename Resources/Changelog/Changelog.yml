@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: PJB3005
-  changes:
-  - message: Wallmount substations now have an interface too.
-    type: Fix
-  id: 8393
-  time: '2025-04-30T00:34:21.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/37047
 - author: EmoGarbage404
   changes:
   - message: Fixed NPCs stalling out when too many exist.
@@ -3949,3 +3942,10 @@
   id: 8905
   time: '2025-08-31T12:54:45.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/39027
+- author: quasr-9
+  changes:
+  - message: Moths can now properly remove knives and other items from military boots.
+    type: Fix
+  id: 8906
+  time: '2025-09-01T15:07:43.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/40049
