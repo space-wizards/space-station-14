@@ -11,6 +11,7 @@ using Content.Shared.Hands;
 using Content.Shared.Hands.Components;
 using Content.Shared.Inventory;
 using Content.Shared.Inventory.Events;
+using Robust.Shared.Localization;
 
 namespace Content.Server._Starlight.IdClothingBlocker;
 
@@ -29,7 +30,7 @@ public sealed class IdClothingBlockerSystem : SharedIdClothingBlockerSystem
         SubscribeLocalEvent<InventoryComponent, DidUnequipEvent>(OnAnyInventoryUnequipped);
     }
 
-    protected override async void OnUnauthorizedAccess(EntityUid clothingUid, IdClothingBlockerComponent component, EntityUid wearer)
+    protected override void OnUnauthorizedAccess(EntityUid clothingUid, IdClothingBlockerComponent component, EntityUid wearer)
     {
         var blockedComponent = EntityManager.EnsureComponent<IdClothingFrozenComponent>(wearer);
         blockedComponent.ClothingItem = clothingUid;
@@ -158,21 +159,20 @@ public sealed class IdClothingBlockerSystem : SharedIdClothingBlockerSystem
 
     private void UpdateClothingBlockingState(EntityUid wearer)
     {
-        var query = EntityQueryEnumerator<IdClothingBlockerComponent>();
-        while (query.MoveNext(out var clothingUid, out var component))
+        if (!TryComp<InventoryComponent>(wearer, out var inventory))
+            return;
+
+        foreach (var container in inventory.Containers)
         {
-            if (TryComp<InventoryComponent>(wearer, out var inventory))
-            {
-                foreach (var container in inventory.Containers)
-                {
-                    if (container.ContainedEntity == clothingUid)
-                    {
-                        bool hasAccess = HasJobAccess(wearer, component);
-                        SetBlocked(clothingUid, component, !hasAccess);
-                        break;
-                    }
-                }
-            }
+            var clothing = container.ContainedEntity;
+            if (clothing == null)
+                continue;
+
+            if (!TryComp<IdClothingBlockerComponent>(clothing, out var blocker))
+                continue;
+
+            var hasAccess = HasJobAccess(wearer, blocker);
+            SetBlocked(clothing.Value, blocker, !hasAccess);
         }
     }
 }

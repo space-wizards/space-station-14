@@ -32,7 +32,7 @@ public abstract class SharedIdClothingFrozenSystem : EntitySystem
     }
 
     /// <summary>
-    /// Handles movement update events, preventing movement while in stasis.
+    /// Handles movement update events, preventing movement while frozen.
     /// </summary>
     private void OnUpdateCanMove(EntityUid uid, IdClothingFrozenComponent component, UpdateCanMoveEvent args)
     {

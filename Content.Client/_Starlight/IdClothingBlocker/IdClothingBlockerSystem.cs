@@ -3,8 +3,8 @@ using Content.Shared._Starlight.IdClothingBlocker;
 namespace Content.Client._Starlight.IdClothingBlocker;
 
 /// <summary>
-/// Client-side implementation of AccessClothingBlockedSystem
-/// Defined to block action and attack predictions
+/// Client-side implementation of SharedIdClothingBlockerSystem
+/// Defined for correct unequip predictions
 /// </summary>
 public sealed class IdClothingBlockerSystem : SharedIdClothingBlockerSystem
 {

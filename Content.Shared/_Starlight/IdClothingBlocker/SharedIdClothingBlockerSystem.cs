@@ -1,7 +1,7 @@
 using Content.Shared.Inventory.Events;
 using Content.Shared.DoAfter;
 using Content.Shared.Clothing.Components;
-using Robust.Shared.Log;
+using Robust.Shared.Localization;
 
 namespace Content.Shared._Starlight.IdClothingBlocker;
 
@@ -47,8 +47,6 @@ public abstract class SharedIdClothingBlockerSystem : EntitySystem
     
     protected virtual bool HasJobAccess(EntityUid wearer, IdClothingBlockerComponent component)
     {
-        // Debug logging to troubleshoot the isBlocked field
-        Logger.Debug($"HasJobAccess called for wearer {wearer}, component.IsBlocked = {component.IsBlocked}");
         return !component.IsBlocked;
     }
 
