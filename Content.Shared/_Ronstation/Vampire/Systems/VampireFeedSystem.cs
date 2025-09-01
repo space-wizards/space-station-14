@@ -8,6 +8,7 @@ using Content.Shared.Body.Systems;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Damage;
+using Content.Shared.Database;
 using Content.Shared.DoAfter;
 using Content.Shared.Mobs.Systems;
 using Content.Shared.Popups;
@@ -18,6 +19,7 @@ namespace Content.Shared._Ronstation.Vampire.Systems;
 
 public sealed class VampireFeedSystem : EntitySystem
 {
+    [Dependency] private readonly SharedBloodstreamSystem _bloodstreamSystem = default!;
     [Dependency] private readonly SharedDoAfterSystem _doAfterSystem = default!;
     [Dependency] protected readonly SharedSolutionContainerSystem SolutionContainer = default!;
     [Dependency] private readonly SharedActionsSystem _actionsSystem = default!;
@@ -30,7 +32,6 @@ public sealed class VampireFeedSystem : EntitySystem
     public override void Initialize()
     {
         base.Initialize();
-
 
         SubscribeLocalEvent<VampireFeedComponent, MapInitEvent>(OnMapInit);
         SubscribeLocalEvent<VampireFeedComponent, VampireFeedActionEvent>(OnFeedAction);
@@ -53,16 +54,19 @@ public sealed class VampireFeedSystem : EntitySystem
 
     private bool IsTargetValid(EntityUid target, Entity<VampireFeedComponent> ent)
     {
+        // Targets without blood can't have their blood drank
         if (!TryComp<BloodstreamComponent>(target, out BloodstreamComponent? comp))
             return false;
 
         if (SolutionContainer.ResolveSolution(comp.Owner, comp.BloodSolutionName, ref comp.BloodSolution, out var bloodSolution))
         {
+            // Can't drink from a target without a beating heart
             if (_mobState.IsDead(target))
             {
                 _popupSystem.PopupClient(Loc.GetString("vampire-feed-attempt-failed-dead"), ent, ent, PopupType.Medium);
                 return false;
             }
+            // Not enough blood = not enough blood flow (to stop people from 'farming')
             if (bloodSolution.Volume < 10)
             {
                 _popupSystem.PopupClient(Loc.GetString("vampire-feed-attempt-failed-low-blood"), ent, ent, PopupType.Medium);
@@ -75,19 +79,25 @@ public sealed class VampireFeedSystem : EntitySystem
 
     private void OnFeedAction(Entity<VampireFeedComponent> ent, ref VampireFeedActionEvent args)
     {
+        // If we already handeled it or our target isn't whitelisted, nope out
         if (args.Handled || _whitelistSystem.IsWhitelistFailOrNull(ent.Comp.Whitelist, args.Target))
             return;
-
+        // We are now handling the action
         args.Handled = true;
         var target = args.Target;
 
+        // Don't drink yourself, idiot
         if (target == ent.Owner)
             return;
 
+        // Check that our target makes sense
         if (!IsTargetValid(target, ent))
             return;
-        // _adminLogger.Add(LogType.Action, LogImpact.Medium, $"{ent:player} started drinking {target:player}'s blood");
 
+        // Log it for admins so they can see what's happening
+        _adminLogger.Add(LogType.Action, LogImpact.Medium, $"{ent:player} started drinking {target:player}'s blood");
+
+        // Run OnFeedDoafter, passing the necessary args
         _doAfterSystem.TryStartDoAfter(new DoAfterArgs(EntityManager, ent, ent.Comp.Delay, new VampireFeedDoAfterEvent(), ent, target: target, used: ent)
         {
             BreakOnMove = true,
@@ -95,37 +105,41 @@ public sealed class VampireFeedSystem : EntitySystem
             DuplicateCondition = DuplicateConditions.None,
         });
     }
-
+    // What happens after the do-after
     private void OnFeedDoAfter(Entity<VampireFeedComponent> ent, ref VampireFeedDoAfterEvent args)
     {
         args.Handled = true;
 
-        // if (!EntityManager.EntityExists(ent.Comp.CurrentDevourSound))
-        //     _audio.Stop(ent.Comp.CurrentDevourSound!);
-
+        // We moved/got interrupted
         if (args.Cancelled)
             return;
 
+        // Somehow they don't have a bloodstream, ergo we can't take anything
         if (!TryComp<BloodstreamComponent>(args.Target, out BloodstreamComponent? bloodstream))
             return;
 
+        // Somehow it can't take damage
         if (!TryComp<DamageableComponent>(args.Target, out var damage))
             return;
 
+        // Check their blood is in their bloodstream
         if (!SolutionContainer.ResolveSolution(bloodstream.Owner, bloodstream.BloodSolutionName, ref bloodstream.BloodSolution, out var bloodSolution))
             return;
 
-        bloodSolution.Volume = bloodSolution.Volume - 10;
-        if (bloodSolution.Volume < 0)
-            bloodSolution.Volume = 0;
+        // Target loses some blood
+        _bloodstreamSystem.TryModifyBloodLevel(bloodstream.Owner, -ent.Comp.TransferAmount);
 
+        // Target takes some damage, then the slurp sound playsF
         _damageable.TryChangeDamage(args.Target, ent.Comp.DamagePerTick, true, true, damage, args.User);
         _audio.PlayPredicted(ent.Comp.FeedNoise, args.Target.Value, args.User, AudioParams.Default.WithVolume(-2f).WithVariation(0.25f));
 
+        // Vampire gets a little stronger(ergo, they get more vitae)
         if (TryComp<VampireComponent>(ent.Owner, out VampireComponent? comp))
         {
             comp.VitaeRegenCap = comp.VitaeRegenCap + comp.VitaeCapUpgradeAmount;
         }
+
+        // Check if we can still feed, if so, repeat
         args.Repeat = IsTargetValid(args.Target.Value, ent);
     }
 }
