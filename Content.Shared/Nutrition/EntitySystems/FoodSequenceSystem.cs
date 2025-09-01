@@ -239,7 +239,7 @@ public sealed class FoodSequenceSystem : SharedFoodSequenceSystem
     private void MergeTrash(EntityUid start, EntityUid element)
     {
         // TODO: EdibleComponent.Trash is read-only
-        // Trash merging may need to be handled differently or trash needs ot be made writable.
+        // Trash merging may need to be handled differently or trash needs to be made writable.
         return;
     }
 
