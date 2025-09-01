@@ -18,7 +18,7 @@
   - type: SolutionTransfer
     canChangeTransferAmount: true
     maxTransferAmount: 5
-  - type: Drink
+  - type: Edible
   - type: MeleeWeapon
     soundNoDamage:
       path: "/Audio/Effects/Fluids/splat.ogg"
@@ -110,7 +110,7 @@
   - type: SolutionTransfer
     canChangeTransferAmount: true
     maxTransferAmount: 5
-  - type: Drink
+  - type: Edible
   - type: Spillable
     solution: drink
   - type: FitsInDispenser

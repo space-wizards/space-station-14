@@ -892,7 +892,7 @@
     radius: 4.0
     energy: 3.5
     color: "#bbbbbb"
-  - type: BadFood
+  - type: BadIngestable
   - type: Anomaly
     corePrototype: AnomalyCoreLiquid
     coreInertPrototype: AnomalyCoreLiquidInert
@@ -971,7 +971,7 @@
     - Honk
     - Carpetium
     - JuiceThatMakesYouWeh
-  - type: Drink
+  - type: Edible
     solution: anomaly
   - type: DrainableSolution
     solution: anomaly

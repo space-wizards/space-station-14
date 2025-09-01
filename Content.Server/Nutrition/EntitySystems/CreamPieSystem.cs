@@ -33,7 +33,7 @@ namespace Content.Server.Nutrition.EntitySystems
             base.Initialize();
 
             // activate BEFORE entity is deleted and trash is spawned
-            SubscribeLocalEvent<CreamPieComponent, ConsumeDoAfterEvent>(OnConsume, before: [typeof(FoodSystem)]);
+            SubscribeLocalEvent<CreamPieComponent, ConsumeDoAfterEvent>(OnConsume, before: [typeof(IngestionSystem)]);
             SubscribeLocalEvent<CreamPieComponent, SliceFoodEvent>(OnSlice);
 
             SubscribeLocalEvent<CreamPiedComponent, RejuvenateEvent>(OnRejuvenate);
@@ -45,13 +45,13 @@ namespace Content.Server.Nutrition.EntitySystems
             var coordinates = Transform(uid).Coordinates;
             _audio.PlayPvs(_audio.ResolveSound(creamPie.Sound), coordinates, AudioParams.Default.WithVariation(0.125f));
 
-            if (TryComp(uid, out FoodComponent? foodComp))
+            if (TryComp(uid, out EdibleComponent? edibleComp))
             {
-                if (_solutions.TryGetSolution(uid, foodComp.Solution, out _, out var solution))
+                if (_solutions.TryGetSolution(uid, edibleComp.Solution, out _, out var solution))
                 {
                     _puddle.TrySpillAt(uid, solution, out _, false);
                 }
-                foreach (var trash in foodComp.Trash)
+                foreach (var trash in edibleComp.Trash)
                 {
                     Spawn(trash, Transform(uid).Coordinates);
                 }

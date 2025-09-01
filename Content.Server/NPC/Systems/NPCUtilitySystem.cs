@@ -174,14 +174,14 @@ public sealed class NPCUtilitySystem : EntitySystem
                 if (!_ingestion.CanConsume(owner, targetUid))
                     return 0f;
 
-                var avoidBadFood = !HasComp<IgnoreBadFoodComponent>(owner);
+                var avoidBadFood = !HasComp<IgnoreBadIngestableComponent>(owner);
 
                 // only eat when hungry or if it will eat anything
                 if (TryComp<HungerComponent>(owner, out var hunger) && hunger.CurrentThreshold > HungerThreshold.Okay && avoidBadFood)
                     return 0f;
 
                 // no mouse don't eat the uranium-235
-                if (avoidBadFood && HasComp<BadFoodComponent>(targetUid))
+                if (avoidBadFood && HasComp<BadIngestableComponent>(targetUid))
                     return 0f;
 
                 var nutrition = _ingestion.TotalNutrition(targetUid, owner);
@@ -201,7 +201,7 @@ public sealed class NPCUtilitySystem : EntitySystem
                     return 0f;
 
                 // no janicow don't drink the blood puddle
-                if (HasComp<BadDrinkComponent>(targetUid))
+                if (HasComp<BadIngestableComponent>(targetUid))
                     return 0f;
 
                 // needs to have something that will satiate thirst, mice wont try to drink 100% pure mutagen.

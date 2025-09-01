@@ -81,7 +81,7 @@
   - type: ReactiveContainer
     solution: bucket
     container: item_slot
-  - type: Drink
+  - type: Edible
     solution: bucket
   - type: Appearance
   - type: SolutionContainerVisuals
@@ -358,7 +358,7 @@
       interfaces:
         enum.StorageUiKey.Key:
           type: StorageBoundUserInterface
-    - type: Drink
+    - type: Edible
       solution: bucket
     - type: ContainerContainer
       containers:

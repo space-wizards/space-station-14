@@ -267,7 +267,7 @@
       solution: beaker
     - type: SolutionTransfer
       canChangeTransferAmount: true
-    - type: Drink
+    - type: Edible
       solution: beaker
 
 - type: entity

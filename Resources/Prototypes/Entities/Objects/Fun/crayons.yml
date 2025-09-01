@@ -22,7 +22,7 @@
         type: CrayonBoundUserInterface
   - type: Crayon
     capacity: 25
-  - type: Food
+  - type: Edible
   - type: FlavorProfile
     flavors:
     - chewy

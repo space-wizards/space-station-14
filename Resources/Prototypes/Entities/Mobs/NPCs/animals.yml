@@ -390,7 +390,7 @@
   - type: Bloodstream
     bloodReagent: InsectBlood
     bloodMaxVolume: 20
-  - type: Food
+  - type: Edible
   - type: FlavorProfile
     flavors:
     - horrible
@@ -1782,7 +1782,7 @@
         Base: dead-0
       Dead:
         Base: splat-0
-  - type: Food
+  - type: Edible
   - type: FlavorProfile
     flavors:
     - meaty
@@ -1856,7 +1856,7 @@
   - type: CanEscapeInventory
   - type: MobPrice
     price: 50
-  - type: BadFood
+  - type: BadIngestable
   - type: NonSpreaderZombie
   - type: FireVisuals
     sprite: Mobs/Effects/onfire.rsi
@@ -1898,7 +1898,7 @@
   suffix: Admeme
   components:
   # allow admeme mouse to eat pills
-  - type: IgnoreBadFood
+  - type: IgnoreBadIngestable
   # intended for swarms that eat pills so only temporary
   - type: TimedDespawn
     lifetime: 60
@@ -3440,7 +3440,7 @@
         Base: dead-0
       Dead:
         Base: splat-0
-  - type: Food
+  - type: Edible
   - type: FlavorProfile
     flavors:
     - meaty

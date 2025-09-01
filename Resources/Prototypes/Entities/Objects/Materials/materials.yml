@@ -553,7 +553,7 @@
   - type: Edible
     trash:
     - TrashBananiumPeel
-  - type: BadFood
+  - type: BadIngestable
   - type: SolutionContainerManager
     solutions:
       food:
@@ -746,7 +746,7 @@
       map: ["base"]
   - type: Appearance
   - type: Edible
-  - type: BadFood
+  - type: BadIngestable
   - type: SolutionContainerManager
     solutions:
       food:

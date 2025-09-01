@@ -245,7 +245,7 @@
   - type: MeleeWeapon
     soundHit:
       path: /Audio/Items/Toys/ian.ogg
-  - type: Food
+  - type: Edible
     requiresSpecialDigestion: true
     useSound:
       path: /Audio/Items/Toys/ian.ogg
@@ -970,7 +970,7 @@
   - type: FlavorProfile
     flavors:
     - plastic
-  - type: Food
+  - type: Edible
   - type: SolutionContainerManager
     solutions:
       food:

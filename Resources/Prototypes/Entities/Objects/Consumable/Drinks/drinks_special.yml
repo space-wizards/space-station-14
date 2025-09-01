@@ -10,7 +10,7 @@
         maxVol: 100
   - type: MixableSolution
     solution: drink
-  - type: Drink
+  - type: Edible
   - type: Shakeable
   - type: FitsInDispenser
     solution: drink
@@ -59,7 +59,7 @@
   - type: SolutionTransfer
     transferAmount: 10
     minTransferAmount: 10
-  - type: Drink
+  - type: Edible
   - type: Sprite
     sprite: Objects/Consumable/Drinks/shotglass.rsi
     layers:
@@ -83,7 +83,7 @@
   name: jar
   description: The hipster's cup.
   components:
-  - type: Drink
+  - type: Edible
   - type: Sprite
     sprite: Objects/Consumable/Drinks/jar.rsi
     layers:
@@ -114,7 +114,7 @@
   name: jar of something
   description: You can't really tell what this is.
   components:
-  - type: Drink
+  - type: Edible
   - type: Sprite
     sprite: Objects/Consumable/Drinks/jar_what.rsi
 
@@ -124,7 +124,7 @@
   components:
   - type: DrainableSolution
     solution: drink
-  - type: Drink
+  - type: Edible
   - type: DrawableSolution
     solution: drink
   - type: RefillableSolution

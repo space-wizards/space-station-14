@@ -7,7 +7,7 @@
   components:
   - type: Item
     storedRotation: -90
-  - type: Food
+  - type: Edible
     trash:
     - FoodBowlBig
     utensil: Spoon
@@ -315,7 +315,7 @@
         - ReagentId: Sugar
           Quantity: 8
         - ReagentId: Vitamin
-          Quantity: 17 
+          Quantity: 17
   - type: Tag
     tags:
     - Fruit
@@ -978,7 +978,7 @@
   - type: FlavorProfile
     flavors:
       - miso
-  - type: Food
+  - type: Edible
     trash:
     - FoodBowlFancy
   - type: Sprite

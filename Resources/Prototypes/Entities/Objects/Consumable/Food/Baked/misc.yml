@@ -6,7 +6,7 @@
   id: FoodBakedBase
   abstract: true
   components:
-  - type: Food
+  - type: Edible
   - type: Sprite
     sprite: Objects/Consumable/Food/Baked/misc.rsi
   - type: SolutionContainerManager
@@ -27,7 +27,7 @@
   id: FoodBakedMuffin
   description: A delicious and spongy little cake.
   components:
-  - type: Food
+  - type: Edible
     trash:
     - FoodPlateMuffinTin
   - type: Sprite
@@ -625,7 +625,7 @@
     - cotton
   - type: Sprite
     state: chevrechaud-cotton
-  - type: Food
+  - type: Edible
     requiresSpecialDigestion: true
   - type: Tag
     tags:
@@ -818,7 +818,7 @@
     - cotton
   - type: Sprite
     state: croissant-cotton
-  - type: Food
+  - type: Edible
     requiresSpecialDigestion: true
   - type: Tag
     tags:
@@ -876,7 +876,7 @@
   - type: Sprite
     sprite: Objects/Consumable/Food/Baked/misc.rsi
     state: grilled-cheese-cotton
-  - type: Food
+  - type: Edible
     requiresSpecialDigestion: true
   - type: Tag
     tags:

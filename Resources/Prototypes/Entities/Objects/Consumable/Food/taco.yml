@@ -8,7 +8,7 @@
   components:
   - type: Item
     storedRotation: -90
-  - type: Food
+  - type: Edible
     transferAmount: 3
   - type: Sprite
     sprite: Objects/Consumable/Food/taco_sequence.rsi
@@ -46,7 +46,7 @@
     flavors:
       - meaty
       - cheesy
-  - type: Food
+  - type: Edible
     transferAmount: 3
   - type: Sprite
     sprite: Objects/Consumable/Food/taco.rsi
@@ -72,7 +72,7 @@
   id: FoodTacoBeef
   description: A very basic and run of the mill beef taco, now with cheese!
   components:
-  - type: Food
+  - type: Edible
   - type: Sprite
     state: beeftaco
 
@@ -82,7 +82,7 @@
   id: FoodTacoChicken
   description: A very basic and run of the mill chicken taco, now with cheese!
   components:
-  - type: Food
+  - type: Edible
   - type: Sprite
     state: chickentaco
 
@@ -96,7 +96,7 @@
     flavors:
       - onion
       - fishy
-  - type: Food
+  - type: Edible
   - type: Sprite
     state: fishtaco
   - type: SolutionContainerManager
@@ -115,7 +115,7 @@
   id: FoodTacoRat
   description: Yeah, that looks about right...
   components:
-  - type: Food
+  - type: Edible
   - type: Sprite
     state: rattaco
   - type: SolutionContainerManager
@@ -134,7 +134,7 @@
   id: FoodTacoBeefSupreme
   description: It's like a regular beef taco, but supreme!
   components:
-  - type: Food
+  - type: Edible
   - type: Sprite
     state: beeftacosupreme
   - type: SolutionContainerManager
@@ -153,7 +153,7 @@
   id: FoodTacoChickenSupreme
   description: It's like a regular chicken taco, but supreme!
   components:
-  - type: Food
+  - type: Edible
   - type: Sprite
     state: chickentacosupreme
   - type: SolutionContainerManager
@@ -176,7 +176,7 @@
     flavors:
     - meaty
     - spicy
-  - type: Food
+  - type: Edible
   - type: Sprite
     state: dragontaco
   - type: SolutionContainerManager

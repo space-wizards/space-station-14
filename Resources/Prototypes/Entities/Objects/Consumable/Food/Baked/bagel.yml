@@ -60,7 +60,7 @@
     - cotton
   - type: Sprite
     state: bagel-cottondough
-  - type: Food
+  - type: Edible
     requiresSpecialDigestion: true
   - type: Tag
     tags:

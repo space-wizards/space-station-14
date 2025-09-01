@@ -48,7 +48,7 @@
     interfaces:
       enum.TransferAmountUiKey.Key:
         type: TransferAmountBoundUserInterface
-  - type: Drink
+  - type: Edible
     solution: beaker
   - type: Appearance
   - type: SolutionContainerVisuals
@@ -145,7 +145,7 @@
     interfaces:
       enum.TransferAmountUiKey.Key:
         type: TransferAmountBoundUserInterface
-  - type: Drink
+  - type: Edible
     solution: beaker
   - type: Appearance
   - type: SolutionContainerVisuals
@@ -555,7 +555,7 @@
     forceFeedDelay: 2
     transferAmount: null
     edible: Pill
-  - type: BadFood
+  - type: BadIngestable
   - type: FlavorProfile
     ignoreReagents: []
   - type: SolutionContainerManager

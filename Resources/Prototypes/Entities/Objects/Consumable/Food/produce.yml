@@ -1871,7 +1871,7 @@
     seedId: flyAmanita
   - type: Extractable
     grindableSolutionName: food
-  - type: BadFood
+  - type: BadIngestable
   - type: FoodSequenceElement
     entries:
       Taco: FlyAmanita
@@ -2415,7 +2415,7 @@
   - type: Seed
     seedId: bungo
   - type: SpaceGarbage
-  - type: BadFood
+  - type: BadIngestable
 
 - type: entity
   parent: FoodProduceBase
@@ -2718,7 +2718,7 @@
   - type: Seed
     seedId: cherry
   - type: SpaceGarbage
-  - type: BadFood
+  - type: BadIngestable
 
 - type: entity
   name: anomaly berry

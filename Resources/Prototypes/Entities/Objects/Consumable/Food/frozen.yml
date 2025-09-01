@@ -6,7 +6,7 @@
   id: FoodFrozenBase
   abstract: true
   components:
-  - type: Food
+  - type: Edible
   - type: Sprite
     sprite: Objects/Consumable/Food/frozen.rsi
   - type: SolutionContainerManager
@@ -87,8 +87,8 @@
     - state: popsicle-base
     - state: popsicle
       color: orange
-  - type: Food
-    trash: 
+  - type: Edible
+    trash:
     - FoodFrozenPopsicleTrash
   - type: Tag
     tags:
@@ -107,8 +107,8 @@
     - state: popsicle-base
     - state: popsicle
       color: red
-  - type: Food
-    trash: 
+  - type: Edible
+    trash:
     - FoodFrozenPopsicleTrash
   - type: Tag
     tags:
@@ -125,8 +125,8 @@
     layers:
     - state: stick
     - state: jumbo
-  - type: Food
-    trash: 
+  - type: Edible
+    trash:
     - FoodFrozenPopsicleTrash
   - type: SolutionContainerManager
     solutions:
@@ -156,8 +156,8 @@
         - state: cone
         - state: alpha-filling
     #      color: foo
-    - type: Food
-      trash: 
+    - type: Edible
+      trash:
       - FoodFrozenSnowconeTrash
     - type: SolutionContainerManager
       solutions:
@@ -195,8 +195,8 @@
     layers:
     - state: cone
     - state: berry
-  - type: Food
-    trash: 
+  - type: Edible
+    trash:
     - FoodFrozenSnowconeTrash
   - type: Tag
     tags:
@@ -212,8 +212,8 @@
     layers:
     - state: cone
     - state: fruitsalad
-  - type: Food
-    trash: 
+  - type: Edible
+    trash:
     - FoodFrozenSnowconeTrash
   - type: Tag
     tags:
@@ -229,8 +229,8 @@
     layers:
     - state: cone
     - state: clown
-  - type: Food
-    trash: 
+  - type: Edible
+    trash:
     - FoodFrozenSnowconeTrash
 
 - type: entity
@@ -243,8 +243,8 @@
     layers:
     - state: cone
     - state: mime
-  - type: Food
-    trash: 
+  - type: Edible
+    trash:
     - FoodFrozenSnowconeTrash
 
 - type: entity
@@ -257,8 +257,8 @@
     layers:
     - state: cone
     - state: rainbow
-  - type: Food
-    trash: 
+  - type: Edible
+    trash:
     - FoodFrozenSnowconeTrash
 
 # Trash

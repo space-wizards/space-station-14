@@ -137,7 +137,7 @@
           state: hand
 
   - type: InventorySlots
-  - type: Food
+  - type: Edible
   - type: Hunger
     baseDecayRate: 0.05 # They get a lil' hungy
   - type: BodyEmotes # Grants them clapping and so on.

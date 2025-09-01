@@ -63,9 +63,9 @@
   - type: FlavorProfile
     flavors:
       - clean
-  - type: Food
+  - type: Edible
     solution: soap
-  - type: BadFood
+  - type: BadIngestable
   - type: CleansForensics
   - type: Residue
     residueAdjective: residue-slippery

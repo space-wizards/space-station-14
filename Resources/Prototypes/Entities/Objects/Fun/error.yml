@@ -7,7 +7,7 @@
   - type: Sprite
     sprite: error.rsi
     state: error
-  - type: Food
+  - type: Edible
   - type: SolutionContainerManager
     solutions:
       food:

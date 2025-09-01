@@ -24,7 +24,7 @@
   - type: SolutionContainerVisuals
     maxFillLevels: 6
     fillBaseName: bottle-1-
-  - type: Drink
+  - type: Edible
   - type: SolutionContainerManager
     solutions:
       drink: # This solution name and target volume is hard-coded in ChemMasterComponent

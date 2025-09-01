@@ -12,7 +12,7 @@
   components:
   - type: Item
     storedRotation: -90
-  - type: Food
+  - type: Edible
   - type: Sprite
     sprite: Objects/Consumable/Food/meals.rsi
   - type: SolutionContainerManager
@@ -98,7 +98,7 @@
   id: FoodMealNachos
   description: Chips from Space Mexico.
   components:
-  - type: Food
+  - type: Edible
     trash:
     - FoodPlateSmall
   - type: FlavorProfile
@@ -123,7 +123,7 @@
   id: FoodMealNachosCheesy
   description: The delicious combination of nachos and melting cheese.
   components:
-  - type: Food
+  - type: Edible
     trash:
     - FoodPlateSmall
   - type: FlavorProfile
@@ -149,7 +149,7 @@
   id: FoodMealNachosCuban
   description: That's some dangerously spicy nachos.
   components:
-  - type: Food
+  - type: Edible
     trash:
     - FoodPlateSmall
   - type: FlavorProfile
@@ -349,7 +349,7 @@
   id: FoodMealRibs
   description: BBQ ribs, slathered in a healthy coating of BBQ sauce. The least vegan thing to ever exist.
   components:
-  - type: Food
+  - type: Edible
     trash:
     - FoodKebabSkewer
   - type: FlavorProfile
@@ -615,7 +615,7 @@
   id: FoodMealCornInButter
   description: Buttery.
   components:
-  - type: Food
+  - type: Edible
     trash:
     - FoodPlate
   - type: FlavorProfile

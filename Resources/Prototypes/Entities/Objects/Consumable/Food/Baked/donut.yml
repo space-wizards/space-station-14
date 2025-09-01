@@ -6,7 +6,7 @@
   abstract: true
   description: Goes great with robust coffee.
   components:
-  - type: Food
+  - type: Edible
   - type: Tag
     tags:
     - Donut

@@ -32,7 +32,7 @@
   components:
   - type: Item
     size: Tiny
-  - type: Drink
+  - type: Edible
     solution: food
   - type: Openable
     sound:
@@ -335,7 +335,7 @@
   name: condiment bottle
   description: A thin glass bottle used to store condiments.
   components:
-  - type: Drink
+  - type: Edible
     solution: food
   - type: Openable
     sound:
@@ -534,7 +534,7 @@
   components:
   - type: Item
     size: Tiny
-  - type: Drink
+  - type: Edible
     solution: food
   - type: SolutionContainerManager
     solutions:

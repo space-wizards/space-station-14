@@ -89,7 +89,7 @@
       ignoreWhitelist:
         components:
         - IgnoreKudzu
-    - type: Food
+    - type: Edible
       requiresSpecialDigestion: true
       delay: 0.5
     - type: FlavorProfile
@@ -246,7 +246,7 @@
       ignoreWhitelist:
         tags:
         - Flesh
-    - type: Food # delightfully devilish !
+    - type: Edible # delightfully devilish !
       delay: 0.5
     - type: SolutionContainerManager
       solutions:

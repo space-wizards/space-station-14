@@ -211,7 +211,7 @@
     locVolume: "examinable-solution-on-examine-volume-puddle"
   - type: DrawableSolution
     solution: puddle
-  - type: BadDrink
+  - type: BadIngestable
   - type: IgnoresFingerprints
   - type: Tag
     tags:

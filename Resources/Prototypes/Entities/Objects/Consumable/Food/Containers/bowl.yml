@@ -21,7 +21,7 @@
       visible: false
   - type: MixableSolution
     solution: food
-  - type: Drink
+  - type: Edible
     solution: food
     useSound:
       path: /Audio/Items/drink.ogg

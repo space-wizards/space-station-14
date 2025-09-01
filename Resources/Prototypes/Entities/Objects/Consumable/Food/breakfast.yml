@@ -10,7 +10,7 @@
   components:
   - type: Item
     storedRotation: -90
-  - type: Food
+  - type: Edible
   - type: Sprite
     sprite: Objects/Consumable/Food/breakfast.rsi
   - type: SolutionContainerManager

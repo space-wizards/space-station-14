@@ -33,7 +33,7 @@
       Cloth: 100
   - type: StaticPrice
     price: 5
-  - type: Food
+  - type: Edible
     requiresSpecialDigestion: true
     useSound: *BasePlushieSound
     delay: 2
@@ -192,7 +192,7 @@
   - type: EmitSoundOnCollide
     sound:
       path: /Audio/Items/Toys/mousesqueek.ogg
-  - type: Food
+  - type: Edible
     requiresSpecialDigestion: true
     useSound:
       path: /Audio/Items/Toys/mousesqueek.ogg
@@ -324,7 +324,7 @@
   - type: EmitSoundOnCollide
     sound:
       path: /Audio/Voice/Arachnid/arachnid_laugh.ogg
-  - type: Food
+  - type: Edible
     requiresSpecialDigestion: true
     useSound:
       path: /Audio/Voice/Arachnid/arachnid_laugh.ogg
@@ -365,7 +365,7 @@
     sound: *PlushieLizardSound
   - type: EmitSoundOnCollide
     sound: *PlushieLizardSound
-  - type: Food
+  - type: Edible
     requiresSpecialDigestion: true
     useSound: *PlushieLizardSound
   - type: MeleeWeapon
@@ -432,7 +432,7 @@
     sound: *PlushieExperimentSound
   - type: EmitSoundOnCollide
     sound: *PlushieExperimentSound
-  - type: Food
+  - type: Edible
     requiresSpecialDigestion: true
     useSound: *PlushieExperimentSound
   - type: MeleeWeapon
@@ -516,7 +516,7 @@
     sound: *PlushieSpaceLizardSound
   - type: EmitSoundOnCollide
     sound: *PlushieSpaceLizardSound
-  - type: Food
+  - type: Edible
     requiresSpecialDigestion: true
     useSound: *PlushieSpaceLizardSound
   - type: MeleeWeapon
@@ -556,7 +556,7 @@
     sound: *PlushieLizardInversedSound
   - type: EmitSoundOnTrigger
     sound: *PlushieLizardInversedSound
-  - type: Food
+  - type: Edible
     requiresSpecialDigestion: true
     useSound: *PlushieLizardInversedSound
   - type: MeleeWeapon
@@ -616,7 +616,7 @@
   - type: MeleeWeapon
     wideAnimationRotation: 180
     soundHit: *PlushieDionaSound
-  - type: Food
+  - type: Edible
     requiresSpecialDigestion: true
     useSound: *PlushieDionaSound
   - type: SolutionContainerManager
@@ -827,7 +827,7 @@
   - type: EmitSoundOnCollide
     sound:
       path: /Audio/Effects/bite.ogg
-  - type: Food
+  - type: Edible
     requiresSpecialDigestion: true
     useSound:
       path: /Audio/Effects/bite.ogg
@@ -974,7 +974,7 @@
   - type: EmitSoundOnCollide
     sound:
       path: /Audio/Items/Toys/rattle.ogg
-  - type: Food
+  - type: Edible
     requiresSpecialDigestion: true
     useSound:
       path: /Audio/Items/Toys/rattle.ogg
@@ -1017,7 +1017,7 @@
   - type: EmitSoundOnCollide
     sound:
       path: /Audio/Items/Toys/mousesqueek.ogg
-  - type: Food
+  - type: Edible
     requiresSpecialDigestion: true
     useSound:
       path: /Audio/Items/Toys/mousesqueek.ogg
@@ -1056,7 +1056,7 @@
     sound: *PlushieVoxSound
   - type: EmitSoundOnCollide
     sound: *PlushieVoxSound
-  - type: Food
+  - type: Edible
     requiresSpecialDigestion: true
     useSound: *PlushieVoxSound
   - type: MeleeWeapon
@@ -1121,7 +1121,7 @@
     sound: *PlushieXenoSound
   - type: EmitSoundOnCollide
     sound: *PlushieXenoSound
-  - type: Food
+  - type: Edible
     requiresSpecialDigestion: true
     useSound: *PlushieXenoSound
   - type: MeleeWeapon
@@ -1187,7 +1187,7 @@
       path: /Audio/Voice/Human/malescream_4.ogg
       params:
         volume: -8
-  - type: Food
+  - type: Edible
     requiresSpecialDigestion: true
     useSound:
       path: /Audio/Voice/Human/malescream_1.ogg
@@ -1239,7 +1239,7 @@
   - type: MeleeWeapon
     soundHit:
       path: /Audio/Voice/Moth/moth_chitter.ogg
-  - type: Food
+  - type: Edible
     requiresSpecialDigestion: true
     useSound:
       path: /Audio/Voice/Moth/moth_chitter.ogg

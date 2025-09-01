@@ -107,7 +107,7 @@ public sealed class FoodSequenceSystem : SharedFoodSequenceSystem
     private bool TryAddFoodElement(Entity<FoodSequenceStartPointComponent> start, Entity<FoodSequenceElementComponent> element, EntityUid? user = null)
     {
         // we can't add a live mouse to a burger.
-        if (!TryComp<FoodComponent>(element, out var elementFood))
+        if (!TryComp<EdibleComponent>(element, out var elementFood))
             return false;
         if (elementFood.RequireDead && _mobState.IsAlive(element))
             return false;
@@ -205,10 +205,10 @@ public sealed class FoodSequenceSystem : SharedFoodSequenceSystem
 
     private void MergeFoodSolutions(EntityUid start, EntityUid element)
     {
-        if (!TryComp<FoodComponent>(start, out var startFood))
+        if (!TryComp<EdibleComponent>(start, out var startFood))
             return;
 
-        if (!TryComp<FoodComponent>(element, out var elementFood))
+        if (!TryComp<EdibleComponent>(element, out var elementFood))
             return;
 
         if (!_solutionContainer.TryGetSolution(start, startFood.Solution, out var startSolutionEntity, out var startSolution))
@@ -238,16 +238,9 @@ public sealed class FoodSequenceSystem : SharedFoodSequenceSystem
 
     private void MergeTrash(EntityUid start, EntityUid element)
     {
-        if (!TryComp<FoodComponent>(start, out var startFood))
-            return;
-
-        if (!TryComp<FoodComponent>(element, out var elementFood))
-            return;
-
-        foreach (var trash in elementFood.Trash)
-        {
-            startFood.Trash.Add(trash);
-        }
+        // TODO: EdibleComponent.Trash is read-only
+        // Trash merging may need to be handled differently or trash needs ot be made writable.
+        return;
     }
 
     private void MergeTags(EntityUid start, EntityUid element)

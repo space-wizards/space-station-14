@@ -25,7 +25,7 @@
     solution: food
   - type: DrainableSolution
     solution: food
-  - type: Drink
+  - type: Edible
     solution: food
     useSound:
       collection: eating

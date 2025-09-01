@@ -10,7 +10,7 @@
     sprite: Objects/Specific/Hydroponics/cannabis.rsi
   - type: Produce
     seedId: cannabis
-  - type: Food
+  - type: Edible
   - type: SolutionContainerManager
     solutions:
       food:

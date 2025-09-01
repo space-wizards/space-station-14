@@ -6,7 +6,7 @@
   id: FoodSnackBase
   abstract: true
   components:
-  - type: Food
+  - type: Edible
   - type: Tag
     tags:
       - FoodSnack
@@ -41,7 +41,7 @@
     state: boritos
   - type: Item
     heldPrefix: boritos
-  - type: Food
+  - type: Edible
     trash:
     - FoodPacketBoritosTrash
 
@@ -58,7 +58,7 @@
     state: cnds
   - type: Item
     heldPrefix: cnds
-  - type: Food
+  - type: Edible
     trash:
     - FoodPacketCnDsTrash
 
@@ -76,7 +76,7 @@
     state: cheesiehonkers
   - type: Item
     heldPrefix: cheesiehonkers
-  - type: Food
+  - type: Edible
     trash:
     - FoodPacketCheesieTrash
 
@@ -95,7 +95,7 @@
     state: chips
   - type: Item
     heldPrefix: chips
-  - type: Food
+  - type: Edible
     trash:
     - FoodPacketChipsTrash
 
@@ -198,7 +198,7 @@
     state: pistachio
   - type: Item
     heldPrefix: pistachio
-  - type: Food
+  - type: Edible
     trash:
     - FoodPacketPistachioTrash
   - type: Tag
@@ -221,7 +221,7 @@
     state: popcorn
   - type: Item
     heldPrefix: popcorn
-  - type: Food
+  - type: Edible
     trash:
     - FoodPacketPopcornTrash
 
@@ -238,7 +238,7 @@
     state: raisins
   - type: Item
     heldPrefix: raisins
-  - type: Food
+  - type: Edible
     trash:
     - FoodPacketRaisinsTrash
   - type: Tag
@@ -258,7 +258,7 @@
     state: semki
   - type: Item
     heldPrefix: semki
-  - type: Food
+  - type: Edible
     trash:
     - FoodPacketSemkiTrash
 
@@ -275,7 +275,7 @@
     state: susjerky
   - type: Item
     heldPrefix: susjerky
-  - type: Food
+  - type: Edible
     trash:
     - FoodPacketSusTrash
   - type: Tag
@@ -295,7 +295,7 @@
     state: syndicakes
   - type: Item
     heldPrefix: syndicakes
-  - type: Food
+  - type: Edible
     trash:
     - FoodPacketSyndiTrash
 
@@ -320,7 +320,7 @@
           Quantity: 5
   - type: Sprite
     state: ramen
-  - type: Food
+  - type: Edible
     trash:
     - FoodPacketCupRamenTrash
   - type: Item
@@ -366,7 +366,7 @@
           Quantity: 10
         - ReagentId: Soysauce
           Quantity: 2
-  - type: Food
+  - type: Edible
     trash:
     - FoodPacketChowMeinTrash
 
@@ -396,7 +396,7 @@
           Quantity: 2
         - ReagentId: Soysauce
           Quantity: 2
-  - type: Food
+  - type: Edible
     trash:
     - FoodPacketDanDanTrash
 
@@ -422,7 +422,7 @@
     sprite: Objects/Consumable/Food/snacks.rsi
     heldPrefix: cookie_fortune
     size: Tiny
-  - type: Food
+  - type: Edible
     trash:
     - FoodCookieFortune
 
@@ -465,7 +465,7 @@
       - ReptilianFood
   - type: Sprite
     state: nutribrick-open
-  - type: Food
+  - type: Edible
   - type: SolutionContainerManager
     solutions:
       food:
@@ -509,7 +509,7 @@
     state: mre-brownie-open
   - type: Item
     heldPrefix: mre-brownie-open
-  - type: Food
+  - type: Edible
   - type: SolutionContainerManager
     solutions:
       food:
@@ -585,7 +585,7 @@
         reagents:
         - ReagentId: ToxinTrash
           Quantity: 5
-  - type: Food
+  - type: Edible
     requiresSpecialDigestion: true
 
 - type: entity
@@ -845,7 +845,7 @@
   name: MRE wrapper
   description: A general purpose wrapper for a variety of military food goods.
   components:
-  - type: Food
+  - type: Edible
     requiresSpecialDigestion: true
   - type: SolutionContainerManager
     solutions:
