@@ -8,8 +8,8 @@ using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.IdentityManagement;
-using Content.Shared.Mobs;
 using Content.Shared.Mobs.Components;
+using Content.Shared.Mobs.Systems;
 using Content.Shared.Movement.Systems;
 using Content.Shared.Nutrition.Components;
 using Content.Shared.Nutrition.EntitySystems;
@@ -32,6 +32,7 @@ namespace Content.Server.Medical
         [Dependency] private readonly ThirstSystem _thirst = default!;
         [Dependency] private readonly ForensicsSystem _forensics = default!;
         [Dependency] private readonly BloodstreamSystem _bloodstream = default!;
+        [Dependency] private readonly MobStateSystem _mobstate = default!;
 
         private static readonly ProtoId<SoundCollectionPrototype> VomitCollection = "Vomit";
 
@@ -52,10 +53,10 @@ namespace Content.Server.Medical
             //  Ignore condition if force was set to true
             if (!force)
             {
-                if (!TryComp<MobStateComponent>(uid, out var state))
+                if (!TryComp<MobStateComponent>(uid, out var mobState))
                     return;
 
-                if (state.CurrentState != MobState.Alive && state.CurrentState != MobState.Critical)
+                if (_mobstate.IsDead(uid, mobState))
                     return;
             }
 
