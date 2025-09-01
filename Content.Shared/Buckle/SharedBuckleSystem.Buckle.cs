@@ -30,6 +30,7 @@ public abstract partial class SharedBuckleSystem
     public static ProtoId<AlertCategoryPrototype> BuckledAlertCategory = "Buckled";
 
     [Dependency] private readonly EntityWhitelistSystem _whitelistSystem = default!;
+    [Dependency] private readonly EntityLookupSystem _entityLookup = default!;
 
     private void InitializeBuckle()
     {
@@ -42,7 +43,7 @@ public abstract partial class SharedBuckleSystem
         SubscribeLocalEvent<BuckleComponent, BeingPulledAttemptEvent>(OnBeingPulledAttempt);
         SubscribeLocalEvent<BuckleComponent, PullStartedMessage>(OnPullStarted);
         SubscribeLocalEvent<BuckleComponent, UnbuckleAlertEvent>(OnUnbuckleAlert);
-        SubscribeLocalEvent<BuckleComponent, KnockDownAttemptEvent>(Penis);  //crawl makes you drop from the seat
+        SubscribeLocalEvent<BuckleComponent, KnockDownAttemptEvent>(OnCrawlAttempt);  //crawl makes you drop from the seat
 
 
         SubscribeLocalEvent<BuckleComponent, InsertIntoEntityStorageAttemptEvent>(OnBuckleInsertIntoEntityStorageAttempt);
@@ -94,9 +95,10 @@ public abstract partial class SharedBuckleSystem
         args.Handled = TryUnbuckle(ent, ent, ent);
     }
 
-    private void Penis(Entity<BuckleComponent> ent, ref KnockDownAttemptEvent args)
+    private void OnCrawlAttempt(Entity<BuckleComponent> entity, ref KnockDownAttemptEvent args)
     {
-        TryUnbuckle(ent, ent, ent);
+        TryUnbuckle(entity, entity, entity);
+        _standingState.Stand(entity);
     }
 
     #endregion
