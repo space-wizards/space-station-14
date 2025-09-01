@@ -330,14 +330,6 @@ public sealed partial class MechMenu : FancyWindow
         };
     }
 
-    private (bool IsRegistered, bool IsActive, string? OwnerId) GetCurrentLockState(MechLockType lockType)
-    {
-        if (_lastState == null)
-            return (false, false, null);
-
-        return GetLockState(_lastState, lockType);
-    }
-
     private void SetAccessVisibility(bool isLocked)
     {
         var noAccessActive = isLocked && !_hasAccess;
