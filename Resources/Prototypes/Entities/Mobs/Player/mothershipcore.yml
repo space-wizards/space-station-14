@@ -195,6 +195,14 @@
     whitelist:
       components:
       - BorgChassis
+  - type: BorgFactory
+    whitelist:
+      components:
+      - MobState
+    blacklist:
+      components:
+      - BorgChassis
+  - type: Conveyor
   - type: IntrinsicUI
     uis:
       enum.RadarConsoleUiKey.Key:
