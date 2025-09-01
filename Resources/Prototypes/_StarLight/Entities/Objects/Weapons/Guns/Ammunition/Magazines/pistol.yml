@@ -879,7 +879,7 @@
       
 - type: entity
   id: MagazinePistolSubMachineGunUzi
-  name: Uzi magazine (.35 auto rubber)
+  name: Uzi magazine (.35 auto)
   parent: BaseMagazinePistolSubMachineGun
   components:
   - type: BallisticAmmoProvider

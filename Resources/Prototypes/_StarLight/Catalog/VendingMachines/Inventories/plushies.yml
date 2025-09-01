@@ -595,6 +595,7 @@
     - SLCrew
   conditions:
     - !type:ListingLimitedStockCondition
+      stock: 1
 
 - type: listing
   id: VendorPlushieFixes

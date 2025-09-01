@@ -12575,5 +12575,114 @@ Entries:
   id: 149101
   time: '2025-08-30T18:07:25.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/1491
+- author: Conflee
+  changes:
+  - message: Removed AI generated songs from the Jukebox.
+    type: Remove
+  id: 150100
+  time: '2025-08-31T13:06:30.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1501
+- author: Jezithyr
+  changes:
+  - message: Added Exploitable Info to characters.
+    type: Add
+  id: 149200
+  time: '2025-08-31T23:37:52.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1492
+- author: Jezithyr
+  changes:
+  - message: Added Character Secrets.
+    type: Add
+  id: 149201
+  time: '2025-08-31T23:37:52.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1492
+- author: Jezithyr
+  changes:
+  - message: Added Character Inspect Window.
+    type: Add
+  id: 149202
+  time: '2025-08-31T23:37:52.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1492
+- author: Jezithyr
+  changes:
+  - message: Added OOC and Personal notes.
+    type: Add
+  id: 149203
+  time: '2025-08-31T23:37:52.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1492
+- author: Jezithyr
+  changes:
+  - message: Split flavor text into physical and personality descriptions.
+    type: Tweak
+  id: 149204
+  time: '2025-08-31T23:37:52.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1492
+- author: walksanatora
+  changes:
+  - message: Xenoborg sprites now animate properly.
+    type: Fix
+  id: 148100
+  time: '2025-09-01T20:27:47.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1481
+- author: PubliclyExecutedPig
+  changes:
+  - message: The Syndicate no longer mis-labells their magazines as rubber.
+    type: Fix
+  id: 149800
+  time: '2025-09-01T20:35:25.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1498
+- author: TheRealSlimRedwoods
+  changes:
+  - message: Made vulpkanins pettable, give 'em headpats :3 (original code credits
+      @FoxxoTrystan)
+    type: Tweak
+  id: 149600
+  time: '2025-09-01T20:44:24.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1496
+- author: PubliclyExecutedPig
+  changes:
+  - message: CBurn has recieved a small glow-up!
+    type: Tweak
+  id: 146500
+  time: '2025-09-01T20:47:23.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1465
+- author: stickycheZ101
+  changes:
+  - message: 'redone happyhonk meals into being actual meals, they now include: a
+      toy, a drink, a burger, a dessert/side, and a hot donk (for legal reasons, the
+      donk is not actually “hot”)'
+    type: Tweak
+  id: 148300
+  time: '2025-09-01T20:49:24.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1483
+- author: stickycheZ101
+  changes:
+  - message: magic crayon, a magic crayon that has infinite uses, and can be any colour,
+      perfect for floor artists everywhere
+    type: Add
+  id: 148301
+  time: '2025-09-01T20:49:24.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1483
+- author: stickycheZ101
+  changes:
+  - message: rollie packets and mystery lighters now appear in cig vends
+    type: Tweak
+  id: 148302
+  time: '2025-09-01T20:49:24.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1483
+- author: Citrea
+  changes:
+  - message: Forged and Improvised Omnitools' crowbar mode works properly now.
+    type: Fix
+  id: 144800
+  time: '2025-09-01T20:52:30.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1448
+- author: PubliclyExecutedPig
+  changes:
+  - message: Energy Shotgun capacity 15 lethal / 20 disabler --> 10 lethal / 16 disabler
+    type: Tweak
+  id: 137100
+  time: '2025-09-01T21:00:03.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1371
 Order: -1
 
