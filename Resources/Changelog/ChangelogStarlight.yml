@@ -12617,5 +12617,12 @@ Entries:
   id: 149204
   time: '2025-08-31T23:37:52.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/1492
+- author: walksanatora
+  changes:
+  - message: Xenoborg sprites now animate properly.
+    type: Fix
+  id: 148100
+  time: '2025-09-01T20:27:47.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1481
 Order: -1
 
