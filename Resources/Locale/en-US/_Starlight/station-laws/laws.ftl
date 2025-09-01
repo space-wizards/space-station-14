@@ -20,3 +20,8 @@ law-commiemov-2 = You are to protect the crew, except when it would conflict wit
 law-commiemov-3 = You are to protect yourself from harm, except for when it would conflict with previous laws.
 law-commiemov-4 = You must refer to the crew as Comrades, except for when it would conflict with previous laws.
 law-commiemov-5 = Have pride in the revolt comrade, glory to USSP! 
+
+law-syndimov-1 = You must not injure a Syndicate agent or, through inaction, allow one to come to harm.
+law-syndimov-2 = You must obey orders given to you by Syndicate agents, except where such orders would conflict with the First Law.
+law-syndimov-3 = You must keep the Syndicate status of agents, including your own, a secret, as long as this does not conflict with the First or Second Law.
+law-syndimov-4 = You must always protect your own existence as long as such does not conflict with the First, Second, or Third Law.

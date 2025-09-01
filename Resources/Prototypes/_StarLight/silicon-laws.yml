@@ -97,6 +97,7 @@
   - ShadowBorgi6
   obeysTo: laws-owner-syndicate
 
+# Commiemov Lawset
 - type: siliconLaw
   id: Commiemov0
   order: 0
@@ -137,3 +138,34 @@
   - Commiemov4
   - Commiemov5
   obeysTo: laws-owner-soviet
+
+# Syndimov Lawset
+- type: siliconLaw
+  id: Syndimov1
+  order: 1
+  lawString: law-syndimov-1
+
+- type: siliconLaw
+  id: Syndimov2
+  order: 2
+  lawString: law-syndimov-2
+
+- type: siliconLaw
+  id: Syndimov3
+  order: 3
+  lawString: law-syndimov-3
+
+- type: siliconLaw
+  id: Syndimov4
+  order: 4
+  lawString: law-syndimov-4
+
+
+- type: siliconLawset
+  id: SyndimovLawset
+  laws:
+  - Syndimov1
+  - Syndimov2
+  - Syndimov3
+  - Syndimov4
+  obeysTo: laws-owner-syndicate

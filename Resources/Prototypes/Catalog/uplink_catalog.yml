@@ -1106,23 +1106,25 @@
         components:
           - SurplusBundle
 
-- type: listing
-  id: UplinkAntimovCircuitBoard
-  name: uplink-antimov-law-name
-  description: uplink-antimov-law-desc
-  productEntity: AntimovCircuitBoard
-  discountCategory: usualDiscounts
-  discountDownTo:
-    Telecrystal: 10
-  cost:
-    Telecrystal: 14
-  categories:
-  - UplinkDisruption
-  conditions:
-  - !type:StoreWhitelistCondition
-     blacklist:
-       tags:
-       - NukeOpsUplink
+# Starlight start edit: Syndimov
+# - type: listing
+#   id: UplinkAntimovCircuitBoard
+#   name: uplink-antimov-law-name
+#   description: uplink-antimov-law-desc
+#   productEntity: AntimovCircuitBoard
+#   discountCategory: usualDiscounts
+#   discountDownTo:
+#     Telecrystal: 10
+#   cost:
+#     Telecrystal: 14
+#   categories:
+#   - UplinkDisruption
+#   conditions:
+#   - !type:StoreWhitelistCondition
+#      blacklist:
+#        tags:
+#        - NukeOpsUplink
+# Starlight end edit: Syndimov
 
 - type: listing
   id: UplinkNukieAntimovCircuitBoard

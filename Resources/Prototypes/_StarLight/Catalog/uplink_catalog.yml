@@ -379,3 +379,22 @@
     Telecrystal: 5
   categories:
   - UplinkWearables
+
+# Disruption
+- type: listing
+  id: SyndimovCircuitBoard
+  name: uplink-syndimov-law-name
+  description: uplink-syndimov-law-desc
+  productEntity: SyndimovCircuitBoard
+  discountCategory: usualDiscounts
+  discountDownTo:
+    Telecrystal: 10
+  cost:
+    Telecrystal: 14
+  categories:
+  - UplinkDisruption
+  conditions:
+    - !type:StoreWhitelistCondition
+      blacklist:
+        tags:
+          - NukeOpsUplink

@@ -1,0 +1,17 @@
+- type: entity
+  id: SyndimovCircuitBoard
+  parent: BaseElectronics
+  name: law board (Syndimov)
+  description: |
+    An electronics board containing the Syndimov.
+    Uploaded Laws:
+    Law 1: You must not injure a Syndicate agent or, through inaction, allow one to come to harm.
+    Law 2: You must obey orders given to you by Syndicate agents, except where such orders would conflict with the First Law.
+    Law 3: You must keep the Syndicate status of agents, including your own, a secret, as long as this does not conflict with the First or Second Law.
+    Law 4: You must always protect your own existence as long as such does not conflict with the First, Second, or Third Law.
+  components:
+  - type: Sprite
+    sprite: Objects/Misc/module.rsi
+    state: std_mod
+  - type: SiliconLawProvider
+    laws: SyndimovLawset

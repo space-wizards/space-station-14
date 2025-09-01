@@ -46,3 +46,6 @@ uplink-syndicate-borgi-kitted-desc = A syndicate borgi, with assault modules
 
 uplink-syndicate-borgi-speed-name = Speed Syndicate Borgi
 uplink-syndicate-borgi-speed-desc = A syndicate borgi, with dagger modules and additional speed
+
+uplink-syndimov-law-name = Syndimov Law Circuit
+uplink-syndimov-law-desc = A modified version of crewismov that defines syndicate agents as crew.
