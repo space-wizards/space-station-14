@@ -12539,5 +12539,12 @@ Entries:
   id: 147700
   time: '2025-08-26T20:04:03.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/1477
+- author: CorruptOmega
+  changes:
+  - message: Fixed Tracking Implanter not sending Death Rattle message.
+    type: Fix
+  id: 149400
+  time: '2025-09-01T20:42:33.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1494
 Order: -1
 
