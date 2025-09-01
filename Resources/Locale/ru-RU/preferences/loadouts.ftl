@@ -1,15 +1,16 @@
 # Name
-loadout-name-edit-label = Настраиваемое имя
-loadout-name-edit-label-dataset = Sets a custom name to be used if you play this role. If empty, a random name will be selected instead.
-loadout-name-edit-tooltip = Не более 32 символов. Если имя не указано, оно будет выбрано случайным образом.
+loadout-name-edit-label = Задаёт пользовательское имя, которое будет использоваться, если вы играете за эту роль. Если пусто, будет использоваться имя вашего персонажа.
+loadout-name-edit-label-dataset = Задаёт пользовательское имя, которое будет использоваться, если вы играете за эту роль. Если пусто, будет использоваться случайное имя.
+loadout-name-edit-tooltip = Не более { $max } символов. Если имя не указано, оно будет выбрано случайным образом.
 # Restrictions
 loadout-restrictions = Ограничения
 loadouts-min-limit = Мин. кол-во: { $count }
 loadouts-max-limit = Макс. кол-во: { $count }
 loadouts-points-limit = Очки: { $count } / { $max }
 loadouts-count-items-in-group =
-    { $item } and { $count } other { $count ->
-        [1] item
-       *[other] items
+    { $item } и { $count } { $count ->
+        [1] другой предмет
+        [few] других предмета
+       *[other] других предметов
     }
 loadouts-points-restriction = Не хватает очков

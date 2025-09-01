@@ -28,12 +28,12 @@ network-configurator-ui-count-label =
         [one] устройство
         [few] устройства
        *[other] устройств
-    }.
-network-configurator-text-set = Set
-network-configurator-text-add = Add
-network-configurator-text-clear = Clear
-network-configurator-text-copy = Copy
-network-configurator-text-show = Show
+    }
+network-configurator-text-set = Установить
+network-configurator-text-add = Добавить
+network-configurator-text-clear = Очистить
+network-configurator-text-copy = Копировать
+network-configurator-text-show = Отображать
 # tooltips
 network-configurator-tooltip-set = Создание списка целевых устройств
 network-configurator-tooltip-add = Добавление в список целевых устройств
@@ -51,5 +51,5 @@ network-configurator-item-status-label =
     Режим: { $mode }
     Переключить: { $keybinding }
 # command
-cmd-clearnetworklinkoverlays-desc = Clear all network link overlays.
-cmd-clearnetworklinkoverlays-help = Usage: clearnetworklinkoverlays
+cmd-clearnetworklinkoverlays-desc = Очистить все наложения сетевых соединений.
+cmd-clearnetworklinkoverlays-help = Использование: clearnetworklinkoverlays

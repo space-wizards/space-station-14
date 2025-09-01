@@ -1,2 +1,2 @@
-ent-ActionRepulse = Repulse
-    .desc = Pushes entities away from the user.
+ent-ActionRepulse = Импульс
+    .desc = Отталкивает существ от заклинателя.

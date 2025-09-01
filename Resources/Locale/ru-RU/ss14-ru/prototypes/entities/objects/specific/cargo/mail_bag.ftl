@@ -1,2 +1,2 @@
-ent-MailBag = mail bag
-    .desc = A bag for carrying mail around the station. Made from tanned space bear hide.
+ent-MailBag = сумка для почты
+    .desc = Сумка для переноски почты по станции. Изготовлена из дублёной шкуры космического медведя.

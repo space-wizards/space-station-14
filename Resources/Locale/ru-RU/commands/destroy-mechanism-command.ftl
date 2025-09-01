@@ -1,4 +1,4 @@
-cmd-destroymechanism-desc = Destroys a mechanism from your entity.
-cmd-destroymechanism-help = Usage: destroymechanism <mechanism>
-cmd-destroymechanism-success = Mechanism with name { $name } has been destroyed.
-cmd-destroymechanism-no-mechanism-found = No mechanism was found with name { $name }.
+cmd-destroymechanism-desc = Уничтожает механизм вашей сущности.
+cmd-destroymechanism-help = Использование: destroymechanism <механизм>
+cmd-destroymechanism-success = Механизм с названием { $name } был уничтожен.
+cmd-destroymechanism-no-mechanism-found = Механизм с названием { $name } не найден.

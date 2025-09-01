@@ -1,2 +1,2 @@
-ent-XenoResinWindow = resin window
-    .desc = Transparent and hardened, yet slightly sticky to the touch. Slightly stronger than a normal reinforced window.
+ent-XenoResinWindow = смоляное окно
+    .desc = Прозрачное и затвердевшее, но слегка липкое на ощупь. Слегка крепче обычного бронированного окна.

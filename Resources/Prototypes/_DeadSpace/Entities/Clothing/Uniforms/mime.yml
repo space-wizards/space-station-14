@@ -1,7 +1,7 @@
 - type: entity
   parent: ClothingUniformBase
   id: ClothingUniformJumpsuitMimeSexyWhite
-  name: сексуальный костюм мима с белыми штанами
+  name: застенчивый костюм мима с белыми штанами
   description: ...
   components:
   - type: Sprite
@@ -12,7 +12,7 @@
 - type: entity
   parent: ClothingUniformBase
   id: ClothingUniformJumpsuitMimeSexyBlack
-  name: сексуальный костюм мима с чёрными штанами
+  name: застенчивый костюм мима с чёрными штанами
   description: ...
   components:
   - type: Sprite

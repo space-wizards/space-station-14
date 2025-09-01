@@ -1,6 +1,22 @@
-timer-trigger-verb-set = { $time } Seconds
-timer-trigger-verb-set-current = { $time } Seconds (current)
-timer-trigger-verb-cycle = Cycle Time Delay
-timer-trigger-examine = The timer is set to { $time } seconds.
-timer-trigger-popup-set = Timer set to { $time } seconds.
-timer-trigger-activated = You activate { THE($device) }.
+timer-trigger-verb-set = { $time ->
+                        [one] секунда
+                        [few] секунды
+                        *[other] секунд
+                        }
+timer-trigger-verb-set-current = { $time ->
+                        [one] секунда
+                        [few] секунды
+                        *[other] секунд
+                        } (сейчас)
+timer-trigger-verb-cycle = Переключить задержку
+timer-trigger-examine = Таймер установлен на { $time ->
+                        [one] секунду
+                        [few] секунды
+                        *[other] секунд
+                        }.
+timer-trigger-popup-set = Таймер установлен на { $time ->
+                        [one] секунду
+                        [few] секунды
+                        *[other] секунд
+                        }.
+timer-trigger-activated = Вы активировали { $device }.

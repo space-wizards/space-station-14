@@ -84,6 +84,7 @@
 - type: entity
   parent: BaseSyringe
   id: SyringeExtractInfectorDead
+  categories: [ DoNotMap ]
   components:
     - type: SolutionContainerManager
       solutions:

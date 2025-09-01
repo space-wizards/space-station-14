@@ -7,14 +7,14 @@ stat-cargo-values = Цена продажи груза
 stat-cargo-id = ID
 stat-cargo-price = Цена
 # Melee
-stat-melee-values = Melee weapon damage
+stat-melee-values = Урон в ближнем бою
 stat-melee-id = ID
-stat-melee-base-damage = Base damage
-stat-melee-wield-damage = Wielded damage
-stat-melee-attack-rate = Attack rate
-stat-melee-dps = DPS
-stat-melee-structural-damage = Structure damage
-stat-melee-structural-wield-damage = Wielded structure damage
+stat-melee-base-damage = Базовый урон
+stat-melee-wield-damage = Урон с двух рук
+stat-melee-attack-rate = Скорость атаки
+stat-melee-dps = Урон в секунду
+stat-melee-structural-damage = Структурный урон
+stat-melee-structural-wield-damage = Структурный урон с двух рук
 # Lathe
 stat-lathe-values = Стоимость печати в лате
 stat-lathe-id = ID

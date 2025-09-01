@@ -1,3 +1,3 @@
-construction-recipe-light-switch-directional = apc net switch (directional)
-construction-recipe-signal-switch-directional = signal switch (directional)
-construction-recipe-signal-button-directional = signal button (directional)
+construction-recipe-light-switch-directional = переключатель сети ЛКП (направленный)
+construction-recipe-signal-switch-directional = переключатель сигнала (направленный)
+construction-recipe-signal-button-directional = кнопка сигнала (направленный)

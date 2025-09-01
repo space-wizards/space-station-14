@@ -20,5 +20,5 @@ reagent-name-weh = сок, заставляющий говорить Вех
 reagent-desc-weh = Чистая сущность плюшевого унатха. Заставляет вас говорить Вех!
 reagent-name-hew = сок, заставляющий говорить Хев
 reagent-desc-hew = Чистая сущность инвертированного плюшевого унатха. Заставляет вас говорить Хев!
-reagent-name-corgiessence = corgium
-reagent-desc-corgiessence = Tastes like dog food. Clearly an acquired taste.
+reagent-name-corgiessence = коргиум
+reagent-desc-corgiessence = На вкус как еда для собак. Очевидно, это дело вкуса.

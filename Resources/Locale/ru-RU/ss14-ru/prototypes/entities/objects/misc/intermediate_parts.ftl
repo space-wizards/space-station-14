@@ -1,2 +1,2 @@
-ent-MoproachShoes = moproach shoes
-    .desc = Three pairs of tiny mopshoes, perfectly fit for a moproach.
+ent-MoproachShoes = тапочки швабракана
+    .desc = Три пары маленьких тапочек-швабр, которые идеально подходят швабраканам.

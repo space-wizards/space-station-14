@@ -1,6 +1,6 @@
-toggle-trigger-condition-default-verb = Toggle device
-toggle-trigger-condition-default-on = Device enabled.
-toggle-trigger-condition-default-off = Device disabled.
-toggle-trigger-condition-stick-verb = Toggle auto-activation
-toggle-trigger-condition-stick-on = The device will now activate automatically when planted.
-toggle-trigger-condition-stick-off = The device will no longer activate automatically when planted.
+toggle-trigger-condition-default-verb = Переключить устройство
+toggle-trigger-condition-default-on = Устройство включено.
+toggle-trigger-condition-default-off = Устройство выключено.
+toggle-trigger-condition-stick-verb = Переключить автоактивацию
+toggle-trigger-condition-stick-on = Устройство будет автоматически активировано после установки.
+toggle-trigger-condition-stick-off = Устройство НЕ будет автоматически активировано после установки.

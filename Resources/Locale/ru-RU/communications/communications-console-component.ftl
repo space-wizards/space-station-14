@@ -2,7 +2,7 @@
 comms-console-announcement-title-station = Консоль связи
 comms-console-announcement-title-centcom = Центральное командование
 comms-console-announcement-title-nukie = Ядерные оперативники
-comms-console-menu-announcement-button-tooltip = Send your message as a station-wide radio announcement.
+comms-console-menu-announcement-button-tooltip = Отправьте своё сообщение в качестве радиообъявления на всю станцию.
 comms-console-announcement-title-station-ai = Станционный ИИ
 # Popup
 comms-console-permission-denied = В доступе отказано

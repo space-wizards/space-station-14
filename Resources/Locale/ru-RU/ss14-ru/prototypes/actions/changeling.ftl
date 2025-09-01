@@ -1,6 +1,6 @@
-ent-ActionRetractableItemArmBlade = Arm Blade
-    .desc = Shed your flesh and reform it into a fleshy blade.
-ent-ActionChangelingDevour = [color=red]Devour[/color]
-    .desc = Consume the essence of your victims and subsume their identity and mind into your own.
-ent-ActionChangelingTransform = [color=red]Transform[/color]
-    .desc = Transform and assume the identities of those you have devoured.
+ent-ActionRetractableItemArmBlade = Рука-клинок
+    .desc = Сбросьте свою плоть и преобразуйте её в плотное лезвие.
+ent-ActionChangelingDevour = [color=red]Поглотить[/color]
+    .desc = Поглощайте сущность ваших жертв и впитывайте их личности и разум в себя.
+ent-ActionChangelingTransform = [color=red]Трансформация[/color]
+    .desc = Трансформируйтесь и обретайте личности тех, кого вы поглотили.

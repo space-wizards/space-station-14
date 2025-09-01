@@ -1,2 +1,2 @@
-cmd-adminlogs-desc = Opens the admin logs panel.
-cmd-adminlogs-help = Usage: adminlogs
+cmd-adminlogs-desc = Открыть панель админ логов.
+cmd-adminlogs-help = Использование: adminlogs

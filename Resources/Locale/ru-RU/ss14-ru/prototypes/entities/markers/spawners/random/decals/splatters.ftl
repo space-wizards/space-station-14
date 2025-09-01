@@ -1,6 +1,6 @@
 ent-DecalSpawnerBloodSplatters = { ent-DecalSpawnerBase }
-    .suffix = Blood Splatters, Footprints
+    .suffix = Брызги крови, следы
     .desc = { ent-DecalSpawnerBase.desc }
 ent-DecalSpawnerGraffiti = { ent-DecalSpawnerBase }
-    .suffix = Graffiti
+    .suffix = Граффити
     .desc = { ent-DecalSpawnerBase.desc }

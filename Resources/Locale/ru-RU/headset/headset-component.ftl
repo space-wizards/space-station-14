@@ -16,8 +16,8 @@ chat-radio-freelance = Независимый
 # not headset but whatever
 chat-radio-handheld = Портативный
 chat-radio-binary = Двоичный
-chat-radio-xenoborg = Xenoborg
-chat-radio-mothership = Mothership
+chat-radio-xenoborg = Ксеноборг
+chat-radio-mothership = Материнский корабль
 chat-radio-deathsquad = Эскадрон смерти
 chat-radio-law = Юридический
 chat-radio-merc = Наёмники

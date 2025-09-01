@@ -6,50 +6,50 @@
 
 ## When trying to ingest without the required utensil... but you gotta hold it
 
-ingestion-you-need-to-hold-utensil = You need to be holding { INDEFINITE($utensil) } { $utensil } to eat that!
-ingestion-try-use-is-empty = { CAPITALIZE(THE($entity)) } is empty!
-ingestion-try-use-wrong-utensil = You can't { $verb } { THE($food) } with { INDEFINITE($utensil) } { $utensil }.
-ingestion-remove-mask = You need to take off the { $entity } first.
+ingestion-you-need-to-hold-utensil = Вам нужна { $utensil }, чтобы есть это!
+ingestion-try-use-is-empty = { CAPITALIZE($entity) } пуст!
+ingestion-try-use-wrong-utensil = Вы не можете { $verb } { $food } с помощью { $utensil }.
+ingestion-remove-mask = Сперва снимите { $entity }.
 
 ## Failed Ingestion
 
-ingestion-you-cannot-ingest-any-more = You can't { $verb } any more!
-ingestion-other-cannot-ingest-any-more = { CAPITALIZE(SUBJECT($target)) } can't { $verb } any more!
-ingestion-cant-digest = You can't digest { THE($entity) }!
-ingestion-cant-digest-other = { CAPITALIZE(SUBJECT($target)) } can't digest { THE($entity) }!
+ingestion-you-cannot-ingest-any-more = Вы не можете больше { $verb }!
+ingestion-other-cannot-ingest-any-more = { CAPITALIZE(SUBJECT($target)) } не может больше { $verb }!
+ingestion-cant-digest = Вы не сможете переварить { $entity }!
+ingestion-cant-digest-other = { CAPITALIZE(SUBJECT($target)) } не сможет переварить { $entity }!
 
 ## Action Verbs, not to be confused with Verbs
 
-ingestion-verb-food = Eat
-ingestion-verb-drink = Drink
+ingestion-verb-food = Есть
+ingestion-verb-drink = Пить
 
 # Edible Component
 
-edible-nom = Nom. { $flavors }
-edible-nom-other = Nom.
-edible-slurp = Slurp. { $flavors }
-edible-slurp-other = Slurp.
-edible-swallow = You swallow { THE($food) }
-edible-gulp = Gulp. { $flavors }
-edible-gulp-other = Gulp.
-edible-has-used-storage = You cannot { $verb } { THE($food) } with an item stored inside.
+edible-nom = Ням. { $flavors }
+edible-nom-other = Ням.
+edible-slurp = Сёрб. { $flavors }
+edible-slurp-other = Сёрб.
+edible-swallow = Вы проглатываете { $food }
+edible-gulp = Глоть. { $flavors }
+edible-gulp-other = Глоть.
+edible-has-used-storage = Вы не можете { $verb } { $food }, пока внутри что-то есть.
 
 ## Nouns
 
-edible-noun-edible = edible
-edible-noun-food = food
-edible-noun-drink = drink
-edible-noun-pill = pill
+edible-noun-edible = съедобное
+edible-noun-food = еда
+edible-noun-drink = напиток
+edible-noun-pill = таблетка
 
 ## Verbs
 
-edible-verb-edible = ingest
-edible-verb-food = eat
-edible-verb-drink = drink
-edible-verb-pill = swallow
+edible-verb-edible = поглощать
+edible-verb-food = есть
+edible-verb-drink = пить
+edible-verb-pill = глотать
 
 ## Force feeding
 
-edible-force-feed = { CAPITALIZE(THE($user)) } is trying to make you { $verb } something!
-edible-force-feed-success = { CAPITALIZE(THE($user)) } forced you to { $verb } something! { $flavors }
-edible-force-feed-success-user = You successfully feed { THE($target) }
+edible-force-feed = { CAPITALIZE($user) } пытается заставить вас что-то { $verb }!
+edible-force-feed-success = { CAPITALIZE($user) } заставил вас что-то { $verb }! { $flavors }
+edible-force-feed-success-user = Вы успешно накормили { $target }

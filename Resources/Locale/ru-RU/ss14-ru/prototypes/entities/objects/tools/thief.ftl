@@ -1,6 +1,6 @@
-ent-ThiefBeacon = thieving beacon
-    .desc = A device that will teleport everything around it to the thief's vault at the end of the shift.
-ent-ToolboxThief = undetermined thieving toolbox
-    .desc = This is where your favorite thief's supplies lie. Try to remember which ones.
-ent-SatchelThief = undetermined thieving satchel
-    .desc = This is where your favorite thief's supplies lie. Folded for your convenience.
+ent-ThiefBeacon = воровской маяк
+    .desc = Устройство, которое в конце смены телепортирует всё вокруг себя в хранилище вора.
+ent-ToolboxThief = неопределённый воровской ящик инструментов
+    .desc = Именно тут лежат ваши любимые воровские припасы. Попробуйте запомнить какие.
+ent-SatchelThief = неопределённая воровская сумка
+    .desc = Именно тут лежат ваши любимые воровские припасы. Сложена для вашего удобства.

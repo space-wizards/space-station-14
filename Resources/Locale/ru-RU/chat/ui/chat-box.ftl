@@ -29,13 +29,13 @@ hud-chatbox-channel-Server = Сервер
 hud-chatbox-channel-Visual = Визуальный
 hud-chatbox-channel-Damage = Повреждения
 hud-chatbox-channel-Unspecified = Неопределённый
-hud-chatbox-highlights = Highlights:
-hud-chatbox-highlights-button = Submit
+hud-chatbox-highlights = Подсветка:
+hud-chatbox-highlights-button = Подтвердить
 hud-chatbox-highlights-tooltip =
-    The words need to be separated by a newline,
-    if wrapped around " they will be highlighted
-    only if separated by spaces or punctuation.
+    Каждое слово должно начинаться с новой строки.
+    Слова, взятые в кавычки ("..."), подсветятся только,
+    если отделены пробелами или знаками препинания.
 hud-chatbox-highlights-placeholder =
-    McHands
-    "Judge"
-    Medical
+    МакХэндс
+    "Судья"
+    Медблок

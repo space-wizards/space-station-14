@@ -1,4 +1,4 @@
-cmd-loadgamemap-desc = Loads the given game map at the given coordinates.
-cmd-loadgamemap-help = loadgamemap <mapid> <gamemap> [<x> <y> [<name>]]
-cmd-listgamemaps-desc = Lists the game maps that can be used by loadgamemap.
-cmd-listgamemaps-help = Usage: listgamemaps
+cmd-loadgamemap-desc = Загружает указанную игровую карту в заданных координатах.
+cmd-loadgamemap-help = Использование: loadgamemap <ID карты> <игровая карта> [<x> <y> [<имя>]]
+cmd-listgamemaps-desc = Показывает список игровых карт, доступных для loadgamemap.
+cmd-listgamemaps-help = Использование: listgamemaps

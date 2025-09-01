@@ -1,3 +1,3 @@
-ent-MobLing = Urist McLing
-    .suffix = Non-Antag
+ent-MobLing = Урист МакКрад
+    .suffix = Неантаг
     .desc = { ent-MobHuman.desc }

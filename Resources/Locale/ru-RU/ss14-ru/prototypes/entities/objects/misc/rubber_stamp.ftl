@@ -42,5 +42,5 @@ ent-RubberStampGreytide = печать грейтайда
     .desc = Резиновая печать для проставления штампов на важных документах. От одного взгляда на неё вас окатывает серая волна...
 ent-RubberStampPsychologist = печать психолога
     .desc = Резиновая печать для проставления штампов на важных документах. Назначьте эти лекарства!
-ent-RubberStampWizard = wizard's rubber stamp
-    .desc = A chaotic wizard stamp for serving unchaotic paperwork, how ironic.
+ent-RubberStampWizard = печать мага
+    .desc = Хаотическая печать мага для обслуживания нехаотичной бумажной работы, как иронично.

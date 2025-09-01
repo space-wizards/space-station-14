@@ -1,3 +1,3 @@
-ent-ItemActionExample = item action example
-    .desc = for testing item actions
-    .suffix = DEBUG
+ent-ItemActionExample = пример действия предмета
+    .desc = для тестирования действий предметов
+    .suffix = ДЕБАГ

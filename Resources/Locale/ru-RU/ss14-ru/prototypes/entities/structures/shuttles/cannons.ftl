@@ -1,5 +1,5 @@
 ent-ShuttleGunBase = пушка щиттла
-    .desc = { "" }
+    .desc = { ent-BaseStructure.desc }
 ent-ShuttleGunSvalinnMachineGun = LSE-400c "Пулемёт Свалинн"
     .desc = Базовая стационарная лазерная установка. Эффективна против живой силы и электроприборов. Для стрельбы использует обычые батареи и обладает чрезвычайно высокой скорострельностью.
     .suffix = НЕ МАППИТЬ
@@ -16,6 +16,5 @@ ent-ShuttleGunPirateCannon = пушка пиратского корабля
     .desc = Кабум!
 ent-ShuttleGunKinetic = PTK-800 "Дематериализатор материи"
     .desc = Стационарная добывающая турель утилизаторов. Самостоятельно накапливает заряды, чрезвычайно эффективна при раскопке астероидов.
-    .suffix = НЕ МАППИТЬ
-ent-ShuttleGunKineticOld = exomorphic dematerializer
-    .desc = An ancient ship gun, utilizing biomechanical systems to store and release energy. While unique in its design, it has been rendered obsolete due to its inferior charging and firing speed compared to mechanical constructions.
+ent-ShuttleGunKineticOld = экзоморфный дематериализатор
+    .desc = Древнее корабельное орудие, использующее биомеханические системы для хранения и высвобождения энергию. Уникальное в своём роде. Несмотря на уникальность конструкции, оно устарело из-за низкой скорости зарядки и стрельбы по сравнению с механическими конструкциями.

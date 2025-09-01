@@ -10,4 +10,4 @@ earlyleave-cryo-announcement =
        *[neuter] было перемещено
     } в длительное крио-хранилище.
 earlyleave-cryo-sender = автоматической системы
-cryostorage-paused-map-name = Cryosleeper body storage map
+cryostorage-paused-map-name = Карта хранения тел криосна

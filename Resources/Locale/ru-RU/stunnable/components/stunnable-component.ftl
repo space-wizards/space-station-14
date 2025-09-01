@@ -1,6 +1,6 @@
 stunnable-component-disarm-success-others = { CAPITALIZE($source) } толкает { $target }!
 stunnable-component-disarm-success = Вы толкаете { $target }!
-knockdown-component-pushup-failure = You're too exhausted to push yourself up!
-knockdown-component-pushup-success = With a burst of energy you push yourself up!
-knockdown-component-stand-no-room = You try to push yourself to stand up but there's not enough room!
-worm-component-stand-attempt = You try to stand up but you cannot!
+knockdown-component-pushup-failure = Вы слишком выдохлись, чтобы встать!
+knockdown-component-pushup-success = С энергичным рывком вы встаёте!
+knockdown-component-stand-no-room = Вы пытаетесь встать, но здесь недостаточно места!
+worm-component-stand-attempt = Вы пытаетесь встать, но вам не удаётся!

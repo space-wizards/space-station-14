@@ -1,4 +1,4 @@
-cmd-camera-desc = Opens a remote camera window for an entity.
-cmd-camera-help = Usage: camera <entityUid or player>
-cmd-camera-hint = <entityUid or player>
-cmd-camera-wrong-argument = Argument must be a valid netUid or a player name.
+cmd-camera-desc = Открывает окно удалённой камеры для существа.
+cmd-camera-help = Использование: camera <entityUid или player>
+cmd-camera-hint = <entityUid или player>
+cmd-camera-wrong-argument = Аргумент должен быть валидным netUid или именем игрока.

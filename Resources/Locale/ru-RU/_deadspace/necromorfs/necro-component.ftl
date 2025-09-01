@@ -91,7 +91,7 @@ reagent-effect-guidebook-cure-sanity =
 
 ent-SyringeExtractInfectorDead = шприц
     .desc = { ent-BaseSyringe.desc }
-    .suffix = Экстракт заразителя, Не маппить
+    .suffix = Экстракт заразителя, НЕ МАППИТЬ
 entity-name-extract-infector = экстракт заразителя
 reagent-desc-extract-infector = Густой и розовый, пахнет отвратительно. Пробовать не стану!
 reagent-effect-guidebook-cause-infection-dead =

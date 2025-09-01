@@ -1,4 +1,4 @@
-cmd-deadmin-desc = Temporarily de-admins you so you can experience the round as a normal player.
+cmd-deadmin-desc = Временно лишает вас прав администратора, чтобы вы могли прочувствовать раунд как обычный игрок.
 cmd-deadmin-help =
-    Usage: deadmin
-    Use readmin to re-admin after using this.
+    Использование: deadmin
+    Используйте readmin чтобы вернуть себе права администратора после этой команды.

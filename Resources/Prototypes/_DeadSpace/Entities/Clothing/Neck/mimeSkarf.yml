@@ -1,7 +1,7 @@
 - type: entity
   parent: ClothingNeckBase
   id: ClothingNeckMimeSexy
-  name: шарф сексуального мима
+  name: шарф застенчивого мима
   description: ...
   components:
   - type: Sprite

@@ -1,4 +1,4 @@
-cmd-toggledisallowlatejoin-desc = Allows or disallows latejoining during mid-game.
-cmd-toggledisallowlatejoin-help = Usage: toggledisallowlatejoin <disallow>
-cmd-toggledisallowlatejoin-disabled = Late joining has been disabled.
-cmd-toggledisallowlatejoin-enabled = Late joining has been enabled.
+cmd-toggledisallowlatejoin-desc = Разрешает или запрещает поздний вход в игру во время раунда.
+cmd-toggledisallowlatejoin-help = Использование: toggledisallowlatejoin <true/false>
+cmd-toggledisallowlatejoin-disabled = Поздний вход отключён.
+cmd-toggledisallowlatejoin-enabled = Поздний вход включён.

@@ -19,5 +19,5 @@ ent-MobPurpleSnake = космическая гадюка
 ent-MobSmallPurpleSnake = космическая гадюка
     .desc = Уменьшенная версия грозной пурпурной змеи из Kepler-283c.
     .suffix = Маленькая
-ent-MobXenoLonePraetorianNoGhost = "Dale"
-    .desc = A praetorian left over from the station's initial security sweep. Has a pair of bloodied dog tags engraved with the name "Pvt. Dale" stuck in its maw.
+ent-MobXenoLonePraetorianNoGhost = "Дейл"
+    .desc = Преторианец, оставшийся после первоначальной зачистки станции. У него в пасти застряла пара окровавленных жетонов с выгравированным именем "Рядовой Дейл".

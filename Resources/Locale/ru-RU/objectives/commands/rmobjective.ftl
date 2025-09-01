@@ -1,12 +1,12 @@
 # addobjectives
-cmd-rmobjective-desc = Removes an objective from the player's mind.
+cmd-rmobjective-desc = Убирает цель с разума игрока.
 cmd-rmobjective-help = rmobjective <username> <index>
-cmd-rmobjective-invalid-args = Expected exactly 2 arguments.
-cmd-rmobjective-player-not-found = Can't find the playerdata.
-cmd-rmobjective-mind-not-found = Can't find the mind.
-cmd-rmobjective-success = Objective successfully removed!
-cmd-rmobjective-failed = Objective removing failed. Maybe the index is out of bounds? Check lsobjectives!
-cmd-rmobjective-invalid-index = Could not parse index { $index } as an integer.
-cmd-rmobjective-invalid-objective-info = INVALID
+cmd-rmobjective-invalid-args = Ожидается ровно 2 аргумента.
+cmd-rmobjective-player-not-found = Не удалось найти данные игрока.
+cmd-rmobjective-mind-not-found = Не удалось найти разум.
+cmd-rmobjective-success = Цель успешно удалена!
+cmd-rmobjective-failed = Не удалось удалить цель. Возможно индекс неверный? Проверьте lsobjectives!
+cmd-rmobjective-invalid-index = Не удалось распознать { $index } как целое число.
+cmd-rmobjective-invalid-objective-info = НЕВАЛИДНО
 cmd-rmobjective-player-completion = <Player>
 cmd-rmobjective-index-completion = <Index>

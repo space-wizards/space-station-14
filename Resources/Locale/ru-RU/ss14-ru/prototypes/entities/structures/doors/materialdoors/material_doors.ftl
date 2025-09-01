@@ -18,5 +18,5 @@ ent-BananiumDoor = бананиумовая дверь
     .desc = Дверь, куда она ведёт?
 ent-WebDoor = паутинная дверь
     .desc = Дверь, ведущая в земли пауков... или просторную комнату.
-ent-CardDoor = cardboard door
-    .desc = { ent-BaseMaterialDoorNavMap.desc }
+ent-CardDoor = картонная дверь
+    .desc = Дверь, куда же она приведёт?

@@ -3,13 +3,13 @@
 
 ## Upgradeaction command loc
 
-upgradeaction-command-help = Usage: upgradeaction <entityUid> [level]
-upgradeaction-command-need-one-argument = upgradeaction needs at least one argument, the action entity uid. The second optional argument is a specified level.
-upgradeaction-command-max-two-arguments = upgradeaction has a maximum of two arguments, the action entity uid and the (optional) level to set.
-upgradeaction-command-second-argument-not-number = upgradeaction's second argument can only be a number.
-upgradeaction-command-less-than-required-level = upgradeaction cannot accept a level of 0 or lower.
-upgradeaction-command-incorrect-entityuid-format = You must use a valid entityuid format for upgradeaction.
-upgradeaction-command-entity-does-not-exist = This entity does not exist, a valid entity is required for upgradeaction.
-upgradeaction-command-entity-is-not-action = This entity doesn't have the action upgrade component, so this action cannot be leveled.
-upgradeaction-command-cannot-level-up = The action cannot be leveled up.
-upgradeaction-command-description = Upgrades an action by one level, or to the specified level, if applicable.
+upgradeaction-command-help = Использование: upgradeaction <entityUid> [level]
+upgradeaction-command-need-one-argument = upgradeaction требует хотя бы один аргумент, uid сущности действия. Второй необязательный аргумент — указанный уровень.
+upgradeaction-command-max-two-arguments = upgradeaction принимает максимум два аргумента: uid сущности действия и (необязательный) уровень для установки.
+upgradeaction-command-second-argument-not-number = Второй аргумент upgradeaction может быть только числом.
+upgradeaction-command-less-than-required-level = upgradeaction не может принимать уровень 0 или ниже.
+upgradeaction-command-incorrect-entityuid-format = Для upgradeaction необходимо использовать правильный формат entityuid.
+upgradeaction-command-entity-does-not-exist = Эта сущность не существует, для upgradeaction требуется действительная сущность.
+upgradeaction-command-entity-is-not-action = У этой сущности нет компонента улучшения действия, поэтому это действие нельзя улучшить.
+upgradeaction-command-cannot-level-up = Действие нельзя улучшить.
+upgradeaction-command-description = Улучшает действие на один уровень или до указанного уровня, если это применимо.

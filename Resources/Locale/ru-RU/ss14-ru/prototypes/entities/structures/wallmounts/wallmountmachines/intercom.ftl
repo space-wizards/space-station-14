@@ -37,5 +37,5 @@ ent-IntercomAll = { ent-Intercom }
     .suffix = Все
     .desc = { ent-Intercom.desc }
 ent-IntercomFreelance = { ent-Intercom }
-    .suffix = Freelance
+    .suffix = Независимый
     .desc = { ent-Intercom.desc }

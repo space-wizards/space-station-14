@@ -1,4 +1,4 @@
 ent-BloodstreamStatusEffectBase = { ent-MobStatusEffectBase }
     .desc = { ent-MobStatusEffectBase.desc }
-ent-StatusEffectBloodloss = bloodloss
+ent-StatusEffectBloodloss = обескровлен
     .desc = { ent-BloodstreamStatusEffectBase.desc }

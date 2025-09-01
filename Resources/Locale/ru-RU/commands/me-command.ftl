@@ -1,2 +1,2 @@
-cmd-me-desc = Perform an action.
-cmd-me-help = Usage: me <text>
+cmd-me-desc = Совершает действие от имени вашего персонажа.
+cmd-me-help = Использование: me <text>
