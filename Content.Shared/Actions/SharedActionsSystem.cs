@@ -21,7 +21,7 @@ using Robust.Shared.Utility;
 
 namespace Content.Shared.Actions;
 
-public abstract class SharedActionsSystem : EntitySystem
+public abstract partial class SharedActionsSystem : EntitySystem
 {
     [Dependency] protected readonly IGameTiming GameTiming = default!;
     [Dependency] private   readonly ISharedAdminLogManager _adminLogger = default!;
@@ -42,6 +42,7 @@ public abstract class SharedActionsSystem : EntitySystem
     public override void Initialize()
     {
         base.Initialize();
+        InitializeActionDoAfter();
 
         _actionQuery = GetEntityQuery<ActionComponent>();
         _actionsQuery = GetEntityQuery<ActionsComponent>();
