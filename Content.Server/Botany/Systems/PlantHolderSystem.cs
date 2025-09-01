@@ -174,11 +174,11 @@ public sealed class PlantHolderSystem : EntitySystem
 
     private void OnInteractUsing(Entity<PlantHolderComponent> entity, ref InteractUsingEvent args)
     {
-        var (uid, component) = entity;
+        var (uid, plantHolder) = entity;
 
         if (TryComp(args.Used, out SeedComponent? seeds))
         {
-            if (component.Seed == null)
+            if (plantHolder.Seed == null)
             {
                 if (!_botany.TryGetSeed(seeds, out var seed))
                     return;
@@ -190,32 +190,38 @@ public sealed class PlantHolderSystem : EntitySystem
                     ("seedName", name),
                     ("seedNoun", noun)), args.User, PopupType.Medium);
 
-                component.Seed = seed.Clone();
-                component.Dead = false;
-                component.Age = 1;
-                component.DrawWarnings = true;
+                plantHolder.Seed = seed.Clone();
+                plantHolder.Dead = false;
+                plantHolder.Age = 1;
+                plantHolder.DrawWarnings = true;
 
                 // Get endurance from seed's PlantTraitsComponent
                 var seedTraits = _botany.GetPlantTraits(seed);
                 if (seeds.HealthOverride != null)
                 {
-                    component.Health = seeds.HealthOverride.Value;
+                    plantHolder.Health = seeds.HealthOverride.Value;
                 }
                 else if (seedTraits != null)
                 {
-                    component.Health = seedTraits.Endurance;
+                    plantHolder.Health = seedTraits.Endurance;
                 }
-                component.LastCycle = _gameTiming.CurTime;
+                plantHolder.LastCycle = _gameTiming.CurTime;
 
                 // Ensure no existing growth components before adding new ones
-                var existingGrowthComponents = EntityManager.GetComponents<PlantGrowthComponent>(uid).ToList();
-                foreach (var g in existingGrowthComponents)
-                    EntityManager.RemoveComponent(uid, g);
+                RemoveAllGrowthComponents(uid);
 
-                foreach (var g in seed.GrowthComponents)
-                    EntityManager.AddComponent(uid, _copier.CreateCopy(g, notNullableOverride: true), overwrite: true);
+                // Fill missing components with defaults
+                seed.GrowthComponents.EnsureGrowthComponents();
 
-                EnsureDefaultGrowthComponents(uid);
+                foreach (var prop in typeof(GrowthComponentsHolder).GetProperties())
+                {
+                    if (prop.GetValue(seed.GrowthComponents) is PlantGrowthComponent growthComp)
+                    {
+                        EntityManager.AddComponent(uid, _copier.CreateCopy(growthComp, notNullableOverride: true), overwrite: true);
+                    }
+                }
+
+                EnsureComp<PlantComponent>(uid);
 
                 if (TryComp<PaperLabelComponent>(args.Used, out var paperLabel))
                 {
@@ -223,8 +229,8 @@ public sealed class PlantHolderSystem : EntitySystem
                 }
                 QueueDel(args.Used);
 
-                CheckLevelSanity(uid, component);
-                UpdateSprite(uid, component);
+                CheckLevelSanity(uid, plantHolder);
+                UpdateSprite(uid, plantHolder);
 
                 if (seed.PlantLogImpact != null)
                     _adminLogger.Add(LogType.Botany, seed.PlantLogImpact.Value, $"{ToPrettyString(args.User):player} planted  {Loc.GetString(seed.Name):seed} at Pos:{Transform(uid).Coordinates}.");
@@ -241,14 +247,14 @@ public sealed class PlantHolderSystem : EntitySystem
         if (_tagSystem.HasTag(args.Used, HoeTag))
         {
             args.Handled = true;
-            if (component.WeedLevel > 0)
+            if (plantHolder.WeedLevel > 0)
             {
                 _popup.PopupCursor(Loc.GetString("plant-holder-component-remove-weeds-message",
                     ("name", Comp<MetaDataComponent>(uid).EntityName)), args.User, PopupType.Medium);
                 _popup.PopupEntity(Loc.GetString("plant-holder-component-remove-weeds-others-message",
                     ("otherName", Comp<MetaDataComponent>(args.User).EntityName)), uid, Filter.PvsExcept(args.User), true);
-                component.WeedLevel = 0;
-                UpdateSprite(uid, component);
+                plantHolder.WeedLevel = 0;
+                UpdateSprite(uid, plantHolder);
             }
             else
             {
@@ -261,13 +267,13 @@ public sealed class PlantHolderSystem : EntitySystem
         if (HasComp<ShovelComponent>(args.Used))
         {
             args.Handled = true;
-            if (component.Seed != null)
+            if (plantHolder.Seed != null)
             {
                 _popup.PopupCursor(Loc.GetString("plant-holder-component-remove-plant-message",
                     ("name", Comp<MetaDataComponent>(uid).EntityName)), args.User, PopupType.Medium);
                 _popup.PopupEntity(Loc.GetString("plant-holder-component-remove-plant-others-message",
                     ("name", Comp<MetaDataComponent>(args.User).EntityName)), uid, Filter.PvsExcept(args.User), true);
-                RemovePlant(uid, component);
+                RemovePlant(uid, plantHolder);
             }
             else
             {
@@ -281,19 +287,19 @@ public sealed class PlantHolderSystem : EntitySystem
         if (_tagSystem.HasTag(args.Used, PlantSampleTakerTag))
         {
             args.Handled = true;
-            if (component.Seed == null)
+            if (plantHolder.Seed == null)
             {
                 _popup.PopupCursor(Loc.GetString("plant-holder-component-nothing-to-sample-message"), args.User);
                 return;
             }
 
-            if (component.Sampled)
+            if (plantHolder.Sampled)
             {
                 _popup.PopupCursor(Loc.GetString("plant-holder-component-already-sampled-message"), args.User);
                 return;
             }
 
-            if (component.Dead)
+            if (plantHolder.Dead)
             {
                 _popup.PopupCursor(Loc.GetString("plant-holder-component-dead-plant-message"), args.User);
                 return;
@@ -305,41 +311,46 @@ public sealed class PlantHolderSystem : EntitySystem
                 return;
             }
 
-            component.Health -= _random.Next(3, 5) * 10;
+            plantHolder.Health -= _random.Next(3, 5) * 10;
 
             float? healthOverride;
-            if (component.Harvest)
+            if (plantHolder.Harvest)
             {
                 healthOverride = null;
             }
             else
             {
-                healthOverride = component.Health;
+                healthOverride = plantHolder.Health;
             }
-            var packetSeed = component.Seed;
+            var packetSeed = plantHolder.Seed;
 
             if (packetSeed != null)
             {
                 // Copy growth components from the plant to the seed before creating seed packet
-                var plantGrowthComponents = EntityManager.GetComponents<PlantGrowthComponent>(uid).ToList();
-                packetSeed.GrowthComponents?.Clear();
-                foreach (var growthComponent in plantGrowthComponents)
+                var holder = new GrowthComponentsHolder();
+
+                foreach (var prop in typeof(GrowthComponentsHolder).GetProperties())
                 {
-                    var newComponent = growthComponent.DupeComponent();
-                    packetSeed.GrowthComponents?.Add(newComponent);
+                    if (EntityManager.TryGetComponent(uid, prop.PropertyType, out var growthComponent))
+                    {
+                        var copiedComponent = _copier.CreateCopy((Component)growthComponent, notNullableOverride: true);
+                        prop.SetValue(holder, copiedComponent);
+                    }
                 }
+
+                packetSeed.GrowthComponents = holder;
 
                 var seed = _botany.SpawnSeedPacket(packetSeed, Transform(args.User).Coordinates, args.User, healthOverride);
                 _randomHelper.RandomOffset(seed, 0.25f);
-                var displayName = Loc.GetString(component.Seed.DisplayName);
+                var displayName = Loc.GetString(plantHolder.Seed.DisplayName);
                 _popup.PopupCursor(Loc.GetString("plant-holder-component-take-sample-message",
                     ("seedName", displayName)), args.User);
 
                 if (_random.Prob(0.3f))
-                    component.Sampled = true;
+                    plantHolder.Sampled = true;
 
-                CheckLevelSanity(uid, component);
-                ForceUpdateByExternalCause(uid, component);
+                CheckLevelSanity(uid, plantHolder);
+                ForceUpdateByExternalCause(uid, plantHolder);
             }
 
             return;
@@ -358,15 +369,15 @@ public sealed class PlantHolderSystem : EntitySystem
 
             if (_solutionContainerSystem.TryGetSolution(args.Used, produce.SolutionName, out var soln2, out var solution2))
             {
-                if (_solutionContainerSystem.ResolveSolution(uid, component.SoilSolutionName, ref component.SoilSolution, out var solution1))
+                if (_solutionContainerSystem.ResolveSolution(uid, plantHolder.SoilSolutionName, ref plantHolder.SoilSolution, out var solution1))
                 {
                     // We try to fit as much of the composted plant's contained solution into the hydroponics tray as we can,
                     // since the plant will be consumed anyway.
 
                     var fillAmount = FixedPoint2.Min(solution2.Volume, solution1.AvailableVolume);
-                    _solutionContainerSystem.TryAddSolution(component.SoilSolution.Value, _solutionContainerSystem.SplitSolution(soln2.Value, fillAmount));
+                    _solutionContainerSystem.TryAddSolution(plantHolder.SoilSolution.Value, _solutionContainerSystem.SplitSolution(soln2.Value, fillAmount));
 
-                    ForceUpdateByExternalCause(uid, component);
+                    ForceUpdateByExternalCause(uid, plantHolder);
                 }
             }
             var seed = produce.Seed;
@@ -376,7 +387,7 @@ public sealed class PlantHolderSystem : EntitySystem
                 if (seedTraits != null)
                 {
                     var nutrientBonus = seedTraits.Potency / 2.5f;
-                    AdjustNutrient(uid, nutrientBonus, component);
+                    AdjustNutrient(uid, nutrientBonus, plantHolder);
                 }
             }
             QueueDel(args.Used);
@@ -505,9 +516,7 @@ public sealed class PlantHolderSystem : EntitySystem
             return;
 
         // Remove all growth components before planting new seed
-        var growthComponents = EntityManager.GetComponents<PlantGrowthComponent>(uid).ToList();
-        foreach (var g in growthComponents)
-            EntityManager.RemoveComponent(uid, g);
+        RemoveAllGrowthComponents(uid);
 
         component.YieldMod = 1;
         component.MutationMod = 1;
@@ -669,14 +678,13 @@ public sealed class PlantHolderSystem : EntitySystem
     }
 
     /// <summary>
-    /// Ensures that all default growth components are added to the plant if they're not already present.
+    /// Removes all growth-related components from a plant.
     /// </summary>
-    private void EnsureDefaultGrowthComponents(EntityUid uid)
+    private void RemoveAllGrowthComponents(EntityUid uid)
     {
-        EnsureComp<PlantComponent>(uid);
-        EnsureComp<BasicGrowthComponent>(uid);
-        EnsureComp<PlantTraitsComponent>(uid);
-        EnsureComp<AtmosphericGrowthComponent>(uid);
-        EnsureComp<WeedPestGrowthComponent>(uid);
+        foreach (var comp in EntityManager.GetComponents<PlantGrowthComponent>(uid))
+        {
+            RemComp(uid, comp);
+        }
     }
 }

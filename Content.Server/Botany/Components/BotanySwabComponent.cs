@@ -18,9 +18,4 @@ public sealed partial class BotanySwabComponent : Component
     /// SeedData from the first plant that got swabbed.
     /// </summary>
     public SeedData? SeedData;
-
-    /// <summary>
-    /// Growth components from the first plant that got swabbed.
-    /// </summary>
-    public List<PlantGrowthComponent> components;
 }

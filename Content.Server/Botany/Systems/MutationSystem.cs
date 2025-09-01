@@ -1,3 +1,4 @@
+using Content.Server.Botany.Components;
 using Content.Server.Botany.Systems;
 using Content.Shared.Atmos;
 using Content.Shared.EntityEffects;
@@ -65,9 +66,12 @@ public sealed class MutationSystem : EntitySystem
     /// </summary>
     private void EnsureGrowthComponents(EntityUid plantHolder, SeedData seed)
     {
-        foreach (var component in seed.GrowthComponents)
+        // Fill missing components in the seed with defaults.
+        seed.GrowthComponents.EnsureGrowthComponents();
+
+        foreach (var prop in typeof(GrowthComponentsHolder).GetProperties())
         {
-            if (!EntityManager.HasComponent(plantHolder, component.GetType()))
+            if (prop.GetValue(seed.GrowthComponents) is PlantGrowthComponent component && !EntityManager.HasComponent(plantHolder, component.GetType()))
             {
                 var newComponent = component.DupeComponent();
                 EntityManager.AddComponent(plantHolder, newComponent);

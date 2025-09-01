@@ -68,17 +68,8 @@ public sealed class BotanySwabSystem : EntitySystem
         if (swab.SeedData == null)
         {
             // Pick up pollen
-            swab.SeedData = plant.Seed;
             if (plant.Seed != null)
-            {
-                // Deep copy components to prevent changes to the original plant from affecting the swab
-                swab.components = new List<PlantGrowthComponent>();
-                foreach (var component in plant.Seed.GrowthComponents)
-                {
-                    var copiedComponent = component.DupeComponent();
-                    swab.components.Add(copiedComponent);
-                }
-            }
+                swab.SeedData = plant.Seed.Clone();
 
             _popupSystem.PopupEntity(Loc.GetString("botany-swab-from"), args.Args.Target.Value, args.Args.User);
         }
@@ -92,18 +83,7 @@ public sealed class BotanySwabSystem : EntitySystem
             plant.Seed = _mutationSystem.Cross(swab.SeedData, old);
 
             // Transfer old plant pollen to swab
-            swab.SeedData = old;
-
-            // Copy components from the old plant to the swab
-            if (old.GrowthComponents != null)
-            {
-                swab.components = new List<PlantGrowthComponent>();
-                foreach (var component in old.GrowthComponents)
-                {
-                    var copiedComponent = component.DupeComponent();
-                    swab.components.Add(copiedComponent);
-                }
-            }
+            swab.SeedData = old.Clone();
 
             _popupSystem.PopupEntity(Loc.GetString("botany-swab-to"), args.Args.Target.Value, args.Args.User);
         }

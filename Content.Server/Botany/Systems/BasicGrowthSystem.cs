@@ -22,22 +22,24 @@ public sealed class BasicGrowthSystem : PlantGrowthSystem
     private void OnSwab(EntityUid uid, BasicGrowthComponent component, BotanySwabDoAfterEvent args)
     {
         if (args.Cancelled || args.Handled || !TryComp<PlantHolderComponent>(args.Args.Target, out var plant) ||
-            args.Used == null || !TryComp<BotanySwabComponent>(args.Used.Value, out var swab))
+            args.Used == null || !TryComp<BotanySwabComponent>(args.Used.Value, out var swab) || swab.SeedData == null)
             return;
 
-        var swabComp = swab.components.Find(c => c.GetType() == typeof(BasicGrowthComponent));
+        var swabComp = swab.SeedData.GrowthComponents.BasicGrowth;
         if (swabComp == null)
         {
-            swab.components.Add(new BasicGrowthComponent() {
+            swab.SeedData.GrowthComponents.BasicGrowth = new BasicGrowthComponent()
+            {
                 WaterConsumption = component.WaterConsumption,
                 NutrientConsumption = component.NutrientConsumption
-            });
+            };
         }
         else
         {
-            BasicGrowthComponent typedComp = (BasicGrowthComponent)swabComp;
-            if (_random.Prob(0.5f)) typedComp.WaterConsumption = component.WaterConsumption;
-            if (_random.Prob(0.5f)) typedComp.NutrientConsumption = component.NutrientConsumption;
+            if (_random.Prob(0.5f))
+                swabComp.WaterConsumption = component.WaterConsumption;
+            if (_random.Prob(0.5f))
+                swabComp.NutrientConsumption = component.NutrientConsumption;
         }
     }
 

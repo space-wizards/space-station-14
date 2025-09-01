@@ -79,26 +79,12 @@ public sealed partial class BotanySystem : EntitySystem
 
     public PlantTraitsComponent? GetPlantTraits(SeedData seed)
     {
-        foreach (var growthComponent in seed.GrowthComponents)
-        {
-            if (growthComponent is PlantTraitsComponent plantTraits)
-            {
-                return plantTraits;
-            }
-        }
-        return null;
+        return seed.GrowthComponents.PlantTraits;
     }
 
     public HarvestComponent? GetHarvestComponent(SeedData seed)
     {
-        foreach (var growthComponent in seed.GrowthComponents)
-        {
-            if (growthComponent is HarvestComponent harvestComp)
-            {
-                return harvestComp;
-            }
-        }
-        return null;
+        return seed.GrowthComponents.Harvest;
     }
 
     private void OnExamined(EntityUid uid, SeedComponent component, ExaminedEvent args)
