@@ -9,7 +9,7 @@
   - type: AntagRandomObjectives
     sets:
     - groups: ThiefBigObjectiveGroups
-      prob: 0.7
+      prob: 0.002
       maxPicks: 1
     - groups: ThiefObjectiveGroups
       maxPicks: 10

@@ -104,7 +104,7 @@
     startAnnouncementColor: "#18abf5"
     startAudio:
       path: /Audio/Announcements/announce.ogg
-    weight: 0.01
+    weight: 0.001
     duration: 1800
   - type: AnomalySpawnRule
 
@@ -120,7 +120,7 @@
     startAnnouncementColor: "#18abf5"
     startAudio:
       path: /Audio/Announcements/announce.ogg
-    weight: 0.02
+    weight: 0.002
     duration: 900
   - type: BluespaceArtifactRule
 
@@ -140,7 +140,7 @@
   parent: BaseGameRule
   components:
   - type: StationEvent
-    weight: 0.08
+    weight: 0.005
     duration: 1
     minimumPlayers: 5
   - type: BreakerFlipRule
@@ -152,7 +152,7 @@
   - type: StationEvent
     startAnnouncement: station-event-bureaucratic-error-announcement
     minimumPlayers: 10
-    weight: 0.06
+    weight: 0.006
     duration: 1
   - type: BureaucraticErrorRule
     ignoredJobs:
@@ -165,7 +165,7 @@
   - type: StationEvent
     startAnnouncement: station-event-clerical-error-announcement
     minimumPlayers: 5
-    weight: 0.05
+    weight: 0.005
     duration: 1
   - type: ClericalErrorRule
 
@@ -358,7 +358,7 @@
   parent: BaseGameRule
   components:
   - type: StationEvent
-    weight: 1.6
+    weight: 0.006
     duration: 1
   - type: FalseAlarmRule
 
@@ -371,7 +371,7 @@
     startAudio:
       path: /Audio/Announcements/attention.ogg
     endAnnouncement: station-event-gas-leak-end-announcement
-    weight: 0.04
+    weight: 0.004
   - type: GasLeakRule
 
 - type: entity
@@ -381,7 +381,7 @@
   - type: StationEvent
     earliestStart: 15
     minimumPlayers: 15
-    weight: 0.03
+    weight: 0.003
     duration: 300
   - type: KudzuGrowthRule
 
@@ -390,7 +390,7 @@
   parent: BaseStationEventShortDelay
   components:
   - type: StationEvent
-    weight: 0.02
+    weight: 0.002
     startAnnouncement: station-event-power-grid-check-start-announcement
     endAnnouncement: station-event-power-grid-check-end-announcement
     startAudio:
@@ -406,7 +406,7 @@
   id: SolarFlare
   components:
   - type: StationEvent
-    weight: 0.02
+    weight: 0.002
     startAnnouncement: station-event-solar-flare-start-announcement
     endAnnouncement: station-event-solar-flare-end-announcement
     startAudio:
@@ -427,8 +427,8 @@
     - Service
     - Supply
     extraCount: 2
-    lightBreakChancePerSecond: 0.0002
-    doorToggleChancePerSecond: 0.001
+    lightBreakChancePerSecond: 0.00002
+    doorToggleChancePerSecond: 0.0001
 
 - type: entity
   id: VentClog
@@ -440,7 +440,7 @@
       path: /Audio/Announcements/attention.ogg
     earliestStart: 3600
     minimumPlayers: 5
-    weight: 0.05
+    weight: 0.005
     duration: 3600
     maxDuration: 21600
   - type: VentClogRule
@@ -455,7 +455,7 @@
       path: /Audio/Announcements/attention.ogg
     earliestStart: 5400
     minimumPlayers: 5
-    weight: 0.02
+    weight: 0.002
     duration: 1800
   - type: VentCrittersRule
     entries:
@@ -476,7 +476,7 @@
       path: /Audio/Announcements/attention.ogg
     earliestStart: 5400
     minimumPlayers: 10
-    weight: 0.02
+    weight: 0.002
     duration: 1800
   - type: VentCrittersRule
     entries:
@@ -497,7 +497,7 @@
       path: /Audio/Announcements/attention.ogg
     earliestStart: 5400
     minimumPlayers: 5
-    weight: 0.02
+    weight: 0.002
     duration: 3600
   - type: VentCrittersRule
     entries:
@@ -528,7 +528,7 @@
   - type: StationEvent
     earliestStart: 172800
     minimumPlayers: 15
-    weight: 0.01 # Zombies was happening basically every single survival round, so now it's super rare
+    weight: 0.001 # Zombies was happening basically every single survival round, so now it's super rare
     duration: 1
   - type: ZombieRule
   - type: AntagSelection
@@ -627,7 +627,7 @@
   parent: BaseGameRule
   components:
   - type: StationEvent
-    weight: 0.04
+    weight: 0.004
     duration: 3600
     maxDuration: 10800
     reoccurrenceDelay: 30
@@ -643,7 +643,7 @@
   id: IonStorm
   components:
   - type: StationEvent
-    weight: 0.02
+    weight: 0.002
     reoccurrenceDelay: 172800
     duration: 3600
     maxDuration: 86400
@@ -667,7 +667,7 @@
   - type: StationEvent
     startAudio:
       path: /Audio/Announcements/attention.ogg
-    weight: 0.02
+    weight: 0.002
     minimumPlayers: 10
     reoccurrenceDelay: 604800
   - type: GreytideVirusRule
