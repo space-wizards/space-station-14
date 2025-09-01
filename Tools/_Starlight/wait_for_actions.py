@@ -29,6 +29,9 @@ def checkIfSafeToProceed(status):
     any_before_us = any(wr.run_number < RUN_NUMBER for wr in que_workflow_runs)
     return not any_before_us
 
+#wait because the github API seems to be inconsistent and updates slowly?
+time.sleep(20)
+
 #loop and get all their IDs, and check if ANY are less than us
 while True:
     if checkAllStatuses(["queued", "in_progress", "requested", "waiting", "pending"]):
