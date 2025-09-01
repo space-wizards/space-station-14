@@ -26,20 +26,21 @@
   The Mothership Core is the leader and life force of the xenoborgs, they are the only one able to make more xenoborgs, and if they are destroyed, all xenoborgs will be destroyed. The Mothership Core is unable to move from its position in the middle of the ship.
   The Mothership Core is capable of upgrading the Xenoborgs with borg-type-specific modules to increase their effectiveness in harvesting sentient brains.
 
-  ### How to borg dead crew:
+  ### Borging crew:
   <Box>
     <GuideEntityEmbed Entity="MachineArtifactCrusher" Caption="body crusher"/>
   </Box>
-  - Have the xenoborgs drag them to the body crusher to get the brain
-  - print an empty xenoborg
-  - unlock the empty xenoborg
-  - open the xenoborg with a crowbar
-  - remove the empty MMI from the xenoborg
-  - place the sentient brain in the MMI.
-  - place the MMI back in the xenoborg
-  - (optional) rename the xenoborg and change their modules
-  - close the xenoborg and lock them back
-  - the new xenoborg will be uncharged and will need to go to a recharging station
+  How to borg dead crew:
+  - 1. Have the xenoborgs drag them to the body crusher to get the brain
+  - 2. print an empty xenoborg
+  - 3. unlock the empty xenoborg
+  - 4. open the xenoborg with a crowbar
+  - 5. remove the empty MMI from the xenoborg
+  - 6. place the sentient brain in the MMI.
+  - 7. place the MMI back in the xenoborg
+  - 8. (optional) rename the xenoborg and change their modules
+  - 9. close the xenoborg and lock them back
+  - 10. the new xenoborg will be uncharged and will need to go to a recharging station
 
   note: if instead of a brain, it is a positronic brain, just toss the MMI and place the positronic brain directly in the empty xenoborg.
 
