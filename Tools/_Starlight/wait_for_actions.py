@@ -13,6 +13,12 @@ g = Github(GITHUB_TOKEN)
 repo = g.get_repo(REPO_NAME)
 print(f"Authenticated to repo {repo.full_name}", flush=True)
 
+def checkAllStatuses(statuses):
+    for status in statuses:
+        if not checkIfSafeToProceed(status):
+            return False
+    return True
+
 def checkIfSafeToProceed(status):
     #check if there are any other workflow runs for this workflow that are queued or in progress with an ID less than us
     workflow_runs = repo.get_workflow_runs(status=status, exclude_pull_requests=False)
@@ -25,7 +31,7 @@ def checkIfSafeToProceed(status):
 
 #loop and get all their IDs, and check if ANY are less than us
 while True:
-    if checkIfSafeToProceed("queued") and checkIfSafeToProceed("in_progress"):
+    if checkAllStatuses(["queued", "in_progress", "requested", "waiting", "pending"]):
         print("No workflow runs queued or running before us, proceeding...", flush=True)
         exit(0)
 
