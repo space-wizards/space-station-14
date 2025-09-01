@@ -13020,5 +13020,50 @@ Entries:
   id: 147517
   time: '2025-09-01T22:10:25.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/1475
+- author: CorruptOmega
+  changes:
+  - message: Bat Language - Eek!
+    type: Add
+  id: 150900
+  time: '2025-09-01T22:29:00.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1509
+- author: CorruptOmega
+  changes:
+  - message: Bats (Remilia) now speak Bat and understand Bat and Galactic Common,
+      like every other pet.
+    type: Tweak
+  id: 150901
+  time: '2025-09-01T22:29:00.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1509
+- author: CorruptOmega
+  changes:
+  - message: Evil Corgi's (Cerberus) now speak Dog and understand Dog and Galactic
+      Common, like every other pet.
+    type: Tweak
+  id: 150902
+  time: '2025-09-01T22:29:00.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1509
+- author: CorruptOmega
+  changes:
+  - message: Skeleton's Skull now can speak and understand Galactic Common. In case
+      you're feeling light headed.
+    type: Add
+  id: 150903
+  time: '2025-09-01T22:29:00.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1509
+- author: CorruptOmega
+  changes:
+  - message: Duck now speaks duck instead of Sylvan
+    type: Tweak
+  id: 150904
+  time: '2025-09-01T22:29:00.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1509
+- author: CorruptOmega
+  changes:
+  - message: SyndiCat now understands common to accept orders.
+    type: Add
+  id: 150905
+  time: '2025-09-01T22:29:00.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1509
 Order: -1
 
