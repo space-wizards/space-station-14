@@ -28,7 +28,6 @@ public abstract partial class SharedStationAiSystem
         SubscribeLocalEvent<StationAiHeldComponent, InteractionAttemptEvent>(OnHeldInteraction);
         SubscribeLocalEvent<StationAiHeldComponent, AttemptRelayActionComponentChangeEvent>(OnHeldRelay);
         SubscribeLocalEvent<StationAiHeldComponent, JumpToCoreEvent>(OnCoreJump);
-        SubscribeLocalEvent<StationAiHeldComponent, PlayerDetachedEvent>(OnPlayerDetached);
 
         SubscribeLocalEvent<TryGetIdentityShortInfoEvent>(OnTryGetIdentityShortInfo);
     }
@@ -166,15 +165,6 @@ public abstract partial class SharedStationAiSystem
         if (whitelistComponent is { Enabled: false })
         {
             ShowDeviceNotRespondingPopup(ent.Owner);
-        }
-    }
-
-    private void OnPlayerDetached(Entity<StationAiHeldComponent> ent, ref PlayerDetachedEvent args)
-    {
-        // If an AI player voluntarily ghosts, delete them
-        if (_net.IsServer && !_mind.TryGetMind(ent, out var _, out var _))
-        {
-            QueueDel(ent.Owner);
         }
     }
 

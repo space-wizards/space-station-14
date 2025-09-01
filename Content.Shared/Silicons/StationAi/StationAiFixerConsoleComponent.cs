@@ -21,7 +21,7 @@ public sealed partial class StationAiFixerConsoleComponent : Component
     /// Determines how long a purge takes to complete (in seconds).
     /// </summary>
     [DataField]
-    public TimeSpan PurgeDuration = TimeSpan.FromSeconds(60);
+    public TimeSpan PurgeDuration = TimeSpan.FromSeconds(30);
 
     /// <summary>
     /// The number of stages that a console action (repair or purge)

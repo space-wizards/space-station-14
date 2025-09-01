@@ -61,8 +61,8 @@ public abstract partial class SharedStationAiSystem
         if (_net.IsClient)
             return;
 
-        // If the player's mind is gone, appear empty. Otherwise, appear occupied.
-        var altState = StationAiState.Empty;
+        // If the player's mind is gone, appear as rebooting. Otherwise, appear occupied.
+        var altState = StationAiState.Rebooting;
 
         if (_mind.TryGetMind(ent, out _, out _))
         {
