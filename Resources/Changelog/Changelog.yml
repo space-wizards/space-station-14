@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: EmoGarbage404
-  changes:
-  - message: Fixed NPCs stalling out when too many exist.
-    type: Fix
-  id: 8394
-  time: '2025-04-30T00:51:42.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/37056
 - author: BIGZi0348, slarticodefast
   changes:
   - message: Reflective vest now reflects lasers only while equipped.
@@ -3949,3 +3942,10 @@
   id: 8906
   time: '2025-09-01T15:07:43.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/40049
+- author: slarticodefast
+  changes:
+  - message: Dropper and mini-syringe transfer amounts can now be set to more options.
+    type: Tweak
+  id: 8907
+  time: '2025-09-01T15:24:37.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/39976
