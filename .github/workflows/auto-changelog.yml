@@ -14,8 +14,34 @@ env:
  BRANCH_NAME: ${{ github.ref_name	 }} 
 
 jobs:
+  wait-for-que:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: "3.x"
+
+      - name: Install Dependencies
+        run: |
+          pip install PyGithub
+
+      - name: Wait for Que to finish
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_REPOSITORY: ${{ github.repository }}
+          WORKFLOW_RUN_ID: ${{ github.run_id }}
+          WORKFLOW_NAME: ${{ github.workflow }}
+        run: |
+          python ./Tools/_Starlight/wait_for_actions.py
+          echo "Script exited with code $?"
+
   update-changelog:
     runs-on: ubuntu-latest
+    needs: wait-for-que
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
