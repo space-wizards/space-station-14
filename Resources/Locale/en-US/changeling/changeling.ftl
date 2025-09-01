@@ -2,7 +2,7 @@
 roles-antag-changeling-objective = A intelligent predator that assumes the identities of its victims.
 
 changeling-devour-attempt-failed-rotting = This corpse has only rotted biomass.
-changeling-devour-attempt-failed-protected = This victim's biomass is protected.
+changeling-devour-attempt-failed-protected = This victim's biomass is protected by armor!
 
 changeling-devour-begin-windup-self = Our uncanny mouth reveals itself with otherworldly hunger.
 changeling-devour-begin-windup-others = { CAPITALIZE(POSS-ADJ($user)) } uncanny mouth reveals itself with otherworldly hunger.

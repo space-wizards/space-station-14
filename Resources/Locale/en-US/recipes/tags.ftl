@@ -125,6 +125,7 @@ construction-graph-tag-wallmount-substation-circuit-board = wallmount substation
 construction-graph-tag-surveillance-camera-monitor-board = surveillance camera monitor board
 construction-graph-tag-television-board = television board
 construction-graph-tag-freezer-electronics = freezer electronics
+construction-graph-tag-turret-control-electronics = sentry turret control panel electronics
 
 # crystals
 construction-graph-tag-cyan-crystal-shard = cyan crystal shard
