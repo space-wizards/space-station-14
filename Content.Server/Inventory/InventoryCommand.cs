@@ -34,7 +34,7 @@ public sealed class InventoryCommand : ToolshedCommand
 
         foreach (var slot in inventory.Slots)
         {
-            if (!slot.SlotFlags.HasFlag(slotFlag))
+            if ((slot.SlotFlags | slotFlag) == 0) // Does this seem somewhat illegal? yes. Does C# provide an alternative function for checking if an enum has ANY of a set of bit flags? no.
                 continue;
             if (_inventorySystem.TryGetSlotEntity(ent, slot.Name, out var item, inventory))
                 items.Add(item.Value);
@@ -172,7 +172,7 @@ public sealed class InventoryCommand : ToolshedCommand
 
         foreach (var slot in inventory.Slots)
         {
-            if (!slot.SlotFlags.HasFlag(slotFlag))
+            if ((slot.SlotFlags | slotFlag) == 0)
                 continue;
 
 
