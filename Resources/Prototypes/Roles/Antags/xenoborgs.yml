@@ -8,7 +8,7 @@
   - !type:RoleTimeRequirement
     role: JobBorg
     time: 18000  # 5 hrs
-    guides: [ Xenoborgs ]
+  guides: [ Xenoborgs ]
 
 - type: antag
   id: Xenoborg
@@ -20,4 +20,4 @@
   - !type:RoleTimeRequirement
     role: JobBorg
     time: 18000  # 5 hrs
-    guides: [ Xenoborgs ]
+  guides: [ Xenoborgs ]
