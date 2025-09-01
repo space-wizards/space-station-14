@@ -15,7 +15,7 @@ print(f"Authenticated to repo {repo.full_name}", flush=True)
 
 def checkIfSafeToProceed(status):
     #check if there are any other workflow runs for this workflow that are queued or in progress with an ID less than us
-    workflow_runs = repo.get_workflow_runs(status=status)
+    workflow_runs = repo.get_workflow_runs(status=status, exclude_pull_requests=False)
     que_workflow_runs = [wr for wr in workflow_runs if wr.name == WORKFLOW_NAME]
     any_before_us = any(wr.id < RUN_ID for wr in que_workflow_runs)
     return not any_before_us
