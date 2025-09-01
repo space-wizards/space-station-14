@@ -246,3 +246,4 @@ marking-VulpFacialHairRuff = Ruff
 marking-VulpFacialHairElder = Elder
 marking-VulpFacialHairElderChin = Elder Chin
 marking-VulpFacialHairKita = Kita
+marking-VulpFacialHairGoatee = Beard (Snout Goatee)

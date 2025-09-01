@@ -115,6 +115,7 @@
     - SnoutCover
     - HeadTop
     - HeadSide
+    - FacialHair
     markingsDisplacement:
       Hair:
         sizeMaps:

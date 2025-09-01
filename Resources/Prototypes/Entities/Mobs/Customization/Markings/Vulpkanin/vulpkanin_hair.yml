@@ -245,3 +245,12 @@
   sprites:
     - sprite: Mobs/Customization/Vulpkanin/facial_hair.rsi
       state: kita
+
+- type: marking
+  id: VulpFacialHairGoatee
+  bodyPart: FacialHair
+  markingCategory: FacialHair
+  speciesRestriction: [ Vulpkanin ]
+  sprites:
+  - sprite: Mobs/Customization/Vulpkanin/facial_hair.rsi
+    state: goatee

@@ -19,6 +19,10 @@
         {
             "name": "kita",
             "directions": 4
+        },
+        {
+            "name": "goatee",
+            "directions": 4
         }
     ]
 }
