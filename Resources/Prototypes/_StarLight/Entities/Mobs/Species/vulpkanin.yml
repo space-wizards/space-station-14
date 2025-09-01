@@ -97,6 +97,12 @@
     damageContainer: Biological
     damageModifierSet: Vulpkanin
   - type: Wagging
+  - type: InteractionPopup
+    successChance: 1
+    interactSuccessString: petting-success-soft-floofy
+    interactSuccessSound:
+      collection: Fox
+    messagePerceivedByOthers: petting-success-soft-floofy-others
 
 - type: entity
   save: false
