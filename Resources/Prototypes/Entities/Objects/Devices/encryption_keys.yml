@@ -241,6 +241,22 @@
     price: 500 # 1000 for 2
 
 - type: entity
+  parent: [ EncryptionKey, BaseMajorContraband ]
+  id: EncryptionKeyNinja
+  name: green encryption key
+  description: An encryption key used by... wait... Spiders?
+  components:
+  - type: EncryptionKey
+    channels:
+    - Common
+    defaultChannel: Common
+  - type: EncryptionKeyChannelsCopy
+  - type: Sprite
+    layers:
+    - state: crypt_green
+    - state: spider_label
+
+- type: entity
   parent: [ EncryptionKey, BaseSiliconScienceContraband ]
   id: EncryptionKeyBinary
   name: binary translator key
