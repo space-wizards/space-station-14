@@ -378,10 +378,13 @@
     damageCoefficient: 0.3
   - type: ZombificationResistance
     zombificationResistanceCoefficient: 0.50
-  - type: AccessReader
-    access: [[ "Security" ]]
-  - type: AccessClothingBlocker
-    access: Security
+  - type: IdClothingBlocker
+    allowedJobs:
+      - SecurityOfficer
+      - Brigmedic
+      - Warden
+      - HeadOfSecurity
+      - Captain
   - type: Pierceable
     level: Metal
   - type: Armor
