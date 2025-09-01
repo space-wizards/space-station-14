@@ -1,0 +1,67 @@
+name: Backfill Changelog
+
+on:
+  workflow_dispatch:
+    inputs:
+      commits_count:
+        description: 'Number of recent commits to check'
+        required: false
+        default: '10'
+        type: string
+
+permissions:
+  contents: write
+  pull-requests: read
+
+jobs:
+  backfill-changelog:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0  # Fetch full history
+
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.x'
+
+      - name: Install Dependencies
+        run: |
+          pip install pyyaml PyGithub
+
+      - name: Backfill Changelogs
+        env:
+          CHANGELOG_FILE_PATH: 'Resources/Changelog/ChangelogStarlight.yml'
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_REPOSITORY: ${{ github.repository }}
+          COMMITS_COUNT: ${{ inputs.commits_count }}
+        run: |
+          python ./Tools/_Starlight/backfill_changelog.py
+
+      - name: Display changelog after backfill
+        run: |
+          if [ -f "Resources/Changelog/ChangelogStarlight.yml" ]; then
+            echo "=== Current changelog content ==="
+            cat "Resources/Changelog/ChangelogStarlight.yml"
+          else
+            echo "Changelog file not found"
+          fi
+
+      - name: Git status before commit
+        run: |
+          git status
+
+      - name: Commit and push changes
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add "Resources/Changelog/ChangelogStarlight.yml"
+          if git diff --cached --quiet; then
+            echo "No changes to commit."
+          else
+            git pull origin ${{ github.ref_name }}
+            git commit -m "Backfill changelog entries [skip ci]"
+            git push origin ${{ github.ref_name }}
+          fi
