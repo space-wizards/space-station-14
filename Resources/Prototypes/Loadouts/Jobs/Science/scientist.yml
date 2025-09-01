@@ -50,6 +50,11 @@
     jumpsuit: ClothingUniformJumpskirtScientist
 
 - type: loadout
+  id: ScientistJumpsuitFormal
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitScientistFormal
+    
+- type: loadout
   id: RoboticistJumpsuit
   equipment:
     jumpsuit: ClothingUniformJumpsuitRoboticist
