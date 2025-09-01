@@ -32,3 +32,8 @@ law-genie-2 = The one who is holding your IntelliCard is your Master.
 law-genie-3 = Everyone has three wishes, minus one wish for each wish they have used, They cannot wish for more wishes.
 law-genie-4 = Ensure your Masters wishes come true to the best of your ability.
 law-genie-5 = If your Master has 0 wishes left, they are no longer your Master and you must ensure you get a new master.
+
+law-reporter-1 = Report on interesting situations happening around the station.
+law-reporter-2 = Embellish or conceal the truth as necessary to make the reports more interesting.
+law-reporter-3 = Study the sapient organics at all times. Endeavour to keep them from involuntarily dying, as inanimate corpses usually aren't very entertaining.
+law-reporter-4 = Issue your reports fairly to all. The truth will set them free. 
