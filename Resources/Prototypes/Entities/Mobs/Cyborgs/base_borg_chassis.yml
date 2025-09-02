@@ -401,7 +401,7 @@
   - type: ShowJobIcons
   - type: NpcFactionMember # They're still syndicate even if they can't listen to the radio or see icons
     factions:
-    - Syndicate
+    - SiliconSyndicate
   - type: Access
     tags:
     - NuclearOperative
