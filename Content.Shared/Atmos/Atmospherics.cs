@@ -243,18 +243,17 @@ namespace Content.Shared.Atmos
         public const float TritiumBurnOxyFactor = 100f;
         public const float TritiumBurnTritFactor = 10f;
 
-        public const float ElectrovaeProductionMaxEfficiencyTemperature = 84.15f;
         public const float ElectrovaeProductionNitrogenRatio = 6f;
-        public const float ElectrovaeProductionWaterVaporRatio = 5.5f;
-        public const float ElectrovaeProductionConversionRate = 80f;
+        public const float ElectrovaeProductionMinTemperature = 70f;
+        public const float ElectrovaeProductionMaxTemperature = 250f;
+        public const float ElectrovaeProductionTemperatureExponent = 1.5f;
         public const float ElectrovaeChargePowerDrainPerMole = 50000f;
         public const float ElectrovaeChargeMinimumPowerDrain = 5000f;
         public const float ElectrovaeChargeMaximumPowerDrain = 100000f;
         public const float ElectrovaeChargeConversionEfficiency = 0.8f;
-        public const float ElectrovaeChargeSearchRadius = 0.5f;
 
         public const float ChargedElectrovaeMinimumAmount = 2.0f;
-        public const float ChargedElectrovaeEmpChance = 0.01f;
+        public const float ChargedElectrovaeEmpChance = 0.02f;
         public const float ChargedElectrovaeEmpRadius = 1f;
         public const float ChargedElectrovaeEmpEnergy = 5000f;
         public const float ChargedElectrovaeEmpDuration = 1f;
