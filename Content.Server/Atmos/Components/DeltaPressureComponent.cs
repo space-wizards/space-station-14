@@ -18,7 +18,7 @@ namespace Content.Server.Atmos.Components;
 public sealed partial class DeltaPressureComponent : Component
 {
     /// <summary>
-    /// Whether the entity is allowed to take pressure damage or not.
+    /// Whether the entity is currently in the processing list of the grid's <see cref="GridAtmosphereComponent"/>.
     /// </summary>
     [DataField(readOnly: true)]
     [ViewVariables(VVAccess.ReadOnly)]
