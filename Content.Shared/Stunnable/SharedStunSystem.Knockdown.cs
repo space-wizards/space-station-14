@@ -14,7 +14,6 @@ using Content.Shared.Popups;
 using Content.Shared.Rejuvenate;
 using Content.Shared.Standing;
 using Robust.Shared.Audio;
-using Content.Shared.Buckle;
 using Robust.Shared.Configuration;
 using Robust.Shared.Input.Binding;
 using Robust.Shared.Physics;
@@ -117,6 +116,7 @@ public abstract partial class SharedStunSystem
         // This is jank but if we don't do this it'll still use the knockedDownComponent modifiers for friction because it hasn't been deleted quite yet.
         entity.Comp.FrictionModifier = 1f;
         entity.Comp.SpeedModifier = 1f;
+        _movementSpeedModifier.RefreshMovementSpeedModifiers(entity);
 
         _standingState.Stand(entity);
         Alerts.ClearAlert(entity, KnockdownAlert);
@@ -541,6 +541,9 @@ public abstract partial class SharedStunSystem
 
     private void OnBuckle(Entity<KnockedDownComponent> entity, ref BuckledEvent args)
     {
+        if (entity.Comp.DoAfterId is { } doAfterId)
+            DoAfter.Cancel(entity.Owner, doAfterId);
+
         RemComp<KnockedDownComponent>(entity);
     }
 
