@@ -1,7 +1,7 @@
 <DefaultWindow xmlns="https://spacestation14.io"
             Title="{Loc 'comp-pda-ui-menu-title'}"
-            SetSize="400 400"
-            MinSize="400 400">
+            MinSize="600 400"
+            SetSize="600 400"> <!-- DeadSpace-Localization -->
     <TabContainer Name="MasterTabContainer">
         <BoxContainer Name="Scanner"
                       Orientation="Vertical"

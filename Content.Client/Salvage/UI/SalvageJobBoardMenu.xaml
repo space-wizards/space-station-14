@@ -2,8 +2,8 @@
                       xmlns:gfx="clr-namespace:Robust.Client.Graphics;assembly=Robust.Client"
                       xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
                       Title="{Loc 'job-board-ui-window-title'}"
-                      SetSize="550 550"
-                      Resizable="False">
+                      Resizable="False"
+                      SetSize="720 550"> <!-- DeadSpace-Localization -->
     <BoxContainer Orientation="Vertical"
                   VerticalExpand="True"
                   HorizontalExpand="True">

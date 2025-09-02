@@ -1,8 +1,8 @@
 ﻿<controls:FancyWindow xmlns="https://spacestation14.io"
                            xmlns:gfx="clr-namespace:Robust.Client.Graphics;assembly=Robust.Client"
                            xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
-                           SetSize="600 600"
-                           MinSize="600 600">
+                           MinSize="800 600"
+                           SetSize="800 600"> <!-- DeadSpace-Localization -->
     <BoxContainer Orientation="Vertical" Margin="15 5 15 10">
         <BoxContainer Orientation="Horizontal">
             <Label Text="{Loc 'cargo-console-menu-account-name-label'}"

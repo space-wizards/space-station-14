@@ -3,8 +3,8 @@
                       xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
                       xmlns:customControls="clr-namespace:Content.Client.Administration.UI.CustomControls"
                       Title="{Loc 'research-console-menu-title'}"
-                      MinSize="625 400"
-                      SetSize="760 550"> <!-- Corvax-Localization -->
+                      MinSize="700 400"
+                      SetSize="980 550"> <!-- DeadSpace-Localization -->
     <BoxContainer Orientation="Vertical"
                   HorizontalExpand="True"
                   VerticalExpand="True">

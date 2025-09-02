@@ -48,7 +48,7 @@ namespace Content.Client.Instruments.UI
             PlaybackSlider.OnValueChanged += PlaybackSliderSeek;
             PlaybackSlider.OnKeyBindUp += PlaybackSliderKeyUp;
 
-            MinSize = SetSize = new Vector2(400, 150);
+            MinSize = SetSize = new Vector2(500, 150); // DS14: expanding the interface size for ru localization
         }
 
         public void SetInstrument(Entity<InstrumentComponent> entity)
