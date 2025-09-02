@@ -362,7 +362,7 @@
   showInVote: true
   minPlayers: 60
   rules:
-    - DerelictCyborgSpawn
+    - DerelictGenericCyborgSpawn
     - BasicStationEventScheduler
     - MeteorSwarmMildScheduler
     - SubGamemodesRule

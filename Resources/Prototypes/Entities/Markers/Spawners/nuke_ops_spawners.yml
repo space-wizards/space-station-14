@@ -76,15 +76,15 @@
   id: NukeOpsAmmoTable
   table: !type:GroupSelector
     children:
-    - id: MagazinePistolSubMachineGun
-    - id: MagazineRifle
-    - id: MagazineBoxLightRifle
+    - id: MagazinePistolSubMachineGunSP #Starlight
+    - id: MagazineRifleSP #Starlight
+    - id: MagazineBoxLightRifleSP #Starlight
       weight: 0.5
     - id: MagazineShotgunSlug
       weight: 0.5
     - id: MagazineShotgun
       weight: 0.5
-    - id: MagazinePistol
+    - id: MagazinePistolSP #Starlight
       weight: 0.5
     - id: MagazineBoxAntiMateriel
       weight: 0.5

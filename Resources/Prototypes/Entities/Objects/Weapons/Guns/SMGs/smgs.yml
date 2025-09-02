@@ -159,7 +159,7 @@
     containers:
       ballistic-ammo: !type:Container
   - type: ProjectileBatteryAmmoProvider
-    proto: CartridgePistol
+    proto: CartridgePistolSP #Starlight Ammo
     fireCost: 100
   - type: Battery
     maxCharge: 3000

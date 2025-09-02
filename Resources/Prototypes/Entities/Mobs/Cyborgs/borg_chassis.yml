@@ -240,10 +240,11 @@
   description: A man-machine hybrid that assists the engineering department. This one seems to have chunks of strange crystals pockmarking its surface.
   components:
   - type: Sprite
+    sprite: Mobs/Silicon/Chassis/engineer.rsi #Starlight
     layers:
     - state: engineer_derelict
       sprite: Mobs/Silicon/Chassis/engineer_derelict.rsi #Starlight ;-;
-    - state: engineer_e_r
+    - state: borg_e_r #Starlight ;-;
       map: ["enum.BorgVisualLayers.Light"]
       shader: unshaded
       visible: false
@@ -253,7 +254,7 @@
     - state: engineer_derelict_crystal
       shader: shaded
       sprite: Mobs/Silicon/Chassis/engineer_derelict.rsi #Starlight ;-;
-    - state: engineer_l
+    - state: borg_l #Starlight ;-;
       shader: unshaded
       map: ["light"]
       visible: false
@@ -263,8 +264,8 @@
       tags:
       - BorgModuleGeneric
       - BorgModuleEngineering
-    hasMindState: engineer_e
-    noMindState: engineer_e_r
+    hasMindState: borg_e #Starlight ;-;
+    noMindState: borg_e_r #Starlight ;-;
 
 - type: entity
   parent: BaseBorgChassisDerelict
@@ -273,15 +274,16 @@
   description: A man-machine hybrid that assists the service department. It's a bigger mess than anything it can clean up.
   components:
   - type: Sprite
+    sprite: Mobs/Silicon/Chassis/janitor.rsi #Starlight
     layers:
     - state: janitor_derelict
       map: ["movement"]
       sprite: Mobs/Silicon/Chassis/janitor_derelict.rsi #Starlight ;-;
-    - state: janitor_e_r
+    - state: borg_e_r #Starlight ;-;
       map: ["enum.BorgVisualLayers.Light"]
       shader: unshaded
       visible: false
-    - state: janitor_l
+    - state: borg_l #Starlight ;-;
       shader: unshaded
       map: ["light"]
       visible: false
@@ -298,8 +300,8 @@
       tags:
       - BorgModuleGeneric
       - BorgModuleJanitor
-    hasMindState: janitor_e
-    noMindState: janitor_e_r
+    hasMindState: borg_e #Starlight ;-;
+    noMindState: borg_e_r #Starlight ;-;
 
 - type: entity
   parent: BaseBorgChassisDerelict
@@ -308,15 +310,16 @@
   description: A man-machine hybrid that assists the medical department. This one's needles don't look very sanitary.
   components:
   - type: Sprite
+    sprite: Mobs/Silicon/Chassis/medical.rsi #Starlight
     layers:
     - state: medical_derelict
       map: ["movement"]
       sprite: Mobs/Silicon/Chassis/medical_derelict.rsi #Starlight ;-;
-    - state: medical_e_r
+    - state: borg_e_r #Starlight ;-;
       map: ["enum.BorgVisualLayers.Light"]
       shader: unshaded
       visible: false
-    - state: medical_l
+    - state: borg_l #Starlight ;-;
       shader: unshaded
       map: ["light"]
       visible: false
@@ -333,8 +336,8 @@
       tags:
       - BorgModuleGeneric
       - BorgModuleMedical
-    hasMindState: medical_e
-    noMindState: medical_e_r
+    hasMindState: borg_e #Starlight ;-;
+    noMindState: borg_e_r #Starlight ;-;
 
 - type: entity
   parent: BaseBorgChassisDerelict
@@ -343,15 +346,16 @@
   description: A man-machine hybrid that assists the cargo department. This one has seen the wrong side of a gibtonite chunk.
   components:
   - type: Sprite
+    sprite: Mobs/Silicon/Chassis/miner.rsi #Starlight
     layers:
     - state: miner_derelict
       map: ["movement"]
       sprite: Mobs/Silicon/Chassis/miner_derelict.rsi #Starlight ;-;
-    - state: miner_e_r
+    - state: borg_e_r #Starlight ;-;
       map: ["enum.BorgVisualLayers.Light"]
       shader: unshaded
       visible: false
-    - state: miner_l
+    - state: borg_l #Starlight ;-;
       shader: unshaded
       map: ["light"]
       visible: false
@@ -368,8 +372,8 @@
       tags:
       - BorgModuleGeneric
       - BorgModuleCargo
-    hasMindState: miner_e
-    noMindState: miner_e_r
+    hasMindState: borg_e #Starlight ;-;
+    noMindState: borg_e_r #Starlight ;-;
 
 - type: entity
   parent: BaseBorgChassisSyndicateDerelict
@@ -378,6 +382,7 @@
   description: A lean, mean killing machine with access to a variety of deadly modules. This one is more rust-orange than blood-red.
   components:
   - type: Sprite
+    sprite: Mobs/Silicon/Chassis/synd_sec.rsi #Starlight
     layers:
     - state: synd_sec_derelict
       sprite: Mobs/Silicon/Chassis/synd_sec_derelict.rsi #Starlight ;-;
