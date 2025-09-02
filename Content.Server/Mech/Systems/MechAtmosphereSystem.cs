@@ -195,7 +195,6 @@ public sealed class MechAtmosphereSystem : EntitySystem
             return false;
         }
 
-        // Use existing atmosphere system methods for gas transfer.
         var success = ProcessFilteredTransfer(external, tankAir, fanModule, frameTime);
 
         SetFanState(uid, fanModule, success ? MechFanState.On : MechFanState.Idle, mechComp);
