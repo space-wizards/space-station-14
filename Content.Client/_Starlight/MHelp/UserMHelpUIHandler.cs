@@ -44,6 +44,7 @@ public sealed class UserMHelpUIHandler(NetUserId owner) : IMHelpUIHandler
     public event Action<Guid?, string, bool> OnMessageSend = delegate { };
     public event Action<Guid?, string> OnInputTextChanged = delegate { };
     public event Action<Guid> OnTicketClosed = delegate { };
+    public event Action<Guid> OnTptoPressed = delegate { };
 
     public void Open(NetUserId channelId)
     {
@@ -63,6 +64,13 @@ public sealed class UserMHelpUIHandler(NetUserId owner) : IMHelpUIHandler
             if (_currentTicket.HasValue)
                 OnTicketClosed.Invoke(_currentTicket.Value);
         };
+        //In-theory it shouldn't be possible to call this
+        //But debugging.
+        _chatPanel.OnTptoPressed += () =>
+        {
+            if (_currentTicket.HasValue)
+                OnTptoPressed.Invoke(_currentTicket.Value);
+        };
         _window = new DefaultWindow()
         {
             TitleClass = "windowTitleAlert",
@@ -73,6 +81,7 @@ public sealed class UserMHelpUIHandler(NetUserId owner) : IMHelpUIHandler
         _window.OnClose += () => OnClose?.Invoke();
         _window.OnOpen += () => OnOpen?.Invoke();
         _window.Contents.AddChild(_chatPanel);
+        _chatPanel.ShowTpto = IsMentor;
     }
 
     public void Dispose()

@@ -263,7 +263,6 @@
         Radiation: 0.5
         Caustic: 0.5
     staminaModifier: 0.35
-    ingoreKnockdown: true
   - type: ExplosionResistance
     damageCoefficient: 0.5
   - type: FireProtection

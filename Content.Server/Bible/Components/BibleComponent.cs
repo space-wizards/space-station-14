@@ -1,4 +1,5 @@
 using Content.Shared.Damage;
+using Content.Shared.Tag;
 using Robust.Shared.Audio;
 using Robust.Shared.Prototypes;
 
@@ -57,9 +58,24 @@ namespace Content.Server.Bible.Components
         [DataField("sizzleSound")]
         public SoundSpecifier SizzleSoundPath = new SoundPathSpecifier("/Audio/Effects/lightburn.ogg");
         [DataField("healSound")]
-        public SoundSpecifier HealSoundPath = new  SoundPathSpecifier("/Audio/Effects/holy.ogg");
+        public SoundSpecifier HealSoundPath = new SoundPathSpecifier("/Audio/Effects/holy.ogg");
 
         [DataField("locPrefix")]
         public string LocPrefix = "bible";
+
+        //#region Starlight
+
+        /// <summary>
+        /// what is the chance a successfull bible thwack removes the cluwning.
+        /// </summary>
+        [DataField]
+        public float CluwneCureChance = 0.03f;
+
+        /// <summary>
+        /// if a item has this tag. the unremovable comp is ignored when dropping the item.
+        /// </summary>
+        [DataField]
+        public ProtoId<TagPrototype> RemovableAnywaysTag = "BibleThwackRemovable";
+        //#endregion Starlight
     }
 }

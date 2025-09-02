@@ -39719,10 +39719,6 @@ entities:
     - type: Transform
       pos: -38.5,14.5
       parent: 4812
-    - type: UserInterface
-      actors:
-        enum.StorageUiKey.Key:
-        - invalid
     - type: ActiveUserInterface
 - proto: DresserQuarterMasterFilled
   entities:

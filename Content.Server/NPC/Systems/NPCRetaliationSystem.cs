@@ -40,7 +40,7 @@ public sealed class NPCRetaliationSystem : EntitySystem
         TryRetaliate(ent, args.Source);
     }
 
-    public bool TryRetaliate(Entity<NPCRetaliationComponent> ent, EntityUid target)
+    public bool TryRetaliate(Entity<NPCRetaliationComponent> ent, EntityUid target, bool raiseEvent = true)
     {
         // don't retaliate against inanimate objects.
         if (!HasComp<MobStateComponent>(target))
@@ -54,6 +54,9 @@ public sealed class NPCRetaliationSystem : EntitySystem
         if (ent.Comp.AttackMemoryLength is {} memoryLength)
             ent.Comp.AttackMemories[target] = _timing.CurTime + memoryLength;
 
+        if(raiseEvent) // Starlight
+            RaiseLocalEvent(ent, new AfterRetaliationEvent(ent, target)); // Starlight
+        
         return true;
     }
 
@@ -76,3 +79,4 @@ public sealed class NPCRetaliationSystem : EntitySystem
         }
     }
 }
+public record struct AfterRetaliationEvent(EntityUid Uid, EntityUid Origin); // Starlight

@@ -6,6 +6,7 @@ using Content.Shared.Radio;
 using Content.Shared.Speech;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
+using Robust.Shared.Serialization; // Starlight
 
 namespace Content.Shared.Chat;
 
@@ -26,6 +27,11 @@ public abstract class SharedChatSystem : EntitySystem
     public const char CollectiveMindPrefix = '+';
 
     public const char DefaultChannelKey = 'h';
+
+    public const int VoiceRange = 10; // how far voice goes in world units
+    public const int WhisperClearRange = 2; // how far whisper goes while still being understandable, in world units
+    public const int WhisperMuffledRange = 5; // how far whisper goes at all, in world units
+    public const string DefaultAnnouncementSound = "/Audio/Announcements/announce.ogg";
 
     public static readonly ProtoId<RadioChannelPrototype> CommonChannel = "Common";
 
@@ -340,3 +346,44 @@ public abstract class SharedChatSystem : EntitySystem
         return rawmsg.Substring(tagStart, tagEnd - tagStart);
     }
 }
+
+// Starlight - Start
+/// <summary>
+///     InGame IC chat is for chat that is specifically ingame (not lobby) but is also in character, i.e. speaking.
+/// </summary>
+// ReSharper disable once InconsistentNaming
+[Serializable, NetSerializable]
+public enum InGameICChatType : byte // Make InGameIIChatType available in Shared
+{
+    Speak,
+    Emote,
+    Whisper,
+    CollectiveMind
+}
+
+/// <summary>
+///     InGame OOC chat is for chat that is specifically ingame (not lobby) but is OOC, like deadchat or LOOC.
+/// </summary>
+[Serializable, NetSerializable]
+public enum InGameOOCChatType : byte
+{
+    Looc,
+    Dead
+}
+
+/// <summary>
+///     Controls transmission of chat.
+/// </summary>
+[Serializable, NetSerializable]
+public enum ChatTransmitRange : byte
+{
+    /// Acts normal, ghosts can hear across the map, etc.
+    Normal,
+    /// Normal but ghosts are still range-limited.
+    GhostRangeLimit,
+    /// Hidden from the chat window.
+    HideChat,
+    /// Ghosts can't hear or see it at all. Regular players can if in-range.
+    NoGhosts
+}
+// Starlight - End

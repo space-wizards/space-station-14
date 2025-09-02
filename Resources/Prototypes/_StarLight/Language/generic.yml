@@ -1,0 +1,66 @@
+- type: language
+  id: Universal
+  obfuscation:
+    !type:ReplacementObfuscation
+    replacement:
+    - "*incomprehensible*" # Never actually used.
+  iconNotUnderstood: false
+  iconUnderstood: false
+
+- type: language
+  id: Machine
+  icon: LanguageIconMachine
+  speech:
+    color: "#6174ff"
+    fontId: Octatrax
+    obfuscationFont: true
+  obfuscation:
+    !type:RandomObfuscation
+
+- type: language
+  id: Zombie
+  icon: LanguageIconBrain
+  speech:
+    color: "#508053"
+  obfuscation:
+    !type:ReplacementObfuscation
+    replacement:
+    - Gruaahhhh...
+    - Mmuaaaa..
+    - Braainnssss...
+    - Grrrrr...
+    - Ouuaahhhhh...
+    - Graaaaaooohhlll...
+    - Brainsss... Braaaiiinnsss..
+    - Braughhh...
+    - Breshhhh...
+    - Graaaaaa...
+
+- type: language
+  id: Sign
+  iconUnderstood: false
+  iconNotUnderstood: false
+  speech:
+    allowRadio: false
+    requireSpeech: false
+    requireHands: true
+    color: "#dddddd"
+    messageWrapOverrides:
+      Speak: chat-sign-language-message-wrap
+      Whisper: chat-sign-language-whisper-wrap
+    speechVerbOverrides:
+    - chat-speech-verb-sign-1
+    - chat-speech-verb-sign-2
+    - chat-speech-verb-sign-3
+  obfuscation:
+    !type:ReplacementObfuscation
+    replacement:
+    - something
+    - a cryptic message
+    - a signal
+    - a message
+
+- type: language
+  id: CodeSpeak
+  icon: LanguageIconCodeSpeak
+  iconNotUnderstood: false

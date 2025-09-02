@@ -3,6 +3,8 @@
   id: GunSafeEnergySniper
   name: LWAP safe
   components:
+  - type: Contraband
+    allowedDepartments: [ Security ]
   - type: StorageFill
     contents:
     - id: WeaponEnergySniper
@@ -60,7 +62,7 @@
       - id: WeaponDisabler
         amount: 2
       - id: TrackingImplanter
-        amount: 4
+        amount: 2
       - id: ClothingOuterHardsuitBrigmedic
         amount: 2
       - id: BoxSterileMask

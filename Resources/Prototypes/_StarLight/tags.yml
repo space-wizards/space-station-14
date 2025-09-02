@@ -10,10 +10,16 @@
   id: AvianFood
 
 - type: Tag
+  id: BibleThwackRemovable
+
+- type: Tag
   id: BladePlasteel
 
 - type: Tag
   id: BladeSteel
+
+- type: Tag
+  id: Bola
 
 - type: Tag
   id: CantInteract
@@ -175,4 +181,13 @@
   id: SyndieDungeon
 
 - type: Tag
+  id: Compy
+
+- type: Tag
   id: Table
+
+- type: Tag
+  id: SecuredLocker
+
+- type: Tag
+  id: Locker

@@ -107,7 +107,12 @@
   - type: Tag
     tags:
     - Trash
+    - Lighters #SL
   - type: SpaceGarbage
+  # Starlight-start: Vending Machines Prices
+  - type: ItemPrice
+    priceCategory: miscellaneous
+  # Starlight-end
 
 - type: entity
   parent: [Matchbox, BaseSyndicateContraband]
@@ -127,6 +132,9 @@
       - id: GorlexMatchstick
         amount: 24
   - type: Matchbox
+  - type: Tag
+    tags:
+    - Lighters #SL
 
 - type: entity
   name: match stick

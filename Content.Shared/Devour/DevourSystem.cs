@@ -109,6 +109,7 @@ public sealed class DevourSystem : EntitySystem
         if (args.Args.Target != null && _whitelistSystem.IsWhitelistPassOrNull(ent.Comp.FoodPreferenceWhitelist, (EntityUid)args.Args.Target))
         {
             _bloodstreamSystem.TryAddToChemicals(ent.Owner, ichorInjection);
+            ent.Comp.Devoured++; //Starlight devour counter.
         }
 
         // If the devoured thing meets the stomach whitelist criteria, add it to the stomach

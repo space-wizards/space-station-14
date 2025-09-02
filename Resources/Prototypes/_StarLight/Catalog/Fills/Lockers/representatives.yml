@@ -26,6 +26,7 @@
   id: LockerRepresentativeFilledBluespaced
   suffix: Filled, Bluespaced
   parent: LockerRepresentativeFilled
+  categories: [ Spawner ]
   components:
   - type: TriggerOnSpawn
   - type: SpawnOnTrigger
@@ -42,7 +43,7 @@
       - id: ClothingHandsGlovesCombat
       - id: ClothingShoesBootsCombat
       - id: TrackingImplanter
-        amount: 3
+        amount: 1
       - id: MedkitAdvancedFilled
       - id: ClothingEyesGlassesBlueShield
       - id: ClothingEyesHudBlueShield
@@ -62,6 +63,7 @@
   id: LockerBSOFilledBluespaced
   suffix: Filled, Bluespaced
   parent: LockerBSOFilled
+  categories: [ Spawner ]
   components:
   - type: TriggerOnSpawn
   - type: SpawnOnTrigger

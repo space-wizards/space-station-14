@@ -17,4 +17,7 @@ public sealed partial class MarkingPrototype : IInheritingPrototype
 
     [DataField]
     public string? WaggingId;
+    
+    [DataField]
+    public string? StaticId;
 }

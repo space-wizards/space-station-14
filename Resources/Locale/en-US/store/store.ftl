@@ -1,5 +1,6 @@
 store-ui-default-title = Store
 store-ui-default-withdraw-text = Withdraw
+store-ui-refund-text = Refund
 store-ui-balance-display = {$currency}: {$amount}
 store-ui-price-display = {$amount} {$currency}
 store-ui-discount-display-with-currency =  {$amount} off on {$currency}

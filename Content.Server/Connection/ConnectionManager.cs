@@ -8,6 +8,7 @@ using Content.Server.Administration.Managers;
 using Content.Server.Chat.Managers;
 using Content.Server.Connection.IPIntel;
 using Content.Server.Database;
+using Content.Server.Discord.DiscordLink;
 using Content.Server.GameTicking;
 using Content.Server.Preferences.Managers;
 using Content.Shared._NullLink;
@@ -56,6 +57,7 @@ namespace Content.Server.Connection
     public sealed partial class ConnectionManager : IConnectionManager
     {
         [Dependency] private readonly IActorRouter _actors = default!; // NullLink
+        [Dependency] private readonly INullLinkPlayerManager _nullLinkPlayerManager = default!; // NullLink
         [Dependency] private readonly IPlayerManager _plyMgr = default!;
         [Dependency] private readonly IPlayerRolesManager _plyRoles = default!;
         [Dependency] private readonly IServerNetManager _netMgr = default!;
@@ -164,6 +166,9 @@ namespace Content.Server.Connection
                 if (reason == ConnectionDenyReason.Full)
                     properties["delay"] = _cfg.GetCVar(CCVars.GameServerFullReconnectDelay);
 
+                //NullLink discord link
+                properties["discord"] = _nullLinkPlayerManager.GetDiscordAuthUrl(e.UserId.ToString());
+
                 e.Deny(new NetDenyReason(msg, properties));
             }
             else
@@ -266,10 +271,16 @@ namespace Content.Server.Connection
                 var bypassAllowed = _cfg.GetCVar(CCVars.BypassBunkerWhitelist) && await _db.GetWhitelistStatusAsync(userId);
 
                 // NullLink Bypass start
-                if (!validAccountAge  
-                    && _roleReqPeacefulBypass is not null
-                    && _actors.TryGetServerGrain(out var serverGrain)) 
-                    validAccountAge = await serverGrain.HasPlayerAnyRole(userId, _roleReqPeacefulBypass.Roles);
+                try
+                {
+                    if (!validAccountAge
+                        && _roleReqPeacefulBypass is not null
+                        && _actors.TryGetServerGrain(out var serverGrain))
+                        validAccountAge = await serverGrain.HasPlayerAnyRole(userId, _roleReqPeacefulBypass.Roles);
+                }
+                catch (Exception)
+                {
+                }
                 // NullLink Bypass end
 
                 // Use the custom reason if it exists & they don't have the minimum account age

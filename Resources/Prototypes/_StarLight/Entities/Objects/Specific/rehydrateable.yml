@@ -10,14 +10,4 @@
     - SubwooferBorgiChassis
     - BaseStationBorgiChassis
     - StationBorgiChassis
-    - SmartCorgi
-
-- type: entity
-  parent: RehydratableAnimalCube
-  id: ShadowBorgiCube
-  name: shadow borgi cube
-  description: Just add water! BORK!
-  components:
-  - type: Rehydratable
-    possibleSpawns:
-    - ShadowBorgiChassis
+    - MobCorgiSmart

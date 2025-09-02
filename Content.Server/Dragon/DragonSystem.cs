@@ -1,3 +1,4 @@
+using Content.Server.Body.Systems;
 using Content.Server.Objectives.Components;
 using Content.Server.Objectives.Systems;
 using Content.Server.Popups;
@@ -30,6 +31,7 @@ public sealed partial class DragonSystem : EntitySystem
     [Dependency] private readonly SharedMapSystem _map = default!;
     [Dependency] private readonly MobStateSystem _mobState = default!;
     [Dependency] private readonly TurfSystem _turf = default!;
+    [Dependency] private readonly BodySystem _body = default!; //starlight
 
     private EntityQuery<CarpRiftsConditionComponent> _objQuery;
 
@@ -97,12 +99,14 @@ public sealed partial class DragonSystem : EntitySystem
             if (!_mobState.IsDead(uid))
                 comp.RiftAccumulator += frameTime;
 
-            // Delete it, naughty dragon!
-            if (comp.RiftAccumulator >= comp.RiftMaxAccumulator)
+            //starlight start
+            if (comp.RiftAccumulator >= comp.RiftMaxAccumulator && !_mobState.IsDead(uid)) // dragon has no rifts and has surpassed the timer
             {
-                Roar(uid, comp);
-                QueueDel(uid);
+                var xform = Transform(uid);
+                Spawn(comp.NoRiftDeathEffect, _transform.GetMapCoordinates(uid, xform: xform));
+                _body.GibBody(uid, gibOrgans: false); // REND HIS FLESH!!!!!!!!!!!!!
             }
+            //starlight end
         }
     }
 

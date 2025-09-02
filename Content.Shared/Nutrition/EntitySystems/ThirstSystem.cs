@@ -3,6 +3,7 @@ using Content.Shared.Movement.Components;
 using Content.Shared.Movement.Systems;
 using Content.Shared.Nutrition.Components;
 using Content.Shared.Rejuvenate;
+using Content.Shared.Starlight.Cybernetics.Components;
 using Content.Shared.StatusIcon;
 using JetBrains.Annotations;
 using Robust.Shared.Prototypes;
@@ -166,27 +167,34 @@ public sealed class ThirstSystem : EntitySystem
         DirtyField(uid, component, nameof(ThirstComponent.LastThirstThreshold));
         DirtyField(uid, component, nameof(ThirstComponent.ActualDecayRate));
 
+        // Starlight-edit: start
+        var thirstMultiplier = 1f;
+        if (TryComp<ThirstRateMultiplierComponent>(uid, out var increaseThirstRateComp )) {
+            thirstMultiplier = increaseThirstRateComp.Multiplier;
+        }
+        // Starlight-edit: end
+
         switch (component.CurrentThirstThreshold)
         {
             case ThirstThreshold.OverHydrated:
                 component.LastThirstThreshold = component.CurrentThirstThreshold;
-                component.ActualDecayRate = component.BaseDecayRate * 1.2f;
+                component.ActualDecayRate = thirstMultiplier * component.BaseDecayRate * 1.2f; // Starlight-edit
                 return;
 
             case ThirstThreshold.Okay:
                 component.LastThirstThreshold = component.CurrentThirstThreshold;
-                component.ActualDecayRate = component.BaseDecayRate;
+                component.ActualDecayRate = thirstMultiplier * component.BaseDecayRate; // Starlight-edit
                 return;
 
             case ThirstThreshold.Thirsty:
                 // Same as okay except with UI icon saying drink soon.
                 component.LastThirstThreshold = component.CurrentThirstThreshold;
-                component.ActualDecayRate = component.BaseDecayRate * 0.8f;
+                component.ActualDecayRate = thirstMultiplier * component.BaseDecayRate * 0.8f; // Starlight-edit
                 return;
             case ThirstThreshold.Parched:
                 _movement.RefreshMovementSpeedModifiers(uid);
                 component.LastThirstThreshold = component.CurrentThirstThreshold;
-                component.ActualDecayRate = component.BaseDecayRate * 0.6f;
+                component.ActualDecayRate = thirstMultiplier * component.BaseDecayRate * 0.6f; // Starlight-edit
                 return;
 
             case ThirstThreshold.Dead:

@@ -6664,20 +6664,12 @@ entities:
     - type: Transform
       pos: 4.5,7.5
       parent: 1
-    - type: UserInterface
-      actors:
-        enum.StorageUiKey.Key:
-        - invalid
     - type: ActiveUserInterface
   - uid: 1156
     components:
     - type: Transform
       pos: 6.5,9.5
       parent: 1
-    - type: UserInterface
-      actors:
-        enum.StorageUiKey.Key:
-        - invalid
     - type: ActiveUserInterface
   - uid: 1173
     components:

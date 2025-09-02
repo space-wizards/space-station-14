@@ -1,4 +1,3 @@
-using System.Linq;
 using Content.Shared.Access.Components;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Actions;
@@ -8,23 +7,27 @@ using Content.Shared.DragDrop;
 using Content.Shared.Emag.Components;
 using Content.Shared.Emag.Systems;
 using Content.Shared.FixedPoint;
-using Content.Shared.Interaction;
 using Content.Shared.Interaction.Components;
 using Content.Shared.Interaction.Events;
+using Content.Shared.Interaction;
 using Content.Shared.Mech.Components;
 using Content.Shared.Mech.Equipment.Components;
 using Content.Shared.Movement.Components;
 using Content.Shared.Movement.Systems;
+using Content.Shared.Movement.Events; // Starlight-edit
 using Content.Shared.Popups;
+using Content.Shared.Repairable; // Starlight-edit
 using Content.Shared.Weapons.Melee;
 using Content.Shared.Weapons.Ranged.Events;
 using Content.Shared.Whitelist;
+using Content.Shared.Stunnable; // Starlight-edit
 using Robust.Shared.Audio.Systems;
-using Robust.Shared.GameObjects;
 using Robust.Shared.Containers;
+using Robust.Shared.GameObjects;
 using Robust.Shared.Network;
 using Robust.Shared.Serialization;
 using Robust.Shared.Timing;
+using System.Linq;
 
 namespace Content.Shared.Mech.EntitySystems;
 
@@ -64,10 +67,62 @@ public abstract partial class SharedMechSystem : EntitySystem
         SubscribeLocalEvent<MechPilotComponent, GetMeleeWeaponEvent>(OnGetMeleeWeapon);
         SubscribeLocalEvent<MechPilotComponent, CanAttackFromContainerEvent>(OnCanAttackFromContainer);
         SubscribeLocalEvent<MechPilotComponent, AttackAttemptEvent>(OnAttackAttempt);
-        SubscribeLocalEvent<MechPilotComponent, EntGotRemovedFromContainerMessage>(OnPilotRemoved); //Starlight
+        SubscribeLocalEvent<MechPilotComponent, EntGotRemovedFromContainerMessage>(OnPilotRemoved); // Starlight-edit
+
+        SubscribeLocalEvent<MechComponent, UpdateCanMoveEvent>(OnMechMoveEvent); // Starlight-edit: Moved from server side, broken
+        SubscribeLocalEvent<MechPilotComponent, UpdateCanMoveEvent>(OnPilotMoveEvent); // Starlight-edit
+        SubscribeLocalEvent<MechComponent, ChangeDirectionAttemptEvent>(OnMechMoveEvent); // Starlight-edit
+        SubscribeLocalEvent<MechComponent, ShotAttemptedEvent>(OnShootAttempt); // Starlight-edit: Moved from server side, broken
+        SubscribeLocalEvent<MechComponent, CanRepairEvent>(OnRepairAttempt); // Starlight-edit: Moved from server side, broken
+        SubscribeLocalEvent<MechPilotComponent, KnockDownAttemptEvent>(OnKnockdownAttempt); // Starlight-edit
 
         InitializeRelay();
     }
+
+    // Starlight-start: Attempt events
+
+    private void OnPilotMoveEvent(EntityUid uid, MechPilotComponent component, UpdateCanMoveEvent args)
+    {
+        if (component.LifeStage > ComponentLifeStage.Running || !TryComp<MechComponent>(component.Mech, out var mech))
+            return;
+
+        if (mech.Broken || mech.Integrity <= 0 || mech.Energy <= 0 || mech.MaintenanceMode)
+            args.Cancel();
+    }
+
+    private void OnMechMoveEvent(EntityUid uid, MechComponent component, CancellableEntityEventArgs args)
+    {
+        if (component.LifeStage > ComponentLifeStage.Running)
+            return;
+
+        if (component.Broken || component.Integrity <= 0 || component.Energy <= 0 || component.MaintenanceMode)
+            args.Cancel();
+    }
+
+    private void OnShootAttempt(EntityUid uid, MechComponent component, ref ShotAttemptedEvent args)
+    {
+        if (!component.MaintenanceMode)
+            return;
+
+        _popup.PopupCursor("Turn off maintenance mode first!", args.User, PopupType.MediumCaution); // Starlight: I think we need translation strings?
+        args.Cancel();
+    }
+
+    private void OnRepairAttempt(EntityUid uid, MechComponent component, ref CanRepairEvent args)
+    {
+        if (!component.MaintenanceMode)
+        {
+            args.Cancel();
+            args.Message = "You need to turn on maintenance mode first!";
+        }
+    }
+
+    private void OnKnockdownAttempt(EntityUid uid, MechPilotComponent component, ref KnockDownAttemptEvent args)
+    {
+        args.Cancelled = true;
+        _popup.PopupCursor("You can't lie down while piloting a mech.", uid, PopupType.SmallCaution);
+    }
+    // Starlight-end
 
     private void OnToggleEquipmentAction(EntityUid uid, MechComponent component, MechToggleEquipmentEvent args)
     {
@@ -151,7 +206,7 @@ public abstract partial class SharedMechSystem : EntitySystem
         rider.Mech = mech;
         Dirty(pilot, rider);
 
-        if ((component.Integrity / component.MaxIntegrity) * 100 >= 50 )
+        if ((component.Integrity / component.MaxIntegrity) * 100 >= 50)
             if (component.FirstStart)
             {
                 _audioSystem.PlayEntity(component.NominalLongSound, pilot, mech);
@@ -296,7 +351,7 @@ public abstract partial class SharedMechSystem : EntitySystem
         _container.Insert(toInsert, component.EquipmentContainer);
         var ev = new MechEquipmentInsertedEvent(uid);
         RaiseLocalEvent(toInsert, ref ev);
-        UpdateUserInterface(uid, component);
+        // Starlight-edit: UpdateUserInterface moved on server side
         if (component.PilotSlot.ContainedEntity != null)
             UpdateActions(uid, component.PilotSlot.ContainedEntity.Value, component);
     }
@@ -334,7 +389,7 @@ public abstract partial class SharedMechSystem : EntitySystem
 
         equipmentComponent.EquipmentOwner = null;
         _container.Remove(toRemove, component.EquipmentContainer);
-        UpdateUserInterface(uid, component);
+        // Starlight-edit: UpdateUserInterface moved on server side.
     }
 
     /// <summary>
@@ -476,9 +531,7 @@ public abstract partial class SharedMechSystem : EntitySystem
             return false;
 
         if (HasComp<NoRotateOnMoveComponent>(uid))
-        {
             RemComp<NoRotateOnMoveComponent>(uid);
-        }
 
         var pilot = component.PilotSlot.ContainedEntity.Value;
 

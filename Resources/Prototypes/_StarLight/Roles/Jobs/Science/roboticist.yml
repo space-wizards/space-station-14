@@ -23,3 +23,8 @@
     id: RoboticistPDA
     belt: ClothingBeltUtilityEngineering
     ears: ClothingHeadsetRobotics
+
+- type: chameleonOutfit
+  id: RoboticistChameleonOutfit
+  job: Roboticist
+  equipment: {} # may someone tell me what these are supposed to look like when chameleon'd

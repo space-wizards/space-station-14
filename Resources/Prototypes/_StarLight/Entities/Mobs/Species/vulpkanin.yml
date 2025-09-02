@@ -5,6 +5,15 @@
   id: BaseMobVulpkanin
   abstract: true
   components:
+  - type: LanguageKnowledge
+    speaks:
+    - GalacticCommon
+    - Canilunzt
+    understands:
+    - GalacticCommon
+    - Canilunzt
+    - Fox # "vaguely canidae"
+    - Dog # "vaguely canidae"
   - type: Absorbable
   - type: HumanoidAppearance
     species: Vulpkanin
@@ -88,6 +97,12 @@
     damageContainer: Biological
     damageModifierSet: Vulpkanin
   - type: Wagging
+  - type: InteractionPopup
+    successChance: 1
+    interactSuccessString: petting-success-soft-floofy
+    interactSuccessSound:
+      collection: Fox
+    messagePerceivedByOthers: petting-success-soft-floofy-others
 
 - type: entity
   save: false

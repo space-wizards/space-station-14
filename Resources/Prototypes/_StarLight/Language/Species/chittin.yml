@@ -1,0 +1,20 @@
+- type: language
+  id: Chittin
+  icon: LanguageIconChittin
+  speech:
+    requireSpeech: false
+    color: "#c64c05"
+    messageWrapOverrides:
+      Speak: chat-sign-language-message-wrap
+      Whisper: chat-sign-language-whisper-wrap
+    speechVerbOverrides:
+    - chat-speech-verb-chittin-1
+  obfuscation:
+    !type:ReplacementObfuscation
+    replacement:
+    - Click
+    - Clack
+    - Click click
+    - Clack clack
+    - Click clack
+    - Clack click

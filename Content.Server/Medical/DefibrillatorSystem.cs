@@ -23,6 +23,7 @@ using Content.Shared.Timing;
 using Content.Shared.Toggleable;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Player;
+using Content.Shared.Chat; // Starlight
 
 namespace Content.Server.Medical;
 

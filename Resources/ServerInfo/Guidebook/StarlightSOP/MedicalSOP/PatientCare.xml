@@ -1,0 +1,13 @@
+<Document>
+# Patient Care
+
+<GuideEntityEmbed Entity="MedicalBed" Caption="Patient Care"/>
+
+1. Patients must be triaged according to the severity of their injuries.
+
+2. Command members must take treatment priority.
+
+3. Doctors may not leave the medical bay for personal reasons if there are untreated patients. This does not include the necessity of eating and drinking.
+
+4. Patients who repeatedly harm themselves or threaten medical staff are not required to be treated by medical staff.
+</Document>

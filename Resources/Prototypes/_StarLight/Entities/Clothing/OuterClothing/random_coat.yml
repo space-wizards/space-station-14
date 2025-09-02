@@ -1,0 +1,34 @@
+﻿
+- type: entity
+  parent: ClothingOuterStorageBase
+  id: ClothingOuterCoatRandomBase
+  abstract: true
+  components:
+  - type: Sprite
+    sprite: _Starlight/Clothing/OuterClothing/Coats/coat_color.rsi
+    layers:
+    - state: equipped-OUTERCLOTHING
+      map: [ "coat" ]
+    - state: trinkets-equipped-OUTERCLOTHING
+      map: [ "trim" ]
+  - type: Clothing
+    sprite: _Starlight/Clothing/OuterClothing/Coats/coat_color.rsi
+    clothingVisuals:
+      outerClothing:
+      - state: equipped-OUTERCLOTHING
+        map: [ "coat" ]
+      - state: trinkets-equipped-OUTERCLOTHING
+        map: [ "trim" ]
+
+- type: entity
+  parent: ClothingOuterCoatRandomBase
+  id: ClothingOuterCoatRandom
+  name: colorful coat
+  description: A colorful coat. Won't do much to keep you warm, but it's certainly a fashion statement!
+  components:
+  - type: RandomSprite
+    available:
+    - coat:
+        equipped-OUTERCLOTHING: Advanced
+      trim:
+        trinkets-equipped-OUTERCLOTHING: Advanced

@@ -20,4 +20,17 @@ public sealed class StarlightMarkingSystem : EntitySystem
         waggingId = marking.WaggingId;
         return true;
     }
+    
+    public bool TryGetStaticId(ProtoId<MarkingPrototype> markingId, [NotNullWhen(true)] out string? staticId)
+    {
+        staticId = null!;
+        if (!_prototype.TryIndex(markingId, out var marking) ||
+            marking.StaticId == null)
+        {
+            return false;
+        }
+
+        staticId = marking.StaticId;
+        return true;
+    }
 }

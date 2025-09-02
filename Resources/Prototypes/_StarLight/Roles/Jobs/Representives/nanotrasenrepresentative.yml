@@ -58,3 +58,9 @@
     back:
     - RubberStampNtrep
     - CaneNT
+
+- type: chameleonOutfit
+  id: NanoTrasenRepresentativeChameleonOutfit
+  job: NanoTrasenRepresentative
+  equipment:
+    outerClothing: ClothingOuterCoatNtrep
