@@ -1,0 +1,27 @@
+- type: accessLevel
+  id: Debug1
+  name: id-card-access-level-debug1
+
+- type: accessLevel
+  id: Debug2
+  name: id-card-access-level-debug2
+
+- type: accessLevel
+  id: Debug3
+  name: id-card-access-level-debug3
+
+- type: accessLevel
+  id: Debug4
+  name: id-card-access-level-debug4
+
+- type: accessLevel
+  id: Debug5
+  name: id-card-access-level-debug5
+
+- type: accessLevel
+  id: Freelance
+  name: id-card-access-level-freelance
+
+- type: accessLevel
+  id: Commie
+  name: id-card-access-level-commie

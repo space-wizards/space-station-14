@@ -34,11 +34,12 @@
   - Atmospherics
   - GenpopEnter
   - GenpopLeave
-  - Magistrate # Starlight
-  - Ntrep # Starlight
-  - Brigmedic # Starlight
-  - BlueShield # Starlight
-  - Robotics # Starlight
+  - Magistrate # Starlight Job
+  - Ntrep # Starlight Job
+  - Brigmedic # Starlight Job
+  - BlueShield # Starlight Job
+  - Robotics # Starlight Job
+  - Surgery # Starlight Job
 
 - type: accessGroup
   id: General

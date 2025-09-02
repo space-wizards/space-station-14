@@ -176,3 +176,122 @@
     board: CargoShuttleConsoleCircuitboard
   - type: StealTarget
     stealGroup: SalvageShuttleConsoleCircuitboard
+
+- type: entity
+  parent: BaseComputerAiAccess
+  id: UniversalIdConsole
+  name: Universal ID console
+  description: A terminal for programming Nanotrasen and non-Nanotrasen ID cards with extended access levels.
+  components:
+  - type: IdCardConsole
+    privilegedIdSlot:
+      name: UniversalIdConsole-privilegedId
+      ejectSound: /Audio/Machines/id_swipe.ogg
+      insertSound: /Audio/Weapons/Guns/MagIn/batrifle_magin.ogg
+      ejectOnBreak: true
+      swap: false
+      whitelist:
+        components:
+        - IdCard
+    targetIdSlot:
+      name: UniversalIdConsole-targetId
+      ejectSound: /Audio/Machines/id_swipe.ogg
+      insertSound: /Audio/Weapons/Guns/MagIn/batrifle_magin.ogg
+      ejectOnBreak: true
+      swap: false
+      whitelist:
+        components:
+        - IdCard
+    accessLevels:
+      - Armory
+      - Atmospherics
+      - Bar
+      - BlueShield
+      - Brig
+      - Brigmedic
+      - Captain
+      - Cargo
+      - CentralCommand
+      - Chapel
+      - Chemistry
+      - ChiefEngineer
+      - ChiefMedicalOfficer
+      - Command
+      - Commie
+      - Cryogenics
+      - Detective
+      - EmergencyShuttleRepealAll
+      - Engineering
+      - External
+      - Freelance
+      - GenpopEnter
+      - GenpopLeave
+      - HeadOfPersonnel
+      - HeadOfSecurity
+      - Hydroponics
+      - Janitor
+      - Kitchen
+      - Lawyer
+      - Magistrate
+      - Maintenance
+      - Medical
+      - Ntrep
+      - NuclearOperative
+      - Quartermaster
+      - Research
+      - ResearchDirector
+      - Robotics
+      - Salvage
+      - Security
+      - Service
+      - StationAi
+      - Surgery
+      - SyndicateAgent
+      - Theatre
+      - Wizard
+      - Xenoborg
+      - Debug1
+      - Debug2
+      - Debug3
+      - Debug4
+      - Debug5
+  - type: ActivatableUI
+    key: enum.IdCardConsoleUiKey.Key
+  - type: UserInterface
+    interfaces:
+      enum.IdCardConsoleUiKey.Key:
+        type: IdCardConsoleBoundUserInterface
+      enum.WiresUiKey.Key:
+        type: WiresBoundUserInterface
+  - type: CrewManifestViewer
+    ownerKey: enum.IdCardConsoleUiKey.Key
+  - type: Speech
+    speechVerb: Robotic
+    speechSounds: Pai
+  - type: Sprite
+    layers:
+    - map: ["computerLayerBody"]
+      state: computer
+    - map: ["computerLayerKeyboard"]
+      state: generic_keyboard
+    - map: ["computerLayerScreen"]
+      state: id
+    - map: ["computerLayerKeys"]
+      state: id_key
+    - map: ["enum.WiresVisualLayers.MaintenancePanel"]
+      state: generic_panel_open
+  - type: Computer
+    board: UniversalIdConsoleCircuitboard
+  - type: PointLight
+    radius: 1.5
+    energy: 1.6
+    color: "#90E0EF"
+  - type: Tag
+    tags:
+    - AccessBreakerImmune
+  - type: ItemSlots
+  - type: ContainerContainer
+    containers:
+      board: !type:Container
+      UniversalIdConsole-privilegedId: !type:ContainerSlot
+      UniversalIdConsole-targetId: !type:ContainerSlot

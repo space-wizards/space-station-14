@@ -874,6 +874,13 @@
     - SyndicateAgent
     - Wizard
     - Xenoborg
+    - Commie
+    - Freelance
+    - Debug1
+    - Debug2
+    - Debug3
+    - Debug4
+    - Debug5
   - type: Tag #  Ignore Chameleon tags
     tags:
     - DoorBumpOpener

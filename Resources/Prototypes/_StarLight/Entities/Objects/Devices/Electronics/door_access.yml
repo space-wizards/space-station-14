@@ -14,3 +14,21 @@
   components:
   - type: AccessReader
     access: [["Robotics"]]
+
+# Freelance
+- type: entity
+  parent: DoorElectronics
+  id: DoorElectronicsFreelance
+  suffix: Freelance, Locked
+  components:
+  - type: AccessReader
+    access: [["Freelance"]]
+
+# Surgery
+- type: entity
+  parent: DoorElectronics
+  id: DoorElectronicsSurgery
+  suffix: Surgery, Locked
+  components:
+  - type: AccessReader
+    access: [["Surgery"]]

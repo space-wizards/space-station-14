@@ -28,6 +28,7 @@
   - ChiefMedicalOfficer
   - Brig
   - Cryogenics
+  - Surgery # Starlight
   special:
   - !type:AddImplantSpecial
     implants: [ MindShieldImplant ]

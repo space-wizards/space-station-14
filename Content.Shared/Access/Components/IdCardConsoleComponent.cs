@@ -40,12 +40,13 @@ public sealed partial class IdCardConsoleComponent : Component
 
     [DataField, AutoNetworkedField]
     public List<ProtoId<AccessLevelPrototype>> AccessLevels = new()
-    {
+    { // Starlight start edit: Alphabetical 
         "Armory",
         "Atmospherics",
         "Bar",
+        "BlueShield", // Starlight
         "Brig",
-        "Detective",
+        "Brigmedic", // Starlight
         "Captain",
         "Cargo",
         "Chapel",
@@ -54,8 +55,10 @@ public sealed partial class IdCardConsoleComponent : Component
         "ChiefMedicalOfficer",
         "Command",
         "Cryogenics",
+        "Detective",
         "Engineering",
         "External",
+        "Freelance", // Starlight
         "HeadOfPersonnel",
         "HeadOfSecurity",
         "Hydroponics",
@@ -63,20 +66,20 @@ public sealed partial class IdCardConsoleComponent : Component
         "Kitchen",
         "Lawyer",
         "Maintenance",
+        "Magistrate", // Starlight
         "Medical",
+        "Ntrep", // Starlight
         "Quartermaster",
         "Research",
         "ResearchDirector",
+        "Robotics", // Starlight
         "Salvage",
         "Security",
         "Service",
-        "Theatre",
-        "Ntrep", // Starlight
-        "Magistrate", // Starlight
-        "BlueShield", // Starlight
-        "Brigmedic", // Starlight
-        "Robotics" // Starlight
-    };
+        "Surgery", // Starlight
+        "Theatre"
+    }; // Starlight end edit: Alphabetical
+
 
     [Serializable, NetSerializable]
     public sealed class IdCardConsoleBoundUserInterfaceState : BoundUserInterfaceState

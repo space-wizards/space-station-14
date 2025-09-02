@@ -19,11 +19,13 @@
         - Belt
     - type: AccessOverrider
       accessLevels:
+      # Starlight start edit: Alphabetical 
       - Armory
       - Atmospherics
       - Bar
+      - BlueShield # Starlight Job
       - Brig
-      - Detective
+      - Brigmedic # Starlight job
       - Captain
       - Cargo
       - Chapel
@@ -31,29 +33,31 @@
       - ChiefEngineer
       - ChiefMedicalOfficer
       - Command
+      - Cryogenics
+      - Detective
       - Engineering
       - External
+      - Freelance # Starlight Job
       - HeadOfPersonnel
       - HeadOfSecurity
       - Hydroponics
       - Janitor
       - Kitchen
       - Lawyer
+      - Magistrate # Starlight job
       - Maintenance
       - Medical
+      - Ntrep # Starlight job
       - Quartermaster
       - Research
       - ResearchDirector
+      - Robotics # Starlight job
       - Salvage
       - Security
       - Service
+      - Surgery # Starlight job
       - Theatre
-      - GenpopEnter
-      - GenpopLeave
-      - Ntrep #Starlight job
-      - Magistrate #Starlight job
-      - BlueShield #Starlight job
-      - Robotics #Starlight job
+      # Starlight end edit: Alphabetical 
       privilegedIdSlot:
         name: id-card-console-privileged-id
         ejectSound: /Audio/Machines/id_swipe.ogg
@@ -94,51 +98,60 @@
     sprite: Objects/Tools/universal_access_configurator.rsi
   - type: AccessOverrider
     accessLevels:
+    # Starlight start edit: Alphabetical 
     - Armory
     - Atmospherics
     - Bar
-    - BasicSilicon
-    - Borg
+    - BlueShield # Starlight Job
     - Brig
-    - Detective
+    - Brigmedic # Starlight job
     - Captain
     - Cargo
+    - CentralCommand
     - Chapel
     - Chemistry
     - ChiefEngineer
     - ChiefMedicalOfficer
     - Command
+    - Commie
     - Cryogenics
+    - Detective
     - EmergencyShuttleRepealAll
     - Engineering
     - External
+    - Freelance # Starlight Job
+    - GenpopEnter
+    - GenpopLeave
     - HeadOfPersonnel
     - HeadOfSecurity
     - Hydroponics
     - Janitor
     - Kitchen
     - Lawyer
+    - Magistrate # Starlight job
     - Maintenance
     - Medical
+    - NuclearOperative
+    - Ntrep # Starlight job
     - Quartermaster
     - Research
     - ResearchDirector
+    - Robotics # Starlight job
     - Salvage
     - Security
     - Service
     - StationAi
-    - Theatre
-    - CentralCommand
-    - NuclearOperative
+    - Surgery # Starlight job
     - SyndicateAgent
+    - Theatre
     - Wizard
     - Xenoborg
-    - GenpopEnter
-    - GenpopLeave
-    - Ntrep #Starlight job
-    - Magistrate #Starlight job
-    - BlueShield #Starlight job
-    - Robotics #Starlight job
+    - Debug1
+    - Debug2
+    - Debug3
+    - Debug4
+    - Debug5
+    # Starlight end edit: Alphabetical
     privilegedIdSlot:
       name: id-card-console-privileged-id
       startingItem: UniversalIDCard

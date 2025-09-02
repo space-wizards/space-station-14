@@ -26,3 +26,20 @@
     prototype: CompuerShuttleSalvage
   - type: StealTarget
     stealGroup: SalvageShuttleConsoleCircuitboard
+
+- type: entity
+  parent: [BaseComputerCircuitboard, BaseCommandContraband]
+  id: UniversalIdConsoleCircuitboard
+  name: Universal ID console board
+  description: A circuit board for a Universal ID console.
+  components:
+    - type: Sprite
+      state: cpu_command
+    - type: ComputerBoard
+      prototype: UniversalIdConsole
+    - type: StaticPrice
+      price: 750
+    - type: Tag
+      tags:
+      - HighRiskItem
+

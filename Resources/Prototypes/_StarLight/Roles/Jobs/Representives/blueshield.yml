@@ -42,6 +42,7 @@
     - Cargo
     - Medical
     - BlueShield
+    - Surgery
   special:
     - !type:AddImplantSpecial
       implants: [MindShieldImplant]

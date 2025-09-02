@@ -39,6 +39,8 @@
     - Cargo
     - Medical
     - Ntrep
+    - Brigmedic
+    - Surgery
   special:
     - !type:AddImplantSpecial
       implants: [MindShieldImplant]
