@@ -35,3 +35,11 @@
   storage:
     back:
     - RubberStampSeniorSalvage # DS14
+
+- type: chameleonOutfit
+  id: SeniorSalvageSpecialistChameleonOutfit
+  job: SeniorSalvageSpecialist
+  equipment:
+    ears: ClothingHeadsetMining
+    neck: ClothingNeckCloakSalvagerSupreme
+    socks: ClothingUnderwearSocksSeniorSalvage

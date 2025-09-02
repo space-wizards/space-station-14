@@ -29,3 +29,10 @@
   equipment:
     ears: ClothingHeadsetMedical
     belt: ClothingBeltMedicalFilled
+
+- type: chameleonOutfit
+  id: MedicalSurgeonChameleonOutfit
+  job: MedicalSurgeon
+  equipment:
+    ears: ClothingHeadsetMedical
+    belt: ClothingBeltMedicalFilled

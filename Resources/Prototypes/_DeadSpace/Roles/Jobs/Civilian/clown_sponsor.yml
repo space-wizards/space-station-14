@@ -33,3 +33,13 @@
   wageDepartment: Civilian
   wage: 50
   #end-backmen: currency
+
+- type: chameleonOutfit
+  id: ClownSponsorChameleonOutfit
+  job: ClownSponsor
+  equipment:
+    head: ClothingHeadHatXmasCrown
+    eyes: ClothingEyesGlassesCheapSunglasses
+    neck: ClothingHeadHatFlowerWreath
+    outerClothing: ClothingOuterClownPriest
+    gloves: ClothingHandsGlovesColorYellowBudget

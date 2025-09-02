@@ -797,8 +797,8 @@
     contents:
       - id: FoodBurgerBig
         amount: 1
-      - id: FoodMealFriesCheesy
-        amount: 1
+      # - id: FoodMealFriesCheesy
+      #   amount: 1
       - id: DrinkColaBottleFull
         amount: 1
       - id: FoodPieAppleSlice

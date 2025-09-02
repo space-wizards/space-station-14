@@ -83,6 +83,7 @@ namespace Content.IntegrationTests.Tests
             "TestTeg",
             "CentComm",
             "MeteorArena",
+            "dm01-entryway",
             // "DSTaipan", // remap in progress
             "Amber",
             // "Aspid", // remap in progress

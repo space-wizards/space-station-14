@@ -42,3 +42,15 @@
   # storage:
   #   back:
   #   -
+
+- type: chameleonOutfit
+  id: CentralCommandOfficerChameleonOutfit
+  job: CentralCommandOfficer
+  equipment:
+    mask: ClothingMaskGasSecurity
+    shoes: ClothingShoesBootsJack
+    outerClothing: ClothingOuterVestWeb
+    eyes: ClothingEyesGlassesSecurity
+    head: ClothingHeadHatBeretCentcomNaval
+    gloves: ClothingHandsGlovesCombat
+    belt: ClothingBeltSecurityWebbingFilled

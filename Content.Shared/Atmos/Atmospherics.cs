@@ -177,6 +177,7 @@ namespace Content.Shared.Atmos
             [Gas.Plasma] = Loc.GetString("gas-plasma-abbreviation"),
             [Gas.Tritium] = Loc.GetString("gas-tritium-abbreviation"),
             [Gas.WaterVapor] = Loc.GetString("gas-water-vapor-abbreviation"),
+            [Gas.InfectionDeadSpace] = Loc.GetString("gas-unknown-abbreviation"),
         };
 
         #region Excited Groups

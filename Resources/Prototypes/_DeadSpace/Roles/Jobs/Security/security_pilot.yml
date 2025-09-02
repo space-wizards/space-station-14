@@ -42,3 +42,12 @@
   storage:
     back:
     - Flash
+
+- type: chameleonOutfit
+  id: SecurityPilotChameleonOutfit
+  job: SecurityPilot
+  equipment:
+    eyes: ClothingEyesGlassesSecurity
+    head: ClothingHeadHatBeretSecurity
+    outerClothing: ClothingOuterWinterSec
+    ears: ClothingHeadsetSecurity

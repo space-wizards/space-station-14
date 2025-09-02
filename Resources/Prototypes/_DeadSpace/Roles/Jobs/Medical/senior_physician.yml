@@ -38,3 +38,12 @@
   storage:
     back:
     - RubberStampSeniorPhysician # DS14
+
+- type: chameleonOutfit
+  id: SeniorPhysicianChameleonOutfit
+  job: SeniorPhysician
+  equipment:
+    shoes: ClothingShoesColorBlack
+    ears: ClothingHeadsetMedical
+    belt: ClothingBeltMedicalFilled
+    socks: ClothingUnderwearSocksSeniorPhysician

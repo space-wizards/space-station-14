@@ -30,3 +30,10 @@
     id: CoronerPDA
     ears: ClothingHeadsetMedicalScience
     socks: ClothingUnderwearSocksCoroner
+
+- type: chameleonOutfit
+  id: CoronerChameleonOutfit
+  job: Coroner
+  equipment:
+    shoes: ClothingShoesBootsJackCoroner
+    socks: ClothingUnderwearSocksCoroner

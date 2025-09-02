@@ -134,3 +134,15 @@
       - id: HandheldCrewMonitor
   - type: ExplosionResistance
     damageCoefficient: 0.6
+
+- type: chameleonOutfit
+  id: BlueShieldOfficerChameleonOutfit
+  job: BlueShieldOfficer
+  equipment:
+    head: ClothingHeadHatBeretBlueShield
+    eyes: ClothingEyesGlassesSecurity
+    shoes: ClothingShoesBootsJackFilled
+    socks: ClothingUnderwearSocksBlueShieldOfficer
+    outerClothing: ClothingOuterArmorBasicBlueShield
+    belt: ClothingBeltMilitaryWebbingBlueShieldFilled
+    gloves: ClothingHandsGlovesCombat
