@@ -88,7 +88,7 @@
     - state: popsicle
       color: orange
   - type: Food
-    trash:
+    trash: 
     - FoodFrozenPopsicleTrash
   - type: Tag
     tags:
@@ -108,7 +108,7 @@
     - state: popsicle
       color: red
   - type: Food
-    trash:
+    trash: 
     - FoodFrozenPopsicleTrash
   - type: Tag
     tags:
@@ -126,7 +126,7 @@
     - state: stick
     - state: jumbo
   - type: Food
-    trash:
+    trash: 
     - FoodFrozenPopsicleTrash
   - type: SolutionContainerManager
     solutions:
@@ -157,7 +157,7 @@
         - state: alpha-filling
     #      color: foo
     - type: Food
-      trash:
+      trash: 
       - FoodFrozenSnowconeTrash
     - type: SolutionContainerManager
       solutions:
@@ -196,7 +196,7 @@
     - state: cone
     - state: berry
   - type: Food
-    trash:
+    trash: 
     - FoodFrozenSnowconeTrash
   - type: Tag
     tags:
@@ -213,7 +213,7 @@
     - state: cone
     - state: fruitsalad
   - type: Food
-    trash:
+    trash: 
     - FoodFrozenSnowconeTrash
   - type: Tag
     tags:
@@ -230,7 +230,7 @@
     - state: cone
     - state: clown
   - type: Food
-    trash:
+    trash: 
     - FoodFrozenSnowconeTrash
 
 - type: entity
@@ -244,7 +244,7 @@
     - state: cone
     - state: mime
   - type: Food
-    trash:
+    trash: 
     - FoodFrozenSnowconeTrash
 
 - type: entity
@@ -258,7 +258,7 @@
     - state: cone
     - state: rainbow
   - type: Food
-    trash:
+    trash: 
     - FoodFrozenSnowconeTrash
 
 # Trash
