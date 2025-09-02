@@ -125,30 +125,6 @@
     - Secret
 
 - type: gamePreset
-  id: SecretExtended #For Admin Use: Runs Extended but shows "Secret" in lobby.
-  alias:
-    - secretextended
-  name: secret-title
-  showInVote: false #Admin Use
-  description: secret-description
-  rules:
-    - BasicStationEventScheduler
-    - MeteorSwarmScheduler
-    - SpaceTrafficControlEventScheduler
-    - BasicRoundstartVariation
-
-- type: gamePreset
-  id: SecretGreenshift #For Admin Use: Runs Greenshift but shows "Secret" in lobby.
-  alias:
-  - secretgreenshift
-  name: secret-title
-  showInVote: false #Admin Use
-  description: secret-description
-  rules:
-  - SpaceTrafficControlFriendlyEventScheduler
-  - BasicRoundstartVariation
-
-- type: gamePreset
   id: Sandbox
   alias:
     - sandbox
@@ -167,24 +143,6 @@
   name: traitor-title
   description: traitor-description
   showInVote: false
-  rules:
-  - DummyNonAntagChance
-  - Traitor
-  - SubGamemodesRule
-  - BasicStationEventScheduler
-  - MeteorSwarmScheduler
-  - SpaceTrafficControlEventScheduler
-  - BasicRoundstartVariation
-
-- type: gamePreset
-  id: SecretTraitor #For Admin Use: Runs Traitor but shows "Secret" in lobby.
-  alias:
-    - secretTraitor
-    - secretTator
-    - SecretTator
-  name: secret-title
-  showInVote: false #Admin Use
-  description: secret-description
   rules:
   - DummyNonAntagChance
   - Traitor
@@ -224,24 +182,6 @@
   - BasicRoundstartVariation
 
 - type: gamePreset
-  id: SecretNukeops #For Admin Use: Runs Nukeops but shows "Secret" in lobby.
-  alias:
-    - secretnukeops
-    - secretNukeops
-    - Secretnukeops
-  name: secret-title
-  showInVote: false #Admin Use
-  description: secret-description
-  rules:
-  - Nukeops
-  - DummyNonAntagChance
-  - SubGamemodesRule
-  - BasicStationEventScheduler
-  - MeteorSwarmScheduler
-  - SpaceTrafficControlEventScheduler
-  - BasicRoundstartVariation
-
-- type: gamePreset
   id: Revolutionary
   alias:
     - rev
@@ -260,48 +200,12 @@
   - BasicRoundstartVariation
 
 - type: gamePreset
-  id: SecretRevolutionary #For Admin Use: Runs Revolutionary but shows "Secret" in lobby.
-  alias:
-    - secretRev
-    - secretRevs
-    - secretRevolutionaries
-  name: secret-title
-  showInVote: false #Admin Use
-  description: secret-description
-  rules:
-  - DummyNonAntagChance
-  - Revolutionary
-  - SubGamemodesRule
-  - BasicStationEventScheduler
-  - MeteorSwarmScheduler
-  - SpaceTrafficControlEventScheduler
-  - BasicRoundstartVariation
-
-- type: gamePreset
   id: Wizard
   alias:
   - wizard
   name: wizard-title
   description: wizard-description
   showInVote: false
-  rules:
-  - Wizard
-  - DummyNonAntagChance
-  - SubGamemodesRuleNoWizard #No Dual Wizards at the start, midround is fine
-  - BasicStationEventScheduler
-  - MeteorSwarmScheduler
-  - SpaceTrafficControlEventScheduler
-  - BasicRoundstartVariation
-
-- type: gamePreset
-  id: SecretWizard #For Admin Use: Runs Wizard but shows "Secret" in lobby.
-  alias:
-  - secretwizard
-  - Secretwizard
-  - secretWizard
-  name: secret-title
-  showInVote: false #Admin Use
-  description: secret-description
   rules:
   - Wizard
   - DummyNonAntagChance
