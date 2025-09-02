@@ -13157,5 +13157,12 @@ Entries:
   id: 150406
   time: '2025-09-02T04:44:53.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/1504
+- author: Fractalflower
+  changes:
+  - message: Heterochromia for vulpkanin
+    type: Add
+  id: 151400
+  time: '2025-09-02T15:17:32.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1514
 Order: -1
 
