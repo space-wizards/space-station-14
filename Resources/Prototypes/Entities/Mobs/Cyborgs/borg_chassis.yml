@@ -242,14 +242,17 @@
   - type: Sprite
     layers:
     - state: engineer_derelict
+      sprite: Mobs/Silicon/Chassis/engineer_derelict.rsi #Starlight ;-;
     - state: engineer_e_r
       map: ["enum.BorgVisualLayers.Light"]
       shader: unshaded
       visible: false
     - state: engineer_derelict_crystal #This layer and the layer below are duplicated in order to create a more mellow unshaded layer. See https://github.com/space-wizards/space-station-14/pull/37869 for more info on the method.
       shader: unshaded
+      sprite: Mobs/Silicon/Chassis/engineer_derelict.rsi #Starlight ;-;
     - state: engineer_derelict_crystal
       shader: shaded
+      sprite: Mobs/Silicon/Chassis/engineer_derelict.rsi #Starlight ;-;
     - state: engineer_l
       shader: unshaded
       map: ["light"]
@@ -273,6 +276,7 @@
     layers:
     - state: janitor_derelict
       map: ["movement"]
+      sprite: Mobs/Silicon/Chassis/janitor_derelict.rsi #Starlight ;-;
     - state: janitor_e_r
       map: ["enum.BorgVisualLayers.Light"]
       shader: unshaded
@@ -307,6 +311,7 @@
     layers:
     - state: medical_derelict
       map: ["movement"]
+      sprite: Mobs/Silicon/Chassis/medical_derelict.rsi #Starlight ;-;
     - state: medical_e_r
       map: ["enum.BorgVisualLayers.Light"]
       shader: unshaded
@@ -341,6 +346,7 @@
     layers:
     - state: miner_derelict
       map: ["movement"]
+      sprite: Mobs/Silicon/Chassis/miner_derelict.rsi #Starlight ;-;
     - state: miner_e_r
       map: ["enum.BorgVisualLayers.Light"]
       shader: unshaded
@@ -374,14 +380,17 @@
   - type: Sprite
     layers:
     - state: synd_sec_derelict
-    - state: synd_sec_e
+      sprite: Mobs/Silicon/Chassis/synd_sec_derelict.rsi #Starlight ;-;
+    - state: synd_sec_derelict_e #Starlight temp fix
       map: ["enum.BorgVisualLayers.Light"]
       shader: unshaded
       visible: false
-    - state: synd_sec_l
+      sprite: Mobs/Silicon/Chassis/synd_sec_derelict.rsi #Starlight ;-;
+    - state: synd_sec_derelict_l
       shader: unshaded
       map: ["light"]
       visible: false
+      sprite: Mobs/Silicon/Chassis/synd_sec_derelict.rsi #Starlight ;-;
   - type: BorgChassis
     maxModules: 3
     moduleWhitelist: # Note - the Derelict Assault Borg does not have a traversal module. This is intentional as Assault Borgs have space traversal with their c20 and free space movement, and they can navigate to the station using the pinpointer.
