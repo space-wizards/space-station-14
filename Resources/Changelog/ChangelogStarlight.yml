@@ -13086,5 +13086,12 @@ Entries:
   id: 151100
   time: '2025-09-01T23:32:31.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/1511
+- author: Happyrobot33
+  changes:
+  - message: Added the panic bunker information to the discord embeds.
+    type: Add
+  id: 151300
+  time: '2025-09-02T02:16:42.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1513
 Order: -1
 
