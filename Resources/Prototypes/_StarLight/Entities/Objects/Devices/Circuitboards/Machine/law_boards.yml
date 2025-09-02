@@ -1,6 +1,6 @@
 - type: entity
   id: SyndimovCircuitBoard
-  parent: BaseElectronics
+  parent: [BaseElectronics, BaseSyndicateContraband]
   name: law board (Syndimov)
   components:
   - type: Sprite
