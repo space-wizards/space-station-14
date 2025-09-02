@@ -1,12 +1,11 @@
 using Robust.Shared.GameStates;
 
-namespace Content.Shared._Starlight.Actions.Storage;
+namespace Content.Shared._Starlight.Storage;
 
 /// <summary>
 /// Component that defines various variables used in our StorageActionSystem, namely delay of opening, and popup texts
 /// </summary>
 [RegisterComponent, Access(typeof(SharedPrivateStorageSystem))]
-[NetworkedComponent]
 public sealed partial class PrivateStorageComponent : Component
 {
     /// <summary>

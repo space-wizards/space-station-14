@@ -39,14 +39,17 @@
   # they like eat it idk lol
   - type: Storage
     clickInsert: false
+    showVerb: false # Starlight Edit
     grid:
     - 0,0,1,2
     maxItemSize: Large
     storageInsertSound:
       path: /Audio/Voice/Slime/slime_squish.ogg
+    # Starlight Edit - Start
   - type: PrivateStorage
-    accessDelay: 5.0
+    accessDelay: 3.0
     accessPopup: "laspi-storage-accessing"
+    # Starlight Edit - End
   - type: ContainerContainer
     containers:
       storagebase: !type:Container
