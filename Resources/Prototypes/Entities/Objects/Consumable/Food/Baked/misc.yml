@@ -26,7 +26,7 @@
   id: FoodBakedMuffin
   description: A delicious and spongy little cake.
   components:
-  - type: Edible
+  - type: Food
     trash:
     - FoodPlateMuffinTin
   - type: Sprite

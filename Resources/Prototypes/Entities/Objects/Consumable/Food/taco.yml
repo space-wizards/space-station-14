@@ -46,7 +46,7 @@
     flavors:
       - meaty
       - cheesy
-  - type: Edible
+  - type: Food
     transferAmount: 3
   - type: Sprite
     sprite: Objects/Consumable/Food/taco.rsi

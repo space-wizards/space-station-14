@@ -9,6 +9,7 @@
   - type: FlavorProfile
     flavors:
       - bread
+  - type: Food
   - type: Sprite
     sprite: Objects/Consumable/Food/Baked/bread.rsi
   - type: Tag

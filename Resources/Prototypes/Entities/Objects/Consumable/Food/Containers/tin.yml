@@ -87,8 +87,8 @@
     flavors:
     - sweet
     - funny
-  - type: Edible
-    trash: 
+  - type: Food
+    trash:
     - FoodTinPeachesTrash
   - type: Tag
     tags:
@@ -111,7 +111,7 @@
   - type: Sprite
     sprite: Objects/Consumable/Food/Tins/maint_peaches.rsi
   - type: Food
-    trash: 
+    trash:
     - FoodTinPeachesMaintTrash
 
 # only exists for backwards compatibility with a few maps, nothing else uses it
@@ -148,9 +148,8 @@
     - savory
     - salty
     - cheap
-  - type: Edible
-    utensil: Spoon
-    trash: 
+  - type: Food
+    trash:
     - FoodTinBeansTrash
 
 - type: entity
@@ -179,8 +178,8 @@
     - meaty
     - salty
     - cheap
-  - type: Edible
-    trash: 
+  - type: Food
+    trash:
     - FoodTinMRETrash
   - type: Tag
     tags:
