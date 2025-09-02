@@ -57,9 +57,9 @@ public sealed class GasArrayTest
 
                 Assert.That(gasTankComponent!.Air.GetMoles(Gas.Oxygen), Is.EqualTo(10));
                 Assert.That(gasTankComponent!.Air.GetMoles(Gas.Nitrogen), Is.EqualTo(20));
-                for (var i = 3; i < Atmospherics.AdjustedNumberOfGases; i++)
+                foreach (var gas in Enum.GetValues<Gas>().Where(p => p != Gas.Oxygen && p != Gas.Nitrogen))
                 {
-                    Assert.That(gasTankComponent!.Air.GetMoles(i), Is.EqualTo(0));
+                    Assert.That(gasTankComponent!.Air.GetMoles(gas), Is.EqualTo(0));
                 }
             });
 
@@ -68,12 +68,15 @@ public sealed class GasArrayTest
             {
                 Assert.That(legacyGasTank.TryGetComponent<GasTankComponent>(out var gasTankComponent, compFactory));
 
-                Assert.That(gasTankComponent!.Air.GetMoles(Gas.Plasma), Is.EqualTo(10));
+                Assert.That(gasTankComponent!.Air.GetMoles(4), Is.EqualTo(10));
 
                 // Iterate through all other gases: check for 0 values
-                foreach (var gas in Enum.GetValues<Gas>().Where(p => p != Gas.Plasma))
+                for (var i = 0; i < Atmospherics.AdjustedNumberOfGases; i++)
                 {
-                    Assert.That(gasTankComponent!.Air.GetMoles(gas), Is.EqualTo(0));
+                    if (i == 4) // our case with a value.
+                        continue;
+
+                    Assert.That(gasTankComponent!.Air.GetMoles(i), Is.EqualTo(0));
                 }
             });
         });
