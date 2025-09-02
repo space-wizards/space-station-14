@@ -181,6 +181,7 @@
     state: std_mod
   - type: SiliconLawProvider
     laws: XenoborgLawset
+    price: 5000 # Starlight-edit: Added lawboards to cargo
 
 - type: entity
   id: MothershipCircuitBoard
@@ -194,3 +195,4 @@
     state: std_mod
   - type: SiliconLawProvider
     laws: MothershipCoreLawset
+    price: 1000 # Starlight-edit: Added lawboards to cargo
