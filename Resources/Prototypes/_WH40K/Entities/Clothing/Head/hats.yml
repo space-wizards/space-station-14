@@ -45,7 +45,7 @@
 
 - type: entity
   parent: ClothingHeadBase
-  id: ClothingHeadSgt
+  id: ClothingHeadVet
   name: Берет
   description: Берет Гвардейца, что принадлежит ветерану или офицеру
   suffix: WH40K, Гвардия

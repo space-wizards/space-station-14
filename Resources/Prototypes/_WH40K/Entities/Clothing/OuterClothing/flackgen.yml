@@ -1,6 +1,6 @@
 - type: entity
   parent: ClothingOuterArmorBasic
-  id: ClothingOuterArmorFlakVest
+  id: ClothingOuterArmorFlakVestGen
   name: Панцирный нагрудник
   description: Высококачественный позолоченый панцирный нагрудник офицера, покажет вашим подчинённым статус и власть, а врагу - в кого стрелять.
   suffix: WH40K, Гвардия
