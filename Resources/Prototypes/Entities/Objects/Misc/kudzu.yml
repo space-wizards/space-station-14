@@ -101,7 +101,7 @@
         food:
           reagents:
           - ReagentId: Nutriment
-            Quantity: 0
+            Quantity: 0.1
     - type: Tag
       tags:
       - Ruminant
