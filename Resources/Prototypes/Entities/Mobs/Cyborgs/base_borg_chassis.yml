@@ -350,7 +350,7 @@
     tags:
     - Borg
   - type: AccessReader
-    access: [["Command"], ["Research"]]
+    access: [["Command"], ["Robotics"]] # Starlight
   - type: ShowJobIcons
   - type: InteractionPopup
     interactSuccessSound:
@@ -407,7 +407,7 @@
     groups:
     - AllAccess #Randomized access would be fun. AllAccess is the best i can think of right now that does make it too hard for it to enter the station or navigate it..
   - type: AccessReader
-    access: [["Command"], ["Research"]]
+    access: [["Command"], ["Robotics"]] # Starlight
   - type: StartIonStormed
     ionStormAmount: 3
   - type: IonStormTarget

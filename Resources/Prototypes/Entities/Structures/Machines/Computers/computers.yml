@@ -1569,7 +1569,7 @@
   - type: Computer
     board: RoboticsConsoleCircuitboard
   - type: AccessReader # only used for dangerous things
-    access: [["ResearchDirector"]]
+    access: [["Robotics"]] # Starlight
   - type: Lock
     unlockOnClick: false
 

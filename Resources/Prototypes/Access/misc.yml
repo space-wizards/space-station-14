@@ -32,12 +32,13 @@
   - Chapel
   - Hydroponics
   - Atmospherics
-  - Magistrate
-  - Ntrep
-  - Brigmedic
-  - BlueShield
   - GenpopEnter
   - GenpopLeave
+  - Magistrate # Starlight
+  - Ntrep # Starlight
+  - Brigmedic # Starlight
+  - BlueShield # Starlight
+  - Robotics # Starlight
 
 - type: accessGroup
   id: General

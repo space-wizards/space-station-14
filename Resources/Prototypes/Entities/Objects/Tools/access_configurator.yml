@@ -52,6 +52,8 @@
       - GenpopLeave
       - Ntrep #Starlight job
       - Magistrate #Starlight job
+      - BlueShield #Starlight job
+      - Robotics #Starlight job
       privilegedIdSlot:
         name: id-card-console-privileged-id
         ejectSound: /Audio/Machines/id_swipe.ogg
@@ -133,6 +135,10 @@
     - Xenoborg
     - GenpopEnter
     - GenpopLeave
+    - Ntrep #Starlight job
+    - Magistrate #Starlight job
+    - BlueShield #Starlight job
+    - Robotics #Starlight job
     privilegedIdSlot:
       name: id-card-console-privileged-id
       startingItem: UniversalIDCard

@@ -5,3 +5,12 @@
   components:
   - type: AccessReader
     access: [["Ntrep"]]
+
+# Robotics
+- type: entity
+  parent: DoorElectronics
+  id: DoorElectronicsRobotics
+  suffix: Robotics, Locked
+  components:
+  - type: AccessReader
+    access: [["Robotics"]]

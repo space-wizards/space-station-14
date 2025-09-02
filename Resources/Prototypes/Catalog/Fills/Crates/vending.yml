@@ -193,7 +193,7 @@
 
 - type: entity
   id: CrateVendingMachineRestockRoboticsFilled
-  parent: CrateScienceSecure
+  parent: CrateRoboticsSecure # Starlight
   name: Robotech Deluxe restock crate
   description: Contains a restock box for a Robotech Deluxe vending machine.
   components:
