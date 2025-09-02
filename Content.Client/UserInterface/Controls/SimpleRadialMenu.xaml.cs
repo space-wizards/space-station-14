@@ -345,16 +345,14 @@ public abstract class RadialMenuActionOptionBase(Action onPressed) : RadialMenuO
 }
 
 /// <summary> Strong-typed model for radial menu button with action, stores provided data to be used upon button press. </summary>
-public sealed class RadialMenuActionOption<T>(Action<T> onPressed, T data)
-    : RadialMenuActionOptionBase(onPressed: () => onPressed(data));
+public sealed class RadialMenuActionOption<T>(Action<T> onPressed, T data) : RadialMenuActionOptionBase(onPressed: () => onPressed(data));
 
 /// <summary>
 /// Model for radial menu button that represents reference for next layer of radial buttons.
 /// </summary>
 /// <param name="nested">List of button models for next layer of menu.</param>
 /// <param name="containerRadius">Radius for radial menu buttons of next layer.</param>
-public sealed class RadialMenuNestedLayerOption(IReadOnlyCollection<RadialMenuOptionBase> nested, float containerRadius = 100)
-    : RadialMenuOptionBase
+public sealed class RadialMenuNestedLayerOption(IReadOnlyCollection<RadialMenuOptionBase> nested, float containerRadius = 100) : RadialMenuOptionBase
 {
     /// <summary> Radius for radial menu buttons of next layer. </summary>
     public float? ContainerRadius { get; } = containerRadius;

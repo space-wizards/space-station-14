@@ -138,7 +138,7 @@ public sealed class EmotesUIController : UIController, IOnStateChanged<GameplayS
         var whitelistSystem = EntitySystemManager.GetEntitySystem<EntityWhitelistSystem>();
         var player = _playerManager.LocalSession?.AttachedEntity;
 
-        Dictionary<EmoteCategory, List<RadialMenuOptionBase>> emotesByCategory = new(); 
+        Dictionary<EmoteCategory, List<RadialMenuOptionBase>> emotesByCategory = new();
         foreach (var emote in emotePrototypes)
         {
             if(emote.Category == EmoteCategory.Invalid)

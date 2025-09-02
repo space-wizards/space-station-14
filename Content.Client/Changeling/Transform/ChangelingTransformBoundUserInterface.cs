@@ -25,10 +25,10 @@ public sealed partial class ChangelingTransformBoundUserInterface(EntityUid owne
 
     protected override void UpdateState(BoundUserInterfaceState state)
     {
+        base.UpdateState(state);
+
         if (_menu == null)
             return;
-
-        base.UpdateState(state);
 
         if (state is not ChangelingTransformBoundUserInterfaceState current)
             return;
@@ -53,14 +53,12 @@ public sealed partial class ChangelingTransformBoundUserInterface(EntityUid owne
             if (!EntMan.TryGetComponent<MetaDataComponent>(identityUid, out var metadata))
                 continue;
 
-            var identityName = metadata.EntityName;
-
             var option = new RadialMenuActionOption<NetEntity>(SendIdentitySelect, identity)
             {
                 IconSpecifier = RadialMenuIconSpecifier.With(identityUid),
-                ToolTip = identityName,
-                BackgroundColor = currentIdentity == identityUid ? SelectedOptionBackground : null,
-                HoverBackgroundColor = currentIdentity == identityUid ? SelectedOptionHoverBackground : null
+                ToolTip = metadata.EntityName,
+                BackgroundColor = (currentIdentity == identityUid) ? SelectedOptionBackground : null,
+                HoverBackgroundColor = (currentIdentity == identityUid) ? SelectedOptionHoverBackground : null
             };
             buttons.Add(option);
         }
