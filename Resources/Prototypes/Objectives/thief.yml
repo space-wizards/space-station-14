@@ -115,7 +115,7 @@
   id: MailStealCollectionObjective
   components:
   - type: NotJobRequirement
-    job: CargoTechnician
+    jobs: [ CargoTechnician, SalvageSpecialist ]
   - type: StealCondition
     stealGroup: Mail
     minCollectionSize: 4
@@ -198,7 +198,7 @@
   id: ClothingOuterHardsuitVoidParamedStealObjective
   components:
   - type: NotJobRequirement
-    job: Paramedic
+    jobs: [ MedicalDoctor, Paramedic, Chemist, Psychologist ]
   - type: StealCondition
     stealGroup: ClothingOuterHardsuitVoidParamed
   - type: Objective
@@ -209,7 +209,7 @@
   id: MedicalTechFabCircuitboardStealObjective
   components:
   - type: NotJobRequirement
-    job: MedicalDoctor
+    jobs: [ MedicalDoctor, Paramedic, Chemist, Psychologist ]
   - type: StealCondition
     stealGroup: MedicalTechFabCircuitboard
   - type: Objective
@@ -242,7 +242,7 @@
   id: AmePartFlatpackStealObjective
   components:
   - type: NotJobRequirement
-    job: StationEngineer
+    jobs: [ StationEngineer, AtmosphericTechnician ]
   - type: StealCondition
     stealGroup: AmePartFlatpack
   - type: Objective
@@ -264,7 +264,7 @@
   id: CargoShuttleCircuitboardStealObjective
   components:
   - type: NotJobRequirement
-    job: CargoTechnician
+    jobs: [ CargoTechnician, SalvageSpecialist ]
   - type: StealCondition
     stealGroup: CargoShuttleConsoleCircuitboard
   - type: Objective
@@ -275,7 +275,7 @@
   id: ClothingEyesHudBeerStealObjective
   components:
   - type: NotJobRequirement
-    job: Bartender
+    jobs: [ Bartender, ServiceWorker ]
   - type: StealCondition
     stealGroup: ClothingEyesHudBeer
   - type: Objective
@@ -343,7 +343,7 @@
   id: ChemDispenserStealObjective
   components:
   - type: NotJobRequirement
-    job: Chemist
+    jobs: [ Chemist, Scientist ]
   - type: StealCondition
     stealGroup: ChemDispenser
   - type: Objective
@@ -365,7 +365,7 @@
   id: FreezerHeaterStealObjective
   components:
   - type: NotJobRequirement
-    job: AtmosphericTechnician
+    jobs: [ AtmosphericTechnician, MedicalDoctor, Chemist, Scientist ]
   - type: StealCondition
     stealGroup: FreezerHeater
   - type: Objective
@@ -376,7 +376,7 @@
   id: TegStealObjective
   components:
   - type: NotJobRequirement
-    job: AtmosphericTechnician
+    jobs: [ AtmosphericTechnician, StationEngineer ]
   - type: StealCondition
     stealGroup: Teg
   - type: Objective
@@ -387,7 +387,7 @@
   id: BoozeDispenserStealObjective
   components:
   - type: NotJobRequirement
-    job: Bartender
+    jobs: [ Bartender, ServiceWorker ]
   - type: StealCondition
     stealGroup: BoozeDispenser
   - type: Objective
