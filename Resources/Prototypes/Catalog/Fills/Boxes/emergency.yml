@@ -107,7 +107,7 @@
     - id: FoodSnackNutribrick
     - id: FoodSnackNutribrick
     - id: DrinkWaterBottleFull
-    - id: DrinkWaterBottleFull
+    - id: Flare
   - type: Sprite
     layers:
     - state: internals
@@ -166,7 +166,7 @@
     - id: FoodSnackNutribrick
     - id: FoodSnackNutribrick
     - id: DrinkWaterBottleFull
-    - id: DrinkWaterBottleFull
+    - id: Flare
   - type: Sprite
     layers:
     - state: internals
@@ -224,7 +224,7 @@
     - id: FoodSnackNutribrick
     - id: FoodSnackNutribrick
     - id: DrinkWaterBottleFull
-    - id: DrinkWaterBottleFull
+    - id: Flare
   - type: Sprite
     layers:
     - state: internals
