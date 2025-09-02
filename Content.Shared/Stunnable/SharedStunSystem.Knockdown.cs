@@ -541,9 +541,10 @@ public abstract partial class SharedStunSystem
 
     private void OnBuckle(Entity<KnockedDownComponent> entity, ref BuckledEvent args)
     {
-        if (entity.Comp.DoAfterId is { } doAfterId)
-            DoAfter.Cancel(entity.Owner, doAfterId);
+        if (entity.Comp.DoAfterId is not { } doAfterId)
+            return;
 
+        DoAfter.Cancel(entity.Owner, doAfterId);
         RemComp<KnockedDownComponent>(entity);
     }
 
