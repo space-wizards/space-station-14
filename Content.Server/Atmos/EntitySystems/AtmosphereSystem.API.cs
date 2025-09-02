@@ -324,6 +324,7 @@ public partial class AtmosphereSystem
 
     /// <summary>
     /// Adds an entity with a DeltaPressureComponent to the DeltaPressure processing list.
+    /// Also fills in important information on the component itself.
     /// </summary>
     /// <param name="grid">The grid to add the entity to.</param>
     /// <param name="ent">The entity to add.</param>
@@ -333,7 +334,8 @@ public partial class AtmosphereSystem
     public bool TryAddDeltaPressureEntity(Entity<GridAtmosphereComponent?> grid, Entity<DeltaPressureComponent> ent)
     {
         // The entity needs to be part of a grid, and it should be the right one :)
-        DebugTools.Assert(Transform(ent).GridUid == grid);
+        var xform = Transform(ent);
+        DebugTools.Assert(xform.GridUid == grid);
 
         if (!_atmosQuery.Resolve(grid, ref grid.Comp, false))
             return false;
@@ -345,6 +347,11 @@ public partial class AtmosphereSystem
 
         grid.Comp.DeltaPressureEntityLookup[ent.Owner] = grid.Comp.DeltaPressureEntities.Count;
         grid.Comp.DeltaPressureEntities.Add(ent);
+
+        ent.Comp.CurrentPosition = _map.CoordinatesToTile(ent.Owner,
+            Comp<MapGridComponent>(grid),
+            xform.Coordinates);
+
         ent.Comp.GridUid = grid.Owner;
         ent.Comp.InProcessingList = true;
 

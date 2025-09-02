@@ -32,6 +32,13 @@ public sealed partial class DeltaPressureComponent : Component
     public bool IsTakingDamage;
 
     /// <summary>
+    /// The current cached position of this entity on the grid.
+    /// Updated via MoveEvent.
+    /// </summary>
+    [DataField(readOnly: true)]
+    public Vector2i CurrentPosition = Vector2i.Zero;
+
+    /// <summary>
     /// The grid this entity is currently joined to for processing.
     /// Required for proper deletion, as we cannot reference the grid
     /// for removal while the entity is being deleted.

@@ -2,6 +2,7 @@ using Content.Server.Atmos.Components;
 using Content.Shared.Damage;
 using Content.Shared.Examine;
 using JetBrains.Annotations;
+using Robust.Shared.Map.Components;
 
 namespace Content.Server.Atmos.EntitySystems;
 
@@ -19,6 +20,7 @@ public sealed class DeltaPressureSystem : EntitySystem
 {
     [Dependency] private readonly AtmosphereSystem _atmosphereSystem = default!;
     [Dependency] private readonly DamageableSystem _damage = default!;
+    [Dependency] private readonly SharedMapSystem _map = default!;
 
     public override void Initialize()
     {
@@ -27,8 +29,21 @@ public sealed class DeltaPressureSystem : EntitySystem
         SubscribeLocalEvent<DeltaPressureComponent, ComponentInit>(OnComponentInit);
         SubscribeLocalEvent<DeltaPressureComponent, ComponentShutdown>(OnComponentShutdown);
         SubscribeLocalEvent<DeltaPressureComponent, ExaminedEvent>(OnExamined);
+        SubscribeLocalEvent<DeltaPressureComponent, MoveEvent>(OnMoveEvent);
 
         SubscribeLocalEvent<DeltaPressureComponent, GridUidChangedEvent>(OnGridChanged);
+    }
+
+    private void OnMoveEvent(Entity<DeltaPressureComponent> ent, ref MoveEvent args)
+    {
+        var xform = Transform(ent);
+        // May move off-grid, so, might as well protect against that.
+        if (!TryComp<MapGridComponent>(xform.GridUid, out var mapGridComponent))
+        {
+            return;
+        }
+
+        ent.Comp.CurrentPosition = _map.CoordinatesToTile(ent.Owner, mapGridComponent, args.NewPosition);
     }
 
     private void OnComponentInit(Entity<DeltaPressureComponent> ent, ref ComponentInit args)

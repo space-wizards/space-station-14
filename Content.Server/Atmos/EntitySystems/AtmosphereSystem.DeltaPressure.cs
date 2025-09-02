@@ -21,16 +21,10 @@ public sealed partial class AtmosphereSystem
     /// </summary>
     /// <param name="ent">The entity to process.</param>
     /// <param name="gridAtmosComp">The <see cref="GridAtmosphereComponent"/> that belongs to the entity's GridUid.</param>
-    /// <param name="mapGridComp">The <see cref="MapGridComponent"/> that belongs to the entity's GridUid.</param>
-    private void ProcessDeltaPressureEntity(Entity<DeltaPressureComponent> ent,
-        GridAtmosphereComponent gridAtmosComp,
-        MapGridComponent mapGridComp)
+    private void ProcessDeltaPressureEntity(Entity<DeltaPressureComponent> ent, GridAtmosphereComponent gridAtmosComp)
     {
         if (!_random.Prob(ent.Comp.RandomDamageChance))
             return;
-
-        var xform = Transform(ent);
-        var indices = _map.CoordinatesToTile(ent.Owner, mapGridComp, xform.Coordinates);
 
         /*
          To make our comparisons a little bit faster, we take advantage of SIMD-accelerated methods
@@ -44,7 +38,8 @@ public sealed partial class AtmosphereSystem
         for (var i = 0; i < Atmospherics.Directions; i++)
         {
             var direction = (AtmosDirection)(1 << i);
-            tiles[i] = gridAtmosComp.Tiles.GetValueOrDefault(indices.Offset(direction));
+            var offset = ent.Comp.CurrentPosition.Offset(direction);
+            tiles[i] = gridAtmosComp.Tiles.GetValueOrDefault(offset);
         }
 
         Span<float> pressures = stackalloc float[Atmospherics.Directions];
@@ -190,7 +185,6 @@ public sealed partial class AtmosphereSystem
     private sealed class DeltaPressureParallelJob(
         AtmosphereSystem system,
         GridAtmosphereComponent atmosphere,
-        MapGridComponent mapGrid,
         int startIndex,
         int cvarBatchSize)
         : IParallelRobustJob
@@ -207,7 +201,7 @@ public sealed partial class AtmosphereSystem
                 return;
 
             var ent = atmosphere.DeltaPressureEntities[actualIndex];
-            system.ProcessDeltaPressureEntity(ent, atmosphere, mapGrid);
+            system.ProcessDeltaPressureEntity(ent, atmosphere);
         }
     }
 

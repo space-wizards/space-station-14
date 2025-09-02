@@ -492,7 +492,6 @@ namespace Content.Server.Atmos.EntitySystems
             {
                 var job = new DeltaPressureParallelJob(this,
                     atmosphere,
-                    ent.Comp3,
                     atmosphere.DeltaPressureCursor,
                     DeltaPressureParallelBatchSize);
                 _parallel.ProcessNow(job, toProcess);
