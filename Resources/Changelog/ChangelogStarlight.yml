@@ -13164,5 +13164,14 @@ Entries:
   id: 151400
   time: '2025-09-02T15:17:32.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/1514
+- author: stickycheZ101
+  changes:
+  - message: added a pipecleaner set of decals, basically a cosmetic version of the
+      old ss13 wiring system (maints ass enthusiasts rejoice)((sprayable with the
+      paint sprayer))
+    type: Add
+  id: 140400
+  time: '2025-09-02T23:25:20.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1404
 Order: -1
 
