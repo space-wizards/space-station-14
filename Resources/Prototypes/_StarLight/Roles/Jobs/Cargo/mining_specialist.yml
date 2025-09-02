@@ -31,4 +31,10 @@
 - type: chameleonOutfit
   id: MiningSpecialistChameleonOutfit
   job: MiningSpecialist
-  equipment: {} # may someone tell me what these are supposed to look like when chameleon'd
+  equipment:
+    head: ClothingHeadHatCargosoft
+    eyes: ClothingEyesGlassesCheapSunglasses
+    mask: ClothingMaskGasExplorer
+    outerClothing: ClothingOuterWinterMiner
+    neck: ClothingNeckScarfStripedBrown
+    gloves: ClothingHandsGlovesColorBlack
