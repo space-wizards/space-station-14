@@ -211,17 +211,6 @@
 
 - type: entity
   parent: ClothingUniformBase
-  id: ClothingUniformJumpskirtSalvageMedic
-  name: salvage medic's jumpskirt
-  description: It's a snappy jumpskirt with a sturdy set of overalls. It's very bloody.
-  components:
-    - type: Sprite
-      sprite: _Starlight/Clothing/Uniforms/Jumpskirt/salvagemedic.rsi
-    - type: Clothing
-      sprite: _Starlight/Clothing/Uniforms/Jumpskirt/salvagemedic.rsi
-
-- type: entity
-  parent: ClothingUniformBase
   id: ClothingUniformJumpskirtMiningSpecialist
   name: mining specialist's jumpskirt
   description: A suit passed down through many generations. a fine layer of dust trails behind it.

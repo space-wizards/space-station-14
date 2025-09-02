@@ -105,18 +105,6 @@
 
 - type: entity
   parent: ClothingUniformBase
-  id: ClothingUniformJumpsuitSalvageMedic
-  name: salvage medic's jumpsuit
-  description: It's a snappy jumpsuit with a sturdy set of overalls. It's very bloody.
-  components:
-  - type: RollUpSleeves
-  - type: Sprite
-    sprite: _Starlight/Clothing/Uniforms/Jumpsuit/salvagemedic.rsi
-  - type: Clothing
-    sprite: _Starlight/Clothing/Uniforms/Jumpsuit/salvagemedic.rsi
-
-- type: entity
-  parent: ClothingUniformBase
   id: ClothingUniformJumpsuitMiningSpecialist
   name: mining specialist's jumpsuit
   description: A suit passed down through many generations. a fine layer of dust trails behind it.

@@ -8,4 +8,3 @@ job-description-mailtech = Deliver letters and packages to the crew of the stati
 job-description-surgeon = Heal people, cripple enemies, and replace limbs and organs!
 job-description-ntncblueshield = Your primary job is to protect your charged Nanotrasen-Central Command Consortium officials, this overrules anything else.
 job-description-salvagelead = Lead your salvage team and keep them safe. Remember, you are the Quartermaster's eyes and ears off station.
-job-description-salvagemedic = Keep your salvage team alive off station. Make sure they all come back in one piece.

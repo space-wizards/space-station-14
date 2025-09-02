@@ -153,37 +153,6 @@
 
 - type: entity
   parent: BasePDA
-  id: SalvageMedicPDA
-  name: salvage medic PDA
-  description: Smells like blood and ash.
-  components:
-    - type: Sprite
-      sprite: _Starlight/Objects/Devices/pda.rsi
-    - type: Pda
-      id: SalvageMedicIDCard
-    - type: Appearance
-      appearanceDataInit:
-        enum.PdaVisuals.PdaType:
-          !type:String
-          pda-salvagemedic
-    - type: PdaBorderColor
-      borderColor: "#af9366"
-      accentHColor: "#edddc4"
-      accentVColor: "#8900c9"
-    - type: Icon
-      sprite: _Starlight/Objects/Devices/pda.rsi
-      state: pda-salvagemedic
-    - type: CartridgeLoader
-      uiKey: enum.PdaUiKey.Key
-      preinstalled:
-        - CrewManifestCartridge
-        - NotekeeperCartridge
-        - NewsReaderCartridge
-        - AstroNavCartridge
-        - MedTekCartridge
-
-- type: entity
-  parent: BasePDA
   id: MiningPDA
   name: mining PDA
   description: there is dirt in every crack.

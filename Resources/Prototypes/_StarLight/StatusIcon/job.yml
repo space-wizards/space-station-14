@@ -48,14 +48,6 @@
 
 - type: jobIcon
   parent: JobIcon
-  id: JobIconSalvageMedic
-  icon:
-    sprite: /Textures/_Starlight/Interface/Misc/job_icons.rsi
-    state: SalvageMedic
-  jobName: job-name-salvagemedic
-
-- type: jobIcon
-  parent: JobIcon
   id: JobIconSalvageSpec
   icon:
     sprite: /Textures/_Starlight/Interface/Misc/job_icons.rsi

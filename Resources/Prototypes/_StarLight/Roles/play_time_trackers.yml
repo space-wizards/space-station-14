@@ -33,6 +33,3 @@
 
 - type: playTimeTracker
   id: JobSalvageLead
-
-- type: playTimeTracker
-  id: JobSalvageMedic

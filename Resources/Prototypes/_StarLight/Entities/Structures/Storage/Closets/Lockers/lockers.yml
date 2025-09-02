@@ -88,38 +88,6 @@
     - type: AccessReader
       access: [["Salvage"]]
 
-# Salvage Medic
-- type: entity
-  id: LockerSalvageMedic
-  parent: LockerBaseSecure
-  name: salvage medic's locker
-  components:
-    - type: Appearance
-    - type: Sprite
-      sprite: _Starlight/Structures/Storage/closet.rsi
-    - type: EntityStorageVisuals
-      stateBaseClosed: salvagemedic
-      stateDoorOpen: salvagemedic_open
-      stateDoorClosed: salvagemedic_door
-    - type: AccessReader
-      access: [["Salvage"]]
-
-# Salvage Lead/Medic Combo Large Locker
-- type: entity
-  id: LockerLargeSalvageLeadMedic
-  parent: LockerLargeBaseSecure
-  name: large salvage lead and medic's locker
-  components:
-  - type: Appearance
-  - type: Sprite
-    sprite: _Starlight/Structures/Storage/closet-large.rsi
-  - type: EntityStorageVisuals
-    stateBaseClosed: salvage
-    stateDoorOpen: salvage_open
-    stateDoorClosed: salvageleadmed_door
-  - type: AccessReader
-    access: [["Salvage"]]
-
 # Salvage Specialist (regular) is in wizden files
 # Salvage Specialist (Large)
 - type: entity

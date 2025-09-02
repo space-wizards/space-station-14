@@ -113,19 +113,6 @@
 
 - type: entity
   parent: [ IDCardStandard, BaseCargoContraband ]
-  id: SalvageMedicIDCard
-  name: salvage medic ID card
-  components:
-    - type: Sprite
-      sprite: _Starlight/Objects/Misc/id_cards.rsi
-      layers:
-        - state: default
-        - state: idsalvagemedic
-    - type: PresetIdCard
-      job: SalvageMedic
-
-- type: entity
-  parent: [ IDCardStandard, BaseCargoContraband ]
   id: MiningIDCard
   name: mining ID card
   components:

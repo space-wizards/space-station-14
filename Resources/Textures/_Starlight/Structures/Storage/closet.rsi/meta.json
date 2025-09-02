@@ -4,7 +4,7 @@
       "x": 32,
       "y": 32
     },
-    "copyright": "Taken from tgstation. Resprite BlueShield Closet by CatBG (Discord:catbg), Miner by Conflee | SalvageLead/Medic by biteless-dot",
+    "copyright": "Taken from tgstation. Resprite BlueShield Closet by CatBG (Discord:catbg), Miner by Conflee | SalvageLead by biteless-dot",
     "license": "CC-BY-SA-3.0",
     "states": [
         {
@@ -51,15 +51,6 @@
         },
         {
             "name": "panel_open"
-        },
-        {
-            "name": "salvagemedic"
-        },
-        {
-            "name": "salvagemedic_door"
-        },
-        {
-            "name": "salvagemedic_open"
         },
         {
             "name": "salvagelead"
