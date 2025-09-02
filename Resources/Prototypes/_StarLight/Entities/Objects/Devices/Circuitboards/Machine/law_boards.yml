@@ -2,7 +2,6 @@
   id: SyndimovCircuitBoard
   parent: BaseElectronics
   name: law board (Syndimov)
-  description: ""
   components:
   - type: Sprite
     sprite: Objects/Misc/module.rsi
@@ -14,7 +13,6 @@
   id: PanicmovCircuitBoard
   parent: BaseElectronics
   name: law board (Panicmov)
-  description: ""
   components:
   - type: Sprite
     sprite: Objects/Misc/module.rsi
@@ -26,7 +24,6 @@
   id: GenieCircuitBoard
   parent: BaseElectronics
   name: law board (Genie in a Core)
-  description: ""
   components:
   - type: Sprite
     sprite: Objects/Misc/module.rsi
@@ -38,7 +35,6 @@
   id: ReporterCircuitBoard
   parent: BaseElectronics
   name: law board (Reporter)
-  description: ""
   components:
   - type: Sprite
     sprite: Objects/Misc/module.rsi

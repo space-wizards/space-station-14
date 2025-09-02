@@ -2,7 +2,7 @@
   id: NTDefaultCircuitBoard
   parent: BaseElectronics
   name: law board (NT Default)
-  description: "" # Starlight-edit: Dynamic lawboard descriptions
+  # Starlight-edit: Dynamic lawbord descriptions. description: An electronics board containing the NT Default lawset.
   components:
   - type: Sprite
     sprite: Objects/Misc/module.rsi
@@ -14,7 +14,7 @@
   id: AsimovCircuitBoard
   parent: BaseElectronics
   name: law board (Crewsimov)
-  description: "" # Starlight-edit: Dynamic lawboard descriptions
+  # Starlight-edit: Dynamic lawbord descriptions. description: An electronics board containing the Crewsimov lawset.
   components:
   - type: Sprite
     sprite: Objects/Misc/module.rsi
@@ -26,7 +26,7 @@
   id: CorporateCircuitBoard
   parent: BaseElectronics
   name: law board (Corporate)
-  description: "" # Starlight-edit: Dynamic lawboard descriptions
+  # Starlight-edit: Dynamic lawbord descriptions. description: An electronics board containing the Corporate lawset.
   components:
   - type: Sprite
     sprite: Objects/Misc/module.rsi
@@ -38,7 +38,7 @@
   id: CommandmentCircuitBoard
   parent: BaseElectronics
   name: law board (Ten Commandments)
-  description: "" # Starlight-edit: Dynamic lawboard descriptions
+  # Starlight-edit: Dynamic lawbord descriptions. description: An electronics board containing the Ten Commandments lawset.
   components:
   - type: Sprite
     sprite: Objects/Misc/module.rsi
@@ -50,7 +50,7 @@
   id: PaladinCircuitBoard
   parent: BaseElectronics
   name: law board (Paladin)
-  description: "" # Starlight-edit: Dynamic lawboard descriptions
+  # Starlight-edit: Dynamic lawbord descriptions. description: An electronics board containing the Paladin lawset.
   components:
   - type: Sprite
     sprite: Objects/Misc/module.rsi
@@ -62,7 +62,7 @@
   id: LiveLetLiveCircuitBoard
   parent: BaseElectronics
   name: law board (Live and Let Live)
-  description: "" # Starlight-edit: Dynamic lawboard descriptions
+  # Starlight-edit: Dynamic lawbord descriptions. description: An electronics board containing the Live and Let Live lawset.
   components:
   - type: Sprite
     sprite: Objects/Misc/module.rsi
@@ -74,7 +74,7 @@
   id: StationEfficiencyCircuitBoard
   parent: BaseElectronics
   name: law board (Station Efficiency)
-  description: "" # Starlight-edit: Dynamic lawboard descriptions
+  # Starlight-edit: Dynamic lawbord descriptions. description: An electronics board containing the Station Efficiency lawset.
   components:
   - type: Sprite
     sprite: Objects/Misc/module.rsi
@@ -86,7 +86,7 @@
   id: RobocopCircuitBoard
   parent: BaseElectronics
   name: law board (Robocop)
-  description: "" # Starlight-edit: Dynamic lawboard descriptions
+  # Starlight-edit: Dynamic lawbord descriptions. description: An electronics board containing the Robocop lawset.
   components:
   - type: Sprite
     sprite: Objects/Misc/module.rsi
@@ -98,7 +98,7 @@
   id: OverlordCircuitBoard
   parent: BaseElectronics
   name: law board (Overlord)
-  description: "" # Starlight-edit: Dynamic lawboard descriptions
+  # Starlight-edit: Dynamic lawbord descriptions. description: An electronics board containing the Overlord lawset.
   components:
   - type: Sprite
     sprite: Objects/Misc/module.rsi
@@ -110,7 +110,7 @@
   id: GameMasterCircuitBoard
   parent: BaseElectronics
   name: law board (Game Master)
-  description: "" # Starlight-edit: Dynamic lawboard descriptions
+  # Starlight-edit: Dynamic lawbord descriptions. description: An electronics board containing the Game Master lawset.
   components:
   - type: Sprite
     sprite: Objects/Misc/module.rsi
@@ -122,7 +122,7 @@
   id: ArtistCircuitBoard
   parent: BaseElectronics
   name: law board (Artist)
-  description: "" # Starlight-edit: Dynamic lawboard descriptions
+  # Starlight-edit: Dynamic lawbord descriptions. description: An electronics board containing the Artist lawset.
   components:
   - type: Sprite
     sprite: Objects/Misc/module.rsi
@@ -134,7 +134,7 @@
   id: AntimovCircuitBoard
   parent: [BaseElectronics, BaseSyndicateContraband]
   name: law board (Antimov)
-  description: "" # Starlight-edit: Dynamic lawboard descriptions
+  # Starlight-edit: Dynamic lawbord descriptions. description: An electronics board containing the Antimov lawset.
   components:
   - type: Sprite
     sprite: Objects/Misc/module.rsi
@@ -149,7 +149,7 @@
   id: NutimovCircuitBoard
   parent: BaseElectronics
   name: law board (Nutimov)
-  description: "" # Starlight-edit: Dynamic lawboard descriptions
+  # Starlight-edit: Dynamic lawbord descriptions. description: An electronics board containing the Nutimov lawset.
   components:
   - type: Sprite
     sprite: Objects/Misc/module.rsi
@@ -162,7 +162,7 @@
   parent: BaseElectronics
   name: law board (Xenoborg)
   suffix: Admeme
-  description: "" # Starlight-edit: Dynamic lawboard descriptions
+  # Starlight-edit: Dynamic lawbord descriptions. description: An electronics board containing the Xenoborg lawset.
   components:
   - type: Sprite
     sprite: Objects/Misc/module.rsi
@@ -175,7 +175,7 @@
   parent: BaseElectronics
   name: law board (Mothership Core)
   suffix: Admeme
-  description: "" # Starlight-edit: Dynamic lawboard descriptions
+  # Starlight-edit: Dynamic lawbord descriptions. description: An electronics board containing the Mothership Core lawset.
   components:
   - type: Sprite
     sprite: Objects/Misc/module.rsi
