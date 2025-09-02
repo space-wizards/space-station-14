@@ -4,7 +4,7 @@ meta:
   engineVersion: 266.0.0
   forkId: ""
   forkVersion: ""
-  time: 08/30/2025 08:43:21
+  time: 09/02/2025 05:52:53
   entityCount: 14028
 maps:
 - 1
@@ -81896,17 +81896,17 @@ entities:
     - type: Transform
       pos: -2.588842,-37.470093
       parent: 2
-- proto: SolarPanelPlasma
+- proto: SolarPanel
   entities:
   - uid: 10949
     components:
     - type: Transform
-      pos: -17.5,-60.5
+      pos: -16.5,-60.5
       parent: 2
   - uid: 10950
     components:
     - type: Transform
-      pos: -16.5,-60.5
+      pos: -17.5,-60.5
       parent: 2
   - uid: 10951
     components:
@@ -81921,12 +81921,12 @@ entities:
   - uid: 10953
     components:
     - type: Transform
-      pos: -17.5,-62.5
+      pos: -16.5,-62.5
       parent: 2
   - uid: 10954
     components:
     - type: Transform
-      pos: -16.5,-62.5
+      pos: -17.5,-62.5
       parent: 2
   - uid: 10955
     components:
@@ -81941,22 +81941,22 @@ entities:
   - uid: 10957
     components:
     - type: Transform
-      pos: -33.5,-31.5
+      pos: -35.5,-33.5
       parent: 2
   - uid: 10958
     components:
     - type: Transform
-      pos: -34.5,-31.5
+      pos: -34.5,-33.5
       parent: 2
   - uid: 10959
     components:
     - type: Transform
-      pos: -35.5,-31.5
+      pos: -33.5,-33.5
       parent: 2
   - uid: 10960
     components:
     - type: Transform
-      pos: -31.5,-31.5
+      pos: -29.5,-31.5
       parent: 2
   - uid: 10961
     components:
@@ -81966,7 +81966,7 @@ entities:
   - uid: 10962
     components:
     - type: Transform
-      pos: -29.5,-31.5
+      pos: -31.5,-31.5
       parent: 2
   - uid: 10963
     components:
@@ -81986,17 +81986,17 @@ entities:
   - uid: 10966
     components:
     - type: Transform
-      pos: -33.5,-33.5
+      pos: -33.5,-31.5
       parent: 2
   - uid: 10967
     components:
     - type: Transform
-      pos: -34.5,-33.5
+      pos: -34.5,-31.5
       parent: 2
   - uid: 10968
     components:
     - type: Transform
-      pos: -35.5,-33.5
+      pos: -35.5,-31.5
       parent: 2
   - uid: 10969
     components:
@@ -82061,147 +82061,147 @@ entities:
   - uid: 10981
     components:
     - type: Transform
-      pos: -30.5,35.5
+      pos: -27.5,37.5
       parent: 2
   - uid: 10982
     components:
     - type: Transform
-      pos: -32.5,35.5
+      pos: -25.5,37.5
       parent: 2
   - uid: 10983
     components:
     - type: Transform
-      pos: -31.5,35.5
+      pos: -26.5,37.5
       parent: 2
   - uid: 10984
     components:
     - type: Transform
-      pos: -29.5,35.5
+      pos: -24.5,35.5
       parent: 2
   - uid: 10985
     components:
     - type: Transform
-      pos: -30.5,37.5
+      pos: -26.5,35.5
       parent: 2
   - uid: 10986
     components:
     - type: Transform
-      pos: -31.5,37.5
+      pos: -27.5,35.5
       parent: 2
   - uid: 10987
     components:
     - type: Transform
-      pos: -32.5,37.5
+      pos: -25.5,35.5
       parent: 2
   - uid: 10988
     components:
     - type: Transform
-      pos: -29.5,37.5
+      pos: -29.5,35.5
       parent: 2
   - uid: 10989
     components:
     - type: Transform
-      pos: -27.5,37.5
+      pos: -30.5,35.5
       parent: 2
   - uid: 10990
     components:
     - type: Transform
-      pos: -26.5,37.5
+      pos: -31.5,35.5
       parent: 2
   - uid: 10991
     components:
     - type: Transform
-      pos: -25.5,37.5
+      pos: -32.5,35.5
       parent: 2
   - uid: 10992
     components:
     - type: Transform
-      pos: -24.5,37.5
+      pos: -32.5,37.5
       parent: 2
   - uid: 10993
     components:
     - type: Transform
-      pos: -27.5,35.5
+      pos: -31.5,37.5
       parent: 2
   - uid: 10994
     components:
     - type: Transform
-      pos: -26.5,35.5
+      pos: -29.5,37.5
       parent: 2
   - uid: 10995
     components:
     - type: Transform
-      pos: -24.5,35.5
+      pos: -30.5,37.5
       parent: 2
   - uid: 10996
     components:
     - type: Transform
-      pos: -25.5,35.5
+      pos: -27.5,31.5
       parent: 2
   - uid: 10997
     components:
     - type: Transform
-      pos: -27.5,33.5
+      pos: -26.5,31.5
       parent: 2
   - uid: 10998
     components:
     - type: Transform
-      pos: -26.5,33.5
+      pos: -24.5,31.5
       parent: 2
   - uid: 10999
     components:
     - type: Transform
-      pos: -24.5,33.5
+      pos: -25.5,31.5
       parent: 2
   - uid: 11000
     components:
     - type: Transform
-      pos: -25.5,33.5
+      pos: -32.5,33.5
       parent: 2
   - uid: 11001
     components:
     - type: Transform
-      pos: -27.5,31.5
+      pos: -31.5,33.5
       parent: 2
   - uid: 11002
     components:
     - type: Transform
-      pos: -26.5,31.5
+      pos: -30.5,33.5
       parent: 2
   - uid: 11003
     components:
     - type: Transform
-      pos: -25.5,31.5
+      pos: -29.5,33.5
       parent: 2
   - uid: 11004
     components:
     - type: Transform
-      pos: -24.5,31.5
+      pos: -27.5,33.5
       parent: 2
   - uid: 11005
     components:
     - type: Transform
-      pos: -29.5,33.5
+      pos: -26.5,33.5
       parent: 2
   - uid: 11006
     components:
     - type: Transform
-      pos: -30.5,33.5
+      pos: -25.5,33.5
       parent: 2
   - uid: 11007
     components:
     - type: Transform
-      pos: -31.5,33.5
+      pos: -24.5,33.5
       parent: 2
   - uid: 11008
     components:
     - type: Transform
-      pos: -32.5,33.5
+      pos: -29.5,31.5
       parent: 2
   - uid: 11009
     components:
     - type: Transform
-      pos: -32.5,31.5
+      pos: -30.5,31.5
       parent: 2
   - uid: 11010
     components:
@@ -82211,12 +82211,12 @@ entities:
   - uid: 11011
     components:
     - type: Transform
-      pos: -30.5,31.5
+      pos: -32.5,31.5
       parent: 2
   - uid: 11012
     components:
     - type: Transform
-      pos: -29.5,31.5
+      pos: -24.5,37.5
       parent: 2
 - proto: SolarTracker
   entities:
@@ -96155,7 +96155,7 @@ entities:
       pos: -38.5,9.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -69733.2
+      secondsUntilStateChange: -69830.414
       state: Opening
   - uid: 13509
     components:
@@ -96163,7 +96163,7 @@ entities:
       pos: -35.5,10.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -69733.7
+      secondsUntilStateChange: -69830.914
       state: Opening
 - proto: WoodenBench
   entities:
