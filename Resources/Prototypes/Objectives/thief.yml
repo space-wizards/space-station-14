@@ -365,7 +365,7 @@
   id: FreezerHeaterStealObjective
   components:
   - type: NotJobRequirement
-    jobs: [ AtmosphericTechnician, MedicalDoctor, Chemist, Scientist ]
+    jobs: [ AtmosphericTechnician, MedicalDoctor, Chemist, Paramedic, Psychologist, Scientist, Chef ]
   - type: StealCondition
     stealGroup: FreezerHeater
   - type: Objective
