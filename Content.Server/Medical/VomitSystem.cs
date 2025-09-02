@@ -66,11 +66,11 @@ namespace Content.Server.Medical
             // Empty the stomach out into it
             foreach (var stomach in stomachList)
             {
-                if (_solutionContainer.ResolveSolution(stomach.Owner, StomachSystem.DefaultSolutionName, ref stomach.Comp1.StomachSolution, out var sol))
+                if (_solutionContainer.ResolveSolution(stomach.Owner, StomachSystem.DefaultSolutionName, ref stomach.Comp1.Solution, out var sol))
                 {
                     solution.AddSolution(sol, _proto);
                     sol.RemoveAllSolution();
-                    _solutionContainer.UpdateChemicals(stomach.Comp1.StomachSolution.Value);
+                    _solutionContainer.UpdateChemicals(stomach.Comp1.Solution.Value);
                 }
             }
             // Adds a tiny amount of the chem stream from earlier along with vomit
