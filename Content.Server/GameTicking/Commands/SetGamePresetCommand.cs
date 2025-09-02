@@ -20,9 +20,9 @@ namespace Content.Server.GameTicking.Commands
 
         public void Execute(IConsoleShell shell, string argStr, string[] args)
         {
-            if (!args.Length.InRange(1, 2))
+            if (!args.Length.InRange(1, 3))
             {
-                shell.WriteError(Loc.GetString("shell-need-between-arguments", ("lower", 1), ("upper", 2), ("currentAmount", args.Length)));
+                shell.WriteError(Loc.GetString("shell-need-between-arguments", ("lower", 1), ("upper", 3), ("currentAmount", args.Length)));
                 return;
             }
 
@@ -34,15 +34,23 @@ namespace Content.Server.GameTicking.Commands
                 return;
             }
 
+            var secret = false;
+
+            if (args.Length >= 2 && !bool.TryParse(args[1], out secret))
+            {
+                shell.WriteError(Loc.GetString("set-game-preset-optional-argument-not-bool"));
+                return;
+            }
+
             var rounds = 1;
 
-            if (args.Length == 2 && !int.TryParse(args[1], out rounds))
+            if (args.Length == 3 && !int.TryParse(args[2], out rounds))
             {
                 shell.WriteError(Loc.GetString("set-game-preset-optional-argument-not-integer"));
                 return;
             }
 
-            ticker.SetGamePreset(preset, false, rounds);
+            ticker.SetGamePreset(preset, false, secret, rounds);
             shell.WriteLine(Loc.GetString("set-game-preset-preset-set-finite", ("preset", preset.ID), ("rounds", rounds.ToString())));
         }
 
