@@ -184,6 +184,10 @@ public sealed class NPCUtilitySystem : EntitySystem
                 if (avoidBadFood && HasComp<BadFoodComponent>(targetUid))
                     return 0f;
 
+                var nutrition = _ingestion.TotalNutrition(targetUid, owner);
+                if (nutrition == 0.0f)
+                    return 0f;
+
                 return 1f;
             }
             case DrinkValueCon:
