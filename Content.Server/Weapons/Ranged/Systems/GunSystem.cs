@@ -57,6 +57,7 @@ using Robust.Shared.Random;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 using static Content.Server.Starlight.TextToSpeech.TTSManager;
+using Content.Shared.Atmos.Components;
 
 namespace Content.Server.Weapons.Ranged.Systems;
 

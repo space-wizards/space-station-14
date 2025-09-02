@@ -174,7 +174,7 @@ public abstract class SharedRoleSystem : EntitySystem
         
         //starlight start
         if (TryComp(mind.CurrentEntity, out ActorComponent? actor))
-            _pvsOverride.AddSessionOverride(mindRoleId, actor.PlayerSession);
+            _pvsOverride.AddSessionOverride(mind.CurrentEntity.Value, actor.PlayerSession);
         //starlight end
 
         var update = MindRolesUpdate((mindId, mind));
