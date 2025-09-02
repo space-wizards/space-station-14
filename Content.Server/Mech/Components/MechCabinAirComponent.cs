@@ -12,6 +12,12 @@ public sealed partial class MechCabinAirComponent : Component
     public float TargetPressure = Atmospherics.OneAtmosphere; // ~101.3 kPa
 
     /// <summary>
+    /// Pressure used when metering a single breath (kPa), like a tank regulator.
+    /// </summary>
+    [DataField]
+    public float RegulatorPressure = 16f;
+
+    /// <summary>
     /// Internal cabin air mixture separate from any attached gas cylinder.
     /// </summary>
     [DataField]
