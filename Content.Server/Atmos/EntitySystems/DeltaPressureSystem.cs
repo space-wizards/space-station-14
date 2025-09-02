@@ -1,7 +1,5 @@
 using Content.Server.Atmos.Components;
-using Content.Shared.Damage;
 using Content.Shared.Examine;
-using JetBrains.Annotations;
 using Robust.Shared.Map.Components;
 
 namespace Content.Server.Atmos.EntitySystems;

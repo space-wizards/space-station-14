@@ -1,7 +1,6 @@
 using Content.Server.Atmos.Components;
 using Content.Shared.Atmos;
 using Content.Shared.Damage;
-using Robust.Shared.Map.Components;
 using Robust.Shared.Random;
 using Robust.Shared.Threading;
 
