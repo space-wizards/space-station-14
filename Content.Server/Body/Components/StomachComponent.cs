@@ -20,7 +20,7 @@ namespace Content.Server.Body.Components
         ///     The interval at which this stomach digests its contents.
         /// </summary>
         [DataField]
-        public TimeSpan UpdateInterval = TimeSpan.FromSeconds(5);
+        public TimeSpan UpdateInterval = TimeSpan.FromSeconds(1);
 
         /// <summary>
         ///     The solution inside of this stomach this transfers reagents to the body.

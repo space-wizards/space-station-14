@@ -6,8 +6,6 @@ using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Components.SolutionManager;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
-using Robust.Shared.GameObjects;
-using Robust.Shared.Prototypes;
 
 namespace Content.Server.Body.Systems
 {
@@ -15,14 +13,11 @@ namespace Content.Server.Body.Systems
     {
         [Dependency] private readonly IGameTiming _gameTiming = default!;
         [Dependency] private readonly SharedSolutionContainerSystem _solutionContainerSystem = default!;
-        [Dependency] private readonly IEntityManager _entManager = default!;
-        [Dependency] private readonly IPrototypeManager _protoMan = default!;
 
         public const string DefaultSolutionName = "stomach";
 
         public override void Initialize()
         {
-            SubscribeLocalEvent<StomachComponent, ComponentInit>(OnComponentInit);
             SubscribeLocalEvent<StomachComponent, MapInitEvent>(OnMapInit);
             SubscribeLocalEvent<StomachComponent, EntityUnpausedEvent>(OnUnpaused);
             SubscribeLocalEvent<StomachComponent, ApplyMetabolicMultiplierEvent>(OnApplyMetabolicMultiplier);
@@ -81,8 +76,7 @@ namespace Content.Server.Body.Systems
                     stomach.ReagentDeltas.Remove(item);
                 }
 
-                // _solutionContainerSystem.UpdateChemicals(stomach.Solution.Value);
-                TryComp<ReactionMixerComponent>(uid, out var reactionMixer);
+                TryComp<ReactionMixerComponent>(uid, out var reactionMixer); // TODO: avoid using TryComp
                 _solutionContainerSystem.UpdateChemicals(stomach.Solution.Value, true, reactionMixer);
 
                 // Transfer everything to the body solution!
