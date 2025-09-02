@@ -4,8 +4,8 @@ meta:
   engineVersion: 266.0.0
   forkId: ""
   forkVersion: ""
-  time: 09/02/2025 05:55:52
-  entityCount: 14028
+  time: 09/02/2025 05:57:31
+  entityCount: 14032
 maps:
 - 1
 grids:
@@ -71893,6 +71893,38 @@ entities:
     - type: Transform
       pos: -2.4696407,21.747667
       parent: 2
+- proto: IntercomAll
+  entities:
+  - uid: 14029
+    components:
+    - type: Transform
+      pos: -6.5,50.5
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 14030
+    components:
+    - type: Transform
+      pos: -8.5,50.5
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 14031
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: -8.5,48.5
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 14032
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: -6.5,48.5
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
 - proto: IntercomCommand
   entities:
   - uid: 9342
@@ -96157,7 +96189,7 @@ entities:
       pos: -38.5,9.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -70006.73
+      secondsUntilStateChange: -70101.82
       state: Opening
   - uid: 13509
     components:
@@ -96165,7 +96197,7 @@ entities:
       pos: -35.5,10.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -70007.23
+      secondsUntilStateChange: -70102.32
       state: Opening
 - proto: WoodenBench
   entities:
