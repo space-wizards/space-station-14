@@ -101,7 +101,7 @@
   id: TechnologyDiskStealCollectionObjective
   components:
   - type: NotJobRequirement
-    job: Scientist
+    jobs: [ Scientist ]
   - type: StealCondition
     stealGroup: TechnologyDisk
     minCollectionSize: 5
@@ -158,7 +158,7 @@
   id: ForensicScannerStealObjective
   components:
   - type: NotJobRequirement
-    job: Detective
+    jobs: [ Detective ]
   - type: StealCondition
     stealGroup: ForensicScanner
   - type: Objective
@@ -169,7 +169,7 @@
   id: FlippoEngravedLighterStealObjective
   components:
   - type: NotJobRequirement
-    job: Detective
+    jobs: [ Detective ]
   - type: StealCondition
     stealGroup: FlippoEngravedLighter
   - type: Objective
@@ -220,7 +220,7 @@
   id: ClothingHeadsetAltMedicalStealObjective
   components:
   - type: NotJobRequirement
-    job: ChiefMedicalOfficer
+    jobs: [ ChiefMedicalOfficer ]
   - type: StealCondition
     stealGroup: ClothingHeadsetAltMedical
   - type: Objective
@@ -231,7 +231,7 @@
   id: FireAxeStealObjective
   components:
   - type: NotJobRequirement
-    job: AtmosphericTechnician
+    jobs: [ AtmosphericTechnician ]
   - type: StealCondition
     stealGroup: FireAxe
   - type: Objective
@@ -253,7 +253,7 @@
   id: ExpeditionsCircuitboardStealObjective
   components:
   - type: NotJobRequirement
-    job: SalvageSpecialist
+    jobs: [ SalvageSpecialist ]
   - type: StealCondition
     stealGroup: SalvageExpeditionsComputerCircuitboard
   - type: Objective
@@ -286,7 +286,7 @@
   id: BibleStealObjective
   components:
   - type: NotJobRequirement
-    job: Chaplain
+    jobs: [ Chaplain ]
   - type: StealCondition
     stealGroup: Bible
   - type: Objective
@@ -297,7 +297,7 @@
   id: ClothingNeckGoldmedalStealObjective
   components:
   - type: NotJobRequirement
-    job: HeadOfPersonnel
+    jobs: [ HeadOfPersonnel ]
   - type: StealCondition
     stealGroup: ClothingNeckGoldmedal
   - type: Objective
@@ -308,7 +308,7 @@
   id: ClothingNeckClownmedalStealObjective
   components:
   - type: NotJobRequirement
-    job: Captain
+    jobs: [ Captain ]
   - type: StealCondition
     stealGroup: ClothingNeckClownmedal
   - type: Objective
@@ -321,7 +321,7 @@
   id: NuclearBombStealObjective
   components:
   - type: NotJobRequirement
-    job: Captain
+    jobs: [ Captain ]
   - type: StealCondition
     stealGroup: NuclearBomb
   - type: Objective
@@ -332,7 +332,7 @@
   id: FaxMachineCaptainStealObjective
   components:
   - type: NotJobRequirement
-    job: Captain
+    jobs: [ Captain ]
   - type: StealCondition
     stealGroup: FaxMachineCaptain
   - type: Objective
@@ -354,7 +354,7 @@
   id: XenoArtifactStealObjective
   components:
   - type: NotJobRequirement
-    job: Scientist
+    jobs: [ Scientist ]
   - type: StealCondition
     stealGroup: XenoArtifact
   - type: Objective
@@ -398,7 +398,7 @@
   id: AltarNanotrasenStealObjective
   components:
   - type: NotJobRequirement
-    job: Chaplain
+    jobs: [ Chaplain ]
   - type: StealCondition
     stealGroup: AltarNanotrasen
   - type: Objective
@@ -409,7 +409,7 @@
   id: PlantRDStealObjective
   components:
   - type: NotJobRequirement
-    job: Scientist
+    jobs: [ Scientist ]
   - type: StealCondition
     stealGroup: PlantRD
   - type: Objective
@@ -420,7 +420,7 @@
   id: ToiletGoldenStealObjective
   components:
   - type: NotJobRequirement
-    job: Captain
+    jobs: [ Captain ]
   - type: StealCondition
     stealGroup: ToiletGoldenDirtyWater
   - type: Objective
@@ -433,7 +433,7 @@
   id: IanStealObjective
   components:
   - type: NotJobRequirement
-    job: HeadOfPersonnel
+    jobs: [ HeadOfPersonnel ]
   - type: StealCondition
     stealGroup: AnimalIan
   - type: Objective
@@ -453,7 +453,7 @@
   id: McGriffStealObjective
   components:
   - type: NotJobRequirement
-    job: Detective
+    jobs: [ Detective ]
   - type: StealCondition
     stealGroup: AnimalMcGriff
   - type: Objective
@@ -464,7 +464,7 @@
   id: WalterStealObjective
   components:
   - type: NotJobRequirement
-    job: Chemist
+    jobs: [ Chemist ]
   - type: StealCondition
     stealGroup: AnimalWalter
   - type: Objective
@@ -484,7 +484,7 @@
   id: RenaultStealObjective
   components:
   - type: NotJobRequirement
-    job: Captain
+    jobs: [ Captain ]
   - type: StealCondition
     stealGroup: AnimalRenault
   - type: Objective
@@ -495,7 +495,7 @@
   id: ShivaStealObjective
   components:
   - type: NotJobRequirement
-    job: SecurityOfficer
+    jobs: [ SecurityOfficer ]
   - type: StealCondition
     stealGroup: AnimalShiva
   - type: Objective
@@ -506,7 +506,7 @@
   id: TropicoStealObjective
   components:
   - type: NotJobRequirement
-    job: AtmosphericTechnician
+    jobs: [ AtmosphericTechnician ]
   - type: StealCondition
     stealGroup: AnimalTropico
   - type: Objective

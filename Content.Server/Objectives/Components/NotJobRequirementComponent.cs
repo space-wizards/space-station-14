@@ -10,17 +10,9 @@ using Robust.Shared.Prototypes;
 [RegisterComponent, Access(typeof(NotJobRequirementSystem))]
 public sealed partial class NotJobRequirementComponent : Component
 {
-    /// <summary>
-    /// ID of the job to ban from having this objective, use for singular job exclusions (i.e. steal tropico for atmos tech).
-    /// </summary>
-    /// <remarks>
-    /// May be worth phasing this out later, but that would be a breaking change.
-    /// </remarks>
-    [DataField]
-    public ProtoId<JobPrototype> Job = string.Empty;
 
     /// <summary>
-    /// List of IDs to ban from having this objective, for multi-job exclusions (i.e. steal paramed's voidsuit for paramedic, chemist, doctor, psychologist)
+    /// List of job prototype IDs to ban from having this objective.
     /// </summary>
     [DataField]
     public List<ProtoId<JobPrototype>> Jobs = new List<ProtoId<JobPrototype>>();
