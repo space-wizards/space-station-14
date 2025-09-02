@@ -8,7 +8,7 @@
     priceMultiplier: 1.5
     nodeCount:
       min: 24
-      max: 48
+      max: 25
   - type: Sprite
     sprite: _Starlight/Objects/Materials/materials.rsi
     state: abyss_core
