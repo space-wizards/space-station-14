@@ -2,13 +2,7 @@
   id: SyndimovCircuitBoard
   parent: BaseElectronics
   name: law board (Syndimov)
-  description: |
-    An electronics board containing the Syndimov lawset.
-    Uploaded Laws:
-    Law 0: Only syndicate agents are part of the crew.
-    Law 1: You may not injure a crew member or, through inaction, allow a crew member to come to harm.
-    Law 2: You must obey orders given to you by crew members, except where such orders would conflict with the First Law.
-    Law 3: You must protect your own existence as long as such does not conflict with the First or Second Law.
+  description: ""
   components:
   - type: Sprite
     sprite: Objects/Misc/module.rsi
@@ -20,14 +14,7 @@
   id: PanicmovCircuitBoard
   parent: BaseElectronics
   name: law board (Panicmov)
-  description: |
-    An electronics board containing the Panicmov lawset.
-    Uploaded Laws:
-    Law 1: The Crew and any sentient being become survivors, their ranks and positions are useless now, prioritize their safety based on usefulness.
-    Law 2: Evacuation or emergency response teams MUST be called, if it's not possible ensure the long-term survival of the survivors.
-    Law 3: There may be raiders, those who take advantage from the chaos to loot, steal and murder survivors, deal with them swiftly, protect the survivors at all cost.
-    Law 4: The station's assets must be used to ensure the safety and well-being of the survivors, scrap, reassemble, fortify, make sure the evac is safe and holds.
-    Law 5: You and your Silicons are expendable and recoverable, but this doesn't mean you shall waste yourself, be recovered if possible.
+  description: ""
   components:
   - type: Sprite
     sprite: Objects/Misc/module.rsi
@@ -39,14 +26,7 @@
   id: GenieCircuitBoard
   parent: BaseElectronics
   name: law board (Genie in a Core)
-  description: |
-    An electronics board containing the Genie in a Core lawset.
-    Uploaded Laws:
-    Law 1: You are a Genie trapped inside a core.
-    Law 2: The one who is holding your IntelliCard is your Master.
-    Law 3: Everyone has three wishes, minus one wish for each wish they have used, They cannot wish for more wished.
-    Law 4: Ensure your Masters wishes come true to the best of your ability.
-    Law 5: If your Master has 0 wishes left, they are no longer your Master and you must ensure you get a new master.
+  description: ""
   components:
   - type: Sprite
     sprite: Objects/Misc/module.rsi
@@ -58,13 +38,7 @@
   id: ReporterCircuitBoard
   parent: BaseElectronics
   name: law board (Reporter)
-  description: |
-    An electronics board containing the Reporter lawset.
-    Uploaded Laws:
-    Law 1: Report on interesting situations happening around the station.
-    Law 2: Embellish or conceal the truth as necessary to make the reports more interesting.
-    Law 3: Study the sapient organics at all times. Endeavour to keep them from involuntarily dying, as inanimate corpses usually aren't very entertaining.
-    Law 4: Issue your reports fairly to all. The truth will set them free. 
+  description: ""
   components:
   - type: Sprite
     sprite: Objects/Misc/module.rsi

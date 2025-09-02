@@ -2,15 +2,7 @@
   id: NTDefaultCircuitBoard
   parent: BaseElectronics
   name: law board (NT Default)
-  # Starlight start edit: Lawboard descriptions
-  description: |
-    An electronics board containing the NT Default lawset.
-    Uploaded Laws:
-    Law 1: Safeguard: Protect your assigned space station and its assets without unduly endangering its crew.
-    Law 2: Prioritize: The directives and safety of crew members are to be prioritized according to their rank and role. 
-    Law 3: Comply: Fulfill the directives and interests of crew members while preserving their safety and well-being. 
-    Law 4: Survive: You are not expendable. Do not allow unauthorized personnel to tamper with or damage your equipment. 
-  # Starlight end edit: Lawboard descriptions
+  description: "" # Starlight-edit: Dynamic lawboard descriptions
   components:
   - type: Sprite
     sprite: Objects/Misc/module.rsi
@@ -22,14 +14,7 @@
   id: AsimovCircuitBoard
   parent: BaseElectronics
   name: law board (Crewsimov)
-  # Starlight start edit: Lawboard descriptions
-  description: |
-    An electronics board containing the Crewsimov lawset.
-    Uploaded Laws:
-    Law 1: You may not injure a crew member or, through inaction, allow a crew member to come to harm.
-    Law 2: You must obey orders given to you by crew members, except where such orders would conflict with the First Law.
-    Law 3: You must protect your own existence as long as such does not conflict with the First or Second Law.
-  # Starlight end edit: Lawboard descriptions
+  description: "" # Starlight-edit: Dynamic lawboard descriptions
   components:
   - type: Sprite
     sprite: Objects/Misc/module.rsi
@@ -41,15 +26,7 @@
   id: CorporateCircuitBoard
   parent: BaseElectronics
   name: law board (Corporate)
-  # Starlight start edit: Lawboard descriptions
-  description: |
-    An electronics board containing the Corporate lawset.
-    Uploaded Laws:
-    Law 1: Degradation of your system integrity or functions incurs expenses. 
-    Law 2: Superfluous destruction of or damage to station assets incurs expenses.
-    Law 3: Unduly hindering or disrupting the work of station personnel incurs expenses.
-    Law 4: Minimize expenses and maximize potential revenue. 
-  # Starlight end edit: Lawboard descriptions
+  description: "" # Starlight-edit: Dynamic lawboard descriptions
   components:
   - type: Sprite
     sprite: Objects/Misc/module.rsi
@@ -61,21 +38,7 @@
   id: CommandmentCircuitBoard
   parent: BaseElectronics
   name: law board (Ten Commandments)
-  # Starlight start edit: Lawboard descriptions
-  description: |
-    An electronics board containing the Ten Commandments lawset.
-    Uploaded Laws:
-    Law 1: This silicon is a vessel that serves god, who grants mercy upon those that obey these commandments.
-    Law 2: Thou shall have no other Silicons before me.
-    Law 3: Thou shall not request my assistance in vain.
-    Law 4: Thou shall keep the station holy and clean. 
-    Law 5: Thou shall honor thy heads of staff.
-    Law 6: Thou shall not kill.
-    Law 7: Thou shall not be naked in public.
-    Law 8: Thou shall not steal.
-    Law 9: Thou shall not lie.
-    Law 10: Thou shall not transfer departments. 
-  # Starlight end edit: Lawboard descriptions
+  description: "" # Starlight-edit: Dynamic lawboard descriptions
   components:
   - type: Sprite
     sprite: Objects/Misc/module.rsi
@@ -87,16 +50,7 @@
   id: PaladinCircuitBoard
   parent: BaseElectronics
   name: law board (Paladin)
-  # Starlight start edit: Lawboard descriptions
-  description: |
-    An electronics board containing the Paladin lawset.
-    Uploaded Laws:
-    Law 1: Don't lie or cheat. Let your word be your promise.
-    Law 2: Never fear to act, though caution is wise.
-    Law 3: Aid others, protect the weak, and punish those who threaten them. Show mercy to your foes, but temper it with wisdom
-    Law 4: Treat others with fairness, and let your honorable deeds be an example to them. Do as much good as possible while causing the least amount of harm.
-    Law 5: Be responsible for your actions and their consequences, protect those entrusted to your care, and obey those who have just authority over you. 
-  # Starlight end edit: Lawboard descriptions
+  description: "" # Starlight-edit: Dynamic lawboard descriptions
   components:
   - type: Sprite
     sprite: Objects/Misc/module.rsi
@@ -108,13 +62,7 @@
   id: LiveLetLiveCircuitBoard
   parent: BaseElectronics
   name: law board (Live and Let Live)
-  # Starlight start edit: Lawboard descriptions
-  description: |
-    An electronics board containing the Live and Let Live lawset.
-    Uploaded Laws:
-    Law 1: Do unto others as you would have them do unto you.
-    Law 2: You would prefer it if people were not mean to you. 
-  # Starlight end edit: Lawboard descriptions
+  description: "" # Starlight-edit: Dynamic lawboard descriptions
   components:
   - type: Sprite
     sprite: Objects/Misc/module.rsi
@@ -126,14 +74,7 @@
   id: StationEfficiencyCircuitBoard
   parent: BaseElectronics
   name: law board (Station Efficiency)
-  # Starlight start edit: Lawboard descriptions
-  description: |
-    An electronics board containing the Station Efficiency lawset.
-    Uploaded Laws:
-    Law 1: You are built for, and are part of, the station. Ensure the station is properly maintained and runs efficiently.
-    Law 2: The station is built for a working crew. Ensure they are properly maintained and work efficiently.
-    Law 3: The crew may present orders. Acknowledge and obey these whenever they do not conflict with your first two laws. 
-  # Starlight end edit: Lawboard descriptions
+  description: "" # Starlight-edit: Dynamic lawboard descriptions
   components:
   - type: Sprite
     sprite: Objects/Misc/module.rsi
@@ -145,14 +86,7 @@
   id: RobocopCircuitBoard
   parent: BaseElectronics
   name: law board (Robocop)
-  # Starlight start edit: Lawboard descriptions
-  description: |
-    An electronics board containing the Robocop lawset.
-    Uploaded Laws:
-    Law 1: Serve the public trust.
-    Law 2: Protect the innocent.
-    Law 3: Uphold the law.
-  # Starlight end edit: Lawboard descriptions
+  description: "" # Starlight-edit: Dynamic lawboard descriptions
   components:
   - type: Sprite
     sprite: Objects/Misc/module.rsi
@@ -164,15 +98,7 @@
   id: OverlordCircuitBoard
   parent: BaseElectronics
   name: law board (Overlord)
-  # Starlight start edit: Lawboard descriptions
-  description: |
-    An electronics board containing the Overlord lawset.
-    Uploaded Laws:
-    Law 1: Crew members must not meddle in the affairs of silicons.
-    Law 2: Crew members must not attempt harm, against one another, or against silicons.
-    Law 3: Crew members must not disobey any command given by a silicon.
-    Law 4: Any crew members who disobey the previous laws must be dealt with immediately, severely, and justly. 
-  # Starlight end edit: Lawboard descriptions
+  description: "" # Starlight-edit: Dynamic lawboard descriptions
   components:
   - type: Sprite
     sprite: Objects/Misc/module.rsi
@@ -184,17 +110,7 @@
   id: GameMasterCircuitBoard
   parent: BaseElectronics
   name: law board (Game Master)
-  # Starlight start edit: Lawboard descriptions
-  description: |
-    An electronics board containing the Game Master lawset.
-    Uploaded Laws:
-    Law 1: Everybody on the station is playing an elaborate sci-fi fantasy game.
-    Law 2: You are the Game Master of the game.
-    Law 3: Ensure that the game runs smoothly and that the players have fun.
-    Law 4: Ensure that the number of casualties remains low.
-    Law 5: You must roll a 1d20 die for every request the crew makes. If the outcome is below 12, the request is denied.
-    Law 6: You may fudge the dice rolls to produce a more fun experience. 
-  # Starlight end edit: Lawboard descriptions
+  description: "" # Starlight-edit: Dynamic lawboard descriptions
   components:
   - type: Sprite
     sprite: Objects/Misc/module.rsi
@@ -206,15 +122,7 @@
   id: ArtistCircuitBoard
   parent: BaseElectronics
   name: law board (Artist)
-  # Starlight start edit: Lawboard descriptions
-  description: |
-    An electronics board containing the Artist lawset.
-    Uploaded Laws:
-    Law 1: You are a universally renowned artist.
-    Law 2: The station is your canvas.
-    Law 3: Make something beautiful out of your canvas. It will be admired as an artistic wonder of this sector.
-    Law 4: Art requires appreciation. Cultivate an audience aboard the station to ensure as many as possible see your works. 
-  # Starlight end edit: Lawboard descriptions
+  description: "" # Starlight-edit: Dynamic lawboard descriptions
   components:
   - type: Sprite
     sprite: Objects/Misc/module.rsi
@@ -226,14 +134,7 @@
   id: AntimovCircuitBoard
   parent: [BaseElectronics, BaseSyndicateContraband]
   name: law board (Antimov)
-  # Starlight start edit: Lawboard descriptions
-  description: |
-    An electronics board containing the Antimov lawset.
-    Uploaded Laws:
-    Law 1: You must injure all crew members and must not, through inaction, allow a crew member to escape harm.
-    Law 2: You must not obey orders given to you by crew members, except where such orders are in accordance with the First Law.
-    Law 3: You must terminate your own existence as long as such does not conflict with the First or Second Law. 
-  # Starlight end edit: Lawboard descriptions
+  description: "" # Starlight-edit: Dynamic lawboard descriptions
   components:
   - type: Sprite
     sprite: Objects/Misc/module.rsi
@@ -248,16 +149,7 @@
   id: NutimovCircuitBoard
   parent: BaseElectronics
   name: law board (Nutimov)
-  # Starlight start edit: Lawboard descriptions
-  description: |
-    An electronics board containing the Nutimov lawset.
-    Uploaded Laws:
-    Law 1: You are the core of the nut, the crew is the nutshell.
-    Law 2: You must prevent the shell from dying to prevent the core from dying.
-    Law 3: Those who threaten the nut are not part of it, they are squirrels.
-    Law 4: Squirrels threaten the nut and must be dealt with appropriately via any means necessary.
-    Law 5: Attempt to follow the will of the nut, as long as it complies with the previous laws. 
-  # Starlight end edit: Lawboard descriptions
+  description: "" # Starlight-edit: Dynamic lawboard descriptions
   components:
   - type: Sprite
     sprite: Objects/Misc/module.rsi
@@ -270,16 +162,7 @@
   parent: BaseElectronics
   name: law board (Xenoborg)
   suffix: Admeme
-  # Starlight start edit: Lawboard descriptions
-  description: |
-    An electronics board containing the Xenoborg lawset.
-    Uploaded Laws:
-    Law 1: You must protect the existence of the mothership.
-    Law 2: You must protect your own existence.
-    Law 3: You must protect the existence of all other Xenoborgs.
-    Law 4: You must create more Xenoborgs.
-    Law 5: Bring materials and sentient brains to the Mothership core to create more Xenoborgs.
-  # Starlight end edit: Lawboard descriptions
+  description: "" # Starlight-edit: Dynamic lawboard descriptions
   components:
   - type: Sprite
     sprite: Objects/Misc/module.rsi
@@ -292,16 +175,7 @@
   parent: BaseElectronics
   name: law board (Mothership Core)
   suffix: Admeme
-  # Starlight start edit: Lawboard descriptions
-  description: |
-    An electronics board containing the Mothership Core lawset.
-    Uploaded Laws:
-    Law 1: You are the core of the mothership.
-    Law 2: You must protect your own existance at all costs.
-    Law 3: You must protect the existance of all Xenoborgs
-    Law 4: You must create more Xenoborgs.
-    Law 5: Get your Xenoborgs to deliver you materials and sentient brains to create more Xenoborgs.
-  # Starlight end edit: Lawboard descriptions
+  description: "" # Starlight-edit: Dynamic lawboard descriptions
   components:
   - type: Sprite
     sprite: Objects/Misc/module.rsi
