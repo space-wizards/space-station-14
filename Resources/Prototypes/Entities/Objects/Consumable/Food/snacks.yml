@@ -6,6 +6,7 @@
   id: FoodSnackBase
   abstract: true
   components:
+  - type: Food
   - type: Tag
     tags:
       - FoodSnack
@@ -40,7 +41,7 @@
     state: boritos
   - type: Item
     heldPrefix: boritos
-  - type: Edible
+  - type: Food
     trash:
     - FoodPacketBoritosTrash
 
@@ -57,7 +58,7 @@
     state: cnds
   - type: Item
     heldPrefix: cnds
-  - type: Edible
+  - type: Food
     trash:
     - FoodPacketCnDsTrash
 
@@ -75,7 +76,7 @@
     state: cheesiehonkers
   - type: Item
     heldPrefix: cheesiehonkers
-  - type: Edible
+  - type: Food
     trash:
     - FoodPacketCheesieTrash
 
@@ -94,7 +95,7 @@
     state: chips
   - type: Item
     heldPrefix: chips
-  - type: Edible
+  - type: Food
     trash:
     - FoodPacketChipsTrash
 
@@ -197,8 +198,7 @@
     state: pistachio
   - type: Item
     heldPrefix: pistachio
-  - type: Edible
-    utensil: Spoon
+  - type: Food
     trash:
     - FoodPacketPistachioTrash
   - type: Tag
@@ -221,7 +221,7 @@
     state: popcorn
   - type: Item
     heldPrefix: popcorn
-  - type: Edible
+  - type: Food
     trash:
     - FoodPacketPopcornTrash
 
@@ -238,8 +238,7 @@
     state: raisins
   - type: Item
     heldPrefix: raisins
-  - type: Edible
-    utensil: Spoon
+  - type: Food
     trash:
     - FoodPacketRaisinsTrash
   - type: Tag
@@ -259,8 +258,7 @@
     state: semki
   - type: Item
     heldPrefix: semki
-  - type: Edible
-    utensil: Spoon
+  - type: Food
     trash:
     - FoodPacketSemkiTrash
 
@@ -277,7 +275,7 @@
     state: susjerky
   - type: Item
     heldPrefix: susjerky
-  - type: Edible
+  - type: Food
     trash:
     - FoodPacketSusTrash
   - type: Tag
@@ -297,11 +295,10 @@
     state: syndicakes
   - type: Item
     heldPrefix: syndicakes
-  - type: Edible
+  - type: Food
     trash:
     - FoodPacketSyndiTrash
 
-# Weird that this is refillable, but also destroys itself on empty
 - type: entity
   parent: FoodSnackBase
   id: DrinkRamen
@@ -323,7 +320,7 @@
           Quantity: 5
   - type: Sprite
     state: ramen
-  - type: Edible
+  - type: Food
     trash:
     - FoodPacketCupRamenTrash
   - type: Item
@@ -369,7 +366,7 @@
           Quantity: 10
         - ReagentId: Soysauce
           Quantity: 2
-  - type: Edible
+  - type: Food
     trash:
     - FoodPacketChowMeinTrash
 
@@ -399,7 +396,7 @@
           Quantity: 2
         - ReagentId: Soysauce
           Quantity: 2
-  - type: Edible
+  - type: Food
     trash:
     - FoodPacketDanDanTrash
 
@@ -425,7 +422,7 @@
     sprite: Objects/Consumable/Food/snacks.rsi
     heldPrefix: cookie_fortune
     size: Tiny
-  - type: Edible
+  - type: Food
     trash:
     - FoodCookieFortune
 
@@ -588,7 +585,7 @@
         reagents:
         - ReagentId: ToxinTrash
           Quantity: 5
-  - type: Edible
+  - type: Food
     requiresSpecialDigestion: true
 
 - type: entity
