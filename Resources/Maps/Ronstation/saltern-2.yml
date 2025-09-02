@@ -4,8 +4,8 @@ meta:
   engineVersion: 266.0.0
   forkId: ""
   forkVersion: ""
-  time: 08/31/2025 19:45:56
-  entityCount: 17006
+  time: 09/02/2025 16:55:47
+  entityCount: 17008
 maps:
 - 1
 grids:
@@ -8778,7 +8778,7 @@ entities:
   - uid: 49
     components:
     - type: MetaData
-      name: blueshield office
+      name: Blueshield Officer
     - type: Transform
       pos: -7.5,28.5
       parent: 2
@@ -10087,7 +10087,7 @@ entities:
       pos: -33.5,9.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -18345.494
+      secondsUntilStateChange: -18434.361
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -10221,7 +10221,7 @@ entities:
       pos: 13.5,-9.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -210996.38
+      secondsUntilStateChange: -211085.25
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -76204,6 +76204,20 @@ entities:
     - type: Transform
       pos: 4.5,21.5
       parent: 2
+- proto: HolopadCommandBridgeLongRange
+  entities:
+  - uid: 12975
+    components:
+    - type: Transform
+      pos: 3.5,33.5
+      parent: 2
+- proto: HolopadCommandBso
+  entities:
+  - uid: 12954
+    components:
+    - type: Transform
+      pos: -10.5,28.5
+      parent: 2
 - proto: HolopadCommandCaptain
   entities:
   - uid: 11221
@@ -76560,7 +76574,7 @@ entities:
       pos: 16.5,-40.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -86375.24
+      secondsUntilStateChange: -86464.11
       state: Opening
 - proto: HospitalCurtainsOpen
   entities:
