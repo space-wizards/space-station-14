@@ -15,7 +15,6 @@ using Content.Shared.Whitelist;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.GameStates;
 using Robust.Shared.Map;
-using Robust.Shared.Network;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 
@@ -33,7 +32,6 @@ public abstract partial class SharedActionsSystem : EntitySystem
     [Dependency] private   readonly SharedInteractionSystem _interaction = default!;
     [Dependency] private   readonly SharedTransformSystem _transform = default!;
     [Dependency] private   readonly SharedDoAfterSystem _doAfter = default!;
-    [Dependency] private   readonly INetManager _netMan = default!;
 
     private EntityQuery<ActionComponent> _actionQuery;
     private EntityQuery<ActionsComponent> _actionsQuery;
@@ -89,6 +87,8 @@ public abstract partial class SharedActionsSystem : EntitySystem
         if (!TryComp<DoAfterArgsComponent>(ent, out var actionDoAfterArgsComp))
             return;
 
+        var performer = GetEntity(args.Performer);
+
         Entity<ActionComponent?>? action = (ent, ent);
 
         // If this doafter is on repeat and was cancelled, start use delay as expected
@@ -117,11 +117,7 @@ public abstract partial class SharedActionsSystem : EntitySystem
             args.Args.Delay = actionDoAfterArgsComp.DelayReduction.Value;
 
         // Validate again for charges, blockers, etc
-        if (TryPerformAction(args.Input, args.Performer, skipDoActionRequest: true))
-            return;
-
-        // This fixes the mispredicting but it doesn't fix the extra repeat
-        if (_netMan.IsClient)
+        if (TryPerformAction(args.Input, performer, skipDoActionRequest: true))
             return;
 
         // Cancel this doafter if we can't validate the action
@@ -372,9 +368,9 @@ public abstract partial class SharedActionsSystem : EntitySystem
 
         Entity<ActionsComponent?> performer = (user, component);
 
-        if (HasComp<DoAfterComponent>(action) && !skipDoActionRequest)
+        if (HasComp<DoAfterArgsComponent>(action) && !skipDoActionRequest)
         {
-            var attemptDoAfterEv = new ActionAttemptDoAfterEvent(performer, action.Comp.UseDelay, ev);
+            var attemptDoAfterEv = new ActionAttemptDoAfterEvent(performer.Owner, action.Comp.UseDelay, ev);
             RaiseLocalEvent(action, ref attemptDoAfterEv);
             return false;
         }

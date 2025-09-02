@@ -3,46 +3,44 @@ using Content.Shared.DoAfter;
 
 namespace Content.Shared.Actions;
 
-public abstract partial class SharedActionsSystem : EntitySystem
+public abstract partial class SharedActionsSystem
 {
-    public void InitializeActionDoAfter()
+    protected void InitializeActionDoAfter()
     {
-        SubscribeLocalEvent<DoAfterComponent, ActionAttemptDoAfterEvent>(OnActionDoAfterAttempt);
+        SubscribeLocalEvent<DoAfterArgsComponent, ActionAttemptDoAfterEvent>(OnActionDoAfterAttempt);
     }
 
-    private void OnActionDoAfterAttempt(Entity<DoAfterComponent> ent, ref ActionAttemptDoAfterEvent args)
+    private void OnActionDoAfterAttempt(Entity<DoAfterArgsComponent> ent, ref ActionAttemptDoAfterEvent args)
     {
+        var performer = args.Performer;
+
         // relay to user
-        if (!TryComp<DoAfterComponent>(args.Performer, out var userDoAfter))
+        if (!Resolve(performer, ref performer.Comp))
             return;
 
-        // Check DoAfterArgs Settings
-        if (!TryComp<DoAfterArgsComponent>(ent.Owner,  out var doAfterArgsComp))
-            return;
+        var delay = ent.Comp.Delay;
 
-        var delay = doAfterArgsComp.Delay;
+        var netEnt = GetNetEntity(performer);
 
-        var actionDoAfterEvent = new ActionDoAfterEvent(args.Performer, args.OriginalUseDelay, args.Input);
+        var actionDoAfterEvent = new ActionDoAfterEvent(netEnt, args.OriginalUseDelay, args.Input);
 
-        // TODO: Should add a raise on used in the attemptactiondoafterevent or something to add a conditional item or w/e
-
-        var doAfterArgs = new DoAfterArgs(EntityManager, args.Performer, delay, actionDoAfterEvent, ent.Owner, args.Performer)
+        var doAfterArgs = new DoAfterArgs(EntityManager, performer, delay, actionDoAfterEvent, ent.Owner, args.Performer)
         {
-            AttemptFrequency = doAfterArgsComp.AttemptFrequency,
-            Broadcast = doAfterArgsComp.Broadcast,
-            Hidden = doAfterArgsComp.Hidden,
-            NeedHand = doAfterArgsComp.NeedHand,
-            BreakOnHandChange = doAfterArgsComp.BreakOnHandChange,
-            BreakOnDropItem = doAfterArgsComp.BreakOnDropItem,
-            BreakOnMove = doAfterArgsComp.BreakOnMove,
-            BreakOnWeightlessMove = doAfterArgsComp.BreakOnWeightlessMove,
-            MovementThreshold = doAfterArgsComp.MovementThreshold,
-            DistanceThreshold = doAfterArgsComp.DistanceThreshold,
-            BreakOnDamage = doAfterArgsComp.BreakOnDamage,
-            DamageThreshold = doAfterArgsComp.DamageThreshold,
-            RequireCanInteract = doAfterArgsComp.RequireCanInteract
+            AttemptFrequency = ent.Comp.AttemptFrequency,
+            Broadcast = ent.Comp.Broadcast,
+            Hidden = ent.Comp.Hidden,
+            NeedHand = ent.Comp.NeedHand,
+            BreakOnHandChange = ent.Comp.BreakOnHandChange,
+            BreakOnDropItem = ent.Comp.BreakOnDropItem,
+            BreakOnMove = ent.Comp.BreakOnMove,
+            BreakOnWeightlessMove = ent.Comp.BreakOnWeightlessMove,
+            MovementThreshold = ent.Comp.MovementThreshold,
+            DistanceThreshold = ent.Comp.DistanceThreshold,
+            BreakOnDamage = ent.Comp.BreakOnDamage,
+            DamageThreshold = ent.Comp.DamageThreshold,
+            RequireCanInteract = ent.Comp.RequireCanInteract
         };
 
-        _doAfter.TryStartDoAfter(doAfterArgs, userDoAfter);
+        _doAfter.TryStartDoAfter(doAfterArgs, performer);
     }
 }

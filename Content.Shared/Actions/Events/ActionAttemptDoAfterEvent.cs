@@ -1,4 +1,4 @@
-﻿using Content.Shared.Actions.Components;
+﻿using Content.Shared.DoAfter;
 
 namespace Content.Shared.Actions.Events;
 
@@ -9,4 +9,4 @@ namespace Content.Shared.Actions.Events;
 /// <param name="OriginalUseDelay">The original action use delay, used for repeating actions</param>
 /// <param name="Input">The original request, for validating</param>
 [ByRefEvent]
-public record struct ActionAttemptDoAfterEvent(Entity<ActionsComponent?> Performer, TimeSpan? OriginalUseDelay, RequestPerformActionEvent Input);
+public record struct ActionAttemptDoAfterEvent(Entity<DoAfterComponent?> Performer, TimeSpan? OriginalUseDelay, RequestPerformActionEvent Input);

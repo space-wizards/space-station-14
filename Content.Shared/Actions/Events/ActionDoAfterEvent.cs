@@ -13,8 +13,7 @@ public sealed partial class ActionDoAfterEvent : DoAfterEvent
     /// <summary>
     /// <inheritdoc cref="ActionAttemptDoAfterEvent.Performer"/>
     /// </summary>
-    [NonSerialized]
-    public readonly Entity<ActionsComponent?> Performer;
+    public readonly NetEntity Performer;
 
     /// <summary>
     /// <inheritdoc cref="ActionAttemptDoAfterEvent.OriginalUseDelay"/>
@@ -26,7 +25,7 @@ public sealed partial class ActionDoAfterEvent : DoAfterEvent
     /// </summary>
     public readonly RequestPerformActionEvent Input;
 
-    public ActionDoAfterEvent(Entity<ActionsComponent?> performer, TimeSpan? originalUseDelay, RequestPerformActionEvent input)
+    public ActionDoAfterEvent(NetEntity performer, TimeSpan? originalUseDelay, RequestPerformActionEvent input)
     {
         Performer = performer;
         OriginalUseDelay = originalUseDelay;
