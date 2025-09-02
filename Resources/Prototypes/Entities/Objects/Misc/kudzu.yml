@@ -149,6 +149,9 @@
       - CrystalCyan
       rarePrototypes:
       - AnomalyFloraBulb
+    - type: Tag
+      tags:
+      - Ruminant
 
 - type: entity
   id: KudzuFlowerAngry
@@ -267,6 +270,7 @@
     - type: Tag
       tags:
       - Meat
+      - Ruminant
 
 - type: entity
   name: dark haze
