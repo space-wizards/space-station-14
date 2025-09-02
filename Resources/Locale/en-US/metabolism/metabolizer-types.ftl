@@ -13,3 +13,4 @@ metabolizer-type-arachnid = Arachnid
 # Starlight
 metabolizer-type-vampire = Vampire
 metabolizer-type-avali = Avali
+metabolizer-type-budget-cyber = Budget Cyber

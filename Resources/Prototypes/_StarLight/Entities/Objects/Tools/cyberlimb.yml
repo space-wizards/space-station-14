@@ -39,7 +39,9 @@
     - Screwdriver
   - type: Sprite
     sprite: _Starlight/Objects/Tools/cyberling.rsi
-    state: screwdriver
+    layers:
+    - state: screwdriver
+      map: ["enum.DamageStateVisualLayers.Base"]
   - type: MeleeWeapon
     wideAnimationRotation: -90
     attackRate: 1

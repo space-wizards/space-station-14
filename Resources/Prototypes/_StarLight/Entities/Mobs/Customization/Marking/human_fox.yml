@@ -1,6 +1,7 @@
 - type: marking
   id: FopsTail
   bodyPart: Tail
+  waggingId: FopsTailWag
   markingCategory: Tail
   speciesRestriction: [Human]
   sprites:
@@ -54,6 +55,7 @@
 - type: marking
   id: PuppyTail
   bodyPart: Tail
+  waggingId: PuppyTailWag
   markingCategory: Tail
   speciesRestriction: [Human]
   sprites:
@@ -97,6 +99,7 @@
   id: FopsTailWag
   bodyPart: Tail
   markingCategory: Tail
+  staticId: FopsTail
   speciesRestriction: []
   sprites:
     - sprite: _Starlight/Mobs/Customization/vulpkanin/vulpkanin.rsi
@@ -139,6 +142,7 @@
   id: PuppyTailWag
   bodyPart: Tail
   markingCategory: Tail
+  staticId: PuppyTail
   speciesRestriction: []
   sprites:
     - sprite: _Starlight/Mobs/Customization/vulpkanin/vulpkanin.rsi
@@ -255,6 +259,7 @@
   id: FoxlikeTail
   bodyPart: Tail
   markingCategory: Tail
+  waggingId: FoxlikeTailWag
   speciesRestriction: [Human]
   sprites:
     - sprite: _Starlight/Mobs/Customization/vulpkanin/tail_markings.rsi
@@ -295,6 +300,7 @@
 
 - type: marking
   id: FoxlikeTailTip
+  waggingId: FoxlikeTailTipWag
   bodyPart: Tail
   markingCategory: Tail
   speciesRestriction: [Human]
@@ -338,6 +344,7 @@
 - type: marking
   id: FoxlikeTailWag
   bodyPart: Tail
+  staticId: FoxlikeTail
   markingCategory: Tail
   speciesRestriction: [Human]
   sprites:
@@ -381,6 +388,7 @@
   id: FoxlikeTailTipWag
   bodyPart: Tail
   markingCategory: Tail
+  staticId: FoxlikeTailTip
   speciesRestriction: [Human]
   sprites:
     - sprite: _Starlight/Mobs/Customization/vulpkanin/tail_markings.rsi
@@ -547,6 +555,7 @@
 
 - type: marking
   id: FoxlikeTailFox
+  waggingId: FoxlikeTailFoxWag
   bodyPart: Tail
   markingCategory: Tail
   speciesRestriction: [Human]
@@ -589,6 +598,7 @@
 
 - type: marking
   id: FoxlikeTailFoxTip
+  waggingId: FoxlikeTailFoxTipWag
   bodyPart: Tail
   markingCategory: Tail
   speciesRestriction: [Human]
@@ -633,6 +643,7 @@
   id: FoxlikeTailFoxWag
   bodyPart: Tail
   markingCategory: Tail
+  staticId: FoxlikeTailFox
   speciesRestriction: [Human]
   sprites:
     - sprite: _Starlight/Mobs/Customization/vulpkanin/tail_markings.rsi
@@ -675,6 +686,7 @@
   id: FoxlikeTailFoxTipWag
   bodyPart: Tail
   markingCategory: Tail
+  staticId: FoxlikeTailFoxTip
   speciesRestriction: [Human]
   sprites:
     - sprite: _Starlight/Mobs/Customization/vulpkanin/tail_markings.rsi
@@ -717,6 +729,7 @@
   id: FoxlikeTailBushy
   bodyPart: Tail
   markingCategory: Tail
+  waggingId: FoxlikeTailBushyWag
   speciesRestriction: [Human]
   sprites:
     - sprite: _Starlight/Mobs/Customization/vulpkanin/tail_markings.rsi
@@ -757,6 +770,7 @@
   id: FoxlikeTailBushyWag
   bodyPart: Tail
   markingCategory: Tail
+  staticId: FoxlikeTailBushy
   speciesRestriction: [Human]
   sprites:
     - sprite: _Starlight/Mobs/Customization/vulpkanin/tail_markings.rsi
