@@ -23,8 +23,8 @@ public sealed class GasArrayTest
     air:
       volume: 5
       moles:
+        Frezon: 20
         Oxygen: 10
-        Nitrogen: 20
 
 - type: entity
   id: {GasTankLegacyTestDummyId}
@@ -56,8 +56,8 @@ public sealed class GasArrayTest
                 Assert.That(gasTank.TryGetComponent<GasTankComponent>(out var gasTankComponent, compFactory));
 
                 Assert.That(gasTankComponent!.Air.GetMoles(Gas.Oxygen), Is.EqualTo(10));
-                Assert.That(gasTankComponent!.Air.GetMoles(Gas.Nitrogen), Is.EqualTo(20));
-                foreach (var gas in Enum.GetValues<Gas>().Where(p => p != Gas.Oxygen && p != Gas.Nitrogen))
+                Assert.That(gasTankComponent!.Air.GetMoles(Gas.Frezon), Is.EqualTo(20));
+                foreach (var gas in Enum.GetValues<Gas>().Where(p => p != Gas.Oxygen && p != Gas.Frezon))
                 {
                     Assert.That(gasTankComponent!.Air.GetMoles(gas), Is.EqualTo(0));
                 }
@@ -68,12 +68,12 @@ public sealed class GasArrayTest
             {
                 Assert.That(legacyGasTank.TryGetComponent<GasTankComponent>(out var gasTankComponent, compFactory));
 
-                Assert.That(gasTankComponent!.Air.GetMoles(4), Is.EqualTo(10));
+                Assert.That(gasTankComponent!.Air.GetMoles(3), Is.EqualTo(10));
 
                 // Iterate through all other gases: check for 0 values
                 for (var i = 0; i < Atmospherics.AdjustedNumberOfGases; i++)
                 {
-                    if (i == 4) // our case with a value.
+                    if (i == 3) // our case with a value.
                         continue;
 
                     Assert.That(gasTankComponent!.Air.GetMoles(i), Is.EqualTo(0));
