@@ -52,8 +52,8 @@ public sealed class GasArraySerializer : ITypeSerializer<float[], SequenceDataNo
         foreach (var (key, value) in node.Children)
         {
             ValidationNode keyNode = Enum.TryParse<Gas>(key, out _)
-                ? new ValidatedValueNode(value)
-                : new ErrorNode(value, $"Failed to parse Gas: {key}");
+                ? new ValidatedValueNode(node.GetKeyNode(key))
+                : new ErrorNode(node.GetKeyNode(key), $"Failed to parse Gas: {key}");
 
             dict.Add(keyNode, serializationManager.ValidateNode<float>(value, context));
         }
