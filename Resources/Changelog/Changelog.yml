@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: themias
-  changes:
-  - message: Skeletons wearing gloves now leave fiber evidence
-    type: Fix
-  id: 8397
-  time: '2025-04-30T19:56:28.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/37077
 - author: metalgearsloth
   changes:
   - message: Fix action additions / removals sometimes not being predicted.
@@ -3949,3 +3942,11 @@
   id: 8909
   time: '2025-09-02T00:07:37.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/40020
+- author: SolidSyn
+  changes:
+  - message: Detectives noir-tech glasses are now contraband, but now include a noir
+      secHUD!
+    type: Tweak
+  id: 8910
+  time: '2025-09-02T13:32:18.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/39859
