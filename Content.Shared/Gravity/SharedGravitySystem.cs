@@ -2,6 +2,7 @@ using Content.Shared.Alert;
 using Content.Shared.Inventory;
 using Content.Shared.Throwing;
 using Content.Shared.Weapons.Ranged.Systems;
+using Robust.Shared.GameStates;
 using Robust.Shared.Map;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Components;
@@ -31,7 +32,9 @@ public abstract partial class SharedGravitySystem : EntitySystem
         SubscribeLocalEvent<GravityChangedEvent>(OnGravityChange);
 
         // Weightlessness
-        SubscribeLocalEvent<GravityAffectedComponent, MapInitEvent>(OnMapInit);
+        SubscribeLocalEvent<GravityAffectedComponent, ComponentInit>(OnInit);
+        SubscribeLocalEvent<GravityAffectedComponent, ComponentGetState>(OnGetState);
+        SubscribeLocalEvent<GravityAffectedComponent, ComponentHandleState>(OnHandleState);
         SubscribeLocalEvent<GravityAffectedComponent, EntParentChangedMessage>(OnEntParentChanged);
         SubscribeLocalEvent<GravityAffectedComponent, PhysicsBodyTypeChangedEvent>(OnBodyTypeChanged);
 
@@ -124,9 +127,29 @@ public abstract partial class SharedGravitySystem : EntitySystem
         RaiseLocalEvent(entity, ref ev);
     }
 
-    private void OnMapInit(Entity<GravityAffectedComponent> entity, ref MapInitEvent args)
+    private void OnInit(Entity<GravityAffectedComponent> entity, ref ComponentInit args)
     {
         RefreshWeightless((entity.Owner, entity.Comp));
+    }
+
+    private void OnGetState(Entity<GravityAffectedComponent> entity, ref ComponentGetState args)
+    {
+        args.State = new GravityAffectedComponentState(entity.Comp.Weightless);
+    }
+
+    private void OnHandleState(Entity<GravityAffectedComponent> entity, ref ComponentHandleState args)
+    {
+        if (args.Current is not GravityAffectedComponentState state)
+            return;
+
+        if (entity.Comp.Weightless == state.Weightless)
+            return;
+
+        entity.Comp.Weightless = state.Weightless;
+        // We do manual networking so we can always raise the event on the client, even if the change is coming from the server.
+        // Needed for floating visuals.
+        var ev = new WeightlessnessChangedEvent(entity.Comp.Weightless);
+        RaiseLocalEvent(entity, ref ev);
     }
 
     private void OnWeightlessnessChanged(Entity<AlertsComponent> entity, ref WeightlessnessChangedEvent args)
@@ -185,7 +208,7 @@ public abstract partial class SharedGravitySystem : EntitySystem
     private void OnGravityChange(ref GravityChangedEvent args)
     {
         var gravity = AllEntityQuery<GravityAffectedComponent, TransformComponent>();
-        while(gravity.MoveNext(out var uid, out var weightless, out var xform))
+        while (gravity.MoveNext(out var uid, out var weightless, out var xform))
         {
             if (xform.GridUid != args.ChangedGridIndex)
                 continue;
@@ -250,6 +273,7 @@ public record struct IsWeightlessEvent(bool IsWeightless = false, bool Handled =
 
 /// <summary>
 /// Raised on an entity when their weightless status changes.
+/// This event is always raised on both the server and client.
 /// </summary>
 [ByRefEvent]
 public readonly record struct WeightlessnessChangedEvent(bool Weightless);
