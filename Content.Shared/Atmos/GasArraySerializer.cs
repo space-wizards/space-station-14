@@ -72,10 +72,11 @@ public sealed class GasArraySerializer : ITypeSerializer<float[], SequenceDataNo
 
         foreach (var (gas, value) in node.Children)
         {
+            // In the event that an invalid gas got serialized into something,
+            // we simply ignore it and continue reading.
+            // Errors should already be caught by Validate().
             if (!Enum.TryParse<Gas>(gas, out var gasEnum))
-            {
-                throw new Exception($"Failed to parse Gas: {gas}");
-            }
+                continue;
 
             list[(int)gasEnum] = serializationManager.Read<float>(value, hookCtx, context);
         }
