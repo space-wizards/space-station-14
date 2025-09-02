@@ -8,6 +8,7 @@ using Content.Shared.DeadSpace.Necromorphs.Sanity;
 using Content.Shared.DeadSpace.Necromorphs.InfectionDead.Components;
 using Content.Shared.Damage;
 using Content.Shared.Zombies;
+using Content.Shared.Mindshield.Components;
 
 namespace Content.Shared.EntityEffects.Effects;
 
@@ -20,6 +21,11 @@ public sealed partial class CauseEnslavedUnitology : EventEntityEffect<CauseEnsl
     {
         if (!args.EntityManager.HasComponent<MobStateComponent>(args.TargetEntity)
             || !args.EntityManager.HasComponent<HumanoidAppearanceComponent>(args.TargetEntity))
+        {
+            return;
+        }
+
+        if (args.EntityManager.HasComponent<MindShieldComponent>(args.TargetEntity))
         {
             return;
         }

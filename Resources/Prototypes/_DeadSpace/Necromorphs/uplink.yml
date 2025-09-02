@@ -119,17 +119,6 @@
   categories:
     - UplinkUnitologyInfection
 
-- type: listing
-  id: UnitologyHypopenBoxList
-  name: Гипоручка
-  description: Ручка с гипоспреем.
-  icon: { sprite: Objects/Storage/penbox.rsi, state: hypopen }
-  productEntity: HypopenBox
-  cost:
-    Telecrystal: 5
-  categories:
-    - UplinkUnitologyInfection
-
 - type: storeCategory
   id: UplinkUnitologyInfection
   name: Общее
