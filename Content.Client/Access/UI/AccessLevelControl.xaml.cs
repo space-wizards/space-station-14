@@ -6,6 +6,7 @@ using Robust.Client.UserInterface.XAML;
 using Robust.Shared.Prototypes;
 using Content.Shared.Access;
 using Content.Shared.Access.Systems;
+using Content.Client.NetworkConfigurator.Systems;
 
 namespace Content.Client.Access.UI;
 
@@ -48,6 +49,8 @@ public sealed partial class AccessLevelControl : GridContainer
 
     public void UpdateState(
         List<ProtoId<AccessLevelPrototype>> pressedList,
+        ProtoId<AccessGroupPrototype>? currentGroup,
+        IPrototypeManager? prototypeManager = null,
         List<ProtoId<AccessLevelPrototype>>? enabledList = null)
     {
         foreach (var (accessName, button) in ButtonsList)
@@ -55,5 +58,12 @@ public sealed partial class AccessLevelControl : GridContainer
             button.Pressed = pressedList.Contains(accessName);
             button.Disabled = !(enabledList?.Contains(accessName) ?? true);
         }
+
+        if (currentGroup == null || prototypeManager == null || !prototypeManager.TryIndex(currentGroup.Value, out var group))
+            return;
+
+        RemoveAllChildren();
+
+        Populate(group.Tags.ToList(), prototypeManager);
     }
 }

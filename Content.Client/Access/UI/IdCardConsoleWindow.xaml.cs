@@ -1,4 +1,5 @@
 using System.Linq;
+using Content.Client._Starlight.Access.UI;
 using Content.Shared.Access;
 using Content.Shared.Access.Systems;
 using Content.Shared.CCVar;
@@ -28,6 +29,7 @@ namespace Content.Client.Access.UI
         private int _maxIdJobLength;
 
         private AccessLevelControl _accessButtons = new();
+        private AccessGroupControl _accessGroups = new(); // Starlight-edit: Access Groups
         private readonly List<string> _jobPrototypeIds = new();
 
         private string? _lastFullName;
@@ -37,8 +39,11 @@ namespace Content.Client.Access.UI
         // The job that will be picked if the ID doesn't have a job on the station.
         private static ProtoId<JobPrototype> _defaultJob = "Assistant";
 
+        private ProtoId<AccessGroupPrototype>? _selectedAccessGroup = null;
+        public Action<ProtoId<AccessGroupPrototype>>? OnGroupSelected;
+
         public IdCardConsoleWindow(IdCardConsoleBoundUserInterface owner, IPrototypeManager prototypeManager,
-            List<ProtoId<AccessLevelPrototype>> accessLevels)
+            List<ProtoId<AccessGroupPrototype>> accessGroups)
         {
             RobustXamlLoader.Load(this);
             IoCManager.InjectDependencies(this);
@@ -80,8 +85,27 @@ namespace Content.Client.Access.UI
             }
 
             JobPresetOptionButton.OnItemSelected += SelectJobPreset;
-            _accessButtons.Populate(accessLevels, prototypeManager);
+            // Starlight-start: Access Groups
+            _accessGroups.Populate(accessGroups, prototypeManager);
+            List<ProtoId<AccessLevelPrototype>> accessLevels = new();
+            var currentAccessGroup = _selectedAccessGroup ?? accessGroups.FirstOrDefault();
+            if (_accessGroups.ButtonsList.TryGetValue(currentAccessGroup, out var groupButton))
+                groupButton.Disabled = true;
+            if (prototypeManager.TryIndex(currentAccessGroup, out var accessGroup))
+            {
+                accessLevels.AddRange(accessGroup.Tags);
+                _accessButtons.Populate(accessLevels, prototypeManager);
+            }
+            else
+                _logMill.Error($"Unable to find accessgroup for {accessGroup}");
+            AccessGroupControlContainer.AddChild(_accessGroups);
+            // Starlight-end
             AccessLevelControlContainer.AddChild(_accessButtons);
+
+            foreach (var (id, button) in _accessGroups.ButtonsList)
+            {
+                button.OnPressed += _ => OnGroupSelected?.Invoke(id);
+            }
 
             foreach (var (id, button) in _accessButtons.ButtonsList)
             {
@@ -180,8 +204,14 @@ namespace Content.Client.Access.UI
 
             JobPresetOptionButton.Disabled = !interfaceEnabled;
 
+            _selectedAccessGroup = state.CurrentAccessGroup;
+
+            _accessGroups.UpdateState(state.CurrentAccessGroup);
+
             _accessButtons.UpdateState(state.TargetIdAccessList?.ToList() ??
                                        new List<ProtoId<AccessLevelPrototype>>(),
+                                       state.CurrentAccessGroup,
+                                       _prototypeManager,
                                        state.AllowedModifyAccessList?.ToList() ??
                                        new List<ProtoId<AccessLevelPrototype>>());
 

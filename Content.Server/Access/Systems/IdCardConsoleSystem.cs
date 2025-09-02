@@ -19,7 +19,8 @@ using Robust.Server.GameObjects;
 using Robust.Shared.Containers;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
-using Content.Shared.Chat; // Starlight
+using Content.Shared.Chat;
+using Content.Shared._Starlight.Access; // Starlight
 
 namespace Content.Server.Access.Systems;
 
@@ -44,6 +45,8 @@ public sealed class IdCardConsoleSystem : SharedIdCardConsoleSystem
 
         SubscribeLocalEvent<IdCardConsoleComponent, WriteToTargetIdMessage>(OnWriteToTargetIdMessage);
 
+        SubscribeLocalEvent<IdCardConsoleComponent, AccessGroupSelectedMessage>(OnAccessGroupSelected);
+
         // one day, maybe bound user interfaces can be shared too.
         SubscribeLocalEvent<IdCardConsoleComponent, ComponentStartup>(UpdateUserInterface);
         SubscribeLocalEvent<IdCardConsoleComponent, EntInsertedIntoContainerMessage>(UpdateUserInterface);
@@ -61,6 +64,13 @@ public sealed class IdCardConsoleSystem : SharedIdCardConsoleSystem
             return;
 
         TryWriteToTargetId(uid, args.FullName, args.JobTitle, args.AccessList, args.JobPrototype, player, component);
+
+        UpdateUserInterface(uid, component, args);
+    }
+
+    private void OnAccessGroupSelected(EntityUid uid, IdCardConsoleComponent component, AccessGroupSelectedMessage args)
+    {
+        component.CurrentAccessGroup = args.SelectedGroup;
 
         UpdateUserInterface(uid, component, args);
     }
@@ -92,7 +102,8 @@ public sealed class IdCardConsoleSystem : SharedIdCardConsoleSystem
                 possibleAccess,
                 string.Empty,
                 privilegedIdName,
-                string.Empty);
+                string.Empty,
+                component.CurrentAccessGroup ?? string.Empty);
         }
         else
         {
@@ -117,7 +128,8 @@ public sealed class IdCardConsoleSystem : SharedIdCardConsoleSystem
                 possibleAccess,
                 jobProto,
                 privilegedIdName,
-                Name(targetId));
+                Name(targetId),
+                component.CurrentAccessGroup ?? string.Empty);
         }
 
         _userInterface.SetUiState(uid, IdCardConsoleUiKey.Key, newState);
@@ -160,7 +172,16 @@ public sealed class IdCardConsoleSystem : SharedIdCardConsoleSystem
             Comp<IdCardComponent>(targetId).JobPrototype = newJobProto;
         }
 
-        if (!newAccessList.TrueForAll(x => component.AccessLevels.Contains(x)))
+        // Ensure the user isn't trying to add access they shouldn't be able to.
+        List<ProtoId<AccessLevelPrototype>> Accesses = new();
+        foreach (var group in component.AccessGroups)
+        {
+            if (!_prototype.TryIndex<AccessGroupPrototype>(group, out var groupPrototype))
+                continue;
+
+            Accesses.AddRange(groupPrototype.Tags.ToList());
+        }
+        if (!newAccessList.TrueForAll(x => Accesses.Contains(x)))
         {
             _sawmill.Warning($"User {ToPrettyString(uid)} tried to write unknown access tag.");
             return;
