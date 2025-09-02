@@ -50,7 +50,7 @@ public sealed class DeltaPressureTest
   - type: DeltaPressure
     minPressure: 15000
     minPressureDelta: 10000
-    scalingType: Linear
+    scalingType: Threshold
     baseDamage:
       types:
         Structural: 1000
@@ -83,7 +83,7 @@ public sealed class DeltaPressureTest
   - type: DeltaPressure
     minPressure: 10000
     minPressureDelta: 15000
-    scalingType: Linear
+    scalingType: Threshold
     baseDamage:
       types:
         Structural: 1000
