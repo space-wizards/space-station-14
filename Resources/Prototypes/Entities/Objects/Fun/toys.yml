@@ -777,7 +777,7 @@
   parent: BaseItem
   id: CardSword
   name: cardboard sword
-  description: A cardboard tube thats been fashioned into a sword.
+  description: A cardboard tube fashioned into the shape of a sword.
   components:
   - type: Sprite
     sprite: Objects/Fun/card_sword.rsi

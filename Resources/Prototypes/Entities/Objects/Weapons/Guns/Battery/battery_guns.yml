@@ -220,10 +220,10 @@
   - type: Appearance
 
 - type: entity
-  name: practice laser carbine
+  name: laser carbine
   parent: [BaseWeaponBattery, BaseGunWieldable]
-  id: WeaponLaserCarbinePractice
-  description: This modified laser carbine fires nearly harmless beams in the 40-watt range, for target practice.
+  id: WeaponLaserCarbine
+  description: Favoured by Nanotrasen Security for being cheap and easy to use.
   components:
   - type: Item
     size: Large
@@ -247,16 +247,16 @@
     availableModes:
     - SemiAuto
   - type: HitscanBatteryAmmoProvider
-    proto: RedLaserPractice
+    proto: RedLaser
     fireCost: 62.5
   - type: StaticPrice
-    price: 300
+    price: 420
 
 - type: entity
-  name: laser carbine
-  parent: [WeaponLaserCarbinePractice, BaseGunWieldable, BaseSecurityContraband]
-  id: WeaponLaserCarbine
-  description: Favoured by Nanotrasen Security for being cheap and easy to use.
+  name: practice laser carbine
+  parent: [WeaponLaserCarbine, BaseGunWieldable]
+  id: WeaponLaserCarbinePractice
+  description: This modified laser carbine fires nearly harmless beams in the 40-watt range, for target practice.
   components:
   - type: StaticPrice
     price: 420
@@ -266,6 +266,7 @@
     magState: mag
     steps: 5
     zeroVisible: true
+  - type: PacifismAllowedGun
   - type: Gun #Starlight - Start
     fireRate: 2
     selectedMode: SemiAuto
@@ -505,6 +506,7 @@
     tags:
     - Taser
     - Sidearm
+  - type: PacifismAllowedGun
 
 - type: entity
   name: disabler
@@ -533,6 +535,7 @@
     guides:
     - Security
     - Antagonists
+  - type: PacifismAllowedGun
 
 - type: entity
   name: disabler SMG
@@ -573,6 +576,7 @@
   - type: Appearance
   - type: StaticPrice
     price: 260
+  - type: PacifismAllowedGun
 
 - type: entity
   name: taser

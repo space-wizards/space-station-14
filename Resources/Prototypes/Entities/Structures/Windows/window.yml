@@ -8,6 +8,10 @@
     snap:
     - Window
   components:
+  - type: Anchorable
+    flags:
+    - Anchorable
+  - type: Rotatable
   - type: Ricochetable
     chance: 0.7
   - type: MeleeSound
