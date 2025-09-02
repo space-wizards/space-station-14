@@ -335,7 +335,15 @@ public partial class AtmosphereSystem
     {
         // The entity needs to be part of a grid, and it should be the right one :)
         var xform = Transform(ent);
-        DebugTools.Assert(xform.GridUid == grid);
+
+        // The entity is not on a grid, so it cannot possibly have an atmosphere that affects it.
+        if (xform.GridUid == null)
+        {
+            return false;
+        }
+
+        // Entity should be on the grid it's being added to.
+        Debug.Assert(xform.GridUid == grid.Owner);
 
         if (!_atmosQuery.Resolve(grid, ref grid.Comp, false))
             return false;
@@ -348,7 +356,7 @@ public partial class AtmosphereSystem
         grid.Comp.DeltaPressureEntityLookup[ent.Owner] = grid.Comp.DeltaPressureEntities.Count;
         grid.Comp.DeltaPressureEntities.Add(ent);
 
-        ent.Comp.CurrentPosition = _map.CoordinatesToTile(ent.Owner,
+        ent.Comp.CurrentPosition = _map.CoordinatesToTile(grid,
             Comp<MapGridComponent>(grid),
             xform.Coordinates);
 

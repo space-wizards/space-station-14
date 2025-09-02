@@ -1,5 +1,6 @@
 using Content.Server.Atmos.Components;
 using Content.Shared.Atmos;
+using Content.Shared.Damage;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Random;
 using Robust.Shared.Threading;
@@ -15,6 +16,11 @@ public sealed partial class AtmosphereSystem
     /// Used to determine the size of the opposing groups when processing delta pressure entities.
     /// </summary>
     private const int DeltaPressurePairCount = Atmospherics.Directions / 2;
+
+    /// <summary>
+    /// The length to pre-allocate list/dicts of delta pressure entities on a <see cref="GridAtmosphereComponent"/>.
+    /// </summary>
+    public const int DeltaPressurePreAllocateLength = 1000;
 
     /// <summary>
     /// Processes a singular entity, determining the pressures it's experiencing and applying damage based on that.
@@ -168,9 +174,7 @@ public sealed partial class AtmosphereSystem
 
         gridAtmosComp.DeltaPressureDamageResults.Enqueue(new DeltaPressureDamageResult(ent,
             pressure,
-            delta,
-            aboveMinPressure,
-            aboveMinDeltaPressure));
+            delta));
     }
 
     /// <summary>
@@ -212,14 +216,45 @@ public sealed partial class AtmosphereSystem
     /// <param name="Ent">The entity to deal damage to.</param>
     /// <param name="Pressure">The current absolute pressure the entity is experiencing.</param>
     /// <param name="DeltaPressure">The current delta pressure the entity is experiencing.</param>
-    /// <param name="AboveMinPressure">Whether the entity is currently above the minimum pressure
-    /// required to deal damage.</param>
-    /// <param name="AboveMinDeltaPressure">Whether the entity is currently above the minimum delta
-    /// pressure required to deal damage.</param>
     public readonly record struct DeltaPressureDamageResult(
         Entity<DeltaPressureComponent> Ent,
         float Pressure,
-        float DeltaPressure,
-        bool AboveMinPressure = false,
-        bool AboveMinDeltaPressure = false);
+        float DeltaPressure);
+
+    /// <summary>
+    /// Does damage to an entity depending on the pressure experienced by it, based on the
+    /// entity's <see cref="DeltaPressureComponent"/>.
+    /// </summary>
+    /// <param name="ent">The entity to apply damage to.</param>
+    /// <param name="pressure">The absolute pressure being exerted on the entity.</param>
+    /// <param name="deltaPressure">The delta pressure being exerted on the entity.</param>
+    private void PerformDamage(Entity<DeltaPressureComponent> ent, float pressure, float deltaPressure)
+    {
+        var maxPressure = Math.Max(pressure - ent.Comp.MinPressure, deltaPressure - ent.Comp.MinPressureDelta);
+        var appliedDamage = ScaleDamage(ent, ent.Comp.BaseDamage, maxPressure);
+
+        _damage.TryChangeDamage(ent, appliedDamage, ignoreResistances: true, interruptsDoAfters: false);
+        ent.Comp.IsTakingDamage = true;
+    }
+
+    /// <summary>
+    /// Returns a new DamageSpecifier scaled based on values on an entity with a DeltaPressureComponent.
+    /// </summary>
+    /// <param name="ent">The entity to base the manipulations off of (pull scaling type)</param>
+    /// <param name="damage">The base damage specifier to scale.</param>
+    /// <param name="pressure">The pressure being exerted on the entity.</param>
+    /// <returns>A scaled DamageSpecifier.</returns>
+    private static DamageSpecifier ScaleDamage(Entity<DeltaPressureComponent> ent, DamageSpecifier damage, float pressure)
+    {
+        var factor = ent.Comp.ScalingType switch
+        {
+            DeltaPressureDamageScalingType.Threshold => 1f,
+            DeltaPressureDamageScalingType.Linear => pressure * ent.Comp.ScalingPower,
+            DeltaPressureDamageScalingType.Log =>
+                (float) Math.Log(pressure, ent.Comp.ScalingPower),
+            _ => throw new ArgumentOutOfRangeException(nameof(ent), "Invalid damage scaling type!"),
+        };
+
+        return damage * factor;
+    }
 }

@@ -50,7 +50,7 @@ public sealed class DeltaPressureTest
   - type: DeltaPressure
     minPressure: 15000
     minPressureDelta: 10000
-    scalingType: Threshold
+    scalingType: Linear
     baseDamage:
       types:
         Structural: 1000
@@ -83,7 +83,7 @@ public sealed class DeltaPressureTest
   - type: DeltaPressure
     minPressure: 10000
     minPressureDelta: 15000
-    scalingType: Threshold
+    scalingType: Linear
     baseDamage:
       types:
         Structural: 1000
@@ -135,48 +135,6 @@ public sealed class DeltaPressureTest
             Assert.That(atmosphereSystem.IsDeltaPressureEntityInList(grid.Owner, dpEnt), "Entity was not in processing list when it should have automatically joined!");
             entMan.DeleteEntity(uid);
             Assert.That(!atmosphereSystem.IsDeltaPressureEntityInList(grid.Owner, dpEnt), "Entity was still in processing list after deletion!");
-        });
-
-        await pair.CleanReturnAsync();
-    }
-
-    [Test]
-    public async Task ProcessingListJoinLeaveTest()
-    {
-        await using var pair = await PoolManager.GetServerClient();
-        var server = pair.Server;
-
-        var entMan = server.EntMan;
-        var mapLoader = entMan.System<MapLoaderSystem>();
-        var atmosphereSystem = entMan.System<AtmosphereSystem>();
-        var deserializationOptions = DeserializationOptions.Default with { InitializeMaps = true };
-
-        Entity<MapGridComponent> grid = default;
-        Entity<DeltaPressureComponent> dpEnt;
-
-        // Load our test map in and assert that it exists.
-        await server.WaitPost(() =>
-        {
-#pragma warning disable NUnit2045
-            Assert.That(mapLoader.TryLoadMap(_testMap, out _, out var gridSet, deserializationOptions),
-                $"Failed to load map {_testMap}.");
-            Assert.That(gridSet, Is.Not.Null, "There were no grids loaded from the map!");
-#pragma warning restore NUnit2045
-
-            grid = gridSet.First();
-        });
-
-        await server.WaitAssertion(() =>
-        {
-            var uid = entMan.SpawnAtPosition("DeltaPressureSolidTestNoAutoJoin", new EntityCoordinates(grid.Owner, Vector2.Zero));
-            dpEnt = new Entity<DeltaPressureComponent>(uid, entMan.GetComponent<DeltaPressureComponent>(uid));
-
-            // YUP
-            Assert.That(!atmosphereSystem.IsDeltaPressureEntityInList(grid.Owner, dpEnt), "Entity was in processing list when it should not have automatically joined!");
-            atmosphereSystem.TryAddDeltaPressureEntity(grid.Owner, dpEnt);
-            Assert.That(atmosphereSystem.IsDeltaPressureEntityInList(grid.Owner, dpEnt), "Entity was not in processing list when it should have been added!");
-            atmosphereSystem.TryRemoveDeltaPressureEntity(grid.Owner, dpEnt);
-            Assert.That(!atmosphereSystem.IsDeltaPressureEntityInList(grid.Owner, dpEnt), "Entity was still in processing list after removal!");
         });
 
         await pair.CleanReturnAsync();

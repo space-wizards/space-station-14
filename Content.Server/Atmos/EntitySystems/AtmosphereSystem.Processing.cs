@@ -509,11 +509,9 @@ namespace Content.Server.Atmos.EntitySystems
             var timeCheck2 = 0;
             while (atmosphere.DeltaPressureDamageResults.TryDequeue(out var result))
             {
-                _deltaPressure.PerformDamage(result.Ent,
+                PerformDamage(result.Ent,
                     result.Pressure,
-                    result.DeltaPressure,
-                    result.AboveMinPressure,
-                    result.AboveMinDeltaPressure);
+                    result.DeltaPressure);
 
                 if (timeCheck2++ < LagCheckIterations)
                     continue;

@@ -72,13 +72,15 @@ namespace Content.Server.Atmos.Components
         /// <remarks>If you want to add/remove/find entities in this list,
         /// use the API methods in the Atmospherics API.</remarks>
         [ViewVariables]
-        public readonly List<Entity<DeltaPressureComponent>> DeltaPressureEntities = new(1000);
+        public readonly List<Entity<DeltaPressureComponent>> DeltaPressureEntities =
+            new(AtmosphereSystem.DeltaPressurePreAllocateLength);
 
         /// <summary>
         /// An index lookup for the <see cref="DeltaPressureEntities"/> list.
         /// Used for add/remove/find operations to speed up processing.
         /// </summary>
-        public readonly Dictionary<EntityUid, int> DeltaPressureEntityLookup = new(1000);
+        public readonly Dictionary<EntityUid, int> DeltaPressureEntityLookup =
+            new(AtmosphereSystem.DeltaPressurePreAllocateLength);
 
         /// <summary>
         /// Integer that indicates the current position in the

@@ -11,7 +11,7 @@ namespace Content.Server.Atmos.Components;
 /// Atmospherics.DeltaPressure batch-processes entities with this component in a list on
 /// the grid's <see cref="GridAtmosphereComponent"/>.
 /// The entities are automatically added and removed from this list, and automatically
-/// added on initialization if <see cref="AutoJoinProcessingList"/> is set to true.
+/// added on initialization.
 /// </summary>
 /// <remarks> Note that the entity should have an <see cref="AirtightComponent"/> and be a grid structure.</remarks>
 [RegisterComponent]
@@ -21,13 +21,15 @@ public sealed partial class DeltaPressureComponent : Component
     /// Whether the entity is allowed to take pressure damage or not.
     /// </summary>
     [DataField(readOnly: true)]
+    [ViewVariables(VVAccess.ReadOnly)]
     [Access(typeof(DeltaPressureSystem), typeof(AtmosphereSystem))]
     public bool InProcessingList;
 
     /// <summary>
-    /// Whether this entity is currently taking damage.
+    /// Whether this entity is currently taking damage from pressure.
     /// </summary>
     [DataField(readOnly: true)]
+    [ViewVariables(VVAccess.ReadOnly)]
     [Access(typeof(DeltaPressureSystem), typeof(AtmosphereSystem))]
     public bool IsTakingDamage;
 
@@ -45,14 +47,6 @@ public sealed partial class DeltaPressureComponent : Component
     /// </summary>
     [DataField]
     public EntityUid? GridUid;
-
-    /// <summary>
-    /// Whether the entity should automatically join the processing list on the grid's <see cref="GridAtmosphereComponent"/>
-    /// for delta pressure processing.
-    /// If this is set to false, the entity will not be automatically added to the list.
-    /// </summary>
-    [DataField]
-    public bool AutoJoinProcessingList = true;
 
     /// <summary>
     /// The percent chance that the entity will take damage each atmos tick,
@@ -81,15 +75,10 @@ public sealed partial class DeltaPressureComponent : Component
     };
 
     /// <summary>
-    /// If the entity is fulfilling both minimum pressure requirements, then this entity will stack damage.
-    /// </summary>
-    [DataField]
-    public bool StackDamage;
-
-    /// <summary>
     /// The minimum pressure in kPa at which the entity will start taking damage.
     /// This doesn't depend on the difference in pressure.
     /// The entity will start to take damage if it is exposed to this pressure.
+    /// This is needed because we don't correctly handle 2-layer windows yet.
     /// </summary>
     [DataField]
     public float MinPressure = 10000;
@@ -147,10 +136,4 @@ public enum DeltaPressureDamageScalingType : byte
     /// Scaling power determines the base of the log.
     /// </summary>
     Log,
-
-    /// <summary>
-    /// Damage dealt will be an exponential function.
-    /// Scaling power determines the power of the exponent.
-    /// </summary>
-    Exponential,
 }
