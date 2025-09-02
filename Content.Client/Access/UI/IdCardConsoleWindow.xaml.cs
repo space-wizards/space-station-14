@@ -215,6 +215,9 @@ namespace Content.Client.Access.UI
                                        state.AllowedModifyAccessList?.ToList() ??
                                        new List<ProtoId<AccessLevelPrototype>>());
 
+            foreach (var (id, button) in _accessButtons.ButtonsList)
+                button.OnPressed += _ => SubmitData();
+
             var jobIndex = _jobPrototypeIds.IndexOf(state.TargetIdJobPrototype);
             // If the job index is < 0 that means they don't have a job registered in the station records
             // or the IdCardComponent's JobPrototype field.

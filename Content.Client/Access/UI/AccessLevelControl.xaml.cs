@@ -63,6 +63,7 @@ public sealed partial class AccessLevelControl : GridContainer
             return;
 
         RemoveAllChildren();
+        ButtonsList.Clear();
 
         Populate(group.Tags.ToList(), prototypeManager);
     }
