@@ -34,19 +34,19 @@ namespace Content.Server.GameTicking.Commands
                 return;
             }
 
-            var secret = false;
+            var rounds = 1;
 
-            if (args.Length >= 2 && !bool.TryParse(args[1], out secret))
+            if (args.Length >= 2 && !int.TryParse(args[1], out rounds))
             {
-                shell.WriteError(Loc.GetString("set-game-preset-optional-argument-not-bool"));
+                shell.WriteError(Loc.GetString("set-game-preset-optional-argument-not-integer"));
                 return;
             }
 
-            var rounds = 1;
+            var secret = false;
 
-            if (args.Length == 3 && !int.TryParse(args[2], out rounds))
+            if (args.Length == 3 && !bool.TryParse(args[2], out secret))
             {
-                shell.WriteError(Loc.GetString("set-game-preset-optional-argument-not-integer"));
+                shell.WriteError(Loc.GetString("set-game-preset-optional-argument-not-bool"));
                 return;
             }
 
