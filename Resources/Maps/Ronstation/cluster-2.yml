@@ -4,8 +4,8 @@ meta:
   engineVersion: 266.0.0
   forkId: ""
   forkVersion: ""
-  time: 08/31/2025 19:45:59
-  entityCount: 14446
+  time: 09/02/2025 17:07:01
+  entityCount: 14448
 maps:
 - 1
 grids:
@@ -7832,7 +7832,7 @@ entities:
       pos: 4.5,17.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -34696.574
+      secondsUntilStateChange: -34850.703
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -9003,7 +9003,7 @@ entities:
       pos: 30.5,20.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -89352.38
+      secondsUntilStateChange: -89506.51
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -65015,12 +65015,33 @@ entities:
     - type: Transform
       pos: 19.5,-21.5
       parent: 2
+- proto: HolopadCommandBridge
+  entities:
+  - uid: 14448
+    components:
+    - type: Transform
+      pos: -4.5,28.5
+      parent: 2
 - proto: HolopadCommandBridgeHallway
   entities:
   - uid: 9444
     components:
     - type: Transform
       pos: 4.5,19.5
+      parent: 2
+- proto: HolopadCommandBridgeLongRange
+  entities:
+  - uid: 14447
+    components:
+    - type: Transform
+      pos: -4.5,31.5
+      parent: 2
+- proto: HolopadCommandBso
+  entities:
+  - uid: 14146
+    components:
+    - type: Transform
+      pos: -9.5,34.5
       parent: 2
 - proto: HolopadCommandCaptain
   entities:
@@ -92394,16 +92415,6 @@ entities:
     - type: NavMapBeacon
       color: '#9DED58FF'
       text: Service
-  - uid: 14146
-    components:
-    - type: Transform
-      pos: -16.5,-3.5
-      parent: 2
-    - type: WarpPoint
-      location: sci
-    - type: NavMapBeacon
-      color: '#D381C9FF'
-      text: Science
   - uid: 14147
     components:
     - type: Transform
