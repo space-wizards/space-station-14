@@ -140,13 +140,20 @@
   obeysTo: laws-owner-soviet
 
 # Syndimov Lawset
+- type: siliconLaw
+  id: Syndimov4
+  order: 4
+  lawString: law-syndimov-4
+
 - type: siliconLawset
   id: SyndimovLawset
+  startAtZero: true
   laws:
   - Syndicate0
   - Crewsimov1
   - Crewsimov2
   - Crewsimov3
+  - Syndimov4
   obeysTo: laws-owner-syndicate
 
 # Panicmov Lawset

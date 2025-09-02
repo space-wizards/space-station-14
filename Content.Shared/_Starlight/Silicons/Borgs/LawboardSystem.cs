@@ -16,29 +16,31 @@ public sealed class LawboardSystem : EntitySystem
         SubscribeLocalEvent<SiliconLawProviderComponent, ExaminedEvent>(OnExamined);
     }
 
-private void OnExamined(EntityUid uid, SiliconLawProviderComponent component, ExaminedEvent args)
-{
-    if (!args.IsInDetailsRange)
-        return;
-
-    if (!_prototype.TryIndex<SiliconLawsetPrototype>(component.Laws, out var lawsetProto))
-        return;
-
-    var lawsetName = _loc.GetString($"board-{lawsetProto.ID.ToLowerInvariant()}-name");
-    var description = $"[color=cyan]An electronics board containing the [color=yellow]{lawsetName}[/color] lawset.[/color]\n[color=orange]Uploaded Laws:[/color]";
-    int lawNum = 1;
-    foreach (var lawId in lawsetProto.Laws)
+    private void OnExamined(EntityUid uid, SiliconLawProviderComponent component, ExaminedEvent args)
     {
-        if (_prototype.TryIndex<SiliconLawPrototype>(lawId, out var lawProto))
-        {
-            var lawText = lawProto.LawString != null
-                ? _loc.GetString(lawProto.LawString)
-                : lawProto.ID;
-            description += $"\n[color=lime]Law {lawNum}:[/color] [color=white]{lawText}[/color]";
-            lawNum++;
-        }
-    }
+        if (!args.IsInDetailsRange)
+            return;
 
-    args.PushMarkup(description);
-}
+        if (!_prototype.TryIndex<SiliconLawsetPrototype>(component.Laws, out var lawsetProto))
+            return;
+
+        var lawsetName = _loc.GetString($"board-{lawsetProto.ID.ToLowerInvariant()}-name");
+        var description = $"[color=cyan]An electronics board containing the [color=yellow]{lawsetName}[/color] lawset.[/color]\n[color=orange]Uploaded Laws:[/color]";
+
+        int lawNum = lawsetProto.StartAtZero ? 0 : 1;
+        foreach (var lawId in lawsetProto.Laws)
+        {
+            if (_prototype.TryIndex<SiliconLawPrototype>(lawId, out var lawProto))
+            {
+                var lawText = lawProto.LawString != null
+                    ? _loc.GetString(lawProto.LawString)
+                    : lawProto.ID;
+
+                description += $"\n[color=lime]Law {lawNum}:[/color] [color=white]{lawText}[/color]";
+                lawNum++;
+            }
+        }
+
+        args.PushMarkup(description);
+    }
 }
