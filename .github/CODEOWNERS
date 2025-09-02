@@ -27,8 +27,7 @@
 /Content.*/Trigger/ @slarticodefast
 
 /Content.*/Stunnable/ @Princess-Cheeseballs
-/Content.*/Nutrition/EntitySystems @Princess-Cheeseballs
-/Content.*/Nutrition/Components @Princess-Cheeseballs
+/Content.*/Nutrition/ @Princess-Cheeseballs
 
 # SKREEEE
 /Content.*.Database/ @PJB3005 @DrSmugleaf
