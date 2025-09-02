@@ -1,48 +1,4 @@
 ﻿Entries:
-- author: ScarKy0
-  changes:
-  - message: Priority mail now indicates whether it was delivered on time or not.
-    type: Tweak
-  id: 8392
-  time: '2025-04-29T22:55:48.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/37049
-- author: PJB3005
-  changes:
-  - message: Wallmount substations now have an interface too.
-    type: Fix
-  id: 8393
-  time: '2025-04-30T00:34:21.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/37047
-- author: EmoGarbage404
-  changes:
-  - message: Fixed NPCs stalling out when too many exist.
-    type: Fix
-  id: 8394
-  time: '2025-04-30T00:51:42.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/37056
-- author: BIGZi0348, slarticodefast
-  changes:
-  - message: Reflective vest now reflects lasers only while equipped.
-    type: Tweak
-  - message: Energy katana now reflects lasers and projectiles only while in hands.
-    type: Tweak
-  id: 8395
-  time: '2025-04-30T14:10:54.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/37039
-- author: themias
-  changes:
-  - message: Firelocks can now close over turnstiles
-    type: Fix
-  id: 8396
-  time: '2025-04-30T15:51:23.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/37074
-- author: themias
-  changes:
-  - message: Skeletons wearing gloves now leave fiber evidence
-    type: Fix
-  id: 8397
-  time: '2025-04-30T19:56:28.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/37077
 - author: metalgearsloth
   changes:
   - message: Fix action additions / removals sometimes not being predicted.
@@ -3917,3 +3873,80 @@
   id: 8900
   time: '2025-08-29T11:48:31.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/39950
+- author: Dutch-VanDerLinde
+  changes:
+  - message: The forensic scanner no longer leaks fingerprints or glove prints onto
+      the scanning object if you use the right-click scan verb.
+    type: Fix
+  id: 8901
+  time: '2025-08-30T14:00:47.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/39964
+- author: FairlySadPanda
+  changes:
+  - message: 'Scurrets can wear a few items on their backs: pet bags, mail bags and
+      spears'
+    type: Add
+  - message: Corgis can now wear mail bags.
+    type: Add
+  id: 8902
+  time: '2025-08-30T14:42:43.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38774
+- author: Kowlin
+  changes:
+  - message: Derelict cyborgs can no longer duplicate their ghost role.
+    type: Fix
+  id: 8903
+  time: '2025-08-30T17:17:50.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/39992
+- author: aada
+  changes:
+  - message: Clown bags are squeakier.
+    type: Add
+  id: 8904
+  time: '2025-08-30T18:10:34.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/39931
+- author: AndrewFenriz
+  changes:
+  - message: when assembling mech, parts now cannot be removed with a crowbar
+    type: Remove
+  id: 8905
+  time: '2025-08-31T12:54:45.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/39027
+- author: quasr-9
+  changes:
+  - message: Moths can now properly remove knives and other items from military boots.
+    type: Fix
+  id: 8906
+  time: '2025-09-01T15:07:43.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/40049
+- author: slarticodefast
+  changes:
+  - message: Dropper and mini-syringe transfer amounts can now be set to more options.
+    type: Tweak
+  id: 8907
+  time: '2025-09-01T15:24:37.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/39976
+- author: IProduceWidgets
+  changes:
+  - message: there are now civilian versions of nanomed vendors.
+    type: Add
+  - message: nanomed inventories have been increased some.
+    type: Tweak
+  id: 8908
+  time: '2025-09-01T23:39:18.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/39718
+- author: M4rchy-S
+  changes:
+  - message: dead mobs will no longer vomit from radiation damage
+    type: Fix
+  id: 8909
+  time: '2025-09-02T00:07:37.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/40020
+- author: SolidSyn
+  changes:
+  - message: Detectives noir-tech glasses are now contraband, but now include a noir
+      secHUD!
+    type: Tweak
+  id: 8910
+  time: '2025-09-02T13:32:18.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/39859
