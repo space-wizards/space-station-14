@@ -179,12 +179,8 @@
 - type: gamePreset
   id: SecretTraitor #For Admin Use: Runs Traitor but shows "Secret" in lobby.
   alias:
-    - secrettraitor
     - secretTraitor
-    - Secrettraitor
-    - secrettator
     - secretTator
-    - Secrettator
     - SecretTator
   name: secret-title
   showInVote: false #Admin Use
@@ -266,18 +262,9 @@
 - type: gamePreset
   id: SecretRevolutionary #For Admin Use: Runs Revolutionary but shows "Secret" in lobby.
   alias:
-    - secretrev
     - secretRev
-    - Secretrev
-    - SecretRev
-    - secretrevs
     - secretRevs
-    - Secretrevs
-    - SecretRevs
-    - secretrevolutionaries
     - secretRevolutionaries
-    - Secretrevolutionaries
-    - SecretRevolutionaries
   name: secret-title
   showInVote: false #Admin Use
   description: secret-description
