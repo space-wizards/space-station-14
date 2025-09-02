@@ -230,7 +230,7 @@
 
 # Grass tiles
 - type: entity
-  name: сказочная трава
+  name: трава фей
   parent: FloorTileItemBase
   id: FloorTileItemFairyGrass
   description: Может послужить неплохим метательным оружием.
@@ -248,7 +248,7 @@
     stackType: FloorTileFairyGrass
 
 - type: entity
-  name: сказочная астро-трава
+  name: астро-трава фей
   parent: FloorTileItemBase
   id: FloorTileItemFairyAstroGrass
   description: Искусственная трава, отлично прячущая провода, поставляется с реалистичными НаноТравинками!

@@ -13,6 +13,8 @@
 - type: latheRecipe
   abstract: true
   id: BaseFauxTileRecipe
+  categories:
+  - Faux # DS14
   completetime: 1
   materials:
     Plastic: 100
@@ -221,6 +223,7 @@
   result: FloorTileItemAstroAsteroidSandBorderless
 
 - type: latheRecipe
+  parent: BaseCircuitTileRecipe # DS14
   id: FloorGreenCircuit
   result: FloorTileItemGCircuit4
   completetime: 2
@@ -228,11 +231,12 @@
     Steel: 100
 
 - type: latheRecipe
-  parent: FloorGreenCircuit
+  parent: BaseCircuitTileRecipe # DS14
   id: FloorBlueCircuit
   result: FloorTileItemBCircuit4
 
 - type: latheRecipe
+  parent: BaseCircuitTileRecipe # DS14
   id: FloorRedCircuit
   result: FloorTileItemRCircuit4
   completetime: 2
@@ -292,7 +296,7 @@
   materials:
     Plastic: 100
     Steel: 25
-    
+
 
  # DS14-start
 

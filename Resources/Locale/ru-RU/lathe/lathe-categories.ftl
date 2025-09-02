@@ -21,13 +21,13 @@ lathe-category-security = Безопасность
 lathe-category-service = Сервис
 lathe-category-supply = Снабжение
 # Cutter
-lathe-category-concrete = Бетон
+lathe-category-concrete = Бетонная
 lathe-category-dark = Тёмная
-lathe-category-maints = Техи
+lathe-category-maints = Техническая
 lathe-category-steel = Стальная
 lathe-category-white = Белая
 lathe-category-wood = Деревянная
-lathe-category-marble = Мрамор
+lathe-category-marble = Мраморная
 # Science
 lathe-category-mechs = Мехи
 lathe-category-modules = Модули

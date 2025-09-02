@@ -1,8 +1,12 @@
-# Базовые рецепты
+# Base prototypes
+
 - type: latheRecipe
   abstract: true
   parent: BaseTileRecipe
   id: BasePlasteelTileRecipe
+  categories:
+  - Shuttle
+  completetime: 1
   materials:
     Plasteel: 25
 
@@ -10,6 +14,8 @@
   abstract: true
   parent: BaseTileRecipe
   id: BasePlasticTileRecipe
+  categories:
+  - Plastic
   materials:
     Plastic: 25
 
@@ -17,10 +23,44 @@
   abstract: true
   parent: BaseTileRecipe
   id: BaseClothTileRecipe
+  categories:
+  - Carpets
   materials:
     Cloth: 25
 
-# Деревянные плитки
+- type: latheRecipe
+  abstract: true
+  parent: BaseTileRecipe
+  id: BaseCircuitTileRecipe
+  categories:
+  - Circuits
+  completetime: 2
+  materials:
+    Steel: 100
+
+- type: latheRecipe
+  abstract: true
+  parent: BaseTileRecipe
+  id: BaseSpecializedTileRecipe
+  categories:
+  - Specialized
+  materials:
+    Steel: 50
+
+- type: latheRecipe
+  abstract: true
+  parent: BaseTileRecipe
+  id: BaseTerracottaTileRecipe
+  categories:
+  - Terracotta
+  materials:
+    Steel: 25
+    Glass: 25
+
+## Recipes
+
+# Wooden tiles
+
 - type: latheRecipe
   parent: BaseWoodTileRecipe
   id: FloorTileItemWoodParquet
@@ -111,126 +151,136 @@
   id: FloorTileItemWoodChessRed
   result: FloorTileItemWoodChessRed
 
-# Стальные плитки
-- type: latheRecipe
-  parent: BaseTileRecipe
-  id: FloorTileItemDirty
-  result: FloorTileItemDirty
+# Specialized tiles
 
 - type: latheRecipe
-  parent: BaseTileRecipe
+  parent: BaseSpecializedTileRecipe
   id: FloorTileItemElevatorShaft
   result: FloorTileItemElevatorShaft
 
 - type: latheRecipe
-  parent: BaseTileRecipe
+  parent: BaseSpecializedTileRecipe
   id: FloorTileItemRockVault
   result: FloorTileItemRockVault
 
 - type: latheRecipe
-  parent: BaseTileRecipe
+  parent: BaseSpecializedTileRecipe
   id: FloorTileItemBlue
   result: FloorTileItemBlue
 
 - type: latheRecipe
-  parent: BaseTileRecipe
+  parent: BaseSpecializedTileRecipe
   id: FloorTileItemLime
   result: FloorTileItemLime
 
 - type: latheRecipe
-  parent: BaseTileRecipe
+  parent: BaseSpecializedTileRecipe
   id: FloorTileItemMining
   result: FloorTileItemMining
 
 - type: latheRecipe
-  parent: BaseTileRecipe
+  parent: BaseSpecializedTileRecipe
   id: FloorTileItemMiningDark
   result: FloorTileItemMiningDark
 
 - type: latheRecipe
-  parent: BaseTileRecipe
+  parent: BaseSpecializedTileRecipe
   id: FloorTileItemMiningLight
   result: FloorTileItemMiningLight
 
 - type: latheRecipe
-  parent: BaseTileRecipe
+  parent: BaseSpecializedTileRecipe
   id: FloorTileItemFreezer
   result: FloorTileItemFreezer
 
 - type: latheRecipe
-  parent: BaseTileRecipe
+  parent: BaseSpecializedTileRecipe
   id: FloorTileItemShowroom
   result: FloorTileItemShowroom
 
 - type: latheRecipe
-  parent: BaseTileRecipe
+  parent: BaseSpecializedTileRecipe
   id: FloorTileItemHydro
   result: FloorTileItemHydro
 
 - type: latheRecipe
-  parent: BaseTileRecipe
+  parent: BaseSpecializedTileRecipe
   id: FloorTileItemBar
   result: FloorTileItemBar
 
 - type: latheRecipe
-  parent: BaseTileRecipe
+  parent: BaseSpecializedTileRecipe
   id: FloorTileItemClown
   result: FloorTileItemClown
 
 - type: latheRecipe
-  parent: BaseTileRecipe
+  parent: BaseSpecializedTileRecipe
   id: FloorTileItemMime
   result: FloorTileItemMime
 
 - type: latheRecipe
-  parent: BaseTileRecipe
+  parent: BaseSpecializedTileRecipe
   id: FloorTileItemKitchen
   result: FloorTileItemKitchen
 
 - type: latheRecipe
-  parent: BaseTileRecipe
+  parent: BaseSpecializedTileRecipe
   id: FloorTileItemLaundry
   result: FloorTileItemLaundry
 
 - type: latheRecipe
-  parent: BaseTileRecipe
+  parent: BaseSpecializedTileRecipe
   id: FloorTileItemStone
   result: FloorTileItemStone
 
-# Терракотовые плитки
+# Terracotta tiles
+
 - type: latheRecipe
-  parent: BaseTileRecipe
+  parent: BaseTerracottaTileRecipe
   id: FloorTileItemTerracotta
   result: FloorTileItemTerracotta
 
 - type: latheRecipe
-  parent: BaseTileRecipe
+  parent: BaseTerracottaTileRecipe
   id: FloorTileItemTerracottaDiagonal
   result: FloorTileItemTerracottaDiagonal
 
 - type: latheRecipe
-  parent: BaseTileRecipe
+  parent: BaseTerracottaTileRecipe
   id: FloorTileItemTerracottaHerringbone
   result: FloorTileItemTerracottaHerringbone
 
 - type: latheRecipe
-  parent: BaseTileRecipe
+  parent: BaseTerracottaTileRecipe
   id: FloorTileItemTerracottaSmall
   result: FloorTileItemTerracottaSmall
 
-# Пластиковые плитки
+# Plastic tiles
+
 - type: latheRecipe
   parent: BasePlasticTileRecipe
   id: FloorTileItemLino
   result: FloorTileItemLino
 
-# Травяные плитки
+- type: latheRecipe
+  parent: BasePlasticTileRecipe
+  id: FloorTileItemBoxing
+  result: FloorTileItemBoxing
+
+- type: latheRecipe
+  parent: BasePlasticTileRecipe
+  id: FloorTileItemGym
+  result: FloorTileItemGym
+
+# Faux tiles
+
 - type: latheRecipe
   parent: BaseFauxTileRecipe
   id: FauxTileFairyAstroGrass
   result: FloorTileItemFairyAstroGrass
 
-# Плитки шаттла
+# Shuttle tiles
+
 - type: latheRecipe
   parent: BasePlasteelTileRecipe
   id: FloorTileItemShuttleWhite
@@ -266,7 +316,8 @@
   id: FloorTileItemShuttleBlack
   result: FloorTileItemShuttleBlack
 
-# Моно плитки шаттла
+# Shuttle mono tiles
+
 - type: latheRecipe
   parent: BasePlasteelTileRecipe
   id: FloorTileItemShuttleMonoWhite
@@ -302,7 +353,8 @@
   id: FloorTileItemShuttleMonoBlack
   result: FloorTileItemShuttleMonoBlack
 
-# Ковры
+# Carpet tiles
+
 - type: latheRecipe
   parent: BaseClothTileRecipe
   id: FloorTileItemArcadeBlue
@@ -333,22 +385,15 @@
   id: FloorTileItemCarpetOffice
   result: FloorTileItemCarpetOffice
 
-- type: latheRecipe
-  parent: BaseClothTileRecipe
-  id: FloorTileItemBoxing
-  result: FloorTileItemBoxing
+# Precious tiles
 
-- type: latheRecipe
-  parent: BaseClothTileRecipe
-  id: FloorTileItemGym
-  result: FloorTileItemGym
-
-# Драгоценные плитки
 - type: latheRecipe
   id: FloorTileItemGold
   result: FloorTileItemGold
   applyMaterialDiscount: false
   completetime: 0.5
+  categories:
+  - Precious
   materials:
     Gold: 50
 
@@ -357,6 +402,8 @@
   result: FloorTileItemSilver
   applyMaterialDiscount: false
   completetime: 0.5
+  categories:
+  - Precious
   materials:
     Silver: 50
 
@@ -365,6 +412,8 @@
   result: FloorTileItemDiamond
   applyMaterialDiscount: false
   completetime: 0.5
+  categories:
+  - Precious
   materials:
     Diamond: 50
 
@@ -373,6 +422,8 @@
   result: FloorTileItemPlasma
   applyMaterialDiscount: false
   completetime: 0.5
+  categories:
+  - Precious
   materials:
     Plasma: 50
 
@@ -381,5 +432,7 @@
   result: FloorTileItemUranium
   applyMaterialDiscount: false
   completetime: 0.5
+  categories:
+  - Precious
   materials:
     Uranium: 50

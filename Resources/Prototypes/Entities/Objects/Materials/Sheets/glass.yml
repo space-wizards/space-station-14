@@ -213,6 +213,9 @@
       map: ["base"]
   - type: Item
     heldPrefix: pglass
+  - type: FloorTile # DS14-tiles
+    outputs:
+    - FloorPlasmaGlass
   - type: Construction
     graph: Glass
     node: SheetPGlass
@@ -288,6 +291,9 @@
       map: ["base"]
   - type: Item
     heldPrefix: rpglass
+  - type: FloorTile # DS14-tiles
+    outputs:
+    - FloorRPlasmaGlass
   - type: Construction
     graph: Glass
     node: SheetRPGlass
@@ -343,6 +349,9 @@
       map: ["base"]
   - type: Item
     heldPrefix: uglass
+  - type: FloorTile # DS14-tiles
+    outputs:
+    - FloorUraniumGlass
   - type: Construction
     graph: Glass
     node: SheetUGlass
@@ -417,6 +426,9 @@
       map: ["base"]
   - type: Item
     heldPrefix: ruglass
+  - type: FloorTile # DS14-tiles
+    outputs:
+    - FloorRUraniumGlass
   - type: Construction
     graph: Glass
     node: SheetRUGlass
@@ -472,6 +484,9 @@
       map: ["base"]
   - type: Item
     heldPrefix: cglass
+  - type: FloorTile # DS14-tiles
+    outputs:
+    - FloorBrassGlass
   - type: Construction
     graph: Glass
     node: SheetClockworkGlass
