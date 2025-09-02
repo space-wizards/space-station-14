@@ -13093,5 +13093,13 @@ Entries:
   id: 151300
   time: '2025-09-02T02:16:42.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/1513
+- author: Happyrobot33
+  changes:
+  - message: Added understood tab to the language UI so you can know what languages
+      you can understand.
+    type: Add
+  id: 151200
+  time: '2025-09-02T02:17:08.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1512
 Order: -1
 
