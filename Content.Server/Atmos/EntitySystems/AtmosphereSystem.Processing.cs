@@ -473,8 +473,9 @@ namespace Content.Server.Atmos.EntitySystems
         /// </summary>
         /// <returns>True if we've finished processing all entities that required processing this run,
         /// otherwise, false.</returns>
-        private bool ProcessDeltaPressure(GridAtmosphereComponent atmosphere)
+        private bool ProcessDeltaPressure(Entity<GridAtmosphereComponent, GasTileOverlayComponent, MapGridComponent, TransformComponent> ent)
         {
+            var atmosphere = ent.Comp1;
             var count = atmosphere.DeltaPressureEntities.Count;
             if (!atmosphere.ProcessingPaused)
             {
@@ -491,6 +492,7 @@ namespace Content.Server.Atmos.EntitySystems
             {
                 var job = new DeltaPressureParallelJob(this,
                     atmosphere,
+                    ent.Comp3,
                     atmosphere.DeltaPressureCursor,
                     DeltaPressureParallelBatchSize);
                 _parallel.ProcessNow(job, toProcess);
@@ -722,7 +724,7 @@ namespace Content.Server.Atmos.EntitySystems
                             : AtmosphereProcessingState.Hotspots;
                         continue;
                     case AtmosphereProcessingState.DeltaPressure:
-                        if (!ProcessDeltaPressure(atmosphere))
+                        if (!ProcessDeltaPressure(ent))
                         {
                             atmosphere.ProcessingPaused = true;
                             return;

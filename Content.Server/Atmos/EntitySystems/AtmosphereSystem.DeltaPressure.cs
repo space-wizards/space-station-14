@@ -1,5 +1,6 @@
 using Content.Server.Atmos.Components;
 using Content.Shared.Atmos;
+using Robust.Shared.Map.Components;
 using Robust.Shared.Random;
 using Robust.Shared.Threading;
 
@@ -20,18 +21,16 @@ public sealed partial class AtmosphereSystem
     /// </summary>
     /// <param name="ent">The entity to process.</param>
     /// <param name="gridAtmosComp">The <see cref="GridAtmosphereComponent"/> that belongs to the entity's GridUid.</param>
+    /// <param name="mapGridComp">The <see cref="MapGridComponent"/> that belongs to the entity's GridUid.</param>
     private void ProcessDeltaPressureEntity(Entity<DeltaPressureComponent> ent,
-        GridAtmosphereComponent gridAtmosComp)
+        GridAtmosphereComponent gridAtmosComp,
+        MapGridComponent mapGridComp)
     {
         if (!_random.Prob(ent.Comp.RandomDamageChance))
             return;
 
-        // This ent could potentially not exist anymore when we finally got around to processing it
-        // (as atmos spans processing across multiple ticks), so this is a good check for that.
-        if (!TryComp(ent, out TransformComponent? xform))
-            return;
-
-        var indices = _transformSystem.GetGridOrMapTilePosition(ent, xform);
+        var xform = Transform(ent);
+        var indices = _map.CoordinatesToTile(ent.Owner, mapGridComp, xform.Coordinates);
 
         /*
          To make our comparisons a little bit faster, we take advantage of SIMD-accelerated methods
@@ -49,11 +48,12 @@ public sealed partial class AtmosphereSystem
         }
 
         Span<float> pressures = stackalloc float[Atmospherics.Directions];
+
+        GetBulkTileAtmospherePressures(tiles, pressures);
+
         Span<float> opposingGroupA = stackalloc float[DeltaPressurePairCount];
         Span<float> opposingGroupB = stackalloc float[DeltaPressurePairCount];
         Span<float> opposingGroupMax = stackalloc float[DeltaPressurePairCount];
-
-        GetBulkTileAtmospherePressures(tiles, pressures);
 
         // Directions are always in pairs: the number of directions is always even
         // (we must consider the future where Multi-Z is real)
@@ -190,6 +190,7 @@ public sealed partial class AtmosphereSystem
     private sealed class DeltaPressureParallelJob(
         AtmosphereSystem system,
         GridAtmosphereComponent atmosphere,
+        MapGridComponent mapGrid,
         int startIndex,
         int cvarBatchSize)
         : IParallelRobustJob
@@ -206,7 +207,7 @@ public sealed partial class AtmosphereSystem
                 return;
 
             var ent = atmosphere.DeltaPressureEntities[actualIndex];
-            system.ProcessDeltaPressureEntity(ent, atmosphere);
+            system.ProcessDeltaPressureEntity(ent, atmosphere, mapGrid);
         }
     }
 

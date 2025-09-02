@@ -4,12 +4,15 @@ using BenchmarkDotNet.Diagnosers;
 using Content.IntegrationTests;
 using Content.IntegrationTests.Pair;
 using Content.Server.Atmos.Components;
+using Content.Server.Atmos.EntitySystems;
+using Content.Shared.Atmos.Components;
 using Content.Shared.CCVar;
 using Robust.Shared;
 using Robust.Shared.Analyzers;
 using Robust.Shared.Configuration;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
+using Robust.Shared.Map.Components;
 using Robust.Shared.Maths;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
@@ -21,6 +24,9 @@ namespace Content.Benchmarks;
 /// simulates them for a number of ticks M.
 /// </summary>
 [Virtual]
+[GcServer(true)]
+[MemoryDiagnoser]
+[ThreadingDiagnoser]
 public class DeltaPressureBenchmark
 {
     /// <summary>
@@ -30,22 +36,18 @@ public class DeltaPressureBenchmark
     public int EntityCount;
 
     /// <summary>
-    /// Number of ticks to simulate the entities for.
-    /// </summary>
-    [Params(30)]
-    public int Ticks;
-
-    /// <summary>
     /// Number of entities that each parallel processing job will handle.
     /// </summary>
-    [Params(100)]
+    // [Params(1, 10, 100, 1000, 5000, 10000)] For testing how multithreading parameters affect performance (THESE TESTS TAKE 16+ HOURS TO RUN)
+    [Params(10)]
     public int BatchSize;
 
     /// <summary>
     /// Number of entities to process per iteration in the DeltaPressure
     /// processing loop.
     /// </summary>
-    [Params(1000)]
+    // [Params(100, 1000, 5000, 10000, 50000)]
+    [Params(100)]
     public int EntitiesPerIteration;
 
     private readonly EntProtoId _windowProtoId = "Window";
@@ -57,6 +59,10 @@ public class DeltaPressureBenchmark
     private IRobustRandom _random = default!;
     private IConfigurationManager _cvar = default!;
     private ITileDefinitionManager _tileDefMan = default!;
+    private AtmosphereSystem _atmospereSystem = default!;
+
+    private Entity<GridAtmosphereComponent, GasTileOverlayComponent, MapGridComponent, TransformComponent>
+        _testEnt;
 
     [GlobalSetup]
     public async Task SetupAsync()
@@ -73,6 +79,7 @@ public class DeltaPressureBenchmark
         _random = server.ResolveDependency<IRobustRandom>();
         _cvar = server.ResolveDependency<IConfigurationManager>();
         _tileDefMan = server.ResolveDependency<ITileDefinitionManager>();
+        _atmospereSystem = _entMan.System<AtmosphereSystem>();
 
         _random.SetSeed(69420); // Randomness needs to be deterministic for benchmarking.
 
@@ -129,14 +136,33 @@ public class DeltaPressureBenchmark
         // Wait a little bit as well.
         // TODO: Unhardcode command magic string when fixgridatmos is an actual command we can ref and not just
         // a stamp-on in AtmosphereSystem.
-        await _pair.WaitCommand("fixgridatmos " + mapdata.Grid.Owner, 15);
+        await _pair.WaitCommand("fixgridatmos " + mapdata.Grid.Owner, 1);
+
+        var uid = mapdata.Grid.Owner;
+        _testEnt = new Entity<GridAtmosphereComponent, GasTileOverlayComponent, MapGridComponent, TransformComponent>(
+            uid,
+            _entMan.GetComponent<GridAtmosphereComponent>(uid),
+            _entMan.GetComponent<GasTileOverlayComponent>(uid),
+            _entMan.GetComponent<MapGridComponent>(uid),
+            _entMan.GetComponent<TransformComponent>(uid));
     }
 
     [Benchmark]
-    public async Task PerformAtmosSimulation()
+    public async Task PerformFullProcess()
     {
-        var server = _pair.Server;
-        await server.WaitRunTicks(Ticks);
+        await _pair.Server.WaitPost(() =>
+        {
+            while (!_atmospereSystem.RunProcessingStage(_testEnt, AtmosphereProcessingState.DeltaPressure)) { }
+        });
+    }
+
+    [Benchmark]
+    public async Task PerformSingleRunProcess()
+    {
+        await _pair.Server.WaitPost(() =>
+        {
+            _atmospereSystem.RunProcessingStage(_testEnt, AtmosphereProcessingState.DeltaPressure);
+        });
     }
 
     [GlobalCleanup]
