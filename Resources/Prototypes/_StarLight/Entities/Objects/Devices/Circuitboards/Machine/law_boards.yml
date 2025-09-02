@@ -9,7 +9,7 @@
   - type: SiliconLawProvider
     laws: SyndimovLawset
     lawUploadSound: /Audio/Ambience/Antag/silicon_lawboard_antimov.ogg
-  - type: StaticPrice # Starlight-edit: Added lawboards to cargo
+  - type: StaticPrice 
     price: 5000
 
 - type: entity
@@ -22,7 +22,7 @@
     state: std_mod
   - type: SiliconLawProvider
     laws: PanicmovLawset
-  - type: StaticPrice # Starlight-edit: Added lawboards to cargo
+  - type: StaticPrice 
     price: 1000
 
 - type: entity
@@ -35,7 +35,7 @@
     state: std_mod
   - type: SiliconLawProvider
     laws: GenieLawset
-  - type: StaticPrice # Starlight-edit: Added lawboards to cargo
+  - type: StaticPrice 
     price: 1000
 
 - type: entity
@@ -48,5 +48,5 @@
     state: std_mod
   - type: SiliconLawProvider
     laws: ReporterLawset
-  - type: StaticPrice # Starlight-edit: Added lawboards to cargo
+  - type: StaticPrice 
     price: 1000
