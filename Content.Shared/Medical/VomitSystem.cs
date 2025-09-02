@@ -6,6 +6,7 @@ using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Fluids;
 using Content.Shared.Forensics.Systems;
 using Content.Shared.IdentityManagement;
+using Content.Shared.Mobs.Systems;
 using Content.Shared.Movement.Systems;
 using Content.Shared.Nutrition.Components;
 using Content.Shared.Nutrition.EntitySystems;
@@ -22,6 +23,7 @@ public sealed class VomitSystem : EntitySystem
     [Dependency] private readonly INetManager _netManager = default!;
     [Dependency] private readonly IPrototypeManager _proto = default!;
     [Dependency] private readonly HungerSystem _hunger = default!;
+    [Dependency] private readonly MobStateSystem _mobState = default!;
     [Dependency] private readonly MovementModStatusSystem _movementMod = default!;
     [Dependency] private readonly ThirstSystem _thirst = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
@@ -45,11 +47,16 @@ public sealed class VomitSystem : EntitySystem
     /// <summary>
     /// Make an entity vomit, if they have a stomach.
     /// </summary>
-    public void Vomit(EntityUid uid, float thirstAdded = -40f, float hungerAdded = -40f)
+    public void Vomit(EntityUid uid, float thirstAdded = -40f, float hungerAdded = -40f, bool force = false)
     {
         // Main requirement: You have a stomach
         var stomachList = _body.GetBodyOrganEntityComps<StomachComponent>(uid);
         if (stomachList.Count == 0)
+            return;
+
+        // Vomit only if entity is alive
+        // Ignore condition if force was set to true
+        if (!force && _mobState.IsDead(uid))
             return;
 
         // Vomiting makes you hungrier and thirstier
