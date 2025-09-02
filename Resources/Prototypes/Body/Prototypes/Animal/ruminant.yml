@@ -10,7 +10,6 @@
       organs:
         lungs: OrganAnimalLungs
         stomach: OrganAnimalRuminantStomach
-        stomach2: OrganAnimalRuminantStomach
         liver: OrganAnimalLiver
         heart: OrganAnimalHeart
         kidneys: OrganAnimalKidneys
