@@ -169,9 +169,24 @@
         - !type:OrganType
           type: Dwarf
           shouldHave: false
+        # Starlight
+        - !type:OrganType
+          type: BudgetCyber
+          shouldHave: false
         damage:
           types:
             Poison: 1
+      # Starlight
+      # Budget CyberLiver will cause you to take more damage from less alcohol
+      - !type:HealthChange
+        conditions:
+        - !type:ReagentThreshold
+          min: 10
+        - !type:OrganType
+          type: BudgetCyber
+        damage:
+          types:
+            Poison: 1.2
       # dwarves take less toxin damage and heal a marginal amount of brute
       - !type:HealthChange
         conditions:
@@ -203,6 +218,11 @@
           shouldHave: false
       - !type:Drunk
         boozePower: 2
+        # Starlight
+        conditions:
+          - !type:OrganType
+            type: BudgetCyber
+            shouldHave: false
 
 - type: reagent
   id: Gin

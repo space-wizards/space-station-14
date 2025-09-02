@@ -282,3 +282,60 @@
     Plastic: 200
     Steel: 100
     Silver: 50
+
+# Budget CyberOrgans
+
+- type: latheRecipe
+  id: BudgetCyberEyes
+  result: BudgetCyberEyes
+  categories:
+  - Implants
+  completetime: 2
+  materials:
+    Plastic: 150
+    Steel: 50
+    Glass: 100
+
+- type: latheRecipe
+  id: BudgetCyberTongue
+  result: BudgetCyberTongue
+  categories:
+  - Implants
+  completetime: 2
+  materials:
+    Plastic: 150
+    Steel: 150
+    Glass: 50
+
+- type: latheRecipe
+  id: BudgetCyberLiver
+  result: BudgetCyberLiver
+  categories:
+  - Implants
+  completetime: 2
+  materials:
+    Plastic: 200
+    Steel: 150
+    Glass: 100
+
+- type: latheRecipe
+  id: BudgetCyberStomach
+  result: BudgetCyberStomach
+  categories:
+  - Implants
+  completetime: 2
+  materials:
+    Plastic: 200
+    Steel: 100
+    Glass: 150
+
+- type: latheRecipe
+  id: BudgetCyberKidneys
+  result: BudgetCyberKidneys
+  categories:
+  - Implants
+  completetime: 2
+  materials:
+    Plastic: 150
+    Steel: 50
+    Glass: 150
