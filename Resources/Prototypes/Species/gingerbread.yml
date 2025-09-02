@@ -6,7 +6,8 @@
   sprites: MobGingerbreadSprites
   markingLimits: MobHumanMarkingLimits
   dollPrototype: MobGingerbreadDummy
-  skinColoration: HumanToned
+  coloringRules:
+  - !type:HumanToned
   defaultSkinTone: "#9a7c5a"
 
 - type: speciesBaseSprites

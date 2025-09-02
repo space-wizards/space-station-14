@@ -6,4 +6,5 @@
   sprites: MobHumanSprites
   markingLimits: MobHumanMarkingLimits
   dollPrototype: MobDwarfDummy
-  skinColoration: HumanToned
+  coloringRules:
+  - !type:HumanToned

@@ -9,7 +9,8 @@
   maleFirstNames: NamesSkeletonFirst
   femaleFirstNames: NamesSkeletonFirst
   dollPrototype: MobSkeletonPersonDummy
-  skinColoration: TintedHues
+  coloringRules:
+  - !type:TintedHues
 
 - type: speciesBaseSprites
   id: MobSkeletonSprites

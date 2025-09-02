@@ -27,7 +27,7 @@ public sealed partial class HumanoidCharacterAppearance : ICharacterAppearance, 
     public Color EyeColor { get; set; } = Color.Black;
 
     [DataField]
-    public Color SkinColor { get; set; } = Humanoid.SkinColor.ValidHumanSkinTone;
+    public Color SkinColor { get; set; } = Color.White;
 
     [DataField]
     public List<Marking> Markings { get; set; } = new();
@@ -93,23 +93,21 @@ public sealed partial class HumanoidCharacterAppearance : ICharacterAppearance, 
     public static HumanoidCharacterAppearance DefaultWithSpecies(string species)
     {
         var speciesPrototype = IoCManager.Resolve<IPrototypeManager>().Index<SpeciesPrototype>(species);
-        var skinColor = speciesPrototype.SkinColoration switch
-        {
-            HumanoidSkinColor.HumanToned => Humanoid.SkinColor.HumanSkinTone(speciesPrototype.DefaultHumanSkinTone),
-            HumanoidSkinColor.Hues => speciesPrototype.DefaultSkinTone,
-            HumanoidSkinColor.TintedHues => Humanoid.SkinColor.TintedHues(speciesPrototype.DefaultSkinTone),
-            HumanoidSkinColor.VoxFeathers => Humanoid.SkinColor.ClosestVoxColor(speciesPrototype.DefaultSkinTone),
-            _ => Humanoid.SkinColor.ValidHumanSkinTone,
-        };
+        var skinColor = speciesPrototype.DefaultSkinTone;
 
-        return new(
+        foreach (var rule in speciesPrototype.ColoringRules)
+        {
+            skinColor = rule.Clamp(skinColor);
+        }
+
+        return new HumanoidCharacterAppearance(
             HairStyles.DefaultHairStyle,
             Color.Black,
             HairStyles.DefaultFacialHairStyle,
             Color.Black,
             Color.Black,
             skinColor,
-            new ()
+            new()
         );
     }
 
@@ -147,22 +145,12 @@ public sealed partial class HumanoidCharacterAppearance : ICharacterAppearance, 
 
         var newEyeColor = random.Pick(RealisticEyeColors);
 
-        var skinType = IoCManager.Resolve<IPrototypeManager>().Index<SpeciesPrototype>(species).SkinColoration;
+        var speciesPrototype = IoCManager.Resolve<IPrototypeManager>().Index<SpeciesPrototype>(species);
 
-        var newSkinColor = new Color(random.NextFloat(1), random.NextFloat(1), random.NextFloat(1), 1);
-        switch (skinType)
+        var newSkinColor = new Color(random.NextFloat(1), random.NextFloat(1), random.NextFloat(1));
+        foreach (var rule in speciesPrototype.ColoringRules)
         {
-            case HumanoidSkinColor.HumanToned:
-                newSkinColor = Humanoid.SkinColor.HumanSkinTone(random.Next(0, 101));
-                break;
-            case HumanoidSkinColor.Hues:
-                break;
-            case HumanoidSkinColor.TintedHues:
-                newSkinColor = Humanoid.SkinColor.ValidTintedHuesSkinTone(newSkinColor);
-                break;
-            case HumanoidSkinColor.VoxFeathers:
-                newSkinColor = Humanoid.SkinColor.ProportionalVoxColor(newSkinColor);
-                break;
+            newSkinColor = rule.Randomize(random);
         }
 
         return new HumanoidCharacterAppearance(newHairStyle, newHairColor, newFacialHairStyle, newHairColor, newEyeColor, newSkinColor, new ());
@@ -207,9 +195,10 @@ public sealed partial class HumanoidCharacterAppearance : ICharacterAppearance, 
             markingSet = new MarkingSet(appearance.Markings, speciesProto.MarkingPoints, markingManager, proto);
             markingSet.EnsureValid(markingManager);
 
-            if (!Humanoid.SkinColor.VerifySkinColor(speciesProto.SkinColoration, skinColor))
+            // Apply all rules to ensure valid skin color
+            foreach (var rule in speciesProto.ColoringRules)
             {
-                skinColor = Humanoid.SkinColor.ValidSkinTone(speciesProto.SkinColoration, skinColor);
+                skinColor = rule.Clamp(skinColor);
             }
 
             markingSet.EnsureSpecies(species, skinColor, markingManager);
