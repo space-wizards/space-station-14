@@ -30,8 +30,9 @@ public sealed class SolutionDumpingSystem : EntitySystem
     [Dependency] private readonly SharedPopupSystem _popup = default!;
     [Dependency] private readonly SharedSolutionContainerSystem _solContainer = default!;
 
-    private EntityQuery<RefillableSolutionComponent> _refillableQuery;
     private EntityQuery<DumpableSolutionComponent> _dumpQuery;
+    private EntityQuery<ItemComponent> _itemQuery;
+    private EntityQuery<RefillableSolutionComponent> _refillableQuery;
 
     public override void Initialize()
     {
@@ -46,13 +47,14 @@ public sealed class SolutionDumpingSystem : EntitySystem
         SubscribeLocalEvent<DrainableSolutionComponent, DragDropDraggedEvent>(OnDrainableDragged);
 
         // We use queries for these since CanDropDraggedEvent gets called pretty rapidly
+        _itemQuery = GetEntityQuery<ItemComponent>();
         _refillableQuery = GetEntityQuery<RefillableSolutionComponent>();
         _dumpQuery = GetEntityQuery<DumpableSolutionComponent>();
     }
 
     private void OnDrainableCanDrag(Entity<DrainableSolutionComponent> ent, ref CanDragEvent args)
     {
-        if (HasComp<ItemComponent>(ent))
+        if (_itemQuery.HasComp(ent))
             args.Handled = true;
     }
 
@@ -85,7 +87,7 @@ public sealed class SolutionDumpingSystem : EntitySystem
     {
         // We only allow dragging drainable solutions which are items onto refillable solutions
         if (!_refillableQuery.TryComp(args.Target, out var targetRefillComp)
-            || !HasComp<ItemComponent>(sourceContainer))
+            || !_itemQuery.HasComp(sourceContainer))
             return;
 
         // Bail if target is refillable but doesn't have a solution
