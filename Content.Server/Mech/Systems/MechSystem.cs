@@ -40,6 +40,8 @@ using Content.Shared.Materials;
 using Content.Server.Materials;
 using Content.Shared.Containers.ItemSlots;
 using System.Numerics;
+using Content.Shared.Hands;
+using Content.Shared.Hands.Components;
 
 namespace Content.Server.Mech.Systems;
 
@@ -86,7 +88,6 @@ public sealed partial class MechSystem : SharedMechSystem
         SubscribeLocalEvent<MechComponent, MechOpenUiEvent>(OnOpenUi);
         SubscribeLocalEvent<MechComponent, MechBrokenSoundEvent>(OnMechBrokenSound);
         SubscribeLocalEvent<MechComponent, MechEntrySuccessSoundEvent>(OnMechEntrySuccessSound);
-
     }
 
     private void OnRepairMechEvent(EntityUid uid, MechComponent component, RepairMechEvent args)
@@ -122,6 +123,16 @@ public sealed partial class MechSystem : SharedMechSystem
         {
             var pilot = Vehicle.GetOperatorOrNull(uid);
             if (pilot.HasValue && !_lockSystem.CheckAccess(uid, pilot.Value, lockComp))
+            {
+                args.Cancel();
+                return;
+            }
+        }
+
+        // Block movement if the pilot has no hands
+        if (Vehicle.TryGetOperator(uid, out var operatorEnt))
+        {
+            if (!HasComp<HandsComponent>(operatorEnt))
             {
                 args.Cancel();
                 return;

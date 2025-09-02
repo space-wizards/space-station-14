@@ -81,7 +81,6 @@ public abstract partial class SharedMechSystem : EntitySystem
         SubscribeLocalEvent<MechComponent, GotEmaggedEvent>(OnEmagged);
 
         SubscribeLocalEvent<MechPilotComponent, GetMeleeWeaponEvent>(OnGetMeleeWeapon);
-        SubscribeLocalEvent<MechPilotComponent, GetActiveWeaponEvent>(OnGetActiveWeapon);
         SubscribeLocalEvent<MechPilotComponent, GetShootingEntityEvent>(OnGetShootingEntity);
         SubscribeLocalEvent<MechPilotComponent, GetProjectileShooterEvent>(OnGetProjectileShooter);
 
@@ -570,6 +569,7 @@ public abstract partial class SharedMechSystem : EntitySystem
         var doAfterEventArgs = new DoAfterArgs(EntityManager, args.User, component.EntryDelay, new MechEntryEvent(), uid, target: uid, used: args.Dragged)
         {
             BreakOnMove = true,
+            NeedHand = true,
         };
 
         _doAfter.TryStartDoAfter(doAfterEventArgs);
@@ -623,6 +623,7 @@ public abstract partial class SharedMechSystem : EntitySystem
                     var doAfterEventArgs = new DoAfterArgs(EntityManager, args.User, component.EntryDelay, new MechEntryEvent(), uid, target: uid)
                     {
                         BreakOnMove = true,
+                        NeedHand = true,
                     };
 
                     _doAfter.TryStartDoAfter(doAfterEventArgs);
@@ -674,18 +675,11 @@ public abstract partial class SharedMechSystem : EntitySystem
         if (args.Handled)
             return;
 
-        if (!TryComp<MechComponent>(component.Mech, out var mech))
+        if (!HasComp<HandsComponent>(uid))
+        {
+            args.Handled = true;
             return;
-
-        var weapon = mech.CurrentSelectedEquipment ?? component.Mech;
-        args.Weapon = weapon;
-        args.Handled = true;
-    }
-
-    private void OnGetActiveWeapon(EntityUid uid, MechPilotComponent component, ref GetActiveWeaponEvent args)
-    {
-        if (args.Handled)
-            return;
+        }
 
         if (!TryComp<MechComponent>(component.Mech, out var mech))
             return;
