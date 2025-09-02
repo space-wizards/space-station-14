@@ -26,7 +26,7 @@
     startAudio:
       path: /Audio/Announcements/attention.ogg
     earliestStart: 1800
-    weight: 0.2
+    weight: 0.0002
     duration: 3600
   - type: VentCrittersRule
     entries:
@@ -49,7 +49,7 @@
     startAudio:
       path: /Audio/Announcements/attention.ogg
     earliestStart: 1800
-    weight: 0.1
+    weight: 0.0001
     duration: 3600
     minimumPlayers: 30 # Hopefully this is enough for the Rat King's potential Army (it was not, raised from 15 -> 30)
   - type: VentCrittersRule
@@ -74,7 +74,7 @@
     startAnnouncement: station-event-vent-creatures-start-announcement
     startAudio:
       path: /Audio/Announcements/attention.ogg
-    weight: 0.2
+    weight: 0.0002
     duration: 3600
   - type: VentCrittersRule
     entries:
@@ -93,7 +93,7 @@
     startAnnouncement: station-event-vent-creatures-start-announcement
     startAudio:
       path: /Audio/Announcements/attention.ogg
-    weight: 0.2
+    weight: 0.0002
     duration: 3600
   - type: VentCrittersRule
     entries:
@@ -113,7 +113,7 @@
     startAudio:
       path: /Audio/Announcements/attention.ogg
     earliestStart: 15
-    weight: 0.2
+    weight: 0.0002
     duration: 3600
     minimumPlayers: 30
   - type: VentCrittersRule

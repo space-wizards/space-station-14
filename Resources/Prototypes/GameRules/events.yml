@@ -104,7 +104,8 @@
     startAnnouncementColor: "#18abf5"
     startAudio:
       path: /Audio/Announcements/announce.ogg
-    weight: 0.001
+    weight: 0.0001
+    minimumPlayers: 5
     duration: 1800
   - type: AnomalySpawnRule
 
@@ -142,7 +143,7 @@
   - type: StationEvent
     weight: 0.005
     duration: 1
-    minimumPlayers: 5
+    minimumPlayers: 2
   - type: BreakerFlipRule
 
 - type: entity
@@ -151,8 +152,8 @@
   components:
   - type: StationEvent
     startAnnouncement: station-event-bureaucratic-error-announcement
-    minimumPlayers: 10
-    weight: 0.006
+    minimumPlayers: 5
+    weight: 0.0006
     duration: 1
   - type: BureaucraticErrorRule
     ignoredJobs:
@@ -165,7 +166,7 @@
   - type: StationEvent
     startAnnouncement: station-event-clerical-error-announcement
     minimumPlayers: 5
-    weight: 0.005
+    weight: 0.0005
     duration: 1
   - type: ClericalErrorRule
 
@@ -352,13 +353,13 @@
       mindRoles:
       - MindRoleWizard
 
-# disabled until event is rewritten to be more interesting
 - type: entity
   id: FalseAlarm
   parent: BaseGameRule
   components:
   - type: StationEvent
-    weight: 0.006
+    weight: 0.0006
+    minimumPlayers: 1
     duration: 1
   - type: FalseAlarmRule
 
@@ -371,7 +372,8 @@
     startAudio:
       path: /Audio/Announcements/attention.ogg
     endAnnouncement: station-event-gas-leak-end-announcement
-    weight: 0.004
+    weight: 0.0004
+    minimumPlayers: 2
   - type: GasLeakRule
 
 - type: entity
@@ -380,8 +382,8 @@
   components:
   - type: StationEvent
     earliestStart: 15
-    minimumPlayers: 15
-    weight: 0.003
+    minimumPlayers: 5
+    weight: 0.0003
     duration: 300
   - type: KudzuGrowthRule
 
@@ -390,7 +392,8 @@
   parent: BaseStationEventShortDelay
   components:
   - type: StationEvent
-    weight: 0.002
+    weight: 0.0002
+    minimumPlayers: 2
     startAnnouncement: station-event-power-grid-check-start-announcement
     endAnnouncement: station-event-power-grid-check-end-announcement
     startAudio:
@@ -406,7 +409,8 @@
   id: SolarFlare
   components:
   - type: StationEvent
-    weight: 0.002
+    weight: 0.0002
+    minimumPlayers: 2
     startAnnouncement: station-event-solar-flare-start-announcement
     endAnnouncement: station-event-solar-flare-end-announcement
     startAudio:
@@ -455,7 +459,7 @@
       path: /Audio/Announcements/attention.ogg
     earliestStart: 5400
     minimumPlayers: 5
-    weight: 0.002
+    weight: 0.0002
     duration: 1800
   - type: VentCrittersRule
     entries:
@@ -475,8 +479,8 @@
     startAudio:
       path: /Audio/Announcements/attention.ogg
     earliestStart: 5400
-    minimumPlayers: 10
-    weight: 0.002
+    minimumPlayers: 5
+    weight: 0.0002
     duration: 1800
   - type: VentCrittersRule
     entries:
@@ -497,7 +501,7 @@
       path: /Audio/Announcements/attention.ogg
     earliestStart: 5400
     minimumPlayers: 5
-    weight: 0.002
+    weight: 0.0002
     duration: 3600
   - type: VentCrittersRule
     entries:
@@ -528,7 +532,7 @@
   - type: StationEvent
     earliestStart: 172800
     minimumPlayers: 15
-    weight: 0.001 # Zombies was happening basically every single survival round, so now it's super rare
+    weight: 0.0001 # Zombies was happening basically every single survival round, so now it's super rare
     duration: 1
   - type: ZombieRule
   - type: AntagSelection
@@ -627,7 +631,8 @@
   parent: BaseGameRule
   components:
   - type: StationEvent
-    weight: 0.004
+    weight: 0.0004
+    minimumPlayers: 1
     duration: 3600
     maxDuration: 10800
     reoccurrenceDelay: 30
@@ -643,7 +648,8 @@
   id: IonStorm
   components:
   - type: StationEvent
-    weight: 0.002
+    weight: 0.0002
+    minimumPlayers: 1
     reoccurrenceDelay: 172800
     duration: 3600
     maxDuration: 86400
@@ -690,7 +696,7 @@
     duration: 1
     minimumPlayers: 1
     maxOccurrences: 10
-    weight: 0.002
+    weight: 0.0002
   - type: RandomSpawnRule
     prototype: RandomSatchelSpawner
 

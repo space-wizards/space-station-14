@@ -12,7 +12,7 @@
   table: !type:AllSelector # we need to pass a list of rules, since rules have further restrictions to consider via StationEventComp
     children:
     - id: GameRuleMeteorSwarmSmall
-      prob: 0.15
+      prob: 0.0005
 
 - type: entityTable
   id: MeteorSwarmMildTable
@@ -109,9 +109,9 @@
   id: GameRuleSpaceDustMinor
   components:
   - type: StationEvent
-    weight: 0.6
+    weight: 0.0006
     earliestStart: 2
-    minimumPlayers: 0
+    minimumPlayers: 3
   - type: MeteorSwarm
     announcement: station-event-space-dust-minor-start-announcement
     announcementSound: /Audio/Announcements/attention.ogg
@@ -130,8 +130,8 @@
   id: GameRuleSpaceDustMajor
   components:
   - type: StationEvent
-    weight: 0.2
-    minimumPlayers: 3
+    weight: 0.0002
+    minimumPlayers: 5
   - type: MeteorSwarm
     announcement: station-event-space-dust-start-announcement
     announcementSound: /Audio/Announcements/attention.ogg
@@ -150,8 +150,8 @@
   id: GameRuleMeteorSwarmSmall
   components:
   - type: StationEvent
-    weight: 0.4
-    minimumPlayers: 15
+    weight: 0.0004
+    minimumPlayers: 5
   - type: MeteorSwarm
     announcement: station-event-meteor-swarm-start-announcement
     announcementSound: /Audio/Announcements/attention.ogg
@@ -166,7 +166,8 @@
   id: GameRuleMeteorSwarmMedium
   components:
   - type: StationEvent
-    weight: 0.2
+    weight: 0.0002
+    minimumPlayers: 5
   - type: MeteorSwarm
     announcement: station-event-meteor-swarm-start-announcement
     announcementSound: /Audio/Announcements/attention.ogg
@@ -182,7 +183,8 @@
   id: GameRuleMeteorSwarmLarge
   components:
   - type: StationEvent
-    weight: 0.2
+    weight: 0.0002
+    minimumPlayers: 5
   - type: MeteorSwarm
     announcement: station-event-meteor-swarm-start-announcement
     announcementSound: /Audio/Announcements/attention.ogg
