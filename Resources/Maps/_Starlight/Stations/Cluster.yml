@@ -4,7 +4,7 @@ meta:
   engineVersion: 266.0.0
   forkId: ""
   forkVersion: ""
-  time: 09/02/2025 05:52:53
+  time: 09/02/2025 05:54:21
   entityCount: 14028
 maps:
 - 1
@@ -9790,13 +9790,6 @@ entities:
     - type: Transform
       pos: -6.5,16.5
       parent: 2
-- proto: BedsheetBrigmedic
-  entities:
-  - uid: 627
-    components:
-    - type: Transform
-      pos: 22.5,10.5
-      parent: 2
 - proto: BedsheetCaptain
   entities:
   - uid: 628
@@ -9873,6 +9866,13 @@ entities:
     components:
     - type: Transform
       pos: 24.5,9.5
+      parent: 2
+- proto: BedsheetMedical
+  entities:
+  - uid: 627
+    components:
+    - type: Transform
+      pos: 22.5,10.5
       parent: 2
 - proto: BedsheetMime
   entities:
@@ -96155,7 +96155,7 @@ entities:
       pos: -38.5,9.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -69830.414
+      secondsUntilStateChange: -69917.28
       state: Opening
   - uid: 13509
     components:
@@ -96163,7 +96163,7 @@ entities:
       pos: -35.5,10.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -69830.914
+      secondsUntilStateChange: -69917.78
       state: Opening
 - proto: WoodenBench
   entities:
