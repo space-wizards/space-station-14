@@ -118,7 +118,7 @@ public abstract partial class SharedHandsSystem
     }
 
     /// <summary>
-    ///     Drops a hands contents at the target location.
+    ///     Drops a hand's contents at the target location.
     /// </summary>
     public bool TryDrop(Entity<HandsComponent?> ent, string handId, EntityCoordinates? targetDropLocation = null, bool checkActionBlocker = true, bool doDropInteraction = true)
     {
@@ -133,7 +133,10 @@ public abstract partial class SharedHandsSystem
 
         // if item is a fake item (like with pulling), just delete it rather than bothering with trying to drop it into the world
         if (TryComp(entity, out VirtualItemComponent? @virtual))
+        {
             _virtualSystem.DeleteVirtualItem((entity.Value, @virtual), ent);
+            return true;
+        }
 
         if (TerminatingOrDeleted(entity))
             return true;
