@@ -2,6 +2,7 @@
 using Content.Server.Administration;
 using Content.Shared.Administration;
 using Content.Shared.Inventory;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Toolshed;
 
 namespace Content.Server.Inventory;
@@ -34,7 +35,7 @@ public sealed class InventoryCommand : ToolshedCommand
 
         foreach (var slot in inventory.Slots)
         {
-            if ((slot.SlotFlags | slotFlag) == 0) // Does this seem somewhat illegal? yes. Does C# provide an alternative function for checking if an enum has ANY of a set of bit flags? no.
+            if ((slot.SlotFlags & slotFlag) == 0) // Does this seem somewhat illegal? yes. Does C# provide an alternative function for checking if an enum has ANY of a set of bit flags? no.
                 continue;
             if (_inventorySystem.TryGetSlotEntity(ent, slot.Name, out var item, inventory))
                 items.Add(item.Value);
@@ -76,82 +77,73 @@ public sealed class InventoryCommand : ToolshedCommand
         return items;
     }
 
-
-
     [CommandImplementation("forceput")]
     public EntityUid? InventoryForcePut([PipedArgument] IEnumerable<EntityUid> ents,
         EntityUid itemEnt,
-        SlotFlags slotFlag) => InventoryPutEnumerableBase(ents, itemEnt, slotFlag, InventoryForcePut);
-
-
-    public EntityUid? InventoryForcePut(EntityUid targetEnt, EntityUid itemEnt, SlotFlags slotFlag)
-    {
-        return InventoryPutBase(targetEnt,
-            itemEnt,
-            slotFlag,
-            PutType.ForcePut) is not null
-            ? targetEnt
-            : null;
-    }
-
+        SlotFlags slotFlag) => InventoryPutEnumerableBase(ents, itemEnt, slotFlag, PutType.ForcePut);
+    [CommandImplementation("forcespawn")]
+    public EntityUid? InventoryForceSpawn([PipedArgument] IEnumerable<EntityUid> ents,
+        EntProtoId itemEnt,
+        SlotFlags slotFlag) => InventorySpawnEnumerableBase(ents, itemEnt, slotFlag, PutType.ForcePut);
 
     [CommandImplementation("put")]
     public EntityUid? InventoryPut([PipedArgument] IEnumerable<EntityUid> ents,
         EntityUid itemEnt,
-        SlotFlags slotFlag) => InventoryPutEnumerableBase(ents, itemEnt, slotFlag, InventoryPut);
-
-
-    public EntityUid? InventoryPut(EntityUid targetEnt, EntityUid itemEnt, SlotFlags slotFlag)
-    {
-        return InventoryPutBase(targetEnt,
-            itemEnt,
-            slotFlag,
-            PutType.Put) is not null
-            ? targetEnt
-            : null;
-    }
-
+        SlotFlags slotFlag) => InventoryPutEnumerableBase(ents, itemEnt, slotFlag, PutType.Put);
+    [CommandImplementation("spawn")]
+    public EntityUid? InventorySpawn([PipedArgument] IEnumerable<EntityUid> ents,
+        EntProtoId itemEnt,
+        SlotFlags slotFlag) => InventorySpawnEnumerableBase(ents, itemEnt, slotFlag, PutType.Put);
 
     [CommandImplementation("tryput")]
     public EntityUid? InventoryTryPut([PipedArgument] IEnumerable<EntityUid> ents,
         EntityUid itemEnt,
-        SlotFlags slotFlag) => InventoryPutEnumerableBase(ents, itemEnt, slotFlag, InventoryTryPut);
-
-
-    public EntityUid? InventoryTryPut(EntityUid targetEnt, EntityUid itemEnt, SlotFlags slotFlag)
-    {
-        return InventoryPutBase(targetEnt,
-            itemEnt,
-            slotFlag,
-            PutType.TryPut) is not null
-            ? targetEnt
-            : null;
-    }
-
-
-
+        SlotFlags slotFlag) => InventoryPutEnumerableBase(ents, itemEnt, slotFlag, PutType.Put);
+    [CommandImplementation("tryspawn")]
+    public EntityUid? InventoryTrySpawn([PipedArgument] IEnumerable<EntityUid> ents,
+        EntProtoId itemEnt,
+        SlotFlags slotFlag) => InventorySpawnEnumerableBase(ents, itemEnt, slotFlag, PutType.Put);
 
     [CommandImplementation("ensure")]
     public EntityUid? InventoryEnsure([PipedArgument] IEnumerable<EntityUid> ents,
         EntityUid itemEnt,
-        SlotFlags slotFlag) => InventoryPutEnumerableBase(ents, itemEnt, slotFlag, InventoryEnsure);
+        SlotFlags slotFlag) => InventoryPutEnumerableBase(ents, itemEnt, slotFlag, PutType.Ensure);
+    [CommandImplementation("ensurespawn")]
+    public EntityUid? InventoryEnsureSpawn([PipedArgument] IEnumerable<EntityUid> ents,
+        EntProtoId itemEnt,
+        SlotFlags slotFlag) => InventorySpawnEnumerableBase(ents, itemEnt, slotFlag, PutType.Ensure);
 
-    public EntityUid? InventoryEnsure(EntityUid targetEnt, EntityUid itemEnt, SlotFlags slotFlag)
+
+    private EntityUid? InventorySpawnEnumerableBase(IEnumerable<EntityUid> targetEnts,
+        EntProtoId itemToInsert,
+        SlotFlags slotFlags,
+        PutType putType)
     {
-        return InventoryPutBase(targetEnt,
-            itemEnt,
-            slotFlag,
-            PutType.Ensure);
-    }
+        var entityUids = targetEnts as EntityUid[] ?? targetEnts.ToArray();
+        if (!entityUids.Any())
+            return null;
 
+        var spawnedItem = Spawn(itemToInsert, Transform(entityUids.First()).Coordinates);
+
+        foreach (var entity in entityUids)
+        {
+            var result = InventoryPutBase(entity, spawnedItem, slotFlags, putType);
+            if (result == null)
+                continue;
+            if (!result.Value.Equals(spawnedItem)) Del(spawnedItem);
+            return result;
+        }
+        Del(spawnedItem);
+        return null;
+    }
     private EntityUid? InventoryPutEnumerableBase(IEnumerable<EntityUid> targetEnts,
         EntityUid itemToInsert,
         SlotFlags slotFlags,
-        Func<EntityUid, EntityUid, SlotFlags, EntityUid?> targetFunc)
+        PutType putType)
     {
         foreach (var entity in targetEnts)
         {
-            var result = targetFunc(entity, itemToInsert, slotFlags);
+            var result = InventoryPutBase(entity, itemToInsert, slotFlags, putType);
             if (result != null)
                 return result;
         }
@@ -172,7 +164,7 @@ public sealed class InventoryCommand : ToolshedCommand
 
         foreach (var slot in inventory.Slots)
         {
-            if ((slot.SlotFlags | slotFlag) == 0)
+            if ((slot.SlotFlags & slotFlag) == 0)
                 continue;
 
 
@@ -195,8 +187,6 @@ public sealed class InventoryCommand : ToolshedCommand
 
         return null;
     }
-
-
 
     private enum PutType
     {
