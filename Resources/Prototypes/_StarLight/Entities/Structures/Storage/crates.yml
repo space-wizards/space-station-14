@@ -8,3 +8,15 @@
     sprite: _Starlight/Structures/Storage/USSP/soviet-crate.rsi
   - type: Sprite
     sprite: _Starlight/Structures/Storage/USSP/soviet-crate.rsi
+
+- type: entity
+  parent: CrateBaseSecure
+  id: CrateRDSecure
+  name: RD crate
+  components:
+  - type: Icon
+    sprite: Structures/Storage/Crates/command.rsi
+  - type: Sprite
+    sprite: Structures/Storage/Crates/command.rsi
+  - type: AccessReader
+    access: [["ResearchDirector"]]

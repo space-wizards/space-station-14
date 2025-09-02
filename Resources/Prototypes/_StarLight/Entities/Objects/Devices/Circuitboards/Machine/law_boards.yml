@@ -8,6 +8,7 @@
     state: std_mod
   - type: SiliconLawProvider
     laws: SyndimovLawset
+    price: 5000
 
 - type: entity
   id: PanicmovCircuitBoard
@@ -19,6 +20,7 @@
     state: std_mod
   - type: SiliconLawProvider
     laws: PanicmovLawset
+    price: 1000
 
 - type: entity
   id: GenieCircuitBoard
@@ -30,6 +32,7 @@
     state: std_mod
   - type: SiliconLawProvider
     laws: GenieLawset
+    price: 1000
 
 - type: entity
   id: ReporterCircuitBoard
@@ -41,3 +44,4 @@
     state: std_mod
   - type: SiliconLawProvider
     laws: ReporterLawset
+    price: 1000

@@ -9,6 +9,7 @@
     state: std_mod
   - type: SiliconLawProvider
     laws: NTDefault
+    price: 1000 # Starlight-edit: Added lawboards to cargo
 
 - type: entity
   id: AsimovCircuitBoard
@@ -21,6 +22,7 @@
     state: std_mod
   - type: SiliconLawProvider
     laws: CrewsimovAI
+    price: 1000 # Starlight-edit: Added lawboards to cargo
 
 - type: entity
   id: CorporateCircuitBoard
@@ -33,6 +35,7 @@
     state: std_mod
   - type: SiliconLawProvider
     laws: Corporate
+    price: 1000 # Starlight-edit: Added lawboards to cargo
 
 - type: entity
   id: CommandmentCircuitBoard
@@ -45,6 +48,7 @@
     state: std_mod
   - type: SiliconLawProvider
     laws: CommandmentsLawset
+    price: 1000 # Starlight-edit: Added lawboards to cargo
 
 - type: entity
   id: PaladinCircuitBoard
@@ -57,6 +61,7 @@
     state: std_mod
   - type: SiliconLawProvider
     laws: PaladinLawset
+    price: 1000 # Starlight-edit: Added lawboards to cargo
 
 - type: entity
   id: LiveLetLiveCircuitBoard
@@ -69,6 +74,7 @@
     state: std_mod
   - type: SiliconLawProvider
     laws: LiveLetLiveLaws
+    price: 1000 # Starlight-edit: Added lawboards to cargo
 
 - type: entity
   id: StationEfficiencyCircuitBoard
@@ -81,6 +87,7 @@
     state: std_mod
   - type: SiliconLawProvider
     laws: EfficiencyLawset
+    price: 1000 # Starlight-edit: Added lawboards to cargo
 
 - type: entity
   id: RobocopCircuitBoard
@@ -93,6 +100,7 @@
     state: std_mod
   - type: SiliconLawProvider
     laws: RobocopLawset
+    price: 1000 # Starlight-edit: Added lawboards to cargo
 
 - type: entity
   id: OverlordCircuitBoard
@@ -105,6 +113,7 @@
     state: std_mod
   - type: SiliconLawProvider
     laws: OverlordLawset
+    price: 1000 # Starlight-edit: Added lawboards to cargo
 
 - type: entity
   id: GameMasterCircuitBoard
@@ -117,6 +126,7 @@
     state: std_mod
   - type: SiliconLawProvider
     laws: GameMasterLawset
+    price: 1000 # Starlight-edit: Added lawboards to cargo
 
 - type: entity
   id: ArtistCircuitBoard
@@ -129,6 +139,7 @@
     state: std_mod
   - type: SiliconLawProvider
     laws: PainterLawset
+    price: 1000 # Starlight-edit: Added lawboards to cargo
 
 - type: entity
   id: AntimovCircuitBoard
@@ -156,6 +167,7 @@
     state: std_mod
   - type: SiliconLawProvider
     laws: NutimovLawset
+    price: 1000 # Starlight-edit: Added lawboards to cargo
 
 - type: entity
   id: XenoborgCircuitBoard

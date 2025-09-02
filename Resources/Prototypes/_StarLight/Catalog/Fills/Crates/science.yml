@@ -1,0 +1,23 @@
+- type: entity
+  id: CrateLawboards
+  parent: CrateRDSecure
+  name: AI Lawboard Crate
+  description: A crate filled with various AI lawboards.
+  components:
+  - type: StorageFill
+    contents:
+    - id: NTDefaultCircuitBoard
+    - id: AsimovCircuitBoard
+    - id: CorporateCircuitBoard
+    - id: CommandmentCircuitBoard
+    - id: PaladinCircuitBoard
+    - id: PanicmovCircuitBoard
+    - id: GenieCircuitBoard
+    - id: ReporterCircuitBoard
+    - id: LiveLetLiveCircuitBoard
+    - id: StationEfficiencyCircuitBoard
+    - id: RobocopCircuitBoard
+    - id: OverlordCircuitBoard
+    - id: GameMasterCircuitBoard
+    - id: ArtistCircuitBoard
+    - id: NutimovCircuitBoard
