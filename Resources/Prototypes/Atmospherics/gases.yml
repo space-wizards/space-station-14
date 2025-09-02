@@ -104,9 +104,9 @@
 - type: gas
   id: 9
   name: gases-electrovae
-  specificHeat: 20
-  heatCapacityRatio: 1.2
-  molarMass: 40
+  specificHeat: 250
+  heatCapacityRatio: 1.28
+  molarMass: 520
   gasOverlaySprite: /Textures/Effects/atmospherics.rsi
   gasOverlayState: electrovae
   gasMolesVisible: 0.1
@@ -118,9 +118,9 @@
 - type: gas
   id: 10
   name: gases-charged-electrovae
-  specificHeat: 20
-  heatCapacityRatio: 1.2
-  molarMass: 40
+  specificHeat: 150
+  heatCapacityRatio: 1.30
+  molarMass: 520
   gasOverlaySprite: /Textures/Effects/atmospherics.rsi
   gasOverlayState: electrovae_charged
   gasMolesVisible: 1.0
