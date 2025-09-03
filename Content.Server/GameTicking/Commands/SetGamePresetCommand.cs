@@ -46,7 +46,7 @@ namespace Content.Server.GameTicking.Commands
 
             if (args.Length == 3 && !ticker.TryFindGamePreset(args[2], out decoy))
             {
-                shell.WriteError(Loc.GetString("set-game-preset-preset-error", ("preset", args[1])));
+                shell.WriteError(Loc.GetString("set-game-preset-preset-error", ("preset", args[2])));
                 return;
             }
 
