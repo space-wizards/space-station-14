@@ -3,7 +3,7 @@
   save: false
   parent: [BaseMobSpeciesOrganic]
   id: BaseMobVulpkanin
-  name: Urrrist McBark
+  name: Urist McBark
   components:
   - type: Hunger
   - type: Thirst
