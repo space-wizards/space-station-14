@@ -25,8 +25,8 @@ namespace Content.Benchmarks;
 /// </summary>
 [Virtual]
 [GcServer(true)]
-[MemoryDiagnoser]
-[ThreadingDiagnoser]
+//[MemoryDiagnoser]
+//[ThreadingDiagnoser]
 public class DeltaPressureBenchmark
 {
     /// <summary>
@@ -47,7 +47,7 @@ public class DeltaPressureBenchmark
     /// processing loop.
     /// </summary>
     // [Params(100, 1000, 5000, 10000, 50000)]
-    [Params(100)]
+    [Params(1000)]
     public int EntitiesPerIteration;
 
     private readonly EntProtoId _windowProtoId = "Window";

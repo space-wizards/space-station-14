@@ -176,5 +176,5 @@ public sealed partial class CCVars
     /// high numbers may cause Atmospherics to distribute the work unevenly.
     /// </summary>
     public static readonly CVarDef<int> DeltaPressureParallelBatchSize =
-        CVarDef.Create("atmos.delta_pressure_parallel_batch_size", 100, CVar.SERVERONLY);
+        CVarDef.Create("atmos.delta_pressure_parallel_batch_size", 10, CVar.SERVERONLY);
 }
