@@ -328,8 +328,7 @@ namespace Content.Server.Database
             profile.PreferenceUnavailable = (DbPreferenceUnavailableMode) humanoid.PreferenceUnavailable;
 
             var pronoun = humanoid.Pronoun;
-
-            profile.Pronouns ??= new DbPronoun();
+            profile.Pronouns ??= new Pronouns();
             profile.Pronouns.Subject = pronoun?.Subject;
             profile.Pronouns.Object = pronoun?.Object;
             profile.Pronouns.DatObj = pronoun?.DatObj;

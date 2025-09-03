@@ -483,11 +483,6 @@ namespace Content.Client.Lobby.UI
 
             _pronounWindow = new PronounWindow(Profile, pronouns, gender, _playerManager.LocalSession, collection);
             _pronounWindow.OpenCentered();
-            _pronounWindow.OnProfileChanged += profile =>
-            {
-                Profile = profile;
-                SetDirty();
-            };
 
             if (Profile is null)
                 return;

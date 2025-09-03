@@ -57,9 +57,11 @@ namespace Content.Server.Database
                 .HasIndex(p => new {p.Slot, PrefsId = p.PreferenceId})
                 .IsUnique();
 
-            modelBuilder.Entity<DbPronoun>()
-                .HasIndex(p => new { HumanoidProfileId = p.ProfileId }, "pronoun")
-                .IsUnique();
+            modelBuilder.Entity<Pronouns>()
+                .HasOne(pronoun => pronoun.Profile)
+                .WithOne(profile => profile.Pronouns)
+                .HasForeignKey<Pronouns>(pronoun => pronoun.ProfileId)
+                .IsRequired();
 
             modelBuilder.Entity<Antag>()
                 .HasIndex(p => new {HumanoidProfileId = p.ProfileId, p.AntagName})
@@ -409,7 +411,7 @@ namespace Content.Server.Database
         public int Age { get; set; }
         public string Sex { get; set; } = null!;
         public string Gender { get; set; } = null!;
-        public DbPronoun Pronouns { get; set; } = null!;
+        public Pronouns? Pronouns { get; set; }
         public string Species { get; set; } = null!;
         [Column(TypeName = "jsonb")] public JsonDocument? Markings { get; set; } = null!;
         public string HairName { get; set; } = null!;
@@ -431,7 +433,7 @@ namespace Content.Server.Database
         public Preference Preference { get; set; } = null!;
     }
 
-    public class DbPronoun
+    public class Pronouns
     {
         public int Id { get; set; }
         public Profile Profile { get; set; } = null!;
@@ -446,7 +448,7 @@ namespace Content.Server.Database
         public string? Counter { get; set; } = null!;
         public bool? Plural { get; set; }
 
-        public DbPronoun(string? subject,
+        public Pronouns(string? subject,
             string? @object,
             string? datObj,
             string? genitive,
@@ -467,7 +469,7 @@ namespace Content.Server.Database
             Plural = plural;
         }
 
-        public DbPronoun() { }
+        public Pronouns() { }
     }
 
     public class Job
