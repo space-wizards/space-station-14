@@ -275,7 +275,7 @@
         maxVol: 18
         reagents:
         - ReagentId: Carbohydrate
-          Quantity: 15
+          Quantity: 3 # Unbaked food should have poor nutrient quantity
   - type: Tag
     tags:
       - Ingredient
@@ -318,10 +318,10 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 6
+        maxVol: 3
         reagents:
         - ReagentId: Carbohydrate
-          Quantity: 5
+          Quantity: 1
 
 - type: entity
   name: dough rope
@@ -337,13 +337,6 @@
   - type: Construction
     graph: DoughRope
     node: rolled
-  - type: SolutionContainerManager
-    solutions:
-      food:
-        maxVol: 6
-        reagents:
-        - ReagentId: Carbohydrate
-          Quantity: 5
 
 - type: entity
   name: cornmeal dough
@@ -376,6 +369,13 @@
   - type: Tag
     tags:
     - Slice
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 3
+        reagents:
+        - ReagentId: Carbohydrate
+          Quantity: 1
 
 - type: entity
   name: tortilla dough
@@ -411,6 +411,13 @@
   - type: Tag
     tags:
     - Slice
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 3
+        reagents:
+        - ReagentId: Carbohydrate
+          Quantity: 1
 
 - type: entity
   name: flattened tortilla dough
@@ -456,7 +463,7 @@
         maxVol: 18
         reagents:
         - ReagentId: Carbohydrate
-          Quantity: 5
+          Quantity: 3
         - ReagentId: Fiber
           Quantity: 10
 
@@ -484,9 +491,9 @@
         maxVol: 6
         reagents:
         - ReagentId: Carbohydrate
-          Quantity: 1.5
+          Quantity: 1
         - ReagentId: Fiber
-          Quantity: 3.5
+          Quantity: 3.3
 
 - type: entity
   name: cotton dough rope
@@ -509,9 +516,9 @@
         maxVol: 6
         reagents:
         - ReagentId: Carbohydrate
-          Quantity: 1.5
+          Quantity: 1
         - ReagentId: Fiber
-          Quantity: 3.5
+          Quantity: 3.3
 
 - type: entity
   name: raw pastry base
@@ -569,6 +576,15 @@
   - type: SliceableFood
     count: 3
     slice: FoodCroissantRawCotton
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 6
+        reagents:
+        - ReagentId: Carbohydrate
+          Quantity: 3
+        - ReagentId: Fiber
+          Quantity: 10
 
 - type: entity
   name: pizza bread
@@ -689,6 +705,13 @@
   - type: SliceableFood
     count: 4
     slice: FoodCheeseSlice
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 20
+        reagents:
+        - ReagentId: Fat
+          Quantity: 15
 
 - type: entity
   name: cheese wedge
@@ -891,7 +914,7 @@
         maxVol: 4
         reagents:
         - ReagentId: Carbohydrate
-          Quantity: 3
+          Quantity: 1
 
 - type: entity
   name: raw cotton croissant
@@ -905,3 +928,12 @@
     - cotton
   - type: Sprite
     state: croissant-raw-cotton
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 4
+        reagents:
+        - ReagentId: Carbohydrate
+          Quantity: 1
+        - ReagentId: Fiber
+          Quantity: 3.3
