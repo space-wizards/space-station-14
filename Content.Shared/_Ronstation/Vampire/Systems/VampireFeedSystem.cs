@@ -1,8 +1,6 @@
 using Content.Shared._Ronstation.Vampire.Components;
 using Content.Shared.Actions;
 using Content.Shared.Administration.Logs;
-using Robust.Shared.Audio;
-using Robust.Shared.Audio.Systems;
 using Content.Shared.Body.Components;
 using Content.Shared.Body.Systems;
 using Content.Shared.Chemistry.Components;
@@ -14,6 +12,8 @@ using Content.Shared.IdentityManagement;
 using Content.Shared.Mobs.Systems;
 using Content.Shared.Popups;
 using Content.Shared.Whitelist;
+using Robust.Shared.Audio;
+using Robust.Shared.Audio.Systems;
 using Robust.Shared.Containers;
 
 namespace Content.Shared._Ronstation.Vampire.Systems;
@@ -93,7 +93,8 @@ public sealed class VampireFeedSystem : EntitySystem
         _popupSystem.PopupPredicted(Loc.GetString("vampire-bite-msg", ("target", Identity.Entity(args.Target, EntityManager))),
             Loc.GetString("vampire-bite-msg-other", ("user", Identity.Entity(ent.Owner, EntityManager)), ("target", Identity.Entity(args.Target, EntityManager))),
             ent.Owner,
-            ent.Owner);
+            ent.Owner,
+            PopupType.MediumCaution);
 
         // Run OnFeedDoafter, passing the necessary args
         _doAfterSystem.TryStartDoAfter(new DoAfterArgs(EntityManager, ent, ent.Comp.Delay, new VampireFeedDoAfterEvent(), ent, target: target, used: ent)
