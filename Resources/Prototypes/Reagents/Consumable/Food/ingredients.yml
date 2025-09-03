@@ -196,6 +196,7 @@
   color: "#b67823"
   boilingPoint: 300.0
   meltingPoint: -16.0
+  flammability: 2
   tileReactions:
   - !type:FlammableTileReaction {}
 
