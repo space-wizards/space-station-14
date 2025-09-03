@@ -997,7 +997,7 @@
   parent: [ BaseCentcommContraband, ClothingOuterHardsuitBase ]
   id: ClothingOuterHardsuitCBURN
   name: CBURN exosuit
-  description: A lightweight yet strong exosuit used for special cleanup operations.
+  description: A lightweight and fireproof exosuit used for special cleanup operations.
   components:
   - type: Sprite
     sprite: Clothing/OuterClothing/Hardsuits/cburn.rsi
@@ -1009,6 +1009,8 @@
   - type: TemperatureProtection
     heatingCoefficient: 0.001
     coolingCoefficient: 0.001
+  - type: FireProtection
+    reduction: 0.8
   - type: ExplosionResistance
     damageCoefficient: 0.7
   - type: Armor
@@ -1025,8 +1027,8 @@
   - type: ZombificationResistance
     zombificationResistanceCoefficient: 0.25
   - type: ClothingSpeedModifier
-    walkModifier: 1.0
-    sprintModifier: 1.0
+    walkModifier: 0.9
+    sprintModifier: 0.9
   - type: HeldSpeedModifier
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetCBURN

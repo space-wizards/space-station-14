@@ -265,7 +265,11 @@
   components:
   - type: Storage
     maxItemSize: Huge
+    grid:
+    - 0,0,9,4
   - type: ClothingSpeedModifier
     walkModifier: 1
     sprintModifier: 1
   - type: HeldSpeedModifier
+  - type: Sprite
+    sprite: Clothing/Back/Duffels/cburn.rsi
