@@ -255,7 +255,8 @@
 - type: latheRecipe
   id: JetInjector
   result: JetInjector
-  category: Tools
+  categories:
+  - Tools
   completetime: 10
   materials:
     PlasmaGlass: 200
