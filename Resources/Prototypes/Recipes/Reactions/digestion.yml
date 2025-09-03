@@ -79,8 +79,8 @@
     Carbohydrate:
       amount: 1
   products:
-    Nutriment: 0.1
-    Toxin: 0.1 # TODO: replace with chemical fill that is inert at small doses, but toxic at high
+    Nutriment: 0.5
+    GastroToxin: 0.5
 
 # Herbivores
 - type: reaction
@@ -93,6 +93,18 @@
       amount: 1
   products:
     Nutriment: 1
+
+- type: reaction
+  id: HerbivoreProteinDigestion
+  source: true
+  requiredMixerCategories:
+  - HerbivoreDigestion
+  reactants:
+    Protein:
+      amount: 1
+  products:
+    Nutriment: 0.5
+    GastroToxin: 0.1
 
 # Blood
 - type: reaction
@@ -183,4 +195,4 @@
   products:
     Mold: 2
     Protein: 1
-    Toxin: 1
+    GastroToxin: 1
