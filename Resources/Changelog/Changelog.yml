@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Pronana
-  changes:
-  - message: Items can now slide on ice crust
-    type: Add
-  id: 8404
-  time: '2025-05-02T08:18:09.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/36847
 - author: metalgearsloth
   changes:
   - message: Predict gas canisters, gas tanks, and internals.
@@ -3945,3 +3938,10 @@
   id: 8916
   time: '2025-09-03T20:22:28.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/37661
+- author: breeplayx3
+  changes:
+  - message: Berry delight now requires blueberry cake as a precursor
+    type: Tweak
+  id: 8917
+  time: '2025-09-03T21:06:05.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/40085
