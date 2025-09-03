@@ -172,7 +172,7 @@ public sealed class IdCardConsoleSystem : SharedIdCardConsoleSystem
             Comp<IdCardComponent>(targetId).JobPrototype = newJobProto;
         }
 
-        var currentGroup = component.CurrentAccessGroup;
+        var currentGroup = component.CurrentAccessGroup ?? component.AccessGroups.FirstOrDefault();
         if (!_prototype.TryIndex<AccessGroupPrototype>(currentGroup, out var currentGroupPrototype))
         {
             _sawmill.Warning($"Current access group {currentGroup} not found!");
