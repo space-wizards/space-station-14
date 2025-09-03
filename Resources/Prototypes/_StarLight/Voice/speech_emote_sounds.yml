@@ -228,7 +228,7 @@
     Scream:
       path: /Audio/_Starlight/Effects/avali_scream.ogg
     Laugh:
-      collection: ResomiLaugh
+      path: /Audio/_Starlight/Voice/Avali/avali_laugh.ogg
     Sneeze:
       collection: MaleSneezes
     Cough:
@@ -278,7 +278,7 @@
     Scream:
       path: /Audio/_Starlight/Effects/avali_scream.ogg
     Laugh:
-      collection: ResomiLaugh
+      path: /Audio/_Starlight/Voice/Avali/avali_laugh.ogg
     Sneeze:
       collection: FemaleSneezes
     Cough:
