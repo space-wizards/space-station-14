@@ -4,8 +4,8 @@ meta:
   engineVersion: 266.0.0
   forkId: ""
   forkVersion: ""
-  time: 09/03/2025 00:52:52
-  entityCount: 26487
+  time: 09/03/2025 00:56:56
+  entityCount: 26486
 maps:
 - 1
 grids:
@@ -14718,7 +14718,7 @@ entities:
       pos: -131.5,-45.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -61338.375
+      secondsUntilStateChange: -61365.79
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -126031,8 +126031,6 @@ entities:
     - type: Transform
       pos: -86.5,-25.5
       parent: 2
-    - type: Lock
-      locked: False
     - type: Label
       currentLabel: 5
     - type: NameModifier
@@ -144386,11 +144384,6 @@ entities:
       name: AI Satelite SMES
     - type: Transform
       pos: -117.5,-65.5
-      parent: 2
-  - uid: 26487
-    components:
-    - type: Transform
-      pos: -88.5,-18.5
       parent: 2
 - proto: SoapDeluxe
   entities:
@@ -171052,7 +171045,7 @@ entities:
       lastSignals:
         DoorStatus: True
     - type: Door
-      secondsUntilStateChange: -261445.12
+      secondsUntilStateChange: -261472.55
       state: Opening
     - type: Airlock
       autoClose: False
