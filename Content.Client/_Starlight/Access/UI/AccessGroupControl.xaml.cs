@@ -3,7 +3,6 @@ using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.XAML;
 using Robust.Shared.Prototypes;
 using Content.Shared.Access;
-using Robust.Client.UserInterface;
 
 namespace Content.Client._Starlight.Access.UI;
 
@@ -24,7 +23,7 @@ public sealed partial class AccessGroupControl : BoxContainer
         _sawmill = _logManager.GetSawmill("accessgroupcontrol");
     }
 
-    public void Populate(List<ProtoId<AccessGroupPrototype>> accessGroups, IPrototypeManager prototypeManager)
+    public void Populate(List<ProtoId<AccessGroupPrototype>> accessGroups, ProtoId<AccessGroupPrototype> currentAccessGroup, IPrototypeManager prototypeManager)
     {
         foreach (var group in accessGroups)
         {
@@ -38,6 +37,10 @@ public sealed partial class AccessGroupControl : BoxContainer
             {
                 Text = accessGroup.Name ?? accessGroup.ID
             };
+
+            if (group == currentAccessGroup)
+                newButton.Disabled = true;
+                
             AddChild(newButton);
             ButtonsList.Add(accessGroup.ID, newButton);
         }

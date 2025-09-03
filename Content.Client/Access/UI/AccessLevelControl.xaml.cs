@@ -53,18 +53,18 @@ public sealed partial class AccessLevelControl : GridContainer
         IPrototypeManager? prototypeManager = null,
         List<ProtoId<AccessLevelPrototype>>? enabledList = null)
     {
+        if (currentGroup != null && prototypeManager != null && prototypeManager.TryIndex(currentGroup.Value, out var group))
+        {
+            RemoveAllChildren();
+            ButtonsList.Clear();
+
+            Populate(group.Tags.ToList(), prototypeManager);
+        }
+
         foreach (var (accessName, button) in ButtonsList)
         {
             button.Pressed = pressedList.Contains(accessName);
             button.Disabled = !(enabledList?.Contains(accessName) ?? true);
         }
-
-        if (currentGroup == null || prototypeManager == null || !prototypeManager.TryIndex(currentGroup.Value, out var group))
-            return;
-
-        RemoveAllChildren();
-        ButtonsList.Clear();
-
-        Populate(group.Tags.ToList(), prototypeManager);
     }
 }
