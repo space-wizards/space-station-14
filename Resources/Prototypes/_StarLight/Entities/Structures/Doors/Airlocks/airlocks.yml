@@ -1,0 +1,41 @@
+# Robotics
+- type: entity
+  parent: Airlock
+  id: AirlockRobotics
+  suffix: Robotics
+  components:
+  - type: Sprite
+    sprite: _Starlight/Structures/Doors/Airlocks/Standard/robotics.rsi
+  - type: Paintable
+    group: null
+
+- type: entity
+  parent: AirlockGlass
+  id: AirlockRoboticsGlass
+  suffix: Robotics
+  components:
+  - type: Sprite
+    sprite: _Starlight/Structures/Doors/Airlocks/Glass/robotics.rsi
+  - type: Paintable
+    group: null
+
+# Surgery
+- type: entity
+  parent: Airlock
+  id: AirlockSurgery
+  suffix: Surgery
+  components:
+  - type: Sprite
+    sprite: _Starlight/Structures/Doors/Airlocks/Standard/surgery.rsi
+  - type: Paintable
+    group: null
+
+- type: entity
+  parent: AirlockGlass
+  id: AirlockSurgeryGlass
+  suffix: Surgery
+  components:
+  - type: Sprite
+    sprite: _Starlight/Structures/Doors/Airlocks/Glass/surgery.rsi
+  - type: Paintable
+    group: null

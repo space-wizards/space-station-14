@@ -125,7 +125,7 @@
 
 # Robotics
 - type: entity
-  parent: AirlockScience
+  parent: AirlockRobotics
   id: AirlockRoboticsLocked
   suffix: Robotics, Locked
   components:
@@ -134,7 +134,7 @@
       board: [ DoorElectronicsRobotics ]
 
 - type: entity
-  parent: AirlockScienceGlass
+  parent: AirlockRoboticsGlass
   id: AirlockRoboticsGlassLocked
   suffix: Robotics, Locked
   components:
@@ -145,6 +145,32 @@
 - type: entity
   parent: AirlockRoboticsLocked
   id: AirlockMaintRoboticsLocked
+  components:
+  - type: Sprite
+    sprite: Structures/Doors/Airlocks/Standard/maint.rsi
+
+# Surgery
+- type: entity
+  parent: AirlockSurgery
+  id: AirlockSurgeryLocked
+  suffix: Surgery, Locked
+  components:
+  - type: ContainerFill
+    containers:
+      board: [ DoorElectronicsSurgery ]
+
+- type: entity
+  parent: AirlockSurgeryGlass
+  id: AirlockSurgeryGlassLocked
+  suffix: Surgery, Locked
+  components:
+  - type: ContainerFill
+    containers:
+      board: [ DoorElectronicsSurgery ]
+
+- type: entity
+  parent: AirlockSurgeryLocked
+  id: AirlockMaintSurgeryLocked
   components:
   - type: Sprite
     sprite: Structures/Doors/Airlocks/Standard/maint.rsi
