@@ -190,7 +190,7 @@
     - Borg
     - BasicSilicon
   - type: Machine
-    board: WeaponEnergyTurretSecurityMachineCircuitboard
+    board: WeaponEnergyTurretCommandMachineCircuitboard
   - type: DeviceNetwork
     receiveFrequencyId: TurretControl
     transmitFrequencyId: Turret
