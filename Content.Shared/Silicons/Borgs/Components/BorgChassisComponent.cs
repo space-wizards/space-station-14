@@ -80,7 +80,7 @@ public sealed partial class BorgChassisComponent : Component
     public ProtoId<AlertPrototype> NoBatteryAlert = "BorgBatteryNone";
 
     /// <summary>
-    /// If the entity can open own UI (default: false)
+    /// If the entity can open own UI.
     /// </summary>
     [DataField]
     public bool CanOpenSelfUi;
