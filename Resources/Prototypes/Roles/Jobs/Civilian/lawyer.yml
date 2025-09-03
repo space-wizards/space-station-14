@@ -8,12 +8,12 @@
       time: 9000 # 2.5 hrs
   startingGear: LawyerGear
   icon: "JobIconLawyer"
+  whitelisted: true
   supervisors: job-supervisors-hop
   access:
   - Service
   - Lawyer
   - Brig
-  - Maintenance
 
 - type: startingGear
   id: LawyerGear

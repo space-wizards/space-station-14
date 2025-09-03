@@ -9,13 +9,11 @@
       time: 1800 #0.5 hr
   startingGear: ChefGear
   icon: "JobIconChef"
+  whitelisted: true
   supervisors: job-supervisors-hop
   access:
   - Service
-  - Maintenance
   - Kitchen
-  extendedAccess:
-  - Hydroponics
   - Bar
 
 - type: startingGear

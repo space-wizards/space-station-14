@@ -19,6 +19,7 @@
   weight: 10
   startingGear: HoSGear
   icon: "JobIconHeadOfSecurity"
+  whitelisted: true
   supervisors: job-supervisors-captain
   canBeAntag: false
   access:
@@ -32,6 +33,19 @@
   - External
   - Detective
   - Cryogenics
+  - Bar
+  - Engineering
+  - Atmospherics
+  - Cargo
+  - Salvage
+  - Kitchen
+  - Janitor
+  - Theatre
+  - Chapel
+  - Hydroponics
+  - Chemistry
+  - Research
+  - Medical
   special:
   - !type:AddImplantSpecial
     implants: [ MindShieldImplant ]

@@ -5,14 +5,11 @@
   playTimeTracker: JobBotanist
   startingGear: BotanistGear
   icon: "JobIconBotanist"
+  whitelisted: true
   supervisors: job-supervisors-hop
   access:
   - Service
-  - Maintenance
   - Hydroponics
-  extendedAccess:
-  - Kitchen
-  - Bar
   special:
   - !type:GiveItemOnHolidaySpecial
     holiday: FourTwenty

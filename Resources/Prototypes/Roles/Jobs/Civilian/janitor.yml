@@ -5,6 +5,7 @@
   playTimeTracker: JobJanitor
   startingGear: JanitorGear
   icon: "JobIconJanitor"
+  whitelisted: true
   supervisors: job-supervisors-hop
   access:
   - Service

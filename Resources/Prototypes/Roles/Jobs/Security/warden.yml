@@ -13,17 +13,32 @@
   weight: 5
   startingGear: WardenGear
   icon: "JobIconWarden"
+  whitelisted: true
   supervisors: job-supervisors-hos
   canBeAntag: false
   access:
-  - Security
-  - Brig
+  access:
   - Armory
+  - Security
+  - Bar
+  - Brig
   - Maintenance
   - Service
-  - External
   - Detective
   - Cryogenics
+  - External
+  - Engineering
+  - Atmospherics
+  - Cargo
+  - Salvage
+  - Kitchen
+  - Janitor
+  - Theatre
+  - Chapel
+  - Hydroponics
+  - Chemistry
+  - Research
+  - Medical
   special:
   - !type:AddImplantSpecial
     implants: [ MindShieldImplant ]

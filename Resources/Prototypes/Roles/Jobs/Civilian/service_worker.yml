@@ -9,10 +9,10 @@
     time: 1800 #0.5 hr
   startingGear: ServiceWorkerGear
   icon: "JobIconServiceWorker"
+  whitelisted: true
   supervisors: job-supervisors-service
   access:
   - Service
-  - Maintenance
   - Bar
   - Kitchen
   extendedAccess:

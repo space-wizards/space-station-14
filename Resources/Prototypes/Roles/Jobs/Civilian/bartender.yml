@@ -9,14 +9,12 @@
       time: 1800 #0.5 hr
   startingGear: BartenderGear
   icon: "JobIconBartender"
+  whitelisted: true
   supervisors: job-supervisors-hop
   access:
   - Service
-  - Maintenance
   - Bar
-  extendedAccess:
   - Kitchen
-  - Hydroponics
 
 - type: startingGear
   id: BartenderGear

@@ -3,9 +3,9 @@
   name: job-name-deathsquad
   description: job-description-deathsquad
   playTimeTracker: JobDeathSquad
-  setPreference: false
   startingGear: DeathSquadGear
   icon: "JobIconNanotrasen"
+  whitelisted: true
   supervisors: job-supervisors-centcom
   canBeAntag: false
   accessGroups:

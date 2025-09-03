@@ -5,10 +5,10 @@
   playTimeTracker: JobReporter
   startingGear: ReporterGear
   icon: "JobIconReporter"
+  whitelisted: true
   supervisors: job-supervisors-hop
   access:
   - Service
-  - Maintenance
 
 - type: startingGear
   id: ReporterGear

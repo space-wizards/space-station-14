@@ -6,19 +6,33 @@
   requirements:
   - !type:RoleTimeRequirement
     role: JobSecurityOfficer
-    time: 18000 #5 hrs
+    time: 180000 #50 hrs
   startingGear: DetectiveGear
   icon: "JobIconDetective"
+  whitelisted: true
   supervisors: job-supervisors-hos
   canBeAntag: false
   access:
   - Security
+  - Bar
   - Brig
   - Maintenance
   - Service
   - Detective
   - Cryogenics
   - External
+  - Engineering
+  - Atmospherics
+  - Cargo
+  - Salvage
+  - Kitchen
+  - Janitor
+  - Theatre
+  - Chapel
+  - Hydroponics
+  - Chemistry
+  - Research
+  - Medical
   special:
   - !type:AddImplantSpecial
     implants: [ MindShieldImplant ]

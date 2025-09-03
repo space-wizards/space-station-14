@@ -5,10 +5,10 @@
   playTimeTracker: JobClown
   startingGear: ClownGear
   icon: "JobIconClown"
+  whitelisted: true
   supervisors: job-supervisors-hop
   access:
   - Theatre
-  - Maintenance
   special:
   - !type:AddComponentSpecial
     components:

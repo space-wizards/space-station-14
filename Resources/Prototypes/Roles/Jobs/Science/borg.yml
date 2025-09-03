@@ -8,9 +8,10 @@
   requirements:
   - !type:RoleTimeRequirement
     role: JobBorg
-    time: 18000  # 5 hrs
+    time: 180000  # 50 hrs
   canBeAntag: false
   icon: JobIconStationAi
+  whitelisted: true
   supervisors: job-supervisors-rd
   jobEntity: StationAiBrain
   jobPreviewEntity: PlayerStationAiPreview
@@ -26,6 +27,7 @@
       time: 36000 # 10 hrs
   canBeAntag: false
   icon: JobIconBorg
+  whitelisted: true
   supervisors: job-supervisors-rd
   jobEntity: PlayerBorgBattery
   applyTraits: false

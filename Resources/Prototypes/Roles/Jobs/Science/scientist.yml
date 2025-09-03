@@ -6,9 +6,10 @@
   requirements:
     - !type:DepartmentTimeRequirement
       department: Science
-      time: 9000 #2.5 hrs
+      time: 90000 #25 hrs
   startingGear: ScientistGear
   icon: "JobIconScientist"
+  whitelisted: true
   supervisors: job-supervisors-rd
   access:
   - Research

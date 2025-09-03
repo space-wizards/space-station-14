@@ -5,10 +5,10 @@
   playTimeTracker: JobZookeeper
   startingGear: ZookeeperGear
   icon: "JobIconZookeeper"
+  whitelist: true
   supervisors: job-supervisors-hop
   access:
   - Service
-  - Maintenance
   special:
   - !type:GiveItemOnHolidaySpecial
     holiday: MonkeyDay

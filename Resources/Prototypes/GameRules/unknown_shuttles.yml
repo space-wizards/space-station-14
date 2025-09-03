@@ -46,7 +46,7 @@
     startAnnouncement: station-event-unknown-shuttle-incoming
     startAudio:
       path: /Audio/Announcements/attention.ogg
-    weight: 0.0002 # 10 default
+    weight: 0.00002 # 10 default
     minimumPlayers: 5
     reoccurrenceDelay: 30
     duration: 1
@@ -100,7 +100,7 @@
   components:
   - type: StationEvent
     startAnnouncement: null # It should be silent.
-    weight: 0.0002 # lower because weird freelance roles
+    weight: 0.00002 # lower because weird freelance roles
     minimumPlayers: 5
     maxOccurrences: 2 # should be the same as [copies] in shuttle_incoming_event.yml
   - type: LoadMapRule
@@ -112,7 +112,7 @@
   components:
   - type: StationEvent
     startAnnouncement: null # It should be silent.
-    weight: 0.0001 # Hopefully this is uncommon enough, it needs to be uncommon enough that people wont waste time metaknowledging it.
+    weight: 0.00001 # Hopefully this is uncommon enough, it needs to be uncommon enough that people wont waste time metaknowledging it.
     earliestStart: 7600 # late to hopefully have enough ghosts to fill all roles quickly.
     minimumPlayers: 25
   - type: LoadMapRule
@@ -124,7 +124,7 @@
   components:
   - type: StationEvent
     startAnnouncement: station-event-unknown-shuttle-incoming #!!
-    weight: 0.0001 # Its just a big ship, so it needs to be rarer to be interesting.
+    weight: 0.00001 # Its just a big ship, so it needs to be rarer to be interesting.
     minimumPlayers: 5
   - type: LoadMapRule
     preloadedGrid: Cruiser
@@ -162,7 +162,7 @@
   components:
   - type: StationEvent
     startAnnouncement: station-event-unknown-shuttle-incoming #!!
-    weight: 0.0001 # Its just a big ship, so it needs to be rarer to be interesting.
+    weight: 0.00001 # Its just a big ship, so it needs to be rarer to be interesting.
   - type: LoadMapRule
     preloadedGrid: Gym
 
@@ -172,7 +172,7 @@
   components:
   - type: StationEvent
     startAnnouncement: station-event-unknown-shuttle-incoming #!!
-    weight: 0.0002 # Its just a big ship, so it needs to be rarer to be interesting.
+    weight: 0.00002 # Its just a big ship, so it needs to be rarer to be interesting.
     minimumPlayers: 5
     earliestStart: 7600 # late to hopefully have enough ghosts to fill all roles quickly. (5-6)
   - type: LoadMapRule
@@ -233,7 +233,7 @@
   components:
   - type: StationEvent
     startAnnouncement: station-event-unknown-shuttle-incoming #!!
-    weight: 0.0003 # this is higher because its just a little generic personal shuttle
+    weight: 0.00003 # this is higher because its just a little generic personal shuttle
     minimumPlayers: 3
     maxOccurrences: 4
   - type: LoadMapRule

@@ -38,7 +38,7 @@
   parent: CargoGiftsBase
   components:
   - type: StationEvent
-    weight: 0.3
+    weight: 0.003
     duration: 120
     earliestStart: 300
   - type: CargoGiftsRule
@@ -55,10 +55,10 @@
   parent: CargoGiftsBase
   components:
   - type: StationEvent
-    weight: 0.1
+    weight: 0.001
     duration: 240
     earliestStart: 3600
-    minimumPlayers: 15
+    minimumPlayers: 10
   - type: CargoGiftsRule
     description: cargo-gift-pizza-large
     dest: cargo-gift-dest-bar
@@ -72,10 +72,10 @@
   parent: CargoGiftsBase
   components:
   - type: StationEvent
-    weight: 0.2
+    weight: 0.002
     duration: 240
     earliestStart: 7200
-    minimumPlayers: 5
+    minimumPlayers: 1
   - type: CargoGiftsRule
     description: cargo-gift-eng
     dest: cargo-gift-dest-eng
@@ -92,9 +92,9 @@
   parent: CargoGiftsBase
   components:
   - type: StationEvent
-    weight: 0.3
+    weight: 0.003
     duration: 120
-    minimumPlayers: 5
+    minimumPlayers: 1
     earliestStart: 7200
   - type: CargoGiftsRule
     description: cargo-gift-vending
@@ -112,9 +112,9 @@
   parent: CargoGiftsBase
   components:
   - type: StationEvent
-    weight: 0.3
+    weight: 0.003
     duration: 120
-    minimumPlayers: 5
+    minimumPlayers: 1
     earliestStart: 3600
   - type: CargoGiftsRule
     description: cargo-gift-cleaning
@@ -129,10 +129,10 @@
   parent: CargoGiftsBase
   components:
   - type: StationEvent
-    weight: 0.3
+    weight: 0.003
     duration: 120
     earliestStart: 3600
-    minimumPlayers: 5
+    minimumPlayers: 1
   - type: CargoGiftsRule
     description: cargo-gift-medical-supply
     dest: cargo-gift-dest-med
@@ -148,10 +148,10 @@
   parent: CargoGiftsBase
   components:
   - type: StationEvent
-    weight: 0.2
+    weight: 0.002
     duration: 120
     earliestStart: 7200
-    minimumPlayers: 5
+    minimumPlayers: 1
   - type: CargoGiftsRule
     description: cargo-gift-space-protection
     dest: cargo-gift-dest-supp
@@ -167,7 +167,7 @@
   parent: CargoGiftsBase
   components:
   - type: StationEvent
-    weight: 0.4
+    weight: 0.004
     duration: 120
     earliestStart: 7200
     minimumPlayers: 5
@@ -184,7 +184,7 @@
   parent: CargoGiftsBase
   components:
   - type: StationEvent
-    weight: 0.1
+    weight: 0.001
     duration: 120
     earliestStart: 8600
     minimumPlayers: 5
@@ -203,7 +203,7 @@
   parent: CargoGiftsBase
   components:
   - type: StationEvent
-    weight: 0.1
+    weight: 0.001
     duration: 120
     earliestStart: 8600
     minimumPlayers: 5

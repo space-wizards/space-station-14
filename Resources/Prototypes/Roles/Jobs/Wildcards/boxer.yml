@@ -5,10 +5,10 @@
   playTimeTracker: JobBoxer
   startingGear: BoxerGear
   icon: "JobIconBoxer"
+  whitelisted: true
   supervisors: job-supervisors-hop
   access:
   - Service
-  - Maintenance
   special:
   - !type:GiveItemOnHolidaySpecial
     holiday: BoxingDay

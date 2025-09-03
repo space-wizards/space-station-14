@@ -9,15 +9,32 @@
       time: 9000 #2.5 hrs
   startingGear: SecurityOfficerGear
   icon: "JobIconSecurityOfficer"
+  whitelisted: true
   supervisors: job-supervisors-hos
   canBeAntag: false
   access:
   - Security
+  - Bar
   - Brig
   - Maintenance
   - Service
-  - External
+  - Detective
   - Cryogenics
+  - External
+  - Engineering
+  - Atmospherics
+  - Cargo
+  - Salvage
+  - Service
+  - Kitchen
+  - Janitor
+  - Theatre
+  - Chapel
+  - Hydroponics
+  - Chemistry
+  - Research
+  - Lawyer
+  - Medical
   special:
   - !type:AddImplantSpecial
     implants: [ MindShieldImplant ]

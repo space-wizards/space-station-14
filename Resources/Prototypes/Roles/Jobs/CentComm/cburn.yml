@@ -3,9 +3,9 @@
   name: job-name-cburn
   description: job-description-cburn
   playTimeTracker: JobCBURN
-  setPreference: false
   startingGear: CBURNGear
   icon: "JobIconNanotrasen"
+  whitelisted: true
   supervisors: job-supervisors-centcom
   canBeAntag: false
   accessGroups:

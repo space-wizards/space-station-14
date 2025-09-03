@@ -12,6 +12,7 @@
       inverted: true # stop playing intern if you're good at security!
   startingGear: SecurityCadetGear
   icon: "JobIconSecurityCadet"
+  whitelisted: true
   supervisors: job-supervisors-security
   canBeAntag: false
   access:
@@ -20,7 +21,6 @@
   - Maintenance
   - Service
   - External
-  - Cryogenics
   special:
   - !type:AddImplantSpecial
     implants: [ MindShieldImplant ]
