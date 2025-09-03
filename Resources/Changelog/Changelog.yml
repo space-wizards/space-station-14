@@ -1,29 +1,4 @@
 ﻿Entries:
-- author: Nikitosych
-  changes:
-  - message: Fixed abrupt stamina damage reset and abrupt speed recovery after 3 seconds
-      (especially noticeable at high damage levels)
-    type: Fix
-  - message: Stamina damage no longer instantly resets when exiting critical state;
-      it now regenerates gradually.
-    type: Tweak
-  id: 8402
-  time: '2025-05-01T23:01:17.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/36336
-- author: YoungThugSS14
-  changes:
-  - message: The Wizard Helmet is now obtainable from the magic vend.
-    type: Tweak
-  id: 8403
-  time: '2025-05-02T01:56:54.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/37084
-- author: Pronana
-  changes:
-  - message: Items can now slide on ice crust
-    type: Add
-  id: 8404
-  time: '2025-05-02T08:18:09.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/36847
 - author: metalgearsloth
   changes:
   - message: Predict gas canisters, gas tanks, and internals.
@@ -3948,3 +3923,25 @@
   id: 8914
   time: '2025-09-03T18:05:48.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/39083
+- author: MissKay1994
+  changes:
+  - message: Interns will no longer be hired infinitely
+    type: Tweak
+  id: 8915
+  time: '2025-09-03T20:16:07.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/40001
+- author: Hitlinemoss
+  changes:
+  - message: Added the senior courier PDA for Cargo Technicians with a significant
+      amount of playtime.
+    type: Add
+  id: 8916
+  time: '2025-09-03T20:22:28.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37661
+- author: breeplayx3
+  changes:
+  - message: Berry delight now requires blueberry cake as a precursor
+    type: Tweak
+  id: 8917
+  time: '2025-09-03T21:06:05.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/40085
