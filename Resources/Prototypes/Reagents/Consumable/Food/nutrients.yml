@@ -112,12 +112,11 @@
 - type: reagent
   id: Fat
   name: reagent-name-fat
-  group: Food
+  group: Biological
   desc: reagent-desc-fat
   flavor: terrible
   color: "#d8d8b0"
   physicalDesc: reagent-physical-desc-exotic-smelling
-  slippery: false
   footstepSound:
     collection: FootstepBlood
     params:
