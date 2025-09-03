@@ -1,5 +1,5 @@
 using System.Linq;
-using Content.Client._Starlight.Access.UI;
+using Content.Client._Starlight.Access.UI; // Starlight-edit
 using Content.Shared.Access;
 using Content.Shared.Access.Systems;
 using Content.Shared.CCVar;
@@ -39,11 +39,11 @@ namespace Content.Client.Access.UI
         // The job that will be picked if the ID doesn't have a job on the station.
         private static ProtoId<JobPrototype> _defaultJob = "Assistant";
 
-        private ProtoId<AccessGroupPrototype>? _selectedAccessGroup = null;
-        public Action<ProtoId<AccessGroupPrototype>>? OnGroupSelected;
+        private ProtoId<AccessGroupPrototype>? _selectedAccessGroup = null; // Starlight-edit
+        public Action<ProtoId<AccessGroupPrototype>>? OnGroupSelected; // Starlight-edit
 
         public IdCardConsoleWindow(IdCardConsoleBoundUserInterface owner, IPrototypeManager prototypeManager,
-            List<ProtoId<AccessGroupPrototype>> accessGroups)
+            List<ProtoId<AccessGroupPrototype>> accessGroups) // Starlight-edit
         {
             RobustXamlLoader.Load(this);
             IoCManager.InjectDependencies(this);
@@ -104,10 +104,10 @@ namespace Content.Client.Access.UI
 
             AccessLevelControlContainer.AddChild(_accessButtons);
 
+            // Starlight-start: Access Groups
             foreach (var (id, button) in _accessGroups.ButtonsList)
-            {
                 button.OnPressed += _ => OnGroupSelected?.Invoke(id);
-            }
+            // Starlight-end
 
             foreach (var (id, button) in _accessButtons.ButtonsList)
             {
@@ -206,19 +206,25 @@ namespace Content.Client.Access.UI
 
             JobPresetOptionButton.Disabled = !interfaceEnabled;
 
+            // Starlight-start: Access Groups
+
             _selectedAccessGroup = state.CurrentAccessGroup;
 
             _accessGroups.UpdateState(state.CurrentAccessGroup);
 
+            // Starlight-end
+
             _accessButtons.UpdateState(state.TargetIdAccessList?.ToList() ??
                                        new List<ProtoId<AccessLevelPrototype>>(),
-                                       state.CurrentAccessGroup,
-                                       _prototypeManager,
+                                       state.CurrentAccessGroup, // Starlight-edit
+                                       _prototypeManager, // Starlight-edit
                                        state.AllowedModifyAccessList?.ToList() ??
                                        new List<ProtoId<AccessLevelPrototype>>());
 
+            // Starlight-start: Access Groups
             foreach (var (id, button) in _accessButtons.ButtonsList)
                 button.OnPressed += _ => SubmitData();
+            // Starlight-end
 
             var jobIndex = _jobPrototypeIds.IndexOf(state.TargetIdJobPrototype);
             // If the job index is < 0 that means they don't have a job registered in the station records

@@ -4,7 +4,7 @@ using Content.Shared.Access.Systems;
 using Content.Shared.CCVar;
 using Content.Shared.Containers.ItemSlots;
 using Content.Shared.CrewManifest;
-using Content.Shared._Starlight.Access;
+using Content.Shared._Starlight.Access; // Starlight-edit
 using Robust.Shared.Configuration;
 using Robust.Shared.Prototypes;
 using static Content.Shared.Access.Components.IdCardConsoleComponent;
@@ -34,24 +34,24 @@ namespace Content.Client.Access.UI
         protected override void Open()
         {
             base.Open();
-            List<ProtoId<AccessGroupPrototype>> accessGroups;
+            List<ProtoId<AccessGroupPrototype>> accessGroups; // Starlight-edit
 
             if (EntMan.TryGetComponent<IdCardConsoleComponent>(Owner, out var idCard))
             {
-                accessGroups = idCard.AccessGroups;
+                accessGroups = idCard.AccessGroups; // Starlight-edit
             }
             else
             {
-                accessGroups = new List<ProtoId<AccessGroupPrototype>>();
+                accessGroups = new List<ProtoId<AccessGroupPrototype>>(); // Starlight-edit
                 _idCardConsoleSystem.Log.Error($"No IdCardConsole component found for {EntMan.ToPrettyString(Owner)}!");
             }
 
-            _window = new IdCardConsoleWindow(this, _prototypeManager, accessGroups)
+            _window = new IdCardConsoleWindow(this, _prototypeManager, accessGroups) // Starlight-edit
             {
                 Title = EntMan.GetComponent<MetaDataComponent>(Owner).EntityName
             };
 
-            _window.OnGroupSelected += group => SendMessage(new AccessGroupSelectedMessage(group));
+            _window.OnGroupSelected += group => SendMessage(new AccessGroupSelectedMessage(group)); // Starlight-edit
             _window.CrewManifestButton.OnPressed += _ => SendMessage(new CrewManifestOpenUiMessage());
             _window.PrivilegedIdButton.OnPressed += _ => SendMessage(new ItemSlotButtonPressedEvent(PrivilegedIdCardSlotId));
             _window.TargetIdButton.OnPressed += _ => SendMessage(new ItemSlotButtonPressedEvent(TargetIdCardSlotId));
