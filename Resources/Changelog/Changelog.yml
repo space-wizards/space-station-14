@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: metalgearsloth
-  changes:
-  - message: Fix action additions / removals sometimes not being predicted.
-    type: Fix
-  id: 8398
-  time: '2025-05-01T00:11:35.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/37076
 - author: imatsoup
   changes:
   - message: Battery weapons with multiple fire-modes (Energy Shotgun, Temperature
@@ -3950,3 +3943,10 @@
   id: 8910
   time: '2025-09-02T13:32:18.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/39859
+- author: FungiFellow
+  changes:
+  - message: Sentience Event can no longer target Corgis, Smile or Mothroaches
+    type: Tweak
+  id: 8911
+  time: '2025-09-03T12:00:07.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/39810
