@@ -10,7 +10,7 @@ namespace Content.Client.Anomaly;
 public sealed class AnomalySystem : SharedAnomalySystem
 {
     [Dependency] private readonly IGameTiming _timing = default!;
-    [Dependency] private readonly FloatingVisualizerSystem _floating = default!;
+    [Dependency] private readonly GravitySystem _gravity = default!;
     [Dependency] private readonly SpriteSystem _sprite = default!;
 
     /// <inheritdoc/>
@@ -26,14 +26,14 @@ public sealed class AnomalySystem : SharedAnomalySystem
     }
     private void OnStartup(EntityUid uid, AnomalyComponent component, ComponentStartup args)
     {
-        _floating.FloatAnimation(uid, component.FloatingOffset, component.AnimationKey, component.AnimationTime);
+        _gravity.FloatAnimation(uid, component.FloatingOffset, component.AnimationKey, component.AnimationTime);
     }
 
     private void OnAnimationComplete(EntityUid uid, AnomalyComponent component, AnimationCompletedEvent args)
     {
         if (args.Key != component.AnimationKey)
             return;
-        _floating.FloatAnimation(uid, component.FloatingOffset, component.AnimationKey, component.AnimationTime);
+        _gravity.FloatAnimation(uid, component.FloatingOffset, component.AnimationKey, component.AnimationTime);
     }
 
     private void OnAppearanceChanged(EntityUid uid, AnomalyComponent component, ref AppearanceChangeEvent args)
