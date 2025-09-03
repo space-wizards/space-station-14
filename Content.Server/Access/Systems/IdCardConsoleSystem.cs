@@ -103,7 +103,7 @@ public sealed class IdCardConsoleSystem : SharedIdCardConsoleSystem
                 string.Empty,
                 privilegedIdName,
                 string.Empty,
-                component.CurrentAccessGroup ?? string.Empty);
+                component.CurrentAccessGroup ?? component.AccessGroups.FirstOrDefault());
         }
         else
         {
@@ -129,7 +129,7 @@ public sealed class IdCardConsoleSystem : SharedIdCardConsoleSystem
                 jobProto,
                 privilegedIdName,
                 Name(targetId),
-                component.CurrentAccessGroup ?? string.Empty);
+                component.CurrentAccessGroup ?? component.AccessGroups.FirstOrDefault());
         }
 
         _userInterface.SetUiState(uid, IdCardConsoleUiKey.Key, newState);

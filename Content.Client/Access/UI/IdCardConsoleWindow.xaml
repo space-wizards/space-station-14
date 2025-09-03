@@ -34,7 +34,7 @@
         <!-- Starlight-start: Access Groups -->
         <BoxContainer Orientation="Horizontal">
             <Control Name="AccessGroupControlContainer" /> <!-- Access Groups Buttons -->
-            <cc:VSeparator Color="#A04B81" Margin="5 0 5 0" /> <!-- Separator -->
+            <cc:VSeparator Color="#a88b5e" Margin="5 0 5 0" /> <!-- Separator -->
             <Control Name="AccessLevelControlContainer" /> <!-- Access Level Buttons -->
         </BoxContainer>
         <!-- Starlight-end: Access Groups -->
