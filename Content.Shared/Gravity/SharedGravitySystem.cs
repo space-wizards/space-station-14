@@ -32,7 +32,7 @@ public abstract partial class SharedGravitySystem : EntitySystem
         SubscribeLocalEvent<GravityChangedEvent>(OnGravityChange);
 
         // Weightlessness
-        SubscribeLocalEvent<GravityAffectedComponent, ComponentInit>(OnInit);
+        SubscribeLocalEvent<GravityAffectedComponent, ComponentStartup>(OnStartup);
         SubscribeLocalEvent<GravityAffectedComponent, ComponentGetState>(OnGetState);
         SubscribeLocalEvent<GravityAffectedComponent, ComponentHandleState>(OnHandleState);
         SubscribeLocalEvent<GravityAffectedComponent, EntParentChangedMessage>(OnEntParentChanged);
@@ -127,7 +127,7 @@ public abstract partial class SharedGravitySystem : EntitySystem
         RaiseLocalEvent(entity, ref ev);
     }
 
-    private void OnInit(Entity<GravityAffectedComponent> entity, ref ComponentInit args)
+    private void OnStartup(Entity<GravityAffectedComponent> entity, ref ComponentStartup args)
     {
         RefreshWeightless((entity.Owner, entity.Comp));
     }
@@ -162,6 +162,10 @@ public abstract partial class SharedGravitySystem : EntitySystem
 
     private void OnEntParentChanged(Entity<GravityAffectedComponent> entity, ref EntParentChangedMessage args)
     {
+        // DO NOT UPDATE WEIGHTLESSNESS IF WE'RE GOING TO OR COMING FROM NULLSPACE!!!
+        if (args.OldMapId == null || args.Transform.MapID == MapId.Nullspace)
+            return;
+
         // If we've moved but are still on the same grid, then don't do anything.
         if (args.OldParent == args.Transform.GridUid)
             return;
@@ -195,11 +199,6 @@ public abstract partial class SharedGravitySystem : EntitySystem
     public bool EntityGridOrMapHaveGravity(Entity<TransformComponent?> entity)
     {
         entity.Comp ??= Transform(entity);
-
-        // DO NOT SET TO WEIGHTLESS IF THEY'RE IN NULL-SPACE
-        // TODO: If entities actually properly pause when leaving PVS rather than entering null-space this can probably go.
-        if (entity.Comp.MapID == MapId.Nullspace)
-            return true;
 
         return GravityQuery.TryComp(entity.Comp.GridUid, out var gravity) && gravity.Enabled ||
                GravityQuery.TryComp(entity.Comp.MapUid, out var mapGravity) && mapGravity.Enabled;

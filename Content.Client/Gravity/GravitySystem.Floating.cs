@@ -9,15 +9,12 @@ namespace Content.Client.Gravity;
 /// <summary>
 /// Handles offsetting a sprite when there is no gravity.
 /// </summary>
-public sealed class FloatingVisualizerSystem : EntitySystem
+public sealed partial class GravitySystem
 {
-    [Dependency] private readonly SharedGravitySystem _gravity = default!;
     [Dependency] private readonly AnimationPlayerSystem _animationSystem = default!;
 
-    public override void Initialize()
+    public void InitializeFloatingVisuals()
     {
-        base.Initialize();
-
         SubscribeLocalEvent<FloatingVisualsComponent, ComponentStartup>(OnComponentStartup);
         SubscribeLocalEvent<FloatingVisualsComponent, WeightlessnessChangedEvent>(OnWeightlessnessChanged);
         SubscribeLocalEvent<FloatingVisualsComponent, AnimationCompletedEvent>(OnAnimationCompleted);
@@ -25,7 +22,7 @@ public sealed class FloatingVisualizerSystem : EntitySystem
 
     private void OnComponentStartup(Entity<FloatingVisualsComponent> ent, ref ComponentStartup args)
     {
-        ent.Comp.IsFloating = _gravity.IsWeightless(ent.Owner);
+        ent.Comp.IsFloating = IsWeightless(ent.Owner);
 
         if (ent.Comp.IsFloating)
             FloatAnimation(ent, ent.Comp.Offset, FloatingVisualsComponent.AnimationKey, ent.Comp.AnimationTime);
