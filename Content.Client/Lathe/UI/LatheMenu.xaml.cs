@@ -157,7 +157,7 @@ public sealed partial class LatheMenu : DefaultWindow
 
                 if (child == null)
                 {
-                    //DebugTools.Assert($"Lathe menu recipe control at {idx} is not of type RecipeControl"); // Something's gone terribly wrong.
+                    DebugTools.Assert($"Lathe menu recipe control at {idx} is not of type RecipeControl"); // Something's gone terribly wrong.
                     continue;
                 }
 
