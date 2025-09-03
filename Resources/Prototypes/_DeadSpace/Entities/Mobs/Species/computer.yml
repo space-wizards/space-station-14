@@ -95,4 +95,8 @@
   - type: Tag
     tags:
     - SiliconIPSIPCEmotes
+    - CanPilot
+    - FootstepSound
+    - DoorBumpOpener
+    - AnomalyHost
   # - type: FootPrints
