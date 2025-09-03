@@ -19,9 +19,9 @@ public sealed partial class GameTicker
     public GamePresetPrototype? Preset { get; private set; }
 
     /// <summary>
-    /// If the selected preset should be showed as a secret gamemode
+    /// The selected preset that will be shown at the lobby screen to fool players.
     /// </summary>
-    public bool Secret { get; private set; }
+    public GamePresetPrototype? Decoy { get; private set; }
 
     /// <summary>
     /// The preset that's currently active.
@@ -99,7 +99,7 @@ public sealed partial class GameTicker
         SetGamePreset(LobbyEnabled ? _cfg.GetCVar(CCVars.GameLobbyDefaultPreset) : "sandbox");
     }
 
-    public void SetGamePreset(GamePresetPrototype? preset, bool force = false, bool secret = false, int? resetDelay = null)
+    public void SetGamePreset(GamePresetPrototype? preset, bool force = false, GamePresetPrototype? decoy = null, int? resetDelay = null)
     {
         // Do nothing if this game ticker is a dummy!
         if (DummyTicker)
@@ -119,7 +119,7 @@ public sealed partial class GameTicker
         }
 
         Preset = preset;
-        Secret = secret;
+        Decoy = decoy;
         ValidateMap();
         UpdateInfoText();
 

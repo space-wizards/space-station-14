@@ -42,15 +42,15 @@ namespace Content.Server.GameTicking.Commands
                 return;
             }
 
-            var secret = false;
+            GamePresetPrototype? decoy = null;
 
-            if (args.Length == 3 && !bool.TryParse(args[2], out secret))
+            if (args.Length == 3 && !ticker.TryFindGamePreset(args[2], out decoy))
             {
-                shell.WriteError(Loc.GetString("set-game-preset-optional-argument-not-bool"));
+                shell.WriteError(Loc.GetString("set-game-preset-preset-error", ("preset", args[1])));
                 return;
             }
 
-            ticker.SetGamePreset(preset, false, secret, rounds);
+            ticker.SetGamePreset(preset, false, decoy, rounds);
             shell.WriteLine(Loc.GetString("set-game-preset-preset-set-finite", ("preset", preset.ID), ("rounds", rounds.ToString())));
         }
 
@@ -71,7 +71,16 @@ namespace Content.Server.GameTicking.Commands
             }
             if (args.Length == 3)
             {
-                return CompletionResult.FromHintOptions(CompletionHelper.Booleans,
+                var gamePresets = _prototype.EnumeratePrototypes<GamePresetPrototype>()
+                    .OrderBy(p => p.ID);
+                var options = new List<string>();
+                foreach (var preset in gamePresets)
+                {
+                    options.Add(preset.ID);
+                    options.AddRange(preset.Alias);
+                }
+
+                return CompletionResult.FromHintOptions(options,
                 Loc.GetString("set-game-preset-command-hint-3"));
             }
             return CompletionResult.Empty;
