@@ -2,7 +2,7 @@
   parent: BaseAction
   id: ActionVampireFeed
   name: feed
-  description: Drain blood from someone to sate your hunger
+  description: Drain blood from someone to extract vitae
   components:
   - type: Action
     icon: { sprite : Interface/Actions/devour.rsi, state: icon }

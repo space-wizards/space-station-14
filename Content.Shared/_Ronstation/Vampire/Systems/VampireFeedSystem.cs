@@ -10,6 +10,7 @@ using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Damage;
 using Content.Shared.Database;
 using Content.Shared.DoAfter;
+using Content.Shared.IdentityManagement;
 using Content.Shared.Mobs.Systems;
 using Content.Shared.Popups;
 using Content.Shared.Whitelist;
@@ -54,13 +55,13 @@ public sealed class VampireFeedSystem : EntitySystem
             // Can't drink from a target without a beating heart
             if (_mobState.IsDead(target))
             {
-                _popupSystem.PopupClient(Loc.GetString("vampire-feed-attempt-failed-dead"), ent, ent, PopupType.Medium);
+                _popupSystem.PopupClient(Loc.GetString("vampire-feed-attempt-failed-dead", ("target", Identity.Entity(target, EntityManager))), ent, ent, PopupType.Medium);
                 return false;
             }
             // Not enough blood = not enough blood flow (to stop people from 'farming')
             if (bloodSolution.Volume < 10)
             {
-                _popupSystem.PopupClient(Loc.GetString("vampire-feed-attempt-failed-low-blood"), ent, ent, PopupType.Medium);
+                _popupSystem.PopupClient(Loc.GetString("vampire-feed-attempt-failed-low-blood", ("target", Identity.Entity(target, EntityManager))), ent, ent, PopupType.Medium);
                 return false;
             }
             return true;
@@ -87,6 +88,12 @@ public sealed class VampireFeedSystem : EntitySystem
 
         // Log it for admins so they can see what's happening
         _adminLogger.Add(LogType.Action, LogImpact.Medium, $"{ent:player} started drinking {target:player}'s blood");
+
+        // I am biting someone/Hey a vampire is biting someone
+        _popupSystem.PopupPredicted(Loc.GetString("vampire-bite-msg", ("target", Identity.Entity(args.Target, EntityManager))),
+            Loc.GetString("vampire-bite-msg-other", ("user", Identity.Entity(ent.Owner, EntityManager)), ("target", Identity.Entity(args.Target, EntityManager))),
+            ent.Owner,
+            ent.Owner);
 
         // Run OnFeedDoafter, passing the necessary args
         _doAfterSystem.TryStartDoAfter(new DoAfterArgs(EntityManager, ent, ent.Comp.Delay, new VampireFeedDoAfterEvent(), ent, target: target, used: ent)
