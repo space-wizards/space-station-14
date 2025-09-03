@@ -28,20 +28,15 @@ namespace Content.Client.UserInterface.Systems.Character;
 public sealed class CharacterUIController : UIController, IOnStateEntered<GameplayState>, IOnStateExited<GameplayState>, IOnSystemChanged<CharacterInfoSystem>
 {
     [Dependency] private readonly IEntityManager _ent = default!;
-    [Dependency] private readonly ILogManager _logMan = default!;
     [Dependency] private readonly IPlayerManager _player = default!;
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
 
     [UISystemDependency] private readonly CharacterInfoSystem _characterInfo = default!;
     [UISystemDependency] private readonly SpriteSystem _sprite = default!;
 
-    private ISawmill _sawmill = default!;
-
     public override void Initialize()
     {
         base.Initialize();
-
-        _sawmill = _logMan.GetSawmill("character");
 
         SubscribeNetworkEvent<MindRoleTypeChangedEvent>(OnRoleTypeChanged);
     }
@@ -221,18 +216,11 @@ public sealed class CharacterUIController : UIController, IOnStateEntered<Gamepl
         if (!_ent.TryGetComponent<MindComponent>(container.Mind.Value, out var mind))
             return;
 
-        var roleText = Loc.GetString("role-type-crew-aligned-name");
-        var color = Color.White;
-        if (_prototypeManager.TryIndex(mind.RoleType, out var proto))
-        {
-            roleText = Loc.GetString(proto.Name);
-            color = proto.Color;
-        }
-        else
-            _sawmill.Error($"{_player.LocalEntity} has invalid Role Type '{mind.RoleType}'. Displaying '{roleText}' instead");
+        if (!_prototypeManager.TryIndex(mind.RoleType, out var proto))
+            Log.Error($"Player '{_player.LocalSession}' has invalid Role Type '{mind.RoleType}'. Displaying default instead");
 
-        _window.RoleType.Text = roleText;
-        _window.RoleType.FontColorOverride = color;
+        _window.RoleType.Text = Loc.GetString(proto?.Name ?? "role-type-crew-aligned-name");
+        _window.RoleType.FontColorOverride = proto?.Color ?? Color.White;
     }
 
     private void CharacterDetached(EntityUid uid)

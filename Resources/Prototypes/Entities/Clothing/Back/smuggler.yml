@@ -37,7 +37,7 @@
   id: ClothingBackpackSatchelSmuggler
   name: smuggler's satchel
   suffix: Empty
-  description: A dingy, suspicious looking satchel.
+  description: A handy, suspicious looking satchel. Just flat enough to fit underneath floor tiles.
   components:
   - type: Sprite
     sprite: Clothing/Back/Satchels/smuggler.rsi
@@ -48,7 +48,7 @@
   id: ClothingBackpackSatchelSmugglerUnanchored
   name: smuggler's satchel
   suffix: Empty, Unanchored
-  description: A dingy, suspicious looking satchel.
+  description: A handy, suspicious looking satchel. Just flat enough to fit underneath floor tiles.
   components:
   - type: Sprite
     sprite: Clothing/Back/Satchels/smuggler.rsi
@@ -85,11 +85,11 @@
           children:
           - id: RevolverCapGun
             amount: !type:RangeNumberSelector
-              range: 4, 8
+              range: 4, 6
             weight: 95
           - id: RevolverCapGunFake
             amount: !type:RangeNumberSelector
-              range: 1, 8
+              range: 1, 6
             weight: 5
 
 - type: entity

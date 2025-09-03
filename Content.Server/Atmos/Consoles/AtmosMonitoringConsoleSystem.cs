@@ -17,6 +17,9 @@ using Robust.Shared.Map.Components;
 using Robust.Shared.Timing;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+using Content.Server.Atmos.EntitySystems;
+using Content.Shared.DeviceNetwork.Components;
+using Content.Shared.NodeContainer;
 
 namespace Content.Server.Atmos.Consoles;
 
@@ -51,6 +54,7 @@ public sealed class AtmosMonitoringConsoleSystem : SharedAtmosMonitoringConsoleS
 
         // Grid events
         SubscribeLocalEvent<GridSplitEvent>(OnGridSplit);
+        SubscribeLocalEvent<PipeNodeGroupRemovedEvent>(OnPipeNodeGroupRemoved);
     }
 
     #region Event handling
@@ -280,16 +284,11 @@ public sealed class AtmosMonitoringConsoleSystem : SharedAtmosMonitoringConsoleS
             return false;
 
         var direction = xform.LocalRotation.GetCardinalDir();
+        var netId = TryGettingFirstPipeNode(uid, out var _, out var firstNetId) ? firstNetId : -1;
+        var color = TryComp<AtmosPipeColorComponent>(uid, out var atmosPipeColor) ? atmosPipeColor.Color : Color.White;
+        var layer = TryComp<AtmosPipeLayersComponent>(uid, out var atmosPipeLayers) ? atmosPipeLayers.CurrentPipeLayer : AtmosPipeLayer.Primary;
 
-        if (!TryGettingFirstPipeNode(uid, out var _, out var netId))
-            netId = -1;
-
-        var color = Color.White;
-
-        if (TryComp<AtmosPipeColorComponent>(uid, out var atmosPipeColor))
-            color = atmosPipeColor.Color;
-
-        device = new AtmosDeviceNavMapData(GetNetEntity(uid), GetNetCoordinates(xform.Coordinates), netId.Value, component.NavMapBlip.Value, direction, color);
+        device = new AtmosDeviceNavMapData(GetNetEntity(uid), GetNetCoordinates(xform.Coordinates), netId.Value, component.NavMapBlip.Value, direction, color, layer);
 
         return true;
     }
@@ -297,6 +296,25 @@ public sealed class AtmosMonitoringConsoleSystem : SharedAtmosMonitoringConsoleS
     #endregion
 
     #region Pipe net functions
+
+    private void OnPipeNodeGroupRemoved(ref PipeNodeGroupRemovedEvent args)
+    {
+        // When a pipe node group is removed, we need to iterate over all of
+        // our pipe chunks and remove any entries with a matching net id.
+        // (We only need to check the chunks for the affected grid, though.)
+
+        if (!_gridAtmosPipeChunks.TryGetValue(args.Grid, out var chunkData))
+            return;
+
+        foreach (var chunk in chunkData.Values)
+        {
+            foreach (var key in chunk.AtmosPipeData.Keys)
+            {
+                if (key.NetId == args.NetId)
+                    chunk.AtmosPipeData.Remove(key);
+            }
+        }
+    }
 
     private void RebuildAtmosPipeGrid(EntityUid gridUid, MapGridComponent grid)
     {
@@ -360,7 +378,7 @@ public sealed class AtmosMonitoringConsoleSystem : SharedAtmosMonitoringConsoleS
             chunk.AtmosPipeData[index] = atmosPipeData & ~mask;
         }
 
-        // Rebuild the tile's pipe data 
+        // Rebuild the tile's pipe data
         foreach (var ent in _sharedMapSystem.GetAnchoredEntities(gridUid, grid, coords))
         {
             if (!TryComp<AtmosPipeColorComponent>(ent, out var entAtmosPipeColor))
@@ -369,7 +387,9 @@ public sealed class AtmosMonitoringConsoleSystem : SharedAtmosMonitoringConsoleS
             if (!TryComp<NodeContainerComponent>(ent, out var entNodeContainer))
                 continue;
 
-            UpdateAtmosPipeChunk(ent, entNodeContainer, entAtmosPipeColor, tileIdx, ref chunk);
+            var showAbsentConnections = TryComp<AtmosMonitoringConsoleDeviceComponent>(ent, out var device) ? device.ShowAbsentConnections : true;
+
+            UpdateAtmosPipeChunk(ent, entNodeContainer, entAtmosPipeColor, tileIdx, ref chunk, showAbsentConnections);
         }
 
         // Add or update the chunk on the associated grid
@@ -391,7 +411,13 @@ public sealed class AtmosMonitoringConsoleSystem : SharedAtmosMonitoringConsoleS
         }
     }
 
-    private void UpdateAtmosPipeChunk(EntityUid uid, NodeContainerComponent nodeContainer, AtmosPipeColorComponent pipeColor, int tileIdx, ref AtmosPipeChunk chunk)
+    private void UpdateAtmosPipeChunk
+        (EntityUid uid,
+        NodeContainerComponent nodeContainer,
+        AtmosPipeColorComponent pipeColor,
+        int tileIdx,
+        ref AtmosPipeChunk chunk,
+        bool showAbsentConnections = true)
     {
         // Entities that are actively being deleted are not to be drawn
         if (MetaData(uid).EntityLifeStage >= EntityLifeStage.Terminating)
@@ -399,16 +425,19 @@ public sealed class AtmosMonitoringConsoleSystem : SharedAtmosMonitoringConsoleS
 
         foreach ((var id, var node) in nodeContainer.Nodes)
         {
-            if (node is not PipeNode)
+            if (node is not PipeNode { } pipeNode)
                 continue;
 
-            var pipeNode = (PipeNode)node;
+            if (!showAbsentConnections && !pipeNode.ReachableNodes.Any(x => x.Owner != uid))
+                continue;
+
             var netId = GetPipeNodeNetId(pipeNode);
+            var subnet = new AtmosMonitoringConsoleSubnet(netId, pipeNode.CurrentPipeLayer, pipeColor.Color);
             var pipeDirection = pipeNode.CurrentPipeDirection;
 
-            chunk.AtmosPipeData.TryGetValue((netId, pipeColor.Color.ToHex()), out var atmosPipeData);
+            chunk.AtmosPipeData.TryGetValue(subnet, out var atmosPipeData);
             atmosPipeData |= (ulong)pipeDirection << tileIdx * SharedNavMapSystem.Directions;
-            chunk.AtmosPipeData[(netId, pipeColor.Color.ToHex())] = atmosPipeData;
+            chunk.AtmosPipeData[subnet] = atmosPipeData;
         }
     }
 
@@ -489,7 +518,7 @@ public sealed class AtmosMonitoringConsoleSystem : SharedAtmosMonitoringConsoleS
         if (component.NavMapBlip == null)
             return;
 
-        var netEntity = EntityManager.GetNetEntity(uid);
+        var netEntity = GetNetEntity(uid);
         var query = AllEntityQuery<AtmosMonitoringConsoleComponent, TransformComponent>();
 
         while (query.MoveNext(out var ent, out var entConsole, out var entXform))
@@ -523,7 +552,7 @@ public sealed class AtmosMonitoringConsoleSystem : SharedAtmosMonitoringConsoleS
         if (component.NavMapBlip == null)
             return;
 
-        var netEntity = EntityManager.GetNetEntity(uid);
+        var netEntity = GetNetEntity(uid);
         var query = AllEntityQuery<AtmosMonitoringConsoleComponent>();
 
         while (query.MoveNext(out var ent, out var entConsole))

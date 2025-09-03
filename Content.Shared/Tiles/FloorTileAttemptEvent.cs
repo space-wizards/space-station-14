@@ -4,4 +4,4 @@ namespace Content.Shared.Tiles;
 /// Raised directed on a grid when attempting a floor tile placement.
 /// </summary>
 [ByRefEvent]
-public record struct FloorTileAttemptEvent(bool Cancelled);
+public record struct FloorTileAttemptEvent(Vector2i GridIndices, bool Cancelled = false);

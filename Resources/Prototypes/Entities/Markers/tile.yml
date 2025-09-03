@@ -1,20 +1,8 @@
 - type: entity
-  id: BaseRoofMarker
-  abstract: true
-  placement:
-    mode: SnapgridCenter
-  components:
-  - type: Transform
-    anchored: true
-  - type: Sprite
-    drawdepth: Overdoors
-    sprite: Markers/cross.rsi
-
-- type: entity
   id: RoofMarker
   name: Roof
   suffix: Enabled
-  parent: BaseRoofMarker
+  parent: MarkerBase
   components:
   - type: SetRoof
     value: true
@@ -27,7 +15,7 @@
   id: NoRoofMarker
   name: Roof
   suffix: Disabled
-  parent: BaseRoofMarker
+  parent: MarkerBase
   components:
   - type: SetRoof
     value: false
