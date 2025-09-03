@@ -229,41 +229,6 @@ public abstract class AlertsSystem : EntitySystem
     }
 
     /// <summary>
-    /// An alternative to show alert with different behavior if an alert already exists.
-    /// </summary>
-    /// <param name="entity">Entity whose alert we're updating</param>
-    /// <param name="alertType">Prototype of the alert we're updating</param>
-    /// <param name="severity">Severity we're setting the alert to</param>
-    /// <param name="cooldown">Time left in the alert.</param>
-    /// <param name="autoRemove">Do we want to remove this alert when it expires?</param>
-    /// <param name="showCooldown">Should we show/hide the cooldown?</param>
-    public void UpdateAlert(Entity<AlertsComponent?> entity,
-        ProtoId<AlertPrototype> alertType,
-        short? severity = null,
-        TimeSpan? cooldown = null,
-        bool autoRemove = false,
-        bool showCooldown = true)
-    {
-        if (_timing.ApplyingState)
-            return;
-
-        if (!Resolve(entity, ref entity.Comp, false))
-            return;
-
-        (TimeSpan Start, TimeSpan End)? down = null;
-
-        // Make sure the start time of the alert cooldown is still accurate
-        // This ensures the progress wheel doesn't "reset" every duration change.
-        if (cooldown != null && TryGet(alertType, out var alert))
-        {
-            TryGetAlertState(entity, alert.AlertKey, out var alertState);
-            down = (alertState.Cooldown?.Item1 ?? _timing.CurTime, cooldown.Value);
-        }
-
-        ShowAlert(entity, alertType, cooldown: down);
-    }
-
-    /// <summary>
     /// Clear the alert with the given category, if one is currently showing.
     /// </summary>
     public void ClearAlertCategory(Entity<AlertsComponent?> entity, ProtoId<AlertCategoryPrototype> category)
