@@ -69,6 +69,12 @@ namespace Content.Server.GameTicking.Commands
 
                 return CompletionResult.FromHintOptions(options, "<id>");
             }
+            if (args.Length == 3)
+            {
+                var options = new List<string> { "true", "false" };
+
+                return CompletionResult.FromHintOptions(options, "[secret, default: false]");
+            }
             return CompletionResult.Empty;
         }
     }
