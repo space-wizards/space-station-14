@@ -1,28 +1,4 @@
 ﻿Entries:
-- author: imatsoup
-  changes:
-  - message: Battery weapons with multiple fire-modes (Energy Shotgun, Temperature
-      Gun) will no longer change their fire-modes when wielded by activating them
-      in your hand.
-    type: Fix
-  id: 8399
-  time: '2025-05-01T05:35:13.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/37085
-- author: MissKay1994
-  changes:
-  - message: Vox can now eat trash and drink welding fuel!
-    type: Add
-  id: 8400
-  time: '2025-05-01T18:16:51.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/35681
-- author: slarticodefast
-  changes:
-  - message: Added noir glasses, which make everything black and white. You can find
-      them in the detective's locker.
-    type: Add
-  id: 8401
-  time: '2025-05-01T22:07:47.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/36923
 - author: Nikitosych
   changes:
   - message: Fixed abrupt stamina damage reset and abrupt speed recovery after 3 seconds
@@ -3950,3 +3926,25 @@
   id: 8911
   time: '2025-09-03T12:00:07.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/39810
+- author: TiniestShark
+  changes:
+  - message: Reptilians now have Mask/Helmet displacements. Snoots are no longer smushed.
+    type: Add
+  id: 8912
+  time: '2025-09-03T16:45:18.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/39351
+- author: TiniestShark
+  changes:
+  - message: Added unique tail sprites to Hard/Softsuits for reptilians! (Wagging
+      animation not supported)
+    type: Add
+  id: 8913
+  time: '2025-09-03T16:45:49.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/35842
+- author: TrixxedHeart & Flareguy
+  changes:
+  - message: Three new tails for Vox.
+    type: Add
+  id: 8914
+  time: '2025-09-03T18:05:48.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/39083
