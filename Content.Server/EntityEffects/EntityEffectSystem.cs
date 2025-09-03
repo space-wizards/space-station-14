@@ -81,8 +81,6 @@ public sealed class EntityEffectSystem : EntitySystem
     [Dependency] private readonly VomitSystem _vomit = default!;
     [Dependency] private readonly TurfSystem _turf = default!;
     // DS14-start
-    [Dependency] private readonly MobStateSystem _mobState = default!;
-    [Dependency] private readonly SharedEggSystem _eggSystem = default!;
     [Dependency] private readonly NecromorfSystem _necromorf = default!;
     [Dependency] private readonly InfectionDeadSystem _infectionDead = default!;
     // DS14-end
@@ -138,7 +136,6 @@ public sealed class EntityEffectSystem : EntitySystem
         SubscribeLocalEvent<ExecuteEntityEffectEvent<PolymorphEffect>>(OnExecutePolymorph);
         SubscribeLocalEvent<ExecuteEntityEffectEvent<ResetNarcolepsy>>(OnExecuteResetNarcolepsy);
         // DS14-start
-        SubscribeLocalEvent<ExecuteEntityEffectEvent<CauseEgg>>(OnExecuteCauseEgg);
         SubscribeLocalEvent<ExecuteEntityEffectEvent<CauseInfectionDead>>(OnExecuteCauseInfectionDead);
         SubscribeLocalEvent<ExecuteEntityEffectEvent<CureInfectionDead>>(OnExecuteCureInfectionDead);
         SubscribeLocalEvent<ExecuteEntityEffectEvent<InfectiodDeadMutation>>(OnExecuteInfectiodDeadMutation);
@@ -994,32 +991,6 @@ public sealed class EntityEffectSystem : EntitySystem
     }
 
     // DS14-start
-    private void OnExecuteCauseEgg(ref ExecuteEntityEffectEvent<CauseEgg> args)
-    {
-        if (_mobState.IsDead(args.Args.TargetEntity))
-            return;
-
-        if (!HasComp<BodyComponent>(args.Args.TargetEntity))
-            return;
-
-        if (HasComp<EggComponent>(args.Args.TargetEntity))
-            return;
-
-        if (HasComp<InfectionDeadComponent>(args.Args.TargetEntity) || HasComp<NecromorfComponent>(args.Args.TargetEntity))
-            return;
-
-        if (HasComp<ZombieComponent>(args.Args.TargetEntity) || HasComp<PendingZombieComponent>(args.Args.TargetEntity) || HasComp<ZombifyOnDeathComponent>(args.Args.TargetEntity))
-            return;
-
-        if (!_eggSystem.IsInfectPossible(args.Args.TargetEntity))
-            return;
-
-        var egg = EnsureComp<EggComponent>(args.Args.TargetEntity);
-
-        egg.SpawnedEntities = args.Effect.SpawnedEntities;
-        _eggSystem.Postpone(args.Effect.Duration, egg);
-    }
-
     private void OnExecuteCauseInfectionDead(ref ExecuteEntityEffectEvent<CauseInfectionDead> args)
     {
         if (!_infectionDead.IsInfectionPossible(args.Args.TargetEntity))

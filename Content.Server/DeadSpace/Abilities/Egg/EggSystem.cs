@@ -33,40 +33,20 @@ public sealed partial class EggSystem : SharedEggSystem
         SubscribeLocalEvent<EggComponent, PlayEggSoundEvent>(PlayEggSound);
         SubscribeLocalEvent<EggComponent, ExaminedEvent>(OnExamine);
     }
-    private void OnExamine(EntityUid uid, EggComponent component, ExaminedEvent args)
-    {
-        var time = _timing.CurTime - component.TimeUntilSpawn;
-        double seconds = Math.Abs(time.TotalSeconds);
-        int roundedSeconds = (int)Math.Round(seconds);
-
-        if (HasComp<MobStateComponent>(uid))
-        {
-            if (args.Examiner == args.Examined)
-            {
-                args.PushMarkup(Loc.GetString($"Вы вылупитесь через [color=red]{roundedSeconds} секунд[/color]."));
-            }
-        }
-        else
-        {
-            args.PushMarkup(Loc.GetString($"Вылупится через [color=red]{roundedSeconds} секунд[/color]."));
-        }
-    }
 
     private void BeginSpawn(EntityUid uid, EggComponent component, EggSpawnEvent args)
     {
-        var entitys = component.SpawnedEntities;
-
-        var spawnEntities = EntitySpawnCollection.GetSpawns(entitys, _robustRandom);
-        var coords = Transform(uid).MapPosition;
+        var spawns = EntitySpawnCollection.GetSpawns(component.SpawnedEntities, _robustRandom);
+        var coords = Transform(uid).Coordinates;
 
         EntityUid popupEnt = default!;
-        if (spawnEntities.Count <= 0)
+        if (spawns.Count <= 0)
         {
             RemComp<EggComponent>(uid);
             return;
         }
 
-        foreach (var proto in spawnEntities)
+        foreach (var proto in spawns)
         {
             popupEnt = Spawn(proto, coords.Offset(_robustRandom.NextVector2(0.25f)));
         }
@@ -110,7 +90,6 @@ public sealed partial class EggSystem : SharedEggSystem
         }
 
         RemComp<EggComponent>(uid);
-        return;
     }
 
     private void PlayEggSound(EntityUid uid, EggComponent component, PlayEggSoundEvent args)
@@ -121,5 +100,24 @@ public sealed partial class EggSystem : SharedEggSystem
             return;
 
         _audio.PlayPvs(component.EggSound, uid);
+    }
+
+    private void OnExamine(EntityUid uid, EggComponent component, ExaminedEvent args)
+    {
+        var time = _timing.CurTime - component.TimeUntilSpawn;
+        double seconds = Math.Abs(time.TotalSeconds);
+        int roundedSeconds = (int)Math.Round(seconds);
+
+        if (HasComp<MobStateComponent>(uid))
+        {
+            if (args.Examiner == args.Examined)
+            {
+                args.PushMarkup(Loc.GetString($"Вы вылупитесь через [color=red]{roundedSeconds} секунд[/color]."));
+            }
+        }
+        else
+        {
+            args.PushMarkup(Loc.GetString($"Вылупится через [color=red]{roundedSeconds} секунд[/color]."));
+        }
     }
 }
