@@ -172,6 +172,20 @@ public sealed class IdCardConsoleSystem : SharedIdCardConsoleSystem
             Comp<IdCardComponent>(targetId).JobPrototype = newJobProto;
         }
 
+        var currentGroup = component.CurrentAccessGroup;
+        if (!_prototype.TryIndex<AccessGroupPrototype>(currentGroup, out var currentGroupPrototype))
+        {
+            _sawmill.Warning($"Current access group {currentGroup} not found!");
+            return;
+        }
+
+       var oldTags = _access.TryGetTags(targetId)?.ToHashSet() ?? new HashSet<ProtoId<AccessLevelPrototype>>();
+
+        var groupTags = currentGroupPrototype.Tags.ToHashSet();
+
+        var oldGroupTags = oldTags.Intersect(groupTags).ToHashSet();
+        var newGroupTags = newAccessList.Intersect(groupTags).ToHashSet();
+
         // Ensure the user isn't trying to add access they shouldn't be able to.
         List<ProtoId<AccessLevelPrototype>> Accesses = new();
         foreach (var group in component.AccessGroups)
@@ -187,17 +201,16 @@ public sealed class IdCardConsoleSystem : SharedIdCardConsoleSystem
             return;
         }
 
-        var oldTags = _access.TryGetTags(targetId) ?? new List<ProtoId<AccessLevelPrototype>>();
-        oldTags = oldTags.ToList();
-
         var privilegedId = component.PrivilegedIdSlot.Item;
 
-        if (oldTags.SequenceEqual(newAccessList))
+        var finalTags = oldTags.Except(groupTags).Union(newGroupTags);
+
+        if (oldTags.SetEquals(finalTags))
             return;
 
         // I hate that C# doesn't have an option for this and don't desire to write this out the hard way.
         // var difference = newAccessList.Difference(oldTags);
-        var difference = newAccessList.Union(oldTags).Except(newAccessList.Intersect(oldTags)).ToHashSet();
+        var difference = finalTags.Union(oldTags).Except(finalTags.Intersect(oldTags)).ToHashSet();
         // NULL SAFETY: PrivilegedIdIsAuthorized checked this earlier.
         var privilegedPerms = _accessReader.FindAccessTags(privilegedId!.Value).ToHashSet();
         if (!difference.IsSubsetOf(privilegedPerms))
@@ -206,9 +219,9 @@ public sealed class IdCardConsoleSystem : SharedIdCardConsoleSystem
             return;
         }
 
-        var addedTags = newAccessList.Except(oldTags).Select(tag => "+" + tag).ToList();
-        var removedTags = oldTags.Except(newAccessList).Select(tag => "-" + tag).ToList();
-        _access.TrySetTags(targetId, newAccessList);
+        var addedTags = finalTags.Except(oldTags).Select(tag => "+" + tag).ToList();
+        var removedTags = oldTags.Except(finalTags).Select(tag => "-" + tag).ToList();
+        _access.TrySetTags(targetId, finalTags);
 
         /*TODO: ECS SharedIdCardConsoleComponent and then log on card ejection, together with the save.
         This current implementation is pretty shit as it logs 27 entries (27 lines) if someone decides to give themselves AA*/
