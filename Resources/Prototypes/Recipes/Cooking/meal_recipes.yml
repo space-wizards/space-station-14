@@ -39,7 +39,7 @@
 - type: microwaveMealRecipe
   id: RecipeBagelCotton
   name: cotton bagel recipe
-  result: FoodBagelCotton
+  result: FoodCottonBagel
   time: 5
   group: Moth
   solids:

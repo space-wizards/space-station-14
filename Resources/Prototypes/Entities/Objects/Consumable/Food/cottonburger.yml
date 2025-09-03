@@ -1,11 +1,14 @@
 # Cotton Bun
-
+# think about changing naming convention here to ensure things are found properly
 - type: entity
   parent: FoodBreadSliceBase
   id: FoodCottonBun
   name: cotton bun
   description: A cotton hamburger bun. Soft, round and convenient to hold.
   components:
+  - type: Construction
+    graph: CookingCottonDough
+    node: cookedCottonBun
   - type: Food
     requiresSpecialDigestion: true
   - type: Sprite
