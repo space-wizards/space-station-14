@@ -24,7 +24,19 @@ public sealed partial class StatusEffectComponent : Component
     /// When this effect will end. If Null, the effect lasts indefinitely.
     /// </summary>
     [DataField(customTypeSerializer: typeof(TimeOffsetSerializer)), AutoPausedField, AutoNetworkedField]
+    public TimeSpan? StartEffectTime;
+
+    /// <summary>
+    /// When this effect will end. If Null, the effect lasts indefinitely.
+    /// </summary>
+    [DataField(customTypeSerializer: typeof(TimeOffsetSerializer)), AutoPausedField, AutoNetworkedField]
     public TimeSpan? EndEffectTime;
+
+    /// <summary>
+    /// If true, this status effect has been applied. Used to ensure that <see cref="StatusEffectAppliedEvent"/> only fires once.
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public bool Applied;
 
     /// <summary>
     /// Whitelist, by which it is determined whether this status effect can be imposed on a particular entity.
