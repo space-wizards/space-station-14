@@ -17,7 +17,6 @@
   supervisors: job-supervisors-hos
   canBeAntag: false
   access:
-  access:
   - Armory
   - Security
   - Bar
