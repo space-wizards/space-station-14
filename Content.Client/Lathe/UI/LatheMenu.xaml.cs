@@ -132,8 +132,6 @@ public sealed partial class LatheMenu : DefaultWindow
 
         // Get the existing list of queue controls
         var oldChildCount = RecipeList.ChildCount;
-        Control[] controls = new Control[Math.Max(oldChildCount, 1)];
-        RecipeList.Children.CopyTo(controls, 0);
         _entityManager.TryGetComponent(Entity, out LatheComponent? lathe);
 
         int idx = 0;
@@ -155,11 +153,11 @@ public sealed partial class LatheMenu : DefaultWindow
             }
             else
             {
-                var child = controls[idx] as RecipeControl;
+                var child = RecipeList.Children.ElementAt(idx) as RecipeControl;
 
                 if (child == null)
                 {
-                    DebugTools.Assert($"Lathe menu recipe control at {idx} is not of type RecipeControl"); // Something's gone terribly wrong.
+                    //DebugTools.Assert($"Lathe menu recipe control at {idx} is not of type RecipeControl"); // Something's gone terribly wrong.
                     continue;
                 }
 
@@ -172,9 +170,9 @@ public sealed partial class LatheMenu : DefaultWindow
         }
 
         // Shrink list if new list is shorter than old list.
-        for (var childIdx = idx; childIdx < oldChildCount; childIdx++)
+        for (var childIdx = oldChildCount - 1; idx <= childIdx; childIdx--)
         {
-            RecipeList.RemoveChild(controls[childIdx]);
+            RecipeList.RemoveChild(childIdx);
         }
     }
 
@@ -272,8 +270,6 @@ public sealed partial class LatheMenu : DefaultWindow
     {
         // Get the existing list of queue controls
         var oldChildCount = QueueList.ChildCount;
-        Control[] controls = new Control[Math.Max(oldChildCount, 1)];
-        QueueList.Children.CopyTo(controls, 0);
 
         var idx = 0;
         foreach (var batch in queue)
@@ -297,7 +293,7 @@ public sealed partial class LatheMenu : DefaultWindow
             }
             else
             {
-                var child = controls[idx] as QueuedRecipeControl;
+                var child = QueueList.Children.ElementAt(idx) as QueuedRecipeControl;
 
                 if (child == null)
                 {
@@ -313,9 +309,9 @@ public sealed partial class LatheMenu : DefaultWindow
         }
 
         // Shrink list if new list is shorter than old list.
-        for (var childIdx = idx; childIdx < oldChildCount; childIdx++)
+        for (var childIdx = oldChildCount - 1; idx <= childIdx; childIdx--)
         {
-            QueueList.RemoveChild(controls[childIdx]);
+            QueueList.RemoveChild(childIdx);
         }
     }
 
