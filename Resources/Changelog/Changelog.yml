@@ -1,27 +1,4 @@
 ﻿Entries:
-- author: BIGZi0348, slarticodefast
-  changes:
-  - message: Reflective vest now reflects lasers only while equipped.
-    type: Tweak
-  - message: Energy katana now reflects lasers and projectiles only while in hands.
-    type: Tweak
-  id: 8395
-  time: '2025-04-30T14:10:54.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/37039
-- author: themias
-  changes:
-  - message: Firelocks can now close over turnstiles
-    type: Fix
-  id: 8396
-  time: '2025-04-30T15:51:23.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/37074
-- author: themias
-  changes:
-  - message: Skeletons wearing gloves now leave fiber evidence
-    type: Fix
-  id: 8397
-  time: '2025-04-30T19:56:28.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/37077
 - author: metalgearsloth
   changes:
   - message: Fix action additions / removals sometimes not being predicted.
@@ -3949,3 +3926,27 @@
   id: 8907
   time: '2025-09-01T15:24:37.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/39976
+- author: IProduceWidgets
+  changes:
+  - message: there are now civilian versions of nanomed vendors.
+    type: Add
+  - message: nanomed inventories have been increased some.
+    type: Tweak
+  id: 8908
+  time: '2025-09-01T23:39:18.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/39718
+- author: M4rchy-S
+  changes:
+  - message: dead mobs will no longer vomit from radiation damage
+    type: Fix
+  id: 8909
+  time: '2025-09-02T00:07:37.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/40020
+- author: SolidSyn
+  changes:
+  - message: Detectives noir-tech glasses are now contraband, but now include a noir
+      secHUD!
+    type: Tweak
+  id: 8910
+  time: '2025-09-02T13:32:18.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/39859
