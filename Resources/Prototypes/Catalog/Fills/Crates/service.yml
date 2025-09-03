@@ -2,12 +2,12 @@
   id: CrateServiceJanitorialSupplies
   parent: CratePlastic
   name: janitorial supplies crate
-  description: Fight back against dirt and grime with Nanotrasen's Janitorial Essentials(tm)! Contains three buckets, caution signs, and cleaner grenades. Also has a single mop, broom, spray cleaner, rag, and trash bag.
+  description: Fight back against dirt and grime with Nanotrasen's Janitorial Essentials(tm)! Contains three buckets, caution signs, and cleaner grenades. Also has a single mop, broom, spray cleaner, wire brush, rag, and trash bag.
   components:
   - type: StorageFill
     contents:
       - id: MopItem
-      - id: MopBucket
+      - id: MopBucketCubeWrapped
       - id: Bucket
         amount: 3
       - id: WetFloorSign
@@ -20,6 +20,19 @@
       - id: Plunger
         amount: 2
       - id: BoxCleanerGrenades
+      - id: WireBrush
+        amount: 2
+
+- type: entity
+  id: CrateServiceCleanerGrenades
+  parent: CratePlastic
+  name: bulk cleanades crate
+  description: Contains two boxes of cleaner grenades, for those deeply-entrenched stains.
+  components:
+  - type: StorageFill
+    contents:
+      - id: BoxCleanerGrenades
+        amount: 2
 
 - type: entity
   id: CrateServiceReplacementLights
@@ -89,6 +102,7 @@
     contents:
     - id: ClothingUniformJumpskirtPerformer
     - id: ClothingShoesBootsPerformer
+    - id: ClothingHeadPerformerWig
     - id: ClothingOuterSuitMonkey
     - id: ClothingHeadHatAnimalMonkey
     - id: ClothingNeckCloakMoth
@@ -130,15 +144,17 @@
   - type: StorageFill
     contents:
     - id: Paper
-      amount: 15
+      amount: 12
+    - id: PaperOffice
+      amount: 6
     - id: Pen
       amount: 2
-    - id: BoxFolderClipboard
+    - id: BoxFolderClipboardEmpty
       amount: 2
     - id: HandLabeler
-    - id: BoxFolderBlue
-    - id: BoxFolderRed
-    - id: BoxFolderYellow
+    - id: BoxFolderBlueEmpty
+    - id: BoxFolderRedEmpty
+    - id: BoxFolderYellowEmpty
     - id: NewtonCradle
     - id: BoxEnvelope
     - id: BrbSign
@@ -360,3 +376,14 @@
         amount: 2
       - id: BoxCandleSmall
         amount: 2
+
+- type: entity
+  parent: CrateGenericSteel
+  id: CrateServiceColorfulLights
+  name: colorful lights crate
+  description: It's not a party until it's hard to see, a little disorienting, and your ears hurt.
+  components:
+  - type: StorageFill
+    contents:
+    - id: BoxLightbulbColorfulMixed
+    - id: BoxLighttubeColorfulMixed

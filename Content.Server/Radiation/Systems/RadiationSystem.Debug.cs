@@ -1,4 +1,3 @@
-using System.Linq;
 using Content.Server.Administration;
 using Content.Server.Radiation.Components;
 using Content.Shared.Administration;
@@ -42,12 +41,12 @@ public partial class RadiationSystem
     /// </summary>
     private void UpdateDebugOverlay(EntityEventArgs ev)
     {
-        var sessions = _debugSessions.ToArray();
-        foreach (var session in sessions)
+        foreach (var session in _debugSessions)
         {
             if (session.Status != SessionStatus.InGame)
                 _debugSessions.Remove(session);
-            RaiseNetworkEvent(ev, session.Channel);
+            else
+                RaiseNetworkEvent(ev, session);
         }
     }
 
@@ -70,13 +69,16 @@ public partial class RadiationSystem
         UpdateDebugOverlay(ev);
     }
 
-    private void UpdateGridcastDebugOverlay(double elapsedTime, int totalSources,
-        int totalReceivers, List<RadiationRay> rays)
+    private void UpdateGridcastDebugOverlay(
+        double elapsedTime,
+        int totalSources,
+        int totalReceivers,
+        List<DebugRadiationRay>? rays)
     {
         if (_debugSessions.Count == 0)
             return;
 
-        var ev = new OnRadiationOverlayUpdateEvent(elapsedTime, totalSources, totalReceivers, rays);
+        var ev = new OnRadiationOverlayUpdateEvent(elapsedTime, totalSources, totalReceivers, rays ?? new());
         UpdateDebugOverlay(ev);
     }
 }
@@ -85,19 +87,18 @@ public partial class RadiationSystem
 ///     Toggle visibility of radiation rays coming from rad sources.
 /// </summary>
 [AdminCommand(AdminFlags.Admin)]
-public sealed class RadiationViewCommand : IConsoleCommand
+public sealed class RadiationViewCommand : LocalizedEntityCommands
 {
-    public string Command => "showradiation";
-    public string Description => Loc.GetString("radiation-command-description");
-    public string Help => Loc.GetString("radiation-command-help");
+    [Dependency] private readonly RadiationSystem _radiation = default!;
 
-    public void Execute(IConsoleShell shell, string argStr, string[] args)
+    public override string Command => "showradiation";
+
+    public override void Execute(IConsoleShell shell, string argStr, string[] args)
     {
         var session = shell.Player;
         if (session == null)
             return;
 
-        var entityManager = IoCManager.Resolve<IEntityManager>();
-        entityManager.System<RadiationSystem>().ToggleDebugView(session);
+        _radiation.ToggleDebugView(session);
     }
 }

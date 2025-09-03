@@ -31,8 +31,9 @@
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
   - type: DisassembleOnAltVerb
-    prototype: InflatableWallStack1
-    doAfter: 3
+    prototypeToSpawn: InflatableWallStack1
+    disassembleTime: 3
+  - type: InflatableSafeDisassembly
   - type: Airtight
   - type: Transform
     anchored: true
@@ -79,7 +80,8 @@
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
   - type: DisassembleOnAltVerb
-    prototype: InflatableDoorStack1
-    doAfter: 3
+    prototypeToSpawn: InflatableDoorStack1
+    disassembleTime: 3
+  - type: InflatableSafeDisassembly
   - type: Occluder
     enabled: false

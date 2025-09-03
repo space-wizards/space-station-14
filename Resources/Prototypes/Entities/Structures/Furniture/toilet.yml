@@ -12,6 +12,8 @@
       map: [ "enum.DisposalUnitVisualLayers.Unanchored" ]
     - state: disposal
       map: [ "enum.DisposalUnitVisualLayers.Base" ]
+    - state: disposal-charging
+      map: [ "enum.DisposalUnitVisualLayers.BaseCharging" ]
     - state: disposal-flush
       map: [ "enum.DisposalUnitVisualLayers.OverlayFlush" ]
     - state: dispover-charge
@@ -32,13 +34,12 @@
       components:
       - HumanoidAppearance
   - type: DisposalUnit
-    autoEngageEnabled: false
-    noUI: true
     blacklist:
       components:
       - HumanoidAppearance
       - Plunger
       - SolutionTransfer
+      - EntityStorage
     whitelist:
       components:
       - Item
@@ -74,6 +75,9 @@
     autoDrain: false
   - type: StaticPrice
     price: 100
+  - type: ActivatableUI
+    key: enum.DisposalUnitUiKey.Key
+    verbOnly: true # Not strictly needed, but we want E to toggle lid
   - type: UserInterface
     interfaces:
       enum.DisposalUnitUiKey.Key:

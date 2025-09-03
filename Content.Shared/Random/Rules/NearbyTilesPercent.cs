@@ -45,7 +45,7 @@ public sealed partial class NearbyTilesPercentRule : RulesRule
             // Only consider collidable anchored (for reasons some subfloor stuff has physics but non-collidable)
             if (IgnoreAnchored)
             {
-                var gridEnum = grid.GetAnchoredEntitiesEnumerator(tile.GridIndices);
+                var gridEnum = mapSys.GetAnchoredEntitiesEnumerator(xform.GridUid.Value, grid, tile.GridIndices);
                 var found = false;
 
                 while (gridEnum.MoveNext(out var ancUid))

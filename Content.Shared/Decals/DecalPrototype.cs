@@ -4,10 +4,10 @@ using Robust.Shared.Utility;
 
 namespace Content.Shared.Decals
 {
-    [Prototype("decal")]
+    [Prototype]
     public sealed partial class DecalPrototype : IPrototype, IInheritingPrototype
     {
-        [IdDataField] public string ID { get; } = null!;
+        [IdDataField] public string ID { get; private set; } = null!;
         [DataField("sprite")] public SpriteSpecifier Sprite { get; private set; } = SpriteSpecifier.Invalid;
         [DataField("tags")] public List<string> Tags = new();
         [DataField("showMenu")] public bool ShowMenu = true;
@@ -36,11 +36,11 @@ namespace Content.Shared.Decals
         public bool DefaultSnap = true;
 
         [ParentDataField(typeof(AbstractPrototypeIdArraySerializer<DecalPrototype>))]
-        public string[]? Parents { get; }
+        public string[]? Parents { get; private set; }
 
         [NeverPushInheritance]
         [AbstractDataField]
-        public bool Abstract { get; }
+        public bool Abstract { get; private set; }
 
     }
 }

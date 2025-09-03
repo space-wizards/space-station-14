@@ -5,6 +5,7 @@
   placement:
     mode: SnapgridCenter
   components:
+  - type: Animateable
   - type: MeleeSound
     soundGroups:
       Brute:
