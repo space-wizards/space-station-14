@@ -1,6 +1,8 @@
 using System.Numerics;
+using System.Linq;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.EntitySystems;
+using Content.Shared.Chemistry.Reagent;
 using Content.Shared.FixedPoint;
 using Content.Shared.Fluids.Components;
 using Content.Shared.Interaction;
@@ -194,9 +196,11 @@ public abstract class SharedAbsorbentSystem : EntitySystem
         EntityUid user,
         EntityUid target)
     {
+        var reagentIds = Puddle.GetAbsorbentReagents(absorbentSoln.Comp.Solution)
+                .Select(s => new ProtoId<ReagentPrototype>(s))
+                .ToArray();
         var contaminantsFromAbsorbent = SolutionContainer.SplitSolutionWithout(absorbentSoln,
-            absorbEnt.Comp.PickupAmount,
-            Puddle.GetAbsorbentReagents(absorbentSoln.Comp.Solution));
+            absorbEnt.Comp.PickupAmount, reagentIds);
 
         var absorbentSolution = absorbentSoln.Comp.Solution;
         if (contaminantsFromAbsorbent.Volume == FixedPoint2.Zero
@@ -306,9 +310,10 @@ public abstract class SharedAbsorbentSystem : EntitySystem
 
             var transferMax = absorber.PickupAmount;
             var transferAmount = available > transferMax ? transferMax : available;
-
-            puddleSplit =
-                puddleSolution.SplitSolutionWithout(transferAmount, Puddle.GetAbsorbentReagents(puddleSolution));
+            var reagentIds = Puddle.GetAbsorbentReagents(absorberSolution)
+                .Select(s => new ProtoId<ReagentPrototype>(s))
+                .ToArray();
+            puddleSplit = puddleSolution.SplitSolutionWithout(transferAmount, reagentIds);
             var absorberSplit =
                 absorberSolution.SplitSolutionWithOnly(puddleSplit.Volume,
                     Puddle.GetAbsorbentReagents(absorberSolution));
@@ -326,7 +331,10 @@ public abstract class SharedAbsorbentSystem : EntitySystem
         else
         {
             // Note: arguably shouldn't this get all solutions?
-            puddleSplit = puddleSolution.SplitSolutionWithout(absorber.PickupAmount, Puddle.GetAbsorbentReagents(puddleSolution));
+            var reagentIds = Puddle.GetAbsorbentReagents(puddleSolution)
+                .Select(s => new ProtoId<ReagentPrototype>(s))
+                .ToArray();
+            puddleSplit = puddleSolution.SplitSolutionWithout(absorber.PickupAmount, reagentIds);
             // Despawn if we're done
             if (puddleSolution.Volume == FixedPoint2.Zero)
             {
