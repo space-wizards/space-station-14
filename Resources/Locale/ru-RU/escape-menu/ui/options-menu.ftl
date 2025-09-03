@@ -101,7 +101,7 @@ ui-options-vp-vertical-fit-tooltip =
     при подгонке под ваш экран. Если ваш экран меньше, чем окно просмотра,
     то это приведёт к его обрезанию по горизонтальной оси.
 ui-options-vp-low-res = Изображение низкого разрешения
-ui-options-ambient-occlusion = Show Ambient Occlusion
+ui-options-ambient-occlusion = Отображать окружающее затенение
 ui-options-parallax-low-quality = Низкокачественный параллакс (фон)
 ui-options-fps-counter = Показать счётчик FPS
 ui-options-vp-width = Ширина окна игры:

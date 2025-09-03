@@ -1,1 +1,1 @@
-material-extractor-comp-wrongreagent = { CAPITALIZE(THE($used)) } does not have enough reagent for extraction!
+material-extractor-comp-wrongreagent = В { $used } недостаточно реагента для извлечения!

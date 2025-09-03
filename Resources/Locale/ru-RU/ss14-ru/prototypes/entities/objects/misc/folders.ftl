@@ -1,12 +1,12 @@
 ent-BoxFolderNuclearCodes = папка с кодами ядерной аутентификации
     .desc = { ent-BaseItem.desc }
 ent-BoxFolderBaseEmpty = папка
-    .desc = A folder Заполненная with top secret paperwork.
+    .desc = Папка, заполненная совершенно секретными документами.
 ent-BoxFolderFill = { "" }
     .suffix = Заполненная
     .desc = { "" }
 ent-BoxFolderFillThreePapers = { "" }
-    .suffix = 3 papers
+    .suffix = 3 листа
     .desc = { "" }
 ent-BoxFolderBase = { ent-BoxFolderBaseEmpty }
     .desc = { ent-BoxFolderBaseEmpty.desc }
