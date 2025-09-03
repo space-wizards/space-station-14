@@ -1063,6 +1063,64 @@ namespace Content.Server.Database.Migrations.Postgres
                     b.ToTable("profile_role_loadout", (string)null);
                 });
 
+            modelBuilder.Entity("Content.Server.Database.Pronouns", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasColumnName("pronouns_id");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Counter")
+                        .HasColumnType("text")
+                        .HasColumnName("counter");
+
+                    b.Property<string>("DatObj")
+                        .HasColumnType("text")
+                        .HasColumnName("dat_obj");
+
+                    b.Property<string>("Genitive")
+                        .HasColumnType("text")
+                        .HasColumnName("genitive");
+
+                    b.Property<string>("Object")
+                        .HasColumnType("text")
+                        .HasColumnName("object");
+
+                    b.Property<bool?>("Plural")
+                        .HasColumnType("boolean")
+                        .HasColumnName("plural");
+
+                    b.Property<string>("PossAdj")
+                        .HasColumnType("text")
+                        .HasColumnName("poss_adj");
+
+                    b.Property<string>("PossPronoun")
+                        .HasColumnType("text")
+                        .HasColumnName("poss_pronoun");
+
+                    b.Property<int>("ProfileId")
+                        .HasColumnType("integer")
+                        .HasColumnName("profile_id");
+
+                    b.Property<string>("Reflexive")
+                        .HasColumnType("text")
+                        .HasColumnName("reflexive");
+
+                    b.Property<string>("Subject")
+                        .HasColumnType("text")
+                        .HasColumnName("subject");
+
+                    b.HasKey("Id")
+                        .HasName("PK_pronouns");
+
+                    b.HasIndex("ProfileId")
+                        .IsUnique();
+
+                    b.ToTable("pronouns", (string)null);
+                });
+
             modelBuilder.Entity("Content.Server.Database.RoleWhitelist", b =>
                 {
                     b.Property<Guid>("PlayerUserId")
@@ -1865,6 +1923,18 @@ namespace Content.Server.Database.Migrations.Postgres
                     b.Navigation("Profile");
                 });
 
+            modelBuilder.Entity("Content.Server.Database.Pronouns", b =>
+                {
+                    b.HasOne("Content.Server.Database.Profile", "Profile")
+                        .WithOne("Pronouns")
+                        .HasForeignKey("Content.Server.Database.Pronouns", "ProfileId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("FK_pronouns_profile_profile_id");
+
+                    b.Navigation("Profile");
+                });
+
             modelBuilder.Entity("Content.Server.Database.RoleWhitelist", b =>
                 {
                     b.HasOne("Content.Server.Database.Player", "Player")
@@ -2150,8 +2220,7 @@ namespace Content.Server.Database.Migrations.Postgres
 
                     b.Navigation("Loadouts");
 
-                    b.Navigation("Pronouns")
-                        .IsRequired();
+                    b.Navigation("Pronouns");
 
                     b.Navigation("Traits");
                 });

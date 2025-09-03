@@ -3,6 +3,7 @@ using System;
 using Content.Server.Database;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Content.Server.Database.Migrations.Sqlite
 {
     [DbContext(typeof(SqliteServerDbContext))]
-    partial class SqliteServerDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250903162420_HumanoidProfilePronouns")]
+    partial class HumanoidProfilePronouns
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "9.0.1");
@@ -599,62 +602,6 @@ namespace Content.Server.Database.Migrations.Sqlite
                     b.HasIndex("UserId");
 
                     b.ToTable("connection_log", (string)null);
-                });
-
-            modelBuilder.Entity("Content.Server.Database.DbPronoun", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER")
-                        .HasColumnName("db_pronoun_id");
-
-                    b.Property<string>("Counter")
-                        .HasColumnType("TEXT")
-                        .HasColumnName("counter");
-
-                    b.Property<string>("DatObj")
-                        .HasColumnType("TEXT")
-                        .HasColumnName("dat_obj");
-
-                    b.Property<string>("Genitive")
-                        .HasColumnType("TEXT")
-                        .HasColumnName("genitive");
-
-                    b.Property<string>("Object")
-                        .HasColumnType("TEXT")
-                        .HasColumnName("object");
-
-                    b.Property<bool?>("Plural")
-                        .HasColumnType("INTEGER")
-                        .HasColumnName("plural");
-
-                    b.Property<string>("PossAdj")
-                        .HasColumnType("TEXT")
-                        .HasColumnName("poss_adj");
-
-                    b.Property<string>("PossPronoun")
-                        .HasColumnType("TEXT")
-                        .HasColumnName("poss_pronoun");
-
-                    b.Property<int>("ProfileId")
-                        .HasColumnType("INTEGER")
-                        .HasColumnName("profile_id");
-
-                    b.Property<string>("Reflexive")
-                        .HasColumnType("TEXT")
-                        .HasColumnName("reflexive");
-
-                    b.Property<string>("Subject")
-                        .HasColumnType("TEXT")
-                        .HasColumnName("subject");
-
-                    b.HasKey("Id")
-                        .HasName("PK_db_pronoun");
-
-                    b.HasIndex(new[] { "ProfileId" }, "pronoun")
-                        .IsUnique();
-
-                    b.ToTable("db_pronoun", (string)null);
                 });
 
             modelBuilder.Entity("Content.Server.Database.IPIntelCache", b =>
@@ -1737,18 +1684,6 @@ namespace Content.Server.Database.Migrations.Sqlite
                     b.Navigation("HWId");
 
                     b.Navigation("Server");
-                });
-
-            modelBuilder.Entity("Content.Server.Database.DbPronoun", b =>
-                {
-                    b.HasOne("Content.Server.Database.Profile", "Profile")
-                        .WithOne("Pronouns")
-                        .HasForeignKey("Content.Server.Database.DbPronoun", "ProfileId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired()
-                        .HasConstraintName("FK_db_pronoun_profile_profile_id");
-
-                    b.Navigation("Profile");
                 });
 
             modelBuilder.Entity("Content.Server.Database.Job", b =>
