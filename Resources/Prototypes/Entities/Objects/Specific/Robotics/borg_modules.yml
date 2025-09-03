@@ -692,6 +692,12 @@
         whitelist:
           components:
           - FloorTile
+    - hand:
+        emptyRepresentative: PowerCellSmall
+        emptyLabel: borg-slot-powercells-empty
+        whitelist:
+          components:
+          - PowerCell
   - type: BorgModuleIcon
     icon: { sprite: Interface/Actions/actions_borg.rsi, state: construction-module }
 
