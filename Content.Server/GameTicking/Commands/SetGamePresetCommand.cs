@@ -71,9 +71,8 @@ namespace Content.Server.GameTicking.Commands
             }
             if (args.Length == 3)
             {
-                var options = new List<string> { "true", "false" };
-
-                return CompletionResult.FromHintOptions(options, "[secret, default: false]");
+                return CompletionResult.FromHintOptions(CompletionHelper.Booleans,
+                Loc.GetString("set-game-preset-command-hint-3"));
             }
             return CompletionResult.Empty;
         }
