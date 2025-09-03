@@ -31,10 +31,9 @@
 - type: latheRecipe
   id: Dropper
   result: Dropper
-  completetime: 2
+  completetime: .8
   materials:
-    Glass: 200
-    Plastic: 100
+    Plastic: 50
 
 - type: latheRecipe
   id: Syringe
