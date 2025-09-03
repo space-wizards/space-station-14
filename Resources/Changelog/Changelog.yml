@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: slarticodefast
-  changes:
-  - message: Added noir glasses, which make everything black and white. You can find
-      them in the detective's locker.
-    type: Add
-  id: 8401
-  time: '2025-05-01T22:07:47.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/36923
 - author: Nikitosych
   changes:
   - message: Fixed abrupt stamina damage reset and abrupt speed recovery after 3 seconds
@@ -3949,3 +3941,10 @@
   id: 8913
   time: '2025-09-03T16:45:49.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/35842
+- author: TrixxedHeart & Flareguy
+  changes:
+  - message: Three new tails for Vox.
+    type: Add
+  id: 8914
+  time: '2025-09-03T18:05:48.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/39083
