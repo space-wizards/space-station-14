@@ -9,7 +9,7 @@
             - material: MetalRod
               amount: 1
             - tag: PowerCellSmall
-              name: power cell small
+              name: construction-graph-tag-power-cell-small
               icon:
                 sprite: Objects/Power/power_cells.rsi
                 state: small
@@ -18,13 +18,13 @@
                 sprite: Objects/Misc/cablecuffs.rsi
                 state: cuff
                 color: red
-              name: cuffs
+              name: construction-graph-tag-cuffs
             - tag: Igniter
-              name: igniter
+              name: construction-graph-tag-igniter
               icon:
                 sprite: Objects/Devices/igniter.rsi
                 state: icon
               doAfter: 15
     - node: msstunprod
       entity: Stunprod
-      
+

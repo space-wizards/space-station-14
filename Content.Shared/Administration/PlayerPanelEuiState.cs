@@ -1,12 +1,12 @@
 using Content.Shared.Eui;
 using Robust.Shared.Network;
 using Robust.Shared.Serialization;
-using YamlDotNet.Serialization.Callbacks;
 
 namespace Content.Shared.Administration;
 
 [Serializable, NetSerializable]
-public sealed class PlayerPanelEuiState(NetUserId guid,
+public sealed class PlayerPanelEuiState(
+    NetUserId guid,
     string username,
     TimeSpan playtime,
     int? totalNotes,
@@ -52,3 +52,6 @@ public sealed class PlayerPanelDeleteMessage : EuiMessageBase;
 
 [Serializable, NetSerializable]
 public sealed class PlayerPanelRejuvenationMessage: EuiMessageBase;
+
+[Serializable, NetSerializable]
+public sealed class PlayerPanelFollowMessage: EuiMessageBase;

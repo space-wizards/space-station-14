@@ -5,10 +5,27 @@
         "y": 32
     },
     "license": "CC-BY-SA-3.0",
-    "copyright": "https://github.com/unitystation/unitystation/blob/221bbcc50edf4e63dc71ac6fd5152664a6b6745a/UnityProject/Assets/Textures/items/drinks/mug_gromit.png | Created By https://github.com/ksivte",
+    "copyright": "https://github.com/unitystation/unitystation/blob/221bbcc50edf4e63dc71ac6fd5152664a6b6745a/UnityProject/Assets/Textures/items/drinks/mug_gromit.png | Created By https://github.com/ksivte, inhands and modification by TiniestShark (github)",
     "states": [
         {
+            "name": "icon-0"
+        },
+        {
+            "name": "icon-1"
+        },
+        {
+            "name": "icon-2"
+        },
+        {
             "name": "icon-3"
+        },
+        {
+            "name": "inhand-left",
+            "directions": 4
+        },
+        {
+            "name": "inhand-right",
+            "directions": 4
         }
     ]
 }

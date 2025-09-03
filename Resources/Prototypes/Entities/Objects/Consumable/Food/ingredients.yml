@@ -482,6 +482,7 @@
   - type: Tag
     tags:
     - Slice
+    - ClothMade
   - type: Construction
     graph: DoughRopeCotton
     node: start
@@ -518,7 +519,11 @@
         - ReagentId: Carbohydrate
           Quantity: 1
         - ReagentId: Fiber
-          Quantity: 3.3
+          Quantity: 3.5
+  - type: Tag
+    tags:
+     - ClothMade
+     - Ingredient
 
 - type: entity
   name: raw pastry base
@@ -738,6 +743,12 @@
     entries:
       Taco: CheeseTaco
       Burger: CheeseBurger
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: cheesewedge-inhand-left
+      right:
+      - state: cheesewedge-inhand-right
 
 - type: entity
   name: chèvre log
