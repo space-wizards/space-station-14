@@ -64,7 +64,7 @@
     canCollide: false
     bodyType: static
   - type: StaticPrice
-    price: 22
+    price: 30 # Starlight
   - type: ContainerContainer
     containers:
       VentCrawTube: !type:Container
