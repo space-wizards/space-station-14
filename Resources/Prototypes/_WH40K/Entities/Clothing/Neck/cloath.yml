@@ -1,19 +1,23 @@
 - type: entity
   parent: ClothingNeckBase
-  id: ClothingNeckGoret
+  id: Gorjet
   name: Горжет
-  description: Горжет офицера
-  suffix: WH40K,Гвардия
+  description: Отличительный знак офицера со встроенным силовым полем, отталкивающим снаряды. Какое-то там попадание в голову не должно отвлекать офицера от мудрых планов!
   components:
   - type: Sprite
-    sprite: _WH40K/Clothing/Neck/Сloaks/gorjet.
-
+    sprite: _WH40K/Clothing/Neck/Сloaks/gorjet.rsi
+    state: icon
+  - type: Clothing
+    sprite: _WH40K/Clothing/Neck/Сloaks/gorjet.rsi
+    
 - type: entity
   parent: ClothingNeckBase
-  id: ClothingNeckColonekcloak
+  id: Colonelcloak
   name: Плащ Полковника
-  description: Плащ полковника Имперской Гвардии
-  suffix: WH40K,Гвардия
+  description: Великолепно вышитый плащ старшего офицера Имперской Гвардии, одним своим видом показывает авторитет, власть, богатство... и куда стрелять противнику.
   components:
   - type: Sprite
+    sprite: _WH40K/Clothing/Neck/Сloaks/colonelcloak.rsi
+    state: icon
+  - type: Clothing
     sprite: _WH40K/Clothing/Neck/Сloaks/colonelcloak.rsi

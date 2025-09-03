@@ -1,0 +1,11 @@
+- type: entity
+  parent: BaseItem
+  id: GuardFlag
+  name: Знамя полка (Кадия)
+  description: Знамя полка - его гордость, физическое воплощение, не дайте врагу завладеть им! Ураааа!
+  components:
+  - type: Sprite
+    sprite: _WH40K/Objects/Misc/guard_flag.rsi
+    state: icon
+  - type: Item
+    sprite: Objects/Misc/Handy_Flags/guard_flag.rsi
