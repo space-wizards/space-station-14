@@ -6,4 +6,5 @@ set-game-preset-optional-argument-not-integer = If argument 2 is provided it mus
 set-game-preset-preset-error = Unable to find game preset "{$preset}"
 
 #set-game-preset-preset-set = Set game preset to "{$preset}"
-set-game-preset-preset-set-finite = Set game preset to "{$preset}" for the next {$rounds} rounds, showing {$decoy} in the lobby.
+set-game-preset-preset-set-finite = Set game preset to "{$preset}" for the next {$rounds} rounds.
+set-game-preset-preset-set-finite-with-decoy = Set game preset to "{$preset}" for the next {$rounds} rounds, showing {$decoy} in the lobby.
