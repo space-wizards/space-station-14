@@ -950,12 +950,6 @@
   id: MimeHappyHonk
 
 - type: Tag
-  id: MothershipCore
-
-- type: Tag
-  id: MothershipModule
-
-- type: Tag
   id: FakeMindShieldImplant
 
 - type: Tag
@@ -981,6 +975,12 @@
 
 - type: Tag
   id: MopBasic
+
+- type: Tag
+  id: MothershipCore
+
+- type: Tag
+  id: MothershipModule
 
 - type: Tag
   id: Mouse
