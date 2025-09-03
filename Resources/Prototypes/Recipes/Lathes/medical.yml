@@ -252,3 +252,13 @@
     Glass: 100
     Plastic: 100
 
+- type: latheRecipe
+  id: JetInjector
+  result: JetInjector
+  category: Tools
+  completetime: 10
+  materials:
+    PlasmaGlass: 200
+    Plasteel: 200
+    Silver: 200
+    Gold: 200

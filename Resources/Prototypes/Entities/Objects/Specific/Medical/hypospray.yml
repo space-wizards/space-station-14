@@ -718,3 +718,41 @@
     transferAmount: 1
     onlyAffectsMobs: false
     injectOnly: true
+
+- type: entity
+  name: jet injector
+  parent: BaseItem
+  description: A sterile injector for convenient administration of drugs to patients.
+  id: JetInjector
+  components:
+  - type: Sprite
+    sprite: Objects/Specific/Medical/jetinjector.rsi
+    layers:
+    - state: jetinjector_base
+      map: [ "enum.SolutionContainerLayers.Base" ]
+    - state: jetinjector_filled1
+      map: [ "enum.SolutionContainerLayers.Fill" ]
+      visible: false
+  - type: Appearance
+  - type: SolutionContainerVisuals
+    maxFillLevels: 6
+    fillBaseName: jetinjector_filled
+    solutionName: hypospray
+  - type: Item
+    sprite: Objects/Specific/Medical/jetinjector.rsi
+  - type: SolutionContainerManager
+    solutions:
+      hypospray:
+        maxVol: 30
+  - type: RefillableSolution
+    solution: hypospray
+  - type: ExaminableSolution
+    solution: hypospray
+  - type: Hypospray
+    onlyAffectsMobs: false
+    injectTime: 2.5
+    injectMaxCapacity: true
+  - type: UseDelay
+    delay: 0.5
+  - type: StaticPrice
+    price: 250
