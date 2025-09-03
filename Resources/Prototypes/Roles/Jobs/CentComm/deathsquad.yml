@@ -31,7 +31,7 @@
   storage:
     back:
     - WeaponPulsePistol
-    - WeaponRevolverMateba
+    - WeaponRevolverMatebaAP
     - SpeedLoaderMagnumAP
     - SpeedLoaderMagnumAP
     - BoxFlashbang

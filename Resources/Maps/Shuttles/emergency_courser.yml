@@ -1,6 +1,17 @@
 meta:
-  format: 6
-  postmapinit: false
+  format: 7
+  category: Grid
+  engineVersion: 250.0.0
+  forkId: ""
+  forkVersion: ""
+  time: 03/29/2025 03:02:29
+  entityCount: 662
+maps: []
+grids:
+- 656
+orphans:
+- 656
+nullspace: []
 tilemap:
   0: Space
   29: FloorDark
@@ -61,10 +72,10 @@ entities:
       gravityShakeSound: !type:SoundPathSpecifier
         path: /Audio/Effects/alert.ogg
     - type: DeviceNetwork
+      deviceNetId: Wireless
       configurators: []
       deviceLists: []
       transmitFrequencyId: ShuttleTimer
-      deviceNetId: Wireless
     - type: DecalGrid
       chunkCollection:
         version: 2
@@ -3145,6 +3156,33 @@ entities:
     components:
     - type: Transform
       pos: 1.5,-0.5
+      parent: 656
+- proto: Screen
+  entities:
+  - uid: 658
+    components:
+    - type: Transform
+      pos: 0.5,-3.5
+      parent: 656
+  - uid: 659
+    components:
+    - type: Transform
+      pos: 6.5,1.5
+      parent: 656
+  - uid: 660
+    components:
+    - type: Transform
+      pos: -6.5,1.5
+      parent: 656
+  - uid: 661
+    components:
+    - type: Transform
+      pos: 3.5,-11.5
+      parent: 656
+  - uid: 662
+    components:
+    - type: Transform
+      pos: -3.5,-11.5
       parent: 656
 - proto: ShuttleWindow
   entities:

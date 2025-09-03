@@ -1,5 +1,4 @@
 using Content.Server.Objectives.Components;
-using Content.Server.Objectives.Components.Targets;
 using Content.Shared.CartridgeLoader;
 using Content.Shared.Interaction;
 using Content.Shared.Mind;
@@ -29,6 +28,7 @@ public sealed class StealConditionSystem : EntitySystem
     private EntityQuery<ContainerManagerComponent> _containerQuery;
 
     private HashSet<Entity<TransformComponent>> _nearestEnts = new();
+    private HashSet<EntityUid> _countedItems = new();
 
     public override void Initialize()
     {
@@ -104,6 +104,8 @@ public sealed class StealConditionSystem : EntitySystem
         var containerStack = new Stack<ContainerManagerComponent>();
         var count = 0;
 
+        _countedItems.Clear();
+
         //check stealAreas
         if (condition.CheckStealAreas)
         {
@@ -174,6 +176,9 @@ public sealed class StealConditionSystem : EntitySystem
 
     private int CheckStealTarget(EntityUid entity, StealConditionComponent condition)
     {
+        if (_countedItems.Contains(entity))
+            return 0;
+
         // check if this is the target
         if (!TryComp<StealTargetComponent>(entity, out var target))
             return 0;
@@ -195,6 +200,8 @@ public sealed class StealConditionSystem : EntitySystem
                     return 0;
             }
         }
+
+        _countedItems.Add(entity);
 
         return TryComp<StackComponent>(entity, out var stack) ? stack.Count : 1;
     }

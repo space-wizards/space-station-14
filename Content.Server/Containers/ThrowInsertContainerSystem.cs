@@ -30,6 +30,12 @@ public sealed class ThrowInsertContainerSystem : EntitySystem
         if (!_containerSystem.CanInsert(args.Thrown, container))
             return;
 
+        var beforeThrowArgs = new BeforeThrowInsertEvent(args.Thrown);
+        RaiseLocalEvent(ent, ref beforeThrowArgs);
+
+        if (beforeThrowArgs.Cancelled)
+            return;
+
         if (_random.Prob(ent.Comp.Probability))
         {
             _audio.PlayPvs(ent.Comp.MissSound, ent);
@@ -46,3 +52,10 @@ public sealed class ThrowInsertContainerSystem : EntitySystem
             _adminLogger.Add(LogType.Landed, LogImpact.Low, $"{ToPrettyString(args.Thrown)} thrown by {ToPrettyString(args.Component.Thrower.Value):player} landed in {ToPrettyString(ent)}");
     }
 }
+
+/// <summary>
+/// Sent before the insertion is made.
+/// Allows preventing the insertion if any system on the entity should need to.
+/// </summary>
+[ByRefEvent]
+public record struct BeforeThrowInsertEvent(EntityUid ThrownEntity, bool Cancelled = false);

@@ -1,0 +1,113 @@
+### Spam Mail
+
+## TODO: They all should be a localized dataset for PaperComponent
+
+# Advertisements
+- type: entity
+  id: MailRobustToolsSpam
+  name: Robust Toolbox - Special Offer!
+  description: An advertisement for the robust toolboxes.
+  parent: Paper
+  components:
+  - type: Paper
+    content: delivery-spam-robust-toolboxes
+
+- type: entity
+  id: MailNanotrasenSpam
+  name: Reasons to choose Nanotrasen!
+  description: An advertisement for the Nanotrasen.
+  parent: Paper
+  components:
+  - type: Paper
+    content: delivery-spam-reasons-to-chose-nanotrasen
+
+- type: entity
+  id: MailSyndicateSpam
+  name: Reasons to choose The Syndicate!
+  description: An advertisement for the The Syndicate.
+  parent: Paper
+  components:
+  - type: Paper
+    content: delivery-spam-reasons-to-choose-syndicate
+
+- type: entity
+  id: MailAlternativeDimensionSpam
+  name: Send reinforcements!
+  description: An official notice from... an alternate timeline?
+  parent: Paper
+  components:
+  - type: Paper
+    content: delivery-spam-alternate-timeline
+
+- type: entity
+  id: MailNarsieCultSpam
+  name: The Children of Nar'Sie
+  description: A local cult is looking for recruits.
+  parent: Paper
+  components:
+  - type: Paper
+    content: delivery-spam-narsie-cult
+
+- type: entity
+  id: MailRageCageSpam
+  name: Do you want to fight?!
+  description: Advertisement for a local fighting club.
+  parent: Paper
+  components:
+  - type: Paper
+    content: delivery-spam-rage-cage
+
+- type: entity
+  id: MailVoyageAdvertisementSpam
+  name: Join us on the maiden voyage!
+  description: Advertisement for a relaxing voyage.
+  parent: Paper
+  components:
+  - type: Paper
+    content: delivery-spam-voyage-advertisement
+
+# Scam Mail
+- type: entity
+  id: MailScienceSpiderClanSpam
+  name: Tired of science blowing up?
+  description: Follow these simple steps to ensure it never happens again!
+  parent: Paper
+  components:
+  - type: Paper
+    content: delivery-spam-tired-of-science
+
+- type: entity
+  id: MailAllAccessSpam
+  name: FREE ALL AXCESS!! # Spelling mistake intentional
+  description: Did you ever want free all access?!
+  parent: Paper
+  components:
+  - type: Paper
+    content: delivery-spam-free-all-access
+
+- type: entity
+  id: MailCentcommRetributionSpam
+  name: NOTICE FROM NANOTRASN!! # Spelling mistake intentional
+  description: An official notice from the CEO of Nanotrasn?!
+  parent: Paper
+  components:
+  - type: Paper
+    content: delivery-spam-centcomm-retribution
+
+- type: entity
+  id: MailEvilLizardSpam
+  name: DO NOT OPEN THIS MAIL
+  description: You have been cursed!
+  parent: Paper
+  components:
+  - type: Paper
+    content: delivery-spam-evil-lizard
+
+- type: entity
+  id: MailParentsNeedMoneySpam
+  name: Help mom and dad!
+  description: Parents in need of financial support.
+  parent: Paper
+  components:
+  - type: Paper
+    content: delivery-spam-parents-need-money

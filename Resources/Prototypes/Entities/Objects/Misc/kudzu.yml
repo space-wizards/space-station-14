@@ -116,7 +116,7 @@
   parent: Kudzu
   components:
     - type: Sprite
-      drawdepth: FloorObjects
+      drawdepth: HighFloorObjects
       sprite: Objects/Misc/kudzuflower.rsi
       state: kudzu_11
     - type: Kudzu
@@ -134,12 +134,12 @@
       offset: 0.2
       chance: 0.05
       prototypes:
-      - LightTree01
-      - LightTree02
-      - LightTree03
-      - LightTree04
-      - LightTree05
-      - LightTree06
+      - LightTree #TODO: transform into EntityTable with weight
+      - LightTree
+      - LightTree
+      - LightTree
+      - LightTree
+      - LightTree
       - CrystalCyan
       rarePrototypes:
       - AnomalyFloraBulb
@@ -247,8 +247,10 @@
       solutions:
         food:
           reagents:
-          - ReagentId: Protein
+          - ReagentId: Razorium
             Quantity: 2
+          - ReagentId: Protein
+            Quantity: 1
     - type: Respirator
       damage:
         types:
@@ -256,6 +258,9 @@
       damageRecovery:
         types:
           Asphyxiation: -0.25
+    - type: Tag
+      tags:
+      - Meat
 
 - type: entity
   name: dark haze

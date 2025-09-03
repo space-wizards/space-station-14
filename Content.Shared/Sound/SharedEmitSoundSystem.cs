@@ -58,7 +58,10 @@ public abstract class SharedEmitSoundSystem : EntitySystem
 
     private void HandleEmitSoundOnUIOpen(EntityUid uid, EmitSoundOnUIOpenComponent component, AfterActivatableUIOpenEvent args)
     {
-        TryEmitSound(uid, component, args.User);
+        if (_whitelistSystem.IsBlacklistFail(component.Blacklist, args.User))
+        {
+            TryEmitSound(uid, component, args.User);
+        }
     }
 
     private void OnMobState(Entity<SoundWhileAliveComponent> entity, ref MobStateChangedEvent args)
@@ -142,14 +145,22 @@ public abstract class SharedEmitSoundSystem : EntitySystem
         if (component.Sound == null)
             return;
 
-        if (predict)
+        if (component.Positional)
         {
-            _audioSystem.PlayPredicted(component.Sound, uid, user);
+            var coords = Transform(uid).Coordinates;
+            if (predict)
+                _audioSystem.PlayPredicted(component.Sound, coords, user);
+            else if (_netMan.IsServer)
+                // don't predict sounds that client couldn't have played already
+                _audioSystem.PlayPvs(component.Sound, coords);
         }
-        else if (_netMan.IsServer)
+        else
         {
-            // don't predict sounds that client couldn't have played already
-            _audioSystem.PlayPvs(component.Sound, uid);
+            if (predict)
+                _audioSystem.PlayPredicted(component.Sound, uid, user);
+            else if (_netMan.IsServer)
+                // don't predict sounds that client couldn't have played already
+                _audioSystem.PlayPvs(component.Sound, uid);
         }
     }
 
@@ -176,7 +187,7 @@ public abstract class SharedEmitSoundSystem : EntitySystem
 
         if (_netMan.IsServer && sound != null)
         {
-            _audioSystem.PlayPvs(_audioSystem.GetSound(sound), uid, AudioParams.Default.WithVolume(volume));
+            _audioSystem.PlayPvs(_audioSystem.ResolveSound(sound), uid, AudioParams.Default.WithVolume(volume));
         }
     }
 

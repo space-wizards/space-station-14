@@ -23,7 +23,7 @@ namespace Content.Shared.Maps
                 return null;
 
             mapManager ??= IoCManager.Resolve<IMapManager>();
-            var pos = coordinates.ToMap(entityManager, entityManager.System<SharedTransformSystem>());
+            var pos = entityManager.System<SharedTransformSystem>().ToMapCoordinates(coordinates);
             if (!mapManager.TryFindGridAt(pos, out _, out var grid))
                 return null;
 
@@ -120,10 +120,11 @@ namespace Content.Shared.Maps
         private static bool GetWorldTileBox(TileRef turf, out Box2Rotated res)
         {
             var entManager = IoCManager.Resolve<IEntityManager>();
+            var xformSystem = entManager.System<SharedTransformSystem>();
 
             if (entManager.TryGetComponent<MapGridComponent>(turf.GridUid, out var tileGrid))
             {
-                var gridRot = entManager.GetComponent<TransformComponent>(turf.GridUid).WorldRotation;
+                var gridRot = xformSystem.GetWorldRotation(turf.GridUid);
 
                 // This is scaled to 90 % so it doesn't encompass walls on other tiles.
                 var tileBox = Box2.UnitCentered.Scale(0.9f);

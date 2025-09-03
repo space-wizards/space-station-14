@@ -256,7 +256,12 @@ public sealed class SingularitySystem : SharedSingularitySystem
     public void OnConsumed(EntityUid uid, SinguloFoodComponent comp, ref EventHorizonConsumedEntityEvent args)
     {
         if (EntityManager.TryGetComponent<SingularityComponent>(args.EventHorizonUid, out var singulo))
-            AdjustEnergy(args.EventHorizonUid, comp.Energy, singularity: singulo);
+        {
+            // Calculate the percentage change (positive or negative)
+            var percentageChange = singulo.Energy * (comp.EnergyFactor - 1f);
+            // Apply both the flat and percentage changes
+            AdjustEnergy(args.EventHorizonUid, comp.Energy + percentageChange, singularity: singulo);
+        }
     }
 
     /// <summary>

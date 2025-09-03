@@ -9,104 +9,49 @@ namespace Content.Shared.Weapons.Melee.Components;
 /// This is used for a melee weapon that throws whatever gets hit by it in a line
 /// until it hits a wall or a time limit is exhausted.
 /// </summary>
-[RegisterComponent, NetworkedComponent]
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
 [Access(typeof(MeleeThrowOnHitSystem))]
-[AutoGenerateComponentState]
 public sealed partial class MeleeThrowOnHitComponent : Component
 {
     /// <summary>
     /// The speed at which hit entities should be thrown.
     /// </summary>
-    [DataField, ViewVariables(VVAccess.ReadWrite)]
-    [AutoNetworkedField]
+    [DataField, AutoNetworkedField]
     public float Speed = 10f;
 
     /// <summary>
-    /// How long hit entities remain thrown, max.
+    /// The maximum distance the hit entity should be thrown.
     /// </summary>
-    [DataField, ViewVariables(VVAccess.ReadWrite)]
-    [AutoNetworkedField]
-    public float Lifetime = 3f;
-
-    /// <summary>
-    /// How long we wait to start accepting collision.
-    /// </summary>
-    [DataField, ViewVariables(VVAccess.ReadWrite)]
-    public float MinLifetime = 0.05f;
+    [DataField, AutoNetworkedField]
+    public float Distance = 20f;
 
     /// <summary>
     /// Whether or not anchorable entities should be unanchored when hit.
     /// </summary>
-    [DataField, ViewVariables(VVAccess.ReadWrite)]
-    [AutoNetworkedField]
+    [DataField, AutoNetworkedField]
     public bool UnanchorOnHit;
 
     /// <summary>
-    /// Whether or not the throwing behavior occurs by default.
+    /// How long should this stun the target, if applicable?
     /// </summary>
-    [DataField, ViewVariables(VVAccess.ReadWrite)]
-    [AutoNetworkedField]
-    public bool Enabled = true;
+    [DataField, AutoNetworkedField]
+    public TimeSpan? StunTime;
+
+    /// <summary>
+    /// Should this also work on a throw-hit?
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public bool ActivateOnThrown;
 }
 
 /// <summary>
-/// Component used to track entities that have been yeeted by <see cref="MeleeThrowOnHitComponent"/>
+/// Raised a weapon entity with <see cref="MeleeThrowOnHitComponent"/> to see if a throw is allowed.
 /// </summary>
-[RegisterComponent, NetworkedComponent]
-[AutoGenerateComponentState]
-[Access(typeof(MeleeThrowOnHitSystem))]
-public sealed partial class MeleeThrownComponent : Component
-{
-    /// <summary>
-    /// The velocity of the throw
-    /// </summary>
-    [DataField, ViewVariables(VVAccess.ReadWrite)]
-    [AutoNetworkedField]
-    public Vector2 Velocity;
-
-    /// <summary>
-    /// How long the throw will last.
-    /// </summary>
-    [DataField, ViewVariables(VVAccess.ReadWrite)]
-    [AutoNetworkedField]
-    public float Lifetime;
-
-    /// <summary>
-    /// How long we wait to start accepting collision.
-    /// </summary>
-    [DataField, ViewVariables(VVAccess.ReadWrite)]
-    public float MinLifetime;
-
-    /// <summary>
-    /// At what point in time will the throw be complete?
-    /// </summary>
-    [DataField(customTypeSerializer: typeof(TimeOffsetSerializer))]
-    [AutoNetworkedField]
-    public TimeSpan ThrownEndTime;
-
-    /// <summary>
-    /// At what point in time will the <see cref="MinLifetime"/> be exhausted
-    /// </summary>
-    [DataField(customTypeSerializer: typeof(TimeOffsetSerializer))]
-    [AutoNetworkedField]
-    public TimeSpan MinLifetimeTime;
-
-    /// <summary>
-    /// the status to which the entity will return when the thrown ends
-    /// </summary>
-    [DataField]
-    public BodyStatus PreviousStatus;
-}
+[ByRefEvent]
+public record struct AttemptMeleeThrowOnHitEvent(EntityUid Target, EntityUid? User, bool Cancelled = false, bool Handled = false);
 
 /// <summary>
-/// Event raised before an entity is thrown by <see cref="MeleeThrowOnHitComponent"/> to see if a throw is allowed.
-/// If not handled, the enabled field on the component will be used instead.
+/// Raised a target entity before it is thrown by <see cref="MeleeThrowOnHitComponent"/>.
 /// </summary>
 [ByRefEvent]
-public record struct AttemptMeleeThrowOnHitEvent(EntityUid Hit, bool Cancelled = false, bool Handled = false);
-
-[ByRefEvent]
-public record struct MeleeThrowOnHitStartEvent(EntityUid User, EntityUid Used);
-
-[ByRefEvent]
-public record struct MeleeThrowOnHitEndEvent();
+public record struct MeleeThrowOnHitStartEvent(EntityUid Weapon, EntityUid? User);

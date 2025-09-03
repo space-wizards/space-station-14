@@ -40,6 +40,9 @@
     damage:
       types:
         Blunt: 5
+  - type: GuideHelp
+    guides:
+    - ExpandingRepairingStation
 
 - type: entity
   name: steel dark checker tile
@@ -1547,6 +1550,23 @@
     - FloorAstroSnow
   - type: Stack
     stackType: FloorTileAstroSnow
+
+- type: entity
+  id: FloorTileItemAstroAsteroidSand
+  parent: FloorTileItemBase
+  name: asteroid astro-sand
+  description: Fake sand. Luckily, it's not as coarse as the real thing.
+  components:
+  - type: Sprite
+    state: asteroid
+  - type: Item
+    heldPrefix: asteroid
+  - type: FloorTile
+    outputs:
+    - Plating
+    - FloorAstroAsteroidSand
+  - type: Stack
+    stackType: FloorTileAstroAsteroidSand
 
 - type: entity
   name: large wood floor

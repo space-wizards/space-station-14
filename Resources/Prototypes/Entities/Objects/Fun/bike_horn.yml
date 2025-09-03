@@ -14,14 +14,29 @@
     sprite: Objects/Fun/bikehorn.rsi
     slots: [Belt]
     quickEquip: false
+  - type: UseDelay
+    delay: 0.5
   - type: EmitSoundOnUse
     sound:
       collection: BikeHorn
       params:
         variation: 0.125
-  - type: UseDelay
-    delay: 0.5
+  - type: EmitSoundOnLand
+    sound:
+      collection: BikeHorn
+      params:
+        variation: 0.125
   - type: EmitSoundOnTrigger
+    sound:
+      collection: BikeHorn
+      params:
+        variation: 0.125
+  - type: EmitSoundOnActivate
+    sound:
+      collection: BikeHorn
+      params:
+        variation: 0.125
+  - type: EmitSoundOnCollide
     sound:
       collection: BikeHorn
       params:
@@ -75,7 +90,22 @@
     sound:
       collection: CluwneHorn
       params:
-        variation: 0.246
+        variation: 0.125
+  - type: EmitSoundOnActivate
+    sound:
+      collection: CluwneHorn
+      params:
+        variation: 0.125
+  - type: EmitSoundOnCollide
+    sound:
+      collection: CluwneHorn
+      params:
+        variation: 0.125
+  - type: EmitSoundOnLand
+    sound:
+      collection: CluwneHorn
+      params:
+        variation: 0.125
   - type: MeleeWeapon
     wideAnimationRotation: 135
     soundHit:
@@ -91,7 +121,7 @@
   parent: BikeHorn
   id: GoldenBikeHorn
   name: golden honker
-  suffix: No mapping
+  categories: [ DoNotMap ]
   description: A happy honk prize, pray to the gods for your reward.
   components:
   - type: Sprite
@@ -133,11 +163,36 @@
       collection: BananiumHorn
       params:
         variation: 0.246
+  - type: EmitSoundOnLand
+    sound:
+      collection: BananiumHorn
+      params:
+        variation: 0.246
   - type: EmitSoundOnTrigger
     sound:
       collection: BananiumHorn
       params:
         variation: 0.246
+  - type: EmitSoundOnActivate
+    sound:
+      collection: BananiumHorn
+      params:
+        variation: 0.246
+  - type: EmitSoundOnCollide
+    sound:
+      collection: BananiumHorn
+      params:
+        variation: 0.246
+  - type: MeleeWeapon
+    wideAnimationRotation: 135
+    soundHit:
+      collection: BananiumHorn
+      params:
+        variation: 0.246
+    damage:
+      types:
+        Blunt: 0
+    hidden: true
   - type: Construction
     graph: BananiumHorn
     node: bananiumHorn

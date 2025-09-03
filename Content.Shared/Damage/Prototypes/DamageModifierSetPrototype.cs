@@ -9,7 +9,7 @@ namespace Content.Shared.Damage.Prototypes
     ///     Done to avoid removing the 'required' tag on the ID and passing around a 'prototype' when we really
     ///     just want normal data to be deserialized.
     /// </remarks>
-    [Prototype("damageModifierSet")]
+    [Prototype]
     public sealed partial class DamageModifierSetPrototype : DamageModifierSet, IPrototype
     {
         [ViewVariables]

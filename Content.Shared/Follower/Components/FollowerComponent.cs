@@ -4,7 +4,7 @@ namespace Content.Shared.Follower.Components;
 
 [RegisterComponent]
 [Access(typeof(FollowerSystem))]
-[NetworkedComponent, AutoGenerateComponentState]
+[NetworkedComponent, AutoGenerateComponentState(RaiseAfterAutoHandleState = true)]
 public sealed partial class FollowerComponent : Component
 {
     [AutoNetworkedField, DataField("following")]

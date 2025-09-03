@@ -1,11 +1,9 @@
-using Content.Server.Power.Components;
 using Content.Shared.UserInterface;
-using Content.Server.Advertise;
-using Content.Server.Advertise.Components;
+using Content.Server.Advertise.EntitySystems;
+using Content.Shared.Advertise.Components;
 using Content.Shared.Arcade;
 using Content.Shared.Power;
 using Robust.Server.GameObjects;
-using Robust.Shared.Player;
 
 namespace Content.Server.Arcade.BlockGame;
 

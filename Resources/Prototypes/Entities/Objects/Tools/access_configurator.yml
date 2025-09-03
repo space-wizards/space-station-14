@@ -90,6 +90,8 @@
     - Armory
     - Atmospherics
     - Bar
+    - BasicSilicon
+    - Borg
     - Brig
     - Detective
     - Captain
@@ -99,6 +101,8 @@
     - ChiefEngineer
     - ChiefMedicalOfficer
     - Command
+    - Cryogenics
+    - EmergencyShuttleRepealAll
     - Engineering
     - External
     - HeadOfPersonnel
@@ -115,10 +119,12 @@
     - Salvage
     - Security
     - Service
+    - StationAi
     - Theatre
     - CentralCommand
     - NuclearOperative
     - SyndicateAgent
+    - Wizard
     privilegedIdSlot:
       name: id-card-console-privileged-id
       ejectSound: /Audio/Machines/id_swipe.ogg

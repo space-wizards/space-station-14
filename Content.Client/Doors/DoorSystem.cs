@@ -21,112 +21,131 @@ public sealed class DoorSystem : SharedDoorSystem
     protected override void OnComponentInit(Entity<DoorComponent> ent, ref ComponentInit args)
     {
         var comp = ent.Comp;
-        comp.OpenSpriteStates = new(2);
-        comp.ClosedSpriteStates = new(2);
+        comp.OpenSpriteStates = new List<(DoorVisualLayers, string)>(2);
+        comp.ClosedSpriteStates = new List<(DoorVisualLayers, string)>(2);
 
         comp.OpenSpriteStates.Add((DoorVisualLayers.Base, comp.OpenSpriteState));
         comp.ClosedSpriteStates.Add((DoorVisualLayers.Base, comp.ClosedSpriteState));
 
-        comp.OpeningAnimation = new Animation()
+        comp.OpeningAnimation = new Animation
         {
             Length = TimeSpan.FromSeconds(comp.OpeningAnimationTime),
             AnimationTracks =
             {
-                new AnimationTrackSpriteFlick()
+                new AnimationTrackSpriteFlick
                 {
                     LayerKey = DoorVisualLayers.Base,
-                    KeyFrames = { new AnimationTrackSpriteFlick.KeyFrame(comp.OpeningSpriteState, 0f) }
-                }
+                    KeyFrames =
+                    {
+                        new AnimationTrackSpriteFlick.KeyFrame(comp.OpeningSpriteState, 0f),
+                    },
+                },
             },
         };
 
-        comp.ClosingAnimation = new Animation()
+        comp.ClosingAnimation = new Animation
         {
             Length = TimeSpan.FromSeconds(comp.ClosingAnimationTime),
             AnimationTracks =
             {
-                new AnimationTrackSpriteFlick()
+                new AnimationTrackSpriteFlick
                 {
                     LayerKey = DoorVisualLayers.Base,
-                    KeyFrames = { new AnimationTrackSpriteFlick.KeyFrame(comp.ClosingSpriteState, 0f) }
-                }
+                    KeyFrames =
+                    {
+                        new AnimationTrackSpriteFlick.KeyFrame(comp.ClosingSpriteState, 0f),
+                    },
+                },
             },
         };
 
-        comp.EmaggingAnimation = new Animation ()
+        comp.EmaggingAnimation = new Animation
         {
             Length = TimeSpan.FromSeconds(comp.EmaggingAnimationTime),
             AnimationTracks =
             {
-                new AnimationTrackSpriteFlick()
+                new AnimationTrackSpriteFlick
                 {
                     LayerKey = DoorVisualLayers.BaseUnlit,
-                    KeyFrames = { new AnimationTrackSpriteFlick.KeyFrame(comp.EmaggingSpriteState, 0f) }
-                }
+                    KeyFrames =
+                    {
+                        new AnimationTrackSpriteFlick.KeyFrame(comp.EmaggingSpriteState, 0f),
+                    },
+                },
             },
         };
     }
 
-    private void OnAppearanceChange(EntityUid uid, DoorComponent comp, ref AppearanceChangeEvent args)
+    private void OnAppearanceChange(Entity<DoorComponent> entity, ref AppearanceChangeEvent args)
     {
         if (args.Sprite == null)
             return;
 
-        if(!AppearanceSystem.TryGetData<DoorState>(uid, DoorVisuals.State, out var state, args.Component))
+        if (!AppearanceSystem.TryGetData<DoorState>(entity, DoorVisuals.State, out var state, args.Component))
             state = DoorState.Closed;
 
-        if (AppearanceSystem.TryGetData<string>(uid, DoorVisuals.BaseRSI, out var baseRsi, args.Component))
-        {
-            if (!_resourceCache.TryGetResource<RSIResource>(SpriteSpecifierSerializer.TextureRoot / baseRsi, out var res))
-            {
-                Log.Error("Unable to load RSI '{0}'. Trace:\n{1}", baseRsi, Environment.StackTrace);
-            }
-            foreach (var layer in args.Sprite.AllLayers)
-            {
-                layer.Rsi = res?.RSI;
-            }
-        }
+        if (AppearanceSystem.TryGetData<string>(entity, DoorVisuals.BaseRSI, out var baseRsi, args.Component))
+            UpdateSpriteLayers(args.Sprite, baseRsi);
 
-        TryComp<AnimationPlayerComponent>(uid, out var animPlayer);
-        if (_animationSystem.HasRunningAnimation(uid, animPlayer, DoorComponent.AnimationKey))
-            _animationSystem.Stop(uid, animPlayer, DoorComponent.AnimationKey); // Halt all running anomations.
+        if (_animationSystem.HasRunningAnimation(entity, DoorComponent.AnimationKey))
+            _animationSystem.Stop(entity.Owner, DoorComponent.AnimationKey);
 
-        args.Sprite.DrawDepth = comp.ClosedDrawDepth;
-        switch(state)
+        UpdateAppearanceForDoorState(entity, args.Sprite, state);
+    }
+
+    private void UpdateAppearanceForDoorState(Entity<DoorComponent> entity, SpriteComponent sprite, DoorState state)
+    {
+        sprite.DrawDepth = state is DoorState.Open ? entity.Comp.OpenDrawDepth : entity.Comp.ClosedDrawDepth;
+
+        switch (state)
         {
             case DoorState.Open:
-                args.Sprite.DrawDepth = comp.OpenDrawDepth;
-                foreach(var (layer, layerState) in comp.OpenSpriteStates)
+                foreach (var (layer, layerState) in entity.Comp.OpenSpriteStates)
                 {
-                    args.Sprite.LayerSetState(layer, layerState);
+                    sprite.LayerSetState(layer, layerState);
                 }
-                break;
+
+                return;
             case DoorState.Closed:
-                foreach(var (layer, layerState) in comp.ClosedSpriteStates)
+                foreach (var (layer, layerState) in entity.Comp.ClosedSpriteStates)
                 {
-                    args.Sprite.LayerSetState(layer, layerState);
+                    sprite.LayerSetState(layer, layerState);
                 }
-                break;
+
+                return;
             case DoorState.Opening:
-                if (animPlayer != null && comp.OpeningAnimationTime != 0.0)
-                    _animationSystem.Play((uid, animPlayer), (Animation)comp.OpeningAnimation, DoorComponent.AnimationKey);
-                break;
+                if (entity.Comp.OpeningAnimationTime == 0.0)
+                    return;
+
+                _animationSystem.Play(entity, (Animation)entity.Comp.OpeningAnimation, DoorComponent.AnimationKey);
+
+                return;
             case DoorState.Closing:
-                if (animPlayer != null && comp.ClosingAnimationTime != 0.0 && comp.CurrentlyCrushing.Count == 0)
-                    _animationSystem.Play((uid, animPlayer), (Animation)comp.ClosingAnimation, DoorComponent.AnimationKey);
-                break;
+                if (entity.Comp.ClosingAnimationTime == 0.0 || entity.Comp.CurrentlyCrushing.Count != 0)
+                    return;
+
+                _animationSystem.Play(entity, (Animation)entity.Comp.ClosingAnimation, DoorComponent.AnimationKey);
+
+                return;
             case DoorState.Denying:
-                if (animPlayer != null)
-                    _animationSystem.Play((uid, animPlayer), (Animation)comp.DenyingAnimation, DoorComponent.AnimationKey);
-                break;
-            case DoorState.Welded:
-                break;
+                _animationSystem.Play(entity, (Animation)entity.Comp.DenyingAnimation, DoorComponent.AnimationKey);
+
+                return;
             case DoorState.Emagging:
-                if (animPlayer != null)
-                    _animationSystem.Play((uid, animPlayer), (Animation)comp.EmaggingAnimation, DoorComponent.AnimationKey);
-                break;
-            default:
-                throw new ArgumentOutOfRangeException($"Invalid door visual state {state}");
+                _animationSystem.Play(entity, (Animation)entity.Comp.EmaggingAnimation, DoorComponent.AnimationKey);
+
+                return;
         }
+    }
+
+    private void UpdateSpriteLayers(SpriteComponent sprite, string baseRsi)
+    {
+        if (!_resourceCache.TryGetResource<RSIResource>(SpriteSpecifierSerializer.TextureRoot / baseRsi, out var res))
+        {
+            Log.Error("Unable to load RSI '{0}'. Trace:\n{1}", baseRsi, Environment.StackTrace);
+            return;
+        }
+
+        sprite.BaseRSI = res.RSI;
     }
 }

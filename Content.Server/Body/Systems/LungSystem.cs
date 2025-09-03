@@ -58,7 +58,7 @@ public sealed class LungSystem : EntitySystem
 
     private void OnMaskToggled(Entity<BreathToolComponent> ent, ref ItemMaskToggledEvent args)
     {
-        if (args.IsToggled || args.IsEquip)
+        if (args.Mask.Comp.IsToggled)
         {
             _atmos.DisconnectInternals(ent);
         }
@@ -69,7 +69,7 @@ public sealed class LungSystem : EntitySystem
             if (TryComp(args.Wearer, out InternalsComponent? internals))
             {
                 ent.Comp.ConnectedInternalsEntity = args.Wearer;
-                _internals.ConnectBreathTool((args.Wearer, internals), ent);
+                _internals.ConnectBreathTool((args.Wearer.Value, internals), ent);
             }
         }
     }

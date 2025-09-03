@@ -1,4 +1,4 @@
-﻿<Document>
+<Document>
   # Roleplay Rule 4 - Do not metagame, obey the Metashield
   Something that is "shielded" cannot be known by your character during a round until the "revealing condition" happens. This also means that your character cannot do things based on "shielded" information. Knowing or acting on something that is shielded before the revealing condition is met is referred to as metagaming.
 
@@ -29,19 +29,6 @@
   - an operative name
   - a War Ops announcement
   - being a nuclear operative
-
-  ## Implanted Implants
-
-  Implanted implants are shielded.
-
-  Implanters themselves and un-implanted implants are not shielded. This prohibits implant checking.
-
-  The revealing condition for this shield is any of the following:
-  - discovering a non-NT implanter, used or unused
-  - discovering a non-NT implant box
-  - discovering use of a non-NT implant by anyone
-  - experiencing a situation where absolutely no other explanation is possible
-  - discovering an unlocked uplink
 
   ## Chameleon Items
 
@@ -101,4 +88,5 @@
   - The fact that the Syndicate are enemies of Nanotrasen, and that they regularly attempt to send covert agents to spy on, sabotage, or attack Nanotrasen.
   - A character's typical appearance. Though you should keep in mind that multiple characters can share the same name.
   - The fact that the Syndicate have covert items capable of getting items to them, and that these items are known as uplinks.
+  - The fact that the Syndicate can provide subdermal implants to their agents with various capabilities.
 </Document>

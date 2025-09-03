@@ -57,6 +57,10 @@
   id: FoodNoodlesCopy
   description: You probably shouldn't try this, you always hear people talking about how bad it is...
   components:
+  - type: Food
+    trash:
+    - FoodPlateSmall
+    - FoodPlateSmall
   - type: FlavorProfile
     flavors:
       - copypasta
