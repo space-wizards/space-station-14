@@ -25,6 +25,7 @@ game-ticker-get-info-preround-text = Hi and welcome to [color=white]Space Statio
                             >[color=yellow]{$desc}[/color]
 game-ticker-no-map-selected = [color=yellow]Map not yet selected![/color]
 game-ticker-player-no-jobs-available-when-joining = When attempting to join to the game, no jobs were available.
+game-ticker-player-no-character-for-job-available-when-joining = When attempting to join the game, no characters were available for selected job {$job}.
 
 # Displayed in chat to admins when a player joins
 player-join-message = Player {$name} joined.

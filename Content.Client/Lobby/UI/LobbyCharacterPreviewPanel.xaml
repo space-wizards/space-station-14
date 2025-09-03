@@ -1,18 +1,68 @@
 <Control
     xmlns="https://spacestation14.io"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls">
+    xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
+    xmlns:graphics="clr-namespace:Robust.Client.Graphics;assembly=Robust.Client"
+    xmlns:style="clr-namespace:Content.Client.Stylesheets"
+    xmlns:ui="clr-namespace:Content.Client.Lobby.UI">
     <BoxContainer Name="VBox" Orientation="Vertical">
-        <controls:NanoHeading Name="Header" Text="{Loc 'lobby-character-preview-panel-header'}">
 
-        </controls:NanoHeading>
-        <BoxContainer Name="Loaded" Orientation="Vertical"
-                      Visible="False">
-            <Label Name="Summary" HorizontalAlignment="Center" Margin="3 3"/>
-            <BoxContainer Name="ViewBox" Orientation="Horizontal" HorizontalAlignment="Center">
+        <!-- Header and the checkbox for locking/unlocking priority icons -->
+        <BoxContainer>
+            <controls:NanoHeading Name="Header" Text="{Loc 'lobby-character-preview-panel-header'}" />
+            <CheckBox Name="PriorityLock" Text="{Loc 'ui-lobby-lock-priorities-checkbox-label'}"
+                      HorizontalExpand="True" HorizontalAlignment="Right" VerticalAlignment="Center"
+                      ToolTip="{Loc 'ui-lobby-lock-priorities-checkbox-tooltip'}"/>
+        </BoxContainer>
 
-            </BoxContainer>
+        <!-- This is the main bit, only shows once we have preferences from the server -->
+        <BoxContainer Name="Loaded" Orientation="Vertical" Visible="False">
+
+            <!-- Where we show ALL the jobs, separated into priorities -->
+            <BoxContainer Name="JobGrid"
+                          VerticalExpand="True"
+                          HorizontalExpand="True"
+                          HorizontalAlignment="Center"
+                          SeparationOverride="6">
+
+                <!-- Jobs with "Never" priority -->
+                <ui:DraggableJobTarget Name="NeverBox" Priority="Never" />
+
+                <!-- Vertical rule -->
+                <PanelContainer MinSize="2 0">
+                    <PanelContainer.PanelOverride>
+                        <graphics:StyleBoxFlat BackgroundColor="{x:Static style:StyleNano.NanoGold}" ContentMarginTopOverride="2" />
+                    </PanelContainer.PanelOverride>
+                </PanelContainer>
+
+                <!-- Jobs with "Low" priority -->
+                <ui:DraggableJobTarget Name="LowBox" Priority="Low" />
+
+                <!-- Vertical rule -->
+                <PanelContainer MinSize="2 0">
+                    <PanelContainer.PanelOverride>
+                        <graphics:StyleBoxFlat BackgroundColor="{x:Static style:StyleNano.NanoGold}" ContentMarginTopOverride="2" />
+                    </PanelContainer.PanelOverride>
+                </PanelContainer>
+
+                <!-- Jobs with "Medium" priority -->
+                <ui:DraggableJobTarget Name="MediumBox" Priority="Medium" />
+
+                <!-- Vertical rule -->
+                <PanelContainer MinSize="2 0">
+                    <PanelContainer.PanelOverride>
+                        <graphics:StyleBoxFlat BackgroundColor="{x:Static style:StyleNano.NanoGold}" ContentMarginTopOverride="2" />
+                    </PanelContainer.PanelOverride>
+                </PanelContainer>
+
+                <!-- THE job with "HIGH" priority -->
+                <ui:DraggableJobTarget Name="HighBox" Priority="High" />
+
+            </BoxContainer> <!-- End job grids -->
+
             <controls:VSpacer/>
+
+            <!-- Character setup button -->
             <Button Name="CharacterSetup" Text="{Loc 'lobby-character-preview-panel-character-setup-button'}"
                     HorizontalAlignment="Center"
                     Margin="0 5 0 0"/>
