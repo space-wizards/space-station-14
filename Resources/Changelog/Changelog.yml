@@ -1,13 +1,6 @@
 ﻿Entries:
 - author: metalgearsloth
   changes:
-  - message: Predict gas canisters, gas tanks, and internals.
-    type: Tweak
-  id: 8405
-  time: '2025-05-02T08:22:29.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/33800
-- author: metalgearsloth
-  changes:
   - message: Fix AI eye movement.
     type: Fix
   id: 8406
@@ -3945,3 +3938,12 @@
   id: 8917
   time: '2025-09-03T21:06:05.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/40085
+- author: ArtisticRoomba
+  changes:
+  - message: Added atmospherics delta-pressure structure damage. Objects like windows,
+      thindows, windoors, etc. will have damage done to them depending on the pressure
+      difference across the sides of the object.
+    type: Add
+  id: 8918
+  time: '2025-09-03T23:58:48.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/39238
