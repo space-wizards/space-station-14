@@ -651,7 +651,7 @@
 - type: entity
   name: pen
   suffix: Hypopen
-  parent: Pen # It is just like normal pen, isn't it?
+  parent: Pen # It is just like a normal pen, isn't it?
   description: A dark ink pen.
   id: Hypopen
   components:
