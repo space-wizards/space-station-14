@@ -14,7 +14,7 @@
             !type:NanotrasenNameGenerator
             prefixCreator: '14'
         - type: StationEmergencyShuttle
-          emergencyShuttlePath: /Maps/Shuttles/emergency_raven.yml
+          emergencyShuttlePath: /Maps/Shuttles/emergency_barratry.yml
         - type: StationJobs
           availableJobs:
             # cmd
@@ -71,6 +71,8 @@
             Mime: [ 1, 1 ]
             Clown: [ 1, 1 ]
             # sil
+            StationAi: [ 1, 1 ]
+            Borg: [ 2, 2 ]
             BorgSecurity: [ 1, 1 ]
             # etc
             ClownSponsor: [ 0, 2 ]
