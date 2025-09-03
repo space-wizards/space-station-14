@@ -85,3 +85,6 @@ language-Duck-description = Quack!
 
 language-Pig-name = Pig
 language-Pig-description = Oink!
+
+language-Bat-name = Bat
+language-Bat-description = Eek!
