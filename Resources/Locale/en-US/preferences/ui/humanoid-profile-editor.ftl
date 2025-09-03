@@ -58,7 +58,14 @@ humanoid-profile-editor-pronouns-plural-label = Should this conjugate plurally?
 humanoid-profile-editor-pronouns-plural-example = eg. singular "she is", plural "they are".
 humanoid-profile-editor-pronouns-plural-option-singular = Singular
 humanoid-profile-editor-pronouns-plural-option-plural = Plural
-
+humanoid-profile-editor-pronouns-subject-placeholder = {SUBJECT($gender)}
+humanoid-profile-editor-pronouns-object-placeholder = {OBJECT($gender)}
+humanoid-profile-editor-pronouns-datobj-placeholder = {DAT-OBJ($gender)}
+humanoid-profile-editor-pronouns-genitive-placeholder = {GENITIVE($gender)}
+humanoid-profile-editor-pronouns-possadj-placeholder = {POSS-ADJ($gender)}
+humanoid-profile-editor-pronouns-posspronoun-placeholder = {POSS-PRONOUN($gender)}
+humanoid-profile-editor-pronouns-reflexive-placeholder = {REFLEXIVE($gender)}
+humanoid-profile-editor-pronouns-counter-placeholder = {COUNTER($gender)}
 
 # Spawn priority
 humanoid-profile-editor-preference-spawn-priority-none = None

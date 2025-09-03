@@ -16,19 +16,21 @@ public sealed partial class PronounWindow : FancyWindow
     public HumanoidCharacterProfile Profile;
 
     // loc strings
-    private const string GetSubject = "{SUBJECT($gender)}";
-    private const string GetObject = "{OBJECT($gender)}";
-    private const string GetDatObj = "{DATOBJ($gender)}";
-    private const string GetGenitive = "{GENITIVE($gender)}";
-    private const string GetPossAdj = "{POSSADJ($gender)}";
-    private const string GetPossPronoun = "{POSSPRONOUN($gender)}";
-    private const string GetReflexive = "{REFLEXIVE($gender)}";
-    private const string GetCounter = "{COUNTER($gender)}";
+    private const string GetSubject = "humanoid-profile-editor-pronouns-subject-placeholder";
+    private const string GetObject = "humanoid-profile-editor-pronouns-object-placeholder";
+    private const string GetDatObj = "humanoid-profile-editor-pronouns-datobj-placeholder";
+    private const string GetGenitive = "humanoid-profile-editor-pronouns-genitive-placeholder";
+    private const string GetPossAdj = "humanoid-profile-editor-pronouns-possadj-placeholder";
+    private const string GetPossPronoun = "humanoid-profile-editor-pronouns-posspronoun-placeholder";
+    private const string GetReflexive = "humanoid-profile-editor-pronouns-reflexive-placeholder";
+    private const string GetCounter = "humanoid-profile-editor-pronouns-counter-placeholder";
 
     // CCvar
     private readonly bool _showAdditionalPronouns;
     private readonly bool _restrictedPronouns;
     private readonly int _pronounLength;
+
+    public event Action<HumanoidCharacterProfile>? OnProfileChanged;
 
     public PronounWindow(HumanoidCharacterProfile profile, Pronoun pronouns, Gender? profileGender, ICommonSession session, IDependencyCollection collection)
     {
@@ -76,10 +78,20 @@ public sealed partial class PronounWindow : FancyWindow
         ReflexiveLine.PlaceHolder = Loc.GetString(GetReflexive, ("gender", genderString));
         CounterLine.PlaceHolder = Loc.GetString(GetCounter, ("gender", genderString));
 
+        SubjectLine.Text = pronouns.Subject ?? string.Empty;
+        ObjectLine.Text = pronouns.Object ?? string.Empty;
+        DatObjLine.Text = pronouns.DatObj ?? string.Empty;
+        GenitiveLine.Text = pronouns.Genitive ?? string.Empty;
+        PossAdjLine.Text = pronouns.PossAdj ?? string.Empty;
+        PossPronounLine.Text = pronouns.PossPronoun ?? string.Empty;
+        ReflexiveLine.Text = pronouns.Reflexive ?? string.Empty;
+        CounterLine.Text = pronouns.Counter ?? string.Empty;
+
         SubjectLine.OnTextChanged += args =>
         {
             var pronouns = Profile.Pronoun?.WithSubject(args.Text);
             Profile = Profile.WithPronouns(pronouns);
+            OnProfileChanged?.Invoke(Profile);
         };
         SubjectLine.IsValid = args => args.Length <= _pronounLength;
 
@@ -87,6 +99,7 @@ public sealed partial class PronounWindow : FancyWindow
         {
             var pronouns = Profile.Pronoun?.WithObject(args.Text);
             Profile = Profile.WithPronouns(pronouns);
+            OnProfileChanged?.Invoke(Profile);
         };
         ObjectLine.IsValid = args => args.Length <= _pronounLength;
 
@@ -94,6 +107,7 @@ public sealed partial class PronounWindow : FancyWindow
         {
             var pronouns = Profile.Pronoun?.WithDatObj(args.Text);
             Profile = Profile.WithPronouns(pronouns);
+            OnProfileChanged?.Invoke(Profile);
         };
         DatObjLine.IsValid = args => args.Length <= _pronounLength;
 
@@ -101,6 +115,7 @@ public sealed partial class PronounWindow : FancyWindow
         {
             var pronouns = Profile.Pronoun?.WithGenitive(args.Text);
             Profile = Profile.WithPronouns(pronouns);
+            OnProfileChanged?.Invoke(Profile);
         };
         GenitiveLine.IsValid = args => args.Length <= _pronounLength;
 
@@ -108,6 +123,7 @@ public sealed partial class PronounWindow : FancyWindow
         {
             var pronouns = Profile.Pronoun?.WithPossAdj(args.Text);
             Profile = Profile.WithPronouns(pronouns);
+            OnProfileChanged?.Invoke(Profile);
         };
         PossAdjLine.IsValid = args => args.Length <= _pronounLength;
 
@@ -115,6 +131,7 @@ public sealed partial class PronounWindow : FancyWindow
         {
             var pronouns = Profile.Pronoun?.WithPossPronoun(args.Text);
             Profile = Profile.WithPronouns(pronouns);
+            OnProfileChanged?.Invoke(Profile);
         };
         PossPronounLine.IsValid = args => args.Length <= _pronounLength;
 
@@ -122,6 +139,7 @@ public sealed partial class PronounWindow : FancyWindow
         {
             var pronouns = Profile.Pronoun?.WithReflexive(args.Text);
             Profile = Profile.WithPronouns(pronouns);
+            OnProfileChanged?.Invoke(Profile);
         };
         ReflexiveLine.IsValid = args => args.Length <= _pronounLength;
 
@@ -129,6 +147,7 @@ public sealed partial class PronounWindow : FancyWindow
         {
             var pronouns = Profile.Pronoun?.WithCounter(args.Text);
             Profile = Profile.WithPronouns(pronouns);
+            OnProfileChanged?.Invoke(Profile);
         };
         CounterLine.IsValid = args => args.Length <= _pronounLength;
 
