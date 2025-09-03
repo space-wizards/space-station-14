@@ -1810,10 +1810,10 @@
   - type: SolutionContainerManager
     solutions:
       drink:
-        maxVol: 60
+        maxVol: 100
         reagents:
         - ReagentId: SpaceLube
-          Quantity: 60
+          Quantity: 100
   - type: GenericVisualizer
     visuals:
       enum.OpenableVisuals.Opened:
