@@ -259,7 +259,7 @@
   - Tools
   completetime: 10
   materials:
-    PlasmaGlass: 200
-    Plasteel: 200
+    Steel: 200
+    Glass: 200
+    Plasma: 200
     Silver: 200
-    Gold: 200

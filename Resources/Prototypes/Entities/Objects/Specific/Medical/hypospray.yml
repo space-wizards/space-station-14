@@ -1,17 +1,18 @@
 - type: entity
   name: hypospray
-  parent: [BaseItem, BaseGrandTheftContraband]
+  parent: [BaseItem]
   description: A sterile injector for rapid administration of drugs to patients.
-  id: Hypospray
+  id: BaseHypospray
+  abstract: true
   components:
   - type: Sprite
     sprite: Objects/Specific/Medical/hypospray.rsi
     layers:
-      - state: hypo
-        map: ["enum.SolutionContainerLayers.Base"]
-      - state: hypo_fill1
-        map: ["enum.SolutionContainerLayers.Fill"]
-        visible: false
+    - state: hypo
+      map: ["enum.SolutionContainerLayers.Base"]
+    - state: hypo_fill1
+      map: ["enum.SolutionContainerLayers.Fill"]
+      visible: false
   - type: Item
     sprite: Objects/Specific/Medical/hypospray.rsi
   - type: SolutionContainerManager
@@ -29,6 +30,13 @@
     delay: 0.5
   - type: StaticPrice
     price: 750
+
+- type: entity
+  name: hypospray
+  parent: [BaseHypospray, BaseGrandTheftContraband]
+  description: A sterile injector for rapid administration of drugs to patients.
+  id: Hypospray
+  components:
   - type: Tag
     tags:
     - HighRiskItem
@@ -42,7 +50,7 @@
 
 - type: entity
   name: gorlex hypospray
-  parent: BaseItem
+  parent: BaseHypospray
   description: Using reverse engineered designs from NT, Cybersun produced these in limited quantities for Gorlex Marauder operatives.
   id: SyndiHypo
   components:
@@ -60,15 +68,6 @@
     solutions:
       hypospray:
         maxVol: 20
-  - type: RefillableSolution
-    solution: hypospray
-  - type: ExaminableSolution
-    solution: hypospray
-    exactVolume: true
-  - type: Hypospray
-    onlyAffectsMobs: false
-  - type: UseDelay
-    delay: 0.5
   - type: Appearance
   - type: SolutionContainerVisuals
     maxFillLevels: 4
@@ -77,7 +76,7 @@
 
 - type: entity
   name: borghypo
-  parent: BaseItem
+  parent: BaseHypospray
   description: A sterile injector for rapid administration of drugs to patients. A cheaper and more specialised version for medical borgs.
   id: BorgHypo
   components:
@@ -90,14 +89,6 @@
     solutions:
       hypospray:
         maxVol: 10
-  - type: RefillableSolution
-    solution: hypospray
-  - type: ExaminableSolution
-    solution: hypospray
-  - type: Hypospray
-    onlyAffectsMobs: false
-  - type: UseDelay
-    delay: 0.5
 
 - type: entity
   name: experimental hypospray
@@ -721,7 +712,7 @@
 
 - type: entity
   name: jet injector
-  parent: BaseItem
+  parent: BaseHypospray
   description: A sterile injector for convenient administration of drugs to patients.
   id: JetInjector
   components:
@@ -733,26 +724,20 @@
     - state: jetinjector_filled1
       map: [ "enum.SolutionContainerLayers.Fill" ]
       visible: false
-  - type: Appearance
-  - type: SolutionContainerVisuals
-    maxFillLevels: 6
-    fillBaseName: jetinjector_filled
-    solutionName: hypospray
   - type: Item
     sprite: Objects/Specific/Medical/jetinjector.rsi
   - type: SolutionContainerManager
     solutions:
       hypospray:
-        maxVol: 30
-  - type: RefillableSolution
-    solution: hypospray
-  - type: ExaminableSolution
-    solution: hypospray
+        maxVol: 15
   - type: Hypospray
     onlyAffectsMobs: false
     injectTime: 2.5
     injectMaxCapacity: true
-  - type: UseDelay
-    delay: 0.5
   - type: StaticPrice
     price: 250
+  - type: Appearance
+  - type: SolutionContainerVisuals
+    maxFillLevels: 6
+    fillBaseName: jetinjector_filled
+    solutionName: hypospray
