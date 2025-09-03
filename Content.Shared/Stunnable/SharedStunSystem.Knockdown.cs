@@ -110,7 +110,7 @@ public abstract partial class SharedStunSystem
         entity.Comp.SpeedModifier = 1f;
 
         _standingState.Stand(entity);
-        Alerts.ClearAlert(entity, KnockdownAlert);
+        Alerts.ClearAlert(entity.Owner, KnockdownAlert);
     }
 
     #endregion

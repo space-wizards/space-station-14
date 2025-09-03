@@ -83,7 +83,7 @@ public abstract class SharedRootableSystem : EntitySystem
 
         var actions = new Entity<ActionsComponent?>(entity, comp);
         _actions.RemoveAction(actions, entity.Comp.ActionEntity);
-        _alerts.ClearAlert(entity, entity.Comp.RootedAlert);
+        _alerts.ClearAlert(entity.Owner, entity.Comp.RootedAlert);
     }
 
     private void OnRootableToggle(Entity<RootableComponent> entity, ref ToggleActionEvent args)
@@ -108,7 +108,7 @@ public abstract class SharedRootableSystem : EntitySystem
 
         if (entity.Comp.Rooted)
         {
-            _alerts.ShowAlert(entity, entity.Comp.RootedAlert);
+            _alerts.ShowAlert(entity.Owner, entity.Comp.RootedAlert);
             var curTime = _timing.CurTime;
             if (curTime > entity.Comp.NextUpdate)
             {
@@ -117,7 +117,7 @@ public abstract class SharedRootableSystem : EntitySystem
         }
         else
         {
-            _alerts.ClearAlert(entity, entity.Comp.RootedAlert);
+            _alerts.ClearAlert(entity.Owner, entity.Comp.RootedAlert);
         }
 
         _audio.PlayPredicted(entity.Comp.RootSound, entity.Owner.ToCoordinates(), entity);
