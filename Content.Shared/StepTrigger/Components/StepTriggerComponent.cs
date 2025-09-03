@@ -6,6 +6,7 @@ namespace Content.Shared.StepTrigger.Components;
 
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState(true)]
 [Access(typeof(StepTriggerSystem))]
+[Obsolete]
 public sealed partial class StepTriggerComponent : Component
 {
     /// <summary>
