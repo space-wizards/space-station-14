@@ -7,6 +7,7 @@ using Content.Shared.Roles;
 using Content.Shared.Roles.Components;
 using Content.Shared.Silicons.Borgs.Components;
 using Content.Shared.Xenoborgs.Components;
+using Robust.Shared.Audio;
 using Robust.Shared.Player;
 
 namespace Content.Server.Xenoborgs;
@@ -60,7 +61,8 @@ public sealed partial class XenoborgSystem : EntitySystem
                 _antag.SendBriefing(actorComp.PlayerSession,
                     Loc.GetString("xenoborgs-welcome"),
                     Color.BlueViolet,
-                    xenoborgComp.GreetSoundNotification);
+                    new SoundPathSpecifier("/Audio/Ambience/Antag/xenoborg_start.ogg")
+                );
             }
         }
     }
@@ -82,7 +84,8 @@ public sealed partial class XenoborgSystem : EntitySystem
                 _antag.SendBriefing(actorComp.PlayerSession,
                     Loc.GetString("mothership-welcome"),
                     Color.BlueViolet,
-                    mothershipComp.GreetSoundNotification);
+                    new SoundPathSpecifier("/Audio/Ambience/Antag/xenoborg_start.ogg")
+                );
             }
         }
     }

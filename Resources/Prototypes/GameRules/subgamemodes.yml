@@ -90,29 +90,49 @@
       mindRoles:
       - MindRoleMothershipCore
       entityPrototype: MothershipCore
+      briefing:
+        text: mothership-welcome
+        color: blueViolet
+        sound: /Audio/Ambience/Antag/xenoborg_start.ogg
     - prefRoles: [ Xenoborg ]
       fallbackRoles: [ MothershipCore ]
       spawnerPrototype: SpawnPointGhostRoleXenoborg
       mindRoles:
       - MindRoleXenoborg
       entityPrototype: XenoborgEngi
+      briefing:
+        text: xenoborgs-welcome
+        color: blueViolet
+        sound: /Audio/Ambience/Antag/xenoborg_start.ogg
     - prefRoles: [ Xenoborg ]
       fallbackRoles: [ MothershipCore ]
       spawnerPrototype: SpawnPointGhostRoleXenoborg
       mindRoles:
       - MindRoleXenoborg
       entityPrototype: XenoborgHeavy
+      briefing:
+        text: xenoborgs-welcome
+        color: blueViolet
+        sound: /Audio/Ambience/Antag/xenoborg_start.ogg
     - prefRoles: [ Xenoborg ]
       fallbackRoles: [ MothershipCore ]
       spawnerPrototype: SpawnPointGhostRoleXenoborg
       mindRoles:
       - MindRoleXenoborg
       entityPrototype: XenoborgScout
+      briefing:
+        text: xenoborgs-welcome
+        color: blueViolet
+        sound: /Audio/Ambience/Antag/xenoborg_start.ogg
     - prefRoles: [ Xenoborg ]
       fallbackRoles: [ MothershipCore ]
       spawnerPrototype: SpawnPointGhostRoleXenoborg
       mindRoles:
       - MindRoleXenoborg
       entityPrototype: XenoborgStealth
+      briefing:
+        text: xenoborgs-welcome
+        color: blueViolet
+        sound: /Audio/Ambience/Antag/xenoborg_start.ogg
   - type: DynamicRuleCost
     cost: 200

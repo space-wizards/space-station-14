@@ -21,7 +21,6 @@ public sealed class XenoborgsRuleSystem : GameRuleSystem<XenoborgsRuleComponent>
     public override void Initialize()
     {
         base.Initialize();
-        SubscribeLocalEvent<XenoborgsRuleComponent, AfterAntagEntitySelectedEvent>(OnAfterAntagEntSelected);
 
         SubscribeLocalEvent<XenoborgComponent, DestructionEventArgs>(OnXenoborgDestroyed);
     }
@@ -32,24 +31,6 @@ public sealed class XenoborgsRuleSystem : GameRuleSystem<XenoborgsRuleComponent>
         GameRuleStartedEvent args)
     {
         base.Started(uid, component, gameRule, args);
-    }
-
-    private void OnAfterAntagEntSelected(Entity<XenoborgsRuleComponent> ent, ref AfterAntagEntitySelectedEvent args)
-    {
-        if (TryComp<XenoborgComponent>(args.EntityUid, out var xenoborgComp))
-        {
-            _antag.SendBriefing(args.Session,
-                Loc.GetString("xenoborgs-welcome"),
-                Color.BlueViolet,
-                xenoborgComp.GreetSoundNotification);
-        }
-        else if (TryComp<MothershipCoreComponent>(args.EntityUid, out var mothershipComp))
-        {
-            _antag.SendBriefing(args.Session,
-                Loc.GetString("mothership-welcome"),
-                Color.BlueViolet,
-                mothershipComp.GreetSoundNotification);
-        }
     }
 
     private void OnXenoborgDestroyed(EntityUid ent, XenoborgComponent component, DestructionEventArgs args)
