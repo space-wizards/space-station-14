@@ -1,4 +1,4 @@
-﻿using Robust.Client.Graphics;
+using Robust.Client.Graphics;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 
@@ -6,11 +6,9 @@ namespace Content.Client.Administration.UI.CustomControls;
 
 public sealed class HSeparator : Control
 {
-    public Color SeparatorColor { get; set; }
+    public const string StylePropertyColor = "color";
 
     private static readonly Color DefaultSeparatorColor = Color.FromHex("#3D4059");
-
-    public const string StylePropertyColor = "color";
 
     public HSeparator(Color color)
     {
@@ -33,4 +31,6 @@ public sealed class HSeparator : Control
     }
 
     public HSeparator() : this(DefaultSeparatorColor) { }
+
+    public Color SeparatorColor { get; set; }
 }
