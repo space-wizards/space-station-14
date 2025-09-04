@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: murolem
-  changes:
-  - message: Updated PA crate order name and description to clarify that it only contains
-      boards.
-    type: Tweak
-  id: 8409
-  time: '2025-05-02T18:31:49.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/37109
 - author: Unkn0wnGh0st333
   changes:
   - message: Knuckle Dusters have arrived to Space Station 14. QM can now rule cargo
@@ -3948,3 +3940,11 @@
   id: 8921
   time: '2025-09-04T11:08:25.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/40096
+- author: DDeegan
+  changes:
+  - message: Fixed labels on orders sent to the cargo telepad to show the correct
+      payer.
+    type: Fix
+  id: 8922
+  time: '2025-09-04T11:17:52.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/39975
