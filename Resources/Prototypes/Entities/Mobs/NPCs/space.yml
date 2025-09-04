@@ -528,6 +528,9 @@
   suffix: Smite
   components:
   - type: GhostRole
+    name: ghost-role-information-smite-snail-name
+    description: ghost-role-information-smite-snail-description
+    rules: ghost-role-information-freeagent-rules
     mindRoles:
     - MindRoleGhostRoleFreeAgent
   - type: MobStateActions
