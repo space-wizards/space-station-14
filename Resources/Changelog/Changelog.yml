@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: themias
-  changes:
-  - message: Station beacons retain edited info when reopening their window.
-    type: Fix
-  id: 8407
-  time: '2025-05-02T16:14:16.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/37121
 - author: Errant
   changes:
   - message: Vox now only drop their organs when gibbed, not all of their bodyparts.
@@ -3947,3 +3940,10 @@
   id: 8919
   time: '2025-09-04T01:08:53.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/40098
+- author: Quantum-cross
+  changes:
+  - message: Hot gas now looks hot!
+    type: Add
+  id: 8920
+  time: '2025-09-04T03:17:39.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/39107
