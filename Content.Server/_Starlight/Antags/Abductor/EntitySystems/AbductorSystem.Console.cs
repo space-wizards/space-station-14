@@ -190,7 +190,7 @@ public sealed partial class AbductorSystem : SharedAbductorSystem
         }
         else
         {
-            if (_mobState.IsIncapacitated(victim))
+            if (_mobState.IsDead(victim)) //The console can grab em if crit. but nothing less.
                 return;
         }
         
