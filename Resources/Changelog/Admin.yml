@@ -1330,5 +1330,55 @@ Entries:
   id: 162
   time: '2025-08-08T19:00:41.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/35531
+- author: EmoGarbage404, soutbridge-fur
+  changes:
+  - message: A new experimental gamemode "Dynamic" has been added to the voting options
+      and admin seletion.
+    type: Add
+  id: 163
+  time: '2025-08-15T14:06:51.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37783
+- author: Samuka
+  changes:
+  - message: edited law boards now work correctly
+    type: Fix
+  id: 164
+  time: '2025-08-19T23:04:24.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/39756
+- author: Southbridge
+  changes:
+  - message: Added dropdown to every log entry in the admin log viewer with additional
+      information.
+    type: Add
+  - message: Added color-highlighting in the log search to find results.
+    type: Add
+  - message: Modified player list searches and the log search to utilize regex instead
+      of regular string searches.
+    type: Tweak
+  id: 165
+  time: '2025-08-21T20:12:16.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/39130
+- author: slarticodefast
+  changes:
+  - message: The 'Delete' button in the objects tab is now a confirm button.
+    type: Tweak
+  - message: Fixed the 'Teleport' button in the objects tab not working for stations
+      and maps.
+    type: Fix
+  id: 166
+  time: '2025-08-22T22:37:52.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/39832
+- author: Samuka
+  changes:
+  - message: setgamepreset now takes another argument that determines what title and
+      description of the game mode will be shown in the lobby screen.
+    type: Tweak
+  - message: Removed SecretGreenshift from game presets.
+    type: Remove
+  - message: Removed SecretExtended from game presets.
+    type: Remove
+  id: 167
+  time: '2025-09-04T13:03:47.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/40053
 Name: Admin
 Order: 2
