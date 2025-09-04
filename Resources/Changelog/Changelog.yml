@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Errant
-  changes:
-  - message: Vox now only drop their organs when gibbed, not all of their bodyparts.
-    type: Fix
-  id: 8408
-  time: '2025-05-02T17:12:23.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/37111
 - author: murolem
   changes:
   - message: Updated PA crate order name and description to clarify that it only contains
@@ -3947,3 +3940,11 @@
   id: 8920
   time: '2025-09-04T03:17:39.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/39107
+- author: jkwookee
+  changes:
+  - message: QM Golden Knuckledusters can be properly obtained as a Syndicate steal
+      objective
+    type: Fix
+  id: 8921
+  time: '2025-09-04T11:08:25.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/40096
