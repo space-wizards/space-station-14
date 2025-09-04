@@ -430,7 +430,7 @@
     requiredTriggeredSpeed: 1
   - type: TriggerOnStepTrigger
   - type: RandomChanceTriggerCondition
-    successchance: 0.2
+    successChance: 0.2
   - type: GibOnTrigger
   - type: ProtectedFromStepTriggers
   - type: MeleeWeapon
