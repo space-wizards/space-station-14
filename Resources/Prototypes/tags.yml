@@ -787,6 +787,9 @@
   id: Hotsauce
 
 - type: Tag
+  id: HudSalvage
+
+- type: Tag
   id: Ice
 
 - type: Tag
