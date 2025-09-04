@@ -232,7 +232,10 @@ public sealed class AirAlarmSystem : EntitySystem
     private void OnClose(EntityUid uid, AirAlarmComponent component, BoundUIClosedEvent args)
     {
         if (!_ui.IsUiOpen(uid, SharedAirAlarmInterfaceKey.Key))
+        {
             RemoveActiveInterface(uid);
+            component.AutoMode = true; // leaving the panel restores auto mode
+        }
     }
 
     private void OnInit(EntityUid uid, AirAlarmComponent comp, ComponentInit args)
@@ -298,6 +301,7 @@ public sealed class AirAlarmSystem : EntitySystem
             }
 
             _adminLogger.Add(LogType.AtmosDeviceSetting, LogImpact.Medium, $"{ToPrettyString(args.Actor)} changed {ToPrettyString(uid)} mode to {args.Mode}");
+            component.AutoMode = false; // setting a mode manually exits auto mode
             SetMode(uid, addr, args.Mode, false);
         }
         else
