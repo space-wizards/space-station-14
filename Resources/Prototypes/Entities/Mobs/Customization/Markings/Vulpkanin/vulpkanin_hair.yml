@@ -215,6 +215,7 @@
   bodyPart: FacialHair
   markingCategory: FacialHair
   speciesRestriction: [ Vulpkanin ]
+  canBeDisplaced: false
   sprites:
     - sprite: Mobs/Customization/Vulpkanin/facial_hair.rsi
       state: ruff
@@ -224,6 +225,7 @@
   bodyPart: FacialHair
   markingCategory: FacialHair
   speciesRestriction: [ Vulpkanin ]
+  canBeDisplaced: false
   sprites:
     - sprite: Mobs/Customization/Vulpkanin/facial_hair.rsi
       state: elder
@@ -233,6 +235,7 @@
   bodyPart: FacialHair
   markingCategory: FacialHair
   speciesRestriction: [ Vulpkanin ]
+  canBeDisplaced: false
   sprites:
     - sprite: Mobs/Customization/Vulpkanin/facial_hair.rsi
       state: elder_chin
@@ -242,6 +245,7 @@
   bodyPart: FacialHair
   markingCategory: FacialHair
   speciesRestriction: [ Vulpkanin ]
+  canBeDisplaced: false
   sprites:
     - sprite: Mobs/Customization/Vulpkanin/facial_hair.rsi
       state: kita
@@ -251,6 +255,7 @@
   bodyPart: FacialHair
   markingCategory: FacialHair
   speciesRestriction: [ Vulpkanin ]
+  canBeDisplaced: false
   sprites:
   - sprite: Mobs/Customization/Vulpkanin/facial_hair.rsi
     state: goatee
