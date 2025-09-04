@@ -101,18 +101,10 @@ public sealed class IdentitySystem : SharedIdentitySystem
                 identityGrammar.Attributes.Add(k, v);
             }
 
-            // copy over the original entity's pronouns too.
-            // NOTE: this might create situations where someone in disguise with an ID gets outed because of loc strings, but that was already happening with gender
-            // TODO fix this if its a concern
-            identityGrammar.Pronoun = grammar.Pronoun;
-
             // If presumed name is null and we're using that, we set proper noun to be false ("the old woman")
-            // also clear any pronouns to avoid neopronoun metagaming
             if (name != representation.TrueName && representation.PresumedName == null)
-            {
                 _grammarSystem.SetProperNoun((ident, identityGrammar), false);
-                grammar.Pronoun = null;
-            }
+
             Dirty(ident, identityGrammar);
         }
 
@@ -150,8 +142,8 @@ public sealed class IdentitySystem : SharedIdentitySystem
     ///     and their 'presumed name' and 'presumed job' being the name/job on their ID card, if they have one.
     /// </summary>
     private IdentityRepresentation GetIdentityRepresentation(EntityUid target,
-        InventoryComponent? inventory = null,
-        HumanoidAppearanceComponent? appearance = null)
+        InventoryComponent? inventory=null,
+        HumanoidAppearanceComponent? appearance=null)
     {
         int age = 18;
         Gender gender = Gender.Epicene;

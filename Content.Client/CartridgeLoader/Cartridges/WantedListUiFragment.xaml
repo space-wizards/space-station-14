@@ -37,7 +37,7 @@
                     <RichTextLabel Name="TargetAge" />
                     <RichTextLabel Name="TargetJob" />
                     <RichTextLabel Name="TargetSpecies" />
-                    <RichTextLabel Name="TargetPronouns" />
+                    <RichTextLabel Name="TargetGender" />
                     <PanelContainer StyleClasses="LowDivider" Margin="0 5 0 5"/>
                     <RichTextLabel Name="InitiatorName" VerticalAlignment="Stretch"/>
                     <RichTextLabel Name="WantedReason" VerticalAlignment="Stretch"/>

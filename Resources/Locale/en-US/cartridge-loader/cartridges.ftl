@@ -78,7 +78,7 @@ wanted-list-search-placeholder = Search by name and status
 wanted-list-age-label = [color=darkgray]Age:[/color] [color=white]{$age}[/color]
 wanted-list-job-label = [color=darkgray]Job:[/color] [color=white]{$job}[/color]
 wanted-list-species-label = [color=darkgray]Species:[/color] [color=white]{$species}[/color]
-wanted-list-pronouns-label = [color=darkgray]Pronouns:[/color] [color=white]{SUBJECT($gender)}/{OBJECT($gender)}[/color]
+wanted-list-gender-label = [color=darkgray]Gender:[/color] [color=white]{$gender}[/color]
 
 wanted-list-reason-label = [color=darkgray]Reason:[/color] [color=white]{$reason}[/color]
 wanted-list-unknown-reason-label = unknown reason

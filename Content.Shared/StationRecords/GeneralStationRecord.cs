@@ -1,5 +1,4 @@
 using Robust.Shared.Enums;
-using Robust.Shared.GameObjects.Components.Localization;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.StationRecords;
@@ -49,13 +48,6 @@ public sealed record GeneralStationRecord
     /// <remarks>Sex should be placed in a medical record, not a general record.</remarks>
     [DataField]
     public Gender Gender = Gender.Epicene;
-
-    /// <summary>
-    ///     Pronouns tied to this station record.
-    ///     If pronouns are null, the pronouns associated with gender will be used.
-    /// </summary>
-    [DataField]
-    public Pronoun? Pronoun = new();
 
     /// <summary>
     ///     The priority to display this record at.

@@ -106,8 +106,8 @@ public sealed partial class WantedListUiFragment : BoxContainer
             "wanted-list-species-label",
             ("species", record.TargetInfo.Species.ToLower())
         ));
-        TargetPronouns.SetMessage(GetLoc(
-            "wanted-list-pronouns-label",
+        TargetGender.SetMessage(GetLoc(
+            "wanted-list-gender-label",
             ("gender", record.TargetInfo.Gender)
         ));
 

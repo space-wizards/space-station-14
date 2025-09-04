@@ -3,7 +3,6 @@ using System.Linq;
 using System.Numerics;
 using Content.Client.Humanoid;
 using Content.Client.Lobby.UI.Loadouts;
-using Content.Client.Lobby.UI.Pronouns;
 using Content.Client.Lobby.UI.Roles;
 using Content.Client.Message;
 using Content.Client.Players.PlayTimeTracking;
@@ -32,7 +31,6 @@ using Robust.Client.Utility;
 using Robust.Shared.Configuration;
 using Robust.Shared.ContentPack;
 using Robust.Shared.Enums;
-using Robust.Shared.GameObjects.Components.Localization;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
 using Direction = Robust.Shared.Maths.Direction;
@@ -59,7 +57,6 @@ namespace Content.Client.Lobby.UI
         private int _maxNameLength;
         private bool _allowFlavorText;
 
-        private PronounWindow? _pronounWindow;
         private FlavorText.FlavorText? _flavorText;
         private TextEdit? _flavorTextEdit;
 
@@ -211,32 +208,18 @@ namespace Content.Client.Lobby.UI
 
             #region Gender
 
-            GenderButton.AddItem(Loc.GetString("humanoid-profile-editor-gender-male-text"), (int)Gender.Male);
-            GenderButton.AddItem(Loc.GetString("humanoid-profile-editor-gender-female-text"), (int)Gender.Female);
-            GenderButton.AddItem(Loc.GetString("humanoid-profile-editor-gender-epicene-text"), (int)Gender.Epicene);
-            GenderButton.AddItem(Loc.GetString("humanoid-profile-editor-gender-neuter-text"), (int)Gender.Neuter);
+            PronounsButton.AddItem(Loc.GetString("humanoid-profile-editor-pronouns-male-text"), (int) Gender.Male);
+            PronounsButton.AddItem(Loc.GetString("humanoid-profile-editor-pronouns-female-text"), (int) Gender.Female);
+            PronounsButton.AddItem(Loc.GetString("humanoid-profile-editor-pronouns-epicene-text"), (int) Gender.Epicene);
+            PronounsButton.AddItem(Loc.GetString("humanoid-profile-editor-pronouns-neuter-text"), (int) Gender.Neuter);
 
-            GenderButton.OnItemSelected += args =>
+            PronounsButton.OnItemSelected += args =>
             {
-                GenderButton.SelectId(args.Id);
-                SetGender((Gender)args.Id);
+                PronounsButton.SelectId(args.Id);
+                SetGender((Gender) args.Id);
             };
 
             #endregion Gender
-
-            #region Pronouns
-
-            PronounsButton.OnPressed += args =>
-            {
-                var pronoun = Profile?.Pronoun;
-                var gender = Profile?.Gender;
-
-                pronoun ??= new Pronoun();
-
-                OpenPronoun(pronoun, gender);
-            };
-
-            #endregion Pronouns
 
             RefreshSpecies();
 
@@ -470,29 +453,6 @@ namespace Content.Client.Lobby.UI
 
             UpdateSpeciesGuidebookIcon();
             IsDirty = false;
-        }
-
-        private void OpenPronoun(Pronoun pronouns, Gender? gender)
-        {
-            _pronounWindow?.Dispose();
-            _pronounWindow = null;
-            var collection = IoCManager.Instance;
-
-            if (collection == null || _playerManager.LocalSession == null || Profile == null)
-                return;
-
-            _pronounWindow = new PronounWindow(Profile, pronouns, gender, _playerManager.LocalSession, collection);
-            _pronounWindow.OpenCentered();
-            _pronounWindow.OnProfileChanged += profile =>
-            {
-                Profile = profile;
-                SetDirty();
-            };
-
-            if (Profile is null)
-                return;
-
-            UpdatePronouns();
         }
 
         /// <summary>
@@ -799,7 +759,6 @@ namespace Content.Client.Lobby.UI
             UpdateFlavorTextEdit();
             UpdateSexControls();
             UpdateGenderControls();
-            UpdatePronouns();
             UpdateSkinColor();
             UpdateSpawnPriorityControls();
             UpdateAgeEdit();
@@ -1318,7 +1277,7 @@ namespace Content.Client.Lobby.UI
             foreach (var (jobId, prioritySelector) in _jobPriorities)
             {
                 var priority = Profile?.JobPriorities.GetValueOrDefault(jobId, JobPriority.Never) ?? JobPriority.Never;
-                prioritySelector.Select((int)priority);
+                prioritySelector.Select((int) priority);
             }
         }
 
@@ -1455,13 +1414,7 @@ namespace Content.Client.Lobby.UI
                 return;
             }
 
-            GenderButton.SelectId((int)Profile.Gender);
-        }
-
-        private void UpdatePronouns()
-        {
-            if (Profile == null)
-                return;
+            PronounsButton.SelectId((int) Profile.Gender);
         }
 
         private void UpdateSpawnPriorityControls()
@@ -1471,7 +1424,7 @@ namespace Content.Client.Lobby.UI
                 return;
             }
 
-            SpawnPriorityButton.SelectId((int)Profile.SpawnPriority);
+            SpawnPriorityButton.SelectId((int) Profile.SpawnPriority);
         }
 
         private void UpdateHairPickers()
