@@ -306,14 +306,7 @@ public abstract class SharedBloodstreamSystem : EntitySystem
         // We explicitly want the exactly blood type that way consuming others blood makes us sick
         var referenceBlood = new ReagentId(ent.Comp.BloodReagent, GetEntityBloodData(ent.Owner));
 
-        // Copy to list again to avoid modifying during enumeration!
-        foreach (var reagentQuantity in args.ReagentList.ToList())
-        {
-            if (reagentQuantity.Reagent != referenceBlood)
-                continue;
-
-            args.ReagentList.Remove(reagentQuantity);
-        }
+        args.ReagentList.RemoveAll(reagent => reagent.Reagent == referenceBlood);
     }
 
     /// <summary>
