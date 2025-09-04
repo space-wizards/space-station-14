@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: youtissoum
-  changes:
-  - message: Skeletons will no longer spawn inside of folded body bags.
-    type: Fix
-  id: 8414
-  time: '2025-05-03T19:19:33.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/37151
 - author: Minemoder
   changes:
   - message: The traitor uplink thieving gloves have been replaced with chameleon
@@ -3945,3 +3938,10 @@
   id: 8925
   time: '2025-09-04T19:37:15.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/39886
+- author: Princess-Cheeseballs
+  changes:
+  - message: You can no longer crawl under counters, or tables without space underneath.
+    type: Tweak
+  id: 8926
+  time: '2025-09-04T21:03:10.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/40099
