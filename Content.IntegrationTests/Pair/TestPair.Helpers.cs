@@ -54,6 +54,23 @@ public sealed partial class TestPair
     }
 
     /// <summary>
+    /// Disconnect and reconnect the client and server pair.
+    /// </summary>
+    public async Task Reconnect()
+    {
+        var netMgr = Client.ResolveDependency<IClientNetManager>();
+
+        // Disconnect the client
+        await Client.WaitPost(() => netMgr.ClientDisconnect("Initial disconnect"));
+        await ReallyBeIdle(10);
+
+        // Reconnect again
+        Assert.DoesNotThrow(() => Client.SetConnectTarget(Server));
+        await Client.WaitPost(() => netMgr.ClientConnect(null!, 0, null!));
+        await ReallyBeIdle(10);
+    }
+
+    /// <summary>
     /// Convert a client-side uid into a server-side uid
     /// </summary>
     public EntityUid ToServerUid(EntityUid uid) => ConvertUid(uid, Client, Server);

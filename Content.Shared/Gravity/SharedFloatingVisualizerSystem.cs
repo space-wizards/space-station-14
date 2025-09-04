@@ -33,7 +33,7 @@ public abstract class SharedFloatingVisualizerSystem : EntitySystem
     private void OnComponentStartup(Entity<FloatingVisualsComponent> entity, ref ComponentStartup args)
     {
         if (CanFloat(entity))
-            FloatAnimation(entity, entity.Comp.Offset, entity.Comp.AnimationKey, entity.Comp.AnimationTime);
+            FloatAnimation(entity, entity.Comp.Offset, FloatingVisualsComponent.AnimationKey, entity.Comp.AnimationTime);
     }
 
     private void OnWeightlessnessChanged(Entity<FloatingVisualsComponent> entity, ref WeightlessnessChangedEvent args)
@@ -45,6 +45,6 @@ public abstract class SharedFloatingVisualizerSystem : EntitySystem
         Dirty(entity);
 
         if (args.Weightless)
-            FloatAnimation(entity, entity.Comp.Offset, entity.Comp.AnimationKey, entity.Comp.AnimationTime);
+            FloatAnimation(entity, entity.Comp.Offset, FloatingVisualsComponent.AnimationKey, entity.Comp.AnimationTime);
     }
 }
