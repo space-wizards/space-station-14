@@ -164,6 +164,7 @@ public sealed partial class PronounWindow : FancyWindow
             };
             var pronouns = Profile.Pronoun?.WithPlural(plural);
             Profile = Profile.WithPronouns(pronouns);
+            OnProfileChanged?.Invoke(Profile);
         };
     }
 }

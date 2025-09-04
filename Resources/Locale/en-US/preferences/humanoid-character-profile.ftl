@@ -7,11 +7,8 @@ humanoid-character-profile-summary =
     [female] She
     [epicene] They
     [neuter] It
-    *[other] {$subject}
+    *[other] {CAPITALIZE($subject)}
 } {$conjugate-be ->
-    [male] is
-    [female] is
-    [neuter] is
-    [false] is
-    *[other] {$conjugate-be}
+    [true] are
+    *[other] {CONJUGATE-BE($conjugate-be)}
 } {$age} years old.
