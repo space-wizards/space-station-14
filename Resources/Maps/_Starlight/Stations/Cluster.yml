@@ -4,8 +4,8 @@ meta:
   engineVersion: 266.0.0
   forkId: ""
   forkVersion: ""
-  time: 09/04/2025 21:46:38
-  entityCount: 14081
+  time: 09/04/2025 22:16:49
+  entityCount: 14084
 maps:
 - 1
 grids:
@@ -38205,12 +38205,6 @@ entities:
       parent: 2
     - type: GasTank
       toggleActionEntity: 5
-    - type: ActionsContainer
-    - type: ContainerContainer
-      containers:
-        actions: !type:Container
-          ents:
-          - 5
   - uid: 5453
     components:
     - type: Transform
@@ -82794,17 +82788,24 @@ entities:
     - type: Transform
       pos: -14.5,25.5
       parent: 2
-- proto: SpawnPointBotanist
+- proto: SpawnPointBorg
   entities:
-  - uid: 11050
+  - uid: 14082
     components:
     - type: Transform
-      pos: 1.5,-6.5
+      pos: -6.5,-15.5
       parent: 2
+  - uid: 14083
+    components:
+    - type: Transform
+      pos: -7.5,-15.5
+      parent: 2
+- proto: SpawnPointBotanist
+  entities:
   - uid: 11051
     components:
     - type: Transform
-      pos: -0.5,-6.5
+      pos: 0.5,-6.5
       parent: 2
 - proto: SpawnPointBoxer
   entities:
@@ -82853,11 +82854,6 @@ entities:
     - type: Transform
       pos: 3.5,-0.5
       parent: 2
-  - uid: 11059
-    components:
-    - type: Transform
-      pos: 4.5,-0.5
-      parent: 2
 - proto: SpawnPointChemist
   entities:
   - uid: 11060
@@ -82876,6 +82872,13 @@ entities:
     components:
     - type: Transform
       pos: 17.5,-18.5
+      parent: 2
+- proto: SpawnPointChiefMedicalOfficer
+  entities:
+  - uid: 11050
+    components:
+    - type: Transform
+      pos: -20.5,11.5
       parent: 2
 - proto: SpawnPointClown
   entities:
@@ -82904,6 +82907,18 @@ entities:
     components:
     - type: Transform
       pos: 25.5,10.5
+      parent: 2
+- proto: SpawnPointIAA
+  entities:
+  - uid: 11093
+    components:
+    - type: Transform
+      pos: 44.5,25.5
+      parent: 2
+  - uid: 11095
+    components:
+    - type: Transform
+      pos: 41.5,25.5
       parent: 2
 - proto: SpawnPointJanitor
   entities:
@@ -83018,10 +83033,10 @@ entities:
       parent: 2
 - proto: SpawnPointQuartermaster
   entities:
-  - uid: 11083
+  - uid: 11096
     components:
     - type: Transform
-      pos: 3.5,-18.5
+      pos: 4.5,-19.5
       parent: 2
 - proto: SpawnPointResearchAssistant
   entities:
@@ -83044,11 +83059,6 @@ entities:
       parent: 2
 - proto: SpawnPointRoboticist
   entities:
-  - uid: 11087
-    components:
-    - type: Transform
-      pos: -6.5,-16.5
-      parent: 2
   - uid: 11088
     components:
     - type: Transform
@@ -83056,6 +83066,11 @@ entities:
       parent: 2
 - proto: SpawnPointSalvageSpecialist
   entities:
+  - uid: 11083
+    components:
+    - type: Transform
+      pos: 19.5,-25.5
+      parent: 2
   - uid: 11089
     components:
     - type: Transform
@@ -83068,6 +83083,11 @@ entities:
       parent: 2
 - proto: SpawnPointScientist
   entities:
+  - uid: 11059
+    components:
+    - type: Transform
+      pos: -17.5,-4.5
+      parent: 2
   - uid: 11091
     components:
     - type: Transform
@@ -83080,37 +83100,32 @@ entities:
       parent: 2
 - proto: SpawnPointSecurityCadet
   entities:
-  - uid: 11093
+  - uid: 11087
     components:
     - type: Transform
-      pos: 32.5,15.5
-      parent: 2
-  - uid: 11094
-    components:
-    - type: Transform
-      pos: 31.5,15.5
-      parent: 2
-- proto: SpawnPointSecurityOfficer
-  entities:
-  - uid: 11095
-    components:
-    - type: Transform
-      pos: 31.5,14.5
-      parent: 2
-  - uid: 11096
-    components:
-    - type: Transform
-      pos: 31.5,13.5
-      parent: 2
-  - uid: 11097
-    components:
-    - type: Transform
-      pos: 32.5,14.5
+      pos: 28.5,13.5
       parent: 2
   - uid: 11098
     components:
     - type: Transform
-      pos: 32.5,13.5
+      pos: 27.5,13.5
+      parent: 2
+- proto: SpawnPointSecurityOfficer
+  entities:
+  - uid: 11094
+    components:
+    - type: Transform
+      pos: 25.5,14.5
+      parent: 2
+  - uid: 11097
+    components:
+    - type: Transform
+      pos: 24.5,14.5
+      parent: 2
+  - uid: 14084
+    components:
+    - type: Transform
+      pos: 26.5,14.5
       parent: 2
 - proto: SpawnPointServiceWorker
   entities:
@@ -83122,7 +83137,7 @@ entities:
   - uid: 11100
     components:
     - type: Transform
-      pos: 2.5,-2.5
+      pos: 3.5,-1.5
       parent: 2
 - proto: SpawnPointStationEngineer
   entities:
@@ -96486,7 +96501,7 @@ entities:
       pos: -38.5,9.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -71322.68
+      secondsUntilStateChange: -71617.625
       state: Opening
   - uid: 13509
     components:
@@ -96494,7 +96509,7 @@ entities:
       pos: -35.5,10.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -71323.18
+      secondsUntilStateChange: -71618.125
       state: Opening
 - proto: WoodenBench
   entities:
