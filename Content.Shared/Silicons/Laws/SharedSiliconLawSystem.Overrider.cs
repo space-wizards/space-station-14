@@ -94,10 +94,7 @@ public abstract partial class SharedSiliconLawSystem
 
     private void OnOverriderDoAfter(Entity<SiliconLawProviderComponent> ent, ref OverriderDoAfterEvent args)
     {
-        if (args.Cancelled)
-            return;
-
-        if (args.Handled)
+        if (args.Cancelled || args.Handled)
             return;
 
         if (!TryComp(ent, out SiliconLawProviderComponent? LawProviderTarget))
