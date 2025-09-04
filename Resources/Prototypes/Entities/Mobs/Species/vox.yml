@@ -30,6 +30,29 @@
   - type: Damageable
     damageContainer: Biological
     damageModifierSet: Vox
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTypeTrigger
+        damageType: Blunt
+        damage: 400
+      behaviors:
+      - !type:GibBehavior { }
+    - trigger:
+        !type:DamageTypeTrigger
+        damageType: Heat
+        damage: 1500
+      behaviors:
+      - !type:SpawnEntitiesBehavior
+        spawnInContainer: true
+        spawn:
+          FoodMeatChickenFried:
+            min: 3
+            max: 5
+      - !type:BurnBodyBehavior { }
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MeatLaserImpact
   - type: PassiveDamage
     # Augment normal health regen to be able to tank some Poison damage
     # This allows Vox to take their mask off temporarily to eat something without needing a trip to medbay afterwards.
