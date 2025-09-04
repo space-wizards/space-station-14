@@ -1,9 +1,8 @@
-using Content.Shared.GameTicking;
 using Content.Shared.Mind.Components;
 using Content.Shared.Mobs.Components;
+using Robust.Shared.Containers;
 using Robust.Shared.GameStates;
 using Robust.Shared.Network;
-using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Mind;
@@ -56,6 +55,9 @@ public sealed partial class MindComponent : Component
     [ViewVariables]
     public bool IsVisitingEntity => VisitingEntity != null;
 
+    /// <summary>
+    /// The entity that this mind may be currently visiting. Used, for example, to allow admin ghosting to not make the owner's body catatonic, as opposed to when normally ghosting.
+    /// </summary>
     [DataField, AutoNetworkedField, Access(typeof(SharedMindSystem))]
     public EntityUid? VisitingEntity { get; set; }
 
@@ -106,10 +108,16 @@ public sealed partial class MindComponent : Component
     public bool PreventSuicide { get; set; }
 
     /// <summary>
-    ///     Mind Role Entities belonging to this Mind
+    /// Mind Role Entities belonging to this Mind are stored in this container.
     /// </summary>
-    [DataField, AutoNetworkedField]
-    public List<EntityUid> MindRoles = new List<EntityUid>();
+    [ViewVariables]
+    public Container MindRoleContainer = default!;
+
+    /// <summary>
+    /// The id for the MindRoleContainer.
+    /// </summary>
+    [ViewVariables]
+    public const string MindRoleContainerId = "mind_roles";
 
     /// <summary>
     ///     The mind's current antagonist/special role, or lack thereof;

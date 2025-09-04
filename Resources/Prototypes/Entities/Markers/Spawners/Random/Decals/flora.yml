@@ -1,0 +1,183 @@
+- type: entity
+  parent: DecalSpawnerBase
+  id: DecalSpawnerFloraBase
+  abstract: true
+  components:
+  - type: RandomDecalSpawner
+    radius: 0.3
+    zIndex: 1
+    deleteSpawnerAfterSpawn: true
+    tileWhitelist:
+    - FloorAstroGrass
+    - FloorMowedAstroGrass
+    - FloorJungleAstroGrass
+    - FloorAstroIce
+    - FloorAstroSnow
+    - FloorAstroAsteroidSand
+    - FloorAsteroidSandUnvariantized
+    - FloorAsteroidIronsandUnvariantized
+    - FloorCave
+    - FloorAsteroidIronsand
+    - FloorAsteroidTile
+    - FloorAsteroidSandDug
+    - FloorAsteroidSand
+    - FloorDirt
+    - FloorGrassLight
+    - FloorGrassDark
+    - FloorGrassJungle
+    - FloorGrass
+
+- type: entity
+  parent: DecalSpawnerFloraBase
+  id: DecalSpawnerGrassyRock
+  suffix: Grassy Rock
+  components:
+  - type: Sprite
+    layers:
+    - state: green
+    - state: decal
+    - sprite: Decals/Flora/flora_rocks.rsi
+      state: rock01
+  - type: RandomDecalSpawner
+    decals:
+    - Rock01
+    - Rock02
+    - Rock03
+    - Rock04
+    - Rock05
+    - Rock06
+    - Rock07
+
+- type: entity
+  parent: DecalSpawnerFloraBase
+  id: DecalSpawnerBasaltRock
+  suffix: Basalt Rock
+  components:
+  - type: Sprite
+    layers:
+    - state: green
+    - state: decal
+    - sprite: Decals/basalt.rsi
+      state: basalt1
+  - type: RandomDecalSpawner
+    decals:
+    - Basalt1
+    - Basalt2
+    - Basalt3
+    - Basalt4
+    - Basalt5
+    - Basalt6
+    - Basalt7
+    - Basalt8
+    - Basalt9
+
+- type: entity
+  parent: DecalSpawnerFloraBase
+  id: DecalSpawnerBushesAC
+  suffix: Bushes (a-c)
+  components:
+  - type: Sprite
+    layers:
+    - state: green
+    - state: decal
+    - sprite: Decals/Flora/flora_bushes.rsi
+      state: busha1
+  - type: RandomDecalSpawner
+    decals:
+    - Busha1
+    - Busha2
+    - Busha3
+    - Bushb1
+    - Bushb2
+    - Bushb3
+    - Bushc1
+    - Bushc2
+    - Bushc3
+
+# I really don't want to add all the rest of the bushes right now, leaving this as an exercise for someone else.
+
+- type: entity
+  parent: DecalSpawnerFloraBase
+  id: DecalSpawnerFlowers
+  suffix: Flowers
+  components:
+  - type: Sprite
+    layers:
+    - state: green
+    - state: decal
+    - sprite: Decals/Flora/flora_flowers.rsi
+      state: flowersbr1
+  - type: RandomDecalSpawner
+    decals:
+    - Flowersbr1
+    - Flowersbr2
+    - Flowersbr3
+    - Flowerspv1
+    - Flowerspv2
+    - Flowerspv3
+    - Flowersy1
+    - Flowersy2
+    - Flowersy3
+    - Flowersy4
+
+- type: entity
+  parent: DecalSpawnerFloraBase
+  id: DecalSpawnerGrassAB
+  suffix: Grass (a-b)
+  components:
+  - type: Sprite
+    layers:
+    - state: green
+    - state: decal
+    - sprite: Decals/Flora/flora_grass.rsi
+      state: grassa1
+  - type: RandomDecalSpawner
+    decals:
+    - Grassa1
+    - Grassa2
+    - Grassa3
+    - Grassa4
+    - Grassa5
+    - Grassb1
+    - Grassb2
+    - Grassb3
+    - Grassb4
+    - Grassb5
+
+- type: entity
+  parent: DecalSpawnerFloraBase
+  id: DecalSpawnerGrassC
+  suffix: Grass (c)
+  components:
+  - type: Sprite
+    layers:
+    - state: green
+    - state: decal
+    - sprite: Decals/Flora/flora_grass.rsi
+      state: grassc1
+  - type: RandomDecalSpawner
+    decals:
+    - Grassc1
+    - Grassc2
+    - Grassc3
+    - Grassc4
+
+- type: entity
+  parent: DecalSpawnerFloraBase
+  id: DecalSpawnerGrassDE
+  suffix: Grass (d-e)
+  components:
+  - type: Sprite
+    layers:
+    - state: green
+    - state: decal
+    - sprite: Decals/Flora/flora_grass.rsi
+      state: grassd1
+  - type: RandomDecalSpawner
+    decals:
+    - Grassd1
+    - Grassd2
+    - Grassd3
+    - Grasse1
+    - Grasse2
+    - Grasse3

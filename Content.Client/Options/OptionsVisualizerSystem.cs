@@ -18,6 +18,7 @@ public sealed class OptionsVisualizerSystem : EntitySystem
 
     [Dependency] private readonly IConfigurationManager _cfg = default!;
     [Dependency] private readonly IReflectionManager _reflection = default!;
+    [Dependency] private readonly SpriteSystem _sprite = default!;
 
     private OptionVisualizerOptions _currentOptions;
 
@@ -55,9 +56,9 @@ public sealed class OptionsVisualizerSystem : EntitySystem
     private void UpdateAllComponents()
     {
         var query = EntityQueryEnumerator<OptionsVisualizerComponent, SpriteComponent>();
-        while (query.MoveNext(out _, out var component, out var sprite))
+        while (query.MoveNext(out var uid, out var component, out var sprite))
         {
-            UpdateComponent(component, sprite);
+            UpdateComponent(uid, component, sprite);
         }
     }
 
@@ -66,17 +67,13 @@ public sealed class OptionsVisualizerSystem : EntitySystem
         if (!TryComp(uid, out SpriteComponent? sprite))
             return;
 
-        UpdateComponent(component, sprite);
+        UpdateComponent(uid, component, sprite);
     }
 
-    private void UpdateComponent(OptionsVisualizerComponent component, SpriteComponent sprite)
+    private void UpdateComponent(EntityUid uid, OptionsVisualizerComponent component, SpriteComponent sprite)
     {
         foreach (var (layerKeyRaw, layerData) in component.Visuals)
         {
-            object layerKey = _reflection.TryParseEnumReference(layerKeyRaw, out var @enum)
-                ? @enum
-                : layerKeyRaw;
-
             OptionsVisualizerComponent.LayerDatum? matchedDatum = null;
             foreach (var datum in layerData)
             {
@@ -89,8 +86,11 @@ public sealed class OptionsVisualizerSystem : EntitySystem
             if (matchedDatum == null)
                 continue;
 
-            var layerIndex = sprite.LayerMapReserveBlank(layerKey);
-            sprite.LayerSetData(layerIndex, matchedDatum.Data);
+            var layerIndex = _reflection.TryParseEnumReference(layerKeyRaw, out var @enum)
+                ? _sprite.LayerMapReserve((uid, sprite), @enum)
+                : _sprite.LayerMapReserve((uid, sprite), layerKeyRaw);
+
+            _sprite.LayerSetData((uid, sprite), layerIndex, matchedDatum.Data);
         }
     }
 }

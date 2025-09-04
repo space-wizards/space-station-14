@@ -74,3 +74,19 @@
       - state: tip
         map: [ "enum.AmmoVisualLayers.Tip" ]
         color: "#65fe08"
+
+- type: entity
+  id: CartridgePistolSpent
+  name: cartridge (.35 auto)
+  suffix: spent
+  parent: BaseCartridgePistol
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Ammunition/Casings/ammo_casing.rsi
+    layers:
+    - state: base-spent
+      map: [ "enum.AmmoVisualLayers.Base" ]
+  - type: SpentAmmoVisuals
+  - type: CartridgeAmmo
+    proto: BulletPistol
+    spent: true

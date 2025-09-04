@@ -1,1 +1,92 @@
-{"name":1,"size":{"x":32,"y":32},"states":[{"name":"closed","directions":1},{"name":"open","directions":1},{"name":"opening","directions":1,"delays":[[0.05,0.05,0.05,0.05,0.05,0.05,0.05,0.05,0.05,0.05,0.05,0.05,0.05,0.05,0.05,0.05,0.05,0.05,0.05,0.05,0.05,0.05,0.05,0.05,0.05,0.05,0.05]]},{"name":"closing","directions":1,"delays":[[0.05,0.05,0.05,0.05,0.05,0.05,0.05,0.05,0.05,0.05,0.05,0.05,0.05,0.05,0.05,0.05,0.05,0.05,0.05,0.05,0.05,0.05,0.05,0.05,0.05,0.05,0.05]]}],"license":"CC-BY-SA-3.0","copyright":"Tgstation at 97b0.05295aca9f31a7500.0556e0.050730d05b5837e39fc","version":1}
+{
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "Tgstation at 97b0.05295aca9f31a7500.0556e0.050730d05b5837e39fc, welded taken from Paradise Station at https://github.com/ParadiseSS13/Paradise/commit/9312f1fb7dcdf1c195e255a528f31092613fb60d and modified by K-Dynamic (github)",
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "states": [
+        {
+            "name": "open",
+            "directions": 1
+        },
+        {
+            "name": "closed",
+            "directions": 1
+        },
+        {
+            "name": "welded"
+        },
+        {
+            "name": "opening",
+            "directions": 1,
+            "delays": [
+                [
+                    0.05,
+                    0.05,
+                    0.05,
+                    0.05,
+                    0.05,
+                    0.05,
+                    0.05,
+                    0.05,
+                    0.05,
+                    0.05,
+                    0.05,
+                    0.05,
+                    0.05,
+                    0.05,
+                    0.05,
+                    0.05,
+                    0.05,
+                    0.05,
+                    0.05,
+                    0.05,
+                    0.05,
+                    0.05,
+                    0.05,
+                    0.05,
+                    0.05,
+                    0.05,
+                    0.05
+                ]
+            ]
+        },
+        {
+            "name": "closing",
+            "directions": 1,
+            "delays": [
+                [
+                    0.05,
+                    0.05,
+                    0.05,
+                    0.05,
+                    0.05,
+                    0.05,
+                    0.05,
+                    0.05,
+                    0.05,
+                    0.05,
+                    0.05,
+                    0.05,
+                    0.05,
+                    0.05,
+                    0.05,
+                    0.05,
+                    0.05,
+                    0.05,
+                    0.05,
+                    0.05,
+                    0.05,
+                    0.05,
+                    0.05,
+                    0.05,
+                    0.05,
+                    0.05,
+                    0.05
+                ]
+            ]
+        }
+    ]
+}

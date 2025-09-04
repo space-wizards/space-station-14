@@ -40,6 +40,11 @@ public sealed class StorageSystem : SharedStorageSystem
         component.MaxItemSize = state.MaxItemSize;
         component.Whitelist = state.Whitelist;
         component.Blacklist = state.Blacklist;
+        component.StorageInsertSound = state.StorageInsertSound;
+        component.StorageRemoveSound = state.StorageRemoveSound;
+        component.StorageOpenSound = state.StorageOpenSound;
+        component.StorageCloseSound = state.StorageCloseSound;
+        component.DefaultStorageOrientation = state.DefaultStorageOrientation;
 
         _oldStoredItems.Clear();
 
@@ -62,6 +67,8 @@ public sealed class StorageSystem : SharedStorageSystem
         {
             component.SavedLocations[loc.Key] = new(loc.Value);
         }
+
+        UpdateOccupied((uid, component));
 
         var uiDirty = !component.StoredItems.SequenceEqual(_oldStoredItems);
 
