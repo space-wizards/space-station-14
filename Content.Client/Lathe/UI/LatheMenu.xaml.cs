@@ -153,7 +153,7 @@ public sealed partial class LatheMenu : DefaultWindow
             }
             else
             {
-                var child = RecipeList.Children.ElementAt(idx) as RecipeControl;
+                var child = RecipeList.GetChild(idx) as RecipeControl;
 
                 if (child == null)
                 {
@@ -293,7 +293,7 @@ public sealed partial class LatheMenu : DefaultWindow
             }
             else
             {
-                var child = QueueList.Children.ElementAt(idx) as QueuedRecipeControl;
+                var child = QueueList.GetChild(idx) as QueuedRecipeControl;
 
                 if (child == null)
                 {
