@@ -323,7 +323,6 @@ public abstract class SharedBloodstreamSystem : EntitySystem
 
         for (var i = bloodSolution.Contents.Count - 1; i >= 0; i--)
         {
-            // Unlike with the metabolism exclusion, we treat all blood as blood, so long as it's "close enough"
             var (reagentId, quantity) = bloodSolution.Contents[i];
             if (reagentId.Prototype == entity.Comp.BloodReagent)
             {
