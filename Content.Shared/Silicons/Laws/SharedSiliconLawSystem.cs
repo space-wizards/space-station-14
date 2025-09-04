@@ -98,16 +98,8 @@ public abstract partial class SharedSiliconLawSystem : EntitySystem
     {
 
     }
-
-    public virtual void SetLaws(List<SiliconLaw> newLaws, EntityUid target, SoundSpecifier? cue = null)
-    {
-
-    }
-
-    public virtual void SoftSetLaws(List<SiliconLaw> newLaws, EntityUid target, SoundSpecifier? cue = null)
-    {
-
-    }
+    public virtual void SetLaws(List<SiliconLaw> newLaws, EntityUid target, SoundSpecifier? cue = null);
+    public virtual void SoftSetLaws(List<SiliconLaw> newLaws, EntityUid target, SoundSpecifier? cue = null);
 }
 
 [ByRefEvent]
