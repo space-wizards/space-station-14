@@ -124,5 +124,5 @@
       prob: 0.002
     - id: MobSnailMoth
       prob: 0.002
-    - id: MobSnailInstantDeath
-      prob: 0.00001 #  ~ 1:2000 snails
+    # - id: MobSnailInstantDeath # Needs Actual Objective to not just be an admeme thing
+    #  prob: 0.00001 #  ~ 1:2000 snails
