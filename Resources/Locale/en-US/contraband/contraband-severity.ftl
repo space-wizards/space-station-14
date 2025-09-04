@@ -28,6 +28,12 @@ contraband-examine-text-GrandTheft =
         [reagent] [color=red]This reagent is a highly valuable target for Syndicate agents![/color]
     }
 
+contraband-examine-text-Highly-Illegal =
+    { $type ->
+        *[item] [color=crimson]This item is highly illegal contraband![/color]
+        [reagent] [color=crimson]This reagent is highly illegal contraband![/color]
+    }
+
 contraband-examine-text-Syndicate =
     { $type ->
         *[item] [color=crimson]This item is highly illegal Syndicate contraband![/color]
@@ -36,8 +42,8 @@ contraband-examine-text-Syndicate =
 
 contraband-examine-text-Magical =
     { $type ->
-        *[item] [color=#b337b3]This item is highly illegal Magical contraband![/color]
-        [reagent] [color=#b337b3]This reagent is highly illegal Magical contraband![/color]
+        *[item] [color=#b337b3]This item is highly illegal magical contraband![/color]
+        [reagent] [color=#b337b3]This reagent is highly illegal magical contraband![/color]
     }
 
 contraband-examine-text-avoid-carrying-around = [color=red][italic]You probably want to avoid visibly carrying this around without a good reason.[/italic][/color]

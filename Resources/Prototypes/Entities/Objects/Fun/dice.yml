@@ -127,7 +127,8 @@
       path: /Audio/Effects/glass_step.ogg
     slipData:
       launchForwardsMultiplier: 0
-  - type: DamageUserOnTrigger
+  - type: DamageOnTrigger
+    targetUser: true
     damage:
       types:
         Piercing: 5

@@ -50,7 +50,7 @@
       enum.KitchenSpikeVisuals.Status:
         base:
           Empty: { state: spike }
-          Bloody: { state: spikebloody }
+          Bloody: { state: spikebloody } # TODO: Add sprites for different species.
   - type: Construction
     graph: MeatSpike
     node: MeatSpike
@@ -58,3 +58,6 @@
     guides:
     - Chef
     - FoodRecipes
+  - type: ContainerContainer
+    containers:
+      body: !type:ContainerSlot
