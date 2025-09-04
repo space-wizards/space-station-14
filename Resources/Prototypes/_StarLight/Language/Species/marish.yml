@@ -1,0 +1,19 @@
+- type: language
+  id: Marish
+  icon: LanguageIconShadekin
+  speech:
+    color: "#be3cc5"
+    fontId: Lymphatic
+    speechVerbOverrides:
+    - chat-speech-verb-marish
+  obfuscation:
+    !type:SyllableObfuscation
+    minSyllables: 1
+    maxSyllables: 2
+    replacement:
+    - mar
+    - mwrrr
+    - maaAr
+    - aarrr
+    - wrurrl
+    - mmar

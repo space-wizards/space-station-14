@@ -107,7 +107,6 @@
     - id: FoodSnackNutribrick
     - id: FoodSnackNutribrick
     - id: DrinkWaterBottleFull
-    - id: DrinkWaterBottleFull
     - id: Flare
   - type: Sprite
     layers:
@@ -167,7 +166,6 @@
     - id: FoodSnackNutribrick
     - id: FoodSnackNutribrick
     - id: DrinkWaterBottleFull
-    - id: DrinkWaterBottleFull
     - id: Flare
   - type: Sprite
     layers:
@@ -225,7 +223,6 @@
     - id: EmergencyMedipen
     - id: FoodSnackNutribrick
     - id: FoodSnackNutribrick
-    - id: DrinkWaterBottleFull
     - id: DrinkWaterBottleFull
     - id: Flare
   - type: Sprite

@@ -74,6 +74,19 @@ namespace Content.Shared.VendingMachines
 
         public string? NextItemToEject;
 
+        // Starlight-edit start: vend operation tracking for idempotent charging and accounting
+        [ViewVariables]
+        public int VendOperationId = 0; // incremented each time an ejection starts
+
+        [ViewVariables]
+        public bool DebitApplied = false; // set true once we debit for the current operation
+
+        [ViewVariables]
+        public EntityUid? LastBuyer; // who initiated the current vend
+
+        [ViewVariables]
+        public InventoryType CurrentItemType; // inventory bucket for NextItemToEject during current operation
+        // Startlight-edit end:
         public bool Broken;
 
         /// <summary>
@@ -208,15 +221,18 @@ namespace Content.Shared.VendingMachines
         #endregion
     }
 
-    [Serializable, NetSerializable]
-    public sealed class VendingMachineInventoryEntry
+    [Serializable, NetSerializable, DataDefinition]
+    public sealed partial class VendingMachineInventoryEntry
     {
-        [ViewVariables(VVAccess.ReadWrite)]
+        [DataField]
         public InventoryType Type;
-        [ViewVariables(VVAccess.ReadWrite)]
+
+        [DataField]
         public string ID;
-        [ViewVariables(VVAccess.ReadWrite)]
+
+        [DataField]
         public uint Amount;
+        
         [ViewVariables(VVAccess.ReadWrite)]
         public int Price; // 🌟Starlight🌟 
     

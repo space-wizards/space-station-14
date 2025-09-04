@@ -595,6 +595,7 @@
     - SLCrew
   conditions:
     - !type:ListingLimitedStockCondition
+      stock: 1
 
 - type: listing
   id: VendorPlushieFixes
@@ -610,17 +611,6 @@
 - type: listing
   id: VendorPlushieVirus
   productEntity: PlushieVirus
-  cost:
-    NTCredit: 20
-  categories:
-    - SLCrew
-  conditions:
-    - !type:ListingLimitedStockCondition
-      stock: 1
-
-- type: listing
-  id: VendorPlushieMahio
-  productEntity: PlushieMahio
   cost:
     NTCredit: 20
   categories:

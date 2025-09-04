@@ -1245,3 +1245,88 @@
           Quantity: 2
   - type: Item
     heldPrefix: cotton-slice
+
+# Motivating
+
+- type: entity
+  name: berry delight
+  parent: FoodCakeBase
+  id: FoodCakeBerryDelight
+  description: This is a cake that is approaching.
+  components:
+  - type: Sprite
+    state: berry_delight
+  - type: FlavorProfile
+    flavors:
+      - sweet
+      - berry
+      - motivating
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 55
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 40
+        - ReagentId: Vitamin
+          Quantity: 10
+        - ReagentId: Milk
+          Quantity: 10
+  - type: SliceableFood
+    slice: FoodCakeBerryDelightSlice
+  - type: Tag
+    tags:
+    - Cake
+    - Fruit
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: plain-inhand-left
+      - state: alpha-filling-inhand-left
+        color: red
+      right:
+      - state: plain-inhand-right
+      - state: alpha-filling-inhand-right
+        color: red
+
+- type: entity
+  name: berry delight slice
+  parent: FoodCakeSliceBase
+  id: FoodCakeBerryDelightSlice
+  description: Put a fork in, your hunger in isolation.
+  components:
+  - type: Sprite
+    state: berry_delight_slice
+  - type: FlavorProfile
+    flavors:
+      - sweet
+      - berry
+      - motivating
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 12
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 8
+        - ReagentId: Vitamin
+          Quantity: 2
+        - ReagentId: Milk
+          Quantity: 2
+  - type: Tag
+    tags:
+    - Cake
+    - Fruit
+    - Slice
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: alpha-slice-inhand-left
+        color: white
+      - state: alpha-slice-filling-inhand-left
+        color: red
+      right:
+      - state: alpha-slice-inhand-right
+        color: white
+      - state: alpha-slice-filling-inhand-right
+        color: red

@@ -15,6 +15,7 @@
   - type: Tag
     tags:
     - Sheet
+    - ConstructionMaterial
   - type: Material
   - type: Damageable
     damageContainer: Inorganic
@@ -109,15 +110,6 @@
     count: 1
 
 - type: entity
-  parent: SheetGlass
-  id: SheetGlassLingering0
-  suffix: Lingering, 0
-  components:
-  - type: Stack
-    lingering: true
-    count: 0
-
-- type: entity
   parent: SheetGlassBase
   id: SheetRGlass
   name: reinforced glass
@@ -141,7 +133,7 @@
       map: ["base"]
   - type: Item
     heldPrefix: rglass
-  - type: FloorTile
+  - type: FloorTile # starlight
     outputs:
     - FloorRGlass
   - type: Construction
@@ -198,15 +190,6 @@
         canReact: false
 
 - type: entity
-  parent: SheetRGlass
-  id: SheetRGlassLingering0
-  suffix: Lingering, 0
-  components:
-  - type: Stack
-    lingering: true
-    count: 0
-
-- type: entity
   parent: SheetGlassBase
   id: SheetPGlass
   name: plasma glass
@@ -230,6 +213,9 @@
       map: ["base"]
   - type: Item
     heldPrefix: pglass
+  - type: FloorTile # starlight
+    outputs:
+    - FloorGlassPlasma
   - type: Construction
     graph: Glass
     node: SheetPGlass
@@ -305,6 +291,9 @@
       map: ["base"]
   - type: Item
     heldPrefix: rpglass
+  - type: FloorTile # starlight
+    outputs:
+    - FloorGlassPlasmaReinforced
   - type: Construction
     graph: Glass
     node: SheetRPGlass
@@ -337,15 +326,6 @@
     count: 1
 
 - type: entity
-  parent: SheetRPGlass
-  id: SheetRPGlassLingering0
-  suffix: Lingering, 0
-  components:
-  - type: Stack
-    lingering: true
-    count: 0
-
-- type: entity
   parent: SheetGlassBase
   id: SheetUGlass
   name: uranium glass
@@ -369,6 +349,9 @@
       map: ["base"]
   - type: Item
     heldPrefix: uglass
+  - type: FloorTile # starlight
+    outputs:
+    - FloorGlassUranium
   - type: Construction
     graph: Glass
     node: SheetUGlass
@@ -443,6 +426,9 @@
       map: ["base"]
   - type: Item
     heldPrefix: ruglass
+  - type: FloorTile # starlight
+    outputs:
+    - FloorGlassUraniumReinforced
   - type: Construction
     graph: Glass
     node: SheetRUGlass
@@ -498,6 +484,9 @@
       map: ["base"]
   - type: Item
     heldPrefix: cglass
+  - type: FloorTile # starlight
+    outputs:
+    - FloorGlassBronze
   - type: Construction
     graph: Glass
     node: SheetClockworkGlass

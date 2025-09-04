@@ -56,3 +56,7 @@
 - type: metabolizerType
   id: Vampire
   name: metabolizer-type-vampire
+
+- type: metabolizerType #Starlight
+  id: BudgetCyber
+  name: metabolizer-type-budget-cyber

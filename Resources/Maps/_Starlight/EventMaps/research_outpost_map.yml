@@ -5210,8 +5210,6 @@ entities:
       pos: 9.5,1.5
       parent: 2
     - type: DeviceNetwork
-      configurators:
-      - invalid
       deviceLists:
       - 3
 - proto: AlwaysPoweredlightRed

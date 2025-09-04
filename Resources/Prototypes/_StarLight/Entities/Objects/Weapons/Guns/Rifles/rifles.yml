@@ -89,7 +89,7 @@
     - state: mag-0
       map: ["enum.GunVisualLayers.Mag"]
   - type: Item
-    size: Huge
+    size: Large
   - type: MagazineAmmoProvider
   - type: ItemSlots
     slots:
@@ -217,12 +217,12 @@
         whitelist:
           tags:
             - CartridgeRifle
-            
+
 - type: entity
   name: Leikha
   parent: [ BaseWeaponRifle, BaseSecurityContraband ]
   id: WeaponRifleLeikha
-  description: A high end military grade assault rifle. This one has been retrofitted with a scope and a burst reciever. Uses .20 rifle ammo. 
+  description: A high end military grade assault rifle. This one has been retrofitted with a scope and a burst reciever. Uses .20 rifle ammo.
   components:
   - type: Sprite
     sprite: _Starlight/Objects/Weapons/Guns/Rifles/m16a4.rsi
@@ -280,7 +280,7 @@
   name: Pitbull
   parent: [ BaseWeaponRifle, BaseSyndicateContraband ]
   id: WeaponRiflePitbull
-  description: A large bullpup rifle with a low fire-rate but excellent accuracy. Chambered in .45 magnum. 
+  description: A large bullpup rifle with a low fire-rate but excellent accuracy. Chambered in .45 magnum.
   components:
   - type: Sprite
     sprite: _Starlight/Objects/Weapons/Guns/Rifles/pitbull.rsi
@@ -313,6 +313,10 @@
       gun_chamber:
         name: Chamber
         startingItem: CartridgeMagnumSP
+        priority: 1
+        whitelist:
+          tags:
+            - CartridgeMagnum
 
 
 - type: entity

@@ -1612,29 +1612,6 @@
           voice: neon
 
 - type: entity
-  parent: BaseMothPlushie
-  id: PlushieMahio
-  name: Mahio Plushie
-  description: Is this moth even RD?
-  components:
-  - type: Item
-    size: Small
-    sprite: _Starlight/Objects/Fun/Plushies/mahio_plushie.rsi
-  - type: Sprite
-    sprite: _Starlight/Objects/Fun/Plushies/mahio_plushie.rsi
-    state: icon
-  - type: ItemToggle
-    onUse: false
-    verbToggleOn: plushie-voicebox-activate
-    verbToggleOff: plushie-voicebox-deactivate
-  - type: ComponentToggler
-    components:
-      - type: DatasetVocalizer
-        dataset: PlushiesMahio
-      - type: TextToSpeech
-        voice: engineer
-
-- type: entity
   parent: BaseResomiPlushie
   id: PlushieRhea
   name: Rhea Plushie

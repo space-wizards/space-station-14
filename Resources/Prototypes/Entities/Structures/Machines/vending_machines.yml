@@ -7,6 +7,16 @@
   description: Just add capitalism!
   abstract: true
   components:
+  # Starlight-start: Languages
+  - type: LanguageSpeaker
+  - type: LanguageKnowledge
+    speaks:
+    - GalacticCommon
+    - Machine
+    understands:
+    - GalacticCommon
+    - Machine
+  # Starlight-end
   - type: ActionGrant
     actions:
     - ActionVendingThrow
@@ -1934,6 +1944,7 @@
   components:
   - type: VendingMachine
     pack: SyndieDrobeInventory
+    showPrices: false # Starlight-edit: Vending Machines Prices
     offState: off
     brokenState: broken
     normalState: normal-unshaded
@@ -2050,6 +2061,7 @@
   components:
   - type: VendingMachine
     pack: CentDrobeInventory
+    showPrices: false # Starlight-edit: Vending Machines Prices
     offState: off
     brokenState: broken
     normalState: normal-unshaded
@@ -2213,6 +2225,7 @@
   components:
   - type: VendingMachine
     pack: ChemVendInventorySyndicate
+    showPrices: false # Starlight-edit: Vending Machines Prices
     offState: off
     brokenState: broken
     normalState: normal

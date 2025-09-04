@@ -65,7 +65,8 @@
       - !type:DeleteEntity
 
   - node: done
-    entity: LockerSteel
+    entity: LockerBase # Starlight-edit
+    doNotReplaceInheritingEntities: true # Starlight-edit
     actions:
     - !type:SetWiresPanelSecurity
       wiresAccessible: true
@@ -79,6 +80,234 @@
         locked: false
       - !type:WirePanel {}
       - !type:AllWiresCut
+
+    - to: medSecurityUnfinished
+      conditions:
+      - !type:WirePanel {}
+      steps:
+      - material: Steel
+        amount: 2
+        doAfter: 2
+
+    - to: highSecurityUnfinished
+      conditions:
+      - !type:WirePanel {}
+      steps:
+      - material: Plasteel
+        amount: 2
+        doAfter: 2
+
+  - node: doneSecure
+    entity: LockerBaseSecure # Starlight-edit
+    doNotReplaceInheritingEntities: true # Starlight-edit
+    actions:
+    - !type:SetWiresPanelSecurity
+      wiresAccessible: true
+    edges:
+    - to: Cutted
+      steps:
+      - tool: Cutting
+        doAfter: 2.5
+      conditions:
+      - !type:Locked
+        locked: false
+      - !type:WirePanel {}
+      - !type:AllWiresCut
+
+    - to: medSecurityUnfinished
+      conditions:
+      - !type:WirePanel {}
+      steps:
+      - material: Steel
+        amount: 2
+        doAfter: 2
+
+    - to: highSecurityUnfinished
+      conditions:
+      - !type:WirePanel {}
+      steps:
+      - material: Plasteel
+        amount: 2
+        doAfter: 2
+
+## Medium security level door: a layer of steel plating protects the internal wiring
+  - node: medSecurityUnfinished
+    actions:
+    - !type:SetWiresPanelSecurity
+      examine: wires-panel-component-on-examine-security-level1
+      wiresAccessible: false
+    edges:
+    - to: done
+      completed:
+      - !type:GivePrototype
+        prototype: SheetSteel1
+        amount: 2
+      conditions:
+      - !type:WirePanel {}
+      - !type:HasTag
+        tag: Locker
+      steps:
+      - tool: Prying
+        doAfter: 4
+
+    - to: doneSecure
+      completed:
+      - !type:GivePrototype
+        prototype: SheetSteel1
+        amount: 2
+      conditions:
+      - !type:WirePanel {}
+      - !type:HasTag
+        tag: SecuredLocker
+      steps:
+      - tool: Prying
+        doAfter: 4
+
+    - to: medSecurity
+      conditions:
+      - !type:WirePanel {}
+      steps:
+      - tool: Welding
+        doAfter: 3
+
+  - node: medSecurity
+    actions:
+    - !type:SetWiresPanelSecurity
+      examine: wires-panel-component-on-examine-security-level2
+      wiresAccessible: false
+    edges:
+    - to: medSecurityUnfinished
+      conditions:
+      - !type:WirePanel {}
+      steps:
+      - tool: Welding
+        doAfter: 10
+
+## High security level door: a layer of plasteel plating protects the internal wiring
+  - node: highSecurityUnfinished
+    actions:
+    - !type:SetWiresPanelSecurity
+      examine: wires-panel-component-on-examine-security-level3
+      wiresAccessible: false
+    edges:
+    - to: done
+      completed:
+      - !type:GivePrototype
+        prototype: SheetPlasteel1
+        amount: 2
+      conditions:
+      - !type:WirePanel {}
+      - !type:HasTag
+        tag: Locker
+      steps:
+      - tool: Prying
+        doAfter: 4
+
+    - to: doneSecure
+      completed:
+      - !type:GivePrototype
+        prototype: SheetPlasteel1
+        amount: 2
+      conditions:
+      - !type:WirePanel {}
+      - !type:HasTag
+        tag: SecuredLocker
+      steps:
+      - tool: Prying
+        doAfter: 4
+
+    - to: highSecurity
+      conditions:
+      - !type:WirePanel {}
+      steps:
+      - tool: Welding
+        doAfter: 5
+
+  - node: highSecurity
+    actions:
+    - !type:SetWiresPanelSecurity
+      examine: wires-panel-component-on-examine-security-level4
+      wiresAccessible: false
+    edges:
+    - to: highSecurityUnfinished
+      conditions:
+      - !type:WirePanel {}
+      steps:
+      - tool: Welding
+        doAfter: 15
+
+    - to: maxSecurity
+      conditions:
+      - !type:WirePanel {}
+      steps:
+      - material: MetalRod
+        amount: 2
+        doAfter: 1
+
+## Max security level door: an electric grill is added
+  - node: maxSecurity
+    actions:
+    - !type:SetWiresPanelSecurity
+      examine: wires-panel-component-on-examine-security-level5
+      wiresAccessible: false
+    edges:
+    - to: highSecurity
+      completed:
+      - !type:AttemptElectrocute
+      - !type:GivePrototype
+        prototype: PartRodMetal1
+        amount: 2
+      conditions:
+      - !type:WirePanel {}
+      steps:
+      - tool: Cutting
+        doAfter: 0.5
+
+    - to: superMaxSecurityUnfinished
+      conditions:
+      - !type:WirePanel {}
+      steps:
+      - material: Plasteel
+        amount: 2
+        doAfter: 2
+
+## Super max security level door: an additional layer of plasteel is added
+  - node: superMaxSecurityUnfinished
+    actions:
+    - !type:SetWiresPanelSecurity
+      examine: wires-panel-component-on-examine-security-level6
+      wiresAccessible: false
+    edges:
+    - to: maxSecurity
+      completed:
+      - !type:GivePrototype
+        prototype: SheetPlasteel1
+        amount: 2
+      conditions:
+      - !type:WirePanel {}
+      steps:
+      - tool: Prying
+        doAfter: 4
+
+    - to: superMaxSecurity
+      conditions:
+      - !type:WirePanel {}
+      steps:
+      - tool: Welding
+        doAfter: 5
+
+  - node: superMaxSecurity
+    actions:
+    - !type:SetWiresPanelSecurity
+      examine: wires-panel-component-on-examine-security-level7
+      wiresAccessible: false
+    edges:
+    - to: superMaxSecurityUnfinished
+      conditions:
+      - !type:WirePanel {}
+      steps:
+      - tool: Welding
+        doAfter: 15
       
 # Starlight-end: Maintenance Panel for Lockers
 

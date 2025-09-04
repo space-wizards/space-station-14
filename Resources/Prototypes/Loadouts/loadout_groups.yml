@@ -36,6 +36,12 @@
   - ClothingNeckTransPin
   - ClothingNeckAutismPin
   - ClothingNeckGoldAutismPin
+  - OffsetCane
+  - OffsetCaneWood
+  - OffsetCaneClown
+  - OffsetCaneMime
+  - OffsetCaneNT
+  - Cane
   - TowelColorBlack
   - TowelColorDarkBlue
   - TowelColorDarkGreen
@@ -88,6 +94,8 @@
   - DaBling #SL
   - CrapPlushie #SL ##not a typo
   - LighterGatcha #SL
+  - MagicCrayon #SL
+  - HappyHonk #SL
 
 - type: loadoutGroup
   id: Glasses
