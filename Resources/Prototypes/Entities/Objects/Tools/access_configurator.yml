@@ -45,6 +45,8 @@
       - Research
       - ResearchDirector
       - Salvage
+      - SalvageLead # Starlight job
+      - Mining # Starlight job
       - Security
       - Service
       - Theatre
@@ -122,6 +124,8 @@
     - Research
     - ResearchDirector
     - Salvage
+    - SalvageLead # Starlight job
+    - Mining # Starlight job
     - Security
     - Service
     - StationAi
