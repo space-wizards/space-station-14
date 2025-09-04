@@ -42,6 +42,7 @@
       board: !type:Container
 
 #abductor
+
 - type: entity
   parent: BaseComputer
   id: AbductorConsole

@@ -327,15 +327,6 @@ entities:
     - type: InstantAction
       originalIconColor: '#FFFFFFFF'
       container: 238
-- proto: ActionToggleJetpack
-  entities:
-  - uid: 228
-    components:
-    - type: Transform
-      parent: 227
-    - type: InstantAction
-      originalIconColor: '#FFFFFFFF'
-      container: 227
 - proto: AirlockGlassShuttleSyndicate
   entities:
   - uid: 114
@@ -2340,8 +2331,6 @@ entities:
       parent: 215
     - type: GasTank
       toggleActionEntity: 229
-    - type: Jetpack
-      toggleActionEntity: 228
     - type: Physics
       canCollide: False
     - type: ActionsContainer
@@ -2349,7 +2338,6 @@ entities:
       containers:
         actions: !type:Container
           ents:
-          - 228
           - 229
     - type: InsideEntityStorage
   - uid: 230

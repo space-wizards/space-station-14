@@ -13164,5 +13164,22 @@ Entries:
   id: 151400
   time: '2025-09-02T15:17:32.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/1514
+- author: stickycheZ101
+  changes:
+  - message: added a pipecleaner set of decals, basically a cosmetic version of the
+      old ss13 wiring system (maints ass enthusiasts rejoice)((sprayable with the
+      paint sprayer))
+    type: Add
+  id: 140400
+  time: '2025-09-02T23:25:20.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1404
+- author: Quantumcross
+  changes:
+  - message: Fix Late join antag selection if you have no "active" characters with
+      a specific antagonist role.
+    type: Fix
+  id: 143300
+  time: '2025-09-04T01:20:43.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1433
 Order: -1
 
