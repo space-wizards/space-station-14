@@ -44,9 +44,6 @@ ghost-role-information-moproach-description = A cute mothroach with more cute mo
 ghost-role-information-snail-name = Snail
 ghost-role-information-snail-description = A little snail who doesn't mind a bit of space. Just stay on grid!
 
-ghost-role-information-smite-snail-name = Divine Snail
-ghost-role-information-smite-snail-description = A little snail who doesn't mind a bit of space and can call down the wrath of god.
-
 ghost-role-information-snailspeed-name = Snail
 ghost-role-information-snailspeed-description = A little snail with snailborn thrusters.
 
