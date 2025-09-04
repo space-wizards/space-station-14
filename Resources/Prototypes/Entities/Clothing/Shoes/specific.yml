@@ -15,7 +15,6 @@
   parent: [ClothingShoesBaseButcherable, ClothingSlotBase]
   id: ClothingShoesClownBase
   components:
-  - type: WaddleWhenWorn
   - type: ItemSlots
     slots:
       item:
@@ -41,6 +40,8 @@
   - type: FootstepModifier
     footstepSoundCollection:
       collection: FootstepClown
+      params:
+        variation: 0.17
   # for H.O.N.K. construction
   - type: Tag
     tags:
@@ -57,9 +58,12 @@
     sprite: Clothing/Shoes/Specific/clown_banana.rsi
   - type: Clothing
     sprite: Clothing/Shoes/Specific/clown_banana.rsi
-  - type: FootstepModifier
-    footstepSoundCollection:
-      collection: FootstepSlip
+  #- type: FootstepModifier You can add a sound effect when you make one that doesn't sound like a dog dying. -emo
+  #  footstepSoundCollection:
+  #    collection: FootstepSlip
+  #    params:
+  #      volume: -10
+  #      variation: 0.10
   - type: Construction
     graph: BananaClownShoes
     node: shoes
@@ -80,6 +84,8 @@
   - type: FootstepModifier
     footstepSoundCollection:
       collection: FootstepClown
+      params:
+        variation: 0.17
   - type: PointLight
     enabled: true
     radius: 3
@@ -99,7 +105,7 @@
     sprite: Clothing/Shoes/Specific/cult.rsi
 
 - type: entity
-  parent: ClothingShoesBase
+  parent: [ ClothingShoesBase, BaseJanitorContraband ]
   id: ClothingShoesGaloshes
   name: galoshes
   description: Rubber boots.
@@ -129,8 +135,10 @@
   - type: Magboots # always have gravity because le suction cups
   - type: ClothingSpeedModifier
     # ninja are masters of sneaking around relatively quickly, won't break cloak
-    walkModifier: 1.1
+    walkModifier: 1.3
     sprintModifier: 1.3
+  - type: FootstepModifier
+    footstepSoundCollection: null
 
 - type: entity
   parent: ClothingShoesBaseButcherable
@@ -155,7 +163,7 @@
     sprite: Clothing/Shoes/Specific/wizard.rsi
 
 - type: entity
-  parent: ClothingShoesBase
+  parent: [ClothingShoesBase, BaseChameleon]
   id: ClothingShoesChameleon
   name: black shoes
   suffix: Chameleon
@@ -189,10 +197,6 @@
     - type: ChameleonClothing
       slot: [FEET]
       default: ClothingShoesColorBlack
-    - type: UserInterface
-      interfaces:
-        enum.ChameleonUiKey.Key:
-          type: ChameleonBoundUserInterface
 
 - type: entity
   parent: ClothingShoesChameleon
@@ -216,6 +220,8 @@
     - type: FootstepModifier
       footstepSoundCollection:
         collection: FootstepJester
+        params:
+          variation: 0.07
 
 - type: entity
   parent: ClothingShoesClown
@@ -249,7 +255,7 @@
     size: Small
     sprite: Clothing/Shoes/Specific/large_clown.rsi
   - type: ClothingSpeedModifier
-    walkModifier: 0.85
+    walkModifier: 0.8
     sprintModifier: 0.8
 
 - type: entity
@@ -275,3 +281,5 @@
   - type: FootstepModifier
     footstepSoundCollection:
       collection: FootstepSkates
+      params:
+        variation: 0.08

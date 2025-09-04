@@ -9,13 +9,15 @@ namespace Content.Server.Botany;
 
 public sealed class MutationSystem : EntitySystem
 {
+    private static ProtoId<RandomPlantMutationListPrototype> RandomPlantMutations = "RandomPlantMutations";
+
     [Dependency] private readonly IRobustRandom _robustRandom = default!;
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     private RandomPlantMutationListPrototype _randomMutations = default!;
 
     public override void Initialize()
     {
-        _randomMutations = _prototypeManager.Index<RandomPlantMutationListPrototype>("RandomPlantMutations");
+        _randomMutations = _prototypeManager.Index(RandomPlantMutations);
     }
 
     /// <summary>
@@ -27,7 +29,7 @@ public sealed class MutationSystem : EntitySystem
     {
         foreach (var mutation in _randomMutations.mutations)
         {
-            if (Random(mutation.BaseOdds * severity))
+            if (Random(Math.Min(mutation.BaseOdds * severity, 1.0f)))
             {
                 if (mutation.AppliesToPlant)
                 {

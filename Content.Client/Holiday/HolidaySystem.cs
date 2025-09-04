@@ -11,6 +11,7 @@ public sealed class HolidaySystem : EntitySystem
 {
     [Dependency] private readonly IResourceCache _rescache = default!;
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
+    [Dependency] private readonly SpriteSystem _sprite = default!;
 
     /// <inheritdoc/>
     public override void Initialize()
@@ -29,6 +30,6 @@ public sealed class HolidaySystem : EntitySystem
 
         var path = SpriteSpecifierSerializer.TextureRoot / rsistring;
         if (_rescache.TryGetResource(path, out RSIResource? rsi))
-            args.Sprite.BaseRSI = rsi.RSI;
+            _sprite.SetBaseRsi((ent.Owner, args.Sprite), rsi.RSI);
     }
 }

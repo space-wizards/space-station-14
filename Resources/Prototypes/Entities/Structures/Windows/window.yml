@@ -8,6 +8,10 @@
     snap:
     - Window
   components:
+  - type: Anchorable
+    flags:
+    - Anchorable
+  - type: Rotatable
   - type: MeleeSound
     soundGroups:
       Brute:
@@ -71,6 +75,11 @@
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
   - type: Airtight
+  - type: DeltaPressure
+    minPressure: 1000
+    minPressureDelta: 750
+    scalingType: Linear
+    scalingPower: 0.0005
   - type: IconSmooth
     key: windows
     base: window
@@ -157,7 +166,7 @@
       fix1:
         shape:
           !type:PhysShapeAabb
-          bounds: "-0.49,-0.49,0.49,-0.36"
+          bounds: "-0.5,-0.5,0.5,-0.28125"
         density: 1500
         mask:
         - FullTileMask
@@ -202,6 +211,10 @@
     noAirWhenFullyAirBlocked: false
     airBlockedDirection:
     - South
+  - type: DeltaPressure
+    minPressure: 250
+    minPressureDelta: 187.5
+    scalingType: Threshold
   - type: Construction
     graph: WindowDirectional
     node: windowDirectional
@@ -254,6 +267,10 @@
     drawdepth: WallTops
     sprite: Structures/Windows/window_diagonal.rsi
     state: state0
+  - type: Tag
+    tags:
+    - Diagonal
+    - Window
   - type: IconSmooth
     mode: Diagonal
     key: windows

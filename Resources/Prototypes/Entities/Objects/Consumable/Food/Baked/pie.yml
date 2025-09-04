@@ -16,14 +16,16 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 20
+        maxVol: 50
         reagents: #Most of these are this with slight variations, not worth changing until we have the rest of the reagents
         - ReagentId: Nutriment
-          Quantity: 11
+          Quantity: 30
         - ReagentId: Vitamin
+          Quantity: 14
+        - ReagentId: Sugar
           Quantity: 5
   - type: Food #All pies here made with a pie tin; unless you're some kind of savage, you're probably not destroying this when you eat or slice the pie!
-    trash: 
+    trash:
     - FoodPlateTin
   - type: SliceableFood
     count: 4
@@ -47,12 +49,14 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 6
+        maxVol: 7
         reagents:
         - ReagentId: Nutriment
-          Quantity: 1.2
+          Quantity: 7.5
         - ReagentId: Vitamin
-          Quantity: 1
+          Quantity: 3.5
+        - ReagentId: Sugar
+          Quantity: 1.25
   - type: Tag
     tags:
     - Pie
@@ -160,7 +164,7 @@
       payloadSlot:
         whitelist:
           components:
-          - OnUseTimerTrigger
+          - TimerTrigger
         insertSound:
           path: /Audio/Weapons/Guns/Empty/empty.ogg
         ejectSound:
@@ -318,6 +322,43 @@
 # Tastes like pie, meat.
 
 - type: entity
+  name: pumpkin pie
+  parent: FoodPieBase
+  id: FoodPiePumpkin
+  description: Someone should turn this into a latte!
+  components:
+  - type: FlavorProfile
+    flavors:
+      - sweet
+      - pumpkin
+  - type: Sprite
+    layers:
+    - state: tin
+    - state: pumpkin
+  - type: SliceableFood
+    slice: FoodPiePumpkinSlice
+  - type: Tag
+    tags:
+    - Pie
+
+- type: entity
+  name: slice of pumpkin pie
+  parent: FoodPieSliceBase
+  id: FoodPiePumpkinSlice
+  components:
+  - type: FlavorProfile
+    flavors:
+      - sweet
+      - pumpkin
+  - type: Sprite
+    layers:
+    - state: pumpkin-slice
+  - type: Tag
+    tags:
+    - Pie
+    - Slice
+
+- type: entity
   name: xeno pie
   parent: FoodPieBase
   id: FoodPieXeno
@@ -472,6 +513,17 @@
       - sweet
   - type: Sprite
     state: grape
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 30
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 15
+        - ReagentId: Vitamin
+          Quantity: 5
+        - ReagentId: Sugar
+          Quantity: 5
   - type: Tag
     tags:
     - Fruit
@@ -509,10 +561,10 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 26
+        maxVol: 35
         reagents:
         - ReagentId: Nutriment
-          Quantity: 15
+          Quantity: 25
         - ReagentId: Theobromine
           Quantity: 2
 # Tastes like tart, dark chocolate.

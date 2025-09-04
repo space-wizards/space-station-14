@@ -1,11 +1,11 @@
 using System.Linq;
 using Content.Server.Administration;
 using Content.Shared.Administration;
-using Robust.Server.GameObjects;
-using Robust.Server.Maps;
 using Robust.Shared.Console;
 using Robust.Shared.ContentPack;
-using Robust.Shared.Map;
+using Robust.Shared.EntitySerialization;
+using Robust.Shared.EntitySerialization.Components;
+using Robust.Shared.EntitySerialization.Systems;
 using Robust.Shared.Utility;
 
 namespace Content.Server.Maps;
@@ -17,8 +17,8 @@ namespace Content.Server.Maps;
 public sealed class ResaveCommand : LocalizedCommands
 {
     [Dependency] private readonly IEntityManager _entManager = default!;
-    [Dependency] private readonly IMapManager _mapManager = default!;
     [Dependency] private readonly IResourceManager _res = default!;
+    [Dependency] private readonly ILogManager _log = default!;
 
     public override string Command => "resave";
 
@@ -26,32 +26,56 @@ public sealed class ResaveCommand : LocalizedCommands
     {
         var loader = _entManager.System<MapLoaderSystem>();
 
-        foreach (var fn in _res.ContentFindFiles(new ResPath("/Maps/")))
+        var opts = MapLoadOptions.Default with
         {
-            var mapId = _mapManager.CreateMap();
-            _mapManager.AddUninitializedMap(mapId);
-            loader.Load(mapId, fn.ToString(), new MapLoadOptions()
+
+            DeserializationOptions = DeserializationOptions.Default with
             {
-                StoreMapUids = true,
-                LoadMap = true,
-            });
+                StoreYamlUids = true,
+                LogOrphanedGrids = false
+            }
+        };
+
+        var log = _log.GetSawmill(Command);
+        var files = _res.ContentFindFiles(new ResPath("/Maps/")).ToList();
+
+        for (var i = 0; i < files.Count; i++)
+        {
+            var fn = files[i];
+            log.Info($"Re-saving file {i}/{files.Count} : {fn}");
+
+            if (!loader.TryLoadGeneric(fn, out var result, opts))
+                continue;
+
+            if (result.Maps.Count != 1)
+            {
+                shell.WriteError(
+                    $"Multi-map or multi-grid files like {fn} are not yet supported by the {Command} command");
+                loader.Delete(result);
+                continue;
+            }
+
+            var map = result.Maps.First();
 
             // Process deferred component removals.
             _entManager.CullRemovedComponents();
 
-            var mapUid = _mapManager.GetMapEntityId(mapId);
-            var mapXform = _entManager.GetComponent<TransformComponent>(mapUid);
-
-            if (_entManager.HasComponent<LoadedMapComponent>(mapUid) || mapXform.ChildCount != 1)
+            if (_entManager.HasComponent<LoadedMapComponent>(map))
             {
-                loader.SaveMap(mapId, fn.ToString());
+                loader.TrySaveMap(map.Comp.MapId, fn);
             }
-            else if (mapXform.ChildEnumerator.MoveNext(out var child))
+            else if (result.Grids.Count == 1)
             {
-                loader.Save(child, fn.ToString());
+                loader.TrySaveGrid(result.Grids.First(), fn);
+            }
+            else
+            {
+                shell.WriteError($"Failed to resave {fn}");
             }
 
-            _mapManager.DeleteMap(mapId);
+            loader.Delete(result);
         }
+
+        shell.WriteLine($"Resaved all maps");
     }
 }

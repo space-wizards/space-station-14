@@ -48,6 +48,11 @@
     trackAllDamage: true
     damageOverlay:
       sprite: Structures/Windows/cracks.rsi
+  - type: DeltaPressure
+    minPressure: 75000
+    minPressureDelta: 50000
+    scalingType: Linear
+    scalingPower: 0.0005
   - type: StaticPrice
     price: 100
   - type: RadiationBlocker
@@ -104,6 +109,10 @@
             max: 1
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
+  - type: DeltaPressure
+    minPressure: 18750
+    minPressureDelta: 12500
+    scalingType: Threshold
   - type: StaticPrice
     price: 50
   - type: RadiationBlocker
@@ -122,6 +131,10 @@
     drawdepth: WallTops
     sprite: Structures/Windows/plasma_diagonal.rsi
     state: state0
+  - type: Tag
+    tags:
+    - Diagonal
+    - Window
   - type: IconSmooth
     mode: Diagonal
     key: windows

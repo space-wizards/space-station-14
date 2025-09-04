@@ -29,6 +29,9 @@
           behaviors:
             - !type:DoActsBehavior
               acts: ["Destruction"]
+    - type: Visibility
+      layer: 1
+    - type: Appearance
     - type: SubFloorHide
       blockAmbience: false
       blockInteractions: false
@@ -45,3 +48,11 @@
         powerMV:
           !type:CableTerminalNode
           nodeGroupID: MVPower
+
+- type: entity
+  id: CableTerminalUncuttable
+  parent: CableTerminal
+  suffix: uncuttable
+  components:
+  - type: Cable
+    cuttingQuality: null

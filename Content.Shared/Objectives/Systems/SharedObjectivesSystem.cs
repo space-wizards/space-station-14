@@ -70,7 +70,7 @@ public abstract class SharedObjectivesSystem : EntitySystem
 
         if (!CanBeAssigned(uid, mindId, mind, comp))
         {
-            Log.Warning($"Objective {proto} did not match the requirements for {_mind.MindOwnerLoggingString(mind)}, deleted it");
+            Log.Warning($"Objective {proto} did not match the requirements for {mind}, deleted it");
             return null;
         }
 
@@ -123,7 +123,7 @@ public abstract class SharedObjectivesSystem : EntitySystem
         var description = meta.EntityDescription;
         if (comp.Icon == null)
         {
-            Log.Error($"An objective {ToPrettyString(uid):objective} of {_mind.MindOwnerLoggingString(mind)} is missing an icon!");
+            Log.Error($"An objective {ToPrettyString(uid):objective} of {mind} is missing an icon!");
             return null;
         }
 
@@ -141,7 +141,7 @@ public abstract class SharedObjectivesSystem : EntitySystem
         if (ev.Progress != null)
             return ev.Progress;
 
-        Log.Error($"Objective {ToPrettyString(uid):objective} of {_mind.MindOwnerLoggingString(mind.Comp)} didn't set a progress value!");
+        Log.Error($"Objective {ToPrettyString(uid):objective} of {mind.Comp} didn't set a progress value!");
         return null;
     }
 

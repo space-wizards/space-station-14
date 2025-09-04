@@ -7,8 +7,7 @@ namespace Content.Shared.Roles;
 /// <summary>
 ///     Describes information for a single antag.
 /// </summary>
-[Prototype("antag")]
-[Serializable, NetSerializable]
+[Prototype]
 public sealed partial class AntagPrototype : IPrototype
 {
     [ViewVariables]

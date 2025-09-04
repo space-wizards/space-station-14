@@ -33,6 +33,18 @@ public sealed class NameModifierSystem : EntitySystem
     }
 
     /// <summary>
+    /// Returns the base name of the entity, without any modifiers applied.
+    /// If the entity doesn't have a <see cref="NameModifierComponent"/>,
+    /// this returns the entity's metadata name.
+    /// </summary>
+    public string GetBaseName(Entity<NameModifierComponent?> entity)
+    {
+        if (Resolve(entity, ref entity.Comp, logMissing: false))
+            return entity.Comp.BaseName;
+        return Name(entity);
+    }
+
+    /// <summary>
     /// Raises a <see cref="RefreshNameModifiersEvent"/> to gather modifiers and
     /// updates the entity's name to its base name with modifiers applied.
     /// This will add a <see cref="NameModifierComponent"/> if any modifiers are added.

@@ -1,18 +1,26 @@
 {
-   "copyright" : "Taken from https://github.com/tgstation/tgstation/blob/master/icons/obj/device.dmi state export_scanner at commit 7544e865d0771d9bd917461e9da16d301fe40fc3.",
+   "copyright" : "Taken from https://github.com/tgstation/tgstation/blob/master/icons/obj/device.dmi state export_scanner at commit 7544e865d0771d9bd917461e9da16d301fe40fc3. In-hand sprites made by obscenelytinyshark for use in SS14.",
    "license" : "CC-BY-SA-3.0",
    "size" : {
       "x" : 32,
       "y" : 32
    },
-   "states" : [
-      {
-         "name" : "icon"
-      },
-      {
-         "name": "equipped-BELT",
-         "directions": 4
-      }
-   ],
+    "states": [
+        {
+            "name": "inhand-left",
+            "directions": 4
+        },
+        {
+            "name": "inhand-right",
+            "directions": 4
+        },
+        {
+            "name": "icon"
+        },
+        {
+            "name": "equipped-BELT",
+            "directions": 4
+        }
+    ],
    "version" : 1
 }

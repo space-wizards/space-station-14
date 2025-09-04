@@ -8,14 +8,14 @@ namespace Content.Shared.Alert;
 
 public abstract class AlertsSystem : EntitySystem
 {
-    [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
+    [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
 
     private FrozenDictionary<ProtoId<AlertPrototype>, AlertPrototype> _typeToAlert = default!;
 
     public IReadOnlyDictionary<AlertKey, AlertState>? GetActiveAlerts(EntityUid euid)
     {
-        return EntityManager.TryGetComponent(euid, out AlertsComponent? comp)
+        return TryComp(euid, out AlertsComponent? comp)
             ? comp.Alerts
             : null;
     }
@@ -38,7 +38,7 @@ public abstract class AlertsSystem : EntitySystem
 
     public bool IsShowingAlert(EntityUid euid, ProtoId<AlertPrototype> alertType)
     {
-        if (!EntityManager.TryGetComponent(euid, out AlertsComponent? alertsComponent))
+        if (!TryComp(euid, out AlertsComponent? alertsComponent))
             return false;
 
         if (TryGet(alertType, out var alert))
@@ -53,13 +53,13 @@ public abstract class AlertsSystem : EntitySystem
     /// <returns>true iff an alert of the indicated alert category is currently showing</returns>
     public bool IsShowingAlertCategory(EntityUid euid, ProtoId<AlertCategoryPrototype> alertCategory)
     {
-        return EntityManager.TryGetComponent(euid, out AlertsComponent? alertsComponent)
+        return TryComp(euid, out AlertsComponent? alertsComponent)
                && alertsComponent.Alerts.ContainsKey(AlertKey.ForCategory(alertCategory));
     }
 
     public bool TryGetAlertState(EntityUid euid, AlertKey key, out AlertState alertState)
     {
-        if (EntityManager.TryGetComponent(euid, out AlertsComponent? alertsComponent))
+        if (TryComp(euid, out AlertsComponent? alertsComponent))
             return alertsComponent.Alerts.TryGetValue(key, out alertState);
 
         alertState = default;
@@ -155,7 +155,7 @@ public abstract class AlertsSystem : EntitySystem
         if (_timing.ApplyingState)
             return;
 
-        if (!EntityManager.TryGetComponent(euid, out AlertsComponent? alertsComponent))
+        if (!TryComp(euid, out AlertsComponent? alertsComponent))
             return;
 
         if (TryGet(alertType, out var alert))
@@ -311,14 +311,14 @@ public abstract class AlertsSystem : EntitySystem
     private void HandleClickAlert(ClickAlertEvent msg, EntitySessionEventArgs args)
     {
         var player = args.SenderSession.AttachedEntity;
-        if (player is null || !EntityManager.HasComponent<AlertsComponent>(player))
+        if (player is null || !HasComp<AlertsComponent>(player))
             return;
 
         if (!IsShowingAlert(player.Value, msg.Type))
         {
             Log.Debug("User {0} attempted to" +
                                    " click alert {1} which is not currently showing for them",
-                EntityManager.GetComponent<MetaDataComponent>(player.Value).EntityName, msg.Type);
+                Comp<MetaDataComponent>(player.Value).EntityName, msg.Type);
             return;
         }
 
@@ -328,7 +328,15 @@ public abstract class AlertsSystem : EntitySystem
             return;
         }
 
-        ActivateAlert(player.Value, alert);
+        if (ActivateAlert(player.Value, alert) && _timing.IsFirstTimePredicted)
+        {
+            HandledAlert();
+        }
+    }
+
+    protected virtual void HandledAlert()
+    {
+
     }
 
     public bool ActivateAlert(EntityUid user, AlertPrototype alert)

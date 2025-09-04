@@ -51,13 +51,13 @@ public sealed class IdExaminableSystem : EntitySystem
         if (_inventorySystem.TryGetSlotEntity(uid, "id", out var idUid))
         {
             // PDA
-            if (EntityManager.TryGetComponent(idUid, out PdaComponent? pda) &&
+            if (TryComp(idUid, out PdaComponent? pda) &&
                 TryComp<IdCardComponent>(pda.ContainedId, out var id))
             {
                 return GetNameAndJob(id);
             }
             // ID Card
-            if (EntityManager.TryGetComponent(idUid, out id))
+            if (TryComp(idUid, out id))
             {
                 return GetNameAndJob(id);
             }
@@ -67,7 +67,7 @@ public sealed class IdExaminableSystem : EntitySystem
 
     private string GetNameAndJob(IdCardComponent id)
     {
-        var jobSuffix = string.IsNullOrWhiteSpace(id.JobTitle) ? string.Empty : $" ({id.JobTitle})";
+        var jobSuffix = string.IsNullOrWhiteSpace(id.LocalizedJobTitle) ? string.Empty : $" ({id.LocalizedJobTitle})";
 
         var val = string.IsNullOrWhiteSpace(id.FullName)
             ? Loc.GetString(id.NameLocId,

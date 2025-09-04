@@ -222,24 +222,24 @@
     sprite: Clothing/Uniforms/Jumpskirt/color.rsi
     layers:
     - state: icon
-      color: "#79CC26"
+      color: "#007923"
     - state: trinkets-icon
   - type: Item
     inhandVisuals:
       left:
       - state: inhand-left
-        color: "#79CC26"
+        color: "#007923"
       - state: trinkets-inhand-left
       right:
       - state: inhand-right
-        color: "#79CC26"
+        color: "#007923"
       - state: trinkets-inhand-right
   - type: Clothing
     sprite: Clothing/Uniforms/Jumpskirt/color.rsi
     clothingVisuals:
       jumpsuit:
       - state: equipped-INNERCLOTHING
-        color: "#79CC26"
+        color: "#007923"
       - state: trinkets-equipped-INNERCLOTHING
 
 # Orange Jumpskirt
@@ -489,3 +489,15 @@
       - state: equipped-INNERCLOTHING
         color: "#cc295f"
       - state: trinkets-equipped-INNERCLOTHING
+
+# Rainbow Jumpskirt
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformJumpskirtColorRainbow
+  name: rainbow jumpskirt
+  description: A multi-colored jumpskirt!
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpskirt/rainbow.rsi
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpskirt/rainbow.rsi
