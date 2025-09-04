@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: metalgearsloth
-  changes:
-  - message: Fix AI eye movement.
-    type: Fix
-  id: 8406
-  time: '2025-05-02T10:07:12.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/37114
 - author: themias
   changes:
   - message: Station beacons retain edited info when reopening their window.
@@ -3947,3 +3940,10 @@
   id: 8918
   time: '2025-09-03T23:58:48.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/39238
+- author: ArtisticRoomba
+  changes:
+  - message: Inflatable walls and airlocks now actually take Delta-Pressure damage.
+    type: Fix
+  id: 8919
+  time: '2025-09-04T01:08:53.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/40098
