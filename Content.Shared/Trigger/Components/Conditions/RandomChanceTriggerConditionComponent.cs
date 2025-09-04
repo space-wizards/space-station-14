@@ -11,6 +11,6 @@ public sealed partial class RandomChanceTriggerConditionComponent : BaseTriggerC
     /// <summary>
     /// Chance for the trigger to succeed.
     /// </summary>
-    [DataField, AutoNetworkedField]
+    [DataField("successChance")]
     public float SuccessChance = .9f;
 }
