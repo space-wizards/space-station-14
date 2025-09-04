@@ -402,9 +402,9 @@ public abstract class SharedBloodstreamSystem : EntitySystem
         if (amount >= 0)
             return SolutionContainer.TryAddReagent(ent.Comp.BloodSolution.Value, ent.Comp.BloodReagent, amount, null, GetEntityBloodData(ent));
 
-        amount *= -1;
+        amount *= -1; // if negative, we start removing instead. Has to be absolute value in the end.
 
-        return SolutionContainer.RemoveReagent(ent.Comp.BloodSolution.Value, ent.Comp.BloodReagent, -amount) > FixedPoint2.Zero;
+        return SolutionContainer.RemoveReagent(ent.Comp.BloodSolution.Value, ent.Comp.BloodReagent, amount) > FixedPoint2.Zero;
     }
 
     /// <summary>
