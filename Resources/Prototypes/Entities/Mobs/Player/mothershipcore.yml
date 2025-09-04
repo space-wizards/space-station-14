@@ -240,7 +240,7 @@
   components:
   - type: Action
     icon: { sprite: Interface/Actions/actions_borg.rsi, state: xenoborg-control-computer }
-    iconOn: Interface/Actions/actions_borg.rsi/xenoborg-control-computer.png
+    iconOn: { sprite: Interface/Actions/actions_borg.rsi, state: xenoborg-control-computer }
     keywords: [ "Mothership Core", "console", "interface" ]
     priority: -6
   - type: InstantAction
@@ -254,7 +254,7 @@
   components:
   - type: Action
     icon: { sprite: Interface/Actions/actions_borg.rsi, state: xenoborg-camera-computer }
-    iconOn: Interface/Actions/actions_borg.rsi/xenoborg-camera-computer.png
+    iconOn: { sprite: Interface/Actions/actions_borg.rsi, state: xenoborg-camera-computer }
     keywords: [ "Mothership Core", "console", "interface" ]
     priority: -6
   - type: InstantAction
