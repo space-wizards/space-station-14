@@ -61,9 +61,9 @@ namespace Content.Client.RoundEnd
             //Gamemode Name
             var gamemodeLabel = new RichTextLabel();
             var gamemodeMessage = new FormattedMessage();
-            gamemodeMessage.AddMarkupOrThrow(Loc.GetString("round-end-summary-window-round-id-label", ("roundId", roundId)));
+            gamemodeMessage.AddMarkupPermissive(Loc.GetString("round-end-summary-window-round-id-label", ("roundId", roundId)));
             gamemodeMessage.AddText(" ");
-            gamemodeMessage.AddMarkupOrThrow(Loc.GetString("round-end-summary-window-gamemode-name-label", ("gamemode", gamemode)));
+            gamemodeMessage.AddMarkupPermissive(Loc.GetString("round-end-summary-window-gamemode-name-label", ("gamemode", gamemode)));
             gamemodeLabel.SetMessage(gamemodeMessage);
             roundEndSummaryContainer.AddChild(gamemodeLabel);
 

@@ -247,7 +247,7 @@ namespace Content.Client.Examine
             else
             {
                 var label = new RichTextLabel();
-                label.SetMessage(FormattedMessage.FromMarkupOrThrow("[bold]???[/bold]"));
+                label.SetMessage(FormattedMessage.FromMarkupPermissive("[bold]???[/bold]"));
                 hBox.AddChild(label);
             }
 

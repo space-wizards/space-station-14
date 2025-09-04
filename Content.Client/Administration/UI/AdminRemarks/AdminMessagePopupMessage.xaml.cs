@@ -13,7 +13,7 @@ public sealed partial class AdminMessagePopupMessage : Control
     {
         RobustXamlLoader.Load(this);
 
-        Admin.SetMessage(FormattedMessage.FromMarkupOrThrow(Loc.GetString(
+        Admin.SetMessage(FormattedMessage.FromMarkupPermissive(Loc.GetString(
             "admin-notes-message-admin",
             ("admin", message.AdminName),
             ("date", message.AddedOn.ToLocalTime()))));

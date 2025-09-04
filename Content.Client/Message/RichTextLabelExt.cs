@@ -15,7 +15,7 @@ public static class RichTextLabelExt
      /// </remarks>
     public static RichTextLabel SetMarkup(this RichTextLabel label, string markup)
     {
-        label.SetMessage(FormattedMessage.FromMarkupOrThrow(markup));
+        label.SetMessage(FormattedMessage.FromMarkupPermissive(markup));
         return label;
     }
 

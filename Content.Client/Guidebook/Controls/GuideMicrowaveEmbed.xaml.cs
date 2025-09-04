@@ -100,7 +100,7 @@ public sealed partial class GuideMicrowaveEmbed : PanelContainer, IDocumentTag, 
             // solid name
 
             var solidNameMsg = new FormattedMessage();
-            solidNameMsg.AddMarkupOrThrow(Loc.GetString("guidebook-microwave-solid-name-display", ("ingredient", ingredient.Name)));
+            solidNameMsg.AddMarkupPermissive(Loc.GetString("guidebook-microwave-solid-name-display", ("ingredient", ingredient.Name)));
             solidNameMsg.Pop();
 
             var solidNameLabel = new GuidebookRichPrototypeLink();
@@ -112,7 +112,7 @@ public sealed partial class GuideMicrowaveEmbed : PanelContainer, IDocumentTag, 
             // solid quantity
 
             var solidQuantityMsg = new FormattedMessage();
-            solidQuantityMsg.AddMarkupOrThrow(Loc.GetString("guidebook-microwave-solid-quantity-display", ("amount", amount)));
+            solidQuantityMsg.AddMarkupPermissive(Loc.GetString("guidebook-microwave-solid-quantity-display", ("amount", amount)));
             solidQuantityMsg.Pop();
 
             var solidQuantityLabel = new RichTextLabel();
@@ -131,7 +131,7 @@ public sealed partial class GuideMicrowaveEmbed : PanelContainer, IDocumentTag, 
             // liquid color
 
             var liquidColorMsg = new FormattedMessage();
-            liquidColorMsg.AddMarkupOrThrow(Loc.GetString("guidebook-microwave-reagent-color-display", ("color", reagent.SubstanceColor)));
+            liquidColorMsg.AddMarkupPermissive(Loc.GetString("guidebook-microwave-reagent-color-display", ("color", reagent.SubstanceColor)));
             liquidColorMsg.Pop();
 
             var liquidColorLabel = new GuidebookRichPrototypeLink();
@@ -144,7 +144,7 @@ public sealed partial class GuideMicrowaveEmbed : PanelContainer, IDocumentTag, 
             // liquid name
 
             var liquidNameMsg = new FormattedMessage();
-            liquidNameMsg.AddMarkupOrThrow(Loc.GetString("guidebook-microwave-reagent-name-display", ("reagent", reagent.LocalizedName)));
+            liquidNameMsg.AddMarkupPermissive(Loc.GetString("guidebook-microwave-reagent-name-display", ("reagent", reagent.LocalizedName)));
             liquidNameMsg.Pop();
 
             var liquidNameLabel = new RichTextLabel();
@@ -155,7 +155,7 @@ public sealed partial class GuideMicrowaveEmbed : PanelContainer, IDocumentTag, 
             // liquid quantity
 
             var liquidQuantityMsg = new FormattedMessage();
-            liquidQuantityMsg.AddMarkupOrThrow(Loc.GetString("guidebook-microwave-reagent-quantity-display", ("amount", amount)));
+            liquidQuantityMsg.AddMarkupPermissive(Loc.GetString("guidebook-microwave-reagent-quantity-display", ("amount", amount)));
             liquidQuantityMsg.Pop();
 
             var liquidQuantityLabel = new RichTextLabel();
@@ -174,7 +174,7 @@ public sealed partial class GuideMicrowaveEmbed : PanelContainer, IDocumentTag, 
     private void GenerateCookTime(FoodRecipePrototype recipe)
     {
         var msg = new FormattedMessage();
-        msg.AddMarkupOrThrow(Loc.GetString("guidebook-microwave-cook-time", ("time", recipe.CookTime)));
+        msg.AddMarkupPermissive(Loc.GetString("guidebook-microwave-cook-time", ("time", recipe.CookTime)));
         msg.Pop();
 
         CookTimeLabel.SetMessage(msg);

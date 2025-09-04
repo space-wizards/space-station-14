@@ -1,4 +1,4 @@
-﻿using Content.Shared.Armor;
+using Content.Shared.Armor;
 using Content.Shared.Inventory;
 using Content.Shared.Movement.Systems;
 using Content.Shared.NameModifier.EntitySystems;
@@ -31,7 +31,7 @@ public abstract class SharedZombieSystem : EntitySystem
             return;
 
         args.Msg.PushNewline();
-        args.Msg.AddMarkupOrThrow(Loc.GetString(ent.Comp.Examine, ("value", value)));
+        args.Msg.AddMarkupPermissive(Loc.GetString(ent.Comp.Examine, ("value", value)));
     }
 
     private void OnRefreshSpeed(EntityUid uid, ZombieComponent component, RefreshMovementSpeedModifiersEvent args)

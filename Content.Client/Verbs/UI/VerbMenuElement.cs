@@ -32,7 +32,7 @@ namespace Content.Client.Verbs.UI
             TooltipSupplier = sender =>
             {
                 var label = new RichTextLabel();
-                label.SetMessage(FormattedMessage.FromMarkupOrThrow(verb.Message ?? verb.Text));
+                label.SetMessage(FormattedMessage.FromMarkupPermissive(verb.Message ?? verb.Text));
 
                 var tooltip = new Tooltip();
                 tooltip.GetChild(0).Children.Clear();

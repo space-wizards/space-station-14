@@ -80,8 +80,8 @@ namespace Content.Client.UserInterface.Systems.Alerts.Controls
 
         private Control SupplyTooltip(Control? sender)
         {
-            var msg = FormattedMessage.FromMarkupOrThrow(Loc.GetString(Alert.Name));
-            var desc = FormattedMessage.FromMarkupOrThrow(Loc.GetString(Alert.Description));
+            var msg = FormattedMessage.FromMarkupPermissive(Loc.GetString(Alert.Name));
+            var desc = FormattedMessage.FromMarkupPermissive(Loc.GetString(Alert.Description));
             return new ActionAlertTooltip(msg, desc) { Cooldown = Cooldown };
         }
 

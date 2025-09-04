@@ -948,11 +948,11 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
 
         if (solution.Volume == 0)
         {
-            msg.AddMarkupOrThrow(Loc.GetString("scannable-solution-empty-container"));
+            msg.AddMarkupPermissive(Loc.GetString("scannable-solution-empty-container"));
             return msg;
         }
 
-        msg.AddMarkupOrThrow(Loc.GetString("scannable-solution-main-text"));
+        msg.AddMarkupPermissive(Loc.GetString("scannable-solution-main-text"));
 
         var reagentPrototypes = solution.GetReagentPrototypes(PrototypeManager);
 
@@ -964,14 +964,14 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
         foreach (var (proto, quantity) in sortedReagentPrototypes)
         {
             msg.PushNewline();
-            msg.AddMarkupOrThrow(Loc.GetString("scannable-solution-chemical"
+            msg.AddMarkupPermissive(Loc.GetString("scannable-solution-chemical"
                 , ("type", proto.LocalizedName)
                 , ("color", proto.SubstanceColor.ToHexNoAlpha())
                 , ("amount", quantity)));
         }
 
         msg.PushNewline();
-        msg.AddMarkupOrThrow(Loc.GetString("scannable-solution-temperature", ("temperature", Math.Round(solution.Temperature))));
+        msg.AddMarkupPermissive(Loc.GetString("scannable-solution-temperature", ("temperature", Math.Round(solution.Temperature))));
 
         return msg;
     }
