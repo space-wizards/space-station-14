@@ -7,11 +7,11 @@
   - type: Sprite
     sprite: Objects/Specific/Medical/hypospray.rsi
     layers:
-      - state: hypo
-        map: ["enum.SolutionContainerLayers.Base"]
-      - state: hypo_fill1
-        map: ["enum.SolutionContainerLayers.Fill"]
-        visible: false
+    - state: hypo
+      map: ["enum.SolutionContainerLayers.Base"]
+    - state: hypo_fill1
+      map: ["enum.SolutionContainerLayers.Fill"]
+      visible: false
   - type: Item
     sprite: Objects/Specific/Medical/hypospray.rsi
   - type: SolutionContainerManager
@@ -49,11 +49,11 @@
   - type: Sprite
     sprite: Objects/Specific/Medical/syndihypo.rsi
     layers:
-      - state: hypo
-        map: ["enum.SolutionContainerLayers.Base"]
-      - state: hypo_fill1
-        map: ["enum.SolutionContainerLayers.Fill"]
-        visible: false
+    - state: hypo
+      map: ["enum.SolutionContainerLayers.Base"]
+    - state: hypo_fill1
+      map: ["enum.SolutionContainerLayers.Fill"]
+      visible: false
   - type: Item
     sprite: Objects/Specific/Medical/syndihypo.rsi
   - type: SolutionContainerManager
@@ -106,12 +106,12 @@
   description: The ultimate application of bluespace technology and rapid chemical administration.
   id: AdminHypo
   components:
-    - type: SolutionContainerManager
-      solutions:
-        hypospray:
-          maxVol: 3000
-    - type: UseDelay
-      delay: 0.0
+  - type: SolutionContainerManager
+    solutions:
+      hypospray:
+        maxVol: 3000
+  - type: UseDelay
+    delay: 0.0
 
 - type: entity
   name: chemical medipen
@@ -138,6 +138,9 @@
         color: "#439822"
       - state: base-colorB-inhand-right
     size: Tiny
+  - type: Tag
+    tags:
+    - Medipen
   - type: SolutionContainerManager
     solutions:
       pen:
@@ -516,10 +519,10 @@
       pen:
         maxVol: 30
         reagents:
-          - ReagentId: Leporazine
-            Quantity: 10
-          - ReagentId: Barozine
-            Quantity: 20
+        - ReagentId: Leporazine
+          Quantity: 10
+        - ReagentId: Barozine
+          Quantity: 20
 
 - type: entity
   name: hyperzine injector
