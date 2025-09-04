@@ -44,7 +44,7 @@
       required: false
     FacialHair:
       points: 1
-      onlyWhitelisted: true
+      onlyWhitelisted: true # Beards lack displacement maps and are impossible to displace onto a snout.
       required: false
     Snout:
       points: 1
