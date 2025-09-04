@@ -1,19 +1,11 @@
-using Content.Shared.Explosion;
 using Content.Shared.Explosion.EntitySystems;
 using Content.Shared.Trigger.Components.Effects;
-using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Trigger.Systems;
 
 public sealed class ExplodeOnTriggerSystem : EntitySystem
 {
     [Dependency] private readonly SharedExplosionSystem _explosion = default!;
-
-    /// <summary>
-    /// Mirrors the default explosion defined serverside in ExplosionSystem.
-    /// Used here to allow ExplosionOnTriggerComponent to be added to an entity directly without defining the type from yml.
-    /// </summary>
-    public static readonly ProtoId<ExplosionPrototype> DefaultExplosionPrototypeId = "Default";
 
     public override void Initialize()
     {
