@@ -4,6 +4,7 @@
   description: ghost-role-information-syndicate-kobold-reinforcement-description
   rules: ghost-role-information-syndicate-reinforcement-rules
   entityPrototype: MobKoboldSyndicateAgent
+  job: GhostRoleProtected # This mob has a hand.
 
 - type: ghostRole
   id: SyndicateKoboldNukeops
@@ -11,6 +12,7 @@
   description: ghost-role-information-syndicate-kobold-reinforcement-description
   rules: ghost-role-information-nukeop-reinforcement-rules
   entityPrototype: MobKoboldSyndicateAgentNukeops
+  job: GhostRoleProtected # This mob has a hand.
 
 - type: ghostRole
   id: SyndicateMonkey
@@ -18,6 +20,7 @@
   description: ghost-role-information-syndicate-monkey-reinforcement-description
   rules: ghost-role-information-syndicate-reinforcement-rules
   entityPrototype: MobMonkeySyndicateAgent
+  job: GhostRoleProtected # This mob has a hand.
 
 - type: ghostRole
   id: SyndicateMonkeyNukeops
@@ -25,6 +28,7 @@
   description: ghost-role-information-syndicate-monkey-reinforcement-description
   rules: ghost-role-information-nukeop-reinforcement-rules
   entityPrototype: MobMonkeySyndicateAgentNukeops
+  job: GhostRoleProtected # This mob has a hand.
 
 - type: ghostRole
   id: SyndicateAgentMedic
@@ -33,6 +37,7 @@
   rules: ghost-role-information-syndicate-reinforcement-rules
   entityPrototype: MobHumanSyndicateAgentMedic
   iconPrototype: MedkitCombat
+  job: GhostRoleProtected # This mob has a hand and can speak.
 
 - type: ghostRole
   id: SyndicateAgentSpy
@@ -41,6 +46,7 @@
   rules: ghost-role-information-syndicate-reinforcement-rules
   entityPrototype: MobHumanSyndicateAgentSpy
   iconPrototype: ClothingMaskGasVoiceChameleon
+  job: GhostRoleProtected # This mob has a hand and can speak.
 
 - type: ghostRole
   id: SyndicateAgentThief
@@ -49,3 +55,4 @@
   rules: ghost-role-information-syndicate-reinforcement-rules
   entityPrototype: MobHumanSyndicateAgentThief
   iconPrototype: SyndicateJawsOfLife
+  job: GhostRoleProtected # This mob has a hand and can speak.

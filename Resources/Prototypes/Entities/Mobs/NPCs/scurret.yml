@@ -201,6 +201,7 @@
       rules: ghost-role-information-nonantagonist-rules
       raffle:
         settings: default
+      job: GhostRoleProtected # This mob can speak.
     - type: GhostTakeoverAvailable
 
 # Spawnable ESS have a ghost role, equipment, a random name and a random colour.

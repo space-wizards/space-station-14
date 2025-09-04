@@ -23,6 +23,7 @@
     name: ghost-role-information-rat-king-name
     description: ghost-role-information-rat-king-description
     rules: ghost-role-information-antagonist-rules
+    job: GhostRoleProtected # This mob can speak.
     mindRoles:
     - MindRoleGhostRoleSoloAntagonist
     raffle:
@@ -169,6 +170,7 @@
     rules: ghost-role-information-space-dragon-rules
     mindRoles:
     - MindRoleDragon
+    job: GhostRoleProtected # This mob can speak.
   - type: Sprite
     layers:
     - state: green
@@ -186,6 +188,7 @@
     rules: ghost-role-information-antagonist-rules
     mindRoles:
     - MindRoleNinja
+    job: GhostRoleProtected # This mob can speak.
     raffle:
       settings: default
   - type: Sprite
@@ -206,6 +209,7 @@
     rules: ghost-role-information-antagonist-rules
     mindRoles:
     - MindRoleParadoxClone
+    job: GhostRoleProtected # This mob can speak.
     raffle:
       settings: default
   - type: Sprite
@@ -224,6 +228,7 @@
     name: ghost-role-information-derelict-engineering-cyborg-name
     description: ghost-role-information-derelict-engineering-cyborg-description
     rules: ghost-role-information-silicon-rules
+    job: GhostRoleProtected # This mob can speak.
     raffle:
       settings: default
 
@@ -240,6 +245,7 @@
     - MindRoleSubvertedSilicon
     raffle:
       settings: default
+    job: GhostRoleProtected # This mob can speak.
   - type: Sprite
     sprite: Markers/jobs.rsi
     layers:
@@ -256,6 +262,7 @@
     name: ghost-role-information-derelict-janitor-cyborg-name
     description: ghost-role-information-derelict-janitor-cyborg-description
     rules: ghost-role-information-silicon-rules
+    job: GhostRoleProtected # This mob can speak.
     raffle:
       settings: default
 
@@ -268,6 +275,7 @@
     name: ghost-role-information-derelict-medical-cyborg-name
     description: ghost-role-information-derelict-medical-cyborg-description
     rules: ghost-role-information-silicon-rules
+    job: GhostRoleProtected # This mob can speak.
     raffle:
       settings: default
 
@@ -292,6 +300,7 @@
     name: ghost-role-information-derelict-syndicate-assault-cyborg-name
     description: ghost-role-information-derelict-syndicate-assault-cyborg-description
     rules: ghost-role-information-silicon-rules
+    job: GhostRoleProtected # This mob can speak.
     raffle:
       settings: default
 

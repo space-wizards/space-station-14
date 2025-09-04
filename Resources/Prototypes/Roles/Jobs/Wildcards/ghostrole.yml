@@ -1,0 +1,39 @@
+# This JobPrototype is specifically granted to any Ghost Role that does not itself have
+# a playtime requirement via other means, but needs one to prevent accounts with extremely
+# low playtime from picking them. (i.e. this is an 'anti-raider' measure).
+
+# The rules for when a Ghost Role needs this JobPrototype are as follows:
+# 1. If the Ghost Role already has a MindRole or JobPrototype that grants any playtime restriction, DO NOT add this Job.
+# 2. If the Ghost Role can somehow talk on radio channels without having their words replaced, add this Job.
+# 3. If the Ghost Role has at least one hand, add this job.
+
+# When in doubt, ask your local friendly admin team.
+
+# Remember that new players are people too, so be careful to not prevent new players who are dead or
+# observing from being able to play.
+
+- type: job
+  id: GhostRoleProtected
+  name: job-name-unknown # Always appear as unknown.
+  description: job-description-unknown
+  playTimeTracker: JobGhostRoleProtected
+  canBeAntag: false
+  icon: JobIconGhostRoleProtected
+  setPreference: false
+  overrideConsoleVisibility: true
+  requirements:
+  - !type:OverallPlaytimeRequirement
+    time: 7200 # 2 hours
+
+# Note: if the above job cannot be added to a Ghost Role because that Ghost Role already has a job:
+# 1. Can you add a playtime requirement to that Job? If yes, do so.
+# 2. Can you add a new job that inherits from that Job and adds the requirement? If yes, do so.
+# 3. If you cannot do either 1 or 2, ONLY THEN add the following Mind Role to the Ghost Role instead:
+
+- type: entity
+  parent: BaseMindRole
+  id: MindRoleGhostRoleProtected
+  name: Ghost Role (Playtime Protected)
+  components:
+  - type: MindRole
+    jobPrototype: GhostRoleProtected
