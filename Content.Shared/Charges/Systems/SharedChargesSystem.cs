@@ -94,6 +94,12 @@ public abstract class SharedChargesSystem : EntitySystem
     /// <summary>
     /// Adds the specified charges. Does not reset the accumulator.
     /// </summary>
+    /// <param name="action">
+    /// The action to add charges to. If it doesn't have <see cref="LimitedChargesComponent"/>, it will be added.
+    /// </param>
+    /// <param name="addCharges">
+    /// The number of charges to add. Can be negative. Resulting charge count is clamped to [0, MaxCharges].
+    /// </param>
     public void AddCharges(Entity<LimitedChargesComponent?, AutoRechargeComponent?> action, int addCharges)
     {
         if (addCharges == 0)
@@ -170,9 +176,21 @@ public abstract class SharedChargesSystem : EntitySystem
         Dirty(action);
     }
 
+    /// <summary>
+    /// Set the number of charges an action has.
+    /// </summary>
+    /// <param name="action">The action in question</param>
+    /// <param name="value">
+    /// The number of charges. Clamped to [0, MaxCharges].
+    /// </param>
+    /// <remarks>
+    /// This method doesn't implicitly add <see cref="LimitedChargesComponent"/>
+    /// unlike some other methods in this system.
+    /// </remarks>
     public void SetCharges(Entity<LimitedChargesComponent?> action, int value)
     {
-        action.Comp ??= EnsureComp<LimitedChargesComponent>(action.Owner);
+        if (!Resolve(action, ref action.Comp))
+            return;
 
         var adjusted = Math.Clamp(value, 0, action.Comp.MaxCharges);
 
@@ -183,6 +201,31 @@ public abstract class SharedChargesSystem : EntitySystem
 
         action.Comp.LastCharges = adjusted;
         action.Comp.LastUpdate = _timing.CurTime;
+        Dirty(action);
+    }
+
+    /// <summary>
+    /// Sets the maximum charges of a given action.
+    /// </summary>
+    /// <param name="action">The action being modified.</param>
+    /// <param name="value">The new maximum charges of the action. Clamped to zero.</param>
+    /// <remarks>
+    /// Does not change the current charge count, or adjust the
+    /// accumulator for auto-recharge. It also doesn't implicitly add
+    /// <see cref="LimitedChargesComponent"/> unlike some other methods
+    /// in this system.
+    /// </remarks>
+    public void SetMaxCharges(Entity<LimitedChargesComponent?> action, int value)
+    {
+        if (!Resolve(action, ref action.Comp))
+            return;
+
+        // You can't have negative max charges (even zero is a bit goofy but eh)
+        var adjusted = Math.Max(0, value);
+        if (action.Comp.MaxCharges == adjusted)
+            return;
+
+        action.Comp.MaxCharges = adjusted;
         Dirty(action);
     }
 

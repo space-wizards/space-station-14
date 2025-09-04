@@ -53,19 +53,13 @@
     trackAllDamage: true
     damageOverlay:
       sprite: Structures/Windows/cracks.rsi
+  - type: DeltaPressure
+    minPressure: 150000
+    minPressureDelta: 100000
+    scalingType: Linear
+    scalingPower: 0.0001
   - type: StaticPrice
     price: 132
-  - type: Fixtures
-    fixtures:
-      fix1:
-        shape:
-          !type:PhysShapeAabb
-          bounds: "-0.5,-0.5,0.5,0.5"
-        mask:
-        - FullTileMask
-        layer:
-        - WallLayer
-        density: 2000
 
 - type: entity
   id: PlasmaReinforcedWindowDirectional
@@ -93,6 +87,8 @@
     trackAllDamage: true
     damageOverlay:
       sprite: Structures/Windows/cracks_directional.rsi
+  - type: Damageable
+    damageModifierSet: RGlass
   - type: RadiationBlocker
     resistance: 2
   - type: Destructible
@@ -120,6 +116,10 @@
             max: 1
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
+  - type: DeltaPressure
+    minPressure: 37500
+    minPressureDelta: 25000
+    scalingType: Threshold
   - type: StaticPrice
     price: 66
 
@@ -139,6 +139,7 @@
   - type: Tag
     tags:
     - Diagonal
+    - Window
   - type: IconSmooth
     mode: Diagonal
     key: windows
