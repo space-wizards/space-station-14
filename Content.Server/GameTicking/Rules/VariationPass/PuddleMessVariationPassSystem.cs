@@ -15,7 +15,7 @@ public sealed class PuddleMessVariationPassSystem : VariationPassSystem<PuddleMe
 
     protected override void ApplyVariation(Entity<PuddleMessVariationPassComponent> ent, ref StationVariationPassEvent args)
     {
-        var totalTiles = Stations.GetTileCount(args.Station);
+        var totalTiles = Stations.GetTileCount(args.Station.AsNullable());
 
         if (!_proto.TryIndex(ent.Comp.RandomPuddleSolutionFill, out var proto))
             return;

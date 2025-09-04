@@ -117,3 +117,13 @@
   components:
   - type: Sprite
     sprite: Structures/Doors/Airlocks/Standard/shuttle_syndicate.rsi
+
+- type: entity
+  parent: AirlockShuttle
+  id: AirlockShuttleXenoborg
+  suffix: Docking
+  name: external airlock
+  description: Necessary for connecting two space craft together.
+  components:
+  - type: Sprite
+    sprite: Structures/Doors/Airlocks/Standard/shuttle_xenoborg.rsi
