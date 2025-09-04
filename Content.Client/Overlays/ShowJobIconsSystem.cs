@@ -10,7 +10,6 @@ public sealed class ShowJobIconsSystem : EquipmentHudSystem<ShowJobIconsComponen
     {
         if (!IsActive)
             return;
-
         ev.StatusIcons.Add(iconPrototype);
     }
 }

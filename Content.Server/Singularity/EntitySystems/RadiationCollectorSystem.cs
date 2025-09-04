@@ -48,7 +48,7 @@ public sealed class RadiationCollectorSystem : EntitySystem
         if (!_containerSystem.TryGetContainer(uid, GasTankContainer, out var container) || container.ContainedEntities.Count == 0)
             return false;
 
-        if (!EntityManager.TryGetComponent(container.ContainedEntities.First(), out gasTankComponent))
+        if (!TryComp(container.ContainedEntities.First(), out gasTankComponent))
             return false;
 
         return true;
