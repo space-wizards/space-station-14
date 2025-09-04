@@ -59,34 +59,16 @@ namespace Content.Server.GameTicking.Commands
 
         public CompletionResult GetCompletion(IConsoleShell shell, string[] args)
         {
-            if (args.Length == 1)
+            return args.Length switch
             {
-                var gamePresets = _prototype.EnumeratePrototypes<GamePresetPrototype>()
-                    .OrderBy(p => p.ID);
-                var options = new List<string>();
-                foreach (var preset in gamePresets)
-                {
-                    options.Add(preset.ID);
-                    options.AddRange(preset.Alias);
-                }
+                1 => CompletionResult.FromHintOptions(CompletionHelper.PrototypeIDs<GamePresetPrototype>(),
+                "<id>"),
 
-                return CompletionResult.FromHintOptions(options, "<id>");
-            }
-            if (args.Length == 3)
-            {
-                var gamePresets = _prototype.EnumeratePrototypes<GamePresetPrototype>()
-                    .OrderBy(p => p.ID);
-                var options = new List<string>();
-                foreach (var preset in gamePresets)
-                {
-                    options.Add(preset.ID);
-                    options.AddRange(preset.Alias);
-                }
+                3 => CompletionResult.FromHintOptions(CompletionHelper.PrototypeIDs<GamePresetPrototype>(),
+                Loc.GetString("set-game-preset-command-hint-3")),
 
-                return CompletionResult.FromHintOptions(options,
-                Loc.GetString("set-game-preset-command-hint-3"));
-            }
-            return CompletionResult.Empty;
+                _ => CompletionResult.Empty
+            };
         }
     }
 }
