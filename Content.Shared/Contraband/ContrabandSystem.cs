@@ -109,7 +109,7 @@ public sealed class ContrabandSystem : EntitySystem
             iconTexture);
     }
 
-    public string GenerateDepartmentExamineMessage(HashSet<ProtoId<DepartmentPrototype>> allowedDepartments, HashSet<ProtoId<JobPrototype>> allowedJobs)
+    public string GenerateDepartmentExamineMessage(HashSet<ProtoId<DepartmentPrototype>> allowedDepartments, HashSet<ProtoId<JobPrototype>> allowedJobs, ContrabandItemType itemType = ContrabandItemType.Item)
     {
         var localizedDepartments = allowedDepartments.Select(p => Loc.GetString("contraband-department-plural", ("department", Loc.GetString(_proto.Index(p).Name))));
         var jobs = allowedJobs.Select(p => _proto.Index(p).LocalizedName).ToArray();
@@ -119,7 +119,7 @@ public sealed class ContrabandSystem : EntitySystem
         var list = ContentLocalizationManager.FormatList(localizedDepartments.Concat(localizedJobs).ToList());
 
         // department restricted text
-        return Loc.GetString("contraband-examine-text-Restricted-department", ("departments", list));
+        return Loc.GetString("contraband-examine-text-Restricted-department", ("departments", list), ("type", itemType));
     }
 
     private FormattedMessage GetContrabandExamine(String deptMessage, String carryMessage)
@@ -140,4 +140,13 @@ public sealed class ContrabandSystem : EntitySystem
     {
         _contrabandExamineOnlyInHudEnabled = val;
     }
+}
+
+/// <summary>
+/// The item type that the contraband text should follow in the description text.
+/// </summary>
+public enum ContrabandItemType
+{
+    Item,
+    Reagent
 }
