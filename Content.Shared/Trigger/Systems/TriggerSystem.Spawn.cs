@@ -30,7 +30,8 @@ public sealed partial class TriggerSystem
         if (target == null)
             return;
 
-        SpawnTriggerHelper(target.Value, ent.Comp.Proto, ent.Comp.UseMapCoords, ent.Comp.Predicted);
+        var xform = Transform(target.Value);
+        SpawnTriggerHelper((target.Value, xform), ent.Comp.Proto, ent.Comp.UseMapCoords, ent.Comp.Predicted);
     }
 
     private void HandleSpawnTableOnTrigger(Entity<SpawnEntityTableOnTriggerComponent> ent, ref TriggerEvent args)
@@ -43,10 +44,11 @@ public sealed partial class TriggerSystem
         if (target == null)
             return;
 
+        var xform = Transform(target.Value);
         var spawns = _entityTable.GetSpawns(ent.Comp.Table);
         foreach (var proto in spawns)
         {
-            SpawnTriggerHelper(target.Value, proto, ent.Comp.UseMapCoords, ent.Comp.Predicted);
+            SpawnTriggerHelper((target.Value, xform), proto, ent.Comp.UseMapCoords, ent.Comp.Predicted);
         }
     }
 
@@ -57,13 +59,11 @@ public sealed partial class TriggerSystem
     /// <param name="proto">The entity to spawn.</param>
     /// <param name="useMapCoords">If true, spawn at target's MapCoordinates. If false, spawn attached to target.</param>
     /// <param name="predicted">Whether to use predicted spawning.</param>
-    private void SpawnTriggerHelper(EntityUid target, EntProtoId proto, bool useMapCoords, bool predicted)
+    private void SpawnTriggerHelper(Entity<TransformComponent> target, EntProtoId proto, bool useMapCoords, bool predicted)
     {
-        var xform = Transform(target);
-
         if (useMapCoords)
         {
-            var mapCoords = _transform.GetMapCoordinates(target, xform);
+            var mapCoords = _transform.GetMapCoordinates(target);
             if (predicted)
                 EntityManager.PredictedSpawn(proto, mapCoords);
             else if (_net.IsServer)
@@ -72,7 +72,7 @@ public sealed partial class TriggerSystem
 
         else
         {
-            var coords = xform.Coordinates;
+            var coords = target.Comp.Coordinates;
             if (!coords.IsValid(EntityManager))
                 return;
 
