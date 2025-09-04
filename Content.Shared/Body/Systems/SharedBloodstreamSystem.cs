@@ -303,10 +303,8 @@ public abstract class SharedBloodstreamSystem : EntitySystem
 
     private void OnMetabolismExclusion(Entity<BloodstreamComponent> ent, ref MetabolismExclusionEvent args)
     {
-        // We explicitly want the exactly blood type that way consuming others blood makes us sick
-        var referenceBlood = new ReagentId(ent.Comp.BloodReagent, GetEntityBloodData(ent.Owner));
-
-        args.ReagentList.RemoveAll(reagent => reagent.Reagent == referenceBlood);
+        // Any blood reagent that shares the name will skip metabolism to enable blood transfusion
+        args.ReagentList.RemoveAll(reagent => reagent.Reagent.Prototype == ent.Comp.BloodReagent);
     }
 
     /// <summary>
