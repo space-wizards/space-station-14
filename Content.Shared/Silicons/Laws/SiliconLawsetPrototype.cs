@@ -16,6 +16,12 @@ public sealed partial class SiliconLawset
     public List<SiliconLaw> Laws = new();
 
     /// <summary>
+    /// The name of the lawset, for admin-facing interfaces
+    /// </summary>
+    [DataField]
+    public LocId Subtype = "lawset-unknown";
+
+    /// <summary>
     /// What entity the lawset considers as a figure of authority.
     /// </summary>
     [DataField(required: true), ViewVariables(VVAccess.ReadWrite)]
@@ -71,6 +77,12 @@ public sealed partial class SiliconLawsetPrototype : IPrototype
     /// </summary>
     [DataField(required: true)]
     public List<ProtoId<SiliconLawPrototype>> Laws = new();
+
+    /// <summary>
+    /// The name of the lawset, for admin-facing interfaces
+    /// </summary>
+    [DataField]
+    public LocId Subtype = "lawset-unknown";
 
     /// <summary>
     /// What entity the lawset considers as a figure of authority.

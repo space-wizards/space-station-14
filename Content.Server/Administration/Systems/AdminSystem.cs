@@ -220,6 +220,7 @@ public sealed class AdminSystem : EntitySystem
         var entityName = string.Empty;
         var identityName = string.Empty;
         var sortWeight = 0;
+        var ent = session?.AttachedEntity;
 
         // Visible (identity) name can be different from real name
         if (session?.AttachedEntity != null)
@@ -250,6 +251,15 @@ public sealed class AdminSystem : EntitySystem
             startingRole = _jobs.MindTryGetJobName(mindId);
         }
 
+        // Check for subtype overrides
+        if (ent is not null)
+        {
+            var ev = new RoleSubtypeOverrideEvent();
+            RaiseLocalEvent(ent.Value, ref ev);
+            if (ev.SubtypeOverride is not null)
+                subtype = ev.SubtypeOverride;
+        }
+
         // Connection status and playtime
         var connected = session != null && session.Status is SessionStatus.Connected or SessionStatus.InGame;
 
@@ -273,7 +283,7 @@ public sealed class AdminSystem : EntitySystem
             roleType?.ID,
             subtype,
             sortWeight,
-            GetNetEntity(session?.AttachedEntity),
+            GetNetEntity(ent),
             data.UserId,
             connected,
             _roundActivePlayers.Contains(data.UserId),

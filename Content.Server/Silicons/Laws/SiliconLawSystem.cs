@@ -33,6 +33,10 @@ public sealed class SiliconLawSystem : SharedSiliconLawSystem
     [Dependency] private readonly UserInterfaceSystem _userInterface = default!;
     [Dependency] private readonly EmagSystem _emag = default!;
 
+    private static readonly LocId LawsetNone = "lawset-none";
+    private static readonly LocId LawsetIon = "lawset-ion";
+    private static readonly LocId LawsetEmagged = "lawset-emagged";
+
     /// <inheritdoc/>
     public override void Initialize()
     {
@@ -49,6 +53,7 @@ public sealed class SiliconLawSystem : SharedSiliconLawSystem
         SubscribeLocalEvent<SiliconLawProviderComponent, MindAddedMessage>(OnLawProviderMindAdded);
         SubscribeLocalEvent<SiliconLawProviderComponent, MindRemovedMessage>(OnLawProviderMindRemoved);
         SubscribeLocalEvent<SiliconLawProviderComponent, SiliconEmaggedEvent>(OnEmagLawsAdded);
+        SubscribeLocalEvent<SiliconLawProviderComponent, RoleSubtypeOverrideEvent>(OnRoleSubtypeOverride);
     }
 
     private void OnMapInit(EntityUid uid, SiliconLawBoundComponent component, MapInitEvent args)
@@ -135,6 +140,11 @@ public sealed class SiliconLawSystem : SharedSiliconLawSystem
         {
             component.Lawset = args.Lawset;
 
+            //Update subtype
+            component.Lawset.Subtype = LawsetIon;
+
+            //TODO:ERRANT Need to trigger a PlayerInfo update
+
             // gotta tell player to check their laws
             NotifyLawsChanged(uid, component.LawUploadSound);
 
@@ -156,6 +166,18 @@ public sealed class SiliconLawSystem : SharedSiliconLawSystem
         // Show the silicon has been subverted.
         component.Subverted = true;
 
+        // Change displayed subtype
+        component.Lawset.Subtype = LawsetEmagged;
+
+        //TODO:ERRANT Need to trigger a PlayerInfo update
+        _mind.TryGetMind(uid, out var mindEnt, out var mind);
+        if (mind is not null)
+        {
+            var ev = new RoleAddedEvent(mindEnt, mind, true);
+            RaiseLocalEvent(mindEnt, ev);
+        }
+
+
         // Add the first emag law before the others
         component.Lawset?.Laws.Insert(0, new SiliconLaw
         {
@@ -169,6 +191,23 @@ public sealed class SiliconLawSystem : SharedSiliconLawSystem
             LawString = Loc.GetString("law-emag-secrecy", ("faction", Loc.GetString(component.Lawset.ObeysTo))),
             Order = component.Lawset.Laws.Max(law => law.Order) + 1
         });
+    }
+
+    private void OnRoleSubtypeOverride(Entity<SiliconLawProviderComponent> ent, ref RoleSubtypeOverrideEvent args)
+    {
+
+        var lawSet = ent.Comp.Lawset;
+
+        if (lawSet is null)
+        {
+            args.SubtypeOverride = LawsetNone;
+            return;
+        }
+
+        if (lawSet?.Subtype is null)
+            return;
+
+        args.SubtypeOverride = lawSet.Subtype;
     }
 
     protected override void EnsureSubvertedSiliconRole(EntityUid mindId)
@@ -272,6 +311,8 @@ public sealed class SiliconLawSystem : SharedSiliconLawSystem
             laws.Laws.Add(_prototype.Index<SiliconLawPrototype>(law).ShallowClone());
         }
         laws.ObeysTo = proto.ObeysTo;
+
+        laws.Subtype = proto.Subtype;
 
         return laws;
     }
