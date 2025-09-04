@@ -254,7 +254,7 @@
 - type: entity
   parent: LightTube
   name: halogen light tube
-  id: LightTubeHalogen
+  id: HalogenLightTube
   description: A halogen light fixture.
   components:
   - type: LightBulb

@@ -183,7 +183,7 @@
   parent: Poweredlight
   components:
   - type: PoweredLight
-    hasLampOnSpawn: LightTubeHalogen
+    hasLampOnSpawn: HalogenLightTube
   - type: PointLight
     radius: 10
     energy: 0.9
