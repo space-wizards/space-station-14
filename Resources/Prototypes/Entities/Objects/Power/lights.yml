@@ -252,6 +252,19 @@
     PowerUse: 10
 
 - type: entity
+  parent: LightTube
+  name: halogen light tube
+  id: LightTubeHalogen
+  description: A halogen light fixture.
+  components:
+  - type: LightBulb
+    color: "#FFBF80" # halogens are orange-2500K temp
+    lightEnergy: 0.9
+    lightRadius: 10
+    lightSoftness: 1
+    PowerUse: 10
+
+- type: entity
   suffix: Broken
   parent: BaseLightTube
   name: fluorescent light tube

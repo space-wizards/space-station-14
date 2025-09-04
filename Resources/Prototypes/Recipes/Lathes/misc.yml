@@ -38,6 +38,11 @@
 
 - type: latheRecipe
   parent: BaseLightRecipe
+  id: HalogenLightTube
+  result: HalogenLightTube
+
+- type: latheRecipe
+  parent: BaseLightRecipe
   id: ExteriorLightTube
   result: ExteriorLightTube
 

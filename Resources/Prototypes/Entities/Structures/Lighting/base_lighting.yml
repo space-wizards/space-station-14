@@ -157,6 +157,44 @@
         Heat: 2
     popupText: powered-light-component-burn-hand
 
+- type: entity
+  id: PoweredlightOld
+  description: "A light fixture. Draws power and produces light when equipped with a light tube."
+  suffix: Old
+  parent: Poweredlight
+  components:
+  - type: PoweredLight
+    hasLampOnSpawn: LightTubeOld
+  - type: PointLight
+    radius: 10
+    energy: 0.5
+    softness: 1
+    color: "#FFDABB"
+  - type: DamageOnInteract
+    damage:
+      types:
+        Heat: 2
+    popupText: powered-light-component-burn-hand
+
+- type: entity
+  id: PoweredlightHalogen
+  description: "A light fixture. Draws power and produces light when equipped with a light tube."
+  suffix: Halogen
+  parent: Poweredlight
+  components:
+  - type: PoweredLight
+    hasLampOnSpawn: LightTubeHalogen
+  - type: PointLight
+    radius: 10
+    energy: 0.9
+    softness: 1
+    color: "#FFBF80"
+  - type: DamageOnInteract
+    damage:
+      types:
+        Heat: 2
+    popupText: powered-light-component-burn-hand
+
 #LED lights
 - type: entity
   id: PoweredlightLED
