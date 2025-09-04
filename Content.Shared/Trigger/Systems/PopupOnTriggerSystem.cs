@@ -4,7 +4,7 @@ using Content.Shared.Trigger.Components.Effects;
 namespace Content.Shared.Trigger.Systems;
 
 /// <summary>
-/// This handles...
+/// This handles <see cref="PopupOnTriggerComponent"/>
 /// </summary>
 public sealed class PopupOnTriggerSystem : EntitySystem
 {
