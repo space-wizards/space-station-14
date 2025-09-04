@@ -4,7 +4,7 @@ meta:
   engineVersion: 266.0.0
   forkId: ""
   forkVersion: ""
-  time: 09/02/2025 06:11:45
+  time: 09/04/2025 21:46:38
   entityCount: 14081
 maps:
 - 1
@@ -38684,66 +38684,92 @@ entities:
     - type: Transform
       pos: 3.5,4.5
       parent: 2
+    - type: FaxMachine
+      name: Bar
   - uid: 5528
     components:
     - type: Transform
       pos: -23.5,8.5
       parent: 2
+    - type: FaxMachine
+      name: Medbay
   - uid: 5529
     components:
     - type: Transform
       pos: 26.5,7.5
       parent: 2
+    - type: FaxMachine
+      name: Security
   - uid: 5530
     components:
     - type: Transform
       pos: 10.5,-15.5
       parent: 2
+    - type: FaxMachine
+      name: Engineering
   - uid: 5531
     components:
     - type: Transform
       pos: 10.5,-20.5
       parent: 2
+    - type: FaxMachine
+      name: Cargo Bay
   - uid: 5532
     components:
     - type: Transform
       pos: -38.5,-7.5
       parent: 2
+    - type: FaxMachine
+      name: Library
   - uid: 5533
     components:
     - type: Transform
       pos: -17.5,-6.5
       parent: 2
+    - type: FaxMachine
+      name: Science
   - uid: 5534
     components:
     - type: Transform
       pos: -9.5,28.5
       parent: 2
+    - type: FaxMachine
+      name: Conference Room
   - uid: 5535
     components:
     - type: Transform
       pos: -4.5,28.5
       parent: 2
+    - type: FaxMachine
+      name: Bridge
   - uid: 5536
     components:
     - type: Transform
       pos: 4.5,24.5
       parent: 2
+    - type: FaxMachine
+      name: Captain's Room
   - uid: 5537
     components:
     - type: Transform
       pos: -1.5,18.5
       parent: 2
+    - type: FaxMachine
+      name: HOP
   - uid: 5538
     components:
     - type: Transform
       pos: 40.5,30.5
       parent: 2
+    - type: FaxMachine
+      name: Courtroom
   - uid: 5539
     components:
     - type: Transform
       pos: -11.5,47.5
       parent: 2
+    - type: FaxMachine
+      name: AI Core
 - proto: FireAlarm
   entities:
   - uid: 5540
@@ -96460,7 +96486,7 @@ entities:
       pos: -38.5,9.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -70951.02
+      secondsUntilStateChange: -71322.68
       state: Opening
   - uid: 13509
     components:
@@ -96468,7 +96494,7 @@ entities:
       pos: -35.5,10.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -70951.52
+      secondsUntilStateChange: -71323.18
       state: Opening
 - proto: WoodenBench
   entities:
