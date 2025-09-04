@@ -176,3 +176,65 @@
     board: SalvageShuttleConsoleCircuitboard
   - type: StealTarget
     stealGroup: SalvageShuttleConsoleCircuitboard
+
+# Universal ID Computer
+- type: entity
+  parent: BaseComputerAiAccess
+  id: UniversalIdConsole
+  name: Universal ID card computer
+  description: A terminal for programming Nanotrasen and non-Nanotrasen ID cards with extended access levels.
+  components:
+  - type: IdCardConsole
+    accessGroups:
+    - General
+    - Security
+    - Cargo
+    - Command
+    - Research
+    - Medical
+    - Service
+    - Engineering
+    - Admin
+    privilegedIdSlot:
+      name: UniversalIdConsole-privilegedId
+      ejectSound: /Audio/Machines/id_swipe.ogg
+      insertSound: /Audio/Weapons/Guns/MagIn/batrifle_magin.ogg
+      ejectOnBreak: true
+      swap: false
+      whitelist:
+        components:
+        - IdCard
+    targetIdSlot:
+      name: UniversalIdConsole-targetId
+      ejectSound: /Audio/Machines/id_swipe.ogg
+      insertSound: /Audio/Weapons/Guns/MagIn/batrifle_magin.ogg
+      ejectOnBreak: true
+      swap: false
+      whitelist:
+        components:
+        - IdCard
+  - type: ActivatableUI
+    key: enum.IdCardConsoleUiKey.Key
+  - type: UserInterface
+    interfaces:
+      enum.IdCardConsoleUiKey.Key:
+        type: IdCardConsoleBoundUserInterface
+      enum.WiresUiKey.Key:
+        type: WiresBoundUserInterface
+  - type: CrewManifestViewer
+    ownerKey: enum.IdCardConsoleUiKey.Key
+  - type: Speech
+    speechVerb: Robotic
+    speechSounds: Pai
+  - type: Sprite
+    layers:
+    - map: ["computerLayerBody"]
+      state: computer
+    - map: ["computerLayerKeyboard"]
+      state: generic_keyboard
+    - map: ["computerLayerScreen"]
+      state: id
+    - map: ["computerLayerKeys"]
+      state: id_key
+    - map: ["enum.WiresVisualLayers.MaintenancePanel"]
+      state:

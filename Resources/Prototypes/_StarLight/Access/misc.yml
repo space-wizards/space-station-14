@@ -25,3 +25,14 @@
 - type: accessLevel
   id: Commie
   name: id-card-access-level-commie
+
+- type: accessGroup
+  id: Admin
+  tags:
+  - Debug1
+  - Debug2
+  - Debug3
+  - Debug4
+  - Debug5
+  - Freelance
+  - Commie
