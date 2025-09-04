@@ -181,7 +181,7 @@ namespace Content.Server.Atmos.EntitySystems
         {
             var data = new GasOverlayData(0,
                 new byte[VisibleGasId.Length],
-                mixture?.Temperature ?? Atmospherics.T20C);
+                mixture?.Temperature ?? Atmospherics.TCMB);
 
             for (var i = 0; i < VisibleGasId.Length; i++)
             {
