@@ -1,7 +1,7 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
-  "copyright": "Taken from Paradise at https://github.com/ParadiseSS13/Paradise/blob/ef7a4d962915cb36b138eeb59663f0053d4906fe/icons/mob/sprite_accessories/vox/vox_body_markings.dmi and modified by Flareguy. eyeshadow & tail_ring states by Flareguy",
+  "copyright": "Taken from Paradise at https://github.com/ParadiseSS13/Paradise/blob/ef7a4d962915cb36b138eeb59663f0053d4906fe/icons/mob/sprite_accessories/vox/vox_body_markings.dmi and modified by Flareguy. eyeshadow & tail_ring states by Flareguy, tail_talisman by TrixxedHeart",
   "size": {
     "x": 32,
     "y": 32
@@ -21,6 +21,10 @@
     },
     {
       "name": "nightling_s",
+      "directions": 4
+    },
+    {
+      "name": "tail_talisman",
       "directions": 4
     },
     {

@@ -314,7 +314,8 @@ public abstract class SharedWieldableSystem : EntitySystem
         var virtuals = new ValueList<EntityUid>();
         for (var i = 0; i < component.FreeHandsRequired; i++)
         {
-            if (_virtualItem.TrySpawnVirtualItemInHand(used, user, out var virtualItem, true))
+            // don't show a popup when dropping items because it will overlap with the popup for wielding
+            if (_virtualItem.TrySpawnVirtualItemInHand(used, user, out var virtualItem, true, silent: true))
             {
                 virtuals.Add(virtualItem.Value);
                 continue;
