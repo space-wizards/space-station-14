@@ -430,6 +430,7 @@
     requiredTriggeredSpeed: 1
   - type: TriggerOnStepTrigger
   - type: GibOnTrigger
+  - type: ProtectedFromStepTriggers
   - type: MeleeWeapon
     soundHit:
       path: /Audio/Effects/bite.ogg
