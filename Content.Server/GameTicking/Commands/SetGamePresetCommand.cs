@@ -46,7 +46,7 @@ namespace Content.Server.GameTicking.Commands
 
             if (args.Length == 3 && !ticker.TryFindGamePreset(args[2], out decoy))
             {
-                shell.WriteError(Loc.GetString("set-game-preset-preset-error", ("preset", args[2])));
+                shell.WriteError(Loc.GetString("set-game-preset-decoy-error", ("preset", args[2])));
                 return;
             }
 
@@ -62,7 +62,7 @@ namespace Content.Server.GameTicking.Commands
             return args.Length switch
             {
                 1 => CompletionResult.FromHintOptions(CompletionHelper.PrototypeIDs<GamePresetPrototype>(),
-                "<id>"),
+                Loc.GetString("set-game-preset-command-hint-1")),
                 2 => CompletionResult.FromHint(Loc.GetString("set-game-preset-command-hint-2")),
                 3 => CompletionResult.FromHintOptions(CompletionHelper.PrototypeIDs<GamePresetPrototype>(),
                 Loc.GetString("set-game-preset-command-hint-3")),
