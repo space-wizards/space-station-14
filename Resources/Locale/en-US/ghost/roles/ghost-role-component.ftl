@@ -32,6 +32,9 @@ ghost-role-information-silicon-rules = You are a [color={role-type-silicon-color
 ghost-role-information-mouse-name = Mouse
 ghost-role-information-mouse-description = A hungry and mischievous mouse.
 
+ghost-role-information-cancer-mouse-name = Cancer Mouse
+ghost-role-information-cancer-mouse-description = An Irradiated Mouse, spread your affliction and seek food
+
 ghost-role-information-mothroach-name = Mothroach
 ghost-role-information-mothroach-description = A cute but mischievous mothroach.
 
@@ -40,6 +43,9 @@ ghost-role-information-moproach-description = A cute mothroach with more cute mo
 
 ghost-role-information-snail-name = Snail
 ghost-role-information-snail-description = A little snail who doesn't mind a bit of space. Just stay on grid!
+
+ghost-role-information-smite-snail-name = Divine Snail
+ghost-role-information-smite-snail-description = A little snail who doesn't mind a bit of space and can call down the wrath of god.
 
 ghost-role-information-snailspeed-name = Snail
 ghost-role-information-snailspeed-description = A little snail with snailborn thrusters.
