@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: Unkn0wnGh0st333
-  changes:
-  - message: Knuckle Dusters have arrived to Space Station 14. QM can now rule cargo
-      with a golden-covered fist!
-    type: Add
-  id: 8411
-  time: '2025-05-03T04:18:08.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/33470
 - author: Errant
   changes:
   - message: Visiting Command and Security ghostroles, as well as some other rare
@@ -3948,3 +3940,10 @@
   id: 8922
   time: '2025-09-04T11:17:52.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/39975
+- author: VoidMeticulous
+  changes:
+  - message: Scurret petting rate lowered to once per 2.25 seconds
+    type: Tweak
+  id: 8923
+  time: '2025-09-04T15:41:45.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/40097

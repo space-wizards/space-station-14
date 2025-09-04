@@ -25,6 +25,12 @@ public static class ServerPackaging
         new PlatformReg("freebsd-x64", "FreeBSD", false),
     };
 
+    private static IReadOnlySet<string> ServerContentIgnoresResources { get; } = new HashSet<string>
+    {
+        "ServerInfo",
+        "Changelog",
+    };
+
     private static List<string> PlatformRids => Platforms
         .Select(o => o.Rid)
         .ToList();
@@ -214,7 +220,7 @@ public static class ServerPackaging
         await RobustServerPackaging.WriteServerResources(
             contentDir,
             inputPassResources,
-            SharedPackaging.AdditionalIgnoredResources,
+            ServerContentIgnoresResources.Concat(SharedPackaging.AdditionalIgnoredResources).ToHashSet(),
             cancel);
 
         if (hybridAcz)
