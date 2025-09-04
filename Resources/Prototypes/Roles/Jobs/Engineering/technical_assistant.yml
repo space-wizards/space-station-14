@@ -12,7 +12,7 @@
       inverted: true # stop playing intern if you're good at engineering!
   startingGear: TechnicalAssistantGear
   icon: "JobIconTechnicalAssistant"
-  whitelist: true
+  whitelisted: true
   supervisors: job-supervisors-engineering
   canBeAntag: false
   access:

@@ -5,7 +5,7 @@
   playTimeTracker: JobZookeeper
   startingGear: ZookeeperGear
   icon: "JobIconZookeeper"
-  whitelist: true
+  whitelisted: true
   supervisors: job-supervisors-hop
   access:
   - Service

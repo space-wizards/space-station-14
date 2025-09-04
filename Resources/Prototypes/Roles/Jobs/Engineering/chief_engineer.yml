@@ -16,6 +16,7 @@
   weight: 10
   startingGear: ChiefEngineerGear
   icon: "JobIconChiefEngineer"
+  whitelisted: true
   supervisors: job-supervisors-captain
   canBeAntag: false
   access:

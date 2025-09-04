@@ -22,7 +22,7 @@
   weight: 20
   startingGear: HoPGear
   icon: "JobIconHeadOfPersonnel"
-  whitedlisted: true
+  whitelisted: true
   joinNotifyCrew: true
   supervisors: job-supervisors-captain
   canBeAntag: false
