@@ -13181,5 +13181,13 @@ Entries:
   id: 143300
   time: '2025-09-04T01:20:43.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/1433
+- author: wayiscool
+  changes:
+  - message: Various floor tiling and lighting changes, extra decals for detailing,
+      and minor room furniture layout changes.
+    type: Tweak
+  id: 147400
+  time: '2025-09-04T22:00:32.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1474
 Order: -1
 
