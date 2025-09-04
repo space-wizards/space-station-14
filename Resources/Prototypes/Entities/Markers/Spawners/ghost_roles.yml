@@ -1,3 +1,7 @@
+# The mind roles specified here will be overwritten by the actual entities' GhostRoleComponent when they spawn
+# But the mind roles specified here are the ones checked for role bans when taking a ghost role!
+# TODO make this simpler
+
 - type: entity
   abstract: true
   parent: MarkerBase
@@ -19,6 +23,7 @@
     name: ghost-role-information-rat-king-name
     description: ghost-role-information-rat-king-description
     rules: ghost-role-information-antagonist-rules
+    job: GhostRoleProtected # This mob can speak.
     mindRoles:
     - MindRoleGhostRoleSoloAntagonist
     raffle:
@@ -88,7 +93,7 @@
   - type: GhostRole
     rules: ghost-role-information-rules-default-team-antagonist
     mindRoles:
-    - MindRoleGhostRoleTeamAntagonist
+    - MindRoleNukeops
     raffle:
       settings: default
   - type: GhostRoleMobSpawner
@@ -128,7 +133,7 @@
     description: roles-antag-nuclear-operative-commander-objective
     rules: ghost-role-information-rules-default-team-antagonist
     mindRoles:
-    - MindRoleGhostRoleTeamAntagonist
+    - MindRoleNukeopsCommander
 
 - type: entity
   categories: [ HideSpawnMenu, Spawner ]
@@ -140,7 +145,7 @@
     description: roles-antag-nuclear-operative-agent-objective
     rules: ghost-role-information-rules-default-team-antagonist
     mindRoles:
-    - MindRoleGhostRoleTeamAntagonist
+    - MindRoleNukeopsMedic
 
 - type: entity
   categories: [ HideSpawnMenu, Spawner ]
@@ -152,7 +157,7 @@
     description: roles-antag-nuclear-operative-objective
     rules: ghost-role-information-rules-default-team-antagonist
     mindRoles:
-    - MindRoleGhostRoleTeamAntagonist
+    - MindRoleNukeops
 
 - type: entity
   categories: [ HideSpawnMenu, Spawner ]
@@ -164,7 +169,8 @@
     description: ghost-role-information-space-dragon-description
     rules: ghost-role-information-space-dragon-rules
     mindRoles:
-    - MindRoleGhostRoleTeamAntagonist
+    - MindRoleDragon
+    job: GhostRoleProtected # This mob can speak.
   - type: Sprite
     layers:
     - state: green
@@ -181,7 +187,8 @@
     description: ghost-role-information-space-ninja-description
     rules: ghost-role-information-antagonist-rules
     mindRoles:
-    - MindRoleGhostRoleSoloAntagonist
+    - MindRoleNinja
+    job: GhostRoleProtected # This mob can speak.
     raffle:
       settings: default
   - type: Sprite
@@ -201,7 +208,8 @@
     description: ghost-role-information-paradox-clone-description
     rules: ghost-role-information-antagonist-rules
     mindRoles:
-    - MindRoleGhostRoleSoloAntagonist
+    - MindRoleParadoxClone
+    job: GhostRoleProtected # This mob can speak.
     raffle:
       settings: default
   - type: Sprite
@@ -220,6 +228,7 @@
     name: ghost-role-information-derelict-engineering-cyborg-name
     description: ghost-role-information-derelict-engineering-cyborg-description
     rules: ghost-role-information-silicon-rules
+    job: GhostRoleProtected # This mob can speak.
     raffle:
       settings: default
 
@@ -232,8 +241,11 @@
     name: ghost-role-information-derelict-cyborg-name
     description: ghost-role-information-derelict-cyborg-description
     rules: ghost-role-information-silicon-rules
+    mindRoles:
+    - MindRoleSubvertedSilicon
     raffle:
       settings: default
+    job: GhostRoleProtected # This mob can speak.
   - type: Sprite
     sprite: Markers/jobs.rsi
     layers:
@@ -250,6 +262,7 @@
     name: ghost-role-information-derelict-janitor-cyborg-name
     description: ghost-role-information-derelict-janitor-cyborg-description
     rules: ghost-role-information-silicon-rules
+    job: GhostRoleProtected # This mob can speak.
     raffle:
       settings: default
 
@@ -262,6 +275,7 @@
     name: ghost-role-information-derelict-medical-cyborg-name
     description: ghost-role-information-derelict-medical-cyborg-description
     rules: ghost-role-information-silicon-rules
+    job: GhostRoleProtected # This mob can speak.
     raffle:
       settings: default
 
@@ -286,6 +300,7 @@
     name: ghost-role-information-derelict-syndicate-assault-cyborg-name
     description: ghost-role-information-derelict-syndicate-assault-cyborg-description
     rules: ghost-role-information-silicon-rules
+    job: GhostRoleProtected # This mob can speak.
     raffle:
       settings: default
 
@@ -300,7 +315,7 @@
     name: ghost-role-information-wizard-name
     description: ghost-role-information-wizard-desc
     mindRoles:
-    - MindRoleGhostRoleSoloAntagonist
+    - MindRoleWizard
     raffle:
       settings: default
   - type: Sprite

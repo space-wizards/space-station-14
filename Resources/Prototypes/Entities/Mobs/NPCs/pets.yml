@@ -870,6 +870,7 @@
     name: ghost-role-information-punpun-name
     description: ghost-role-information-punpun-description
     rules: ghost-role-information-nonantagonist-rules
+    job: GhostRoleProtected # This mob can speak and has a hand.
   - type: GhostTakeoverAvailable
   - type: Butcherable
     butcheringType: Spike

@@ -362,6 +362,7 @@
         settings: default
       mindRoles:
       - MindRoleGhostRoleFreeAgent
+      job: GhostRoleProtected # This mob can speak.
     - type: GhostTakeoverAvailable
 
 - type: entity
