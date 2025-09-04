@@ -33,6 +33,7 @@
   result: Dropper
   completetime: .8
   materials:
+    Glass: 50
     Plastic: 50
 
 - type: latheRecipe
