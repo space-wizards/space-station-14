@@ -262,7 +262,7 @@
     Squawk:
       collection: ResomiSquawk
     Crying:
-      collection: MaleCry
+      path: /Audio/_Starlight/Voice/Avali/avali_cry.ogg
     Honk:
       collection: BikeHorn
     Whistle:
@@ -312,7 +312,7 @@
     Squawk:
       collection: ResomiSquawk
     Crying:
-      collection: FemaleCry
+      path: /Audio/_Starlight/Voice/Avali/avali_cry.ogg
     Honk:
       collection: BikeHorn
     Whistle:
