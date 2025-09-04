@@ -8,6 +8,7 @@ using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Damage;
 using Content.Shared.Database;
 using Content.Shared.DoAfter;
+using Content.Shared.Forensics;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Mobs.Systems;
 using Content.Shared.Popups;
@@ -95,6 +96,10 @@ public sealed class VampireFeedSystem : EntitySystem
             ent.Owner,
             ent.Owner,
             PopupType.MediumCaution);
+
+        var ev = new TransferDnaEvent { Donor = target, Recipient = ent.Owner };
+        RaiseLocalEvent(target, ref ev);
+
 
         // Run OnFeedDoafter, passing the necessary args
         _doAfterSystem.TryStartDoAfter(new DoAfterArgs(EntityManager, ent, ent.Comp.Delay, new VampireFeedDoAfterEvent(), ent, target: target, used: ent)
