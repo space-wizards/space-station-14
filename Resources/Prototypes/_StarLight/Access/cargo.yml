@@ -1,3 +1,7 @@
 ﻿- type: accessLevel
+  id: SalvageLead
+  name: id-card-access-level-salvagelead
+
+- type: accessLevel
   id: Mining
   name: id-card-access-level-mining

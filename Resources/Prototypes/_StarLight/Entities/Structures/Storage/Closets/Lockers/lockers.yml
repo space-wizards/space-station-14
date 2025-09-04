@@ -86,7 +86,7 @@
       stateDoorOpen: salvagelead_open
       stateDoorClosed: salvagelead_door
     - type: AccessReader
-      access: [["Salvage"]]
+      access: [["SalvageLead"]]
 
 # Salvage Specialist (regular) is in wizden files
 # Salvage Specialist (Large)

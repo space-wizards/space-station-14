@@ -14,6 +14,7 @@
   access:
   - Cargo
   - Salvage
+  - SalvageLead
   - Maintenance
   - External
   special:

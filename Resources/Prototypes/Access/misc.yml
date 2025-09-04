@@ -39,6 +39,7 @@
   - GenpopEnter
   - GenpopLeave
   - Mining # Starlight
+  - SalvageLead # Starlight
 
 - type: accessGroup
   id: General

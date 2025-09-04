@@ -4,4 +4,5 @@ id-card-access-level-blueshield = BlueShield
 
 id-card-access-level-brigmedic = Brigmedic
 
+id-card-access-level-salvagelead = Salvage Lead
 id-card-access-level-mining = Mining
