@@ -1,14 +1,4 @@
 ﻿Entries:
-- author: Radezolid
-  changes:
-  - message: Fixed departmental maintenance airlocks not using it's wire layout.
-    type: Fix
-  - message: Command maintenance airlocks now have proper security like their regular
-      counterparts.
-    type: Tweak
-  id: 8413
-  time: '2025-05-03T15:07:57.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/36735
 - author: youtissoum
   changes:
   - message: Skeletons will no longer spawn inside of folded body bags.
@@ -3947,3 +3937,11 @@
   id: 8924
   time: '2025-09-04T19:11:04.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/37585
+- author: whatston3
+  changes:
+  - message: Lathe UIs are now way smoother when printing mass amounts of fast-printing
+      items.
+    type: Fix
+  id: 8925
+  time: '2025-09-04T19:37:15.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/39886
