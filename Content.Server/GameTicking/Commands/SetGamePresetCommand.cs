@@ -63,7 +63,7 @@ namespace Content.Server.GameTicking.Commands
             {
                 1 => CompletionResult.FromHintOptions(CompletionHelper.PrototypeIDs<GamePresetPrototype>(),
                 "<id>"),
-
+                2 => CompletionResult.FromHint(Loc.GetString("set-game-preset-command-hint-2")),
                 3 => CompletionResult.FromHintOptions(CompletionHelper.PrototypeIDs<GamePresetPrototype>(),
                 Loc.GetString("set-game-preset-command-hint-3")),
 
