@@ -1391,22 +1391,6 @@ entities:
     - type: Transform
       pos: -0.48522186,7.0128937
       parent: 1
-    - type: HandheldLight
-      toggleActionEntity: 3
-    - type: ContainerContainer
-      containers:
-        cell_slot: !type:ContainerSlot
-          showEnts: False
-          occludes: True
-          ent: null
-        actions: !type:Container
-          showEnts: False
-          occludes: True
-          ents:
-          - 3
-    - type: Physics
-      canCollide: True
-    - type: ActionsContainer
 - proto: LockableButtonCargo
   entities:
   - uid: 181

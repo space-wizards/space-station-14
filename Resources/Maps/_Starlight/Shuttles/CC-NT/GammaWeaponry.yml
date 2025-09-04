@@ -691,12 +691,6 @@ entities:
       nextSound: -124.7240603
     - type: Physics
       canCollide: False
-    - type: ActionsContainer
-    - type: ContainerContainer
-      containers:
-        actions: !type:Container
-          ents:
-          - 40
   - uid: 44
     mapInit: true
     paused: true
@@ -713,12 +707,6 @@ entities:
       nextSound: -124.8630021
     - type: Physics
       canCollide: False
-    - type: ActionsContainer
-    - type: ContainerContainer
-      containers:
-        actions: !type:Container
-          ents:
-          - 81
   - uid: 86
     mapInit: true
     paused: true
@@ -735,12 +723,6 @@ entities:
       nextSound: -126.2885337
     - type: Physics
       canCollide: False
-    - type: ActionsContainer
-    - type: ContainerContainer
-      containers:
-        actions: !type:Container
-          ents:
-          - 87
   - uid: 96
     mapInit: true
     paused: true
@@ -757,12 +739,6 @@ entities:
       nextSound: -126.4153074
     - type: Physics
       canCollide: False
-    - type: ActionsContainer
-    - type: ContainerContainer
-      containers:
-        actions: !type:Container
-          ents:
-          - 97
 - proto: GeneratorBasic15kW
   entities:
   - uid: 34

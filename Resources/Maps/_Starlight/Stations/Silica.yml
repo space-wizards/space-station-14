@@ -75858,12 +75858,6 @@ entities:
       inSlot: suitstorage
     - type: Physics
       canCollide: False
-    - type: ActionsContainer
-    - type: ContainerContainer
-      containers:
-        actions: !type:Container
-          ents:
-          - 6
   - uid: 21855
     components:
     - type: Transform
@@ -123560,16 +123554,6 @@ entities:
     components:
     - type: Transform
       parent: 18466
-    - type: GasTank
-      toggleActionEntity: 15788
-    - type: Physics
-      canCollide: False
-    - type: ActionsContainer
-    - type: ContainerContainer
-      containers:
-        actions: !type:Container
-          ents:
-          - 15788
     - type: InsideEntityStorage
   - uid: 15790
     components:

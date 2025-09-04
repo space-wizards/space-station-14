@@ -53180,20 +53180,6 @@ entities:
     - type: Transform
       pos: 56.9357,2.9133167
       parent: 2
-    - type: HandheldLight
-      toggleActionEntity: 17
-    - type: ContainerContainer
-      containers:
-        cell_slot: !type:ContainerSlot
-          showEnts: False
-          occludes: True
-          ent: null
-        actions: !type:Container
-          showEnts: False
-          occludes: True
-          ents:
-          - 17
-    - type: ActionsContainer
   - uid: 7662
     components:
     - type: Transform
@@ -104172,27 +104158,11 @@ entities:
     - type: Transform
       pos: 5.254054,-33.25772
       parent: 2
-    - type: Blocking
-      blockingToggleActionEntity: 5
-    - type: ActionsContainer
-    - type: ContainerContainer
-      containers:
-        actions: !type:Container
-          ents:
-          - 5
   - uid: 8
     components:
     - type: Transform
       pos: 5.222804,-33.429596
       parent: 2
-    - type: Blocking
-      blockingToggleActionEntity: 9
-    - type: ActionsContainer
-    - type: ContainerContainer
-      containers:
-        actions: !type:Container
-          ents:
-          - 9
 - proto: RiotLaserShield
   entities:
   - uid: 12
@@ -104200,27 +104170,11 @@ entities:
     - type: Transform
       pos: 5.769679,-33.429596
       parent: 2
-    - type: Blocking
-      blockingToggleActionEntity: 13
-    - type: ActionsContainer
-    - type: ContainerContainer
-      containers:
-        actions: !type:Container
-          ents:
-          - 13
   - uid: 14
     components:
     - type: Transform
       pos: 5.7540674,-33.214645
       parent: 2
-    - type: Blocking
-      blockingToggleActionEntity: 15
-    - type: ActionsContainer
-    - type: ContainerContainer
-      containers:
-        actions: !type:Container
-          ents:
-          - 15
 - proto: RiotShield
   entities:
   - uid: 6
@@ -104228,27 +104182,11 @@ entities:
     - type: Transform
       pos: 5.488429,-33.41397
       parent: 2
-    - type: Blocking
-      blockingToggleActionEntity: 7
-    - type: ActionsContainer
-    - type: ContainerContainer
-      containers:
-        actions: !type:Container
-          ents:
-          - 7
   - uid: 10
     components:
     - type: Transform
       pos: 5.532593,-33.175583
       parent: 2
-    - type: Blocking
-      blockingToggleActionEntity: 11
-    - type: ActionsContainer
-    - type: ContainerContainer
-      containers:
-        actions: !type:Container
-          ents:
-          - 11
 - proto: RobocopCircuitBoard
   entities:
   - uid: 14404

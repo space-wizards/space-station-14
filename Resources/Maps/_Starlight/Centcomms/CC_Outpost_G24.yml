@@ -230,6 +230,8 @@ entities:
       bodyType: Dynamic
     - type: Fixtures
       fixtures: {}
+    - type: BecomesStation
+      id: centcomm
     - type: OccluderTree
     - type: SpreaderGrid
     - type: Shuttle

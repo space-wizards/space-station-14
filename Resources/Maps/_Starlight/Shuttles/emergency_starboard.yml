@@ -1,6 +1,11 @@
 meta:
   format: 6
   postmapinit: false
+maps: []
+grids:
+- 2
+orphans:
+- 2
 tilemap:
   0: Space
   1: FloorBar
@@ -30,7 +35,6 @@ entities:
       name: NT Evac Starboard
     - type: Transform
       pos: 0.06253052,0.58707
-      parent: 1
     - type: MapGrid
       chunks:
         0,0:

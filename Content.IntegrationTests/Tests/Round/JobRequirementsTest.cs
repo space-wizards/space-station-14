@@ -91,7 +91,7 @@ public sealed class JobRequirementsTest
                 - type: StationJobs
                   availableJobs:
                     SeniorCitizen: [ -1, -1 ]
-                    Passenger: [ -1, -1 ]
+                    Assistant: [ -1, -1 ]
                     Twenties: [ -1, -1 ]
                     Wehngineer: [ -1, -1 ]
                     FreezerHead: [ -1, -1 ]
@@ -254,7 +254,7 @@ public sealed class JobRequirementsTest
         var priorities = new Dictionary<ProtoId<JobPrototype>, JobPriority>
         {
             { wantedJob, JobPriority.High },
-            { "Passenger", JobPriority.Low },
+            { "Assistant", JobPriority.Low },
         };
 
         await pair.Client.WaitAssertion(() =>

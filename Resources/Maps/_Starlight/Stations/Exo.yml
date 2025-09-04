@@ -44481,20 +44481,6 @@ entities:
     - type: Transform
       pos: 9.3677225,-84.24618
       parent: 2
-    - type: HandheldLight
-      toggleActionEntity: 38
-    - type: ContainerContainer
-      containers:
-        cell_slot: !type:ContainerSlot
-          showEnts: False
-          occludes: True
-          ent: null
-        actions: !type:Container
-          showEnts: False
-          occludes: True
-          ents:
-          - 38
-    - type: ActionsContainer
 - proto: ClothingHeadHatHardhatYellowDark
   entities:
   - uid: 40
@@ -92475,17 +92461,6 @@ entities:
     - type: Transform
       pos: 67.341934,-35.365723
       parent: 2
-    - type: GasTank
-      toggleActionEntity: 27
-    - type: Jetpack
-      toggleActionEntity: 29
-    - type: ActionsContainer
-    - type: ContainerContainer
-      containers:
-        actions: !type:Container
-          ents:
-          - 29
-          - 27
   - uid: 12945
     components:
     - type: Transform
@@ -92725,22 +92700,6 @@ entities:
     - type: Transform
       pos: 53.538273,-56.19024
       parent: 2
-    - type: HandheldLight
-      toggleActionEntity: 43
-    - type: ContainerContainer
-      containers:
-        cell_slot: !type:ContainerSlot
-          showEnts: False
-          occludes: True
-          ent: null
-        actions: !type:Container
-          showEnts: False
-          occludes: True
-          ents:
-          - 43
-    - type: Physics
-      canCollide: True
-    - type: ActionsContainer
 - proto: Lantern
   entities:
   - uid: 44
@@ -95274,14 +95233,6 @@ entities:
     - type: Transform
       pos: 46.344013,-75.307045
       parent: 2
-    - type: GasTank
-      toggleActionEntity: 10
-    - type: ActionsContainer
-    - type: ContainerContainer
-      containers:
-        actions: !type:Container
-          ents:
-          - 10
   - uid: 31
     components:
     - type: Transform
@@ -103887,27 +103838,11 @@ entities:
     - type: Transform
       pos: 68.51489,-32.324493
       parent: 2
-    - type: Blocking
-      blockingToggleActionEntity: 6
-    - type: ActionsContainer
-    - type: ContainerContainer
-      containers:
-        actions: !type:Container
-          ents:
-          - 6
   - uid: 7
     components:
     - type: Transform
       pos: 68.75447,-32.376614
       parent: 2
-    - type: Blocking
-      blockingToggleActionEntity: 8
-    - type: ActionsContainer
-    - type: ContainerContainer
-      containers:
-        actions: !type:Container
-          ents:
-          - 8
 - proto: RobocopCircuitBoard
   entities:
   - uid: 14840

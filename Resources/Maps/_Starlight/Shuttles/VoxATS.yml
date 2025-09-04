@@ -6291,14 +6291,6 @@ entities:
     - type: Transform
       pos: 4.5012116,3.9218264
       parent: 2
-    - type: GasTank
-      toggleActionEntity: 1041
-    - type: ActionsContainer
-    - type: ContainerContainer
-      containers:
-        actions: !type:Container
-          ents:
-          - 1041
 - proto: DrinkBeerBottleFull
   entities:
   - uid: 641

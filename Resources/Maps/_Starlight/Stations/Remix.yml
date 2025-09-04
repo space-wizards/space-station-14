@@ -64857,8 +64857,6 @@ entities:
     - type: Transform
       pos: -15.5,9.5
       parent: 2
-    - type: PowerSupplier
-      supplyRate: 30000
 - proto: GlassBoxLaserFilled
   entities:
   - uid: 8496

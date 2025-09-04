@@ -1076,22 +1076,6 @@ entities:
     components:
     - type: Transform
       parent: 216
-    - type: HandheldLight
-      toggleActionEntity: 221
-    - type: ContainerContainer
-      containers:
-        cell_slot: !type:ContainerSlot
-          showEnts: False
-          occludes: True
-          ent: null
-        actions: !type:Container
-          showEnts: False
-          occludes: True
-          ents:
-          - 221
-    - type: Physics
-      canCollide: False
-    - type: ActionsContainer
     - type: InsideEntityStorage
   - uid: 232
     components:

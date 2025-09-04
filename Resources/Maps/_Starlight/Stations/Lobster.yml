@@ -8108,32 +8108,6 @@ entities:
     - type: Transform
       pos: 37.44573,4.5264144
       parent: 2
-- proto: ActionToggleInternals
-  entities:
-  - uid: 7
-    components:
-    - type: Transform
-      parent: 6
-  - uid: 10
-    components:
-    - type: Transform
-      parent: 9
-- proto: ActionToggleJetpack
-  entities:
-  - uid: 8
-    components:
-    - type: Transform
-      parent: 6
-- proto: ActionToggleLight
-  entities:
-  - uid: 18
-    components:
-    - type: Transform
-      parent: 17
-  - uid: 20
-    components:
-    - type: Transform
-      parent: 19
 - proto: AirAlarm
   entities:
   - uid: 21
@@ -73843,19 +73817,6 @@ entities:
     components:
     - type: Transform
       parent: 5
-    - type: GasTank
-      toggleActionEntity: 10
-    - type: Clothing
-      inSlotFlag: SUITSTORAGE
-      inSlot: suitstorage
-    - type: Physics
-      canCollide: False
-    - type: ActionsContainer
-    - type: ContainerContainer
-      containers:
-        actions: !type:Container
-          ents:
-          - 10
 - proto: Dresser
   entities:
   - uid: 12257
@@ -77100,20 +77061,6 @@ entities:
     - type: Transform
       pos: 80.56627,-48.400932
       parent: 2
-    - type: HandheldLight
-      toggleActionEntity: 20
-    - type: ContainerContainer
-      containers:
-        cell_slot: !type:ContainerSlot
-          showEnts: False
-          occludes: True
-          ent: null
-        actions: !type:Container
-          showEnts: False
-          occludes: True
-          ents:
-          - 20
-    - type: ActionsContainer
 - proto: FlippoLighter
   entities:
   - uid: 12674
@@ -107494,22 +107441,6 @@ entities:
     components:
     - type: Transform
       parent: 5
-    - type: GasTank
-      toggleActionEntity: 7
-    - type: Clothing
-      inSlotFlag: BACK
-      inSlot: back
-    - type: Jetpack
-      toggleActionEntity: 8
-    - type: Physics
-      canCollide: False
-    - type: ActionsContainer
-    - type: ContainerContainer
-      containers:
-        actions: !type:Container
-          ents:
-          - 8
-          - 7
 - proto: JetpackMiniFilled
   entities:
   - uid: 16630
@@ -107814,22 +107745,6 @@ entities:
     - type: Transform
       pos: -39.966583,32.73777
       parent: 2
-    - type: HandheldLight
-      toggleActionEntity: 18
-    - type: ContainerContainer
-      containers:
-        cell_slot: !type:ContainerSlot
-          showEnts: False
-          occludes: True
-          ent: null
-        actions: !type:Container
-          showEnts: False
-          occludes: True
-          ents:
-          - 18
-    - type: Physics
-      canCollide: True
-    - type: ActionsContainer
   - uid: 16682
     components:
     - type: Transform

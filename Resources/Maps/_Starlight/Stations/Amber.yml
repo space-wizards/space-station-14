@@ -55,9 +55,7 @@ entities:
     - type: Transform
     - type: Map
       mapPaused: True
-    - type: PhysicsMap
     - type: GridTree
-    - type: MovedGrids
     - type: Broadphase
     - type: OccluderTree
     - type: LoadedMap
@@ -16419,14 +16417,6 @@ entities:
     - type: Transform
       pos: -31.51879,-61.20825
       parent: 2
-    - type: GasTank
-      toggleActionEntity: 8
-    - type: ActionsContainer
-    - type: ContainerContainer
-      containers:
-        actions: !type:Container
-          ents:
-          - 8
   - uid: 580
     components:
     - type: Transform
@@ -62101,14 +62091,6 @@ entities:
     - type: Transform
       pos: -35.623657,-0.3498057
       parent: 2
-    - type: GasTank
-      toggleActionEntity: 4
-    - type: ActionsContainer
-    - type: ContainerContainer
-      containers:
-        actions: !type:Container
-          ents:
-          - 4
 - proto: EmergencyOxygenTankFilled
   entities:
   - uid: 5
@@ -62116,14 +62098,6 @@ entities:
     - type: Transform
       pos: -35.35269,-0.4644692
       parent: 2
-    - type: GasTank
-      toggleActionEntity: 6
-    - type: ActionsContainer
-    - type: ContainerContainer
-      containers:
-        actions: !type:Container
-          ents:
-          - 6
 - proto: EmergencyRollerBed
   entities:
   - uid: 9099
@@ -65137,77 +65111,21 @@ entities:
     - type: Transform
       pos: -32.516693,-57.438038
       parent: 2
-    - type: HandheldLight
-      toggleActionEntity: 26
-    - type: ContainerContainer
-      containers:
-        cell_slot: !type:ContainerSlot
-          showEnts: False
-          occludes: True
-          ent: null
-        actions: !type:Container
-          showEnts: False
-          occludes: True
-          ents:
-          - 26
-    - type: ActionsContainer
   - uid: 27
     components:
     - type: Transform
       pos: -32.77724,-57.239983
       parent: 2
-    - type: HandheldLight
-      toggleActionEntity: 28
-    - type: ContainerContainer
-      containers:
-        cell_slot: !type:ContainerSlot
-          showEnts: False
-          occludes: True
-          ent: null
-        actions: !type:Container
-          showEnts: False
-          occludes: True
-          ents:
-          - 28
-    - type: ActionsContainer
   - uid: 29
     components:
     - type: Transform
       pos: 27.562937,-29.514505
       parent: 2
-    - type: HandheldLight
-      toggleActionEntity: 30
-    - type: ContainerContainer
-      containers:
-        cell_slot: !type:ContainerSlot
-          showEnts: False
-          occludes: True
-          ent: null
-        actions: !type:Container
-          showEnts: False
-          occludes: True
-          ents:
-          - 30
-    - type: ActionsContainer
   - uid: 31
     components:
     - type: Transform
       pos: 45.4472,-50.26539
       parent: 2
-    - type: HandheldLight
-      toggleActionEntity: 32
-    - type: ContainerContainer
-      containers:
-        cell_slot: !type:ContainerSlot
-          showEnts: False
-          occludes: True
-          ent: null
-        actions: !type:Container
-          showEnts: False
-          occludes: True
-          ents:
-          - 32
-    - type: ActionsContainer
   - uid: 9413
     components:
     - type: Transform
@@ -65250,20 +65168,6 @@ entities:
     - type: Transform
       pos: -26.740911,15.543136
       parent: 2
-    - type: HandheldLight
-      toggleActionEntity: 16
-    - type: ContainerContainer
-      containers:
-        cell_slot: !type:ContainerSlot
-          showEnts: False
-          occludes: True
-          ent: null
-        actions: !type:Container
-          showEnts: False
-          occludes: True
-          ents:
-          - 16
-    - type: ActionsContainer
   - uid: 9420
     components:
     - type: Transform
@@ -98181,33 +98085,11 @@ entities:
     - type: Transform
       pos: -3.7147171,-52.21066
       parent: 2
-    - type: GasTank
-      toggleActionEntity: 10
-    - type: Jetpack
-      toggleActionEntity: 11
-    - type: ActionsContainer
-    - type: ContainerContainer
-      containers:
-        actions: !type:Container
-          ents:
-          - 11
-          - 10
   - uid: 12
     components:
     - type: Transform
       pos: -3.495859,-52.32532
       parent: 2
-    - type: GasTank
-      toggleActionEntity: 13
-    - type: Jetpack
-      toggleActionEntity: 14
-    - type: ActionsContainer
-    - type: ContainerContainer
-      containers:
-        actions: !type:Container
-          ents:
-          - 14
-          - 13
 - proto: Jug
   entities:
   - uid: 13595
@@ -98305,43 +98187,11 @@ entities:
     - type: Transform
       pos: -0.55744004,-50.242683
       parent: 2
-    - type: HandheldLight
-      toggleActionEntity: 22
-    - type: ContainerContainer
-      containers:
-        cell_slot: !type:ContainerSlot
-          showEnts: False
-          occludes: True
-          ent: null
-        actions: !type:Container
-          showEnts: False
-          occludes: True
-          ents:
-          - 22
-    - type: Physics
-      canCollide: True
-    - type: ActionsContainer
   - uid: 23
     components:
     - type: Transform
       pos: 46.70643,-33.07726
       parent: 2
-    - type: HandheldLight
-      toggleActionEntity: 24
-    - type: ContainerContainer
-      containers:
-        cell_slot: !type:ContainerSlot
-          showEnts: False
-          occludes: True
-          ent: null
-        actions: !type:Container
-          showEnts: False
-          occludes: True
-          ents:
-          - 24
-    - type: Physics
-      canCollide: True
-    - type: ActionsContainer
   - uid: 13609
     components:
     - type: Transform
@@ -98362,39 +98212,11 @@ entities:
     - type: Transform
       pos: 36.56211,-3.2625933
       parent: 2
-    - type: HandheldLight
-      toggleActionEntity: 18
-    - type: ContainerContainer
-      containers:
-        actions: !type:Container
-          showEnts: False
-          occludes: True
-          ents:
-          - 18
-        cell_slot: !type:ContainerSlot
-          showEnts: False
-          occludes: True
-          ent: null
-    - type: ActionsContainer
   - uid: 19
     components:
     - type: Transform
       pos: 20.602448,-37.864635
       parent: 2
-    - type: HandheldLight
-      toggleActionEntity: 20
-    - type: ContainerContainer
-      containers:
-        actions: !type:Container
-          showEnts: False
-          occludes: True
-          ents:
-          - 20
-        cell_slot: !type:ContainerSlot
-          showEnts: False
-          occludes: True
-          ent: null
-    - type: ActionsContainer
   - uid: 13611
     components:
     - type: Transform

@@ -16,7 +16,6 @@ public sealed partial class CyberLimbSystem : EntitySystem
 {
     public void InitializeToggleable()
     {
-        base.Initialize();
         SubscribeLocalEvent<BodyComponent, LimbAttachedEvent<IWithAction>>(IWithActionAttached);
         SubscribeLocalEvent<BodyComponent, LimbRemovedEvent<IWithAction>>(IWithActionRemoved);
     }

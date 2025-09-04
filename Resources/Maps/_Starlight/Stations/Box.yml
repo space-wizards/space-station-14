@@ -62,9 +62,7 @@ entities:
     - type: Transform
     - type: Map
       mapPaused: True
-    - type: PhysicsMap
     - type: GridTree
-    - type: MovedGrids
     - type: Broadphase
     - type: OccluderTree
   - uid: 2
@@ -89229,24 +89227,6 @@ entities:
     - type: Transform
       pos: 49.481064,16.680466
       parent: 2
-    - type: HandheldLight
-      toggleActionEntity: 14
-    - type: ContainerContainer
-      containers:
-        cellslot_cell_container: !type:ContainerSlot
-          showEnts: False
-          occludes: True
-          ent: null
-        cell_slot: !type:ContainerSlot
-          showEnts: False
-          occludes: True
-          ent: null
-        actions: !type:Container
-          showEnts: False
-          occludes: True
-          ents:
-          - 14
-    - type: ActionsContainer
   - uid: 13937
     components:
     - type: Transform
@@ -139117,14 +139097,6 @@ entities:
     - type: Transform
       pos: 79.485985,-43.45112
       parent: 2
-    - type: GasTank
-      toggleActionEntity: 10
-    - type: ActionsContainer
-    - type: ContainerContainer
-      containers:
-        actions: !type:Container
-          ents:
-          - 10
 - proto: OxygenTankFilled
   entities:
   - uid: 11
@@ -139132,14 +139104,6 @@ entities:
     - type: Transform
       pos: 78.58031,-56.4234
       parent: 2
-    - type: GasTank
-      toggleActionEntity: 12
-    - type: ActionsContainer
-    - type: ContainerContainer
-      containers:
-        actions: !type:Container
-          ents:
-          - 12
   - uid: 19901
     components:
     - type: Transform

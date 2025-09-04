@@ -3833,12 +3833,6 @@ entities:
       toggleActionEntity: 5
     - type: Physics
       canCollide: False
-    - type: ActionsContainer
-    - type: ContainerContainer
-      containers:
-        actions: !type:Container
-          ents:
-          - 5
           - 6
           - 4
     - type: InsideEntityStorage

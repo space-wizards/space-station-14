@@ -103552,33 +103552,11 @@ entities:
     - type: Transform
       pos: -5.5322437,-42.114655
       parent: 2
-    - type: GasTank
-      toggleActionEntity: 27
-    - type: Jetpack
-      toggleActionEntity: 28
-    - type: ActionsContainer
-    - type: ContainerContainer
-      containers:
-        actions: !type:Container
-          ents:
-          - 28
-          - 27
   - uid: 29
     components:
     - type: Transform
       pos: -5.5634937,-42.427155
       parent: 2
-    - type: GasTank
-      toggleActionEntity: 30
-    - type: Jetpack
-      toggleActionEntity: 31
-    - type: ActionsContainer
-    - type: ContainerContainer
-      containers:
-        actions: !type:Container
-          ents:
-          - 31
-          - 30
   - uid: 15044
     components:
     - type: Transform
@@ -137132,12 +137110,6 @@ entities:
     - type: Transform
       pos: 60.431927,-11.441023
       parent: 2
-    - type: ActionsContainer
-    - type: ContainerContainer
-      containers:
-        actions: !type:Container
-          ents:
-          - 25
     missingComponents:
     - Item
     - Pullable

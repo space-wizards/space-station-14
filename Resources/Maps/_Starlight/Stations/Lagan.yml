@@ -137016,14 +137016,6 @@ entities:
     - type: Transform
       pos: 67.46928,5.5600743
       parent: 2
-    - type: GasTank
-      toggleActionEntity: 5
-    - type: ActionsContainer
-    - type: ContainerContainer
-      containers:
-        actions: !type:Container
-          ents:
-          - 5
   - uid: 20519
     components:
     - type: Transform
@@ -137339,16 +137331,6 @@ entities:
     components:
     - type: Transform
       parent: 12412
-    - type: GasTank
-      toggleActionEntity: 14780
-    - type: Physics
-      canCollide: False
-    - type: ActionsContainer
-    - type: ContainerContainer
-      containers:
-        actions: !type:Container
-          ents:
-          - 14780
     - type: InsideEntityStorage
   - uid: 12419
     components:

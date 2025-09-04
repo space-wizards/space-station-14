@@ -14380,8 +14380,6 @@ entities:
     - type: Transform
       pos: -23.5,-0.5
       parent: 2
-    - type: PowerSupplierComponent
-      maxSupply: 45000
   - uid: 2028
     components:
     - type: Transform

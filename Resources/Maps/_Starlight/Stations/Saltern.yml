@@ -57745,27 +57745,11 @@ entities:
     - type: Transform
       pos: 55.587463,8.4327
       parent: 31
-    - type: GasTank
-      toggleActionEntity: 10985
-    - type: ActionsContainer
-    - type: ContainerContainer
-      containers:
-        actions: !type:Container
-          ents:
-          - 10985
   - uid: 6881
     components:
     - type: Transform
       pos: 55.233295,8.4327
       parent: 31
-    - type: GasTank
-      toggleActionEntity: 11367
-    - type: ActionsContainer
-    - type: ContainerContainer
-      containers:
-        actions: !type:Container
-          ents:
-          - 11367
   - uid: 11326
     components:
     - type: Transform

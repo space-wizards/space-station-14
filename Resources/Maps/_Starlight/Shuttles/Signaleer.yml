@@ -3618,20 +3618,6 @@ entities:
     - type: Transform
       pos: 2.4201431,0.8171711
       parent: 16
-    - type: HandheldLight
-      toggleActionEntity: 944
-    - type: ContainerContainer
-      containers:
-        cell_slot: !type:ContainerSlot
-          showEnts: False
-          occludes: True
-          ent: null
-        actions: !type:Container
-          showEnts: False
-          occludes: True
-          ents:
-          - 944
-    - type: ActionsContainer
 - proto: FloorDrain
   entities:
   - uid: 954

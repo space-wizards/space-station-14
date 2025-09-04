@@ -33792,20 +33792,6 @@ entities:
     - type: Transform
       pos: -42.855858,-7.1805997
       parent: 4812
-    - type: HandheldLight
-      toggleActionEntity: 6594
-    - type: ContainerContainer
-      containers:
-        cell_slot: !type:ContainerSlot
-          showEnts: False
-          occludes: True
-          ent: null
-        actions: !type:Container
-          showEnts: False
-          occludes: True
-          ents:
-          - 6594
-    - type: ActionsContainer
 - proto: ClothingHeadHatOutlawHat
   entities:
   - uid: 9510
@@ -34080,12 +34066,6 @@ entities:
       parent: 4812
     - type: Stethoscope
       actionEntity: 917
-    - type: ActionsContainer
-    - type: ContainerContainer
-      containers:
-        actions: !type:Container
-          ents:
-          - 917
 - proto: ClothingNeckTieRed
   entities:
   - uid: 10922
@@ -39639,14 +39619,6 @@ entities:
     - type: Transform
       pos: -9.140223,-28.333141
       parent: 4812
-    - type: GasTank
-      toggleActionEntity: 11171
-    - type: ActionsContainer
-    - type: ContainerContainer
-      containers:
-        actions: !type:Container
-          ents:
-          - 11171
 - proto: DoubleEmergencyOxygenTankFilled
   entities:
   - uid: 13153
@@ -39654,14 +39626,6 @@ entities:
     - type: Transform
       pos: -8.796473,-28.364391
       parent: 4812
-    - type: GasTank
-      toggleActionEntity: 11172
-    - type: ActionsContainer
-    - type: ContainerContainer
-      containers:
-        actions: !type:Container
-          ents:
-          - 11172
 - proto: Dresser
   entities:
   - uid: 1254
@@ -42137,20 +42101,6 @@ entities:
     - type: Transform
       pos: -30.505053,10.627045
       parent: 4812
-    - type: HandheldLight
-      toggleActionEntity: 7927
-    - type: ContainerContainer
-      containers:
-        cell_slot: !type:ContainerSlot
-          showEnts: False
-          occludes: True
-          ent: null
-        actions: !type:Container
-          showEnts: False
-          occludes: True
-          ents:
-          - 7927
-    - type: ActionsContainer
 - proto: Floodlight
   entities:
   - uid: 14008
@@ -68141,22 +68091,6 @@ entities:
     - type: Transform
       pos: 24.580408,-19.166311
       parent: 4812
-    - type: HandheldLight
-      toggleActionEntity: 8638
-    - type: ContainerContainer
-      containers:
-        cell_slot: !type:ContainerSlot
-          showEnts: False
-          occludes: True
-          ent: null
-        actions: !type:Container
-          showEnts: False
-          occludes: True
-          ents:
-          - 8638
-    - type: Physics
-      canCollide: True
-    - type: ActionsContainer
   - uid: 1520
     components:
     - type: Transform
@@ -68243,26 +68177,6 @@ entities:
     - type: Transform
       pos: -4.4936132,-15.203495
       parent: 4812
-    - type: HandheldLight
-      toggleActionEntity: 8328
-    - type: ContainerContainer
-      containers:
-        cellslot_cell_container: !type:ContainerSlot
-          showEnts: False
-          occludes: True
-          ent: null
-        cell_slot: !type:ContainerSlot
-          showEnts: False
-          occludes: True
-          ent: null
-        actions: !type:Container
-          showEnts: False
-          occludes: True
-          ents:
-          - 8328
-    - type: Physics
-      canCollide: True
-    - type: ActionsContainer
   - uid: 7077
     components:
     - type: Transform
@@ -68298,26 +68212,6 @@ entities:
     - type: Transform
       pos: -28.458933,-5.183518
       parent: 4812
-    - type: HandheldLight
-      toggleActionEntity: 9825
-    - type: ContainerContainer
-      containers:
-        cellslot_cell_container: !type:ContainerSlot
-          showEnts: False
-          occludes: True
-          ent: null
-        cell_slot: !type:ContainerSlot
-          showEnts: False
-          occludes: True
-          ent: null
-        actions: !type:Container
-          showEnts: False
-          occludes: True
-          ents:
-          - 9825
-    - type: Physics
-      canCollide: True
-    - type: ActionsContainer
   - uid: 10811
     components:
     - type: Transform
