@@ -13086,5 +13086,76 @@ Entries:
   id: 151100
   time: '2025-09-01T23:32:31.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/1511
+- author: Happyrobot33
+  changes:
+  - message: Added the panic bunker information to the discord embeds.
+    type: Add
+  id: 151300
+  time: '2025-09-02T02:16:42.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1513
+- author: Happyrobot33
+  changes:
+  - message: Added understood tab to the language UI so you can know what languages
+      you can understand.
+    type: Add
+  id: 151200
+  time: '2025-09-02T02:17:08.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1512
+- author: DrSmugleaf
+  changes:
+  - message: Fixed the ChefVend restock crate, AutoDrobe restock crate, and clothing
+      restock crate selling for more than they are bought for.
+    type: Fix
+  id: 150400
+  time: '2025-09-02T04:44:53.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1504
+- author: DrSmugleaf
+  changes:
+  - message: Fixed assistant, mailman, mining specialist, magistrate, IAA, surgeon,
+      blueshield, nanotrasen representative, brigmedic, and roboticist not having
+      chameleon outfits.
+    type: Fix
+  id: 150401
+  time: '2025-09-02T04:44:53.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1504
+- author: DrSmugleaf
+  changes:
+  - message: Fixed forged sword parts and tidebreaker parts having incorrect construction
+      menu data.
+    type: Fix
+  id: 150402
+  time: '2025-09-02T04:44:53.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1504
+- author: DrSmugleaf
+  changes:
+  - message: Fixed security nonbreather and medical nonbreather survival boxes not
+      having a flare.
+    type: Fix
+  id: 150403
+  time: '2025-09-02T04:44:53.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1504
+- author: DrSmugleaf
+  changes:
+  - message: Fixed the LWAP safe, lr30's crate, lr30 magazine's crate, combat shotgun's
+      crate not having an allowed contraband department.
+    type: Fix
+  id: 150404
+  time: '2025-09-02T04:44:53.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1504
+- author: DrSmugleaf
+  changes:
+  - message: Fixed the Service and Thieves guidebooks  having an invalid entity id.
+    type: Fix
+  id: 150405
+  time: '2025-09-02T04:44:53.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1504
+- author: DrSmugleaf
+  changes:
+  - message: Fixed non-breather survival boxes having a second water bottle instead
+      of a flare.
+    type: Fix
+  id: 150406
+  time: '2025-09-02T04:44:53.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1504
 Order: -1
 

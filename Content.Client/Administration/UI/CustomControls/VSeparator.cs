@@ -9,17 +9,24 @@ public sealed class VSeparator : PanelContainer
 {
     private static readonly Color SeparatorColor = Color.FromHex("#3D4059");
 
+    private readonly StyleBoxFlat _styleBox;
+
+    public Color Color
+    {
+        get => _styleBox.BackgroundColor;
+        set => _styleBox.BackgroundColor = value;
+    }
+
     public VSeparator(Color color)
     {
         MinSize = new Vector2(2, 5);
 
-        AddChild(new PanelContainer
+        _styleBox = new StyleBoxFlat
         {
-            PanelOverride = new StyleBoxFlat
-            {
-                BackgroundColor = color
-            }
-        });
+            BackgroundColor = color,
+        };
+
+        AddChild(new PanelContainer { PanelOverride = _styleBox });
     }
 
     public VSeparator() : this(SeparatorColor) { }
