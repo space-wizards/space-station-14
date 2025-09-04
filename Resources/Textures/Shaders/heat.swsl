@@ -1,6 +1,9 @@
 ﻿uniform sampler2D SCREEN_TEXTURE;
 
-uniform lowp int N; // Number of frequencies to combine
+// Number of frequencies to combine, can't be a parameter/uniform else it causes problems in compatibility mode
+// I have no idea why
+const highp int N = 32;
+
 uniform highp float spatial_scale; // spatial scaling of modes, higher = fine turbulence, lower = coarse turbulence
 uniform highp float strength_scale; // distortion strength
 uniform highp float speed_scale; // scaling factor on the speed of the animation

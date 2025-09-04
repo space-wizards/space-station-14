@@ -121,7 +121,6 @@
   kind: source
   path: "/Textures/Shaders/heat.swsl"
   params:
-    N: 32
     spatial_scale: 1.0
     strength_scale: 1.0
     speed_scale: 1.0
