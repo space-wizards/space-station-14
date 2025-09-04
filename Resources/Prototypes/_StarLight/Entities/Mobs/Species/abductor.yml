@@ -9,6 +9,23 @@
   abstract: true
   components:
   #- type: Absorbable Starlight: Done on purpose so the abductors don't get absorbed.
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTypeTrigger
+        damageType: Heat
+        damage: 9000
+      behaviors:
+      - !type:SpawnEntitiesBehavior
+        spawnInContainer: true
+        spawn:
+          Ash:
+            min: 1
+            max: 1
+      - !type:BurnBodyBehavior { }
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MeatLaserImpact
   - type: Muted
   - type: HumanoidAppearance
     species: Abductor
