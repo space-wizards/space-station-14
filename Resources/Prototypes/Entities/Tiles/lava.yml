@@ -36,6 +36,8 @@
     state: full
   - type: IconSmooth
     key: floor
+    additionalKeys:
+    - walls
     base: lava
   - type: Physics
     bodyType: Static

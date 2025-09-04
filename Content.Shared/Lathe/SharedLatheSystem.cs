@@ -22,6 +22,7 @@ public abstract class SharedLatheSystem : EntitySystem
     [Dependency] private readonly EmagSystem _emag = default!;
 
     public readonly Dictionary<string, List<LatheRecipePrototype>> InverseRecipes = new();
+    public const int MaxItemsPerRequest = 10_000;
 
     public override void Initialize()
     {
@@ -32,6 +33,25 @@ public abstract class SharedLatheSystem : EntitySystem
         SubscribeLocalEvent<PrototypesReloadedEventArgs>(OnPrototypesReloaded);
 
         BuildInverseRecipeDictionary();
+    }
+
+    /// <summary>
+    /// Get the set of all recipes that a lathe could possibly ever create (e.g., if all techs were unlocked).
+    /// </summary>
+    public HashSet<ProtoId<LatheRecipePrototype>> GetAllPossibleRecipes(LatheComponent component)
+    {
+        var recipes = new HashSet<ProtoId<LatheRecipePrototype>>();
+        foreach (var pack in component.StaticPacks)
+        {
+            recipes.UnionWith(_proto.Index(pack).Recipes);
+        }
+
+        foreach (var pack in component.DynamicPacks)
+        {
+            recipes.UnionWith(_proto.Index(pack).Recipes);
+        }
+
+        return recipes;
     }
 
     /// <summary>
@@ -66,6 +86,8 @@ public abstract class SharedLatheSystem : EntitySystem
         if (!Resolve(uid, ref component))
             return false;
         if (!HasRecipe(uid, recipe, component))
+            return false;
+        if (amount <= 0)
             return false;
 
         foreach (var (material, needed) in recipe.Materials)

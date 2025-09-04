@@ -93,7 +93,7 @@
     disableWhenFirstOpened: true
     whitelist:
       components:
-        - Body
+        - MobState
   - type: LockVisuals
     stateLocked: cursed_door
     stateUnlocked: decursed_door
@@ -161,6 +161,7 @@
 
 - type: entity
   id: ProjectilePolyboltBase
+  abstract: true
   parent: BaseBullet
   categories: [ HideSpawnMenu ]
   components:
@@ -173,6 +174,10 @@
     damage:
       types:
         Poison: 5
+  - type: TriggerOnCollide
+    fixtureID: projectile
+  - type: PolymorphOnTrigger
+    targetUser: true
 
 - type: entity
   id: ProjectilePolyboltCarp
@@ -181,11 +186,12 @@
   description: Nooo, I don't wanna be fish!
   categories: [ HideSpawnMenu ]
   components:
-  - type: PolymorphOnCollide
+  - type: PolymorphOnTrigger
     polymorph: WizardForcedCarp
-    whitelist:
+  - type: WhitelistTriggerCondition
+    userWhitelist:
       components:
-      - Body
+      - MobState
 
 - type: entity
   id: ProjectilePolyboltMonkey
@@ -194,11 +200,12 @@
   description: Nooo, I don't wanna be monkey!
   categories: [ HideSpawnMenu ]
   components:
-  - type: PolymorphOnCollide
+  - type: PolymorphOnTrigger
     polymorph: WizardForcedMonkey
-    whitelist:
+  - type: WhitelistTriggerCondition
+    userWhitelist:
       components:
-      - Body
+      - MobState
 
 - type: entity
   id: ProjectilePolyboltDoor
@@ -212,9 +219,10 @@
     layers:
     - state: spell
       color: brown
-  - type: PolymorphOnCollide
+  - type: PolymorphOnTrigger
     polymorph: WizardWallDoor
-    whitelist:
+  - type: WhitelistTriggerCondition
+    userWhitelist:
       components:
       - Airlock
       - Firelock
@@ -262,11 +270,12 @@
   description: KnoH KnoH!
   categories: [ HideSpawnMenu ]
   components:
-  - type: PolymorphOnCollide
+  - type: PolymorphOnTrigger
     polymorph: WizardForcedCluwne
-    whitelist:
+  - type: WhitelistTriggerCondition
+    userWhitelist:
       components:
-      - Body
+      - MobState
 
 - type: entity
   id: ProjectileIcicle
@@ -291,8 +300,9 @@
   description: Nooo, I don't wanna be bread!
   categories: [ HideSpawnMenu ]
   components:
-  - type: PolymorphOnCollide
+  - type: PolymorphOnTrigger
     polymorph: BreadMorph
-    whitelist:
+  - type: WhitelistTriggerCondition
+    userWhitelist:
       components:
-      - Body
+      - MobState

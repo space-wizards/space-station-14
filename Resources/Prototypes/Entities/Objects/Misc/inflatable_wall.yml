@@ -31,9 +31,15 @@
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
   - type: DisassembleOnAltVerb
-    prototype: InflatableWallStack1
-    doAfter: 3
+    prototypeToSpawn: InflatableWallStack1
+    disassembleTime: 3
+  - type: InflatableSafeDisassembly
   - type: Airtight
+  - type: DeltaPressure
+    minPressure: 1000
+    minPressureDelta: 750
+    scalingType: Linear
+    scalingPower: 0.0005
   - type: Transform
     anchored: true
   placement:
@@ -79,7 +85,13 @@
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
   - type: DisassembleOnAltVerb
-    prototype: InflatableDoorStack1
-    doAfter: 3
+    prototypeToSpawn: InflatableDoorStack1
+    disassembleTime: 3
+  - type: InflatableSafeDisassembly
   - type: Occluder
     enabled: false
+  - type: DeltaPressure
+    minPressure: 1000
+    minPressureDelta: 750
+    scalingType: Linear
+    scalingPower: 0.0005

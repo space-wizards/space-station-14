@@ -18,7 +18,6 @@ public sealed partial class PlayerTabHeader : Control
         UsernameLabel.OnKeyBindDown += UsernameClicked;
         CharacterLabel.OnKeyBindDown += CharacterClicked;
         JobLabel.OnKeyBindDown += JobClicked;
-        AntagonistLabel.OnKeyBindDown += AntagonistClicked;
         RoleTypeLabel.OnKeyBindDown += RoleTypeClicked;
         PlaytimeLabel.OnKeyBindDown += PlaytimeClicked;
     }
@@ -30,7 +29,6 @@ public sealed partial class PlayerTabHeader : Control
             Header.Username => UsernameLabel,
             Header.Character => CharacterLabel,
             Header.Job => JobLabel,
-            Header.Antagonist => AntagonistLabel,
             Header.RoleType => RoleTypeLabel,
             Header.Playtime => PlaytimeLabel,
             _ => throw new ArgumentOutOfRangeException(nameof(header), header, null)
@@ -42,7 +40,6 @@ public sealed partial class PlayerTabHeader : Control
         UsernameLabel.Text = Loc.GetString("player-tab-username");
         CharacterLabel.Text = Loc.GetString("player-tab-character");
         JobLabel.Text = Loc.GetString("player-tab-job");
-        AntagonistLabel.Text = Loc.GetString("player-tab-antagonist");
         RoleTypeLabel.Text = Loc.GetString("player-tab-roletype");
         PlaytimeLabel.Text = Loc.GetString("player-tab-playtime");
     }
@@ -73,11 +70,6 @@ public sealed partial class PlayerTabHeader : Control
         HeaderClicked(args, Header.Job);
     }
 
-    private void AntagonistClicked(GUIBoundKeyEventArgs args)
-    {
-        HeaderClicked(args, Header.Antagonist);
-    }
-
     private void RoleTypeClicked(GUIBoundKeyEventArgs args)
     {
         HeaderClicked(args, Header.RoleType);
@@ -97,7 +89,6 @@ public sealed partial class PlayerTabHeader : Control
             UsernameLabel.OnKeyBindDown -= UsernameClicked;
             CharacterLabel.OnKeyBindDown -= CharacterClicked;
             JobLabel.OnKeyBindDown -= JobClicked;
-            AntagonistLabel.OnKeyBindDown -= AntagonistClicked;
             RoleTypeLabel.OnKeyBindDown -= RoleTypeClicked;
             PlaytimeLabel.OnKeyBindDown -= PlaytimeClicked;
         }
@@ -108,7 +99,6 @@ public sealed partial class PlayerTabHeader : Control
         Username,
         Character,
         Job,
-        Antagonist,
         RoleType,
         Playtime
     }

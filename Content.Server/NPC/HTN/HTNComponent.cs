@@ -10,7 +10,7 @@ public sealed partial class HTNComponent : NPCComponent
     /// The base task to use for planning
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite),
-     DataField("rootTask", required: true)]
+    DataField("rootTask", required: true)]
     public HTNCompoundTask RootTask = default!;
 
     /// <summary>
@@ -37,6 +37,9 @@ public sealed partial class HTNComponent : NPCComponent
     [ViewVariables(VVAccess.ReadWrite)]
     public float PlanAccumulator = 0f;
 
+    [DataField]
+    public bool ConstantlyReplan = true;
+
     [ViewVariables]
     public HTNPlanJob? PlanningJob = null;
 
@@ -47,4 +50,10 @@ public sealed partial class HTNComponent : NPCComponent
     /// Is this NPC currently planning?
     /// </summary>
     [ViewVariables] public bool Planning => PlanningJob != null;
+
+    /// <summary>
+    /// Determines whether plans should be made / updated for this entity
+    /// </summary>
+    [DataField]
+    public bool Enabled = true;
 }

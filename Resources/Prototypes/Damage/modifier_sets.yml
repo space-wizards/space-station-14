@@ -146,6 +146,13 @@
     Blunt: 5
 
 - type: damageModifierSet
+  id: Card
+  coefficients:
+    Slash: 2.0
+    Piercing: 0.1 # Holes easily poked through, but do little to structural integrity 
+    Heat: 3.0
+
+- type: damageModifierSet
   id: Web # Very flammable, can be easily hacked and slashed, but shooting or hitting it is another story.
   coefficients:
     Blunt: 0.7
@@ -161,7 +168,6 @@
     Piercing: 1.2
     Cold: 1.5
     Poison: 0.8
-    Cellular: 0.2
 
 - type: damageModifierSet
   id: Infernal
@@ -192,7 +198,7 @@
   id: Moth # Slightly worse at everything but cold
   coefficients:
     Cold: 0.7
-    Heat: 1.3
+    Heat: 1.2
 
 - type: damageModifierSet
   id: Vox
@@ -238,21 +244,24 @@
 
 # Represents which damage types should be modified
 # in relation to how they cause bleed rate.
+# Make sure to add any new damage type here.
 - type: damageModifierSet
   id: BloodlossHuman
   coefficients:
-    Blunt: 0.08
-    Slash: 0.25
-    Piercing: 0.2
-    Shock: 0.0
-    Cold: 0.0
-    Heat: -0.5 # heat damage cauterizes wounds, but will still hurt obviously.
-    Poison: 0.0
-    Radiation: 0.0
     Asphyxiation: 0.0
     Bloodloss: 0.0 # no double dipping
-    Cellular: 0.0
+    Blunt: 0.08
     Caustic: 0.0
+    Cellular: 0.0
+    Cold: 0.0
+    Heat: -0.5 # heat damage cauterizes wounds, but will still hurt obviously.
+    Holy: 0
+    Piercing: 0.2
+    Poison: 0.0
+    Radiation: 0.0
+    Shock: 0.0
+    Slash: 0.25
+    Structural: 0.0
 
 - type: damageModifierSet
   id: SlimePet # Very survivable slimes
