@@ -10,7 +10,6 @@ using Content.Shared.Traits;
 using Robust.Shared.Collections;
 using Robust.Shared.Configuration;
 using Robust.Shared.Enums;
-using Robust.Shared.GameObjects.Components.Localization;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
@@ -85,12 +84,6 @@ namespace Content.Shared.Preferences
         public Gender Gender { get; private set; } = Gender.Male;
 
         /// <summary>
-        ///     Custom pronouns for a character. If null, character just uses pronouns associated with gender.
-        /// </summary>
-        [DataField]
-        public Pronoun? Pronoun { get; private set; }
-
-        /// <summary>
         /// <see cref="Appearance"/>
         /// </summary>
         public ICharacterAppearance CharacterAppearance => Appearance;
@@ -136,7 +129,6 @@ namespace Content.Shared.Preferences
             int age,
             Sex sex,
             Gender gender,
-            Pronoun? pronoun,
             HumanoidCharacterAppearance appearance,
             SpawnPriorityPreference spawnPriority,
             Dictionary<ProtoId<JobPrototype>, JobPriority> jobPriorities,
@@ -151,7 +143,6 @@ namespace Content.Shared.Preferences
             Age = age;
             Sex = sex;
             Gender = gender;
-            Pronoun = pronoun;
             Appearance = appearance;
             SpawnPriority = spawnPriority;
             _jobPriorities = jobPriorities;
@@ -183,7 +174,6 @@ namespace Content.Shared.Preferences
                 other.Age,
                 other.Sex,
                 other.Gender,
-                other.Pronoun,
                 other.Appearance.Clone(),
                 other.SpawnPriority,
                 new Dictionary<ProtoId<JobPrototype>, JobPriority>(other.JobPriorities),
@@ -268,7 +258,6 @@ namespace Content.Shared.Preferences
                 Sex = sex,
                 Age = age,
                 Gender = gender,
-                Pronoun = null,
                 Species = species,
                 Appearance = HumanoidCharacterAppearance.Random(species, sex),
             };
@@ -299,15 +288,11 @@ namespace Content.Shared.Preferences
             return new(this) { Gender = gender };
         }
 
-        public HumanoidCharacterProfile WithPronouns(Pronoun? pronouns)
-        {
-            return new(this) { Pronoun = pronouns };
-        }
-
         public HumanoidCharacterProfile WithSpecies(string species)
         {
             return new(this) { Species = species };
         }
+
 
         public HumanoidCharacterProfile WithCharacterAppearance(HumanoidCharacterAppearance appearance)
         {
@@ -462,24 +447,13 @@ namespace Content.Shared.Preferences
             };
         }
 
-        public string Summary
-        {
-            get
-            {
-                var plurality = Gender.ToString().ToLowerInvariant();
-                if (Pronoun is { } notNullPronoun &&
-                    notNullPronoun.Plural is { } notNullPronounPlural)
-                    plurality = notNullPronounPlural.ToString();
-                return Loc.GetString(
-                    "humanoid-character-profile-summary",
-                    ("name", Name),
-                    ("subject", Pronoun?.Subject ??
-                        Gender.ToString().ToLowerInvariant()),
-                    ("conjugate-be", plurality),
-                    ("age", Age)
-                );
-            }
-        }
+        public string Summary =>
+            Loc.GetString(
+                "humanoid-character-profile-summary",
+                ("name", Name),
+                ("gender", Gender.ToString().ToLowerInvariant()),
+                ("age", Age)
+            );
 
         public bool MemberwiseEquals(ICharacterProfile maybeOther)
         {
@@ -488,7 +462,6 @@ namespace Content.Shared.Preferences
             if (Age != other.Age) return false;
             if (Sex != other.Sex) return false;
             if (Gender != other.Gender) return false;
-            if (Pronoun != other.Pronoun) return false;
             if (Species != other.Species) return false;
             if (PreferenceUnavailable != other.PreferenceUnavailable) return false;
             if (SpawnPriority != other.SpawnPriority) return false;
@@ -566,8 +539,6 @@ namespace Content.Shared.Preferences
             {
                 name = GetName(Species, gender);
             }
-
-            // TODO pronoun validation (restricted & length)
 
             string flavortext;
             var maxFlavorTextLength = configManager.GetCVar(CCVars.MaxFlavorTextLength);
@@ -748,7 +719,6 @@ namespace Content.Shared.Preferences
             hashCode.Add(Age);
             hashCode.Add((int)Sex);
             hashCode.Add((int)Gender);
-            hashCode.Add(Pronoun);
             hashCode.Add(Appearance);
             hashCode.Add((int)SpawnPriority);
             hashCode.Add((int)PreferenceUnavailable);

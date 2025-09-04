@@ -158,7 +158,6 @@ public abstract class SharedHumanoidAppearanceSystem : EntitySystem
 
         SetSex(target, sourceHumanoid.Sex, false, targetHumanoid);
         SetGender((target, targetHumanoid), sourceHumanoid.Gender);
-        SetPronouns((target, targetHumanoid), sourceHumanoid.Pronouns);
 
         Dirty(target, targetHumanoid);
     }
@@ -280,22 +279,6 @@ public abstract class SharedHumanoidAppearanceSystem : EntitySystem
     }
 
     /// <summary>
-    ///     Sets pronouns in the entity's HumanoidAppearanceComponent and GrammarComponent.
-    /// </summary>
-    public void SetPronouns(Entity<HumanoidAppearanceComponent?> ent, Pronoun? pronouns)
-    {
-        if (!Resolve(ent, ref ent.Comp) || pronouns == null)
-            return;
-        ent.Comp.Pronouns = pronouns;
-        Dirty(ent);
-
-        if (TryComp<GrammarComponent>(ent, out var grammar))
-            grammar.Pronoun = pronouns;
-
-        _identity.QueueIdentityUpdate(ent);
-    }
-
-    /// <summary>
     ///     Sets the skin color of this humanoid mob. Will only affect base layers that are not custom,
     ///     custom base layers should use <see cref="SetBaseLayerColor"/> instead.
     /// </summary>
@@ -371,7 +354,7 @@ public abstract class SharedHumanoidAppearanceSystem : EntitySystem
     }
 
     /// <summary>
-    ///     Set a humanoid mob's sex. This will not change their gender or pronouns.
+    ///     Set a humanoid mob's sex. This will not change their gender.
     /// </summary>
     /// <param name="uid">The humanoid mob's UID.</param>
     /// <param name="sex">The sex to set the mob to.</param>
@@ -470,11 +453,9 @@ public abstract class SharedHumanoidAppearanceSystem : EntitySystem
         EnsureDefaultMarkings(uid, humanoid);
 
         humanoid.Gender = profile.Gender;
-        humanoid.Pronouns = profile.Pronoun;
         if (TryComp<GrammarComponent>(uid, out var grammar))
         {
             _grammarSystem.SetGender((uid, grammar), profile.Gender);
-            grammar.Pronoun = profile.Pronoun;
         }
 
         humanoid.Age = profile.Age;
