@@ -985,47 +985,11 @@ entities:
     components:
     - type: Transform
       parent: 33
-    - type: LimbWithItems
-      itemEntities:
-      - 39
-      - 41
-    - type: Physics
-      canCollide: False
-    - type: ContainerContainer
-      containers:
-        bodypart: !type:Container
-          showEnts: False
-          occludes: True
-          ents: []
-        cyberlimb: !type:Container
-          showEnts: False
-          occludes: True
-          ents:
-          - 39
-          - 41
     - type: InsideEntityStorage
   - uid: 43
     components:
     - type: Transform
       parent: 33
-    - type: LimbWithItems
-      itemEntities:
-      - 44
-      - 82
-    - type: Physics
-      canCollide: False
-    - type: ContainerContainer
-      containers:
-        bodypart: !type:Container
-          showEnts: False
-          occludes: True
-          ents: []
-        cyberlimb: !type:Container
-          showEnts: False
-          occludes: True
-          ents:
-          - 44
-          - 82
     - type: InsideEntityStorage
 - proto: LeftHandCyber
   entities:
@@ -1310,47 +1274,11 @@ entities:
     components:
     - type: Transform
       parent: 33
-    - type: LimbWithItems
-      itemEntities:
-      - 86
-      - 88
-    - type: Physics
-      canCollide: False
-    - type: ContainerContainer
-      containers:
-        bodypart: !type:Container
-          showEnts: False
-          occludes: True
-          ents: []
-        cyberlimb: !type:Container
-          showEnts: False
-          occludes: True
-          ents:
-          - 86
-          - 88
     - type: InsideEntityStorage
   - uid: 90
     components:
     - type: Transform
       parent: 33
-    - type: LimbWithItems
-      itemEntities:
-      - 96
-      - 98
-    - type: Physics
-      canCollide: False
-    - type: ContainerContainer
-      containers:
-        bodypart: !type:Container
-          showEnts: False
-          occludes: True
-          ents: []
-        cyberlimb: !type:Container
-          showEnts: False
-          occludes: True
-          ents:
-          - 96
-          - 98
     - type: InsideEntityStorage
 - proto: RightHandCyber
   entities:
