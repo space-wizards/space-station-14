@@ -399,7 +399,7 @@ public sealed partial class AdminLogManager : SharedAdminLogManager, IAdminLogMa
 
     private void DoAdminAlerts(List<AdminLogPlayer> players, string message, LogImpact impact)
     {
-        var adminLog = true;
+        var adminLog = false;
         var logMessage = message;
 
         foreach (var player in players)
