@@ -33,6 +33,18 @@
 	{
       "name": "equipped-MASK-vulpkanin",
       "directions": 4
+    },
+	{
+      "name": "equipped-MASK-dog",
+      "directions": 4
+    },
+	{
+      "name": "equipped-MASK-fox",
+      "directions": 4
+    },
+	{
+      "name": "equipped-MASK-puppy",
+      "directions": 4
     }
   ]
 }

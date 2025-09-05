@@ -506,6 +506,9 @@
         volume: -4
   - type: Clothing
     slots: [mask]
+  - type: Tag
+    tags:
+    - PetWearable
 
 - type: entity
   parent: BaseItem
