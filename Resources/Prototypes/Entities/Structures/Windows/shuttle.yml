@@ -51,6 +51,11 @@
     trackAllDamage: true
     damageOverlay:
       sprite: Structures/Windows/cracks.rsi
+  - type: DeltaPressure
+    minPressure: 15000
+    minPressureDelta: 10000
+    scalingType: Linear
+    scalingPower: 0.0005
   - type: StaticPrice
     price: 150
 
