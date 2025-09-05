@@ -29,8 +29,11 @@
     fillBaseName: vial-1-
     inHandsMaxFillLevels: 4
     inHandsFillBaseName: -fill-
-  - type: Drink
+  - type: Edible
+    edible: Drink
     solution: beaker
+    destroyOnEmpty: false
+    # utensil: Spoon # I don't think it would fit.
   - type: SolutionContainerManager
     solutions:
       beaker:

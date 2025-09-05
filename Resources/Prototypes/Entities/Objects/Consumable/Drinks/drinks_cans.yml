@@ -4,7 +4,11 @@
   id: DrinkCanBaseFull
   abstract: true
   components:
-  - type: Drink
+  - type: Edible
+    edible: Drink
+    solution: drink
+    destroyOnEmpty: false
+    # utensil: Spoon # no would fit. one day add straws.
   - type: Openable
   - type: Shakeable
   - type: SolutionContainerManager
@@ -314,7 +318,6 @@
           Quantity: 4
         - ReagentId: Iron
           Quantity: 1
-  - type: Drink
   - type: Sprite
     sprite: Objects/Consumable/Drinks/sodawater.rsi
 
@@ -433,7 +436,6 @@
           Quantity: 4
         - ReagentId: Iron
           Quantity: 1
-  - type: Drink
   - type: Sprite
     sprite: Objects/Consumable/Drinks/tonic.rsi
 
@@ -480,7 +482,6 @@
           Quantity: 4
         - ReagentId: Iron
           Quantity: 1
-  - type: Drink
   - type: Sprite
     sprite: Objects/Consumable/Drinks/changelingsting.rsi
   - type: Item
@@ -505,7 +506,6 @@
           Quantity: 4
         - ReagentId: Iron
           Quantity: 1
-  - type: Drink
   - type: Sprite
     sprite: Objects/Consumable/Drinks/dr_gibb.rsi
   - type: Item
@@ -562,7 +562,6 @@
           Quantity: 4
         - ReagentId: Iron
           Quantity: 1
-  - type: Drink
   - type: Sprite
     sprite: Objects/Consumable/Drinks/energy_drink.rsi
   - type: Item
@@ -640,7 +639,6 @@
           Quantity: 4
         - ReagentId: Iron
           Quantity: 1
-  - type: Drink
   - type: Sprite
     sprite: Objects/Consumable/Drinks/shamblersjuice.rsi
   - type: Item
@@ -665,7 +663,6 @@
           Quantity: 4
         - ReagentId: Iron
           Quantity: 1
-  - type: Drink
   - type: Sprite
     sprite: Objects/Consumable/Drinks/pwrgame.rsi
   - type: Item
@@ -690,7 +687,6 @@
           Quantity: 4
         - ReagentId: Iron
           Quantity: 1
-  - type: Drink
   - type: Sprite
     sprite: Objects/Consumable/Drinks/beer_can.rsi
   - type: Item
@@ -718,7 +714,6 @@
           Quantity: 4
         - ReagentId: Iron
           Quantity: 1
-  - type: Drink
   - type: Sprite
     sprite: Objects/Consumable/Drinks/wine_can.rsi
   - type: Item

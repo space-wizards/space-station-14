@@ -17,6 +17,11 @@
     sprite: Objects/Consumable/Food/condiments.rsi
   - type: TrashOnSolutionEmpty
     solution: food
+  - type: Edible
+    edible: Drink
+    solution: food
+    destroyOnEmpty: false
+    utensil: Spoon
   - type: SpaceGarbage
   - type: StaticPrice
     price: 0
@@ -32,8 +37,6 @@
   components:
   - type: Item
     size: Tiny
-  - type: Drink
-    solution: food
   - type: Openable
     sound:
       collection: packetOpenSounds
@@ -335,8 +338,6 @@
   name: condiment bottle
   description: A thin glass bottle used to store condiments.
   components:
-  - type: Drink
-    solution: food
   - type: Openable
     sound:
       collection: pop
@@ -534,8 +535,8 @@
   components:
   - type: Item
     size: Tiny
-  - type: Drink
-    solution: food
+  - type: Edible
+    edible: Food
   - type: SolutionContainerManager
     solutions:
       food:
