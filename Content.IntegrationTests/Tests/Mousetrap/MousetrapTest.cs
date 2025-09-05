@@ -32,8 +32,6 @@ public sealed class MousetrapMouseMoveOverTest : MovementTest
         // Make sure the mouse doesn't have any AI active
         await Server.WaitPost(() => SEntMan.RemoveComponent<HTNComponent>(SPlayer));
 
-        await Pair.RunSeconds(5);
-
         // Spawn a mouse trap
         await SpawnTarget(MousetrapProtoId);
         Assert.That(Delta(), Is.GreaterThan(0.5), "Mouse and mousetrap not in expected positions.");
