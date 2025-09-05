@@ -162,8 +162,11 @@
             Poison: 0.1
       - !type:HealthChange
         conditions:
-        - !type:OrganType
+        - !type:OrganType # Starlight
           type: Avali
+          shouldHave: true
+        - !type:OrganType # Starlight
+          type: Resomi
           shouldHave: true
         damage:
           types:
