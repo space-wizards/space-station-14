@@ -4,8 +4,8 @@ meta:
   engineVersion: 266.0.0
   forkId: ""
   forkVersion: ""
-  time: 09/02/2025 17:46:12
-  entityCount: 18953
+  time: 09/04/2025 16:45:36
+  entityCount: 18952
 maps:
 - 1
 grids:
@@ -3764,7 +3764,8 @@ entities:
           1,4:
             1: 35065
           2,0:
-            0: 64989
+            0: 64925
+            2: 64
           2,1:
             0: 285
             1: 52224
@@ -3791,7 +3792,8 @@ entities:
           4,0:
             0: 61695
           4,1:
-            0: 15
+            0: 7
+            2: 8
             1: 34816
           4,3:
             1: 63624
@@ -3965,9 +3967,9 @@ entities:
             0: 46079
           -1,-8:
             0: 255
-            2: 61952
+            3: 61952
           -1,-7:
-            2: 767
+            3: 767
             0: 61440
           -1,-6:
             0: 65535
@@ -4231,7 +4233,8 @@ entities:
           5,-5:
             0: 16255
           5,0:
-            0: 12803
+            0: 4611
+            2: 8192
           6,-4:
             0: 61440
             1: 160
@@ -4340,7 +4343,7 @@ entities:
           4,4:
             1: 52986
           5,1:
-            0: 3
+            2: 3
             1: 29312
           5,2:
             1: 13171
@@ -5125,16 +5128,16 @@ entities:
             1: 52420
           15,-12:
             1: 3619
-            3: 8
+            4: 8
           15,-11:
             0: 65535
           15,-10:
             0: 64432
           15,-13:
             1: 13119
-            3: 34816
+            4: 34816
           16,-12:
-            3: 3
+            4: 3
             1: 776
             0: 34944
           16,-11:
@@ -5222,7 +5225,7 @@ entities:
             0: 30583
           14,-16:
             1: 4369
-            4: 17472
+            5: 17472
           14,-15:
             1: 241
             0: 61440
@@ -5232,8 +5235,8 @@ entities:
             1: 61440
             0: 255
           15,-16:
-            5: 4368
-            3: 17472
+            6: 4368
+            4: 17472
           15,-15:
             1: 240
             0: 61440
@@ -5243,8 +5246,8 @@ entities:
             1: 61440
             0: 255
           16,-16:
-            3: 4368
-            6: 17472
+            4: 4368
+            7: 17472
           16,-15:
             1: 240
             0: 61440
@@ -5252,7 +5255,7 @@ entities:
             0: 4095
           16,-13:
             1: 34959
-            3: 13056
+            4: 13056
           13,-20:
             0: 4087
             1: 8
@@ -5365,13 +5368,13 @@ entities:
           17,-21:
             0: 65262
           17,-20:
-            3: 57344
+            4: 57344
           17,-19:
-            3: 238
+            4: 238
             1: 57344
           17,-16:
             1: 52428
-            3: 4368
+            4: 4368
           18,-17:
             1: 15940
           18,-20:
@@ -5861,6 +5864,21 @@ entities:
           moles:
           - 0
           - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+        - volume: 2500
+          temperature: 293.14975
+          moles:
+          - 20.078888
+          - 75.53487
           - 0
           - 0
           - 0
@@ -8715,7 +8733,7 @@ entities:
       pos: 2.5,-6.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -308308.78
+      secondsUntilStateChange: -308500.8
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -9130,7 +9148,7 @@ entities:
       pos: -22.5,8.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -267735.8
+      secondsUntilStateChange: -267927.84
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -9201,7 +9219,7 @@ entities:
       pos: 36.5,-61.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -152951.33
+      secondsUntilStateChange: -153143.36
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -11974,13 +11992,6 @@ entities:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: -25.5,7.5
-      parent: 2
-- proto: BibleNecronomicon
-  entities:
-  - uid: 730
-    components:
-    - type: Transform
-      pos: 5.7179217,10.676744
       parent: 2
 - proto: BiofabricatorMachineCircuitboard
   entities:
@@ -43693,16 +43704,70 @@ entities:
     - type: Transform
       pos: 19.5,4.5
       parent: 2
+    - type: EntityStorage
+      air:
+        volume: 200
+        immutable: False
+        temperature: 293.14673
+        moles:
+        - 1.7459903
+        - 6.568249
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
   - uid: 6834
     components:
     - type: Transform
       pos: 20.5,4.5
       parent: 2
+    - type: EntityStorage
+      air:
+        volume: 200
+        immutable: False
+        temperature: 293.14673
+        moles:
+        - 1.7459903
+        - 6.568249
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
   - uid: 6835
     components:
     - type: Transform
       pos: 21.5,4.5
       parent: 2
+    - type: EntityStorage
+      air:
+        volume: 200
+        immutable: False
+        temperature: 293.14673
+        moles:
+        - 1.7459903
+        - 6.568249
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
 - proto: CrateContrabandStorageSecure
   entities:
   - uid: 6836
@@ -44255,6 +44320,24 @@ entities:
       rot: 3.141592653589793 rad
       pos: 21.5,2.5
       parent: 2
+    - type: EntityStorage
+      air:
+        volume: 200
+        immutable: False
+        temperature: 293.14673
+        moles:
+        - 1.7459903
+        - 6.568249
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
 - proto: CrewMonitoringServer
   entities:
   - uid: 6907
@@ -75733,8 +75816,12 @@ entities:
   - uid: 11057
     components:
     - type: Transform
+      anchored: False
       pos: 17.5,-39.5
       parent: 2
+    - type: Physics
+      canCollide: True
+      bodyType: Dynamic
     - type: AtmosPipeColor
       color: '#FC1313FF'
     - type: DeviceNetwork
@@ -83168,7 +83255,7 @@ entities:
       pos: 7.5,9.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -288015.2
+      secondsUntilStateChange: -288207.22
       state: Opening
   - uid: 12499
     components:
@@ -83176,7 +83263,7 @@ entities:
       pos: 7.5,10.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -288014.7
+      secondsUntilStateChange: -288206.72
       state: Opening
 - proto: HospitalCurtainsOpen
   entities:
@@ -83186,7 +83273,7 @@ entities:
       pos: -6.5,-4.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -301279.53
+      secondsUntilStateChange: -301471.56
       state: Closing
   - uid: 12501
     components:
@@ -118536,6 +118623,24 @@ entities:
     - type: Transform
       pos: 10.5,1.5
       parent: 2
+    - type: EntityStorage
+      air:
+        volume: 200
+        immutable: False
+        temperature: 293.14673
+        moles:
+        - 1.7459903
+        - 6.568249
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
 - proto: WardrobeGreenFilled
   entities:
   - uid: 18585
