@@ -18,6 +18,7 @@ using Robust.Shared.Player;
 using Robust.Shared.Threading;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
+using DependencyAttribute = Robust.Shared.IoC.DependencyAttribute;
 
 // ReSharper disable once RedundantUsingDirective
 
@@ -26,18 +27,21 @@ namespace Content.Server.Atmos.EntitySystems
     [UsedImplicitly]
     public sealed class GasTileOverlaySystem : SharedGasTileOverlaySystem
     {
-        [Robust.Shared.IoC.Dependency] private readonly IGameTiming _gameTiming = default!;
-        [Robust.Shared.IoC.Dependency] private readonly IPlayerManager _playerManager = default!;
-        [Robust.Shared.IoC.Dependency] private readonly IMapManager _mapManager = default!;
-        [Robust.Shared.IoC.Dependency] private readonly IParallelManager _parMan = default!;
-        [Robust.Shared.IoC.Dependency] private readonly AtmosphereSystem _atmosphereSystem = default!;
-        [Robust.Shared.IoC.Dependency] private readonly ChunkingSystem _chunkingSys = default!;
+        [Dependency] private readonly IGameTiming _gameTiming = default!;
+        [Dependency] private readonly IPlayerManager _playerManager = default!;
+        [Dependency] private readonly IMapManager _mapManager = default!;
+        [Dependency] private readonly IParallelManager _parMan = default!;
+        [Dependency] private readonly AtmosphereSystem _atmosphereSystem = default!;
+        [Dependency] private readonly ChunkingSystem _chunkingSys = default!;
 
         /// <summary>
-        /// Per-tick cache of sessions.
+        /// Cache of sessions updated every tick that <see cref="_doSessionUpdate"/>
+        /// is true; effectively every other tick.
         /// </summary>
         private readonly List<ICommonSession> _sessions = new();
-        private UpdatePlayerJob _updateJob;
+        private UpdatePlayerJob _updatePlayerJob;
+
+        private UpdateGridOverlayJob _updateGridOverlayJob;
 
         private readonly Dictionary<ICommonSession, Dictionary<NetEntity, HashSet<Vector2i>>> _lastSentChunks = new();
 
@@ -73,7 +77,7 @@ namespace Content.Server.Atmos.EntitySystems
             _query = GetEntityQuery<GasTileOverlayComponent>();
             _gridQuery = GetEntityQuery<MapGridComponent>();
 
-            _updateJob = new UpdatePlayerJob()
+            _updatePlayerJob = new UpdatePlayerJob()
             {
                 EntManager = EntityManager,
                 System = this,
@@ -85,6 +89,8 @@ namespace Content.Server.Atmos.EntitySystems
                 LastSentChunks = _lastSentChunks,
                 GridQuery = _gridQuery,
             };
+
+            _updateGridOverlayJob = new UpdateGridOverlayJob(EntityManager, this);
 
             _playerManager.PlayerStatusChanged += OnPlayerStatusChanged;
             Subs.CVar(ConfMan, CCVars.NetGasOverlayTickRate, UpdateTickRate, true);
@@ -171,7 +177,7 @@ namespace Content.Server.Atmos.EntitySystems
 
         private byte GetOpacity(float moles, float molesVisible, float molesVisibleMax)
         {
-            return (byte) (ContentHelpers.RoundToLevels(
+            return (byte)(ContentHelpers.RoundToLevels(
                 MathHelper.Clamp01((moles - molesVisible) /
                                    (molesVisibleMax - molesVisible)) * 255, byte.MaxValue,
                 _thresholds) * 255 / (_thresholds - 1));
@@ -195,7 +201,7 @@ namespace Content.Server.Atmos.EntitySystems
                     continue;
                 }
 
-                opacity = (byte) (ContentHelpers.RoundToLevels(
+                opacity = (byte)(ContentHelpers.RoundToLevels(
                     MathHelper.Clamp01((moles - gas.GasMolesVisible) /
                                        (gas.GasMolesVisibleMax - gas.GasMolesVisible)) * 255, byte.MaxValue,
                     _thresholds) * 255 / (_thresholds - 1));
@@ -207,7 +213,8 @@ namespace Content.Server.Atmos.EntitySystems
         /// <summary>
         ///     Updates the visuals for a tile on some grid chunk. Returns true if the visuals have changed.
         /// </summary>
-        private bool UpdateChunkTile(GridAtmosphereComponent gridAtmosphere, GasOverlayChunk chunk, Vector2i index)
+        [Access(typeof(GasTileOverlaySystem), typeof(UpdateGridOverlayJob))]
+        public bool UpdateChunkTile(GridAtmosphereComponent gridAtmosphere, GasOverlayChunk chunk, Vector2i index)
         {
             ref var oldData = ref chunk.TileData[chunk.GetDataIndex(index)];
             if (!gridAtmosphere.Tiles.TryGetValue(index, out var tile))
@@ -234,7 +241,7 @@ namespace Content.Server.Atmos.EntitySystems
                 oldData = new GasOverlayData(tile.Hotspot.State, oldData.Opacity, temp);
             }
 
-            if (tile is {Air: not null, NoGridTile: false})
+            if (tile is { Air: not null, NoGridTile: false })
             {
                 for (var i = 0; i < VisibleGasId.Length; i++)
                 {
@@ -295,26 +302,13 @@ namespace Content.Server.Atmos.EntitySystems
 
         private void UpdateOverlayData()
         {
-            // TODO parallelize?
-            var query = AllEntityQuery<GasTileOverlayComponent, GridAtmosphereComponent, MetaDataComponent>();
-            while (query.MoveNext(out var uid, out var overlay, out var gam, out var meta))
-            {
-                var changed = false;
-                foreach (var index in overlay.InvalidTiles)
-                {
-                    var chunkIndex = GetGasChunkIndices(index);
+            _updateGridOverlayJob.Grids.Clear();
 
-                    if (!overlay.Chunks.TryGetValue(chunkIndex, out var chunk))
-                        overlay.Chunks[chunkIndex] = chunk = new GasOverlayChunk(chunkIndex);
+            var query = AllEntityQuery<GasTileOverlayComponent, GridAtmosphereComponent>();
+            while (query.MoveNext(out var uid, out var overlay, out var gam))
+                _updateGridOverlayJob.Grids.Add((uid, overlay, gam));
 
-                    changed |= UpdateChunkTile(gam, chunk, index);
-                }
-
-                if (changed)
-                    Dirty(uid, overlay, meta);
-
-                overlay.InvalidTiles.Clear();
-            }
+            _parMan.ProcessNow(_updateGridOverlayJob, _updateGridOverlayJob.Grids.Count);
         }
 
         public override void Update(float frameTime)
@@ -364,8 +358,8 @@ namespace Content.Server.Atmos.EntitySystems
             if (_sessions.Count == 0)
                 return;
 
-            _parMan.ProcessNow(_updateJob, _sessions.Count);
-            _updateJob.LastSessionUpdate = _gameTiming.CurTick;
+            _parMan.ProcessNow(_updatePlayerJob, _sessions.Count);
+            _updatePlayerJob.LastSessionUpdate = _gameTiming.CurTick;
         }
 
         public void Reset(RoundRestartCleanupEvent ev)
@@ -483,6 +477,49 @@ namespace Content.Server.Atmos.EntitySystems
 
                 if (ev.UpdatedChunks.Count != 0 || ev.RemovedChunks.Count != 0)
                     System.RaiseNetworkEvent(ev, playerSession.Channel);
+            }
+        }
+
+        /// <summary>
+        /// Updates a grid's gas overlay data and dirties it if it's visuals were changed.
+        /// </summary>
+        private record struct UpdateGridOverlayJob : IParallelRobustJob
+        {
+            // I don't know what this actually does and how it counts for minimumbatchparallel so if there's a more reasonable value for this please change it.
+            public int BatchSize => 4;
+
+            // Not much reason to use non-interface entman here and we need it because it exposes a query for MetaDataComponent.
+            public EntityManager EntManager;
+            public GasTileOverlaySystem System;
+
+            public List<Entity<GasTileOverlayComponent, GridAtmosphereComponent>> Grids = new();
+
+            public UpdateGridOverlayJob(EntityManager entityManager, GasTileOverlaySystem system)
+            {
+                EntManager = entityManager;
+                System = system;
+            }
+
+            public void Execute(int gridIndex)
+            {
+                var (gridUid, gasOverlayComponent, gridAtmosphereComponent) = Grids[gridIndex];
+                var changed = false;
+
+                foreach (var index in gasOverlayComponent.InvalidTiles)
+                {
+                    var chunkIndex = GetGasChunkIndices(index);
+
+                    if (!gasOverlayComponent.Chunks.TryGetValue(chunkIndex, out var chunk))
+                        gasOverlayComponent.Chunks[chunkIndex] = chunk = new GasOverlayChunk(chunkIndex);
+
+                    changed |= System.UpdateChunkTile(gridAtmosphereComponent, chunk, index);
+                }
+
+                // Dirty it if we observed any actual change.
+                if (changed)
+                    EntManager.Dirty(gridUid, gasOverlayComponent, EntManager.MetaQuery.GetComponent(gridUid));
+
+                gasOverlayComponent.InvalidTiles.Clear();
             }
         }
 

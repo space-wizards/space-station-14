@@ -7,12 +7,14 @@ using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
 using Robust.Client.ResourceManagement;
 using Robust.Shared.GameStates;
+using Robust.Shared.Threading;
 
 namespace Content.Client.Atmos.EntitySystems
 {
     [UsedImplicitly]
     public sealed class GasTileOverlaySystem : SharedGasTileOverlaySystem
     {
+        [Dependency] private readonly IParallelManager _parallelManager = default!;
         [Dependency] private readonly IResourceCache _resourceCache = default!;
         [Dependency] private readonly IOverlayManager _overlayMan = default!;
         [Dependency] private readonly SpriteSystem _spriteSys = default!;
