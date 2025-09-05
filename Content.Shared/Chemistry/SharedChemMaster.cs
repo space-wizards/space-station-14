@@ -1,6 +1,5 @@
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.FixedPoint;
-using Content.Shared.Mobs.Events;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.Chemistry
