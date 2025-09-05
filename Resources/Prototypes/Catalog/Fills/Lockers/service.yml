@@ -218,7 +218,8 @@
   id: FillLockerMime
   table: !type:AllSelector
     children:
-    - id: CrayonBox
+    - id: DrinkBottleOfNothingFull
     - id: RevolverCapGun
     - id: BoxCartridgeCap
+    - id: CrayonBox
 
