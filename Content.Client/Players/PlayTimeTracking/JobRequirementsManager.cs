@@ -90,33 +90,47 @@ public sealed class JobRequirementsManager : ISharedPlaytimeManager
         Updated?.Invoke();
     }
 
-    public bool IsAllowed(JobPrototype job, HumanoidCharacterProfile? profile, [NotNullWhen(false)] out FormattedMessage? reason)
+    public bool IsAllowed(JobPrototype job,
+        HumanoidCharacterProfile? profile,
+        [NotNullWhen(false)] out FormattedMessage? reason,
+        out FormattedMessage? reason_short)
     {
-        reason = null;
-
+        reason_short = null;
         if (_roleBans.Contains($"Job:{job.ID}"))
         {
             reason = FormattedMessage.FromUnformatted(Loc.GetString("role-ban"));
+            reason_short = reason;
             return false;
         }
 
         if (!CheckWhitelist(job, out reason))
+        {
+            reason_short = reason;
             return false;
+        }
 
-        var player = _playerManager.LocalSession;
-        if (player == null)
+        // if (_playerManager.LocalSession == null)// Skip role reqs on debug lobby
+        //     return true;
+
+        if (CheckRoleRequirements(job, profile, out reason))
             return true;
-
-        return CheckRoleRequirements(job, profile, out reason);
+        // reason_short = FormattedMessage.FromUnformatted(Loc.GetString("role-requirements-unmeet"));
+        return false;
     }
 
-    public bool CheckRoleRequirements(JobPrototype job, HumanoidCharacterProfile? profile, [NotNullWhen(false)] out FormattedMessage? reason)
+    public bool CheckRoleRequirements(
+        JobPrototype job,
+        HumanoidCharacterProfile? profile,
+        [NotNullWhen(false)] out FormattedMessage? reason)
     {
         var reqs = _entManager.System<SharedRoleSystem>().GetJobRequirement(job);
         return CheckRoleRequirements(reqs, profile, out reason);
     }
 
-    public bool CheckRoleRequirements(HashSet<JobRequirement>? requirements, HumanoidCharacterProfile? profile, [NotNullWhen(false)] out FormattedMessage? reason)
+    public bool CheckRoleRequirements(
+        HashSet<JobRequirement>? requirements,
+        HumanoidCharacterProfile? profile,
+        [NotNullWhen(false)] out FormattedMessage? reason)
     {
         reason = null;
 
@@ -129,7 +143,7 @@ public sealed class JobRequirementsManager : ISharedPlaytimeManager
             if (requirement.Check(_entManager, _prototypes, profile, _roles, out var jobReason))
                 continue;
 
-            reasons.Add(jobReason.ToMarkup());
+            reasons.Add("[jobreqLine]" + jobReason.ToMarkup() + "[/jobreqLine]");
         }
 
         reason = reasons.Count == 0 ? null : FormattedMessage.FromMarkupOrThrow(string.Join('\n', reasons));

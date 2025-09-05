@@ -19,6 +19,7 @@ public sealed partial class RequirementsSelector : BoxContainer
 {
     private readonly RadioOptions<int> _options;
     private readonly StripeBack _lockStripe;
+    private readonly RichTextLabel _requirementsLabel;
     private List<ProtoId<GuideEntryPrototype>>? _guides;
 
     public event Action<int>? OnSelected;
@@ -45,14 +46,14 @@ public sealed partial class RequirementsSelector : BoxContainer
             OnSelected?.Invoke(args.Id);
         };
 
-        var requirementsLabel = new Label()
+        _requirementsLabel = new RichTextLabel()
         {
-            Text = Loc.GetString("role-timer-locked"),
             Visible = true,
             HorizontalAlignment = HAlignment.Center,
-            StyleClasses = {StyleBase.StyleClassLabelSubText},
+            StyleClasses = { StyleBase.StyleClassLabelSubText }
         };
-
+        _requirementsLabel.LineBreaksAuto = false;
+        _requirementsLabel.SetMessage(FormattedMessage.FromUnformatted(Loc.GetString("role-timer-locked")));
         _lockStripe = new StripeBack()
         {
             Visible = false,
@@ -61,7 +62,7 @@ public sealed partial class RequirementsSelector : BoxContainer
             MouseFilter = MouseFilterMode.Stop,
             Children =
             {
-                requirementsLabel
+                _requirementsLabel
             }
         };
 
@@ -105,10 +106,42 @@ public sealed partial class RequirementsSelector : BoxContainer
         OptionsContainer.AddChild(_lockStripe);
     }
 
-    public void LockRequirements(FormattedMessage requirements)
+    public void LockRequirements(
+        FormattedMessage requirements,
+        FormattedMessage? requiremenets_short = null)
     {
         var tooltip = new Tooltip();
         tooltip.SetMessage(requirements);
+        if (requiremenets_short == null)
+        {
+            requiremenets_short = FormattedMessage.Empty;
+            if (requirements.Count > 0)
+            {
+                var firstNode = requirements[0];
+                requiremenets_short.PushTag(new MarkupNode(
+                    name: "font",
+                    value: new MarkupParameter(8),
+                    attributes: null
+                ));
+                foreach (var i in requirements)
+                {
+                    requiremenets_short.PushTag(i);
+                    if (firstNode.Name == i.Name && i.Closing)
+                        break;
+                }
+                requiremenets_short.PushTag(new MarkupNode(
+                    name: "font",
+                    value: null,
+                    attributes: null,
+                    closing: true
+                ));
+                // lss = requirements[0];
+                // requiremenets_short = FormattedMessage.Empty;
+                // requiremenets_short.PushTag(lss);
+            }
+        }
+        if (requiremenets_short != null)
+            _requirementsLabel.SetMessage(requiremenets_short);
         _lockStripe.TooltipSupplier = _ => tooltip;
         _lockStripe.Visible = true;
         _options.Visible = false;
