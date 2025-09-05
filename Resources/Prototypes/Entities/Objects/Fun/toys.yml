@@ -1804,8 +1804,8 @@
   - type: Sprite
     sprite: Objects/Fun/lube.rsi
     layers:
-      - state: icon
-        map: ["enum.OpenableVisuals.Layer"]
+    - state: icon
+      map: ["enum.OpenableVisuals.Layer"]
   - type: Appearance
   - type: SolutionContainerManager
     solutions:
