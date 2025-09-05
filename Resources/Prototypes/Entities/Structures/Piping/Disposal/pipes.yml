@@ -104,6 +104,9 @@
   - type: DisposalTube
     containerId: DisposalTransit
   - type: DisposalTransit
+    degrees:
+    - 0
+    - 180
   - type: ContainerContainer
     containers:
       DisposalTransit: !type:Container
@@ -132,6 +135,9 @@
   - type: DisposalTube
     containerId: DisposalTagger
   - type: DisposalTagger
+    degrees:
+    - 0
+    - 180
   - type: ContainerContainer
     containers:
       DisposalTagger: !type:Container
@@ -166,6 +172,9 @@
   - type: DisposalTube
     containerId: DisposalTransit
   - type: DisposalTransit
+    degrees:
+    - 0
+    - 180
   - type: DeviceNetwork
     deviceNetId: Wireless
     receiveFrequencyId: BasicDevice
@@ -328,7 +337,7 @@
     visible: true
   - type: DisposalTube
     containerId: DisposalJunction
-  - type: DisposalJunction
+  - type: DisposalTransit
     degrees:
     - 0
     - -90
@@ -370,7 +379,7 @@
       state: conpipe-j2
   - type: DisposalTube
     containerId: DisposalJunction
-  - type: DisposalJunction
+  - type: DisposalTransit
     degrees:
     - 0
     - 90
@@ -412,7 +421,7 @@
       state: conpipe-y
   - type: DisposalTube
     containerId: DisposalJunction
-  - type: DisposalJunction
+  - type: DisposalTransit
     degrees:
     - 0
     - 90
@@ -453,7 +462,7 @@
     visible: true
   - type: DisposalTube
     containerId: DisposalJunction
-  - type: DisposalJunction
+  - type: DisposalTransit
     degrees:
     - 0
     - -90
@@ -494,7 +503,10 @@
       state: conpipe-c
   - type: DisposalTube
     containerId: DisposalBend
-  - type: DisposalBend
+  - type: DisposalTransit
+    degrees:
+    - 0
+    - -90
   - type: ContainerContainer
     containers:
       DisposalBend: !type:Container
@@ -567,7 +579,7 @@
     layers:
     - map: [ "pipe" ]
       state: signal-router-flipped-free
-  - type: DisposalJunction
+  - type: DisposalTransit
     degrees:
     - 0
     - 90

@@ -44,23 +44,14 @@ namespace Content.Server.Disposal.Tube
             SubscribeLocalEvent<DisposalTubeComponent, ComponentStartup>(OnStartup);
             SubscribeLocalEvent<DisposalTubeComponent, ConstructionBeforeDeleteEvent>(OnDeconstruct);
 
-            SubscribeLocalEvent<DisposalConduitComponent, GetDisposalsConnectableDirectionsEvent>(OnGetConduitConnectableDirections);
-            SubscribeLocalEvent<DisposalConduitComponent, GetDisposalsNextDirectionEvent>(OnGetConduitNextDirection);
+            SubscribeLocalEvent<DisposalTransitComponent, GetDisposalsConnectableDirectionsEvent>(OnGetTransitConnectableDirections);
+            SubscribeLocalEvent<DisposalTransitComponent, GetDisposalsNextDirectionEvent>(OnGetTransitNextDirection);
 
-            SubscribeLocalEvent<DisposalBendComponent, GetDisposalsConnectableDirectionsEvent>(OnGetBendConnectableDirections);
-            SubscribeLocalEvent<DisposalBendComponent, GetDisposalsNextDirectionEvent>(OnGetBendNextDirection);
-
-            SubscribeLocalEvent<Shared.Disposal.Tube.DisposalEntryComponent, GetDisposalsConnectableDirectionsEvent>(OnGetEntryConnectableDirections);
-            SubscribeLocalEvent<Shared.Disposal.Tube.DisposalEntryComponent, GetDisposalsNextDirectionEvent>(OnGetEntryNextDirection);
-
-            SubscribeLocalEvent<DisposalJunctionComponent, GetDisposalsConnectableDirectionsEvent>(OnGetJunctionConnectableDirections);
-            SubscribeLocalEvent<DisposalJunctionComponent, GetDisposalsNextDirectionEvent>(OnGetJunctionNextDirection);
+            SubscribeLocalEvent<DisposalEntryComponent, GetDisposalsConnectableDirectionsEvent>(OnGetEntryConnectableDirections);
+            SubscribeLocalEvent<DisposalEntryComponent, GetDisposalsNextDirectionEvent>(OnGetEntryNextDirection);
 
             SubscribeLocalEvent<DisposalRouterComponent, GetDisposalsConnectableDirectionsEvent>(OnGetRouterConnectableDirections);
             SubscribeLocalEvent<DisposalRouterComponent, GetDisposalsNextDirectionEvent>(OnGetRouterNextDirection);
-
-            SubscribeLocalEvent<DisposalTransitComponent, GetDisposalsConnectableDirectionsEvent>(OnGetTransitConnectableDirections);
-            SubscribeLocalEvent<DisposalTransitComponent, GetDisposalsNextDirectionEvent>(OnGetTransitNextDirection);
 
             SubscribeLocalEvent<DisposalTaggerComponent, GetDisposalsConnectableDirectionsEvent>(OnGetTaggerConnectableDirections);
             SubscribeLocalEvent<DisposalTaggerComponent, GetDisposalsNextDirectionEvent>(OnGetTaggerNextDirection);
@@ -138,16 +129,16 @@ namespace Content.Server.Disposal.Tube
             DisconnectTube(uid, tube);
         }
 
-        private void OnGetConduitConnectableDirections(EntityUid uid, DisposalConduitComponent component, ref GetDisposalsConnectableDirectionsEvent args)
+        private void OnGetTransitConnectableDirections(EntityUid uid, DisposalTransitComponent component, ref GetDisposalsConnectableDirectionsEvent args)
         {
             var rotation = Transform(uid).LocalRotation;
 
-            args.Connectable = component.Angles
+            args.Connectable = component.Degrees
                 .Select(angle => new Angle(angle.Theta + rotation.Theta).GetDir())
                 .ToArray();
         }
 
-        private void OnGetConduitNextDirection(EntityUid uid, DisposalConduitComponent component, ref GetDisposalsNextDirectionEvent args)
+        private void OnGetTransitNextDirection(EntityUid uid, DisposalTransitComponent component, ref GetDisposalsNextDirectionEvent args)
         {
             var ev = new GetDisposalsConnectableDirectionsEvent();
             RaiseLocalEvent(uid, ref ev);
@@ -184,30 +175,6 @@ namespace Content.Server.Disposal.Tube
             }
         }
 
-        private void OnGetBendConnectableDirections(EntityUid uid, DisposalBendComponent component, ref GetDisposalsConnectableDirectionsEvent args)
-        {
-            var direction = Transform(uid).LocalRotation;
-            var side = new Angle(MathHelper.DegreesToRadians(direction.Degrees - 90));
-
-            args.Connectable = new[] { direction.GetDir(), side.GetDir() };
-        }
-
-        private void OnGetBendNextDirection(EntityUid uid, DisposalBendComponent component, ref GetDisposalsNextDirectionEvent args)
-        {
-            var ev = new GetDisposalsConnectableDirectionsEvent();
-            RaiseLocalEvent(uid, ref ev);
-
-            var previousDF = args.Holder.PreviousDirectionFrom;
-
-            if (previousDF == Direction.Invalid)
-            {
-                args.Next = ev.Connectable[0];
-                return;
-            }
-
-            args.Next = previousDF == ev.Connectable[0] ? ev.Connectable[1] : ev.Connectable[0];
-        }
-
         private void OnGetEntryConnectableDirections(EntityUid uid, Shared.Disposal.Tube.DisposalEntryComponent component, ref GetDisposalsConnectableDirectionsEvent args)
         {
             args.Connectable = new[] { Transform(uid).LocalRotation.GetDir() };
@@ -227,35 +194,9 @@ namespace Content.Server.Disposal.Tube
             args.Next = ev.Connectable[0];
         }
 
-        private void OnGetJunctionConnectableDirections(EntityUid uid, DisposalJunctionComponent component, ref GetDisposalsConnectableDirectionsEvent args)
-        {
-            var direction = Transform(uid).LocalRotation;
-
-            args.Connectable = component.Degrees
-                .Select(degree => new Angle(degree.Theta + direction.Theta).GetDir())
-                .ToArray();
-        }
-
-        private void OnGetJunctionNextDirection(EntityUid uid, DisposalJunctionComponent component, ref GetDisposalsNextDirectionEvent args)
-        {
-            var next = Transform(uid).LocalRotation.GetDir();
-            var ev = new GetDisposalsConnectableDirectionsEvent();
-            RaiseLocalEvent(uid, ref ev);
-            var directions = ev.Connectable.Skip(1).ToArray();
-
-            if (args.Holder.PreviousDirectionFrom == Direction.Invalid ||
-                args.Holder.PreviousDirectionFrom == next)
-            {
-                args.Next = _random.Pick(directions);
-                return;
-            }
-
-            args.Next = next;
-        }
-
         private void OnGetRouterConnectableDirections(EntityUid uid, DisposalRouterComponent component, ref GetDisposalsConnectableDirectionsEvent args)
         {
-            OnGetJunctionConnectableDirections(uid, component, ref args);
+            OnGetTransitConnectableDirections(uid, component, ref args);
         }
 
         private void OnGetRouterNextDirection(EntityUid uid, DisposalRouterComponent component, ref GetDisposalsNextDirectionEvent args)
@@ -270,31 +211,6 @@ namespace Content.Server.Disposal.Tube
             }
 
             args.Next = Transform(uid).LocalRotation.GetDir();
-        }
-
-        private void OnGetTransitConnectableDirections(EntityUid uid, DisposalTransitComponent component, ref GetDisposalsConnectableDirectionsEvent args)
-        {
-            var rotation = Transform(uid).LocalRotation;
-            var opposite = new Angle(rotation.Theta + Math.PI);
-
-            args.Connectable = new[] { rotation.GetDir(), opposite.GetDir() };
-        }
-
-        private void OnGetTransitNextDirection(EntityUid uid, DisposalTransitComponent component, ref GetDisposalsNextDirectionEvent args)
-        {
-            var ev = new GetDisposalsConnectableDirectionsEvent();
-            RaiseLocalEvent(uid, ref ev);
-            var previousDF = args.Holder.PreviousDirectionFrom;
-            var forward = ev.Connectable[0];
-
-            if (previousDF == Direction.Invalid)
-            {
-                args.Next = forward;
-                return;
-            }
-
-            var backward = ev.Connectable[1];
-            args.Next = previousDF == forward ? backward : forward;
         }
 
         private void OnGetTaggerConnectableDirections(EntityUid uid, DisposalTaggerComponent component, ref GetDisposalsConnectableDirectionsEvent args)

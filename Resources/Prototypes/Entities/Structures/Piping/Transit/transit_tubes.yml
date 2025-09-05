@@ -11,6 +11,8 @@
   - type: Sprite
   - type: Appearance
   - type: Clickable
+    bounds: 
+      all: "-0.5,-0.5,0.5,0.5"
   - type: InteractionOutline
   - type: Physics
     bodyType: Static
@@ -33,7 +35,7 @@
     thresholds:
     - trigger:
         !type:DamageTrigger
-        damage: 100 #excess damage (nuke?). avoid computational cost of spawning entities.
+        damage: 100
       behaviors:
       - !type:DoActsBehavior
         acts: ["Destruction"]
@@ -56,6 +58,9 @@
   - type: ContainerContainer
     containers:
       DisposalTube: !type:Container
+  - type: TileEmission
+    color: White
+    range: -0.25
   - type: StaticPrice
     price: 30
 
@@ -71,14 +76,13 @@
     layers:
     - map: [ "pod" ]
       state: occupied_pod
+      shader: unshaded
   - type: DisposalHolder
     traversalTime: 0.2
   - type: ContainerContainer
     containers:
-      DisposalHolderComponent: !type:Container 
-        #showEnts: true
+      DisposalHolderComponent: !type:Container
 
-  
 # Pipes
 
 - type: entity
@@ -109,10 +113,13 @@
     layers:
     - map: [ "tube" ]
       state: straight
+    - map: [ "glass" ]
+      state: straight_glass
+      shader: unshaded
   - type: DisposalTube
     containerId: DisposalTransit
-  - type: DisposalConduit
-    angles:
+  - type: DisposalTransit
+    degrees:
     - 0
     - 180
   - type: ContainerContainer
@@ -138,11 +145,13 @@
     layers:
     - map: [ "tube" ]
       state: diagonal
-    visible: true
+    - map: [ "glass" ]
+      state: diagonal_glass
+      shader: unshaded
   - type: DisposalTube
     containerId: DisposalJunction
-  - type: DisposalConduit
-    angles:
+  - type: DisposalTransit
+    degrees:
     - 135
     - -45
   - type: ContainerContainer
@@ -177,11 +186,13 @@
     layers:
     - map: [ "tube" ]
       state: junct
-    visible: true
+    - map: [ "glass" ]
+      state: junct_glass      
+      shader: unshaded
   - type: DisposalTube
     containerId: DisposalJunction
-  - type: DisposalConduit
-    angles:
+  - type: DisposalTransit
+    degrees:
     - -135
     - 135
     - 0
@@ -217,8 +228,11 @@
     layers:
     - map: [ "tube" ]
       state: junct_f
-  - type: DisposalConduit
-    angles:
+    - map: [ "glass" ]
+      state: junct_f_glass
+      shader: unshaded
+  - type: DisposalTransit
+    degrees:
     - 135
     - -135
     - 0
@@ -250,10 +264,13 @@
     layers:
     - map: [ "tube" ]
       state: bend
+    - map: [ "glass" ]
+      state: bend_glass   
+      shader: unshaded      
   - type: DisposalTube
     containerId: DisposalJunction
-  - type: DisposalConduit
-    angles:
+  - type: DisposalTransit
+    degrees:
     - 135
     - 0
   - type: ContainerContainer
@@ -285,8 +302,11 @@
     layers:
     - map: [ "tube" ]
       state: bend_f
-  - type: DisposalConduit
-    angles:
+    - map: [ "glass" ]
+      state: bend_f_glass
+      shader: unshaded
+  - type: DisposalTransit
+    degrees:
     - -135
     - 0
   - type: GenericVisualizer
@@ -328,7 +348,10 @@
     - map: [ "enum.DisposalUnitVisualLayers.OverlayCharging" ]      
     - map: [ "enum.DisposalUnitVisualLayers.OverlayReady" ]     
     - map: [ "enum.DisposalUnitVisualLayers.OverlayFull" ]    
-    - map: [ "enum.DisposalUnitVisualLayers.OverlayEngaged" ]      
+    - map: [ "enum.DisposalUnitVisualLayers.OverlayEngaged" ] 
+    - map: [ "glass" ]  
+      state: station_uni_glass
+      shader: unshaded      
   - type: Physics
     bodyType: Static
     canCollide: false
@@ -378,6 +401,9 @@
     holderPrototypeId: TransitHolder
   - type: DisposalTube
     containerId: disposals  
+  - type: TileEmission
+    color: White
+    range: -0.25
 
 - type: entity
   id: TransitTubeStation
