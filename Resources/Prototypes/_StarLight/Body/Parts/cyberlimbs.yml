@@ -180,6 +180,7 @@
         - SawCyber
         - HemostatCyber
         - BoneSetterCyber
+        - BoneGel
     - type: WithAttachedBodyParts
       parts:
         left hand: LeftHandCyber
@@ -211,6 +212,7 @@
         - SawCyber
         - HemostatCyber
         - BoneSetterCyber
+        - BoneGel
     - type: WithAttachedBodyParts
       parts:
         right hand: RightHandCyber
