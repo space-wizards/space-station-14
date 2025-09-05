@@ -1,43 +1,4 @@
 ﻿Entries:
-- author: youtissoum
-  changes:
-  - message: Skeletons will no longer spawn inside of folded body bags.
-    type: Fix
-  id: 8414
-  time: '2025-05-03T19:19:33.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/37151
-- author: Minemoder
-  changes:
-  - message: The traitor uplink thieving gloves have been replaced with chameleon
-      thieving gloves, the same used by the Thief.
-    type: Tweak
-  id: 8415
-  time: '2025-05-03T19:28:47.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/36369
-- author: EmoGarbage404
-  changes:
-  - message: Added gibtonite! This secret ore becomes visible when struck and explodes
-      violently. It can be detected early using a mineral scanner.
-    type: Add
-  id: 8416
-  time: '2025-05-04T00:38:48.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/37160
-- author: EmoGarbage404
-  changes:
-  - message: You can no longer scrap coins and other salvaging treasures. They're
-      simply too valuable to junk.
-    type: Remove
-  id: 8417
-  time: '2025-05-04T02:39:19.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/37149
-- author: EmoGarbage404
-  changes:
-  - message: Mob corpses brought back from salvage pulls will no longer despawn with
-      the pull.
-    type: Fix
-  id: 8418
-  time: '2025-05-04T05:47:11.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/37169
 - author: perryprog
   changes:
   - message: Shelves built from the construction menu can now be placed in all orientations.
@@ -3945,3 +3906,40 @@
   id: 8925
   time: '2025-09-04T19:37:15.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/39886
+- author: Princess-Cheeseballs
+  changes:
+  - message: You can no longer crawl under counters, or tables without space underneath.
+    type: Tweak
+  id: 8926
+  time: '2025-09-04T21:03:10.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/40099
+- author: CawsForConcern
+  changes:
+  - message: Iced Coffee now contains Theobromine
+    type: Fix
+  id: 8927
+  time: '2025-09-04T22:46:44.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/40063
+- author: ArtisticRoomba
+  changes:
+  - message: Fixed Atmospherics Delta-Pressure damage not capping damage beyond a
+      certain pressure for applicable structures.
+    type: Fix
+  id: 8928
+  time: '2025-09-05T07:09:54.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/40125
+- author: ArtisticRoomba
+  changes:
+  - message: Shutters of all types (regular, windowed, radiation) now take Delta-Pressure
+      damage. Blast doors still don't take Delta-Pressure damage.
+    type: Fix
+  id: 8929
+  time: '2025-09-05T07:47:31.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/40126
+- author: ScarKy0, FairlySadPanda, TiniestShark, MilonPL, beck-thompson
+  changes:
+  - message: The vulpkanin species can now be selected as a roundstart species.
+    type: Add
+  id: 8930
+  time: '2025-09-05T10:43:17.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37539

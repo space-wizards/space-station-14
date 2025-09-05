@@ -110,8 +110,10 @@
   # that means we only need to copy them over when switching between species.
   # So these don't need to be part of the Body settings, unless someone makes a trait that adjusts these components.
   - BodyEmotes
+  - MessyDrinker
   # - Fixtures TODO: A better way to clone fixtures or a fixture fix. Currently if you devour someone on the ground and transform, you lose collision with tables as they were knocked down when they were copied.
   - Speech
+  - TemperatureProtection
   - TypingIndicator
   - ScaleVisuals # for dwarf height
   eventComponents:
