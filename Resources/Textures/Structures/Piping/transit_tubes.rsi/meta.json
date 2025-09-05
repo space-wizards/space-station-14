@@ -11,8 +11,16 @@
             "name": "straight",
             "directions": 4
         },
-		{
+        {
+            "name": "straight_glass",
+            "directions": 4
+        },
+        {
             "name": "diagonal",
+            "directions": 4
+        },
+        {
+            "name": "diagonal_glass",
             "directions": 4
         },
         {
@@ -20,7 +28,15 @@
             "directions": 4
         },
         {
+            "name": "bend_glass",
+            "directions": 4
+        },
+        {
             "name": "bend_f",
+            "directions": 4
+        },
+        {
+            "name": "bend_f_glass",
             "directions": 4
         },
         {
@@ -28,7 +44,15 @@
             "directions": 4
         },
         {
+            "name": "junct_glass",
+            "directions": 4
+        },
+        {
             "name": "junct_f",
+            "directions": 4
+        },
+        {
+            "name": "junct_f_glass",
             "directions": 4
         },
         {
@@ -36,14 +60,22 @@
             "directions": 4
         },
         {
+            "name": "station_uni_glass",
+            "directions": 4
+        },
+        {
             "name": "station_uni_f",
             "directions": 4
         },
-		{
+        {
+            "name": "station_uni_f_glass",
+            "directions": 4
+        },
+        {
             "name": "empty_pod",
             "directions": 8
         },
-		{
+        {
             "name": "occupied_pod",
             "directions": 8
         }
