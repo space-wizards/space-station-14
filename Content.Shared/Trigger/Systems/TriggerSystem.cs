@@ -104,7 +104,7 @@ public sealed partial class TriggerSystem : EntitySystem
         if (ent.Comp.Popup != null)
             _popup.PopupPredicted(Loc.GetString(ent.Comp.Popup.Value, ("device", ent.Owner)), ent.Owner, user);
 
-        if (!isactive)
+        if(!isactive)
             AddComp<ActiveTimerTriggerComponent>(ent);
         var curTime = _timing.CurTime;
         ent.Comp.NextTrigger = curTime + ent.Comp.Delay;

@@ -38,6 +38,7 @@ public sealed class MultiTimerQueueSystem : EntitySystem
             if (delay != TimeSpan.Zero)
                 timerTrigger.Delay = delay;
         }
+        // EntityManager.RemoveComponent<ActiveTimerTriggerComponent>(ent);
         _triggerSystem.ActivateTimerTrigger(
             new Entity<TimerTriggerComponent?>(ent.Owner, timerTrigger), forced: true);
         if (ent.Comp.Queue.Count == 0)
