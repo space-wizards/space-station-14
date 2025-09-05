@@ -1,14 +1,6 @@
 ﻿Entries:
 - author: EmoGarbage404
   changes:
-  - message: Added gibtonite! This secret ore becomes visible when struck and explodes
-      violently. It can be detected early using a mineral scanner.
-    type: Add
-  id: 8416
-  time: '2025-05-04T00:38:48.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/37160
-- author: EmoGarbage404
-  changes:
   - message: You can no longer scrap coins and other salvaging treasures. They're
       simply too valuable to junk.
     type: Remove
@@ -3944,3 +3936,11 @@
   id: 8927
   time: '2025-09-04T22:46:44.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/40063
+- author: ArtisticRoomba
+  changes:
+  - message: Fixed Atmospherics Delta-Pressure damage not capping damage beyond a
+      certain pressure for applicable structures.
+    type: Fix
+  id: 8928
+  time: '2025-09-05T07:09:54.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/40125
