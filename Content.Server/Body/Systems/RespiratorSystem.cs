@@ -5,6 +5,7 @@ using Content.Server.Chat.Systems;
 using Content.Server.EntityEffects;
 using Content.Shared.Alert;
 using Content.Shared.Atmos;
+using Content.Shared.Bed.Components;
 using Content.Shared.Body.Components;
 using Content.Shared.Body.Events;
 using Content.Shared.Body.Prototypes;
@@ -364,7 +365,13 @@ public sealed class RespiratorSystem : EntitySystem
         if (ent.Comp.SuffocationCycles == 2)
             _adminLogger.Add(LogType.Asphyxiation, $"{ToPrettyString(ent):entity} started suffocating");
 
-        _damageableSys.TryChangeDamage(ent, ent.Comp.Damage, interruptsDoAfters: false);
+        var damage = ent.Comp.Damage;
+        // Roller beds stabilize critical patients.
+        if (TryComp<StabilizeOnBuckleComponent>(ent.Owner, out var stabilizerComponent)
+            && _mobState.IsCritical(ent.Owner))
+            damage *= (1 - stabilizerComponent.Efficiency); // 30% Efficiency leads to 70% Asphyxiation taken.
+
+        _damageableSys.TryChangeDamage(ent, damage, interruptsDoAfters: false);
 
         if (ent.Comp.SuffocationCycles < ent.Comp.SuffocationCycleThreshold)
             return;
