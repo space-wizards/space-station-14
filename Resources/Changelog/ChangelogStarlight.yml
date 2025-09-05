@@ -13189,5 +13189,19 @@ Entries:
   id: 147400
   time: '2025-09-04T22:00:32.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/1474
+- author: Jezithyr
+  changes:
+  - message: Fixed previous flavor text not carrying over to the new format.
+    type: Fix
+  id: 151800
+  time: '2025-09-05T01:48:45.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1518
+- author: Jezithyr
+  changes:
+  - message: Fix for flavortext editors sometimes not working
+    type: Fix
+  id: 151801
+  time: '2025-09-05T01:48:45.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1518
 Order: -1
 
