@@ -4,7 +4,7 @@ using Content.Shared.Chemistry.EntitySystems;
 
 namespace Content.Shared.Trigger.Systems;
 
-public sealed class AddReagentOnTriggerSystem : EntitySystem
+public sealed class ReagentTriggerSystem : EntitySystem
 {
     [Dependency] private readonly SharedSolutionContainerSystem _solutionContainer = default!;
 
@@ -23,12 +23,9 @@ public sealed class AddReagentOnTriggerSystem : EntitySystem
         if (target == null)
             return;
 
-        if (!_solutionContainer.ResolveSolution(target.Value, ent.Comp.SolutionName, ref ent.Comp.SolutionRef, out var solution))
+        if (!_solutionContainer.TryGetSolution(target.Value, ent.Comp.SolutionId, out var solutionRef, out _))
             return;
 
-        foreach (var reagent in ent.Comp.Generated.Contents)
-        {
-            _solutionContainer.TryAddReagent(ent.Comp.SolutionRef.Value, reagent.Reagent.Prototype, reagent.Quantity, out _);
-        }
+        _solutionContainer.TryAddSolution(solutionRef.Value, ent.Comp.AddedSolution);
     }
 }
