@@ -82,6 +82,7 @@
                 <Label Text="{Loc 'chem-master-window-packaging-text'}" />
                 <Control HorizontalExpand="True"/>
                 <!-- Output Draw Source -->
+                <Label Name="DrawSource" Text="{Loc 'chem-master-output-source'}" StyleClasses="LabelSecondaryColor"/>
                 <Button MinSize="80 0" Name="OutputBufferDraw" Access="Public" Text="{Loc 'chem-master-output-buffer-draw'}" ToggleMode="True" StyleClasses="OpenRight" />
                 <Button MinSize="80 0" Name="OutputBeakerDraw" Access="Public" Text="{Loc 'chem-master-output-beaker-draw'}" ToggleMode="True" StyleClasses="OpenLeft" />
                 <Label Text="{Loc 'chem-master-window-buffer-label'}" />
