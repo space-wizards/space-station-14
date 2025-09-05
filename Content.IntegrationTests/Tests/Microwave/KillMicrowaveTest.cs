@@ -3,7 +3,6 @@ using Content.Shared.Kitchen;
 
 namespace Content.IntegrationTests.Tests.Microwave;
 
-[TestFixture]
 public sealed class KillMicrowaveTest
 {
     [Test]
