@@ -19,7 +19,7 @@ public sealed class KillMicrowaveTest
 
         if (recipesCount > recipesLimit)
         {
-            Assert.Fail($"PLEASE STOP ADDING NEW MICROWAVE RECIPES. THIS SHIT IS OBSOLETED! Keep it under {recipesLimit}. Current count: {recipesCount}");
+            Assert.Fail($"PLEASE STOP ADDING NEW MICROWAVE RECIPES. MICROWAVE RECIPES ARE FROZEN AND NEED TO BE REPLACED WITH PROPER COOKING MECHANICS! See https://github.com/space-wizards/space-station-14/issues/8524. Keep it under {recipesLimit}. Current count: {recipesCount}");
         }
 
         if (recipesCount < recipesLimit)
