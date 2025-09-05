@@ -258,6 +258,6 @@
   completetime: 2
   materials:
     Steel: 300
+    Glass: 300
     Plastic: 300
-    Gold: 300
     Silver: 300

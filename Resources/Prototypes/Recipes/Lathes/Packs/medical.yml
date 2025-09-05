@@ -85,7 +85,6 @@
   - HotplateMachineCircuitboard
 
 ## Dynamic
-
 - type: latheRecipePack
   id: HolographicRollerbeds
   recipes:
