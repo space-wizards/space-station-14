@@ -151,8 +151,7 @@ public sealed partial class DungeonJob
             if (found)
                 continue;
 
-            var ent = _entManager.SpawnEntity(gen.Entity, _maps.GridTileToLocal(_gridUid, _grid, tile));
-            AddLoadedEntity(tile, ent);
+            _entManager.SpawnEntity(gen.Entity, _maps.GridTileToLocal(_gridUid, _grid, tile));
         }
     }
 }

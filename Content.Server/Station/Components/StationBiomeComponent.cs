@@ -1,4 +1,5 @@
 using Content.Server.Station.Systems;
+using Content.Shared.Parallax.Biomes;
 using Robust.Shared.Prototypes;
 
 namespace Content.Server.Station.Components;
@@ -10,7 +11,7 @@ namespace Content.Server.Station.Components;
 public sealed partial class StationBiomeComponent : Component
 {
     [DataField(required: true)]
-    public EntProtoId Biome = "BiomeGrasslands";
+    public ProtoId<BiomeTemplatePrototype> Biome = "Grasslands";
 
     // If null, its random
     [DataField]

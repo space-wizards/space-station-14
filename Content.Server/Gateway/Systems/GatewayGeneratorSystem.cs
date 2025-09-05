@@ -1,11 +1,12 @@
 using System.Linq;
 using Content.Server.Gateway.Components;
+using Content.Server.Parallax;
 using Content.Server.Procedural;
 using Content.Shared.CCVar;
 using Content.Shared.Dataset;
 using Content.Shared.Maps;
+using Content.Shared.Parallax.Biomes;
 using Content.Shared.Procedural;
-using Content.Shared.Procedural.Components;
 using Content.Shared.Salvage;
 using Robust.Shared.Configuration;
 using Robust.Shared.Map;
@@ -35,8 +36,9 @@ public sealed class GatewayGeneratorSystem : EntitySystem
     [Dependency] private readonly SharedSalvageSystem _salvage = default!;
     [Dependency] private readonly TileSystem _tile = default!;
 
-    [ValidatePrototypeId<LocalizedDatasetPrototype>]
-    private const string PlanetNames = "NamesBorer";
+    private static readonly ProtoId<LocalizedDatasetPrototype> PlanetNames = "NamesBorer";
+    private static readonly ProtoId<BiomeTemplatePrototype> BiomeTemplate = "Continental";
+    private static readonly ProtoId<DungeonConfigPrototype> DungeonConfig = "Experiment";
 
     // TODO:
     // Fix shader some more
@@ -100,7 +102,7 @@ public sealed class GatewayGeneratorSystem : EntitySystem
         var random = new Random(seed);
         var mapUid = _maps.CreateMap();
 
-        var gatewayName = _salvage.GetFTLName(_protoManager.Index<LocalizedDatasetPrototype>(PlanetNames), seed);
+        var gatewayName = _salvage.GetFTLName(_protoManager.Index(PlanetNames), seed);
         _metadata.SetEntityName(mapUid, gatewayName);
 
         var origin = new Vector2i(random.Next(-MaxOffset, MaxOffset), random.Next(-MaxOffset, MaxOffset));
@@ -110,7 +112,7 @@ public sealed class GatewayGeneratorSystem : EntitySystem
         };
         AddComp(mapUid, restricted);
 
-        _biome.EnsurePlanet(mapUid, _protoManager.Index("BiomeContinental"), seed);
+        _biome.EnsurePlanet(mapUid, _protoManager.Index(BiomeTemplate), seed);
 
         var grid = Comp<MapGridComponent>(mapUid);
 
@@ -182,7 +184,7 @@ public sealed class GatewayGeneratorSystem : EntitySystem
         var dungeonRotation = _dungeon.GetDungeonRotation(seed);
         var dungeonPosition = (origin + dungeonRotation.RotateVec(new Vector2i(0, dungeonDistance))).Floored();
 
-        _dungeon.GenerateDungeon(_protoManager.Index<DungeonConfigPrototype>("Experiment"), args.MapUid, grid, dungeonPosition, seed);
+        _dungeon.GenerateDungeon(_protoManager.Index(DungeonConfig), args.MapUid, grid, dungeonPosition, seed);
 
         // TODO: Dungeon mobs + loot.
 
@@ -198,7 +200,7 @@ public sealed class GatewayGeneratorSystem : EntitySystem
                 var layer = lootLayers[layerIdx];
                 lootLayers.RemoveSwap(layerIdx);
 
-                _biome.AddLayer((ent.Owner, biomeComp), $"{layer.Id}-{i}", layer.Id);
+                _biome.AddMarkerLayer(ent.Owner, biomeComp, layer.Id);
             }
 
             // - Mobs
@@ -210,7 +212,7 @@ public sealed class GatewayGeneratorSystem : EntitySystem
                 var layer = mobLayers[layerIdx];
                 mobLayers.RemoveSwap(layerIdx);
 
-                _biome.AddLayer((ent.Owner, biomeComp), $"{layer.Id}-{i}", layer.Id);
+                _biome.AddMarkerLayer(ent.Owner, biomeComp, layer.Id);
             }
         }
     }

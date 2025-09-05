@@ -32,18 +32,11 @@ public sealed partial class DungeonJob
             if (reservedTiles.Contains(neighbor))
                 continue;
 
-            var tileVariant = _tile.GetVariantTile(tileDef, random);
-            _maps.SetTile(_gridUid, _grid, neighbor, tileVariant);
-            AddLoadedTile(neighbor, tileVariant);
+            _maps.SetTile(_gridUid, _grid, neighbor, _tile.GetVariantTile(tileDef, random));
             var gridPos = _maps.GridTileToLocal(_gridUid, _grid, neighbor);
             var protoNames = _entTable.GetSpawns(contents, random);
 
-            var uids = _entManager.SpawnEntitiesAttachedTo(gridPos, protoNames);
-
-            foreach (var uid in uids)
-            {
-                AddLoadedEntity(neighbor, uid);
-            }
+            _entManager.SpawnEntitiesAttachedTo(gridPos, protoNames);
 
             await SuspendDungeon();
             if (!ValidateResume())

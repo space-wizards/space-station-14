@@ -1,14 +1,12 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Numerics;
-using Content.Server.Decals;
 using Content.Server.Shuttles.Components;
 using Content.Server.Shuttles.Events;
 using Content.Server.Station.Events;
 using Content.Shared.Body.Components;
 using Content.Shared.CCVar;
 using Content.Shared.Database;
-using Content.Shared.Decals;
 using Content.Shared.Ghost;
 using Content.Shared.Maps;
 using Content.Shared.Parallax;
@@ -618,10 +616,7 @@ public sealed partial class ShuttleSystem
         {
             foreach (var child in toKnock)
             {
-                if (!_statusQuery.TryGetComponent(child, out var status))
-                    continue;
-
-                _stuns.TryParalyze(child, _hyperspaceKnockdownTime, true, status);
+                _stuns.TryUpdateParalyzeDuration(child, _hyperspaceKnockdownTime);
 
                 // If the guy we knocked down is on a spaced tile, throw them too
                 if (grid != null)
@@ -958,7 +953,6 @@ public sealed partial class ShuttleSystem
         var transform = _physics.GetRelativePhysicsTransform((uid, xform), xform.MapUid.Value);
         var aabbs = new List<Box2>(manager.Fixtures.Count);
         var tileSet = new List<(Vector2i, Tile)>();
-        TryComp(xform.MapUid.Value, out DecalGridComponent? decalGrid);
 
         foreach (var fixture in manager.Fixtures.Values)
         {
@@ -972,15 +966,9 @@ public sealed partial class ShuttleSystem
             aabb = aabb.Enlarged(0.2f);
             aabbs.Add(aabb);
 
-            if (decalGrid != null)
-            {
-                foreach (var decal in _decals.GetDecalsIntersecting(xform.MapUid.Value, aabb))
-                {
-                    _decals.RemoveDecal(xform.MapUid.Value, decal.Index, decalGrid);
-                }
-            }
-
+            // Handle clearing biome stuff as relevant.
             tileSet.Clear();
+            _biomes.ReserveTiles(xform.MapUid.Value, aabb, tileSet);
             _lookupEnts.Clear();
             _immuneEnts.Clear();
             // TODO: Ideally we'd query first BEFORE moving grid but needs adjustments above.

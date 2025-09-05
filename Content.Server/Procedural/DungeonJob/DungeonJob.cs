@@ -1,7 +1,8 @@
-using System.Numerics;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Content.Server.Decals;
+using Content.Server.NPC.Components;
 using Content.Server.NPC.HTN;
 using Content.Server.NPC.Systems;
 using Content.Server.Shuttles.Systems;
@@ -22,10 +23,11 @@ using Robust.Shared.Physics.Components;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Utility;
+using IDunGenLayer = Content.Shared.Procedural.IDunGenLayer;
 
 namespace Content.Server.Procedural.DungeonJob;
 
-public sealed partial class DungeonJob : Job<(List<Dungeon>, DungeonData)>
+public sealed partial class DungeonJob : Job<List<Dungeon>>
 {
     public bool TimeSlice = true;
 
@@ -58,10 +60,6 @@ public sealed partial class DungeonJob : Job<(List<Dungeon>, DungeonData)>
 
     private readonly ISawmill _sawmill;
 
-    private DungeonData _data = new();
-
-    private HashSet<Vector2i>? _reservedTiles;
-
     public DungeonJob(
         ISawmill sawmill,
         double maxTime,
@@ -81,14 +79,12 @@ public sealed partial class DungeonJob : Job<(List<Dungeon>, DungeonData)>
         int seed,
         Vector2i position,
         EntityCoordinates? targetCoordinates = null,
-        CancellationToken cancellation = default,
-        HashSet<Vector2i>? reservedTiles = null) : base(maxTime, cancellation)
+        CancellationToken cancellation = default) : base(maxTime, cancellation)
     {
         _sawmill = sawmill;
         _entManager = entManager;
         _prototype = prototype;
         _tileDefManager = tileDefManager;
-        _reservedTiles = reservedTiles;
 
         _anchorable = anchorable;
         _decals = decals;
@@ -115,18 +111,17 @@ public sealed partial class DungeonJob : Job<(List<Dungeon>, DungeonData)>
     /// <summary>
     /// Gets the relevant dungeon, running recursively as relevant.
     /// </summary>
-    /// <param name="reservedTiles">Should we reserve tiles even if the config doesn't specify.</param>
-    private async Task<(List<Dungeon>, HashSet<Vector2i>)> GetDungeons(
+    /// <param name="reserve">Should we reserve tiles even if the config doesn't specify.</param>
+    private async Task<List<Dungeon>> GetDungeons(
         Vector2i position,
         DungeonConfig config,
         List<IDunGenLayer> layers,
+        HashSet<Vector2i> reservedTiles,
         int seed,
         Random random,
-        HashSet<Vector2i>? reserved = null,
         List<Dungeon>? existing = null)
     {
         var dungeons = new List<Dungeon>();
-        var reservedTiles = reserved == null ? new HashSet<Vector2i>() : new HashSet<Vector2i>(reserved);
 
         // Don't pass dungeons back up the "stack". They are ref types though it's a caller problem if they start trying to mutate it.
         if (existing != null)
@@ -142,8 +137,8 @@ public sealed partial class DungeonJob : Job<(List<Dungeon>, DungeonData)>
 
             foreach (var layer in layers)
             {
-            	var dungCount = dungeons.Count;
-                await RunLayer(i, count, config, dungeons, position, layer, reservedTiles, seed, random);
+                var dungCount = dungeons.Count;
+                await RunLayer(dungeons, position, layer, reservedTiles, seed, random);
 
                 if (config.ReserveTiles)
                 {
@@ -157,23 +152,24 @@ public sealed partial class DungeonJob : Job<(List<Dungeon>, DungeonData)>
 
                 await SuspendDungeon();
                 if (!ValidateResume())
-                    return (new List<Dungeon>(), new HashSet<Vector2i>());
+                    return new List<Dungeon>();
             }
         }
 
-        // Only return the new dungeons and applicable reserved tiles.
-        return (dungeons[(existing?.Count ?? 0)..], config.ReturnReserved ? reservedTiles : new HashSet<Vector2i>());
+        return dungeons;
     }
 
-    protected override async Task<(List<Dungeon>, DungeonData)> Process()
+    protected override async Task<List<Dungeon>?> Process()
     {
         _sawmill.Info($"Generating dungeon {_gen} with seed {_seed} on {_entManager.ToPrettyString(_gridUid)}");
         _grid.CanSplit = false;
         var random = new Random(_seed);
-        var oldTileCount = _reservedTiles?.Count ?? 0;
         var position = (_position + random.NextPolarVector2(_gen.MinOffset, _gen.MaxOffset)).Floored();
 
-        var (dungeons, _) = await GetDungeons(position, _gen, _gen.Layers, _seed, random, reserved: _reservedTiles);
+        // Tiles we can no longer generate on due to being reserved elsewhere.
+        var reservedTiles = new HashSet<Vector2i>();
+
+        var dungeons = await GetDungeons(position, _gen, _gen.Layers, reservedTiles, _seed, random);
         // To make it slightly more deterministic treat this RNG as separate ig.
 
         // Post-processing after finishing loading.
@@ -185,7 +181,6 @@ public sealed partial class DungeonJob : Job<(List<Dungeon>, DungeonData)>
         }
 
         // Defer splitting so they don't get spammed and so we don't have to worry about tracking the grid along the way.
-        DebugTools.Assert(oldTileCount == (_reservedTiles?.Count ?? 0));
         _grid.CanSplit = true;
         _entManager.System<GridFixtureSystem>().CheckSplits(_gridUid);
         var npcSystem = _entManager.System<NPCSystem>();
@@ -199,13 +194,10 @@ public sealed partial class DungeonJob : Job<(List<Dungeon>, DungeonData)>
         }
 
         _sawmill.Info($"Finished generating dungeon {_gen} with seed {_seed}");
-        return (dungeons, _data);
+        return dungeons;
     }
 
     private async Task RunLayer(
-        int runCount,
-        int maxRuns,
-        DungeonConfig config,
         List<Dungeon> dungeons,
         Vector2i position,
         IDunGenLayer layer,
@@ -213,7 +205,7 @@ public sealed partial class DungeonJob : Job<(List<Dungeon>, DungeonData)>
         int seed,
         Random random)
     {
-        // _sawmill.Debug($"Doing postgen {layer.GetType()} for {_gen} with seed {_seed}");
+        _sawmill.Debug($"Doing postgen {layer.GetType()} for {_gen} with seed {_seed}");
 
         // If there's a way to just call the methods directly for the love of god tell me.
         // Some of these don't care about reservedtiles because they only operate on dungeon tiles (which should
@@ -227,11 +219,14 @@ public sealed partial class DungeonJob : Job<(List<Dungeon>, DungeonData)>
             case AutoCablingDunGen cabling:
                 await PostGen(cabling, dungeons[^1], reservedTiles, random);
                 break;
+            case BiomeMarkerLayerDunGen markerPost:
+                await PostGen(markerPost, dungeons[^1], reservedTiles, random);
+                break;
+            case BiomeDunGen biome:
+                await PostGen(biome, dungeons[^1], reservedTiles, random);
+                break;
             case BoundaryWallDunGen boundary:
                 await PostGen(boundary, dungeons[^1], reservedTiles, random);
-                break;
-            case ChunkDunGen chunk:
-                dungeons.Add(await PostGen(chunk, reservedTiles, random));
                 break;
             case CornerClutterDunGen clutter:
                 await PostGen(clutter, dungeons[^1], reservedTiles, random);
@@ -249,7 +244,7 @@ public sealed partial class DungeonJob : Job<(List<Dungeon>, DungeonData)>
                 await PostGen(flank, dungeons[^1], reservedTiles, random);
                 break;
             case ExteriorDunGen exterior:
-                dungeons.AddRange(await GenerateExteriorDungen(runCount, maxRuns, position, exterior, reservedTiles, random));
+                dungeons.AddRange(await GenerateExteriorDungen(position, exterior, reservedTiles, random));
                 break;
             case FillGridDunGen fill:
                 await GenerateFillDunGen(fill, dungeons, reservedTiles);
@@ -290,66 +285,26 @@ public sealed partial class DungeonJob : Job<(List<Dungeon>, DungeonData)>
             case PrototypeDunGen prototypo:
                 var groupConfig = _prototype.Index(prototypo.Proto);
                 position = (position + random.NextPolarVector2(groupConfig.MinOffset, groupConfig.MaxOffset)).Floored();
-                List<Dungeon>? inheritedDungeons = null;
-                HashSet<Vector2i>? inheritedReserved = null;
-
-                switch (prototypo.InheritReserved)
-                {
-                    case ReservedInheritance.All:
-                        inheritedReserved = new HashSet<Vector2i>(reservedTiles);
-                        break;
-                    case ReservedInheritance.None:
-                        break;
-                    default:
-                        throw new NotImplementedException();
-                }
 
                 switch (prototypo.InheritDungeons)
                 {
                     case DungeonInheritance.All:
-                        inheritedDungeons = dungeons;
+                        dungeons.AddRange(await GetDungeons(position, groupConfig, groupConfig.Layers, reservedTiles, seed, random, existing: dungeons));
                         break;
                     case DungeonInheritance.Last:
-                        inheritedDungeons = dungeons.GetRange(dungeons.Count - 1, 1);
+                        dungeons.AddRange(await GetDungeons(position, groupConfig, groupConfig.Layers, reservedTiles, seed, random, existing: dungeons.GetRange(dungeons.Count - 1, 1)));
                         break;
                     case DungeonInheritance.None:
+                        dungeons.AddRange(await GetDungeons(position, groupConfig, groupConfig.Layers, reservedTiles, seed, random));
                         break;
-                    default:
-                        throw new NotImplementedException();
-                }
-
-                var (newDungeons, newReserved) = await GetDungeons(position,
-                    groupConfig,
-                    groupConfig.Layers,
-                    seed,
-                    random,
-                    reserved: inheritedReserved,
-                    existing: inheritedDungeons);
-                dungeons.AddRange(newDungeons);
-
-                if (groupConfig.ReturnReserved)
-                {
-                    reservedTiles.UnionWith(newReserved);
                 }
 
                 break;
             case ReplaceTileDunGen replace:
                 await GenerateTileReplacementDunGen(replace, dungeons, reservedTiles, random);
                 break;
-            case RoofDunGen roof:
-                await RoofGen(roof, dungeons, reservedTiles, random);
-                break;
             case RoomEntranceDunGen rEntrance:
                 await PostGen(rEntrance, dungeons[^1], reservedTiles, random);
-                break;
-            case SampleDecalDunGen sdec:
-                await PostGen(sdec, dungeons, reservedTiles, random);
-                break;
-            case SampleEntityDunGen sent:
-                await PostGen(sent, dungeons, reservedTiles, random);
-                break;
-            case SampleTileDunGen stile:
-                await PostGen(stile, dungeons, reservedTiles, random);
                 break;
             case SplineDungeonConnectorDunGen spline:
                 dungeons.Add(await PostGen(spline, dungeons, reservedTiles, random));
@@ -363,6 +318,11 @@ public sealed partial class DungeonJob : Job<(List<Dungeon>, DungeonData)>
             default:
                 throw new NotImplementedException();
         }
+    }
+
+    private void LogDataError(Type type)
+    {
+        _sawmill.Error($"Unable to find dungeon data keys for {type}");
     }
 
     [Pure]
@@ -385,20 +345,5 @@ public sealed partial class DungeonJob : Job<(List<Dungeon>, DungeonData)>
             return;
 
         await SuspendIfOutOfTime();
-    }
-
-    private void AddLoadedEntity(Vector2i tile, EntityUid ent)
-    {
-        _data.Entities[ent] = tile;
-    }
-
-    private void AddLoadedDecal(Vector2 tile, uint decal)
-    {
-        _data.Decals[decal] = tile;
-    }
-
-    private void AddLoadedTile(Vector2i index, Tile tile)
-    {
-        _data.Tiles[index] = tile;
     }
 }

@@ -5,7 +5,7 @@
         "y": 32
     },
     "license": "CC-BY-SA-3.0",
-    "copyright": "Taken from tgstation at commit https://github.com/tgstation/tgstation/commit/f8f4aeda930fcd0805ca4cc76d9bc9412a5b3428",
+    "copyright": "Taken from tgstation at commit https://github.com/tgstation/tgstation/commit/f8f4aeda930fcd0805ca4cc76d9bc9412a5b3428, cart_goldenplunger modified from cart_plunger by TiniestShark (github)",
     "states": [
         {
             "name": "cart",
@@ -53,6 +53,10 @@
         },
 		{
             "name": "cart_plunger",
+            "directions": 4
+        },
+        {
+            "name": "cart_goldenplunger",
             "directions": 4
         },
         {
