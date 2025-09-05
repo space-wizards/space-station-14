@@ -1,5 +1,6 @@
 using System.Linq;
 using Content.Server.Administration;
+using Content.Server.Administration.Systems;
 using Content.Server.Chat.Managers;
 using Content.Server.Radio.Components;
 using Content.Server.Station.Systems;
@@ -25,6 +26,7 @@ namespace Content.Server.Silicons.Laws;
 /// <inheritdoc/>
 public sealed class SiliconLawSystem : SharedSiliconLawSystem
 {
+    [Dependency] private readonly AdminSystem _admin = default!;
     [Dependency] private readonly IChatManager _chatManager = default!;
     [Dependency] private readonly SharedMindSystem _mind = default!;
     [Dependency] private readonly IPrototypeManager _prototype = default!;
@@ -142,8 +144,8 @@ public sealed class SiliconLawSystem : SharedSiliconLawSystem
 
             //Update subtype
             component.Lawset.Subtype = LawsetIon;
-
-            //TODO:ERRANT Need to trigger a PlayerInfo update
+            if (TryComp<ActorComponent>(uid, out var actor))
+                _admin.UpdatePlayerList(actor.PlayerSession);
 
             // gotta tell player to check their laws
             NotifyLawsChanged(uid, component.LawUploadSound);
@@ -168,15 +170,8 @@ public sealed class SiliconLawSystem : SharedSiliconLawSystem
 
         // Change displayed subtype
         component.Lawset.Subtype = LawsetEmagged;
-
-        //TODO:ERRANT Need to trigger a PlayerInfo update
-        _mind.TryGetMind(uid, out var mindEnt, out var mind);
-        if (mind is not null)
-        {
-            var ev = new RoleAddedEvent(mindEnt, mind, true);
-            RaiseLocalEvent(mindEnt, ev);
-        }
-
+        if (TryComp<ActorComponent>(uid, out var actor))
+            _admin.UpdatePlayerList(actor.PlayerSession);
 
         // Add the first emag law before the others
         component.Lawset?.Laws.Insert(0, new SiliconLaw
