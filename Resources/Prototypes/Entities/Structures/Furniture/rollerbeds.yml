@@ -2,7 +2,7 @@
   id: RollerBed
   parent: [BaseItem, BaseDeployFoldable]
   name: rollerbed
-  description: Used to carry patients around without damaging them, slightly stabilizing those in critical condition.
+  description: Used to carry patients around without damaging them, stabilizing those in critical condition.
   components:
     - type: Transform
       noRot: true
@@ -155,13 +155,13 @@
   parent: RollerBed
   id: RollerBedHolo
   name: holographic rollerbed
-  description: Used to float patients frictionlessly to safety, stabilizing those in critical condition.
+  description: Used to float patients frictionlessly to safety, stabilizing and reducing the bleeding of those in critical condition.
   components:
   - type: Item
     size: Small
   - type: StabilizeOnBuckle
     efficiency: 1
-    reducesBleeding: 3 # Stops full bleeding in 10 seconds, one per second.
+    reducesBleeding: 3 # Stops full bleeding in 10 seconds, one stack per second.
   - type: Strap
     buckleOffset: "0,0.05"
   - type: Fixtures

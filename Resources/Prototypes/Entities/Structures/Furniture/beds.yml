@@ -68,7 +68,7 @@
   parent: Bed
   id: MedicalBed
   name: medical bed
-  description: A hospital bed for patients to recover in. Resting here provides fairly slow healing, while slightly stabilizing patients in critical condition.
+  description: A hospital bed for patients to recover in. Resting here provides fairly slow healing, while stabilizing patients in critical condition.
   components:
   - type: Sprite
     state: bed-MED
