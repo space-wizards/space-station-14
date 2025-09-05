@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: perryprog
-  changes:
-  - message: Shelves built from the construction menu can now be placed in all orientations.
-    type: Fix
-  id: 8419
-  time: '2025-05-04T22:42:21.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/37186
 - author: brainfood1183
   changes:
   - message: A stack of Whoopie Cushions no longer launches you into oblivion!
@@ -3943,3 +3936,10 @@
   id: 8930
   time: '2025-09-05T10:43:17.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/37539
+- author: IProduceWidgets
+  changes:
+  - message: Pride pins can now chameleon to any other pride pin!
+    type: Tweak
+  id: 8931
+  time: '2025-09-05T15:55:54.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/36894
