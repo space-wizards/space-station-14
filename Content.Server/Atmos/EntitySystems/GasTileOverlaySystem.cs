@@ -213,7 +213,7 @@ namespace Content.Server.Atmos.EntitySystems
         /// <summary>
         ///     Updates the visuals for a tile on some grid chunk. Returns true if the visuals have changed.
         /// </summary>
-        [Access(typeof(GasTileOverlaySystem), typeof(UpdateGridOverlayJob))]
+        [Access(typeof(UpdateGridOverlayJob))]
         public bool UpdateChunkTile(GridAtmosphereComponent gridAtmosphere, GasOverlayChunk chunk, Vector2i index)
         {
             ref var oldData = ref chunk.TileData[chunk.GetDataIndex(index)];
