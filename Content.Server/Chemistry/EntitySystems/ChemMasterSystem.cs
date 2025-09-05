@@ -295,7 +295,7 @@ namespace Content.Server.Chemistry.EntitySystems
         {
             outputSolution = null;
 
-            Solution? solution = null;
+            Solution? solution;
             Entity<SolutionComponent>? soln = null;
 
             switch (chemMaster.Comp.DrawSource)
@@ -365,7 +365,7 @@ namespace Content.Server.Chemistry.EntitySystems
 
             outputSolution = solution.SplitSolution(neededVolume);
             if (soln.HasValue)
-                _solutionContainerSystem.UpdateChemicals(soln.Value, false);
+                _solutionContainerSystem.UpdateChemicals(soln.Value);
             return true;
         }
 
