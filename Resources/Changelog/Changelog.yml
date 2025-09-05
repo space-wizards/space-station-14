@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: spanky-spanky
-  changes:
-  - message: On Fland, modified security to include genpop.
-    type: Add
-  id: 8421
-  time: '2025-05-06T01:29:18.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/37207
 - author: B-Kirill
   changes:
   - message: Added a search by profession and species in station records.
@@ -3943,3 +3936,10 @@
   id: 8932
   time: '2025-09-05T16:23:06.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/38424
+- author: IProduceWidgets
+  changes:
+  - message: You can drink out of the toilets.
+    type: Add
+  id: 8933
+  time: '2025-09-05T20:03:10.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/40133
