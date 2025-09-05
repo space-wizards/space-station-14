@@ -76,6 +76,17 @@ namespace Content.IntegrationTests.Tests
             "Relic",
             "dm01-entryway",
             "Exo",
+            "dm01-entryway",
+            "Barratry",
+            "ChristmasHotel",
+            "ChristmasLobster",
+            "ChristmasManor",
+            "ChristmasOrwell",
+            "Cork",
+            "Kiloton",
+            "Lagan",
+            "Lobster",
+            "Manor",
         };
 
         private static readonly ProtoId<EntityCategoryPrototype> DoNotMapCategory = "DoNotMap";

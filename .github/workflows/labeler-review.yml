@@ -1,40 +1,99 @@
 name: "Labels: Review"
+
 on:
-  pull_request_review:
-    types: [submitted]
+  pull_request_target:
+    types: [opened, reopened, synchronize, ready_for_review, edited, review_requested, review_request_removed]
+
 jobs:
-  add_label_approved: # Approved by team member
-    # Change the repository name after you've made sure the team name is correct for your fork!
-    if: ${{ (github.repository == 'ss14Starlight/space-station-14') && (github.event.review.state == 'APPROVED') }}
-    permissions:
-      contents: read
-      pull-requests: write
+  collect_reviews:
     runs-on: ubuntu-latest
+    outputs:
+      approved: ${{ steps.reviews_parsed.outputs.approved }}
+      changes_requested: ${{ steps.reviews_parsed.outputs.changes_requested }}
+      commented: ${{ steps.reviews_parsed.outputs.commented }}
     steps:
-    - uses: tspascoal/get-user-teams-membership@v3
-      id: checkUserMember
-      with:
-        username: ${{ github.actor }}
-        team: "maintainer,dev"
-        GITHUB_TOKEN: ${{ secrets.LABELER_PAT }}
-    - if: ${{ steps.checkUserMember.outputs.isTeamMember == 'true' }}
-      uses: actions-ecosystem/action-add-labels@v1
-      with:
-        labels: "S: Approved"
-  add_label_awaiting_changes: # Changes requested by team member
-    if: ${{ (github.repository == 'ss14Starlight/space-station-14') && (github.event.review.state == 'CHANGES_REQUESTED') }}
-    permissions:
-      contents: read
-      pull-requests: write
+      - name: Get latest reviews
+        id: reviews
+        run: |
+          reviews=$(curl -s -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
+            https://api.github.com/repos/${{ github.repository }}/pulls/${{ github.event.pull_request.number }}/reviews \
+            | jq -c '
+              sort_by(.submitted_at)
+              | group_by(.user.login)
+              | map(last)
+            ')
+          echo "reviews=$reviews" >> $GITHUB_OUTPUT
+
+      - name: Parse reviewers by state
+        id: reviews_parsed
+        run: |
+          approved=$(echo '${{ steps.reviews.outputs.reviews }}' \
+            | jq -c '[ map(select(.state=="APPROVED")) | map(.user.login) ]')
+          changes_requested=$(echo '${{ steps.reviews.outputs.reviews }}' \
+            | jq -c '[ map(select(.state=="CHANGES_REQUESTED")) | map(.user.login) ]')
+          commented=$(echo '${{ steps.reviews.outputs.reviews }}' \
+            | jq -c '[ map(select(.state=="COMMENTED")) | map(.user.login) ]')
+
+          echo "approved=$approved" >> $GITHUB_OUTPUT
+          echo "changes_requested=$changes_requested" >> $GITHUB_OUTPUT
+          echo "commented=$commented" >> $GITHUB_OUTPUT
+
+  check_approved:
+    needs: collect_reviews
+    if: needs.collect_reviews.outputs.approved != '[]'
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        user: ${{ fromJSON(needs.collect_reviews.outputs.approved) }}
     steps:
-    - uses: tspascoal/get-user-teams-membership@v3
-      id: checkUserMember
-      with:
-        username: ${{ github.actor }}
-        team: "maintainer,dev"
-        GITHUB_TOKEN: ${{ secrets.LABELER_PAT }}
-    - if: ${{ steps.checkUserMember.outputs.isTeamMember == 'true' }}
-      uses: actions-ecosystem/action-add-labels@v1
-      with:
-        labels: "S: Awaiting Changes"
+      - uses: tspascoal/get-user-teams-membership@v3
+        id: membership
+        with:
+          username: ${{ matrix.user }}
+          team: "maintainer,dev"
+          GITHUB_TOKEN: ${{ secrets.LABELER_PAT }}
+
+      - name: Mark if approved by team
+        if: steps.membership.outputs.isTeamMember == 'true'
+        run: echo "approved_by_team=true" >> $GITHUB_ENV
+
+  add_label_approved:
+    needs: check_approved
+    if: env.approved_by_team == 'true'
+    runs-on: ubuntu-latest
+    permissions:
+      pull-requests: write
+    steps:
+      - uses: actions-ecosystem/action-add-labels@v1
+        with:
+          labels: "S: Approved"
+
+  check_changes_requested:
+    needs: collect_reviews
+    if: needs.collect_reviews.outputs.changes_requested != '[]'
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        user: ${{ fromJSON(needs.collect_reviews.outputs.changes_requested) }}
+    steps:
+      - uses: tspascoal/get-user-teams-membership@v3
+        id: membership
+        with:
+          username: ${{ matrix.user }}
+          team: "maintainer,dev"
+          GITHUB_TOKEN: ${{ secrets.LABELER_PAT }}
+
+      - name: Mark if changes requested by team
+        if: steps.membership.outputs.isTeamMember == 'true'
+        run: echo "changes_by_team=true" >> $GITHUB_ENV
+
+  add_label_changes:
+    needs: check_changes_requested
+    if: env.changes_by_team == 'true'
+    runs-on: ubuntu-latest
+    permissions:
+      pull-requests: write
+    steps:
+      - uses: actions-ecosystem/action-add-labels@v1
+        with:
+          labels: "S: Awaiting Changes"

@@ -28,3 +28,14 @@
     back:
     - MailTrolleyFlatpack
     - Multitool #maybe not a good idea? idk makes unpacking it quick
+
+- type: chameleonOutfit
+  id: MailTechChameleonOutfit
+  job: MailTech
+  equipment:
+    head: ClothingHeadHatCargosoft
+    eyes: ClothingEyesGlassesCheapSunglasses
+    mask: ClothingMaskBreath
+    outerClothing: ClothingOuterWinterCargo
+    neck: ClothingNeckScarfStripedBrown
+    gloves: ClothingHandsGlovesFingerless

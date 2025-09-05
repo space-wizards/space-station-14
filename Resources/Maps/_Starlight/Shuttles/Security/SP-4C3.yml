@@ -244,8 +244,6 @@ entities:
       pos: -3.5,1.5
       parent: 1
     - type: DeviceNetwork
-      configurators:
-      - invalid
       deviceLists:
       - 63
   - uid: 66
@@ -254,8 +252,6 @@ entities:
       pos: -3.5,9.5
       parent: 1
     - type: DeviceNetwork
-      configurators:
-      - invalid
       deviceLists:
       - 63
 - proto: APCBasic
@@ -727,8 +723,6 @@ entities:
     - type: VentCrawTube
       connected: True
     - type: DeviceNetwork
-      configurators:
-      - invalid
       deviceLists:
       - 63
     - type: AtmosPipeColor
@@ -742,8 +736,6 @@ entities:
     - type: VentCrawTube
       connected: True
     - type: DeviceNetwork
-      configurators:
-      - invalid
       deviceLists:
       - 63
     - type: AtmosPipeColor
@@ -759,8 +751,6 @@ entities:
     - type: VentCrawTube
       connected: True
     - type: DeviceNetwork
-      configurators:
-      - invalid
       deviceLists:
       - 63
     - type: AtmosPipeColor
@@ -774,8 +764,6 @@ entities:
     - type: VentCrawTube
       connected: True
     - type: DeviceNetwork
-      configurators:
-      - invalid
       deviceLists:
       - 63
     - type: AtmosPipeColor
