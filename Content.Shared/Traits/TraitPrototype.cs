@@ -85,5 +85,11 @@ public sealed partial class TraitPrototype : IPrototype
     /// </summary>
     [DataField]
     public List<string>? RemoveLanguagesUnderstood { get; private set; } = default!;
+
+    /// <summary>
+    ///     Background of a player, metashield info.
+    /// </summary>
+    [DataField]
+    public string Background { get; private set; } = default!;
     // Starlight - End
 }
