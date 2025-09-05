@@ -246,8 +246,7 @@ namespace Content.Server.Chemistry.EntitySystems
                 Dirty(item, pill);
 
                 // Log pill creation by a user
-                _adminLogger.Add(LogType.Action,
-                    LogImpact.Low,
+                _adminLogger.Add(LogType.Action, LogImpact.Low,
                     $"{ToPrettyString(user):user} printed {ToPrettyString(item):pill} {SharedSolutionContainerSystem.ToPrettyString(itemSolution.Value.Comp.Solution)}");
             }
 
