@@ -490,7 +490,7 @@
     showExamineText: false
     clumsyProof: true
     projectileSpeed: 10 #idk gotta dial it in
-    firerate: 0.5
+    fireRate: 0.5
   - type: RechargeBasicEntityAmmo
     rechargeSound: null
     rechargeCooldown: 0.5
