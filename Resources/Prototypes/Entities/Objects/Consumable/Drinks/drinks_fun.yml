@@ -1,6 +1,6 @@
 - type: entity
   abstract: true
-  parent: [ DrinkBaseMaterialPlastic, DrinkBase, DrinkBaseOpenable, DrinkVisualsOpenable ] # todo Should use DrinkVisualAll, but sprite has no inhand
+  parent: [ DrinkBaseMaterialPlastic, DrinkBase, DrinkBaseOpenable, DrinkVisualsAllFilled ]
   id: BaseSqueezeBottle
   components:
   - type: Openable
@@ -20,12 +20,15 @@
         maxVol: 30
   - type: SolutionContainerVisuals
     maxFillLevels: 6
-    fillBaseName: fill
+    fillBaseName: fill # TODO rename to "fill-"
+  - type: GenericVisualizer
+    visuals:
+      enum.OpenableVisuals.Opened:
+        enum.OpenableVisuals.Layer:
+          True: {state: "icon_open"}
+          False: {state: "icon"}
   - type: TrashOnSolutionEmpty
     solution: drink
-  - type: ExaminableSolution # Remove when DrinkVisualAll is added
-    examinableWhileClosed: true
-    heldOnly: false
 
 - type: entity
   parent: BaseSqueezeBottle

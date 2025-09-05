@@ -18,7 +18,7 @@
   - type: Edible
     edible: Drink # Namesake. This entity is a sort of cup you can drink directly from.
     destroyOnEmpty: false
-    utensil: None
+    utensil: None # Spoons don't fit in cups, also conflicts with bar spoon stirring
     solution: &sol drink # solution name alias
   - type: Spillable
     solution: *sol
@@ -81,16 +81,17 @@
   parent: DrinkBaseOpenable
   id: DrinkBaseOpenableOpen
   components:
-  - type: Sprite
-    layers:
-    - state: icon_open
-      map: ["enum.OpenableVisuals.Layer"]
   - type: Openable
     opened: true
   - type: Sealable
     sealed: false
+#  - type: Sprite # Needs to be done manually, since most drinks have more than one layer. Or just let the visualizer handle it
+#    layers:
+#    - state: icon_open
+#      map: ["enum.OpenableVisuals.Layer"]
 
 ## Bases for visuals
+# TODO standardize state names for fill levels and openable visuals
 
 # Basic visualizer for an openable entity. Requires DrinkBaseOpenable
 - type: entity
