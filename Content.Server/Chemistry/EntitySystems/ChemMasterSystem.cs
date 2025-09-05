@@ -273,7 +273,7 @@ namespace Content.Server.Chemistry.EntitySystems
             if (message.Label.Length > SharedChemMaster.LabelMaxLength)
                 return;
 
-            if (!WithdrawFromBuffer(chemMaster, message.Dosage, user, out var withdrawal))
+            if (!WithdrawFromSource(chemMaster, message.Dosage, user, out var withdrawal))
                 return;
 
             _labelSystem.Label(container, message.Label);
@@ -287,37 +287,6 @@ namespace Content.Server.Chemistry.EntitySystems
             ClickSound(chemMaster);
         }
 
-        private bool WithdrawFromBuffer(
-            Entity<ChemMasterComponent> chemMaster,
-            FixedPoint2 neededVolume, EntityUid? user,
-            [NotNullWhen(returnValue: true)] out Solution? outputSolution)
-        {
-            outputSolution = null;
-
-            if (!_solutionContainerSystem.TryGetSolution(chemMaster.Owner, SharedChemMaster.BufferSolutionName, out _, out var solution))
-            {
-                return false;
-            }
-
-            if (solution.Volume == 0)
-            {
-                if (user.HasValue)
-                    _popupSystem.PopupCursor(Loc.GetString("chem-master-window-buffer-empty-text"), user.Value);
-                return false;
-            }
-
-            // ReSharper disable once InvertIf
-            if (neededVolume > solution.Volume)
-            {
-                if (user.HasValue)
-                    _popupSystem.PopupCursor(Loc.GetString("chem-master-window-buffer-low-text"), user.Value);
-                return false;
-            }
-
-            outputSolution = solution.SplitSolution(neededVolume);
-            return true;
-        }
-
         private bool WithdrawFromSource(
             Entity<ChemMasterComponent> chemMaster,
             FixedPoint2 neededVolume,
@@ -327,6 +296,7 @@ namespace Content.Server.Chemistry.EntitySystems
             outputSolution = null;
 
             Solution? solution = null;
+            Entity<SolutionComponent>? soln = null;
 
             switch (chemMaster.Comp.DrawSource)
             {
@@ -335,6 +305,7 @@ namespace Content.Server.Chemistry.EntitySystems
                     {
                         return false;
                     }
+
                     break;
 
                 case ChemMasterDrawSource.External:
@@ -345,10 +316,11 @@ namespace Content.Server.Chemistry.EntitySystems
                             _popupSystem.PopupCursor(Loc.GetString("chem-master-window-no-beaker-text"), user.Value);
                         return false;
                     }
-                    if (!_solutionContainerSystem.TryGetFitsInDispenser(container.Value, out _, out solution))
+                    if (!_solutionContainerSystem.TryGetFitsInDispenser(container.Value, out soln, out solution))
                     {
                         return false;
                     }
+
                     break;
 
                 default:
@@ -392,6 +364,8 @@ namespace Content.Server.Chemistry.EntitySystems
             }
 
             outputSolution = solution.SplitSolution(neededVolume);
+            if (soln.HasValue)
+                _solutionContainerSystem.UpdateChemicals(soln.Value, false);
             return true;
         }
 
