@@ -15,9 +15,17 @@ public sealed class KillMicrowaveTest
         var protoMan = server.ProtoMan;
 
         var recipesCount = protoMan.EnumeratePrototypes<FoodRecipePrototype>().Count();
-        var recipesLimit = 218; //Current count as of 2025-09-05
+        var recipesLimit = 218;
 
-        Assert.That(recipesCount <= recipesLimit, $"PLEASE STOP ADDING NEW MICROWAVE RECIPES. THIS SHIT IS OBSOLETED! Keep it under {recipesLimit}. Current count: {recipesCount}");
+        if (recipesCount > recipesLimit)
+        {
+            Assert.Fail($"PLEASE STOP ADDING NEW MICROWAVE RECIPES. THIS SHIT IS OBSOLETED! Keep it under {recipesLimit}. Current count: {recipesCount}");
+        }
+
+        if (recipesCount < recipesLimit)
+        {
+            Assert.Fail($"Oh, you deleted the microwave recipes? YOU ARE SO COOL! Please lower the number of recipes in KillMicrowaveTest from {recipesLimit} to {recipesCount} so that future contributors cannot add new recipes back.");
+        }
 
         await pair.CleanReturnAsync();
     }
