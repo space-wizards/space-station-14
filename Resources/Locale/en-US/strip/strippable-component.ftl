@@ -10,6 +10,8 @@ strippable-component-alert-owner = {CAPITALIZE(THE($user))} is removing your {$i
 strippable-component-alert-owner-hidden = You feel someone fumbling in your {$slot}!
 strippable-component-alert-owner-insert = {CAPITALIZE(THE($user))} is putting {INDEFINITE($item)} {$item} on you!
 strippable-component-alert-owner-insert-hand = {CAPITALIZE(THE($user))} is putting {INDEFINITE($item)} {$item} in your hand!
+strippable-component-alert-force-unequip = {CAPITALIZE(THE($user))} has stripped you of {$item}!
+strippable-component-alert-force-equip = {CAPITALIZE(THE($user))} has given you {$item}!
 
 # generic warning for when a user interacts with your equipped items.
 strippable-component-alert-owner-interact = {CAPITALIZE(THE($user))} is fumbling around with your {$item}!
