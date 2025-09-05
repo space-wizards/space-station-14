@@ -27,7 +27,7 @@ public sealed class ContrabandTest
                     if (!proto.TryGetComponent<ContrabandComponent>(out var contraband, componentFactory))
                         continue;
 
-                    Assert.That(protoMan.Resolve(contraband.Severity, out var severity),
+                    Assert.That(protoMan.TryIndex(contraband.Severity, out var severity),
                         @$"{proto.ID} has a ContrabandComponent with a unknown severity.");
 
                     if (!severity.ShowDepartmentsAndJobs)

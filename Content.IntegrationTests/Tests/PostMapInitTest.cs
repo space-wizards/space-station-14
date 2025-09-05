@@ -266,7 +266,7 @@ namespace Content.IntegrationTests.Tests
                     var protoId = yamlEntity["proto"].AsString();
 
                     // This doesn't properly handle prototype migrations, but thats not a significant issue.
-                    if (!protoManager.Resolve(protoId, out var proto))
+                    if (!protoManager.TryIndex(protoId, out var proto))
                         continue;
 
                     Assert.That(!proto.Categories.Contains(dnmCategory),
