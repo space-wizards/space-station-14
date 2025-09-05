@@ -68,7 +68,7 @@
   parent: Bed
   id: MedicalBed
   name: medical bed
-  description: A hospital bed for patients to recover in. Resting here provides fairly slow healing.
+  description: A hospital bed for patients to recover in. Resting here provides fairly slow healing, while slightly stabilizing patients in critical condition.
   components:
   - type: Sprite
     state: bed-MED
@@ -78,6 +78,8 @@
         Poison: -0.2
         Cold: -0.4
         Blunt: -0.2
+  - type: StabilizeOnBuckle
+    efficiency: 0.3
   - type: Construction
     graph: bed
     node: medicalbed

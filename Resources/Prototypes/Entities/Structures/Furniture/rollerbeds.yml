@@ -2,7 +2,7 @@
   id: RollerBed
   parent: [BaseItem, BaseDeployFoldable]
   name: rollerbed
-  description: Used to carry patients around without damaging them.
+  description: Used to carry patients around without damaging them, slightly stabilizing those in critical condition.
   components:
     - type: Transform
       noRot: true
@@ -33,7 +33,7 @@
           shape:
             !type:PhysShapeCircle
             radius: 0.35
-          density: 80
+          density: 20
           mask:
           - MobMask
     - type: Damageable
@@ -62,6 +62,8 @@
       rotation: -90
       buckleOffset: "0,0.15"
       buckleOnInteractHand: False
+    - type: StabilizeOnBuckle
+      efficiency: 0.3
     - type: Appearance
     - type: GenericVisualizer
       visuals:
@@ -107,7 +109,6 @@
     - state: cheap_rollerbed_buckled
       map: ["buckledLayer"]
       visible: false
-  - type: Appearance
 
 - type: entity
   parent: CheapRollerBed
@@ -137,7 +138,6 @@
     - state: emergency_rollerbed_buckled
       map: ["buckledLayer"]
       visible: false
-  - type: Appearance
 
 - type: entity
   parent: EmergencyRollerBed
