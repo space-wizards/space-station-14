@@ -133,7 +133,7 @@ public sealed class JobRequirementsTest
         var priorities = new Dictionary<ProtoId<JobPrototype>, JobPriority>
         {
             { wantedJob, JobPriority.High },
-            { "Passenger", JobPriority.Low },
+            { "Assistant", JobPriority.Low },
         };
 
         await pair.Client.WaitAssertion(() =>
@@ -154,7 +154,7 @@ public sealed class JobRequirementsTest
         await pair.Server.WaitPost(() => ticker.StartRound());
         await pair.RunTicksSync(10);
 
-        pair.AssertJob(expectedJob ? wantedJob : "Passenger");
+        pair.AssertJob(expectedJob ? wantedJob : "Assistant");
 
         await pair.Server.WaitPost(() => ticker.RestartRound());
         await pair.CleanReturnAsync();
@@ -275,7 +275,7 @@ public sealed class JobRequirementsTest
         await pair.Server.WaitPost(() => ticker.StartRound());
         await pair.RunTicksSync(10);
 
-        pair.AssertJob(expectedJob ? wantedJob : "Passenger");
+        pair.AssertJob(expectedJob ? wantedJob : "Assistant");
 
         await pair.Server.WaitPost(() => ticker.RestartRound());
         await pair.CleanReturnAsync();

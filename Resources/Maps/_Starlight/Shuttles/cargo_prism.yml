@@ -29,7 +29,6 @@ entities:
       name: Cargo Shuttle
     - type: Transform
       pos: 88.40116,75.02753
-      parent: invalid
     - type: MapGrid
       chunks:
         0,0:
@@ -984,8 +983,6 @@ entities:
       pos: 0.5,4.5
       parent: 1
     - type: DeviceNetwork
-      configurators:
-      - invalid
       deviceLists:
       - 4
 - proto: GasPassiveVent
