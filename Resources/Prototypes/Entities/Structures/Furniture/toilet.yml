@@ -101,6 +101,7 @@
   - type: DumpableSolution
     solution: drainBuffer
   - type: Edible
+    edible: Drink
     solution: tank
     destroyOnEmpty: false
     utensil: Spoon
