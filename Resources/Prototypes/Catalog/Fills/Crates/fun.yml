@@ -331,6 +331,19 @@
         amount: 2
 
 - type: entity
+  id: CrateFunCapGuns
+  parent: CratePlastic
+  name: cap gun crate
+  description: Face your foes at high noon with this set of two cap guns! Extra ammo included.
+  components:
+  - type: StorageFill
+    contents:
+    - id: RevolverCapGun
+      amount: 2
+    - id: BoxCartridgeCap
+      amount: 2
+
+- type: entity
   id: CrateFunWaterGuns
   parent: CratePlastic
   name: water gun crate

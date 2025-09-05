@@ -79,6 +79,16 @@
   group: market
 
 - type: cargoProduct
+  id: CrateFunCapGuns
+  icon:
+    sprite: Objects/Fun/capgun.rsi
+    state: icon
+  product: CrateFunCapGuns
+  cost: 750
+  category: cargoproduct-category-name-fun
+  group: market
+
+- type: cargoProduct
   id: CrateFunWaterGuns
   icon:
     sprite: Objects/Weapons/Guns/Pistols/water_pistol.rsi
