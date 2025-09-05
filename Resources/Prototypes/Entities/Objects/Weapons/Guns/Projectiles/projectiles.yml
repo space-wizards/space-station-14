@@ -992,9 +992,11 @@
         - Impassable
         - BulletImpassable
   - type: Sprite
-    sprite: Objects/Fun/tennisball.rsi
+    sprite: Objects/Fun/Balls/tennisball.rsi
     layers:
       - state: icon
+  - type: Ammo
+    muzzleFlash: null
   - type: Projectile
     deleteOnCollide: true
     damage:

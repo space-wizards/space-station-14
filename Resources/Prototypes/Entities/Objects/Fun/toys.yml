@@ -483,13 +483,13 @@
     size: Small
     sprite: Objects/Fun/Balls/tennisball.rsi
   - type: Gun
-    soundGunShot: null
+    soundGunshot: null
     soundEmpty: null
     soundMode: null
     cameraRecoilScalar: 0
     showExamineText: false
     clumsyProof: true
-    projectileSpeed: 8 #idk gotta dial in
+    projectileSpeed: 10 #idk gotta dial it in
     firerate: 0.5
   - type: RechargeBasicEntityAmmo
     rechargeSound: null
