@@ -13254,5 +13254,12 @@ Entries:
   id: 153501
   time: '2025-09-05T02:37:37.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/1535
+- author: STARLIGHT TEAM
+  changes:
+  - message: Changed Starlight logo.
+    type: Tweak
+  id: 155700
+  time: '2025-09-05T18:15:01.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1557
 Order: -1
 
