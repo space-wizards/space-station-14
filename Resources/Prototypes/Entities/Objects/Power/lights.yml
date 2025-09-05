@@ -258,7 +258,7 @@
   description: A halogen light fixture.
   components:
   - type: LightBulb
-    color: "#FFBF80" # halogens are orange-2500K temp
+    color: "#FFBF80" # halogens are orange-3500K temp
     lightEnergy: 0.9
     lightRadius: 10
     lightSoftness: 1
