@@ -2,6 +2,7 @@
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Content.Server.Administration.Logs.Converters;
+using Robust.Shared.Collections;
 
 namespace Content.Server.Administration.Logs;
 
@@ -19,11 +20,22 @@ public sealed partial class AdminLogManager
             PropertyNamingPolicy = NamingPolicy
         };
 
+        var interfaces = new ValueList<IAdminLogConverter>();
+
         foreach (var converter in _reflection.FindTypesWithAttribute<AdminLogConverterAttribute>())
         {
             var instance = _typeFactory.CreateInstance<JsonConverter>(converter);
-            (instance as IAdminLogConverter)?.Init(_dependencies);
+            if (instance is IAdminLogConverter converterInterface)
+            {
+                interfaces.Add(converterInterface);
+                converterInterface.Init(_dependencies);
+            }
             _jsonOptions.Converters.Add(instance);
+        }
+
+        foreach (var @interface in interfaces)
+        {
+            @interface.Init2(_jsonOptions);
         }
 
         var converterNames = _jsonOptions.Converters.Select(converter => converter.GetType().Name);

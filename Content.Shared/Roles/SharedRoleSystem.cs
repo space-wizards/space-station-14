@@ -250,7 +250,7 @@ public abstract class SharedRoleSystem : EntitySystem
 
         if (!_prototypes.HasIndex(roleTypeId))
         {
-            Log.Error($"Failed to change Role Type of {comp} to {roleTypeId}, {subtype}. Invalid role");
+            Log.Error($"Failed to change Role Type of {_minds.MindOwnerLoggingString(comp)} to {roleTypeId}, {subtype}. Invalid role");
             return;
         }
 
@@ -263,7 +263,7 @@ public abstract class SharedRoleSystem : EntitySystem
             RaiseNetworkEvent(new MindRoleTypeChangedEvent(), session.Channel);
         else
         {
-            var error = $"The Character Window of {comp} potentially did not update immediately : session error";
+            var error = $"The Character Window of {_minds.MindOwnerLoggingString(comp)} potentially did not update immediately : session error";
             _adminLogger.Add(LogType.Mind, LogImpact.Medium, $"{error}");
         }
 

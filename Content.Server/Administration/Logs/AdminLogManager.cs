@@ -361,10 +361,19 @@ public sealed partial class AdminLogManager : SharedAdminLogManager, IAdminLogMa
                 case SerializablePlayer player:
                     AddPlayer(players, player.UserId, logId);
                     continue;
+
                 case EntityStringRepresentation rep:
                     if (rep.Session is {} session)
                         AddPlayer(players, session.UserId.UserId, logId);
                     continue;
+
+                case IAdminLogsPlayerValue playerValue:
+                    foreach (var player in playerValue.Players)
+                    {
+                        AddPlayer(players, player, logId);
+                    }
+
+                    break;
             }
         }
 
