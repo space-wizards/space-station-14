@@ -1,4 +1,5 @@
 <DefaultWindow xmlns="https://spacestation14.io"
+            xmlns:cc="clr-namespace:Content.Client.Administration.UI.CustomControls"
             MinSize="650 290">
     <BoxContainer Orientation="Vertical">
         <GridContainer Columns="2">
@@ -10,11 +11,11 @@
         </GridContainer>
         <Label Name="TargetNameLabel" />
         <Control MinSize="0 8"/>
-        <GridContainer Name="AccessLevelGrid" Columns="5" HorizontalAlignment="Center">
-
-            <!-- Access level buttons are added here by the C# code -->
-
-        </GridContainer>
+        <BoxContainer Orientation="Horizontal">
+            <Control Name="AccessGroupControlContainer" /> <!-- Access Groups Buttons -->
+            <cc:VSeparator Color="#a88b5e" Margin="5 0 5 0" /> <!-- Separator -->
+            <Control Name="AccessLevelControlContainer" /> <!-- Access Level Buttons -->
+        </BoxContainer>
         <Control MinSize="0 8"/>
         <Label Name="MissingPrivilegesLabel" />
         <Control MinSize="0 4"/>

@@ -1,8 +1,9 @@
+# Standard Access Configurator
 - type: entity
   parent: BaseItem
   id: AccessConfigurator
   name: access configurator
-  description: Used to modify the access level requirements for airlocks and other lockable devices.
+  description: Used to modify the access group requirements for airlocks and other lockable devices.
   components:
     - type: EmitSoundOnLand
       sound:
@@ -18,55 +19,24 @@
       slots:
         - Belt
     - type: AccessOverrider
-      accessLevels:
-      # Starlight start edit: Alphabetical 
-      - Armory
-      - Atmospherics
-      - Bar
-      - BlueShield # Starlight Job
-      - Brig
-      - Brigmedic # Starlight job
-      - Captain
-      - Cargo
-      - Chapel
-      - Chemistry
-      - ChiefEngineer
-      - ChiefMedicalOfficer
-      - Command
-      - Cryogenics
-      - Detective
-      - Engineering
-      - External
-      - Freelance # Starlight Job
-      - HeadOfPersonnel
-      - HeadOfSecurity
-      - Hydroponics
-      - Janitor
-      - Kitchen
-      - Lawyer
-      - Magistrate # Starlight job
-      - Maintenance
-      - Medical
-      - Ntrep # Starlight job
-      - Quartermaster
-      - Research
-      - ResearchDirector
-      - Robotics # Starlight job
-      - Salvage
+      accessGroups:
+      - General
       - Security
+      - Cargo
+      - Command
+      - Research
+      - Medical
       - Service
-      - Surgery # Starlight job
-      - Theatre
-      # Starlight end edit: Alphabetical 
+      - Engineering
       privilegedIdSlot:
-        name: id-card-console-privileged-id
+        name: AccessOverrider-privilegedId
         ejectSound: /Audio/Machines/id_swipe.ogg
         insertSound: /Audio/Weapons/Guns/MagIn/batrifle_magin.ogg
         ejectOnBreak: true
         swap: false
         whitelist:
           components:
-          - IdCard
+            - IdCard
       denialSound:
         path: /Audio/Machines/custom_deny.ogg
       doAfter: 0.5
@@ -85,6 +55,7 @@
       containers:
         AccessOverrider-privilegedId: !type:ContainerSlot
 
+# Universal/Admin Access Configurator
 - type: entity
   parent: AccessConfigurator
   id: AccessConfiguratorUniversal
@@ -92,76 +63,45 @@
   suffix: Admin
   description: A modified access configurator used only by the mythical Administrator.
   components:
-  - type: Sprite
-    sprite: Objects/Tools/universal_access_configurator.rsi
-  - type: Clothing
-    sprite: Objects/Tools/universal_access_configurator.rsi
-  - type: AccessOverrider
-    accessLevels:
-    # Starlight start edit: Alphabetical 
-    - Armory
-    - Atmospherics
-    - Bar
-    - BlueShield # Starlight Job
-    - Brig
-    - Brigmedic # Starlight job
-    - Captain
-    - Cargo
-    - CentralCommand
-    - Chapel
-    - Chemistry
-    - ChiefEngineer
-    - ChiefMedicalOfficer
-    - Command
-    - Commie
-    - Cryogenics
-    - Detective
-    - EmergencyShuttleRepealAll
-    - Engineering
-    - External
-    - Freelance # Starlight Job
-    - GenpopEnter
-    - GenpopLeave
-    - HeadOfPersonnel
-    - HeadOfSecurity
-    - Hydroponics
-    - Janitor
-    - Kitchen
-    - Lawyer
-    - Magistrate # Starlight job
-    - Maintenance
-    - Medical
-    - NuclearOperative
-    - Ntrep # Starlight job
-    - Quartermaster
-    - Research
-    - ResearchDirector
-    - Robotics # Starlight job
-    - Salvage
-    - Security
-    - Service
-    - StationAi
-    - Surgery # Starlight job
-    - SyndicateAgent
-    - Theatre
-    - Wizard
-    - Xenoborg
-    - Debug1
-    - Debug2
-    - Debug3
-    - Debug4
-    - Debug5
-    # Starlight end edit: Alphabetical
-    privilegedIdSlot:
-      name: id-card-console-privileged-id
-      startingItem: UniversalIDCard
-      ejectSound: /Audio/Machines/id_swipe.ogg
-      insertSound: /Audio/Weapons/Guns/MagIn/batrifle_magin.ogg
-      ejectOnBreak: true
-      swap: false
-      whitelist:
-        components:
-        - IdCard
-    denialSound:
-      path: /Audio/Machines/custom_deny.ogg
-    doAfter: 0.5
+    - type: Sprite
+      sprite: Objects/Tools/universal_access_configurator.rsi
+    - type: Clothing
+      sprite: Objects/Tools/universal_access_configurator.rsi
+    - type: AccessOverrider
+      accessGroups:
+      - General
+      - Security
+      - Cargo
+      - Command
+      - Research
+      - Medical
+      - Service
+      - Engineering
+      - Admin
+      privilegedIdSlot:
+        name: AccessOverrider-privilegedId
+        startingItem: UniversalIDCard
+        ejectSound: /Audio/Machines/id_swipe.ogg
+        insertSound: /Audio/Weapons/Guns/MagIn/batrifle_magin.ogg
+        ejectOnBreak: true
+        swap: false
+        whitelist:
+          components:
+            - IdCard
+      denialSound:
+        path: /Audio/Machines/custom_deny.ogg
+      doAfter: 0.5
+    - type: UserInterface
+      interfaces:
+        enum.AccessOverriderUiKey.Key:
+          type: AccessOverriderBoundUserInterface
+    - type: ActivatableUI
+      key: enum.AccessOverriderUiKey.Key
+      requiresComplex: true
+      requireActiveHand: false
+      singleUser: true
+      inHandsOnly: true
+    - type: ItemSlots
+    - type: ContainerContainer
+      containers:
+        AccessOverrider-privilegedId: !type:ContainerSlot

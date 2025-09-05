@@ -22,6 +22,21 @@ public sealed partial class AccessOverriderComponent : Component
 
     public EntityUid TargetAccessReaderId = new();
 
+    // NEW: Access Groups (Starlight-style)
+    [DataField, AutoNetworkedField]
+    public List<ProtoId<AccessGroupPrototype>> AccessGroups = new();
+
+    [DataField, AutoNetworkedField]
+    public ProtoId<AccessGroupPrototype>? CurrentAccessGroup;
+
+    // Keep existing AccessLevels (backwards-compatible)
+    [DataField, AutoNetworkedField]
+    public List<ProtoId<AccessLevelPrototype>> AccessLevels = new();
+
+    [ViewVariables(VVAccess.ReadWrite)]
+    [DataField]
+    public float DoAfter;
+
     [Serializable, NetSerializable]
     public sealed class WriteToTargetAccessReaderIdMessage : BoundUserInterfaceMessage
     {
@@ -33,12 +48,17 @@ public sealed partial class AccessOverriderComponent : Component
         }
     }
 
-    [DataField, AutoNetworkedField]
-    public List<ProtoId<AccessLevelPrototype>> AccessLevels = new();
+    // NEW: message for selecting an Access Group in the UI
+    [Serializable, NetSerializable]
+    public sealed class AccessGroupSelectedMessage : BoundUserInterfaceMessage
+    {
+        public readonly ProtoId<AccessGroupPrototype> SelectedGroup;
 
-    [ViewVariables(VVAccess.ReadWrite)]
-    [DataField]
-    public float DoAfter;
+        public AccessGroupSelectedMessage(ProtoId<AccessGroupPrototype> selectedGroup)
+        {
+            SelectedGroup = selectedGroup;
+        }
+    }
 
     [Serializable, NetSerializable]
     public sealed class AccessOverriderBoundUserInterfaceState : BoundUserInterfaceState
@@ -52,6 +72,10 @@ public sealed partial class AccessOverriderComponent : Component
         public readonly ProtoId<AccessLevelPrototype>[]? AllowedModifyAccessList;
         public readonly ProtoId<AccessLevelPrototype>[]? MissingPrivilegesList;
 
+        // NEW: groups state
+        public readonly ProtoId<AccessGroupPrototype>[]? AccessGroups;
+        public readonly ProtoId<AccessGroupPrototype>? CurrentAccessGroup;
+
         public AccessOverriderBoundUserInterfaceState(bool isPrivilegedIdPresent,
             bool isPrivilegedIdAuthorized,
             ProtoId<AccessLevelPrototype>[]? targetAccessReaderIdAccessList,
@@ -59,7 +83,9 @@ public sealed partial class AccessOverriderComponent : Component
             ProtoId<AccessLevelPrototype>[]? missingPrivilegesList,
             string privilegedIdName,
             string targetLabel,
-            Color targetLabelColor)
+            Color targetLabelColor,
+            ProtoId<AccessGroupPrototype>[]? accessGroups,
+            ProtoId<AccessGroupPrototype>? currentAccessGroup)
         {
             IsPrivilegedIdPresent = isPrivilegedIdPresent;
             IsPrivilegedIdAuthorized = isPrivilegedIdAuthorized;
@@ -69,6 +95,9 @@ public sealed partial class AccessOverriderComponent : Component
             PrivilegedIdName = privilegedIdName;
             TargetLabel = targetLabel;
             TargetLabelColor = targetLabelColor;
+
+            AccessGroups = accessGroups;
+            CurrentAccessGroup = currentAccessGroup;
         }
     }
 

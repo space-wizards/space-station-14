@@ -28,6 +28,7 @@ public sealed class AccessOverriderSystem : SharedAccessOverriderSystem
     [Dependency] private readonly PopupSystem _popupSystem = default!;
     [Dependency] private readonly SharedAudioSystem _audioSystem = default!;
     [Dependency] private readonly SharedDoAfterSystem _doAfterSystem = default!;
+    [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
 
     public override void Initialize()
     {
@@ -38,6 +39,9 @@ public sealed class AccessOverriderSystem : SharedAccessOverriderSystem
         SubscribeLocalEvent<AccessOverriderComponent, EntRemovedFromContainerMessage>(UpdateUserInterface);
         SubscribeLocalEvent<AccessOverriderComponent, AfterInteractEvent>(AfterInteractOn);
         SubscribeLocalEvent<AccessOverriderComponent, AccessOverriderDoAfterEvent>(OnDoAfter);
+
+        // React to group selection from the client UI
+        SubscribeLocalEvent<AccessOverriderComponent, AccessGroupSelectedMessage>(OnAccessGroupSelected);
 
         Subs.BuiEvents<AccessOverriderComponent>(AccessOverriderUiKey.Key, subs =>
         {
@@ -98,6 +102,13 @@ public sealed class AccessOverriderSystem : SharedAccessOverriderSystem
         UpdateUserInterface(uid, component, args);
     }
 
+    // NEW: handle group selection
+    private void OnAccessGroupSelected(EntityUid uid, AccessOverriderComponent component, AccessGroupSelectedMessage args)
+    {
+        component.CurrentAccessGroup = args.SelectedGroup;
+        UpdateUserInterface(uid, component, args);
+    }
+
     private void UpdateUserInterface(EntityUid uid, AccessOverriderComponent component, EntityEventArgs args)
     {
         if (!component.Initialized)
@@ -138,17 +149,31 @@ public sealed class AccessOverriderSystem : SharedAccessOverriderSystem
             }
         }
 
-        AccessOverriderBoundUserInterfaceState newState;
+        // Compute allowed modify list based on current group (if any) or fallback to component.AccessLevels
+        ProtoId<AccessLevelPrototype>[]? allowedModify = null;
+        if (component.CurrentAccessGroup != null && _prototypeManager.TryIndex(component.CurrentAccessGroup, out AccessGroupPrototype? groupProto))
+        {
+            allowedModify = groupProto.Tags.ToArray();
+        }
+        else
+        {
+            allowedModify = component.AccessLevels.ToArray();
+        }
 
-        newState = new AccessOverriderBoundUserInterfaceState(
+        // Expose groups to the client
+        var groupsArray = component.AccessGroups?.ToArray();
+
+        AccessOverriderBoundUserInterfaceState newState = new AccessOverriderBoundUserInterfaceState(
             component.PrivilegedIdSlot.HasItem,
             PrivilegedIdIsAuthorized(uid, component),
             currentAccess,
-            possibleAccess,
+            allowedModify,
             missingAccess,
             privilegedIdName,
             targetLabel,
-            targetLabelColor);
+            targetLabelColor,
+            groupsArray,
+            component.CurrentAccessGroup);
 
         _userInterface.SetUiState(uid, AccessOverriderUiKey.Key, newState);
     }
@@ -189,10 +214,31 @@ public sealed class AccessOverriderSystem : SharedAccessOverriderSystem
             return;
         }
 
-        if (newAccessList.Count > 0 && !newAccessList.TrueForAll(x => component.AccessLevels.Contains(x)))
+        // Respect groups: ensure the newAccessList are valid within any groups configured on the component
+        if (component.AccessGroups != null && component.AccessGroups.Count > 0)
         {
-            _sawmill.Warning($"User {ToPrettyString(uid)} tried to write unknown access tag.");
-            return;
+            // flatten all group tags
+            var allGroupTags = new HashSet<ProtoId<AccessLevelPrototype>>();
+            foreach (var g in component.AccessGroups)
+            {
+                if (!_prototypeManager.TryIndex(g, out AccessGroupPrototype? gp))
+                    continue;
+                allGroupTags.UnionWith(gp.Tags);
+            }
+
+            if (newAccessList.Count > 0 && !newAccessList.TrueForAll(x => allGroupTags.Contains(x)))
+            {
+                _sawmill.Warning($"User {ToPrettyString(uid)} tried to write unknown access tag.");
+                return;
+            }
+        }
+        else
+        {
+            if (newAccessList.Count > 0 && !newAccessList.TrueForAll(x => component.AccessLevels.Contains(x)))
+            {
+                _sawmill.Warning($"User {ToPrettyString(uid)} tried to write unknown access tag.");
+                return;
+            }
         }
 
         if (!_accessReader.GetMainAccessReader(component.TargetAccessReaderId, out var accessReaderEnt))
