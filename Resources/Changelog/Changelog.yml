@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: EmoGarbage404
-  changes:
-  - message: Mob corpses brought back from salvage pulls will no longer despawn with
-      the pull.
-    type: Fix
-  id: 8418
-  time: '2025-05-04T05:47:11.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/37169
 - author: perryprog
   changes:
   - message: Shelves built from the construction menu can now be placed in all orientations.
@@ -3944,3 +3936,10 @@
   id: 8929
   time: '2025-09-05T07:47:31.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/40126
+- author: ScarKy0, FairlySadPanda, TiniestShark, MilonPL, beck-thompson
+  changes:
+  - message: The vulpkanin species can now be selected as a roundstart species.
+    type: Add
+  id: 8930
+  time: '2025-09-05T10:43:17.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37539
