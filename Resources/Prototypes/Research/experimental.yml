@@ -121,6 +121,7 @@
   recipeUnlocks:
   - WeaponParticleDecelerator
   - HoloprojectorField
+  - RollerBedHoloSpawnFolded
 
 - type: technology
   id: GravityManipulation

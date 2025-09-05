@@ -86,6 +86,11 @@
 
 ## Dynamic
 
+- type: latheRecipePack
+  id: HolographicRollerbeds
+  recipes:
+  - RollerBedHoloSpawnFolded
+
 # Shared with protolathe
 - type: latheRecipePack
   id: Chemistry

@@ -252,3 +252,12 @@
     Glass: 100
     Plastic: 100
 
+- type: latheRecipe
+  id: RollerBedHoloSpawnFolded
+  result: RollerBedHoloSpawnFolded
+  completetime: 2
+  materials:
+    Steel: 300
+    Plastic: 300
+    Gold: 300
+    Silver: 300

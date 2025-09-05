@@ -150,3 +150,51 @@
     folded: true
   - type: Strap
     enabled: False
+
+- type: entity
+  parent: RollerBed
+  id: RollerBedHolo
+  name: holographic rollerbed
+  description: Used to float patients frictionlessly to safety, stabilizing those in critical condition.
+  components:
+  - type: Item
+    size: Small
+  - type: StabilizeOnBuckle
+    efficiency: 1
+    reducesBleeding: 3 # Stops full bleeding in 10 seconds, one per second.
+  - type: Strap
+    buckleOffset: "0,0.05"
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.35
+        density: 5
+        mask:
+        - MobMask
+  - type: Sprite
+    sprite: Structures/Furniture/rollerbeds.rsi
+    noRot: true
+    layers:
+    - state: holographic_rollerbed
+      map: ["unfoldedLayer"]
+    - state: holographic_rollerbed_folded
+      map: ["foldedLayer"]
+      visible: false
+    - state: holographic_rollerbed_buckled
+      map: ["buckledLayer"]
+      visible: false
+  - type: StaticPrice
+    price: 200
+
+
+- type: entity
+  parent: RollerBedHolo
+  id: RollerBedHoloSpawnFolded
+  suffix: folded
+  components:
+  - type: Foldable
+    folded: true
+  - type: Strap
+    enabled: False
