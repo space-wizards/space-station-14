@@ -41,6 +41,7 @@
   points:
     Hair:
       points: 1
+      onlyWhitelisted: true # TODO: Vulps are meant to use human hair, however something causes hair to break if affected by a displacement map and removed. Allow human hair again when #40135 is resolved.
       required: false
     FacialHair:
       points: 1
