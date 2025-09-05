@@ -115,6 +115,11 @@
     node: Shutters
     containers:
     - board
+  - type: DeltaPressure
+    minPressure: 1000
+    minPressureDelta: 750
+    scalingType: Linear
+    scalingPower: 0.0005
 
 - type: entity
   id: ShuttersNormalOpen
@@ -151,6 +156,11 @@
     node: ShuttersRadiation
     containers:
     - board
+  - type: DeltaPressure
+    minPressure: 1000
+    minPressureDelta: 750
+    scalingType: Linear
+    scalingPower: 0.0005
   - type: RadiationBlocker
     resistance: 4
 
@@ -188,6 +198,11 @@
     node: ShuttersWindow
     containers:
     - board
+  - type: DeltaPressure
+    minPressure: 1000
+    minPressureDelta: 750
+    scalingType: Linear
+    scalingPower: 0.0005
   - type: RadiationBlocker
     resistance: 1
 
