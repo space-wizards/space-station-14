@@ -13203,5 +13203,27 @@ Entries:
   id: 151801
   time: '2025-09-05T01:48:45.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/1518
+- author: STARLIGHT TEAM
+  changes:
+  - message: Abductors can once again teleport onto the station from another map.
+    type: Fix
+  id: 155000
+  time: '2025-09-05T02:09:45.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1550
+- author: STARLIGHT TEAM
+  changes:
+  - message: Flash and welding protection has been added to the abductor agent’s helmet.
+    type: Add
+  id: 155001
+  time: '2025-09-05T02:09:45.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1550
+- author: STARLIGHT TEAM
+  changes:
+  - message: Removed the abductor’s ID card, and completely disabled their ability
+      to use ID cards at all.
+    type: Remove
+  id: 155002
+  time: '2025-09-05T02:09:45.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1550
 Order: -1
 
