@@ -28,7 +28,7 @@ public sealed class AccessOverriderSystem : SharedAccessOverriderSystem
     [Dependency] private readonly PopupSystem _popupSystem = default!;
     [Dependency] private readonly SharedAudioSystem _audioSystem = default!;
     [Dependency] private readonly SharedDoAfterSystem _doAfterSystem = default!;
-    [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+    [Dependency] private readonly IPrototypeManager _prototypeManager = default!; // Starlight-edit
 
     public override void Initialize()
     {
@@ -40,8 +40,7 @@ public sealed class AccessOverriderSystem : SharedAccessOverriderSystem
         SubscribeLocalEvent<AccessOverriderComponent, AfterInteractEvent>(AfterInteractOn);
         SubscribeLocalEvent<AccessOverriderComponent, AccessOverriderDoAfterEvent>(OnDoAfter);
 
-        // React to group selection from the client UI
-        SubscribeLocalEvent<AccessOverriderComponent, AccessGroupSelectedMessage>(OnAccessGroupSelected);
+        SubscribeLocalEvent<AccessOverriderComponent, AccessGroupSelectedMessage>(OnAccessGroupSelected); // Starlight-edit
 
         Subs.BuiEvents<AccessOverriderComponent>(AccessOverriderUiKey.Key, subs =>
         {
@@ -102,12 +101,13 @@ public sealed class AccessOverriderSystem : SharedAccessOverriderSystem
         UpdateUserInterface(uid, component, args);
     }
 
-    // NEW: handle group selection
+    // Starlight-edit: Start
     private void OnAccessGroupSelected(EntityUid uid, AccessOverriderComponent component, AccessGroupSelectedMessage args)
     {
         component.CurrentAccessGroup = args.SelectedGroup;
         UpdateUserInterface(uid, component, args);
     }
+    // Starlight-edit: End
 
     private void UpdateUserInterface(EntityUid uid, AccessOverriderComponent component, EntityEventArgs args)
     {
@@ -149,7 +149,7 @@ public sealed class AccessOverriderSystem : SharedAccessOverriderSystem
             }
         }
 
-        // Compute allowed modify list based on current group (if any) or fallback to component.AccessLevels
+        // Starlight-edit: Start
         ProtoId<AccessLevelPrototype>[]? allowedModify = null;
         if (component.CurrentAccessGroup != null && _prototypeManager.TryIndex(component.CurrentAccessGroup, out AccessGroupPrototype? groupProto))
         {
@@ -164,16 +164,19 @@ public sealed class AccessOverriderSystem : SharedAccessOverriderSystem
         var groupsArray = component.AccessGroups?.ToArray();
 
         AccessOverriderBoundUserInterfaceState newState = new AccessOverriderBoundUserInterfaceState(
+        // Starlight-edit: End
             component.PrivilegedIdSlot.HasItem,
             PrivilegedIdIsAuthorized(uid, component),
             currentAccess,
-            allowedModify,
+            allowedModify, // Starlight-edit
             missingAccess,
             privilegedIdName,
             targetLabel,
+            // Starlight-edit: Start
             targetLabelColor,
             groupsArray,
             component.CurrentAccessGroup);
+            // Starlight-edit: End
 
         _userInterface.SetUiState(uid, AccessOverriderUiKey.Key, newState);
     }
@@ -214,7 +217,7 @@ public sealed class AccessOverriderSystem : SharedAccessOverriderSystem
             return;
         }
 
-        // Respect groups: ensure the newAccessList are valid within any groups configured on the component
+        // Starlight-edit: Start
         if (component.AccessGroups != null && component.AccessGroups.Count > 0)
         {
             // flatten all group tags
@@ -235,6 +238,7 @@ public sealed class AccessOverriderSystem : SharedAccessOverriderSystem
         else
         {
             if (newAccessList.Count > 0 && !newAccessList.TrueForAll(x => component.AccessLevels.Contains(x)))
+        // Starlight-edit: End
             {
                 _sawmill.Warning($"User {ToPrettyString(uid)} tried to write unknown access tag.");
                 return;

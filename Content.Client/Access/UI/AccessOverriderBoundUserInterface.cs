@@ -36,7 +36,7 @@ namespace Content.Client.Access.UI
         public override void OnProtoReload(PrototypesReloadedEventArgs args)
         {
             base.OnProtoReload(args);
-            if (!args.WasModified<AccessLevelPrototype>() && !args.WasModified<AccessGroupPrototype>())
+            if (!args.WasModified<AccessLevelPrototype>() && !args.WasModified<AccessGroupPrototype>()) // Starlight-edit
                 return;
 
             RefreshAccess();
@@ -48,27 +48,31 @@ namespace Content.Client.Access.UI
         private void RefreshAccess()
         {
             List<ProtoId<AccessLevelPrototype>> accessLevels;
-            List<ProtoId<AccessGroupPrototype>> accessGroups;
-            ProtoId<AccessGroupPrototype>? currentGroup = null;
+            // Starlight-edit: Start
+            List<ProtoId<AccessGroupPrototype>> accessGroups; 
+            ProtoId<AccessGroupPrototype>? currentGroup = null; 
+            // Starlight-edit: End
 
             if (EntMan.TryGetComponent<AccessOverriderComponent>(Owner, out var accessOverrider))
             {
                 accessLevels = accessOverrider.AccessLevels;
                 accessLevels.Sort();
 
+                // Starlight-edit: Start
                 accessGroups = accessOverrider.AccessGroups;
                 accessGroups.Sort();
+                // Starlight-edit: End
 
                 currentGroup = accessOverrider.CurrentAccessGroup;
             }
             else
             {
                 accessLevels = new List<ProtoId<AccessLevelPrototype>>();
-                accessGroups = new List<ProtoId<AccessGroupPrototype>>();
+                accessGroups = new List<ProtoId<AccessGroupPrototype>>(); // Starlight-edit
                 _accessOverriderSystem.Log.Error($"No AccessOverrider component found for {EntMan.ToPrettyString(Owner)}!");
             }
 
-            _window?.SetAccess(_prototypeManager, accessGroups, currentGroup, accessLevels);
+            _window?.SetAccess(_prototypeManager, accessGroups, currentGroup, accessLevels); // Starlight-edit
         }
 
         protected override void UpdateState(BoundUserInterfaceState state)

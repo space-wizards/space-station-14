@@ -3,7 +3,7 @@
   parent: BaseItem
   id: AccessConfigurator
   name: access configurator
-  description: Used to modify the access group requirements for airlocks and other lockable devices.
+  description: Used to modify the access level requirements for airlocks and other lockable devices.
   components:
     - type: EmitSoundOnLand
       sound:
@@ -19,6 +19,7 @@
       slots:
         - Belt
     - type: AccessOverrider
+    # Starlight-edit: Start
       accessGroups:
       - General
       - Security
@@ -28,6 +29,7 @@
       - Medical
       - Service
       - Engineering
+    # Starlight-edit: End
       privilegedIdSlot:
         name: AccessOverrider-privilegedId
         ejectSound: /Audio/Machines/id_swipe.ogg
@@ -68,6 +70,7 @@
     - type: Clothing
       sprite: Objects/Tools/universal_access_configurator.rsi
     - type: AccessOverrider
+    # Starlight-edit: Start
       accessGroups:
       - General
       - Security
@@ -79,7 +82,7 @@
       - Engineering
       - Admin
       privilegedIdSlot:
-        name: AccessOverrider-privilegedId
+        name: AccessOverrider-privilegedId # Starlight-edit
         startingItem: UniversalIDCard
         ejectSound: /Audio/Machines/id_swipe.ogg
         insertSound: /Audio/Weapons/Guns/MagIn/batrifle_magin.ogg
@@ -105,3 +108,4 @@
     - type: ContainerContainer
       containers:
         AccessOverrider-privilegedId: !type:ContainerSlot
+    # Starlight-edit: End

@@ -22,7 +22,7 @@ public sealed partial class AccessOverriderComponent : Component
 
     public EntityUid TargetAccessReaderId = new();
 
-    // NEW: Access Groups (Starlight-style)
+    // Starlight-edit: Start
     [DataField, AutoNetworkedField]
     public List<ProtoId<AccessGroupPrototype>> AccessGroups = new();
 
@@ -36,6 +36,7 @@ public sealed partial class AccessOverriderComponent : Component
     [ViewVariables(VVAccess.ReadWrite)]
     [DataField]
     public float DoAfter;
+    // Starlight-edit: End
 
     [Serializable, NetSerializable]
     public sealed class WriteToTargetAccessReaderIdMessage : BoundUserInterfaceMessage
@@ -48,7 +49,7 @@ public sealed partial class AccessOverriderComponent : Component
         }
     }
 
-    // NEW: message for selecting an Access Group in the UI
+    // Starlight-edit: Start
     [Serializable, NetSerializable]
     public sealed class AccessGroupSelectedMessage : BoundUserInterfaceMessage
     {
@@ -59,6 +60,7 @@ public sealed partial class AccessOverriderComponent : Component
             SelectedGroup = selectedGroup;
         }
     }
+    // Starlight-edit: End
 
     [Serializable, NetSerializable]
     public sealed class AccessOverriderBoundUserInterfaceState : BoundUserInterfaceState
@@ -72,9 +74,10 @@ public sealed partial class AccessOverriderComponent : Component
         public readonly ProtoId<AccessLevelPrototype>[]? AllowedModifyAccessList;
         public readonly ProtoId<AccessLevelPrototype>[]? MissingPrivilegesList;
 
-        // NEW: groups state
+        // Starlight-edit: Start
         public readonly ProtoId<AccessGroupPrototype>[]? AccessGroups;
         public readonly ProtoId<AccessGroupPrototype>? CurrentAccessGroup;
+        // Starlight-edit: End
 
         public AccessOverriderBoundUserInterfaceState(bool isPrivilegedIdPresent,
             bool isPrivilegedIdAuthorized,
@@ -83,9 +86,11 @@ public sealed partial class AccessOverriderComponent : Component
             ProtoId<AccessLevelPrototype>[]? missingPrivilegesList,
             string privilegedIdName,
             string targetLabel,
+            // Starlight-edit: Start
             Color targetLabelColor,
             ProtoId<AccessGroupPrototype>[]? accessGroups,
             ProtoId<AccessGroupPrototype>? currentAccessGroup)
+            // Starlight-edit: End
         {
             IsPrivilegedIdPresent = isPrivilegedIdPresent;
             IsPrivilegedIdAuthorized = isPrivilegedIdAuthorized;
@@ -96,8 +101,10 @@ public sealed partial class AccessOverriderComponent : Component
             TargetLabel = targetLabel;
             TargetLabelColor = targetLabelColor;
 
+            // Starlight-edit: Start
             AccessGroups = accessGroups;
             CurrentAccessGroup = currentAccessGroup;
+            // Starlight-edit: End
         }
     }
 
