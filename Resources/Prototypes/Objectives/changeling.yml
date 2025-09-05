@@ -1,0 +1,23 @@
+- type: entity
+  abstract: true
+  parent: BaseObjective
+  id: BaseChangelingObjective
+  components:
+  - type: Objective
+    issuer: objective-issuer-changeling
+    difficulty: 1
+  - type: RoleRequirement
+    roles:
+    - ChangelingRole
+
+- type: entity
+  parent: [BaseChangelingObjective, BaseSurviveObjective]
+  id: ChangelingSurviveObjective
+  name: Survive.
+  description: We must stay alive at all cost.
+  components:
+  - type: Objective
+    difficulty: 1
+    icon:
+      sprite: Mobs/Species/Human/organs.rsi
+      state: heart-on
