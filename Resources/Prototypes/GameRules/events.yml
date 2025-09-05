@@ -193,7 +193,7 @@
     duration: null
     earliestStart: 30
     reoccurrenceDelay: 20
-    minimumPlayers: 20
+    minimumPlayers: 30
   - type: SpaceSpawnRule
   - type: AntagLoadProfileRule
   - type: AntagObjectives
