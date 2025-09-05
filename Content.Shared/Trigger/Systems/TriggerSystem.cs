@@ -11,6 +11,7 @@ using Robust.Shared.Physics.Systems;
 using Robust.Shared.Timing;
 using Robust.Shared.Random;
 using Robust.Shared.Audio.Systems;
+using Content.Shared.Trigger.Components.Effects;
 
 
 namespace Content.Shared.Trigger.Systems;
@@ -78,14 +79,17 @@ public sealed partial class TriggerSystem : EntitySystem
     /// Activate a timer trigger on an entity with <see cref="TimerTriggerComponent"/>.
     /// </summary>
     /// <returns>Whether or not a timer was activated.</returns>
-    public bool ActivateTimerTrigger(Entity<TimerTriggerComponent?> ent, EntityUid? user = null)
+    public bool ActivateTimerTrigger(Entity<TimerTriggerComponent?> ent, EntityUid? user = null, bool forced = false)
     {
         if (!Resolve(ent, ref ent.Comp))
             return false;
-
-        if (HasComp<ActiveTimerTriggerComponent>(ent))
-            return false; // already activated
-
+        var isactive = HasComp<ActiveTimerTriggerComponent>(ent);
+        if (isactive)
+        {
+            if (!forced)
+                return false; // already activated
+            // EntityManager.RemoveComponentDeferred<ActiveTimerTriggerComponent>(ent);
+        }
         if (user != null)
         {
             _adminLogger.Add(LogType.Trigger,
@@ -100,7 +104,8 @@ public sealed partial class TriggerSystem : EntitySystem
         if (ent.Comp.Popup != null)
             _popup.PopupPredicted(Loc.GetString(ent.Comp.Popup.Value, ("device", ent.Owner)), ent.Owner, user);
 
-        AddComp<ActiveTimerTriggerComponent>(ent);
+        if (!isactive)
+            AddComp<ActiveTimerTriggerComponent>(ent);
         var curTime = _timing.CurTime;
         ent.Comp.NextTrigger = curTime + ent.Comp.Delay;
         var delay = ent.Comp.InitialBeepDelay ?? ent.Comp.BeepInterval;

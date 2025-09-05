@@ -153,12 +153,6 @@ public sealed partial class TriggerSystem
             Trigger(uid, null, comp.KeyOut);
         }
     }
-    public void RestartTimer(Entity<TimerTriggerComponent> ent)
-    {
-        ent.Comp.NextTrigger = _timing.CurTime + ent.Comp.Delay;
-        EnsureComp<ActiveTimerTriggerComponent>(ent);
-        Dirty(ent);
-    }
     private void UpdateTimer()
     {
         var curTime = _timing.CurTime;
@@ -173,6 +167,7 @@ public sealed partial class TriggerSystem
 
             if (timer.NextTrigger <= curTime)
             {
+                _popup.PopupPredicted(timer.KeyOut, uid, null);
                 Trigger(uid, timer.User, timer.KeyOut);
                 // Remove after triggering to prevent it from starting the timer again
                 RemComp<ActiveTimerTriggerComponent>(uid);
