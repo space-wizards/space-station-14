@@ -5,8 +5,6 @@
   components:
   - type: UniversalLanguageSpeaker
   - type: Abductor
-  - type: Strippable
-    handDelay: 10800 # 3 hours to strip a item off a abductor, mabey use that fancy console to make your friend visible
   - type: Tag
     tags:
       - Abductor
