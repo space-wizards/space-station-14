@@ -504,6 +504,8 @@
       collection: ToySqueak
       params:
         volume: -4
+  - type: Clothing
+    slots: [mask]
 
 - type: entity
   parent: BaseItem
