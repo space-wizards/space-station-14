@@ -152,6 +152,12 @@ public abstract partial class InteractionTest
     /// <param name="enableToggleable">Whether or not to automatically enable any toggleable items</param>
     protected async Task<NetEntity> PlaceInHands(EntitySpecifier entity, bool enableToggleable = true)
     {
+        if (Hands == null)
+        {
+            Assert.Fail("No HandsComponent");
+            return default;
+        }
+
         if (Hands.ActiveHandId == null)
         {
             Assert.Fail("No active hand");
@@ -192,6 +198,12 @@ public abstract partial class InteractionTest
     protected async Task Pickup(NetEntity? entity = null, bool deleteHeld = true)
     {
         entity ??= Target;
+
+        if (Hands == null)
+        {
+            Assert.Fail("No HandsComponent");
+            return;
+        }
 
         if (Hands.ActiveHandId == null)
         {
@@ -727,7 +739,7 @@ public abstract partial class InteractionTest
     /// List of currently active DoAfters on the player.
     /// </summary>
     protected IEnumerable<Shared.DoAfter.DoAfter> ActiveDoAfters
-        => DoAfters.DoAfters.Values.Where(x => !x.Cancelled && !x.Completed);
+        => DoAfters?.DoAfters.Values.Where(x => !x.Cancelled && !x.Completed) ?? [];
 
     #region Component
 
@@ -741,6 +753,18 @@ public abstract partial class InteractionTest
             Assert.Fail("No target specified");
 
         return SEntMan.GetComponent<T>(ToServer(target!.Value));
+    }
+
+    /// <summary>
+    /// Convenience method to check if the target has a component on the server.
+    /// </summary>
+    protected bool HasComp<T>(NetEntity? target = null) where T : IComponent
+    {
+        target ??= Target;
+        if (target == null)
+            Assert.Fail("No target specified");
+
+        return SEntMan.HasComponent<T>(ToServer(target));
     }
 
     /// <inheritdoc cref="Comp{T}"/>
@@ -1010,7 +1034,7 @@ public abstract partial class InteractionTest
         }
 
         Assert.That(control.GetType().IsAssignableTo(typeof(TControl)));
-        return (TControl) control;
+        return (TControl)control;
     }
 
     /// <summary>
@@ -1174,8 +1198,8 @@ public abstract partial class InteractionTest
         {
             var atmosSystem = SEntMan.System<AtmosphereSystem>();
             var moles = new float[Atmospherics.AdjustedNumberOfGases];
-            moles[(int) Gas.Oxygen] = 21.824779f;
-            moles[(int) Gas.Nitrogen] = 82.10312f;
+            moles[(int)Gas.Oxygen] = 21.824779f;
+            moles[(int)Gas.Nitrogen] = 82.10312f;
             atmosSystem.SetMapAtmosphere(target, false, new GasMixture(moles, Atmospherics.T20C));
         });
     }
