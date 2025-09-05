@@ -10,8 +10,8 @@ public sealed partial class HasStatusEffectPrecondition : HTNPrecondition
 {
     private StatusEffectsSystem _statusEffects = default!;
 
-    [DataField("statusEffect", required: true)]
-    public EntProtoId StatusEffectId;
+    [DataField(required: true)]
+    public EntProtoId StatusEffect;
 
     public override void Initialize(IEntitySystemManager sysManager)
     {
@@ -23,6 +23,6 @@ public sealed partial class HasStatusEffectPrecondition : HTNPrecondition
     {
         var owner = blackboard.GetValue<EntityUid>(NPCBlackboard.Owner);
 
-        return _statusEffects.HasStatusEffect(owner, StatusEffectId);
+        return _statusEffects.HasStatusEffect(owner, StatusEffect);
     }
 }
