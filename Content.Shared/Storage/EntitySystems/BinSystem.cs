@@ -40,14 +40,14 @@ public sealed class BinSystem : EntitySystem
             var meta = MetaData(next);
             // This means we have a contained item
             args.PushText(Loc.GetString(
-                "bin-component-on-examine-text",
+                entity.Comp.ExamineText,
                 ("count", entity.Comp.ItemContainer.Count),
                 ("subject", meta.EntityPrototype?.Name ?? meta.EntityName)));
 
             return;
         }
 
-        args.PushText(Loc.GetString("bin-component-on-examine-empty-text"));
+        args.PushText(Loc.GetString(entity.Comp.EmptyText));
     }
 
     private void OnStartup(Entity<BinComponent> entity, ref ComponentStartup args)
@@ -159,7 +159,7 @@ public sealed class BinSystem : EntitySystem
         if (!Resolve(entity, ref entity.Comp, false))
             return false;
 
-        if (entity.Comp.ItemContainer.ContainedEntities.Last() is not { Valid: true } toRemove)
+        if (entity.Comp.ItemContainer.ContainedEntities.LastOrDefault() is not { Valid: true } toRemove)
             return false;
 
         if (!_container.Remove(toRemove, entity.Comp.ItemContainer))

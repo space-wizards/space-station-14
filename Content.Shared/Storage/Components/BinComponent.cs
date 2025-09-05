@@ -28,6 +28,18 @@ public sealed partial class BinComponent : Component
     public string ContainerId = "bin-container";
 
     /// <summary>
+    /// Examine string that displays when there are items in the bin.
+    /// </summary>
+    [DataField]
+    public string ExamineText = "bin-component-on-examine-text";
+
+    /// <summary>
+    /// Examine text that displays when the bin is empty.
+    /// </summary>
+    [DataField]
+    public string EmptyText = "bin-component-on-examine-empty-text";
+
+    /// <summary>
     /// Icon for insertion
     /// </summary>
     [DataField]
