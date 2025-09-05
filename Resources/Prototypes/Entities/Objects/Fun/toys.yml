@@ -499,6 +499,11 @@
     proto: BulletTennis
     capacity: 1
     count: 1
+  - type: EmitSoundOnUse
+    sound:
+      collection: ToySqueak
+      params:
+        volume: -4
 
 - type: entity
   parent: BaseItem
