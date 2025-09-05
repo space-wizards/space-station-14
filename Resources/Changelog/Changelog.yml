@@ -1,60 +1,4 @@
 ﻿Entries:
-- author: Errant
-  changes:
-  - message: Vox now only drop their organs when gibbed, not all of their bodyparts.
-    type: Fix
-  id: 8408
-  time: '2025-05-02T17:12:23.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/37111
-- author: murolem
-  changes:
-  - message: Updated PA crate order name and description to clarify that it only contains
-      boards.
-    type: Tweak
-  id: 8409
-  time: '2025-05-02T18:31:49.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/37109
-- author: Unkn0wnGh0st333
-  changes:
-  - message: Knuckle Dusters have arrived to Space Station 14. QM can now rule cargo
-      with a golden-covered fist!
-    type: Add
-  id: 8411
-  time: '2025-05-03T04:18:08.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/33470
-- author: Errant
-  changes:
-  - message: Visiting Command and Security ghostroles, as well as some other rare
-      centcomm ghostroles, now have their names properly randomized.
-    type: Fix
-  id: 8412
-  time: '2025-05-03T12:10:43.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/37143
-- author: Radezolid
-  changes:
-  - message: Fixed departmental maintenance airlocks not using it's wire layout.
-    type: Fix
-  - message: Command maintenance airlocks now have proper security like their regular
-      counterparts.
-    type: Tweak
-  id: 8413
-  time: '2025-05-03T15:07:57.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/36735
-- author: youtissoum
-  changes:
-  - message: Skeletons will no longer spawn inside of folded body bags.
-    type: Fix
-  id: 8414
-  time: '2025-05-03T19:19:33.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/37151
-- author: Minemoder
-  changes:
-  - message: The traitor uplink thieving gloves have been replaced with chameleon
-      thieving gloves, the same used by the Thief.
-    type: Tweak
-  id: 8415
-  time: '2025-05-03T19:28:47.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/36369
 - author: EmoGarbage404
   changes:
   - message: Added gibtonite! This secret ore becomes visible when struck and explodes
@@ -3947,3 +3891,56 @@
   id: 8920
   time: '2025-09-04T03:17:39.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/39107
+- author: jkwookee
+  changes:
+  - message: QM Golden Knuckledusters can be properly obtained as a Syndicate steal
+      objective
+    type: Fix
+  id: 8921
+  time: '2025-09-04T11:08:25.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/40096
+- author: DDeegan
+  changes:
+  - message: Fixed labels on orders sent to the cargo telepad to show the correct
+      payer.
+    type: Fix
+  id: 8922
+  time: '2025-09-04T11:17:52.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/39975
+- author: VoidMeticulous
+  changes:
+  - message: Scurret petting rate lowered to once per 2.25 seconds
+    type: Tweak
+  id: 8923
+  time: '2025-09-04T15:41:45.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/40097
+- author: Quantum-cross
+  changes:
+  - message: The anomaly scanner has received an upgrade, showing some information
+      without opening the UI.
+    type: Add
+  id: 8924
+  time: '2025-09-04T19:11:04.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37585
+- author: whatston3
+  changes:
+  - message: Lathe UIs are now way smoother when printing mass amounts of fast-printing
+      items.
+    type: Fix
+  id: 8925
+  time: '2025-09-04T19:37:15.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/39886
+- author: Princess-Cheeseballs
+  changes:
+  - message: You can no longer crawl under counters, or tables without space underneath.
+    type: Tweak
+  id: 8926
+  time: '2025-09-04T21:03:10.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/40099
+- author: CawsForConcern
+  changes:
+  - message: Iced Coffee now contains Theobromine
+    type: Fix
+  id: 8927
+  time: '2025-09-04T22:46:44.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/40063
