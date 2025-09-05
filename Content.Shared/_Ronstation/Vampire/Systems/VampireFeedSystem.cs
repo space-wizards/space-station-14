@@ -105,7 +105,7 @@ public sealed class VampireFeedSystem : EntitySystem
         _doAfterSystem.TryStartDoAfter(new DoAfterArgs(EntityManager, ent, ent.Comp.Delay, new VampireFeedDoAfterEvent(), ent, target: target, used: ent)
         {
             BreakOnMove = true,
-            BlockDuplicate = true,
+            BlockDuplicate = false,
             DuplicateCondition = DuplicateConditions.None,
         });
     }

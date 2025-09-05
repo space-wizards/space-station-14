@@ -108,7 +108,7 @@
   - Wizard
   - Dragon
   - Xenoborg
-  - Vampire
+  - Vampire # Ronstation - modification
 
 - type: npcFaction
   id: Revolutionary
@@ -137,7 +137,7 @@
   - Revolutionary
   - Wizard
   - Xenoborg
-  - Vampire
+  - Vampire # Ronstation - modification
 
 - type: npcFaction
   id: Wizard
@@ -155,7 +155,7 @@
   - Revolutionary
   - AllHostile
   - Xenoborg
-  - Vampire
+  - Vampire # Ronstation - modification
 
 - type: npcFaction
   id: Xenoborg
@@ -166,7 +166,7 @@
   - Zombie
   - Revolutionary
   - Wizard
-  - Vampire
+  - Vampire # Ronstation - modification
 
   - Xeno # rivalry
 
