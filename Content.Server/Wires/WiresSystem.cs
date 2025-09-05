@@ -621,10 +621,13 @@ public sealed class WiresSystem : SharedWiresSystem
 
     public void SetWiresPanelSecurity(EntityUid uid, WiresPanelSecurityComponent component, WiresPanelSecurityEvent args)
     {
-        component.Examine = args.Examine;
-        component.WiresAccessible = args.WiresAccessible;
+        if (MetaData(uid).EntityLifeStage == EntityLifeStage.MapInitialized)
+        {
+            component.Examine = args.Examine;
+            component.WiresAccessible = args.WiresAccessible;
 
-        Dirty(uid, component);
+            Dirty(uid, component);
+        }
 
         if (!args.WiresAccessible)
         {

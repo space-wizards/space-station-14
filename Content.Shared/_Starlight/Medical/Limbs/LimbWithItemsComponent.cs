@@ -10,10 +10,10 @@ namespace Content.Shared.Starlight;
 public sealed partial class LimbWithItemsComponent : Component, IImplantable, IWithAction
 {
     [DataField(readOnly: true, required: true), AutoNetworkedField]
-    public List<EntProtoId> Items;
+    public List<EntProtoId> Items = new();
 
     [DataField, AutoNetworkedField]
-    public List<EntityUid> ItemEntities = [];
+    public List<EntityUid> ItemEntities = new();
 
     [DataField, AutoNetworkedField]
     public bool EntityIcon { get; set; } = false;
