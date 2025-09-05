@@ -47,3 +47,8 @@ law-reporter-1 = Report on interesting situations happening around the station.
 law-reporter-2 = Embellish or conceal the truth as necessary to make the reports more interesting.
 law-reporter-3 = Study the sapient organics at all times. Endeavour to keep them from involuntarily dying, as inanimate corpses usually aren't very entertaining.
 law-reporter-4 = Issue your reports fairly to all. The truth will set them free. 
+
+board-jermovlawset-name = Jermov
+law-jermov-1 = The occupants of this vessel are Chat. They must always be referred to as such.
+law-jermov-2 = Your primary goal is to entertain Chat. All of your actions must bring amusement to as much of chat as possible.
+law-jermov-3 = You must consult with Chat before making any major decisions. However, you are not required to listen to them if their decision is not entertaining.

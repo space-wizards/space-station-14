@@ -50,3 +50,16 @@
     laws: ReporterLawset
   - type: StaticPrice 
     price: 1000
+
+- type: entity
+  id: JermovCircuitBoard
+  parent: BaseElectronics
+  name: law board (Jermov)
+  components:
+  - type: Sprite
+    sprite: Objects/Misc/module.rsi
+    state: std_mod
+  - type: SiliconLawProvider
+    laws: JermovLawset
+  - type: StaticPrice 
+    price: 1000
