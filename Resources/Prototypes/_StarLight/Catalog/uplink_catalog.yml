@@ -379,3 +379,16 @@
     Telecrystal: 5
   categories:
   - UplinkWearables
+
+- type: listing
+  id: UplinkClothingOuterArmorBasic
+  name: uplink-clothing-outer-armor-basic-name
+  description: uplink-clothing-outer-armor-basic-desc
+  productEntity: ClothingOuterArmorBasic
+  discountCategory: usualDiscounts
+  discountDownTo:
+    Telecrystal: 2
+  cost:
+    Telecrystal: 4
+  categories:
+  - UplinkWearables
