@@ -100,8 +100,10 @@
   - type: ReagentTank
   - type: DumpableSolution
     solution: drainBuffer
-  - type: Drink
+  - type: Edible
     solution: tank
+    destroyOnEmpty: false
+    utensil: Spoon
   - type: GenericVisualizer
     visuals:
       enum.ToiletVisuals.SeatVisualState:
