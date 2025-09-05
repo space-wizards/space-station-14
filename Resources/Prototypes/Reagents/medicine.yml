@@ -293,7 +293,7 @@
           shouldHave: true
         damage:
           types:
-            Poison: 1.5 #Avali blood is ammonia based, so chems made to treat normal bloodloss poison them instead (Lethal Dose: 20u)
+            Poison: 1.5 #Resomi blood is ammonia based, so chems made to treat normal bloodloss poison them instead (Lethal Dose: 20u)
             Asphyxiation: 1 
             Bloodloss: 1
 
@@ -352,7 +352,7 @@
           shouldHave: true
         damage:
           types:
-            Poison: 2.5 #Avali blood is ammonia based, so chems made to treat normal bloodloss poison them instead. Dex+ is worse. (Lethal Dose: 15u)
+            Poison: 2.5 #Resomi blood is ammonia based, so chems made to treat normal bloodloss poison them instead. Dex+ is worse. (Lethal Dose: 15u)
             Asphyxiation: 1.5
             Bloodloss: 1
 
