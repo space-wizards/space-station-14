@@ -621,6 +621,7 @@ public sealed class WiresSystem : SharedWiresSystem
 
     public void SetWiresPanelSecurity(EntityUid uid, WiresPanelSecurityComponent component, WiresPanelSecurityEvent args)
     {
+        //starlight, only update if map initialized
         if (MetaData(uid).EntityLifeStage == EntityLifeStage.MapInitialized)
         {
             component.Examine = args.Examine;

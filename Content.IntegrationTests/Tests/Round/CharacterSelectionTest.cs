@@ -74,7 +74,7 @@ public sealed class CharacterSelectionTest
 
     // some constants to help test case readability & also make the compiler catch typos
     private static readonly ProtoId<JobPrototype> Captain = "Captain";
-    private static readonly ProtoId<JobPrototype> Passenger = "Assistant";
+    private static readonly ProtoId<JobPrototype> Passenger = "Assistant"; //starlight
     private static readonly ProtoId<JobPrototype> Mime = "Mime";
     private static readonly ProtoId<JobPrototype> Clown = "Clown";
     private static readonly ProtoId<AntagPrototype> Traitor = "Traitor";

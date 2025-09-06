@@ -10,7 +10,7 @@ namespace Content.Server.EnergyDome;
 [RegisterComponent, Access(typeof(EnergyDomeSystem))] //Access add
 public sealed partial class EnergyDomeGeneratorComponent : Component
 {
-    [ViewVariables(VVAccess.ReadWrite)]
+    [ViewVariables(VVAccess.ReadWrite)] //starlight
     public bool Enabled = false;
 
     /// <summary>

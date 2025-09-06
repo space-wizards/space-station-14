@@ -11,7 +11,7 @@ public abstract partial class SharedToolSystem
 {
     public void InitializeMultipleTool()
     {
-        SubscribeLocalEvent<MultipleToolComponent, MapInitEvent>(OnMultipleToolStartup);
+        SubscribeLocalEvent<MultipleToolComponent, MapInitEvent>(OnMultipleToolStartup); //starlight, map init instead of comp init
         SubscribeLocalEvent<MultipleToolComponent, ActivateInWorldEvent>(OnMultipleToolActivated);
         SubscribeLocalEvent<MultipleToolComponent, AfterAutoHandleStateEvent>(OnMultipleToolHandleState);
     }

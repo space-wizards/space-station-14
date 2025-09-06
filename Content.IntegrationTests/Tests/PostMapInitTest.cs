@@ -36,8 +36,8 @@ namespace Content.IntegrationTests.Tests
         private static readonly string[] NoSpawnMaps =
         {
             "CentComm",
-            "StarlightCentCommG24",
-            "StarlightCentCommSC17",
+            "StarlightCentCommG24", //starlight
+            "StarlightCentCommSC17", //starlight
             "Dart"
         };
 
@@ -58,10 +58,11 @@ namespace Content.IntegrationTests.Tests
             "/Maps/Shuttles/ShuttleEvent/honki.yml", // Contains golden honker, clown's rubber stamp
             "/Maps/Shuttles/ShuttleEvent/instigator.yml", // Contains EXP-320g "Friendship"
             "/Maps/Shuttles/ShuttleEvent/syndie_evacpod.yml", // Contains syndicate rubber stamp
+            #region starlight
             "/Maps/nanoStation.yml",
-            "/Maps/_Starlight/nukieplanet.yml", //nukie spawn map
-            "/Maps/_Starlight/Centcomms/CC_Outpost_G24.yml", //centcomm map
-            "/Maps/_Starlight/Centcomms/CC_Outpost_SC17.yml", //centcomm map
+            "/Maps/_Starlight/nukieplanet.yml", //starlight nukie spawn map
+            "/Maps/_Starlight/Centcomms/CC_Outpost_G24.yml", //starlight centcomm map
+            "/Maps/_Starlight/Centcomms/CC_Outpost_SC17.yml", //starlight centcomm map
             "/Maps/_Starlight/Dungeon/syndie.yml",
             "/Maps/_Starlight/Shuttles/Radiotower.yml",
             "/Maps/_Starlight/Shuttles/scarletSHCdefenderFinal.yml",
@@ -75,6 +76,7 @@ namespace Content.IntegrationTests.Tests
             "/Maps/_Starlight/Stations/Orwell.yml",
             "/Maps/_Starlight/Stations/Remix.yml",
             "/Maps/_Starlight/Stations/Starboard.yml"
+            #endregion
         };
 
         private static readonly string[] GameMaps =
@@ -104,6 +106,7 @@ namespace Content.IntegrationTests.Tests
             "Lagan",
             "Lobster",
             "Manor",
+            #region Starlight
             "Gateway",
             "Leth",
             "Origin",
@@ -116,12 +119,12 @@ namespace Content.IntegrationTests.Tests
             "StarlightBox",
             "StarlightCentCommG24",
             "StarlightCentCommSC17",
-            "StarlightCog", 
-            "StarlightCore", 
-            "StarlightCrescent", 
-            "StarlightElkridge", 
-            "StarlightExo", 
-            "StarlightFland", 
+            "StarlightCog",
+            "StarlightCore",
+            "StarlightCrescent",
+            "StarlightElkridge",
+            "StarlightExo",
+            "StarlightFland",
             "StarlightHotel",
             "StarlightMarathon",
             "StarlightMeta",
@@ -131,6 +134,7 @@ namespace Content.IntegrationTests.Tests
             "StarlightReach",
             "StarlightSaltern",
             "StarlightSilica"
+            #endregion
         };
 
         private static readonly ProtoId<EntityCategoryPrototype> DoNotMapCategory = "DoNotMap";
