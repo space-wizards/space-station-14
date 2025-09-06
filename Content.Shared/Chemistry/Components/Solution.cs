@@ -962,5 +962,15 @@ namespace Content.Shared.Chemistry.Components
             }
             return dict;
         }
+
+        public Dictionary<ProtoId<ReagentPrototype>, FixedPoint2> GetReagentPrototypes()
+        {
+            var dict = new Dictionary<ProtoId<ReagentPrototype>, FixedPoint2>(Contents.Count);
+            foreach (var (reagent, quantity) in Contents)
+            {
+                dict[reagent.Prototype] = quantity;
+            }
+            return dict;
+        }
     }
 }

@@ -1,0 +1,10 @@
+﻿<ScrollContainer xmlns="https://spacestation14.io"
+                 SizeFlagsStretchRatio="8"
+                 HorizontalExpand="True"
+                 VerticalExpand="True">
+    <BoxContainer Orientation="Vertical" VerticalExpand="True">
+        <BoxContainer Name="ReagentList" Orientation="Vertical" VerticalExpand="True">
+            <Label Name="NoReagentsLabel" Text="{Loc 'lathe-menu-no-reagents-message'}" HorizontalAlignment="Center" VerticalAlignment="Center" VerticalExpand="True"/>
+        </BoxContainer>
+    </BoxContainer>
+</ScrollContainer>

@@ -8,6 +8,7 @@ using Content.Shared.Nutrition.EntitySystems;
 using Content.Shared.Popups;
 using Content.Shared.Verbs;
 using Content.Shared.Chemistry.EntitySystems;
+using Content.Shared.Wires;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Random;
 
@@ -18,6 +19,7 @@ public sealed class LubeSystem : EntitySystem
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
     [Dependency] private readonly SharedSolutionContainerSystem _solutionContainer = default!;
+    [Dependency] private readonly SharedWiresSystem _wires = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly IAdminLogManager _adminLogger = default!;
     [Dependency] private readonly OpenableSystem _openable = default!;
@@ -36,6 +38,9 @@ public sealed class LubeSystem : EntitySystem
             return;
 
         if (!args.CanReach || args.Target is not { Valid: true } target)
+            return;
+
+        if (_wires.IsPanelOpen(target))
             return;
 
         if (TryLube(entity, target, args.User))
