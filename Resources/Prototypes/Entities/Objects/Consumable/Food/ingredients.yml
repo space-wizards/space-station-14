@@ -274,8 +274,8 @@
       food:
         maxVol: 18
         reagents:
-        - ReagentId: Nutriment
-          Quantity: 15
+        - ReagentId: Carbohydrate
+          Quantity: 3 # Unbaked food should have poor nutrient quantity
   - type: Tag
     tags:
       - Ingredient
@@ -318,10 +318,10 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 6
+        maxVol: 3
         reagents:
-        - ReagentId: Nutriment
-          Quantity: 5
+        - ReagentId: Carbohydrate
+          Quantity: 1
 
 - type: entity
   name: dough rope
@@ -337,13 +337,6 @@
   - type: Construction
     graph: DoughRope
     node: rolled
-  - type: SolutionContainerManager
-    solutions:
-      food:
-        maxVol: 6
-        reagents:
-        - ReagentId: Nutriment
-          Quantity: 5
 
 - type: entity
   name: cornmeal dough
@@ -376,6 +369,13 @@
   - type: Tag
     tags:
     - Slice
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 3
+        reagents:
+        - ReagentId: Carbohydrate
+          Quantity: 1
 
 - type: entity
   name: tortilla dough
@@ -411,6 +411,13 @@
   - type: Tag
     tags:
     - Slice
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 3
+        reagents:
+        - ReagentId: Carbohydrate
+          Quantity: 1
 
 - type: entity
   name: flattened tortilla dough
@@ -455,8 +462,8 @@
       food:
         maxVol: 18
         reagents:
-        - ReagentId: Nutriment
-          Quantity: 5
+        - ReagentId: Carbohydrate
+          Quantity: 3
         - ReagentId: Fiber
           Quantity: 10
 
@@ -484,10 +491,10 @@
       food:
         maxVol: 6
         reagents:
-        - ReagentId: Nutriment
-          Quantity: 1.5
+        - ReagentId: Carbohydrate
+          Quantity: 1
         - ReagentId: Fiber
-          Quantity: 3.5
+          Quantity: 3.3
 
 - type: entity
   name: cotton dough rope
@@ -509,8 +516,8 @@
       food:
         maxVol: 6
         reagents:
-        - ReagentId: Nutriment
-          Quantity: 1.5
+        - ReagentId: Carbohydrate
+          Quantity: 1
         - ReagentId: Fiber
           Quantity: 3.5
   - type: Tag
@@ -574,6 +581,15 @@
   - type: SliceableFood
     count: 3
     slice: FoodCroissantRawCotton
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 6
+        reagents:
+        - ReagentId: Carbohydrate
+          Quantity: 3
+        - ReagentId: Fiber
+          Quantity: 10
 
 - type: entity
   name: pizza bread
@@ -694,6 +710,13 @@
   - type: SliceableFood
     count: 4
     slice: FoodCheeseSlice
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 20
+        reagents:
+        - ReagentId: Fat
+          Quantity: 15
 
 - type: entity
   name: cheese wedge
@@ -711,7 +734,7 @@
       food:
         maxVol: 6
         reagents:
-        - ReagentId: Nutriment
+        - ReagentId: Fat
           Quantity: 3.75
   - type: Tag
     tags:
@@ -747,7 +770,7 @@
       food:
         maxVol: 6
         reagents:
-        - ReagentId: Nutriment
+        - ReagentId: Fat
           Quantity: 3
         - ReagentId: Vitamin
           Quantity: 0.6
@@ -769,7 +792,7 @@
       food:
         maxVol: 2
         reagents:
-        - ReagentId: Nutriment
+        - ReagentId: Fat
           Quantity: 1
         - ReagentId: Vitamin
           Quantity: 0.2
@@ -795,8 +818,10 @@
         reagents:
         - ReagentId: Protein
           Quantity: 9
-        - ReagentId: Nutriment
-          Quantity: 6
+        - ReagentId: Fat
+          Quantity: 3
+        - ReagentId: Carbohydrate
+          Quantity: 3
   - type: SliceableFood
     count: 3
     slice: FoodTofuSlice
@@ -819,8 +844,10 @@
         reagents:
         - ReagentId: Protein
           Quantity: 3
-        - ReagentId: Nutriment
-          Quantity: 2
+        - ReagentId: Fat
+          Quantity: 1
+        - ReagentId: Carbohydrate
+          Quantity: 1
   - type: Tag
     tags:
     - Slice
@@ -841,7 +868,7 @@
       food:
         maxVol: 8
         reagents:
-        - ReagentId: Nutriment
+        - ReagentId: Oil
           Quantity: 2
         - ReagentId: GastroToxin
           Quantity: 3
@@ -866,7 +893,7 @@
       food:
         maxVol: 14
         reagents:
-        - ReagentId: Nutriment
+        - ReagentId: Oil
           Quantity: 2
         - ReagentId: Vitamin
           Quantity: 1
@@ -897,8 +924,8 @@
       food:
         maxVol: 4
         reagents:
-        - ReagentId: Nutriment
-          Quantity: 3
+        - ReagentId: Carbohydrate
+          Quantity: 1
 
 - type: entity
   name: raw cotton croissant
@@ -912,3 +939,12 @@
     - cotton
   - type: Sprite
     state: croissant-raw-cotton
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 4
+        reagents:
+        - ReagentId: Carbohydrate
+          Quantity: 1
+        - ReagentId: Fiber
+          Quantity: 3.3
