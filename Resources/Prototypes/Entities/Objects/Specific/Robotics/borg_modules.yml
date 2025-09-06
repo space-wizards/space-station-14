@@ -842,17 +842,17 @@
           components:
           - Healing
     - hand:
-        emptyRepresentative: ChemicalMedipen
-        emptyLabel: borg-slot-medipen-empty
-        whitelist:
-          tags:
-          - Medipen
-    - hand:
         emptyRepresentative: Pill
         emptyLabel: borg-slot-pill-empty
         whitelist:
           components:
           - Pill
+    - hand:
+        emptyRepresentative: ChemicalMedipen
+        emptyLabel: borg-slot-medipen-empty
+        whitelist:
+          tags:
+          - Medipen
   - type: BorgModuleIcon
     icon: { sprite: Interface/Actions/actions_borg.rsi, state: treatment-module }
 
