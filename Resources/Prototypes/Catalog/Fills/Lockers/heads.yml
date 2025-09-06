@@ -10,8 +10,6 @@
     - id: CargoShuttleConsoleCircuitboard
     - id: SalvageMagnetMachineCircuitboard
     - id: SalvageJobBoardComputerCircuitboard
-    - id: CigPackGreen
-      prob: 0.50
     - id: ClothingHeadsetAltCargo
     - id: DoorRemoteCargo
     - id: RubberStampApproved
@@ -38,7 +36,6 @@
     children:
     - id: CaptainIDCard
     - id: CigarGoldCase
-      prob: 0.25
     - id: ClothingBeltSheathFilled
     - id: ClothingHeadsetAltCommand
     - id: ClothingOuterArmorCaptainCarapace
@@ -47,8 +44,8 @@
     - id: MedalCase
     - id: NukeDisk
     - id: PinpointerNuclear
-    - id: PlushieNuke
-      prob: 0.1
+    - id: RubberStampApproved
+    - id: RubberStampDenied
     - id: RubberStampCaptain
     - id: SpaceCash1000
     - id: WeaponDisabler
@@ -124,12 +121,6 @@
     - id: BoxHeadset
     - id: BoxID
     - id: BoxPDA
-    - id: CigarGoldCase
-      prob: 0.25
-      # Fuck the HoP they don't deserve fucking cigars.
-      # Yes they do fuck you.
-    - id: ClothingBackpackIan
-      prob: 0.5
     - id: ClothingHeadsetCommand
     - id: ClothingNeckGoldmedal
     - id: DoorRemoteService
@@ -160,8 +151,6 @@
     children:
     - id: AccessConfigurator
     - id: BoxEncryptionKeyEngineering
-    - id: CigarCase
-      prob: 0.15
     - id: ClothingBeltChiefEngineerFilled
     - id: ClothingEyesGlassesMeson
     - id: ClothingHandsGlovesColorYellow
@@ -170,6 +159,8 @@
     - id: CargoRequestEngineeringComputerCircuitboard
     - id: RCD
     - id: RCDAmmo
+    - id: RubberStampApproved
+    - id: RubberStampDenied
     - id: RubberStampCE
     - id: MetalFoamGrenade
 
@@ -217,10 +208,8 @@
     children:
     - id: BoxEncryptionKeyMedical
     - id: ClothingBackpackDuffelSurgeryFilled
-    - id: ClothingCloakCmo
     - id: ClothingEyesHudMedical
     - id: ClothingHandsGlovesNitrile
-    - id: ClothingHeadHatBeretCmo
     - id: ClothingHeadsetAltMedical
     - id: ClothingMaskSterile
     - id: DoorRemoteMedical
@@ -229,6 +218,8 @@
     - id: MedicalTechFabCircuitboard
     - id: CargoRequestMedicalComputerCircuitboard
     - id: MedkitFilled
+    - id: RubberStampApproved
+    - id: RubberStampDenied
     - id: RubberStampCMO
     - id: MedTekCartridge
 
@@ -282,6 +273,8 @@
     - id: ProtolatheMachineCircuitboard
     - id: ResearchComputerCircuitboard
     - id: CargoRequestScienceComputerCircuitboard
+    - id: RubberStampApproved
+    - id: RubberStampDenied
     - id: RubberStampRd
 
 # Hardsuit table, used for suit storage as well
@@ -327,8 +320,6 @@
     - id: WeaponEnergyShotgun
     - id: BookSpaceLaw
     - id: BoxEncryptionKeySecurity
-    - id: CigarGoldCase
-      prob: 0.50
     - id: ClothingBeltSecurityFilled
     - id: ClothingEyesGlassesSecurity
     - id: ClothingHeadsetAltSecurity
@@ -337,6 +328,8 @@
     - id: ClothingShoesBootsJack
     - id: DoorRemoteSecurity
     - id: HoloprojectorSecurity
+    - id: RubberStampApproved
+    - id: RubberStampDenied
     - id: RubberStampHos
     - id: SecurityTechFabCircuitboard
     - id: CargoRequestSecurityComputerCircuitboard

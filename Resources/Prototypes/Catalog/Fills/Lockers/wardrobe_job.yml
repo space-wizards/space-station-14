@@ -193,9 +193,6 @@
     - id: ClothingOuterCoatRnd
     - id: ClothingUniformJumpskirtScientist
     - id: ClothingEyesGlasses
-      prob: 0.5
-    - id: CrowbarRed #The jojoke - hit video game Half-Life
-      prob: 0.1
 
 - type: entity
   id: WardrobeBotanistFilled
@@ -244,9 +241,7 @@
     - id: ClothingOuterCoatLab
     - id: ClothingUniformJumpskirtMedicalDoctor
     - id: ClothingHandsGlovesLatex
-      prob: 0.4
     - id: ClothingEyesGlasses
-      prob: 0.3
 
 - type: entity
   id: WardrobeChapelFilled

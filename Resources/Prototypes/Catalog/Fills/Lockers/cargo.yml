@@ -18,9 +18,7 @@
     - id: AppraisalTool
     - id: FireExtinguisher
     - id: Flare
-      prob: 0.3
-      rolls: !type:ConstantNumberSelector
-        value: 3
+      amount: 2
 
 - type: entity
   id: LockerSalvageSpecialistFilledHardsuit

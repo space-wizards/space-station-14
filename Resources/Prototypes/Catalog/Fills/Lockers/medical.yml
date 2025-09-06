@@ -41,9 +41,6 @@
   table: !type:AllSelector
     children:
     - id: HandheldHealthAnalyzer
-      prob: 0.6
-    - id: ClothingHeadMirror
-      prob: 0.1
     - id: ClothingHandsGlovesLatex
     - id: ClothingHeadsetMedical
     - id: ClothingEyesHudMedical
@@ -92,8 +89,7 @@
     children:
     - id: BoxSyringe
     - id: BoxBeaker
-    - id: BoxBeaker
-      prob: 0.3
+      amount: 2
     - id: BoxPillCanister
     - id: BoxBottle
     - id: BoxVial
@@ -103,7 +99,6 @@
     - id: ClothingHeadsetMedical
     - id: ClothingMaskSterile
     - id: HandLabeler
-      prob: 0.5
 
 - type: entity
   parent: LockerChemistry
@@ -130,8 +125,6 @@
     - id: ClothingHeadsetMedical
     - id: ClothingMaskSterile
     - id: HandheldGPSBasic
-    - id: MedkitFilled
-      prob: 0.3
 
 - type: entity
   parent: LockerParamedic

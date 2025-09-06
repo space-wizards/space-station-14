@@ -17,14 +17,9 @@
     - id: DrinkShaker
     - id: ClothingEyesHudBeer
     - id: HandLabeler
-    - id: DrinkBottleBeer
-      amount: !type:BinomialNumberSelector
-        trials: 3
-    - !type:AllSelector
-      rolls: 2
-      children:
-      - id: BoxBeanbag
-      - id: RagItem
+    - id: BoxBeanbag
+    - id: RagItem
+      amount: 2
 
 #- type: entity
 #  id: LockerFormalFilled
@@ -131,15 +126,12 @@
     - id: ClothingOuterApronBotanist
     - id: ClothingHeadBandBotany
     - id: ChemistryBottleRobustHarvest
-      prob: 0.3
     - id: ClothingBeltPlant
     - id: PlantBag ##Some maps don't have nutrivend
     - id: BoxMouthSwab
     - id: Dropper
     - id: HandLabeler
     - id: ClothingUniformOveralls
-    - id: ClothingHeadHatTrucker
-      prob: 0.1
 
 - type: entity
   id: LockerBotanistLoot
