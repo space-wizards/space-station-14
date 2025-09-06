@@ -57,6 +57,7 @@ public sealed class SunShadowOverlay : Overlay
 
         if (_target?.Size != targetSize)
         {
+            _target?.Dispose();
             _target = _clyde
                 .CreateRenderTarget(targetSize,
                     new RenderTargetFormatParameters(RenderTargetColorFormat.Rgba8Srgb),
@@ -64,6 +65,7 @@ public sealed class SunShadowOverlay : Overlay
 
             if (_blurTarget?.Size != targetSize)
             {
+                _blurTarget?.Dispose();
                 _blurTarget = _clyde
                     .CreateRenderTarget(targetSize, new RenderTargetFormatParameters(RenderTargetColorFormat.Rgba8Srgb), name: "sun-shadow-blur");
             }
