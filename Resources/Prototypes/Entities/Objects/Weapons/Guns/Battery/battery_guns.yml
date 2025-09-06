@@ -75,6 +75,7 @@
     shape:
     - 0,0,1,0
     - 0,1,0,1
+    bulk: 3
   - type: Tag
     tags:
     - Sidearm
@@ -342,6 +343,7 @@
   components:
   - type: Item
     size: Huge
+    bulk: 10
     shape:
     - 0,0,4,1
   - type: Sprite
@@ -378,6 +380,7 @@
   components:
   - type: Item
     size: Huge
+    bulk: 10
     shape:
     - 0,0,4,1
   - type: Sprite
@@ -445,6 +448,7 @@
   components:
   - type: Item
     size: Huge
+    bulk: 10
     shape:
     - 0,0,4,1
   - type: Sprite
@@ -686,6 +690,7 @@
   components:
   - type: Item
     size: Normal
+    bulk: 3
     shape:
     - 0,0,1,1
   - type: Sprite
