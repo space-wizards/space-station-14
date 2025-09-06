@@ -91,9 +91,10 @@ public sealed class DisplacementMapSystem : EntitySystem
     /// <summary>
     /// Attempts to remove the displacement layer specified.
     /// </summary>
-    /// <param name="sprite"></param>
-    /// <param name="key"></param>
-    /// <returns>False if the key is invalid or the layer didn't exist. Otherwise true.</returns>
+    /// <param name="sprite">The sprite to remove the displacement layer from.</param>
+    /// <param name="key">The key of the layer that is referenced by the displacement layer we want to remove.</param>
+    /// <param name="logMissing">Whether to report an error if the displacement map isn't on the sprite.</param>
+    /// <returns>False if the key is invalid or the layer didn't exist. Otherwise, true.</returns>
     public bool TryRemoveDisplacement(Entity<SpriteComponent> sprite, object key, bool logMissing = true)
     {
         var displacementLayerKey = BuildDisplacementLayerKey(key);
