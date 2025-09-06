@@ -711,7 +711,7 @@ public abstract class SharedActionsSystem : EntitySystem
         ent.Comp.AttachedEntity = performer;
         DirtyField(ent, ent.Comp, nameof(ActionComponent.AttachedEntity));
         performer.Comp.Actions.Add(ent);
-        Dirty(performer, performer.Comp);
+        OnActionsDirty(performer, performer.Comp);
         ActionAdded((performer, performer.Comp), (ent, ent.Comp));
         return true;
     }
@@ -866,7 +866,7 @@ public abstract class SharedActionsSystem : EntitySystem
         }
 
         performer.Comp.Actions.Remove(ent.Owner);
-        Dirty(performer, performer.Comp);
+        OnActionsDirty(performer, performer.Comp);
         ent.Comp.AttachedEntity = null;
         DirtyField(ent, ent.Comp, nameof(ActionComponent.AttachedEntity));
         ActionRemoved((performer, performer.Comp), ent);
@@ -1073,5 +1073,21 @@ public abstract class SharedActionsSystem : EntitySystem
 
         ent.Comp.Temporary = temporary;
         Dirty(ent);
+    }
+
+    private void OnActionsDirty(EntityUid uid, ActionsComponent component)
+    {
+        Dirty(uid, component);
+
+        // Relay: dirty for all connected relays.
+        var relayQuery = EntityQueryEnumerator<ActionsDisplayRelayComponent>();
+        while (relayQuery.MoveNext(out var relayUid, out var relayComp))
+        {
+            if (relayComp.Source == uid)
+            {
+                if (TryComp<ActionsComponent>(relayUid, out var relayActionComp))
+                    Dirty(relayUid, relayActionComp);
+            }
+        }
     }
 }
