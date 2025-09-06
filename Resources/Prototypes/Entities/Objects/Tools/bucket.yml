@@ -7,6 +7,7 @@
   - type: Clickable
   - type: Edible
     edible: Drink
+    utensil: Spoon
     solution: bucket
     destroyOnEmpty: false
   - type: Sprite
