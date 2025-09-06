@@ -1076,22 +1076,6 @@ entities:
     components:
     - type: Transform
       parent: 216
-    - type: HandheldLight
-      toggleActionEntity: 221
-    - type: ContainerContainer
-      containers:
-        cell_slot: !type:ContainerSlot
-          showEnts: False
-          occludes: True
-          ent: null
-        actions: !type:Container
-          showEnts: False
-          occludes: True
-          ents:
-          - 221
-    - type: Physics
-      canCollide: False
-    - type: ActionsContainer
     - type: InsideEntityStorage
   - uid: 232
     components:
@@ -1569,8 +1553,6 @@ entities:
       inletTwoConcentration: 0.22000003
       inletOneConcentration: 0.78
       targetPressure: 400
-    - type: VentCrawTube
-      connected: True
 - proto: GasPassiveVent
   entities:
   - uid: 82
@@ -1598,23 +1580,17 @@ entities:
       rot: 3.141592653589793 rad
       pos: 3.5,1.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
   - uid: 86
     components:
     - type: Transform
       pos: 3.5,3.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
   - uid: 87
     components:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: -2.5,3.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
 - proto: GasPipeStraight
   entities:
   - uid: 88
@@ -1622,189 +1598,141 @@ entities:
     - type: Transform
       pos: 3.5,2.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
   - uid: 89
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 2.5,3.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
   - uid: 90
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 1.5,3.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
   - uid: 91
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 0.5,3.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
   - uid: 92
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: -0.5,3.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
   - uid: 93
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: -1.5,3.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
   - uid: 94
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: -2.5,2.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
   - uid: 283
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 6.5,0.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
   - uid: 308
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 5.5,0.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
   - uid: 323
     components:
     - type: Transform
       pos: 8.5,1.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
   - uid: 331
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 7.5,0.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
   - uid: 332
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 4.5,0.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
   - uid: 333
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 2.5,0.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
   - uid: 334
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 1.5,0.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
   - uid: 335
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 0.5,0.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
   - uid: 336
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: -0.5,0.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
   - uid: 337
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: -1.5,0.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
   - uid: 341
     components:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 5.5,-0.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
   - uid: 342
     components:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 4.5,-0.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
   - uid: 343
     components:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 3.5,-0.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
   - uid: 344
     components:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 2.5,-0.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
   - uid: 345
     components:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 1.5,-0.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
   - uid: 346
     components:
     - type: Transform
       pos: 6.5,0.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
   - uid: 347
     components:
     - type: Transform
       pos: 6.5,1.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
 - proto: GasPipeTJunction
   entities:
   - uid: 276
@@ -1812,32 +1740,24 @@ entities:
     - type: Transform
       pos: 3.5,0.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
   - uid: 300
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 8.5,0.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
   - uid: 307
     components:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: -2.5,0.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
   - uid: 340
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 6.5,-0.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
 - proto: GasVentPump
   entities:
   - uid: 284
@@ -1845,8 +1765,6 @@ entities:
     - type: Transform
       pos: 8.5,2.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: DeviceNetwork
       deviceLists:
       - 350
@@ -1856,8 +1774,6 @@ entities:
       rot: 3.141592653589793 rad
       pos: 3.5,-0.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: DeviceNetwork
       deviceLists:
       - 349
@@ -1867,8 +1783,6 @@ entities:
       rot: 3.141592653589793 rad
       pos: 8.5,-0.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: DeviceNetwork
       deviceLists:
       - 350
@@ -1878,8 +1792,6 @@ entities:
       rot: 3.141592653589793 rad
       pos: -2.5,-0.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: DeviceNetwork
       deviceLists:
       - 349
@@ -1891,8 +1803,6 @@ entities:
       rot: 1.5707963267948966 rad
       pos: 0.5,-0.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: DeviceNetwork
       deviceLists:
       - 349
@@ -1902,8 +1812,6 @@ entities:
       rot: -1.5707963267948966 rad
       pos: 7.5,-0.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: DeviceNetwork
       deviceLists:
       - 350

@@ -19,6 +19,7 @@
   - MagazineBoxLightRiflePractice
   - MagazineBoxMagnumPractice
   - MagazineBoxPistolPractice
+  - MagazineBoxCaselessRiflePractice
   - MagazineBoxRiflePractice
   - WeaponDisablerPractice
   - WeaponLaserCarbinePractice
@@ -38,6 +39,8 @@
   - MagazineBoxMagnumHP
   - MagazineBoxMagnumFMJ
 # Pistol
+  - MagazineBoxCaselessRifle
+  - MagazineBoxCaselessRifleRubber
   - MagazineBoxPistolSP
   - MagazineBoxPistolHP
   - MagazineBoxPistolFMJ
@@ -62,13 +65,20 @@
   - MagazineLightRifleSP
   - MagazineLightRifleHP
   - MagazineLightRifleFMJ
+  - MagazineLightRifleMaxim
+  - SpeedLoaderLightRifle
   - MagazineLightRifleEmpty
 # Magnum
   - SpeedLoaderMagnumSP
   - SpeedLoaderMagnumHP
   - SpeedLoaderMagnumFMJ
+  - MagazineMagnum
+  - MagazineMagnumRifleSP
+  - MagazineMagnumEmpty
   - SpeedLoaderMagnumEmpty
 # Pistol
+  - MagazinePistolCaselessRifle
+  - MagazineCaselessRifleRubber
   - MagazinePistolSP
   - MagazinePistolHP
   - MagazinePistolFMJ
@@ -84,6 +94,8 @@
   - MagazinePistolSubMachineGunEmpty
   - MagazinePistolSubMachineGunTopMounted
   - MagazinePistolSubMachineGunTopMountedEmpty
+  - MagazinePistolSubMachineGunUzi
+  - MagazinePistolSubMachineGunPPSH
 # Rifle
   - MagazineRifleSP
   - MagazineRifleHP
@@ -232,6 +244,8 @@
   - WeaponIonCarbine
   - WeaponDecloner
   - WeaponLaserImmolator
+  - WeaponLaserSvalinn
+  - WeaponTemperatureGun
 
 - type: latheRecipePack
   id: StarlightSecurityMechsWeapons

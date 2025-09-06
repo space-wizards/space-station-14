@@ -9380,8 +9380,6 @@ entities:
     - type: Transform
       pos: -12.5,-17.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: GasMixer
       inletTwoConcentration: 0.22000003
       inletOneConcentration: 0.78
@@ -9420,16 +9418,12 @@ entities:
       rot: -1.5707963267948966 rad
       pos: -12.5,-19.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
   - uid: 1465
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: -11.5,-22.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#0055CCFF'
   - uid: 2154
@@ -9438,8 +9432,6 @@ entities:
       rot: 3.141592653589793 rad
       pos: -13.5,-9.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#0055CCFF'
   - uid: 2155
@@ -9448,8 +9440,6 @@ entities:
       rot: 1.5707963267948966 rad
       pos: -7.5,-7.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#0055CCFF'
   - uid: 2156
@@ -9458,8 +9448,6 @@ entities:
       rot: 3.141592653589793 rad
       pos: -7.5,-12.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#0055CCFF'
   - uid: 2157
@@ -9468,8 +9456,6 @@ entities:
       rot: 3.141592653589793 rad
       pos: -9.5,-16.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#0055CCFF'
   - uid: 2158
@@ -9478,8 +9464,6 @@ entities:
       rot: 1.5707963267948966 rad
       pos: -14.5,-13.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#0055CCFF'
   - uid: 2187
@@ -9487,8 +9471,6 @@ entities:
     - type: Transform
       pos: 7.5,9.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#0055CCFF'
   - uid: 2188
@@ -9497,8 +9479,6 @@ entities:
       rot: -1.5707963267948966 rad
       pos: 6.5,5.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#0055CCFF'
   - uid: 2195
@@ -9507,8 +9487,6 @@ entities:
       rot: 3.141592653589793 rad
       pos: -8.5,8.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#0055CCFF'
   - uid: 2219
@@ -9517,8 +9495,6 @@ entities:
       rot: 3.141592653589793 rad
       pos: -7.5,14.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#0055CCFF'
   - uid: 2229
@@ -9527,8 +9503,6 @@ entities:
       rot: 1.5707963267948966 rad
       pos: -5.5,22.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#0055CCFF'
   - uid: 2230
@@ -9537,8 +9511,6 @@ entities:
       rot: -1.5707963267948966 rad
       pos: -5.5,21.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#0055CCFF'
   - uid: 2231
@@ -9547,8 +9519,6 @@ entities:
       rot: 3.141592653589793 rad
       pos: -3.5,18.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#0055CCFF'
   - uid: 2237
@@ -9557,8 +9527,6 @@ entities:
       rot: 1.5707963267948966 rad
       pos: 0.5,12.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#0055CCFF'
   - uid: 2238
@@ -9567,8 +9535,6 @@ entities:
       rot: -1.5707963267948966 rad
       pos: 1.5,12.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#0055CCFF'
   - uid: 2239
@@ -9577,8 +9543,6 @@ entities:
       rot: -1.5707963267948966 rad
       pos: 5.5,13.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#0055CCFF'
   - uid: 2250
@@ -9587,8 +9551,6 @@ entities:
       rot: 1.5707963267948966 rad
       pos: 1.5,21.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#0055CCFF'
   - uid: 2257
@@ -9597,8 +9559,6 @@ entities:
       rot: -1.5707963267948966 rad
       pos: 4.5,21.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#0055CCFF'
   - uid: 2282
@@ -9606,8 +9566,6 @@ entities:
     - type: Transform
       pos: 5.5,-12.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#0055CCFF'
   - uid: 2292
@@ -9616,8 +9574,6 @@ entities:
       rot: 1.5707963267948966 rad
       pos: -6.5,-4.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#0055CCFF'
   - uid: 2293
@@ -9625,8 +9581,6 @@ entities:
     - type: Transform
       pos: 7.5,-4.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#0055CCFF'
   - uid: 2294
@@ -9634,8 +9588,6 @@ entities:
     - type: Transform
       pos: 8.5,-7.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#0055CCFF'
   - uid: 2323
@@ -9643,8 +9595,6 @@ entities:
     - type: Transform
       pos: 15.5,-13.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#0055CCFF'
   - uid: 2328
@@ -9653,8 +9603,6 @@ entities:
       rot: -1.5707963267948966 rad
       pos: 10.5,-17.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#0055CCFF'
 - proto: GasPipeBendAlt1
@@ -9665,8 +9613,6 @@ entities:
       rot: 1.5707963267948966 rad
       pos: -13.5,-9.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#990000FF'
   - uid: 2363
@@ -9675,8 +9621,6 @@ entities:
       rot: 3.141592653589793 rad
       pos: -7.5,-12.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#990000FF'
   - uid: 2379
@@ -9685,8 +9629,6 @@ entities:
       rot: 3.141592653589793 rad
       pos: -5.5,-22.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#990000FF'
   - uid: 2380
@@ -9695,8 +9637,6 @@ entities:
       rot: -1.5707963267948966 rad
       pos: -6.5,-21.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#990000FF'
   - uid: 2395
@@ -9704,8 +9644,6 @@ entities:
     - type: Transform
       pos: -7.5,-15.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#990000FF'
   - uid: 2413
@@ -9714,8 +9652,6 @@ entities:
       rot: 3.141592653589793 rad
       pos: -11.5,-21.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#990000FF'
   - uid: 2434
@@ -9724,8 +9660,6 @@ entities:
       rot: 1.5707963267948966 rad
       pos: -11.5,-12.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#990000FF'
   - uid: 2441
@@ -9734,8 +9668,6 @@ entities:
       rot: 3.141592653589793 rad
       pos: -9.5,-15.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#990000FF'
   - uid: 2456
@@ -9743,8 +9675,6 @@ entities:
     - type: Transform
       pos: 4.5,-12.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#990000FF'
   - uid: 2458
@@ -9753,8 +9683,6 @@ entities:
       rot: -1.5707963267948966 rad
       pos: -6.5,-9.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#990000FF'
   - uid: 2462
@@ -9763,8 +9691,6 @@ entities:
       rot: 1.5707963267948966 rad
       pos: -6.5,-6.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#990000FF'
   - uid: 2575
@@ -9773,8 +9699,6 @@ entities:
       rot: 3.141592653589793 rad
       pos: -7.5,-24.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#990000FF'
   - uid: 2577
@@ -9782,8 +9706,6 @@ entities:
     - type: Transform
       pos: 12.5,-13.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#990000FF'
   - uid: 2579
@@ -9792,8 +9714,6 @@ entities:
       rot: 3.141592653589793 rad
       pos: 11.5,-13.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#990000FF'
   - uid: 3011
@@ -9802,8 +9722,6 @@ entities:
       rot: -1.5707963267948966 rad
       pos: -5.5,-6.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#990000FF'
 - proto: GasPipeBendAlt2
@@ -9814,8 +9732,6 @@ entities:
       rot: 1.5707963267948966 rad
       pos: -5.5,-4.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#990000FF'
   - uid: 2480
@@ -9823,8 +9739,6 @@ entities:
     - type: Transform
       pos: 8.5,-9.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#990000FF'
   - uid: 2489
@@ -9833,8 +9747,6 @@ entities:
       rot: 3.141592653589793 rad
       pos: 7.5,-9.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#990000FF'
   - uid: 2494
@@ -9843,8 +9755,6 @@ entities:
       rot: 1.5707963267948966 rad
       pos: 10.5,-9.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#990000FF'
   - uid: 2507
@@ -9853,8 +9763,6 @@ entities:
       rot: 3.141592653589793 rad
       pos: -1.5,2.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#990000FF'
   - uid: 2520
@@ -9863,8 +9771,6 @@ entities:
       rot: -1.5707963267948966 rad
       pos: 7.5,9.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#990000FF'
   - uid: 2525
@@ -9873,8 +9779,6 @@ entities:
       rot: -1.5707963267948966 rad
       pos: 6.5,4.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#990000FF'
   - uid: 2532
@@ -9883,8 +9787,6 @@ entities:
       rot: 3.141592653589793 rad
       pos: -2.5,9.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#990000FF'
   - uid: 2546
@@ -9892,8 +9794,6 @@ entities:
     - type: Transform
       pos: -2.5,17.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#990000FF'
   - uid: 2547
@@ -9902,8 +9802,6 @@ entities:
       rot: 3.141592653589793 rad
       pos: -3.5,17.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#990000FF'
   - uid: 2552
@@ -9911,8 +9809,6 @@ entities:
     - type: Transform
       pos: -3.5,22.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#990000FF'
   - uid: 2554
@@ -9921,8 +9817,6 @@ entities:
       rot: 1.5707963267948966 rad
       pos: -5.5,22.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#990000FF'
   - uid: 2556
@@ -9931,8 +9825,6 @@ entities:
       rot: -1.5707963267948966 rad
       pos: -5.5,20.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#990000FF'
   - uid: 2559
@@ -9941,8 +9833,6 @@ entities:
       rot: 1.5707963267948966 rad
       pos: 0.5,12.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#990000FF'
   - uid: 2560
@@ -9951,8 +9841,6 @@ entities:
       rot: -1.5707963267948966 rad
       pos: 1.5,12.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#990000FF'
   - uid: 2570
@@ -9961,8 +9849,6 @@ entities:
       rot: 1.5707963267948966 rad
       pos: 1.5,21.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#990000FF'
   - uid: 2573
@@ -9971,8 +9857,6 @@ entities:
       rot: -1.5707963267948966 rad
       pos: 4.5,21.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#990000FF'
   - uid: 2574
@@ -9981,8 +9865,6 @@ entities:
       rot: 1.5707963267948966 rad
       pos: 4.5,22.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#990000FF'
   - uid: 2576
@@ -9990,8 +9872,6 @@ entities:
     - type: Transform
       pos: 7.5,-4.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#990000FF'
   - uid: 2580
@@ -10000,8 +9880,6 @@ entities:
       rot: 3.141592653589793 rad
       pos: 10.5,-11.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#990000FF'
   - uid: 2581
@@ -10009,8 +9887,6 @@ entities:
     - type: Transform
       pos: 11.5,-11.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#990000FF'
 - proto: GasPipeFourway
@@ -10020,8 +9896,6 @@ entities:
     - type: Transform
       pos: 0.5,8.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#0055CCFF'
   - uid: 2344
@@ -10029,8 +9903,6 @@ entities:
     - type: Transform
       pos: 15.5,-9.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#0055CCFF'
 - proto: GasPipeFourwayAlt2
@@ -10040,8 +9912,6 @@ entities:
     - type: Transform
       pos: 0.5,9.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#990000FF'
   - uid: 2519
@@ -10049,8 +9919,6 @@ entities:
     - type: Transform
       pos: 6.5,9.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#990000FF'
 - proto: GasPipeManifold
@@ -10094,32 +9962,24 @@ entities:
       rot: 3.141592653589793 rad
       pos: -12.5,-18.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
   - uid: 1416
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: -14.5,-17.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
   - uid: 1417
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: -14.5,-19.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
   - uid: 1419
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: -11.5,-15.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#0055CCFF'
   - uid: 1420
@@ -10128,8 +9988,6 @@ entities:
       rot: 3.141592653589793 rad
       pos: -11.5,-14.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#0055CCFF'
   - uid: 1421
@@ -10138,8 +9996,6 @@ entities:
       rot: 3.141592653589793 rad
       pos: -11.5,-17.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#0055CCFF'
   - uid: 1422
@@ -10148,8 +10004,6 @@ entities:
       rot: 3.141592653589793 rad
       pos: -11.5,-18.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#0055CCFF'
   - uid: 1423
@@ -10158,8 +10012,6 @@ entities:
       rot: 3.141592653589793 rad
       pos: -11.5,-19.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#0055CCFF'
   - uid: 1424
@@ -10168,8 +10020,6 @@ entities:
       rot: 3.141592653589793 rad
       pos: -11.5,-20.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#0055CCFF'
   - uid: 1425
@@ -10178,8 +10028,6 @@ entities:
       rot: 3.141592653589793 rad
       pos: -11.5,-21.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#0055CCFF'
   - uid: 1466
@@ -10188,8 +10036,6 @@ entities:
       rot: 1.5707963267948966 rad
       pos: -10.5,-22.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#0055CCFF'
   - uid: 1470
@@ -10198,8 +10044,6 @@ entities:
       rot: 3.141592653589793 rad
       pos: -9.5,-21.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#0055CCFF'
   - uid: 1471
@@ -10208,8 +10052,6 @@ entities:
       rot: 3.141592653589793 rad
       pos: -8.5,-21.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#0055CCFF'
   - uid: 2125
@@ -10218,8 +10060,6 @@ entities:
       rot: -1.5707963267948966 rad
       pos: 8.5,-22.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#0055CCFF'
   - uid: 2129
@@ -10228,8 +10068,6 @@ entities:
       rot: 3.141592653589793 rad
       pos: -9.5,-14.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#0055CCFF'
   - uid: 2130
@@ -10238,8 +10076,6 @@ entities:
       rot: 3.141592653589793 rad
       pos: -9.5,-15.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#0055CCFF'
   - uid: 2131
@@ -10248,8 +10084,6 @@ entities:
       rot: 1.5707963267948966 rad
       pos: -10.5,-13.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#0055CCFF'
   - uid: 2132
@@ -10258,8 +10092,6 @@ entities:
       rot: 1.5707963267948966 rad
       pos: -12.5,-13.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#0055CCFF'
   - uid: 2133
@@ -10268,8 +10100,6 @@ entities:
       rot: 1.5707963267948966 rad
       pos: -13.5,-13.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#0055CCFF'
   - uid: 2134
@@ -10277,8 +10107,6 @@ entities:
     - type: Transform
       pos: -9.5,-12.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#0055CCFF'
   - uid: 2135
@@ -10286,8 +10114,6 @@ entities:
     - type: Transform
       pos: -9.5,-11.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#0055CCFF'
   - uid: 2136
@@ -10295,8 +10121,6 @@ entities:
     - type: Transform
       pos: -9.5,-10.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#0055CCFF'
   - uid: 2137
@@ -10304,8 +10128,6 @@ entities:
     - type: Transform
       pos: -7.5,-10.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#0055CCFF'
   - uid: 2138
@@ -10313,8 +10135,6 @@ entities:
     - type: Transform
       pos: -7.5,-11.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#0055CCFF'
   - uid: 2139
@@ -10323,8 +10143,6 @@ entities:
       rot: -1.5707963267948966 rad
       pos: -6.5,-12.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#0055CCFF'
   - uid: 2140
@@ -10333,8 +10151,6 @@ entities:
       rot: -1.5707963267948966 rad
       pos: -5.5,-12.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#0055CCFF'
   - uid: 2141
@@ -10343,8 +10159,6 @@ entities:
       rot: -1.5707963267948966 rad
       pos: -3.5,-12.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#0055CCFF'
   - uid: 2142
@@ -10353,8 +10167,6 @@ entities:
       rot: 3.141592653589793 rad
       pos: -4.5,-13.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#0055CCFF'
   - uid: 2143
@@ -10363,8 +10175,6 @@ entities:
       rot: 3.141592653589793 rad
       pos: -4.5,-14.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#0055CCFF'
   - uid: 2144
@@ -10373,8 +10183,6 @@ entities:
       rot: 3.141592653589793 rad
       pos: -4.5,-15.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#0055CCFF'
   - uid: 2149
@@ -10383,8 +10191,6 @@ entities:
       rot: 3.141592653589793 rad
       pos: -7.5,-8.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#0055CCFF'
   - uid: 2150
@@ -10393,8 +10199,6 @@ entities:
       rot: 1.5707963267948966 rad
       pos: -8.5,-9.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#0055CCFF'
   - uid: 2151
@@ -10403,8 +10207,6 @@ entities:
       rot: 1.5707963267948966 rad
       pos: -10.5,-9.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#0055CCFF'
   - uid: 2152
@@ -10413,8 +10215,6 @@ entities:
       rot: 1.5707963267948966 rad
       pos: -11.5,-9.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#0055CCFF'
   - uid: 2153
@@ -10423,8 +10223,6 @@ entities:
       rot: 1.5707963267948966 rad
       pos: -12.5,-9.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#0055CCFF'
   - uid: 2159
@@ -10432,8 +10230,6 @@ entities:
     - type: Transform
       pos: -6.5,-6.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#0055CCFF'
   - uid: 2160
@@ -10441,8 +10237,6 @@ entities:
     - type: Transform
       pos: -6.5,-5.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#0055CCFF'
   - uid: 2161
@@ -10451,8 +10245,6 @@ entities:
       rot: -1.5707963267948966 rad
       pos: -5.5,-4.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#0055CCFF'
   - uid: 2162
@@ -10461,8 +10253,6 @@ entities:
       rot: -1.5707963267948966 rad
       pos: -4.5,-4.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#0055CCFF'
   - uid: 2163
@@ -10471,8 +10261,6 @@ entities:
       rot: -1.5707963267948966 rad
       pos: -3.5,-4.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#0055CCFF'
   - uid: 2164
@@ -10481,8 +10269,6 @@ entities:
       rot: -1.5707963267948966 rad
       pos: -2.5,-4.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#0055CCFF'
   - uid: 2165
@@ -10491,8 +10277,6 @@ entities:
       rot: -1.5707963267948966 rad
       pos: -1.5,-4.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#0055CCFF'
   - uid: 2166
@@ -10501,8 +10285,6 @@ entities:
       rot: 3.141592653589793 rad
       pos: 0.5,-3.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#0055CCFF'
   - uid: 2167
@@ -10511,8 +10293,6 @@ entities:
       rot: 3.141592653589793 rad
       pos: 0.5,-2.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#0055CCFF'
   - uid: 2168
@@ -10521,8 +10301,6 @@ entities:
       rot: 3.141592653589793 rad
       pos: 0.5,-1.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#0055CCFF'
   - uid: 2169
@@ -10531,8 +10309,6 @@ entities:
       rot: 3.141592653589793 rad
       pos: 0.5,-0.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#0055CCFF'
   - uid: 2170
@@ -10541,8 +10317,6 @@ entities:
       rot: 3.141592653589793 rad
       pos: 0.5,0.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#0055CCFF'
   - uid: 2171
@@ -10551,8 +10325,6 @@ entities:
       rot: 3.141592653589793 rad
       pos: 0.5,1.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#0055CCFF'
   - uid: 2172
@@ -10561,8 +10333,6 @@ entities:
       rot: 3.141592653589793 rad
       pos: 0.5,2.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#0055CCFF'
   - uid: 2173
@@ -10571,8 +10341,6 @@ entities:
       rot: 3.141592653589793 rad
       pos: 0.5,3.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#0055CCFF'
   - uid: 2174
@@ -10581,8 +10349,6 @@ entities:
       rot: 3.141592653589793 rad
       pos: 0.5,4.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#0055CCFF'
   - uid: 2175
@@ -10591,8 +10357,6 @@ entities:
       rot: 3.141592653589793 rad
       pos: 0.5,5.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#0055CCFF'
   - uid: 2176
@@ -10601,8 +10365,6 @@ entities:
       rot: 3.141592653589793 rad
       pos: 0.5,6.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#0055CCFF'
   - uid: 2177
@@ -10611,8 +10373,6 @@ entities:
       rot: 3.141592653589793 rad
       pos: 0.5,7.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#0055CCFF'
   - uid: 2178
@@ -10621,8 +10381,6 @@ entities:
       rot: 1.5707963267948966 rad
       pos: 1.5,9.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#0055CCFF'
   - uid: 2179
@@ -10631,8 +10389,6 @@ entities:
       rot: 1.5707963267948966 rad
       pos: 2.5,9.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#0055CCFF'
   - uid: 2180
@@ -10641,8 +10397,6 @@ entities:
       rot: 1.5707963267948966 rad
       pos: 3.5,9.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#0055CCFF'
   - uid: 2181
@@ -10651,8 +10405,6 @@ entities:
       rot: 1.5707963267948966 rad
       pos: 4.5,9.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#0055CCFF'
   - uid: 2182
@@ -10661,8 +10413,6 @@ entities:
       rot: 1.5707963267948966 rad
       pos: 5.5,9.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#0055CCFF'
   - uid: 2183
@@ -10670,8 +10420,6 @@ entities:
     - type: Transform
       pos: 6.5,8.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#0055CCFF'
   - uid: 2184
@@ -10679,8 +10427,6 @@ entities:
     - type: Transform
       pos: 7.5,8.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#0055CCFF'
   - uid: 2185
@@ -10688,8 +10434,6 @@ entities:
     - type: Transform
       pos: 6.5,7.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#0055CCFF'
   - uid: 2186
@@ -10697,8 +10441,6 @@ entities:
     - type: Transform
       pos: 6.5,6.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#0055CCFF'
   - uid: 2191
@@ -10707,8 +10449,6 @@ entities:
       rot: 1.5707963267948966 rad
       pos: -0.5,8.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#0055CCFF'
   - uid: 2192
@@ -10717,8 +10457,6 @@ entities:
       rot: 1.5707963267948966 rad
       pos: -1.5,8.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#0055CCFF'
   - uid: 2196
@@ -10727,8 +10465,6 @@ entities:
       rot: 1.5707963267948966 rad
       pos: -3.5,8.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#0055CCFF'
   - uid: 2197
@@ -10737,8 +10473,6 @@ entities:
       rot: 1.5707963267948966 rad
       pos: -4.5,8.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#0055CCFF'
   - uid: 2198
@@ -10746,8 +10480,6 @@ entities:
     - type: Transform
       pos: -5.5,7.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#0055CCFF'
   - uid: 2199
@@ -10755,8 +10487,6 @@ entities:
     - type: Transform
       pos: -5.5,6.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#0055CCFF'
   - uid: 2200
@@ -10765,8 +10495,6 @@ entities:
       rot: -1.5707963267948966 rad
       pos: -6.5,8.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#0055CCFF'
   - uid: 2201
@@ -10775,8 +10503,6 @@ entities:
       rot: -1.5707963267948966 rad
       pos: -7.5,8.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#0055CCFF'
   - uid: 2202
@@ -10785,8 +10511,6 @@ entities:
       rot: 3.141592653589793 rad
       pos: -8.5,9.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#0055CCFF'
   - uid: 2203
@@ -10795,8 +10519,6 @@ entities:
       rot: 3.141592653589793 rad
       pos: -8.5,10.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#0055CCFF'
   - uid: 2204
@@ -10805,8 +10527,6 @@ entities:
       rot: 3.141592653589793 rad
       pos: -8.5,11.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#0055CCFF'
   - uid: 2205
@@ -10815,8 +10535,6 @@ entities:
       rot: 3.141592653589793 rad
       pos: -2.5,9.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#0055CCFF'
   - uid: 2206
@@ -10825,8 +10543,6 @@ entities:
       rot: 3.141592653589793 rad
       pos: -2.5,10.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#0055CCFF'
   - uid: 2207
@@ -10835,8 +10551,6 @@ entities:
       rot: 3.141592653589793 rad
       pos: -2.5,11.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#0055CCFF'
   - uid: 2208
@@ -10845,8 +10559,6 @@ entities:
       rot: 3.141592653589793 rad
       pos: -2.5,12.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#0055CCFF'
   - uid: 2209
@@ -10855,8 +10567,6 @@ entities:
       rot: 3.141592653589793 rad
       pos: -2.5,13.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#0055CCFF'
   - uid: 2210
@@ -10865,8 +10575,6 @@ entities:
       rot: 3.141592653589793 rad
       pos: -2.5,15.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#0055CCFF'
   - uid: 2211
@@ -10875,8 +10583,6 @@ entities:
       rot: 3.141592653589793 rad
       pos: -2.5,16.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#0055CCFF'
   - uid: 2212
@@ -10885,8 +10591,6 @@ entities:
       rot: 3.141592653589793 rad
       pos: -2.5,17.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#0055CCFF'
   - uid: 2213
@@ -10895,8 +10599,6 @@ entities:
       rot: 1.5707963267948966 rad
       pos: -3.5,14.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#0055CCFF'
   - uid: 2214
@@ -10905,8 +10607,6 @@ entities:
       rot: 1.5707963267948966 rad
       pos: -4.5,14.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#0055CCFF'
   - uid: 2215
@@ -10915,8 +10615,6 @@ entities:
       rot: 1.5707963267948966 rad
       pos: -5.5,14.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#0055CCFF'
   - uid: 2216
@@ -10925,8 +10623,6 @@ entities:
       rot: 1.5707963267948966 rad
       pos: -6.5,14.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#0055CCFF'
   - uid: 2217
@@ -10934,8 +10630,6 @@ entities:
     - type: Transform
       pos: -7.5,15.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#0055CCFF'
   - uid: 2218
@@ -10943,8 +10637,6 @@ entities:
     - type: Transform
       pos: -7.5,16.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#0055CCFF'
   - uid: 2222
@@ -10953,8 +10645,6 @@ entities:
       rot: -1.5707963267948966 rad
       pos: -4.5,22.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#0055CCFF'
   - uid: 2223
@@ -10963,8 +10653,6 @@ entities:
       rot: 3.141592653589793 rad
       pos: -3.5,21.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#0055CCFF'
   - uid: 2224
@@ -10973,8 +10661,6 @@ entities:
       rot: 3.141592653589793 rad
       pos: -3.5,20.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#0055CCFF'
   - uid: 2225
@@ -10983,8 +10669,6 @@ entities:
       rot: 3.141592653589793 rad
       pos: -3.5,19.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#0055CCFF'
   - uid: 2226
@@ -10993,8 +10677,6 @@ entities:
       rot: 3.141592653589793 rad
       pos: -3.5,23.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#0055CCFF'
   - uid: 2227
@@ -11003,8 +10685,6 @@ entities:
       rot: 3.141592653589793 rad
       pos: -3.5,24.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#0055CCFF'
   - uid: 2228
@@ -11013,8 +10693,6 @@ entities:
       rot: 3.141592653589793 rad
       pos: -3.5,25.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#0055CCFF'
   - uid: 2235
@@ -11022,8 +10700,6 @@ entities:
     - type: Transform
       pos: 0.5,10.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#0055CCFF'
   - uid: 2236
@@ -11031,8 +10707,6 @@ entities:
     - type: Transform
       pos: 0.5,11.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#0055CCFF'
   - uid: 2240
@@ -11041,8 +10715,6 @@ entities:
       rot: -1.5707963267948966 rad
       pos: 4.5,13.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#0055CCFF'
   - uid: 2241
@@ -11051,8 +10723,6 @@ entities:
       rot: -1.5707963267948966 rad
       pos: 3.5,13.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#0055CCFF'
   - uid: 2242
@@ -11061,8 +10731,6 @@ entities:
       rot: -1.5707963267948966 rad
       pos: 2.5,13.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#0055CCFF'
   - uid: 2243
@@ -11071,8 +10739,6 @@ entities:
       rot: 3.141592653589793 rad
       pos: 1.5,14.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#0055CCFF'
   - uid: 2244
@@ -11081,8 +10747,6 @@ entities:
       rot: 3.141592653589793 rad
       pos: 1.5,15.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#0055CCFF'
   - uid: 2245
@@ -11091,8 +10755,6 @@ entities:
       rot: 3.141592653589793 rad
       pos: 1.5,16.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#0055CCFF'
   - uid: 2246
@@ -11101,8 +10763,6 @@ entities:
       rot: 3.141592653589793 rad
       pos: 1.5,17.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#0055CCFF'
   - uid: 2247
@@ -11111,8 +10771,6 @@ entities:
       rot: 3.141592653589793 rad
       pos: 1.5,19.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#0055CCFF'
   - uid: 2248
@@ -11121,8 +10779,6 @@ entities:
       rot: 3.141592653589793 rad
       pos: 1.5,20.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#0055CCFF'
   - uid: 2249
@@ -11131,8 +10787,6 @@ entities:
       rot: 1.5707963267948966 rad
       pos: 2.5,21.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#0055CCFF'
   - uid: 2252
@@ -11141,8 +10795,6 @@ entities:
       rot: -1.5707963267948966 rad
       pos: 3.5,21.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#0055CCFF'
   - uid: 2253
@@ -11151,8 +10803,6 @@ entities:
       rot: 3.141592653589793 rad
       pos: 4.5,22.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#0055CCFF'
   - uid: 2254
@@ -11161,8 +10811,6 @@ entities:
       rot: 3.141592653589793 rad
       pos: 4.5,24.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#0055CCFF'
   - uid: 2255
@@ -11171,8 +10819,6 @@ entities:
       rot: 3.141592653589793 rad
       pos: 4.5,25.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#0055CCFF'
   - uid: 2260
@@ -11181,8 +10827,6 @@ entities:
       rot: 1.5707963267948966 rad
       pos: -2.5,-12.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#0055CCFF'
   - uid: 2261
@@ -11191,8 +10835,6 @@ entities:
       rot: 1.5707963267948966 rad
       pos: -1.5,-12.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#0055CCFF'
   - uid: 2262
@@ -11200,8 +10842,6 @@ entities:
     - type: Transform
       pos: -0.5,-11.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#0055CCFF'
   - uid: 2263
@@ -11209,8 +10849,6 @@ entities:
     - type: Transform
       pos: -0.5,-10.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#0055CCFF'
   - uid: 2264
@@ -11218,8 +10856,6 @@ entities:
     - type: Transform
       pos: -0.5,-9.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#0055CCFF'
   - uid: 2265
@@ -11227,8 +10863,6 @@ entities:
     - type: Transform
       pos: -0.5,-8.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#0055CCFF'
   - uid: 2266
@@ -11236,8 +10870,6 @@ entities:
     - type: Transform
       pos: 1.5,-8.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#0055CCFF'
   - uid: 2267
@@ -11245,8 +10877,6 @@ entities:
     - type: Transform
       pos: 1.5,-9.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#0055CCFF'
   - uid: 2268
@@ -11254,8 +10884,6 @@ entities:
     - type: Transform
       pos: 1.5,-10.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#0055CCFF'
   - uid: 2269
@@ -11263,8 +10891,6 @@ entities:
     - type: Transform
       pos: 1.5,-11.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#0055CCFF'
   - uid: 2270
@@ -11273,8 +10899,6 @@ entities:
       rot: -1.5707963267948966 rad
       pos: 2.5,-12.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#0055CCFF'
   - uid: 2271
@@ -11283,8 +10907,6 @@ entities:
       rot: -1.5707963267948966 rad
       pos: 3.5,-12.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#0055CCFF'
   - uid: 2272
@@ -11293,8 +10915,6 @@ entities:
       rot: -1.5707963267948966 rad
       pos: 4.5,-12.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#0055CCFF'
   - uid: 2273
@@ -11303,8 +10923,6 @@ entities:
       rot: 3.141592653589793 rad
       pos: 5.5,-13.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#0055CCFF'
   - uid: 2274
@@ -11313,8 +10931,6 @@ entities:
       rot: 3.141592653589793 rad
       pos: 5.5,-14.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#0055CCFF'
   - uid: 2275
@@ -11323,8 +10939,6 @@ entities:
       rot: 3.141592653589793 rad
       pos: 5.5,-15.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#0055CCFF'
   - uid: 2276
@@ -11333,8 +10947,6 @@ entities:
       rot: 3.141592653589793 rad
       pos: 0.5,-13.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#0055CCFF'
   - uid: 2277
@@ -11343,8 +10955,6 @@ entities:
       rot: 3.141592653589793 rad
       pos: 0.5,-14.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#0055CCFF'
   - uid: 2278
@@ -11353,8 +10963,6 @@ entities:
       rot: 3.141592653589793 rad
       pos: 0.5,-15.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#0055CCFF'
   - uid: 2295
@@ -11363,8 +10971,6 @@ entities:
       rot: -1.5707963267948966 rad
       pos: -6.5,-22.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#0055CCFF'
   - uid: 2296
@@ -11373,8 +10979,6 @@ entities:
       rot: -1.5707963267948966 rad
       pos: -5.5,-22.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#0055CCFF'
   - uid: 2297
@@ -11383,8 +10987,6 @@ entities:
       rot: -1.5707963267948966 rad
       pos: -4.5,-22.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#0055CCFF'
   - uid: 2298
@@ -11393,8 +10995,6 @@ entities:
       rot: -1.5707963267948966 rad
       pos: -3.5,-22.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#0055CCFF'
   - uid: 2299
@@ -11403,8 +11003,6 @@ entities:
       rot: -1.5707963267948966 rad
       pos: -2.5,-22.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#0055CCFF'
   - uid: 2300
@@ -11413,8 +11011,6 @@ entities:
       rot: -1.5707963267948966 rad
       pos: -1.5,-22.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#0055CCFF'
   - uid: 2301
@@ -11423,8 +11019,6 @@ entities:
       rot: -1.5707963267948966 rad
       pos: 0.5,-22.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#0055CCFF'
   - uid: 2302
@@ -11433,8 +11027,6 @@ entities:
       rot: -1.5707963267948966 rad
       pos: 1.5,-22.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#0055CCFF'
   - uid: 2303
@@ -11443,8 +11035,6 @@ entities:
       rot: -1.5707963267948966 rad
       pos: 2.5,-22.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#0055CCFF'
   - uid: 2304
@@ -11453,8 +11043,6 @@ entities:
       rot: -1.5707963267948966 rad
       pos: 3.5,-22.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#0055CCFF'
   - uid: 2305
@@ -11463,8 +11051,6 @@ entities:
       rot: -1.5707963267948966 rad
       pos: 4.5,-22.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#0055CCFF'
   - uid: 2306
@@ -11473,8 +11059,6 @@ entities:
       rot: -1.5707963267948966 rad
       pos: 5.5,-22.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#0055CCFF'
   - uid: 2307
@@ -11483,8 +11067,6 @@ entities:
       rot: -1.5707963267948966 rad
       pos: 7.5,-22.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#0055CCFF'
   - uid: 2308
@@ -11493,8 +11075,6 @@ entities:
       rot: -1.5707963267948966 rad
       pos: 9.5,-22.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#0055CCFF'
   - uid: 2309
@@ -11503,8 +11083,6 @@ entities:
       rot: -1.5707963267948966 rad
       pos: 10.5,-22.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#0055CCFF'
   - uid: 2310
@@ -11513,8 +11091,6 @@ entities:
       rot: -1.5707963267948966 rad
       pos: 11.5,-22.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#0055CCFF'
   - uid: 2311
@@ -11523,8 +11099,6 @@ entities:
       rot: 3.141592653589793 rad
       pos: 12.5,-21.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#0055CCFF'
   - uid: 2312
@@ -11533,8 +11107,6 @@ entities:
       rot: 3.141592653589793 rad
       pos: 12.5,-20.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#0055CCFF'
   - uid: 2313
@@ -11543,8 +11115,6 @@ entities:
       rot: 3.141592653589793 rad
       pos: 12.5,-19.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#0055CCFF'
   - uid: 2314
@@ -11553,8 +11123,6 @@ entities:
       rot: 3.141592653589793 rad
       pos: 12.5,-18.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#0055CCFF'
   - uid: 2316
@@ -11563,8 +11131,6 @@ entities:
       rot: 1.5707963267948966 rad
       pos: 13.5,-17.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#0055CCFF'
   - uid: 2317
@@ -11573,8 +11139,6 @@ entities:
       rot: 1.5707963267948966 rad
       pos: 14.5,-17.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#0055CCFF'
   - uid: 2318
@@ -11582,8 +11146,6 @@ entities:
     - type: Transform
       pos: 12.5,-16.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#0055CCFF'
   - uid: 2319
@@ -11591,8 +11153,6 @@ entities:
     - type: Transform
       pos: 12.5,-15.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#0055CCFF'
   - uid: 2320
@@ -11600,8 +11160,6 @@ entities:
     - type: Transform
       pos: 12.5,-14.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#0055CCFF'
   - uid: 2321
@@ -11610,8 +11168,6 @@ entities:
       rot: -1.5707963267948966 rad
       pos: 13.5,-13.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#0055CCFF'
   - uid: 2322
@@ -11620,8 +11176,6 @@ entities:
       rot: -1.5707963267948966 rad
       pos: 14.5,-13.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#0055CCFF'
   - uid: 2324
@@ -11630,8 +11184,6 @@ entities:
       rot: -1.5707963267948966 rad
       pos: 11.5,-13.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#0055CCFF'
   - uid: 2325
@@ -11640,8 +11192,6 @@ entities:
       rot: 3.141592653589793 rad
       pos: 10.5,-14.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#0055CCFF'
   - uid: 2326
@@ -11650,8 +11200,6 @@ entities:
       rot: 3.141592653589793 rad
       pos: 10.5,-15.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#0055CCFF'
   - uid: 2327
@@ -11660,8 +11208,6 @@ entities:
       rot: 3.141592653589793 rad
       pos: 10.5,-16.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#0055CCFF'
   - uid: 2329
@@ -11670,8 +11216,6 @@ entities:
       rot: 3.141592653589793 rad
       pos: 10.5,-12.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#0055CCFF'
   - uid: 2330
@@ -11680,8 +11224,6 @@ entities:
       rot: 3.141592653589793 rad
       pos: 10.5,-11.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#0055CCFF'
   - uid: 2331
@@ -11690,8 +11232,6 @@ entities:
       rot: 3.141592653589793 rad
       pos: 10.5,-10.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#0055CCFF'
   - uid: 2332
@@ -11700,8 +11240,6 @@ entities:
       rot: 3.141592653589793 rad
       pos: 8.5,-12.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#0055CCFF'
   - uid: 2333
@@ -11710,8 +11248,6 @@ entities:
       rot: 3.141592653589793 rad
       pos: 8.5,-11.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#0055CCFF'
   - uid: 2334
@@ -11720,8 +11256,6 @@ entities:
       rot: 3.141592653589793 rad
       pos: 8.5,-10.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#0055CCFF'
   - uid: 2335
@@ -11730,8 +11264,6 @@ entities:
       rot: 1.5707963267948966 rad
       pos: 9.5,-9.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#0055CCFF'
   - uid: 2336
@@ -11740,8 +11272,6 @@ entities:
       rot: 1.5707963267948966 rad
       pos: 11.5,-9.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#0055CCFF'
   - uid: 2337
@@ -11750,8 +11280,6 @@ entities:
       rot: 1.5707963267948966 rad
       pos: 12.5,-9.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#0055CCFF'
   - uid: 2338
@@ -11760,8 +11288,6 @@ entities:
       rot: 1.5707963267948966 rad
       pos: 13.5,-9.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#0055CCFF'
   - uid: 2339
@@ -11770,8 +11296,6 @@ entities:
       rot: 1.5707963267948966 rad
       pos: 14.5,-9.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#0055CCFF'
   - uid: 2340
@@ -11779,8 +11303,6 @@ entities:
     - type: Transform
       pos: 15.5,-10.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#0055CCFF'
   - uid: 2341
@@ -11788,8 +11310,6 @@ entities:
     - type: Transform
       pos: 15.5,-8.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#0055CCFF'
   - uid: 2342
@@ -11797,8 +11317,6 @@ entities:
     - type: Transform
       pos: 15.5,-7.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#0055CCFF'
   - uid: 2343
@@ -11806,8 +11324,6 @@ entities:
     - type: Transform
       pos: 15.5,-6.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#0055CCFF'
   - uid: 2345
@@ -11815,8 +11331,6 @@ entities:
     - type: Transform
       pos: 8.5,-8.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#0055CCFF'
   - uid: 2346
@@ -11824,8 +11338,6 @@ entities:
     - type: Transform
       pos: 7.5,-6.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#0055CCFF'
   - uid: 2347
@@ -11833,8 +11345,6 @@ entities:
     - type: Transform
       pos: 7.5,-5.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#0055CCFF'
   - uid: 2348
@@ -11843,8 +11353,6 @@ entities:
       rot: -1.5707963267948966 rad
       pos: 1.5,-4.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#0055CCFF'
   - uid: 2349
@@ -11853,8 +11361,6 @@ entities:
       rot: -1.5707963267948966 rad
       pos: 2.5,-4.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#0055CCFF'
   - uid: 2350
@@ -11863,8 +11369,6 @@ entities:
       rot: -1.5707963267948966 rad
       pos: 3.5,-4.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#0055CCFF'
   - uid: 2351
@@ -11873,8 +11377,6 @@ entities:
       rot: -1.5707963267948966 rad
       pos: 4.5,-4.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#0055CCFF'
   - uid: 2352
@@ -11883,8 +11385,6 @@ entities:
       rot: -1.5707963267948966 rad
       pos: 5.5,-4.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#0055CCFF'
   - uid: 2353
@@ -11893,8 +11393,6 @@ entities:
       rot: -1.5707963267948966 rad
       pos: 6.5,-4.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#0055CCFF'
 - proto: GasPipeStraightAlt1
@@ -11904,8 +11402,6 @@ entities:
     - type: Transform
       pos: -7.5,-23.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#990000FF'
   - uid: 2377
@@ -11914,8 +11410,6 @@ entities:
       rot: 1.5707963267948966 rad
       pos: 9.5,-22.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#990000FF'
   - uid: 2378
@@ -11924,8 +11418,6 @@ entities:
       rot: 1.5707963267948966 rad
       pos: 4.5,-22.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#990000FF'
   - uid: 2381
@@ -11933,8 +11425,6 @@ entities:
     - type: Transform
       pos: -7.5,-22.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#990000FF'
   - uid: 2382
@@ -11943,8 +11433,6 @@ entities:
       rot: 1.5707963267948966 rad
       pos: 11.5,-22.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#990000FF'
   - uid: 2383
@@ -11953,8 +11441,6 @@ entities:
       rot: 1.5707963267948966 rad
       pos: 10.5,-22.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#990000FF'
   - uid: 2384
@@ -11963,8 +11449,6 @@ entities:
       rot: 1.5707963267948966 rad
       pos: 8.5,-22.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#990000FF'
   - uid: 2385
@@ -11973,8 +11457,6 @@ entities:
       rot: 1.5707963267948966 rad
       pos: 7.5,-22.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#990000FF'
   - uid: 2386
@@ -11983,8 +11465,6 @@ entities:
       rot: 1.5707963267948966 rad
       pos: 6.5,-22.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#990000FF'
   - uid: 2387
@@ -11993,8 +11473,6 @@ entities:
       rot: 1.5707963267948966 rad
       pos: 5.5,-22.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#990000FF'
   - uid: 2388
@@ -12003,8 +11481,6 @@ entities:
       rot: 1.5707963267948966 rad
       pos: 3.5,-22.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#990000FF'
   - uid: 2389
@@ -12013,8 +11489,6 @@ entities:
       rot: 1.5707963267948966 rad
       pos: 2.5,-22.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#990000FF'
   - uid: 2391
@@ -12023,8 +11497,6 @@ entities:
       rot: 1.5707963267948966 rad
       pos: 0.5,-22.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#990000FF'
   - uid: 2392
@@ -12033,8 +11505,6 @@ entities:
       rot: 1.5707963267948966 rad
       pos: -1.5,-12.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#990000FF'
   - uid: 2393
@@ -12043,8 +11513,6 @@ entities:
       rot: 1.5707963267948966 rad
       pos: -4.5,-12.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#990000FF'
   - uid: 2394
@@ -12053,8 +11521,6 @@ entities:
       rot: 1.5707963267948966 rad
       pos: -5.5,-12.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#990000FF'
   - uid: 2397
@@ -12063,8 +11529,6 @@ entities:
       rot: 1.5707963267948966 rad
       pos: -0.5,-22.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#990000FF'
   - uid: 2398
@@ -12073,8 +11537,6 @@ entities:
       rot: 1.5707963267948966 rad
       pos: -1.5,-22.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#990000FF'
   - uid: 2399
@@ -12083,8 +11545,6 @@ entities:
       rot: 1.5707963267948966 rad
       pos: -2.5,-22.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#990000FF'
   - uid: 2400
@@ -12093,8 +11553,6 @@ entities:
       rot: 1.5707963267948966 rad
       pos: -2.5,-12.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#990000FF'
   - uid: 2401
@@ -12103,8 +11561,6 @@ entities:
       rot: 1.5707963267948966 rad
       pos: -4.5,-22.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#990000FF'
   - uid: 2402
@@ -12113,8 +11569,6 @@ entities:
       rot: -1.5707963267948966 rad
       pos: -3.5,-22.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#990000FF'
   - uid: 2403
@@ -12123,8 +11577,6 @@ entities:
       rot: -1.5707963267948966 rad
       pos: -8.5,-15.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#990000FF'
   - uid: 2404
@@ -12133,8 +11585,6 @@ entities:
       rot: -1.5707963267948966 rad
       pos: 13.5,-18.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#990000FF'
   - uid: 2408
@@ -12143,8 +11593,6 @@ entities:
       rot: 1.5707963267948966 rad
       pos: -10.5,-21.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#990000FF'
   - uid: 2409
@@ -12153,8 +11601,6 @@ entities:
       rot: 1.5707963267948966 rad
       pos: -9.5,-21.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#990000FF'
   - uid: 2410
@@ -12163,8 +11609,6 @@ entities:
       rot: 1.5707963267948966 rad
       pos: -8.5,-21.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#990000FF'
   - uid: 2412
@@ -12173,8 +11617,6 @@ entities:
       rot: 1.5707963267948966 rad
       pos: -6.5,-12.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#990000FF'
   - uid: 2415
@@ -12183,8 +11625,6 @@ entities:
       rot: -1.5707963267948966 rad
       pos: 13.5,-22.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#990000FF'
   - uid: 2417
@@ -12193,8 +11633,6 @@ entities:
       rot: -1.5707963267948966 rad
       pos: 14.5,-18.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#990000FF'
   - uid: 2418
@@ -12203,8 +11641,6 @@ entities:
       rot: 3.141592653589793 rad
       pos: 12.5,-21.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#990000FF'
   - uid: 2419
@@ -12213,8 +11649,6 @@ entities:
       rot: 3.141592653589793 rad
       pos: 12.5,-20.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#990000FF'
   - uid: 2420
@@ -12223,8 +11657,6 @@ entities:
       rot: 3.141592653589793 rad
       pos: 12.5,-19.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#990000FF'
   - uid: 2422
@@ -12232,8 +11664,6 @@ entities:
     - type: Transform
       pos: 12.5,-17.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#990000FF'
   - uid: 2423
@@ -12241,8 +11671,6 @@ entities:
     - type: Transform
       pos: 12.5,-16.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#990000FF'
   - uid: 2424
@@ -12250,8 +11678,6 @@ entities:
     - type: Transform
       pos: 12.5,-15.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#990000FF'
   - uid: 2425
@@ -12259,8 +11685,6 @@ entities:
     - type: Transform
       pos: 12.5,-14.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#990000FF'
   - uid: 2426
@@ -12268,8 +11692,6 @@ entities:
     - type: Transform
       pos: -11.5,-20.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#990000FF'
   - uid: 2427
@@ -12277,8 +11699,6 @@ entities:
     - type: Transform
       pos: -11.5,-19.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#990000FF'
   - uid: 2428
@@ -12286,8 +11706,6 @@ entities:
     - type: Transform
       pos: -11.5,-18.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#990000FF'
   - uid: 2429
@@ -12295,8 +11713,6 @@ entities:
     - type: Transform
       pos: -11.5,-17.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#990000FF'
   - uid: 2430
@@ -12304,8 +11720,6 @@ entities:
     - type: Transform
       pos: -11.5,-16.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#990000FF'
   - uid: 2431
@@ -12313,8 +11727,6 @@ entities:
     - type: Transform
       pos: -11.5,-15.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#990000FF'
   - uid: 2432
@@ -12322,8 +11734,6 @@ entities:
     - type: Transform
       pos: -11.5,-14.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#990000FF'
   - uid: 2433
@@ -12331,8 +11741,6 @@ entities:
     - type: Transform
       pos: -11.5,-13.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#990000FF'
   - uid: 2435
@@ -12341,8 +11749,6 @@ entities:
       rot: -1.5707963267948966 rad
       pos: -10.5,-12.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#990000FF'
   - uid: 2437
@@ -12351,8 +11757,6 @@ entities:
       rot: 3.141592653589793 rad
       pos: -9.5,-13.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#990000FF'
   - uid: 2438
@@ -12361,8 +11765,6 @@ entities:
       rot: 3.141592653589793 rad
       pos: -9.5,-14.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#990000FF'
   - uid: 2439
@@ -12371,8 +11773,6 @@ entities:
       rot: 1.5707963267948966 rad
       pos: -0.5,-12.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#990000FF'
   - uid: 2440
@@ -12381,8 +11781,6 @@ entities:
       rot: 1.5707963267948966 rad
       pos: 0.5,-12.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#990000FF'
   - uid: 2443
@@ -12391,8 +11789,6 @@ entities:
       rot: 1.5707963267948966 rad
       pos: 3.5,-12.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#990000FF'
   - uid: 2444
@@ -12401,8 +11797,6 @@ entities:
       rot: -1.5707963267948966 rad
       pos: -12.5,-9.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#990000FF'
   - uid: 2445
@@ -12411,8 +11805,6 @@ entities:
       rot: -1.5707963267948966 rad
       pos: -11.5,-9.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#990000FF'
   - uid: 2446
@@ -12421,8 +11813,6 @@ entities:
       rot: -1.5707963267948966 rad
       pos: -10.5,-9.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#990000FF'
   - uid: 2447
@@ -12431,8 +11821,6 @@ entities:
       rot: 3.141592653589793 rad
       pos: -9.5,-11.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#990000FF'
   - uid: 2449
@@ -12440,8 +11828,6 @@ entities:
     - type: Transform
       pos: -9.5,-10.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#990000FF'
   - uid: 2450
@@ -12450,8 +11836,6 @@ entities:
       rot: 1.5707963267948966 rad
       pos: 2.5,-12.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#990000FF'
   - uid: 2451
@@ -12460,8 +11844,6 @@ entities:
       rot: 1.5707963267948966 rad
       pos: 1.5,-12.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#990000FF'
   - uid: 2453
@@ -12470,8 +11852,6 @@ entities:
       rot: 1.5707963267948966 rad
       pos: -8.5,-9.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#990000FF'
   - uid: 2455
@@ -12479,8 +11859,6 @@ entities:
     - type: Transform
       pos: -7.5,-11.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#990000FF'
   - uid: 2459
@@ -12489,8 +11867,6 @@ entities:
       rot: 3.141592653589793 rad
       pos: -13.5,-10.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#990000FF'
   - uid: 2460
@@ -12499,8 +11875,6 @@ entities:
       rot: 3.141592653589793 rad
       pos: -6.5,-8.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#990000FF'
   - uid: 2461
@@ -12509,8 +11883,6 @@ entities:
       rot: 3.141592653589793 rad
       pos: -6.5,-7.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#990000FF'
 - proto: GasPipeStraightAlt2
@@ -12521,8 +11893,6 @@ entities:
       rot: 1.5707963267948966 rad
       pos: -4.5,-4.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#990000FF'
   - uid: 2466
@@ -12531,8 +11901,6 @@ entities:
       rot: 1.5707963267948966 rad
       pos: -3.5,-4.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#990000FF'
   - uid: 2467
@@ -12541,8 +11909,6 @@ entities:
       rot: 1.5707963267948966 rad
       pos: -2.5,-4.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#990000FF'
   - uid: 2468
@@ -12551,8 +11917,6 @@ entities:
       rot: 1.5707963267948966 rad
       pos: -1.5,-4.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#990000FF'
   - uid: 2469
@@ -12561,8 +11925,6 @@ entities:
       rot: 1.5707963267948966 rad
       pos: -0.5,-4.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#990000FF'
   - uid: 2470
@@ -12571,8 +11933,6 @@ entities:
       rot: 1.5707963267948966 rad
       pos: 2.5,-4.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#990000FF'
   - uid: 2471
@@ -12581,8 +11941,6 @@ entities:
       rot: 1.5707963267948966 rad
       pos: 3.5,-4.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#990000FF'
   - uid: 2472
@@ -12591,8 +11949,6 @@ entities:
       rot: 1.5707963267948966 rad
       pos: 4.5,-4.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#990000FF'
   - uid: 2473
@@ -12601,8 +11957,6 @@ entities:
       rot: 1.5707963267948966 rad
       pos: 5.5,-4.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#990000FF'
   - uid: 2474
@@ -12611,8 +11965,6 @@ entities:
       rot: 1.5707963267948966 rad
       pos: 6.5,-4.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#990000FF'
   - uid: 2475
@@ -12620,8 +11972,6 @@ entities:
     - type: Transform
       pos: 7.5,-5.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#990000FF'
   - uid: 2476
@@ -12629,8 +11979,6 @@ entities:
     - type: Transform
       pos: 7.5,-6.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#990000FF'
   - uid: 2477
@@ -12638,8 +11986,6 @@ entities:
     - type: Transform
       pos: 7.5,-7.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#990000FF'
   - uid: 2478
@@ -12647,8 +11993,6 @@ entities:
     - type: Transform
       pos: 7.5,-8.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#990000FF'
   - uid: 2483
@@ -12657,8 +12001,6 @@ entities:
       rot: 1.5707963267948966 rad
       pos: 13.5,-9.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#990000FF'
   - uid: 2484
@@ -12666,8 +12008,6 @@ entities:
     - type: Transform
       pos: 14.5,-6.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#990000FF'
   - uid: 2486
@@ -12675,8 +12015,6 @@ entities:
     - type: Transform
       pos: 14.5,-10.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#990000FF'
   - uid: 2487
@@ -12685,8 +12023,6 @@ entities:
       rot: 1.5707963267948966 rad
       pos: 12.5,-9.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#990000FF'
   - uid: 2488
@@ -12695,8 +12031,6 @@ entities:
       rot: 1.5707963267948966 rad
       pos: 11.5,-9.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#990000FF'
   - uid: 2490
@@ -12704,8 +12038,6 @@ entities:
     - type: Transform
       pos: 14.5,-7.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#990000FF'
   - uid: 2492
@@ -12714,8 +12046,6 @@ entities:
       rot: 1.5707963267948966 rad
       pos: 9.5,-10.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#990000FF'
   - uid: 2496
@@ -12724,8 +12054,6 @@ entities:
       rot: 3.141592653589793 rad
       pos: 0.5,-3.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#990000FF'
   - uid: 2497
@@ -12734,8 +12062,6 @@ entities:
       rot: 3.141592653589793 rad
       pos: 0.5,-1.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#990000FF'
   - uid: 2498
@@ -12744,8 +12070,6 @@ entities:
       rot: 3.141592653589793 rad
       pos: 0.5,-2.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#990000FF'
   - uid: 2499
@@ -12754,8 +12078,6 @@ entities:
       rot: 3.141592653589793 rad
       pos: 0.5,-0.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#990000FF'
   - uid: 2500
@@ -12764,8 +12086,6 @@ entities:
       rot: 3.141592653589793 rad
       pos: 0.5,0.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#990000FF'
   - uid: 2501
@@ -12774,8 +12094,6 @@ entities:
       rot: 3.141592653589793 rad
       pos: 0.5,1.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#990000FF'
   - uid: 2502
@@ -12784,8 +12102,6 @@ entities:
       rot: 3.141592653589793 rad
       pos: 0.5,3.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#990000FF'
   - uid: 2503
@@ -12794,8 +12110,6 @@ entities:
       rot: 3.141592653589793 rad
       pos: 0.5,4.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#990000FF'
   - uid: 2506
@@ -12804,8 +12118,6 @@ entities:
       rot: 1.5707963267948966 rad
       pos: -0.5,2.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#990000FF'
   - uid: 2508
@@ -12814,8 +12126,6 @@ entities:
       rot: 3.141592653589793 rad
       pos: -1.5,3.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#990000FF'
   - uid: 2509
@@ -12824,8 +12134,6 @@ entities:
       rot: 3.141592653589793 rad
       pos: 0.5,6.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#990000FF'
   - uid: 2510
@@ -12834,8 +12142,6 @@ entities:
       rot: 3.141592653589793 rad
       pos: 0.5,7.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#990000FF'
   - uid: 2511
@@ -12844,8 +12150,6 @@ entities:
       rot: 3.141592653589793 rad
       pos: -1.5,4.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#990000FF'
   - uid: 2512
@@ -12854,8 +12158,6 @@ entities:
       rot: 3.141592653589793 rad
       pos: 0.5,8.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#990000FF'
   - uid: 2514
@@ -12864,8 +12166,6 @@ entities:
       rot: 1.5707963267948966 rad
       pos: 1.5,9.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#990000FF'
   - uid: 2515
@@ -12874,8 +12174,6 @@ entities:
       rot: 1.5707963267948966 rad
       pos: 2.5,9.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#990000FF'
   - uid: 2516
@@ -12884,8 +12182,6 @@ entities:
       rot: 1.5707963267948966 rad
       pos: 3.5,9.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#990000FF'
   - uid: 2517
@@ -12894,8 +12190,6 @@ entities:
       rot: 1.5707963267948966 rad
       pos: 4.5,9.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#990000FF'
   - uid: 2518
@@ -12904,8 +12198,6 @@ entities:
       rot: 1.5707963267948966 rad
       pos: 5.5,9.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#990000FF'
   - uid: 2521
@@ -12914,8 +12206,6 @@ entities:
       rot: 3.141592653589793 rad
       pos: 6.5,8.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#990000FF'
   - uid: 2522
@@ -12924,8 +12214,6 @@ entities:
       rot: 3.141592653589793 rad
       pos: 6.5,7.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#990000FF'
   - uid: 2523
@@ -12934,8 +12222,6 @@ entities:
       rot: 3.141592653589793 rad
       pos: 6.5,6.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#990000FF'
   - uid: 2524
@@ -12944,8 +12230,6 @@ entities:
       rot: 3.141592653589793 rad
       pos: 6.5,5.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#990000FF'
   - uid: 2526
@@ -12954,8 +12238,6 @@ entities:
       rot: 3.141592653589793 rad
       pos: 6.5,10.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#990000FF'
   - uid: 2527
@@ -12964,8 +12246,6 @@ entities:
       rot: 3.141592653589793 rad
       pos: 6.5,11.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#990000FF'
   - uid: 2528
@@ -12974,8 +12254,6 @@ entities:
       rot: 3.141592653589793 rad
       pos: 6.5,12.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#990000FF'
   - uid: 2529
@@ -12984,8 +12262,6 @@ entities:
       rot: 3.141592653589793 rad
       pos: 6.5,13.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#990000FF'
   - uid: 2530
@@ -12994,8 +12270,6 @@ entities:
       rot: 1.5707963267948966 rad
       pos: -0.5,9.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#990000FF'
   - uid: 2531
@@ -13004,8 +12278,6 @@ entities:
       rot: 1.5707963267948966 rad
       pos: -1.5,9.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#990000FF'
   - uid: 2533
@@ -13014,8 +12286,6 @@ entities:
       rot: 3.141592653589793 rad
       pos: -2.5,10.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#990000FF'
   - uid: 2534
@@ -13024,8 +12294,6 @@ entities:
       rot: 3.141592653589793 rad
       pos: -2.5,11.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#990000FF'
   - uid: 2535
@@ -13034,8 +12302,6 @@ entities:
       rot: 3.141592653589793 rad
       pos: -2.5,12.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#990000FF'
   - uid: 2537
@@ -13044,8 +12310,6 @@ entities:
       rot: 3.141592653589793 rad
       pos: -2.5,14.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#990000FF'
   - uid: 2538
@@ -13054,8 +12318,6 @@ entities:
       rot: 3.141592653589793 rad
       pos: -2.5,15.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#990000FF'
   - uid: 2539
@@ -13064,8 +12326,6 @@ entities:
       rot: 3.141592653589793 rad
       pos: -2.5,16.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#990000FF'
   - uid: 2540
@@ -13074,8 +12334,6 @@ entities:
       rot: -1.5707963267948966 rad
       pos: -3.5,13.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#990000FF'
   - uid: 2541
@@ -13084,8 +12342,6 @@ entities:
       rot: -1.5707963267948966 rad
       pos: -4.5,13.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#990000FF'
   - uid: 2542
@@ -13094,8 +12350,6 @@ entities:
       rot: -1.5707963267948966 rad
       pos: -5.5,13.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#990000FF'
   - uid: 2543
@@ -13104,8 +12358,6 @@ entities:
       rot: -1.5707963267948966 rad
       pos: -6.5,13.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#990000FF'
   - uid: 2544
@@ -13114,8 +12366,6 @@ entities:
       rot: -1.5707963267948966 rad
       pos: -7.5,13.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#990000FF'
   - uid: 2549
@@ -13124,8 +12374,6 @@ entities:
       rot: 3.141592653589793 rad
       pos: -3.5,19.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#990000FF'
   - uid: 2550
@@ -13134,8 +12382,6 @@ entities:
       rot: 3.141592653589793 rad
       pos: -3.5,20.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#990000FF'
   - uid: 2551
@@ -13144,8 +12390,6 @@ entities:
       rot: 3.141592653589793 rad
       pos: -3.5,21.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#990000FF'
   - uid: 2553
@@ -13154,8 +12398,6 @@ entities:
       rot: -1.5707963267948966 rad
       pos: -4.5,22.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#990000FF'
   - uid: 2555
@@ -13163,8 +12405,6 @@ entities:
     - type: Transform
       pos: -5.5,21.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#990000FF'
   - uid: 2557
@@ -13173,8 +12413,6 @@ entities:
       rot: 3.141592653589793 rad
       pos: 0.5,10.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#990000FF'
   - uid: 2558
@@ -13183,8 +12421,6 @@ entities:
       rot: 3.141592653589793 rad
       pos: 0.5,11.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#990000FF'
   - uid: 2561
@@ -13193,8 +12429,6 @@ entities:
       rot: 3.141592653589793 rad
       pos: 1.5,13.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#990000FF'
   - uid: 2562
@@ -13203,8 +12437,6 @@ entities:
       rot: 3.141592653589793 rad
       pos: 1.5,14.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#990000FF'
   - uid: 2563
@@ -13213,8 +12445,6 @@ entities:
       rot: 3.141592653589793 rad
       pos: 1.5,15.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#990000FF'
   - uid: 2564
@@ -13223,8 +12453,6 @@ entities:
       rot: 3.141592653589793 rad
       pos: 1.5,16.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#990000FF'
   - uid: 2565
@@ -13233,8 +12461,6 @@ entities:
       rot: 3.141592653589793 rad
       pos: 1.5,17.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#990000FF'
   - uid: 2566
@@ -13243,8 +12469,6 @@ entities:
       rot: 3.141592653589793 rad
       pos: 1.5,18.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#990000FF'
   - uid: 2569
@@ -13252,8 +12476,6 @@ entities:
     - type: Transform
       pos: 1.5,20.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#990000FF'
   - uid: 2571
@@ -13262,8 +12484,6 @@ entities:
       rot: 1.5707963267948966 rad
       pos: 2.5,21.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#990000FF'
   - uid: 2572
@@ -13272,8 +12492,6 @@ entities:
       rot: 1.5707963267948966 rad
       pos: 3.5,21.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#990000FF'
 - proto: GasPipeTJunction
@@ -13284,8 +12502,6 @@ entities:
       rot: -1.5707963267948966 rad
       pos: -11.5,-16.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#0055CCFF'
   - uid: 1418
@@ -13293,8 +12509,6 @@ entities:
     - type: Transform
       pos: -12.5,-16.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#0055CCFF'
   - uid: 1467
@@ -13303,8 +12517,6 @@ entities:
       rot: 3.141592653589793 rad
       pos: -9.5,-22.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#0055CCFF'
   - uid: 1468
@@ -13313,8 +12525,6 @@ entities:
       rot: 3.141592653589793 rad
       pos: -8.5,-22.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#0055CCFF'
   - uid: 1469
@@ -13323,8 +12533,6 @@ entities:
       rot: 3.141592653589793 rad
       pos: -7.5,-22.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#0055CCFF'
   - uid: 2127
@@ -13332,8 +12540,6 @@ entities:
     - type: Transform
       pos: -11.5,-13.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#0055CCFF'
   - uid: 2128
@@ -13342,8 +12548,6 @@ entities:
       rot: -1.5707963267948966 rad
       pos: -9.5,-13.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#0055CCFF'
   - uid: 2145
@@ -13351,8 +12555,6 @@ entities:
     - type: Transform
       pos: -4.5,-12.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#0055CCFF'
   - uid: 2146
@@ -13361,8 +12563,6 @@ entities:
       rot: -1.5707963267948966 rad
       pos: -7.5,-9.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#0055CCFF'
   - uid: 2147
@@ -13370,8 +12570,6 @@ entities:
     - type: Transform
       pos: -9.5,-9.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#0055CCFF'
   - uid: 2148
@@ -13380,8 +12578,6 @@ entities:
       rot: 3.141592653589793 rad
       pos: -6.5,-7.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#0055CCFF'
   - uid: 2189
@@ -13390,8 +12586,6 @@ entities:
       rot: 1.5707963267948966 rad
       pos: 0.5,9.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#0055CCFF'
   - uid: 2193
@@ -13400,8 +12594,6 @@ entities:
       rot: 3.141592653589793 rad
       pos: -2.5,8.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#0055CCFF'
   - uid: 2194
@@ -13409,8 +12601,6 @@ entities:
     - type: Transform
       pos: -5.5,8.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#0055CCFF'
   - uid: 2220
@@ -13418,8 +12608,6 @@ entities:
     - type: Transform
       pos: -2.5,18.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#0055CCFF'
   - uid: 2221
@@ -13428,8 +12616,6 @@ entities:
       rot: -1.5707963267948966 rad
       pos: -3.5,22.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#0055CCFF'
   - uid: 2232
@@ -13438,8 +12624,6 @@ entities:
       rot: -1.5707963267948966 rad
       pos: -2.5,14.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#0055CCFF'
   - uid: 2233
@@ -13447,8 +12631,6 @@ entities:
     - type: Transform
       pos: 6.5,9.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#0055CCFF'
   - uid: 2234
@@ -13457,8 +12639,6 @@ entities:
       rot: 1.5707963267948966 rad
       pos: 1.5,13.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#0055CCFF'
   - uid: 2251
@@ -13467,8 +12647,6 @@ entities:
       rot: 1.5707963267948966 rad
       pos: 1.5,18.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#0055CCFF'
   - uid: 2256
@@ -13477,8 +12655,6 @@ entities:
       rot: 1.5707963267948966 rad
       pos: 4.5,23.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#0055CCFF'
   - uid: 2258
@@ -13487,8 +12663,6 @@ entities:
       rot: 3.141592653589793 rad
       pos: -0.5,-4.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#0055CCFF'
   - uid: 2259
@@ -13497,8 +12671,6 @@ entities:
       rot: 3.141592653589793 rad
       pos: 0.5,-4.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#0055CCFF'
   - uid: 2279
@@ -13507,8 +12679,6 @@ entities:
       rot: 3.141592653589793 rad
       pos: -0.5,-12.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#0055CCFF'
   - uid: 2280
@@ -13517,8 +12687,6 @@ entities:
       rot: 3.141592653589793 rad
       pos: 1.5,-12.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#0055CCFF'
   - uid: 2281
@@ -13526,8 +12694,6 @@ entities:
     - type: Transform
       pos: 0.5,-12.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#0055CCFF'
   - uid: 2283
@@ -13535,8 +12701,6 @@ entities:
     - type: Transform
       pos: -0.5,-22.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#0055CCFF'
   - uid: 2284
@@ -13545,8 +12709,6 @@ entities:
       rot: 3.141592653589793 rad
       pos: 6.5,-22.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#0055CCFF'
   - uid: 2286
@@ -13555,8 +12717,6 @@ entities:
       rot: 1.5707963267948966 rad
       pos: 12.5,-17.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#0055CCFF'
   - uid: 2287
@@ -13564,8 +12724,6 @@ entities:
     - type: Transform
       pos: 12.5,-13.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#0055CCFF'
   - uid: 2288
@@ -13574,8 +12732,6 @@ entities:
       rot: 1.5707963267948966 rad
       pos: 10.5,-13.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#0055CCFF'
   - uid: 2289
@@ -13583,8 +12739,6 @@ entities:
     - type: Transform
       pos: 10.5,-9.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#0055CCFF'
   - uid: 2290
@@ -13593,8 +12747,6 @@ entities:
       rot: 1.5707963267948966 rad
       pos: 8.5,-9.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#0055CCFF'
   - uid: 2291
@@ -13603,8 +12755,6 @@ entities:
       rot: 3.141592653589793 rad
       pos: 7.5,-7.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#0055CCFF'
   - uid: 2315
@@ -13613,8 +12763,6 @@ entities:
       rot: 3.141592653589793 rad
       pos: 12.5,-22.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#0055CCFF'
 - proto: GasPipeTJunctionAlt1
@@ -13624,8 +12772,6 @@ entities:
     - type: Transform
       pos: 1.5,-22.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#990000FF'
   - uid: 2405
@@ -13634,8 +12780,6 @@ entities:
       rot: 3.141592653589793 rad
       pos: 12.5,-22.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#990000FF'
   - uid: 2406
@@ -13644,8 +12788,6 @@ entities:
       rot: 1.5707963267948966 rad
       pos: -6.5,-20.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#990000FF'
   - uid: 2407
@@ -13654,8 +12796,6 @@ entities:
       rot: -1.5707963267948966 rad
       pos: -5.5,-20.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#990000FF'
   - uid: 2411
@@ -13663,8 +12803,6 @@ entities:
     - type: Transform
       pos: -7.5,-21.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#990000FF'
   - uid: 2421
@@ -13673,8 +12811,6 @@ entities:
       rot: 1.5707963267948966 rad
       pos: 12.5,-18.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#990000FF'
   - uid: 2436
@@ -13683,8 +12819,6 @@ entities:
       rot: -1.5707963267948966 rad
       pos: -9.5,-12.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#990000FF'
   - uid: 2448
@@ -13692,8 +12826,6 @@ entities:
     - type: Transform
       pos: -9.5,-9.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#990000FF'
   - uid: 2452
@@ -13701,8 +12833,6 @@ entities:
     - type: Transform
       pos: -7.5,-9.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#990000FF'
   - uid: 2454
@@ -13711,8 +12841,6 @@ entities:
       rot: 1.5707963267948966 rad
       pos: -7.5,-10.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#990000FF'
   - uid: 2457
@@ -13720,8 +12848,6 @@ entities:
     - type: Transform
       pos: -3.5,-12.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#990000FF'
 - proto: GasPipeTJunctionAlt2
@@ -13732,8 +12858,6 @@ entities:
       rot: 3.141592653589793 rad
       pos: 8.5,-10.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#990000FF'
   - uid: 2481
@@ -13742,8 +12866,6 @@ entities:
       rot: 1.5707963267948966 rad
       pos: 14.5,-8.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#990000FF'
   - uid: 2482
@@ -13752,8 +12874,6 @@ entities:
       rot: -1.5707963267948966 rad
       pos: 14.5,-9.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#990000FF'
   - uid: 2491
@@ -13762,8 +12882,6 @@ entities:
       rot: 3.141592653589793 rad
       pos: 1.5,-4.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#990000FF'
   - uid: 2493
@@ -13772,8 +12890,6 @@ entities:
       rot: -1.5707963267948966 rad
       pos: 10.5,-10.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#990000FF'
   - uid: 2495
@@ -13782,8 +12898,6 @@ entities:
       rot: 3.141592653589793 rad
       pos: 0.5,-4.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#990000FF'
   - uid: 2504
@@ -13792,8 +12906,6 @@ entities:
       rot: -1.5707963267948966 rad
       pos: 0.5,2.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#990000FF'
   - uid: 2505
@@ -13802,8 +12914,6 @@ entities:
       rot: 1.5707963267948966 rad
       pos: 0.5,5.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#990000FF'
   - uid: 2536
@@ -13812,8 +12922,6 @@ entities:
       rot: -1.5707963267948966 rad
       pos: -2.5,13.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#990000FF'
   - uid: 2548
@@ -13822,8 +12930,6 @@ entities:
       rot: -1.5707963267948966 rad
       pos: -3.5,18.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#990000FF'
   - uid: 2568
@@ -13832,8 +12938,6 @@ entities:
       rot: 1.5707963267948966 rad
       pos: 1.5,19.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#990000FF'
 - proto: GasPort
@@ -13843,15 +12947,11 @@ entities:
     - type: Transform
       pos: -9.5,-19.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
   - uid: 1458
     components:
     - type: Transform
       pos: -8.5,-19.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
   - uid: 1459
     components:
     - type: Transform
@@ -13859,8 +12959,6 @@ entities:
       parent: 1
     - type: AtmosPipeLayers
       pipeLayer: Secondary
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#990000FF'
   - uid: 1460
@@ -13870,8 +12968,6 @@ entities:
       parent: 1
     - type: AtmosPipeLayers
       pipeLayer: Secondary
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#990000FF'
 - proto: GasPressurePump
@@ -13884,8 +12980,6 @@ entities:
       parent: 1
     - type: GasPressurePump
       targetPressure: 800
-    - type: VentCrawTube
-      connected: True
   - uid: 1411
     components:
     - type: Transform
@@ -13894,16 +12988,12 @@ entities:
       parent: 1
     - type: GasPressurePump
       targetPressure: 2000
-    - type: VentCrawTube
-      connected: True
   - uid: 1473
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: -9.5,-20.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#0055CCFF'
   - uid: 1474
@@ -13911,8 +13001,6 @@ entities:
     - type: Transform
       pos: -8.5,-20.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#0055CCFF'
 - proto: GasVentPump
@@ -13923,8 +13011,6 @@ entities:
       rot: 1.5707963267948966 rad
       pos: -13.5,-16.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: DeviceNetwork
       deviceLists:
       - 2674
@@ -13935,8 +13021,6 @@ entities:
     - type: Transform
       pos: -7.5,-21.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: DeviceNetwork
       deviceLists:
       - 2674
@@ -13947,8 +13031,6 @@ entities:
     - type: Transform
       pos: -0.5,-3.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: DeviceNetwork
       deviceLists:
       - 2664
@@ -13960,8 +13042,6 @@ entities:
       rot: -1.5707963267948966 rad
       pos: 1.5,8.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: DeviceNetwork
       deviceLists:
       - 2658
@@ -13973,8 +13053,6 @@ entities:
       rot: 3.141592653589793 rad
       pos: 7.5,7.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: DeviceNetwork
       deviceLists:
       - 2660
@@ -13986,8 +13064,6 @@ entities:
       rot: 3.141592653589793 rad
       pos: -5.5,5.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: DeviceNetwork
       deviceLists:
       - 2662
@@ -13999,8 +13075,6 @@ entities:
       rot: 1.5707963267948966 rad
       pos: 5.5,5.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: DeviceNetwork
       deviceLists:
       - 2659
@@ -14011,8 +13085,6 @@ entities:
     - type: Transform
       pos: 5.5,14.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: DeviceNetwork
       deviceLists:
       - 2661
@@ -14023,8 +13095,6 @@ entities:
     - type: Transform
       pos: -8.5,12.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: DeviceNetwork
       deviceLists:
       - 2663
@@ -14036,8 +13106,6 @@ entities:
       rot: -1.5707963267948966 rad
       pos: -1.5,18.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: DeviceNetwork
       deviceLists:
       - 2654
@@ -14049,8 +13117,6 @@ entities:
       rot: 1.5707963267948966 rad
       pos: -6.5,21.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: DeviceNetwork
       deviceLists:
       - 2657
@@ -14061,8 +13127,6 @@ entities:
     - type: Transform
       pos: -3.5,26.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#0055CCFF'
   - uid: 2104
@@ -14070,8 +13134,6 @@ entities:
     - type: Transform
       pos: 4.5,26.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#0055CCFF'
   - uid: 2105
@@ -14080,8 +13142,6 @@ entities:
       rot: -1.5707963267948966 rad
       pos: 5.5,23.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: DeviceNetwork
       deviceLists:
       - 2656
@@ -14093,8 +13153,6 @@ entities:
       rot: -1.5707963267948966 rad
       pos: 2.5,18.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: DeviceNetwork
       deviceLists:
       - 2655
@@ -14106,8 +13164,6 @@ entities:
       rot: -1.5707963267948966 rad
       pos: -5.5,-7.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: DeviceNetwork
       deviceLists:
       - 2664
@@ -14119,8 +13175,6 @@ entities:
       rot: 1.5707963267948966 rad
       pos: 6.5,-7.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: DeviceNetwork
       deviceLists:
       - 2664
@@ -14131,8 +13185,6 @@ entities:
     - type: Transform
       pos: -0.5,-7.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: DeviceNetwork
       deviceLists:
       - 2678
@@ -14143,8 +13195,6 @@ entities:
     - type: Transform
       pos: 1.5,-7.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: DeviceNetwork
       deviceLists:
       - 2678
@@ -14156,8 +13206,6 @@ entities:
       rot: 3.141592653589793 rad
       pos: 8.5,-13.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: DeviceNetwork
       deviceLists:
       - 2664
@@ -14169,8 +13217,6 @@ entities:
       rot: 1.5707963267948966 rad
       pos: 9.5,-17.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: DeviceNetwork
       deviceLists:
       - 2670
@@ -14182,8 +13228,6 @@ entities:
       rot: 3.141592653589793 rad
       pos: 5.5,-16.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: DeviceNetwork
       deviceLists:
       - 2678
@@ -14195,8 +13239,6 @@ entities:
       rot: 3.141592653589793 rad
       pos: -4.5,-16.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: DeviceNetwork
       deviceLists:
       - 2678
@@ -14208,8 +13250,6 @@ entities:
       rot: 3.141592653589793 rad
       pos: 0.5,-16.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: DeviceNetwork
       deviceLists:
       - 2676
@@ -14221,8 +13261,6 @@ entities:
       rot: -1.5707963267948966 rad
       pos: -8.5,-16.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: DeviceNetwork
       deviceLists:
       - 2677
@@ -14234,8 +13272,6 @@ entities:
       rot: 3.141592653589793 rad
       pos: -14.5,-14.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#0055CCFF'
   - uid: 2118
@@ -14244,8 +13280,6 @@ entities:
       rot: 3.141592653589793 rad
       pos: 15.5,-14.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#0055CCFF'
   - uid: 2119
@@ -14254,8 +13288,6 @@ entities:
       rot: 3.141592653589793 rad
       pos: 15.5,-11.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: DeviceNetwork
       deviceLists:
       - 2669
@@ -14267,8 +13299,6 @@ entities:
       rot: -1.5707963267948966 rad
       pos: 16.5,-9.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: DeviceNetwork
       deviceLists:
       - 2669
@@ -14279,8 +13309,6 @@ entities:
     - type: Transform
       pos: 15.5,-5.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: DeviceNetwork
       deviceLists:
       - 2668
@@ -14291,8 +13319,6 @@ entities:
     - type: Transform
       pos: -13.5,-8.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: DeviceNetwork
       deviceLists:
       - 2667
@@ -14304,8 +13330,6 @@ entities:
       rot: 3.141592653589793 rad
       pos: -0.5,-23.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: DeviceNetwork
       deviceLists:
       - 2675
@@ -14316,8 +13340,6 @@ entities:
     - type: Transform
       pos: 6.5,-21.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#0055CCFF'
   - uid: 2126
@@ -14326,8 +13348,6 @@ entities:
       rot: -1.5707963267948966 rad
       pos: 15.5,-17.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: DeviceNetwork
       deviceLists:
       - 2672
@@ -14339,8 +13359,6 @@ entities:
       rot: -1.5707963267948966 rad
       pos: 13.5,-22.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: DeviceNetwork
       deviceLists:
       - 2673
@@ -14356,8 +13374,6 @@ entities:
     - type: DeviceNetwork
       deviceLists:
       - 2653
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#0055CCFF'
 - proto: GasVentScrubber
@@ -14368,8 +13384,6 @@ entities:
       rot: 3.141592653589793 rad
       pos: 1.5,-23.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: DeviceNetwork
       deviceLists:
       - 2675
@@ -14383,8 +13397,6 @@ entities:
       rot: 3.141592653589793 rad
       pos: -7.5,-16.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: DeviceNetwork
       deviceLists:
       - 2677
@@ -14398,8 +13410,6 @@ entities:
       rot: -1.5707963267948966 rad
       pos: 15.5,-18.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: DeviceNetwork
       deviceLists:
       - 2672
@@ -14413,8 +13423,6 @@ entities:
       rot: -1.5707963267948966 rad
       pos: 16.5,-8.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: DeviceNetwork
       deviceLists:
       - 2669
@@ -14425,8 +13433,6 @@ entities:
     - type: Transform
       pos: 14.5,-5.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: DeviceNetwork
       deviceLists:
       - 2668
@@ -14440,8 +13446,6 @@ entities:
       rot: 3.141592653589793 rad
       pos: 14.5,-11.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: DeviceNetwork
       deviceLists:
       - 2669
@@ -14455,8 +13459,6 @@ entities:
       rot: 3.141592653589793 rad
       pos: -3.5,-13.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: DeviceNetwork
       deviceLists:
       - 2678
@@ -14470,8 +13472,6 @@ entities:
       rot: 1.5707963267948966 rad
       pos: 7.5,-10.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: DeviceNetwork
       deviceLists:
       - 2664
@@ -14485,8 +13485,6 @@ entities:
       rot: -1.5707963267948966 rad
       pos: -6.5,-10.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: DeviceNetwork
       deviceLists:
       - 2664
@@ -14499,8 +13497,6 @@ entities:
     - type: Transform
       pos: 1.5,-3.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: DeviceNetwork
       deviceLists:
       - 2664
@@ -14514,8 +13510,6 @@ entities:
       rot: -1.5707963267948966 rad
       pos: 1.5,5.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: DeviceNetwork
       deviceLists:
       - 2658
@@ -14529,8 +13523,6 @@ entities:
       rot: 1.5707963267948966 rad
       pos: 5.5,4.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: DeviceNetwork
       deviceLists:
       - 2659
@@ -14543,8 +13535,6 @@ entities:
     - type: Transform
       pos: 6.5,14.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: DeviceNetwork
       deviceLists:
       - 2661
@@ -14557,8 +13547,6 @@ entities:
     - type: Transform
       pos: 7.5,10.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: DeviceNetwork
       deviceLists:
       - 2660
@@ -14571,8 +13559,6 @@ entities:
     - type: Transform
       pos: -1.5,5.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: DeviceNetwork
       deviceLists:
       - 2662
@@ -14586,8 +13572,6 @@ entities:
       rot: 1.5707963267948966 rad
       pos: -4.5,18.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: DeviceNetwork
       deviceLists:
       - 2654
@@ -14601,8 +13585,6 @@ entities:
       rot: 1.5707963267948966 rad
       pos: -8.5,13.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: DeviceNetwork
       deviceLists:
       - 2663
@@ -14616,8 +13598,6 @@ entities:
       rot: -1.5707963267948966 rad
       pos: 5.5,22.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: DeviceNetwork
       deviceLists:
       - 2656
@@ -14631,8 +13611,6 @@ entities:
       rot: 3.141592653589793 rad
       pos: -5.5,-22.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: DeviceNetwork
       deviceLists:
       - 2674
@@ -14644,8 +13622,6 @@ entities:
       rot: 3.141592653589793 rad
       pos: 4.5,-13.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: DeviceNetwork
       deviceLists:
       - 2678
@@ -14659,8 +13635,6 @@ entities:
       rot: -1.5707963267948966 rad
       pos: 14.5,-22.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: DeviceNetwork
       deviceLists:
       - 2673
@@ -14674,8 +13648,6 @@ entities:
       rot: 3.141592653589793 rad
       pos: -13.5,-11.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: DeviceNetwork
       deviceLists:
       - 2667
@@ -14689,8 +13661,6 @@ entities:
       rot: 1.5707963267948966 rad
       pos: -6.5,20.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: DeviceNetwork
       deviceLists:
       - 2657
@@ -14704,8 +13674,6 @@ entities:
       rot: -1.5707963267948966 rad
       pos: 2.5,19.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: DeviceNetwork
       deviceLists:
       - 2655

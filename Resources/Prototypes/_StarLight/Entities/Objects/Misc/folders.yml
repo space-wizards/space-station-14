@@ -164,3 +164,9 @@
       - HighRiskItem
     - type: StealTarget
       stealGroup: HoPBoardSteal
+    - type: ContainerContainer
+      containers:
+        storagebase: !type:Container
+        pen_slot: !type:ContainerSlot
+        IdCardConsole-privilegedId: !type:ContainerSlot
+        IdCardConsole-targetId: !type:ContainerSlot

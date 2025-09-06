@@ -17,8 +17,8 @@
         - SpeedLoaderMagnumImprovised
     proto: null
     capacity: 1
-    chambers: [ true]
-    ammoSlots: [ null]
+    chambers: [ null ]
+    ammoSlots: [ null ]
   - type: Construction
     graph: MakeshiftRevolverGraph
     node: shotgun
@@ -51,7 +51,7 @@
     sprite: _Starlight/Objects/Weapons/Guns/Revolvers/improvised_revolver.rsi
   - type: RevolverAmmoProvider
     capacity: 2
-    chambers: [ true, true]
+    chambers: [ null, null]
     ammoSlots: [ null, null]
   - type: Construction
     graph: ImprovisedRevolverGraph

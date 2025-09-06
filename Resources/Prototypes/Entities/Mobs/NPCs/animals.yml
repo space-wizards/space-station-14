@@ -5,11 +5,13 @@
   description: Some cultures find them terrifying, others crunchy on the teeth.
   components:
   # Starlight-start: Languages
+  - type: LanguageSpeaker
   - type: LanguageKnowledge
     speaks:
-    - Mouse
+    - Bat
     understands:
-    - Mouse
+    - Bat
+    - GalacticCommon
   # Starlight-end
   - type: MovementSpeedModifier
     baseWalkSpeed : 3
@@ -665,9 +667,9 @@
   # Starlight-start: Languages
   - type: LanguageKnowledge
     speaks:
-    - Sylvan
+    - Duck
     understands:
-    - Sylvan
+    - Duck
   # Starlight-end
   - type: Sprite
     drawdepth: Mobs
@@ -2932,6 +2934,15 @@
   id: MobCorgiNarsi
   description: Ian! No!
   components:
+  # Starlight Start
+  - type: LanguageSpeaker
+  - type: LanguageKnowledge
+    speaks:
+    - Dog
+    understands:
+    - Dog
+    - GalacticCommon
+  # Starlight End
   - type: Sprite
     drawdepth: Mobs
     sprite: Mobs/Pets/corgi.rsi
@@ -3118,6 +3129,14 @@
   parent: MobCatSpace
   description: Explosive kitten.
   components:
+# Starlight-start: Languages
+  - type: LanguageKnowledge
+    speaks:
+    - Cat
+    understands:
+    - Cat
+    - GalacticCommon
+# Starlight-end
   - type: Sprite
     layers:
     - map: ["enum.DamageStateVisualLayers.Base"]
