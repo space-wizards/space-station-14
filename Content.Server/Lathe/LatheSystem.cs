@@ -29,6 +29,7 @@ public sealed class LatheSystem : SharedLatheSystem
         SubscribeLocalEvent<LatheAnnouncingComponent, TechnologyDatabaseModifiedEvent>(OnTechnologyDatabaseModified);
         SubscribeLocalEvent<LatheHeatProducingComponent, LatheStartPrintingEvent>(OnHeatStartPrinting);
     }
+
     public override void Update(float frameTime)
     {
         var query = EntityQueryEnumerator<LatheProducingComponent, LatheComponent>();

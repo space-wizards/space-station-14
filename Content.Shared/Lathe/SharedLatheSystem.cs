@@ -39,10 +39,10 @@ public abstract class SharedLatheSystem : EntitySystem
     [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
     [Dependency] private readonly EmagSystem _emag = default!;
     [Dependency] private readonly SharedPowerReceiverSystem _power = default!;
-    [Dependency] protected readonly SharedAppearanceSystem Appearance = default!;
+    [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly SharedContainerSystem _container = default!;
-    [Dependency] protected readonly SharedMaterialStorageSystem MaterialStorage = default!;
+    [Dependency] private readonly SharedMaterialStorageSystem _materialStorage = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
     [Dependency] private readonly SharedPuddleSystem _puddle = default!;
     [Dependency] private readonly ReagentSpeedSystem _reagentSpeed = default!;
@@ -87,10 +87,10 @@ public abstract class SharedLatheSystem : EntitySystem
     /// </summary>
     private void OnMapInit(Entity<LatheComponent> entity, ref MapInitEvent args)
     {
-        Appearance.SetData(entity, LatheVisuals.IsInserting, false);
-        Appearance.SetData(entity, LatheVisuals.IsRunning, false);
+        _appearance.SetData(entity, LatheVisuals.IsInserting, false);
+        _appearance.SetData(entity, LatheVisuals.IsRunning, false);
 
-        MaterialStorage.UpdateMaterialWhitelist(entity);
+        _materialStorage.UpdateMaterialWhitelist(entity);
     }
 
     private void OnExamined(Entity<LatheComponent> ent, ref ExaminedEvent args)
@@ -102,12 +102,12 @@ public abstract class SharedLatheSystem : EntitySystem
             args.PushMarkup(Loc.GetString("lathe-menu-reagent-slot-examine"));
     }
 
-    private void OnEmagged(EntityUid uid, EmagLatheRecipesComponent component, ref GotEmaggedEvent args)
+    private void OnEmagged(Entity<EmagLatheRecipesComponent> entity, ref GotEmaggedEvent args)
     {
         if (!_emag.CompareFlag(args.Type, EmagType.Interaction))
             return;
 
-        if (_emag.CheckFlag(uid, EmagType.Interaction))
+        if (_emag.CheckFlag(entity, EmagType.Interaction))
             return;
 
         args.Handled = true;
@@ -125,12 +125,12 @@ public abstract class SharedLatheSystem : EntitySystem
         }
     }
 
-    private void OnGetWhitelist(EntityUid uid, LatheComponent component, ref GetMaterialWhitelistEvent args)
+    private void OnGetWhitelist(Entity<LatheComponent> entity, ref GetMaterialWhitelistEvent args)
     {
-        if (args.Storage != uid)
+        if (args.Storage != entity.Owner)
             return;
         var materialWhitelist = new List<ProtoId<MaterialPrototype>>();
-        var recipes = GetAvailableRecipes((uid, component), true);
+        var recipes = GetAvailableRecipes(entity, true);
         foreach (var id in recipes)
         {
             if (!Proto.TryIndex(id, out var proto))
@@ -154,7 +154,7 @@ public abstract class SharedLatheSystem : EntitySystem
     /// </summary>
     private void UpdateRunningAppearance(EntityUid uid, bool isRunning)
     {
-        Appearance.SetData(uid, LatheVisuals.IsRunning, isRunning);
+        _appearance.SetData(uid, LatheVisuals.IsRunning, isRunning);
     }
 
     public static int AdjustMaterial(int original, bool reduce, float multiplier)
@@ -181,7 +181,7 @@ public abstract class SharedLatheSystem : EntitySystem
         {
             var adjustedAmount = AdjustMaterial(needed, recipe.ApplyMaterialDiscount, entity.Comp.MaterialUseMultiplier);
 
-            if (MaterialStorage.GetMaterialAmount(entity.Owner, material) < adjustedAmount * amount)
+            if (_materialStorage.GetMaterialAmount(entity.Owner, material) < adjustedAmount * amount)
                 return false;
         }
         return true;
@@ -206,7 +206,7 @@ public abstract class SharedLatheSystem : EntitySystem
                 AdjustMaterial(amount, recipe.ApplyMaterialDiscount, entity.Comp.MaterialUseMultiplier);
             adjustedAmount *= quantity;
 
-            MaterialStorage.TryChangeMaterialAmount(entity.Owner, mat, -adjustedAmount);
+            _materialStorage.TryChangeMaterialAmount(entity.Owner, mat, -adjustedAmount);
         }
 
         if (entity.Comp.Queue.Last is { } node && node.ValueRef.Recipe == recipe.ID)
@@ -398,24 +398,24 @@ public abstract class SharedLatheSystem : EntitySystem
         }
     }
 
-    private void OnGetRecipes(EntityUid uid, TechnologyDatabaseComponent component, LatheGetRecipesEvent args)
+    private void OnGetRecipes(Entity<TechnologyDatabaseComponent> entity, ref LatheGetRecipesEvent args)
     {
-        if (uid == args.Lathe)
-            AddRecipesFromDynamicPacks(ref args, component, args.Comp.DynamicPacks);
+        if (entity.Owner == args.Lathe)
+            AddRecipesFromDynamicPacks(ref args, entity.Comp, args.Comp.DynamicPacks);
     }
 
-    private void GetEmagLatheRecipes(EntityUid uid, EmagLatheRecipesComponent component, LatheGetRecipesEvent args)
+    private void GetEmagLatheRecipes(Entity<EmagLatheRecipesComponent> entity, ref LatheGetRecipesEvent args)
     {
-        if (uid != args.Lathe)
+        if (entity.Owner != args.Lathe)
             return;
 
-        if (!args.GetUnavailable && !_emag.CheckFlag(uid, EmagType.Interaction))
+        if (!args.GetUnavailable && !_emag.CheckFlag(entity, EmagType.Interaction))
             return;
 
-        AddRecipesFromPacks(args.Recipes, component.EmagStaticPacks);
+        AddRecipesFromPacks(args.Recipes, entity.Comp.EmagStaticPacks);
 
-        if (TryComp<TechnologyDatabaseComponent>(uid, out var database))
-            AddRecipesFromDynamicPacks(ref args, database, component.EmagDynamicPacks);
+        if (TryComp<TechnologyDatabaseComponent>(entity, out var database))
+            AddRecipesFromDynamicPacks(ref args, database, entity.Comp.EmagDynamicPacks);
     }
 
     protected bool HasRecipe(Entity<LatheComponent> entity, LatheRecipePrototype recipe)
