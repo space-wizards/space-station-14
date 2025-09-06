@@ -11,6 +11,7 @@
             <ui:CharacterOverviewControl Name="CharacterInfo" Access="Public"/>
             <ui:CharacterICInfoControl Name="InfoIC" Access="Public"/>
             <ui:CharacterOOCInfoControl Name="InfoOOC" Access="Public"/>
+            <ui:CharacterBackgroundInfoControl Name="InfoBackground" Access="Public"/>
         </TabContainer>
     </ScrollContainer>
 </windows:CharacterWindow>

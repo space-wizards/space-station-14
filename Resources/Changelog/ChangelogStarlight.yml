@@ -13181,5 +13181,190 @@ Entries:
   id: 143300
   time: '2025-09-04T01:20:43.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/1433
+- author: wayiscool
+  changes:
+  - message: Various floor tiling and lighting changes, extra decals for detailing,
+      and minor room furniture layout changes.
+    type: Tweak
+  id: 147400
+  time: '2025-09-04T22:00:32.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1474
+- author: Jezithyr
+  changes:
+  - message: Fixed previous flavor text not carrying over to the new format.
+    type: Fix
+  id: 151800
+  time: '2025-09-05T01:48:45.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1518
+- author: Jezithyr
+  changes:
+  - message: Fix for flavortext editors sometimes not working
+    type: Fix
+  id: 151801
+  time: '2025-09-05T01:48:45.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1518
+- author: STARLIGHT TEAM
+  changes:
+  - message: Abductors can once again teleport onto the station from another map.
+    type: Fix
+  id: 155000
+  time: '2025-09-05T02:09:45.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1550
+- author: STARLIGHT TEAM
+  changes:
+  - message: Flash and welding protection has been added to the abductor agent’s helmet.
+    type: Add
+  id: 155001
+  time: '2025-09-05T02:09:45.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1550
+- author: STARLIGHT TEAM
+  changes:
+  - message: Removed the abductor’s ID card, and completely disabled their ability
+      to use ID cards at all.
+    type: Remove
+  id: 155002
+  time: '2025-09-05T02:09:45.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1550
+- author: CorruptOmega
+  changes:
+  - message: Fixed Tracking Implanter not sending Death Rattle message.
+    type: Fix
+  id: 149400
+  time: '2025-09-01T20:42:33.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1494
+- author: Happyrobot33
+  changes:
+  - message: Removed vulp petting for now, pending rewrite.
+    type: Remove
+  id: 155100
+  time: '2025-09-05T02:33:37.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1551
+- author: walksanatora
+  changes:
+  - message: Abductors cant self-teleport when crit/dead
+    type: Tweak
+  id: 153500
+  time: '2025-09-05T02:37:37.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1535
+- author: walksanatora
+  changes:
+  - message: Abductor console cant teleport dead abductors to the ship (field triage
+      required)
+    type: Tweak
+  id: 153501
+  time: '2025-09-05T02:37:37.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1535
+- author: STARLIGHT TEAM
+  changes:
+  - message: Changed Starlight logo.
+    type: Tweak
+  id: 155700
+  time: '2025-09-05T18:15:01.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1557
+- author: Conflee
+  changes:
+  - message: Expanded the Abductor's Shuttle. It is now an oval, with internal thrusters
+      and an engineering area so they can have a real atmos setup and access to their
+      generators, APC, SMES, Substation, Gyroscope, and Mini Gravity Generator. This
+      is to allow repairs and prevent station events from disabling the shuttle.
+    type: Tweak
+  id: 156600
+  time: '2025-09-06T15:48:39.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1566
+- author: Conflee
+  changes:
+  - message: Added the Armor Vest to the Traitor Uplink for 3tc
+    type: Add
+  id: 155900
+  time: '2025-09-06T16:15:29.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1559
+- author: Conflee
+  changes:
+  - message: Changed the Web Vest price from 5tc to 4tc. The Elite Web Vest is still
+      5tc
+    type: Tweak
+  id: 155901
+  time: '2025-09-06T16:15:29.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1559
+- author: Conflee
+  changes:
+  - message: Changed some corporate branded lighters to be non-contra
+    type: Tweak
+  id: 155902
+  time: '2025-09-06T16:15:29.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1559
+- author: princess_gurchi
+  changes:
+  - message: Non-Resomi that get Resomi eyes installed through surgery now also get
+      same flash weakness as Resomi have
+    type: Fix
+  id: 111400
+  time: '2025-09-02T15:15:29.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1114
+- author: princess_gurchi
+  changes:
+  - message: Budget CyberOrgans. Tier 1 medical research that unlocks 5 new cheap
+      but low quality organs in medfab or emagged lathe
+    type: Add
+  id: 111401
+  time: '2025-09-02T15:15:29.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1114
+- author: walksanatora
+  changes:
+  - message: Xenoborgis can now properly do their 2nd in command duty (by unlocking
+      robotics consoles and other xenoborgs)
+    type: Fix
+  id: 156400
+  time: '2025-09-06T16:11:32.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1564
+- author: walksanatora
+  changes:
+  - message: Debug make ghost role now raffles by default.
+    type: Tweak
+  id: 156200
+  time: '2025-09-06T16:14:01.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1562
+- author: Fasuh
+  changes:
+  - message: Resomi is now hurt by Saline, Dexalin and Dexalin Plus the same as Avali.
+    type: Add
+  id: 155800
+  time: '2025-09-06T15:46:25.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1558
+- author: Fasuh
+  changes:
+  - message: Resomi is healed by Ammonia and Amoxla the same as Avali.
+    type: Add
+  id: 155801
+  time: '2025-09-06T15:46:25.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1558
+- author: Fasuh
+  changes:
+  - message: Resomi now has Ammonia based blood.
+    type: Tweak
+  id: 155802
+  time: '2025-09-06T15:46:25.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1558
+- author: Fasuh
+  changes:
+  - message: Avali is now correctly harmed by Saline, Dexalin and Dexalin Plus again.
+    type: Fix
+  id: 155803
+  time: '2025-09-06T15:46:25.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1558
+- author: Fasuh
+  changes:
+  - message: Vampires not being damaged by holy water.
+    type: Fix
+  id: 155804
+  time: '2025-09-06T15:46:25.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1558
+- author: Conflee, Miracula
+  changes:
+  - message: Added background traits
+    type: Add
+  id: 156100
+  time: '2025-09-06T16:28:27.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1561
 Order: -1
 

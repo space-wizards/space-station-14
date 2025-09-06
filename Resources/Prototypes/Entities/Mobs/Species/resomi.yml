@@ -35,6 +35,8 @@
         color: "#C048C2"
       Burn:
         sprite: Mobs/Effects/Resomi/burn_damage.rsi
+  - type: Bloodstream # Starlight
+    bloodReagent: ResomiBlood
   - type: FireVisuals
     sprite: Mobs/Effects/onfire.rsi
     normalState: Resomi_minor_burning
