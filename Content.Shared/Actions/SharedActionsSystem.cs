@@ -324,11 +324,9 @@ public abstract partial class SharedActionsSystem : EntitySystem
 
         Entity<ActionsComponent?> performer = (user, component);
 
-        if (HasComp<DoAfterArgsComponent>(action) && !skipDoActionRequest)
+        if (TryComp<DoAfterArgsComponent>(action, out var actionDoAfterComp) && TryComp<DoAfterComponent>(performer, out var performerDoAfterComp) && !skipDoActionRequest)
         {
-            var attemptDoAfterEv = new ActionAttemptDoAfterEvent(performer.Owner, action.Comp.UseDelay, ev);
-            RaiseLocalEvent(action, ref attemptDoAfterEv);
-            return false;
+            return TryStartActionDoAfter((action, actionDoAfterComp), (performer, performerDoAfterComp), action.Comp.UseDelay, ev);
         }
 
         // All checks passed. Perform the action!

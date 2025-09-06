@@ -9,25 +9,21 @@ public abstract partial class SharedActionsSystem
     protected void InitializeActionDoAfter()
     {
         SubscribeLocalEvent<ActionComponent, ActionDoAfterEvent>(OnActionDoAfter);
-
-        SubscribeLocalEvent<DoAfterArgsComponent, ActionAttemptDoAfterEvent>(OnActionDoAfterAttempt);
     }
 
-    private void OnActionDoAfterAttempt(Entity<DoAfterArgsComponent> ent, ref ActionAttemptDoAfterEvent args)
+    private bool TryStartActionDoAfter(Entity<DoAfterArgsComponent> ent, Entity<DoAfterComponent?> performer, TimeSpan? originalUseDelay, RequestPerformActionEvent input)
     {
-        var performer = args.Performer;
-
         // relay to user
         if (!Resolve(performer, ref performer.Comp))
-            return;
+            return false;
 
         var delay = ent.Comp.Delay;
 
         var netEnt = GetNetEntity(performer);
 
-        var actionDoAfterEvent = new ActionDoAfterEvent(netEnt, args.OriginalUseDelay, args.Input);
+        var actionDoAfterEvent = new ActionDoAfterEvent(netEnt, originalUseDelay, input);
 
-        var doAfterArgs = new DoAfterArgs(EntityManager, performer, delay, actionDoAfterEvent, ent.Owner, args.Performer)
+        var doAfterArgs = new DoAfterArgs(EntityManager, performer, delay, actionDoAfterEvent, ent.Owner, performer)
         {
             AttemptFrequency = ent.Comp.AttemptFrequency,
             Broadcast = ent.Comp.Broadcast,
@@ -44,7 +40,7 @@ public abstract partial class SharedActionsSystem
             RequireCanInteract = ent.Comp.RequireCanInteract
         };
 
-        _doAfter.TryStartDoAfter(doAfterArgs, performer);
+        return _doAfter.TryStartDoAfter(doAfterArgs, performer);
     }
 
     private void OnActionDoAfter(Entity<ActionComponent> ent, ref ActionDoAfterEvent args)

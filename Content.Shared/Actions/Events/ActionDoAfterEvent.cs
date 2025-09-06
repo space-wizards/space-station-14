@@ -11,17 +11,17 @@ namespace Content.Shared.Actions.Events;
 public sealed partial class ActionDoAfterEvent : DoAfterEvent
 {
     /// <summary>
-    /// <inheritdoc cref="ActionAttemptDoAfterEvent.Performer"/>
+    /// The action performer
     /// </summary>
     public readonly NetEntity Performer;
 
     /// <summary>
-    /// <inheritdoc cref="ActionAttemptDoAfterEvent.OriginalUseDelay"/>
+    /// The original action use delay, used for repeating actions
     /// </summary>
     public readonly TimeSpan? OriginalUseDelay;
 
     /// <summary>
-    /// <inheritdoc cref="ActionAttemptDoAfterEvent.Input"/>
+    /// The original request, for validating
     /// </summary>
     public readonly RequestPerformActionEvent Input;
 
