@@ -572,13 +572,14 @@ public abstract partial class InventorySystem
         }
         var hasHands = Resolve(ent.Owner, ref ent.Comp2);
 
-        var allItems = GetHandOrInventoryEntities(ent.Owner);
-        foreach (var item in allItems)
+        var allItems = new Queue<EntityUid>(GetHandOrInventoryEntities(ent.Owner));
+        while (allItems.TryDequeue(out var item))
         {
             if (TryGetContainingSlot(item, out var itemSlot))
             {
                 if (HasFilledDependentSlots((ent, ent.Comp1), itemSlot.Name))
                 {
+                    allItems.Enqueue(item);
                     continue;
                 }
 
