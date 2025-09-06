@@ -3452,8 +3452,6 @@ entities:
     - type: VentCrawTube
       connected: True
     - type: DeviceNetwork
-      configurators:
-      - invalid
       deviceLists:
       - 17
   - uid: 518
@@ -3465,8 +3463,6 @@ entities:
     - type: VentCrawTube
       connected: True
     - type: DeviceNetwork
-      configurators:
-      - invalid
       deviceLists:
       - 17
   - uid: 519
@@ -3478,8 +3474,6 @@ entities:
     - type: VentCrawTube
       connected: True
     - type: DeviceNetwork
-      configurators:
-      - invalid
       deviceLists:
       - 17
 - proto: GasVentScrubber
@@ -3493,8 +3487,6 @@ entities:
     - type: VentCrawTube
       connected: True
     - type: DeviceNetwork
-      configurators:
-      - invalid
       deviceLists:
       - 17
   - uid: 521
@@ -3506,8 +3498,6 @@ entities:
     - type: VentCrawTube
       connected: True
     - type: DeviceNetwork
-      configurators:
-      - invalid
       deviceLists:
       - 17
   - uid: 522
@@ -3519,8 +3509,6 @@ entities:
     - type: VentCrawTube
       connected: True
     - type: DeviceNetwork
-      configurators:
-      - invalid
       deviceLists:
       - 17
 - proto: GeneratorBasic15kW

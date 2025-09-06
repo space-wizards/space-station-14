@@ -190,4 +190,28 @@
   id: Locker
 
 - type: Tag
+  id: CivilianTraitBackground
+
+- type: Tag
+  id: FormerSoldierTraitBackground
+
+- type: Tag
+  id: RomerolDisasterSurvivorTraitBackground
+
+- type: Tag
+  id: XenosDisasterSurvivorTraitBackground
+
+- type: Tag
+  id: DeificEncounterTraitBackground
+
+- type: Tag
+  id: MagicalEncounterTraitBackground
+
+- type: Tag
+  id: AbductedTraitBackground
+
+- type: Tag
+  id: PettyCriminalTraitBackground
+
+- type: Tag
   id: ScanGateMachineBoard

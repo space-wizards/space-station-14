@@ -380,6 +380,19 @@
   categories:
   - UplinkWearables
 
+- type: listing
+  id: UplinkClothingOuterArmorBasic
+  name: uplink-clothing-outer-armor-basic-name
+  description: uplink-clothing-outer-armor-basic-desc
+  productEntity: ClothingOuterArmorBasic
+  discountCategory: usualDiscounts
+  discountDownTo:
+    Telecrystal: 2 #SL / Rebalanced pricing: Armor Vest 2, Web Vest 3, Elite Web vest 4
+  cost:
+    Telecrystal: 3 #SL / Rebalanced pricing: Armor Vest 3, Web Vest 4, Elite Web vest 5
+  categories:
+  - UplinkWearables
+
 # Devices
 
 - type: listing

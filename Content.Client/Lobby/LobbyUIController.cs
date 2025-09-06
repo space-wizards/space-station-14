@@ -10,6 +10,7 @@ using Content.Shared.Humanoid.Prototypes;
 using Content.Shared.Preferences;
 using Content.Shared.Preferences.Loadouts;
 using Content.Shared.Roles;
+using Content.Shared.Starlight.CCVar; // Starlight-edit
 using Content.Shared.Traits;
 using Robust.Client.Player;
 using Robust.Client.ResourceManagement;
@@ -70,8 +71,25 @@ public sealed class LobbyUIController : UIController, IOnStateEntered<LobbyState
 
         _configurationManager.OnValueChanged(CCVars.FlavorText, args =>
         {
-            _profileEditor?.RefreshFlavorText();
+            _profileEditor?.RefreshCharacterInfo(); //starlight
         });
+
+        //begin starlight
+        _configurationManager.OnValueChanged(StarlightCCVars.ICSecrets, args =>
+        {
+            _profileEditor?.RefreshCharacterInfo();
+        });
+
+        _configurationManager.OnValueChanged(StarlightCCVars.OOCNotes, args =>
+        {
+            _profileEditor?.RefreshCharacterInfo();
+        });
+
+        _configurationManager.OnValueChanged(StarlightCCVars.ExploitableSecrets, args =>
+        {
+            _profileEditor?.RefreshCharacterInfo();
+        });
+        //end starlight
 
         _configurationManager.OnValueChanged(CCVars.GameRoleTimers, _ => RefreshEditors());
 
