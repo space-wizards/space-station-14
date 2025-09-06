@@ -231,6 +231,8 @@
             32:
               sprite: Mobs/Pets/displacements.rsi
               state: corgi_head_displacement
+    - type: LockingWhitelist
+      blacklist: #N/A you are the 2nd in command. if the mothership put you in this spot you are TRUSTED
 
 - type: entity
   parent: XenoBorgiChassis
@@ -266,9 +268,6 @@
       raffle:
         settings: default
     - type: GhostTakeoverAvailable
-    - type: SiliconLawProvider
-      laws: ShadowFactoryBorgiLawset
-      subverted: true
     - type: ContainerFill
       containers:
         borg_brain:
