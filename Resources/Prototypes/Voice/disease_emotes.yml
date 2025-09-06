@@ -6,9 +6,8 @@
     components:
     - Vocal
   blacklist:
-    components:
-    - BorgChassis
-    - ComputerEmotes
+    tags:
+    - SiliconEmotes
   chatMessages: ["chat-emote-msg-sneeze"]
   chatTriggers:
     - чихает
@@ -22,9 +21,8 @@
     components:
     - Vocal
   blacklist:
-    components:
-    - BorgChassis
-    - ComputerEmotes
+    tags:
+    - SiliconEmotes
   chatMessages: ["chat-emote-msg-cough"]
   chatTriggers:
     - cough
@@ -65,9 +63,8 @@
     components:
     - Vocal
   blacklist:
-    components:
-    - BorgChassis
-    - ComputerEmotes
+    tags:
+    - SiliconEmotes
   chatMessages: ["chat-emote-msg-yawn"]
   chatTriggers:
     - yawn

@@ -512,7 +512,7 @@
   - type: Computer
     board: ResearchComputerCircuitboard
   - type: AccessReader
-    access: [["ResearchDirector"], ["Captain"]] # DS14
+    access: [["ResearchDirector"]] # DS14
   - type: PointLight
     radius: 1.5
     energy: 1.6
@@ -541,7 +541,6 @@
       state: generic_panel_open
   - type: ResearchClient
   - type: AnalysisConsole
-    reportEntityId: PaperArtifactAnalyzer
   - type: DeviceList
   - type: DeviceNetwork
     deviceNetId: Wired
@@ -550,10 +549,10 @@
     ports:
       - ArtifactAnalyzerSender
   - type: ActivatableUI
-    key: enum.ArtifactAnalzyerUiKey.Key
+    key: enum.ArtifactAnalyzerUiKey.Key
   - type: UserInterface
     interfaces:
-      enum.ArtifactAnalzyerUiKey.Key:
+      enum.ArtifactAnalyzerUiKey.Key:
         type: AnalysisConsoleBoundUserInterface
       enum.ResearchClientUiKey.Key:
         type: ResearchClientBoundUserInterface
@@ -674,29 +673,12 @@
     access: [[ "Command" ]]
   - type: CommunicationsConsole
     title: comms-console-announcement-title-station
-    announcementSound:
+    sound:
       path: /Audio/_DeadSpace/Announcements/announce.ogg # DS14-Announcements
       params:
         volume: -2
-    firstPrivilegedIdSlot:
-      name: id-card-console-privileged-id
-      ejectSound: /Audio/Machines/id_swipe.ogg
-      insertSound: /Audio/Weapons/Guns/MagIn/batrifle_magin.ogg
-      ejectOnBreak: true
-      swap: false
-      whitelist:
-        components:
-        - IdCard
-    secondPrivilegedIdSlot:
-      name: id-card-console-target-id
-      ejectSound: /Audio/Machines/id_swipe.ogg
-      insertSound: /Audio/Weapons/Guns/MagIn/batrifle_magin.ogg
-      ejectOnBreak: true
-      swap: false
-      whitelist:
-        components:
-        - IdCard
   - type: DeviceNetwork
+    deviceNetId: Wireless
     transmitFrequencyId: ShuttleTimer
   - type: ActivatableUI
     key: enum.CommunicationsConsoleUiKey.Key
@@ -715,12 +697,6 @@
   - type: Damageable
     damageContainer: StructuralInorganic
     damageModifierSet: StructuralMetallicStrong
-  - type: ItemSlots
-  - type: ContainerContainer
-    containers:
-      board: !type:Container
-      CommunicationsConsole-firstId: !type:ContainerSlot {}
-      CommunicationsConsole-secondId: !type:ContainerSlot {}
 
 - type: entity
   parent: ComputerComms
@@ -745,10 +721,10 @@
   - type: CommunicationsConsole
     title: comms-console-announcement-title-nukie
     color: "#ff0000"
-    canCallShuttle: false
-    canCallERT: false
+    canShuttle: false
     global: true #announce to everyone they're about to fuck shit up
-    announcementSound: /Audio/Announcements/war.ogg
+    announceSentBy: false # The title already says who they are.
+    sound: /Audio/Announcements/war.ogg
   - type: Computer
     board: SyndicateCommsComputerCircuitboard
   - type: PointLight
@@ -779,9 +755,10 @@
   - type: CommunicationsConsole
     title: comms-console-announcement-title-wizard
     color: "#ff00ff"
-    canCallShuttle: false
+    canShuttle: false
     global: true #announce to everyone they're about to fuck shit up
-    announcementSound: /Audio/Announcements/war.ogg
+    announceSentBy: false
+    sound: /Audio/Announcements/war.ogg
   - type: Computer
     board: WizardCommsComputerCircuitboard
   - type: PointLight
@@ -812,8 +789,12 @@
   - type: CommunicationsConsole
     title: comms-console-announcement-title-centcom
     color: "#1d8bad"
-    canCallShuttle: false
+    canShuttle: false
     global: true
+    sound:
+      path: /Audio/_DeadSpace/Announcements/centcomm.ogg # DS14-Announcements
+      params:
+        volume: -2
   - type: Computer
     board: CentcommCommsComputerCircuitboard
   - type: PointLight
@@ -894,45 +875,6 @@
     color: "#e6e227"
 
 - type: entity
-  id: ComputerCargoShuttle
-  parent: BaseComputerAiAccess
-  name: cargo shuttle computer
-  description: Used to order the shuttle.
-  components:
-  - type: Sprite
-    layers:
-    - map: ["computerLayerBody"]
-      state: computer
-    - map: ["computerLayerKeyboard"]
-      state: generic_keyboard
-    - map: ["computerLayerScreen"]
-      state: supply
-    - map: ["computerLayerKeys"]
-      state: tech_key
-    - map: [ "enum.WiresVisualLayers.MaintenancePanel" ]
-      state: generic_panel_open
-  - type: CargoShuttleConsole
-  - type: ActivatableUI
-    key: enum.CargoConsoleUiKey.Shuttle
-  - type: UserInterface
-    interfaces:
-      enum.CargoConsoleUiKey.Shuttle:
-        type: CargoShuttleConsoleBoundUserInterface
-      enum.WiresUiKey.Key:
-        type: WiresBoundUserInterface
-  - type: Computer
-    board: CargoShuttleComputerCircuitboard
-  - type: PointLight
-    radius: 1.5
-    energy: 1.6
-    color: "#b89f25"
-  - type: AccessReader
-    access: [["Cargo"]]
-  - type: GuideHelp
-    guides:
-    - Cargo
-
-- type: entity
   id: ComputerCargoOrders
   parent: BaseComputerAiAccess
   name: cargo request computer
@@ -970,7 +912,7 @@
     energy: 1.6
     color: "#b89f25"
   - type: AccessReader
-    access: [["Quartermaster"]]
+    access: [["Quartermaster"]] # DS14
   - type: DeviceNetwork
     deviceNetId: Wireless
     receiveFrequencyId: BasicDevice
@@ -1007,6 +949,7 @@
     account: Engineering
     announcementChannel: Engineering
     removeLimitAccess: [ "ChiefEngineer" ]
+    mode: SendToPrimary
   - type: ActiveRadio
     channels:
     - Engineering
@@ -1014,8 +957,6 @@
     board: CargoRequestEngineeringComputerCircuitboard
   - type: PointLight
     color: "#c9c042"
-  - type: AccessReader
-    access: [["ChiefEngineer"]]
 
 - type: entity
   id: ComputerCargoOrdersMedical
@@ -1039,6 +980,7 @@
     account: Medical
     announcementChannel: Medical
     removeLimitAccess: [ "ChiefMedicalOfficer" ]
+    mode: SendToPrimary
   - type: ActiveRadio
     channels:
     - Medical
@@ -1046,8 +988,6 @@
     board: CargoRequestMedicalComputerCircuitboard
   - type: PointLight
     color: "#41e0fc"
-  - type: AccessReader
-    access: [["ChiefMedicalOfficer"]]
 
 - type: entity
   id: ComputerCargoOrdersScience
@@ -1071,6 +1011,7 @@
     account: Science
     announcementChannel: Science
     removeLimitAccess: [ "ResearchDirector" ]
+    mode: SendToPrimary
   - type: ActiveRadio
     channels:
     - Science
@@ -1078,8 +1019,6 @@
     board: CargoRequestScienceComputerCircuitboard
   - type: PointLight
     color: "#b53ca1"
-  - type: AccessReader
-    access: [["ResearchDirector"]]
 
 - type: entity
   id: ComputerCargoOrdersSecurity
@@ -1103,6 +1042,7 @@
     account: Security
     announcementChannel: Security
     removeLimitAccess: [ "HeadOfSecurity" ]
+    mode: SendToPrimary
   - type: ActiveRadio
     channels:
     - Security
@@ -1110,8 +1050,6 @@
     board: CargoRequestSecurityComputerCircuitboard
   - type: PointLight
     color: "#d11d00"
-  - type: AccessReader
-    access: [["Armory"]]
 
 - type: entity
   id: ComputerCargoOrdersService
@@ -1135,6 +1073,7 @@
     account: Service
     announcementChannel: Service
     removeLimitAccess: [ "HeadOfPersonnel" ]
+    mode: SendToPrimary
   - type: ActiveRadio
     channels:
     - Service
@@ -1142,8 +1081,6 @@
     board: CargoRequestServiceComputerCircuitboard
   - type: PointLight
     color: "#afe837"
-  - type: AccessReader
-    access: [["HeadOfPersonnel"]]
 
 - type: entity
   id: ComputerCargoBounty
@@ -1274,6 +1211,42 @@
   - type: GuideHelp
     guides:
     - Cloning
+
+- type: entity
+  parent: BaseComputerAiAccess
+  id: ComputerSalvageJobBoard
+  name: salvage job board
+  description: Console for accessing salvage jobs, if you're tough enough.
+  components:
+  - type: Sprite
+    layers:
+    - map: ["computerLayerBody"]
+      state: computer
+    - map: ["computerLayerKeyboard"]
+      state: generic_keyboard
+    - map: ["computerLayerScreen"]
+      state: salvjob # givin em a salvjob like hawk tuah
+    - map: ["computerLayerKeys"]
+      state: generic_keys
+    - map: [ "enum.WiresVisualLayers.MaintenancePanel" ]
+      state: generic_panel_open
+  - type: SalvageJobBoardConsole
+  - type: ActivatableUI
+    key: enum.SalvageJobBoardUiKey.Key
+  - type: UserInterface
+    interfaces:
+      enum.SalvageJobBoardUiKey.Key:
+        type: SalvageJobBoardBoundUserInterface
+      enum.WiresUiKey.Key:
+        type: WiresBoundUserInterface
+  - type: ActiveRadio
+    channels: [ Supply ]
+  - type: Computer
+    board: SalvageJobBoardComputerCircuitboard
+  - type: PointLight
+    radius: 1.5
+    energy: 1.6
+    color: "#b89f25"
 
 - type: entity
   id: ComputerSalvageExpedition
@@ -1407,6 +1380,21 @@
           type: SurveillanceCameraMonitorBoundUserInterface
         enum.WiresUiKey.Key:
           type: WiresBoundUserInterface
+
+- type: entity
+  parent: ComputerSurveillanceWirelessCameraMonitor
+  id: ComputerSurveillanceWirelessXenoborgCameraMonitor
+  name: xenoborg camera monitor
+  description: A wireless xenoborg camera monitor. You're watching them. Maybe.
+  components:
+  - type: Computer
+    board: XenoborgCameraMonitorCircuitboard
+  - type: DeviceNetwork
+    deviceNetId: Wireless
+    receiveFrequencyId: Mothership
+    transmitFrequencyId: Mothership
+  - type: WirelessNetworkConnection
+    range: 2000
 
 - type: entity
   id: ComputerPalletConsole
@@ -1574,6 +1562,39 @@
     access: [["ResearchDirector"]]
   - type: Lock
     unlockOnClick: false
+
+- type: entity
+  parent: ComputerRoboticsControl
+  id: ComputerXenoborgsControl
+  name: xenoborgs control console
+  description: Used to remotely monitor all xenoborgs.
+  components:
+  - type: Sprite
+    layers:
+    - map: ["computerLayerBody"]
+      state: computer
+    - map: ["computerLayerKeyboard"]
+      state: generic_keyboard
+    - map: ["computerLayerScreen"]
+      state: xenorobot
+    - map: ["computerLayerKeys"]
+      state: rd_key
+    - map: [ "enum.WiresVisualLayers.MaintenancePanel" ]
+      state: generic_panel_open
+  - type: RoboticsConsole
+    allowBorgControl: false
+    radioChannel: Xenoborg
+  - type: ActiveRadio
+    channels:
+    - Xenoborg
+  - type: DeviceNetwork
+    deviceNetId: Wireless
+    receiveFrequencyId: Mothership
+    transmitFrequencyId: Xenoborg
+  - type: Computer
+    board: ComputerXenoborgsControlCircuitboard
+  - type: AccessReader # only used for dangerous things
+    access: [["Xenoborg"]]
 
 - type: entity
   id: StationAiUploadComputer

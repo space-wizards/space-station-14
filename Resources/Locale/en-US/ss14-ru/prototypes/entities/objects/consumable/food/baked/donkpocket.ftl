@@ -38,3 +38,7 @@ ent-FoodDonkpocketCarpWarm = warm carp-pocket
     .desc = { ent-FoodDonkpocketCarp.desc }
 ent-FoodDonkpocketDink = dink-pocket
     .desc = An off-brand lizard donk-pocket, filled with pickled carrot and wrapped with seaweed. Best eaten cold, or even better, not eaten at all.
+ent-FoodDonkpocketMoth = moth-pocket
+    .desc = Buzzy edition of donk-pocket that was created during mass protests ab-... Actually who cares? Just donk-pockets for moths.
+ent-FoodDonkpocketMothWarm = warm moth-pocket
+    .desc = { ent-FoodDonkpocketMoth.desc }

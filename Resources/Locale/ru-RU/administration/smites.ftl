@@ -56,7 +56,8 @@ admin-smite-vomit-organs-name = Рвота органами
 admin-smite-ghostkick-name = Кик втихаря
 admin-smite-nyanify-name = НЯфикация
 admin-smite-kill-sign-name = Знак смерти
-admin-smite-omni-accent-name = Omni-Accent
+admin-smite-omni-accent-name = Омни-акцент
+admin-smite-crawler-name = Ползун
 
 ## Smite descriptions
 
@@ -100,7 +101,8 @@ admin-trick-unbolt-description = Разболтирует целевой шлю�
 admin-smite-super-bonk-description = Заставляет цель удариться о каждый стол на станции и за её пределами.
 admin-smite-terminate-description = Создаёт экстерминатора с ролью призрака, с единственной задачей - убить выбранную цель.
 admin-smite-super-slip-description = Очень сильно поскальзывает цель.
-admin-smite-omni-accent-description = Makes the target speak with almost every accent available.
+admin-smite-omni-accent-description = Заставляет цель говорить с почти каждым возможным акцентом.
+admin-smite-crawler-description = Заставляет цель упасть и не позволяет встать. Для дополнительного эффекта удалите и руки!
 admin-smite-super-bonk-lite-description = Заставляет цель удариться о каждый стол на станции и за её пределами. Прекращает действовать после смерти цели.
 
 ## Tricks descriptions

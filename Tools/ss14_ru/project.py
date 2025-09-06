@@ -1,4 +1,4 @@
-﻿import pathlib
+import pathlib
 import os
 import glob
 from file import FluentFile
@@ -26,7 +26,7 @@ class Project:
     def get_fluent_files_by_dir(self, dir_path):
         files = []
         files_paths_list = glob.glob(f'{dir_path}/**/*.ftl', recursive=True)
-        
+
         for file_path in files_paths_list:
             if any(excluded in file_path for excluded in self.exclude_dir_paths_ds):
                 continue

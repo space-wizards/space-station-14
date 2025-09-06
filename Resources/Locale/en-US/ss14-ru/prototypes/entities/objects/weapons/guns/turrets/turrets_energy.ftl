@@ -1,4 +1,11 @@
-ent-WeaponEnergyTurretStation = sentry turret
+ent-WeaponEnergyTurretStationBase = sentry turret
     .desc = A high-tech autonomous weapons system designed to keep unauthorized personnel out of sensitive areas.
-ent-WeaponEnergyTurretAI = AI sentry turret
-    .desc = A high-tech autonomous weapons system under the direct control of a local artifical intelligence.
+ent-WeaponEnergyTurretAI = { ent-WeaponEnergyTurretStationBase }
+    .suffix = AI, Silicon
+    .desc = { ent-WeaponEnergyTurretStationBase.desc }
+ent-WeaponEnergyTurretSecurity = { ent-WeaponEnergyTurretStationBase }
+    .suffix = Security
+    .desc = { ent-WeaponEnergyTurretStationBase.desc }
+ent-WeaponEnergyTurretCommand = { ent-WeaponEnergyTurretStationBase }
+    .suffix = Command
+    .desc = { ent-WeaponEnergyTurretStationBase.desc }

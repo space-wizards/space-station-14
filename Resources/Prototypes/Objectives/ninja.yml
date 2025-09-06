@@ -100,16 +100,23 @@
   - type: TargetObjective
     title: objective-condition-kill-head-title
   - type: PickRandomPerson
-    ignoredJobs:
-    - Passenger
-    - TaipanAtmosTech
-    - TaipanBotanist
-    - TaipanCargotech
-    - TaipanChef
-    - TaipanMedic
-    - TaipanRD
-    - TaipanScience
-    - TaipanTelecommunicationsOfficer
+    filters:
+    # Can't have multiple objectives to kill the same person.
+    - !type:TargetObjectiveMindFilter
+      blacklist:
+        components:
+        - KillPersonCondition
+    - !type:BlacklistedJobsMindFilter
+      blacklist:
+      - Passenger
+      - TaipanAtmosTech
+      - TaipanBotanist
+      - TaipanCargotech
+      - TaipanChef
+      - TaipanMedic
+      - TaipanRD
+      - TaipanScience
+      - TaipanTelecommunicationsOfficer
   - type: KillPersonCondition
     # don't count missing evac as killing as heads are higher profile, so you really need to do the dirty work
     # if ce flies a shittle to centcom you better find a way onto it

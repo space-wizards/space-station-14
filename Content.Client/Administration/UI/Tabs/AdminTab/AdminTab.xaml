@@ -17,6 +17,7 @@
             <cc:UICommandButton Command="ert_accept" Text="{Loc admin-player-actions-window-ert}" WindowType="{x:Type at:ERTCallWindow}"/>
             <cc:CommandButton Command="adminlogs" Text="{Loc admin-player-actions-window-admin-logs}"/>
             <cc:CommandButton Command="faxui" Text="{Loc admin-player-actions-window-admin-fax}"/>
+            <cc:CommandButton Command="achatwindow" Text="{Loc admin-player-actions-window-admin-chat}"/>
             <cc:CommandButton Command="votecallui" Text="{Loc administration-ui-round-tab-call-vote}" />
         </GridContainer>
     </BoxContainer>

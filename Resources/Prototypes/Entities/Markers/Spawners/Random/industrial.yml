@@ -45,9 +45,7 @@
           state: icon
     - type: RandomSpawner
       rarePrototypes:
-        - CapacitorStockPart
         - MicroManipulatorStockPart
-        - MatterBinStockPart
         - CableHVStack10
         - WelderIndustrial
         - PowerCellHigh

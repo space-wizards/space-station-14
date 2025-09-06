@@ -1,1 +1,1 @@
-fire-protection-reduction-value = - [color=orange]Fire[/color] damage reduced by [color=lightblue]{ $value }%[/color].
+fire-protection-reduction-value = - [color=orange]Огненный[/color] урон снижается на [color=lightblue]{ $value }%[/color].

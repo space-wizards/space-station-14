@@ -56,6 +56,8 @@
 
                             <Label Name="StationTime" Access="Public" FontColorOverride="{x:Static maths:Color.LightGray}" HorizontalAlignment="Left"/>
 
+                            <RichTextLabel Name="PlaytimeComment" Visible="False" Access="Public" HorizontalAlignment="Left" />
+
                             <controls:HLine Color="#404040" Thickness="1" Margin="0 5"/>
 
                             <lobbyUi:ServerListBox Name="ServerListBox" Access="Public" MinSize="0 30" VerticalExpand="True" HorizontalExpand="True" Margin="3 3 3 3" HorizontalAlignment="Stretch"/>

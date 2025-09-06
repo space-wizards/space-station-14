@@ -48,3 +48,13 @@
   id: ClothingBackpackSatchelOfficial
   name: чёрная сумка
   description: Стильная чёрная кожаная сумка.
+
+- type: chameleonOutfit
+  id: CentcomGearChameleonOutfit
+  job: CentralCommandOfficial
+  equipment:
+    shoes: ClothingShoesBootsLaceup
+    head: ClothingHeadHatCentcom
+    eyes: ClothingEyesGlassesSunglasses
+    gloves: ClothingHandsGlovesColorBlack
+    outerClothing: ClothingOuterVestWeb

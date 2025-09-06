@@ -12,3 +12,5 @@ ent-DrinkJigger = jigger
     .desc = Like a shaker, but smaller. Used to control the amount of ingredients.
 ent-DrinkIceBucket = ice bucket
     .desc = A special bucket of refreshy ice. Prohibited use for challenge with the same name!
+ent-Pitcher = metal pitcher
+    .desc = A stainless steel insulated pitcher. Everyone's best friend in the morning.

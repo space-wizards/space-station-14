@@ -77,6 +77,21 @@ reagent-effect-guidebook-health-change =
                *[both] изменяют здоровье на
             }
     } { $changes }
+reagent-effect-guidebook-even-health-change =
+    { $chance ->
+        [1]
+            { $healsordeals ->
+                [heals] Равномерно лечит
+                [deals] Равномерно наносит
+               *[both] Равномерно изменяет здоровье на
+            }
+       *[other]
+            { $healsordeals ->
+                [heals] раномерно лечат
+                [deals] равномерно наносят
+               *[both] равномерно изменяют здоровье на
+            }
+    } { $changes }
 reagent-effect-guidebook-status-effect =
     { $type ->
         [add]
@@ -95,11 +110,6 @@ reagent-effect-guidebook-status-effect =
                *[other] удаляют
             } { NATURALFIXED($time, 3) } от { LOC($key) }
     }
-reagent-effect-guidebook-activate-artifact =
-    { $chance ->
-        [1] Пытается
-       *[other] пытаются
-    } активировать артефакт
 reagent-effect-guidebook-set-solution-temperature-effect =
     { $chance ->
         [1] Устанавливает
@@ -133,7 +143,7 @@ reagent-effect-guidebook-adjust-reagent-reagent =
                 [1] добавляют
                *[-1] удаляют
             }
-    } { NATURALFIXED($amount, 2) }ед. от { $reagent } { $deltasign ->
+    } { NATURALFIXED($amount, 2) } ед. от { $reagent } { $deltasign ->
         [1] к
        *[-1] из
     } раствора
@@ -230,6 +240,11 @@ reagent-effect-guidebook-electrocute =
         [1] Бьёт током
        *[other] бьют током
     } употребившего в течении { NATURALFIXED($time, 3) }
+reagent-effect-guidebook-emote =
+    { $chance ->
+        [1] Вызывает
+       *[other] вызвать
+    }  у цели [bold][color=white]{ $emote }[/color][/bold]
 reagent-effect-guidebook-extinguish-reaction =
     { $chance ->
         [1] Гасит
@@ -315,7 +330,11 @@ reagent-effect-guidebook-reduce-rotting =
     { $chance ->
         [1] Регенерирует
        *[other] регенерируют
-    } { NATURALFIXED($time, 3) } { MANY("second", $time) } гниения
+    } { NATURALFIXED($time, 3) } { $time ->
+        [one] секунду
+        [few] секунды
+       *[other] секунд
+    } гниения
 reagent-effect-guidebook-innoculate-zombie-infection =
     { $chance ->
         [1] Лечит
@@ -325,12 +344,26 @@ reagent-effect-guidebook-area-reaction =
     { $chance ->
         [1] Вызывает
        *[other] вызывают
-    } дымовую или пенную реакцию на { NATURALFIXED($duration, 3) } { MANY("second", $duration) }
+    } дымовую или пенную реакцию на { NATURALFIXED($duration, 3) } { $duration ->
+        [one] секунду
+        [few] секунды
+       *[other] секунд
+    }
+reagent-effect-guidebook-artifact-unlock =
+    { $chance ->
+        [1] Помогает
+       *[other] помогают
+    } разблокировать инопланетный артефакт.
 reagent-effect-guidebook-add-to-solution-reaction =
     { $chance ->
         [1] Заставляет
        *[other] заставляют
     } химикаты, применённые к объекту, добавиться во внутренний контейнер для растворов этого объекта
+reagent-effect-guidebook-artifact-durability-restore =
+    Восстанавливает { $restored } { $restored ->
+        [1] прочность
+       *[other] прочности
+    } активного узла космического артефакта.
 reagent-effect-guidebook-plant-attribute =
     { $chance ->
         [1] Изменяет

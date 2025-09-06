@@ -16,7 +16,7 @@ public sealed partial class NecroKudzuComponent : Component
     [ViewVariables(VVAccess.ReadOnly)]
     public float Duration = 60f;
 
-    [DataField("proto", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
+    [DataField("proto")]
     [ViewVariables(VVAccess.ReadOnly)]
-    public string NecroWallId = "NecroWall";
+    public EntProtoId NecroWallId = "NecroWall";
 }

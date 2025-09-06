@@ -115,7 +115,6 @@ public sealed class CardboardBoxSystem : SharedCardboardBoxSystem
             _stealth.SetVisibility(uid, stealth.MaxVisibility, stealth);
             _stealth.SetEnabled(uid, true, stealth);
             EntityManager.EnsureComponent<SlipperyComponent>(uid, out var slippery);
-            slippery.ParalyzeTime = 2;
         }
     }
 
@@ -156,7 +155,7 @@ public sealed class CardboardBoxSystem : SharedCardboardBoxSystem
     private void OnSlip(EntityUid uid, CardboardBoxComponent component, ref SlipEvent args)
     {
         if (component.Mover != null)
-            _stun.TryParalyze(component.Mover.Value, TimeSpan.FromSeconds(2), true);
+            _stun.TryUpdateParalyzeDuration(component.Mover.Value, TimeSpan.FromSeconds(2));
 
         if (TryComp<EntityStorageComponent>(uid, out var box))
         {
@@ -165,7 +164,7 @@ public sealed class CardboardBoxSystem : SharedCardboardBoxSystem
                 var ent = _entity.GetNetEntity(box.Contents.ContainedEntities[i]);
 
                 if (_entity.HasComponent<HumanoidAppearanceComponent>(_entity.GetEntity(ent)))
-                    _stun.TryParalyze(_entity.GetEntity(ent), TimeSpan.FromSeconds(2), true);
+                    _stun.TryUpdateParalyzeDuration(_entity.GetEntity(ent), TimeSpan.FromSeconds(2));
             }
         }
 

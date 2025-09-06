@@ -43,7 +43,15 @@
       whitelist:
         components:
           - Paper
-    photocopierType: Default
+    allowedFormCategories:
+    - NTCargo
+    - NTCivilian
+    - NTEngineering
+    - NTLaw
+    - NTMedical
+    - NTScience
+    - NTSecurity
+    - NTCommand
   - type: GenericVisualizer
     visuals:
       enum.PhotocopierVisuals.VisualState:
@@ -73,7 +81,16 @@
       whitelist:
         components:
           - Paper
-    photocopierType: Command
+    allowedFormCategories:
+    - NTCargo
+    - NTCivilian
+    - NTEngineering
+    - NTLaw
+    - NTMedical
+    - NTScience
+    - NTSecurity
+    - NTCommand
+    - NTCentcomm
 
 - type: entity
   parent: PhotocopierBase
@@ -88,7 +105,17 @@
       whitelist:
         components:
           - Paper
-    photocopierType: Centcomm
+    allowedFormCategories:
+    - NTCargo
+    - NTCivilian
+    - NTEngineering
+    - NTLaw
+    - NTMedical
+    - NTScience
+    - NTSecurity
+    - NTCommand
+    - NTCentcomm
+    - NTOperator
 
 - type: entity
   parent: PhotocopierBase
@@ -103,7 +130,15 @@
       whitelist:
         components:
           - Paper
-    photocopierType: Syndicate
+    allowedFormCategories:
+    - NTCargo
+    - NTCivilian
+    - NTEngineering
+    - NTLaw
+    - NTMedical
+    - NTScience
+    - NTSecurity
+    - Syndicate
 
 - type: entity
   parent: PhotocopierBase
@@ -118,7 +153,15 @@
       whitelist:
         components:
           - Paper
-    photocopierType: Nukeops
+    allowedFormCategories:
+    - NTCargo
+    - NTCivilian
+    - NTEngineering
+    - NTLaw
+    - NTMedical
+    - NTScience
+    - NTSecurity
+    - Nukeops
 
 - type: entity
   parent: BaseItem

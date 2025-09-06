@@ -15,6 +15,7 @@
   - type: Tag
     tags:
     - Sheet
+    - ConstructionMaterial
   - type: Material
   - type: Damageable
     damageContainer: Inorganic
@@ -107,15 +108,6 @@
   - type: Stack
     stackType: Glass
     count: 1
-
-- type: entity
-  parent: SheetGlass
-  id: SheetGlassLingering0
-  suffix: Lingering, 0
-  components:
-  - type: Stack
-    lingering: true
-    count: 0
 
 - type: entity
   parent: SheetGlassBase
@@ -221,6 +213,9 @@
       map: ["base"]
   - type: Item
     heldPrefix: pglass
+  - type: FloorTile # DS14-tiles
+    outputs:
+    - FloorPlasmaGlass
   - type: Construction
     graph: Glass
     node: SheetPGlass
@@ -296,6 +291,9 @@
       map: ["base"]
   - type: Item
     heldPrefix: rpglass
+  - type: FloorTile # DS14-tiles
+    outputs:
+    - FloorRPlasmaGlass
   - type: Construction
     graph: Glass
     node: SheetRPGlass
@@ -351,6 +349,9 @@
       map: ["base"]
   - type: Item
     heldPrefix: uglass
+  - type: FloorTile # DS14-tiles
+    outputs:
+    - FloorUraniumGlass
   - type: Construction
     graph: Glass
     node: SheetUGlass
@@ -425,6 +426,9 @@
       map: ["base"]
   - type: Item
     heldPrefix: ruglass
+  - type: FloorTile # DS14-tiles
+    outputs:
+    - FloorRUraniumGlass
   - type: Construction
     graph: Glass
     node: SheetRUGlass
@@ -480,6 +484,9 @@
       map: ["base"]
   - type: Item
     heldPrefix: cglass
+  - type: FloorTile # DS14-tiles
+    outputs:
+    - FloorBrassGlass
   - type: Construction
     graph: Glass
     node: SheetClockworkGlass

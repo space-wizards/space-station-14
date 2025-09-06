@@ -11,7 +11,6 @@ using Robust.Shared.Enums;
 using Robust.Shared.Player;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
-using Robust.Shared.Audio.Systems;
 
 namespace Content.Server.GameTicking
 {
@@ -19,7 +18,6 @@ namespace Content.Server.GameTicking
     public sealed partial class GameTicker
     {
         [Dependency] private readonly IPlayerManager _playerManager = default!;
-        [Dependency] private readonly SharedAudioSystem _audioSystem = default!;
 
         private void InitializePlayer()
         {
@@ -34,11 +32,8 @@ namespace Content.Server.GameTicking
             {
                 if (args.NewStatus != SessionStatus.Disconnected)
                 {
-                    mind.Session = session;
                     _pvsOverride.AddSessionOverride(mindId.Value, session);
                 }
-
-                DebugTools.Assert(mind.Session == session);
             }
 
             DebugTools.Assert(session.GetMind() == mindId);
@@ -70,7 +65,7 @@ namespace Content.Server.GameTicking
                         : Loc.GetString("player-join-message", ("name", args.Session.Name)));
 
                     if (firstConnection)
-                        _audioSystem.PlayGlobal("/Audio/_DeadSpace/Misc/watchlist.ogg", Filter.Empty().AddPlayers(_adminManager.ActiveAdmins), false, AudioParams.Default.WithVolume(-4f));
+                        _audio.PlayGlobal("/Audio/_DeadSpace/Misc/watchlist.ogg", Filter.Empty().AddPlayers(_adminManager.ActiveAdmins), false, AudioParams.Default.WithVolume(-4f));
 
                     RaiseNetworkEvent(GetConnectionStatusMsg(), session.Channel);
 
@@ -131,10 +126,9 @@ namespace Content.Server.GameTicking
                 case SessionStatus.Disconnected:
                 {
                     _chatManager.SendAdminAnnouncement(Loc.GetString("player-leave-message", ("name", args.Session.Name)));
-                    if (mind != null)
+                    if (mindId != null)
                     {
-                        _pvsOverride.ClearOverride(GetNetEntity(mindId!.Value));
-                        mind.Session = null;
+                        _pvsOverride.RemoveSessionOverride(mindId.Value, session);
                     }
 
                     if (_playerGameStatuses.ContainsKey(args.Session.UserId)) // Corvax-Queue: Delete data only if player was in game

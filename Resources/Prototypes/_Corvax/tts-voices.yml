@@ -4825,6 +4825,7 @@
   name: tts-voice-name-annie
   sex: Female
   speaker: annie
+  roundStart: false # too childish to be Round Start
 
 - type: ttsVoice
   id: WreckingBall

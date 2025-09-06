@@ -1,5 +1,7 @@
 ent-AdminObserver = admin observer
     .desc = { ent-MobObserverBase.desc }
+ent-BaseAGhostAction = { ent-BaseAction }
+    .desc = { ent-BaseAction.desc }
 ent-ActionAGhostShowSolar = Solar Control Interface
     .desc = View a Solar Control Interface.
 ent-ActionAGhostShowCommunications = Communications Interface

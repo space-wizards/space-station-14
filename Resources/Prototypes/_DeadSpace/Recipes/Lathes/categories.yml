@@ -1,0 +1,28 @@
+# Cutter machine
+- type: latheCategory
+  id: Shuttle
+  name: lathe-category-shuttle
+
+- type: latheCategory
+  id: Plastic
+  name: lathe-category-plastic
+
+- type: latheCategory
+  id: Circuits
+  name: lathe-category-circuits
+
+- type: latheCategory
+  id: Precious
+  name: lathe-category-precious
+
+- type: latheCategory
+  id: Faux
+  name: lathe-category-faux
+
+- type: latheCategory
+  id: Specialized
+  name: lathe-category-specialized
+
+- type: latheCategory
+  id: Terracotta
+  name: lathe-category-terracotta

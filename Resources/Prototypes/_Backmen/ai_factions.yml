@@ -1,15 +1,19 @@
 ﻿- type: npcFaction
   id: Blob
   hostile:
-  - NanoTrasen
-  - Syndicate
-  - Xeno
-  - Zombie
-  - Dragon
   - Revolutionary
+  - NanoTrasen
+  - SimpleNeutral
+  - SimpleHostile
+  - Syndicate
+  - Passive
+  - PetsNT
+  - Zombie
+  - Xeno
   - AllHostile
   - Wizard
   - Dragon
-  - Necromorfs # DS14
+  - Xenoborg
   - SpiderTerror # DS14
+  - Blob # DS14
   - SyndicateAgent # DS14-agents-faction

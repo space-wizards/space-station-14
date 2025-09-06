@@ -23,37 +23,6 @@ public abstract class SharedEggSystem : EntitySystem
         SubscribeLocalEvent<EggComponent, HatchActionEvent>(OnHatch);
     }
 
-    private void OnShutdown(EntityUid uid, EggComponent component, ComponentShutdown args)
-    {
-        _actionsSystem.RemoveAction(uid, component.ActionHatchEntity);
-    }
-
-    private void OnComponentInit(EntityUid uid, EggComponent component, ComponentInit args)
-    {
-        if (component.CanHatch)
-            _actionsSystem.AddAction(uid, ref component.ActionHatchEntity, component.ActionHatch, uid);
-
-        component.TimeUntilSpawn = _timing.CurTime + TimeSpan.FromSeconds(component.Duration);
-        component.TimeUntilPlaySound = TimeSpan.FromSeconds(component.DurationPlayEggSound) + _timing.CurTime;
-    }
-
-    private void OnHatch(EntityUid uid, EggComponent component, HatchActionEvent args)
-    {
-        if (args.Handled)
-            return;
-
-        var eggSpawnEvent = new EggSpawnEvent();
-        RaiseLocalEvent(uid, ref eggSpawnEvent);
-
-        args.Handled = true;
-    }
-
-    private void OnEggUnpause(EntityUid uid, EggComponent component, ref EntityUnpausedEvent args)
-    {
-        component.TimeUntilSpawn += args.PausedTime;
-        component.TimeUntilPlaySound += args.PausedTime;
-    }
-
     public override void Update(float frameTime)
     {
         base.Update(frameTime);
@@ -76,6 +45,37 @@ public abstract class SharedEggSystem : EntitySystem
         }
     }
 
+    private void OnComponentInit(EntityUid uid, EggComponent component, ComponentInit args)
+    {
+        if (component.CanHatch)
+            _actionsSystem.AddAction(uid, ref component.ActionHatchEntity, component.ActionHatch, uid);
+
+        component.TimeUntilSpawn = _timing.CurTime + TimeSpan.FromSeconds(component.Duration);
+        component.TimeUntilPlaySound = TimeSpan.FromSeconds(component.DurationPlayEggSound) + _timing.CurTime;
+    }
+
+    private void OnShutdown(EntityUid uid, EggComponent component, ComponentShutdown args)
+    {
+        _actionsSystem.RemoveAction(uid, component.ActionHatchEntity);
+    }
+
+    private void OnEggUnpause(EntityUid uid, EggComponent component, ref EntityUnpausedEvent args)
+    {
+        component.TimeUntilSpawn += args.PausedTime;
+        component.TimeUntilPlaySound += args.PausedTime;
+    }
+
+    private void OnHatch(EntityUid uid, EggComponent component, HatchActionEvent args)
+    {
+        if (args.Handled)
+            return;
+
+        var eggSpawnEvent = new EggSpawnEvent();
+        RaiseLocalEvent(uid, ref eggSpawnEvent);
+
+        args.Handled = true;
+    }
+
     public bool IsInfectPossible(EntityUid target)
     {
         if (HasComp<ImmunEggComponent>(target))
@@ -87,7 +87,7 @@ public abstract class SharedEggSystem : EntitySystem
         if (HasComp<InfectionDeadComponent>(target) || HasComp<NecromorfComponent>(target))
             return false;
 
-        if (HasComp<ZombieComponent>(target) || HasComp<PendingZombieComponent>(target))
+        if (HasComp<ZombieComponent>(target) || HasComp<PendingZombieComponent>(target) || HasComp<ZombifyOnDeathComponent>(target))
             return false;
 
         return true;

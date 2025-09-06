@@ -2,8 +2,8 @@
                       xmlns:gfx="clr-namespace:Robust.Client.Graphics;assembly=Robust.Client"
                       xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
                       Title="{Loc 'bounty-console-menu-title'}"
-                      SetSize="550 420"
-                      MinSize="400 350">
+                      MinSize="670 450"
+                      SetSize="720 550"> <!-- DeadSpace-Localization -->
     <BoxContainer Orientation="Vertical"
                   VerticalExpand="True"
                   HorizontalExpand="True">

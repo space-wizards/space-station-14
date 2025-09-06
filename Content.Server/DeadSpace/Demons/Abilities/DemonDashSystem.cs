@@ -42,9 +42,9 @@ public sealed class DemonDashSystem : EntitySystem
         {
             if (_timing.CurTime > comp.AddChargeTime)
             {
-                _charges.AddCharges(uid, 1, charges);
+                _charges.AddCharges((uid, charges), 1);
                 comp.AddChargeTime = _timing.CurTime + comp.AddChargeDuration;
-                _popup.PopupEntity(Loc.GetString($"Рывок восстановился, количество рывков = {charges.Charges}"), uid, uid);
+                _popup.PopupEntity(Loc.GetString($"Рывок восстановился, количество рывков = {charges.LastCharges}"), uid, uid);
             }
         }
     }
@@ -70,28 +70,27 @@ public sealed class DemonDashSystem : EntitySystem
         args.Handled = true;
 
         TryComp<LimitedChargesComponent>(uid, out var charges);
-        if (_charges.IsEmpty(uid, charges))
+        if (_charges.IsEmpty((uid, charges)))
         {
             _popup.PopupEntity(Loc.GetString("Вы не можете применить телепортацию, количество рывков = 0"), uid, uid);
             return;
         }
 
-        var origin = Transform(user).MapPosition;
-        var target = args.Target.ToMap(EntityManager, _transform);
+        var origin = _transform.GetMapCoordinates(user);
+        var target = _transform.ToMapCoordinates(args.Target);
         if (!_interaction.InRangeUnobstructed(origin, target, 0f, CollisionGroup.Opaque, uid => uid == user))
         {
             _popup.PopupEntity(Loc.GetString("Конечная точка вне зоны видимости"), uid, uid);
             return;
         }
+
         _transform.SetCoordinates(user, args.Target);
         _transform.AttachToGridOrMap(user);
 
-        _audio.PlayPvs("/Audio/Magic/blink.ogg", uid, AudioParams.Default.WithVolume(3).WithMaxDistance(2f));
-
         if (charges != null)
         {
-            _charges.UseCharge(uid, charges);
-            _popup.PopupEntity(Loc.GetString($"Количество рывков = {charges.Charges}"), uid, uid);
+            _charges.TryUseCharge((uid, charges));
+            _popup.PopupEntity(Loc.GetString($"Количество рывков = {charges.LastCharges}"), uid, uid);
         }
 
         _audio.PlayPvs("/Audio/Magic/blink.ogg", uid, AudioParams.Default.WithVolume(3).WithMaxDistance(2f));

@@ -16,6 +16,7 @@ using Content.Server.Station.Systems;
 using Content.Shared.Backmen.Blob.Components;
 using Content.Shared.GameTicking.Components;
 using Content.Shared.Objectives.Components;
+using Robust.Server.Player;
 using Robust.Shared.Audio;
 
 namespace Content.Server.Backmen.GameTicking.Rules;
@@ -30,6 +31,7 @@ public sealed class BlobRuleSystem : GameRuleSystem<BlobRuleComponent>
     [Dependency] private readonly ObjectivesSystem _objectivesSystem = default!;
     [Dependency] private readonly AlertLevelSystem _alertLevel = default!;
     [Dependency] private readonly IChatManager _chatManager = default!;
+    [Dependency] private readonly IPlayerManager _player = default!;
 
     private static readonly SoundPathSpecifier BlobDetectAudio = new SoundPathSpecifier("/Audio/_DeadSpace/Announcements/outbreak5.ogg"); // DS14-Announcements
 
@@ -176,10 +178,10 @@ public sealed class BlobRuleSystem : GameRuleSystem<BlobRuleComponent>
         foreach (var (mindId, mind) in blob.Blobs)
         {
             var name = mind.CharacterName;
-            _mindSystem.TryGetSession(mindId, out var session);
+            _player.TryGetSessionById(mind.UserId, out var session);
             var username = session?.Name;
 
-            var objectives = mind.AllObjectives.ToArray();
+            var objectives = mind.Objectives.ToArray();
             if (objectives.Length == 0)
             {
                 if (username != null)

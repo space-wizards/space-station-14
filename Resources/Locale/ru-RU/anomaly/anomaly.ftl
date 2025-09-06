@@ -29,7 +29,7 @@ anomaly-scanner-particle-containment-unknown = - [color=goldenrod]Сдержив
 anomaly-scanner-particle-transformation-unknown = - [color=#6b75fa]Трансформирующий тип:[/color] [color=red]ОШИБКА[/color]
 anomaly-scanner-pulse-timer = Время до следующего импульса: [color=gray]{ $time }[/color]
 anomaly-gorilla-core-slot-name = Ядро аномалии
-anomaly-gorilla-charge-none = Он не содержит [bold]ядро аномалии[/bold] внутри себя.
+anomaly-gorilla-charge-none = Внутри нет [bold]ядра аномалии[/bold].
 anomaly-gorilla-charge-limit =
     { $count ->
         [one] Остался
@@ -53,6 +53,8 @@ anomaly-sync-examine-connected = Он [color=darkgreen]присоединён[/c
 anomaly-sync-examine-not-connected = Он [color=darkred]не присоединён[/color] к аномалии.
 anomaly-sync-connect-verb-text = Присоединить аномалию
 anomaly-sync-connect-verb-message = Присоединить близлежащую аномалию к { $machine }.
+anomaly-sync-disconnect-verb-text = Отсоединить аномалию
+anomaly-sync-disconnect-verb-message = Отсоединить подключённую аномалию от { $machine }.
 anomaly-generator-ui-title = генератор аномалий
 anomaly-generator-fuel-display = Топливо:
 anomaly-generator-cooldown = Перезарядка: [color=gray]{ $time }[/color]

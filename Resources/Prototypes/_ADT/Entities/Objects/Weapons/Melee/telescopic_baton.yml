@@ -8,7 +8,7 @@
     sprite: _ADT/Objects/Weapons/Melee/telescopic_baton.rsi
     layers:
     - state: telescope_off
-      map: [ "enum.ToggleVisuals.Layer" ]
+      map: [ "enum.ToggleableVisuals.Layer" ]
   - type: SwitchableWeapon
     openSound: "/Audio/_ADT/open_telescopic_baton.ogg"
     closeSound: "/Audio/_ADT/close_telescopic_baton.ogg"
@@ -36,7 +36,7 @@
   - type: Appearance
   - type: GenericVisualizer
     visuals:
-     enum.ToggleVisuals.Toggled:
-        enum.ToggleVisuals.Layer:
+     enum.ToggleableVisuals.Enabled:
+        enum.ToggleableVisuals.Layer:
           True: {state: telescope_on}
           False: {state: telescope_off}

@@ -567,6 +567,8 @@
         orGroup: GiftPool
       - id: FoodBoxDonkpocketHonk
         orGroup: GiftPool
+      - id: FoodBoxDonkpocketMoth
+        orGroup: GiftPool
       - id: ClothingHandsGlovesColorPurple
         orGroup: GiftPool
       - id: ClothingHandsGlovesColorYellow
@@ -618,6 +620,8 @@
       - id: ClothingUniformJumpsuitColorMaroon
         orGroup: GiftPool
       - id: ClothingUniformColorRainbow
+        orGroup: GiftPool
+      - id: ClothingUniformJumpskirtColorRainbow
         orGroup: GiftPool
       - id: ClothingUniformOveralls
         orGroup: GiftPool

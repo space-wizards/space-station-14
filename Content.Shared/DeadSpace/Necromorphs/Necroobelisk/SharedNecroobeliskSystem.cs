@@ -16,6 +16,7 @@ public abstract class SharedNecroobeliskSystem : EntitySystem
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
     [Dependency] private readonly SharedSanitySystem _sharedSanity = default!;
+
     private bool _isSanityCheckExecuted = false;
 
     public override void Initialize()
@@ -112,7 +113,6 @@ public abstract class SharedNecroobeliskSystem : EntitySystem
 
     public virtual void UpdateState(EntityUid uid, NecroobeliskComponent component)
     {
-
         if (component.IsActive)
         {
             _appearance.SetData(uid, NecroobeliskVisuals.Unactive, false);

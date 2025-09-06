@@ -24,6 +24,7 @@ cmd-ban-hint-duration-6 = 1 месяц
 cmd-banlist-desc = Список активных банов пользователя.
 cmd-banlist-help = Использование: banlist <name or user ID>
 cmd-banlist-empty = Нет активных банов у пользователя { $user }
+cmd-banlist-hint = <name/user ID>
 cmd-banlistF-hint = <name/user ID>
 cmd-ban_exemption_update-desc = Установить исключение на типы банов игрока.
 cmd-ban_exemption_update-help =

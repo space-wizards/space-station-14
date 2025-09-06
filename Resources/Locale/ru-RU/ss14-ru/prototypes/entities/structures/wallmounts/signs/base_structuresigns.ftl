@@ -1,2 +1,2 @@
-ent-BaseSign = base sign
-    .desc = { "" }
+ent-BaseSign = вывеска бара
+    .desc = { ent-BaseWallmountMetallic.desc }

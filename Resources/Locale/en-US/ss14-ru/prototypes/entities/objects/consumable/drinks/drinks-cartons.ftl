@@ -23,3 +23,5 @@ ent-DrinkOatMilkCarton = oat milk
     .desc = It's oat milk. Tan and nutritious goodness!
 ent-DrinkJuiceLemonCarton = lemon juice
     .desc = First it's sour, then it's still sour.
+ent-DrinkJuicePineappleCarton = pineapple juice
+    .desc = Tastes like a tropical vacation far from space.

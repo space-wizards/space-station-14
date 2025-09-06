@@ -7,19 +7,19 @@
     - to: jetpack
       steps:
       - tag: GasTank
-        name: oxygen tank
+        name: construction-graph-tag-gas-tank
         icon:
           sprite: Objects/Tanks/oxygen.rsi
           state: icon
         doAfter: 3
       - tag: FireExtinguisher
-        name: fire extinguisher
+        name: construction-graph-tag-fire-extinguisher
         icon:
           sprite: Objects/Misc/fire_extinguisher.rsi
           state: fire_extinguisher_closed
         doAfter: 3
       - tag: GasTank
-        name: oxygen tank
+        name: construction-graph-tag-gas-tank
         icon:
           sprite: Objects/Tanks/oxygen.rsi
           state: icon

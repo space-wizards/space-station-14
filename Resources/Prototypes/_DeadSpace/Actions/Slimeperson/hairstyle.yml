@@ -3,8 +3,9 @@
   name: Change appearance
   description: Change hairstyle.
   components:
-    - type: InstantAction
+    - type: Action
       icon: { sprite: Objects/Tools/scissors.rsi, state: icon }
       itemIconStyle: NoItem
       useDelay: 1 # emote spam
+    - type: InstantAction
       event: !type:ToggleIntrinsicUIEvent { key: enum.MagicMirrorUiKey.Key }

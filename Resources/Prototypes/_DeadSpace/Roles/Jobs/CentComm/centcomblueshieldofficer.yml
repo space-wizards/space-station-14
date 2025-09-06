@@ -44,3 +44,15 @@
     - WelderIndustrialAdvanced
     - ClothingEyesGlassesMeson
     - MedkitCombatFilled
+
+- type: chameleonOutfit
+  id: CentralCommandBlueShieldOfficerChameleonOutfit
+  job: CentralCommandBlueShieldOfficer
+  equipment:
+    head: ClothingHeadHatBeretBlueShield
+    mask: ClothingMaskGasSecurity
+    eyes: ClothingEyesGlassesSecurity
+    gloves: ClothingHandsGlovesCombat
+    outerClothing: ClothingOuterArmorBasicBlueShield
+    shoes: ClothingShoesBootsJack
+    belt: ClothingBeltMilitaryWebbingMed

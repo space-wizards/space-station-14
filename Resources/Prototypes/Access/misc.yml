@@ -19,7 +19,7 @@
   - Medical
   - Quartermaster
   - Salvage
-  - SeniorSalvage
+  - SeniorSalvage # DS14
   - Cargo
   - Research
   - Service
@@ -33,6 +33,13 @@
   - Chapel
   - Hydroponics
   - Atmospherics
-  - Paramedic
-  - Brigmedic
-  - Coroner
+  - Paramedic # DS14
+  - Brigmedic # DS14
+  - Coroner # DS14
+  - GenpopEnter
+  - GenpopLeave
+
+- type: accessGroup
+  id: General
+  tags:
+  - Maintenance

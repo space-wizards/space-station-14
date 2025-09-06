@@ -28,8 +28,8 @@
     radius: 1.5
     energy: 1.6
     color: "#3c5eb5"
-  - type: Advertise
-    pack: ClownVendAds
+  - type: DatasetVocalizer
+    dataset: ClownVendAds
   - type: SpeakOnUIClosed
     pack: ClownVendGoodbyes
   - type: AccessReader
@@ -79,8 +79,8 @@
     brokenState: broken
     normalState: normal-unshaded
     denyState: deny-unshaded
-  - type: Advertise
-    pack: ClothesMateAds
+  - type: DatasetVocalizer
+    dataset: ClothesMateAds
   - type: SpeakOnUIClosed
     pack: GenericVendGoodbyes
   - type: Speech

@@ -1,14 +1,9 @@
 - type: construction
-  name: шахтёрский шлюз
   id: MiningAirlock
   graph: MiningAirlock
   startNode: start
   targetNode: airlock
   category: construction-category-structures
-  description: Это открывается, это закрывается и это может раздавить вас.
-  icon:
-    sprite: Structures/Doors/Airlocks/Standard/mining.rsi
-    state: assembly
   objectType: Structure
   placementMode: SnapgridCenter
   canBuildInImpassable: false
@@ -16,16 +11,11 @@
     - !type:TileNotBlocked
 
 - type: construction
-  name: шахтёрский стекляный шлюз
   id: MiningAirlockGlass
   graph: MiningAirlock
   startNode: start
   targetNode: glassAirlock
   category: construction-category-structures
-  description: Это открывается, это закрывается и это может раздавить вас.
-  icon:
-    sprite: Structures/Doors/Airlocks/Glass/mining.rsi
-    state: assembly
   objectType: Structure
   placementMode: SnapgridCenter
   canBuildInImpassable: false

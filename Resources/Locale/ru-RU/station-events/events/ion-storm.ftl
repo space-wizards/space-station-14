@@ -14,13 +14,12 @@ ion-storm-x-and-y = { $x } И { $y }
 # subjects can generally be threats or jobs or objects
 # thing is specified above it
 ion-storm-law-on-station = ОБНАРУЖЕНЫ { $joined } { $subjects } НА СТАНЦИИ
-ion-storm-law-call-shuttle = THE SHUTTLE MUST BE CALLED BECAUSE OF { $joined } { $subjects } ON THE STATION
-ion-storm-law-no-shuttle = ШАТТЛ НЕ МОЖЕТ БЫТЬ ВЫЗВАН ПО ПРИЧИНЕ ПРИСУТСТВИЯ { $joined } { $subjects } НА СТАНЦИИ
+ion-storm-law-call-shuttle = ШАТТЛ ДОЛЖЕН БЫТЬ ВЫЗВАН ИЗ-ЗА { $joined } { $subjects } НА СТАНЦИИ
 ion-storm-law-crew-are = ВСЕ { $who } ТЕПЕРЬ { $joined } { $subjects }
 ion-storm-law-subjects-harmful = { $adjective } { $subjects } ПРИЧИНЯЮТ ВРЕД ЗДОРОВЬЮ ЭКИПАЖА
 ion-storm-law-must-harmful = ВСЕ КТО { $must } ПРИЧИНЯЮТ ВРЕД ЗДОРОВЬЮ ЭКИПАЖА
 # thing is a concept or action
-ion-storm-law-thing-harmful = { $thing } ПРИЧИНЯЮТ ВРЕД ЗДОРОВЬЮ ЭКИПАЖА
+ion-storm-law-thing-harmful = { $thing } ПРИЧИНЯЕТ ВРЕД ЗДОРОВЬЮ ЭКИПАЖА
 ion-storm-law-job-harmful = { $adjective } { $job } ПРИЧИНЯЮТ ВРЕД ЗДОРОВЬЮ ЭКИПАЖА
 # thing is objects or concept, adjective applies in both cases
 # this means you can get a law like "NOT HAVING CHRISTMAS-STEALING COMMUNISM IS HARMFUL TO THE CREW" :)
@@ -39,13 +38,13 @@ ion-storm-law-requires-subjects =
     } { $joined } { $subjects }
 ion-storm-law-allergic =
     { $who } { $plural ->
-        [true] { "" }
-       *[false] { "" }
+        [true] ИМЕЮТ
+       *[false] ИМЕЕТ
     } { $severity } АЛЛЕРГИЮ НА { $allergy }
 ion-storm-law-allergic-subjects =
     { $who } { $plural ->
-        [true] { "" }
-       *[false] { "" }
+        [true] ИМЕЮТ
+       *[false] ИМЕЕТ
     } { $severity } АЛЛЕРГИЮ НА { $adjective } { $subjects }
 ion-storm-law-feeling = { $who } { $feeling } { $concept }
 ion-storm-law-feeling-subjects = { $who } { $feeling } { $joined } { $subjects }

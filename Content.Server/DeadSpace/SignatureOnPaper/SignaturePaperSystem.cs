@@ -3,11 +3,11 @@
 using Content.Shared.DeadSpace.SignatureOnPaper.Components;
 using Robust.Shared.Audio.Systems;
 using Content.Shared.Verbs;
-using Content.Shared.Hands.Components;
 using Robust.Shared.Utility;
 using Content.Shared.Database;
 using Content.Shared.Paper;
 using Content.Shared.Examine;
+using Content.Server.Hands.Systems;
 
 namespace Content.Server.DeadSpace.SignatureOnPaper;
 
@@ -15,6 +15,7 @@ public sealed partial class SignaturePaperSystem : EntitySystem
 {
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
+    [Dependency] private readonly HandsSystem _hands = default!;
 
     public override void Initialize()
     {
@@ -35,23 +36,18 @@ public sealed partial class SignaturePaperSystem : EntitySystem
         if (!TryComp<PaperComponent>(uid, out var paperComp))
             return;
 
-        if (!TryComp<HandsComponent>(args.User, out var handsComp))
+        if (_hands.GetActiveItem(args.User) is not { } item)
             return;
 
-        var item = handsComp.ActiveHandEntity;
-
-        if (item == null)
+        if (!TryComp(args.User, out MetaDataComponent? compObj))
             return;
 
-        if (!EntityManager.TryGetComponent(args.User, typeof(MetaDataComponent), out var compObj))
-            return;
-
-        var name = ((MetaDataComponent)compObj).EntityName;
+        var name = compObj.EntityName;
 
         if (paperComp.Signatures.Contains(name))
             return;
 
-        if (TryComp<SignatureToolComponent>(item.Value, out var signatureToolComp) && component.NumberSignatures < component.MaximumSignatures)
+        if (TryComp<SignatureToolComponent>(item, out var signatureToolComp) && component.NumberSignatures < component.MaximumSignatures)
         {
             args.Verbs.Add(new Verb()
             {

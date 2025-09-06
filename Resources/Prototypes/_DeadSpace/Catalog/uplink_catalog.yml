@@ -1,4 +1,24 @@
 - type: listing
+  id: UplinkEswordDouble
+  name: uplink-esword-double-name
+  description: uplink-esword-double-desc
+  icon: { sprite: /Textures/Objects/Weapons/Melee/e_sword_double.rsi, state: icon }
+  productEntity: EnergySwordDouble
+  cost:
+    Telecrystal: 21
+  categories:
+  - UplinkWeaponry
+  conditions:
+    - !type:StoreWhitelistCondition
+      blacklist:
+        tags:
+          - NukeOpsUplink
+    - !type:BuyerWhitelistCondition
+      blacklist:
+        components:
+          - SurplusBundle
+
+- type: listing
   id: UplinkEnergyCrossbow
   name: uplink-energy-crossbow-name
   description: uplink-energy-crossbow-desc
@@ -377,3 +397,48 @@
     whitelist:
     - Chef
 
+- type: listing
+  id: UplinkFlippoSyndicateLighter
+  name: uplink-syndicate-flippo-syndicate-lighter-name
+  description: uplink-syndicate-flippo-syndicate-lighter-desc
+  icon: { sprite: /Textures/Objects/Tools/Lighters/lighters.rsi, state: zippo_syndicate_icon_base }
+  productEntity: FlippoSyndicateLighter
+  cost:
+    Telecrystal: 1
+  categories:
+    - UplinkPointless
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 1
+
+# For the DesertEagle
+- type: listing
+  id: UplinkMagazineEagle
+  name: uplink-magazine-eagle-name
+  description: uplink-magazine-eagle-desc
+  icon: { sprite: /Textures/_DeadSpace/Objects/Weapons/Guns/Ammunition/Magazine/Pistol/magazinedeserteagle.rsi, state: base }
+  productEntity: MagazineEagle
+  cost:
+    Telecrystal: 1
+  categories:
+  - UplinkAmmo
+  conditions:
+
+- type: listing
+  id: UplinkMagazineEagleAP
+  name: uplink-magazine-eagle-ap-name
+  description: uplink-magazine-eagle-ap-desc
+  icon: { sprite: /Textures/_DeadSpace/Objects/Weapons/Guns/Ammunition/Magazine/Pistol/magazinedeserteagle.rsi, state: red }
+  productEntity: MagazineEagleAP
+  discountCategory: usualDiscounts
+  discountDownTo:
+    Telecrystal: 2
+  cost:
+    Telecrystal: 3
+  categories:
+  - UplinkAmmo
+  conditions:
+    - !type:StoreWhitelistCondition
+      whitelist:
+        tags:
+          - NukeOpsUplink

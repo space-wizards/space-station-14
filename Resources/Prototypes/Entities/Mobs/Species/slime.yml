@@ -96,7 +96,7 @@
         scaleByQuantity: true
         damage:
           types:
-            Heat: 1
+            Heat: 1 # DS14-value
       - !type:PopupMessage
         type: Local
         visualType: Large

@@ -1,18 +1,21 @@
 # Commands
 
+
 ## Delay shuttle round end
 
-emergency-shuttle-command-round-desc = Останавливает таймер окончания раунда, когда эвакуационный шаттл покидает гиперпространство.
+cmd-delayroundend-desc = Останавливает таймер окончания раунда, когда эвакуационный шаттл покидает гиперпространство.
+cmd-delayroundend-help = Использование: delayroundend
 emergency-shuttle-command-round-yes = Раунд продлён.
 emergency-shuttle-command-round-no = Невозможно продлить окончание раунда.
 
 ## Dock emergency shuttle
-
-emergency-shuttle-command-dock-desc = Вызывает спасательный шаттл и пристыковывает его к станции... если это возможно.
+cmd-dockemergencyshuttle-desc = Вызывает спасательный шаттл и пристыковывает его к станции... если это возможно.
+cmd-dockemergencyshuttle-help = Использование: dockemergencyshuttle
 
 ## Launch emergency shuttle
+cmd-launchemergencyshuttle-desc = Досрочно запускает эвакуационный шаттл, если это возможно.
+cmd-launchemergencyshuttle-help = Использование: launchemergencyshuttle
 
-emergency-shuttle-command-launch-desc = Досрочно запускает эвакуационный шаттл, если это возможно.
 # Emergency shuttle
 emergency-shuttle-left = Эвакуационный шаттл покинул станцию. Расчётное время прибытия шаттла на станцию Центкома — { $transitTime } секунд.
 emergency-shuttle-launch-time = Эвакуационный шаттл будет запущен через { $consoleAccumulator } секунд.
@@ -22,7 +25,6 @@ emergency-shuttle-nearby = Эвакуационный шаттл не может
 emergency-shuttle-extended = { " " }Время до запуска было продлено в связи с непредвиденными обстоятельствами.
 # Emergency shuttle console popup / announcement
 emergency-shuttle-console-no-early-launches = Досрочный запуск отключён
-# Emergency shuttle console popup / announcement
 emergency-shuttle-console-auth-left =
     { $remaining } { $remaining ->
         [one] авторизация осталась
@@ -38,7 +40,6 @@ emergency-shuttle-console-auth-revoked =
 emergency-shuttle-console-denied = Доступ запрещён
 # UI
 emergency-shuttle-console-window-title = Консоль эвакуационного шаттла
-# UI
 emergency-shuttle-ui-engines = ДВИГАТЕЛИ:
 emergency-shuttle-ui-idle = Простой
 emergency-shuttle-ui-repeal-all = Повторить всё

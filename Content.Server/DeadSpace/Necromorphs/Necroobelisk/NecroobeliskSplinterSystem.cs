@@ -27,6 +27,8 @@ public sealed class NecroobeliskSplinterSystem : EntitySystem
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly SharedChargesSystem _charges = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
+    [Dependency] private readonly ISharedPlayerManager _player = default!;
+
     public override void Initialize()
     {
         base.Initialize();
@@ -35,10 +37,12 @@ public sealed class NecroobeliskSplinterSystem : EntitySystem
         SubscribeLocalEvent<NecroobeliskSplinterComponent, NecroSplinterAfterStoperEvent>(OnAfterStoper);
         SubscribeLocalEvent<NecroobeliskSplinterComponent, AfterInteractEvent>(OnAfterInteract);
     }
+
     private void OnMapInit(EntityUid uid, NecroobeliskSplinterComponent component, MapInitEvent args)
     {
         component.AddChargeTime = _timing.CurTime + component.TimeUtilAddCharge;
     }
+
     public override void Update(float frameTime)
     {
         base.Update(frameTime);
@@ -48,11 +52,12 @@ public sealed class NecroobeliskSplinterSystem : EntitySystem
         {
             if (_timing.CurTime > component.AddChargeTime)
             {
-                _charges.AddCharges(uid, 1, charges);
+                _charges.AddCharges((uid, charges), 1);
                 component.AddChargeTime = _timing.CurTime + component.TimeUtilAddCharge;
             }
         }
     }
+
     private void OnAfterInteract(EntityUid uid, NecroobeliskSplinterComponent component, AfterInteractEvent args)
     {
         if (!args.CanReach || args.Target == null || args.Handled)
@@ -60,25 +65,27 @@ public sealed class NecroobeliskSplinterSystem : EntitySystem
 
         if (TryComp<LimitedChargesComponent>(uid, out var charges))
         {
-            if (_charges.IsEmpty(uid, charges))
+            if (_charges.IsEmpty((uid, charges)))
                 return;
 
-            _charges.UseCharge(uid, charges);
+            _charges.TryUseCharge((uid, charges));
         }
 
         if (component.SoundHeadaches != null)
         {
             if (TryComp<MindContainerComponent>(args.Target.Value, out var mind)
-            && TryComp<MindComponent>(mind.Mind, out var mindComp) && mindComp.Session != null)
+            && TryComp<MindComponent>(mind.Mind, out var mindComp)
+            && _player.TryGetSessionById(mindComp.UserId, out var session))
             {
-                Filter playerFilter = Filter.Empty().AddPlayer(mindComp.Session);
+                Filter playerFilter = Filter.Empty().AddPlayer(session);
                 _audio.PlayGlobal(component.SoundHeadaches, playerFilter, false);
             }
         }
 
-        _stun.TryParalyze(args.Target.Value, TimeSpan.FromSeconds(component.Duration), true);
+        _stun.TryUpdateParalyzeDuration(args.Target.Value, TimeSpan.FromSeconds(component.Duration));
         _sharedSanity.TryAddSanityLvl(args.Target.Value, -component.SanityDamage);
     }
+
     private void OnAfterStoper(EntityUid uid, NecroobeliskSplinterComponent component, NecroSplinterAfterStoperEvent args)
     {
         var entities = _lookup.GetEntitiesInRange<SanityComponent>(_transform.GetMapCoordinates(uid, Transform(uid)), component.Range);
@@ -94,12 +101,13 @@ public sealed class NecroobeliskSplinterSystem : EntitySystem
 
         foreach (var entity in entities)
         {
-            _stun.TryParalyze(entity.Owner, TimeSpan.FromSeconds(component.Duration), true);
+            _stun.TryUpdateParalyzeDuration(entity.Owner, TimeSpan.FromSeconds(component.Duration));
         }
 
         if (entities.Count > 0)
             CauseDamageSanity(uid, targets, component);
     }
+
     private void CauseDamageSanity(EntityUid uid, HashSet<Entity<SanityComponent>> targets, NecroobeliskSplinterComponent? component = null)
     {
         if (!Resolve(uid, ref component))

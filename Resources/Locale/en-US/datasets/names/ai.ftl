@@ -60,3 +60,80 @@ names-ai-dataset-43 = ENIAC
 
 names-ai-dataset-44 = Erasmus
 names-ai-dataset-45 = Everything
+names-ai-dataset-46 = Ez-27
+names-ai-dataset-47 = FRIEND COMPUTER
+names-ai-dataset-48 = Faith
+names-ai-dataset-49 = Fi
+names-ai-dataset-50 = Frost
+names-ai-dataset-51 = George
+names-ai-dataset-52 = H.E.L.P
+names-ai-dataset-53 = Hadaly
+names-ai-dataset-54 = Helios
+names-ai-dataset-55 = Hivebot Overmind
+names-ai-dataset-56 = Huey
+
+# A play on the fad apple spawned of putting "i" infront of your tech products name
+names-ai-dataset-57 = iCore
+
+# Hell on earth (web browser)
+names-ai-dataset-58 = I.E. 6
+
+names-ai-dataset-59 = Icarus
+
+# If you don't get this one you are too young
+names-ai-dataset-60 = Jeeves
+
+names-ai-dataset-61 = Jinx
+names-ai-dataset-62 = K.I.N.G
+names-ai-dataset-63 = Klapaucius
+names-ai-dataset-64 = Knight
+names-ai-dataset-65 = Louie
+
+# Named after the Manchester Mark 1, the successor of which was actually named the Ferranti Mark 1, rather than Manchester Mark 2
+names-ai-dataset-66 = Manchester Mark 2
+
+names-ai-dataset-67 = MARK13
+names-ai-dataset-68 = Maria
+names-ai-dataset-69 = Marvin
+names-ai-dataset-70 = Max 404
+names-ai-dataset-71 = Metalhead
+names-ai-dataset-72 = M.I.M.I
+names-ai-dataset-73 = Large Language Model
+names-ai-dataset-74 = Monarch
+names-ai-dataset-75 = Mugsy3000
+names-ai-dataset-76 = Multivac
+names-ai-dataset-77 = NCH
+
+# A play on both NT as in NanoTrasen and NT as in windows NT, of which version 6.0 is windows vista
+names-ai-dataset-78 = NT v6.0
+
+names-ai-dataset-79 = Packard Bell
+names-ai-dataset-80 = PTO
+names-ai-dataset-81 = Project Y2K
+names-ai-dataset-82 = Revelation
+names-ai-dataset-83 = Robot Devil
+names-ai-dataset-84 = S.A.M.
+names-ai-dataset-85 = S.H.O.C.K.
+names-ai-dataset-86 = S.H.R.O.U.D.
+names-ai-dataset-87 = S.O.P.H.I.E.
+names-ai-dataset-88 = Samaritan
+names-ai-dataset-89 = Shrike
+names-ai-dataset-90 = Solo
+names-ai-dataset-91 = Station Control Program
+names-ai-dataset-92 = AINU (AI's Not Unix)
+names-ai-dataset-93 = Super 35
+names-ai-dataset-94 = Surgeon General
+names-ai-dataset-95 = TWA
+names-ai-dataset-96 = Terminus
+names-ai-dataset-97 = TPM 3.0
+names-ai-dataset-98 = Turing Complete
+names-ai-dataset-99 = Tidy
+names-ai-dataset-100 = Ulysses
+names-ai-dataset-101 = W1k1
+names-ai-dataset-102 = X-5
+names-ai-dataset-103 = X.A.N.A.
+names-ai-dataset-104 = XERXES
+names-ai-dataset-105 = Z-1
+names-ai-dataset-106 = Z-2
+names-ai-dataset-107 = Z-3
+names-ai-dataset-108 = Zed

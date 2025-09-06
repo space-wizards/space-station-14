@@ -8,6 +8,3 @@ ent-Fulton1 = фултон
     .desc = { ent-Fulton.desc }
 ent-FultonEffect = эффект фултона
     .desc = { "" }
-ent-Fulton0 = { ent-Fulton }
-    .suffix = Не исчезают закончившись, 0
-    .desc = { ent-Fulton.desc }

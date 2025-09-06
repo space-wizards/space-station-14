@@ -1,6 +1,6 @@
 - type: gameMap
   id: Box
-  mapName: 'DS Box Station'
+  mapName: 'Box'
   mapPath: /Maps/ds_box.yml
   minPlayers: 60
   stations:

@@ -1,7 +1,6 @@
 // Мёртвый Космос, Licensed under custom terms with restrictions on public hosting and commercial use, full text: https://raw.githubusercontent.com/dead-space-server/space-station-14-fobos/master/LICENSE.TXT
 
 using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
 namespace Content.Shared.DeadSpace.Necromorphs.NecroWall.Components;
 
@@ -18,9 +17,9 @@ public sealed partial class NecroWallComponent : Component
     [ViewVariables(VVAccess.ReadOnly)]
     public TimeSpan NextTickUtilRegen = TimeSpan.Zero;
 
-    [DataField("proto", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
+    [DataField("proto")]
     [ViewVariables(VVAccess.ReadOnly)]
-    public string NecroWallId = "NecroWall";
+    public EntProtoId NecroWallId = "NecroWall";
 
     [ViewVariables(VVAccess.ReadOnly)]
     public bool IsActive = true;

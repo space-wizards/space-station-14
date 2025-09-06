@@ -1,5 +1,6 @@
 ### UI
 
+
 # For the PDA Ringer screen
 
 comp-ringer-vibration-popup = Ваш КПК вибрирует

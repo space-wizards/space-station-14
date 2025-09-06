@@ -10,4 +10,4 @@ id-card-console-window-select-all-accesses-button = Выбрать все
 access-id-card-console-component-no-hands-error = У вас нет рук.
 id-card-console-privileged-id = Основная ID
 id-card-console-target-id = Целевая ID
-id-card-console-damaged = Structural integrity compromised, ejecting contents.
+id-card-console-damaged = Нарушение структурной целостности, выброс содержимого.

@@ -1,7 +1,7 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
-  "copyright": "Created by discord:IAmRasputin#5242. Vox state by Flareguy for SS14",
+  "copyright": "Created by discord:IAmRasputin#5242. Vox state by Flareguy for SS14. monkey state made by MercerBray for Ss14. equipped-HELMET-dog modified from equipped-HELMET by casiliuscestus (GitHub) for SS14.",
   "size": {
     "x": 32,
     "y": 32
@@ -28,6 +28,14 @@
     {
       "name": "on-equipped-HELMET-vox",
       "directions": 4
+    },
+    {
+        "name": "equipped-HELMET-monkey",
+        "directions": 4
+    },
+    {
+        "name": "equipped-HELMET-dog",
+        "directions": 4
     }
   ]
 }

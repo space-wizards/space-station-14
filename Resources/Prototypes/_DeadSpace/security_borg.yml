@@ -217,9 +217,9 @@
     - state: security
     - state: icon-energy
   - type: ItemBorgModule
-    items:
-    - WeaponDisablerBorg
-    - WeaponLaserGunBorg
+    hands:
+    - item: WeaponDisablerBorg
+    - item: WeaponLaserGunBorg
 
 - type: entity
   id: BorgModuleArrestSecurity
@@ -233,9 +233,9 @@
     - state: security
     - state: icon-arrest
   - type: ItemBorgModule
-    items:
-    - StunbatonBorg
-    - BorgSecJawsOfLife
+    hands:
+    - item: StunbatonBorg
+    - item: BorgSecJawsOfLife
 
 - type: entity
   id: BaseBorgModuleSecurity
@@ -619,14 +619,14 @@
         store: part-container
 
       - component: Flash
-        name: flash
+        name: construction-graph-component-flash
         store: part-container
         icon:
           sprite: Objects/Weapons/Melee/flash.rsi
           state: flash
 
       - component: Flash
-        name: second flash
+        name: construction-graph-component-second-flash
         store: part-container
         icon:
           sprite: Objects/Weapons/Melee/flash.rsi

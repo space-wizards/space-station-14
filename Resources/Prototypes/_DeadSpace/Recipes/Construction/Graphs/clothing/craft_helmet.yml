@@ -7,7 +7,7 @@
         - to: clothingCraftHelmet
           steps:
             - tag: HardHat
-              name: Каска
+              name: construction-graph-tag-hard-hat
               icon:
                 sprite: Clothing/Head/Hardhats/yellow.rsi
                 state: icon
@@ -16,7 +16,7 @@
                   sprite: Objects/Misc/cablecuffs.rsi
                   state: cuff
                   color: red
-              name: cuffs
+              name: construction-graph-tag-cuffs
             - material: Steel
               amount: 3
               doAfter: 10

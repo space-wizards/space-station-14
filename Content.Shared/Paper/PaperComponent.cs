@@ -15,7 +15,7 @@ public sealed partial class PaperComponent : Component
     public List<string> Signatures = new List<string>(); // DS14-signatures
 
     [DataField("contentSize")]
-    public int ContentSize { get; set; } = 6000;
+    public int ContentSize { get; set; } = 10000;
 
     [DataField("stampedBy"), AutoNetworkedField]
     public List<StampDisplayInfo> StampedBy { get; set; } = new();

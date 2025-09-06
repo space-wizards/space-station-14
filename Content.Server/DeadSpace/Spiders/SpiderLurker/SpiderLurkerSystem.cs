@@ -15,6 +15,7 @@ using Content.Shared.DeadSpace.Abilities.Bloodsucker.Components;
 using Content.Shared.DeadSpace.Abilities.Bloodsucker;
 using Content.Server.Popups;
 using Content.Shared.Bed.Sleep;
+using Content.Server.Spreader;
 
 namespace Content.Server.DeadSpace.Spiders.SpiderLurker;
 
@@ -27,7 +28,10 @@ public sealed class SpiderLurkerSystem : SharedBloodsuckerSystem
     [Dependency] private readonly IGameTiming _gameTiming = default!;
     [Dependency] private readonly TransformSystem _transform = default!;
     [Dependency] private readonly IMapManager _mapMan = default!;
+    [Dependency] private readonly SharedMapSystem _map = default!;
     [Dependency] private readonly PopupSystem _popup = default!;
+    [Dependency] private readonly TurfSystem _turf = default!;
+    [Dependency] private readonly SpreaderSystem _spreader = default!;
 
     public override void Initialize()
     {
@@ -59,6 +63,7 @@ public sealed class SpiderLurkerSystem : SharedBloodsuckerSystem
     {
         args.Cancelled = true;
     }
+
     public override void Update(float frameTime)
     {
         base.Update(frameTime);
@@ -75,6 +80,7 @@ public sealed class SpiderLurkerSystem : SharedBloodsuckerSystem
             }
         }
     }
+
     private void OnHide(EntityUid uid, SpiderLurkerComponent component, SpiderLurkerActionEvent args)
     {
         if (args.Handled)
@@ -97,16 +103,18 @@ public sealed class SpiderLurkerSystem : SharedBloodsuckerSystem
 
         var xform = Transform(uid);
         var mapCoords = _transform.GetMapCoordinates(uid, xform);
-        if (!_mapMan.TryFindGridAt(mapCoords, out _, out var grid) ||
-            !grid.TryGetTileRef(xform.Coordinates, out var tileRef) ||
-            tileRef.Tile.IsSpace())
+        if (!_mapMan.TryFindGridAt(mapCoords, out var gridUid, out var grid) ||
+            !_map.TryGetTileRef(gridUid, grid, xform.Coordinates, out var tileRef) ||
+            tileRef.Tile.IsEmpty)
         {
             return;
         }
 
-        var coords = grid.MapToGrid(mapCoords);
-        var ent = Spawn(component.SmokePrototype, coords.SnapToGrid());
+        if (_spreader.RequiresFloorToSpread(component.SmokePrototype.ToString()) && _turf.IsSpace(tileRef))
+            return;
 
+        var coords = _map.MapToGrid(gridUid, mapCoords);
+        var ent = Spawn(component.SmokePrototype, coords.SnapToGrid());
         if (!TryComp<SmokeComponent>(ent, out var smoke))
         {
             Log.Error($"Smoke prototype {component.SmokePrototype} was missing SmokeComponent");
@@ -140,5 +148,4 @@ public sealed class SpiderLurkerSystem : SharedBloodsuckerSystem
             component.IsHide = false;
         }
     }
-
 }

@@ -1,2 +1,2 @@
 ent-BaseSign = base sign
-    .desc = { "" }
+    .desc = { ent-BaseWallmountMetallic.desc }

@@ -14,7 +14,7 @@
   canBeAntag: false
   access:
   - Security
-  - Brigmedic
+  - Brigmedic # DS14
   - Brig
   - Armory
   - Maintenance
@@ -43,3 +43,17 @@
     - Flash
     - HyperLinkBookCorporateLaw
     - HyperLinkBookSOPSecurity
+
+- type: chameleonOutfit
+  id: WardenChameleonOutfit
+  job: Warden
+  hasMindShield: true
+  equipment:
+    head: ClothingHeadHatWarden
+    mask: ClothingMaskGasSecurity
+    outerClothing: ClothingOuterCoatWarden
+    jumpsuit: ClothingUniformJumpsuitWarden
+    neck: Dinkystar
+    belt: ClothingBeltSecurity
+    gloves: ClothingHandsGlovesCombat
+    shoes: ClothingShoesBootsJack

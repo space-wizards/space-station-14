@@ -20,7 +20,7 @@
     min: 1
     max: 6
     title: objective-condition-submission-title
-  - type: UnitologySubmissionConditions
+  - type: UnitologySubmissionCondition
 
 - type: entity
   parent: BaseUnitologyObjective
@@ -32,7 +32,7 @@
     min: 10
     max: 25
     title: objective-condition-infect-title
-  - type: UnitologyInfectConditions
+  - type: UnitologyInfectCondition
 
 - type: entity
   parent: BaseUnitologyObjective
@@ -44,4 +44,4 @@
     min: 2
     max: 6
     title: objective-condition-invitation-title
-  - type: UnitologyInvitationConditions
+  - type: UnitologyInvitationCondition

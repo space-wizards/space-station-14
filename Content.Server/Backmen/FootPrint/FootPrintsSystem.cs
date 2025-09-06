@@ -8,7 +8,6 @@ using Content.Shared.Inventory;
 using Content.Shared.Mobs;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Backmen.FootPrint;
-using Content.Shared.DeadSpace.LieDown;
 using Content.Shared.Chemistry.Components.SolutionManager;
 using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Gravity;
@@ -34,7 +33,6 @@ public sealed class FootPrintsSystem : EntitySystem
     private EntityQuery<TransformComponent> _transformQuery;
     private EntityQuery<MobThresholdsComponent> _mobThresholdQuery;
     private EntityQuery<AppearanceComponent> _appearanceQuery;
-    private EntityQuery<LieDownComponent> _layingQuery;
 
     public override void Initialize()
     {
@@ -43,7 +41,6 @@ public sealed class FootPrintsSystem : EntitySystem
        _transformQuery = GetEntityQuery<TransformComponent>();
        _mobThresholdQuery = GetEntityQuery<MobThresholdsComponent>();
        _appearanceQuery = GetEntityQuery<AppearanceComponent>();
-       _layingQuery = GetEntityQuery<LieDownComponent>();
 
         SubscribeLocalEvent<FootPrintsComponent, ComponentStartup>(OnStartupComponent);
         SubscribeLocalEvent<FootPrintsComponent, MoveEvent>(OnMove);
@@ -100,15 +97,14 @@ public sealed class FootPrintsSystem : EntitySystem
         var (uid, comp) = ent;
         var transform = Transform(uid);
 
-        if (_gravity.IsWeightless(uid, xform: transform))
+        if (_gravity.IsWeightless(uid))
             return;
 
         if (!_mobThresholdQuery.TryComp(uid, out var mobThreshHolds) ||
             !_map.TryFindGridAt(_transform.GetMapCoordinates((uid, transform)), out var gridUid, out _))
             return;
 
-        var dragging = mobThreshHolds.CurrentThresholdState is MobState.Critical or MobState.Dead ||
-                       _layingQuery.TryComp(uid, out var laying) && laying.DrawDowned;
+        var dragging = mobThreshHolds.CurrentThresholdState is MobState.Critical or MobState.Dead;
         var distance = (transform.LocalPosition - comp.StepPos).Length();
         var stepSize = dragging ? comp.DragSize : comp.StepSize;
 

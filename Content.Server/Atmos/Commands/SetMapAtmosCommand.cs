@@ -9,10 +9,10 @@ using Robust.Shared.Map;
 namespace Content.Server.Atmos.Commands;
 
 [AdminCommand(AdminFlags.Admin)]
-public sealed class AddMapAtmosCommand : LocalizedCommands
+public sealed class AddMapAtmosCommand : LocalizedEntityCommands
 {
     [Dependency] private readonly IEntityManager _entities = default!;
-    [Dependency] private readonly IMapManager _map = default!;
+    [Dependency] private readonly SharedMapSystem _map = default!;
 
     private const string _cmd = "cmd-set-map-atmos";
     public override string Command => "setmapatmos";
@@ -28,10 +28,10 @@ public sealed class AddMapAtmosCommand : LocalizedCommands
         }
 
         int.TryParse(args[0], out var id);
-        var map = _map.GetMapEntityId(new MapId(id));
+        var map = _map.GetMapOrInvalid(new MapId(id));
         if (!map.IsValid())
         {
-            shell.WriteError(Loc.GetString("cmd-parse-failure-mapid",  ("arg", args[0])));
+            shell.WriteError(Loc.GetString("cmd-parse-failure-mapid", ("arg", args[0])));
             return;
         }
 
@@ -54,15 +54,15 @@ public sealed class AddMapAtmosCommand : LocalizedCommands
             return;
         }
 
-        var mix = new GasMixture(Atmospherics.CellVolume) {Temperature = Math.Max(temp, Atmospherics.TCMB)};
+        var mix = new GasMixture(Atmospherics.CellVolume) { Temperature = Math.Max(temp, Atmospherics.TCMB) };
         for (var i = 0; i < Atmospherics.TotalNumberOfGases; i++)
         {
             if (args.Length == 3 + i)
                 break;
 
-            if (!float.TryParse(args[3+i], out var moles))
+            if (!float.TryParse(args[3 + i], out var moles))
             {
-                shell.WriteError(Loc.GetString("cmd-parse-failure-float", ("arg", args[3+i])));
+                shell.WriteError(Loc.GetString("cmd-parse-failure-float", ("arg", args[3 + i])));
                 return;
             }
 
@@ -80,7 +80,7 @@ public sealed class AddMapAtmosCommand : LocalizedCommands
             return CompletionResult.FromHintOptions(CompletionHelper.MapIds(_entities), Loc.GetString($"{_cmd}-hint-map"));
 
         if (args.Length == 2)
-            return CompletionResult.FromHintOptions(new[]{ "false", "true"}, Loc.GetString($"{_cmd}-hint-space"));
+            return CompletionResult.FromHintOptions(new[] { "false", "true" }, Loc.GetString($"{_cmd}-hint-space"));
 
         if (!bool.TryParse(args[1], out var space) || space)
             return CompletionResult.Empty;
@@ -88,7 +88,7 @@ public sealed class AddMapAtmosCommand : LocalizedCommands
         if (args.Length == 3)
             return CompletionResult.FromHint(Loc.GetString($"{_cmd}-hint-temp"));
 
-        var gas = (Gas) args.Length - 4;
-        return CompletionResult.FromHint(Loc.GetString($"{_cmd}-hint-gas" , ("gas", gas.ToString())));
+        var gas = (Gas)args.Length - 4;
+        return CompletionResult.FromHint(Loc.GetString($"{_cmd}-hint-gas", ("gas", gas.ToString())));
     }
 }

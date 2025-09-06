@@ -1,13 +1,12 @@
 - type: sponsorLoadout
   id: DragonFox
-  entity: ClothingBackpackDragonFox
+  entity: ClothingBackpackDragonFoxMedTech
   sponsorOnly: true
 
 - type: sponsorLoadout
-  id: DragonFoxHypospray
-  entity: HypoDragonfox
+  id: DragonFoxBelt
+  entity: ClothingBeltWebbingDragonFoxMedTech
   sponsorOnly: true
-  whitelistJobs: [ChiefMedicalOfficer, MedicalDoctor, Chemist]
 
 # Backpack
 - type: entity
@@ -41,7 +40,6 @@
       - id: ToySword
       - id: WeaponDisablerToySponsor
       - id: ChainswordDragonFox
-      - id: PaperLawdragon_fox
 
 # Belt
 - type: entity
@@ -258,7 +256,7 @@
       sprite: _DeadSpace/Sponsor/vjlados/magboots.rsi
       layers:
       - state: icon
-        map: [ "enum.ToggleVisuals.Layer" ]
+        map: [ "enum.ToggleableVisuals.Layer" ]
     - type: Clothing
       sprite: _DeadSpace/Sponsor/vjlados/magboots.rsi
     - type: ClothingSpeedModifier
@@ -468,7 +466,7 @@
   - type: Storage
     maxItemSize: Huge
     grid:
-    - 0,0,15,5
+    - 0,0,19,9
   - type: StorageFill
     contents:
       - id: ClothingOuterHardsuitDragonFoxMedTech
@@ -479,7 +477,10 @@
       - id: JetpackVoidFilled
       - id: ClothingEyesHudMultiversalDragonFoxMedTech
       - id: ClothingUniformJumpsuitDragonFoxMedTech
-      - id: JawsOfLife
+      - id: DominatorMedkitAdvanced
+      - id: ClothingHeadsetMedTech
+      - id: DefibrillatorCompact
+      - id: PaperLawdragon_fox
 
 - type: entity
   parent: ClothingOuterHardsuitBase
@@ -559,17 +560,19 @@
   - type: Clothing
     sprite: _DeadSpace/Sponsor/DragonFox/MedTech/other/belt.rsi
   - type: Storage
-    maxItemSize: Small
+    maxItemSize: Normal
     grid:
-    - 0,0,7,1
+    - 0,0,9,1
   - type: Item
     size: Huge
   - type: StorageFill
     contents:
       - id: PowerDrill
-      - id: CrowbarRed
       - id: WelderExperimental
       - id: Multitool
+      - id: RCDDragonfox
+      - id: JawsOfLife
+      - id: HypoDragonfox
 
 - type: entity
   parent: ClothingShoesBootsMag
@@ -581,7 +584,7 @@
     sprite: _DeadSpace/Sponsor/DragonFox/MedTech/other/magboots.rsi
     layers:
     - state: icon
-      map: [ "enum.ToggleVisuals.Layer" ]
+      map: [ "enum.ToggleableVisuals.Layer" ]
   - type: Clothing
     sprite: _DeadSpace/Sponsor/DragonFox/MedTech/other/magboots.rsi
   - type: ClothingSpeedModifier
@@ -611,6 +614,15 @@
     sprite: _DeadSpace/Sponsor/DragonFox/MedTech/other/pda.rsi
     state: pda
     scale: 0.7, 0.7
+  - type: CartridgeLoader
+    uiKey: enum.PdaUiKey.Key
+    preinstalled:
+      - CrewManifestCartridge
+      - NotekeeperCartridge
+      - NanoTaskCartridge
+      - NewsReaderCartridge
+      - BankCartridge
+      - MedTekCartridge
 
 - type: entity
   parent: ClothingUniformBase

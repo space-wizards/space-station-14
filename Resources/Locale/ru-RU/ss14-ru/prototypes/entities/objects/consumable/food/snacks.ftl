@@ -1,5 +1,5 @@
-ent-FoodSnackBase = { ent-BaseItem }
-    .desc = { ent-BaseItem.desc }
+ent-FoodSnackBase = { ent-FoodBase }
+    .desc = { ent-FoodBase.desc }
 ent-FoodSnackBoritos = боритос
     .desc = Хрустящие, солёные чипсы из тортильи. Вероятно, с ними можно приготовить начос.
 ent-FoodSnackCnDs = Си&Ди
@@ -47,6 +47,8 @@ ent-FoodSnackMREBrownie = брауни
 ent-FoodSnackMREBrownieOpen = брауни
     .desc = { ent-FoodSnackMREBrownie.desc }
     .suffix = ИРП
+ent-FoodSnackSwirlLollipop = леденец-спиралька
+    .desc = Спираль чистого концентрированного сахара. Кто сейчас самый большой ребенок в песочнице?
 ent-FoodPacketTrash = { ent-BaseItem }
     .desc = Это мусор.
 ent-FoodPacketBoritosTrash = пакетик от боритос

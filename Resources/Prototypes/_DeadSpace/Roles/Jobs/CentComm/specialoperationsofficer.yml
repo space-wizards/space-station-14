@@ -66,8 +66,19 @@
       - id: Paper
         amount: 8
     - type: Sprite
-      sprite: Objects/Misc/bureaucracy.rsi
+      sprite: Objects/Misc/folders.rsi
       layers:
       - state: folder-colormap
         color: "#2365FF"
       - state: folder-base
+
+- type: chameleonOutfit
+  id: CentcomSpecialOperationsOfficerChameleonOutfit
+  job: CentralCommandSpecialOperationsOfficer
+  equipment:
+    shoes: ClothingShoesCentcomBlack
+    head: ClothingHeadCapCentcomBlack
+    eyes: ClothingEyesGlassesSecurity
+    gloves: ClothingHandsGlovesCombat
+    outerClothing: ClothingOuterVestWeb
+    neck: ClothingNeckCloakCentcomBlack

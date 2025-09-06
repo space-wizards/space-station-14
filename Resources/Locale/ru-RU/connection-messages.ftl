@@ -32,7 +32,7 @@ ban-banned-2 = Причина бана: "{ $reason }"
 ban-banned-3 = Попытки обойти этот бан, например, путём создания нового аккаунта, будут фиксироваться.
 soft-player-cap-full = Сервер заполнен!
 panic-bunker-account-denied = Этот сервер находится в режиме "Бункер", часто используемом в качестве меры предосторожности против рейдов. Новые подключения от аккаунтов, не соответствующих определённым требованиям, временно не принимаются. Приносим свои извинения. Повторите попытку позже.
-whitelist-misconfigured = The server is misconfigured and is not accepting players. Please contact the server owner and try again later.
+whitelist-misconfigured = Сервер неправильно настроен и не принимает игроков. Пожалуйста, свяжитесь с владельцем сервера и повторите попытку позже.
 panic-bunker-account-denied-reason = Этот сервер находится в режиме "Бункер", часто используемом в качестве меры предосторожности против рейдов. Новые подключения от аккаунтов, не соответствующих определённым требованиям, временно не принимаются. Приносим свои извинения. Повторите попытку позже. Причина: "{ $reason }"
 panic-bunker-account-reason-account = Ваш аккаунт на сервере слишком новый. Он должен быть старше { $minutes } минут
 panic-bunker-account-reason-overall =
@@ -64,8 +64,12 @@ generic-misconfigured = Сервер неправильно настроен и 
 ipintel-server-ratelimited = На этом сервере используется система безопасности с внешней проверкой, которая достигла своего максимального предела проверки. Пожалуйста, обратитесь за помощью к администрации сервера и повторите попытку позже.
 ipintel-unknown = На этом сервере используется система безопасности с внешней проверкой, но она столкнулась с ошибкой. Пожалуйста, обратитесь за помощью к администрации сервера и повторите попытку позже.
 ipintel-suspicious = Похоже, вы подключаетесь через центр обработки данных или VPN. По административным причинам мы не разрешаем играть через VPN-соединения. Пожалуйста, обратитесь за помощью к администрации сервера, если вы считаете, что это ошибочно.
-hwid-required = Your client has refused to send a hardware id. Please contact the administration team for further assistance.
-baby-jail-account-denied = This server is a newbie server, intended for new players and those who want to help them. New connections by accounts that are too old or are not on a whitelist are not accepted. Check out some other servers and see everything Space Station 14 has to offer. Have fun!
-baby-jail-account-denied-reason = This server is a newbie server, intended for new players and those who want to help them. New connections by accounts that are too old or are not on a whitelist are not accepted. Check out some other servers and see everything Space Station 14 has to offer. Have fun! Reason: "{ $reason }"
-baby-jail-account-reason-account = Your Space Station 14 account is too old. It must be younger than { $minutes } minutes
-baby-jail-account-reason-overall = Your overall playtime on the server must be younger than { $minutes } $minutes
+hwid-required = Ваш клиент отказался отправлять идентификатор оборудования (HWID). Пожалуйста, свяжитесь с администрацией для получения дальнейшей помощи.
+baby-jail-account-denied = Этот сервер — сервер для новичков, предназначенный для новых игроков и тех, кто хочет им помочь. Новые подключения слишком старых или не внесённых в белый список аккаунтов не принимаются. Загляните на другие серверы и посмотрите все, что может предложить Space Station 14. Веселитесь!
+baby-jail-account-denied-reason = Этот сервер — сервер для новичков, предназначенный для новых игроков и тех, кто хочет им помочь. Новые подключения слишком старых или не внесённых в белый список аккаунтов не принимаются. Загляните на другие серверы и посмотрите все, что может предложить Space Station 14. Веселитесь! Причина: "{ $reason }"
+baby-jail-account-reason-account = Ваш аккаунт Space Station 14 слишком старый. Он должен быть моложе { $minutes } минут
+baby-jail-account-reason-overall =
+    Наигранное Вами время на сервере должно быть больше { $minutes } { $minutes ->
+    [one] минуты
+    *[other] минут
+    }.

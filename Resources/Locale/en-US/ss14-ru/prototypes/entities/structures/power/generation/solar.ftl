@@ -1,11 +1,11 @@
 ent-SolarPanelBasePhysSprite = solar panel
     .desc = { "" }
 ent-SolarPanelPlasma = solar panel plasma
-    .desc = A plasma solar panel that generates power.
+    .desc = A few sheets of plasma glass that generate electricity when hit by photons.
 ent-SolarPanelUranium = solar panel uranium
-    .desc = A uranium solar panel that generates power.
+    .desc = A few sheets of uranium glass that generate electricity when hit by photons.
 ent-SolarPanel = solar panel
-    .desc = A solar panel that generates power.
+    .desc = A few sheets of glass that generate electricity when hit by photons.
 ent-SolarPanelBroken = solar panel
     .desc = A broken solar panel.
     .suffix = Broken

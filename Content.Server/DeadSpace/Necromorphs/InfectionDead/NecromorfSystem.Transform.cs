@@ -8,7 +8,6 @@ using Content.Server.Humanoid;
 using Content.Server.IdentityManagement;
 using Content.Server.Inventory;
 using Content.Server.Mind;
-using Content.Server.Mind.Commands;
 using Content.Server.NPC;
 using Content.Shared.DeadSpace.Necromorphs.InfectionDead.Components;
 using Content.Server.NPC.HTN;
@@ -33,13 +32,11 @@ using Content.Shared.Weapons.Melee;
 using Content.Shared.Prying.Components;
 using Content.Shared.Traits.Assorted;
 using Content.Shared.DeadSpace.Necromorphs.InfectionDead.Prototypes;
-using Robust.Shared.Prototypes;
 using System.Numerics;
 using Robust.Server.GameObjects;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Collision.Shapes;
 using Robust.Shared.Physics.Systems;
-using Content.Server.Zombies;
 using Content.Shared.DeadSpace.Necromorphs.Sanity;
 using Content.Shared.Cuffs;
 using Content.Shared.Cuffs.Components;
@@ -49,6 +46,10 @@ using Content.Shared.Mobs.Systems;
 using Content.Shared.Damage.Components;
 using Content.Shared.Rotation;
 using Content.Shared.Interaction.Components;
+using Content.Shared.Body.Components;
+using Robust.Server.Player;
+using Content.Shared.Zombies;
+using Content.Shared.Sprite;
 
 namespace Content.Server.DeadSpace.Necromorphs.InfectionDead;
 
@@ -64,14 +65,14 @@ public sealed partial class NecromorfSystem
     [Dependency] private readonly SharedCombatModeSystem _combat = default!;
     [Dependency] private readonly IChatManager _chatMan = default!;
     [Dependency] private readonly MindSystem _mind = default!;
-    [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly SharedCuffableSystem _cuffs = default!;
     [Dependency] private readonly MobThresholdSystem _mobThreshold = default!;
     [Dependency] private readonly SharedRotationVisualsSystem _sharedRotationVisuals = default!;
+    [Dependency] private readonly IPlayerManager _player = default!;
 
     public void Necrofication(EntityUid target, string prototypeId, InfectionDeadStrainData strainData, MobStateComponent? mobState = null)
     {
-        if (!_prototypeManager.TryIndex<NecromorfPrototype>(prototypeId, out var necromorf))
+        if (!_protoManager.TryIndex<NecromorfPrototype>(prototypeId, out var necromorf))
             return;
 
         if (!Resolve(target, ref mobState, logMissing: false))
@@ -196,7 +197,7 @@ public sealed partial class NecromorfSystem
 
             if (TryComp(target, out HandsComponent? hands))
             {
-                foreach (var hand in _hands.EnumerateHands(target, hands))
+                foreach (var hand in _hands.EnumerateHands((target, hands)))
                 {
                     _hands.TryDrop(target, hand);
                 }
@@ -243,7 +244,7 @@ public sealed partial class NecromorfSystem
 
         _popup.PopupEntity(Loc.GetString("necro-transform", ("target", target)), target, PopupType.LargeCaution);
 
-        MakeSentientCommand.MakeSentient(target, EntityManager);
+        _mind.MakeSentient(target);
 
         if (necromorf != null)
         {
@@ -264,8 +265,8 @@ public sealed partial class NecromorfSystem
         _identity.QueueIdentityUpdate(target);
 
         //He's gotta have a mind
-        var hasMind = _mind.TryGetMind(target, out var mindId, out _);
-        if (hasMind && _mind.TryGetSession(mindId, out var session))
+        var hasMind = _mind.TryGetMind(target, out _, out var mind);
+        if (hasMind && mind != null && _player.TryGetSessionById(mind.UserId, out var session))
         {
             _chatMan.DispatchServerMessage(session, Loc.GetString("Вы стали некроморфом. Ваша цель — найти живых и попытаться устранить их. Работайте вместе с другими некроморфами."));
         }
@@ -316,6 +317,7 @@ public sealed partial class NecromorfSystem
 
         ApplyVirusStrain(target, necromorfComp);
     }
+
     private void SetScale(EntityUid uid, float scale)
     {
         var physics = EntityManager.System<SharedPhysicsSystem>();

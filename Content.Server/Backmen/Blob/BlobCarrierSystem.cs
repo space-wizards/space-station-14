@@ -7,11 +7,8 @@ using Content.Shared.Backmen.Blob;
 using Content.Shared.Backmen.Blob.Components;
 using Content.Shared.Mind.Components;
 using Content.Shared.Mobs;
-using Content.Shared.Popups;
-using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Timing;
 
 namespace Content.Server.Backmen.Blob;
 
@@ -35,8 +32,7 @@ public sealed class BlobCarrierSystem : SharedBlobCarrierSystem
         SubscribeLocalEvent<BlobCarrierComponent, MindRemovedMessage>(OnMindRemove);
     }
 
-
-    [ValidatePrototypeId<EntityPrototype>] private const string ActionTransformToBlob = "ActionTransformToBlob";
+    private static readonly EntProtoId ActionTransformToBlob = "ActionTransformToBlob";
 
     private void OnMindAdded(EntityUid uid, BlobCarrierComponent component, MindAddedMessage args)
     {

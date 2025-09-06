@@ -1,2 +1,2 @@
-ent-BankCartridge = bank cartridge
-    .desc = A program for managing bank account
+ent-BankCartridge = картридж Банк
+    .desc = Программа для управления вашим банковским счетом.

@@ -8,6 +8,10 @@ using Content.Shared.Destructible;
 using Robust.Shared.Player;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Utility;
+using Robust.Shared.Prototypes;
+using Robust.Shared.Random;
+using Content.Shared.Random;
+using Content.Shared.Random.Helpers;
 
 namespace Content.Server.DeadSpace.Demons.Herald;
 
@@ -16,8 +20,9 @@ public sealed class DemonPortalSystem : EntitySystem
     [Dependency] private readonly ChatSystem _chat = default!;
     [Dependency] private readonly NavMapSystem _navMap = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
-    [Dependency] private readonly ChatSystem _chatSystem = default!;
     [Dependency] private readonly IGameTiming _gameTiming = default!;
+    [Dependency] private readonly IPrototypeManager _proto = default!;
+    [Dependency] private readonly IRobustRandom _random = default!;
 
     public override void Initialize()
     {
@@ -51,23 +56,21 @@ public sealed class DemonPortalSystem : EntitySystem
     {
         var location = Transform(uid).Coordinates;
         Timer.Spawn(20000,
-        () => _chatSystem.DispatchGlobalAnnouncement(Loc.GetString("demon-portal-destroyed", ("location", location)), playSound: true, colorOverride: Color.Green));
-
+        () => _chat.DispatchGlobalAnnouncement(Loc.GetString("demon-portal-destroyed", ("location", location)), playSound: true, colorOverride: Color.Green));
     }
 
     private void SpawnDemon(DemonPortalComponent comp, TransformComponent xform)
     {
-        int randomIndex = new Random().Next(0, comp.DemonSpawnIdArray.Length);
-        Spawn(comp.DemonSpawnIdArray[randomIndex], xform.Coordinates);
+        var spawn = _random.Pick(comp.DemonSpawnIdArray);
+        Spawn(spawn, xform.Coordinates);
+
         comp.DemonSpawnTime = _gameTiming.CurTime + comp.DemonSpawnDuration;
     }
 
     private void Announce(EntityUid uid, DemonPortalComponent comp, TransformComponent xform)
     {
-        var location = xform.LocalPosition;
-
         var msg = Loc.GetString("carp-rift-warning",
-                    ("location", FormattedMessage.RemoveMarkup(_navMap.GetNearestBeaconString((uid, xform)))));
+            ("location", FormattedMessage.RemoveMarkupOrThrow(_navMap.GetNearestBeaconString((uid, xform)))));
 
         _chat.DispatchGlobalAnnouncement(msg, playSound: false, colorOverride: Color.Red);
         _audio.PlayGlobal("/Audio/Misc/notice1.ogg", Filter.Broadcast(), true);

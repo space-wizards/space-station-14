@@ -30,3 +30,5 @@ ent-ClothingUniformJumpskirtColorBrown = brown jumpskirt
     .desc = A generic brown jumpskirt with no rank markings.
 ent-ClothingUniformJumpskirtColorMaroon = maroon jumpskirt
     .desc = A generic maroon jumpskirt with no rank markings.
+ent-ClothingUniformJumpskirtColorRainbow = rainbow jumpskirt
+    .desc = A multi-colored jumpskirt!

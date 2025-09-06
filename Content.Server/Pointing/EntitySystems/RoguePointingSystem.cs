@@ -32,7 +32,7 @@ namespace Content.Server.Pointing.EntitySystems
             var angering = _random.Pick(targets);
             angering.Comp.RemainingAnger -= 1;
             if (angering.Comp.RemainingAnger <= 0)
-                RemComp<PointingArrowAngeringComponent>(uid);
+                RemComp<PointingArrowAngeringComponent>(angering);
 
             return angering.Owner;
         }
@@ -62,7 +62,7 @@ namespace Content.Server.Pointing.EntitySystems
 
                 if (component.Chasing is not {Valid: true} chasing || Deleted(chasing))
                 {
-                    EntityManager.QueueDeleteEntity(uid);
+                    QueueDel(uid);
                     continue;
                 }
 
@@ -99,7 +99,7 @@ namespace Content.Server.Pointing.EntitySystems
 
 
                 _explosion.QueueExplosion(uid, ExplosionSystem.DefaultExplosionPrototypeId, 50, 3, 10);
-                EntityManager.QueueDeleteEntity(uid);
+                QueueDel(uid);
             }
         }
     }

@@ -1,6 +1,5 @@
-using Content.Client.DeadSpace.StationAI.UI;
-using Content.Shared.DeadSpace.StationAI.UI;
 using Content.Shared.Silicons.StationAi;
+using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
 using Robust.Client.Player;
 using Robust.Shared.Player;
@@ -11,6 +10,8 @@ public sealed partial class StationAiSystem : SharedStationAiSystem
 {
     [Dependency] private readonly IOverlayManager _overlayMgr = default!;
     [Dependency] private readonly IPlayerManager _player = default!;
+    [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
+    [Dependency] private readonly SpriteSystem _sprite = default!;
 
     private StationAiOverlay? _overlay;
 
@@ -24,8 +25,7 @@ public sealed partial class StationAiSystem : SharedStationAiSystem
         SubscribeLocalEvent<StationAiOverlayComponent, LocalPlayerDetachedEvent>(OnAiDetached);
         SubscribeLocalEvent<StationAiOverlayComponent, ComponentInit>(OnAiOverlayInit);
         SubscribeLocalEvent<StationAiOverlayComponent, ComponentRemove>(OnAiOverlayRemove);
-
-        // SubscribeLocalEvent<StationAiOverlayComponent, AfterAutoHandleStateEvent>(OnCamUpdate);
+        SubscribeLocalEvent<StationAiCoreComponent, AppearanceChangeEvent>(OnAppearanceChange);
     }
 
     private void OnAiOverlayInit(Entity<StationAiOverlayComponent> ent, ref ComponentInit args)
@@ -76,20 +76,20 @@ public sealed partial class StationAiSystem : SharedStationAiSystem
         RemoveOverlay();
     }
 
+    private void OnAppearanceChange(Entity<StationAiCoreComponent> entity, ref AppearanceChangeEvent args)
+    {
+        if (args.Sprite == null)
+            return;
+
+        if (_appearance.TryGetData<PrototypeLayerData>(entity.Owner, StationAiVisualState.Key, out var layerData, args.Component))
+            _sprite.LayerSetData((entity.Owner, args.Sprite), StationAiVisualState.Key, layerData);
+
+        _sprite.LayerSetVisible((entity.Owner, args.Sprite), StationAiVisualState.Key, layerData != null);
+    }
+
     public override void Shutdown()
     {
         base.Shutdown();
         _overlayMgr.RemoveOverlay<StationAiOverlay>();
     }
-
-    // private void OnCamUpdate(Entity<StationAiOverlayComponent> ent, ref AfterAutoHandleStateEvent args)
-    // {
-    //     if (!TryComp<UserInterfaceComponent>(ent, out var userInterface) ||
-    //         !userInterface.ClientOpenInterfaces.TryGetValue(AICameraListUiKey.Key, out var ui1) ||
-    //         ui1 is not AICameraListBoundUserInterface ui)
-    //     {
-    //         return;
-    //     }
-    //     ui.Update();
-    // }
 }

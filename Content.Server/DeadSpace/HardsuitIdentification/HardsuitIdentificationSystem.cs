@@ -19,7 +19,6 @@ using Content.Shared.Body.Part;
 using Content.Shared.Emag.Systems;
 using Robust.Shared.Audio.Systems;
 using Content.Shared.Speech.Components;
-using Robust.Server.GameObjects;
 
 namespace Content.Server.DeadSpace.HardsuitIdentification;
 
@@ -33,7 +32,6 @@ public sealed class HardsuitIdentificationSystem : EntitySystem
     [Dependency] private readonly IAdminLogManager _adminLogger = default!;
     [Dependency] private readonly VocalSystem _vocal = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
-    [Dependency] private readonly TransformSystem _transform = default!;
 
     public override void Initialize()
     {
@@ -57,13 +55,13 @@ public sealed class HardsuitIdentificationSystem : EntitySystem
                 return;
             }
         }
-        
+
         if (comp.Nonlethal)
         {
             Timer.Spawn(0000,
                 () =>
                 {
-                    _popupSystem.PopupEntity(Loc.GetString("Ошибка идентификации пользователя"), args.Equipee, args.Equipee);
+                    _popupSystem.PopupEntity(Loc.GetString("hardsuit-identification-error"), args.Equipee, args.Equipee);
                     _inventory.TryUnequip(args.Equipee, "outerClothing", true, true);
                 });
             return;

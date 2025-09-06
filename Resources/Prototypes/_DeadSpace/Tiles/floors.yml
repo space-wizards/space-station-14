@@ -86,13 +86,13 @@
   - 1.0
   - 1.0
   - 1.0
-  - 1.0 
+  - 1.0
   baseTurf: Plating
   isSubfloor: false
   footstepSounds:
     collection: FootstepHull
   heatCapacity: 10000
-  indestructible: true  
+  indestructible: true
 
 # Shuttle mono tiles
 - type: tile

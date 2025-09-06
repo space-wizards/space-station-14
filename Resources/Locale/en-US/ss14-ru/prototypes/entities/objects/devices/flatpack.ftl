@@ -30,3 +30,5 @@ ent-CrewMonitoringServerFlatpack = crew monitoring server flatpack
     .desc = A flatpack used for constructing a crew monitoring server.
 ent-CrewMonitoringComputerFlatpack = crew monitoring computer flatpack
     .desc = A flatpack used for constructing a crew monitoring console.
+ent-HydroponicsTrayFlatpack = hydroponics tray flatpack
+    .desc = A flatpack used for constructing a hydroponics tray.

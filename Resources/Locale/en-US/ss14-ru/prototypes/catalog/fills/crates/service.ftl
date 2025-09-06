@@ -1,5 +1,7 @@
 ent-CrateServiceJanitorialSupplies = janitorial supplies crate
-    .desc = Fight back against dirt and grime with Nanotrasen's Janitorial Essentials(tm)! Contains three buckets, caution signs, and cleaner grenades. Also has a single mop, broom, spray cleaner, rag, and trash bag.
+    .desc = Fight back against dirt and grime with Nanotrasen's Janitorial Essentials(tm)! Contains three buckets, caution signs, and cleaner grenades. Also has a single mop, broom, spray cleaner, wire brush, rag, and trash bag.
+ent-CrateServiceCleanerGrenades = bulk cleanades crate
+    .desc = Contains two boxes of cleaner grenades, for those deeply-entrenched stains.
 ent-CrateServiceReplacementLights = replacement lights crate
     .desc = May the light of Aether shine upon this station! Or at least, the light of forty two light tubes and twenty one light bulbs.
 ent-CrateServiceHolidayLights = holiday lights crate
@@ -35,5 +37,7 @@ ent-CrateTrashCartFilled = { ent-CrateTrashCart }
     .desc = { ent-CrateTrashCart.desc }
 ent-CrateCandles = candles crate
     .desc = Contains 4 boxes of candles, 2 large and 2 small. For atmosphere or something.
+ent-CrateServiceColorfulLights = colorful lights crate
+    .desc = It's not a party until it's hard to see, a little disorienting, and your ears hurt.
 ent-CrateServicePhotocopierToners = { ent-CrateGenericSteel }
     .desc = { ent-CrateGenericSteel.desc }

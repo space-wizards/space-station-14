@@ -1,28 +1,32 @@
-﻿# Actions
+# Actions
 - type: entity
+  parent: BaseAction
   id: ActionJumpToCore
   name: Jump to core
   description: Sends your eye back to the core.
   components:
-  - type: InstantAction
-    priority: -8
+  - type: Action
+    priority: -8 # DS14
     itemIconStyle: BigAction
     icon:
       sprite: Interface/Actions/actions_ai.rsi
       state: ai_core
+  - type: InstantAction
     event: !type:JumpToCoreEvent
 
 - type: entity
+  parent: BaseAction
   id: ActionSurvCameraLights
   name: Toggle camera lights
   description: Enable surveillance camera lights near wherever you're viewing.
   components:
-  - type: InstantAction
-    priority: -7
+  - type: Action
+    priority: -7 # DS14
     itemIconStyle: BigAction
     icon:
       sprite: Interface/Actions/actions_ai.rsi
       state: camera_light
+  - type: InstantAction
     event: !type:RelayedActionComponentChangeEvent
       components:
       - type: LightOnCollideCollider
@@ -39,72 +43,79 @@
 
 
 - type: entity
+  parent: BaseMentalAction
   id: ActionAIViewLaws
   name: View Laws
   description: View the laws that you must follow.
   components:
-  - type: InstantAction
-    checkCanInteract: false
-    checkConsciousness: false
+  - type: Action
     priority: -3
     itemIconStyle: NoItem
     icon:
       sprite: Interface/Actions/actions_ai.rsi
       state: state_laws
-    event: !type:ToggleLawsScreenEvent
     useDelay: 0.5
+  - type: InstantAction
+    event: !type:ToggleLawsScreenEvent
+
+# DS14-start
 
 - type: entity
   id: AIActionAGhostShowCommunications
   components:
-  - type: InstantAction
+  - type: Action
     itemIconStyle: BigAction
     icon:
       sprite: Interface/Actions/actions_ai.rsi
       state: comms_console
     priority: -10
+  - type: InstantAction
     event: !type:ToggleIntrinsicUIEvent { key: enum.CommunicationsConsoleUiKey.Key }
 
 - type: entity
   id: AIActionAGhostShowCrewMonitoring
   components:
-  - type: InstantAction
+  - type: Action
     itemIconStyle: BigAction
     icon:
       sprite: Interface/Actions/actions_ai.rsi
       state: crew_monitor
     priority: -6
+  - type: InstantAction
     event: !type:ToggleIntrinsicUIEvent { key: enum.CrewMonitoringUIKey.Key }
 
 - type: entity
   id: AIActionAGhostShowStationRecords
   components:
-  - type: InstantAction
+  - type: Action
     itemIconStyle: BigAction
     icon:
       sprite: Interface/Actions/actions_ai.rsi
       state: station_records
     priority: -5
+  - type: InstantAction
     event: !type:ToggleIntrinsicUIEvent { key: enum.GeneralStationRecordConsoleKey.Key }
 
 - type: entity
   id: AIActionAGhostShowRadar
   components:
-  - type: InstantAction
+  - type: Action
     itemIconStyle: BigAction
     icon:
       sprite: Interface/Actions/actions_ai.rsi
       state: mass_scanner
     priority: -4
+  - type: InstantAction
     event: !type:ToggleIntrinsicUIEvent { key: enum.RadarConsoleUiKey.Key }
 
 - type: entity
   id: AIEyeCamAction
   components:
-  - type: InstantAction
+  - type: Action
     itemIconStyle: BigAction
     icon:
       sprite: Interface/Actions/actions_ai.rsi
       state: camera
     priority: -9
+  - type: InstantAction
     event: !type:AIEyeCamerasActionEvent

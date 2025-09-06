@@ -9,7 +9,6 @@ using Content.Shared.Body.Components;
 using Content.Server.Popups;
 using Content.Shared.Zombies;
 using Content.Shared.DeadSpace.Necromorphs.InfectionDead.Components;
-using Content.Server.Zombies;
 using Content.Shared.Actions;
 using Content.Server.DeadSpace.Spiders.SpiderTerror.Components;
 using Content.Shared.DeadSpace.Abilities.Egg.Components;
@@ -122,7 +121,7 @@ public sealed partial class SpiderInfectorSystem : EntitySystem
         {
             _popup.PopupEntity(Loc.GetString("Цель чем-то больна?"), uid, uid);
             return false;
-        };
+        }
 
         if (!_eggSystem.IsInfectPossible(target))
             return false;

@@ -2,23 +2,22 @@
 
 using Robust.Shared.Audio;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
 namespace Content.Server.DeadSpace.HardsuitIdentification;
 
 [RegisterComponent]
 public sealed partial class HardsuitIdentificationComponent : Component
 {
-    [DataField(customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
-    public string Action = "ActionHardsuitSaveDNA";
+    [DataField]
+    public EntProtoId Action = "ActionHardsuitSaveDNA";
 
     [DataField]
     public EntityUid? ActionEntity;
 
-    [DataField, ViewVariables(VVAccess.ReadWrite)]
+    [DataField]
     public string DNA = String.Empty;
 
-    [DataField, ViewVariables(VVAccess.ReadWrite)]
+    [DataField]
     public bool DNAWasStored = false;
 
     [DataField]
@@ -32,7 +31,7 @@ public sealed partial class HardsuitIdentificationComponent : Component
     {
         Params = AudioParams.Default.WithVolume(8),
     };
-    
+
     [DataField]
     public bool Nonlethal;
 }

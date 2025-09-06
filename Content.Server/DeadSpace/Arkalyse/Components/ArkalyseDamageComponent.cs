@@ -2,7 +2,6 @@
 
 using Content.Shared.Damage;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 using Robust.Shared.Audio;
 
 namespace Content.Server.DeadSpace.Arkalyse.Components;
@@ -14,8 +13,8 @@ public sealed partial class ArkalyseDamageComponent : Component
     [DataField]
     public EntityUid? ActionDamageArkalyseAttackEntity;
 
-    [DataField("actionDamageArkalyseAttack", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
-    public string ActionDamageArkalyseAttack = "ActionDamageArkalyseAttack";
+    [DataField]
+    public EntProtoId ActionDamageArkalyseAttack = "ActionDamageArkalyseAttack";
 
     [DataField]
     public bool IsDamageAttack = false;

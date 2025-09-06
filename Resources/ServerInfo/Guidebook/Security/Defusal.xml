@@ -29,7 +29,7 @@
   Чтобы взвести бомбу, вы можете либо кликнуть [color=yellow]ПКМ[/color] и выбрать [color=yellow]Начать обратный отсчёт[/color], либо [color=yellow]Alt-кликнуть[/color] по бомбе. После этого она запикает.
 
   ## Time
-  A bomb has a limited time, at a minimum of [protodata="SyndicateBomb" comp="OnUseTimerTrigger" member="ShortestDelayOption"/] seconds and a maximum of [protodata="SyndicateBomb" comp="OnUseTimerTrigger" member="LongestDelayOption"/] seconds. You can view the timer by examining it, unless the Proceed wire is cut. Once the timer hits zero, the bomb will detonate.
+  A bomb has a limited time, at a minimum of [protodata="SyndicateBomb" comp="TimerTrigger" member="ShortestDelayOption"/] seconds and a maximum of [protodata="SyndicateBomb" comp="TimerTrigger" member="LongestDelayOption"/] seconds. You can view the timer by examining it, unless the Proceed wire is cut. Once the timer hits zero, the bomb will detonate.
 
   ## Болты
   По умолчанию, как только бомба будет взведена, она болтируется к земле. Вы должны найти провод БОЛТ и перерезать его, чтобы отключить болты, после чего вы можете открутить её и выбросить в космос.

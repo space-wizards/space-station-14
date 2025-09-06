@@ -7,5 +7,7 @@
             <Button Name="AllButton" Text="{Loc 'instruments-component-channels-all-button'}" HorizontalExpand="true" VerticalExpand="true" SizeFlagsStretchRatio="1"/>
             <Button Name="ClearButton" Text="{Loc 'instruments-component-channels-clear-button'}" HorizontalExpand="true" VerticalExpand="true" SizeFlagsStretchRatio="1"/>
         </BoxContainer>
+        <CheckButton Name="DisplayTrackNames"
+                     Text="{Loc 'instruments-component-channels-track-names-toggle'}" />
     </BoxContainer>
 </DefaultWindow>

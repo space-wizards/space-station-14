@@ -5,7 +5,6 @@ using Content.Server.Popups;
 using Content.Shared.Chemistry.EntitySystems;
 using Robust.Shared.Audio.Systems;
 using Content.Shared.NPC.Systems;
-using Content.Server.Body.Components;
 using Content.Shared.FixedPoint;
 using Content.Shared.DeadSpace.Abilities.Bloodsucker;
 using Content.Shared.DoAfter;
@@ -25,7 +24,6 @@ public sealed partial class BloodsuckerSystem : SharedBloodsuckerSystem
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly BloodstreamSystem _bloodstreamSystem = default!;
     [Dependency] private readonly NpcFactionSystem _npcFaction = default!;
-    [Dependency] private readonly SharedSolutionContainerSystem _solutionContainerSystem = default!;
     [Dependency] private readonly SharedDoAfterSystem _doAfter = default!;
     [Dependency] private readonly SharedActionsSystem _actionsSystem = default!;
     [Dependency] private readonly SpiderTerrorTombSystem _tomb = default!;
@@ -195,19 +193,19 @@ public sealed partial class BloodsuckerSystem : SharedBloodsuckerSystem
         if (!Resolve(uid, ref component, false))
             return false;
 
-        if (!_solutionContainerSystem.ResolveSolution(uid, component.BloodSolutionName, ref component.BloodSolution))
+        if (!_solutionContainer.ResolveSolution(uid, component.BloodSolutionName, ref component.BloodSolution))
             return false;
 
         if (amount >= 0)
-            return _solutionContainerSystem.TryAddReagent(component.BloodSolution.Value, component.BloodReagent, amount, out _);
+            return _solutionContainer.TryAddReagent(component.BloodSolution.Value, component.BloodReagent, amount, out _);
 
-        var newSol = _solutionContainerSystem.SplitSolution(component.BloodSolution.Value, -amount);
+        var newSol = _solutionContainer.SplitSolution(component.BloodSolution.Value, -amount);
 
-        if (!_solutionContainerSystem.ResolveSolution(uid, component.BloodTemporarySolutionName, ref component.TemporarySolution, out var tempSolution))
+        if (!_solutionContainer.ResolveSolution(uid, component.BloodTemporarySolutionName, ref component.TemporarySolution, out var tempSolution))
             return true;
 
 
-        _solutionContainerSystem.UpdateChemicals(component.TemporarySolution.Value);
+        _solutionContainer.UpdateChemicals(component.TemporarySolution.Value);
 
         return true;
     }

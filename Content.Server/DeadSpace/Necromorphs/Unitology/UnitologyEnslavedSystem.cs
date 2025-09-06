@@ -8,6 +8,7 @@ using Robust.Shared.Prototypes;
 using System.Linq;
 using Content.Shared.Roles;
 using Content.Server.GameTicking.Rules.Components;
+using Robust.Server.Player;
 
 namespace Content.Server.DeadSpace.Necromorphs.Unitology;
 
@@ -15,12 +16,10 @@ public sealed class UnitologyEnslavedSystem : EntitySystem
 {
     [Dependency] private readonly MindSystem _mindSystem = default!;
     [Dependency] private readonly AntagSelectionSystem _antag = default!;
+    [Dependency] private readonly IPlayerManager _player = default!;
 
-    [ValidatePrototypeId<EntityPrototype>]
-    private const string UnitologyRule = "Unitology";
-
-    [ValidatePrototypeId<AntagPrototype>]
-    public const string UnitologyAntagRole = "UniEnslaved";
+    private static readonly EntProtoId UnitologyRule = "Unitology";
+    public static readonly ProtoId<AntagPrototype> UnitologyAntagRole = "UniEnslaved";
 
     public override void Initialize()
     {
@@ -40,10 +39,11 @@ public sealed class UnitologyEnslavedSystem : EntitySystem
         def.PrefRoles.Contains(new ProtoId<AntagPrototype>(UnitologyAntagRole))
         );
 
-        if (definition == null)
-            definition = rule.Comp.Definitions.Last();
+        definition ??= rule.Comp.Definitions.Last();
 
-        _antag.MakeAntag(rule, mind.Session, definition.Value);
+        if (!_player.TryGetSessionById(mind.UserId, out var session))
+            return;
 
+        _antag.MakeAntag(rule, session, definition.Value);
     }
 }

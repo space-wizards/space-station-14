@@ -1,3 +1,5 @@
+ent-BaseBrassInstrument = { ent-BaseHandheldInstrument }
+    .desc = { ent-BaseHandheldInstrument.desc }
 ent-TrumpetInstrument = труба
     .desc = Любимый инструмент джазовых музыкантов и эгоистичных школьников средних классов.
 ent-TromboneInstrument = тромбон

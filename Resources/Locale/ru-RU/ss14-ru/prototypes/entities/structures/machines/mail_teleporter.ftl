@@ -1,2 +1,2 @@
-ent-CargoMailTeleporter = mail teleporter
-    .desc = Periodically teleports in mail to deliver across the station.
+ent-CargoMailTeleporter = почтовый телепортер
+    .desc = Периодически телепортирует почту для доставки по станции.

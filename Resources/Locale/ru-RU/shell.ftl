@@ -1,5 +1,6 @@
 ### for technical and/or system messages
 
+
 ## General
 
 shell-server-cannot = Сервер не может выполнить это.
@@ -8,6 +9,7 @@ shell-invalid-command = Неверная команда.
 shell-invalid-command-specific = Неверная команда { $commandName }.
 shell-cannot-run-command-from-server = Вы не можете выполнить эту команду с сервера.
 shell-only-players-can-run-this-command = Только игроки могут выполнять эту команду.
+shell-must-have-body = У вас должно быть тело для выполнения этой команды.
 shell-must-be-attached-to-entity = Для выполнения этой команды вы должны быть прикреплены к сущности.
 
 ## Arguments
@@ -28,8 +30,10 @@ shell-argument-must-be-boolean = Аргумент должен быть boolean.
 shell-wrong-arguments-number = Неправильное количество аргументов.
 shell-need-between-arguments = Нужно от { $lower } до { $upper } аргументов!
 shell-need-minimum-arguments = Нужно не менее { $minimum } аргументов!
+shell-need-exactly-zero-arguments = Эта команда принимает ноль аргументов.
 shell-need-minimum-one-argument = Нужен хотя бы один аргумент!
 shell-argument-uid = EntityUid
+shell-missing-required-permission = Вам нужен { $perm } для этой команды!
 
 ## Guards
 
@@ -42,6 +46,7 @@ shell-invalid-bool = Неверный boolean.
 shell-entity-uid-must-be-number = EntityUid должен быть числом.
 shell-could-not-find-entity = Не удалось найти сущность { $entity }.
 shell-could-not-find-entity-with-uid = Не удалось найти сущность с uid { $uid }.
+shell-entity-target-lacks-component = Целевая сущность не имеет компонента { $componentName }
 shell-entity-with-uid-lacks-component = Сущность с uid { $uid } не имеет компонента { $componentName }.
 shell-invalid-color-hex = Недопустимый HEX-цвет!
 shell-target-player-does-not-exist = Целевой игрок не существует!

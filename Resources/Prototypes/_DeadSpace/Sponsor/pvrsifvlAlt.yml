@@ -15,6 +15,18 @@
   sponsorOnly: true
   whitelistJobs: [ChiefMedicalOfficer, MedicalDoctor, Chemist, Paramedic, ResearchDirector, SeniorResearcher, Scientist, Captain]
 
+- type: sponsorLoadout
+  id: DominatorpvrsifvlAlt
+  entity: PistolDominatorpvrsifvlAlt
+  sponsorOnly: true
+  whitelistJobs: [SecurityOfficer, HeadOfSecurity, Warden, Detective, SecurityCadet, SecurityPilot]
+
+- type: sponsorLoadout
+  id: BlueshieldgunpvrsifvlAlt
+  entity: PistolBlueShieldpvrsifvlAlt
+  sponsorOnly: true
+  whitelistJobs: [BlueShieldOfficer]
+
 # Backpack
 - type: entity
   parent: ClothingBackpack
@@ -83,6 +95,43 @@
       - id: trayScannerpvrsifvlAlt
   - type: Tag
     tags: [] # ignore "WhitelistChameleon" tag
+
+#dominator security
+- type: entity
+  parent: PistolDominator
+  id: PistolDominatorpvrsifvlAlt
+  name: лазерный револьвер Хоукмун ETL//07
+  categories: [ HideSpawnMenu ]
+  description: Модифицированный образец табельного доминатора службы безопасности. Выследи свою жертву и вонзи когти во Тьму. Разработан и спроектирован компанией Vitezstvi по индивидуальному заказу.
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/pvrsifvlAlt/dominator.rsi
+    layers:
+    - state: base-0
+      map: ["enum.GunVisualLayers.Base"]
+    - state: mag-unshaded-4-0
+      map: ["enum.GunVisualLayers.MagUnshaded"]
+      shader: unshaded
+  - type: MagazineVisuals
+    magState: mag
+    steps: 5
+
+# Blushield Gun
+- type: entity
+  name: импульсный револьвер Хоукмун ETL//07
+  parent: PistolBlueShield
+  categories: [ HideSpawnMenu ]
+  id: PistolBlueShieldpvrsifvlAlt
+  description: Модифицированный образец импульсного пистолета корпуса «Синий Щит». Выследи свою жертву и вонзи когти во Тьму. Разработан и спроектирован компанией Vitezstvi по индивидуальному заказу.
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/pvrsifvlAlt/gun.rsi
+    layers:
+    - state: base
+      map: ["enum.GunVisualLayers.Base"]
+    - state: mag-unshaded-4
+      map: ["enum.GunVisualLayers.MagUnshaded"]
+      shader: unshaded
 
 # Cloack
 - type: entity
@@ -162,6 +211,8 @@
       path: /Audio/_DeadSpace/Sponsor/pvrsifvlAlt/synthoceps-crusher/synthoceps-empty.ogg
       params:
         volume: -4
+  - type: PointLight
+    color: "#eb3828"
 
 #Gasmask
 - type: entity
@@ -239,7 +290,7 @@
   - type: Clothing
     sprite: _DeadSpace/Sponsor/pvrsifvlAlt/helmet.rsi
   - type: PointLight
-    color: "#73caec"
+    color: "#960018"
     radius: 7
     energy: 3
   - type: PressureProtection
@@ -361,7 +412,7 @@
       sprite: _DeadSpace/Sponsor/pvrsifvlAlt/magboots.rsi
       layers:
       - state: icon
-        map: [ "enum.ToggleVisuals.Layer" ]
+        map: [ "enum.ToggleableVisuals.Layer" ]
     - type: Clothing
       sprite: _DeadSpace/Sponsor/pvrsifvlAlt/magboots.rsi
     - type: ClothingSpeedModifier
@@ -619,7 +670,7 @@
     - state: icon-o
       shader: unshaded
       visible: false
-      map: ["enum.ToggleVisuals.Layer"]
+      map: ["enum.ToggleableVisuals.Layer"]
 
 #Гарнитура
 - type: entity

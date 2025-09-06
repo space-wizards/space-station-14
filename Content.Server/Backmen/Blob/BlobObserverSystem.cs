@@ -60,8 +60,8 @@ public sealed class BlobObserverSystem : SharedBlobObserverSystem
 
         SubscribeLocalEvent<BlobCoreComponent, CreateBlobObserverEvent>(OnCreateBlobObserver);
 
-        SubscribeLocalEvent<BlobObserverComponent, PlayerAttachedEvent>(OnPlayerAttached, before: new []{ typeof(ActionsSystem) });
-        SubscribeLocalEvent<BlobObserverComponent, PlayerDetachedEvent>(OnPlayerDetached, before: new []{ typeof(ActionsSystem) });
+        SubscribeLocalEvent<BlobObserverComponent, PlayerAttachedEvent>(OnPlayerAttached, before: new[] { typeof(ActionsSystem) });
+        SubscribeLocalEvent<BlobObserverComponent, PlayerDetachedEvent>(OnPlayerDetached, before: new[] { typeof(ActionsSystem) });
 
         SubscribeLocalEvent<BlobCoreComponent, BlobCreateFactoryActionEvent>(OnCreateFactory);
         SubscribeLocalEvent<BlobCoreComponent, BlobCreateResourceActionEvent>(OnCreateResource);
@@ -83,11 +83,14 @@ public sealed class BlobObserverSystem : SharedBlobObserverSystem
         _tileQuery = GetEntityQuery<BlobTileComponent>();
     }
 
-    [ValidatePrototypeId<EntityPrototype>]
-    private const string MobObserverBlobController = "MobObserverBlobController";
+    private static readonly EntProtoId MobObserverBlobController = "MobObserverBlobController";
+
     private void OnStartup(Entity<BlobObserverComponent> ent, ref ComponentStartup args)
     {
-        _hands.AddHand(ent,"BlobHand",HandLocation.Middle);
+        if (!TryComp<HandsComponent>(ent, out var hands))
+            return;
+
+        _hands.AddHand((ent, hands), "BlobHand", HandLocation.Middle);
 
         ent.Comp.VirtualItem = Spawn(MobObserverBlobController, Transform(ent).Coordinates);
         var comp = EnsureComp<BlobObserverControllerComponent>(ent.Comp.VirtualItem);
@@ -101,16 +104,12 @@ public sealed class BlobObserverSystem : SharedBlobObserverSystem
         }
     }
 
-    private void SendBlobBriefing(EntityUid mind)
+    private void SendBlobBriefing(ICommonSession session)
     {
-        if (_mindSystem.TryGetSession(mind, out var session))
-        {
-            _chatManager.DispatchServerMessage(session, Loc.GetString("blob-role-greeting"));
-        }
+        _chatManager.DispatchServerMessage(session, Loc.GetString("blob-role-greeting"));
     }
 
-    [ValidatePrototypeId<AlertPrototype>]
-    private const string BlobHealth = "BlobHealth";
+    private static readonly ProtoId<AlertPrototype> BlobHealth = "BlobHealth";
 
     private void OnCreateBlobObserver(EntityUid blobCoreUid, BlobCoreComponent core, CreateBlobObserverEvent args)
     {
@@ -142,9 +141,12 @@ public sealed class BlobObserverSystem : SharedBlobObserverSystem
             }
         }
 
+        if (!_playerManager.TryGetSessionById(mind.UserId, out var session))
+            return;
+
         if (!isNewMind)
         {
-            var name = mind.Session?.Name ?? "???";
+            var name = session.Name ?? "???";
             _mindSystem.WipeMind(mindId, mind);
             mindId = _mindSystem.CreateMind(args.UserId, $"Blob Player ({name})");
             mind = Comp<MindComponent>(mindId);
@@ -152,20 +154,19 @@ public sealed class BlobObserverSystem : SharedBlobObserverSystem
         }
 
         _roleSystem.MindAddRole(mindId, core.MindRoleBlobPrototypeId.Id);
-        SendBlobBriefing(mindId);
+
+        SendBlobBriefing(session);
 
         _alerts.ShowAlert(observer, BlobHealth, (short) Math.Clamp(Math.Round(core.CoreBlobTotalHealth.Float() / 10f), 0, 20));
 
         var blobRule = EntityQuery<BlobRuleComponent>().FirstOrDefault();
-        blobRule?.Blobs.Add((mindId,mind));
+        blobRule?.Blobs.Add((mindId, mind));
 
         _mindSystem.TryAddObjective(mindId, mind, "BlobCaptureObjective");
 
         _mindSystem.TransferTo(mindId, observer, true, mind: mind);
-        if (_actorSystem.TryGetSessionById(args.UserId, out var session))
-        {
-            _actorSystem.SetAttachedEntity(session, observer, true);
-        }
+
+        _actorSystem.SetAttachedEntity(session, observer, true);
 
         UpdateUi(observer, core);
     }

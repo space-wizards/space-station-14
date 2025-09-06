@@ -5,8 +5,7 @@ using Robust.Shared.Prototypes;
 namespace Content.Server.GuideGenerator;
 public sealed partial class ReactionJsonGenerator
 {
-    [ValidatePrototypeId<MixingCategoryPrototype>]
-    private const string DefaultMixingCategory = "DummyMix";
+    private static readonly ProtoId<MixingCategoryPrototype> DefaultMixingCategory = "DummyMix";
 
     private static void AddMixingCategories(Dictionary<String, ReactionEntry> reactions, IPrototypeManager prototype)
     {

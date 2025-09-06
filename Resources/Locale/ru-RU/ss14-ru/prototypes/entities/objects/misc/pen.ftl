@@ -14,5 +14,5 @@ ent-PenCentcom = ручка Центком
     .desc = В стремлении не отстать от "мощи" бюрократической машины Cybersun, NT создала реплику их кибер-ручки в своём корпоративном стиле.
 ent-PenHop = перьевая ручка главы персонала
     .desc = Элегантная перьевая ручка для главы персонала станции.
-ent-PenWiz = wizard's magical pen
-    .desc = A luxurious fountain pen. Seems to have a magical crystal eraser.
+ent-PenWiz = магическая ручка
+    .desc = Элегантная перьевая ручка. Похоже, у неё есть волшебный стирающий кристалл.

@@ -13,7 +13,6 @@
   footstepSounds:
     collection: BarestepCarpet
   itemDrop: FloorVebTileItem
-  friction: 0.05
   heatCapacity: 10000
 
 - type: entity
@@ -33,6 +32,6 @@
 
 - type: stack
   id: FloorVebTile
-  name: плита из паутины
+  name: stack-web-tile
   spawn: FloorVebTileItem
   maxCount: 30
