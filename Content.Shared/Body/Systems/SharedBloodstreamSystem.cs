@@ -404,7 +404,22 @@ public abstract class SharedBloodstreamSystem : EntitySystem
 
         amount *= -1; // if negative, we start removing instead. Has to be absolute value in the end.
 
-        return SolutionContainer.RemoveReagent(ent.Comp.BloodSolution.Value, ent.Comp.BloodReagent, amount) > FixedPoint2.Zero;
+        // Needs to check every reagent, because RemoveReagent function strictly works with fitting reagent data
+        for (var i = bloodSolution.Contents.Count - 1; i >= 0; i--)
+        {
+            var (reagentId, quantity) = bloodSolution.Contents[i];
+            if (reagentId.Prototype == ent.Comp.BloodReagent)
+            {
+                var delta = FixedPoint2.Min(amount, quantity);
+                SolutionContainer.RemoveReagent(ent.Comp.BloodSolution.Value, reagentId, delta);
+                amount -= delta;
+
+                if (amount <= 0)
+                    return true;
+            }
+        }
+
+        return true;
     }
 
     /// <summary>
