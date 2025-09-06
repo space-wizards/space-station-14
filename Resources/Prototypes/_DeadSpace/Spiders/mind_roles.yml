@@ -6,6 +6,7 @@
   - type: MindRole
     roleType: TeamAntagonist
     antagPrototype: SpiderTerror
+    subtype: role-subtype-spider-terror
   - type: SpiderTerrorRole
 
 - type: entity
@@ -16,6 +17,7 @@
   - type: MindRole
     roleType: TeamAntagonist
     antagPrototype: SpiderTerrorQueen
+    subtype: role-subtype-spider-terror-queen
 
 - type: entity
   parent: MindRoleSpiderTerror
@@ -25,6 +27,7 @@
   - type: MindRole
     roleType: TeamAntagonist
     antagPrototype: SpiderTerrorKing
+    subtype: role-subtype-spider-terror-king
 
 - type: entity
   parent: MindRoleSpiderTerror
@@ -34,3 +37,4 @@
   - type: MindRole
     roleType: TeamAntagonist
     antagPrototype: SpiderTerrorKingBlood
+    subtype: role-subtype-spider-terror-kingblood

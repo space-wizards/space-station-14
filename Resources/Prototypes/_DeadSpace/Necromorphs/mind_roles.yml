@@ -6,6 +6,7 @@
   - type: MindRole
     roleType: TeamAntagonist
     antagPrototype: Uni
+    subtype: role-subtype-uni
   - type: UnitologyRole
 
 - type: entity
@@ -16,6 +17,7 @@
   - type: MindRole
     roleType: TeamAntagonist
     antagPrototype: UniHead
+    subtype: role-subtype-unihead
 
 - type: entity
   parent: MindRoleUnitology
@@ -25,3 +27,4 @@
   - type: MindRole
     roleType: TeamAntagonist
     antagPrototype: UniEnslaved
+    subtype: role-subtype-unienslaved

@@ -62,12 +62,6 @@ uplink-incendiary-grenade-name = Зажигательная граната
 uplink-incendiary-grenade-desc = Выпускает серию зажигательных фрагментов, поджигающих всех, кто находится в зоне детонации.
 uplink-shrapnel-grenade-name = Осколочная граната
 uplink-shrapnel-grenade-desc = Выпускает серию острых осколков, наносящих огромный урон по незащищённым целям.
-uplink-magazine-bulldog-pellet-name = Барабанный магазин (.50 дробь)
-uplink-magazine-bulldog-pellet-desc = Магазин для дробовика, наполненный восемью дробовыми патронами. Совместим с Бульдогом.
-uplink-magazine-bulldog-slug-name = Барабанный магазин (.50 пуля)
-uplink-magazine-bulldog-slug-desc = Магазин для дробовика, наполненный восемью пулевыми патронами. Совместим с Бульдогом.
-uplink-estoc-ammo-name = Винтовочный магазин (6.5х39 мм TSF)
-uplink-estoc-ammo-desc = Винтовочный магазин на 25 патронов. Совместим с марксманской винтовкой Эсток.
 # Ammo
 uplink-pistol-magazine-name = Пистолетный магазин (9х19 мм)
 uplink-pistol-magazine-desc = Пистолетный магазин на 10 патронов. Совместим с "Гадюкой".
@@ -81,6 +75,12 @@ uplink-mosin-ammo-name = Коробка патронов (7.62х39 мм винт
 uplink-mosin-ammo-desc = Коробка с 60 патронами для резервной винтовки.
 uplink-sniper-ammo-name = Коробка патронов (.50 антиматериальные)
 uplink-sniper-ammo-desc = Коробка с 10 патронами для снайперской винтовки Христов.
+uplink-magazine-bulldog-pellet-name = Барабанный магазин (.50 дробь)
+uplink-magazine-bulldog-pellet-desc = Магазин для дробовика, наполненный восемью дробовыми патронами. Совместим с Бульдогом.
+uplink-magazine-bulldog-slug-name = Барабанный магазин (.50 пуля)
+uplink-magazine-bulldog-slug-desc = Магазин для дробовика, наполненный восемью пулевыми патронами. Совместим с Бульдогом.
+uplink-estoc-ammo-name = Винтовочный магазин (6.5х39 мм TSF)
+uplink-estoc-ammo-desc = Винтовочный магазин на 25 патронов. Совместим с марксманской винтовкой Эсток.
 # Utility
 uplink-holopara-kit-name = Набор "Голопаразит"
 uplink-holopara-kit-desc =
@@ -174,6 +174,8 @@ uplink-meds-bundle-name = Медицинский набор Interdyne
 uplink-meds-bundle-desc = Ассортимент автоинъекторов и медицинского оборудования премиум-класса на все случаи жизни. Содержит элитный компактный дефибриллятор, который можно использовать в качестве оружия.
 uplink-ammo-bundle-name = Набор боеприпасов
 uplink-ammo-bundle-desc = Перезаряжаю! Содержит 4 магазина для C-20r, 4 барабана для Бульдога и 2 короба патронов для L6 SAW.
+uplink-buldog-xl-ammo-bundle-name = Набор XL-магазинов для "Бульдога"
+uplink-buldog-xl-ammo-bundle-desc = Набор, содержащий 4-XL барабана по 16 патронов для дробовика "Бульдог". Имеет 2 барабана с дробью и 2 барабана с пулями
 uplink-sniper-bundle-name = Набор снайпера
 uplink-sniper-bundle-desc = Неприметный чемодан, в котором находятся снайперская винтовка Христов, 20 запасных патронов и удобная маскировка.
 # Bundles
