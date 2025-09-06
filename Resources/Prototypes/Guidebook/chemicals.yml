@@ -11,6 +11,7 @@
   - Foods
   - Botanical
   - Biological
+  - Sacred
   - Special
   - Others
   filterEnabled: True
@@ -55,6 +56,12 @@
   id: Biological
   name: guide-entry-biological
   text: "/ServerInfo/Guidebook/ChemicalTabs/Biological.xml"
+  filterEnabled: True
+
+- type: guideEntry
+  id: Sacred
+  name: guide-entry-sacred
+  text: "/ServerInfo/Guidebook/ChemicalTabs/Sacred.xml"
   filterEnabled: True
 
 - type: guideEntry
