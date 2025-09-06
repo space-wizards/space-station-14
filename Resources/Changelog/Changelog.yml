@@ -1,49 +1,4 @@
 ﻿Entries:
-- author: EmoGarbage404
-  changes:
-  - message: Added gibtonite! This secret ore becomes visible when struck and explodes
-      violently. It can be detected early using a mineral scanner.
-    type: Add
-  id: 8416
-  time: '2025-05-04T00:38:48.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/37160
-- author: EmoGarbage404
-  changes:
-  - message: You can no longer scrap coins and other salvaging treasures. They're
-      simply too valuable to junk.
-    type: Remove
-  id: 8417
-  time: '2025-05-04T02:39:19.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/37149
-- author: EmoGarbage404
-  changes:
-  - message: Mob corpses brought back from salvage pulls will no longer despawn with
-      the pull.
-    type: Fix
-  id: 8418
-  time: '2025-05-04T05:47:11.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/37169
-- author: perryprog
-  changes:
-  - message: Shelves built from the construction menu can now be placed in all orientations.
-    type: Fix
-  id: 8419
-  time: '2025-05-04T22:42:21.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/37186
-- author: brainfood1183
-  changes:
-  - message: A stack of Whoopie Cushions no longer launches you into oblivion!
-    type: Fix
-  id: 8420
-  time: '2025-05-04T23:01:27.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/36984
-- author: spanky-spanky
-  changes:
-  - message: On Fland, modified security to include genpop.
-    type: Add
-  id: 8421
-  time: '2025-05-06T01:29:18.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/37207
 - author: B-Kirill
   changes:
   - message: Added a search by profession and species in station records.
@@ -3944,3 +3899,47 @@
   id: 8927
   time: '2025-09-04T22:46:44.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/40063
+- author: ArtisticRoomba
+  changes:
+  - message: Fixed Atmospherics Delta-Pressure damage not capping damage beyond a
+      certain pressure for applicable structures.
+    type: Fix
+  id: 8928
+  time: '2025-09-05T07:09:54.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/40125
+- author: ArtisticRoomba
+  changes:
+  - message: Shutters of all types (regular, windowed, radiation) now take Delta-Pressure
+      damage. Blast doors still don't take Delta-Pressure damage.
+    type: Fix
+  id: 8929
+  time: '2025-09-05T07:47:31.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/40126
+- author: ScarKy0, FairlySadPanda, TiniestShark, MilonPL, beck-thompson
+  changes:
+  - message: The vulpkanin species can now be selected as a roundstart species.
+    type: Add
+  id: 8930
+  time: '2025-09-05T10:43:17.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37539
+- author: IProduceWidgets
+  changes:
+  - message: Pride pins can now chameleon to any other pride pin!
+    type: Tweak
+  id: 8931
+  time: '2025-09-05T15:55:54.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/36894
+- author: MidZik
+  changes:
+  - message: Midround wizard player count requirement increased from 10 to 30.
+    type: Tweak
+  id: 8932
+  time: '2025-09-05T16:23:06.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38424
+- author: IProduceWidgets
+  changes:
+  - message: You can drink out of the toilets.
+    type: Add
+  id: 8933
+  time: '2025-09-05T20:03:10.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/40133
