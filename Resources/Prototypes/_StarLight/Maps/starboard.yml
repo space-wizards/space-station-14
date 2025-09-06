@@ -32,7 +32,7 @@
             StationEngineer: [ 4, 6 ]
             TechnicalAssistant: [ 2, 4 ]
             #medical
-            #ChiefMedicalOfficer: [ 1, 1 ] #MISSING SPAWN, FIX!
+            ChiefMedicalOfficer: [ 1, 1 ]
             Chemist: [ 2, 2 ]
             MedicalDoctor: [ 4, 6 ]
             MedicalIntern: [ 2, 4 ]
