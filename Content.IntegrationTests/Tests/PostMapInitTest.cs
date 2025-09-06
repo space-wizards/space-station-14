@@ -193,6 +193,16 @@ namespace Content.IntegrationTests.Tests
                     filePath.Extension == "yml" && !filePath.Filename.StartsWith(".", StringComparison.Ordinal))
                 .ToArray();
 
+            //starlight shuttles
+            var starlightShuttleFolder = new ResPath("/Maps/_Starlight/Shuttles");
+            var starlightShuttles = resMan
+                .ContentFindFiles(starlightShuttleFolder)
+                .Where(filePath =>
+                    filePath.Extension == "yml" && !filePath.Filename.StartsWith(".", StringComparison.Ordinal))
+                .ToArray();
+            
+            shuttles = shuttles.Concat(starlightShuttles).ToArray();
+
             await server.WaitPost(() =>
             {
                 Assert.Multiple(() =>
