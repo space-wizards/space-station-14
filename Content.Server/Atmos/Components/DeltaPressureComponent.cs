@@ -1,4 +1,5 @@
 using Content.Server.Atmos.EntitySystems;
+using Content.Shared.Atmos;
 using Content.Shared.Damage;
 using Content.Shared.FixedPoint;
 
@@ -34,11 +35,13 @@ public sealed partial class DeltaPressureComponent : Component
     public bool IsTakingDamage;
 
     /// <summary>
-    /// The current cached position of this entity on the grid.
-    /// Updated via MoveEvent.
+    /// The current cached offset position(s) of the entity on the grid.
+    /// This is used to determine which tiles to check for pressure differences,
+    /// as checking this every operation is expensive.
+    /// Updated via MoveEvent in the system.
     /// </summary>
     [DataField(readOnly: true)]
-    public Vector2i CurrentPosition = Vector2i.Zero;
+    public Vector2i[] OffsetPositions = new Vector2i[Atmospherics.Directions];
 
     /// <summary>
     /// The grid this entity is currently joined to for processing.
