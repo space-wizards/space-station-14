@@ -5,7 +5,7 @@ namespace Content.Shared.Access.Systems;
 
 public sealed class AccessToggleSystem : EntitySystem
 {
-    [Dependency] private readonly SharedAccessSystem _access = default!;
+    [Dependency] private readonly AccessSystem _access = default!;
 
     public override void Initialize()
     {

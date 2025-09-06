@@ -4,7 +4,6 @@ using Content.Server.Station.Components;
 using Content.Server.Station.Systems;
 using Content.Shared.Access.Systems;
 using Content.Shared.Roles;
-using Content.Shared.StatusIcon;
 using Robust.Shared.Prototypes;
 
 namespace Content.Server.Access.Systems;
@@ -13,7 +12,7 @@ public sealed class PresetIdCardSystem : EntitySystem
 {
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly IdCardSystem _cardSystem = default!;
-    [Dependency] private readonly SharedAccessSystem _accessSystem = default!;
+    [Dependency] private readonly AccessSystem _accessSystem = default!;
     [Dependency] private readonly StationSystem _stationSystem = default!;
 
     public override void Initialize()
