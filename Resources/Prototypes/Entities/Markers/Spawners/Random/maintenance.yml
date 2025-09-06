@@ -119,7 +119,7 @@
       - id: MysteryFigureBox
       - id: RubberChicken
       - id: DogBowlBlue
-      - id: DogBownRed
+      - id: DogBowlRed
       # Cult
       - !type:AllSelector
         children:
