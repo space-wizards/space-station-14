@@ -1,3 +1,4 @@
+using System.Linq;
 using System.Numerics;
 using Content.Shared.CombatMode;
 using Content.Shared.Hands;
@@ -201,6 +202,25 @@ public abstract class SharedGrapplingGunSystem : EntitySystem
                 SetReeling(uid, grappling, false, null);
             }
         }
+    }
+
+    /// <summary>
+    /// Checks whether the entity is hooked to something via grappling gun.
+    /// </summary>
+    /// <param name="uid">Entity to check.</param>
+    /// <returns>True if hooked, false otherwise.</returns>
+    public bool IsEntityHooked(EntityUid uid)
+    {
+        if (!TryComp<JointRelayTargetComponent>(uid, out var joint))
+            return false;
+
+        foreach (var entityUid in joint.Relayed)
+        {
+            if (HasComp<GrapplingGunComponent>(entityUid))
+                return true;
+        }
+
+        return false;
     }
 
     private void OnGrappleCollide(EntityUid uid, GrapplingProjectileComponent component, ref ProjectileEmbedEvent args)
