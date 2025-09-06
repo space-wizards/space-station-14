@@ -51,6 +51,7 @@
     slots:
       item:
         name: clothing-boots-sidearm
+        priority: 3
         whitelist:
           tags:
           - Knife
