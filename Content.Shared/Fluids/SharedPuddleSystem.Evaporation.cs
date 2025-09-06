@@ -1,6 +1,8 @@
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.FixedPoint;
+using Robust.Shared.Prototypes;
+using System.Linq;
 
 namespace Content.Shared.Fluids;
 
@@ -26,6 +28,14 @@ public abstract partial class SharedPuddleSystem
                 absorbentReagents.Add(solProto.ID);
         }
         return absorbentReagents.ToArray();
+    }
+
+    public ProtoId<ReagentPrototype>[] GetAbsorbentReagentPrototypes(Solution solution)
+    {
+        return solution.GetReagentPrototypes(_prototypeManager).Keys
+            .Where(solProto => solProto.Absorbent)
+            .Select(solProto => new ProtoId<ReagentPrototype>(solProto.ID))
+            .ToArray();
     }
 
     public bool CanFullyEvaporate(Solution solution)
