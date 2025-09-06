@@ -13309,5 +13309,13 @@ Entries:
   id: 111401
   time: '2025-09-02T15:15:29.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/1114
+- author: walksanatora
+  changes:
+  - message: Xenoborgis can now properly do their 2nd in command duty (by unlocking
+      robotics consoles and other xenoborgs)
+    type: Fix
+  id: 156400
+  time: '2025-09-06T16:11:32.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1564
 Order: -1
 
