@@ -13261,5 +13261,15 @@ Entries:
   id: 155700
   time: '2025-09-05T18:15:01.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/1557
+- author: Conflee
+  changes:
+  - message: Expanded the Abductor's Shuttle. It is now an oval, with internal thrusters
+      and an engineering area so they can have a real atmos setup and access to their
+      generators, APC, SMES, Substation, Gyroscope, and Mini Gravity Generator. This
+      is to allow repairs and prevent station events from disabling the shuttle.
+    type: Tweak
+  id: 156600
+  time: '2025-09-06T15:48:39.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1566
 Order: -1
 
