@@ -836,9 +836,9 @@
 #    - proto: BulletLaserSpread Starlight
 #      fireCost: 65
     - proto: BulletLaserSpreadNarrow #Starlight
-      fireCost: 80
+      fireCost: 120
     - proto: BulletDisablerSmgSpread #Starlight
-      fireCost: 60
+      fireCost: 75
   - type: Item
     size: Large
     sprite: Objects/Weapons/Guns/Battery/inhands_64x.rsi

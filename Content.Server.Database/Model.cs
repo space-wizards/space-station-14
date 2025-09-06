@@ -13,7 +13,7 @@ using NpgsqlTypes;
 
 namespace Content.Server.Database
 {
-    public abstract class ServerDbContext : DbContext
+    public abstract partial class ServerDbContext : DbContext
     {
         protected ServerDbContext(DbContextOptions options) : base(options)
         {
@@ -24,7 +24,6 @@ namespace Content.Server.Database
         public DbSet<AssignedUserId> AssignedUserId { get; set; } = null!;
         public DbSet<Player> Player { get; set; } = default!;
         public DbSet<Admin> Admin { get; set; } = null!;
-        public DbSet<PlayerDataDTO> PlayerData { get; set; } = null!; // 🌟Starlight🌟
         public DbSet<AdminRank> AdminRank { get; set; } = null!;
         public DbSet<Round> Round { get; set; } = null!;
         public DbSet<Server> Server { get; set; } = null!;
@@ -416,14 +415,12 @@ namespace Content.Server.Database
         public List<JobPriorityEntry> JobPriorities { get; set; } = new();
     }
 
-    public class Profile
+    public partial class Profile
     {
         public int Id { get; set; }
         public int Slot { get; set; }
         [Column("char_name")] public string CharacterName { get; set; } = null!;
         public string FlavorText { get; set; } = null!;
-        public string Voice { get; set; } = null!;
-        public string SiliconVoice { get; set; } = null!; // 🌟Starlight🌟
         public int Age { get; set; }
         public string Sex { get; set; } = null!;
         public string Gender { get; set; } = null!;
@@ -431,25 +428,17 @@ namespace Content.Server.Database
         [Column(TypeName = "jsonb")] public JsonDocument? Markings { get; set; } = null!;
         public string HairName { get; set; } = null!;
         public string HairColor { get; set; } = null!;
-        public bool HairGlowing { get; set; } = false; //starlight
         public string FacialHairName { get; set; } = null!;
         public string FacialHairColor { get; set; } = null!;
-        public bool FacialHairGlowing { get; set; } = false; //starlight
         public string EyeColor { get; set; } = null!;
-        public bool EyeGlowing { get; set; } = false; //starlight
         public string SkinColor { get; set; } = null!;
         public int SpawnPriority { get; set; } = 0;
         public List<Job> Jobs { get; } = new();
         public List<Antag> Antags { get; } = new();
         public List<Trait> Traits { get; } = new();
-
         public List<ProfileRoleLoadout> Loadouts { get; } = new();
-
-        public bool Enabled { get; set; }
-
         public int PreferenceId { get; set; }
         public Preference Preference { get; set; } = null!;
-
         public StarLightModel.StarLightProfile? StarLightProfile { get; set; } // Starlight
     }
 
@@ -660,14 +649,6 @@ namespace Content.Server.Database
         public AdminRank? AdminRank { get; set; }
         public List<AdminFlag> Flags { get; set; } = default!;
     }
-    public class PlayerDataDTO // 🌟Starlight🌟
-    {
-        [Key] public Guid UserId { get; set; }
-        public string? Title { get; set; }
-        public string? GhostTheme { get; set; }
-        public int Balance { get; set; }
-    }
-
     public class AdminFlag
     {
         public int Id { get; set; }

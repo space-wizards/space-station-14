@@ -13,6 +13,20 @@
           targetComponent: TraitorRule
 
 - type: entity
+  id: RRMailSyndicateSpamLetter
+  name: Reasons to choose The Syndicate!
+  description: An advertisement for the Syndicate. Wont fit in a fax somehow.
+  parent: [ Paper, BaseSyndicateContraband ]
+  components:
+    - type: Paper
+      content: delivery-spam-reasons-to-join-syndicate
+    - type: AntagOnSign
+      chance: 1.00
+      antags:
+        - antag: Traitor
+          targetComponent: TraitorRule
+
+- type: entity
   id: MailSpamDontYouWantMore
   name: Don't You Want More?
   description: An inciting paper that smells faintly of welding fuel and desire. Wont fit in a fax somehow.

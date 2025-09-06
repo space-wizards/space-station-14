@@ -35,3 +35,9 @@
     belt: BoxFolderNanoTrasenClipboard
   inhand:
     - BriefcaseIAAFilled
+
+- type: chameleonOutfit
+  id: IAAChameleonOutfit
+  job: IAA
+  equipment:
+    eyes: ClothingEyesGlassesSunglasses

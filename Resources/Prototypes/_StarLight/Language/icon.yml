@@ -48,6 +48,30 @@
 
 - type: jobIcon
   parent: JobIcon
+  id: LanguageIconVox
+  icon:
+    sprite: /Textures/_Starlight/Interface/language_icon.rsi
+    state: vox
+  allowSelection: false
+
+- type: jobIcon
+  parent: JobIcon
+  id: LanguageIconVulp
+  icon:
+    sprite: /Textures/_Starlight/Interface/language_icon.rsi
+    state: vulp
+  allowSelection: false
+
+- type: jobIcon
+  parent: JobIcon
+  id: LanguageIconShadekin
+  icon:
+    sprite: /Textures/_Starlight/Interface/language_icon.rsi
+    state: shadekin
+  allowSelection: false
+
+- type: jobIcon
+  parent: JobIcon
   id: LanguageIconFish
   icon:
     sprite: /Textures/_Starlight/Interface/language_icon.rsi

@@ -299,6 +299,3 @@
                 SheetSteel:
                   min: 2
                   max: 10
-    - type: Construction
-      graph: MakeshiftShield
-      node: makeshiftShield

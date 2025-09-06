@@ -166,9 +166,19 @@ public sealed partial class ConnectionManager
     }
 
     // NullLink Whitelist start
-    private async Task<bool> CheckNullLinkRolesCondition(NullLinkRolesCondition condition, NetUserId userId) 
-        => _actors.TryGetServerGrain(out var server) 
-            && await server.HasPlayerAnyRole(userId, [.. condition.Roles]);
+    private async Task<bool> CheckNullLinkRolesCondition(NullLinkRolesCondition condition, NetUserId userId)
+    {
+        try
+        {
+            return _actors.TryGetServerGrain(out var server)
+                && await server.HasPlayerAnyRole(userId, [.. condition.Roles]);
+        }
+        catch (Exception)
+        {
+        }
+        return false;
+    }
+
     // NullLink Whitelist end
 
     private bool CheckConditionNotesPlaytimeRange(

@@ -36,12 +36,16 @@ namespace Content.IntegrationTests.Tests
         private static readonly string[] NoSpawnMaps =
         {
             "CentComm",
+            "StarlightCentCommG24", //starlight
+            "StarlightCentCommSC17", //starlight
             "Dart"
         };
 
         private static readonly string[] Grids =
         {
             "/Maps/centcomm.yml",
+            //"/Maps/_Starlight/Centcomms/CC_Outpost_G24",
+            //"/Maps/_Starlight/Centcomms/CC_Outpost_SC17",
             AdminTestArenaSystem.ArenaMapPath
         };
 
@@ -54,6 +58,25 @@ namespace Content.IntegrationTests.Tests
             "/Maps/Shuttles/ShuttleEvent/honki.yml", // Contains golden honker, clown's rubber stamp
             "/Maps/Shuttles/ShuttleEvent/instigator.yml", // Contains EXP-320g "Friendship"
             "/Maps/Shuttles/ShuttleEvent/syndie_evacpod.yml", // Contains syndicate rubber stamp
+            #region starlight
+            "/Maps/nanoStation.yml",
+            "/Maps/_Starlight/nukieplanet.yml", //starlight nukie spawn map
+            "/Maps/_Starlight/Centcomms/CC_Outpost_G24.yml", //starlight centcomm map
+            "/Maps/_Starlight/Centcomms/CC_Outpost_SC17.yml", //starlight centcomm map
+            "/Maps/_Starlight/Dungeon/syndie.yml",
+            "/Maps/_Starlight/Shuttles/Radiotower.yml",
+            "/Maps/_Starlight/Shuttles/scarletSHCdefenderFinal.yml",
+            "/Maps/_Starlight/Shuttles/Signaleer.yml",
+            //TODO: Review these, either remove the do not map from the offending entities or remove the entities from the map
+            "/Maps/_Starlight/Stations/Bagel.yml",
+            "/Maps/_Starlight/Stations/Barratry.yml",
+            "/Maps/_Starlight/Stations/Cork.yml",
+            "/Maps/_Starlight/Stations/Lagan.yml",
+            "/Maps/_Starlight/Stations/Lobster.yml",
+            "/Maps/_Starlight/Stations/Orwell.yml",
+            "/Maps/_Starlight/Stations/Remix.yml",
+            "/Maps/_Starlight/Stations/Starboard.yml"
+            #endregion
         };
 
         private static readonly string[] GameMaps =
@@ -76,6 +99,42 @@ namespace Content.IntegrationTests.Tests
             "Relic",
             "dm01-entryway",
             "Exo",
+            "dm01-entryway",
+            "Barratry",
+            "Cork",
+            "Kiloton",
+            "Lagan",
+            "Lobster",
+            "Manor",
+            #region Starlight
+            "Gateway",
+            "Leth",
+            "Origin",
+            "Orwell",
+            "Prism",
+            "Remix",
+            "Starboard",
+            "StarlightAmber",
+            "StarlightBagel",
+            "StarlightBox",
+            "StarlightCentCommG24",
+            "StarlightCentCommSC17",
+            "StarlightCog",
+            "StarlightCore",
+            "StarlightCrescent",
+            "StarlightElkridge",
+            "StarlightExo",
+            "StarlightFland",
+            "StarlightHotel",
+            "StarlightMarathon",
+            "StarlightMeta",
+            "StarlightOasis",
+            "StarlightOmega",
+            "StarlightPacked",
+            "StarlightReach",
+            "StarlightSaltern",
+            "StarlightSilica"
+            #endregion
         };
 
         private static readonly ProtoId<EntityCategoryPrototype> DoNotMapCategory = "DoNotMap";
@@ -138,6 +197,16 @@ namespace Content.IntegrationTests.Tests
                     filePath.Extension == "yml" && !filePath.Filename.StartsWith(".", StringComparison.Ordinal))
                 .ToArray();
 
+            //starlight shuttles
+            var starlightShuttleFolder = new ResPath("/Maps/_Starlight/Shuttles");
+            var starlightShuttles = resMan
+                .ContentFindFiles(starlightShuttleFolder)
+                .Where(filePath =>
+                    filePath.Extension == "yml" && !filePath.Filename.StartsWith(".", StringComparison.Ordinal))
+                .ToArray();
+            
+            shuttles = shuttles.Concat(starlightShuttles).ToArray();
+
             await server.WaitPost(() =>
             {
                 Assert.Multiple(() =>
@@ -181,43 +250,46 @@ namespace Content.IntegrationTests.Tests
                 .ToArray();
 
             var v7Maps = new List<ResPath>();
-            foreach (var map in maps)
+            Assert.Multiple(() =>
             {
-                var rootedPath = map.ToRootedPath();
-
-                // ReSharper disable once RedundantLogicalConditionalExpressionOperand
-                if (SkipTestMaps && rootedPath.ToString().StartsWith(TestMapsPath, StringComparison.Ordinal))
+                foreach (var map in maps)
                 {
-                    continue;
+                    var rootedPath = map.ToRootedPath();
+
+                    // ReSharper disable once RedundantLogicalConditionalExpressionOperand
+                    if (SkipTestMaps && rootedPath.ToString().StartsWith(TestMapsPath, StringComparison.Ordinal))
+                    {
+                        continue;
+                    }
+
+                    if (!resourceManager.TryContentFileRead(rootedPath, out var fileStream))
+                    {
+                        Assert.Fail($"Map not found: {rootedPath}");
+                    }
+
+                    using var reader = new StreamReader(fileStream);
+                    var yamlStream = new YamlStream();
+
+                    yamlStream.Load(reader);
+
+                    var root = yamlStream.Documents[0].RootNode;
+                    var meta = root["meta"];
+                    var version = meta["format"].AsInt();
+
+                    // TODO MAP TESTS
+                    // Move this to some separate test?
+                    CheckDoNotMap(map, root, protoManager);
+
+                    if (version >= 7)
+                    {
+                        v7Maps.Add(map);
+                        continue;
+                    }
+
+                    var postMapInit = meta["postmapinit"].AsBool();
+                    Assert.That(postMapInit, Is.False, $"Map {map.Filename} was saved postmapinit");
                 }
-
-                if (!resourceManager.TryContentFileRead(rootedPath, out var fileStream))
-                {
-                    Assert.Fail($"Map not found: {rootedPath}");
-                }
-
-                using var reader = new StreamReader(fileStream);
-                var yamlStream = new YamlStream();
-
-                yamlStream.Load(reader);
-
-                var root = yamlStream.Documents[0].RootNode;
-                var meta = root["meta"];
-                var version = meta["format"].AsInt();
-
-                // TODO MAP TESTS
-                // Move this to some separate test?
-                CheckDoNotMap(map, root, protoManager);
-
-                if (version >= 7)
-                {
-                    v7Maps.Add(map);
-                    continue;
-                }
-
-                var postMapInit = meta["postmapinit"].AsBool();
-                Assert.That(postMapInit, Is.False, $"Map {map.Filename} was saved postmapinit");
-            }
+            });
 
             var deps = server.ResolveDependency<IEntitySystemManager>().DependencyCollection;
             var ev = new BeforeEntityReadEvent();
@@ -331,16 +403,22 @@ namespace Content.IntegrationTests.Tests
 
             await server.WaitPost(() =>
             {
+                //setup new stopwatch
+                var sw = new Robust.Shared.Timing.Stopwatch();
+                sw.Start();
                 MapId mapId;
                 try
                 {
-                    var opts = DeserializationOptions.Default with {InitializeMaps = true};
+                    var opts = DeserializationOptions.Default with { InitializeMaps = true };
                     ticker.LoadGameMap(protoManager.Index<GameMapPrototype>(mapProto), out mapId, opts);
                 }
                 catch (Exception ex)
                 {
                     throw new Exception($"Failed to load map {mapProto}", ex);
                 }
+
+                //output
+                TestContext.Out.WriteLine($"{sw.Elapsed.TotalMilliseconds} ms: Loaded map {mapProto}");
 
                 mapSystem.CreateMap(out var shuttleMap);
                 var largest = 0f;
@@ -366,6 +444,8 @@ namespace Content.IntegrationTests.Tests
                     }
                 }
 
+                TestContext.Out.WriteLine($"{sw.Elapsed.TotalMilliseconds} ms: Found {grids.Count} grids on {mapProto}, target is {targetGrid}");
+
                 // Test shuttle can dock.
                 // This is done inside gamemap test because loading the map takes ages and we already have it.
                 var station = entManager.GetComponent<StationMemberComponent>(targetGrid!.Value).Station;
@@ -382,7 +462,10 @@ namespace Content.IntegrationTests.Tests
                         $"Unable to dock {shuttlePath} to {mapProto}");
                 }
 
+                TestContext.Out.WriteLine($"{sw.Elapsed.TotalMilliseconds} ms: Shuttle docked on {mapProto}");
+
                 mapSystem.DeleteMap(shuttleMap);
+                TestContext.Out.WriteLine($"{sw.Elapsed.TotalMilliseconds} ms: Deleted shuttle map on {mapProto}");
 
                 if (entManager.HasComponent<StationJobsComponent>(station))
                 {
@@ -417,6 +500,8 @@ namespace Content.IntegrationTests.Tests
                     Assert.That(jobs, Is.Empty, $"There is no spawnpoints for {string.Join(", ", jobs)} on {mapProto}.");
                 }
 
+                TestContext.Out.WriteLine($"{sw.Elapsed.TotalMilliseconds} ms: Validated spawns on {mapProto}");
+
                 try
                 {
                     mapSystem.DeleteMap(mapId);
@@ -425,6 +510,8 @@ namespace Content.IntegrationTests.Tests
                 {
                     throw new Exception($"Failed to delete map {mapProto}", ex);
                 }
+
+                TestContext.Out.WriteLine($"{sw.Elapsed.TotalMilliseconds} ms: Deleted map {mapProto}");
             });
             await server.WaitRunTicks(1);
 
@@ -441,7 +528,7 @@ namespace Content.IntegrationTests.Tests
 #nullable enable
             while (queryPoint.MoveNext(out T? comp, out var xform))
             {
-                var spawner = (ISpawnPoint) comp;
+                var spawner = (ISpawnPoint)comp;
 
                 if (spawner.SpawnType is not SpawnPointType.LateJoin
                 || xform.GridUid == null
