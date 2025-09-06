@@ -477,6 +477,7 @@ namespace Content.Shared.Preferences
         {
             var configManager = collection.Resolve<IConfigurationManager>();
             var prototypeManager = collection.Resolve<IPrototypeManager>();
+            var jobRequirementsManager = collection.Resolve<ISharedJobRequirementsManager>();
 
             if (!prototypeManager.TryIndex(Species, out var speciesPrototype) || speciesPrototype.RoundStart == false)
             {
@@ -607,9 +608,12 @@ namespace Content.Shared.Preferences
 
             _jobPriorities.Clear();
 
-            foreach (var (job, priority) in priorities)
+            foreach (var (jobId, priority) in priorities)
             {
-                _jobPriorities.Add(job, priority);
+                if (jobRequirementsManager.IsAllowed(session, jobId, this, out _))
+                {
+                    _jobPriorities.Add(jobId, priority);
+                }
             }
 
             PreferenceUnavailable = prefsUnavailableMode;

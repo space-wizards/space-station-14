@@ -6,6 +6,7 @@ using Content.Client.Lobby.UI.Loadouts;
 using Content.Client.Lobby.UI.Roles;
 using Content.Client.Message;
 using Content.Client.Players.PlayTimeTracking;
+using Content.Client.Roles;
 using Content.Client.Sprite;
 using Content.Client.Stylesheets;
 using Content.Client.UserInterface.Systems.Guidebook;
@@ -48,7 +49,7 @@ namespace Content.Client.Lobby.UI
         private readonly IPrototypeManager _prototypeManager;
         private readonly IResourceManager _resManager;
         private readonly MarkingManager _markingManager;
-        private readonly JobRequirementsManager _requirements;
+        private readonly JobRequirementsManager _jobRequirements;
         private readonly LobbyUIController _controller;
 
         private readonly SpriteSystem _sprite;
@@ -118,7 +119,7 @@ namespace Content.Client.Lobby.UI
             IPlayerManager playerManager,
             IPrototypeManager prototypeManager,
             IResourceManager resManager,
-            JobRequirementsManager requirements,
+            JobRequirementsManager jobRequirements,
             MarkingManager markings)
         {
             RobustXamlLoader.Load(this);
@@ -131,7 +132,7 @@ namespace Content.Client.Lobby.UI
             _markingManager = markings;
             _preferencesManager = preferencesManager;
             _resManager = resManager;
-            _requirements = requirements;
+            _jobRequirements = jobRequirements;
             _controller = UserInterfaceManager.GetUIController<LobbyUIController>();
             _sprite = _entManager.System<SpriteSystem>();
 
@@ -661,7 +662,7 @@ namespace Content.Client.Lobby.UI
                 selector.Select(Profile?.AntagPreferences.Contains(antag.ID) == true ? 0 : 1);
 
                 var requirements = _entManager.System<SharedRoleSystem>().GetAntagRequirement(antag);
-                if (!_requirements.CheckRoleRequirements(requirements, (HumanoidCharacterProfile?)_preferencesManager.Preferences?.SelectedCharacter, out var reason))
+                if (!_jobRequirements.CheckRoleRequirements(requirements, (HumanoidCharacterProfile?)_preferencesManager.Preferences?.SelectedCharacter, out var reason))
                 {
                     selector.LockRequirements(reason);
                     Profile = Profile?.WithAntagPreference(antag.ID, false);
@@ -921,7 +922,7 @@ namespace Content.Client.Lobby.UI
                     icon.Texture = _sprite.Frame0(jobIcon.Icon);
                     selector.Setup(items, job.LocalizedName, 200, job.LocalizedDescription, icon, job.Guides);
 
-                    if (!_requirements.IsAllowed(job, (HumanoidCharacterProfile?)_preferencesManager.Preferences?.SelectedCharacter, out var reason))
+                    if (_playerManager.LocalSession is not null && !_jobRequirements.IsAllowed(_playerManager.LocalSession, job, (HumanoidCharacterProfile?)_preferencesManager.Preferences?.SelectedCharacter, out var reason))
                     {
                         selector.LockRequirements(reason);
                     }
