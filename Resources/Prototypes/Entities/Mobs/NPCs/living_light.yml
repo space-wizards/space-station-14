@@ -66,12 +66,13 @@
     damageContainer: Inorganic
     damageModifierSet: LivingLight
   - type: PassiveDamage
-    allowedStates:
-    - Alive
-    damageCap: 20
-    damage:
-      types:
-        Heat: -0.2
+    passiveDamageList:
+    - allowedStates:
+      - Alive
+      damageCap: 20
+      damage:
+        types:
+          Heat: -0.2
   - type: NoSlip
   - type: Pullable
   - type: ZombieImmune
