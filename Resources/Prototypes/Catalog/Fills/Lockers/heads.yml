@@ -341,6 +341,7 @@
     - id: SecurityTechFabCircuitboard
     - id: CargoRequestSecurityComputerCircuitboard
     - id: WeaponDisabler
+    - id: WeaponTaser
     - id: WantedListCartridge
     - id: DrinkHosFlask
 
