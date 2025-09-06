@@ -19,13 +19,13 @@ namespace Content.Shared.IdentityManagement;
 /// </summary>
 public abstract class IdentitySystem : EntitySystem
 {
-    [Dependency] private readonly SharedIdCardSystem _idCard = default!;
+    [Dependency] private readonly GrammarSystem _grammarSystem = default!;
     [Dependency] private readonly ISharedAdminLogManager _adminLog = default!;
     [Dependency] private readonly MetaDataSystem _metaData = default!;
     [Dependency] private readonly SharedContainerSystem _container = default!;
-    [Dependency] private readonly SharedHumanoidAppearanceSystem _humanoid = default!;
-    [Dependency] private readonly GrammarSystem _grammarSystem = default!;
     [Dependency] private readonly SharedCriminalRecordsConsoleSystem _criminalRecordsConsole = default!;
+    [Dependency] private readonly SharedHumanoidAppearanceSystem _humanoid = default!;
+    [Dependency] private readonly SharedIdCardSystem _idCard = default!;
 
     // The name of the container holding the identity entity
     private const string SlotName = "identity";
@@ -70,7 +70,7 @@ public abstract class IdentitySystem : EntitySystem
         _queuedIdentityUpdates.Clear();
     }
 
-    #region Event handlers
+    #region Event Handlers
 
     // Creates an identity entity, and store it in the identity container
     private void OnMapInit(Entity<IdentityComponent> ent, ref MapInitEvent args)
@@ -193,9 +193,9 @@ public abstract class IdentitySystem : EntitySystem
     /// </summary>
     private IdentityRepresentation GetIdentityRepresentation(Entity<InventoryComponent?, HumanoidAppearanceComponent?> target)
     {
-        int age = 18;
-        Gender gender = Gender.Epicene;
-        string species = SharedHumanoidAppearanceSystem.DefaultSpecies;
+        var age = 18;
+        var gender = Gender.Epicene;
+        var species = SharedHumanoidAppearanceSystem.DefaultSpecies;
 
         // Always use their actual age and gender, since that can't really be changed by an ID.
         if (Resolve(target, ref target.Comp2, false))

@@ -16,6 +16,7 @@ public sealed partial class IdentityBlockerComponent : Component
     public IdentityBlockerCoverage Coverage = IdentityBlockerCoverage.FULL;
 }
 
+[Flags]
 public enum IdentityBlockerCoverage
 {
     NONE  = 0,
