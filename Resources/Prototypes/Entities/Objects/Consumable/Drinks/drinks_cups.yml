@@ -29,7 +29,10 @@
     interfaces:
       enum.TransferAmountUiKey.Key:
         type: TransferAmountBoundUserInterface
-  - type: Drink
+  - type: Edible
+    edible: Drink
+    solution: drink
+    destroyOnEmpty: false
   - type: Sprite
     state: icon
   - type: Spillable
@@ -347,7 +350,6 @@
   name: water cup
   description: A paper water cup.
   components:
-  - type: Drink
   - type: Sprite
     sprite: Objects/Consumable/Drinks/water_cup.rsi
     layers:

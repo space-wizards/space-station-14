@@ -82,6 +82,8 @@
       Glass: 25
   - type: FitsInDispenser
     solution: drink
+  - type: Edible
+    utensil: Spoon # straws when
   - type: Tag
     tags:
       - DrinkGlass
@@ -2218,7 +2220,6 @@
   id: DrinkTomatoJuice
   suffix: tomato juice
   components:
-  - type: Drink
   - type: SolutionContainerManager
     solutions:
       drink:
@@ -2368,7 +2369,6 @@
         reagents:
         - ReagentId: Water
           Quantity: 30
-  - type: Drink
   - type: Sprite
     sprite: Objects/Consumable/Drinks/water.rsi
 
@@ -2681,7 +2681,6 @@
   name: blue milkshake
   description: ''
   components:
-  - type: Drink
   - type: Sprite
     sprite: Objects/Consumable/Drinks/shake-blue.rsi
 
@@ -2691,7 +2690,6 @@
   name: shakeempty
   description: ''
   components:
-  - type: Drink
   - type: Sprite
     sprite: Objects/Consumable/Drinks/shake-empty.rsi
 
@@ -2701,7 +2699,6 @@
   name: meat shake
   description: ''
   components:
-  - type: Drink
   - type: Sprite
     sprite: Objects/Consumable/Drinks/shake-meat.rsi
 
@@ -2711,7 +2708,6 @@
   name: robo shake
   description: ''
   components:
-  - type: Drink
   - type: Sprite
     sprite: Objects/Consumable/Drinks/shake-robo.rsi
 
@@ -2721,7 +2717,6 @@
   name: white shake
   description: ''
   components:
-  - type: Drink
   - type: Sprite
     sprite: Objects/Consumable/Drinks/shake-white.rsi
 

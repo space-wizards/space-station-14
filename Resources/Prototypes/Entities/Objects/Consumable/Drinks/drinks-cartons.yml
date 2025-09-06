@@ -131,7 +131,6 @@
         reagents:
         - ReagentId: CoconutWater
           Quantity: 50
-  - type: Drink
   - type: Label
     currentLabel: reagent-name-coconut-water
   - type: Sprite

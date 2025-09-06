@@ -802,7 +802,6 @@
         reagents:
         - ReagentId: JuiceLime
           Quantity: 150
-  - type: Drink
   - type: Label
     currentLabel: reagent-name-juice-lime
   - type: Sprite
@@ -821,7 +820,6 @@
         reagents:
         - ReagentId: JuiceOrange
           Quantity: 150
-  - type: Drink
   - type: Label
     currentLabel: reagent-name-juice-orange
   - type: Sprite
@@ -840,7 +838,6 @@
         reagents:
         - ReagentId: Cream
           Quantity: 150
-  - type: Drink
   - type: Label
     currentLabel: reagent-name-cream
   - type: Sprite
@@ -862,7 +859,6 @@
         reagents:
         - ReagentId: Sugar
           Quantity: 300
-  - type: Drink
   - type: Label
     currentLabel: reagent-name-sugar
 
@@ -879,7 +875,6 @@
         reagents:
         - ReagentId: LemonLime
           Quantity: 300
-  - type: Drink
   - type: Label
     currentLabel: reagent-name-lemon-lime
 
@@ -896,7 +891,6 @@
         reagents:
         - ReagentId: Mead
           Quantity: 150
-  - type: Drink
   - type: Label
     currentLabel: reagent-name-mead
 
@@ -913,7 +907,6 @@
         reagents:
         - ReagentId: Ice
           Quantity: 300
-  - type: Drink
   - type: Label
     currentLabel: reagent-name-ice
 
@@ -930,7 +923,6 @@
         reagents:
         - ReagentId: CoconutWater
           Quantity: 300
-  - type: Drink
   - type: Label
     currentLabel: reagent-name-coconut-water
 
@@ -947,7 +939,6 @@
         reagents:
         - ReagentId: Coffee
           Quantity: 300
-  - type: Drink
   - type: Label
     currentLabel: reagent-name-coffee
 
@@ -964,7 +955,6 @@
         reagents:
         - ReagentId: Tea
           Quantity: 300
-  - type: Drink
   - type: Label
     currentLabel: reagent-name-tea
 
@@ -981,7 +971,6 @@
         reagents:
         - ReagentId: GreenTea
           Quantity: 300
-  - type: Drink
   - type: Label
     currentLabel: reagent-name-green-tea
 
@@ -998,7 +987,6 @@
         reagents:
         - ReagentId: IcedTea
           Quantity: 300
-  - type: Drink
   - type: Label
     currentLabel: reagent-name-iced-tea
 
@@ -1015,7 +1003,6 @@
         reagents:
         - ReagentId: DrGibb
           Quantity: 300
-  - type: Drink
   - type: Label
     currentLabel: reagent-name-dr-gibb
 
@@ -1032,7 +1019,6 @@
         reagents:
         - ReagentId: RootBeer
           Quantity: 300
-  - type: Drink
   - type: Label
     currentLabel: reagent-name-root-beer
 
@@ -1049,7 +1035,6 @@
         reagents:
         - ReagentId: JuiceWatermelon
           Quantity: 300
-  - type: Drink
   - type: Label
     currentLabel: reagent-name-juice-watermelon
 
@@ -1066,7 +1051,6 @@
         reagents:
         - ReagentId: EnergyDrink
           Quantity: 100
-  - type: Drink
   - type: Label
     currentLabel: reagent-name-energy-drink
 
@@ -1080,4 +1064,3 @@
     solutions:
       drink:
         maxVol: 150
-  - type: Drink

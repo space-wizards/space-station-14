@@ -18,7 +18,11 @@
   - type: SolutionTransfer
     canChangeTransferAmount: true
     maxTransferAmount: 5
-  - type: Drink
+  - type: Edible
+    edible: Drink
+    solution: drink
+    destroyOnEmpty: false
+    # utensil: Spoon # straws one day.
   - type: MeleeWeapon
     soundNoDamage:
       path: "/Audio/Effects/Fluids/splat.ogg"
@@ -110,7 +114,11 @@
   - type: SolutionTransfer
     canChangeTransferAmount: true
     maxTransferAmount: 5
-  - type: Drink
+  - type: Edible
+    edible: Drink
+    solution: drink
+    destroyOnEmpty: false
+    # utensil: Spoon # straws one day.
   - type: Spillable
     solution: drink
   - type: FitsInDispenser

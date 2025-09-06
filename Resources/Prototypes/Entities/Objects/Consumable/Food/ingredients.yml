@@ -25,10 +25,11 @@
     solution: food
   - type: DrainableSolution
     solution: food
-  - type: Drink
+  - type: Edible
+    edible: Food
     solution: food
-    useSound:
-      collection: eating
+    destroyOnEmpty: false
+    utensil: Spoon # I think this prototype is for powder bags. This does mean the behavior changes based on the container which is real dumb, but fuck it.
   - type: Damageable
     damageContainer: Inorganic
   - type: Spillable
