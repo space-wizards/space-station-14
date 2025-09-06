@@ -1,12 +1,15 @@
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
 namespace Content.Shared.Movement.Components;
 
-[RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState(fieldDeltas: true)]
 public sealed partial class JetpackComponent : Component
 {
+    /// <summary>Whether the jetpack is turned on, but not whether it's actually flying!</summary>
+    [DataField, AutoNetworkedField]
+    public bool Enabled = false;
+
     [DataField, AutoNetworkedField]
     public EntityUid? JetpackUser;
 
