@@ -7,8 +7,8 @@
   defaultSkinTone: "#cdb369"
   markingLimits: MobDionaMarkingLimits
   dollPrototype: MobDionaDummy
-  coloringRules:
-  - !type:Hues
+  #coloringRules:
+  #- !type:Hues
   maleFirstNames: NamesDionaFirst
   femaleFirstNames: NamesDionaFirst
   lastNames: NamesDionaLast

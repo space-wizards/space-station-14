@@ -150,7 +150,7 @@ public sealed partial class HumanoidCharacterAppearance : ICharacterAppearance, 
         var newSkinColor = new Color(random.NextFloat(1), random.NextFloat(1), random.NextFloat(1));
         foreach (var rule in speciesPrototype.ColoringRules)
         {
-            newSkinColor = rule.Randomize(random);
+            newSkinColor = rule.Clamp(newSkinColor);
         }
 
         return new HumanoidCharacterAppearance(newHairStyle, newHairColor, newFacialHairStyle, newHairColor, newEyeColor, newSkinColor, new ());

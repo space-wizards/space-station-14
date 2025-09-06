@@ -6,5 +6,5 @@
   sprites: MobHumanSprites
   markingLimits: MobHumanMarkingLimits
   dollPrototype: MobDwarfDummy
-  coloringRules:
-  - !type:HumanToned
+  #coloringRules:
+  #- !type:HumanToned

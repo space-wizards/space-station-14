@@ -6,8 +6,8 @@
   sprites: MobVoxSprites
   markingLimits: MobVoxMarkingLimits
   dollPrototype: MobVoxDummy
-  coloringRules:
-  - !type:VoxFeathers
+  #coloringRules:
+  #- !type:VoxFeathers
   defaultSkinTone: "#6c741d"
   maleFirstNames: NamesVox
   femaleFirstNames: NamesVox

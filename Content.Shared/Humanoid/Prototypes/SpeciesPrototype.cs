@@ -81,7 +81,7 @@ public sealed partial class SpeciesPrototype : IPrototype
     /// <summary>
     /// a set of rules that the selected skin color goes through, transforming into a color available for selection
     /// </summary>
-    [DataField(required: true)]
+    [DataField/*(required: true)*/]
     public List<ColoringSchemeRule> ColoringRules = [];
 
     [DataField]
