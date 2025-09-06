@@ -394,6 +394,23 @@ public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelection
         if (!antagEnt.HasValue)
         {
             var getEntEv = new AntagSelectEntityEvent(session, ent);
+
+            AntagSelectionDefinition? antagSelectDef = null;
+            if (session != null)
+            {
+                foreach (var pair in ent.Comp.PreSelectedSessions)
+                {
+                    if (pair.Value.Contains(session))
+                        antagSelectDef = pair.Key;
+                }
+            }
+
+            if (antagSelectDef != null)
+            {
+                if (antagSelectDef.Value.EntityPrototype != null)
+                    getEntEv.Entity = Spawn(antagSelectDef.Value.EntityPrototype);
+            }
+
             RaiseLocalEvent(ent, ref getEntEv, true);
             antagEnt = getEntEv.Entity;
         }
@@ -416,7 +433,7 @@ public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelection
         // Therefore any component subscribing to this has to make sure both subscriptions return the same value
         // or the ghost role raffle location preview will be wrong.
 
-        var getPosEv = new AntagSelectLocationEvent(session, ent);
+        var getPosEv = new AntagSelectLocationEvent(session, ent, antagEnt);
         RaiseLocalEvent(ent, ref getPosEv, true);
         if (getPosEv.Handled)
         {
@@ -616,11 +633,13 @@ public record struct AntagSelectEntityEvent(ICommonSession? Session, Entity<Anta
 /// Event raised on a game rule entity to determine the location for the antagonist.
 /// </summary>
 [ByRefEvent]
-public record struct AntagSelectLocationEvent(ICommonSession? Session, Entity<AntagSelectionComponent> GameRule)
+public record struct AntagSelectLocationEvent(ICommonSession? Session, Entity<AntagSelectionComponent> GameRule, EntityUid? Entity = null)
 {
     public readonly ICommonSession? Session = Session;
 
     public bool Handled => Coordinates.Any();
+
+    public EntityUid? Entity = Entity;
 
     public List<MapCoordinates> Coordinates = new();
 }

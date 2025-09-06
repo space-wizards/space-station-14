@@ -1,0 +1,33 @@
+- type: entity
+  id: SpawnPointXenoborg
+  parent: MarkerBase
+  name: mothership core
+  components:
+  - type: SpawnPoint
+    spawnWhitelist:
+      components:
+      - Xenoborg
+      tags:
+      - Xenoborg
+  - type: Sprite
+    layers:
+    - state: green
+    - sprite: Mobs/Silicon/chassis.rsi
+      state: xenoborg_engi
+
+- type: entity
+  id: SpawnPointMothershipCore
+  parent: MarkerBase
+  name: xenoborgs
+  components:
+  - type: SpawnPoint
+    spawnWhitelist:
+      components:
+      - MothershipCore
+      tags:
+      - MothershipCore
+  - type: Sprite
+    layers:
+    - state: green
+    - sprite: Mobs/Silicon/mothership_core.rsi
+      state: core-idle
