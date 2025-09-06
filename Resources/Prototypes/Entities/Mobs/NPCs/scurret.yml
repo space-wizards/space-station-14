@@ -46,6 +46,8 @@
     spawned:
     - id: FoodMeat
       amount: 4
+    - id: MaterialPeltScurret
+      amount: 1 # This is extremely valuable fur, and a reason scurrets should fear spess.
   # They wawa!
   - type: Vocal
     sounds:
