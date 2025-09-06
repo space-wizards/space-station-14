@@ -14,7 +14,7 @@
   id: PlushieJeleshkaSpeech
   values:
     prefix: plushies-jeleshka-
-    count: 7
+    count: 8
 
 - type: localizedDataset
   id: PlushieAhahaahahahaSpeech
