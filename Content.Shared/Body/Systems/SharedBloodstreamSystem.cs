@@ -399,6 +399,10 @@ public abstract class SharedBloodstreamSystem : EntitySystem
             || !SolutionContainer.ResolveSolution(ent.Owner, ent.Comp.BloodSolutionName, ref ent.Comp.BloodSolution, out var bloodSolution))
             return false;
 
+        // TODO: Remove this constraint to allow hypervolemia
+        var constraint = FixedPoint2.Max(0, ent.Comp.BloodReferenceVolume - bloodSolution.Volume);
+        amount = FixedPoint2.Min(amount, constraint);
+
         if (amount >= 0)
             return SolutionContainer.TryAddReagent(ent.Comp.BloodSolution.Value, ent.Comp.BloodReagent, amount, null, GetEntityBloodData(ent));
 
