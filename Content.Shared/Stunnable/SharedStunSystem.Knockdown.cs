@@ -52,6 +52,7 @@ public abstract partial class SharedStunSystem
         // Action blockers
         SubscribeLocalEvent<KnockedDownComponent, BuckleAttemptEvent>(OnBuckleAttempt);
         SubscribeLocalEvent<KnockedDownComponent, StandAttemptEvent>(OnStandAttempt);
+        SubscribeLocalEvent<KnockedDownComponent, BuckledEvent>(OnBuckle);
 
         // Updating movement a friction
         SubscribeLocalEvent<KnockedDownComponent, RefreshMovementSpeedModifiersEvent>(OnRefreshKnockedSpeed);
@@ -115,6 +116,7 @@ public abstract partial class SharedStunSystem
         // This is jank but if we don't do this it'll still use the knockedDownComponent modifiers for friction because it hasn't been deleted quite yet.
         entity.Comp.FrictionModifier = 1f;
         entity.Comp.SpeedModifier = 1f;
+        _movementSpeedModifier.RefreshMovementSpeedModifiers(entity);
 
         _standingState.Stand(entity);
         Alerts.ClearAlert(entity.Owner, KnockdownAlert);
@@ -535,6 +537,15 @@ public abstract partial class SharedStunSystem
     {
         if (args.User == entity && entity.Comp.NextUpdate > GameTiming.CurTime)
             args.Cancelled = true;
+    }
+
+    private void OnBuckle(Entity<KnockedDownComponent> entity, ref BuckledEvent args)
+    {
+        if (entity.Comp.DoAfterId is not { } doAfterId)
+            return;
+
+        DoAfter.Cancel(entity.Owner, doAfterId);
+        RemComp<KnockedDownComponent>(entity);
     }
 
     #endregion
