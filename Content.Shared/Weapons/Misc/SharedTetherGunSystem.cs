@@ -221,7 +221,7 @@ public abstract partial class SharedTetherGunSystem : EntitySystem
         _physics.SetAngularVelocity(target, SpinVelocity, body: targetPhysics);
         _physics.WakeBody(target, body: targetPhysics);
         var thrown = EnsureComp<ThrownItemComponent>(component.Tethered.Value);
-        thrown.Thrower = gunUid;
+        thrown.Thrower = GetWeakReference(gunUid);
         _blocker.UpdateCanMove(target);
 
         // Invisible tether entity
