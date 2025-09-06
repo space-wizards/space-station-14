@@ -46,6 +46,8 @@
   - CellRechargerCircuitboard
   - WeaponCapacitorRechargerCircuitboard
   - FreezerElectronics
+  - MassDriverCircuitboard
+  - MassDriverComputerCircuitboard
 
 - type: latheRecipePack
   id: EngineeringBoardsStatic
