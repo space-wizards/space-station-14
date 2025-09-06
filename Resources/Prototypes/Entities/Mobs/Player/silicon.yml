@@ -235,14 +235,14 @@
     damageOverlay:
       sprite: Mobs/Silicon/station_ai_cracks.rsi
   - type: ApcPowerReceiver
-    powerLoad: 300
+    powerLoad: 500
   - type: ExtensionCableReceiver
   - type: Battery
-    maxCharge: 180000
-    startingCharge: 180000
+    maxCharge: 300000
+    startingCharge: 0
   - type: ApcPowerReceiverBattery
-    idleLoad: 300
-    batteryRechargeRate: 600
+    idleLoad: 500
+    batteryRechargeRate: 1000
     batteryRechargeEfficiency: 0 # Setting to zero until the light flickering issue associated with dynamic power loads is fixed 
   - type: StationAiCore
   - type: StationAiVision
