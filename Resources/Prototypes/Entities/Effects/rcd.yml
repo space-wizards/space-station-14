@@ -2,6 +2,7 @@
   id: EffectRCDBase
   abstract: true
   categories: [ HideSpawnMenu ]
+  save: false
   components:
   - type: Transform
     anchored: True
