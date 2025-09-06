@@ -85,17 +85,14 @@ public sealed partial class TriggerSystem : EntitySystem
     /// Activate a timer trigger on an entity with <see cref="TimerTriggerComponent"/>.
     /// </summary>
     /// <returns>Whether or not a timer was activated.</returns>
-    public bool ActivateTimerTrigger(Entity<TimerTriggerComponent?> ent, EntityUid? user = null, bool forced = false)
+    public bool ActivateTimerTrigger(Entity<TimerTriggerComponent?> ent, EntityUid? user = null)
     {
         if (!Resolve(ent, ref ent.Comp))
             return false;
         var isactive = HasComp<ActiveTimerTriggerComponent>(ent);
         if (isactive)
-        {
-            if (!forced)
-                return false; // already activated
-            // EntityManager.RemoveComponentDeferred<ActiveTimerTriggerComponent>(ent);
-        }
+            return false; // already activated
+
         if (user != null)
         {
             _adminLogger.Add(LogType.Trigger,
@@ -110,7 +107,7 @@ public sealed partial class TriggerSystem : EntitySystem
         if (ent.Comp.Popup != null)
             _popup.PopupPredicted(Loc.GetString(ent.Comp.Popup.Value, ("device", ent.Owner)), ent.Owner, user);
 
-        if(!isactive)
+        if (!isactive)
             AddComp<ActiveTimerTriggerComponent>(ent);
         var curTime = _timing.CurTime;
         ent.Comp.NextTrigger = curTime + ent.Comp.Delay;

@@ -1,0 +1,106 @@
+- type: entity
+  id: BaseDelamination
+  name: Pseudo Delamination
+  abstract: true
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Grenades/GravitationalGrenades/emfield.rsi
+    #emfield-animation
+  - type: TriggerOnSpawn
+    keyOut: trigger
+  - type: TimerTrigger
+    delay: 11.2
+    keysIn:
+    - trigger
+    keyOut: timer
+    popup: null
+  - type: EmitSoundOnTrigger
+    keysIn:
+    - timer
+    positional: true
+    sound:
+      path: /Audio/Effects/Grenades/Supermatter/supermatter.end.ogg
+      params:
+        volume: 5
+  - type: AmbientSound
+    enabled: true
+    volume: -5
+    range: 14
+    sound:
+      path: /Audio/Effects/Grenades/Supermatter/supermatter.loop.ogg # 1.6
+  - type: GravityWell
+    maxRange: 15
+    baseRadialAcceleration: 5
+    baseTangentialAcceleration: .5
+    gravPulsePeriod: 0.03
+  - type: SingularityDistortion
+    intensity: 150
+    falloffPower: 1.5
+  - type: PointLight
+    enabled: true
+    color: "#fff"
+    energy: 8
+    radius: 6
+    softness: 1
+    offset: "0, 0"
+
+
+- type: entity
+  parent: BaseDelamination
+  id: BasePullingDelamination
+  components:
+  - type: TimerTrigger
+    delay: 11.2 # 7 times
+  - type: AmbientSound
+    sound:
+      path: /Audio/Effects/Grenades/Supermatter/supermatter.loop.ogg # 1.6
+  # - type: SingularityDistortion
+  #   intensity: 150
+  - type: PointLight
+    color: "#ffaa44"
+
+- type: entity
+  parent: BasePullingDelamination
+  id: SupermatterDelamination
+  name: Pseudo Supermatter Delamination
+  components:
+  - type: Explosive
+    explosionType: Default
+    totalIntensity: 200
+    intensitySlope: 30
+    maxIntensity: 120
+  - type: ExplodeOnTrigger
+    keysIn:
+    - timer
+  - type: PointLight
+    color: "#ffaa44"
+
+- type: entity
+  parent: BasePullingDelamination
+  id: SinguloDelamination
+  name: Singulo Delamination
+  components:
+  - type: DeleteOnTrigger
+    keysIn:
+    - timer
+  - type: PointLight
+    color: "#b444ff"
+
+- type: entity
+  parent: BaseDelamination
+  id: WhiteholeDelamination
+  name: Whitehole Delamination
+  components:
+  - type: DeleteOnTrigger
+    keysIn:
+    - timer
+  - type: PointLight
+    color: "#ffffff"
+  - type: AmbientSound
+    sound:
+      path: /Audio/Effects/Grenades/Supermatter/whitehole.loop.ogg #1.617
+  - type: GravityWell
+    baseRadialAcceleration: -10
+    baseTangentialAcceleration: -1
+  - type: SingularityDistortion
+    intensity: -150
