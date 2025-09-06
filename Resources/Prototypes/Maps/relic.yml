@@ -59,6 +59,6 @@
             Lawyer: [ 1, 1 ]
             #supply (0)
             #civilian (1+)
-            Passenger: [ -1, -1 ] #infinite, not counted
+            Assistant: [ -1, -1 ] #infinite, not counted, Starlight Assistant
             #silicon (1)
             StationAi: [ 1, 1 ]
