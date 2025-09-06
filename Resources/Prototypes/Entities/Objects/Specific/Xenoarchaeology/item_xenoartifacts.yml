@@ -20,7 +20,7 @@
       map: [ "enum.ArtifactsVisualLayers.ActivationEffect" ]
       visible: false
   - type: Physics
-    bodyType: Dynamic
+    bodyType: KinematicController
   - type: CollisionWake
     enabled: false
   - type: InteractionOutline
