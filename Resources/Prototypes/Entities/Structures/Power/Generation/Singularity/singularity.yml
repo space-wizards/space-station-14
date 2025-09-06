@@ -71,7 +71,7 @@
     - GhostOnlyWarp
   - type: WarpPoint
     follow: true
-    location: singularity
+    location: location-singularity
     blacklist:
       tags:
       - GhostOnlyWarp
