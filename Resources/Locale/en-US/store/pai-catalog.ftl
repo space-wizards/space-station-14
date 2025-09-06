@@ -6,3 +6,6 @@ pai-midi-player-desc = Enables you to play music to entertain your owner.
 
 pai-station-map-name = Station Map
 pai-station-map-desc = Enables you to view the station map to assist in navigation.
+
+pai-customization-control-name = Customization Display
+pai-customization-control-desc = Enables you to control your appearance.
