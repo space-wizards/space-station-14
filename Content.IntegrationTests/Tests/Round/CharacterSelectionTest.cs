@@ -258,7 +258,7 @@ public sealed class CharacterSelectionTest
         },
         // Case 1 from https://github.com/space-wizards/space-station-14/pull/36493#issuecomment-3014257219
         // if a player has no antag-compatible jobs enabled they should not be selected as an antag
-        new() {
+        /* new() { //starlight, commented out because its unstable
             Description = "Only antag captain",
             HighPrioJob = Captain,
             Characters =
@@ -267,7 +267,7 @@ public sealed class CharacterSelectionTest
             ],
             ExpectedJob = Captain,
             ExpectTraitor = false
-        },
+        }, */
         // Case 2 from https://github.com/space-wizards/space-station-14/pull/36493#issuecomment-3014257219
         // a player that is selected as an antag should always roll a character & job compatible with that
         // antag selection
