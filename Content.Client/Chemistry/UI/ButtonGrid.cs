@@ -1,5 +1,4 @@
-using System;
-using Robust.Client.Graphics;
+using System.Linq;
 using Robust.Client.UserInterface.Controls;
 
 namespace Content.Client.Chemistry.UI;
@@ -9,16 +8,19 @@ namespace Content.Client.Chemistry.UI;
 /// </summary>
 public sealed class ButtonGrid : GridContainer
 {
-    private string _buttonList = "";
+    private List<string> _buttonList = [];
 
     /// <summary>
-    ///     A comma-seperated list of text to use for each button. These will be inserted sequentially.
+    /// A list of strings to use for each button. These will be inserted sequentially.
+    /// Duplicate strings are probably a bad idea.
     /// </summary>
-    public string ButtonList
+    public List<string> ButtonList
     {
         get => _buttonList;
         set
         {
+            if (_buttonList.SequenceEqual(value))
+                return;
             _buttonList = value;
             Update();
         }
@@ -29,23 +31,26 @@ public sealed class ButtonGrid : GridContainer
     private string? _selected;
 
     /// <summary>
-    ///     Which button is currently selected. Only matters when <see cref="RadioGroup"/> is true.
+    /// Which button is currently selected. Only matters when <see cref="RadioGroup" /> is true.
     /// </summary>
     public string? Selected
     {
         get => _selected;
         set
         {
+            if (RadioGroup && _selected is not null && _buttons.TryGetValue(_selected, out var oldButton))
+                oldButton.Pressed = false;
+
             _selected = value;
-            Update();
+
+            if (RadioGroup && _selected is not null && _buttons.TryGetValue(_selected, out var newButton))
+                newButton.Pressed = true;
         }
     }
 
     public Action<string>? OnButtonPressed;
 
-    /// <summary>
-    ///     <see cref="GridContainer.Columns"/>
-    /// </summary>
+    /// <seealso cref="GridContainer.Columns"/>
     public new int Columns
     {
         get => base.Columns;
@@ -56,9 +61,7 @@ public sealed class ButtonGrid : GridContainer
         }
     }
 
-    /// <summary>
-    ///     <see cref="GridContainer.Rows"/>
-    /// </summary>
+    /// <seealso cref="GridContainer.Rows"/>
     public new int Rows
     {
         get => base.Rows;
@@ -69,21 +72,22 @@ public sealed class ButtonGrid : GridContainer
         }
     }
 
+    private readonly Dictionary<string, Button> _buttons = [];
+
     private void Update()
     {
-        if (ButtonList == "")
+        if (ButtonList.Count == 0)
             return;
 
-        this.Children.Clear();
-        var i = 0;
-        var list = ButtonList.Split(",");
+        Children.Clear();
+        _buttons.Clear();
 
+        var i = 0;
         var group = new ButtonGroup();
 
-        foreach (var button in list)
+        foreach (var button in ButtonList)
         {
-            var btn = new Button();
-            btn.Text = button;
+            var btn = new Button { Text = button };
             btn.OnPressed += _ =>
             {
                 if (RadioGroup)
@@ -91,18 +95,17 @@ public sealed class ButtonGrid : GridContainer
                 Selected = button;
                 OnButtonPressed?.Invoke(button);
             };
+
             if (button == Selected)
                 btn.Pressed = true;
-            var sep = HSeparationOverride ?? 0;
-            // ReSharper disable once PossibleLossOfFraction
-            // btn.SetWidth = (this.PixelWidth - sep * (Columns - 1)) / 3;
+
             btn.Group = group;
 
             var row = i / Columns;
             var col = i % Columns;
-            var last = i == list.Length - 1;
+            var last = i == ButtonList.Count - 1;
             var lastCol = i == Columns - 1;
-            var lastRow = row == list.Length / Columns - 1;
+            var lastRow = row == ButtonList.Count / Columns - 1;
 
             if (row == 0 && (lastCol || last))
                 btn.AddStyleClass("OpenLeft");
@@ -111,7 +114,8 @@ public sealed class ButtonGrid : GridContainer
             else
                 btn.AddStyleClass("OpenBoth");
 
-            this.Children.Add(btn);
+            Children.Add(btn);
+            _buttons.Add(button, btn);
 
             i++;
         }
