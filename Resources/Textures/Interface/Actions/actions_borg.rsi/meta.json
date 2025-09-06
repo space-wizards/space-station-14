@@ -32,6 +32,9 @@
             "name":"geiger-module"
         },
         {
+            "name":"inflatable-module"
+        },
+        {
             "name":"rcd-module"
         },
         {
@@ -110,10 +113,16 @@
             "name":"syndicate-operative-module"
         },
         {
+            "name":"syndicate-desword-module"
+        },
+        {
             "name":"syndicate-esword-module"
         },
         {
             "name":"syndicate-l6c-module"
+        },
+        {
+            "name":"syndicate-c20r-module"
         },
         {
             "name":"syndicate-martyr-module"

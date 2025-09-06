@@ -29,6 +29,9 @@
             "name": "icon-cables"
         },
         {
+            "name": "icon-inflatable"
+        },
+        {
             "name": "icon-chemist"
         },
         {
@@ -229,4 +232,5 @@
             "directions": 4
         }
     ]
+
 }
