@@ -3365,9 +3365,6 @@ entities:
         819:
           position: 0,0
           _rotation: South
-        820:
-          position: 1,0
-          _rotation: South
         821:
           position: 2,2
           _rotation: South
@@ -3423,7 +3420,6 @@ entities:
           occludes: True
           ents:
           - 819
-          - 820
           - 824
           - 826
           - 825
