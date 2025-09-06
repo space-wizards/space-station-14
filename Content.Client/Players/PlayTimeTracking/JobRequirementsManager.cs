@@ -92,6 +92,12 @@ public sealed class JobRequirementsManager : ISharedPlaytimeManager
         Updated?.Invoke();
     }
 
+    /// <summary>
+    /// Check a list of job- and antag prototypes against the current player, for requirements and bans.
+    /// </summary>
+    /// <returns>
+    /// False if any of the prototypes are banned or have unmet requirements.
+    /// </returns>>
     public bool IsAllowed(
         List<ProtoId<JobPrototype>>? jobs,
         List<ProtoId<AntagPrototype>>? antags,
