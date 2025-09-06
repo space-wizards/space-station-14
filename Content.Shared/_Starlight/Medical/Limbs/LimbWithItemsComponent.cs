@@ -9,7 +9,7 @@ namespace Content.Shared.Starlight;
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
 public sealed partial class LimbWithItemsComponent : Component, IImplantable, IWithAction
 {
-    [DataField(readOnly: true, required: true), AutoNetworkedField]
+    [DataField(required: true), AutoNetworkedField]
     public List<EntProtoId> Items = new();
 
     [DataField, AutoNetworkedField]
