@@ -26,6 +26,7 @@ namespace Content.Server.NodeContainer.EntitySystems
         [Dependency] private readonly IAdminManager _adminManager = default!;
         [Dependency] private readonly INodeGroupFactory _nodeGroupFactory = default!;
         [Dependency] private readonly ILogManager _logManager = default!;
+        [Dependency] private readonly SharedMapSystem _map = default!;
 
         private readonly List<int> _visDeletes = new();
         private readonly List<BaseNodeGroup> _visSends = new();
@@ -349,13 +350,15 @@ namespace Content.Server.NodeContainer.EntitySystems
 
         private IEnumerable<Node> GetCompatibleNodes(Node node, EntityQuery<TransformComponent> xformQuery, EntityQuery<NodeContainerComponent> nodeQuery)
         {
-            var xform = xformQuery.GetComponent(node.Owner);
-            TryComp<MapGridComponent>(xform.GridUid, out var grid);
+            if (!xformQuery.TryGetComponent(node.Owner, out var xform))
+                yield break;
 
             if (!node.Connectable(EntityManager, xform))
                 yield break;
 
-            foreach (var reachable in node.GetReachableNodes(xform, nodeQuery, xformQuery, grid, EntityManager))
+            var gridQuery = GetEntityQuery<MapGridComponent>();
+
+            foreach (var reachable in node.GetReachableNodes(node.Owner, nodeQuery, xformQuery, gridQuery, EntityManager, _map))
             {
                 DebugTools.Assert(reachable != node, "GetReachableNodes() should not include self.");
 
