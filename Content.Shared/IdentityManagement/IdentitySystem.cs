@@ -27,9 +27,10 @@ public abstract class IdentitySystem : EntitySystem
     [Dependency] private readonly GrammarSystem _grammarSystem = default!;
     [Dependency] private readonly SharedCriminalRecordsConsoleSystem _criminalRecordsConsole = default!;
 
+    // The name of the container holding the identity entity
     private const string SlotName = "identity";
 
-    // Recycled hashset for perf
+    // Recycled hashset for tracking identities each tick that need to update
     private readonly HashSet<EntityUid> _queuedIdentityUpdates = new();
 
     /// <inheritdoc />
@@ -51,6 +52,9 @@ public abstract class IdentitySystem : EntitySystem
         SubscribeLocalEvent<IdentityComponent, EntityRenamedEvent>((uid, _, _) => QueueIdentityUpdate(uid));
     }
 
+    /// <summary>
+    /// Iterates through all identities that need to be updated.
+    /// </summary>
     public override void Update(float frameTime)
     {
         base.Update(frameTime);
@@ -68,7 +72,7 @@ public abstract class IdentitySystem : EntitySystem
 
     #region Event handlers
 
-    // This is where the magic happens
+    // Creates an identity entity, and store it in the identity container
     private void OnMapInit(Entity<IdentityComponent> ent, ref MapInitEvent args)
     {
         var ident = Spawn(null, Transform(ent).Coordinates);
@@ -83,6 +87,7 @@ public abstract class IdentitySystem : EntitySystem
         ent.Comp.IdentityEntitySlot = _container.EnsureContainer<ContainerSlot>(ent, SlotName);
     }
 
+    // Adds an identity blocker's coverage, and cancels the event if coverage is complete.
     private void OnSeeIdentity(Entity<IdentityBlockerComponent> ent, ref SeeIdentityAttemptEvent args)
     {
         if (ent.Comp.Enabled)
@@ -98,6 +103,7 @@ public abstract class IdentitySystem : EntitySystem
         OnSeeIdentity(ent, ref args.Args);
     }
 
+    // Toggles if a mask is hiding the identity.
     private void OnMaskToggled(Entity<IdentityBlockerComponent> ent, ref ItemMaskToggledEvent args)
     {
         ent.Comp.Enabled = !args.Mask.Comp.IsToggled;
@@ -112,7 +118,6 @@ public abstract class IdentitySystem : EntitySystem
     }
 
     #endregion
-
     #region Private API
 
     /// <summary>
@@ -155,11 +160,25 @@ public abstract class IdentitySystem : EntitySystem
         SetIdentityCriminalIcon(ent);
     }
 
+    /// <summary>
+    /// When the identity of a person is changed, searches the criminal records to see if the name of the new identity
+    /// has a record. If the new name has a criminal status attached to it, the person will get the criminal status
+    /// until they change identity again.
+    /// </summary>
     private void SetIdentityCriminalIcon(EntityUid uid)
     {
         _criminalRecordsConsole.CheckNewIdentity(uid);
     }
 
+    /// <summary>
+    /// Attempts to get an entity's name. Cancelled if the entity has full coverage from <see cref="IdentityBlockerComponent"/>.
+    /// </summary>
+    /// <param name="target">The entity being targeted.</param>
+    /// <param name="representation">The data structure containing an entity's identities.</param>
+    /// <returns>
+    /// An entity's real name if <see cref="SeeIdentityAttemptEvent"/> isn't cancelled,
+    /// or a hidden identity such as a fake ID or fully hidden identity like "middle-aged man".
+    /// </returns>
     private string GetIdentityName(EntityUid target, IdentityRepresentation representation)
     {
         var ev = new SeeIdentityAttemptEvent();
