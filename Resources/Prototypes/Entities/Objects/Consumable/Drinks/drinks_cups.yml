@@ -369,26 +369,3 @@
     - HEAD
     quickEquip: false
     sprite: Clothing/Head/Hats/party_water_cup.rsi
-
-- type: entity
-  parent: DrinkBaseCup
-  id: DrinkBaseDogBowl
-  abstract: true
-  name: dog bowl
-  description: A dog bowl.
-  components:
-  - type: Sprite
-    sprite: Objects/Consumable/Food/dogbowl.rsi
-    layers:
-      - state: icon
-        color: blue
-      - map: ["enum.SolutionContainerLayers.Fill"]
-        state: fill-3
-        visible: false
-  - type: Appearance
-  - type: SolutionContainerVisuals
-    maxFillLevels: 3
-    fillBaseName: fill-
-  - type: PhysicalComposition
-    materialComposition:
-      Plastic: 25
