@@ -19,6 +19,7 @@ using Content.Shared.Roles;
 using Content.Shared.Traits;
 using Microsoft.EntityFrameworkCore;
 using Robust.Shared.Enums;
+using Robust.Shared.GameObjects.Components.Localization;
 using Robust.Shared.Network;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
@@ -49,6 +50,7 @@ namespace Content.Server.Database
                 .Include(p => p.Profiles).ThenInclude(h => h.Jobs)
                 .Include(p => p.Profiles).ThenInclude(h => h.Antags)
                 .Include(p => p.Profiles).ThenInclude(h => h.Traits)
+                .Include(p => p.Profiles).ThenInclude(h => h.Pronouns)
                 .Include(p => p.Profiles)
                     .ThenInclude(h => h.Loadouts)
                     .ThenInclude(l => l.Groups)
@@ -108,6 +110,7 @@ namespace Content.Server.Database
                 .Include(p => p.Loadouts)
                     .ThenInclude(l => l.Groups)
                     .ThenInclude(group => group.Loadouts)
+                .Include(p => p.Pronouns)
                 .AsSplitQuery()
                 .SingleOrDefault(h => h.Slot == slot);
 
@@ -266,6 +269,17 @@ namespace Content.Server.Database
                 profile.Age,
                 sex,
                 gender,
+                new Pronoun(
+                   profile.Pronouns?.Subject,
+                   profile.Pronouns?.Object,
+                   profile.Pronouns?.DatObj,
+                   profile.Pronouns?.Genitive,
+                   profile.Pronouns?.PossAdj,
+                   profile.Pronouns?.PossPronoun,
+                   profile.Pronouns?.Reflexive,
+                   profile.Pronouns?.Counter,
+                   profile.Pronouns?.Plural
+                ),
                 new HumanoidCharacterAppearance
                 (
                     profile.HairName,
@@ -312,6 +326,18 @@ namespace Content.Server.Database
             profile.Markings = markings;
             profile.Slot = slot;
             profile.PreferenceUnavailable = (DbPreferenceUnavailableMode) humanoid.PreferenceUnavailable;
+
+            var pronoun = humanoid.Pronoun;
+            profile.Pronouns ??= new Pronouns();
+            profile.Pronouns.Subject = pronoun?.Subject;
+            profile.Pronouns.Object = pronoun?.Object;
+            profile.Pronouns.DatObj = pronoun?.DatObj;
+            profile.Pronouns.Genitive = pronoun?.Genitive;
+            profile.Pronouns.PossAdj = pronoun?.PossAdj;
+            profile.Pronouns.PossPronoun = pronoun?.PossPronoun;
+            profile.Pronouns.Reflexive = pronoun?.Reflexive;
+            profile.Pronouns.Counter = pronoun?.Counter;
+            profile.Pronouns.Plural = pronoun?.Plural;
 
             profile.Jobs.Clear();
             profile.Jobs.AddRange(
