@@ -485,7 +485,6 @@
   plantMetabolism:
   - !type:PlantAdjustWater
     amount: 1
-  reactiveEffects: []
   metamorphicSprite:
     sprite: Objects/Consumable/Drinks/iceglass.rsi
     state: icon_empty
