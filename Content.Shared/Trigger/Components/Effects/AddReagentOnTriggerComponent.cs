@@ -1,0 +1,24 @@
+using Content.Shared.Chemistry.EntitySystems;
+using Robust.Shared.GameStates;
+using Content.Shared.Chemistry.Components;
+
+namespace Content.Shared.Trigger.Components.Effects;
+
+/// <summary>
+/// Adds reagents to the solution when the trigger is activated.
+/// </summary>
+[RegisterComponent, AutoGenerateComponentState]
+public sealed partial class AddReagentOnTriggerComponent : BaseXOnTriggerComponent
+{
+    /// <summary>
+    /// The name of the solution to add to.
+    /// </summary>
+    [DataField(required: true)]
+    public string SolutionId = string.Empty;
+
+    /// <summary>
+    /// The reagent(s) to be added in the solution.
+    /// </summary>
+    [DataField(required: true)]
+    public Solution AddedSolution = default!;
+}
