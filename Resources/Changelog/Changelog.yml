@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: themias
-  changes:
-  - message: Fixed being unable to roll dough flat
-    type: Fix
-  id: 8424
-  time: '2025-05-06T16:57:05.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/37183
 - author: Quantum-cross
   changes:
   - message: Hosted anomaly effects not appearing at host when host is in container
@@ -3945,3 +3938,11 @@
   id: 8935
   time: '2025-09-06T15:13:43.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/40158
+- author: ToastEnjoyer
+  changes:
+  - message: On box, fixed a bug where there was a disconnected grid at the tesla
+      engine spot.
+    type: Fix
+  id: 8936
+  time: '2025-09-06T16:00:24.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/40161
