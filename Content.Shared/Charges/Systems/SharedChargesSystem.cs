@@ -21,18 +21,9 @@ public abstract class SharedChargesSystem : EntitySystem
 
         SubscribeLocalEvent<LimitedChargesComponent, ExaminedEvent>(OnExamine);
 
-        SubscribeLocalEvent<LimitedChargesComponent, DoAfterAttemptEvent<ActionDoAfterEvent>>(OnActionDoAfterAttempt);
         SubscribeLocalEvent<LimitedChargesComponent, ActionAttemptEvent>(OnChargesAttempt);
         SubscribeLocalEvent<LimitedChargesComponent, MapInitEvent>(OnChargesMapInit);
         SubscribeLocalEvent<LimitedChargesComponent, ActionPerformedEvent>(OnChargesPerformed);
-    }
-
-    private void OnActionDoAfterAttempt(Entity<LimitedChargesComponent> ent, ref DoAfterAttemptEvent<ActionDoAfterEvent> args)
-    {
-        var charges = GetCurrentCharges((ent.Owner, ent.Comp, null));
-
-        if (charges <= 0)
-            args.Cancel();
     }
 
     private void OnExamine(EntityUid uid, LimitedChargesComponent comp, ExaminedEvent args)
