@@ -150,10 +150,10 @@ public sealed partial class AtmosphereSystem
     /// Caches airtight structure offsets for the given <see cref="DeltaPressureComponent"/> entity based on its current position on the given grid.
     /// </summary>
     /// <param name="ent">The entity with a <see cref="DeltaPressureComponent"/> whose offsets need to be cached.</param>
-    /// <param name="mapGridComponent">The <see cref="MapGridComponent"/> that belongs to the grid that the entity is on.</param>
+    /// <param name="mapEnt">The entity of the map the first entity is on.</param>
     /// <param name="xform"><see cref="TransformComponent"/> of the entity.</param>
     public void CacheAirtightStructureOffsets(Entity<DeltaPressureComponent> ent,
-        MapGridComponent mapGridComponent,
+        Entity<MapGridComponent> mapEnt,
         TransformComponent xform)
     {
         // Computing offsets is quite expensive in a hot loop, and they don't change frequently for
@@ -161,7 +161,7 @@ public sealed partial class AtmosphereSystem
         for (var i = 0; i < Atmospherics.Directions; i++)
         {
             var dir = (AtmosDirection)(1 << i);
-            var offset = _map.LocalToTile(ent, mapGridComponent, xform.Coordinates).Offset(dir);
+            var offset = _map.LocalToTile(mapEnt.Owner, mapEnt.Comp, xform.Coordinates).Offset(dir);
             ent.Comp.OffsetPositions[i] = offset;
         }
     }

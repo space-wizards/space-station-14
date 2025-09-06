@@ -39,7 +39,7 @@ public sealed class DeltaPressureSystem : EntitySystem
             return;
         }
 
-        _atmosphereSystem.CacheAirtightStructureOffsets(ent, mapGridComponent, xform);
+        _atmosphereSystem.CacheAirtightStructureOffsets(ent, (xform.GridUid.Value, mapGridComponent), xform);
     }
 
     private void OnComponentInit(Entity<DeltaPressureComponent> ent, ref ComponentInit args)
