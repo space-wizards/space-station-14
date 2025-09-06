@@ -216,6 +216,7 @@
     - StarlightCyberlimbDynamic
     - StarlightCyberOrgansDynamic
     - StarlightImplantDynamic
+    - StarlightBudgetCyberOrgansDynamic
 
     - StarlightSecurityAmmoDynamic
     - StarlightSecurityExplosives
@@ -502,6 +503,7 @@
     - StarlightCyberOrgansDynamic
     - StarlightImplantDynamic
     - Chemistry
+    - StarlightBudgetCyberOrgansDynamic
   - type: Machine
     board: MedicalTechFabCircuitboard
   - type: StealTarget

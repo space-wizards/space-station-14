@@ -1,6 +1,7 @@
 using System;
 using System.Linq;
 using System.Threading;
+using Content.Server.Administration.Systems;
 using Content.Server.Database;
 using Content.Server.Discord;
 using Content.Shared.Starlight;
@@ -58,6 +59,11 @@ public sealed partial class GameTicker //🌟Starlight🌟
                                Name  = "Round duration",
                                Inline = true,
                                Value = ""
+                            },
+                            new(){
+                               Name  = "Panic Bunker",
+                               Inline = true,
+                               Value = "N/A"
                             }
                         ],
                         Thumbnail = new WebhookEmbedImage
@@ -109,6 +115,11 @@ public sealed partial class GameTicker //🌟Starlight🌟
                                Name  = "Round duration",
                                Inline = true,
                                Value = ""
+                            },
+                            new(){
+                               Name  = "Panic Bunker",
+                               Inline = true,
+                               Value = "N/A"
                             }
                         ],
                         Thumbnail = new WebhookEmbedImage
@@ -159,6 +170,7 @@ public sealed partial class GameTicker //🌟Starlight🌟
         embed.Fields[1] = embed.Fields[1] with { Value = mapName };
         embed.Fields[2] = embed.Fields[2] with { Value = string.IsNullOrWhiteSpace(GamemodeDescOverride) ? preset : Loc.GetString(GamemodeDescOverride) };
         embed.Fields[3] = embed.Fields[3] with { Value = RoundDuration().ToString("hh\\:mm\\:ss") };
+        embed.Fields[4] = embed.Fields[4] with { Value = _admin.PanicBunker.Enabled ? "On" : "Off" };
 
         _payload.Embeds[0] = embed;
 
@@ -189,6 +201,7 @@ public sealed partial class GameTicker //🌟Starlight🌟
         embed.Fields[3] = embed.Fields[3] with { Value = mapName };
         embed.Fields[4] = embed.Fields[4] with { Value = preset };
         embed.Fields[5] = embed.Fields[5] with { Value = RoundDuration().ToString("hh\\:mm\\:ss") };
+        embed.Fields[6] = embed.Fields[6] with { Value = _admin.PanicBunker.Enabled ? "On" : "Off" };
 
         _payloadWithAdmins.Embeds[0] = embed;
 

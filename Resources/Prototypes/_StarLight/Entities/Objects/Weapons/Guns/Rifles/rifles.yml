@@ -137,6 +137,8 @@
     fireRate: 7
     soundGunshot:
       path: /Audio/_Starlight/Weapons/Guns/Gunshots/m90.ogg
+  - type: MagazineVisuals
+    steps: 1
 
 - type: entity
   name: Aussec Armory M-52
@@ -175,12 +177,12 @@
         whitelist:
           tags:
             - CartridgeRifle
-            
+
 - type: entity
   name: Leikha
   parent: [ BaseWeaponRifle, BaseSecurityContraband ]
   id: WeaponRifleLeikha
-  description: A high end military grade assault rifle. This one has been retrofitted with a scope and a burst reciever. Uses .20 rifle ammo. 
+  description: A high end military grade assault rifle. This one has been retrofitted with a scope and a burst reciever. Uses .20 rifle ammo.
   components:
   - type: Sprite
     sprite: _Starlight/Objects/Weapons/Guns/Rifles/m16a4.rsi
@@ -238,7 +240,7 @@
   name: Pitbull
   parent: [ BaseWeaponRifle, BaseSyndicateContraband ]
   id: WeaponRiflePitbull
-  description: A large bullpup rifle with a low fire-rate but excellent accuracy. Chambered in .45 magnum. 
+  description: A large bullpup rifle with a low fire-rate but excellent accuracy. Chambered in .45 magnum.
   components:
   - type: Sprite
     sprite: _Starlight/Objects/Weapons/Guns/Rifles/pitbull.rsi

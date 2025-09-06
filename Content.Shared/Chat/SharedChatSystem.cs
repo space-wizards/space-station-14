@@ -35,6 +35,8 @@ public abstract class SharedChatSystem : EntitySystem
     public static readonly SoundSpecifier DefaultAnnouncementSound
         = new SoundPathSpecifier("/Audio/Announcements/announce.ogg");
 
+    public static readonly char[] ICDisallowedCharacters = ['[', ']', '\\']; // Starlight
+
     public static readonly ProtoId<RadioChannelPrototype> CommonChannel = "Common";
 
     public static readonly string DefaultChannelPrefix = $"{RadioChannelPrefix}{DefaultChannelKey}";
@@ -243,6 +245,19 @@ public abstract class SharedChatSystem : EntitySystem
         message = OopsConcat(char.ToUpper(message[0]).ToString(), message.Remove(0, 1));
         return message;
     }
+
+    // Starlight start
+    public string SanitizeMessageOfEvilCharacters(string message)
+    {
+        
+        foreach (char c in ICDisallowedCharacters)
+        {
+            message = message.Replace($"{c}", "");
+        }
+
+        return message;
+    }
+    // Starlight end
 
     private static string OopsConcat(string a, string b)
     {

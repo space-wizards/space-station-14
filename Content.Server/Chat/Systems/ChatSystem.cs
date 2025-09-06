@@ -978,7 +978,7 @@ public sealed partial class ChatSystem : SharedChatSystem
     }
 
     // ReSharper disable once InconsistentNaming
-    private string SanitizeInGameICMessage(EntityUid source, string message, out string? emoteStr, bool capitalize = true, bool punctuate = false, bool capitalizeTheWordI = true)
+    private string SanitizeInGameICMessage(EntityUid source, string message, out string? emoteStr, bool capitalize = true, bool punctuate = false, bool capitalizeTheWordI = true, bool noDisallowedCharacters = true) // Starlight
     {
         var newMessage = SanitizeMessageReplaceWords(message.Trim());
 
@@ -993,6 +993,8 @@ public sealed partial class ChatSystem : SharedChatSystem
             newMessage = SanitizeMessageCapitalizeTheWordI(newMessage, "i");
         if (punctuate)
             newMessage = SanitizeMessagePeriod(newMessage);
+        if (noDisallowedCharacters) // Starlight
+            newMessage = SanitizeMessageOfEvilCharacters(newMessage); // Starlight
 
         return prefix + newMessage;
     }

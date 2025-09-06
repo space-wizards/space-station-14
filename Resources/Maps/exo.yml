@@ -44169,20 +44169,6 @@ entities:
     - type: Transform
       pos: 9.3677225,-84.24618
       parent: 2
-    - type: HandheldLight
-      toggleActionEntity: 167
-    - type: ContainerContainer
-      containers:
-        cell_slot: !type:ContainerSlot
-          showEnts: False
-          occludes: True
-          ent: null
-        actions: !type:Container
-          showEnts: False
-          occludes: True
-          ents:
-          - 167
-    - type: ActionsContainer
 - proto: ClothingHeadHatHardhatYellowDark
   entities:
   - uid: 17536
@@ -86654,17 +86640,6 @@ entities:
     - type: Transform
       pos: 67.341934,-35.365723
       parent: 2
-    - type: GasTank
-      toggleActionEntity: 10251
-    - type: Jetpack
-      toggleActionEntity: 7161
-    - type: ActionsContainer
-    - type: ContainerContainer
-      containers:
-        actions: !type:Container
-          ents:
-          - 7161
-          - 10251
   - uid: 19423
     components:
     - type: Transform
@@ -86841,22 +86816,6 @@ entities:
     - type: Transform
       pos: 53.538273,-56.19024
       parent: 2
-    - type: HandheldLight
-      toggleActionEntity: 4915
-    - type: ContainerContainer
-      containers:
-        cell_slot: !type:ContainerSlot
-          showEnts: False
-          occludes: True
-          ent: null
-        actions: !type:Container
-          showEnts: False
-          occludes: True
-          ents:
-          - 4915
-    - type: Physics
-      canCollide: True
-    - type: ActionsContainer
 - proto: LampInterrogator
   entities:
   - uid: 15343
@@ -86864,22 +86823,6 @@ entities:
     - type: Transform
       pos: 50.54356,-37.204014
       parent: 2
-    - type: HandheldLight
-      toggleActionEntity: 7566
-    - type: ContainerContainer
-      containers:
-        cell_slot: !type:ContainerSlot
-          showEnts: False
-          occludes: True
-          ent: null
-        actions: !type:Container
-          showEnts: False
-          occludes: True
-          ents:
-          - 7566
-    - type: Physics
-      canCollide: True
-    - type: ActionsContainer
 - proto: Lantern
   entities:
   - uid: 5675
@@ -89415,14 +89358,6 @@ entities:
     - type: Transform
       pos: 46.344013,-75.307045
       parent: 2
-    - type: GasTank
-      toggleActionEntity: 3031
-    - type: ActionsContainer
-    - type: ContainerContainer
-      containers:
-        actions: !type:Container
-          ents:
-          - 3031
   - uid: 18387
     components:
     - type: Transform
@@ -96368,27 +96303,11 @@ entities:
     - type: Transform
       pos: 68.51489,-32.324493
       parent: 2
-    - type: Blocking
-      blockingToggleActionEntity: 6618
-    - type: ActionsContainer
-    - type: ContainerContainer
-      containers:
-        actions: !type:Container
-          ents:
-          - 6618
   - uid: 13901
     components:
     - type: Transform
       pos: 68.75447,-32.376614
       parent: 2
-    - type: Blocking
-      blockingToggleActionEntity: 6619
-    - type: ActionsContainer
-    - type: ContainerContainer
-      containers:
-        actions: !type:Container
-          ents:
-          - 6619
 - proto: RobocopCircuitBoard
   entities:
   - uid: 18624

@@ -102,8 +102,9 @@
     - type: TriggerOnMobstateChange
       mobState:
       - Critical
-    - type: RattleOnTrigger #
-      radioChannel: "Security"
+    - type: RattleOnTrigger
+      targetUser: true
+      radioChannel: Security
     #endregion Starlight tracker rattle
 
 #Traitor implants

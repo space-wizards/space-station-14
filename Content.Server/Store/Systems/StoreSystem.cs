@@ -56,6 +56,9 @@ public sealed partial class StoreSystem : EntitySystem
 
     private void OnMapInit(EntityUid uid, StoreComponent component, MapInitEvent args)
     {
+        // STARLIGHT: Ensure the store has a StockLimitedProcessingComponent
+        EnsureComp<StockLimitedProcessingComponent>(uid);
+
         RefreshAllListings(component);
         component.StartingMap = Transform(uid).MapUid;
     }
@@ -67,9 +70,6 @@ public sealed partial class StoreSystem : EntitySystem
         {
             RefreshAllListings(component);
         }
-
-        // STARLIGHT: Ensure the store has a StockLimitedProcessingComponent
-        EnsureComp<StockLimitedProcessingComponent>(uid);
 
         var ev = new StoreAddedEvent();
         RaiseLocalEvent(uid, ref ev, true);

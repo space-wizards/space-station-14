@@ -257,6 +257,13 @@
     Medicine:
       effects:
       - !type:HealthChange
+        conditions:
+        - !type:OrganType #starliight
+          type: Avali
+          shouldHave: false
+        - !type:OrganType
+          type: Resomi
+          shouldHave: false
         damage:
           types:
             Asphyxiation: -1
@@ -269,6 +276,26 @@
           types:
             Asphyxiation: 3
             Cold: 1
+      - !type:HealthChange #Starlight
+        conditions:
+        - !type:OrganType
+          type: Avali
+          shouldHave: true
+        damage:
+          types:
+            Poison: 1.5 #Avali blood is ammonia based, so chems made to treat normal bloodloss poison them instead (Lethal Dose: 20u)
+            Asphyxiation: 1 
+            Bloodloss: 1
+      - !type:HealthChange #Starlight
+        conditions:
+        - !type:OrganType
+          type: Resomi
+          shouldHave: true
+        damage:
+          types:
+            Poison: 1.5 #Resomi blood is ammonia based, so chems made to treat normal bloodloss poison them instead (Lethal Dose: 20u)
+            Asphyxiation: 1 
+            Bloodloss: 1
 
 - type: reagent
   id: DexalinPlus
@@ -282,6 +309,13 @@
     Medicine:
       effects:
       - !type:HealthChange
+        conditions:
+        - !type:OrganType #starliight
+          type: Avali
+          shouldHave: false
+        - !type:OrganType
+          type: Resomi
+          shouldHave: false
         damage:
           types:
             Asphyxiation: -3.5
@@ -301,6 +335,26 @@
           types:
             Asphyxiation: 5
             Cold: 3
+      - !type:HealthChange #Starlight
+        conditions:
+        - !type:OrganType
+          type: Avali
+          shouldHave: true
+        damage:
+          types:
+            Poison: 2.5 #Avali blood is ammonia based, so chems made to treat normal bloodloss poison them instead. Dex+ is worse. (Lethal Dose: 15u)
+            Asphyxiation: 1.5
+            Bloodloss: 1
+      - !type:HealthChange #Starlight
+        conditions:
+        - !type:OrganType
+          type: Resomi
+          shouldHave: true
+        damage:
+          types:
+            Poison: 2.5 #Resomi blood is ammonia based, so chems made to treat normal bloodloss poison them instead. Dex+ is worse. (Lethal Dose: 15u)
+            Asphyxiation: 1.5
+            Bloodloss: 1
 
 # this ones a doozy
 - type: reagent
@@ -683,8 +737,49 @@
       effects:
         - !type:SatiateThirst
           factor: 6
+    Medicine: #Starlight
+      effects:
         - !type:ModifyBloodLevel
+          conditions:
+          - !type:OrganType
+           type: Avali
+           shouldHave: false
+          - !type:OrganType
+           type: Resomi
+           shouldHave: false
           amount: 6
+        - !type:ModifyBleedAmount
+          conditions:
+          - !type:OrganType
+           type: Avali
+           shouldHave: true
+          amount: 2
+        - !type:ModifyBleedAmount
+          conditions:
+          - !type:OrganType
+           type: Resomi
+           shouldHave: true
+          amount: 2
+        - !type:HealthChange
+          conditions:
+          - !type:OrganType
+           type: Avali
+           shouldHave: true
+          damage:
+            types:
+              Poison: 12 #This is on par with giving someone the wrong blood-type (very lethal) / (Lethal Dose: 10u, VERY FAST ACTING)
+              Caustic: 2 #Split to prevent 15u RRing someone, as caustic can be healed with topicals.
+              Slash: 1 #Allows it to heal bleeding.
+        - !type:HealthChange
+          conditions:
+          - !type:OrganType
+           type: Resomi
+           shouldHave: true
+          damage:
+            types:
+              Poison: 12 #This is on par with giving someone the wrong blood-type (very lethal) / (Lethal Dose: 10u, VERY FAST ACTING)
+              Caustic: 2 #Split to prevent 15u RRing someone, as caustic can be healed with topicals.
+              Slash: 1 #Allows it to heal bleeding.
 
 - type: reagent
   id: Siderlac
@@ -1117,10 +1212,30 @@
       effects:
       - !type:SatiateThirst
         factor: 3
+    Medicine:  # Starlight
+      effects:
+      #If vampire
+      - !type:HealthChange
+        conditions:
+        - !type:OrganType
+          type: Vampire
+        damage:
+          types:
+            Heat: 2
+      - !type:Emote
+        conditions:
+        - !type:OrganType
+          type: Vampire
+        emote: Scream
+        probability: 0.3
+      #If not vampire
       - !type:HealthChange
         conditions:
         - !type:TotalDamage
           max: 50
+        - !type:OrganType
+          type: Vampire
+          shouldHave: false
         damage:
           types:
             Blunt: -0.2
@@ -1130,6 +1245,15 @@
             Cold: -0.2
 
   reactiveEffects:
+    Unholy: # Starlight
+      methods: [ Touch ]
+      effects:
+        - !type:HealthChange
+          damage:
+            types:
+              Heat: 5
+        - !type:Emote
+          emote: Scream
     Extinguish:
       methods: [ Touch ]
       effects:

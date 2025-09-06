@@ -1,22 +1,26 @@
 - type: entity
   id: CrateArmoryLr30
   parent: [ CrateWeaponSecure, BaseRestrictedContraband ]
-  name: lr30's  crate
+  name: lr30's crate
   description: Contains two automatic energy gun "lr-30", with two additional magazines. Requires Armory access to open.
   components:
+  - type: Contraband
+    allowedDepartments: [ Security ]
   - type: StorageFill
     contents:
       - id: WeaponLr30
         amount: 2
       - id: MagazineBatteryLr30
         amount: 2
-        
+
 - type: entity
   id: CrateArmoryLr30Magazines
   parent: [ CrateWeaponSecure, BaseRestrictedContraband ]
   name: lr30 magazine's crate
   description: Contains six magazines for "lr-30". Requires Armory access to open.
   components:
+  - type: Contraband
+    allowedDepartments: [ Security ]
   - type: StorageFill
     contents:
       - id: MagazineBatteryLr30
@@ -25,9 +29,11 @@
 - type: entity
   id: CrateArmoryCombatShotgun
   parent: [ CrateWeaponSecure, BaseRestrictedContraband ]
-  name: combat shotgun's  crate
+  name: combat shotgun's crate
   description: Contains two automatic combat shotguns, with two additional ammo boxes. Requires Armory access to open.
   components:
+  - type: Contraband
+    allowedDepartments: [ Security ]
   - type: StorageFill
     contents:
       - id: WeaponShotgunCombat
