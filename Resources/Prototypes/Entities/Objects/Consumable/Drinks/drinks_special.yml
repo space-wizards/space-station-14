@@ -211,3 +211,106 @@
       Steel: 300
   - type: FitsInDispenser
     solution: drink
+
+- type: entity
+  parent: DrinkBaseCup
+  id: DogBowlBlue
+  name: dog bowl
+  description: A dog bowl.
+  components:
+  - type: Sprite
+    sprite: Objects/Consumable/Food/dogbowl.rsi
+    layers:
+    - state: icon
+      color: "#0089EF"
+    - map: ["Stripe"]
+      state: stripe
+      color: "#00000000"
+    - map: ["Bone"]
+      state: bone
+      color: "#00000000"
+    - map: ["enum.SolutionContainerLayers.Fill"]
+      state: fill-3
+      visible: false
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: inhand-left
+        color: "#0089EF"
+      right:
+      - state: inhand-right
+        color: "#0089EF"
+  - type: Appearance
+  - type: SolutionContainerVisuals
+    maxFillLevels: 3
+    fillBaseName: fill-
+    inHandsMaxFillLevels: 1
+    inHandsFillBaseName: -fill-
+  - type: PhysicalComposition
+    materialComposition:
+      Plastic: 25
+  - type: RandomSprite
+    available:
+    - Bone:
+        bone: Sixteen
+    - Stripe:
+        stripe: Sixteen
+    
+- type: entity
+  parent: DogBowlBlue
+  id: DogBowlRed
+  name: dog bowl
+  description: A dog bowl.
+  components:
+  - type: Sprite
+    sprite: Objects/Consumable/Food/dogbowl.rsi
+    layers:
+    - state: icon
+      color: "#940000"
+    - map: ["Stripe"]
+      state: stripe
+      color: "#00000000"
+    - map: ["Bone"]
+      state: bone
+      color: "#00000000"
+    - map: ["enum.SolutionContainerLayers.Fill"]
+      state: fill-3
+      visible: false
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: inhand-left
+        color: "#940000"
+      right:
+      - state: inhand-right
+        color: "#940000"
+
+- type: entity
+  parent: DogBowlBlue
+  id: DogBowlMog
+  name: mog bowl
+  description: the bottom reads \"Spacedballs the off-off brand merchandise\".
+  components:
+  - type: Sprite
+    sprite: Objects/Consumable/Food/dogbowl.rsi
+    layers:
+    - state: icon
+      color: "#EAE8E8"
+    - map: ["Mog"]
+      state: mog # intentionally cursed Maybe change it to "Barf" one day, but I could not fit that.
+      color: "#FFFFFF"
+    - map: ["enum.SolutionContainerLayers.Fill"]
+      state: fill-3
+      visible: false
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: inhand-left
+        color: "#EAE8E8"
+      right:
+      - state: inhand-right
+        color: "#EAE8E8"
+  - type: RandomSprite
+    available:
+    - Mog:
+        mog: Sixteen
