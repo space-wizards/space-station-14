@@ -68,7 +68,7 @@ public abstract class AlertsSystem : EntitySystem
             }
 
             OnAlertsDirty(uid, alertComp);
-            OnAlertsDirty(uid, autoComp);
+            Dirty(uid, autoComp);
         }
     }
 
@@ -179,11 +179,11 @@ public abstract class AlertsSystem : EntitySystem
             EnsureComp<AlertAutoRemoveComponent>(entity, out var autoComp);
 
             if (autoComp.AlertKeys.Add(alert.AlertKey))
-                OnAlertsDirty(entity, autoComp);
+                Dirty(entity, autoComp);
         }
 
         AfterShowAlert((entity, entity.Comp));
-        OnAlertsDirty(entity);
+        OnAlertsDirty(entity, entity.Comp);
     }
 
     /// <summary>
@@ -242,7 +242,7 @@ public abstract class AlertsSystem : EntitySystem
         }
 
         AfterClearAlert((entity, entity.Comp));
-        OnAlertsDirty(entity);
+        OnAlertsDirty(entity, entity.Comp);
     }
 
     /// <summary>
@@ -264,7 +264,7 @@ public abstract class AlertsSystem : EntitySystem
             }
 
             AfterClearAlert((entity, entity.Comp));
-            OnAlertsDirty(entity);
+            OnAlertsDirty(entity, entity.Comp);
         }
         else
         {
@@ -400,12 +400,9 @@ public abstract class AlertsSystem : EntitySystem
         OnAlertsDirty(uid, component);
     }
 
-    private void OnAlertsDirty(EntityUid uid, AlertsComponent? component = null)
+    private void OnAlertsDirty(EntityUid uid, AlertsComponent component)
     {
-        if (component != null)
-            Dirty(uid, component);
-        else
-            Dirty(uid);
+        Dirty(uid, component);
 
         // Relay: dirty for all connected relays.
         var relayQuery = EntityQueryEnumerator<AlertsDisplayRelayComponent>();
