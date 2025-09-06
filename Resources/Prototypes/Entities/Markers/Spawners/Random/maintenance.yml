@@ -118,6 +118,7 @@
       - id: BalloonCorgi
       - id: MysteryFigureBox
       - id: RubberChicken
+      - id: DogBowlMog
       # Cult
       - !type:AllSelector
         children:
