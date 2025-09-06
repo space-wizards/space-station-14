@@ -46,7 +46,7 @@ public sealed class ProjectileGrenadeSystem : EntitySystem
     /// </summary>
     private void OnFragTrigger(Entity<ProjectileGrenadeComponent> entity, ref TriggerEvent args)
     {
-        if (args.Key != entity.Comp.TriggerKey)
+        if (args.Keys != null && !args.Keys.Contains(entity.Comp.TriggerKey))
             return;
 
         FragmentIntoProjectiles(entity.Owner, entity.Comp);
