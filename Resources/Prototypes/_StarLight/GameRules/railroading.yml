@@ -38,6 +38,10 @@
     
     - RRCardCriminal
 
+    # open mail
+
+    - RRCardMailOpen
+
     # Metabolize: Food
 
     - RRCardFoodSashimi

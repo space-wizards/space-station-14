@@ -15,6 +15,7 @@ using Robust.Shared.Audio.Systems;
 using Robust.Shared.Containers;
 using Robust.Shared.Prototypes;
 using Content.Shared.Emag.Systems; //Starlight
+using Content.Shared._Starlight.Railroading.Events; // starlight
 
 namespace Content.Shared.Delivery;
 
@@ -201,6 +202,11 @@ public abstract class SharedDeliverySystem : EntitySystem
 
         var ev = new DeliveryOpenedEvent(user);
         RaiseLocalEvent(ent, ref ev);
+
+        // starlight start - raise railroad mail tracking event on the opener
+        var railEv = new RailroadingDeliveryOpenedEvent();
+        RaiseLocalEvent(user, ref railEv);
+        // starlight end
 
         if (attemptPickup)
             _hands.TryDrop(user, ent);
