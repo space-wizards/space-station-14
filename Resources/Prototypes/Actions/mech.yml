@@ -46,3 +46,20 @@
       state: mech_eject
   - type: InstantAction
     event: !type:MechEjectPilotEvent
+
+- type: entity
+  parent: BaseMechAction
+  id: ActionMechToggleLight
+  name: Toggle Lights
+  description: Toggle mech lights
+  components:
+  - type: Action
+    useDelay: 1
+    icon:
+      sprite: Interface/Actions/actions_mecha.rsi
+      state: mech_lights_off
+    iconOn:
+      sprite: Interface/Actions/actions_mecha.rsi
+      state: mech_lights_on
+  - type: InstantAction
+    event: !type:ToggleActionEvent
