@@ -17,7 +17,7 @@ namespace Content.Shared.IdentityManagement;
 /// <summary>
 /// Responsible for updating the identity of an entity on init or clothing equip/unequip.
 /// </summary>
-public abstract class IdentitySystem : EntitySystem
+public sealed class IdentitySystem : EntitySystem
 {
     [Dependency] private readonly GrammarSystem _grammarSystem = default!;
     [Dependency] private readonly ISharedAdminLogManager _adminLog = default!;
