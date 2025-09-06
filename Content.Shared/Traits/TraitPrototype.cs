@@ -90,6 +90,6 @@ public sealed partial class TraitPrototype : IPrototype
     ///     Background of a player, metashield info.
     /// </summary>
     [DataField]
-    public string Background { get; private set; } = default!;
+    public string? Background { get; private set; } = default!;
     // Starlight - End
 }

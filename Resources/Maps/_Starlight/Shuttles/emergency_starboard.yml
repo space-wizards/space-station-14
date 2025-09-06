@@ -1,6 +1,11 @@
 meta:
   format: 6
   postmapinit: false
+maps: []
+grids:
+- 2
+orphans:
+- 2
 tilemap:
   0: Space
   1: FloorBar
@@ -30,7 +35,6 @@ entities:
       name: NT Evac Starboard
     - type: Transform
       pos: 0.06253052,0.58707
-      parent: 1
     - type: MapGrid
       chunks:
         0,0:
@@ -2784,94 +2788,70 @@ entities:
     - type: Transform
       pos: 21.5,4.5
       parent: 2
-    - type: VentCrawTube
-      connected: True
   - uid: 298
     components:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 12.5,5.5
       parent: 2
-    - type: VentCrawTube
-      connected: True
   - uid: 299
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 3.5,7.5
       parent: 2
-    - type: VentCrawTube
-      connected: True
   - uid: 300
     components:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 7.5,10.5
       parent: 2
-    - type: VentCrawTube
-      connected: True
   - uid: 301
     components:
     - type: Transform
       pos: 15.5,5.5
       parent: 2
-    - type: VentCrawTube
-      connected: True
   - uid: 302
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 15.5,4.5
       parent: 2
-    - type: VentCrawTube
-      connected: True
   - uid: 306
     components:
     - type: Transform
       pos: 15.5,0.5
       parent: 2
-    - type: VentCrawTube
-      connected: True
   - uid: 307
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 7.5,-2.5
       parent: 2
-    - type: VentCrawTube
-      connected: True
   - uid: 359
     components:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 14.5,6.5
       parent: 2
-    - type: VentCrawTube
-      connected: True
   - uid: 681
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 15.5,-2.5
       parent: 2
-    - type: VentCrawTube
-      connected: True
   - uid: 805
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 19.5,6.5
       parent: 2
-    - type: VentCrawTube
-      connected: True
   - uid: 808
     components:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 19.5,8.5
       parent: 2
-    - type: VentCrawTube
-      connected: True
 - proto: GasPipeFourway
   entities:
   - uid: 308
@@ -2879,15 +2859,11 @@ entities:
     - type: Transform
       pos: 7.5,0.5
       parent: 2
-    - type: VentCrawTube
-      connected: True
   - uid: 309
     components:
     - type: Transform
       pos: 14.5,5.5
       parent: 2
-    - type: VentCrawTube
-      connected: True
 - proto: GasPipeStraight
   entities:
   - uid: 310
@@ -2895,423 +2871,313 @@ entities:
     - type: Transform
       pos: 21.5,1.5
       parent: 2
-    - type: VentCrawTube
-      connected: True
   - uid: 311
     components:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 19.5,4.5
       parent: 2
-    - type: VentCrawTube
-      connected: True
   - uid: 312
     components:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 20.5,4.5
       parent: 2
-    - type: VentCrawTube
-      connected: True
   - uid: 313
     components:
     - type: Transform
       pos: 21.5,3.5
       parent: 2
-    - type: VentCrawTube
-      connected: True
   - uid: 314
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 3.5,8.5
       parent: 2
-    - type: VentCrawTube
-      connected: True
   - uid: 315
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 3.5,9.5
       parent: 2
-    - type: VentCrawTube
-      connected: True
   - uid: 316
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 4.5,7.5
       parent: 2
-    - type: VentCrawTube
-      connected: True
   - uid: 317
     components:
     - type: Transform
       pos: 7.5,9.5
       parent: 2
-    - type: VentCrawTube
-      connected: True
   - uid: 318
     components:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 8.5,10.5
       parent: 2
-    - type: VentCrawTube
-      connected: True
   - uid: 319
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 5.5,7.5
       parent: 2
-    - type: VentCrawTube
-      connected: True
   - uid: 320
     components:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 17.5,4.5
       parent: 2
-    - type: VentCrawTube
-      connected: True
   - uid: 323
     components:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 16.5,4.5
       parent: 2
-    - type: VentCrawTube
-      connected: True
   - uid: 324
     components:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 18.5,4.5
       parent: 2
-    - type: VentCrawTube
-      connected: True
   - uid: 325
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 2.5,-0.5
       parent: 2
-    - type: VentCrawTube
-      connected: True
   - uid: 326
     components:
     - type: Transform
       pos: 21.5,2.5
       parent: 2
-    - type: VentCrawTube
-      connected: True
   - uid: 327
     components:
     - type: Transform
       pos: 15.5,-0.5
       parent: 2
-    - type: VentCrawTube
-      connected: True
   - uid: 329
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 13.5,-2.5
       parent: 2
-    - type: VentCrawTube
-      connected: True
   - uid: 330
     components:
     - type: Transform
       pos: 12.5,-1.5
       parent: 2
-    - type: VentCrawTube
-      connected: True
   - uid: 331
     components:
     - type: Transform
       pos: 12.5,-0.5
       parent: 2
-    - type: VentCrawTube
-      connected: True
   - uid: 332
     components:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 11.5,0.5
       parent: 2
-    - type: VentCrawTube
-      connected: True
   - uid: 333
     components:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 10.5,0.5
       parent: 2
-    - type: VentCrawTube
-      connected: True
   - uid: 334
     components:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 8.5,0.5
       parent: 2
-    - type: VentCrawTube
-      connected: True
   - uid: 335
     components:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 9.5,0.5
       parent: 2
-    - type: VentCrawTube
-      connected: True
   - uid: 336
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 7.5,-0.5
       parent: 2
-    - type: VentCrawTube
-      connected: True
   - uid: 337
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 7.5,-1.5
       parent: 2
-    - type: VentCrawTube
-      connected: True
   - uid: 338
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 6.5,0.5
       parent: 2
-    - type: VentCrawTube
-      connected: True
   - uid: 339
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 5.5,0.5
       parent: 2
-    - type: VentCrawTube
-      connected: True
   - uid: 340
     components:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 4.5,0.5
       parent: 2
-    - type: VentCrawTube
-      connected: True
   - uid: 341
     components:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 3.5,0.5
       parent: 2
-    - type: VentCrawTube
-      connected: True
   - uid: 342
     components:
     - type: Transform
       pos: 2.5,1.5
       parent: 2
-    - type: VentCrawTube
-      connected: True
   - uid: 343
     components:
     - type: Transform
       pos: 2.5,2.5
       parent: 2
-    - type: VentCrawTube
-      connected: True
   - uid: 344
     components:
     - type: Transform
       pos: 2.5,3.5
       parent: 2
-    - type: VentCrawTube
-      connected: True
   - uid: 345
     components:
     - type: Transform
       pos: 2.5,4.5
       parent: 2
-    - type: VentCrawTube
-      connected: True
   - uid: 346
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 2.5,5.5
       parent: 2
-    - type: VentCrawTube
-      connected: True
   - uid: 347
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 7.5,1.5
       parent: 2
-    - type: VentCrawTube
-      connected: True
   - uid: 348
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 7.5,3.5
       parent: 2
-    - type: VentCrawTube
-      connected: True
   - uid: 349
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 7.5,4.5
       parent: 2
-    - type: VentCrawTube
-      connected: True
   - uid: 350
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 7.5,2.5
       parent: 2
-    - type: VentCrawTube
-      connected: True
   - uid: 351
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 7.5,5.5
       parent: 2
-    - type: VentCrawTube
-      connected: True
   - uid: 352
     components:
     - type: Transform
       pos: 12.5,4.5
       parent: 2
-    - type: VentCrawTube
-      connected: True
   - uid: 353
     components:
     - type: Transform
       pos: 12.5,3.5
       parent: 2
-    - type: VentCrawTube
-      connected: True
   - uid: 354
     components:
     - type: Transform
       pos: 12.5,2.5
       parent: 2
-    - type: VentCrawTube
-      connected: True
   - uid: 355
     components:
     - type: Transform
       pos: 12.5,1.5
       parent: 2
-    - type: VentCrawTube
-      connected: True
   - uid: 356
     components:
     - type: Transform
       pos: 7.5,6.5
       parent: 2
-    - type: VentCrawTube
-      connected: True
   - uid: 357
     components:
     - type: Transform
       pos: 7.5,8.5
       parent: 2
-    - type: VentCrawTube
-      connected: True
   - uid: 358
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 13.5,5.5
       parent: 2
-    - type: VentCrawTube
-      connected: True
   - uid: 360
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 15.5,6.5
       parent: 2
-    - type: VentCrawTube
-      connected: True
   - uid: 361
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 6.5,7.5
       parent: 2
-    - type: VentCrawTube
-      connected: True
   - uid: 683
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 14.5,-2.5
       parent: 2
-    - type: VentCrawTube
-      connected: True
   - uid: 767
     components:
     - type: Transform
       pos: 15.5,-1.5
       parent: 2
-    - type: VentCrawTube
-      connected: True
   - uid: 802
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 16.5,6.5
       parent: 2
-    - type: VentCrawTube
-      connected: True
   - uid: 803
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 17.5,6.5
       parent: 2
-    - type: VentCrawTube
-      connected: True
   - uid: 804
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 18.5,6.5
       parent: 2
-    - type: VentCrawTube
-      connected: True
   - uid: 806
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 19.5,7.5
       parent: 2
-    - type: VentCrawTube
-      connected: True
   - uid: 807
     components:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 20.5,8.5
       parent: 2
-    - type: VentCrawTube
-      connected: True
 - proto: GasPipeTJunction
   entities:
   - uid: 362
@@ -3320,32 +3186,24 @@ entities:
       rot: -1.5707963267948966 rad
       pos: 7.5,7.5
       parent: 2
-    - type: VentCrawTube
-      connected: True
   - uid: 363
     components:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 12.5,-2.5
       parent: 2
-    - type: VentCrawTube
-      connected: True
   - uid: 364
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 12.5,0.5
       parent: 2
-    - type: VentCrawTube
-      connected: True
   - uid: 365
     components:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 2.5,0.5
       parent: 2
-    - type: VentCrawTube
-      connected: True
 - proto: GasPort
   entities:
   - uid: 366
@@ -3354,8 +3212,6 @@ entities:
       rot: 1.5707963267948966 rad
       pos: 14.5,0.5
       parent: 2
-    - type: VentCrawTube
-      connected: True
 - proto: GasVentPump
   entities:
   - uid: 367
@@ -3366,8 +3222,6 @@ entities:
     - type: DeviceNetwork
       deviceLists:
       - 838
-    - type: VentCrawTube
-      connected: True
   - uid: 368
     components:
     - type: Transform
@@ -3377,8 +3231,6 @@ entities:
     - type: DeviceNetwork
       deviceLists:
       - 838
-    - type: VentCrawTube
-      connected: True
   - uid: 369
     components:
     - type: Transform
@@ -3388,8 +3240,6 @@ entities:
     - type: DeviceNetwork
       deviceLists:
       - 838
-    - type: VentCrawTube
-      connected: True
   - uid: 370
     components:
     - type: Transform
@@ -3398,8 +3248,6 @@ entities:
     - type: DeviceNetwork
       deviceLists:
       - 838
-    - type: VentCrawTube
-      connected: True
   - uid: 371
     components:
     - type: Transform
@@ -3409,8 +3257,6 @@ entities:
     - type: DeviceNetwork
       deviceLists:
       - 838
-    - type: VentCrawTube
-      connected: True
   - uid: 372
     components:
     - type: Transform
@@ -3420,8 +3266,6 @@ entities:
     - type: DeviceNetwork
       deviceLists:
       - 838
-    - type: VentCrawTube
-      connected: True
   - uid: 373
     components:
     - type: Transform
@@ -3431,24 +3275,18 @@ entities:
     - type: DeviceNetwork
       deviceLists:
       - 838
-    - type: VentCrawTube
-      connected: True
   - uid: 374
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 21.5,0.5
       parent: 2
-    - type: VentCrawTube
-      connected: True
   - uid: 809
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 21.5,8.5
       parent: 2
-    - type: VentCrawTube
-      connected: True
 - proto: GeneratorBasic15kW
   entities:
   - uid: 173

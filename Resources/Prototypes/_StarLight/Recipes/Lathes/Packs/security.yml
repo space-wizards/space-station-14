@@ -244,6 +244,8 @@
   - WeaponIonCarbine
   - WeaponDecloner
   - WeaponLaserImmolator
+  - WeaponLaserSvalinn
+  - WeaponTemperatureGun
 
 - type: latheRecipePack
   id: StarlightSecurityMechsWeapons
