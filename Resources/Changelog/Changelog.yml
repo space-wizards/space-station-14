@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: B-Kirill
-  changes:
-  - message: Added a search by profession and species in station records.
-    type: Add
-  id: 8422
-  time: '2025-05-06T16:21:16.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/37213
 - author: Cojoke-dot
   changes:
   - message: Pacifists can now throw bola
@@ -3943,3 +3936,11 @@
   id: 8933
   time: '2025-09-05T20:03:10.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/40133
+- author: ArtisticRoomba
+  changes:
+  - message: Resin windows (exo windows) now inherit Delta-Pressure damage values
+      and pressure thresholds from reinforced windows.
+    type: Fix
+  id: 8934
+  time: '2025-09-06T08:02:47.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/40151
