@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: Quantum-cross
-  changes:
-  - message: Hosted anomaly effects not appearing at host when host is in container
-      or buckled
-    type: Fix
-  id: 8425
-  time: '2025-05-06T17:01:37.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/37179
 - author: ScarKy0
   changes:
   - message: Borgs, brains, zombies and similiar now correctly count as "marooned"
@@ -3946,3 +3938,10 @@
   id: 8936
   time: '2025-09-06T16:00:24.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/40161
+- author: Dutch-VanDerLinde
+  changes:
+  - message: Some jumpsuits may now be folded to give them an alternate look.
+    type: Add
+  id: 8937
+  time: '2025-09-06T17:55:02.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/31213
