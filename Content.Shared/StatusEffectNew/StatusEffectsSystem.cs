@@ -55,11 +55,7 @@ public sealed partial class StatusEffectsSystem : EntitySystem
             if (effect.AppliedTo is null)
                 continue;
 
-            var meta = MetaData(ent);
-            if (meta.EntityPrototype is null)
-                continue;
-
-            TryRemoveStatusEffect(effect.AppliedTo.Value, meta.EntityPrototype);
+            PredictedQueueDel(ent);
         }
     }
 
