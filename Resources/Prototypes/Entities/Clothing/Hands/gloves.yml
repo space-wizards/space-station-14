@@ -29,6 +29,11 @@
     tags:
     - Kangaroo
     - WhitelistChameleon
+  - type: ThrowEquippedOnHit
+    throwChance: 0.5
+    whitelist:
+      tags:
+      - EvilGlove
 
 - type: entity
   parent: ClothingHandsGlovesBoxingRed
@@ -395,10 +400,11 @@
     sprite: Clothing/Hands/Gloves/northstar.rsi
   - type: MeleeWeapon
     autoAttack: true
-    attackRate: 4
+    attackRate: 5
     damage:
       types:
-       Blunt: 8
+        Blunt: 3.25
+        Asphyxiation: 1.75 # Change this to something better when newmed is finished.
     soundHit:
       collection: Punch
     animation: WeaponArcFist
@@ -408,6 +414,8 @@
     fiberColor: fibers-blue
   - type: FingerprintMask
   - type: MeleeSpeech
+  - type: ThrowEquippedOnHit
+    throwChance: 0.03
   - type: ActivatableUI
     key: enum.MeleeSpeechUiKey.Key
     verbOnly: true
@@ -422,6 +430,8 @@
     tags:
     - Kangaroo
     - WhitelistChameleon
+    - ClothMade
+    - EvilGlove
 
 - type: entity
   parent: [ClothingHandsBase, BaseSecurityContraband]
