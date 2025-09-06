@@ -18,6 +18,7 @@ using System.Linq;
 using Content.Shared.Movement.Events;
 using Content.Shared.Movement.Components;
 using Content.Shared.Tools;
+using Content.Shared.Actions.Components;
 using Content.Shared.Tools.Components;
 using Content.Shared.Tools.Systems;
 using Content.Shared.Verbs;
@@ -81,7 +82,6 @@ public sealed partial class MechSystem : SharedMechSystem
         SubscribeLocalEvent<MechComponent, BeingGibbedEvent>(OnBeingGibbed);
         SubscribeLocalEvent<MechComponent, UpdateCanMoveEvent>(OnMechCanMoveEvent);
         SubscribeLocalEvent<MechComponent, PowerCellChangedEvent>(OnBatteryChanged);
-        SubscribeLocalEvent<MechComponent, PowerCellSlotEmptyEvent>(OnBatteryChanged);
 
         SubscribeLocalEvent<MechPilotComponent, ToolUserAttemptUseEvent>(OnToolUseAttempt);
         SubscribeAllEvent<RequestMechEquipmentSelectEvent>(OnEquipmentSelectRequest);
@@ -211,13 +211,6 @@ public sealed partial class MechSystem : SharedMechSystem
         }
         else if (args.Container == component.PilotSlot)
         {
-            // Pilot left, clear alerts
-            var pilot = args.Entity;
-            _alerts.ClearAlert(pilot, component.BatteryAlert);
-            _alerts.ClearAlert(pilot, component.NoBatteryAlert);
-            _alerts.ClearAlert(pilot, component.HealthAlert);
-            _alerts.ClearAlert(pilot, component.BrokenAlert);
-
             // Unlock battery slot when unoccupied
             if (TryComp<ItemSlotsComponent>(uid, out var slots))
                 _itemSlots.SetLock(uid, component.BatterySlotId, false, slots);
@@ -312,6 +305,7 @@ public sealed partial class MechSystem : SharedMechSystem
         UpdateUserInterface(uid, component);
         UpdateBatteryAlert((uid, component));
         UpdateHealthAlert((uid, component));
+        SetupPilotRelay(args.User, uid);
     }
 
     private void OnMechExit(EntityUid uid, MechComponent component, MechExitEvent args)
@@ -327,16 +321,8 @@ public sealed partial class MechSystem : SharedMechSystem
 
         UpdateUserInterface(uid, component);
 
-        // Clear alerts after pilot exit
         if (pilot.HasValue)
-        {
-            _alerts.ClearAlert(pilot.Value, component.BatteryAlert);
-            _alerts.ClearAlert(pilot.Value, component.NoBatteryAlert);
-            _alerts.ClearAlert(pilot.Value, component.HealthAlert);
-            _alerts.ClearAlert(pilot.Value, component.BrokenAlert);
-
             _actionBlocker.UpdateCanMove(pilot.Value);
-        }
     }
 
     private void OnDamageChanged(EntityUid uid, MechComponent component, DamageChangedEvent args)
@@ -359,14 +345,6 @@ public sealed partial class MechSystem : SharedMechSystem
     private void OnBatteryChanged(EntityUid uid, MechComponent component, PowerCellChangedEvent args)
     {
         // Battery changed, update UI and alerts
-        Dirty(uid, component);
-        UpdateUserInterface(uid, component);
-        UpdateBatteryAlert((uid, component));
-    }
-
-    private void OnBatteryChanged(EntityUid uid, MechComponent component, PowerCellSlotEmptyEvent args)
-    {
-        // Battery removed, update UI and alerts
         Dirty(uid, component);
         UpdateUserInterface(uid, component);
         UpdateBatteryAlert((uid, component));
@@ -430,14 +408,10 @@ public sealed partial class MechSystem : SharedMechSystem
 
     private void UpdateBatteryAlert(Entity<MechComponent> ent)
     {
-        var pilot = ent.Comp.PilotSlot.ContainedEntity;
-        if (pilot == null)
-            return;
-
         if (!_powerCell.TryGetBatteryFromSlot(ent, out var batt))
         {
-            _alerts.ClearAlert(pilot.Value, ent.Comp.BatteryAlert);
-            _alerts.ShowAlert(pilot.Value, ent.Comp.NoBatteryAlert);
+            _alerts.ClearAlert(ent.Owner, ent.Comp.BatteryAlert);
+            _alerts.ShowAlert(ent.Owner, ent.Comp.NoBatteryAlert);
             return;
         }
 
@@ -449,31 +423,27 @@ public sealed partial class MechSystem : SharedMechSystem
         if (chargePercent == 0 && batt.CurrentCharge > 0)
             chargePercent = 1;
 
-        _alerts.ClearAlert(pilot.Value, ent.Comp.NoBatteryAlert);
-        _alerts.ShowAlert(pilot.Value, ent.Comp.BatteryAlert, chargePercent);
+        _alerts.ClearAlert(ent.Owner, ent.Comp.NoBatteryAlert);
+        _alerts.ShowAlert(ent.Owner, ent.Comp.BatteryAlert, chargePercent);
     }
 
     private void UpdateHealthAlert(Entity<MechComponent> ent)
     {
-        var pilot = ent.Comp.PilotSlot.ContainedEntity;
-        if (pilot == null)
-            return;
-
         if (ent.Comp.Broken)
         {
             // Mech is broken
-            _alerts.ClearAlert(pilot.Value, ent.Comp.HealthAlert);
-            _alerts.ShowAlert(pilot.Value, ent.Comp.BrokenAlert);
+            _alerts.ClearAlert(ent.Owner, ent.Comp.HealthAlert);
+            _alerts.ShowAlert(ent.Owner, ent.Comp.BrokenAlert);
         }
         else
         {
             // Mech is healthy, show health percentage
-            _alerts.ClearAlert(pilot.Value, ent.Comp.BrokenAlert);
+            _alerts.ClearAlert(ent.Owner, ent.Comp.BrokenAlert);
 
             var integrity = ent.Comp.Integrity.Float();
             var maxIntegrity = ent.Comp.MaxIntegrity.Float();
             var healthPercent = (short)MathF.Round((1f - integrity / maxIntegrity) * 4f);
-            _alerts.ShowAlert(pilot.Value, ent.Comp.HealthAlert, healthPercent);
+            _alerts.ShowAlert(ent.Owner, ent.Comp.HealthAlert, healthPercent);
         }
     }
 
@@ -536,14 +506,35 @@ public sealed partial class MechSystem : SharedMechSystem
     {
         // Eject pilot if present
         if (component.PilotSlot.ContainedEntity != null)
-        {
             TryEject(uid, component);
-        }
 
         if (component.PilotSlot.ContainedEntity != null)
             args.GibbedParts.Add(component.PilotSlot.ContainedEntity.Value);
 
         // TODO: Parts should fall out
         QueueDel(uid);
+    }
+
+    private void SetupPilotRelay(EntityUid pilot, EntityUid mech)
+    {
+        // Ensure pilot has required components
+        var pilotActions = EnsureComp<ActionsComponent>(pilot);
+        var pilotAlerts = EnsureComp<AlertsComponent>(pilot);
+
+        // Setup actions relay
+        var actionsRelay = EnsureComp<ActionsDisplayRelayComponent>(pilot);
+        actionsRelay.Source = mech;
+        actionsRelay.InteractAsSource = true;
+
+        // Setup alerts relay
+        var alertsRelay = EnsureComp<AlertsDisplayRelayComponent>(pilot);
+        alertsRelay.Source = mech;
+        alertsRelay.InteractAsSource = true;
+
+        // Notify client of changes
+        Dirty(pilot, pilotActions);
+        Dirty(pilot, pilotAlerts);
+        Dirty(pilot, actionsRelay);
+        Dirty(pilot, alertsRelay);
     }
 }

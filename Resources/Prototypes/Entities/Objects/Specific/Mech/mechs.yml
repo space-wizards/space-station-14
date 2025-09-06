@@ -127,6 +127,13 @@
   - type: MovementSpeedModifier
     baseWalkSpeed: 1
     baseSprintSpeed: 2
+  - type: Alerts
+  - type: Actions
+  - type: ActionGrant
+    actions:
+    - ActionMechCycleEquipment
+    - ActionMechOpenUI
+    - ActionMechEject
   - type: Tag
     tags:
     - DoorBumpOpener

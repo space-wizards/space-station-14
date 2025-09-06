@@ -205,15 +205,6 @@ public sealed partial class MechComponent : Component
     [DataField, ViewVariables(VVAccess.ReadWrite)]
     public float MovementEnergyPerSecond = 5f;
 
-    #region Action Prototypes
-    [DataField]
-    public EntProtoId MechCycleAction = "ActionMechCycleEquipment";
-    [DataField]
-    public EntProtoId MechUiAction = "ActionMechOpenUI";
-    [DataField]
-    public EntProtoId MechEjectAction = "ActionMechEject";
-    #endregion
-
     /// <summary>
     /// Assembly construction graph id to return to on disassembly.
     /// </summary>
@@ -228,10 +219,6 @@ public sealed partial class MechComponent : Component
     [DataField]
     public string? BrokenState;
     #endregion
-
-    [DataField] public EntityUid? MechCycleActionEntity;
-    [DataField] public EntityUid? MechUiActionEntity;
-    [DataField] public EntityUid? MechEjectActionEntity;
 
     /// <summary>
     /// Time the UI was last updated automatically.
