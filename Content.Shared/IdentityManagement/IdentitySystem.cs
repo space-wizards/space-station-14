@@ -1,6 +1,7 @@
 using Content.Shared.Access.Systems;
 using Content.Shared.Administration.Logs;
 using Content.Shared.Clothing;
+using Content.Shared.CriminalRecords.Systems;
 using Content.Shared.Database;
 using Content.Shared.Hands;
 using Content.Shared.Humanoid;
@@ -13,7 +14,10 @@ using Robust.Shared.GameObjects.Components.Localization;
 
 namespace Content.Shared.IdentityManagement;
 
-public abstract class SharedIdentitySystem : EntitySystem
+/// <summary>
+/// Responsible for updating the identity of an entity on init or clothing equip/unequip.
+/// </summary>
+public abstract class IdentitySystem : EntitySystem
 {
     [Dependency] private readonly SharedIdCardSystem _idCard = default!;
     [Dependency] private readonly ISharedAdminLogManager _adminLog = default!;
@@ -21,19 +25,22 @@ public abstract class SharedIdentitySystem : EntitySystem
     [Dependency] private readonly SharedContainerSystem _container = default!;
     [Dependency] private readonly SharedHumanoidAppearanceSystem _humanoid = default!;
     [Dependency] private readonly GrammarSystem _grammarSystem = default!;
+    [Dependency] private readonly SharedCriminalRecordsConsoleSystem _criminalRecordsConsole = default!;
 
-    private static string _slotName = "identity";
+    private const string SlotName = "identity";
 
     // Recycled hashset for perf
     private readonly HashSet<EntityUid> _queuedIdentityUpdates = new();
 
+    /// <inheritdoc />
     public override void Initialize()
     {
         base.Initialize();
 
+        SubscribeLocalEvent<IdentityComponent, MapInitEvent>(OnMapInit);
         SubscribeLocalEvent<IdentityComponent, ComponentInit>(OnComponentInit);
         SubscribeLocalEvent<IdentityBlockerComponent, SeeIdentityAttemptEvent>(OnSeeIdentity);
-        SubscribeLocalEvent<IdentityBlockerComponent, InventoryRelayedEvent<SeeIdentityAttemptEvent>>((e, c, ev) => OnSeeIdentity(e, c, ev.Args));
+        SubscribeLocalEvent<IdentityBlockerComponent, InventoryRelayedEvent<SeeIdentityAttemptEvent>>(OnRelaySeeIdentity);
         SubscribeLocalEvent<IdentityBlockerComponent, ItemMaskToggledEvent>(OnMaskToggled);
 
         SubscribeLocalEvent<IdentityComponent, DidEquipEvent>((uid, _, _) => QueueIdentityUpdate(uid));
@@ -42,35 +49,6 @@ public abstract class SharedIdentitySystem : EntitySystem
         SubscribeLocalEvent<IdentityComponent, DidUnequipHandEvent>((uid, _, _) => QueueIdentityUpdate(uid));
         SubscribeLocalEvent<IdentityComponent, WearerMaskToggledEvent>((uid, _, _) => QueueIdentityUpdate(uid));
         SubscribeLocalEvent<IdentityComponent, EntityRenamedEvent>((uid, _, _) => QueueIdentityUpdate(uid));
-        SubscribeLocalEvent<IdentityComponent, MapInitEvent>(OnMapInit);
-    }
-
-    private void OnSeeIdentity(EntityUid uid, IdentityBlockerComponent component, SeeIdentityAttemptEvent args)
-    {
-        if (component.Enabled)
-        {
-            args.TotalCoverage |= component.Coverage;
-            if(args.TotalCoverage == IdentityBlockerCoverage.FULL)
-                args.Cancel();
-        }
-    }
-
-    protected virtual void OnComponentInit(EntityUid uid, IdentityComponent component, ComponentInit args)
-    {
-        component.IdentityEntitySlot = _container.EnsureContainer<ContainerSlot>(uid, _slotName);
-    }
-
-    private void OnMaskToggled(Entity<IdentityBlockerComponent> ent, ref ItemMaskToggledEvent args)
-    {
-        ent.Comp.Enabled = !args.Mask.Comp.IsToggled;
-    }
-
-    /// <summary>
-    ///     Queues an identity update to the start of the next tick.
-    /// </summary>
-    public void QueueIdentityUpdate(EntityUid uid)
-    {
-        _queuedIdentityUpdates.Add(uid);
     }
 
     public override void Update(float frameTime)
@@ -82,37 +60,74 @@ public abstract class SharedIdentitySystem : EntitySystem
             if (!TryComp<IdentityComponent>(ent, out var identity))
                 continue;
 
-            UpdateIdentityInfo(ent, identity);
+            UpdateIdentityInfo((ent, identity));
         }
 
         _queuedIdentityUpdates.Clear();
     }
 
+    #region Event handlers
+
     // This is where the magic happens
-    private void OnMapInit(EntityUid uid, IdentityComponent component, MapInitEvent args)
+    private void OnMapInit(Entity<IdentityComponent> ent, ref MapInitEvent args)
     {
-        var ident = Spawn(null, Transform(uid).Coordinates);
+        var ident = Spawn(null, Transform(ent).Coordinates);
 
         _metaData.SetEntityName(ident, "identity");
-        QueueIdentityUpdate(uid);
-        _container.Insert(ident, component.IdentityEntitySlot);
+        QueueIdentityUpdate(ent);
+        _container.Insert(ident, ent.Comp.IdentityEntitySlot);
     }
+
+    private void OnComponentInit(Entity<IdentityComponent> ent, ref ComponentInit args)
+    {
+        ent.Comp.IdentityEntitySlot = _container.EnsureContainer<ContainerSlot>(ent, SlotName);
+    }
+
+    private void OnSeeIdentity(Entity<IdentityBlockerComponent> ent, ref SeeIdentityAttemptEvent args)
+    {
+        if (ent.Comp.Enabled)
+        {
+            args.TotalCoverage |= ent.Comp.Coverage;
+            if(args.TotalCoverage == IdentityBlockerCoverage.FULL)
+                args.Cancel();
+        }
+    }
+
+    private void OnRelaySeeIdentity(Entity<IdentityBlockerComponent> ent, ref InventoryRelayedEvent<SeeIdentityAttemptEvent> args)
+    {
+        OnSeeIdentity(ent, ref args.Args);
+    }
+
+    private void OnMaskToggled(Entity<IdentityBlockerComponent> ent, ref ItemMaskToggledEvent args)
+    {
+        ent.Comp.Enabled = !args.Mask.Comp.IsToggled;
+    }
+
+    /// <summary>
+    /// Queues an identity update to the start of the next tick.
+    /// </summary>
+    public void QueueIdentityUpdate(EntityUid uid)
+    {
+        _queuedIdentityUpdates.Add(uid);
+    }
+
+    #endregion
 
     #region Private API
 
     /// <summary>
-    ///     Updates the metadata name for the id(entity) from the current state of the character.
+    /// Updates the metadata name for the id(entity) from the current state of the character.
     /// </summary>
-    private void UpdateIdentityInfo(EntityUid uid, IdentityComponent identity)
+    private void UpdateIdentityInfo(Entity<IdentityComponent> ent)
     {
-        if (identity.IdentityEntitySlot.ContainedEntity is not { } ident)
+        if (ent.Comp.IdentityEntitySlot.ContainedEntity is not { } ident)
             return;
 
-        var representation = GetIdentityRepresentation(uid);
-        var name = GetIdentityName(uid, representation);
+        var representation = GetIdentityRepresentation(ent.Owner);
+        var name = GetIdentityName(ent, representation);
 
         // Clone the old entity's grammar to the identity entity, for loc purposes.
-        if (TryComp<GrammarComponent>(uid, out var grammar))
+        if (TryComp<GrammarComponent>(ent, out var grammar))
         {
             var identityGrammar = EnsureComp<GrammarComponent>(ident);
             identityGrammar.Attributes.Clear();
@@ -134,9 +149,15 @@ public abstract class SharedIdentitySystem : EntitySystem
 
         _metaData.SetEntityName(ident, name);
 
-        _adminLog.Add(LogType.Identity, LogImpact.Medium, $"{ToPrettyString(uid)} changed identity to {name}");
-        var identityChangedEvent = new IdentityChangedEvent(uid, ident);
-        RaiseLocalEvent(uid, ref identityChangedEvent);
+        _adminLog.Add(LogType.Identity, LogImpact.Medium, $"{ToPrettyString(ent)} changed identity to {name}");
+        var identityChangedEvent = new IdentityChangedEvent(ent, ident);
+        RaiseLocalEvent(ent, ref identityChangedEvent);
+        SetIdentityCriminalIcon(ent);
+    }
+
+    private void SetIdentityCriminalIcon(EntityUid uid)
+    {
+        _criminalRecordsConsole.CheckNewIdentity(uid);
     }
 
     private string GetIdentityName(EntityUid target, IdentityRepresentation representation)
@@ -148,28 +169,26 @@ public abstract class SharedIdentitySystem : EntitySystem
     }
 
     /// <summary>
-    ///     Gets an 'identity representation' of an entity, with their true name being the entity name
-    ///     and their 'presumed name' and 'presumed job' being the name/job on their ID card, if they have one.
+    /// Gets an 'identity representation' of an entity, with their true name being the entity name
+    /// and their 'presumed name' and 'presumed job' being the name/job on their ID card, if they have one.
     /// </summary>
-    private IdentityRepresentation GetIdentityRepresentation(EntityUid target,
-        InventoryComponent? inventory=null,
-        HumanoidAppearanceComponent? appearance=null)
+    private IdentityRepresentation GetIdentityRepresentation(Entity<InventoryComponent?, HumanoidAppearanceComponent?> target)
     {
         int age = 18;
         Gender gender = Gender.Epicene;
         string species = SharedHumanoidAppearanceSystem.DefaultSpecies;
 
         // Always use their actual age and gender, since that can't really be changed by an ID.
-        if (Resolve(target, ref appearance, false))
+        if (Resolve(target, ref target.Comp2, false))
         {
-            gender = appearance.Gender;
-            age = appearance.Age;
-            species = appearance.Species;
+            gender = target.Comp2.Gender;
+            age = target.Comp2.Age;
+            species = target.Comp2.Species;
         }
 
         var ageString = _humanoid.GetAgeRepresentation(species, age);
         var trueName = Name(target);
-        if (!Resolve(target, ref inventory, false))
+        if (!Resolve(target, ref target.Comp1, false))
             return new(trueName, gender, ageString, string.Empty);
 
         string? presumedJob = null;
@@ -190,7 +209,7 @@ public abstract class SharedIdentitySystem : EntitySystem
 }
 
 /// <summary>
-///     Gets called whenever an entity changes their identity.
+/// Gets called whenever an entity changes their identity.
 /// </summary>
 [ByRefEvent]
 public record struct IdentityChangedEvent(EntityUid CharacterEntity, EntityUid IdentityEntity);
