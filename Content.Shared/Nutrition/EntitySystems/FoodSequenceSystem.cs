@@ -85,7 +85,7 @@ public sealed class FoodSequenceSystem : SharedFoodSequenceSystem
 
     private void Metamorf(Entity<FoodSequenceStartPointComponent> start, MetamorphRecipePrototype recipe)
     {
-        var result = SpawnAtPosition(recipe.Result, Transform(start).Coordinates);
+        var result = PredictedSpawnNextToOrDrop(recipe.Result, start);
 
         //Try putting in container
         _transform.DropNextTo(result, (start, Transform(start)));
