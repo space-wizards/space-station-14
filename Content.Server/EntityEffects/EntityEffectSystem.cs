@@ -548,6 +548,9 @@ public sealed class EntityEffectSystem : EntitySystem
 
     private void OnExecuteCauseZombieInfection(ref ExecuteEntityEffectEvent<CauseZombieInfection> args)
     {
+        if (HasComp<ZombieImmuneComponent>(args.Args.TargetEntity))
+            return;
+
         EnsureComp<ZombifyOnDeathComponent>(args.Args.TargetEntity);
         EnsureComp<PendingZombieComponent>(args.Args.TargetEntity);
     }
