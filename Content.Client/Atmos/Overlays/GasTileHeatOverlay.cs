@@ -186,6 +186,10 @@ public sealed class GasTileHeatOverlay : Overlay
         if (ScreenTexture is null || _heatTarget is null || _heatBlurTarget is null)
             return;
 
+        // Skip rendering if heat distortion is disabled.
+        if (!_configManager.GetCVar(CCVars.HeatDistortionShader))
+            return;
+
         // Blur to soften the edges of the distortion. the lower parts of the alpha channel need to get cut off in the
         // distortion shader to keep them in tile bounds.
         _clyde.BlurRenderTarget(args.Viewport, _heatTarget, _heatBlurTarget, args.Viewport.Eye!, 14f);

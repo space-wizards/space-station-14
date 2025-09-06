@@ -73,4 +73,10 @@ public sealed partial class CCVars
     /// </summary>
     public static readonly CVarDef<bool> AccessibilityServerCensorNudity =
             CVarDef.Create("accessibility.server_censor_nudity", false, CVar.ARCHIVE | CVar.REPLICATED | CVar.SERVER);
+
+    /// <summary>
+    /// If enabled, enables heat distortion shader.
+    /// </summary>
+    public static readonly CVarDef<bool> HeatDistortionShader =
+            CVarDef.Create("accessibility.heat_distortion", true, CVar.CLIENTONLY | CVar.ARCHIVE);
 }
