@@ -17,7 +17,6 @@ namespace Content.Server.Atmos.EntitySystems;
 public sealed class DeltaPressureSystem : EntitySystem
 {
     [Dependency] private readonly AtmosphereSystem _atmosphereSystem = default!;
-    [Dependency] private readonly SharedMapSystem _map = default!;
 
     public override void Initialize()
     {
@@ -40,7 +39,7 @@ public sealed class DeltaPressureSystem : EntitySystem
             return;
         }
 
-        ent.Comp.CurrentPosition = _map.CoordinatesToTile(xform.GridUid.Value, mapGridComponent, args.NewPosition);
+        _atmosphereSystem.CacheAirtightStructureOffsets(ent, mapGridComponent, xform);
     }
 
     private void OnComponentInit(Entity<DeltaPressureComponent> ent, ref ComponentInit args)

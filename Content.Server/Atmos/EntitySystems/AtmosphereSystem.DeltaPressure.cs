@@ -1,6 +1,8 @@
+using System.Runtime.InteropServices;
 using Content.Server.Atmos.Components;
 using Content.Shared.Atmos;
 using Content.Shared.Damage;
+using Robust.Shared.Map.Components;
 using Robust.Shared.Random;
 using Robust.Shared.Threading;
 
@@ -39,17 +41,9 @@ public sealed partial class AtmosphereSystem
          so simple vector operations like min/max/abs can be performed on them.
          */
 
-        var tiles = new TileAtmosphere?[Atmospherics.Directions];
-        for (var i = 0; i < Atmospherics.Directions; i++)
-        {
-            var direction = (AtmosDirection)(1 << i);
-            var offset = ent.Comp.CurrentPosition.Offset(direction);
-            tiles[i] = gridAtmosComp.Tiles.GetValueOrDefault(offset);
-        }
-
         Span<float> pressures = stackalloc float[Atmospherics.Directions];
 
-        GetBulkTileAtmospherePressures(tiles, pressures);
+        GetBulkTileAtmospherePressures(ent.Comp.OffsetPositions, pressures, gridAtmosComp);
 
         Span<float> opposingGroupA = stackalloc float[DeltaPressurePairCount];
         Span<float> opposingGroupB = stackalloc float[DeltaPressurePairCount];
@@ -89,16 +83,19 @@ public sealed partial class AtmosphereSystem
 
     /// <summary>
     /// A DeltaPressure helper method that retrieves the pressures of all gas mixtures
-    /// in the given array of <see cref="TileAtmosphere"/>s, and stores the results in the
+    /// in the given array of <see cref="Vector2i"/>s, and stores the results in the
     /// provided <paramref name="pressures"/> span.
     /// The tiles array length is limited to Atmosphereics.Directions.
     /// </summary>
-    /// <param name="tiles">The tiles array to find the pressures of.</param>
+    /// <param name="tiles">An array of <see cref="Vector2i"/> local coordinates to retrieve pressures at.</param>
     /// <param name="pressures">The span to store the pressures to - this should be the same length
     /// as the tile array.</param>
+    /// <param name="gridAtmosComp">The grid to search the tiles for.</param>
     /// <remarks>This is for internal use of the DeltaPressure system -
     /// it may not be a good idea to use this generically.</remarks>
-    private static void GetBulkTileAtmospherePressures(TileAtmosphere?[] tiles, Span<float> pressures)
+    private static void GetBulkTileAtmospherePressures(Vector2i[] tiles,
+        Span<float> pressures,
+        GridAtmosphereComponent gridAtmosComp)
     {
         #if DEBUG
         // Just in case someone tries to use this method incorrectly.
@@ -117,7 +114,8 @@ public sealed partial class AtmosphereSystem
 
         for (var i = 0; i < tiles.Length; i++)
         {
-            if (tiles[i] is not { Air: { } mixture })
+            if (!gridAtmosComp.Tiles.TryGetValue(tiles[i], out var tile) ||
+                tile.Air is not { } mixture)
             {
                 pressures[i] = 0f;
 
@@ -146,6 +144,26 @@ public sealed partial class AtmosphereSystem
         NumericsHelpers.Multiply(mixtMoles, atmosR);
         NumericsHelpers.Multiply(mixtMoles, mixtTemp);
         NumericsHelpers.Divide(mixtMoles, mixtVol, pressures);
+    }
+
+    /// <summary>
+    /// Caches airtight structure offsets for the given <see cref="DeltaPressureComponent"/> entity based on its current position on the given grid.
+    /// </summary>
+    /// <param name="ent">The entity with a <see cref="DeltaPressureComponent"/> whose offsets need to be cached.</param>
+    /// <param name="mapGridComponent">The <see cref="MapGridComponent"/> that belongs to the grid that the entity is on.</param>
+    /// <param name="xform"><see cref="TransformComponent"/> of the entity.</param>
+    public void CacheAirtightStructureOffsets(Entity<DeltaPressureComponent> ent,
+        MapGridComponent mapGridComponent,
+        TransformComponent xform)
+    {
+        // Computing offsets is quite expensive in a hot loop, and they don't change frequently for
+        // most airtight structures, so we go ahead and cache them and only update on movement.
+        for (var i = 0; i < Atmospherics.Directions; i++)
+        {
+            var dir = (AtmosDirection)(1 << i);
+            var offset = _map.LocalToTile(ent, mapGridComponent, xform.Coordinates).Offset(dir);
+            ent.Comp.OffsetPositions[i] = offset;
+        }
     }
 
     /// <summary>
