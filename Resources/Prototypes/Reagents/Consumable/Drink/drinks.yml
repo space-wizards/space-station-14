@@ -466,19 +466,17 @@
 - type: reagent
   id: Ice
   name: reagent-name-ice
-  parent: Water # If you think about it, ice is just water that's cold enough to go from the liquid state to the solid state
+  parent: BaseDrink
   desc: reagent-desc-ice
   evaporationSpeed: 0.15 # TODO: Ideally Ice should just turn into Water if the room is warm enough, rather than evaporating over time as Water does
   absorbent: false
   physicalDesc: reagent-physical-desc-frosty
   flavor: cold
   color: "#bed8e6"
-  friction: 0.05 # Copied from Ice Crust
-  metabolisms:
-    Drink:
-      effects:
-      - !type:SatiateThirst
-        factor: 3 # Slightly less hydrating than pure water
+  recognizable: true
+  meltingPoint: 0.0
+  boilingPoint: 100.0
+  friction: 0.05 #Copied from Ice Crust
   metamorphicSprite:
     sprite: Objects/Consumable/Drinks/iceglass.rsi
     state: icon_empty
