@@ -1,7 +1,6 @@
 #nullable enable annotations
 using System.Linq;
 using System.Numerics;
-using Content.Server.Disposal.Unit;
 using Content.Server.Power.Components;
 using Content.Server.Power.EntitySystems;
 using Content.Shared.Disposal.Components;
@@ -28,14 +27,14 @@ namespace Content.IntegrationTests.Tests.Disposal
                 SubscribeLocalEvent<DoInsertDisposalUnitEvent>(ev =>
                 {
                     var (_, toInsert, unit) = ev;
-                    var insertTransform = Comp<TransformComponent>(toInsert);
+                    var insertTransform = Comp<TransformComponent>(GetEntity(toInsert));
                     // Not in a tube yet
-                    Assert.That(insertTransform.ParentUid, Is.EqualTo(unit));
+                    Assert.That(insertTransform.ParentUid, Is.EqualTo(GetEntity(unit)));
                 }, after: new[] { typeof(SharedDisposalUnitSystem) });
             }
         }
 
-        private static void UnitInsert(EntityUid uid, DisposalUnitComponent unit, bool result, DisposalUnitSystem disposalSystem, params EntityUid[] entities)
+        private static void UnitInsert(EntityUid uid, DisposalUnitComponent unit, bool result, SharedDisposalUnitSystem disposalSystem, params EntityUid[] entities)
         {
             foreach (var entity in entities)
             {
@@ -52,13 +51,13 @@ namespace Content.IntegrationTests.Tests.Disposal
             }
         }
 
-        private static void UnitInsertContains(EntityUid uid, DisposalUnitComponent unit, bool result, DisposalUnitSystem disposalSystem, params EntityUid[] entities)
+        private static void UnitInsertContains(EntityUid uid, DisposalUnitComponent unit, bool result, SharedDisposalUnitSystem disposalSystem, params EntityUid[] entities)
         {
             UnitInsert(uid, unit, result, disposalSystem, entities);
             UnitContains(unit, result, entities);
         }
 
-        private static void Flush(EntityUid unitEntity, DisposalUnitComponent unit, bool result, DisposalUnitSystem disposalSystem, params EntityUid[] entities)
+        private static void Flush(EntityUid unitEntity, DisposalUnitComponent unit, bool result, SharedDisposalUnitSystem disposalSystem, params EntityUid[] entities)
         {
             Assert.Multiple(() =>
             {
@@ -160,7 +159,7 @@ namespace Content.IntegrationTests.Tests.Disposal
 
             var entityManager = server.ResolveDependency<IEntityManager>();
             var xformSystem = entityManager.System<SharedTransformSystem>();
-            var disposalSystem = entityManager.System<DisposalUnitSystem>();
+            var disposalSystem = entityManager.System<SharedDisposalUnitSystem>();
             var power = entityManager.System<PowerReceiverSystem>();
 
             await server.WaitAssertion(() =>

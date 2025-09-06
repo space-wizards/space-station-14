@@ -1,18 +1,20 @@
-using Content.Server.Disposal.Unit;
 using Content.Shared.Damage;
+using Content.Shared.Disposal.Unit;
 using Robust.Shared.Audio;
 using Robust.Shared.Containers;
+using Robust.Shared.GameStates;
+using Robust.Shared.Serialization;
 
-namespace Content.Server.Disposal.Tube;
+namespace Content.Shared.Disposal.Tube;
 
-[RegisterComponent]
-[Access(typeof(DisposalTubeSystem), typeof(DisposableSystem))]
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
+[Access(typeof(SharedDisposalTubeSystem), typeof(SharedDisposableSystem))]
 public sealed partial class DisposalTubeComponent : Component
 {
     [DataField]
     public string ContainerId = "DisposalTube";
 
-    [ViewVariables]
+    [DataField, AutoNetworkedField]
     public bool Connected;
 
     [DataField]
@@ -21,13 +23,13 @@ public sealed partial class DisposalTubeComponent : Component
     /// <summary>
     /// Container of entities that are currently inside this tube.
     /// </summary>
-    [ViewVariables]
-    public Container Contents = default!;
+    [DataField]
+    public Container? Contents;
 
     /// <summary>
     /// Damage dealt to containing entities on every turn.
     /// </summary>
-    [DataField, ViewVariables(VVAccess.ReadWrite)]
+    [DataField]
     public DamageSpecifier DamageOnTurn = new()
     {
         DamageDict = new()
@@ -40,8 +42,34 @@ public sealed partial class DisposalTubeComponent : Component
     public DisposalTubeType DisposalTubeType = DisposalTubeType.Disposals;
 }
 
+[ByRefEvent]
+public record struct GetDisposalsConnectableDirectionsEvent
+{
+    public Direction[] Connectable;
+}
+
+[ByRefEvent]
+public record struct GetDisposalsNextDirectionEvent(DisposalHolderComponent Holder)
+{
+    public Direction Next;
+}
+
+[Serializable, NetSerializable]
 public enum DisposalTubeType
 {
     Disposals,
     Transit
+}
+
+[Serializable, NetSerializable]
+public enum DisposalTubeVisuals
+{
+    VisualState
+}
+
+[Serializable, NetSerializable]
+public enum DisposalTubeVisualState
+{
+    Free = 0,
+    Anchored,
 }

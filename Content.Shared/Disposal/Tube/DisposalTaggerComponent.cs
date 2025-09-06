@@ -1,11 +1,12 @@
 using Robust.Shared.Audio;
+using Robust.Shared.GameStates;
 
-namespace Content.Server.Disposal.Tube;
+namespace Content.Shared.Disposal.Tube;
 
-[RegisterComponent]
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
 public sealed partial class DisposalTaggerComponent : DisposalTransitComponent
 {
-    [DataField]
+    [DataField, AutoNetworkedField]
     public string Tag = string.Empty;
 
     [DataField]

@@ -5,6 +5,7 @@ using Robust.Shared.Containers;
 using Robust.Shared.GameStates;
 using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
+using Content.Shared.DoAfter;
 
 namespace Content.Shared.Disposal.Components;
 
@@ -116,69 +117,13 @@ public sealed partial class DisposalUnitComponent : Component
     /// </summary>
     [DataField(customTypeSerializer: typeof(TimeOffsetSerializer)), AutoNetworkedField]
     public TimeSpan? NextFlush;
-
-    [Serializable, NetSerializable]
-    public enum Visuals : byte
-    {
-        VisualState,
-        Handle,
-        Light
-    }
-
-    [Serializable, NetSerializable]
-    public enum VisualState : byte
-    {
-        UnAnchored,
-        Anchored,
-        OverlayFlushing,
-        OverlayCharging
-    }
-
-    [Serializable, NetSerializable]
-    public enum HandleState : byte
-    {
-        Normal,
-        Engaged
-    }
-
-    [Serializable, NetSerializable]
-    [Flags]
-    public enum LightStates : byte
-    {
-        Off = 0,
-        Charging = 1 << 0,
-        Full = 1 << 1,
-        Ready = 1 << 2
-    }
-
-    [Serializable, NetSerializable]
-    public enum UiButton : byte
-    {
-        Eject,
-        Engage,
-        Power
-    }
-
-    /// <summary>
-    ///     Message data sent from client to server when a disposal unit ui button is pressed.
-    /// </summary>
-    [Serializable, NetSerializable]
-    public sealed class UiButtonPressedMessage : BoundUserInterfaceMessage
-    {
-        public readonly UiButton Button;
-
-        public UiButtonPressedMessage(UiButton button)
-        {
-            Button = button;
-        }
-    }
-
-    [Serializable, NetSerializable]
-    public enum DisposalUnitUiKey : byte
-    {
-        Key
-    }
 }
+
+[Serializable, NetSerializable]
+public record DoInsertDisposalUnitEvent(NetEntity? User, NetEntity ToInsert, NetEntity Unit);
+
+[Serializable, NetSerializable]
+public sealed partial class DisposalDoAfterEvent : SimpleDoAfterEvent;
 
 [Serializable, NetSerializable]
 public enum DisposalsPressureState : byte
@@ -194,4 +139,79 @@ public enum DisposalsPressureState : byte
     /// FlushDelay has elapsed and now we're transitioning back to Ready.
     /// </summary>
     Pressurizing
+}
+
+[Serializable, NetSerializable]
+public enum DisposalUnitVisuals : byte
+{
+    VisualState,
+    Handle,
+    Light
+}
+
+[Serializable, NetSerializable]
+public enum DisposalUnitVisualState : byte
+{
+    UnAnchored,
+    Anchored,
+    OverlayFlushing,
+    OverlayCharging
+}
+
+[Serializable, NetSerializable]
+public enum DisposalUnitHandleState : byte
+{
+    Normal,
+    Engaged
+}
+
+[Serializable, NetSerializable]
+[Flags]
+public enum DisposalUnitLightStates : byte
+{
+    Off = 0,
+    Charging = 1 << 0,
+    Full = 1 << 1,
+    Ready = 1 << 2
+}
+
+[Serializable, NetSerializable]
+public enum DisposalUnitUiButton : byte
+{
+    Eject,
+    Engage,
+    Power
+}
+
+[Serializable, NetSerializable]
+public enum DisposalUnitVisualLayers : byte
+{
+    Unanchored,
+    Base,
+    BaseCharging,
+    OverlayFlush,
+    OverlayCharging,
+    OverlayReady,
+    OverlayFull,
+    OverlayEngaged
+}
+
+/// <summary>
+///     Message data sent from client to server when a disposal unit ui button is pressed.
+/// </summary>
+[Serializable, NetSerializable]
+public sealed class DisposalUnitUiButtonPressedMessage : BoundUserInterfaceMessage
+{
+    public readonly DisposalUnitUiButton Button;
+
+    public DisposalUnitUiButtonPressedMessage(DisposalUnitUiButton button)
+    {
+        Button = button;
+    }
+}
+
+[Serializable, NetSerializable]
+public enum DisposalUnitUiKey : byte
+{
+    Key
 }

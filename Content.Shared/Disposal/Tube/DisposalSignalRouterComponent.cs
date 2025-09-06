@@ -1,18 +1,20 @@
 using Content.Shared.DeviceLinking;
+using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
 
-namespace Content.Server.Disposal.Tube;
+namespace Content.Shared.Disposal.Tube;
 
 /// <summary>
 /// Requires <see cref="DisposalJunctionComponent"/> to function.
 /// </summary>
-[RegisterComponent, Access(typeof(DisposalSignalRouterSystem))]
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
+[Access(typeof(DisposalSignalRouterSystem))]
 public sealed partial class DisposalSignalRouterComponent : Component
 {
     /// <summary>
     /// Whether to route items to the side or not.
     /// </summary>
-    [DataField]
+    [DataField, AutoNetworkedField]
     public bool Routing;
 
     /// <summary>

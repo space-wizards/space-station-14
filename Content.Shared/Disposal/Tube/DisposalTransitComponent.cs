@@ -1,7 +1,9 @@
-namespace Content.Server.Disposal.Tube;
+using Robust.Shared.GameStates;
 
-[RegisterComponent]
-[Access(typeof(DisposalTubeSystem))]
+namespace Content.Shared.Disposal.Tube;
+
+[RegisterComponent, NetworkedComponent]
+[Access(typeof(SharedDisposalTubeSystem))]
 [Virtual]
 public partial class DisposalTransitComponent : Component
 {

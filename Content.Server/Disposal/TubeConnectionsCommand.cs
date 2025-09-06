@@ -1,6 +1,6 @@
 using Content.Server.Administration;
-using Content.Server.Disposal.Tube;
 using Content.Shared.Administration;
+using Content.Shared.Disposal.Tube;
 using Robust.Shared.Console;
 
 namespace Content.Server.Disposal
@@ -54,7 +54,7 @@ namespace Content.Server.Disposal
                 return;
             }
 
-            _entities.System<DisposalTubeSystem>().PopupDirections(id.Value, tube, player.AttachedEntity.Value);
+            _entities.System<SharedDisposalTubeSystem>().PopupDirections(id.Value, tube, player.AttachedEntity.Value);
         }
     }
 }

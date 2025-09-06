@@ -34,18 +34,16 @@ public sealed class DisposalUnitSystem : SharedDisposalUnitSystem
         UpdateUI((uid, component));
     }
 
-    protected override void UpdateUI(Entity<DisposalUnitComponent> entity)
+    private void UpdateUI(Entity<DisposalUnitComponent> entity)
     {
-        if (_uiSystem.TryGetOpenUi<DisposalUnitBoundUserInterface>(entity.Owner, DisposalUnitComponent.DisposalUnitUiKey.Key, out var bui))
+        if (_uiSystem.TryGetOpenUi<DisposalUnitBoundUserInterface>(entity.Owner, DisposalUnitUiKey.Key, out var bui))
         {
             bui.Refresh(entity);
         }
     }
 
-    protected override void OnDisposalInit(Entity<DisposalUnitComponent> ent, ref ComponentInit args)
+    private void OnDisposalInit(Entity<DisposalUnitComponent> ent, ref ComponentInit args)
     {
-        base.OnDisposalInit(ent, ref args);
-
         if (!TryComp<SpriteComponent>(ent, out var sprite) || !TryComp<AppearanceComponent>(ent, out var appearance))
             return;
 
@@ -65,20 +63,20 @@ public sealed class DisposalUnitSystem : SharedDisposalUnitSystem
     /// </summary>
     private void UpdateState(Entity<DisposalUnitComponent> ent, SpriteComponent sprite, AppearanceComponent appearance)
     {
-        if (!_appearanceSystem.TryGetData<DisposalUnitComponent.VisualState>(ent, DisposalUnitComponent.Visuals.VisualState, out var state, appearance))
+        if (!_appearanceSystem.TryGetData<DisposalUnitVisualState>(ent, DisposalUnitVisuals.VisualState, out var state, appearance))
             return;
 
-        _sprite.LayerSetVisible((ent, sprite), DisposalUnitVisualLayers.Unanchored, state == DisposalUnitComponent.VisualState.UnAnchored);
-        _sprite.LayerSetVisible((ent, sprite), DisposalUnitVisualLayers.Base, state == DisposalUnitComponent.VisualState.Anchored);
-        _sprite.LayerSetVisible((ent, sprite), DisposalUnitVisualLayers.OverlayFlush, state == DisposalUnitComponent.VisualState.OverlayFlushing);
-        _sprite.LayerSetVisible((ent, sprite), DisposalUnitVisualLayers.BaseCharging, state == DisposalUnitComponent.VisualState.OverlayCharging);
+        _sprite.LayerSetVisible((ent, sprite), DisposalUnitVisualLayers.Unanchored, state == DisposalUnitVisualState.UnAnchored);
+        _sprite.LayerSetVisible((ent, sprite), DisposalUnitVisualLayers.Base, state == DisposalUnitVisualState.Anchored);
+        _sprite.LayerSetVisible((ent, sprite), DisposalUnitVisualLayers.OverlayFlush, state == DisposalUnitVisualState.OverlayFlushing);
+        _sprite.LayerSetVisible((ent, sprite), DisposalUnitVisualLayers.BaseCharging, state == DisposalUnitVisualState.OverlayCharging);
 
         var chargingState = _sprite.LayerMapTryGet((ent, sprite), DisposalUnitVisualLayers.BaseCharging, out var chargingLayer, false)
             ? _sprite.LayerGetRsiState((ent, sprite), chargingLayer)
             : new RSI.StateId(DefaultChargeState);
 
         // This is a transient state so not too worried about replaying in range.
-        if (state == DisposalUnitComponent.VisualState.OverlayFlushing)
+        if (state == DisposalUnitVisualState.OverlayFlushing)
         {
             if (!_animationSystem.HasRunningAnimation(ent, AnimationKey))
             {
@@ -122,31 +120,20 @@ public sealed class DisposalUnitSystem : SharedDisposalUnitSystem
         else
             _animationSystem.Stop(ent.Owner, AnimationKey);
 
-        if (!_appearanceSystem.TryGetData<DisposalUnitComponent.HandleState>(ent, DisposalUnitComponent.Visuals.Handle, out var handleState, appearance))
-            handleState = DisposalUnitComponent.HandleState.Normal;
+        if (!_appearanceSystem.TryGetData<DisposalUnitHandleState>(ent, DisposalUnitVisuals.Handle, out var handleState, appearance))
+            handleState = DisposalUnitHandleState.Normal;
 
-        _sprite.LayerSetVisible((ent, sprite), DisposalUnitVisualLayers.OverlayEngaged, handleState != DisposalUnitComponent.HandleState.Normal);
+        _sprite.LayerSetVisible((ent, sprite), DisposalUnitVisualLayers.OverlayEngaged, handleState != DisposalUnitHandleState.Normal);
 
-        if (!_appearanceSystem.TryGetData<DisposalUnitComponent.LightStates>(ent, DisposalUnitComponent.Visuals.Light, out var lightState, appearance))
-            lightState = DisposalUnitComponent.LightStates.Off;
+        if (!_appearanceSystem.TryGetData<DisposalUnitLightStates>(ent, DisposalUnitVisuals.Light, out var lightState, appearance))
+            lightState = DisposalUnitLightStates.Off;
 
         _sprite.LayerSetVisible((ent, sprite), DisposalUnitVisualLayers.OverlayCharging,
-                (lightState & DisposalUnitComponent.LightStates.Charging) != 0);
+                (lightState & DisposalUnitLightStates.Charging) != 0);
         _sprite.LayerSetVisible((ent, sprite), DisposalUnitVisualLayers.OverlayReady,
-                (lightState & DisposalUnitComponent.LightStates.Ready) != 0);
+                (lightState & DisposalUnitLightStates.Ready) != 0);
         _sprite.LayerSetVisible((ent, sprite), DisposalUnitVisualLayers.OverlayFull,
-                (lightState & DisposalUnitComponent.LightStates.Full) != 0);
+                (lightState & DisposalUnitLightStates.Full) != 0);
     }
 }
 
-public enum DisposalUnitVisualLayers : byte
-{
-    Unanchored,
-    Base,
-    BaseCharging,
-    OverlayFlush,
-    OverlayCharging,
-    OverlayReady,
-    OverlayFull,
-    OverlayEngaged
-}

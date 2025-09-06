@@ -17,9 +17,9 @@ public sealed class MailingUnitBoundUserInterface : BoundUserInterface
     {
     }
 
-    private void ButtonPressed(DisposalUnitComponent.UiButton button)
+    private void ButtonPressed(DisposalUnitUiButton button)
     {
-        SendMessage(new DisposalUnitComponent.UiButtonPressedMessage(button));
+        SendMessage(new DisposalUnitUiButtonPressedMessage(button));
         // If we get client-side power stuff then we can predict the button presses but for now we won't as it stuffs
         // the pressure lerp up.
     }
@@ -37,9 +37,9 @@ public sealed class MailingUnitBoundUserInterface : BoundUserInterface
         MailingUnitWindow = this.CreateWindow<MailingUnitWindow>();
         MailingUnitWindow.OpenCenteredRight();
 
-        MailingUnitWindow.Eject.OnPressed += _ => ButtonPressed(DisposalUnitComponent.UiButton.Eject);
-        MailingUnitWindow.Engage.OnPressed += _ => ButtonPressed(DisposalUnitComponent.UiButton.Engage);
-        MailingUnitWindow.Power.OnPressed += _ => ButtonPressed(DisposalUnitComponent.UiButton.Power);
+        MailingUnitWindow.Eject.OnPressed += _ => ButtonPressed(DisposalUnitUiButton.Eject);
+        MailingUnitWindow.Engage.OnPressed += _ => ButtonPressed(DisposalUnitUiButton.Engage);
+        MailingUnitWindow.Power.OnPressed += _ => ButtonPressed(DisposalUnitUiButton.Power);
 
         MailingUnitWindow.TargetListContainer.OnItemSelected += TargetSelected;
 
