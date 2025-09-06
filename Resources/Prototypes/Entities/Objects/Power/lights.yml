@@ -152,25 +152,6 @@
 
 - type: entity
   parent: BaseLightbulb
-  name: exterior light bulb
-  description: A high power high energy bulb for the depths of space. May contain mercury.
-  id: ExteriorLightBulb
-  components:
-  - type: LightBulb
-    color: "#B4FCF0"
-    bulb: Bulb
-    lightEnergy: 1
-    lightRadius: 8
-    lightSoftness: 0.6
-    BurningTemperature: 350
-    PowerUse: 50
-  - type: Tag
-    tags:
-    - LightBulb
-    - Trash
-
-- type: entity
-  parent: BaseLightbulb
   name: dim light bulb
   id: DimLightBulb
   description: A dim light bulb for populating the darkness of maintenance.

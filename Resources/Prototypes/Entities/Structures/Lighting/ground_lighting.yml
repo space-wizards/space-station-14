@@ -103,33 +103,3 @@
       types:
         Heat: 1 # LEDs don't get as hot
     popupText: powered-light-component-burn-hand
-
-## Exterior
-- type: entity
-  parent: PoweredLightPostSmallEmpty
-  id: PoweredExteriorLightPostSmall
-  suffix: Exterior
-  components:
-  - type: PoweredLight
-    hasLampOnSpawn: ExteriorLightBulb
-  - type: DamageOnInteract
-    damage:
-      types:
-        Heat: 4 # brighter light gets hotter
-    popupText: powered-light-component-burn-hand
-
-- type: entity
-  parent: BaseLightPostFixture
-  id: AlwaysPoweredExteriorLightPostSmall
-  suffix: Always powered, exterior
-  components:
-  - type: PointLight
-    radius: 8
-    energy: 1
-    softness: 0.6
-    color: "#B4FCF0"
-  - type: DamageOnInteract
-    damage:
-      types:
-        Heat: 4 # brighter light gets hotter
-    popupText: powered-light-component-burn-hand
