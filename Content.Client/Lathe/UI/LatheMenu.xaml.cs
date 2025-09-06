@@ -137,7 +137,7 @@ public sealed partial class LatheMenu : DefaultWindow
         int idx = 0;
         foreach (var prototype in sortedRecipesToShow)
         {
-            var canProduce = _lathe.CanProduce(Entity, prototype, quantity, component: lathe);
+            var canProduce = _lathe.CanProduce((Entity, lathe), prototype, quantity);
             var tooltipFunction = () => GenerateTooltipText(prototype);
 
             if (idx >= oldChildCount)
