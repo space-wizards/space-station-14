@@ -1,6 +1,7 @@
 using System.Linq;
 using System.Numerics;
 using Content.Server.Administration;
+using Content.Server.Antag;
 using Content.Server.Chat.Managers;
 using Content.Server.DeviceNetwork.Systems;
 using Content.Server.GameTicking;
@@ -61,6 +62,7 @@ public sealed class ArrivalsSystem : EntitySystem
     [Dependency] private readonly ShuttleSystem _shuttles = default!;
     [Dependency] private readonly StationSpawningSystem _stationSpawning = default!;
     [Dependency] private readonly StationSystem _station = default!;
+    [Dependency] private readonly AntagSelectionSystem _antag = default!;
 
     private EntityQuery<PendingClockInComponent> _pendingQuery;
     private EntityQuery<ArrivalsBlacklistComponent> _blacklistQuery;
@@ -273,6 +275,9 @@ public sealed class ArrivalsSystem : EntitySystem
 
             if (ArrivalsGodmode)
                 RemCompDeferred<GodmodeComponent>(pUid);
+
+            if (_actor.TryGetSession(pUid, out var session) && session is not null)
+                _antag.TryMakeLateJoinAntag(session);
         }
     }
 
