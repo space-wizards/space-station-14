@@ -45,7 +45,7 @@ public abstract partial class SharedStationAiFixerConsoleSystem : EntitySystem
 
     private void OnInserted(Entity<StationAiFixerConsoleComponent> ent, ref EntInsertedIntoContainerMessage args)
     {
-        if (!HasComp<StationAiHolderComponent>(args.Entity))
+        if (args.Container.ID != ent.Comp.StationAiHolderSlot)
             return;
 
         if (TryGetTarget(ent, out var target))
@@ -59,7 +59,7 @@ public abstract partial class SharedStationAiFixerConsoleSystem : EntitySystem
 
     private void OnRemoved(Entity<StationAiFixerConsoleComponent> ent, ref EntRemovedFromContainerMessage args)
     {
-        if (!HasComp<StationAiHolderComponent>(args.Entity))
+        if (args.Container.ID != ent.Comp.StationAiHolderSlot)
             return;
 
         ent.Comp.ActionTarget = null;
