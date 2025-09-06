@@ -5,6 +5,7 @@ using Content.Client.UserInterface.Systems.Ghost.Widgets;
 using Content.Shared.Ghost;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controllers;
+using Robust.Shared.Timing;
 
 namespace Content.Client.UserInterface.Systems.Ghost;
 
@@ -12,8 +13,12 @@ namespace Content.Client.UserInterface.Systems.Ghost;
 public sealed class GhostUIController : UIController, IOnSystemChanged<GhostSystem>
 {
     [Dependency] private readonly IEntityNetworkManager _net = default!;
+    [Dependency] private readonly IGameTiming _gameTiming = default!;
 
     [UISystemDependency] private readonly GhostSystem? _system = default;
+
+    private TimeSpan _lastUpdateTime;
+    private static readonly TimeSpan UpdateInterval = TimeSpan.FromSeconds(5f);
 
     private GhostGui? Gui => UIManager.GetActiveUIWidgetOrNull<GhostGui>();
 
@@ -26,8 +31,25 @@ public sealed class GhostUIController : UIController, IOnSystemChanged<GhostSyst
         gameplayStateLoad.OnScreenUnload += OnScreenUnload;
     }
 
+    public override void FrameUpdate(FrameEventArgs args)
+    {
+        base.FrameUpdate(args);
+
+        if (Gui is null
+            || Gui?.Visible == false)
+            return;
+
+        if (_lastUpdateTime + UpdateInterval > _gameTiming.CurTime
+            || !Gui!.TargetWindow.IsOpen)
+            return;
+
+        _lastUpdateTime = _gameTiming.CurTime;
+        OnGhostnado(false);
+    }
+
     private void OnScreenLoad()
     {
+        _lastUpdateTime = TimeSpan.Zero;
         LoadGui();
     }
 
@@ -43,6 +65,7 @@ public sealed class GhostUIController : UIController, IOnSystemChanged<GhostSyst
         system.PlayerAttached += OnPlayerAttached;
         system.PlayerDetached += OnPlayerDetached;
         system.GhostWarpsResponse += OnWarpsResponse;
+        system.GhostnadoResponse += OnGhostnadoResponse;
         system.GhostRoleCountUpdated += OnRoleCountUpdated;
     }
 
@@ -53,6 +76,7 @@ public sealed class GhostUIController : UIController, IOnSystemChanged<GhostSyst
         system.PlayerAttached -= OnPlayerAttached;
         system.PlayerDetached -= OnPlayerDetached;
         system.GhostWarpsResponse -= OnWarpsResponse;
+        system.GhostnadoResponse -= OnGhostnadoResponse;
         system.GhostRoleCountUpdated -= OnRoleCountUpdated;
     }
 
@@ -100,6 +124,11 @@ public sealed class GhostUIController : UIController, IOnSystemChanged<GhostSyst
         window.Populate();
     }
 
+    private void OnGhostnadoResponse(GhostnadoResponseEvent msg)
+    {
+        Gui?.TargetWindow.UpdateGhostnadoButton(msg.EntityFound);
+    }
+
     private void OnRoleCountUpdated(GhostUpdateGhostRoleCountEvent msg)
     {
         UpdateGui();
@@ -111,9 +140,9 @@ public sealed class GhostUIController : UIController, IOnSystemChanged<GhostSyst
         _net.SendSystemNetworkMessage(msg);
     }
 
-    private void OnGhostnadoClicked()
+    private void OnGhostnado(bool warp = true)
     {
-        var msg = new GhostnadoRequestEvent();
+        var msg = new GhostnadoRequestEvent(warp);
         _net.SendSystemNetworkMessage(msg);
     }
 
@@ -126,7 +155,7 @@ public sealed class GhostUIController : UIController, IOnSystemChanged<GhostSyst
         Gui.ReturnToBodyPressed += ReturnToBody;
         Gui.GhostRolesPressed += GhostRolesPressed;
         Gui.TargetWindow.WarpClicked += OnWarpClicked;
-        Gui.TargetWindow.OnGhostnadoClicked += OnGhostnadoClicked;
+        Gui.TargetWindow.OnGhostnado += OnGhostnado;
 
         UpdateGui();
     }
