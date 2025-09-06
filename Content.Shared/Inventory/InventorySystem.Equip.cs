@@ -1,4 +1,5 @@
 using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 using Content.Shared.Armor;
 using Content.Shared.Clothing.Components;
 using Content.Shared.DoAfter;
@@ -15,7 +16,9 @@ using Content.Shared.Strip.Components;
 using Content.Shared.Whitelist;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Containers;
+using Robust.Shared.Physics.Systems;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Random;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 
@@ -33,8 +36,10 @@ public abstract partial class InventorySystem
     [Dependency] private readonly SharedHandsSystem _handsSystem = default!;
     [Dependency] private readonly IGameTiming _gameTiming = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
+    [Dependency] private readonly SharedPhysicsSystem _physicsSystem = default!;
     [Dependency] private readonly EntityWhitelistSystem _whitelistSystem = default!;
     [Dependency] private readonly SharedStrippableSystem _strippable = default!;
+    [Dependency] private readonly IRobustRandom _random = default!;
 
     private static readonly ProtoId<ItemSizePrototype> PocketableItemSize = "Small";
 
@@ -545,6 +550,64 @@ public abstract partial class InventorySystem
 
         return true;
     }
+
+    /// <summary>
+    /// Try to unequip all held and worn items.
+    /// </summary>
+    /// <param name="ent">The entity unequipping the items.</param>
+    /// <param name="throwItems">Whether to throw items in random directions close to <see cref="ent"/></param>
+    /// <param name="scatterItems">Whether to instantly scatter items around <see cref="ent"/>,
+    /// preventing them from being all in the same exact position in the next tick.</param>
+    /// <param name="maxThrowImpulse">If <see cref="throwItems"/> is true, Max random impulse applied to the thrown items.</param>
+    /// <param name="forceUnequip"> Whether to force unequipping the items no matter what.</param>
+    public void TryUnequipAll(Entity<InventoryComponent?, HandsComponent?> ent,
+        bool throwItems = false,
+        bool scatterItems = false,
+        float maxThrowImpulse = 40.0f,
+        bool forceUnequip = true)
+    {
+        if (!Resolve(ent.Owner, ref ent.Comp1))
+        {
+            return;
+        }
+        var hasHands = Resolve(ent.Owner, ref ent.Comp2);
+
+        var allItems = GetHandOrInventoryEntities(ent.Owner);
+        foreach (var item in allItems)
+        {
+            if (TryGetContainingSlot(item, out var itemSlot))
+            {
+                if (HasFilledDependentSlots((ent, ent.Comp1), itemSlot.Name))
+                {
+                    continue;
+                }
+
+                TryUnequip(ent, ent, itemSlot.Name, force: forceUnequip);
+            }
+            else if (hasHands && _handsSystem.IsHolding(ent.Owner, item))
+            {
+                _handsSystem.TryDrop((ent.Owner, ent.Comp2), checkActionBlocker: false);
+            }
+
+            if (scatterItems)
+            {
+                _transform.SetWorldPosition(item, _transform.GetWorldPosition(item) + _random.NextVector2(0.5f));
+            }
+
+            if (!throwItems)
+            {
+                continue;
+            }
+
+            var throwDirection = _random.NextAngle().ToVec();
+            var throwSpeed = _random.NextFloat() * maxThrowImpulse;
+            var throwRotationSpeed = _random.NextFloat() * maxThrowImpulse / 10.0f;
+
+            _physicsSystem.ApplyLinearImpulse(item, throwDirection * throwSpeed);
+            _physicsSystem.ApplyAngularImpulse(item, throwRotationSpeed);
+        }
+    }
+
 
     public bool TryGetSlotEntity(EntityUid uid, string slot, [NotNullWhen(true)] out EntityUid? entityUid, InventoryComponent? inventoryComponent = null, ContainerManagerComponent? containerManagerComponent = null)
     {

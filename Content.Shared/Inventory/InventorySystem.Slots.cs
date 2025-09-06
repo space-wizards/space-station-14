@@ -155,6 +155,18 @@ public partial class InventorySystem : EntitySystem
     public bool HasSlot(EntityUid uid, string slot, InventoryComponent? component = null) =>
         TryGetSlot(uid, slot, out _, component);
 
+    /// <summary>
+    /// True if <see cref="targetSlotName"/> has any filled slot that depends on <see cref="targetSlotName"/> in the inventory.
+    /// </summary>
+    /// <param name="ent">Holder of the inventory.</param>
+    /// <param name="targetSlotName">Name of slot to check for filled dependent slots.</param>
+    public bool HasFilledDependentSlots(Entity<InventoryComponent> ent, string targetSlotName)
+    {
+        return ent.Comp.Slots.Any(slotDef => slotDef.Name != targetSlotName
+                                             && slotDef.DependsOn == targetSlotName
+                                             && TryGetSlotEntity(ent.Owner, slotDef.Name, out var _));
+    }
+
     public bool TryGetSlot(EntityUid uid, string slot, [NotNullWhen(true)] out SlotDefinition? slotDefinition, InventoryComponent? inventory = null)
     {
         slotDefinition = null;

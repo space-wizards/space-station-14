@@ -32,11 +32,9 @@ public partial class SharedBodySystem
     [Dependency] private readonly InventorySystem _inventory = default!;
     [Dependency] private readonly GibbingSystem _gibbingSystem = default!;
     [Dependency] private readonly SharedAudioSystem _audioSystem = default!;
-    [Dependency] private readonly IRobustRandom _random = default!;
 
     private const float GibletLaunchImpulse = 8;
     private const float GibletLaunchImpulseVariance = 3;
-    private const float MaxWornItemThrowSpeed = 40.0f;
 
     private void InitializeBody()
     {
@@ -298,25 +296,7 @@ public partial class SharedBodySystem
         Angle splatCone = default,
         SoundSpecifier? gibSoundOverride = null)
     {
-        foreach (var item in _inventory.GetHandOrInventoryEntities(bodyId))
-        {
-            if (!_inventory.TryGetContainingSlot(item, out var itemSlot))
-            {
-                continue;
-            }
-
-            if (!_inventory.TryUnequip(bodyId, bodyId, itemSlot.Name, force: true))
-            {
-                continue;
-            }
-
-            var throwDirection = _random.NextAngle().ToVec();
-            var throwSpeed = _random.NextFloat() * MaxWornItemThrowSpeed;
-            var throwRotationSpeed = _random.NextFloat() * MaxWornItemThrowSpeed / 10.0f;
-
-            _physicsSystem.ApplyLinearImpulse(item, throwDirection * throwSpeed);
-            _physicsSystem.ApplyAngularImpulse(item, throwRotationSpeed);
-        }
+        _inventory.TryUnequipAll(bodyId, true, true);
 
         var gibs = new HashSet<EntityUid>();
 
