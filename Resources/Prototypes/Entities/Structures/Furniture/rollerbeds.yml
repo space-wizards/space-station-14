@@ -2,7 +2,7 @@
   id: RollerBed
   parent: [BaseItem, BaseDeployFoldable]
   name: rollerbed
-  description: Used to carry patients around without damaging them.
+  description: Used to carry patients around without damaging them, stabilizing those in critical condition.
   components:
     - type: Transform
       noRot: true
@@ -33,7 +33,7 @@
           shape:
             !type:PhysShapeCircle
             radius: 0.35
-          density: 80
+          density: 20
           mask:
           - MobMask
     - type: Damageable
@@ -62,6 +62,8 @@
       rotation: -90
       buckleOffset: "0,0.15"
       buckleOnInteractHand: False
+    - type: StabilizeOnBuckle
+      efficiency: 0.3
     - type: Appearance
     - type: GenericVisualizer
       visuals:
@@ -69,13 +71,15 @@
           buckledLayer:
             True: {visible: true}
             False: {visible: false}
+          unfoldedLayer:
+            True: { visible: false }
+            False: { visible: true }
         enum.FoldedVisuals.State: # Copypasta from BaseFoldable b/c collections don't merge when overriding component prototypes.
           foldedLayer:
             True: {visible: true}
             False: {visible: false}
           unfoldedLayer:
-            True: {visible: false}
-            False: {visible: true}
+            True: { visible: false }
     - type: StaticPrice
       price: 120
 
@@ -107,7 +111,6 @@
     - state: cheap_rollerbed_buckled
       map: ["buckledLayer"]
       visible: false
-  - type: Appearance
 
 - type: entity
   parent: CheapRollerBed
@@ -137,11 +140,58 @@
     - state: emergency_rollerbed_buckled
       map: ["buckledLayer"]
       visible: false
-  - type: Appearance
 
 - type: entity
   parent: EmergencyRollerBed
   id: EmergencyRollerBedSpawnFolded
+  suffix: folded
+  components:
+  - type: Foldable
+    folded: true
+  - type: Strap
+    enabled: False
+
+- type: entity
+  parent: RollerBed
+  id: RollerBedHolo
+  name: holographic rollerbed
+  description: Used to float patients frictionlessly to safety, stabilizing and reducing the bleeding of those in critical condition.
+  components:
+  - type: Item
+    size: Small
+  - type: StabilizeOnBuckle
+    efficiency: 1
+    reducesBleeding: 3 # Stops full bleeding in 10 seconds, one stack per second.
+  - type: Strap
+    buckleOffset: "0,0.05"
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.35
+        density: 5
+        mask:
+        - MobMask
+  - type: Sprite
+    sprite: Structures/Furniture/rollerbeds.rsi
+    noRot: true
+    layers:
+    - state: holographic_rollerbed
+      map: ["unfoldedLayer"]
+    - state: holographic_rollerbed_folded
+      map: ["foldedLayer"]
+      visible: false
+    - state: holographic_rollerbed_buckled
+      map: ["buckledLayer"]
+      visible: false
+  - type: StaticPrice
+    price: 200
+
+
+- type: entity
+  parent: RollerBedHolo
+  id: RollerBedHoloSpawnFolded
   suffix: folded
   components:
   - type: Foldable

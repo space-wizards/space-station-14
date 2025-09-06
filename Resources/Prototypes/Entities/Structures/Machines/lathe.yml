@@ -483,6 +483,7 @@
     - SurgeryStatic
     dynamicPacks:
     - Chemistry
+    - HolographicRollerbeds
   - type: Machine
     board: MedicalTechFabCircuitboard
   - type: StealTarget
