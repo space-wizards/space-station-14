@@ -61,8 +61,6 @@ public abstract partial class SharedActionsSystem : EntitySystem
         SubscribeLocalEvent<ActionsComponent, ComponentShutdown>(OnShutdown);
         SubscribeLocalEvent<ActionsComponent, ComponentGetState>(OnGetState);
 
-        SubscribeLocalEvent<ActionComponent, ActionDoAfterEvent>(OnActionDoAfterAttempt);
-
         SubscribeLocalEvent<ActionComponent, ActionValidateEvent>(OnValidate);
         SubscribeLocalEvent<InstantActionComponent, ActionValidateEvent>(OnInstantValidate);
         SubscribeLocalEvent<EntityTargetActionComponent, ActionValidateEvent>(OnEntityValidate);
@@ -80,48 +78,6 @@ public abstract partial class SharedActionsSystem : EntitySystem
         SubscribeLocalEvent<WorldTargetActionComponent, ActionSetTargetEvent>(OnWorldSetTarget);
 
         SubscribeAllEvent<RequestPerformActionEvent>(OnActionRequest);
-    }
-
-    private void OnActionDoAfterAttempt(Entity<ActionComponent> ent, ref ActionDoAfterEvent args)
-    {
-        if (!TryComp<DoAfterArgsComponent>(ent, out var actionDoAfterArgsComp))
-            return;
-
-        var performer = GetEntity(args.Performer);
-
-        Entity<ActionComponent?>? action = (ent, ent);
-
-        // If this doafter is on repeat and was cancelled, start use delay as expected
-        if (args.Cancelled && actionDoAfterArgsComp.Repeat)
-        {
-            SetUseDelay(action, args.OriginalUseDelay);
-            RemoveCooldown(action);
-            StartUseDelay(action);
-            UpdateAction(ent);
-            return;
-        }
-
-        args.Repeat = actionDoAfterArgsComp.Repeat;
-
-        // Set the use delay to 0 so this can repeat properly
-        if (actionDoAfterArgsComp.Repeat)
-        {
-            SetUseDelay(action, TimeSpan.Zero);
-        }
-
-        if (args.Cancelled)
-            return;
-
-        // Post original doafter, reduce the time on it now for other casts if ables
-        if (actionDoAfterArgsComp.DelayReduction != null)
-            args.Args.Delay = actionDoAfterArgsComp.DelayReduction.Value;
-
-        // Validate again for charges, blockers, etc
-        if (TryPerformAction(args.Input, performer, skipDoActionRequest: true))
-            return;
-
-        // Cancel this doafter if we can't validate the action
-        _doAfter.Cancel(args.DoAfter.Id, force: true);
     }
 
     private void OnActionMapInit(Entity<ActionComponent> ent, ref MapInitEvent args)

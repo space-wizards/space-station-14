@@ -1,4 +1,5 @@
-﻿using Content.Shared.Actions.Events;
+﻿using Content.Shared.Actions.Components;
+using Content.Shared.Actions.Events;
 using Content.Shared.DoAfter;
 
 namespace Content.Shared.Actions;
@@ -7,6 +8,8 @@ public abstract partial class SharedActionsSystem
 {
     protected void InitializeActionDoAfter()
     {
+        SubscribeLocalEvent<ActionComponent, ActionDoAfterEvent>(OnActionDoAfter);
+
         SubscribeLocalEvent<DoAfterArgsComponent, ActionAttemptDoAfterEvent>(OnActionDoAfterAttempt);
     }
 
@@ -42,5 +45,47 @@ public abstract partial class SharedActionsSystem
         };
 
         _doAfter.TryStartDoAfter(doAfterArgs, performer);
+    }
+
+    private void OnActionDoAfter(Entity<ActionComponent> ent, ref ActionDoAfterEvent args)
+    {
+        if (!TryComp<DoAfterArgsComponent>(ent, out var actionDoAfterArgsComp))
+            return;
+
+        var performer = GetEntity(args.Performer);
+
+        Entity<ActionComponent?>? action = (ent, ent);
+
+        // If this doafter is on repeat and was cancelled, start use delay as expected
+        if (args.Cancelled && actionDoAfterArgsComp.Repeat)
+        {
+            SetUseDelay(action, args.OriginalUseDelay);
+            RemoveCooldown(action);
+            StartUseDelay(action);
+            UpdateAction(ent);
+            return;
+        }
+
+        args.Repeat = actionDoAfterArgsComp.Repeat;
+
+        // Set the use delay to 0 so this can repeat properly
+        if (actionDoAfterArgsComp.Repeat)
+        {
+            SetUseDelay(action, TimeSpan.Zero);
+        }
+
+        if (args.Cancelled)
+            return;
+
+        // Post original doafter, reduce the time on it now for other casts if ables
+        if (actionDoAfterArgsComp.DelayReduction != null)
+            args.Args.Delay = actionDoAfterArgsComp.DelayReduction.Value;
+
+        // Validate again for charges, blockers, etc
+        if (TryPerformAction(args.Input, performer, skipDoActionRequest: true))
+            return;
+
+        // Cancel this doafter if we can't validate the action
+        _doAfter.Cancel(args.DoAfter.Id, force: true);
     }
 }
