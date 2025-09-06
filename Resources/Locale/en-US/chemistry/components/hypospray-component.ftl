@@ -15,6 +15,10 @@ hypospray-component-feel-prick-message = You feel a tiny prick!
 hypospray-component-transfer-already-full-message = {$owner} is already full!
 hypospray-cant-inject = Can't inject into {$target}!
 
+## Jet Injectors
+hypospray-component-injecting-user = You start preparing the hypodermic spray on the skin.
+hypospray-component-injecting-target = {CAPITALIZE(THE($user))} is trying to prepare a hypodermic spray on you!
+
 hypospray-verb-mode-label = Toggle Container Draw
 hypospray-verb-mode-inject-all = You cannot draw from containers anymore.
 hypospray-verb-mode-inject-mobs-only = You can now draw from containers.
