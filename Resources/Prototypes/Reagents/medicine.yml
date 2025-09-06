@@ -763,18 +763,19 @@
   color: "#ba7d7d"
   metabolisms:
     Medicine:
+      metabolismRate: 0.2 # makes it viable for pre-combat rather than a burst post-combat
       effects:
       # Medium-large quantities can hurt you instead,
-      # but still technically stop your bleeding.
+      # but still stop your bleeding.
       - !type:ModifyBleedAmount
-        amount: -1.5
+        amount: -1.0
       - !type:HealthChange
         conditions:
         - !type:ReagentThreshold
           min: 15
         damage:
           types:
-            Bloodloss: 3
+            Bloodloss: 1.5
 
 - type: reagent
   id: Tricordrazine
