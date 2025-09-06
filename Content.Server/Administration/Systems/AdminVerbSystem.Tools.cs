@@ -21,6 +21,7 @@ using Content.Shared.Damage;
 using Content.Shared.Damage.Components;
 using Content.Shared.Database;
 using Content.Shared.Doors.Components;
+using Content.Shared.Doors.Systems;
 using Content.Shared.Hands.Components;
 using Content.Shared.Inventory;
 using Content.Shared.PDA;
@@ -41,7 +42,7 @@ namespace Content.Server.Administration.Systems;
 
 public sealed partial class AdminVerbSystem
 {
-    [Dependency] private readonly DoorSystem _door = default!;
+    [Dependency] private readonly SharedBoltSystem _bolt = default!;
     [Dependency] private readonly AirlockSystem _airlockSystem = default!;
     [Dependency] private readonly StackSystem _stackSystem = default!;
     [Dependency] private readonly SharedAccessSystem _accessSystem = default!;
@@ -75,7 +76,7 @@ public sealed partial class AdminVerbSystem
                     : new SpriteSpecifier.Texture(new("/Textures/Interface/AdminActions/bolt.png")),
                 Act = () =>
                 {
-                    _door.SetBoltsDown((args.Target, bolts), !bolts.BoltsDown);
+                    _bolt.TrySetBoltsDown((args.Target, bolts), !bolts.BoltsDown);
                 },
                 Impact = LogImpact.Medium,
                 Message = Loc.GetString(bolts.BoltsDown
