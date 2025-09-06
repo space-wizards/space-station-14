@@ -8,7 +8,7 @@
       max: 5
   - type: RailroadCard
     title: rr-mail-open
-    icon: 
+    icon: 
     iconColor: '#9FED5896'
     color: '#515151'
     image: /Textures/_Starlight/Railroading/letter.png
