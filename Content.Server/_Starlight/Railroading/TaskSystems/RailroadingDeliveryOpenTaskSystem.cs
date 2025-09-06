@@ -20,10 +20,10 @@ public sealed partial class RailroadingDeliveryOpenTaskSystem : EntitySystem
         SubscribeLocalEvent<RailroadDeliveryOpenTaskComponent, RailroadingCardCompletionQueryEvent>(OnCompletionQuery);
         SubscribeLocalEvent<RailroadDeliveryOpenTaskComponent, CollectObjectiveInfoEvent>(OnCollectObjectiveInfo);
 
-        SubscribeLocalEvent<RailroadDeliveryOpenWatcherComponent, RailroadingDeliveryOpenedEvent>(OnMailOpen);
+        SubscribeLocalEvent<RailroadDeliveryOpenWatcherComponent, DeliveryOpenedEvent>(OnMailOpen);
     }
 
-    private void OnMailOpen(Entity<RailroadDeliveryOpenWatcherComponent> ent, ref RailroadingDeliveryOpenedEvent evt)
+    private void OnMailOpen(Entity<RailroadDeliveryOpenWatcherComponent> ent, ref DeliveryOpenedEvent evt)
     {
         if (!TryComp<RailroadableComponent>(ent, out var railroadable)
             || railroadable.ActiveCard is null

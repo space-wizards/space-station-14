@@ -202,10 +202,8 @@ public abstract class SharedDeliverySystem : EntitySystem
 
         var ev = new DeliveryOpenedEvent(user);
         RaiseLocalEvent(ent, ref ev);
-
-        // starlight start - raise railroad mail tracking event on the opener
-        var railEv = new RailroadingDeliveryOpenedEvent();
-        RaiseLocalEvent(user, ref railEv);
+        // starlight start - raise event on user for railroad mail task
+        RaiseLocalEvent(user, ref ev);
         // starlight end
 
         if (attemptPickup)
