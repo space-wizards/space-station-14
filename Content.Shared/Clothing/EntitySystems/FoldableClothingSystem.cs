@@ -37,7 +37,7 @@ public sealed class FoldableClothingSystem : EntitySystem
         }
 
         // Setting hidden layers while equipped is not currently supported.
-        if (ent.Comp.FoldedHideLayers != null || ent.Comp.UnfoldedHideLayers != null)
+        if (ent.Comp.FoldedHideLayers.Count != 0|| ent.Comp.UnfoldedHideLayers.Count != 0)
             args.Cancelled = true;
     }
 
@@ -65,7 +65,7 @@ public sealed class FoldableClothingSystem : EntitySystem
             // This should instead work via an event or something that gets raised to optionally modify the currently hidden layers.
             // Or at the very least it should stash the old layers and restore them when unfolded.
             // TODO CLOTHING fix this.
-            if (ent.Comp.FoldedHideLayers != null && TryComp<HideLayerClothingComponent>(ent.Owner, out var hideLayerComp))
+            if (ent.Comp.FoldedHideLayers.Count != 0 && TryComp<HideLayerClothingComponent>(ent.Owner, out var hideLayerComp))
                 hideLayerComp.Slots = ent.Comp.FoldedHideLayers;
 
         }
@@ -81,7 +81,7 @@ public sealed class FoldableClothingSystem : EntitySystem
                 _itemSystem.SetHeldPrefix(ent.Owner, null, false, itemComp);
 
             // TODO CLOTHING fix this.
-            if (ent.Comp.UnfoldedHideLayers != null && TryComp<HideLayerClothingComponent>(ent.Owner, out var hideLayerComp))
+            if (ent.Comp.UnfoldedHideLayers.Count != 0 && TryComp<HideLayerClothingComponent>(ent.Owner, out var hideLayerComp))
                 hideLayerComp.Slots = ent.Comp.UnfoldedHideLayers;
 
         }

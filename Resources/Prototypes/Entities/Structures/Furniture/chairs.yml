@@ -402,6 +402,40 @@
     node: chairSteelBench
 
 - type: entity
+  name: cardboard stool
+  id: CardStool
+  parent: UnanchoredChairBase
+  description: Make sure you sit *really* gently.
+  components:
+  - type: Sprite
+    state: card-stool
+  - type: Construction
+    graph: Seat
+    node: stoolCard
+  - type: Damageable
+    damageContainer: Inorganic
+    damageModifierSet: Card
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 40
+      behaviors:
+        - !type:DoActsBehavior
+          acts: [ "Destruction" ]
+    - trigger:
+        !type:DamageTrigger
+        damage: 10
+      behaviors:
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          MaterialCardboard:
+            min: 1
+            max: 2
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+
+- type: entity
   name: wooden bench
   id: WoodenBench
   parent: ChairBase
