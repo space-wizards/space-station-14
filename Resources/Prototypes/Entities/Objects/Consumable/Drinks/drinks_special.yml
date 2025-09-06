@@ -289,7 +289,7 @@
   parent: DogBowlBlue
   id: DogBowlMog
   name: mog bowl
-  description: the bottom reads \"Spacedballs the off-off brand merchandise\".
+  description: the bottom reads "Spacedballs the off-off brand merchandise".
   components:
   - type: Sprite
     sprite: Objects/Consumable/Food/dogbowl.rsi
