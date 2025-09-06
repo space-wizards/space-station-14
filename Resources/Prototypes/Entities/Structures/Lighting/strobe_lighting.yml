@@ -1,25 +1,29 @@
+##########################
+
+# Index
+
+# 1. STROBE LIGHT
+## Empty
+## Incandescent
+# 2. STROBE LIGHT, POLICE
+## Empty
+## Incandescent
+# 3. STROBE LIGHT, SIREN
+## Empty
+## Incandescent
+# 4. STROBE LIGHT, EPSILON
+## Empty
+## Incandescent
+
+##########################
+
+# 1. STROBE LIGHT
 - type: entity
-  id: AlwaysPoweredStrobeLight
-  name: strobe
-  description: "UH?! Sorry, all I can hear is WEE-OOO-WEE-OOO!"
-  suffix: Always powered
+  abstract: true
+  parent: BaseLightFixture
+  id: BaseStrobeLightFixture
+  name: strobe light fixture
   components:
-  - type: AmbientSound
-    volume: -15
-    range: 2
-    sound:
-      path: /Audio/Ambience/Objects/light_hum.ogg
-  - type: MeleeSound
-    soundGroups:
-      Brute:
-        collection: GlassSmash
-  - type: Transform
-    anchored: true
-  - type: Clickable
-  - type: InteractionOutline
-  - type: Construction
-    graph: LightFixture
-    node: bulbLight
   - type: Sprite
     sprite: Structures/Wallmounts/Lighting/strobe_light.rsi
     drawdepth: WallMountedItems
@@ -32,14 +36,11 @@
     state: base
   - type: PointLight
     mask: /Textures/Effects/LightMasks/double_cone.png
-    color: "#FFE4CE"
-    energy: 5
-    radius: 10
-    softness: 1
     offset: "0, 0.35"
   - type: RotatingLight
-  - type: Physics
-    bodyType: Static
+  - type: Construction
+    graph: LightFixture
+    node: strobeLight
   - type: Fixtures
     fixtures:
       fix1:
@@ -51,113 +52,165 @@
         - None
         layer:
         - TabletopMachineLayer
-  - type: Damageable
-    damageContainer: Inorganic
-    damageModifierSet: Metallic
-  - type: Destructible
-    thresholds:
-    - trigger:
-        !type:DamageTrigger
-        damage: 100
-      behaviors: #excess damage, don't spawn entities.
-      - !type:DoActsBehavior
-        acts: [ "Destruction" ]
-    - trigger:
-        !type:DamageTrigger
-        damage: 25
-      behaviors:
-      - !type:EmptyAllContainersBehaviour
-      - !type:SpawnEntitiesBehavior
-        spawn:
-          SheetSteel1:
-            min: 1
-            max: 1
-      - !type:DoActsBehavior
-        acts: ["Destruction"]
-  placement:
-    mode: SnapgridCenter
-    snap:
-    - Wallmount
 
+## Empty
 - type: entity
-  name: strobe
-  description: "UH?! Sorry, all I can hear is WEE-OOO-WEE-OOO!"
+  parent: [ BasePoweredLight , BaseStrobeLightFixture ]
   id: PoweredStrobeLightEmpty
-  suffix: Empty
-  parent: AlwaysPoweredStrobeLight
+  suffix: Default, empty
+  description: UH?! Sorry, all I can hear is WEE-OOO-WEE-OOO!
   components:
-  - type: Sprite
-    sprite: Structures/Wallmounts/Lighting/strobe_light.rsi
-    state: empty
-  - type: AmbientSound
-    enabled: false
-  - type: PointLight
-    enabled: false
-    offset: "0, 0.35"
-  - type: ContainerContainer
-    containers:
-      light_bulb: !type:ContainerSlot
   - type: PoweredLight
     bulb: Bulb
     on: false
-  - type: ApcPowerReceiver
-  - type: ExtensionCableReceiver
-  - type: DeviceNetwork
-    deviceNetId: Wireless
-    receiveFrequencyId: SmartLight
-  - type: WirelessNetworkConnection
-    range: 200
-  - type: Appearance
-  - type: PoweredLightVisuals
-    spriteStateMap:
-      empty: empty
-      broken: broken
-      burned: broken
-      off: base
-      on: base
-  - type: DeviceLinkSink
-    ports:
-      - On
-      - Off
-      - Toggle
-  - type: Construction
-    graph: LightFixture
-    node: strobeLight
-  - type: DamageOnInteract
-    damage:
-      types:
-        Heat: 2
-    popupText: powered-light-component-burn-hand
+
+## Incandescent
+- type: entity
+  parent: PoweredStrobeLightEmpty
+  id: PoweredStrobeLight
+  suffix: Default, incandescent
+  components:
+  - type: PoweredLight
+    hasLampOnSpawn: LightBulb
 
 - type: entity
+  parent: BaseStrobeLightFixture
+  id: AlwaysPoweredStrobeLight
+  suffix: Default, always powered, incandescent
+  description: A strobe light fixture that WEE-OOO-WEE-OOOs without consuming power.
+  components:
+  - type: PointLight
+    color: "#FFD1A3"
+    energy: 1.0
+    radius: 6
+    softness: 1.1
+
+
+# 2. STROBE LIGHT, POLICE
+- type: entity
+  abstract: true
+  parent: BaseStrobeLightFixture
+  id: BaseStrobeLightPoliceFixture
+  components:
+  - type: AmbientSound
+    volume: 0
+    range: 10
+    sound:
+      path: /Audio/Effects/Lightning/strobe.ogg
+
+## Empty
+- type: entity
+  parent: [ BasePoweredLight , BaseStrobeLightPoliceFixture ]
+  id: PoweredStrobeLightPoliceEmpty
+  suffix: Police, empty
+  components:
+  - type: PoweredLight
+    bulb: Bulb
+    on: false
+
+## Incandescent
+- type: entity
+  parent: PoweredStrobeLightPoliceEmpty
   id: PoweredStrobeLightPolice
-  suffix: "Empty, police"
-  parent: PoweredStrobeLightEmpty
+  suffix: Police, incandescent
+  components:
+  - type: PoweredLight
+    hasLampOnSpawn: LightBulb
+
+- type: entity
+  parent: BaseStrobeLightPoliceFixture
+  id: AlwaysPoweredStrobeLightPolice
+  suffix: Police, always powered, incandescent
+  description: Woop, woop! That's the sound of da police! Woop, woop! That's the sound of the beast!
+  components:
+  - type: PointLight
+    color: "#FFD1A3"
+    energy: 1.0
+    radius: 6
+    softness: 1.1
+
+
+# 3. STROBE LIGHT, SIREN
+- type: entity
+  abstract: true
+  parent: BaseStrobeLightFixture
+  id: BaseStrobeLightSirenFixture
   components:
   - type: AmbientSound
     volume: 0
     range: 10
     sound:
-      path: "/Audio/Effects/Lightning/strobe.ogg"
+      path: /Audio/Misc/gamma.ogg
 
+## Empty
 - type: entity
+  parent: [ BasePoweredLight , BaseStrobeLightSirenFixture ]
+  id: PoweredStrobeLightSirenEmpty
+  suffix: Siren, empty
+  components:
+  - type: PoweredLight
+    bulb: Bulb
+    on: false
+
+## Incandescent
+- type: entity
+  parent: PoweredStrobeLightSirenEmpty
   id: PoweredStrobeLightSiren
-  suffix: "Empty, siren"
-  parent: PoweredStrobeLightEmpty
+  suffix: Siren, incandescent
   components:
-  - type: AmbientSound
-    volume: 0
-    range: 10
-    sound:
-      path: "/Audio/Misc/gamma.ogg"
+  - type: PoweredLight
+    hasLampOnSpawn: LightBulb
 
 - type: entity
-  id: PoweredStrobeLightEpsilon
-  suffix: "Empty, epsilon"
-  parent: PoweredStrobeLightEmpty
+  parent: BaseStrobeLightSirenFixture
+  id: AlwaysPoweredStrobeLightSiren
+  suffix: Siren, always powered, incandescent
+  components:
+  - type: PointLight
+    color: "#FFD1A3"
+    energy: 1.0
+    radius: 6
+    softness: 1.1
+
+
+# 4. STROBE LIGHT, EPSILON
+- type: entity
+  abstract: true
+  parent: BaseStrobeLightFixture
+  id: BaseStrobeLightEpsilonFixture
   components:
   - type: AmbientSound
     volume: 0
     range: 10
     sound:
-      path: "/Audio/Effects/Lightning/strobeepsilon.ogg"
+      path: /Audio/Effects/Lightning/strobeepsilon.ogg
+
+## Empty
+- type: entity
+  parent: [ BasePoweredLight , BaseStrobeLightEpsilonFixture ]
+  id: PoweredStrobeLightEpsilonEmpty
+  suffix: Epsilon, empty
+  components:
+  - type: PoweredLight
+    bulb: Bulb
+    on: false
+
+## Incandescent
+- type: entity
+  parent: PoweredStrobeLightEpsilonEmpty
+  id: PoweredStrobeLightEpsilon
+  suffix: Epsilon, incandescent
+  components:
+  - type: PoweredLight
+    hasLampOnSpawn: LightBulb
+
+- type: entity
+  parent: BaseStrobeLightEpsilonFixture
+  id: AlwaysPoweredStrobeLightEpsilon
+  suffix: Epsilon, always powered, incandescent
+  components:
+  - type: PointLight
+    color: "#FFD1A3"
+    energy: 1.0
+    radius: 6
+    softness: 1.1
