@@ -392,6 +392,11 @@ public abstract partial class SharedGunSystem : EntitySystem
             return;
         }
 
+        //Starlight start
+        var NonEmptyGunShotEvent = new OnNonEmptyGunShotEvent(user, ev.Ammo);
+        RaiseLocalEvent(gunUid, ref NonEmptyGunShotEvent);
+        //starlight end
+
         // Handle burstfire
         if (gun.SelectedMode == SelectiveFire.Burst)
         {
@@ -709,6 +714,11 @@ public record struct AttemptShootEvent(EntityUid User, string? Message, bool Can
 /// <param name="User">The user that fired this gun.</param>
 [ByRefEvent]
 public record struct GunShotEvent(EntityUid User, List<(EntityUid? Uid, IShootable Shootable)> Ammo);
+
+//starlight start
+[ByRefEvent]
+public record struct OnNonEmptyGunShotEvent(EntityUid User, List<(EntityUid? Uid, IShootable Shootable)> Ammo);
+//starlight end
 
 /// <summary>
 /// Raised on an entity after firing a gun to see if any components or systems would allow this entity to be pushed

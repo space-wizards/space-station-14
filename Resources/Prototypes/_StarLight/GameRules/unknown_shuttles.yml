@@ -6,3 +6,12 @@
       startAnnouncement: null # It should be silent.
     - type: LoadMapRule
       gridPath: /Maps/_Starlight/Shuttles/ShuttleEvent/ShadowBorgiGrid.yml # no preload cause that leads to a warp point in shuttle space
+
+- type: entity
+  parent: BaseUnknownShuttleRule
+  id: UnknownShuttleFireResponse
+  components:
+  - type: StationEvent
+    maxOccurrences: 1 # should be the same as [copies] in shuttle_incoming_event.yml
+  - type: LoadMapRule
+    preloadedGrid: ShuttleFireResponse

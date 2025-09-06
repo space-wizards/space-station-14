@@ -53,7 +53,8 @@ public sealed class DnaScrambleOnTriggerSystem : EntitySystem
         _forensics.RandomizeDNA(target.Value);
         _forensics.RandomizeFingerprint(target.Value);
 
-        RemComp<DetailExaminableComponent>(target.Value); // remove MRP+ custom description if one exists
+        //Starlight remove
+        //RemComp<DetailExaminableComponent>(target.Value); // remove MRP+ custom description if one exists
         _identity.QueueIdentityUpdate(target.Value); // manually queue identity update since we don't raise the event
 
         // Can't use PopupClient or PopupPredicted because the trigger might be unpredicted.

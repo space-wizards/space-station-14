@@ -10,6 +10,7 @@
     understands:
     - GalacticCommon
     - Nekomimetic
+    - Cat
   - type: Absorbable
   - type: Speech
     speechVerb: Felionoid
@@ -37,7 +38,7 @@
       150: Dead
   - type: SlowOnDamage
     speedModifierThresholds:
-      45: 0.7 
+      45: 0.7
       60: 0.5
   - type: Butcherable
     butcheringType: Spike
@@ -81,7 +82,7 @@
     - AnomalyHost
     - Felionoid
   - type: Fixtures
-    fixtures: 
+    fixtures:
       fix1:
         shape:
           !type:PhysShapeCircle

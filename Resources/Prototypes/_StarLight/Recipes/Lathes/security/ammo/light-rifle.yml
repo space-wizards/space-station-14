@@ -125,6 +125,20 @@
     Steel: 1312
     Uranium: 1312
 
+- type: latheRecipe
+  parent: BaseAmmoRecipe
+  id: MagazineLightRifleMaxim
+  result: MagazineLightRifleMaxim
+  materials:
+    Steel: 350
+
+- type: latheRecipe
+  parent: BaseAmmoRecipe
+  id: SpeedLoaderLightRifle
+  result: SpeedLoaderLightRifle
+  materials:
+    Steel: 200
+
 ############ BOXES ############
 
 - type: latheRecipe

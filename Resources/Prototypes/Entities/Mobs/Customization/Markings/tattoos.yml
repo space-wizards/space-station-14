@@ -114,7 +114,7 @@
   id: TattooEyeRight
   bodyPart: Eyes
   markingCategory: Head
-  speciesRestriction: [Human, SlimePerson, Reptilian, Dwarf]
+  speciesRestriction: [Human, SlimePerson, Reptilian, Dwarf, Vulpkanin] # starlight: add vulp
   coloring:
     default:
       type:
@@ -128,7 +128,7 @@
   id: TattooEyeLeft
   bodyPart: Eyes
   markingCategory: Head
-  speciesRestriction: [Human, SlimePerson, Reptilian, Dwarf]
+  speciesRestriction: [Human, SlimePerson, Reptilian, Dwarf, Vulpkanin] # starlight: add vulp
   coloring:
     default:
       type:
@@ -142,7 +142,7 @@
   id: TattooEyeMothRight
   bodyPart: Eyes
   markingCategory: Overlay
-  speciesRestriction: [Moth]
+  speciesRestriction: [Moth, Avali] # starlight: avali have the same shape
   coloring:
     default:
       type:
@@ -156,7 +156,7 @@
   id: TattooEyeMothLeft
   bodyPart: Eyes
   markingCategory: Overlay
-  speciesRestriction: [Moth]
+  speciesRestriction: [Moth, Avali]  # starlight: avali have the same shape
   coloring:
     default:
       type:

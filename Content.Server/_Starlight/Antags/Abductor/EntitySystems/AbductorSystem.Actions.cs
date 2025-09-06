@@ -5,6 +5,7 @@ using Content.Shared.Actions.Components;
 using Content.Shared.DoAfter;
 using Content.Shared.Effects;
 using Content.Shared.Inventory;
+using Content.Shared.Mobs.Systems;
 using Content.Shared.Movement.Pulling.Components;
 using Content.Shared.Movement.Pulling.Systems;
 using Content.Shared.Starlight.Antags.Abductor;
@@ -24,6 +25,7 @@ public sealed partial class AbductorSystem : SharedAbductorSystem
     [Dependency] private readonly PullingSystem _pullingSystem = default!;
     [Dependency] private readonly InventorySystem _inv = default!;
     [Dependency] private readonly StarlightActionsSystem _starlightActions = default!;
+    [Dependency] private readonly MobStateSystem _mobState = default!;
     
     private static readonly EntProtoId<InstantActionComponent> _gizmoMark = "ActionGizmoMark";
     private static readonly EntProtoId<InstantActionComponent> _sendYourself = "ActionSendYourself";
@@ -79,6 +81,8 @@ public sealed partial class AbductorSystem : SharedAbductorSystem
 
     private void OnReturn(AbductorReturnToShipEvent ev)
     {
+        if (_mobState.IsIncapacitated(ev.Performer))
+            return;
         AbductorAgentComponent? agentComp = null;
         if (!TryComp<AbductorScientistComponent>(ev.Performer, out var scientistComp) && !TryComp<AbductorAgentComponent>(ev.Performer, out agentComp))
             EnsureComp<AbductorScientistComponent>(ev.Performer, out scientistComp);
@@ -189,6 +193,8 @@ public sealed partial class AbductorSystem : SharedAbductorSystem
     
     private void OnDoAfterSendYourself(EntityUid ent, AbductorSendYourselfDoAfterEvent args)
     {
+        if (_mobState.IsIncapacitated(ent))
+            return;
         _color.RaiseEffect(Color.FromHex("#BA0099"), new List<EntityUid>(1) { ent }, Filter.Pvs(ent, entityManager: EntityManager));
         if (_pullingSystem.IsPulling(ent))
         {

@@ -37,6 +37,7 @@
           32:
             sprite: Mobs/Species/Human/displacement.rsi
             state: jumpsuit-female
+  - type: Wagging # Starlight
 
 
 - type: entity

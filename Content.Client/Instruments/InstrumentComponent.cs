@@ -1,10 +1,12 @@
 using Content.Shared.Instruments;
 using Robust.Client.Audio.Midi;
 using Robust.Shared.Audio.Midi;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom; // Starlight
 
 namespace Content.Client.Instruments;
 
 [RegisterComponent]
+[AutoGenerateComponentPause] // Starlight
 public sealed partial class InstrumentComponent : SharedInstrumentComponent
 {
     public event Action? OnMidiPlaybackEnded;
@@ -67,4 +69,11 @@ public sealed partial class InstrumentComponent : SharedInstrumentComponent
     public int PlayerTick => Renderer?.PlayerTick ?? 0;
 
     public void PlaybackEndedInvoke() => OnMidiPlaybackEnded?.Invoke();
+
+    [DataField(customTypeSerializer: typeof(TimeOffsetSerializer))]
+    [AutoPausedField]
+    public TimeSpan NextInputTime { get; set; } = TimeSpan.Zero; // Starlight
+
+    [DataField]
+    public TimeSpan InputDelay { get; set; } = TimeSpan.FromSeconds(1); // Starlight
 }
