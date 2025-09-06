@@ -37,7 +37,8 @@ public sealed class DisplacementMapSystem : EntitySystem
         if (displacementKey is null)
             return false;
 
-        if (!TryRemoveDisplacement(sprite, key))
+        // We're just ensuring the displacement is not there, we don't care if it isn't.
+        if (!TryRemoveDisplacement(sprite, key, false))
             return false;
 
         //allows you not to write it every time in the YML
@@ -93,10 +94,10 @@ public sealed class DisplacementMapSystem : EntitySystem
     /// <param name="sprite"></param>
     /// <param name="key"></param>
     /// <returns>False if the key is invalid or the layer didn't exist. Otherwise true.</returns>
-    public bool TryRemoveDisplacement(Entity<SpriteComponent> sprite, object key)
+    public bool TryRemoveDisplacement(Entity<SpriteComponent> sprite, object key, bool logMissing = true)
     {
         var displacementLayerKey = BuildDisplacementLayerKey(key);
 
-        return displacementLayerKey is not null && _sprite.RemoveLayer(sprite.AsNullable(), displacementLayerKey);
+        return displacementLayerKey is not null && _sprite.RemoveLayer(sprite.AsNullable(), displacementLayerKey, logMissing);
     }
 }
