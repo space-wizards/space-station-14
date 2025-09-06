@@ -1,5 +1,4 @@
 using System.Diagnostics.CodeAnalysis;
-using Content.Client.Lobby;
 using Content.Shared.CCVar;
 using Content.Shared.Players;
 using Content.Shared.Players.JobWhitelist;
@@ -28,6 +27,9 @@ public sealed class JobRequirementsManager : ISharedPlaytimeManager
     private readonly Dictionary<string, TimeSpan> _roles = new();
     private readonly List<string> _roleBans = new();
     private readonly List<string> _jobWhitelists = new();
+
+    private const string PrefixAntag = SharedRoleSystem.RolePrefixAntag;
+    private const string PrefixJob = SharedRoleSystem.RolePrefixJob;
 
     private ISawmill _sawmill = default!;
 
@@ -90,33 +92,90 @@ public sealed class JobRequirementsManager : ISharedPlaytimeManager
         Updated?.Invoke();
     }
 
-    public bool IsAllowed(JobPrototype job, HumanoidCharacterProfile? profile, [NotNullWhen(false)] out FormattedMessage? reason)
+    public bool IsAllowed(
+        List<ProtoId<JobPrototype>>? jobs,
+        List<ProtoId<AntagPrototype>>? antags,
+        HumanoidCharacterProfile? profile,
+        [NotNullWhen(false)] out FormattedMessage? reason)
     {
         reason = null;
 
-        if (_roleBans.Contains($"Job:{job.ID}"))
+        if (antags is not null)
+        {
+            foreach (var proto in antags)
+            {
+                if (!IsAllowed(_prototypes.Index(proto), profile, out reason))
+                    return false;
+            }
+        }
+
+        if (jobs is not null)
+        {
+            foreach (var proto in jobs)
+            {
+                if (!IsAllowed(_prototypes.Index(proto), profile, out reason))
+                    return false;
+            }
+        }
+
+        return true;
+    }
+
+    /// <summary>
+    /// Check the job prototype against the current player, for requirements and bans
+    /// </summary>
+    public bool IsAllowed(
+        JobPrototype job,
+        HumanoidCharacterProfile? profile,
+        [NotNullWhen(false)] out FormattedMessage? reason)
+    {
+        // Check the player's bans
+        if (_roleBans.Contains(PrefixJob + job.ID))
         {
             reason = FormattedMessage.FromUnformatted(Loc.GetString("role-ban"));
             return false;
         }
 
+        // Check whitelist requirements
         if (!CheckWhitelist(job, out reason))
             return false;
 
-        var player = _playerManager.LocalSession;
-        if (player == null)
-            return true;
+        // Check other role requirements
+        var reqs = _entManager.System<SharedRoleSystem>().GetRoleRequirements(job);
+        if (!CheckRoleRequirements(reqs, profile, out reason))
+            return false;
 
-        return CheckRoleRequirements(job, profile, out reason);
+
+        return true;
     }
 
-    public bool CheckRoleRequirements(JobPrototype job, HumanoidCharacterProfile? profile, [NotNullWhen(false)] out FormattedMessage? reason)
+    /// <summary>
+    /// Check the antag prototype against the current player, for requirements and bans
+    /// </summary>
+    public bool IsAllowed(
+        AntagPrototype antag,
+        HumanoidCharacterProfile? profile,
+        [NotNullWhen(false)] out FormattedMessage? reason)
     {
-        var reqs = _entManager.System<SharedRoleSystem>().GetJobRequirement(job);
-        return CheckRoleRequirements(reqs, profile, out reason);
+        // Check the player's bans
+        if (_roleBans.Contains(PrefixAntag + antag.ID))
+        {
+            reason = FormattedMessage.FromUnformatted(Loc.GetString("role-ban"));
+            return false;
+        }
+
+        // TODO AntagPrototype whitelist check
+
+        // Check other role requirements
+        var reqs = _entManager.System<SharedRoleSystem>().GetRoleRequirements(antag);
+        if (!CheckRoleRequirements(reqs, profile, out reason))
+            return false;
+
+        return true;
     }
 
-    public bool CheckRoleRequirements(HashSet<JobRequirement>? requirements, HumanoidCharacterProfile? profile, [NotNullWhen(false)] out FormattedMessage? reason)
+    // This must be private so code paths can't accidentally skip requirement overrides. Call this through IsAllowed()
+    private bool CheckRoleRequirements(HashSet<JobRequirement>? requirements, HumanoidCharacterProfile? profile, [NotNullWhen(false)] out FormattedMessage? reason)
     {
         reason = null;
 
