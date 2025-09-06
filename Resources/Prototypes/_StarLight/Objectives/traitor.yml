@@ -15,7 +15,7 @@
       - !type:TargetObjectiveMindFilter
         blacklist:
           components:
-          - TeachALessonTargetComponent
+          - TeachALessonTarget
 
 - type: entity
   parent: [BaseTraitorObjective, BaseTeachALessonObjective]
@@ -38,7 +38,7 @@
       - !type:TargetObjectiveMindFilter
         blacklist:
           components:
-          - TeachALessonTargetComponent # dont let mutiple teach someone.
+          - TeachALessonTarget # dont let mutiple teach someone.
 
 - type: entity
   parent: BaseRDStealObjective
