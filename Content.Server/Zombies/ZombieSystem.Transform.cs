@@ -123,10 +123,10 @@ public sealed partial class ZombieSystem
                 _ghost.SpawnGhost((playerMindEnt, playerMind), target);
 
                 // Notify
-                _chatMan.ChatMessageToOne(ChatChannel.Local, message, message, EntityUid.Invalid, false, sess.Channel);
+                _chatMan.DispatchServerMessage(sess, message);
             }
             else
-                Log.Error($"Where is my mind, where is my mind");
+                Log.Error($"Mind for session '{sess}' could not be found");
         }
 
         //you're a real zombie now, son.
