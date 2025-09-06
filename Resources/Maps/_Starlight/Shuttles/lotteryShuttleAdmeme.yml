@@ -6602,8 +6602,6 @@ entities:
       nextAttack: -295.666538
     - type: EmitSoundOnCollide
       nextSound: -295.666538
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#0335FCFF'
   - uid: 276
@@ -6616,8 +6614,6 @@ entities:
       nextAttack: -295.666538
     - type: EmitSoundOnCollide
       nextSound: -295.666538
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#0335FCFF'
   - uid: 277
@@ -6630,8 +6626,6 @@ entities:
       nextAttack: -295.666538
     - type: EmitSoundOnCollide
       nextSound: -295.666538
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#0335FCFF'
   - uid: 278
@@ -6644,8 +6638,6 @@ entities:
       nextAttack: -295.666538
     - type: EmitSoundOnCollide
       nextSound: -295.666538
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#0335FCFF'
   - uid: 279
@@ -6659,8 +6651,6 @@ entities:
       nextAttack: -295.666538
     - type: EmitSoundOnCollide
       nextSound: -295.666538
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#0335FCFF'
   - uid: 280
@@ -6674,8 +6664,6 @@ entities:
       nextAttack: -295.666538
     - type: EmitSoundOnCollide
       nextSound: -295.666538
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#0335FCFF'
   - uid: 281
@@ -6689,8 +6677,6 @@ entities:
       nextAttack: -295.666538
     - type: EmitSoundOnCollide
       nextSound: -295.666538
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#FF1212FF'
   - uid: 282
@@ -6703,8 +6689,6 @@ entities:
       nextAttack: -295.666538
     - type: EmitSoundOnCollide
       nextSound: -295.666538
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#FF1212FF'
   - uid: 283
@@ -6718,8 +6702,6 @@ entities:
       nextAttack: -295.666538
     - type: EmitSoundOnCollide
       nextSound: -295.666538
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#FF1212FF'
   - uid: 284
@@ -6733,8 +6715,6 @@ entities:
       nextAttack: -295.666538
     - type: EmitSoundOnCollide
       nextSound: -295.666538
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#FF1212FF'
   - uid: 285
@@ -6748,8 +6728,6 @@ entities:
       nextAttack: -295.666538
     - type: EmitSoundOnCollide
       nextSound: -295.666538
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#FF1212FF'
 - proto: GasPipeStraight
@@ -6765,8 +6743,6 @@ entities:
       nextAttack: -295.666538
     - type: EmitSoundOnCollide
       nextSound: -295.666538
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#0335FCFF'
   - uid: 287
@@ -6780,8 +6756,6 @@ entities:
       nextAttack: -295.666538
     - type: EmitSoundOnCollide
       nextSound: -295.666538
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#0335FCFF'
   - uid: 288
@@ -6795,8 +6769,6 @@ entities:
       nextAttack: -295.666538
     - type: EmitSoundOnCollide
       nextSound: -295.666538
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#0335FCFF'
   - uid: 289
@@ -6809,8 +6781,6 @@ entities:
       nextAttack: -295.666538
     - type: EmitSoundOnCollide
       nextSound: -295.666538
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#0335FCFF'
   - uid: 290
@@ -6823,8 +6793,6 @@ entities:
       nextAttack: -295.666538
     - type: EmitSoundOnCollide
       nextSound: -295.666538
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#0335FCFF'
   - uid: 291
@@ -6837,8 +6805,6 @@ entities:
       nextAttack: -295.666538
     - type: EmitSoundOnCollide
       nextSound: -295.666538
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#0335FCFF'
   - uid: 292
@@ -6852,8 +6818,6 @@ entities:
       nextAttack: -295.666538
     - type: EmitSoundOnCollide
       nextSound: -295.666538
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#0335FCFF'
   - uid: 293
@@ -6867,8 +6831,6 @@ entities:
       nextAttack: -295.666538
     - type: EmitSoundOnCollide
       nextSound: -295.666538
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#0335FCFF'
   - uid: 294
@@ -6881,8 +6843,6 @@ entities:
       nextAttack: -295.666538
     - type: EmitSoundOnCollide
       nextSound: -295.666538
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#FF1212FF'
   - uid: 295
@@ -6895,8 +6855,6 @@ entities:
       nextAttack: -295.666538
     - type: EmitSoundOnCollide
       nextSound: -295.666538
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#FF1212FF'
   - uid: 296
@@ -6909,8 +6867,6 @@ entities:
       nextAttack: -295.666538
     - type: EmitSoundOnCollide
       nextSound: -295.666538
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#FF1212FF'
   - uid: 297
@@ -6924,8 +6880,6 @@ entities:
       nextAttack: -295.666538
     - type: EmitSoundOnCollide
       nextSound: -295.666538
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#FF1212FF'
   - uid: 298
@@ -6939,8 +6893,6 @@ entities:
       nextAttack: -295.666538
     - type: EmitSoundOnCollide
       nextSound: -295.666538
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#FF1212FF'
   - uid: 299
@@ -6954,8 +6906,6 @@ entities:
       nextAttack: -295.666538
     - type: EmitSoundOnCollide
       nextSound: -295.666538
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#FF1212FF'
   - uid: 300
@@ -6969,8 +6919,6 @@ entities:
       nextAttack: -295.666538
     - type: EmitSoundOnCollide
       nextSound: -295.666538
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#FF1212FF'
   - uid: 301
@@ -6984,8 +6932,6 @@ entities:
       nextAttack: -295.666538
     - type: EmitSoundOnCollide
       nextSound: -295.666538
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#FF1212FF'
   - uid: 302
@@ -6999,8 +6945,6 @@ entities:
       nextAttack: -295.666538
     - type: EmitSoundOnCollide
       nextSound: -295.666538
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#FF1212FF'
   - uid: 303
@@ -7014,8 +6958,6 @@ entities:
       nextAttack: -295.666538
     - type: EmitSoundOnCollide
       nextSound: -295.666538
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#FF1212FF'
   - uid: 304
@@ -7029,8 +6971,6 @@ entities:
       nextAttack: -295.666538
     - type: EmitSoundOnCollide
       nextSound: -295.666538
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#FF1212FF'
   - uid: 305
@@ -7044,8 +6984,6 @@ entities:
       nextAttack: -295.666538
     - type: EmitSoundOnCollide
       nextSound: -295.666538
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#FF1212FF'
   - uid: 306
@@ -7059,8 +6997,6 @@ entities:
       nextAttack: -295.666538
     - type: EmitSoundOnCollide
       nextSound: -295.666538
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#FF1212FF'
 - proto: GasPipeTJunction
@@ -7076,8 +7012,6 @@ entities:
       nextAttack: -295.666538
     - type: EmitSoundOnCollide
       nextSound: -295.666538
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#0335FCFF'
   - uid: 308
@@ -7091,8 +7025,6 @@ entities:
       nextAttack: -295.666538
     - type: EmitSoundOnCollide
       nextSound: -295.666538
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#0335FCFF'
   - uid: 309
@@ -7105,8 +7037,6 @@ entities:
       nextAttack: -295.666538
     - type: EmitSoundOnCollide
       nextSound: -295.666538
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#0335FCFF'
   - uid: 310
@@ -7120,8 +7050,6 @@ entities:
       nextAttack: -295.666538
     - type: EmitSoundOnCollide
       nextSound: -295.666538
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#0335FCFF'
   - uid: 311
@@ -7135,8 +7063,6 @@ entities:
       nextAttack: -295.666538
     - type: EmitSoundOnCollide
       nextSound: -295.666538
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#FF1212FF'
   - uid: 312
@@ -7150,8 +7076,6 @@ entities:
       nextAttack: -295.666538
     - type: EmitSoundOnCollide
       nextSound: -295.666538
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#FF1212FF'
   - uid: 313
@@ -7165,8 +7089,6 @@ entities:
       nextAttack: -295.666538
     - type: EmitSoundOnCollide
       nextSound: -295.666538
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#FF1212FF'
 - proto: GasPort
@@ -7180,8 +7102,6 @@ entities:
       parent: 1
     - type: EmitSoundOnCollide
       nextSound: -295.666538
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#0335FCFF'
 - proto: GasVentPump
@@ -7354,8 +7274,6 @@ entities:
           threshold: 393.15
           enabled: True
         ignore: False
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#0335FCFF'
   - uid: 316
@@ -7527,8 +7445,6 @@ entities:
           threshold: 393.15
           enabled: True
         ignore: False
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#0335FCFF'
   - uid: 317
@@ -7700,8 +7616,6 @@ entities:
           threshold: 393.15
           enabled: True
         ignore: False
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#0335FCFF'
   - uid: 318
@@ -7873,8 +7787,6 @@ entities:
           threshold: 393.15
           enabled: True
         ignore: False
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#0335FCFF'
   - uid: 319
@@ -8046,8 +7958,6 @@ entities:
           threshold: 393.15
           enabled: True
         ignore: False
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#0335FCFF'
 - proto: GasVentScrubber
@@ -8221,8 +8131,6 @@ entities:
           threshold: 393.15
           enabled: True
         ignore: False
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#FF1212FF'
   - uid: 321
@@ -8394,8 +8302,6 @@ entities:
           threshold: 393.15
           enabled: True
         ignore: False
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#FF1212FF'
   - uid: 322
@@ -8566,8 +8472,6 @@ entities:
           threshold: 393.15
           enabled: True
         ignore: False
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#FF1212FF'
   - uid: 323
@@ -8739,8 +8643,6 @@ entities:
           threshold: 393.15
           enabled: True
         ignore: False
-    - type: VentCrawTube
-      connected: True
     - type: AtmosPipeColor
       color: '#FF1212FF'
 - proto: GeneratorBasic15kW

@@ -673,37 +673,27 @@ entities:
       rot: -1.5707963267948966 rad
       pos: -1.5,4.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
   - uid: 103
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: -0.5,4.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
   - uid: 104
     components:
     - type: Transform
       pos: 0.5,-2.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
   - uid: 105
     components:
     - type: Transform
       pos: 0.5,-3.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
   - uid: 106
     components:
     - type: Transform
       pos: 0.5,-4.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
 - proto: GasVentScrubber
   entities:
   - uid: 107
@@ -711,8 +701,6 @@ entities:
     - type: Transform
       pos: 0.5,-1.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
     - type: DeviceNetwork
       deviceLists:
       - 17
