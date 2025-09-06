@@ -6,6 +6,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Content.Server.Administration.Logs;
 using Content.Shared.Administration.Logs;
+using Content.Shared.Administration.ParrotMemories;
 using Content.Shared.CCVar;
 using Content.Shared.Construction.Prototypes;
 using Content.Shared.Database;
@@ -361,6 +362,22 @@ namespace Content.Server.Database
         /// </remarks>
         /// <param name="notification">The notification to send.</param>
         Task SendNotification(DatabaseNotification notification);
+
+        #endregion
+
+        #region Parrots
+
+        IAsyncEnumerable<ExtendedParrotMemory> GetParrotMemories(bool blocked, int? round = null, string? textFilter = null);
+
+        IAsyncEnumerable<ParrotMemory> GetRandomParrotMemories(int limit);
+
+        Task AddParrotMemory(string message, NetUserId sourcePlayer, int roundId);
+
+        Task SetParrotMemoryBlock(int messageId, bool blocked);
+
+        Task SetParrotMemoryBlockPlayer(NetUserId playerId, bool blocked);
+
+        Task TruncateParrotMemory(TimeSpan maxMessageAge);
 
         #endregion
     }
@@ -1070,6 +1087,41 @@ namespace Content.Server.Database
             DbWriteOpsMetric.Inc();
             return RunDbCommand(() => _db.SendNotification(notification));
         }
+
+        #region Parrots
+
+        public IAsyncEnumerable<ExtendedParrotMemory> GetParrotMemories(bool blocked, int? round = null, string? textFilter = null)
+        {
+            return RunDbCommand(() => _db.GetParrotMemories(blocked, round, textFilter));
+        }
+
+        public IAsyncEnumerable<ParrotMemory> GetRandomParrotMemories(int limit)
+        {
+            return RunDbCommand(() => _db.GetRandomParrotMemories(limit));
+        }
+
+        public Task AddParrotMemory(string message, NetUserId sourcePlayer, int roundId)
+        {
+            return RunDbCommand(() => _db.AddParrotMemory(message, sourcePlayer, roundId));
+        }
+
+        public Task SetParrotMemoryBlock(int messageId, bool blocked)
+        {
+            return RunDbCommand(() => _db.SetParrotMemoryBlock(messageId, blocked));
+        }
+
+        public Task SetParrotMemoryBlockPlayer(NetUserId playerId, bool blocked)
+        {
+            return RunDbCommand(() => _db.SetParrotMemoryBlockPlayer(playerId, blocked));
+        }
+
+        public Task TruncateParrotMemory(TimeSpan maxMessageAge)
+        {
+            return RunDbCommand(() => _db.TruncateParrotMemory(maxMessageAge));
+        }
+
+        #endregion
+
 
         private async void HandleDatabaseNotification(DatabaseNotification notification)
         {
