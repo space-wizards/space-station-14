@@ -972,6 +972,42 @@
         Piercing: 0
 
 - type: entity
+  id: BulletTennis
+  name: tennis ball
+  description: A fuzzy orb of endless betrayal.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Physics
+    bodyType: Dynamic
+    linearDamping: 0
+    angularDamping: 0
+  - type: Fixtures
+    fixtures:
+      projectile:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.1,-0.1,0.1,0.1"
+        hard: false
+        mask:
+        - Impassable
+        - BulletImpassable
+  - type: Sprite
+    sprite: Objects/Fun/Balls/tennisball.rsi
+    layers:
+      - state: icon
+  - type: Ammo
+    muzzleFlash: null
+  - type: Projectile
+    deleteOnCollide: true
+    damage:
+      types:
+        Piercing: 0
+    soundHit: null
+  - type: TimedDespawn
+    lifetime: 10
+    
+
+- type: entity
   id: BulletAcid
   name: acid spit
   parent: BaseBullet
