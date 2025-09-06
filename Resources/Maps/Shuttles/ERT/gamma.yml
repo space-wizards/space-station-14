@@ -1123,73 +1123,6 @@ entities:
         chunkSize: 4
     - type: GasTileOverlay
     - type: RadiationGridResistance
-- proto: ActionToggleInternals
-  entities:
-  - uid: 4
-    components:
-    - type: Transform
-      parent: 3
-    - type: InstantAction
-      originalIconColor: '#FFFFFFFF'
-      container: 3
-  - uid: 6
-    components:
-    - type: Transform
-      parent: 5
-    - type: InstantAction
-      originalIconColor: '#FFFFFFFF'
-      container: 5
-  - uid: 11
-    components:
-    - type: Transform
-      parent: 10
-    - type: InstantAction
-      originalIconColor: '#FFFFFFFF'
-      container: 10
-  - uid: 13
-    components:
-    - type: Transform
-      parent: 12
-    - type: InstantAction
-      originalIconColor: '#FFFFFFFF'
-      container: 12
-  - uid: 18
-    components:
-    - type: Transform
-      parent: 17
-    - type: InstantAction
-      originalIconColor: '#FFFFFFFF'
-      container: 17
-  - uid: 25
-    components:
-    - type: Transform
-      parent: 24
-    - type: InstantAction
-      originalIconColor: '#FFFFFFFF'
-      container: 24
-  - uid: 27
-    components:
-    - type: Transform
-      parent: 26
-    - type: InstantAction
-      originalIconColor: '#FFFFFFFF'
-      container: 26
-  - uid: 32
-    components:
-    - type: Transform
-      parent: 31
-    - type: InstantAction
-      originalIconColor: '#FFFFFFFF'
-      container: 31
-- proto: ActionToggleJetpack
-  entities:
-  - uid: 19
-    components:
-    - type: Transform
-      parent: 17
-    - type: InstantAction
-      originalIconColor: '#FFFFFFFF'
-      container: 17
 - proto: AdvMopItem
   entities:
   - uid: 36
@@ -3927,46 +3860,22 @@ entities:
     components:
     - type: Transform
       parent: 2
-    - type: GasTank
-      toggleActionEntity: 4
     - type: Physics
       canCollide: False
-    - type: ActionsContainer
-    - type: ContainerContainer
-      containers:
-        actions: !type:Container
-          ents:
-          - 4
     - type: InsideEntityStorage
   - uid: 12
     components:
     - type: Transform
       parent: 9
-    - type: GasTank
-      toggleActionEntity: 13
     - type: Physics
       canCollide: False
-    - type: ActionsContainer
-    - type: ContainerContainer
-      containers:
-        actions: !type:Container
-          ents:
-          - 13
     - type: InsideEntityStorage
   - uid: 24
     components:
     - type: Transform
       parent: 23
-    - type: GasTank
-      toggleActionEntity: 25
     - type: Physics
       canCollide: False
-    - type: ActionsContainer
-    - type: ContainerContainer
-      containers:
-        actions: !type:Container
-          ents:
-          - 25
     - type: InsideEntityStorage
   - uid: 35
     components:
@@ -3995,61 +3904,29 @@ entities:
     components:
     - type: Transform
       parent: 2
-    - type: GasTank
-      toggleActionEntity: 6
     - type: Physics
       canCollide: False
-    - type: ActionsContainer
-    - type: ContainerContainer
-      containers:
-        actions: !type:Container
-          ents:
-          - 6
     - type: InsideEntityStorage
   - uid: 10
     components:
     - type: Transform
       parent: 9
-    - type: GasTank
-      toggleActionEntity: 11
     - type: Physics
       canCollide: False
-    - type: ActionsContainer
-    - type: ContainerContainer
-      containers:
-        actions: !type:Container
-          ents:
-          - 11
     - type: InsideEntityStorage
   - uid: 26
     components:
     - type: Transform
       parent: 23
-    - type: GasTank
-      toggleActionEntity: 27
     - type: Physics
       canCollide: False
-    - type: ActionsContainer
-    - type: ContainerContainer
-      containers:
-        actions: !type:Container
-          ents:
-          - 27
     - type: InsideEntityStorage
   - uid: 31
     components:
     - type: Transform
       parent: 30
-    - type: GasTank
-      toggleActionEntity: 32
     - type: Physics
       canCollide: False
-    - type: ActionsContainer
-    - type: ContainerContainer
-      containers:
-        actions: !type:Container
-          ents:
-          - 32
     - type: InsideEntityStorage
   - uid: 408
     components:
@@ -6410,19 +6287,8 @@ entities:
     components:
     - type: Transform
       parent: 16
-    - type: GasTank
-      toggleActionEntity: 18
-    - type: Jetpack
-      toggleActionEntity: 19
     - type: Physics
       canCollide: False
-    - type: ActionsContainer
-    - type: ContainerContainer
-      containers:
-        actions: !type:Container
-          ents:
-          - 19
-          - 18
     - type: InsideEntityStorage
   - uid: 20
     components:

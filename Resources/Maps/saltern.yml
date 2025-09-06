@@ -5768,46 +5768,6 @@ entities:
     - type: Transform
       pos: -11.470391,11.486723
       parent: 2
-- proto: ActionToggleBlock
-  entities:
-  - uid: 12
-    components:
-    - type: Transform
-      parent: 11
-    - type: InstantAction
-      originalIconColor: '#FFFFFFFF'
-      container: 11
-  - uid: 14
-    components:
-    - type: Transform
-      parent: 13
-    - type: InstantAction
-      originalIconColor: '#FFFFFFFF'
-      container: 13
-- proto: ActionToggleInternals
-  entities:
-  - uid: 17
-    components:
-    - type: Transform
-      parent: 16
-    - type: InstantAction
-      container: 16
-- proto: ActionToggleJetpack
-  entities:
-  - uid: 18
-    components:
-    - type: Transform
-      parent: 16
-    - type: InstantAction
-      container: 16
-- proto: ActionToggleLight
-  entities:
-  - uid: 13284
-    components:
-    - type: Transform
-      parent: 13283
-    - type: InstantAction
-      container: 13283
 - proto: ADTBlackChair
   entities:
   - uid: 19
@@ -42201,20 +42161,6 @@ entities:
     - type: Transform
       pos: 2.4978046,0.6471896
       parent: 13282
-    - type: HandheldLight
-      toggleActionEntity: 13284
-    - type: ContainerContainer
-      containers:
-        cell_slot: !type:ContainerSlot
-          showEnts: False
-          occludes: True
-          ent: null
-        actions: !type:Container
-          showEnts: False
-          occludes: True
-          ents:
-          - 13284
-    - type: ActionsContainer
 - proto: FlippoLighter
   entities:
   - uid: 6259
@@ -61945,19 +61891,8 @@ entities:
     components:
     - type: Transform
       parent: 15
-    - type: GasTank
-      toggleActionEntity: 17
-    - type: Jetpack
-      toggleActionEntity: 18
     - type: Physics
       canCollide: False
-    - type: ActionsContainer
-    - type: ContainerContainer
-      containers:
-        actions: !type:Container
-          ents:
-          - 18
-          - 17
     - type: InsideEntityStorage
   - uid: 13281
     components:
@@ -70522,14 +70457,6 @@ entities:
     - type: Transform
       pos: -10.098847,19.520386
       parent: 2
-    - type: Blocking
-      blockingToggleActionEntity: 12
-    - type: ActionsContainer
-    - type: ContainerContainer
-      containers:
-        actions: !type:Container
-          ents:
-          - 12
 - proto: RiotLaserShield
   entities:
   - uid: 13
@@ -70537,14 +70464,6 @@ entities:
     - type: Transform
       pos: -10.098847,19.170387
       parent: 2
-    - type: Blocking
-      blockingToggleActionEntity: 14
-    - type: ActionsContainer
-    - type: ContainerContainer
-      containers:
-        actions: !type:Container
-          ents:
-          - 14
 - proto: RiotShield
   entities:
   - uid: 10322
