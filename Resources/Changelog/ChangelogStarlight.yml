@@ -13366,5 +13366,79 @@ Entries:
   id: 156100
   time: '2025-09-06T16:28:27.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/1561
+- author: Happyrobot33, Arkanic
+  changes:
+  - message: (Test infra) Changed maximujm testing time from 20 to 50 minutes for
+      local testing purposes.
+    type: Tweak
+  id: 153900
+  time: '2025-09-06T18:53:18.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1539
+- author: Happyrobot33, Arkanic
+  changes:
+  - message: (Test infra) Added all game maps to map test, along with our CC maps.
+    type: Fix
+  id: 153901
+  time: '2025-09-06T18:53:18.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1539
+- author: Happyrobot33, Arkanic
+  changes:
+  - message: (Test infra) Wrapped do not map check into a assert multiple to give
+      a full list of do not map entities.
+    type: Tweak
+  id: 153902
+  time: '2025-09-06T18:53:18.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1539
+- author: Happyrobot33, Arkanic
+  changes:
+  - message: (Test infra) Fixed references of passenger job instead of assistant job.
+    type: Fix
+  id: 153903
+  time: '2025-09-06T18:53:18.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1539
+- author: Happyrobot33, Arkanic
+  changes:
+  - message: Edited ALL MAPS to fix test issues.
+    type: Tweak
+  id: 153904
+  time: '2025-09-06T18:53:18.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1539
+- author: Happyrobot33, Arkanic
+  changes:
+  - message: Removed ALL christmas map variants.
+    type: Remove
+  id: 153905
+  time: '2025-09-06T18:53:18.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1539
+- author: Happyrobot33, Arkanic
+  changes:
+  - message: Removed invalid job slots on ALL maps. Maps are in progress to actually
+      getting these spawns back.
+    type: Remove
+  id: 153906
+  time: '2025-09-06T18:53:18.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1539
+- author: Happyrobot33, Arkanic
+  changes:
+  - message: Made mech drill and mech flashbang launcher available properly in researches.
+    type: Fix
+  id: 153907
+  time: '2025-09-06T18:53:18.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1539
+- author: Happyrobot33, Arkanic
+  changes:
+  - message: Svalinn laser pistol and temperature gun are now unlockable.
+    type: Add
+  id: 153908
+  time: '2025-09-06T18:53:18.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1539
+- author: Happyrobot33, Arkanic
+  changes:
+  - message: OVERALL alot of changes that shouldnt effect player gameplay at all,
+      but could
+    type: Tweak
+  id: 153909
+  time: '2025-09-06T18:53:18.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1539
 Order: -1
 
