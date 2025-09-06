@@ -13324,5 +13324,40 @@ Entries:
   id: 156200
   time: '2025-09-06T16:14:01.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/1562
+- author: Fasuh
+  changes:
+  - message: Resomi is now hurt by Saline, Dexalin and Dexalin Plus the same as Avali.
+    type: Add
+  id: 155800
+  time: '2025-09-06T15:46:25.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1558
+- author: Fasuh
+  changes:
+  - message: Resomi is healed by Ammonia and Amoxla the same as Avali.
+    type: Add
+  id: 155801
+  time: '2025-09-06T15:46:25.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1558
+- author: Fasuh
+  changes:
+  - message: Resomi now has Ammonia based blood.
+    type: Tweak
+  id: 155802
+  time: '2025-09-06T15:46:25.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1558
+- author: Fasuh
+  changes:
+  - message: Avali is now correctly harmed by Saline, Dexalin and Dexalin Plus again.
+    type: Fix
+  id: 155803
+  time: '2025-09-06T15:46:25.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1558
+- author: Fasuh
+  changes:
+  - message: Vampires not being damaged by holy water.
+    type: Fix
+  id: 155804
+  time: '2025-09-06T15:46:25.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1558
 Order: -1
 
