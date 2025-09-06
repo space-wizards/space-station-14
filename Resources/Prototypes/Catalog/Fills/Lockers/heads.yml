@@ -44,8 +44,6 @@
     - id: MedalCase
     - id: NukeDisk
     - id: PinpointerNuclear
-    - id: RubberStampApproved
-    - id: RubberStampDenied
     - id: RubberStampCaptain
     - id: SpaceCash1000
     - id: WeaponDisabler
@@ -159,8 +157,6 @@
     - id: CargoRequestEngineeringComputerCircuitboard
     - id: RCD
     - id: RCDAmmo
-    - id: RubberStampApproved
-    - id: RubberStampDenied
     - id: RubberStampCE
     - id: MetalFoamGrenade
 
@@ -218,8 +214,6 @@
     - id: MedicalTechFabCircuitboard
     - id: CargoRequestMedicalComputerCircuitboard
     - id: MedkitFilled
-    - id: RubberStampApproved
-    - id: RubberStampDenied
     - id: RubberStampCMO
     - id: MedTekCartridge
 
@@ -273,8 +267,6 @@
     - id: ProtolatheMachineCircuitboard
     - id: ResearchComputerCircuitboard
     - id: CargoRequestScienceComputerCircuitboard
-    - id: RubberStampApproved
-    - id: RubberStampDenied
     - id: RubberStampRd
 
 # Hardsuit table, used for suit storage as well
@@ -327,8 +319,6 @@
     - id: ClothingShoesBootsJack
     - id: DoorRemoteSecurity
     - id: HoloprojectorSecurity
-    - id: RubberStampApproved
-    - id: RubberStampDenied
     - id: RubberStampHos
     - id: SecurityTechFabCircuitboard
     - id: CargoRequestSecurityComputerCircuitboard
