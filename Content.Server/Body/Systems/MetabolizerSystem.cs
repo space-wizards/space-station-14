@@ -12,6 +12,8 @@ using Content.Shared.EntityEffects;
 using Content.Shared.FixedPoint;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Mobs.Systems;
+using Content.Shared.WooWoo.Components.Antivenom;
+using Content.Shared.WooWoo.Systems.Antivenom;
 using Robust.Shared.Collections;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
@@ -27,6 +29,7 @@ namespace Content.Server.Body.Systems
         [Dependency] private readonly IRobustRandom _random = default!;
         [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
         [Dependency] private readonly MobStateSystem _mobStateSystem = default!;
+        [Dependency] private readonly SharedAntivenomProducerSystem _antivenomProducerSystem = default!;
         [Dependency] private readonly SharedSolutionContainerSystem _solutionContainerSystem = default!;
 
         private EntityQuery<OrganComponent> _organQuery;
@@ -138,6 +141,11 @@ namespace Content.Server.Body.Systems
             var list = solution.Contents.ToArray();
             _random.Shuffle(list);
 
+            // do we have antivenom immuno-metabolism?
+            // Maybe if we add some organ related to the immune system we can use that, but for now we just use the body/parentEnt.
+            // This is so we can set different animals with different immune capabilities without a morbillion stomach types
+            bool antivenomProducer = TryComp<AntivenomProducerComponent>(solutionEntityUid, out var antivenomComp);
+
             int reagents = 0;
             foreach (var (reagent, quantity) in list)
             {
@@ -155,9 +163,17 @@ namespace Content.Server.Body.Systems
                     continue;
                 }
 
-                // we're done here entirely if this is true
-                if (reagents >= ent.Comp1.MaxReagentsProcessable)
-                    return;
+                // stop metabolizing if we're out of slots and dont have reagent immunizations
+                if (antivenomProducer)
+                {
+                    if (reagents >= ent.Comp1.MaxReagentsProcessable + antivenomComp!.UnlockedImmunities.Count)
+                        return;
+                }
+                else
+                {
+                    if (reagents >= ent.Comp1.MaxReagentsProcessable)
+                        return;
+                }
 
 
                 // loop over all our groups and see which ones apply
@@ -213,12 +229,24 @@ namespace Content.Server.Body.Systems
                 // remove a certain amount of reagent
                 if (mostToRemove > FixedPoint2.Zero)
                 {
+                    if (antivenomProducer)
+                    {
+                        _antivenomProducerSystem.AccumulateImmunity(solutionEntityUid.Value, antivenomComp!, reagent, mostToRemove);
+                    }
+
                     solution.RemoveReagent(reagent, mostToRemove);
 
                     // We have processed a reagant, so count it towards the cap
                     reagents += 1;
                 }
             }
+
+            // run our antivenom production here so we can utilize the metabolizer's update logic
+            // allowing us to bypass a whole bunch of metabolism / blood timing stuff.
+            // we do it after metabolzing so theres always antivenom to pull out of the solution by syringe.
+            // all at the cost of one metab update loop of delay.
+            if (antivenomProducer)
+                _antivenomProducerSystem.CreateAntivenom(soln.Value, antivenomComp!);
 
             _solutionContainerSystem.UpdateChemicals(soln.Value);
         }
