@@ -466,8 +466,9 @@
 - type: reagent
   id: Ice
   name: reagent-name-ice
-  parent: BaseDrink
   desc: reagent-desc-ice
+  slipData:
+    requiredSlipSpeed: 3.5
   evaporationSpeed: 0.15 # TODO: Ideally Ice should just turn into Water if the room is warm enough (and vis versa), rather than Ice directly evaporating
   physicalDesc: reagent-physical-desc-frosty
   flavor: cold
@@ -476,6 +477,14 @@
   meltingPoint: 0.0
   boilingPoint: 100.0
   friction: 0.05 # Copied from Ice Crust
+  metabolisms:
+    Drink:
+      effects:
+      - !type:SatiateThirst
+        factor: 3
+  plantMetabolism:
+  - !type:PlantAdjustWater
+    amount: 1
   reactiveEffects: []
   metamorphicSprite:
     sprite: Objects/Consumable/Drinks/iceglass.rsi
