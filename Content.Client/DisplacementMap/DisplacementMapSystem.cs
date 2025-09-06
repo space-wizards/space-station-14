@@ -37,9 +37,10 @@ public sealed class DisplacementMapSystem : EntitySystem
         if (displacementKey is null)
             return false;
 
-        // We're just ensuring the displacement is not there, we don't care if it isn't.
-        if (!TryRemoveDisplacement(sprite, key, false))
-            return false;
+        EnsureDisplacementIsNotOnSprite(sprite, key);
+
+        if (data.ShaderOverride is not null)
+            sprite.Comp.LayerSetShader(index, data.ShaderOverride);
 
         //allows you not to write it every time in the YML
         foreach (var pair in data.SizeMaps)
@@ -89,16 +90,17 @@ public sealed class DisplacementMapSystem : EntitySystem
     }
 
     /// <summary>
-    /// Attempts to remove the displacement layer specified.
+    /// Ensures that the displacement map associated with the given layer key is not in the Sprite's LayerMap.
     /// </summary>
     /// <param name="sprite">The sprite to remove the displacement layer from.</param>
     /// <param name="key">The key of the layer that is referenced by the displacement layer we want to remove.</param>
     /// <param name="logMissing">Whether to report an error if the displacement map isn't on the sprite.</param>
-    /// <returns>False if the key is invalid or the layer didn't exist. Otherwise, true.</returns>
-    public bool TryRemoveDisplacement(Entity<SpriteComponent> sprite, object key, bool logMissing = true)
+    public void EnsureDisplacementIsNotOnSprite(Entity<SpriteComponent> sprite, object key)
     {
         var displacementLayerKey = BuildDisplacementLayerKey(key);
+        if (displacementLayerKey is null)
+            return;
 
-        return displacementLayerKey is not null && _sprite.RemoveLayer(sprite.AsNullable(), displacementLayerKey, logMissing);
+        _sprite.RemoveLayer(sprite.AsNullable(), displacementLayerKey, false);
     }
 }

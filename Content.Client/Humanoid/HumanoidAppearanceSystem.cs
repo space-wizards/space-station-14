@@ -308,9 +308,7 @@ public sealed class HumanoidAppearanceSystem : SharedHumanoidAppearanceSystem
             // The Vulps must be shaved.
             // (https://github.com/space-wizards/space-station-14/issues/40135).
             if (prototype.CanBeDisplaced)
-                // Even if something can be displaced, it doesn't mean it has been displaced, so we are only ensuring
-                // the displacement layer is gone here.
-                _displacement.TryRemoveDisplacement(spriteEnt, layerId, false);
+                _displacement.EnsureDisplacementIsNotOnSprite(spriteEnt, layerId);
         }
     }
 
@@ -355,9 +353,9 @@ public sealed class HumanoidAppearanceSystem : SharedHumanoidAppearanceSystem
         visible &= humanoid.BaseLayers.TryGetValue(markingPrototype.BodyPart, out var setting)
            && setting.AllowsMarkings;
 
-        for (var index = 0; index < markingPrototype.Sprites.Count; index++)
+        for (var j = 0; j < markingPrototype.Sprites.Count; j++)
         {
-            var markingSprite = markingPrototype.Sprites[index];
+            var markingSprite = markingPrototype.Sprites[j];
 
             if (markingSprite is not SpriteSpecifier.Rsi rsi)
                 return;
@@ -366,7 +364,7 @@ public sealed class HumanoidAppearanceSystem : SharedHumanoidAppearanceSystem
 
             if (!_sprite.LayerMapTryGet((entity.Owner, sprite), layerId, out _, false))
             {
-                var layer = _sprite.AddLayer((entity.Owner, sprite), markingSprite, targetLayer + index + 1);
+                var layer = _sprite.AddLayer((entity.Owner, sprite), markingSprite, targetLayer + j + 1);
                 _sprite.LayerMapSet((entity.Owner, sprite), layerId, layer);
                 _sprite.LayerSetSprite((entity.Owner, sprite), layerId, rsi);
             }
@@ -379,13 +377,13 @@ public sealed class HumanoidAppearanceSystem : SharedHumanoidAppearanceSystem
             // Okay so if the marking prototype is modified but we load old marking data this may no longer be valid
             // and we need to check the index is correct.
             // So if that happens just default to white?
-            if (colors != null && index < colors.Count)
-                _sprite.LayerSetColor((entity.Owner, sprite), layerId, colors[index]);
+            if (colors != null && j < colors.Count)
+                _sprite.LayerSetColor((entity.Owner, sprite), layerId, colors[j]);
             else
                 _sprite.LayerSetColor((entity.Owner, sprite), layerId, Color.White);
 
             if (humanoid.MarkingsDisplacement.TryGetValue(markingPrototype.BodyPart, out var displacementData) && markingPrototype.CanBeDisplaced)
-                _displacement.TryAddDisplacement(displacementData, (entity.Owner, sprite), targetLayer + index + 1, layerId, out _);
+                _displacement.TryAddDisplacement(displacementData, (entity.Owner, sprite), targetLayer + j + 1, layerId, out _);
         }
     }
 
