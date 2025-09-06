@@ -308,7 +308,9 @@ public sealed class HumanoidAppearanceSystem : SharedHumanoidAppearanceSystem
             // The Vulps must be shaved.
             // (https://github.com/space-wizards/space-station-14/issues/40135).
             if (prototype.CanBeDisplaced)
-                _displacement.TryRemoveDisplacement(spriteEnt, layerId);
+                // Even if something can be displaced, it doesn't mean it has been displaced, so we are only ensuring
+                // the displacement layer is gone here.
+                _displacement.TryRemoveDisplacement(spriteEnt, layerId, false);
         }
     }
 
