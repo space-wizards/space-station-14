@@ -1,8 +1,10 @@
+using System.Diagnostics.CodeAnalysis;
 using Content.Shared.Atmos.Components;
 using Content.Shared.Database;
 using Content.Shared.Examine;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Interaction;
+using Content.Shared.Interaction.Components;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Popups;
 using Content.Shared.SubFloor;
@@ -11,7 +13,6 @@ using Content.Shared.Tools.Components;
 using Content.Shared.Tools.Systems;
 using Content.Shared.Verbs;
 using Robust.Shared.Prototypes;
-using System.Diagnostics.CodeAnalysis;
 
 namespace Content.Shared.Atmos.EntitySystems;
 
@@ -56,8 +57,10 @@ public abstract partial class SharedAtmosPipeLayersSystem : EntitySystem
             return;
 
         var user = args.User;
+        var bypassChecks = HasComp<BypassInteractionChecksComponent>(user);
+        Entity<ToolComponent>? tool = null; // C# moment
 
-        if (TryComp<SubFloorHideComponent>(ent, out var subFloorHide) && subFloorHide.IsUnderCover)
+        if (!bypassChecks && TryComp<SubFloorHideComponent>(ent, out var subFloorHide) && subFloorHide.IsUnderCover)
         {
             var v = new Verb
             {
@@ -70,9 +73,10 @@ public abstract partial class SharedAtmosPipeLayersSystem : EntitySystem
             };
 
             args.Verbs.Add(v);
+            return;
         }
 
-        else if (!TryGetHeldTool(user, ent.Comp.Tool, out var tool))
+        if (!bypassChecks && !TryGetHeldTool(user, ent.Comp.Tool, out tool))
         {
             var v = new Verb
             {
@@ -85,32 +89,40 @@ public abstract partial class SharedAtmosPipeLayersSystem : EntitySystem
             };
 
             args.Verbs.Add(v);
+            return;
         }
 
-        else
+        // Iterate through the pipe layers up to the number the device supports
+        foreach (var layer in Enum.GetValues<AtmosPipeLayer>()[..ent.Comp.NumberOfPipeLayers])
         {
-            for (var i = 0; i < ent.Comp.NumberOfPipeLayers; i++)
+            var layerName = GetPipeLayerName(layer);
+            var label = Loc.GetString("atmos-pipe-layers-component-select-layer", ("layerName", layerName));
+
+            var v = new Verb
             {
-                var index = i;
-                var layerName = GetPipeLayerName((AtmosPipeLayer)index);
-                var label = Loc.GetString("atmos-pipe-layers-component-select-layer", ("layerName", layerName));
-
-                var v = new Verb
+                Priority = 1,
+                Category = VerbCategory.Adjust,
+                Text = label,
+                Disabled = layer == ent.Comp.CurrentPipeLayer,
+                Impact = LogImpact.Low,
+                DoContactInteraction = true,
+                Act = () =>
                 {
-                    Priority = 1,
-                    Category = VerbCategory.Adjust,
-                    Text = label,
-                    Disabled = index == (int)ent.Comp.CurrentPipeLayer,
-                    Impact = LogImpact.Low,
-                    DoContactInteraction = true,
-                    Act = () =>
+                    if (bypassChecks)
+                        SetPipeLayer(ent, layer, user);
+                    else if (tool is not null) // C# moment cont.: Tool is always not null here >:(
                     {
-                        _tool.UseTool(tool.Value, user, ent, ent.Comp.Delay, tool.Value.Comp.Qualities, new TrySettingPipeLayerCompletedEvent((AtmosPipeLayer)index));
+                        _tool.UseTool(tool.Value,
+                            user,
+                            ent,
+                            ent.Comp.Delay,
+                            tool.Value.Comp.Qualities,
+                            new TrySettingPipeLayerCompletedEvent(layer));
                     }
-                };
+                },
+            };
 
-                args.Verbs.Add(v);
-            }
+            args.Verbs.Add(v);
         }
     }
 
