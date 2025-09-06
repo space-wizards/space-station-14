@@ -27,6 +27,7 @@
       - DrinkBarefootGlass
       - DrinkBeerglass
       - DrinkBerryJuice
+      - DrinkBlackJapanGlass
       - DrinkBlackRussianGlass
       - DrinkBlueCuracaoGlass
       - DrinkBlueHawaiianGlass
@@ -34,11 +35,14 @@
       - DrinkBooger
       - DrinkBraveBullGlass
       - DrinkBronxGlass
+      - DrinkBruisedMelonGlass
       - BudgetInsulsDrinkGlass
       - DrinkCarrotJuice
       - DrinkCoconutRum
+      - DrinkCoconutSakeColadaGlass
       - DrinkChocolateGlass
       - DrinkCognacGlass
+      - DrinkCosmicAlaskaGlass
       - DrinkCosmopolitan
       - DrinkCrushDepthGlass
       - DrinkCubaLibreGlass
@@ -59,6 +63,7 @@
       - DrinkGreenTeaGlass
       - DrinkGrogGlass
       - DrinkHippiesDelightGlass
+      - DrinkHorsesNeckGlass
       - DrinkIcedCoffeeGlass
       - DrinkIcedGreenTeaGlass
       - DrinkIcedBeerGlass
@@ -86,6 +91,7 @@
       - DrinkPinaColadaGlass
       - DrinkPoscaGlass
       - DrinkRadlerGlass
+      - DrinkRansomNoteGlass
       - DrinkRedMeadGlass
       - DrinkRewriter
       - DrinkRoyRogersGlass
