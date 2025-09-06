@@ -89,7 +89,6 @@
   - type: AtmosMonitoringConsoleDevice
     navMapBlip: GasFlowRegulator
   - type: VentCrawTube
-    containerId: VentCrawTube
   - type: VentCrawTransit
   - type: ContainerContainer
     containers:
@@ -419,7 +418,6 @@
   - type: AtmosMonitoringConsoleDevice
     navMapBlip: GasValve
   - type: VentCrawTube
-    containerId: VentCrawTube
   - type: VentCrawTransit
   - type: ContainerContainer
     containers:
