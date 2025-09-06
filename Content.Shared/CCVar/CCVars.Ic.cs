@@ -11,6 +11,12 @@ public sealed partial class CCVars
         CVarDef.Create("ic.restricted_names", true, CVar.SERVER | CVar.REPLICATED);
 
     /// <summary>
+    ///     Restricts IC character pronouns to alphanumeric chars.
+    /// </summary>
+    public static readonly CVarDef<bool> RestrictedPronouns =
+        CVarDef.Create("ic.restricted_pronouns", true, CVar.SERVER | CVar.REPLICATED);
+
+    /// <summary>
     ///     Sets the maximum IC name length.
     /// </summary>
     public static readonly CVarDef<int> MaxNameLength =
@@ -21,6 +27,18 @@ public sealed partial class CCVars
     /// </summary>
     public static readonly CVarDef<int> MaxLoadoutNameLength =
         CVarDef.Create("ic.loadout_name_length", 32, CVar.SERVER | CVar.REPLICATED);
+
+    /// <summary>
+    ///     Enables dative, genitive, and measure word forms for pronouns (not used in en-US).
+    /// </summary>
+    public static readonly CVarDef<bool> ShowAdditionalPronouns =
+        CVarDef.Create("ic.show_additional_pronouns", false, CVar.SERVER | CVar.REPLICATED);
+
+    /// <summary>
+    ///     Sets the maximum length for a character's pronouns (eg. he, her, themselves)
+    /// </summary>
+    public static readonly CVarDef<int> MaxPronounLength =
+        CVarDef.Create("ic.pronoun_length", 16, CVar.SERVER | CVar.REPLICATED);
 
     /// <summary>
     ///     Allows flavor text (character descriptions).
