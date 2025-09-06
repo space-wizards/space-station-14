@@ -1,4 +1,5 @@
 using Content.Shared.Dataset;
+using Content.Shared.Humanoid.ColoringScheme;
 using Content.Shared.Humanoid.Markings;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
@@ -54,7 +55,7 @@ public sealed partial class SpeciesPrototype : IPrototype
 
     /// <summary>
     ///     Default human skin tone for this species. This applies for human skin tones.
-    ///     See <see cref="SkinColor.HumanSkinTone"/> for the valid range of skin tones.
+    ///     See <see cref="ColoringRules"/> for the valid range of skin tones.
     /// </summary>
     [DataField]
     public int DefaultHumanSkinTone { get; private set; } = 20;
@@ -78,10 +79,10 @@ public sealed partial class SpeciesPrototype : IPrototype
     public EntProtoId DollPrototype { get; private set; } = default!;
 
     /// <summary>
-    /// Method of skin coloration used by the species.
+    /// a set of rules that the selected skin color goes through, transforming into a color available for selection
     /// </summary>
     [DataField(required: true)]
-    public HumanoidSkinColor SkinColoration { get; private set; }
+    public List<ColoringSchemeRule> ColoringRules = [];
 
     [DataField]
     public ProtoId<LocalizedDatasetPrototype> MaleFirstNames { get; private set; } = "NamesFirstMale";

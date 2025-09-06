@@ -1085,67 +1085,25 @@ namespace Content.Client.Lobby.UI
 
         private void OnSkinColorOnValueChanged()
         {
-            if (Profile is null) return;
+            if (Profile is null)
+                return;
 
-            var skin = _prototypeManager.Index<SpeciesPrototype>(Profile.Species).SkinColoration;
+            var speciesPrototype = _prototypeManager.Index(Profile.Species);
+            var coloringRules = speciesPrototype.ColoringRules;
 
-            switch (skin)
+            if (coloringRules.Count == 0)
+                return;
+
+            var inputColor = _rgbSkinColorSelector.Color;
+            var outputColor = inputColor;
+
+            foreach (var rule in coloringRules)
             {
-                case HumanoidSkinColor.HumanToned:
-                {
-                    if (!Skin.Visible)
-                    {
-                        Skin.Visible = true;
-                        RgbSkinColorContainer.Visible = false;
-                    }
-
-                    var color = SkinColor.HumanSkinTone((int) Skin.Value);
-
-                    Markings.CurrentSkinColor = color;
-                    Profile = Profile.WithCharacterAppearance(Profile.Appearance.WithSkinColor(color));//
-                    break;
-                }
-                case HumanoidSkinColor.Hues:
-                {
-                    if (!RgbSkinColorContainer.Visible)
-                    {
-                        Skin.Visible = false;
-                        RgbSkinColorContainer.Visible = true;
-                    }
-
-                    Markings.CurrentSkinColor = _rgbSkinColorSelector.Color;
-                    Profile = Profile.WithCharacterAppearance(Profile.Appearance.WithSkinColor(_rgbSkinColorSelector.Color));
-                    break;
-                }
-                case HumanoidSkinColor.TintedHues:
-                {
-                    if (!RgbSkinColorContainer.Visible)
-                    {
-                        Skin.Visible = false;
-                        RgbSkinColorContainer.Visible = true;
-                    }
-
-                    var color = SkinColor.TintedHues(_rgbSkinColorSelector.Color);
-
-                    Markings.CurrentSkinColor = color;
-                    Profile = Profile.WithCharacterAppearance(Profile.Appearance.WithSkinColor(color));
-                    break;
-                }
-                case HumanoidSkinColor.VoxFeathers:
-                {
-                    if (!RgbSkinColorContainer.Visible)
-                    {
-                        Skin.Visible = false;
-                        RgbSkinColorContainer.Visible = true;
-                    }
-
-                    var color = SkinColor.ClosestVoxColor(_rgbSkinColorSelector.Color);
-
-                    Markings.CurrentSkinColor = color;
-                    Profile = Profile.WithCharacterAppearance(Profile.Appearance.WithSkinColor(color));
-                    break;
-                }
+                outputColor = rule.Clamp(outputColor);
             }
+
+            Markings.CurrentSkinColor = outputColor;
+            Profile = Profile.WithCharacterAppearance(Profile.Appearance.WithSkinColor(outputColor));
 
             ReloadProfilePreview();
         }
@@ -1317,63 +1275,24 @@ namespace Content.Client.Lobby.UI
 
         private void UpdateSkinColor()
         {
-            if (Profile == null)
+            if (Profile is null)
                 return;
 
-            var skin = _prototypeManager.Index<SpeciesPrototype>(Profile.Species).SkinColoration;
+            var speciesPrototype = _prototypeManager.Index(Profile.Species);
+            var coloringRules = speciesPrototype.ColoringRules;
 
-            switch (skin)
+            if (coloringRules.Count == 0)
+                return;
+
+            var skinColor = Profile.Appearance.SkinColor;
+
+            // Apply all coloring rules to ensure the color is valid.
+            foreach (var rule in coloringRules)
             {
-                case HumanoidSkinColor.HumanToned:
-                {
-                    if (!Skin.Visible)
-                    {
-                        Skin.Visible = true;
-                        RgbSkinColorContainer.Visible = false;
-                    }
-
-                    Skin.Value = SkinColor.HumanSkinToneFromColor(Profile.Appearance.SkinColor);
-
-                    break;
-                }
-                case HumanoidSkinColor.Hues:
-                {
-                    if (!RgbSkinColorContainer.Visible)
-                    {
-                        Skin.Visible = false;
-                        RgbSkinColorContainer.Visible = true;
-                    }
-
-                    // set the RGB values to the direct values otherwise
-                    _rgbSkinColorSelector.Color = Profile.Appearance.SkinColor;
-                    break;
-                }
-                case HumanoidSkinColor.TintedHues:
-                {
-                    if (!RgbSkinColorContainer.Visible)
-                    {
-                        Skin.Visible = false;
-                        RgbSkinColorContainer.Visible = true;
-                    }
-
-                    // set the RGB values to the direct values otherwise
-                    _rgbSkinColorSelector.Color = Profile.Appearance.SkinColor;
-                    break;
-                }
-                case HumanoidSkinColor.VoxFeathers:
-                {
-                    if (!RgbSkinColorContainer.Visible)
-                    {
-                        Skin.Visible = false;
-                        RgbSkinColorContainer.Visible = true;
-                    }
-
-                    _rgbSkinColorSelector.Color = SkinColor.ClosestVoxColor(Profile.Appearance.SkinColor);
-
-                    break;
-                }
+                skinColor = rule.Clamp(skinColor);
             }
 
+            _rgbSkinColorSelector.Color = skinColor;
         }
 
         public void UpdateSpeciesGuidebookIcon()

@@ -95,8 +95,8 @@
                             <!-- Skin -->
                             <BoxContainer Margin="10" HorizontalExpand="True" Orientation="Vertical">
                                 <Label Text="{Loc 'humanoid-profile-editor-skin-color-label'}" />
-                                <Slider HorizontalExpand="True" Name="Skin" MinValue="0" MaxValue="100" Value="20" />
-                                <BoxContainer Name="RgbSkinColorContainer" Visible="False" Orientation="Vertical" HorizontalExpand="True"></BoxContainer>
+                                <Slider HorizontalExpand="True" Name="Skin" MinValue="0" MaxValue="100" Value="20" Visible="False" />
+                                <BoxContainer Name="RgbSkinColorContainer" Visible="True" Orientation="Vertical" HorizontalExpand="True"></BoxContainer>
                             </BoxContainer>
                             <!-- Hair -->
                             <BoxContainer Margin="10" Orientation="Horizontal">
