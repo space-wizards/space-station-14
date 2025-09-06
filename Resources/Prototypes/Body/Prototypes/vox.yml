@@ -8,7 +8,7 @@
       connections:
       - torso
       organs:
-        brain: OrganHumanBrain
+        brain: OrganVoxBrain
         eyes: OrganHumanEyes
     torso:
       part: TorsoVox
