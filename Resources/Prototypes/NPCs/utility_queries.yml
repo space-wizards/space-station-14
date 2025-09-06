@@ -121,6 +121,15 @@
     curve: !type:BoolCurve
 
 - type: utilityQuery
+  id: NearbyNotInitialInfectedMeleeTargets
+  parent: NearbyMeleeTargets
+  query:
+  - !type:NearbyHostilesQuery
+  - !type:RemoveHasComponentFilter
+    components:
+      - type: InitialInfected
+
+- type: utilityQuery
   id: OrderedTargets
   query:
     - !type:NearbyHostilesQuery
