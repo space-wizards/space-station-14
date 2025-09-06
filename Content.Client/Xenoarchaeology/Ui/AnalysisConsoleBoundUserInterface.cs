@@ -52,7 +52,7 @@ public sealed class AnalysisConsoleBoundUserInterface(EntityUid owner, Enum uiKe
         if (!disposing)
             return;
 
-        _consoleMenu?.Dispose();
+        _consoleMenu?.Close();
     }
 }
 

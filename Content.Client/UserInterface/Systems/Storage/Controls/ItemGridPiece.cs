@@ -101,7 +101,7 @@ public sealed class ItemGridPiece : Control, IEntityControl
         // really just an "oh shit" catch.
         if (!_entityManager.EntityExists(Entity) || !_entityManager.TryGetComponent<ItemComponent>(Entity, out var itemComponent))
         {
-            Dispose();
+            Orphan();
             return;
         }
 
