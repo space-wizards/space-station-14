@@ -21,6 +21,8 @@
     containers:
       cluster-payload: !type:Container
   - type: ProjectileGrenade
+  - type: TimerTrigger
+    delay: 3.5
   - type: AnimationPlayer
   - type: GenericVisualizer
     visuals:
@@ -71,7 +73,6 @@
   - type: TimerTrigger
     initialBeepDelay: 0
     beepInterval: 2
-    delay: 3.5
   - type: TimerTriggerVisuals
     primingSound:
       path: /Audio/Effects/countdown.ogg
@@ -98,7 +99,6 @@
         volume: 5
     initialBeepDelay: 0
     beepInterval: 2
-    delay: 3.5
   - type: EmitSoundOnTrigger
     keysIn:
     - timer
@@ -130,7 +130,6 @@
         volume: 5
     initialBeepDelay: 0
     beepInterval: 2
-    delay: 3.5
   - type: EmitSoundOnTrigger
     keysIn:
     - timer
