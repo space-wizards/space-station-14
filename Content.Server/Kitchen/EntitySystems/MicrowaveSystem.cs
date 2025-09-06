@@ -465,7 +465,8 @@ namespace Content.Server.Kitchen.EntitySystems
                 HasComp<ActiveMicrowaveComponent>(uid),
                 component.CurrentCookTimeButtonIndex,
                 component.CurrentCookTimerTime,
-                component.CurrentCookTimeEnd
+                component.CurrentCookTimeEnd,
+                _power.IsPowered(uid)
             ));
         }
 
