@@ -3,6 +3,8 @@ using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.FixedPoint;
 using Content.Shared.Storage.Components;
+using Robust.Shared.Containers;
+using Robust.Shared.GameObjects;
 using Robust.Shared.Prototypes;
 
 namespace Content.IntegrationTests.Tests.Nutrition;
@@ -36,6 +38,7 @@ public sealed class WaterCoolerInteractionTest : InteractionTest
 
         // Record how many paper cups are in the cooler
         var binComp = Comp<BinComponent>(cooler);
+        var container = binComp.ItemContainer;
         var initialCount = binComp.ItemContainer.Count;
         Assert.That(binComp.ItemContainer, Is.Not.Empty, "Water cooler didn't start with any cups");
 
@@ -43,6 +46,8 @@ public sealed class WaterCoolerInteractionTest : InteractionTest
         await Interact();
 
         var cup = HandSys.GetActiveItem((SPlayer, Hands));
+
+        Assert.That(cup != null);
 
         Assert.Multiple(() =>
         {
@@ -54,7 +59,7 @@ public sealed class WaterCoolerInteractionTest : InteractionTest
             Assert.That(binComp.ItemContainer, Has.Count.EqualTo(initialCount - 1), "Number of cups in cooler bin did not decrease by one");
 
             // Make sure the cup isn't somehow still in the cooler too
-            Assert.That(binComp.ItemContainer, Does.Not.Contain(cup));
+            Assert.That(!container.Contains(cup.Value));
         });
 
         // Alt-interact with the water cooler while holding the cup to put it back
@@ -69,7 +74,7 @@ public sealed class WaterCoolerInteractionTest : InteractionTest
             Assert.That(binComp.ItemContainer, Has.Count.EqualTo(initialCount), "Number of cups in cooler bin did not return to initial count");
 
             // Make sure the cup is in the cooler
-            Assert.That(binComp.ItemContainer, Contains.Item(cup), "Cup was not returned to cooler");
+            Assert.That(container.Contains(cup.Value), "Cup was not returned to cooler");
         });
     }
 
