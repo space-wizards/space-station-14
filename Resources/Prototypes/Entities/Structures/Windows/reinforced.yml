@@ -1,7 +1,7 @@
 - type: entity
   id: ReinforcedWindow
   name: reinforced window
-  parent: Window
+  parent: [Window, BaseDeltaPressureReinforcedGlass]
   components:
   - type: Sprite
     drawdepth: WallTops
@@ -55,14 +55,10 @@
     trackAllDamage: true
     damageOverlay:
       sprite: Structures/Windows/cracks.rsi
-  - type: DeltaPressure
-    minPressure: 15000
-    minPressureDelta: 10000
-    scalingType: Threshold
 
 - type: entity
   id: WindowReinforcedDirectional
-  parent: WindowDirectional
+  parent: [WindowDirectional, BaseDeltaPressureReinforcedGlassQuarter]
   name: directional reinforced window
   description: Don't smudge up the glass down there.
   placement:
@@ -117,9 +113,6 @@
             max: 1
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
-  - type: DeltaPressure
-    minPressure: 3750
-    minPressureDelta: 2500
   - type: StaticPrice
     price: 22.5
 
