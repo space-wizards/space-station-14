@@ -262,11 +262,32 @@
     actions:
     - ActionEggInjection
 
-# Tier 2
+##########
+# Tier 2 #
+##########
+
+# Purple
+
+- type: entity
+  name: terror purple
+  parent: MobTerrorRed
+  id: MobTerrorPurple
+  components:
+  - type: Sprite
+    drawdepth: Mobs
+    layers:
+    - map: ["enum.DamageStateVisualLayers.Base"]
+      state: alive
+      sprite: _Starlight/Mobs/Animals/Spiders/terror_purple.rsi
+  - type: ActionGrant
+    actions:
+    - ActionSpiderEMPScream
+
+# White
 
 - type: entity
   name: terror white
-  parent: MobTerrorSpider
+  parent: MobTerrorGreen
   id: MobTerrorWhite
   components:
   - type: Sprite
@@ -275,22 +296,6 @@
     - map: ["enum.DamageStateVisualLayers.Base"]
       state: alive
       sprite: _Starlight/Mobs/Animals/Spiders/terror_white.rsi
-  - type: VentCrawler
-  - type: MobThresholds
-    thresholds:
-      0: Alive
-      80: Dead
-  - type: PassiveDamage 
-    allowedStates:
-    - Alive
-    damageCap: 79
-    damage:
-      types:
-        Poison: -0.5
-      groups:
-        Brute: -0.5
-        Burn: -0.5
-        Airloss: -1.5
   - type: HitscanBatteryAmmoProvider
     proto: BulletAcidHitscan
     fireCost: 50
@@ -307,18 +312,6 @@
     availableModes:
       - FullAuto
     soundGunshot: /Audio/Weapons/Xeno/alien_spitacid.ogg
-  - type: Prying
-    pryPowered: false
-    force: true
-    speedModifier: 1.5
-    useSound:
-      path: /Audio/Items/crowbar.ogg
-  - type: MovementSpeedModifier
-    baseWalkSpeed : 3.00
-    baseSprintSpeed : 4.50
-  - type: ActionGrant
-    actions:
-    - ActionEggInjection
 
 - type: entity
   name: princess of terror

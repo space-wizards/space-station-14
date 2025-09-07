@@ -1,19 +1,12 @@
 ﻿using System.Linq;
 using Content.Shared._Starlight.Antags.TerrorSpider;
-using Content.Shared.Damage.Components;
 using Content.Shared.DoAfter;
-using Content.Shared.Movement.Components;
-using Content.Shared.Movement.Systems;
 using Content.Shared.Popups;
 using Content.Shared.Spider;
-using Content.Shared.Starlight.Medical.Surgery;
-using Content.Shared.Stealth.Components;
-using Robust.Shared.Physics.Events;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Timing;
 
-namespace Content.Shared.Starlight.Antags.TerrorSpider;
+namespace Content.Server._Starlight.Antags.TerrorSpider;
 
 public sealed class EggInjectSystem : EntitySystem
 {

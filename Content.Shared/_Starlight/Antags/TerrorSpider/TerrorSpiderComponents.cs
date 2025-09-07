@@ -15,6 +15,9 @@ using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared._Starlight.Antags.TerrorSpider;
+
+#region Components
+
 [RegisterComponent]
 public sealed partial class StealthOnWebComponent : Component
 {
@@ -35,29 +38,43 @@ public sealed partial class HasEggHolderComponent : Component
 public sealed partial class TerrorPrincessComponent : Component
 {
 }
-public sealed partial class EggInjectionEvent : EntityTargetActionEvent
-{
-}
-[Serializable, NetSerializable]
-public sealed partial class EggInjectionDoAfterEvent : SimpleDoAfterEvent
-{
-}
+
+#endregion
+
+#region BUI
+
 [Serializable, NetSerializable]
 public enum EggsLayingUiKey : byte
 {
     Key
 }
 
-public sealed partial class EggsLayingEvent : InstantActionEvent
-{
-
-}
 [Serializable, NetSerializable]
 public sealed class EggsLayingBuiMsg : BoundUserInterfaceMessage
 {
     public EntProtoId Egg { get; set; }
 }
 [Serializable, NetSerializable]
-public sealed class EggsLayingBuiState : BoundUserInterfaceState
+public sealed class EggsLayingBuiState : BoundUserInterfaceState { }
+
+#endregion
+
+#region Events
+
+public sealed partial class EggInjectionEvent : EntityTargetActionEvent { }
+
+[Serializable, NetSerializable]
+public sealed partial class EggInjectionDoAfterEvent : SimpleDoAfterEvent {}
+
+public sealed partial class EggsLayingEvent : InstantActionEvent { }
+
+public sealed partial class EMPScreamEvent : InstantActionEvent
 {
+    [DataField]
+    public float Power = 2.5f;
+
+    [DataField]
+    public SoundSpecifier? ScreamSound = new SoundPathSpecifier("/Audio/Effects/changeling_shriek.ogg");
 }
+
+#endregion
