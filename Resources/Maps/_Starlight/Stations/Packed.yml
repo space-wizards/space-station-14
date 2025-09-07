@@ -4,8 +4,8 @@ meta:
   engineVersion: 266.0.0
   forkId: ""
   forkVersion: ""
-  time: 09/06/2025 23:34:23
-  entityCount: 15774
+  time: 09/07/2025 01:13:35
+  entityCount: 15779
 maps:
 - 1
 grids:
@@ -7889,7 +7889,7 @@ entities:
       pos: 47.5,-39.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -8852.908
+      secondsUntilStateChange: -14760.362
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -40149,6 +40149,13 @@ entities:
     - type: Transform
       pos: 65.5,-3.5
       parent: 2
+    - type: BodyScanner
+      tableEntity: 10779
+    - type: DeviceLinkSource
+      linkedPorts:
+        10779:
+        - - BodyScannerSender
+          - BodyScannerReceiver
   - uid: 6154
     components:
     - type: Transform
@@ -71099,6 +71106,8 @@ entities:
     - type: Transform
       pos: 65.5,-4.5
       parent: 2
+    - type: OperatingTable
+      scanner: 6153
   - uid: 10780
     components:
     - type: Transform
@@ -74067,7 +74076,7 @@ entities:
       rot: -1.5707963267948966 rad
       pos: 64.5,42.5
       parent: 2
-  - uid: 15774
+  - uid: 15779
     components:
     - type: Transform
       anchored: False
@@ -82615,6 +82624,18 @@ entities:
     - type: Transform
       pos: 44.5,24.5
       parent: 2
+- proto: SpawnPointIAA
+  entities:
+  - uid: 15777
+    components:
+    - type: Transform
+      pos: 21.5,30.5
+      parent: 2
+  - uid: 15778
+    components:
+    - type: Transform
+      pos: 21.5,32.5
+      parent: 2
 - proto: SpawnPointJanitor
   entities:
   - uid: 12562
@@ -82666,6 +82687,25 @@ entities:
     components:
     - type: Transform
       pos: 9.5,3.5
+      parent: 2
+- proto: SpawnPointMagistrate
+  entities:
+  - uid: 15776
+    components:
+    - type: Transform
+      pos: 17.5,31.5
+      parent: 2
+- proto: SpawnPointmailtech
+  entities:
+  - uid: 15774
+    components:
+    - type: Transform
+      pos: 19.5,23.5
+      parent: 2
+  - uid: 15775
+    components:
+    - type: Transform
+      pos: 19.5,22.5
       parent: 2
 - proto: SpawnPointMedicalDoctor
   entities:
