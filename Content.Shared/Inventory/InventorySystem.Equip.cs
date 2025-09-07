@@ -577,6 +577,17 @@ public abstract partial class InventorySystem
         var hasHands = Resolve(ent.Owner, ref ent.Comp2, false);
 
         var allItems = new Queue<EntityUid>(GetHandOrInventoryEntities(ent.Owner));
+
+        if (hasHands)
+        {
+            foreach (var heldItem in _handsSystem.EnumerateHeld(ent.Owner))
+            {
+                _handsSystem.TryDrop(ent.Owner, heldItem, checkActionBlocker: false);
+                allItems.Enqueue(heldItem);
+            }
+        }
+
+
         while (allItems.TryDequeue(out var item))
         {
             if (TryGetContainingSlot(item, out var itemSlot))
@@ -592,7 +603,7 @@ public abstract partial class InventorySystem
                     unequippedItems.Add(item);
                 }
             }
-            else if (hasHands && _handsSystem.IsHolding(ent.Owner, item))
+            else if (hasHands)
             {
                 unequippedItems.Add(item);
             }

@@ -310,7 +310,7 @@ public partial class SharedBodySystem
             gibSoundOverride ??= gibbable.GibSound;
         }
         var parts = GetBodyChildren(bodyId, body).ToArray();
-        gibs.EnsureCapacity(parts.Length);
+        gibs.EnsureCapacity(parts.Length + allInventoryItems.Count);
         foreach (var part in parts)
         {
 
