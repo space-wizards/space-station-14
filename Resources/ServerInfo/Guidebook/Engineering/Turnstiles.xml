@@ -1,0 +1,158 @@
+﻿<Document>
+  # Turnstiles
+  Turnstiles are used to control access to different areas of the station in one direction without allowing people to gain access by "tailgating" another user.
+
+  These structures are most commonly used as access control structures for GenPop prison configurations.
+
+  <Box>
+    <GuideEntityEmbed Entity="Turnstile" Caption=""/>
+  </Box>
+
+  Turnstiles can be used by colliding with the turnstile from the correct entry direction.
+  Inspection of the turnstile will show an arrow that points to the side of the turnstile in which entry is allowed.
+
+  If access levels are configured on the turnstile,they will only grant entry if you have an ID card with the correct access level.
+  The ID card must be in your hand or in your ID slot.
+  In the case of having multiple IDs, the turnstile will check them all when you try to open it.
+  This behavior is also the same for IDs in a PDA.
+
+  The access level required to pass through the turnstile can be modified using an Access Configurator,
+  or by using a Multitool on the door electronics for the turnstile (which requires partial deconstruction).
+
+  <Box>
+    <GuideEntityEmbed Entity="AccessConfigurator" Caption=""/>
+    <GuideEntityEmbed Entity="Multitool" Caption=""/>
+    <GuideEntityEmbed Entity="DoorElectronics" Caption=""/>
+  </Box>
+
+  Turnstiles do not block gas flow, and may be paired with [textlink="firelocks" link="FireAndGasControl"] to protect
+  and seal off areas in case of a [textlink="hull breach" link="Spacing"] or a [textlink="fire." link="Fires"]
+
+  ## Bolting
+  Turnstiles can be bolted to prevent passage and bypassing via tools. When this occurs, the turnstile will display
+  red lights on the top of the turnstile frame.
+
+  Turnstiles cannot be set to emergency access mode.
+
+  ## Remote Control
+  The bolts of turnstiles can be controlled remotely, either by the station AI or by using a Door Remote.
+  <Box>
+    <GuideEntityEmbed Entity="PlayerStationAiEmpty" Caption=""/>
+  </Box>
+  <Box>
+    [color=#999999][italic]The Station AI, which has remote control over all airlocks and turnstiles.[italic][/color]
+  </Box>
+
+  <Box>
+    <GuideEntityEmbed Entity="DoorRemoteEngineering" Caption=""/>
+    <GuideEntityEmbed Entity="DoorRemoteCommand" Caption=""/>
+    <GuideEntityEmbed Entity="DoorRemoteMedical" Caption=""/>
+    <GuideEntityEmbed Entity="DoorRemoteService" Caption=""/>
+    <GuideEntityEmbed Entity="DoorRemoteSecurity" Caption=""/>
+    <GuideEntityEmbed Entity="DoorRemoteResearch" Caption=""/>
+  </Box>
+  <Box>
+    [color=#999999][italic]Precious door remotes. With unlimited power...[italic][/color]
+  </Box>
+
+
+  Department heads usually get door remotes for their respective department.
+
+  They can bolt turnstiles with line of sight using these remotes.
+
+  ## Linking
+  Turnstiles have no [textlink="device link" link="Networking"] functionality.
+
+  ## Wiring
+  Turnstiles have internal wiring under their maintenance panel, which can be opened using a screwdriver.
+  Each wire controls some aspect of the turnstile's functionality.
+  When you either pulse, cut, or mend the wire, it will affect the turnstile in different ways.
+
+  The lights next to the wires will indicate the status of the wire:
+  - A steady light indicates that the system is functioning as normal.
+  - A flashing light indicates that the system is malfunctioning. It is either not working or is behaving not as intended.
+
+  Below is a list of the wires and their functions:
+
+  [color=#a4885c]Bolt Wire (BOLT)[/color]
+  - [color=yellow]Pulse the wire[/color]: Bolts or unbolts the door.
+  - [color=red]Cut the wire[/color]: Bolts the door.
+  - [color=green]Mend the wire[/color]: Does nothing.
+  - [italic]Note: The bolts will be unable to actuate if the solenoid is bypassed or malfunctioning.[/italic]
+
+  [color=#a4885c]Solenoid Wire (SOLN)[/color]
+  - [color=yellow]Pulse the wire[/color]: Bypasses the solenoid for a short time.
+  - [color=red]Cut the wire[/color]: Bypasses the solenoid.
+  - [color=green]Mend the wire[/color]: Restores the normal function of the solenoid.
+  - [italic]Note: The turnstile mechanism can be forced with tools while the solenoid is bypassed or malfunctioning![/italic]
+
+  [color=#a4885c]Log Wire (LOG)[/color]
+  - [color=yellow]Pulse the wire[/color]: Temporary disables turnstile logging.
+  - [color=red]Cut the wire[/color]: Disables turnstile logging.
+  - [color=green]Mend the wire[/color]: Re-enables turnstile logging.
+
+  [color=#a4885c]Bolt Light (BLIT)[/color]
+  - [color=yellow]Pulse the wire[/color]: Turns the system off temporarily, or turns it back on.
+  - [color=red]Cut the wire[/color]: Prevents the bolt light from turning on, which communicates if the door is bolted or not.
+  - [color=green]Mend the wire[/color]: Turns the system back on.
+
+  [color=#a4885c]AI Access Light (AIA)[/color]
+  - [color=yellow]Pulse the wire[/color]: Does nothing.
+  - [color=red]Cut the wire[/color]: Disables AI access. The AI can no longer bolt the door.
+  - [color=green]Mend the wire[/color]: Re-enables AI access.
+
+  ## Security
+
+  Just like [textlink="airlocks" link="Airlocks"], turnstiles can be [textlink="upgraded" link="AirlockSecurity"] to protect the
+  internal wiring of the turnstile.
+
+  ### Increasing Physical Security
+
+  A basic turnstile can be upgraded to protect its internal wiring with steel plating.
+
+  To upgrade a basic turnstile with steel plating, you will require the following materials:
+  <Box HorizontalAlignment="Stretch">
+    <Box>
+      <GuideEntityEmbed Entity="Screwdriver" Caption="Screwdriver"/>
+    </Box>
+    <Box>
+      <GuideEntityEmbed Entity="SheetSteel" Caption="2 steel sheets"/>
+    </Box>
+    <Box>
+      <GuideEntityEmbed Entity="Welder" Caption="Welder"/>
+    </Box>
+  </Box>
+
+  To perform the upgrade:
+  -	Use the screwdriver to open the turnstile maintenance panel.
+  -	Add the steel sheets to the turnstile.
+  -	Weld the steel sheets into place.
+  -	Close the maintenance panel using the screwdriver.
+
+  ### Adding Electrical Deterrence
+
+  Since the turnstiles are often used in GenPop prison configurations, a little electrical deterrence is often used to
+  prevent tampering with the turnstile's sensitive wiring.
+
+  You can add an electrified grille to a turnstile. This upgrade can be performed on a basic turnstile, or on a turnstile
+  previously upgraded with steel plating.
+
+  To upgrade a turnstile with an electrified grille, you will require:
+  <Box HorizontalAlignment="Stretch">
+    <Box>
+      <GuideEntityEmbed Entity="Screwdriver" Caption="Screwdriver"/>
+    </Box>
+    <Box>
+      <GuideEntityEmbed Entity="PartRodMetal" Caption="2 metal rods"/>
+    </Box>
+  </Box>
+
+  To perform the upgrade:
+  -	Use the screwdriver to open the turnstile maintenance panel.
+  -	Add the metal rods to the turnstile.
+  -	Close the maintenance panel using the screwdriver.
+  - Ensure that active electrical cable is routed directly under the turnstile.
+
+  [bold]Warning! It is not recommended to attempt reversal of this modification without first turning off the power
+  or wearing proper personal protective equipment.[/bold]
+</Document>

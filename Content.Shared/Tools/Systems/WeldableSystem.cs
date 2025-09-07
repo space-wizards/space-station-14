@@ -2,6 +2,7 @@ using Content.Shared.Administration.Logs;
 using Content.Shared.Database;
 using Content.Shared.Examine;
 using Content.Shared.Interaction;
+using Content.Shared.Prying.Components;
 using Content.Shared.Tools.Components;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Systems;
@@ -24,8 +25,21 @@ public sealed class WeldableSystem : EntitySystem
         SubscribeLocalEvent<WeldableComponent, WeldFinishedEvent>(OnWeldFinished);
         SubscribeLocalEvent<LayerChangeOnWeldComponent, WeldableChangedEvent>(OnWeldChanged);
         SubscribeLocalEvent<WeldableComponent, ExaminedEvent>(OnExamine);
+        SubscribeLocalEvent<WeldableComponent, BeforePryEvent>(OnBeforePry);
 
         _query = GetEntityQuery<WeldableComponent>();
+    }
+
+    private void OnBeforePry(Entity<WeldableComponent> ent, ref BeforePryEvent args)
+    {
+        if (!args.CanPry)
+            return;
+
+        if (!ent.Comp.IsWelded)
+            return;
+
+        args.Message = Loc.GetString("pryable-component-cannot-pry-is-welded-message", ("object", ent.Owner));
+        args.CanPry = false;
     }
 
     public bool IsWelded(EntityUid uid, WeldableComponent? component = null)
