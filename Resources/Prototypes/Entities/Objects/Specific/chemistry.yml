@@ -345,10 +345,13 @@
     injectOnly: false
     ignoreMobs: true
     ignoreClosed: false
-    minTransferAmount: 1
-    maxTransferAmount: 5
-    transferAmount: 1
-    toggleState: 1 # draw
+    transferAmounts:
+    - 1
+    - 2
+    - 3
+    - 4
+    - 5
+    currentTransferAmount: 1
   - type: ExaminableSolution
     solution: dropper
     exactVolume: true
@@ -444,8 +447,7 @@
   id: Syringe
   components:
   - type: Injector
-    transferAmount: 15
-    toggleState: Draw
+    currentTransferAmount: 15
   - type: Tag
     tags:
     - Syringe
@@ -469,9 +471,13 @@
       injector:
         maxVol: 5
   - type: Injector
-    minTransferAmount: 1
-    maxTransferAmount: 5
-    transferAmount: 5
+    transferAmounts:
+    - 1
+    - 2
+    - 3
+    - 4
+    - 5
+    currentTransferAmount: 5
   - type: SolutionContainerVisuals
     maxFillLevels: 3
     fillBaseName: minisyringe
@@ -520,6 +526,7 @@
     - SyringeGunAmmo
 
 - type: entity
+  abstract: true
   parent: BaseSyringe
   id: PrefilledSyringe
   components:
@@ -583,14 +590,14 @@
         canReact: false
   - type: Injector
     injectOnly: false
-    minTransferAmount: 5
-    maxTransferAmount: 10
-    transferAmount: 10
+    transferAmounts:
+    - 5
+    - 10
+    currentTransferAmount: 10
   - type: Tag
     tags:
     - Syringe
     - Trash
-
 
 - type: entity
   name: pill
