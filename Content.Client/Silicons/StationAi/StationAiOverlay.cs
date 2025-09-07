@@ -1,7 +1,11 @@
+// Modified by Ronstation contributor(s), therefore this file is licensed as MIT sublicensed with AGPL-v3.0.
 using System.Numerics;
+using System.Linq; // Ronstation - modification.
+using Content.Client.Pinpointer.UI; // Ronstation - modification.
 using Content.Shared.Silicons.StationAi;
 using Robust.Client.Graphics;
 using Robust.Client.Player;
+using Robust.Shared.Collections; // Ronstation - modification.
 using Robust.Shared.Enums;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Physics;
@@ -25,9 +29,11 @@ public sealed class StationAiOverlay : Overlay
     public override OverlaySpace Space => OverlaySpace.WorldSpace;
 
     private readonly HashSet<Vector2i> _visibleTiles = new();
+    private readonly NavMapControl _navMap = new(); // Ronstation - modification.
 
     private IRenderTexture? _staticTexture;
     private IRenderTexture? _stencilTexture;
+    private Dictionary<Color, Color> _sRGBLookUp = new(); // Ronstation - modification.
 
     private float _updateRate = 1f / 30f;
     private float _accumulator;
@@ -35,6 +41,8 @@ public sealed class StationAiOverlay : Overlay
     public StationAiOverlay()
     {
         IoCManager.InjectDependencies(this);
+        _navMap.WallColor = new(102, 102, 102); // Ronstation - modification.
+        _navMap.TileColor = new(30, 30, 30); // Ronstation - modification.
     }
 
     protected override void Draw(in OverlayDrawArgs args)
@@ -67,6 +75,8 @@ public sealed class StationAiOverlay : Overlay
             var lookups = _entManager.System<EntityLookupSystem>();
             var xforms = _entManager.System<SharedTransformSystem>();
 
+            _navMap.AiFrameUpdate((float) _timing.FrameTime.TotalSeconds, gridUid); // Ronstation - modification.
+
             if (_accumulator <= 0f)
             {
                 _accumulator = MathF.Max(0f, _accumulator + _updateRate);
@@ -94,10 +104,8 @@ public sealed class StationAiOverlay : Overlay
             worldHandle.RenderInRenderTarget(_staticTexture!,
             () =>
             {
-                worldHandle.SetTransform(invMatrix);
-                var shader = _proto.Index(CameraStaticShader).Instance();
-                worldHandle.UseShader(shader);
-                worldHandle.DrawRect(worldBounds, Color.White);
+                worldHandle.SetTransform(matty); // Ronstation - modification.
+                DrawNavMap(worldHandle, grid); // Ronstation - modification.
             },
             Color.Black);
         }
@@ -129,4 +137,69 @@ public sealed class StationAiOverlay : Overlay
         worldHandle.UseShader(null);
 
     }
+
+    // Ronstation - start of modifications.
+    protected void DrawNavMap(DrawingHandleWorld handle, MapGridComponent grid)
+    {   
+        if (!_sRGBLookUp.TryGetValue(_navMap.WallColor, out var wallsRGB))
+        {
+            wallsRGB = Color.ToSrgb(_navMap.WallColor);
+            _sRGBLookUp[_navMap.WallColor] = wallsRGB;
+        }
+
+        // Draw floor tiles
+        if (_navMap.TilePolygons.Any())
+        {
+            foreach (var (polygonVerts, polygonColor) in _navMap.TilePolygons)
+            {
+                handle.DrawPrimitives(DrawPrimitiveTopology.TriangleFan, polygonVerts[..polygonVerts.Length], polygonColor);
+            }
+        }
+
+        // Draw map lines
+        if (_navMap.TileLines.Any())
+        {
+            var lines = new ValueList<Vector2>(_navMap.TileLines.Count * 2);
+
+            foreach (var (o, t) in _navMap.TileLines)
+            {
+                var origin = new Vector2(o.X, -o.Y);
+                var terminus = new Vector2(t.X, -t.Y);
+
+                lines.Add(origin);
+                lines.Add(terminus);
+            }
+
+            if (lines.Count > 0)
+                handle.DrawPrimitives(DrawPrimitiveTopology.LineList, lines.Span, wallsRGB);
+        }
+
+        // Draw map rects
+        if (_navMap.TileRects.Any())
+        {
+            var rects = new ValueList<Vector2>(_navMap.TileRects.Count * 8);
+
+            foreach (var (lt, rb) in _navMap.TileRects)
+            {
+                var leftTop = new Vector2(lt.X, -lt.Y);
+                var rightBottom = new Vector2(rb.X, -rb.Y);
+
+                var rightTop = new Vector2(rightBottom.X, leftTop.Y);
+                var leftBottom = new Vector2(leftTop.X, rightBottom.Y);
+
+                rects.Add(leftTop);
+                rects.Add(rightTop);
+                rects.Add(rightTop);
+                rects.Add(rightBottom);
+                rects.Add(rightBottom);
+                rects.Add(leftBottom);
+                rects.Add(leftBottom);
+                rects.Add(leftTop);
+            }
+
+            if (rects.Count > 0)
+                handle.DrawPrimitives(DrawPrimitiveTopology.LineList, rects.Span, wallsRGB);
+        }
+    }
+    // Ronstation - end of modifications.
 }
