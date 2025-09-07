@@ -15,7 +15,7 @@
   The [color=green]Low Voltage[/color] Network is used for powering almost all small machines on the station. This includes things like lights, computers, and other small devices.
 
   <Box>
-    <GuideEntityEmbed Entity="PoweredSmallLight" Caption=""/>
+    <GuideEntityEmbed Entity="PoweredLightBulbFixtureIncandescent" Caption=""/>
     <GuideEntityEmbed Entity="ComputerShuttleCargo" Caption=""/>
     <GuideEntityEmbed Entity="ComputerComms" Caption=""/>
     <GuideEntityEmbed Entity="Autolathe" Caption=""/>
