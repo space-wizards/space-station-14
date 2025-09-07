@@ -69,7 +69,6 @@
     offset: "0, -0.5"
   - type: Construction
     graph: LightFixture
-    node: tubeLight
   - type: RCDDeconstructable
     cost: 4
     delay: 2

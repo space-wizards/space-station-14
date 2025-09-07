@@ -37,6 +37,8 @@
       state: glow
       shader: unshaded
     state: base
+  - type: Construction
+    node: tubeLight
   - type: Fixtures
     fixtures:
       fix1:

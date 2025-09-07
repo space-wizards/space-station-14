@@ -32,7 +32,6 @@
     offset: "0, 0"
   - type: Anchorable
   - type: Construction
-    graph: LightFixture
     node: groundLight
   - type: Fixtures
     fixtures:

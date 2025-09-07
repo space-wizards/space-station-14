@@ -41,7 +41,6 @@
         layer:
         - TabletopMachineLayer
   - type: Construction
-    graph: LightFixture
     node: bulbLight
   - type: Destructible
     thresholds:

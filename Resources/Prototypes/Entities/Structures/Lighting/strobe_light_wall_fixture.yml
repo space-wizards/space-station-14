@@ -39,7 +39,6 @@
     offset: "0, 0.35"
   - type: RotatingLight
   - type: Construction
-    graph: LightFixture
     node: strobeLight
   - type: Fixtures
     fixtures:
