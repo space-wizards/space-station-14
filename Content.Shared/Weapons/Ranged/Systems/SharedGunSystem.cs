@@ -445,11 +445,11 @@ public abstract partial class SharedGunSystem : EntitySystem
         var projectile = EnsureComp<ProjectileComponent>(uid);
         projectile.Weapon = gunUid;
 
-        var shooterEvent = new GetProjectileShooterEvent();
+        var shooterEvent = new GetShootingEntityEvent();
         if (user != null)
             RaiseLocalEvent(user.Value, ref shooterEvent);
 
-        var shooter = shooterEvent.ProjectileShooter ?? user ?? gunUid;
+        var shooter = shooterEvent.ShootingEntity ?? user ?? gunUid;
 
         if (shooter != null)
             Projectiles.SetShooter(uid, projectile, shooter.Value);

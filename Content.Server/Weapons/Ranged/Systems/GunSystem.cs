@@ -150,11 +150,11 @@ public sealed partial class GunSystem : SharedGunSystem
                     var fromEffect = fromCoordinates;
                     var dir = mapDirection.Normalized();
 
-                    var shooterEvent = new GetProjectileShooterEvent();
+                    var shooterEvent = new GetShootingEntityEvent();
                     if (user != null)
                         RaiseLocalEvent(user.Value, ref shooterEvent);
 
-                    var effectiveShooter = shooterEvent.ProjectileShooter ?? user ?? gunUid;
+                    var effectiveShooter = shooterEvent.ShootingEntity ?? user ?? gunUid;
 
                     //in the situation when user == null, means that the cannon fires on its own (via signals). And we need the gun to not fire by itself in this case
                     var lastUser = effectiveShooter;
