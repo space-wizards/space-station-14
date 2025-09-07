@@ -2,6 +2,7 @@ using Robust.Client.GameObjects;
 using Content.Shared.Lathe;
 using Content.Shared.Power;
 using Content.Client.Power;
+using Content.Shared.Lathe.Components;
 
 namespace Content.Client.Lathe;
 

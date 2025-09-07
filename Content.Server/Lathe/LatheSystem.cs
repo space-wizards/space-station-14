@@ -3,6 +3,7 @@ using Content.Server.Lathe.Components;
 using Content.Server.Radio.EntitySystems;
 using Content.Shared.Atmos;
 using Content.Shared.Lathe;
+using Content.Shared.Lathe.Components;
 using Content.Shared.Localizations;
 using Content.Shared.Research.Components;
 using Content.Shared.Research.Prototypes;

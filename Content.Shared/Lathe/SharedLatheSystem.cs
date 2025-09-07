@@ -1,6 +1,5 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
-using Content.Server.Lathe.Components;
 using Content.Shared.Administration.Logs;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.EntitySystems;
@@ -9,6 +8,7 @@ using Content.Shared.Database;
 using Content.Shared.Emag.Systems;
 using Content.Shared.Examine;
 using Content.Shared.Fluids;
+using Content.Shared.Lathe.Components;
 using Content.Shared.Lathe.Prototypes;
 using Content.Shared.Localizations;
 using Content.Shared.Materials;
