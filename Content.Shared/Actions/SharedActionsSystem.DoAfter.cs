@@ -1,5 +1,4 @@
-﻿using Content.Shared.Actions.Components;
-using Content.Shared.Actions.Events;
+﻿using Content.Shared.Actions.Events;
 using Content.Shared.DoAfter;
 
 namespace Content.Shared.Actions;
@@ -8,7 +7,7 @@ public abstract partial class SharedActionsSystem
 {
     protected void InitializeActionDoAfter()
     {
-        SubscribeLocalEvent<ActionComponent, ActionDoAfterEvent>(OnActionDoAfter);
+        SubscribeLocalEvent<DoAfterArgsComponent, ActionDoAfterEvent>(OnActionDoAfter);
     }
 
     private bool TryStartActionDoAfter(Entity<DoAfterArgsComponent> ent, Entity<DoAfterComponent?> performer, TimeSpan? originalUseDelay, RequestPerformActionEvent input)
@@ -43,29 +42,28 @@ public abstract partial class SharedActionsSystem
         return _doAfter.TryStartDoAfter(doAfterArgs, performer);
     }
 
-    private void OnActionDoAfter(Entity<ActionComponent> ent, ref ActionDoAfterEvent args)
+    private void OnActionDoAfter(Entity<DoAfterArgsComponent> ent, ref ActionDoAfterEvent args)
     {
-        if (!TryComp<DoAfterArgsComponent>(ent, out var actionDoAfterArgsComp))
+        if (!_actionQuery.TryComp(ent, out var actionComp))
             return;
 
         var performer = GetEntity(args.Performer);
-
-        Entity<ActionComponent?>? action = (ent, ent);
+        var action = (ent, actionComp);
 
         // If this doafter is on repeat and was cancelled, start use delay as expected
-        if (args.Cancelled && actionDoAfterArgsComp.Repeat)
+        if (args.Cancelled && ent.Comp.Repeat)
         {
             SetUseDelay(action, args.OriginalUseDelay);
             RemoveCooldown(action);
             StartUseDelay(action);
-            UpdateAction(ent);
+            UpdateAction(action);
             return;
         }
 
-        args.Repeat = actionDoAfterArgsComp.Repeat;
+        args.Repeat = ent.Comp.Repeat;
 
         // Set the use delay to 0 so this can repeat properly
-        if (actionDoAfterArgsComp.Repeat)
+        if (ent.Comp.Repeat)
         {
             SetUseDelay(action, TimeSpan.Zero);
         }
@@ -74,8 +72,8 @@ public abstract partial class SharedActionsSystem
             return;
 
         // Post original doafter, reduce the time on it now for other casts if ables
-        if (actionDoAfterArgsComp.DelayReduction != null)
-            args.Args.Delay = actionDoAfterArgsComp.DelayReduction.Value;
+        if (ent.Comp.DelayReduction != null)
+            args.Args.Delay = ent.Comp.DelayReduction.Value;
 
         // Validate again for charges, blockers, etc
         if (TryPerformAction(args.Input, performer, skipDoActionRequest: true))

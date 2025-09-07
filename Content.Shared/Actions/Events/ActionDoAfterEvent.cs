@@ -1,5 +1,4 @@
-﻿using Content.Shared.Actions.Components;
-using Content.Shared.DoAfter;
+﻿using Content.Shared.DoAfter;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.Actions.Events;
