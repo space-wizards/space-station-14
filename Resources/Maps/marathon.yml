@@ -10898,17 +10898,6 @@ entities:
     - type: Transform
       pos: -25.5,28.5
       parent: 30
-  - uid: 1827
-    components:
-    - type: Transform
-      pos: -46.5,62.5
-      parent: 30
-    - type: DeviceLinkSink
-      invokeCounter: 1
-    - type: DeviceLinkSource
-      linkedPorts:
-        1829:
-        - DoorStatus: DoorBolt
   - uid: 2123
     components:
     - type: Transform
