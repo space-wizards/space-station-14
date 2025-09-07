@@ -21,7 +21,7 @@
     <GuideEntityEmbed Entity="Autolathe" Caption=""/>
     <GuideEntityEmbed Entity="VendingMachineEngivend" Caption=""/>
     <GuideEntityEmbed Entity="VendingMachineMedical" Caption=""/>
-    <GuideEntityEmbed Entity="AlwaysPoweredWallLight" Caption=""/>
+    <GuideEntityEmbed Entity="PoweredLightTubeFixtureFluorescent" Caption=""/>
   </Box>
 
   [color=green]Low Voltage[/color] power is provided by APCs, which are wall-mounted devices that convert power from the [color=Yellow]Medium Voltage[/color] Network to [color=green]Low Voltage[/color].
