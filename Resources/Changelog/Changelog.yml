@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Morty, lzk228
-  changes:
-  - message: Speech bubbles now indicate when a person is thinking of what to say.
-    type: Tweak
-  id: 8428
-  time: '2025-05-06T17:49:42.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/29349
 - author: Prole0
   changes:
   - message: Water bottles now fit in dispensers!
@@ -3945,3 +3938,11 @@
   id: 8939
   time: '2025-09-07T14:36:38.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/40171
+- author: ArtisticRoomba
+  changes:
+  - message: Atmospherics Delta-Pressure now has a short guidebook entry. You can
+      find it in Jobs > Engineering > Atmospherics > Atmospheric Upsets > Delta Pressure.
+    type: Add
+  id: 8940
+  time: '2025-09-07T15:10:39.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/40194
