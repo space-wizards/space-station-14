@@ -131,6 +131,8 @@
   parent: MobTerrorSpider
   id: MobTerrorRed
   components:
+  - type: Spider
+    webPrototype: SpiderWebStrong
   - type: VentCrawler
   - type: MobThresholds
     thresholds:
@@ -172,6 +174,9 @@
     - map: ["enum.DamageStateVisualLayers.Base", "movement"]
       state: alive
       sprite: _Starlight/Mobs/Animals/Spiders/terror_gray2.rsi
+  - type: Spider
+    webPrototype: SpiderWebStealth
+    webSpawnCooldown: 20
   - type: VentCrawler
   - type: StealthOnWeb
   - type: StaminaDamageOnHit
@@ -221,6 +226,8 @@
     - map: ["enum.DamageStateVisualLayers.Base", "movement"]
       state: alive
       sprite: _Starlight/Mobs/Animals/Spiders/terror_green.rsi
+  - type: Spider
+    webPrototype: SpiderWebSlime
   - type: VentCrawler
   - type: MobThresholds
     thresholds:
