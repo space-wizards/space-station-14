@@ -220,7 +220,7 @@ public sealed partial class ThavenMoodsSystem : SharedThavenMoodSystem
                 if (alreadyChosen.Contains(choice) || mood.MoodVars.ContainsValue(choice))
                     continue;
 
-                mood.MoodVars.Add(name, choice);
+                mood.MoodVars.TryAdd(name, choice);
                 alreadyChosen.Add(choice);
                 foundChoice = true;
                 break;
