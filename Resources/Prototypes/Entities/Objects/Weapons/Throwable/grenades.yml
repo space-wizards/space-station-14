@@ -15,6 +15,12 @@
     slots:
     - Belt
   - type: TriggerOnUse
+  - type: DeviceLinkSink
+    ports:
+    - Trigger
+  - type: WirelessNetworkConnection
+    range: 200
+  - type: TriggerOnSignal
   - type: TimerTrigger
     delay: 3
   - type: Damageable
