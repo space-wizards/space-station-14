@@ -1,0 +1,137 @@
+########################
+
+# Index
+
+# 1. LIGHT BULB FIXTURE
+## Empty
+## Incandescent
+## LED
+## Dim
+## Warm
+
+########################
+
+
+# 1. LIGHT BULB FIXTURE
+- type: entity
+  abstract: true
+  parent: BaseLightFixture
+  id: BaseLightBulbFixture
+  name: light bulb fixture
+  components:
+  - type: Sprite
+    sprite: Structures/Wallmounts/Lighting/light_small.rsi
+    drawdepth: WallMountedItems
+    layers:
+    - map: ["enum.PoweredLightLayers.Base"]
+      state: base
+    - map: ["enum.PoweredLightLayers.Glow"]
+      state: glow
+      shader: unshaded
+    state: base
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.1,0.5,0.1,0.255"
+        density: 190
+        mask:
+        - None
+        layer:
+        - TabletopMachineLayer
+  - type: Construction
+    graph: LightFixture
+    node: bulbLight
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 100
+      behaviors: #excess damage, don't spawn entities.
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+      - !type:PlaySoundBehavior
+        sound:
+          collection: GlassBreak
+    - trigger:
+        !type:DamageTrigger
+        damage: 25
+      behaviors:
+      - !type:EmptyAllContainersBehaviour
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          SheetSteel1:
+            min: 1
+            max: 1
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+      - !type:PlaySoundBehavior
+        sound:
+          collection: GlassBreak
+
+## Empty
+- type: entity
+  parent: [ BasePoweredLight , BaseLightBulbFixture ]
+  id: PoweredLightBulbFixtureEmpty
+  suffix: Empty
+  components:
+  - type: PoweredLight
+    bulb: Bulb
+
+## Incandescent
+- type: entity
+  parent: PoweredLightBulbFixtureEmpty
+  id: PoweredLightBulbFixtureIncandescent
+  suffix: Incandescent
+  components:
+  - type: PoweredLight
+    hasLampOnSpawn: LightBulb
+
+- type: entity
+  parent: BaseLightBulbFixture
+  id: AlwaysPoweredLightBulbFixtureIncandescent
+  suffix: Always powered, incandescent
+  components:
+  - type: PointLight
+    color: "#FFD1A3"
+    energy: 1.0
+    radius: 6
+    softness: 1.1
+
+## LED
+- type: entity
+  parent: PoweredLightBulbFixtureEmpty
+  id: PoweredLightBulbFixtureLED
+  suffix: LED
+  components:
+  - type: PoweredLight
+    hasLampOnSpawn: LedLightBulb
+  - type: DamageOnInteract
+    damage:
+      types:
+        Heat: 1 # LEDs don't get as hot
+    popupText: powered-light-component-burn-hand
+
+# Dim
+- type: entity
+  parent: PoweredLightBulbFixtureEmpty
+  id: PoweredLightBulbFixtureDim
+  suffix: Dim
+  components:
+  - type: PoweredLight
+    hasLampOnSpawn: DimLightBulb
+  - type: DamageOnInteract
+    damage:
+      types:
+        Heat: 1 # dim light not as energetic
+    popupText: powered-light-component-burn-hand
+
+# Warm
+- type: entity
+  parent: PoweredLightBulbFixtureEmpty
+  id: PoweredLightBulbFixtureWarm
+  suffix: Warm
+  components:
+  - type: PoweredLight
+    hasLampOnSpawn: WarmLightBulb
