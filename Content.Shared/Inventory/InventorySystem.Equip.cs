@@ -560,34 +560,41 @@ public abstract partial class InventorySystem
     /// preventing them from being all in the same exact position in the next tick.</param>
     /// <param name="maxThrowImpulse">If <see cref="throwItems"/> is true, Max random impulse applied to the thrown items.</param>
     /// <param name="forceUnequip"> Whether to force unequipping the items no matter what.</param>
-    public void TryUnequipAll(Entity<InventoryComponent?, HandsComponent?> ent,
+    /// <returns> All successfully unequipped items.</returns>
+    public HashSet<EntityUid> TryUnequipAll(Entity<InventoryComponent?, HandsComponent?> ent,
         bool throwItems = false,
         bool scatterItems = false,
         float maxThrowImpulse = 40.0f,
         bool forceUnequip = true)
     {
-        if (!Resolve(ent.Owner, ref ent.Comp1))
+        var unequippedItems = new HashSet<EntityUid>();
+
+        if (!Resolve(ent.Owner, ref ent.Comp1, false))
         {
-            return;
+            return [];
         }
-        var hasHands = Resolve(ent.Owner, ref ent.Comp2);
+
+        var hasHands = Resolve(ent.Owner, ref ent.Comp2, false);
 
         var allItems = new Queue<EntityUid>(GetHandOrInventoryEntities(ent.Owner));
         while (allItems.TryDequeue(out var item))
         {
             if (TryGetContainingSlot(item, out var itemSlot))
             {
-                if (HasFilledDependentSlots((ent, ent.Comp1), itemSlot.Name))
+                if (HasItemsInDependentSlots((ent, ent.Comp1), itemSlot.Name))
                 {
                     allItems.Enqueue(item);
                     continue;
                 }
 
-                TryUnequip(ent, ent, itemSlot.Name, force: forceUnequip);
+                if (TryUnequip(ent, ent, itemSlot.Name, force: forceUnequip))
+                {
+                    unequippedItems.Add(item);
+                }
             }
             else if (hasHands && _handsSystem.IsHolding(ent.Owner, item))
             {
-                _handsSystem.TryDrop((ent.Owner, ent.Comp2), checkActionBlocker: false);
+                unequippedItems.Add(item);
             }
 
             if (scatterItems)
@@ -607,6 +614,8 @@ public abstract partial class InventorySystem
             _physicsSystem.ApplyLinearImpulse(item, throwDirection * throwSpeed);
             _physicsSystem.ApplyAngularImpulse(item, throwRotationSpeed);
         }
+
+        return unequippedItems;
     }
 
 

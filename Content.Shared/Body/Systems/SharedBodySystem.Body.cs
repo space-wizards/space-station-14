@@ -296,9 +296,10 @@ public partial class SharedBodySystem
         Angle splatCone = default,
         SoundSpecifier? gibSoundOverride = null)
     {
-        _inventory.TryUnequipAll(bodyId, true, true);
-
         var gibs = new HashSet<EntityUid>();
+
+        var allInventoryItems = _inventory.TryUnequipAll(bodyId, launchGibs, launchGibs);
+        gibs.UnionWith(allInventoryItems);
 
         if (!Resolve(bodyId, ref body, logMissing: false))
             return gibs;
