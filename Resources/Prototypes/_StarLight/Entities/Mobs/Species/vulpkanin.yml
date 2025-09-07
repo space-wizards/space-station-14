@@ -12,6 +12,8 @@
     understands:
     - GalacticCommon
     - Canilunzt
+    - Fox # "vaguely canidae"
+    - Dog # "vaguely canidae"
   - type: Absorbable
   - type: HumanoidAppearance
     species: Vulpkanin

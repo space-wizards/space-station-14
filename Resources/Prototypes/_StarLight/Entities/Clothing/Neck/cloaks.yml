@@ -25,6 +25,9 @@
           tags:
             - PowerCell
             - PowerCellSmall
+  - type: ContainerContainer
+    containers:
+      cell_slot: !type:ContainerSlot
   - type: EnergyDomeGenerator
     damageEnergyDraw: 8
     domePrototype: EnergyDomeSmallCap
