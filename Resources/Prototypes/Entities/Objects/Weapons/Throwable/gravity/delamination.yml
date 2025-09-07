@@ -31,15 +31,15 @@
       path: /Audio/Effects/Grenades/Supermatter/supermatter.loop.ogg # 1.6
   - type: GravityWell
     maxRange: 15
-    baseRadialAcceleration: 35
+    baseRadialAcceleration: 40
     baseTangentialAcceleration: 1
-    gravPulsePeriod: 0.1
+    gravPulsePeriod: 0.03
   - type: SingularityDistortion
     intensity: 150
     falloffPower: 1.5
   - type: PointLight
     enabled: true
-    color: "#fff"
+    color: "#ffffff"
     energy: 8
     radius: 6
     softness: 1
@@ -75,7 +75,10 @@
     - timer
   - type: PointLight
     color: "#ffaa44"
-
+  - type: Sprite
+    layers:
+    - state: icon
+      color: "#ffaa44"
 - type: entity
   parent: BasePullingDelamination
   id: SinguloDelamination
@@ -86,7 +89,10 @@
     - timer
   - type: PointLight
     color: "#b444ff"
-
+  - type: Sprite
+    layers:
+    - state: icon
+      color: "#b444ff"
 - type: entity
   parent: BaseDelamination
   id: WhiteholeDelamination
