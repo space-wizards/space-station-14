@@ -12053,17 +12053,6 @@ entities:
       linkedPorts:
         1827:
         - DoorStatus: DoorBolt
-  - uid: 2312
-    components:
-    - type: Transform
-      pos: -50.5,59.5
-      parent: 30
-    - type: DeviceLinkSink
-      invokeCounter: 1
-    - type: DeviceLinkSource
-      linkedPorts:
-        840:
-        - DoorStatus: DoorBolt
   - uid: 13548
     components:
     - type: Transform
