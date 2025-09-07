@@ -1,11 +1,11 @@
 using Content.Server.DeviceLinking.Components;
-using Content.Server.DeviceNetwork;
 using Content.Server.Doors.Systems;
 using Content.Shared.DeviceLinking;
 using Content.Shared.DeviceLinking.Events;
 using Content.Shared.DeviceNetwork;
 using Content.Shared.Doors.Components;
 using Content.Shared.Doors;
+using Content.Shared.Doors.Systems;
 using JetBrains.Annotations;
 
 namespace Content.Server.DeviceLinking.Systems
@@ -15,6 +15,7 @@ namespace Content.Server.DeviceLinking.Systems
     {
         [Dependency] private readonly DoorSystem _doorSystem = default!;
         [Dependency] private readonly DeviceLinkSystem _signalSystem = default!;
+        [Dependency] private readonly SharedBoltSystem _boltSystem = default!;
 
         public override void Initialize()
         {
@@ -79,7 +80,7 @@ namespace Content.Server.DeviceLinking.Systems
                     bolt = state == SignalState.High;
                 }
 
-                _doorSystem.SetBoltsDown((uid, bolts), bolt);
+                _boltSystem.TrySetBoltsDown((uid, bolts), bolt);
             }
         }
 
