@@ -77,7 +77,7 @@ public sealed class IdentitySystem : EntitySystem
     // Creates an identity entity, and store it in the identity container
     private void OnMapInit(Entity<IdentityComponent> ent, ref MapInitEvent args)
     {
-        var ident = PredictedSpawnAtPosition(null, Transform(ent).Coordinates);
+        var ident = Spawn(null, Transform(ent).Coordinates);
 
         _metaData.SetEntityName(ident, "identity");
         QueueIdentityUpdate(ent);
