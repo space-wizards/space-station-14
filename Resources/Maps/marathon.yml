@@ -15668,18 +15668,6 @@ entities:
       parent: 30
 - proto: BrigTimer
   entities:
-  - uid: 1981
-    components:
-    - type: Transform
-      rot: -1.5707963267948966 rad
-      pos: -45.5,41.5
-      parent: 30
-    - type: DeviceLinkSource
-      linkedPorts:
-        1761:
-        - Start: Close
-        - Timer: AutoClose
-        - Timer: Open
   - uid: 1982
     components:
     - type: Transform
