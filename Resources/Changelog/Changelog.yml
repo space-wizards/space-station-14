@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: B-Kirill
-  changes:
-  - message: Added a collapse button for the lobby right panel, improving visibility
-      of the background artwork.
-    type: Add
-  id: 8427
-  time: '2025-05-06T17:24:59.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/37140
 - author: Morty, lzk228
   changes:
   - message: Speech bubbles now indicate when a person is thinking of what to say.
@@ -3944,3 +3936,12 @@
   id: 8938
   time: '2025-09-07T14:01:26.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/40197
+- author: FairlySadPanda
+  changes:
+  - message: Removing displaced markings no longer makes the renderer give up.
+    type: Fix
+  - message: Vulpkanin can once again use normal human hair.
+    type: Fix
+  id: 8939
+  time: '2025-09-07T14:36:38.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/40171
