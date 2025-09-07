@@ -1,6 +1,5 @@
 using Content.Shared.Actions.Events;
 using Content.Shared.Charges.Components;
-using Content.Shared.DoAfter;
 using Content.Shared.Examine;
 using JetBrains.Annotations;
 using Robust.Shared.Timing;
