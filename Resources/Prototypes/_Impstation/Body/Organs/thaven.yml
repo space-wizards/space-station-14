@@ -4,6 +4,7 @@
   name: thaven brain
   description: "An organic positronic brain. Quite remarkable, really."
   components:
+    - type: BorgBrain
     - type: Sprite
       sprite: _Impstation/Mobs/Species/Thaven/organs.rsi
       state: brain-thaven

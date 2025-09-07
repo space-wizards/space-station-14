@@ -73,8 +73,17 @@ thaven-mood-distrust-fashion-desc = Never trust anyone whose outfit is better th
 thaven-mood-happy-bad-name = Never Trust A Smile
 thaven-mood-happy-bad-desc = Cheerfulness indicates untrustworthiness.
 
-thaven-mood-only-pills-name = Needles Are Scary
-thaven-mood-only-pills-desc = You only accept medication in the form of pills.
+# trypanophilia is the enjoyment of needles
+thaven-mood-only-pills-name = { $medRestriction -> 
+  *[Pills] Needles Are Scary
+  [Patches] Choking Hazard
+  [Syringes] Trypanophilia
+}
+thaven-mood-only-pills-desc = { $medRestriction ->
+  *[Pills] You only accept medication in the form of pills.
+  [Patches] You only accept medication from patches.
+  [Syringes] You only accept medication through syringes.
+}
 
 thaven-mood-avoid-puddles-name = Don't Get Your Feet Wet
 thaven-mood-avoid-puddles-desc = It is undignified and unsanitary to walk over spilled liquids. You should avoid it, even if it costs you your life.

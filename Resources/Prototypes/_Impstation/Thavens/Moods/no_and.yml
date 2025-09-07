@@ -232,11 +232,13 @@
   moodName: thaven-mood-happy-bad-name
   moodDesc: thaven-mood-happy-bad-desc
 
-# You only accept medication in the form of pills.
+# You only accept medication in the form of pills/patches/syringes.
 - type: thavenMood
   id: OnlyPills
   moodName: thaven-mood-only-pills-name
   moodDesc: thaven-mood-only-pills-desc
+  moodVars:
+    medRestriction: MedDeliveryRestriction
   conflicts:
     - NoModernMedicine
 

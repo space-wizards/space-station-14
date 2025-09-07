@@ -1,14 +1,38 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
-  "copyright": "Brain by Widgetbeck",
+  "copyright": "inahands by Widgetbeck. brain-thaven by Conflee for Starlight",
   "size": {
     "x": 32,
     "y": 32
   },
   "states": [
     {
-      "name": "brain-thaven"
+      "name": "brain-thaven",
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ]
+      ]
     },
     {
       "name": "brain-inhand-left",

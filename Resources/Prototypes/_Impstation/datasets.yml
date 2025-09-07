@@ -1201,3 +1201,10 @@
   - numerous
   - substantial
   - capitalist
+
+- type: dataset
+  id: MedDeliveryRestriction
+  values:
+  - Pills
+  - Patches
+  - Syringes
