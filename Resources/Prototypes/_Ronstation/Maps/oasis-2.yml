@@ -2,7 +2,7 @@
 - type: gameMap
   id: Oasis2
   mapName: 'Oasis-II'
-  mapPath: /Maps/_Ronstation/oasis-II.yml # Ronstation - modification.
+  mapPath: /Maps/_Ronstation/oasis-2.yml # Ronstation - modification.
   minPlayers: 35
   stations:
     Oasis:
