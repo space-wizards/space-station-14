@@ -34,6 +34,8 @@ public sealed class GasTileHeatOverlay : Overlay
     public override OverlaySpace Space => OverlaySpace.WorldSpace;
     private readonly ShaderInstance _shader;
 
+    private bool _heatDistortionShader;
+
     public GasTileHeatOverlay()
     {
         IoCManager.InjectDependencies(this);
@@ -42,7 +44,7 @@ public sealed class GasTileHeatOverlay : Overlay
         _shader = _proto.Index(HeatOverlayShader).InstanceUnique();
 
         _configManager.OnValueChanged(CCVars.ReducedMotion, SetReducedMotion, invokeImmediately: true);
-
+        _configManager.OnValueChanged(CCVars.HeatDistortionShader, b => _heatDistortionShader = b, invokeImmediately: true);
     }
 
     private void SetReducedMotion(bool reducedMotion)
@@ -187,7 +189,7 @@ public sealed class GasTileHeatOverlay : Overlay
             return;
 
         // Skip rendering if heat distortion is disabled.
-        if (!_configManager.GetCVar(CCVars.HeatDistortionShader))
+        if (!_heatDistortionShader)
             return;
 
         // Blur to soften the edges of the distortion. the lower parts of the alpha channel need to get cut off in the
