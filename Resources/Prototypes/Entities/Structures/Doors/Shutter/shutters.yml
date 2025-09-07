@@ -106,8 +106,15 @@
   - type: BlockWeather
 
 - type: entity
-  id: ShuttersNormal
+  id: BaseShutterPryable
   parent: BaseShutter
+  abstract: true
+  components:
+  - type: Pryable
+
+- type: entity
+  id: ShuttersNormal
+  parent: BaseShutterPryable
   components:
   - type: Occluder
   - type: Construction
@@ -139,7 +146,7 @@
 
 - type: entity
   id: ShuttersRadiation
-  parent: BaseShutter
+  parent: BaseShutterPryable
   name: radiation shutters
   description: Why did they make these shutters radioactive?
   components:
@@ -182,7 +189,7 @@
 
 - type: entity
   id: ShuttersWindow
-  parent: BaseShutter
+  parent: BaseShutterPryable
   name: window shutters
   description: The Best (TM) place to see your friends explode!
   components:
