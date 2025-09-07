@@ -1,0 +1,51 @@
+########################
+
+# Index
+
+# 1. JANITORIAL SERVICE LIGHT FIXTRUE
+## Empty
+## Service
+
+########################
+
+
+# 1. JANITORIAL SERVICE LIGHT FIXTURE
+- type: entity
+  abstract: true
+  parent: BaseLightBulbFixture
+  id: BaseServiceLightFixture
+  name: janitorial service light
+  components:
+  - type: Sprite
+    sprite: Structures/Wallmounts/Lighting/service_light.rsi
+    state: base
+
+## Empty
+- type: entity
+  parent: [ BasePoweredLight , BaseServiceLightFixture ]
+  id: PoweredServiceLightFixtureEmpty
+  suffix: Empty
+  components:
+  - type: PoweredLight
+    bulb: Bulb
+    on: false
+
+## Service
+- type: entity
+  parent: PoweredServiceLightFixtureEmpty
+  id: PoweredServiceLightFixtureService
+  suffix: Service
+  components:
+  - type: PoweredLight
+    hasLampOnSpawn: ServiceLightBulb
+
+- type: entity
+  parent: BaseServiceLightFixture
+  id: AlwaysPoweredServiceLightFixtureService
+  suffix: Always powered, service
+  components:
+  - type: PointLight
+    color: "#CCFF60"
+    radius: 1.5
+    energy: 0.45
+    softness: 3
