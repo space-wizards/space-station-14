@@ -12,6 +12,7 @@ using Content.Shared.Construction.Prototypes;
 using Content.Shared.Construction.Steps;
 using Content.Shared.FixedPoint;
 using Content.Shared.Lathe;
+using Content.Shared.Lathe.Components;
 using Content.Shared.Materials;
 using Content.Shared.Research.Prototypes;
 using Content.Shared.Stacks;
