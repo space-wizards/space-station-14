@@ -5,6 +5,7 @@ using Content.Shared.Damage;
 using Content.Shared.Damage.Prototypes;
 using Content.Shared.FixedPoint;
 using Content.Shared.VendingMachines;
+using Robust.Shared.Prototypes;
 
 namespace Content.IntegrationTests.Tests.Vending;
 
@@ -17,6 +18,7 @@ public sealed class VendingInteractionTest : InteractionTest
     private const string RestockBoxProtoId = "InteractionTestRestockBox";
 
     private const string RestockBoxOtherProtoId = "InteractionTestRestockBoxOther";
+    private static readonly ProtoId<DamageTypePrototype> TestDamageType = "Blunt";
 
     [TestPrototypes]
     private const string TestPrototypes = $@"
@@ -196,7 +198,7 @@ public sealed class VendingInteractionTest : InteractionTest
         Assert.That(damageableComp.Damage.GetTotal(), Is.EqualTo(FixedPoint2.Zero), $"{VendingMachineProtoId} started with unexpected damage.");
 
         // Damage the vending machine to the point that it breaks
-        var damageType = ProtoMan.Index<DamageTypePrototype>("Blunt");
+        var damageType = ProtoMan.Index(TestDamageType);
         var damage = new DamageSpecifier(damageType, FixedPoint2.New(100));
         await Server.WaitPost(() => damageableSys.TryChangeDamage(SEntMan.GetEntity(Target), damage, ignoreResistances: true));
         await RunTicks(5);
