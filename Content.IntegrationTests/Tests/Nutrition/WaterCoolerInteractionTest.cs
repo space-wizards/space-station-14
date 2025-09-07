@@ -36,8 +36,8 @@ public sealed class WaterCoolerInteractionTest : InteractionTest
 
         // Record how many paper cups are in the cooler
         var binComp = Comp<BinComponent>(cooler);
-        var initialCount = binComp.Items.Count;
-        Assert.That(binComp.Items, Is.Not.Empty, "Water cooler didn't start with any cups");
+        var initialCount = binComp.ItemContainer.Count;
+        Assert.That(binComp.ItemContainer, Is.Not.Empty, "Water cooler didn't start with any cups");
 
         // Interact with the water cooler using an empty hand to grab a paper cup
         await Interact();
@@ -51,10 +51,10 @@ public sealed class WaterCoolerInteractionTest : InteractionTest
             AssertPrototype(PaperCup, SEntMan.GetNetEntity(cup));
 
             // Make sure the number of cups in the cooler has decreased by one
-            Assert.That(binComp.Items, Has.Count.EqualTo(initialCount - 1), "Number of cups in cooler bin did not decrease by one");
+            Assert.That(binComp.ItemContainer, Has.Count.EqualTo(initialCount - 1), "Number of cups in cooler bin did not decrease by one");
 
             // Make sure the cup isn't somehow still in the cooler too
-            Assert.That(binComp.Items, Does.Not.Contain(cup));
+            Assert.That(binComp.ItemContainer, Does.Not.Contain(cup));
         });
 
         // Alt-interact with the water cooler while holding the cup to put it back
@@ -66,10 +66,10 @@ public sealed class WaterCoolerInteractionTest : InteractionTest
             Assert.That(HandSys.ActiveHandIsEmpty((SPlayer, Hands)), "Player's hand is not empty");
 
             // Make sure the count has gone back up by one
-            Assert.That(binComp.Items, Has.Count.EqualTo(initialCount), "Number of cups in cooler bin did not return to initial count");
+            Assert.That(binComp.ItemContainer, Has.Count.EqualTo(initialCount), "Number of cups in cooler bin did not return to initial count");
 
             // Make sure the cup is in the cooler
-            Assert.That(binComp.Items, Contains.Item(cup), "Cup was not returned to cooler");
+            Assert.That(binComp.ItemContainer, Contains.Item(cup), "Cup was not returned to cooler");
         });
     }
 
@@ -93,7 +93,8 @@ public sealed class WaterCoolerInteractionTest : InteractionTest
         await Interact();
 
         // Make sure the cup now contains water
-        Assert.That(solutionSys.GetTotalPrototypeQuantity(ToServer(cup), Water), Is.GreaterThan(FixedPoint2.Zero),
+        Assert.That(solutionSys.GetTotalPrototypeQuantity(ToServer(cup), Water),
+            Is.GreaterThan(FixedPoint2.Zero),
             "Cup does not contain any water");
     }
 }
