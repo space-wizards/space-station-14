@@ -747,7 +747,7 @@ PoweredLightPostSmallEmpty: PoweredLightPostFixtureEmpty
 PoweredLightPostSmall: PoweredLightPostFixtureIncandescent
 LightPostSmall: AlwaysPoweredLightPostFixtureIncandescent
 PoweredLEDLightPostSmall: PoweredLightPostFixtureLED
-# Strobe -> strobe light fixture
+# Strobe -> Strobe light fixture
 PoweredStrobeLightEmpty: PoweredStrobeLightFixtureEmpty
 PoweredStrobeLight: PoweredStrobeLightFixtureIncandescent
 AlwaysPoweredStrobeLight: AlwaysPoweredStrobeLightFixtureIncandescent
