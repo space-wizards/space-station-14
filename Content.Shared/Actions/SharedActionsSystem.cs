@@ -322,15 +322,13 @@ public abstract partial class SharedActionsSystem : EntitySystem
         if (validateEv.Invalid)
             return false;
 
-        Entity<ActionsComponent?> performer = (user, component);
-
-        if (TryComp<DoAfterArgsComponent>(action, out var actionDoAfterComp) && TryComp<DoAfterComponent>(performer, out var performerDoAfterComp) && !skipDoActionRequest)
+        if (TryComp<DoAfterArgsComponent>(action, out var actionDoAfterComp) && TryComp<DoAfterComponent>(user, out var performerDoAfterComp) && !skipDoActionRequest)
         {
-            return TryStartActionDoAfter((action, actionDoAfterComp), (performer, performerDoAfterComp), action.Comp.UseDelay, ev);
+            return TryStartActionDoAfter((action, actionDoAfterComp), (user, performerDoAfterComp), action.Comp.UseDelay, ev);
         }
 
         // All checks passed. Perform the action!
-        PerformAction(performer, action);
+        PerformAction((user, component), action);
         return true;
     }
 
