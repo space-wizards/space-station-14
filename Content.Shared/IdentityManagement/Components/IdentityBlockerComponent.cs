@@ -3,10 +3,10 @@ using Robust.Shared.GameStates;
 
 namespace Content.Shared.IdentityManagement.Components;
 
-[RegisterComponent, NetworkedComponent]
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
 public sealed partial class IdentityBlockerComponent : Component
 {
-    [DataField]
+    [DataField, AutoNetworkedField]
     public bool Enabled = true;
 
     /// <summary>

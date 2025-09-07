@@ -11,6 +11,7 @@ using Content.Shared.Inventory.Events;
 using Robust.Shared.Containers;
 using Robust.Shared.Enums;
 using Robust.Shared.GameObjects.Components.Localization;
+using Robust.Shared.Timing;
 
 namespace Content.Shared.IdentityManagement;
 
@@ -20,6 +21,7 @@ namespace Content.Shared.IdentityManagement;
 public sealed class IdentitySystem : EntitySystem
 {
     [Dependency] private readonly GrammarSystem _grammarSystem = default!;
+    [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly ISharedAdminLogManager _adminLog = default!;
     [Dependency] private readonly MetaDataSystem _metaData = default!;
     [Dependency] private readonly SharedContainerSystem _container = default!;
@@ -75,7 +77,7 @@ public sealed class IdentitySystem : EntitySystem
     // Creates an identity entity, and store it in the identity container
     private void OnMapInit(Entity<IdentityComponent> ent, ref MapInitEvent args)
     {
-        var ident = Spawn(null, Transform(ent).Coordinates);
+        var ident = PredictedSpawnAtPosition(null, Transform(ent).Coordinates);
 
         _metaData.SetEntityName(ident, "identity");
         QueueIdentityUpdate(ent);
@@ -107,6 +109,7 @@ public sealed class IdentitySystem : EntitySystem
     private void OnMaskToggled(Entity<IdentityBlockerComponent> ent, ref ItemMaskToggledEvent args)
     {
         ent.Comp.Enabled = !args.Mask.Comp.IsToggled;
+        Dirty(ent);
     }
 
     /// <summary>
@@ -114,6 +117,9 @@ public sealed class IdentitySystem : EntitySystem
     /// </summary>
     public void QueueIdentityUpdate(EntityUid uid)
     {
+        if (_timing.ApplyingState)
+            return;
+
         _queuedIdentityUpdates.Add(uid);
     }
 
