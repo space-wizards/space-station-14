@@ -195,3 +195,19 @@
   components:
     - type: SurveillanceCameraRouter
       subnetFrequency: SurveillanceCameraEntertainment
+
+- type: entity
+  parent: SurveillanceCameraWirelessRouterBase
+  id: SurveillanceCameraWirelessRouterXenoborg
+  name: xenoborg camera wireless router
+  components:
+  - type: DeviceNetwork
+    deviceNetId: Wireless
+    receiveFrequencyId: Mothership
+    transmitFrequencyId: Mothership
+  - type: WirelessNetworkConnection
+    range: 2000 # longer range to get xenoborgs even when the mothership is far away
+  - type: SurveillanceCameraRouter
+    subnetFrequency: Xenoborg
+  - type: Machine
+    board: SurveillanceCameraWirelessRouterXenoborgCircuitboard
