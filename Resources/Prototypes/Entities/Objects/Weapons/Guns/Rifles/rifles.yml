@@ -195,7 +195,7 @@
   name: Estoc DMR
   parent: [BaseWeaponRifle, BaseSyndicateContraband]
   id: WeaponRifleEstoc
-  description: "A bullpup designated marksman rifle firing in 3-round bursts. The Estoc was designed as a companion to the Lecter combat rifle, equipped with an extended 22-inch barrel and telescopic sight for long-range engagements.\nFeeds from .20 rifle magazines."
+  description: "A bullpup designated marksman rifle firing in 3-round bursts. The Estoc was designed as a counterpart to the Lecter combat rifle, equipped with an extended 22-inch barrel and telescopic sight for long-range engagements.\nFeeds from .20 rifle magazines."
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Rifles/estoc.rsi
