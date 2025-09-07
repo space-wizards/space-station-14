@@ -300,7 +300,7 @@ namespace Content.Server.Atmos.EntitySystems
                    Math.Abs(strengthA - strengthB) > tolerance; // other change within tolerance
         }
 
-        private void UpdateOverlayData()
+        public void UpdateOverlayData()
         {
             _updateGridOverlayJob.Grids.Clear();
 
