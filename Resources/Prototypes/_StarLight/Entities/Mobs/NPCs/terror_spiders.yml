@@ -266,6 +266,22 @@
 # Tier 2 #
 ##########
 
+# Black
+
+- type: entity
+  name: terror black
+  parent: MobTerrorGray
+  id: MobTerrorBlack
+  components:
+  - type: Sprite
+    drawdepth: Mobs
+    layers:
+    - map: ["enum.DamageStateVisualLayers.Base"]
+      state: alive
+      sprite: _Starlight/Mobs/Animals/Spiders/terror_widow.rsi
+  - type: Jump
+    knockdownTargetOnCollision: true
+
 # Purple
 
 - type: entity
@@ -301,16 +317,16 @@
     fireCost: 50
   - type: BatterySelfRecharger
     autoRecharge: true
-    autoRechargeRate: 50
+    autoRechargeRate: 25
   - type: Battery
     maxCharge: 200
     startingCharge: 200
   - type: Gun
-    fireRate: 0.75
+    fireRate: 0.5
     useKey: false
-    selectedMode: FullAuto
+    selectedMode: Burst
     availableModes:
-      - FullAuto
+      - Burst
     soundGunshot: /Audio/Weapons/Xeno/alien_spitacid.ogg
 
 - type: entity
