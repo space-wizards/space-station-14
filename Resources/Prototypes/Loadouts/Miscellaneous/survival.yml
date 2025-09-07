@@ -21,6 +21,7 @@
     - Human
     - Moth
     - Reptilian
+    - Vulpkanin
 
 - type: loadoutEffectGroup
   id: EffectSpeciesVox
@@ -78,6 +79,7 @@
     - Dwarf
     - Human
     - Reptilian
+    - Vulpkanin
 
 - type: loadoutEffectGroup
   id: OxygenBreatherMimeMoth

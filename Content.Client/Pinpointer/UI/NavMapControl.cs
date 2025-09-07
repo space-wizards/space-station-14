@@ -1,3 +1,4 @@
+// Modified by Ronstation contributor(s), therefore this file is licensed as MIT sublicensed with AGPL-v3.0.
 using Content.Client.Stylesheets;
 using Content.Client.UserInterface.Controls;
 using Content.Shared.Input;
@@ -462,6 +463,27 @@ public partial class NavMapControl : MapGridControl
             UpdateNavMap();
         }
     }
+
+    // Ronstation - start of modifications.
+    public void AiFrameUpdate(float seconds, EntityUid? newMapUid)
+    { 
+        if (MapUid != newMapUid)
+        {   
+            MapUid = newMapUid;
+            ForceNavMapUpdate();
+        }
+        else
+        {
+            // Update the timer
+            _updateTimer += seconds;
+            if (_updateTimer >= UpdateTime)
+            {
+                _updateTimer -= UpdateTime;
+                UpdateNavMap();
+            }
+        }
+    }
+    // Ronstation - end of modifications.
 
     protected virtual void UpdateNavMap()
     {

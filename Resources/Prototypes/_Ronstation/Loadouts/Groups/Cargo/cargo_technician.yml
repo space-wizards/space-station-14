@@ -20,6 +20,13 @@
   - CargoTechnicianDuffel
 
 - type: loadoutGroup
+  id: CargoTechnicianPDA
+  parent: BasePDA
+  loadouts:
+  - CargoTechnicianPDA
+  - SeniorCourierPDA
+
+- type: loadoutGroup
   id: CargoTechnicianOuterClothing
   parent: BaseOuterClothing
   loadouts:
