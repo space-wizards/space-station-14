@@ -77,6 +77,6 @@ public sealed partial class CCVars
     /// <summary>
     /// If enabled, enables heat distortion shader.
     /// </summary>
-    public static readonly CVarDef<bool> HeatDistortionShader =
+    public static readonly CVarDef<bool> AccessibilityHeatDistortion  =
             CVarDef.Create("accessibility.heat_distortion", true, CVar.CLIENTONLY | CVar.ARCHIVE);
 }
