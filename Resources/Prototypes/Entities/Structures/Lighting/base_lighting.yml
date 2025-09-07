@@ -116,3 +116,5 @@
     range: 2
     sound:
       path: /Audio/Ambience/Objects/light_hum.ogg
+  - type: PlacementReplacement
+    key: lights
