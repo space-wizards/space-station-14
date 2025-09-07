@@ -311,7 +311,6 @@
   - type: Door
     openSpriteState: door_opened
     closedSpriteState: door_closed
-    canPry: false
     occludes: false
     changeAirtight: false
     bumpOpen: false
