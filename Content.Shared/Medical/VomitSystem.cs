@@ -34,6 +34,12 @@ public sealed class VomitSystem : EntitySystem
     [Dependency] private readonly SharedPuddleSystem _puddle = default!;
     [Dependency] private readonly SharedSolutionContainerSystem _solutionContainer = default!;
 
+    public override void Initialize()
+    {
+        base.Initialize();
+
+        SubscribeLocalEvent<BodyComponent, CanVomitEvent>(CanBodyVomitSolution);
+    }
 
     private const float ChemMultiplier = 0.1f;
 
@@ -44,21 +50,40 @@ public sealed class VomitSystem : EntitySystem
     private readonly SoundSpecifier _vomitSound = new SoundCollectionSpecifier(VomitCollection,
         AudioParams.Default.WithVariation(0.2f).WithVolume(-4f));
 
-    /// <summary>
-    /// Make an entity vomit, if they have a stomach.
-    /// </summary>
-    public void Vomit(EntityUid uid, float thirstAdded = -40f, float hungerAdded = -40f, bool force = false)
+    private void CanBodyVomitSolution(Entity<BodyComponent> ent, ref CanVomitEvent args)
     {
+        if (args.Handled)
+            return;
+
         // Main requirement: You have a stomach
-        var stomachList = _body.GetBodyOrganEntityComps<StomachComponent>(uid);
+        var stomachList = _body.GetBodyOrganEntityComps<StomachComponent>((ent, null));
         if (stomachList.Count == 0)
             return;
 
         // Vomit only if entity is alive
         // Ignore condition if force was set to true
-        if (!force && _mobState.IsDead(uid))
+        if (!args.Forced && _mobState.IsDead(ent))
             return;
 
+        // Empty the stomach out into it
+        foreach (var stomach in stomachList)
+        {
+            if (_solutionContainer.ResolveSolution(stomach.Owner, StomachSystem.DefaultSolutionName, ref stomach.Comp1.Solution, out var sol))
+            {
+                args.Sol.AddSolution(sol, _proto);
+                sol.RemoveAllSolution();
+                _solutionContainer.UpdateChemicals(stomach.Comp1.Solution.Value);
+            }
+        }
+
+        args.Handled = true;
+    }
+
+    /// <summary>
+    /// Make an entity vomit, if they have a stomach.
+    /// </summary>
+    public void Vomit(EntityUid uid, float thirstAdded = -40f, float hungerAdded = -40f, bool force = false)
+    {
         // Vomiting makes you hungrier and thirstier
         if (TryComp<HungerComponent>(uid, out var hunger))
             _hunger.ModifyHunger(uid, hungerAdded, hunger);
@@ -74,16 +99,9 @@ public sealed class VomitSystem : EntitySystem
         // TODO: Need decals
         var solution = new Solution();
 
-        // Empty the stomach out into it
-        foreach (var stomach in stomachList)
-        {
-            if (_solutionContainer.ResolveSolution(stomach.Owner, StomachSystem.DefaultSolutionName, ref stomach.Comp1.Solution, out var sol))
-            {
-                solution.AddSolution(sol, _proto);
-                sol.RemoveAllSolution();
-                _solutionContainer.UpdateChemicals(stomach.Comp1.Solution.Value);
-            }
-        }
+        var ev = new CanVomitEvent(solution, force);
+        RaiseLocalEvent(uid, ref ev);
+
         // Adds a tiny amount of the chem stream from earlier along with vomit
         if (TryComp<BloodstreamComponent>(uid, out var bloodStream))
         {
@@ -117,3 +135,6 @@ public sealed class VomitSystem : EntitySystem
         _popup.PopupEntity(Loc.GetString("disease-vomit", ("person", Identity.Entity(uid, EntityManager))), uid);
     }
 }
+
+[ByRefEvent]
+public record struct CanVomitEvent(Solution Sol, bool Forced = false, bool Handled = false);
