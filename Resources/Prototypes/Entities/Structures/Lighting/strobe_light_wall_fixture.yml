@@ -20,7 +20,7 @@
 # 1. STROBE LIGHT
 - type: entity
   abstract: true
-  parent: BaseLightFixture
+  parent: BaseLightBulbFixture
   id: BaseStrobeLightFixture
   name: strobe light fixture
   components:
