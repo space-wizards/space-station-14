@@ -629,7 +629,6 @@ public abstract partial class InventorySystem
         return unequippedItems;
     }
 
-
     public bool TryGetSlotEntity(EntityUid uid, string slot, [NotNullWhen(true)] out EntityUid? entityUid, InventoryComponent? inventoryComponent = null, ContainerManagerComponent? containerManagerComponent = null)
     {
         entityUid = null;
