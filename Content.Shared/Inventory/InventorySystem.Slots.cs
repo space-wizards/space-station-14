@@ -156,7 +156,7 @@ public partial class InventorySystem : EntitySystem
         TryGetSlot(uid, slot, out _, component);
 
     /// <summary>
-    /// True if <see cref="targetSlotName"/> has any other filled slot that depends on <see cref="targetSlotName"/> in the inventory.
+    /// True if <see cref="targetSlotName"/> has any other filled slot that depends on it in the inventory.
     /// </summary>
     /// <param name="ent">Holder of the inventory.</param>
     /// <param name="targetSlotName">Name of slot to check for filled dependent slots.</param>
