@@ -1,15 +1,14 @@
-# 1. LAMP POSTS
+# 1. LIGHT POSTS
 ## Empty
 ## Incandescent
 ## LED
-## Exterior
 
-# 1. LAMP POST
+# 1. LIGHT POST
 - type: entity
   abstract: true
   parent: BaseLightFixture
   id: BaseLightPostFixture
-  name: post light
+  name: light post
   components:
   - type: Sprite
     sprite: Structures/Lighting/LightPosts/small_light_post.rsi
@@ -47,7 +46,7 @@
 ## Empty
 - type: entity
   parent: [ BasePoweredLight , BaseLightPostFixture ]
-  id: PoweredLightPostSmallEmpty
+  id: PoweredLightPostFixtureEmpty
   suffix: Empty
   description: A light fixture. Draws power and produces light when equipped with a light bulb.
   components:
@@ -56,8 +55,8 @@
 
 ## Incandescent
 - type: entity
-  parent: PoweredLightPostSmallEmpty
-  id: PoweredLightPostSmall
+  parent: PoweredLightPostFixtureEmpty
+  id: PoweredLightPostFixtureIncandescent
   suffix: Incandescent
   components:
   - type: PoweredLight
@@ -65,7 +64,7 @@
 
 - type: entity
   parent: BaseLightPostFixture
-  id: LightPostSmall
+  id: AlwaysPoweredLightPostFixtureIncandescent
   suffix: Always powered, incandescent
   components:
   - type: PointLight
@@ -76,8 +75,8 @@
 
 ## LED
 - type: entity
-  parent: PoweredLightPostSmallEmpty
-  id: PoweredLEDLightPostSmall
+  parent: PoweredLightPostFixtureEmpty
+  id: PoweredLightPostFixtureLED
   suffix: LED
   components:
   - type: PoweredLight
@@ -90,7 +89,7 @@
 
 - type: entity
   parent: BaseLightPostFixture
-  id: AlwaysPoweredLampPostLED
+  id: AlwaysPoweredLightPostLED
   suffix: Always powered, LED
   components:
   - type: PointLight

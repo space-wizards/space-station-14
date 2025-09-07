@@ -33,7 +33,7 @@
         amount: 1
         doAfter: 1.0
   - node: tubeLight
-    entity: PoweredlightEmpty
+    entity: PoweredLightTubeFixtureEmpty
     edges:
     - to: start
       conditions:
@@ -48,7 +48,7 @@
         amount: 2
       - !type:DeleteEntity {}
   - node: bulbLight
-    entity: PoweredSmallLightEmpty
+    entity: PoweredLightBulbFixtureEmpty
     edges:
     - to: start
       conditions:
@@ -63,7 +63,7 @@
         amount: 1
       - !type:DeleteEntity {}
   - node: groundLight
-    entity: PoweredLightPostSmallEmpty
+    entity: PoweredLightPostFixtureEmpty
     edges:
     - to: start
       conditions:
@@ -78,7 +78,7 @@
         amount: 5
       - !type:DeleteEntity {}
   - node: strobeLight
-    entity: PoweredStrobeLightEmpty
+    entity: PoweredStrobeLightFixtureEmpty
     edges:
     - to: start
       conditions:

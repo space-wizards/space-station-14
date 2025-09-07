@@ -8,7 +8,7 @@
 # Index
 
 # 0. BASE
-# 1. TUBE LIGHT FIXTURES
+# 1. LIGHT TUBE FIXTURE
 ## Empty
 ## Fluorescent
 ## Incandescent
@@ -23,7 +23,7 @@
 ## Cyan
 ## Blue
 ## Black
-# 2. LIGHT BULB FIXTURES
+# 2. LIGHT BULB FIXTURE
 ## Empty
 ## Incandescent
 ## LED
@@ -137,12 +137,12 @@
     sound:
       path: /Audio/Ambience/Objects/light_hum.ogg
 
-# 1. TUBE LIGHT FIXTURES
+# 1. LIGHT TUBE FIXTURES
 - type: entity
   abstract: true
   parent: BaseLightFixture
   id: BaseLightTubeFixture
-  name: tube light fixture
+  name: light tube fixture
   components:
   - type: Sprite
     sprite: Structures/Wallmounts/Lighting/light_tube.rsi
@@ -169,7 +169,7 @@
 ## Empty
 - type: entity
   parent: [ BasePoweredLight , BaseLightTubeFixture ]
-  id: PoweredlightEmpty
+  id: PoweredLightTubeFixtureEmpty
   suffix: Empty
   description: A light fixture. Draws power and produces light when equipped with a light tube.
   components:
@@ -178,8 +178,8 @@
 
 ## Fluorescent
 - type: entity
-  parent: PoweredlightEmpty
-  id: Poweredlight
+  parent: PoweredLightTubeFixtureEmpty
+  id: PoweredLightTubeFixtureFluorescent
   suffix: Fluorescent
   components:
   - type: PoweredLight
@@ -187,7 +187,7 @@
 
 - type: entity
   parent: BaseLightTubeFixture
-  id: AlwaysPoweredWallLight
+  id: AlwaysPoweredLightTubeFixtureFluorescent
   suffix: Always powered, fluorescent
   description: A light fixture that glows without consuming power.
   components:
@@ -199,8 +199,8 @@
 
 ## LED
 - type: entity
-  parent: PoweredlightEmpty
-  id: PoweredlightLED
+  parent: PoweredLightTubeFixtureEmpty
+  id: PoweredLightTubeFixtureLED
   suffix: LED
   components:
   - type: PoweredLight
@@ -212,8 +212,8 @@
     popupText: powered-light-component-burn-hand
 
 - type: entity
-  parent: AlwaysPoweredWallLight
-  id: AlwaysPoweredLightLED
+  parent: AlwaysPoweredLightTubeFixtureFluorescent
+  id: AlwaysPoweredLightTubeFixtureLED
   suffix: Always powered, LED
   components:
   - type: PointLight
@@ -229,8 +229,8 @@
 
 ## Exterior
 - type: entity
-  parent: PoweredlightEmpty
-  id: PoweredlightExterior
+  parent: PoweredLightTubeFixtureEmpty
+  id: PoweredLightTubeFixtureExterior
   suffix: Exterior
   components:
   - type: PoweredLight
@@ -242,8 +242,8 @@
     popupText: powered-light-component-burn-hand
 
 - type: entity
-  parent: AlwaysPoweredWallLight
-  id: AlwaysPoweredLightExterior
+  parent: AlwaysPoweredLightTubeFixtureFluorescent
+  id: AlwaysPoweredLightTubeFixtureExterior
   suffix: Always powered, exterior
   components:
   - type: PointLight
@@ -259,16 +259,16 @@
 
 ## Sodium
 - type: entity
-  parent: PoweredlightEmpty
-  id: PoweredlightSodium
+  parent: PoweredLightTubeFixtureEmpty
+  id: PoweredLightTubeFixtureSodium
   suffix: Sodium
   components:
   - type: PoweredLight
     hasLampOnSpawn: SodiumLightTube
 
 - type: entity
-  parent: AlwaysPoweredWallLight
-  id: AlwaysPoweredLightSodium
+  parent: AlwaysPoweredLightTubeFixtureFluorescent
+  id: AlwaysPoweredLightTubeFixtureSodium
   suffix: Always powered, sodium
   components:
   - type: PointLight
@@ -279,16 +279,16 @@
 
 ## Pink
 - type: entity
-  parent: PoweredlightEmpty
-  id: PoweredlightPink
+  parent: PoweredLightTubeFixtureEmpty
+  id: PoweredLightTubeFixturePink
   suffix: Pink
   components:
   - type: PoweredLight
     hasLampOnSpawn: LightTubeCrystalPink
 
 - type: entity
-  parent: AlwaysPoweredWallLight
-  id: AlwaysPoweredlightPink
+  parent: AlwaysPoweredLightTubeFixtureFluorescent
+  id: AlwaysPoweredLightTubeFixturePink
   suffix: Always powered, pink
   components:
   - type: PointLight
@@ -299,16 +299,16 @@
 
 ## Red
 - type: entity
-  parent: PoweredlightEmpty
-  id: PoweredlightRed
+  parent: PoweredLightTubeFixtureEmpty
+  id: PoweredLightTubeFixtureRed
   suffix: Red
   components:
   - type: PoweredLight
     hasLampOnSpawn: LightTubeCrystalRed
 
 - type: entity
-  parent: AlwaysPoweredWallLight
-  id: AlwaysPoweredlightRed
+  parent: AlwaysPoweredLightTubeFixtureFluorescent
+  id: AlwaysPoweredLightTubeFixtureRed
   suffix: Always powered, red
   components:
   - type: PointLight
@@ -319,16 +319,16 @@
 
 ## Orange
 - type: entity
-  parent: PoweredlightEmpty
-  id: PoweredlightOrange
+  parent: PoweredLightTubeFixtureEmpty
+  id: PoweredLightTubeFixtureOrange
   suffix: Orange
   components:
   - type: PoweredLight
     hasLampOnSpawn: LightTubeCrystalOrange
 
 - type: entity
-  parent: AlwaysPoweredWallLight
-  id: AlwaysPoweredlightOrange
+  parent: AlwaysPoweredLightTubeFixtureFluorescent
+  id: AlwaysPoweredLightTubeFixtureOrange
   suffix: Always powered, orange
   components:
   - type: PointLight
@@ -339,16 +339,16 @@
 
 ## Yellow
 - type: entity
-  parent: PoweredlightEmpty
-  id: PoweredlightYellow
+  parent: PoweredLightTubeFixtureEmpty
+  id: PoweredLightTubeFixtureYellow
   suffix: Yellow
   components:
   - type: PoweredLight
     hasLampOnSpawn: LightTubeCrystalYellow
 
 - type: entity
-  parent: AlwaysPoweredWallLight
-  id: AlwaysPoweredlightYellow
+  parent: AlwaysPoweredLightTubeFixtureFluorescent
+  id: AlwaysPoweredLightTubeFixtureYellow
   suffix: Always powered, yellow
   components:
   - type: PointLight
@@ -359,16 +359,16 @@
 
 ## Green
 - type: entity
-  parent: PoweredlightEmpty
-  id: PoweredlightGreen
+  parent: PoweredLightTubeFixtureEmpty
+  id: PoweredLightTubeFixtureGreen
   suffix: Green
   components:
   - type: PoweredLight
     hasLampOnSpawn: LightTubeCrystalGreen
 
 - type: entity
-  parent: AlwaysPoweredWallLight
-  id: AlwaysPoweredlightGreen
+  parent: AlwaysPoweredLightTubeFixtureFluorescent
+  id: AlwaysPoweredLightTubeFixtureGreen
   suffix: Always powered, green
   components:
   - type: PointLight
@@ -379,16 +379,16 @@
 
 ## Cyan
 - type: entity
-  parent: PoweredlightEmpty
-  id: PoweredlightCyan
+  parent: PoweredLightTubeFixtureEmpty
+  id: PoweredLightTubeFixtureCyan
   suffix: Cyan
   components:
   - type: PoweredLight
     hasLampOnSpawn: LightTubeCrystalCyan
 
 - type: entity
-  parent: AlwaysPoweredWallLight
-  id: AlwaysPoweredlightCyan
+  parent: AlwaysPoweredLightTubeFixtureFluorescent
+  id: AlwaysPoweredLightTubeFixtureCyan
   suffix: Always powered, cyan
   components:
   - type: PointLight
@@ -399,16 +399,16 @@
 
 ## Blue
 - type: entity
-  parent: PoweredlightEmpty
-  id: PoweredlightBlue
+  parent: PoweredLightTubeFixtureEmpty
+  id: PoweredLightTubeFixtureBlue
   suffix: Blue
   components:
   - type: PoweredLight
     hasLampOnSpawn: LightTubeCrystalBlue
 
 - type: entity
-  parent: AlwaysPoweredWallLight
-  id: AlwaysPoweredlightBlue
+  parent: AlwaysPoweredLightTubeFixtureFluorescent
+  id: AlwaysPoweredLightTubeFixtureBlue
   suffix: Always powered, blue
   components:
   - type: PointLight
@@ -419,16 +419,16 @@
 
 ## Black
 - type: entity
-  parent: PoweredlightEmpty
-  id: PoweredlightBlack
+  parent: PoweredLightTubeFixtureEmpty
+  id: PoweredLightTubeFixtureBlack
   suffix: Black
   components:
   - type: PoweredLight
     hasLampOnSpawn: LightTubeCrystalBlack
 
 - type: entity
-  parent: AlwaysPoweredWallLight
-  id: AlwaysPoweredlightBlack
+  parent: AlwaysPoweredLightTubeFixtureFluorescent
+  id: AlwaysPoweredLightTubeFixtureBlack
   suffix: Always powered, black
   components:
   - type: PointLight
@@ -499,7 +499,7 @@
 ## Empty
 - type: entity
   parent: [ BasePoweredLight , BaseLightBulbFixture ]
-  id: PoweredSmallLightEmpty
+  id: PoweredLightBulbFixtureEmpty
   suffix: Empty
   components:
   - type: PoweredLight
@@ -507,8 +507,8 @@
 
 ## Incandescent
 - type: entity
-  parent: PoweredSmallLightEmpty
-  id: PoweredSmallLight
+  parent: PoweredLightBulbFixtureEmpty
+  id: PoweredLightBulbFixtureIncandescent
   suffix: Incandescent
   components:
   - type: PoweredLight
@@ -516,7 +516,7 @@
 
 - type: entity
   parent: BaseLightBulbFixture
-  id: SmallLight
+  id: AlwaysPoweredLightBulbFixtureIncandescent
   suffix: Always powered, incandescent
   components:
   - type: PointLight
@@ -527,8 +527,8 @@
 
 ## LED
 - type: entity
-  parent: PoweredSmallLightEmpty
-  id: PoweredLEDSmallLight
+  parent: PoweredLightBulbFixtureEmpty
+  id: PoweredLightBulbFixtureLED
   suffix: LED
   components:
   - type: PoweredLight
@@ -541,8 +541,8 @@
 
 # Dim
 - type: entity
-  parent: PoweredSmallLightEmpty
-  id: PoweredDimSmallLight
+  parent: PoweredLightBulbFixtureEmpty
+  id: PoweredLightBulbFixtureDim
   suffix: Dim
   components:
   - type: PoweredLight
@@ -555,8 +555,8 @@
 
 # Warm
 - type: entity
-  parent: PoweredSmallLightEmpty
-  id: PoweredWarmSmallLight
+  parent: PoweredLightBulbFixtureEmpty
+  id: PoweredLightBulbFixtureWarm
   suffix: Warm
   components:
   - type: PoweredLight

@@ -56,7 +56,7 @@
 ## Empty
 - type: entity
   parent: [ BasePoweredLight , BaseStrobeLightFixture ]
-  id: PoweredStrobeLightEmpty
+  id: PoweredStrobeLightFixtureEmpty
   suffix: Default, empty
   description: UH?! Sorry, all I can hear is WEE-OOO-WEE-OOO!
   components:
@@ -66,8 +66,8 @@
 
 ## Incandescent
 - type: entity
-  parent: PoweredStrobeLightEmpty
-  id: PoweredStrobeLight
+  parent: PoweredStrobeLightFixtureEmpty
+  id: PoweredStrobeLightFixtureIncandescent
   suffix: Default, incandescent
   components:
   - type: PoweredLight
@@ -75,7 +75,7 @@
 
 - type: entity
   parent: BaseStrobeLightFixture
-  id: AlwaysPoweredStrobeLight
+  id: AlwaysPoweredStrobeLightFixtureIncandescent
   suffix: Default, always powered, incandescent
   description: A strobe light fixture that WEE-OOO-WEE-OOOs without consuming power.
   components:
@@ -101,7 +101,7 @@
 ## Empty
 - type: entity
   parent: [ BasePoweredLight , BaseStrobeLightPoliceFixture ]
-  id: PoweredStrobeLightPoliceEmpty
+  id: PoweredStrobeLightPoliceFixtureEmpty
   suffix: Police, empty
   components:
   - type: PoweredLight
@@ -110,7 +110,7 @@
 
 ## Incandescent
 - type: entity
-  parent: PoweredStrobeLightPoliceEmpty
+  parent: PoweredStrobeLightPoliceFixtureEmpty
   id: PoweredStrobeLightPolice
   suffix: Police, incandescent
   components:
@@ -119,7 +119,7 @@
 
 - type: entity
   parent: BaseStrobeLightPoliceFixture
-  id: AlwaysPoweredStrobeLightPolice
+  id: AlwaysPoweredStrobeLightPoliceFixture
   suffix: Police, always powered, incandescent
   description: Woop, woop! That's the sound of da police! Woop, woop! That's the sound of the beast!
   components:
@@ -145,7 +145,7 @@
 ## Empty
 - type: entity
   parent: [ BasePoweredLight , BaseStrobeLightSirenFixture ]
-  id: PoweredStrobeLightSirenEmpty
+  id: PoweredStrobeLightSirenFixtureEmpty
   suffix: Siren, empty
   components:
   - type: PoweredLight
@@ -154,8 +154,8 @@
 
 ## Incandescent
 - type: entity
-  parent: PoweredStrobeLightSirenEmpty
-  id: PoweredStrobeLightSiren
+  parent: PoweredStrobeLightSirenFixtureEmpty
+  id: PoweredStrobeLightSirenFixtureIncandescent
   suffix: Siren, incandescent
   components:
   - type: PoweredLight
@@ -163,7 +163,7 @@
 
 - type: entity
   parent: BaseStrobeLightSirenFixture
-  id: AlwaysPoweredStrobeLightSiren
+  id: AlwaysPoweredStrobeLightSirenFixtureIncandescent
   suffix: Siren, always powered, incandescent
   components:
   - type: PointLight
@@ -188,7 +188,7 @@
 ## Empty
 - type: entity
   parent: [ BasePoweredLight , BaseStrobeLightEpsilonFixture ]
-  id: PoweredStrobeLightEpsilonEmpty
+  id: PoweredStrobeLightEpsilonFixtureEmpty
   suffix: Epsilon, empty
   components:
   - type: PoweredLight
@@ -197,8 +197,8 @@
 
 ## Incandescent
 - type: entity
-  parent: PoweredStrobeLightEpsilonEmpty
-  id: PoweredStrobeLightEpsilon
+  parent: PoweredStrobeLightEpsilonFixtureEmpty
+  id: PoweredStrobeLightEpsilonFixtureIncandescent
   suffix: Epsilon, incandescent
   components:
   - type: PoweredLight
@@ -206,7 +206,7 @@
 
 - type: entity
   parent: BaseStrobeLightEpsilonFixture
-  id: AlwaysPoweredStrobeLightEpsilon
+  id: AlwaysPoweredStrobeLightEpsilonFixtureIncandescent
   suffix: Epsilon, always powered, incandescent
   components:
   - type: PointLight
