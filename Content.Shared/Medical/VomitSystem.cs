@@ -102,6 +102,9 @@ public sealed class VomitSystem : EntitySystem
         var ev = new CanVomitEvent(solution, force);
         RaiseLocalEvent(uid, ref ev);
 
+        if (!ev.Handled)
+            return;
+
         // Adds a tiny amount of the chem stream from earlier along with vomit
         if (TryComp<BloodstreamComponent>(uid, out var bloodStream))
         {
