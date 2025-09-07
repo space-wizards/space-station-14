@@ -141,7 +141,6 @@ thaven-mood-speech-restriction-name = {$speechType ->
   [Alliterate] Always Alliterate At All Apportunities
   [ThirdPerson] Third Person
   [TitleCase] Title Case
-  [GreySpeak] Grayspeak Is The Height Of Fashion
 }
 thaven-mood-speech-restriction-desc = {$speechType ->
   *[FullNameAndTitle] Thaven refuse to acknowledge anyone who fails to refer to them using their full name, and expect everyone else to do the same.
@@ -160,5 +159,4 @@ thaven-mood-speech-restriction-desc = {$speechType ->
   [Alliterate] Alliteration is virtuous. Endeavor to use it wherever possible.
   [ThirdPerson] The third person point-of-view is the only respectful manner of speaking.
   [TitleCase] You Are Miraculously Capable Of Pronouncing Capital Letters, And Believe It Is Important That You Do So.
-  [GreySpeak] You should endeavor to speak like Grays to the best of your ability.
 }

@@ -170,7 +170,6 @@
     - Alliterate
     - ThirdPerson
     - TitleCase
-    - GreySpeak
 
 - type: dataset
   id: ThavenWords
