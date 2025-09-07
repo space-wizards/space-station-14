@@ -10823,17 +10823,6 @@ entities:
     - type: Transform
       pos: -26.5,24.5
       parent: 30
-  - uid: 840
-    components:
-    - type: Transform
-      pos: -50.5,62.5
-      parent: 30
-    - type: DeviceLinkSink
-      invokeCounter: 1
-    - type: DeviceLinkSource
-      linkedPorts:
-        2312:
-        - DoorStatus: DoorBolt
   - uid: 1006
     components:
     - type: Transform
