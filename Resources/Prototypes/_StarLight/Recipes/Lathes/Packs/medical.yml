@@ -52,3 +52,12 @@
   - EyeImplantWelding
   - EyeImplantMedical
   - EyeImplantSecurity
+
+- type: latheRecipePack
+  id: StarlightBudgetCyberOrgansDynamic
+  recipes:
+  - BudgetCyberEyes
+  - BudgetCyberTongue
+  - BudgetCyberLiver
+  - BudgetCyberStomach
+  - BudgetCyberKidneys

@@ -47,8 +47,6 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
-        with:
-          ref: ${{ github.ref }}
 
       - name: Get Pull Request Number
         id: get_pr
@@ -63,6 +61,12 @@ jobs:
           fi
           echo "PR Number: $PR_NUMBER"
           echo "::set-output name=PR_NUMBER::$PR_NUMBER"
+        
+      #re checkout
+      - name: Re-checkout repository
+        uses: actions/checkout@v3
+        with:
+          ref: ${{ github.ref }}
           
       - name: Set up Python
         if: steps.get_pr.outputs.PR_NUMBER != ''
