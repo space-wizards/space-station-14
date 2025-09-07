@@ -1,4 +1,3 @@
-using System.Linq;
 using System.Numerics;
 using Content.Shared.CombatMode;
 using Content.Shared.Hands;
