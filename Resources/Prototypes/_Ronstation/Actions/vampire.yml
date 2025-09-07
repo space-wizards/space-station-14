@@ -5,8 +5,8 @@
   description: Drain blood from someone to extract vitae
   components:
   - type: Action
-    icon: { sprite : Interface/Actions/devour.rsi, state: icon }
-    iconOn: { sprite : Interface/Actions/devour.rsi, state: icon-on }
+    icon: { sprite : _Ronstation/Interface/Actions/feed.rsi, state: icon }
+    iconOn: { sprite : _Ronstation/Interface/Actions/feed.rsi, state: icon-on }
     itemIconStyle: BigAction
     priority: 1
   - type: TargetAction

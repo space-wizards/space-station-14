@@ -1,8 +1,8 @@
 - type: alert
   id: Vitae
   icons:
-  - sprite: /Textures/Interface/Alerts/essence_counter.rsi
-    state: essence0
+    - sprite: Mobs/Species/Human/organs.rsi
+      state: heart-on
   alertViewEntity: AlertVitaeSpriteView
   name: alerts-vampire-vitae-name
   description: alerts-vampire-vitae-desc
