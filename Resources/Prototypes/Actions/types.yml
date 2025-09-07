@@ -376,6 +376,7 @@
     iconOn: { sprite: Interface/Actions/actions_fakemindshield.rsi, state: icon-on }
     itemIconStyle: NoItem
     useDelay: 1
+    raiseOnUser: true
   - type: InstantAction
     event: !type:FakeMindShieldToggleEvent
   - type: Tag
@@ -395,6 +396,17 @@
     useDelay: 1
     itemIconStyle: BigAction
 
+#  TODO: Add back once we have animated tails again. Were removed due to the sprite rework, causing all of them to not fit anymore.
+# - type: entity
+#   parent: ActionToggleWagging
+#   id: ActionToggleWaggingVulpkanin
+#   components:
+#   - type: Action
+#     icon: { sprite: Mobs/Customization/Vulpkanin/tail_markings.rsi, state: tail-wag-icon }
+#     iconOn: { sprite: Mobs/Customization/Vulpkanin/tail_markings.rsi, state: tail-wag-icon }
+#     itemIconStyle: NoItem
+#     useDelay: 1 # Prevents Emote Spam
+
 - type: entity
   parent: BaseAction
   id: ActionGravityJump
@@ -403,6 +415,20 @@
   components:
   - type: Action
     useDelay: 8
+    icon:
+      sprite: Interface/Actions/jump.rsi
+      state: icon
+  - type: InstantAction
+    event: !type:GravityJumpEvent {}
+
+- type: entity
+  parent: BaseAction
+  id: ActionVulpkaninGravityJump
+  name: Leap
+  description: Use your agile legs to leap a short distance. Be careful not to bump into anything!
+  components:
+  - type: Action
+    useDelay: 12
     icon:
       sprite: Interface/Actions/jump.rsi
       state: icon

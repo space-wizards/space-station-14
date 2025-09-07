@@ -317,6 +317,10 @@
     - state: base
       map: ["enum.GunVisualLayers.Base"]
   - type: Item
+    shape:
+    - 0,0,1,0
+    - 0,1,0,1
+    storedOffset: -2,-7
     sprite: Objects/Fun/capgun.rsi
   - type: Tag
     tags:
@@ -773,7 +777,7 @@
   parent: BaseItem
   id: CardSword
   name: cardboard sword
-  description: A cardboard tube thats been fashioned into a sword.
+  description: A cardboard tube fashioned into the shape of a sword.
   components:
   - type: Sprite
     sprite: Objects/Fun/card_sword.rsi
@@ -911,6 +915,7 @@
     delay: 0.8
   - type: Slippery
     staminaDamage: 0
+    frictionStatusTime: 0
     slipData:
       stunTime: 0
       knockdownTime: 0
