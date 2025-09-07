@@ -3,12 +3,11 @@
   start: start
   graph:
   - node: start
-    actions:
-    - !type:DeleteEntity { }
     edges:
-    - to: turnstile
+    - to: assembly
       completed:
-      - !type:SnapToGrid
+      - !type:SetAnchor
+        value: false
       steps:
       - material: MetalRod
         amount: 4
@@ -17,17 +16,191 @@
         amount: 1
         doAfter: 2
 
-  - node: turnstile
-    entity: Turnstile
+  - node: assembly
+    entity: TurnstileAssembly
+    actions:
+    - !type:SnapToGrid {}
+    - !type:SetAnchor {}
+    - !type:AppearanceChange
     edges:
+    - to: wired
+      conditions:
+      - !type:EntityAnchored {}
+      steps:
+      - material: Cable
+        amount: 5
+        doAfter: 2.5
     - to: start
+      conditions:
+      - !type:EntityAnchored
+        anchored: false
       completed:
       - !type:SpawnPrototype
         prototype: PartRodMetal1
         amount: 4
-      - !type:DeleteEntity
+      - !type:SpawnPrototype
+        prototype: SheetSteel1
+        amount: 1
+      - !type:DeleteEntity {}
       steps:
       - tool: Welding
-        doAfter: 4.0
+        doAfter: 3
+
+  - node: wired
+    entity: TurnstileAssembly
+    actions:
+    - !type:AppearanceChange
+    edges:
+    - to: electronics
+      conditions:
+      - !type:EntityAnchored {}
+      steps:
+      - component: DoorElectronics
+        store: board
+        name: construction-graph-component-door-electronics-circuit-board
+        icon:
+          sprite: "Objects/Misc/module.rsi"
+          state: "door_electronics"
+        doAfter: 3
+    - to: assembly
+      completed:
+      - !type:SpawnPrototype
+        prototype: CableApcStack1
+        amount: 5
+      steps:
       - tool: Cutting
-        doAfter: 2.0
+        doAfter: 2.5
+
+  - node: electronics
+    entity: TurnstileAssembly
+    actions:
+    - !type:AppearanceChange
+    edges:
+    - to: turnstile
+      conditions:
+      - !type:EntityAnchored {}
+      steps:
+      - tool: Screwing
+        doAfter: 2.5
+    - to: wired
+      conditions:
+      - !type:EntityAnchored {}
+      completed:
+      - !type:EmptyAllContainers
+        pickup: true
+        emptyAtUser: true
+      steps:
+      - tool: Prying
+        doAfter: 5
+
+  - node: turnstile
+    entity: Turnstile
+    edges:
+    - to: wired
+      conditions:
+      - !type:EntityAnchored {}
+      - !type:DoorBolted
+        value: false
+      - !type:WirePanel {}
+      - !type:AllWiresCut
+      completed:
+      - !type:EmptyAllContainers
+        pickup: true
+        emptyAtUser: true
+      steps:
+      - tool: Prying
+        doAfter: 5
+
+    - to: turnstileShocked
+      conditions:
+      - !type:WirePanel {}
+      steps:
+      - material: MetalRod
+        amount: 2
+        doAfter: 1
+    - to: turnstileMedSecurityUnfinished
+      conditions:
+      - !type:WirePanel {}
+      steps:
+      - material: Steel
+        amount: 2
+        doAfter: 2
+
+  - node: turnstileShocked
+    actions:
+    - !type:SetWiresPanelSecurity
+      examine: wires-panel-component-on-examine-security-level5
+      wiresAccessible: false
+    edges:
+    - to: turnstile
+      completed:
+      - !type:AttemptElectrocute
+      - !type:GivePrototype
+        prototype: PartRodMetal1
+        amount: 2
+      conditions:
+      - !type:WirePanel {}
+      steps:
+      - tool: Cutting
+        doAfter: 0.5
+
+  - node: turnstileMedSecurityUnfinished
+    actions:
+    - !type:SetWiresPanelSecurity
+      examine: wires-panel-component-on-examine-security-level1
+      wiresAccessible: false
+    edges:
+    - to: turnstile
+      completed:
+      - !type:GivePrototype
+        prototype: SheetSteel1
+        amount: 2
+      conditions:
+      - !type:WirePanel {}
+      steps:
+      - tool: Prying
+        doAfter: 4
+    - to: turnstileMedSecurity
+      conditions:
+      - !type:WirePanel {}
+      steps:
+      - tool: Welding
+        doAfter: 3
+
+  - node: turnstileMedSecurity
+    actions:
+    - !type:SetWiresPanelSecurity
+      examine: wires-panel-component-on-examine-security-level2
+      wiresAccessible: false
+    edges:
+    - to: turnstileMedSecurityUnfinished
+      conditions:
+      - !type:WirePanel {}
+      steps:
+      - tool: Welding
+        doAfter: 10
+    - to: turnstileMedSecurityShocked
+      conditions:
+      - !type:WirePanel { }
+      steps:
+      - material: MetalRod
+        amount: 2
+        doAfter: 1
+
+  - node: turnstileMedSecurityShocked
+    actions:
+    - !type:SetWiresPanelSecurity
+      examine: wires-panel-component-on-examine-security-level5
+      wiresAccessible: false
+    edges:
+    - to: turnstileMedSecurity
+      completed:
+      - !type:AttemptElectrocute
+      - !type:GivePrototype
+        prototype: PartRodMetal1
+        amount: 2
+      conditions:
+      - !type:WirePanel {}
+      steps:
+      - tool: Cutting
+        doAfter: 0.5

@@ -25,4 +25,4 @@
     sprite: Objects/Weapons/Melee/armblade.rsi
   - type: Prying
     speedModifier: 1.5 # Jaws of life speed
-    pryPowered: true
+    strength: Powered
