@@ -94,7 +94,6 @@ public abstract partial class SharedMechSystem : EntitySystem
         SubscribeLocalEvent<MechPilotComponent, GetUsedEntityEvent>(OnPilotGetUsedEntity);
         SubscribeLocalEvent<MechPilotComponent, AccessibleOverrideEvent>(OnPilotAccessible);
         SubscribeLocalEvent<MechPilotComponent, GetShootingEntityEvent>(OnGetShootingEntity);
-        SubscribeLocalEvent<MechPilotComponent, GetProjectileShooterEvent>(OnGetProjectileShooter);
 
         InitializeRelay();
     }
@@ -787,16 +786,6 @@ public abstract partial class SharedMechSystem : EntitySystem
 
         // Use the mech entity for shooting coordinates and physics instead of the pilot
         args.ShootingEntity = component.Mech;
-        args.Handled = true;
-    }
-
-    private void OnGetProjectileShooter(EntityUid uid, MechPilotComponent component, ref GetProjectileShooterEvent args)
-    {
-        if (args.Handled)
-            return;
-
-        // Use the mech entity as the shooter for projectiles to prevent self-damage
-        args.ProjectileShooter = component.Mech;
         args.Handled = true;
     }
     #endregion
