@@ -557,7 +557,11 @@
     delay: 2.5
     injectOnly: false
     # start of modifications
-    maxTransferAmount: 25 # Ronstation edit - Bluespace syringes are still pretty whatever, but its something
+    transferAmounts:
+    - 5
+    - 10
+    - 25 # Ronstation edit - Bluespace syringes are still pretty whatever, but its something
+    currentTransferAmount: 25 # Ronstation edit - Bluespace syringes are still pretty whatever, but its something
     # end of modifications
   - type: SolutionContainerVisuals
     maxFillLevels: 2
