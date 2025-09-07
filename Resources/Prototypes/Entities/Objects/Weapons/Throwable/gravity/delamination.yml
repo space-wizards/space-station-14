@@ -5,7 +5,8 @@
   components:
   - type: Sprite
     sprite: Objects/Weapons/Grenades/GravitationalGrenades/emfield.rsi
-    #emfield-animation
+    layers:
+    - state: icon
   - type: TriggerOnSpawn
     keyOut: trigger
   - type: TimerTrigger
@@ -30,9 +31,9 @@
       path: /Audio/Effects/Grenades/Supermatter/supermatter.loop.ogg # 1.6
   - type: GravityWell
     maxRange: 15
-    baseRadialAcceleration: 5
-    baseTangentialAcceleration: .5
-    gravPulsePeriod: 0.03
+    baseRadialAcceleration: 35
+    baseTangentialAcceleration: 1
+    gravPulsePeriod: 0.1
   - type: SingularityDistortion
     intensity: 150
     falloffPower: 1.5
@@ -100,7 +101,7 @@
     sound:
       path: /Audio/Effects/Grenades/Supermatter/whitehole.loop.ogg #1.617
   - type: GravityWell
-    baseRadialAcceleration: -10
+    baseRadialAcceleration: -40
     baseTangentialAcceleration: -1
   - type: SingularityDistortion
     intensity: -150

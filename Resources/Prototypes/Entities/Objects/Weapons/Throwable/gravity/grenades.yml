@@ -29,28 +29,37 @@
       params:
         volume: -5
   - type: EmitSoundOnTrigger
+    positional: true
     keysIn:
     - timer
     sound:
       path: /Audio/Effects/Grenades/Supermatter/supermatter.start.ogg #0.804
       params:
         volume: 5
-  - type: DeleteOnTrigger
-    keysIn:
-    - stageTwo
-  - type: AnchorOnTrigger
-    keysIn:
-    - timer
+  # - type: AnchorOnTrigger
+  #   keysIn:
+  #   - timer
   - type: TwoStageTrigger
     keysIn:
     - timer
-    triggerDelay: 0.8
+    triggerDelay: 0.4
     keyOut: stageTwo
   - type: SpawnOnTrigger
-    proto: SupermatterDelamination
     keysIn:
     - stageTwo
-
+    proto: SupermatterDelamination
+  - type: DeleteOnTrigger
+    keysIn:
+    - stageTwo
+  # - type: Explosive
+  #   explosionType: Default
+  #   totalIntensity: 1
+  #   intensitySlope: 1
+  #   maxIntensity: 1
+  #   tileBreakScale: 0
+  # - type: ExplodeOnTrigger
+  #   keysIn:
+  #   - stageTwo
 
 - type: entity
   parent: [ BaseGravGrenade, BaseSyndicateContraband ]
@@ -83,9 +92,12 @@
   - type: Sprite
     sprite: Objects/Weapons/Grenades/GravitationalGrenades/whitehole.rsi
   - type: EmitSoundOnTrigger
+    positional: true
     sound:
       path: /Audio/Effects/Grenades/Supermatter/whitehole.start.ogg
       params:
         volume: 5
   - type: SpawnOnTrigger
     proto: WhiteholeDelamination
+  - type: TwoStageTrigger
+    triggerDelay: 0.8
