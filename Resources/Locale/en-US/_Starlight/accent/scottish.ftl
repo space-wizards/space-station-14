@@ -311,4 +311,4 @@ accent-scottish-replaced-104 = fuck
 accent-scottish-replacement-104 = sod
 
 accent-scottish-replaced-105 = fucking
-accent-scottish-replacement-105 = sodding
+accent-scottish-replacement-105 = soddin'
