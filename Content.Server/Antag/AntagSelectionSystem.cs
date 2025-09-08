@@ -347,7 +347,7 @@ public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelection
     {
         _adminLogger.Add(LogType.AntagSelection, $"Start trying to make {session} become the antagonist: {ToPrettyString(ent)}");
 
-        if (checkPref && !HasPrimaryAntagPreference(session, def))
+        if (checkPref && !ValidAntagPreference(session, def.PrefRoles))
             return false;
 
         if (!IsSessionValid(ent, session, def) || !IsEntityValid(session?.AttachedEntity, def))
@@ -500,26 +500,12 @@ public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelection
             if (ent.Comp.PreSelectedSessions.TryGetValue(def, out var preSelected) && preSelected.Contains(session))
                 continue;
 
-            var blocked = false;
-            var fallbackBlocked = false;
-
-            // Check for role bans and playtime requirements
-            // These are not in IsSessionValid so that we can have a Preferred role ban not block a Fallback role
-
-            if (_ban.IsRoleBanned(session, def.PrefRoles)
-                || !_playTime.IsAllowed(session, def.PrefRoles))
-                blocked = true;
-
-            if (_ban.IsRoleBanned(session, def.FallbackRoles)
-                || !_playTime.IsAllowed(session, def.FallbackRoles))
-                fallbackBlocked = true;
-
             // Add player to the appropriate antag pool
-            if (HasPrimaryAntagPreference(session, def) && !blocked)
+            if (ValidAntagPreference(session, def.PrefRoles))
             {
                 preferredList.Add(session);
             }
-            else if (HasFallbackAntagPreference(session, def) && !fallbackBlocked)
+            else if (ValidAntagPreference(session, def.FallbackRoles))
             {
                 fallbackList.Add(session);
             }
