@@ -63,8 +63,6 @@
   - CentralCommandOfficial
   - CBURN
   - ERTLeader
- # - ERTChaplain # Removed
- # - ERTJanitor # Removed
   - ERTMedical
   - ERTSecurity
   - ERTEngineer
@@ -78,8 +76,6 @@
   description: department-Engineering-description
   color: "#EFB341"
   roles:
- # - AtmosphericTechnician # Removed
- # - ChiefEngineer # Moved to Command
   - StationEngineer
   - TechnicalAssistant
 
@@ -89,8 +85,6 @@
   description: department-Medical-description
   color: "#52B4E9"
   roles:
-#  - Chemist # Removed
-#  - ChiefMedicalOfficer # Moved to Command
   - MedicalDoctor
   - MedicalIntern
   - Psychologist
@@ -103,7 +97,6 @@
   color: "#DE3A3A"
   weight: 20
   roles:
-  - HeadOfSecurity
   - SecurityCadet
   - SecurityOfficer
   - Detective
@@ -115,7 +108,6 @@
   description: department-Science-description
   color: "#D381C9"
   roles:
-  - ResearchDirector
   - Scientist
   - ResearchAssistant
 
