@@ -104,6 +104,36 @@
       path: /Audio/Weapons/Guns/MagIn/sfrifle_magin.ogg
 
 - type: entity
+  name: integrated hydra
+  parent: BaseWeaponBattery
+  id: BorgLauncherHydra
+  description: PLOOP... FSSSSSS... Automatically fabricates cleanades over time.
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Launchers/hydra_launcher.rsi
+    layers:
+    - state: icon
+  - type: Gun
+    fireRate: 1
+    selectedMode: SemiAuto
+    availableModes:
+    - SemiAuto
+    soundGunshot:
+      path: /Audio/Weapons/Guns/Gunshots/grenade_launcher.ogg
+  - type: ProjectileBatteryAmmoProvider
+    proto: GrenadeCleanade
+    fireCost: 30
+  - type: Battery
+    maxCharge: 90
+    startingCharge: 90
+  - type: BatterySelfRecharger
+    autoRecharge: true
+    autoRechargeRate: 1
+  - type: AmmoCounter
+  - type: Item
+    size: Normal
+
+- type: entity
   name: RPG-7
   parent: [ BaseWeaponLauncher, BaseMajorContraband ]
   id: WeaponLauncherRocket

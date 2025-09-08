@@ -774,6 +774,7 @@
     - item: AdvMopItem
     - item: BorgMegaSprayBottle
     - item: HoloprojectorBorg
+    - item: BorgLauncherHydra
     - item: BorgDropper
     - item: Beaker
       hand:
