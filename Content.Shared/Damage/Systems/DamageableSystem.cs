@@ -251,7 +251,7 @@ public sealed class DamageableSystem : EntitySystem
         if (damage.Empty)
             return false;
 
-        var before = new BeforeDamageChangedEvent();
+        var before = new BeforeDamageChangedEvent(damage, origin);
         RaiseLocalEvent(ent, ref before);
 
         if (before.Cancelled)
@@ -271,7 +271,7 @@ public sealed class DamageableSystem : EntitySystem
                 damage = DamageSpecifier.ApplyModifierSet(damage, modifierSet);
             }
 
-            var ev = new DamageModifyEvent(damage);
+            var ev = new DamageModifyEvent(damage, origin);
             RaiseLocalEvent(ent, ev);
             damage = ev.Damage;
 
@@ -483,7 +483,7 @@ public sealed class DamageableSystem : EntitySystem
 ///     Raised before damage is done, so stuff can cancel it if necessary.
 /// </summary>
 [ByRefEvent]
-public record struct BeforeDamageChangedEvent(bool Cancelled = false);
+public record struct BeforeDamageChangedEvent(DamageSpecifier Damage, EntityUid? Origin = null, bool Cancelled = false);
 
 /// <summary>
 ///     Raised on an entity when damage is about to be dealt,
@@ -492,7 +492,7 @@ public record struct BeforeDamageChangedEvent(bool Cancelled = false);
 ///
 ///     For example, armor.
 /// </summary>
-public sealed class DamageModifyEvent(DamageSpecifier damage) : EntityEventArgs, IInventoryRelayEvent
+public sealed class DamageModifyEvent(DamageSpecifier damage, EntityUid? origin = null) : EntityEventArgs, IInventoryRelayEvent
 {
     // Whenever locational damage is a thing, this should just check only that bit of armour.
     public SlotFlags TargetSlots => ~SlotFlags.POCKET;
