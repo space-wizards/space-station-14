@@ -302,7 +302,8 @@ public partial class SharedBodySystem
             return gibs;
 
         var parts = GetBodyChildren(bodyId, body).ToArray();
-        var allInventoryItems = _inventory.TryUnequipAll(bodyId, launchGibs, launchGibs);
+        var allInventoryItems =
+            _inventory.TryUnequipAll(bodyId, launchGibs, launchGibs, splatModifier, splatDirection, splatCone);
 
         gibs.EnsureCapacity(parts.Length + allInventoryItems.Count);
         gibs.UnionWith(allInventoryItems);
@@ -331,14 +332,6 @@ public partial class SharedBodySystem
         }
 
         var bodyTransform = Transform(bodyId);
-        if (TryComp<InventoryComponent>(bodyId, out var inventory))
-        {
-            foreach (var item in _inventory.GetHandOrInventoryEntities(bodyId))
-            {
-                SharedTransform.DropNextTo(item, (bodyId, bodyTransform));
-                gibs.Add(item);
-            }
-        }
         _audioSystem.PlayPredicted(gibSoundOverride, bodyTransform.Coordinates, null);
         return gibs;
     }
