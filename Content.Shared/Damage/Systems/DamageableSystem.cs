@@ -387,6 +387,13 @@ public sealed class DamageableSystem : EntitySystem
         Dirty(ent);
     }
 
+    /// <summary>
+    ///     If the damage in a DamageableComponent was changed, this function should be called.
+    /// </summary>
+    /// <remarks>
+    ///     This updates cached damage information, flags the component as dirty, and raises a damage changed event.
+    ///     The damage changed event is used by other systems, such as damage thresholds.
+    /// </remarks>
     private void DamageChanged(
         Entity<DamageableComponent> ent,
         DamageSpecifier? damageDelta = null,
