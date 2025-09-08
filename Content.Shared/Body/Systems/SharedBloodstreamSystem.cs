@@ -1,5 +1,4 @@
 using Content.Shared.Alert;
-using Content.Shared.Bed.Components;
 using Content.Shared.Body.Components;
 using Content.Shared.Body.Events;
 using Content.Shared.Chemistry.Components;

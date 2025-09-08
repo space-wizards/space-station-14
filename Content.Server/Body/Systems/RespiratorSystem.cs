@@ -5,7 +5,6 @@ using Content.Server.Chat.Systems;
 using Content.Server.EntityEffects;
 using Content.Shared.Alert;
 using Content.Shared.Atmos;
-using Content.Shared.Bed.Components;
 using Content.Shared.Body.Components;
 using Content.Shared.Body.Events;
 using Content.Shared.Body.Prototypes;
@@ -365,9 +364,7 @@ public sealed class RespiratorSystem : EntitySystem
         if (ent.Comp.SuffocationCycles == 2)
             _adminLogger.Add(LogType.Asphyxiation, $"{ToPrettyString(ent):entity} started suffocating");
 
-        var damage = ent.Comp.Damage;
-
-        var asphyxEv = new SuffocationDamageEvent(damage);
+        var asphyxEv = new SuffocationDamageEvent(ent.Comp.Damage);
         RaiseLocalEvent(ent, ref asphyxEv);
 
         _damageableSys.TryChangeDamage(ent, asphyxEv.AsphyxationAmount, interruptsDoAfters: false);
