@@ -54,6 +54,7 @@ public abstract partial class SharedStunSystem
         SubscribeLocalEvent<KnockedDownComponent, BuckleAttemptEvent>(OnBuckleAttempt);
         SubscribeLocalEvent<KnockedDownComponent, StandAttemptEvent>(OnStandAttempt);
         SubscribeLocalEvent<KnockedDownComponent, BuckledEvent>(OnBuckle);
+        SubscribeLocalEvent<KnockedDownComponent, UnbuckledEvent>(OnCrawlUnbuckle);
 
         // Updating movement a friction
         SubscribeLocalEvent<KnockedDownComponent, RefreshMovementSpeedModifiersEvent>(OnRefreshKnockedSpeed);
@@ -543,6 +544,14 @@ public abstract partial class SharedStunSystem
     {
         RemComp<KnockedDownComponent>(entity);
     }
+
+    private void OnCrawlUnbuckle(Entity<KnockedDownComponent> entity, ref UnbuckledEvent args)
+    {
+        if (_standingState.Down(entity));
+            RemComp<KnockedDownComponent>(entity);
+    }
+
+
 
     #endregion
 

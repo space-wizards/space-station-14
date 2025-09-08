@@ -42,8 +42,6 @@ public abstract partial class SharedBuckleSystem
         SubscribeLocalEvent<BuckleComponent, BeingPulledAttemptEvent>(OnBeingPulledAttempt);
         SubscribeLocalEvent<BuckleComponent, PullStartedMessage>(OnPullStarted);
         SubscribeLocalEvent<BuckleComponent, UnbuckleAlertEvent>(OnUnbuckleAlert);
-        SubscribeLocalEvent<BuckleComponent, KnockDownAttemptEvent>(OnCrawlAttempt);
-
 
         SubscribeLocalEvent<BuckleComponent, InsertIntoEntityStorageAttemptEvent>(OnBuckleInsertIntoEntityStorageAttempt);
         SubscribeLocalEvent<BuckleComponent, PreventCollideEvent>(OnBucklePreventCollide);
@@ -93,12 +91,6 @@ public abstract partial class SharedBuckleSystem
             return;
         args.Handled = TryUnbuckle(ent, ent, ent);
     }
-
-    private void OnCrawlAttempt(Entity<BuckleComponent> ent, ref KnockDownAttemptEvent args)
-    {
-         Unbuckle(ent!, null);
-    }
-
     #endregion
 
     #region Transform
