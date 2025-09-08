@@ -411,7 +411,7 @@ public sealed class DamageableSystem : EntitySystem
         ent.Comp.TotalDamage = ent.Comp.Damage.GetTotal();
         Dirty(ent);
 
-        if (damageDelta != null && TryComp<AppearanceComponent>(ent, out var appearance))
+        if (damageDelta != null && _appearanceQuery.TryGetComponent(ent, out var appearance))
         {
             _appearance.SetData(
                 ent,
