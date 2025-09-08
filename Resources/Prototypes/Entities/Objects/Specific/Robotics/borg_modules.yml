@@ -754,6 +754,7 @@
     - item: MopItem
     - item: BorgBucket
     - item: BorgSprayBottle
+    - item: WireBrush
     - item: HoloprojectorBorg
   - type: BorgModuleIcon
     icon: { sprite: Interface/Actions/actions_borg.rsi, state: cleaning-module }
