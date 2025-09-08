@@ -248,8 +248,11 @@
     damageProtection:
       flatReductions:
         Heat: 10 # capable of touching light bulbs and stoves without feeling pain!
-  - type: CyborgSparkEffect #starlight
-  - type: StationAIShunt #Starlight allow shunting into all borgs
+  #region Starlight
+  - type: CyborgSparkEffect
+  - type: StationAIShunt
+  - type: Crawler
+  #endregion
   # Starlight-start: Languages
   - type: LanguageKnowledge
     speaks:

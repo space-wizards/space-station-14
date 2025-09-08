@@ -486,7 +486,7 @@
     - item: Wirecutter
     - item: WelderIndustrial
     - item: Multitool
-    - item: SprayPainterRecharging #STARLIGHT
+    - item: SprayPainterBorg # Starlight
   - type: BorgModuleIcon
     icon: { sprite: Interface/Actions/actions_borg.rsi, state: tool-module }
 
@@ -628,7 +628,7 @@
     - item: WelderExperimental
     - item: Multitool
     - item: RemoteSignallerAdvanced
-    - item: SprayPainterRecharging #STARLIGHT
+    - item: SprayPainterBorg # Starlight
   - type: BorgModuleIcon
     icon: { sprite: Interface/Actions/actions_borg.rsi, state: adv-tools-module }
 
