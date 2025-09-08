@@ -67,6 +67,22 @@
       path: /Audio/_Starlight/Medical/Surgery/cautery1.ogg
     endSound:
       path: /Audio/_Starlight/Medical/Surgery/cautery2.ogg
+
+- type: entity
+  name: cautery
+  id: CauteryRipper
+  parent: Cautery
+  components:
+  - type: Sprite
+    sprite: _Starlight/Objects/Specific/Medical/surgery.rsi
+    state: cauteryripper
+  - type: SurgeryTool
+    speed: 1
+    startSound:
+      path: /Audio/_Starlight/Medical/Surgery/cautery1.ogg
+    endSound:
+      path: /Audio/_Starlight/Medical/Surgery/cautery2.ogg
+
 # Drill
 
 - type: entity
@@ -118,6 +134,19 @@
     state: drill
   - type: SurgeryTool
     speed: 0.5
+    startSound:
+      path: /Audio/_Starlight/Medical/Surgery/saw.ogg
+
+- type: entity
+  name: drill
+  id: DrillRipper
+  parent: Drill
+  components:
+  - type: Sprite
+    sprite: _Starlight/Objects/Specific/Medical/surgery.rsi
+    state: drillripper
+  - type: SurgeryTool
+    speed: 1
     startSound:
       path: /Audio/_Starlight/Medical/Surgery/saw.ogg
 
@@ -184,6 +213,21 @@
     state: scalpel
   - type: SurgeryTool
     speed: 0.2
+    startSound:
+      path: /Audio/_Starlight/Medical/Surgery/scalpel1.ogg
+    endSound:
+      path: /Audio/_Starlight/Medical/Surgery/scalpel2.ogg
+
+- type: entity
+  name: scalpel
+  id: ScalpelRipper
+  parent: Scalpel
+  components:
+  - type: Sprite
+    sprite: _Starlight/Objects/Specific/Medical/surgery.rsi
+    state: scalpelripper
+  - type: SurgeryTool
+    speed: 1
     startSound:
       path: /Audio/_Starlight/Medical/Surgery/scalpel1.ogg
     endSound:
@@ -324,6 +368,22 @@
       path: /Audio/_Starlight/Medical/Surgery/retractor2.ogg
 
 - type: entity
+  name: retractor
+  id: RetractorRipper
+  parent: Retractor
+  description: A surgical tool used to hold open incisions.
+  components:
+  - type: Sprite
+    sprite: _Starlight/Objects/Specific/Medical/surgery.rsi
+    state: retractorripper
+  - type: SurgeryTool
+    speed: 1
+    startSound:
+      path: /Audio/_Starlight/Medical/Surgery/retractor1.ogg
+    endSound:
+      path: /Audio/_Starlight/Medical/Surgery/retractor2.ogg
+
+- type: entity
   name: hemostat
   id: Hemostat
   parent: BaseScissors
@@ -376,6 +436,20 @@
     state: hemostat
   - type: SurgeryTool
     speed: 0.4
+    startSound:
+      path: /Audio/_Starlight/Medical/Surgery/hemostat1.ogg
+
+- type: entity
+  name: hemostat
+  id: HemostatRipper
+  parent: Hemostat
+  description: A surgical tool used to compress blood vessels to prevent bleeding.
+  components:
+  - type: Sprite
+    sprite: _Starlight/Objects/Specific/Medical/surgery.rsi
+    state: hemostatripper
+  - type: SurgeryTool
+    speed: 1
     startSound:
       path: /Audio/_Starlight/Medical/Surgery/hemostat1.ogg
 
@@ -444,6 +518,21 @@
     speed: 0.4
     startSound:
       path: /Audio/_Starlight/Medical/Surgery/bone_setter.ogg
+
+- type: entity
+  name: bone setter
+  id: BoneSetterRipper
+  parent: BoneSetter
+  description: A surgical tool used for setting bones. It also breaks them quite well.
+  components:
+  - type: Sprite
+    sprite: _Starlight/Objects/Specific/Medical/surgery.rsi
+    state: bonesetterripper
+  - type: SurgeryTool
+    speed: 1
+    startSound:
+      path: /Audio/_Starlight/Medical/Surgery/bone_setter.ogg
+
 # Saws
 
 - type: entity
@@ -578,6 +667,25 @@
       path: /Audio/_Starlight/Medical/Surgery/saw.ogg
     endSound:
       path: /Audio/Items/drill_hit.ogg
+
+- type: entity
+  name: circular saw
+  id: SawRipper
+  parent: SawElectric
+  description: You think you can cut anything with it.
+  components:
+  - type: Sprite
+    sprite: _Starlight/Objects/Specific/Medical/surgery.rsi
+    state: sawripper
+  - type: Tool
+    speedModifier: 1
+  - type: SurgeryTool
+    speed: 1
+    startSound:
+      path: /Audio/_Starlight/Medical/Surgery/saw.ogg
+    endSound:
+      path: /Audio/Items/drill_hit.ogg
+
 # BoneGel
 
 - type: entity
@@ -599,3 +707,17 @@
   - type: Sprite
     sprite: Objects/Specific/Medical/Surgery/bone_gel.rsi
     state: abductor
+
+- type: entity
+  name: bottle of bone gel
+  id: BoneSetterRipper
+  parent: BoneGel
+  description: A container for bone gel that often needs to be refilled from a specialized machine.
+  components:
+  - type: Sprite
+    sprite: _Starlight/Objects/Specific/Medical/surgery.rsi
+    state: bonegelripper
+  - type: SurgeryTool
+    speed: 1
+    startSound:
+      path: /Audio/_Starlight/Medical/Surgery/bone_setter.ogg
