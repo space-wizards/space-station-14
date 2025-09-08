@@ -67,7 +67,7 @@
     - WizardWand
 
 - type: entity
-  parent: BaseAction
+  parent: BaseEntitySpellAction
   id: ActionRgbLight
   components:
   - type: EntityTargetAction
@@ -75,3 +75,5 @@
     event: !type:ChangeComponentsSpellEvent
       toAdd:
       - type: RgbLightController
+  - type: Action
+    useDelay: 5
