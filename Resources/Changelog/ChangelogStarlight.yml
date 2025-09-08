@@ -13498,5 +13498,12 @@ Entries:
   id: 140800
   time: '2025-09-08T20:52:03.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/1408
+- author: walksanatora
+  changes:
+  - message: Borgs can now crawl again.
+    type: Tweak
+  id: 146200
+  time: '2025-09-08T20:52:46.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1462
 Order: -1
 
