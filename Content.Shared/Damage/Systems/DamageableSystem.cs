@@ -47,6 +47,9 @@ public sealed class DamageableSystem : EntitySystem
         SubscribeLocalEvent<DamageableComponent, OnIrradiatedEvent>(OnIrradiated);
         SubscribeLocalEvent<DamageableComponent, RejuvenateEvent>(OnRejuvenate);
 
+        _appearanceQuery = GetEntityQuery<AppearanceComponent>();
+        _damageableQuery = GetEntityQuery<DamageableComponent>();
+
         // Damage modifier CVars are updated and stored here to be queried in other systems.
         // Note that certain modifiers requires reloading the guidebook.
         Subs.CVar(
