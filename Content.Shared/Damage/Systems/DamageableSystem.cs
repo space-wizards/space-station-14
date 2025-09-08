@@ -227,7 +227,7 @@ public sealed class DamageableSystem : EntitySystem
         EntityUid? origin = null
     )
     {
-        if (!Resolve(uid, ref damageable, false))
+        if (!_damageableQuery.Resolve(uid, ref damageable, false))
             return null;
 
         return TryChangeDamage((uid, damageable), damage, ignoreResistances, interruptsDoAfters, origin)
