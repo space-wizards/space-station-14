@@ -29,8 +29,6 @@
   - type: OrganVisualization
     layer: Eyes
     prototype: CyberEyesNightVision
-  - type: RoundstartImplantable
-    cost: 5
 
 - type: entity
   id: CyberEyeThermal
@@ -47,8 +45,6 @@
   - type: OrganVisualization
     layer: Eyes
     prototype: CyberEyesThermalVision
-  - type: RoundstartImplantable
-    cost: 6
 
 - type: entity
   id: BudgetCyberEyes
