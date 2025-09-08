@@ -17,11 +17,13 @@ public sealed class StarlightInputSystem : EntitySystem
 
     private EntityQuery<ActiveNPCComponent> _activeNpcQuery;
     private EntityQuery<ActorComponent> _actorQuery;
+    private EntityQuery<MovementRelayTargetComponent> _movementRelayTargetQuery;
 
     public override void Initialize()
     {
         _activeNpcQuery = GetEntityQuery<ActiveNPCComponent>();
         _actorQuery = GetEntityQuery<ActorComponent>();
+        _movementRelayTargetQuery = GetEntityQuery<MovementRelayTargetComponent>();
 
         SubscribeLocalEvent<ActiveInputMoverComponent, MapInitEvent>(OnActiveChanged);
         SubscribeLocalEvent<ActiveInputMoverComponent, PlayerAttachedEvent>(OnActiveChanged);
@@ -29,6 +31,9 @@ public sealed class StarlightInputSystem : EntitySystem
 
         SubscribeLocalEvent<ActiveNPCComponent, MapInitEvent>(OnActiveChanged);
         SubscribeLocalEvent<ActiveNPCComponent, ComponentRemove>(OnActiveChanged);
+
+        SubscribeLocalEvent<MovementRelayTargetComponent, ComponentRemove>(OnActiveChanged);
+        SubscribeLocalEvent<MovementRelayTargetComponent, MapInitEvent>(OnActiveChanged);
 
         Subs.CVar(_config, StarlightCCVars.PhysicsActiveInputMoverEnabled, v => _activeInputMoverEnabled = v, true);
     }
@@ -49,6 +54,8 @@ public sealed class StarlightInputSystem : EntitySystem
 
     private bool ShouldBeActive(EntityUid ent)
     {
-        return _actorQuery.HasComp(ent) || _activeNpcQuery.HasComp(ent);
+        return _actorQuery.HasComp(ent) ||
+               _activeNpcQuery.HasComp(ent) ||
+               _movementRelayTargetQuery.CompOrNull(ent)?.Source != null;
     }
 }
