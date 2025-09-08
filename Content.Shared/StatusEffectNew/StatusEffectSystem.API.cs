@@ -115,7 +115,6 @@ public sealed partial class StatusEffectsSystem
             return TryAddStatusEffect(target, effectProto, out statusEffect, duration, delay);
 
         var endTime = delay == null ? duration : delay + duration;
-        Logger.Debug(endTime!.Value.ToString());
         UpdateStatusEffectTime(statusEffect.Value, endTime);
         UpdateStatusEffectDelay(statusEffect.Value, delay);
 
