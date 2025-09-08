@@ -122,6 +122,12 @@ public sealed partial class DisposalUnitComponent : Component
 [Serializable, NetSerializable]
 public record DoInsertDisposalUnitEvent(NetEntity? User, NetEntity ToInsert, NetEntity Unit);
 
+/// <summary>
+/// Event raised on entities that are entering or exiting disposals.
+/// </summary>
+[ByRefEvent]
+public record DisposalSystemTransitionEvent;
+
 [Serializable, NetSerializable]
 public sealed partial class DisposalDoAfterEvent : SimpleDoAfterEvent;
 
@@ -186,13 +192,16 @@ public enum DisposalUnitUiButton : byte
 [Serializable, NetSerializable]
 public enum DisposalUnitVisualLayers : byte
 {
+    Unit,
+    OverlayCharge,
+    OverlayFull,
+    Handle,
     Unanchored,
     Base,
     BaseCharging,
     OverlayFlush,
     OverlayCharging,
     OverlayReady,
-    OverlayFull,
     OverlayEngaged
 }
 

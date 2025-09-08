@@ -31,7 +31,6 @@ public abstract partial class SharedDisposalTubeSystem : EntitySystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<DisposalTubeComponent, ComponentInit>(OnComponentInit);
         SubscribeLocalEvent<DisposalTubeComponent, ComponentRemove>(OnComponentRemove);
 
         SubscribeLocalEvent<DisposalTubeComponent, AnchorStateChangedEvent>(OnAnchorChange);
@@ -80,7 +79,7 @@ public abstract partial class SharedDisposalTubeSystem : EntitySystem
             tagger.Tag = msg.Tag.Trim();
             Dirty(uid, tagger);
 
-            _audioSystem.PlayPvs(tagger.ClickSound, uid, AudioParams.Default.WithVolume(-2f));
+            _audioSystem.PlayPredicted(tagger.ClickSound, uid, msg.Actor, AudioParams.Default.WithVolume(-2f));
         }
     }
 
@@ -113,13 +112,8 @@ public abstract partial class SharedDisposalTubeSystem : EntitySystem
 
             Dirty(uid, router);
 
-            _audioSystem.PlayPvs(router.ClickSound, uid, AudioParams.Default.WithVolume(-2f));
+            _audioSystem.PlayPredicted(router.ClickSound, uid, msg.Actor, AudioParams.Default.WithVolume(-2f));
         }
-    }
-
-    private void OnComponentInit(EntityUid uid, DisposalTubeComponent tube, ComponentInit args)
-    {
-        tube.Contents = _containerSystem.EnsureContainer<Container>(uid, tube.ContainerId);
     }
 
     private void OnComponentRemove(EntityUid uid, DisposalTubeComponent tube, ComponentRemove args)
@@ -347,17 +341,6 @@ public abstract partial class SharedDisposalTubeSystem : EntitySystem
 
         tube.Connected = false;
         Dirty(uid, tube);
-
-        var query = GetEntityQuery<DisposalHolderComponent>();
-
-        if (tube.Contents != null)
-        {
-            foreach (var entity in tube.Contents.ContainedEntities.ToArray())
-            {
-                if (query.TryGetComponent(entity, out var holder))
-                    _disposableSystem.ExitDisposals(entity, holder);
-            }
-        }
     }
 
     public bool CanConnect(EntityUid tubeId, DisposalTubeComponent tube, Direction direction)

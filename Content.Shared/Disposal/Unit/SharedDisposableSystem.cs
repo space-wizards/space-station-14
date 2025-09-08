@@ -4,13 +4,17 @@ using Content.Shared.Body.Components;
 using Content.Shared.Damage;
 using Content.Shared.Disposal.Components;
 using Content.Shared.Disposal.Tube;
+using Content.Shared.Eye;
+using Content.Shared.Follower.Components;
 using Content.Shared.Item;
 using Content.Shared.Throwing;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Containers;
 using Robust.Shared.Map.Components;
+using Robust.Shared.Network;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Systems;
+using Robust.Shared.Player;
 
 namespace Content.Shared.Disposal.Unit;
 
@@ -27,6 +31,8 @@ public abstract partial class SharedDisposableSystem : EntitySystem
     [Dependency] private readonly SharedPhysicsSystem _physicsSystem = default!;
     [Dependency] private readonly SharedTransformSystem _xformSystem = default!;
     [Dependency] private readonly SharedAppearanceSystem _appearanceSystem = default!;
+    [Dependency] private readonly INetManager _net = default!;
+    [Dependency] private readonly SharedEyeSystem _eye = default!;
 
     private EntityQuery<DisposalTubeComponent> _disposalTubeQuery;
     private EntityQuery<DisposalUnitComponent> _disposalUnitQuery;
@@ -47,6 +53,31 @@ public abstract partial class SharedDisposableSystem : EntitySystem
         SubscribeLocalEvent<DisposalHolderComponent, ComponentStartup>(OnComponentStartup);
         SubscribeLocalEvent<DisposalHolderComponent, ContainerIsInsertingAttemptEvent>(CanInsert);
         SubscribeLocalEvent<DisposalHolderComponent, EntInsertedIntoContainerMessage>(OnInsert);
+
+        SubscribeLocalEvent<ActorComponent, DisposalSystemTransitionEvent>(OnActorTransition);
+        SubscribeLocalEvent<FollowerComponent, DisposalSystemTransitionEvent>(OnFollowerTransition);
+        SubscribeLocalEvent<GetVisMaskEvent>(OnGetVisibility);
+    }
+
+    private void OnActorTransition(Entity<ActorComponent> ent, ref DisposalSystemTransitionEvent args)
+    {
+        _eye.RefreshVisibilityMask(ent.Owner);
+    }
+
+    private void OnFollowerTransition(Entity<FollowerComponent> ent, ref DisposalSystemTransitionEvent args)
+    {
+        _eye.RefreshVisibilityMask(ent.Owner);
+    }
+
+    private void OnGetVisibility(ref GetVisMaskEvent ev)
+    {
+        // Prevents mispredictions by allowing clients in the disposal system
+        // to be sent any entities that are hidden under subfloors
+        if (HasComp<ActorComponent>(ev.Entity) &&
+            HasComp<BeingDisposedComponent>(ev.Entity))
+        {
+            ev.VisibilityMask |= (int)VisibilityFlags.Subfloor;
+        }
     }
 
     protected virtual void MergeAtmos(Entity<DisposalHolderComponent> ent, GasMixture gasMix)
@@ -115,6 +146,9 @@ public abstract partial class SharedDisposableSystem : EntitySystem
         {
             RemComp<BeingDisposedComponent>(entity);
 
+            var ev = new DisposalSystemTransitionEvent();
+            RaiseLocalEvent(entity, ref ev);
+
             var meta = _metaQuery.GetComponent(entity);
             if (holder.Container != null && holder.Container.Contains(entity))
                 _containerSystem.Remove((entity, null, meta), holder.Container, reparent: false, force: true);
@@ -150,16 +184,15 @@ public abstract partial class SharedDisposableSystem : EntitySystem
     }
 
     // Note: This function will cause an ExitDisposals on any failure that does not make an ExitDisposals impossible.
-    public bool EnterTube(EntityUid holderUid, EntityUid toUid, DisposalHolderComponent? holder = null, TransformComponent? holderTransform = null, DisposalTubeComponent? to = null, TransformComponent? toTransform = null)
+    public bool EnterTube(EntityUid holderUid, EntityUid toUid, DisposalHolderComponent? holder = null, TransformComponent? holderTransform = null, DisposalTubeComponent? to = null)
     {
         if (!Resolve(holderUid, ref holder, ref holderTransform))
             return false;
+
         if (holder.IsExitingDisposals)
-        {
-            //Log.Error("Tried entering tube after exiting disposals. This should never happen.");
             return false;
-        }
-        if (!Resolve(toUid, ref to, ref toTransform))
+
+        if (!Resolve(toUid, ref to))
         {
             ExitDisposals(holderUid, holder, holderTransform);
             return false;
@@ -171,14 +204,8 @@ public abstract partial class SharedDisposableSystem : EntitySystem
             {
                 var comp = EnsureComp<BeingDisposedComponent>(ent);
                 comp.Holder = holderUid;
+                Dirty(ent, comp);
             }
-        }
-
-        // Insert into next tube
-        if (to.Contents != null && !_containerSystem.Insert(holderUid, to.Contents))
-        {
-            ExitDisposals(holderUid, holder, holderTransform);
-            return false;
         }
 
         if (holder.CurrentTube != null)
@@ -193,10 +220,6 @@ public abstract partial class SharedDisposableSystem : EntitySystem
         RaiseLocalEvent(toUid, ref ev);
 
         holder.CurrentDirection = ev.Next;
-        holder.StartingTime = holder.TraversalTime;
-        holder.TimeLeft = holder.TraversalTime;
-        // Logger.InfoS("c.s.disposal.holder", $"Disposals dir {holder.CurrentDirection}");
-        Dirty(holderUid, holder);
 
         // Invalid direction = exit now!
         if (holder.CurrentDirection == Direction.Invalid)
@@ -205,19 +228,38 @@ public abstract partial class SharedDisposableSystem : EntitySystem
             return false;
         }
 
-        var xform = Transform(holderUid);
-        var parentXform = Transform(xform.ParentUid);
-        xform.LocalRotation = holder.CurrentDirection.ToAngle() - parentXform.LocalRotation;
+        holder.NextTube = _disposalTubeSystem.NextTubeFor(holder.CurrentTube.Value, holder.CurrentDirection);
 
-        // damage entities on turns and play sound
-        if (holder.Container != null && holder.CurrentDirection != holder.PreviousDirection)
+        var xform = Transform(holderUid);
+        var xform2 = Transform(toUid);
+
+        if (xform2.GridUid != null)
+        {
+            var rotation = _xformSystem.GetWorldRotation(xform2.GridUid.Value);
+            xform.LocalRotation = holder.CurrentDirection.ToAngle() - rotation;
+        }
+
+        if (holder.Container != null)
         {
             foreach (var ent in holder.Container.ContainedEntities)
             {
-                _damageable.TryChangeDamage(ent, to.DamageOnTurn);
+                var entryEvent = new DisposalSystemTransitionEvent();
+                RaiseLocalEvent(ent, ref entryEvent);
+
+                // damage entities on turns and play sound
+                if (holder.CurrentDirection != holder.PreviousDirection)
+                {
+                    _damageable.TryChangeDamage(ent, to.DamageOnTurn);
+
+                    if (_net.IsServer)
+                    {
+                        _audio.PlayPvs(to.ClangSound, toUid);
+                    }
+                }
             }
-            _audio.PlayPvs(to.ClangSound, toUid);
         }
+
+        Dirty(holderUid, holder);
 
         return true;
     }
@@ -227,63 +269,51 @@ public abstract partial class SharedDisposableSystem : EntitySystem
         var query = EntityQueryEnumerator<DisposalHolderComponent>();
         while (query.MoveNext(out var uid, out var holder))
         {
-            UpdateComp(uid, holder, frameTime);
-        }
-    }
-
-    private void UpdateComp(EntityUid uid, DisposalHolderComponent holder, float frameTime)
-    {
-        while (frameTime > 0)
-        {
-            var time = frameTime;
-            if (time > holder.TimeLeft)
+            if (holder.Container?.Count == 0)
             {
-                time = holder.TimeLeft;
-            }
-
-            holder.TimeLeft -= time;
-            frameTime -= time;
-            Dirty(uid, holder);
-
-            if (!Exists(holder.CurrentTube))
-            {
-                ExitDisposals(uid, holder);
-                break;
-            }
-
-            var currentTube = holder.CurrentTube!.Value;
-            if (holder.TimeLeft > 0)
-            {
-                var progress = 1 - holder.TimeLeft / holder.StartingTime;
-                var origin = _xformQuery.GetComponent(currentTube).Coordinates;
-                var destination = holder.CurrentDirection.ToVec();
-                var newPosition = destination * progress;
-
-                // This is some supreme shit code.
-                _xformSystem.SetCoordinates(uid, _xformSystem.WithEntityId(origin.Offset(newPosition), currentTube));
+                PredictedQueueDel(uid);
                 continue;
             }
 
-            // Past this point, we are performing inter-tube transfer!
-            // Remove current tube content
-            var tubeQuery = _disposalTubeQuery.GetComponent(currentTube);
+            UpdateComp((uid, holder));
+        }
+    }
 
-            if (tubeQuery.Contents != null)
-                _containerSystem.Remove(uid, tubeQuery.Contents, reparent: false);
+    private void UpdateComp(Entity<DisposalHolderComponent> ent)
+    {
+        var currentTube = ent.Comp.CurrentTube;
+        var nextTube = ent.Comp.NextTube;
 
-            // Find next tube
-            var nextTube = _disposalTubeSystem.NextTubeFor(currentTube, holder.CurrentDirection);
-            if (!Exists(nextTube))
-            {
-                ExitDisposals(uid, holder);
-                break;
-            }
+        if (currentTube == null || !Exists(currentTube) ||
+            nextTube == null || !Exists(nextTube))
+        {
+            ExitDisposals(ent.Owner, ent.Comp);
+            return;
+        }
 
-            // Perform remainder of entry process
-            if (!EnterTube(uid, nextTube!.Value, holder))
-            {
-                break;
-            }
+        var gridUid = _xformQuery.GetComponent(currentTube.Value).GridUid;
+
+        if (gridUid == null)
+            return;
+
+        var gridRotation = _xformSystem.GetWorldRotation(gridUid.Value);
+        var origin = _xformQuery.GetComponent(currentTube.Value).Coordinates;
+        var destination = _xformQuery.GetComponent(nextTube.Value).Coordinates;
+        var entCoords = _xformQuery.GetComponent(ent).Coordinates;
+
+        var originDestDiff = destination.Position - origin.Position;
+        var originEntDiff = entCoords.Position - origin.Position;
+        var entDestDiff = destination.Position - entCoords.Position;
+        var velocity = gridRotation.RotateVec(entDestDiff.Normalized()) * ent.Comp.TraversalSpeed;
+
+        _physicsSystem.SetLinearVelocity(ent, velocity);
+
+        if (originEntDiff.Length() <= originDestDiff.Length())
+            return;
+
+        if (EnterTube(ent.Owner, nextTube!.Value, ent.Comp))
+        {
+            UpdateComp(ent);
         }
     }
 }
