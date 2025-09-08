@@ -13606,5 +13606,20 @@ Entries:
   id: 153800
   time: '2025-09-08T23:31:28.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/1538
+- author: CrazyPhantom
+  changes:
+  - message: Engineering cyborgs recharging spray painter breaking once reaching 0
+      Charges.
+    type: Fix
+  id: 155300
+  time: '2025-09-08T23:34:21.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1553
+- author: CrazyPhantom
+  changes:
+  - message: Engineering cyborgs recharging spray painter now has a 5 second cooldown.
+    type: Tweak
+  id: 155301
+  time: '2025-09-08T23:34:21.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1553
 Order: -1
 
