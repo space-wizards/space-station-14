@@ -72,14 +72,24 @@ public sealed class DamageableSystem : EntitySystem
             value => UniversalProjectileDamageModifier = value,
             true
         );
-        Subs.CVar(_config, CCVars.PlaytestMeleeDamageModifier, value => UniversalMeleeDamageModifier = value, true);
+        Subs.CVar(
+            _config,
+            CCVars.PlaytestMeleeDamageModifier,
+            value => UniversalMeleeDamageModifier = value,
+            true
+        );
         Subs.CVar(
             _config,
             CCVars.PlaytestProjectileDamageModifier,
             value => UniversalProjectileDamageModifier = value,
             true
         );
-        Subs.CVar(_config, CCVars.PlaytestHitscanDamageModifier, value => UniversalHitscanDamageModifier = value, true);
+        Subs.CVar(
+            _config,
+            CCVars.PlaytestHitscanDamageModifier,
+            value => UniversalHitscanDamageModifier = value,
+            true
+        );
         Subs.CVar(
             _config,
             CCVars.PlaytestReagentDamageModifier,
@@ -106,9 +116,24 @@ public sealed class DamageableSystem : EntitySystem
             value => UniversalExplosionDamageModifier = value,
             true
         );
-        Subs.CVar(_config, CCVars.PlaytestThrownDamageModifier, value => UniversalThrownDamageModifier = value, true);
-        Subs.CVar(_config, CCVars.PlaytestTopicalsHealModifier, value => UniversalTopicalsHealModifier = value, true);
-        Subs.CVar(_config, CCVars.PlaytestMobDamageModifier, value => UniversalMobDamageModifier = value, true);
+        Subs.CVar(
+            _config,
+            CCVars.PlaytestThrownDamageModifier,
+            value => UniversalThrownDamageModifier = value,
+            true
+        );
+        Subs.CVar(
+            _config,
+            CCVars.PlaytestTopicalsHealModifier,
+            value => UniversalTopicalsHealModifier = value,
+            true
+        );
+        Subs.CVar(
+            _config,
+            CCVars.PlaytestMobDamageModifier,
+            value => UniversalMobDamageModifier = value,
+            true
+        );
     }
 
     /// <summary>
