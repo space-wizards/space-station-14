@@ -49,7 +49,7 @@ public sealed partial class VampireSystem : SharedVampireSystem
             return false;
 
         component.VitaeRegenCap += component.VitaeCapUpgradeAmount;
-        component.LevelUpValue += 60f;
+        component.LevelUpValue += 40f;
         Dirty(uid, component);
 
         return true;

@@ -63,10 +63,8 @@ public sealed partial class VampireSystem
         {
             // Can't drink from a target without a beating heart
             if (_mobState.IsDead(target))
-            {
-                _popupSystem.PopupEntity(Loc.GetString("vampire-feed-attempt-failed-dead", ("target", Identity.Entity(target, EntityManager))), ent, ent, PopupType.Medium);
                 return false;
-            }
+
             // Not enough blood = not enough blood flow (to stop people from 'farming')
             if (bloodSolution.Volume < 10)
             {
@@ -90,6 +88,13 @@ public sealed partial class VampireSystem
         // Don't drink yourself, idiot
         if (target == ent.Owner)
             return;
+
+        // Can't drink from a target without a beating heart
+        if (_mobState.IsDead(target))
+        {
+            _popupSystem.PopupEntity(Loc.GetString("vampire-feed-attempt-failed-dead", ("target", Identity.Entity(target, EntityManager))), ent.Owner, ent.Owner, PopupType.Medium);
+            return;
+        }
 
         // Check that our target makes sense
         if (!IsTargetValid(target, ent))
@@ -158,8 +163,13 @@ public sealed partial class VampireSystem
             if (LevelUp(ent.Owner, comp))
                 _popupSystem.PopupEntity(Loc.GetString("vampire-level-up"),
                     args.User,
-                    args.User);
+                    args.User,
+                    PopupType.LargeCaution);
         }
+
+        // EXECUTED
+        if (bloodSolution.Volume < (bloodSolution.MaxVolume / 5))
+            _damageable.TryChangeDamage(args.Target, ent.Comp.ExecuteDamage, true, true, damage, args.User);
 
         // Ow my neck
         _popupSystem.PopupEntity(Loc.GetString("vampire-feed-msg"),

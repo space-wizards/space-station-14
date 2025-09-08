@@ -54,7 +54,7 @@ public sealed partial class VampireComponent : Component
     /// How much stolen vitae is required before you can 'levelup'.
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite), DataField("levelupValue")]
-    public FixedPoint2 LevelUpValue = 60f;
+    public FixedPoint2 LevelUpValue = 40f; // Two full drinks without interruption
 
     [ViewVariables]
     public float Accumulator = 0;

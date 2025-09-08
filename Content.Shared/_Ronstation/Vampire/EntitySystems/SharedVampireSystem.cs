@@ -12,7 +12,6 @@ public abstract class SharedVampireSystem : EntitySystem
     {
         base.Initialize();
 
-        // SubscribeLocalEvent<VampireComponent, FeedEvent>(OnFeedAttempt);
     }
 
 }
