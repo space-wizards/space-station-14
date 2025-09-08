@@ -1,0 +1,31 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "clurger created by gentlebutter (Discord), rosy-mothroach made by TurboTracker, edited by Whatstone",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "avocadosushi"
+    },
+    {
+      "name": "avocadosushislice"
+    },
+    {
+      "name": "carpsushi"
+    },
+    {
+      "name": "carpsushislice"
+    },
+    {
+      "name": "inhand-right",
+      "directions": 4
+    },
+    {
+      "name": "inhand-left",
+      "directions": 4
+    }    
+  ]
+}

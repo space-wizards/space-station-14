@@ -3,7 +3,7 @@
   parent: BaseGameRule
   components:
   - type: StationEvent
-    weight: 0.0001
+    weight: 0.00001
     minimumPlayers: 3
     duration: 3600
     maxOccurrences: 2 # this event has diminishing returns on interesting-ness, so we cap it

@@ -1,0 +1,68 @@
+﻿- type: entity
+  name: umbrella
+  parent: BaseItem
+  id: FlashlightUmbrella
+  description: Keeps you dry AND stylish.
+  components:
+  - type: Tag
+    tags:
+    - Flashlight
+  - type: HandheldLight
+    addPrefix: false
+    blinkingBehaviourId: blinking
+    radiatingBehaviourId: radiating
+  - type: LightBehaviour
+    behaviours:
+    - !type:FadeBehaviour
+      id: radiating
+      maxDuration: 2.0
+      startValue: 3.0
+      endValue: 2.0
+      isLooped: true
+      reverseWhenFinished: true
+    - !type:PulseBehaviour
+      id: blinking
+      interpolate: Nearest
+      maxDuration: 1.0
+      minValue: 0.1
+      maxValue: 2.0
+      isLooped: true
+  - type: ToggleableLightVisuals
+    spriteLayer: light
+    inhandVisuals:
+      left:
+      - state: inhand-left-light
+        shader: unshaded
+      right:
+      - state: inhand-right-light
+        shader: unshaded
+  - type: PowerCellSlot
+    cellSlotId: cell_slot
+  - type: ContainerContainer
+    containers:
+      cell_slot: !type:ContainerSlot
+  - type: ItemSlots
+    slots:
+      cell_slot:
+        name: power-cell-slot-component-slot-name-default
+        startingItem: PowerCellMedium
+  - type: Sprite
+    sprite: Objects/Tools/umbrella.rsi
+    layers:
+    - state: flashlight
+    - state: flashlight-overlay
+      shader: unshaded
+      visible: false
+      map: [ "light" ]
+  - type: Item
+    sprite: Objects/Tools/umbrella.rsi
+    storedRotation: -45
+    size: Huge
+  - type: PointLight
+    enabled: false
+    radius: 3
+    energy: 2.5
+    netsync: false
+  - type: Appearance
+  - type: StaticPrice
+    price: 15.5

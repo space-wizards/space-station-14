@@ -772,3 +772,223 @@
     seedId: bloonion
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/bloonion.rsi
+
+# FF Custom Code
+- type: entity
+  parent: SeedBase
+  name: packet of pear seeds
+  description: "they are peary good for you."
+  id: PearSeeds
+  components:
+    - type: Seed
+      seedId: pear
+    - type: Sprite
+      sprite: Objects/Specific/Hydroponics/pear.rsi
+
+- type: entity
+  parent: SeedBase
+  name: packet of coffee seeds
+  description: Perfect for any self-respecting coffee roaster.
+  id: CoffeeSeeds
+  components:
+    - type: Seed
+      seedId: coffee
+    - type: Sprite
+      sprite: Objects/Specific/Hydroponics/coffee.rsi
+
+- type: entity
+  parent: SeedBase
+  name: packet of avocado seeds
+  description: These seeds are the pits.
+  id: AvocadoSeeds
+  components:
+    - type: Seed
+      seedId: avocado
+    - type: Sprite
+      sprite: Objects/Specific/Hydroponics/avocado.rsi
+
+- type: entity
+  parent: SeedBase
+  name: packet of cucumber seeds
+  description: Can you grow water?
+  id: CucumberSeeds
+  components:
+    - type: Seed
+      seedId: cucumber
+    - type: Sprite
+      sprite: Objects/Specific/Hydroponics/cucumber.rsi
+
+- type: seed
+  id: pear
+  name: seeds-pear-name
+  noun: seeds-noun-seeds
+  displayName: seeds-pear-display-name
+  plantRsi: Objects/Specific/Hydroponics/pear.rsi
+  packetPrototype: PearSeeds
+  productPrototypes:
+    - FoodPear
+  harvestRepeat: Repeat
+  lifespan: 55
+  maturation: 6
+  production: 6
+  yield: 3
+  potency: 10
+  idealLight: 6
+  chemicals:
+    Nutriment:
+      Min: 1
+      Max: 10
+      PotencyDivisor: 10
+    Vitamin:
+      Min: 1
+      Max: 4
+      PotencyDivisor: 25
+
+- type: seed
+  id: coffee
+  name: seeds-coffee-name
+  noun: seeds-noun-seeds
+  displayName: seeds-coffee-display-name
+  plantRsi: Objects/Specific/Hydroponics/coffee.rsi
+  packetPrototype: CoffeeSeeds
+  productPrototypes:
+    - FoodCoffee
+  lifespan: 25
+  maturation: 9
+  production: 1
+  yield: 2
+  potency: 5
+  idealLight: 8
+  growthStages: 5
+  harvestRepeat: Repeat
+  waterConsumption: 0.60
+  chemicals:
+    Nutriment:
+      Min: 2
+      Max: 8
+      PotencyDivisor: 16
+    Theobromine:
+      Min: 1
+      Max: 4
+      PotencyDivisor: 25
+
+- type: seed
+  id: avocado
+  name: seeds-avocado-name
+  noun: seeds-noun-seeds
+  displayName: seeds-avocado-display-name
+  plantRsi: Objects/Specific/Hydroponics/avocado.rsi
+  packetPrototype: AvocadoSeeds
+  productPrototypes:
+    - FoodAvocado
+  lifespan: 55
+  maturation: 6
+  production: 6
+  yield: 3
+  potency: 10
+  idealLight: 6
+  growthStages: 5
+  harvestRepeat: Repeat
+  waterConsumption: 0.60
+  chemicals:
+    Nutriment:
+      Min: 1
+      Max: 10
+      PotencyDivisor: 10
+    Vitamin:
+      Min: 1
+      Max: 4
+      PotencyDivisor: 25
+
+- type: seed
+  id: cucumber
+  name: seeds-cucumber-name
+  noun: seeds-noun-seeds
+  displayName: seeds-cucumber-display-name
+  plantRsi: Objects/Specific/Hydroponics/cucumber.rsi
+  packetPrototype: CucumberSeeds
+  productPrototypes:
+    - FoodCucumber
+  lifespan: 50
+  maturation: 7
+  production: 5
+  yield: 4
+  potency: 10
+  growthStages: 5
+  chemicals:
+    Nutriment:
+      Min: 1
+      Max: 10
+      PotencyDivisor: 10
+    Vitamin:
+      Min: 1
+      Max: 4
+      PotencyDivisor: 25
+
+- type: entity
+  parent: SeedBase
+  name: jar of bees
+  description: Starter kit for a new apiarist.
+  id: BeeSeeds
+  components:
+    - type: Seed
+      seedId: bees
+    - type: Sprite
+      sprite: Objects/Specific/Hydroponics/bees.rsi
+    - type: Damageable
+      damageContainer: Inorganic
+      damageModifierSet: Glass
+    # "it's a jar of bees, it should break into bees"
+    - type: Destructible
+      thresholds:
+      - trigger:
+          !type:DamageTrigger
+          damage: 3
+        behaviors:
+        - !type:PlaySoundBehavior
+          sound:
+            collection: GlassBreak
+        - !type:SpawnEntitiesBehavior
+          spawn:
+            MobAngryBeeTimed:
+              min: 1
+              max: 1
+          transferForensics: true
+        - !type:DoActsBehavior
+          acts: [ "Destruction" ]
+    - type: DamageOnLand
+      ignoreResistances: true
+      damage:
+        types:
+          Blunt: 3
+    - type: DamageOtherOnHit
+      damage:
+        types:
+          Blunt: 3
+
+- type: seed
+  id: bees
+  name: seeds-bees-name
+  noun: seeds-noun-nothing
+  packetName: botany-seed-jar-name
+  displayName: seeds-bees-display-name
+  plantRsi: Objects/Specific/Hydroponics/bees.rsi
+  packetPrototype: BeeSeeds
+  productPrototypes:
+    - FoodHoneyComb
+  lifespan: 60
+  maturation: 7
+  production: 5
+  yield: 4
+  potency: 10
+  growthStages: 4
+  harvestRepeat: Repeat
+  chemicals:
+    Nutriment:
+      Min: 1
+      Max: 10
+      PotencyDivisor: 10
+    Vitamin:
+      Min: 1
+      Max: 4
+      PotencyDivisor: 25

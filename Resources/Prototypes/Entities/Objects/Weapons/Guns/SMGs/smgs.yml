@@ -284,3 +284,192 @@
     steps: 6
     zeroVisible: true
   - type: Appearance
+
+# FF Custom Code
+- type: entity
+  name: FPA-90 sub machine gun
+  parent: BaseWeaponPistol
+  id: WeaponSubMachineGunFPA90
+  description: It's a cheap piece of shit made by a company well known for cheap guns, but at least you don't need hearing protection while using it. It fires .25 caseless.
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/SMGs/FPA90.rsi
+    layers:
+    - state: base
+      map: ["enum.GunVisualLayers.Base"]
+    - state: mag-0
+      map: ["enum.GunVisualLayers.Mag"]
+  - type: Gun
+    minAngle: 10
+    maxAngle: 15
+    fireRate: 20
+    burstFireRate: 20
+    shotsPerBurst: 3
+    burstCooldown: 1.1
+    selectedMode: Burst
+    soundGunshot:
+      path: /Audio/Weapons/Guns/Gunshots/fpa-90-suppressed-gunshot.ogg
+      params:
+        volume: -3
+        maxDistance: 8
+        rolloffFactor: 1.2
+    availableModes:
+      - Burst
+    fireOnDropChance: 1
+  - type: MagazineVisuals
+    magState: mag
+    steps: 1
+    zeroVisible: true
+  - type: ItemSlots
+    slots:
+      gun_magazine:
+        name: Magazine
+        startingItem: MagazineCaselessRifle
+        insertSound: /Audio/Weapons/Guns/MagIn/smg_magin.ogg
+        ejectSound: /Audio/Weapons/Guns/MagOut/smg_magout.ogg
+        priority: 2
+        whitelist:
+          tags:
+            - MagazineCaselessRifle
+      gun_chamber:
+        name: Chamber
+        startingItem: CartridgeCaselessRifle
+        priority: 1
+        whitelist:
+          tags:
+            - CartridgeCaselessRifle
+  - type: Appearance
+  - type: StaticPrice
+    price: 200
+  - type: Item
+    size: Large
+    shape: null
+  - type: ExtendDescription
+    descriptionList:
+      - description: "gun-suppressed"
+        fontSize: 10
+        color: "#ff4f00"
+        requireDetailRange: false
+
+- type: entity
+  name: FPA-90 sub machine gun
+  parent: WeaponSubMachineGunFPA90
+  id: WeaponSubMachineGunFPA90Empty
+  description: It's a cheap piece of shit made by a company well known for cheap guns, but at least you don't need hearing protection while using it. It fires .25 caseless.
+  suffix: Empty # TheDen
+  components:
+  - type: ItemSlots
+    slots:
+      gun_magazine:
+        name: Magazine
+        startingItem: null
+        insertSound: /Audio/Weapons/Guns/MagIn/smg_magin.ogg
+        ejectSound: /Audio/Weapons/Guns/MagOut/smg_magout.ogg
+        priority: 2
+        whitelist:
+          tags:
+            - MagazineCaselessRifle
+      gun_chamber:
+        name: Chamber
+        startingItem: null
+        priority: 1
+        whitelist:
+          tags:
+            - CartridgeCaselessRifle
+
+- type: entity
+  name: BRDI R-25
+  parent: [BaseWeaponSubMachineGun, BaseGunWieldable]
+  id: WeaponSubMachineGunBRDIR25
+  description: An iconic weapon used by members of the Biesel Republic Foreign Legion. As a pride and joy of the colonies, it represents freedom from the tyranny of the Sol Alliance. It is chambered in .25 Caseless Rifle.
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/SMGs/BRDI_R25.rsi
+    layers:
+    - state: base
+      map: ["enum.GunVisualLayers.Base"]
+    - state: mag-0
+      map: ["enum.GunVisualLayers.Mag"]
+  - type: Clothing
+    sprite: Objects/Weapons/Guns/SMGs/BRDI_R25.rsi
+  - type: Wieldable
+  - type: GunWieldBonus
+    minAngle: -17
+    maxAngle: -22
+  - type: Gun
+    minAngle: 21
+    maxAngle: 32
+    fireRate: 5  # 300rpm in Semi & Full Auto
+    burstFireRate: 20  # 1200rpm in Burst mode.
+    shotsPerBurst: 3
+    burstCooldown: 0.9
+    cameraRecoilScalar: 0.5
+    selectedMode: Burst
+    soundGunshot:
+      path: /Audio/Weapons/Guns/Gunshots/fpa-90-suppressed-gunshot.ogg
+      params:
+        volume: -3
+        maxDistance: 8
+    availableModes:
+    - SemiAuto
+    - Burst
+    - FullAuto
+    fireOnDropChance: 0.3
+  - type: ChamberMagazineAmmoProvider
+    autoEject: true
+  - type: MagazineVisuals
+    magState: mag
+    steps: 1
+    zeroVisible: true
+  - type: Appearance
+  - type: StaticPrice
+    price: 1500
+  - type: ItemSlots
+    slots:
+      gun_magazine:
+        name: Magazine
+        startingItem: MagazineCaselessRifle
+        insertSound: /Audio/Weapons/Guns/MagIn/smg_magin.ogg
+        ejectSound: /Audio/Weapons/Guns/MagOut/smg_magout.ogg
+        priority: 2
+        whitelist:
+          tags:
+            - MagazineCaselessRifle
+      gun_chamber:
+        name: Chamber
+        startingItem: CartridgeCaselessRifle
+        priority: 1
+        whitelist:
+          tags:
+            - CartridgeCaselessRifle
+  - type: ExtendDescription
+    descriptionList:
+      - description: "gun-suppressed"
+        fontSize: 10
+        color: "#ff4f00"
+        requireDetailRange: false
+
+- type: entity
+  name: antique BRDI R-25
+  parent: WeaponSubMachineGunBRDIR25
+  id: WeaponSubMachineGunBRDIR25HoS
+  description: Once wielded by an unknown member of the Biesel Foreign Legion, this beloved rifle has seen battle with Sol on every world in the colonies.
+  components:
+    - type: StealTarget
+      stealGroup: HoSAntiqueWeapon
+    - type: Sprite
+      sprite: Objects/Weapons/Guns/SMGs/BRDI_R25_decorated.rsi
+    - type: Clothing
+      sprite: Objects/Weapons/Guns/SMGs/BRDI_R25_decorated.rsi
+
+- type: entity
+  name: BRDI R-25
+  parent: WeaponSubMachineGunBRDIR25
+  id: WeaponSubMachineGunBRDIR25BSO
+  description: An iconic weapon used by members of the Biesel Republic Foreign Legion. Repainted for Blueshield Officers.
+  suffix: BSO
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/SMGs/BRDI_R25_blue.rsi
+  - type: Clothing
+    sprite: Objects/Weapons/Guns/SMGs/BRDI_R25_blue.rsi
