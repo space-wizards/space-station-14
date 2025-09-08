@@ -583,10 +583,8 @@ public abstract partial class InventorySystem
             foreach (var heldItem in _handsSystem.EnumerateHeld(ent.Owner))
             {
                 _handsSystem.TryDrop(ent.Owner, heldItem, checkActionBlocker: false);
-                allItems.Enqueue(heldItem);
             }
         }
-
 
         while (allItems.TryDequeue(out var item))
         {
