@@ -926,7 +926,10 @@
   - type: EmitSoundOnTrigger
     sound: /Audio/Items/smoke_grenade_smoke.ogg
     positional: true
-  - type: ExplodeOnTrigger
+  - type: Projectile
+    damage:
+      types:
+        Blunt: 0 # no hurty no more sorry ERT jannies
 
 - type: entity
   id: BulletGrenadeEMP
