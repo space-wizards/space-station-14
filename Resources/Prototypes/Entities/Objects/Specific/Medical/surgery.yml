@@ -710,7 +710,7 @@
 
 - type: entity
   name: bottle of bone gel
-  id: BoneSetterRipper
+  id: BoneGelRipper
   parent: BoneGel
   description: A container for bone gel that often needs to be refilled from a specialized machine.
   components:
