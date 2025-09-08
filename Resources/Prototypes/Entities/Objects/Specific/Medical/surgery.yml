@@ -715,8 +715,8 @@
   description: A container for bone gel that often needs to be refilled from a specialized machine.
   components:
   - type: Sprite
-    sprite: _Starlight/Objects/Specific/Medical/surgery.rsi
-    state: bonegelripper
+    sprite: Objects/Specific/Medical/Surgery/bone_gel.rsi
+    state: bone-gel
   - type: SurgeryTool
     speed: 1
     startSound:
