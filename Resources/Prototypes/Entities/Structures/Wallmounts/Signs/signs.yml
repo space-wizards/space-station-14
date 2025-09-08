@@ -290,6 +290,15 @@
 
 - type: entity
   parent: BaseSign
+  id: SignArrivals
+  name: arrivals sign
+  description: A sign indicating where the Arrivals shuttle will dock.
+  components:
+  - type: Sprite
+    state: arrivals
+
+- type: entity
+  parent: BaseSign
   id: SignToolStorage
   name: tool storage sign
   description: A sign indicating the tool storage room.
