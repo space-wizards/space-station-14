@@ -392,3 +392,18 @@
     Telecrystal: 3 #SL / Rebalanced pricing: Armor Vest 3, Web Vest 4, Elite Web vest 5
   categories:
   - UplinkWearables
+
+# Devices
+
+- type: listing
+  id: UplinkEcronizer
+  name: uplink-ecronizer-name
+  description: uplink-ecronizer-desc
+  productEntity: Ecronizer
+  discountCategory: usualDiscounts
+  discountDownTo:
+    Telecrystal: 2
+  cost:
+    Telecrystal: 4
+  categories:
+  - UplinkDisruption
