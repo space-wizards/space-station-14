@@ -471,7 +471,7 @@
            - SprayPainter
     - item: CrayonRainbow
       hand:
-        emptyRepresentative: CrayonRed
+        emptyRepresentative: CrayonRainbow
         emptyLabel: borg-slot-crayon-empty
         whitelist:
           tags:
