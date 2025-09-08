@@ -807,6 +807,21 @@ public sealed partial class AdminVerbSystem
         };
         args.Verbs.Add(backwardsAccent);
 
+        var politeAccentName = Loc.GetString("admin-smite-speak-proper-name").ToLowerInvariant();
+        Verb politeAccent = new()
+        {
+            Text = politeAccentName,
+            Category = VerbCategory.Smite,
+            Icon = new SpriteSpecifier.Texture(new ("/Textures/_Starlight/Interface/AdminActions/proper.png")),
+            Act = () =>
+            {
+                EnsureComp<PoliteAccentComponent>(args.Target);
+            },
+            Impact = LogImpact.Extreme,
+            Message = string.Join(": ", politeAccentName, Loc.GetString("admin-smite-speak-proper-description"))
+        };
+        args.Verbs.Add(politeAccent);
+
         var disarmProneName = Loc.GetString("admin-smite-disarm-prone-name").ToLowerInvariant();
         Verb disarmProne = new()
         {
@@ -934,6 +949,9 @@ public sealed partial class AdminVerbSystem
                 EnsureComp<SouthernAccentComponent>(args.Target);
                 EnsureComp<SpanishAccentComponent>(args.Target);
                 EnsureComp<StutteringAccentComponent>(args.Target);
+                EnsureComp<ScottishAccentComponent>(args.Target);
+                EnsureComp<PirateAccentComponent>(args.Target);
+                EnsureComp<ArchaicAccentComponent>(args.Target);
 
                 if (_random.Next(0, 8) == 0)
                 {
