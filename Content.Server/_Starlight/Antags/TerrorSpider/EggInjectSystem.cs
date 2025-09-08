@@ -51,6 +51,8 @@ public sealed class EggInjectSystem : EntitySystem
         {
             EnsureComp<EggHolderComponent>(args.Target.Value);
             EnsureComp<HasEggHolderComponent>(args.Target.Value);
+            var ev = new EggsInjectedEvent();
+            RaiseLocalEvent(ent, ev);
         }
     }
 

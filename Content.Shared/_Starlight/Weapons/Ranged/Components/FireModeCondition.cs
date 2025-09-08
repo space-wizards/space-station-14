@@ -1,6 +1,5 @@
 using JetBrains.Annotations;
 using Content.Shared.Weapons.Ranged.Components;
-using Robust.Shared.Serialization;
 
 namespace Content.Shared._Starlight.Weapons.Ranged.Components;
 

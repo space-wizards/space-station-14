@@ -24,8 +24,7 @@ public sealed partial class InjectOnCollideComponent : Component
     /// </summary>
     [DataField]
     public EntityWhitelist? Blacklist;
-    
-    
+
     /// <summary>
     /// A whitelist of entities that should be targeted by this component's speed modifiers.
     /// </summary>

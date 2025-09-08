@@ -129,7 +129,8 @@
 - type: entity
   name: terror red
   parent: MobTerrorSpider
-  id: MobTerrorRed
+  id: MobTerrorRedUnevolvable
+  abstract: true
   components:
   - type: Spider
     webPrototype: SpiderWebStrong
@@ -164,9 +165,22 @@
     baseSprintSpeed : 4.00
 
 - type: entity
+  name: terror red
+  parent: MobTerrorRedUnevolvable
+  id: MobTerrorRed
+  components:
+  - type: Evolving
+    evolveTo: MobTerrorPurple
+    conditions: 
+    - !type:DamageDealCondition
+      targetDamageAmount: 250
+      onlyAlive: true
+
+- type: entity
   name: terror gray
   parent: MobTerrorSpider
-  id: MobTerrorGray
+  id: MobTerrorGrayUnevolvable
+  abstract: true
   components:
   - type: Sprite
     drawdepth: Mobs
@@ -214,11 +228,22 @@
   - type: MovementSpeedModifier
     baseWalkSpeed : 3.00
     baseSprintSpeed : 5
+
+- type: entity
+  name: terror gray
+  parent: MobTerrorGrayUnevolvable
+  id: MobTerrorGray
+  components:
+  - type: Evolving
+    evolveTo: MobTerrorBlack
+    conditions: 
+    - !type:SpiderWebCondition
     
 - type: entity
   name: terror green
   parent: MobTerrorSpider
-  id: MobTerrorGreen
+  id: MobTerrorGreenUnevolvable
+  abstract: true
   components:
   - type: Sprite
     drawdepth: Mobs
@@ -269,6 +294,16 @@
     actions:
     - ActionEggInjection
 
+- type: entity
+  name: terror green
+  parent: MobTerrorGreenUnevolvable
+  id: MobTerrorGreen
+  components:
+  - type: Evolving
+    evolveTo: MobTerrorWhite
+    conditions: 
+    - !type:EggsInjectCondition
+
 ##########
 # Tier 2 #
 ##########
@@ -277,7 +312,7 @@
 
 - type: entity
   name: terror black
-  parent: MobTerrorGray
+  parent: MobTerrorGrayUnevolvable
   id: MobTerrorBlack
   components:
   - type: Sprite
@@ -293,7 +328,7 @@
 
 - type: entity
   name: terror purple
-  parent: MobTerrorRed
+  parent: MobTerrorRedUnevolvable
   id: MobTerrorPurple
   components:
   - type: Sprite
@@ -310,7 +345,7 @@
 
 - type: entity
   name: terror white
-  parent: MobTerrorGreen
+  parent: MobTerrorGreenUnevolvable
   id: MobTerrorWhite
   components:
   - type: Sprite

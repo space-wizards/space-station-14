@@ -7,6 +7,8 @@ using Robust.Server.GameObjects;
 using Robust.Shared.Map;
 using Robust.Shared.Player;
 using Robust.Shared.Timing;
+using Content.Shared._Starlight.Spider.Events;
+using Content.Shared.Weapons.Melee.Events;
 
 namespace Content.Server.Spider;
 
@@ -16,6 +18,7 @@ public sealed class SpiderSystem : SharedSpiderSystem
     [Dependency] private readonly TurfSystem _turf = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly MobStateSystem _mobState = default!;
+    [Dependency] private readonly EntityLookupSystem _lookup = default!;
 
     /// <summary>
     ///     A recycled hashset used to check turfs for spiderwebs.
@@ -26,7 +29,16 @@ public sealed class SpiderSystem : SharedSpiderSystem
     {
         base.Initialize();
         SubscribeLocalEvent<SpiderComponent, SpiderWebActionEvent>(OnSpawnNet);
+        SubscribeLocalEvent<SpiderComponent, MeleeHitEvent>(OnMeleeHit);
     }
+
+    // Starlight-start
+    public void OnMeleeHit(EntityUid uid, SpiderComponent component, ref MeleeHitEvent args)
+    {
+        if (component.CantBreakWeb && args.HitEntities.Any(EntityManager.HasComponent<SpiderWebObjectComponent>))
+            args.BonusDamage = -args.BaseDamage;
+    }
+    // Starlight-end
 
     public override void Update(float frameTime)
     {
@@ -103,12 +115,20 @@ public sealed class SpiderSystem : SharedSpiderSystem
             result = true;
         }
 
+        // Starlight-start
+        if (result)
+        {
+            var ev = new SpiderWebSpawnedEvent();
+            RaiseLocalEvent(ent.Owner, ev);
+        }
+        // Starlight-end
+
         return result;
     }
 
     private bool IsTileBlockedByWeb(EntityCoordinates coords)
     {
-        _webs = _turf.GetEntitiesInTile(coords); // Starlight-edit
+        _webs = _lookup.GetEntitiesIntersecting(coords); // Starlight-edit
         foreach (var entity in _webs)
         {
             if (HasComp<SpiderWebObjectComponent>(entity))
