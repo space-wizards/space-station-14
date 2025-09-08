@@ -13599,5 +13599,12 @@ Entries:
   id: 137603
   time: '2025-09-08T22:24:25.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/1376
+- author: Arkanic
+  changes:
+  - message: Fix revenant thermal vision
+    type: Fix
+  id: 153800
+  time: '2025-09-08T23:31:28.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1538
 Order: -1
 
