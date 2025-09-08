@@ -1,4 +1,4 @@
-﻿- type: entity
+- type: entity
   id: PartCyber
   parent: [BaseItem, BasePart]
   name: "cyber body part"
@@ -372,6 +372,71 @@
         path: /Audio/Effects/metal_scrape1.ogg
       items:
         - CyberMantisBlade
+    - type: WithAttachedBodyParts
+      parts:
+        right hand: RightHandCyber
+
+#ripperdoc
+- type: entity
+  id: LeftArmCyberRipper
+  name: "left ripperdoc arm"
+  parent: [PartCyber, BaseLeftArm]
+  components:
+    - type: BaseLayerId
+      layer: CyberLArmSilver
+    - type: BaseLayerIdToggled
+      layer: CyberLArmSilverReaper
+    - type: Sprite
+      sprite: _Starlight/Mobs/Species/Cyberlimbs/parts.rsi
+      state: "l_silver_arm"
+    - type: Icon
+      sprite: _Starlight/Mobs/Species/Cyberlimbs/parts.rsi
+      state: "l_silver_arm"
+    - type: LimbWithItems
+      action: ActionToggleCyberHandLeft
+      sound: 
+        path: /Audio/_Starlight/Medical/Cyber/deploy.ogg
+      items:
+        - ScalpelRipper
+        - RetractorRipper
+        - CauteryRipper
+        - DrillRipper
+        - SawRipper
+        - HemostatRipper
+        - BoneSetterRipper
+        - BoneGelRipper
+    - type: WithAttachedBodyParts
+      parts:
+        left hand: LeftHandCyber
+
+- type: entity
+  id: RightArmCyberRipper
+  name: "right ripperdoc arm"
+  parent: [PartCyber, BaseRightArm]
+  components:
+    - type: BaseLayerId
+      layer: CyberRArmSilver
+    - type: BaseLayerIdToggled
+      layer: CyberRArmSilverReaper
+    - type: Sprite
+      sprite: _Starlight/Mobs/Species/Cyberlimbs/parts.rsi
+      state: "r_silver_arm"
+    - type: Icon
+      sprite: _Starlight/Mobs/Species/Cyberlimbs/parts.rsi
+      state: "r_silver_arm"
+    - type: LimbWithItems
+      action: ActionToggleCyberHandRight
+      sound: 
+        path: /Audio/_Starlight/Medical/Cyber/deploy.ogg
+      items:
+        - ScalpelRipper
+        - RetractorRipper
+        - CauteryRipper
+        - DrillRipper
+        - SawRipper
+        - HemostatRipper
+        - BoneSetterRipper
+        - BoneGelRipper
     - type: WithAttachedBodyParts
       parts:
         right hand: RightHandCyber
