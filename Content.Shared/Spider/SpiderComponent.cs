@@ -36,6 +36,16 @@ public sealed partial class SpiderComponent : Component
     /// </summary>
     [DataField]
     public TimeSpan? NextWebSpawn;
+
+    #region Starlight
+
+    [DataField]
+    public bool OnlyOneWebPerTile = true; // Starlight-edit
+
+    [DataField]
+    public bool OneWebSpawn = true; // Starlight-edit
+
+    #endregion
 }
 
 public sealed partial class SpiderWebActionEvent : InstantActionEvent { }

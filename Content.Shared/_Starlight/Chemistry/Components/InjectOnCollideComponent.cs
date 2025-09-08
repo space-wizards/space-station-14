@@ -1,4 +1,5 @@
 using Content.Shared.Chemistry.Reagent;
+using Content.Shared.Whitelist;
 using Robust.Shared.Audio;
 
 namespace Content.Shared._Starlight.Chemistry.Components;

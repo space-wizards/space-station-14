@@ -20,7 +20,7 @@ public sealed class SpiderSystem : SharedSpiderSystem
     /// <summary>
     ///     A recycled hashset used to check turfs for spiderwebs.
     /// </summary>
-    private readonly HashSet<EntityUid> _webs = [];
+    private HashSet<EntityUid> _webs = []; // Starlight-edit
 
     public override void Initialize()
     {
@@ -81,11 +81,14 @@ public sealed class SpiderSystem : SharedSpiderSystem
         var result = false;
 
         // Spawn web in center
-        if (!IsTileBlockedByWeb(coords))
+        if (!IsTileBlockedByWeb(coords) && ent.Comp.OnlyOneWebPerTile) // Starlight-edit
         {
             Spawn(ent.Comp.WebPrototype, coords);
             result = true;
         }
+
+        if (ent.Comp.OneWebSpawn) // Starlight-edit: we spawn only one web in center
+            return result;
 
         // Spawn web in other directions
         for (var i = 0; i < 4; i++)
@@ -93,7 +96,7 @@ public sealed class SpiderSystem : SharedSpiderSystem
             var direction = (DirectionFlag)(1 << i);
             var outerSpawnCoordinates = coords.Offset(direction.AsDir().ToVec());
 
-            if (IsTileBlockedByWeb(outerSpawnCoordinates))
+            if (IsTileBlockedByWeb(outerSpawnCoordinates) && ent.Comp.OnlyOneWebPerTile) // Starlight-edit
                 continue;
 
             Spawn(ent.Comp.WebPrototype, outerSpawnCoordinates);
@@ -105,8 +108,7 @@ public sealed class SpiderSystem : SharedSpiderSystem
 
     private bool IsTileBlockedByWeb(EntityCoordinates coords)
     {
-        _webs.Clear();
-        _turf.GetEntitiesInTile(coords, _webs);
+        _webs = _turf.GetEntitiesInTile(coords); // Starlight-edit
         foreach (var entity in _webs)
         {
             if (HasComp<SpiderWebObjectComponent>(entity))
