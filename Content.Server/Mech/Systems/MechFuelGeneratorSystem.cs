@@ -1,5 +1,6 @@
 using Content.Server.Mech.Components;
 using Content.Server.Power.Generator;
+using Content.Shared.Materials;
 using Content.Shared.Mech;
 using Content.Shared.Mech.Components;
 using Content.Shared.Mech.EntitySystems;
@@ -15,10 +16,12 @@ namespace Content.Server.Mech.Systems;
 public sealed partial class MechFuelGeneratorBridgeSystem : EntitySystem
 {
     [Dependency] private readonly GeneratorSystem _generator = default!;
+    [Dependency] private readonly SharedMaterialStorageSystem _materialStorage = default!;
 
     public override void Initialize()
     {
         SubscribeLocalEvent<MechGeneratorModuleComponent, MechEquipmentUiMessageRelayEvent>(OnMechGeneratorMessage);
+        SubscribeLocalEvent<MechGeneratorModuleComponent, MechEquipmentUiStateReadyEvent>(OnUiStateReady);
     }
 
     private void OnMechGeneratorMessage(EntityUid uid, MechGeneratorModuleComponent component, MechEquipmentUiMessageRelayEvent args)
@@ -30,6 +33,38 @@ public sealed partial class MechFuelGeneratorBridgeSystem : EntitySystem
             return;
 
         _generator.EmptyGenerator(uid);
+    }
+
+    private void OnUiStateReady(EntityUid uid, MechGeneratorModuleComponent gen, MechEquipmentUiStateReadyEvent args)
+    {
+        var ui = new MechGeneratorUiState();
+
+        // Read live telemetry written by generator systems each tick
+        if (TryComp<MechEnergyAccumulatorComponent>(uid, out var telem))
+        {
+            ui.ChargeCurrent = telem.Current;
+            ui.ChargeMax = telem.Max;
+        }
+
+        if (gen.GenerationType == MechGenerationType.FuelGenerator)
+        {
+            if (TryComp<SolidFuelGeneratorAdapterComponent>(uid, out var solid))
+            {
+                var amount = _materialStorage.GetMaterialAmount(uid, solid.FuelMaterial);
+                amount += (int) MathF.Floor(solid.FractionalMaterial);
+
+                if (TryComp<MaterialStorageComponent>(uid, out var storage))
+                {
+                    ui.HasFuel = true;
+                    ui.FuelCapacity = storage.StorageLimit ?? 0;
+                }
+
+                ui.FuelName = solid.FuelMaterial;
+                ui.FuelAmount = amount;
+            }
+        }
+
+        args.States[GetNetEntity(uid)] = ui;
     }
 
 	public override void Update(float frameTime)

@@ -15,9 +15,6 @@ using Content.Server.Atmos;
 using System.Linq;
 using Robust.Shared.Timing;
 using Content.Shared.Power.Generator;
-using Content.Shared.Materials;
-using Robust.Shared.Prototypes;
-using Content.Server.Power.Generator;
 
 namespace Content.Server.Mech.Systems;
 
@@ -37,7 +34,7 @@ public sealed class MechInterfaceSystem : EntitySystem
     [Dependency] private readonly MechLockSystem _mechLockSystem = null!;
     [Dependency] private readonly ContainerSystem _container = null!;
     [Dependency] private readonly IGameTiming _gameTiming = null!;
-    [Dependency] private readonly SharedMaterialStorageSystem _materialStorage = null!;
+
 
     // TODO: make it work to delay value updates
     private static readonly TimeSpan VisualsChangeDelay = TimeSpan.FromSeconds(0.5f);
@@ -408,48 +405,14 @@ public sealed class MechInterfaceSystem : EntitySystem
 
     private void CollectEquipmentUiStates(IEnumerable<EntityUid> entities, Dictionary<NetEntity, BoundUserInterfaceState> states)
     {
-        if (!entities.Any())
-            return;
-
-        var statesEvent = new MechEquipmentUiStateReadyEvent();
         foreach (var entity in entities)
         {
-            RaiseLocalEvent(entity, statesEvent);
-            // Extend with generator UI state if applicable
-            if (TryComp<MechGeneratorModuleComponent>(entity, out var gen))
-            {
-                var ui = new MechGeneratorUiState();
+            var evt = new MechEquipmentUiStateReadyEvent();
+            RaiseLocalEvent(entity, evt);
+            if (evt.States.Count == 0)
+                continue;
 
-                // Read live telemetry written by generator systems each tick
-                if (TryComp<MechEnergyAccumulatorComponent>(entity, out var telem))
-                {
-                    ui.ChargeCurrent = telem.Current;
-                    ui.ChargeMax = telem.Max;
-                }
-
-                if (gen.GenerationType == MechGenerationType.FuelGenerator)
-                {
-                    if (TryComp<SolidFuelGeneratorAdapterComponent>(entity, out var solid))
-                    {
-                        var amount = _materialStorage.GetMaterialAmount(entity, solid.FuelMaterial);
-                        amount += (int) MathF.Floor(solid.FractionalMaterial);
-                        if (TryComp<MaterialStorageComponent>(entity, out var storage))
-                        {
-                            ui.HasFuel = true;
-                            ui.FuelCapacity = storage.StorageLimit ?? 0;
-                        }
-                        ui.FuelName = solid.FuelMaterial;
-                        ui.FuelAmount = amount;
-                    }
-                }
-
-                states[GetNetEntity(entity)] = ui;
-            }
-        }
-
-        if (statesEvent.States.Count > 0)
-        {
-            foreach (var (netEntity, state) in statesEvent.States)
+            foreach (var (netEntity, state) in evt.States)
             {
                 states[netEntity] = state;
             }
