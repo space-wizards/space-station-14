@@ -91,13 +91,13 @@ public sealed partial class DamageableComponent : Component
 [Serializable, NetSerializable]
 public sealed class DamageableComponentState(
     Dictionary<string, FixedPoint2> damageDict,
-    string? damageContainerId,
-    string? modifierSetId,
+    ProtoId<DamageContainerPrototype>? damageContainerId,
+    ProtoId<DamageModifierSetPrototype>? modifierSetId,
     FixedPoint2? healthBarThreshold)
     : ComponentState
 {
     public readonly Dictionary<string, FixedPoint2> DamageDict = damageDict;
-    public readonly string? DamageContainerId = damageContainerId;
-    public readonly string? ModifierSetId = modifierSetId;
+    public readonly ProtoId<DamageContainerPrototype>? DamageContainerId = damageContainerId;
+    public readonly ProtoId<DamageModifierSetPrototype>? ModifierSetId = modifierSetId;
     public readonly FixedPoint2? HealthBarThreshold = healthBarThreshold;
 }
