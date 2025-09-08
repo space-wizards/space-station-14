@@ -99,6 +99,8 @@
     - type: WithAttachedBodyParts
       parts:
         left foot: LeftFootCyber
+    - type: RoundstartImplantable
+      cost: 2
 
 - type: entity
   id: RightLegCyber
@@ -119,6 +121,8 @@
     - type: WithAttachedBodyParts
       parts:
         right foot: RightFootCyber
+    - type: RoundstartImplantable
+      cost: 2
 
 - type: entity
   id: LeftFootCyber
@@ -408,6 +412,8 @@
     - type: WithAttachedBodyParts
       parts:
         left hand: LeftHandCyber
+    - type: RoundstartImplantable
+      cost: 4
 
 - type: entity
   id: RightArmCyberRipper
@@ -440,3 +446,5 @@
     - type: WithAttachedBodyParts
       parts:
         right hand: RightHandCyber
+    - type: RoundstartImplantable
+      cost: 4
