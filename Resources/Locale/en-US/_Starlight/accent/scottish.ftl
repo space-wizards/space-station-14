@@ -306,3 +306,9 @@ accent-scottish-replacement-102 = sleekit
 
 accent-scottish-replaced-103 = a small distance
 accent-scottish-replacement-103 = bawhair
+
+accent-scottish-replaced-104 = fuck
+accent-scottish-replacement-104 = sod
+
+accent-scottish-replaced-105 = fucking
+accent-scottish-replacement-105 = sodding
