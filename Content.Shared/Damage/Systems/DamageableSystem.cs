@@ -195,7 +195,7 @@ public sealed class DamageableSystem : EntitySystem
         DamageChanged(ent);
     }
 
-    [Obsolete("Use ChangeDamage instead")]
+    [Obsolete("Use TryChangeDamage(Entity<DamageableComponent>...) instead")]
     public DamageSpecifier? TryChangeDamage(
         EntityUid? uid,
         DamageSpecifier damage,
@@ -205,10 +205,26 @@ public sealed class DamageableSystem : EntitySystem
         EntityUid? origin = null
     )
     {
-        if (!uid.HasValue || !Resolve(uid.Value, ref damageable, false))
+        return uid is null ? null : TryChangeDamage(uid.Value, damage, ignoreResistances, interruptsDoAfters, damageable, origin);
+    }
+
+    // This function is only here because the C# type engine deduces that non-nullable Entities are more correctly matched
+    // to the signature that uses the non-nullable Entity<DamageableComponent> in the non-obsolete TryChangeDamage below
+    // instead of using the signature above which actually compiles.
+    [Obsolete("Use TryChangeDamage(Entity<DamageableComponent>...) instead")]
+    public DamageSpecifier? TryChangeDamage(
+        EntityUid uid,
+        DamageSpecifier damage,
+        bool ignoreResistances = false,
+        bool interruptsDoAfters = true,
+        DamageableComponent? damageable = null,
+        EntityUid? origin = null
+    )
+    {
+        if (!Resolve(uid, ref damageable, false))
             return null;
 
-        return ChangeDamage((uid.Value, damageable), damage, ignoreResistances, interruptsDoAfters, origin)
+        return TryChangeDamage((uid, damageable), damage, ignoreResistances, interruptsDoAfters, origin)
             ? damage
             : null;
     }
@@ -224,7 +240,7 @@ public sealed class DamageableSystem : EntitySystem
     /// <returns>
     ///     If the changing of damage was successful.
     /// </returns>
-    public bool ChangeDamage(
+    public bool TryChangeDamage(
         Entity<DamageableComponent> ent,
         DamageSpecifier damage,
         bool ignoreResistances = false,
@@ -429,7 +445,7 @@ public sealed class DamageableSystem : EntitySystem
             damage.DamageDict.Add(typeId, damageValue);
         }
 
-        ChangeDamage(ent, damage, interruptsDoAfters: false, origin: args.Origin);
+        TryChangeDamage(ent, damage, interruptsDoAfters: false, origin: args.Origin);
     }
 
     private void OnRejuvenate(Entity<DamageableComponent> ent, ref RejuvenateEvent args)
