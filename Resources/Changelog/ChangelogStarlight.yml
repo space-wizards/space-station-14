@@ -13483,5 +13483,13 @@ Entries:
   id: 153300
   time: '2025-09-08T20:40:23.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/1533
+- author: CorruptOmega and Conflee
+  changes:
+  - message: New Bar Windows! Comes with diagonal and alternative so that you can
+      have the pattern correct.
+    type: Add
+  id: 156800
+  time: '2025-09-08T20:43:46.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1568
 Order: -1
 
