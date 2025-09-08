@@ -927,12 +927,6 @@
     sound: /Audio/Items/smoke_grenade_smoke.ogg
     positional: true
   - type: ExplodeOnTrigger
-  - type: Explosive
-    explosionType: Default
-    totalIntensity: 0.01 # a little pop
-    intensitySlope: 1
-    maxIntensity: 0.01
-    tileBreakScale: 0.01
 
 - type: entity
   id: BulletGrenadeEMP

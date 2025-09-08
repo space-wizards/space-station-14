@@ -122,10 +122,10 @@
       path: /Audio/Weapons/Guns/Gunshots/grenade_launcher.ogg
   - type: ProjectileBatteryAmmoProvider
     proto: GrenadeCleanade
-    fireCost: 30
+    fireCost: 100
   - type: Battery
-    maxCharge: 90
-    startingCharge: 90
+    maxCharge: 200
+    startingCharge: 200
   - type: BatterySelfRecharger
     autoRecharge: true
     autoRechargeRate: 1
