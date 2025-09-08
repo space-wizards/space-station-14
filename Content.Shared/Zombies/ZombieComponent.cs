@@ -151,6 +151,20 @@ public sealed partial class ZombieComponent : Component
         }
     };
 
+    // starlight
+    /// <summary>
+    /// What bite damage should be assigned to this mob if it previously had a 0 damage attack (mice, moproaches, etc)
+    /// </summary>
+    [DataField]
+    public DamageSpecifier MinimumDamageOnBite = new()
+    {
+        DamageDict = new()
+        {
+            { "Slash", 10 },
+            { "Structural", 5 }
+        }
+    };
+
     /// <summary>
     ///     Starlight, this just makes zombies always attack at the same speed as a base human (and also the first C# code I did eheee :3)
     /// </summary>
