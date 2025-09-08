@@ -284,3 +284,35 @@
     steps: 6
     zeroVisible: true
   - type: Appearance
+
+- type: entity
+  name: brown briefcase
+  parent: [BaseWeaponSubMachineGun, BaseSyndicateContraband]
+  id: WeaponSubMachineGunBriefcase
+  description: Useful for carrying items in your hands.
+  suffix: Gun
+  components:
+  - type: Item
+    size: Ginormous
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/SMGs/briefcase_gun.rsi
+    layers:
+    - state: base
+      map: ["enum.GunVisualLayers.Base"]
+  - type: Gun
+    fireRate: 10
+    minAngle: 25
+    maxAngle: 32
+    availableModes:
+    - FullAuto
+    soundGunshot:
+      path: /Audio/Weapons/Guns/Gunshots/atreides.ogg
+  - type: ChamberMagazineAmmoProvider
+    autoEject: false
+  - type: MagazineVisuals
+    magState: mag
+    steps: 1
+    zeroVisible: true
+  - type: Appearance
+  - type: StaticPrice
+    price: 5000
