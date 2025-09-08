@@ -13461,5 +13461,13 @@ Entries:
   id: 153700
   time: '2025-09-08T20:12:11.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/1537
+- author: CorruptOmega
+  changes:
+  - message: Syndicate Monkeys and Syndicate Kobolds now also understand Galactic
+      Common to receive orders.
+    type: Tweak
+  id: 155400
+  time: '2025-09-08T20:27:19.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1554
 Order: -1
 
