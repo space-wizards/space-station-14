@@ -90,6 +90,9 @@
     reagents:
     - ReagentId: SpaceDrugs
       Quantity: 2
+    blacklist:
+      components:
+      - IgnoreSpiderWeb
 
 - type: entity
   id: SpiderWebStealth
