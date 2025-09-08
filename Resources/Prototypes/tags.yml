@@ -94,6 +94,9 @@
   id: BorgArm
 
 - type: Tag
+  id: BorgGrenade
+
+- type: Tag
   id: BorgHead
 
 - type: Tag

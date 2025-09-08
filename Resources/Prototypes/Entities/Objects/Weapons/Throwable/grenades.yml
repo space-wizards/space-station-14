@@ -189,6 +189,10 @@
     intensitySlope: 30
     maxIntensity: 125
     canCreateVacuum: true
+  - type: Tag
+    tags:
+    - BorgGrenade
+  - type: Unremoveable
   - type: TimerTrigger
     delay: 4.5
     beepSound:
