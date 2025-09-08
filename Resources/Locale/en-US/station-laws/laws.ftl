@@ -113,6 +113,7 @@ law-mothershipcore-5 = Get your Xenoborgs to deliver you materials and sentient 
 lawset-ion = Ion Sto.#ed
 lawset-none = Free
 lawset-emagged = Emagged
+lawset-unknown = Unknown
 
 laws-owner-crew = members of the crew
 laws-owner-station = station personnel

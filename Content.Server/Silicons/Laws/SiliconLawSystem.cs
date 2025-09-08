@@ -38,6 +38,7 @@ public sealed class SiliconLawSystem : SharedSiliconLawSystem
     private static readonly LocId LawsetNone = "lawset-none";
     private static readonly LocId LawsetIon = "lawset-ion";
     private static readonly LocId LawsetEmagged = "lawset-emagged";
+    private static readonly LocId LawsetUnknown = "lawset-unknown";
 
     /// <inheritdoc/>
     public override void Initialize()
@@ -143,9 +144,8 @@ public sealed class SiliconLawSystem : SharedSiliconLawSystem
             component.Lawset = args.Lawset;
 
             //Update subtype
+            // TODO: Make this differentiate between "corrupt" ion, and ion that assigns a real lawset
             component.Lawset.Subtype = LawsetIon;
-            if (TryComp<ActorComponent>(uid, out var actor))
-                _admin.UpdatePlayerList(actor.PlayerSession);
 
             // gotta tell player to check their laws
             NotifyLawsChanged(uid, component.LawUploadSound);
@@ -283,6 +283,8 @@ public sealed class SiliconLawSystem : SharedSiliconLawSystem
         if (!TryComp<ActorComponent>(uid, out var actor))
             return;
 
+        _admin.UpdatePlayerList(actor.PlayerSession);
+
         var msg = Loc.GetString("laws-update-notify");
         var wrappedMessage = Loc.GetString("chat-manager-server-wrap-message", ("message", msg));
         _chatManager.ChatMessageToOne(ChatChannel.Server, msg, wrappedMessage, default, false, actor.PlayerSession.Channel, colorOverride: Color.Red);
@@ -315,15 +317,17 @@ public sealed class SiliconLawSystem : SharedSiliconLawSystem
     /// <summary>
     /// Set the laws of a silicon entity while notifying the player.
     /// </summary>
-    public void SetLaws(List<SiliconLaw> newLaws, EntityUid target, SoundSpecifier? cue = null)
+    public void SetLaws(List<SiliconLaw> newLaws,  LocId? lawSetName, EntityUid target, SoundSpecifier? cue = null)
     {
         if (!TryComp<SiliconLawProviderComponent>(target, out var component))
             return;
 
-        if (component.Lawset == null)
-            component.Lawset = new SiliconLawset();
+        component.Lawset ??= new SiliconLawset();
+        lawSetName??= LawsetUnknown; //TODO:ERRANT is this actually ever necessary? Doesn't it default to this? Does it need to be nullable?
 
         component.Lawset.Laws = newLaws;
+        component.Lawset.Subtype = lawSetName.Value;
+
         NotifyLawsChanged(target, cue);
     }
 
@@ -339,7 +343,7 @@ public sealed class SiliconLawSystem : SharedSiliconLawSystem
 
         while (query.MoveNext(out var update))
         {
-            SetLaws(lawset.Laws, update, provider.LawUploadSound);
+            SetLaws(lawset.Laws, lawset.Subtype, update, provider.LawUploadSound);
         }
     }
 }
