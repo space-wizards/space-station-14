@@ -51,7 +51,6 @@ namespace Content.Shared.Movement.Systems
         private void OnStand(Entity<MovementSpeedModifierComponent> entity, ref StoodEvent args)
         {
             RefreshFrictionModifiers(entity);
-            RefreshMovementSpeedModifiers(entity);
         }
 
         /// <summary>
