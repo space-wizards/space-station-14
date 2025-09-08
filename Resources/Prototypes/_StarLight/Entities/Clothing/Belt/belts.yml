@@ -107,7 +107,7 @@
 - type: entity
   parent: [ClothingBeltStorageBase, ContentsExplosionResistanceBase, BaseCommandContraband]
   id: ClothingBeltBlueShield
-  name: Blueshield Webbing
+  name: blueshield webbing
   description: A tactical rig that can hold many items to save the lives of command.
   components:
   - type: Storage
@@ -124,7 +124,7 @@
 - type: entity
   parent: [ClothingBeltBrigmedic]
   id: ClothingBeltBrigmedicWeb
-  name: Tactical Trauma Rig
+  name: tactical trauma rig
   description: A stylish alternative to the belt.
   components:
   - type: Sprite
@@ -136,7 +136,7 @@
 - type: entity
   parent: [ClothingBeltBrigmedic]
   id: ClothingBeltCorpsman
-  name: Corpsman Duty Belt
+  name: corpsman duty belt
   description: A tactical belt with as many pockets and bags to hold all the medical items you need!
   components:
   - type: Sprite

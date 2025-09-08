@@ -1,7 +1,7 @@
 - type: entity
   id: DefibrillatorBrigmedical
   parent: [ BaseDefibrillator, PowerCellSlotTinyItem ]
-  name: Brigmedic Defibrillator
+  name: brigmedic defibrillator
   description: Hand-held device that can save lives, and act as a weapon in a pinch.
   components:
   - type: Sprite
