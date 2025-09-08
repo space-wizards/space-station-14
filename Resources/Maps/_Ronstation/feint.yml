@@ -4,8 +4,8 @@ meta:
   engineVersion: 266.0.0
   forkId: ""
   forkVersion: ""
-  time: 09/08/2025 18:23:42
-  entityCount: 19053
+  time: 09/08/2025 19:41:56
+  entityCount: 19054
 maps:
 - 1
 grids:
@@ -8684,7 +8684,7 @@ entities:
       pos: 2.5,-6.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -318997.38
+      secondsUntilStateChange: -319054.34
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -9096,7 +9096,7 @@ entities:
       pos: -22.5,7.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -6664.9937
+      secondsUntilStateChange: -6721.9766
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -9109,7 +9109,7 @@ entities:
       pos: -22.5,8.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -278424.4
+      secondsUntilStateChange: -278481.38
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -9180,7 +9180,7 @@ entities:
       pos: 36.5,-61.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -163639.94
+      secondsUntilStateChange: -163696.92
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -53177,7 +53177,7 @@ entities:
       pos: 54.5,-27.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -934.6992
+      secondsUntilStateChange: -991.6822
       state: Closing
     - type: DeviceNetwork
       deviceLists:
@@ -83532,7 +83532,7 @@ entities:
       pos: 7.5,9.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -298703.78
+      secondsUntilStateChange: -298760.75
       state: Opening
   - uid: 12499
     components:
@@ -83540,7 +83540,7 @@ entities:
       pos: 7.5,10.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -298703.28
+      secondsUntilStateChange: -298760.25
       state: Opening
 - proto: HospitalCurtainsOpen
   entities:
@@ -83550,7 +83550,7 @@ entities:
       pos: -6.5,-4.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -311968.12
+      secondsUntilStateChange: -312025.1
       state: Closing
   - uid: 12501
     components:
@@ -99933,6 +99933,13 @@ entities:
     components:
     - type: Transform
       pos: 6.5,-27.5
+      parent: 2
+- proto: SpawnPointBlueshieldOfficer
+  entities:
+  - uid: 19054
+    components:
+    - type: Transform
+      pos: 71.5,-8.5
       parent: 2
 - proto: SpawnPointBorg
   entities:
