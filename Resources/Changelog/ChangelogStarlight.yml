@@ -13491,5 +13491,12 @@ Entries:
   id: 156800
   time: '2025-09-08T20:43:46.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/1568
+- author: stickycheZ101
+  changes:
+  - message: a certain crew major text is now a halo reference
+    type: Tweak
+  id: 140800
+  time: '2025-09-08T20:52:03.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1408
 Order: -1
 
