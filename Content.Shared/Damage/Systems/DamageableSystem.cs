@@ -117,8 +117,8 @@ public sealed class DamageableSystem : EntitySystem
     private void DamageableInit(Entity<DamageableComponent> ent, ref ComponentInit _)
     {
         if (
-            ent.Comp.DamageContainerId is null ||
-            !_prototypeManager.TryIndex(ent.Comp.DamageContainerId, out var damageContainerPrototype)
+            ent.Comp.DamageContainerID is null ||
+            !_prototypeManager.TryIndex(ent.Comp.DamageContainerID, out var damageContainerPrototype)
         )
         {
             // No DamageContainerPrototype was given. So we will allow the container to support all damage types
@@ -376,7 +376,7 @@ public sealed class DamageableSystem : EntitySystem
         {
             args.State = new DamageableComponentState(
                 ent.Comp.Damage.DamageDict,
-                ent.Comp.DamageContainerId,
+                ent.Comp.DamageContainerID,
                 ent.Comp.DamageModifierSetId,
                 ent.Comp.HealthBarThreshold
             );
@@ -387,7 +387,7 @@ public sealed class DamageableSystem : EntitySystem
         // avoid mispredicting damage on newly spawned entities.
         args.State = new DamageableComponentState(
             ent.Comp.Damage.DamageDict.ShallowClone(),
-            ent.Comp.DamageContainerId,
+            ent.Comp.DamageContainerID,
             ent.Comp.DamageModifierSetId,
             ent.Comp.HealthBarThreshold
         );
@@ -420,7 +420,7 @@ public sealed class DamageableSystem : EntitySystem
         if (args.Current is not DamageableComponentState state)
             return;
 
-        ent.Comp.DamageContainerId = state.DamageContainerId;
+        ent.Comp.DamageContainerID = state.DamageContainerId;
         ent.Comp.DamageModifierSetId = state.ModifierSetId;
         ent.Comp.HealthBarThreshold = state.HealthBarThreshold;
 

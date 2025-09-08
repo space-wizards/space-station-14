@@ -64,8 +64,8 @@ public sealed class ShowHealthIconsSystem : EquipmentHudSystem<ShowHealthIconsCo
     {
         var damageableComponent = entity.Comp;
 
-        if (damageableComponent.DamageContainerId == null ||
-            !DamageContainers.Contains(damageableComponent.DamageContainerId))
+        if (damageableComponent.DamageContainerID == null ||
+            !DamageContainers.Contains(damageableComponent.DamageContainerID))
         {
             return Array.Empty<HealthIconPrototype>();
         }
@@ -73,7 +73,7 @@ public sealed class ShowHealthIconsSystem : EquipmentHudSystem<ShowHealthIconsCo
         var result = new List<HealthIconPrototype>();
 
         // Here you could check health status, diseases, mind status, etc. and pick a good icon, or multiple depending on whatever.
-        if (damageableComponent?.DamageContainerId == "Biological")
+        if (damageableComponent?.DamageContainerID == "Biological")
         {
             if (TryComp<MobStateComponent>(entity, out var state))
             {

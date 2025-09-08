@@ -25,7 +25,8 @@ public sealed partial class DamageableComponent : Component
     ///     If null, all damage types will be supported.
     /// </summary>
     [DataField("damageContainer")]
-    public ProtoId<DamageContainerPrototype>? DamageContainerId;
+    // ReSharper disable once InconsistentNaming - This is wrong but fixing it is potentially annoying for downstreams.
+    public ProtoId<DamageContainerPrototype>? DamageContainerID;
 
     /// <summary>
     ///     This <see cref="DamageModifierSetPrototype"/> will be applied to any damage that is dealt to this container,
