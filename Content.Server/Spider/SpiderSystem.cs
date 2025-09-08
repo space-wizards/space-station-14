@@ -7,8 +7,8 @@ using Robust.Server.GameObjects;
 using Robust.Shared.Map;
 using Robust.Shared.Player;
 using Robust.Shared.Timing;
-using Content.Shared._Starlight.Spider.Events;
-using Content.Shared.Weapons.Melee.Events;
+using Content.Shared._Starlight.Spider.Events; // Starlight-edit
+using Content.Shared.Weapons.Melee.Events; // Starlight-edit
 
 namespace Content.Server.Spider;
 
@@ -18,7 +18,7 @@ public sealed class SpiderSystem : SharedSpiderSystem
     [Dependency] private readonly TurfSystem _turf = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly MobStateSystem _mobState = default!;
-    [Dependency] private readonly EntityLookupSystem _lookup = default!;
+    [Dependency] private readonly EntityLookupSystem _lookup = default!; // Starlight-edit
 
     /// <summary>
     ///     A recycled hashset used to check turfs for spiderwebs.
@@ -29,7 +29,7 @@ public sealed class SpiderSystem : SharedSpiderSystem
     {
         base.Initialize();
         SubscribeLocalEvent<SpiderComponent, SpiderWebActionEvent>(OnSpawnNet);
-        SubscribeLocalEvent<SpiderComponent, MeleeHitEvent>(OnMeleeHit);
+        SubscribeLocalEvent<SpiderComponent, MeleeHitEvent>(OnMeleeHit); // Starlight-edit
     }
 
     // Starlight-start

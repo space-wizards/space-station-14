@@ -6,7 +6,7 @@
   components:
   - type: Action
     icon: Interface/Actions/web.png
-    useDelay: 3
+    useDelay: 3 # Starlight-edit: Added charges instead of placing 5 webs
   # Starlight-start
   - type: LimitedCharges
     maxCharges: 3
