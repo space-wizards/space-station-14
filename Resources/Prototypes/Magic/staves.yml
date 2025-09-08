@@ -76,4 +76,4 @@
       toAdd:
       - type: RgbLightController
   - type: Action
-    useDelay: 5
+    useDelay: 0
