@@ -560,7 +560,7 @@ public sealed class DamageChangedEvent : EntityEventArgs
         DamageDelta = damageDelta;
         Origin = origin;
 
-        if (DamageDelta == null)
+        if (DamageDelta is null)
             return;
 
         foreach (var damageChange in DamageDelta.DamageDict.Values)

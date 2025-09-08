@@ -64,14 +64,16 @@ public sealed partial class DamageableComponent : Component
     public FixedPoint2 TotalDamage;
 
     [DataField("radiationDamageTypes")]
-    public List<ProtoId<DamageTypePrototype>> RadiationDamageTypeIDs = ["Radiation"];
+    // ReSharper disable once UseCollectionExpression - Cannot refactor this as it's a potential sandbox violation.
+    public List<ProtoId<DamageTypePrototype>> RadiationDamageTypeIDs = new() { "Radiation" };
 
     /// <summary>
     ///     Group types that affect the pain overlay.
     /// </summary>
     ///     TODO: Add support for adding damage types specifically rather than whole damage groups
     [DataField]
-    public List<ProtoId<DamageGroupPrototype>> PainDamageGroups = ["Brute", "Burn"];
+    // ReSharper disable once UseCollectionExpression - Cannot refactor this as it's a potential sandbox volation.
+    public List<ProtoId<DamageGroupPrototype>> PainDamageGroups = new() { "Brute", "Burn" };
 
     [DataField]
     public Dictionary<MobState, ProtoId<HealthIconPrototype>> HealthIcons = new()
