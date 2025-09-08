@@ -366,12 +366,11 @@ public sealed class RespiratorSystem : EntitySystem
             _adminLogger.Add(LogType.Asphyxiation, $"{ToPrettyString(ent):entity} started suffocating");
 
         var damage = ent.Comp.Damage;
-        // Roller beds stabilize critical patients.
-        if (TryComp<StabilizeOnBuckleComponent>(ent.Owner, out var stabilizerComponent)
-            && _mobState.IsCritical(ent.Owner))
-            damage *= (1 - stabilizerComponent.Efficiency); // 30% Efficiency leads to 70% Asphyxiation taken.
 
-        _damageableSys.TryChangeDamage(ent, damage, interruptsDoAfters: false);
+        var asphyxEv = new SuffocationDamageEvent(damage);
+        RaiseLocalEvent(ent, ref asphyxEv);
+
+        _damageableSys.TryChangeDamage(ent, asphyxEv.AsphyxationAmount, interruptsDoAfters: false);
 
         if (ent.Comp.SuffocationCycles < ent.Comp.SuffocationCycleThreshold)
             return;

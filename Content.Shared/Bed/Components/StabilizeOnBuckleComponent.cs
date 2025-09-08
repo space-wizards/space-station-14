@@ -18,7 +18,5 @@
         /// </summary>
         [DataField]
         public float ReducesBleeding = 0f;
-
-        [DataField] public EntityUid? SleepAction;
     }
 }

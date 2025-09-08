@@ -90,12 +90,6 @@ public abstract class SharedBloodstreamSystem : EntitySystem
 
                 // Bleed rate is reduced by the bleed reduction amount in the bloodstream component.
                 TryModifyBleedAmount((uid, bloodstream), -ev.BleedReductionAmount);
-
-                // The Bleeding rate of critical patients is reduced by stabilizing beds with bleed reduction.
-                if (TryComp<StabilizeOnBuckleComponent>(uid, out var stabilizeBleeding)
-                    && _mobStateSystem.IsCritical(uid)
-                    && stabilizeBleeding.ReducesBleeding != 0f)
-                    TryModifyBleedAmount((uid, bloodstream), -stabilizeBleeding.ReducesBleeding);
             }
 
             // deal bloodloss damage if their blood level is below a threshold.
@@ -105,12 +99,10 @@ public abstract class SharedBloodstreamSystem : EntitySystem
                 // bloodloss damage is based on the base value, and modified by how low your blood level is.
                 var amt = bloodstream.BloodlossDamage / (0.1f + bloodPercentage);
 
-                // If critical and strapped on a stabilizing bed, reduce bloodloss damage with applied efficiency.
-                if (TryComp<StabilizeOnBuckleComponent>(uid, out var stabilizeBloodloss)
-                    && _mobStateSystem.IsCritical(uid))
-                    amt *= (1 - stabilizeBloodloss.Efficiency); // 30% Efficiency leads to 70% Bloodloss taken.
+                var ev = new BloodlossDamageEvent(amt);
+                RaiseLocalEvent(uid, ref ev);
 
-                _damageableSystem.TryChangeDamage(uid, amt,
+                _damageableSystem.TryChangeDamage(uid, ev.BloodlossDamageAmount,
                     ignoreResistances: false, interruptsDoAfters: false);
 
                 // Apply dizziness as a symptom of bloodloss.
