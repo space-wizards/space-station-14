@@ -13476,5 +13476,12 @@ Entries:
   id: 156700
   time: '2025-09-08T20:36:00.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/1567
+- author: CorruptOmega
+  changes:
+  - message: New Ion Storm law descriptions to include languages.
+    type: Add
+  id: 153300
+  time: '2025-09-08T20:40:23.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1533
 Order: -1
 
