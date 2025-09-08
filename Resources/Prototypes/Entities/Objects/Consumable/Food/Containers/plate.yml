@@ -55,6 +55,7 @@
   - type: Tag
     tags:
     - Trash
+    - Dinnerware
   - type: PhysicalComposition
     materialComposition:
       Glass: 60
@@ -152,6 +153,7 @@
   - type: Tag
     tags:
     - Trash
+    - Dinnerware
 
 - type: entity
   name: plastic plate
@@ -174,6 +176,7 @@
   - type: Tag
     tags:
     - Trash
+    - Dinnerware
 
 # Pie Tin
 
@@ -194,6 +197,7 @@
   - type: Tag
     tags:
     - Trash
+    - Dinnerware
   - type: PhysicalComposition
     materialComposition:
       Steel: 60
@@ -218,6 +222,7 @@
   - type: Tag
     tags:
     - Trash
+    - Dinnerware
   - type: PhysicalComposition
     materialComposition:
       Steel: 30

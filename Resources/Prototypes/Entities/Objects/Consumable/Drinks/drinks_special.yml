@@ -211,3 +211,6 @@
       Steel: 300
   - type: FitsInDispenser
     solution: drink
+  - type: Tag
+    tags:
+    - Dinnerware

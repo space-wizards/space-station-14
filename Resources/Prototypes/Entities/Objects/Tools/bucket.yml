@@ -74,7 +74,7 @@
   parent: Bucket
   id: BorgBucket
   name: internal tank
-  description: The internal reservoir of a custodial cyborg, capable of holding a entire mop bucket worth of water.
+  description: The internal reservoir of a cyborg, twice the normal size of a bucket.
   components:
   - type: SolutionContainerManager
     solutions:

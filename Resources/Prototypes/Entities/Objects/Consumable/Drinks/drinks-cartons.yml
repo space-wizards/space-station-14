@@ -45,6 +45,9 @@
   - type: TrashOnSolutionEmpty
     solution: drink
   - type: DnaSubstanceTrace
+  - type: Tag
+    tags:
+    - Ingredient
 
 - type: entity
   parent: DrinkCartonBaseFull

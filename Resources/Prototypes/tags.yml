@@ -348,6 +348,9 @@
   id: ComputerTelevisionCircuitboard
 
 - type: Tag
+  id: Condiment
+
+- type: Tag
   id: ConstructionMaterial
 
 - type: Tag
@@ -454,6 +457,9 @@
 
 - type: Tag
   id: Dice
+
+- type: Tag
+  id: Dinnerware
 
 - type: Tag
   id: DiscreteHealthAnalyzer #So construction recipes don't eat medical PDAs

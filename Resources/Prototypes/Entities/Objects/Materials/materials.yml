@@ -144,6 +144,7 @@
           Quantity: 5
   - type: Tag
     tags:
+      - Ingredient
       - ClothMade
       - Gauze
       - RawMaterial
