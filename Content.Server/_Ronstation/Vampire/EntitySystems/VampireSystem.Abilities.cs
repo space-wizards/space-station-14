@@ -1,3 +1,6 @@
+using Content.Server.Popups;
+using Content.Server._Ronstation.Vampire.EntitySystems;
+using Content.Shared._Ronstation.Vampire;
 using Content.Shared._Ronstation.Vampire.Components;
 using Content.Shared.Actions;
 using Content.Shared.Administration.Logs;
@@ -16,10 +19,14 @@ using Content.Shared.Whitelist;
 using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Containers;
+using Robust.Shared.Player;
+using Robust.Shared.Prototypes;
+using Robust.Shared.Utility;
 
-namespace Content.Shared._Ronstation.Vampire.Systems;
 
-public sealed class VampireFeedSystem : EntitySystem
+namespace Content.Server._Ronstation.Vampire.EntitySystems;
+
+public sealed partial class VampireSystem
 {
     [Dependency] private readonly SharedBloodstreamSystem _bloodstreamSystem = default!;
     [Dependency] private readonly SharedDoAfterSystem _doAfterSystem = default!;
@@ -31,9 +38,8 @@ public sealed class VampireFeedSystem : EntitySystem
     [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
     [Dependency] private readonly EntityWhitelistSystem _whitelistSystem = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
-    public override void Initialize()
+    public void InitializeAbilities()
     {
-        base.Initialize();
 
         SubscribeLocalEvent<VampireFeedComponent, MapInitEvent>(OnMapInit);
         SubscribeLocalEvent<VampireFeedComponent, VampireFeedActionEvent>(OnFeedAction);
@@ -49,20 +55,22 @@ public sealed class VampireFeedSystem : EntitySystem
     {
         // Targets without blood can't have their blood drank
         if (!TryComp<BloodstreamComponent>(target, out BloodstreamComponent? comp))
+        {
+            _popupSystem.PopupEntity(Loc.GetString("vampire-feed-attempt-failed-no-bloodstream", ("target", Identity.Entity(target, EntityManager))), ent, ent, PopupType.Medium);
             return false;
-
+        }
         if (SolutionContainer.ResolveSolution(comp.Owner, comp.BloodSolutionName, ref comp.BloodSolution, out var bloodSolution))
         {
             // Can't drink from a target without a beating heart
             if (_mobState.IsDead(target))
             {
-                _popupSystem.PopupClient(Loc.GetString("vampire-feed-attempt-failed-dead", ("target", Identity.Entity(target, EntityManager))), ent, ent, PopupType.Medium);
+                _popupSystem.PopupEntity(Loc.GetString("vampire-feed-attempt-failed-dead", ("target", Identity.Entity(target, EntityManager))), ent, ent, PopupType.Medium);
                 return false;
             }
             // Not enough blood = not enough blood flow (to stop people from 'farming')
             if (bloodSolution.Volume < 10)
             {
-                _popupSystem.PopupClient(Loc.GetString("vampire-feed-attempt-failed-low-blood", ("target", Identity.Entity(target, EntityManager))), ent, ent, PopupType.Medium);
+                _popupSystem.PopupEntity(Loc.GetString("vampire-feed-attempt-failed-low-blood", ("target", Identity.Entity(target, EntityManager))), ent, ent, PopupType.Medium);
                 return false;
             }
             return true;
@@ -91,10 +99,15 @@ public sealed class VampireFeedSystem : EntitySystem
         _adminLogger.Add(LogType.Action, LogImpact.Medium, $"{ent:player} started drinking {target:player}'s blood");
 
         // I am biting someone/Hey a vampire is biting someone
-        _popupSystem.PopupPredicted(Loc.GetString("vampire-bite-msg", ("target", Identity.Entity(args.Target, EntityManager))),
+        _popupSystem.PopupEntity(Loc.GetString("vampire-bite-msg", ("target", Identity.Entity(args.Target, EntityManager))),
+            ent.Owner,
+            ent.Owner);
+
+        _popupSystem.PopupEntity(
             Loc.GetString("vampire-bite-msg-other", ("user", Identity.Entity(ent.Owner, EntityManager)), ("target", Identity.Entity(args.Target, EntityManager))),
             ent.Owner,
-            ent.Owner,
+            Filter.PvsExcept(ent.Owner),
+            true,
             PopupType.MediumCaution);
 
         var ev = new TransferDnaEvent { Donor = target, Recipient = ent.Owner };
@@ -137,17 +150,23 @@ public sealed class VampireFeedSystem : EntitySystem
         _damageable.TryChangeDamage(args.Target, ent.Comp.DamagePerTick, true, true, damage, args.User);
         _audio.PlayPredicted(ent.Comp.FeedNoise, args.Target.Value, args.User, AudioParams.Default.WithVolume(-2f).WithVariation(0.25f));
 
-        // Vampire gets a little stronger(ergo, they get more vitae)
+        // Vampire gets vitae
         if (TryComp<VampireComponent>(ent.Owner, out VampireComponent? comp))
         {
-            comp.VitaeRegenCap = comp.VitaeRegenCap + comp.VitaeCapUpgradeAmount;
+            ChangeVitaeAmount(ent.Owner, comp.VitaeGainOnDoAfter, comp, false);
+
+            if (LevelUp(ent.Owner, comp))
+                _popupSystem.PopupEntity(Loc.GetString("vampire-level-up"),
+                    args.User,
+                    args.User);
         }
 
         // Ow my neck
-        _popupSystem.PopupPredicted(Loc.GetString("vampire-feed-msg"),
-            Loc.GetString("vampire-feed-msg-other"),
+        _popupSystem.PopupEntity(Loc.GetString("vampire-feed-msg"),
             args.User,
             args.User);
+
+        _popupSystem.PopupEntity(Loc.GetString("vampire-feed-msg-others", ("entity", args.User)), args.User, Filter.PvsExcept(args.User), true);
 
         // Check if we can still feed, if so, repeat
         args.Repeat = IsTargetValid(args.Target.Value, ent);

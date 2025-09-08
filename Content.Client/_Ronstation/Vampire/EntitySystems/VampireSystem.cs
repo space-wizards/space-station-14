@@ -1,4 +1,5 @@
 using Content.Shared._Ronstation.Vampire.Components;
+using Content.Shared._Ronstation.Vampire.EntitySystems;
 using Content.Client.Alerts;
 using Content.Shared.Alert;
 using Content.Shared.Alert.Components;
@@ -7,7 +8,7 @@ using Content.Shared.StatusIcon.Components;
 using Robust.Client.Player;
 using Robust.Shared.Prototypes;
 
-namespace Content.Client._Ronstation.Vampire.EntitySystems;
+namespace Content.Client._Ronstation.Vampire.SharedVampireSystem;
 
 public sealed class VampireSystem : EntitySystem
 {

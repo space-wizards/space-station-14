@@ -1,3 +1,4 @@
+using Content.Shared._Ronstation.Vampire.EntitySystems;
 using Content.Shared._Ronstation.Vampire.Components;
 using Content.Shared.Actions;
 using Content.Shared.Alert;
@@ -8,7 +9,7 @@ using Robust.Shared.Player;
 
 namespace Content.Server._Ronstation.Vampire.EntitySystems;
 
-public sealed class VampireSystem : EntitySystem
+public sealed partial class VampireSystem : SharedVampireSystem
 {
     [Dependency] private readonly AlertsSystem _alerts = default!;
     public override void Initialize()
@@ -16,6 +17,7 @@ public sealed class VampireSystem : EntitySystem
         base.Initialize();
 
         SubscribeLocalEvent<VampireComponent, ComponentStartup>(OnStartup);
+        InitializeAbilities();
     }
     private void OnStartup(EntityUid uid, VampireComponent component, ComponentStartup args)
     {
@@ -29,12 +31,26 @@ public sealed class VampireSystem : EntitySystem
             return false;
 
         component.Vitae += amount;
+        component.StolenVitae += amount;
         Dirty(uid, component);
 
         if (regenCap)
             FixedPoint2.Min(component.Vitae, component.VitaeRegenCap);
 
         _alerts.ShowAlert(uid, component.VitaeAlert);
+
+        return true;
+    }
+    public bool LevelUp(EntityUid uid, VampireComponent? component = null)
+    {
+        if (!Resolve(uid, ref component))
+            return false;
+        if (component.StolenVitae < component.LevelUpValue)
+            return false;
+
+        component.VitaeRegenCap += component.VitaeCapUpgradeAmount;
+        component.LevelUpValue += 60f;
+        Dirty(uid, component);
 
         return true;
     }
