@@ -651,8 +651,9 @@
         whitelist:
           tags: #STARLIGHT start
           - MicroManipulatorStockPart
-          components:
-          - Battery #STARLIGHT end
+          - PowerCell
+          - PowerCellSmall
+                #STARLIGHT end
     - hand:
         emptyRepresentative: SpaceHeaterFlatpack
         emptyLabel: borg-slot-flatpacks-empty
