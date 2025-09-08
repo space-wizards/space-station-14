@@ -377,7 +377,7 @@ public sealed class DamageableSystem : EntitySystem
     [Obsolete("Use the Entity<Comp> variant instead")]
     public void SetDamageModifierSetId(EntityUid uid, string? damageModifierSetId, DamageableComponent? comp = null)
     {
-        if (!Resolve(uid, ref comp))
+        if (!_damageableQuery.Resolve(uid, ref comp))
             return;
 
         SetDamageModifierSetId((uid, comp), damageModifierSetId);
