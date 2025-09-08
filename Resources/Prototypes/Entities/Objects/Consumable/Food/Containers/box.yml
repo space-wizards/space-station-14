@@ -851,8 +851,8 @@
         orGroup: GiftPool
       - id: ToySword
         orGroup: GiftPool
-      - id: RevolverCapGun
-        orGroup: GiftPool
+      # - id: RevolverCapGun
+      #   orGroup: GiftPool
       - id: ToyRubberDuck
         orGroup: GiftPool
       - id: BikeHorn
