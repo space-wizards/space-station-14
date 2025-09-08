@@ -1652,9 +1652,6 @@ entities:
         175:
           position: 3,3
           _rotation: South
-        176:
-          position: 4,3
-          _rotation: South
         177:
           position: 5,3
           _rotation: South
@@ -1686,7 +1683,6 @@ entities:
           - 173
           - 174
           - 175
-          - 176
           - 177
 - proto: CableApcExtension
   entities:

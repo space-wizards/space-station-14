@@ -31,7 +31,6 @@
     - type: Weldable
       time: 3
     - type: VentCrawTube
-      containerId: VentCrawTube
     - type: VentCrawEntry
     - type: ContainerContainer
       containers:
@@ -128,7 +127,6 @@
     - type: Weldable
       time: 3
     - type: VentCrawTube
-      containerId: VentCrawTube
     - type: VentCrawEntry
     - type: ContainerContainer
       containers:
@@ -223,7 +221,6 @@
     - type: AtmosMonitoringConsoleDevice
       navMapBlip: GasVentOpening
     - type: VentCrawTube
-      containerId: VentCrawTube
     - type: VentCrawJunction
       degrees:
         - 0

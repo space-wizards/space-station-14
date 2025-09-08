@@ -1,7 +1,7 @@
 - type: latheRecipePack
   id: StarlightDocs
   recipes:
-  # Reports
+  - PrintedDocumentReportMorgueRecipe
   - PrintedDocumentReportStationRecipe
   - PrintedDocumentReportOnEliminationOfViolationsRecipe
   - PrintedDocumentReporDepartmentRecipe

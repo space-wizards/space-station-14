@@ -173,6 +173,6 @@
     energy: 1.6
     color: "#43ccb5"
   - type: Computer
-    board: CargoShuttleConsoleCircuitboard
+    board: SalvageShuttleConsoleCircuitboard
   - type: StealTarget
     stealGroup: SalvageShuttleConsoleCircuitboard

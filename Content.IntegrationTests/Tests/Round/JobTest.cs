@@ -13,7 +13,7 @@ namespace Content.IntegrationTests.Tests.Round;
 [TestFixture]
 public sealed class JobTest
 {
-    private static readonly ProtoId<JobPrototype> Passenger = "Passenger";
+    private static readonly ProtoId<JobPrototype> Passenger = "Assistant"; //starlight
     private static readonly ProtoId<JobPrototype> Engineer = "StationEngineer";
     private static readonly ProtoId<JobPrototype> Captain = "Captain";
 
@@ -146,9 +146,11 @@ public sealed class JobTest
 
         await pair.SetJobPriorities( new ()
         {
-            {Passenger, JobPriority.Medium},
-            {Engineer, JobPriority.High},
-            {Captain, JobPriority.Low},
+            //starlight change https://github.com/ss14Starlight/space-station-14/pull/1109
+            //essentially, weight only matters for each category now instead of globally
+            { Passenger, JobPriority.Medium},
+            {Engineer, JobPriority.Medium},
+            {Captain, JobPriority.Medium},
         });
         await pair.SetJobPreferences([Passenger, Engineer, Captain]);
         ticker.ToggleReadyAll(true);

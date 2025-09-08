@@ -130,20 +130,44 @@
         - BorgModuleSyndicateWeapon
 
 - type: entity
-  parent: BaseBorgiChassis
-  id: ShadowBorgiChassis
-  name: Shadow Borgi
-  suffix: Shadow Factory
-  description: A contributor to a menacing plot to convert the station.
+  parent: [ BaseXenoborgChassis, BaseBorgiChassis ]
+  id: XenoBorgiChassis
+  name: XenoBorgi
+  description:  A man-machine hybrid that aims to replicate itself. They love extracting brains to insert into fresh Xenoborg chassis to grow their army. This one seems to be an borgi type, as it has inferior flesh in exchange for hands to support the other Xenoborgs.
   components:
+    - type: Sprite
+      drawdepth: Mobs
+      sprite: Mobs/Pets/corgi.rsi
+      layers:
+      # Additional layers required for borg states
+      - map: ["enum.DamageStateVisualLayers.Base"]
+        state: corgi
+      - map: [ "enum.HumanoidVisualLayers.Handcuffs" ]
+        color: "#ffffff"
+        sprite: Objects/Misc/handcuffs.rsi # Would do a custom dog handcuff sprite but unfortunately handcuffs have their overlay baked-in to the cuff itself so this is mostly filler
+        state: body-overlay-2
+        visible: false
+      - map: ["enum.BorgVisualLayers.Body"]
+        state: corgi
+        visible: false
+      - state: corgitag
+        map: ["enum.BorgVisualLayers.Light"]
+        shader: unshaded
+        visible: false
+      - state: corgitag
+        map: ["enum.BorgVisualLayers.LightStatus"]
+        shader: unshaded
+        visible: false
     - type: BorgChassis
+      hasMindState: corgitag
+      noMindState: corgitag
       maxModules: 8
       moduleWhitelist:
         tags:
         - BorgModuleSyndicate
         - BorgModuleGeneric
         - BorgModuleMedical
-        - BorgModuleEngineering
+        - XenoborgModuleGeneric
     - type: SiliconLawProvider
       laws: ShadowFactoryBorgiLawset
       subverted: true
@@ -153,38 +177,11 @@
     - type: ContainerFill
       containers:
         borg_module:
-        - BorgModuleTool
-        - BorgModuleAdvancedTool
+        - XenoborgModuleBasic
+        - XenoborgModuleTool
         - BorgModuleSyndicateWeapon
         - BorgModuleTopicals
-        - BorgModuleFireExtinguisher
-    - type: NpcFactionMember
-      factions:
-      - Syndicate
-    - type: Access
-      tags:
-      - NuclearOperative
-      - SyndicateAgent
-    - type: ShowSyndicateIcons
-    - type: IntrinsicRadioTransmitter
-      channels:
-      - Syndicate
-      - Binary
-    - type: ActiveRadio
-      channels:
-      - Syndicate
-      - Binary
-    - type: Lock
-      locked: false
-      unlockOnClick: false
-    - type: LockingWhitelist
-      blacklist:
-        components:
-        - RoboticsConsole
-      whitelist:
-        components:
-        - BorgChassis
-    - type: Barotrauma # Shadow borgis largely do not have access to hardsuits so nerf the space damage they take
+    - type: Barotrauma # borgis largely do not have access to hardsuits so nerf the space damage they take
       maxDamage: 1
       damage:
         types:
@@ -193,36 +190,90 @@
       coldDamage:
         types:
           Cold: 0.01
+    - type: LanguageKnowledge
+      speaks:
+      - GalacticCommon
+      - Machine
+      - Dog
+      understands:
+      - GalacticCommon
+      - SolCommon
+      - Machine
+      - Canilunzt
+      - Sign
+      - Bubblish
+      - Chittin
+      - Draconic
+      - Marish
+      - Moffic
+      - Nekomimetic
+      - Sylvan
+      - Terrum
+      - VoxPidgin
+      - Scratch
+      - Dog
+    - type: Inventory
+      speciesId: dog
+      templateId: SmartCorgi
+      displacements:
+        belt:
+          sizeMaps:
+            32:
+              sprite: Mobs/Pets/displacements.rsi
+              state: corgi_belt_displacement
+        ears:
+          sizeMaps:
+            32:
+              sprite: Mobs/Pets/displacements.rsi
+              state: corgi_belt_displacement
+        head:
+          sizeMaps:
+            32:
+              sprite: Mobs/Pets/displacements.rsi
+              state: corgi_head_displacement
+    - type: LockingWhitelist
+      blacklist: #N/A you are the 2nd in command. if the mothership put you in this spot you are TRUSTED
+
+- type: entity
+  parent: XenoBorgiChassis
+  id: XenoBorgiPrinted
+  suffix: Cell
+  components:
+    - type: ContainerFill
+      containers:
+        borg_brain:
+        - MMI
+        borg_module:
+        - XenoborgModuleBasic
+        - XenoborgModuleTool
+        - BorgModuleSyndicateWeapon
+        - BorgModuleTopicals
     - type: ItemSlots
       slots:
         cell_slot:
           name: power-cell-slot-component-slot-name-default
           startingItem: PowerCellHyper
 
+
 - type: entity
-  parent: ShadowBorgiChassis
-  id: StarterShadowBorgiChassis
-  name: Shadow Borgi
-  suffix: InitialSpawn; ShadowFactory
-  description: A leader of a menacing plot to convert the station.
+  parent: XenoBorgiPrinted
+  id: FilledXenoBorgiChassis
+  name: XenoBorgi
+  suffix: Cell, Brain
   components:
     - type: GhostRole
-      name: Shadow Borgi
-      description: Your job is to run a shadow factory and forcibly convert the station into borgis!
-      rules: Check your laws upon being fitted to your chassis.  You are a team antagonist, and your goal is to kill everyone you can on the station, bring them back to your ship, gib them, and borg them.  Exercise prudence about your targetting as you are made of flesh, and therefore feeble.
+      name: XenoBorgi
+      description: Your job is to assist the mothership with their duties with your pair of hands. You of inferior flesh have a job to do.
+      rules: Check your laws upon being fitted to your chassis. You are a team antagonist, and your goal is to kill everyone you can on the station, bring them back to your ship, gib them, and borg them. Exercise prudence about your targetting as you are made of flesh, and therefore feeble.
       raffle:
         settings: default
     - type: GhostTakeoverAvailable
-    - type: SiliconLawProvider
-      laws: ShadowFactoryBorgiLawset
-      subverted: true
     - type: ContainerFill
       containers:
         borg_brain:
-        - PositronicBrain
+        - MMIFilled
         borg_module:
-        - BorgModuleTool
-        - BorgModuleAdvancedTool
+        - XenoborgModuleBasic
+        - XenoborgModuleTool
         - BorgModuleSyndicateWeapon
         - BorgModuleTopicals
-        - BorgModuleFireExtinguisher

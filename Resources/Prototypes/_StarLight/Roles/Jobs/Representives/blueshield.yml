@@ -59,3 +59,10 @@
     back:
     - Flash
     - ClothingMaskGasBSO
+
+- type: chameleonOutfit
+  id: BlueShieldChameleonOutfit
+  job: BlueShield
+  equipment:
+    head: ClothingHeadHatBeretBlueShield
+    gloves: ClothingHandsGlovesCombat
