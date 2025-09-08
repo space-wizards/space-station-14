@@ -24,6 +24,9 @@ public sealed class DamageableSystem : EntitySystem
     [Dependency] private readonly IConfigurationManager _config = default!;
     [Dependency] private readonly SharedChemistryGuideDataSystem _chemistryGuideData = default!;
 
+    private EntityQuery<AppearanceComponent> _appearanceQuery;
+    private EntityQuery<DamageableComponent> _damageableQuery;
+
     public float UniversalAllDamageModifier { get; private set; } = 1f;
     public float UniversalAllHealModifier { get; private set; } = 1f;
     public float UniversalMeleeDamageModifier { get; private set; } = 1f;
