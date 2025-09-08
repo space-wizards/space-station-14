@@ -1301,7 +1301,7 @@
       hands:
       - item: SelfDestructSeq
         hand:
-          emptyRepresentation: SelfDestructSeq
+          emptyRepresentative: ExGrenade
           emptyLabel: borg-slot-martyr-bomb-empty
           whitelist:
             tags:
