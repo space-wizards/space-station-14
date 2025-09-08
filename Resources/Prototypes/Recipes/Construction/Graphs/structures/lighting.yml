@@ -36,13 +36,13 @@
           steps:
             - material: Steel
               amount: 2
-              doafter: 2.0
+              doAfter: 2.0
             - material: Glass
               amount: 2
-              doafter: 2.0
+              doAfter: 2.0
             - material: Cable
               amount: 1
-              doafter: 2.0
+              doAfter: 2.0
     - node: tubeLight
       entity: PoweredlightEmpty
       edges:
