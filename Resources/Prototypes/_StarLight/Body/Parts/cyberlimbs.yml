@@ -383,19 +383,19 @@
   parent: [PartCyber, BaseLeftArm]
   components:
     - type: BaseLayerId
-      layer: CyberLArmSilver
+      layer: CyberLArmRipper
     - type: BaseLayerIdToggled
-      layer: CyberLArmSilverReaper
+      layer: CyberLArmRipperRipping
     - type: Sprite
       sprite: _Starlight/Mobs/Species/Cyberlimbs/parts.rsi
-      state: "l_silver_arm"
+      state: "l_ripper_arm"
     - type: Icon
       sprite: _Starlight/Mobs/Species/Cyberlimbs/parts.rsi
-      state: "l_silver_arm"
+      state: "l_ripper_arm"
     - type: LimbWithItems
       action: ActionToggleCyberHandLeft
       sound: 
-        path: /Audio/_Starlight/Medical/Cyber/deploy.ogg
+        path: /Audio/Effects/metal_scrape1.ogg
       items:
         - ScalpelRipper
         - RetractorRipper
@@ -415,19 +415,19 @@
   parent: [PartCyber, BaseRightArm]
   components:
     - type: BaseLayerId
-      layer: CyberRArmSilver
+      layer: CyberRArmRipper
     - type: BaseLayerIdToggled
-      layer: CyberRArmSilverReaper
+      layer: CyberRArmRipperRipping
     - type: Sprite
       sprite: _Starlight/Mobs/Species/Cyberlimbs/parts.rsi
-      state: "r_silver_arm"
+      state: "r_ripper_arm"
     - type: Icon
       sprite: _Starlight/Mobs/Species/Cyberlimbs/parts.rsi
-      state: "r_silver_arm"
+      state: "r_ripper_arm"
     - type: LimbWithItems
       action: ActionToggleCyberHandRight
       sound: 
-        path: /Audio/_Starlight/Medical/Cyber/deploy.ogg
+        path: /Audio/Effects/metal_scrape1.ogg
       items:
         - ScalpelRipper
         - RetractorRipper
