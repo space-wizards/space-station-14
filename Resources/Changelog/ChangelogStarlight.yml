@@ -13543,5 +13543,12 @@ Entries:
   id: 151703
   time: '2025-09-08T21:03:11.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/1517
+- author: Citrea
+  changes:
+  - message: Robotics can now produce Personnel Transport Modules for cyborgs.
+    type: Add
+  id: 142500
+  time: '2025-09-08T21:12:13.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1425
 Order: -1
 
