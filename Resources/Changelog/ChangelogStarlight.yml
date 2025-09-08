@@ -13571,5 +13571,33 @@ Entries:
   id: 142000
   time: '2025-09-08T21:31:09.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/1420
+- author: Vonte
+  changes:
+  - message: reorganised rooms inside Orwell security.
+    type: Tweak
+  id: 137600
+  time: '2025-09-08T22:24:25.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1376
+- author: Vonte
+  changes:
+  - message: other minor changes around the station listed in the description.
+    type: Tweak
+  id: 137601
+  time: '2025-09-08T22:24:25.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1376
+- author: Vonte
+  changes:
+  - message: changes to the engineering locker-room and atmos.
+    type: Tweak
+  id: 137602
+  time: '2025-09-08T22:24:25.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1376
+- author: Vonte
+  changes:
+  - message: added rooms that the security department in Orwell were missing.
+    type: Add
+  id: 137603
+  time: '2025-09-08T22:24:25.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1376
 Order: -1
 
