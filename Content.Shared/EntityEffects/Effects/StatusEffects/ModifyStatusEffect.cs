@@ -65,8 +65,16 @@ public sealed partial class ModifyStatusEffect : EntityEffect
     }
 
     /// <inheritdoc />
-    protected override string? ReagentEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys)
-        => Loc.GetString(
+    protected override string? ReagentEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys) =>
+        Delay > 0
+        ? Loc.GetString(
+            "reagent-effect-guidebook-status-effect-delay",
+            ("chance", Probability),
+            ("type", Type),
+            ("time", Time),
+            ("key", prototype.Index(EffectProto).Name),
+            ("delay", Delay))
+        : Loc.GetString(
             "reagent-effect-guidebook-status-effect",
             ("chance", Probability),
             ("type", Type),

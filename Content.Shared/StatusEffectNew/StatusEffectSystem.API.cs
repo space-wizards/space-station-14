@@ -116,7 +116,7 @@ public sealed partial class StatusEffectsSystem
 
         if (!TryGetStatusEffect(target, effectProto, out statusEffect))
             return TryAddStatusEffect(target, effectProto, out statusEffect, duration, delay);
-        
+
         if (!TryComp<StatusEffectComponent>(statusEffect, out var statusEffectComponent))
             return false;
 
