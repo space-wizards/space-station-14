@@ -1,0 +1,17 @@
+- type: trait
+  id: ArchaicAccent
+  name: trait-archaic-accent-name
+  description: trait-archaic-accent-desc
+  category: SpeechTraits
+  cost: 2
+  components:
+    - type: ArchaicAccent
+
+- type: trait
+  id: ScottishAccent
+  name: trait-scottish-accent-name
+  description: trait-scottish-accent-desc
+  category: SpeechTraits
+  cost: 2
+  components:
+    - type: ScottishAccent
