@@ -29,6 +29,8 @@
   - type: OrganVisualization
     layer: Eyes
     prototype: CyberEyesNightVision
+  - type: RoundstartImplantable
+    cost: 5
 
 - type: entity
   id: CyberEyeThermal
@@ -45,6 +47,8 @@
   - type: OrganVisualization
     layer: Eyes
     prototype: CyberEyesThermalVision
+  - type: RoundstartImplantable
+    cost: 6
 
 - type: entity
   id: BudgetCyberEyes
@@ -63,6 +67,8 @@
   - type: OrganVisualization
     layer: Eyes
     prototype: MobHumanoidEyes
+  - type: RoundstartImplantable
+    cost: -1
 
 - type: entity
   id: BudgetCyberTongue
@@ -76,6 +82,8 @@
   - type: FunctionalOrgan
     comps: 
     - type: UnableToTaste
+  - type: RoundstartImplantable
+    cost: -1
 
 - type: entity
   id: BudgetCyberLiver
@@ -92,6 +100,8 @@
     groups:
     - id: Alcohol
       rateModifier: 0.1 # removes alcohol very slowly along with the stomach removing it as a drink
+  - type: RoundstartImplantable
+    cost: -1
 
 - type: entity
   id: BudgetCyberStomach
@@ -117,6 +127,8 @@
     groups:
     - id: Food
     - id: Drink
+  - type: RoundstartImplantable
+    cost: -1
 
 - type: entity
   id: BudgetCyberKidneys
@@ -133,3 +145,5 @@
     comps: 
     - type: ThirstRateMultiplier
       multiplier: 1.25
+  - type: RoundstartImplantable
+    cost: -1
