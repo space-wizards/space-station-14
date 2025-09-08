@@ -13564,5 +13564,12 @@ Entries:
   id: 153001
   time: '2025-09-08T21:28:15.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/1530
+- author: Way
+  changes:
+  - message: Morgue report document to printer
+    type: Add
+  id: 142000
+  time: '2025-09-08T21:31:09.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1420
 Order: -1
 
