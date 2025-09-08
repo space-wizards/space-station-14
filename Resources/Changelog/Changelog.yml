@@ -1,42 +1,4 @@
 ﻿Entries:
-- author: Quantum-cross
-  changes:
-  - message: Hosted anomaly effects not appearing at host when host is in container
-      or buckled
-    type: Fix
-  id: 8425
-  time: '2025-05-06T17:01:37.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/37179
-- author: ScarKy0
-  changes:
-  - message: Borgs, brains, zombies and similiar now correctly count as "marooned"
-      even while on the evac shuttle.
-    type: Fix
-  id: 8426
-  time: '2025-05-06T17:24:26.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/37148
-- author: B-Kirill
-  changes:
-  - message: Added a collapse button for the lobby right panel, improving visibility
-      of the background artwork.
-    type: Add
-  id: 8427
-  time: '2025-05-06T17:24:59.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/37140
-- author: Morty, lzk228
-  changes:
-  - message: Speech bubbles now indicate when a person is thinking of what to say.
-    type: Tweak
-  id: 8428
-  time: '2025-05-06T17:49:42.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/29349
-- author: Prole0
-  changes:
-  - message: Water bottles now fit in dispensers!
-    type: Tweak
-  id: 8429
-  time: '2025-05-06T18:13:34.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/37108
 - author: OnyxTheBrave
   changes:
   - message: Holy water now correctly metabolizes at .5 unites per second
@@ -3946,3 +3908,41 @@
   id: 8936
   time: '2025-09-06T16:00:24.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/40161
+- author: Dutch-VanDerLinde
+  changes:
+  - message: Some jumpsuits may now be folded to give them an alternate look.
+    type: Add
+  id: 8937
+  time: '2025-09-06T17:55:02.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/31213
+- author: Crude Oil
+  changes:
+  - message: Regular syringes no longer have the 1u transfer amount
+    type: Fix
+  id: 8938
+  time: '2025-09-07T14:01:26.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/40197
+- author: FairlySadPanda
+  changes:
+  - message: Removing displaced markings no longer makes the renderer give up.
+    type: Fix
+  - message: Vulpkanin can once again use normal human hair.
+    type: Fix
+  id: 8939
+  time: '2025-09-07T14:36:38.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/40171
+- author: ArtisticRoomba
+  changes:
+  - message: Atmospherics Delta-Pressure now has a short guidebook entry. You can
+      find it in Jobs > Engineering > Atmospherics > Atmospheric Upsets > Delta Pressure.
+    type: Add
+  id: 8940
+  time: '2025-09-07T15:10:39.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/40194
+- author: Banditoz
+  changes:
+  - message: You can cross chasms with the grapple gun.
+    type: Add
+  id: 8941
+  time: '2025-09-08T00:34:01.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/39983
