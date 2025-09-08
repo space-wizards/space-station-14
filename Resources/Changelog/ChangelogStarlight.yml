@@ -13447,5 +13447,12 @@ Entries:
   id: 35600
   time: '2025-09-08T20:03:51.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/356
+- author: Arkanic
+  changes:
+  - message: Fixed zombie mice, moproaches from being unable to attack
+    type: Fix
+  id: 153600
+  time: '2025-09-08T20:14:00.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1536
 Order: -1
 
