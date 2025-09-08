@@ -77,9 +77,7 @@
         gasMixture:
           volume: 1000
           moles:
-            - 0 # oxygen
-            - 0 # nitrogen
-            - 340.5701689 # carbon dioxide
+            CarbonDioxide: 340.5701689 # carbon dioxide
           temperature: 373.15
   - type: Repairable
     doAfterDelay: 30 # you can heal the mothership core, but it takes a while
@@ -90,6 +88,17 @@
     maxIntensity: 100
     intensitySlope: 2
     totalIntensity: 200
+  - type: SurveillanceCameraSpeaker
+  - type: SurveillanceCameraMonitor
+  - type: RoboticsConsole
+    allowBorgControl: false
+    radioChannel: Xenoborg
+  - type: DeviceNetwork
+    deviceNetId: Wireless
+    receiveFrequencyId: Mothership
+    transmitFrequencyId: Mothership
+  - type: WirelessNetworkConnection
+    range: 10000 # mothership can see them from very far
   - type: WiresPanel
   - type: ActivatableUI
     key: enum.LatheUiKey.Key
@@ -101,6 +110,10 @@
         requireInputValidation: false
       enum.RadarConsoleUiKey.Key:
         type: RadarConsoleBoundUserInterface
+      enum.RoboticsConsoleUiKey.Key:
+        type: RoboticsConsoleBoundUserInterface
+      enum.SurveillanceCameraMonitorUiKey.Key:
+        type: SurveillanceCameraMonitorBoundUserInterface
       enum.LatheUiKey.Key:
         type: LatheBoundUserInterface
       enum.ResearchClientUiKey.Key:
@@ -184,9 +197,38 @@
     uis:
       enum.RadarConsoleUiKey.Key:
         toggleAction: ActionAGhostShowRadar
+      enum.RoboticsConsoleUiKey.Key:
+        toggleAction: ActionXenoborgControlMonitor
+      enum.SurveillanceCameraMonitorUiKey.Key:
+        toggleAction: ActionXenoborgCameraMonitor
   - type: ShowElectrocutionHUD
   - type: PowerMonitoringCableNetworks
   - type: RadarConsole
 
-# TODO: add xenoborg control interface action (part 5)
-# TODO: add xenoborg camera monitor interface action (part 5)
+- type: entity
+  parent: BaseAGhostAction
+  id: ActionXenoborgControlMonitor
+  name: Xenoborgs Control Console
+  description: View the Xenoborgs Control Console
+  components:
+  - type: Action
+    icon: { sprite: Interface/Actions/actions_borg.rsi, state: xenoborg-basic-module }
+    iconOn: { sprite: Interface/Actions/actions_borg.rsi, state: xenoborg-basic-module }
+    keywords: [ "Mothership Core", "console", "interface" ]
+    priority: -6
+  - type: InstantAction
+    event: !type:ToggleIntrinsicUIEvent { key: enum.RoboticsConsoleUiKey.Key }
+
+- type: entity
+  parent: BaseAGhostAction
+  id: ActionXenoborgCameraMonitor
+  name: Xenoborgs Camera Monitor
+  description: View the Xenoborgs Camera Monitor
+  components:
+  - type: Action
+    icon: { sprite: Interface/Actions/actions_borg.rsi, state: xenoborg-eye-module }
+    iconOn: { sprite: Interface/Actions/actions_borg.rsi, state: xenoborg-eye-module }
+    keywords: [ "Mothership Core", "console", "interface" ]
+    priority: -6
+  - type: InstantAction
+    event: !type:ToggleIntrinsicUIEvent { key: enum.SurveillanceCameraMonitorUiKey.Key }
