@@ -298,7 +298,6 @@ public partial class SharedBodySystem
     {
         var gibs = new HashSet<EntityUid>();
 
-
         if (!Resolve(bodyId, ref body, logMissing: false))
             return gibs;
 
