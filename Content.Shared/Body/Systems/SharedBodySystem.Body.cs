@@ -298,19 +298,21 @@ public partial class SharedBodySystem
     {
         var gibs = new HashSet<EntityUid>();
 
-        var allInventoryItems = _inventory.TryUnequipAll(bodyId, launchGibs, launchGibs);
-        gibs.UnionWith(allInventoryItems);
 
         if (!Resolve(bodyId, ref body, logMissing: false))
             return gibs;
+
+        var parts = GetBodyChildren(bodyId, body).ToArray();
+        var allInventoryItems = _inventory.TryUnequipAll(bodyId, launchGibs, launchGibs);
+
+        gibs.EnsureCapacity(parts.Length + allInventoryItems.Count);
+        gibs.UnionWith(allInventoryItems);
 
         var root = GetRootPartOrNull(bodyId, body);
         if (root != null && TryComp(root.Value.Entity, out GibbableComponent? gibbable))
         {
             gibSoundOverride ??= gibbable.GibSound;
         }
-        var parts = GetBodyChildren(bodyId, body).ToArray();
-        gibs.EnsureCapacity(parts.Length + allInventoryItems.Count);
         foreach (var part in parts)
         {
 
