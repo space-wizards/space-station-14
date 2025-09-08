@@ -117,3 +117,6 @@ accent-polite-replacement-39 = lovely person
 
 accent-polite-replaced-40 = fucking
 accent-polite-replacement-40 = loving
+
+accent-polite-replaced-41 = an asshole
+accent-polite-replacement-41 = a friend
