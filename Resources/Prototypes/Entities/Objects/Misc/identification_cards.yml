@@ -140,6 +140,7 @@
   name: warden ID card
   components:
     - type: Sprite
+      sprite: _Ronstation/Objects/Misc/id_cards.rsi # Ronstation - It has it's own sprite now.
       layers:
         - state: default
         - state: idwarden
