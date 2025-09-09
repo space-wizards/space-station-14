@@ -654,6 +654,7 @@
           - MicroManipulatorStockPart
           - PowerCell
           - PowerCellSmall
+          - PowerCage
         #STARLIGHT end
     - hand:
         emptyRepresentative: SpaceHeaterFlatpack
