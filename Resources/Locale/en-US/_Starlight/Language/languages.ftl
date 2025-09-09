@@ -91,3 +91,6 @@ language-Pig-description = Oink!
 
 language-Bat-name = Bat
 language-Bat-description = Eek!
+
+language-Thaveyan-name = Thaveyan
+language-Thaveyan-description = A lyrical sing-songy language common to the Thaven which reminds others of listening to the waves.

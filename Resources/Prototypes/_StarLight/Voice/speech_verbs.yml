@@ -15,3 +15,12 @@
   - chat-speech-verb-vulpkanin-2
   - chat-speech-verb-vulpkanin-3
   - chat-speech-verb-vulpkanin-4
+
+- type: speechVerb
+  id: Thaven
+  name: chat-speech-verb-name-thaven
+  speechVerbStrings:
+  - chat-speech-verb-thaven-1
+  - chat-speech-verb-thaven-2
+  - chat-speech-verb-thaven-3
+  - chat-speech-verb-thaven-4
