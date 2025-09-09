@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: Ghagliiarghii
-  changes:
-  - message: Fixed a bug which allowed Janitor borgs to delete a held item and acquire
-      an empty hand.
-    type: Fix
-  id: 8432
-  time: '2025-05-06T19:10:10.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/36961
 - author: UpAndLeaves
   changes:
   - message: wearing an elite web vest and an atmos fire helmet will no longer heal
@@ -3946,3 +3938,11 @@
   id: 8943
   time: '2025-09-09T02:44:31.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/40206
+- author: Kittygyat
+  changes:
+  - message: Changed the Galoshes description to be more descriptive of what they
+      actually do.
+    type: Tweak
+  id: 8944
+  time: '2025-09-09T02:47:46.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/40200
