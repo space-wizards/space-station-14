@@ -33,6 +33,7 @@ public sealed class SpecializationConsoleSystem : SharedSpecializationConsoleSys
         // SubscribeLocalEvent<SpecializationConsoleComponent, SpecializationChangedMessage>(OnSpecializationChanged);
         SubscribeLocalEvent<SpecializationConsoleComponent, EntInsertedIntoContainerMessage>(UpdateUserInterface);
         SubscribeLocalEvent<SpecializationConsoleComponent, EntRemovedFromContainerMessage>(UpdateUserInterface);
+        SubscribeLocalEvent<SpecializationConsoleComponent, BoundUIOpenedEvent>(UpdateUserInterface);
     }
 
     private void UpdateUserInterface(EntityUid uid,
@@ -40,25 +41,13 @@ public sealed class SpecializationConsoleSystem : SharedSpecializationConsoleSys
         EntityEventArgs args)
     {
         SpecializationConsoleBoundInterfaceState newState;
-        if (component.TargetIdSlot.Item is not { Valid: true } targetId)
-        {
-            newState = new SpecializationConsoleBoundInterfaceState(
-                component.PrivilegedIdSlot.HasItem,
-                component.TargetIdSlot.HasItem,
-                null,
-                null,
-                null,
-                null,
-                null);
-        }
-        else
+        if (component.TargetIdSlot.Item is { Valid: true } targetId)
         {
             var targetIdComponent = Comp<IdCardComponent>(targetId);
 
             if (!TryComp<StationRecordKeyStorageComponent>(targetId, out var keyStorage))
                 return;
             var stationRecord = keyStorage.CachedRecord;
-
 
             newState = new SpecializationConsoleBoundInterfaceState(
                 component.PrivilegedIdSlot.HasItem,
@@ -69,8 +58,17 @@ public sealed class SpecializationConsoleSystem : SharedSpecializationConsoleSys
                 stationRecord?.Profile,
                 stationRecord?.JobPrototype);
         }
-
+        else
+        {
+            newState = new SpecializationConsoleBoundInterfaceState(
+                component.PrivilegedIdSlot.HasItem,
+                component.TargetIdSlot.HasItem,
+                null,
+                null,
+                null,
+                null,
+                null);
+        }
         _userInterfaceSystem.SetUiState(uid, SpecializationConsoleWindowUiKey.Key, newState);
-
     }
 }

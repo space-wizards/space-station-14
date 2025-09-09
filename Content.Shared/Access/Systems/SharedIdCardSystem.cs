@@ -143,8 +143,8 @@ public abstract class SharedIdCardSystem : EntitySystem
         {
             jobSpec = jobSpec.Trim();
 
-            if (jobSpec.Length > _maxIdJobLength)
-                jobSpec = jobSpec[.._maxIdJobLength];
+            if (jobSpec.Length > _maxJobSpecLength)
+                jobSpec = jobSpec[.._maxJobSpecLength];
         }
         else
         {
@@ -311,17 +311,23 @@ public abstract class SharedIdCardSystem : EntitySystem
         if (!Resolve(uid, ref id))
             return;
 
-        var jobSuffix = string.IsNullOrWhiteSpace(id.LocalizedJobTitle) ? string.Empty : $" ({id.LocalizedJobTitle})";
-        var jobSpecSuffix = string.IsNullOrWhiteSpace(id.JobSpecTitle) ? string.Empty : $" ({id.JobSpecTitle})";
+        var jobSuffix = string.Empty;
+        if (!string.IsNullOrWhiteSpace(id.LocalizedJobTitle))
+        {
+            jobSuffix = $" ({id.LocalizedJobTitle}";
+
+            if (!string.IsNullOrWhiteSpace(id.LocalizedJobSpecTitle))
+                jobSuffix += $", {id.LocalizedJobSpecTitle}";
+
+            jobSuffix += ")";
+        }
 
         var val = string.IsNullOrWhiteSpace(id.FullName)
             ? Loc.GetString(id.NameLocId,
-                ("jobSuffix", jobSuffix),
-                ("jobSpecSuffix}", jobSpecSuffix))
+                ("jobSuffix", jobSuffix))
             : Loc.GetString(id.FullNameLocId,
                 ("fullName", id.FullName),
-                ("jobSuffix", jobSuffix),
-                ("jobSpecSuffix}", jobSpecSuffix));
+                ("jobSuffix", jobSuffix));
         _metaSystem.SetEntityName(uid, val);
     }
 

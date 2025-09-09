@@ -37,9 +37,26 @@ public sealed class SpecializationConsoleSystem : SharedSpecializationConsoleSys
         base.Initialize();
 
         // SubscribeLocalEvent<SpecializationConsoleComponent, SpecializationChangedMessage>(OnSpecializationChanged);
-        SubscribeLocalEvent<SpecializationConsoleComponent, EntInsertedIntoContainerMessage>(UpdateUserInterface);
-        SubscribeLocalEvent<SpecializationConsoleComponent, EntRemovedFromContainerMessage>(UpdateUserInterface);
+        // SubscribeLocalEvent<SpecializationConsoleComponent, EntInsertedIntoContainerMessage>(UpdateUserInterface);
+        // SubscribeLocalEvent<SpecializationConsoleComponent, EntRemovedFromContainerMessage>(UpdateUserInterface);
         SubscribeLocalEvent<AfterGeneralRecordCreatedEvent>(OnGeneralRecordCreated);
+        SubscribeLocalEvent<SpecializationConsoleComponent, SpecializationChangedMessage>(OnSpecializationChanged);
+    }
+
+    private void OnSpecializationChanged(EntityUid uid, SpecializationConsoleComponent comp, SpecializationChangedMessage args)
+    {
+        if (!TryComp<SpecializationConsoleComponent>(uid, out var card))
+            return;
+
+        if (card.TargetIdSlot.Item is not { Valid: true } targetId )
+            // || !PrivilegedIdIsAuthorized(uid, card))
+            return;
+        if (!TryComp<IdCardComponent>(targetId, out var idCard))
+            return;
+
+        _idCard.TryChangeJobSpec(targetId, $"{args.Specialization}");
+
+        UpdateStationRecord(uid, targetId, args.Specialization);
     }
 
     private void OnGeneralRecordCreated(AfterGeneralRecordCreatedEvent ev)
@@ -50,67 +67,17 @@ public sealed class SpecializationConsoleSystem : SharedSpecializationConsoleSys
         _record.Synchronize(ev.Key);
     }
 
-    private void UpdateUserInterface(EntityUid uid,
-        SpecializationConsoleComponent component,
-        EntityEventArgs args)
-    {
-        HumanoidCharacterProfile? profile = null;
-        ProtoId<JobPrototype>? job = null;
-        SpecializationConsoleBoundInterfaceState newState;
-
-        // this could be prettier
-        if (component.TargetIdSlot.Item is not { Valid: true } targetId)
-        {
-            newState = new SpecializationConsoleBoundInterfaceState(
-                component.PrivilegedIdSlot.HasItem,
-                component.TargetIdSlot.HasItem,
-                null,
-                null,
-                null,
-                null,
-                null);
-        }
-        else
-        {
-            var targetIdComponent = Comp<IdCardComponent>(targetId);
-
-            if (TryComp<StationRecordKeyStorageComponent>(targetId, out var keyStor) &&
-                keyStor.Key is {} key &&
-                _record.TryGetRecord<GeneralStationRecord>(key, out var rec))
-            {
-                profile = rec.Profile;
-                job = rec.JobPrototype;
-            }
-
-            newState = new SpecializationConsoleBoundInterfaceState(
-                component.PrivilegedIdSlot.HasItem,
-                component.TargetIdSlot.HasItem,
-                targetIdComponent.FullName,
-                targetIdComponent.LocalizedJobTitle,
-                targetIdComponent.JobSpecTitle,
-                profile,
-                job);
-
-        }
-        _userInterfaceSystem.SetUiState(uid, SpecializationConsoleWindowUiKey.Key, newState);
-    }
-
-    private void UpdateStationRecord(EntityUid uid, EntityUid targetId, ProtoId<AccessLevelPrototype> newJobTitle, JobPrototype? newJobProto)
+    private void UpdateStationRecord(EntityUid uid, EntityUid targetId, string? newSpecTitle)
     {
         if (!TryComp<StationRecordKeyStorageComponent>(targetId, out var keyStorage)
             || keyStorage.Key is not { } key
-            || !_record.TryGetRecord<GeneralStationRecord>(key, out var record))
+            || !_record.TryGetRecord<GeneralStationRecord>(key, out var record)
+            || newSpecTitle == null)
         {
             return;
         }
 
-        record.JobTitle = newJobTitle;
-
-        if (newJobProto != null)
-        {
-            record.JobPrototype = newJobProto.ID;
-            record.JobIcon = newJobProto.Icon;
-        }
+        record.JobSpec = newSpecTitle;
 
         _record.Synchronize(key);
     }

@@ -23,7 +23,7 @@ public sealed class SpecializationConsoleBoundUserInterface(EntityUid owner, Enu
         _window.TargetIdButton.OnPressed += _ => SendPredictedMessage(new ItemSlotButtonPressedEvent(TargetIdCardSlotId));
         // _window.TargetIdButton.OnPressed += _ => SendPredictedMessage(new NewEmployeeDataEvent());
 
-        // _window.OnDialogConfirmed += spec => SendMessage(new SpecializationChangedMessage(spec));
+        _window.OnDialogConfirmed += spec => SendMessage(new SpecializationChangedMessage(spec));
 
     }
 

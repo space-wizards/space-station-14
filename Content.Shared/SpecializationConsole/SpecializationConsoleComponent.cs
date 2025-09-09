@@ -23,9 +23,6 @@ public sealed partial class SpecializationConsoleComponent : Component
     [DataField]
     public ItemSlot TargetIdSlot = new();
 
-    public HumanoidCharacterProfile? Profile;
-
-
     /// <summary>
     /// Sound to play when denying access to the device.
     /// </summary>
@@ -70,6 +67,12 @@ public sealed class SpecializationConsoleBoundInterfaceState : BoundUserInterfac
 }
 
 [Serializable, NetSerializable]
-public sealed class NewEmployeeDataEvent : BoundUserInterfaceMessage
+public sealed class SpecializationChangedMessage : BoundUserInterfaceMessage
 {
+    public string? Specialization;
+
+    public SpecializationChangedMessage(string? specialization)
+    {
+        Specialization = specialization;
+    }
 }

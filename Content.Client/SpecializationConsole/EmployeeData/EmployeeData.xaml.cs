@@ -33,6 +33,11 @@ public sealed partial class EmployeeData : Control
         IoCManager.InjectDependencies(this);
     }
 
+    public void SetJobSpec(string? jobSpec)
+    {
+        EmployeeSpecLabel.Text = jobSpec ?? string.Empty;
+    }
+
     public void SetInfo(string? entName, string? jobTitle, string? jobSpec)
     {
         EmployeeNameLabel.Text = entName ?? string.Empty;
