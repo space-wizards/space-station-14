@@ -1,0 +1,4 @@
+- type: dungeonPack
+  id: DefaultVGRoidDungeonPack
+  dungeonConfigs:
+    - VGRoid
