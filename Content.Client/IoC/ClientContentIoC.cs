@@ -21,10 +21,12 @@ using Content.Client.Voting;
 using Content.Shared.Administration.Logs;
 using Content.Client.Lobby;
 using Content.Client.Players.RateLimiting;
+using Content.Client.Roles;
 using Content.Shared.Administration.Managers;
 using Content.Shared.Chat;
 using Content.Shared.Players.PlayTimeTracking;
 using Content.Shared.Players.RateLimiting;
+using Content.Shared.Roles;
 
 namespace Content.Client.IoC
 {
@@ -52,10 +54,12 @@ namespace Content.Client.IoC
             collection.Register<ISharedAdminLogManager, SharedAdminLogManager>();
             collection.Register<GhostKickManager>();
             collection.Register<ExtendedDisconnectInformationManager>();
-            collection.Register<JobRequirementsManager>();
+            collection.Register<PlayTimeTrackingManager>();
             collection.Register<DocumentParsingManager>();
             collection.Register<ContentReplayPlaybackManager>();
-            collection.Register<ISharedPlaytimeManager, JobRequirementsManager>();
+            collection.Register<ISharedPlaytimeManager, PlayTimeTrackingManager>();
+            collection.Register<JobRequirementsManager>();
+            collection.Register<ISharedJobRequirementsManager, JobRequirementsManager>();
             collection.Register<MappingManager>();
             collection.Register<DebugMonitorManager>();
             collection.Register<PlayerRateLimitManager>();

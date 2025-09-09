@@ -5,22 +5,17 @@ using Content.Server.Afk;
 using Content.Server.Afk.Events;
 using Content.Server.GameTicking;
 using Content.Server.GameTicking.Events;
-using Content.Server.Preferences.Managers;
+using Content.Server.Roles;
 using Content.Server.Station.Events;
-using Content.Shared.CCVar;
 using Content.Shared.GameTicking;
 using Content.Shared.Mobs;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Players;
 using Content.Shared.Players.PlayTimeTracking;
-using Content.Shared.Preferences;
 using Content.Shared.Roles;
 using Robust.Server.Player;
-using Robust.Shared.Configuration;
-using Robust.Shared.Network;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Utility;
 
 namespace Content.Server.Players.PlayTimeTracking;
 
@@ -31,12 +26,11 @@ public sealed class PlayTimeTrackingSystem : EntitySystem
 {
     [Dependency] private readonly IAdminManager _adminManager = default!;
     [Dependency] private readonly IAfkManager _afk = default!;
-    [Dependency] private readonly IConfigurationManager _cfg = default!;
     [Dependency] private readonly IPlayerManager _playerManager = default!;
-    [Dependency] private readonly IServerPreferencesManager _preferencesManager = default!;
     [Dependency] private readonly IPrototypeManager _prototypes = default!;
     [Dependency] private readonly SharedRoleSystem _roles = default!;
     [Dependency] private readonly PlayTimeTrackingManager _tracking = default!;
+    [Dependency] private readonly JobRequirementsManager _jobRequirements = default!;
 
     public override void Initialize()
     {
@@ -173,80 +167,18 @@ public sealed class PlayTimeTrackingSystem : EntitySystem
 
     private void OnStationJobsGetCandidates(ref StationJobsGetCandidatesEvent ev)
     {
-        RemoveDisallowedJobs(ev.Player, ev.Jobs);
+        _jobRequirements.RemoveDisallowedJobs(ev.Player, ev.Jobs);
     }
 
     private void OnIsJobAllowed(ref IsJobAllowedEvent ev)
     {
-        if (!IsAllowed(ev.Player, ev.JobId))
+        if (!_jobRequirements.IsAllowed(ev.Player, ev.JobId, null, out _))
             ev.Cancelled = true;
     }
 
     private void OnGetDisallowedJobs(ref GetDisallowedJobsEvent ev)
     {
-        ev.Jobs.UnionWith(GetDisallowedJobs(ev.Player));
-    }
-
-    public bool IsAllowed(ICommonSession player, string role)
-    {
-        if (!_prototypes.TryIndex<JobPrototype>(role, out var job) ||
-            !_cfg.GetCVar(CCVars.GameRoleTimers))
-            return true;
-
-        if (!_tracking.TryGetTrackerTimes(player, out var playTimes))
-        {
-            Log.Error($"Unable to check playtimes {Environment.StackTrace}");
-            playTimes = new Dictionary<string, TimeSpan>();
-        }
-
-        return JobRequirements.TryRequirementsMet(job, playTimes, out _, EntityManager, _prototypes, (HumanoidCharacterProfile?) _preferencesManager.GetPreferences(player.UserId).SelectedCharacter);
-    }
-
-    public HashSet<ProtoId<JobPrototype>> GetDisallowedJobs(ICommonSession player)
-    {
-        var roles = new HashSet<ProtoId<JobPrototype>>();
-        if (!_cfg.GetCVar(CCVars.GameRoleTimers))
-            return roles;
-
-        if (!_tracking.TryGetTrackerTimes(player, out var playTimes))
-        {
-            Log.Error($"Unable to check playtimes {Environment.StackTrace}");
-            playTimes = new Dictionary<string, TimeSpan>();
-        }
-
-        foreach (var job in _prototypes.EnumeratePrototypes<JobPrototype>())
-        {
-            if (JobRequirements.TryRequirementsMet(job, playTimes, out _, EntityManager, _prototypes, (HumanoidCharacterProfile?) _preferencesManager.GetPreferences(player.UserId).SelectedCharacter))
-                roles.Add(job.ID);
-        }
-
-        return roles;
-    }
-
-    public void RemoveDisallowedJobs(NetUserId userId, List<ProtoId<JobPrototype>> jobs)
-    {
-        if (!_cfg.GetCVar(CCVars.GameRoleTimers))
-            return;
-
-        var player = _playerManager.GetSessionById(userId);
-        if (!_tracking.TryGetTrackerTimes(player, out var playTimes))
-        {
-            // Sorry mate but your playtimes haven't loaded.
-            Log.Error($"Playtimes weren't ready yet for {player} on roundstart!");
-            playTimes ??= new Dictionary<string, TimeSpan>();
-        }
-
-        for (var i = 0; i < jobs.Count; i++)
-        {
-            if (_prototypes.TryIndex(jobs[i], out var job)
-                && JobRequirements.TryRequirementsMet(job, playTimes, out _, EntityManager, _prototypes, (HumanoidCharacterProfile?) _preferencesManager.GetPreferences(userId).SelectedCharacter))
-            {
-                continue;
-            }
-
-            jobs.RemoveSwap(i);
-            i--;
-        }
+        ev.Jobs.UnionWith(_jobRequirements.GetDisallowedJobs(ev.Player));
     }
 
     public void PlayerRolesChanged(ICommonSession player)

@@ -3,7 +3,7 @@ using Content.Client.Guidebook;
 using Content.Client.Humanoid;
 using Content.Client.Inventory;
 using Content.Client.Lobby.UI;
-using Content.Client.Players.PlayTimeTracking;
+using Content.Client.Roles;
 using Content.Client.Station;
 using Content.Shared.CCVar;
 using Content.Shared.Clothing;
@@ -36,7 +36,7 @@ public sealed class LobbyUIController : UIController, IOnStateEntered<LobbyState
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly IResourceCache _resourceCache = default!;
     [Dependency] private readonly IStateManager _stateManager = default!;
-    [Dependency] private readonly JobRequirementsManager _requirements = default!;
+    [Dependency] private readonly JobRequirementsManager _jobRequirements = default!;
     [Dependency] private readonly MarkingManager _markings = default!;
     [UISystemDependency] private readonly HumanoidAppearanceSystem _humanoid = default!;
     [UISystemDependency] private readonly ClientInventorySystem _inventory = default!;
@@ -64,7 +64,7 @@ public sealed class LobbyUIController : UIController, IOnStateEntered<LobbyState
         base.Initialize();
         _prototypeManager.PrototypesReloaded += OnProtoReload;
         _preferencesManager.OnServerDataLoaded += PreferencesDataLoaded;
-        _requirements.Updated += OnRequirementsUpdated;
+        _jobRequirements.Updated += OnRequirementsUpdated;
 
         _configurationManager.OnValueChanged(CCVars.FlavorText, args =>
         {
@@ -273,7 +273,7 @@ public sealed class LobbyUIController : UIController, IOnStateEntered<LobbyState
             _playerManager,
             _prototypeManager,
             _resourceCache,
-            _requirements,
+            _jobRequirements,
             _markings);
 
         _profileEditor.OnOpenGuidebook += _guide.OpenHelp;
