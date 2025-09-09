@@ -106,7 +106,8 @@ public sealed partial class VampireSystem
         // I am biting someone/Hey a vampire is biting someone
         _popupSystem.PopupEntity(Loc.GetString("vampire-bite-msg", ("target", Identity.Entity(args.Target, EntityManager))),
             ent.Owner,
-            ent.Owner);
+            ent.Owner,
+            PopupType.MediumCaution);
 
         _popupSystem.PopupEntity(
             Loc.GetString("vampire-bite-msg-other", ("user", Identity.Entity(ent.Owner, EntityManager)), ("target", Identity.Entity(args.Target, EntityManager))),
@@ -177,7 +178,7 @@ public sealed partial class VampireSystem
             args.User,
             args.User);
 
-        _popupSystem.PopupEntity(Loc.GetString("vampire-feed-msg-others", ("entity", args.User)), args.User, Filter.PvsExcept(args.User), true);
+        _popupSystem.PopupEntity(Loc.GetString("vampire-feed-msg-other", ("entity", args.User)), args.User, Filter.PvsExcept(args.User), true);
 
         // Check if we can still feed, if so, repeat
         args.Repeat = IsTargetValid(args.Target.Value, ent);
