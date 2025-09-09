@@ -15,3 +15,4 @@ research-technology-thermalvision-eyes = Thermal Vision Cyber Eyes
 
 research-technology-ion-weaponry = Ion Weaponry
 research-technology-declone-technology = Declone Technology
+research-technology-scan-gate = Scan Gates Technology

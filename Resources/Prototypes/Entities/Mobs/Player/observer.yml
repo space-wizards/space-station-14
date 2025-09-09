@@ -72,6 +72,7 @@
     radius: 6
     castShadows: false
     enabled: false
+  - type: ActiveInputMover # Starlight
 
 # proto for player ghosts specifically
 - type: entity
