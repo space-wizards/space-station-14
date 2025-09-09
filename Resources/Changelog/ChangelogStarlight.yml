@@ -13629,5 +13629,26 @@ Entries:
   id: 152200
   time: '2025-09-08T23:37:41.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/1522
+- author: Rinary
+  changes:
+  - message: Added scan gates(metal detectors). Needs to be mapped.
+    type: Add
+  id: 149000
+  time: '2025-09-08T23:57:57.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1490
+- author: Rinary
+  changes:
+  - message: Added tier 4 scan gates technology.
+    type: Add
+  id: 149001
+  time: '2025-09-08T23:57:57.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1490
+- author: Rinary
+  changes:
+  - message: Added ecronizer as new sindicate tool for bypass scan gates.
+    type: Add
+  id: 149002
+  time: '2025-09-08T23:57:57.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1490
 Order: -1
 
