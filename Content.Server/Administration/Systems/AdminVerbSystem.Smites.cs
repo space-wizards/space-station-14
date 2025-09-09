@@ -992,7 +992,7 @@ public sealed partial class AdminVerbSystem
 
         var offset = new Random(target.Id).NextAngle().RotateVec(new Vector2(distance, 0));
         var spawnCoords = _transformSystem.GetMapCoordinates(target).Offset(offset);
-        var rod = Spawn("ImmovableRodKeepTiles", spawnCoords);
+        var rod = Spawn(proto, spawnCoords);
         // Here we abuse the ChasingWalkComp by making it skip targetting logic and dialling its frequency up
         EnsureComp<ChasingWalkComponent>(rod, out var chasingComp);
         chasingComp.NextChangeVectorTime = TimeSpan.MaxValue; // we just want it to never change
