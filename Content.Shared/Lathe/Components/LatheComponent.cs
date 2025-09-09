@@ -1,3 +1,4 @@
+using System.Linq;
 using Content.Shared.Lathe.Prototypes;
 using Content.Shared.Research.Prototypes;
 using Robust.Shared.Audio;
@@ -7,7 +8,8 @@ using Robust.Shared.Serialization;
 
 namespace Content.Shared.Lathe.Components;
 
-[RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
+[RegisterComponent, NetworkedComponent]
+[AutoGenerateComponentState(true, true)]
 public sealed partial class LatheComponent : Component
 {
     /// <summary>
@@ -24,6 +26,12 @@ public sealed partial class LatheComponent : Component
     // Note that this shouldn't be modified dynamically.
     // I.e., this + the static recipies should represent all recipies that the lathe can ever make
     // Otherwise the material arbitrage test and/or LatheSystem.GetAllBaseRecipes needs to be updated
+
+    /// <summary>
+    /// All of the recipies this lathe currently has.
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public List<ProtoId<LatheRecipePrototype>> Recipes = new();
 
     /// <summary>
     /// The lathe's construction queue.

@@ -23,6 +23,7 @@ using Content.Shared.UserInterface;
 using JetBrains.Annotations;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Containers;
+using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
@@ -48,7 +49,7 @@ public abstract class SharedLatheSystem : EntitySystem
     [Dependency] private readonly ReagentSpeedSystem _reagentSpeed = default!;
     [Dependency] private readonly SharedSolutionContainerSystem _solution = default!;
     [Dependency] private readonly SharedStackSystem _stack = default!;
-    [Dependency] private readonly SharedUserInterfaceSystem _uiSys = default!;
+    [Dependency] protected readonly SharedUserInterfaceSystem UISys = default!;
 
     public readonly Dictionary<string, List<LatheRecipePrototype>> InverseRecipes = new();
     public const int MaxItemsPerRequest = 10_000;
@@ -59,12 +60,12 @@ public abstract class SharedLatheSystem : EntitySystem
 
         SubscribeLocalEvent<PrototypesReloadedEventArgs>(OnPrototypesReloaded);
 
-        SubscribeLocalEvent<LatheComponent, MapInitEvent>(OnMapInit);
+        SubscribeLocalEvent<LatheComponent, ComponentInit>(OnComponentInit);
         SubscribeLocalEvent<LatheComponent, ExaminedEvent>(OnExamined);
         SubscribeLocalEvent<LatheComponent, PowerChangedEvent>(OnPowerChanged);
         SubscribeLocalEvent<LatheComponent, TechnologyDatabaseModifiedEvent>(OnDatabaseModified);
         SubscribeLocalEvent<LatheComponent, ResearchRegistrationChangedEvent>(OnResearchRegistrationChanged);
-        SubscribeLocalEvent<LatheComponent, BeforeActivatableUIOpenEvent>((u, c, _) => UpdateUserInterfaceState((u, c)));
+        SubscribeLocalEvent<LatheComponent, BeforeActivatableUIOpenEvent>((u, c, _) => UpdateUI((u, c)));
         SubscribeLocalEvent<LatheComponent, MaterialAmountChangedEvent>(OnMaterialAmountChanged);
         SubscribeLocalEvent<LatheComponent, GetMaterialWhitelistEvent>(OnGetWhitelist);
 
@@ -78,19 +79,37 @@ public abstract class SharedLatheSystem : EntitySystem
         SubscribeLocalEvent<LatheComponent, LatheMoveRequestMessage>(OnLatheMoveRequestMessage);
         SubscribeLocalEvent<LatheComponent, LatheAbortFabricationMessage>(OnLatheAbortFabricationMessage);
 
+        //Networking
+        //SubscribeLocalEvent<LatheComponent, ComponentGetState>(OnGetState);
+        //SubscribeLocalEvent<LatheComponent, ComponentHandleState>(OnHandleState);
+
         BuildInverseRecipeDictionary();
+    }
+
+    public override void Update(float frameTime)
+    {
+        var query = EntityQueryEnumerator<LatheProducingComponent, LatheComponent>();
+        while (query.MoveNext(out var uid, out var comp, out var lathe))
+        {
+            if (lathe.CurrentRecipe == null)
+                continue;
+
+            if (Timing.CurTime - comp.StartTime >= comp.ProductionLength)
+                FinishProducing((uid, lathe, comp));
+        }
     }
 
     /// <summary>
     /// Initialize the UI and appearance.
     /// Appearance requires initialization or the layers break
     /// </summary>
-    private void OnMapInit(Entity<LatheComponent> entity, ref MapInitEvent args)
+    private void OnComponentInit(Entity<LatheComponent> entity, ref ComponentInit args)
     {
         _appearance.SetData(entity, LatheVisuals.IsInserting, false);
         _appearance.SetData(entity, LatheVisuals.IsRunning, false);
 
         _materialStorage.UpdateMaterialWhitelist(entity);
+        UpdateRecipies(entity);
     }
 
     private void OnExamined(Entity<LatheComponent> ent, ref ExaminedEvent args)
@@ -158,7 +177,7 @@ public abstract class SharedLatheSystem : EntitySystem
     }
 
     public static int AdjustMaterial(int original, bool reduce, float multiplier)
-        => reduce ? (int) MathF.Ceiling(original * multiplier) : original;
+        => reduce ? (int)MathF.Ceiling(original * multiplier) : original;
 
     #region Production
 
@@ -179,11 +198,13 @@ public abstract class SharedLatheSystem : EntitySystem
 
         foreach (var (material, needed) in recipe.Materials)
         {
-            var adjustedAmount = AdjustMaterial(needed, recipe.ApplyMaterialDiscount, entity.Comp.MaterialUseMultiplier);
+            var adjustedAmount =
+                AdjustMaterial(needed, recipe.ApplyMaterialDiscount, entity.Comp.MaterialUseMultiplier);
 
             if (_materialStorage.GetMaterialAmount(entity.Owner, material) < adjustedAmount * amount)
                 return false;
         }
+
         return true;
     }
 
@@ -214,6 +235,7 @@ public abstract class SharedLatheSystem : EntitySystem
         else
             entity.Comp.Queue.AddLast(new LatheRecipeBatch(recipe.ID, 0, quantity));
 
+        DirtyField(entity, nameof(LatheComponent.Queue));
         return true;
     }
 
@@ -238,18 +260,21 @@ public abstract class SharedLatheSystem : EntitySystem
         lathe.StartTime = Timing.CurTime;
         lathe.ProductionLength = time;
         entity.Comp.CurrentRecipe = recipe;
+        DirtyField(entity, nameof(LatheComponent.CurrentRecipe));
 
         var ev = new LatheStartPrintingEvent(recipe);
         RaiseLocalEvent(entity, ref ev);
 
         _audio.PlayPvs(entity.Comp.ProducingSound, entity);
         UpdateRunningAppearance(entity, true);
-        UpdateUserInterfaceState(entity);
+        UpdateUI((entity, entity.Comp));
 
         if (time == TimeSpan.Zero)
         {
             FinishProducing((entity, entity.Comp, lathe));
         }
+
+        DirtyField(entity, nameof(LatheComponent.Queue));
         return true;
     }
 
@@ -276,9 +301,11 @@ public abstract class SharedLatheSystem : EntitySystem
             }
 
             entity.Comp.CurrentRecipe = null;
+            DirtyField(entity.AsNullable(), nameof(LatheComponent.CurrentRecipe));
         }
+
         RemCompDeferred<LatheProducingComponent>(entity);
-        UpdateUserInterfaceState(entity);
+        UpdateUI((entity, entity.Comp));
         UpdateRunningAppearance(entity, false);
     }
 
@@ -319,11 +346,13 @@ public abstract class SharedLatheSystem : EntitySystem
 
         entity.Comp1.CurrentRecipe = null;
         entity.Comp2.StartTime = Timing.CurTime;
+        DirtyField(entity, entity.Comp1, nameof(LatheComponent.CurrentRecipe));
+        Dirty(entity.Owner, entity.Comp2);
 
         if (!TryStartProducing(entity.AsNullable()))
         {
             RemCompDeferred(entity, entity.Comp2);
-            UpdateUserInterfaceState(entity.AsNullable());
+            UpdateUI(entity);
             UpdateRunningAppearance(entity, false);
         }
     }
@@ -351,10 +380,17 @@ public abstract class SharedLatheSystem : EntitySystem
         return recipes;
     }
 
+    public void UpdateRecipies(Entity<LatheComponent> entity)
+    {
+        entity.Comp.Recipes = GetAvailableRecipes(entity);
+        DirtyField(entity.AsNullable(), nameof(LatheComponent.Recipes));
+    }
+
     /// <summary>
     /// Add every recipe in the list of recipe packs to a single hashset.
     /// </summary>
-    public void AddRecipesFromPacks(HashSet<ProtoId<LatheRecipePrototype>> recipes, IEnumerable<ProtoId<LatheRecipePackPrototype>> packs)
+    public void AddRecipesFromPacks(HashSet<ProtoId<LatheRecipePrototype>> recipes,
+        IEnumerable<ProtoId<LatheRecipePackPrototype>> packs)
     {
         foreach (var id in packs)
         {
@@ -364,7 +400,9 @@ public abstract class SharedLatheSystem : EntitySystem
     }
 
     [PublicAPI]
-    public bool TryGetAvailableRecipes(Entity<LatheComponent?> entity, [NotNullWhen(true)] out List<ProtoId<LatheRecipePrototype>>? recipes, bool getUnavailable = false)
+    public bool TryGetAvailableRecipes(Entity<LatheComponent?> entity,
+        [NotNullWhen(true)] out List<ProtoId<LatheRecipePrototype>>? recipes,
+        bool getUnavailable = false)
     {
         recipes = null;
         if (!Resolve(entity, ref entity.Comp))
@@ -374,7 +412,8 @@ public abstract class SharedLatheSystem : EntitySystem
         return true;
     }
 
-    public List<ProtoId<LatheRecipePrototype>> GetAvailableRecipes(Entity<LatheComponent> entity, bool getUnavailable = false)
+    public List<ProtoId<LatheRecipePrototype>> GetAvailableRecipes(Entity<LatheComponent> entity,
+        bool getUnavailable = false)
     {
         var ev = new LatheGetRecipesEvent(entity, getUnavailable);
         AddRecipesFromPacks(ev.Recipes, entity.Comp.StaticPacks);
@@ -385,7 +424,9 @@ public abstract class SharedLatheSystem : EntitySystem
     /// <summary>
     /// Adds every unlocked recipe from each pack to the recipes list.
     /// </summary>
-    public void AddRecipesFromDynamicPacks(ref LatheGetRecipesEvent args, TechnologyDatabaseComponent database, IEnumerable<ProtoId<LatheRecipePackPrototype>> packs)
+    public void AddRecipesFromDynamicPacks(ref LatheGetRecipesEvent args,
+        TechnologyDatabaseComponent database,
+        IEnumerable<ProtoId<LatheRecipePackPrototype>> packs)
     {
         foreach (var id in packs)
         {
@@ -435,7 +476,7 @@ public abstract class SharedLatheSystem : EntitySystem
         InverseRecipes.Clear();
         foreach (var latheRecipe in Proto.EnumeratePrototypes<LatheRecipePrototype>())
         {
-            if (latheRecipe.Result is not {} result)
+            if (latheRecipe.Result is not { } result)
                 continue;
 
             InverseRecipes.GetOrNew(result).Add(latheRecipe);
@@ -460,7 +501,7 @@ public abstract class SharedLatheSystem : EntitySystem
         if (!string.IsNullOrWhiteSpace(proto.Name))
             return Loc.GetString(proto.Name);
 
-        if (proto.Result is {} result)
+        if (proto.Result is { } result)
         {
             return Proto.Index(result).Name;
         }
@@ -468,7 +509,9 @@ public abstract class SharedLatheSystem : EntitySystem
         if (proto.ResultReagents is { } resultReagents)
         {
             return ContentLocalizationManager.FormatList(resultReagents
-                .Select(p => Loc.GetString("lathe-menu-result-reagent-display", ("reagent", Proto.Index(p.Key).LocalizedName), ("amount", p.Value)))
+                .Select(p => Loc.GetString("lathe-menu-result-reagent-display",
+                    ("reagent", Proto.Index(p.Key).LocalizedName),
+                    ("amount", p.Value)))
                 .ToList());
         }
 
@@ -486,7 +529,7 @@ public abstract class SharedLatheSystem : EntitySystem
         if (!string.IsNullOrWhiteSpace(proto.Description))
             return Loc.GetString(proto.Description);
 
-        if (proto.Result is {} result)
+        if (proto.Result is { } result)
         {
             return Proto.Index(result).Description;
         }
@@ -505,7 +548,9 @@ public abstract class SharedLatheSystem : EntitySystem
 
     #region UI
 
-    public void UpdateUserInterfaceState(Entity<LatheComponent?> entity)
+    protected virtual void UpdateUI(Entity<LatheComponent> entity) { }
+
+    /*public void UpdateUserInterfaceState(Entity<LatheComponent?> entity)
     {
         if (!Resolve(entity, ref entity.Comp))
             return;
@@ -515,8 +560,8 @@ public abstract class SharedLatheSystem : EntitySystem
             producing = node.Value.Recipe;
 
         var state = new LatheUpdateState(GetAvailableRecipes((entity, entity.Comp)), entity.Comp.Queue.ToArray(), producing);
-        _uiSys.SetUiState(entity.Owner, LatheUiKey.Key, state);
-    }
+        UISys.SetUiState(entity.Owner, LatheUiKey.Key, state);
+    }*/
 
     private void OnLatheQueueRecipeMessage(Entity<LatheComponent> entity, ref LatheQueueRecipeMessage args)
     {
@@ -529,13 +574,14 @@ public abstract class SharedLatheSystem : EntitySystem
                     $"{ToPrettyString(args.Actor):player} queued {args.Quantity} {GetRecipeName(recipe)} at {ToPrettyString(entity):lathe}");
             }
         }
+
         TryStartProducing(entity.AsNullable());
-        UpdateUserInterfaceState(entity.AsNullable());
+        UpdateUI(entity);
     }
 
     private void OnLatheSyncRequestMessage(Entity<LatheComponent> entity, ref LatheSyncRequestMessage args)
     {
-        UpdateUserInterfaceState(entity.AsNullable());
+        UpdateUI(entity);
     }
 
     /// <summary>
@@ -564,7 +610,7 @@ public abstract class SharedLatheSystem : EntitySystem
             $"{ToPrettyString(args.Actor):player} deleted a lathe job for ({batch.ItemsPrinted}/{batch.ItemsRequested}) {GetRecipeName(batch.Recipe)} at {ToPrettyString(entity):lathe}");
 
         entity.Comp.Queue.Remove(node);
-        UpdateUserInterfaceState(entity.AsNullable());
+        UpdateUI(entity);
     }
 
     public void OnLatheMoveRequestMessage(Entity<LatheComponent> entity, ref LatheMoveRequestMessage args)
@@ -615,7 +661,7 @@ public abstract class SharedLatheSystem : EntitySystem
             entity.Comp.Queue.AddBefore(newRelativeNode, node);
         }
 
-        UpdateUserInterfaceState(entity.AsNullable());
+        UpdateUI(entity);
     }
 
     public void OnLatheAbortFabricationMessage(Entity<LatheComponent> entity, ref LatheAbortFabricationMessage args)
@@ -628,22 +674,38 @@ public abstract class SharedLatheSystem : EntitySystem
             $"{ToPrettyString(args.Actor):player} aborted printing {GetRecipeName(entity.Comp.CurrentRecipe.Value)} at {ToPrettyString(entity):lathe}");
 
         entity.Comp.CurrentRecipe = null;
+        DirtyField(entity.AsNullable(), nameof(LatheComponent.CurrentRecipe));
         FinishProducing(entity);
     }
+
     #endregion
 
     private void OnMaterialAmountChanged(Entity<LatheComponent> entity, ref MaterialAmountChangedEvent args)
     {
-        UpdateUserInterfaceState(entity.AsNullable());
+        UpdateUI(entity);
     }
 
     private void OnDatabaseModified(Entity<LatheComponent> entity, ref TechnologyDatabaseModifiedEvent args)
     {
-        UpdateUserInterfaceState(entity.AsNullable());
+        UpdateUI(entity);
     }
 
     private void OnResearchRegistrationChanged(Entity<LatheComponent> entity, ref ResearchRegistrationChangedEvent args)
     {
-        UpdateUserInterfaceState(entity.AsNullable());
+        UpdateUI(entity);
     }
+
+    #region Networking
+
+    private void OnGetState(Entity<LatheComponent> entity, ref ComponentGetState args)
+    {
+
+    }
+
+    private void OnHandleState(Entity<LatheComponent> entity, ref ComponentHandleState args)
+    {
+
+    }
+
+#endregion
 }

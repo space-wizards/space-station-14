@@ -33,15 +33,7 @@ public sealed class LatheSystem : SharedLatheSystem
 
     public override void Update(float frameTime)
     {
-        var query = EntityQueryEnumerator<LatheProducingComponent, LatheComponent>();
-        while (query.MoveNext(out var uid, out var comp, out var lathe))
-        {
-            if (lathe.CurrentRecipe == null)
-                continue;
-
-            if (Timing.CurTime - comp.StartTime >= comp.ProductionLength)
-                FinishProducing((uid, lathe, comp));
-        }
+        base.Update(frameTime);
 
         var heatQuery = EntityQueryEnumerator<LatheHeatProducingComponent, LatheProducingComponent, TransformComponent>();
         while (heatQuery.MoveNext(out var uid, out var heatComp, out _, out var xform))

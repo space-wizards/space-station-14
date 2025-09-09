@@ -15,6 +15,7 @@ public sealed class LatheSystem : SharedLatheSystem
     {
         base.Initialize();
 
+        SubscribeLocalEvent<LatheComponent, AfterAutoHandleStateEvent>(OnAfterAutoHandleState);
         SubscribeLocalEvent<LatheComponent, AppearanceChangeEvent>(OnAppearanceChange);
     }
 
@@ -46,6 +47,19 @@ public sealed class LatheSystem : SharedLatheSystem
                 var state = isRunning ? component.UnlitRunningState : component.UnlitIdleState;
                 _sprite.LayerSetRsiState((uid, args.Sprite), powerLayer, state);
             }
+        }
+    }
+
+    private void OnAfterAutoHandleState(Entity<LatheComponent> entity, ref AfterAutoHandleStateEvent args)
+    {
+        UpdateUI(entity);
+    }
+
+    protected override void UpdateUI(Entity<LatheComponent> entity)
+    {
+        if (UISys.TryGetOpenUi(entity.Owner, LatheUiKey.Key, out var bui))
+        {
+            bui.Update();
         }
     }
 }
