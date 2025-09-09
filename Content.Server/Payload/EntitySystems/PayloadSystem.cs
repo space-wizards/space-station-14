@@ -22,6 +22,7 @@ public sealed class PayloadSystem : EntitySystem
     [Dependency] private readonly TransformSystem _transform = default!;
     [Dependency] private readonly IAdminLogManager _adminLogger = default!;
     [Dependency] private readonly ISerializationManager _serializationManager = default!;
+    [Dependency] private readonly IComponentFactory _factory = default!;
 
     private static readonly ProtoId<TagPrototype> PayloadTag = "Payload";
 
@@ -108,7 +109,7 @@ public sealed class PayloadSystem : EntitySystem
             _serializationManager.CopyTo(data.Component, ref temp);
             AddComp(uid, (Component) temp!);
 
-            trigger.GrantedComponents.Add(registration.Type);
+            trigger.GrantedComponents.Add(registration.Name);
         }
     }
 
@@ -119,9 +120,10 @@ public sealed class PayloadSystem : EntitySystem
 
         trigger.Active = false;
 
-        foreach (var type in trigger.GrantedComponents)
+        foreach (var compName in trigger.GrantedComponents)
         {
-            RemComp(uid, type);
+            var reg = _factory.GetRegistration(compName);
+            RemComp(uid, reg.Type);
         }
 
         trigger.GrantedComponents.Clear();
