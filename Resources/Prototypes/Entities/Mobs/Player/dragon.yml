@@ -15,6 +15,7 @@
     understands:
     - GalacticCommon
     - Carptongue
+    - Thaveyan
   # Starlight-end
   - type: ThermalVision
   - type: Bloodstream
