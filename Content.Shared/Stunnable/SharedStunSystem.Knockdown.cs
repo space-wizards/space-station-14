@@ -117,7 +117,7 @@ public abstract partial class SharedStunSystem
         entity.Comp.SpeedModifier = 1f;
 
         _standingState.Stand(entity);
-        Alerts.ClearAlert(entity, KnockdownAlert);
+        Alerts.ClearAlert(entity.Owner, KnockdownAlert);
     }
 
     #endregion
@@ -179,7 +179,7 @@ public abstract partial class SharedStunSystem
     {
         entity.Comp.NextUpdate = time;
         DirtyField(entity, entity.Comp, nameof(KnockedDownComponent.NextUpdate));
-        Alerts.ShowAlert(entity, KnockdownAlert, null, (GameTiming.CurTime, entity.Comp.NextUpdate));
+        Alerts.ShowAlert(entity.Owner, KnockdownAlert, null, (GameTiming.CurTime, entity.Comp.NextUpdate));
     }
 
     /// <summary>
@@ -216,7 +216,7 @@ public abstract partial class SharedStunSystem
 
         entity.Comp.NextUpdate += time;
         DirtyField(entity, entity.Comp, nameof(KnockedDownComponent.NextUpdate));
-        Alerts.ShowAlert(entity, KnockdownAlert, null, (GameTiming.CurTime, entity.Comp.NextUpdate));
+        Alerts.ShowAlert(entity.Owner, KnockdownAlert, null, (GameTiming.CurTime, entity.Comp.NextUpdate));
     }
 
     #endregion
