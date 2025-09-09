@@ -24,7 +24,10 @@ namespace Content.Client.VendingMachines
             base.Open();
 
             _menu = this.CreateWindowCenteredLeft<VendingMachineMenu>();
-            _menu.Title = EntMan.GetComponent<MetaDataComponent>(Owner).EntityName;
+            _menu.Title = (
+                EntMan.GetComponent<VendingMachineComponent>(Owner).CustomWindowTitle
+                ?? EntMan.GetComponent<MetaDataComponent>(Owner).EntityName
+            );
             _menu.OnItemSelected += OnItemSelected;
             Refresh();
         }

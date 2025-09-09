@@ -141,6 +141,13 @@ namespace Content.Shared.VendingMachines
 
         #region Client Visuals
         /// <summary>
+        /// Text to display at the top of the vending machine's user interface window, 
+        /// in cases where the default (machine prototype's name) is not desired.
+        /// </summary>
+        [DataField]
+        public string? CustomWindowTitle;
+
+        /// <summary>
         /// RSI state for when the vending machine is unpowered.
         /// Will be displayed on the layer <see cref="VendingMachineVisualLayers.Base"/>
         /// </summary>
