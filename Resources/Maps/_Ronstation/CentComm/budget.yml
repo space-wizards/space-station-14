@@ -4,7 +4,7 @@ meta:
   engineVersion: 266.0.0
   forkId: ""
   forkVersion: ""
-  time: 09/09/2025 16:51:31
+  time: 09/09/2025 19:53:04
   entityCount: 504
 maps: []
 grids:
@@ -1820,6 +1820,10 @@ entities:
       rot: -1.5707963267948966 rad
       pos: -2.5,0.5
       parent: 1
+    - type: GasMixer
+      inletTwoConcentration: 0.22000003
+      inletOneConcentration: 0.78
+      targetPressure: 250
     - type: AtmosPipeLayers
       pipeLayer: Tertiary
     - type: AtmosPipeColor
