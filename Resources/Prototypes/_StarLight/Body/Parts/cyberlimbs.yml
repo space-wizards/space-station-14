@@ -413,7 +413,7 @@
       parts:
         left hand: LeftHandCyber
     - type: RoundstartImplantable
-      cost: 3
+      cost: 2
 
 - type: entity
   id: RightArmCyberRipper
@@ -447,4 +447,4 @@
       parts:
         right hand: RightHandCyber
     - type: RoundstartImplantable
-      cost: 3
+      cost: 2
