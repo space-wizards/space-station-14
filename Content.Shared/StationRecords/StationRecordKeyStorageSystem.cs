@@ -16,7 +16,7 @@ public sealed class StationRecordKeyStorageSystem : EntitySystem
 
     private void OnGetState(EntityUid uid, StationRecordKeyStorageComponent component, ref ComponentGetState args)
     {
-        args.State = new StationRecordKeyStorageComponentState(_records.Convert(component.Key));
+        args.State = new StationRecordKeyStorageComponentState(_records.Convert(component.Key), component.Record);
     }
 
     private void OnHandleState(EntityUid uid, StationRecordKeyStorageComponent component, ref ComponentHandleState args)
@@ -24,6 +24,7 @@ public sealed class StationRecordKeyStorageSystem : EntitySystem
         if (args.Current is not StationRecordKeyStorageComponentState state)
             return;
         component.Key = _records.Convert(state.Key);
+        component.Record = state.Record;
     }
 
     /// <summary>
