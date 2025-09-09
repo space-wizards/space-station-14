@@ -93,7 +93,7 @@
             enabled: true
             inherent: true
           dungeonPacks:
-          - VGRoidDungeonPack
+          - DefaultVGRoidDungeonPack
 
 - type: entity
   id: BaseStationCentcomm
