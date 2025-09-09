@@ -1,3 +1,4 @@
+// Modified by Ronstation contributor(s), therefore this file is licensed as MIT sublicensed with AGPL-v3.0.
 using System.Linq;
 using System.Numerics;
 using System.Threading;
@@ -24,6 +25,8 @@ using Content.Shared.DeviceNetwork;
 using Content.Shared.DeviceNetwork.Components;
 using Content.Shared.GameTicking;
 using Content.Shared.Localizations;
+using Content.Shared.Random; // Ronstation - modification.
+using Content.Shared.Random.Helpers; // Ronstation - modification.
 using Content.Shared.Shuttles.Components;
 using Content.Shared.Shuttles.Events;
 using Content.Shared.Tag;
@@ -70,6 +73,7 @@ public sealed partial class EmergencyShuttleSystem : EntitySystem
     [Dependency] private readonly StationSystem _station = default!;
     [Dependency] private readonly TransformSystem _transformSystem = default!;
     [Dependency] private readonly UserInterfaceSystem _uiSystem = default!;
+    [Dependency] private readonly IPrototypeManager _prototype = default!; // Ronstation - modification.
 
     private const float ShuttleSpawnBuffer = 1f;
 
@@ -527,6 +531,19 @@ public sealed partial class EmergencyShuttleSystem : EntitySystem
             return;
         }
 
+        // Ronstation - start of modifications.
+        var centComm = _configManager.GetCVar(CCVars.CentComm);
+        if (!string.IsNullOrEmpty(centComm))
+        {
+            component.Map = new ResPath(centComm);
+        } 
+        else if (component.WeightedMap != null)
+        {
+            var randomMap = _prototype.Index(component.WeightedMap.Value).Pick(_random);
+            component.Map = new ResPath(randomMap);
+        }
+        // Ronstation - end of modifications.
+        
         if (string.IsNullOrEmpty(component.Map.ToString()))
         {
             Log.Warning("No CentComm map found, skipping setup.");

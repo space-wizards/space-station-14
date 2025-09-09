@@ -1,0 +1,15 @@
+- type: gameMap
+  id: BudgetCentComm
+  isGrid: true
+  mapName: 'Budget Central Command'
+  mapPath: /Maps/_Ronstation/CentComm/budget.yml
+  minPlayers: 10
+  stations:
+    centcomm:
+      stationProto: NanotrasenCentralCommand
+      components:
+        - type: StationNameSetup
+          mapNameTemplate: '{0} Budget Central Command {1}'
+          nameGenerator:
+            !type:NanotrasenNameGenerator
+            prefixCreator: 'BG'
