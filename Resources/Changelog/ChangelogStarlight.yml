@@ -13440,5 +13440,222 @@ Entries:
   id: 153909
   time: '2025-09-06T18:53:18.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/1539
+- author: PubliclyExecutedPig
+  changes:
+  - message: Buffed zombies to be more nimble, and regenerate faster!
+    type: Tweak
+  id: 35600
+  time: '2025-09-08T20:03:51.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/356
+- author: Arkanic
+  changes:
+  - message: Fixed zombie mice, moproaches from being unable to attack
+    type: Fix
+  id: 153600
+  time: '2025-09-08T20:14:00.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1536
+- author: Arkanic
+  changes:
+  - message: Fix clown being unable to fire honk mech "guns"
+    type: Fix
+  id: 153700
+  time: '2025-09-08T20:12:11.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1537
+- author: CorruptOmega
+  changes:
+  - message: Syndicate Monkeys and Syndicate Kobolds now also understand Galactic
+      Common to receive orders.
+    type: Tweak
+  id: 155400
+  time: '2025-09-08T20:27:19.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1554
+- author: Arkanic
+  changes:
+  - message: Letter opening railroad objective
+    type: Add
+  id: 156700
+  time: '2025-09-08T20:36:00.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1567
+- author: CorruptOmega
+  changes:
+  - message: New Ion Storm law descriptions to include languages.
+    type: Add
+  id: 153300
+  time: '2025-09-08T20:40:23.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1533
+- author: CorruptOmega and Conflee
+  changes:
+  - message: New Bar Windows! Comes with diagonal and alternative so that you can
+      have the pattern correct.
+    type: Add
+  id: 156800
+  time: '2025-09-08T20:43:46.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1568
+- author: stickycheZ101
+  changes:
+  - message: a certain crew major text is now a halo reference
+    type: Tweak
+  id: 140800
+  time: '2025-09-08T20:52:03.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1408
+- author: walksanatora
+  changes:
+  - message: Borgs can now crawl again.
+    type: Tweak
+  id: 146200
+  time: '2025-09-08T20:52:46.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1462
+- author: Citrea
+  changes:
+  - message: Omnitool crowbars also work on unpowered airlocks now.
+    type: Fix
+  id: 155500
+  time: '2025-09-08T20:56:49.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1555
+- author: CawsForConcern
+  changes:
+  - message: Lowered Vulpkanin heat damage modifier to 1.15 (15% extra heat) from
+      1.5 (50% extra heat)
+    type: Tweak
+  id: 151700
+  time: '2025-09-08T21:03:11.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1517
+- author: CawsForConcern
+  changes:
+  - message: Lowered Vulpkanin cold damage modifier to 0.85 (15% less cold) from 1.5
+      (50% less cold)
+    type: Tweak
+  id: 151701
+  time: '2025-09-08T21:03:11.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1517
+- author: CawsForConcern
+  changes:
+  - message: Updated Guidebook to reflect the new damage modifier
+    type: Tweak
+  id: 151702
+  time: '2025-09-08T21:03:11.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1517
+- author: CawsForConcern
+  changes:
+  - message: Clarified in the Guidebook that Vulpkanin take extra Heat damage, not
+      'fire' damage
+    type: Tweak
+  id: 151703
+  time: '2025-09-08T21:03:11.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1517
+- author: Citrea
+  changes:
+  - message: Robotics can now produce Personnel Transport Modules for cyborgs.
+    type: Add
+  id: 142500
+  time: '2025-09-08T21:12:13.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1425
+- author: PubliclyExecutedPig
+  changes:
+  - message: Nuclear Operatives only spawn with a team of 5 past 80 pop
+    type: Tweak
+  id: 153000
+  time: '2025-09-08T21:28:15.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1530
+- author: PubliclyExecutedPig
+  changes:
+  - message: Nuclear operatives now may spawn with a 6th operative past 96 pop.
+    type: Tweak
+  id: 153001
+  time: '2025-09-08T21:28:15.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1530
+- author: Way
+  changes:
+  - message: Morgue report document to printer
+    type: Add
+  id: 142000
+  time: '2025-09-08T21:31:09.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1420
+- author: Vonte
+  changes:
+  - message: reorganised rooms inside Orwell security.
+    type: Tweak
+  id: 137600
+  time: '2025-09-08T22:24:25.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1376
+- author: Vonte
+  changes:
+  - message: other minor changes around the station listed in the description.
+    type: Tweak
+  id: 137601
+  time: '2025-09-08T22:24:25.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1376
+- author: Vonte
+  changes:
+  - message: changes to the engineering locker-room and atmos.
+    type: Tweak
+  id: 137602
+  time: '2025-09-08T22:24:25.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1376
+- author: Vonte
+  changes:
+  - message: added rooms that the security department in Orwell were missing.
+    type: Add
+  id: 137603
+  time: '2025-09-08T22:24:25.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1376
+- author: Arkanic
+  changes:
+  - message: Fix revenant thermal vision
+    type: Fix
+  id: 153800
+  time: '2025-09-08T23:31:28.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1538
+- author: CrazyPhantom
+  changes:
+  - message: Engineering cyborgs recharging spray painter breaking once reaching 0
+      Charges.
+    type: Fix
+  id: 155300
+  time: '2025-09-08T23:34:21.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1553
+- author: CrazyPhantom
+  changes:
+  - message: Engineering cyborgs recharging spray painter now has a 5 second cooldown.
+    type: Tweak
+  id: 155301
+  time: '2025-09-08T23:34:21.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1553
+- author: Fasuh
+  changes:
+  - message: Add a progress bar to Laspi storage when it is opened by someone else.
+      Laspi rejoice!
+    type: Add
+  id: 152200
+  time: '2025-09-08T23:37:41.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1522
+- author: Rinary
+  changes:
+  - message: Added scan gates(metal detectors). Needs to be mapped.
+    type: Add
+  id: 149000
+  time: '2025-09-08T23:57:57.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1490
+- author: Rinary
+  changes:
+  - message: Added tier 4 scan gates technology.
+    type: Add
+  id: 149001
+  time: '2025-09-08T23:57:57.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1490
+- author: Rinary
+  changes:
+  - message: Added ecronizer as new sindicate tool for bypass scan gates.
+    type: Add
+  id: 149002
+  time: '2025-09-08T23:57:57.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1490
+- author: DrSmugleaf
+  changes:
+  - message: Improved performance specially during high player counts and long rounds.
+    type: Tweak
+  id: 157600
+  time: '2025-09-09T01:48:18.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1576
 Order: -1
 
