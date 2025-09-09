@@ -73,7 +73,7 @@ public abstract class SharedAgentIdCardSystem : EntitySystem
 
     private void OnJobIconChanged(Entity<AgentIDCardComponent> ent, ref AgentIDCardJobIconChangedMessage args)
     {
-        if (!_prototypeManager.TryIndex(args.JobIconId, out var jobIcon) ||
+        if (!_prototypeManager.Resolve(args.JobIconId, out var jobIcon) ||
             !_card.TryChangeJobIcon(ent, jobIcon))
             return;
 

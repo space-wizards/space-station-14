@@ -30,7 +30,7 @@ public sealed class AgentIDCardSystem : SharedAgentIdCardSystem
         if (!TryComp<IdCardComponent>(ent, out var idCardComp))
             return;
 
-        _prototypeManager.TryIndex(args.Args.ChameleonOutfit.Job, out var jobProto);
+        _prototypeManager.Resolve(args.Args.ChameleonOutfit.Job, out var jobProto);
 
         var jobIcon = args.Args.ChameleonOutfit.Icon ?? jobProto?.Icon;
         var jobName = args.Args.ChameleonOutfit.Name ?? jobProto?.Name ?? "";
