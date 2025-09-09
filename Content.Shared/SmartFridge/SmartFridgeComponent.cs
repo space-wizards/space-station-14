@@ -1,9 +1,6 @@
 using Content.Shared.Whitelist;
-using Robust.Shared.Analyzers;
 using Robust.Shared.Audio;
-using Robust.Shared.GameObjects;
 using Robust.Shared.GameStates;
-using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.SmartFridge;
@@ -41,6 +38,8 @@ public sealed partial class SmartFridgeComponent : Component
     /// </summary>
     [DataField, AutoNetworkedField]
     public List<SmartFridgeEntry> Entries = new();
+    // Consider replacing with a sorted dictionary?
+    // Then entries don't have to be networked & serialized twice here & in ContainedEntries
 
     /// <summary>
     /// A mapping of smart fridge entries to the actual contained contents
@@ -75,15 +74,10 @@ public sealed partial class SmartFridgeComponent : Component
     public SoundSpecifier SoundDeny = new SoundCollectionSpecifier("VendingDeny");
 }
 
-[Serializable, NetSerializable, DataRecord]
-public record struct SmartFridgeEntry
+[Serializable, NetSerializable]
+public record struct SmartFridgeEntry(string Name)
 {
-    public string Name;
-
-    public SmartFridgeEntry(string name)
-    {
-        Name = name;
-    }
+    public string Name = Name;
 }
 
 [Serializable, NetSerializable]
