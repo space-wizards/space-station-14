@@ -24,10 +24,14 @@ namespace Content.Client.VendingMachines
             base.Open();
 
             _menu = this.CreateWindowCenteredLeft<VendingMachineMenu>();
-            _menu.Title = (
-                EntMan.GetComponent<VendingMachineComponent>(Owner).CustomWindowTitle
-                ?? EntMan.GetComponent<MetaDataComponent>(Owner).EntityName
-            );
+            if (EntMan.TryGetComponent(Owner, out VendingMachineComponent? bendy) && bendy.CustomWindowTitle != null)
+            {
+                _menu.Title = bendy.CustomWindowTitle;
+            }
+            else
+            {
+                _menu.Title = EntMan.GetComponent<MetaDataComponent>(Owner).EntityName;
+            }
             _menu.OnItemSelected += OnItemSelected;
             Refresh();
         }
