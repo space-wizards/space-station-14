@@ -97,7 +97,7 @@
   id: ElectrovaeProduction
   priority: 4
   minimumTemperature: 39.15
-  maximumTemperature: 149.15
+  maximumTemperature: 250.0
   minimumRequirements:
   - 0     # oxygen
   - 0.01  # nitrogen
