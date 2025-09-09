@@ -31,7 +31,6 @@ public sealed partial class VampireSystem : SharedVampireSystem
             return false;
 
         component.Vitae += amount;
-        component.StolenVitae += amount;
         Dirty(uid, component);
 
         if (regenCap)

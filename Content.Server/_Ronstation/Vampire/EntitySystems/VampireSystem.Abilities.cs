@@ -159,6 +159,7 @@ public sealed partial class VampireSystem
         if (TryComp<VampireComponent>(ent.Owner, out VampireComponent? comp))
         {
             ChangeVitaeAmount(ent.Owner, comp.VitaeGainOnDoAfter, comp, false);
+            comp.StolenVitae += comp.VitaeGainOnDoAfter;
 
             if (LevelUp(ent.Owner, comp))
                 _popupSystem.PopupEntity(Loc.GetString("vampire-level-up"),
@@ -168,7 +169,7 @@ public sealed partial class VampireSystem
         }
 
         // EXECUTED
-        if (bloodSolution.Volume < (bloodSolution.MaxVolume / 5))
+        if (bloodSolution.Volume < (bloodSolution.MaxVolume * ent.Comp.ExecuteThreshold))
             _damageable.TryChangeDamage(args.Target, ent.Comp.ExecuteDamage, true, true, damage, args.User);
 
         // Ow my neck

@@ -75,5 +75,8 @@ public sealed partial class VampireFeedComponent : Component
         },
     };
 
-   public override bool SendOnlyToOwner => true;
+    [DataField, AutoNetworkedField]
+    public FixedPoint2 ExecuteThreshold = FixedPoint2.New(0.2);
+
+    public override bool SendOnlyToOwner => true;
 }

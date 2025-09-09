@@ -42,7 +42,7 @@ public sealed partial class VampireComponent : Component
     /// The amount of maximum vitae gained on level-up.
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite), DataField("vitaeCapUpgradeAmount")]
-    public float VitaeCapUpgradeAmount = 40f;
+    public FixedPoint2 VitaeCapUpgradeAmount = 20f;
 
     /// <summary>
     /// The total amount of vitae stolen from targets using the feed action.
