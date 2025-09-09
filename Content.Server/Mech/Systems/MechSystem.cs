@@ -1,3 +1,4 @@
+using Content.Server.Emp;
 using Content.Server.Construction.Components;
 using Content.Server.Construction;
 using Content.Server.Mech.Components;
@@ -70,112 +71,127 @@ public sealed partial class MechSystem : SharedMechSystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<MechComponent, InteractUsingEvent>(OnInteractUsing);
-        SubscribeLocalEvent<MechComponent, RepairMechEvent>(OnRepairMechEvent);
+        SubscribeLocalEvent<MechComponent, MapInitEvent>(OnMapInit);
+        SubscribeLocalEvent<MechComponent, MechEntryEvent>(OnMechEntry);
+        SubscribeLocalEvent<MechComponent, MechExitEvent>(OnMechExit);
+        SubscribeLocalEvent<MechComponent, MechOpenUiEvent>(OnOpenUi);
+
         SubscribeLocalEvent<MechComponent, EntInsertedIntoContainerMessage>(OnContainerChanged);
         SubscribeLocalEvent<MechComponent, EntRemovedFromContainerMessage>(OnContainerChanged);
         SubscribeLocalEvent<MechComponent, RemoveBatteryEvent>(OnRemoveBattery);
-        SubscribeLocalEvent<MechComponent, MechEntryEvent>(OnMechEntry);
-        SubscribeLocalEvent<MechComponent, MechExitEvent>(OnMechExit);
-        SubscribeLocalEvent<MechComponent, DamageChangedEvent>(OnDamageChanged);
-        SubscribeLocalEvent<MechComponent, MapInitEvent>(OnMapInit);
-        SubscribeLocalEvent<MechComponent, BeingGibbedEvent>(OnBeingGibbed);
+        SubscribeLocalEvent<MechComponent, InteractUsingEvent>(OnInteractUsing);
+
         SubscribeLocalEvent<MechComponent, UpdateCanMoveEvent>(OnMechCanMoveEvent);
+        SubscribeLocalEvent<MechComponent, DamageChangedEvent>(OnDamageChanged);
+        SubscribeLocalEvent<MechComponent, RepairMechEvent>(OnRepairMechEvent);
         SubscribeLocalEvent<MechComponent, PowerCellChangedEvent>(OnBatteryChanged);
 
-        SubscribeLocalEvent<MechPilotComponent, ToolUserAttemptUseEvent>(OnToolUseAttempt);
-        SubscribeAllEvent<RequestMechEquipmentSelectEvent>(OnEquipmentSelectRequest);
-        SubscribeLocalEvent<MechComponent, MechOpenUiEvent>(OnOpenUi);
         SubscribeLocalEvent<MechComponent, MechBrokenSoundEvent>(OnMechBrokenSound);
         SubscribeLocalEvent<MechComponent, MechEntrySuccessSoundEvent>(OnMechEntrySuccessSound);
+
+        SubscribeAllEvent<RequestMechEquipmentSelectEvent>(OnEquipmentSelectRequest);
+        SubscribeLocalEvent<MechPilotComponent, ToolUserAttemptUseEvent>(OnToolUseAttempt);
+        SubscribeLocalEvent<MechComponent, EmpAttemptEvent>(OnEmpAttempt);
+        SubscribeLocalEvent<MechComponent, BeingGibbedEvent>(OnBeingGibbed);
     }
 
-    private void OnRepairMechEvent(EntityUid uid, MechComponent component, RepairMechEvent args)
+    private void OnMapInit(EntityUid uid, MechComponent component, MapInitEvent args)
     {
-        RepairMech(uid, component);
+        var xform = Transform(uid);
 
-        // Restore prototype-declared disassembly graph after successful repair
-        var cc = EnsureComp<ConstructionComponent>(uid);
-        _construction.ChangeGraph(uid, null, "MechDisassemble", "start", performActions: false, cc);
+        foreach (var equipment in component.StartingEquipment)
+        {
+            var ent = Spawn(equipment, xform.Coordinates);
+            InsertEquipment(uid, ent, component);
+        }
+
+        foreach (var module in component.StartingModules)
+        {
+            var ent = Spawn(module, xform.Coordinates);
+            InsertEquipment(uid, ent, component);
+        }
+
+        // Ensure cabin pressure component is present for airtight operation
+        EnsureComp<MechCabinAirComponent>(uid);
+
+        component.Integrity = component.MaxIntegrity;
+        component.Airtight = false;
+
+        SetIntegrity(uid, component.MaxIntegrity, component);
+        _actionBlocker.UpdateCanMove(uid);
+
+        UpdateUserInterface(uid, component);
+        UpdateHealthAlert((uid, component));
     }
 
-    private void OnMechEntrySuccessSound(EntityUid uid, MechComponent component, MechEntrySuccessSoundEvent args)
+    private void OnMechEntry(EntityUid uid, MechComponent component, MechEntryEvent args)
     {
+        if (args.Cancelled || args.Handled)
+            return;
+
+        // Allow entry if locks are not active; block only if active and user lacks access
+        if (TryComp<MechLockComponent>(uid, out var lockComp) && lockComp.IsLocked && !_lockSystem.CheckAccess(uid, args.User, lockComp))
+        {
+            _lockSystem.CheckAccessWithFeedback(uid, args.User, lockComp);
+            return;
+        }
+
+        if (!Vehicle.CanOperate(uid, args.User))
+        {
+            _popup.PopupEntity(Loc.GetString("mech-no-enter-popup", ("item", uid)), args.User);
+            return;
+        }
+
+        TryInsert(uid, args.Args.User, component);
+        args.Handled = true;
+
+        UpdateUserInterface(uid, component);
+        UpdateBatteryAlert((uid, component));
+        UpdateHealthAlert((uid, component));
+
+        // Ensure pilot has required components
+        var pilotActions = EnsureComp<ActionsComponent>(pilot);
+        var pilotAlerts = EnsureComp<AlertsComponent>(pilot);
+
+        // Setup actions relay
+        var actionsRelay = EnsureComp<ActionsDisplayRelayComponent>(pilot);
+        actionsRelay.Source = mech;
+        actionsRelay.InteractAsSource = true;
+
+        // Setup alerts relay
+        var alertsRelay = EnsureComp<AlertsDisplayRelayComponent>(pilot);
+        alertsRelay.Source = mech;
+        alertsRelay.InteractAsSource = true;
+
+        // Notify client of changes
+        Dirty(pilot, pilotActions);
+        Dirty(pilot, pilotAlerts);
+        Dirty(pilot, actionsRelay);
+        Dirty(pilot, alertsRelay);
+    }
+
+    private void OnMechExit(EntityUid uid, MechComponent component, MechExitEvent args)
+    {
+        if (args.Cancelled || args.Handled)
+            return;
+
         var pilot = Vehicle.GetOperatorOrNull(uid);
-        if (!pilot.HasValue)
-            return;
 
-        _audio.PlayEntity(args.Sound, Filter.Entities(pilot.Value), uid, false);
+        TryEject(uid, component);
+
+        args.Handled = true;
+
+        UpdateUserInterface(uid, component);
+
+        if (pilot.HasValue)
+            _actionBlocker.UpdateCanMove(pilot.Value);
     }
 
-    private void OnMechCanMoveEvent(EntityUid uid, MechComponent component, UpdateCanMoveEvent args)
+    private void OnOpenUi(EntityUid uid, MechComponent component, MechOpenUiEvent args)
     {
-        // Block movement if mech is in broken state or has no energy/integrity
-        var hasCharge = _powerCell.TryGetBatteryFromSlot(uid, out var battery) && battery.CurrentCharge > 0;
-        if (component.Broken || component.Integrity <= 0 || !hasCharge)
-        {
-            args.Cancel();
-            return;
-        }
-
-        // Block movement if mech is locked and pilot lacks access
-        if (TryComp<MechLockComponent>(uid, out var lockComp) && lockComp.IsLocked)
-        {
-            var pilot = Vehicle.GetOperatorOrNull(uid);
-            if (pilot.HasValue && !_lockSystem.CheckAccess(uid, pilot.Value, lockComp))
-            {
-                args.Cancel();
-                return;
-            }
-        }
-
-        // Block movement if the pilot has no hands
-        if (Vehicle.TryGetOperator(uid, out var operatorEnt))
-        {
-            if (!HasComp<HandsComponent>(operatorEnt))
-            {
-                args.Cancel();
-                return;
-            }
-        }
-    }
-
-    private void OnInteractUsing(EntityUid uid, MechComponent component, InteractUsingEvent args)
-    {
-        // Allow prying removal when a battery is present
-        if (_toolSystem.HasQuality(args.Used, PryingQuality) && component.BatterySlot.ContainedEntity != null)
-        {
-            if (Vehicle.HasOperator(uid))
-            {
-                _popup.PopupEntity(Loc.GetString("mech-cannot-modify-closed-popup"), args.User);
-                return;
-            }
-
-            var doAfterEventArgs = new DoAfterArgs(EntityManager, args.User, component.BatteryRemovalDelay,
-                new RemoveBatteryEvent(), uid, target: uid, used: args.Target)
-            {
-                BreakOnMove = true
-            };
-
-            _doAfter.TryStartDoAfter(doAfterEventArgs);
-            return;
-        }
-
-        // Try forwarding material sheets into generator module storage when hatch is open
-        if (!Vehicle.HasOperator(uid) && TryComp<MaterialComponent>(args.Used, out var materialComp))
-        {
-            foreach (var mod in component.ModuleContainer.ContainedEntities)
-            {
-                if (TryComp<MaterialStorageComponent>(mod, out var storage))
-                {
-                    if (_material.TryInsertMaterialEntity(args.User, args.Used, mod, storage))
-                    {
-                        args.Handled = true;
-                        return;
-                    }
-                }
-            }
-        }
+        // UI can always be opened, access control is handled in the UI itself
+        args.Handled = true;
+        ToggleMechUi(uid, component);
     }
 
     private void OnContainerChanged(EntityUid uid, MechComponent component, EntInsertedIntoContainerMessage args)
@@ -239,90 +255,74 @@ public sealed partial class MechSystem : SharedMechSystem
         UpdateUserInterface(uid, component);
     }
 
-    private void OnMapInit(EntityUid uid, MechComponent component, MapInitEvent args)
+    private void OnInteractUsing(EntityUid uid, MechComponent component, InteractUsingEvent args)
     {
-        var xform = Transform(uid);
-
-        foreach (var equipment in component.StartingEquipment)
+        // Allow prying removal when a battery is present
+        if (_toolSystem.HasQuality(args.Used, PryingQuality) && component.BatterySlot.ContainedEntity != null)
         {
-            var ent = Spawn(equipment, xform.Coordinates);
-            InsertEquipment(uid, ent, component);
-        }
+            if (Vehicle.HasOperator(uid))
+            {
+                _popup.PopupEntity(Loc.GetString("mech-cannot-modify-closed-popup"), args.User);
+                return;
+            }
 
-        foreach (var module in component.StartingModules)
-        {
-            var ent = Spawn(module, xform.Coordinates);
-            InsertEquipment(uid, ent, component);
-        }
+            var doAfterEventArgs = new DoAfterArgs(EntityManager, args.User, component.BatteryRemovalDelay,
+                new RemoveBatteryEvent(), uid, target: uid, used: args.Target)
+            {
+                BreakOnMove = true
+            };
 
-        // Ensure cabin pressure component is present for airtight operation
-        EnsureComp<MechCabinAirComponent>(uid);
-
-        component.Integrity = component.MaxIntegrity;
-        component.Airtight = false;
-
-        SetIntegrity(uid, component.MaxIntegrity, component);
-        _actionBlocker.UpdateCanMove(uid);
-
-        UpdateUserInterface(uid, component);
-        UpdateHealthAlert((uid, component));
-    }
-
-    private void OnOpenUi(EntityUid uid, MechComponent component, MechOpenUiEvent args)
-    {
-        // UI can always be opened, access control is handled in the UI itself
-        args.Handled = true;
-        ToggleMechUi(uid, component);
-    }
-
-    private void OnToolUseAttempt(EntityUid uid, MechPilotComponent component, ref ToolUserAttemptUseEvent args)
-    {
-        if (args.Target == component.Mech)
-            args.Cancelled = true;
-    }
-
-    private void OnMechEntry(EntityUid uid, MechComponent component, MechEntryEvent args)
-    {
-        if (args.Cancelled || args.Handled)
-            return;
-
-        // Allow entry if locks are not active; block only if active and user lacks access
-        if (TryComp<MechLockComponent>(uid, out var lockComp) && lockComp.IsLocked && !_lockSystem.CheckAccess(uid, args.User, lockComp))
-        {
-            _lockSystem.CheckAccessWithFeedback(uid, args.User, lockComp);
+            _doAfter.TryStartDoAfter(doAfterEventArgs);
             return;
         }
 
-        if (!Vehicle.CanOperate(uid, args.User))
+        // Try forwarding material sheets into generator module storage when hatch is open
+        if (!Vehicle.HasOperator(uid) && TryComp<MaterialComponent>(args.Used, out var materialComp))
         {
-            _popup.PopupEntity(Loc.GetString("mech-no-enter-popup", ("item", uid)), args.User);
+            foreach (var mod in component.ModuleContainer.ContainedEntities)
+            {
+                if (TryComp<MaterialStorageComponent>(mod, out var storage))
+                {
+                    if (_material.TryInsertMaterialEntity(args.User, args.Used, mod, storage))
+                    {
+                        args.Handled = true;
+                        return;
+                    }
+                }
+            }
+        }
+    }
+
+    private void OnMechCanMoveEvent(EntityUid uid, MechComponent component, UpdateCanMoveEvent args)
+    {
+        // Block movement if mech is in broken state or has no energy/integrity
+        var hasCharge = _powerCell.TryGetBatteryFromSlot(uid, out var battery) && battery.CurrentCharge > 0;
+        if (component.Broken || component.Integrity <= 0 || !hasCharge)
+        {
+            args.Cancel();
             return;
         }
 
-        TryInsert(uid, args.Args.User, component);
-        args.Handled = true;
+        // Block movement if mech is locked and pilot lacks access
+        if (TryComp<MechLockComponent>(uid, out var lockComp) && lockComp.IsLocked)
+        {
+            var pilot = Vehicle.GetOperatorOrNull(uid);
+            if (pilot.HasValue && !_lockSystem.CheckAccess(uid, pilot.Value, lockComp))
+            {
+                args.Cancel();
+                return;
+            }
+        }
 
-        UpdateUserInterface(uid, component);
-        UpdateBatteryAlert((uid, component));
-        UpdateHealthAlert((uid, component));
-        SetupPilotRelay(args.User, uid);
-    }
-
-    private void OnMechExit(EntityUid uid, MechComponent component, MechExitEvent args)
-    {
-        if (args.Cancelled || args.Handled)
-            return;
-
-        var pilot = Vehicle.GetOperatorOrNull(uid);
-
-        TryEject(uid, component);
-
-        args.Handled = true;
-
-        UpdateUserInterface(uid, component);
-
-        if (pilot.HasValue)
-            _actionBlocker.UpdateCanMove(pilot.Value);
+        // Block movement if the pilot has no hands
+        if (Vehicle.TryGetOperator(uid, out var operatorEnt))
+        {
+            if (!HasComp<HandsComponent>(operatorEnt))
+            {
+                args.Cancel();
+                return;
+            }
+        }
     }
 
     private void OnDamageChanged(EntityUid uid, MechComponent component, DamageChangedEvent args)
@@ -342,12 +342,90 @@ public sealed partial class MechSystem : SharedMechSystem
         UpdateHealthAlert((uid, component));
     }
 
+    private void OnRepairMechEvent(EntityUid uid, MechComponent component, RepairMechEvent args)
+    {
+        RepairMech(uid, component);
+
+        // Restore prototype-declared disassembly graph after successful repair
+        var cc = EnsureComp<ConstructionComponent>(uid);
+        _construction.ChangeGraph(uid, null, "MechDisassemble", "start", performActions: false, cc);
+    }
+
     private void OnBatteryChanged(EntityUid uid, MechComponent component, PowerCellChangedEvent args)
     {
         // Battery changed, update UI and alerts
         Dirty(uid, component);
         UpdateUserInterface(uid, component);
         UpdateBatteryAlert((uid, component));
+    }
+
+    private void OnMechBrokenSound(EntityUid uid, MechComponent component, MechBrokenSoundEvent args)
+    {
+        _audio.PlayPvs(args.Sound, uid);
+    }
+
+    private void OnMechEntrySuccessSound(EntityUid uid, MechComponent component, MechEntrySuccessSoundEvent args)
+    {
+        var pilot = Vehicle.GetOperatorOrNull(uid);
+        if (!pilot.HasValue)
+            return;
+
+        _audio.PlayEntity(args.Sound, Filter.Entities(pilot.Value), uid, false);
+    }
+
+    private void OnEquipmentSelectRequest(RequestMechEquipmentSelectEvent args, EntitySessionEventArgs session)
+    {
+        var user = session.SenderSession.AttachedEntity;
+        if (user == null)
+            return;
+        if (!TryComp<MechPilotComponent>(user.Value, out var pilot))
+            return;
+        var mech = pilot.Mech;
+        if (!TryComp<MechComponent>(mech, out var mechComp))
+            return;
+
+        if (args.Equipment == null)
+        {
+            mechComp.CurrentSelectedEquipment = null;
+            _popup.PopupEntity(Loc.GetString("mech-select-none-popup"), mech);
+        }
+        else
+        {
+            var equipment = GetEntity(args.Equipment);
+            if (Exists(equipment) && mechComp.EquipmentContainer.ContainedEntities.Any(e => e == equipment))
+            {
+                mechComp.CurrentSelectedEquipment = equipment;
+                _popup.PopupEntity(Loc.GetString("mech-select-popup", ("item", equipment)), mech);
+            }
+        }
+
+        Dirty(mech, mechComp);
+        RefreshPilotHandVirtualItems(mech, mechComp);
+    }
+
+    private void OnToolUseAttempt(EntityUid uid, MechPilotComponent component, ref ToolUserAttemptUseEvent args)
+    {
+        if (args.Target == component.Mech)
+            args.Cancelled = true;
+    }
+
+    private void OnEmpAttempt(EntityUid uid, MechComponent component, EmpAttemptEvent args)
+    {
+        // mech (battery) is immune to emp
+        args.Cancel();
+    }
+
+    private void OnBeingGibbed(EntityUid uid, MechComponent component, ref BeingGibbedEvent args)
+    {
+        // Eject pilot if present
+        if (component.PilotSlot.ContainedEntity != null)
+            TryEject(uid, component);
+
+        if (component.PilotSlot.ContainedEntity != null)
+            args.GibbedParts.Add(component.PilotSlot.ContainedEntity.Value);
+
+        // TODO: Parts should fall out
+        QueueDel(uid);
     }
 
     private void ToggleMechUi(EntityUid uid, MechComponent? component = null, EntityUid? user = null)
@@ -459,82 +537,11 @@ public sealed partial class MechSystem : SharedMechSystem
         UpdateUserInterface(uid, component);
     }
 
-    private void OnMechBrokenSound(EntityUid uid, MechComponent component, MechBrokenSoundEvent args)
-    {
-        _audio.PlayPvs(args.Sound, uid);
-    }
-
     public override bool CanInsert(EntityUid uid, EntityUid toInsert, MechComponent? component = null)
     {
         if (!Resolve(uid, ref component))
             return false;
 
         return base.CanInsert(uid, toInsert, component) && _actionBlocker.CanMove(toInsert);
-    }
-
-    private void OnEquipmentSelectRequest(RequestMechEquipmentSelectEvent args, EntitySessionEventArgs session)
-    {
-        var user = session.SenderSession.AttachedEntity;
-        if (user == null)
-            return;
-        if (!TryComp<MechPilotComponent>(user.Value, out var pilot))
-            return;
-        var mech = pilot.Mech;
-        if (!TryComp<MechComponent>(mech, out var mechComp))
-            return;
-
-        if (args.Equipment == null)
-        {
-            mechComp.CurrentSelectedEquipment = null;
-            _popup.PopupEntity(Loc.GetString("mech-select-none-popup"), mech);
-        }
-        else
-        {
-            var equipment = GetEntity(args.Equipment);
-            if (Exists(equipment) && mechComp.EquipmentContainer.ContainedEntities.Any(e => e == equipment))
-            {
-                mechComp.CurrentSelectedEquipment = equipment;
-                _popup.PopupEntity(Loc.GetString("mech-select-popup", ("item", equipment)), mech);
-            }
-        }
-
-        Dirty(mech, mechComp);
-        RefreshPilotHandVirtualItems(mech, mechComp);
-    }
-
-    private void OnBeingGibbed(EntityUid uid, MechComponent component, ref BeingGibbedEvent args)
-    {
-        // Eject pilot if present
-        if (component.PilotSlot.ContainedEntity != null)
-            TryEject(uid, component);
-
-        if (component.PilotSlot.ContainedEntity != null)
-            args.GibbedParts.Add(component.PilotSlot.ContainedEntity.Value);
-
-        // TODO: Parts should fall out
-        QueueDel(uid);
-    }
-
-    private void SetupPilotRelay(EntityUid pilot, EntityUid mech)
-    {
-        // Ensure pilot has required components
-        var pilotActions = EnsureComp<ActionsComponent>(pilot);
-        var pilotAlerts = EnsureComp<AlertsComponent>(pilot);
-
-        // Setup actions relay
-        var actionsRelay = EnsureComp<ActionsDisplayRelayComponent>(pilot);
-        actionsRelay.Source = mech;
-        actionsRelay.InteractAsSource = true;
-
-        // Setup alerts relay
-        var alertsRelay = EnsureComp<AlertsDisplayRelayComponent>(pilot);
-        alertsRelay.Source = mech;
-        alertsRelay.InteractAsSource = true;
-
-        // Notify client of changes
-        Dirty(pilot, pilotActions);
-        Dirty(pilot, pilotAlerts);
-        Dirty(pilot, actionsRelay);
-        Dirty(pilot, alertsRelay);
     }
 }
