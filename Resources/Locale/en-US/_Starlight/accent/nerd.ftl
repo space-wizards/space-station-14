@@ -104,7 +104,6 @@ accent-nerd-replaced-35 = artifact
 accent-nerd-replacement-35 = tangible instantiation
 
 accent-nerd-replaced-36 = borg
-accent-nerd-replaced-36 = robot
 accent-nerd-replacement-36 = cybernetic organism
 
 accent-nerd-replaced-37 = bot
@@ -147,7 +146,6 @@ accent-nerd-replaced-49 = med
 accent-nerd-replacement-49 = the anatomical pathology division
 
 accent-nerd-replaced-50 = booze
-accent-nerd-replaced-50 = alcohol
 accent-nerd-replacement-50 = ethanolic solution
 
 accent-nerd-replaced-51 = drunk
@@ -215,3 +213,9 @@ accent-nerd-replacement-71 = correctional confinement facility
 
 accent-nerd-replaced-72 = well,
 accent-nerd-replacement-72 = well actually,
+
+accent-nerd-replaced-73 = robot
+accent-nerd-replacement-73 = cybernetic organism
+
+accent-nerd-replaced-74 = alcohol
+accent-nerd-replacement-74 = ethanolic solution
