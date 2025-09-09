@@ -363,7 +363,7 @@
     attackRate: 1
     damage:
       types:
-        Blunt: 26
+        Blunt: 25
   - type: MovementSpeedModifier
     baseWalkSpeed: 2.5
     baseSprintSpeed: 4.5
@@ -627,8 +627,8 @@
     attackRate: 1
     damage:
       types:
-        Blunt: 25
-        Structural: 180
+        Blunt: 30
+        Structural: 100
   - type: MovementSpeedModifier
     baseWalkSpeed: 2
     baseSprintSpeed: 2.6
@@ -687,7 +687,7 @@
     damage:
       types:
         Blunt: 40
-        Structural: 220
+        Structural: 150
   - type: MovementSpeedModifier
     baseWalkSpeed: 1.5
     baseSprintSpeed: 2

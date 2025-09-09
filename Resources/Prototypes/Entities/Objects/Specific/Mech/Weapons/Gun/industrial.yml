@@ -12,7 +12,7 @@
     maxCharge: 20
     startingCharge: 20
   - type: Gun
-    fireRate: 1
+    fireRate: 1.5
     selectedMode: SemiAuto
     availableModes:
       - SemiAuto

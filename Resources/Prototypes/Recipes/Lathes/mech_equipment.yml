@@ -9,7 +9,7 @@
   completetime: 10
   materials:
     Steel: 500
-    Plastic: 200
+    Plastic: 250
 
 ## Recipes
 
@@ -23,32 +23,16 @@
   id: MechEquipmentGrabberSmall
   result: MechEquipmentGrabberSmall
   materials:
-    Steel: 400
+    Steel: 300
     Plastic: 100
 
 - type: latheRecipe
   parent: BaseMechEquipmentRecipe
-  id: MechEquipmentHonkerBananaMortar
-  result: WeaponMechSpecialBananaMortar
-  materials:
-    Steel: 1150
-    Bananium: 800
-
-- type: latheRecipe
-  parent: BaseMechEquipmentRecipe
-  id: MechEquipmentHonkerMousetrapMortar
-  result: WeaponMechSpecialMousetrapMortar
-  materials:
-    Steel: 1200
-    Bananium: 300
-
-- type: latheRecipe
-  parent: BaseToolRecipe
   id: MechEquipmentDrill
   result: WeaponMechMelleDrill
   completetime: 3
   materials:
-    Steel: 900
+    Steel: 750
     Plastic: 250
 
 - type: latheRecipe
@@ -56,7 +40,23 @@
   id: MechEquipmentDrillDiamond
   result: WeaponMechMelleDrillDiamond
   materials:
-    Steel: 1200
+    Steel: 1000
     Plastic: 500
     Silver: 200
-    Diamond: 150
+    Diamond: 200
+
+- type: latheRecipe
+  parent: BaseMechEquipmentRecipe
+  id: MechEquipmentHonkerBananaMortar
+  result: WeaponMechSpecialBananaMortar
+  materials:
+    Steel: 1000
+    Bananium: 750
+
+- type: latheRecipe
+  parent: BaseMechEquipmentRecipe
+  id: MechEquipmentHonkerMousetrapMortar
+  result: WeaponMechSpecialMousetrapMortar
+  materials:
+    Steel: 1000
+    Bananium: 250

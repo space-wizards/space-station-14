@@ -143,8 +143,8 @@
     sprite: Objects/Specific/Mech/mecha_equipment.rsi
     state: mecha_disabler
   - type: Battery
-    maxCharge: 500
-    startingCharge: 500
+    maxCharge: 15
+    startingCharge: 15
   - type: Gun
     fireRate: 1
     selectedMode: SemiAuto
@@ -195,8 +195,8 @@
     sprite: Objects/Specific/Mech/mecha_equipment.rsi
     state: mecha_scatter
   - type: Battery
-    maxCharge: 250
-    startingCharge: 250
+    maxCharge: 125
+    startingCharge: 125
   - type: Gun
     fireRate: 0.5
     selectedMode: SemiAuto
@@ -206,7 +206,7 @@
       path: /Audio/Weapons/Guns/Gunshots/shotgun.ogg
   - type: ProjectileBatteryAmmoProvider
     proto: ShellShotgun
-    fireCost: 50
+    fireCost: 25
   - type: Appearance
   - type: AmmoCounter
 
@@ -273,8 +273,8 @@
     sprite: Objects/Specific/Mech/mecha_equipment.rsi
     state: mecha_missilerack_six
   - type: Battery
-    maxCharge: 300
-    startingCharge: 300
+    maxCharge: 150
+    startingCharge: 150
   - type: Gun
     fireRate: 0.5
     selectedMode: SemiAuto

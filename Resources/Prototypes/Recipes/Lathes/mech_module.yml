@@ -8,8 +8,9 @@
   - MechModule
   completetime: 10
   materials:
-    Steel: 500
-    Plastic: 200
+    Steel: 250
+    Glass: 250
+    Plastic: 250
 
 ## Recipes
 
@@ -22,8 +23,6 @@
   parent: BaseMechModuleRecipe
   id: MechModuleAirTank
   result: MechModuleAirTank
-  materials:
-    Steel: 600
 
 - type: latheRecipe
   parent: BaseMechModuleRecipe
@@ -31,7 +30,7 @@
   result: MechModuleTeslaRelay
   materials:
     Steel: 1000
-    Glass: 200
+    Glass: 500
 
 - type: latheRecipe
   parent: BaseMechModuleRecipe
@@ -39,9 +38,9 @@
   result: MechModulePlasmaGenerator
   materials:
     Steel: 1000
-    Glass: 100
+    Glass: 250
     Plasma: 500
-    Silver: 200
+    Silver: 250
 
 - type: latheRecipe
   parent: BaseMechModuleRecipe
@@ -49,4 +48,4 @@
   result: MechModuleHorn
   materials:
     Steel: 500
-    Bananium: 200
+    Bananium: 250

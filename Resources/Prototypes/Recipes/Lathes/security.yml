@@ -314,29 +314,29 @@
   id: WeaponMechCombatImmolationGun
   result: WeaponMechCombatImmolationGun
   materials:
-    Steel: 2800
-    Plastic: 1000
-    Plasma: 750
-    Glass: 500
+    Steel: 2500
+    Plastic: 500
+    Plasma: 500
+    Glass: 250
 
 - type: latheRecipe
   parent: BaseWeaponRecipeMechWeapons
   id: WeaponMechCombatSolarisLaser
   result: WeaponMechCombatSolarisLaser
   materials:
-    Steel: 1650
+    Steel: 2000
     Plastic: 300
-    Plasma: 250
-    Glass: 200
+    Plasma: 300
+    Glass: 100
 
 - type: latheRecipe
   parent: BaseWeaponRecipeMechWeapons
   id: WeaponMechCombatFiredartLaser
   result: WeaponMechCombatFiredartLaser
   materials:
-    Steel: 1200
+    Steel: 1500
     Plastic: 200
-    Plasma: 150
+    Plasma: 200
     Glass: 50
 
 - type: latheRecipe
@@ -352,8 +352,8 @@
   id: WeaponMechCombatShotgun
   result: WeaponMechCombatShotgun
   materials:
-    Steel: 1600
-    Plastic: 550
+    Steel: 1500
+    Plastic: 500
 
 - type: latheRecipe
   parent: BaseWeaponRecipeMechWeapons
@@ -380,14 +380,14 @@
   materials:
     Steel: 1200
     Glass: 300
-    Plastic: 450
+    Plastic: 500
 
 - type: latheRecipe
   parent: BaseWeaponRecipeMechWeapons
   id: WeaponMechCombatMissileRack6
   result: WeaponMechCombatMissileRack6
   materials:
-    Steel: 2500
+    Steel: 3000
     Glass: 1500
     Plastic: 750
 
