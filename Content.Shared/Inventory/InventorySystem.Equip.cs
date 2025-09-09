@@ -557,37 +557,21 @@ public abstract partial class InventorySystem
     /// <summary>
     /// Try to unequip all held and worn items.
     /// </summary>
-    /// <param name="ent">The entity unequipping the items.</param>
-    /// <param name="throwItems">Whether to throw items in random directions close to <see cref="ent"/></param>
-    /// <param name="scatterItems">Whether to instantly scatter items around <see cref="ent"/>,
-    /// preventing them from being all in the same exact position in the next tick.</param>
-    /// <param name="maxThrowImpulseModifier">If <see cref="throwItems"/> is true, modifies max random impulse
-    /// applied to the thrown items. If 1, items are scattered next to <see cref="ent"/></param>
-    /// <param name="throwDirection">If <see cref="throwItems"/> is true, The direction in which to throw the items</param>
-    /// <param name="throwCone">If <see cref="throwItems"/> is true, the spread angle of thrown items</param>
-    /// <param name="forceUnequip"> Whether to force unequipping the items no matter what.</param>
-    /// <returns> All successfully unequipped items.</returns>
-    public HashSet<EntityUid> TryUnequipAll(Entity<InventoryComponent?, HandsComponent?> ent,
-        bool throwItems = false,
-        bool scatterItems = false,
-        float maxThrowImpulseModifier = 1.0f,
-        Vector2? throwDirection = null,
-        Angle? throwCone = null,
-        bool forceUnequip = true)
+    /// <param name="ent">The inventory's owner.</param>
+    /// <param name="forceUnequip">Whether to force unequipping all items, no matter what</param>
+    /// <returns></returns>
+    public HashSet<EntityUid> TryUnequipAll(Entity<InventoryComponent?, HandsComponent?> ent, bool forceUnequip = true)
     {
         var unequippedItems = new HashSet<EntityUid>();
 
         if (!Resolve(ent.Owner, ref ent.Comp1, false))
         {
-            return [];
+            return unequippedItems;
         }
 
-        var maxThrowImpulse = maxThrowImpulseModifier * UnequipAllDefaultMaxThrowImpulse;
+        var inventoryItems = new Queue<EntityUid>(GetHandOrInventoryEntities(ent.Owner));
 
         var hasHands = Resolve(ent.Owner, ref ent.Comp2, false);
-
-        var allItems = new Queue<EntityUid>(GetHandOrInventoryEntities(ent.Owner));
-
         if (hasHands)
         {
             foreach (var heldItem in _handsSystem.EnumerateHeld(ent.Owner))
@@ -596,13 +580,13 @@ public abstract partial class InventorySystem
             }
         }
 
-        while (allItems.TryDequeue(out var item))
+        while (inventoryItems.TryDequeue(out var item))
         {
             if (TryGetContainingSlot(item, out var itemSlot))
             {
                 if (HasItemsInDependentSlots((ent, ent.Comp1), itemSlot.Name))
                 {
-                    allItems.Enqueue(item);
+                    inventoryItems.Enqueue(item);
                     continue;
                 }
 
@@ -615,7 +599,38 @@ public abstract partial class InventorySystem
             {
                 unequippedItems.Add(item);
             }
+        }
 
+        return unequippedItems;
+    }
+
+    /// <summary>
+    /// Try to unequip all held and worn items, then scatter or throw them around the entity.
+    /// </summary>
+    /// <param name="ent">The entity unequipping the items.</param>
+    /// <param name="scatterItems">Whether to instantly scatter items around <see cref="ent"/>,
+    /// preventing them from being all in the same exact position in the next tick.</param>
+    /// <param name="throwItems">Whether to throw items in random directions close to <see cref="ent"/></param>
+    /// <param name="maxThrowImpulseModifier">If <see cref="throwItems"/> is true, modifies max random linear impulse
+    /// applied to the thrown items. If 1, items are scattered next to <see cref="ent"/></param>
+    /// <param name="throwDirection">If <see cref="throwItems"/> is true, The direction in which to throw the items</param>
+    /// <param name="throwCone">If <see cref="throwDirection"/> is defined, the full spread angle of thrown items</param>
+    /// <param name="forceUnequip"> Whether to force unequipping the items no matter what.</param>
+    /// <returns> All successfully unequipped items.</returns>
+    public HashSet<EntityUid> TryUnequipAllAndScatter(Entity<InventoryComponent?, HandsComponent?> ent,
+        bool scatterItems = false,
+        bool throwItems = false,
+        float maxThrowImpulseModifier = 1.0f,
+        Vector2? throwDirection = null,
+        Angle throwCone = default,
+        bool forceUnequip = true)
+    {
+        var unequippedItems = TryUnequipAll(ent, forceUnequip);
+
+        var maxThrowImpulse = maxThrowImpulseModifier * UnequipAllDefaultMaxThrowImpulse;
+
+        foreach (var item in unequippedItems)
+        {
             if (scatterItems)
             {
                 _transform.SetWorldPosition(item, _transform.GetWorldPosition(item) + _random.NextVector2(0.5f));
@@ -626,15 +641,20 @@ public abstract partial class InventorySystem
                 continue;
             }
 
-            var currentItemThrowDirection = throwDirection ?? _random.NextAngle().ToVec();
-            if (throwCone is not null)
+            Vector2 currentDir;
+            if (throwDirection is not null)
             {
-                var angle = currentItemThrowDirection.ToAngle();
-                angle += _random.NextAngle((Angle)(-throwCone / 2.0f), (Angle)(throwCone / 2.0f));
-                currentItemThrowDirection = angle.ToVec();
+                var currentAngle = throwDirection.Value.ToAngle();
+                currentAngle += _random.NextAngle((-throwCone / 2.0f), (throwCone / 2.0f));
+                currentDir = currentAngle.ToVec();
             }
+            else
+            {
+                currentDir = _random.NextAngle().ToVec();
+            }
+
             var throwSpeed = _random.NextFloat() * maxThrowImpulse;
-            _physicsSystem.ApplyLinearImpulse(item, currentItemThrowDirection * throwSpeed);
+            _physicsSystem.ApplyLinearImpulse(item, currentDir * throwSpeed);
 
             var throwRotationSpeed = _random.NextFloat() * maxThrowImpulse / 10.0f;
             _physicsSystem.ApplyAngularImpulse(item, throwRotationSpeed);

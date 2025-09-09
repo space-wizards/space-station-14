@@ -303,7 +303,7 @@ public partial class SharedBodySystem
 
         var parts = GetBodyChildren(bodyId, body).ToArray();
         var allInventoryItems =
-            _inventory.TryUnequipAll(bodyId, launchGibs, launchGibs, splatModifier, splatDirection, splatCone);
+            _inventory.TryUnequipAllAndScatter(bodyId, launchGibs, launchGibs, splatModifier, splatDirection, splatCone);
 
         gibs.EnsureCapacity(parts.Length + allInventoryItems.Count);
         gibs.UnionWith(allInventoryItems);
