@@ -4,7 +4,6 @@ using Content.Shared.Whitelist;
 using Robust.Shared.Containers;
 using Robust.Shared.GameStates;
 using Robust.Shared.Serialization;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 using Content.Shared.DoAfter;
 
 namespace Content.Shared.Disposal.Components;
@@ -12,7 +11,7 @@ namespace Content.Shared.Disposal.Components;
 /// <summary>
 /// Takes in entities and flushes them out to attached disposals tubes after a timer.
 /// </summary>
-[RegisterComponent, NetworkedComponent, AutoGenerateComponentState(true)]
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState(true), AutoGenerateComponentPause]
 public sealed partial class DisposalUnitComponent : Component
 {
     public const string ContainerId = "disposals";
@@ -22,6 +21,18 @@ public sealed partial class DisposalUnitComponent : Component
     /// </summary>
     [DataField]
     public GasMixture Air = new(Atmospherics.CellVolume);
+
+    /// <summary>
+    /// Name of the flushing animation state.
+    /// </summary>
+    [DataField]
+    public string FlushingState = "disposal-flush";
+
+    /// <summary>
+    /// The animation used when unit flushes.
+    /// </summary>
+    [ViewVariables(VVAccess.ReadWrite)]
+    public object FlushingAnimation = default!;
 
     /// <summary>
     /// Sounds played upon the unit flushing.
@@ -56,7 +67,7 @@ public sealed partial class DisposalUnitComponent : Component
     /// <summary>
     /// Next time the disposal unit will be pressurized.
     /// </summary>
-    [DataField(customTypeSerializer: typeof(TimeOffsetSerializer)), AutoNetworkedField]
+    [DataField, AutoNetworkedField, AutoPausedField]
     public TimeSpan NextPressurized = TimeSpan.Zero;
 
     /// <summary>
@@ -80,7 +91,7 @@ public sealed partial class DisposalUnitComponent : Component
     /// <summary>
     /// Last time that an entity tried to exit this disposal unit.
     /// </summary>
-    [DataField, AutoNetworkedField]
+    [DataField, AutoNetworkedField, AutoPausedField]
     public TimeSpan LastExitAttempt;
 
     [DataField]
@@ -115,7 +126,7 @@ public sealed partial class DisposalUnitComponent : Component
     /// <summary>
     /// Next time this unit will flush. Is the lesser of <see cref="FlushDelay"/> and <see cref="AutomaticEngageTime"/>
     /// </summary>
-    [DataField(customTypeSerializer: typeof(TimeOffsetSerializer)), AutoNetworkedField]
+    [DataField, AutoNetworkedField, AutoPausedField]
     public TimeSpan? NextFlush;
 }
 
@@ -150,35 +161,20 @@ public enum DisposalsPressureState : byte
 [Serializable, NetSerializable]
 public enum DisposalUnitVisuals : byte
 {
-    VisualState,
-    Handle,
-    Light
+    IsReady,
+    IsEngaged,
+    IsFlushing,
+    IsCharging,
+    IsFull,
 }
 
 [Serializable, NetSerializable]
-public enum DisposalUnitVisualState : byte
+public enum DisposalUnitVisualLayers : byte
 {
-    UnAnchored,
-    Anchored,
-    OverlayFlushing,
-    OverlayCharging
-}
-
-[Serializable, NetSerializable]
-public enum DisposalUnitHandleState : byte
-{
-    Normal,
-    Engaged
-}
-
-[Serializable, NetSerializable]
-[Flags]
-public enum DisposalUnitLightStates : byte
-{
-    Off = 0,
-    Charging = 1 << 0,
-    Full = 1 << 1,
-    Ready = 1 << 2
+    Base,
+    OverlayEngaged,
+    OverlayCharging,
+    OverlayFull,
 }
 
 [Serializable, NetSerializable]
@@ -186,23 +182,7 @@ public enum DisposalUnitUiButton : byte
 {
     Eject,
     Engage,
-    Power
-}
-
-[Serializable, NetSerializable]
-public enum DisposalUnitVisualLayers : byte
-{
-    Unit,
-    OverlayCharge,
-    OverlayFull,
-    Handle,
-    Unanchored,
-    Base,
-    BaseCharging,
-    OverlayFlush,
-    OverlayCharging,
-    OverlayReady,
-    OverlayEngaged
+    Power,
 }
 
 /// <summary>

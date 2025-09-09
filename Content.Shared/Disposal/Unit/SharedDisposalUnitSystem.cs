@@ -1,6 +1,7 @@
 using Content.Shared.ActionBlocker;
 using Content.Shared.Administration.Logs;
 using Content.Shared.Climbing.Systems;
+using Content.Shared.Construction.EntitySystems;
 using Content.Shared.Containers;
 using Content.Shared.Database;
 using Content.Shared.Destructible;
@@ -84,7 +85,7 @@ public abstract class SharedDisposalUnitSystem : EntitySystem
         SubscribeLocalEvent<DisposalUnitComponent, GotEmaggedEvent>(OnEmagged);
         SubscribeLocalEvent<DisposalUnitComponent, AnchorStateChangedEvent>(OnAnchorChanged);
         SubscribeLocalEvent<DisposalUnitComponent, PowerChangedEvent>(OnPowerChange);
-        SubscribeLocalEvent<DisposalUnitComponent, ComponentInit>(OnDisposalInit);
+        SubscribeLocalEvent<DisposalUnitComponent, ComponentInit>(OnComponentInit);
 
         SubscribeLocalEvent<DisposalUnitComponent, ActivateInWorldEvent>(OnActivate);
         SubscribeLocalEvent<DisposalUnitComponent, AfterInteractUsingEvent>(OnAfterInteractUsing);
@@ -242,7 +243,7 @@ public abstract class SharedDisposalUnitSystem : EntitySystem
         args.Handled = true;
     }
 
-    private void OnDisposalInit(Entity<DisposalUnitComponent> ent, ref ComponentInit args)
+    protected virtual void OnComponentInit(Entity<DisposalUnitComponent> ent, ref ComponentInit args)
     {
         ent.Comp.Container = _containers.EnsureContainer<Container>(ent, DisposalUnitComponent.ContainerId);
     }
@@ -275,6 +276,7 @@ public abstract class SharedDisposalUnitSystem : EntitySystem
             return;
 
         UpdateVisualState(uid, component);
+
         if (!args.Anchored)
             TryEjectContents(uid, component);
     }
@@ -334,60 +336,24 @@ public abstract class SharedDisposalUnitSystem : EntitySystem
     public void UpdateVisualState(EntityUid uid, DisposalUnitComponent component, bool flush = false)
     {
         if (!TryComp(uid, out AppearanceComponent? appearance))
-        {
             return;
-        }
 
-        if (!Transform(uid).Anchored)
-        {
-            _appearance.SetData(uid, DisposalUnitVisuals.VisualState, DisposalUnitVisualState.UnAnchored, appearance);
-            _appearance.SetData(uid, DisposalUnitVisuals.Handle, DisposalUnitHandleState.Normal, appearance);
-            _appearance.SetData(uid, DisposalUnitVisuals.Light, DisposalUnitLightStates.Off, appearance);
+        var isAnchored = Transform(uid).Anchored;
+        _appearance.SetData(uid, AnchorVisuals.Anchored, isAnchored, appearance);
+
+        if (!isAnchored)
             return;
-        }
 
         var state = GetState(uid, component);
-
-        switch (state)
-        {
-            case DisposalsPressureState.Flushed:
-                _appearance.SetData(uid, DisposalUnitVisuals.VisualState, DisposalUnitVisualState.OverlayFlushing, appearance);
-                break;
-            case DisposalsPressureState.Pressurizing:
-                _appearance.SetData(uid, DisposalUnitVisuals.VisualState, DisposalUnitVisualState.OverlayCharging, appearance);
-                break;
-            case DisposalsPressureState.Ready:
-                _appearance.SetData(uid, DisposalUnitVisuals.VisualState, DisposalUnitVisualState.Anchored, appearance);
-                break;
-        }
-
-        _appearance.SetData(uid, DisposalUnitVisuals.Handle, component.Engaged
-            ? DisposalUnitHandleState.Engaged
-            : DisposalUnitHandleState.Normal, appearance);
+        _appearance.SetData(uid, DisposalUnitVisuals.IsReady, state == DisposalsPressureState.Ready, appearance);
+        _appearance.SetData(uid, DisposalUnitVisuals.IsFlushing, state == DisposalsPressureState.Flushed, appearance);
+        _appearance.SetData(uid, DisposalUnitVisuals.IsEngaged, component.Engaged, appearance);
 
         if (!_power.IsPowered(uid))
-        {
-            _appearance.SetData(uid, DisposalUnitVisuals.Light, DisposalUnitLightStates.Off, appearance);
             return;
-        }
 
-        var lightState = DisposalUnitLightStates.Off;
-
-        if (component.Container.ContainedEntities.Count > 0)
-        {
-            lightState |= DisposalUnitLightStates.Full;
-        }
-
-        if (state is DisposalsPressureState.Pressurizing or DisposalsPressureState.Flushed)
-        {
-            lightState |= DisposalUnitLightStates.Charging;
-        }
-        else
-        {
-            lightState |= DisposalUnitLightStates.Ready;
-        }
-
-        _appearance.SetData(uid, DisposalUnitVisuals.Light, lightState, appearance);
+        _appearance.SetData(uid, DisposalUnitVisuals.IsFull, component.Container.ContainedEntities.Count > 0, appearance);
+        _appearance.SetData(uid, DisposalUnitVisuals.IsCharging, state != DisposalsPressureState.Ready, appearance);
     }
 
     /// <summary>
