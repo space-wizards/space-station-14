@@ -8,9 +8,15 @@
   markingLimits: MobMothMarkingLimits
   dollPrototype: MobMothDummy
   coloringRules:
-  - !type:ClampHsvRule
-    minColor: "#1e1e1e"
-    maxColor: "#ec5959"
+  - !type:HsvValueLimit
+    min: 0.2
+    max: 1
+  - !type:HsvSaturationLimit
+    min: 0
+    max: 0.8
+  - !type:HsvHueLimit
+    ranges:
+    - [0, 1]
   maleFirstNames: NamesMothFirstMale
   femaleFirstNames: NamesMothFirstFemale
   lastNames: NamesMothLast

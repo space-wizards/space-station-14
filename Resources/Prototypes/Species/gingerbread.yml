@@ -6,8 +6,16 @@
   sprites: MobGingerbreadSprites
   markingLimits: MobHumanMarkingLimits
   dollPrototype: MobGingerbreadDummy
-  #coloringRules:
-  #- !type:HumanToned
+  coloringRules:
+  - !type:HsvValueLimit
+    min: 0.5
+    max: 0.9
+  - !type:HsvSaturationLimit
+    min: 0.2
+    max: 0.5
+  - !type:HsvHueLimit
+    ranges:
+    - [0.1, 0.15]
   defaultSkinTone: "#9a7c5a"
 
 - type: speciesBaseSprites

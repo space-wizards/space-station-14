@@ -6,8 +6,16 @@
   sprites: MobHumanSprites
   markingLimits: MobHumanMarkingLimits
   dollPrototype: MobHumanDummy
-  #coloringRules:
-  #- !type:HumanToned
+  coloringRules:
+  - !type:HsvValueLimit
+    min: 0.5
+    max: 0.9
+  - !type:HsvSaturationLimit
+    min: 0.2
+    max: 0.5
+  - !type:HsvHueLimit
+    ranges:
+    - [0.1, 0.15]
 
 # The lack of a layer means that
 # this person cannot have round-start anything

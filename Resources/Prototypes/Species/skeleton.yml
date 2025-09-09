@@ -9,8 +9,16 @@
   maleFirstNames: NamesSkeletonFirst
   femaleFirstNames: NamesSkeletonFirst
   dollPrototype: MobSkeletonPersonDummy
-  #coloringRules:
-  #- !type:TintedHues
+  coloringRules:
+  - !type:HsvValueLimit
+    min: 0.7
+    max: 1.0
+  - !type:HsvSaturationLimit
+    min: 0.0
+    max: 0.15
+  - !type:HsvHueLimit
+    ranges:
+    - [0.0, 1.0]
 
 - type: speciesBaseSprites
   id: MobSkeletonSprites
