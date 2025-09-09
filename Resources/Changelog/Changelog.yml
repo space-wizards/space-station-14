@@ -1,34 +1,4 @@
 ﻿Entries:
-- author: Prole0
-  changes:
-  - message: Water bottles now fit in dispensers!
-    type: Tweak
-  id: 8429
-  time: '2025-05-06T18:13:34.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/37108
-- author: OnyxTheBrave
-  changes:
-  - message: Holy water now correctly metabolizes at .5 unites per second
-    type: Fix
-  id: 8430
-  time: '2025-05-06T18:31:24.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/37106
-- author: sowelipililimute
-  changes:
-  - message: Departmental cargo request computers now print slips that can be given
-      to Cargo for final approval, rather than directly approving the orders themselves
-    type: Tweak
-  id: 8431
-  time: '2025-05-06T19:04:19.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/36944
-- author: Ghagliiarghii
-  changes:
-  - message: Fixed a bug which allowed Janitor borgs to delete a held item and acquire
-      an empty hand.
-    type: Fix
-  id: 8432
-  time: '2025-05-06T19:10:10.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/36961
 - author: UpAndLeaves
   changes:
   - message: wearing an elite web vest and an atmos fire helmet will no longer heal
@@ -3946,3 +3916,33 @@
   id: 8940
   time: '2025-09-07T15:10:39.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/40194
+- author: Banditoz
+  changes:
+  - message: You can cross chasms with the grapple gun.
+    type: Add
+  id: 8941
+  time: '2025-09-08T00:34:01.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/39983
+- author: Orbitsystem
+  changes:
+  - message: Diona sap can now trigger artifact nodes that require blood.
+    type: Fix
+  id: 8942
+  time: '2025-09-08T13:56:59.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/40211
+- author: Centronias
+  changes:
+  - message: Derelict Mediborgs can determine solution contents and see mob health
+      in their HUD, like their non-derelict counterparts.
+    type: Fix
+  id: 8943
+  time: '2025-09-09T02:44:31.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/40206
+- author: Kittygyat
+  changes:
+  - message: Changed the Galoshes description to be more descriptive of what they
+      actually do.
+    type: Tweak
+  id: 8944
+  time: '2025-09-09T02:47:46.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/40200

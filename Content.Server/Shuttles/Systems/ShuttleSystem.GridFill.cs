@@ -91,7 +91,7 @@ public sealed partial class ShuttleSystem
         var dungeonProtos = new List<DungeonConfigPrototype>();
         foreach (var dungeonPackId in group.DungeonPacks)
         {
-            if (!_protoManager.TryIndex(dungeonPackId, out var dungeonProto))
+            if (!_protoManager.Resolve(dungeonPackId, out var dungeonProto))
             {
                 Log.Error(dungeonPackId + "is an invalid prototype.");
                 return false;
@@ -99,7 +99,7 @@ public sealed partial class ShuttleSystem
 
             foreach (var configId in dungeonProto.DungeonConfigs)
             {
-                if (_protoManager.TryIndex(configId, out var configProto))
+                if (_protoManager.Resolve(configId, out var configProto))
                 {
                     dungeonProtos.Add(configProto);
                 }
@@ -146,7 +146,7 @@ public sealed partial class ShuttleSystem
         {
             foreach (var gridPackId in group.GridPacks)
             {
-                if (_protoManager.TryIndex(gridPackId, out var gridPack))
+                if (_protoManager.Resolve(gridPackId, out var gridPack))
                 {
                     paths.AddRange(gridPack.GridPaths);
                 }
@@ -212,7 +212,7 @@ public sealed partial class ShuttleSystem
                         throw new NotImplementedException();
                 }
 
-                if (_protoManager.TryIndex(group.NameDataset, out var dataset))
+                if (_protoManager.Resolve(group.NameDataset, out var dataset))
                 {
                     _metadata.SetEntityName(spawned, _salvage.GetFTLName(dataset, _random.Next()));
                 }
