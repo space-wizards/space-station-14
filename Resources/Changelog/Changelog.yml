@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: sowelipililimute
-  changes:
-  - message: Departmental cargo request computers now print slips that can be given
-      to Cargo for final approval, rather than directly approving the orders themselves
-    type: Tweak
-  id: 8431
-  time: '2025-05-06T19:04:19.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/36944
 - author: Ghagliiarghii
   changes:
   - message: Fixed a bug which allowed Janitor borgs to delete a held item and acquire
@@ -3946,3 +3938,11 @@
   id: 8942
   time: '2025-09-08T13:56:59.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/40211
+- author: Centronias
+  changes:
+  - message: Derelict Mediborgs can determine solution contents and see mob health
+      in their HUD, like their non-derelict counterparts.
+    type: Fix
+  id: 8943
+  time: '2025-09-09T02:44:31.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/40206
