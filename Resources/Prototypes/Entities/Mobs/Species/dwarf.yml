@@ -27,8 +27,8 @@
     damageRecovery:
       types:
         Asphyxiation: -1.0
-  - type: ScaleVisuals
-    scale: 1, 0.8
+  #- type: ScaleVisuals # STARLIGHT
+  #  scale: 1, 0.8 # STARLIGHT
   - type: Body
     prototype: Dwarf
     requiredLegs: 2
