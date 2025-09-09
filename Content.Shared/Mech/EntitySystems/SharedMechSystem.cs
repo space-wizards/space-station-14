@@ -184,31 +184,6 @@ public abstract partial class SharedMechSystem : EntitySystem
         }
     }
 
-    private void SetupUser(EntityUid mech, EntityUid pilot, MechComponent? component = null)
-    {
-        if (!Resolve(mech, ref component))
-            return;
-
-        var rider = EnsureComp<MechPilotComponent>(pilot);
-        rider.Mech = mech;
-        Dirty(pilot, rider);
-
-        if (_net.IsClient)
-            return;
-
-        // Drop held items upon entering.
-        if (!TryComp<HandsComponent>(pilot, out var handsComp))
-            return;
-
-        foreach (var hand in _hands.EnumerateHands(pilot))
-        {
-            if (_hands.TryGetHeldItem(pilot, hand, out _))
-                _hands.TryDrop((pilot, handsComp), hand);
-        }
-
-        ManageVirtualItems(pilot, mech, create: true);
-    }
-
     /// <summary>
     /// Inserts a piece of equipment or a module into a mech.
     /// </summary>
@@ -550,36 +525,63 @@ public abstract partial class SharedMechSystem : EntitySystem
 
     private void OnOperatorSet(Entity<MechComponent> ent, ref VehicleOperatorSetEvent args)
     {
-        if (args.OldOperator is { } oldOperator)
-        {
-            RemComp<MechPilotComponent>(oldOperator);
-            RemComp<ActionsDisplayRelayComponent>(oldOperator);
-            RemComp<AlertsDisplayRelayComponent>(oldOperator);
-
-            ManageVirtualItems(oldOperator, ent, create: false);
-
-            if (TryComp<ActionsComponent>(oldOperator, out var pilotActions))
-                Dirty(oldOperator, pilotActions);
-            if (TryComp<AlertsComponent>(oldOperator, out var pilotAlerts))
-                Dirty(oldOperator, pilotAlerts);
-        }
-
         if (args.NewOperator is { } newOperator)
-        {
             SetupUser(ent, newOperator, ent);
 
-            if (ent.Comp.EntrySuccessSound != null)
-            {
-                var ev = new MechEntrySuccessSoundEvent(ent.Owner, ent.Comp.EntrySuccessSound);
-                RaiseLocalEvent(ent, ref ev);
-            }
-        }
+        if (args.OldOperator is { } oldOperator)
+            RemoveUser(ent, oldOperator);
 
         UpdateAppearance(ent);
 
         // Toggle movement energy drain based on pilot presence
         var drainToggle = new MechMovementDrainToggleEvent(args.NewOperator != null);
         RaiseLocalEvent(ent, ref drainToggle);
+    }
+
+    private void SetupUser(EntityUid mech, EntityUid pilot, MechComponent? component = null)
+    {
+        if (!Resolve(mech, ref component))
+            return;
+
+        var rider = EnsureComp<MechPilotComponent>(pilot);
+        rider.Mech = mech;
+        Dirty(pilot, rider);
+
+        if (_net.IsClient)
+            return;
+
+        // Drop held items upon entering.
+        if (!TryComp<HandsComponent>(pilot, out var handsComp))
+            return;
+
+        foreach (var hand in _hands.EnumerateHands(pilot))
+        {
+            if (_hands.TryGetHeldItem(pilot, hand, out _))
+                _hands.TryDrop((pilot, handsComp), hand);
+        }
+
+        // Play entry success sound.
+        if (component.EntrySuccessSound != null)
+        {
+            var ev = new MechEntrySuccessSoundEvent(mech, component.EntrySuccessSound);
+            RaiseLocalEvent(mech, ref ev);
+        }
+
+        ManageVirtualItems(pilot, mech, create: true);
+    }
+
+    private void RemoveUser(EntityUid mech, EntityUid pilot)
+    {
+        RemComp<MechPilotComponent>(pilot);
+        RemComp<ActionsDisplayRelayComponent>(pilot);
+        RemComp<AlertsDisplayRelayComponent>(pilot);
+
+        ManageVirtualItems(pilot, mech, create: false);
+
+        if (TryComp<ActionsComponent>(pilot, out var pilotActions))
+            Dirty(pilot, pilotActions);
+        if (TryComp<AlertsComponent>(pilot, out var pilotAlerts))
+            Dirty(pilot, pilotAlerts);
     }
 
     private void OnGetVerb(EntityUid uid, MechComponent component, GetVerbsEvent<AlternativeVerb> args)

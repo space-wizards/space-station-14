@@ -12,7 +12,10 @@ public sealed class MechChargerSystem : EntitySystem
     [Dependency] private readonly PowerCellSystem _powerCell = default!;
     [Dependency] private readonly SharedContainerSystem _containers = default!;
     [Dependency] private readonly EntityWhitelistSystem _whitelist = default!;
+    private readonly Dictionary<EntityUid, float> _weaponEnergyBuffer = new();
 
+    /// TODO: need a ChargerSystem.cs refractor so it can charge batteries from another battery in the slot.
+    /// To avoid most of this crap.
     public override void Update(float frameTime)
     {
         base.Update(frameTime);
@@ -23,19 +26,18 @@ public sealed class MechChargerSystem : EntitySystem
             if (!_powerCell.TryGetBatteryFromSlot(mechUid, out var mechBatteryEnt, out var mechBattery, null))
                 continue;
 
-            if (mechBatteryEnt == null || mechBattery.CurrentCharge <= 0)
+            if (mechBattery.CurrentCharge <= 0)
                 continue;
 
-            var chargeRate = charger.ChargeRate;
-            if (chargeRate <= 0f)
+            if (charger.ChargeRate <= 0f)
                 continue;
 
-            // Get the container to charge
+            // Get the container to charge.
             var container = _containers.TryGetContainer(mechUid, charger.SlotId, out var cont)
                 ? cont
                 : mech.EquipmentContainer;
 
-            // Charge all weapons in the container
+            // Charge all weapons in the container.
             foreach (var weapon in container.ContainedEntities)
             {
                 if (_whitelist.IsWhitelistFail(charger.Whitelist, weapon))
@@ -48,14 +50,33 @@ public sealed class MechChargerSystem : EntitySystem
                     continue;
 
                 var chargeNeeded = battery.MaxCharge - battery.CurrentCharge;
-                var chargeAvailable = mechBattery.CurrentCharge;
-                var chargeToAdd = MathF.Min(MathF.Min(chargeRate, chargeNeeded), chargeAvailable);
 
-                if (chargeToAdd <= 0)
-                    continue;
+                // Reserve additional energy from mech battery into a per-weapon buffer.
+                _weaponEnergyBuffer.TryGetValue(weapon, out var buffered);
+                var additionalNeeded = chargeNeeded - buffered;
+                if (additionalNeeded > 0f)
+                {
+                    var toReserve = MathF.Min(additionalNeeded, mechBattery.CurrentCharge);
+                    if (toReserve > 0f && _battery.TryUseCharge(mechBatteryEnt.Value, toReserve, mechBattery))
+                    {
+                        buffered += toReserve;
+                        _weaponEnergyBuffer[weapon] = buffered;
+                    }
+                }
 
-                if (_battery.TryUseCharge(mechBatteryEnt.Value, chargeToAdd, mechBattery))
-                    _battery.SetCharge(weapon, battery.CurrentCharge + chargeToAdd, battery);
+                // Transfer from buffer to weapon at the normal charge rate (scaled by frame time).
+                var transfer = MathF.Min(charger.ChargeRate, MathF.Min(buffered, chargeNeeded));
+                if (transfer > 0f)
+                {
+                    var newCharge = battery.CurrentCharge + transfer;
+                    _battery.SetCharge(weapon, newCharge, battery);
+                    buffered -= transfer;
+
+                    if (buffered <= 0f || newCharge >= battery.MaxCharge)
+                        _weaponEnergyBuffer.Remove(weapon);
+                    else
+                        _weaponEnergyBuffer[weapon] = buffered;
+                }
             }
         }
     }

@@ -150,24 +150,24 @@ public sealed partial class MechSystem : SharedMechSystem
         UpdateHealthAlert((uid, component));
 
         // Ensure pilot has required components
-        var pilotActions = EnsureComp<ActionsComponent>(pilot);
-        var pilotAlerts = EnsureComp<AlertsComponent>(pilot);
+        var pilotActions = EnsureComp<ActionsComponent>(args.User);
+        var pilotAlerts = EnsureComp<AlertsComponent>(args.User);
 
         // Setup actions relay
-        var actionsRelay = EnsureComp<ActionsDisplayRelayComponent>(pilot);
-        actionsRelay.Source = mech;
+        var actionsRelay = EnsureComp<ActionsDisplayRelayComponent>(args.User);
+        actionsRelay.Source = uid;
         actionsRelay.InteractAsSource = true;
 
         // Setup alerts relay
-        var alertsRelay = EnsureComp<AlertsDisplayRelayComponent>(pilot);
-        alertsRelay.Source = mech;
+        var alertsRelay = EnsureComp<AlertsDisplayRelayComponent>(args.User);
+        alertsRelay.Source = uid;
         alertsRelay.InteractAsSource = true;
 
         // Notify client of changes
-        Dirty(pilot, pilotActions);
-        Dirty(pilot, pilotAlerts);
-        Dirty(pilot, actionsRelay);
-        Dirty(pilot, alertsRelay);
+        Dirty(args.User, pilotActions);
+        Dirty(args.User, pilotAlerts);
+        Dirty(args.User, actionsRelay);
+        Dirty(args.User, alertsRelay);
     }
 
     private void OnMechExit(EntityUid uid, MechComponent component, MechExitEvent args)
