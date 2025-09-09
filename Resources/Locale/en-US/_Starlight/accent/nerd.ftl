@@ -104,10 +104,8 @@ accent-nerd-replaced-35 = artifact
 accent-nerd-replacement-35 = tangible instantiation
 
 accent-nerd-replaced-36 = borg
+accent-nerd-replaced-36 = robot
 accent-nerd-replacement-36 = cybernetic organism
-
-accent-nerd-replaced-37 = robot
-accent-nerd-replacement-37 = cybernetic organism
 
 accent-nerd-replaced-37 = bot
 accent-nerd-replacement-37 = cybernetic organism
