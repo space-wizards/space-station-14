@@ -107,6 +107,7 @@ public sealed class ChargedElectrovaeManager : EntitySystem
         oxygenToConsume = Math.Min(oxygenToConsume, mixture.GetMoles(Gas.Oxygen));
 
         mixture.AdjustMoles(Gas.ChargedElectrovae, -ceToConsume);
+        mixture.AdjustMoles(Gas.Electrovae, ceToConsume);
         mixture.AdjustMoles(Gas.Oxygen, -oxygenToConsume);
 
         return true;
