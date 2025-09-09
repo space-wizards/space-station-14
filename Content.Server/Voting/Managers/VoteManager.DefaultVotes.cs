@@ -226,8 +226,10 @@ namespace Content.Server.Voting.Managers
             var presets = GetGamePresets();
 
             //add the secret prototype
-            presets.Add(_prototypeManager.EnumeratePrototypes<GamePresetPrototype>()
-                .Where(p => p.ID == "Secret" && p.ShowInVote).First(), Loc.GetString("ui-vote-secret-map"));
+            if (_prototypeManager.TryIndex<GamePresetPrototype>("Secret", out var secretPreset))
+            {
+                presets.Add(secretPreset, Loc.GetString("ui-vote-secret-map"));
+            }
             //starlight end
 
             /* starlight disable
