@@ -77,11 +77,15 @@ namespace Content.IntegrationTests.Tests
             "Relic",
             "dm01-entryway",
             "Exo",
+            // Ronstation - start of modifications.
             "Saltern2",
             "Cluster2",
             "Atlas2",
       	    "Atlas3",
-	          "Feint"
+	        "Feint",
+            // Centcomm maps
+	        "BudgetCentComm"
+            // Ronstation - end of modifications.
         };
 
         private static readonly ProtoId<EntityCategoryPrototype> DoNotMapCategory = "DoNotMap";
