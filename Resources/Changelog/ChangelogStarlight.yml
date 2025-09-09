@@ -13650,5 +13650,12 @@ Entries:
   id: 149002
   time: '2025-09-08T23:57:57.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/1490
+- author: DrSmugleaf
+  changes:
+  - message: Improved performance specially during high player counts and long rounds.
+    type: Tweak
+  id: 157600
+  time: '2025-09-09T01:48:18.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1576
 Order: -1
 
