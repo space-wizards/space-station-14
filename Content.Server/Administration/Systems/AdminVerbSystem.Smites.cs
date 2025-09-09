@@ -952,6 +952,7 @@ public sealed partial class AdminVerbSystem
                 EnsureComp<ScottishAccentComponent>(args.Target);
                 EnsureComp<PirateAccentComponent>(args.Target);
                 EnsureComp<ArchaicAccentComponent>(args.Target);
+                EnsureComp<NerdAccentComponent>(args.Target);
 
                 if (_random.Next(0, 8) == 0)
                 {
