@@ -219,3 +219,6 @@ accent-nerd-replacement-73 = cybernetic organism
 
 accent-nerd-replaced-74 = alcohol
 accent-nerd-replacement-74 = ethanolic solution
+
+accent-nerd-replaced-75 = actually
+accent-nerd-replacement-75 = erm actually
