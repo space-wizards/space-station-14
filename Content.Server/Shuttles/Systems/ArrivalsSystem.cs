@@ -601,7 +601,7 @@ public sealed class ArrivalsSystem : EntitySystem
             _loader.TryLoadGrid(dummyMapId, component.ShuttlePath, out var shuttle))
         {
             component.Shuttle = shuttle.Value;
-            var shuttleComp = Comp<ShuttleComponent>(component.Shuttle!.Value);
+            var shuttleComp = Comp<ShuttleComponent>(component.Shuttle!.Value); // We just set this field to something, so null can be suppressed
             var arrivalsComp = EnsureComp<ArrivalsShuttleComponent>(component.Shuttle.Value);
             arrivalsComp.Station = uid;
             EnsureComp<ProtectedGridComponent>(uid);
