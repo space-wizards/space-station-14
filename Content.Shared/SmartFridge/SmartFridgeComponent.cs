@@ -77,6 +77,9 @@ public sealed partial class SmartFridgeComponent : Component
 [Serializable, NetSerializable]
 public record struct SmartFridgeEntry(string Name)
 {
+    // Warning: if you add more fields to this, you need to update SmartFridgeEntrySerializer
+    // This cannot simply use a DataRecord attribute, as this struct is used as a yaml dictionary key, so it must
+    // serialize to a ValueDataNode
     public string Name = Name;
 }
 

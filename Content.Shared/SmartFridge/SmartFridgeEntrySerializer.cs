@@ -40,7 +40,6 @@ public sealed class SmartFridgeEntrySerializer :
         return new ValidatedValueNode(node);
     }
 
-
     public ValidationNode Validate(ISerializationManager serializationManager,
         MappingDataNode node,
         IDependencyCollection dependencies,
