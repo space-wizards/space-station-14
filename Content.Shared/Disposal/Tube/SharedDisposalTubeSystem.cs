@@ -369,6 +369,9 @@ public abstract partial class SharedDisposalTubeSystem : EntitySystem
         if (!Resolve(uid, ref entry))
             return false;
 
+        if (!TryComp<DisposalTubeComponent>(uid, out var tube))
+            return false;
+
         var xform = Transform(uid);
         var holder = Spawn(entry.HolderPrototypeId, _transform.GetMapCoordinates(uid, xform: xform));
         var holderComponent = Comp<DisposalHolderComponent>(holder);
@@ -389,7 +392,7 @@ public abstract partial class SharedDisposalTubeSystem : EntitySystem
             Dirty(holder, holderComponent);
         }
 
-        return _disposableSystem.EnterTube(holder, uid, holderComponent);
+        return _disposableSystem.EnterTube((holder, holderComponent), (uid, tube));
     }
 
     protected virtual void MergeAtmos(Entity<DisposalHolderComponent> ent, GasMixture gasMix)
