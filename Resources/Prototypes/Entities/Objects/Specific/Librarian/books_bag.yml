@@ -17,8 +17,6 @@
     - type: Storage
       grid:
       - 0,0,7,3
-      quickInsert: true
-      areaInsert: true
       whitelist:
         tags:
           - Book
@@ -28,3 +26,5 @@
           - TabletopBoard
           - Write
     - type: Dumpable
+    - type: QuickPickup
+    - type: AreaPickup
