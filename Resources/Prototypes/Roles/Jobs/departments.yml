@@ -5,7 +5,6 @@
   color: "#A46106"
   roles:
   - CargoTechnician
-  - Quartermaster
   - SalvageSpecialist
 
 - type: department
@@ -20,7 +19,6 @@
   - Boxer
   - Chaplain
   - Chef
-  - HeadOfPersonnel
   - Janitor
   - Lawyer
   - Librarian
