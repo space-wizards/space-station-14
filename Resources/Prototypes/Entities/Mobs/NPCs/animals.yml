@@ -1478,8 +1478,6 @@
   components:
   - type: NameIdentifier
     group: Monkey
-  - type: SentienceTarget
-    weight: 0.00
   - type: Speech
     speechSounds: Monkey
     speechVerb: Monkey
@@ -1661,6 +1659,7 @@
       100: Critical
       200: Dead
   - type: SentienceTarget
+    flavorKind: station-event-random-sentience-flavor-kobold
     weight: 0.00
   - type: NpcFactionMember
     factions:
