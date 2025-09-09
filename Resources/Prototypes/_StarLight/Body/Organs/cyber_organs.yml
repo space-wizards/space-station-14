@@ -23,6 +23,9 @@
   - type: Sprite
     sprite: _Starlight/Objects/Specific/Medical/implants.rsi
     state: eyes_night
+  - type: Icon
+    sprite: _Starlight/Objects/Specific/Medical/implants.rsi
+    state: eyes_night
   - type: FunctionalOrgan
     comps: 
     - type: NightVision
@@ -39,6 +42,9 @@
   - type: Sprite
     sprite: _Starlight/Objects/Specific/Medical/implants.rsi
     state: eyes_thermal
+  - type: Icon
+    sprite: _Starlight/Objects/Specific/Medical/implants.rsi
+    state: eyes_thermal
   - type: FunctionalOrgan
     comps: 
     - type: ThermalVision
@@ -53,6 +59,11 @@
   parent: [OrganCyber, BaseOrganEyes]
   components:
   - type: Sprite
+    sprite: _Starlight/Objects/Specific/Medical/budget_cyber_organs.rsi
+    layers:
+      - state: eyeball-l
+      - state: eyeball-r
+  - type: Icon
     sprite: _Starlight/Objects/Specific/Medical/budget_cyber_organs.rsi
     layers:
       - state: eyeball-l
@@ -75,6 +86,9 @@
   - type: Sprite
     sprite: _Starlight/Objects/Specific/Medical/budget_cyber_organs.rsi
     state: tongue
+  - type: Icon
+    sprite: _Starlight/Objects/Specific/Medical/budget_cyber_organs.rsi
+    state: tongue
   - type: FunctionalOrgan
     comps: 
     - type: UnableToTaste
@@ -88,6 +102,9 @@
   parent: [OrganCyber, OrganHumanLiver]
   components:
   - type: Sprite
+    sprite: _Starlight/Objects/Specific/Medical/budget_cyber_organs.rsi
+    state: liver
+  - type: Icon
     sprite: _Starlight/Objects/Specific/Medical/budget_cyber_organs.rsi
     state: liver
   - type: Metabolizer # The liver metabolizes certain chemicals only, like alcohol.
@@ -106,6 +123,9 @@
   parent: [OrganCyber, OrganHumanStomach]
   components:
   - type: Sprite
+    sprite: _Starlight/Objects/Specific/Medical/budget_cyber_organs.rsi
+    state: stomach
+  - type: Icon
     sprite: _Starlight/Objects/Specific/Medical/budget_cyber_organs.rsi
     state: stomach
   - type: SolutionContainerManager
@@ -133,6 +153,11 @@
   parent: [OrganCyber, OrganHumanKidneys]
   components:
   - type: Sprite
+    sprite: _Starlight/Objects/Specific/Medical/budget_cyber_organs.rsi
+    layers:
+      - state: kidney-l
+      - state: kidney-r
+  - type: Icon
     sprite: _Starlight/Objects/Specific/Medical/budget_cyber_organs.rsi
     layers:
       - state: kidney-l
