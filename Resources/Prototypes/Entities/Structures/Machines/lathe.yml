@@ -74,6 +74,36 @@
 
 - type: entity
   abstract: true
+  parent: BaseLathe
+  id: BaseLatheReagents
+  components:
+  - type: Lathe
+    internalSolution: lathe
+  - type: SolutionContainerManager
+    solutions:
+      lathe:
+        maxVol: 500
+  - type: DumpableSolution
+    solution: lathe
+
+- type: entity
+  abstract: true
+  parent: BaseLatheLube
+  id: BaseLatheLubeReagents
+  components:
+  - type: Lathe
+    internalSolution: lathe
+  - type: SolutionContainerManager
+    solutions:
+      lathe:
+        maxVol: 500
+      lube:
+        maxVol: 250
+  - type: DumpableSolution
+    solution: lathe
+
+- type: entity
+  abstract: true
   id: BaseHyperlathe
   components:
   - type: Lathe
@@ -453,7 +483,7 @@
 
 - type: entity
   id: MedicalTechFab
-  parent: BaseLatheLube
+  parent: BaseLatheLubeReagents
   name: medical techfab
   description: Prints equipment for use by the medbay.
   components:

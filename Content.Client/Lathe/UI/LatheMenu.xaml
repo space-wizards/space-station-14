@@ -3,6 +3,7 @@
     xmlns:gfx="clr-namespace:Robust.Client.Graphics;assembly=Robust.Client"
     xmlns:system="clr-namespace:System;assembly=System.Runtime"
     xmlns:ui="clr-namespace:Content.Client.Materials.UI"
+    xmlns:rui="clr-namespace:Content.Client.Chemistry.UI"
     Title="{Loc 'lathe-menu-title'}"
     MinSize="550 450"
     SetSize="750 500">
@@ -136,22 +137,45 @@
                 </ScrollContainer>
             </BoxContainer>
             <BoxContainer
-            VerticalExpand="True"
-            HorizontalExpand="True"
-            Orientation="Vertical">
-            <Label Text="{Loc 'lathe-menu-materials-title'}" Margin="5 5 5 5" HorizontalAlignment="Center"/>
-            <PanelContainer VerticalExpand="True">
-                <PanelContainer.PanelOverride>
-                    <gfx:StyleBoxFlat BackgroundColor="#1B1B1E" />
-                </PanelContainer.PanelOverride>
-                <BoxContainer
-                    Orientation="Vertical"
-                    VerticalExpand="True"
-                    HorizontalExpand="True">
-                    <ui:MaterialStorageControl Name="MaterialsList" SizeFlagsStretchRatio="8"/>
-                </BoxContainer>
-            </PanelContainer>
-        </BoxContainer>
+                Name="MaterialsContainer"
+                Visible="True"
+                VerticalExpand="True"
+                HorizontalExpand="True"
+                Orientation="Vertical"
+                MinHeight="130">
+                <Label Text="{Loc 'lathe-menu-materials-title'}" Margin="5 5 5 5" HorizontalAlignment="Center"/>
+                <PanelContainer VerticalExpand="True">
+                    <PanelContainer.PanelOverride>
+                        <gfx:StyleBoxFlat BackgroundColor="#1B1B1E" />
+                    </PanelContainer.PanelOverride>
+                    <BoxContainer
+                        Orientation="Vertical"
+                        VerticalExpand="True"
+                        HorizontalExpand="True">
+                        <ui:MaterialStorageControl Name="MaterialsList" SizeFlagsStretchRatio="8"/>
+                    </BoxContainer>
+                </PanelContainer>
+            </BoxContainer>
+            <BoxContainer
+                Name="ReagentsContainer"
+                Visible="False"
+                VerticalExpand="True"
+                HorizontalExpand="True"
+                Orientation="Vertical">
+                <Label Text="{Loc 'lathe-menu-reagents-title'}" Margin="5 5 5 5" HorizontalAlignment="Center"/>
+                <PanelContainer VerticalExpand="True">
+                    <PanelContainer.PanelOverride>
+                        <gfx:StyleBoxFlat BackgroundColor="#1B1B1E" />
+                    </PanelContainer.PanelOverride>
+                    <BoxContainer
+                        Orientation="Vertical"
+                        VerticalExpand="True"
+                        HorizontalExpand="True">
+                        <rui:ReagentStorageControl Name="ReagentList" SizeFlagsStretchRatio="8"/>
+                    </BoxContainer>
+                </PanelContainer>
+            </BoxContainer>
+            <Label Name="SiloLinkedLabel" Text="{Loc 'lathe-menu-silo-linked-message'}" StyleClasses="LabelSubText" Visible="False" HorizontalAlignment="Center"/>
         </BoxContainer>
 
     </BoxContainer>

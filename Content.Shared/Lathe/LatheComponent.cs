@@ -41,6 +41,15 @@ namespace Content.Shared.Lathe
         [DataField]
         public SoundSpecifier? ProducingSound;
 
+        /// <summary>
+        /// The internal solution which this lathe draws from for recipies.
+        /// </summary>
+        [DataField]
+        public string? InternalSolution;
+
+        /// <summary>
+        /// The slot where this lathe dumps solutions into or on the floor if the slot has no valid container.
+        /// </summary>
         [DataField]
         public string? ReagentOutputSlotId;
 
@@ -82,6 +91,12 @@ namespace Content.Shared.Lathe
         /// </summary>
         [DataField, ViewVariables(VVAccess.ReadWrite), AutoNetworkedField]
         public float MaterialUseMultiplier = 1;
+
+        /// <summary>
+        /// A modifier that changes how much of a reagent is needed to print a recipe
+        /// </summary>
+        [DataField, AutoNetworkedField]
+        public float ReagentUseMultiplier = 1;
         #endregion
     }
 
