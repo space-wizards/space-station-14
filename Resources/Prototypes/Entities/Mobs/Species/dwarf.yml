@@ -77,8 +77,8 @@
   id: MobDwarfDummy
   categories: [ HideSpawnMenu ]
   components:
-  - type: ScaleVisuals
-    scale: 1, 0.8
+  #- type: ScaleVisuals # STARLIGHT
+  #  scale: 1, 0.8 # STARLIGHT
   - type: Inventory
     femaleDisplacements:
       jumpsuit:
