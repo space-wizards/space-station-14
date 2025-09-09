@@ -356,7 +356,7 @@ public sealed class PullingSystem : EntitySystem
             RaiseLocalEvent(pullable, message);
         }
 
-        _alertsSystem.ClearAlert(pullable, pullable.Comp.PulledAlert);
+        _alertsSystem.ClearAlert(pullable.Owner, pullable.Comp.PulledAlert);
     }
 
     public bool IsPulled(EntityUid uid, PullableComponent? component = null)
