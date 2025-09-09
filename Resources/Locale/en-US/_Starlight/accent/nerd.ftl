@@ -13,7 +13,7 @@ accent-nerd-replacement-4 = diminutive
 accent-nerd-replaced-5 = flukies
 accent-nerd-replacement-5 = fiasco
 
-accent-nerd-replaced-6 = perfect
+accent-nerd-replaced-6 = exact
 accent-nerd-replacement-6 = impeccable
 
 accent-nerd-replaced-7 = warning
@@ -41,7 +41,7 @@ accent-nerd-replaced-14 = countless
 accent-nerd-replacement-14 = myriad
 
 accent-nerd-replaced-15 = a perfect time
-accent-nerd-replacement-15 = an opportune
+accent-nerd-replacement-15 = an opportune time
 
 accent-nerd-replaced-16 = perfect
 accent-nerd-replacement-16 = quintessential
@@ -103,10 +103,13 @@ accent-nerd-replacement-34 = aberration
 accent-nerd-replaced-35 = artifact
 accent-nerd-replacement-35 = tangible instantiation
 
-accent-nerd-replaced-36 = cyborg
+accent-nerd-replaced-36 = borg
 accent-nerd-replacement-36 = cybernetic organism
 
 accent-nerd-replaced-37 = robot
+accent-nerd-replacement-37 = cybernetic organism
+
+accent-nerd-replaced-37 = bot
 accent-nerd-replacement-37 = cybernetic organism
 
 accent-nerd-replaced-38 = ai
@@ -122,19 +125,19 @@ accent-nerd-replaced-41 = scientist
 accent-nerd-replacement-41 = empirical investigator
 
 accent-nerd-replaced-42 = roboticist
-accent-nerd-replacement-42 = autonomous mechatronics aficionado
+accent-nerd-replacement-42 = aficionado of autonomous mechatronics
 
 accent-nerd-replaced-43 = RD
 accent-nerd-replacement-43 = principal investigator of research endeavors
 
-accent-nerd-replaced-44 = officer
+accent-nerd-replaced-44 = secoff
 accent-nerd-replacement-44 = sentient firewall entity
 
 accent-nerd-replaced-45 = cargo
-accent-nerd-replacement-45 = manifest logistics division
+accent-nerd-replacement-45 = the logistics and procurement department
 
 accent-nerd-replaced-46 = kitchen
-accent-nerd-replacement-46 = culinary fabrication laboratory
+accent-nerd-replacement-46 = gastronomical laboratory
 
 accent-nerd-replaced-47 = bridge
 accent-nerd-replacement-47 = command nexus
@@ -145,10 +148,11 @@ accent-nerd-replacement-48 = orbital habitation module
 accent-nerd-replaced-49 = med
 accent-nerd-replacement-49 = the anatomical pathology division
 
+accent-nerd-replaced-50 = booze
 accent-nerd-replaced-50 = alcohol
 accent-nerd-replacement-50 = ethanolic solution
 
-accent-nerd-replaced-51 = dunk
+accent-nerd-replaced-51 = drunk
 accent-nerd-replacement-51 = exhibiting inebriation
 
 accent-nerd-replaced-52 = cleaning
@@ -196,8 +200,8 @@ accent-nerd-replacement-65 = computational device
 accent-nerd-replaced-66 = ninja
 accent-nerd-replacement-66 = practitioner of ninjutsu
 
-accent-nerd-replaced-67 = nukies
-accent-nerd-replacement-67 = enemy operatives
+accent-nerd-replaced-67 = nukie
+accent-nerd-replacement-67 = enemy operative
 
 accent-nerd-replaced-68 = traitor
 accent-nerd-replacement-68 = adversary
