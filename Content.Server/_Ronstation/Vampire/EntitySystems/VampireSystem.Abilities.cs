@@ -153,7 +153,7 @@ public sealed partial class VampireSystem
 
         // Target takes some damage, then the slurp sound playsF
         _damageable.TryChangeDamage(args.Target, ent.Comp.DamagePerTick, true, true, damage, args.User);
-        _audio.PlayPredicted(ent.Comp.FeedNoise, args.Target.Value, args.User, AudioParams.Default.WithVolume(-2f).WithVariation(0.25f));
+        _audio.PlayPvs(ent.Comp.FeedNoise, args.Target.Value, AudioParams.Default.WithVolume(-2f).WithVariation(0.25f));
 
         // Vampire gets vitae
         if (TryComp<VampireComponent>(ent.Owner, out VampireComponent? comp))
