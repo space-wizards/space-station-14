@@ -22,6 +22,12 @@
       cluster-payload: !type:Container
   - type: ProjectileGrenade
   - type: TimerTrigger
+    beepSound:
+      path: "/Audio/Effects/beep1.ogg"
+      params:
+        volume: 5
+    initialBeepDelay: 0
+    beepInterval: 2
     delay: 3.5
   - type: AnimationPlayer
   - type: GenericVisualizer
@@ -69,12 +75,6 @@
     proto: GrenadeFlashEffect
     predicted: true
   - type: TriggerOnUse
-  - type: TimerTrigger
-    initialBeepDelay: 0
-    beepInterval: 2
-  - type: TimerTriggerVisuals
-    primingSound:
-      path: /Audio/Effects/countdown.ogg
 
 - type: entity
   parent: [ProjectileGrenadeBase, BaseSyndicateContraband]
@@ -91,13 +91,6 @@
     fillPrototype: PelletClusterIncendiary
     capacity: 30
   - type: TriggerOnUse
-  - type: TimerTrigger
-    beepSound:
-      path: "/Audio/Effects/beep1.ogg"
-      params:
-        volume: 5
-    initialBeepDelay: 0
-    beepInterval: 2
   - type: EmitSoundOnTrigger
     keysIn:
     - timer
@@ -121,13 +114,6 @@
     fillPrototype: PelletClusterLethal
     capacity: 30
   - type: TriggerOnUse
-  - type: TimerTrigger
-    beepSound:
-      path: "/Audio/Effects/beep1.ogg"
-      params:
-        volume: 5
-    initialBeepDelay: 0
-    beepInterval: 2
   - type: EmitSoundOnTrigger
     keysIn:
     - timer
