@@ -1,10 +1,9 @@
-using Content.Server.Chemistry.Components;
-using Content.Shared.Chemistry.EntitySystems;
+using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.NameModifier.EntitySystems;
 using Robust.Shared.Prototypes;
 
-namespace Content.Server.Chemistry.EntitySystems;
+namespace Content.Shared.Chemistry.EntitySystems;
 
 public sealed class TransformableContainerSystem : EntitySystem
 {
@@ -28,6 +27,7 @@ public sealed class TransformableContainerSystem : EntitySystem
         if (string.IsNullOrEmpty(entity.Comp.InitialDescription))
         {
             entity.Comp.InitialDescription = meta.EntityDescription;
+            Dirty(entity);
         }
     }
 
@@ -45,7 +45,7 @@ public sealed class TransformableContainerSystem : EntitySystem
         //the biggest reagent in the solution decides the appearance
         var reagentId = solution.GetPrimaryReagentId();
 
-        //If biggest reagent didn't change - don't change anything at all
+        //If biggest reagent didn't changed - don't change anything at all
         if (entity.Comp.CurrentReagent != null && entity.Comp.CurrentReagent == reagentId?.Prototype)
         {
             return;
@@ -59,6 +59,7 @@ public sealed class TransformableContainerSystem : EntitySystem
             _metadataSystem.SetEntityDescription(entity.Owner, proto.LocalizedDescription, metadata);
             entity.Comp.CurrentReagent = proto;
             entity.Comp.Transformed = true;
+            Dirty(entity);
         }
 
         _nameMod.RefreshNameModifiers(entity.Owner);
@@ -66,9 +67,10 @@ public sealed class TransformableContainerSystem : EntitySystem
 
     private void OnRefreshNameModifiers(Entity<TransformableContainerComponent> entity, ref RefreshNameModifiersEvent args)
     {
-        if (_prototypeManager.TryIndex(entity.Comp.CurrentReagent, out var currentReagent))
+        if (entity.Comp.CurrentReagent is { } currentReagent
+            && _prototypeManager.TryIndex(currentReagent, out var proto))
         {
-            args.AddModifier("transformable-container-component-glass", priority: -1, ("reagent", currentReagent.LocalizedName));
+            args.AddModifier("transformable-container-component-glass", priority: -1, ("reagent", proto.LocalizedName));
         }
     }
 
@@ -76,6 +78,7 @@ public sealed class TransformableContainerSystem : EntitySystem
     {
         entity.Comp.CurrentReagent = null;
         entity.Comp.Transformed = false;
+        Dirty(entity);
 
         var metadata = MetaData(entity);
 

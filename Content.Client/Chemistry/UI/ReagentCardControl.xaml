@@ -1,34 +1,30 @@
 <Control xmlns="https://spacestation14.io" HorizontalExpand="True">
     <BoxContainer Name="MainContainer"
-                  Orientation="Horizontal"
                   HorizontalExpand="True">
-        <PanelContainer Name="ColorPanel"
-                        VerticalExpand="True"
-                        SetWidth="7"
-                        Margin="0 1 0 0" />
+        <!-- Background color -->
+        <PanelContainer Name="ColorPanel" SetWidth="7" Margin="0 1 0 0" />
+        <!-- Big ol' clicky thing -->
         <Button Name="MainButton"
-                HorizontalExpand="True"
-                VerticalExpand="True"
                 StyleClasses="ButtonSquare"
+                HorizontalExpand="True"
                 Margin="-1 0 0 0">
-            <BoxContainer Orientation="Horizontal" HorizontalExpand="True">
+            <BoxContainer HorizontalExpand="True">
                 <BoxContainer Orientation="Vertical"
                               VerticalExpand="True"
-                              HorizontalExpand="True"
                               Margin="-5 0 0 0">
                     <Label Name="ReagentNameLabel" />
+                    <!-- Quantity subtext -->
                     <Label Name="FillLabel"
                            StyleClasses="LabelSubText"
                            Margin="0 -5 0 0" />
                 </BoxContainer>
             </BoxContainer>
         </Button>
+        <!-- Eject button -->
         <Button Name="EjectButton"
                 StyleClasses="OpenLeft"
-                VerticalExpand="True"
                 SetWidth="20">
             <Label Name="EjectButtonIcon"
-                   VerticalAlignment="Center"
                    HorizontalAlignment="Center"
                    Margin="-7 -4 0 0" />
         </Button>

@@ -1,5 +1,6 @@
 using System.Globalization;
 using System.Linq;
+using JetBrains.Annotations;
 using Robust.Shared.Serialization;
 using Robust.Shared.Utility;
 
@@ -283,7 +284,13 @@ namespace Content.Shared.FixedPoint
 
         public string ToString(string? format, IFormatProvider? formatProvider)
         {
-            return ToString();
+            return ShiftDown().ToString(format, formatProvider);
+        }
+
+        [Pure]
+        public string ToString(IFormatProvider? provider)
+        {
+            return ToString(null, provider);
         }
 
         public readonly string Serialize()
