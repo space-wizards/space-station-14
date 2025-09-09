@@ -121,7 +121,8 @@
             "name": "Chef"
         },
         {
-            "name": "Warden"
+            "name": "Warden",
+            "_comment": "Ronstation - Sprite ported from funkystation."
         },
         {
             "name": "ResearchDirector"
