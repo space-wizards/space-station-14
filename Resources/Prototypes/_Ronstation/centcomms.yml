@@ -1,5 +1,5 @@
 - type: weightedRandom
   id: RandomCentcomm
   weights:
-    "/Maps/centcomm.yml": 1
-    "/Maps/_Ronstation/Centcomm/budget.yml": 0.2
+    CentComm: 1
+    BudgetCentComm: 0.2

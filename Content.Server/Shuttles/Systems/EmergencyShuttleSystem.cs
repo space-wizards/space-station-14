@@ -10,6 +10,7 @@ using Content.Server.Communications;
 using Content.Server.DeviceNetwork.Systems;
 using Content.Server.GameTicking;
 using Content.Server.GameTicking.Events;
+using Content.Server.Maps; // Ronstation - modification.
 using Content.Server.Pinpointer;
 using Content.Server.Popups;
 using Content.Server.RoundEnd;
@@ -537,10 +538,11 @@ public sealed partial class EmergencyShuttleSystem : EntitySystem
         {
             component.Map = new ResPath(centComm);
         } 
-        else if (component.WeightedMap != null)
+        else if (!string.IsNullOrEmpty(component.WeightedMap))
         {
             var randomMap = _prototype.Index(component.WeightedMap.Value).Pick(_random);
-            component.Map = new ResPath(randomMap);
+            var mapPrototype = _prototype.Index<GameMapPrototype>(randomMap);
+            component.Map = new ResPath(mapPrototype.MapPath.ToString());
         }
         // Ronstation - end of modifications.
         
