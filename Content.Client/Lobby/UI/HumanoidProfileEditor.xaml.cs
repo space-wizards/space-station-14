@@ -660,7 +660,7 @@ namespace Content.Client.Lobby.UI
                 selector.Setup(items, title, 250, description, guides: antag.Guides);
                 selector.Select(Profile?.AntagPreferences.Contains(antag.ID) == true ? 0 : 1);
 
-                var requirements = _entManager.System<SharedRoleSystem>().GetAntagRequirement(antag);
+                var requirements = _entManager.System<SharedRoleSystem>().GetRoleRequirement(antag);
                 if (!_requirements.CheckRoleRequirements(requirements, (HumanoidCharacterProfile?)_preferencesManager.Preferences?.SelectedCharacter, out var reason))
                 {
                     selector.LockRequirements(reason);
@@ -893,9 +893,20 @@ namespace Content.Client.Lobby.UI
                     JobList.AddChild(category);
                 }
 
-                var jobs = department.Roles.Select(jobId => _prototypeManager.Index(jobId))
-                    .Where(job => job.SetPreference)
-                    .ToArray();
+                List<JobPrototype> jobsList = new();
+
+                foreach (var role in department.Roles)
+                {
+                    if (!_prototypeManager.TryIndex(role, out var jobPrototype))
+                        continue;
+
+                    if (!jobPrototype.SetPreference)
+                        continue;
+
+                    jobsList.Add(jobPrototype);
+                }
+
+                var jobs = jobsList.ToArray();
 
                 Array.Sort(jobs, JobUIComparer.Instance);
 

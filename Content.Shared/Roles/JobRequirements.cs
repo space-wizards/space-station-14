@@ -6,6 +6,7 @@ using Robust.Shared.Utility;
 
 namespace Content.Shared.Roles;
 
+// TODO: This should be RoleRequirements but needs to be migrated independently.
 public static class JobRequirements
 {
     public static bool TryRequirementsMet(
@@ -17,7 +18,7 @@ public static class JobRequirements
         HumanoidCharacterProfile? profile)
     {
         var sys = entManager.System<SharedRoleSystem>();
-        var requirements = sys.GetJobRequirement(job);
+        var requirements = sys.GetRoleRequirement(job);
         reason = null;
         if (requirements == null)
             return true;
@@ -37,6 +38,7 @@ public static class JobRequirements
 /// </summary>
 [ImplicitDataDefinitionForInheritors]
 [Serializable, NetSerializable]
+// TODO: This should be RoleRequirement but needs to be migrated independently.
 public abstract partial class JobRequirement
 {
     [DataField]

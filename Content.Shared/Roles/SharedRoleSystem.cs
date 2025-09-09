@@ -670,39 +670,35 @@ public abstract class SharedRoleSystem : EntitySystem
     // TODO ROLES Change to readonly.
     // Passing around a reference to a prototype's hashset makes me uncomfortable because it might be accidentally
     // mutated.
-    public HashSet<JobRequirement>? GetJobRequirement(JobPrototype job)
+    public HashSet<JobRequirement>? GetRoleRequirement(RolePrototype role)
     {
-        if (_requirementOverride != null && _requirementOverride.Jobs.TryGetValue(job.ID, out var req))
-            return req;
+        if (_requirementOverride is null)
+            return null;
 
-        return job.Requirements;
+        switch (role)
+        {
+            case JobPrototype:
+                if (_requirementOverride.Jobs.TryGetValue(role.ID, out var jobReq))
+                    return jobReq;
+
+                break;
+            case AntagPrototype:
+                if (_requirementOverride.Antags.TryGetValue(role.ID, out var antagReq))
+                    return antagReq;
+
+                break;
+        }
+
+        return role.Requirements;
     }
 
     // TODO ROLES Change to readonly.
-    public HashSet<JobRequirement>? GetJobRequirement(ProtoId<JobPrototype> job)
+    public HashSet<JobRequirement>? GetRoleRequirement<T>(ProtoId<T>? role) where T : RolePrototype
     {
-        if (_requirementOverride != null && _requirementOverride.Jobs.TryGetValue(job, out var req))
-            return req;
+        if (role is null)
+            return null;
 
-        return _prototypes.Index(job).Requirements;
-    }
-
-    // TODO ROLES Change to readonly.
-    public HashSet<JobRequirement>? GetAntagRequirement(ProtoId<AntagPrototype> antag)
-    {
-        if (_requirementOverride != null && _requirementOverride.Antags.TryGetValue(antag, out var req))
-            return req;
-
-        return _prototypes.Index(antag).Requirements;
-    }
-
-    // TODO ROLES Change to readonly.
-    public HashSet<JobRequirement>? GetAntagRequirement(AntagPrototype antag)
-    {
-        if (_requirementOverride != null && _requirementOverride.Antags.TryGetValue(antag.ID, out var req))
-            return req;
-
-        return antag.Requirements;
+        return !_prototypes.TryIndex(role, out var roleProto) ? null : GetRoleRequirement(roleProto);
     }
 
     /// <summary>

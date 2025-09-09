@@ -52,7 +52,7 @@ public sealed class BanPanelEui : BaseEui
         switch (msg)
         {
             case BanPanelEuiStateMsg.CreateBanRequest r:
-                BanPlayer(r.Player, r.IpAddress, r.UseLastIp, r.Hwid, r.UseLastHwid, r.Minutes, r.Severity, r.Reason, r.Roles, r.Erase);
+                BanPlayer(r.Player, r.IpAddress, r.UseLastIp, r.Hwid, r.UseLastHwid, r.Minutes, r.Severity, r.Reason, r.Jobs, r.Antags, r.Erase);
                 break;
             case BanPanelEuiStateMsg.GetPlayerInfoRequest r:
                 ChangePlayer(r.PlayerUsername);
@@ -60,7 +60,7 @@ public sealed class BanPanelEui : BaseEui
         }
     }
 
-    private async void BanPlayer(string? target, string? ipAddressString, bool useLastIp, ImmutableTypedHwid? hwid, bool useLastHwid, uint minutes, NoteSeverity severity, string reason, IReadOnlyCollection<string>? roles, bool erase)
+    private async void BanPlayer(string? target, string? ipAddressString, bool useLastIp, ImmutableTypedHwid? hwid, bool useLastHwid, uint minutes, NoteSeverity severity, string reason, ProtoId<JobPrototype>[]? jobs, ProtoId<AntagPrototype>[]? antags, bool erase)
     {
         if (!_admins.HasAdminFlag(Player, AdminFlags.Ban))
         {
@@ -119,22 +119,50 @@ public sealed class BanPanelEui : BaseEui
             targetHWid = useLastHwid ? located.LastHWId : hwid;
         }
 
-        if (roles?.Count > 0)
+        if (jobs?.Length > 0 || antags?.Length > 0)
         {
             var now = DateTimeOffset.UtcNow;
-            foreach (var role in roles)
+
+            if (jobs is not null)
             {
-                if (_prototypeManager.HasIndex<JobPrototype>(role))
+                foreach (var role in jobs)
                 {
-                    _banManager.CreateRoleBan(targetUid, target, Player.UserId, addressRange, targetHWid, role, minutes, severity, reason, now);
+                    _banManager.CreateRoleBan(
+                        targetUid,
+                        target,
+                        Player.UserId,
+                        addressRange,
+                        targetHWid,
+                        role,
+                        minutes,
+                        severity,
+                        reason,
+                        now
+                    );
                 }
-                else
+            }
+
+            if (antags is not null)
+            {
+                foreach (var role in antags)
                 {
-                    _sawmill.Warning($"{Player.Name} ({Player.UserId}) tried to issue a job ban with an invalid job: {role}");
+                    _banManager.CreateRoleBan(
+                        targetUid,
+                        target,
+                        Player.UserId,
+                        addressRange,
+                        targetHWid,
+                        role,
+                        minutes,
+                        severity,
+                        reason,
+                        now
+                    );
                 }
             }
 
             Close();
+
             return;
         }
 

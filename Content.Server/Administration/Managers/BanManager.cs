@@ -44,6 +44,7 @@ public sealed partial class BanManager : IBanManager, IPostInjectInit
 
     public const string SawmillId = "admin.bans";
     public const string JobPrefix = "Job:";
+    public const string AntagPrefix = "Antag:";
 
     private readonly Dictionary<ICommonSession, List<ServerRoleBanDef>> _cachedRoleBans = new();
     // Cached ban exemption flags are used to handle
@@ -232,17 +233,72 @@ public sealed partial class BanManager : IBanManager, IPostInjectInit
 
     #endregion
 
-    #region Job Bans
+    #region Role Bans
     // If you are trying to remove timeOfBan, please don't. It's there because the note system groups role bans by time, reason and banning admin.
     // Removing it will clutter the note list. Please also make sure that department bans are applied to roles with the same DateTimeOffset.
-    public async void CreateRoleBan(NetUserId? target, string? targetUsername, NetUserId? banningAdmin, (IPAddress, int)? addressRange, ImmutableTypedHwid? hwid, string role, uint? minutes, NoteSeverity severity, string reason, DateTimeOffset timeOfBan)
+    public async void CreateRoleBan(NetUserId? target, string? targetUsername, NetUserId? banningAdmin, (IPAddress, int)? addressRange, ImmutableTypedHwid? hwid, RolePrototype role, uint? minutes, NoteSeverity severity, string reason, DateTimeOffset timeOfBan)
     {
-        if (!_prototypeManager.TryIndex(role, out JobPrototype? _))
+        string roleId;
+
+        switch (role)
         {
-            throw new ArgumentException($"Invalid role '{role}'", nameof(role));
+            case JobPrototype:
+                roleId = JobPrefix + role.ID;
+
+                break;
+            case AntagPrototype:
+                roleId = AntagPrefix + role.ID;
+
+                break;
+            default:
+                _sawmill.Error("Unsupported child of RolePrototype attempted to be banned. BanManager must be updated to know how to encode the banned role.");
+
+                return;
         }
 
-        role = string.Concat(JobPrefix, role);
+        await CreateRoleBan(target, targetUsername, banningAdmin, addressRange, hwid, minutes, severity, reason, timeOfBan, roleId);
+    }
+
+    public async void CreateRoleBan<T>(NetUserId? target, string? targetUsername, NetUserId? banningAdmin, (IPAddress, int)? addressRange, ImmutableTypedHwid? hwid, ProtoId<T> role, uint? minutes, NoteSeverity severity, string reason, DateTimeOffset timeOfBan) where T : RolePrototype
+    {
+        string roleId;
+
+        // We commit some type violence here as we don't want to create an overload of this signature for every single potential future child
+        // of RolePrototype.
+        // TODO: If someone knows a smarter way to implement this, do that instead. This smells but might be a bit inevitable.
+        var typ = typeof(T);
+
+        if (typ == typeof(JobPrototype))
+        {
+            roleId = JobPrefix + role;
+        }
+        else if (typ == typeof(AntagPrototype))
+        {
+            roleId = AntagPrefix + role;
+        }
+        else
+        {
+            _sawmill.Error("Unsupported child of RolePrototype attempted to be banned. BanManager must be updated to know how to encode the banned role.");
+
+            return;
+        }
+
+        await CreateRoleBan(target, targetUsername, banningAdmin, addressRange, hwid, minutes, severity, reason, timeOfBan, roleId);
+    }
+
+    private async Task CreateRoleBan(
+        NetUserId? target,
+        string? targetUsername,
+        NetUserId? banningAdmin,
+        (IPAddress, int)? addressRange,
+        ImmutableTypedHwid? hwid,
+        uint? minutes,
+        NoteSeverity severity,
+        string reason,
+        DateTimeOffset timeOfBan,
+        string roleId
+    )
+    {
         DateTimeOffset? expires = null;
         if (minutes > 0)
         {
@@ -266,16 +322,16 @@ public sealed partial class BanManager : IBanManager, IPostInjectInit
             severity,
             banningAdmin,
             null,
-            role);
+            roleId);
 
         if (!await AddRoleBan(banDef))
         {
-            _chat.SendAdminAlert(Loc.GetString("cmd-roleban-existing", ("target", targetUsername ?? "null"), ("role", role)));
+            _chat.SendAdminAlert(Loc.GetString("cmd-roleban-existing", ("target", targetUsername ?? "null"), ("role", roleId)));
             return;
         }
 
         var length = expires == null ? Loc.GetString("cmd-roleban-inf") : Loc.GetString("cmd-roleban-until", ("expires", expires));
-        _chat.SendAdminAlert(Loc.GetString("cmd-roleban-success", ("target", targetUsername ?? "null"), ("role", role), ("reason", reason), ("length", length)));
+        _chat.SendAdminAlert(Loc.GetString("cmd-roleban-success", ("target", targetUsername ?? "null"), ("role", roleId), ("reason", reason), ("length", length)));
 
         if (target != null && _playerManager.TryGetSessionById(target.Value, out var session))
         {
@@ -331,17 +387,46 @@ public sealed partial class BanManager : IBanManager, IPostInjectInit
             .Select(ban => new ProtoId<JobPrototype>(ban.Role[JobPrefix.Length..]))
             .ToHashSet();
     }
+
+    public HashSet<ProtoId<AntagPrototype>>? GetAntagBans(NetUserId playerUserId)
+    {
+        if (!_playerManager.TryGetSessionById(playerUserId, out var session))
+            return null;
+
+        if (!_cachedRoleBans.TryGetValue(session, out var roleBans))
+            return null;
+
+        return roleBans
+            .Where(ban => ban.Role.StartsWith(AntagPrefix, StringComparison.Ordinal))
+            .Select(ban => new ProtoId<AntagPrototype>(ban.Role[JobPrefix.Length..]))
+            .ToHashSet();
+    }
     #endregion
 
     public void SendRoleBans(ICommonSession pSession)
     {
         var roleBans = _cachedRoleBans.GetValueOrDefault(pSession) ?? new List<ServerRoleBanDef>();
-        var bans = new MsgRoleBans()
+
+        List<ProtoId<JobPrototype>> jobs = new();
+        List<ProtoId<AntagPrototype>> antags = new();
+
+        foreach (var banDef in roleBans)
         {
-            Bans = roleBans.Select(o => o.Role).ToList()
+            if (banDef.Role.StartsWith(JobPrefix))
+                jobs.Add(banDef.Role.Replace(JobPrefix, ""));
+            else if (banDef.Role.StartsWith(AntagPrefix))
+                antags.Add(banDef.Role.Replace(AntagPrefix, ""));
+            else
+                _sawmill.Warning($"Sending role bans from the server to session {pSession.Name}: unknown role {banDef.Role} in cached data");
+        }
+
+        var bans = new MsgRoleBans
+        {
+            JobBans = jobs,
+            AntagBans = antags,
         };
 
-        _sawmill.Debug($"Sent rolebans to {pSession.Name}");
+        _sawmill.Debug($"Sent role bans to {pSession.Name}");
         _netManager.ServerSendMessage(bans, pSession.Channel);
     }
 

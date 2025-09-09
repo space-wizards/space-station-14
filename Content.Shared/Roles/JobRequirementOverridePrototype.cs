@@ -5,6 +5,8 @@ namespace Content.Shared.Roles;
 /// <summary>
 /// Collection of job, antag, and ghost-role job requirements for per-server requirement overrides.
 /// </summary>
+// TODO: This should be RoleRequirementOverridePrototype but the name is a YAML dependency and needs to be migrated
+// independently.
 [Prototype]
 public sealed partial class JobRequirementOverridePrototype : IPrototype
 {

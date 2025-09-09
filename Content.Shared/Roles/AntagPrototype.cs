@@ -1,6 +1,4 @@
-using Content.Shared.Guidebook;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization;
 
 namespace Content.Shared.Roles;
 
@@ -8,48 +6,30 @@ namespace Content.Shared.Roles;
 ///     Describes information for a single antag.
 /// </summary>
 [Prototype]
-public sealed partial class AntagPrototype : IPrototype
+public sealed partial class AntagPrototype : RolePrototype
 {
-    [ViewVariables]
-    [IdDataField]
-    public string ID { get; private set; } = default!;
+    /// <summary>
+    ///     The group name of all antagonists when they need to be grouped together in a dictionary of lists of roles.
+    ///     Equivalent to Jobs using a DepartmentPrototype ID.
+    /// </summary>
+    ///
+    public static readonly string GroupName = "Antagonist";
 
     /// <summary>
-    ///     The name of this antag as displayed to players.
+    ///     The color that all antagonists use when they visually grouped together.
+    ///     Equivalent to DepartmentPrototype's Color property.
     /// </summary>
-    [DataField("name")]
-    public string Name { get; private set; } = "";
+    public static readonly Color GroupColor = Color.Red;
 
     /// <summary>
     ///     The antag's objective, shown in a tooltip in the antag preference menu or as a ghost role description.
     /// </summary>
-    [DataField("objective", required: true)]
+    [DataField]
     public string Objective { get; private set; } = "";
 
     /// <summary>
-    ///     Whether or not the antag role is one of the bad guys.
-    /// </summary>
-    [DataField("antagonist")]
-    public bool Antagonist { get; private set; }
-
-    /// <summary>
-    ///     Whether or not the player can set the antag role in antag preferences.
-    /// </summary>
-    [DataField("setPreference")]
-    public bool SetPreference { get; private set; }
-
-    /// <summary>
-    ///     Requirements that must be met to opt in to this antag role.
-    /// </summary>
-    // TODO ROLE TIMERS
-    // Actually check if the requirements are met. Because apparently this is actually unused.
-    [DataField, Access(typeof(SharedRoleSystem), Other = AccessPermissions.None)]
-    public HashSet<JobRequirement>? Requirements;
-
-    /// <summary>
-    /// Optional list of guides associated with this antag. If the guides are opened, the first entry in this list
-    /// will be used to select the currently selected guidebook.
+    ///     Whether the antag role is one of the bad guys.
     /// </summary>
     [DataField]
-    public List<ProtoId<GuideEntryPrototype>>? Guides;
+    public bool Antagonist { get; private set; }
 }

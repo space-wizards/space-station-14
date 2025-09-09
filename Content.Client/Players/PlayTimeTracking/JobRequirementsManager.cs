@@ -16,6 +16,7 @@ using Robust.Shared.Utility;
 
 namespace Content.Client.Players.PlayTimeTracking;
 
+// TODO: Should be RoleRequirementsManager but this change needs to be done independently.
 public sealed class JobRequirementsManager : ISharedPlaytimeManager
 {
     [Dependency] private readonly IBaseClient _client = default!;
@@ -26,7 +27,8 @@ public sealed class JobRequirementsManager : ISharedPlaytimeManager
     [Dependency] private readonly IPrototypeManager _prototypes = default!;
 
     private readonly Dictionary<string, TimeSpan> _roles = new();
-    private readonly List<string> _roleBans = new();
+    private readonly List<ProtoId<JobPrototype>> _jobBans = new();
+    private readonly List<ProtoId<AntagPrototype>> _antagBans = new();
     private readonly List<string> _jobWhitelists = new();
 
     private ISawmill _sawmill = default!;
@@ -52,16 +54,20 @@ public sealed class JobRequirementsManager : ISharedPlaytimeManager
             // Reset on disconnect, just in case.
             _roles.Clear();
             _jobWhitelists.Clear();
-            _roleBans.Clear();
+            _jobBans.Clear();
+            _antagBans.Clear();
         }
     }
 
     private void RxRoleBans(MsgRoleBans message)
     {
-        _sawmill.Debug($"Received roleban info containing {message.Bans.Count} entries.");
+        _sawmill.Debug($"Received roleban info containing {message.JobBans.Count} job ban entries and {message.AntagBans.Count} antag ban entries.");
 
-        _roleBans.Clear();
-        _roleBans.AddRange(message.Bans);
+        _jobBans.Clear();
+        _jobBans.AddRange(message.JobBans);
+        _antagBans.Clear();
+        _antagBans.AddRange(message.AntagBans);
+
         Updated?.Invoke();
     }
 
@@ -90,30 +96,33 @@ public sealed class JobRequirementsManager : ISharedPlaytimeManager
         Updated?.Invoke();
     }
 
-    public bool IsAllowed(JobPrototype job, HumanoidCharacterProfile? profile, [NotNullWhen(false)] out FormattedMessage? reason)
+    public bool IsAllowed(RolePrototype role, HumanoidCharacterProfile? profile, [NotNullWhen(false)] out FormattedMessage? reason)
     {
         reason = null;
 
-        if (_roleBans.Contains($"Job:{job.ID}"))
+        var banned = role switch
+        {
+            JobPrototype => _jobBans.Contains(role.ID),
+            AntagPrototype => _antagBans.Contains(role.ID),
+            _ => false,
+        };
+
+        if (banned)
         {
             reason = FormattedMessage.FromUnformatted(Loc.GetString("role-ban"));
+
             return false;
         }
 
-        if (!CheckWhitelist(job, out reason))
+        if (!CheckWhitelist(role, out reason))
             return false;
 
-        var player = _playerManager.LocalSession;
-        if (player == null)
-            return true;
-
-        return CheckRoleRequirements(job, profile, out reason);
+        return _playerManager.LocalSession is null || CheckRoleRequirements(role, profile, out reason);
     }
 
-    public bool CheckRoleRequirements(JobPrototype job, HumanoidCharacterProfile? profile, [NotNullWhen(false)] out FormattedMessage? reason)
+    public bool CheckRoleRequirements(RolePrototype role, HumanoidCharacterProfile? profile, [NotNullWhen(false)] out FormattedMessage? reason)
     {
-        var reqs = _entManager.System<SharedRoleSystem>().GetJobRequirement(job);
-        return CheckRoleRequirements(reqs, profile, out reason);
+        return CheckRoleRequirements(_entManager.System<SharedRoleSystem>().GetRoleRequirement(role), profile, out reason);
     }
 
     public bool CheckRoleRequirements(HashSet<JobRequirement>? requirements, HumanoidCharacterProfile? profile, [NotNullWhen(false)] out FormattedMessage? reason)
@@ -136,19 +145,18 @@ public sealed class JobRequirementsManager : ISharedPlaytimeManager
         return reason == null;
     }
 
-    public bool CheckWhitelist(JobPrototype job, [NotNullWhen(false)] out FormattedMessage? reason)
+    public bool CheckWhitelist(RolePrototype role, [NotNullWhen(false)] out FormattedMessage? reason)
     {
         reason = default;
         if (!_cfg.GetCVar(CCVars.GameRoleWhitelist))
             return true;
 
-        if (job.Whitelisted && !_jobWhitelists.Contains(job.ID))
-        {
-            reason = FormattedMessage.FromUnformatted(Loc.GetString("role-not-whitelisted"));
-            return false;
-        }
+        if (!role.Whitelisted || _jobWhitelists.Contains(role.ID))
+            return true;
 
-        return true;
+        reason = FormattedMessage.FromUnformatted(Loc.GetString("role-not-whitelisted"));
+
+        return false;
     }
 
     public TimeSpan FetchOverallPlaytime()

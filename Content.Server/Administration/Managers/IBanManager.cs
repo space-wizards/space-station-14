@@ -27,9 +27,10 @@ public interface IBanManager
     public void CreateServerBan(NetUserId? target, string? targetUsername, NetUserId? banningAdmin, (IPAddress, int)? addressRange, ImmutableTypedHwid? hwid, uint? minutes, NoteSeverity severity, string reason);
     public HashSet<string>? GetRoleBans(NetUserId playerUserId);
     public HashSet<ProtoId<JobPrototype>>? GetJobBans(NetUserId playerUserId);
+    public HashSet<ProtoId<AntagPrototype>>? GetAntagBans(NetUserId playerUserId);
 
     /// <summary>
-    /// Creates a job ban for the specified target, username or GUID
+    /// Creates a role ban for the specified target, username or GUID
     /// </summary>
     /// <param name="target">Target user, username or GUID, null for none</param>
     /// <param name="role">Role to be banned from</param>
@@ -37,7 +38,18 @@ public interface IBanManager
     /// <param name="reason">Reason for the ban</param>
     /// <param name="minutes">Number of minutes to ban for. 0 and null mean permanent</param>
     /// <param name="timeOfBan">Time when the ban was applied, used for grouping role bans</param>
-    public void CreateRoleBan(NetUserId? target, string? targetUsername, NetUserId? banningAdmin, (IPAddress, int)? addressRange, ImmutableTypedHwid? hwid, string role, uint? minutes, NoteSeverity severity, string reason, DateTimeOffset timeOfBan);
+    public void CreateRoleBan<T>(NetUserId? target, string? targetUsername, NetUserId? banningAdmin, (IPAddress, int)? addressRange, ImmutableTypedHwid? hwid, ProtoId<T> job, uint? minutes, NoteSeverity severity, string reason, DateTimeOffset timeOfBan) where T : RolePrototype;
+
+    /// <summary>
+    /// Creates a role ban for the specified target, username or GUID
+    /// </summary>
+    /// <param name="target">Target user, username or GUID, null for none</param>
+    /// <param name="role">Role to be banned from</param>
+    /// <param name="severity">Severity of the resulting ban note</param>
+    /// <param name="reason">Reason for the ban</param>
+    /// <param name="minutes">Number of minutes to ban for. 0 and null mean permanent</param>
+    /// <param name="timeOfBan">Time when the ban was applied, used for grouping role bans</param>
+    public void CreateRoleBan(NetUserId? target, string? targetUsername, NetUserId? banningAdmin, (IPAddress, int)? addressRange, ImmutableTypedHwid? hwid, RolePrototype role, uint? minutes, NoteSeverity severity, string reason, DateTimeOffset timeOfBan);
 
     /// <summary>
     /// Pardons a role ban for the specified target, username or GUID
