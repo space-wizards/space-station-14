@@ -78,6 +78,7 @@
       - Carptongue
     understands: 
       - GalacticCommon
+      - Thaveyan
       - Carptongue
   - type: Inventory
     templateId: thaven
