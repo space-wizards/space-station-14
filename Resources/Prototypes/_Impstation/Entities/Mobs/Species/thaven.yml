@@ -75,7 +75,7 @@
   - type: LanguageKnowledge
     speaks:
       - GalacticCommon
-      - Carptongue
+      - Thaveyan
     understands: 
       - GalacticCommon
       - Thaveyan
