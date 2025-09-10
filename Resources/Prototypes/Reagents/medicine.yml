@@ -205,9 +205,7 @@
   physicalDesc: reagent-physical-desc-bubbling
   flavor: medicine
   color: "#32cd32"
-  # start of modifications
-  worksOnTheDead: true 
-  # end of modifications
+  worksOnTheDead: true # Ronstation
   metabolisms:
     Medicine:
       effects:
