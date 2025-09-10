@@ -1,5 +1,5 @@
 - type: entity
-  parent: BaseItem
+  parent: [ BaseItem, BaseSecurityContraband ]
   id: EmptyDetonator
   name: detonator cap
   description: A detonator cap. Requires a trigger and wire.

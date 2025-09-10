@@ -1,6 +1,6 @@
 # Explosive cable below
 - type: entity
-  parent: CableStack
+  parent: [ CableStack, BaseSecurityContraband ]
   id: CableDetStack
   name: explosive cord
   suffix: Full
