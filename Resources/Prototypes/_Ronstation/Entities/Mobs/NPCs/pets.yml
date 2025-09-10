@@ -24,6 +24,8 @@
   - type: Tag
     tags:
     - CannotSuicide
+  - type: CanEscapeInventory
+  - type: Emoting
 
 - type: entity
   id: MobPetSnail
