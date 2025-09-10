@@ -22,6 +22,7 @@ public sealed class ProximityDetectionSystem : EntitySystem
         base.Initialize();
 
         SubscribeLocalEvent<ProximityDetectorComponent, MapInitEvent>(OnMapInit);
+        SubscribeLocalEvent<ProximityDetectorComponent, NewProximityTargetEvent>(OnNewTarget);
         SubscribeLocalEvent<ProximityDetectorComponent, ItemToggledEvent>(OnToggled);
 
         _xformQuery = GetEntityQuery<TransformComponent>();
@@ -33,6 +34,15 @@ public sealed class ProximityDetectionSystem : EntitySystem
 
         component.NextUpdate = _timing.CurTime + component.UpdateCooldown;
         DirtyField(ent, component, nameof(ProximityDetectorComponent.NextUpdate));
+    }
+
+    private void OnNewTarget(Entity<ProximityDetectorComponent> ent, ref NewProximityTargetEvent args)
+    {
+        if (ent.Comp.Target.HasValue)
+            _pvsOverride.RemoveGlobalOverride(ent.Comp.Target.Value);
+
+        if (args.Target.HasValue)
+            _pvsOverride.AddGlobalOverride(args.Target.Value);
     }
 
     private void OnToggled(Entity<ProximityDetectorComponent> ent, ref ItemToggledEvent args)
@@ -75,8 +85,6 @@ public sealed class ProximityDetectionSystem : EntitySystem
 
         var updatedEv = new ProximityTargetUpdatedEvent(0, ent);
         RaiseLocalEvent(ent, ref updatedEv);
-
-        OnNewTarget(ent, null);
 
         component.Target = null;
         component.Distance = 0;
@@ -122,8 +130,6 @@ public sealed class ProximityDetectionSystem : EntitySystem
             var newTargetEv = new NewProximityTargetEvent(closestDistance, detector, closestUid);
             RaiseLocalEvent(detector, ref newTargetEv);
 
-            OnNewTarget(detector, closestUid);
-
             component.Target = closestUid;
             DirtyField(detector, component, nameof(ProximityDetectorComponent.Target));
         }
@@ -136,14 +142,5 @@ public sealed class ProximityDetectionSystem : EntitySystem
             component.Distance = closestDistance;
             DirtyField(detector, component, nameof(ProximityDetectorComponent.Distance));
         }
-    }
-
-    private void OnNewTarget(Entity<ProximityDetectorComponent> ent, EntityUid? newTarget)
-    {
-        if (ent.Comp.Target.HasValue)
-            _pvsOverride.RemoveGlobalOverride(ent.Comp.Target.Value);
-
-        if (newTarget.HasValue)
-            _pvsOverride.AddGlobalOverride(newTarget.Value);
     }
 }
