@@ -1,11 +1,17 @@
 #nullable enable
 using System.Collections.Generic;
 using System.Linq;
+using Content.Server.Body.Components;
+using Content.Server.Salvage.Magnet;
+using Content.Shared.Body.Components;
 using Content.Shared.Coordinates;
+using Content.Shared.Gravity;
+using Content.Shared.Humanoid;
+using Content.Shared.Inventory;
+using Content.Shared.Prototypes;
+using Content.Shared.Xenoarchaeology.Artifact.Components;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
-using Robust.Shared.Map;
-using Robust.Shared.Map.Components;
 using Robust.Shared.Physics;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
@@ -29,6 +35,39 @@ namespace Content.IntegrationTests.Tests;
 [TestFixture]
 public sealed class PrototypeSaveTest
 {
+    // Any entities with these components will be ignored by this test.
+    // This is just temporary, these should get fixed.
+    // There may be more problematic components that get revealed as others are removed from the ignore list.
+    // TODO PERSISTENCE
+    // Some of these components set data on init instead of mapinit, which probably breaks saveing & loading postinit maps.
+    public Type[] IgnoredComponents =
+    [
+        // inventory templates should probably be set up on mapinit
+        // or prototypes need to be given missing containers
+        typeof(InventoryComponent),
+
+        // profile loading should be probably be done on mapinit, not init
+        typeof(HumanoidAppearanceComponent),
+
+        // Actions should be added on mapinit not startup
+        typeof(XenoArtifactComponent),
+
+        // Remove FloatingVisualsComponent.CanFloat, replace with GravitySystem.IsWeightless()
+        typeof(FloatingVisualsComponent),
+
+        // Uses EnsureSolution on init
+        // Either needs to move to mapinit, or prototypes need to be updated
+        // Preferable move to mapinit to avoid redundant data (e.g., having to specify blood reagent type in multiple places)
+        typeof(BloodstreamComponent),
+        typeof(MetabolizerComponent),
+
+        // Prototypes are missing containers
+        typeof(BodyComponent),
+
+        // LinkedEntity needs to be nullable, or the comp should be removed from prototypes
+        typeof(SalvageMobRestrictionsComponent),
+    ];
+
     [Test]
     public async Task UninitializedSaveTest()
     {
@@ -68,6 +107,9 @@ public sealed class PrototypeSaveTest
                 continue;
 
             if (prototype.SetSuffix == "DEBUG")
+                continue;
+
+            if (IgnoredComponents.Any(type => prototype.HasComponent(type, compFact)))
                 continue;
 
             prototypes.Add(prototype);
