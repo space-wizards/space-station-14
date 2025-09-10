@@ -4,11 +4,11 @@
     "x": 32,
     "y": 32
   },
-  "copyright": "Taked From TG Station",
+  "copyright": "Darkrell",
   "license": "CC-BY-SA-3.0",
   "states": [
     {
-      "name": "console",
+      "name": "abductor",
       "directions": 1,
       "delays": [
         [
@@ -21,6 +21,20 @@
           0.08,
           0.08,
           0.08,
+          0.08,
+          0.08,
+          0.08,
+          0.08,
+          0.08,
+          0.08
+        ]
+      ]
+    },
+    {
+      "name": "enemy",
+      "directions": 1,
+      "delays": [
+        [
           0.08,
           0.08,
           0.08,
