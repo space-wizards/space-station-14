@@ -5,7 +5,7 @@
   - type: HTN
     constantlyReplan: false
     rootTask:
-      task: PetFoodFollowCompount
+      task: PetFoodFollowCompound
   - type: GhostRole
     allowMovement: true
     allowSpeech: false
@@ -42,7 +42,7 @@
     name: ghost-role-information-pet-butterfly-name
   - type: HTN
     rootTask:
-      task: PetFollowCompount # Doesnt eat food
+      task: PetFollowCompound # Doesnt eat food
 
 - type: entity
   id: MobPetBee
@@ -53,7 +53,7 @@
     name: ghost-role-information-pet-bee-name
   - type: HTN
     rootTask:
-      task: PetFollowCompount # Doesnt eat food
+      task: PetFollowCompound # Doesnt eat food
 
 - type: entity
   id: MobPetMothroach
