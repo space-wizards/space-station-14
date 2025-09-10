@@ -51,7 +51,6 @@
 
 - type: entity
   id: ChemDispenser
-  name: chemical dispenser
   suffix: Filled
   parent: ChemDispenserEmpty
   components:

@@ -68,7 +68,10 @@ construction-graph-tag-match-stick = match stick
 construction-graph-tag-potato = a potato
 construction-graph-tag-wheat-bushel = wheat bushel
 construction-graph-tag-corgi-hide = corgi hide
+construction-graph-tag-apron = an apron
+construction-graph-tag-utility-belt = a utility belt
 soil-construction-graph-any-mushroom = any mushroom
+construction-graph-tag-mop-basic = mop
 
 # toys
 construction-graph-tag-rubber-ducky = a rubber ducky
@@ -122,6 +125,7 @@ construction-graph-tag-wallmount-substation-circuit-board = wallmount substation
 construction-graph-tag-surveillance-camera-monitor-board = surveillance camera monitor board
 construction-graph-tag-television-board = television board
 construction-graph-tag-freezer-electronics = freezer electronics
+construction-graph-tag-turret-control-electronics = sentry turret control panel electronics
 
 # crystals
 construction-graph-tag-cyan-crystal-shard = cyan crystal shard
@@ -143,3 +147,6 @@ construction-graph-tag-fire-helmet = fire helmet
 
 # salvage
 construction-graph-tag-spationaut-hardsuit = spationaut hardsuit
+
+# clothing
+construction-graph-tag-backpack = backpack

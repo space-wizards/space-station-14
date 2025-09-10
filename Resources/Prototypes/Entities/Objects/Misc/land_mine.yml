@@ -27,15 +27,17 @@
     drawdepth: Items
     sprite: Objects/Misc/landmine.rsi
     layers:
-    - state: landmine-inactive
+    - state: landmine
+    - state: landmine-unshaded
+      shader: unshaded
       map: [ "enum.ToggleableVisuals.Layer" ]
   - type: Appearance
   - type: GenericVisualizer
     visuals:
       enum.ToggleableVisuals.Enabled:
         enum.ToggleableVisuals.Layer:
-          True: {state: landmine}
-          False: {state: landmine-inactive}
+          True: {visible: true}
+          False: {visible: false}
   - type: Damageable
     damageContainer: Inorganic
   - type: Destructible
@@ -62,7 +64,8 @@
   name: kick mine
   parent: BaseLandMine
   components:
-  - type: GhostKickUserOnTrigger
+  - type: GhostKickOnTrigger
+    targetUser: true
   - type: DeleteOnTrigger
 
 - type: entity
@@ -74,9 +77,6 @@
     activated: true
     onActivate: false
   - type: Armable
-  - type: Sprite
-    layers:
-    - state: landmine
 
 - type: entity
   name: modular mine
@@ -98,9 +98,6 @@
     activated: true
     onActivate: false
   - type: Armable
-  - type: Sprite
-    layers:
-    - state: landmine
 
 - type: entity
   name: explosive mine
@@ -124,6 +121,3 @@
     activated: true
     onActivate: false
   - type: Armable
-  - type: Sprite
-    layers:
-    - state: landmine
