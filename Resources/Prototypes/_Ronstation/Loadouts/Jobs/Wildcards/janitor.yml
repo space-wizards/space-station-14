@@ -1,0 +1,5 @@
+# Shoes
+- type: loadout
+  id: BoxerShoes
+  equipment:
+    shoes: ClothingShoesColorRed

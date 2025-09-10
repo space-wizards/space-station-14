@@ -4,3 +4,9 @@
   loadouts:
   - YellowJumpsuit
   - YellowJumpskirt
+
+- type: loadoutGroup
+  id: TechnicalAssistantShoes
+  parent: BaseShoes
+  loadouts:
+  - WorkBoots
