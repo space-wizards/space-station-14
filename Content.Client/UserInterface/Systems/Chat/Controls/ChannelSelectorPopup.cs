@@ -113,12 +113,9 @@ public sealed class ChannelSelectorPopup : Popup
         Selected?.Invoke(channel);
     }
 
-    protected override void Dispose(bool disposing)
+    protected override void ExitedTree()
     {
-        base.Dispose(disposing);
-
-        if (!disposing)
-            return;
+        base.ExitedTree();
 
         _chatUIController.SelectableChannelsChanged -= SetChannels;
     }
