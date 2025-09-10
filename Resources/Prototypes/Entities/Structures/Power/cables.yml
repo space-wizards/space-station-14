@@ -240,7 +240,6 @@
     sprite: Structures/Power/Cables/ex_cable.rsi
     state: excable_0
   - type: Icon
-    color: Yellow
     sprite: Structures/Power/Cables/ex_cable.rsi
     state: excable_4
   - type: Damageable
