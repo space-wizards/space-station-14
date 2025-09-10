@@ -249,10 +249,31 @@
 
 - type: entity
   name: practice laser carbine
-  parent: [WeaponLaserCarbine, BaseGunWieldable]
+  parent: [BaseWeaponBattery, BaseGunWieldable]
   id: WeaponLaserCarbinePractice
   description: This modified laser carbine fires nearly harmless beams in the 40-watt range, for target practice.
   components:
+  - type: Item
+    size: Large
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Battery/laser_gun.rsi
+    layers:
+    - state: base
+      map: [ "enum.GunVisualLayers.Base" ]
+    - state: mag-unshaded-4
+      map: [ "enum.GunVisualLayers.MagUnshaded" ]
+      shader: unshaded
+  - type: MagazineVisuals
+    magState: mag
+    steps: 5
+    zeroVisible: false
+  - type: Appearance
+  - type: Clothing
+    sprite: Objects/Weapons/Guns/Battery/laser_gun.rsi
+  - type: Gun
+    selectedMode: SemiAuto
+    availableModes:
+    - SemiAuto
   - type: StaticPrice
     price: 300
   - type: HitscanBatteryAmmoProvider
