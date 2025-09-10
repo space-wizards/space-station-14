@@ -1,8 +1,8 @@
 - type: entity
-  name: detonator cap
-  description: A detonator cap. Requires a trigger and wire.
   parent: BaseItem
   id: EmptyDetonator
+  name: detonator cap
+  description: A detonator cap. Requires a trigger and wire.
   components:
   - type: Sprite
     sprite: Objects/Weapons/Bombs/detonator.rsi
@@ -49,10 +49,10 @@
     price: 25
 
 - type: entity
-  name: detonator cap
-  description: A detonator cap.
   parent: EmptyDetonator
   id: WiredDetonator
+  name: detonator cap
+  description: A detonator cap.
   categories: [ HideSpawnMenu ]
   components:
   - type: Explosive # this is the cord, but its a little smaller because I dont want these to be grenades. They need to not really break walls themselves, but do enough to set off the cable. ~125 structural.

@@ -23,8 +23,8 @@
 
 - type: entity
   abstract: true
-  id: CableBase
   parent: CablePhysBase
+  id: CableBase
   components:
   - type: Visibility
     layer: 1
@@ -228,9 +228,10 @@
 # Explosive cable below
 
 - type: entity
-  name: explosive cord
   id: CableDet
   parent: CablePhysBase
+  name: explosive cord
+  description: Spaghetti for people who hate walls.
   components:
   - type: Cable
     cableDroppedOnCutPrototype: CableDetStack1

@@ -2,7 +2,6 @@
   id: DetonatorGraph
   start: start
   graph:
-  
   - node: start
     edges:
     - to: emptyDetonator

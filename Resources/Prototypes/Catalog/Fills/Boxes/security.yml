@@ -137,9 +137,9 @@
     - state: forensic
 
 - type: entity
-  name: detonator box
   parent: BoxCardboard
   id: BoxDetonator
+  name: detonator box
   description: A box of explosive detonators and triggers.
   components:
   - type: Item
