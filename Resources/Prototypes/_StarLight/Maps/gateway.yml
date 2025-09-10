@@ -21,8 +21,8 @@
             CargoTechnician: [ 5, 20 ]
             MailTech: [ 1, 20 ]
             #civilian
-            Assistant: [-1, -1]
+            #Assistant: [-1, -1]
             Clown: [ 1, 1 ]
             Mime: [ 1, 1 ]
             #silicon
-            Borg: [ 3, 10 ]
+            #Borg: [ 3, 10 ]

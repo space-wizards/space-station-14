@@ -470,31 +470,23 @@ entities:
       rot: 3.141592653589793 rad
       pos: 1.5,-2.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
   - uid: 39
     components:
     - type: Transform
       pos: 2.5,-2.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
   - uid: 40
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: -0.5,-2.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
   - uid: 41
     components:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: -1.5,-2.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
 - proto: GasPipeFourway
   entities:
   - uid: 42
@@ -502,8 +494,6 @@ entities:
     - type: Transform
       pos: 0.5,-3.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
 - proto: GasPipeStraight
   entities:
   - uid: 43
@@ -511,37 +501,27 @@ entities:
     - type: Transform
       pos: 0.5,-1.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
   - uid: 44
     components:
     - type: Transform
       pos: 0.5,-2.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
   - uid: 45
     components:
     - type: Transform
       pos: 0.5,-4.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
   - uid: 46
     components:
     - type: Transform
       pos: 0.5,-5.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
   - uid: 47
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 0.5,-1.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
 - proto: GasPipeTJunction
   entities:
   - uid: 48
@@ -550,16 +530,12 @@ entities:
       rot: 1.5707963267948966 rad
       pos: -0.5,-1.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
   - uid: 49
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 1.5,-1.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
 - proto: GasPort
   entities:
   - uid: 50
@@ -567,8 +543,6 @@ entities:
     - type: Transform
       pos: -0.5,-0.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
 - proto: GasVentPump
   entities:
   - uid: 51
@@ -577,23 +551,17 @@ entities:
       rot: 3.141592653589793 rad
       pos: 2.5,-3.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
   - uid: 52
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: -1.5,-3.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
   - uid: 53
     components:
     - type: Transform
       pos: 1.5,-0.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
 - proto: GasVentScrubber
   entities:
   - uid: 54
@@ -601,24 +569,18 @@ entities:
     - type: Transform
       pos: 0.5,-0.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
   - uid: 55
     components:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: -0.5,-3.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
   - uid: 56
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 1.5,-3.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
 - proto: GeneratorBasic15kW
   entities:
   - uid: 57

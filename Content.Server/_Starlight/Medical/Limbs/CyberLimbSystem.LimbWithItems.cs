@@ -10,6 +10,7 @@ using Robust.Shared.Containers;
 using Robust.Shared.Map;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Prototypes;
+using static Content.Server._Starlight.Actions.SLActionSystem;
 using static Content.Server.Power.Pow3r.PowerState;
 
 namespace Content.Server._Starlight.Medical.Limbs;
@@ -17,11 +18,9 @@ public sealed partial class CyberLimbSystem : EntitySystem
 {
     public void InitializeLimbWithItems()
     {
-        base.Initialize();
-        SubscribeLocalEvent<LimbWithItemsComponent, ComponentInit>(OnLimbWithItemsInit);
+        SubscribeLocalEvent<LimbWithItemsComponent, SLActionMapInitEvent>(OnLimbWithItemsInit);
         SubscribeLocalEvent<LimbWithItemsComponent, ToggleLimbEvent>(OnLimbToggle);
         SubscribeLocalEvent<BodyComponent, LimbRemovedEvent<LimbWithItemsComponent>>(LimbWithItemsRemoved);
-
     }
 
     private void LimbWithItemsRemoved(Entity<BodyComponent> ent, ref LimbRemovedEvent<LimbWithItemsComponent> args)
@@ -73,7 +72,7 @@ public sealed partial class CyberLimbSystem : EntitySystem
         Dirty(ent);
     }
 
-    private void OnLimbWithItemsInit(Entity<LimbWithItemsComponent> limb, ref ComponentInit args)
+    private void OnLimbWithItemsInit(Entity<LimbWithItemsComponent> limb, ref SLActionMapInitEvent args)
     {
         if (limb.Comp.ItemEntities?.Count == limb.Comp.Items.Count) return;
         var container = _container.EnsureContainer<Container>(limb.Owner, "cyberlimb", out _);

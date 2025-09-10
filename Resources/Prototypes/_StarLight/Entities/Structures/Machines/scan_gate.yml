@@ -1,0 +1,105 @@
+- type: entity
+  id: BaseScanGate
+  parent: [ BaseMachinePowered, ConstructibleMachine ]
+  abstract: true
+  name: scan gate
+  components:
+  - type: Appearance
+  - type: WiresVisuals
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.4,-0.4,0.4,0.4"
+        density: 190
+        layer:
+        - ConveyorMask
+        hard: False
+  - type: ScanGate
+    scanDelay: 1.5
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 100
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalBreak
+      - !type:ChangeConstructionNodeBehavior
+        node: machineFrame
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+  - type: WiresPanel
+  - type: Wires
+    layoutId: ScanGate
+  - type: UserInterface
+    interfaces:
+      enum.WiresUiKey.Key:
+        type: WiresBoundUserInterface
+  - type: Transform
+    anchored: true
+  - type: Pullable
+  - type: StaticPrice
+    price: 1500
+  - type: AccessReader
+    access: [["Security"]]
+  - type: Electrified
+    enabled: false
+    usesApcPower: true
+    requirePower: true
+  - type: DeviceList
+  - type: DeviceNetwork
+    deviceNetId: Wireless
+  - type: DeviceLinkSource
+    range: 5
+    ports:
+      - ScanGateSuccess
+      - ScanGateFail
+
+- type: entity
+  id: ScanGate
+  parent: BaseScanGate
+  description: It scans items for contraband when they pass through.
+  components:
+  - type: Sprite
+    sprite: _Starlight/Structures/Machines/scan_gate.rsi
+    snapCardinals: true
+    layers:
+    - state: base
+    - state: idle
+      shader: unshaded
+      map: ["enum.ScanGateVisualLayers.Status"]
+    - state: panel
+      map: ["enum.WiresVisualLayers.MaintenancePanel"]
+  - type: GenericVisualizer
+    visuals: 
+      enum.PowerDeviceVisuals.Powered:
+        enum.ScanGateVisualLayers.Status:
+          True: { visible: true }
+          False: { visible: false }
+      enum.ScanGateVisuals.State:
+        enum.ScanGateVisualLayers.Status:
+          idle: { state: idle }
+          fail: { state: scan_fail }
+          success: { state: scan_success }
+  - type: Machine
+    board: ScanGateMachineCircuitboard
+  - type: ContainerContainer
+    containers:
+      machine_board: !type:Container
+      machine_parts: !type:Container
+
+- type: entity
+  id: ScanGateBlack
+  parent: ScanGate
+  components:
+  - type: Sprite
+    layers:
+    - state: base_black
+    - state: idle
+      shader: unshaded
+      map: ["enum.ScanGateVisualLayers.Status"]
+    - state: panel
+      map: ["enum.WiresVisualLayers.MaintenancePanel"]

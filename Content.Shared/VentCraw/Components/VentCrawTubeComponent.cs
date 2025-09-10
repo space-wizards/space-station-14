@@ -8,10 +8,8 @@ namespace Content.Shared.VentCraw.Tube.Components;
 [RegisterComponent]
 public sealed partial class VentCrawTubeComponent : Component
 {
-    [DataField("containerId")] 
     public string ContainerId { get; set; } = "VentCrawTube";
 
-    [DataField("connected")]
     public bool Connected;
 
     [ViewVariables]
