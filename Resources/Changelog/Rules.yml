@@ -1,7 +1,7 @@
 ﻿Entries:
 - author: Errant
   changes:
-  - message: Changes to Rules can now be tracked here. You like reading rules, don't you, you are a Rulesreader.
+  - message: Tab created.
     type: Add
   id: 1
   time: '2025-09-10'
