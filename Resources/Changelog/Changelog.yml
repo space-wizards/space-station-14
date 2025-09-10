@@ -1,16 +1,4 @@
 ﻿Entries:
-- author: K-Dynamic
-  changes:
-  - message: Disposal x-junctions can be constructed, which feeds from three directions
-      towards one.
-    type: Add
-  - message: Disposal junctions now properly swap to all other possible junctions
-      when a screwdriver is applied - disposal junction -> y-junction -> flipped junction
-      -> x-junction -> disposal junction...
-    type: Fix
-  id: 8435
-  time: '2025-05-07T11:37:59.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/37092
 - author: Zalycon
   changes:
   - message: Raised limit of species chest markings to 2
@@ -3946,3 +3934,11 @@
   id: 8946
   time: '2025-09-10T19:22:24.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/39880
+- author: SweetAplle
+  changes:
+  - message: Saying "idk" now no longer forces the shrug emote, instead expanding
+      to "I don't know".
+    type: Tweak
+  id: 8947
+  time: '2025-09-10T20:09:58.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/39024
