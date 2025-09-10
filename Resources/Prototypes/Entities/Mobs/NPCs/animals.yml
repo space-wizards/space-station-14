@@ -839,7 +839,7 @@
       behaviors:
       - !type:GibBehavior
         recursive: false
-  - type: ZombieImmune
+  - type: ZombieImmune # Ronstation - modification
 
 - type: entity
   name: cow
