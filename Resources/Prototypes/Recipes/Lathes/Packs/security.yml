@@ -84,7 +84,6 @@
   - ShuttleGunFriendshipCircuitboard
   - ShuttleGunPerforatorCircuitboard
   - ShuttleGunSvalinnMachineGunCircuitboard
-  - ScanGateMachineCircuitboard # Starlight-edit
 
 - type: latheRecipePack
   parent:
