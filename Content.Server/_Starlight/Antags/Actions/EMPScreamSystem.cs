@@ -1,15 +1,15 @@
 using System.Numerics;
 using Content.Server.Emp;
 using Content.Shared.Camera;
-using Content.Shared._Starlight.Antags.TerrorSpider;
+using Content.Shared._Starlight.Antags.Actions;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.Player;
 using Robust.Server.Audio;
 
-namespace Content.Server._Starlight.Antags.TerrorSpider;
+namespace Content.Server._Starlight.Antags.Actions;
 
-public sealed partial class TerrorSpiderSystem : EntitySystem
+public sealed partial class EMPScreamSystem : EntitySystem
 {
     [Dependency] private readonly EmpSystem _emp = default!;
     [Dependency] private readonly TransformSystem _transform = default!;
@@ -31,7 +31,7 @@ public sealed partial class TerrorSpiderSystem : EntitySystem
         ScreamEffect(uid, ev.Power, ev.ScreamSound);
 
         var pos = _transform.GetMapCoordinates(uid);
-        _emp.EmpPulse(pos, ev.Power, 5000f, ev.Power * 2);
+        _emp.EmpPulse(pos, ev.Power, ev.EnergyConsumption, ev.Power * ev.DurationMultiply);
     }
 
     private void ScreamEffect(EntityUid source, float screamPower, SoundSpecifier? sound = null)
