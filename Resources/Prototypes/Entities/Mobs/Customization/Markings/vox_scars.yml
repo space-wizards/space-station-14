@@ -1,0 +1,118 @@
+- type: marking
+  id: VoxScarEyeRight
+  bodyPart: Head
+  markingCategory: Head
+  speciesRestriction: [Vox]
+  sprites:
+  - sprite: Mobs/Customization/vox_scars.rsi
+    state: vox_scar_eye_right
+
+- type: marking
+  id: VoxScarEyeLeft
+  bodyPart: Head
+  markingCategory: Head
+  speciesRestriction: [Vox]
+  followSkinColor: true
+  sprites:
+  - sprite: Mobs/Customization/vox_scars.rsi
+    state: vox_scar_eye_left
+
+- type: marking
+  id: VoxScarTopSurgeryShort
+  bodyPart: Chest
+  markingCategory: Chest
+  speciesRestriction: [Vox]
+  followSkinColor: true
+  sprites:
+  - sprite: Mobs/Customization/vox_scars.rsi
+    state: vox_top_surgery_short
+
+- type: marking
+  id: VoxScarTopSurgeryLong
+  bodyPart: Chest
+  markingCategory: Chest
+  speciesRestriction: [Vox]
+  followSkinColor: true
+  sprites:
+  - sprite: Mobs/Customization/vox_scars.rsi
+    state: vox_top_surgery_long
+
+- type: marking
+  id: VoxScarChest
+  bodyPart: Chest
+  markingCategory: Chest
+  speciesRestriction: [Vox]
+  followSkinColor: true
+  sprites:
+  - sprite: Mobs/Customization/vox_scars.rsi
+    state: vox_scar_chest
+
+- type: marking
+  id: VoxScarNeck
+  bodyPart: Head
+  markingCategory: Head
+  speciesRestriction: [Vox]
+  followSkinColor: true
+  sprites:
+  - sprite: Mobs/Customization/vox_scars.rsi
+    state: vox_scar_neck
+
+- type: marking
+  id: VoxScarChestBullets
+  bodyPart: Chest
+  markingCategory: Chest
+  speciesRestriction: [Vox]
+  followSkinColor: true
+  sprites:
+  - sprite: Mobs/Customization/vox_scars.rsi
+    state: vox_scar_chest_bullets
+
+- type: marking
+  id: VoxScarStomachBullets
+  bodyPart: Chest
+  markingCategory: Chest
+  speciesRestriction: [Vox]
+  followSkinColor: true
+  sprites:
+  - sprite: Mobs/Customization/vox_scars.rsi
+    state: vox_scar_stomach_bullets
+
+- type: marking
+  id: VoxScarFace1
+  bodyPart: Head
+  markingCategory: Head
+  speciesRestriction: [Vox]
+  followSkinColor: true
+  sprites:
+  - sprite: Mobs/Customization/vox_scars.rsi
+    state: vox_scar_face_1
+
+- type: marking
+  id: VoxScarFace2
+  bodyPart: Head
+  markingCategory: Head
+  speciesRestriction: [Vox]
+  followSkinColor: true
+  sprites:
+  - sprite: Mobs/Customization/vox_scars.rsi
+    state: vox_scar_face_2
+
+- type: marking
+  id: VoxScarEyeRightSmall
+  bodyPart: Head
+  markingCategory: Head
+  speciesRestriction: [Vox]
+  followSkinColor: true
+  sprites:
+  - sprite: Mobs/Customization/vox_scars.rsi
+    state: vox_scar_eye_right_small
+
+- type: marking
+  id: VoxScarEyeLeftSmall
+  bodyPart: Head
+  markingCategory: Head
+  speciesRestriction: [Vox]
+  followSkinColor: true
+  sprites:
+  - sprite: Mobs/Customization/vox_scars.rsi
+    state: vox_scar_eye_left_small

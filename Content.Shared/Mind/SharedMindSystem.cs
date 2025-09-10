@@ -2,19 +2,25 @@ using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Shared.Administration.Logs;
 using Content.Shared.Database;
+using Content.Shared.Emoting;
 using Content.Shared.Examine;
 using Content.Shared.GameTicking;
 using Content.Shared.Humanoid;
 using Content.Shared.Interaction.Events;
+using Content.Shared.Movement.Components;
 using Content.Shared.Mind.Components;
+using Content.Shared.Mind.Filters;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Mobs.Systems;
 using Content.Shared.Objectives.Systems;
 using Content.Shared.Players;
+using Content.Shared.Speech;
 using Content.Shared.Whitelist;
+using Robust.Shared.Containers;
 using Robust.Shared.Map;
 using Robust.Shared.Network;
 using Robust.Shared.Player;
+using Robust.Shared.Random;
 using Robust.Shared.Utility;
 
 namespace Content.Shared.Mind;
@@ -23,15 +29,19 @@ public abstract partial class SharedMindSystem : EntitySystem
 {
     [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
     [Dependency] private readonly INetManager _net = default!;
+    [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly MobStateSystem _mobState = default!;
     [Dependency] private readonly SharedObjectivesSystem _objectives = default!;
     [Dependency] private readonly SharedPlayerSystem _player = default!;
     [Dependency] private readonly ISharedPlayerManager _playerManager = default!;
     [Dependency] private readonly MetaDataSystem _metadata = default!;
     [Dependency] private readonly EntityWhitelistSystem _whitelist = default!;
+    [Dependency] private readonly SharedContainerSystem _container = default!;
 
     [ViewVariables]
     protected readonly Dictionary<NetUserId, EntityUid> UserMinds = new();
+
+    private HashSet<Entity<MindComponent>> _pickingMinds = new();
 
     public override void Initialize()
     {
@@ -55,6 +65,8 @@ public abstract partial class SharedMindSystem : EntitySystem
 
     private void OnMindStartup(EntityUid uid, MindComponent component, ComponentStartup args)
     {
+        component.MindRoleContainer = _container.EnsureContainer<Container>(uid, MindComponent.MindRoleContainerId);
+
         if (component.UserId == null)
             return;
 
@@ -251,6 +263,24 @@ public abstract partial class SharedMindSystem : EntitySystem
             return true;
         // They might actually be alive.
         return _mobState.IsDead(mind.OwnedEntity.Value, targetMobState);
+    }
+
+    /// <summary>
+    ///     True if the OwnedEntity of this mind is physically unrevivable.
+    ///     This is mainly to check whether a mind is able to inherit their "original" character again without the need for creating a new one.
+    ///     In cases of being a brain, being borged or a zombie they are "unrevivable"
+    /// </summary>
+    public bool IsCharacterUnrevivablePhysically(MindComponent mind)
+    {
+        if (mind.OwnedEntity == null)
+            return true;
+
+        // This entity cannot be dead, alive or crit, so it makes sense it cannot be revived to begin with.
+        if (!HasComp<MobStateComponent>(mind.OwnedEntity))
+            return true;
+
+        // Could use checks for the amount of damage they have, but with chemistry you can never tell what damage means someone is truly "unrevivable".
+        return false;
     }
 
     public virtual void Visit(EntityUid mindId, EntityUid entity, MindComponent? mind = null)
@@ -557,15 +587,35 @@ public abstract partial class SharedMindSystem : EntitySystem
     }
 
     /// <summary>
-    ///     A string to represent the mind for logging
+    ///     True if this Mind is 'sufficiently unrevivable' IC (Objectives, EndText).
+    ///     Note that this is *IC logic*, it's not necessarily tied to any specific truth.
+    ///     "If administrators decide that zombies are unrevivable, this returns true for zombies."
+    ///     Alternative IsCharacterDeadIC that checks for whether they will be able to inherit their body again.
+    ///     State in which they must be given a new body to "live" (borging, being a brain, etc) should count as "unrevivable".
     /// </summary>
-    public string MindOwnerLoggingString(MindComponent mind)
+    public bool IsCharacterUnrevivableIc(MindComponent mind)
     {
-        if (mind.OwnedEntity != null)
-            return ToPrettyString(mind.OwnedEntity.Value);
-        if (mind.UserId != null)
-            return mind.UserId.Value.ToString();
-        return "(originally " + mind.OriginalOwnerUserId + ")";
+        if (mind.OwnedEntity is { } owned)
+        {
+            var ev = new GetCharacterUnrevivableIcEvent(null);
+            RaiseLocalEvent(owned, ref ev);
+
+            if (ev.Unrevivable != null)
+                return ev.Unrevivable.Value;
+        }
+
+        return IsCharacterUnrevivablePhysically(mind);
+    }
+
+    /// <summary>
+    /// A string to represent the mind for logging.
+    /// </summary>
+    public MindStringRepresentation MindOwnerLoggingString(MindComponent mind)
+    {
+        return new MindStringRepresentation(
+            ToPrettyString(mind.OwnedEntity),
+            mind.UserId != null,
+            mind.UserId ?? mind.OriginalOwnerUserId);
     }
 
     public string? GetCharacterName(NetUserId userId)
@@ -575,23 +625,95 @@ public abstract partial class SharedMindSystem : EntitySystem
 
     /// <summary>
     /// Returns a list of every living humanoid player's minds, except for a single one which is exluded.
+    /// A new hashset is allocated for every call, consider using <see cref="AddAliveHumans"/> instead.
     /// </summary>
     public HashSet<Entity<MindComponent>> GetAliveHumans(EntityUid? exclude = null)
     {
         var allHumans = new HashSet<Entity<MindComponent>>();
+        AddAliveHumans(allHumans, exclude);
+        return allHumans;
+    }
+
+    /// <summary>
+    /// Adds to a hashset every living humanoid player's minds, except for a single one which is exluded.
+    /// </summary>
+    public void AddAliveHumans(HashSet<Entity<MindComponent>> allHumans, EntityUid? exclude = null)
+    {
         // HumanoidAppearanceComponent is used to prevent mice, pAIs, etc from being chosen
-        var query = EntityQueryEnumerator<MobStateComponent, HumanoidAppearanceComponent>();
-        while (query.MoveNext(out var uid, out var mobState, out _))
+        var query = EntityQueryEnumerator<HumanoidAppearanceComponent, MobStateComponent>();
+        while (query.MoveNext(out var uid, out _, out var mobState))
         {
             // the player needs to have a mind and not be the excluded one +
             // the player has to be alive
             if (!TryGetMind(uid, out var mind, out var mindComp) || mind == exclude || !_mobState.IsAlive(uid, mobState))
                 continue;
 
-            allHumans.Add(new Entity<MindComponent>(mind, mindComp));
+            allHumans.Add((mind, mindComp));
+        }
+    }
+
+    /// <summary>
+    /// Picks a random mind from a pool after applying a list of filters.
+    /// Returns null if no valid mind could be found.
+    /// </summary>
+    public Entity<MindComponent>? PickFromPool(IMindPool pool, List<MindFilter> filters, EntityUid? exclude = null)
+    {
+        _pickingMinds.Clear();
+        pool.FindMinds(_pickingMinds, exclude, EntityManager, this);
+        FilterMinds(_pickingMinds, filters, exclude);
+
+        if (_pickingMinds.Count == 0)
+            return null;
+
+        return _random.Pick(_pickingMinds);
+    }
+
+    /// <summary>
+    /// Filters minds from a hashset using a single <see cref="MindFilter"/>.
+    /// </summary>
+    public void FilterMinds(HashSet<Entity<MindComponent>> minds, MindFilter filter, EntityUid? exclude = null)
+    {
+        minds.RemoveWhere(mind => filter.Filter(mind, exclude, EntityManager, this));
+    }
+
+    /// <summary>
+    /// Filters minds from a hashset using a list of <see cref="MindFilter"/>s to apply sequentially.
+    /// </summary>
+    public void FilterMinds(HashSet<Entity<MindComponent>> minds, List<MindFilter> filters, EntityUid? exclude = null)
+    {
+        foreach (var filter in filters)
+        {
+            // no point calling it if there are none left
+            if (minds.Count == 0)
+                break;
+
+            FilterMinds(minds, filter, exclude);
+        }
+    }
+
+    /// <summary>
+    /// Give sentience to a target entity by attaching necessary components.
+    /// </summary>
+    /// <param name="uid">Uid of the target entity.</param>
+    /// <param name="allowMovement">Whether the target entity should be able to move.</param>
+    /// <param name="allowSpeech">Whether the target entity should be able to talk.</param>
+    public void MakeSentient(EntityUid uid, bool allowMovement = true, bool allowSpeech = true)
+    {
+        EnsureComp<MindContainerComponent>(uid);
+        if (allowMovement)
+        {
+            EnsureComp<InputMoverComponent>(uid);
+            EnsureComp<MobMoverComponent>(uid);
+            EnsureComp<MovementSpeedModifierComponent>(uid);
         }
 
-        return allHumans;
+        if (allowSpeech)
+        {
+            EnsureComp<SpeechComponent>(uid);
+            EnsureComp<EmotingComponent>(uid);
+        }
+
+        EnsureComp<ExaminerComponent>(uid);
     }
 }
 
@@ -602,3 +724,24 @@ public abstract partial class SharedMindSystem : EntitySystem
 /// <param name="Dead"></param>
 [ByRefEvent]
 public record struct GetCharactedDeadIcEvent(bool? Dead);
+
+/// <summary>
+/// Raised on an entity to determine whether or not they are "unrevivable" in IC-logic.
+/// Used to check for things such as being borged or a zombie.
+/// </summary>
+/// <param name="Unrevivable"></param>
+[ByRefEvent]
+public record struct GetCharacterUnrevivableIcEvent(bool? Unrevivable);
+
+public sealed record MindStringRepresentation(EntityStringRepresentation? OwnedEntity, bool PlayerPresent, NetUserId? Player) : IAdminLogsPlayerValue
+{
+    public override string ToString()
+    {
+        var str = OwnedEntity?.ToString() ?? "mind without entity";
+        if (Player != null)
+            str += $" ({(PlayerPresent ? "" : "originally ")} {Player})";
+        return str;
+    }
+
+    IEnumerable<NetUserId> IAdminLogsPlayerValue.Players => Player == null ? [] : [Player.Value];
+}

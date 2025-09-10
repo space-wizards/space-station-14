@@ -63,7 +63,7 @@ public sealed class JobWhitelistManager : IPostInjectInit
         if (!_config.GetCVar(CCVars.GameRoleWhitelist))
             return true;
 
-        if (!_prototypes.TryIndex(job, out var jobPrototype) ||
+        if (!_prototypes.Resolve(job, out var jobPrototype) ||
             !jobPrototype.Whitelisted)
         {
             return true;

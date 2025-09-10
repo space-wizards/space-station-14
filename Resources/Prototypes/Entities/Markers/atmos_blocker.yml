@@ -108,3 +108,20 @@
   components:
   - type: AtmosFixMarker
     mode: 7
+
+- type: entity
+  parent: MarkerBase
+  id: AtmosFixAirMarker
+  name: Atmos Fix Air Marker
+  description: "Oxygen (21%) and nitrogen (79%) @ gas miner pressure, T20C"
+  components:
+  - type: Sprite
+    layers:
+    - sprite: Markers/atmos.rsi # {
+      state: base
+      shader: unshaded
+    - sprite: Markers/atmos.rsi
+      shader: unshaded # }
+      state: air
+  - type: AtmosFixMarker
+    mode: 8

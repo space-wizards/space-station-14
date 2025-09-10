@@ -7,6 +7,7 @@ using Content.Server.Power.Components;
 using Content.Server.Power.EntitySystems;
 using Content.Server.Singularity.Components;
 using Content.Shared.Atmos;
+using Content.Shared.Atmos.Components;
 using Content.Shared.Examine;
 using Content.Shared.Interaction;
 using Content.Shared.Radiation.Events;
@@ -47,7 +48,7 @@ public sealed class RadiationCollectorSystem : EntitySystem
         if (!_containerSystem.TryGetContainer(uid, GasTankContainer, out var container) || container.ContainedEntities.Count == 0)
             return false;
 
-        if (!EntityManager.TryGetComponent(container.ContainedEntities.First(), out gasTankComponent))
+        if (!TryComp(container.ContainedEntities.First(), out gasTankComponent))
             return false;
 
         return true;
@@ -67,6 +68,9 @@ public sealed class RadiationCollectorSystem : EntitySystem
 
     private void OnActivate(EntityUid uid, RadiationCollectorComponent component, ActivateInWorldEvent args)
     {
+        if (!args.Complex)
+            return;
+
         if (TryComp(uid, out UseDelayComponent? useDelay) && !_useDelay.TryResetDelay((uid, useDelay), true))
             return;
 

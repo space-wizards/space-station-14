@@ -24,6 +24,12 @@ public sealed partial class StationBankAccountComponent : Component
     public double PrimaryCut = 0.50;
 
     /// <summary>
+    /// When giving funds to a particular account from an override sell, the proportion of funds they should receive compared to remaining accounts.
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public double LockboxCut = 0.75;
+
+    /// <summary>
     /// A dictionary corresponding to the money held by each cargo account.
     /// </summary>
     [DataField, AutoNetworkedField]

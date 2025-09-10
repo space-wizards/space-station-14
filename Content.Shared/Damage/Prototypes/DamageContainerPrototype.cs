@@ -1,6 +1,5 @@
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.List;
 
 namespace Content.Shared.Damage.Prototypes
 {
@@ -13,7 +12,6 @@ namespace Content.Shared.Damage.Prototypes
     ///     cref="DamageableComponent"/> should support.
     /// </remarks>
     [Prototype]
-    [Serializable, NetSerializable]
     public sealed partial class DamageContainerPrototype : IPrototype
     {
         [ViewVariables]
@@ -23,14 +21,14 @@ namespace Content.Shared.Damage.Prototypes
         /// <summary>
         ///     List of damage groups that are supported by this container.
         /// </summary>
-        [DataField("supportedGroups", customTypeSerializer: typeof(PrototypeIdListSerializer<DamageGroupPrototype>))]
-        public List<string> SupportedGroups = new();
+        [DataField]
+        public List<ProtoId<DamageGroupPrototype>> SupportedGroups = new();
 
         /// <summary>
         ///     Partial List of damage types supported by this container. Note that members of the damage groups listed
         ///     in <see cref="SupportedGroups"/> are also supported, but they are not included in this list.
         /// </summary>
-        [DataField("supportedTypes", customTypeSerializer: typeof(PrototypeIdListSerializer<DamageTypePrototype>))]
-        public List<string> SupportedTypes = new();
+        [DataField]
+        public List<ProtoId<DamageTypePrototype>> SupportedTypes = new();
     }
 }
