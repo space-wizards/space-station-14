@@ -23,7 +23,7 @@ public sealed class SpiderSystem : SharedSpiderSystem
     /// <summary>
     ///     A recycled hashset used to check turfs for spiderwebs.
     /// </summary>
-    private HashSet<EntityUid> _webs = []; // Starlight-edit
+    private readonly HashSet<EntityUid> _webs = [];
 
     public override void Initialize()
     {
@@ -128,7 +128,8 @@ public sealed class SpiderSystem : SharedSpiderSystem
 
     private bool IsTileBlockedByWeb(EntityCoordinates coords)
     {
-        _webs = _lookup.GetEntitiesIntersecting(coords); // Starlight-edit
+        _webs.Clear();
+        _webs.UnionWith(_lookup.GetEntitiesIntersecting(coords)); // Starlight-edit
         foreach (var entity in _webs)
         {
             if (HasComp<SpiderWebObjectComponent>(entity))
