@@ -32,7 +32,7 @@
   components:
   - type: ItemToggle
   - type: PowerCellDraw
-    drawRate: 1
+    drawRate: 0.6 # 10 min with low-cap / 20 min with med-cap / 30 min with high-cap power cells
   - type: ItemSlots
     slots:
       cell_slot:
