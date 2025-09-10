@@ -12,9 +12,9 @@
       - !type:GenericStatusEffect
         key: Stutter
         component: ScrambledAccent
-      - !type:Drunk
-        slurSpeech: false
-        boozePower: 20
+      - !type:ModifyStatusEffect
+        effectProto: StatusEffectSlurred
+        time: 20.0
 
 - type: reagent
   id: Dylovene
@@ -83,6 +83,11 @@
         key: Jitter
         time: 3.0
         type: Remove
+      - !type:ModifyStatusEffect
+        effectProto: StatusEffectDrowsiness
+        time: 1.5
+        type: Add
+        refresh: false
       - !type:HealthChange
         damage:
           types:
@@ -99,8 +104,8 @@
   metabolisms:
     Medicine:
       effects:
-      - !type:GenericStatusEffect
-        key: Drunk
+      - !type:ModifyStatusEffect
+        effectProto: StatusEffectDrunk
         time: 6.0
         type: Remove
       - !type:HealthChange
@@ -124,7 +129,7 @@
           types:
             Radiation: -3
           groups:
-            Brute: 0.5
+            Brute: 1.5
 
 - type: reagent
   id: Bicaridine
@@ -137,10 +142,9 @@
   metabolisms:
     Medicine:
       effects:
-      - !type:HealthChange
+      - !type:EvenHealthChange
         damage:
-          groups:
-            Brute: -2
+          Brute: -1.5
       - !type:HealthChange
         conditions:
         - !type:ReagentThreshold
@@ -310,6 +314,13 @@
   metabolisms:
     Medicine:
       effects:
+      - !type:AdjustReagent
+        conditions:
+        - !type:ReagentThreshold
+          reagent: Histamine
+          min: 45
+        reagent: Histamine
+        amount: -5
       - !type:HealthChange
         conditions:
           # they gotta be in crit first
@@ -420,6 +431,7 @@
   color: "#731024"
   metabolisms:
     Medicine:
+      metabolismRate: 0.1 # Smaller doses stabilize critical people for longer. Gives it a specific usecase as to not be entirely outclassed by dex+
       effects:
       - !type:HealthChange
         conditions:
@@ -428,7 +440,7 @@
           mobstate: Critical
         damage:
           types:
-            Asphyxiation: -5
+            Asphyxiation: -2
       - !type:ModifyBleedAmount
         amount: -0.25
 
@@ -560,14 +572,29 @@
         min: 4
   metabolisms:
     Medicine:
+      metabolismRate: 0.1
       effects:
       - !type:HealthChange
         damage:
           types:
-            Cellular: -1
-            Radiation: 1
-      - !type:ChemVomit
-        probability: 0.05
+            Cellular: -0.3
+            Radiation: 0.15
+            Caustic: 0.15
+      - !type:HealthChange
+        conditions:
+        - !type:ReagentThreshold
+          min: 11
+        damage:
+          types:
+            Radiation: 0.2
+      - !type:HealthChange
+        conditions:
+        - !type:ReagentThreshold
+          reagent: Arithrazine
+          min: 1
+        damage:
+          types:
+            Caustic: 0.3
 
 - type: reagent
   id: PolypyryliumOligomers
@@ -721,8 +748,8 @@
         key: KnockedDown
         time: 3.0
         type: Remove
-      - !type:GenericStatusEffect
-        key: SeeingRainbows
+      - !type:ModifyStatusEffect
+        effectProto: StatusEffectSeeingRainbow
         time: 15.0
         type: Remove
 
@@ -800,13 +827,12 @@
   metabolisms:
     Medicine:
       effects:
-      - !type:HealthChange
+      - !type:EvenHealthChange
         damage:
-          groups:
-            Burn: -2
-            Toxin: -2
-            Airloss: -2
-            Brute: -2
+          Burn: -2
+          Toxin: -2
+          Airloss: -2
+          Brute: -2
 
 - type: reagent
   id: Ultravasculine
@@ -819,23 +845,34 @@
   metabolisms:
     Medicine:
       effects:
+      - !type:EvenHealthChange
+        conditions:
+        - !type:ReagentThreshold
+          min: 0
+          max: 20
+        damage:
+          Toxin: -6
       - !type:HealthChange
         conditions:
         - !type:ReagentThreshold
           min: 0
-          max: 30
+          max: 20
         damage:
           groups:
-            Toxin: -3
-            Brute: 0.5
+            Brute: 1.5
+      - !type:EvenHealthChange
+        conditions:
+        - !type:ReagentThreshold
+          min: 20
+        damage:
+          Toxin: -2
       - !type:HealthChange
         conditions:
         - !type:ReagentThreshold
-          min: 30
+          min: 20
         damage:
           groups:
-            Toxin: -1
-            Brute: 3
+            Brute: 6
       - !type:AdjustReagent
         conditions:
         - !type:ReagentThreshold
@@ -895,8 +932,8 @@
       - !type:GenericStatusEffect
         key: Stutter
         component: StutteringAccent
-      - !type:GenericStatusEffect
-        key: Drowsiness
+      - !type:ModifyStatusEffect
+        effectProto: StatusEffectDrowsiness
         time: 10
         type: Remove
       - !type:ResetNarcolepsy
@@ -920,8 +957,8 @@
   metabolisms:
     Medicine:
       effects:
-      - !type:GenericStatusEffect
-        key: Drowsiness
+      - !type:ModifyStatusEffect
+        effectProto: StatusEffectDrowsiness
         time: 10
         type: Remove
       - !type:ResetNarcolepsy
@@ -944,18 +981,19 @@
   color: "#e0a5b9"
   metabolisms:
     Medicine:
+      metabolismRate: 0.25
       effects:
       - !type:HealthChange
         damage:
           types:
-            Caustic: -3
+            Caustic: -1.25 # 5 per u
       - !type:HealthChange
         conditions:
         - !type:ReagentThreshold
           min: 16
         damage:
           types:
-            Heat: 2
+            Heat: 1 # 4 per u
       - !type:Jitter
         conditions:
         - !type:ReagentThreshold
@@ -973,6 +1011,21 @@
         - !type:ReagentThreshold
           min: 30
         probability: 0.02
+      - !type:ChemVomit
+        conditions:
+        - !type:ReagentThreshold
+          reagent: Arithrazine
+          min: 1
+        probability: 0.1
+      - !type:PopupMessage
+        conditions:
+        - !type:ReagentThreshold
+          reagent: Arithrazine
+          min: 1
+        type: Local
+        visualType: Medium
+        messages: [ "generic-reagent-effect-nauseous" ]
+        probability: 0.2
 
 - type: reagent
   id: Lacerinol
@@ -984,18 +1037,20 @@
   color: "#283332"
   metabolisms:
     Medicine:
+      metabolismRate: 0.25
       effects:
       - !type:HealthChange
         damage:
           types:
-            Slash: -3
+            Slash: -2 # 8 per u
+            Heat: 0.2 # 0.8 per u
       - !type:HealthChange
         conditions:
         - !type:ReagentThreshold
           min: 12
         damage:
           types:
-            Cold: 3
+            Cold: 1.5 # 6 per u
 
 - type: reagent
   id: Puncturase
@@ -1007,19 +1062,20 @@
   color: "#b9bf93"
   metabolisms:
     Medicine:
+      metabolismRate: 0.25
       effects:
       - !type:HealthChange
         damage:
           types:
-            Piercing: -4
-            Blunt: 0.1
+            Piercing: -2.5 # 10 per u
+            Radiation: 0.05 # 0.2 per u, 3 for 15u
       - !type:HealthChange
         conditions:
         - !type:ReagentThreshold
-          min: 11
+          min: 12
         damage:
           types:
-            Blunt: 5
+            Blunt: 3 # 12 per u
 
 - type: reagent
   id: Bruizine
@@ -1031,24 +1087,28 @@
   color: "#ff3636"
   metabolisms:
     Medicine:
+      metabolismRate: 0.25
       effects:
       - !type:HealthChange
         damage:
           types:
-            Blunt: -3.5
+            Blunt: -2.25 # 9 per u
+      - !type:SatiateHunger
+        factor: -1
       - !type:HealthChange
         conditions:
         - !type:ReagentThreshold
           min: 10.5
         damage:
           types:
-            Poison: 4
+            Poison: 2.5 # 10 per u
 
 - type: reagent
   id: Holywater
   name: reagent-name-holywater
   group: Medicine
   desc: reagent-desc-holywater
+  evaporationSpeed: 0.3
   physicalDesc: reagent-physical-desc-holy
   flavor: holy
   color: "#91C3F7"
@@ -1057,8 +1117,6 @@
       effects:
       - !type:SatiateThirst
         factor: 3
-    Medicine:
-      effects:
       - !type:HealthChange
         conditions:
         - !type:TotalDamage
@@ -1070,6 +1128,7 @@
             Heat: -0.2
             Shock: -0.2
             Cold: -0.2
+
   reactiveEffects:
     Extinguish:
       methods: [ Touch ]
@@ -1137,21 +1196,22 @@
   color: "#8147ff"
   metabolisms:
     Medicine:
+      metabolismRate: 0.25
       effects:
       # heals shocks and removes shock chems
       - !type:HealthChange
         damage:
           types:
-            Shock: -4
+            Shock: -1.5 # 6 per u
       - !type:AdjustReagent
         reagent: Licoxide
-        amount: -4
+        amount: -2
       - !type:AdjustReagent
         reagent:  Tazinide
-        amount: -4
+        amount: -2
       # makes you a little chilly when not oding
       - !type:AdjustTemperature
-        amount: -5000
+        amount: -2500
       # od makes you freeze to death
       - !type:HealthChange
         conditions:
@@ -1159,7 +1219,7 @@
           min: 12
         damage:
           types:
-            Cold: 2
+            Cold: 1 # 4 per u
       - !type:AdjustTemperature
         conditions:
         - !type:ReagentThreshold
@@ -1169,7 +1229,7 @@
         conditions:
         - !type:ReagentThreshold
           min: 12
-          
+
 - type: reagent
   id: Opporozidone #Name based of an altered version of the startreck chem "Opporozine"
   name: reagent-name-opporozidone
@@ -1238,9 +1298,10 @@
           max: 213.0
         damage:
           types:
-            Heat: -3.0
-            Shock: -3.0
-            Caustic: -1.0
+            Cold: -4.0
+            Heat: -4.0
+            Shock: -4.0
+            Caustic: -1.5
 
 - type: reagent
   id : Mannitol # currently this is just a way to create psicodine
@@ -1280,12 +1341,11 @@
         damage:
           types:
             Poison: 2
-      - !type:GenericStatusEffect
+      - !type:ModifyStatusEffect
+        effectProto: StatusEffectSeeingRainbow
         conditions:
         - !type:ReagentThreshold
           min: 30
-        key: SeeingRainbows
-        component: SeeingRainbows
         type: Add
         time: 8
         refresh: false
@@ -1293,8 +1353,8 @@
         key: Jitter
         time: 2.0
         type: Remove
-      - !type:GenericStatusEffect
-        key: Drunk
+      - !type:ModifyStatusEffect
+        effectProto: StatusEffectDrunk
         time: 6.0
         type: Remove
       - !type:PopupMessage # we dont have sanity/mood so this will have to do
@@ -1346,9 +1406,8 @@
         emote: Yawn
         showInChat: true
         probability: 0.1
-      - !type:GenericStatusEffect
-        key: Drowsiness
-        component: Drowsiness
+      - !type:ModifyStatusEffect
+        effectProto: StatusEffectDrowsiness
         time: 4
         type: Add
         refresh: false
@@ -1356,8 +1415,8 @@
         key: Jitter
         time: 4.0
         type: Remove
-      - !type:GenericStatusEffect
-        key: SeeingRainbows
+      - !type:ModifyStatusEffect
+        effectProto: StatusEffectSeeingRainbow
         time: 10.0
         type: Remove
       - !type:AdjustReagent

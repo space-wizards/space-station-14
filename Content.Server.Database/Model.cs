@@ -392,6 +392,7 @@ namespace Content.Server.Database
         public Guid UserId { get; set; }
         public int SelectedCharacterSlot { get; set; }
         public string AdminOOCColor { get; set; } = null!;
+        public List<string> ConstructionFavorites { get; set; } = new();
         public List<Profile> Profiles { get; } = new();
     }
 
@@ -479,6 +480,12 @@ namespace Content.Server.Database
         /// The corresponding role prototype on the profile.
         /// </summary>
         public string RoleName { get; set; } = string.Empty;
+
+        /// <summary>
+        /// Custom name of the role loadout if it supports it.
+        /// </summary>
+        [MaxLength(256)]
+        public string? EntityName { get; set; }
 
         /// <summary>
         /// Store the saved loadout groups. These may get validated and removed when loaded at runtime.
@@ -973,14 +980,16 @@ namespace Content.Server.Database
         Full = 2,
         Panic = 3,
         /*
-         * TODO: Remove baby jail code once a more mature gateway process is established. This code is only being issued as a stopgap to help with potential tiding in the immediate future.
-         *
          * If baby jail is removed, please reserve this value for as long as can reasonably be done to prevent causing ambiguity in connection denial reasons.
          * Reservation by commenting out the value is likely sufficient for this purpose, but may impact projects which depend on SS14 like SS14.Admin.
+         *
+         * Edit: It has
          */
         BabyJail = 4,
         /// Results from rejected connections with external API checking tools
         IPChecks = 5,
+        /// Results from rejected connections who are authenticated but have no modern hwid associated with them.
+        NoHwid = 6
     }
 
     public class ServerBanHit

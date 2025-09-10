@@ -4,11 +4,12 @@
   description: job-description-rd
   playTimeTracker: JobResearchDirector
   requirements:
-    - !type:DepartmentTimeRequirement
-      department: Science
-      time: 36000 #10 hrs
-    - !type:OverallPlaytimeRequirement
-      time: 144000 #40 hrs
+  - !type:RoleTimeRequirement
+    role: JobScientist
+    time: 18000 #5 hrs
+  - !type:DepartmentTimeRequirement
+    department: Science
+    time: 36000 #10 hrs
   weight: 10
   startingGear: ResearchDirectorGear
   icon: "JobIconResearchDirector"
@@ -36,3 +37,15 @@
   storage:
     back:
     - Flash
+
+- type: chameleonOutfit
+  id: ResearchDirectorChameleonOutfit
+  job: ResearchDirector
+  hasMindShield: true
+  equipment:
+    head: ClothingHeadHatBeretRND
+    eyes: ClothingEyesGlasses
+    mask: ClothingMaskGas
+    neck: ClothingNeckCloakRd
+    outerClothing: ClothingOuterCoatRD
+    gloves: ClothingHandsGlovesColorPurple

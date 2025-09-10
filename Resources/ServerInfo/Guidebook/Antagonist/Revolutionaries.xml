@@ -11,7 +11,7 @@
   Revolutionaries are conversion antagonists sponsored by the [color=#ff0000]Syndicate[/color] who are tasked with taking control of the station. They have no fancy gimmicks or cheap tricks, they only have a cause and strength in numbers.
 
   ## Objectives
-  You must cuff, kill, or exile all of the [textlink="Command staff" link="Command"] on station in no particular order.
+  You must convert, cuff or kill all of the [textlink="Command staff" link="Command"] on station in no particular order.
 
   Your objective is [bold]not to destroy the station[/bold], but [italic]to take it over[/italic], so try to minimize damage where possible.
 
@@ -40,7 +40,7 @@
   - [bold]Visibly be destroyed upon being implanted into a [color=#5e9cff]Head Revolutionary[/color][/bold], giving you away
   - NOT protect against flash disorientation
 
-  Assume all of [color=#cb0000]Security[/color] and [color=#1b67a5]Command[/color] are implanted with mindshields already.
+  Assume all of [color=#cb0000]Security[/color] and [color=#1b67a5]Command[/color] are implanted with mindshields already, [bold]however they can be removed using an empty implanter, obtainable from the Medical department's MedFab.[/bold]
 
   <Box>
     <GuideEntityEmbed Entity="MindShieldImplanter"/>

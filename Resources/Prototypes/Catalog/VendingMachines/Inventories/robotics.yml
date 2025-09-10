@@ -18,3 +18,5 @@
     Welder: 1
     Screwdriver: 2
     Crowbar: 2
+  contrabandInventory:
+    FoodBurgerRobot: 1  

@@ -1,7 +1,6 @@
 using System.Linq;
 using Content.Server.Administration.Logs;
 using Content.Server.DeviceLinking.Systems;
-using Content.Server.DeviceNetwork.Components;
 using Content.Shared.Access.Components;
 using Content.Shared.Access.Systems;
 using Content.Shared.Database;
@@ -19,6 +18,7 @@ using Robust.Server.Audio;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.Map.Events;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 
@@ -67,15 +67,18 @@ public sealed class NetworkConfiguratorSystem : SharedNetworkConfiguratorSystem
 
         SubscribeLocalEvent<DeviceListComponent, ComponentRemove>(OnComponentRemoved);
 
-        SubscribeLocalEvent<BeforeSaveEvent>(OnMapSave);
+        SubscribeLocalEvent<BeforeSerializationEvent>(OnMapSave);
     }
 
-    private void OnMapSave(BeforeSaveEvent ev)
+    private void OnMapSave(BeforeSerializationEvent ev)
     {
         var enumerator = AllEntityQuery<NetworkConfiguratorComponent>();
         while (enumerator.MoveNext(out var uid, out var conf))
         {
-            if (CompOrNull<TransformComponent>(conf.ActiveDeviceList)?.MapUid != ev.Map)
+            if (!TryComp(conf.ActiveDeviceList, out TransformComponent? listXform))
+                continue;
+
+            if (!ev.MapIds.Contains(listXform.MapID))
                 continue;
 
             // The linked device list is (probably) being saved. Make sure that the configurator is also being saved
@@ -83,9 +86,10 @@ public sealed class NetworkConfiguratorSystem : SharedNetworkConfiguratorSystem
             // containing a set of all entities that are about to be saved, which would make checking this much easier.
             // This is a shitty bandaid, and will force close the UI during auto-saves.
             // TODO Map serialization refactor
+            // I'm refactoring it now and I still dont know what to do
 
             var xform = Transform(uid);
-            if (xform.MapUid == ev.Map && IsSaveable(uid))
+            if (ev.MapIds.Contains(xform.MapID) && IsSaveable(uid))
                 continue;
 
             _uiSystem.CloseUi(uid, NetworkConfiguratorUiKey.Configure);
@@ -493,14 +497,15 @@ public sealed class NetworkConfiguratorSystem : SharedNetworkConfiguratorSystem
             return;
 
         var sources = _deviceLinkSystem.GetSourcePorts(sourceUid, sourceComponent);
-        var sinks = _deviceLinkSystem.GetSinkPorts(sinkUid, sinkComponent);
+        var sinks = _deviceLinkSystem.GetSinkPortIds((sinkUid, sinkComponent));
         var links = _deviceLinkSystem.GetLinks(sourceUid, sinkUid, sourceComponent);
         var defaults = _deviceLinkSystem.GetDefaults(sources);
+        var sourceIds = sources.Select(s => (ProtoId<SourcePortPrototype>)s.ID).ToArray();
 
         var sourceAddress = Resolve(sourceUid, ref sourceNetworkComponent, false) ? sourceNetworkComponent.Address : "";
         var sinkAddress = Resolve(sinkUid, ref sinkNetworkComponent, false) ? sinkNetworkComponent.Address : "";
 
-        var state = new DeviceLinkUserInterfaceState(sources, sinks, links, sourceAddress, sinkAddress, defaults);
+        var state = new DeviceLinkUserInterfaceState(sourceIds, sinks, links, sourceAddress, sinkAddress, defaults);
         _uiSystem.SetUiState(configuratorUid, NetworkConfiguratorUiKey.Link, state);
     }
 

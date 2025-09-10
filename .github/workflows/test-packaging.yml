@@ -34,7 +34,7 @@ jobs:
 
     steps:
       - name: Checkout Master
-        uses: actions/checkout@v3.6.0
+        uses: actions/checkout@v4.2.2
 
       - name: Setup Submodule
         run: |
@@ -49,7 +49,7 @@ jobs:
           git submodule update --init --recursive
 
       - name: Setup .NET Core
-        uses: actions/setup-dotnet@v3.2.0
+        uses: actions/setup-dotnet@v4.1.0
         with:
           dotnet-version: 9.0.x
 
@@ -60,7 +60,7 @@ jobs:
         run: dotnet build Content.Packaging --configuration Release --no-restore /m
 
       - name: Package server
-        run: dotnet run --project Content.Packaging server --platform win-x64 --platform linux-x64 --platform osx-x64 --platform linux-arm64
+        run: dotnet run --project Content.Packaging server --platform win-x64 --platform win-arm64 --platform linux-x64 --platform linux-arm64 --platform osx-x64 --platform osx-arm64
 
       - name: Package client
         run: dotnet run --project Content.Packaging client --no-wipe-release

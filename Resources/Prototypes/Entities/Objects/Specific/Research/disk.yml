@@ -35,6 +35,7 @@
   id: ResearchDiskDebug
   name: research point disk
   suffix: DEBUG, DO NOT MAP
+  categories: [ DoNotMap ]
   description: A disk for the R&D server containing all the points you could ever need.
   components:
   - type: ResearchDisk

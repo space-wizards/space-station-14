@@ -6,6 +6,10 @@
   placement:
     mode: SnapgridCenter
   components:
+  - type: Anchorable
+    flags:
+    - Anchorable
+  - type: Rotatable
   - type: Clickable
   - type: Sprite
     sprite: Structures/catwalk.rsi
@@ -51,6 +55,7 @@
             max: 1
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
+  - type: TrayScanReveal
   - type: RCDDeconstructable
     cost: 2
     delay: 2

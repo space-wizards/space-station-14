@@ -49,6 +49,10 @@ public abstract class SharedScatteringGrenadeSystem : EntitySystem
         if (entity.Comp.Whitelist == null)
             return;
 
+        // Make sure there's room for another grenade to be added
+        if (entity.Comp.Count >= entity.Comp.Capacity)
+            return;
+
         if (args.Handled || !_whitelistSystem.IsValid(entity.Comp.Whitelist, args.Used))
             return;
 
@@ -65,6 +69,6 @@ public abstract class SharedScatteringGrenadeSystem : EntitySystem
         if (!TryComp<AppearanceComponent>(entity, out var appearanceComponent))
             return;
 
-        _appearance.SetData(entity, ClusterGrenadeVisuals.GrenadesCounter, entity.Comp.UnspawnedCount + entity.Comp.Container.ContainedEntities.Count, appearanceComponent);
+        _appearance.SetData(entity, ClusterGrenadeVisuals.GrenadesCounter, entity.Comp.Count, appearanceComponent);
     }
 }
