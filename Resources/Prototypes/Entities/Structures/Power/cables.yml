@@ -225,7 +225,6 @@
     cuttingQuality: null
 
 # Explosive cable below
-
 - type: entity
   id: CableDet
   parent: [ CablePhysBase, BaseSecurityContraband ]
