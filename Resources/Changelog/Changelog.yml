@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Flareguy
-  changes:
-  - message: Moth clothing now visually conforms to their body type, similar to Vox.
-    type: Add
-  id: 8434
-  time: '2025-05-07T10:06:42.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/37231
 - author: K-Dynamic
   changes:
   - message: Disposal x-junctions can be constructed, which feeds from three directions
@@ -3945,3 +3938,11 @@
   id: 8945
   time: '2025-09-10T11:42:33.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/40258
+- author: insoPL
+  changes:
+  - message: Doafters are now cancalled when the target/user is enclosed in a container
+      during it.
+    type: Fix
+  id: 8946
+  time: '2025-09-10T19:22:24.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/39880
