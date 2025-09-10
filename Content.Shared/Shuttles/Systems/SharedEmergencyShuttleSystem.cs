@@ -18,13 +18,13 @@ public abstract class SharedEmergencyShuttleSystem : EntitySystem
         SubscribeLocalEvent<EmergencyShuttleConsoleComponent, ActivatableUIOpenAttemptEvent>(OnEmergencyOpenAttempt);
     }
 
-    private void OnEmergencyOpenAttempt(EntityUid uid, EmergencyShuttleConsoleComponent component, ActivatableUIOpenAttemptEvent args)
+    private void OnEmergencyOpenAttempt(Entity<EmergencyShuttleConsoleComponent> ent, ref ActivatableUIOpenAttemptEvent args)
     {
         // I'm hoping ActivatableUI checks it's open before allowing these messages.
         if (!ConfigManager.GetCVar(CCVars.EmergencyEarlyLaunchAllowed))
         {
             args.Cancel();
-            Popup.PopupClient(Loc.GetString("emergency-shuttle-console-no-early-launches"), uid, args.User);
+            Popup.PopupClient(Loc.GetString("emergency-shuttle-console-no-early-launches"), ent, args.User);
         }
     }
 }
