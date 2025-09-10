@@ -14,8 +14,8 @@ using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Damage;
 using Content.Shared.Database;
 using Content.Shared.EntityEffects;
-using Content.Shared.EntityEffects.EffectConditions;
-using Content.Shared.EntityEffects.Effects;
+using Content.Shared.EntityEffects.NewEffects;
+using Content.Shared.EntityEffects.NewEffects.Body;
 using Content.Shared.Mobs.Systems;
 using JetBrains.Annotations;
 using Robust.Shared.Prototypes;
@@ -342,15 +342,18 @@ public sealed class RespiratorSystem : EntitySystem
         // TODO generalize condition checks
         // this is pretty janky, but I just want to bodge a method that checks if an entity can breathe a gas mixture
         // Applying actual reaction effects require a full ReagentEffectArgs struct.
-        bool CanMetabolize(EntityEffect effect)
+        bool CanMetabolize(AnyEntityEffect effect)
         {
             if (effect.Conditions == null)
                 return true;
 
             foreach (var cond in effect.Conditions)
             {
+                // TODO: CONDITIONS
+                /*
                 if (cond is OrganType organ && !_entityEffect.OrganCondition(organ, lung))
                     return false;
+                    */
             }
 
             return true;

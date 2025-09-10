@@ -8,6 +8,11 @@
   color: "#848789"
   boilingPoint: 2327.0
   meltingPoint: 660.0
+  newReactiveEffects:
+    Extinguish:
+      methods: [ Touch ]
+      effects:
+      - !type:ExtinguishEffectArgs
 
 - type: reagent
   id: Carbon
@@ -42,10 +47,7 @@
   metabolisms:
     Poison:
       effects:
-      - !type:HealthChange
-        damage:
-          types:
-            Poison: 2
+      - !type:ExtinguishEffectArgs
 
 - type: reagent
   id: Copper

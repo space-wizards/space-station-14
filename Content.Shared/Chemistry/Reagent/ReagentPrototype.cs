@@ -233,7 +233,7 @@ namespace Content.Shared.Chemistry.Reagent
         {
             ReagentPrototype = proto.ID;
             GuideEntries = proto.Metabolisms?
-                .Select(x => (x.Key, x.Value.MakeGuideEntry(prototype, entSys)))
+                .Select(x => (x.Key, x.Value.MakeGuideEntry()))
                 .ToDictionary(x => x.Key, x => x.Item2);
             if (proto.PlantMetabolisms.Count > 0)
             {
@@ -262,13 +262,13 @@ namespace Content.Shared.Chemistry.Reagent
         /// </summary>
         [JsonPropertyName("effects")]
         [DataField("effects", required: true)]
-        public EntityEffect[] Effects = default!;
+        public AnyEntityEffect[] Effects = default!;
 
-        public ReagentEffectsGuideEntry MakeGuideEntry(IPrototypeManager prototype, IEntitySystemManager entSys)
+        public ReagentEffectsGuideEntry MakeGuideEntry()
         {
             return new ReagentEffectsGuideEntry(MetabolismRate,
                 Effects
-                    .Select(x => x.GuidebookEffectDescription(prototype, entSys)) // hate.
+                    .Select(x => x.GuidebookEffectDescription()) // hate.
                     .Where(x => x is not null)
                     .Select(x => x!)
                     .ToArray());
@@ -296,6 +296,6 @@ namespace Content.Shared.Chemistry.Reagent
         public HashSet<ReactionMethod> Methods = default!;
 
         [DataField("effects", required: true)]
-        public EntityEffect[] Effects = default!;
+        public AnyEntityEffect[] Effects = default!;
     }
 }

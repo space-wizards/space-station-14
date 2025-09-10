@@ -3,7 +3,8 @@ using System.Diagnostics.CodeAnalysis;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Components.SolutionManager;
 using Content.Shared.Chemistry.Reagent;
-using Content.Shared.EntityEffects.Effects;
+using Content.Shared.EntityEffects.NewEffects;
+using Content.Shared.EntityEffects.NewEffects.Body;
 using Content.Shared.FixedPoint;
 using Content.Shared.Inventory;
 using Content.Shared.Nutrition.Components;
@@ -226,7 +227,7 @@ public sealed partial class IngestionSystem
                 foreach (var effect in entry.Effects)
                 {
                     // ignores any effect conditions, just cares about how much it can hydrate
-                    if (effect is SatiateHunger hunger)
+                    if (effect is SatiateHungerEffect hunger)
                     {
                         total += hunger.NutritionFactor * quantity.Quantity.Float();
                     }
@@ -277,7 +278,7 @@ public sealed partial class IngestionSystem
                 foreach (var effect in entry.Effects)
                 {
                     // ignores any effect conditions, just cares about how much it can hydrate
-                    if (effect is SatiateThirst thirst)
+                    if (effect is SatiateThirstEffect thirst)
                     {
                         total += thirst.HydrationFactor * quantity.Quantity.Float();
                     }

@@ -1,0 +1,142 @@
+﻿using System.Linq;
+using Content.Shared.Chemistry;
+using Content.Shared.Chemistry.Reaction;
+using Content.Shared.Database;
+using Content.Shared.Localizations;
+
+namespace Content.Shared.EntityEffects;
+
+/// <summary>
+/// This handles entity effects.
+/// Specifically it handles the receiving of events for causing entity effects, and provides
+/// public API for other systems to take advantage of entity effects.
+/// </summary>
+public sealed partial class SharedEntityEffectsSystem : EntitySystem, IEntityEffectRaiser
+{
+    public override void Initialize()
+    {
+        SubscribeLocalEvent<ReactiveComponent, ReactionEntityEvent>(OnReactive);
+    }
+
+    private void OnReactive(Entity<ReactiveComponent> entity, ref ReactionEntityEvent args)
+    {
+        if (args.Reagent.ReactiveEffects != null && entity.Comp.ReactiveGroups != null)
+        {
+            foreach (var (key, val) in args.Reagent.ReactiveEffects)
+            {
+                if (!val.Methods.Contains(args.Method))
+                    continue;
+
+                if (!entity.Comp.ReactiveGroups.TryGetValue(key, out var group))
+                    continue;
+
+                if (!group.Contains(args.Method))
+                    continue;
+
+                foreach (var effect in val.Effects)
+                {
+                    effect.RaiseEvent(entity, this);
+                }
+            }
+        }
+    }
+
+    public void RaiseEffectEvent<T>(EntityUid target, T effect) where T : EntityEffectBase<T>
+    {
+        var effectEv = new EntityEffectEvent<T>(effect);
+        RaiseLocalEvent(target, ref effectEv);
+    }
+}
+
+/// <summary>
+/// This is a basic abstract entity effect containing all the data an entity effect needs to affect entities with effects...
+/// </summary>
+/// <typeparam name="T">The Component that is required for the effect</typeparam>
+/// <typeparam name="TEffect">The Entity Effect itself</typeparam>
+public abstract partial class EntityEffectSystem<T, TEffect> : EntitySystem where T : Component where TEffect : EntityEffectBase<TEffect>
+{
+    /// <inheritdoc/>
+    public override void Initialize()
+    {
+        SubscribeLocalEvent<T, EntityEffectEvent<TEffect>>(Effect);
+    }
+    protected abstract void Effect(Entity<T> entity, ref EntityEffectEvent<TEffect> args);
+
+    public string? GuidebookEffectDescription(TEffect effect)
+    {
+        if (effect.EntityEffectGuidebookText is null)
+            return null;
+
+        return Loc.GetString(
+            effect.EntityEffectFormat,
+            ("effect", effect),
+            ("chance", effect.Probability),
+            ("conditionCount", effect.Conditions?.Length ?? 0),
+            ("conditions",
+                ContentLocalizationManager.FormatList(
+                    effect.Conditions?.Select(x => x.EntityConditionGuidebookText).ToList() ?? new List<string>()
+                    )));
+    }
+}
+
+public interface IEntityEffectRaiser
+{
+    void RaiseEffectEvent<T>(EntityUid target, T effect) where T : EntityEffectBase<T>;
+}
+
+public abstract partial class EntityEffectBase<T> : AnyEntityEffect where T : EntityEffectBase<T>
+{
+    public override void RaiseEvent(EntityUid target, IEntityEffectRaiser raiser)
+    {
+        if (this is not T type)
+            return;
+
+        raiser.RaiseEffectEvent(target, type);
+    }
+}
+
+// This exists so we can store entity effects in list and raise events without type erasure.
+public abstract partial class AnyEntityEffect
+{
+    public abstract void RaiseEvent(EntityUid target, IEntityEffectRaiser raiser);
+
+    [DataField]
+    public AnyEntityCondition[]? Conditions;
+
+    [DataField]
+    public float Probability = 1.0f;
+
+    [DataField]
+    public readonly string EntityEffectFormat = "guidebook-reagent-effect-description";
+
+    [DataField]
+    public readonly string? EntityEffectGuidebookText;
+
+    public string? GuidebookEffectDescription()
+    {
+        if (EntityEffectGuidebookText is null)
+            return null;
+
+        return Loc.GetString(
+            EntityEffectFormat,
+            ("effect", this),
+            ("chance", Probability),
+            ("conditionCount", Conditions?.Length ?? 0),
+            ("conditions",
+                ContentLocalizationManager.FormatList(
+                    Conditions?.Select(x => x.EntityConditionGuidebookText).ToList() ?? new List<string>()
+                )));
+    }
+
+    public virtual bool ShouldLog { get; private set; } = true;
+
+    public virtual LogImpact LogImpact { get; private set; } = LogImpact.Low;
+}
+
+/// <summary>
+/// An Event carrying an entity effect.
+/// </summary>
+/// <param name="Effect">The Effect</param>
+/// <param name="Scale">A strength scalar for the effect, defaults to 1 and typically only goes under for incomplete reactions.</param>
+[ByRefEvent]
+public readonly record struct EntityEffectEvent<T>(T Effect, float Scale = 1f) where T : EntityEffectBase<T>;

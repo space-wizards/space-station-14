@@ -24,6 +24,7 @@ public sealed class ReagentGuideRegistryChangedEvent : EntityEventArgs
 {
     public ReagentGuideChangeset Changeset;
 
+    // TODO: THIS EVENT SENDS REAGENT GUIDEBOOK DATA FROM SERVER TO CLIENT WE WILL NEED TO EDIT EVERYTHING THAT USES THIS!!!
     public ReagentGuideRegistryChangedEvent(ReagentGuideChangeset changeset)
     {
         Changeset = changeset;

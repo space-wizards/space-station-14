@@ -139,7 +139,8 @@ namespace Content.Server.Body.Systems
             _random.Shuffle(list);
 
             int reagents = 0;
-            foreach (var (reagent, quantity) in list)
+            // TODO: FIX THIS
+            /*foreach (var (reagent, quantity) in list)
             {
                 if (!_prototypeManager.TryIndex<ReagentPrototype>(reagent.Prototype, out var proto))
                     continue;
@@ -218,7 +219,7 @@ namespace Content.Server.Body.Systems
                     // We have processed a reagant, so count it towards the cap
                     reagents += 1;
                 }
-            }
+            }*/
 
             _solutionContainerSystem.UpdateChemicals(soln.Value);
         }
