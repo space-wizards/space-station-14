@@ -25,6 +25,37 @@
           amount: 20
 
 - type: entity
+  id: BoxFolderCyborgClipboard
+  parent: BoxFolderClipboard
+  categories: [ HideSpawnMenu ]
+  name: Cyborg clipboard
+  description: A clipboard mounted to a cyborg's chassis.
+  components:
+    - type: Sprite
+      sprite: _Starlight/Objects/Misc/borg-clipboard.rsi
+      layers:
+        - state: clipboard
+        - state: clipboard_paper
+          map: ["clipboard_paper"]
+          visible: false
+        - state: clipboard_pen
+          map: ["clipboard_pen"]
+          visible: false
+        - state: clipboard_over
+    - type: Item
+      sprite: _Starlight/Objects/Misc/borg-clipboard.rsi
+    - type: Storage
+      grid:
+      - 0,0,5,2
+      whitelist:
+        tags:
+        - Document
+    - type: StorageFill
+      contents:
+        - id: Paper
+          amount: 6
+
+- type: entity
   id: BoxFolderHoPClipboard
   parent: [BoxFolderClipboard, BaseGrandTheftContraband]
   name: Bureaucratic Digi-Board
