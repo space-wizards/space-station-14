@@ -130,13 +130,6 @@
               Poison: -0.5
         - !type:HealthChange
           conditions:
-          - !type:TotalDamage
-            max: 50
-          damage:
-            types:
-              Cellular: 0.75
-        - !type:HealthChange
-          conditions:
           - !type:ReagentThreshold
             min: 11
           damage:
