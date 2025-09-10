@@ -538,7 +538,7 @@ public abstract partial class SharedStationAiSystem : EntitySystem
         ClearEye(ent);
     }
 
-    private void UpdateAppearance(Entity<StationAiHolderComponent?> entity)
+    protected void UpdateAppearance(Entity<StationAiHolderComponent?> entity)
     {
         if (!Resolve(entity.Owner, ref entity.Comp, false))
             return;

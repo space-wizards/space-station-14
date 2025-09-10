@@ -54,6 +54,7 @@ public sealed class StationAiSystem : SharedStationAiSystem
     [Dependency] private readonly StationJobsSystem _stationJobs = default!;
     [Dependency] private readonly IPrototypeManager _proto = default!;
     [Dependency] private readonly MobStateSystem _mobState = default!;
+    [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
 
     private readonly HashSet<Entity<StationAiCoreComponent>> _stationAiCores = new();
 
@@ -320,10 +321,16 @@ public sealed class StationAiSystem : SharedStationAiSystem
 
     private void OnRejuvenate(Entity<StationAiCoreComponent> ent, ref RejuvenateEvent args)
     {
-        if (!TryGetHeld((ent.Owner, ent.Comp), out var held))
-            return;
+        if (TryGetHeld((ent.Owner, ent.Comp), out var held))
+        {
+            _mobState.ChangeMobState(held.Value, MobState.Alive);
+        }
 
-        _mobState.ChangeMobState(held.Value, MobState.Alive);
+        if (TryComp<StationAiHolderComponent>(ent, out var holder))
+        {
+            _appearance.SetData(ent, StationAiVisuals.Broken, false);
+            UpdateAppearance((ent, holder));
+        }
     }
 
     private void OnExpandICChatRecipients(ExpandICChatRecipientsEvent ev)
