@@ -1,6 +1,7 @@
 ﻿using Content.Shared.Item.ItemToggle;
 using Content.Shared.Item.ItemToggle.Components;
 using Content.Shared.ProximityDetection.Components;
+using Robust.Shared.GameStates;
 using Robust.Shared.Timing;
 
 namespace Content.Shared.ProximityDetection.Systems;
@@ -12,6 +13,7 @@ public sealed class ProximityDetectionSystem : EntitySystem
 {
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly ItemToggleSystem _toggle = default!;
+    [Dependency] private readonly SharedPvsOverrideSystem _pvsOverride = default!;
 
     private EntityQuery<TransformComponent> _xformQuery;
 
@@ -68,17 +70,17 @@ public sealed class ProximityDetectionSystem : EntitySystem
         if (component.Target == null)
             return;
 
-        component.Distance = float.PositiveInfinity;
-        DirtyField(ent, component, nameof(ProximityDetectorComponent.Distance));
+        OnNewTarget(ent, null);
 
         component.Target = null;
-        DirtyField(ent, component, nameof(ProximityDetectorComponent.Target));
-
-        var updatedEv = new ProximityTargetUpdatedEvent(component.Distance, ent);
-        RaiseLocalEvent(ent, ref updatedEv);
+        component.Distance = float.PositiveInfinity;
+        DirtyFields(ent, component, null, nameof(ProximityDetectorComponent.Target), nameof(ProximityDetectorComponent.Distance));
 
         var newTargetEv = new NewProximityTargetEvent(component.Distance, ent);
         RaiseLocalEvent(ent, ref newTargetEv);
+
+        var updatedEv = new ProximityTargetUpdatedEvent(component.Distance, ent);
+        RaiseLocalEvent(ent, ref updatedEv);
     }
 
     private void UpdateTarget(Entity<ProximityDetectorComponent> detector)
@@ -115,25 +117,33 @@ public sealed class ProximityDetectionSystem : EntitySystem
             closestUid = uid;
         }
 
-        var newDistance = component.Distance != closestDistance;
-        var newTarget = component.Target != closestUid;
-
-        if (newDistance)
+        if (component.Target != closestUid)
         {
-            var updatedEv = new ProximityTargetUpdatedEvent(closestDistance, detector, closestUid);
-            RaiseLocalEvent(detector, ref updatedEv);
-
-            component.Distance = closestDistance;
-            DirtyField(detector, component, nameof(ProximityDetectorComponent.Distance));
-        }
-
-        if (newTarget)
-        {
-            var newTargetEv = new NewProximityTargetEvent(closestDistance, detector, closestUid);
-            RaiseLocalEvent(detector, ref newTargetEv);
+            OnNewTarget(detector, closestUid);
 
             component.Target = closestUid;
             DirtyField(detector, component, nameof(ProximityDetectorComponent.Target));
+
+            var newTargetEv = new NewProximityTargetEvent(closestDistance, detector, closestUid);
+            RaiseLocalEvent(detector, ref newTargetEv);
         }
+
+        if (component.Distance != closestDistance)
+        {
+            component.Distance = closestDistance;
+            DirtyField(detector, component, nameof(ProximityDetectorComponent.Distance));
+
+            var updatedEv = new ProximityTargetUpdatedEvent(closestDistance, detector, closestUid);
+            RaiseLocalEvent(detector, ref updatedEv);
+        }
+    }
+
+    private void OnNewTarget(Entity<ProximityDetectorComponent> ent, EntityUid? newTarget)
+    {
+        if (ent.Comp.Target.HasValue)
+            _pvsOverride.RemoveGlobalOverride(ent.Comp.Target.Value);
+
+        if (newTarget.HasValue)
+            _pvsOverride.AddGlobalOverride(newTarget.Value);
     }
 }

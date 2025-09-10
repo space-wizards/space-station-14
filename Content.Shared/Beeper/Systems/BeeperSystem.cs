@@ -28,8 +28,11 @@ public sealed class BeeperSystem : EntitySystem
     {
         SetIntervalScaling((ent, ent.Comp), ent.Comp.IntervalScaling);
 
-        ent.Comp.NextBeep = _timing.CurTime + ent.Comp.Interval;
-        DirtyField(ent, ent.Comp, nameof(ent.Comp.NextBeep));
+        if (!ent.Comp.IsMuted)
+        {
+            ent.Comp.NextBeep = _timing.CurTime + ent.Comp.Interval;
+            DirtyField(ent, ent.Comp, nameof(ent.Comp.NextBeep));
+        }
     }
 
     public override void Update(float frameTime)
@@ -38,7 +41,7 @@ public sealed class BeeperSystem : EntitySystem
 
         while (query.MoveNext(out var uid, out var beeper))
         {
-            if (beeper.NextBeep > _timing.CurTime)
+            if (beeper.IsMuted || beeper.NextBeep > _timing.CurTime)
                 continue;
 
             beeper.NextBeep += beeper.Interval;
@@ -50,9 +53,7 @@ public sealed class BeeperSystem : EntitySystem
             var beepEvent = new BeepPlayedEvent(beeper.IsMuted);
             RaiseLocalEvent(uid, ref beepEvent);
 
-            // PlayPredicted will make both client and server play the sound.
-            if (!beeper.IsMuted && _net.IsServer)
-                _audio.PlayPvs(beeper.BeepSound, uid);
+            _audio.PlayLocal(beeper.BeepSound, uid, null);
         }
     }
 
@@ -79,8 +80,14 @@ public sealed class BeeperSystem : EntitySystem
     /// </summary>
     public void SetMute(Entity<BeeperComponent?> ent, bool isMuted)
     {
-        if (!Resolve(ent, ref ent.Comp))
+        if (!Resolve(ent, ref ent.Comp) || ent.Comp.IsMuted == isMuted)
             return;
+
+        if (!isMuted)
+        {
+            ent.Comp.NextBeep = _timing.CurTime + ent.Comp.Interval;
+            DirtyField(ent, ent.Comp, nameof(ent.Comp.NextBeep));
+        }
 
         ent.Comp.IsMuted = isMuted;
         DirtyField(ent, ent.Comp, nameof(ent.Comp.IsMuted));
