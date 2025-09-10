@@ -13674,5 +13674,12 @@ Entries:
   id: 157201
   time: '2025-09-10T02:48:38.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/1572
+- author: Happyrobot33
+  changes:
+  - message: Added Gamerule cooldowns for votes.
+    type: Add
+  id: 101600
+  time: '2025-09-10T03:38:23.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1016
 Order: -1
 
