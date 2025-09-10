@@ -145,7 +145,7 @@ namespace Content.Shared.VendingMachines
         /// in cases where the default (machine prototype's name) is not desired.
         /// </summary>
         [DataField]
-        public string? CustomWindowTitle;
+        public LocId? CustomWindowTitle;
 
         /// <summary>
         /// RSI state for when the vending machine is unpowered.

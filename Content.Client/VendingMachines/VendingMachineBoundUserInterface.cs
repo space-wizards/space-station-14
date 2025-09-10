@@ -26,7 +26,7 @@ namespace Content.Client.VendingMachines
             _menu = this.CreateWindowCenteredLeft<VendingMachineMenu>();
             if (EntMan.TryGetComponent(Owner, out VendingMachineComponent? bendy) && bendy.CustomWindowTitle != null)
             {
-                _menu.Title = bendy.CustomWindowTitle;
+                _menu.Title = Loc.GetString(bendy.CustomWindowTitle);
             }
             else
             {

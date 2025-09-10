@@ -790,7 +790,7 @@
   description: A kitchen and restaurant equipment vendor.
   components:
   - type: VendingMachine
-    customWindowTitle: Plasteel Chef Dinnerware
+    customWindowTitle: dinnerware-vendor-custom-window-title
     pack: DinnerwareInventory
     offState: off
     brokenState: broken

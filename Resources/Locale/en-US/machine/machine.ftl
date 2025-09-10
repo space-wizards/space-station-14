@@ -19,4 +19,6 @@ two-way-lever-cant = can't push the lever that way!
 
 recycler-count-items = Recycled {$items} objects.
 
+dinnerware-vendor-custom-window-title = Plasteel Chef Dinnerware
+
 machine-already-in-use = {CAPITALIZE(THE($machine))} is already in use.
