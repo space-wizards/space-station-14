@@ -12,6 +12,7 @@ using Content.Server.Preferences.Managers;
 using Content.Server.Roles;
 using Content.Server.Roles.Jobs;
 using Content.Server.Shuttles.Components;
+using Content.Server.Shuttles.Systems;
 using Content.Server.Station.Events;
 using Content.Shared.Administration.Logs;
 using Content.Shared.Antag;
@@ -51,6 +52,7 @@ public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelection
     [Dependency] private readonly TransformSystem _transform = default!;
     [Dependency] private readonly EntityWhitelistSystem _whitelist = default!;
     [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
+    [Dependency] private readonly ArrivalsSystem _arrivals = default!;
 
     // arbitrary random number to give late joining some mild interest.
     public const float LateJoinRandomChance = 0.5f;
@@ -576,8 +578,7 @@ public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelection
         if (entity == null)
             return true;
 
-        // If this component was stopped this tick, that's ok, we're probably doing a late join antag from arrivals.
-        if (TryComp<PendingClockInComponent>(entity, out var clockInComp) && clockInComp.LifeStage < ComponentLifeStage.Stopped)
+        if (_arrivals.IsOnArrivals((entity.Value, null)))
             return false;
 
         if (!def.AllowNonHumans && !HasComp<HumanoidAppearanceComponent>(entity))

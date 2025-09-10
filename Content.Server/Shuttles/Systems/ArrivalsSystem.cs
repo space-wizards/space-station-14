@@ -448,6 +448,26 @@ public sealed class ArrivalsSystem : EntitySystem
         return false;
     }
 
+    /// <summary>
+    /// Check if an entity is on the arrivals grid
+    /// </summary>
+    /// <param name="entity">Entity to check</param>
+    /// <returns>True if the entity is on the arrivals grid. Returns false if no arrivals grid.</returns>
+    public bool IsOnArrivals(Entity<TransformComponent?> entity)
+    {
+        if (!Resolve(entity, ref entity.Comp))
+            return false;
+
+        if(!TryGetArrivals(out var arrivals))
+            return false;
+
+        var arrivalsGridUid = Transform(arrivals).GridUid;
+        if (!arrivalsGridUid.HasValue)
+            return false;
+
+        return entity.Comp.GridUid == Transform(arrivals).GridUid;
+    }
+
     public TimeSpan? NextShuttleArrival()
     {
         var query = EntityQueryEnumerator<ArrivalsShuttleComponent>();
