@@ -16,8 +16,8 @@ using Content.Shared.Damage;
 using Content.Shared.Destructible;
 using Content.Shared.DeviceNetwork.Components;
 using Content.Shared.DoAfter;
-using Content.Shared.Ghost;
 using Content.Shared.Popups;
+using Content.Shared.Power.Components;
 using Content.Shared.Roles;
 using Content.Shared.Silicons.StationAi;
 using Content.Shared.Speech.Components;
@@ -52,8 +52,11 @@ public sealed class StationAiSystem : SharedStationAiSystem
     [Dependency] private readonly IPrototypeManager _proto = default!;
 
     private readonly HashSet<Entity<StationAiCoreComponent>> _stationAiCores = new();
+
     private readonly ProtoId<ChatNotificationPrototype> _turretIsAttackingChatNotificationPrototype = "TurretIsAttacking";
     private readonly ProtoId<ChatNotificationPrototype> _aiWireSnippedChatNotificationPrototype = "AiWireSnipped";
+    private readonly ProtoId<ChatNotificationPrototype> _aiLosingPowerChatNotificationPrototype = "AiLosingPower";
+    private readonly ProtoId<ChatNotificationPrototype> _aiCriticalPowerChatNotificationPrototype = "AiCriticalPower";
 
     private readonly ProtoId<JobPrototype> _stationAiJob = "StationAi";
     private readonly EntProtoId _stationAiBrain = "StationAiBrain";
@@ -67,6 +70,7 @@ public sealed class StationAiSystem : SharedStationAiSystem
 
         SubscribeLocalEvent<StationAiCoreComponent, AfterConstructionChangeEntityEvent>(AfterConstructionChangeEntity);
         SubscribeLocalEvent<StationAiCoreComponent, ContainerSpawnEvent>(OnContainerSpawn);
+        SubscribeLocalEvent<StationAiCoreComponent, ApcPowerReceiverBatteryChangedEvent>(OnApcBatteryChanged);
         SubscribeLocalEvent<StationAiCoreComponent, ChargeChangedEvent>(OnChargeChanged);
         SubscribeLocalEvent<StationAiCoreComponent, DamageChangedEvent>(OnDamageChanged);
         SubscribeLocalEvent<StationAiCoreComponent, DestructionEventArgs>(OnDestruction);
@@ -161,6 +165,18 @@ public sealed class StationAiSystem : SharedStationAiSystem
         _stationJobs.TryAdjustJobSlot(station.Value, _stationAiJob, -1, false, true);
     }
 
+    private void OnApcBatteryChanged(Entity<StationAiCoreComponent> ent, ref ApcPowerReceiverBatteryChangedEvent args)
+    {
+        if (!args.Enabled)
+            return;
+
+        if (!TryGetHeld((ent.Owner, ent.Comp), out var held))
+            return;
+
+        var ev = new ChatNotificationEvent(_aiLosingPowerChatNotificationPrototype, ent);
+        RaiseLocalEvent(held.Value, ref ev);
+    }
+
     private void OnChargeChanged(Entity<StationAiCoreComponent> entity, ref ChargeChangedEvent args)
     {
         UpdateBatteryAlert(entity);
@@ -208,6 +224,14 @@ public sealed class StationAiSystem : SharedStationAiSystem
         var chargeLevel = Math.Round(chargePercent * proto.MaxSeverity);
 
         _alerts.ShowAlert(held.Value, _batteryAlert, (short)Math.Clamp(chargeLevel, 0, proto.MaxSeverity));
+
+        if (TryComp<ApcPowerReceiverBatteryComponent>(ent, out var apcBattery) &&
+            apcBattery.Enabled &&
+            chargePercent < 0.2)
+        {
+            var ev = new ChatNotificationEvent(_aiCriticalPowerChatNotificationPrototype, ent);
+            RaiseLocalEvent(held.Value, ref ev);
+        }
     }
 
     private void UpdateCoreIntegrityAlert(Entity<StationAiCoreComponent> ent)
@@ -256,15 +280,11 @@ public sealed class StationAiSystem : SharedStationAiSystem
         if (TryGetHeld((ent.Owner, ent.Comp), out var held) &&
             _mind.TryGetMind(held.Value, out var mindId, out var mind))
         {
-            // Ghost the player immediately
             _ghost.OnGhostAttempt(mindId, canReturnGlobal: true, mind: mind);
-
-            // Don't allow the player to manually return to their body
-            if (TryComp<GhostComponent>(mind.VisitingEntity, out var ghost))
-            {
-                _ghost.SetCanReturnToBody((mind.VisitingEntity.Value, ghost), false);
-            }
+            RemComp<StationAiOverlayComponent>(held.Value);
         }
+
+        ClearEye(ent);
     }
 
     private void OnExpandICChatRecipients(ExpandICChatRecipientsEvent ev)

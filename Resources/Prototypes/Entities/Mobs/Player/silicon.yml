@@ -239,7 +239,7 @@
   - type: ExtensionCableReceiver
   - type: Battery
     maxCharge: 300000
-    startingCharge: 0
+    startingCharge: 300000
   - type: ApcPowerReceiverBattery
     idleLoad: 500
     batteryRechargeRate: 1000
@@ -403,8 +403,6 @@
   - type: Sprite
     # Once it's in a core it's pretty much an abstract entity at that point.
     visible: false
-  - type: BlockMovement
-    blockInteraction: false
   - type: SiliconLawProvider
     laws: Crewsimov
   - type: SiliconLawBound
@@ -426,6 +424,10 @@
     drawFov: false
   - type: Examiner
   - type: InputMover
+  - type: BlockMovement
+    blockInteraction: false
+  - type: GhostOnMove
+    mustBeDead: true
   - type: Speech
     speechVerb: Robotic
     speechSounds: Borg

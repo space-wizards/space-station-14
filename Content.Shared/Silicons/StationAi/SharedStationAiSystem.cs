@@ -349,12 +349,7 @@ public abstract partial class SharedStationAiSystem : EntitySystem
 
     private void OnCorePower(Entity<StationAiCoreComponent> ent, ref PowerChangedEvent args)
     {
-        if (args.Powered)
-        {
-            if (SetupEye(ent))
-                AttachEye(ent);
-        }
-        else
+        if (!args.Powered)
         {
             KillHeldAi(ent);
         }
@@ -446,13 +441,21 @@ public abstract partial class SharedStationAiSystem : EntitySystem
         return true;
     }
 
-    private void ClearEye(Entity<StationAiCoreComponent> ent)
+    protected void ClearEye(Entity<StationAiCoreComponent> ent)
     {
         if (_net.IsClient)
             return;
 
         QueueDel(ent.Comp.RemoteEntity);
         ent.Comp.RemoteEntity = null;
+        Dirty(ent);
+
+        if (TryGetHeld((ent, ent.Comp), out var held) &&
+            TryComp(held, out EyeComponent? eyeComp))
+        {
+            _eye.SetDrawFov(held.Value, true, eyeComp);
+            _eye.SetTarget(held.Value, null, eyeComp);
+        }
     }
 
     private void AttachEye(Entity<StationAiCoreComponent> ent)
