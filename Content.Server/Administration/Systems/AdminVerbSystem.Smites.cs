@@ -957,7 +957,7 @@ public sealed partial class AdminVerbSystem
             {
                 var speed = 25f; // It don't miss brother.
                 var distance = 350f;
-                HomingLaunchSequence(args.Target, "ImmovableRodKeepTiles", distance, speed);
+                HomingLaunchSequence(args.Target, "ImmovableRodKeepTiles", distance, speed); // todo: swap the proto for an EntityTable GetSpawns once rod rule rework
             },
             Impact = LogImpact.Extreme,
             Message = string.Join(": ", homingRodName, Loc.GetString("admin-smite-homing-rod-description"))
