@@ -19,7 +19,7 @@ public sealed partial class ChangelingTransformBoundUserInterface(EntityUid owne
         base.Open();
 
         _menu = this.CreateWindow<SimpleRadialMenu>();
-
+        Update();
         _menu.OpenOverMouseScreenPosition();
     }
 
