@@ -222,7 +222,7 @@ public sealed partial class GuideReagentEmbed : BoxContainer, IDocumentTag, ISea
             }
             // Other contraband text
             else if (reagent.ContrabandSeverity != null &&
-                     _prototype.TryIndex(reagent.ContrabandSeverity.Value, out var severity))
+                     _prototype.Resolve(reagent.ContrabandSeverity.Value, out var severity))
             {
                 description.PushNewline();
                 description.AddMarkupPermissive(Loc.GetString(severity.ExamineText, ("type", ContrabandItemType.Reagent)));
