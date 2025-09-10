@@ -215,3 +215,6 @@
 
 - type: Tag
   id: PettyCriminalTraitBackground
+
+- type: Tag
+  id: ScanGateMachineBoard

@@ -1,3 +1,33 @@
+# generic modules
+- type: entity
+  id: BorgModuleUppies
+  parent: [ BaseBorgModule, BaseProviderBorgModule ]
+  name: personnel transport cyborg module
+  description: A universal cyborg module which allows the unit to carry small personnel.
+  components:
+  - type: Sprite
+    layers:
+    - state: generic
+    - state: icon-hands
+  - type: ItemBorgModule
+    hands:
+    - hand:
+        emptyRepresentative: MobResomi
+        emptyLabel: borg-slot-uppies-empty
+        whitelist:
+          components:
+          - HumanoidAppearance
+    - hand:
+        emptyRepresentative: MobResomi
+        emptyLabel: borg-slot-uppies-empty
+        whitelist:
+          components:
+          - HumanoidAppearance
+  - type: BorgModuleIcon
+    icon: { sprite: _Starlight/Interface/Actions/actions_borg.rsi, state: hands }
+
+
+# purrfus
 - type: entity
   id: BaseBorgModulePurrfus
   parent: BaseBorgModule
@@ -60,3 +90,4 @@
           - Stamp
   - type: BorgModuleIcon
     icon: { sprite: _Starlight/Interface/Actions/actions_borg.rsi, state: paperwork-module }
+
