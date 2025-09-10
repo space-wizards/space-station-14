@@ -47,6 +47,6 @@
 - type: entity
   categories: [ HideSpawnMenu ]
   id: TranslatorForeigner
-  parent: [ PowerCellSlotHighItem, TranslatorPoweredBase ]
+  parent: [ PowerCellSlotMediumItem, TranslatorPoweredBase ]
   name: foreigner's translator
   description: A special-issue translator that helps foreigner's speak and understand this station's primary language.
