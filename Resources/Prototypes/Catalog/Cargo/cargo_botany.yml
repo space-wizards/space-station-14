@@ -47,3 +47,13 @@
   cost: 750
   category: cargoproduct-category-name-hydroponics
   group: market
+
+- type: cargoProduct
+  id: HydroponicsTray
+  icon:
+    sprite: Structures/Hydroponics/containers.rsi
+    state: hydrotray3
+  product: CrateHydroponicsTray
+  cost: 750
+  category: cargoproduct-category-name-hydroponics
+  group: market

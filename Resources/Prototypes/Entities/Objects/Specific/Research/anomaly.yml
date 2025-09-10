@@ -6,7 +6,26 @@
   components:
   - type: Sprite
     sprite: Objects/Specific/Research/anomalyscanner.rsi
-    state: icon
+    layers:
+      - state: icon
+        map: ["enum.AnomalyScannerVisualLayers.Base"]
+      - map: ["enum.AnomalyScannerVisualLayers.Screen"]
+        visible: false
+        shader: unshaded
+      - state: severity_mask
+        map: ["enum.AnomalyScannerVisualLayers.SeverityMask"]
+        visible: false
+        shader: unshaded
+      - map: ["enum.AnomalyScannerVisualLayers.Stability"]
+        visible: false
+        shader: unshaded
+      - visible: false
+        map: ["enum.AnomalyScannerVisualLayers.Pulse"]
+        shader: unshaded
+      - state: supercritical
+        map: ["enum.AnomalyScannerVisualLayers.Supercritical"]
+        shader: unshaded
+        visible: false
   - type: ActivatableUI
     key: enum.AnomalyScannerUiKey.Key
     requireActiveHand: false
@@ -15,7 +34,35 @@
     interfaces:
       enum.AnomalyScannerUiKey.Key:
         type: AnomalyScannerBoundUserInterface
+  - type: Appearance
+  - type: GenericVisualizer
+    visuals:
+      enum.AnomalyScannerVisuals.HasAnomaly:
+        enum.AnomalyScannerVisualLayers.Screen:
+          True: { visible: true }
+          False: { visible: false }
+        enum.AnomalyScannerVisualLayers.SeverityMask:
+          True: { visible: true }
+          False: { visible: false }
+      enum.AnomalyScannerVisuals.AnomalyStability:
+        enum.AnomalyScannerVisualLayers.Stability:
+          Stable: { visible: false }
+          Decaying: { visible: true, state: decaying }
+          Growing: { visible: true, state: growing }
+      enum.AnomalyScannerVisuals.AnomalyNextPulse:
+        enum.AnomalyScannerVisualLayers.Pulse:
+          0: { visible: false }
+          1: { visible: true, state: timer_1 }
+          2: { visible: true, state: timer_2 }
+          3: { visible: true, state: timer_3 }
+          4: { visible: true, state: timer_4 }
+          5: { visible: true, state: timer_5 }
+      enum.AnomalyScannerVisuals.AnomalyIsSupercritical:
+        enum.AnomalyScannerVisualLayers.Supercritical:
+          True: { visible: true }
+          False: { visible: false }
   - type: AnomalyScanner
+  - type: AnomalyScannerScreen
   - type: GuideHelp
     guides:
     - ScannersAndVessels
@@ -27,7 +74,7 @@
   parent: BaseItem
   name: anomaly locator
   description: A device designed to aid in the locating of anomalies. Did you check the gas miners?
-  suffix: Unpowered
+  suffix: Always Powered
   components:
   - type: Sprite
     sprite: Objects/Specific/Research/anomalylocator.rsi
@@ -36,21 +83,20 @@
       - state: screen
         shader: unshaded
         visible: false
-        map: ["enum.ToggleVisuals.Layer"]
+        map: ["enum.ToggleableVisuals.Layer"]
   - type: Appearance
   - type: GenericVisualizer
     visuals:
-      enum.ToggleVisuals.Toggled:
-        enum.ToggleVisuals.Layer:
+      enum.ToggleableVisuals.Enabled:
+        enum.ToggleableVisuals.Layer:
           True: { visible: true }
           False: { visible: false }
   - type: ItemToggle
   - type: ProximityBeeper
   - type: ProximityDetector
     range: 20
-    criteria:
-      components:
-      - Anomaly
+    components:
+    - type: Anomaly
   - type: Beeper
     isMuted: true
     minBeepInterval: 0.15
@@ -64,7 +110,7 @@
 - type: entity
   id: AnomalyLocator
   parent: [ AnomalyLocatorUnpowered, PowerCellSlotSmallItem ]
-  suffix: Powered
+  suffix: ""
   components:
   - type: PowerCellDraw
     drawRate: 1
@@ -86,7 +132,7 @@
   parent: AnomalyLocatorUnpowered
   name: wide-spectrum anomaly locator
   description: A device that looks for anomalies from an extended distance, but has no way to determine the distance to them.
-  suffix: Unpowered
+  suffix: Always Powered
   components:
   - type: Sprite
     sprite: Objects/Specific/Research/anomalylocatorwide.rsi
@@ -95,10 +141,11 @@
     maxBeepInterval: 0.5
   - type: ProximityDetector
     range: 40
+
 - type: entity
   id: AnomalyLocatorWide
   parent: [ AnomalyLocatorWideUnpowered, PowerCellSlotSmallItem ]
-  suffix: Powered
+  suffix: ""
   components:
   - type: PowerCellDraw
     drawRate: 1
@@ -142,7 +189,6 @@
   - type: CorePoweredThrower
   - type: MeleeThrowOnHit
     unanchorOnHit: true
-    enabled: false
   - type: ItemSlots
     slots:
       core_slot:

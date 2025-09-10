@@ -20,13 +20,12 @@ public sealed class PolymorphCommand : ToolshedCommand
     [CommandImplementation]
     public EntityUid? Polymorph(
             [PipedArgument] EntityUid input,
-            [CommandArgument] ProtoId<PolymorphPrototype> protoId
+            ProtoId<PolymorphPrototype> protoId
         )
     {
         _system ??= GetSys<PolymorphSystem>();
 
-        if (!_proto.TryIndex(protoId, out var prototype))
-            return null;
+        var prototype = _proto.Index(protoId);
 
         return _system.PolymorphEntity(input, prototype.Configuration);
     }
@@ -34,7 +33,7 @@ public sealed class PolymorphCommand : ToolshedCommand
     [CommandImplementation]
     public IEnumerable<EntityUid> Polymorph(
             [PipedArgument] IEnumerable<EntityUid> input,
-            [CommandArgument] ProtoId<PolymorphPrototype> protoId
+            ProtoId<PolymorphPrototype> protoId
         )
         => input.Select(x => Polymorph(x, protoId)).Where(x => x is not null).Select(x => (EntityUid)x!);
 }

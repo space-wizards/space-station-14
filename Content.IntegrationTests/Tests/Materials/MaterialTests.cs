@@ -3,7 +3,6 @@ using Content.Server.Stack;
 using Content.Shared.Stacks;
 using Content.Shared.Materials;
 using Robust.Shared.GameObjects;
-using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
 
 namespace Content.IntegrationTests.Tests.Materials
@@ -24,7 +23,7 @@ namespace Content.IntegrationTests.Tests.Materials
             var server = pair.Server;
             await server.WaitIdleAsync();
 
-            var mapManager = server.ResolveDependency<IMapManager>();
+            var mapSystem = server.System<SharedMapSystem>();
             var prototypeManager = server.ResolveDependency<IPrototypeManager>();
             var entityManager = server.ResolveDependency<IEntityManager>();
 
@@ -59,7 +58,7 @@ namespace Content.IntegrationTests.Tests.Materials
                     }
                 });
 
-                mapManager.DeleteMap(testMap.MapId);
+                mapSystem.DeleteMap(testMap.MapId);
             });
 
             await pair.CleanReturnAsync();

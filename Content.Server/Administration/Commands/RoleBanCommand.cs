@@ -7,6 +7,8 @@ using Content.Shared.Database;
 using Content.Shared.Roles;
 using Robust.Shared.Configuration;
 using Robust.Shared.Console;
+using Robust.Shared.Prototypes;
+
 namespace Content.Server.Administration.Commands;
 
 [AdminCommand(AdminFlags.Ban)]
@@ -15,6 +17,10 @@ public sealed class RoleBanCommand : IConsoleCommand
     [Dependency] private readonly IPlayerLocator _locator = default!;
     [Dependency] private readonly IBanManager _bans = default!;
     [Dependency] private readonly IConfigurationManager _cfg = default!;
+    [Dependency] private readonly ILogManager _log = default!;
+    [Dependency] private readonly IPrototypeManager _proto = default!;
+
+    private ISawmill? _sawmill;
 
     public string Command => "roleban";
     public string Description => Loc.GetString("cmd-roleban-desc");
@@ -28,7 +34,8 @@ public sealed class RoleBanCommand : IConsoleCommand
         uint minutes;
         if (!Enum.TryParse(_cfg.GetCVar(CCVars.RoleBanDefaultSeverity), out NoteSeverity severity))
         {
-            Logger.WarningS("admin.role_ban", "Role ban severity could not be parsed from config! Defaulting to medium.");
+            _sawmill ??= _log.GetSawmill("admin.role_ban");
+            _sawmill.Warning("Role ban severity could not be parsed from config! Defaulting to medium.");
             severity = NoteSeverity.Medium;
         }
 
@@ -74,6 +81,12 @@ public sealed class RoleBanCommand : IConsoleCommand
                 shell.WriteError(Loc.GetString("cmd-roleban-arg-count"));
                 shell.WriteLine(Help);
                 return;
+        }
+
+        if (!_proto.HasIndex<JobPrototype>(job))
+        {
+            shell.WriteError(Loc.GetString("cmd-roleban-job-parse", ("job", job)));
+            return;
         }
 
         var located = await _locator.LookupIdByNameOrIdAsync(target);

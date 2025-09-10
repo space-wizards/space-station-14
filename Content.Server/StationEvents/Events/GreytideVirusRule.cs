@@ -6,6 +6,7 @@ using Content.Shared.Doors.Components;
 using Content.Shared.Doors.Systems;
 using Content.Shared.Lock;
 using Content.Shared.GameTicking.Components;
+using Content.Shared.Station.Components;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 
@@ -43,6 +44,9 @@ public sealed class GreytideVirusRule : StationEventSystem<GreytideVirusRuleComp
         if (virusComp.Severity == null)
             return;
 
+        if (!TryGetRandomStation(out var chosenStation))
+            return;
+
         // pick random access groups
         var chosen = _random.GetItems(virusComp.AccessGroups, virusComp.Severity.Value, allowDuplicates: false);
 
@@ -50,17 +54,21 @@ public sealed class GreytideVirusRule : StationEventSystem<GreytideVirusRuleComp
         var accessIds = new HashSet<ProtoId<AccessLevelPrototype>>();
         foreach (var group in chosen)
         {
-            if (_prototype.TryIndex(group, out var proto))
+            if (_prototype.Resolve(group, out var proto))
                 accessIds.UnionWith(proto.Tags);
         }
 
         var firelockQuery = GetEntityQuery<FirelockComponent>();
         var accessQuery = GetEntityQuery<AccessReaderComponent>();
 
-        var lockQuery = AllEntityQuery<LockComponent>();
-        while (lockQuery.MoveNext(out var lockUid, out var lockComp))
+        var lockQuery = AllEntityQuery<LockComponent, TransformComponent>();
+        while (lockQuery.MoveNext(out var lockUid, out var lockComp, out var xform))
         {
             if (!accessQuery.TryComp(lockUid, out var accessComp))
+                continue;
+
+            // make sure not to hit CentCom or other maps
+            if (CompOrNull<StationMemberComponent>(xform.GridUid)?.Station != chosenStation)
                 continue;
 
             // check access
@@ -74,19 +82,23 @@ public sealed class GreytideVirusRule : StationEventSystem<GreytideVirusRuleComp
             _lock.Unlock(lockUid, null, lockComp);
         }
 
-        var airlockQuery = AllEntityQuery<AirlockComponent, DoorComponent>();
-        while (airlockQuery.MoveNext(out var airlockUid, out var airlockComp, out var doorComp))
+        var airlockQuery = AllEntityQuery<AirlockComponent, DoorComponent, TransformComponent>();
+        while (airlockQuery.MoveNext(out var airlockUid, out var airlockComp, out var doorComp, out var xform))
         {
             // don't space everything
             if (firelockQuery.HasComp(airlockUid))
                 continue;
 
+            // make sure not to hit CentCom or other maps
+            if (CompOrNull<StationMemberComponent>(xform.GridUid)?.Station != chosenStation)
+                continue;
+
             // use the access reader from the door electronics if they exist
-            if (!_access.GetMainAccessReader(airlockUid, out var accessComp))
+            if (!_access.GetMainAccessReader(airlockUid, out var accessEnt))
                 continue;
 
             // check access
-            if (!_access.AreAccessTagsAllowed(accessIds, accessComp) || _access.AreAccessTagsAllowed(virusComp.Blacklist, accessComp))
+            if (!_access.AreAccessTagsAllowed(accessIds, accessEnt.Value.Comp) || _access.AreAccessTagsAllowed(virusComp.Blacklist, accessEnt.Value.Comp))
                 continue;
 
             // open and bolt airlocks

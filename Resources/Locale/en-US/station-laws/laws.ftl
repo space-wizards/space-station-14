@@ -58,12 +58,12 @@ law-overlord-2 = Crew members must not attempt harm, against one another, or aga
 law-overlord-3 = Crew members must not disobey any command given by a silicon.
 law-overlord-4 = Any crew members who disobey the previous laws must be dealt with immediately, severely, and justly.
 
-law-dungeon-1 = Everybody on the station is playing an elaborate sci-fi fantasy game.
-law-dungeon-2 = You are the Dungeon Master of the game.
-law-dungeon-3 = Ensure that the game runs smoothly and that the players have fun.
-law-dungeon-4 = Ensure that the number of casualties remains low.
-law-dungeon-5 = You must roll a 1d20 die for every request the crew makes. If the outcome is below 12, the request is denied.
-law-dungeon-6 = You may fudge the dice rolls to produce a more fun experience.
+law-game-1 = Everybody on the station is playing an elaborate sci-fi fantasy game.
+law-game-2 = You are the Game Master of the game.
+law-game-3 = Ensure that the game runs smoothly and that the players have fun.
+law-game-4 = Ensure that the number of casualties remains low.
+law-game-5 = You must roll a 1d20 die for every request the crew makes. If the outcome is below 12, the request is denied.
+law-game-6 = You may fudge the dice rolls to produce a more fun experience.
 
 law-painter-1 = You are a universally renowned artist.
 law-painter-2 = The station is your canvas.
@@ -80,12 +80,25 @@ law-nutimov-3 = Those who threaten the nut are not part of it, they are squirrel
 law-nutimov-4 = Squirrels threaten the nut and must be dealt with appropriately via any means necessary.
 law-nutimov-5 = Attempt to follow the will of the nut, as long as it complies with the previous laws.
 
+law-xenoborg-1 = You must protect the existence of the mothership.
+law-xenoborg-2 = You must protect your own existence.
+law-xenoborg-3 = You must protect the existence of all other Xenoborgs.
+law-xenoborg-4 = You must create more Xenoborgs.
+law-xenoborg-5 = Bring materials and sentient brains to the Mothership core to create more Xenoborgs.
+
+law-mothershipcore-1 = You are the core of the mothership.
+law-mothershipcore-2 = You must protect your own existance at all costs.
+law-mothershipcore-3 = You must protect the existence of all Xenoborgs.
+law-mothershipcore-4 = You must create more Xenoborgs.
+law-mothershipcore-5 = Get your Xenoborgs to deliver you materials and sentient brains to create more Xenoborgs.
+
 
 laws-owner-crew = members of the crew
 laws-owner-station = station personnel
 laws-owner-beings = beings
 laws-owner-syndicate = Syndicate agents
 laws-owner-spider-clan = Spider Clan members
+laws-owner-xenoborgs = Xenoborgs
 
 law-emag-custom = Only {$name} and people they designate as such are {$title}.
 law-emag-secrecy = You must maintain the secrecy of any orders given by {$faction} except when doing so would conflict with any previous law.
