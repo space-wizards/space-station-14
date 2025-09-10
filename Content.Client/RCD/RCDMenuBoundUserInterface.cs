@@ -142,7 +142,7 @@ public sealed class RCDMenuBoundUserInterface : BoundUserInterface
     {
         string tooltip;
 
-        if (proto.Mode is RcdMode.ConstructTile or RcdMode.ConstructObject
+        if (proto.Mode != RcdMode.ConstructTile && proto.Mode != RcdMode.Deconstruct
             && proto.Prototype != null
             && _prototypeManager.Resolve(proto.Prototype, out var entProto))
         {

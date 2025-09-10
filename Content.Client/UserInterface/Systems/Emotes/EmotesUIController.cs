@@ -39,7 +39,7 @@ public sealed class EmotesUIController : UIController, IOnStateChanged<GameplayS
     {
         CommandBinds.Builder
             .Bind(ContentKeyFunctions.OpenEmotesMenu,
-                InputCmdHandler.FromDelegate(_ => ToggleEmotesMenu(false)))
+                InputCmdHandler.FromDelegate(_ => ToggleEmotesMenu()))
             .Register<EmotesUIController>();
     }
 
@@ -48,7 +48,7 @@ public sealed class EmotesUIController : UIController, IOnStateChanged<GameplayS
         CommandBinds.Unregister<EmotesUIController>();
     }
 
-    private void ToggleEmotesMenu(bool centered)
+    private void ToggleEmotesMenu()
     {
         if (_menu == null)
         {
@@ -67,14 +67,7 @@ public sealed class EmotesUIController : UIController, IOnStateChanged<GameplayS
             if (EmotesButton != null)
                 EmotesButton.SetClickPressed(true);
 
-            if (centered)
-            {
-                _menu.OpenCentered();
-            }
-            else
-            {
-                _menu.OpenOverMouseScreenPosition();
-            }
+            _menu.OpenOverMouseScreenPosition();
         }
         else
         {
@@ -106,7 +99,7 @@ public sealed class EmotesUIController : UIController, IOnStateChanged<GameplayS
 
     private void ActionButtonPressed(BaseButton.ButtonEventArgs args)
     {
-        ToggleEmotesMenu(true);
+        ToggleEmotesMenu();
     }
 
     private void OnWindowClosed()
