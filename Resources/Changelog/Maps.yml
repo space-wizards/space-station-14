@@ -510,4 +510,147 @@
   id: 63
   time: '2025-08-11T15:43:47.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/39331
+- author: Steffo99
+  changes:
+  - message: On many stations, fax machines have slightly more consistent names.
+    type: Tweak
+  id: 64
+  time: '2025-08-17T18:50:57.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/39455
+- author: Nox38, ArtisticRoomba
+  changes:
+  - message: On Packed, added Genpop and revamped security.
+    type: Add
+  - message: On Packed, revamped the north maints area above security.
+    type: Tweak
+  - message: On Packed, revamped Science.
+    type: Tweak
+  id: 65
+  time: '2025-08-17T19:00:49.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38339
+- author: beck-thompson
+  changes:
+  - message: Removed a lot of mapped gear on the nukie planet and replaced it with
+      random spawners.
+    type: Tweak
+  - message: Two new random spawners with loot for the nukie planet
+    type: Add
+  id: 66
+  time: '2025-08-18T04:33:37.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/39090
+- author: beck-thompson
+  changes:
+  - message: Replaced the guaranteed explosives on the infiltrator with a random grenade
+      spawner and ammo bundle.
+    type: Tweak
+  - message: Replaced the guaranteed med spawns on the infiltrator with random med
+      kit spawners.
+    type: Tweak
+  - message: Added a random loot spawner to the infiltrator.
+    type: Add
+  id: 67
+  time: '2025-08-18T18:22:15.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/39091
+- author: M4rchy-S
+  changes:
+  - message: On Marathon, fixed the reagent grinder in perma not having power.
+    type: Fix
+  id: 68
+  time: '2025-08-23T22:48:39.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/39801
+- author: F1restar4
+  changes:
+  - message: On Exo, added an atmospherics network monitor console to atmos' front
+      room
+    type: Add
+  id: 69
+  time: '2025-08-26T08:32:58.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/39330
+- author: Vortebo
+  changes:
+  - message: On Relic, added the prison station.
+    type: Add
+  - message: On Relic, Cargo has been removed, along with the trade station. Botany,
+      the Janitor's closet, and the bar have also been removed.
+    type: Remove
+  - message: On Relic, Atmospherics has been relocated, with accompanying pipe adjustments.
+      The layouts and contents of Engineering, Science, Security, and many individual
+      rooms have been modified. The cargo shuttle is now a prison shuttle. The arrivals
+      shuttle now flies in the correct direction.
+    type: Tweak
+  id: 70
+  time: '2025-08-28T17:40:36.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/39215
+- author: Southbridge
+  changes:
+  - message: On Amber, added a pressure relief valve to the TEG burn chamber.
+    type: Add
+  - message: On Amber, added latejoin spawns to arrivals.
+    type: Tweak
+  id: 71
+  time: '2025-08-29T05:39:23.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/39943
+- author: Southbridge
+  changes:
+  - message: On Marathon, gave the containment area some much needed love.
+    type: Add
+  - message: On Marathon, redesigned the TEG burn chamber in preparation for the atmos
+      pressure update.
+    type: Tweak
+  - message: On Marathon, touched up a couple areas in Atmos and expanded the burn
+      chamber area.
+    type: Tweak
+  id: 72
+  time: '2025-08-29T05:40:38.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/39955
+- author: Southbridge
+  changes:
+  - message: On Box, redesigned the burn chambers to be ready for the atmos pressure
+      update.
+    type: Tweak
+  id: 73
+  time: '2025-08-29T05:42:00.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/39954
+- author: Southbridge
+  changes:
+  - message: On Bagel, ensured there were late join spawners at arrivals
+    type: Add
+  - message: On Bagel, overhauled the TEG so it's a bit more ready for the pressure
+      update
+    type: Tweak
+  id: 74
+- author: ScarKy0
+  changes:
+  - message: On Bagel, added cameras to genpop and engineering.
+    type: Add
+  - message: On Bagel, added AI turrets to the AI core.
+    type: Add
+  id: 75
+  time: '2025-08-30T19:29:13.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/39968
+- author: ScarKy0
+  changes:
+  - message: On Marathon, added ai turrets to the ai core.
+    type: Add
+  - message: On Marathon, added a few more cameras to chapelroid and sec.
+    type: Add
+  id: 76
+  time: '2025-08-30T19:31:36.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/39969
+- author: Southbridge
+  changes:
+  - message: On the Cryptid, Flatline, and Cruiser event shuttles, replaced some static
+      spawns with random ones.
+    type: Tweak
+  id: 77
+  time: '2025-09-01T23:13:52.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/40059
+- author: ArtisticRoomba
+  changes:
+  - message: On Exo, the main atmospherics burn chamber is now made out of reinforced
+      plasma glass instead of resin.
+    type: Fix
+  id: 78
+  time: '2025-09-06T06:02:26.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/40152
 Order: 1

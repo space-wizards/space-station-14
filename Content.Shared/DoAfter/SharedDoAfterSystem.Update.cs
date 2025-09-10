@@ -164,12 +164,11 @@ public abstract partial class SharedDoAfterSystem : EntitySystem
         if (args.Target is { } target && !xformQuery.TryGetComponent(target, out targetXform))
             return true;
 
-        TransformComponent? usedXform = null;
-        if (args.Used is { } @using && !xformQuery.TryGetComponent(@using, out usedXform))
+        if (args.Used is { } @using && !xformQuery.HasComp(@using))
             return true;
 
         // TODO: Re-use existing xform query for these calculations.
-        if (args.BreakOnMove && !(!args.BreakOnWeightlessMove && _gravity.IsWeightless(args.User, xform: userXform)))
+        if (args.BreakOnMove && !(!args.BreakOnWeightlessMove && _gravity.IsWeightless(args.User)))
         {
             // Whether the user has moved too much from their original position.
             if (!_transform.InRange(userXform.Coordinates, doAfter.UserPosition, args.MovementThreshold))
@@ -184,22 +183,22 @@ public abstract partial class SharedDoAfterSystem : EntitySystem
             }
         }
 
-        // Whether the user and the target are too far apart or they are inaccessible.
+        // Whether the user and the target are too far apart.
         if (args.Target != null)
         {
             if (args.DistanceThreshold != null)
             {
-                if (!_interaction.InRangeAndAccessible(args.User, args.Target.Value, args.DistanceThreshold.Value))
+                if (!_interaction.InRangeUnobstructed(args.User, args.Target.Value, args.DistanceThreshold.Value))
                     return true;
             }
         }
 
-        // Whether the distance between the tool and the user has grown too much or they became inaccessible.
+        // Whether the distance between the tool and the user has grown too much.
         if (args.Used != null)
         {
             if (args.DistanceThreshold != null)
             {
-                if (!_interaction.InRangeAndAccessible(args.User,
+                if (!_interaction.InRangeUnobstructed(args.User,
                         args.Used.Value,
                         args.DistanceThreshold.Value))
                     return true;
