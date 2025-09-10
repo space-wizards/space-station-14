@@ -23,6 +23,7 @@ public static class PoolManager
         (CCVars.AdminLogsQueueSendDelay.Name, "0"),
         (CCVars.NPCMaxUpdates.Name,           "999999"),
         (CCVars.GameRoleTimers.Name,          "false"),
+        (CCVars.GameRoleLoadoutTimers.Name,   "false"),
         (CCVars.GameRoleWhitelist.Name,       "false"),
         (CCVars.GridFill.Name,                "false"),
         (CCVars.PreloadGrids.Name,            "false"),
@@ -39,8 +40,8 @@ public static class PoolManager
         (CCVars.MovementMobPushing.Name,      "false"),
         (CCVars.InteractionRateLimitCount.Name, "9999999"),
         (CCVars.InteractionRateLimitPeriod.Name, "0.1"),
+        (CCVars.MovementMobPushing.Name, "false"),
     };
-
 
     /// <summary>
     /// Runs a server, or a client until a condition is true

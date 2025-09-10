@@ -179,6 +179,15 @@
     path: /Audio/Animals/goat_bah.ogg
 
 - type: speechSounds
+  id: Vulpkanin
+  saySound:
+    path: /Audio/Voice/Talk/vulp.ogg
+  askSound:
+    path: /Audio/Voice/Talk/vulp_ask.ogg
+  exclaimSound:
+    path: /Audio/Voice/Talk/vulp_exclaim.ogg
+
+- type: speechSounds
   id: Wawa
   saySound:
     path: /Audio/Animals/wawa_statement.ogg
