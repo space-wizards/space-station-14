@@ -3,6 +3,7 @@ using Content.Shared.Chemistry;
 using Content.Shared.Chemistry.Reaction;
 using Content.Shared.Database;
 using Content.Shared.Localizations;
+using Robust.Shared.Prototypes;
 
 namespace Content.Shared.EntityEffects;
 
@@ -84,6 +85,26 @@ public interface IEntityEffectRaiser
     void RaiseEffectEvent<T>(EntityUid target, T effect) where T : EntityEffectBase<T>;
 }
 
+/// <summary>
+/// Entity effect that specifically deals with new status effects.
+/// </summary>
+/// <typeparam name="T">The entity effect type, typically for status effects which need systems to pass arguments</typeparam>
+public abstract class StatusEntityEffectBase<T> : EntityEffectBase<T> where T : EntityEffectBase<T>
+{
+    /// <summary>
+    /// How long the modifier applies (in seconds).
+    /// Is scaled by reagent amount if used with an EntityEffectReagentArgs.
+    /// </summary>
+    [DataField]
+    public TimeSpan? Duration = TimeSpan.FromSeconds(2);
+
+    /// <summary>
+    /// Should this effect add the status effect, remove time from it, or set its cooldown?
+    /// </summary>
+    [DataField]
+    public StatusEffectMetabolismType Type = StatusEffectMetabolismType.Add;
+}
+
 public abstract partial class EntityEffectBase<T> : AnyEntityEffect where T : EntityEffectBase<T>
 {
     public override void RaiseEvent(EntityUid target, IEntityEffectRaiser raiser)
@@ -128,8 +149,10 @@ public abstract partial class AnyEntityEffect
                 )));
     }
 
+    [DataField]
     public virtual bool ShouldLog { get; private set; } = true;
 
+    [DataField]
     public virtual LogImpact LogImpact { get; private set; } = LogImpact.Low;
 }
 
@@ -140,3 +163,11 @@ public abstract partial class AnyEntityEffect
 /// <param name="Scale">A strength scalar for the effect, defaults to 1 and typically only goes under for incomplete reactions.</param>
 [ByRefEvent]
 public readonly record struct EntityEffectEvent<T>(T Effect, float Scale = 1f) where T : EntityEffectBase<T>;
+
+public enum StatusEffectMetabolismType
+{
+    Refresh,
+    Add,
+    Remove,
+    Set,
+}

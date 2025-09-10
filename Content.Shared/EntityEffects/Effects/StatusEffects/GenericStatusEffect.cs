@@ -66,10 +66,3 @@ public sealed partial class GenericStatusEffect : EntityEffect
         ("time", Time),
         ("key", $"reagent-effect-status-effect-{Key}"));
 }
-
-public enum StatusEffectMetabolismType
-{
-    Add,
-    Remove,
-    Set
-}
