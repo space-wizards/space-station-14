@@ -1,0 +1,6 @@
+- type: roleLoadout
+  id: JobBorg
+  nameDataset: NamesBorg
+  canCustomizeName: true
+  groups:
+  - BorgHead

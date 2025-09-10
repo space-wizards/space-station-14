@@ -21,3 +21,12 @@
     back:
     - PlushieBee
   groupBy: "plushies"
+
+- type: loadout
+  id: PlushieBeeHead
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: PlushieBee
+  equipment:
+    head: PlushieBee
+  groupBy: "plushies"

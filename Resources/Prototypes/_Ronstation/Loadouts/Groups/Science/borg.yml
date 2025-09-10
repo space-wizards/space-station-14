@@ -1,0 +1,17 @@
+- type: loadoutGroup
+  id: BorgHead
+  parent: BaseHead
+  loadouts:
+  - PlushieLizardHead
+  - PlushieSpaceLizardHead
+  - PlushieHumanHead
+  - PlushieMothHead
+  - PlushieVoxHead
+  - PlushieSlimeHead
+  - PlushieDionaHead
+  - PlushieArachindHead
+  - PlushiePenguinHead
+  - PlushieBeeHead
+  - PlushieAtmosianHead
+  - PlushieNukeHead
+  - PlushieHampterHead
