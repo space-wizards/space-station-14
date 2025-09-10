@@ -16,8 +16,11 @@ using Content.Shared.Damage;
 using Content.Shared.Destructible;
 using Content.Shared.DeviceNetwork.Components;
 using Content.Shared.DoAfter;
+using Content.Shared.Mobs;
+using Content.Shared.Mobs.Systems;
 using Content.Shared.Popups;
 using Content.Shared.Power.Components;
+using Content.Shared.Rejuvenate;
 using Content.Shared.Roles;
 using Content.Shared.Silicons.StationAi;
 using Content.Shared.Speech.Components;
@@ -50,6 +53,7 @@ public sealed class StationAiSystem : SharedStationAiSystem
     [Dependency] private readonly StationSystem _station = default!;
     [Dependency] private readonly StationJobsSystem _stationJobs = default!;
     [Dependency] private readonly IPrototypeManager _proto = default!;
+    [Dependency] private readonly MobStateSystem _mobState = default!;
 
     private readonly HashSet<Entity<StationAiCoreComponent>> _stationAiCores = new();
 
@@ -75,6 +79,7 @@ public sealed class StationAiSystem : SharedStationAiSystem
         SubscribeLocalEvent<StationAiCoreComponent, DamageChangedEvent>(OnDamageChanged);
         SubscribeLocalEvent<StationAiCoreComponent, DestructionEventArgs>(OnDestruction);
         SubscribeLocalEvent<StationAiCoreComponent, DoAfterAttemptEvent<IntellicardDoAfterEvent>>(OnDoAfterAttempt);
+        SubscribeLocalEvent<StationAiCoreComponent, RejuvenateEvent>(OnRejuvenate);
 
         SubscribeLocalEvent<ExpandICChatRecipientsEvent>(OnExpandICChatRecipients);
         SubscribeLocalEvent<StationAiTurretComponent, AmmoShotEvent>(OnAmmoShot);
@@ -148,6 +153,32 @@ public sealed class StationAiSystem : SharedStationAiSystem
             accent.OverrideTotalDamage = null;
             accent.DamageAtMaxCorruption = null;
         }
+    }
+
+    protected override void OnMobStateChanged(Entity<StationAiCustomizationComponent> ent, ref MobStateChangedEvent args)
+    {
+        if (args.NewMobState == MobState.Dead)
+        {
+            SetStationAiState(ent, StationAiState.Dead);
+            return;
+        }
+
+        var state = StationAiState.Rebooting;
+
+        if (_mind.TryGetMind(ent, out var _, out var _))
+        {
+            state = StationAiState.Occupied;
+
+            if (TryGetCore(ent, out var aiCore) && aiCore.Comp != null)
+            {
+                var aiCoreEnt = (aiCore.Owner, aiCore.Comp);
+
+                if (SetupEye(aiCoreEnt))
+                    AttachEye(aiCoreEnt);
+            }
+        }
+
+        SetStationAiState(ent, state);
     }
 
     private void OnDestruction(Entity<StationAiCoreComponent> ent, ref DestructionEventArgs args)
@@ -285,6 +316,14 @@ public sealed class StationAiSystem : SharedStationAiSystem
         }
 
         ClearEye(ent);
+    }
+
+    private void OnRejuvenate(Entity<StationAiCoreComponent> ent, ref RejuvenateEvent args)
+    {
+        if (!TryGetHeld((ent.Owner, ent.Comp), out var held))
+            return;
+
+        _mobState.ChangeMobState(held.Value, MobState.Alive);
     }
 
     private void OnExpandICChatRecipients(ExpandICChatRecipientsEvent ev)

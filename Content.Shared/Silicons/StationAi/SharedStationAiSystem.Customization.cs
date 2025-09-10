@@ -74,13 +74,13 @@ public abstract partial class SharedStationAiSystem
         SetStationAiState(ent, state);
     }
 
-    private void OnMobStateChanged(Entity<StationAiCustomizationComponent> ent, ref MobStateChangedEvent args)
+    protected virtual void OnMobStateChanged(Entity<StationAiCustomizationComponent> ent, ref MobStateChangedEvent args)
     {
         var state = (args.NewMobState == MobState.Dead) ? StationAiState.Dead : StationAiState.Rebooting;
         SetStationAiState(ent, state);
     }
 
-    private void SetStationAiState(Entity<StationAiCustomizationComponent> ent, StationAiState state)
+    protected void SetStationAiState(Entity<StationAiCustomizationComponent> ent, StationAiState state)
     {
         if (ent.Comp.State != state)
         {

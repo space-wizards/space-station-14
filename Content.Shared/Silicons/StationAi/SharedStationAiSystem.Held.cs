@@ -101,8 +101,7 @@ public abstract partial class SharedStationAiSystem
     {
         if (!_containers.TryGetContainingContainer(entity, out var container) ||
             container.ID != StationAiCoreComponent.Container ||
-            !TryComp(container.Owner, out StationAiCoreComponent? coreComp) ||
-            coreComp.RemoteEntity == null)
+            !TryComp(container.Owner, out StationAiCoreComponent? coreComp))
         {
             core = (EntityUid.Invalid, null);
             return false;
