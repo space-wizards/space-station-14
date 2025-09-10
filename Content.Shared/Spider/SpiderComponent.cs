@@ -40,9 +40,6 @@ public sealed partial class SpiderComponent : Component
     #region Starlight
 
     [DataField]
-    public bool OnlyOneWebPerTile = true;
-
-    [DataField]
     public bool OneWebSpawn = true;
 
     [DataField]

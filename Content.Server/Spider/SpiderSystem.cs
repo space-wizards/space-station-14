@@ -93,7 +93,7 @@ public sealed class SpiderSystem : SharedSpiderSystem
         var result = false;
 
         // Spawn web in center
-        if (!IsTileBlockedByWeb(coords) && ent.Comp.OnlyOneWebPerTile) // Starlight-edit
+        if (!IsTileBlockedByWeb(coords))
         {
             Spawn(ent.Comp.WebPrototype, coords);
             result = true;
@@ -108,7 +108,7 @@ public sealed class SpiderSystem : SharedSpiderSystem
             var direction = (DirectionFlag)(1 << i);
             var outerSpawnCoordinates = coords.Offset(direction.AsDir().ToVec());
 
-            if (IsTileBlockedByWeb(outerSpawnCoordinates) && ent.Comp.OnlyOneWebPerTile) // Starlight-edit
+            if (IsTileBlockedByWeb(outerSpawnCoordinates))
                 continue;
 
             Spawn(ent.Comp.WebPrototype, outerSpawnCoordinates);
