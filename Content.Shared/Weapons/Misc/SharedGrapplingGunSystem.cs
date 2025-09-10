@@ -40,6 +40,7 @@ public abstract class SharedGrapplingGunSystem : EntitySystem
         SubscribeLocalEvent<CanWeightlessMoveEvent>(OnWeightlessMove);
         SubscribeAllEvent<RequestGrapplingReelMessage>(OnGrapplingReel);
 
+        // TODO: After step trigger refactor, dropping a grappling gun should manually try and activate step triggers it's suppressing.
         SubscribeLocalEvent<GrapplingGunComponent, GunShotEvent>(OnGrapplingShot);
         SubscribeLocalEvent<GrapplingGunComponent, ActivateInWorldEvent>(OnGunActivate);
         SubscribeLocalEvent<GrapplingGunComponent, HandDeselectedEvent>(OnGrapplingDeselected);
@@ -201,6 +202,25 @@ public abstract class SharedGrapplingGunSystem : EntitySystem
                 SetReeling(uid, grappling, false, null);
             }
         }
+    }
+
+    /// <summary>
+    /// Checks whether the entity is hooked to something via grappling gun.
+    /// </summary>
+    /// <param name="entity">Entity to check.</param>
+    /// <returns>True if hooked, false otherwise.</returns>
+    public bool IsEntityHooked(Entity<JointRelayTargetComponent?> entity)
+    {
+        if (!Resolve(entity, ref entity.Comp))
+            return false;
+
+        foreach (var uid in entity.Comp.Relayed)
+        {
+            if (HasComp<GrapplingGunComponent>(uid))
+                return true;
+        }
+
+        return false;
     }
 
     private void OnGrappleCollide(EntityUid uid, GrapplingProjectileComponent component, ref ProjectileEmbedEvent args)

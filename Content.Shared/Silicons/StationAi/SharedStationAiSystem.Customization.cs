@@ -25,7 +25,7 @@ public abstract partial class SharedStationAiSystem
 
     private void OnStationAiCustomization(Entity<StationAiCoreComponent> entity, ref StationAiCustomizationMessage args)
     {
-        if (!_protoManager.TryIndex(args.GroupProtoId, out var groupPrototype) || !_protoManager.TryIndex(args.CustomizationProtoId, out var customizationProto))
+        if (!_protoManager.Resolve(args.GroupProtoId, out var groupPrototype) || !_protoManager.Resolve(args.CustomizationProtoId, out var customizationProto))
             return;
 
         if (!TryGetHeld((entity, entity.Comp), out var held))
@@ -103,7 +103,7 @@ public abstract partial class SharedStationAiSystem
         if (!entity.Comp.ProtoIds.TryGetValue(_stationAiHologramCustomGroupProtoId, out var protoId))
             return;
 
-        if (!_protoManager.TryIndex(protoId, out var prototype))
+        if (!_protoManager.Resolve(protoId, out var prototype))
             return;
 
         if (!prototype.LayerData.TryGetValue(StationAiState.Hologram.ToString(), out var layerData))
@@ -139,7 +139,7 @@ public abstract partial class SharedStationAiSystem
         layerData = null;
 
         if (!entity.Comp.ProtoIds.TryGetValue(_stationAiCoreCustomGroupProtoId, out var protoId) ||
-            !_protoManager.TryIndex(protoId, out var prototype) ||
+           !_protoManager.Resolve(protoId, out var prototype) ||
             prototype.LayerData.Count == 0)
         {
             return false;
