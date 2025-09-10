@@ -12,7 +12,7 @@
   - type: ExpendableLight
     glowDuration: 225
     fadeOutDuration: 15
-    iconStateOn: flare_unlit
+    iconStateLit: flare_unlit
     iconStateSpent: flare_spent
     turnOnBehaviourID: turn_on
     fadeOutBehaviourID: fade_out
@@ -29,14 +29,14 @@
     layers:
       - map: [ enum.ExpendableLightVisualLayers.Base ]
         state: flare_base
+      - map: [ enum.ExpendableLightVisualLayers.Overlay ]
+        state: flare_unlit
+        color: "#FF0000"
       - map: [ enum.ExpendableLightVisualLayers.Glow ]
         state: flare_burn
         color: "#FFFFFF"
         visible: false
         shader: unshaded
-      - map: [ enum.ExpendableLightVisualLayers.Overlay ]
-        state: flare_unlit
-        color: "#FF0000"
   - type: Icon
     sprite: Objects/Misc/flare.rsi
     state: icon
