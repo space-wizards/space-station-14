@@ -55,7 +55,7 @@ public sealed partial class ExpendableLightComponent : Component
     public bool Activated => CurrentState is ExpendableLightState.Lit or ExpendableLightState.Fading;
 
     [DataField, AutoNetworkedField]
-    public float StateExpiryTime;
+    public TimeSpan StateExpiryTime;
 
     [DataField, AutoNetworkedField]
     public ExpendableLightState CurrentState { get; set; }

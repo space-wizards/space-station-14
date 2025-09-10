@@ -11,6 +11,7 @@
   - type: SpaceGarbage
   - type: ExpendableLight
     glowDuration: 225
+    stateExpiryTime: 225
     fadeOutDuration: 15
     iconStateLit: flare_unlit
     iconStateSpent: flare_spent
