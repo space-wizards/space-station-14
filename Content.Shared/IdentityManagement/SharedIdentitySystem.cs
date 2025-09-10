@@ -39,6 +39,11 @@ public abstract class SharedIdentitySystem : EntitySystem
     {
         ent.Comp.Enabled = !args.Mask.Comp.IsToggled;
     }
+
+    /// <summary>
+    /// Queues an identity update to the start of the next tick.
+    /// </summary>
+    public virtual void QueueIdentityUpdate(EntityUid uid) { }
 }
 /// <summary>
 ///     Gets called whenever an entity changes their identity.

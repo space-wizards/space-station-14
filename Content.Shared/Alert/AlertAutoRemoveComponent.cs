@@ -13,5 +13,5 @@ public sealed partial class AlertAutoRemoveComponent : Component
     /// </summary>
     [AutoNetworkedField]
     [DataField]
-    public List<AlertKey> AlertKeys = new();
+    public HashSet<AlertKey> AlertKeys = new();
 }

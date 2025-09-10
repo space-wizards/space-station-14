@@ -28,6 +28,12 @@
           variation: 0.05
   - type: Destructible
     thresholds:
+    - trigger: # Excess damage, don't spawn entities
+        !type:DamageTrigger
+        damage: 50
+      behaviors:
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
     - trigger:
         !type:DamageTrigger
         damage: 10
@@ -89,6 +95,12 @@
           variation: 0.05
   - type: Destructible
     thresholds:
+    - trigger: # Excess damage, don't spawn entities
+        !type:DamageTrigger
+        damage: 100
+      behaviors:
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
     - trigger:
         !type:DamageTrigger
         damage: 50
@@ -158,6 +170,12 @@
         density: 1000
   - type: Destructible
     thresholds:
+    - trigger: # Excess damage, don't spawn entities
+        !type:DamageTrigger
+        damage: 200
+      behaviors:
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
     - trigger:
         !type:DamageTrigger
         damage: 75
@@ -179,6 +197,12 @@
     state: support_wall_broken
   - type: Destructible
     thresholds:
+    - trigger: # Excess damage, don't spawn entities
+        !type:DamageTrigger
+        damage: 100
+      behaviors:
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
     - trigger:
         !type:DamageTrigger
         damage: 50

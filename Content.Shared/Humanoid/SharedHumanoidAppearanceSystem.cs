@@ -11,6 +11,7 @@ using Content.Shared.Inventory;
 using Content.Shared.Preferences;
 using Robust.Shared;
 using Robust.Shared.Configuration;
+using Robust.Shared.Enums;
 using Robust.Shared.GameObjects.Components.Localization;
 using Robust.Shared.Network;
 using Robust.Shared.Player;
@@ -39,9 +40,9 @@ public abstract class SharedHumanoidAppearanceSystem : EntitySystem
     [Dependency] private readonly ISerializationManager _serManager = default!;
     [Dependency] private readonly MarkingManager _markingManager = default!;
     [Dependency] private readonly GrammarSystem _grammarSystem = default!;
+    [Dependency] private readonly SharedIdentitySystem _identity = default!;
 
-    [ValidatePrototypeId<SpeciesPrototype>]
-    public const string DefaultSpecies = "Human";
+    public static readonly ProtoId<SpeciesPrototype> DefaultSpecies = "Human";
 
     public override void Initialize()
     {
@@ -90,7 +91,7 @@ public abstract class SharedHumanoidAppearanceSystem : EntitySystem
         }
 
         if (string.IsNullOrEmpty(humanoid.Initial)
-            || !_proto.TryIndex(humanoid.Initial, out HumanoidProfilePrototype? startingSet))
+            || !_proto.Resolve(humanoid.Initial, out HumanoidProfilePrototype? startingSet))
         {
             LoadProfile(uid, HumanoidCharacterProfile.DefaultWithSpecies(humanoid.Species), humanoid);
             return;
@@ -145,21 +146,18 @@ public abstract class SharedHumanoidAppearanceSystem : EntitySystem
     public void CloneAppearance(EntityUid source, EntityUid target, HumanoidAppearanceComponent? sourceHumanoid = null,
         HumanoidAppearanceComponent? targetHumanoid = null)
     {
-        if (!Resolve(source, ref sourceHumanoid) || !Resolve(target, ref targetHumanoid))
+        if (!Resolve(source, ref sourceHumanoid, false) || !Resolve(target, ref targetHumanoid, false))
             return;
 
         targetHumanoid.Species = sourceHumanoid.Species;
         targetHumanoid.SkinColor = sourceHumanoid.SkinColor;
         targetHumanoid.EyeColor = sourceHumanoid.EyeColor;
         targetHumanoid.Age = sourceHumanoid.Age;
-        SetSex(target, sourceHumanoid.Sex, false, targetHumanoid);
         targetHumanoid.CustomBaseLayers = new(sourceHumanoid.CustomBaseLayers);
         targetHumanoid.MarkingSet = new(sourceHumanoid.MarkingSet);
 
-        targetHumanoid.Gender = sourceHumanoid.Gender;
-
-        if (TryComp<GrammarComponent>(target, out var grammar))
-            _grammarSystem.SetGender((target, grammar), sourceHumanoid.Gender);
+        SetSex(target, sourceHumanoid.Sex, false, targetHumanoid);
+        SetGender((target, targetHumanoid), sourceHumanoid.Gender);
 
         Dirty(target, targetHumanoid);
     }
@@ -264,6 +262,23 @@ public abstract class SharedHumanoidAppearanceSystem : EntitySystem
     }
 
     /// <summary>
+    /// Sets the gender in the entity's HumanoidAppearanceComponent and GrammarComponent.
+    /// </summary>
+    public void SetGender(Entity<HumanoidAppearanceComponent?> ent, Gender gender)
+    {
+        if (!Resolve(ent, ref ent.Comp))
+            return;
+
+        ent.Comp.Gender = gender;
+        Dirty(ent);
+
+        if (TryComp<GrammarComponent>(ent, out var grammar))
+            _grammarSystem.SetGender((ent, grammar), gender);
+
+        _identity.QueueIdentityUpdate(ent);
+    }
+
+    /// <summary>
     ///     Sets the skin color of this humanoid mob. Will only affect base layers that are not custom,
     ///     custom base layers should use <see cref="SetBaseLayerColor"/> instead.
     /// </summary>
@@ -277,7 +292,7 @@ public abstract class SharedHumanoidAppearanceSystem : EntitySystem
         if (!Resolve(uid, ref humanoid))
             return;
 
-        if (!_proto.TryIndex<SpeciesPrototype>(humanoid.Species, out var species))
+        if (!_proto.Resolve<SpeciesPrototype>(humanoid.Species, out var species))
         {
             return;
         }

@@ -27,6 +27,50 @@
     layoutId: ParticleAccelerator
   - type: AccessReader
     access: [["Engineering"]]
+  - type: MultipartMachine
+    parts:
+      enum.AcceleratorParts.EndCap:
+        component: ParticleAcceleratorEndCap
+        offset: 1, -1
+        rotation: -90
+        ghostProto: ParticleAcceleratorEndCap
+        graph: ParticleAcceleratorEndCap
+        expectedNode: completed
+      enum.AcceleratorParts.FuelChamber:
+        component: ParticleAcceleratorFuelChamber
+        offset: 0, -1
+        rotation: -90
+        ghostProto: ParticleAcceleratorFuelChamber
+        graph: ParticleAcceleratorFuelChamber
+        expectedNode: completed
+      enum.AcceleratorParts.PowerBox:
+        component: ParticleAcceleratorPowerBox
+        offset: -1, -1
+        rotation: -90
+        ghostProto: ParticleAcceleratorPowerBox
+        graph: ParticleAcceleratorPowerBox
+        expectedNode: completed
+      enum.AcceleratorParts.PortEmitter:
+        component: ParticleAcceleratorEmitter
+        offset: -2, -2
+        rotation: -90
+        ghostProto: ParticleAcceleratorEmitterPort
+        graph: ParticleAcceleratorEmitterPort
+        expectedNode: completed
+      enum.AcceleratorParts.ForeEmitter:
+        component: ParticleAcceleratorEmitter
+        offset: -2, -1
+        rotation: -90
+        ghostProto: ParticleAcceleratorEmitterFore
+        graph: ParticleAcceleratorEmitterFore
+        expectedNode: completed
+      enum.AcceleratorParts.StarboardEmitter:
+        component: ParticleAcceleratorEmitter
+        offset: -2, 0
+        rotation: -90
+        ghostProto: ParticleAcceleratorEmitterStarboard
+        graph: ParticleAcceleratorEmitterStarboard
+        expectedNode: completed
 
 # Unfinished
 

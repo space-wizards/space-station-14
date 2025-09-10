@@ -1,9 +1,10 @@
 - type: entity
+  parent: BaseAction
   id: ActionItemRecall
   name: Mark Item
   description: Mark a held item to later summon into your hand.
   components:
-  - type: InstantAction
+  - type: Action
     useDelay: 10
     raiseOnAction: true
     itemIconStyle: BigAction
@@ -17,5 +18,6 @@
     icon:
       sprite: Objects/Magic/magicactions.rsi
       state: item_recall
+  - type: InstantAction
     event: !type:OnItemRecallActionEvent
   - type: ItemRecall
