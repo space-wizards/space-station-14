@@ -1,0 +1,6 @@
+- type: soundCollection
+  id: ScanGateScan
+  files:
+    - /Audio/_Starlight/Effects/ScanGate/scan1.ogg
+    - /Audio/_Starlight/Effects/ScanGate/scan2.ogg
+    - /Audio/_Starlight/Effects/ScanGate/scan3.ogg

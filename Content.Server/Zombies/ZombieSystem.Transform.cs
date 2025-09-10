@@ -207,6 +207,10 @@ public sealed partial class ZombieSystem
             Dirty(target, pryComp);
         }
 
+        //starlight start
+        if(!melee.Damage.AnyPositive()) melee.Damage = zombiecomp.MinimumDamageOnBite;
+        //starlight end
+
         Dirty(target, melee);
 
         //The zombie gets the assigned damage weaknesses and strengths

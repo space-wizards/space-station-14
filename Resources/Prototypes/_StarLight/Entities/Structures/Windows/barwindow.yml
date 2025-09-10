@@ -1,0 +1,103 @@
+- type: entity
+  parent: Window
+  id: BarWindow
+  name: bar window
+  components:
+  - type: Sprite
+    drawdepth: WallTops
+    sprite: /Textures/_Starlight/Structures/Windows/barwindow.rsi
+  - type: Icon
+    sprite: /Textures/_Starlight/Structures/Windows/barwindow.rsi
+  - type: IconSmooth
+    base: barwindow
+  - type: Construction
+    graph: BarWindow
+    node: barWindow
+  - type: StaticPrice
+    price: 70
+
+- type: entity
+  parent: BarWindow
+  id: BarWindowDiagonal
+  name: bar window
+  suffix: diagonal
+  placement:
+    mode: SnapgridCenter
+    snap:
+    - Window
+  components:
+  - type: Sprite
+    drawdepth: WallTops
+    sprite: /Textures/_Starlight/Structures/Windows/barwindow_diagonal.rsi
+    state: state0
+  - type: IconSmooth
+    mode: Diagonal
+    key: windows
+    base: state
+  - type: Icon
+    sprite: /Textures/_Starlight/Structures/Windows/barwindow_diagonal.rsi
+    state: state0
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PolygonShape
+            vertices:
+            - "-0.5,-0.5"
+            - "0.5,0.5"
+            - "0.5,-0.5"
+        mask:
+        - FullTileMask
+        layer:
+        - GlassLayer
+  - type: Airtight
+    noAirWhenFullyAirBlocked: false
+    airBlockedDirection:
+    - South
+    - East
+  - type: DamageVisuals
+    damageOverlay:
+      sprite: Structures/Windows/cracks_diagonal.rsi
+
+- type: entity
+  parent: BarWindow
+  id: BarAltWindowDiagonal
+  name: bar window alternative
+  suffix: diagonal
+  placement:
+    mode: SnapgridCenter
+    snap:
+    - Window
+  components:
+  - type: Sprite
+    drawdepth: WallTops
+    sprite: /Textures/_Starlight/Structures/Windows/alt_barwindow_diagonal.rsi
+    state: state0
+  - type: IconSmooth
+    mode: Diagonal
+    key: windows
+    base: state
+  - type: Icon
+    sprite: /Textures/_Starlight/Structures/Windows/alt_barwindow_diagonal.rsi
+    state: state0
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PolygonShape
+            vertices:
+            - "-0.5,-0.5"
+            - "0.5,0.5"
+            - "0.5,-0.5"
+        mask:
+        - FullTileMask
+        layer:
+        - GlassLayer
+  - type: Airtight
+    noAirWhenFullyAirBlocked: false
+    airBlockedDirection:
+    - South
+    - East
+  - type: DamageVisuals
+    damageOverlay:
+      sprite: Structures/Windows/cracks_diagonal.rsi
