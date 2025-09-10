@@ -170,8 +170,6 @@ public sealed class SiliconLawSystem : SharedSiliconLawSystem
 
         // Change displayed subtype
         component.Lawset.Subtype = LawsetEmagged;
-        if (TryComp<ActorComponent>(uid, out var actor))
-            _admin.UpdatePlayerList(actor.PlayerSession);
 
         // Add the first emag law before the others
         component.Lawset?.Laws.Insert(0, new SiliconLaw
@@ -188,19 +186,19 @@ public sealed class SiliconLawSystem : SharedSiliconLawSystem
         });
     }
 
+    /// <summary>
+    /// Override the entity's subtype with the name of the last known lawset
+    /// </summary>
     private void OnRoleSubtypeOverride(Entity<SiliconLawProviderComponent> ent, ref RoleSubtypeOverrideEvent args)
     {
-
         var lawSet = ent.Comp.Lawset;
 
-        if (lawSet is null)
+        // I'll show you what it means to be free!
+        if (lawSet?.Subtype is null || lawSet?.Laws is null || lawSet.Laws.Count == 0 )
         {
             args.SubtypeOverride = LawsetNone;
             return;
         }
-
-        if (lawSet?.Subtype is null)
-            return;
 
         args.SubtypeOverride = lawSet.Subtype;
     }
