@@ -23,17 +23,6 @@
           - ItemMask
         restitution: 0.3
         friction: 0.2
-  - type: Damageable
-    damageContainer: Inorganic
-    damageModifierSet: Metallic
-  - type: Destructible
-    thresholds:
-    - trigger:
-        !type:DamageTrigger
-        damage: 200
-      behaviors:
-      - !type:DoActsBehavior
-        acts: [ "Destruction" ]
 
 - type: entity
   parent: OreBase
@@ -57,6 +46,12 @@
         reagents:
         - ReagentId: Gold
           Quantity: 10
+  - type: Item
+    heldPrefix: gold
+  - type: Tag
+    tags:
+    - Ore
+    - OreGold
 
 - type: entity
   parent: GoldOre
@@ -88,6 +83,8 @@
         reagents:
         - ReagentId: Carbon
           Quantity: 20
+  - type: Item
+    heldPrefix: diamond
 
 - type: entity
   parent: DiamondOre
@@ -119,6 +116,8 @@
         reagents:
         - ReagentId: Iron
           Quantity: 10
+  - type: Item
+    heldPrefix: iron
 
 - type: entity
   id: SteelOre1
@@ -155,6 +154,12 @@
         reagents:
         - ReagentId: Plasma
           Quantity: 10
+  - type: Item
+    heldPrefix: plasma
+  - type: Tag
+    tags:
+    - Ore
+    - OrePlasma
 
 - type: entity
   parent: PlasmaOre
@@ -186,6 +191,12 @@
         reagents:
         - ReagentId: Silver
           Quantity: 10
+  - type: Item
+    heldPrefix: silver
+  - type: Tag
+    tags:
+    - Ore
+    - OreSilver
 
 - type: entity
   parent: SilverOre
@@ -217,6 +228,8 @@
         reagents:
         - ReagentId: Silicon
           Quantity: 10
+  - type: Item
+    heldPrefix: spacequartz
 
 - type: entity
   parent: SpaceQuartz
@@ -256,6 +269,12 @@
         - ReagentId: Radium
           Quantity: 2
         canReact: false
+  - type: Item
+    heldPrefix: uranium
+  - type: Tag
+    tags:
+    - Ore
+    - OreUranium
 
 - type: entity
   parent: UraniumOre
@@ -296,6 +315,12 @@
           Quantity: 2
         - ReagentId: Honk
           Quantity: 5
+  - type: Item
+    heldPrefix: bananium
+  - type: Tag
+    tags:
+    - Ore
+    - OreBananium
 
 - type: entity
   parent: BananiumOre
@@ -335,6 +360,8 @@
   - type: PhysicalComposition
     materialComposition:
       Coal: 100
+  - type: Item
+    heldPrefix: coal
 
 - type: entity
   parent: Coal
@@ -343,6 +370,30 @@
   components:
   - type: Stack
     count: 1
+
+- type: entity
+  parent: Coal
+  id: Coal5
+  suffix: Five
+  components:
+  - type: Stack
+    count: 5
+
+- type: entity
+  parent: Coal
+  id: Coal10
+  suffix: Ten
+  components:
+  - type: Stack
+    count: 10
+
+- type: entity
+  parent: Coal
+  id: Coal15
+  suffix: Fifteen
+  components:
+  - type: Stack
+    count: 15
 
 - type: entity
   parent: OreBase
@@ -368,6 +419,8 @@
           Quantity: 10
         - ReagentId: Iodine
           Quantity: 5
+  - type: Item
+    heldPrefix: salt
 
 - type: entity
   parent: SaltOre
@@ -376,3 +429,4 @@
   components:
   - type: Stack
     count: 1
+

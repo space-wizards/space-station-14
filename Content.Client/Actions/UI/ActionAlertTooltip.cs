@@ -21,7 +21,7 @@ namespace Content.Client.Actions.UI
         /// </summary>
         public (TimeSpan Start, TimeSpan End)? Cooldown { get; set; }
 
-        public ActionAlertTooltip(FormattedMessage name, FormattedMessage? desc, string? requires = null, FormattedMessage? charges = null)
+        public ActionAlertTooltip(FormattedMessage name, FormattedMessage? desc, string? requires = null)
         {
             _gameTiming = IoCManager.Resolve<IGameTiming>();
 
@@ -50,17 +50,6 @@ namespace Content.Client.Actions.UI
                 };
                 description.SetMessage(desc);
                 vbox.AddChild(description);
-            }
-
-            if (charges != null && !string.IsNullOrWhiteSpace(charges.ToString()))
-            {
-                var chargesLabel = new RichTextLabel
-                {
-                    MaxWidth = TooltipTextMaxWidth,
-                    StyleClasses = { StyleNano.StyleClassTooltipActionCharges }
-                };
-                chargesLabel.SetMessage(charges);
-                vbox.AddChild(chargesLabel);
             }
 
             vbox.AddChild(_cooldownLabel = new RichTextLabel
@@ -101,7 +90,7 @@ namespace Content.Client.Actions.UI
             {
                 var duration = Cooldown.Value.End - Cooldown.Value.Start;
 
-                if (!FormattedMessage.TryFromMarkup($"[color=#a10505]{(int) duration.TotalSeconds} sec cooldown ({(int) timeLeft.TotalSeconds + 1} sec remaining)[/color]", out var markup))
+                if (!FormattedMessage.TryFromMarkup(Loc.GetString("ui-actionslot-duration", ("duration", (int)duration.TotalSeconds), ("timeLeft", (int)timeLeft.TotalSeconds + 1)), out var markup))
                     return;
 
                 _cooldownLabel.SetMessage(markup);

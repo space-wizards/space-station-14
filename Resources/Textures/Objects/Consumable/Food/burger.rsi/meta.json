@@ -1,194 +1,387 @@
 {
-  "version": 1,
-  "license": "CC-BY-SA-3.0",
-  "copyright": "Taken from tgstation and modified by Swept and potato1234x at https://github.com/tgstation/tgstation/commit/40d75cc340c63582fb66ce15bf75a36115f6bdaa, ian.png created by EmoGarbage, mothroach.png created by TurboTracker",
-  "size": {
-    "x": 32,
-    "y": 32
-  },
-  "states": [
-    {
-      "name": "appendix"
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "Taken from tgstation and modified by Swept and potato1234x at https://github.com/tgstation/tgstation/commit/40d75cc340c63582fb66ce15bf75a36115f6bdaa, ian.png created by EmoGarbage, mothroach.png created by TurboTracker, screwed by TheShuEd. Inhands by Tiniest Shark (Github)",
+    "size": {
+        "x": 32,
+        "y": 32
     },
-    {
-      "name": "bacon"
-    },
-    {
-      "name": "baseball"
-    },
-    {
-      "name": "bearger"
-    },
-    {
-      "name": "bigbite"
-    },
-    {
-      "name": "brain"
-    },
-    {
-      "name": "bun"
-    },
-    {
-      "name": "bun_top"
-    },
-    {
-      "name": "bun_bottom"
-    },
-    {
-      "name": "c"
-    },
-    {
-      "name": "cat"
-    },
-    {
-      "name": "cheese"
-    },
-    {
-      "name": "cheesealt"
-    },
-    {
-      "name": "chicken"
-    },
-    {
-      "name": "clown"
-    },
-    {
-      "name": "crab"
-    },
-    {
-      "name": "crazy",
-      "delays": [
-        [
-          0.1,
-          0.1,
-          0.1,
-          0.1
-        ]
-      ]
-    },
-    {
-      "name": "custburg-bottom"
-    },
-    {
-      "name": "custburg-filling"
-    },
-    {
-      "name": "custburg-top"
-    },
-    {
-      "name": "empowered",
-      "delays": [
-        [
-          1.5,
-          0.1
-        ]
-      ]
-    },
-    {
-      "name": "fish"
-    },
-    {
-      "name": "fivealarm"
-    },
-    {
-      "name": "ghost",
-      "delays": [
-        [
-          0.11,
-          0.08,
-          0.06,
-          0.05,
-          0.04,
-          0.04,
-          0.07,
-          0.1,
-          0.13,
-          0.11,
-          0.09,
-          0.07,
-          0.05,
-          0.06,
-          0.07,
-          0.08,
-          0.1,
-          0.12
-        ]
-      ]
-    },
-    {
-      "name": "human"
-    },
-    {
-      "name": "ian"
-    },
-    {
-      "name": "plain"
-    },
-    {
-      "name": "mcguffin"
-    },
-    {
-      "name": "mcrib"
-    },
-    {
-      "name": "mime"
-    },
-    {
-      "name": "rat"
-    },
-    {
-      "name": "ro",
-      "delays": [
-        [
-          0.1,
-          0.1,
-          0.1,
-          0.1,
-          0.1,
-          0.4,
-          0.3,
-          0.1,
-          0.3,
-          0.1,
-          0.3,
-          0.4,
-          0.1,
-          0.1,
-          0.1,
-          0.1,
-          0.1,
-          1.1
-        ]
-      ]
-    },
-    {
-      "name": "spell"
-    },
-    {
-      "name": "superbite"
-    },
-    {
-      "name": "plate"
-    },
-    {
-      "name": "tofu"
-    },
-    {
-      "name": "soylent"
-    },
-    {
-      "name": "x"
-    },
-    {
-      "name": "mothroach"
-    },
-    {
-      "name": "inhand-right",
-      "directions": 4
-    },
-    {
-      "name": "inhand-left",
-      "directions": 4
-    }
-  ]
+    "states": [
+        {
+            "name": "appendix"
+        },
+        {
+            "name": "alpha-bun-inhand-left",
+            "directions": 4
+        },
+        {
+            "name": "alpha-bun-inhand-right",
+            "directions": 4
+        },
+        {
+            "name": "alpha-filling-inhand-left",
+            "directions": 4
+        },
+        {
+            "name": "alpha-filling-inhand-right",
+            "directions": 4
+        },
+        {
+            "name": "alpha-patty-inhand-left",
+            "directions": 4
+        },
+        {
+            "name": "alpha-patty-inhand-right",
+            "directions": 4
+        },
+        {
+            "name": "bacon"
+        },
+        {
+            "name": "baseball"
+        },
+        {
+            "name": "bearger"
+        },
+        {
+            "name": "bear-inhand-left",
+            "directions": 4
+        },
+        {
+            "name": "bear-inhand-right",
+            "directions": 4
+        },
+        {
+            "name": "bigbite"
+        },
+        {
+            "name": "burger-big-inhand-left",
+            "directions": 4
+        },
+        {
+            "name": "burger-big-inhand-right",
+            "directions": 4
+        },
+        {
+            "name": "brain"
+        },
+        {
+            "name": "brain-inhand-left",
+            "directions": 4
+        },
+        {
+            "name": "brain-inhand-right",
+            "directions": 4
+        },
+        {
+            "name": "bun"
+        },
+        {
+            "name": "bun-inhand-left",
+            "directions": 4
+        },
+        {
+            "name": "bun-inhand-right",
+            "directions": 4
+        },
+        {
+            "name": "burger-inhand-left",
+            "directions": 4
+        },
+        {
+            "name": "burger-inhand-right",
+            "directions": 4
+        },
+        {
+            "name": "c"
+        },
+        {
+            "name": "cat"
+        },
+        {
+            "name": "cat-inhand-left",
+            "directions": 4
+        },
+        {
+            "name": "cat-inhand-right",
+            "directions": 4
+        },
+        {
+            "name": "cheese"
+        },
+        {
+            "name": "cheesealt"
+        },
+        {
+            "name": "chicken"
+        },
+        {
+            "name": "clown"
+        },
+        {
+            "name": "clown-inhand-left",
+            "directions": 4
+        },
+        {
+            "name": "clown-inhand-right",
+            "directions": 4
+        },
+        {
+            "name": "crab"
+        },
+        {
+            "name": "crazy",
+            "delays": [
+                [
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1
+                ]
+            ]
+        },
+        {
+            "name": "crazy-inhand-left",
+            "directions": 4,
+            "delays": [
+                [
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1
+                ],
+                [
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1
+                ],
+                [
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1
+                ],
+                [
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1
+                ]
+            ]
+        },
+        {
+            "name": "crazy-inhand-right",
+            "directions": 4,
+            "delays": [
+                [
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1
+                ],
+                [
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1
+                ],
+                [
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1
+                ],
+                [
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1
+                ]
+            ]
+        },
+        {
+            "name": "custburg-bottom"
+        },
+        {
+            "name": "custburg-filling"
+        },
+        {
+            "name": "custburg-top"
+        },
+        {
+            "name": "empowered",
+            "delays": [
+                [
+                    1.5,
+                    0.1
+                ]
+            ]
+        },
+        {
+            "name": "plasma-inhand-left",
+            "directions": 4
+        },
+        {
+            "name": "plasma-inhand-right",
+            "directions": 4
+        },
+        {
+            "name": "fish"
+        },
+        {
+            "name": "fivealarm"
+        },
+        {
+            "name": "ghost",
+            "delays": [
+                [
+                    0.11,
+                    0.08,
+                    0.06,
+                    0.05,
+                    0.04,
+                    0.04,
+                    0.07,
+                    0.1,
+                    0.13,
+                    0.11,
+                    0.09,
+                    0.07,
+                    0.05,
+                    0.06,
+                    0.07,
+                    0.08,
+                    0.1,
+                    0.12
+                ]
+            ]
+        },
+        {
+            "name": "human"
+        },
+        {
+            "name": "ian"
+        },
+        {
+            "name": "dog-inhand-left",
+            "directions": 4
+        },
+        {
+            "name": "dog-inhand-right",
+            "directions": 4
+        },
+        {
+            "name": "plain"
+        },
+        {
+            "name": "plain-inhand-left",
+            "directions": 4
+        },
+        {
+            "name": "plain-inhand-right",
+            "directions": 4
+        },
+        {
+            "name": "mcguffin"
+        },
+        {
+            "name": "mcrib"
+        },
+        {
+            "name": "mime"
+        },
+        {
+            "name": "mime-inhand-left",
+            "directions": 4
+        },
+        {
+            "name": "mime-inhand-right",
+            "directions": 4
+        },
+        {
+            "name": "rat"
+        },
+        {
+            "name": "rat-inhand-left",
+            "directions": 4
+        },
+        {
+            "name": "rat-inhand-right",
+            "directions": 4
+        },
+        {
+            "name": "ro",
+            "delays": [
+                [
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.4,
+                    0.3,
+                    0.1,
+                    0.3,
+                    0.1,
+                    0.3,
+                    0.4,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    1.1
+                ]
+            ]
+        },
+        {
+            "name": "screwed"
+        },
+        {
+            "name": "spell"
+        },
+        {
+            "name": "spell-inhand-left",
+            "directions": 4
+        },
+        {
+            "name": "spell-inhand-right",
+            "directions": 4
+        },
+        {
+            "name": "superbite"
+        },
+        {
+            "name": "burger-super-inhand-left",
+            "directions": 4
+        },
+        {
+            "name": "burger-super-inhand-right",
+            "directions": 4
+        },
+        {
+            "name": "plate"
+        },
+        {
+            "name": "tofu"
+        },
+        {
+            "name": "soylent"
+        },
+        {
+            "name": "x"
+        },
+        {
+            "name": "mothroach"
+        },
+        {
+            "name": "mothroach-inhand-left",
+            "directions": 4
+        },
+        {
+            "name": "mothroach-inhand-right",
+            "directions": 4
+        }
+    ]
 }

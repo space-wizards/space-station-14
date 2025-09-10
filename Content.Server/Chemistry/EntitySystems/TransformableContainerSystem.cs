@@ -1,5 +1,4 @@
 using Content.Server.Chemistry.Components;
-using Content.Server.Chemistry.Containers.EntitySystems;
 using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.NameModifier.EntitySystems;
@@ -10,7 +9,7 @@ namespace Content.Server.Chemistry.EntitySystems;
 public sealed class TransformableContainerSystem : EntitySystem
 {
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
-    [Dependency] private readonly SolutionContainerSystem _solutionsSystem = default!;
+    [Dependency] private readonly SharedSolutionContainerSystem _solutionsSystem = default!;
     [Dependency] private readonly MetaDataSystem _metadataSystem = default!;
     [Dependency] private readonly NameModifierSystem _nameMod = default!;
 
@@ -46,8 +45,8 @@ public sealed class TransformableContainerSystem : EntitySystem
         //the biggest reagent in the solution decides the appearance
         var reagentId = solution.GetPrimaryReagentId();
 
-        //If biggest reagent didn't changed - don't change anything at all
-        if (entity.Comp.CurrentReagent != null && entity.Comp.CurrentReagent.ID == reagentId?.Prototype)
+        //If biggest reagent didn't change - don't change anything at all
+        if (entity.Comp.CurrentReagent != null && entity.Comp.CurrentReagent == reagentId?.Prototype)
         {
             return;
         }
@@ -67,7 +66,7 @@ public sealed class TransformableContainerSystem : EntitySystem
 
     private void OnRefreshNameModifiers(Entity<TransformableContainerComponent> entity, ref RefreshNameModifiersEvent args)
     {
-        if (entity.Comp.CurrentReagent is { } currentReagent)
+        if (_prototypeManager.TryIndex(entity.Comp.CurrentReagent, out var currentReagent))
         {
             args.AddModifier("transformable-container-component-glass", priority: -1, ("reagent", currentReagent.LocalizedName));
         }

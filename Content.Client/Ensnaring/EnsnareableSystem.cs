@@ -1,42 +1,45 @@
 using Content.Shared.Ensnaring;
 using Content.Shared.Ensnaring.Components;
 using Robust.Client.GameObjects;
+using Robust.Shared.Utility;
 
-namespace Content.Client.Ensnaring.Visualizers;
+namespace Content.Client.Ensnaring;
 
 public sealed class EnsnareableSystem : SharedEnsnareableSystem
 {
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
+    [Dependency] private readonly SpriteSystem _sprite = default!;
 
     public override void Initialize()
     {
         base.Initialize();
 
-        SubscribeLocalEvent<EnsnareableComponent, ComponentInit>(OnComponentInit);
         SubscribeLocalEvent<EnsnareableComponent, AppearanceChangeEvent>(OnAppearanceChange);
     }
 
-    private void OnComponentInit(EntityUid uid, EnsnareableComponent component, ComponentInit args)
+    protected override void OnEnsnareInit(Entity<EnsnareableComponent> ent, ref ComponentInit args)
     {
-        if(!TryComp<SpriteComponent>(uid, out var sprite))
+        base.OnEnsnareInit(ent, ref args);
+
+        if (!TryComp<SpriteComponent>(ent.Owner, out var sprite))
             return;
 
         // TODO remove this, this should just be in yaml.
-        sprite.LayerMapReserveBlank(EnsnaredVisualLayers.Ensnared);
+        _sprite.LayerMapReserve((ent.Owner, sprite), EnsnaredVisualLayers.Ensnared);
     }
 
     private void OnAppearanceChange(EntityUid uid, EnsnareableComponent component, ref AppearanceChangeEvent args)
     {
-        if (args.Sprite == null || !args.Sprite.LayerMapTryGet(EnsnaredVisualLayers.Ensnared, out var layer))
+        if (args.Sprite == null || !_sprite.LayerMapTryGet((uid, args.Sprite), EnsnaredVisualLayers.Ensnared, out var layer, false))
             return;
 
         if (_appearance.TryGetData<bool>(uid, EnsnareableVisuals.IsEnsnared, out var isEnsnared, args.Component))
         {
             if (component.Sprite != null)
             {
-                args.Sprite.LayerSetRSI(layer, component.Sprite);
-                args.Sprite.LayerSetState(layer, component.State);
-                args.Sprite.LayerSetVisible(layer, isEnsnared);
+                _sprite.LayerSetRsi((uid, args.Sprite), layer, new ResPath(component.Sprite));
+                _sprite.LayerSetRsiState((uid, args.Sprite), layer, component.State);
+                _sprite.LayerSetVisible((uid, args.Sprite), layer, isEnsnared);
             }
         }
     }

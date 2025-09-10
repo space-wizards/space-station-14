@@ -2,6 +2,7 @@ using System.Linq;
 using Content.Shared.Hands.Components;
 using Content.Shared.Interaction.Components;
 using Content.Shared.Silicons.Borgs.Components;
+using Content.Shared.Whitelist;
 using Robust.Shared.Containers;
 
 namespace Content.Server.Silicons.Borgs;
@@ -51,7 +52,7 @@ public sealed partial class BorgSystem
 
     private void OnProvideItemStartup(EntityUid uid, ItemBorgModuleComponent component, ComponentStartup args)
     {
-        component.ProvidedContainer = Container.EnsureContainer<Container>(uid, component.ProvidedContainerId);
+        Container.EnsureContainer<Container>(uid, component.HoldingContainer);
     }
 
     private void OnSelectableInstalled(EntityUid uid, SelectableBorgModuleComponent component, ref BorgModuleInstalledEvent args)
@@ -60,8 +61,10 @@ public sealed partial class BorgSystem
 
         if (_actions.AddAction(chassis, ref component.ModuleSwapActionEntity, out var action, component.ModuleSwapActionId, uid))
         {
-            action.EntityIcon = uid;
-            Dirty(component.ModuleSwapActionEntity.Value, action);
+            var actEnt = (component.ModuleSwapActionEntity.Value, action);
+            _actions.SetEntityIcon(actEnt, uid);
+            if (TryComp<BorgModuleIconComponent>(uid, out var moduleIconComp))
+                _actions.SetIcon(actEnt, moduleIconComp.Icon);
         }
 
         if (!TryComp(chassis, out BorgChassisComponent? chassisComp))
@@ -184,43 +187,43 @@ public sealed partial class BorgSystem
         if (!TryComp<HandsComponent>(chassis, out var hands))
             return;
 
-        var xform = Transform(chassis);
-        foreach (var itemProto in component.Items)
-        {
-            EntityUid item;
+        if (!_container.TryGetContainer(uid, component.HoldingContainer, out var container))
+            return;
 
-            if (!component.ItemsCreated)
+        var xform = Transform(chassis);
+
+        for (var i = 0; i < component.Hands.Count; i++)
+        {
+            var hand = component.Hands[i];
+            var handId = $"{uid}-hand-{i}";
+
+            _hands.AddHand((chassis, hands), handId, hand.Hand);
+            EntityUid? item = null;
+
+            if (component.StoredItems is not null)
+            {
+                if (component.StoredItems.TryGetValue(handId, out var storedItem))
+                {
+                    item = storedItem;
+                    _container.Remove(storedItem, container, force: true);
+                }
+            }
+            else if (hand.Item is { } itemProto)
             {
                 item = Spawn(itemProto, xform.Coordinates);
             }
-            else
+
+            if (item is { } pickUp)
             {
-                item = component.ProvidedContainer.ContainedEntities
-                    .FirstOrDefault(ent => Prototype(ent)?.ID == itemProto);
-                if (!item.IsValid())
+                _hands.DoPickup(chassis, handId, pickUp, hands);
+                if (!hand.ForceRemovable && hand.Hand.Whitelist == null && hand.Hand.Blacklist == null)
                 {
-                    Log.Debug($"no items found: {component.ProvidedContainer.ContainedEntities.Count}");
-                    continue;
+                    EnsureComp<UnremoveableComponent>(pickUp);
                 }
-
-                _container.Remove(item, component.ProvidedContainer, force: true);
             }
-
-            if (!item.IsValid())
-            {
-                Log.Debug("no valid item");
-                continue;
-            }
-
-            var handId = $"{uid}-item{component.HandCounter}";
-            component.HandCounter++;
-            _hands.AddHand(chassis, handId, HandLocation.Middle, hands);
-            _hands.DoPickup(chassis, hands.Hands[handId], item, hands);
-            EnsureComp<UnremoveableComponent>(item);
-            component.ProvidedItems.Add(handId, item);
         }
 
-        component.ItemsCreated = true;
+        Dirty(uid, component);
     }
 
     private void RemoveProvidedItems(EntityUid chassis, EntityUid uid, BorgChassisComponent? chassisComponent = null, ItemBorgModuleComponent? component = null)
@@ -231,27 +234,33 @@ public sealed partial class BorgSystem
         if (!TryComp<HandsComponent>(chassis, out var hands))
             return;
 
-        if (TerminatingOrDeleted(uid))
-        {
-            foreach (var (hand, item) in component.ProvidedItems)
-            {
-                QueueDel(item);
-                _hands.RemoveHand(chassis, hand, hands);
-            }
-            component.ProvidedItems.Clear();
+        if (!_container.TryGetContainer(uid, component.HoldingContainer, out var container))
             return;
+
+        if (TerminatingOrDeleted(uid))
+            return;
+
+        component.StoredItems ??= new();
+
+        for (var i = 0; i < component.Hands.Count; i++)
+        {
+            var handId = $"{uid}-hand-{i}";
+
+            if (_hands.TryGetHeldItem(chassis, handId, out var held))
+            {
+                RemComp<UnremoveableComponent>(held.Value);
+                _container.Insert(held.Value, container);
+                component.StoredItems[handId] = held.Value;
+            }
+            else
+            {
+                component.StoredItems.Remove(handId);
+            }
+
+            _hands.RemoveHand(chassis, handId);
         }
 
-        foreach (var (handId, item) in component.ProvidedItems)
-        {
-            if (LifeStage(item) <= EntityLifeStage.MapInitialized)
-            {
-                RemComp<UnremoveableComponent>(item);
-                _container.Insert(item, component.ProvidedContainer);
-            }
-            _hands.RemoveHand(chassis, handId, hands);
-        }
-        component.ProvidedItems.Clear();
+        Dirty(uid, component);
     }
 
     /// <summary>
@@ -283,8 +292,8 @@ public sealed partial class BorgSystem
                 if (!TryComp<ItemBorgModuleComponent>(containedModuleUid, out var containedItemModuleComp))
                     continue;
 
-                if (containedItemModuleComp.Items.Count == itemModuleComp.Items.Count &&
-                    containedItemModuleComp.Items.All(itemModuleComp.Items.Contains))
+                if (containedItemModuleComp.Hands.Count == itemModuleComp.Hands.Count &&
+                    containedItemModuleComp.Hands.All(itemModuleComp.Hands.Contains))
                 {
                     if (user != null)
                         Popup.PopupEntity(Loc.GetString("borg-module-duplicate"), uid, user.Value);
@@ -292,6 +301,24 @@ public sealed partial class BorgSystem
                 }
             }
         }
+
+        return true;
+    }
+
+    /// <summary>
+    /// Check if a module can be removed from a borg.
+    /// </summary>
+    /// <param name="borg">The borg that the module is being removed from.</param>
+    /// <param name="module">The module to remove from the borg.</param>
+    /// <param name="user">The user attempting to remove the module.</param>
+    /// <returns>True if the module can be removed.</returns>
+    public bool CanRemoveModule(
+        Entity<BorgChassisComponent> borg,
+        Entity<BorgModuleComponent> module,
+        EntityUid? user = null)
+    {
+        if (module.Comp.DefaultModule)
+            return false;
 
         return true;
     }
@@ -364,5 +391,25 @@ public sealed partial class BorgSystem
         moduleComponent.InstalledEntity = null;
         var ev = new BorgModuleUninstalledEvent(uid);
         RaiseLocalEvent(module, ref ev);
+    }
+
+    /// <summary>
+    /// Sets <see cref="BorgChassisComponent.MaxModules"/>.
+    /// </summary>
+    /// <param name="ent">The borg to modify.</param>
+    /// <param name="maxModules">The new max module count.</param>
+    public void SetMaxModules(Entity<BorgChassisComponent> ent, int maxModules)
+    {
+        ent.Comp.MaxModules = maxModules;
+    }
+
+    /// <summary>
+    /// Sets <see cref="BorgChassisComponent.ModuleWhitelist"/>.
+    /// </summary>
+    /// <param name="ent">The borg to modify.</param>
+    /// <param name="whitelist">The new module whitelist.</param>
+    public void SetModuleWhitelist(Entity<BorgChassisComponent> ent, EntityWhitelist? whitelist)
+    {
+        ent.Comp.ModuleWhitelist = whitelist;
     }
 }

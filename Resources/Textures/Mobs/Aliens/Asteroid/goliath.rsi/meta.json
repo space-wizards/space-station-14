@@ -1,0 +1,111 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Taken from Paradise at https://github.com/ParadiseSS13/Paradise/blob/5a68c5f6d3b60ee82c06e0287d1eb8108d2e1fe2/icons/mob/lavaland/lavaland_monsters.dmi",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "goliath",
+      "directions": 4
+    },
+    {
+      "name": "goliath_alert",
+      "directions": 4,
+      "delays": [
+        [
+          1,
+          0.2,
+          1,
+          0.5
+        ],
+        [
+          1,
+          0.2,
+          1,
+          0.5
+        ],
+        [
+          1,
+          0.2,
+          1,
+          0.5
+        ],
+        [
+          1,
+          0.2,
+          1,
+          0.5
+        ]
+      ]
+    },
+    {
+      "name": "goliath_preattack",
+      "directions": 4,
+      "delays": [
+        [
+          0.2,
+          0.2,
+          0.2,
+          0.2
+        ],
+        [
+          0.2,
+          0.2,
+          0.2,
+          0.2
+        ],
+        [
+          0.2,
+          0.2,
+          0.2,
+          0.2
+        ],
+        [
+          0.2,
+          0.2,
+          0.2,
+          0.2
+        ]
+      ]
+    },
+    {
+      "name": "goliath_dead"
+    },
+    {
+      "name": "goliath_tentacle_spawn",
+      "delays": [
+        [
+          0.2,
+          0.2,
+          0.2,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "goliath_tentacle_wiggle",
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "goliath_tentacle_retract",
+      "delays": [
+        [
+          0.1,
+          0.2,
+          0.2,
+          0.2
+        ]
+      ]
+    }
+  ]
+}

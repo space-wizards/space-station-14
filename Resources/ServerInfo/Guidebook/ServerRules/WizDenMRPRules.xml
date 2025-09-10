@@ -1,4 +1,4 @@
-﻿<Document>
+<Document>
   # Server Rules
   This is a Wizard's Den server, one of the official Space Station 14 servers. If you are banned on this server, you will be banned on all official servers.
 
@@ -36,7 +36,7 @@
   - [textlink="1. Silicons must follow Silicon Rules" link="RuleR1"]
   - [textlink="2. Familiars must obey their master" link="RuleR2"]
   - [textlink="3. Roleplay a normal person" link="RuleR3"]
-  - [textlink="4. Do not metagame, obey the Metashield" link="RuleR4"]
+  - [textlink="4. Do not metagame, do not metagrudge" link="RuleR4"]
   - [textlink="5. Don't interfere with arrivals" link="RuleR5"]
   - [textlink="6. Don't act like an antagonist unless the game tells you that you are one" link="RuleR6"]
   - [textlink="7. Do not stall the round" link="RuleR7"]
@@ -62,4 +62,13 @@
   - [textlink="8. Your HUD determines who is crew" link="RuleS8"]
   - [textlink="9. Harm refers to physical harm, prioritized by immediacy and likelihood" link="RuleS9"]
   - [textlink="10. You may determine how you resolve conflicts between orders" link="RuleS10"]
+
+  ## MRP Rules
+  MRP rules exclusive to our MRP Servers. Other rules may still contain amendments.
+
+  These rules do not apply to any server that is not under the MRP Ruleset.
+
+  - [textlink="1. Do not Powergame " link="RuleM1"]
+
+
 </Document>

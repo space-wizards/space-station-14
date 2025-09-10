@@ -101,22 +101,22 @@ public sealed partial class ActivatableUISystem : EntitySystem
         if (_whitelistSystem.IsWhitelistFail(component.RequiredItems, args.Using ?? default))
             return false;
 
-        if (component.RequireHands)
+        if (component.RequiresComplex)
         {
             if (args.Hands == null)
                 return false;
 
             if (component.InHandsOnly)
             {
-                if (!_hands.IsHolding(args.User, uid, out var hand, args.Hands))
+                if (!_hands.IsHolding((args.User, args.Hands), uid, out var hand ))
                     return false;
 
-                if (component.RequireActiveHand && args.Hands.ActiveHand != hand)
+                if (component.RequireActiveHand && args.Hands.ActiveHandId != hand)
                     return false;
             }
         }
 
-        return args.CanInteract || HasComp<GhostComponent>(args.User) && !component.BlockSpectators;
+        return (args.CanInteract || HasComp<GhostComponent>(args.User) && !component.BlockSpectators) && !RaiseCanOpenEventChecks(args.User, uid);
     }
 
     private void OnUseInHand(EntityUid uid, ActivatableUIComponent component, UseInHandEvent args)
@@ -191,19 +191,22 @@ public sealed partial class ActivatableUISystem : EntitySystem
         if (!_blockerSystem.CanInteract(user, uiEntity) && (!HasComp<GhostComponent>(user) || aui.BlockSpectators))
             return false;
 
-        if (aui.RequireHands)
+        if (aui.RequiresComplex)
+        {
+            if (!_blockerSystem.CanComplexInteract(user))
+                return false;
+        }
+
+        if (aui.InHandsOnly)
         {
             if (!TryComp(user, out HandsComponent? hands))
                 return false;
 
-            if (aui.InHandsOnly)
-            {
-                if (!_hands.IsHolding(user, uiEntity, out var hand, hands))
-                    return false;
+            if (!_hands.IsHolding((user, hands), uiEntity, out var hand))
+                return false;
 
-                if (aui.RequireActiveHand && hands.ActiveHand != hand)
-                    return false;
-            }
+            if (aui.RequireActiveHand && hands.ActiveHandId != hand)
+                return false;
         }
 
         if (aui.AdminOnly && !_adminManager.IsAdmin(user))
@@ -222,11 +225,7 @@ public sealed partial class ActivatableUISystem : EntitySystem
 
         // If we've gotten this far, fire a cancellable event that indicates someone is about to activate this.
         // This is so that stuff can require further conditions (like power).
-        var oae = new ActivatableUIOpenAttemptEvent(user);
-        var uae = new UserOpenActivatableUIAttemptEvent(user, uiEntity);
-        RaiseLocalEvent(user, uae);
-        RaiseLocalEvent(uiEntity, oae);
-        if (oae.Cancelled || uae.Cancelled)
+        if (RaiseCanOpenEventChecks(user, uiEntity))
             return false;
 
         // Give the UI an opportunity to prepare itself if it needs to do anything
@@ -274,13 +273,24 @@ public sealed partial class ActivatableUISystem : EntitySystem
 
     private void OnHandDeselected(Entity<ActivatableUIComponent> ent, ref HandDeselectedEvent args)
     {
-        if (ent.Comp.RequireHands && ent.Comp.InHandsOnly && ent.Comp.RequireActiveHand)
+        if (ent.Comp.InHandsOnly && ent.Comp.RequireActiveHand)
             CloseAll(ent, ent);
     }
 
     private void OnHandUnequipped(Entity<ActivatableUIComponent> ent, ref GotUnequippedHandEvent args)
     {
-        if (ent.Comp.RequireHands && ent.Comp.InHandsOnly)
+        if (ent.Comp.InHandsOnly)
             CloseAll(ent, ent);
+    }
+
+    private bool RaiseCanOpenEventChecks(EntityUid user, EntityUid uiEntity)
+    {
+        // If we've gotten this far, fire a cancellable event that indicates someone is about to activate this.
+        // This is so that stuff can require further conditions (like power).
+        var oae = new ActivatableUIOpenAttemptEvent(user);
+        var uae = new UserOpenActivatableUIAttemptEvent(user, uiEntity);
+        RaiseLocalEvent(user, uae);
+        RaiseLocalEvent(uiEntity, oae);
+        return oae.Cancelled || uae.Cancelled;
     }
 }

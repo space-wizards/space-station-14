@@ -22,8 +22,9 @@
   - type: Tag
     tags:
     - ClothMade
+    - Recyclable
     - WhitelistChameleon
-  - type: ClothingRequiredStepTriggerImmune
+  - type: ProtectedFromStepTriggers
 
 - type: entity
   abstract: true
@@ -35,6 +36,9 @@
     spawned:
     - id: MaterialCloth1
       amount: 1
+  - type: PhysicalComposition # 50% of the amount of cloth you'd obtain upon butchering
+    materialComposition:
+      Cloth: 50
 
 # stuff common to all military boots
 - type: entity
@@ -51,6 +55,7 @@
           tags:
           - Knife
           - Sidearm
+        priority: 4
 
 - type: entity
   abstract: true
@@ -69,4 +74,5 @@
   description: Fluffy boots to help survive even the coldest of winters.
   components:
   - type: TemperatureProtection
-    coefficient: 0.2
+    heatingCoefficient: 1.025
+    coolingCoefficient: 0.5

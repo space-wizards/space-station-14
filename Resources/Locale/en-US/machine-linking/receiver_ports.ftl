@@ -25,8 +25,8 @@ signal-port-description-close = Closes a device.
 signal-port-name-doorbolt = Door bolt
 signal-port-description-doorbolt = Bolts door when HIGH.
 
-signal-port-name-trigger = Trigger
-signal-port-description-trigger = Triggers some mechanism on the device.
+signal-port-name-trigger-receiver = Trigger
+signal-port-description-trigger-receiver = Triggers some mechanism on the device.
 
 signal-port-name-order-sender = Order sender
 signal-port-description-order-sender = Cargo console order sender
@@ -81,3 +81,8 @@ signal-port-description-logic-input-b = Second input of a logic gate.
 
 signal-port-name-logic-input = Input
 signal-port-description-logic-input = Input to the edge detector, cannot be a pulse signal.
+
+signal-port-description-logic-memory-input = Signal to load into the memory cell, when enabled.
+
+signal-port-name-logic-enable = Enable
+signal-port-description-logic-enable = Only loads the input signal into the memory cell when HIGH.

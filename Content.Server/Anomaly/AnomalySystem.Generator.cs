@@ -1,7 +1,5 @@
 using Content.Server.Anomaly.Components;
-using Content.Server.Power.Components;
 using Content.Server.Power.EntitySystems;
-using Content.Server.Station.Components;
 using Content.Shared.Anomaly;
 using Content.Shared.CCVar;
 using Content.Shared.Materials;
@@ -11,9 +9,7 @@ using Content.Shared.Physics;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Components;
-using Robust.Shared.Map;
-using System.Numerics;
-using Robust.Server.GameObjects;
+using Content.Shared.Power;
 
 namespace Content.Server.Anomaly;
 
@@ -114,7 +110,7 @@ public sealed partial class AnomalySystem
             var valid = true;
 
             // TODO: This should be using static lookup.
-            foreach (var ent in gridComp.GetAnchoredEntities(tile))
+            foreach (var ent in _mapSystem.GetAnchoredEntities(grid, gridComp, tile))
             {
                 if (!physQuery.TryGetComponent(ent, out var body))
                     continue;
@@ -130,10 +126,10 @@ public sealed partial class AnomalySystem
                 continue;
 
             var pos = _mapSystem.GridTileToLocal(grid, gridComp, tile);
-            var mapPos = pos.ToMap(EntityManager, _transform);
+            var mapPos = _transform.ToMapCoordinates(pos);
             // don't spawn in AntiAnomalyZones
             var antiAnomalyZonesQueue = AllEntityQuery<AntiAnomalyZoneComponent, TransformComponent>();
-            while (antiAnomalyZonesQueue.MoveNext(out var uid, out var zone, out var antiXform))
+            while (antiAnomalyZonesQueue.MoveNext(out _, out var zone, out var antiXform))
             {
                 if (antiXform.MapID != mapPos.MapId)
                     continue;
@@ -167,8 +163,7 @@ public sealed partial class AnomalySystem
         var xform = Transform(uid);
 
         if (_station.GetStationInMap(xform.MapID) is not { } station ||
-            !TryComp<StationDataComponent>(station, out var data) ||
-            _station.GetLargestGrid(data) is not { } grid)
+            _station.GetLargestGrid(station) is not { } grid)
         {
             if (xform.GridUid == null)
                 return;

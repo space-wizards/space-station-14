@@ -11,8 +11,6 @@ namespace Content.Shared.Traits.Assorted;
 /// </summary>
 public sealed class PermanentBlindnessSystem : EntitySystem
 {
-    [Dependency] private readonly INetManager _net = default!;
-    [Dependency] private readonly IEntityManager _entityManager = default!;
     [Dependency] private readonly BlindableSystem _blinding = default!;
 
     /// <inheritdoc/>
@@ -25,7 +23,7 @@ public sealed class PermanentBlindnessSystem : EntitySystem
 
     private void OnExamined(Entity<PermanentBlindnessComponent> blindness, ref ExaminedEvent args)
     {
-        if (args.IsInDetailsRange && !_net.IsClient && blindness.Comp.Blindness == 0)
+        if (args.IsInDetailsRange && blindness.Comp.Blindness == 0)
         {
             args.PushMarkup(Loc.GetString("permanent-blindness-trait-examined", ("target", Identity.Entity(blindness, EntityManager))));
         }
@@ -33,20 +31,26 @@ public sealed class PermanentBlindnessSystem : EntitySystem
 
     private void OnShutdown(Entity<PermanentBlindnessComponent> blindness, ref ComponentShutdown args)
     {
-        _blinding.UpdateIsBlind(blindness.Owner);
+        if (!TryComp<BlindableComponent>(blindness.Owner, out var blindable))
+            return;
+
+        if (blindable.MinDamage != 0)
+        {
+            _blinding.SetMinDamage((blindness.Owner, blindable), 0);
+        }
     }
 
     private void OnMapInit(Entity<PermanentBlindnessComponent> blindness, ref MapInitEvent args)
     {
-        if (!_entityManager.TryGetComponent<BlindableComponent>(blindness, out var blindable))
+        if(!TryComp<BlindableComponent>(blindness.Owner, out var blindable))
             return;
 
         if (blindness.Comp.Blindness != 0)
-            _blinding.SetMinDamage(new Entity<BlindableComponent?>(blindness.Owner, blindable), blindness.Comp.Blindness);
+            _blinding.SetMinDamage((blindness.Owner, blindable), blindness.Comp.Blindness);
         else
         {
             var maxMagnitudeInt = (int) BlurryVisionComponent.MaxMagnitude;
-            _blinding.SetMinDamage(new Entity<BlindableComponent?>(blindness.Owner, blindable), maxMagnitudeInt);
+            _blinding.SetMinDamage((blindness.Owner, blindable), maxMagnitudeInt);
         }
     }
 }

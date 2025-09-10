@@ -5,6 +5,7 @@
   description: A hand-held mass scanner.
   components:
   - type: Item
+    sprite: Objects/Tools/handheld_mass_scanner.rsi
   - type: Sprite
     sprite: Objects/Tools/handheld_mass_scanner.rsi
     state: icon
@@ -12,10 +13,10 @@
       - state: icon
       - state: scanner
         shader: unshaded
-        visible: true
+        visible: false
         map: [ "enum.PowerDeviceVisualLayers.Powered" ]
   - type: RadarConsole
-    maxRange: 64
+    maxRange: 256
     followEntity: true
   - type: Appearance
   - type: GenericVisualizer
@@ -25,8 +26,8 @@
           True: { visible: true }
           False: { visible: false }
   - type: PowerCellDraw
-    drawRate: 3
-    useRate: 100
+    drawRate: 1.5
+  - type: ToggleCellDraw
   - type: ActivatableUI
     key: enum.RadarConsoleUiKey.Key
     inHandsOnly: true
@@ -47,15 +48,6 @@
     slots:
       cell_slot:
         name: power-cell-slot-component-slot-name-default
-  - type: Sprite
-    sprite: Objects/Tools/handheld_mass_scanner.rsi
-    state: icon
-    layers:
-      - state: icon
-      - state: scanner
-        shader: unshaded
-        visible: false
-        map: [ "enum.PowerDeviceVisualLayers.Powered" ]
 
 - type: entity
   id: HandHeldMassScannerBorg

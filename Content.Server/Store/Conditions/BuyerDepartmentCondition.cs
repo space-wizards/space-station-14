@@ -30,20 +30,18 @@ public sealed partial class BuyerDepartmentCondition : ListingCondition
         var prototypeManager = IoCManager.Resolve<IPrototypeManager>();
 
         var ent = args.EntityManager;
-        var minds = ent.System<SharedMindSystem>();
 
-        // this is for things like surplus crate
-        if (!minds.TryGetMind(args.Buyer, out var mindId, out _))
-            return true;
+        if (!ent.TryGetComponent<MindComponent>(args.Buyer, out var _))
+            return true; // inanimate objects don't have minds
 
         var jobs = ent.System<SharedJobSystem>();
-        jobs.MindTryGetJob(mindId, out var job, out _);
+        jobs.MindTryGetJob(args.Buyer, out var job);
 
-        if (Blacklist != null && job?.Prototype != null)
+        if (Blacklist != null && job != null)
         {
             foreach (var department in prototypeManager.EnumeratePrototypes<DepartmentPrototype>())
             {
-                if (department.Roles.Contains(job.Prototype.Value) && Blacklist.Contains(department.ID))
+                if (department.Roles.Contains(job.ID) && Blacklist.Contains(department.ID))
                     return false;
             }
         }
@@ -52,11 +50,11 @@ public sealed partial class BuyerDepartmentCondition : ListingCondition
         {
             var found = false;
 
-            if (job?.Prototype != null)
+            if (job != null)
             {
                 foreach (var department in prototypeManager.EnumeratePrototypes<DepartmentPrototype>())
                 {
-                    if (department.Roles.Contains(job.Prototype.Value) && Whitelist.Contains(department.ID))
+                    if (department.Roles.Contains(job.ID) && Whitelist.Contains(department.ID))
                     {
                         found = true;
                         break;

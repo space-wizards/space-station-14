@@ -1,3 +1,6 @@
+using Content.Shared.Maps;
+using Robust.Shared.Prototypes;
+
 namespace Content.Shared.Procedural.PostGeneration;
 
 // Ime a worm
@@ -32,4 +35,7 @@ public sealed partial class WormCorridorDunGen : IDunGenLayer
     /// </summary>
     [DataField]
     public float Width = 3f;
+
+    [DataField(required: true)]
+    public ProtoId<ContentTileDefinition> Tile;
 }

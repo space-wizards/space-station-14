@@ -20,7 +20,7 @@
       projectile:
         shape:
           !type:PhysShapeAabb
-          bounds: "-0.1,-0.1,0.1,0.1"
+          bounds: "-0.1,-0.3,0.1,-0.1"
         hard: false
         mask:
         - Impassable
@@ -106,3 +106,107 @@
   - type: Construction
     graph: ImprovisedArrow
     node: ImprovisedArrow
+
+- type: entity
+  parent: BaseArrow
+  id: ArrowImprovisedPlasma
+  name: plasma glass shard arrow
+  description: The greyshirt's preferred projectile. Now with extra lethality!
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Projectiles/arrows.rsi
+    layers:
+    - state: tail
+      color: white
+    - state: rod
+      color: darkgray
+    - state: tip
+      color: purple
+    - state: solution1
+      map: ["enum.SolutionContainerLayers.Fill"]
+      visible: false
+  - type: Projectile
+    damage:
+      types:
+        Piercing: 30
+  - type: Construction
+    graph: ImprovisedArrowPlasma
+    node: ImprovisedArrowPlasma
+
+- type: entity
+  parent: BaseArrow
+  id: ArrowImprovisedUranium
+  name: uranium glass shard arrow
+  description: The greyshirt's preferred projectile. Now with added radiation!
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Projectiles/arrows.rsi
+    layers:
+    - state: tail
+      color: white
+    - state: rod
+      color: darkgray
+    - state: tip
+      color: green
+    - state: solution1
+      map: ["enum.SolutionContainerLayers.Fill"]
+      visible: false
+  - type: Projectile
+    damage:
+      types:
+        Piercing: 25
+        Radiation: 5
+  - type: Construction
+    graph: ImprovisedArrowUranium
+    node: ImprovisedArrowUranium
+
+- type: entity
+  parent: BaseArrow
+  id: ArrowImprovisedCarp
+  name: carp tooth arrow
+  description: The salvager's preferred arrow. Kill your enemies with the teeth of their families.
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Projectiles/arrows.rsi
+    layers:
+    - state: tail
+      color: purple
+    - state: rod
+      color: darkgray
+    - state: tip
+      color: white
+    - state: solution1
+      map: ["enum.SolutionContainerLayers.Fill"]
+      visible: false
+  - type: Projectile
+    damage:
+      types:
+        Piercing: 30
+  - type: Construction
+    graph: ImprovisedArrowCarp
+    node: ImprovisedArrowCarp
+
+- type: entity
+  parent: BaseArrow
+  id: ArrowCard
+  name: cardboard arrow
+  description: Careful, you'll poke an eye out!
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Projectiles/arrows.rsi
+    layers:
+    - state: tail
+      color: white
+    - state: rod
+      color: brown
+    - state: tip
+      color: brown
+  - type: Projectile
+    damage:
+      types:
+        Blunt: 1
+  - type: StaminaDamageOnCollide
+    damage: 10
+  - type: Construction
+    graph: CardArrow
+    node: CardArrow

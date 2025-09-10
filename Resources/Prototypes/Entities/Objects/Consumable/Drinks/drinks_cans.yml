@@ -14,11 +14,19 @@
         - ReagentId: Cola
           Quantity: 30
         maxVol: 30
+      grindable:
+        reagents: # 5u -> 1/2 steel sheet (10u)
+        - ReagentId: Aluminium # Fun fact: soda can makeup is approx. 75% aluminium and 25% tin/iron.
+          Quantity: 4
+        - ReagentId: Iron
+          Quantity: 1
   - type: MixableSolution
     solution: drink
   - type: SolutionTransfer
     canChangeTransferAmount: true
     maxTransferAmount: 15
+  - type: Extractable
+    grindableSolutionName: grindable
   - type: UserInterface
     interfaces:
       enum.TransferAmountUiKey.Key:
@@ -38,6 +46,9 @@
     solution: drink
   - type: PressurizedSolution
     solution: drink
+  - type: ExaminableSolution
+    solution: drink
+    examinableWhileClosed: false
   - type: Appearance
   - type: GenericVisualizer
     visuals:
@@ -71,8 +82,8 @@
 - type: entity
   parent: DrinkCanBaseFull
   id: DrinkColaCan
-  name: space cola
-  description: A refreshing beverage.
+  name: Space Cola can
+  description: A sweet, carbonated soft drink.
   components:
   - type: SolutionContainerManager
     solutions:
@@ -81,6 +92,12 @@
         reagents:
         - ReagentId: Cola
           Quantity: 30
+      grindable:
+        reagents:
+        - ReagentId: Aluminium
+          Quantity: 4
+        - ReagentId: Iron
+          Quantity: 1
   - type: Tag
     tags:
     - Cola
@@ -101,6 +118,12 @@
     solutions:
       drink:
         maxVol: 30
+      grindable:
+        reagents:
+        - ReagentId: Aluminium
+          Quantity: 4
+        - ReagentId: Iron
+          Quantity: 1
   - type: Openable
     opened: true
   - type: Sprite
@@ -129,6 +152,12 @@
         reagents:
         - ReagentId: IcedTea
           Quantity: 30
+      grindable:
+        reagents:
+        - ReagentId: Aluminium
+          Quantity: 4
+        - ReagentId: Iron
+          Quantity: 1
   - type: Sprite
     sprite: Objects/Consumable/Drinks/ice_tea_can.rsi
   - type: Item
@@ -137,7 +166,7 @@
 - type: entity
   parent: DrinkCanBaseFull
   id: DrinkLemonLimeCan
-  name: lemon-lime can
+  name: Smite can
   description: You wanted ORANGE. It gave you Lemon-Lime.
   components:
   - type: SolutionContainerManager
@@ -147,10 +176,73 @@
         reagents:
         - ReagentId: LemonLime
           Quantity: 30
+      grindable:
+        reagents:
+        - ReagentId: Aluminium
+          Quantity: 4
+        - ReagentId: Iron
+          Quantity: 1
   - type: Sprite
     sprite: Objects/Consumable/Drinks/lemon-lime.rsi
   - type: Item
     sprite: Objects/Consumable/Drinks/lemon-lime.rsi
+
+- type: entity
+  parent: DrinkCanBaseFull
+  id: DrinkLemonLimeCranberryCan
+  name: Smite Cranberry can
+  description: Y'all want a Smite Cranberry? Beloved by administrators everywhere. Drink in moderation. A limited run for the holidays!
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 30
+        reagents:
+        - ReagentId: LemonLimeCranberry
+          Quantity: 30
+      grindable:
+        reagents:
+        - ReagentId: Aluminium
+          Quantity: 4
+        - ReagentId: Iron
+          Quantity: 1
+  - type: Sprite
+    sprite: Objects/Consumable/Drinks/lemon-lime-cranberry.rsi
+  - type: Item
+    sprite: Objects/Consumable/Drinks/lemon-lime-cranberry.rsi
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape: !type:PhysShapeCircle
+          radius: 0.2
+        density: 5
+        mask:
+        - ItemMask
+        restitution: 0.3
+        friction: 0.2
+      projectile:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.1,-0.1,0.1,0.1"
+        hard: false
+        mask:
+        - Impassable
+        - BulletImpassable
+  - type: EmbeddableProjectile
+    sound: /Audio/Weapons/punch1.ogg
+    embedOnThrow: True
+  - type: ThrowingAngle
+    angle: 0
+  - type: LandAtCursor
+  - type: Ammo
+    muzzleFlash: null
+  - type: Projectile
+    deleteOnCollide: false
+    onlyCollideWhenShot: true
+    damage:
+      types:
+        Blunt: 1
+        Cold: 2 # Refreshing
 
 - type: entity
   parent: DrinkCanBaseFull
@@ -165,6 +257,12 @@
         reagents:
         - ReagentId: GrapeSoda
           Quantity: 30
+      grindable:
+        reagents:
+        - ReagentId: Aluminium
+          Quantity: 4
+        - ReagentId: Iron
+          Quantity: 1
   - type: Sprite
     sprite: Objects/Consumable/Drinks/purple_can.rsi
   - type: Item
@@ -183,6 +281,12 @@
         reagents:
         - ReagentId: RootBeer
           Quantity: 30
+      grindable:
+        reagents:
+        - ReagentId: Aluminium
+          Quantity: 4
+        - ReagentId: Iron
+          Quantity: 1
   - type: Sprite
     sprite: Objects/Consumable/Drinks/rootbeer.rsi
   - type: Item
@@ -204,6 +308,12 @@
         reagents:
         - ReagentId: SodaWater
           Quantity: 30
+      grindable:
+        reagents:
+        - ReagentId: Aluminium
+          Quantity: 4
+        - ReagentId: Iron
+          Quantity: 1
   - type: Drink
   - type: Sprite
     sprite: Objects/Consumable/Drinks/sodawater.rsi
@@ -211,8 +321,8 @@
 - type: entity
   parent: DrinkCanBaseFull
   id: DrinkSpaceMountainWindCan
-  name: space mountain wind can
-  description: Blows right through you like a space wind.
+  name: Space Solar Wind can
+  description: Blows right through you like a solar wind.
   components:
   - type: SolutionContainerManager
     solutions:
@@ -221,6 +331,12 @@
         reagents:
         - ReagentId: SpaceMountainWind
           Quantity: 30
+      grindable:
+        reagents:
+        - ReagentId: Aluminium
+          Quantity: 4
+        - ReagentId: Iron
+          Quantity: 1
   - type: Sprite
     sprite: Objects/Consumable/Drinks/space_mountain_wind.rsi
   - type: Item
@@ -229,7 +345,7 @@
 - type: entity
   parent: DrinkCanBaseFull
   id: DrinkSpaceUpCan
-  name: space-up can
+  name: Space-Up can
   description: Tastes like a hull breach in your mouth.
   components:
   - type: SolutionContainerManager
@@ -239,6 +355,12 @@
         reagents:
         - ReagentId: SpaceUp
           Quantity: 30
+      grindable:
+        reagents:
+        - ReagentId: Aluminium
+          Quantity: 4
+        - ReagentId: Iron
+          Quantity: 1
   - type: Sprite
     sprite: Objects/Consumable/Drinks/space-up.rsi
   - type: Item
@@ -247,7 +369,7 @@
 - type: entity
   parent: DrinkCanBaseFull
   id: DrinkSolDryCan
-  name: sol dry
+  name: Sol Dry can
   description: Sweet ginger soda from outer space!
   components:
   - type: SolutionContainerManager
@@ -257,6 +379,12 @@
         reagents:
         - ReagentId: SolDry
           Quantity: 30
+      grindable:
+        reagents:
+        - ReagentId: Aluminium
+          Quantity: 4
+        - ReagentId: Iron
+          Quantity: 1
   - type: Sprite
     sprite: Objects/Consumable/Drinks/sol_dry.rsi
   - type: Item
@@ -265,7 +393,7 @@
 - type: entity
   parent: DrinkCanBaseFull
   id: DrinkStarkistCan
-  name: starkist can
+  name: Starkist can
   description: The taste of a star in liquid form. And, a bit of tuna...?
   components:
   - type: SolutionContainerManager
@@ -275,6 +403,12 @@
         reagents:
         - ReagentId: Starkist
           Quantity: 30
+      grindable:
+        reagents:
+        - ReagentId: Aluminium
+          Quantity: 4
+        - ReagentId: Iron
+          Quantity: 1
   - type: Sprite
     sprite: Objects/Consumable/Drinks/starkist.rsi
   - type: Item
@@ -293,6 +427,12 @@
         reagents:
         - ReagentId: TonicWater
           Quantity: 30
+      grindable:
+        reagents:
+        - ReagentId: Aluminium
+          Quantity: 4
+        - ReagentId: Iron
+          Quantity: 1
   - type: Drink
   - type: Sprite
     sprite: Objects/Consumable/Drinks/tonic.rsi
@@ -310,6 +450,12 @@
         reagents:
         - ReagentId: FourteenLoko
           Quantity: 30
+      grindable:
+        reagents:
+        - ReagentId: Aluminium
+          Quantity: 4
+        - ReagentId: Iron
+          Quantity: 1
   - type: Sprite
     sprite: Objects/Consumable/Drinks/fourteen_loko.rsi
   - type: Item
@@ -318,7 +464,7 @@
 - type: entity
   parent: DrinkCanBaseFull
   id: DrinkChangelingStingCan
-  name: changeling sting can
+  name: Changeling Sting can
   description: You take a tiny sip and feel a burning sensation...
   components:
   - type: SolutionContainerManager
@@ -328,6 +474,12 @@
         reagents:
         - ReagentId: ChangelingSting
           Quantity: 30
+      grindable:
+        reagents:
+        - ReagentId: Aluminium
+          Quantity: 4
+        - ReagentId: Iron
+          Quantity: 1
   - type: Drink
   - type: Sprite
     sprite: Objects/Consumable/Drinks/changelingsting.rsi
@@ -347,6 +499,12 @@
         reagents:
         - ReagentId: DrGibb
           Quantity: 30
+      grindable:
+        reagents:
+        - ReagentId: Aluminium
+          Quantity: 4
+        - ReagentId: Iron
+          Quantity: 1
   - type: Drink
   - type: Sprite
     sprite: Objects/Consumable/Drinks/dr_gibb.rsi
@@ -356,7 +514,7 @@
 - type: entity
   parent: DrinkCanBaseFull
   id: DrinkNukieCan
-  name: blood-red brew can
+  name: Blood-red Brew can
   description: A home-brewed drink made from the crazed minds at the Syndicate. Not recommended by doctors.
   components:
   - type: SolutionContainerManager
@@ -370,6 +528,12 @@
           Quantity: 20
         - ReagentId: Ice
           Quantity: 5
+      grindable:
+        reagents:
+        - ReagentId: Aluminium
+          Quantity: 4
+        - ReagentId: Iron
+          Quantity: 1
   - type: Tag
     tags:
     - DrinkCan
@@ -382,7 +546,7 @@
 - type: entity
   parent: DrinkCanBaseFull
   id: DrinkEnergyDrinkCan
-  name: red bool energy drink
+  name: Red Bool can
   description: A can of Red Bool, with enough caffeine to kill a horse.
   components:
   - type: SolutionContainerManager
@@ -392,6 +556,12 @@
         reagents:
         - ReagentId: EnergyDrink
           Quantity: 30
+      grindable:
+        reagents:
+        - ReagentId: Aluminium
+          Quantity: 4
+        - ReagentId: Iron
+          Quantity: 1
   - type: Drink
   - type: Sprite
     sprite: Objects/Consumable/Drinks/energy_drink.rsi
@@ -454,7 +624,7 @@
 - type: entity
   parent: DrinkCanBaseFull
   id: DrinkShamblersJuiceCan
-  name: shamblers juice can
+  name: Shambler's Juice can
   description: ~Shake me up some of that Shambler's Juice!~
   components:
   - type: SolutionContainerManager
@@ -464,6 +634,12 @@
         reagents:
         - ReagentId: ShamblersJuice
           Quantity: 30
+      grindable:
+        reagents:
+        - ReagentId: Aluminium
+          Quantity: 4
+        - ReagentId: Iron
+          Quantity: 1
   - type: Drink
   - type: Sprite
     sprite: Objects/Consumable/Drinks/shamblersjuice.rsi
@@ -473,7 +649,7 @@
 - type: entity
   parent: DrinkCanBaseFull
   id: DrinkPwrGameCan
-  name: pwr game can
+  name: PWR Game can
   description: The only drink with the PWR that true gamers crave. When a gamer talks about gamerfuel, this is what they're literally referring to.
   components:
   - type: SolutionContainerManager
@@ -483,6 +659,12 @@
         reagents:
         - ReagentId: PwrGame
           Quantity: 30
+      grindable:
+        reagents:
+        - ReagentId: Aluminium
+          Quantity: 4
+        - ReagentId: Iron
+          Quantity: 1
   - type: Drink
   - type: Sprite
     sprite: Objects/Consumable/Drinks/pwrgame.rsi
@@ -502,6 +684,12 @@
         reagents:
         - ReagentId: Beer
           Quantity: 30
+      grindable:
+        reagents:
+        - ReagentId: Aluminium
+          Quantity: 4
+        - ReagentId: Iron
+          Quantity: 1
   - type: Drink
   - type: Sprite
     sprite: Objects/Consumable/Drinks/beer_can.rsi
@@ -524,6 +712,12 @@
         reagents:
         - ReagentId: Wine
           Quantity: 30
+      grindable:
+        reagents:
+        - ReagentId: Aluminium
+          Quantity: 4
+        - ReagentId: Iron
+          Quantity: 1
   - type: Drink
   - type: Sprite
     sprite: Objects/Consumable/Drinks/wine_can.rsi

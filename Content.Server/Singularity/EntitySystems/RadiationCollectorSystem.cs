@@ -7,6 +7,7 @@ using Content.Server.Power.Components;
 using Content.Server.Power.EntitySystems;
 using Content.Server.Singularity.Components;
 using Content.Shared.Atmos;
+using Content.Shared.Atmos.Components;
 using Content.Shared.Examine;
 using Content.Shared.Interaction;
 using Content.Shared.Radiation.Events;
@@ -30,7 +31,7 @@ public sealed class RadiationCollectorSystem : EntitySystem
     public override void Initialize()
     {
         base.Initialize();
-        SubscribeLocalEvent<RadiationCollectorComponent, InteractHandEvent>(OnInteractHand);
+        SubscribeLocalEvent<RadiationCollectorComponent, ActivateInWorldEvent>(OnActivate);
         SubscribeLocalEvent<RadiationCollectorComponent, OnIrradiatedEvent>(OnRadiation);
         SubscribeLocalEvent<RadiationCollectorComponent, ExaminedEvent>(OnExamined);
         SubscribeLocalEvent<RadiationCollectorComponent, GasAnalyzerScanEvent>(OnAnalyzed);
@@ -47,7 +48,7 @@ public sealed class RadiationCollectorSystem : EntitySystem
         if (!_containerSystem.TryGetContainer(uid, GasTankContainer, out var container) || container.ContainedEntities.Count == 0)
             return false;
 
-        if (!EntityManager.TryGetComponent(container.ContainedEntities.First(), out gasTankComponent))
+        if (!TryComp(container.ContainedEntities.First(), out gasTankComponent))
             return false;
 
         return true;
@@ -65,8 +66,11 @@ public sealed class RadiationCollectorSystem : EntitySystem
         UpdateTankAppearance(uid, component, gasTank);
     }
 
-    private void OnInteractHand(EntityUid uid, RadiationCollectorComponent component, InteractHandEvent args)
+    private void OnActivate(EntityUid uid, RadiationCollectorComponent component, ActivateInWorldEvent args)
     {
+        if (!args.Complex)
+            return;
+
         if (TryComp(uid, out UseDelayComponent? useDelay) && !_useDelay.TryResetDelay((uid, useDelay), true))
             return;
 
@@ -103,7 +107,7 @@ public sealed class RadiationCollectorSystem : EntitySystem
 
             if (gas.Byproduct != null)
             {
-                gasTankComponent.Air.AdjustMoles((int) gas.Byproduct, delta * gas.MolarRatio);
+                gasTankComponent.Air.AdjustMoles((int)gas.Byproduct, delta * gas.MolarRatio);
             }
         }
 
@@ -204,13 +208,14 @@ public sealed class RadiationCollectorSystem : EntitySystem
         if (!Resolve(uid, ref appearance, false))
             return;
 
+        // gas canisters can fill tanks up to 10 atm, so we set the warning level thresholds 1/3 and 2/3 of that
         if (gasTank == null || gasTank.Air.Pressure < 10)
             _appearance.SetData(uid, RadiationCollectorVisuals.PressureState, 0, appearance);
 
-        else if (gasTank.Air.Pressure < Atmospherics.OneAtmosphere)
+        else if (gasTank.Air.Pressure < 3.33f * Atmospherics.OneAtmosphere)
             _appearance.SetData(uid, RadiationCollectorVisuals.PressureState, 1, appearance);
 
-        else if (gasTank.Air.Pressure < 3f * Atmospherics.OneAtmosphere)
+        else if (gasTank.Air.Pressure < 6.66f * Atmospherics.OneAtmosphere)
             _appearance.SetData(uid, RadiationCollectorVisuals.PressureState, 2, appearance);
 
         else

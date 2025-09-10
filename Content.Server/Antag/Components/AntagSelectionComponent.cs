@@ -3,7 +3,6 @@ using Content.Shared.Antag;
 using Content.Shared.Destructible.Thresholds;
 using Content.Shared.Preferences.Loadouts;
 using Content.Shared.Roles;
-using Content.Shared.Storage;
 using Content.Shared.Whitelist;
 using Robust.Shared.Audio;
 using Robust.Shared.Player;
@@ -15,10 +14,16 @@ namespace Content.Server.Antag.Components;
 public sealed partial class AntagSelectionComponent : Component
 {
     /// <summary>
-    /// Has the primary selection of antagonists finished yet?
+    /// Has the primary assignment of antagonists finished yet?
     /// </summary>
     [DataField]
-    public bool SelectionsComplete;
+    public bool AssignmentComplete;
+
+    /// <summary>
+    /// Has the antagonists been preselected but yet to be fully assigned?
+    /// </summary>
+    [DataField]
+    public bool PreSelectionsComplete;
 
     /// <summary>
     /// The definitions for the antagonists
@@ -27,10 +32,10 @@ public sealed partial class AntagSelectionComponent : Component
     public List<AntagSelectionDefinition> Definitions = new();
 
     /// <summary>
-    /// The minds and original names of the players selected to be antagonists.
+    /// The minds and original names of the players assigned to be antagonists.
     /// </summary>
     [DataField]
-    public List<(EntityUid, string)> SelectedMinds = new();
+    public List<(EntityUid, string)> AssignedMinds = new();
 
     /// <summary>
     /// When the antag selection will occur.
@@ -39,10 +44,16 @@ public sealed partial class AntagSelectionComponent : Component
     public AntagSelectionTime SelectionTime = AntagSelectionTime.PostPlayerSpawn;
 
     /// <summary>
+    /// Cached sessions of antag definitions and selected players. Players in this dict are not guaranteed to have been assigned the role yet.
+    /// </summary>
+    [DataField]
+    public Dictionary<AntagSelectionDefinition, HashSet<ICommonSession>>PreSelectedSessions = new();
+
+    /// <summary>
     /// Cached sessions of players who are chosen. Used so we don't have to rebuild the pool multiple times in a tick.
     /// Is not serialized.
     /// </summary>
-    public HashSet<ICommonSession> SelectedSessions = new();
+    public HashSet<ICommonSession> AssignedSessions = new();
 
     /// <summary>
     /// Locale id for the name of the antag.
@@ -50,6 +61,13 @@ public sealed partial class AntagSelectionComponent : Component
     /// </summary>
     [DataField]
     public LocId? AgentName;
+
+    /// <summary>
+    /// If the player is pre-selected but fails to spawn in (e.g. due to only having antag-immune jobs selected),
+    /// should they be removed from the pre-selection list?
+    /// </summary>
+    [DataField]
+    public bool RemoveUponFailedSpawn = true;
 }
 
 [DataDefinition]
@@ -145,9 +163,16 @@ public partial struct AntagSelectionDefinition()
 
     /// <summary>
     /// Components added to the player's mind.
+    /// Do NOT use this to add role-type components. Add those as MindRoles instead
     /// </summary>
     [DataField]
     public ComponentRegistry MindComponents = new();
+
+    /// <summary>
+    /// List of Mind Role Prototypes to be added to the player's mind.
+    /// </summary>
+    [DataField]
+    public List<EntProtoId>? MindRoles;
 
     /// <summary>
     /// A set of starting gear that's equipped to the player.

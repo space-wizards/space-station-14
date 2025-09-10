@@ -1,54 +1,39 @@
 - type: latheRecipe
+  parent: BasePartRecipe
   id: TimerTrigger
   result: TimerTrigger
-  category: Parts
-  completetime: 2
-  materials:
-    Steel: 300
-    Plastic: 200
 
 - type: latheRecipe
+  parent: BasePartRecipe
   id: SignalTrigger
   result: SignalTrigger
-  category: Parts
-  completetime: 2
-  materials:
-    Steel: 300
-    Plastic: 200
 
 - type: latheRecipe
+  parent: BasePartRecipe
   id: VoiceTrigger
   result: VoiceTrigger
-  category: Parts
-  completetime: 2
-  materials:
-    Steel: 300
-    Plastic: 200
 
 - type: latheRecipe
+  parent: BasePartRecipe
   id: Igniter
   result: Igniter
-  category: Parts
-  completetime: 2
   materials:
     Steel: 300
     Plastic: 100
     Glass: 100
 
 - type: latheRecipe
+  parent: BaseWeaponRecipe
   id: ChemicalPayload
   result: ChemicalPayload
-  category: Weapons
-  completetime: 2
   materials:
     Steel: 200
     Plastic: 300
 
 - type: latheRecipe
+  parent: BaseWeaponRecipe
   id: FlashPayload
   result: FlashPayload
-  category: Weapons
-  completetime: 2
   materials:
     Steel: 50
     Plastic: 100
@@ -58,7 +43,8 @@
 - type: latheRecipe
   id: ExplosivePayload
   result: ExplosivePayload
-  category: Weapons
+  categories:
+  - Weapons
   completetime: 4
   materials:
     Steel: 100
@@ -68,20 +54,18 @@
     Silver: 50
 
 - type: latheRecipe
+  parent: BasePartRecipe
   id: Signaller
   result: RemoteSignaller
-  category: Parts
-  completetime: 2
   materials:
     Steel: 100
     Plastic: 200
     Glass: 100
 
 - type: latheRecipe
+  parent: BasePartRecipe
   id: SignallerAdvanced
   result: RemoteSignallerAdvanced
-  category: Parts
-  completetime: 2
   materials:
     Steel: 100
     Plastic: 200
@@ -90,7 +74,8 @@
 - type: latheRecipe
   id: AnomalyLocator
   result: AnomalyLocatorEmpty
-  category: Tools
+  categories:
+  - Tools
   completetime: 3
   materials:
     Steel: 400
@@ -99,17 +84,17 @@
 - type: latheRecipe
   id: AnomalyLocatorWide
   result: AnomalyLocatorWideEmpty
-  category: Tools
+  categories:
+  - Tools
   completetime: 3
   materials:
     Steel: 400
     Glass: 100
 
 - type: latheRecipe
+  parent: BaseToolRecipe
   id: AnomalyScanner
   result: AnomalyScanner
-  category: Tools
-  completetime: 2
   materials:
     Plastic: 200
     Glass: 150
@@ -117,7 +102,8 @@
 - type: latheRecipe
   id: WeaponPistolCHIMP
   result: WeaponPistolCHIMP
-  category: Tools
+  categories:
+  - Tools
   completetime: 5
   materials:
     Steel: 500
@@ -126,7 +112,8 @@
 - type: latheRecipe
   id: WeaponGauntletGorilla
   result: WeaponGauntletGorilla
-  category: Tools
+  categories:
+  - Tools
   completetime: 5
   materials:
     Steel: 1500
@@ -146,34 +133,19 @@
     Uranium: 150
 
 - type: latheRecipe
+  parent: ClothingBackpackHolding
   id: ClothingBackpackSatchelHolding
   result: ClothingBackpackSatchelHolding
-  completetime: 5
-  materials:
-    Steel: 2000
-    Silver: 750
-    Plasma: 1500
-    Uranium: 150
 
 - type: latheRecipe
+  parent: ClothingBackpackHolding
   id: ClothingBackpackDuffelHolding
   result: ClothingBackpackDuffelHolding
-  completetime: 5
-  materials:
-    Steel: 2000
-    Silver: 750
-    Plasma: 1500
-    Uranium: 150
 
 - type: latheRecipe
+  parent: ClothingBackpackHolding
   id: OreBagOfHolding
   result: OreBagOfHolding
-  completetime: 5
-  materials:
-    Steel: 2000
-    Silver: 750
-    Plasma: 1500
-    Uranium: 150
 
 - type: latheRecipe
   id: ClothingMaskWeldingGas
@@ -186,7 +158,8 @@
 - type: latheRecipe
   id: WeaponForceGun
   result: WeaponForceGun
-  category: Tools
+  categories:
+  - Tools
   completetime: 5
   materials:
     Steel: 500
@@ -203,9 +176,19 @@
     Uranium: 100
 
 - type: latheRecipe
+  id: DeviceDesynchronizer
+  result: DeviceDesynchronizer
+  completetime: 5
+  materials:
+    Steel: 700
+    Glass: 100
+    Uranium: 200
+
+- type: latheRecipe
   id: WeaponProtoKineticAccelerator
   result: WeaponProtoKineticAccelerator
-  category: Weapons
+  categories:
+  - Weapons
   completetime: 5
   materials:
     Steel: 1000
@@ -215,7 +198,8 @@
 - type: latheRecipe
   id: WeaponTetherGun
   result: WeaponTetherGun
-  category: Tools
+  categories:
+  - Tools
   completetime: 5
   materials:
     Steel: 500
@@ -225,7 +209,8 @@
 - type: latheRecipe
   id: WeaponGrapplingGun
   result: WeaponGrapplingGun
-  category: Tools
+  categories:
+  - Tools
   completetime: 5
   materials:
     Steel: 500
