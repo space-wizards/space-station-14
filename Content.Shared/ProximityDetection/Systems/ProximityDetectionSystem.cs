@@ -70,17 +70,17 @@ public sealed class ProximityDetectionSystem : EntitySystem
         if (component.Target == null)
             return;
 
+        var newTargetEv = new NewProximityTargetEvent(0, ent);
+        RaiseLocalEvent(ent, ref newTargetEv);
+
+        var updatedEv = new ProximityTargetUpdatedEvent(0, ent);
+        RaiseLocalEvent(ent, ref updatedEv);
+
         OnNewTarget(ent, null);
 
         component.Target = null;
-        component.Distance = float.PositiveInfinity;
+        component.Distance = 0;
         DirtyFields(ent, component, null, nameof(ProximityDetectorComponent.Target), nameof(ProximityDetectorComponent.Distance));
-
-        var newTargetEv = new NewProximityTargetEvent(component.Distance, ent);
-        RaiseLocalEvent(ent, ref newTargetEv);
-
-        var updatedEv = new ProximityTargetUpdatedEvent(component.Distance, ent);
-        RaiseLocalEvent(ent, ref updatedEv);
     }
 
     private void UpdateTarget(Entity<ProximityDetectorComponent> detector)
@@ -119,22 +119,22 @@ public sealed class ProximityDetectionSystem : EntitySystem
 
         if (component.Target != closestUid)
         {
+            var newTargetEv = new NewProximityTargetEvent(closestDistance, detector, closestUid);
+            RaiseLocalEvent(detector, ref newTargetEv);
+
             OnNewTarget(detector, closestUid);
 
             component.Target = closestUid;
             DirtyField(detector, component, nameof(ProximityDetectorComponent.Target));
-
-            var newTargetEv = new NewProximityTargetEvent(closestDistance, detector, closestUid);
-            RaiseLocalEvent(detector, ref newTargetEv);
         }
 
         if (component.Distance != closestDistance)
         {
-            component.Distance = closestDistance;
-            DirtyField(detector, component, nameof(ProximityDetectorComponent.Distance));
-
             var updatedEv = new ProximityTargetUpdatedEvent(closestDistance, detector, closestUid);
             RaiseLocalEvent(detector, ref updatedEv);
+
+            component.Distance = closestDistance;
+            DirtyField(detector, component, nameof(ProximityDetectorComponent.Distance));
         }
     }
 
