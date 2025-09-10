@@ -44,13 +44,18 @@ public sealed class GasTileHeatOverlay : Overlay
         _shader = _proto.Index(HeatOverlayShader).InstanceUnique();
 
         _configManager.OnValueChanged(CCVars.ReducedMotion, SetReducedMotion, invokeImmediately: true);
-        _configManager.OnValueChanged(CCVars.AccessibilityHeatDistortion, b => _heatDistortion = b, invokeImmediately: true);
+        _configManager.OnValueChanged(CCVars.AccessibilityHeatDistortion, SetHeatDistortion, invokeImmediately: true);
     }
 
     private void SetReducedMotion(bool reducedMotion)
     {
         _shader.SetParameter("strength_scale", reducedMotion ? 0.5f : 1f);
         _shader.SetParameter("speed_scale", reducedMotion ? 0.25f : 1f);
+    }
+
+    private void SetHeatDistortion(bool value)
+    {
+        _heatDistortion = value;
     }
 
     protected override bool BeforeDraw(in OverlayDrawArgs args)
@@ -191,9 +196,6 @@ public sealed class GasTileHeatOverlay : Overlay
         if (ScreenTexture is null || _heatTarget is null || _heatBlurTarget is null)
             return;
 
-        if (!_heatDistortion)
-            return;
-
         // Blur to soften the edges of the distortion. the lower parts of the alpha channel need to get cut off in the
         // distortion shader to keep them in tile bounds.
         _clyde.BlurRenderTarget(args.Viewport, _heatTarget, _heatBlurTarget, args.Viewport.Eye!, 14f);
@@ -213,7 +215,7 @@ public sealed class GasTileHeatOverlay : Overlay
         _heatTarget = null;
         _heatBlurTarget = null;
         _configManager.UnsubValueChanged(CCVars.ReducedMotion, SetReducedMotion);
-        _configManager.UnsubValueChanged(CCVars.AccessibilityHeatDistortion, b => _heatDistortion = b);
+        _configManager.UnsubValueChanged(CCVars.AccessibilityHeatDistortion, SetHeatDistortion);
         base.DisposeBehavior();
     }
 }
