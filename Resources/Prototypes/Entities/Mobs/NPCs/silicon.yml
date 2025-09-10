@@ -1,6 +1,5 @@
 # Used for generic robotic entities (like Hivelords)
 - type: entity
-  save: false
   abstract: true
   parent: BaseMob
   id: MobRobotic
@@ -53,7 +52,6 @@
 
 # Used for bots
 - type: entity
-  save: false
   abstract: true
   parent: MobRobotic
   id: MobSiliconBase

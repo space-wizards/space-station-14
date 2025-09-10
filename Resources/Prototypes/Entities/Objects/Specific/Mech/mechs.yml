@@ -1,6 +1,6 @@
 - type: entity
   id: BaseMech
-  save: false
+  save: false # TODO PERSISTENCE enable this. I don't know why its disabled.
   abstract: true
   components:
   - type: MobMover
