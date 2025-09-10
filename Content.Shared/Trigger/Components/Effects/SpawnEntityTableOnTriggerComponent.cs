@@ -1,21 +1,21 @@
+using Content.Shared.EntityTable.EntitySelectors;
 using Robust.Shared.GameStates;
-using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Trigger.Components.Effects;
 
 /// <summary>
-/// Spawns a protoype when triggered.
+/// Spawns an entity table at this entity when triggered.
 /// If TargetUser is true it will be spawned at their location.
 /// </summary>
-/// <seealso cref="SpawnEntityTableOnTriggerComponent"/>
+/// <seealso cref="SpawnOnTriggerComponent"/>
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
-public sealed partial class SpawnOnTriggerComponent : BaseXOnTriggerComponent
+public sealed partial class SpawnEntityTableOnTriggerComponent : BaseXOnTriggerComponent
 {
     /// <summary>
-    /// The prototype to spawn.
+    /// The table to spawn.
     /// </summary>
     [DataField(required: true), AutoNetworkedField]
-    public EntProtoId Proto = string.Empty;
+    public EntityTableSelector Table;
 
     /// <summary>
     /// Use MapCoordinates for spawning?
@@ -25,8 +25,9 @@ public sealed partial class SpawnOnTriggerComponent : BaseXOnTriggerComponent
     public bool UseMapCoords;
 
     /// <summary>
-    /// Whether or not to use predicted spawning.
+    /// Whether to use predicted spawning.
     /// </summary>
+    /// <remarks>Randomization in EntityTables is not currently predicted! Use with caution.</remarks>
     [DataField, AutoNetworkedField]
     public bool Predicted;
 }
