@@ -62,35 +62,35 @@ namespace Content.Server.Light.EntitySystems
             component.StateExpiryTime -= frameTime;
             Dirty(ent);
 
-            if (component.StateExpiryTime <= 0f)
+            if (!(component.StateExpiryTime <= 0f))
+                return;
+
+            switch (component.CurrentState)
             {
-                switch (component.CurrentState)
-                {
-                    case ExpendableLightState.Lit:
-                        component.CurrentState = ExpendableLightState.Fading;
-                        component.StateExpiryTime = (float)component.FadeOutDuration.TotalSeconds;
+                case ExpendableLightState.Lit:
+                    component.CurrentState = ExpendableLightState.Fading;
+                    component.StateExpiryTime = (float)component.FadeOutDuration.TotalSeconds;
 
-                        UpdateVisualizer(ent);
+                    UpdateVisualizer(ent);
 
-                        break;
+                    break;
 
-                    default:
-                    case ExpendableLightState.Fading:
-                        component.CurrentState = ExpendableLightState.Dead;
-                        _nameModifier.RefreshNameModifiers(ent.Owner);
+                default:
+                case ExpendableLightState.Fading:
+                    component.CurrentState = ExpendableLightState.Dead;
+                    _nameModifier.RefreshNameModifiers(ent.Owner);
 
-                        _tagSystem.AddTag(ent, TrashTag);
+                    _tagSystem.AddTag(ent, TrashTag);
 
-                        UpdateSounds(ent);
-                        UpdateVisualizer(ent);
+                    UpdateSounds(ent);
+                    UpdateVisualizer(ent);
 
-                        if (TryComp<ItemComponent>(ent, out var item))
-                        {
-                            _item.SetHeldPrefix(ent, "unlit", component: item);
-                        }
+                    if (TryComp<ItemComponent>(ent, out var item))
+                    {
+                        _item.SetHeldPrefix(ent, "unlit", component: item);
+                    }
 
-                        break;
-                }
+                    break;
             }
         }
 

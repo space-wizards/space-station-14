@@ -1,5 +1,7 @@
+using Content.Shared.Stacks;
 using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.Light.Components;
@@ -65,10 +67,19 @@ public sealed partial class ExpendableLightComponent : Component
     public string FadeOutBehaviourID { get; set; } = string.Empty;
 
     [DataField]
-    public float GlowDuration { get; set; } = 60 * 15f;
+    public TimeSpan GlowDuration { get; set; } = TimeSpan.FromMinutes(15);
 
     [DataField]
-    public float FadeOutDuration { get; set; } = 60 * 5f;
+    public TimeSpan FadeOutDuration { get; set; } = TimeSpan.FromMinutes(5);
+
+    [DataField]
+    public ProtoId<StackPrototype>? RefuelMaterialID;
+
+    [DataField]
+    public TimeSpan RefuelMaterialTime = TimeSpan.FromSeconds(15f);
+
+    [DataField]
+    public TimeSpan RefuelMaximumDuration = TimeSpan.FromSeconds(60 * 15f * 2);
 
     [DataField]
     public string SpentDesc { get; set; } = string.Empty;
