@@ -642,3 +642,4 @@
       raffle:
         settings: default
     - type: Cluwne
+      unremovable: true #Starlight

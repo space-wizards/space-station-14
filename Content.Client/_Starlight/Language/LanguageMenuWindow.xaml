@@ -1,0 +1,52 @@
+<DefaultWindow xmlns="https://spacestation14.io"
+               xmlns:ui="clr-namespace:Content.Client.UserInterface.Controls"
+               Title="{Loc language-menu-window-title}"
+               SetSize="300 300">
+    <TabContainer Name="MasterTabContainer">
+        <BoxContainer Orientation="Vertical"
+                      SeparationOverride="4"
+                      MinWidth="150">
+            <PanelContainer Name="CurrentLanguageContainer"
+                            Access="Public"
+                            StyleClasses="PdaBorderRect">
+                <Label Name="CurrentLanguageLabel"
+                       Access="Public"
+                       Text="Current Language:"
+                       HorizontalExpand="True"></Label>
+            </PanelContainer>
+
+            <ui:HLine></ui:HLine>
+
+            <ScrollContainer HorizontalExpand="True"
+                             VerticalExpand="True"
+                             HScrollEnabled="False"
+                             VScrollEnabled="True"
+                             MinHeight="50">
+                <BoxContainer Name="SpokenList"
+                              Access="Public"
+                              HorizontalExpand="True"
+                              SeparationOverride="2"
+                              Orientation="Vertical">
+                    <!-- The rest here is generated Programmatically -->
+                </BoxContainer>
+            </ScrollContainer>
+        </BoxContainer>
+        <BoxContainer Orientation="Vertical"
+                      SeparationOverride="4"
+                      MinWidth="150">
+            <ScrollContainer HorizontalExpand="True"
+                             VerticalExpand="True"
+                             HScrollEnabled="False"
+                             VScrollEnabled="True"
+                             MinHeight="50">
+                <BoxContainer Name="UnderstoodList"
+                              Access="Public"
+                              HorizontalExpand="True"
+                              SeparationOverride="2"
+                              Orientation="Vertical">
+                    <!-- The rest here is generated Programmatically -->
+                </BoxContainer>
+            </ScrollContainer>
+        </BoxContainer>
+    </TabContainer>
+</DefaultWindow>

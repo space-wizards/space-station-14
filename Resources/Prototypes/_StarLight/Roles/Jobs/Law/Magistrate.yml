@@ -63,3 +63,13 @@
     - GavelHammer
     - GavelBlock
     - MagistrateUniformSkirt
+
+- type: chameleonOutfit
+  id: MagistrateChameleonOutfit
+  job: Magistrate
+  equipment:
+    head: ClothingHeadHatPwig
+    eyes: ClothingEyesGlassesSecurity
+    outerClothing: ClothingOuterRobesJudge
+    neck: ClothingNeckLawyerbadge
+    gloves: ClothingHandsGlovesColorWhite

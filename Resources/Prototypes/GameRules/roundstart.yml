@@ -22,7 +22,7 @@
     rules:
     - id: Thief
       prob: 0.5
-    - id: Changeling
+    - id: SLChangeling #Starlight lings
       prob: 0.4
     - id: Vampire
       prob: 0.25
@@ -37,7 +37,7 @@
     rules:
     - id: Thief
       prob: 0.5
-    - id: Changeling
+    - id: SLChangeling # StarlightLings
       prob: 0.4
     - id: Vampire
       prob: 0.25
@@ -165,8 +165,8 @@
     - prefRoles: [ Nukeops ]
       fallbackRoles: [ NukeopsCommander, NukeopsMedic ]
       spawnerPrototype: SpawnPointNukeopsOperative
-      max: 3
-      playerRatio: 10
+      max: 4
+      playerRatio: 16
       startingGear: SyndicateOperativeGearFull
       roleLoadout:
       - RoleSurvivalNukie
@@ -234,6 +234,36 @@
       - MindRoleTraitorReinforcement
 
 - type: entity
+  id: Changeling
+  parent: BaseGameRule
+  components:
+  - type: GameRule
+    minPlayers: 25
+  - type: AntagSelection
+    agentName: changeling-round-end-agent-name
+    selectionTime: IntraPlayerSpawn
+    definitions:
+    - prefRoles: [ Changeling ]
+      max: 3
+      playerRatio: 15
+      briefing:
+        text: changeling-role-greeting
+        color: Red
+        sound: /Audio/Ambience/Antag/changeling_start.ogg
+      components:
+      - type: ChangelingDevour
+      - type: ChangelingIdentity
+      - type: ChangelingTransform
+      - type: ActionGrant
+        actions:
+        - ActionRetractableItemArmBlade # Temporary addition, will inevitably be a purchasable in the bio-store
+      mindRoles:
+      - MindRoleChangeling
+  - type: AntagObjectives
+    objectives:
+    - ChangelingSurviveObjective
+
+- type: entity
   id: Revolutionary
   parent: BaseGameRule
   components:
@@ -278,7 +308,7 @@
     - WizardSurviveObjective
     - WizardDemonstrateObjective
   - type: LoadMapRule
-    gridPath: /Maps/Shuttles/wizard.yml
+    mapPath: /Maps/_Starlight/WizardShuttle.yml #Starlight. wizard deserves their shuttle. and it had to be re-saved as a map to get it to work.
   - type: RuleGrids
   - type: AntagSelection
   - type: AntagLoadProfileRule
@@ -308,6 +338,7 @@
       startingGear: WizardBlueGear
       # TODO: WizardComp as needed
       components:
+      - type: UniversalLanguageSpeaker # Starlight-edit: Languages
       - type: NpcFactionMember
         factions:
         - Wizard

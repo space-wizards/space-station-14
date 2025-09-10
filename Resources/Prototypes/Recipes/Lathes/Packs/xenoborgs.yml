@@ -1,0 +1,17 @@
+## Static
+
+- type: latheRecipePack
+  id: EmptyXenoborgs
+  recipes:
+  - XenoborgEngiRecipe
+  - XenoborgHeavyRecipe
+  - XenoborgScoutRecipe
+  - XenoborgStealthRecipe
+  - XenoborgiRecipe #Starlight
+
+- type: latheRecipePack
+  id: XenoborgUpgradeModules
+  recipes:
+  - XenoborgModuleHeavyLaserRecipe
+  - XenoborgModuleEnergySwordRecipe
+  - XenoborgModuleSuperCloakDeviceRecipe

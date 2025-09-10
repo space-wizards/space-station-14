@@ -150,3 +150,8 @@
   license: "CC-BY-SA-3.0"
   copyright: "Created by obscenelytinyshark for space-station-14."
   source: "https://github.com/space-wizards/space-station-14/"
+
+- files: ["dark_marble.png", "white_marble.png", "plasmarble.png", "uranium_marble.png"]
+  license: "CC0-1.0"
+  copyright: "Created by SeaWyrm"
+  source: "https://github.com/space-wizards/space-station-14/pull/38007"

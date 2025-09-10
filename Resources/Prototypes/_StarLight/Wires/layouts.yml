@@ -1,0 +1,27 @@
+- type: wireLayout
+  id: Locker
+  wires:
+  - !type:PowerWireAction
+  - !type:PowerWireAction
+    pulseTimeout: 15
+  - !type:AccessWireAction
+    electrify: true
+  - !type:AiInteractWireAction
+  - !type:LogWireAction
+  dummyWires: 1
+  
+- type: wireLayout
+  id: MedibotControls
+  dummyWires: 9
+  wires:
+  - !type:SpeechWireAction
+
+- type: wireLayout
+  id: ScanGate
+  dummyWires: 2
+  wires:
+  - !type:PowerWireAction
+  - !type:PowerWireAction
+    pulseTimeout: 15
+  - !type:AccessWireAction
+    electrify: true

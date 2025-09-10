@@ -331,6 +331,49 @@
   - type: Item
     size: Small
     sprite: _Starlight/Objects/Fun/Plushies/mozan_plushie.rsi
+    
+- type: entity
+  parent: BaseMothPlushie
+  id: PlushieKoni
+  name: koni plushie
+  description: Some sort of moth-cat hybrid. You can't help but find it really cute. Can squeak and meow!
+  components:
+    - type: Sprite
+      sprite: _Starlight/Objects/Fun/Plushies/koni_plush.rsi
+      state: icon
+    - type: Item
+      size: Small
+      sprite: _Starlight/Objects/Fun/Plushies/koni_plush.rsi
+    - type: EmitSoundOnUse
+      sound:
+        collection: CatMothSounds
+    - type: EmitSoundOnActivate
+      sound:
+        collection: CatMothSounds
+    - type: EmitSoundOnCollide
+      sound:
+        collection: CatMothSounds
+    - type: EmitSoundOnLand
+      sound:
+        collection: CatMothScreams
+    - type: EmitSoundOnTrigger
+      sound:
+        collection: CatMothSounds
+    - type: MeleeWeapon
+      soundHit:
+        collection: CatMothSounds
+    - type: Food
+      useSound:
+        collection: CatMothScreams
+    - type: Clothing
+      quickEquip: false
+      sprite: _Starlight/Objects/Fun/Plushies/koni_plush.rsi
+      slots:
+        - HEAD
+      clothingVisuals:
+        head:
+          - state: equipped-HELMET
+      
 
 - type: entity
   parent: BasePlushie
@@ -1472,6 +1515,70 @@
           dataset: PlushiesRedwoods
         - type: TextToSpeech
           voice: klaasjeamandou
+   
+- type: entity
+  parent: BasePlushie
+  id: PlushieDoxesTheCaptain #Weh!
+  name: doxes-the-captain plushie
+  description: An adorable stuffed toy that resembles Doxes-the-Captain. "Captain's IP is 189.47.108.519!"
+  components:
+  - type: Sprite
+    sprite: _Starlight/Objects/Fun/Plushies/doxesthecaptain.rsi
+    state: icon
+  - type: Item
+    sprite: _Starlight/Objects/Fun/Plushies/doxesthecaptain.rsi
+  - type: EmitSoundOnUse
+    sound:
+      path: /Audio/Items/Toys/weh.ogg
+  - type: EmitSoundOnLand
+    sound:
+      path: /Audio/Items/Toys/weh.ogg
+  - type: EmitSoundOnActivate
+    sound:
+      path: /Audio/Items/Toys/weh.ogg
+  - type: EmitSoundOnTrigger
+    sound:
+      path: /Audio/Items/Toys/weh.ogg
+  - type: EmitSoundOnCollide
+    sound:
+      path: /Audio/Items/Toys/weh.ogg
+  - type: Food
+    requiresSpecialDigestion: true
+    useSound:
+      path: /Audio/Items/Toys/weh.ogg
+  - type: MeleeWeapon
+    wideAnimationRotation: 180
+    soundHit:
+      path: /Audio/Items/Toys/weh.ogg
+  - type: Extractable
+    juiceSolution:
+      reagents:
+      - ReagentId: JuiceThatMakesYouWeh
+        Quantity: 30
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 20
+        reagents:
+        - ReagentId: Fiber
+          Quantity: 10
+        - ReagentId: JuiceThatMakesYouWeh
+          Quantity: 10
+  - type: Clothing
+    quickEquip: false
+    sprite: _Starlight/Objects/Fun/Plushies/doxesthecaptain.rsi
+    slots:
+    - HEAD
+  - type: Speech
+    speechVerb: Reptilian # for pais (In the secret stash)
+  - type: FoodSequenceElement
+    entries:
+      CottonBurger: LizardPlushie
+  - type: Tag
+    tags:
+    - Payload
+    - ClothMade
+    - PlushieLizard
 
 - type: entity
   parent: BaseShadekinPlushie
@@ -1503,29 +1610,6 @@
           dataset: PlushiesVirus
         - type: TextToSpeech
           voice: neon
-
-- type: entity
-  parent: BaseMothPlushie
-  id: PlushieMahio
-  name: Mahio Plushie
-  description: Is this moth even RD?
-  components:
-  - type: Item
-    size: Small
-    sprite: _Starlight/Objects/Fun/Plushies/mahio_plushie.rsi
-  - type: Sprite
-    sprite: _Starlight/Objects/Fun/Plushies/mahio_plushie.rsi
-    state: icon
-  - type: ItemToggle
-    onUse: false
-    verbToggleOn: plushie-voicebox-activate
-    verbToggleOff: plushie-voicebox-deactivate
-  - type: ComponentToggler
-    components:
-      - type: DatasetVocalizer
-        dataset: PlushiesMahio
-      - type: TextToSpeech
-        voice: engineer
 
 - type: entity
   parent: BaseResomiPlushie
@@ -1630,7 +1714,6 @@
   - type: EmitSoundOnTrigger
     sound:
       path: /Audio/Animals/cat_meow2.ogg
-
   - type: Food
     requiresSpecialDigestion: true
     useSound:
@@ -1639,6 +1722,30 @@
     wideAnimationRotation: 180
     soundHit:
       path: /Audio/Animals/cat_hiss.ogg
+
+- type: entity
+  parent: BaseVulpkaninPlushie
+  id: PlushieKilla
+  name: killa plushie
+  description: Looks like a cheap knockoff, it has visibly loose stitching
+  components:
+  - type: Item
+    size: Small
+    sprite: _Starlight/Objects/Fun/Plushies/killa_plushie.rsi
+  - type: Sprite
+    sprite: _Starlight/Objects/Fun/Plushies/killa_plushie.rsi
+    layers: 
+      - state: KillaTamalePlush
+  - type: ItemToggle
+    onUse: false
+    verbToggleOn: plushie-voicebox-activate
+    verbToggleOff: plushie-voicebox-deactivate
+  - type: ComponentToggler
+    components:
+    - type: DatasetVocalizer
+      dataset: PlushiesKilla
+    - type: TextToSpeech
+      voice: heavy
 
 - type: entity
   parent: BasePlushie

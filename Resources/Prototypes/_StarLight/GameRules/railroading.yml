@@ -17,8 +17,11 @@
 #    - RRCardFoodHerbSalad
 #    - RRCardFoodMelonFruitBowl
 #    - RRCardFoodStew
-    - RRCardMetabolizeNicotine
-
+#    - RRCardMetabolizeNicotine
+#    - RRCardMetabolizeTest
+#    - RRCardCriminal
+    - RRCardMailOpen
+    
 - type: entity
   parent: BaseGameRule
   id: RailroadingMinor
@@ -32,6 +35,16 @@
     preSpawnDelay: 10
     delay: 10
     cards:
+    # antagonists
+    
+    - RRCardCriminal
+
+    # open mail
+
+    - RRCardMailOpen
+
+    # Metabolize: Food
+
     - RRCardFoodSashimi
     - RRCardFoodApplePie
     - RRCardFoodDumplings

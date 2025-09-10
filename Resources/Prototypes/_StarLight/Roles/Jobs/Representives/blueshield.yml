@@ -33,7 +33,9 @@
     - Detective
     - Salvage
     - Security
+    - Brigmedic
     - Brig
+    - Lawyer
     - Cargo
     - Atmospherics
     - Cargo
@@ -57,3 +59,10 @@
     back:
     - Flash
     - ClothingMaskGasBSO
+
+- type: chameleonOutfit
+  id: BlueShieldChameleonOutfit
+  job: BlueShield
+  equipment:
+    head: ClothingHeadHatBeretBlueShield
+    gloves: ClothingHandsGlovesCombat

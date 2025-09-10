@@ -1,0 +1,19 @@
+- files: ["scan_fail.ogg"]
+  license: "CC-BY-SA-3.0"
+  copyright: 'by TG Station, original name: scanbuzz.ogg'
+  source: "https://github.com/tgstation/tgstation/commit/436ba869ebcd0b60b63973fb7562f447ee655205"
+
+- files: ["scan1.ogg"]
+  license: "CC0-1.0"
+  copyright: "SOUND - Radio Interference - During COVID-19 Quarantine by bolkmar"
+  source: "https://freesound.org/s/511890/"
+
+- files: ["scan2.ogg"]
+  license: "CC0-1.0"
+  copyright: "SOUND - Radio Interference - During COVID-19 Quarantine by bolkmar"
+  source: "https://freesound.org/s/511890/"
+
+- files: ["scan3.ogg"]
+  license: "CC0-1.0"
+  copyright: "SOUND - Radio Interference - During COVID-19 Quarantine by bolkmar"
+  source: "https://freesound.org/s/511890/"

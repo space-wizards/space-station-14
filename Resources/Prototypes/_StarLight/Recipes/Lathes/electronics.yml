@@ -9,6 +9,11 @@
   result: StoveMachineCircuitboard
 
 - type: latheRecipe
+  parent: BaseCircuitboardRecipe
+  id: ScanGateMachineCircuitboard
+  result: ScanGateMachineCircuitboard
+
+- type: latheRecipe
   parent: BaseGoldCircuitboardRecipe
   id: ClarkeCentralElectronics
   result: ClarkeCentralElectronics

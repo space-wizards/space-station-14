@@ -1,0 +1,64 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Used human organs as base, edits done by anassassin",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+    "states": [
+        {
+            "name": "eyeball-l"
+        },
+        {
+            "name": "eyeball-r"
+        },
+        {
+            "name": "eyeballs-inhand-left",
+            "directions": 4
+        },
+        {
+            "name": "eyeballs-inhand-right",
+            "directions": 4
+        },
+        {
+            "name": "kidney-l"
+        },
+        {
+            "name": "kidney-r"
+        },
+        {
+            "name": "kidneys-inhand-left",
+            "directions": 4
+        },
+        {
+            "name": "kidneys-inhand-right",
+            "directions": 4
+        },
+        {
+            "name": "liver"
+        },
+        {
+            "name": "liver-inhand-left",
+            "directions": 4
+        },
+        {
+            "name": "liver-inhand-right",
+            "directions": 4
+        },
+        {
+            "name": "stomach"
+        },
+        {
+            "name": "stomach-inhand-left",
+            "directions": 4
+        },
+        {
+            "name": "stomach-inhand-right",
+            "directions": 4
+        },
+        {
+            "name": "tongue"
+        }
+    ]
+}

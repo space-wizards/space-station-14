@@ -98,7 +98,11 @@
   - type: PhysicalComposition
   - type: Tag
     tags:
-      - Lighters #SL
+      - Lighters # SL
+  # Starlight-start: Vending Machines Prices
+  - type: ItemPrice
+    priceCategory: cigaretes
+  # Starlight-end
 
 - type: entity
   name: cheap lighter
@@ -224,6 +228,10 @@
   - type: Tag
     tags:
     - Lighters #SL
+  # Starlight-start: Vending Machines Prices
+  - type: ItemPrice
+    priceCategory: cigaretes
+  # Starlight-end
 
 - type: entity
   name: flippo engraved lighter
@@ -403,7 +411,7 @@
         maxVol: 3
 
 - type: entity
-  parent: [BaseBrandedLighter, BaseSyndicateContraband]
+  parent: [BaseBrandedLighter] #SL Edit: Non Contra
   id: CybersunFlippo
   name: CyberSun Flippo
   description: "A Sleek black and magenta flippo lighter, bearing the logo and iconography of CyberSun Industries."
@@ -423,7 +431,7 @@
     color: magenta
 
 - type: entity
-  parent: [BaseBrandedLighter, BaseSyndicateContraband]
+  parent: [BaseBrandedLighter] #SL Edit: Non Contra
   id: InterdyneFlippo
   name: Interdyne Flippo
   description: "A deep blue flippo lighter, decorated with the logo of Interdyne Pharmaceuticals' 'Gene Clean' clinics. Become the master of your own cigarette."
@@ -543,7 +551,7 @@
     color: green
 
 - type: entity
-  parent: [BaseBrandedLighter, BaseSyndicateContraband]
+  parent: [BaseBrandedLighter] #SL Edit: Non Contra
   id: WaffleCoFlippo
   name: Waffle Co. flippo
   description: "A robust mass produced lighter. The Waffle Co. logo turns the spark wheel when pushed up, minimising risk of lighter burns for even the most inept user."
@@ -611,7 +619,7 @@
   parent: [BaseBrandedLighter]
   id: DonkcoLighter
   name: Donk Co. flippo
-  description: "The flippo of choice for the seasoned traitor. A Breaded novelty lighter made by Donk Co. Somehow edible while lit."
+  description: "The flippo of choice for terrible cooks. A Breaded novelty lighter made by Donk Co. Somehow edible while lit." #SL Edit: decription edit to remove 'traitor' reference
   components:
   - type: Sprite
     sprite: Objects/Tools/Lighters/donkco.rsi

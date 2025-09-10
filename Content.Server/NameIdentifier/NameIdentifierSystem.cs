@@ -82,8 +82,8 @@ public sealed class NameIdentifierSystem : EntitySystem
         randomVal = set[^1];
         set.RemoveAt(set.Count - 1);
 
-        return proto.Prefix is not null
-            ? $"{proto.Prefix}-{randomVal}"
+        return proto.Format is not null
+            ? Loc.GetString(proto.Format, ("number", randomVal))
             : $"{randomVal}";
     }
 
@@ -104,8 +104,8 @@ public sealed class NameIdentifierSystem : EntitySystem
             ids.Remove(ent.Comp.Identifier))
         {
             id = ent.Comp.Identifier;
-            uniqueName = group.Prefix is not null
-                ? $"{group.Prefix}-{id}"
+            uniqueName = group.Format is not null
+                ? Loc.GetString(group.Format, ("number", id))
                 : $"{id}";
         }
         else

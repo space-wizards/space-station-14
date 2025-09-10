@@ -36,7 +36,7 @@ public sealed class GoliathTentacleSystem : DelayableEntitySystem
 
         if (!TryComp(args.Performer, out TransformComponent? xform)) return;
         _popup.PopupPredicted(Loc.GetString("tentacle-ability-use-popup", ("entity", args.Performer)), args.Performer, args.Performer, type: PopupType.SmallCaution);
-        _stun.TryStun(args.Performer, TimeSpan.FromSeconds(0.8f), false);
+        _stun.TryAddStunDuration(args.Performer, TimeSpan.FromSeconds(0.8f));
 
         Queue<EntityCoordinates> spawnPos = new();
         var direction = Vector2.Normalize(args.Target.Position - xform.Coordinates.Position);

@@ -61,3 +61,34 @@ jobs:
         FORK_ID: starlight-test
         PUBLISH_TOKEN: ${{ secrets.PUBLISH_TOKEN }}
         GITHUB_REPOSITORY: ${{ vars.GITHUB_REPOSITORY }}
+
+  update-changelog:
+    name: Publish Changelogs
+#    needs: build
+    runs-on: ubuntu-latest
+    environment: prod
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up SSH
+        env:
+          ACTIONS_SSH_KEY: ${{ secrets.ACTIONS_SSH_KEY }}
+        run: |
+          mkdir -p ~/.ssh
+          echo "$ACTIONS_SSH_KEY" | tr -d '\r' > ~/.ssh/id_ed25519
+          chmod 600 ~/.ssh/id_ed25519
+          ssh-keyscan github.com >> ~/.ssh/known_hosts
+
+      - name: Test SSH Connection
+        run: ssh -T git@github.com || exit 0
+
+      - name: Publish changelog (Discord)
+        continue-on-error: true
+        run: Tools/actions_changelogs_since_last_run.py
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_REPOSITORY: ${{ vars.GITHUB_REPOSITORY }}
+          DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL_DELTA }}
+          DISCORD_CHANGELOG_ROLE_ID: "1408308518448267364"

@@ -44,6 +44,7 @@
   - Detective
   - Salvage
   - Security
+  - Brigmedic # Starlight
   - Brig
   - Lawyer
   - Cargo
@@ -64,6 +65,7 @@
     gloves: ClothingHandsGlovesHop
     ears: ClothingHeadsetHoP
     belt: BoxFolderClipboard
+    #eyes: ClothingEyesHudCommand #Starlight
   storage:
     back:
     - Flash

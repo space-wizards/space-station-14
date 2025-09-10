@@ -25,8 +25,6 @@
     stackType: SalvageTicket
     count: 1
     baseLayer: base
-    layerStates:
-    - icon
     layerFunction: Threshold
   - type: StackLayerThreshold
     thresholds: [1]

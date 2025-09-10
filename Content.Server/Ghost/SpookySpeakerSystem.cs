@@ -4,6 +4,7 @@ using Content.Shared.Random.Helpers;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
+using Content.Shared.Chat; // Starlight
 
 namespace Content.Server.Ghost;
 

@@ -23,7 +23,6 @@ public sealed class NightVisionSystem : EntitySystem
     private NightVisionOverlay _overlay = default!;
     [ViewVariables]
     private EntityUid? _effect = null;
-    private readonly EntProtoId _effectPrototype = "EffectNightVision";
 
     public override void Initialize()
     {
@@ -87,7 +86,7 @@ public sealed class NightVisionSystem : EntitySystem
 
         _overlayMan.AddOverlay(_overlay);
 
-        _effect = SpawnAttachedTo(_effectPrototype, Transform(uid).Coordinates);
+        _effect = SpawnAttachedTo(nightVision.EffectPrototype, Transform(uid).Coordinates);
         _xformSys.SetParent(_effect.Value, uid);
     }
 
