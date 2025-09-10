@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Zalycon
-  changes:
-  - message: Raised limit of species chest markings to 2
-    type: Tweak
-  id: 8436
-  time: '2025-05-07T12:44:53.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/37065
 - author: themias
   changes:
   - message: Genpop prisoner closets can be ordered from cargo
@@ -3942,3 +3935,10 @@
   id: 8947
   time: '2025-09-10T20:09:58.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/39024
+- author: imatsoup
+  changes:
+  - message: Butterflies can no longer be infected by Romerol or become Romerol zombies.
+    type: Tweak
+  id: 8948
+  time: '2025-09-10T21:48:53.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/40265
