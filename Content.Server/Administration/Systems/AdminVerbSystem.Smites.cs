@@ -974,7 +974,7 @@ public sealed partial class AdminVerbSystem
             {
                 var speed = 5f; // slightly faster than default sprint speed 4.5
                 if (TryComp<MovementSpeedModifierComponent>(args.Target, out var movement))
-                    speed = movement.SprintSpeedModifier + 0.05f;// run
+                    speed = movement.CurrentSprintSpeed + 0.001f;// run
                 var distance = 200f; // its kinda slow so were just gonna cheat a bit.
                 HomingLaunchSequence(args.Target, "ImmovableRodKeepTiles", distance, speed);
             },
