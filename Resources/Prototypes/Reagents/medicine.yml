@@ -205,6 +205,9 @@
   physicalDesc: reagent-physical-desc-bubbling
   flavor: medicine
   color: "#32cd32"
+  # start of modifications
+  worksOnTheDead: true 
+  # end of modifications
   metabolisms:
     Medicine:
       effects:
@@ -1469,7 +1472,6 @@
         damage:
           groups:
             Brute: 3
-            Genetic: 1
           types:
             Poison: -6
             Radiation: -3
