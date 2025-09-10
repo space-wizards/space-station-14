@@ -13688,5 +13688,19 @@ Entries:
   id: 126100
   time: '2025-09-10T03:41:31.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/1261
+- author: biteless-dot
+  changes:
+  - message: Re-adds 2 empty patch packs to chemist locker spawns
+    type: Tweak
+  id: 158200
+  time: '2025-09-10T04:28:00.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1582
+- author: biteless-dot
+  changes:
+  - message: Adds a craft for patch packs - costs 2 plastic and is available roundstart
+    type: Add
+  id: 158201
+  time: '2025-09-10T04:28:00.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1582
 Order: -1
 
