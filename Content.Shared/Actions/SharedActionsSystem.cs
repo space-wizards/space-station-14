@@ -359,7 +359,7 @@ public abstract partial class SharedActionsSystem : EntitySystem
 
         // All checks passed. Perform the action!
         if (!_actionsQuery.TryComp(performer, out var performerActions))
-            return;
+            return false;
 
         var playPredicted = performer == user;
         PerformAction((performer, performerActions), action, null, playPredicted);
