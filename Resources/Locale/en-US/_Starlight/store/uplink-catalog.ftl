@@ -46,3 +46,6 @@ uplink-syndicate-borgi-kitted-desc = A syndicate borgi, with assault modules
 
 uplink-syndicate-borgi-speed-name = Speed Syndicate Borgi
 uplink-syndicate-borgi-speed-desc = A syndicate borgi, with dagger modules and additional speed
+
+uplink-ecronizer-name = Ecronizer
+uplink-ecronizer-desc = A small device that can be used to bypass most scanning devices, making you and your items invisible to them.

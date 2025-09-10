@@ -6,6 +6,7 @@ using Content.Shared.Cargo.Prototypes;
 using Content.Shared.Damage;
 using Content.Shared.Damage.Prototypes;
 using Content.Shared.Prototypes;
+using Content.Shared.Starlight.Antags.Abductor;
 using Content.Shared.Storage.Components;
 using Content.Shared.VendingMachines;
 using Content.Shared.Wires;
@@ -132,6 +133,14 @@ namespace Content.IntegrationTests.Tests
 
                     restocks.Add(proto.ID);
                 }
+
+                // Starlight start
+                foreach (var listing in prototypeManager.EnumeratePrototypes<AbductorListingPrototype>())
+                {
+                    // Ignore any prototypes that are listed as abductor listings instead
+                    restocks.Remove(listing.ProductEntity);
+                }
+                // Starlight end
 
                 // Collect all the prototypes with StorageFills referencing those entities.
                 foreach (var proto in prototypeManager.EnumeratePrototypes<EntityPrototype>())

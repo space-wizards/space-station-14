@@ -1,0 +1,20 @@
+﻿<ui:CharacterInspectWindow
+    xmlns="https://spacestation14.io"
+    xmlns:ui="clr-namespace:Content.Client._Starlight.Character.Info.UI"
+    MinSize="400 545"
+>
+    <ScrollContainer>
+        <TabContainer Name="InspectTabs" Access="Public">
+            <BoxContainer Orientation="Vertical">
+                <ui:CharacterICInfoControl Access="Public" Name="ICInfo"/>
+            </BoxContainer>
+            <BoxContainer Orientation="Vertical">
+                <ui:CharacterOOCInfoControl Access="Public" Name="OOCInfo"/>
+            </BoxContainer>
+            <BoxContainer Orientation="Vertical">
+                <ui:CharacterBackgroundInfoControl Access="Public" Name="BackgroundInfo"/>
+            </BoxContainer>
+        </TabContainer>
+
+    </ScrollContainer>
+</ui:CharacterInspectWindow>

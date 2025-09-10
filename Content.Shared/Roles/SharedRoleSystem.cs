@@ -10,6 +10,7 @@ using Content.Shared.Whitelist;
 using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Configuration;
+using Robust.Shared.GameStates;
 using Robust.Shared.Map;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
@@ -30,6 +31,10 @@ public abstract class SharedRoleSystem : EntitySystem
     [Dependency] private readonly IPrototypeManager _prototypes = default!;
 
     private JobRequirementOverridePrototype? _requirementOverride;
+
+    // Starlight
+    [Dependency] private readonly SharedPvsOverrideSystem _pvsOverride = default!;
+    // Starlight
 
     public override void Initialize()
     {
@@ -167,6 +172,11 @@ public abstract class SharedRoleSystem : EntitySystem
         }
 
         mind.MindRoles.Add(mindRoleId);
+
+        //starlight start
+        if (TryComp(mind.CurrentEntity, out ActorComponent? actor))
+            _pvsOverride.AddSessionOverride(mindRoleId, actor.PlayerSession);
+        //starlight end
 
         var update = MindRolesUpdate((mindId, mind));
 

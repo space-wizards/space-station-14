@@ -31,13 +31,13 @@ public sealed partial class RailroadingSystem : SharedRailroadingSystem
     public override void Initialize()
     {
         base.Initialize();
-        SubscribeLocalEvent<RailroadCardComponent, ComponentInit>(OnInit);
+        SubscribeLocalEvent<RailroadCardComponent, MapInitEvent>(OnMapInit);
         SubscribeLocalEvent<RailroadableComponent, OpenCardsAlertEvent>(ShowCardsUi);
         SubscribeLocalEvent<RailroadableComponent, ExaminedEvent>(OnExamined);
         SubscribeLocalEvent<RailroadableComponent, CollectObjectivesEvent>(OnCollectObjectiveInfo);
     }
 
-    private void OnInit(Entity<RailroadCardComponent> ent, ref ComponentInit args)
+    private void OnMapInit(Entity<RailroadCardComponent> ent, ref MapInitEvent args)
     {
         if (ent.Comp.Images != null && ent.Comp.Images.Count != 0)
             ent.Comp.Image = _random.Pick(ent.Comp.Images); // Randomly picks Image from collection.

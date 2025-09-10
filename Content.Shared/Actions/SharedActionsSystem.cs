@@ -471,6 +471,12 @@ public abstract class SharedActionsSystem : EntitySystem
         if (comp.CheckCanAccess)
             return _interaction.InRangeUnobstructed(user, coords, range: comp.Range);
 
+        // Starlight start 
+        // I’m writing this for the FIFTH fucking time. If this line disappears again, I’ll find who did it.
+        if (!comp.CheckMap)
+            return true;
+        // tarlight end
+
         // even if we don't check for obstructions, we may still need to check the range.
         var xform = Transform(user);
         if (xform.MapID != _transform.GetMapId(coords))

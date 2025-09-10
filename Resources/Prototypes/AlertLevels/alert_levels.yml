@@ -81,4 +81,17 @@
       color: '#454545'
       emergencyLightColor: '#454545'
       forceEnableEmergencyLights: true
-      shuttleTime: 1200 # end starlight
+      shuttleTime: 1200
+    psi:
+      announcement: alert-level-psi-announcement
+      selectable: false
+      sound:
+        path: /Audio/Misc/gamma.ogg
+        params:
+          volume: -2
+      disableSelection: true
+      color: "#2288ff"
+      emergencyLightColor: "#2288ff"
+      forceEnableEmergencyLights: true
+      shuttleTime: 1200
+      # end starlight
