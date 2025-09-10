@@ -10,40 +10,43 @@
       organs:
         brain: OrganThavenBrain
         eyes: OrganHumanEyes
+        tongue: OrganHumanTongue
+        eye_implant: null
     torso:
       part: TorsoThaven
       connections:
-      - right_arm
-      - left_arm
-      - right_leg
-      - left_leg
+      - right arm
+      - left arm
+      - right leg
+      - left leg
       organs:
         heart: OrganHumanHeart
         lungs: OrganHumanLungs
         stomach: OrganHumanStomach
         liver: OrganHumanLiver
         kidneys: OrganHumanKidneys
-    right_arm:
+        cavity: null
+    right arm:
       part: RightArmThaven
       connections:
-      - right_hand
-    left_arm:
+      - right hand
+    left arm:
       part: LeftArmThaven
       connections:
-      - left_hand
-    right_hand:
+      - left hand
+    right hand:
       part: RightHandThaven
-    left_hand:
+    left hand:
       part: LeftHandThaven
-    right_leg:
+    right leg:
       part: RightLegThaven
       connections:
-      - right_foot
-    left_leg:
+      - right foot
+    left leg:
       part: LeftLegThaven
       connections:
-      - left_foot
-    right_foot:
+      - left foot
+    right foot:
       part: RightFootThaven
-    left_foot:
+    left foot:
       part: LeftFootThaven
