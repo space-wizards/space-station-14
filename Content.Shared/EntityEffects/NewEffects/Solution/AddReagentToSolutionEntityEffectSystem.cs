@@ -3,7 +3,7 @@ using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Chemistry.Reagent;
 using Robust.Shared.Prototypes;
 
-namespace Content.Shared.EntityEffects.NewEffects;
+namespace Content.Shared.EntityEffects.NewEffects.Solution;
 
 public sealed class AddReagentToSolutionEntityEffectSystem : EntityEffectSystem<SolutionContainerManagerComponent, AddReagentToSolution>
 {
@@ -34,7 +34,7 @@ public sealed partial class AddReagentToSolution : EntityEffectBase<AddReagentTo
     ///     Solution we're looking for
     /// </summary>
     [DataField(required: true)]
-    public string? Solution;
+    public string? Solution = "reagents";
 
     ///<summary>
     ///     A modifier for how much reagent we're creating.

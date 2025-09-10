@@ -1,12 +1,9 @@
-using Content.Shared.EntityEffects;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Random;
-using System.Diagnostics.CodeAnalysis;
 
-namespace Content.Shared.EntityEffects.Effects.PlantMetabolism;
+namespace Content.Shared.EntityEffects.NewEffects.Botany.PlantAttributes;
 
 [ImplicitDataDefinitionForInheritors]
-public abstract partial class PlantAdjustAttribute<T> : EventEntityEffect<T> where T : PlantAdjustAttribute<T>
+public abstract partial class BasePlantAdjustAttribute<T> : EntityEffectBase<T> where T : BasePlantAdjustAttribute<T>
 {
     [DataField]
     public float Amount { get; protected set; } = 1;
@@ -23,7 +20,8 @@ public abstract partial class PlantAdjustAttribute<T> : EventEntityEffect<T> whe
     [DataField]
     public virtual bool GuidebookIsAttributePositive { get; protected set; } = true;
 
-    protected override string? ReagentEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys)
+    // TODO: For guidebook might want to use this tbqh...
+    /*protected override string? ReagentEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys)
     {
         string color;
         if (GuidebookIsAttributePositive ^ Amount < 0.0)
@@ -35,5 +33,5 @@ public abstract partial class PlantAdjustAttribute<T> : EventEntityEffect<T> whe
             color = "red";
         }
         return Loc.GetString("reagent-effect-guidebook-plant-attribute", ("attribute", Loc.GetString(GuidebookAttributeName)), ("amount", Amount.ToString("0.00")), ("colorName", color), ("chance", Probability));
-    }
+    }*/
 }

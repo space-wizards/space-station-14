@@ -57,7 +57,7 @@ public sealed partial class MovementSpeedModifierEntityEffectSystem : EntityEffe
     }
 }
 
-public sealed class MovementSpeedModifier : StatusEntityEffectBase<MovementSpeedModifier>
+public sealed class MovementSpeedModifier : BaseStatusEntityEffect<MovementSpeedModifier>
 {
     /// <summary>
     /// How much the entities' walk speed is multiplied by.

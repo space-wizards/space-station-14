@@ -37,7 +37,7 @@ public sealed partial class ModifyKnockdownEntityEffectSystem : EntityEffectSyst
     }
 }
 
-public sealed class ModifyKnockdown : StatusEntityEffectBase<ModifyKnockdown>
+public sealed class ModifyKnockdown : BaseStatusEntityEffect<ModifyKnockdown>
 {
     /// <summary>
     /// Should we only affect those with crawler component? Note if this is false, it will paralyze non-crawler's instead.

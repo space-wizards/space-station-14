@@ -87,19 +87,19 @@ public sealed class EntityEffectSystem : EntitySystem
         SubscribeLocalEvent<ExecuteEntityEffectEvent<PlantAdjustMutationLevel>>(OnExecutePlantAdjustMutationLevel);
         SubscribeLocalEvent<ExecuteEntityEffectEvent<PlantAdjustMutationMod>>(OnExecutePlantAdjustMutationMod);
         SubscribeLocalEvent<ExecuteEntityEffectEvent<PlantAdjustNutrition>>(OnExecutePlantAdjustNutrition);
-        SubscribeLocalEvent<ExecuteEntityEffectEvent<PlantAdjustPests>>(OnExecutePlantAdjustPests);
+        SubscribeLocalEvent<ExecuteEntityEffectEvent<Shared.EntityEffects.NewEffects.Botany.PlantAttributes.PlantAdjustPests>>(OnExecutePlantAdjustPests);
         SubscribeLocalEvent<ExecuteEntityEffectEvent<PlantAdjustPotency>>(OnExecutePlantAdjustPotency);
         SubscribeLocalEvent<ExecuteEntityEffectEvent<PlantAdjustToxins>>(OnExecutePlantAdjustToxins);
         SubscribeLocalEvent<ExecuteEntityEffectEvent<PlantAdjustWater>>(OnExecutePlantAdjustWater);
         SubscribeLocalEvent<ExecuteEntityEffectEvent<PlantAdjustWeeds>>(OnExecutePlantAdjustWeeds);
         SubscribeLocalEvent<ExecuteEntityEffectEvent<PlantAffectGrowth>>(OnExecutePlantAffectGrowth);
-        SubscribeLocalEvent<ExecuteEntityEffectEvent<PlantChangeStat>>(OnExecutePlantChangeStat);
-        SubscribeLocalEvent<ExecuteEntityEffectEvent<PlantCryoxadone>>(OnExecutePlantCryoxadone);
-        SubscribeLocalEvent<ExecuteEntityEffectEvent<PlantDestroySeeds>>(OnExecutePlantDestroySeeds);
-        SubscribeLocalEvent<ExecuteEntityEffectEvent<PlantDiethylamine>>(OnExecutePlantDiethylamine);
-        SubscribeLocalEvent<ExecuteEntityEffectEvent<PlantPhalanximine>>(OnExecutePlantPhalanximine);
-        SubscribeLocalEvent<ExecuteEntityEffectEvent<PlantRestoreSeeds>>(OnExecutePlantRestoreSeeds);
-        SubscribeLocalEvent<ExecuteEntityEffectEvent<RobustHarvest>>(OnExecuteRobustHarvest);
+        SubscribeLocalEvent<ExecuteEntityEffectEvent<Shared.EntityEffects.NewEffects.Botany.PlantAttributes.PlantChangeStat>>(OnExecutePlantChangeStat);
+        SubscribeLocalEvent<ExecuteEntityEffectEvent<Shared.EntityEffects.NewEffects.Botany.PlantAttributes.PlantCryoxadone>>(OnExecutePlantCryoxadone);
+        SubscribeLocalEvent<ExecuteEntityEffectEvent<Shared.EntityEffects.NewEffects.Botany.PlantAttributes.PlantDestroySeeds>>(OnExecutePlantDestroySeeds);
+        SubscribeLocalEvent<ExecuteEntityEffectEvent<Shared.EntityEffects.NewEffects.Botany.PlantAttributes.PlantDiethylamine>>(OnExecutePlantDiethylamine);
+        SubscribeLocalEvent<ExecuteEntityEffectEvent<Shared.EntityEffects.NewEffects.Botany.PlantAttributes.PlantPhalanximine>>(OnExecutePlantPhalanximine);
+        SubscribeLocalEvent<ExecuteEntityEffectEvent<Shared.EntityEffects.NewEffects.Botany.PlantAttributes.PlantRestoreSeeds>>(OnExecutePlantRestoreSeeds);
+        SubscribeLocalEvent<ExecuteEntityEffectEvent<Shared.EntityEffects.NewEffects.Botany.PlantAttributes.RobustHarvest>>(OnExecuteRobustHarvest);
         SubscribeLocalEvent<ExecuteEntityEffectEvent<AdjustTemperature>>(OnExecuteAdjustTemperature);
         SubscribeLocalEvent<ExecuteEntityEffectEvent<AreaReactionEffect>>(OnExecuteAreaReactionEffect);
         SubscribeLocalEvent<ExecuteEntityEffectEvent<CauseZombieInfection>>(OnExecuteCauseZombieInfection);
@@ -356,7 +356,7 @@ public sealed class EntityEffectSystem : EntitySystem
         val = valMutated;
     }
 
-    private void OnExecutePlantChangeStat(ref ExecuteEntityEffectEvent<PlantChangeStat> args)
+    private void OnExecutePlantChangeStat(ref ExecuteEntityEffectEvent<Shared.EntityEffects.NewEffects.Botany.PlantAttributes.PlantChangeStat> args)
     {
         if (!CanMetabolizePlant(args.Args.TargetEntity, out var plantHolderComp))
             return;
@@ -396,7 +396,7 @@ public sealed class EntityEffectSystem : EntitySystem
         }
     }
 
-    private void OnExecutePlantCryoxadone(ref ExecuteEntityEffectEvent<PlantCryoxadone> args)
+    private void OnExecutePlantCryoxadone(ref ExecuteEntityEffectEvent<Shared.EntityEffects.NewEffects.Botany.PlantAttributes.PlantCryoxadone> args)
     {
         if (!CanMetabolizePlant(args.Args.TargetEntity, out var plantHolderComp))
             return;
@@ -415,7 +415,7 @@ public sealed class EntityEffectSystem : EntitySystem
         plantHolderComp.ForceUpdate = true;
     }
 
-    private void OnExecutePlantDestroySeeds(ref ExecuteEntityEffectEvent<PlantDestroySeeds> args)
+    private void OnExecutePlantDestroySeeds(ref ExecuteEntityEffectEvent<Shared.EntityEffects.NewEffects.Botany.PlantAttributes.PlantDestroySeeds> args)
     {
         if (!CanMetabolizePlant(args.Args.TargetEntity, out var plantHolderComp, mustHaveMutableSeed: true))
             return;
@@ -432,7 +432,7 @@ public sealed class EntityEffectSystem : EntitySystem
         }
     }
 
-    private void OnExecutePlantDiethylamine(ref ExecuteEntityEffectEvent<PlantDiethylamine> args)
+    private void OnExecutePlantDiethylamine(ref ExecuteEntityEffectEvent<Shared.EntityEffects.NewEffects.Botany.PlantAttributes.PlantDiethylamine> args)
     {
         if (!CanMetabolizePlant(args.Args.TargetEntity, out var plantHolderComp, mustHaveMutableSeed: true))
             return;
@@ -450,7 +450,7 @@ public sealed class EntityEffectSystem : EntitySystem
         }
     }
 
-    private void OnExecutePlantPhalanximine(ref ExecuteEntityEffectEvent<PlantPhalanximine> args)
+    private void OnExecutePlantPhalanximine(ref ExecuteEntityEffectEvent<Shared.EntityEffects.NewEffects.Botany.PlantAttributes.PlantPhalanximine> args)
     {
         if (!CanMetabolizePlant(args.Args.TargetEntity, out var plantHolderComp, mustHaveMutableSeed: true))
             return;
@@ -458,7 +458,7 @@ public sealed class EntityEffectSystem : EntitySystem
         plantHolderComp.Seed!.Viable = true;
     }
 
-    private void OnExecutePlantRestoreSeeds(ref ExecuteEntityEffectEvent<PlantRestoreSeeds> args)
+    private void OnExecutePlantRestoreSeeds(ref ExecuteEntityEffectEvent<Shared.EntityEffects.NewEffects.Botany.PlantAttributes.PlantRestoreSeeds> args)
     {
         if (!CanMetabolizePlant(args.Args.TargetEntity, out var plantHolderComp, mustHaveMutableSeed: true))
             return;
@@ -471,7 +471,7 @@ public sealed class EntityEffectSystem : EntitySystem
         }
     }
 
-    private void OnExecuteRobustHarvest(ref ExecuteEntityEffectEvent<RobustHarvest> args)
+    private void OnExecuteRobustHarvest(ref ExecuteEntityEffectEvent<Shared.EntityEffects.NewEffects.Botany.PlantAttributes.RobustHarvest> args)
     {
         if (!CanMetabolizePlant(args.Args.TargetEntity, out var plantHolderComp))
             return;

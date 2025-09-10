@@ -29,4 +29,4 @@ public sealed partial class ModifyParalysisEntityEffectSystem : EntityEffectSyst
     }
 }
 
-public sealed class ModifyParalysis : StatusEntityEffectBase<ModifyParalysis>;
+public sealed class ModifyParalysis : BaseStatusEntityEffect<ModifyParalysis>;
