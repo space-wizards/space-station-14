@@ -301,26 +301,22 @@ namespace Content.Shared.Movement.Systems
             // Relayed movement just uses the same keybinds given we're moving the relayed entity
             // the same as us.
 
+            if (!MoverQuery.TryGetComponent(entity, out var moverComp))
+                return;
+
             // TODO: Should move this into HandleMobMovement itself.
-            if (TryComp<RelayInputMoverComponent>(entity, out var relayMover))
+            if (moverComp.CanMove &&
+                TryComp<RelayInputMoverComponent>(entity, out var relayMover))
             {
                 DebugTools.Assert(relayMover.RelayEntity != entity);
                 DebugTools.AssertNotNull(relayMover.RelayEntity);
-                DebugTools.Assert(TryComp<InputMoverComponent>(relayMover.RelayEntity, out var relayInputMover));
 
                 if (MoverQuery.TryGetComponent(entity, out var mover))
                     SetMoveInput((entity, mover), MoveButtons.None);
 
-                if (mover?.CanMove == true)
-                    HandleDirChange(relayMover.RelayEntity, dir, subTick, state);
-                else // Cancel movement if our relay source cannot move
-                    SetMoveInput((relayMover.RelayEntity, relayInputMover), MoveButtons.None);
-
+                HandleDirChange(relayMover.RelayEntity, dir, subTick, state);
                 return;
             }
-
-            if (!MoverQuery.TryGetComponent(entity, out var moverComp))
-                return;
 
             // For stuff like "Moving out of locker" or the likes
             // We'll relay a movement input to the parent.
