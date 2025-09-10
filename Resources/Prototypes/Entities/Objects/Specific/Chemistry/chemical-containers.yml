@@ -34,6 +34,7 @@
     - type: ExaminableSolution
       solution: beaker
       exactVolume: true
+      examinableWhileClosed: true
     - type: DrawableSolution
       solution: beaker
     - type: InjectableSolution
@@ -87,7 +88,6 @@
         - !type:DoActsBehavior
           acts: [ "Destruction" ]
     - type: Label
-    - type: Sealable
     - type: Tag
       tags:
       - ChemDispensable
