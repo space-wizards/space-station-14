@@ -42,7 +42,10 @@ namespace Content.IntegrationTests.Tests
         private static readonly string[] Grids =
         {
             "/Maps/centcomm.yml",
-            AdminTestArenaSystem.ArenaMapPath
+            AdminTestArenaSystem.ArenaMapPath,
+            // Ronstation - start of modifications.
+            "/Maps/_Ronstation/CentComm/budget.yml",
+            // Ronstation - end of modifications.
         };
 
         private static readonly string[] DoNotMapWhitelist =
@@ -54,7 +57,11 @@ namespace Content.IntegrationTests.Tests
             "/Maps/Shuttles/ShuttleEvent/honki.yml", // Contains golden honker, clown's rubber stamp
             "/Maps/Shuttles/ShuttleEvent/instigator.yml", // Contains EXP-320g "Friendship"
             "/Maps/Shuttles/ShuttleEvent/syndie_evacpod.yml", // Contains syndicate rubber stamp
-			"/Maps/_Ronstation/Shuttles/ShuttleEvent/syndie_evacpod.yml" // Contains syndicate rubber stamp Ronstation - Modification
+            // Ronstation - start of modifications.
+			"/Maps/_Ronstation/Shuttles/ShuttleEvent/syndie_evacpod.yml", // Contains syndicate rubber stamp
+            // Centcomm maps
+            "/Maps/_Ronstation/CentComm/budget.yml"
+            // Ronstation - end of modifications.
         };
 
         private static readonly string[] GameMaps =
