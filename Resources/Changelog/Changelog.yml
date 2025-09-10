@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: UpAndLeaves
-  changes:
-  - message: wearing an elite web vest and an atmos fire helmet will no longer heal
-      your burn damage when on fire.
-    type: Fix
-  id: 8433
-  time: '2025-05-07T02:03:05.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/37241
 - author: Flareguy
   changes:
   - message: Moth clothing now visually conforms to their body type, similar to Vox.
@@ -3946,3 +3938,10 @@
   id: 8944
   time: '2025-09-09T02:47:46.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/40200
+- author: Steffo99
+  changes:
+  - message: Fixed the RGB staff not working.
+    type: Fix
+  id: 8945
+  time: '2025-09-10T11:42:33.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/40258
