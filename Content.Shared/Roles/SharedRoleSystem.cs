@@ -673,7 +673,7 @@ public abstract class SharedRoleSystem : EntitySystem
     public HashSet<JobRequirement>? GetRoleRequirement(RolePrototype role)
     {
         if (_requirementOverride is null)
-            return null;
+            return role.Requirements;
 
         switch (role)
         {
