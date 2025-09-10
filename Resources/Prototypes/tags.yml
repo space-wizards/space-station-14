@@ -685,6 +685,9 @@
 - type: Tag
   id: GeigerCounter
 
+- type: Tag
+  id: Ghost
+
 # Used for warps
 - type: Tag
   id: GhostOnlyWarp

@@ -1,4 +1,4 @@
-using Robust.Shared.Serialization;
+﻿using Robust.Shared.Serialization;
 
 namespace Content.Shared.Eye
 {
@@ -11,7 +11,7 @@ namespace Content.Shared.Eye
         Ghost = 1 << 1, // Observers and revenants.
         Subfloor = 1 << 2, // Pipes, disposal chutes, cables etc. while hidden under tiles. Can be revealed with a t-ray.
         Admin = 1 << 3, // Reserved for admins in stealth mode and admin tools.
-        Abductor = 1 << 4, // Abductor Eye... why cant this just be on like ghost layer or something? who cares if abductors can see ghost?
         NullSpace = 1 << 5, // Starlight
+        Net = 1 << 15 // 32768 🌟Starlight🌟
     }
 }
