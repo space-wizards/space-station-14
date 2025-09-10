@@ -43,6 +43,14 @@
       - IgnoreSpiderWeb
 
 - type: entity
+  id: SpiderWebStrongOpaque
+  parent: SpiderWebStrong
+  name: strong opaque spider web
+  description: It's stringy, sticky, opaque and strong.
+  components:
+  - type: Occluder
+
+- type: entity
   id: SpiderWebSlime
   parent: SpiderWebBase
   name: slime spider web
@@ -89,6 +97,26 @@
     limit: 20
     reagents:
     - ReagentId: SpaceDrugs
+      Quantity: 2
+    blacklist:
+      components:
+      - IgnoreSpiderWeb
+
+- type: entity
+  id: SpiderWebPoison
+  parent: SpiderWebSlime
+  name: poison spider web
+  description: It's stringy and sticky.
+  components:
+  - type: Sprite
+    color: "#009926bd"
+  - type: SpeedModifierContacts
+    walkSpeedModifier: 0.5
+    sprintSpeedModifier: 0.5
+  - type: InjectOnCollide
+    limit: 20
+    reagents:
+    - ReagentId: Mechanotoxin
       Quantity: 2
     blacklist:
       components:
