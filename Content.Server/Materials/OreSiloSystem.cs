@@ -39,6 +39,10 @@ public sealed class OreSiloSystem : SharedOreSiloSystem
             if (client.Comp.Silo is not null)
                 continue;
 
+            // Don't show clients on the screen if we can't link them.
+            if (!CanTransmitMaterials((ent, ent, xform), client))
+                continue;
+
             var netEnt = GetNetEntity(client);
             var name = Identity.Name(client, EntityManager);
             var beacon = _navMap.GetNearestBeaconString(client.Owner, onlyName: true);
@@ -58,7 +62,7 @@ public sealed class OreSiloSystem : SharedOreSiloSystem
             var netEnt = GetNetEntity(client);
             var name = Identity.Name(client, EntityManager);
             var beacon = _navMap.GetNearestBeaconString(client, onlyName: true);
-            var inRange = CanTransmitMaterials((ent, ent), client);
+            var inRange = CanTransmitMaterials((ent, ent, xform), client);
 
             var txt = Loc.GetString("ore-silo-ui-itemlist-entry",
                 ("name", name),

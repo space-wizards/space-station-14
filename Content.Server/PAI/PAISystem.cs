@@ -2,14 +2,17 @@ using Content.Server.Ghost.Roles;
 using Content.Server.Ghost.Roles.Components;
 using Content.Server.Instruments;
 using Content.Server.Kitchen.Components;
+using Content.Server.Store.Systems;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Mind.Components;
 using Content.Shared.PAI;
 using Content.Shared.Popups;
-using Robust.Shared.Random;
-using System.Text;
+using Content.Shared.Store;
+using Content.Shared.Store.Components;
 using Content.Shared.Instruments;
-using Robust.Shared.Player;
+using Robust.Shared.Random;
+using Robust.Shared.Prototypes;
+using System.Text;
 
 namespace Content.Server.PAI;
 
@@ -19,12 +22,13 @@ public sealed class PAISystem : SharedPAISystem
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly MetaDataSystem _metaData = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
+    [Dependency] private readonly StoreSystem _store = default!;
     [Dependency] private readonly ToggleableGhostRoleSystem _toggleableGhostRole = default!;
 
     /// <summary>
     /// Possible symbols that can be part of a scrambled pai's name.
     /// </summary>
-    private static readonly char[] SYMBOLS = new[] { '#', '~', '-', '@', '&', '^', '%', '$', '*', ' '};
+    private static readonly char[] SYMBOLS = new[] { '#', '~', '-', '@', '&', '^', '%', '$', '*', ' ' };
 
     public override void Initialize()
     {
@@ -34,6 +38,8 @@ public sealed class PAISystem : SharedPAISystem
         SubscribeLocalEvent<PAIComponent, MindAddedMessage>(OnMindAdded);
         SubscribeLocalEvent<PAIComponent, MindRemovedMessage>(OnMindRemoved);
         SubscribeLocalEvent<PAIComponent, BeingMicrowavedEvent>(OnMicrowaved);
+
+        SubscribeLocalEvent<PAIComponent, PAIShopActionEvent>(OnShop);
     }
 
     private void OnUseInHand(EntityUid uid, PAIComponent component, UseInHandEvent args)
@@ -99,6 +105,14 @@ public sealed class PAISystem : SharedPAISystem
         // add 's pAI to the scrambled name
         var val = Loc.GetString("pai-system-pai-name-raw", ("name", name.ToString()));
         _metaData.SetEntityName(uid, val);
+    }
+
+    private void OnShop(Entity<PAIComponent> ent, ref PAIShopActionEvent args)
+    {
+        if (!TryComp<StoreComponent>(ent, out var store))
+            return;
+
+        _store.ToggleUi(args.Performer, ent, store);
     }
 
     public void PAITurningOff(EntityUid uid)

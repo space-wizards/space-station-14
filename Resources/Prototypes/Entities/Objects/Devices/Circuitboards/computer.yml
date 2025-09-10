@@ -17,6 +17,7 @@
         Glass: 230
       chemicalComposition:
         Silicon: 20
+    - type: Circuitboard
 
 - type: entity
   parent: BaseComputerCircuitboard
@@ -200,14 +201,14 @@
 
 - type: entity
   parent: BaseComputerCircuitboard
-  id: CargoShuttleComputerCircuitboard
-  name: cargo shuttle computer board
-  description: A computer printed circuit board for a cargo shuttle computer.
+  id: SalvageJobBoardComputerCircuitboard
+  name: salvage job board computer board
+  description: A computer printed circuit board for a salvage job board computer.
   components:
-    - type: Sprite
-      state: cpu_supply
-    - type: ComputerBoard
-      prototype: ComputerCargoShuttle
+  - type: Sprite
+    state: cpu_supply
+  - type: ComputerBoard
+    prototype: ComputerSalvageJobBoard
 
 - type: entity
   parent: BaseComputerCircuitboard
@@ -259,6 +260,17 @@
     state: cpu_service
   - type: ComputerBoard
     prototype: ComputerSurveillanceWirelessCameraMonitor
+  
+- type: entity
+  parent: BaseComputerCircuitboard
+  id: XenoborgCameraMonitorCircuitboard
+  name: xenoborg camera monitor board
+  description: A computer printed circuit board for a xenoborg camera monitor.
+  components:
+  - type: Sprite
+    state: cpu_science
+  - type: ComputerBoard
+    prototype: ComputerSurveillanceWirelessXenoborgCameraMonitor
 
 - type: entity
   parent: BaseComputerCircuitboard
@@ -317,7 +329,7 @@
     prototype: ComputerCrewMonitoring
 
 - type: entity
-  parent: [BaseComputerCircuitboard, BaseGrandTheftContraband]
+  parent: [BaseComputerCircuitboard, BaseCommandContraband]
   id: IDComputerCircuitboard
   name: ID card computer board
   description: A computer printed circuit board for an ID card console.
@@ -344,7 +356,7 @@
       prototype: computerBodyScanner
 
 - type: entity
-  parent: [ BaseComputerCircuitboard, BaseGrandTheftContraband ]
+  parent: [ BaseComputerCircuitboard, BaseCommandContraband ]
   id: CommsComputerCircuitboard
   name: communications computer board
   description: A computer printed circuit board for a communications console.
@@ -449,7 +461,7 @@
     prototype: ComputerShuttle
 
 - type: entity
-  parent: BaseComputerCircuitboard
+  parent: [ BaseComputerCircuitboard, BaseSyndicateContraband ]
   id: SyndicateShuttleConsoleCircuitboard
   name: syndicate shuttle console board
   description: A computer printed circuit board for a syndicate shuttle console.
@@ -482,7 +494,7 @@
       prototype: ComputerIFF
 
 - type: entity
-  parent: BaseComputerCircuitboard
+  parent: [ BaseComputerCircuitboard, BaseSyndicateContraband ]
   id: ComputerIFFSyndicateCircuitboard
   name: syndicate IFF console board
   description: Allows you to control the IFF and stealth characteristics of this vessel.
@@ -526,6 +538,17 @@
       state: cpu_science
     - type: ComputerBoard
       prototype: ComputerRoboticsControl
+
+- type: entity
+  parent: BaseComputerCircuitboard
+  id: ComputerXenoborgsControlCircuitboard
+  name: xenoborg control console board
+  description: A computer printed circuit board for a xenoborg control console.
+  components:
+    - type: Sprite
+      state: cpu_science
+    - type: ComputerBoard
+      prototype: ComputerXenoborgsControl
 
 - type: entity
   parent: BaseComputerCircuitboard

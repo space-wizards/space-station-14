@@ -1,16 +1,20 @@
 - type: entity
+  parent: BaseEntitySpellAction
   id: ActionAnimateSpell
   name: Animate
   description: Bring an inanimate object to life!
   components:
-  - type: LimitedCharges
-    maxCharges: 5
-  - type: EntityTargetAction
+  - type: Action
     useDelay: 0
-    itemIconStyle: BigAction
+    sound: !type:SoundPathSpecifier
+      path: /Audio/Magic/staff_animation.ogg
+    icon:
+      sprite: Objects/Magic/magicactions.rsi
+      state: spell_default
+  - type: EntityTargetAction
     whitelist:
       components:
-      - Animateable # Currently on: SeatBase, TableBase, ClosetBase, BaseMachine, ConstructibleMachine, BaseComputer, BaseItem, CrateGeneric, StorageTank, GasCanister, BaseTarget
+      - Animateable # Currently on: SeatBase, TableBase, ClosetBase, BaseMachine, ConstructibleMachine, BaseComputer, BaseItem, CrateGeneric, StorageTank, GasCanister
     blacklist:
       components:
       - MindContainer
@@ -19,14 +23,7 @@
       - AnomalyGenerator
       - TegGenerator
       - TegCirculator
-      - Artifact
-    canTargetSelf: false
-    interactOnMiss: false
-    sound: !type:SoundPathSpecifier
-      path: /Audio/Magic/staff_animation.ogg
-    icon:
-      sprite: Objects/Magic/magicactions.rsi
-      state: spell_default
+      - XenoArtifact
     event: !type:ChangeComponentsSpellEvent
       toAdd:
       - type: Animate
@@ -70,9 +67,9 @@
               collection: MetalBreak
       - type: Hands
       - type: CanEscapeInventory
+      - type: MobCollision
       toRemove:
       - RequireProjectileTarget
       - BlockMovement
       - Item
-      speech: action-speech-spell-animate
-      doSpeech: false
+      - MeleeRequiresWield

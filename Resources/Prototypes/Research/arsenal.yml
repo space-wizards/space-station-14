@@ -156,6 +156,20 @@
   - WeaponXrayCannon
 
 - type: technology
+  id: KineticModifications
+  name: research-technology-kinetic-modifications
+  icon:
+    sprite: Objects/Tools/upgrade.rsi
+    state: display
+  discipline: Arsenal
+  tier: 2
+  cost: 7500
+  recipeUnlocks:
+  - PKAUpgradeDamage
+  - PKAUpgradeRange
+  - PKAUpgradeFireRate
+
+- type: technology
   id: BasicShuttleArmament
   name: research-technology-basic-shuttle-armament
   icon:
@@ -176,6 +190,18 @@
   - ShuttleGunFriendshipCircuitboard
   technologyPrerequisites:
   - SalvageWeapons
+
+- type: technology
+  id: DualWieldingTechnology
+  name: research-technology-dual-wielding-technology
+  icon:
+    sprite: Clothing/Back/Specific/harmpack.rsi
+    state: icon
+  discipline: Arsenal
+  tier: 2
+  cost: 10000
+  recipeUnlocks:
+  - ClothingBackpackHarmpack
 
 # Tier 3
 

@@ -4,6 +4,10 @@
   name: cryogenic sleep unit
   description: A super-cooled container that keeps crewmates safe during space travel.
   components:
+  - type: Anchorable
+    flags:
+    - Anchorable
+  - type: Rotatable
   - type: Sprite
     noRot: true
     sprite: Structures/cryostorage.rsi
@@ -21,8 +25,15 @@
     access: [["Cryogenics"]]
   - type: InteractionOutline
   - type: Cryostorage
-  - type: Physics
-    canCollide: false
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.45,-0.45,0.45,0.05"
+        density: 190
+        mask:
+        - TableMask
   - type: DragInsertContainer
     containerId: storage
     entryDelay: 2
