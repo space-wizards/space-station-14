@@ -13657,5 +13657,36 @@ Entries:
   id: 157600
   time: '2025-09-09T01:48:18.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/1576
+- author: STARLIGHT TEAM
+  changes:
+  - message: Functionality has been added to swap sprites for a viewer based on the
+      whitelist.
+    type: Add
+  id: 157200
+  time: '2025-09-10T02:48:38.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1572
+- author: STARLIGHT TEAM
+  changes:
+  - message: The abductor eye and the AI eye are now in a separate net layout and
+      can see each other. Though for the AI, seeing all foreign objects is treated
+      as a bug, and it can’t actually identify who it is.
+    type: Tweak
+  id: 157201
+  time: '2025-09-10T02:48:38.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1572
+- author: Happyrobot33
+  changes:
+  - message: Added Gamerule cooldowns for votes.
+    type: Add
+  id: 101600
+  time: '2025-09-10T03:38:23.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1016
+- author: TacoLlama, Arkanic, and Conflee
+  changes:
+  - message: Added Purrfus cyborg
+    type: Add
+  id: 126100
+  time: '2025-09-10T03:41:31.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1261
 Order: -1
 

@@ -5,4 +5,4 @@
   components:
   - type: MindRole
     exclusiveAntag: true
-    subtype: role-subtype-traitor
+    subtype: rr-criminal
