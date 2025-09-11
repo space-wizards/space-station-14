@@ -8,6 +8,6 @@
 
 - type: roleType
   id: Neutral
-  name: role-type-central-command-aligned-name
+  name: role-type-central-command-aligned-name # DOTS - Pending rename from all instances of "Central Command" to "Corporate Aligned"
   color: '#00b600'
   symbol: "🗡" # Should never be antag, but just in case.

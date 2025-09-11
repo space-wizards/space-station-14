@@ -52,11 +52,11 @@
     - type: GhostRole
       name: ghost-role-information-Death-Squad-name
       description: ghost-role-information-Death-Squad-description
-      rules: ghost-role-information-Death-Squad-rules
+      rules: ghost-role-information-central-command-rules # Starlight
       raffle:
         settings: short
       mindRoles:
-      - MindRoleGhostRoleFamiliar
+      - MindRoleGhostRoleFamiliar # DOTS - look at deleting this, if we are reclassifying DS. Does this break stuff?
       job: DeathSquad
       requirements:
       - !type:OverallPlaytimeRequirement
