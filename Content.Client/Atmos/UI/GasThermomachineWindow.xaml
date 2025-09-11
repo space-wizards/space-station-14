@@ -1,5 +1,6 @@
-﻿<DefaultWindow xmlns="https://spacestation14.io"
+﻿<controls:FancyWindow xmlns="https://spacestation14.io"
                xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+               xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
                MinSize="300 120" Title="{Loc comp-gas-thermomachine-ui-title-freezer}">
     <BoxContainer Name="VboxContainer" Orientation="Vertical" Margin="5 5 5 5" SeparationOverride="10">
         <BoxContainer Orientation="Horizontal" HorizontalExpand="True">
@@ -11,4 +12,4 @@
             <Label Text="{Loc comp-gas-thermomachine-ui-temperature}"/>
         </BoxContainer>
     </BoxContainer>
-</DefaultWindow>
+</controls:FancyWindow>

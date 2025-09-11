@@ -2,6 +2,9 @@
 uplink-pistol-viper-name = Viper
 uplink-pistol-viper-desc = A small, easily concealable, but somewhat underpowered gun. Retrofitted with a fully automatic receiver. Uses pistol magazines (.35 auto).
 
+uplink-estoc-bundle-name = Estoc DMR bundle
+uplink-estoc-bundle-desc = A designated marksman rifle, fitted with a mid-range optic for longer-range combat. Bundled with two rifle magazines (.20 rifle).
+
 uplink-revolver-python-name = Python
 uplink-revolver-python-desc = A brutally simple, effective, and loud Syndicate revolver. Comes loaded with armor-piercing rounds. Uses .45 magnum.
 
@@ -85,16 +88,25 @@ uplink-shrapnel-grenade-desc = Launches a spray of sharp fragments dealing great
 
 # Ammo
 uplink-pistol-magazine-name = Pistol Magazine (.35 auto)
-uplink-pistol-magazine-desc = Pistol magazine with 10 catridges. Compatible with the Viper.
+uplink-pistol-magazine-desc = Pistol magazine with 10 cartridges. Compatible with the Viper.
 
 uplink-pistol-magazine-c20r-name = SMG magazine (.35 auto)
-uplink-pistol-magazine-c20r-desc = Rifle magazine with 30 catridges. Compatible with C-20r.
+uplink-pistol-magazine-c20r-desc = Rifle magazine with 30 cartridges. Compatible with C-20r.
+
+uplink-magazine-bulldog-pellet-name = Drum magazine (.50 pellet)
+uplink-magazine-bulldog-pellet-desc = Shotgun magazine with 8 shells filled with buckshot. Compatible with the Bulldog.
+
+uplink-magazine-bulldog-slug-name = Drum magazine (.50 slug)
+uplink-magazine-bulldog-slug-desc = Shotgun magazine with 8 shells filled with slugs. Compatible with the Bulldog.
+
+uplink-estoc-ammo-name = Rifle magazine (.20 rifle)
+uplink-estoc-ammo-desc = A rifle magazine with 25 cartridges. Compatible with the Estoc DMR.
 
 uplink-pistol-magazine-caseless-name = Pistol Magazine (.25 caseless)
-uplink-pistol-magazine-caseless-desc = Pistol magazine with 10 catridges. Compatible with the Cobra.
+uplink-pistol-magazine-caseless-desc = Pistol magazine with 10 cartridges. Compatible with the Cobra.
 
 uplink-speedloader-magnum-name = Speedloader (.45 magnum AP)
-uplink-speedloader-magnu-desc = Revolver speedloader with 6 armor-piercing catridges, capable of ignoring armor entirely. Compatible with the Python.
+uplink-speedloader-magnu-desc = Revolver speedloader with 6 armor-piercing cartridges, capable of ignoring armor entirely. Compatible with the Python.
 
 uplink-mosin-ammo-name = Ammunition box (.30 rifle)
 uplink-mosin-ammo-desc = A box of 60 cartridges for the surplus rifle.
@@ -225,13 +237,13 @@ uplink-chemistry-kit-name = Chemical Synthesis Kit
 uplink-chemistry-kit-desc = A starter kit for the aspiring chemist, includes two vials of vestine for all your criminal needs!
 
 uplink-knives-kit-name = Throwing Knives Kit
-uplink-knives-kit-desc = A set of 4 syndicate branded throwing knives, perfect for embedding into the body of your victims.
+uplink-knives-kit-desc = A set of 4 syndicate branded throwing knives, perfect for embedding into the body of your victims. Capable of ignoring armor entirely when thrown.
 
 uplink-meds-bundle-name = Interdyne Medical Bundle
 uplink-meds-bundle-desc = An assortment of autoinjectors and premium medical equipment to cover for every possible situation. Contains an elite compact defibrillator that can be used as a weapon.
 
 uplink-ammo-bundle-name = Ammo Bundle
-uplink-ammo-bundle-desc = Reloading! Contains 4 magazines for the C-20r, 4 drums for the Bulldog, and 2 ammo boxes for the L6 SAW.
+uplink-ammo-bundle-desc = Reloading! Contains 4 magazines for the C-20r, 4 drums for the Bulldog, 3 magazines for the Estoc DMR, and 2 ammo boxes for the L6 SAW.
 
 uplink-sniper-bundle-name = Sniper Bundle
 uplink-sniper-bundle-desc = An inconspicuous briefcase that contains a Hristov, 10 spare bullets and a convenient disguise.
@@ -240,7 +252,7 @@ uplink-c20r-bundle-name = C-20r Bundle
 uplink-c20r-bundle-desc = Old faithful: The classic C-20r Submachine Gun, bundled with three magazines.
 
 uplink-buldog-bundle-name = Bulldog Bundle
-uplink-buldog-bundle-desc = Lean and mean: Contains the popular Bulldog Shotgun and four 12g buckshot drums.
+uplink-buldog-bundle-desc = Lean and mean: Contains the popular Bulldog Shotgun, a 12g slug drum, and four 12g buckshot drums.
 
 uplink-grenade-launcher-bundle-name = China-Lake Bundle
 uplink-grenade-launcher-bundle-desc = An old China-Lake grenade launcher bundled with 11 rounds of varying destructive capability.
@@ -256,6 +268,9 @@ uplink-surplus-bundle-desc = Contains 50 telecrystals worth of completely random
 
 uplink-super-surplus-bundle-name = Super Surplus Crate
 uplink-super-surplus-bundle-desc = Contains 125 telecrystals worth of completely random Syndicate items.
+
+uplink-starter-kit-name = Basic Operative Bundle
+uplink-starter-kit-desc = Contains 40 telecrystals of basic operative gear. For those operatives who just don't know what they should buy.
 
 # Tools
 uplink-toolbox-name = Toolbox
@@ -472,5 +487,11 @@ uplink-business-card-desc = A business card that you can give to someone to demo
 uplink-fake-mindshield-name = Fake Mindshield
 uplink-fake-mindshield-desc = A togglable implant capable of mimicking the same transmissions a real mindshield puts out when on, tricking capable Heads-up displays into thinking you have a mindshield (Nanotrasen brand implanter not provided.)
 
+uplink-contraband-lighter-name = Contraband Lighter box
+uplink-contraband-lighter-desc = A mystery box guaranteed to contain a syndicate branded lighter. No fuel required
+
 uplink-smuggler-satchel-name = Smuggler's Satchel
 uplink-smuggler-satchel-desc = A handy, suspicious looking satchel. Just flat enough to fit underneath floor tiles.
+
+uplink-acolyte-armor-name = Acolyte Armor
+uplink-acolyte-armor-desc = The must have of any self respecting cult leader. An evil looking piece of armor, made of bones, and surprisingly resistant to damage.

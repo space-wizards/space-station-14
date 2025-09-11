@@ -52,6 +52,21 @@
   color: white
 
 - type: reagent
+  id: Lye
+  name: reagent-name-lye
+  desc: reagent-desc-lye
+  flavor: alkaline
+  physicalDesc: reagent-physical-desc-alkaline
+  color: "#e5420b"
+  metabolisms:
+    Poison:
+      effects:
+      - !type:HealthChange
+        damage:
+          types:
+            Caustic: 1
+
+- type: reagent
   id: SodiumCarbonate
   name: reagent-name-sodium-carbonate
   desc: reagent-desc-sodium-carbonate
@@ -77,6 +92,23 @@
       methods: [ Touch ]
       effects:
       - !type:ArtifactUnlock
+        conditions:
+        - !type:ReagentThreshold
+          min: 5
+
+- type: reagent
+  parent: Artifexium
+  id: ArtifactGlue
+  name: reagent-name-artifact-glue
+  desc: reagent-desc-artifact-glue
+  flavor: artifactglue
+  physicalDesc: reagent-physical-desc-non-newtonian
+  color: "#827394"
+  reactiveEffects:
+    Acidic:
+      methods: [ Touch ]
+      effects:
+      - !type:ArtifactDurabilityRestore
         conditions:
         - !type:ReagentThreshold
           min: 5
@@ -185,13 +217,3 @@
         key: Adrenaline
         component: IgnoreSlowOnDamage
         time: 120
-
-- type: reagent
-  id: SalicylicAcid
-  name: reagent-name-salicylic-acid
-  desc: reagent-desc-salicylic-acid
-  physicalDesc: reagent-physical-desc-powdery
-  flavor: bitter
-  color: "#FFFFFF"
-  boilingPoint: 55.5
-  meltingPoint: -50.0

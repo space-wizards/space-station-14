@@ -17,6 +17,7 @@
         Glass: 230
       chemicalComposition:
         Silicon: 20
+    - type: Circuitboard
 
 - type: entity
   parent: BaseComputerCircuitboard
@@ -200,6 +201,17 @@
 
 - type: entity
   parent: BaseComputerCircuitboard
+  id: SalvageJobBoardComputerCircuitboard
+  name: salvage job board computer board
+  description: A computer printed circuit board for a salvage job board computer.
+  components:
+  - type: Sprite
+    state: cpu_supply
+  - type: ComputerBoard
+    prototype: ComputerSalvageJobBoard
+
+- type: entity
+  parent: BaseComputerCircuitboard
   id: SalvageExpeditionsComputerCircuitboard
   name: salvage expeditions computer board
   description: A computer printed circuit board for a salvage expeditions computer.
@@ -248,6 +260,17 @@
     state: cpu_service
   - type: ComputerBoard
     prototype: ComputerSurveillanceWirelessCameraMonitor
+  
+- type: entity
+  parent: BaseComputerCircuitboard
+  id: XenoborgCameraMonitorCircuitboard
+  name: xenoborg camera monitor board
+  description: A computer printed circuit board for a xenoborg camera monitor.
+  components:
+  - type: Sprite
+    state: cpu_science
+  - type: ComputerBoard
+    prototype: ComputerSurveillanceWirelessXenoborgCameraMonitor
 
 - type: entity
   parent: BaseComputerCircuitboard
@@ -306,7 +329,7 @@
     prototype: ComputerCrewMonitoring
 
 - type: entity
-  parent: [BaseComputerCircuitboard, BaseGrandTheftContraband]
+  parent: [BaseComputerCircuitboard, BaseCommandContraband]
   id: IDComputerCircuitboard
   name: ID card computer board
   description: A computer printed circuit board for an ID card console.
@@ -333,7 +356,7 @@
       prototype: computerBodyScanner
 
 - type: entity
-  parent: [ BaseComputerCircuitboard, BaseGrandTheftContraband ]
+  parent: [ BaseComputerCircuitboard, BaseCommandContraband ]
   id: CommsComputerCircuitboard
   name: communications computer board
   description: A computer printed circuit board for a communications console.
@@ -515,6 +538,17 @@
       state: cpu_science
     - type: ComputerBoard
       prototype: ComputerRoboticsControl
+
+- type: entity
+  parent: BaseComputerCircuitboard
+  id: ComputerXenoborgsControlCircuitboard
+  name: xenoborg control console board
+  description: A computer printed circuit board for a xenoborg control console.
+  components:
+    - type: Sprite
+      state: cpu_science
+    - type: ComputerBoard
+      prototype: ComputerXenoborgsControl
 
 - type: entity
   parent: BaseComputerCircuitboard

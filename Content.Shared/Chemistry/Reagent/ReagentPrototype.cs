@@ -63,6 +63,12 @@ namespace Content.Shared.Chemistry.Reagent
         [DataField]
         public bool Recognizable;
 
+        /// <summary>
+        /// Whether this reagent stands out (blood, slime).
+        /// </summary>
+        [DataField]
+        public bool Standsout;
+
         [DataField]
         public ProtoId<FlavorPrototype>? Flavor;
 
@@ -145,23 +151,23 @@ namespace Content.Shared.Chemistry.Reagent
         [DataField]
         public bool WorksOnTheDead;
 
-        [DataField(serverOnly: true)]
+        [DataField]
         public FrozenDictionary<ProtoId<MetabolismGroupPrototype>, ReagentEffectsEntry>? Metabolisms;
 
-        [DataField(serverOnly: true)]
+        [DataField]
         public Dictionary<ProtoId<ReactiveGroupPrototype>, ReactiveReagentEffectEntry>? ReactiveEffects;
 
         [DataField(serverOnly: true)]
         public List<ITileReaction> TileReactions = new(0);
 
-        [DataField("plantMetabolism", serverOnly: true)]
+        [DataField("plantMetabolism")]
         public List<EntityEffect> PlantMetabolisms = new(0);
 
         [DataField]
         public float PricePerUnit;
 
         [DataField]
-        public SoundSpecifier FootstepSound = new SoundCollectionSpecifier("FootstepWater", AudioParams.Default.WithVolume(6));
+        public SoundSpecifier FootstepSound = new SoundCollectionSpecifier("FootstepPuddle");
 
         public FixedPoint2 ReactionTile(TileRef tile, FixedPoint2 reactVolume, IEntityManager entityManager, List<ReagentData>? data)
         {
@@ -184,14 +190,17 @@ namespace Content.Shared.Chemistry.Reagent
             return removed;
         }
 
-        public void ReactionPlant(EntityUid? plantHolder, ReagentQuantity amount, Solution solution)
+        public void ReactionPlant(EntityUid? plantHolder,
+            ReagentQuantity amount,
+            Solution solution,
+            EntityManager entityManager,
+            IRobustRandom random,
+            ISharedAdminLogManager logger)
         {
             if (plantHolder == null)
                 return;
 
-            var entMan = IoCManager.Resolve<IEntityManager>();
-            var random = IoCManager.Resolve<IRobustRandom>();
-            var args = new EntityEffectReagentArgs(plantHolder.Value, entMan, null, solution, amount.Quantity, this, null, 1f);
+            var args = new EntityEffectReagentArgs(plantHolder.Value, entityManager, null, solution, amount.Quantity, this, null, 1f);
             foreach (var plantMetabolizable in PlantMetabolisms)
             {
                 if (!plantMetabolizable.ShouldApply(args, random))
@@ -200,8 +209,10 @@ namespace Content.Shared.Chemistry.Reagent
                 if (plantMetabolizable.ShouldLog)
                 {
                     var entity = args.TargetEntity;
-                    entMan.System<SharedAdminLogSystem>().Add(LogType.ReagentEffect, plantMetabolizable.LogImpact,
-                        $"Plant metabolism effect {plantMetabolizable.GetType().Name:effect} of reagent {ID:reagent} applied on entity {entMan.ToPrettyString(entity):entity} at {entMan.GetComponent<TransformComponent>(entity).Coordinates:coordinates}");
+                    logger.Add(
+                        LogType.ReagentEffect,
+                        plantMetabolizable.LogImpact,
+                        $"Plant metabolism effect {plantMetabolizable.GetType().Name:effect} of reagent {ID} applied on entity {entity}");
                 }
 
                 plantMetabolizable.Effect(args);

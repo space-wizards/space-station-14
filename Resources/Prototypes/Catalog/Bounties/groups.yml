@@ -1,0 +1,11 @@
+- type: cargoBountyGroup
+  id: StationBounty
+
+- type: cargoBountyGroup
+  id: SalvageJobTier1
+
+- type: cargoBountyGroup
+  id: SalvageJobTier2
+
+- type: cargoBountyGroup
+  id: SalvageJobTier3
