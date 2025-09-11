@@ -1,6 +1,10 @@
-﻿using Content.Shared.Atmos.Piping.Binary.Components;
+﻿using Content.Shared.Atmos.Components;
+using Content.Shared.Atmos.Piping.Binary.Components;
+using Content.Shared.Atmos.Piping.Unary.Components;
+using Content.Shared.IdentityManagement;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
+using Robust.Client.UserInterface;
 
 namespace Content.Client.Atmos.UI
 {
@@ -21,14 +25,8 @@ namespace Content.Client.Atmos.UI
         {
             base.Open();
 
-            _window = new GasCanisterWindow();
+            _window = this.CreateWindow<GasCanisterWindow>();
 
-            if (State != null)
-                UpdateState(State);
-
-            _window.OpenCentered();
-
-            _window.OnClose += Close;
             _window.ReleaseValveCloseButtonPressed += OnReleaseValveClosePressed;
             _window.ReleaseValveOpenButtonPressed += OnReleaseValveOpenPressed;
             _window.ReleasePressureSet += OnReleasePressureSet;
@@ -37,22 +35,22 @@ namespace Content.Client.Atmos.UI
 
         private void OnTankEjectPressed()
         {
-            SendMessage(new GasCanisterHoldingTankEjectMessage());
+            SendPredictedMessage(new GasCanisterHoldingTankEjectMessage());
         }
 
         private void OnReleasePressureSet(float value)
         {
-            SendMessage(new GasCanisterChangeReleasePressureMessage(value));
+            SendPredictedMessage(new GasCanisterChangeReleasePressureMessage(value));
         }
 
         private void OnReleaseValveOpenPressed()
         {
-            SendMessage(new GasCanisterChangeReleaseValveMessage(true));
+            SendPredictedMessage(new GasCanisterChangeReleaseValveMessage(true));
         }
 
         private void OnReleaseValveClosePressed()
         {
-            SendMessage(new GasCanisterChangeReleaseValveMessage(false));
+            SendPredictedMessage(new GasCanisterChangeReleaseValveMessage(false));
         }
 
         /// <summary>
@@ -62,17 +60,21 @@ namespace Content.Client.Atmos.UI
         protected override void UpdateState(BoundUserInterfaceState state)
         {
             base.UpdateState(state);
-            if (_window == null || state is not GasCanisterBoundUserInterfaceState cast)
+            if (_window == null || state is not GasCanisterBoundUserInterfaceState cast || !EntMan.TryGetComponent(Owner, out GasCanisterComponent? component))
                 return;
 
-            _window.SetCanisterLabel(cast.CanisterLabel);
+            var canisterLabel = Identity.Name(Owner, EntMan);
+            var tankLabel = component.GasTankSlot.Item != null ? Identity.Name(component.GasTankSlot.Item.Value, EntMan) : null;
+
+            _window.SetCanisterLabel(canisterLabel);
             _window.SetCanisterPressure(cast.CanisterPressure);
             _window.SetPortStatus(cast.PortStatus);
-            _window.SetTankLabel(cast.TankLabel);
+
+            _window.SetTankLabel(tankLabel);
             _window.SetTankPressure(cast.TankPressure);
-            _window.SetReleasePressureRange(cast.ReleasePressureMin, cast.ReleasePressureMax);
-            _window.SetReleasePressure(cast.ReleasePressure);
-            _window.SetReleaseValve(cast.ReleaseValve);
+            _window.SetReleasePressureRange(component.MinReleasePressure, component.MaxReleasePressure);
+            _window.SetReleasePressure(component.ReleasePressure);
+            _window.SetReleaseValve(component.ReleaseValve);
         }
 
         protected override void Dispose(bool disposing)

@@ -9,10 +9,10 @@ namespace Content.IntegrationTests.Tests.Chemistry
 {
     public sealed class FixedPoint2SerializationTest : SerializationTest
     {
-        protected override Assembly[] Assemblies => new[]
-        {
+        protected override Assembly[] Assemblies =>
+        [
             typeof(FixedPoint2SerializationTest).Assembly
-        };
+        ];
 
         [Test]
         public void DeserializeNullTest()
@@ -53,6 +53,6 @@ namespace Content.IntegrationTests.Tests.Chemistry
     [DataDefinition]
     public sealed partial class FixedPoint2TestDefinition
     {
-        [DataField("unit")] public FixedPoint2? Unit { get; set; } = FixedPoint2.New(5);
+        [DataField] public FixedPoint2? Unit { get; set; } = FixedPoint2.New(5);
     }
 }

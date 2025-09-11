@@ -8,7 +8,6 @@
   - vvread
   - vvwrite
   - vvinvoke
-  - scale
   - spin
 
 - Flags: DEBUG
@@ -32,7 +31,6 @@
   - togglelight
   - togglelightbuf
   - toggleshadows
-  - testbed
   - lightbb
   - vv
   - szr_stats
@@ -41,6 +39,9 @@
   - hwid
   - showaudio
   - showpos
+  - showvel
+  - showrot
+  - showangvel
   - showray
   - showchunkbb
   - showgridnodes
@@ -61,7 +62,7 @@
   - watch
   - sendgarbage
   - setinputcontext
-  - showvelocities
+  - showplayervelocity
   - tilelookup
   - net_entityreport
   - scene
@@ -90,12 +91,12 @@
 
 - Flags: ADMIN
   Commands:
-  - delete
-  - kick
   - listplayers
   - tp
   - tpto
-  - respawn
+
+- Flags: FUN
+  Commands:
   - tippy
   - tip
 
@@ -111,6 +112,12 @@
   Commands:
   - spawn
   - cspawn
+  - delete
+
+- Flags: MODERATOR
+  Commands:
+  - kick
+  - respawn
 
 - Flags: HOST
   Commands:

@@ -23,7 +23,20 @@ public sealed class GeneralStationRecordConsoleSystem : EntitySystem
             subs.Event<BoundUIOpenedEvent>(UpdateUserInterface);
             subs.Event<SelectStationRecord>(OnKeySelected);
             subs.Event<SetStationRecordFilter>(OnFiltersChanged);
+            subs.Event<DeleteStationRecord>(OnRecordDelete);
         });
+    }
+
+    private void OnRecordDelete(Entity<GeneralStationRecordConsoleComponent> ent, ref DeleteStationRecord args)
+    {
+        if (!ent.Comp.CanDeleteEntries)
+            return;
+
+        var owning = _station.GetOwningStation(ent.Owner);
+
+        if (owning != null)
+            _stationRecords.RemoveRecord(new StationRecordKey(args.Id, owning.Value));
+        UpdateUserInterface(ent); // Apparently an event does not get raised for this.
     }
 
     private void UpdateUserInterface<T>(Entity<GeneralStationRecordConsoleComponent> ent, ref T args)
@@ -68,8 +81,9 @@ public sealed class GeneralStationRecordConsoleSystem : EntitySystem
             case 0:
                 _ui.SetUiState(uid, GeneralStationRecordConsoleKey.Key, new GeneralStationRecordConsoleState());
                 return;
-            case 1:
-                console.ActiveKey = listing.Keys.First();
+            default:
+                if (console.ActiveKey == null)
+                    console.ActiveKey = listing.Keys.First();
                 break;
         }
 
@@ -79,7 +93,7 @@ public sealed class GeneralStationRecordConsoleSystem : EntitySystem
         var key = new StationRecordKey(id, owningStation.Value);
         _stationRecords.TryGetRecord<GeneralStationRecord>(key, out var record, stationRecords);
 
-        GeneralStationRecordConsoleState newState = new(id, record, listing, console.Filter);
+        GeneralStationRecordConsoleState newState = new(id, record, listing, console.Filter, ent.Comp.CanDeleteEntries);
         _ui.SetUiState(uid, GeneralStationRecordConsoleKey.Key, newState);
     }
 }

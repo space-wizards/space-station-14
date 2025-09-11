@@ -28,6 +28,9 @@ reagent-effect-condition-guidebook-reagent-threshold =
 reagent-effect-condition-guidebook-mob-state-condition =
     the mob is { $state }
 
+reagent-effect-condition-guidebook-job-condition =
+    the target's job is { $job }
+
 reagent-effect-condition-guidebook-solution-temperature =
     the solution's temperature is { $max ->
             [2147483648] at least {NATURALFIXED($min, 2)}k
@@ -59,3 +62,15 @@ reagent-effect-condition-guidebook-has-tag =
                 } the tag {$tag}
 
 reagent-effect-condition-guidebook-this-reagent = this reagent
+
+reagent-effect-condition-guidebook-breathing =
+    the metabolizer is { $isBreathing ->
+                [true] breathing normally
+                *[false] suffocating
+               }
+
+reagent-effect-condition-guidebook-internals =
+    the metabolizer is { $usingInternals ->
+                [true] using internals
+                *[false] breathing atmospheric air
+               }

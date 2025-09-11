@@ -1,5 +1,6 @@
 using Content.Shared.Humanoid;
 using Content.Shared.Humanoid.Markings;
+using Robust.Client.UserInterface;
 
 namespace Content.Client.Humanoid;
 
@@ -20,15 +21,12 @@ public sealed class HumanoidMarkingModifierBoundUserInterface : BoundUserInterfa
     {
         base.Open();
 
-        _window = new();
-        _window.OnClose += Close;
+        _window = this.CreateWindowCenteredLeft<HumanoidMarkingModifierWindow>();
         _window.OnMarkingAdded += SendMarkingSet;
         _window.OnMarkingRemoved += SendMarkingSet;
         _window.OnMarkingColorChange += SendMarkingSetNoResend;
         _window.OnMarkingRankChange += SendMarkingSet;
         _window.OnLayerInfoModified += SendBaseLayer;
-
-        _window.OpenCenteredLeft();
     }
 
     protected override void UpdateState(BoundUserInterfaceState state)

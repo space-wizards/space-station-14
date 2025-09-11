@@ -24,7 +24,7 @@ public sealed partial class ShuttleMapControl : BaseShuttleControl
 {
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly IInputManager _inputs = default!;
-    [Dependency] private readonly IMapManager _mapManager = default!;
+    private readonly SharedMapSystem _mapSystem;
     private readonly ShuttleSystem _shuttles;
     private readonly SharedTransformSystem _xformSystem;
 
@@ -73,6 +73,7 @@ public sealed partial class ShuttleMapControl : BaseShuttleControl
     public ShuttleMapControl() : base(256f, 512f, 512f)
     {
         RobustXamlLoader.Load(this);
+        _mapSystem = EntManager.System<SharedMapSystem>();
         _shuttles = EntManager.System<ShuttleSystem>();
         _xformSystem = EntManager.System<SharedTransformSystem>();
         var cache = IoCManager.Resolve<IResourceCache>();
@@ -109,12 +110,12 @@ public sealed partial class ShuttleMapControl : BaseShuttleControl
         {
             if (args.Function == EngineKeyFunctions.UIClick)
             {
-                var mapUid = _mapManager.GetMapEntityId(ViewingMap);
+                var mapUid = _mapSystem.GetMapOrInvalid(ViewingMap);
 
                 var beaconsOnly = EntManager.TryGetComponent(mapUid, out FTLDestinationComponent? destComp) &&
                                   destComp.BeaconsOnly;
 
-                var mapTransform = Matrix3.CreateInverseTransform(Offset, Angle.Zero);
+                var mapTransform = Matrix3Helpers.CreateInverseTransform(Offset, Angle.Zero);
 
                 if (beaconsOnly && TryGetBeacon(_beacons, mapTransform, args.RelativePixelPosition, PixelRect, out var foundBeacon, out _))
                 {
@@ -203,7 +204,7 @@ public sealed partial class ShuttleMapControl : BaseShuttleControl
     /// </summary>
     /// <param name="mapObjects"></param>
     /// <returns></returns>
-    private List<IMapObject> GetViewportMapObjects(Matrix3 matty, List<IMapObject> mapObjects)
+    private List<IMapObject> GetViewportMapObjects(Matrix3x2 matty, List<IMapObject> mapObjects)
     {
         var results = new List<IMapObject>();
         var enlargement = new Vector2i((int) (16 * UIScale), (int) (16 * UIScale));
@@ -217,7 +218,7 @@ public sealed partial class ShuttleMapControl : BaseShuttleControl
 
             var mapCoords = _shuttles.GetMapCoordinates(mapObj);
 
-            var relativePos = matty.Transform(mapCoords.Position);
+            var relativePos = Vector2.Transform(mapCoords.Position, matty);
             relativePos = relativePos with { Y = -relativePos.Y };
             var uiPosition = ScalePosition(relativePos);
 
@@ -249,8 +250,8 @@ public sealed partial class ShuttleMapControl : BaseShuttleControl
 
         DrawParallax(handle);
 
-        var viewedMapUid = _mapManager.GetMapEntityId(ViewingMap);
-        var matty = Matrix3.CreateInverseTransform(Offset, Angle.Zero);
+        var viewedMapUid = _mapSystem.GetMapOrInvalid(ViewingMap);
+        var matty = Matrix3Helpers.CreateInverseTransform(Offset, Angle.Zero);
         var realTime = _timing.RealTime;
         var viewBox = new Box2(Offset - WorldRangeVector, Offset + WorldRangeVector);
         var viewportObjects = GetViewportMapObjects(matty, mapObjects);
@@ -267,7 +268,7 @@ public sealed partial class ShuttleMapControl : BaseShuttleControl
                 var (gridPos, gridRot) = _xformSystem.GetWorldPositionRotation(shuttleXform);
                 gridPos = Maps.GetGridPosition((gridUid, gridPhysics), gridPos, gridRot);
 
-                var gridRelativePos = matty.Transform(gridPos);
+                var gridRelativePos = Vector2.Transform(gridPos, matty);
                 gridRelativePos = gridRelativePos with { Y = -gridRelativePos.Y };
                 var gridUiPos = ScalePosition(gridRelativePos);
 
@@ -296,7 +297,7 @@ public sealed partial class ShuttleMapControl : BaseShuttleControl
                 continue;
             }
 
-            var adjustedPos = matty.Transform(mapCoords.Position);
+            var adjustedPos = Vector2.Transform(mapCoords.Position, matty);
             var localPos = ScalePosition(adjustedPos with { Y = -adjustedPos.Y});
             handle.DrawCircle(localPos, exclusion.Range * MinimapScale, exclusionColor.WithAlpha(0.05f));
             handle.DrawCircle(localPos, exclusion.Range * MinimapScale, exclusionColor, filled: false);
@@ -319,7 +320,7 @@ public sealed partial class ShuttleMapControl : BaseShuttleControl
 
             foreach (var (beaconName, coords, mapO) in GetBeacons(viewportObjects, matty, controlLocalBounds))
             {
-                var localPos = matty.Transform(coords.Position);
+                var localPos = Vector2.Transform(coords.Position, matty);
                 localPos = localPos with { Y = -localPos.Y };
                 var beaconUiPos = ScalePosition(localPos);
                 var mapObject = GetMapObject(localPos, Angle.Zero, scale: 0.75f, scalePosition: true);
@@ -360,7 +361,7 @@ public sealed partial class ShuttleMapControl : BaseShuttleControl
             var (gridPos, gridRot) = _xformSystem.GetWorldPositionRotation(grid.Owner);
             gridPos = Maps.GetGridPosition((grid, gridPhysics), gridPos, gridRot);
 
-            var gridRelativePos = matty.Transform(gridPos);
+            var gridRelativePos = Vector2.Transform(gridPos, matty);
             gridRelativePos = gridRelativePos with { Y = -gridRelativePos.Y };
             var gridUiPos = ScalePosition(gridRelativePos);
 
@@ -439,7 +440,7 @@ public sealed partial class ShuttleMapControl : BaseShuttleControl
 
                     var color = ftlFree ? Color.LimeGreen : Color.Magenta;
 
-                    var gridRelativePos = matty.Transform(gridPos);
+                    var gridRelativePos = Vector2.Transform(gridPos, matty);
                     gridRelativePos = gridRelativePos with { Y = -gridRelativePos.Y };
                     var gridUiPos = ScalePosition(gridRelativePos);
 
@@ -512,15 +513,15 @@ public sealed partial class ShuttleMapControl : BaseShuttleControl
     /// <summary>
     /// Returns the beacons that intersect the viewport.
     /// </summary>
-    private IEnumerable<(string Beacon, MapCoordinates Coordinates, IMapObject MapObject)> GetBeacons(List<IMapObject> mapObjs, Matrix3 mapTransform, UIBox2i area)
+    private IEnumerable<(string Beacon, MapCoordinates Coordinates, IMapObject MapObject)> GetBeacons(List<IMapObject> mapObjs, Matrix3x2 mapTransform, UIBox2i area)
     {
         foreach (var mapO in mapObjs)
         {
             if (mapO is not ShuttleBeaconObject beacon)
                 continue;
 
-            var beaconCoords = EntManager.GetCoordinates(beacon.Coordinates).ToMap(EntManager, _xformSystem);
-            var position = mapTransform.Transform(beaconCoords.Position);
+            var beaconCoords = _xformSystem.ToMapCoordinates(EntManager.GetCoordinates(beacon.Coordinates));
+            var position = Vector2.Transform(beaconCoords.Position, mapTransform);
             var localPos = ScalePosition(position with {Y = -position.Y});
 
             // If beacon not on screen then ignore it.
@@ -557,7 +558,7 @@ public sealed partial class ShuttleMapControl : BaseShuttleControl
         return mapObj;
     }
 
-    private bool TryGetBeacon(IEnumerable<IMapObject> mapObjects, Matrix3 mapTransform, Vector2 mousePos, UIBox2i area, out ShuttleBeaconObject foundBeacon, out Vector2 foundLocalPos)
+    private bool TryGetBeacon(IEnumerable<IMapObject> mapObjects, Matrix3x2 mapTransform, Vector2 mousePos, UIBox2i area, out ShuttleBeaconObject foundBeacon, out Vector2 foundLocalPos)
     {
         // In pixels
         const float BeaconSnapRange = 32f;
@@ -579,7 +580,7 @@ public sealed partial class ShuttleMapControl : BaseShuttleControl
             if (!_shuttles.CanFTLBeacon(beaconObj.Coordinates))
                 continue;
 
-            var position = mapTransform.Transform(beaconCoords.Position);
+            var position = Vector2.Transform(beaconCoords.Position, mapTransform);
             var localPos = ScalePosition(position with {Y = -position.Y});
 
             // If beacon not on screen then ignore it.

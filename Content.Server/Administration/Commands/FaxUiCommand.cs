@@ -5,26 +5,22 @@ using Robust.Shared.Console;
 
 namespace Content.Server.Administration.Commands;
 
-[AdminCommand(AdminFlags.Admin)]
-public sealed class FaxUiCommand : IConsoleCommand
+[AdminCommand(AdminFlags.Fun)]
+public sealed class FaxUiCommand : LocalizedEntityCommands
 {
-    public string Command => "faxui";
+    [Dependency] private readonly EuiManager _euiManager = default!;
 
-    public string Description => Loc.GetString("cmd-faxui-desc");
-    public string Help => Loc.GetString("cmd-faxui-help");
+    public override string Command => "faxui";
 
-    public void Execute(IConsoleShell shell, string argStr, string[] args)
+    public override void Execute(IConsoleShell shell, string argStr, string[] args)
     {
-        var player = shell.Player;
-        if (player == null)
+        if (shell.Player is not { } player)
         {
-            shell.WriteLine("shell-only-players-can-run-this-command");
+            shell.WriteError(Loc.GetString("shell-cannot-run-command-from-server"));
             return;
         }
 
-        var eui = IoCManager.Resolve<EuiManager>();
         var ui = new AdminFaxEui();
-        eui.OpenEui(ui, player);
+        _euiManager.OpenEui(ui, player);
     }
 }
-

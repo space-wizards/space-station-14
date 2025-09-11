@@ -1,4 +1,3 @@
-using System.Threading;
 using Content.Server.GameTicking;
 using Content.Server.RoundEnd;
 using Content.Shared.CCVar;
@@ -12,7 +11,7 @@ namespace Content.IntegrationTests.Tests
     {
         private sealed class RoundEndTestSystem : EntitySystem
         {
-            public int Count;
+            public int RoundCount;
 
             public override void Initialize()
             {
@@ -22,7 +21,7 @@ namespace Content.IntegrationTests.Tests
 
             private void OnRoundEnd(RoundEndSystemChangedEvent ev)
             {
-                Interlocked.Increment(ref Count);
+                RoundCount += 1;
             }
         }
 
@@ -43,7 +42,7 @@ namespace Content.IntegrationTests.Tests
             var ticker = sysManager.GetEntitySystem<GameTicker>();
             var roundEndSystem = sysManager.GetEntitySystem<RoundEndSystem>();
             var sys = server.System<RoundEndTestSystem>();
-            sys.Count = 0;
+            sys.RoundCount = 0;
 
             await server.WaitAssertion(() =>
             {
@@ -127,13 +126,17 @@ namespace Content.IntegrationTests.Tests
 
             async Task WaitForEvent()
             {
-                var timeout = Task.Delay(TimeSpan.FromSeconds(10));
-                var currentCount = Thread.VolatileRead(ref sys.Count);
-                while (currentCount == Thread.VolatileRead(ref sys.Count) && !timeout.IsCompleted)
+                const int maxTicks = 60;
+                var currentCount = sys.RoundCount;
+                for (var i = 0; i < maxTicks; i++)
                 {
-                    await pair.RunTicksSync(5);
+                    if (currentCount != sys.RoundCount)
+                        return;
+
+                    await pair.RunTicksSync(1);
                 }
-                if (timeout.IsCompleted) throw new TimeoutException("Event took too long to trigger");
+
+                throw new TimeoutException("Event took too long to trigger");
             }
 
             // Need to clean self up

@@ -10,6 +10,9 @@ namespace Content.Shared.Whitelist;
 ///     Does not whitelist by prototypes, since that is undesirable; you're better off just adding a tag to all
 ///     entity prototypes that need to be whitelisted, and checking for that.
 /// </summary>
+/// <remarks>
+///     Do not add more conditions like itemsize to the whitelist, this should stay as lightweight as possible!
+/// </remarks>
 /// <code>
 /// whitelist:
 ///   tags:
@@ -54,14 +57,4 @@ public sealed partial class EntityWhitelist
     /// </summary>
     [DataField]
     public bool RequireAll;
-
-    [Obsolete("Use WhitelistSystem")]
-    public bool IsValid(EntityUid uid, IEntityManager? man = null)
-    {
-        var sys = man?.System<EntityWhitelistSystem>() ??
-                  IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<EntityWhitelistSystem>();
-
-        return sys.IsValid(this, uid);
-
-    }
 }

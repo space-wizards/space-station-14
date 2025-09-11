@@ -1,3 +1,43 @@
+- type: entityTable
+  id: RandomInstrumentTable
+  table: !type:GroupSelector
+    children:
+    - !type:GroupSelector
+      weight: 95
+      children:
+      - id: AcousticGuitarInstrument
+      - id: ViolinInstrument
+      - id: TrumpetInstrument
+      - id: ElectricGuitarInstrument
+      - id: AccordionInstrument
+      - id: HarmonicaInstrument
+      - id: TromboneInstrument
+      - id: FrenchHornInstrument
+      - id: EuphoniumInstrument
+      - id: SaxophoneInstrument
+      - id: BanjoInstrument
+      - id: GlockenspielInstrument
+      - id: XylophoneInstrument
+      - id: BikeHornInstrument
+      - id: RecorderInstrument
+      - id: FluteInstrument
+      - id: ClarinetInstrument
+      - id: CelloInstrument
+      - id: KalimbaInstrument
+      - id: MicrophoneInstrument
+      - id: BassGuitarInstrument
+      - id: OcarinaInstrument
+      - id: PanFluteInstrument
+    - !type:GroupSelector
+      weight: 5
+      children:
+      - id: SynthesizerInstrument
+      - id: GunpetInstrument
+      - id: BagpipeInstrument
+      - id: RockGuitarInstrument
+      - id: MusicBoxInstrument
+      - id: ViolaInstrument
+
 - type: entity
   id: RandomInstruments
   name: random instruments spawner
@@ -8,37 +48,6 @@
       - state: red
       - sprite: Objects/Fun/Instruments/h_synthesizer.rsi
         state: icon
-  - type: RandomSpawner
-    prototypes:
-      - AcousticGuitarInstrument
-      - ViolinInstrument
-      - TrumpetInstrument
-      - ElectricGuitarInstrument
-      - AccordionInstrument
-      - HarmonicaInstrument
-      - TromboneInstrument
-      - FrenchHornInstrument
-      - EuphoniumInstrument
-      - SaxophoneInstrument
-      - BanjoInstrument
-      - GlockenspielInstrument
-      - XylophoneInstrument
-      - BikeHornInstrument
-      - RecorderInstrument
-      - FluteInstrument
-      - ClarinetInstrument
-      - CelloInstrument
-      - KalimbaInstrument
-      - MicrophoneInstrument
-      - BassGuitarInstrument
-      - OcarinaInstrument
-      - PanFluteInstrument
-    chance: 0.95
-    rarePrototypes:
-      - SynthesizerInstrument
-      - GunpetInstrument
-      - BagpipeInstrument
-      - RockGuitarInstrument
-      - MusicBoxInstrument
-      - ViolaInstrument
-    rareChance: 0.05
+  - type: EntityTableSpawner
+    table: !type:NestedSelector
+      tableId: RandomInstrumentTable

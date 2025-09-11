@@ -1,26 +1,14 @@
-﻿using Content.Shared.Actions;
-using Robust.Shared.Audio;
+using Content.Shared.Actions;
 
 namespace Content.Shared.Magic.Events;
 
-public sealed partial class KnockSpellEvent : InstantActionEvent, ISpeakSpell
+public sealed partial class KnockSpellEvent : InstantActionEvent
 {
     /// <summary>
     /// The range this spell opens doors in
-    /// 4f is the default
+    /// 10f is the default
+    /// Should be able to open all doors/lockers in visible sight
     /// </summary>
-    [DataField("range")]
-    public float Range = 4f;
-
-    [DataField("knockSound")]
-    public SoundSpecifier KnockSound = new SoundPathSpecifier("/Audio/Magic/knock.ogg");
-
-    /// <summary>
-    /// Volume control for the spell.
-    /// </summary>
-    [DataField("knockVolume")]
-    public float KnockVolume = 5f;
-
-    [DataField("speech")]
-    public string? Speech { get; private set; }
+    [DataField]
+    public float Range = 10f;
 }

@@ -39,11 +39,15 @@
   - type: BallisticAmmoProvider
     proto: CartridgeCap
     capacity: 20
+  - type: MagazineVisuals
+    magState: mag-cap
+    steps: 4
+    zeroVisible: false
   - type: Sprite
     sprite: Objects/Weapons/Guns/Ammunition/Boxes/magnum.rsi
     layers:
-      - state: capbase
+      - state: base
         map: ["enum.GunVisualLayers.Base"]
-      - state: mag-1
+      - state: mag-cap-1
         map: ["enum.GunVisualLayers.Mag"]
-      - state: cap
+      - state: capbase

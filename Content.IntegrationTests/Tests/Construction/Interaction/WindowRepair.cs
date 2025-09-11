@@ -8,6 +8,8 @@ namespace Content.IntegrationTests.Tests.Construction.Interaction;
 
 public sealed class WindowRepair : InteractionTest
 {
+    private static readonly ProtoId<DamageTypePrototype> BluntDamageType = "Blunt";
+
     [Test]
     public async Task RepairReinforcedWindow()
     {
@@ -16,7 +18,7 @@ public sealed class WindowRepair : InteractionTest
         // Damage the entity.
         var sys = SEntMan.System<DamageableSystem>();
         var comp = Comp<DamageableComponent>();
-        var damageType = Server.ResolveDependency<IPrototypeManager>().Index<DamageTypePrototype>("Blunt");
+        var damageType = Server.ProtoMan.Index(BluntDamageType);
         var damage = new DamageSpecifier(damageType, FixedPoint2.New(10));
         Assert.That(comp.Damage.GetTotal(), Is.EqualTo(FixedPoint2.Zero));
         await Server.WaitPost(() => sys.TryChangeDamage(SEntMan.GetEntity(Target), damage, ignoreResistances: true));
@@ -24,7 +26,7 @@ public sealed class WindowRepair : InteractionTest
         Assert.That(comp.Damage.GetTotal(), Is.GreaterThan(FixedPoint2.Zero));
 
         // Repair the entity
-        await Interact(Weld);
+        await InteractUsing(Weld);
         Assert.That(comp.Damage.GetTotal(), Is.EqualTo(FixedPoint2.Zero));
 
         // Validate that we can still deconstruct the entity (i.e., that welding deconstruction is not blocked).

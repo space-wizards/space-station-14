@@ -151,7 +151,7 @@
 - type: cargoProduct
   id: LivestockParrot
   icon:
-    sprite: Mobs/Animals/parrot.rsi
+    sprite: Mobs/Animals/parrot/parrot.rsi
     state: parrot
   product: CrateNPCParrot
   cost: 3000
@@ -221,7 +221,7 @@
 - type: cargoProduct
   id: LivestockMothroach
   icon:
-    sprite: Mobs/Animals/mothroach.rsi
+    sprite: Mobs/Animals/mothroach/mothroach.rsi
     state: mothroach
   product: CrateNPCMothroach
   cost: 5000

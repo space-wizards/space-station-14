@@ -4,11 +4,10 @@
   id: BaseTraitorObjective
   components:
   - type: Objective
-    issuer: syndicate
+    issuer: objective-issuer-syndicate
   - type: RoleRequirement
     roles:
-      components:
-      - TraitorRole
+    - TraitorRole
 
 - type: entity
   abstract: true
@@ -17,8 +16,8 @@
   components:
   - type: Objective
     icon:
-      sprite: Objects/Misc/bureaucracy.rsi
-      state: folder-white
+      sprite: Objects/Misc/folders.rsi
+      state: folder-colormap
   - type: MultipleTraitorsRequirement
 
 - type: entity
@@ -36,10 +35,9 @@
 # state
 
 - type: entity
-  noSpawn: true
   parent: [BaseTraitorObjective, BaseLivingObjective]
   id: EscapeShuttleObjective
-  name: Escape to centcom alive and unrestrained.
+  name: Escape to centcomm alive and unrestrained.
   description: One of our undercover agents will debrief you when you arrive. Don't show up in cuffs.
   components:
   - type: Objective
@@ -50,7 +48,6 @@
   - type: EscapeShuttleCondition
 
 - type: entity
-  noSpawn: true
   parent: BaseTraitorObjective
   id: DieObjective
   name: Die a glorious death
@@ -69,7 +66,6 @@
   - type: DieCondition
 
 #- type: entity
-#  noSpawn: true
 #  parent: [BaseTraitorObjective, BaseLivingObjective]
 #  id: HijackShuttleObjective
 #  name: Hijack emergency shuttle
@@ -85,23 +81,29 @@
 # kill
 
 - type: entity
-  noSpawn: true
   parent: [BaseTraitorObjective, BaseKillObjective]
   id: KillRandomPersonObjective
-  description: Do it however you like, just make sure they don't make it to centcom.
+  description: Do it however you like, just make sure they don't get off the station.
   components:
   - type: Objective
     difficulty: 1.75
     unique: false
   - type: TargetObjective
-    title: objective-condition-kill-person-title
+    title: objective-condition-maroon-person-title
   - type: PickRandomPerson
+    filters:
+    # Can't have multiple objectives to kill the same person.
+    - !type:TargetObjectiveMindFilter
+      blacklist:
+        components:
+        - KillPersonCondition
+  - type: KillPersonCondition
+    requireMaroon: true
 
 - type: entity
-  noSpawn: true
   parent: [BaseTraitorObjective, BaseKillObjective]
   id: KillRandomHeadObjective
-  description: We need this head gone and you probably know why. Good luck, agent.
+  description: We need this head gone and you probably know why. Make sure they don't make it to CentComm, even if they're dead. Good luck, agent.
   components:
   - type: Objective
     # technically its still possible for KillRandomPersonObjective to roll a head but this is guaranteed, so higher difficulty
@@ -109,17 +111,27 @@
     # killing 1 head is enough
     unique: true
   - type: TargetObjective
-    title: objective-condition-kill-head-title
-  - type: PickRandomHead
+    title: objective-condition-kill-maroon-title
+  - type: PickRandomPerson
+    filters:
+    - !type:BodyMindFilter
+      whitelist:
+        components:
+        - CommandStaff
+    # Can't have multiple objectives to kill the same person.
+    - !type:TargetObjectiveMindFilter
+      blacklist:
+        components:
+        - KillPersonCondition
   - type: KillPersonCondition
     # don't count missing evac as killing as heads are higher profile, so you really need to do the dirty work
     # if ce flies a shittle to centcom you better find a way onto it
     requireDead: true
+    requireMaroon: true
 
 # social
 
 - type: entity
-  noSpawn: true
   parent: [BaseTraitorSocialObjective, BaseKeepAliveObjective]
   id: RandomTraitorAliveObjective
   description: Identify yourself at your own risk. We just need them alive.
@@ -128,10 +140,20 @@
     difficulty: 1.75
   - type: TargetObjective
     title: objective-condition-other-traitor-alive-title
-  - type: RandomTraitorAlive
+  - type: PickRandomPerson
+    filters:
+    - !type:HasRoleMindFilter
+      whitelist:
+        components:
+        - TraitorRole
+    # Can't have multiple objectives to help/save the same person
+    - !type:TargetObjectiveMindFilter
+      blacklist:
+        components:
+        - HelpProgressCondition
+        - KeepAliveCondition
 
 - type: entity
-  noSpawn: true
   parent: [BaseTraitorSocialObjective, BaseHelpProgressObjective]
   id: RandomTraitorProgressObjective
   description: Identify yourself at your own risk. We just need them to succeed.
@@ -140,7 +162,25 @@
     difficulty: 2.5
   - type: TargetObjective
     title: objective-condition-other-traitor-progress-title
-  - type: RandomTraitorProgress
+  - type: PickRandomPerson
+    filters:
+    - !type:HasRoleMindFilter
+      whitelist:
+        components:
+        - TraitorRole
+    # Can't help anyone who is tasked with helping:
+    # 1. thats boring
+    # 2. no cyclic progress dependencies!!!
+    - !type:ObjectiveMindFilter
+      blacklist:
+        components:
+        - HelpProgressCondition
+    # Can't have multiple objectives to help/save the same person
+    - !type:TargetObjectiveMindFilter
+      blacklist:
+        components:
+        - HelpProgressCondition
+        - KeepAliveCondition
 
 # steal
 
@@ -157,7 +197,6 @@
     owner: job-name-cmo
 
 - type: entity
-  noSpawn: true
   parent: BaseCMOStealObjective
   id: CMOHyposprayStealObjective
   components:
@@ -165,7 +204,6 @@
     stealGroup: Hypospray
 
 - type: entity
-  noSpawn: true
   parent: BaseCMOStealObjective
   id: CMOCrewMonitorStealObjective
   components:
@@ -185,7 +223,6 @@
     owner: job-name-rd
 
 - type: entity
-  noSpawn: true
   parent: BaseRDStealObjective
   id: RDHardsuitStealObjective
   components:
@@ -196,7 +233,6 @@
     difficulty: 3
 
 - type: entity
-  noSpawn: true
   parent: BaseRDStealObjective
   id: HandTeleporterStealObjective
   components:
@@ -206,23 +242,21 @@
 ## hos
 
 - type: entity
-  noSpawn: true
   parent: BaseTraitorStealObjective
-  id: SecretDocumentsStealObjective
+  id: EnergyShotgunStealObjective
   components:
   - type: Objective
-    # hos has a gun ce does not, higher difficulty than most
+    # HoS will have this on them a lot of the time so..
     difficulty: 3
   - type: NotJobRequirement
     job: HeadOfSecurity
   - type: StealCondition
-    stealGroup: BookSecretDocuments
+    stealGroup: WeaponEnergyShotgun
     owner: job-name-hos
 
 ## ce
 
 - type: entity
-  noSpawn: true
   parent: BaseTraitorStealObjective
   id: MagbootsStealObjective
   components:
@@ -235,7 +269,6 @@
 ## qm
 
 - type: entity
-  noSpawn: true
   parent: BaseTraitorStealObjective
   id: ClipboardStealObjective
   components:
@@ -245,10 +278,19 @@
     stealGroup: BoxFolderQmClipboard
     owner: job-name-qm
 
+- type: entity
+  parent: BaseTraitorStealObjective
+  id: KnuckleDustersStealObjective
+  components:
+  - type: NotJobRequirement
+    job: Quartermaster
+  - type: StealCondition
+    stealGroup: ClothingHandsKnuckleDustersQM
+    owner: job-name-qm
+
 ## hop
 
 - type: entity
-  noSpawn: true
   parent: BaseTraitorStealObjective
   id: CorgiMeatStealObjective
   components:
@@ -274,7 +316,6 @@
     job: Captain
 
 - type: entity
-  noSpawn: true
   parent: BaseCaptainObjective
   id: CaptainIDStealObjective
   components:
@@ -282,7 +323,6 @@
     stealGroup: CaptainIDCard
 
 - type: entity
-  noSpawn: true
   parent: BaseCaptainObjective
   id: CaptainJetpackStealObjective
   components:
@@ -290,7 +330,6 @@
     stealGroup: JetpackCaptainFilled
 
 - type: entity
-  noSpawn: true
   parent: BaseCaptainObjective
   id: CaptainGunStealObjective
   components:
@@ -299,7 +338,6 @@
     owner: job-name-captain
 
 - type: entity
-  noSpawn: true
   parent: BaseCaptainObjective
   id: NukeDiskStealObjective
   components:

@@ -1,3 +1,4 @@
+using Content.Shared.Labels.EntitySystems;
 using Robust.Shared.GameStates;
 
 namespace Content.Shared.Labels.Components;
@@ -6,6 +7,7 @@ namespace Content.Shared.Labels.Components;
 /// Makes entities have a label in their name. Labels are normally given by <see cref="HandLabelerComponent"/>
 /// </summary>
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
+[Access(typeof(LabelSystem))]
 public sealed partial class LabelComponent : Component
 {
     /// <summary>
@@ -16,9 +18,8 @@ public sealed partial class LabelComponent : Component
     public string? CurrentLabel { get; set; }
 
     /// <summary>
-    ///  The original name of the entity
-    ///  Used for reverting the modified entity name when the label is removed
+    /// Should the label show up in the examine menu?
     /// </summary>
     [DataField, AutoNetworkedField]
-    public string? OriginalName { get; set; }
+    public bool Examinable = true;
 }

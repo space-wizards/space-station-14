@@ -1,3 +1,4 @@
+using Content.Shared.Actions.Components;
 using Content.Shared.Hands;
 using Content.Shared.Inventory;
 using Content.Shared.Inventory.Events;
@@ -101,6 +102,13 @@ public sealed class RequestPerformActionEvent : EntityEventArgs
         Action = action;
         EntityCoordinatesTarget = entityCoordinatesTarget;
     }
+
+    public RequestPerformActionEvent(NetEntity action, NetEntity? entityTarget, NetCoordinates entityCoordinatesTarget)
+    {
+        Action = action;
+        EntityTarget = entityTarget;
+        EntityCoordinatesTarget = entityCoordinatesTarget;
+    }
 }
 
 /// <summary>
@@ -142,6 +150,12 @@ public abstract partial class WorldTargetActionEvent : BaseActionEvent
     ///     The coordinates of the location that the user targeted.
     /// </summary>
     public EntityCoordinates Target;
+
+    /// <summary>
+    /// When combined with <see cref="EntityTargetAction"/> (and <c>Event</c> is null), the entity the client was hovering when clicked.
+    /// This can be null as the primary purpose of this event is for getting coordinates.
+    /// </summary>
+    public EntityUid? Entity;
 }
 
 /// <summary>
@@ -155,4 +169,14 @@ public abstract partial class BaseActionEvent : HandledEntityEventArgs
     ///     The user performing the action.
     /// </summary>
     public EntityUid Performer;
+
+    /// <summary>
+    ///     The action the event belongs to.
+    /// </summary>
+    public Entity<ActionComponent> Action;
+
+    /// <summary>
+    /// Should we toggle the action entity?
+    /// </summary>
+    public bool Toggle;
 }

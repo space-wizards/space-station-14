@@ -1,7 +1,7 @@
 ﻿- type: entity
   id: BaseSpellbook
   name: spellbook
-  parent: BaseItem
+  parent: [ BaseItem, BaseMagicalContraband ]
   abstract: true
   components:
     - type: Sprite
@@ -9,7 +9,7 @@
       layers:
       - state: paper_blood
       - state: cover_strong
-        color: "#645a5a" 
+        color: "#645a5a"
       - state: decor_wingette_flat
         color: "#4d0303"
       - state: icon_pentagramm
@@ -19,14 +19,57 @@
       tags:
       - Spellbook
 
+# For the Wizard Antag
+# Do not add discounts or price inflation
+- type: entity
+  id: WizardsGrimoire
+  name: wizards grimoire
+  suffix: Wizard
+  parent: [ BaseItem, StorePresetSpellbook, BaseMagicalContraband ]
+  components:
+    - type: Sprite
+      sprite: Objects/Misc/books.rsi
+      layers:
+      - state: paper_blood
+      - state: cover_strong
+        color: "#645a5a"
+      - state: decor_wingette_flat
+        color: "#4d0303"
+      - state: icon_pentagramm
+        color: "#f7e19f"
+    - type: UserInterface
+      interfaces:
+        enum.StoreUiKey.Key:
+          type: StoreBoundUserInterface
+    - type: ActivatableUI
+      key: enum.StoreUiKey.Key
+    - type: Store
+      refundAllowed: true
+      ownerOnly: true # get your own tome!
+      balance:
+        WizCoin: 10 # prices are balanced around this 10 point maximum and how strong the spells are
+
+# Not meant for wizard antag but meant for spawning, so people can't abuse refund if they were given a tome
+- type: entity
+  id: WizardsGrimoireNoRefund
+  name: wizards grimoire
+  suffix: Wizard, No Refund
+  parent: [ WizardsGrimoire, StorePresetSpellbook ]
+  components:
+    - type: Store
+      refundAllowed: false
+      ownerOnly: true # get your own tome!
+      balance:
+        WizCoin: 10 # prices are balanced around this 10 point maximum and how strong the spells are
+
 - type: entity
   id: SpawnSpellbook
   name: spawn spellbook
   parent: BaseSpellbook
   components:
     - type: Spellbook
-      spells:
-        ActionSpawnMagicarpSpell: -1
+      spellActions:
+        ActionSpawnMagicarpSpell: null
 
 - type: entity
   id: ForceWallSpellbook
@@ -48,8 +91,8 @@
       - state: detail_rivets
         color: gold
     - type: Spellbook
-      spells:
-        ActionForceWall: -1
+      spellActions:
+        ActionForceWall: null
 
 - type: entity
   id: BlinkBook
@@ -69,8 +112,8 @@
       - state: detail_rivets
         color: gold
     - type: Spellbook
-      spells:
-        ActionBlink: -1
+      spellActions:
+        ActionBlink: null
 
 - type: entity
   id: SmiteBook
@@ -92,8 +135,8 @@
         color: red
       - state: overlay_blood
     - type: Spellbook
-      spells:
-        ActionSmite: -1
+      spellActions:
+        ActionSmiteNoReq: null
 
 - type: entity
   id: KnockSpellbook
@@ -114,8 +157,8 @@
       - state: detail_bookmark
         color: "#98c495"
     - type: Spellbook
-      spells:
-        ActionKnock: -1
+      spellActions:
+        ActionKnock: null
 
 - type: entity
   id: FireballSpellbook
@@ -138,8 +181,8 @@
       - state: icon_magic_fireball
         shader: unshaded
     - type: Spellbook
-      spells:
-        ActionFireball: -1
+      spellActions:
+        ActionFireball: null
 
 - type: entity
   id: ScrollRunes
@@ -153,8 +196,8 @@
     layers:
     - state: spell_default
   - type: Spellbook
-    spells:
-      ActionFlashRune: -1
-      ActionExplosionRune: -1
-      ActionIgniteRune: -1
-      ActionStunRune: -1
+    spellActions:
+      ActionFlashRune: null
+      ActionExplosionRune: null
+      ActionIgniteRune: null
+      ActionStunRune: null

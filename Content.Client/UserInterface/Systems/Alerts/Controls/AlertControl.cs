@@ -1,4 +1,4 @@
-﻿using System.Numerics;
+using System.Numerics;
 using Content.Client.Actions.UI;
 using Content.Client.Cooldown;
 using Content.Shared.Alert;
@@ -12,6 +12,10 @@ namespace Content.Client.UserInterface.Systems.Alerts.Controls
 {
     public sealed class AlertControl : BaseButton
     {
+        [Dependency] private readonly IEntityManager _entityManager = default!;
+
+        private readonly SpriteSystem _sprite;
+
         public AlertPrototype Alert { get; }
 
         /// <summary>
@@ -33,8 +37,7 @@ namespace Content.Client.UserInterface.Systems.Alerts.Controls
         private (TimeSpan Start, TimeSpan End)? _cooldown;
 
         private short? _severity;
-        private readonly IGameTiming _gameTiming;
-        private readonly IEntityManager _entityManager;
+
         private readonly SpriteView _icon;
         private readonly CooldownGraphic _cooldownGraphic;
 
@@ -47,25 +50,25 @@ namespace Content.Client.UserInterface.Systems.Alerts.Controls
         /// <param name="severity">severity of alert, null if alert doesn't have severity levels</param>
         public AlertControl(AlertPrototype alert, short? severity)
         {
-            _gameTiming = IoCManager.Resolve<IGameTiming>();
-            _entityManager = IoCManager.Resolve<IEntityManager>();
+            // Alerts will handle this.
+            MuteSounds = true;
+
+            IoCManager.InjectDependencies(this);
+            _sprite = _entityManager.System<SpriteSystem>();
             TooltipSupplier = SupplyTooltip;
             Alert = alert;
+
+            HorizontalAlignment = HAlignment.Left;
             _severity = severity;
-
-            _spriteViewEntity = _entityManager.Spawn(Alert.AlertViewEntity);
-            if (_entityManager.TryGetComponent<SpriteComponent>(_spriteViewEntity, out var sprite))
-            {
-                var icon = Alert.GetIcon(_severity);
-                if (sprite.LayerMapTryGet(AlertVisualLayers.Base, out var layer))
-                    sprite.LayerSetSprite(layer, icon);
-            }
-
             _icon = new SpriteView
             {
-                Scale = new Vector2(2, 2)
+                Scale = new Vector2(2, 2),
+                MaxSize = new Vector2(64, 64),
+                Stretch = SpriteView.StretchMode.None,
+                HorizontalAlignment = HAlignment.Left
             };
-            _icon.SetEntity(_spriteViewEntity);
+
+            SetupIcon();
 
             Children.Add(_icon);
             _cooldownGraphic = new CooldownGraphic
@@ -77,9 +80,9 @@ namespace Content.Client.UserInterface.Systems.Alerts.Controls
 
         private Control SupplyTooltip(Control? sender)
         {
-            var msg = FormattedMessage.FromMarkup(Loc.GetString(Alert.Name));
-            var desc = FormattedMessage.FromMarkup(Loc.GetString(Alert.Description));
-            return new ActionAlertTooltip(msg, desc) {Cooldown = Cooldown};
+            var msg = FormattedMessage.FromMarkupOrThrow(Loc.GetString(Alert.Name));
+            var desc = FormattedMessage.FromMarkupOrThrow(Loc.GetString(Alert.Description));
+            return new ActionAlertTooltip(msg, desc) { Cooldown = Cooldown };
         }
 
         /// <summary>
@@ -94,8 +97,8 @@ namespace Content.Client.UserInterface.Systems.Alerts.Controls
             if (!_entityManager.TryGetComponent<SpriteComponent>(_spriteViewEntity, out var sprite))
                 return;
             var icon = Alert.GetIcon(_severity);
-            if (sprite.LayerMapTryGet(AlertVisualLayers.Base, out var layer))
-                sprite.LayerSetSprite(layer, icon);
+            if (_sprite.LayerMapTryGet((_spriteViewEntity, sprite), AlertVisualLayers.Base, out var layer, false))
+                _sprite.LayerSetSprite((_spriteViewEntity, sprite), layer, icon);
         }
 
         protected override void FrameUpdate(FrameEventArgs args)
@@ -111,6 +114,36 @@ namespace Content.Client.UserInterface.Systems.Alerts.Controls
             }
 
             _cooldownGraphic.FromTime(Cooldown.Value.Start, Cooldown.Value.End);
+        }
+
+        private void SetupIcon()
+        {
+            if (!_entityManager.Deleted(_spriteViewEntity))
+                _entityManager.QueueDeleteEntity(_spriteViewEntity);
+
+            _spriteViewEntity = _entityManager.Spawn(Alert.AlertViewEntity);
+            if (_entityManager.TryGetComponent<SpriteComponent>(_spriteViewEntity, out var sprite))
+            {
+                var icon = Alert.GetIcon(_severity);
+                if (_sprite.LayerMapTryGet((_spriteViewEntity, sprite), AlertVisualLayers.Base, out var layer, false))
+                    _sprite.LayerSetSprite((_spriteViewEntity, sprite), layer, icon);
+            }
+
+            _icon.SetEntity(_spriteViewEntity);
+        }
+
+        protected override void EnteredTree()
+        {
+            base.EnteredTree();
+            SetupIcon();
+        }
+
+        protected override void ExitedTree()
+        {
+            base.ExitedTree();
+
+            if (!_entityManager.Deleted(_spriteViewEntity))
+                _entityManager.QueueDeleteEntity(_spriteViewEntity);
         }
 
         protected override void Dispose(bool disposing)

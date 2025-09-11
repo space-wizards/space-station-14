@@ -1,18 +1,10 @@
 # Head
 - type: loadout
   id: BotanistHead
-  equipment: BotanistHead
-
-- type: startingGear
-  id: BotanistHead
   equipment:
     head: ClothingHeadHatTrucker
 
 - type: loadout
-  id: BotanistBandana
-  equipment: BotanistBandana
-
-- type: startingGear
   id: BotanistBandana
   equipment:
     head: ClothingHeadBandBotany
@@ -20,27 +12,15 @@
 # Jumpsuit
 - type: loadout
   id: BotanistJumpsuit
-  equipment: BotanistJumpsuit
-
-- type: startingGear
-  id: BotanistJumpsuit
   equipment:
     jumpsuit: ClothingUniformJumpsuitHydroponics
 
 - type: loadout
   id: BotanistJumpskirt
-  equipment: BotanistJumpskirt
-
-- type: startingGear
-  id: BotanistJumpskirt
   equipment:
     jumpsuit: ClothingUniformJumpskirtHydroponics
 
 - type: loadout
-  id: BotanistOveralls
-  equipment: BotanistOveralls
-
-- type: startingGear
   id: BotanistOveralls
   equipment:
     jumpsuit: ClothingUniformOveralls
@@ -48,46 +28,26 @@
 # Back
 - type: loadout
   id: BotanistBackpack
-  equipment: BotanistBackpack
-
-- type: startingGear
-  id: BotanistBackpack
   equipment:
-    back: ClothingBackpackHydroponicsFilled
+    back: ClothingBackpackHydroponics
 
 - type: loadout
   id: BotanistSatchel
-  equipment: BotanistSatchel
-
-- type: startingGear
-  id: BotanistSatchel
   equipment:
-    back: ClothingBackpackSatchelHydroponicsFilled
+    back: ClothingBackpackSatchelHydroponics
 
 - type: loadout
   id: BotanistDuffel
-  equipment: BotanistDuffel
-
-- type: startingGear
-  id: BotanistDuffel
   equipment:
-    back: ClothingBackpackDuffelHydroponicsFilled
+    back: ClothingBackpackDuffelHydroponics
 
 # Outer clothing
 - type: loadout
-  id: BotanistApron
-  equipment: BotanistApron
-
-- type: startingGear
   id: BotanistApron
   equipment:
     outerClothing: ClothingOuterApronBotanist
 
 - type: loadout
-  id: BotanistWintercoat
-  equipment: BotanistWintercoat
-
-- type: startingGear
   id: BotanistWintercoat
   equipment:
     outerClothing: ClothingOuterWinterHydro

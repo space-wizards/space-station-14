@@ -23,8 +23,8 @@ public sealed class RotationVisualizerSystem : SharedRotationVisualsSystem
         if (args.Sprite == null)
             return;
 
-        // If not defined, defaults to standing.
-        _appearance.TryGetData<RotationState>(uid, RotationVisuals.RotationState, out var state, args.Component);
+        if (!_appearance.TryGetData<RotationState>(uid, RotationVisuals.RotationState, out var state, args.Component))
+            state = RotationState.Vertical;
 
         switch (state)
         {
@@ -52,7 +52,7 @@ public sealed class RotationVisualizerSystem : SharedRotationVisualsSystem
         // Stop the current rotate animation and then start a new one
         if (_animation.HasRunningAnimation(animationComp, animationKey))
         {
-            _animation.Stop(animationComp, animationKey);
+            _animation.Stop((uid, animationComp), animationKey);
         }
 
         var animation = new Animation

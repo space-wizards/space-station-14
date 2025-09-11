@@ -9,12 +9,42 @@
   group: market
 
 - type: cargoProduct
+  id: ServiceCleanerGrenades
+  icon:
+    sprite: Objects/Weapons/Grenades/janitor.rsi
+    state: icon
+  product: CrateServiceCleanerGrenades
+  cost: 400
+  category: cargoproduct-category-name-service
+  group: market
+
+- type: cargoProduct
   id: ServiceLightsReplacement
   icon:
     sprite: Objects/Power/light_bulb.rsi
     state: normal
   product: CrateServiceReplacementLights
   cost: 600
+  category: cargoproduct-category-name-service
+  group: market
+
+- type: cargoProduct
+  id: ServiceLightsHoliday
+  icon:
+    sprite: Objects/Power/light_bulb.rsi
+    state: normal
+  product: CrateServiceHolidayLights
+  cost: 800
+  category: cargoproduct-category-name-service
+  group: market
+
+- type: cargoProduct
+  id: ServiceLightsColorful
+  icon:
+    sprite: Objects/Power/light_bulb.rsi
+    state: normal
+  product: CrateServiceColorfulLights
+  cost: 800
   category: cargoproduct-category-name-service
   group: market
 
@@ -42,7 +72,7 @@
   id: ServiceSmokeables
   icon:
     sprite: Objects/Consumable/Smokeables/Cigarettes/Cartons/green.rsi
-    state: closed
+    state: icon
   product: CrateServiceSmokeables
   cost: 1500
   category: cargoproduct-category-name-service
@@ -52,7 +82,7 @@
   id: ServiceCustomSmokable
   icon:
     sprite: Objects/Consumable/Smokeables/Cigarettes/Cartons/green.rsi
-    state: closed
+    state: icon
   product: CrateServiceCustomSmokable
   cost: 1000
   category: cargoproduct-category-name-service
@@ -61,10 +91,20 @@
 - type: cargoProduct
   id: ServiceBureaucracy
   icon:
-    sprite: Objects/Misc/bureaucracy.rsi
+    sprite: Objects/Misc/pens.rsi
     state: pen
   product: CrateServiceBureaucracy
   cost: 1000
+  category: cargoproduct-category-name-service
+  group: market
+
+- type: cargoProduct
+  id: ServiceFaxMachine
+  icon:
+    sprite: Structures/Machines/fax_machine.rsi
+    state: icon
+  product: CrateServiceFaxMachine
+  cost: 2000
   category: cargoproduct-category-name-service
   group: market
 
@@ -173,7 +213,7 @@
   icon:
     sprite: Clothing/Head/Helmets/janitor_bombsuit.rsi
     state: icon
-  product: CrateJanitorExplosive
+  product: ClosetJanitorBombFilled
   cost: 1000
   category: cargoproduct-category-name-service
   group: market
@@ -188,3 +228,12 @@
   category: cargoproduct-category-name-service
   group: market
 
+- type: cargoProduct
+  id: ServiceCandles
+  icon:
+    sprite: Objects/Misc/candles.rsi
+    state: candle-big
+  product: CrateCandles
+  cost: 500
+  category: cargoproduct-category-name-service
+  group: market

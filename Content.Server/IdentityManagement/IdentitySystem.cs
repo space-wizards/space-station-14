@@ -19,7 +19,7 @@ namespace Content.Server.IdentityManagement;
 /// <summary>
 ///     Responsible for updating the identity of an entity on init or clothing equip/unequip.
 /// </summary>
-public class IdentitySystem : SharedIdentitySystem
+public sealed class IdentitySystem : SharedIdentitySystem
 {
     [Dependency] private readonly IdCardSystem _idCard = default!;
     [Dependency] private readonly IAdminLogManager _adminLog = default!;
@@ -27,6 +27,7 @@ public class IdentitySystem : SharedIdentitySystem
     [Dependency] private readonly SharedContainerSystem _container = default!;
     [Dependency] private readonly HumanoidAppearanceSystem _humanoid = default!;
     [Dependency] private readonly CriminalRecordsConsoleSystem _criminalRecordsConsole = default!;
+    [Dependency] private readonly GrammarSystem _grammarSystem = default!;
 
     private HashSet<EntityUid> _queuedIdentityUpdates = new();
 
@@ -39,6 +40,7 @@ public class IdentitySystem : SharedIdentitySystem
         SubscribeLocalEvent<IdentityComponent, DidUnequipEvent>((uid, _, _) => QueueIdentityUpdate(uid));
         SubscribeLocalEvent<IdentityComponent, DidUnequipHandEvent>((uid, _, _) => QueueIdentityUpdate(uid));
         SubscribeLocalEvent<IdentityComponent, WearerMaskToggledEvent>((uid, _, _) => QueueIdentityUpdate(uid));
+        SubscribeLocalEvent<IdentityComponent, EntityRenamedEvent>((uid, _, _) => QueueIdentityUpdate(uid));
         SubscribeLocalEvent<IdentityComponent, MapInitEvent>(OnMapInit);
     }
 
@@ -70,7 +72,7 @@ public class IdentitySystem : SharedIdentitySystem
     /// <summary>
     ///     Queues an identity update to the start of the next tick.
     /// </summary>
-    public void QueueIdentityUpdate(EntityUid uid)
+    public override void QueueIdentityUpdate(EntityUid uid)
     {
         _queuedIdentityUpdates.Add(uid);
     }
@@ -101,7 +103,9 @@ public class IdentitySystem : SharedIdentitySystem
 
             // If presumed name is null and we're using that, we set proper noun to be false ("the old woman")
             if (name != representation.TrueName && representation.PresumedName == null)
-                identityGrammar.ProperNoun = false;
+                _grammarSystem.SetProperNoun((ident, identityGrammar), false);
+
+            Dirty(ident, identityGrammar);
         }
 
         if (name == Name(ident))
@@ -165,7 +169,7 @@ public class IdentitySystem : SharedIdentitySystem
         if (_idCard.TryFindIdCard(target, out var id))
         {
             presumedName = string.IsNullOrWhiteSpace(id.Comp.FullName) ? null : id.Comp.FullName;
-            presumedJob = id.Comp.JobTitle?.ToLowerInvariant();
+            presumedJob = id.Comp.LocalizedJobTitle?.ToLowerInvariant();
         }
 
         // If it didn't find a job, that's fine.

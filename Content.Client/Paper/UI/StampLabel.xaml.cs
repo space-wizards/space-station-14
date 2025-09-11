@@ -10,6 +10,8 @@ namespace Content.Client.Paper.UI;
 [GenerateTypedNameReferences]
 public sealed partial class StampLabel : Label
 {
+    private static readonly ProtoId<ShaderPrototype> PaperStamp = "PaperStamp";
+
     /// A scale that's applied to the text to ensure it
     /// fits in the allowed space.
     private Vector2 _textScaling = Vector2.One;
@@ -26,7 +28,7 @@ public sealed partial class StampLabel : Label
         RobustXamlLoader.Load(this);
 
         var prototypes = IoCManager.Resolve<IPrototypeManager>();
-        _stampShader = prototypes.Index<ShaderPrototype>("PaperStamp").InstanceUnique();
+        _stampShader = prototypes.Index(PaperStamp).InstanceUnique();
     }
 
     protected override Vector2 MeasureOverride(Vector2 availableSize)
@@ -50,7 +52,7 @@ public sealed partial class StampLabel : Label
         base.Draw(handle);
 
         // Restore a sane transform+shader
-        handle.SetTransform(Matrix3.Identity);
+        handle.SetTransform(Matrix3x2.Identity);
         handle.UseShader(null);
     }
 }

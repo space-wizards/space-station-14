@@ -109,6 +109,12 @@
   - type: Tag
     tags:
     - Meat
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: plain-inhand-left
+      right:
+      - state: plain-inhand-right
 
 - type: entity
   name: raw human meat
@@ -127,6 +133,12 @@
   - type: SliceableFood
     count: 3
     slice: FoodMeatCutlet
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: plain-inhand-left
+      right:
+      - state: plain-inhand-right
 
 - type: entity
   name: raw carp fillet
@@ -155,6 +167,12 @@
       reagents:
       - ReagentId: CarpoToxin
         Quantity: 5
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: generic-pink-inhand-left
+      right:
+      - state: generic-pink-inhand-right
 
 - type: entity
   name: raw bacon
@@ -185,6 +203,12 @@
     graph: Bacon
     node: start
     defaultTarget: bacon
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: generic-pink-inhand-left
+      right:
+      - state: generic-pink-inhand-right
 
 - type: entity
   name: raw bear meat
@@ -209,7 +233,14 @@
     graph: BearSteak
     node: start
     defaultTarget: filet migrawr
-
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: generic-pink-inhand-left
+        color: "#934C64"
+      right:
+      - state: generic-pink-inhand-right
+        color: "#934C64"
 
 - type: entity
   name: raw penguin meat
@@ -234,6 +265,12 @@
     graph: PenguinSteak
     node: start
     defaultTarget: cooked penguin
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: generic-pink-inhand-left
+      right:
+      - state: generic-pink-inhand-right
 
 - type: entity
   name: raw chicken meat
@@ -260,6 +297,12 @@
     graph: ChickenSteak
     node: start
     defaultTarget: cooked chicken
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: generic-pink-inhand-left
+      right:
+      - state: generic-pink-inhand-right
 
 - type: entity
   name: raw duck meat
@@ -284,11 +327,17 @@
     graph: DuckSteak
     node: start
     defaultTarget: cooked duck
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: generic-pink-inhand-left
+      right:
+      - state: generic-pink-inhand-right
 
 - type: entity
   name: prime-cut corgi meat
   # can't rot since that would be very bad for syndies
-  parent: FoodMeatBase
+  parent: [FoodMeatBase, BaseGrandTheftContraband]
   id: FoodMeatCorgi
   description: The tainted gift of an evil crime. The meat may be delicious, but at what cost?
   components:
@@ -309,6 +358,12 @@
     price: 750
   - type: StealTarget
     stealGroup: FoodMeatCorgi
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: corgi-inhand-left
+      right:
+      - state: corgi-inhand-right
 
 - type: entity
   name: raw crab meat
@@ -356,12 +411,18 @@
     graph: GoliathSteak
     node: start
     defaultTarget: goliath steak
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: plain-inhand-left
+      right:
+      - state: plain-inhand-right
 
 - type: entity
   name: dragon flesh
   parent: FoodMeatBase
   id: FoodMeatDragon
-  description: The dense meat of the space-era apex predator is oozing with it's mythical ichor. Ironically, best eaten raw.
+  description: The dense meat of the space-era apex predator is oozing with its mythical ichor. Ironically, best eaten raw.
   components:
   - type: Tag
     tags:
@@ -383,6 +444,19 @@
       reagents:
       - ReagentId: Ichor
         Quantity: 10
+  - type: SliceableFood
+    count: 3
+    slice: FoodMeatDragonCutlet
+  - type: Construction
+    graph: DragonSteak
+    node: start
+    defaultTarget: dragon steak
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: dragon-inhand-left
+      right:
+      - state: dragon-inhand-right
 
 - type: entity
   name: raw rat meat
@@ -403,6 +477,12 @@
   - type: SliceableFood
     count: 3
     slice: FoodMeatCutlet
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: plain-inhand-left
+      right:
+      - state: plain-inhand-right
 
 - type: entity
   name: raw lizard meat
@@ -427,6 +507,14 @@
     graph: LizardSteak
     node: start
     defaultTarget: lizard steak
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: plain-inhand-left
+        color: "#6EFF41"
+      right:
+      - state: plain-inhand-right
+        color: "#6EFF41"
 
 - type: entity
   name: raw plant meat
@@ -447,6 +535,8 @@
     tags:
     - Raw
     - Meat
+    - Trash
+    - Recyclable
   - type: Sprite
     state: rotten
   - type: SolutionContainerManager
@@ -459,6 +549,12 @@
           Quantity: 4
         - ReagentId: Fat
           Quantity: 4
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: rotten-inhand-left
+      right:
+      - state: rotten-inhand-right
 
 - type: entity
   name: raw spider meat
@@ -479,6 +575,8 @@
   - type: SliceableFood
     count: 3
     slice: FoodMeatSpiderCutlet
+  - type: Item
+    heldPrefix: spider
 
 - type: entity
   name: raw spider leg
@@ -496,6 +594,14 @@
           Quantity: 10
         - ReagentId: Fat
           Quantity: 3
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: snake-inhand-left
+        color: "#333333"
+      right:
+      - state: snake-inhand-right
+        color: "#333333"
 
 - type: entity
   name: meatwheat clump
@@ -503,6 +609,9 @@
   id: FoodMeatWheat
   description: This doesn't look like meat, but your standards aren't that high to begin with.
   components:
+  - type: FlavorProfile
+    flavors:
+      - falsemeat
   - type: Sprite
     state: clump
   - type: SolutionContainerManager
@@ -511,6 +620,14 @@
         reagents:
         - ReagentId: UncookedAnimalProteins
           Quantity: 1
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: generic-pink-inhand-left
+        color: "#934C64"
+      right:
+      - state: generic-pink-inhand-right
+        color: "#934C64"
 
 - type: entity
   name: raw snake meat
@@ -521,6 +638,7 @@
   - type: Tag
     tags:
     - Raw
+    - Meat
   - type: Sprite
     state: snake
   - type: SolutionContainerManager
@@ -531,6 +649,12 @@
           Quantity: 10
         - ReagentId: Toxin
           Quantity: 2
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: snake-inhand-left
+      right:
+      - state: snake-inhand-right
 
 - type: entity
   name: raw xeno meat
@@ -558,6 +682,14 @@
   - type: SliceableFood
     count: 3
     slice: FoodMeatXenoCutlet
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: plain-inhand-left
+        color: "#6EFF41"
+      right:
+      - state: plain-inhand-right
+        color: "#6EFF41"
 
 - type: entity
   name: raw rouny meat
@@ -587,6 +719,12 @@
     graph: RounySteak
     node: start
     defaultTarget: rouny steak
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: plain-inhand-left
+      right:
+      - state: plain-inhand-right
 
 - type: entity
   name: killer tomato meat
@@ -599,6 +737,14 @@
   - type: SliceableFood
     count: 3
     slice: FoodMeatTomatoCutlet
+  - type: StaticPrice
+    price: 100
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: tomato-inhand-left
+      right:
+      - state: tomato-inhand-right
 
 - type: entity
   name: salami
@@ -657,6 +803,32 @@
     - Meat
   - type: Sprite
     state: meatball
+  - type: Construction
+    graph: MeatMeatballCooked
+    node: start
+
+# meat patty - grillin' time
+
+- type: entity
+  name: meat patty
+  parent: FoodMeatBase
+  id: FoodMeatPatty
+  description: A flat slab of ground meat. Ready for grillin'.
+  components:
+  - type: Tag
+    tags:
+    - Raw
+    - Meat
+  - type: Sprite
+    state: raw_patty
+  - type: InternalTemperature
+    conductivity: 0.43
+  - type: Construction
+    graph: CookedPatty
+    node: start
+    defaultTarget: cooked meat patty
+  - type: Item
+    heldPrefix: generic-pink
 
 - type: entity
   name: slimeball
@@ -671,8 +843,83 @@
     tags:
     - Raw
     - Meat
+  - type: Extractable
+    juiceSolution:
+      reagents:
+      - ReagentId: Slime
+        Quantity: 10
   - type: Sprite
     state: slime
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: slime-inhand-left
+      right:
+      - state: slime-inhand-right
+
+- type: entity
+  name: raw snail meat
+  parent: FoodMeatRawBase
+  id: FoodMeatSnail
+  description: Improved with salt.
+  components:
+  - type: Sprite
+    state: snail
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 15
+        reagents:
+        - ReagentId: UncookedAnimalProteins
+          Quantity: 3
+        - ReagentId: Fat
+          Quantity: 3
+        - ReagentId: Water
+          Quantity: 4 #It makes saline if you add salt!
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: generic-pink-inhand-left
+        color: "#E2AE7C"
+      right:
+      - state: generic-pink-inhand-right
+        color: "#E2AE7C"
+
+- type: entity
+  name: anomalous meat mass
+  parent: FoodMeatRawBase
+  id: FoodMeatAnomaly
+  description: An impossibly dense slab of meat. Just looking at it makes you uncomfortable.
+  components:
+  - type: Sprite
+    state: anomalymeat
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        reagents:
+        - ReagentId: UncookedAnimalProteins
+          Quantity: 90
+        - ReagentId: Fat
+          Quantity: 90
+  - type: SliceableFood
+    count: 10
+    sliceTime: 5
+    slice: FoodMeat #That's... So much meat
+  - type: InternalTemperature
+    conductivity: 0.43
+  - type: Construction
+    graph: AnomalyMeatSteak
+    node: start
+    defaultTarget: anomaly steak
+  - type: Tag
+    tags:
+    - Meat
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: plain-inhand-left
+      right:
+      - state: plain-inhand-right
 
 # Cooked
 
@@ -736,6 +983,16 @@
   - type: Construction
     graph: MeatSteak
     node: meat steak
+  - type: FoodSequenceElement
+    entries:
+      Burger: MeatSteak
+      Taco: MeatSteak
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: plain-cooked-inhand-left
+      right:
+      - state: plain-cooked-inhand-right
 
 - type: entity
   name: bacon
@@ -767,6 +1024,18 @@
   - type: Construction
     graph: Bacon
     node: bacon
+  - type: FoodSequenceElement
+    entries:
+      Burger: MeatBacon
+      Taco: MeatBacon
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: generic-pink-inhand-left
+        color: "#5B3E2A"
+      right:
+      - state: generic-pink-inhand-right
+        color: "#5B3E2A"
 
 - type: entity
   name: cooked bear
@@ -796,6 +1065,12 @@
   - type: Construction
     graph: BearSteak
     node: filet migrawr
+  - type: FoodSequenceElement
+    entries:
+      Burger: MeatBearBurger
+      Taco: MeatBear
+  - type: Item
+    heldPrefix: meatball
 
 - type: entity
   name: penguin filet
@@ -824,6 +1099,18 @@
   - type: Construction
     graph: PenguinSteak
     node: cooked penguin
+  - type: FoodSequenceElement
+    entries:
+      Burger: MeatPenguinBurger
+      Taco: MeatPenguin
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: plain-cooked-inhand-left
+        color: "#F7E3A3"
+      right:
+      - state: plain-cooked-inhand-right
+        color: "#F7E3A3"
 
 - type: entity
   name: cooked chicken
@@ -852,6 +1139,18 @@
   - type: Construction
     graph: ChickenSteak
     node: cooked chicken
+  - type: FoodSequenceElement
+    entries:
+      Burger: MeatChicken
+      Taco: MeatChicken
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: plain-cooked-inhand-left
+        color: "#F7E3A3"
+      right:
+      - state: plain-cooked-inhand-right
+        color: "#F7E3A3"
 
 - type: entity
   name: fried chicken
@@ -880,6 +1179,18 @@
           Quantity: 5
         - ReagentId: Protein
           Quantity: 5
+  - type: FoodSequenceElement
+    entries:
+      Burger: MeatChicken
+      Taco: MeatChicken
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: plain-cooked-inhand-left
+        color: "#F7E3A3"
+      right:
+      - state: plain-cooked-inhand-right
+        color: "#F7E3A3"
 
 - type: entity
   name: cooked duck
@@ -908,6 +1219,18 @@
   - type: Construction
     graph: DuckSteak
     node: cooked duck
+  - type: FoodSequenceElement
+    entries:
+      Burger: MeatDuck
+      Taco: MeatDuck
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: plain-cooked-inhand-left
+        color: "#F7E3A3"
+      right:
+      - state: plain-cooked-inhand-right
+        color: "#F7E3A3"
 
 - type: entity
   name: cooked crab
@@ -936,6 +1259,16 @@
   - type: Construction
     graph: CrabSteak
     node: cooked crab
+  - type: FoodSequenceElement
+    entries:
+      Burger: MeatCrabBurger
+      Taco: MeatCrab
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: plain-cooked-inhand-left
+      right:
+      - state: plain-cooked-inhand-right
 
 - type: entity
   name: goliath steak
@@ -962,6 +1295,16 @@
   - type: Construction
     graph: GoliathSteak
     node: goliath steak
+  - type: FoodSequenceElement
+    entries:
+      Burger: MeatGoliathBurger
+      Taco: MeatGoliath
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: plain-cooked-inhand-left
+      right:
+      - state: plain-cooked-inhand-right
 
 - type: entity
   name: rouny steak
@@ -992,6 +1335,16 @@
   - type: Construction
     graph: RounySteak
     node: rouny steak
+  - type: FoodSequenceElement
+    entries:
+      Burger: MeatXeno
+      Taco: MeatXeno
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: plain-cooked-inhand-left
+      right:
+      - state: plain-cooked-inhand-right
 
 - type: entity
   name: lizard steak
@@ -1021,6 +1374,16 @@
   - type: Construction
     graph: LizardSteak
     node: lizard steak
+  - type: FoodSequenceElement
+    entries:
+      Burger: MeatLizardBurger
+      Taco: MeatLizard
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: plain-cooked-inhand-left
+      right:
+      - state: plain-cooked-inhand-right
 
 - type: entity
   name: boiled spider leg
@@ -1043,6 +1406,18 @@
           Quantity: 5
         - ReagentId: Protein
           Quantity: 5
+  - type: FoodSequenceElement
+    entries:
+      Burger: MeatSpiderBurger
+      Taco: MeatSpider
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: snake-inhand-left
+        color: "#44201A"
+      right:
+      - state: snake-inhand-right
+        color: "#44201A"
 
 - type: entity
   name: meatball
@@ -1064,6 +1439,159 @@
           Quantity: 5
         - ReagentId: Protein
           Quantity: 5
+  - type: FoodSequenceElement
+    entries:
+      Burger: MeatBall
+      Taco: MeatBall
+  - type: Construction
+    graph: MeatMeatballCooked
+    node: meatball cooked
+  - type: Item
+    heldPrefix: meatball
+
+- type: entity
+  name: cooked meat patty
+  parent: FoodMeatBase
+  id: FoodMeatPattyCooked
+  description: A cooked meat patty.
+  components:
+  - type: Tag
+    tags:
+    - Cooked
+    - Meat
+    - Steak
+  - type: Sprite
+    state: patty
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 7.5
+        - ReagentId: Protein
+          Quantity: 7.5
+  - type: Construction
+    graph: CookedPatty
+    node: cooked meat patty
+  - type: FoodSequenceElement
+    entries:
+      Burger: MeatPatty
+      Taco: MeatPatty
+  - type: Item
+    heldPrefix: meatball
+
+- type: entity
+  name: boiled snail
+  parent: FoodMeatBase
+  id: FoodMeatSnailCooked
+  description: Improved with salt.
+  components:
+  - type: Tag
+    tags:
+    - Cooked
+    - Meat
+  - type: Sprite
+    layers:
+    - state: snail-cooked
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 15
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 3
+        - ReagentId: Protein
+          Quantity: 3
+        - ReagentId: Water
+          Quantity: 4 # makes saline if you add salt!
+  - type: FoodSequenceElement
+    entries:
+      Burger: MeatSnail
+      Taco: MeatSnail
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: generic-pink-inhand-left
+        color: "#5B3E2A"
+      right:
+      - state: generic-pink-inhand-right
+        color: "#5B3E2A"
+
+- type: entity
+  name: anomalous steak
+  parent: FoodMeatBase
+  id: FoodMeatAnomalyCooked
+  description: A gigantic mass of cooked meat. A meal for a dinner party, or someone REALLY hungry.
+  components:
+  - type: Tag
+    tags:
+    - Cooked
+    - Meat
+  - type: Sprite
+    layers:
+    - state: anomalymeat-cooked #Kinda hard to cook this... thing evenly
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 100
+        - ReagentId: Protein
+          Quantity: 50
+  - type: SliceableFood
+    count: 10
+    sliceTime: 5
+    slice: FoodMeatCooked
+  - type: Construction
+    graph: AnomalyMeatSteak
+    node: anomaly steak
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: plain-cooked-inhand-left
+      right:
+      - state: plain-cooked-inhand-right
+
+- type: entity
+  name: dragon steak
+  parent: FoodMeatBase
+  id: FoodMeatDragonCooked
+  description: Pouring ketchup on this is considered a capital crime on most stations.
+  components:
+  - type: Tag
+    tags:
+    - Cooked
+    - Meat
+    - Steak
+  - type: Sprite
+    layers:
+    - state: dragon-cooked
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        reagents:
+        - ReagentId: Ichor
+          Quantity: 6
+        - ReagentId: Nutriment
+          Quantity: 6
+        - ReagentId: Protein
+          Quantity: 6
+  - type: SliceableFood
+    count: 3
+    slice: FoodMeatDragonCutletCooked
+  - type: Construction
+    graph: DragonSteak
+    node: dragon steak
+  - type: FoodSequenceElement
+    entries:
+      Burger: DragonSteak
+      Taco: DragonSteak
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: dragon-cooked-inhand-left
+      right:
+      - state: dragon-cooked-inhand-right
 
 # Cutlets
 
@@ -1090,6 +1618,16 @@
           Quantity: 3
         - ReagentId: Fat
           Quantity: 2
+  - type: Construction
+    graph: Cutlet
+    node: start
+    defaultTarget: cutlet
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: generic-pink-inhand-left
+      right:
+      - state: generic-pink-inhand-right
 
 - type: entity
   name: raw bear cutlet
@@ -1115,6 +1653,18 @@
           Quantity: 3
         - ReagentId: Fat
           Quantity: 2
+  - type: Construction
+    graph: BearCutlet
+    node: start
+    defaultTarget: bear cutlet
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: generic-pink-inhand-left
+        color: brown
+      right:
+      - state: generic-pink-inhand-right
+        color: brown
 
 - type: entity
   name: raw penguin cutlet
@@ -1138,6 +1688,18 @@
           Quantity: 3
         - ReagentId: Fat
           Quantity: 2
+  - type: Construction
+    graph: PenguinCutlet
+    node: start
+    defaultTarget: penguin cutlet
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: generic-pink-inhand-left
+        color: white
+      right:
+      - state: generic-pink-inhand-right
+        color: white
 
 - type: entity
   name: raw chicken cutlet
@@ -1161,6 +1723,16 @@
           Quantity: 3
         - ReagentId: Fat
           Quantity: 2
+  - type: Construction
+    graph: ChickenCutlet
+    node: start
+    defaultTarget: chicken cutlet
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: generic-pink-inhand-left
+      right:
+      - state: generic-pink-inhand-right
 
 - type: entity
   name: raw duck cutlet
@@ -1184,6 +1756,16 @@
           Quantity: 3
         - ReagentId: Fat
           Quantity: 2
+  - type: Construction
+    graph: DuckCutlet
+    node: start
+    defaultTarget: duck cutlet
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: generic-pink-inhand-left
+      right:
+      - state: generic-pink-inhand-right
 
 - type: entity
   name: raw lizard cutlet
@@ -1210,6 +1792,18 @@
           Quantity: 3
         - ReagentId: Fat
           Quantity: 2
+  - type: Construction
+    graph: LizardCutlet
+    node: start
+    defaultTarget: lizard cutlet
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: generic-pink-inhand-left
+        color: green
+      right:
+      - state: generic-pink-inhand-right
+        color: green
 
 - type: entity
   name: raw spider cutlet
@@ -1232,6 +1826,18 @@
           Quantity: 3
         - ReagentId: Fat
           Quantity: 2
+  - type: Construction
+    graph: SpiderCutlet
+    node: start
+    defaultTarget: spider cutlet
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: generic-pink-inhand-left
+        color: green
+      right:
+      - state: generic-pink-inhand-right
+        color: green
 
 - type: entity
   name: raw xeno cutlet
@@ -1256,6 +1862,18 @@
         reagents:
         - ReagentId: SulfuricAcid
           Quantity: 20
+  - type: Construction
+    graph: XenoCutlet
+    node: start
+    defaultTarget: xeno cutlet
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: generic-pink-inhand-left
+        color: green
+      right:
+      - state: generic-pink-inhand-right
+        color: green
 
 - type: entity
   name: raw killer tomato cutlet
@@ -1270,6 +1888,8 @@
   - type: Sprite
     state: salami-slice
     color: red
+  - type: StaticPrice
+    price: 30
 
 - type: entity
   name: salami slice
@@ -1292,6 +1912,41 @@
           Quantity: 1
         - ReagentId: Protein
           Quantity: 1
+
+- type: entity
+  name: raw dragon cutlet
+  parent: FoodMeatBase
+  id: FoodMeatDragonCutlet
+  description: A raw dragon meat cutlet.
+  components:
+  - type: Tag
+    tags:
+    - Raw
+    - Cutlet
+    - Meat
+  - type: Sprite
+    layers:
+    - state: dragoncutlet
+    - state: dragoncutlet_veins
+      shader: unshaded
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        reagents:
+        - ReagentId: Ichor
+          Quantity: 3
+  - type: Construction
+    graph: DragonCutlet
+    node: start
+    defaultTarget: dragon cutlet
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: generic-pink-inhand-left
+        color: "#D127A7"
+      right:
+      - state: generic-pink-inhand-right
+        color: "#D127A7"
 
 # Cooked
 
@@ -1316,6 +1971,21 @@
           Quantity: 2
         - ReagentId: Protein
           Quantity: 2
+  - type: Construction
+    graph: Cutlet
+    node: cutlet
+  - type: FoodSequenceElement
+    entries:
+      Burger: MeatCutlet
+      Taco: MeatCutlet
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: generic-pink-inhand-left
+        color: "#5B3614"
+      right:
+      - state: generic-pink-inhand-right
+        color: "#5B3614"
 
 - type: entity
   name: bear cutlet
@@ -1341,6 +2011,21 @@
           Quantity: 2
         - ReagentId: Protein
           Quantity: 2
+  - type: Construction
+    graph: BearCutlet
+    node: bear cutlet
+  - type: FoodSequenceElement
+    entries:
+      Burger: BearCutletBurger
+      Taco: BearCutlet
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: generic-pink-inhand-left
+        color: "#5B3614"
+      right:
+      - state: generic-pink-inhand-right
+        color: "#5B3614"
 
 - type: entity
   name: penguin cutlet
@@ -1364,6 +2049,21 @@
           Quantity: 2
         - ReagentId: Protein
           Quantity: 2
+  - type: Construction
+    graph: PenguinCutlet
+    node: penguin cutlet
+  - type: FoodSequenceElement
+    entries:
+      Burger: PenguinCutletBurger
+      Taco: PenguinCutlet
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: generic-pink-inhand-left
+        color: "#5B3614"
+      right:
+      - state: generic-pink-inhand-right
+        color: "#5B3614"
 
 - type: entity
   name: chicken cutlet
@@ -1387,6 +2087,21 @@
           Quantity: 2
         - ReagentId: Protein
           Quantity: 2
+  - type: Construction
+    graph: ChickenCutlet
+    node: chicken cutlet
+  - type: FoodSequenceElement
+    entries:
+      Burger: ChickenCutlet
+      Taco: ChickenCutlet
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: generic-pink-inhand-left
+        color: "#5B3614"
+      right:
+      - state: generic-pink-inhand-right
+        color: "#5B3614"
 
 - type: entity
   name: duck cutlet
@@ -1410,6 +2125,21 @@
           Quantity: 2
         - ReagentId: Protein
           Quantity: 2
+  - type: Construction
+    graph: DuckCutlet
+    node: duck cutlet
+  - type: FoodSequenceElement
+    entries:
+      Burger: DuckCutlet
+      Taco: DuckCutlet
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: generic-pink-inhand-left
+        color: "#5B3614"
+      right:
+      - state: generic-pink-inhand-right
+        color: "#5B3614"
 
 - type: entity
   name: lizard cutlet
@@ -1434,6 +2164,21 @@
           Quantity: 2
         - ReagentId: Protein
           Quantity: 2
+  - type: Construction
+    graph: LizardCutlet
+    node: lizard cutlet
+  - type: FoodSequenceElement
+    entries:
+      Burger: LizardCutletBurger
+      Taco: LizardCutlet
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: generic-pink-inhand-left
+        color: "#153F06"
+      right:
+      - state: generic-pink-inhand-right
+        color: "#153F06"
 
 - type: entity
   name: spider cutlet
@@ -1456,6 +2201,21 @@
           Quantity: 1
         - ReagentId: Protein
           Quantity: 1
+  - type: Construction
+    graph: SpiderCutlet
+    node: spider cutlet
+  - type: FoodSequenceElement
+    entries:
+      Burger: SpiderCutletBurger
+      Taco: SpiderCutlet
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: generic-pink-inhand-left
+        color: "#153F06"
+      right:
+      - state: generic-pink-inhand-right
+        color: "#153F06"
 
 - type: entity
   name: xeno cutlet
@@ -1478,3 +2238,57 @@
           Quantity: 1
         - ReagentId: Protein
           Quantity: 1
+  - type: Construction
+    graph: XenoCutlet
+    node: xeno cutlet
+  - type: FoodSequenceElement
+    entries:
+      Burger: XenoCutlet
+      Taco: XenoCutlet
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: generic-pink-inhand-left
+        color: "#153F06"
+      right:
+      - state: generic-pink-inhand-right
+        color: "#153F06"
+
+- type: entity
+  name: dragon cutlet
+  parent: FoodMeatBase
+  id: FoodMeatDragonCutletCooked
+  description: It's a meal for kings!
+  components:
+  - type: Tag
+    tags:
+    - Cooked
+    - Cutlet
+    - Meat
+  - type: Sprite
+    state: dragoncutlet-cooked
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        reagents:
+        - ReagentId: Ichor
+          Quantity: 2
+        - ReagentId: Nutriment
+          Quantity: 2
+        - ReagentId: Protein
+          Quantity: 2
+  - type: Construction
+    graph: DragonCutlet
+    node: dragon cutlet
+  - type: FoodSequenceElement
+    entries:
+      Burger: DragonCutlet
+      Taco: DragonCutlet
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: generic-pink-inhand-left
+        color: "#7A1763"
+      right:
+      - state: generic-pink-inhand-right
+        color: "#7A1763"

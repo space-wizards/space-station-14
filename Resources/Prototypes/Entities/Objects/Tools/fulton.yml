@@ -1,13 +1,12 @@
 # Stack
 - type: stack
   id: Fulton
-  name: fulton
+  name: stack-fulton
   icon:
     sprite: /Textures/Objects/Tools/fulton.rsi
     state: extraction_pack
   spawn: Fulton1
   maxCount: 10
-  itemSize: 2
 
 # Entities
 - type: entity
@@ -29,6 +28,11 @@
             - Impassable
     - type: Item
       size: Normal
+      inhandVisuals:
+        left:
+        - state: inhand-left-beacon
+        right:
+        - state: inhand-right-beacon
     - type: Foldable
       folded: true
     - type: Clickable
@@ -59,6 +63,11 @@
   - type: Fulton
   - type: Item
     size: Normal
+    inhandVisuals:
+      left:
+      - state: inhand-left-fulton
+      right:
+      - state: inhand-right-fulton
   - type: Stack
     stackType: Fulton
     count: 10
@@ -88,7 +97,7 @@
 
 - type: entity
   id: FultonEffect
-  noSpawn: true
+  categories: [ HideSpawnMenu ]
   name: fulton effect
   components:
   - type: TimedDespawn

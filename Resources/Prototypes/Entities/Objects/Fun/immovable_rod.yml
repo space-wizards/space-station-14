@@ -1,4 +1,4 @@
-﻿- type: entity
+- type: entity
   id: ImmovableRod
   name: immovable rod
   description: You can sense that it's hungry. That's usually a bad sign.
@@ -6,14 +6,18 @@
   - type: Clickable
   - type: InteractionOutline
   - type: MovementIgnoreGravity
+    weightless: true
   - type: Sprite
     sprite: Objects/Fun/immovable_rod.rsi
     state: icon
     noRot: false
   - type: ImmovableRod
+  - type: GravityAffected
   - type: Physics
     bodyType: Dynamic
     linearDamping: 0
+  - type: TileFrictionModifier
+    modifier: 0
   - type: PointLight
     radius: 3
     color: red
@@ -32,6 +36,9 @@
   - type: WarpPoint
     follow: true
     location: immovable rod
+    blacklist:
+      tags:
+      - GhostOnlyWarp
 
 - type: entity
   id: ImmovableRodDespawn
@@ -66,22 +73,20 @@
   suffix: Wizard
   components:
   - type: ImmovableRod
-    minSpeed: 35
+    maxSpeed: 25
     destroyTiles: false
     randomizeVelocity: false
     shouldGib: false
     damage:
       types:
-        Blunt: 200
-  - type: MovementIgnoreGravity
-    gravityState: true
+        Blunt: 190
   - type: InputMover
   - type: MovementSpeedModifier
-    weightlessAcceleration: 5
-    weightlessModifier: 2
-    weightlessFriction: 0
-    friction: 0
-    frictionNoInput: 0
+    baseWeightlessAcceleration: 5
+    baseWeightlessModifier: 2
+    baseWeightlessFriction: 0
+    baseFriction: 0
+    offGridFriction: 0
   - type: CanMoveInAir
   - type: MovementAlwaysTouching
   - type: NoSlip
@@ -93,6 +98,7 @@
   components:
   - type: ImmovableRod
     randomizeVelocity: false
+    maxSpeed: 0
 
 - type: entity
   parent: ImmovableRodKeepTilesStill
@@ -113,7 +119,7 @@
   description: SHARK TORNADO!
   components:
   - type: Sprite
-    sprite: Objects/Fun/sharkplush.rsi
+    sprite: Objects/Fun/Plushies/shark.rsi
     state: blue
     rotation: 90
     noRot: false
@@ -175,4 +181,15 @@
     sprite: Objects/Weapons/Melee/debug.rsi
     state: icon
     rotation: 225
+    noRot: false
+
+- type: entity
+  parent: ImmovableRodKeepTilesStill
+  id: ImmovableRodWeh
+  name: immovable weh
+  description: WEH!
+  components:
+  - type: Sprite
+    sprite: Objects/Fun/Plushies/lizard.rsi
+    state: icon
     noRot: false

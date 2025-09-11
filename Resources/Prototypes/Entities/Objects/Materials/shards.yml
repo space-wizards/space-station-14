@@ -5,6 +5,8 @@
   description: It's a shard of some unknown material.
   components:
   - type: Sharp
+  - type: Execution
+    doAfterDuration: 4.0
   - type: Sprite
     layers:
       - sprite: Objects/Materials/Shards/shard.rsi
@@ -63,13 +65,15 @@
         acts: [ "Destruction" ]
   - type: StepTrigger
     intersectRatio: 0.2
-  - type: ClothingRequiredStepTrigger
+  - type: PreventableStepTrigger
   - type: Slippery
     slipSound:
       path: /Audio/Effects/glass_step.ogg
-    launchForwardsMultiplier: 0
+    slipData:
+      launchForwardsMultiplier: 0
   - type: TriggerOnStepTrigger
-  - type: DamageUserOnTrigger
+  - type: DamageOnTrigger
+    targetUser: true
     damage:
       types:
         Piercing: 5
@@ -85,10 +89,10 @@
   components:
   - type: Sprite
     color: "#bbeeff"
-  - type: WelderRefinable
+  - type: ToolRefinable
     refineResult:
-    - SheetGlass1
-  - type: DamageUserOnTrigger
+    - id: SheetGlass1
+  - type: DamageOnTrigger
     damage:
       types:
         Piercing: 4.5
@@ -120,11 +124,11 @@
     damage:
       types:
         Slash: 4.5
-  - type: WelderRefinable
+  - type: ToolRefinable
     refineResult:
-    - SheetGlass1
-    - PartRodMetal1
-  - type: DamageUserOnTrigger
+    - id: SheetGlass1
+    - id: PartRodMetal1
+  - type: DamageOnTrigger
     damage:
       types:
         Piercing: 5.5
@@ -156,11 +160,11 @@
     damage:
       types:
         Slash: 5.5
-  - type: WelderRefinable
+  - type: ToolRefinable
     refineResult:
-    - SheetGlass1
-    - SheetPlasma1
-  - type: DamageUserOnTrigger
+    - id: SheetGlass1
+    - id: SheetPlasma1
+  - type: DamageOnTrigger
     damage:
       types:
         Piercing: 6.5
@@ -195,11 +199,11 @@
       types:
         Slash: 4.5
         Radiation: 2
-  - type: WelderRefinable
+  - type: ToolRefinable
     refineResult:
-    - SheetGlass1
-    - SheetUranium1
-  - type: DamageUserOnTrigger
+    - id: SheetGlass1
+    - id: SheetUranium1
+  - type: DamageOnTrigger
     damage:
       types:
         Piercing: 5
@@ -230,11 +234,11 @@
   components:
   - type: Sprite
     color: "#e0aa36"
-  - type: WelderRefinable
+  - type: ToolRefinable
     refineResult:
-    - SheetGlass1
-    - SheetBrass1
-  - type: DamageUserOnTrigger
+    - id: SheetGlass1
+    - id: SheetBrass1
+  - type: DamageOnTrigger
     damage:
       types:
         Piercing: 5

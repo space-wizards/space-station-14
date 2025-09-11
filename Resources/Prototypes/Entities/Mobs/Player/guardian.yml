@@ -13,6 +13,9 @@
       makeSentient: true
       name: ghost-role-information-guardian-name
       description: ghost-role-information-guardian-description
+      rules: ghost-role-information-familiar-rules
+      mindRoles:
+      - MindRoleGhostRoleFamiliar
       raffle:
         settings: default
     - type: GhostTakeoverAvailable
@@ -122,6 +125,7 @@
       makeSentient: true
       name: ghost-role-information-holoparasite-name
       description: ghost-role-information-holoparasite-description
+      rules: ghost-role-information-familiar-rules
       raffle:
         settings: default
     - type: GhostTakeoverAvailable
@@ -146,7 +150,7 @@
   name: Ifrit
   parent: MobGuardianBase
   id: MobIfritGuardian
-  description: A corrupted jinn, ripped from fitra to serve the wizard's petty needs. It stands wicked, tuning into it's owner's life to sustain itself.
+  description: A corrupted jinn, ripped from fitra to serve the wizard's petty needs. It stands wicked, tuning into its owner's life to sustain itself.
   components:
     - type: GhostRole
       allowMovement: true
@@ -154,6 +158,7 @@
       makeSentient: true
       name: ghost-role-information-ifrit-name
       description: ghost-role-information-ifrit-description
+      rules: ghost-role-information-familiar-rules
       raffle:
         settings: default
     - type: GhostTakeoverAvailable
@@ -173,7 +178,7 @@
 - type: entity
   name: HoloClown
   id: MobHoloClownGuardian
-  parent: MobGuardianBase
+  parent: [MobGuardianBase, InventoryBase]
   description: A mesmerising whirl of hard-light patterns weaves a blue colored clown of dubious origin.
   components:
     - type: GhostRole
@@ -182,6 +187,7 @@
       makeSentient: true
       name: ghost-role-information-holoclown-name
       description: ghost-role-information-holoclown-description
+      rules: ghost-role-information-familiar-rules
       raffle:
         settings: default
     - type: GhostTakeoverAvailable
@@ -225,14 +231,17 @@
     - type: Inventory
       templateId: holoclown
     - type: Hands
+    - type: ComplexInteraction
     - type: Clumsy
-      clumsyDamage:
+      gunShootFailDamage:
         types:
           Blunt: 5
           Piercing: 4
         groups:
           Burn: 3
-    - type: InventorySlots
+      catchingFailDamage:
+        types:
+          Blunt: 1
     - type: MeleeWeapon
       angle: 30
       animation: WeaponArcFist
@@ -246,7 +255,7 @@
       prototypes: [ HoloClownGear ]
     - type: RandomMetadata
       nameSegments:
-      - names_clown
+      - NamesClown
     - type: NpcFactionMember
       factions:
         - Syndicate
@@ -255,14 +264,13 @@
         task: SimpleHumanoidHostileCompound
 
 - type: entity
+  parent: BaseMentalAction
   id: ActionToggleGuardian
   name: Toggle Guardian
   description: Either manifests the guardian or recalls it back into your body
-  noSpawn: true
   components:
-  - type: InstantAction
+  - type: Action
     icon: Interface/Actions/manifest.png
-    event: !type:GuardianToggleActionEvent
     useDelay: 2
-    checkCanInteract: false
-    checkConsciousness: false
+  - type: InstantAction
+    event: !type:GuardianToggleActionEvent

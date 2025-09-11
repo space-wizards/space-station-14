@@ -48,6 +48,7 @@ public partial class NavMapControl : MapGridControl
     public List<(Vector2, Vector2)> TileLines = new();
     public List<(Vector2, Vector2)> TileRects = new();
     public List<(Vector2[], Color)> TilePolygons = new();
+    public List<NavMapRegionOverlay> RegionOverlays = new();
 
     // Default colors
     public Color WallColor = new(102, 217, 102);
@@ -218,7 +219,7 @@ public partial class NavMapControl : MapGridControl
 
             // Convert to a world position
             var unscaledPosition = (localPosition - MidPointVector) / MinimapScale;
-            var worldPosition = _transformSystem.GetWorldMatrix(_xform).Transform(new Vector2(unscaledPosition.X, -unscaledPosition.Y) + offset);
+            var worldPosition = Vector2.Transform(new Vector2(unscaledPosition.X, -unscaledPosition.Y) + offset, _transformSystem.GetWorldMatrix(_xform));
 
             // Find closest tracked entity in range
             var closestEntity = NetEntity.Invalid;
@@ -229,7 +230,7 @@ public partial class NavMapControl : MapGridControl
                 if (!blip.Selectable)
                     continue;
 
-                var currentDistance = (blip.Coordinates.ToMapPos(EntManager, _transformSystem) - worldPosition).Length();
+                var currentDistance = (_transformSystem.ToMapCoordinates(blip.Coordinates).Position - worldPosition).Length();
 
                 if (closestDistance < currentDistance || currentDistance * MinimapScale > MaxSelectableDistance)
                     continue;
@@ -319,6 +320,22 @@ public partial class NavMapControl : MapGridControl
             }
         }
 
+        // Draw region overlays
+        if (_grid != null)
+        {
+            foreach (var regionOverlay in RegionOverlays)
+            {
+                foreach (var gridCoords in regionOverlay.GridCoords)
+                {
+                    var positionTopLeft = ScalePosition(new Vector2(gridCoords.Item1.X, -gridCoords.Item1.Y) - new Vector2(offset.X, -offset.Y));
+                    var positionBottomRight = ScalePosition(new Vector2(gridCoords.Item2.X + _grid.TileSize, -gridCoords.Item2.Y - _grid.TileSize) - new Vector2(offset.X, -offset.Y));
+
+                    var box = new UIBox2(positionTopLeft, positionBottomRight);
+                    handle.DrawRect(box, regionOverlay.Color);
+                }
+            }
+        }
+
         // Draw map lines
         if (TileLines.Any())
         {
@@ -368,26 +385,6 @@ public partial class NavMapControl : MapGridControl
         if (PostWallDrawingAction != null)
             PostWallDrawingAction.Invoke(handle);
 
-        // Beacons
-        if (_beacons.Pressed)
-        {
-            var rectBuffer = new Vector2(5f, 3f);
-
-            // Calculate font size for current zoom level
-            var fontSize = (int) Math.Round(1 / WorldRange * DefaultDisplayedRange * UIScale * _targetFontsize, 0);
-            var font = new VectorFont(_cache.GetResource<FontResource>("/Fonts/NotoSans/NotoSans-Bold.ttf"), fontSize);
-
-            foreach (var beacon in _navMap.Beacons.Values)
-            {
-                var position = beacon.Position - offset;
-                position = ScalePosition(position with { Y = -position.Y });
-
-                var textDimensions = handle.GetDimensions(font, beacon.Text, 1f);
-                handle.DrawRect(new UIBox2(position - textDimensions / 2 - rectBuffer, position + textDimensions / 2 + rectBuffer), BackgroundColor);
-                handle.DrawString(font, position - textDimensions / 2, beacon.Text, beacon.Color);
-            }
-        }
-
         var curTime = Timing.RealTime;
         var blinkFrequency = 1f / 1f;
         var lit = curTime.TotalSeconds % blinkFrequency > blinkFrequency / 2f;
@@ -397,11 +394,11 @@ public partial class NavMapControl : MapGridControl
         {
             if (lit && value.Visible)
             {
-                var mapPos = coord.ToMap(EntManager, _transformSystem);
+                var mapPos = _transformSystem.ToMapCoordinates(coord);
 
                 if (mapPos.MapId != MapId.Nullspace)
                 {
-                    var position = _transformSystem.GetInvWorldMatrix(_xform).Transform(mapPos.Position) - offset;
+                    var position = Vector2.Transform(mapPos.Position, _transformSystem.GetInvWorldMatrix(_xform)) - offset;
                     position = ScalePosition(new Vector2(position.X, -position.Y));
 
                     handle.DrawCircle(position, float.Sqrt(MinimapScale) * 2f, value.Color);
@@ -418,17 +415,37 @@ public partial class NavMapControl : MapGridControl
             if (blip.Texture == null)
                 continue;
 
-            var mapPos = blip.Coordinates.ToMap(EntManager, _transformSystem);
+            var mapPos = _transformSystem.ToMapCoordinates(blip.Coordinates);
 
             if (mapPos.MapId != MapId.Nullspace)
             {
-                var position = _transformSystem.GetInvWorldMatrix(_xform).Transform(mapPos.Position) - offset;
+                var position = Vector2.Transform(mapPos.Position, _transformSystem.GetInvWorldMatrix(_xform)) - offset;
                 position = ScalePosition(new Vector2(position.X, -position.Y));
 
                 var scalingCoefficient = MinmapScaleModifier * float.Sqrt(MinimapScale);
-                var positionOffset = new Vector2(scalingCoefficient * blip.Texture.Width, scalingCoefficient * blip.Texture.Height);
+                var positionOffset = new Vector2(scalingCoefficient * blip.Scale * blip.Texture.Width, scalingCoefficient * blip.Scale * blip.Texture.Height);
 
                 handle.DrawTextureRect(blip.Texture, new UIBox2(position - positionOffset, position + positionOffset), blip.Color);
+            }
+        }
+
+        // Beacons
+        if (_beacons.Pressed)
+        {
+            var rectBuffer = new Vector2(5f, 3f);
+
+            // Calculate font size for current zoom level
+            var fontSize = (int)Math.Round(1 / WorldRange * DefaultDisplayedRange * UIScale * _targetFontsize, 0);
+            var font = new VectorFont(_cache.GetResource<FontResource>("/Fonts/NotoSans/NotoSans-Bold.ttf"), fontSize);
+
+            foreach (var beacon in _navMap.Beacons.Values)
+            {
+                var position = beacon.Position - offset;
+                position = ScalePosition(position with { Y = -position.Y });
+
+                var textDimensions = handle.GetDimensions(font, beacon.Text, 1f);
+                handle.DrawRect(new UIBox2(position - textDimensions / 2 - rectBuffer, position + textDimensions / 2 + rectBuffer), BackgroundColor);
+                handle.DrawString(font, position - textDimensions / 2, beacon.Text, beacon.Color);
             }
         }
     }
@@ -535,7 +552,7 @@ public partial class NavMapControl : MapGridControl
                 // East edge
                 neighborData = 0;
                 if (relativeTile.X != SharedNavMapSystem.ChunkSize - 1)
-                    neighborData = chunk.TileData[i+SharedNavMapSystem.ChunkSize];
+                    neighborData = chunk.TileData[i + SharedNavMapSystem.ChunkSize];
                 else if (_navMap.Chunks.TryGetValue(chunkOrigin + Vector2i.Right, out neighborChunk))
                     neighborData = neighborChunk.TileData[i + SharedNavMapSystem.ChunkSize - SharedNavMapSystem.ArraySize];
 
@@ -548,7 +565,7 @@ public partial class NavMapControl : MapGridControl
                 // South edge
                 neighborData = 0;
                 if (relativeTile.Y != 0)
-                    neighborData = chunk.TileData[i-1];
+                    neighborData = chunk.TileData[i - 1];
                 else if (_navMap.Chunks.TryGetValue(chunkOrigin + Vector2i.Down, out neighborChunk))
                     neighborData = neighborChunk.TileData[i - 1 + SharedNavMapSystem.ChunkSize];
 
@@ -561,7 +578,7 @@ public partial class NavMapControl : MapGridControl
                 // West edge
                 neighborData = 0;
                 if (relativeTile.X != 0)
-                    neighborData = chunk.TileData[i-SharedNavMapSystem.ChunkSize];
+                    neighborData = chunk.TileData[i - SharedNavMapSystem.ChunkSize];
                 else if (_navMap.Chunks.TryGetValue(chunkOrigin + Vector2i.Left, out neighborChunk))
                     neighborData = neighborChunk.TileData[i - SharedNavMapSystem.ChunkSize + SharedNavMapSystem.ArraySize];
 
@@ -672,6 +689,9 @@ public partial class NavMapControl : MapGridControl
         Vector2i foundTermius;
         Vector2i foundOrigin;
 
+        if (origin == terminus)
+            return;
+
         // Does our new line end at the beginning of an existing line?
         if (lookup.Remove(terminus, out foundTermius))
         {
@@ -722,13 +742,15 @@ public struct NavMapBlip
     public Color Color;
     public bool Blinks;
     public bool Selectable;
+    public float Scale;
 
-    public NavMapBlip(EntityCoordinates coordinates, Texture texture, Color color, bool blinks, bool selectable = true)
+    public NavMapBlip(EntityCoordinates coordinates, Texture texture, Color color, bool blinks, bool selectable = true, float scale = 1f)
     {
         Coordinates = coordinates;
         Texture = texture;
         Color = color;
         Blinks = blinks;
         Selectable = selectable;
+        Scale = scale;
     }
 }

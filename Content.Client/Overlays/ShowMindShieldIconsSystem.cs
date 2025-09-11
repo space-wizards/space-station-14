@@ -15,14 +15,24 @@ public sealed class ShowMindShieldIconsSystem : EquipmentHudSystem<ShowMindShiel
         base.Initialize();
 
         SubscribeLocalEvent<MindShieldComponent, GetStatusIconsEvent>(OnGetStatusIconsEvent);
+        SubscribeLocalEvent<FakeMindShieldComponent, GetStatusIconsEvent>(OnGetStatusIconsEventFake);
+    }
+    // TODO: Probably need to get this OFF of client since this can be read by bad actors rather easily
+    //  ...imagine cheating in a game about silly paper dolls
+    private void OnGetStatusIconsEventFake(EntityUid uid, FakeMindShieldComponent component, ref GetStatusIconsEvent ev)
+    {
+        if(!IsActive)
+            return;
+        if (component.IsEnabled && _prototype.Resolve(component.MindShieldStatusIcon, out var fakeStatusIconPrototype))
+            ev.StatusIcons.Add(fakeStatusIconPrototype);
     }
 
     private void OnGetStatusIconsEvent(EntityUid uid, MindShieldComponent component, ref GetStatusIconsEvent ev)
     {
-        if (!IsActive || ev.InContainer)
+        if (!IsActive)
             return;
 
-        if (_prototype.TryIndex<StatusIconPrototype>(component.MindShieldStatusIcon.Id, out var iconPrototype))
+        if (_prototype.Resolve(component.MindShieldStatusIcon, out var iconPrototype))
             ev.StatusIcons.Add(iconPrototype);
     }
 }

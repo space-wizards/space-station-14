@@ -11,9 +11,8 @@ using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.XAML;
 using Robust.Shared.Network;
-using Robust.Shared.Utility;
-using Robust.Shared.Timing;
 using Robust.Shared.Configuration;
+using Robust.Shared.Utility;
 
 namespace Content.Client.Administration.UI.Bwoink
 {
@@ -30,12 +29,14 @@ namespace Content.Client.Administration.UI.Bwoink
         public AdminAHelpUIHandler AHelpHelper = default!;
 
         private PlayerInfo? _currentPlayer;
-        private readonly Dictionary<Button, ConfirmationData> _confirmations = new();
 
         public BwoinkControl()
         {
             RobustXamlLoader.Load(this);
             IoCManager.InjectDependencies(this);
+
+            var newPlayerThreshold = 0;
+            _cfg.OnValueChanged(CCVars.NewPlayerThreshold, (val) => { newPlayerThreshold = val; }, true);
 
             var uiController = _ui.GetUIController<AHelpUIController>();
             if (uiController.UIHelper is not AdminAHelpUIHandler helper)
@@ -45,6 +46,8 @@ namespace Content.Client.Administration.UI.Bwoink
 
             _adminManager.AdminStatusUpdated += UpdateButtons;
             UpdateButtons();
+
+            AdminOnly.OnToggled += args => PlaySound.Disabled = args.Pressed;
 
             ChannelSelector.OnSelectionChanged += sel =>
             {
@@ -58,9 +61,9 @@ namespace Content.Client.Administration.UI.Bwoink
                 var sb = new StringBuilder();
 
                 if (info.Connected)
-                    sb.Append('●');
+                    sb.Append(info.ActiveThisRound ? '⚫' : '◐');
                 else
-                    sb.Append(info.ActiveThisRound ? '○' : '·');
+                    sb.Append(info.ActiveThisRound ? '⭘' : '·');
 
                 sb.Append(' ');
                 if (AHelpHelper.TryGetChannel(info.SessionId, out var panel) && panel.Unread > 0)
@@ -72,10 +75,12 @@ namespace Content.Client.Administration.UI.Bwoink
                     sb.Append(' ');
                 }
 
+                // Mark antagonists with symbol
                 if (info.Antag && info.ActiveThisRound)
                     sb.Append(new Rune(0x1F5E1)); // 🗡
 
-                if (info.OverallPlaytime <= TimeSpan.FromSeconds(_cfg.GetCVar(CCVars.NewPlayerThreshold)))
+                // Mark new players with symbol
+                if (IsNewPlayer(info))
                     sb.Append(new Rune(0x23F2)); // ⏲
 
                 sb.AppendFormat("\"{0}\"", text);
@@ -83,30 +88,74 @@ namespace Content.Client.Administration.UI.Bwoink
                 return sb.ToString();
             };
 
+            // <summary>
+            // Returns true if the player's overall playtime is under the set threshold
+            // </summary>
+            bool IsNewPlayer(PlayerInfo info)
+            {
+                // Don't show every disconnected player as new, don't show 0-minute players as new if threshold is
+                if (newPlayerThreshold <= 0 || info.OverallPlaytime is null && !info.Connected)
+                    return false;
+
+                return (info.OverallPlaytime is null
+                        || info.OverallPlaytime < TimeSpan.FromMinutes(newPlayerThreshold));
+            }
+
             ChannelSelector.Comparison = (a, b) =>
             {
                 var ach = AHelpHelper.EnsurePanel(a.SessionId);
                 var bch = AHelpHelper.EnsurePanel(b.SessionId);
 
-                // First, sort by unread. Any chat with unread messages appears first. We just sort based on unread
-                // status, not number of unread messages, so that more recent unread messages take priority.
+                // Pinned players first
+                if (a.IsPinned != b.IsPinned)
+                    return a.IsPinned ? -1 : 1;
+
+                // Then, any chat with unread messages.
                 var aUnread = ach.Unread > 0;
                 var bUnread = bch.Unread > 0;
                 if (aUnread != bUnread)
                     return aUnread ? -1 : 1;
 
-                // Next, sort by connection status. Any disconnected players are grouped towards the end.
+                // Then, any chat with recent messages from the current round
+                var aRecent = a.ActiveThisRound && ach.LastMessage != DateTime.MinValue;
+                var bRecent = b.ActiveThisRound && bch.LastMessage != DateTime.MinValue;
+                if (aRecent != bRecent)
+                    return aRecent ? -1 : 1;
+
+                // Sort by connection status. Disconnected players will be last.
                 if (a.Connected != b.Connected)
                     return a.Connected ? -1 : 1;
 
-                // Next, group by whether or not the players have participated in this round.
-                // The ahelp window shows all players that have connected since server restart, this groups them all towards the bottom.
-                if (a.ActiveThisRound != b.ActiveThisRound)
-                    return a.ActiveThisRound ? -1 : 1;
+                // Sort connected players by whether they have joined the round, then by New Player status, then by Antag status
+                if (a.Connected && b.Connected)
+                {
+                    var aNewPlayer = IsNewPlayer(a);
+                    var bNewPlayer = IsNewPlayer(b);
+
+                    //  Players who have joined the round will be listed before players in the lobby
+                    if (a.ActiveThisRound != b.ActiveThisRound)
+                        return a.ActiveThisRound ? -1 : 1;
+
+                    //  Within both the joined group and lobby group, new players will be grouped and listed first
+                    if (aNewPlayer != bNewPlayer)
+                        return aNewPlayer ? -1 : 1;
+
+                    //  Within all four previous groups, antagonists will be listed first.
+                    if (a.Antag != b.Antag)
+                        return a.Antag ? -1 : 1;
+                }
+
+                // Sort disconnected players by participation in the round
+                if (!a.Connected && !b.Connected)
+                {
+                    if (a.ActiveThisRound != b.ActiveThisRound)
+                        return a.ActiveThisRound ? -1 : 1;
+                }
 
                 // Finally, sort by the most recent message.
                 return bch.LastMessage.CompareTo(ach.LastMessage);
             };
+
 
             Bans.OnPressed += _ =>
             {
@@ -128,11 +177,6 @@ namespace Content.Client.Administration.UI.Bwoink
 
             Kick.OnPressed += _ =>
             {
-                if (!AdminUIHelpers.TryConfirm(Kick, _confirmations))
-                {
-                    return;
-                }
-
                 // TODO: Reason field
                 if (_currentPlayer is not null)
                     _console.ExecuteCommand($"kick \"{_currentPlayer.Username}\"");
@@ -146,11 +190,6 @@ namespace Content.Client.Administration.UI.Bwoink
 
             Respawn.OnPressed += _ =>
             {
-                if (!AdminUIHelpers.TryConfirm(Respawn, _confirmations))
-                {
-                    return;
-                }
-
                 if (_currentPlayer is not null)
                     _console.ExecuteCommand($"respawn \"{_currentPlayer.Username}\"");
             };
@@ -226,7 +265,7 @@ namespace Content.Client.Administration.UI.Bwoink
             if (pl.Antag)
                 sb.Append(new Rune(0x1F5E1)); // 🗡
 
-            if (pl.OverallPlaytime <= TimeSpan.FromSeconds(_cfg.GetCVar(CCVars.NewPlayerThreshold)))
+            if (pl.OverallPlaytime <= TimeSpan.FromMinutes(_cfg.GetCVar(CCVars.NewPlayerThreshold)))
                 sb.Append(new Rune(0x23F2)); // ⏲
 
             sb.AppendFormat("\"{0}\"", pl.CharacterName);
@@ -243,9 +282,9 @@ namespace Content.Client.Administration.UI.Bwoink
         {
             UpdateButtons();
 
+            AHelpHelper.HideAllPanels();
             if (ch != null)
             {
-                AHelpHelper.HideAllPanels();
                 var panel = AHelpHelper.EnsurePanel(ch.Value);
                 panel.Visible = true;
             }
@@ -253,7 +292,20 @@ namespace Content.Client.Administration.UI.Bwoink
 
         public void PopulateList()
         {
+            // Maintain existing pin statuses
+            var pinnedPlayers = ChannelSelector.PlayerInfo.Where(p => p.IsPinned).ToDictionary(p => p.SessionId);
+
             ChannelSelector.PopulateList();
+
+            // Restore pin statuses
+            foreach (var player in ChannelSelector.PlayerInfo)
+            {
+                if (pinnedPlayers.TryGetValue(player.SessionId, out var pinnedPlayer))
+                {
+                    player.IsPinned = pinnedPlayer.IsPinned;
+                }
+            }
+
             UpdateButtons();
         }
     }

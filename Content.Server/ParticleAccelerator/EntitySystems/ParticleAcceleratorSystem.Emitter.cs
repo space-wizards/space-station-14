@@ -1,5 +1,6 @@
 using Content.Server.ParticleAccelerator.Components;
 using Content.Server.Singularity.Components;
+using Content.Shared.ParticleAccelerator.Components;
 using Content.Shared.Projectiles;
 using Content.Shared.Singularity.Components;
 using Robust.Shared.Physics.Components;
@@ -49,7 +50,7 @@ public sealed partial class ParticleAcceleratorSystem
                 ParticleAcceleratorPowerState.Level0 => 1,
                 ParticleAcceleratorPowerState.Level1 => 2,
                 ParticleAcceleratorPowerState.Level2 => 3,
-                ParticleAcceleratorPowerState.Level3 => 10,
+                ParticleAcceleratorPowerState.Level3 => 6,
                 _ => 0,
             } * 10;
         }

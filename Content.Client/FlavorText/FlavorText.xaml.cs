@@ -17,7 +17,7 @@ namespace Content.Client.FlavorText
 
             var loc = IoCManager.Resolve<ILocalizationManager>();
             CFlavorTextInput.Placeholder = new Rope.Leaf(loc.GetString("flavor-text-placeholder"));
-            CFlavorTextInput.OnKeyBindDown  += _ => FlavorTextChanged();
+            CFlavorTextInput.OnTextChanged  += _ => FlavorTextChanged();
         }
 
         public void FlavorTextChanged()

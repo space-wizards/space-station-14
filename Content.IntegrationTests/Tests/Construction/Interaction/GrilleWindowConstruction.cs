@@ -17,17 +17,14 @@ public sealed class GrilleWindowConstruction : InteractionTest
     {
         // Construct Grille
         await StartConstruction(Grille);
-        await Interact(Rod, 10);
-        ClientAssertPrototype(Grille, ClientTarget);
-
-        Target = CTestSystem.Ghosts[ClientTarget!.Value.GetHashCode()];
+        await InteractUsing(Rod, 10);
+        ClientAssertPrototype(Grille, Target);
         var grille = Target;
 
         // Construct Window
         await StartConstruction(Window);
-        await Interact(Glass, 10);
-        ClientAssertPrototype(Window, ClientTarget);
-        Target = CTestSystem.Ghosts[ClientTarget!.Value.GetHashCode()];
+        await InteractUsing(Glass, 10);
+        ClientAssertPrototype(Window, Target);
 
         // Deconstruct Window
         await Interact(Screw, Wrench);
@@ -35,7 +32,7 @@ public sealed class GrilleWindowConstruction : InteractionTest
 
         // Deconstruct Grille
         Target = grille;
-        await Interact(Cut);
+        await InteractUsing(Cut);
         AssertDeleted();
     }
 

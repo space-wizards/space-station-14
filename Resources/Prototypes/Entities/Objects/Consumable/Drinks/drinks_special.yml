@@ -11,7 +11,7 @@
   - type: MixableSolution
     solution: drink
   - type: Drink
-  - type: Shakeable # Doesn't do anything, but I mean...
+  - type: Shakeable
   - type: FitsInDispenser
     solution: drink
   - type: DrawableSolution
@@ -27,6 +27,8 @@
   - type: Sprite
     sprite: Objects/Consumable/Drinks/shaker.rsi
     state: icon
+  - type: Item
+    sprite: Objects/Consumable/Drinks/shaker.rsi
   - type: UserInterface
     interfaces:
       enum.TransferAmountUiKey.Key:
@@ -34,6 +36,15 @@
   - type: PhysicalComposition
     materialComposition:
       Steel: 50
+  - type: DnaSubstanceTrace
+  - type: ReactionMixer
+    mixOnInteract: false
+    reactionTypes:
+    - Shake
+  - type: ExaminableSolution
+    solution: drink
+    heldOnly: true
+    examinableWhileClosed: false
 
 - type: entity
   parent: DrinkGlassBase
@@ -63,12 +74,14 @@
   - type: SolutionContainerVisuals
     maxFillLevels: 2
     fillBaseName: fill
+    inHandsMaxFillLevels: 1
+    inHandsFillBaseName: -fill-
 
 - type: entity
   parent: DrinkGlassBase
   id: DrinkJar
   name: jar
-  description: The hipster's cup
+  description: The hipster's cup.
   components:
   - type: Drink
   - type: Sprite
@@ -135,6 +148,10 @@
     solutions:
       drink:
         maxVol: 20
+  - type: SolutionTransfer
+    canChangeTransferAmount: true
+    minTransferAmount: 1
+    maxTransferAmount: 20
   - type: MixableSolution
     solution: drink
   - type: FitsInDispenser
@@ -164,3 +181,33 @@
   - type: PhysicalComposition
     materialComposition:
       Steel: 75
+
+- type: entity
+  parent: DrinkBase
+  id: Pitcher
+  name: metal pitcher
+  description: A stainless steel insulated pitcher. Everyone's best friend in the morning.
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 60
+  - type: Sprite
+    sprite: Objects/Consumable/Drinks/pitcher.rsi
+    layers:
+    - state: icon
+      map: ["enum.SolutionContainerLayers.Base"]
+    - state: fill-6
+      map: ["enum.SolutionContainerLayers.Fill"]
+      visible: false
+  - type: Appearance
+  - type: SolutionContainerVisuals
+    maxFillLevels: 6
+    fillBaseName: fill-
+    inHandsMaxFillLevels: 2
+    inHandsFillBaseName: -fill-
+  - type: PhysicalComposition
+    materialComposition:
+      Steel: 300
+  - type: FitsInDispenser
+    solution: drink

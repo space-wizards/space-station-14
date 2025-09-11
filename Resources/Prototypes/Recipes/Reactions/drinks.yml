@@ -9,7 +9,21 @@
     AcidSpit: 3
 
 - type: reaction
+  id: AlienBrainHemorrhage
+  reactants:
+    IrishCream:
+      amount: 1
+    BlueCuracao:
+      amount: 1
+    Grenadine:
+      amount: 1
+  products:
+    AlienBrainHemorrhage: 3
+
+- type: reaction
   id: AlliesCocktail
+  requiredMixerCategories:
+  - Shake
   reactants:
     Martini:
       amount: 2
@@ -20,6 +34,8 @@
 
 - type: reaction
   id: Amasec
+  requiredMixerCategories:
+  - Shake
   reactants:
     Wine:
       amount: 2
@@ -32,6 +48,8 @@
 
 - type: reaction
   id: Andalusia
+  requiredMixerCategories:
+  - Stir
   reactants:
     Rum:
       amount: 1
@@ -72,14 +90,14 @@
     Uranium:
       amount: 1
   products:
-    AtomicBomb: 11
+    AtomicBomb: 10
 
 - type: reaction
   id: B52
   reactants:
     Cognac:
       amount: 1
-    IrishCarBomb:
+    IrishSlammer:
       amount: 1
     CoffeeLiqueur:
       amount: 1
@@ -92,12 +110,14 @@
     Tequila:
       amount: 1
     VodkaRedBool:
-      amount: 2
+      amount: 3
   products:
-    BudgetInsulsDrink: 3
+    BudgetInsulsDrink: 4
 
 - type: reaction
   id: BlueHawaiian
+  requiredMixerCategories:
+  - Shake
   reactants:
     CoconutRum:
       amount: 2
@@ -126,6 +146,8 @@
 
 - type: reaction
   id: BahamaMama
+  requiredMixerCategories:
+  - Shake
   reactants:
     Ice:
       amount: 1
@@ -168,6 +190,8 @@
 
 - type: reaction
   id: BeepskySmash
+  requiredMixerCategories:
+  - Shake
   reactants:
     Iron:
       amount: 1
@@ -190,6 +214,8 @@
 
 - type: reaction
   id: BloodyMary
+  requiredMixerCategories:
+  - Stir
   reactants:
     JuiceLime:
       amount: 1
@@ -223,6 +249,20 @@
       amount: 2
   products:
     BraveBull: 3
+
+- type: reaction
+  id: Bronx
+  requiredMixerCategories:
+  - Shake
+  reactants:
+    Gin:
+      amount: 1
+    Vermouth:
+      amount: 1
+    JuiceOrange:
+      amount: 1
+  products:
+    Bronx: 3
 
 - type: reaction
   id: CafeLatte
@@ -269,6 +309,16 @@
     CreamOfCoconut: 3
 
 - type: reaction
+  id: CrushDepth
+  reactants:
+    RootBeerFloat:
+      amount: 1
+    Rum:
+      amount: 1
+  products:
+    CrushDepth: 2
+
+- type: reaction
   id: CubaLibre
   reactants:
     Cola:
@@ -279,7 +329,19 @@
     CubaLibre: 3
 
 - type: reaction
+  id: DarkandStormy
+  reactants:
+    SolDry:
+      amount: 1
+    Rum:
+      amount: 1
+  products:
+    DarkandStormy: 2
+
+- type: reaction
   id: DemonsBlood
+  requiredMixerCategories:
+  - Stir
   reactants:
     Rum:
       amount: 1
@@ -294,6 +356,8 @@
 
 - type: reaction
   id: DevilsKiss
+  requiredMixerCategories:
+  - Stir
   reactants:
     Rum:
       amount: 1
@@ -306,6 +370,8 @@
 
 - type: reaction
   id: DoctorsDelight
+  requiredMixerCategories:
+  - Stir
   reactants:
     Cream:
       amount: 2
@@ -322,6 +388,8 @@
 
 - type: reaction
   id: DriestMartini
+  requiredMixerCategories:
+  - Shake
   reactants:
     Gin:
       amount: 1
@@ -331,7 +399,37 @@
     DriestMartini: 2
 
 - type: reaction
+  id: Eggnog
+  requiredMixerCategories:
+  - Shake
+  reactants:
+    Egg:
+      amount: 1
+    Milk:
+      amount: 4
+    Rum:
+      amount: 5
+  products:
+    Eggnog: 10
+
+- type: reaction
+  id: ElectricShark
+  requiredMixerCategories:
+  - Shake
+  reactants:
+    DarkandStormy:
+      amount: 4
+    BlueCuracao:
+      amount: 1
+    JuicePineapple:
+      amount: 1
+  products:
+    ElectricShark: 6
+
+- type: reaction
   id: ErikaSurprise
+  requiredMixerCategories:
+  - Shake
   reactants:
     Ale:
       amount: 2
@@ -373,6 +471,8 @@
 
 - type: reaction
   id: GargleBlaster
+  requiredMixerCategories:
+  - Shake
   reactants:
     Cognac:
       amount: 1
@@ -411,6 +511,8 @@
 
 - type: reaction
   id: Gildlager
+  requiredMixerCategories:
+  - Shake
   reactants:
     Gold:
       amount: 1
@@ -491,7 +593,7 @@
   reactants:
     Beer:
       amount: 10
-    Frostoil:
+    FrostOil:
       amount: 1
   products:
     IcedBeer: 10
@@ -531,23 +633,27 @@
   reactants:
     EnergyDrink:
       amount: 1
-    IrishCarBomb:
+    IrishSlammer:
       amount: 1
   products:
     IrishBool: 2
 
 - type: reaction
-  id: IrishCarBomb
+  id: IrishSlammer
   reactants:
     Ale:
       amount: 1
     IrishCream:
       amount: 1
   products:
-    IrishCarBomb: 2
+    IrishSlammer: 2
+  sound:
+    path: /Audio/Animals/penguin_squawk.ogg # Cocktail is called grenade penguin in localisation
 
 - type: reaction
   id: IrishCoffee
+  requiredMixerCategories:
+  - Stir
   reactants:
     Coffee:
       amount: 1
@@ -567,7 +673,51 @@
     IrishCream: 3
 
 - type: reaction
+  id: JackRose
+  requiredMixerCategories:
+  - Shake
+  reactants:
+    JuiceApple:
+      amount: 1
+    Cognac:
+      amount: 1
+    Grenadine:
+      amount: 1
+    JuiceLemon:
+      amount: 1
+  products:
+    JackRose: 4
+
+- type: reaction
+  id: JungleBird
+  requiredMixerCategories:
+  - Shake
+  reactants:
+    Rum:
+      amount: 3
+    JuicePineapple:
+      amount: 1
+    Grenadine:
+      amount: 1
+    JuiceLime:
+      amount: 1
+  products:
+    JungleBird: 6
+
+- type: reaction
+  id: Kalimotxo
+  reactants:
+    Cola:
+      amount: 1
+    Wine:
+      amount: 1
+  products:
+    Kalimotxo: 2
+
+- type: reaction
   id: KiraSpecial
+  requiredMixerCategories:
+  - Stir
   reactants:
     JuiceLime:
       amount: 1
@@ -580,6 +730,8 @@
 
 - type: reaction
   id: Lemonade
+  requiredMixerCategories:
+  - Stir
   reactants:
     JuiceLemon:
       amount: 1
@@ -592,6 +744,8 @@
 
 - type: reaction
   id: LemonLime
+  requiredMixerCategories:
+  - Stir
   reactants:
     JuiceLemon:
       amount: 1
@@ -604,6 +758,8 @@
 
 - type: reaction
   id: LongIslandIcedTea
+  requiredMixerCategories:
+  - Stir
   reactants:
     CubaLibre:
       amount: 3
@@ -618,6 +774,8 @@
 
 - type: reaction
   id: Manhattan
+  requiredMixerCategories:
+  - Shake
   reactants:
     Whiskey:
       amount: 2
@@ -658,6 +816,8 @@
 
 - type: reaction
   id: Martini
+  requiredMixerCategories:
+  - Shake
   reactants:
     Gin:
       amount: 2
@@ -679,6 +839,8 @@
 
 - type: reaction
   id: Mojito
+  requiredMixerCategories:
+  - Shake
   reactants:
     JuiceLime:
       amount: 1
@@ -690,6 +852,22 @@
       amount: 1
   products:
     Mojito: 4
+
+- type: reaction
+  id: MonkeyBusiness
+  requiredMixerCategories:
+  - Shake
+  reactants:
+    Gin:
+      amount: 1
+    JuiceOrange:
+      amount: 1
+    Grenadine:
+      amount: 1
+    Absinthe:
+      amount: 1
+  products:
+    MonkeyBusiness: 4
 
 - type: reaction
   id: Moonshine
@@ -725,7 +903,23 @@
     NuclearCola: 5
 
 - type: reaction
+  id: NuclearColaBreakdown
+  source: true
+  requiredMixerCategories:
+  - Centrifuge
+  reactants:
+    NuclearCola:
+      amount: 10 # assuming we loose all o2 released as gas in the centrifugal process
+  products:
+    Ipecac: 2
+    Water: 2
+    Sugar: 2
+    Uranium: 1
+
+- type: reaction
   id: Patron
+  requiredMixerCategories:
+  - Shake
   reactants:
     Tequila:
       amount: 10
@@ -736,6 +930,8 @@
 
 - type: reaction
   id: Painkiller
+  requiredMixerCategories:
+  - Shake
   reactants:
     JuicePineapple:
       amount: 3
@@ -773,6 +969,16 @@
       amount: 1
   products:
     Posca: 3
+
+- type: reaction
+  id: Radler
+  reactants:
+    Lemonade:
+      amount: 1
+    Beer:
+      amount: 1
+  products:
+    Radler: 2
 
 - type: reaction
   id: RedMead
@@ -838,6 +1044,8 @@
 
 - type: reaction
   id: ScrewdriverCocktail
+  requiredMixerCategories:
+  - Shake
   reactants:
     JuiceOrange:
       amount: 2
@@ -889,7 +1097,19 @@
     LemonLime:
       amount: 1
   products:
-    SnowWhite: 3
+    SnowWhite: 2
+
+- type: reaction
+  id: SodaWater
+  requiredMixerCategories:
+  - Shake
+  reactants:
+    Water:
+      amount: 5
+    CarbonDioxide:
+      amount: 1
+  products:
+    SodaWater: 6
 
 - type: reaction
   id: SoyLatte
@@ -934,6 +1154,16 @@
     SyndicateBomb: 2
 
 - type: reaction
+  id: Tea
+  reactants:
+    TeaPowder:
+      amount: 1
+    Water:
+      amount: 5
+  products:
+    Tea: 6
+
+- type: reaction
   id: TequilaSunrise
   reactants:
     JuiceOrange:
@@ -954,7 +1184,21 @@
     ThreeMileIsland: 10
 
 - type: reaction
+  id: Tortuga
+  requiredMixerCategories:
+  - Stir
+  reactants:
+    IcedTea:
+      amount: 1
+    Sugar:
+      amount: 1
+  products:
+    Tortuga: 2
+
+- type: reaction
   id: ToxinsSpecial
+  requiredMixerCategories:
+  - Shake
   reactants:
     Rum:
       amount: 2
@@ -966,7 +1210,25 @@
     ToxinsSpecial: 5
 
 - type: reaction
+  id: Vampiro
+  requiredMixerCategories:
+  - Shake
+  reactants:
+    TequilaSunrise:
+      amount: 3
+    BloodyMary:
+      amount: 1
+    Hotsauce:
+      amount: 1
+    LemonLime:
+      amount: 1
+  products:
+    Vampiro: 6
+
+- type: reaction
   id: VodkaMartini
+  requiredMixerCategories:
+  - Shake
   reactants:
     Vermouth:
       amount: 1
@@ -1021,11 +1283,11 @@
   id: WhiteRussian
   reactants:
     BlackRussian:
-      amount: 2
+      amount: 1
     Cream:
       amount: 1
   products:
-    WhiteRussian: 3
+    WhiteRussian: 2
 
 - type: reaction
   id: WhiskeySoda
@@ -1083,6 +1345,18 @@
     TheMartinez: 6
 
 - type: reaction
+  id: Vodka
+  requiredMixerCategories:
+  - Stir
+  reactants:
+    Ethanol:
+      amount: 1
+    Water:
+      amount: 1
+  products:
+    Vodka: 2
+
+- type: reaction
   id: WaterBreakdown
   source: true
   requiredMixerCategories:
@@ -1117,3 +1391,167 @@
       amount: 1
   products:
     Cola: 4
+
+- type: reaction
+  id: Caipirinha
+  requiredMixerCategories:
+  - Shake
+  reactants:
+    Rum:
+      amount: 1
+    JuiceLime:
+      amount: 1
+    Sugar:
+      amount: 1
+    Ice:
+      amount: 1
+  products:
+    Caipirinha: 4
+
+- type: reaction
+  id: Daiquiri
+  requiredMixerCategories:
+  - Stir
+  reactants:
+    Rum:
+      amount: 4
+    Sugar:
+      amount: 1
+    JuiceLime:
+      amount: 1
+  products:
+    Daiquiri: 6
+
+- type: reaction
+  id: DeathInTheAfternoon
+  reactants:
+    Absinthe:
+      amount: 2
+    Champagne:
+      amount: 1
+  products:
+    DeathInTheAfternoon: 3
+
+- type: reaction
+  id: Empress75
+  requiredMixerCategories:
+  - Shake
+  reactants:
+    Champagne:
+      amount: 2
+    Gin:
+      amount: 2
+    JuiceLime:
+      amount: 1
+    Grenadine:
+      amount: 1
+  products:
+    Empress75: 6
+
+- type: reaction
+  id: EspressoMartini
+  requiredMixerCategories:
+  - Shake
+  reactants:
+    BlackRussian:
+      amount: 1
+    Coffee:
+      amount: 1
+  products:
+    EspressoMartini: 2
+
+- type: reaction
+  id: Mayojito
+  reactants:
+    Mojito:
+      amount: 1
+    Mayo:
+      amount: 1
+  products:
+    Mayojito: 2
+
+- type: reaction
+  id: Mimeosa
+  reactants:
+    Mimosa:
+      amount: 2
+    Nothing:
+      amount: 1
+  products:
+    Mimeosa: 3
+
+- type: reaction
+  id: Mimosa
+  reactants:
+    JuiceOrange:
+      amount: 2
+    Champagne:
+      amount: 1
+  products:
+    Mimosa: 3
+
+- type: reaction
+  id: MoscowMule
+  requiredMixerCategories:
+  - Stir
+  reactants:
+    Vodka:
+      amount: 4
+    JuiceLime:
+      amount: 1
+    SolDry:
+      amount: 1
+  products:
+    MoscowMule: 6
+
+- type: reaction
+  id: TheSunAlsoRises
+  reactants:
+    Absinthe:
+      amount: 1
+    Daiquiri:
+      amount: 5
+  products:
+    TheSunAlsoRises: 6
+
+- type: reaction
+  id: WhiskeySour
+  requiredMixerCategories:
+  - Shake
+  reactants:
+    Whiskey:
+      amount: 2
+    Sugar:
+      amount: 1
+    JuiceLemon:
+      amount: 2
+    Egg:
+      amount: 1
+  products:
+    WhiskeySour: 6
+
+- type: reaction
+  id: ZombieCocktail
+  reactants:
+    Rum:
+      amount: 2
+    Grenadine:
+      amount: 1
+    ZombieBlood:
+      amount: 1
+  products:
+    ZombieCocktail: 4
+
+- type: reaction
+  id: BacchusBlessing
+  reactants:
+    Hooch:
+      amount: 1
+    Absinthe:
+      amount: 1
+    ManlyDorf:
+      amount: 1
+    SyndicateBomb:
+      amount: 1
+  products:
+    BacchusBlessing: 4

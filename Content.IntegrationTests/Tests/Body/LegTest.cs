@@ -5,7 +5,6 @@ using Content.Shared.Body.Part;
 using Content.Shared.Rotation;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
-using Robust.Shared.Maths;
 
 namespace Content.IntegrationTests.Tests.Body
 {
@@ -40,13 +39,14 @@ namespace Content.IntegrationTests.Tests.Body
             var appearanceSystem = entityManager.System<SharedAppearanceSystem>();
             var xformSystem = entityManager.System<SharedTransformSystem>();
 
+            var map = await pair.CreateTestMap();
+
             await server.WaitAssertion(() =>
             {
-                var mapId = mapManager.CreateMap();
                 BodyComponent body = null;
 
                 human = entityManager.SpawnEntity("HumanBodyAndAppearanceDummy",
-                    new MapCoordinates(Vector2.Zero, mapId));
+                    new MapCoordinates(Vector2.Zero, map.MapId));
 
                 Assert.Multiple(() =>
                 {
@@ -61,7 +61,7 @@ namespace Content.IntegrationTests.Tests.Body
 
                 foreach (var leg in legs)
                 {
-                    xformSystem.DetachParentToNull(leg.Id, entityManager.GetComponent<TransformComponent>(leg.Id));
+                    xformSystem.DetachEntity(leg.Id, entityManager.GetComponent<TransformComponent>(leg.Id));
                 }
             });
 

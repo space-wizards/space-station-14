@@ -9,6 +9,17 @@
     - id: ClothingOuterHardsuitLuxury
 
 - type: entity
+  id: CrateCargoParcelWrap
+  parent: CrateGenericSteel
+  name: parcel wrap crate
+  description: All your parcel wrapping needs in one crate, containing three rolls of parcel wrap.
+  components:
+  - type: StorageFill
+    contents:
+    - id: ParcelWrap
+      amount: 3
+
+- type: entity
   id: CrateCargoGambling
   name: the grand lottery $$$
   description: A box containing treasure beyond your greatest imaginations!
@@ -110,9 +121,6 @@
     - id: WeaponRifleAk
       prob: 0.0001
       orGroup: Weapons
-    - id: Throngler
-      prob: 0.0001
-      orGroup: Weapons
     - id: WeaponLauncherPirateCannon
       prob: 0.001
       orGroup: Weapons
@@ -161,6 +169,9 @@
     - id: WeaponTurretXeno
       prob: 0.01
       orGroup: Weapons
+    - id: WeaponRifleFoam
+      prob: 0.03
+      orGroup: Weapons
     #clothing
     - id: ClothingUniformJumpsuitFamilyGuy
       prob: 0.05
@@ -168,7 +179,7 @@
     - id: ClothingOuterHardsuitCBURN
       prob: 0.001
       orGroup: Clothes
-    - id: ClothingOuterHardsuitBasic
+    - id: ClothingOuterHardsuitSanta
       prob: 0.001
       orGroup: Clothes
     - id: ClothingBackpackERTClown
@@ -305,6 +316,9 @@
     - id: PlushieArachind
       prob: 0.01
       orGroup: Plushies
+    - id: PlushieThrongler #hehe
+      prob: 0.0005
+      orGroup: Plushies
     #useful
     - id: AmeJar
       prob: 0.01
@@ -339,7 +353,10 @@
     - id: Lamp
       prob: 0.01
       orGroup: Useful
-    - id: FloraTreeLarge05
+    - id: FloraTreeLarge
+      prob: 0.01
+      orGroup: Useful
+    - id: LightTree #Funny mobs maybe
       prob: 0.01
       orGroup: Useful
     #notuseful
@@ -387,4 +404,13 @@
       orGroup: NotUseful
     - id: WeakKudzu
       prob: 0.01
+      orGroup: NotUseful
+    - id: MagazineFoamBox
+      prob: 0.001
+      orGroup: NotUseful
+    - id: BoxDonkSoftBox
+      prob: 0.008
+      orGroup: NotUseful
+    - id: GrenadeFoamDart
+      prob: 0.001
       orGroup: NotUseful

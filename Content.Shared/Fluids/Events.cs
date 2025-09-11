@@ -34,3 +34,15 @@ public sealed partial class AbsorbantDoAfterEvent : DoAfterEvent
 
     public override DoAfterEvent Clone() => this;
 }
+
+/// <summary>
+/// Raised when trying to spray something, for example a fire extinguisher.
+/// </summary>
+[ByRefEvent]
+public record struct SprayAttemptEvent(EntityUid User, bool Cancelled = false)
+{
+    public void Cancel()
+    {
+        Cancelled = true;
+    }
+}

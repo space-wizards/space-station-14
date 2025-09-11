@@ -1,0 +1,30 @@
+﻿<Document>
+  # The Wizard
+
+  <Box>
+    [color=#457573][italic]IT'S WIZARD TIME MOTHERF-...[italic][/color]
+  </Box>
+  <Box>
+    <GuideEntityEmbed Entity="ToyFigurineWizard" Caption=""/>
+  </Box>
+  Wizards are a force of chaos and unpredictability. You never know what one is going to do next.
+  Generally sent by the [color=#40E0D0]Space Wizards Federation[/color] or some schmuck turned into one by rolling a nat 20 on a cursed die.
+  And since a Wizard is highly unpredictable, one may show up when you least expect it!
+
+  ## The Grimoire
+  <Box>
+    <GuideEntityEmbed Entity="WizardsGrimoire" Caption="Wizards Grimoire"/>
+  </Box>
+
+  [bold]By wizard law of eld your Grimoire is bound to you.[/bold] This means you cannot share your Grimoire with anyone else. The spells and equipment inside are for you and you alone.
+  The Wizard's Grimoire is used to get all sorts of magical spells, equipment, and creatures. What's available to you is [italic]extremely powerful[/italic] so you only have 10 [color=#FF0000]W[/color][color=#FFA500]i[/color][color=#FFFF00]z[/color][color=#00FF00]€[/color][color=#0000FF]o[/color][color=#4B0082]i[/color][color=#8F00FF]n[/color]™ to spend on them.
+  Your only limit, other than the price, is your creativity. Try to find some combinations!
+
+  <Box>
+    <GuideEntityEmbed Entity="PonderingOrbWizard" Caption="The Pondering Orb"/>
+  </Box>
+
+  If you ever find yourself wanting to ponder, look no further! The [bold]Pondering Orb[/bold] allows the Wizard to tap into the Station's camera network to spy on others unsuspectingly.
+  Could be useful if you're trying to plan something out or stay one step ahead of [color=red]Security[/color].
+
+</Document>

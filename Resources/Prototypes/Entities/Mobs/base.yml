@@ -1,4 +1,4 @@
-﻿# The progenitor. This should only container the most basic components possible.
+# The progenitor. This should only container the most basic components possible.
 # Only put things on here if every mob *must* have it. This includes ghosts.
 - type: entity
   save: false
@@ -8,6 +8,8 @@
   - type: Sprite
     noRot: true
     drawdepth: Mobs
+  - type: MobCollision
+  - type: GravityAffected
   - type: Physics
     bodyType: KinematicController
   - type: Fixtures
@@ -41,8 +43,16 @@
   - type: CameraRecoil
   - type: MindContainer
   - type: MovementSpeedModifier
+  - type: RequireProjectileTarget
+    active: False
+  - type: StunVisuals
+
+- type: entity
+  save: false
+  id: MobPolymorphable
+  abstract: true
+  components:
   - type: Polymorphable
-  - type: StatusIcon
 
 # Used for mobs that have health and can take damage.
 - type: entity
@@ -75,6 +85,21 @@
       - !type:PlaySoundBehavior
         sound:
           collection: MeatLaserImpact
+    - trigger:
+        !type:DamageTypeTrigger
+        damageType: Radiation
+        damage: 15
+      behaviors:
+      - !type:PopupBehavior
+        popup: mouth-taste-metal
+        popupType: LargeCaution
+        targetOnly: true
+    - trigger:
+        !type:DamageTypeTrigger
+        damageType: Radiation
+        damage: 40
+      behaviors:
+      - !type:VomitBehavior
   - type: RadiationReceiver
   - type: Stamina
   - type: MobState
@@ -97,6 +122,10 @@
     - Piercing
     - Heat
     - Shock
+    - Cold
+    - Caustic
+    - Asphyxiation
+    - Radiation
   - type: DamageOnHighSpeedImpact
     damage:
       types:
@@ -148,7 +177,7 @@
     sweatHeatRegulation: 2000
     shiveringHeatRegulation: 2000
     normalBodyTemperature: 310.15
-    thermalRegulationTemperatureThreshold: 25
+    thermalRegulationTemperatureThreshold: 2
   - type: MovedByPressure
 
 # Used for mobs that require regular atmospheric conditions.
@@ -164,7 +193,7 @@
     sweatHeatRegulation: 500
     shiveringHeatRegulation: 500
     normalBodyTemperature: 310.15
-    thermalRegulationTemperatureThreshold: 25
+    thermalRegulationTemperatureThreshold: 2
   - type: Temperature
     heatDamageThreshold: 325
     coldDamageThreshold: 260

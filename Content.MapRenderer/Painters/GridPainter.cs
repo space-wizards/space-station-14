@@ -43,7 +43,7 @@ namespace Content.MapRenderer.Painters
             _decals = GetDecals();
         }
 
-        public void Run(Image gridCanvas, EntityUid gridUid, MapGridComponent grid)
+        public void Run(Image gridCanvas, EntityUid gridUid, MapGridComponent grid, Vector2 customOffset = default)
         {
             var stopwatch = new Stopwatch();
             stopwatch.Start();
@@ -56,10 +56,10 @@ namespace Content.MapRenderer.Painters
 
             // Decals are always painted before entities, and are also optional.
             if (_decals.TryGetValue(gridUid, out var decals))
-                _decalPainter.Run(gridCanvas, CollectionsMarshal.AsSpan(decals));
+                _decalPainter.Run(gridCanvas, CollectionsMarshal.AsSpan(decals), customOffset);
 
 
-            _entityPainter.Run(gridCanvas, entities);
+            _entityPainter.Run(gridCanvas, entities, customOffset);
             Console.WriteLine($"{nameof(GridPainter)} painted grid {gridUid} in {(int) stopwatch.Elapsed.TotalMilliseconds} ms");
         }
 
@@ -138,8 +138,8 @@ namespace Content.MapRenderer.Painters
             var yOffset = (int) -grid.LocalAABB.Bottom;
             var tileSize = grid.TileSize;
 
-            var x = ((float) Math.Floor(position.X) + xOffset) * tileSize * TilePainter.TileImageSize;
-            var y = ((float) Math.Floor(position.Y) + yOffset) * tileSize * TilePainter.TileImageSize;
+            var x = (position.X + xOffset) * tileSize * TilePainter.TileImageSize;
+            var y = (position.Y + yOffset) * tileSize * TilePainter.TileImageSize;
 
             return (x, y);
         }

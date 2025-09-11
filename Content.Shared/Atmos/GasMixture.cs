@@ -1,4 +1,5 @@
-﻿using System.Diagnostics.CodeAnalysis;
+﻿using System.Collections;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using Content.Shared.Atmos.EntitySystems;
@@ -13,13 +14,13 @@ namespace Content.Shared.Atmos
     /// </summary>
     [Serializable]
     [DataDefinition]
-    public sealed partial class GasMixture : IEquatable<GasMixture>, ISerializationHooks
+    public sealed partial class GasMixture : IEquatable<GasMixture>, ISerializationHooks, IEnumerable<(Gas gas, float moles)>
     {
         public static GasMixture SpaceGas => new() {Volume = Atmospherics.CellVolume, Temperature = Atmospherics.TCMB, Immutable = true};
 
         // No access, to ensure immutable mixtures are never accidentally mutated.
-        [Access(typeof(SharedAtmosphereSystem), typeof(SharedAtmosDebugOverlaySystem), Other = AccessPermissions.None)]
-        [DataField]
+        [Access(typeof(SharedAtmosphereSystem), typeof(SharedAtmosDebugOverlaySystem), typeof(GasEnumerator), Other = AccessPermissions.None)]
+        [DataField(customTypeSerializer: typeof(GasArraySerializer))]
         public float[] Moles = new float[Atmospherics.AdjustedNumberOfGases];
 
         public float this[int gas] => Moles[gas];
@@ -32,10 +33,9 @@ namespace Content.Shared.Atmos
         public bool Immutable { get; private set; }
 
         [ViewVariables]
-        public readonly Dictionary<GasReaction, float> ReactionResults = new()
+        public readonly float[] ReactionResults =
         {
-            // We initialize the dictionary here.
-            { GasReaction.Fire, 0f }
+            0f,
         };
 
         [ViewVariables]
@@ -94,6 +94,11 @@ namespace Content.Shared.Atmos
             _temperature = temp;
             Moles = moles;
             Volume = volume;
+        }
+
+        public GasMixture(GasMixture toClone)
+        {
+            CopyFrom(toClone);
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -197,9 +202,12 @@ namespace Content.Shared.Atmos
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public void CopyFromMutable(GasMixture sample)
+        public void CopyFrom(GasMixture sample)
         {
-            if (Immutable) return;
+            if (Immutable)
+                return;
+
+            Volume = sample.Volume;
             sample.Moles.CopyTo(Moles, 0);
             Temperature = sample.Temperature;
         }
@@ -239,6 +247,16 @@ namespace Content.Shared.Atmos
             }
 
             return new GasMixtureStringRepresentation(TotalMoles, Temperature, Pressure, molesPerGas);
+        }
+
+        GasEnumerator GetEnumerator()
+        {
+            return new GasEnumerator(this);
+        }
+
+        IEnumerator<(Gas gas, float moles)> IEnumerable<(Gas gas, float moles)>.GetEnumerator()
+        {
+            return GetEnumerator();
         }
 
         public override bool Equals(object? obj)
@@ -281,6 +299,11 @@ namespace Content.Shared.Atmos
             return hashCode.ToHashCode();
         }
 
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return GetEnumerator();
+        }
+
         public GasMixture Clone()
         {
             if (Immutable)
@@ -293,6 +316,29 @@ namespace Content.Shared.Atmos
                 Volume = Volume,
             };
             return newMixture;
+        }
+
+        public struct GasEnumerator(GasMixture mixture) : IEnumerator<(Gas gas, float moles)>
+        {
+            private int _idx = -1;
+
+            public void Dispose()
+            {
+                // Nada.
+            }
+
+            public bool MoveNext()
+            {
+                return ++_idx < Atmospherics.TotalNumberOfGases;
+            }
+
+            public void Reset()
+            {
+                _idx = -1;
+            }
+
+            public (Gas gas, float moles) Current => ((Gas)_idx, mixture.Moles[_idx]);
+            object? IEnumerator.Current => Current;
         }
     }
 }

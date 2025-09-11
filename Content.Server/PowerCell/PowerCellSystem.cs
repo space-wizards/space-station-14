@@ -39,9 +39,12 @@ public sealed partial class PowerCellSystem : SharedPowerCellSystem
         SubscribeLocalEvent<PowerCellDrawComponent, ChargeChangedEvent>(OnDrawChargeChanged);
         SubscribeLocalEvent<PowerCellDrawComponent, PowerCellChangedEvent>(OnDrawCellChanged);
 
-        // funny
         SubscribeLocalEvent<PowerCellSlotComponent, ExaminedEvent>(OnCellSlotExamined);
+        // funny
         SubscribeLocalEvent<PowerCellSlotComponent, BeingMicrowavedEvent>(OnSlotMicrowaved);
+
+        SubscribeLocalEvent<PowerCellSlotComponent, GetChargeEvent>(OnGetCharge);
+        SubscribeLocalEvent<PowerCellSlotComponent, ChangeChargeEvent>(OnChangeCharge);
     }
 
     private void OnSlotMicrowaved(EntityUid uid, PowerCellSlotComponent component, BeingMicrowavedEvent args)
@@ -64,11 +67,11 @@ public sealed partial class PowerCellSystem : SharedPowerCellSystem
         }
 
         var frac = args.Charge / args.MaxCharge;
-        var level = (byte) ContentHelpers.RoundToNearestLevels(frac, 1, PowerCellComponent.PowerCellVisualsLevels);
+        var level = (byte)ContentHelpers.RoundToNearestLevels(frac, 1, PowerCellComponent.PowerCellVisualsLevels);
         _sharedAppearanceSystem.SetData(uid, PowerCellVisuals.ChargeLevel, level);
 
         // If this power cell is inside a cell-slot, inform that entity that the power has changed (for updating visuals n such).
-        if (_containerSystem.TryGetContainingContainer(uid, out var container)
+        if (_containerSystem.TryGetContainingContainer((uid, null, null), out var container)
             && TryComp(container.Owner, out PowerCellSlotComponent? slot)
             && _itemSlotsSystem.TryGetSlot(container.Owner, slot.CellSlotId, out var itemSlot))
         {
@@ -243,5 +246,21 @@ public sealed partial class PowerCellSystem : SharedPowerCellSystem
         {
             args.PushMarkup(Loc.GetString("power-cell-component-examine-details-no-battery"));
         }
+    }
+
+    private void OnGetCharge(Entity<PowerCellSlotComponent> entity, ref GetChargeEvent args)
+    {
+        if (!TryGetBatteryFromSlot(entity, out var batteryUid, out _))
+            return;
+
+        RaiseLocalEvent(batteryUid.Value, ref args);
+    }
+
+    private void OnChangeCharge(Entity<PowerCellSlotComponent> entity, ref ChangeChargeEvent args)
+    {
+        if (!TryGetBatteryFromSlot(entity, out var batteryUid, out _))
+            return;
+
+        RaiseLocalEvent(batteryUid.Value, ref args);
     }
 }

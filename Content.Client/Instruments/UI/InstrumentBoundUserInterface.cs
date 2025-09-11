@@ -1,8 +1,8 @@
 using Content.Shared.ActionBlocker;
+using Content.Shared.Instruments;
 using Content.Shared.Instruments.UI;
 using Content.Shared.Interaction;
 using Robust.Client.Audio.Midi;
-using Robust.Client.GameObjects;
 using Robust.Client.Player;
 using Robust.Client.UserInterface;
 
@@ -13,7 +13,6 @@ namespace Content.Client.Instruments.UI
         public IEntityManager Entities => EntMan;
         [Dependency] public readonly IMidiManager MidiManager = default!;
         [Dependency] public readonly IFileDialogManager FileDialogManager = default!;
-        [Dependency] public readonly IPlayerManager PlayerManager = default!;
         [Dependency] public readonly ILocalizationManager Loc = default!;
 
         public readonly InstrumentSystem Instruments;
@@ -23,8 +22,6 @@ namespace Content.Client.Instruments.UI
         [ViewVariables] private InstrumentMenu? _instrumentMenu;
         [ViewVariables] private BandMenu? _bandMenu;
         [ViewVariables] private ChannelsMenu? _channelsMenu;
-
-        [ViewVariables] public InstrumentComponent? Instrument { get; private set; }
 
         public InstrumentBoundUserInterface(EntityUid owner, Enum uiKey) : base(owner, uiKey)
         {
@@ -37,26 +34,28 @@ namespace Content.Client.Instruments.UI
 
         protected override void ReceiveMessage(BoundUserInterfaceMessage message)
         {
-            switch (message)
-            {
-                case InstrumentBandResponseBuiMessage bandRx:
-                    _bandMenu?.Populate(bandRx.Nearby, EntMan);
-                    break;
-                default:
-                    break;
-            }
+            if (message is InstrumentBandResponseBuiMessage bandRx)
+                _bandMenu?.Populate(bandRx.Nearby, EntMan);
         }
 
         protected override void Open()
         {
-            if (!EntMan.TryGetComponent(Owner, out InstrumentComponent? instrument))
-                return;
+            base.Open();
 
-            Instrument = instrument;
-            _instrumentMenu = new InstrumentMenu(this);
-            _instrumentMenu.OnClose += Close;
+            _instrumentMenu = this.CreateWindow<InstrumentMenu>();
+            _instrumentMenu.Title = EntMan.GetComponent<MetaDataComponent>(Owner).EntityName;
 
-            _instrumentMenu.OpenCentered();
+            _instrumentMenu.OnOpenBand += OpenBandMenu;
+            _instrumentMenu.OnOpenChannels += OpenChannelsMenu;
+            _instrumentMenu.OnCloseChannels += CloseChannelsMenu;
+            _instrumentMenu.OnCloseBands += CloseBandMenu;
+
+            _instrumentMenu.SetMIDI(MidiManager.IsAvailable);
+
+            if (EntMan.TryGetComponent(Owner, out InstrumentComponent? instrument))
+            {
+                _instrumentMenu.SetInstrument((Owner, instrument));
+            }
         }
 
         protected override void Dispose(bool disposing)
@@ -64,7 +63,12 @@ namespace Content.Client.Instruments.UI
             base.Dispose(disposing);
             if (!disposing)
                 return;
-            _instrumentMenu?.Dispose();
+
+            if (EntMan.TryGetComponent(Owner, out InstrumentComponent? instrument))
+            {
+                _instrumentMenu?.RemoveInstrument(instrument);
+            }
+
             _bandMenu?.Dispose();
             _channelsMenu?.Dispose();
         }
@@ -77,6 +81,11 @@ namespace Content.Client.Instruments.UI
         public void OpenBandMenu()
         {
             _bandMenu ??= new BandMenu(this);
+
+            if (EntMan.TryGetComponent(Owner, out InstrumentComponent? instrument))
+            {
+                _bandMenu.Master = instrument.Master;
+            }
 
             // Refresh cache...
             RefreshBands();

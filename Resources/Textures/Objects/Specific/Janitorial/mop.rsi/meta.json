@@ -1,30 +1,71 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
-  "copyright": "Taken from tgstation at https://github.com/tgstation/tgstation/commit/f8f4aeda930fcd0805ca4cc76d9bc9412a5b3428, wielded versions from Easypoll", 
+  "copyright": "Taken from tgstation at https://github.com/tgstation/tgstation/commit/f8f4aeda930fcd0805ca4cc76d9bc9412a5b3428, wielded versions from Easypoll, fill levels by Tayrtahn on GitHub.",
   "size": {
     "x": 32,
     "y": 32
   },
   "states": [
     {
-      "name": "mop"
+        "name": "mop"
     },
     {
-      "name": "inhand-left",
-      "directions": 4
+        "name": "fill-1"
     },
     {
-      "name": "inhand-right",
-      "directions": 4
+        "name": "fill-2"
     },
-  	{
-      "name": "wielded-inhand-left",
-      "directions": 4
+    {
+        "name": "fill-3"
     },
-	  {
-      "name": "wielded-inhand-right",
-      "directions": 4
+    {
+        "name": "inhand-left",
+        "directions": 4
+    },
+    {
+        "name": "inhand-right",
+        "directions": 4
+    },
+    {
+        "name": "inhand-left-fill-1",
+        "directions": 4
+    },
+    {
+        "name": "inhand-left-fill-2",
+        "directions": 4
+    },
+    {
+        "name": "inhand-right-fill-1",
+        "directions": 4
+    },
+    {
+        "name": "inhand-right-fill-2",
+        "directions": 4
+    },
+    {
+        "name": "wielded-inhand-left",
+        "directions": 4
+    },
+	{
+        "name": "wielded-inhand-right",
+        "directions": 4
+    },
+    {
+        "name": "wielded-inhand-left-fill-1",
+        "directions": 4
+    },
+    {
+        "name": "wielded-inhand-left-fill-2",
+        "directions": 4
+    },
+    {
+        "name": "wielded-inhand-right-fill-1",
+        "directions": 4
+    },
+    {
+        "name": "wielded-inhand-right-fill-2",
+        "directions": 4
     }
   ]
 }

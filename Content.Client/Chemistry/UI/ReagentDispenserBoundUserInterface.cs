@@ -1,7 +1,10 @@
+using Content.Client.Guidebook.Components;
+using Content.Client.UserInterface.Controls;
 using Content.Shared.Chemistry;
 using Content.Shared.Containers.ItemSlots;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
+using Robust.Client.UserInterface;
 
 namespace Content.Client.Chemistry.UI
 {
@@ -13,9 +16,6 @@ namespace Content.Client.Chemistry.UI
     {
         [ViewVariables]
         private ReagentDispenserWindow? _window;
-
-        [ViewVariables]
-        private ReagentDispenserBoundUserInterfaceState? _lastState;
 
         public ReagentDispenserBoundUserInterface(EntityUid owner, Enum uiKey) : base(owner, uiKey)
         {
@@ -31,13 +31,8 @@ namespace Content.Client.Chemistry.UI
             base.Open();
 
             // Setup window layout/elements
-            _window = new()
-            {
-                Title = EntMan.GetComponent<MetaDataComponent>(Owner).EntityName,
-            };
-
-            _window.OpenCentered();
-            _window.OnClose += Close;
+            _window = this.CreateWindow<ReagentDispenserWindow>();
+            _window.SetInfoFromEntity(EntMan, Owner);
 
             // Setup static button actions.
             _window.EjectButton.OnPressed += _ => SendMessage(new ItemSlotButtonPressedEvent(SharedReagentDispenser.OutputSlotName));
@@ -45,8 +40,8 @@ namespace Content.Client.Chemistry.UI
 
             _window.AmountGrid.OnButtonPressed += s => SendMessage(new ReagentDispenserSetDispenseAmountMessage(s));
 
-            _window.OnDispenseReagentButtonPressed += (id) => SendMessage(new ReagentDispenserDispenseReagentMessage(id));
-            _window.OnEjectJugButtonPressed += (id) => SendMessage(new ItemSlotButtonPressedEvent(id));
+            _window.OnDispenseReagentButtonPressed += (location) => SendMessage(new ReagentDispenserDispenseReagentMessage(location));
+            _window.OnEjectJugButtonPressed += (location) => SendMessage(new ReagentDispenserEjectContainerMessage(location));
         }
 
         /// <summary>
@@ -61,19 +56,7 @@ namespace Content.Client.Chemistry.UI
             base.UpdateState(state);
 
             var castState = (ReagentDispenserBoundUserInterfaceState) state;
-            _lastState = castState;
-
             _window?.UpdateState(castState); //Update window state
-        }
-
-        protected override void Dispose(bool disposing)
-        {
-            base.Dispose(disposing);
-
-            if (disposing)
-            {
-                _window?.Dispose();
-            }
         }
     }
 }

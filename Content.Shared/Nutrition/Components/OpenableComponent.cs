@@ -27,10 +27,16 @@ public sealed partial class OpenableComponent : Component
     public bool OpenableByHand = true;
 
     /// <summary>
+    /// If true, tries to open when activated in world.
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public bool OpenOnActivate;
+
+    /// <summary>
     /// Text shown when examining and its open.
     /// </summary>
     [DataField]
-    public LocId ExamineText = "drink-component-on-examine-is-opened";
+    public LocId ExamineText = "openable-component-on-examine-is-opened";
 
     /// <summary>
     /// The locale id for the popup shown when IsClosed is called and closed. Needs a "owner" entity argument passed to it.
@@ -38,7 +44,7 @@ public sealed partial class OpenableComponent : Component
     /// It's still generic enough that you should change it if you make openable non-drinks, i.e. unwrap it first, peel it first.
     /// </summary>
     [DataField]
-    public LocId ClosedPopup = "drink-component-try-use-drink-not-open";
+    public LocId ClosedPopup = "openable-component-try-use-closed";
 
     /// <summary>
     /// Text to show in the verb menu for the "Open" action.
@@ -58,7 +64,7 @@ public sealed partial class OpenableComponent : Component
     /// Sound played when opening.
     /// </summary>
     [DataField]
-    public SoundSpecifier Sound = new SoundCollectionSpecifier("canOpenSounds");
+    public SoundSpecifier? Sound = new SoundCollectionSpecifier("canOpenSounds");
 
     /// <summary>
     /// Can this item be closed again after opening?

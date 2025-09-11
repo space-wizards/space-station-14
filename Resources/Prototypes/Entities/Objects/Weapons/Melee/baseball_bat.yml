@@ -1,6 +1,6 @@
 - type: entity
   name: baseball bat
-  parent: BaseItem
+  parent: [BaseItem, BaseMinorContraband]
   id: BaseBallBat
   description: A robust baseball bat.
   components:
@@ -23,10 +23,15 @@
         Structural: 10
   - type: Item
     size: Normal
+    shape:
+    - 0,0,0,3
+    storedSprite:
+      state: storage
+      sprite: Objects/Weapons/Melee/baseball_bat.rsi
   - type: Tool
     qualities:
     - Rolling
-    speed: 0.75 # a bit unwieldly but does the job
+    speedModifier: 0.75 # a bit unwieldly but does the job
   - type: Clothing
     quickEquip: false
     slots:
@@ -54,6 +59,12 @@
     state: icon
   - type: Item
     size: Normal
+    shape:
+    - 0,0,0,3
+    storedSprite:
+      state: storage
+      sprite: Objects/Weapons/Melee/incomplete_bat.rsi
+    sprite: Objects/Weapons/Melee/incomplete_bat.rsi
   - type: Construction
     graph: WoodenBat
     node: incompleteBat
@@ -63,7 +74,7 @@
   parent: BaseBallBat
   id: WeaponMeleeKnockbackStick
   description: And then he spleefed all over.
-  suffix: Do not map
+  categories: [ DoNotMap ]
   components:
   - type: MeleeThrowOnHit
   - type: MeleeWeapon

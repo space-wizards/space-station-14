@@ -2,7 +2,10 @@ using Content.Client.Items.Systems;
 using Content.Shared.Chemistry;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Reagent;
+using Content.Shared.Clothing;
+using Content.Shared.Clothing.Components;
 using Content.Shared.Hands;
+using Content.Shared.Item;
 using Content.Shared.Rounding;
 using Robust.Client.GameObjects;
 using Robust.Shared.Prototypes;
@@ -19,12 +22,12 @@ public sealed class SolutionContainerVisualsSystem : VisualizerSystem<SolutionCo
         base.Initialize();
         SubscribeLocalEvent<SolutionContainerVisualsComponent, MapInitEvent>(OnMapInit);
         SubscribeLocalEvent<SolutionContainerVisualsComponent, GetInhandVisualsEvent>(OnGetHeldVisuals);
+        SubscribeLocalEvent<SolutionContainerVisualsComponent, GetEquipmentVisualsEvent>(OnGetClothingVisuals);
     }
 
     private void OnMapInit(EntityUid uid, SolutionContainerVisualsComponent component, MapInitEvent args)
     {
         var meta = MetaData(uid);
-        component.InitialName = meta.EntityName;
         component.InitialDescription = meta.EntityDescription;
     }
 
@@ -46,7 +49,7 @@ public sealed class SolutionContainerVisualsSystem : VisualizerSystem<SolutionCo
         if (args.Sprite == null)
             return;
 
-        if (!args.Sprite.LayerMapTryGet(component.Layer, out var fillLayer))
+        if (!SpriteSystem.LayerMapTryGet((uid, args.Sprite), component.Layer, out var fillLayer, false))
             return;
 
         var maxFillLevels = component.MaxFillLevels;
@@ -64,9 +67,9 @@ public sealed class SolutionContainerVisualsSystem : VisualizerSystem<SolutionCo
         }
         if (component.Metamorphic)
         {
-            if (args.Sprite.LayerMapTryGet(component.BaseLayer, out var baseLayer))
+            if (SpriteSystem.LayerMapTryGet((uid, args.Sprite), component.BaseLayer, out var baseLayer, false))
             {
-                var hasOverlay = args.Sprite.LayerMapTryGet(component.OverlayLayer, out var overlayLayer);
+                var hasOverlay = SpriteSystem.LayerMapTryGet((uid, args.Sprite), component.OverlayLayer, out var overlayLayer, false);
 
                 if (AppearanceSystem.TryGetData<string>(uid, SolutionContainerVisuals.BaseOverride,
                         out var baseOverride,
@@ -76,35 +79,35 @@ public sealed class SolutionContainerVisualsSystem : VisualizerSystem<SolutionCo
 
                     if (reagentProto?.MetamorphicSprite is { } sprite)
                     {
-                        args.Sprite.LayerSetSprite(baseLayer, sprite);
+                        SpriteSystem.LayerSetSprite((uid, args.Sprite), baseLayer, sprite);
                         if (reagentProto.MetamorphicMaxFillLevels > 0)
                         {
-                            args.Sprite.LayerSetVisible(fillLayer, true);
+                            SpriteSystem.LayerSetVisible((uid, args.Sprite), fillLayer, true);
                             maxFillLevels = reagentProto.MetamorphicMaxFillLevels;
                             fillBaseName = reagentProto.MetamorphicFillBaseName;
                             changeColor = reagentProto.MetamorphicChangeColor;
                             fillSprite = sprite;
                         }
                         else
-                            args.Sprite.LayerSetVisible(fillLayer, false);
+                            SpriteSystem.LayerSetVisible((uid, args.Sprite), fillLayer, false);
 
                         if (hasOverlay)
-                            args.Sprite.LayerSetVisible(overlayLayer, false);
+                            SpriteSystem.LayerSetVisible((uid, args.Sprite), overlayLayer, false);
                     }
                     else
                     {
-                        args.Sprite.LayerSetVisible(fillLayer, true);
+                        SpriteSystem.LayerSetVisible((uid, args.Sprite), fillLayer, true);
                         if (hasOverlay)
-                            args.Sprite.LayerSetVisible(overlayLayer, true);
+                            SpriteSystem.LayerSetVisible((uid, args.Sprite), overlayLayer, true);
                         if (component.MetamorphicDefaultSprite != null)
-                            args.Sprite.LayerSetSprite(baseLayer, component.MetamorphicDefaultSprite);
+                            SpriteSystem.LayerSetSprite((uid, args.Sprite), baseLayer, component.MetamorphicDefaultSprite);
                     }
                 }
             }
         }
         else
         {
-            args.Sprite.LayerSetVisible(fillLayer, true);
+            SpriteSystem.LayerSetVisible((uid, args.Sprite), fillLayer, true);
         }
 
         var closestFillSprite = ContentHelpers.RoundToLevels(fraction, 1, maxFillLevels + 1);
@@ -116,25 +119,25 @@ public sealed class SolutionContainerVisualsSystem : VisualizerSystem<SolutionCo
 
             var stateName = fillBaseName + closestFillSprite;
             if (fillSprite != null)
-                args.Sprite.LayerSetSprite(fillLayer, fillSprite);
-            args.Sprite.LayerSetState(fillLayer, stateName);
+                SpriteSystem.LayerSetSprite((uid, args.Sprite), fillLayer, fillSprite);
+            SpriteSystem.LayerSetRsiState((uid, args.Sprite), fillLayer, stateName);
 
             if (changeColor && AppearanceSystem.TryGetData<Color>(uid, SolutionContainerVisuals.Color, out var color, args.Component))
-                args.Sprite.LayerSetColor(fillLayer, color);
+                SpriteSystem.LayerSetColor((uid, args.Sprite), fillLayer, color);
             else
-                args.Sprite.LayerSetColor(fillLayer, Color.White);
+                SpriteSystem.LayerSetColor((uid, args.Sprite), fillLayer, Color.White);
         }
         else
         {
             if (component.EmptySpriteName == null)
-                args.Sprite.LayerSetVisible(fillLayer, false);
+                SpriteSystem.LayerSetVisible((uid, args.Sprite), fillLayer, false);
             else
             {
-                args.Sprite.LayerSetState(fillLayer, component.EmptySpriteName);
+                SpriteSystem.LayerSetRsiState((uid, args.Sprite), fillLayer, component.EmptySpriteName);
                 if (changeColor)
-                    args.Sprite.LayerSetColor(fillLayer, component.EmptySpriteColor);
+                    SpriteSystem.LayerSetColor((uid, args.Sprite), fillLayer, component.EmptySpriteColor);
                 else
-                    args.Sprite.LayerSetColor(fillLayer, Color.White);
+                    SpriteSystem.LayerSetColor((uid, args.Sprite), fillLayer, Color.White);
             }
         }
 
@@ -150,6 +153,9 @@ public sealed class SolutionContainerVisualsSystem : VisualizerSystem<SolutionCo
         if (!TryComp(uid, out AppearanceComponent? appearance))
             return;
 
+        if (!TryComp<ItemComponent>(uid, out var item))
+            return;
+
         if (!AppearanceSystem.TryGetData<float>(uid, SolutionContainerVisuals.FillFraction, out var fraction, appearance))
             return;
 
@@ -159,11 +165,49 @@ public sealed class SolutionContainerVisualsSystem : VisualizerSystem<SolutionCo
         {
             var layer = new PrototypeLayerData();
 
-            var key = "inhand-" + args.Location.ToString().ToLowerInvariant() + component.InHandsFillBaseName + closestFillSprite;
+            var heldPrefix = item.HeldPrefix == null ? "inhand-" : $"{item.HeldPrefix}-inhand-";
+            var key = heldPrefix + args.Location.ToString().ToLowerInvariant() + component.InHandsFillBaseName + closestFillSprite;
 
             layer.State = key;
 
             if (component.ChangeColor && AppearanceSystem.TryGetData<Color>(uid, SolutionContainerVisuals.Color, out var color, appearance))
+                layer.Color = color;
+
+            args.Layers.Add((key, layer));
+        }
+    }
+
+    private void OnGetClothingVisuals(Entity<SolutionContainerVisualsComponent> ent, ref GetEquipmentVisualsEvent args)
+    {
+        if (ent.Comp.EquippedFillBaseName == null)
+            return;
+
+        if (!TryComp<AppearanceComponent>(ent, out var appearance))
+            return;
+
+        if (!TryComp<ClothingComponent>(ent, out var clothing))
+            return;
+
+        if (!AppearanceSystem.TryGetData<float>(ent, SolutionContainerVisuals.FillFraction, out var fraction, appearance))
+            return;
+
+        var closestFillSprite = ContentHelpers.RoundToLevels(fraction, 1, ent.Comp.EquippedMaxFillLevels + 1);
+
+        if (closestFillSprite > 0)
+        {
+            var layer = new PrototypeLayerData();
+
+            var equippedPrefix = clothing.EquippedPrefix == null ? $"equipped-{args.Slot}" : $" {clothing.EquippedPrefix}-equipped-{args.Slot}";
+            var key = equippedPrefix + ent.Comp.EquippedFillBaseName + closestFillSprite;
+
+            // Make sure the sprite state is valid so we don't show a big red error message
+            // This saves us from having to make fill level sprites for every possible slot the item could be in (including pockets).
+            if (!TryComp<SpriteComponent>(ent, out var sprite) || sprite.BaseRSI == null || !sprite.BaseRSI.TryGetState(key, out _))
+                return;
+
+            layer.State = key;
+
+            if (ent.Comp.ChangeColor && AppearanceSystem.TryGetData<Color>(ent, SolutionContainerVisuals.Color, out var color, appearance))
                 layer.Color = color;
 
             args.Layers.Add((key, layer));

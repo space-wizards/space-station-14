@@ -1,65 +1,62 @@
+using Content.Shared.Inventory;
 using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
+using Robust.Shared.Serialization;
 
 namespace Content.Shared.Weapons.Reflect;
 
 /// <summary>
 /// Entities with this component have a chance to reflect projectiles and hitscan shots
+/// Uses <c>ItemToggleComponent</c> to control reflection.
 /// </summary>
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
 public sealed partial class ReflectComponent : Component
 {
     /// <summary>
-    /// Can only reflect when enabled
-    /// </summary>
-    [DataField("enabled"), ViewVariables(VVAccess.ReadWrite), AutoNetworkedField]
-    public bool Enabled = true;
-
-    /// <summary>
     /// What we reflect.
     /// </summary>
-    [ViewVariables(VVAccess.ReadWrite), DataField("reflects")]
+    [DataField]
     public ReflectType Reflects = ReflectType.Energy | ReflectType.NonEnergy;
 
-    [DataField("spread"), ViewVariables(VVAccess.ReadWrite), AutoNetworkedField]
-    public Angle Spread = Angle.FromDegrees(45);
-
-    [DataField("soundOnReflect")]
-    public SoundSpecifier? SoundOnReflect = new SoundPathSpecifier("/Audio/Weapons/Guns/Hits/laser_sear_wall.ogg");
-
     /// <summary>
-    /// Is the deflection an innate power or something actively maintained? If true, this component grants a flat
-    /// deflection chance rather than a chance that degrades when moving/weightless/stunned/etc.
+    /// Select in which inventory slots it will reflect.
+    /// By default, it will reflect in any inventory position, except pockets.
     /// </summary>
     [DataField]
-    public bool Innate = false;
+    public SlotFlags SlotFlags = SlotFlags.WITHOUT_POCKET;
 
     /// <summary>
-    /// Maximum probability for a projectile to be reflected.
+    /// Is it allowed to reflect while being in hands.
     /// </summary>
-    [DataField("reflectProb"), ViewVariables(VVAccess.ReadWrite), AutoNetworkedField]
+    [DataField, AutoNetworkedField]
+    public bool ReflectingInHands = true;
+
+    /// <summary>
+    /// Can only reflect when placed correctly.
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public bool InRightPlace;
+
+    /// <summary>
+    /// Probability for a projectile to be reflected.
+    /// </summary>
+    [DataField, AutoNetworkedField]
     public float ReflectProb = 0.25f;
 
     /// <summary>
-    /// The maximum velocity a wielder can move at before losing effectiveness.
+    /// Probability for a projectile to be reflected.
     /// </summary>
-    [DataField]
-    public float VelocityBeforeNotMaxProb = 2.5f; // Walking speed for a human. Suitable for a weightless deflector like an e-sword.
+    [DataField, AutoNetworkedField]
+    public Angle Spread = Angle.FromDegrees(45);
 
     /// <summary>
-    /// The velocity a wielder has to be moving at to use the minimum effectiveness value.
+    /// The sound to play when reflecting.
     /// </summary>
     [DataField]
-    public float VelocityBeforeMinProb = 4.5f; // Sprinting speed for a human. Suitable for a weightless deflector like an e-sword.
-
-    /// <summary>
-    /// Minimum probability for a projectile to be reflected.
-    /// </summary>
-    [DataField]
-    public float MinReflectProb = 0.1f;
+    public SoundSpecifier? SoundOnReflect = new SoundPathSpecifier("/Audio/Weapons/Guns/Hits/laser_sear_wall.ogg", AudioParams.Default.WithVariation(0.05f));
 }
 
-[Flags]
+[Flags, Serializable, NetSerializable]
 public enum ReflectType : byte
 {
     None = 0,

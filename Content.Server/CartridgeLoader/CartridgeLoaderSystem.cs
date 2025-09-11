@@ -1,8 +1,9 @@
-﻿using System.Diagnostics.CodeAnalysis;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Server.DeviceNetwork.Systems;
 using Content.Server.PDA;
 using Content.Shared.CartridgeLoader;
+using Content.Shared.DeviceNetwork.Events;
 using Content.Shared.Interaction;
 using Robust.Server.Containers;
 using Robust.Server.GameObjects;
@@ -164,6 +165,15 @@ public sealed class CartridgeLoaderSystem : SharedCartridgeLoaderSystem
         if (!Resolve(loaderUid, ref loader))
             return false;
 
+        if (!TryComp(cartridgeUid, out CartridgeComponent? loadedCartridge))
+            return false;
+
+        foreach (var program in GetInstalled(loaderUid))
+        {
+            if (TryComp(program, out CartridgeComponent? installedCartridge) && installedCartridge.ProgramName == loadedCartridge.ProgramName)
+                return false;
+        }
+
         //This will eventually be replaced by serializing and deserializing the cartridge to copy it when something needs
         //the data on the cartridge to carry over when installing
 
@@ -191,7 +201,6 @@ public sealed class CartridgeLoaderSystem : SharedCartridgeLoaderSystem
         if (container.Count >= loader.DiskSpace)
             return false;
 
-        // TODO cancel duplicate program installations
         var ev = new ProgramInstallationAttempt(loaderUid, prototype);
         RaiseLocalEvent(ref ev);
 
@@ -332,6 +341,9 @@ public sealed class CartridgeLoaderSystem : SharedCartridgeLoaderSystem
         if (args.Container.ID != InstalledContainerId && args.Container.ID != loader.CartridgeSlot.ID)
             return;
 
+        if (TryComp(args.Entity, out CartridgeComponent? cartridge))
+            cartridge.LoaderUid = uid;
+
         RaiseLocalEvent(args.Entity, new CartridgeAddedEvent(uid));
         base.OnItemInserted(uid, loader, args);
     }
@@ -351,6 +363,9 @@ public sealed class CartridgeLoaderSystem : SharedCartridgeLoaderSystem
 
         if (deactivate)
             RaiseLocalEvent(args.Entity, new CartridgeDeactivatedEvent(uid));
+
+        if (TryComp(args.Entity, out CartridgeComponent? cartridge))
+            cartridge.LoaderUid = null;
 
         RaiseLocalEvent(args.Entity, new CartridgeRemovedEvent(uid));
         base.OnItemRemoved(uid, loader, args);
@@ -413,7 +428,9 @@ public sealed class CartridgeLoaderSystem : SharedCartridgeLoaderSystem
     private void OnUiMessage(EntityUid uid, CartridgeLoaderComponent component, CartridgeUiMessage args)
     {
         var cartridgeEvent = args.MessageEvent;
+        cartridgeEvent.User = args.Actor;
         cartridgeEvent.LoaderUid = GetNetEntity(uid);
+        cartridgeEvent.Actor = args.Actor;
 
         RelayEvent(component, cartridgeEvent, true);
     }

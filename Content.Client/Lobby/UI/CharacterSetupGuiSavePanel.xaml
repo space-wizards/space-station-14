@@ -1,0 +1,10 @@
+<DefaultWindow xmlns="https://spacestation14.io"
+            Title="{Loc 'character-setup-gui-save-panel-title'}"
+            Resizable="False">
+
+    <BoxContainer Orientation="Horizontal" SeparationOverride="4" MinSize="200 40">
+        <Button Name="SaveButton" Access="Public" Text="{Loc 'character-setup-gui-save-panel-save'}" StyleClasses="ButtonBig"/>
+        <Button Name="NoSaveButton" Access="Public" Text="{Loc 'character-setup-gui-save-panel-nosave'}" StyleClasses="ButtonBig"/>
+        <Button Name="CancelButton" Access="Public" Text="{Loc 'character-setup-gui-save-panel-cancel'}" StyleClasses="ButtonBig"/>
+    </BoxContainer>
+</DefaultWindow>

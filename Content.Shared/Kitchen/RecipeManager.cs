@@ -14,7 +14,8 @@ namespace Content.Shared.Kitchen
             Recipes = new List<FoodRecipePrototype>();
             foreach (var item in _prototypeManager.EnumeratePrototypes<FoodRecipePrototype>())
             {
-                Recipes.Add(item);
+                if (!item.SecretRecipe)
+                    Recipes.Add(item);
             }
 
             Recipes.Sort(new RecipeComparer());

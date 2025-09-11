@@ -3,8 +3,11 @@ using System.Linq;
 using Content.Server.Antag.Components;
 using Content.Server.GameTicking.Rules.Components;
 using Content.Server.Objectives;
+using Content.Shared.Antag;
 using Content.Shared.Chat;
+using Content.Shared.GameTicking.Components;
 using Content.Shared.Mind;
+using Content.Shared.Preferences;
 using JetBrains.Annotations;
 using Robust.Shared.Audio;
 using Robust.Shared.Enums;
@@ -18,15 +21,21 @@ public sealed partial class AntagSelectionSystem
     /// Tries to get the next non-filled definition based on the current amount of selected minds and other factors.
     /// </summary>
     public bool TryGetNextAvailableDefinition(Entity<AntagSelectionComponent> ent,
-        [NotNullWhen(true)] out AntagSelectionDefinition? definition)
+        [NotNullWhen(true)] out AntagSelectionDefinition? definition,
+        int? players = null)
     {
         definition = null;
 
-        var totalTargetCount = GetTargetAntagCount(ent);
-        var mindCount = ent.Comp.SelectedMinds.Count;
+        var totalTargetCount = GetTargetAntagCount(ent, players);
+        var mindCount = ent.Comp.AssignedMinds.Count;
         if (mindCount >= totalTargetCount)
             return false;
 
+        // TODO ANTAG fix this
+        // If here are two definitions with 1/10 and 10/10 slots filled, this will always return the second definition
+        // even though it has already met its target
+        // AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA I fucking hate game ticker code.
+        // It needs to track selected minds for each definition independently.
         foreach (var def in ent.Comp.Definitions)
         {
             var target = GetTargetAntagCount(ent, null, def);
@@ -47,12 +56,26 @@ public sealed partial class AntagSelectionSystem
     /// Gets the number of antagonists that should be present for a given rule based on the provided pool.
     /// A null pool will simply use the player count.
     /// </summary>
-    public int GetTargetAntagCount(Entity<AntagSelectionComponent> ent, AntagSelectionPlayerPool? pool = null)
+    public int GetTargetAntagCount(Entity<AntagSelectionComponent> ent, int? playerCount = null)
     {
         var count = 0;
         foreach (var def in ent.Comp.Definitions)
         {
-            count += GetTargetAntagCount(ent, pool, def);
+            count += GetTargetAntagCount(ent, playerCount, def);
+        }
+
+        return count;
+    }
+
+    public int GetTotalPlayerCount(IList<ICommonSession> pool)
+    {
+        var count = 0;
+        foreach (var session in pool)
+        {
+            if (session.Status is SessionStatus.Disconnected or SessionStatus.Zombie)
+                continue;
+
+            count++;
         }
 
         return count;
@@ -62,16 +85,19 @@ public sealed partial class AntagSelectionSystem
     /// Gets the number of antagonists that should be present for a given antag definition based on the provided pool.
     /// A null pool will simply use the player count.
     /// </summary>
-    public int GetTargetAntagCount(Entity<AntagSelectionComponent> ent, AntagSelectionPlayerPool? pool, AntagSelectionDefinition def)
+    public int GetTargetAntagCount(Entity<AntagSelectionComponent> ent, int? playerCount, AntagSelectionDefinition def)
     {
-        var poolSize = pool?.Count ?? _playerManager.Sessions
-            .Count(s => s.State.Status is not SessionStatus.Disconnected and not SessionStatus.Zombie);
+        // TODO ANTAG
+        // make pool non-nullable
+        // Review uses and ensure that people are INTENTIONALLY including players in the lobby if this is a mid-round
+        // antag selection.
+        var poolSize = playerCount ?? GetTotalPlayerCount(_playerManager.Sessions);
 
         // factor in other definitions' affect on the count.
         var countOffset = 0;
         foreach (var otherDef in ent.Comp.Definitions)
         {
-            countOffset += Math.Clamp((poolSize - countOffset) / otherDef.PlayerRatio, otherDef.Min, otherDef.Max) * otherDef.PlayerRatio;
+            countOffset += Math.Clamp((poolSize - countOffset) / otherDef.PlayerRatio, otherDef.Min, otherDef.Max) * otherDef.PlayerRatio; // Note: Is the PlayerRatio necessary here? Seems like it can cause issues for defs with varied PlayerRatio.
         }
         // make sure we don't double-count the current selection
         countOffset -= Math.Clamp(poolSize / def.PlayerRatio, def.Min, def.Max) * def.PlayerRatio;
@@ -91,7 +117,7 @@ public sealed partial class AntagSelectionSystem
             return new List<(EntityUid, SessionData, string)>();
 
         var output = new List<(EntityUid, SessionData, string)>();
-        foreach (var (mind, name) in ent.Comp.SelectedMinds)
+        foreach (var (mind, name) in ent.Comp.AssignedMinds)
         {
             if (!TryComp<MindComponent>(mind, out var mindComp) || mindComp.OriginalOwnerUserId == null)
                 continue;
@@ -113,7 +139,7 @@ public sealed partial class AntagSelectionSystem
             return new();
 
         var output = new List<Entity<MindComponent>>();
-        foreach (var (mind, _) in ent.Comp.SelectedMinds)
+        foreach (var (mind, _) in ent.Comp.AssignedMinds)
         {
             if (!TryComp<MindComponent>(mind, out var mindComp) || mindComp.OriginalOwnerUserId == null)
                 continue;
@@ -124,14 +150,44 @@ public sealed partial class AntagSelectionSystem
     }
 
     /// <remarks>
-    /// Helper specifically for <see cref="ObjectivesTextGetInfoEvent"/>
+    /// Helper to get just the mind entities and not names.
     /// </remarks>
     public List<EntityUid> GetAntagMindEntityUids(Entity<AntagSelectionComponent?> ent)
     {
         if (!Resolve(ent, ref ent.Comp, false))
             return new();
 
-        return ent.Comp.SelectedMinds.Select(p => p.Item1).ToList();
+        return ent.Comp.AssignedMinds.Select(p => p.Item1).ToList();
+    }
+
+    /// <summary>
+    /// Checks if a given session has the primary antag preferences for a given definition
+    /// </summary>
+    public bool HasPrimaryAntagPreference(ICommonSession? session, AntagSelectionDefinition def)
+    {
+        if (session == null)
+            return true;
+
+        if (def.PrefRoles.Count == 0)
+            return false;
+
+        var pref = (HumanoidCharacterProfile) _pref.GetPreferences(session.UserId).SelectedCharacter;
+        return pref.AntagPreferences.Any(p => def.PrefRoles.Contains(p));
+    }
+
+    /// <summary>
+    /// Checks if a given session has the fallback antag preferences for a given definition
+    /// </summary>
+    public bool HasFallbackAntagPreference(ICommonSession? session, AntagSelectionDefinition def)
+    {
+        if (session == null)
+            return true;
+
+        if (def.FallbackRoles.Count == 0)
+            return false;
+
+        var pref = (HumanoidCharacterProfile) _pref.GetPreferences(session.UserId).SelectedCharacter;
+        return pref.AntagPreferences.Any(p => def.FallbackRoles.Contains(p));
     }
 
     /// <summary>
@@ -193,7 +249,7 @@ public sealed partial class AntagSelectionSystem
         if (!Resolve(ent, ref ent.Comp, false))
             return false;
 
-        return GetAliveAntagCount(ent) == ent.Comp.SelectedMinds.Count;
+        return GetAliveAntagCount(ent) == ent.Comp.AssignedMinds.Count;
     }
 
     /// <summary>
@@ -208,10 +264,10 @@ public sealed partial class AntagSelectionSystem
         if (!_mind.TryGetMind(entity, out _, out var mindComponent))
             return;
 
-        if (mindComponent.Session == null)
+        if (!_playerManager.TryGetSessionById(mindComponent.UserId, out var session))
             return;
 
-        SendBriefing(mindComponent.Session, briefing, briefingColor, briefingSound);
+        SendBriefing(session, briefing, briefingColor, briefingSound);
     }
 
     /// <summary>
@@ -298,8 +354,66 @@ public sealed partial class AntagSelectionSystem
         var ruleEnt = GameTicker.AddGameRule(id);
         RemComp<LoadMapRuleComponent>(ruleEnt);
         var antag = Comp<AntagSelectionComponent>(ruleEnt);
-        antag.SelectionsComplete = true; // don't do normal selection.
+        antag.AssignmentComplete = true; // don't do normal selection.
         GameTicker.StartGameRule(ruleEnt);
         return (ruleEnt, antag);
+    }
+
+    /// <summary>
+    /// Get all sessions that have been preselected for antag.
+    /// </summary>
+    /// <param name="except">A specific definition to be excluded from the check.</param>
+    public HashSet<ICommonSession> GetPreSelectedAntagSessions(AntagSelectionDefinition? except = null)
+    {
+        var result = new HashSet<ICommonSession>();
+        var query = QueryAllRules();
+        while (query.MoveNext(out var uid, out var comp, out _))
+        {
+            if (HasComp<EndedGameRuleComponent>(uid))
+                continue;
+
+            foreach (var def in comp.Definitions)
+            {
+                if (def.Equals(except))
+                    continue;
+
+                if (comp.PreSelectedSessions.TryGetValue(def, out var set))
+                    result.UnionWith(set);
+            }
+        }
+
+        return result;
+    }
+
+    /// <summary>
+    /// Get all sessions that have been preselected for antag and are exclusive, i.e. should not be paired with other antags.
+    /// </summary>
+    /// <param name="except">A specific definition to be excluded from the check.</param>
+    // Note: This is a bit iffy since technically this exclusive definition is defined via the MultiAntagSetting, while there's a separately tracked antagExclusive variable in the mindrole.
+    // We can't query that however since there's no guarantee the mindrole has been given out yet when checking pre-selected antags.
+    // I don't think there's any instance where they differ, but it's something to be aware of for a potential future refactor.
+    public HashSet<ICommonSession> GetPreSelectedExclusiveAntagSessions(AntagSelectionDefinition? except = null)
+    {
+        var result = new HashSet<ICommonSession>();
+        var query = QueryAllRules();
+        while (query.MoveNext(out var uid, out var comp, out _))
+        {
+            if (HasComp<EndedGameRuleComponent>(uid))
+                continue;
+
+            foreach (var def in comp.Definitions)
+            {
+                if (def.Equals(except))
+                    continue;
+
+                if (def.MultiAntagSetting == AntagAcceptability.None && comp.PreSelectedSessions.TryGetValue(def, out var set))
+                {
+                    result.UnionWith(set);
+                    break;
+                }
+            }
+        }
+
+        return result;
     }
 }

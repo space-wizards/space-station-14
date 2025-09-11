@@ -1,16 +1,31 @@
 using Content.Server.Body.Systems;
+using Content.Shared.Atmos;
+using Content.Shared.Chat.Prototypes;
 using Content.Shared.Damage;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 
 namespace Content.Server.Body.Components
 {
-    [RegisterComponent, Access(typeof(RespiratorSystem))]
+    [RegisterComponent, Access(typeof(RespiratorSystem)), AutoGenerateComponentPause]
     public sealed partial class RespiratorComponent : Component
     {
         /// <summary>
+        ///     Volume of our breath in liters
+        /// </summary>
+        [DataField]
+        public float BreathVolume = Atmospherics.BreathVolume;
+
+        /// <summary>
+        ///     How much of the gas we inhale is metabolized? Value range is (0, 1]
+        /// </summary>
+        [DataField]
+        public float Ratio = 1.0f;
+
+        /// <summary>
         ///     The next time that this body will inhale or exhale.
         /// </summary>
-        [DataField(customTypeSerializer: typeof(TimeOffsetSerializer))]
+        [DataField(customTypeSerializer: typeof(TimeOffsetSerializer)), AutoPausedField]
         public TimeSpan NextUpdate;
 
         /// <summary>
@@ -19,6 +34,18 @@ namespace Content.Server.Body.Components
         /// </summary>
         [DataField]
         public TimeSpan UpdateInterval = TimeSpan.FromSeconds(2);
+
+        /// <summary>
+        /// Multiplier applied to <see cref="UpdateInterval"/> for adjusting based on metabolic rate multiplier.
+        /// </summary>
+        [DataField]
+        public float UpdateIntervalMultiplier = 1f;
+
+        /// <summary>
+        /// Adjusted update interval based off of the multiplier value.
+        /// </summary>
+        [ViewVariables]
+        public TimeSpan AdjustedUpdateInterval => UpdateInterval * UpdateIntervalMultiplier;
 
         /// <summary>
         ///     Saturation level. Reduced by UpdateInterval each tick.
@@ -50,10 +77,16 @@ namespace Content.Server.Body.Components
         public DamageSpecifier DamageRecovery = default!;
 
         [DataField]
-        public TimeSpan GaspPopupCooldown = TimeSpan.FromSeconds(8);
+        public TimeSpan GaspEmoteCooldown = TimeSpan.FromSeconds(8);
 
         [ViewVariables]
-        public TimeSpan LastGaspPopupTime;
+        public TimeSpan LastGaspEmoteTime;
+
+        /// <summary>
+        ///     The emote when gasps
+        /// </summary>
+        [DataField]
+        public ProtoId<EmotePrototype> GaspEmote = "Gasp";
 
         /// <summary>
         ///     How many cycles in a row has the mob been under-saturated?

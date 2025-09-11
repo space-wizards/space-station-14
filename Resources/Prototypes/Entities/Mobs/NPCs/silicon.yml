@@ -1,64 +1,21 @@
+# Used for generic robotic entities (like Hivelords)
 - type: entity
   save: false
   abstract: true
-  id: MobSiliconBase
+  parent: BaseMob
+  id: MobRobotic
   components:
-  - type: LagCompensation
   - type: Reactive
     groups:
       Acidic: [Touch]
-  - type: Clickable
   - type: Damageable
     damageContainer: Inorganic
-  - type: InteractionOutline
-  - type: Fixtures
-    fixtures:
-      fix1:
-        shape:
-          !type:PhysShapeCircle
-          radius: 0.35
-        density: 50
-        mask:
-        - MobMask
-        layer:
-        - MobLayer
-  - type: MovementSpeedModifier
-    baseWalkSpeed : 3
-    baseSprintSpeed : 4
-  - type: Sprite
-    noRot: true
-    drawdepth: Mobs
-  - type: NpcFactionMember
-    factions:
-    - SimpleNeutral
-  - type: IntrinsicRadioReceiver
-  - type: IntrinsicRadioTransmitter
-    channels:
-    - Binary
-  - type: ActiveRadio
-    channels:
-    - Binary
-    - Common
-  - type: HealthExaminable
-    examinableTypes:
-    - Blunt
-    - Slash
-    - Piercing
-    - Heat
-    - Shock
-    locPrefix: silicon
   - type: MovedByPressure
   - type: Physics
     bodyType: KinematicController # Same for all inheritors
   - type: StatusEffects
     allowed:
-    - Stun
-    - KnockedDown
-    - SlowedDown
-    - Stutter
     - Electrocution
-  - type: NameIdentifier
-    group: GenericNumber
   - type: Repairable
     doAfterDelay: 8
     fuelCost: 15
@@ -66,6 +23,8 @@
   - type: Tag
     tags:
     - DoorBumpOpener
+    - SiliconEmotes
+    - Unimplantable
   - type: MobState
     allowedStates:
       - Alive
@@ -76,7 +35,52 @@
       120: Dead
     stateAlertDict:
       Alive: BorgHealth
+      Dead: BorgDead
     showOverlays: false
+  - type: Speech
+    speechVerb: Robotic
+    speechSounds: Borg
+  - type: TypingIndicator
+    proto: robot
+  - type: Vocal
+    sounds:
+      Unsexed: UnisexSilicon
+  - type: Emoting
+  - type: ZombieImmune
+  - type: ProtectedFromStepTriggers
+  - type: NoSlip
+  - type: Insulated
+
+# Used for bots
+- type: entity
+  save: false
+  abstract: true
+  parent: MobRobotic
+  id: MobSiliconBase
+  components:
+  - type: NpcFactionMember
+    factions:
+    - SimpleNeutral
+  - type: Access
+    tags:
+    - BasicSilicon
+  - type: IntrinsicRadioReceiver
+  - type: ActiveRadio
+    channels:
+    - Common
+  - type: HealthExaminable
+    examinableTypes:
+    - Blunt
+    - Slash
+    - Piercing
+    - Heat
+    - Shock
+    locPrefix: silicon
+  - type: NameIdentifier
+    group: Silicon
+  - type: MovementSpeedModifier
+    baseWalkSpeed : 3
+    baseSprintSpeed : 4
   - type: Stamina
     critThreshold: 120
   - type: Destructible
@@ -92,21 +96,68 @@
       behaviors:
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
-  - type: Input
-    context: "human"
-  - type: InputMover
-  - type: MobMover
-  - type: Body
-    prototype: Bot
   - type: GuideHelp
     guides:
     - Robotics
+  - type: Tag
+    tags:
+    - DoorBumpOpener
+    - SiliconEmotes
+    - Bot
+    - Unimplantable
+  - type: Body
+    prototype: Bot
   - type: Speech
     speechVerb: Robotic
-  - type: TypingIndicator
-    proto: robot
-  - type: ZombieImmune
-  - type: StepTriggerImmune
+    speechSounds: Pai #couldn't decide if this should be borg or pai sounds so I flipped a coin.
+
+- type: entity
+  parent: MobSiliconBase
+  id: MobFireBot
+  name: firebot
+  description: A little fire extinguishing bot. He looks rather anxious.
+  components:
+  - type: Sprite
+    sprite: Mobs/Silicon/Bots/firebot.rsi
+    state: firebot
+  - type: Construction
+    graph: FireBot
+    node: bot
+  - type: HTN
+    rootTask:
+      task: FirebotCompound
+  - type: SolutionContainerManager
+    solutions:
+      spray:
+        maxVol: 10
+        reagents:
+        - ReagentId: Water
+          Quantity: 10
+  - type: SolutionRegeneration
+    solution: spray
+    generated:
+      reagents:
+        - ReagentId: Water
+          Quantity: 10
+  - type: Spray
+    transferAmount: 10
+    pushbackAmount: 60
+    spraySound:
+      path: /Audio/Effects/extinguish.ogg
+    sprayedPrototype: ExtinguisherSpray
+    vaporAmount: 1
+    vaporSpread: 90
+    sprayVelocity: 3.0
+  - type: UseDelay
+    delay: 2
+  - type: InteractionPopup
+    interactSuccessString: petting-success-firebot
+    interactFailureString: petting-failure-firebot
+    interactSuccessSound:
+      path: /Audio/Ambience/Objects/periodic_beep.ogg
+  - type: Vocalizer
+  - type: DatasetVocalizer
+    dataset: FirebotAd
 
 - type: entity
   parent: MobSiliconBase
@@ -119,6 +170,8 @@
     maxInterval: 12
     sound:
       collection: BikeHorn
+      params:
+        variation: 0.125
   - type: Sprite
     sprite: Mobs/Silicon/Bots/honkbot.rsi
     state: honkbot
@@ -126,7 +179,8 @@
     rootTask:
       task: HonkbotCompound
   - type: Slippery
-    launchForwardsMultiplier: 2
+    slipData:
+      launchForwardsMultiplier: 2
   - type: Speech
     speechVerb: Cluwne
   - type: StepTrigger
@@ -154,6 +208,9 @@
     makeSentient: true
     name: ghost-role-information-honkbot-name
     description: ghost-role-information-honkbot-description
+    rules: ghost-role-information-freeagent-rules
+    mindRoles:
+    - MindRoleGhostRoleFreeAgentHarmless
     raffle:
       settings: default
   - type: GhostTakeoverAvailable
@@ -162,6 +219,8 @@
     interactFailureString: petting-failure-honkbot
     interactSuccessSound:
       path: /Audio/Items/bikehorn.ogg
+      params:
+        variation: 0.125
 
 - type: entity
   parent: MobHonkBot
@@ -172,6 +231,8 @@
   - type: SpamEmitSound
     sound:
       collection: CluwneHorn
+      params:
+        variation: 0.125
   - type: Sprite
     state: jonkbot
   - type: Construction
@@ -181,11 +242,16 @@
     makeSentient: true
     name: ghost-role-information-jonkbot-name
     description: ghost-role-information-jonkbot-description
+    rules: ghost-role-information-freeagent-rules
+    mindRoles:
+    - MindRoleGhostRoleFreeAgentHarmless
     raffle:
       settings: default
   - type: InteractionPopup
     interactSuccessSound:
       path: /Audio/Items/brokenbikehorn.ogg
+      params:
+        variation: 0.125
   - type: Vocal
     sounds:
       Unsexed: Cluwne
@@ -209,8 +275,6 @@
   - type: Construction
     graph: CleanBot
     node: bot
-  - type: SentienceTarget
-    flavorKind: station-event-random-sentience-flavor-mechanical
   - type: Absorbent
     pickupAmount: 10
   - type: UseDelay
@@ -233,7 +297,6 @@
   - type: MovementSpeedModifier
     baseWalkSpeed: 2
     baseSprintSpeed: 3
-  - type: NoSlip
   - type: HTN
     rootTask:
       task: CleanbotCompound
@@ -246,7 +309,10 @@
       path: /Audio/Ambience/Objects/periodic_beep.ogg
 
 - type: entity
-  parent: MobSiliconBase
+  parent:
+  - MobSiliconBase
+  - ShowMedicalIcons
+  - StripableInventoryBase
   id: MobMedibot
   name: medibot
   description: No substitute for a doctor, but better than nothing.
@@ -280,37 +346,30 @@
   - type: Construction
     graph: MediBot
     node: bot
-  - type: NoSlip
   - type: Anchorable
   - type: InteractionPopup
     interactSuccessString: petting-success-medibot
     interactFailureString: petting-failure-medibot
     interactSuccessSound:
       path: /Audio/Ambience/Objects/periodic_beep.ogg
-  - type: ShowHealthBars
-    damageContainers:
-    - Biological
-  - type: ShowHealthIcons
-    damageContainers:
-    - Biological
+  - type: Vocalizer
+  - type: DatasetVocalizer
+    dataset: MedibotAds
+  - type: Inventory
+    templateId: medibot
+  - type: DoAfter
 
 - type: entity
-  parent: MobSiliconBase
+  parent:
+  - MobSiliconBase
+  - StripableInventoryBase
   id: MobMimeBot
   name: mimebot
-  description: Why not give mimebot a friendly wave.
+  description: Why not give the mimebot a friendly wave?
   components:
-  - type: InventorySlots
-  - type: Strippable
-  - type: UserInterface
-    interfaces:
-      enum.StrippingUiKey.Key:
-        type: StrippableBoundUserInterface
   - type: Sprite
-    layers:
-    - map: ["enum.DamageStateVisualLayers.Base"]
-      state: mimebot
-      sprite: Mobs/Silicon/Bots/mimebot.rsi
+    sprite: Mobs/Silicon/Bots/mimebot.rsi
+    state: mimebot
   - type: MimePowers
   - type: Construction
     graph: MimeBot
@@ -319,6 +378,9 @@
     makeSentient: true
     name: ghost-role-information-mimebot-name
     description: ghost-role-information-mimebot-description
+    rules: ghost-role-information-freeagent-rules
+    mindRoles:
+    - MindRoleGhostRoleFreeAgentHarmless
     raffle:
       settings: default
   - type: GhostTakeoverAvailable
@@ -337,11 +399,20 @@
   - type: Sprite
     sprite: Mobs/Silicon/Bots/supplybot.rsi
     layers:
-    - state: supplybot
+    - map: ["movement"]
+      state: supplybot
+  - type: SpriteMovement
+    movementLayers:
+      movement:
+        state: supplybot-moving
+    noMovementLayers:
+      movement:
+        state: supplybot
   - type: GhostRole
     makeSentient: true
     name: ghost-role-information-supplybot-name
     description: ghost-role-information-supplybot-description
+    rules: ghost-role-information-nonantagonist-rules
     raffle:
       settings: default
   - type: GhostTakeoverAvailable
@@ -380,8 +451,12 @@
     tags:
     - DoorBumpOpener
     - FootstepSound
+    - SiliconEmotes
+    - Bot
+    - Unimplantable
   - type: ActiveRadio
     channels:
-    - Binary
     - Common
     - Supply
+  - type: Puller
+    needsHands: false

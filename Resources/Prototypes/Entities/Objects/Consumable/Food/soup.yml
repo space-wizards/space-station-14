@@ -1,14 +1,15 @@
 # When adding new food also add to random spawner located in Resources\Prototypes\Entities\Markers\Spawners\Random\Food_Drinks\food_meal.yml
 
 - type: entity
-  parent: FoodBase
+  parent: FoodInjectableBase
   id: FoodBowlBase
   abstract: true
   components:
   - type: Item
     storedRotation: -90
   - type: Food
-    trash: FoodBowlBig
+    trash:
+    - FoodBowlBig
     utensil: Spoon
   - type: SolutionContainerManager
     solutions:
@@ -82,7 +83,7 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 15
+        maxVol: 20
         reagents:
         - ReagentId: Nutriment
           Quantity: 10
@@ -107,7 +108,7 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 15
+        maxVol: 25
         reagents:
         - ReagentId: Nutriment
           Quantity: 8
@@ -137,12 +138,16 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 15
+        maxVol: 70
         reagents:
         - ReagentId: Nutriment
-          Quantity: 8
+          Quantity: 20
+        - ReagentId: Kelotane
+          Quantity: 12
+        - ReagentId: Bicaridine
+          Quantity: 12
         - ReagentId: Vitamin
-          Quantity: 2
+          Quantity: 20
   - type: Tag
     tags:
     - Fruit
@@ -167,14 +172,14 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 15
+        maxVol: 50
         reagents:
         - ReagentId: Nutriment
-          Quantity: 8
+          Quantity: 10
         - ReagentId: Vitamin
-          Quantity: 2
+          Quantity: 25
         - ReagentId: DoctorsDelight
-          Quantity: 5
+          Quantity: 10
   - type: Tag
     tags:
     - Meat
@@ -199,14 +204,14 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 15
+        maxVol: 45
         reagents:
         - ReagentId: Nutriment
-          Quantity: 8
+          Quantity: 20
         - ReagentId: Vitamin
-          Quantity: 2
+          Quantity: 10
         - ReagentId: Allicin
-          Quantity: 3
+          Quantity: 8
 
 - type: entity
   name: caesar salad
@@ -227,12 +232,12 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 15
+        maxVol: 50
         reagents:
         - ReagentId: Nutriment
-          Quantity: 8
+          Quantity: 15
         - ReagentId: Vitamin
-          Quantity: 6
+          Quantity: 30
 
 - type: entity
   name: kimchi salad
@@ -252,12 +257,12 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 15
+        maxVol: 30
         reagents:
         - ReagentId: Nutriment
           Quantity: 8
         - ReagentId: Vitamin
-          Quantity: 2
+          Quantity: 15
         - ReagentId: Allicin
           Quantity: 2
 
@@ -277,12 +282,12 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 10
+        maxVol: 35
         reagents:
-        - ReagentId: Nutriment
-          Quantity: 2
+        - ReagentId: Sugar
+          Quantity: 10
         - ReagentId: Vitamin
-          Quantity: 4
+          Quantity: 15
   - type: Tag
     tags:
     - Fruit
@@ -305,12 +310,12 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 15
+        maxVol: 35
         reagents:
-        - ReagentId: Nutriment
-          Quantity: 7
+        - ReagentId: Sugar
+          Quantity: 8
         - ReagentId: Vitamin
-          Quantity: 4
+          Quantity: 17 
   - type: Tag
     tags:
     - Fruit
@@ -403,11 +408,13 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 12
+        maxVol: 35
         reagents:
         - ReagentId: Nutriment
-          Quantity: 4
+          Quantity: 25
         - ReagentId: Vitamin
+          Quantity: 4
+        - ReagentId: Protein
           Quantity: 4
   - type: Tag
     tags:
@@ -431,7 +438,7 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 40
+        maxVol: 40.5
         reagents:
         - ReagentId: Nutriment
           Quantity: 18
@@ -493,12 +500,12 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 12
+        maxVol: 30
         reagents:
         - ReagentId: Nutriment
-          Quantity: 5
+          Quantity: 10
         - ReagentId: Vitamin
-          Quantity: 3
+          Quantity: 15
         - ReagentId: CapsaicinOil
           Quantity: 2
   - type: Tag
@@ -565,7 +572,7 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 12
+        maxVol: 15
         reagents:
         - ReagentId: Nutriment
           Quantity: 6
@@ -590,14 +597,14 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 12
+        maxVol: 40
         reagents:
         - ReagentId: Nutriment
-          Quantity: 7
-        - ReagentId: Vitamin
           Quantity: 8
+        - ReagentId: Vitamin
+          Quantity: 17
         - ReagentId: Water
-          Quantity: 10
+          Quantity: 5
   - type: Tag
     tags:
     - Meat
@@ -619,7 +626,7 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 12
+        maxVol: 40
         reagents:
         - ReagentId: Nutriment
           Quantity: 1
@@ -645,10 +652,10 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 12
+        maxVol: 40
         reagents:
         - ReagentId: Nutriment
-          Quantity: 3
+          Quantity: 10
         - ReagentId: Iron
           Quantity: 10
         - ReagentId: Blood
@@ -675,14 +682,14 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 30
+        maxVol: 40
         reagents:
         - ReagentId: Protein
-          Quantity: 9
+          Quantity: 15
         - ReagentId: Soysauce
           Quantity: 10
         - ReagentId: Vitamin
-          Quantity: 7
+          Quantity: 10
 
 - type: entity
   name: clown's tears
@@ -700,7 +707,7 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 12
+        maxVol: 55
         reagents:
         - ReagentId: Nutriment
           Quantity: 2
@@ -708,6 +715,8 @@
           Quantity: 9
         - ReagentId: Water
           Quantity: 10
+        - ReagentId: Razorium
+          Quantity: 1 # silly
 
 - type: entity
   name: vegetable soup
@@ -726,16 +735,16 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 12
+        maxVol: 40
         reagents:
         - ReagentId: Nutriment
           Quantity: 5
         - ReagentId: Vitamin
-          Quantity: 7
+          Quantity: 15
         - ReagentId: Water
           Quantity: 10
         - ReagentId: Oculine
-          Quantity: 1
+          Quantity: 4
 
 - type: entity
   name: nettle soup
@@ -753,18 +762,18 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 12
+        maxVol: 40
         reagents:
         - ReagentId: Nutriment
           Quantity: 5
         - ReagentId: Vitamin
-          Quantity: 8
+          Quantity: 15
         - ReagentId: Water
           Quantity: 10
         - ReagentId: Omnizine
           Quantity: 5
         - ReagentId: Histamine
-          Quantity: 0.5
+          Quantity: 4
 
 - type: entity
   name: mystery soup
@@ -796,14 +805,14 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 20
+        maxVol: 40
         reagents:
           - ReagentId: Nutriment
             Quantity: 8
           - ReagentId: CapsaicinOil
             Quantity: 5
           - ReagentId: Vitamin
-            Quantity: 4
+            Quantity: 20
           - ReagentId: Allicin
             Quantity: 3
   - type: Tag
@@ -828,12 +837,12 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 20
+        maxVol: 40
         reagents:
           - ReagentId: Nutriment
             Quantity: 8
           - ReagentId: Vitamin
-            Quantity: 4
+            Quantity: 25
   - type: Tag
     tags:
     - ChiliBowl
@@ -857,14 +866,14 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 20
+        maxVol: 40
         reagents:
           - ReagentId: Nutriment
-            Quantity: 6
+            Quantity: 12
           - ReagentId: CapsaicinOil
             Quantity: 5
           - ReagentId: Vitamin
-            Quantity: 4
+            Quantity: 20
           - ReagentId: Allicin
             Quantity: 3
   - type: Tag
@@ -888,10 +897,10 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 20
+        maxVol: 40
         reagents:
           - ReagentId: Nutriment
-            Quantity: 10
+            Quantity: 15
           - ReagentId: Vitamin
             Quantity: 5
           - ReagentId: TableSalt
@@ -919,12 +928,12 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 22
+        maxVol: 40
         reagents:
           - ReagentId: Nutriment
             Quantity: 3
           - ReagentId: Vitamin
-            Quantity: 5
+            Quantity: 20
           - ReagentId: Water
             Quantity: 10
   - type: Tag
@@ -949,12 +958,12 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 12
+        maxVol: 40
         reagents:
           - ReagentId: Nutriment
-            Quantity: 5
+            Quantity: 10 # Eyes are yummy
           - ReagentId: Vitamin
-            Quantity: 3
+            Quantity: 15
   - type: Tag
     tags:
     - Meat
@@ -970,7 +979,8 @@
     flavors:
       - miso
   - type: Food
-    trash: FoodBowlFancy
+    trash:
+    - FoodBowlFancy
   - type: Sprite
     layers:
     - state: bowl2
@@ -979,7 +989,7 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 30
+        maxVol: 40
         reagents:
           - ReagentId: Nutriment
             Quantity: 9
@@ -1008,12 +1018,12 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 25
+        maxVol: 40
         reagents:
           - ReagentId: Nutriment
-            Quantity: 2
+            Quantity: 5
           - ReagentId: Vitamin
-            Quantity: 6
+            Quantity: 20
           - ReagentId: Water
             Quantity: 5
           - ReagentId: Milk
@@ -1032,10 +1042,10 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 25
+        maxVol: 40
         reagents:
           - ReagentId: Nutriment
-            Quantity: 3
+            Quantity: 15
           - ReagentId: Vitamin
             Quantity: 7
           - ReagentId: Water
@@ -1055,12 +1065,12 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 15
+        maxVol: 40
         reagents:
           - ReagentId: Nutriment
-            Quantity: 4
+            Quantity: 15
           - ReagentId: Vitamin
-            Quantity: 6
+            Quantity: 15
 # Tastes like beet.
 
 - type: entity
@@ -1081,14 +1091,14 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 15
+        maxVol: 40
         reagents:
           - ReagentId: Nutriment
-            Quantity: 15
-          - ReagentId: Protein
             Quantity: 5
+          - ReagentId: Protein
+            Quantity: 20
           - ReagentId: Vitamin
-            Quantity: 2
+            Quantity: 15
   - type: Tag
     tags:
     - Meat
@@ -1111,12 +1121,12 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 12
+        maxVol: 40
         reagents:
           - ReagentId: Nutriment
-            Quantity: 4
+            Quantity: 15
           - ReagentId: Vitamin
-            Quantity: 5
+            Quantity: 15
 # Tastes like sweet potato.
 
 - type: entity
@@ -1135,12 +1145,12 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 10
+        maxVol: 40
         reagents:
           - ReagentId: Nutriment
-            Quantity: 1
-          - ReagentId: Vitamin
             Quantity: 5
+          - ReagentId: Vitamin
+            Quantity: 25
           - ReagentId: Allicin
             Quantity: 5
 
@@ -1160,14 +1170,14 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 30
+        maxVol: 40
         reagents:
           - ReagentId: Nutriment
-            Quantity: 6
+            Quantity: 5
           - ReagentId: Vitamin
-            Quantity: 6
+            Quantity: 15
           - ReagentId: Protein
-            Quantity: 6
+            Quantity: 5
           - ReagentId: Water
             Quantity: 5
 # Tastes like crab.
@@ -1189,10 +1199,10 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 10
+        maxVol: 40
         reagents:
           - ReagentId: Nutriment
-            Quantity: 3
+            Quantity: 15
           - ReagentId: Licoxide
             Quantity: 6
 
@@ -1212,12 +1222,12 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 15
+        maxVol: 40
         reagents:
           - ReagentId: Nutriment
-            Quantity: 6
+            Quantity: 10
           - ReagentId: Vitamin
-            Quantity: 5
+            Quantity: 15
           - ReagentId: CapsaicinOil
             Quantity: 5
   - type: Tag
@@ -1225,3 +1235,33 @@
     - Fruit
     - Soup
 # Tastes like bungo, hot curry.
+
+- type: entity
+  name: escargot
+  parent: FoodBowlBase
+  id: FoodSoupEscargot
+  description: A creamy and rich bowl of snails, bon appetit!
+  components:
+  - type: FlavorProfile
+    flavors:
+      - creamy
+      - slimy
+  - type: Sprite
+    layers:
+    - state: bowl
+    - state: escargot
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 40
+        reagents:
+          - ReagentId: Nutriment
+            Quantity: 15
+          - ReagentId: Vitamin
+            Quantity: 15
+          - ReagentId: Allicin
+            Quantity: 3
+  - type: Tag
+    tags:
+    - Meat
+    - Soup

@@ -1,5 +1,7 @@
-﻿using Content.Shared.Movement.Pulling.Systems;
+﻿using Content.Shared.Alert;
+using Content.Shared.Movement.Pulling.Systems;
 using Robust.Shared.GameStates;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 
 namespace Content.Shared.Movement.Pulling.Components;
@@ -7,7 +9,7 @@ namespace Content.Shared.Movement.Pulling.Components;
 /// <summary>
 /// Specifies an entity as being able to pull another entity with <see cref="PullableComponent"/>
 /// </summary>
-[RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState(true)]
 [Access(typeof(PullingSystem))]
 public sealed partial class PullerComponent : Component
 {
@@ -16,7 +18,7 @@ public sealed partial class PullerComponent : Component
     /// Next time the puller can throw what is being pulled.
     /// Used to avoid spamming it for infinite spin + velocity.
     /// </summary>
-    [DataField(customTypeSerializer: typeof(TimeOffsetSerializer)), AutoNetworkedField]
+    [DataField(customTypeSerializer: typeof(TimeOffsetSerializer)), AutoNetworkedField, Access(Other = AccessPermissions.ReadWriteExecute)]
     public TimeSpan NextThrow;
 
     [DataField]
@@ -38,4 +40,9 @@ public sealed partial class PullerComponent : Component
     /// </summary>
     [DataField]
     public bool NeedsHands = true;
+
+    [DataField]
+    public ProtoId<AlertPrototype> PullingAlert = "Pulling";
 }
+
+public sealed partial class StopPullingAlertEvent : BaseAlertEvent;

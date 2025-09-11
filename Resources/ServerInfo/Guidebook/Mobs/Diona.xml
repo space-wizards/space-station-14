@@ -7,7 +7,7 @@
 
   They can't wear shoes, but are not slowed by Kudzu.
   They get hungry and thirsty slower.
-  Their "blood" is normal water and can't be metabolised from Iron.
+  Their "blood" is tree sap and can't be metabolised from Iron.
   Being plants, Weed Killer poisons them, while Robust Harvest heals them (but not without risk when overused!)
 
   They take [color=#1e90ff]30% less Blunt damage and 20% less Slash damage[/color];
@@ -16,7 +16,7 @@
 
   ## Make Like A Tree And Leave
   <Box>
-    <GuideEntityEmbed Entity="FloraTree06" Caption=""/>
+    <GuideEntityEmbed Entity="FloraTree" Caption=""/>
   </Box>
   Being exposed to too much Robust Harvest will cause a Diona to grow out of control, turning into an immobile tree (dropping all their equipment).
   Cutting down the tree will "restore" the Diona to their mobile state.

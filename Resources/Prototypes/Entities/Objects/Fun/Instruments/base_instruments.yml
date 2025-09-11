@@ -1,10 +1,11 @@
-﻿- type: entity
+- type: entity
   abstract: true
   parent: BaseItem
   id: BaseHandheldInstrument
   description: That's an instrument.
   components:
   - type: Sprite
+    state: icon
   - type: Instrument
   - type: ActivatableUI
     inHandsOnly: true
@@ -29,10 +30,10 @@
   components:
   - type: Instrument
   - type: ActivatableUI
-    allowSpectator: false # otherwise they can play client-side music
+    blockSpectators: true # otherwise they can play client-side music
     inHandsOnly: false
     singleUser: true
-    requireHands: true
+    requiresComplex: true
     verbText: verb-instrument-openui
     key: enum.InstrumentUiKey.Key
   - type: InteractionOutline
@@ -62,15 +63,14 @@
         density: 80
         mask:
         - Impassable
-        - HighImpassable
         - MidImpassable
         layer:
         - Opaque
-        - HighImpassable
         - MidImpassable
         - BulletImpassable
   - type: StaticPrice
     price: 300
+  - type: RequireProjectileTarget
 
 - type: entity
   parent: BasePlaceableInstrument

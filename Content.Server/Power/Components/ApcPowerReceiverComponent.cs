@@ -1,5 +1,6 @@
 using Content.Server.Power.NodeGroups;
 using Content.Server.Power.Pow3r;
+using Content.Shared.Power.Components;
 
 namespace Content.Server.Power.Components
 {
@@ -8,17 +9,17 @@ namespace Content.Server.Power.Components
     ///     so that it can receive power from a <see cref="IApcNet"/>.
     /// </summary>
     [RegisterComponent]
-    public sealed partial class ApcPowerReceiverComponent : Component
+    public sealed partial class ApcPowerReceiverComponent : SharedApcPowerReceiverComponent
     {
-        [ViewVariables]
-        public bool Powered => (MathHelper.CloseToPercent(NetworkLoad.ReceivingPower, Load) || !NeedsPower) && !PowerDisabled;
-
         /// <summary>
         ///     Amount of charge this needs from an APC per second to function.
         /// </summary>
-        [ViewVariables(VVAccess.ReadWrite)]
         [DataField("powerLoad")]
-        public float Load { get => NetworkLoad.DesiredPower; set => NetworkLoad.DesiredPower = value; }
+        public override float Load
+        {
+            get => NetworkLoad.DesiredPower;
+            set => NetworkLoad.DesiredPower = value;
+        }
 
         public ApcPowerProviderComponent? Provider = null;
 
@@ -26,14 +27,12 @@ namespace Content.Server.Power.Components
         ///     When false, causes this to appear powered even if not receiving power from an Apc.
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]
-        public bool NeedsPower
+        public override bool NeedsPower
         {
             get => _needsPower;
             set
             {
                 _needsPower = value;
-                // Reset this so next tick will do a power update.
-                PoweredLastUpdate = null;
             }
         }
 
@@ -43,14 +42,12 @@ namespace Content.Server.Power.Components
         /// <summary>
         ///     When true, causes this to never appear powered.
         /// </summary>
-        [ViewVariables(VVAccess.ReadWrite)]
         [DataField("powerDisabled")]
-        public bool PowerDisabled {
+        public override bool PowerDisabled
+        {
             get => !NetworkLoad.Enabled;
             set => NetworkLoad.Enabled = !value;
         }
-
-        public bool? PoweredLastUpdate;
 
         [ViewVariables]
         public PowerState.Load NetworkLoad { get; } = new PowerState.Load
@@ -60,16 +57,4 @@ namespace Content.Server.Power.Components
 
         public float PowerReceived => NetworkLoad.ReceivingPower;
     }
-
-    /// <summary>
-    /// Raised whenever an ApcPowerReceiver becomes powered / unpowered.
-    /// Does nothing on the client.
-    /// </summary>
-    [ByRefEvent]
-    public readonly record struct PowerChangedEvent(bool Powered, float ReceivingPower)
-    {
-        public readonly bool Powered = Powered;
-        public readonly float ReceivingPower = ReceivingPower;
-    }
-
 }

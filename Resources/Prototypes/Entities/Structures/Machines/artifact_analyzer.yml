@@ -1,13 +1,13 @@
 - type: entity
   id: MachineArtifactAnalyzer
-  parent: [ BaseMachinePowered, ConstructibleMachine ]
+  parent: [ BaseMachinePowered, SmallConstructibleMachine ]
   name: artifact analyzer
   description: A platform capable of performing analysis on various types of artifacts.
   components:
   - type: Sprite
     noRot: true
     sprite: Structures/Machines/artifact_analyzer.rsi
-    drawdepth: FloorObjects
+    drawdepth: HighFloorObjects
     layers:
     - state: icon
     - state: unshaded
@@ -28,6 +28,14 @@
         shape:
           !type:PhysShapeAabb
           bounds: "-0.35,-0.35,0.35,0.35"
+        mask:
+        - Impassable
+        - HighImpassable
+        - MidImpassable
+      fix2:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.35,-0.35,0.35,0.35"
         density: 190
         mask:
         - MachineMask
@@ -35,19 +43,18 @@
         - Impassable
         - MidImpassable
         - LowImpassable
+        - BulletImpassable
         hard: False
   - type: Transform
     anchored: true
-    noRot: false
   - type: ApcPowerReceiver
     powerLoad: 12000
     needsPower: false #only turns on when scanning
   - type: ArtifactAnalyzer
-  - type: TraversalDistorter
   - type: ItemPlacer
     whitelist:
       components:
-      - Artifact
+      - XenoArtifact
   - type: DeviceNetwork
     deviceNetId: Wired
     receiveFrequencyId: BasicDevice
@@ -82,7 +89,7 @@
   - type: ArtifactCrusher
     crushingWhitelist:
       components:
-      - Artifact
+      - XenoArtifact
     crushingDamage:
       types:
         Blunt: 10
@@ -119,7 +126,10 @@
     capacity: 1
     whitelist:
       components:
-      - Artifact
+      - XenoArtifact
+      tags:
+      - CanPilot # People
+      - VimPilot # Pets
   - type: Appearance
   - type: GenericVisualizer
     visuals:

@@ -83,7 +83,7 @@
 - type: entity
   id: BedsheetCentcom
   parent: BedsheetBase
-  name: CentCom bedsheet
+  name: CentComm bedsheet
   description: Woven with advanced nanothread for warmth as well as being very decorated, essential for all officials.
   components:
   - type: Sprite
@@ -306,7 +306,7 @@
 
 - type: entity
   id: BedsheetSyndie
-  parent: BedsheetBase
+  parent: [ BedsheetBase, BaseSyndicateContraband ]
   name: syndicate bedsheet
   description: It has a syndicate emblem and it has an aura of evil.
   components:

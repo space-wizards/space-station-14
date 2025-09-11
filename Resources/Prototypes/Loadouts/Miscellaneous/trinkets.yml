@@ -8,211 +8,501 @@
       department: Command
       time: 3600 # 1 hour
 
-# Plushies
+# Flowers
 - type: loadout
-  id: PlushieLizard
-  equipment: PlushieLizard
+  id: FlowerWreath
+  storage:
+    back:
+    - ClothingHeadHatFlowerWreath
 
-- type: startingGear
+- type: loadout
+  id: Hairflower
+  storage:
+    back:
+    - ClothingHeadHatHairflower
+
+# Headphones
+- type: loadout
+  id: Headphones
+  storage:
+    back:
+    - ClothingMultipleHeadphones
+
+# Toys
+- type: loadout
   id: PlushieLizard
   storage:
     back:
     - PlushieLizard
-    
-- type: loadout
-  id: PlushieSpaceLizard
-  equipment: PlushieSpaceLizard
 
-- type: startingGear
+- type: loadout
   id: PlushieSpaceLizard
   storage:
     back:
     - PlushieSpaceLizard
 
+- type: loadout
+  id: ThreeCandles
+  dummyEntity: LoadoutDummyCandles
+  storage:
+    back:
+    - CandleRed
+    - CandleBlue
+    - CandleGreenSmall
+
 # Smokeables
 - type: loadout
-  id: Lighter
-  equipment: Lighter
-
-- type: startingGear
   id: Lighter
   storage:
     back:
     - Lighter
+  groupBy: "smokeables"
 
 - type: loadout
-  id: CigPackGreen
-  equipment: CigPackGreen
-
-- type: startingGear
   id: CigPackGreen
   storage:
     back:
     - CigPackGreen
+  groupBy: "smokeables"
 
 - type: loadout
-  id: CigPackRed
-  equipment: CigPackRed
-
-- type: startingGear
   id: CigPackRed
   storage:
     back:
     - CigPackRed
+  groupBy: "smokeables"
 
 - type: loadout
-  id: CigPackBlue
-  equipment: CigPackBlue
-
-- type: startingGear
   id: CigPackBlue
   storage:
     back:
     - CigPackBlue
+  groupBy: "smokeables"
 
 - type: loadout
-  id: CigPackBlack
-  equipment: CigPackBlack
-
-- type: startingGear
   id: CigPackBlack
   storage:
     back:
     - CigPackBlack
+  groupBy: "smokeables"
 
 - type: loadout
   id: CigarCase
-  equipment: CigarCase
   effects:
   - !type:GroupLoadoutEffect
     proto: Command
-
-- type: startingGear
-  id: CigarCase
   storage:
     back:
     - CigarCase
+  groupBy: "smokeables"
 
 - type: loadout
   id: CigarGold
-  equipment: CigarGold
   effects:
   - !type:GroupLoadoutEffect
     proto: Command
-
-- type: startingGear
-  id: CigarGold
   storage:
     back:
     - CigarGold
+  groupBy: "smokeables"
 
 # Pins
 - type: loadout
   id: ClothingNeckLGBTPin
-  equipment: ClothingNeckLGBTPin
-
-- type: startingGear
-  id: ClothingNeckLGBTPin
   storage:
     back:
     - ClothingNeckLGBTPin
+  groupBy: "pin"
 
 - type: loadout
-  id: ClothingNeckAromanticPin
-  equipment: ClothingNeckAromanticPin
+  id: ClothingNeckAllyPin
+  storage:
+    back:
+    - ClothingNeckAllyPin
+  groupBy: "pin"
 
-- type: startingGear
+- type: loadout
   id: ClothingNeckAromanticPin
   storage:
     back:
     - ClothingNeckAromanticPin
+  groupBy: "pin"
 
 - type: loadout
-  id: ClothingNeckAsexualPin
-  equipment: ClothingNeckAsexualPin
-
-- type: startingGear
   id: ClothingNeckAsexualPin
   storage:
     back:
     - ClothingNeckAsexualPin
+  groupBy: "pin"
 
 - type: loadout
-  id: ClothingNeckBisexualPin
-  equipment: ClothingNeckBisexualPin
-
-- type: startingGear
   id: ClothingNeckBisexualPin
   storage:
     back:
     - ClothingNeckBisexualPin
+  groupBy: "pin"
 
 - type: loadout
-  id: ClothingNeckIntersexPin
-  equipment: ClothingNeckIntersexPin
+  id: ClothingNeckGayPin
+  storage:
+    back:
+    - ClothingNeckGayPin
+  groupBy: "pin"
 
-- type: startingGear
+- type: loadout
   id: ClothingNeckIntersexPin
   storage:
     back:
     - ClothingNeckIntersexPin
+  groupBy: "pin"
 
 - type: loadout
-  id: ClothingNeckLesbianPin
-  equipment: ClothingNeckLesbianPin
-
-- type: startingGear
   id: ClothingNeckLesbianPin
   storage:
     back:
     - ClothingNeckLesbianPin
+  groupBy: "pin"
 
 - type: loadout
-  id: ClothingNeckNonBinaryPin
-  equipment: ClothingNeckNonBinaryPin
-
-- type: startingGear
   id: ClothingNeckNonBinaryPin
   storage:
     back:
     - ClothingNeckNonBinaryPin
+  groupBy: "pin"
 
 - type: loadout
-  id: ClothingNeckPansexualPin
-  equipment: ClothingNeckPansexualPin
-
-- type: startingGear
   id: ClothingNeckPansexualPin
   storage:
     back:
     - ClothingNeckPansexualPin
+  groupBy: "pin"
 
 - type: loadout
-  id: ClothingNeckTransPin
-  equipment: ClothingNeckTransPin
+  id: ClothingNeckOmnisexualPin
+  storage:
+    back:
+    - ClothingNeckOmnisexualPin
+  groupBy: "pin"
 
-- type: startingGear
+- type: loadout
+  id: ClothingNeckGenderqueerPin
+  storage:
+    back:
+    - ClothingNeckGenderqueerPin
+  groupBy: "pin"
+
+- type: loadout
   id: ClothingNeckTransPin
   storage:
     back:
     - ClothingNeckTransPin
+  groupBy: "pin"
 
 - type: loadout
-  id: ClothingNeckAutismPin
-  equipment: ClothingNeckAutismPin
-
-- type: startingGear
   id: ClothingNeckAutismPin
   storage:
     back:
     - ClothingNeckAutismPin
+  groupBy: "pin"
 
 - type: loadout
-  id: ClothingNeckGoldAutismPin
-  equipment: ClothingNeckGoldAutismPin
-
-- type: startingGear
   id: ClothingNeckGoldAutismPin
   storage:
     back:
     - ClothingNeckGoldAutismPin
+  groupBy: "pin"
+
+- type: loadout
+  id: ClothingNeckAroacePin
+  storage:
+    back:
+    - ClothingNeckAroacePin
+  groupBy: "pin"
+
+- type: loadout
+  id: ClothingNeckPluralPin
+  storage:
+    back:
+    - ClothingNeckPluralPin
+  groupBy: "pin"
+
+- type: loadout
+  id: ClothingNeckGenderfluidPin
+  storage:
+    back:
+    - ClothingNeckGenderfluidPin
+  groupBy: "pin"
+
+# Canes
+# The white cane is intentionally not included here. Thats for the blind.
+- type: loadout
+  id: OffsetCane
+  storage:
+    back:
+    - OffsetCane
+  groupBy: "canes"
+
+- type: loadout
+  id: OffsetCaneWood
+  storage:
+    back:
+    - OffsetCaneWood
+  groupBy: "canes"
+
+- type: loadout
+  id: OffsetCaneClown
+  effects:
+  - !type:JobRequirementLoadoutEffect
+    requirement:
+      !type:RoleTimeRequirement
+      role: JobClown
+      time: 3600 # 1hr
+  storage:
+    back:
+    - OffsetCaneClown
+  groupBy: "canes"
+
+- type: loadout
+  id: OffsetCaneMime
+  effects:
+  - !type:JobRequirementLoadoutEffect
+    requirement:
+      !type:RoleTimeRequirement
+      role: JobMime
+      time: 3600 # 1hr
+  storage:
+    back:
+    - OffsetCaneMime
+  groupBy: "canes"
+
+- type: loadout
+  id: OffsetCaneNT
+  effects:
+  - !type:JobRequirementLoadoutEffect
+    requirement:
+      !type:DepartmentTimeRequirement
+      department: Command
+      time: 18000 # 5hr
+  storage:
+    back:
+    - OffsetCaneNT
+  groupBy: "canes"
+
+- type: loadout
+  id: Cane
+  effects:
+  - !type:JobRequirementLoadoutEffect
+    requirement:
+      !type:RoleTimeRequirement
+      role: JobLibrarian
+      time: 3600 # 1hr same as Jamjar.
+  storage:
+    back:
+    - Cane
+  groupBy: "canes"
+
+# Towels
+- type: loadout
+  id: TowelColorWhite
+  effects:
+  - !type:JobRequirementLoadoutEffect
+    requirement:
+      !type:OverallPlaytimeRequirement
+      time: 36000 # 10hr
+  storage:
+    back:
+    - TowelColorWhite
+  groupBy: "towels"
+
+- type: loadout
+  id: TowelColorSilver
+  effects:
+  - !type:JobRequirementLoadoutEffect
+    requirement:
+      !type:OverallPlaytimeRequirement
+      time: 1800000 # 500hr
+  storage:
+    back:
+    - TowelColorSilver
+  groupBy: "towels"
+
+- type: loadout
+  id: TowelColorGold
+  effects:
+  - !type:JobRequirementLoadoutEffect
+    requirement:
+      !type:OverallPlaytimeRequirement
+      time: 3600000 # 1000hr
+  storage:
+    back:
+    - TowelColorGold
+  groupBy: "towels"
+
+- type: loadout
+  id: TowelColorLightBrown
+  effects:
+  - !type:JobRequirementLoadoutEffect
+    requirement:
+      !type:DepartmentTimeRequirement
+      department: Cargo
+      time: 360000 # 100hr
+  storage:
+    back:
+    - TowelColorLightBrown
+  groupBy: "towels"
+
+- type: loadout
+  id: TowelColorGreen
+  effects:
+  - !type:JobRequirementLoadoutEffect
+    requirement:
+      !type:DepartmentTimeRequirement
+      department: Civilian
+      time: 360000 # 100hr
+  storage:
+    back:
+    - TowelColorGreen
+  groupBy: "towels"
+
+- type: loadout
+  id: TowelColorDarkBlue
+  effects:
+  - !type:JobRequirementLoadoutEffect
+    requirement:
+      !type:DepartmentTimeRequirement
+      department: Command
+      time: 360000 # 100hr
+  storage:
+    back:
+    - TowelColorDarkBlue
+  groupBy: "towels"
+
+- type: loadout
+  id: TowelColorOrange
+  effects:
+  - !type:JobRequirementLoadoutEffect
+    requirement:
+      !type:DepartmentTimeRequirement
+      department: Engineering
+      time: 360000 # 100hr
+  storage:
+    back:
+    - TowelColorOrange
+  groupBy: "towels"
+
+- type: loadout
+  id: TowelColorLightBlue
+  effects:
+  - !type:JobRequirementLoadoutEffect
+    requirement:
+      !type:DepartmentTimeRequirement
+      department: Medical
+      time: 360000 # 100hr
+  storage:
+    back:
+    - TowelColorLightBlue
+  groupBy: "towels"
+
+- type: loadout
+  id: TowelColorPurple
+  effects:
+  - !type:JobRequirementLoadoutEffect
+    requirement:
+      !type:DepartmentTimeRequirement
+      department: Science
+      time: 360000 # 100hr
+  storage:
+    back:
+    - TowelColorPurple
+  groupBy: "towels"
+
+- type: loadout
+  id: TowelColorRed
+  effects:
+  - !type:JobRequirementLoadoutEffect
+    requirement:
+      !type:DepartmentTimeRequirement
+      department: Security
+      time: 360000 # 100hr
+  storage:
+    back:
+    - TowelColorRed
+  groupBy: "towels"
+
+- type: loadout
+  id: TowelColorGray
+  effects:
+  - !type:JobRequirementLoadoutEffect
+    requirement:
+      !type:RoleTimeRequirement
+      role: JobPassenger
+      time: 360000 # 100hr
+  storage:
+    back:
+    - TowelColorGray
+  groupBy: "towels"
+
+- type: loadout
+  id: TowelColorBlack
+  effects:
+  - !type:JobRequirementLoadoutEffect
+    requirement:
+      !type:RoleTimeRequirement
+      role: JobChaplain
+      time: 360000 # 100hr
+  storage:
+    back:
+    - TowelColorBlack
+  groupBy: "towels"
+
+- type: loadout
+  id: TowelColorDarkGreen
+  effects:
+  - !type:JobRequirementLoadoutEffect
+    requirement:
+      !type:RoleTimeRequirement
+      role: JobLibrarian
+      time: 360000 # 100hr
+  storage:
+    back:
+    - TowelColorDarkGreen
+  groupBy: "towels"
+
+- type: loadout
+  id: TowelColorMaroon
+  effects:
+  - !type:JobRequirementLoadoutEffect
+    requirement:
+      !type:RoleTimeRequirement
+      role: JobLawyer
+      time: 360000 # 100hr
+  storage:
+    back:
+    - TowelColorMaroon
+  groupBy: "towels"
+
+- type: loadout
+  id: TowelColorYellow
+  effects:
+  - !type:JobRequirementLoadoutEffect
+    requirement:
+      !type:RoleTimeRequirement
+      role: JobClown
+      time: 360000 # 100hr
+  storage:
+    back:
+    - TowelColorYellow
+  groupBy: "towels"
+
+- type: loadout
+  id: TowelColorMime
+  effects:
+  - !type:JobRequirementLoadoutEffect
+    requirement:
+      !type:RoleTimeRequirement
+      role: JobMime
+      time: 360000 # 100hr
+  storage:
+    back:
+    - TowelColorMime
+  groupBy: "towels"

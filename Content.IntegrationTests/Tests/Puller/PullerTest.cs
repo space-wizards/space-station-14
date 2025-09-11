@@ -29,7 +29,7 @@ public sealed class PullerTest
             {
                 foreach (var proto in protoManager.EnumeratePrototypes<EntityPrototype>())
                 {
-                    if (!proto.TryGetComponent(out PullerComponent? puller))
+                    if (!proto.TryGetComponent(out PullerComponent? puller, compFactory))
                         continue;
 
                     if (!puller.NeedsHands)

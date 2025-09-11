@@ -1,49 +1,51 @@
-﻿using Content.Shared.FixedPoint;
-using Content.Shared.ProximityDetection.Systems;
-using Content.Shared.Whitelist;
+﻿using Content.Shared.ProximityDetection.Systems;
 using Robust.Shared.GameStates;
+using Robust.Shared.Prototypes;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 
 namespace Content.Shared.ProximityDetection.Components;
+
 /// <summary>
-/// This is used to search for the closest entity with a range that matches specified requirements (tags and/or components)
+/// Used to search for the closest entity with a range that matches specified requirements (tags and/or components).
 /// </summary>
-[RegisterComponent, NetworkedComponent, AutoGenerateComponentState ,Access(typeof(ProximityDetectionSystem))]
+[RegisterComponent, NetworkedComponent]
+[AutoGenerateComponentState(fieldDeltas: true), AutoGenerateComponentPause]
+[Access(typeof(ProximityDetectionSystem))]
 public sealed partial class ProximityDetectorComponent : Component
 {
     /// <summary>
-    /// Whether or not it's on.
+    /// Entities that detector will search for.
     /// </summary>
-    [DataField, AutoNetworkedField, ViewVariables(VVAccess.ReadWrite)]
-    public bool Enabled = true;
+    [DataField(required: true)]
+    public ComponentRegistry Components;
 
     /// <summary>
-    /// The criteria used to filter entities
-    /// Note: RequireAll is only supported for tags, all components are required to count as a match!
+    /// The entity that was found.
     /// </summary>
-    [DataField( required: true), AutoNetworkedField, ViewVariables(VVAccess.ReadWrite)]
-    public EntityWhitelist Criteria = new();
+    [ViewVariables, AutoNetworkedField]
+    public EntityUid? Target;
 
     /// <summary>
-    /// Found Entity
+    /// The distance to <see cref="Target"/>.
     /// </summary>
-    [ViewVariables(VVAccess.ReadWrite), AutoNetworkedField]
-    public EntityUid? TargetEnt;
+    [ViewVariables, AutoNetworkedField]
+    public float Distance = float.PositiveInfinity;
 
     /// <summary>
-    /// Distance to Found Entity
+    /// The farthest distance to search for targets.
     /// </summary>
-    [ViewVariables(VVAccess.ReadWrite), AutoNetworkedField]
-    public FixedPoint2 Distance = -1;
-
+    [DataField, AutoNetworkedField]
+    public float Range = 10f;
 
     /// <summary>
-    /// The farthest distance to search for targets
+    /// How often detector updates.
     /// </summary>
-    [DataField, ViewVariables(VVAccess.ReadWrite), AutoNetworkedField]
-    public FixedPoint2 Range = 10f;
+    [DataField, AutoNetworkedField]
+    public TimeSpan UpdateCooldown = TimeSpan.FromSeconds(1);
 
-    public float AccumulatedFrameTime;
-
-    [DataField, ViewVariables(VVAccess.ReadWrite), AutoNetworkedField]
-    public float UpdateRate = 0.3f;
+    /// <summary>
+    /// Next time detector updates.
+    /// </summary>
+    [DataField(customTypeSerializer: typeof(TimeOffsetSerializer)), AutoNetworkedField, AutoPausedField]
+    public TimeSpan NextUpdate = TimeSpan.Zero;
 }

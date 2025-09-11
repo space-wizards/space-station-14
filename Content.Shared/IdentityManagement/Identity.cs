@@ -15,7 +15,14 @@ public static class Identity
     /// </summary>
     public static string Name(EntityUid uid, IEntityManager ent, EntityUid? viewer=null)
     {
-        var uidName = ent.GetComponent<MetaDataComponent>(uid).EntityName;
+        if (!uid.IsValid())
+            return string.Empty;
+
+        var meta = ent.GetComponent<MetaDataComponent>(uid);
+        if (meta.EntityLifeStage <= EntityLifeStage.Initializing)
+            return meta.EntityName; // Identity component and such will not yet have initialized and may throw NREs
+
+        var uidName = meta.EntityName;
 
         if (!ent.TryGetComponent<IdentityComponent>(uid, out var identity))
             return uidName;
@@ -34,7 +41,7 @@ public static class Identity
             return uidName;
         }
 
-        return uidName + $" ({identName})";
+        return $"{uidName} ({identName})";
     }
 
     /// <summary>
@@ -42,9 +49,15 @@ public static class Identity
     ///     This is an extension method because of its simplicity, and if it was any harder to call it might not
     ///     be used enough for loc.
     /// </summary>
-    public static EntityUid Entity(EntityUid uid, IEntityManager ent)
+    /// <param name="viewer">
+    ///     If this entity can see through identities, this method will always return the actual target entity.
+    /// </param>
+    public static EntityUid Entity(EntityUid uid, IEntityManager ent, EntityUid? viewer = null)
     {
         if (!ent.TryGetComponent<IdentityComponent>(uid, out var identity))
+            return uid;
+
+        if (viewer != null && CanSeeThroughIdentity(uid, viewer.Value, ent))
             return uid;
 
         return identity.IdentityEntitySlot.ContainedEntity ?? uid;

@@ -7,6 +7,32 @@
   id: Debug2
   name: store-category-debug2
 
+#WIZARD
+- type: storeCategory
+  id: SpellbookOffensive
+  name: store-caregory-spellbook-offensive
+  priority: 0
+
+- type: storeCategory
+  id: SpellbookDefensive
+  name: store-caregory-spellbook-defensive
+  priority: 1
+
+- type: storeCategory
+  id: SpellbookUtility
+  name: store-caregory-spellbook-utility
+  priority: 2
+
+- type: storeCategory
+  id: SpellbookEquipment
+  name: store-caregory-spellbook-equipment
+  priority: 3
+
+- type: storeCategory
+  id: SpellbookEvents
+  name: store-caregory-spellbook-events
+  priority: 4
+
 #uplink categoires
 - type: storeCategory
   id: UplinkWeaponry
@@ -68,3 +94,12 @@
   id: RevenantAbilities
   name: store-category-abilities
 
+#pai
+- type: storeCategory
+  id: PAIAbilities
+  name: store-category-abilities
+
+- type: storeCategory
+  id: DiscountedItems
+  name: store-discounted-items
+  priority: 200

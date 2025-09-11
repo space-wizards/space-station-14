@@ -1,6 +1,8 @@
 using Content.Shared.Atmos.Components;
+using Content.Shared.Atmos.EntitySystems;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
+using Robust.Client.UserInterface;
 
 namespace Content.Client.UserInterface.Systems.Atmos.GasTank
 {
@@ -14,9 +16,9 @@ namespace Content.Client.UserInterface.Systems.Atmos.GasTank
         {
         }
 
-        public void SetOutputPressure(in float value)
+        public void SetOutputPressure(float value)
         {
-            SendMessage(new GasTankSetPressureMessage
+            SendPredictedMessage(new GasTankSetPressureMessage
             {
                 Pressure = value
             });
@@ -24,20 +26,28 @@ namespace Content.Client.UserInterface.Systems.Atmos.GasTank
 
         public void ToggleInternals()
         {
-            SendMessage(new GasTankToggleInternalsMessage());
+            SendPredictedMessage(new GasTankToggleInternalsMessage());
         }
 
         protected override void Open()
         {
             base.Open();
-            _window = new GasTankWindow(this);
-            _window.OnClose += Close;
-            _window.OpenCentered();
+            _window = this.CreateWindow<GasTankWindow>();
+            _window.Entity = Owner;
+            _window.SetTitle(EntMan.GetComponent<MetaDataComponent>(Owner).EntityName);
+            _window.OnOutputPressure += SetOutputPressure;
+            _window.OnToggleInternals += ToggleInternals;
         }
 
         protected override void UpdateState(BoundUserInterfaceState state)
         {
             base.UpdateState(state);
+
+            if (EntMan.TryGetComponent(Owner, out GasTankComponent? component))
+            {
+                var canConnect = EntMan.System<SharedGasTankSystem>().CanConnectToInternals((Owner, component));
+                _window?.Update(canConnect, component.IsConnected, component.OutputPressure);
+            }
 
             if (state is GasTankBoundUserInterfaceState cast)
                 _window?.UpdateState(cast);

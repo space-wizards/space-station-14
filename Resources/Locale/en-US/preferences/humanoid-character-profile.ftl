@@ -5,5 +5,6 @@ humanoid-character-profile-summary =
     This is {$name}. {$gender ->
     [male] He is
     [female] She is
-    *[other] They are
+    [epicene] They are
+    *[other] It is
 } {$age} years old.

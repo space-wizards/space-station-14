@@ -1,0 +1,26 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Taken from vgstation13 at https://github.com/vgstation-coders/vgstation13/blob/15121b534f4ef10339d96412e22fe3ce4d15a45d/icons/obj/coins.dmi",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "coin_silver"
+    },
+    {
+      "name": "coin_gold"
+    },
+    {
+      "name": "coin_iron"
+    },
+    {
+      "name": "coin_diamond"
+    },
+    {
+      "name": "coin_adamantine"
+    }
+  ]
+}

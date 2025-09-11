@@ -7,13 +7,12 @@ using Content.Shared.Stacks;
 using Content.Shared.Tag;
 using Content.Shared.Popups;
 using Robust.Shared.Containers;
-using Robust.Shared.Utility;
+using Robust.Shared.Prototypes;
 
 namespace Content.Server.Construction;
 
 public sealed class MachineFrameSystem : EntitySystem
 {
-    [Dependency] private readonly IComponentFactory _factory = default!;
     [Dependency] private readonly SharedContainerSystem _container = default!;
     [Dependency] private readonly TagSystem _tag = default!;
     [Dependency] private readonly StackSystem _stack = default!;
@@ -59,22 +58,9 @@ public sealed class MachineFrameSystem : EntitySystem
             return;
         }
 
-        // Machine parts cannot currently satisfy stack/component/tag restrictions. Similarly stacks cannot satisfy
-        // component/tag restrictions. However, there is no reason this cannot be supported in the future. If this
-        // changes, then RegenerateProgress() also needs to be updated.
-        //
+        // If this changes in the future, then RegenerateProgress() also needs to be updated.
         // Note that one entity is ALLOWED to satisfy more than one kind of component or tag requirements. This is
         // necessary in order to avoid weird entity-ordering shenanigans in RegenerateProgress().
-
-        // Handle parts
-        if (TryComp<MachinePartComponent>(args.Used, out var machinePart))
-        {
-            if (TryInsertPart(uid, args.Used, component, machinePart))
-                args.Handled = true;
-            return;
-        }
-
-        // Handle stacks
         if (TryComp<StackComponent>(args.Used, out var stack))
         {
             if (TryInsertStack(uid, args.Used, component, stack))
@@ -88,7 +74,7 @@ public sealed class MachineFrameSystem : EntitySystem
             if (component.ComponentProgress[compName] >= info.Amount)
                 continue;
 
-            var registration = _factory.GetRegistration(compName);
+            var registration = Factory.GetRegistration(compName);
 
             if (!HasComp(args.Used, registration.Type))
                 continue;
@@ -169,29 +155,6 @@ public sealed class MachineFrameSystem : EntitySystem
     }
 
     /// <returns>Whether or not the function had any effect. Does not indicate success.</returns>
-    private bool TryInsertPart(EntityUid uid, EntityUid used, MachineFrameComponent component, MachinePartComponent machinePart)
-    {
-        DebugTools.Assert(!HasComp<StackComponent>(uid));
-        if (!component.Requirements.ContainsKey(machinePart.PartType))
-            return false;
-
-        if (component.Progress[machinePart.PartType] >= component.Requirements[machinePart.PartType])
-            return false;
-
-        if (!_container.TryRemoveFromContainer(used))
-            return false;
-
-        if (!_container.Insert(used, component.PartContainer))
-            return true;
-
-        component.Progress[machinePart.PartType]++;
-        if (IsComplete(component))
-            _popupSystem.PopupEntity(Loc.GetString("machine-frame-component-on-complete"), uid);
-
-        return true;
-    }
-
-    /// <returns>Whether or not the function had any effect. Does not indicate success.</returns>
     private bool TryInsertStack(EntityUid uid, EntityUid used, MachineFrameComponent component, StackComponent stack)
     {
         var type = stack.StackTypeId;
@@ -239,12 +202,6 @@ public sealed class MachineFrameSystem : EntitySystem
         if (!component.HasBoard)
             return false;
 
-        foreach (var (part, amount) in component.Requirements)
-        {
-            if (component.Progress[part] < amount)
-                return false;
-        }
-
         foreach (var (type, amount) in component.MaterialRequirements)
         {
             if (component.MaterialProgress[type] < amount)
@@ -268,20 +225,13 @@ public sealed class MachineFrameSystem : EntitySystem
 
     public void ResetProgressAndRequirements(MachineFrameComponent component, MachineBoardComponent machineBoard)
     {
-        component.Requirements = new Dictionary<string, int>(machineBoard.Requirements);
-        component.MaterialRequirements = new Dictionary<string, int>(machineBoard.MaterialIdRequirements);
+        component.MaterialRequirements = new Dictionary<ProtoId<StackPrototype>, int>(machineBoard.StackRequirements);
         component.ComponentRequirements = new Dictionary<string, GenericPartInfo>(machineBoard.ComponentRequirements);
-        component.TagRequirements = new Dictionary<string, GenericPartInfo>(machineBoard.TagRequirements);
+        component.TagRequirements = new Dictionary<ProtoId<TagPrototype>, GenericPartInfo>(machineBoard.TagRequirements);
 
-        component.Progress.Clear();
         component.MaterialProgress.Clear();
         component.ComponentProgress.Clear();
         component.TagProgress.Clear();
-
-        foreach (var (machinePart, _) in component.Requirements)
-        {
-            component.Progress[machinePart] = 0;
-        }
 
         foreach (var (stackType, _) in component.MaterialRequirements)
         {
@@ -307,7 +257,6 @@ public sealed class MachineFrameSystem : EntitySystem
             component.MaterialRequirements.Clear();
             component.ComponentRequirements.Clear();
             component.TagRequirements.Clear();
-            component.Progress.Clear();
             component.MaterialProgress.Clear();
             component.ComponentProgress.Clear();
             component.TagProgress.Clear();
@@ -326,22 +275,6 @@ public sealed class MachineFrameSystem : EntitySystem
 
         foreach (var part in component.PartContainer.ContainedEntities)
         {
-            if (TryComp<MachinePartComponent>(part, out var machinePart))
-            {
-                DebugTools.Assert(!HasComp<StackComponent>(part));
-
-                // Check this is part of the requirements...
-                if (!component.Requirements.ContainsKey(machinePart.PartType))
-                    continue;
-
-                if (!component.Progress.ContainsKey(machinePart.PartType))
-                    component.Progress[machinePart.PartType] = 1;
-                else
-                    component.Progress[machinePart.PartType]++;
-
-                continue;
-            }
-
             if (TryComp<StackComponent>(part, out var stack))
             {
                 var type = stack.StackTypeId;
@@ -360,14 +293,12 @@ public sealed class MachineFrameSystem : EntitySystem
             // I have many regrets.
             foreach (var (compName, _) in component.ComponentRequirements)
             {
-                var registration = _factory.GetRegistration(compName);
+                var registration = Factory.GetRegistration(compName);
 
                 if (!HasComp(part, registration.Type))
                     continue;
 
-                if (!component.ComponentProgress.ContainsKey(compName))
-                    component.ComponentProgress[compName] = 1;
-                else
+                if (!component.ComponentProgress.TryAdd(compName, 1))
                     component.ComponentProgress[compName]++;
             }
 
@@ -380,18 +311,17 @@ public sealed class MachineFrameSystem : EntitySystem
                 if (!_tag.HasTag(tagComp, tagName))
                     continue;
 
-                if (!component.TagProgress.ContainsKey(tagName))
-                    component.TagProgress[tagName] = 1;
-                else
+                if (!component.TagProgress.TryAdd(tagName, 1))
                     component.TagProgress[tagName]++;
             }
         }
     }
     private void OnMachineFrameExamined(EntityUid uid, MachineFrameComponent component, ExaminedEvent args)
     {
-        if (!args.IsInDetailsRange)
+        if (!args.IsInDetailsRange || !component.HasBoard)
             return;
-        if (component.HasBoard)
-            args.PushMarkup(Loc.GetString("machine-frame-component-on-examine-label", ("board", EntityManager.GetComponent<MetaDataComponent>(component.BoardContainer.ContainedEntities[0]).EntityName)));
+
+        var board = component.BoardContainer.ContainedEntities[0];
+        args.PushMarkup(Loc.GetString("machine-frame-component-on-examine-label", ("board", Name(board))));
     }
 }

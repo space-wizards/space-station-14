@@ -8,12 +8,14 @@ using Content.Shared.Damage;
 using Content.Shared.Damage.Prototypes;
 using Content.Shared.Movement.Components;
 using Robust.Shared.Containers;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
 
 namespace Content.Shared.Body.Systems;
 
 public partial class SharedBodySystem
 {
+    private static readonly ProtoId<DamageTypePrototype> BloodlossDamageType = "Bloodloss";
     private void InitializeParts()
     {
         // TODO: This doesn't handle comp removal on child ents.
@@ -178,7 +180,7 @@ public partial class SharedBodySystem
         )
         {
             // TODO BODY SYSTEM KILL : remove this when wounding and required parts are implemented properly
-            var damage = new DamageSpecifier(Prototypes.Index<DamageTypePrototype>("Bloodloss"), 300);
+            var damage = new DamageSpecifier(Prototypes.Index(BloodlossDamageType), 300);
             Damageable.TryChangeDamage(bodyEnt, damage);
         }
     }
@@ -189,7 +191,7 @@ public partial class SharedBodySystem
     /// </summary>
     public EntityUid? GetParentPartOrNull(EntityUid uid)
     {
-        if (!Containers.TryGetContainingContainer(uid, out var container))
+        if (!Containers.TryGetContainingContainer((uid, null, null), out var container))
             return null;
 
         var parent = container.Owner;
@@ -205,7 +207,7 @@ public partial class SharedBodySystem
     /// </summary>
     public (EntityUid Parent, string Slot)? GetParentPartAndSlotOrNull(EntityUid uid)
     {
-        if (!Containers.TryGetContainingContainer(uid, out var container))
+        if (!Containers.TryGetContainingContainer((uid, null, null), out var container))
             return null;
 
         var slotId = GetPartSlotContainerIdFromContainer(container.ID);
@@ -235,7 +237,7 @@ public partial class SharedBodySystem
         parentUid = null;
         parentComponent = null;
 
-        if (Containers.TryGetContainingContainer(partUid, out var container) &&
+        if (Containers.TryGetContainingContainer((partUid, null, null), out var container) &&
             TryComp(container.Owner, out parentComponent))
         {
             parentUid = container.Owner;

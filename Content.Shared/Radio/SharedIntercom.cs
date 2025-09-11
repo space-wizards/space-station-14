@@ -1,4 +1,5 @@
-﻿using Robust.Shared.Serialization;
+﻿using Robust.Shared.Prototypes;
+using Robust.Shared.Serialization;
 
 namespace Content.Shared.Radio;
 
@@ -6,23 +7,6 @@ namespace Content.Shared.Radio;
 public enum IntercomUiKey
 {
     Key,
-}
-
-[Serializable, NetSerializable]
-public sealed class IntercomBoundUIState : BoundUserInterfaceState
-{
-    public bool MicEnabled;
-    public bool SpeakerEnabled;
-    public List<string> AvailableChannels;
-    public string SelectedChannel;
-
-    public IntercomBoundUIState(bool micEnabled, bool speakerEnabled, List<string> availableChannels, string selectedChannel)
-    {
-        MicEnabled = micEnabled;
-        SpeakerEnabled = speakerEnabled;
-        AvailableChannels = availableChannels;
-        SelectedChannel = selectedChannel;
-    }
 }
 
 [Serializable, NetSerializable]

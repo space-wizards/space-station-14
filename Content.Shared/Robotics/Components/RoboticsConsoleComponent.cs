@@ -36,7 +36,7 @@ public sealed partial class RoboticsConsoleComponent : Component
     /// Radio message sent when destroying a borg.
     /// </summary>
     [DataField]
-    public LocId DestroyMessage = "robotics-console-cyborg-destroyed";
+    public LocId DestroyMessage = "robotics-console-cyborg-destroying";
 
     /// <summary>
     /// Cooldown on destroying borgs to prevent complete abuse.
@@ -50,4 +50,10 @@ public sealed partial class RoboticsConsoleComponent : Component
     [DataField(customTypeSerializer: typeof(TimeOffsetSerializer))]
     [AutoNetworkedField, AutoPausedField]
     public TimeSpan NextDestroy = TimeSpan.Zero;
+
+    /// <summary>
+    /// Controls if the console can disable or destroy any borg.
+    /// </summary>
+    [DataField]
+    public bool AllowBorgControl = true;
 }

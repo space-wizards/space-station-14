@@ -1,10 +1,5 @@
 using Content.Shared.Power;
 using Content.Shared.Whitelist;
-using Content.Shared.Power;
-using Content.Shared.Whitelist;
-using Robust.Shared.GameObjects;
-using Robust.Shared.Serialization.Manager.Attributes;
-using Robust.Shared.ViewVariables;
 
 namespace Content.Server.Power.Components
 {

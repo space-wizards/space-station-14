@@ -33,7 +33,7 @@ public abstract partial class InteractionTest
         public int Quantity;
 
         /// <summary>
-        /// If true, a check has been performed to see if the prototype ia an entity prototype with a stack component,
+        /// If true, a check has been performed to see if the prototype is an entity prototype with a stack component,
         /// in which case the specifier was converted into a stack-specifier
         /// </summary>
         public bool Converted;
@@ -77,7 +77,7 @@ public abstract partial class InteractionTest
             StackComponent? stack = null;
             await server.WaitPost(() =>
             {
-                entProto.TryGetComponent(factory.GetComponentName(typeof(StackComponent)), out stack);
+                entProto.TryGetComponent(factory.GetComponentName<StackComponent>(), out stack);
             });
 
             if (stack != null)
@@ -100,27 +100,27 @@ public abstract partial class InteractionTest
 
         if (!ProtoMan.TryIndex<EntityPrototype>(spec.Prototype, out var entProto))
         {
-            Assert.Fail($"Unkown prototype: {spec.Prototype}");
+            Assert.Fail($"Unknown prototype: {spec.Prototype}");
             return default;
         }
 
         StackComponent? stack = null;
         await Server.WaitPost(() =>
         {
-            entProto.TryGetComponent(Factory.GetComponentName(typeof(StackComponent)), out stack);
+            entProto.TryGetComponent(Factory.GetComponentName<StackComponent>(), out stack);
         });
 
         if (stack != null)
             return await SpawnEntity((stack.StackTypeId, spec.Quantity), coords);
 
         Assert.That(spec.Quantity, Is.EqualTo(1), "SpawnEntity only supports returning a singular entity");
-        await Server.WaitPost(() => uid = SEntMan.SpawnEntity(spec.Prototype, coords));
+        await Server.WaitPost(() => uid = SEntMan.SpawnAtPosition(spec.Prototype, coords));
         return uid;
     }
 
     /// <summary>
     /// Convert an entity-uid to a matching entity specifier. Useful when doing entity lookups & checking that the
-    /// right quantity of entities/materials werre produced. Returns null if passed an entity with a null prototype.
+    /// right quantity of entities/materials were produced. Returns null if passed an entity with a null prototype.
     /// </summary>
     protected EntitySpecifier? ToEntitySpecifier(EntityUid uid)
     {

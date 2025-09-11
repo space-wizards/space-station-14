@@ -22,7 +22,7 @@ public sealed class CrewManifestSection : BoxContainer
         AddChild(new Label()
         {
             StyleClasses = { "LabelBig" },
-            Text = Loc.GetString($"department-{section.ID}")
+            Text = Loc.GetString(section.Name)
         });
 
         var gridContainer = new GridContainer()
@@ -51,7 +51,7 @@ public sealed class CrewManifestSection : BoxContainer
             title.SetMessage(entry.JobTitle);
 
 
-            if (prototypeManager.TryIndex<StatusIconPrototype>(entry.JobIcon, out var jobIcon))
+            if (prototypeManager.TryIndex<JobIconPrototype>(entry.JobIcon, out var jobIcon))
             {
                 var icon = new TextureRect()
                 {

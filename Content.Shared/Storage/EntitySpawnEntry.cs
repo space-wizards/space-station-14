@@ -6,6 +6,19 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototy
 namespace Content.Shared.Storage;
 
 /// <summary>
+/// Prototype wrapper around <see cref="EntitySpawnEntry"/>
+/// </summary>
+[Prototype]
+public sealed partial class EntitySpawnEntryPrototype : IPrototype
+{
+    [IdDataField]
+    public string ID { get; private set; } = string.Empty;
+
+    [DataField]
+    public List<EntitySpawnEntry> Entries = new();
+}
+
+/// <summary>
 ///     Dictates a list of items that can be spawned.
 /// </summary>
 [Serializable]
@@ -61,6 +74,18 @@ public static class EntitySpawnCollection
     {
         public List<EntitySpawnEntry> Entries { get; set; } = new();
         public float CumulativeProbability { get; set; } = 0f;
+    }
+
+    public static List<string> GetSpawns(ProtoId<EntitySpawnEntryPrototype> proto, IPrototypeManager? protoManager = null, IRobustRandom? random = null)
+    {
+        IoCManager.Resolve(ref protoManager, ref random);
+        return GetSpawns(protoManager.Index(proto).Entries, random);
+    }
+
+    public static List<string?> GetSpawns(ProtoId<EntitySpawnEntryPrototype> proto, System.Random random, IPrototypeManager? protoManager = null)
+    {
+        IoCManager.Resolve(ref protoManager);
+        return GetSpawns(protoManager.Index(proto).Entries, random);
     }
 
     /// <summary>

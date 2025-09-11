@@ -7,7 +7,7 @@ namespace Content.Client.Overlays;
 
 public sealed partial class StencilOverlay
 {
-    private void DrawRestrictedRange(in OverlayDrawArgs args, RestrictedRangeComponent rangeComp, Matrix3 invMatrix)
+    private void DrawRestrictedRange(in OverlayDrawArgs args, RestrictedRangeComponent rangeComp, Matrix3x2 invMatrix)
     {
         var worldHandle = args.WorldHandle;
         var renderScale = args.Viewport.RenderScale.X;
@@ -16,7 +16,7 @@ public sealed partial class StencilOverlay
         var length = zoom.X;
         var bufferRange = MathF.Min(10f, rangeComp.Range);
 
-        var pixelCenter = invMatrix.Transform(rangeComp.Origin);
+        var pixelCenter = Vector2.Transform(rangeComp.Origin, invMatrix);
         // Something something offset?
         var vertical = args.Viewport.Size.Y;
 
@@ -44,14 +44,14 @@ public sealed partial class StencilOverlay
             worldHandle.DrawRect(localAABB, Color.White);
         }, Color.Transparent);
 
-        worldHandle.SetTransform(Matrix3.Identity);
-        worldHandle.UseShader(_protoManager.Index<ShaderPrototype>("StencilMask").Instance());
+        worldHandle.SetTransform(Matrix3x2.Identity);
+        worldHandle.UseShader(_protoManager.Index(StencilMask).Instance());
         worldHandle.DrawTextureRect(_blep!.Texture, worldBounds);
         var curTime = _timing.RealTime;
         var sprite = _sprite.GetFrame(new SpriteSpecifier.Texture(new ResPath("/Textures/Parallaxes/noise.png")), curTime);
 
         // Draw the rain
-        worldHandle.UseShader(_protoManager.Index<ShaderPrototype>("StencilDraw").Instance());
+        worldHandle.UseShader(_protoManager.Index(StencilDraw).Instance());
         _parallax.DrawParallax(worldHandle, worldAABB, sprite, curTime, position, new Vector2(0.5f, 0f));
     }
 }

@@ -1,3 +1,4 @@
+using System.Numerics;
 using Content.Shared.Examine;
 using Robust.Client.Graphics;
 using Robust.Client.Player;
@@ -15,6 +16,8 @@ namespace Content.Client.Popups;
 /// </summary>
 public sealed class PopupOverlay : Overlay
 {
+    private static readonly ProtoId<ShaderPrototype> UnshadedShader = "unshaded";
+
     private readonly IConfigurationManager _configManager;
     private readonly IEntityManager _entManager;
     private readonly IPlayerManager _playerMgr;
@@ -47,7 +50,7 @@ public sealed class PopupOverlay : Overlay
         _popup = popup;
         _controller = controller;
 
-        _shader = protoManager.Index<ShaderPrototype>("unshaded").Instance();
+        _shader = protoManager.Index(UnshadedShader).Instance();
     }
 
     protected override void Draw(in OverlayDrawArgs args)
@@ -55,7 +58,7 @@ public sealed class PopupOverlay : Overlay
         if (args.ViewportControl == null)
             return;
 
-        args.DrawingHandle.SetTransform(Matrix3.Identity);
+        args.DrawingHandle.SetTransform(Matrix3x2.Identity);
         args.DrawingHandle.UseShader(_shader);
         var scale = _configManager.GetCVar(CVars.DisplayUIScale);
 
@@ -73,24 +76,30 @@ public sealed class PopupOverlay : Overlay
             return;
 
         var matrix = args.ViewportControl.GetWorldToScreenMatrix();
-        var viewPos = new MapCoordinates(args.WorldAABB.Center, args.MapId);
         var ourEntity = _playerMgr.LocalEntity;
+        var viewPos = new MapCoordinates(args.WorldAABB.Center, args.MapId);
+        var ourPos = args.WorldBounds.Center;
+        if (ourEntity != null)
+        {
+            viewPos = _transform.GetMapCoordinates(ourEntity.Value);
+            ourPos = viewPos.Position;
+        }
 
         foreach (var popup in _popup.WorldLabels)
         {
-            var mapPos = popup.InitialPos.ToMap(_entManager, _transform);
+            var mapPos = _transform.ToMapCoordinates(popup.InitialPos);
 
             if (mapPos.MapId != args.MapId)
                 continue;
 
-            var distance = (mapPos.Position - args.WorldBounds.Center).Length();
+            var distance = (mapPos.Position - ourPos).Length();
 
             // Should handle fade here too wyci.
             if (!args.WorldBounds.Contains(mapPos.Position) || !_examine.InRangeUnOccluded(viewPos, mapPos, distance,
                     e => e == popup.InitialPos.EntityId || e == ourEntity, entMan: _entManager))
                 continue;
 
-            var pos = matrix.Transform(mapPos.Position);
+            var pos = Vector2.Transform(mapPos.Position, matrix);
             _controller.DrawPopup(popup, worldHandle, pos, scale);
         }
     }

@@ -1,6 +1,7 @@
 ﻿using Content.Shared.Whitelist;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
+using Robust.Shared.Utility;
 
 namespace Content.Shared.Cargo.Prototypes;
 
@@ -9,7 +10,7 @@ namespace Content.Shared.Cargo.Prototypes;
 /// that must be sold together in a labeled container in order
 /// to receive a monetary reward.
 /// </summary>
-[Prototype, Serializable, NetSerializable]
+[Prototype]
 public sealed partial class CargoBountyPrototype : IPrototype
 {
     /// <inheritdoc/>
@@ -31,7 +32,7 @@ public sealed partial class CargoBountyPrototype : IPrototype
     /// <summary>
     /// The entries that must be satisfied for the cargo bounty to be complete.
     /// </summary>
-    [DataField( required: true)]
+    [DataField(required: true)]
     public List<CargoBountyItemEntry> Entries = new();
 
     /// <summary>
@@ -39,6 +40,18 @@ public sealed partial class CargoBountyPrototype : IPrototype
     /// </summary>
     [DataField]
     public string IdPrefix = "NT";
+
+    /// <summary>
+    /// A group used for categorizing this bounty.
+    /// </summary>
+    [DataField]
+    public ProtoId<CargoBountyGroupPrototype> Group = "StationBounty";
+
+    /// <summary>
+    /// Optional sprite representing this bounty.
+    /// </summary>
+    [DataField]
+    public SpriteSpecifier? Sprite;
 }
 
 [DataDefinition, Serializable, NetSerializable]
@@ -49,6 +62,12 @@ public readonly partial record struct CargoBountyItemEntry()
     /// </summary>
     [DataField(required: true)]
     public EntityWhitelist Whitelist { get; init; } = default!;
+
+    /// <summary>
+    /// A blacklist that can be used to exclude items in the whitelist.
+    /// </summary>
+    [DataField]
+    public EntityWhitelist? Blacklist { get; init; } = null;
 
     // todo: implement some kind of simple generic condition system
 

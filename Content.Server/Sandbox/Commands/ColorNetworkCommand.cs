@@ -1,29 +1,27 @@
 using Content.Server.Administration.Managers;
 using Content.Server.Atmos.Piping.Components;
 using Content.Server.Atmos.Piping.EntitySystems;
-using Content.Server.NodeContainer;
-using Content.Server.NodeContainer.NodeGroups;
 using Content.Shared.Administration;
+using Content.Shared.NodeContainer;
+using Content.Shared.NodeContainer.NodeGroups;
 using Robust.Shared.Console;
 
 namespace Content.Server.Sandbox.Commands
 {
     [AnyCommand]
-    public sealed class ColorNetworkCommand : IConsoleCommand
+    public sealed class ColorNetworkCommand : LocalizedEntityCommands
     {
-        [Dependency] private readonly IEntityManager _entManager = default!;
+        [Dependency] private readonly IAdminManager _adminManager = default!;
+        [Dependency] private readonly AtmosPipeColorSystem _pipeColorSystem = default!;
+        [Dependency] private readonly SandboxSystem _sandboxSystem = default!;
 
-        public string Command => "colornetwork";
-        public string Description => Loc.GetString("color-network-command-description");
-        public string Help => Loc.GetString("color-network-command-help-text", ("command",Command));
+        public override string Command => "colornetwork";
 
-        public void Execute(IConsoleShell shell, string argStr, string[] args)
+        public override void Execute(IConsoleShell shell, string argStr, string[] args)
         {
-            var sandboxManager = EntitySystem.Get<SandboxSystem>();
-            var adminManager = IoCManager.Resolve<IAdminManager>();
-            if (shell.IsClient && (!sandboxManager.IsSandboxEnabled && !adminManager.HasAdminFlag(shell.Player!, AdminFlags.Mapping)))
+            if (shell.IsClient || (!_sandboxSystem.IsSandboxEnabled && !_adminManager.HasAdminFlag(shell.Player!, AdminFlags.Mapping)))
             {
-                shell.WriteError("You are not currently able to use mapping commands.");
+                shell.WriteError(Loc.GetString("cmd-colornetwork-no-access"));
             }
 
             if (args.Length != 3)
@@ -40,13 +38,13 @@ namespace Content.Server.Sandbox.Commands
 
             var nent = new NetEntity(targetId);
 
-            if (!_entManager.TryGetEntity(nent, out var eUid))
+            if (!EntityManager.TryGetEntity(nent, out var eUid))
             {
                 shell.WriteLine(Loc.GetString("shell-invalid-entity-id"));
                 return;
             }
 
-            if (!_entManager.TryGetComponent(eUid, out NodeContainerComponent? nodeContainerComponent))
+            if (!EntityManager.TryGetComponent(eUid, out NodeContainerComponent? nodeContainerComponent))
             {
                 shell.WriteLine(Loc.GetString("shell-entity-is-not-node-container"));
                 return;
@@ -77,10 +75,10 @@ namespace Content.Server.Sandbox.Commands
 
             foreach (var x in group.Nodes)
             {
-                if (!_entManager.TryGetComponent(x.Owner, out AtmosPipeColorComponent? atmosPipeColorComponent))
+                if (!EntityManager.TryGetComponent(x.Owner, out AtmosPipeColorComponent? atmosPipeColorComponent))
                     continue;
 
-                _entManager.System<AtmosPipeColorSystem>().SetColor(x.Owner, atmosPipeColorComponent, color);
+                _pipeColorSystem.SetColor(x.Owner, atmosPipeColorComponent, color);
             }
         }
     }

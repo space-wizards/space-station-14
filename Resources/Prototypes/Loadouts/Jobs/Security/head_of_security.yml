@@ -1,73 +1,57 @@
+# For mantles
+- type: loadoutEffectGroup
+  id: MasterHoS
+  effects:
+  - !type:JobRequirementLoadoutEffect
+    requirement:
+      !type:RoleTimeRequirement
+      role: JobHeadOfSecurity
+      time: 72000 #20 hrs
+
 # Jumpsuit
 - type: loadout
   id: HeadofSecurityJumpsuit
-  equipment: HeadofSecurityJumpsuit
-
-- type: startingGear
-  id: HeadofSecurityJumpsuit
   equipment:
     jumpsuit: ClothingUniformJumpsuitHoS
+  groupBy: "jumpsuit"
 
 - type: loadout
-  id: HeadofSecurityJumpskirt
-  equipment: HeadofSecurityJumpskirt
-
-- type: startingGear
   id: HeadofSecurityJumpskirt
   equipment:
     jumpsuit: ClothingUniformJumpskirtHoS
+  groupBy: "jumpskirt"
 
 - type: loadout
-  id: HeadofSecurityTurtleneck
-  equipment: HeadofSecurityTurtleneck
-
-- type: startingGear
   id: HeadofSecurityTurtleneck
   equipment:
     jumpsuit: ClothingUniformJumpsuitHoSAlt
+  groupBy: "jumpsuit"
 
 - type: loadout
-  id: HeadofSecurityTurtleneckSkirt
-  equipment: HeadofSecurityTurtleneckSkirt
-
-- type: startingGear
   id: HeadofSecurityTurtleneckSkirt
   equipment:
     jumpsuit: ClothingUniformJumpskirtHoSAlt
+  groupBy: "jumpskirt"
 
 - type: loadout
-  id: HeadofSecurityFormalSuit
-  equipment: HeadofSecurityFormalSuit
-
-- type: startingGear
   id: HeadofSecurityFormalSuit
   equipment:
     jumpsuit: ClothingUniformJumpsuitHosFormal
+  groupBy: "jumpsuit"
 
 - type: loadout
-  id: HeadofSecurityFormalSkirt
-  equipment: HeadofSecurityFormalSkirt
-
-- type: startingGear
   id: HeadofSecurityFormalSkirt
   equipment:
     jumpsuit: ClothingUniformJumpskirtHosFormal
+  groupBy: "jumpskirt"
 
 # Head
 - type: loadout
-  id: HeadofSecurityHead
-  equipment: HeadofSecurityHead
-
-- type: startingGear
   id: HeadofSecurityHead
   equipment:
     head: ClothingHeadHatHoshat
 
 - type: loadout
-  id: HeadofSecurityBeret
-  equipment: HeadofSecurityBeret
-
-- type: startingGear
   id: HeadofSecurityBeret
   equipment:
     head: ClothingHeadHatBeretHoS
@@ -75,16 +59,16 @@
 # Neck
 - type: loadout
   id: HeadofSecurityCloak
-  equipment: HeadofSecurityCloak
-
-- type: startingGear
-  id: HeadofSecurityCloak
   equipment:
     neck: ClothingNeckCloakHos
 
 - type: loadout
   id: HeadofSecurityMantle
-  equipment: HeadofSecurityMantle
+  equipment:
+    neck: ClothingNeckMantleHOS
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: MasterHoS
 
 - type: startingGear
   id: HeadofSecurityMantle
@@ -94,18 +78,10 @@
 # OuterClothing
 - type: loadout
   id: HeadofSecurityCoat
-  equipment: HeadofSecurityCoat
-
-- type: startingGear
-  id: HeadofSecurityCoat
   equipment:
     outerClothing: ClothingOuterCoatHoSTrench
 
 - type: loadout
-  id: HeadofSecurityWinterCoat
-  equipment: HeadofSecurityWinterCoat
-
-- type: startingGear
   id: HeadofSecurityWinterCoat
   equipment:
     outerClothing: ClothingOuterWinterHoS

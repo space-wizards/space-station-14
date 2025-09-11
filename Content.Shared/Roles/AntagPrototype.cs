@@ -1,3 +1,4 @@
+using Content.Shared.Guidebook;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 
@@ -6,8 +7,7 @@ namespace Content.Shared.Roles;
 /// <summary>
 ///     Describes information for a single antag.
 /// </summary>
-[Prototype("antag")]
-[Serializable, NetSerializable]
+[Prototype]
 public sealed partial class AntagPrototype : IPrototype
 {
     [ViewVariables]
@@ -41,6 +41,15 @@ public sealed partial class AntagPrototype : IPrototype
     /// <summary>
     ///     Requirements that must be met to opt in to this antag role.
     /// </summary>
-    [DataField("requirements")]
+    // TODO ROLE TIMERS
+    // Actually check if the requirements are met. Because apparently this is actually unused.
+    [DataField, Access(typeof(SharedRoleSystem), Other = AccessPermissions.None)]
     public HashSet<JobRequirement>? Requirements;
+
+    /// <summary>
+    /// Optional list of guides associated with this antag. If the guides are opened, the first entry in this list
+    /// will be used to select the currently selected guidebook.
+    /// </summary>
+    [DataField]
+    public List<ProtoId<GuideEntryPrototype>>? Guides;
 }

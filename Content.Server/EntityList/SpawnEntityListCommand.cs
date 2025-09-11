@@ -7,50 +7,49 @@ using Robust.Shared.Prototypes;
 namespace Content.Server.EntityList
 {
     [AdminCommand(AdminFlags.Spawn)]
-    public sealed class SpawnEntityListCommand : IConsoleCommand
+    public sealed class SpawnEntityListCommand : LocalizedEntityCommands
     {
-        public string Command => "spawnentitylist";
-        public string Description => "Spawns a list of entities around you";
-        public string Help => $"Usage: {Command} <entityListPrototypeId>";
+        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
 
-        public void Execute(IConsoleShell shell, string argStr, string[] args)
+        public override string Command => "spawnentitylist";
+
+        public override void Execute(IConsoleShell shell, string argStr, string[] args)
         {
             if (args.Length != 1)
             {
-                shell.WriteError($"Invalid arguments.\n{Help}");
+                shell.WriteError(Loc.GetString($"shell-need-exactly-one-argument"));
                 return;
             }
 
             if (shell.Player is not { } player)
             {
-                shell.WriteError("You must be a player to run this command.");
+                shell.WriteError(Loc.GetString("shell-cannot-run-command-from-server"));
                 return;
             }
 
             if (player.AttachedEntity is not {} attached)
             {
-                shell.WriteError("You must have an entity to run this command.");
+                shell.WriteError(Loc.GetString("shell-only-players-can-run-this-command"));
                 return;
             }
 
-            var prototypeManager = IoCManager.Resolve<IPrototypeManager>();
-
-            if (!prototypeManager.TryIndex(args[0], out EntityListPrototype? prototype))
+            if (!_prototypeManager.TryIndex(args[0], out EntityListPrototype? prototype))
             {
-                shell.WriteError($"No {nameof(EntityListPrototype)} found with id {args[0]}");
+                shell.WriteError(Loc.GetString($"cmd-spawnentitylist-failed",
+                    ("prototype", nameof(EntityListPrototype)),
+                    ("id", args[0])));
                 return;
             }
 
-            var entityManager = IoCManager.Resolve<IEntityManager>();
             var i = 0;
 
-            foreach (var entity in prototype.Entities(prototypeManager))
+            foreach (var entity in prototype.GetEntities(_prototypeManager))
             {
-                entityManager.SpawnEntity(entity.ID, entityManager.GetComponent<TransformComponent>(attached).Coordinates);
+                EntityManager.SpawnEntity(entity.ID, EntityManager.GetComponent<TransformComponent>(attached).Coordinates);
                 i++;
             }
 
-            shell.WriteLine($"Spawned {i} entities.");
+            shell.WriteLine(Loc.GetString($"cmd-spawnentitylist-success", ("count", i)));
         }
     }
 }

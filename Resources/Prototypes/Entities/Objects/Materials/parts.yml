@@ -19,6 +19,9 @@
       behaviors:
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
+  - type: Tag
+    tags:
+    - ConstructionMaterial
 
 - type: entity
   parent: PartBase
@@ -45,7 +48,7 @@
       map: ["base"]
   - type: Item
     size: Normal
-#    heldPrefix: rods
+    heldPrefix: rods
   - type: Construction
     graph: MetalRod
     node: MetalRod
@@ -57,7 +60,7 @@
   - type: StaticPrice
     price: 0
   - type: StackPrice
-    price: 5
+    price: 7.5
   - type: Extractable
     grindableSolutionName: rod
   - type: SolutionContainerManager
@@ -68,6 +71,9 @@
           Quantity: 4.5
         - ReagentId: Carbon
           Quantity: 0.5
+  - type: GuideHelp
+    guides:
+    - ExpandingRepairingStation
 
 - type: entity
   parent: PartRodMetal
@@ -78,6 +84,7 @@
   - type: Tag
     tags:
     - RodMetal1
+    - ConstructionMaterial
   - type: Sprite
     state: rods
   - type: Stack
@@ -92,25 +99,8 @@
   - type: Tag
     tags:
     - RodMetal1
+    - ConstructionMaterial
   - type: Sprite
     state: rods
   - type: Stack
     count: 1
-
-- type: entity
-  parent: PartRodMetal
-  id: PartRodMetalLingering0
-  suffix: Lingering, 0
-  components:
-  - type: Stack
-    lingering: true
-    count: 0
-
-- type: entity
-  parent: FloorTileItemSteel
-  id: FloorTileItemSteelLingering0
-  suffix: Lingering, 0
-  components:
-  - type: Stack
-    lingering: true
-    count: 0

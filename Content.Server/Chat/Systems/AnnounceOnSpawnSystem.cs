@@ -16,7 +16,7 @@ public sealed class AnnounceOnSpawnSystem : EntitySystem
     private void OnInit(EntityUid uid, AnnounceOnSpawnComponent comp, MapInitEvent args)
     {
         var message = Loc.GetString(comp.Message);
-        var sender = comp.Sender != null ? Loc.GetString(comp.Sender) : "Central Command";
+        var sender = comp.Sender != null ? Loc.GetString(comp.Sender) : Loc.GetString("chat-manager-sender-announcement");
         _chat.DispatchGlobalAnnouncement(message, sender, playSound: true, comp.Sound, comp.Color);
     }
 }

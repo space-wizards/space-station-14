@@ -45,6 +45,10 @@ public sealed class NPCTest
                     var count = counts.GetOrNew(compound.ID);
                     count++;
 
+                    // Compound tasks marked with AllowRecursion are only evaluated once
+                    if (counts.ContainsKey(compound.ID) && compound.AllowRecursion)
+                        continue;
+
                     Assert.That(count, Is.LessThan(50));
                     counts[compound.ID] = count;
                     Count(protoManager.Index<HTNCompoundPrototype>(compoundTask.Task), counts, htnSystem, protoManager);

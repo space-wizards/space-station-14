@@ -8,6 +8,16 @@ stat-cargo-values = Cargo sell prices
 stat-cargo-id = ID
 stat-cargo-price = Price
 
+# Melee
+stat-melee-values = Melee weapon damage
+stat-melee-id = ID
+stat-melee-base-damage = Base damage
+stat-melee-wield-damage = Wielded damage
+stat-melee-attack-rate = Attack rate
+stat-melee-dps = DPS
+stat-melee-structural-damage = Structure damage
+stat-melee-structural-wield-damage = Wielded structure damage
+
 # Lathe
 stat-lathe-values = Lathe sell prices
 stat-lathe-id = ID
@@ -18,3 +28,8 @@ stat-lathe-sell = Sell price
 stat-item-values = Item sizes
 stat-item-id = ID
 stat-item-price = Size
+
+# Draw Rate
+stat-drawrate-values = APC draw rate
+stat-drawrate-id = ID
+stat-drawrate-rate = Draw Rate (W)

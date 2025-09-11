@@ -1,57 +1,96 @@
+using Content.Shared.Decals;
 using Content.Shared.SprayPainter;
 using Content.Shared.SprayPainter.Components;
-using Robust.Client.GameObjects;
+using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
+using Robust.Shared.Prototypes;
 
 namespace Content.Client.SprayPainter.UI;
 
-public sealed class SprayPainterBoundUserInterface : BoundUserInterface
+/// <summary>
+/// A BUI for a spray painter. Allows selecting pipe colours, decals, and paintable object types sorted by category.
+/// </summary>
+public sealed class SprayPainterBoundUserInterface(EntityUid owner, Enum uiKey) : BoundUserInterface(owner, uiKey)
 {
     [ViewVariables]
     private SprayPainterWindow? _window;
-
-    [ViewVariables]
-    private SprayPainterSystem? _painter;
-
-    public SprayPainterBoundUserInterface(EntityUid owner, Enum uiKey) : base(owner, uiKey)
-    {
-    }
 
     protected override void Open()
     {
         base.Open();
 
-        if (!EntMan.TryGetComponent<SprayPainterComponent>(Owner, out var comp))
+        if (_window == null)
+        {
+            _window = this.CreateWindow<SprayPainterWindow>();
+
+            _window.OnSpritePicked += OnSpritePicked;
+            _window.OnSetPipeColor += OnSetPipeColor;
+            _window.OnTabChanged += OnTabChanged;
+            _window.OnDecalChanged += OnDecalChanged;
+            _window.OnDecalColorChanged += OnDecalColorChanged;
+            _window.OnDecalAngleChanged += OnDecalAngleChanged;
+            _window.OnDecalSnapChanged += OnDecalSnapChanged;
+        }
+
+        var sprayPainter = EntMan.System<SprayPainterSystem>();
+        _window.PopulateCategories(sprayPainter.PaintableStylesByGroup, sprayPainter.PaintableGroupsByCategory, sprayPainter.Decals);
+        Update();
+
+        if (EntMan.TryGetComponent(Owner, out SprayPainterComponent? sprayPainterComp))
+            _window.SetSelectedTab(sprayPainterComp.SelectedTab);
+    }
+
+    public override void Update()
+    {
+        if (_window == null)
             return;
 
-        _window = new SprayPainterWindow();
+        if (!EntMan.TryGetComponent(Owner, out SprayPainterComponent? sprayPainter))
+            return;
 
-        _painter = EntMan.System<SprayPainterSystem>();
-
-        _window.OnClose += Close;
-        _window.OnSpritePicked = OnSpritePicked;
-        _window.OnColorPicked = OnColorPicked;
-
-        _window.Populate(_painter.Entries, comp.Index, comp.PickedColor, comp.ColorPalette);
-
-        _window.OpenCentered();
+        _window.PopulateColors(sprayPainter.ColorPalette);
+        if (sprayPainter.PickedColor != null)
+            _window.SelectColor(sprayPainter.PickedColor);
+        _window.SetSelectedStyles(sprayPainter.StylesByGroup);
+        _window.SetSelectedDecal(sprayPainter.SelectedDecal);
+        _window.SetDecalAngle(sprayPainter.SelectedDecalAngle);
+        _window.SetDecalColor(sprayPainter.SelectedDecalColor);
+        _window.SetDecalSnap(sprayPainter.SnapDecals);
     }
 
-    protected override void Dispose(bool disposing)
+    private void OnDecalSnapChanged(bool snap)
     {
-        base.Dispose(disposing);
-
-        _window?.Dispose();
+        SendPredictedMessage(new SprayPainterSetDecalSnapMessage(snap));
     }
 
-    private void OnSpritePicked(ItemList.ItemListSelectedEventArgs args)
+    private void OnDecalAngleChanged(int angle)
     {
-        SendMessage(new SprayPainterSpritePickedMessage(args.ItemIndex));
+        SendPredictedMessage(new SprayPainterSetDecalAngleMessage(angle));
     }
 
-    private void OnColorPicked(ItemList.ItemListSelectedEventArgs args)
+    private void OnDecalColorChanged(Color? color)
+    {
+        SendPredictedMessage(new SprayPainterSetDecalColorMessage(color));
+    }
+
+    private void OnDecalChanged(ProtoId<DecalPrototype> protoId)
+    {
+        SendPredictedMessage(new SprayPainterSetDecalMessage(protoId));
+    }
+
+    private void OnTabChanged(int index, bool isSelectedTabWithDecals)
+    {
+        SendPredictedMessage(new SprayPainterTabChangedMessage(index, isSelectedTabWithDecals));
+    }
+
+    private void OnSpritePicked(string group, string style)
+    {
+        SendPredictedMessage(new SprayPainterSetPaintableStyleMessage(group, style));
+    }
+
+    private void OnSetPipeColor(ItemList.ItemListSelectedEventArgs args)
     {
         var key = _window?.IndexToColorKey(args.ItemIndex);
-        SendMessage(new SprayPainterColorPickedMessage(key));
+        SendPredictedMessage(new SprayPainterSetPipeColorMessage(key));
     }
 }

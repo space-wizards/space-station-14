@@ -35,8 +35,7 @@
   parent: ClothingShoesBaseButcherable
   id: ClothingShoeSlippersDuck
   name: ducky slippers
-  # description: You wish these made quacking sounds as you walked.
-  description: Comfy, yet haunted by the ghosts of ducks you fed bread to as a child.
+  description: You wish these made quacking sounds as you walked. It's a good thing they don't, though.
   components:
   - type: Sprite
     sprite: Clothing/Shoes/Misc/duck-slippers.rsi
@@ -44,14 +43,45 @@
     sprite: Clothing/Shoes/Misc/duck-slippers.rsi
   - type: FootstepModifier
     footstepSoundCollection:
-      collection: FootstepDuck
+      collection: FootstepCarpet
       params:
         variation: 0.07
-  - type: WaddleWhenWorn
-    tumbleIntensity: 10 # smaller than clown shoes
   - type: Construction
     graph: ClothingShoeSlippersDuck
     node: shoes
+
+- type: entity
+  parent: ClothingShoesBaseButcherable
+  id: ClothingShoeSlippersLizard
+  name: lizard plushie slippers
+  description: An adorable pair of slippers that resemble a lizardperson. Combine this with some other green clothing and you'll be the coolest crewmember on the station!
+  components:
+  - type: Sprite
+    sprite: Clothing/Shoes/Misc/lizard-slippers.rsi
+  - type: Clothing
+    sprite: Clothing/Shoes/Misc/lizard-slippers.rsi
+  - type: FootstepModifier
+    footstepSoundCollection:
+      collection: FootstepCarpet
+      params:
+        variation: 0.02
+  - type: Construction
+    graph: ClothingShoeSlippersLizard
+    node: shoes
+  - type: Extractable
+    juiceSolution:
+      reagents:
+      - ReagentId: JuiceThatMakesYouWeh
+        Quantity: 60
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 40
+        reagents:
+        - ReagentId: Fiber
+          Quantity: 20
+        - ReagentId: JuiceThatMakesYouWeh
+          Quantity: 20
 
 - type: entity
   parent: ClothingShoesBaseButcherable
@@ -88,7 +118,7 @@
   - type: NoSlip
 
 - type: entity
-  parent: [ClothingShoesBase, PowerCellSlotSmallItem]
+  parent: [ClothingShoesBase, PowerCellSlotSmallItem, BaseToggleClothing]
   id: ClothingShoesBootsSpeed
   name: speed boots
   description: High-tech boots woven with quantum fibers, able to convert electricity into pure speed!
@@ -97,26 +127,27 @@
     sprite: Clothing/Shoes/Boots/speedboots.rsi
     layers:
     - state: icon
-      map: [ "enum.ToggleVisuals.Layer" ]
+      map: [ "enum.ToggleableVisuals.Layer" ]
   - type: Clothing
     sprite: Clothing/Shoes/Boots/speedboots.rsi
-  - type: ToggleClothingSpeed
-    toggleAction: ActionToggleSpeedBoots
+  - type: ToggleClothing
+    action: ActionToggleSpeedBoots
   - type: ClothingSpeedModifier
     walkModifier: 1.5
     sprintModifier: 1.5
-    enabled: false
+    standing: true
   - type: Appearance
   - type: GenericVisualizer
     visuals:
-      enum.ToggleVisuals.Toggled:
-        enum.ToggleVisuals.Layer:
+      enum.ToggleableVisuals.Enabled:
+        enum.ToggleableVisuals.Layer:
           True: {state: icon-on}
           False: {state: icon}
   - type: StaticPrice
     price: 500
   - type: PowerCellDraw
     drawRate: 4
+  - type: ToggleCellDraw
   - type: ItemSlots
     slots:
       cell_slot:
@@ -125,13 +156,57 @@
     tags: []
 
 - type: entity
+  parent: BaseAction
   id: ActionToggleSpeedBoots
   name: Toggle Speed Boots
   description: Toggles the speed boots on and off.
-  noSpawn: true
   components:
+  - type: Action
+    itemIconStyle: BigItem
   - type: InstantAction
-    itemIconStyle: NoItem
-    event: !type:ToggleClothingSpeedEvent
-    icon: { sprite: Clothing/Shoes/Boots/speedboots.rsi, state: icon }
-    iconOn: { sprite: Clothing/Shoes/Boots/speedboots.rsi, state: icon-on }
+    event: !type:ToggleActionEvent
+
+- type: entity
+  parent: ClothingShoesBase
+  id: ClothingShoesBootsMoon
+  name: moon boots
+  description: Special anti-gravity boots developed with a speciality blend of lunar rock gel. Shipped from the Netherlands.
+  components:
+  - type: Sprite
+    sprite: Clothing/Shoes/Boots/moonboots.rsi
+    layers:
+    - state: icon
+  - type: Clothing
+    sprite: Clothing/Shoes/Boots/moonboots.rsi
+  - type: AntiGravityClothing
+  - type: StaticPrice
+    price: 75
+  - type: Tag
+    tags: [ ]
+
+- type: entity
+  parent: ClothingShoesBase
+  id: ClothingShoesBootsJump
+  name: jump boots
+  description: High-tech boots that give you the incredible ability to JUMP! With these boots you can jump over lava, chasms and weird chemicals on the floor!
+  components:
+  - type: Sprite
+    sprite: Clothing/Shoes/Boots/jumpboots.rsi
+    layers:
+    - state: icon
+  - type: Clothing
+    sprite: Clothing/Shoes/Boots/jumpboots.rsi
+  - type: JumpAbility
+    jumpDistance: 4
+    jumpSound: /Audio/Effects/stealthoff.ogg
+  - type: ActionGrant
+    actions:
+    - ActionGravityJump
+  - type: ItemActionGrant
+    actions:
+    - ActionGravityJump
+    activeIfWorn: true
+  - type: StaticPrice
+    price: 220
+  - type: Tag
+    tags: []

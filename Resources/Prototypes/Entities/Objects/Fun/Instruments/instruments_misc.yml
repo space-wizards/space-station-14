@@ -24,7 +24,7 @@
   - type: Instrument
     program: 122
   - type: Item
-    size: Normal
+    size: Small
 
 - type: entity
   parent: BaseHandheldInstrument
@@ -59,7 +59,7 @@
     size: Small
   - type: Prayable
     sentMessage: prayer-popup-notify-centcom-sent
-    notifiactionPrefix: prayer-chat-notify-centcom
+    notificationPrefix: prayer-chat-notify-centcom
     verb: prayer-verbs-call
     verbImage: null
 
@@ -74,7 +74,7 @@
     state: icon
   - type: Prayable
     sentMessage: prayer-popup-notify-syndicate-sent
-    notifiactionPrefix: prayer-chat-notify-syndicate
+    notificationPrefix: prayer-chat-notify-syndicate
 
 - type: entity
   parent: BaseHandheldInstrument
@@ -115,10 +115,8 @@
     program: 127
   - type: Sprite
     sprite: Objects/Fun/Instruments/gunpet.rsi
-    state: icon
   - type: Item
     size: Small
-    sprite: Objects/Fun/Instruments/gunpet.rsi
     storedRotation: -90
   - type: Tag
     tags:
@@ -136,16 +134,13 @@
     bank: 1
   - type: Sprite
     sprite: Objects/Fun/Instruments/bike_horn.rsi
-    state: icon
   - type: Tag
     tags:
     - BrassInstrument #Go figure.
   - type: Item
-    sprite: Objects/Fun/Instruments/bike_horn.rsi
     size: Small
     storedRotation: -90
   - type: Clothing
-    sprite: Objects/Fun/Instruments/bike_horn.rsi
     slots: [Belt]
     quickEquip: false
 
@@ -156,14 +151,11 @@
   description: A direct line to the Honkmother. Seems to always go to voicemail.
   components:
   - type: Sprite
-    sprite: Objects/Fun/Instruments/otherinstruments.rsi
     state: banana_phone
   - type: EmitSoundOnLand
     sound:
        path: /Audio/Items/bikehorn.ogg
   - type: Slippery
-    paralyzeTime: 4
-    launchForwardsMultiplier: 1.5
   - type: StepTrigger
   - type: CollisionWake
     enabled: false
@@ -185,6 +177,6 @@
         - ItemMask
   - type: Prayable
     sentMessage: prayer-popup-notify-honkmother-sent
-    notifiactionPrefix: prayer-chat-notify-honkmother
+    notificationPrefix: prayer-chat-notify-honkmother
     verb: prayer-verbs-call
     verbImage: null

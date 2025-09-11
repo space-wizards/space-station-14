@@ -1,6 +1,7 @@
 using System.Diagnostics.CodeAnalysis;
 using Content.Shared.Alert;
 using Content.Shared.Rejuvenate;
+using Content.Shared.StatusEffectNew;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
@@ -8,12 +9,13 @@ using Robust.Shared.Utility;
 
 namespace Content.Shared.StatusEffect
 {
+    [Obsolete("Migration to Content.Shared.StatusEffectNew.StatusEffectsSystem is required")]
     public sealed class StatusEffectsSystem : EntitySystem
     {
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
-        [Dependency] private readonly IComponentFactory _componentFactory = default!;
         [Dependency] private readonly IGameTiming _gameTiming = default!;
         [Dependency] private readonly AlertsSystem _alertsSystem = default!;
+        private List<EntityUid> _toRemove = new();
 
         public override void Initialize()
         {
@@ -32,17 +34,27 @@ namespace Content.Shared.StatusEffect
 
             var curTime = _gameTiming.CurTime;
             var enumerator = EntityQueryEnumerator<ActiveStatusEffectsComponent, StatusEffectsComponent>();
+            _toRemove.Clear();
 
             while (enumerator.MoveNext(out var uid, out _, out var status))
             {
-                foreach (var state in status.ActiveEffects.ToArray())
+                if (status.ActiveEffects.Count == 0)
                 {
-                    // if we're past the end point of the effect
-                    if (curTime > state.Value.Cooldown.Item2)
-                    {
-                        TryRemoveStatusEffect(uid, state.Key, status);
-                    }
+                    // This shouldn't happen, but just in case something sneaks through
+                    _toRemove.Add(uid);
+                    continue;
                 }
+
+                foreach (var state in status.ActiveEffects)
+                {
+                    if (curTime > state.Value.Cooldown.Item2)
+                        TryRemoveStatusEffect(uid, state.Key, status);
+                }
+            }
+
+            foreach (var uid in _toRemove)
+            {
+                RemComp<ActiveStatusEffectsComponent>(uid);
             }
         }
 
@@ -62,29 +74,21 @@ namespace Content.Shared.StatusEffect
             component.AllowedEffects.AddRange(state.AllowedEffects);
 
             // Remove non-existent effects.
-            foreach (var effect in component.ActiveEffects.Keys)
+            foreach (var key in component.ActiveEffects.Keys)
             {
-                if (!state.ActiveEffects.ContainsKey(effect))
-                {
-                    TryRemoveStatusEffect(uid, effect, component, remComp: false);
-                }
+                if (!state.ActiveEffects.ContainsKey(key))
+                    component.ActiveEffects.Remove(key);
             }
 
             foreach (var (key, effect) in state.ActiveEffects)
             {
-                // don't bother with anything if we already have it
-                if (component.ActiveEffects.ContainsKey(key))
-                {
-                    component.ActiveEffects[key] = new(effect);
-                    continue;
-                }
-
-                var time = effect.Cooldown.Item2 - effect.Cooldown.Item1;
-
-                TryAddStatusEffect(uid, key, time, true, component, effect.Cooldown.Item1);
-                component.ActiveEffects[key].RelevantComponent = effect.RelevantComponent;
-                // state handling should not add networked components, that is handled separately by the client game state manager.
+                component.ActiveEffects[key] = new(effect);
             }
+
+            if (component.ActiveEffects.Count == 0)
+                RemComp<ActiveStatusEffectsComponent>(uid);
+            else
+                EnsureComp<ActiveStatusEffectsComponent>(uid);
         }
 
         private void OnRejuvenate(EntityUid uid, StatusEffectsComponent component, RejuvenateEvent args)
@@ -102,6 +106,7 @@ namespace Content.Shared.StatusEffect
         /// <param name="status">The status effects component to change, if you already have it.</param>
         /// <returns>False if the effect could not be added or the component already exists, true otherwise.</returns>
         /// <typeparam name="T">The component type to add and remove from the entity.</typeparam>
+        [Obsolete("Migration to Content.Shared.StatusEffectNew.StatusEffectsSystem is required")]
         public bool TryAddStatusEffect<T>(EntityUid uid, string key, TimeSpan time, bool refresh,
             StatusEffectsComponent? status = null)
             where T : IComponent, new()
@@ -109,20 +114,19 @@ namespace Content.Shared.StatusEffect
             if (!Resolve(uid, ref status, false))
                 return false;
 
-            if (TryAddStatusEffect(uid, key, time, refresh, status))
-            {
-                // If they already have the comp, we just won't bother updating anything.
-                if (!EntityManager.HasComponent<T>(uid))
-                {
-                    var comp = EntityManager.AddComponent<T>(uid);
-                    status.ActiveEffects[key].RelevantComponent = _componentFactory.GetComponentName(comp.GetType());
-                }
-                return true;
-            }
+            if (!TryAddStatusEffect(uid, key, time, refresh, status))
+                return false;
 
-            return false;
+            if (HasComp<T>(uid))
+                return true;
+
+            AddComp<T>(uid);
+            status.ActiveEffects[key].RelevantComponent = Factory.GetComponentName<T>();
+            return true;
+
         }
 
+        [Obsolete("Migration to Content.Shared.StatusEffectNew.StatusEffectsSystem is required")]
         public bool TryAddStatusEffect(EntityUid uid, string key, TimeSpan time, bool refresh, string component,
             StatusEffectsComponent? status = null)
         {
@@ -132,10 +136,10 @@ namespace Content.Shared.StatusEffect
             if (TryAddStatusEffect(uid, key, time, refresh, status))
             {
                 // If they already have the comp, we just won't bother updating anything.
-                if (!EntityManager.HasComponent(uid, _componentFactory.GetRegistration(component).Type))
+                if (!HasComp(uid, Factory.GetRegistration(component).Type))
                 {
-                    var newComponent = (Component) _componentFactory.GetComponent(component);
-                    EntityManager.AddComponent(uid, newComponent);
+                    var newComponent = (Component) Factory.GetComponent(component);
+                    AddComp(uid, newComponent);
                     status.ActiveEffects[key].RelevantComponent = component;
                 }
                 return true;
@@ -162,8 +166,13 @@ namespace Content.Shared.StatusEffect
         ///     If the effect already exists, it will simply replace the cooldown with the new one given.
         ///     If you want special 'effect merging' behavior, do it your own damn self!
         /// </remarks>
-        public bool TryAddStatusEffect(EntityUid uid, string key, TimeSpan time, bool refresh,
-            StatusEffectsComponent? status = null, TimeSpan? startTime = null)
+        [Obsolete("Migration to Content.Shared.StatusEffectNew.StatusEffectsSystem is required")]
+        public bool TryAddStatusEffect(EntityUid uid,
+            string key,
+            TimeSpan time,
+            bool refresh,
+            StatusEffectsComponent? status = null,
+            TimeSpan? startTime = null)
         {
             if (!Resolve(uid, ref status, false))
                 return false;
@@ -219,7 +228,7 @@ namespace Content.Shared.StatusEffect
         ///     This is mostly for stuns, since Stun and Knockdown share an alert key. Other times this pretty much
         ///     will not be useful.
         /// </remarks>
-        private (TimeSpan, TimeSpan)? GetAlertCooldown(EntityUid uid, AlertType alert, StatusEffectsComponent status)
+        private (TimeSpan, TimeSpan)? GetAlertCooldown(EntityUid uid, ProtoId<AlertPrototype> alert, StatusEffectsComponent status)
         {
             (TimeSpan, TimeSpan)? maxCooldown = null;
             foreach (var kvp in status.ActiveEffects)
@@ -251,6 +260,7 @@ namespace Content.Shared.StatusEffect
         ///     Obviously this doesn't automatically clear any effects a status effect might have.
         ///     That's up to the removed component to handle itself when it's removed.
         /// </remarks>
+        [Obsolete("Migration to Content.Shared.StatusEffectNew.StatusEffectsSystem is required")]
         public bool TryRemoveStatusEffect(EntityUid uid, string key,
             StatusEffectsComponent? status = null, bool remComp = true)
         {
@@ -266,10 +276,10 @@ namespace Content.Shared.StatusEffect
             // There are cases where a status effect component might be server-only, so TryGetRegistration...
             if (remComp
                 && state.RelevantComponent != null
-                && _componentFactory.TryGetRegistration(state.RelevantComponent, out var registration))
+                && Factory.TryGetRegistration(state.RelevantComponent, out var registration))
             {
                 var type = registration.Type;
-                EntityManager.RemoveComponent(uid, type);
+                RemComp(uid, type);
             }
 
             if (proto.Alert != null)
@@ -294,6 +304,7 @@ namespace Content.Shared.StatusEffect
         /// <param name="uid">The entity to remove effects from.</param>
         /// <param name="status">The status effects component to change, if you already have it.</param>
         /// <returns>False if any status effects failed to be removed, true if they all did.</returns>
+        [Obsolete("Migration to Content.Shared.StatusEffectNew.StatusEffectsSystem is required")]
         public bool TryRemoveAllStatusEffects(EntityUid uid,
             StatusEffectsComponent? status = null)
         {
@@ -317,6 +328,7 @@ namespace Content.Shared.StatusEffect
         /// <param name="uid">The entity to check on.</param>
         /// <param name="key">The status effect ID to check for</param>
         /// <param name="status">The status effect component, should you already have it.</param>
+        [Obsolete("Migration to Content.Shared.StatusEffectNew.StatusEffectsSystem is required")]
         public bool HasStatusEffect(EntityUid uid, string key,
             StatusEffectsComponent? status = null)
         {
@@ -334,14 +346,14 @@ namespace Content.Shared.StatusEffect
         /// <param name="uid">The entity to check on.</param>
         /// <param name="key">The status effect ID to check for</param>
         /// <param name="status">The status effect component, should you already have it.</param>
-        public bool CanApplyEffect(EntityUid uid, string key,
-            StatusEffectsComponent? status = null)
+        [Obsolete("Migration to Content.Shared.StatusEffectNew.StatusEffectsSystem is required")]
+        public bool CanApplyEffect(EntityUid uid, string key, StatusEffectsComponent? status = null)
         {
             // don't log since stuff calling this prolly doesn't care if we don't actually have it
             if (!Resolve(uid, ref status, false))
                 return false;
 
-            var ev = new BeforeStatusEffectAddedEvent(key);
+            var ev = new BeforeOldStatusEffectAddedEvent(key);
             RaiseLocalEvent(uid, ref ev);
             if (ev.Cancelled)
                 return false;
@@ -361,6 +373,7 @@ namespace Content.Shared.StatusEffect
         /// <param name="key">The status effect to add time to.</param>
         /// <param name="time">The amount of time to add.</param>
         /// <param name="status">The status effect component, should you already have it.</param>
+        [Obsolete("Migration to Content.Shared.StatusEffectNew.StatusEffectsSystem is required")]
         public bool TryAddTime(EntityUid uid, string key, TimeSpan time,
             StatusEffectsComponent? status = null)
         {
@@ -392,6 +405,7 @@ namespace Content.Shared.StatusEffect
         /// <param name="key">The status effect to remove time from.</param>
         /// <param name="time">The amount of time to add.</param>
         /// <param name="status">The status effect component, should you already have it.</param>
+        [Obsolete("Migration to Content.Shared.StatusEffectNew.StatusEffectsSystem is required")]
         public bool TryRemoveTime(EntityUid uid, string key, TimeSpan time,
             StatusEffectsComponent? status = null)
         {
@@ -427,6 +441,7 @@ namespace Content.Shared.StatusEffect
         /// <remarks>
         ///     Not used internally; just sets it itself.
         /// </remarks>
+        [Obsolete("Migration to Content.Shared.StatusEffectNew.StatusEffectsSystem is required")]
         public bool TrySetTime(EntityUid uid, string key, TimeSpan time,
             StatusEffectsComponent? status = null)
         {
@@ -450,6 +465,7 @@ namespace Content.Shared.StatusEffect
         /// <param name="time">Out var for the time, if it exists.</param>
         /// <param name="status">The status effects component to use, if any.</param>
         /// <returns>False if the status effect was not active, true otherwise.</returns>
+        [Obsolete("Migration to Content.Shared.StatusEffectNew.StatusEffectsSystem is required")]
         public bool TryGetTime(EntityUid uid, string key,
             [NotNullWhen(true)] out (TimeSpan, TimeSpan)? time,
             StatusEffectsComponent? status = null)
@@ -466,10 +482,11 @@ namespace Content.Shared.StatusEffect
     }
 
     /// <summary>
-    ///     Raised on an entity before a status effect is added to determine if adding it should be cancelled.
+    /// Raised on an entity before a status effect is added to determine if adding it should be cancelled.
+    /// Obsolete version of <see cref="BeforeStatusEffectAddedEvent" />
     /// </summary>
-    [ByRefEvent]
-    public record struct BeforeStatusEffectAddedEvent(string Key, bool Cancelled=false);
+    [ByRefEvent, Obsolete("Migration to StatusEffectNew.StatusEffectsSystem is required")]
+    public record struct BeforeOldStatusEffectAddedEvent(string EffectKey, bool Cancelled = false);
 
     public readonly struct StatusEffectAddedEvent
     {

@@ -9,10 +9,16 @@ namespace Content.Shared.Standing
     {
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField]
-        public SoundSpecifier DownSound { get; private set; } = new SoundCollectionSpecifier("BodyFall");
+        public SoundSpecifier? DownSound { get; private set; } = new SoundCollectionSpecifier("BodyFall");
 
         [DataField, AutoNetworkedField]
         public bool Standing { get; set; } = true;
+
+        /// <summary>
+        /// Friction modifier applied to an entity in the downed state.
+        /// </summary>
+        [DataField, AutoNetworkedField]
+        public float DownFrictionMod = 0.4f;
 
         /// <summary>
         ///     List of fixtures that had their collision mask changed when the entity was downed.

@@ -6,8 +6,6 @@
   components:
     - type: SpaceGarbage
     - type: ExpendableLight
-      spentName: expendable-light-spent-green-glowstick-name
-      spentDesc: expendable-light-spent-glowstick-desc
       glowDuration: 900 # time in seconds
       glowColorLit: "#00FF00"
       fadeOutDuration: 300
@@ -115,7 +113,7 @@
   name: light pulse test
   parent: BaseItem
   id: LightBehaviourTest1
-  noSpawn: true
+  categories: [ HideSpawnMenu ]
   components:
     - type: Sprite
       sprite: Objects/Misc/glowstick.rsi
@@ -136,8 +134,8 @@
         - !type:PulseBehaviour
           interpolate: Cubic
           maxDuration: 10.0
-          minValue: 1.0
-          maxValue: 7.0
+          startValue: 1.0
+          endValue: 7.0
           isLooped: true
           property: Energy
           enabled: true
@@ -146,7 +144,7 @@
   name: color cycle test
   parent: BaseItem
   id: LightBehaviourTest2
-  noSpawn: true
+  categories: [ HideSpawnMenu ]
   components:
     - type: Sprite
       sprite: Objects/Misc/glowstick.rsi
@@ -178,7 +176,7 @@
   name: multi-behaviour light test
   parent: BaseItem
   id: LightBehaviourTest3
-  noSpawn: true
+  categories: [ HideSpawnMenu ]
   components:
     - type: Sprite
       sprite: Objects/Misc/glowstick.rsi
@@ -200,7 +198,7 @@
           interpolate: Nearest
           minDuration: 0.2
           maxDuration: 1.0
-          maxValue: 0.2
+          endValue: 0.2
           property: AnimatedEnable
           isLooped: true
           enabled: true
@@ -218,7 +216,7 @@
   name: light fade in test
   parent: BaseItem
   id: LightBehaviourTest4
-  noSpawn: true
+  categories: [ HideSpawnMenu ]
   components:
     - type: Sprite
       sprite: Objects/Misc/glowstick.rsi
@@ -239,8 +237,8 @@
         - !type:FadeBehaviour
           interpolate: Cubic
           maxDuration: 5.0
-          minValue: 0.0
-          maxValue: 10.0
+          startValue: 0.0
+          endValue: 10.0
           isLooped: true
           property: Energy
           enabled: true
@@ -249,7 +247,7 @@
   name: light pulse radius test
   parent: BaseItem
   id: LightBehaviourTest5
-  noSpawn: true
+  categories: [ HideSpawnMenu ]
   components:
     - type: Sprite
       sprite: Objects/Misc/glowstick.rsi
@@ -271,8 +269,8 @@
           interpolate: Cubic
           minDuration: 1.0
           maxDuration: 5.0
-          minValue: 2.0
-          maxValue: 10.0
+          startValue: 2.0
+          endValue: 10.0
           isLooped: true
           enabled: true
 
@@ -280,7 +278,7 @@
   name: light randomize radius test
   parent: BaseItem
   id: LightBehaviourTest6
-  noSpawn: true
+  categories: [ HideSpawnMenu ]
   components:
     - type: Sprite
       sprite: Objects/Misc/glowstick.rsi
@@ -302,7 +300,7 @@
         - !type:RandomizeBehaviour
           interpolate: Nearest
           maxDuration: 0.5
-          minValue: 10.0
-          maxValue: 25.0
+          startValue: 10.0
+          endValue: 25.0
           isLooped: true
           enabled: true

@@ -1,8 +1,11 @@
+# If you add a new trait, make sure to add the corresponding component to the whitelist in \Resources\Prototypes\Entities\Mobs\Player\clone.yml so it gets copied to clones correctly!
+
 - type: trait
   id: Blindness
   name: trait-blindness-name
   description: trait-blindness-desc
   traitGear: WhiteCane
+  category: Disabilities
   whitelist:
     components:
       - Blindable
@@ -14,6 +17,7 @@
   name: trait-poor-vision-name
   description: trait-poor-vision-desc
   traitGear: ClothingEyesGlasses
+  category: Disabilities
   whitelist:
     components:
       - Blindable
@@ -25,22 +29,45 @@
   id: Narcolepsy
   name: trait-narcolepsy-name
   description: trait-narcolepsy-desc
+  category: Disabilities
   components:
     - type: Narcolepsy
       timeBetweenIncidents: 300, 600
       durationOfIncident: 10, 30
 
 - type: trait
-  id: Pacifist
-  name: trait-pacifist-name
-  description: trait-pacifist-desc
+  id: Unrevivable
+  name: trait-unrevivable-name
+  description: trait-unrevivable-desc
+  category: Disabilities
   components:
-    - type: Pacified
+    - type: Unrevivable
+      cloneable: true
+
+- type: trait
+  id: Monochromacy
+  name: trait-monochromacy-name
+  description: trait-monochromacy-desc
+  category: Disabilities
+  components:
+  - type: BlackAndWhiteOverlay
+
+- type: trait
+  id: Muted
+  name: trait-muted-name
+  description: trait-muted-desc
+  category: Disabilities
+  blacklist:
+    components:
+      - BorgChassis
+  components:
+    - type: Muted
 
 - type: trait
   id: Paracusia
   name: trait-paracusia-name
   description: trait-paracusia-desc
+  category: Disabilities
   components:
     - type: Paracusia
       minTimeBetweenIncidents: 0.1
@@ -50,32 +77,26 @@
         collection: Paracusia
 
 - type: trait
-  id: Unrevivable
-  name: trait-unrevivable-name
-  description: trait-unrevivable-desc
+  id: PainNumbness
+  name: trait-painnumbness-name
+  description: trait-painnumbness-desc
+  category: Disabilities
   components:
-    - type: Unrevivable
+  - type: PainNumbness
 
 - type: trait
-  id: Muted
-  name: trait-muted-name
-  description: trait-muted-desc
-  blacklist:
-    components:
-      - BorgChassis
+  id: Hemophilia
+  name: trait-hemophilia-name
+  description: trait-hemophilia-desc
+  category: Disabilities
   components:
-    - type: Muted
+  - type: Hemophilia
 
 - type: trait
-  id: FrontalLisp
-  name: trait-frontal-lisp-name
-  description: trait-frontal-lisp-desc
+  id: ImpairedMobility
+  name: trait-impaired-mobility-name
+  description: trait-impaired-mobility-desc
+  traitGear: OffsetCane
+  category: Disabilities
   components:
-    - type: FrontalLisp
-
-- type: trait
-  id: Snoring
-  name: trait-snoring-name
-  description: trait-snoring-desc
-  components:
-    - type: Snoring
+    - type: ImpairedMobility

@@ -1,4 +1,4 @@
-using Content.Server.Atmos.Components;
+using Content.Shared.Atmos.Components;
 using Content.Shared.Damage.Components;
 using Content.Shared.Damage.Systems;
 

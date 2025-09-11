@@ -35,10 +35,4 @@ public sealed partial class InfantComponent : Component
     [DataField("infantEndTime", customTypeSerializer: typeof(TimeOffsetSerializer))]
     [AutoPausedField]
     public TimeSpan InfantEndTime;
-
-    /// <summary>
-    /// The entity's name before the "baby" prefix is added.
-    /// </summary>
-    [DataField("originalName")]
-    public string OriginalName = string.Empty;
 }

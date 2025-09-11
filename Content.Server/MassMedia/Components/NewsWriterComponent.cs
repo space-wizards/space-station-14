@@ -22,4 +22,16 @@ public sealed partial class NewsWriterComponent : Component
 
     [DataField]
     public SoundSpecifier ConfirmSound = new SoundPathSpecifier("/Audio/Machines/scan_finish.ogg");
+
+    /// <summary>
+    /// This stores the working title of the current article
+    /// </summary>
+    [DataField, ViewVariables]
+    public string DraftTitle = "";
+
+    /// <summary>
+    /// This stores the working content of the current article
+    /// </summary>
+    [DataField, ViewVariables]
+    public string DraftContent = "";
 }

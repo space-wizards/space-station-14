@@ -1,15 +1,13 @@
-﻿using Content.Shared.Actions;
+using Content.Shared.Actions;
 
 namespace Content.Shared.Magic.Events;
 
-public sealed partial class SmiteSpellEvent : EntityTargetActionEvent, ISpeakSpell
+public sealed partial class SmiteSpellEvent : EntityTargetActionEvent
 {
+    // TODO: Make part of gib method
     /// <summary>
-    ///     Should this smite delete all parts/mechanisms gibbed except for the brain?
+    /// Should this smite delete all parts/mechanisms gibbed except for the brain?
     /// </summary>
-    [DataField("deleteNonBrainParts")]
+    [DataField]
     public bool DeleteNonBrainParts = true;
-
-    [DataField("speech")]
-    public string? Speech { get; private set; }
 }

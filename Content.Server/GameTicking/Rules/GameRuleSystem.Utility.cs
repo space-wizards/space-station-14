@@ -1,14 +1,12 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
-using Content.Server.GameTicking.Components;
-using Content.Server.GameTicking.Rules.Components;
 using Content.Server.Station.Components;
+using Content.Shared.GameTicking.Components;
 using Content.Shared.Random.Helpers;
-using Robust.Server.GameObjects;
+using Content.Shared.Station.Components;
 using Robust.Shared.Collections;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
-using Robust.Shared.Random;
 
 namespace Content.Server.GameTicking.Rules;
 
@@ -17,6 +15,11 @@ public abstract partial class GameRuleSystem<T> where T: IComponent
     protected EntityQueryEnumerator<ActiveGameRuleComponent, T, GameRuleComponent> QueryActiveRules()
     {
         return EntityQueryEnumerator<ActiveGameRuleComponent, T, GameRuleComponent>();
+    }
+
+    protected EntityQueryEnumerator<DelayedStartRuleComponent, T, GameRuleComponent> QueryDelayedRules()
+    {
+        return EntityQueryEnumerator<DelayedStartRuleComponent, T, GameRuleComponent>();
     }
 
     /// <summary>
@@ -126,4 +129,8 @@ public abstract partial class GameRuleSystem<T> where T: IComponent
         return found;
     }
 
+    protected void ForceEndSelf(EntityUid uid, GameRuleComponent? component = null)
+    {
+        GameTicker.EndGameRule(uid, component);
+    }
 }

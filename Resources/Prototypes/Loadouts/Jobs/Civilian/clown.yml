@@ -1,75 +1,58 @@
 # Head
 - type: loadout
   id: JesterHat
-  equipment: JesterHat
+  equipment:
+    head: ClothingHeadHatJester
 
-- type: startingGear
-  id: JesterHat
+- type: loadout
+  id: JesterAltHat
   equipment:
     head: ClothingHeadHatJesterAlt
 
 # Jumpsuit
 - type: loadout
   id: ClownSuit
-  equipment: ClownSuit
-
-- type: startingGear
-  id: ClownSuit
   equipment:
     jumpsuit: ClothingUniformJumpsuitClown
 
 - type: loadout
-  id: JesterSuit
-  equipment: JesterSuit
+  id: ClownSkirt
+  equipment:
+    jumpsuit: ClothingUniformJumpskirtClown
 
-- type: startingGear
+- type: loadout
   id: JesterSuit
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitJester
+
+- type: loadout
+  id: JesterAltSuit
   equipment:
     jumpsuit: ClothingUniformJumpsuitJesterAlt
 
 # Back
 - type: loadout
   id: ClownBackpack
-  equipment: ClownBackpack
-
-- type: startingGear
-  id: ClownBackpack
   equipment:
-    back: ClothingBackpackClownFilled
+    back: ClothingBackpackClown
 
 - type: loadout
   id: ClownSatchel
-  equipment: ClownSatchel
-
-- type: startingGear
-  id: ClownSatchel
   equipment:
-    back: ClothingBackpackSatchelClownFilled
+    back: ClothingBackpackSatchelClown
 
 - type: loadout
   id: ClownDuffel
-  equipment: ClownDuffel
-
-- type: startingGear
-  id: ClownDuffel
   equipment:
-    back: ClothingBackpackDuffelClownFilled
+    back: ClothingBackpackDuffelClown
 
 # Shoes
 - type: loadout
-  id: ClownShoes
-  equipment: ClownShoes
-
-- type: startingGear
   id: ClownShoes
   equipment:
     shoes: ClothingShoesClown
 
 - type: loadout
-  id: JesterShoes
-  equipment: JesterShoes
-
-- type: startingGear
   id: JesterShoes
   equipment:
     shoes: ClothingShoesJester
@@ -77,18 +60,10 @@
 # Outer clothing
 - type: loadout
   id: ClownRobes
-  equipment: ClownRobes
-
-- type: startingGear
-  id: ClownRobes
   equipment:
     outerClothing: ClothingOuterClownPriest
 
 - type: loadout
-  id: ClownWintercoat
-  equipment: ClownWintercoat
-
-- type: startingGear
   id: ClownWintercoat
   equipment:
     outerClothing: ClothingOuterWinterClown

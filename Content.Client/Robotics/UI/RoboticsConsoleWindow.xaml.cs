@@ -17,27 +17,26 @@ public sealed partial class RoboticsConsoleWindow : FancyWindow
 {
     [Dependency] private readonly IEntityManager _entMan = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
-    [Dependency] private readonly IPrototypeManager _proto = default!;
     private readonly LockSystem _lock;
     private readonly SpriteSystem _sprite;
 
     public Action<string>? OnDisablePressed;
     public Action<string>? OnDestroyPressed;
 
-    private Entity<RoboticsConsoleComponent, LockComponent?> _console;
     private string? _selected;
     private Dictionary<string, CyborgControlData> _cyborgs = new();
 
-    public RoboticsConsoleWindow(EntityUid console)
+    public EntityUid Entity;
+
+    private bool _allowBorgControl = true;
+
+    public RoboticsConsoleWindow()
     {
         RobustXamlLoader.Load(this);
         IoCManager.InjectDependencies(this);
 
         _lock = _entMan.System<LockSystem>();
         _sprite = _entMan.System<SpriteSystem>();
-
-        _console = (console, _entMan.GetComponent<RoboticsConsoleComponent>(console), null);
-        _entMan.TryGetComponent(_console, out _console.Comp2);
 
         Cyborgs.OnItemSelected += args =>
         {
@@ -67,9 +66,15 @@ public sealed partial class RoboticsConsoleWindow : FancyWindow
         DestroyButton.StyleClasses.Add(StyleBase.ButtonCaution);
     }
 
+    public void SetEntity(EntityUid uid)
+    {
+        Entity = uid;
+    }
+
     public void UpdateState(RoboticsConsoleState state)
     {
         _cyborgs = state.Cyborgs;
+        _allowBorgControl = state.AllowBorgControl;
 
         // clear invalid selection
         if (_selected is {} selected && !_cyborgs.ContainsKey(selected))
@@ -82,9 +87,9 @@ public sealed partial class RoboticsConsoleWindow : FancyWindow
 
         PopulateData();
 
-        var locked = _lock.IsLocked((_console, _console.Comp2));
-        DangerZone.Visible = !locked;
-        LockedMessage.Visible = locked;
+        var locked = _lock.IsLocked(Entity);
+        DangerZone.Visible = !locked && _allowBorgControl;
+        LockedMessage.Visible = locked && _allowBorgControl; // Only show if locked AND control is allowed
     }
 
     private void PopulateCyborgs()
@@ -118,31 +123,47 @@ public sealed partial class RoboticsConsoleWindow : FancyWindow
         BorgSprite.Texture = _sprite.Frame0(data.ChassisSprite!);
 
         var batteryColor = data.Charge switch {
-            < 0.2f => "red",
-            < 0.4f => "orange",
-            < 0.6f => "yellow",
-            < 0.8f => "green",
-            _ => "blue"
+            < 0.2f => "#FF6C7F", // red
+            < 0.4f => "#EF973C", // orange
+            < 0.6f => "#E8CB2D", // yellow
+            < 0.8f => "#30CC19", // green
+            _ => "#00D3B8" // cyan
+        };
+
+        var hpPercentColor = data.HpPercent switch {
+            < 0.2f => "#FF6C7F", // red
+            < 0.4f => "#EF973C", // orange
+            < 0.6f => "#E8CB2D", // yellow
+            < 0.8f => "#30CC19", // green
+            _ => "#00D3B8" // cyan
         };
 
         var text = new FormattedMessage();
-        text.PushMarkup(Loc.GetString("robotics-console-model", ("name", model)));
-        text.AddMarkup(Loc.GetString("robotics-console-designation"));
+        text.AddMarkupOrThrow($"{Loc.GetString("robotics-console-model", ("name", model))}\n");
+        text.AddMarkupOrThrow(Loc.GetString("robotics-console-designation"));
         text.AddText($" {data.Name}\n"); // prevent players trolling by naming borg [color=red]satan[/color]
-        text.PushMarkup(Loc.GetString("robotics-console-battery", ("charge", (int) (data.Charge * 100f)), ("color", batteryColor)));
-        text.PushMarkup(Loc.GetString("robotics-console-brain", ("brain", data.HasBrain)));
-        text.AddMarkup(Loc.GetString("robotics-console-modules", ("count", data.ModuleCount)));
+        text.AddMarkupOrThrow($"{Loc.GetString("robotics-console-battery", ("charge", (int)(data.Charge * 100f)), ("color", batteryColor))}\n");
+        text.AddMarkupOrThrow($"{Loc.GetString("robotics-console-hp", ("hp", (int)(data.HpPercent * 100f)), ("color", hpPercentColor))}\n");
+        text.AddMarkupOrThrow($"{Loc.GetString("robotics-console-brain", ("brain", data.HasBrain))}\n");
+        text.AddMarkupOrThrow(Loc.GetString("robotics-console-modules", ("count", data.ModuleCount)));
         BorgInfo.SetMessage(text);
 
         // how the turntables
-        DisableButton.Disabled = !data.HasBrain;
-        DestroyButton.Disabled = _timing.CurTime < _console.Comp1.NextDestroy;
+        DisableButton.Disabled = !_allowBorgControl || !(data.HasBrain && data.CanDisable);
+        DestroyButton.Disabled = !_allowBorgControl;
     }
 
     protected override void FrameUpdate(FrameEventArgs args)
     {
         base.FrameUpdate(args);
 
-        DestroyButton.Disabled = _timing.CurTime < _console.Comp1.NextDestroy;
+        if (_entMan.TryGetComponent(Entity, out RoboticsConsoleComponent? console))
+        {
+            DestroyButton.Disabled = _timing.CurTime < console.NextDestroy;
+        }
+        else
+        {
+            DestroyButton.Disabled = true;
+        }
     }
 }

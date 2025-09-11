@@ -15,10 +15,18 @@ public abstract class SharedPowerCellSystem : EntitySystem
     public override void Initialize()
     {
         base.Initialize();
+
+        SubscribeLocalEvent<PowerCellDrawComponent, MapInitEvent>(OnMapInit);
+
         SubscribeLocalEvent<PowerCellSlotComponent, RejuvenateEvent>(OnRejuvenate);
         SubscribeLocalEvent<PowerCellSlotComponent, EntInsertedIntoContainerMessage>(OnCellInserted);
         SubscribeLocalEvent<PowerCellSlotComponent, EntRemovedFromContainerMessage>(OnCellRemoved);
         SubscribeLocalEvent<PowerCellSlotComponent, ContainerIsInsertingAttemptEvent>(OnCellInsertAttempt);
+    }
+
+    private void OnMapInit(Entity<PowerCellDrawComponent> ent, ref MapInitEvent args)
+    {
+        ent.Comp.NextUpdateTime = Timing.CurTime + ent.Comp.Delay;
     }
 
     private void OnRejuvenate(EntityUid uid, PowerCellSlotComponent component, RejuvenateEvent args)
@@ -63,13 +71,16 @@ public abstract class SharedPowerCellSystem : EntitySystem
         RaiseLocalEvent(uid, new PowerCellChangedEvent(true), false);
     }
 
-    public void SetPowerCellDrawEnabled(EntityUid uid, bool enabled, PowerCellDrawComponent? component = null)
+    public void SetDrawEnabled(Entity<PowerCellDrawComponent?> ent, bool enabled)
     {
-        if (!Resolve(uid, ref component, false) || enabled == component.Drawing)
+        if (!Resolve(ent, ref ent.Comp, false) || ent.Comp.Enabled == enabled)
             return;
 
-        component.Drawing = enabled;
-        component.NextUpdateTime = Timing.CurTime;
+        if (enabled)
+            ent.Comp.NextUpdateTime = Timing.CurTime;
+
+        ent.Comp.Enabled = enabled;
+        Dirty(ent, ent.Comp);
     }
 
     /// <summary>

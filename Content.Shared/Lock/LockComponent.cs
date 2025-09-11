@@ -1,3 +1,4 @@
+using Content.Shared.Access.Components;
 using Content.Shared.DoAfter;
 using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
@@ -21,6 +22,18 @@ public sealed partial class LockComponent : Component
     public bool Locked  = true;
 
     /// <summary>
+    /// If true, will show verbs to lock and unlock the item. Otherwise, it will not.
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public bool ShowLockVerbs = true;
+
+    /// <summary>
+    /// If true will show examine text.
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public bool ShowExamine = true;
+
+    /// <summary>
     /// Whether or not the lock is locked by simply clicking.
     /// </summary>
     [DataField("lockOnClick"), ViewVariables(VVAccess.ReadWrite)]
@@ -34,10 +47,16 @@ public sealed partial class LockComponent : Component
     public bool UnlockOnClick = true;
 
     /// <summary>
+    /// Whether the lock requires access validation through <see cref="AccessReaderComponent"/>
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public bool UseAccess = true;
+
+    /// <summary>
     /// The sound played when unlocked.
     /// </summary>
     [DataField("unlockingSound"), ViewVariables(VVAccess.ReadWrite)]
-    public SoundSpecifier UnlockSound = new SoundPathSpecifier("/Audio/Machines/door_lock_off.ogg")
+    public SoundSpecifier? UnlockSound = new SoundPathSpecifier("/Audio/Machines/door_lock_off.ogg")
     {
         Params = AudioParams.Default.WithVolume(-5f),
     };
@@ -46,7 +65,7 @@ public sealed partial class LockComponent : Component
     /// The sound played when locked.
     /// </summary>
     [DataField("lockingSound"), ViewVariables(VVAccess.ReadWrite)]
-    public SoundSpecifier LockSound = new SoundPathSpecifier("/Audio/Machines/door_lock_on.ogg")
+    public SoundSpecifier? LockSound = new SoundPathSpecifier("/Audio/Machines/door_lock_on.ogg")
     {
         Params = AudioParams.Default.WithVolume(-5f)
     };
@@ -54,9 +73,9 @@ public sealed partial class LockComponent : Component
     /// <summary>
     /// Whether or not an emag disables it.
     /// </summary>
-    [DataField("breakOnEmag")]
+    [DataField]
     [AutoNetworkedField]
-    public bool BreakOnEmag = true;
+    public bool BreakOnAccessBreaker = true;
 
     /// <summary>
     /// Amount of do-after time needed to lock the entity.
@@ -85,6 +104,13 @@ public sealed partial class LockComponent : Component
 /// </summary>
 [ByRefEvent]
 public record struct LockToggleAttemptEvent(EntityUid User, bool Silent = false, bool Cancelled = false);
+
+/// <summary>
+/// Event raised on the user when a toggle is attempted.
+/// Can be cancelled to prevent it.
+/// </summary>
+[ByRefEvent]
+public record struct UserLockToggleAttemptEvent(EntityUid Target, bool Silent = false, bool Cancelled = false);
 
 /// <summary>
 /// Event raised on a lock after it has been toggled.

@@ -1,9 +1,25 @@
+# Senior times
+- type: loadoutEffectGroup
+  id: SeniorCargo
+  effects:
+  - !type:JobRequirementLoadoutEffect
+    requirement:
+      !type:RoleTimeRequirement
+      role: JobCargoTechnician
+      time: 21600 #6 hrs
+  - !type:JobRequirementLoadoutEffect
+    requirement:
+      !type:RoleTimeRequirement
+      role: JobSalvageSpecialist
+      time: 21600 #6 hrs
+  - !type:JobRequirementLoadoutEffect
+    requirement:
+      !type:DepartmentTimeRequirement
+      department: Cargo
+      time: 216000 # 60 hrs
+
 # Head
 - type: loadout
-  id: CargoTechnicianHead
-  equipment: CargoTechnicianHead
-
-- type: startingGear
   id: CargoTechnicianHead
   equipment:
     head: ClothingHeadHatCargosoft
@@ -11,18 +27,10 @@
 # Jumpsuit
 - type: loadout
   id: CargoTechnicianJumpsuit
-  equipment: CargoTechnicianJumpsuit
-
-- type: startingGear
-  id: CargoTechnicianJumpsuit
   equipment:
     jumpsuit: ClothingUniformJumpsuitCargo
 
 - type: loadout
-  id: CargoTechnicianJumpskirt
-  equipment: CargoTechnicianJumpskirt
-
-- type: startingGear
   id: CargoTechnicianJumpskirt
   equipment:
     jumpsuit: ClothingUniformJumpskirtCargo
@@ -30,37 +38,21 @@
 # Back
 - type: loadout
   id: CargoTechnicianBackpack
-  equipment: CargoTechnicianBackpack
-
-- type: startingGear
-  id: CargoTechnicianBackpack
   equipment:
-    back: ClothingBackpackCargoFilled
+    back: ClothingBackpackCargo
 
 - type: loadout
   id: CargoTechnicianSatchel
-  equipment: CargoTechnicianSatchel
-
-- type: startingGear
-  id: CargoTechnicianSatchel
   equipment:
-    back: ClothingBackpackSatchelCargoFilled
+    back: ClothingBackpackSatchelCargo
 
 - type: loadout
   id: CargoTechnicianDuffel
-  equipment: CargoTechnicianDuffel
-
-- type: startingGear
-  id: CargoTechnicianDuffel
   equipment:
-    back: ClothingBackpackDuffelCargoFilled
+    back: ClothingBackpackDuffelCargo
 
 # OuterClothing
 - type: loadout
-  id: CargoTechnicianWintercoat
-  equipment: CargoTechnicianWintercoat
-
-- type: startingGear
   id: CargoTechnicianWintercoat
   equipment:
     outerClothing: ClothingOuterWinterCargo
@@ -68,9 +60,19 @@
 # Shoes
 - type: loadout
   id: CargoWinterBoots
-  equipment: CargoWinterBoots
-
-- type: startingGear
-  id: CargoWinterBoots
   equipment:
     shoes: ClothingShoesBootsWinterCargo
+
+# ID
+- type: loadout
+  id: CargoTechnicianPDA
+  equipment:
+    id: CargoPDA
+
+- type: loadout
+  id: SeniorCourierPDA
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: SeniorCargo
+  equipment:
+    id: SeniorCourierPDA

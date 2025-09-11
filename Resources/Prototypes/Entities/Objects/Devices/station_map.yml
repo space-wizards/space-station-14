@@ -1,9 +1,9 @@
 - type: entity
+  parent: BaseItem
   id: BaseHandheldStationMap
   name: station map
   description: Displays a readout of the current station.
   abstract: true
-  parent: BaseItem
   components:
     - type: StationMap
     - type: Sprite
@@ -34,14 +34,9 @@
 - type: entity
   id: HandheldStationMap
   parent:
-    - BaseHandheldStationMap
-    - PowerCellSlotSmallItem
-  suffix: Handheld, Powered
-  components:
-    - type: PowerCellDraw
-      drawRate: 0
-      useRate: 20
-    - type: ActivatableUIRequiresPowerCell
+  - BaseHandheldStationMap
+  - BaseHandheldComputer
+  suffix: Handheld
 
 - type: entity
   id: HandheldStationMapEmpty
@@ -56,4 +51,4 @@
 - type: entity
   id: HandheldStationMapUnpowered
   parent: BaseHandheldStationMap
-  suffix: Handheld, Unpowered
+  suffix: Handheld, Always Powered

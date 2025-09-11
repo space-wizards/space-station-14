@@ -4,7 +4,6 @@
   id: BaseVariationPass
   parent: BaseGameRule
   abstract: true
-  noSpawn: true
   components:
   - type: StationVariationPassRule
 
@@ -13,14 +12,12 @@
 - type: entity
   id: BasicPoweredLightVariationPass
   parent: BaseVariationPass
-  noSpawn: true
   components:
   - type: PoweredLightVariationPass
 
 - type: entity
   id: SolidWallRustingVariationPass
   parent: BaseVariationPass
-  noSpawn: true
   components:
   - type: WallReplaceVariationPass
   - type: EntityReplaceVariationPass
@@ -32,7 +29,6 @@
 - type: entity
   id: ReinforcedWallRustingVariationPass
   parent: BaseVariationPass
-  noSpawn: true
   components:
   - type: ReinforcedWallReplaceVariationPass
   - type: EntityReplaceVariationPass
@@ -44,13 +40,52 @@
 - type: entity
   id: BasicTrashVariationPass
   parent: BaseVariationPass
-  noSpawn: true
   components:
   - type: EntitySpawnVariationPass
     tilesPerEntityAverage: 35
     tilesPerEntityStdDev: 4
     entities:
     - id: RandomSpawner
+
+- type: entity
+  id: BasicDecalDirtVariationPass
+  parent: BaseVariationPass
+  components:
+  - type: EntitySpawnVariationPass
+    tilesPerEntityAverage: 80
+    tilesPerEntityStdDev: 5
+    entities:
+    - id: DecalSpawnerDirtWide
+
+- type: entity
+  id: BasicDecalGraffitiVariationPass
+  parent: BaseVariationPass
+  components:
+  - type: EntitySpawnVariationPass
+    tilesPerEntityAverage: 120
+    tilesPerEntityStdDev: 5
+    entities:
+    - id: DecalSpawnerGraffiti
+
+- type: entity
+  id: BasicDecalBrunsVariationPass
+  parent: BaseVariationPass
+  components:
+  - type: EntitySpawnVariationPass
+    tilesPerEntityAverage: 120
+    tilesPerEntityStdDev: 10
+    entities:
+    - id: DecalSpawnerBurns
+
+- type: entity
+  id: BasicDecalDirtMonospaceVariationPass
+  parent: BaseVariationPass
+  components:
+  - type: EntitySpawnVariationPass
+    tilesPerEntityAverage: 80
+    tilesPerEntityStdDev: 10
+    entities:
+    - id: DecalSpawnerDirtMonospace
 
 - type: weightedRandomFillSolution
   id: RandomFillTrashPuddle
@@ -71,7 +106,6 @@
     - Carbon
     - Hydrogen
     - Fat
-    - SpaceLube
     - SpaceGlue
     - Sulfur
     - Acetone
@@ -105,7 +139,6 @@
 - type: entity
   id: BasicPuddleMessVariationPass
   parent: BaseVariationPass
-  noSpawn: true
   components:
   - type: PuddleMessVariationPass
     randomPuddleSolutionFill: RandomFillTrashPuddle
@@ -113,7 +146,6 @@
 - type: entity
   id: BloodbathPuddleMessVariationPass
   parent: BaseVariationPass
-  noSpawn: true
   components:
   - type: PuddleMessVariationPass
     tilesPerSpillAverage: 150
@@ -123,7 +155,6 @@
 - type: entity
   id: CutWireVariationPass
   parent: BaseVariationPass
-  noSpawn: true
   components:
   - type: CutWireVariationPass
     wireCutChance: 0.01
@@ -131,3 +162,25 @@
     blacklist:
       components:
       - ParticleAcceleratorControlBox
+
+- type: entity
+  id: SolarPanelDamageVariationPass
+  parent: BaseVariationPass
+  components:
+  - type: SolarPanelReplaceVariationPass
+  - type: EntityReplaceVariationPass
+    entitiesPerReplacementAverage: 30
+    entitiesPerReplacementStdDev: 5
+    replacements:
+    - id: SolarPanelBroken
+
+- type: entity
+  id: SolarPanelEmptyVariationPass
+  parent: BaseVariationPass
+  components:
+  - type: SolarPanelReplaceVariationPass
+  - type: EntityReplaceVariationPass
+    entitiesPerReplacementAverage: 30
+    entitiesPerReplacementStdDev: 5
+    replacements:
+    - id: SolarAssembly

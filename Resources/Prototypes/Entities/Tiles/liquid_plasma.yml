@@ -1,4 +1,4 @@
-﻿- type: entity
+- type: entity
   id: FloorLiquidPlasmaEntity
   name: liquid plasma
   description: Sweet, expensive nectar. Don't consume.
@@ -7,14 +7,20 @@
     snap:
     - Wall
   components:
+  - type: TileEmission
+    color: "#974988"
   - type: StepTrigger
     requiredTriggeredSpeed: 0
     intersectRatio: 0.1
     blacklist:
       tags:
       - Catwalk
-  - type: Lava
-    fireStacks: 0.75
+  - type: TileEntityEffect
+    effects:
+    - !type:FlammableReaction
+      multiplier: 3.75
+      multiplierOnExisting: 0.75
+    - !type:Ignite
   - type: Transform
     anchored: true
   - type: SyncSprite

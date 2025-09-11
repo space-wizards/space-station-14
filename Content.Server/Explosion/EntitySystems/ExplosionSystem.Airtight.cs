@@ -3,12 +3,13 @@ using Content.Server.Destructible;
 using Content.Shared.Atmos;
 using Content.Shared.Damage;
 using Content.Shared.Explosion;
+using Content.Shared.Explosion.EntitySystems;
 using Content.Shared.FixedPoint;
 using Robust.Shared.Map.Components;
 
 namespace Content.Server.Explosion.EntitySystems;
 
-public sealed partial class ExplosionSystem : EntitySystem
+public sealed partial class ExplosionSystem
 {
     [Dependency] private readonly DestructibleSystem _destructibleSystem = default!;
 
@@ -65,10 +66,10 @@ public sealed partial class ExplosionSystem : EntitySystem
         if (!_airtightMap.ContainsKey(gridId))
             _airtightMap[gridId] = new();
 
-        query ??= EntityManager.GetEntityQuery<AirtightComponent>();
-        var damageQuery = EntityManager.GetEntityQuery<DamageableComponent>();
-        var destructibleQuery = EntityManager.GetEntityQuery<DestructibleComponent>();
-        var anchoredEnumerator = grid.GetAnchoredEntitiesEnumerator(tile);
+        query ??= GetEntityQuery<AirtightComponent>();
+        var damageQuery = GetEntityQuery<DamageableComponent>();
+        var destructibleQuery = GetEntityQuery<DestructibleComponent>();
+        var anchoredEnumerator = _mapSystem.GetAnchoredEntitiesEnumerator(gridId, grid, tile);
 
         while (anchoredEnumerator.MoveNext(out var uid))
         {
@@ -98,13 +99,13 @@ public sealed partial class ExplosionSystem : EntitySystem
         if (!airtight.AirBlocked)
             return;
 
-        if (!EntityManager.TryGetComponent(uid, out TransformComponent? transform) || !transform.Anchored)
+        if (!TryComp(uid, out TransformComponent? transform) || !transform.Anchored)
             return;
 
         if (!TryComp<MapGridComponent>(transform.GridUid, out var grid))
             return;
 
-        UpdateAirtightMap(transform.GridUid.Value, grid, grid.CoordinatesToTile(transform.Coordinates));
+        UpdateAirtightMap(transform.GridUid.Value, grid, _mapSystem.CoordinatesToTile(transform.GridUid.Value, grid, transform.Coordinates));
     }
 
     /// <summary>

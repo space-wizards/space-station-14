@@ -19,159 +19,99 @@
       time: 216000 # 60 hrs
 
 # Head
-- type: loadout
-  id: StationEngineerHardhatYellow
-  equipment: StationEngineerHardhatYellow
-
 - type: startingGear
+  id: EngineeringBeret
+  equipment:
+    head: ClothingHeadHatBeretEngineering
+
+- type: loadout
   id: StationEngineerHardhatYellow
   equipment:
     head: ClothingHeadHatHardhatYellow
 
 - type: loadout
   id: StationEngineerHardhatOrange
-  equipment: StationEngineerHardhatOrange
-
-- type: startingGear
-  id: StationEngineerHardhatOrange
   equipment:
     head: ClothingHeadHatHardhatOrange
 
 - type: loadout
-  id: StationEngineerHardhatRed
-  equipment: StationEngineerHardhatRed
-
-- type: startingGear
   id: StationEngineerHardhatRed
   equipment:
     head: ClothingHeadHatHardhatRed
 
 - type: loadout
   id: SeniorEngineerBeret
-  equipment: EngineeringBeret
+  startingGear: EngineeringBeret
   effects:
   - !type:GroupLoadoutEffect
     proto: SeniorEngineering
 
-- type: startingGear
-  id: EngineeringBeret
-  equipment:
-    head: ClothingHeadHatBeretEngineering
-
 # Jumpsuit
 - type: loadout
-  id: StationEngineerJumpsuit
-  equipment: StationEngineerJumpsuit
-
-- type: startingGear
   id: StationEngineerJumpsuit
   equipment:
     jumpsuit: ClothingUniformJumpsuitEngineering
 
 - type: loadout
   id: StationEngineerJumpskirt
-  equipment: StationEngineerJumpskirt
-
-- type: startingGear
-  id: StationEngineerJumpskirt
   equipment:
     jumpsuit: ClothingUniformJumpskirtEngineering
 
 - type: loadout
-  id: StationEngineerHazardsuit
-  equipment: StationEngineerHazardsuit
-
-- type: startingGear
   id: StationEngineerHazardsuit
   equipment:
     jumpsuit: ClothingUniformJumpsuitEngineeringHazard
 
 - type: loadout
   id: SeniorEngineerJumpsuit
-  equipment: SeniorEngineerJumpsuit
   effects:
   - !type:GroupLoadoutEffect
     proto: SeniorEngineering
-
-- type: startingGear
-  id: SeniorEngineerJumpsuit
   equipment:
     jumpsuit: ClothingUniformJumpsuitSeniorEngineer
 
 - type: loadout
   id: SeniorEngineerJumpskirt
-  equipment: SeniorEngineerJumpskirt
   effects:
   - !type:GroupLoadoutEffect
     proto: SeniorEngineering
-
-- type: startingGear
-  id: SeniorEngineerJumpskirt
   equipment:
     jumpsuit: ClothingUniformJumpskirtSeniorEngineer
 
 # Back
 - type: loadout
   id: StationEngineerBackpack
-  equipment: StationEngineerBackpack
-
-- type: startingGear
-  id: StationEngineerBackpack
   equipment:
-    back: ClothingBackpackEngineeringFilled
+    back: ClothingBackpackEngineering
 
 - type: loadout
   id: StationEngineerSatchel
-  equipment: StationEngineerSatchel
-
-- type: startingGear
-  id: StationEngineerSatchel
   equipment:
-    back: ClothingBackpackSatchelEngineeringFilled
+    back: ClothingBackpackSatchelEngineering
 
 - type: loadout
   id: StationEngineerDuffel
-  equipment: StationEngineerDuffel
-
-- type: startingGear
-  id: StationEngineerDuffel
   equipment:
-    back: ClothingBackpackDuffelEngineeringFilled
+    back: ClothingBackpackDuffelEngineering
 
 # OuterClothing
 - type: loadout
   id: StationEngineerOuterVest
-  equipment: StationEngineerOuterVest
-
-- type: startingGear
-  id: StationEngineerOuterVest
   equipment:
     outerClothing: ClothingOuterVestHazard
-  
-- type: loadout
-  id: StationEngineerWintercoat
-  equipment: StationEngineerWintercoat
 
-- type: startingGear
+- type: loadout
   id: StationEngineerWintercoat
   equipment:
     outerClothing: ClothingOuterWinterEngi
-  
+
 # Shoes
 - type: loadout
-  id: WorkBoots
-  equipment: WorkBoots
-
-- type: startingGear
   id: WorkBoots
   equipment:
     shoes: ClothingShoesBootsWork
 
 - type: loadout
-  id: EngineeringWinterBoots
-  equipment: EngineeringWinterBoots
-
-- type: startingGear
   id: EngineeringWinterBoots
   equipment:
     shoes: ClothingShoesBootsWinterEngi
@@ -179,21 +119,13 @@
 # ID
 - type: loadout
   id: StationEngineerPDA
-  equipment: StationEngineerPDA
-
-- type: startingGear
-  id: StationEngineerPDA
   equipment:
     id: EngineerPDA
 
 - type: loadout
   id: SeniorEngineerPDA
-  equipment: SeniorEngineerPDA
   effects:
   - !type:GroupLoadoutEffect
     proto: SeniorEngineering
-
-- type: startingGear
-  id: SeniorEngineerPDA
   equipment:
     id: SeniorEngineerPDA

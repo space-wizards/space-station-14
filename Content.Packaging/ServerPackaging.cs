@@ -13,13 +13,22 @@ public static class ServerPackaging
     private static readonly List<PlatformReg> Platforms = new()
     {
         new PlatformReg("win-x64", "Windows", true),
+        new PlatformReg("win-arm64", "Windows", true),
         new PlatformReg("linux-x64", "Linux", true),
         new PlatformReg("linux-arm64", "Linux", true),
         new PlatformReg("osx-x64", "MacOS", true),
+        new PlatformReg("osx-arm64", "MacOS", true),
         // Non-default platforms (i.e. for Watchdog Git)
         new PlatformReg("win-x86", "Windows", false),
         new PlatformReg("linux-x86", "Linux", false),
         new PlatformReg("linux-arm", "Linux", false),
+        new PlatformReg("freebsd-x64", "FreeBSD", false),
+    };
+
+    private static IReadOnlySet<string> ServerContentIgnoresResources { get; } = new HashSet<string>
+    {
+        "ServerInfo",
+        "Changelog",
     };
 
     private static List<string> PlatformRids => Platforms
@@ -44,6 +53,7 @@ public static class ServerPackaging
         // Python script had Npgsql. though we want Npgsql.dll as well soooo
         "Npgsql",
         "Microsoft",
+        "NetCord",
     };
 
     private static readonly List<string> ServerNotExtraAssemblies = new()
@@ -207,7 +217,11 @@ public static class ServerPackaging
             contentAssemblies,
             cancel: cancel);
 
-        await RobustServerPackaging.WriteServerResources(contentDir, inputPassResources, cancel);
+        await RobustServerPackaging.WriteServerResources(
+            contentDir,
+            inputPassResources,
+            ServerContentIgnoresResources.Concat(SharedPackaging.AdditionalIgnoredResources).ToHashSet(),
+            cancel);
 
         if (hybridAcz)
         {

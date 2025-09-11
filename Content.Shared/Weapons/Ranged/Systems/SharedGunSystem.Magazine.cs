@@ -38,6 +38,8 @@ public abstract partial class SharedGunSystem
 
     private void OnMagazineUse(EntityUid uid, MagazineAmmoProviderComponent component, UseInHandEvent args)
     {
+        // not checking for args.Handled or marking as such because we only relay the event to the magazine entity
+
         var magEnt = GetMagazineEntity(uid);
 
         if (magEnt == null)
@@ -146,13 +148,14 @@ public abstract partial class SharedGunSystem
     private void FinaliseMagazineTakeAmmo(EntityUid uid, MagazineAmmoProviderComponent component, int count, int capacity, EntityUid? user, AppearanceComponent? appearance)
     {
         // If no ammo then check for autoeject
-        if (component.AutoEject && count == 0)
+        var ejectMag = component.AutoEject && count == 0;
+        if (ejectMag)
         {
             EjectMagazine(uid, component);
             Audio.PlayPredicted(component.SoundAutoEject, uid, user);
         }
 
-        UpdateMagazineAppearance(uid, appearance, true, count, capacity);
+        UpdateMagazineAppearance(uid, appearance, !ejectMag, count, capacity);
     }
 
     private void UpdateMagazineAppearance(EntityUid uid, MagazineAmmoProviderComponent component, EntityUid magEnt)

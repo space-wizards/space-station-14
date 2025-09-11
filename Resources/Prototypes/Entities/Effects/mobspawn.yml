@@ -1,6 +1,7 @@
-﻿- type: entity
+- type: entity
   id: MobSpawnCrabQuartz
   name: mobspawner quartzcrab
+  categories: [ HideSpawnMenu, Spawner ]
   components:
   - type: Transform
     anchored: True
@@ -30,6 +31,7 @@
   id: MobSpawnCrabIron
   parent: MobSpawnCrabQuartz
   name: mobspawner ironcrab
+  categories: [ HideSpawnMenu, Spawner ]
   components:
   - type: Sprite
     sprite: /Textures/Effects/mobspawn.rsi
@@ -38,9 +40,22 @@
     prototype: MobIronCrab
 
 - type: entity
+  id: MobSpawnCrabCoal
+  parent: MobSpawnCrabQuartz
+  name: mobspawner coalcrab
+  categories: [ HideSpawnMenu, Spawner ]
+  components:
+  - type: Sprite
+    sprite: /Textures/Effects/mobspawn.rsi
+    state: crab_coal
+  - type: SpawnOnDespawn
+    prototype: MobCoalCrab
+
+- type: entity
   id: MobSpawnCrabSilver
   parent: MobSpawnCrabQuartz
   name: mobspawner silvercrab
+  categories: [ HideSpawnMenu, Spawner ]
   components:
   - type: Sprite
     sprite: /Textures/Effects/mobspawn.rsi
@@ -49,9 +64,22 @@
     prototype: MobSilverCrab
 
 - type: entity
+  id: MobSpawnCrabGold
+  parent: MobSpawnCrabQuartz
+  name: mobspawner goldcrab
+  categories: [ HideSpawnMenu, Spawner ]
+  components:
+  - type: Sprite
+    sprite: /Textures/Effects/mobspawn.rsi
+    state: crab_gold
+  - type: SpawnOnDespawn
+    prototype: MobGoldCrab
+
+- type: entity
   id: MobSpawnCrabUranium
   parent: MobSpawnCrabQuartz
   name: mobspawner uraniumcrab
+  categories: [ HideSpawnMenu, Spawner ]
   components:
   - type: Sprite
     sprite: /Textures/Effects/mobspawn.rsi
@@ -60,8 +88,20 @@
     prototype: MobUraniumCrab
 
 - type: entity
+  id: MobSpawnCrabBananium
+  parent: MobSpawnCrabQuartz
+  name: mobspawner bananiumcrab
+  categories: [ HideSpawnMenu, Spawner ]
+  components:
+  - type: Sprite
+    sprite: /Textures/Effects/mobspawn.rsi
+    state: crab_bananium
+  - type: SpawnOnDespawn
+    prototype: MobBananiumCrab
+
+- type: entity
   id: EffectAnomalyFloraBulb
-  noSpawn: true
+  categories: [ HideSpawnMenu ]
   components:
   - type: TimedDespawn
     lifetime: 0.4
@@ -78,36 +118,28 @@
     tags:
       - HideContextMenu
   - type: AnimationPlayer
-  - type: RandomSpawner
+  - type: EntityTableSpawner
     deleteSpawnerAfterSpawn: false
-    rareChance: 0.1
-    offset: 0.3
-    chance: 1
-    prototypes:
-    - FoodAmbrosiaVulgaris
-    - FoodAloe
-    - FoodCabbage
-    - FoodCarrot
-    - FoodGalaxythistle
-    - FoodLemon
-    - FoodLime
-    - FoodPeaPod
-    - FoodPineapple
-    - FoodOnionRed
-    - FoodWatermelon
-    - FoodAmbrosiaVulgaris
-    - FoodAloe
-    - FoodCabbage
-    - FoodCarrot
-    - FoodGalaxythistle
-    - FoodLemon
-    - FoodLime
-    - FoodPeaPod
-    - FoodPineapple
-    - FoodOnionRed
-    - FoodWatermelon
-    - FoodGatfruit
-    - MobTomatoKiller
-    rarePrototypes:
-    - MobLuminousEntity
-    - MobLuminousObject
+    table: !type:NestedSelector
+      tableId: AnomalyFloraLootTable
+
+- type: entityTable
+  id: AnomalyFloraLootTable
+  table: !type:GroupSelector
+    children:
+    - id: FoodAmbrosiaVulgaris
+    - id: FoodAloe
+    - id: FoodCabbage
+    - id: FoodGalaxythistle
+    - id: FoodLemon
+    - id: FoodLime
+    - id: FoodPeaPod
+    - id: FoodPineapple
+    - id: FoodOnionRed
+    - id: FoodWatermelon
+    - id: FoodCherry
+    - id: MobTomatoKiller
+    - id: MobLuminousEntity
+    - id: MobLuminousObject
+    - id: FoodGatfruit # 0.007% spawn chance. 1 / 141
+      weight: 0.10

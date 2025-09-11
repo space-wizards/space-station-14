@@ -1,10 +1,11 @@
 using Content.Shared.Administration.Logs;
-using Content.Shared.Emag.Systems;
 using Content.Shared.Database;
+using Content.Shared.Emag.Systems;
 using Content.Shared.Interaction;
 using Content.Shared.Ninja.Components;
 using Content.Shared.Tag;
 using Content.Shared.Whitelist;
+using Robust.Shared.Audio.Systems;
 
 namespace Content.Shared.Ninja.Systems;
 
@@ -13,10 +14,11 @@ namespace Content.Shared.Ninja.Systems;
 /// </summary>
 public sealed class EmagProviderSystem : EntitySystem
 {
-    [Dependency] private readonly EmagSystem _emag = default!;
+    [Dependency] private readonly SharedAudioSystem _audio = default!;
+    [Dependency] private readonly EntityWhitelistSystem _whitelist = default!;
     [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
     [Dependency] private readonly SharedNinjaGlovesSystem _gloves = default!;
-    [Dependency] private readonly TagSystem _tags = default!;
+    [Dependency] private readonly TagSystem _tag = default!;
 
     public override void Initialize()
     {
@@ -28,45 +30,39 @@ public sealed class EmagProviderSystem : EntitySystem
     /// <summary>
     /// Emag clicked entities that are on the whitelist.
     /// </summary>
-    private void OnBeforeInteractHand(EntityUid uid, EmagProviderComponent comp, BeforeInteractHandEvent args)
+    private void OnBeforeInteractHand(Entity<EmagProviderComponent> ent, ref BeforeInteractHandEvent args)
     {
         // TODO: change this into a generic check event thing
-        if (args.Handled || !_gloves.AbilityCheck(uid, args, out var target))
+        if (args.Handled || !_gloves.AbilityCheck(ent, args, out var target))
             return;
 
+        var (uid, comp) = ent;
+
         // only allowed to emag entities on the whitelist
-        if (comp.Whitelist != null && !comp.Whitelist.IsValid(target, EntityManager))
+        if (_whitelist.IsWhitelistFail(comp.Whitelist, target))
             return;
 
         // only allowed to emag non-immune entities
-        if (_tags.HasTag(target, comp.EmagImmuneTag))
+        if (_tag.HasTag(target, comp.AccessBreakerImmuneTag))
             return;
 
-        var handled = _emag.DoEmagEffect(uid, target);
-        if (!handled)
+        var emagEv = new GotEmaggedEvent(uid, EmagType.Access);
+        RaiseLocalEvent(args.Target, ref emagEv);
+
+        if (!emagEv.Handled)
             return;
 
-        _adminLogger.Add(LogType.Emag, LogImpact.High, $"{ToPrettyString(uid):player} emagged {ToPrettyString(target):target}");
+        _audio.PlayPredicted(comp.EmagSound, uid, uid);
+
+        _adminLogger.Add(LogType.Emag, LogImpact.High, $"{ToPrettyString(uid):player} emagged {ToPrettyString(target):target} with flag(s): {ent.Comp.EmagType}");
         var ev = new EmaggedSomethingEvent(target);
         RaiseLocalEvent(uid, ref ev);
         args.Handled = true;
     }
-
-    /// <summary>
-    /// Set the whitelist for emagging something outside of yaml.
-    /// </summary>
-    public void SetWhitelist(EntityUid uid, EntityWhitelist? whitelist, EmagProviderComponent? comp = null)
-    {
-        if (!Resolve(uid, ref comp))
-            return;
-
-        comp.Whitelist = whitelist;
-        Dirty(uid, comp);
-    }
 }
 
 /// <summary>
-/// Raised on the player when emagging something.
+/// Raised on the player when access breaking something.
 /// </summary>
 [ByRefEvent]
 public record struct EmaggedSomethingEvent(EntityUid Target);

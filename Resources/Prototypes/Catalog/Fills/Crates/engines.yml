@@ -42,7 +42,7 @@
   components:
   - type: StorageFill
     contents:
-      - id: EmitterFlatpack # TODO change to flatpack
+      - id: EmitterFlatpack
 
 - type: entity
   id: CrateEngineeringSingularityCollector
@@ -80,8 +80,8 @@
 - type: entity
   id: CrateEngineeringParticleAccelerator
   parent: CrateEngineeringSecure
-  name: PA crate
-  description: Complex to setup, but rewarding as fuck.
+  name: PA board crate
+  description: Complex to setup, but rewarding as fuck. Contains boards for all particle accelerator components.
   components:
   - type: StorageFill
     contents:
@@ -120,12 +120,14 @@
   id: CrateEngineeringSolar
   parent: CrateEngineering
   name: solar assembly crate
-  description: Parts for constructing solar panels and trackers.
+  description: A kit with solar flatpacks and glass to construct ten solar panels.
   components:
   - type: StorageFill
     contents:
       - id: SolarAssemblyFlatpack
-        amount: 6
+        amount: 10
+      - id: SheetGlass10
+        amount: 2
 
 - type: entity
   id: CrateEngineeringShuttle

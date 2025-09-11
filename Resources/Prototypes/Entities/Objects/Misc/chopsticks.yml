@@ -13,12 +13,15 @@
   - type: Utensil
     types:
     - Fork
+  - type: Tag
+    tags:
+    - Trash
 
 - type: entity
   parent: BaseItem
   name: paired chopsticks
   id: PairedChopsticks
-  description: You should probably seperate them.
+  description: You should probably separate them.
   components:
   - type: SpawnItemsOnUse
     items:
@@ -28,3 +31,6 @@
   - type: Sprite
     sprite: Objects/Misc/chopstick.rsi
     state: paired
+  - type: Tag
+    tags:
+    - Trash

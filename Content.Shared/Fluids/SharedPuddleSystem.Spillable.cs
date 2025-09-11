@@ -34,7 +34,7 @@ public abstract partial class SharedPuddleSystem
 
     private void AddSpillVerb(Entity<SpillableComponent> entity, ref GetVerbsEvent<Verb> args)
     {
-        if (!args.CanAccess || !args.CanInteract)
+        if (!args.CanAccess || !args.CanInteract || args.Hands == null)
             return;
 
         if (!_solutionContainerSystem.TryGetSolution(args.Target, entity.Comp.SolutionName, out var soln, out var solution))
@@ -45,10 +45,6 @@ public abstract partial class SharedPuddleSystem
 
         if (solution.Volume == FixedPoint2.Zero)
             return;
-
-        if (HasComp<PreventSpillerComponent>(args.User))
-            return;
-
 
         Verb verb = new()
         {
@@ -64,6 +60,8 @@ public abstract partial class SharedPuddleSystem
                 var puddleSolution = _solutionContainerSystem.SplitSolution(soln.Value, solution.Volume);
                 TrySpillAt(Transform(target).Coordinates, puddleSolution, out _);
 
+                // TODO: Make this an event subscription once spilling puddles is predicted.
+                // Injectors should not be hardcoded here.
                 if (TryComp<InjectorComponent>(entity, out var injectorComp))
                 {
                     injectorComp.ToggleState = InjectorToggleMode.Draw;

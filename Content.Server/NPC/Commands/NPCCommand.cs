@@ -7,19 +7,20 @@ using Robust.Shared.Console;
 namespace Content.Server.NPC.Commands;
 
 [AdminCommand(AdminFlags.Debug)]
-public sealed class NPCCommand : IConsoleCommand
+public sealed class NpcCommand : LocalizedEntityCommands
 {
-    public string Command => "npc";
-    public string Description => "Opens the debug window for NPCs";
-    public string Help => $"{Command}";
-    public void Execute(IConsoleShell shell, string argStr, string[] args)
+    [Dependency] private readonly EuiManager _euiManager = default!;
+
+    public override string Command => "npc";
+
+    public override void Execute(IConsoleShell shell, string argStr, string[] args)
     {
         if (shell.Player is not { } playerSession)
         {
+            shell.WriteError(Loc.GetString("shell-cannot-run-command-from-server"));
             return;
         }
 
-        var euiManager = IoCManager.Resolve<EuiManager>();
-        euiManager.OpenEui(new NPCEui(), playerSession);
+        _euiManager.OpenEui(new NPCEui(), playerSession);
     }
 }

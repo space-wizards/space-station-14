@@ -1,5 +1,4 @@
 using Content.Client.Lobby;
-using Content.Client.Preferences;
 using Content.Server.Preferences.Managers;
 using Content.Shared.Preferences;
 using Robust.Client.State;

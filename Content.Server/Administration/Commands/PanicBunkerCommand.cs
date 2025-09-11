@@ -14,18 +14,18 @@ public sealed class PanicBunkerCommand : LocalizedCommands
 
     public override void Execute(IConsoleShell shell, string argStr, string[] args)
     {
-        var toggle = Toggle(CCVars.PanicBunkerEnabled, shell, args, _cfg);
+        var toggle = Toggle(CCVars.PanicBunkerEnabled, shell, args, _cfg, LocalizationManager);
         if (toggle == null)
             return;
 
         shell.WriteLine(Loc.GetString(toggle.Value ? "panicbunker-command-enabled" : "panicbunker-command-disabled"));
     }
 
-    public static bool? Toggle(CVarDef<bool> cvar, IConsoleShell shell, string[] args, IConfigurationManager config)
+    public static bool? Toggle(CVarDef<bool> cvar, IConsoleShell shell, string[] args, IConfigurationManager config, ILocalizationManager loc)
     {
         if (args.Length > 1)
         {
-            shell.WriteError(Loc.GetString("shell-need-between-arguments",("lower", 0), ("upper", 1)));
+            shell.WriteError(loc.GetString("shell-need-between-arguments",("lower", 0), ("upper", 1)));
             return null;
         }
 
@@ -38,7 +38,7 @@ public sealed class PanicBunkerCommand : LocalizedCommands
 
         if (args.Length == 1 && !bool.TryParse(args[0], out enabled))
         {
-            shell.WriteError(Loc.GetString("shell-argument-must-be-boolean"));
+            shell.WriteError(loc.GetString("shell-argument-must-be-boolean"));
             return null;
         }
 
@@ -56,7 +56,7 @@ public sealed class PanicBunkerDisableWithAdminsCommand : LocalizedCommands
 
     public override void Execute(IConsoleShell shell, string argStr, string[] args)
     {
-        var toggle = PanicBunkerCommand.Toggle(CCVars.PanicBunkerDisableWithAdmins, shell, args, _cfg);
+        var toggle = PanicBunkerCommand.Toggle(CCVars.PanicBunkerDisableWithAdmins, shell, args, _cfg, LocalizationManager);
         if (toggle == null)
             return;
 
@@ -76,7 +76,7 @@ public sealed class PanicBunkerEnableWithoutAdminsCommand : LocalizedCommands
 
     public override void Execute(IConsoleShell shell, string argStr, string[] args)
     {
-        var toggle = PanicBunkerCommand.Toggle(CCVars.PanicBunkerEnableWithoutAdmins, shell, args, _cfg);
+        var toggle = PanicBunkerCommand.Toggle(CCVars.PanicBunkerEnableWithoutAdmins, shell, args, _cfg, LocalizationManager);
         if (toggle == null)
             return;
 
@@ -96,7 +96,7 @@ public sealed class PanicBunkerCountDeadminnedCommand : LocalizedCommands
 
     public override void Execute(IConsoleShell shell, string argStr, string[] args)
     {
-        var toggle = PanicBunkerCommand.Toggle(CCVars.PanicBunkerCountDeadminnedAdmins, shell, args, _cfg);
+        var toggle = PanicBunkerCommand.Toggle(CCVars.PanicBunkerCountDeadminnedAdmins, shell, args, _cfg, LocalizationManager);
         if (toggle == null)
             return;
 
@@ -116,7 +116,7 @@ public sealed class PanicBunkerShowReasonCommand : LocalizedCommands
 
     public override void Execute(IConsoleShell shell, string argStr, string[] args)
     {
-        var toggle = PanicBunkerCommand.Toggle(CCVars.PanicBunkerShowReason, shell, args, _cfg);
+        var toggle = PanicBunkerCommand.Toggle(CCVars.PanicBunkerShowReason, shell, args, _cfg, LocalizationManager);
         if (toggle == null)
             return;
 
@@ -139,7 +139,7 @@ public sealed class PanicBunkerMinAccountAgeCommand : LocalizedCommands
         if (args.Length == 0)
         {
             var current = _cfg.GetCVar(CCVars.PanicBunkerMinAccountAge);
-            shell.WriteLine(Loc.GetString("panicbunker-command-min-account-age-is", ("hours", current / 60)));
+            shell.WriteLine(Loc.GetString("panicbunker-command-min-account-age-is", ("minutes", current)));
         }
 
         if (args.Length > 1)
@@ -148,30 +148,30 @@ public sealed class PanicBunkerMinAccountAgeCommand : LocalizedCommands
             return;
         }
 
-        if (!int.TryParse(args[0], out var hours))
+        if (!int.TryParse(args[0], out var minutes))
         {
             shell.WriteError(Loc.GetString("shell-argument-must-be-number"));
             return;
         }
 
-        _cfg.SetCVar(CCVars.PanicBunkerMinAccountAge, hours * 60);
-        shell.WriteLine(Loc.GetString("panicbunker-command-min-account-age-set", ("hours", hours)));
+        _cfg.SetCVar(CCVars.PanicBunkerMinAccountAge, minutes);
+        shell.WriteLine(Loc.GetString("panicbunker-command-min-account-age-set", ("minutes", minutes)));
     }
 }
 
 [AdminCommand(AdminFlags.Server)]
-public sealed class PanicBunkerMinOverallHoursCommand : LocalizedCommands
+public sealed class PanicBunkerMinOverallMinutesCommand : LocalizedCommands
 {
     [Dependency] private readonly IConfigurationManager _cfg = default!;
 
-    public override string Command => "panicbunker_min_overall_hours";
+    public override string Command => "panicbunker_min_overall_minutes";
 
     public override void Execute(IConsoleShell shell, string argStr, string[] args)
     {
         if (args.Length == 0)
         {
-            var current = _cfg.GetCVar(CCVars.PanicBunkerMinOverallHours);
-            shell.WriteLine(Loc.GetString("panicbunker-command-min-overall-hours-is", ("minutes", current)));
+            var current = _cfg.GetCVar(CCVars.PanicBunkerMinOverallMinutes);
+            shell.WriteLine(Loc.GetString("panicbunker-command-min-overall-minutes-is", ("minutes", current)));
         }
 
         if (args.Length > 1)
@@ -180,13 +180,13 @@ public sealed class PanicBunkerMinOverallHoursCommand : LocalizedCommands
             return;
         }
 
-        if (!int.TryParse(args[0], out var hours))
+        if (!int.TryParse(args[0], out var minutes))
         {
             shell.WriteError(Loc.GetString("shell-argument-must-be-number"));
             return;
         }
 
-        _cfg.SetCVar(CCVars.PanicBunkerMinOverallHours, hours);
-        shell.WriteLine(Loc.GetString("panicbunker-command-overall-hours-age-set", ("hours", hours)));
+        _cfg.SetCVar(CCVars.PanicBunkerMinOverallMinutes, minutes);
+        shell.WriteLine(Loc.GetString("panicbunker-command-min-overall-minutes-set", ("minutes", minutes)));
     }
 }
