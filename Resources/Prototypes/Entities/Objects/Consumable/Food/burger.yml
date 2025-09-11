@@ -2,12 +2,11 @@
 # Bun
 
 - type: entity
-  name: bun
   parent: FoodBreadSliceBase
   id: FoodBreadBun
+  name: bun
   description: A hamburger bun. Round and convenient to hold.
   components:
-  - type: Food
   - type: Sprite
     sprite: Objects/Consumable/Food/burger.rsi
     layers:
@@ -28,14 +27,13 @@
         amount: 1
 
 - type: entity
-  id: FoodBreadBunBottom
   parent: FoodBreadSliceBase
+  id: FoodBreadBunBottom
   name: bottom bun
   description: It's time to start building the burger tower.
   components:
   - type: Item
     size: Normal #patch until there is an adequate resizing system in place
-  - type: Food
   - type: Sprite
     drawdepth: Mobs
     noRot: true
@@ -63,12 +61,11 @@
           Quantity: 3.3 # 1/2 of a bun
 
 - type: entity
-  id: FoodBreadBunTop
   parent: FoodBreadSliceBase
+  id: FoodBreadBunTop
   name: top bun
   description: The perfect finish for your burger tower.
   components:
-  - type: Food
   - type: Sprite
     sprite: Objects/Consumable/Food/burger_sequence.rsi
     layers:
@@ -87,9 +84,9 @@
 # Base
 
 - type: entity
+  abstract: true
   parent: FoodInjectableBase
   id: FoodBurgerBase
-  abstract: true
   components:
   - type: FlavorProfile
     flavors:
@@ -108,6 +105,8 @@
           Quantity: 3
   - type: Item
     sprite: Objects/Consumable/Food/burger.rsi
+    shape:
+    - 0,0,1,0
 
 # Custom Burger Example
 
@@ -264,11 +263,13 @@
       - state: burger-inhand-right
 
 - type: entity
-  name: bearger
   parent: FoodBurgerBase
   id: FoodBurgerBear
+  name: bearger
   description: Best served rawr.
   components:
+  - type: Item
+    storedOffset: 0,1
   - type: FlavorProfile
     flavors:
       - bun
@@ -297,11 +298,16 @@
       - state: bear-inhand-right
 
 - type: entity
-  name: big bite burger
   parent: FoodBurgerBase
   id: FoodBurgerBig
+  name: big bite burger
   description: Forget the Big Mac. THIS is the future!
   components:
+  - type: Item
+    size: Normal
+    shape:
+    - 0,0,1,1
+    storedOffset: 0,3
   - type: FlavorProfile
     flavors: # What bun?
       - meaty
@@ -332,11 +338,13 @@
 # Tastes like bun, silver, magic.
 
 - type: entity
-  name: brain burger
   parent: FoodBurgerBase
   id: FoodBurgerBrain
+  name: brain burger
   description: A strange looking burger. It looks almost sentient.
   components:
+  - type: Item
+    storedOffset: 0,1
   - type: FlavorProfile
     flavors:
       - bun
@@ -366,11 +374,13 @@
 # Tastes like bun, brains.
 
 - type: entity
-  name: cat burger
   parent: FoodBurgerBase
   id: FoodBurgerCat
+  name: cat burger
   description: Finally those cats and catpeople are worth something!
   components:
+  - type: Item
+    storedOffset: -1,1
   - type: Sprite
     state: cat
   - type: FlavorProfile
@@ -489,11 +499,13 @@
 # Tastes like bun, chicken.
 
 - type: entity
-  name: clown burger
   parent: FoodBurgerBase
   id: FoodBurgerClown
+  name: clown burger
   description: This tastes funny...
   components:
+  - type: Item
+    storedOffset: 0,1
   - type: FlavorProfile
     flavors:
       - bun
@@ -594,11 +606,16 @@
         color: "#7e1a07"
 
 - type: entity
-  name: crazy hamburger # Burger for you euro-cucks
   parent: FoodBurgerBase
   id: FoodBurgerCrazy
+  name: crazy hamburger # Burger for you euro-cucks
   description: This looks like the sort of food that a demented clown in a trenchcoat would make.
   components:
+  - type: Item
+    size: Normal
+    shape:
+    - 0,0,1,1
+    storedOffset: -2,0
   - type: FlavorProfile
     flavors:
       - bun
@@ -633,11 +650,13 @@
       - state: crazy-inhand-right
 
 - type: entity
-  name: duck sandwich # Burger for you sick bastards
   parent: FoodBurgerBase
   id: FoodBurgerDuck
+  name: duck sandwich # Burger for you sick bastards
   description: A duck sandwich, only the criminally insane would dare to eat the meat of such an adorable creature.
   components:
+  - type: Item
+    storedOffset: 0,1
   - type: FlavorProfile
     flavors:
       - bun
@@ -673,11 +692,13 @@
 # Tastes like bun, duck.
 
 - type: entity
-  name: empowered burger
   parent: FoodBurgerBase
   id: FoodBurgerEmpowered
+  name: empowered burger
   description: It's shockingly good, if you live off of electricity that is.
   components:
+  - type: Item
+    storedOffset: -2,1
   - type: Sprite
     state: empowered
   - type: FlavorProfile
@@ -702,11 +723,13 @@
 # Tastes like bun, pure electricity.
 
 - type: entity
-  name: fillet-o-carp burger
   parent: FoodBurgerBase
   id: FoodBurgerCarp
+  name: fillet-o-carp burger
   description: Almost like a carp is yelling somewhere...
   components:
+  - type: Item
+    storedOffset: 0,1
   - type: FlavorProfile
     flavors:
       - bun
@@ -733,11 +756,16 @@
 # Tastes like bun, fish.
 
 - type: entity
-  name: five alarm burger
   parent: FoodBurgerBase
   id: FoodBurgerFive
+  name: five alarm burger
   description: HOT! HOT! HOT!
   components:
+  - type: Item
+    size: Normal
+    shape:
+    - 0,0,1,1
+    storedOffset: 0,1
   - type: FlavorProfile
     flavors:
       - meaty
@@ -772,11 +800,16 @@
 # Tastes like bun, HEAT.
 
 - type: entity
-  name: ghost burger
   parent: FoodBurgerBase
   id: FoodBurgerGhost
+  name: ghost burger
   description: Too spooky!
   components:
+  - type: Item
+    size: Normal
+    shape:
+    - 0,0,1,1
+    storedOffset: 0,3
   - type: FlavorProfile
     flavors:
       - bun
@@ -848,11 +881,13 @@
       - state: plain-inhand-right
 
 - type: entity
-  name: McGuffin
   parent: FoodBurgerBase
   id: FoodBurgerMcguffin
+  name: McGuffin
   description: A cheap and greasy imitation of an eggs Benedict.
   components:
+  - type: Item
+    storedOffset: 0,1
   - type: FlavorProfile
     flavors:
       - muffin
@@ -889,12 +924,12 @@
         color: "#e3756d"
 
 - type: entity
-  name: BBQ Rib Sandwich
   parent: FoodBurgerBase
   id: FoodBurgerMcrib
+  name: BBQ Rib Sandwich
   description: An elusive rib shaped burger with limited availability across the galaxy. Not as good as you remember it.
   components:
-  - type: Food
+  - type: Edible
     trash:
     - FoodKebabSkewer
   - type: FlavorProfile
@@ -1082,11 +1117,13 @@
 # Tastes like bun, lettuce, sludge.
 
 - type: entity
-  name: soylent burger
   parent: FoodBurgerBase
   id: FoodBurgerSoy
+  name: soylent burger
   description: After eating this you have the overwhelming urge to purchase overpriced figurines of superheroes.
   components:
+  - type: Item
+    storedOffset: 0,1
   - type: FlavorProfile
     flavors:
       - bun
@@ -1119,11 +1156,16 @@
 # Tastes like bun, redditors.
 
 - type: entity
-  name: spell burger
   parent: FoodBurgerBase
   id: FoodBurgerSpell
+  name: spell burger
   description: This is absolutely Ei Nath.
   components:
+  - type: Item
+    size: Normal
+    shape:
+    - 0,0,1,1
+    storedOffset: -1,2
   - type: FlavorProfile
     flavors:
       - bun
@@ -1150,11 +1192,16 @@
 # Tastes like bun, silver.
 
 - type: entity
-  name: super bite burger
   parent: FoodBurgerBase
   id: FoodBurgerSuper
+  name: super bite burger
   description: This is a mountain of a burger. FOOD!
   components:
+  - type: Item
+    size: Normal
+    shape:
+    - 0,0,1,1
+    storedOffset: 0,4
   - type: FlavorProfile
     flavors: # What bun?
       - meaty
@@ -1270,11 +1317,14 @@
 # I'd rather wait for a custom burger component.
 
 - type: entity
-  name: mothroachburger
   parent: FoodBurgerBase
   id: FoodBurgerMothRoach
+  name: mothroachburger
   description: The last lamp it saw was the one inside the microwave.
   components:
+  - type: Item
+    shape:
+    - 0,0,0,1
   - type: FlavorProfile
     flavors:
       - bun
