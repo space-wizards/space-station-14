@@ -124,9 +124,7 @@ namespace Content.Server.Sandbox
             }
 
             if (recentSpawns.Count >= _maxEntitySpawnsPerTimeFrame)
-            {
                 return false;
-            }
 
             recentSpawns.Enqueue(now);
             return true;
