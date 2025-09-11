@@ -1,3 +1,4 @@
+using Content.Shared.Access;
 using Content.Shared.Cargo.Prototypes;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
@@ -60,12 +61,19 @@ namespace Content.Shared.Cargo
         [DataField]
         public ProtoId<CargoAccountPrototype> Account;
 
-        public CargoOrderData(int orderId, string productId, string productName, int price, int amount, string requester, string reason, ProtoId<CargoAccountPrototype> account)
+        /// <summary>
+        /// Access needed to approve this order.
+        /// </summary>
+        [DataField]
+        public ProtoId<AccessLevelPrototype>[] ApproveAccess;
+
+        public CargoOrderData(int orderId, string productId, string productName, int price, ProtoId<AccessLevelPrototype>[] approveAccess, int amount, string requester, string reason, ProtoId<CargoAccountPrototype> account)
         {
             OrderId = orderId;
             ProductId = productId;
             ProductName = productName;
             Price = price;
+            ApproveAccess = approveAccess;
             OrderQuantity = amount;
             Requester = requester;
             Reason = reason;

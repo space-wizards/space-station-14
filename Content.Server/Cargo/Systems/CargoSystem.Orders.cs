@@ -76,7 +76,7 @@ namespace Content.Server.Cargo.Systems
                 return;
 
             var orderId = GenerateOrderId(orderDatabase);
-            var data = new CargoOrderData(orderId, product.Product, product.Name, product.Cost, slip.OrderQuantity, slip.Requester, slip.Reason, slip.Account);
+            var data = new CargoOrderData(orderId, product.Product, product.Name, product.Cost, product.ApproveAccess, slip.OrderQuantity, slip.Requester, slip.Reason, slip.Account);
 
             if (!TryAddOrder(stationUid.Value, ent.Comp.Account, data, orderDatabase))
             {
@@ -146,13 +146,6 @@ namespace Content.Server.Cargo.Systems
             if (component.Mode != CargoOrderConsoleMode.DirectOrder)
                 return;
 
-            if (!_accessReaderSystem.IsAllowed(player, uid))
-            {
-                ConsolePopup(args.Actor, Loc.GetString("cargo-console-order-not-allowed"));
-                PlayDenySound(uid, component);
-                return;
-            }
-
             var station = _station.GetOwningStation(uid);
 
             // No station to deduct from.
@@ -169,6 +162,16 @@ namespace Content.Server.Cargo.Systems
             var order = orderDatabase.Orders[component.Account].Find(order => args.OrderId == order.OrderId && !order.Approved);
             if (order == null || !_protoMan.TryIndex(order.Account, out var account))
             {
+                return;
+            }
+
+            var anyApproveAccess = order.ApproveAccess.Length != 0;
+
+            if (anyApproveAccess && !_accessReaderSystem.FindAccessTags(player).Intersect(order.ApproveAccess).Any() ||
+                !anyApproveAccess && !_accessReaderSystem.IsAllowed(player, uid))
+            {
+                ConsolePopup(args.Actor, Loc.GetString("cargo-console-order-not-allowed"));
+                PlayDenySound(uid, component);
                 return;
             }
 
@@ -466,7 +469,7 @@ namespace Content.Server.Cargo.Systems
 
         private static CargoOrderData GetOrderData(CargoConsoleAddOrderMessage args, CargoProductPrototype cargoProduct, int id, ProtoId<CargoAccountPrototype> account)
         {
-            return new CargoOrderData(id, cargoProduct.Product, cargoProduct.Name, cargoProduct.Cost, args.Amount, args.Requester, args.Reason, account);
+            return new CargoOrderData(id, cargoProduct.Product, cargoProduct.Name, cargoProduct.Cost, cargoProduct.ApproveAccess, args.Amount, args.Requester, args.Reason, account);
         }
 
         public int GetOutstandingOrderCount(Entity<StationCargoOrderDatabaseComponent> station, ProtoId<CargoAccountPrototype> account)
@@ -534,7 +537,7 @@ namespace Content.Server.Cargo.Systems
             DebugTools.Assert(_protoMan.HasIndex<EntityPrototype>(spawnId));
             // Make an order
             var id = GenerateOrderId(component);
-            var order = new CargoOrderData(id, spawnId, name, cost, qty, sender, description, account);
+            var order = new CargoOrderData(id, spawnId, name, cost, [], qty, sender, description, account);
 
             // Approve it now
             order.SetApproverData(dest, sender);
