@@ -1,6 +1,6 @@
 - type: entity
   id: Memorial
-  parent: BaseStructure
+  parent: [ BaseCoverGreat, BaseStructure ]
   name: memorial
   description: Commemorating something.
   components:

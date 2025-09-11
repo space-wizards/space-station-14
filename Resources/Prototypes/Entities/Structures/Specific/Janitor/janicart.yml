@@ -151,7 +151,7 @@
 - type: entity
   name: janitorial trolley
   id: JanitorialTrolley
-  parent: [BaseStructureDynamic, StructureWheeled]
+  parent: [ BaseCoverMild, BaseStructureDynamic, StructureWheeled ]
   description: This is the alpha and omega of sanitation.
   components:
     - type: Sprite

@@ -25,7 +25,7 @@
 - type: entity
   name: baseinstrument
   id: BasePlaceableInstrument
-  parent: BaseStructureDynamic
+  parent: [ BaseCoverSome, BaseStructureDynamic ]
   abstract: true
   components:
   - type: Instrument
@@ -70,7 +70,6 @@
         - BulletImpassable
   - type: StaticPrice
     price: 300
-  - type: RequireProjectileTarget
 
 - type: entity
   parent: BasePlaceableInstrument

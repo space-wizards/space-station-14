@@ -1,0 +1,31 @@
+# These only belong on structures which have the Impassible or BulletImpassible masks, or some variation thereof.
+# Don't place these on things that would be *obviously 100% cover* like walls.
+# Don't place these on the things that you would normally shoot at, such as mobs.
+
+- type: entity
+  id: BaseCoverSome # For most things that are kinda crappy blockers but bullets hit.
+  abstract: true
+  components:
+  - type: Cover
+    coverPct: 0.20
+  
+- type: entity
+  id: BaseCoverMild # For most impromptu cover
+  abstract: true
+  components:
+  - type: Cover
+    coverPct: 0.40
+
+- type: entity
+  id: BaseCoverGood # For most metal / bulky cover
+  abstract: true
+  components:
+  - type: Cover
+    coverPct: 0.60
+
+- type: entity
+  id: BaseCoverGreat # For most intentional cover, barricades etc etc.
+  abstract: true
+  components:
+  - type: Cover
+    coverPct: 0.80

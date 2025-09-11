@@ -1,6 +1,6 @@
 - type: entity
   id: Mannequin
-  parent: [BaseStructureDynamic, StripableInventoryBase]
+  parent: [ BaseCoverMild, BaseStructureDynamic, StripableInventoryBase ] # cover here is a little wierd, but the thing cant move soo...
   name: mannequin
   description: It can wear any clothing with style.
   components:

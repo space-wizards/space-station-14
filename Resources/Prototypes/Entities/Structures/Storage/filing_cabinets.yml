@@ -39,7 +39,7 @@
       - id: NanoTaskCartridge
 
 - type: entity
-  parent: [ BaseStructureDynamic, BaseBagOpenClose ]
+  parent: [ BaseCoverMild, BaseStructureDynamic, BaseBagOpenClose ]
   id: BaseFilingCabinet
   description: A cabinet for all your filing needs.
   suffix: Empty
@@ -160,7 +160,6 @@
         - MachineLayer
   - type: Construction
     node: chestDrawer
-  - type: RequireProjectileTarget
 
 - type: entity
   abstract: true

@@ -1,6 +1,6 @@
 - type: entity
   abstract: true
-  parent: BaseStructure
+  parent: [ BaseCoverGood, BaseStructure ]
   id: BaseMachine
   components:
   - type: Animateable
@@ -75,7 +75,5 @@
 
 - type: entity
   abstract: true
-  parent: ConstructibleMachine
+  parent: [ BaseCoverSome, ConstructibleMachine ]
   id: SmallConstructibleMachine
-  components:
-    - type: RequireProjectileTarget

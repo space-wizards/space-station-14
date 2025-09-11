@@ -277,7 +277,6 @@
         - RawMaterial
         - Ingot
   - type: OreSiloClient
-  - type: RequireProjectileTarget
 
 - type: entity
   id: CircuitImprinterHyperConvection
