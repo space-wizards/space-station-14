@@ -1,3 +1,5 @@
+# Contains modifications made by Ronstation contributors, therefore this file is subject to MIT sublicensed with AGPL v3.0.
+
 - type: jobIcon
   abstract: true
   id: JobIcon
@@ -229,7 +231,7 @@
   parent: JobIcon
   id: JobIconWarden
   icon:
-    sprite: /Textures/_Ronstation/Interface/Misc/job_icons.rsi
+    sprite: /Textures/_Ronstation/Interface/Misc/job_icons.rsi # Ronstation - Icon is redesigned.
     state: Warden
   jobName: job-name-warden
 
