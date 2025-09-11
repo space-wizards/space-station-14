@@ -47,7 +47,6 @@ namespace Content.Client.Ghost
             SubscribeLocalEvent<GhostComponent, ToggleGhostsActionEvent>(OnToggleGhosts);
         }
 
-
         private void OnToggleLighting(EntityUid uid, EyeComponent component, ToggleLightingActionEvent args)
         {
             if (args.Handled)
@@ -123,7 +122,7 @@ namespace Content.Client.Ghost
         private void OnGhostState(EntityUid uid, GhostComponent component, ref AfterAutoHandleStateEvent args)
         {
             if (TryComp<SpriteComponent>(uid, out var sprite))
-                sprite.LayerSetColor(0, component.Color);
+                _sprite.LayerSetColor((uid, sprite), 0, component.Color);
 
             if (uid != _playerManager.LocalEntity)
                 return;

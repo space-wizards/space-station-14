@@ -102,7 +102,7 @@ public sealed partial class DeliverySystem : SharedDeliverySystem
         if (ent.Comp.WasPenalized)
             return;
 
-        if (!_protoMan.TryIndex(ent.Comp.PenaltyBankAccount, out var accountInfo))
+        if (!_protoMan.Resolve(ent.Comp.PenaltyBankAccount, out var accountInfo))
             return;
 
         var multiplier = GetDeliveryMultiplier(ent);
@@ -133,20 +133,6 @@ public sealed partial class DeliverySystem : SharedDeliverySystem
 
         ent.Comp.WasPenalized = true;
         DirtyField(ent.Owner, ent.Comp, nameof(DeliveryComponent.WasPenalized));
-    }
-
-    /// <summary>
-    /// Gathers the total multiplier for a delivery.
-    /// This is done by components having subscribed to GetDeliveryMultiplierEvent and having added onto it.
-    /// </summary>
-    /// <param name="ent">The delivery for which to get the multiplier.</param>
-    /// <returns>Total multiplier.</returns>
-    private float GetDeliveryMultiplier(Entity<DeliveryComponent> ent)
-    {
-        var ev = new GetDeliveryMultiplierEvent();
-        RaiseLocalEvent(ent, ref ev);
-
-        return ev.Multiplier;
     }
 
     public override void Update(float frameTime)

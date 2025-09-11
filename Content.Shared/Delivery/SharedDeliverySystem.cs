@@ -54,12 +54,23 @@ public abstract class SharedDeliverySystem : EntitySystem
         var jobTitle = ent.Comp.RecipientJobTitle ?? Loc.GetString("delivery-recipient-no-job");
         var recipientName = ent.Comp.RecipientName ?? Loc.GetString("delivery-recipient-no-name");
 
-        if (ent.Comp.IsOpened)
+        using (args.PushGroup(nameof(DeliveryComponent), 1))
         {
-            args.PushText(Loc.GetString("delivery-already-opened-examine"));
+            if (ent.Comp.IsOpened)
+            {
+                args.PushText(Loc.GetString("delivery-already-opened-examine"));
+            }
+
+            args.PushText(Loc.GetString("delivery-recipient-examine", ("recipient", recipientName), ("job", jobTitle)));
         }
 
-        args.PushText(Loc.GetString("delivery-recipient-examine", ("recipient", recipientName), ("job", jobTitle)));
+        if (ent.Comp.IsLocked)
+        {
+            var multiplier = GetDeliveryMultiplier(ent);
+            var totalSpesos = Math.Round(ent.Comp.BaseSpesoReward * multiplier);
+
+            args.PushMarkup(Loc.GetString("delivery-earnings-examine", ("spesos", totalSpesos)), -1);
+        }
     }
 
     private void OnSpawnerExamine(Entity<DeliverySpawnerComponent> ent, ref ExaminedEvent args)
@@ -174,7 +185,7 @@ public abstract class SharedDeliverySystem : EntitySystem
 
         if (!force)
             _popup.PopupPredicted(Loc.GetString("delivery-unlocked-self", ("delivery", deliveryName)),
-                Loc.GetString("delivery-unlocked-others", ("delivery", deliveryName), ("recipient", Identity.Name(user, EntityManager)), ("possadj", user)), user, user);
+                Loc.GetString("delivery-unlocked-others", ("delivery", deliveryName), ("recipient", Identity.Entity(user, EntityManager)), ("possadj", user)), user, user);
 
         return true;
     }
@@ -202,7 +213,7 @@ public abstract class SharedDeliverySystem : EntitySystem
 
         if (!force)
             _popup.PopupPredicted(Loc.GetString("delivery-opened-self", ("delivery", deliveryName)),
-                Loc.GetString("delivery-opened-others", ("delivery", deliveryName), ("recipient", Identity.Name(user, EntityManager)), ("possadj", user)), user, user);
+                Loc.GetString("delivery-opened-others", ("delivery", deliveryName), ("recipient", Identity.Entity(user, EntityManager)), ("possadj", user)), user, user);
 
         if (!_container.TryGetContainer(ent, ent.Comp.Container, out var container))
             return;
@@ -220,19 +231,62 @@ public abstract class SharedDeliverySystem : EntitySystem
         }
     }
 
+    #region Visual Updates
     // TODO: generic updateVisuals from component data
     private void UpdateAntiTamperVisuals(EntityUid uid, bool isLocked)
     {
         _appearance.SetData(uid, DeliveryVisuals.IsLocked, isLocked);
 
-        // If we're trying to unlock, always remove the priority tape
-        if (!isLocked)
-            _appearance.SetData(uid, DeliveryVisuals.IsPriority, false);
+        // If we're trying to unlock, mark priority as inactive
+        if (HasComp<DeliveryPriorityComponent>(uid))
+            _appearance.SetData(uid, DeliveryVisuals.PriorityState, DeliveryPriorityState.Inactive);
+    }
+
+    public void UpdatePriorityVisuals(Entity<DeliveryPriorityComponent> ent)
+    {
+        if (!TryComp<DeliveryComponent>(ent, out var delivery))
+            return;
+
+        if (delivery.IsLocked && !delivery.IsOpened)
+        {
+            _appearance.SetData(ent, DeliveryVisuals.PriorityState, ent.Comp.Expired ? DeliveryPriorityState.Inactive : DeliveryPriorityState.Active);
+        }
+    }
+
+    public void UpdateBrokenVisuals(Entity<DeliveryFragileComponent> ent, bool isFragile)
+    {
+        _appearance.SetData(ent, DeliveryVisuals.IsBroken, ent.Comp.Broken);
+        _appearance.SetData(ent, DeliveryVisuals.IsFragile, isFragile);
+    }
+
+    public void UpdateBombVisuals(Entity<DeliveryBombComponent> ent)
+    {
+        var isPrimed = HasComp<PrimedDeliveryBombComponent>(ent);
+
+        _appearance.SetData(ent, DeliveryVisuals.IsBomb, isPrimed ? DeliveryBombState.Primed : DeliveryBombState.Inactive);
     }
 
     protected void UpdateDeliverySpawnerVisuals(EntityUid uid, int contents)
     {
         _appearance.SetData(uid, DeliverySpawnerVisuals.Contents, contents > 0);
+    }
+    #endregion
+
+    /// <summary>
+    /// Gathers the total multiplier for a delivery.
+    /// This is done by components having subscribed to GetDeliveryMultiplierEvent and having added onto it.
+    /// </summary>
+    /// <param name="ent">The delivery for which to get the multiplier.</param>
+    /// <returns>Total multiplier.</returns>
+    protected float GetDeliveryMultiplier(Entity<DeliveryComponent> ent)
+    {
+        var ev = new GetDeliveryMultiplierEvent();
+        RaiseLocalEvent(ent, ref ev);
+
+        // Ensure the multiplier can never go below 0.
+        var totalMultiplier = Math.Max(ev.AdditiveMultiplier * ev.MultiplicativeMultiplier, 0);
+
+        return totalMultiplier;
     }
 
     protected virtual void GrantSpesoReward(Entity<DeliveryComponent?> ent) { }
@@ -243,13 +297,16 @@ public abstract class SharedDeliverySystem : EntitySystem
 }
 
 /// <summary>
-/// Used to gather the multiplier from all different delivery components.
+/// Used to gather the total multiplier for deliveries.
+/// This is done by various modifier components subscribing to this and adding accordingly.
 /// </summary>
+/// <param name="AdditiveMultiplier">The additive multiplier.</param>
+/// <param name="MultiplicativeMultiplier">The multiplicative multiplier.</param>
 [ByRefEvent]
-public record struct GetDeliveryMultiplierEvent(float Multiplier)
+public record struct GetDeliveryMultiplierEvent(float AdditiveMultiplier, float MultiplicativeMultiplier)
 {
     // we can't use an optional parameter because the default parameterless constructor defaults everything
-    public GetDeliveryMultiplierEvent() : this(1.0f) { }
+    public GetDeliveryMultiplierEvent() : this(1.0f, 1.0f) { }
 }
 
 /// <summary>

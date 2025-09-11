@@ -20,11 +20,15 @@ public sealed class SalvageExpeditionConsoleBoundUserInterface : BoundUserInterf
 
     [Dependency] private readonly IConfigurationManager _cfgManager = default!;
     [Dependency] private readonly IEntityManager _entManager = default!;
+    [Dependency] private readonly ILogManager _logManager = default!;
     [Dependency] private readonly IPrototypeManager _protoManager = default!;
+
+    private readonly ISawmill _sawmill;
 
     public SalvageExpeditionConsoleBoundUserInterface(EntityUid owner, Enum uiKey) : base(owner, uiKey)
     {
         IoCManager.InjectDependencies(this);
+        _sawmill = _logManager.GetSawmill("salvage.expedition.console");
     }
 
     protected override void Open()
@@ -111,7 +115,7 @@ public sealed class SalvageExpeditionConsoleBoundUserInterface : BoundUserInterf
 
             string LogAndReturnDefaultFactionDescription(string faction)
             {
-                Logger.Error($"Description is null or white space for SalvageFactionPrototype: {faction}");
+                _sawmill.Error($"Description is null or white space for SalvageFactionPrototype: {faction}");
                 return Loc.GetString(_protoManager.Index<SalvageFactionPrototype>(faction).ID);
             }
 
@@ -150,7 +154,7 @@ public sealed class SalvageExpeditionConsoleBoundUserInterface : BoundUserInterf
 
             string LogAndReturnDefaultBiomDescription(string biome)
             {
-                Logger.Error($"Description is null or white space for SalvageBiomeModPrototype: {biome}");
+                _sawmill.Error($"Description is null or white space for SalvageBiomeModPrototype: {biome}");
                 return Loc.GetString(_protoManager.Index<SalvageBiomeModPrototype>(biome).ID);
             }
 
