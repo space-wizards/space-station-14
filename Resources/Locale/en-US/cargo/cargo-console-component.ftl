@@ -45,6 +45,7 @@ cargo-console-unlock-approved-order-broadcast = [bold]{$productName} x{$orderAmo
 cargo-console-fund-withdraw-broadcast = [bold]{$name} withdrew {$amount} spesos from {$name1} \[{$code1}\]
 cargo-console-fund-transfer-broadcast = [bold]{$name} transferred {$amount} spesos from {$name1} \[{$code1}\] to {$name2} \[{$code2}\][/bold]
 cargo-console-fund-transfer-user-unknown = Unknown
+cargo-console-order-approve-access = Requires one of the following accesses to be approved: {$accesses}.
 
 cargo-console-paper-reason-default = None
 cargo-console-paper-approver-default = Self
