@@ -2,15 +2,14 @@
 # Base
 
 - type: entity
+  abstract: true
   parent: FoodInjectableBase
   id: FoodPizzaBase
-  abstract: true
   components:
   - type: FlavorProfile
     flavors:
       - oily
       - bread
-  - type: Food
   - type: Sprite
     sprite: Objects/Consumable/Food/Baked/pizza.rsi
   - type: SolutionContainerManager
@@ -28,6 +27,7 @@
     size: Normal
     shape:
     - 0,0,2,1
+    storedOffset: 0,-5
   - type: Tag
     tags:
     - Pizza
@@ -42,7 +42,6 @@
     flavors:
       - oily
       - bread
-  - type: Food
   - type: Sprite
     sprite: Objects/Consumable/Food/Baked/pizza.rsi
   - type: SolutionContainerManager
@@ -654,7 +653,7 @@
   - type: Sprite
     layers:
     - state: cotton-pizza
-  - type: Food
+  - type: Edible
     requiresSpecialDigestion: true
   - type: SliceableFood
     slice: FoodPizzaCottonSlice
