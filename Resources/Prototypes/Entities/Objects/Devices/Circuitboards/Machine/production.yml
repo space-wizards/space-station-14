@@ -1349,3 +1349,19 @@
       Steel: 2
       Manipulator: 2
       Cable: 1
+
+- type: entity
+  parent: BaseMachineCircuitboard
+  id: FaxMachineCircuitboard
+  name: fax machine board
+  suffix: Machine Board
+  description: A machine circuit board for a fax machine.
+  components:
+    - type: Sprite
+      state: service
+    - type: MachineBoard
+      prototype: FaxMachineBase
+      stackRequirements:
+        Manipulator: 1
+        Steel: 3
+        Cable: 1
