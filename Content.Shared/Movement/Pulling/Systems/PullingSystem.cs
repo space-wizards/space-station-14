@@ -94,12 +94,16 @@ public sealed class PullingSystem : EntitySystem
     {
         if (!TryComp<PullerComponent>(ent, out var comp))
             return;
+
         if (comp.Pulling == null)
             return;
+
         if (CanPull(ent, comp.Pulling.Value, comp))
             return;
+
         if (!TryComp<PullableComponent>(comp.Pulling, out var pullableComp))
             return;
+
         TryStopPull(comp.Pulling.Value, pullableComp);
     }
 
