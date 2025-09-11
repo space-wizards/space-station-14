@@ -1,18 +1,13 @@
 using System;
 using System.Linq;
 using System.Numerics;
-using Content.Server.Administration.Systems;
 using Content.Shared.Actions;
+using Content.Shared.Actions.Components;
 using Content.Shared.Atmos.Components;
-using Content.Shared.Atmos.EntitySystems;
-using Content.Shared.Inventory;
-using Content.Shared.Maps;
-using Content.Shared.Movement.Components;
 using Content.Shared.Throwing;
 using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Map;
-using Robust.Shared.Physics.Events;
 using Content.Shared.Stunnable;
 
 namespace Content.Shared._Starlight.Actions.Jump;
@@ -90,6 +85,7 @@ public abstract class SharedJumpSystem : EntitySystem
 
         OnJump((JumpActionEvent)args);
     }
+
     private void OnJump(JumpActionEvent args)
     {
         if (args.Handled) return;
@@ -110,5 +106,34 @@ public abstract class SharedJumpSystem : EntitySystem
         _throwing.TryThrow(args.Performer, vector, baseThrowSpeed: args.Speed, doSpin: false);
 
         _audio.PlayPredicted(args.Sound, args.Performer, args.Performer, AudioParams.Default.WithVolume(-4f));
+    }
+
+    public bool TryJump(Entity<JumpComponent?> ent, EntityCoordinates targetCoords, float speed = 15f, bool toPointer = false, SoundSpecifier? sound = null, float? distance = null)
+    {
+        if (!Resolve(ent, ref ent.Comp)
+            || ent.Comp.ActionEntity == null
+            || !TryComp<ActionComponent>(ent.Comp.ActionEntity, out var action)
+            || _action.IsCooldownActive(action))
+            return false;
+
+        Jump(new Entity<JumpComponent>(ent, ent.Comp), targetCoords, speed, toPointer, sound, distance);
+        return true;
+    }
+
+    public void Jump(Entity<JumpComponent> ent, EntityCoordinates targetCoords, float speed = 15f, bool toPointer = false, SoundSpecifier? sound = null, float? distance = null)
+    {
+        var userTransform = Transform(ent.Owner);
+        var userMapCoords = _transform.GetMapCoordinates(userTransform);
+        var targetMapCoords = _transform.ToMapCoordinates(targetCoords);
+
+        var vector = targetMapCoords.Position - userMapCoords.Position;
+        if (distance != null
+            && (!toPointer || Vector2.Distance(userMapCoords.Position, targetMapCoords.Position) > distance))
+            vector = Vector2.Normalize(vector) * distance.Value;
+
+        _throwing.TryThrow(ent.Owner, vector, baseThrowSpeed: speed, doSpin: false);
+
+        if (sound != null)
+            _audio.PlayPredicted(sound, ent.Owner, ent.Owner, AudioParams.Default.WithVolume(-4f));
     }
 }

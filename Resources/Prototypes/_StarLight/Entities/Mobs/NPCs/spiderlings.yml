@@ -69,6 +69,7 @@
   - type: HTN
     rootTask:
       task: SimpleAvoidanceCompound
+  - type: Jump
 
 # Default
 - type: entity
