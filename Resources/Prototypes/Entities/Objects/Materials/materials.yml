@@ -373,13 +373,25 @@
   description: A pelt of a scurret, an exceptionally rare species found only on Planet Wawa. Beautifully soft, it still smells of pizza and rainfall. This will never "Wa" again. I hope you're happy.
   components:
   - type: Sprite
-    sprite: Objects/Materials/materials.rsi
-    state: scurretpelt
+    layers:
+    - map: [ "enum.DamageStateVisualLayers.Base" ]
+      sprite: Objects/Materials/materials.rsi
+      state: scurret
   - type: Item
     heldPrefix: scurretpelt
   - type: Clothing
-    sprite: Clothing/Head/Misc/hides.rsi
-    equippedPrefix: scurret
+    # sprite: Clothing/Head/Misc/hides.rsi
+    clothingVisuals:
+      head:
+      - map: [ "enum.DamageStateVisualLayers.Base" ]
+        sprite: Clothing/Head/Misc/hides.rsi
+        state: scurret-equipped-HELMET
+      head-vox:
+      - map: [ "enum.DamageStateVisualLayers.Base" ]
+        sprite: Clothing/Head/Misc/hides.rsi
+        state: scurret-equipped-HELMET-vox
+    hasSpeciesSpecificSprites: true
+    # equippedPrefix: scurret
     slots:
     - HEAD
   - type: Tag
@@ -387,6 +399,12 @@
     - PeltScurret
   - type: StaticPrice
     price: 12500 # A 50% refund on a scurret crate purchase.
+  - type: InheritColorOnSpawn
+  - type: RandomSprite
+    available:
+    - enum.DamageStateVisualLayers.Base:
+        scurret: ScurretColors
+
 
 - type: entity
   parent: MaterialBase

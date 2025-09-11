@@ -49,7 +49,9 @@ public sealed class RandomSpriteSystem : SharedRandomSpriteSystem
             foreach (var keyColorPair in component.Selected)
             {
                 _clothing.SetLayerColor(clothing, slotPair.Key, keyColorPair.Key, keyColorPair.Value.Color);
-                _clothing.SetLayerState(clothing, slotPair.Key, keyColorPair.Key, keyColorPair.Value.State);
+
+                if (!clothing.HasSpeciesSpecificSprites)
+                    _clothing.SetLayerState(clothing, slotPair.Key, keyColorPair.Key, keyColorPair.Value.State);
             }
         }
     }

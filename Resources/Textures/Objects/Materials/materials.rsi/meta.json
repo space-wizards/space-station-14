@@ -239,14 +239,14 @@
       "name": "bones_3"
     },
     {
-      "name": "scurretpelt"
+      "name": "scurret"
     },
     {
-      "name": "scurretpelt-inhand-left",
+      "name": "scurret-inhand-left",
       "directions": 4
     },
     {
-      "name": "scurretpelt-inhand-right",
+      "name": "scurret-inhand-right",
       "directions": 4
     }
   ]

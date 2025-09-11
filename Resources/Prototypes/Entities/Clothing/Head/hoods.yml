@@ -212,27 +212,6 @@
 
 - type: entity
   parent: ClothingHeadBase
-  id: ClothingHeadHatHoodScurret
-  categories: [ HideSpawnMenu ]
-  name: scurret mascot hood
-  description: A hood to complete the 'Wa' look. Smells strongly of old pizza.
-  components:
-  - type: Sprite
-    sprite: Clothing/Head/Hoods/scurretsuit.rsi
-  - type: Clothing
-    sprite: Clothing/Head/Hoods/scurretsuit.rsi
-  - type: HideLayerClothing
-    slots:
-    - Hair
-  - type: Tag
-    tags:
-    - ScurretWearable # but why
-    - CorgiWearable
-    - ClothMade
-    - WhitelistChameleon
-
-- type: entity
-  parent: ClothingHeadBase
   id: ClothingHeadHatHoodCarp
   categories: [ HideSpawnMenu ]
   name: carp hood

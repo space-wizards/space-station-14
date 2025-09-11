@@ -49,7 +49,7 @@
         name: construction-graph-tag-scurret-pelt
         icon:
           sprite: Objects/Materials/materials.rsi
-          state: scurretpelt
+          state: scurret
         doAfter: 5
   - node: suit
     entity: ClothingOuterSuitScurret

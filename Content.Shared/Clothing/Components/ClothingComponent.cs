@@ -92,6 +92,14 @@ public sealed partial class ClothingComponent : Component
     /// </summary>
     [DataField]
     public TimeSpan StripDelay = TimeSpan.Zero;
+
+    /// <summary>
+    /// Does this ClothingComponent use one sprite for all species, or does it use customized sprites for one or more
+    /// species? This is used to allow this ClothingComponent to forbid systems from changing the state of its visual
+    /// layers when doing so would break species clothing variant sprites (e.g. custom sprites for a Vox).
+    /// </summary>
+    [DataField]
+    public bool HasSpeciesSpecificSprites;
 }
 
 public enum ClothingMask : byte

@@ -13,6 +13,7 @@ using Content.Shared.Mobs.Systems;
 using Content.Shared.Nutrition.Components;
 using Content.Shared.Nutrition.EntitySystems;
 using Content.Shared.Popups;
+using Content.Shared.Sprite;
 using Content.Shared.Storage;
 using Content.Shared.Verbs;
 using Robust.Server.Containers;
@@ -115,6 +116,20 @@ public sealed class SharpSystem : EntitySystem
         {
             // distribute the spawned items randomly in a small radius around the origin
             popupEnt = Spawn(proto, coords.Offset(_robustRandom.NextVector2(0.25f)));
+
+            if (!TryComp<InheritColorOnSpawnComponent>(uid, out var inheritComp))
+                continue;
+
+            if (!TryComp<RandomSpriteComponent>(args.Target, out var spriteComponent))
+                continue;
+
+            var comp = AddComp<RandomSpriteComponent>(uid);
+
+            foreach(var dst in inheritComp.DestinationVisualLayers) {
+                comp.Selected[dst] = spriteComponent.Selected[inheritComp.SourceVisualLayer];
+            }
+
+            Dirty(uid, comp);
         }
 
         // only show a big popup when butchering living things.

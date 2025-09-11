@@ -276,39 +276,6 @@
 
 - type: entity
   parent: ClothingOuterBase
-  id: ClothingOuterSuitScurret
-  name: scurret mascot suit
-  description: Created at short notice during the first (and only) strike by Arnold's Pizza's workforce on Planet Wawa. It was hoped nobody would notice the difference in delivery staff. It did not work. Smells of old pizza and rainfall.
-  components:
-  - type: Sprite
-    sprite: Clothing/OuterClothing/Suits/scurretsuit.rsi
-  - type: Item
-    size: Normal
-  - type: Clothing
-    sprite: Clothing/OuterClothing/Suits/scurretsuit.rsi
-  - type: ToggleableClothing
-    clothingPrototype: ClothingHeadHatHoodScurret
-  - type: ContainerContainer
-    containers:
-      toggleable-clothing: !type:ContainerSlot {}
-  - type: Construction
-    graph: ClothingOuterSuitScurret
-    node: suit
-  - type: ProtectedFromStepTriggers
-    slots: WITHOUT_POCKET
-  - type: Tag
-    tags:
-    - ScurretWearable # but why
-    - CorgiWearable
-    - WhitelistChameleon
-  - type: StaticPrice
-    price: 1 # You have turned a scurret into a fursuit. You deserve nothing.
-  - type: HideLayerClothing
-    layers:
-      Tail: OUTERCLOTHING
-
-- type: entity
-  parent: ClothingOuterBase
   id: ClothingOuterSuitCarp
   name: carp suit
   description: A special suit that makes you look just like a space carp, if your eyesight is bad.

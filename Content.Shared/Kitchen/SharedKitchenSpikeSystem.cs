@@ -17,6 +17,7 @@ using Content.Shared.Mobs.Systems;
 using Content.Shared.Movement.Events;
 using Content.Shared.Nutrition.Components;
 using Content.Shared.Popups;
+using Content.Shared.Sprite;
 using Content.Shared.Throwing;
 using Content.Shared.Verbs;
 using Robust.Shared.Audio.Systems;
@@ -283,6 +284,21 @@ public sealed class SharedKitchenSpikeSystem : EntitySystem
             Loc.GetString("comp-kitchen-spike-meat-name",
                 ("name", Name(uid)),
                 ("victim", args.Target)));
+
+        // distribute the spawned items randomly in a small radius around the origin
+        if (TryComp<InheritColorOnSpawnComponent>(uid, out var inheritComp))
+        {
+            if (TryComp<RandomSpriteComponent>(args.Target, out var spriteComponent))
+            {
+                var comp = AddComp<RandomSpriteComponent>(uid);
+
+                foreach(var dst in inheritComp.DestinationVisualLayers) {
+                    comp.Selected[dst] = spriteComponent.Selected[inheritComp.SourceVisualLayer];
+                }
+
+                Dirty(uid, comp);
+            }
+        }
 
         // Decrease the amount since we spawned an entity from that entry.
         entry.Amount--;
