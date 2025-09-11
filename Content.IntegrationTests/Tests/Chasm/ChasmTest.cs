@@ -115,13 +115,13 @@ public sealed class ChasmTest : MovementTest
         await Move(DirectionFlag.East, 1f);
 
         // We should be on the other side.
-        Assert.That(Delta(), Is.LessThan(-0.5), "Player was unable to walk over a chasm with a catwalk.");
+        Assert.That(Delta(), Is.LessThan(-0.5), "Player was unable to walk over a chasm with a grappling gun.");
 
         // Check that the player is not deleted.
         AssertExists(Player);
 
         // Make sure the player is not falling right now.
-        Assert.That(HasComp<ChasmFallingComponent>(Player), Is.False, "Player has ChasmFallingComponent after walking over a catwalk.");
+        Assert.That(HasComp<ChasmFallingComponent>(Player), Is.False, "Player has ChasmFallingComponent after moving over a chasm with a grappling gun.");
 
         // Drop the grappling gun.
         await Drop();

@@ -168,6 +168,7 @@ public abstract partial class InteractionTest
         ProtoMan = Server.ResolveDependency<IPrototypeManager>();
         Factory = Server.ResolveDependency<IComponentFactory>();
         STiming = Server.ResolveDependency<IGameTiming>();
+        SLogger = Server.ResolveDependency<ILogManager>().RootSawmill;
         HandSys = SEntMan.System<HandsSystem>();
         InteractSys = SEntMan.System<SharedInteractionSystem>();
         ToolSys = SEntMan.System<ToolSystem>();
@@ -178,20 +179,21 @@ public abstract partial class InteractionTest
         SConstruction = SEntMan.System<Server.Construction.ConstructionSystem>();
         STestSystem = SEntMan.System<InteractionTestSystem>();
         Stack = SEntMan.System<StackSystem>();
-        SLogger = Server.ResolveDependency<ILogManager>().RootSawmill;
-        SUiSys = Client.System<SharedUserInterfaceSystem>();
+        SUiSys = SEntMan.System<SharedUserInterfaceSystem>();
+        SCombatMode = SEntMan.System<SharedCombatModeSystem>();
+        SGun = SEntMan.System<SharedGunSystem>();
 
         // client dependencies
         CEntMan = Client.ResolveDependency<IEntityManager>();
         UiMan = Client.ResolveDependency<IUserInterfaceManager>();
         CTiming = Client.ResolveDependency<IGameTiming>();
         InputManager = Client.ResolveDependency<IInputManager>();
+        CLogger = Client.ResolveDependency<ILogManager>().RootSawmill;
         InputSystem = CEntMan.System<Robust.Client.GameObjects.InputSystem>();
         CTestSystem = CEntMan.System<InteractionTestSystem>();
         CConSys = CEntMan.System<ConstructionSystem>();
         ExamineSys = CEntMan.System<ExamineSystem>();
-        CLogger = Client.ResolveDependency<ILogManager>().RootSawmill;
-        CUiSys = Client.System<SharedUserInterfaceSystem>();
+        CUiSys = CEntMan.System<SharedUserInterfaceSystem>();
 
         // Setup map.
         await Pair.CreateTestMap();
