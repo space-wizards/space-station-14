@@ -38,7 +38,7 @@ namespace Content.Client.Labels.UI
         protected override void Opened()
         {
             base.Opened();
-            
+
             // Give the editor keyboard focus, since that's the only
             // thing the user will want to be doing with this UI
             LabelLineEdit.GrabKeyboardFocus();
@@ -52,6 +52,13 @@ namespace Content.Client.Labels.UI
             _label = label;
             if (!_focused)
                 LabelLineEdit.Text = label;
+        }
+
+        public void SetInitialLabelState()
+        {
+            LabelLineEdit.Text = _label;
+            LabelLineEdit.CursorPosition = _label.Length;
+            LabelLineEdit.SelectionStart = 0;
         }
 
         public void SetMaxLabelLength(int maxLength)
