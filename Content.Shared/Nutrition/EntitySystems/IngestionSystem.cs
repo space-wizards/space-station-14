@@ -135,13 +135,7 @@ public sealed partial class IngestionSystem : EntitySystem
         return ingestionEv.Handled;
     }
 
-    private void OnEdibleInit(Entity<EdibleComponent> entity, ref ComponentInit args)
-    {
-        UpdateAppearance(entity);
-
-        if (TryComp(entity, out RefillableSolutionComponent? refillComp))
-            refillComp.Solution = entity.Comp.Solution;
-    }
+    private void OnEdibleInit(Entity<EdibleComponent> entity, ref ComponentInit args) => UpdateAppearance(entity);
 
     #region Appearance System
 
