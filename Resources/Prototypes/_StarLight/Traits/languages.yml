@@ -24,10 +24,250 @@
   name: trait-language-signlanguage-name
   description: trait-language-signlanguage-desc
   category: LanguageTraits
-  cost: 1
+  cost: 0
   components:
   - type: LanguageSpeaker
   languagesSpoken:
     - Sign
   languagesUnderstood:
     - Sign
+
+- type: trait
+  id: Nekomimetic
+  name: trait-language-nekomimetic-name
+  description: trait-language-nekomimetic-desc
+  category: LanguageTraits
+  cost: 1
+  components:
+  - type: LanguageSpeaker
+  languagesUnderstood:
+    - Nekomimetic
+
+- type: trait
+  id: NekomimeticAdvanced
+  name: trait-language-nekomimeticadvanced-name
+  description: trait-language-nekomimeticadvanced-desc
+  category: LanguageTraits
+  cost: 2
+  components:
+  - type: LanguageSpeaker
+  languagesSpoken:
+    - Nekomimetic
+  languagesUnderstood:
+    - Nekomimetic
+
+- type: trait
+  id: Canilunzt
+  name: trait-language-canilunzt-name
+  description: trait-language-canilunzt-desc
+  category: LanguageTraits
+  cost: 1
+  components:
+    - type: LanguageSpeaker
+  languagesUnderstood:
+    - Canilunzt
+
+- type: trait
+  id: CanilunztAdvanced
+  name: trait-language-canilunztadvanced-name
+  description: trait-language-canilunztadvanced-desc
+  category: LanguageTraits
+  cost: 2
+  components:
+    - type: LanguageSpeaker
+  languagesSpoken:
+    - Canilunzt
+  languagesUnderstood:
+    - Canilunzt
+
+- type: trait
+  id: Scratch
+  name: trait-language-scratch-name
+  description: trait-language-scratch-desc
+  category: LanguageTraits
+  cost: 1
+  components:
+    - type: LanguageSpeaker
+  languagesUnderstood:
+    - Scratch
+
+- type: trait
+  id: ScratchAdvanced
+  name: trait-language-scratchadvanced-name
+  description: trait-language-scratchadvanced-desc
+  category: LanguageTraits
+  cost: 2
+  components:
+    - type: LanguageSpeaker
+  languagesSpoken:
+    - Scratch
+  languagesUnderstood:
+    - Scratch
+
+- type: trait
+  id: SolCommon
+  name: trait-language-solcommon-name
+  description: trait-language-solcommon-desc
+  category: LanguageTraits
+  cost: 1
+  components:
+    - type: LanguageSpeaker
+  languagesUnderstood:
+    - SolCommon
+
+- type: trait
+  id: SolCommonAdvanced
+  name: trait-language-solcommonadvanced-name
+  description: trait-language-solcommonadvanced-desc
+  category: LanguageTraits
+  cost: 2
+  components:
+    - type: LanguageSpeaker
+  languagesSpoken:
+    - SolCommon
+  languagesUnderstood:
+    - SolCommon
+
+- type: trait
+  id: VoxPidgin
+  name: trait-language-voxpidgin-name
+  description: trait-language-voxpidgin-desc
+  category: LanguageTraits
+  cost: 1
+  components:
+    - type: LanguageSpeaker
+  languagesUnderstood:
+    - VoxPidgin
+
+- type: trait
+  id: VoxPidginAdvanced
+  name: trait-language-voxpidginadvanced-name
+  description: trait-language-voxpidginadvanced-desc
+  category: LanguageTraits
+  cost: 2
+  components:
+    - type: LanguageSpeaker
+  languagesSpoken:
+    - VoxPidgin
+  languagesUnderstood:
+    - VoxPidgin
+
+- type: trait
+  id: Draconic
+  name: trait-language-draconic-name
+  description: trait-language-draconic-desc
+  category: LanguageTraits
+  cost: 1
+  components:
+    - type: LanguageSpeaker
+  languagesUnderstood:
+    - Draconic
+
+- type: trait
+  id: DraconicAdvanced
+  name: trait-language-draconicadvanced-name
+  description: trait-language-draconicadvanced-desc
+  category: LanguageTraits
+  cost: 2
+  components:
+    - type: LanguageSpeaker
+  languagesSpoken:
+    - Draconic
+  languagesUnderstood:
+    - Draconic
+
+- type: trait
+  id: Marish
+  name: trait-language-marish-name
+  description: trait-language-marish-desc
+  category: LanguageTraits
+  cost: 1
+  components:
+    - type: LanguageSpeaker
+  languagesUnderstood:
+    - Marish
+
+- type: trait
+  id: MarishAdvanced
+  name: trait-language-marishadvanced-name
+  description: trait-language-marishadvanced-desc
+  category: LanguageTraits
+  cost: 2
+  components:
+    - type: LanguageSpeaker
+  languagesSpoken:
+    - Marish
+  languagesUnderstood:
+    - Marish
+
+- type: trait
+  id: Bubblish
+  name: trait-language-bubblish-name
+  description: trait-language-bubblish-desc
+  category: LanguageTraits
+  cost: 1
+  components:
+    - type: LanguageSpeaker
+  languagesUnderstood:
+    - Bubblish
+
+- type: trait
+  id: BubblishAdvanced
+  name: trait-language-bubblishadvanced-name
+  description: trait-language-bubblishadvanced-desc
+  category: LanguageTraits
+  cost: 2
+  components:
+    - type: LanguageSpeaker
+  languagesSpoken:
+    - Bubblish
+  languagesUnderstood:
+    - Bubblish
+
+- type: trait
+  id: Terrum
+  name: trait-language-terrum-name
+  description: trait-language-terrum-desc
+  category: LanguageTraits
+  cost: 1
+  components:
+    - type: LanguageSpeaker
+  languagesUnderstood:
+    - Terrum
+
+- type: trait
+  id: TerrumAdvanced
+  name: trait-language-terrumadvanced-name
+  description: trait-language-terrumadvanced-desc
+  category: LanguageTraits
+  cost: 2
+  components:
+    - type: LanguageSpeaker
+  languagesSpoken:
+    - Terrum
+  languagesUnderstood:
+    - Terrum
+
+- type: trait
+  id: Sylvan
+  name: trait-language-sylvan-name
+  description: trait-language-sylvan-desc
+  category: LanguageTraits
+  cost: 1
+  components:
+    - type: LanguageSpeaker
+  languagesUnderstood:
+    - Sylvan
+
+- type: trait
+  id: SylvanAdvanced
+  name: trait-language-sylvanadvanced-name
+  description: trait-language-sylvanadvanced-desc
+  category: LanguageTraits
+  cost: 2
+  components:
+    - type: LanguageSpeaker
+  languagesSpoken:
+    - Sylvan
+  languagesUnderstood:
+    - Sylvan
