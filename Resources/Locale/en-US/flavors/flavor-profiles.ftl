@@ -183,6 +183,7 @@ flavor-complex-false-meat = not entirely unlike meat
 flavor-complex-paper = like mushy pulp
 flavor-complex-compressed-meat = like compressed meat
 flavor-complex-dog-food = like dog food
+flavor-complex-nuclear-meltdown = like nuclear meltdown
 
 # Drink-specific flavors.
 

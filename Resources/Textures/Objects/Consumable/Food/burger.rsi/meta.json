@@ -382,6 +382,17 @@
         {
             "name": "mothroach-inhand-right",
             "directions": 4
-        }
+        },
+		{
+            "name": "BurgerRadiation"
+		},
+		{
+		    "name": "burger-radiation-inhand-left",
+		    "directions": 4
+        },
+		{
+            "name": "burger-radiation-inhand-right",
+			"directions": 4
+		}
     ]
 }

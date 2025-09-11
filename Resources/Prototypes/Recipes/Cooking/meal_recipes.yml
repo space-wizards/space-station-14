@@ -394,6 +394,17 @@
     FoodBreadBun: 1
     MobMothroach: 1
 
+- type: microwaveMealRecipe
+  id: RecipeBurgerRadiation
+  name: Irradiated Burger recipe
+  result: FoodBurgerirradiatedburger
+  time: 15
+  group: Savory
+  solids:
+    FoodBreadBun: 1
+    FoodMeat: 1
+    SheetUranium1: 1
+
 #Breads & Sandwiches
 
 - type: microwaveMealRecipe
@@ -2458,4 +2469,3 @@
     Fiber: 10
   solids:
     FoodCakePlain: 1
-    

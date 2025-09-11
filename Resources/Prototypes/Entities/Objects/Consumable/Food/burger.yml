@@ -1303,3 +1303,33 @@
       right:
       - state: mothroach-inhand-right
 
+- type: entity
+  name: Irradiated Burger
+  parent: FoodBurgerBase
+  id: FoodBurgerirradiatedburger
+  description: Dont Drop It!!!
+  components:
+  - type: FlavorProfile
+    flavors:
+    - bun
+    - meaty
+    - atomiccola
+  - type: Sprite
+    state: BurgerRadiation
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 15
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 3
+        - ReagentId: Protein
+          Quantity: 4
+        - ReagentId: Vitamin
+          Quantity: 7
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: burger-inhand-left
+      right:
+      - state: burger-inhand-right
