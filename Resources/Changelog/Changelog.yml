@@ -1,26 +1,4 @@
 ﻿Entries:
-- author: Krunklehorn
-  changes:
-  - message: Cyborg chassis now properly drop their contents when gibbed.
-    type: Fix
-  id: 8440
-  time: '2025-05-08T14:28:12.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/37276
-- author: Thinbug0
-  changes:
-  - message: The push horn lost its ability to push items, in exchange of a bigger
-      range
-    type: Tweak
-  id: 8441
-  time: '2025-05-08T16:49:59.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/37281
-- author: MureixloL
-  changes:
-  - message: Changed sprite of mime satchel!
-    type: Tweak
-  id: 8442
-  time: '2025-05-08T17:38:31.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/37280
 - author: ciaran
   changes:
   - message: Guidebook recipe inputs can now link to recipes on the same page
@@ -3942,3 +3920,30 @@
   id: 8951
   time: '2025-09-11T02:37:10.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/40253
+- author: IProduceWidgets
+  changes:
+  - message: Tennis balls! Found in arcade machines, maintenance and the cargo toy
+      crate!
+    type: Add
+  id: 8952
+  time: '2025-09-11T10:57:31.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/40143
+- author: 5tickman
+  changes:
+  - message: Food and ingredient item sizes have been adjusted.
+    type: Tweak
+  - message: Mimes now start with a Nutribrick instead of a Baguette.
+    type: Tweak
+  - message: The combat bakery kit is now a 4x4 sized box.
+    type: Tweak
+  id: 8953
+  time: '2025-09-11T11:37:25.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/39203
+- author: aada
+  changes:
+  - message: Cups, bottles, mugs, and other drinks have had minor changes. Most are
+      now destructible.
+    type: Tweak
+  id: 8954
+  time: '2025-09-11T15:59:11.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/39221
