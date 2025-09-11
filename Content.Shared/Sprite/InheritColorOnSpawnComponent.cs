@@ -14,7 +14,7 @@ public sealed partial class InheritColorOnSpawnComponent : Component
     public string SourceVisualLayer = "enum.DamageStateVisualLayers.Base";
 
     [DataField]
-    public List<string> DestinationVisualLayers = ["enum.DamageStateVisualLayers.Base"];
+    public List<string> DestinationVisualLayers = new() { "enum.DamageStateVisualLayers.Base" };
 }
 
 [Serializable, NetSerializable]
