@@ -486,6 +486,7 @@
     - item: Wirecutter
     - item: WelderIndustrial
     - item: Multitool
+    - item: SprayPainterBorg # Starlight
   - type: BorgModuleIcon
     icon: { sprite: Interface/Actions/actions_borg.rsi, state: tool-module }
 
@@ -526,6 +527,12 @@
     - item: MineralScannerUnpowered
     - item: BorgOreBag
     - item: RadioHandheldExpedition # Starlight
+    - hand: # Starlight
+        emptyRepresentative: GoldOre
+        emptyLabel: borg-slot-ore-empty
+        whitelist:
+          tags:
+            - Ore
   - type: BorgModuleIcon
     icon: { sprite: Interface/Actions/actions_borg.rsi, state: mining-module }
 
@@ -545,6 +552,12 @@
     - item: Shovel
     - item: AdvancedMineralScannerUnpowered
     - item: OreBagOfHolding
+    - hand: # Starlight
+        emptyRepresentative: GoldOre
+        emptyLabel: borg-slot-ore-empty
+        whitelist:
+          tags:
+            - Ore
     - item: RadioHandheldExpedition # Starlight
   - type: BorgModuleIcon
     icon: { sprite: Interface/Actions/actions_borg.rsi, state: adv-mining-module }
@@ -585,6 +598,7 @@
     - item: WelderExperimental
     - item: Multitool
     - item: RemoteSignallerAdvanced
+    - item: SprayPainterBorg # Starlight
   - type: BorgModuleIcon
     icon: { sprite: Interface/Actions/actions_borg.rsi, state: adv-tools-module }
 
@@ -635,8 +649,10 @@
         emptyRepresentative: MicroManipulatorStockPart
         emptyLabel: borg-slot-construction-empty
         whitelist:
-          tags:
-          - ConstructionMaterial
+          tags: #STARLIGHT start
+          - MicroManipulatorStockPart
+          components:
+          - Battery #STARLIGHT end
     - hand:
         emptyRepresentative: SpaceHeaterFlatpack
         emptyLabel: borg-slot-flatpacks-empty
@@ -661,6 +677,15 @@
         whitelist:
           components:
           - FloorTile
+    #Starlight-edit: start
+    - hand:
+        emptyRepresentative: PlasmaTank
+        emptyLabel: borg-slot-fuel-empty
+        whitelist:
+          components:
+          - GasTank
+          - AmeFuelContainer
+    #Starlight-edit: end
   - type: BorgModuleIcon
     icon: { sprite: Interface/Actions/actions_borg.rsi, state: construction-module }
 
@@ -846,6 +871,12 @@
     hands:
     - item: HandheldHealthAnalyzerUnpowered
     - item: Syringe
+      hand: #Starlight start
+        emptyLabel: borg-slot-syringe-empty
+        emptyRepresentative: Syringe
+        whitelist:
+          tags:
+          - Syringe #Starlight end
     - item: BorgDropper
     - item: BaseChemistryEmptyVial
       hand:
@@ -888,6 +919,12 @@
     - item: AutoMenderBrute
     - item: AutoMenderBurn
     - item: Syringe
+      hand: #Starlight start
+        emptyLabel: borg-slot-syringe-empty
+        emptyRepresentative: Syringe
+        whitelist:
+          tags:
+          - Syringe #Starlight end
     - item: BorgDropper
     - item: Beaker
       hand:
@@ -1078,6 +1115,14 @@
     - item: HydroponicsToolSpade
     - item: HydroponicsToolClippers
     - item: Bucket
+      #Starlight start
+    - hand:
+        emptyLabel: borg-slot-seeds-empty
+        emptyRepresentative: WheatSeeds
+        whitelist:
+          components:
+          - Seed
+      #Starlight end
   - type: BorgModuleIcon
     icon: { sprite: Interface/Actions/actions_borg.rsi, state: gardening-module }
 

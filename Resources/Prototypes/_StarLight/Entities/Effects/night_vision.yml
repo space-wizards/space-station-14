@@ -19,3 +19,10 @@
     energy: 1.8
     radius: 20
     softness: 20
+
+- type: entity
+  id: EffectThermalVisionRevenant
+  parent: EffectThermalVision
+  components:
+  - type: PointLight
+    castShadows: false

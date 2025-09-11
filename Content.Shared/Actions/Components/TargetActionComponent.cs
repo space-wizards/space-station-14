@@ -65,4 +65,8 @@ public sealed partial class TargetActionComponent : Component
     /// </summary>
     [DataField]
     public bool TargetingIndicator = true;
+
+    // Starlight
+    [DataField]
+    public bool CheckMap = true;
 }

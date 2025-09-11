@@ -76,7 +76,6 @@
     - type: AtmosMonitoringConsoleDevice
       navMapBlip: GasFlowRegulator
     - type: VentCrawTube
-      containerId: VentCrawTube
     - type: VentCrawJunction
       degrees:
         - 0
@@ -136,7 +135,6 @@
         nodeGroupID: Pipe
         pipeDirection: North
   - type: VentCrawTube
-    containerId: VentCrawTube
   - type: VentCrawJunction
     degrees:
       - 0
@@ -195,7 +193,6 @@
     - type: AtmosMonitoringConsoleDevice
       navMapBlip: GasFlowRegulator
     - type: VentCrawTube
-      containerId: VentCrawTube
     - type: VentCrawJunction
       degrees:
         - 0
@@ -251,7 +248,6 @@
   - type: Construction
     node: mixerflipped
   - type: VentCrawTube
-    containerId: VentCrawTube
   - type: VentCrawJunction
     degrees:
       - 0
@@ -321,7 +317,6 @@
     - type: AtmosMonitoringConsoleDevice
       navMapBlip: GasFlowRegulator
     - type: VentCrawTube
-      containerId: VentCrawTube
     - type: VentCrawJunction
       degrees:
         - 0

@@ -38,7 +38,7 @@
             ChiefMedicalOfficer: [ 1, 1 ]
             Chemist: [ 3, 3 ]
             MedicalDoctor: [ 4, 4 ]
-            MedicalIntern: [ 3, 3 ]
+            #MedicalIntern: [ 3, 3 ]
             Psychologist: [ 1, 1 ]
             Paramedic: [ 2, 2 ]
             Surgeon: [ 2, 2 ]  

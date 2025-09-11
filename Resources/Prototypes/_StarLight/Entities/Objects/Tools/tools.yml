@@ -448,10 +448,13 @@
         components:
         - type: ToolTileCompatible
           delay: 1
-        - type: Prying
+        - type: Tool
           speedModifier: 0.75
+          qualities:
+            - Prying
           useSound:
             path: /Audio/Items/crowbar.ogg
+        - type: Prying
         - type: MeleeWeapon
           wideAnimationRotation: -135
           soundHit:
@@ -700,9 +703,12 @@
         components:
         - type: ToolTileCompatible
           delay: 1
-        - type: Prying
+        - type: Tool
+          qualities:
+            - Prying
           useSound:
             path: /Audio/Items/crowbar.ogg
+        - type: Prying
         - type: MeleeWeapon
           wideAnimationRotation: -135
           soundHit:

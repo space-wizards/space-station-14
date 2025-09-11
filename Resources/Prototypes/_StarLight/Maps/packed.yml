@@ -53,7 +53,7 @@
             Quartermaster: [ 1, 1 ]
             SalvageSpecialist: [ 5, 5 ]
             CargoTechnician: [ 2, 2 ]
-            MailTech: [ 1, 2 ]
+            #MailTech: [ 1, 2 ]
             MiningSpecialist: [ 2, 3 ]
             #civilian
             Assistant: [ -1, -1 ]
@@ -64,8 +64,8 @@
             StationAi: [ 1, 1 ]
             Borg: [ 1, 1 ]
             #law
-            Magistrate: [ 1, 1 ]
-            IAA: [ 2, 2 ]
+            #Magistrate: [ 1, 1 ]
+            #IAA: [ 2, 2 ]
             #Representives
             BlueShield: [ 1, 1 ]
             NanoTrasenRepresentative: [ 1, 1 ]
