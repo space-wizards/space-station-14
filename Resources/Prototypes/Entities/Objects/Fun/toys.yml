@@ -487,6 +487,7 @@
       collection: ToySqueak
       params:
         volume: -4
+  - type: UseDelay
   - type: Clothing
     slots: [mask]
   - type: Tag
