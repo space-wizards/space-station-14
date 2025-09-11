@@ -1,13 +1,13 @@
-using Content.Shared.Chemistry.EntitySystems;
 using Robust.Shared.GameStates;
 using Content.Shared.Chemistry.Components;
 
 namespace Content.Shared.Trigger.Components.Effects;
 
 /// <summary>
-/// Adds reagents to the solution when the trigger is activated.
+/// Adds reagents to the specified solution when the trigger is activated.
+/// If TargetUser is true the user will have the solution added instead.
 /// </summary>
-[RegisterComponent, AutoGenerateComponentState]
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
 public sealed partial class AddReagentOnTriggerComponent : BaseXOnTriggerComponent
 {
     /// <summary>

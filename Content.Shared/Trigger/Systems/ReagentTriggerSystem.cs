@@ -26,6 +26,6 @@ public sealed class ReagentTriggerSystem : EntitySystem
         if (!_solutionContainer.TryGetSolution(target.Value, ent.Comp.SolutionId, out var solutionRef, out _))
             return;
 
-        _solutionContainer.TryAddSolution(solutionRef.Value, ent.Comp.AddedSolution);
+        _solutionContainer.AddSolution(solutionRef.Value, ent.Comp.AddedSolution);
     }
 }
