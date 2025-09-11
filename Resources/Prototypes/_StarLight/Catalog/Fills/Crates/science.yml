@@ -17,7 +17,6 @@
     - id: LiveLetLiveCircuitBoard
     - id: StationEfficiencyCircuitBoard
     - id: RobocopCircuitBoard
-    - id: OverlordCircuitBoard
     - id: GameMasterCircuitBoard
     - id: ArtistCircuitBoard
     - id: NutimovCircuitBoard
