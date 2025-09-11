@@ -2,6 +2,7 @@ using Content.IntegrationTests.Tests.Movement;
 using Content.Shared.Chasm;
 using Content.Shared.Projectiles;
 using Content.Shared.Weapons.Misc;
+using Content.Shared.Weapons.Ranged.Components;
 using Robust.Shared.Maths;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Prototypes;
@@ -17,7 +18,6 @@ public sealed class ChasmTest : MovementTest
     private readonly EntProtoId _chasmProto = "FloorChasmEntity";
     private readonly EntProtoId _catWalkProto = "Catwalk";
     private readonly EntProtoId _grapplingGunProto = "WeaponGrapplingGun";
-    private readonly EntProtoId _grapplingHookProto = "GrapplingHook";
 
     /// <summary>
     /// Test that a player falls into the chasm when walking over it.
@@ -94,22 +94,24 @@ public sealed class ChasmTest : MovementTest
         Assert.That(Delta(), Is.GreaterThan(0.5), "Player did not spawn left of the chasm.");
 
         // Give the player a grappling gun.
-        await PlaceInHands(_grapplingGunProto);
+        var grapplingGun = await PlaceInHands(_grapplingGunProto);
+        await Pair.RunSeconds(2f); // guns have a cooldown when picking them up
 
         // Shoot at the wall to the right.
         Assert.That(WallRight, Is.Not.Null, "No wall to shoot at!");
-        await AttemptShoot(ToServer(WallRight));
-        await Pair.RunSeconds(1f);
+        await AttemptShoot(WallRight);
+        await Pair.RunSeconds(2f);
 
         // Check that the grappling hook is embedded into the wall.
-        var grapple = await FindEntity(_grapplingHookProto.Id);
-        Assert.That(SEntMan.TryGetComponent<EmbeddableProjectileComponent>(grapple, out var embeddable), "Grappling hook was not embeddable.");
+        Assert.That(TryComp<GrapplingGunComponent>(grapplingGun, out var grapplingGunComp), "Grappling gun did not have GrapplingGunComponent.");
+        Assert.That(grapplingGunComp.Projectile, Is.Not.Null, "Grappling gun projectile does not exist.");
+        Assert.That(SEntMan.TryGetComponent<EmbeddableProjectileComponent>(grapplingGunComp.Projectile, out var embeddable), "Grappling hook was not embeddable.");
         Assert.That(embeddable.EmbeddedIntoUid, Is.EqualTo(ToServer(WallRight)), "Grappling hook was not embedded into the wall.");
 
         // Check that the player is hooked.
         var grapplingSystem = SEntMan.System<SharedGrapplingGunSystem>();
         Assert.That(grapplingSystem.IsEntityHooked(SPlayer), "Player is not hooked to the wall.");
-        Assert.That(HasComp<JointRelayTargetComponent>(Player), Is.False, "Player does not have the JointRelayTargetComponent after using a grappling gun.");
+        Assert.That(HasComp<JointRelayTargetComponent>(Player), "Player does not have the JointRelayTargetComponent after using a grappling gun.");
 
         // Attempt to walk past the chasm.
         await Move(DirectionFlag.East, 1f);

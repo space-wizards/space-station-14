@@ -207,9 +207,9 @@ public abstract partial class SharedGunSystem : EntitySystem
     public void AttemptShoot(EntityUid user, EntityUid gunUid, GunComponent gun, EntityCoordinates toCoordinates, EntityUid? target = null)
     {
         gun.ShootCoordinates = toCoordinates;
+        gun.Target = target;
         AttemptShoot(user, gunUid, gun);
         gun.ShotCounter = 0;
-        gun.Target = target;
         DirtyField(gunUid, gun, nameof(GunComponent.ShotCounter));
     }
 

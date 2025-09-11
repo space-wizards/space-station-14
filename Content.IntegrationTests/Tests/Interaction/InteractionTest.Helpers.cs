@@ -442,6 +442,11 @@ public abstract partial class InteractionTest
     /// This does not pass a target entity into the GunSystem, meaning that targets that
     /// need to be aimed at directly won't be hit.
     /// </summary>
+    /// <remarks>
+    /// Guns have a cooldown when picking them up.
+    /// So make sure to wait a little after spawning a gun in the player's hand or this will fail.
+    /// TODO: Validate that the gun was sucessfully fired.
+    /// </remarks>
     protected async Task AttemptShoot(NetCoordinates? target = null)
     {
         var actualTarget = SEntMan.GetCoordinates(target ?? TargetCoords);
@@ -468,11 +473,16 @@ public abstract partial class InteractionTest
     /// <summary>
     /// Make the player shoot with their currently held gun.
     /// The player needs to be able to enter combat mode for this.
-    /// Defaults to targeting the current <see cref="STarget"/> entity.
+    /// Defaults to targeting the current <see cref="Target"/> entity.
     /// </summary>
-    protected async Task AttemptShoot(EntityUid? target = null)
+    /// <remarks>
+    /// Guns have a cooldown when picking them up.
+    /// So make sure to wait a little after spawning a gun in the player's hand or this will fail.
+    /// TODO: Validate that the gun was sucessfully fired.
+    /// </remarks>
+    protected async Task AttemptShoot(NetEntity? target = null)
     {
-        var actualTarget = target ?? STarget;
+        var actualTarget = target ?? Target;
         Assert.That(actualTarget, Is.Not.Null, "No target to shoot at!");
 
         if (!SEntMan.TryGetComponent(SPlayer, out CombatModeComponent? combat))
@@ -487,7 +497,7 @@ public abstract partial class InteractionTest
 
         Assert.That(SGun.TryGetGun(SPlayer, out var gunUid, out var gunComp), "Player was not holding a gun!");
 
-        await Server.WaitPost(() => SGun.AttemptShoot(SPlayer, gunUid, gunComp!, Position(actualTarget!.Value), actualTarget));
+        await Server.WaitPost(() => SGun.AttemptShoot(SPlayer, gunUid, gunComp!, Position(actualTarget!.Value), ToServer(actualTarget)));
         await RunTicks(1);
 
         // If the player was not in combat mode before then disable it again.
