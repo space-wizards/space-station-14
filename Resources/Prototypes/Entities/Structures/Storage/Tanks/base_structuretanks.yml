@@ -1,6 +1,6 @@
 - type: entity
   id: StorageTank
-  parent: BaseStructureDynamic
+  parent: [ BaseCoverGood, BaseStructureDynamic ]
   name: storage tank
   description: A liquids storage tank.
   abstract: true
