@@ -4,9 +4,10 @@ using Robust.Shared.Player;
 
 namespace Content.Client.Ghost;
 
-public sealed class GhostVisibilitySystem: SharedGhostVisibilitySystem
+public sealed class GhostVisibilitySystem : SharedGhostVisibilitySystem
 {
     [Dependency] private readonly ISharedPlayerManager _player = default!;
+    [Dependency] private readonly SpriteSystem _sprite = default!;
 
     private bool _showGhosts;
 
@@ -46,12 +47,12 @@ public sealed class GhostVisibilitySystem: SharedGhostVisibilitySystem
 
     private void OnDetached(Entity<GhostVisibilityComponent> ent, ref PlayerDetachedEvent args)
     {
-        UpdateVisibility(ent!);
+        UpdateVisibility(ent.AsNullable());
     }
 
     private void OnAttached(Entity<GhostVisibilityComponent> ent, ref PlayerAttachedEvent args)
     {
-        UpdateVisibility(ent!);
+        UpdateVisibility(ent.AsNullable());
     }
 
     private void OnGhostVisState(EntityUid uid, GhostVisibilityComponent component, ref AfterAutoHandleStateEvent args)
@@ -76,6 +77,7 @@ public sealed class GhostVisibilitySystem: SharedGhostVisibilitySystem
         if (!Resolve(ent.Owner, ref ent.Comp1, ref ent.Comp2))
             return;
 
-        ent.Comp2.Visible = ShowGhosts || ent.Comp1.Visible || ent.Owner == _player.LocalEntity;
+        var visible = ShowGhosts || ent.Comp1.Visible || ent.Owner == _player.LocalEntity;
+        _sprite.SetVisible((ent.Owner, ent.Comp2), visible);
     }
 }

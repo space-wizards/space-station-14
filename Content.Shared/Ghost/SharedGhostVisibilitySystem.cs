@@ -55,7 +55,7 @@ public abstract class SharedGhostVisibilitySystem : EntitySystem
 
     protected virtual void SetVisible(Entity<GhostVisibilityComponent?, VisibilityComponent?> ghost, bool visible)
     {
-        if (!Resolve(ghost.Owner, ref ghost.Comp1, ref ghost.Comp2))
+        if (!Resolve(ghost.Owner, ref ghost.Comp1))
             return;
 
         if (ghost.Comp1.Visible == visible && ghost.Comp1.LifeStage >= ComponentLifeStage.Running)
