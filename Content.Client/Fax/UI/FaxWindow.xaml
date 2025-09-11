@@ -1,43 +1,116 @@
-<DefaultWindow xmlns="https://spacestation14.io"
-               Title="{Loc 'fax-machine-ui-window'}"
-               MinWidth="250">
-    <BoxContainer Orientation="Vertical" VerticalExpand="True">
-        <BoxContainer Orientation="Horizontal" HorizontalExpand="True">
-            <Label Text="{Loc 'fax-machine-ui-paper'}" />
-            <Control MinWidth="4" />
-            <Label Name="PaperStatusLabel" />
-        </BoxContainer>
-        <Control HorizontalExpand="True" MinHeight="20" />
-        <BoxContainer Orientation="Horizontal" HorizontalExpand="True">
-            <Label Text="{Loc 'fax-machine-ui-from'}" />
-            <Control MinWidth="4" />
-            <Label Name="FromLabel" />
-        </BoxContainer>
-        <BoxContainer Orientation="Horizontal" HorizontalExpand="True">
-            <Label Text="{Loc 'fax-machine-ui-to'}" />
-            <Control MinWidth="4" />
-            <OptionButton Name="PeerSelector" HorizontalExpand="True" />
-        </BoxContainer>
-        <Control HorizontalExpand="True" MinHeight="20" />
-        <BoxContainer Orientation="Horizontal" HorizontalExpand="True">
-            <Button Name="FileButton"
-                    Text="{Loc 'fax-machine-ui-file-button'}"
-                    HorizontalExpand="False"/>
-            <Button Name="PaperButton"
-                    Text="{Loc 'fax-machine-ui-paper-button-normal'}"
-                    HorizontalExpand="False"/>
-        </BoxContainer>
-        <BoxContainer Orientation="Horizontal" HorizontalExpand="True">
-            <Button Name="CopyButton"
-                    Text="{Loc 'fax-machine-ui-copy-button'}"
-                    HorizontalExpand="False"
-                    Disabled="True" />
-            <Button Name="SendButton"
-                    Text="{Loc 'fax-machine-ui-send-button'}"
-                    HorizontalExpand="True"
-                    Disabled="True" />
-            <Button Name="RefreshButton"
-                    Text="{Loc 'fax-machine-ui-refresh-button'}" />
-        </BoxContainer>
+<DefaultWindow
+    xmlns="https://spacestation14.io"
+    Title="{Loc 'fax-machine-ui-window'}"
+    MinSize="380 220">
+    <BoxContainer Orientation="Vertical"
+        SeparationOverride="2"
+        VerticalExpand="True">
+
+        <PanelContainer StyleClasses="PanelBackgroundBaseDark" HorizontalExpand="True">
+            <BoxContainer Orientation="Vertical"
+                Margin="0 0 0 2">
+
+                <!-- From Line -->
+                <BoxContainer Orientation="Horizontal">
+
+                    <!-- From Value Name -->
+                    <Label Text="{Loc 'fax-machine-ui-from'}"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Bottom"/>
+
+                    <Control HorizontalExpand="True"
+                        MinWidth="8"
+                        HorizontalAlignment="Center"/>
+
+                    <!-- From Value -->
+                    <Label Name="FromLabel"
+                        HorizontalAlignment="Right"
+                        VerticalAlignment="Center"
+                        Align="Right"/>
+                </BoxContainer>
+
+                <!-- To Line -->
+                <BoxContainer
+                    Orientation="Horizontal">
+
+                    <!-- To Label -->
+                    <Label Text="{Loc 'fax-machine-ui-to'}"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Bottom"/>
+
+                    <Control HorizontalExpand="True"
+                        MinWidth="8"
+                        HorizontalAlignment="Center"/>
+
+                    <BoxContainer Orientation="Horizontal">
+                        <!-- To Value -->
+                        <OptionButton Name="PeerSelector"
+                            StyleClasses="OpenRight" />
+
+                        <!-- Refresh Fax Recipients -->
+                        <Button StyleClasses="OpenLeft"
+                            Name="RefreshButton"
+                            ToolTip="{Loc 'fax-machine-ui-refresh-button'}">
+                            <TextureButton
+                                MouseFilter="Ignore"
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Center"
+                                Scale="0.9 0.9"
+                                StyleClasses="Refresh" />
+                         </Button>
+                   </BoxContainer>
+                </BoxContainer>
+
+                <PanelContainer StyleClasses="LowDivider" Margin="0 4 0 4"/>
+
+                <!-- Send & Copy -->
+                <BoxContainer Orientation="Vertical">
+
+                    <!-- Paper Status -->
+                    <Label Name="PaperStatusLabel"
+                        HorizontalAlignment="Center" />
+
+                    <BoxContainer>
+                        <Button Name="CopyButton"
+                            Text="{Loc 'fax-machine-ui-copy-button'}"
+                            StyleClasses="OpenRight"
+                            HorizontalExpand="True"
+                            Disabled="True" />
+                        <Button Name="SendButton"
+                            Text="{Loc 'fax-machine-ui-send-button'}"
+                            StyleClasses="OpenLeft"
+                            HorizontalExpand="True"
+                            Disabled="True" />
+                    </BoxContainer>
+                </BoxContainer>
+            </BoxContainer>
+
+        </PanelContainer>
+
+        <PanelContainer StyleClasses="PanelBackgroundBaseDark"
+            HorizontalExpand="True" Margin="0 10 0 0"
+            VerticalExpand="True" VerticalAlignment="Bottom">
+            <BoxContainer Orientation="Vertical"
+                VerticalExpand="True">
+
+                <!-- Other actions -->
+                <BoxContainer Margin="0 4 0 4">
+
+                    <Button Name="PaperButton"
+                        Text="{Loc 'fax-machine-ui-paper-button-normal'}"
+                        StyleClasses="OpenRight"
+                        HorizontalExpand="True"/>
+
+                    <Button Name="FileButton"
+                        Text="{Loc 'fax-machine-ui-file-button'}"
+                        StyleClasses="OpenLeft"
+                        HorizontalExpand="True"/>
+
+                </BoxContainer>
+
+                <!-- It would be cool to add a display of the inserted file here. -->
+            </BoxContainer>
+        </PanelContainer>
+
     </BoxContainer>
 </DefaultWindow>

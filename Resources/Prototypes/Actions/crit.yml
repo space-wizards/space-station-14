@@ -1,47 +1,50 @@
 # Actions added to mobs in crit.
 - type: entity
+  abstract: true
+  parent: BaseMentalAction
+  id: BaseCritAction
+  components:
+  - type: Action
+    itemIconStyle: NoItem
+
+- type: entity
+  parent: BaseCritAction
   id: ActionCritSuccumb
   name: Succumb
   description: Accept your fate.
   components:
-  - type: InstantAction
-    itemIconStyle: NoItem
-    checkCanInteract: false
-    checkConsciousness: false
+  - type: Action
+    startDelay: true
+    useDelay: 10
     icon:
       sprite: Mobs/Ghosts/ghost_human.rsi
       state: icon
+  - type: InstantAction
     event: !type:CritSuccumbEvent
-    startDelay: true
-    useDelay: 10
 
 - type: entity
+  parent: BaseCritAction
   id: ActionCritFakeDeath
   name: Fake Death
   description: Pretend to take your final breath while staying alive.
   components:
-  - type: InstantAction
-    itemIconStyle: NoItem
-    checkCanInteract: false
-    checkConsciousness: false
+  - type: Action
+    useDelay: 30
     icon:
       sprite: Interface/Actions/actions_crit.rsi
       state: fakedeath
+  - type: InstantAction
     event: !type:CritFakeDeathEvent
-    useDelay: 30
 
 - type: entity
+  parent: ActionCritSuccumb # for use delay
   id: ActionCritLastWords
   name: Say Last Words
   description: Whisper your last words to anyone nearby, and then succumb to your fate. You only have 30 characters to work with.
   components:
-  - type: InstantAction
-    itemIconStyle: NoItem
-    checkCanInteract: false
-    checkConsciousness: false
+  - type: Action
     icon:
       sprite: Interface/Actions/actions_crit.rsi
       state: lastwords
+  - type: InstantAction
     event: !type:CritLastWordsEvent
-    startDelay: true
-    useDelay: 10

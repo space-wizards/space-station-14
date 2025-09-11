@@ -1,20 +1,20 @@
 ﻿- type: stack
   id: Cable
-  name: lv cable
+  name: stack-lv-cable
   icon: { sprite: "/Textures/Objects/Tools/cable-coils.rsi", state: coil-30 }
   spawn: CableApcStack1
   maxCount: 30
 
 - type: stack
   id: CableMV
-  name: mv cable
+  name: stack-mv-cable
   icon: { sprite: "/Textures/Objects/Tools/cable-coils.rsi", state: coilmv-30 }
   spawn: CableMVStack1
   maxCount: 30
 
 - type: stack
   id: CableHV
-  name: hv cable
+  name: stack-hv-cable
   icon: { sprite: "/Textures/Objects/Tools/cable-coils.rsi", state: coilhv-30 }
   spawn: CableHVStack1
   maxCount: 30
