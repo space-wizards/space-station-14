@@ -736,7 +736,7 @@
   id: HideCorgi # corgi hide for crafting, not for making corgis invisible
 
 - type: Tag
-  id: PeltScurret
+  id: PeltScurret # scurret hide for selling, not for throwing at scurrets (unless you are a psychopath)
 
 - type: Tag
   id: HidesHair # for headwear.

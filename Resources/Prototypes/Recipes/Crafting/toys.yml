@@ -15,14 +15,6 @@
   objectType: Item
 
 - type: construction
-  id: ClothingOuterSuitScurret
-  graph: ClothingOuterSuitScurret
-  startNode: start
-  targetNode: suit
-  category: construction-category-misc
-  objectType: Item
-
-- type: construction
   id: MoproachShoes
   graph: MoproachShoes
   startNode: start

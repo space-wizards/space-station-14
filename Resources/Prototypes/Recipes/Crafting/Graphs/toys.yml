@@ -38,23 +38,6 @@
     entity: ClothingOuterSuitIan
 
 - type: constructionGraph
-  id: ClothingOuterSuitScurret
-  start: start
-  graph:
-  - node: start
-    edges:
-    - to: suit
-      steps:
-      - tag: PeltScurret
-        name: construction-graph-tag-scurret-pelt
-        icon:
-          sprite: Objects/Materials/materials.rsi
-          state: scurret
-        doAfter: 5
-  - node: suit
-    entity: ClothingOuterSuitScurret
-
-- type: constructionGraph
   id: MoproachShoes
   start: start
   graph:
