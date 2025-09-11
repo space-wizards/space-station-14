@@ -36,22 +36,6 @@
   fireStates: 3
 
 - type: explosion
-  id: MicroBomb
-  damagePerIntensity:
-    types:
-      Heat: 6
-      Blunt: 6
-      Piercing: 6
-      Structural: 20
-  tileBreakChance: [ 0, 0.5, 1 ]
-  tileBreakIntensity: [ 1, 10, 15 ]
-  tileBreakRerollReduction: 30
-  intensityPerState: 20
-  lightColor: Orange
-  texturePath: /Textures/Effects/fire.rsi
-  fireStates: 3
-
-- type: explosion
   id: Radioactive
   damagePerIntensity:
     types:
@@ -136,6 +120,4 @@
   fireStates: 3
   fireStacks: 2
 
-# STOP
-# BEFORE YOU ADD MORE EXPLOSION TYPES CONSIDER IF AN EXISTING ONE IS SUITABLE
-# ADDING NEW ONES IS PROHIBITIVELY EXPENSIVE
+
