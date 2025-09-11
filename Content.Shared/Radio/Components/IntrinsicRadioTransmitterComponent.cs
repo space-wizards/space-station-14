@@ -1,4 +1,5 @@
 using Content.Shared.Chat;
+using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Radio.Components;
@@ -7,7 +8,7 @@ namespace Content.Shared.Radio.Components;
 ///     This component allows an entity to directly translate spoken text into radio messages (effectively an intrinsic
 ///     radio headset).
 /// </summary>
-[RegisterComponent]
+[RegisterComponent, NetworkedComponent]
 public sealed partial class IntrinsicRadioTransmitterComponent : Component
 {
     [DataField]

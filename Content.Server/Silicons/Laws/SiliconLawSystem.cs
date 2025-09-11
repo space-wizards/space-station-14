@@ -1,7 +1,6 @@
 using System.Linq;
 using Content.Server.Administration;
 using Content.Server.Chat.Managers;
-using Content.Server.Roles;
 using Content.Server.Station.Systems;
 using Content.Shared.Administration;
 using Content.Shared.Chat;

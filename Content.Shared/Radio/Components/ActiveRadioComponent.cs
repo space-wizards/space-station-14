@@ -1,13 +1,12 @@
-using Content.Shared.Radio;
+using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.Set;
 
 namespace Content.Shared.Radio.Components;
 
 /// <summary>
 ///     This component is required to receive radio message events.
 /// </summary>
-[RegisterComponent]
+[RegisterComponent, NetworkedComponent]
 public sealed partial class ActiveRadioComponent : Component
 {
     /// <summary>

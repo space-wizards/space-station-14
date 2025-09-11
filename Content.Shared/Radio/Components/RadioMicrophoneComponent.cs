@@ -1,5 +1,6 @@
 using Content.Shared.Radio.EntitySystems;
 using Content.Shared.Chat;
+using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Radio.Components;
@@ -7,7 +8,7 @@ namespace Content.Shared.Radio.Components;
 /// <summary>
 ///     Listens for local chat messages and relays them to some radio frequency
 /// </summary>
-[RegisterComponent]
+[RegisterComponent, NetworkedComponent]
 [Access(typeof(SharedRadioDeviceSystem))]
 public sealed partial class RadioMicrophoneComponent : Component
 {

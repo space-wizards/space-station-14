@@ -1,7 +1,5 @@
-
 using Content.Shared.Popups;
 using Content.Shared.Radio.Components;
-using Content.Shared.Speech.Components;
 
 namespace Content.Shared.Radio.EntitySystems;
 
@@ -19,7 +17,7 @@ public abstract class SharedRadioDeviceSystem : EntitySystem
         SetMicrophoneEnabled(uid, user, !component.Enabled, quiet, component);
     }
 
-    public abstract void SetMicrophoneEnabled(EntityUid uid, EntityUid? user, bool enabled, bool quiet = false, RadioMicrophoneComponent? component = null);
+    public virtual void SetMicrophoneEnabled(EntityUid uid, EntityUid? user, bool enabled, bool quiet = false, RadioMicrophoneComponent? component = null) { }
 
     public void ToggleRadioSpeaker(EntityUid uid, EntityUid user, bool quiet = false, RadioSpeakerComponent? component = null)
     {
@@ -35,6 +33,7 @@ public abstract class SharedRadioDeviceSystem : EntitySystem
             return;
 
         component.Enabled = enabled;
+        Dirty(uid, component);
 
         if (!quiet && user != null)
         {

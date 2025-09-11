@@ -2,6 +2,7 @@ using Content.Shared.Chat;
 using Content.Shared.Tools;
 using Robust.Shared.Audio;
 using Robust.Shared.Containers;
+using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Radio.Components;
@@ -9,14 +10,13 @@ namespace Content.Shared.Radio.Components;
 /// <summary>
 ///     This component is by entities that can contain encryption keys
 /// </summary>
-[RegisterComponent]
+[RegisterComponent, NetworkedComponent]
 public sealed partial class EncryptionKeyHolderComponent : Component
 {
     /// <summary>
     ///     Whether or not encryption keys can be removed from the headset.
     /// </summary>
-    [ViewVariables(VVAccess.ReadWrite)]
-    [DataField("keysUnlocked")]
+    [DataField]
     public bool KeysUnlocked = true;
 
     /// <summary>

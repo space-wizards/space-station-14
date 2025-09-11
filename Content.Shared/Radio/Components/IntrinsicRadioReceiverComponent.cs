@@ -1,3 +1,5 @@
+using Robust.Shared.GameStates;
+
 namespace Content.Shared.Radio.Components;
 
 /// <summary>
@@ -5,7 +7,5 @@ namespace Content.Shared.Radio.Components;
 ///     automatically add an <see cref="ActiveRadioComponent"/>, which is required to receive radio messages on specific
 ///     channels.
 /// </summary>
-[RegisterComponent]
-public sealed partial class IntrinsicRadioReceiverComponent : Component
-{
-}
+[RegisterComponent, NetworkedComponent]
+public sealed partial class IntrinsicRadioReceiverComponent : Component;
