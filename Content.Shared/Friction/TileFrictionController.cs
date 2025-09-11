@@ -1,6 +1,7 @@
 using System.Numerics;
 using Content.Shared.CCVar;
 using Content.Shared.Gravity;
+using Content.Shared.Interaction.Components;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Movement.Components;
 using Content.Shared.Movement.Events;
@@ -110,8 +111,12 @@ namespace Content.Shared.Friction
 
                 if (body.BodyType != BodyType.KinematicController)
                 {
-                    // Commented out because it's not nearly as important and actual issues should get caught by the other assert
-                    // DebugTools.Assert(!HasComp<InputMoverComponent>(uid), $"Input mover: {ToPrettyString(uid)} in TileFrictionController is not the correct BodyType, BodyType found: {body.BodyType}, expected: KinematicController.");
+                    /*
+                     * Extra catch for input movers that may be temporarily unable to move for whatever reason.
+                     * Block movement shouldn't be added and removed frivolously so it should be reliable to use this
+                     * as a check for brains and such which have input mover purely for ghosting behavior.
+                     */
+                    DebugTools.Assert(!HasComp<InputMoverComponent>(uid) || HasComp<BlockMovementComponent>(uid), $"Input mover: {ToPrettyString(uid)} in TileFrictionController is not the correct BodyType, BodyType found: {body.BodyType}, expected: KinematicController.");
                     continue;
                 }
 

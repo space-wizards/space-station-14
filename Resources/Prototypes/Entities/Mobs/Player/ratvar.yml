@@ -80,7 +80,6 @@
     - Syndicate
     globalReceive: true
   - type: Physics
-    bodyType: KinematicController
     bodyStatus: InAir
   - type: CanMoveInAir
   - type: EventHorizon
