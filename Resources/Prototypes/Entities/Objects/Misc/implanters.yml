@@ -67,11 +67,11 @@
     size: Small
   - type: Appearance
   - type: ChangeLayersColor
-      mapLayers:
-        implantFull:
-          whitelist:
-            components:
-            - SubdermalImplant
+    mapLayers:
+      implantFull:
+        whitelist:
+          components:
+          - SubdermalImplant
   - type: GenericVisualizer
     visuals:
       enum.ImplanterVisuals.Full:

@@ -24,7 +24,7 @@
       components:
       - MobState # admeme implanting a chair with trombone implant needs to give the chair mobstate so it can die first
   - type: ItemLayersColor
-      color: "#6e008c"
+    color: "#6e008c"
   - type: TriggerOnMobstateChange
     mobState:
     - Dead
@@ -44,7 +44,7 @@
   - type: SubdermalImplant
     implantAction: ActionToggleLight
   - type: ItemLayersColor
-      color: "#fcf803"
+    color: "#fcf803"
   - type: PointLight
     enabled: false
     radius: 2.5
@@ -68,7 +68,7 @@
   - type: SubdermalImplant
     implantAction: ActionActivateHonkImplant
   - type: ItemLayersColor
-      color: "#fc03c6"
+    color: "#fc03c6"
   - type: TriggerOnActivateImplant
   - type: EmitSoundOnTrigger
     predicted: true
