@@ -188,9 +188,9 @@ public abstract class SharedSprayPainterSystem : EntitySystem
         args.Handled = true;
 
         // Starlight-edit: Start
-    if (TryComp<LimitedChargesComponent>(args.Used, out var charges))
-    {
-        if (!Charges.TryUseCharges((args.Used, charges), targetGroup.Cost))
+        if (TryComp<LimitedChargesComponent>(args.Used, out var charges))
+        {
+            if (!Charges.TryUseCharges((args.Used, charges), targetGroup.Cost))
         {
         var msg = Loc.GetString("spray-painter-interact-no-charges");
         _popup.PopupClient(msg, args.User, args.User);
