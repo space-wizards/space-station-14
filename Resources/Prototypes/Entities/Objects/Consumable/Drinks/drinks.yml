@@ -1559,6 +1559,22 @@
 
 - type: entity
   parent: DrinkGlass
+  id: DrinkNadaColadaGlass
+  suffix: nada colada
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 30
+        reagents:
+        - ReagentId: NadaColada
+          Quantity: 30
+  - type: Icon
+    sprite: Objects/Consumable/Drinks/nadacolada.rsi
+    state: icon
+
+- type: entity
+  parent: DrinkGlass
   id: DrinkNeurotoxinGlass
   suffix: neurotoxin
   components:
@@ -1635,6 +1651,22 @@
           Quantity: 30
   - type: Icon
     sprite: Objects/Consumable/Drinks/orangejuice.rsi
+    state: icon
+
+- type: entity
+  parent: DrinkGlass
+  id: DrinkPainColadaGlass
+  suffix: pain colada
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 30
+        reagents:
+        - ReagentId: PainColada
+          Quantity: 30
+  - type: Icon
+    sprite: Objects/Consumable/Drinks/paincolada.rsi
     state: icon
 
 - type: entity

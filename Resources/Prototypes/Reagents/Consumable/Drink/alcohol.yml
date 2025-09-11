@@ -1597,6 +1597,55 @@
         amount: 0.2
 
 - type: reagent
+  id: NadaColada
+  name: reagent-name-nada-colada
+  parent: BaseAlcohol
+  desc: reagent-desc-nada-colada
+  physicalDesc: reagent-physical-desc-tropical
+  flavor: nadacolada
+  color: "#f0fcf0"
+  metamorphicSprite:
+    sprite: Objects/Consumable/Drinks/nadacolada.rsi
+    state: icon_empty
+  metamorphicMaxFillLevels: 6
+  metamorphicFillBaseName: fill-
+  metamorphicChangeColor: true
+  metabolisms:
+    Drink:
+      effects:
+      - !type:SatiateThirst
+        factor: 2
+      - !type:AdjustReagent
+        reagent: Ethanol
+        amount: 0.2
+
+- type: reagent
+  id: PainColada
+  name: reagent-name-pain-colada
+  parent: BaseAlcohol
+  desc: reagent-desc-pain-colada
+  physicalDesc: reagent-physical-desc-tropical
+  flavor: paincolada
+  color: "#b3e1c5"
+  metamorphicSprite:
+    sprite: Objects/Consumable/Drinks/paincolada.rsi
+    state: icon_empty
+  metamorphicMaxFillLevels: 6
+  metamorphicFillBaseName: fill-
+  metamorphicChangeColor: true
+  metabolisms:
+    Drink:
+      effects:
+      - !type:SatiateThirst
+        factor: 1
+      - !type:AdjustReagent
+        reagent: Ethanol
+        amount: 0.2
+      - !type:AdjustReagent
+        reagent: Razorium
+        amount: 0.25
+
+- type: reagent
   id: Radler
   name: reagent-name-radler
   parent: BaseAlcohol
