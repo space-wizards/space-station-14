@@ -25,7 +25,7 @@ namespace Content.Client.Power.APC.UI
             IoCManager.InjectDependencies(this);
             RobustXamlLoader.Load(this);
 
-            BreakerButton.OnPressed += _ => OnBreaker?.Invoke();
+            BreakerButton.OnToggled += _ => OnBreaker?.Invoke();
         }
 
         public void SetEntity(EntityUid entity)
