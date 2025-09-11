@@ -116,7 +116,7 @@ public abstract partial class InteractionTest
         });
 
         await RunTicks(5);
-        AssertPrototype(prototype);
+        AssertPrototype(prototype, entity);
         return entity;
     }
 
