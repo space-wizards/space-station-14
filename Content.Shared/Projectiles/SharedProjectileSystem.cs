@@ -245,6 +245,12 @@ public record struct ProjectileReflectAttemptEvent(EntityUid ProjUid, Projectile
 }
 
 /// <summary>
+/// Cancelable event for cover
+/// </summary>
+[ByRefEvent]
+public record struct ProjectileMissCoverAttemptEvent(EntityUid ProjUid, ProjectileComponent Component, bool Cancelled);
+
+/// <summary>
 /// Raised when a projectile hits an entity
 /// </summary>
 [ByRefEvent]

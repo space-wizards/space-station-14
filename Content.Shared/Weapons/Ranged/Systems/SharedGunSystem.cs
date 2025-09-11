@@ -6,6 +6,7 @@ using Content.Shared.Administration.Logs;
 using Content.Shared.Audio;
 using Content.Shared.CombatMode;
 using Content.Shared.Containers.ItemSlots;
+using Content.Shared.Coordinates;
 using Content.Shared.Damage;
 using Content.Shared.Examine;
 using Content.Shared.Hands;
@@ -427,6 +428,7 @@ public abstract partial class SharedGunSystem : EntitySystem
         Physics.SetLinearVelocity(uid, finalLinear, body: physics);
 
         var projectile = EnsureComp<ProjectileComponent>(uid);
+        projectile.Origin = TransformSystem.GetMapCoordinates(uid);
         projectile.Weapon = gunUid;
         var shooter = user ?? gunUid;
         if (shooter != null)
