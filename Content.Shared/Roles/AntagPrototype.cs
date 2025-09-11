@@ -10,6 +10,12 @@ namespace Content.Shared.Roles;
 [Prototype]
 public sealed partial class AntagPrototype : IPrototype
 {
+    // The name to group all antagonists under. Equivalent to DepartmentPrototype IDs.
+    public static readonly string GroupName = "Antagonist";
+
+    // The colour to group all antagonists using. Equivalent to DepartmentPrototype Color fields.
+    public static readonly Color GroupColor = Color.Red;
+
     [ViewVariables]
     [IdDataField]
     public string ID { get; private set; } = default!;

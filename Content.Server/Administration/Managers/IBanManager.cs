@@ -52,15 +52,35 @@ public interface IBanManager
     public HashSet<ProtoId<JobPrototype>>? GetJobBans(NetUserId playerUserId);
 
     /// <summary>
+    /// Gets a list of prototype IDs with the player's antag bans.
+    /// </summary>
+    public HashSet<ProtoId<AntagPrototype>>? GetAntagBans(NetUserId playerUserId);
+
+    /// <summary>
     /// Creates a job ban for the specified target, username or GUID
     /// </summary>
     /// <param name="target">Target user, username or GUID, null for none</param>
-    /// <param name="role">Role ID to be banned from. It must be prefixed to designate the type ('Job:' or 'Antag:')</param>
+    /// <param name="targetUsername">The username of the target, if known</param>
+    /// <param name="banningAdmin">The responsible admin for the ban</param>
+    /// <param name="addressRange">The range of IPs that are to be banned, if known</param>
+    /// <param name="hwid">The HWID to be banned, if known</param>
+    /// <param name="role">The role ID to be banned from. Either an AntagPrototype or a JobPrototype</param>
+    /// <param name="minutes">Number of minutes to ban for. 0 and null mean permanent</param>
     /// <param name="severity">Severity of the resulting ban note</param>
     /// <param name="reason">Reason for the ban</param>
-    /// <param name="minutes">Number of minutes to ban for. 0 and null mean permanent</param>
     /// <param name="timeOfBan">Time when the ban was applied, used for grouping role bans</param>
-    public void CreateRoleBan(NetUserId? target, string? targetUsername, NetUserId? banningAdmin, (IPAddress, int)? addressRange, ImmutableTypedHwid? hwid, string role, uint? minutes, NoteSeverity severity, string reason, DateTimeOffset timeOfBan);
+    public void CreateRoleBan<T>(
+        NetUserId? target,
+        string? targetUsername,
+        NetUserId? banningAdmin,
+        (IPAddress, int)? addressRange,
+        ImmutableTypedHwid? hwid,
+        ProtoId<T> role,
+        uint? minutes,
+        NoteSeverity severity,
+        string reason,
+        DateTimeOffset timeOfBan
+    ) where T : class, IPrototype;
 
     /// <summary>
     /// Pardons a role ban for the specified target, username or GUID

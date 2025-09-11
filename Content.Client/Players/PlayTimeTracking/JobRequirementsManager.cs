@@ -25,11 +25,9 @@ public sealed class JobRequirementsManager : ISharedPlaytimeManager
     [Dependency] private readonly IPrototypeManager _prototypes = default!;
 
     private readonly Dictionary<string, TimeSpan> _roles = new();
-    private readonly List<string> _roleBans = new();
+    private readonly List<string> _jobBans = new();
+    private readonly List<string> _antagBans = new();
     private readonly List<string> _jobWhitelists = new();
-
-    private const string PrefixAntag = SharedRoleSystem.RolePrefixAntag;
-    private const string PrefixJob = SharedRoleSystem.RolePrefixJob;
 
     private ISawmill _sawmill = default!;
 
@@ -54,16 +52,19 @@ public sealed class JobRequirementsManager : ISharedPlaytimeManager
             // Reset on disconnect, just in case.
             _roles.Clear();
             _jobWhitelists.Clear();
-            _roleBans.Clear();
+            _jobBans.Clear();
+            _antagBans.Clear();
         }
     }
 
     private void RxRoleBans(MsgRoleBans message)
     {
-        _sawmill.Debug($"Received roleban info containing {message.Bans.Count} entries.");
+        _sawmill.Debug($"Received role ban info: {message.JobBans.Count} job ban entries and {message.AntagBans.Count} antag ban entries.");
 
-        _roleBans.Clear();
-        _roleBans.AddRange(message.Bans);
+        _jobBans.Clear();
+        _jobBans.AddRange(message.JobBans);
+        _antagBans.Clear();
+        _antagBans.AddRange(message.AntagBans);
         Updated?.Invoke();
     }
 
@@ -136,7 +137,7 @@ public sealed class JobRequirementsManager : ISharedPlaytimeManager
         [NotNullWhen(false)] out FormattedMessage? reason)
     {
         // Check the player's bans
-        if (_roleBans.Contains(PrefixJob + job.ID))
+        if (_jobBans.Contains(job.ID))
         {
             reason = FormattedMessage.FromUnformatted(Loc.GetString("role-ban"));
             return false;
@@ -151,7 +152,6 @@ public sealed class JobRequirementsManager : ISharedPlaytimeManager
         if (!CheckRoleRequirements(reqs, profile, out reason))
             return false;
 
-
         return true;
     }
 
@@ -164,13 +164,15 @@ public sealed class JobRequirementsManager : ISharedPlaytimeManager
         [NotNullWhen(false)] out FormattedMessage? reason)
     {
         // Check the player's bans
-        if (_roleBans.Contains(PrefixAntag + antag.ID))
+        if (_antagBans.Contains(antag.ID))
         {
             reason = FormattedMessage.FromUnformatted(Loc.GetString("role-ban"));
             return false;
         }
 
-        // TODO AntagPrototype whitelist check
+        // Check whitelist requirements
+        if (!CheckWhitelist(antag, out reason))
+            return false;
 
         // Check other role requirements
         var reqs = _entManager.System<SharedRoleSystem>().GetRoleRequirements(antag);
@@ -212,6 +214,15 @@ public sealed class JobRequirementsManager : ISharedPlaytimeManager
             reason = FormattedMessage.FromUnformatted(Loc.GetString("role-not-whitelisted"));
             return false;
         }
+
+        return true;
+    }
+
+    public bool CheckWhitelist(AntagPrototype antag, [NotNullWhen(false)] out FormattedMessage? reason)
+    {
+        reason = default;
+
+        // TODO: Implement antag whitelisting.
 
         return true;
     }

@@ -30,10 +30,6 @@ public abstract class SharedRoleSystem : EntitySystem
 
     private JobRequirementOverridePrototype? _requirementOverride;
 
-    // Prefixes used when recording or referencing role bans
-    public const string RolePrefixJob = "Job:";
-    public const string RolePrefixAntag = "Antag:";
-
     public override void Initialize()
     {
         Subs.CVar(_cfg, CCVars.GameRoleTimerOverride, SetRequirementOverride, true);
