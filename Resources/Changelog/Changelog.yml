@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: ciaran
-  changes:
-  - message: Guidebook recipe inputs can now link to recipes on the same page
-    type: Add
-  id: 8443
-  time: '2025-05-09T00:06:26.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/36700
 - author: Nyxilath
   changes:
   - message: Trash bags can be printed by Autolathes again.
@@ -3947,3 +3940,11 @@
   id: 8954
   time: '2025-09-11T15:59:11.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/39221
+- author: luegamer
+  changes:
+  - message: SmartFridge Circuitboards are now printable, SmartFridge destruction
+      no longer deletes all contents
+    type: Add
+  id: 8955
+  time: '2025-09-11T19:59:21.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/39879
