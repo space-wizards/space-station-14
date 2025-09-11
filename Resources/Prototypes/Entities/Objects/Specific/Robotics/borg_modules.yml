@@ -412,6 +412,14 @@
 
 # generic modules
 - type: entity
+  id: BorgModuleCablePlaceholder
+  parent: BaseItem
+  components:
+  - type: Sprite
+    sprite: Objects/Tools/cable-coils.rsi
+    state: coilall-30
+
+- type: entity
   id: BorgModuleCable
   parent: [ BaseBorgModule, BaseProviderBorgModule ]
   name: cable cyborg module
@@ -425,21 +433,21 @@
     hands:
     - item: CableApcStack10
       hand:
-        emptyRepresentative: CableApcStack10
+        emptyRepresentative: BorgModuleCablePlaceholder
         emptyLabel: borg-slot-cables-empty
         whitelist:
           tags:
           - CableCoil
     - item: CableMVStack10
       hand:
-        emptyRepresentative: CableMVStack10
+        emptyRepresentative: BorgModuleCablePlaceholder
         emptyLabel: borg-slot-cables-empty
         whitelist:
           tags:
           - CableCoil
     - item: CableHVStack10
       hand:
-        emptyRepresentative: CableHVStack10
+        emptyRepresentative: BorgModuleCablePlaceholder
         emptyLabel: borg-slot-cables-empty
         whitelist:
           tags:

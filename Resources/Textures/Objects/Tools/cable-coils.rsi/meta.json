@@ -1,7 +1,7 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
-  "copyright": "Taken from tgstation and modified by SweptWasTaken at commit https://github.com/tgstation/tgstation/commit/77608a9f46b06a46f0f6b1be061755f68cc255a3",
+  "copyright": "Taken from tgstation, modified by SweptWasTaken at commit https://github.com/tgstation/tgstation/commit/77608a9f46b06a46f0f6b1be061755f68cc255a3, new coilall by SurrealShibe (GitHub).",
   "size": {
     "x": 32,
     "y": 32
@@ -68,9 +68,6 @@
       "name": "coillv-10"
     },
     {
-      "name": "coilall-30"
-    },
-    {
       "name": "coil-equipped-BELT",
       "directions": 4
     },
@@ -85,6 +82,9 @@
     {
       "name": "coilhv-equipped-BELT",
       "directions": 4
+    },
+    {
+      "name": "coilall-30"
     }
   ]
 }
