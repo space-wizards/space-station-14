@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: Thinbug0
-  changes:
-  - message: The push horn lost its ability to push items, in exchange of a bigger
-      range
-    type: Tweak
-  id: 8441
-  time: '2025-05-08T16:49:59.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/37281
 - author: MureixloL
   changes:
   - message: Changed sprite of mime satchel!
@@ -3943,3 +3935,14 @@
   id: 8952
   time: '2025-09-11T10:57:31.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/40143
+- author: 5tickman
+  changes:
+  - message: Food and ingredient item sizes have been adjusted.
+    type: Tweak
+  - message: Mimes now start with a Nutribrick instead of a Baguette.
+    type: Tweak
+  - message: The combat bakery kit is now a 4x4 sized box.
+    type: Tweak
+  id: 8953
+  time: '2025-09-11T11:37:25.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/39203
