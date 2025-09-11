@@ -414,6 +414,7 @@
 - type: entity
   id: BorgModuleCablePlaceholder
   parent: BaseItem
+  categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
     sprite: Objects/Tools/cable-coils.rsi
@@ -627,6 +628,7 @@
 - type: entity
   id: BorgModuleConstructionMaterialPlaceholder
   parent: BaseItem
+  categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
     sprite: Objects/Materials/Sheets/other.rsi
