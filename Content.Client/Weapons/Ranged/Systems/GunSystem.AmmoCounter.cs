@@ -163,7 +163,7 @@ public sealed partial class GunSystem
         private readonly Label _noMagazineLabel;
         private readonly Label _ammoCount;
 
-        public ChamberMagazineStatusControl()
+        public ChamberMagazineStatusControl(string noMagazineText)
         {
             MinHeight = 15;
             HorizontalExpand = true;
@@ -188,7 +188,7 @@ public sealed partial class GunSystem
                             }),
                             (_noMagazineLabel = new Label
                             {
-                                Text = "No Magazine!",
+                                Text = noMagazineText,
                                 StyleClasses = {StyleNano.StyleClassItemStatus}
                             })
                         }

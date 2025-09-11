@@ -18,3 +18,5 @@ credits-window-attributions-copyright = [color=white]Copyright:[/color] {$copyri
 credits-window-attributions-license = [color=white]License:[/color] {$license}
 credits-window-attributions-source = [color=white]Source:[/color] {$source}
 credits-window-attributions-failed = [color=red]Failed to read file:[/color] {$file}
+credits-window-previous-page = Previous Page
+credits-window-next-page = Next Page

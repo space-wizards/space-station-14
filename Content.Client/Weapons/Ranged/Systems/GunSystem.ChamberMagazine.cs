@@ -57,7 +57,7 @@ public sealed partial class GunSystem
 
     private void OnChamberMagazineCounter(EntityUid uid, ChamberMagazineAmmoProviderComponent component, AmmoCounterControlEvent args)
     {
-        args.Control = new ChamberMagazineStatusControl();
+        args.Control = new ChamberMagazineStatusControl(Loc.GetString("gun-no-magazine"));
     }
 
     private void OnChamberMagazineAmmoUpdate(EntityUid uid, ChamberMagazineAmmoProviderComponent component, UpdateAmmoCounterEvent args)

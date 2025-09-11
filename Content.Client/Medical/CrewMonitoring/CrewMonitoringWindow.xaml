@@ -11,7 +11,7 @@
             <BoxContainer Orientation="Vertical" Margin="0 0 10 0">
                 <controls:StripeBack>
                     <PanelContainer>
-                        <Label Name="StationName" Text="Unknown station" Align="Center" Margin="0 5 0 3"/>
+                        <Label Name="StationName" Text="{Loc 'crew-monitoring-user-interface-unknown-station'}" Align="Center" Margin="0 5 0 3"/>
                     </PanelContainer>
                 </controls:StripeBack>
 

@@ -100,11 +100,11 @@ public sealed partial class CreditsWindow : DefaultWindow
 
         var container = new BoxContainer { Orientation = LayoutOrientation.Horizontal };
 
-        var previousPageButton = new Button { Text = "Previous Page" };
+        var previousPageButton = new Button { Text = Loc.GetString("credits-window-previous-page") };
         previousPageButton.OnPressed +=
             _ => PopulateAttributions(attributionsContainer, count - AttributionsSourcesPerPage);
 
-        var nextPageButton = new Button { Text = "Next Page" };
+        var nextPageButton = new Button { Text = Loc.GetString("credits-window-next-page") };
         nextPageButton.OnPressed +=
             _ => PopulateAttributions(attributionsContainer, count + AttributionsSourcesPerPage);
 
