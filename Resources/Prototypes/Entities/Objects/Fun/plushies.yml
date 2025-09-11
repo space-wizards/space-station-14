@@ -110,6 +110,7 @@
     - ForceableFollow
     - PlushieGhost
     - Payload
+    - ClothMade
 
 - type: entity
   parent: PlushieGhost
@@ -304,6 +305,7 @@
     state: icon
   - type: EmitSoundOnUse
     sound: &PlushieArachnidSound
+      path: /Audio/Voice/Arachnid/arachnid_laugh.ogg
   - type: EmitSoundOnLand
     sound: *PlushieArachnidSound
   - type: EmitSoundOnActivate
@@ -351,6 +353,7 @@
     sound: *PlushieLizardSound
   - type: Edible
     useSound: *PlushieLizardSound
+    transferAmount: 10
   - type: MeleeWeapon
     wideAnimationRotation: 180
     soundHit: *PlushieLizardSound
