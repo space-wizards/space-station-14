@@ -366,6 +366,10 @@
         maxVol: 15
   - type: Injector
     injectOnly: false
+    transferAmounts:
+    - 5
+    - 10
+    - 15
   - type: ExaminableSolution
     solution: injector
     exactVolume: true
