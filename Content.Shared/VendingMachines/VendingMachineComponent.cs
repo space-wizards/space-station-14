@@ -142,6 +142,7 @@ namespace Content.Shared.VendingMachines
         /// <summary>
         /// Audio entity used during restock in case the doafter gets canceled.
         /// </summary>
+        [DataField]
         public EntityUid? RestockStream;
 
         #region Client Visuals
