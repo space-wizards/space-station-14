@@ -1,8 +1,12 @@
 using Content.Shared.Projectiles;
 using Content.Shared.Cover.Components;
 using Robust.Shared.Random;
-using Robust.Shared.Timing;
-using Robust.Shared.Physics.Components;
+using Content.Shared.Examine;
+using Content.Shared.CCVar;
+using Robust.Shared.Configuration;
+using Robust.Shared.Physics;
+using Content.Shared.Physics;
+using Content.Shared.Damage.Components;
 
 namespace Content.Shared.Cover;
 
@@ -10,13 +14,18 @@ public sealed class SharedCoverSystem : EntitySystem
 {
     [Dependency] private readonly SharedTransformSystem _xform = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
-    [Dependency] private readonly IGameTiming _time = default!;
+    [Dependency] private readonly IConfigurationManager _configuration = default!;
+
+    private bool _coverExamineEnabled;
 
     public override void Initialize()
     {
         base.Initialize();
 
         SubscribeLocalEvent<CoverComponent, ProjectileMissCoverAttemptEvent>(OnMissCover);
+        SubscribeLocalEvent<CoverComponent, ExaminedEvent>(OnExamine);
+
+        Subs.CVar(_configuration, CCVars.CoverExamine, SetCoverExamine, true);
     }
 
     private void OnMissCover(Entity<CoverComponent> ent, ref ProjectileMissCoverAttemptEvent args)
@@ -35,15 +44,89 @@ public sealed class SharedCoverSystem : EntitySystem
         if (distance < cover.Comp.MinDistance) // we are too close and could shoot over easily
             return true;
 
-        var coverPctAdjusted = 1 - (cover.Comp.MaxDistance - distance) / cover.Comp.MaxDistance;
+        // extend the cover falloff range for guns with scopes.
+        var maxDistAdj = cover.Comp.MaxDistance + comp.CoverRangeBonus;
 
-        if (!_random.Prob(coverPctAdjusted)) // we are too far to reach over easily
+        var mix = (maxDistAdj - distance) / maxDistAdj;
+        var coverPctAdj = MathHelper.Lerp(cover.Comp.CoverPct, 0, mix); // closer means easier to miss cover
+        if (!_random.Prob(coverPctAdj)) // we are too far to reach over easily
         {
             // don't need to consider penetration. Things that pen can miss cover, or hit it and let pen figure it out.
             return true;
         }
 
         return false;
+    }
+
+    // ToDo: consider hitscans.
+
+    private void OnExamine(EntityUid ent, CoverComponent component, ref ExaminedEvent args)
+    {
+        if (!component.ShowExamine)
+            return;
+
+        if (!_coverExamineEnabled)
+            return;
+
+        if (!args.IsInDetailsRange)
+            return;
+
+        if (TryComp<RequireProjectileTargetComponent>(ent, out var req)) // It will always fly over
+        {
+            if (req.Active == true)
+            {
+                args.PushMarkup(Loc.GetString("no-cover"));
+                return;
+            }
+        }
+
+        // check if we can even collide with a projectile
+        if (!TryComp<FixturesComponent>(ent, out var fix))
+            return;
+
+        var matches = false;
+        var projlayers = CollisionGroup.Impassable | CollisionGroup.BulletImpassable;
+        foreach (var f in fix.Fixtures.Values)
+        {
+            var layer = (CollisionGroup)f.CollisionLayer;
+            if ((layer & projlayers) != 0)
+            {
+                matches = true;
+                break;
+            }
+        }
+        if (!matches)
+        {
+            args.PushMarkup(Loc.GetString("no-cover"));
+            return;
+        }
+
+        // print some fuzzy text ~
+        // not exact since the exact value will be meaningless and muddied in computation
+        switch (component.CoverPct)
+        {
+            case <= 0f:
+                args.PushMarkup(Loc.GetString("no-cover"));
+                break;
+            case <= 0.25f:
+                args.PushMarkup(Loc.GetString("some-cover"));
+                break;
+            case <= 0.50f:
+                args.PushMarkup(Loc.GetString("mild-cover"));
+                break;
+            case <= 0.75f:
+                args.PushMarkup(Loc.GetString("good-cover"));
+                break;
+            default:
+                args.PushMarkup(Loc.GetString("great-cover"));
+                break;
+        }
+
+    }
+
+    private void SetCoverExamine(bool val)
+    {
+        _coverExamineEnabled = val;
     }
 
 }

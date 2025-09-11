@@ -106,4 +106,10 @@ public sealed partial class ProjectileComponent : Component
     /// </summary>
     [DataField]
     public MapCoordinates? Origin;
+
+    /// <summary>
+    /// How much closer to consider the shots from this gun for cover purposes. For scopes.
+    /// </summary>
+    [DataField]
+    public float CoverRangeBonus = 0;
 }

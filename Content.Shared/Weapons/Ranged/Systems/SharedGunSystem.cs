@@ -430,6 +430,9 @@ public abstract partial class SharedGunSystem : EntitySystem
         var projectile = EnsureComp<ProjectileComponent>(uid);
         projectile.Origin = TransformSystem.GetMapCoordinates(uid);
         projectile.Weapon = gunUid;
+        // we cant rely on this being a gun because this code is cursed. Can't change to Entity<GunComponent> because of uses in random non-gun systems
+        if (TryComp<GunComponent>(gunUid, out var gun))
+            projectile.CoverRangeBonus = gun.CoverRangeBonus;
         var shooter = user ?? gunUid;
         if (shooter != null)
             Projectiles.SetShooter(uid, projectile, shooter.Value);
