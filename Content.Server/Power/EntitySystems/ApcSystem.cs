@@ -33,7 +33,7 @@ public sealed class ApcSystem : EntitySystem
         SubscribeLocalEvent<ApcComponent, BoundUIOpenedEvent>(OnBoundUiOpen);
         SubscribeLocalEvent<ApcComponent, ComponentStartup>(OnApcStartup);
         SubscribeLocalEvent<ApcComponent, ChargeChangedEvent>(OnBatteryChargeChanged);
-        SubscribeLocalEvent<ApcComponent, ApcToggleMainBreakerMessage>(OnToggleMainBreaker);
+        SubscribeLocalEvent<ApcComponent, ApcSetMainBreakerMessage>(OnSetMainBreaker);
         SubscribeLocalEvent<ApcComponent, GotEmaggedEvent>(OnEmagged);
 
         SubscribeLocalEvent<ApcComponent, EmpPulseEvent>(OnEmpPulse);
@@ -75,9 +75,9 @@ public sealed class ApcSystem : EntitySystem
         UpdateApcState(uid, component);
     }
 
-    private void OnToggleMainBreaker(EntityUid uid, ApcComponent component, ApcToggleMainBreakerMessage args)
+    private void OnSetMainBreaker(EntityUid uid, ApcComponent component, ApcSetMainBreakerMessage args)
     {
-        var attemptEv = new ApcToggleMainBreakerAttemptEvent();
+        var attemptEv = new ApcSetMainBreakerAttemptEvent();
         RaiseLocalEvent(uid, ref attemptEv);
         if (attemptEv.Cancelled)
         {
@@ -88,7 +88,7 @@ public sealed class ApcSystem : EntitySystem
 
         if (_accessReader.IsAllowed(args.Actor, uid))
         {
-            ApcToggleBreaker(uid, component);
+            ApcSetBreaker(uid, args.Enabled, component);
         }
         else
         {
@@ -97,7 +97,7 @@ public sealed class ApcSystem : EntitySystem
         }
     }
 
-    public void ApcToggleBreaker(EntityUid uid, ApcComponent? apc = null, PowerNetworkBatteryComponent? battery = null)
+    public void ApcSetBreaker(EntityUid uid, bool breakerEnabled, ApcComponent? apc = null, PowerNetworkBatteryComponent? battery = null)
     {
         if (!Resolve(uid, ref apc, ref battery))
             return;
@@ -209,10 +209,10 @@ public sealed class ApcSystem : EntitySystem
         {
             args.Affected = true;
             args.Disabled = true;
-            ApcToggleBreaker(uid, component);
+            ApcSetBreaker(uid, false, component);
         }
     }
 }
 
 [ByRefEvent]
-public record struct ApcToggleMainBreakerAttemptEvent(bool Cancelled);
+public record struct ApcSetMainBreakerAttemptEvent(bool Cancelled);

@@ -22,7 +22,7 @@ namespace Content.Client.Power.APC
             base.Open();
             _menu = this.CreateWindow<ApcMenu>();
             _menu.SetEntity(Owner);
-            _menu.OnBreaker += BreakerPressed;
+            _menu.OnBreaker += on => BreakerPressed(on);
 
             var hasAccess = false;
             if (PlayerManager.LocalEntity != null)
@@ -41,9 +41,9 @@ namespace Content.Client.Power.APC
             _menu?.UpdateState(castState);
         }
 
-        public void BreakerPressed()
+        public void BreakerPressed(bool on)
         {
-            SendMessage(new ApcToggleMainBreakerMessage());
+            SendMessage(new ApcSetMainBreakerMessage(on));
         }
     }
 }

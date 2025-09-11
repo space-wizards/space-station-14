@@ -212,8 +212,9 @@ namespace Content.Shared.APC
     }
 
     [Serializable, NetSerializable]
-    public sealed class ApcToggleMainBreakerMessage : BoundUserInterfaceMessage
+    public sealed class ApcSetMainBreakerMessage(bool enabled) : BoundUserInterfaceMessage
     {
+        public bool Enabled = enabled;
     }
 
     public enum ApcExternalPowerState : byte

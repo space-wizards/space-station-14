@@ -50,7 +50,7 @@ namespace Content.Server.StationEvents.Events
                 if (TryComp(entity, out ApcComponent? apcComponent))
                 {
                     if(!apcComponent.MainBreakerEnabled)
-                        _apcSystem.ApcToggleBreaker(entity, apcComponent);
+                        _apcSystem.ApcSetBreaker(entity, true, apcComponent);
                 }
             }
 
@@ -87,7 +87,7 @@ namespace Content.Server.StationEvents.Events
                 if (TryComp<ApcComponent>(selected, out var apcComponent))
                 {
                     if (apcComponent.MainBreakerEnabled)
-                        _apcSystem.ApcToggleBreaker(selected, apcComponent);
+                        _apcSystem.ApcSetBreaker(selected, false, apcComponent);
                 }
                 component.Unpowered.Add(selected);
             }
