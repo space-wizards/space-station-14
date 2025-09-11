@@ -561,22 +561,6 @@ entities:
     - type: GasTileOverlay
     - type: SpreaderGrid
     - type: GridPathfinding
-- proto: ActionToggleInternals
-  entities:
-  - uid: 481
-    components:
-    - type: Transform
-      parent: 355
-    - type: InstantAction
-      container: 355
-- proto: ActionToggleJetpack
-  entities:
-  - uid: 480
-    components:
-    - type: Transform
-      parent: 355
-    - type: InstantAction
-      container: 355
 - proto: AirAlarm
   entities:
   - uid: 89
@@ -3064,19 +3048,8 @@ entities:
     components:
     - type: Transform
       parent: 431
-    - type: GasTank
-      toggleActionEntity: 481
-    - type: Jetpack
-      toggleActionEntity: 480
     - type: Physics
       canCollide: False
-    - type: ActionsContainer
-    - type: ContainerContainer
-      containers:
-        actions: !type:Container
-          ents:
-          - 480
-          - 481
     - type: InsideEntityStorage
   - uid: 432
     components:

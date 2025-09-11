@@ -297,20 +297,6 @@ entities:
     - type: GravityShake
       shakeTimes: 10
     - type: GasTileOverlay
-- proto: ActionToggleBlock
-  entities:
-  - uid: 4
-    components:
-    - type: Transform
-      parent: 3
-    - type: InstantAction
-      container: 3
-  - uid: 6
-    components:
-    - type: Transform
-      parent: 5
-    - type: InstantAction
-      container: 5
 - proto: AirCanister
   entities:
   - uid: 105
@@ -1621,27 +1607,11 @@ entities:
     - type: Transform
       pos: -4.4730644,5.4960384
       parent: 1
-    - type: Blocking
-      blockingToggleActionEntity: 4
-    - type: ActionsContainer
-    - type: ContainerContainer
-      containers:
-        actions: !type:Container
-          ents:
-          - 4
   - uid: 5
     components:
     - type: Transform
       pos: -4.679327,5.6895027
       parent: 1
-    - type: Blocking
-      blockingToggleActionEntity: 6
-    - type: ActionsContainer
-    - type: ContainerContainer
-      containers:
-        actions: !type:Container
-          ents:
-          - 6
 - proto: Thruster
   entities:
   - uid: 222
