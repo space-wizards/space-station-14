@@ -192,11 +192,11 @@ public abstract class SharedSprayPainterSystem : EntitySystem
         {
             if (!Charges.TryUseCharges((args.Used, charges), targetGroup.Cost))
         {
-        var msg = Loc.GetString("spray-painter-interact-no-charges");
-        _popup.PopupClient(msg, args.User, args.User);
-        return;
+                var msg = Loc.GetString("spray-painter-interact-no-charges");
+                _popup.PopupClient(msg, args.User, args.User);
+                return;
+            }
         }
-    }
         // Starlight-edit: End
 
         if (!targetGroup.Styles.TryGetValue(selectedStyle, out var proto))
