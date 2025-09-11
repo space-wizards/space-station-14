@@ -34,6 +34,13 @@
       smart_fridge_inventory: !type:Container
       machine_board: !type:Container
       machine_parts: !type:Container
+  - type: Construction
+    graph: Machine
+    node: machine
+    containers:
+    - machine_parts
+    - machine_board
+    - smart_fridge_inventory
   - type: LitOnPowered
   - type: ApcPowerReceiver
     powerLoad: 200
@@ -85,35 +92,17 @@
   - type: InteractionOutline
   - type: Destructible
     thresholds:
-    - trigger: # Excess damage, don't spawn entities
+    - trigger:
         !type:DamageTrigger
         damage: 300
       behaviors:
       - !type:PlaySoundBehavior
         sound:
           collection: MetalBreak
+      - !type:ChangeConstructionNodeBehavior
+        node: machineFrame
       - !type:DoActsBehavior
-        acts: [ "Destruction" ]
-    - trigger:
-        !type:DamageTrigger
-        damage: 100
-      behaviors:
-      - !type:DoActsBehavior
-        acts: ["Breakage"]
-    - trigger:
-        !type:DamageTrigger
-        damage: 200
-      behaviors:
-      - !type:SpawnEntitiesBehavior
-        spawn:
-          SheetSteel1:
-            min: 1
-            max: 1
-      - !type:DoActsBehavior
-        acts: [ "Destruction" ]
-      - !type:PlaySoundBehavior
-        sound:
-          collection: MetalBreak
+        acts: ["Destruction"]
   - type: Damageable
     damageContainer: StructuralInorganic
     damageModifierSet: Metallic
