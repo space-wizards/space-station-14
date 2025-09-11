@@ -1092,6 +1092,57 @@
     icon: { sprite: Interface/Actions/actions_borg.rsi, state: musical-module }
 
 - type: entity
+  id: BorgModuleCooking
+  parent: [ BaseBorgModuleService, BaseProviderBorgModule ]
+  name: cooking cyborg module
+  components:
+  - type: Sprite
+    layers:
+    - state: service
+    - state: icon-gardening
+  - type: ItemBorgModule
+    hands:
+    - item: KitchenKnife
+    - item: RollingPin
+    - item: BorgDropper
+    - hand:
+        emptyLabel: borg-slot-dining-ware-empty
+        emptyRepresentative: FoodPlate
+        whitelist:
+          tags:
+          - Dinnerware
+          - DrinkCup
+          components:
+          - Utensil
+          - Food
+    - item: Beaker
+      hand:
+        emptyLabel: borg-slot-chemical-containers-empty
+        emptyRepresentative: Beaker
+        whitelist:
+          components:
+          - FitsInDispenser
+    - hand:
+        emptyLabel: borg-slot-ingredients-empty
+        emptyRepresentative: FoodTomato
+        whitelist:
+          tags:
+          - Condiment
+          - Ingredient
+          - Meat
+          - Packet
+          components:
+          - Produce
+        blacklist:
+          tags:
+          - Soup
+          - Bread
+          - Pizza
+
+  - type: BorgModuleIcon
+    icon: { sprite: Interface/Actions/actions_borg.rsi, state: cooking-module }
+
+- type: entity
   id: BorgModuleGardening
   parent: [ BaseBorgModuleService, BaseProviderBorgModule ]
   name: gardening cyborg module
@@ -1125,6 +1176,40 @@
     - item: PlantBag
   - type: BorgModuleIcon
     icon: { sprite: Interface/Actions/actions_borg.rsi, state: harvesting-module }
+
+- type: entity
+  id: BorgModuleBotany
+  parent: [ BaseBorgModuleService, BaseProviderBorgModule ]
+  name: botany cyborg module
+  components:
+  - type: Sprite
+    layers:
+    - state: service
+    - state: icon-gardening
+  - type: ItemBorgModule
+    hands:
+    - item: HydroponicsToolMiniHoe
+    - item: HydroponicsToolSpade
+    - item: HydroponicsToolClippers
+    - item: HydroponicsToolScythe
+    - item: HydroponicsToolHatchet
+    - item: BorgDropper
+    - item: PlantBag
+    - item: BorgBucket
+    - hand:
+        emptyLabel: borg-slot-seeds-empty
+        emptyRepresentative: WheatSeeds
+        whitelist:
+          components:
+          - Seed
+    - hand:
+        emptyLabel: borg-slot-produce-empty
+        emptyRepresentative: FoodTomato
+        whitelist:
+          components:
+          - Produce
+  - type: BorgModuleIcon
+    icon: { sprite: Interface/Actions/actions_borg.rsi, state: gardening-module }
 
 - type: entity
   id: BorgModuleClowning
