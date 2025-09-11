@@ -1675,8 +1675,9 @@
           Purge1: { state: ai-fixer-purge-1 }
           Purge2: { state: ai-fixer-purge-2 }
           Purge3: { state: ai-fixer-purge-3 }
-          Invalid: { state: ai-fixer-empty }
-          Alive: { state: ai-fixer-full }
+          Empty: { state: ai-fixer-empty }
+          Occupied: { state: ai-fixer-full }
+          Rebooting: { state: ai-fixer-404 }
           Dead: { state: ai-fixer-404 }
       enum.WiresVisuals.MaintenancePanelState:
         enum.WiresVisualLayers.MaintenancePanel:

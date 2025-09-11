@@ -9,7 +9,6 @@ using Content.Shared.Mobs.Systems;
 using Content.Shared.Power;
 using Robust.Shared.Containers;
 using Robust.Shared.Timing;
-using Robust.Shared.Player;
 using System.Diagnostics.CodeAnalysis;
 
 namespace Content.Shared.Silicons.StationAi;
@@ -267,8 +266,6 @@ public abstract partial class SharedStationAiFixerConsoleSystem : EntitySystem
         if (!TryComp<AppearanceComponent>(ent, out var appearance))
             return;
 
-        _userInterface.TryGetOpenUi(ent.Owner, StationAiFixerConsoleUiKey.Key, out var bui);
-
         if (IsActionInProgress(ent))
         {
             var currentStage = ent.Comp.ActionType + ent.Comp.CurrentActionStage.ToString();
@@ -277,22 +274,20 @@ public abstract partial class SharedStationAiFixerConsoleSystem : EntitySystem
                 oldStage != currentStage)
             {
                 _appearance.SetData(ent, StationAiFixerConsoleVisuals.Key, currentStage, appearance);
-                bui?.Update<StationAiFixerConsoleBoundUserInterfaceState>();
             }
 
             return;
         }
 
         var target = ent.Comp.ActionTarget;
-        var currentMobState = MobState.Invalid;
+        var state = StationAiState.Empty;
 
-        if (TryComp<MobStateComponent>(target, out var mobState) && !EntityManager.IsQueuedForDeletion(target.Value))
+        if (TryComp<StationAiCustomizationComponent>(target, out var customization) && !EntityManager.IsQueuedForDeletion(target.Value))
         {
-            currentMobState = mobState.CurrentState;
+            state = customization.State;
         }
 
-        _appearance.SetData(ent, StationAiFixerConsoleVisuals.Key, currentMobState.ToString(), appearance);
-        bui?.Update<StationAiFixerConsoleBoundUserInterfaceState>();
+        _appearance.SetData(ent, StationAiFixerConsoleVisuals.Key, state.ToString(), appearance);
     }
 
     /// <summary>
