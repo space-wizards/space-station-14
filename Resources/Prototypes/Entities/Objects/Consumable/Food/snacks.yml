@@ -12,13 +12,6 @@
       - FoodSnack
   - type: Sprite
     sprite: Objects/Consumable/Food/snacks.rsi
-  - type: SolutionContainerManager
-    solutions:
-      food:
-        maxVol: 30 # Room for extra condiments
-        reagents:
-        - ReagentId: Nutriment
-          Quantity: 10
   - type: Item
     sprite: Objects/Consumable/Food/snacks.rsi
     heldPrefix: packet
@@ -41,6 +34,17 @@
     state: boritos
   - type: Item
     heldPrefix: boritos
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 10
+        reagents:
+        - ReagentId: Carbohydrate
+          Quantity: 4
+        - ReagentId: Oil
+          Quantity: 1
+        - ReagentId: TableSalt
+          Quantity: 1
   - type: Food
     trash:
     - FoodPacketBoritosTrash
@@ -58,6 +62,15 @@
     state: cnds
   - type: Item
     heldPrefix: cnds
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 10
+        reagents:
+        - ReagentId: CocoaPowder
+          Quantity: 2.5
+        - ReagentId: Sugar
+          Quantity: 2.5
   - type: Food
     trash:
     - FoodPacketCnDsTrash
@@ -76,6 +89,17 @@
     state: cheesiehonkers
   - type: Item
     heldPrefix: cheesiehonkers
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 10
+        reagents:
+        - ReagentId: Carbohydrate
+          Quantity: 2.5
+        - ReagentId: Fat
+          Quantity: 1.5
+        - ReagentId: TableSalt
+          Quantity: 1
   - type: Food
     trash:
     - FoodPacketCheesieTrash
@@ -95,6 +119,17 @@
     state: chips
   - type: Item
     heldPrefix: chips
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 10
+        reagents:
+        - ReagentId: Carbohydrate
+          Quantity: 2.5
+        - ReagentId: Oil
+          Quantity: 1.5
+        - ReagentId: TableSalt
+          Quantity: 1
   - type: Food
     trash:
     - FoodPacketChipsTrash
@@ -141,14 +176,14 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 30
+        maxVol: 10
         reagents:
-        - ReagentId: Nutriment
-          Quantity: 10
-        - ReagentId: Theobromine
-          Quantity: 3
+        - ReagentId: Fat
+          Quantity: 2.5
+        - ReagentId: Sugar
+          Quantity: 2.5
         - ReagentId: CocoaPowder
-          Quantity: 1
+          Quantity: 2.5
 
 - type: entity
   name: energy bar
@@ -183,6 +218,17 @@
     state: energybar-open
   - type: Item
     heldPrefix: energybar-open
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 10
+        reagents:
+        - ReagentId: Fat
+          Quantity: 2.5
+        - ReagentId: Sugar
+          Quantity: 2.5
+        - ReagentId: Carbohydrate
+          Quantity: 2.5
 
 - type: entity
   name: Sweetie's pistachios
@@ -201,6 +247,15 @@
   - type: Food
     trash:
     - FoodPacketPistachioTrash
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 10
+        reagents:
+        - ReagentId: Protein
+          Quantity: 4
+        - ReagentId: TableSalt
+          Quantity: 1
   - type: Tag
     tags:
     - Fruit # Seed of a fruit, you can yell at me
@@ -224,6 +279,17 @@
   - type: Food
     trash:
     - FoodPacketPopcornTrash
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 10
+        reagents:
+        - ReagentId: Carbohydrate
+          Quantity: 4
+        - ReagentId: TableSalt
+          Quantity: 1
+        - ReagentId: Oil
+          Quantity: 1
 
 - type: entity
   name: 4no raisins
@@ -241,6 +307,13 @@
   - type: Food
     trash:
     - FoodPacketRaisinsTrash
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 10
+        reagents:
+        - ReagentId: Sugar
+          Quantity: 5
   - type: Tag
     tags:
     - Fruit
@@ -261,6 +334,15 @@
   - type: Food
     trash:
     - FoodPacketSemkiTrash
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 10
+        reagents:
+        - ReagentId: Oil
+          Quantity: 4
+        - ReagentId: Protein
+          Quantity: 1
 
 - type: entity
   name: sus jerky
@@ -281,6 +363,15 @@
   - type: Tag
     tags:
     - Meat
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 10
+        reagents:
+        - ReagentId: Protein
+          Quantity: 4
+        - ReagentId: TableSalt
+          Quantity: 1
 
 - type: entity
   name: syndi-cakes
@@ -298,6 +389,15 @@
   - type: Food
     trash:
     - FoodPacketSyndiTrash
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 10
+        reagents:
+        - ReagentId: Sugar
+          Quantity: 2.5
+        - ReagentId: Carbohydrate
+          Quantity: 2.5
 
 - type: entity
   parent: FoodSnackBase
@@ -362,7 +462,7 @@
       food:
         maxVol: 30 # Room for extra condiments
         reagents:
-        - ReagentId: Nutriment
+        - ReagentId: Carbohydrate
           Quantity: 10
         - ReagentId: Soysauce
           Quantity: 2
@@ -390,7 +490,7 @@
       food:
         maxVol: 30 # Room for extra condiments
         reagents:
-        - ReagentId: Nutriment
+        - ReagentId: Carbohydrate
           Quantity: 10
         - ReagentId: CapsaicinOil
           Quantity: 2
@@ -416,7 +516,7 @@
       food:
         maxVol: 1
         reagents:
-        - ReagentId: Nutriment
+        - ReagentId: Sugar
           Quantity: 1
   - type: Item
     sprite: Objects/Consumable/Food/snacks.rsi
@@ -471,7 +571,7 @@
       food:
         maxVol: 25
         reagents:
-        - ReagentId: Nutriment
+        - ReagentId: Protein
           Quantity: 20
 
 - type: entity
@@ -515,8 +615,10 @@
       food:
         maxVol: 15
         reagents:
-        - ReagentId: Nutriment
-          Quantity: 10
+        - ReagentId: Sugar
+          Quantity: 5
+        - ReagentId: Carbohydrate
+          Quantity: 5
         - ReagentId: Theobromine
           Quantity: 3
 

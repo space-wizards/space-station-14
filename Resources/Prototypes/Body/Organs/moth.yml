@@ -25,3 +25,6 @@
     groups:
       - id: Food
       - id: Drink
+  - type: ReactionMixer
+    reactionTypes:
+    - HerbivoreDigestion

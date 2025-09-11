@@ -1,0 +1,22 @@
+- type: mixingCategory
+  id: Digestion
+  verbText: mixing-verb-digestion
+  icon:
+    sprite: Mobs/Species/Human/organs.rsi
+    state: stomach
+
+- type: mixingCategory
+  id: CarnivoreDigestion
+  parent: Digestion
+  verbText: mixing-verb-carnivore-digestion
+  icon:
+    sprite: Mobs/Species/Human/organs.rsi
+    state: stomach
+
+- type: mixingCategory
+  id: HerbivoreDigestion
+  parent: Digestion
+  verbText: mixing-verb-herbivore-digestion
+  icon:
+    sprite: Mobs/Species/Human/organs.rsi
+    state: stomach
