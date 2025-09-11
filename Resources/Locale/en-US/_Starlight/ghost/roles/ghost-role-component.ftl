@@ -13,3 +13,8 @@ ghost-role-information-soviet-marine-rules = You are required to obey orders giv
 
 ghost-role-information-derelict-borgi-name = Derelict Borgi
 ghost-role-information-derelict-borgi-desc = You are a regular borgi that got lost in space. After years of exposure to ion storms you find yourself near a space station.
+
+ghost-role-information-central-command-rules = You are [color={role-type-central-command-alternate-color}][bold]{role-type-central-command-aligned-name}[/bold][/color]. You should generally not seek to harm the station and its crew.
+                                             You don't remember any of your previous life, and you don't remember anything you learned as a ghost.
+                                             You are allowed to remember knowledge about the game in general, such as how to cook, how to use objects, etc.
+                                             You are absolutely [color=red]NOT[/color] allowed to remember, say, the name, appearance, etc. of your previous character.
