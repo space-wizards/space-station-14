@@ -3,7 +3,7 @@
   abstract: true
   category: cargoproduct-category-name-armory
   group: market
-  approveAccess: [ Quartermaster, HeadOfSecurity, Captain ]
+  approveAccess: [ Quartermaster, Armory ]
 
 - type: cargoProduct
   parent: BaseArmoryProduct
