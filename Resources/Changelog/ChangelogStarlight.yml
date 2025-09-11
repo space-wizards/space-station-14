@@ -13717,5 +13717,12 @@ Entries:
   id: 159701
   time: '2025-09-11T10:59:15.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/1597
+- author: Arkanic
+  changes:
+  - message: Fixed Dwarf width/height sliders not working
+    type: Fix
+  id: 159200
+  time: '2025-09-11T17:23:09.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1592
 Order: -1
 
