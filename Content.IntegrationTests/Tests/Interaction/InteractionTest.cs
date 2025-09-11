@@ -7,12 +7,16 @@ using Content.IntegrationTests.Pair;
 using Content.Server.Hands.Systems;
 using Content.Server.Stack;
 using Content.Server.Tools;
+using Content.Shared.CombatMode;
 using Content.Shared.DoAfter;
 using Content.Shared.Hands.Components;
 using Content.Shared.Interaction;
+using Content.Shared.Item.ItemToggle;
 using Content.Shared.Mind;
 using Content.Shared.Players;
+using Content.Shared.Weapons.Ranged.Systems;
 using Robust.Client.Input;
+using Robust.Client.State;
 using Robust.Client.UserInterface;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Log;
@@ -21,8 +25,6 @@ using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
 using Robust.UnitTesting;
-using Content.Shared.Item.ItemToggle;
-using Robust.Client.State;
 
 namespace Content.IntegrationTests.Tests.Interaction;
 
@@ -107,6 +109,8 @@ public abstract partial class InteractionTest
     protected SharedMapSystem MapSystem = default!;
     protected ISawmill SLogger = default!;
     protected SharedUserInterfaceSystem SUiSys = default!;
+    protected SharedCombatModeSystem SCombatMode = default!;
+    protected SharedGunSystem SGun = default!;
 
     // CLIENT dependencies
     protected IEntityManager CEntMan = default!;
@@ -124,7 +128,7 @@ public abstract partial class InteractionTest
     protected HandsComponent Hands = default!;
     protected DoAfterComponent DoAfters = default!;
 
-    public float TickPeriod => (float) STiming.TickPeriod.TotalSeconds;
+    public float TickPeriod => (float)STiming.TickPeriod.TotalSeconds;
 
     // Simple mob that has one hand and can perform misc interactions.
     [TestPrototypes]
@@ -149,6 +153,7 @@ public abstract partial class InteractionTest
     tags:
     - CanPilot
   - type: UserInterface
+  - type: CombatMode
 ";
 
     [SetUp]
