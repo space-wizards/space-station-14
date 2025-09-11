@@ -171,9 +171,9 @@ public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelection
     }
 
     /// <summary>
-    /// Roll this player to be a late join antag
+    /// Attempt to make this player be a late-join antag.
     /// </summary>
-    /// <param name="session"></param>
+    /// <param name="session">The session to attempt to make antag.</param>
     public void TryMakeLateJoinAntag(ICommonSession session)
     {
         // TODO: this really doesn't handle multiple latejoin definitions well
