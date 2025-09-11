@@ -691,12 +691,6 @@ entities:
       nextSound: -124.7240603
     - type: Physics
       canCollide: False
-    - type: ActionsContainer
-    - type: ContainerContainer
-      containers:
-        actions: !type:Container
-          ents:
-          - 40
   - uid: 44
     mapInit: true
     paused: true
@@ -713,12 +707,6 @@ entities:
       nextSound: -124.8630021
     - type: Physics
       canCollide: False
-    - type: ActionsContainer
-    - type: ContainerContainer
-      containers:
-        actions: !type:Container
-          ents:
-          - 81
   - uid: 86
     mapInit: true
     paused: true
@@ -735,12 +723,6 @@ entities:
       nextSound: -126.2885337
     - type: Physics
       canCollide: False
-    - type: ActionsContainer
-    - type: ContainerContainer
-      containers:
-        actions: !type:Container
-          ents:
-          - 87
   - uid: 96
     mapInit: true
     paused: true
@@ -757,12 +739,6 @@ entities:
       nextSound: -126.4153074
     - type: Physics
       canCollide: False
-    - type: ActionsContainer
-    - type: ContainerContainer
-      containers:
-        actions: !type:Container
-          ents:
-          - 97
 - proto: GeneratorBasic15kW
   entities:
   - uid: 34
@@ -1009,47 +985,11 @@ entities:
     components:
     - type: Transform
       parent: 33
-    - type: LimbWithItems
-      itemEntities:
-      - 39
-      - 41
-    - type: Physics
-      canCollide: False
-    - type: ContainerContainer
-      containers:
-        bodypart: !type:Container
-          showEnts: False
-          occludes: True
-          ents: []
-        cyberlimb: !type:Container
-          showEnts: False
-          occludes: True
-          ents:
-          - 39
-          - 41
     - type: InsideEntityStorage
   - uid: 43
     components:
     - type: Transform
       parent: 33
-    - type: LimbWithItems
-      itemEntities:
-      - 44
-      - 82
-    - type: Physics
-      canCollide: False
-    - type: ContainerContainer
-      containers:
-        bodypart: !type:Container
-          showEnts: False
-          occludes: True
-          ents: []
-        cyberlimb: !type:Container
-          showEnts: False
-          occludes: True
-          ents:
-          - 44
-          - 82
     - type: InsideEntityStorage
 - proto: LeftHandCyber
   entities:
@@ -1334,47 +1274,11 @@ entities:
     components:
     - type: Transform
       parent: 33
-    - type: LimbWithItems
-      itemEntities:
-      - 86
-      - 88
-    - type: Physics
-      canCollide: False
-    - type: ContainerContainer
-      containers:
-        bodypart: !type:Container
-          showEnts: False
-          occludes: True
-          ents: []
-        cyberlimb: !type:Container
-          showEnts: False
-          occludes: True
-          ents:
-          - 86
-          - 88
     - type: InsideEntityStorage
   - uid: 90
     components:
     - type: Transform
       parent: 33
-    - type: LimbWithItems
-      itemEntities:
-      - 96
-      - 98
-    - type: Physics
-      canCollide: False
-    - type: ContainerContainer
-      containers:
-        bodypart: !type:Container
-          showEnts: False
-          occludes: True
-          ents: []
-        cyberlimb: !type:Container
-          showEnts: False
-          occludes: True
-          ents:
-          - 96
-          - 98
     - type: InsideEntityStorage
 - proto: RightHandCyber
   entities:

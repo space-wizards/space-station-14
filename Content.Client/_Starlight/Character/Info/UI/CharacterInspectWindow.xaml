@@ -11,6 +11,9 @@
             <BoxContainer Orientation="Vertical">
                 <ui:CharacterOOCInfoControl Access="Public" Name="OOCInfo"/>
             </BoxContainer>
+            <BoxContainer Orientation="Vertical">
+                <ui:CharacterBackgroundInfoControl Access="Public" Name="BackgroundInfo"/>
+            </BoxContainer>
         </TabContainer>
 
     </ScrollContainer>

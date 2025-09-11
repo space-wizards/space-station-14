@@ -1,4 +1,5 @@
 using System.Linq;
+using Content.Shared._Starlight.Access;
 using Content.Shared.Bed.Cryostorage;
 using Content.Shared.Bed.Sleep;
 using Content.Shared.Clothing.EntitySystems;
@@ -20,8 +21,12 @@ public abstract class SharedAbductorSystem : EntitySystem
     {
         SubscribeLocalEvent<AbductorExperimentatorComponent, EntInsertedIntoContainerMessage>(OnInsertedContainer);
         SubscribeLocalEvent<AbductorExperimentatorComponent, EntRemovedFromContainerMessage>(OnRemovedContainer);
+        SubscribeLocalEvent<AbductorComponent, AccessReadEvent>(OnAccessRead);
+        
         base.Initialize();
     }
+
+    private void OnAccessRead(Entity<AbductorComponent> ent, ref AccessReadEvent args) => args.Denied = true;
 
     private void OnRemovedContainer(Entity<AbductorExperimentatorComponent> ent, ref EntRemovedFromContainerMessage args)
     {

@@ -13731,23 +13731,17 @@ entities:
       rot: 1.5707963267948966 rad
       pos: 10.5,25.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
   - uid: 3923
     components:
     - type: Transform
       pos: 11.5,26.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
   - uid: 3932
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 10.5,26.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
 - proto: GasPort
   entities:
   - uid: 1054
@@ -13756,16 +13750,12 @@ entities:
       rot: 3.141592653589793 rad
       pos: -17.5,-17.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
   - uid: 1261
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: -18.5,-17.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
 - proto: GasThermoMachineHellfireFreezer
   entities:
   - uid: 1181
@@ -16300,8 +16290,6 @@ entities:
     - type: Transform
       pos: 11.5,25.5
       parent: 1
-    - type: VentCrawTube
-      connected: True
 - proto: PrinterDoc
   entities:
   - uid: 1161

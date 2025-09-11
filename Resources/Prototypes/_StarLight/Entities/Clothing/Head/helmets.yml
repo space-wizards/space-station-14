@@ -6,6 +6,8 @@
   components:
   - type: Pierceable
     level: Metal
+  - type: FlashImmunity
+  - type: EyeProtection
   - type: Armor
     modifiers:
       coefficients:

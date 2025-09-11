@@ -224,6 +224,7 @@
     - FootstepSound
     - DoorBumpOpener
     - AnomalyHost
+  - type: ActiveInputMover # Starlight
 
 - type: entity
   save: false

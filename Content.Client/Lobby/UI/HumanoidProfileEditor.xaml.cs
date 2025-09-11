@@ -645,15 +645,15 @@ namespace Content.Client.Lobby.UI
         {
             if (ICInfoEditor.VisibleInTree)
             {
-                ICInfoEditor.PhysicalDescInput.Visible = _allowFlavorText;
-                ICInfoEditor.PersonalityDescInput.Visible = _allowFlavorText;
-                ICInfoEditor.SecretsInput.Visible = _allowCharacterSecrets;
-                ICInfoEditor.ExploitableInput.Visible = _allowCharacterSecrets;
+                ICInfoEditor.Physical.Visible = _allowFlavorText;
+                ICInfoEditor.Personality.Visible = _allowFlavorText;
+                ICInfoEditor.Secrets.Visible = _allowCharacterSecrets;
+                ICInfoEditor.Exploitable.Visible = _allowCharacterSecrets;
             }
             if (OOCInfoEditor.VisibleInTree)
             {
-                OOCInfoEditor.OOCNotesInput.Visible = _allowRPNotes;
-                OOCInfoEditor.PersonalNotesInput.Visible = _allowRPNotes;
+                OOCInfoEditor.OOCNotes.Visible = _allowRPNotes;
+                OOCInfoEditor.PersonalNotes.Visible = _allowRPNotes;
             }
         }
 

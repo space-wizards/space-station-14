@@ -1,6 +1,16 @@
 # Reports
 
 - type: latheRecipe
+  id: PrintedDocumentReportMorgueRecipe
+  result: PrintedDocumentReportMorgue
+  categories:
+  - Reports
+  completetime: 2
+  applyMaterialDiscount: false
+  materials:
+    SheetPrinter: 100
+
+- type: latheRecipe
   id: PrintedDocumentReportStationRecipe
   result: PrintedDocumentReportStation
   categories:
