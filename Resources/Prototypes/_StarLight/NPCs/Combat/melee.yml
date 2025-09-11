@@ -1,0 +1,60 @@
+- type: htnCompound
+  id: MeleeAvoidanceCompound
+  branches:
+    - tasks:
+        - !type:HTNPrimitiveTask
+          operator: !type:UtilityOperator
+            proto: NearbyMeleeTargets
+        - !type:HTNCompoundTask
+          task: BeforeMeleeAvoidenceTargetCompound
+
+- type: htnCompound
+  id: BeforeMeleeAvoidenceTargetCompound
+  branches:
+    - preconditions:
+        - !type:BuckledPrecondition
+          isBuckled: true
+      tasks:
+        - !type:HTNPrimitiveTask
+          operator: !type:UnbuckleOperator
+            shutdownState: TaskFinished
+
+    - preconditions:
+        - !type:PulledPrecondition
+          isPulled: true
+      tasks:
+        - !type:HTNPrimitiveTask
+          operator: !type:UnPullOperator
+            shutdownState: TaskFinished
+
+    - preconditions:
+        - !type:InContainerPrecondition
+          isInContainer: true
+      tasks:
+        - !type:HTNCompoundTask
+          task: EscapeCompound
+
+    # Avoide combat
+    - tasks:
+        - !type:HTNCompoundTask
+          task: MeleeAvoidanceTargetCompound
+
+# Tries to avoid melee attack from our target.
+- type: htnCompound
+  id: MeleeAvoidanceTargetCompound
+  branches:
+    - preconditions:
+      - !type:KeyExistsPrecondition
+        key: Target
+      tasks:
+        - !type:HTNPrimitiveTask
+          operator: !type:MoveFromOperator
+            shutdownState: PlanFinished
+            pathfindInPlanning: true
+            removeKeyOnFinish: false
+            targetKey: TargetCoordinates
+            pathfindKey: TargetPathfind
+            rangeKey: VisionRadius
+        - !type:HTNPrimitiveTask
+          operator: !type:JukeOperator
+            jukeType: Away
