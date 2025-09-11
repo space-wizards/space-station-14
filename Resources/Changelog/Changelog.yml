@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: B-Kirill
-  changes:
-  - message: AI context menu buttons now only appear on objects with valid interactions.
-    type: Fix
-  id: 8439
-  time: '2025-05-07T23:48:39.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/37224
 - author: Krunklehorn
   changes:
   - message: Cyborg chassis now properly drop their contents when gibbed.
@@ -3942,3 +3935,10 @@
   id: 8950
   time: '2025-09-11T01:01:28.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/32139
+- author: ToastEnjoyer
+  changes:
+  - message: Fixed the laser carbine not being labeled as contraband
+    type: Fix
+  id: 8951
+  time: '2025-09-11T02:37:10.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/40253
