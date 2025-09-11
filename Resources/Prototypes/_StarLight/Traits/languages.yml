@@ -24,7 +24,7 @@
   name: trait-language-signlanguage-name
   description: trait-language-signlanguage-desc
   category: LanguageTraits
-  cost: 0
+  cost: 1
   components:
   - type: LanguageSpeaker
   languagesSpoken:
