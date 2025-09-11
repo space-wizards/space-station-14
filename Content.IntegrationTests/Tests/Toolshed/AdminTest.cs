@@ -25,6 +25,11 @@ public sealed class AdminTest : ToolshedTest
                     if (ignored.Contains(cmd.Cmd.GetType().Assembly))
                         continue;
 
+                    // Only care about content commands.
+                    var assemblyName = cmd.Cmd.GetType().Assembly.FullName;
+                    if (assemblyName == null || !assemblyName.StartsWith("Content."))
+                        continue;
+
                     Assert.That(admin.TryGetCommandFlags(cmd, out _), $"Command does not have admin permissions set up: {cmd.FullName()}");
                 }
             });

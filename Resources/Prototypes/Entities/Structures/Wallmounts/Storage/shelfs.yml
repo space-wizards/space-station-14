@@ -45,6 +45,7 @@
   description: It looks as strong as reality itself.
   components:
   - type: Lock
+  - type: LockedStorage
   - type: LockVisuals
   - type: Sprite
     sprite: Structures/Storage/Shelfs/wood.rsi

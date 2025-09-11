@@ -54,7 +54,7 @@
   - type: DisarmMalus
 
 - type: entity
-  parent: [Cane, VoiceLock]
+  parent: [Cane, SelectableLock]
   id: CaneSheath
   suffix: Empty
   components:
@@ -84,6 +84,7 @@
           - CaneBlade
         insertSound: /Audio/Items/sheath.ogg
         ejectSound: /Audio/Items/unsheath.ogg
+        priority: 3
   - type: ItemMapper
     mapLayers:
       cane:
