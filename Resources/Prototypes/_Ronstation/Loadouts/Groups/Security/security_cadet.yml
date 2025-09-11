@@ -4,9 +4,3 @@
   loadouts:
   - RedJumpsuit
   - RedJumpskirt
-
-- type: loadoutGroup
-  id: SecurityCadetShoes
-  parent: BaseShoes
-  loadouts:
-  - JackBoots
