@@ -104,7 +104,6 @@ public abstract partial class SharedStationAiSystem : EntitySystem
 
         SubscribeLocalEvent<StationAiCoreComponent, EntInsertedIntoContainerMessage>(OnAiInsert);
         SubscribeLocalEvent<StationAiCoreComponent, EntRemovedFromContainerMessage>(OnAiRemove);
-        SubscribeLocalEvent<StationAiCoreComponent, MapInitEvent>(OnAiMapInit);
         SubscribeLocalEvent<StationAiCoreComponent, ComponentShutdown>(OnAiShutdown);
         SubscribeLocalEvent<StationAiCoreComponent, PowerChangedEvent>(OnCorePower);
         SubscribeLocalEvent<StationAiCoreComponent, GetVerbsEvent<Verb>>(OnCoreVerbs);
@@ -353,12 +352,6 @@ public abstract partial class SharedStationAiSystem : EntitySystem
         {
             KillHeldAi(ent);
         }
-    }
-
-    private void OnAiMapInit(Entity<StationAiCoreComponent> ent, ref MapInitEvent args)
-    {
-        if (SetupEye(ent))
-            AttachEye(ent);
     }
 
     private void OnBroken(Entity<StationAiCoreComponent> ent, ref BreakageEventArgs args)

@@ -40,6 +40,12 @@ public sealed class StationAiCustomizationMessage : BoundUserInterfaceMessage
 }
 
 /// <summary>
+/// Event raised when the station AI customization visual state changes
+/// </summary>
+[ByRefEvent]
+public record StationAiCustomizationStateChanged(StationAiState NewState);
+
+/// <summary>
 /// Key for opening the station AI customization UI
 /// </summary>
 [Serializable, NetSerializable]

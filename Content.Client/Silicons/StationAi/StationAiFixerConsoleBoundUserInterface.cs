@@ -6,7 +6,6 @@ namespace Content.Client.Silicons.StationAi;
 public sealed class StationAiFixerConsoleBoundUserInterface(EntityUid owner, Enum uiKey) : BoundUserInterface(owner, uiKey)
 {
     private StationAiFixerConsoleWindow? _window;
-    private StationAiFixerConsoleConfirmationDialog? _confirmationDialog;
 
     protected override void Open()
     {

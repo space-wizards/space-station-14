@@ -39,8 +39,7 @@ public abstract partial class SharedStationAiFixerConsoleSystem : EntitySystem
         SubscribeLocalEvent<StationAiFixerConsoleComponent, PowerChangedEvent>(OnPowerChanged);
         SubscribeLocalEvent<StationAiFixerConsoleComponent, ExaminedEvent>(OnExamined);
 
-        SubscribeLocalEvent<StationAiFixableComponent, PlayerAttachedEvent>(OnPlayerAttached);
-        SubscribeLocalEvent<StationAiFixableComponent, PlayerDetachedEvent>(OnPlayerDetached);
+        SubscribeLocalEvent<StationAiCustomizationComponent, StationAiCustomizationStateChanged>(OnStationAiCustomizationStateChanged);
     }
 
     private void OnInserted(Entity<StationAiFixerConsoleComponent> ent, ref EntInsertedIntoContainerMessage args)
@@ -112,16 +111,7 @@ public abstract partial class SharedStationAiFixerConsoleSystem : EntitySystem
         args.PushMarkup(message);
     }
 
-    private void OnPlayerAttached(Entity<StationAiFixableComponent> ent, ref PlayerAttachedEvent args)
-    {
-        if (_container.TryGetOuterContainer(ent, Transform(ent), out var outerContainer) &&
-            TryComp<StationAiFixerConsoleComponent>(outerContainer.Owner, out var stationAiFixerConsole))
-        {
-            UpdateAppearance((outerContainer.Owner, stationAiFixerConsole));
-        }
-    }
-
-    private void OnPlayerDetached(Entity<StationAiFixableComponent> ent, ref PlayerDetachedEvent args)
+    private void OnStationAiCustomizationStateChanged(Entity<StationAiCustomizationComponent> ent, ref StationAiCustomizationStateChanged args)
     {
         if (_container.TryGetOuterContainer(ent, Transform(ent), out var outerContainer) &&
             TryComp<StationAiFixerConsoleComponent>(outerContainer.Owner, out var stationAiFixerConsole))

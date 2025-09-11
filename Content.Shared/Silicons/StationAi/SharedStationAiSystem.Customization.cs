@@ -58,19 +58,7 @@ public abstract partial class SharedStationAiSystem
 
     private void OnPlayerDetached(Entity<StationAiCustomizationComponent> ent, ref PlayerDetachedEvent args)
     {
-        if (_net.IsClient)
-            return;
-
-        // If the player's mind is gone, appear as rebooting. Otherwise, appear occupied.
-        var altState = StationAiState.Rebooting;
-
-        if (_mind.TryGetMind(ent, out _, out _))
-        {
-            altState = StationAiState.Occupied;
-        }
-
-        // Being dead overrides the above.
-        var state = _mobState.IsDead(ent) ? StationAiState.Dead : altState;
+        var state = _mobState.IsDead(ent) ? StationAiState.Dead : StationAiState.Rebooting;
         SetStationAiState(ent, state);
     }
 
@@ -86,6 +74,9 @@ public abstract partial class SharedStationAiSystem
         {
             ent.Comp.State = state;
             Dirty(ent);
+
+            var ev = new StationAiCustomizationStateChanged(state);
+            RaiseLocalEvent(ent, ref ev);
         }
 
         if (_containers.TryGetContainingContainer(ent.Owner, out var container) &&

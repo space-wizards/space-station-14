@@ -158,7 +158,7 @@ public sealed class StationAiSystem : SharedStationAiSystem
 
     protected override void OnMobStateChanged(Entity<StationAiCustomizationComponent> ent, ref MobStateChangedEvent args)
     {
-        if (args.NewMobState == MobState.Dead)
+        if (args.NewMobState != MobState.Alive)
         {
             SetStationAiState(ent, StationAiState.Dead);
             return;
@@ -166,17 +166,17 @@ public sealed class StationAiSystem : SharedStationAiSystem
 
         var state = StationAiState.Rebooting;
 
-        if (_mind.TryGetMind(ent, out var _, out var _))
+        if (_mind.TryGetMind(ent, out var _, out var mind) && !mind.IsVisitingEntity)
         {
             state = StationAiState.Occupied;
+        }
 
-            if (TryGetCore(ent, out var aiCore) && aiCore.Comp != null)
-            {
-                var aiCoreEnt = (aiCore.Owner, aiCore.Comp);
+        if (TryGetCore(ent, out var aiCore) && aiCore.Comp != null)
+        {
+            var aiCoreEnt = (aiCore.Owner, aiCore.Comp);
 
-                if (SetupEye(aiCoreEnt))
-                    AttachEye(aiCoreEnt);
-            }
+            if (SetupEye(aiCoreEnt))
+                AttachEye(aiCoreEnt);
         }
 
         SetStationAiState(ent, state);
@@ -324,6 +324,7 @@ public sealed class StationAiSystem : SharedStationAiSystem
         if (TryGetHeld((ent.Owner, ent.Comp), out var held))
         {
             _mobState.ChangeMobState(held.Value, MobState.Alive);
+            EnsureComp<StationAiOverlayComponent>(held.Value);
         }
 
         if (TryComp<StationAiHolderComponent>(ent, out var holder))
