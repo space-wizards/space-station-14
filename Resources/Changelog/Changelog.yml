@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: JuneSzalkowska, SlamBamActionman
-  changes:
-  - message: 3 new exomorph-themed posters have been added!
-    type: Add
-  id: 8438
-  time: '2025-05-07T23:26:48.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/37260
 - author: B-Kirill
   changes:
   - message: AI context menu buttons now only appear on objects with valid interactions.
@@ -3942,3 +3935,10 @@
   id: 8949
   time: '2025-09-10T22:13:59.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/40260
+- author: TsjipTsjip LuckyShotPictures IProduceWidgets
+  changes:
+  - message: Admin shuttles have been added to the repo, and can be found in /Maps/Shuttles/AdminSpawn/..
+    type: Add
+  id: 8950
+  time: '2025-09-11T01:01:28.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/32139
