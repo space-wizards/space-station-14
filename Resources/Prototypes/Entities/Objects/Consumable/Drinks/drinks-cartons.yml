@@ -154,7 +154,7 @@
 # Large carton
 
 - type: entity
-  parent: DrinkCartonBaseFull
+  parent: [DrinkBaseMaterialPlastic, DrinkCartonBaseFull] # Looks like a plastic jug, fight me
   id: DrinkMilkCarton
   name: milk
   description: An opaque white liquid produced by the mammary glands of mammals.
@@ -184,7 +184,7 @@
     sprite: Objects/Consumable/Drinks/soymilk.rsi
 
 - type: entity
-  parent: DrinkCartonBaseFull
+  parent: [DrinkBaseMaterialPlastic, DrinkCartonBaseFull]
   id: DrinkOatMilkCarton
   name: oat milk
   description: It's oat milk. Tan and nutritious goodness!
