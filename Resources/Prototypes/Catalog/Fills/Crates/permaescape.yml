@@ -227,7 +227,7 @@
     contents:
       - id: ClothingEyesGlassesOutlawGlasses
       - id: ClothingHeadHatOutlawHat
-      - id: HappyHonkNukieSnacks
+      - id: FoodBoxHappyHonkNukieFillLunch
       # - id: BaseUplinkRadio # too spicy I think.
         # prob: 0.50
       # - id: Telecrystal
