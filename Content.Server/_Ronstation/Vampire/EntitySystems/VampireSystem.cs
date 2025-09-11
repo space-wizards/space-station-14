@@ -44,11 +44,11 @@ public sealed partial class VampireSystem : SharedVampireSystem
     {
         if (!Resolve(uid, ref component))
             return false;
-        if (component.StolenVitae < component.LevelUpValue)
+        if (component.StolenVitae < component.LevelUpValue * component.CurseLevel)
             return false;
 
+        component.CurseLevel += 1;
         component.VitaeRegenCap += component.VitaeCapUpgradeAmount;
-        component.LevelUpValue += 40f;
         Dirty(uid, component);
 
         return true;
