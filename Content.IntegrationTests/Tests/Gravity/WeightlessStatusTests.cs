@@ -362,6 +362,30 @@ public sealed class WeightlessStatusTests
         AssertServer(server, sHuman, true);
         AssertClient(client, cHuman, true);
 
+        // Unequip the boots while off-grid
+        await server.WaitAssertion(() =>
+        {
+            Assert.That(invSystem.TryUnequip(sHuman, "shoes"));
+        });
+
+        await pair.RunSeconds(0.5f);
+
+        // We are in space, we should be weightless
+        AssertServer(server, sHuman, true);
+        AssertClient(client, cHuman, true);
+
+        // Equip the boots again while off-grid
+        await server.WaitAssertion(() =>
+        {
+            Assert.That(invSystem.TryEquip(sHuman, sBoots, "shoes"));
+        });
+
+        await pair.RunSeconds(0.5f);
+
+        // We are in space, we should be weightless
+        AssertServer(server, sHuman, true);
+        AssertClient(client, cHuman, true);
+
         // Teleport the dummy back to the grid
         await server.WaitPost(() =>
         {
@@ -466,7 +490,7 @@ public sealed class WeightlessStatusTests
     /// <summary>
     /// Similar as above, but with moonboots on a grid with gravity and all the checks inverted.
     /// Moon boots don't have a toggle at the moment. If someone ever makes them more similar to magboots
-    /// then ajust this test to do the same as the one above.
+    /// then adjust this test to do the same as the one above.
     /// </summary>
     [Test]
     public async Task MoonBootsClothingGravityTest()
@@ -557,6 +581,26 @@ public sealed class WeightlessStatusTests
         await server.WaitPost(() =>
         {
             transformSystem.SetCoordinates(sHuman, pos2);
+        });
+
+        await pair.RunSeconds(0.5f);
+
+        // Unequip the boots while off-grid
+        await server.WaitAssertion(() =>
+        {
+            Assert.That(invSystem.TryUnequip(sHuman, "shoes"));
+        });
+
+        await pair.RunSeconds(0.5f);
+
+        // We are in space, we should be weightless
+        AssertServer(server, sHuman, true);
+        AssertClient(client, cHuman, true);
+
+        // Equip the boots again while off-grid
+        await server.WaitAssertion(() =>
+        {
+            Assert.That(invSystem.TryEquip(sHuman, sBoots, "shoes"));
         });
 
         await pair.RunSeconds(0.5f);
