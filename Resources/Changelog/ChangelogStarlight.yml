@@ -13702,5 +13702,20 @@ Entries:
   id: 158201
   time: '2025-09-10T04:28:00.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/1582
+- author: CawsForConcern
+  changes:
+  - message: Reduced the Translator's power draw by 40%
+    type: Tweak
+  id: 159700
+  time: '2025-09-11T10:59:15.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1597
+- author: CawsForConcern
+  changes:
+  - message: Foreigner's Translator devices start with a medium-capacity power cell
+      instead of high-capacity
+    type: Tweak
+  id: 159701
+  time: '2025-09-11T10:59:15.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1597
 Order: -1
 
