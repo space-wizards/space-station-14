@@ -1,7 +1,7 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
-  "copyright": "Taken from tgstation at https://github.com/tgstation/tgstation/pull/37864/commits/efdef3f1f997d1c0575c36cd31a5db575d1df0ca#diff-a4eb7c89f7231f0aaf0c2f69d730dea56383019f2aa5c6a1d91a82c781b528e6. Modified by hercoyote23 (github) for SS14, inhand sprites by SeamLesss (Github)",
+  "copyright": "Taken from tgstation at https://github.com/tgstation/tgstation/pull/37864/commits/efdef3f1f997d1c0575c36cd31a5db575d1df0ca#diff-a4eb7c89f7231f0aaf0c2f69d730dea56383019f2aa5c6a1d91a82c781b528e6. Modified by hercoyote23 (github) for SS14, inhand sprites by SeamLesss (Github), inhand-kangaroo sprite by brainfood (Github)",
   "size": {
     "x": 32,
     "y": 32
@@ -12,6 +12,10 @@
     },
     {
       "name": "equipped-HAND",
+      "directions": 4
+    },
+    {
+      "name": "equipped-HAND-kangaroo",
       "directions": 4
     },
     {

@@ -1,7 +1,7 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
-  "copyright": "https://github.com/tgstation/tgstation/blob/a7a67c81afc99d77483c84878173822ee8cbeecd/icons/obj/fulton.dmi",
+  "copyright": "https://github.com/tgstation/tgstation/blob/a7a67c81afc99d77483c84878173822ee8cbeecd/icons/obj/fulton.dmi, inhands by TiniestShark (github)",
   "size": {
     "x": 32,
     "y": 32
@@ -30,6 +30,22 @@
     },
     {
       "name": "extraction_pack"
+    },
+    {
+      "name": "inhand-left-beacon",
+      "directions": 4
+    },
+    {
+      "name": "inhand-right-beacon",
+      "directions": 4
+    },
+    {
+      "name": "inhand-left-fulton",
+      "directions": 4
+    },
+    {
+      "name": "inhand-right-fulton",
+      "directions": 4
     }
   ]
 }

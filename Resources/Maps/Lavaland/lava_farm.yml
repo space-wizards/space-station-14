@@ -137,47 +137,17 @@ entities:
         chunkSize: 4
     - type: GasTileOverlay
     - type: RadiationGridResistance
-- proto: ActionToggleInternals
-  entities:
-  - uid: 154
-    mapInit: true
-    paused: true
-    components:
-    - type: Transform
-      parent: 153
-    - type: InstantAction
-      originalIconColor: '#FFFFFFFF'
-      container: 153
-- proto: ActionToggleLight
-  entities:
-  - uid: 151
-    mapInit: true
-    paused: true
-    components:
-    - type: Transform
-      parent: 150
-    - type: InstantAction
-      originalIconColor: '#FFFFFFFF'
-      container: 150
 - proto: AirTankFilled
   entities:
   - uid: 153
     components:
     - type: Transform
       parent: 149
-    - type: GasTank
-      toggleActionEntity: 154
     - type: Clothing
       inSlotFlag: SUITSTORAGE
       inSlot: suitstorage
     - type: Physics
       canCollide: False
-    - type: ActionsContainer
-    - type: ContainerContainer
-      containers:
-        actions: !type:Container
-          ents:
-          - 154
 - proto: BasaltFive
   entities:
   - uid: 223
@@ -562,22 +532,6 @@ entities:
     - type: Clothing
       inSlotFlag: HEAD
       inSlot: head
-    - type: HandheldLight
-      toggleActionEntity: 151
-    - type: ContainerContainer
-      containers:
-        cell_slot: !type:ContainerSlot
-          showEnts: False
-          occludes: True
-          ent: null
-        actions: !type:Container
-          showEnts: False
-          occludes: True
-          ents:
-          - 151
-    - type: Physics
-      canCollide: False
-    - type: ActionsContainer
 - proto: ClothingMaskGas
   entities:
   - uid: 155
