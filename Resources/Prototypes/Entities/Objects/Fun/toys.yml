@@ -482,23 +482,6 @@
   - type: Item
     size: Small
     sprite: Objects/Fun/Balls/tennisball.rsi
-  - type: Gun
-    soundGunshot: null
-    soundEmpty: null
-    soundMode: null
-    cameraRecoilScalar: 0
-    showExamineText: false
-    clumsyProof: true
-    projectileSpeed: 10 #idk gotta dial it in
-    fireRate: 0.5
-  - type: RechargeBasicEntityAmmo
-    rechargeSound: null
-    rechargeCooldown: 0.5
-    showExamineText: false
-  - type: BasicEntityAmmoProvider
-    proto: BulletTennis
-    capacity: 1
-    count: 1
   - type: EmitSoundOnUse
     sound:
       collection: ToySqueak
