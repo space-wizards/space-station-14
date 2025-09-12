@@ -50,7 +50,6 @@
       - CaneBlade
   - type: DisarmMalus
 
-
 - type: entity
   parent: [Cane, SelectableLock]
   id: CaneSheath
