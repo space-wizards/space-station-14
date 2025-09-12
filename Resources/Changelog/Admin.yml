@@ -1,4 +1,6 @@
-﻿AdminOnly: true
+﻿Name: Admin
+Order: 3
+AdminOnly: true
 Entries:
 - author: DrSmugleaf
   changes:
@@ -1380,5 +1382,4 @@ Entries:
   id: 167
   time: '2025-09-04T13:03:47.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/40053
-Name: Admin
-Order: 3
+
