@@ -43,6 +43,7 @@ public sealed class GhostRoleSystem : EntitySystem
 {
     [Dependency] private readonly IBanManager _ban = default!;
     [Dependency] private readonly IConfigurationManager _cfg = default!;
+    [Dependency] private readonly IEntityManager _ent = default!;
     [Dependency] private readonly EuiManager _euiManager = default!;
     [Dependency] private readonly IPlayerManager _playerManager = default!;
     [Dependency] private readonly IAdminLogManager _adminLogger = default!;
@@ -532,7 +533,7 @@ public sealed class GhostRoleSystem : EntitySystem
         foreach (var proto in roleEnt.Comp.MindRoles)
         {
             if (!_prototype.TryIndex(proto, out var indexed)
-                || !indexed.Components.TryGetComponent("MindRole", out var comp))
+                || !indexed.TryGetComponent<MindRoleComponent>(out var comp, _ent.ComponentFactory))
                 continue;
             var roleComp = (MindRoleComponent)comp;
 
