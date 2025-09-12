@@ -13860,5 +13860,20 @@ Entries:
   id: 159902
   time: '2025-09-12T17:13:20.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/1599
+- author: biteless-dot
+  changes:
+  - message: Added new alignment type, Corporate Aligned, for Ghost roles
+    type: Add
+  id: 161000
+  time: '2025-09-12T23:08:28.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1610
+- author: biteless-dot
+  changes:
+  - message: Updated NT & CC jobs to have new spawn text denoting that they are beholden
+      to the company, and not the crew
+    type: Tweak
+  id: 161001
+  time: '2025-09-12T23:08:28.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1610
 Order: -1
 
