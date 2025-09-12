@@ -1,0 +1,7 @@
+- files: ["toggleswitch_disabled_off.svg", "toggleswitch_disabled_on.svg"]
+  license: "CC-BY-SA-3.0"
+  copyright: "Based on toggleswitch_off.svg and toggleswitch_on.svg, modified by Jen Pollock <jen@jenpollock.ca>"
+
+- files: ["toggleswitch_off.svg", "toggleswitch_on.svg"]
+  license: "CC-BY-SA-3.0"
+  copyright: "Janet Blackquill <uhhadd@gmail.com>"
