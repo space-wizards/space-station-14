@@ -140,6 +140,10 @@
   - type: MovementSpeedModifier
     baseWalkSpeed: 2.25
     baseSprintSpeed: 3.6
+  - type: Prying
+    pryPowered: false
+    force: false
+
 
 - type: entity
   id: MechRipleyBattery
@@ -178,6 +182,9 @@
     pilotWhitelist:
       components:
       - HumanoidAppearance
+  - type: Prying
+    pryPowered: false
+    force: false
 
 - type: entity
   parent: MechHonker
@@ -228,6 +235,9 @@
   - type: MovementSpeedModifier
     baseWalkSpeed: 2.4
     baseSprintSpeed: 3.7
+  - type: Prying
+    pryPowered: false
+    force: false
 
 - type: entity
   parent: MechHamtr
@@ -294,6 +304,9 @@
   - type: Access
     tags:
     - Maintenance
+  - type: Prying
+    pryPowered: false
+    force: false
   # TOOD: buzz / chime actions
   # TODO: builtin flashlight
 
