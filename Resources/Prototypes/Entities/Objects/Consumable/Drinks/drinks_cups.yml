@@ -65,20 +65,11 @@
   components:
   - type: Sprite
     sprite: Objects/Consumable/Drinks/glass_coupe_shape.rsi
-    layers:
-    - state: icon # todo add "icon_empty" state to match DrinkVisualsFillOverlay
-      map: [ "enum.SolutionContainerLayers.Base" ]
-    - state: fill1
-      map: [ "enum.SolutionContainerLayers.Fill" ]
-      visible: false
-    - state: icon-front
-      map: [ "enum.SolutionContainerLayers.Overlay" ]
   - type: SolutionContainerVisuals
-    fillBaseName: fill # todo rename to "fill-" to match DrinkVisualsFillOverlay
     inHandsMaxFillLevels: 1
 
 - type: entity
-  parent: [DrinkBaseMaterialCardboard, DrinkBaseCup] # TODO should use DrinkVisualsFill but state names are wrong and no inhand
+  parent: [DrinkBaseMaterialCardboard, DrinkBaseCup, DrinkBaseEmptyTrash, DrinkVisualsFill]
   id: DrinkWaterCup
   name: water cup
   description: A paper water cup.
@@ -91,22 +82,14 @@
     size: Tiny
   - type: Sprite
     sprite: Objects/Consumable/Drinks/water_cup.rsi
-    layers:
-    - state: icon-0
-    - state: icon-1
-      map: ["enum.SolutionContainerLayers.Fill"]
-      visible: false
   - type: SolutionContainerVisuals
     maxFillLevels: 1
-    fillBaseName: icon-
+    inHandsFillBaseName: null
   - type: Tag
     tags:
     - Trash
     - DrinkCup
     - WhitelistChameleon
-  - type: Appearance
-  - type: TrashOnSolutionEmpty
-    solution: drink
   - type: Clothing
     slots:
     - HEAD
