@@ -1,0 +1,17 @@
+- type: entity
+  parent: [ ClothingHeadBase ]
+  id: ClothingHeadHatWhiteCatEars
+  name: white cat ears
+  description: "NYAH!"
+  categories: [ DoNotMap ]
+  components:
+  - type: Tag
+    tags: [] # ignore "WhitelistChameleon" tag
+  - type: Sprite
+    sprite: Clothing/Head/Hats/catears.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Hats/catears.rsi
+  - type: AddAccentClothing
+    accent: OwOAccent
+  - type: StaticPrice
+    price: 15
