@@ -13,7 +13,6 @@ namespace Content.Shared.Cover;
 
 public sealed class SharedCoverSystem : EntitySystem
 {
-    [Dependency] private readonly SharedTransformSystem _xform = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly IConfigurationManager _configuration = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
@@ -45,11 +44,11 @@ public sealed class SharedCoverSystem : EntitySystem
     private bool TryMissCover(EntityUid projectile, ProjectileComponent comp, Entity<CoverComponent> cover)
     {
         // Maybe this should use comp.CreationTick instead? Adds another layer of unit conversion fuckery though.
-        // relies on the firespeed being accurate. We have to poll speed at some time-point and that one seems better than backing it out at collision time.
         var traveltime = comp.FireTime != null ?
             _timing.CurTime - comp.FireTime :
             TimeSpan.MaxValue;
 
+        // relies on the firespeed being accurate. We have to poll speed at some time-point and that one seems better than backing it out at collision time.
         var distance = comp.FireSpeed != null ?
             Math.Clamp(comp.FireSpeed.Value * (float)traveltime.Value.TotalSeconds, 0, cover.Comp.MaxDistance) :
             cover.Comp.MaxDistance;
@@ -84,9 +83,9 @@ public sealed class SharedCoverSystem : EntitySystem
         if (!args.IsInDetailsRange)
             return;
 
-        if (!_reqTargetQuery.TryComp(ent, out var req)) // It will always fly over
+        if (_reqTargetQuery.TryComp(ent, out var req)) // It will always fly over
         {
-            if (req != null && req.Active == true)
+            if (req.Active == true)
             {
                 args.PushMarkup(Loc.GetString("no-cover"));
                 return;
