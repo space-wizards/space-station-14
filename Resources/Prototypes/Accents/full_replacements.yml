@@ -207,3 +207,27 @@
   - accent-words-scurret-18
   - accent-words-scurret-19
   - accent-words-scurret-20
+
+- type: accent
+  id: monkey
+  fullReplacements:
+  - accent-words-monkey-1
+  - accent-words-monkey-2
+  - accent-words-monkey-3
+  - accent-words-monkey-4
+  - accent-words-monkey-5
+  - accent-words-monkey-6
+  - accent-words-monkey-7
+  - accent-words-monkey-8
+  - accent-words-monkey-9
+  - accent-words-monkey-10
+  - accent-words-monkey-11
+  - accent-words-monkey-12
+  - accent-words-monkey-13
+  - accent-words-monkey-14
+  - accent-words-monkey-15
+  - accent-words-monkey-16
+  - accent-words-monkey-17
+  - accent-words-monkey-18
+  - accent-words-monkey-19
+  - accent-words-monkey-20

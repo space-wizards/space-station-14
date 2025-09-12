@@ -1432,11 +1432,9 @@
       - !type:WashCreamPieReaction
   - type: Crawler
 
-
-
 - type: entity
-  name: monkey
-  id: MobMonkey
+  id: MobBaseMonkey
+  abstract: true
   parent: MobBaseAncestor
   description: New church of neo-darwinists actually believe that EVERY animal evolved from a monkey. Tastes like pork, and killing them is both fun and relaxing.
   components:
@@ -1445,7 +1443,14 @@
   - type: Speech
     speechSounds: Monkey
     speechVerb: Monkey
-  - type: MonkeyAccent
+  - type: ReplacmentAccent
+    accent: monkey
+
+- type: entity
+  name: monkey
+  id: MobMonkey
+  parent: MobBaseMonkey
+  components:
   - type: SentienceTarget
     flavorKind: station-event-random-sentience-flavor-primate
   - type: AlwaysRevolutionaryConvertible
@@ -1469,22 +1474,12 @@
     clumsySound:
       path: /Audio/Animals/monkey_scream.ogg
 
-
 - type: entity
   name: monkey
   id: MobBaseSyndicateMonkey
-  parent: MobBaseAncestor
-  description: New church of neo-darwinists actually believe that EVERY animal evolved from a monkey. Tastes like pork, and killing them is both fun and relaxing.
+  parent: MobBaseMonkey
   suffix: syndicate base
   components:
-  - type: NameIdentifier
-    group: Monkey
-  - type: SentienceTarget
-    flavorKind: station-event-random-sentience-flavor-primate
-  - type: Speech
-    speechSounds: Monkey
-    speechVerb: Monkey
-  - type: MonkeyAccent
   - type: NpcFactionMember
     factions:
     - Syndicate
