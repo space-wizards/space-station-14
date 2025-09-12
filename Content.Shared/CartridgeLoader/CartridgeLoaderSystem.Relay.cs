@@ -8,6 +8,7 @@ public partial class CartridgeLoaderSystem : EntitySystem
     private void InitializeRelay()
     {
         SubscribeLocalEvent<CartridgeLoaderComponent, AfterInteractEvent>(RelayEvent);
+        SubscribeLocalEvent<CartridgeLoaderComponent, InteractUsingEvent>(RelayEvent);
         SubscribeLocalEvent<CartridgeLoaderComponent, DeviceNetworkPacketEvent>(RelayEvent);
     }
 

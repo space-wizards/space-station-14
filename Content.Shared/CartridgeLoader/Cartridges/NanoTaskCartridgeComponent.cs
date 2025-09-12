@@ -32,11 +32,3 @@ public sealed partial class NanoTaskCartridgeComponent : Component
     [DataField]
     public TimeSpan PrintDelay = TimeSpan.FromSeconds(5);
 }
-
-/// <summary>
-///     Component attached to the PDA a NanoTask cartridge is inserted into for interaction handling
-/// </summary>
-[RegisterComponent]
-public sealed partial class NanoTaskInteractionComponent : Component
-{
-}

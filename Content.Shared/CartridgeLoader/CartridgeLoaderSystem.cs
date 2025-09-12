@@ -1,12 +1,14 @@
-﻿using Content.Shared.Containers.ItemSlots;
+﻿using System.Diagnostics.CodeAnalysis;
+using Content.Shared.Containers.ItemSlots;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
-using System.Diagnostics.CodeAnalysis;
+using Robust.Shared.Timing;
 
 namespace Content.Shared.CartridgeLoader;
 
 public partial class CartridgeLoaderSystem : EntitySystem
 {
+    [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly ItemSlotsSystem _itemSlotsSystem = default!;
     [Dependency] private readonly SharedAppearanceSystem _appearanceSystem = default!;
     [Dependency] private readonly SharedContainerSystem _container = default!;
@@ -49,6 +51,9 @@ public partial class CartridgeLoaderSystem : EntitySystem
 
     private void OnItemInserted(Entity<CartridgeLoaderComponent> ent, ref EntInsertedIntoContainerMessage args)
     {
+        if (_timing.ApplyingState)
+            return;
+
         if (args.Container.ID != CartridgeLoaderComponent.RemovableContainerId && args.Container.ID != CartridgeLoaderComponent.UnremovableContainerId && args.Container.ID != CartridgeLoaderComponent.CartridgeSlotId)
             return;
 
@@ -65,13 +70,17 @@ public partial class CartridgeLoaderSystem : EntitySystem
                 UpdateCartridgeInstallationStatus((args.Entity, cartridge), InstallationStatus.Cartridge);
         }
 
-        RaiseLocalEvent(args.Entity, new CartridgeAddedEvent(ent));
+        var evt = new CartridgeAddedEvent(ent);
+        RaiseLocalEvent(args.Entity, ref evt);
         UpdateUiState(ent.AsNullable());
         UpdateAppearanceData(ent);
     }
 
     private void OnItemRemoved(Entity<CartridgeLoaderComponent> ent, ref EntRemovedFromContainerMessage args)
     {
+        if (_timing.ApplyingState)
+            return;
+
         if (args.Container.ID != CartridgeLoaderComponent.RemovableContainerId && args.Container.ID != CartridgeLoaderComponent.UnremovableContainerId && args.Container.ID != CartridgeLoaderComponent.CartridgeSlotId)
             return;
 
@@ -79,7 +88,8 @@ public partial class CartridgeLoaderSystem : EntitySystem
         {
             ent.Comp.ActiveProgram = null;
             Dirty(ent);
-            RaiseLocalEvent(args.Entity, new CartridgeDeactivatedEvent(ent));
+            var deactivated = new CartridgeDeactivatedEvent(ent);
+            RaiseLocalEvent(args.Entity, ref deactivated);
         }
 
         if (TryComp<CartridgeComponent>(args.Entity, out var cartridge))
@@ -88,7 +98,8 @@ public partial class CartridgeLoaderSystem : EntitySystem
             Dirty(args.Entity, cartridge);
         }
 
-        RaiseLocalEvent(args.Entity, new CartridgeRemovedEvent(ent));
+        var removed = new CartridgeRemovedEvent(ent);
+        RaiseLocalEvent(args.Entity, ref removed);
         UpdateUiState(ent.AsNullable());
         UpdateAppearanceData(ent);
     }
@@ -114,28 +125,14 @@ public partial class CartridgeLoaderSystem : EntitySystem
 /// <summary>
 /// Gets sent to program / cartridge entities when they get inserted or installed
 /// </summary>
-public sealed class CartridgeAddedEvent : EntityEventArgs
-{
-    public readonly Entity<CartridgeLoaderComponent> Loader;
-
-    public CartridgeAddedEvent(Entity<CartridgeLoaderComponent> loader)
-    {
-        Loader = loader;
-    }
-}
+[ByRefEvent]
+public record struct CartridgeAddedEvent(Entity<CartridgeLoaderComponent> Loader);
 
 /// <summary>
 /// Gets sent to cartridge entities when they get ejected
 /// </summary>
-public sealed class CartridgeRemovedEvent : EntityEventArgs
-{
-    public readonly Entity<CartridgeLoaderComponent> Loader;
-
-    public CartridgeRemovedEvent(Entity<CartridgeLoaderComponent> loader)
-    {
-        Loader = loader;
-    }
-}
+[ByRefEvent]
+public record struct CartridgeRemovedEvent(Entity<CartridgeLoaderComponent> Loader);
 
 /// <summary>
 /// Gets sent to program / cartridge entities when they get activated
@@ -143,28 +140,14 @@ public sealed class CartridgeRemovedEvent : EntityEventArgs
 /// <remarks>
 /// Don't update the programs ui state in this events listener
 /// </remarks>
-public sealed class CartridgeActivatedEvent : EntityEventArgs
-{
-    public readonly Entity<CartridgeLoaderComponent> Loader;
-
-    public CartridgeActivatedEvent(Entity<CartridgeLoaderComponent> loader)
-    {
-        Loader = loader;
-    }
-}
+[ByRefEvent]
+public record struct CartridgeActivatedEvent(Entity<CartridgeLoaderComponent> Loader);
 
 /// <summary>
 /// Gets sent to program / cartridge entities when they get deactivated
 /// </summary>
-public sealed class CartridgeDeactivatedEvent : EntityEventArgs
-{
-    public readonly Entity<CartridgeLoaderComponent> Loader;
-
-    public CartridgeDeactivatedEvent(Entity<CartridgeLoaderComponent> loader)
-    {
-        Loader = loader;
-    }
-}
+[ByRefEvent]
+public record struct CartridgeDeactivatedEvent(Entity<CartridgeLoaderComponent> Loader);
 
 /// <summary>
 /// Gets sent to program / cartridge entities when the ui is ready to be updated by the cartridge.
@@ -172,15 +155,8 @@ public sealed class CartridgeDeactivatedEvent : EntityEventArgs
 /// <remarks>
 /// This is used for the initial ui state update because updating the ui in the activate event doesn't work
 /// </remarks>
-public sealed class CartridgeUiReadyEvent : EntityEventArgs
-{
-    public readonly Entity<CartridgeLoaderComponent> Loader;
-
-    public CartridgeUiReadyEvent(Entity<CartridgeLoaderComponent> loader)
-    {
-        Loader = loader;
-    }
-}
+[ByRefEvent]
+public record struct CartridgeUiReadyEvent(Entity<CartridgeLoaderComponent> Loader);
 
 /// <summary>
 /// Gets sent by the cartridge loader system to the cartridge loader entity so another system

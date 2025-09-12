@@ -24,7 +24,10 @@ public partial class CartridgeLoaderSystem : EntitySystem
                 break;
             case CartridgeUiMessageAction.UIReady:
                 if (ent.Comp.ActiveProgram is { } foreground)
-                    RaiseLocalEvent(foreground, new CartridgeUiReadyEvent(ent));
+                {
+                    var evt = new CartridgeUiReadyEvent(ent);
+                    RaiseLocalEvent(foreground, ref evt);
+                }
                 break;
             default:
                 throw new ArgumentOutOfRangeException($"Unrecognized UI action passed from cartridge loader ui {message.Action}.");

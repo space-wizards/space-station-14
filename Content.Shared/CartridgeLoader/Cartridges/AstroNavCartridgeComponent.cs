@@ -1,6 +1,6 @@
-using Content.Shared.GPS;
+using Robust.Shared.GameStates;
 
 namespace Content.Shared.CartridgeLoader.Cartridges;
 
-[RegisterComponent]
+[RegisterComponent, NetworkedComponent]
 public sealed partial class AstroNavCartridgeComponent : Component;

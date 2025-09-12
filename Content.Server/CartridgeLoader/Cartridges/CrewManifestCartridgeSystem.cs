@@ -78,7 +78,7 @@ public sealed class CrewManifestCartridgeSystem : EntitySystem
     {
         _unsecureViewersAllowed = unsecureViewersAllowed;
 
-        var allCartridgeLoaders = EntityQueryEnumerator<CartridgeLoaderComponent>();
+        var allCartridgeLoaders = AllEntityQuery<CartridgeLoaderComponent>();
         while (allCartridgeLoaders.MoveNext(out var loaderUid, out var comp))
         {
             if (_unsecureViewersAllowed)

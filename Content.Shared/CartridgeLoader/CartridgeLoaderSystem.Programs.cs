@@ -81,7 +81,8 @@ public partial class CartridgeLoaderSystem : EntitySystem
         if (ent.Comp.ActiveProgram is { } active)
             DeactivateProgram(ent, active);
 
-        RaiseLocalEvent(program, new CartridgeActivatedEvent(ent));
+        var evt = new CartridgeActivatedEvent(ent);
+        RaiseLocalEvent(program, ref evt);
         ent.Comp.ActiveProgram = program;
         Dirty(ent);
         UpdateUiState(ent.AsNullable());
@@ -92,7 +93,8 @@ public partial class CartridgeLoaderSystem : EntitySystem
         if (!HasProgram(ent, program) || ent.Comp.ActiveProgram != program)
             return;
 
-        RaiseLocalEvent(program, new CartridgeDeactivatedEvent(ent));
+        var evt = new CartridgeDeactivatedEvent(ent);
+        RaiseLocalEvent(program, ref evt);
         ent.Comp.ActiveProgram = null;
         Dirty(ent);
         UpdateUiState(ent.AsNullable());

@@ -92,7 +92,7 @@ public sealed class LogProbeCartridgeSystem : EntitySystem
 
         ent.Comp.NextPrintAllowed = _timing.CurTime + ent.Comp.PrintCooldown;
 
-        var paper = Spawn(ent.Comp.PaperPrototype, _transform.GetMapCoordinates(user));
+        var paper = EntityManager.PredictedSpawn(ent.Comp.PaperPrototype, _transform.GetMapCoordinates(user));
         _label.Label(paper, ent.Comp.EntityName); // label it for easy identification
 
         _audio.PlayEntity(ent.Comp.PrintSound, user, paper);
