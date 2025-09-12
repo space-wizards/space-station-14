@@ -1,4 +1,4 @@
-﻿using Content.Shared.Alert;
+using Content.Shared.Alert;
 using Content.Shared.Buckle.Components;
 using Content.Shared.CCVar;
 using Content.Shared.Damage;
@@ -48,6 +48,7 @@ public abstract partial class SharedStunSystem
     [Dependency] private readonly SharedPopupSystem _popup = default!;
     [Dependency] private readonly SharedPhysicsSystem _physics = default!;
     [Dependency] private readonly StandingStateSystem _standingState = default!;
+    [Dependency] private readonly IConfigurationManager _cfgManager = default!;
 
     public static readonly ProtoId<AlertPrototype> KnockdownAlert = "Knockdown";
 
@@ -137,7 +138,7 @@ public abstract partial class SharedStunSystem
         entity.Comp.SpeedModifier = 1f;
 
         _standingState.Stand(entity);
-        Alerts.ClearAlert(entity, KnockdownAlert);
+        Alerts.ClearAlert(entity.Owner, KnockdownAlert);
     }
 
     #endregion
@@ -199,7 +200,7 @@ public abstract partial class SharedStunSystem
     {
         entity.Comp.NextUpdate = time;
         DirtyField(entity, entity.Comp, nameof(KnockedDownComponent.NextUpdate));
-        Alerts.ShowAlert(entity, KnockdownAlert, null, (GameTiming.CurTime, entity.Comp.NextUpdate));
+        Alerts.ShowAlert(entity.Owner, KnockdownAlert, null, (GameTiming.CurTime, entity.Comp.NextUpdate));
     }
 
     /// <summary>
@@ -236,7 +237,7 @@ public abstract partial class SharedStunSystem
 
         entity.Comp.NextUpdate += time;
         DirtyField(entity, entity.Comp, nameof(KnockedDownComponent.NextUpdate));
-        Alerts.ShowAlert(entity, KnockdownAlert, null, (GameTiming.CurTime, entity.Comp.NextUpdate));
+        Alerts.ShowAlert(entity.Owner, KnockdownAlert, null, (GameTiming.CurTime, entity.Comp.NextUpdate));
     }
 
     #endregion
@@ -261,7 +262,7 @@ public abstract partial class SharedStunSystem
     private void ToggleKnockdown(Entity<CrawlerComponent?, KnockedDownComponent?> entity)
     {
         // We resolve here instead of using TryCrawling to be extra sure someone without crawler can't stand up early.
-        if (!Resolve(entity, ref entity.Comp1, false))
+        if (!Resolve(entity, ref entity.Comp1, false) || !_cfgManager.GetCVar(CCVars.MovementCrawling))
             return;
 
         if (!Resolve(entity, ref entity.Comp2, false))
@@ -286,7 +287,7 @@ public abstract partial class SharedStunSystem
         if (!KnockdownOver((entity, entity.Comp)))
             return false;
 
-        if (!_crawlerQuery.TryComp(entity, out var crawler))
+        if (!_crawlerQuery.TryComp(entity, out var crawler) || !_cfgManager.GetCVar(CCVars.MovementCrawling))
         {
             // If we can't crawl then just have us sit back up...
             // In case you're wondering, the KnockdownOverCheck, returns if we're able to move, so if next update is null.
@@ -524,7 +525,7 @@ public abstract partial class SharedStunSystem
 
         // Targeted moth attack
         CancelKnockdownDoAfter((entity, entity.Comp));
-        RemComp<KnockedDownComponent>(entity);
+        RemCompDeferred<KnockedDownComponent>(entity);
     }
 
     private void OnKnockdownAttempt(Entity<GravityAffectedComponent> entity, ref KnockDownAttemptEvent args)
