@@ -1,11 +1,9 @@
 using Content.Shared.Atmos;
-using Content.Shared.Atmos.EntitySystems;
 using Content.Shared.Body.Components;
 using Content.Shared.Damage;
 using Content.Shared.Disposal.Components;
 using Content.Shared.Disposal.Tube;
 using Content.Shared.Eye;
-using Content.Shared.Follower;
 using Content.Shared.Follower.Components;
 using Content.Shared.Item;
 using Content.Shared.Throwing;
@@ -22,7 +20,6 @@ namespace Content.Shared.Disposal.Unit;
 public abstract partial class SharedDisposableSystem : EntitySystem
 {
     [Dependency] private readonly ThrowingSystem _throwing = default!;
-    [Dependency] private readonly SharedAtmosphereSystem _atmosphereSystem = default!;
     [Dependency] private readonly DamageableSystem _damageable = default!;
     [Dependency] private readonly SharedDisposalUnitSystem _disposalUnitSystem = default!;
     [Dependency] private readonly SharedDisposalTubeSystem _disposalTubeSystem = default!;
@@ -31,11 +28,9 @@ public abstract partial class SharedDisposableSystem : EntitySystem
     [Dependency] private readonly SharedMapSystem _maps = default!;
     [Dependency] private readonly SharedPhysicsSystem _physicsSystem = default!;
     [Dependency] private readonly SharedTransformSystem _xformSystem = default!;
-    [Dependency] private readonly SharedAppearanceSystem _appearanceSystem = default!;
     [Dependency] private readonly INetManager _net = default!;
     [Dependency] private readonly SharedEyeSystem _eye = default!;
 
-    private EntityQuery<DisposalTubeComponent> _disposalTubeQuery;
     private EntityQuery<DisposalUnitComponent> _disposalUnitQuery;
     private EntityQuery<MetaDataComponent> _metaQuery;
     private EntityQuery<PhysicsComponent> _physicsQuery;
@@ -45,7 +40,6 @@ public abstract partial class SharedDisposableSystem : EntitySystem
     {
         base.Initialize();
 
-        _disposalTubeQuery = GetEntityQuery<DisposalTubeComponent>();
         _disposalUnitQuery = GetEntityQuery<DisposalUnitComponent>();
         _metaQuery = GetEntityQuery<MetaDataComponent>();
         _physicsQuery = GetEntityQuery<PhysicsComponent>();
@@ -213,12 +207,11 @@ public abstract partial class SharedDisposableSystem : EntitySystem
         ent.Comp.NextTube = _disposalTubeSystem.NextTubeFor(ent.Comp.CurrentTube.Value, ent.Comp.CurrentDirection);
 
         var xform = Transform(ent);
-        var xform2 = Transform(tube);
 
-        if (xform2.GridUid != null)
+        if (xform.GridUid != null)
         {
-            var rotation = _xformSystem.GetWorldRotation(xform2.GridUid.Value);
-            xform.LocalRotation = ent.Comp.CurrentDirection.ToAngle() - rotation;
+            var rotation = _xformSystem.GetWorldRotation(xform.GridUid.Value);
+            _xformSystem.SetWorldRotation(ent, ent.Comp.CurrentDirection.ToAngle() - rotation);
         }
 
         // damage entities on turns and play sound
@@ -240,26 +233,26 @@ public abstract partial class SharedDisposableSystem : EntitySystem
         return true;
     }
 
-    public void AttachEntityToDisposalHolder(Entity<DisposalHolderComponent> ent, EntityUid attachee)
+    public void AttachEntityToDisposalHolder(Entity<DisposalHolderComponent> ent, EntityUid uid)
     {
-        var comp = EnsureComp<BeingDisposedComponent>(attachee);
+        var comp = EnsureComp<BeingDisposedComponent>(uid);
 
         if (comp.Holder == ent.Owner)
             return;
 
         comp.Holder = ent;
-        Dirty(attachee, comp);
+        Dirty(uid, comp);
 
         var ev = new DisposalSystemTransitionEvent();
-        RaiseLocalEvent(attachee, ref ev);
+        RaiseLocalEvent(uid, ref ev);
     }
 
-    public void DetachEntityFromDisposalHolder(EntityUid detachee)
+    public void DetachEntityFromDisposalHolder(EntityUid uid)
     {
-        RemComp<BeingDisposedComponent>(detachee);
+        RemComp<BeingDisposedComponent>(uid);
 
         var ev = new DisposalSystemTransitionEvent();
-        RaiseLocalEvent(detachee, ref ev);
+        RaiseLocalEvent(uid, ref ev);
     }
 
     public override void Update(float frameTime)

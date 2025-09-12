@@ -38,8 +38,7 @@ public partial class DisposalTubeComponent : Component
     };
 
     /// <summary>
-    /// Array of angles that entities can exit the disposal tube from.
-    /// South is 0, west is 90, north is 180, and east is -90.
+    /// Array of directions that entities can exit the disposal tube from.
     /// </summary>
     /// <remarks>
     /// The direction that entities will exit preferentially follows the order the list (from most to least).
@@ -47,7 +46,7 @@ public partial class DisposalTubeComponent : Component
     /// or if the angular difference between the entry and potential exit is less than <see cref="MinDeltaAngle"/>.
     /// </remarks>
     [DataField]
-    public Angle[] Degrees = { 0 };
+    public Direction[] Exits = { Direction.South };
 
     /// <summary>
     /// The smallest angle that entities can turn while traveling through the conduit.

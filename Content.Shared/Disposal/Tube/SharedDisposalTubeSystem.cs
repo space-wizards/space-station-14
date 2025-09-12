@@ -112,8 +112,8 @@ public abstract partial class SharedDisposalTubeSystem : EntitySystem
     {
         var rotation = Transform(uid).LocalRotation;
 
-        args.Connectable = component.Degrees
-            .Select(angle => new Angle(angle.Theta + rotation.Theta).GetDir())
+        args.Connectable = component.Exits
+            .Select(exit => new Angle(exit.ToAngle() + rotation).GetDir())
             .ToArray();
     }
 

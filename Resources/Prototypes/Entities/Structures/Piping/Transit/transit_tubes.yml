@@ -55,9 +55,6 @@
   - type: CollideOnAnchor
   - type: DisposalTube
     clangSound: "/Audio/Effects/toss.ogg"
-  - type: ContainerContainer
-    containers:
-      DisposalTube: !type:Container
   - type: TileEmission
     color: White
     range: -0.25
@@ -82,6 +79,14 @@
   - type: ContainerContainer
     containers:
       DisposalHolderComponent: !type:Container
+  - type: Physics
+    bodyType: Kinematic
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.25
 
 # Pipes
 
@@ -117,20 +122,15 @@
       state: straight_glass
       shader: unshaded
   - type: DisposalTube
-    containerId: DisposalTransit
-    degrees:
-    - 0
-    - 180
-  - type: ContainerContainer
-    containers:
-      DisposalTransit: !type:Container
-        #showEnts: true
+    exits:
+    - South
+    - North
   - type: GenericVisualizer
     visuals:
-      enum.DisposalTubeVisuals.VisualState:
+      enum.AnchorVisuals.Anchored:
         pipe:
-          Free: { state: straight }
-          Anchored: { state: straight }
+          False: { state: straight }
+          True: { state: straight }
 
 - type: entity
   id: TransitTubeDiagonal
@@ -148,20 +148,15 @@
       state: diagonal_glass
       shader: unshaded
   - type: DisposalTube
-    containerId: DisposalJunction
-    degrees:
-    - 135
-    - -45
-  - type: ContainerContainer
-    containers:
-      DisposalJunction: !type:Container
-        #showEnts: true
+    exits:
+    - NorthWest
+    - SouthEast
   - type: GenericVisualizer
     visuals:
-      enum.DisposalTubeVisuals.VisualState:
+      enum.AnchorVisuals.Anchored:
         pipe:
-          Free: { state: diagonal }
-          Anchored: { state: diagonal }
+          False: { state: diagonal }
+          True: { state: diagonal }
   - type: Fixtures
     fixtures:
       fix1:
@@ -188,22 +183,17 @@
       state: junct_glass      
       shader: unshaded
   - type: DisposalTube
-    containerId: DisposalJunction
-    degrees:
-    - -135
-    - 135
-    - 0
+    exits:
+    - NorthEast
+    - NorthWest
+    - South
     minDeltaAngle: 135
-  - type: ContainerContainer
-    containers:
-      DisposalJunction: !type:Container
-        #showEnts: true
   - type: GenericVisualizer
     visuals:
-      enum.DisposalTubeVisuals.VisualState:
+      enum.AnchorVisuals.Anchored:
         pipe:
-          Free: { state: junct }
-          Anchored: { state: junct }
+          False: { state: junct }
+          True: { state: junct }
   - type: Flippable
     mirrorEntity: TransitTubeJunctionFlipped
   - type: Fixtures
@@ -229,17 +219,17 @@
       state: junct_f_glass
       shader: unshaded
   - type: DisposalTube
-    degrees:
-    - 135
-    - -135
-    - 0
+    exits:
+    - NorthWest
+    - NorthEast
+    - South
     minDeltaAngle: 135
   - type: GenericVisualizer
     visuals:
-      enum.DisposalTubeVisuals.VisualState:
+      enum.AnchorVisuals.Anchored:
         pipe:
-          Free: { state: junct_f }
-          Anchored: { state: junct_f }
+          False: { state: junct_f }
+          True: { state: junct_f }
   - type: Flippable
     mirrorEntity: TransitTubeJunction
   - type: Fixtures
@@ -265,20 +255,15 @@
       state: bend_glass   
       shader: unshaded      
   - type: DisposalTube
-    containerId: DisposalJunction
-    degrees:
-    - 135
-    - 0
-  - type: ContainerContainer
-    containers:
-      DisposalJunction: !type:Container
-        #showEnts: true
+    exits:
+    - NorthWest
+    - South
   - type: GenericVisualizer
     visuals:
-      enum.DisposalTubeVisuals.VisualState:
+      enum.AnchorVisuals.Anchored:
         pipe:
-          Free: { state: bend }
-          Anchored: { state: bend }
+          False: { state: bend }
+          True: { state: bend }
   - type: Fixtures
     fixtures:
       fix1:
@@ -302,15 +287,15 @@
       state: bend_f_glass
       shader: unshaded
   - type: DisposalTube
-    degrees:
-    - -135
-    - 0
+    exits:
+    - NorthEast
+    - South
   - type: GenericVisualizer
     visuals:
-      enum.DisposalTubeVisuals.VisualState:
+      enum.AnchorVisuals.Anchored:
         pipe:
-          Free: { state: bend_f }
-          Anchored: { state: bend_f }
+          False: { state: bend_f }
+          True: { state: bend_f }
   - type: Flippable
     mirrorEntity: TransitTubeBend
   - type: Fixtures
@@ -367,10 +352,6 @@
             min: 1
             max: 1
   - type: Appearance
-  - type: ContainerContainer
-    containers:
-      disposals: !type:Container
-        #showEnts: true
   - type: Transform
     noRot: false
   - type: Rotatable
@@ -386,8 +367,7 @@
     insertSound: 
   - type: DisposalEntry
     holderPrototypeId: TransitHolder
-  - type: DisposalTube
-    containerId: disposals  
+  - type: DisposalTube 
   - type: TileEmission
     color: White
     range: -0.25
