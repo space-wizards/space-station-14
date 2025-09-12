@@ -16,7 +16,7 @@ public sealed class WizdenContentFreeze
     /// https://github.com/space-wizards/space-station-14/issues/8524
     /// </summary>
     [Test]
-    public async Task MicrovaweRecipesFreeze()
+    public async Task MicrowaveRecipesFreezeTest()
     {
         await using var pair = await PoolManager.GetServerClient();
         var server = pair.Server;
@@ -33,7 +33,7 @@ public sealed class WizdenContentFreeze
 
         if (recipesCount < recipesLimit)
         {
-            Assert.Fail($"Oh, you deleted the microwave recipes? YOU ARE SO COOL! Please lower the number of recipes in KillMicrowaveTest from {recipesLimit} to {recipesCount} so that future contributors cannot add new recipes back.");
+            Assert.Fail($"Oh, you deleted the microwave recipes? YOU ARE SO COOL! Please lower the number of recipes in MicrowaveRecipesFreezeTest from {recipesLimit} to {recipesCount} so that future contributors cannot add new recipes back.");
         }
 
         await pair.CleanReturnAsync();
