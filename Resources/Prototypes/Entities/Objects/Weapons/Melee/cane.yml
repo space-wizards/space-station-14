@@ -29,16 +29,12 @@
 
 - type: entity
   name: cane blade
-  parent: [BaseItem, BaseSyndicateContraband]
+  parent: [BaseSword, BaseSyndicateContraband]
   id: CaneBlade
   description: A sharp blade with a cane shaped hilt.
   components:
-  - type: Sharp
-  - type: Execution
-    doAfterDuration: 4.0
   - type: Sprite
     sprite: Objects/Weapons/Melee/cane_blade.rsi
-    state: icon
   - type: MeleeWeapon
     wideAnimationRotation: 65
     attackRate: 1.5
@@ -48,18 +44,12 @@
     soundHit:
         path: /Audio/Weapons/bladeslice.ogg
   - type: Item
-    size: Normal
     sprite: Objects/Weapons/Melee/cane_blade.rsi
   - type: Tag
     tags:
       - CaneBlade
   - type: DisarmMalus
-  - type: Tool
-    qualities:
-    - Slicing
-  - type: Utensil
-    types:
-    - Knife
+
 
 - type: entity
   parent: [Cane, SelectableLock]
