@@ -1,88 +1,4 @@
 ﻿Entries:
-- author: UpAndLeaves
-  changes:
-  - message: wearing an elite web vest and an atmos fire helmet will no longer heal
-      your burn damage when on fire.
-    type: Fix
-  id: 8433
-  time: '2025-05-07T02:03:05.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/37241
-- author: Flareguy
-  changes:
-  - message: Moth clothing now visually conforms to their body type, similar to Vox.
-    type: Add
-  id: 8434
-  time: '2025-05-07T10:06:42.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/37231
-- author: K-Dynamic
-  changes:
-  - message: Disposal x-junctions can be constructed, which feeds from three directions
-      towards one.
-    type: Add
-  - message: Disposal junctions now properly swap to all other possible junctions
-      when a screwdriver is applied - disposal junction -> y-junction -> flipped junction
-      -> x-junction -> disposal junction...
-    type: Fix
-  id: 8435
-  time: '2025-05-07T11:37:59.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/37092
-- author: Zalycon
-  changes:
-  - message: Raised limit of species chest markings to 2
-    type: Tweak
-  id: 8436
-  time: '2025-05-07T12:44:53.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/37065
-- author: themias
-  changes:
-  - message: Genpop prisoner closets can be ordered from cargo
-    type: Tweak
-  id: 8437
-  time: '2025-05-07T20:28:28.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/37237
-- author: JuneSzalkowska, SlamBamActionman
-  changes:
-  - message: 3 new exomorph-themed posters have been added!
-    type: Add
-  id: 8438
-  time: '2025-05-07T23:26:48.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/37260
-- author: B-Kirill
-  changes:
-  - message: AI context menu buttons now only appear on objects with valid interactions.
-    type: Fix
-  id: 8439
-  time: '2025-05-07T23:48:39.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/37224
-- author: Krunklehorn
-  changes:
-  - message: Cyborg chassis now properly drop their contents when gibbed.
-    type: Fix
-  id: 8440
-  time: '2025-05-08T14:28:12.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/37276
-- author: Thinbug0
-  changes:
-  - message: The push horn lost its ability to push items, in exchange of a bigger
-      range
-    type: Tweak
-  id: 8441
-  time: '2025-05-08T16:49:59.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/37281
-- author: MureixloL
-  changes:
-  - message: Changed sprite of mime satchel!
-    type: Tweak
-  id: 8442
-  time: '2025-05-08T17:38:31.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/37280
-- author: ciaran
-  changes:
-  - message: Guidebook recipe inputs can now link to recipes on the same page
-    type: Add
-  id: 8443
-  time: '2025-05-09T00:06:26.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/36700
 - author: Nyxilath
   changes:
   - message: Trash bags can be printed by Autolathes again.
@@ -3946,3 +3862,89 @@
   id: 8944
   time: '2025-09-09T02:47:46.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/40200
+- author: Steffo99
+  changes:
+  - message: Fixed the RGB staff not working.
+    type: Fix
+  id: 8945
+  time: '2025-09-10T11:42:33.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/40258
+- author: insoPL
+  changes:
+  - message: Doafters are now cancalled when the target/user is enclosed in a container
+      during it.
+    type: Fix
+  id: 8946
+  time: '2025-09-10T19:22:24.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/39880
+- author: SweetAplle
+  changes:
+  - message: Saying "idk" now no longer forces the shrug emote, instead expanding
+      to "I don't know".
+    type: Tweak
+  id: 8947
+  time: '2025-09-10T20:09:58.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/39024
+- author: imatsoup
+  changes:
+  - message: Butterflies can no longer be infected by Romerol or become Romerol zombies.
+    type: Tweak
+  id: 8948
+  time: '2025-09-10T21:48:53.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/40265
+- author: Princess-Cheeseballs
+  changes:
+  - message: Cardboard boxes can no longer freely move in space.
+    type: Fix
+  id: 8949
+  time: '2025-09-10T22:13:59.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/40260
+- author: TsjipTsjip LuckyShotPictures IProduceWidgets
+  changes:
+  - message: Admin shuttles have been added to the repo, and can be found in /Maps/Shuttles/AdminSpawn/..
+    type: Add
+  id: 8950
+  time: '2025-09-11T01:01:28.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/32139
+- author: ToastEnjoyer
+  changes:
+  - message: Fixed the laser carbine not being labeled as contraband
+    type: Fix
+  id: 8951
+  time: '2025-09-11T02:37:10.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/40253
+- author: IProduceWidgets
+  changes:
+  - message: Tennis balls! Found in arcade machines, maintenance and the cargo toy
+      crate!
+    type: Add
+  id: 8952
+  time: '2025-09-11T10:57:31.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/40143
+- author: 5tickman
+  changes:
+  - message: Food and ingredient item sizes have been adjusted.
+    type: Tweak
+  - message: Mimes now start with a Nutribrick instead of a Baguette.
+    type: Tweak
+  - message: The combat bakery kit is now a 4x4 sized box.
+    type: Tweak
+  id: 8953
+  time: '2025-09-11T11:37:25.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/39203
+- author: aada
+  changes:
+  - message: Cups, bottles, mugs, and other drinks have had minor changes. Most are
+      now destructible.
+    type: Tweak
+  id: 8954
+  time: '2025-09-11T15:59:11.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/39221
+- author: luegamer
+  changes:
+  - message: SmartFridge Circuitboards are now printable, SmartFridge destruction
+      no longer deletes all contents
+    type: Add
+  id: 8955
+  time: '2025-09-11T19:59:21.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/39879
