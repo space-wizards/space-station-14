@@ -1261,8 +1261,6 @@
   - type: Sprite
     sprite: Objects/Fun/Plushies/vulp.rsi
     state: icon
-  - type: Item
-    heldPrefix: inhand
   - type: EmitSoundOnUse
     sound: &PlushieVulpSound
       path: /Audio/Voice/Vulpkanin/howl.ogg
@@ -1284,7 +1282,7 @@
     soundHit: *PlushieVulpSound
   - type: Clothing
     quickEquip: false
-    equippedPrefix: equipped
+    sprite: Objects/Fun/Plushies/vulp.rsi
     slots:
     - HEAD
   - type: FoodSequenceElement
