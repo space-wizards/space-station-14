@@ -135,7 +135,20 @@ public sealed partial class IngestionSystem : EntitySystem
         return ingestionEv.Handled;
     }
 
-    private void OnEdibleInit(Entity<EdibleComponent> entity, ref ComponentInit args) => UpdateAppearance(entity);
+    private void OnEdibleInit(Entity<EdibleComponent> entity, ref ComponentInit args)
+    {
+        // TODO: When Food and Drink component are kill make sure to nuke both TryComps and just have it update appearance...
+        // Beakers, Soap and other items have drainable, and we should be able to eat that solution...
+        // If I could make drainable properly support sound effects and such I'd just have it use TryIngest itself
+        // Does this exist just to make tests fail? That way you have the proper yaml???
+        if (TryComp<DrainableSolutionComponent>(entity, out var existingDrainable))
+            entity.Comp.Solution = existingDrainable.Solution;
+
+        UpdateAppearance(entity);
+
+        if (TryComp(entity, out RefillableSolutionComponent? refillComp))
+            refillComp.Solution = entity.Comp.Solution;
+    }
 
     #region Appearance System
 

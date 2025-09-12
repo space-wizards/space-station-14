@@ -610,8 +610,6 @@
         reagents:
         - ReagentId: Fiber
           Quantity: 10
-  - type: RefillableSolution
-    solution: plushie
   - type: SolutionContainerVisuals
     solutionName: plushie
     maxFillLevels: 1
