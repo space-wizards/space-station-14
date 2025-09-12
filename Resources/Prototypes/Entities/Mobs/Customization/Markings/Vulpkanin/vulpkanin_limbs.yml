@@ -1,0 +1,436 @@
+- type: marking
+  id: VulpClawsHandLeft
+  bodyPart: LHand
+  markingCategory: Arms
+  speciesRestriction: [ Vulpkanin ]
+  sprites:
+    - sprite: Mobs/Customization/Vulpkanin/body_markings.rsi
+      state: claws_l_hand
+  coloring:
+    default:
+      type:
+        !type:SimpleColoring
+          color: "#e5e3d1"
+
+- type: marking
+  id: VulpClawsHandRight
+  bodyPart: RHand
+  markingCategory: Arms
+  speciesRestriction: [ Vulpkanin ]
+  sprites:
+    - sprite: Mobs/Customization/Vulpkanin/body_markings.rsi
+      state: claws_r_hand
+  coloring:
+    default:
+      type:
+        !type:SimpleColoring
+          color: "#e5e3d1"
+
+- type: marking
+  id: VulpClawsFootLeft
+  bodyPart: LFoot
+  markingCategory: Legs
+  speciesRestriction: [ Vulpkanin ]
+  sprites:
+    - sprite: Mobs/Customization/Vulpkanin/body_markings.rsi
+      state: claws_l_foot
+  coloring:
+    default:
+      type:
+        !type:SimpleColoring
+          color: "#e5e3d1"
+
+- type: marking
+  id: VulpClawsFootRight
+  bodyPart: RFoot
+  markingCategory: Legs
+  speciesRestriction: [ Vulpkanin ]
+  sprites:
+    - sprite: Mobs/Customization/Vulpkanin/body_markings.rsi
+      state: claws_r_foot
+  coloring:
+    default:
+      type:
+        !type:SimpleColoring
+          color: "#e5e3d1"
+
+# Crest
+
+## Left Side
+- type: marking
+  id: VulpPointsCrestLegLeft
+  markingCategory: Legs
+  bodyPart: LLeg
+  speciesRestriction: [ Vulpkanin ]
+  sprites:
+    - sprite: Mobs/Customization/Vulpkanin/body_markings.rsi
+      state: crest-leg-l
+  coloring:
+    default:
+      type:
+        !type:SimpleColoring
+          color: "#e5e3d1"
+
+- type: marking
+  id: VulpPointsCrestArmLeft
+  markingCategory: Arms
+  bodyPart: LArm
+  speciesRestriction: [ Vulpkanin ]
+  sprites:
+    - sprite: Mobs/Customization/Vulpkanin/body_markings.rsi
+      state: crest-arm-l
+  coloring:
+    default:
+      type:
+        !type:SimpleColoring
+          color: "#e5e3d1"
+
+- type: marking
+  id: VulpPointsCrestFootLeft
+  markingCategory: Legs
+  bodyPart: LFoot
+  speciesRestriction: [ Vulpkanin ]
+  sprites:
+    - sprite: Mobs/Customization/Vulpkanin/body_markings.rsi
+      state: crest-foot-l
+  coloring:
+    default:
+      type:
+        !type:SimpleColoring
+          color: "#e5e3d1"
+
+- type: marking
+  id: VulpPointsCrestHandLeft
+  markingCategory: Arms
+  bodyPart: LHand
+  speciesRestriction: [ Vulpkanin ]
+  sprites:
+    - sprite: Mobs/Customization/Vulpkanin/body_markings.rsi
+      state: crest-hand-l
+  coloring:
+    default:
+      type:
+        !type:SimpleColoring
+          color: "#e5e3d1"
+
+## Right Side
+
+- type: marking
+  id: VulpPointsCrestLegRight
+  markingCategory: Legs
+  bodyPart: RLeg
+  speciesRestriction: [ Vulpkanin ]
+  sprites:
+    - sprite: Mobs/Customization/Vulpkanin/body_markings.rsi
+      state: crest-leg-r
+  coloring:
+    default:
+      type:
+        !type:SimpleColoring
+          color: "#e5e3d1"
+
+- type: marking
+  id: VulpPointsCrestArmRight
+  markingCategory: Arms
+  bodyPart: RArm
+  speciesRestriction: [ Vulpkanin ]
+  sprites:
+    - sprite: Mobs/Customization/Vulpkanin/body_markings.rsi
+      state: crest-arm-r
+  coloring:
+    default:
+      type:
+        !type:SimpleColoring
+          color: "#e5e3d1"
+
+- type: marking
+  id: VulpPointsCrestFootRight
+  markingCategory: Legs
+  bodyPart: RFoot
+  speciesRestriction: [ Vulpkanin ]
+  sprites:
+    - sprite: Mobs/Customization/Vulpkanin/body_markings.rsi
+      state: crest-foot-r
+  coloring:
+    default:
+      type:
+        !type:SimpleColoring
+          color: "#e5e3d1"
+
+- type: marking
+  id: VulpPointsCrestHandRight
+  markingCategory: Arms
+  bodyPart: RHand
+  speciesRestriction: [ Vulpkanin ]
+  sprites:
+    - sprite: Mobs/Customization/Vulpkanin/body_markings.rsi
+      state: crest-hand-r
+  coloring:
+    default:
+      type:
+        !type:SimpleColoring
+          color: "#e5e3d1"
+
+# Fade
+
+## Left Side 
+
+- type: marking
+  id: VulpPointsFadeLegLeft
+  markingCategory: Legs
+  bodyPart: LLeg
+  speciesRestriction: [ Vulpkanin ]
+  sprites:
+    - sprite: Mobs/Customization/Vulpkanin/body_markings.rsi
+      state: points_fade-leg-l
+  coloring:
+    default:
+      type:
+        !type:SimpleColoring
+          color: "#e5e3d1"
+
+- type: marking
+  id: VulpPointsFadeArmLeft
+  markingCategory: Arms
+  bodyPart: LArm
+  speciesRestriction: [ Vulpkanin ]
+  sprites:
+    - sprite: Mobs/Customization/Vulpkanin/body_markings.rsi
+      state: points_fade-arm-l
+  coloring:
+    default:
+      type:
+        !type:SimpleColoring
+          color: "#e5e3d1"
+
+- type: marking
+  id: VulpPointsFadeFootLeft
+  markingCategory: Legs
+  bodyPart: LFoot
+  speciesRestriction: [ Vulpkanin ]
+  sprites:
+    - sprite: Mobs/Customization/Vulpkanin/body_markings.rsi
+      state: points_fade-foot-l
+  coloring:
+    default:
+      type:
+        !type:SimpleColoring
+          color: "#e5e3d1"
+
+- type: marking
+  id: VulpPointsFadeHandLeft
+  markingCategory: Arms
+  bodyPart: LHand
+  speciesRestriction: [ Vulpkanin ]
+  sprites:
+    - sprite: Mobs/Customization/Vulpkanin/body_markings.rsi
+      state: points_fade-hand-l
+  coloring:
+    default:
+      type:
+        !type:SimpleColoring
+          color: "#e5e3d1"
+
+## Right Side
+
+- type: marking
+  id: VulpPointsFadeLegRight
+  markingCategory: Legs
+  bodyPart: RLeg
+  speciesRestriction: [ Vulpkanin ]
+  sprites:
+    - sprite: Mobs/Customization/Vulpkanin/body_markings.rsi
+      state: points_fade-leg-r
+  coloring:
+    default:
+      type:
+        !type:SimpleColoring
+          color: "#e5e3d1"
+
+- type: marking
+  id: VulpPointsFadeArmRight
+  markingCategory: Arms
+  bodyPart: RArm
+  speciesRestriction: [ Vulpkanin ]
+  sprites:
+    - sprite: Mobs/Customization/Vulpkanin/body_markings.rsi
+      state: points_fade-arm-r
+  coloring:
+    default:
+      type:
+        !type:SimpleColoring
+          color: "#e5e3d1"
+
+- type: marking
+  id: VulpPointsFadeFootRight
+  markingCategory: Legs
+  bodyPart: RFoot
+  speciesRestriction: [ Vulpkanin ]
+  sprites:
+    - sprite: Mobs/Customization/Vulpkanin/body_markings.rsi
+      state: points_fade-foot-r
+  coloring:
+    default:
+      type:
+        !type:SimpleColoring
+          color: "#e5e3d1"
+
+- type: marking
+  id: VulpPointsFadeHandRight
+  markingCategory: Arms
+  bodyPart: RHand
+  speciesRestriction: [ Vulpkanin ]
+  sprites:
+    - sprite: Mobs/Customization/Vulpkanin/body_markings.rsi
+      state: points_fade-hand-r
+  coloring:
+    default:
+      type:
+        !type:SimpleColoring
+          color: "#e5e3d1"
+
+# Sharp
+
+## Left Side
+
+- type: marking
+  id: VulpPointsSharpLegLeft
+  markingCategory: Legs
+  bodyPart: LLeg
+  speciesRestriction: [ Vulpkanin ]
+  sprites:
+    - sprite: Mobs/Customization/Vulpkanin/body_markings.rsi
+      state: points_sharp-leg-l
+  coloring:
+    default:
+      type:
+        !type:SimpleColoring
+          color: "#e5e3d1"
+
+- type: marking
+  id: VulpPointsSharpArmLeft
+  markingCategory: Arms
+  bodyPart: LArm
+  speciesRestriction: [ Vulpkanin ]
+  sprites:
+    - sprite: Mobs/Customization/Vulpkanin/body_markings.rsi
+      state: points_sharp-arm-l
+  coloring:
+    default:
+      type:
+        !type:SimpleColoring
+          color: "#e5e3d1"
+
+- type: marking
+  id: VulpPointsSharpLongArmLeft
+  markingCategory: Arms
+  bodyPart: LArm
+  speciesRestriction: [ Vulpkanin ]
+  sprites:
+    - sprite: Mobs/Customization/Vulpkanin/body_markings.rsi
+      state: points_sharp-arm-long-l
+  coloring:
+    default:
+      type:
+        !type:SimpleColoring
+          color: "#e5e3d1"
+
+- type: marking
+  id: VulpPointsSharpFootLeft
+  markingCategory: Legs
+  bodyPart: LFoot
+  speciesRestriction: [ Vulpkanin ]
+  sprites:
+    - sprite: Mobs/Customization/Vulpkanin/body_markings.rsi
+      state: points_sharp-foot-l
+  coloring:
+    default:
+      type:
+        !type:SimpleColoring
+          color: "#e5e3d1"
+
+- type: marking
+  id: VulpPointsSharpHandLeft
+  markingCategory: Arms
+  bodyPart: LHand
+  speciesRestriction: [ Vulpkanin ]
+  sprites:
+    - sprite: Mobs/Customization/Vulpkanin/body_markings.rsi
+      state: points_sharp-hand-l
+  coloring:
+    default:
+      type:
+        !type:SimpleColoring
+          color: "#e5e3d1"
+
+## Right Side
+
+- type: marking
+  id: VulpPointsSharpLegRight
+  markingCategory: Legs
+  bodyPart: RLeg
+  speciesRestriction: [ Vulpkanin ]
+  sprites:
+    - sprite: Mobs/Customization/Vulpkanin/body_markings.rsi
+      state: points_sharp-leg-r
+  coloring:
+    default:
+      type:
+        !type:SimpleColoring
+          color: "#e5e3d1"
+
+- type: marking
+  id: VulpPointsSharpArmRight
+  markingCategory: Arms
+  bodyPart: RArm
+  speciesRestriction: [ Vulpkanin ]
+  sprites:
+    - sprite: Mobs/Customization/Vulpkanin/body_markings.rsi
+      state: points_sharp-arm-r
+  coloring:
+    default:
+      type:
+        !type:SimpleColoring
+          color: "#e5e3d1"
+
+- type: marking
+  id: VulpPointsSharpLongArmRight
+  markingCategory: Arms
+  bodyPart: RArm
+  speciesRestriction: [ Vulpkanin ]
+  sprites:
+    - sprite: Mobs/Customization/Vulpkanin/body_markings.rsi
+      state: points_sharp-arm-long-r
+  coloring:
+    default:
+      type:
+        !type:SimpleColoring
+          color: "#e5e3d1"
+
+- type: marking
+  id: VulpPointsSharpFootRight
+  markingCategory: Legs
+  bodyPart: RFoot
+  speciesRestriction: [ Vulpkanin ]
+  sprites:
+    - sprite: Mobs/Customization/Vulpkanin/body_markings.rsi
+      state: points_sharp-foot-r
+  coloring:
+    default:
+      type:
+        !type:SimpleColoring
+          color: "#e5e3d1"
+
+- type: marking
+  id: VulpPointsSharpHandRight
+  markingCategory: Arms
+  bodyPart: RHand
+  speciesRestriction: [ Vulpkanin ]
+  sprites:
+    - sprite: Mobs/Customization/Vulpkanin/body_markings.rsi
+      state: points_sharp-hand-r
+  coloring:
+    default:
+      type:
+        !type:SimpleColoring
+          color: "#e5e3d1"
