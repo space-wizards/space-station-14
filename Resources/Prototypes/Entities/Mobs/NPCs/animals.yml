@@ -3866,7 +3866,6 @@
     speaks:
     - Dog
     - GalacticCommon
-    - Canilunzt
     understands:
     - Dog
     - GalacticCommon
