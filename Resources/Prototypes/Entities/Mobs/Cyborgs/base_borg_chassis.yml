@@ -300,11 +300,11 @@
     nameSet: True
     id: Xenoborg
   - type: Explosive
-    explosionType: Minibomb
+    explosionType: DemolitionCharge
     deleteAfterExplosion: false # let damage threshold gib the borg
-    totalIntensity: 200 # bigger kaboom
-    intensitySlope: 20
-    maxIntensity: 100
+    totalIntensity: 340 # bigger kaboom
+    intensitySlope: 45
+    maxIntensity: 85
     canCreateVacuum: false
 
 - type: entity
