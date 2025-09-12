@@ -54,6 +54,7 @@
   id: PlushieThrongler
   name: throngler plushie
   description: A stuffed toy to remind cargo techs of what they can no longer have.
+  categories: [ DoNotMap ] # DS14
   components:
   - type: Sprite
     sprite: Objects/Weapons/Melee/ThronglerPlushie.rsi
