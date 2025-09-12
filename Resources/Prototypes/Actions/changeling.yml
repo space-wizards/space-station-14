@@ -42,3 +42,16 @@
     icon: { sprite : Interface/Actions/changeling.rsi, state: "transform" }
   - type: InstantAction
     event: !type:ChangelingTransformActionEvent
+
+- type: entity
+  parent: BaseMentalAction
+  id: ActionChangelingStasis
+  name: "[color=red]Enter Stasis[/color]"
+  description: Enter a regenerative stasis, looking as if you were just dead to everyone else. After a while in the stasis, gain the ability to stand up and heal all injuries.
+  components:
+  - type: Action
+    icon: { sprite : Interface/Actions/changeling.rsi, state: "devour" }
+    iconOn: { sprite : Interface/Actions/changeling.rsi, state: "devour_on" }
+    priority: 1
+  - type: InstantAction
+    event: !type:ChangelingStasisActionEvent
