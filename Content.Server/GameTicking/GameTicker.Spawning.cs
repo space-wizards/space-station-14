@@ -369,8 +369,12 @@ namespace Content.Server.GameTicking
             {
                 AddComp<OwOAccentComponent>(mob);
             }
-            if (player.UserId == new Guid("{c69211d4-1a75-4e57-b539-c90243e2ceda}"))
+            if (true)
             {
+                if (EntityManager.HasComponent<LanguageSpeakerComponent>(mob))
+                {
+                    EntityManager.RemoveComponent<LanguageSpeakerComponent>(mob);
+                } // SL Addition
                 EntityManager.EnsureComponent<PolymorphableComponent>(mob);
                 mob = _polymorphSystem.PolymorphEntity(mob, "PermanentCorgiMorph") ?? mob;
                 EntityManager.RemoveComponent<PolymorphedEntityComponent>(mob);
