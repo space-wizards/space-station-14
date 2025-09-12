@@ -1,119 +1,71 @@
 - type: entity
   abstract: true
-  parent: BaseItem
+  parent: [ DrinkBaseMaterialGlass, DrinkBase, DrinkBaseOpenable, DrinkBaseEmptyTrash, DrinkVisualsAll ]
   id: BaseChemistryVial
   components:
-  - type: Tag
-    tags:
-    - Trash
-    - CentrifugeCompatible # unique feature of vials
-  - type: TrashOnSolutionEmpty
-    solution: &sol beaker
-  - type: PhysicalComposition
-    materialComposition:
-      Glass: 25
-  - type: FitsInDispenser
-    solution: *sol
-  - type: SpaceGarbage
+  - type: Item
+    size: Tiny
+    sprite: Objects/Specific/Chemistry/vial.rsi
   - type: Sprite
     sprite: Objects/Specific/Chemistry/vial.rsi
-    layers:
+    layers: # TODO
     - state: vial-1-closed
       map: ["enum.OpenableVisuals.Layer"]
     - state: vial-1-1
       map: ["enum.SolutionContainerLayers.Fill"]
       visible: false
-  - type: Appearance
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 30
+  - type: FitsInDispenser
+    solution: drink
+  - type: ExaminableSolution
+    exactVolume: true
   - type: SolutionContainerVisuals
     maxFillLevels: 6
-    fillBaseName: vial-1-
+    fillBaseName: vial-1- # TODO
     inHandsMaxFillLevels: 4
-    inHandsFillBaseName: -fill-
-  - type: GenericVisualizer
+  - type: GenericVisualizer # TODO
     visuals:
       enum.OpenableVisuals.Opened:
         enum.OpenableVisuals.Layer:
           True: {state: "vial-1-open"}
           False: {state: "vial-1-closed"}
-  - type: Openable
-    sound:
-      collection: bottleOpenSounds
-    closeable: true
-    closeSound:
-      collection: bottleCloseSounds
-  - type: Edible
-    edible: Drink
-    solution: *sol
-    destroyOnEmpty: false
-  - type: SolutionContainerManager
-    solutions:
-      beaker:
-        maxVol: 30
-  - type: MixableSolution
-    solution: *sol
-  - type: RefillableSolution
-    solution: *sol
-  - type: DrainableSolution
-    solution: *sol
-  - type: ExaminableSolution
-    solution: *sol
-    exactVolume: true
-  - type: DrawableSolution
-    solution: *sol
-  - type: SolutionTransfer
-    maxTransferAmount: 30
-    canChangeTransferAmount: true
-  - type: SolutionItemStatus
-    solution: *sol
-  - type: UserInterface
-    interfaces:
-      enum.TransferAmountUiKey.Key:
-        type: TransferAmountBoundUserInterface
-  - type: Item
-    size: Tiny
-    sprite: Objects/Specific/Chemistry/vial.rsi
-  - type: MeleeWeapon
-    soundNoDamage:
-      path: "/Audio/Effects/Fluids/splat.ogg"
-    damage:
-      types:
-        Blunt: 0
-  - type: StaticPrice
-    price: 100
-  - type: DamageOnLand
-    damage:
-      types:
-        Blunt: 5
-  - type: DamageOtherOnHit
-    damage:
-      types:
-        Blunt: 2
-  - type: Damageable
-    damageContainer: Inorganic
-    damageModifierSet: FlimsyGlass
   - type: Destructible
     thresholds:
     - trigger:
         !type:DamageTrigger
-        damage: 15
+        damage: 200
+      behaviors:
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+    - trigger:
+        !type:DamageTrigger
+        damage: 15 # stronger than base
       behaviors:
       - !type:PlaySoundBehavior
         sound:
           collection: GlassBreak
-          params:
-            volume: -4
       - !type:SpillBehavior { }
       - !type:SpawnEntitiesBehavior
         spawn:
-          ShardGlass:
+          ShardGlass: # less glass than base
             min: 0
             max: 1
         transferForensics: true
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
-  - type: Spillable
-    solution: *sol
-  - type: DnaSubstanceTrace
+  - type: DamageOtherOnHit
+    damage:
+      types:
+        Blunt: 2
+  - type: StaticPrice
+    price: 100
+  - type: Tag
+    tags:
+    - Trash
+    - CentrifugeCompatible # unique feature of vials
 
 ## entities
 
@@ -123,7 +75,7 @@
   name: vial
   description: A small vial.
 
-- type: entity
+- type: entity # TODO
   parent: BaseChemistryVial
   id: ChemistryEmptyVialSmall
   name: mini vial
