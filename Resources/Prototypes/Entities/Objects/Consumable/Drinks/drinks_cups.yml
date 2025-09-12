@@ -22,22 +22,16 @@
 # A mug is a type of cup.[2]
 - type: entity
   abstract: true
-  parent: [ DrinkBaseMaterialPorcelain, DrinkBaseCup ] # todo Should use DrinkVisualsFill, but inheritors have no in-hand and state names are wrong
+  parent: [ DrinkBaseMaterialPorcelain, DrinkBaseCup, DrinkVisualsFill ]
   id: DrinkBaseMug
   name: mug
   description: A mug.
   components:
   - type: Sprite
     sprite: Objects/Consumable/Drinks/mug.rsi
-    layers:
-      - state: icon-0
-      - state: icon-3
-        map: ["enum.SolutionContainerLayers.Fill"]
-        visible: false
-  - type: Appearance
   - type: SolutionContainerVisuals
     maxFillLevels: 3
-    fillBaseName: icon-
+    inHandsFillBaseName: null
 
 ## Misc Cups
 
@@ -53,18 +47,13 @@
     price: 125
 
 - type: entity
-  parent: DrinkBaseMug
+  parent: DrinkBaseMug # a teacup is basically a mug
   id: DrinkTeacupEmpty
   name: teacup
   description: A plain white porcelain teacup.
   components:
   - type: Sprite
     sprite: Objects/Consumable/Drinks/teacup.rsi
-    layers:
-    - state: icon-0
-    - state: icon-4
-      map: ["enum.SolutionContainerLayers.Fill"]
-      visible: false
   - type: SolutionContainerVisuals
     maxFillLevels: 4
 
