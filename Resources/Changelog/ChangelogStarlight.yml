@@ -13767,5 +13767,69 @@ Entries:
   id: 158000
   time: '2025-09-12T16:42:12.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/1580
+- author: CawsForConcern
+  changes:
+  - message: (Barratry) Boxer spawnpoint to boxing ring
+    type: Add
+  id: 157100
+  time: '2025-09-12T16:47:12.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1571
+- author: CawsForConcern
+  changes:
+  - message: (Barratry) Willow (Boxer pet) to boxing ring
+    type: Add
+  id: 157101
+  time: '2025-09-12T16:47:12.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1571
+- author: CawsForConcern
+  changes:
+  - message: (Barratry) Reporter jobs, as there was no news room or console on station
+    type: Remove
+  id: 157102
+  time: '2025-09-12T16:47:12.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1571
+- author: CawsForConcern
+  changes:
+  - message: (Barratry) Zookeper job, as there was no zoo on station
+    type: Remove
+  id: 157103
+  time: '2025-09-12T16:47:12.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1571
+- author: CawsForConcern
+  changes:
+  - message: (Barratry) Psychologist job, as there was no psych office on station
+    type: Remove
+  id: 157104
+  time: '2025-09-12T16:47:12.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1571
+- author: CawsForConcern
+  changes:
+  - message: (Barratry) Chemist jobs from 3 -> 2 to match the number of workstations
+      in chemistry
+    type: Tweak
+  id: 157105
+  time: '2025-09-12T16:47:12.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1571
+- author: CawsForConcern
+  changes:
+  - message: (Cog) MedicalIntern spawnpoints to medbay
+    type: Add
+  id: 157106
+  time: '2025-09-12T16:47:12.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1571
+- author: CawsForConcern
+  changes:
+  - message: (Cog) Linked operating computer to operating table
+    type: Tweak
+  id: 157107
+  time: '2025-09-12T16:47:12.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1571
+- author: CawsForConcern
+  changes:
+  - message: (Fland) IAA spawnpoints to Courtroom
+    type: Add
+  id: 157108
+  time: '2025-09-12T16:47:12.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1571
 Order: -1
 
