@@ -1,6 +1,6 @@
 - type: entity
-  id: BaseBorgModule
   parent: BaseItem
+  id: BaseBorgModule
   name: borg module
   description: A piece of tech that gives cyborgs new abilities.
   abstract: true
@@ -61,8 +61,8 @@
     event: !type:BorgModuleActionSelectedEvent
 
 - type: entity
-  id: BaseBorgModuleCargo
   parent: BaseBorgModule
+  id: BaseBorgModuleCargo
   abstract: true
   components:
   - type: Tag
@@ -86,8 +86,8 @@
         color: "#593718"
 
 - type: entity
-  id: BaseBorgModuleEngineering
   parent: BaseBorgModule
+  id: BaseBorgModuleEngineering
   abstract: true
   components:
   - type: Tag
@@ -113,8 +113,8 @@
         color: "#DEC343"
 
 - type: entity
-  id: BaseBorgModuleJanitor
   parent: BaseBorgModule
+  id: BaseBorgModuleJanitor
   abstract: true
   components:
   - type: Tag
@@ -140,8 +140,8 @@
         color: "#404040"
 
 - type: entity
-  id: BaseBorgModuleMedical
   parent: BaseBorgModule
+  id: BaseBorgModuleMedical
   abstract: true
   components:
   - type: Tag
@@ -167,8 +167,8 @@
         color: "#C3C3C3"
 
 - type: entity
-  id: BaseBorgModuleScience
   parent: BaseBorgModule
+  id: BaseBorgModuleScience
   abstract: true
   components:
   - type: Tag
@@ -194,8 +194,8 @@
         color: "#C3C3C3"
 
 - type: entity
-  id: BaseBorgModuleService
   parent: BaseBorgModule
+  id: BaseBorgModuleService
   abstract: true
   components:
   - type: Tag
@@ -221,8 +221,8 @@
         color: "#313131"
 
 - type: entity
-  id: BaseBorgModuleSyndicate
   parent: BaseBorgModule
+  id: BaseBorgModuleSyndicate
   abstract: true
   components:
   - type: Tag
@@ -249,8 +249,8 @@
 
 
 - type: entity
-  id: BaseBorgModuleSyndicateAssault
   parent: BaseBorgModule
+  id: BaseBorgModuleSyndicateAssault
   abstract: true
   components:
   - type: Tag
@@ -412,8 +412,8 @@
 
 # generic modules
 - type: entity
-  id: BorgModuleCablePlaceholder
   parent: BaseItem
+  id: BorgModuleCablePlaceholder
   categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
@@ -421,8 +421,8 @@
     state: coilall-30
 
 - type: entity
-  id: BorgModuleCable
   parent: [ BaseBorgModule, BaseProviderBorgModule ]
+  id: BorgModuleCable
   name: cable cyborg module
   description: A universal cyborg module which allows the unit to install and manipulate electrical systems.
   components:
@@ -460,8 +460,8 @@
     icon: { sprite: Interface/Actions/actions_borg.rsi, state: wire-module }
 
 - type: entity
-  id: BorgModuleFireExtinguisher
   parent: [ BaseBorgModule, BaseProviderBorgModule ]
+  id: BorgModuleFireExtinguisher
   name: thruster cyborg module
   description: NT assigned a team to design a jetpack for cyborg units, but they ran out of funding and just made a bigger fire extinguisher. It comes with a integrated GPS and mass scanner though!
   components:
@@ -479,8 +479,8 @@
     icon: { sprite: Interface/Actions/actions_borg.rsi, state: extinguisher-module }
 
 - type: entity
-  id: BorgModuleTool
   parent: [ BaseBorgModule, BaseProviderBorgModule ]
+  id: BorgModuleTool
   name: tool cyborg module
   components:
   - type: Sprite
@@ -499,8 +499,8 @@
     icon: { sprite: Interface/Actions/actions_borg.rsi, state: tool-module }
 
 - type: entity
-  id: BorgModuleInflatable
   parent: [ BaseBorgModule, BaseProviderBorgModule ]
+  id: BorgModuleInflatable
   name: inflatable cyborg module
   components:
   - type: Sprite
@@ -530,8 +530,8 @@
 
 # cargo modules
 - type: entity
-  id: BorgModuleAppraisal
   parent: [ BaseBorgModuleCargo, BaseProviderBorgModule ]
+  id: BorgModuleAppraisal
   name: appraisal cyborg module
   components:
   - type: Sprite
@@ -550,8 +550,8 @@
     icon: { sprite: Interface/Actions/actions_borg.rsi, state: appraisal-module }
 
 - type: entity
-  id: BorgModuleMining
   parent: [ BaseBorgModuleCargo, BaseProviderBorgModule ]
+  id: BorgModuleMining
   name: mining cyborg module
   components:
   - type: Sprite
@@ -568,8 +568,8 @@
     icon: { sprite: Interface/Actions/actions_borg.rsi, state: mining-module }
 
 - type: entity
-  id: BorgModuleAdvancedMining
   parent: [ BaseBorgModuleCargo, BaseProviderBorgModule ]
+  id: BorgModuleAdvancedMining
   name: advanced mining cyborg module
   description: Advanced cargo module containing advanced mining equipment. Studies show it advances productivity of a cyborg by 150%.
   components:
@@ -587,8 +587,8 @@
     icon: { sprite: Interface/Actions/actions_borg.rsi, state: adv-mining-module }
 
 - type: entity
-  id: BorgModuleTraversal
   parent: [ BaseBorgModuleCargo, BaseProviderBorgModule ]
+  id: BorgModuleTraversal
   name: traversal cyborg module
   components:
   - type: Sprite
@@ -606,8 +606,8 @@
 
 # engineering modules
 - type: entity
-  id: BorgModuleAdvancedTool
   parent: [ BaseBorgModuleEngineering, BaseProviderBorgModule ]
+  id: BorgModuleAdvancedTool
   name: advanced tool cyborg module
   description: Advanced engineering module containing cutting-edge tools.
   components:
@@ -626,8 +626,8 @@
     icon: { sprite: Interface/Actions/actions_borg.rsi, state: adv-tools-module }
 
 - type: entity
-  id: BorgModuleConstructionMaterialPlaceholder
   parent: BaseItem
+  id: BorgModuleConstructionMaterialPlaceholder
   categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
@@ -635,8 +635,8 @@
     state: generic_materials
 
 - type: entity
-  id: BorgModuleConstruction
   parent: [ BaseBorgModuleEngineering, BaseProviderBorgModule ]
+  id: BorgModuleConstruction
   name: construction cyborg module
   components:
   - type: Sprite
@@ -706,8 +706,8 @@
     icon: { sprite: Interface/Actions/actions_borg.rsi, state: construction-module }
 
 - type: entity
-  id: BorgModuleRCD
   parent: [ BaseBorgModuleEngineering, BaseProviderBorgModule ]
+  id: BorgModuleRCD
   name: engineering cyborg module
   components:
   - type: Sprite
@@ -727,8 +727,8 @@
 
 # janitorial modules (this gets its own unique things because janis are epic)
 - type: entity
-  id: BorgModuleCustodial
   parent: [ BaseBorgModuleJanitor, BaseProviderBorgModule ]
+  id: BorgModuleCustodial
   name: custodial cyborg module
   components:
   - type: Sprite
@@ -751,8 +751,8 @@
     icon: { sprite: Interface/Actions/actions_borg.rsi, state: light-replacer-module }
 
 - type: entity
-  id: BorgModuleCleaning
   parent: [ BaseBorgModuleJanitor, BaseProviderBorgModule ]
+  id: BorgModuleCleaning
   name: cleaning cyborg module
   components:
   - type: Sprite
@@ -769,8 +769,8 @@
     icon: { sprite: Interface/Actions/actions_borg.rsi, state: cleaning-module }
 
 - type: entity
-  id: BorgModuleAdvancedCleaning
   parent: [ BaseBorgModuleJanitor, BaseProviderBorgModule ]
+  id: BorgModuleAdvancedCleaning
   name: advanced cleaning cyborg module
   description: Advanced janitorial module containing, well... advanced janitor equipment. What were you expecting?
   components:
@@ -796,8 +796,8 @@
 
 # medical modules
 - type: entity
-  id: BorgModuleDiagnosis # todo: reuse when med refractor is finished
   parent: [ BaseBorgModuleMedical, BaseProviderBorgModule ]
+  id: BorgModuleDiagnosis # todo: reuse when med refractor is finished
   name: diagnosis cyborg module
   components:
   - type: Sprite
@@ -812,8 +812,8 @@
     icon: { sprite: Interface/Actions/actions_borg.rsi, state: diagnosis-module }
 
 - type: entity
-  id: BorgModuleTopicals
   parent: [ BaseBorgModuleMedical, BaseProviderBorgModule ]
+  id: BorgModuleTopicals
   name: topicals cyborg module
   components:
   - type: Sprite
@@ -855,8 +855,8 @@
     icon: { sprite: Interface/Actions/actions_borg.rsi, state: treatment-module }
 
 - type: entity
-  id: BorgModuleRescue
   parent: [ BaseBorgModuleMedical, BaseProviderBorgModule ]
+  id: BorgModuleRescue
   name: rescue cyborg module
   components:
   - type: Sprite
@@ -874,8 +874,8 @@
     icon: { sprite: Interface/Actions/actions_borg.rsi, state: defib-module }
 
 - type: entity
-  id: BorgModuleChemical
   parent: [ BaseBorgModuleMedical, BaseProviderBorgModule ]
+  id: BorgModuleChemical
   name: chemical cyborg module
   components:
   - type: Sprite
@@ -912,8 +912,8 @@
     icon: { sprite: Interface/Actions/actions_borg.rsi, state: chem-module }
 
 - type: entity
-  id: BorgModuleAdvancedChemical
   parent: [ BaseBorgModuleMedical, BaseProviderBorgModule ]
+  id: BorgModuleAdvancedChemical
   name: advanced chemical cyborg module
   description: Advanced medical module containing the cyborg adaptation of the highly coveted hypospray. Now your cyborgs can inject crew-harmers with chloral hydrate even faster!
   components:
@@ -986,8 +986,8 @@
     icon: { sprite: Interface/Actions/actions_borg.rsi, state: node-scanner-module }
 
 - type: entity
-  id: BorgModuleAnomaly
   parent: [ BaseBorgModuleScience, BaseProviderBorgModule ]
+  id: BorgModuleAnomaly
   name: anomaly cyborg module
   components:
   - type: Sprite
@@ -1017,8 +1017,8 @@
 
 # service modules
 - type: entity
-  id: BorgModuleService
   parent: [ BaseBorgModuleService, BaseProviderBorgModule ]
+  id: BorgModuleService
   name: service cyborg module
   components:
   - type: Sprite
@@ -1067,8 +1067,8 @@
     icon: { sprite: Interface/Actions/actions_borg.rsi, state: service-module }
 
 - type: entity
-  id: BorgModuleMusique
   parent: [ BaseBorgModuleService, BaseProviderBorgModule ]
+  id: BorgModuleMusique
   name: musique cyborg module
   components:
   - type: Sprite
@@ -1102,8 +1102,8 @@
     icon: { sprite: Interface/Actions/actions_borg.rsi, state: musical-module }
 
 - type: entity
-  id: BorgModuleGardening
   parent: [ BaseBorgModuleService, BaseProviderBorgModule ]
+  id: BorgModuleGardening
   name: gardening cyborg module
   components:
   - type: Sprite
@@ -1120,8 +1120,8 @@
     icon: { sprite: Interface/Actions/actions_borg.rsi, state: gardening-module }
 
 - type: entity
-  id: BorgModuleHarvesting
   parent: [ BaseBorgModuleService, BaseProviderBorgModule ]
+  id: BorgModuleHarvesting
   name: harvesting cyborg module
   components:
   - type: Sprite
@@ -1137,8 +1137,8 @@
     icon: { sprite: Interface/Actions/actions_borg.rsi, state: harvesting-module }
 
 - type: entity
-  id: BorgModuleClowning
   parent: [ BaseBorgModuleService, BaseProviderBorgModule ]
+  id: BorgModuleClowning
   name: clowning cyborg module
   components:
   - type: Sprite
@@ -1154,8 +1154,8 @@
     icon: { sprite: Interface/Actions/actions_borg.rsi, state: clowning-module }
 
 - type: entity
-  id: BorgModuleAdvancedClowning
   parent: [ BaseBorgModuleService, BaseProviderBorgModule ]
+  id: BorgModuleAdvancedClowning
   name: advanced clowning cyborg module
   description: Advanced service module for only the silliest cyborgs! Comes with a built-in oven that bakes pies automatically over time, a holopeel projector, and a push horn.
   components:
@@ -1247,8 +1247,8 @@
     icon: { sprite: Interface/Actions/actions_borg.rsi, state: syndicate-esword-module }
 
 - type: entity
-  id: BorgModuleDoubleEsword
   parent: [ BaseBorgModuleSyndicate, BaseProviderBorgModule, BaseSyndicateContraband ]
+  id: BorgModuleDoubleEsword
   name: double energy sword cyborg module
   description: A weapons module that comes with a double energy sword.
   components:
