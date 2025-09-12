@@ -3869,6 +3869,7 @@
     understands:
     - Dog
     - GalacticCommon
+    - Canilunzt
   # Starlight-end
   - type: Sprite
     layers:
