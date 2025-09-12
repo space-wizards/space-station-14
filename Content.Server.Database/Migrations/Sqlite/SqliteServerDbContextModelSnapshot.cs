@@ -91,10 +91,6 @@ namespace Content.Server.Database.Migrations.Sqlite
                         .HasColumnType("INTEGER")
                         .HasColumnName("admin_log_id");
 
-                    b.Property<long>("CurTime")
-                        .HasColumnType("INTEGER")
-                        .HasColumnName("cur_time");
-
                     b.Property<DateTime>("Date")
                         .HasColumnType("TEXT")
                         .HasColumnName("date");
