@@ -20,6 +20,9 @@ public sealed class SharedCoverSystem : EntitySystem
 
     private bool _coverExamineEnabled;
 
+    private EntityQuery<FixturesComponent> _fixQuery;
+    private EntityQuery<RequireProjectileTargetComponent> _reqTargetQuery;
+
     public override void Initialize()
     {
         base.Initialize();
@@ -78,9 +81,9 @@ public sealed class SharedCoverSystem : EntitySystem
         if (!args.IsInDetailsRange)
             return;
 
-        if (TryComp<RequireProjectileTargetComponent>(ent, out var req)) // It will always fly over
+        if (!_reqTargetQuery.TryComp(ent, out var req)) // It will always fly over
         {
-            if (req.Active == true)
+            if (req != null && req.Active == true)
             {
                 args.PushMarkup(Loc.GetString("no-cover"));
                 return;
@@ -88,7 +91,7 @@ public sealed class SharedCoverSystem : EntitySystem
         }
 
         // check if we can even collide with a projectile
-        if (!TryComp<FixturesComponent>(ent, out var fix))
+        if (!_fixQuery.TryComp(ent, out var fix))
             return;
 
         var matches = false;
