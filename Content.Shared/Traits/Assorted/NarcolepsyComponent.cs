@@ -39,6 +39,6 @@ public sealed partial class NarcolepsyComponent : Component
     /// Next time indcident happens.
     /// </summary>
     [DataField(customTypeSerializer: typeof(TimeOffsetSerializer))]
-    [AutoPausedField]
+    [AutoNetworkedField, AutoPausedField]
     public TimeSpan NextIncidentTime = TimeSpan.Zero;
 }
