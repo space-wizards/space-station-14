@@ -13738,5 +13738,20 @@ Entries:
   id: 160300
   time: '2025-09-12T16:21:05.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/1603
+- author: Fractalflower
+  changes:
+  - message: Ian (& friends), McGriff, Walter, and Renault now actually understand
+      Canilunzt.
+    type: Add
+  id: 160800
+  time: '2025-09-12T16:28:09.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1608
+- author: Fractalflower
+  changes:
+  - message: Floppa now actually understands Nekomimetic.
+    type: Add
+  id: 160801
+  time: '2025-09-12T16:28:09.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1608
 Order: -1
 
