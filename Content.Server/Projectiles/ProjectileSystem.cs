@@ -22,6 +22,8 @@ public sealed class ProjectileSystem : SharedProjectileSystem
     [Dependency] private readonly GunSystem _guns = default!;
     [Dependency] private readonly SharedCameraRecoilSystem _sharedCameraRecoil = default!;
 
+    private EntityQuery<TargetedProjectileComponent> _targettedProjQuery;
+
     public override void Initialize()
     {
         base.Initialize();
@@ -46,7 +48,7 @@ public sealed class ProjectileSystem : SharedProjectileSystem
         }
 
         //if were shooting right at it, always hit cover.
-        if (!TryComp<TargetedProjectileComponent>(uid, out var targetedcomp) || target != targetedcomp.Target)
+        if (!_targettedProjQuery.TryComp(uid, out var targetedcomp) || target != targetedcomp.Target)
         {
             var coverEv = new ProjectileMissCoverAttemptEvent(uid, component, false);
             RaiseLocalEvent(target, ref coverEv);
