@@ -10,6 +10,11 @@
     solution: spray
     destroyOnEmpty: false
     utensil: None
+    transferAmount: 10
+    useSound:
+      path: /Audio/Effects/spray3.ogg
+      params:
+        variation: 0.2
   - type: Tag
     tags:
     - Spray
