@@ -1,0 +1,44 @@
+- type: job
+  id: NanotrasenRepresentative
+  name: job-name-nanorep
+  description: job-description-nanorep
+  playTimeTracker: JobNanotrasenRepresentative
+  requirements:
+    - !type:DepartmentTimeRequirement
+      department: Command
+      time: 1620000 # 150 hours
+  weight: 20
+  startingGear: NanotrasenRepresentativeGear
+  icon: "JobIconNanotrasenRepresentative"
+  whitelisted: true
+  requireAdminNotify: true
+  joinNotifyCrew: true
+  supervisors: job-supervisors-centcom
+  canBeAntag: false
+  accessGroups:
+  - BasicAllAccess
+  access:
+  - CentralCommand
+  - NanotrasenRepresentative
+  special:
+  - !type:AddImplantSpecial
+    implants: [ MindShieldImplant ]
+  - !type:AddComponentSpecial
+    components:
+      - type: CommandStaff
+  afterLoadoutSpecial:
+  - !type:ModifyEnvirosuitSpecial
+    charges: 8
+  - !type:ModifyEnvirohelmSpecial
+    powerCell: PowerCellHigh
+
+- type: startingGear
+  id: NanotrasenRepresentativeGear
+#  subGear:
+#  - NanotrasenRepresentativePlasmamanGear
+  equipment:
+    shoes: ClothingShoesColorBlack
+    id: CentcomPDA
+    jumpsuit: ClothingUniformJumpsuitNanotrasenRepresentative
+    ears: ClothingHeadsetAltCentCom
+#   pocket1: UniqueNanorepLockerTeleporter

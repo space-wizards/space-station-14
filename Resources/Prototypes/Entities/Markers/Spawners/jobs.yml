@@ -607,3 +607,28 @@
     layers:
       - state: green
       - state: zookeeper
+
+# Final Frontier Custom
+- type: entity
+  id: SpawnPointNanotrasenRepresentative
+  parent: SpawnPointJobBase
+  name: nanotrasenrepresentative
+  components:
+  - type: SpawnPoint
+    job_id: NanotrasenRepresentative
+  - type: Sprite
+    layers:
+      - state: green
+      - state: centcom
+
+- type: entity
+  id: SpawnPointMagistrate
+  parent: SpawnPointJobBase
+  name: magistrate
+  components:
+  - type: SpawnPoint
+    job_id: Magistrate
+  - type: Sprite
+    layers:
+      - state: green
+      - state: centcom

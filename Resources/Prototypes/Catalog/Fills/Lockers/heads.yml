@@ -394,3 +394,34 @@
     - id: SpaceCash1000
     - id: BeachBall
     - id: BikeHorn
+
+# Final Frontier Custom
+- type: entity
+  id: LockerNanorepFilled
+  suffix: Filled
+  parent: LockerNanorep
+  components:
+  - type: StorageFill
+    contents:
+    - id: BoxFolderCentCom
+    - id: WeaponDisabler
+    - id: BriefcaseBrownFilled
+    - id: BedsheetCentcom
+    - id: CaneSheathFilledNanotrasen
+    - id: HandheldFaxNanorep
+    - id: RubberStampNanorep
+    - id: Paper
+      amount: 2
+
+- type: entity
+  id: LockerMagistrateFilled
+  suffix: Filled
+  parent: LockerMagistrate
+  components:
+  - type: StorageFill
+    contents:
+    - id: BoxFolderCentCom
+    - id: WeaponDisabler
+    - id: BriefcaseBrownFilled
+    - id: RubberStampMagistrate
+    - id: ClothingHeadHatPwig

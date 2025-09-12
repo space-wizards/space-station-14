@@ -326,3 +326,28 @@
   components:
   - type: AccessReader
     access: [["Xenoborg"]]
+
+# Final Frontier Custom
+- type: entity
+  parent: DoorElectronics
+  id: DoorElectronicsCentralCommandCaptain
+  suffix: CentCommCap, Locked
+  components:
+  - type: AccessReader
+    access: [["CentralCommand"], [Captain]]
+
+- type: entity
+  parent: DoorElectronics
+  id: DoorElectronicsNTR
+  suffix: NanotrasenRepresentative, Locked
+  components:
+  - type: AccessReader
+    access: [["NanotrasenRepresentative"]]
+
+- type: entity
+  parent: DoorElectronics
+  id: DoorElectronicsMAG
+  suffix: Magistrate, Locked
+  components:
+  - type: AccessReader
+    access: [["Magistrate"]]

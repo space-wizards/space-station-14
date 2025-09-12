@@ -610,3 +610,34 @@
     stateBaseClosed: hop
     stateDoorOpen: hop_open
     stateDoorClosed: representative_door
+
+# Final Frontier Custom
+- type: entity
+  id: LockerNanorep
+  name: nanotrasen representative locker
+  parent: LockerBaseSecure
+  components:
+  - type: Appearance
+  - type: Sprite
+    sprite: Structures/Storage/closet.rsi
+  - type: AccessReader
+    access: [["NanotrasenRepresentative"]]
+  - type: EntityStorageVisuals
+    stateBaseClosed: ntr
+    stateDoorOpen: ntr_open
+    stateDoorClosed: ntr_door
+
+- type: entity
+  id: LockerMagistrate
+  name: magistrate locker
+  parent: LockerBaseSecure
+  components:
+  - type: Appearance
+  - type: Sprite
+    sprite: Structures/Storage/closet.rsi
+  - type: AccessReader
+    access: [["Magistrate"]]
+  - type: EntityStorageVisuals
+    stateBaseClosed: mag
+    stateDoorOpen: bso_open # Sue me
+    stateDoorClosed: mag_door

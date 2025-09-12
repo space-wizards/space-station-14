@@ -344,12 +344,12 @@
   - type: Item
     size: Large
     shape: null
-  - type: ExtendDescription
-    descriptionList:
-      - description: "gun-suppressed"
-        fontSize: 10
-        color: "#ff4f00"
-        requireDetailRange: false
+#  - type: ExtendDescription
+#    descriptionList:
+#      - description: "gun-suppressed"
+#        fontSize: 10
+#        color: "#ff4f00"
+#        requireDetailRange: false
 
 - type: entity
   name: FPA-90 sub machine gun
@@ -442,12 +442,12 @@
         whitelist:
           tags:
             - CartridgeCaselessRifle
-  - type: ExtendDescription
-    descriptionList:
-      - description: "gun-suppressed"
-        fontSize: 10
-        color: "#ff4f00"
-        requireDetailRange: false
+#  - type: ExtendDescription
+#    descriptionList:
+#      - description: "gun-suppressed"
+#        fontSize: 10
+#        color: "#ff4f00"
+#        requireDetailRange: false
 
 - type: entity
   name: antique BRDI R-25

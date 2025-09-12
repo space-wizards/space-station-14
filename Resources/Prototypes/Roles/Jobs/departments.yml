@@ -4,8 +4,8 @@
   description: department-Cargo-description
   color: "#A46106"
   roles:
-  - CargoTechnician
-  - SalvageSpecialist
+    - CargoTechnician
+    - SalvageSpecialist
 
 - type: department
   id: Civilian
@@ -14,20 +14,20 @@
   color: "#9FED58"
   weight: -10
   roles:
-  - Bartender
-  - Botanist
-  - Boxer
-  - Chaplain
-  - Chef
-  - Janitor
-  - Lawyer
-  - Librarian
-  - Musician
-  - Passenger
-  - Reporter
-  - Visitor
-  - Zookeeper
-  - ServiceWorker
+    - Bartender
+    - Botanist
+    - Boxer
+    - Chaplain
+    - Chef
+    - Janitor
+    - Lawyer
+    - Librarian
+    - Musician
+    - Passenger
+    - Reporter
+    - Visitor
+    - Zookeeper
+    - ServiceWorker
 
 - type: department
   id: CentralCommand
@@ -35,13 +35,13 @@
   description: department-CentralCommand-description
   color: "#0c344d"
   roles:
-  - CentralCommandOfficial
-  - CBURN
-  - ERTLeader
-  - ERTMedical
-  - ERTSecurity
-  - ERTEngineer
-  - DeathSquad
+    - CentralCommandOfficial
+    - CBURN
+    - ERTLeader
+    - ERTMedical
+    - ERTSecurity
+    - ERTEngineer
+    - DeathSquad
   editorHidden: true
   weight: 120
 
@@ -51,20 +51,22 @@
   description: department-Command-description
   color: "#334E6D"
   roles:
-  - Captain
-  - ChiefEngineer
-  - ChiefMedicalOfficer
-  - HeadOfPersonnel
-  - HeadOfSecurity
-  - ResearchDirector
-  - Quartermaster
-  - CentralCommandOfficial
-  - CBURN
-  - ERTLeader
-  - ERTMedical
-  - ERTSecurity
-  - ERTEngineer
-  - DeathSquad
+    - Magistrate
+    - NanotrasenRepresentative
+    - Captain
+    - ChiefEngineer
+    - ChiefMedicalOfficer
+    - HeadOfPersonnel
+    - HeadOfSecurity
+    - ResearchDirector
+    - Quartermaster
+    - CentralCommandOfficial
+    - CBURN
+    - ERTLeader
+    - ERTMedical
+    - ERTSecurity
+    - ERTEngineer
+    - DeathSquad
   primary: false
   weight: 100
 
@@ -74,8 +76,8 @@
   description: department-Engineering-description
   color: "#EFB341"
   roles:
-  - StationEngineer
-  - TechnicalAssistant
+    - StationEngineer
+    - TechnicalAssistant
 
 - type: department
   id: Medical
@@ -83,10 +85,10 @@
   description: department-Medical-description
   color: "#52B4E9"
   roles:
-  - MedicalDoctor
-  - MedicalIntern
-  - Psychologist
-  - Paramedic
+    - MedicalDoctor
+    - MedicalIntern
+    - Psychologist
+    - Paramedic
 
 - type: department
   id: Security
@@ -95,10 +97,10 @@
   color: "#DE3A3A"
   weight: 20
   roles:
-  - SecurityCadet
-  - SecurityOfficer
-  - Detective
-  - Warden
+    - SecurityCadet
+    - SecurityOfficer
+    - Detective
+    - Warden
 
 - type: department
   id: Science
@@ -106,8 +108,8 @@
   description: department-Science-description
   color: "#D381C9"
   roles:
-  - Scientist
-  - ResearchAssistant
+    - Scientist
+    - ResearchAssistant
 
 - type: department
   id: Silicon
@@ -115,8 +117,8 @@
   description: department-Silicon-description
   color: "#D381C9"
   roles:
-  - Borg
-  - StationAi
+    - Borg
+    - StationAi
 
 - type: department
   id: Specific
@@ -125,8 +127,8 @@
   color: "#9FED58"
   weight: 10
   roles:
-  - Boxer
-  - Reporter
-  - Zookeeper
-  - Psychologist
+    - Boxer
+    - Reporter
+    - Zookeeper
+    - Psychologist
   primary: false

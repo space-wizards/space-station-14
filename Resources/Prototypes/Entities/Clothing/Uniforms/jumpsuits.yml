@@ -1401,3 +1401,26 @@
     sprite: Clothing/Uniforms/Jumpsuit/familiar_garbs.rsi
   - type: Clothing
     sprite: Clothing/Uniforms/Jumpsuit/familiar_garbs.rsi
+
+# Final Frontier Custom
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformJumpsuitNanotrasenRepresentative
+  name: nanotrasen representative suit
+  description: A black suit worn by officials.
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpsuit/nanotrasen_representative.rsi
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpsuit/nanotrasen_representative.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformJumpsuitMagistrate
+  name: magistrate robes
+  description: The robes worn by officials.
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpsuit/magistrate.rsi
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpsuit/magistrate.rsi

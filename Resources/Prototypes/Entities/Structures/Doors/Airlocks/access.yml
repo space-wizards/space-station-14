@@ -1293,3 +1293,84 @@
   - type: ContainerFill
     containers:
       board: [ DoorElectronicsSyndicateAgent ]
+
+# Final Frontier Custom
+# CC locked
+
+- type: entity
+  parent: AirlockCentralCommand
+  id: AirlockCentralCommandCommandLocked
+  suffix: Command, Locked
+  components:
+  - type: ContainerFill
+    containers:
+      board: [ DoorElectronicsCommand ]
+
+- type: entity
+  parent: AirlockCentralCommandGlass
+  id: AirlockCentralCommandCommandGlassLocked
+  suffix: Command, Locked
+  components:
+  - type: ContainerFill
+    containers:
+      board: [ DoorElectronicsCommand ]
+
+# CC/cap locked
+
+- type: entity
+  parent: AirlockCommand
+  id: AirlockCommandCommandLocked
+  suffix: CentCommCap, Locked
+  components:
+  - type: ContainerFill
+    containers:
+      board: [ DoorElectronicsCentralCommandCaptain ]
+
+- type: entity
+  parent: AirlockCommandGlass
+  id: AirlockCommandCommandGlassLocked
+  suffix: CentCommCap, Locked
+  components:
+  - type: ContainerFill
+    containers:
+      board: [ DoorElectronicsCentralCommandCaptain ]
+
+# NTR locked
+
+- type: entity
+  parent: AirlockCentralCommand
+  id: AirlockNanotrasenRepresentativeCommandLocked
+  suffix: NTRep, Locked
+  components:
+  - type: ContainerFill
+    containers:
+      board: [ DoorElectronicsNTR ]
+
+- type: entity
+  parent: AirlockCentralCommandGlass
+  id: AirlockNanotrasenRepresentativeCommandGlassLocked
+  suffix: NTRep, Locked
+  components:
+  - type: ContainerFill
+    containers:
+      board: [ DoorElectronicsNTR ]
+
+# MAG locked
+
+- type: entity
+  parent: AirlockCentralCommand
+  id: AirlockMagistrateCommandLocked
+  suffix: Magistrate, Locked
+  components:
+  - type: ContainerFill
+    containers:
+      board: [ DoorElectronicsMAG ]
+
+- type: entity
+  parent: AirlockCentralCommandGlass
+  id: AirlockMagistrateCommandGlassLocked
+  suffix: Magistrate, Locked
+  components:
+  - type: ContainerFill
+    containers:
+      board: [ DoorElectronicsMAG ]

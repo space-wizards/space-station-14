@@ -1,0 +1,48 @@
+- type: job
+  id: Magistrate
+  name: job-name-magistrate
+  description: job-description-magistrate
+  playTimeTracker: JobMagistrate
+  requirements:
+    - !type:DepartmentTimeRequirement
+      department: Command
+      time: 1800000 # 500 hours
+    - !type:DepartmentTimeRequirement
+      department: Security
+      time: 1080000 # 300 hours
+  weight: 20
+  startingGear: MagistrateGear
+  icon: "JobIconMagistrate"
+  whitelisted: true
+  requireAdminNotify: true
+  joinNotifyCrew: true
+  supervisors: job-supervisors-centcom
+  canBeAntag: false
+  accessGroups:
+  - BasicAllAccess
+  access:
+  - CentralCommand
+  - Magistrate
+  special:
+  - !type:AddImplantSpecial
+    implants: [ MindShieldImplant ]
+  - !type:AddComponentSpecial
+    components:
+      - type: CommandStaff
+# afterLoadoutSpecial:
+# - !type:ModifyEnvirosuitSpecial
+#   charges: 8
+# - !type:ModifyEnvirohelmSpecial
+#   powerCell: PowerCellHigh
+
+- type: startingGear
+  id: MagistrateGear
+#  subGear:
+#  - MagistratePlasmamanGear
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitMagistrate
+    shoes: ClothingShoesLeather
+    gloves: ClothingHandsGlovesColorWhite
+    id: ChiefJusticePDA
+    ears: ClothingHeadsetMagistrate
+#   pocket1: UniqueMagistrateLockerTeleporter

@@ -188,3 +188,13 @@
   components:
   - type: ExplosionResistance
     damageCoefficient: 0
+
+# Final Frontier Custom
+- type: entity
+  parent: ClothingBackpackSatchel
+  id: ClothingBackpackSatchelNanorep
+  name: Nanotrasen Representative Satchel
+  description: An expensive dark green backpack. Smells like fax machines.
+  components:
+  - type: Sprite
+    sprite: Clothing/Back/Satchels/nanorep.rsi

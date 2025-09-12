@@ -232,6 +232,9 @@
     {
       "name": "pda-seniorofficer"
     },
+        {
+      "name": "pda-chiefjustice"
+    },
 	{
       "name": "pda-wizard",
       "delays": [

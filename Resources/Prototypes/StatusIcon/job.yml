@@ -460,3 +460,18 @@
     sprite: /Textures/Interface/Misc/job_icons.rsi
     state: Admin
   allowSelection: false
+
+# Final Frontier Custom
+- type: jobIcon
+  parent: JobIcon
+  id: JobIconNanotrasenRepresentative
+  icon:
+    sprite: /Textures/Interface/Misc/job_icons.rsi
+    state: nanotrasenrepresentative
+
+- type: jobIcon
+  parent: JobIcon
+  id: JobIconMagistrate
+  icon:
+    sprite: /Textures/Interface/Misc/job_icons.rsi
+    state: magistrate

@@ -46,7 +46,7 @@
   storage:
     back:
     - Flash
-    # - StationCharter
+    - StationCharter
 
 - type: chameleonOutfit
   id: CaptainChameleonOutfit

@@ -303,3 +303,25 @@
       sprite: Clothing/Ears/Headsets/wizard.rsi
     - type: Clothing
       sprite: Clothing/Ears/Headsets/wizard.rsi
+
+# Final Frontier Custom
+- type: entity
+  parent: ClothingHeadset
+  id: ClothingHeadsetMagistrate
+  name: magistrate's headset
+  description: The headset used by the magistrate.
+  components:
+  - type: ContainerFill
+    containers:
+      key_slots:
+      - EncryptionKeyCommand
+      - EncryptionKeyCentCom
+      - EncryptionKeyJustice
+      - EncryptionKeyPrison
+      - EncryptionKeySecurity
+      - EncryptionKeyCommon
+  - type: Sprite
+    sprite: Clothing/Ears/Headsets/justice.rsi
+    state: icon_alt
+  - type: Clothing
+    sprite: Clothing/Ears/Headsets/justice.rsi

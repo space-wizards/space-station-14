@@ -16,7 +16,7 @@
           emergencyShuttlePath: /Maps/Shuttles/emergency_accordia.yml
         - type: StationJobs
           availableJobs: # 72 jobs total w/o latejoins & interns, 91 jobs total w/ latejoins & interns
-            #command (7)
+            #command (11)
             Captain: [ 1, 1 ]
             HeadOfPersonnel: [ 1, 1 ]
             HeadOfSecurity: [ 1, 1 ]
@@ -24,6 +24,10 @@
             ChiefEngineer: [ 1, 1 ]
             ResearchDirector: [ 1, 1 ]
             Quartermaster: [ 1, 1 ]
+            NanotrasenRepresentative: [ 1, 1 ]
+            Magistrate: [ 1, 1 ]
+            CentralCommandOfficial: [ 1, 1]
+            CBURN: [ 1, 1 ]
             #service (15 - 16)
             Bartender: [ 2, 2 ]
             Botanist: [ 2, 3 ]
@@ -56,11 +60,13 @@
             #supply (7)
             SalvageSpecialist: [ 3, 3 ]
             CargoTechnician: [ 4, 4 ]
-            #civilian (3+)
+            #civilian (2+)
             Passenger: [ -1, -1 ] #infinite, not counted
-            Clown: [ 1, 1 ]
-            Mime: [ 1, 1 ]
+            Visitor: [ -1, -1] #infinite, not counted
+            #Clown: [ 1, 1 ]
+            #Mime: [ 1, 1 ]
             Musician: [ 1, 1 ]
+            Boxer: [ 1, 1 ]
             #silicon (3)
             Borg: [ 2, 2 ]
             StationAi: [ 1, 1 ]

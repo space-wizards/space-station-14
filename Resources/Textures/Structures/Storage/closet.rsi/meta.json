@@ -8,6 +8,24 @@
     "license": "CC-BY-SA-3.0",
     "states": [
         {
+            "name": "bso_open"
+        },
+        {
+            "name": "mag"
+        },
+        {
+            "name": "mag_door"
+        },
+        {
+            "name": "ntr"
+        },
+        {
+            "name": "ntr_door"
+        },
+        {
+            "name": "ntr_open"
+        },
+        {
             "name": "abductor"
         },
         {

@@ -24,7 +24,9 @@ job-name-centcomoff = CentComm Official
 job-name-cburn = Centcomm Quarantine Officer
 job-name-deathsquad = Centcomm Agent
 job-name-reporter = Reporter
+job-name-magistrate = Magistrate
 job-name-musician = Musician
+job-name-nanorep = Nanotrasen Representative
 job-name-librarian = Librarian
 job-name-lawyer = Lawyer
 

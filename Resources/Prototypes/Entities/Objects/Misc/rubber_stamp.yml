@@ -314,3 +314,30 @@
     stampState: "paper_stamp-wizard"
   - type: Sprite
     state: stamp-wizard
+
+# Final Frontier Custom
+- type: entity
+  name: nanotrasen representative rubber stamp
+  parent: RubberStampBase
+  id: RubberStampNanorep
+  components:
+  - type: Stamp
+    stampedName: stamp-component-stamped-name-nanorep
+    stampedColor: "#2ec69b"
+    stampState: "paper_stamp-nanorep"
+  - type: Sprite
+    sprite: Objects/Misc/stamps.rsi
+    state: stamp-nanorep
+
+- type: entity
+  name: magistrate rubber stamp
+  parent: RubberStampBase
+  id: RubberStampMagistrate
+  components:
+  - type: Stamp
+    stampedName: stamp-component-stamped-name-magistrate
+    stampedColor: "#76a5b4"
+    stampState: "paper_stamp-magistrate"
+  - type: Sprite
+    sprite: Objects/Misc/stamps.rsi
+    state: stamp-magistrate

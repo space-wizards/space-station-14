@@ -77,6 +77,9 @@
   id: JobLibrarian
 
 - type: playTimeTracker
+  id: JobMagistrate
+
+- type: playTimeTracker
   id: JobMedicalDoctor
 
 - type: playTimeTracker
@@ -87,6 +90,9 @@
 
 - type: playTimeTracker
   id: JobMusician
+
+- type: playTimeTracker
+  id: JobNanotrasenRepresentative
 
 - type: playTimeTracker
   id: JobPassenger
