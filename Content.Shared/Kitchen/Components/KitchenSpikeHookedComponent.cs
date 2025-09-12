@@ -7,4 +7,11 @@ namespace Content.Shared.Kitchen.Components;
 /// </summary>
 [RegisterComponent, NetworkedComponent]
 [Access(typeof(SharedKitchenSpikeSystem))]
-public sealed partial class KitchenSpikeHookedComponent : Component;
+public sealed partial class KitchenSpikeHookedComponent : Component
+{
+    /// <summary>
+    /// The EntityUid of the Kitchen Spike we're hooked to.
+    /// </summary>
+    [DataField]
+    public EntityUid KitchenSpike;
+}
