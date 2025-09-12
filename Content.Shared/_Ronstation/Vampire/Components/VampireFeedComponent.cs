@@ -61,20 +61,6 @@ public sealed partial class VampireFeedComponent : Component
         },
     };
 
-    /// <summary>
-    /// The damage profile for when the target's blood volume passes under the execution threshold
-    /// </summary>
-    [DataField, AutoNetworkedField]
-    public DamageSpecifier ExecuteDamage = new()
-    {
-        DamageDict = new Dictionary<string, FixedPoint2>
-        {
-            { "Bloodloss", 60},
-            { "Piercing", 20 },
-            { "Slash", 20 }
-        },
-    };
-
     [DataField, AutoNetworkedField]
     public FixedPoint2 ExecuteThreshold = FixedPoint2.New(0.2);
 

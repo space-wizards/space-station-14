@@ -13,6 +13,8 @@ using Content.Shared.Database;
 using Content.Shared.DoAfter;
 using Content.Shared.Forensics;
 using Content.Shared.IdentityManagement;
+using Content.Shared.Mobs;
+using Content.Shared.Mobs.Components;
 using Content.Shared.Mobs.Systems;
 using Content.Shared.Popups;
 using Content.Shared.Whitelist;
@@ -35,6 +37,7 @@ public sealed partial class VampireSystem
     [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
     [Dependency] private readonly DamageableSystem _damageable = default!;
     [Dependency] private readonly MobStateSystem _mobState = default!;
+    [Dependency] private readonly MobThresholdSystem _mobThreshold = default!;
     [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
     [Dependency] private readonly EntityWhitelistSystem _whitelistSystem = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
@@ -171,7 +174,14 @@ public sealed partial class VampireSystem
 
         // EXECUTED
         if (bloodSolution.Volume < (bloodSolution.MaxVolume * ent.Comp.ExecuteThreshold))
-            _damageable.TryChangeDamage(args.Target, ent.Comp.ExecuteDamage, true, true, damage, args.User);
+        {
+            if (!_mobThreshold.TryGetThresholdForState(args.Target.Value, MobState.Dead, out var threshold))
+                return;
+
+            DamageSpecifier dspec = new();
+            dspec.DamageDict.Add("Piercing", threshold.Value - damage.TotalDamage);
+            _damageable.TryChangeDamage(args.Target, dspec, true, origin: args.Target);
+        }
 
         // Ow my neck
         _popupSystem.PopupEntity(Loc.GetString("vampire-feed-msg"),
