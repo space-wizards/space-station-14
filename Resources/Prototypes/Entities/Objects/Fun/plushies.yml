@@ -603,15 +603,15 @@
     useSound: *PlushieDionaSound
   - type: SolutionContainerManager
     solutions:
-      plushie:
-        maxVol: 1
       food:
-        maxVol: 10
+        maxVol: 11
         reagents:
         - ReagentId: Fiber
           Quantity: 10
+  - type: RefillableSolution
+    solution: food
   - type: SolutionContainerVisuals
-    solutionName: plushie
+    solutionName: food
     maxFillLevels: 1
     fillBaseName: plushie_diona
     changeColor: false
