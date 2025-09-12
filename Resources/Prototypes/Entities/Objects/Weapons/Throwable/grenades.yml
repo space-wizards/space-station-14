@@ -184,9 +184,9 @@
     keysIn:
     - timer
   - type: Explosive
-    explosionType: Minibomb
-    totalIntensity: 400
-    intensitySlope: 30
+    explosionType: DemolitionCharge
+    totalIntensity: 660
+    intensitySlope: 50
     maxIntensity: 125
     canCreateVacuum: true
   - type: TimerTrigger
