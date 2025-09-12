@@ -44,7 +44,7 @@ public sealed class SharedCoverSystem : EntitySystem
             _timing.CurTime - comp.FireTime :
             TimeSpan.MaxValue;
 
-        var distanceCalc = comp.FireSpeed != null ?
+        var distance = comp.FireSpeed != null ?
             Math.Clamp(comp.FireSpeed.Value * (float)traveltime.Value.TotalSeconds, 0, cover.Comp.MaxDistance) :
             cover.Comp.MaxDistance;
 
