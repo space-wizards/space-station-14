@@ -83,6 +83,7 @@ public abstract partial class SharedCartridgeLoaderSystem : EntitySystem
 
         RaiseLocalEvent(program, new CartridgeActivatedEvent(ent));
         ent.Comp.ActiveProgram = program;
+        Dirty(ent);
         UpdateUiState(ent.AsNullable());
     }
 
@@ -93,6 +94,7 @@ public abstract partial class SharedCartridgeLoaderSystem : EntitySystem
 
         RaiseLocalEvent(program, new CartridgeDeactivatedEvent(ent));
         ent.Comp.ActiveProgram = null;
+        Dirty(ent);
         UpdateUiState(ent.AsNullable());
     }
 

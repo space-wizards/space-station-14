@@ -55,6 +55,7 @@ public abstract partial class SharedCartridgeLoaderSystem : EntitySystem
         if (TryComp<CartridgeComponent>(args.Entity, out var cartridge))
         {
             cartridge.LoaderUid = ent;
+            Dirty(args.Entity, cartridge);
 
             if (args.Container.ID == CartridgeLoaderComponent.RemovableContainerId)
                 UpdateCartridgeInstallationStatus((args.Entity, cartridge), InstallationStatus.Installed);
@@ -77,11 +78,15 @@ public abstract partial class SharedCartridgeLoaderSystem : EntitySystem
         if (ent.Comp.ActiveProgram == args.Entity)
         {
             ent.Comp.ActiveProgram = null;
+            Dirty(ent);
             RaiseLocalEvent(args.Entity, new CartridgeDeactivatedEvent(ent));
         }
 
         if (TryComp<CartridgeComponent>(args.Entity, out var cartridge))
+        {
             cartridge.LoaderUid = null;
+            Dirty(args.Entity, cartridge);
+        }
 
         RaiseLocalEvent(args.Entity, new CartridgeRemovedEvent(ent));
         UpdateUiState(ent.AsNullable());

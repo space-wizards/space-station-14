@@ -3,7 +3,8 @@ using Robust.Shared.GameStates;
 
 namespace Content.Shared.CartridgeLoader;
 
-[RegisterComponent, NetworkedComponent]
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
+[Access(typeof(SharedCartridgeLoaderSystem))]
 public sealed partial class CartridgeLoaderComponent : Component
 {
     public const string UnremovableContainerId = "preinstalled-program-container";
@@ -18,7 +19,7 @@ public sealed partial class CartridgeLoaderComponent : Component
     /// <summary>
     /// The currently running program that has its ui showing
     /// </summary>
-    [DataField]
+    [DataField, AutoNetworkedField]
     public EntityUid? ActiveProgram = default;
 
     /// <summary>
@@ -31,7 +32,7 @@ public sealed partial class CartridgeLoaderComponent : Component
     /// Controls whether the cartridge loader will play notifications if it supports it at all
     /// TODO: Add an option for this to the PDA
     /// </summary>
-    [DataField]
+    [DataField, AutoNetworkedField]
     public bool NotificationsEnabled = true;
 
     [DataField(required: true)]
