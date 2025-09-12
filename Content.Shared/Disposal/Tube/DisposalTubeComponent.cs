@@ -6,16 +6,22 @@ using Robust.Shared.Serialization;
 
 namespace Content.Shared.Disposal.Tube;
 
+/// <summary>
+/// Basic component for disposal pipes.
+/// </summary>
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
 [Access(typeof(SharedDisposalTubeSystem), typeof(SharedDisposableSystem))]
 public sealed partial class DisposalTubeComponent : Component
 {
-    [DataField]
-    public string ContainerId = "DisposalTube";
-
+    /// <summary>
+    /// Sets whether the tube is a valid target for receiving entities.
+    /// </summary>
     [DataField, AutoNetworkedField]
     public bool Connected;
 
+    /// <summary>
+    /// Sound played when entities passing through this pipe change direction.
+    /// </summary>
     [DataField]
     public SoundSpecifier ClangSound = new SoundPathSpecifier("/Audio/Effects/clang.ogg", AudioParams.Default.WithVolume(-5f));
 
@@ -37,6 +43,10 @@ public sealed partial class DisposalTubeComponent : Component
         }
     };
 
+    /// <summary>
+    /// Determines the type of disposal pipe -
+    /// only pipes of the same type can connect to each other.
+    /// </summary>
     [DataField]
     public DisposalTubeType DisposalTubeType = DisposalTubeType.Disposals;
 }

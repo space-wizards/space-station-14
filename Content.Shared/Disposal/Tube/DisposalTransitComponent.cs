@@ -2,6 +2,10 @@ using Robust.Shared.GameStates;
 
 namespace Content.Shared.Disposal.Tube;
 
+/// <summary>
+/// Basic component for disposal pipes - contains a list of the potential
+/// directions disposal holders passing through it can be routed.
+/// </summary>
 [RegisterComponent, NetworkedComponent]
 [Access(typeof(SharedDisposalTubeSystem))]
 [Virtual]
