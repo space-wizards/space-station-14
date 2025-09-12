@@ -152,7 +152,7 @@ public abstract class SharedLatheSystem : EntitySystem
         var recipes = GetAvailableRecipes(entity, true);
         foreach (var id in recipes)
         {
-            if (!Proto.TryIndex(id, out var proto))
+            if (!Proto.Resolve(id, out var proto))
                 continue;
             foreach (var (mat, _) in proto.Materials)
             {
@@ -184,7 +184,7 @@ public abstract class SharedLatheSystem : EntitySystem
     [PublicAPI]
     public bool CanProduce(Entity<LatheComponent?> entity, string recipe, int amount = 1)
     {
-        return Proto.TryIndex<LatheRecipePrototype>(recipe, out var proto) && CanProduce(entity, proto, amount);
+        return Proto.Resolve<LatheRecipePrototype>(recipe, out var proto) && CanProduce(entity, proto, amount);
     }
 
     public bool CanProduce(Entity<LatheComponent?> entity, LatheRecipePrototype recipe, int amount = 1)
@@ -565,7 +565,7 @@ public abstract class SharedLatheSystem : EntitySystem
 
     private void OnLatheQueueRecipeMessage(Entity<LatheComponent> entity, ref LatheQueueRecipeMessage args)
     {
-        if (Proto.TryIndex(args.ID, out LatheRecipePrototype? recipe))
+        if (Proto.Resolve(args.ID, out LatheRecipePrototype? recipe))
         {
             if (TryAddToQueue(entity.AsNullable(), recipe, args.Quantity))
             {
