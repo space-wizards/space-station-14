@@ -634,6 +634,9 @@
   id: GhostOnlyWarp
 
 - type: Tag
+  id: GenderPin
+
+- type: Tag
   id: GlassAirlock
 
 - type: Tag
@@ -802,6 +805,9 @@
   id: Ingot
 
 - type: Tag
+  id: Inflatable
+
+- type: Tag
   id: InstantDoAfters
 
 - type: Tag
@@ -927,6 +933,9 @@
 
 - type: Tag
   id: Medkit
+
+- type: Tag
+  id: MessyDrinkerImmune
 
 - type: Tag
   id: Metal
