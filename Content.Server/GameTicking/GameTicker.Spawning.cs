@@ -374,8 +374,10 @@ namespace Content.Server.GameTicking
                 EntityManager.EnsureComponent<PolymorphableComponent>(mob);
                 mob = _polymorphSystem.PolymorphEntity(mob, "PermanentCorgiMorph") ?? mob;
                 EntityManager.RemoveComponent<PolymorphedEntityComponent>(mob);
-                var lang = EntityManager.EnsureComponent<LanguageSpeakerComponent>(mob);
-                lang.SpokenLanguages.Remove(SharedLanguageSystem.FallbackLanguagePrototype);
+                // var accent = EntityManager.EnsureComponent<ReplacementAccentComponent>(mob); # SL Removal
+                var lang = EntityManager.EnsureComponent<LanguageSpeakerComponent>(mob); // SL Addition
+                lang.SpokenLanguages.Remove(SharedLanguageSystem.FallbackLanguagePrototype); // SL Addition
+                // accent.Accent = "dog"; # SL Removal
             }
 
 
