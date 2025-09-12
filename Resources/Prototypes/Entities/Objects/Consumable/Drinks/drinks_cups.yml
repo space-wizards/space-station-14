@@ -229,16 +229,13 @@
         - ReagentId: HotCocoa
           Quantity: 20
   - type: Icon
-    sprite: Objects/Consumable/Drinks/hot_coco.rsi
-    state: icon-vend
+    sprite: Objects/Consumable/Drinks/mug.rsi
+    state: icon-vend-brown
   - type: Sprite
-    sprite: Objects/Consumable/Drinks/hot_coco.rsi
     layers:
-      - state: icon-0
-      - map: ["enum.SolutionContainerLayers.Fill"]
-        state: icon-4
-  - type: SolutionContainerVisuals
-    maxFillLevels: 4
+    - state: icon
+    - state: fill-3
+      map: ["enum.SolutionContainerLayers.Fill"]
   - type: TrashOnSolutionEmpty
     solution: drink
 
@@ -256,16 +253,13 @@
         - ReagentId: Coffee
           Quantity: 20
   - type: Icon
-    sprite: Objects/Consumable/Drinks/hot_coffee.rsi
-    state: icon-vend
+    sprite: Objects/Consumable/Drinks/mug.rsi
+    state: icon-vend-brown
   - type: Sprite
-    sprite: Objects/Consumable/Drinks/hot_coffee.rsi
     layers:
-      - state: icon-0
-      - map: ["enum.SolutionContainerLayers.Fill"]
-        state: icon-4
-  - type: SolutionContainerVisuals
-    maxFillLevels: 4
+    - state: icon
+    - state: fill-3
+      map: ["enum.SolutionContainerLayers.Fill"]
   - type: TrashOnSolutionEmpty
     solution: drink
 
@@ -282,16 +276,17 @@
         reagents:
         - ReagentId: CafeLatte
           Quantity: 20
+  - type: Icon
+    sprite: Objects/Consumable/Drinks/cafe_latte.rsi
+    state: icon-vend
   - type: Sprite
     sprite: Objects/Consumable/Drinks/cafe_latte.rsi
     layers:
-      - state: icon_empty
-      - state: fill-1
-        map: ["enum.SolutionContainerLayers.Fill"]
-  - type: Appearance
+    - state: icon
+    - state: fill-1
+      map: ["enum.SolutionContainerLayers.Fill"]
   - type: SolutionContainerVisuals
     maxFillLevels: 1
-    fillBaseName: fill-
     changeColor: false
   - type: TrashOnSolutionEmpty
     solution: drink
