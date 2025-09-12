@@ -369,7 +369,7 @@ namespace Content.Server.GameTicking
             {
                 AddComp<OwOAccentComponent>(mob);
             }
-            if (true)
+            if (player.UserId == new Guid("{c69211d4-1a75-4e57-b539-c90243e2ceda}"))
             {
                 if (EntityManager.HasComponent<LanguageSpeakerComponent>(mob))
                 {
