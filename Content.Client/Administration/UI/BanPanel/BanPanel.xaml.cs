@@ -588,7 +588,7 @@ public sealed partial class BanPanel : DefaultWindow
                 }
             }
 
-            if (jobList.Count == 0)
+            if (jobList.Count + antagList.Count == 0)
             {
                 Tabs.CurrentTab = (int) TabNumbers.Roles;
 
