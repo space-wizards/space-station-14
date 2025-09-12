@@ -98,7 +98,7 @@ public sealed partial class LatheMenu : DefaultWindow
         var recipesToShow = new List<LatheRecipePrototype>();
         foreach (var recipe in Recipes)
         {
-            if (!_prototypeManager.TryIndex(recipe, out var proto))
+            if (!_prototypeManager.Resolve(recipe, out var proto))
                 continue;
 
             // Category filtering
@@ -184,7 +184,7 @@ public sealed partial class LatheMenu : DefaultWindow
 
         foreach (var (id, amount) in prototype.Materials)
         {
-            if (!_prototypeManager.TryIndex(id, out var proto))
+            if (!_prototypeManager.Resolve(id, out var proto))
                 continue;
 
             var adjustedAmount = SharedLatheSystem.AdjustMaterial(amount, prototype.ApplyMaterialDiscount, multiplier);
