@@ -1,0 +1,15 @@
+# Fashion-O-Mat-Start
+- type: entity
+  name: sweet pastry set bag
+  parent: ClothingBackpackDuffel
+  id: BoxPancakes
+  description: Look like someone who cares more about pancakes than what others think of her. Look like-A ROBOT??!
+  components:
+  - type: StorageFill
+    contents:
+      - id: ClothingHeadHoney
+      - id: ClothingUniformPastryDress
+      - id: ClothingUniformApron
+      - id: FoodBakedPancake
+        amount: 2
+# Fashion-O-Mat-End
