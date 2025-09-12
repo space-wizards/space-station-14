@@ -1944,6 +1944,7 @@
   components:
   - type: VendingMachine
     pack: SyndieDrobeInventory
+    showPrices: false # Starlight-edit: Vending Machines Prices
     offState: off
     brokenState: broken
     normalState: normal-unshaded
@@ -2060,6 +2061,7 @@
   components:
   - type: VendingMachine
     pack: CentDrobeInventory
+    showPrices: false # Starlight-edit: Vending Machines Prices
     offState: off
     brokenState: broken
     normalState: normal-unshaded
@@ -2223,6 +2225,7 @@
   components:
   - type: VendingMachine
     pack: ChemVendInventorySyndicate
+    showPrices: false # Starlight-edit: Vending Machines Prices
     offState: off
     brokenState: broken
     normalState: normal

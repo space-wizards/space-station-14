@@ -1,0 +1,40 @@
+- type: entity
+  name: ecronizer
+  parent: [BaseItem, BaseSyndicateContraband]
+  id: Ecronizer
+  description: This device will ecronize all your items from any scanning device.
+  components:
+  - type: Sprite
+    sprite: _Starlight/Objects/Devices/ecronizer.rsi
+    layers:
+        - state: base
+        - state: enabled
+          shader: unshaded
+          visible: false
+          map: [ "enum.ToggleableVisuals.Layer" ]
+  - type: ScanByPass
+    powered: true
+    toggleable: true
+  - type: PowerCellSlot
+    cellSlotId: cell_slot
+  - type: ContainerContainer
+    containers:
+      cell_slot: !type:ContainerSlot
+  - type: ItemSlots
+    slots:
+      cell_slot:
+        name: power-cell-slot-component-slot-name-default
+        startingItem: PowerCellMedium
+  - type: Appearance
+  - type: StaticPrice
+    price: 2000
+  - type: ItemToggle
+  - type: PowerCellDraw
+    enabled: false
+  - type: ToggleCellDraw
+  - type: GenericVisualizer
+    visuals:
+      enum.ToggleableVisuals.Enabled:
+        enum.ToggleableVisuals.Layer:
+          True: {visible: true}
+          False: {visible: false}

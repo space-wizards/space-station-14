@@ -10,7 +10,8 @@
   - type: UniversalLanguageSpeaker
   - type: Emag
     emagType: All
-  - type: ThermalVision
+  - type: ThermalVision # Starlight
+    effectPrototype: EffectThermalVisionRevenant # Starlight
   - type: Input
     context: "ghost"
   - type: Spectral

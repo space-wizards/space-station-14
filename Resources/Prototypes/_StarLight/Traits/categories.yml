@@ -2,3 +2,8 @@
   id: LanguageTraits
   name: trait-category-languages
   maxTraitPoints: 2
+  
+- type: traitCategory
+  id: BackgroundTraits
+  name: trait-category-background
+  maxTraitPoints: 1
