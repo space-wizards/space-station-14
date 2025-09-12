@@ -279,11 +279,12 @@
     - timer
   # explosion does most of its damage in the center and less at the edges
   - type: Explosive
-    explosionType: Minibomb
+    explosionType: DemolitionCharge
     deleteAfterExplosion: false # let damage threshold gib the borg
-    totalIntensity: 30
-    intensitySlope: 20
-    maxIntensity: 20
+    totalIntensity: 50
+    intensitySlope: 35
+    maxIntensity: 35
+    maxTileBreak: 1 # will destroy one layer of tiles (second layer being plating)
     canCreateVacuum: false # its for killing the borg not the station
 
 - type: entity
