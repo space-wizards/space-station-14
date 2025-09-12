@@ -13838,5 +13838,27 @@ Entries:
   id: 153200
   time: '2025-09-12T17:12:27.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/1532
+- author: Fractalflower
+  changes:
+  - message: Ten new language traits.
+    type: Add
+  id: 159900
+  time: '2025-09-12T17:13:20.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1599
+- author: Fractalflower
+  changes:
+  - message: Scratch and Sol Common cost one point to learn; species languages cost
+      two.
+    type: Add
+  id: 159901
+  time: '2025-09-12T17:13:20.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1599
+- author: Fractalflower
+  changes:
+  - message: You now get two language trait points.
+    type: Tweak
+  id: 159902
+  time: '2025-09-12T17:13:20.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1599
 Order: -1
 
