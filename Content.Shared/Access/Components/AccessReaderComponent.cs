@@ -91,7 +91,7 @@ public sealed partial class AccessReaderComponent : Component
     /// </summary>
     /// <remarks>
     /// The text can be supplied with the 'access' variable to populate it
-    /// with a comma separated list of the access levels contained in <see cref="AccessLists"/>
+    /// with a comma separated list of the access levels contained in <see cref="AccessLists"/>.
     /// </remarks>
     [DataField]
     public LocId ExaminationText = "access-reader-examination";
@@ -140,7 +140,7 @@ public sealed class AccessReaderComponentState : ComponentState
 }
 
 /// <summary>
-/// Raised after the settings on the access reader are changed
+/// Raised after the settings on the access reader are changed.
 /// </summary>
 public sealed class AccessReaderConfigurationChangedEvent : EntityEventArgs;
 
