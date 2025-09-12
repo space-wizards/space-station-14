@@ -13753,5 +13753,12 @@ Entries:
   id: 160801
   time: '2025-09-12T16:28:09.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/1608
+- author: Rinary
+  changes:
+  - message: Removed locker electrification
+    type: Remove
+  id: 158700
+  time: '2025-09-12T16:28:29.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1587
 Order: -1
 
