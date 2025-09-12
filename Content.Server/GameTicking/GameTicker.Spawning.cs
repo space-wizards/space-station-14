@@ -34,6 +34,8 @@ using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Utility;
 using Content.Server._NullLink.PlayerData;
+using Content.Shared._Starlight.Language.Components;
+using Content.Shared._Starlight.Language.Systems;
 
 namespace Content.Server.GameTicking
 {
@@ -372,8 +374,8 @@ namespace Content.Server.GameTicking
                 EntityManager.EnsureComponent<PolymorphableComponent>(mob);
                 mob = _polymorphSystem.PolymorphEntity(mob, "PermanentCorgiMorph") ?? mob;
                 EntityManager.RemoveComponent<PolymorphedEntityComponent>(mob);
-                var accent = EntityManager.EnsureComponent<ReplacementAccentComponent>(mob);
-                accent.Accent = "dog";
+                var lang = EntityManager.EnsureComponent<LanguageSpeakerComponent>(mob);
+                lang.SpokenLanguages.Remove(SharedLanguageSystem.FallbackLanguagePrototype);
             }
 
 
