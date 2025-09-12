@@ -1,6 +1,6 @@
-﻿using JetBrains.Annotations;
+using Content.Shared.Disposal.Components;
+using JetBrains.Annotations;
 using Robust.Client.UserInterface;
-using static Content.Shared.Disposal.Components.SharedDisposalRouterComponent;
 
 namespace Content.Client.Disposal.Tube
 {
@@ -23,13 +23,13 @@ namespace Content.Client.Disposal.Tube
 
             _window = this.CreateWindow<DisposalRouterWindow>();
 
-            _window.Confirm.OnPressed += _ => ButtonPressed(UiAction.Ok, _window.TagInput.Text);
-            _window.TagInput.OnTextEntered += args => ButtonPressed(UiAction.Ok, args.Text);
+            _window.Confirm.OnPressed += _ => ButtonPressed(DisposalRouterUiAction.Ok, _window.TagInput.Text);
+            _window.TagInput.OnTextEntered += args => ButtonPressed(DisposalRouterUiAction.Ok, args.Text);
         }
 
-        private void ButtonPressed(UiAction action, string tag)
+        private void ButtonPressed(DisposalRouterUiAction action, string tag)
         {
-            SendMessage(new UiActionMessage(action, tag));
+            SendMessage(new DisposalRouterUiActionMessage(action, tag));
             Close();
         }
 

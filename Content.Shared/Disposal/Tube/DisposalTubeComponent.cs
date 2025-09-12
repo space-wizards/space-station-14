@@ -9,16 +9,10 @@ namespace Content.Shared.Disposal.Tube;
 /// <summary>
 /// Basic component for disposal pipes.
 /// </summary>
-[RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
-[Access(typeof(SharedDisposalTubeSystem), typeof(SharedDisposableSystem))]
-public sealed partial class DisposalTubeComponent : Component
+[RegisterComponent, NetworkedComponent]
+[Virtual]
+public partial class DisposalTubeComponent : Component
 {
-    /// <summary>
-    /// Sets whether the tube is a valid target for receiving entities.
-    /// </summary>
-    [DataField, AutoNetworkedField]
-    public bool Connected;
-
     /// <summary>
     /// Sound played when entities passing through this pipe change direction.
     /// </summary>
@@ -42,6 +36,24 @@ public sealed partial class DisposalTubeComponent : Component
             { "Blunt", 0.0 },
         }
     };
+
+    /// <summary>
+    /// Array of angles that entities can exit the disposal tube from.
+    /// South is 0, west is 90, north is 180, and east is -90.
+    /// </summary>
+    /// <remarks>
+    /// The direction that entities will exit preferentially follows the order the list (from most to least).
+    /// A direction will be skipped if it is the opposite to the direction the entity entered,
+    /// or if the angular difference between the entry and potential exit is less than <see cref="MinDeltaAngle"/>.
+    /// </remarks>
+    [DataField]
+    public Angle[] Degrees = { 0 };
+
+    /// <summary>
+    /// The smallest angle that entities can turn while traveling through the conduit.
+    /// </summary>
+    [DataField]
+    public Angle MinDeltaAngle = 0;
 
     /// <summary>
     /// Determines the type of disposal pipe -

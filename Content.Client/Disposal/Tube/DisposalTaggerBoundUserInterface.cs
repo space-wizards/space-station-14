@@ -1,6 +1,6 @@
-﻿using JetBrains.Annotations;
+using Content.Shared.Disposal.Components;
+using JetBrains.Annotations;
 using Robust.Client.UserInterface;
-using static Content.Shared.Disposal.Components.SharedDisposalTaggerComponent;
 
 namespace Content.Client.Disposal.Tube
 {
@@ -23,14 +23,14 @@ namespace Content.Client.Disposal.Tube
 
             _window = this.CreateWindow<DisposalTaggerWindow>();
 
-            _window.Confirm.OnPressed += _ => ButtonPressed(UiAction.Ok, _window.TagInput.Text);
-            _window.TagInput.OnTextEntered += args => ButtonPressed(UiAction.Ok, args.Text);
+            _window.Confirm.OnPressed += _ => ButtonPressed(DisposalTaggerUiAction.Ok, _window.TagInput.Text);
+            _window.TagInput.OnTextEntered += args => ButtonPressed(DisposalTaggerUiAction.Ok, args.Text);
         }
 
-        private void ButtonPressed(UiAction action, string tag)
+        private void ButtonPressed(DisposalTaggerUiAction action, string tag)
         {
             // TODO: This looks copy-pasted with the other mailing stuff...
-            SendMessage(new UiActionMessage(action, tag));
+            SendMessage(new DisposalTaggerUiActionMessage(action, tag));
             Close();
         }
 

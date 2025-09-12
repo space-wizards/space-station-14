@@ -1,7 +1,6 @@
 using System.Linq;
 using System.Text;
 using Content.Shared.Atmos;
-using Content.Shared.Destructible;
 using Content.Shared.Disposal.Components;
 using Content.Shared.Disposal.Unit;
 using Content.Shared.Popups;
@@ -18,7 +17,6 @@ namespace Content.Shared.Disposal.Tube;
 public abstract partial class SharedDisposalTubeSystem : EntitySystem
 {
     [Dependency] private readonly IRobustRandom _random = default!;
-    [Dependency] private readonly SharedAppearanceSystem _appearanceSystem = default!;
     [Dependency] private readonly SharedPopupSystem _popups = default!;
     [Dependency] private readonly SharedUserInterfaceSystem _uiSystem = default!;
     [Dependency] private readonly SharedAudioSystem _audioSystem = default!;
@@ -31,14 +29,8 @@ public abstract partial class SharedDisposalTubeSystem : EntitySystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<DisposalTubeComponent, ComponentRemove>(OnComponentRemove);
-
-        SubscribeLocalEvent<DisposalTubeComponent, AnchorStateChangedEvent>(OnAnchorChange);
-        SubscribeLocalEvent<DisposalTubeComponent, BreakageEventArgs>(OnBreak);
-        SubscribeLocalEvent<DisposalTubeComponent, ComponentStartup>(OnStartup);
-
-        SubscribeLocalEvent<DisposalTransitComponent, GetDisposalsConnectableDirectionsEvent>(OnGetTransitConnectableDirections);
-        SubscribeLocalEvent<DisposalTransitComponent, GetDisposalsNextDirectionEvent>(OnGetTransitNextDirection);
+        SubscribeLocalEvent<DisposalTubeComponent, GetDisposalsConnectableDirectionsEvent>(OnGetTransitConnectableDirections);
+        SubscribeLocalEvent<DisposalTubeComponent, GetDisposalsNextDirectionEvent>(OnGetTransitNextDirection);
 
         SubscribeLocalEvent<DisposalEntryComponent, GetDisposalsConnectableDirectionsEvent>(OnGetEntryConnectableDirections);
         SubscribeLocalEvent<DisposalEntryComponent, GetDisposalsNextDirectionEvent>(OnGetEntryNextDirection);
@@ -49,16 +41,16 @@ public abstract partial class SharedDisposalTubeSystem : EntitySystem
         SubscribeLocalEvent<DisposalTaggerComponent, GetDisposalsConnectableDirectionsEvent>(OnGetTaggerConnectableDirections);
         SubscribeLocalEvent<DisposalTaggerComponent, GetDisposalsNextDirectionEvent>(OnGetTaggerNextDirection);
 
-        Subs.BuiEvents<DisposalRouterComponent>(SharedDisposalRouterComponent.DisposalRouterUiKey.Key, subs =>
+        Subs.BuiEvents<DisposalRouterComponent>(DisposalRouterUiKey.Key, subs =>
         {
             subs.Event<BoundUIOpenedEvent>(OnOpenRouterUI);
-            subs.Event<SharedDisposalRouterComponent.UiActionMessage>(OnUiAction);
+            subs.Event<DisposalRouterUiActionMessage>(OnUiAction);
         });
 
-        Subs.BuiEvents<DisposalTaggerComponent>(SharedDisposalTaggerComponent.DisposalTaggerUiKey.Key, subs =>
+        Subs.BuiEvents<DisposalTaggerComponent>(DisposalTaggerUiKey.Key, subs =>
         {
             subs.Event<BoundUIOpenedEvent>(OnOpenTaggerUI);
-            subs.Event<SharedDisposalTaggerComponent.UiActionMessage>(OnUiAction);
+            subs.Event<DisposalTaggerUiActionMessage>(OnUiAction);
         });
     }
 
@@ -68,13 +60,13 @@ public abstract partial class SharedDisposalTubeSystem : EntitySystem
     /// which interact with the world and require server action.
     /// </summary>
     /// <param name="msg">A user interface message from the client.</param>
-    private void OnUiAction(EntityUid uid, DisposalTaggerComponent tagger, SharedDisposalTaggerComponent.UiActionMessage msg)
+    private void OnUiAction(EntityUid uid, DisposalTaggerComponent tagger, DisposalTaggerUiActionMessage msg)
     {
         if (TryComp<PhysicsComponent>(uid, out var physBody) && physBody.BodyType != BodyType.Static)
             return;
 
         //Check for correct message and ignore maleformed strings
-        if (msg.Action == SharedDisposalTaggerComponent.UiAction.Ok && SharedDisposalTaggerComponent.TagRegex.IsMatch(msg.Tag))
+        if (msg.Action == DisposalTaggerUiAction.Ok && DisposalTaggerComponent.TagRegex.IsMatch(msg.Tag))
         {
             tagger.Tag = msg.Tag.Trim();
             Dirty(uid, tagger);
@@ -89,7 +81,7 @@ public abstract partial class SharedDisposalTubeSystem : EntitySystem
     /// which interact with the world and require server action.
     /// </summary>
     /// <param name="msg">A user interface message from the client.</param>
-    private void OnUiAction(EntityUid uid, DisposalRouterComponent router, SharedDisposalRouterComponent.UiActionMessage msg)
+    private void OnUiAction(EntityUid uid, DisposalRouterComponent router, DisposalRouterUiActionMessage msg)
     {
         if (!Exists(msg.Actor))
             return;
@@ -98,7 +90,7 @@ public abstract partial class SharedDisposalTubeSystem : EntitySystem
             return;
 
         //Check for correct message and ignore maleformed strings
-        if (msg.Action == SharedDisposalRouterComponent.UiAction.Ok && SharedDisposalRouterComponent.TagRegex.IsMatch(msg.Tags))
+        if (msg.Action == DisposalRouterUiAction.Ok && DisposalRouterComponent.TagRegex.IsMatch(msg.Tags))
         {
             router.Tags.Clear();
             foreach (var tag in msg.Tags.Split(',', StringSplitOptions.RemoveEmptyEntries))
@@ -116,12 +108,7 @@ public abstract partial class SharedDisposalTubeSystem : EntitySystem
         }
     }
 
-    private void OnComponentRemove(EntityUid uid, DisposalTubeComponent tube, ComponentRemove args)
-    {
-        DisconnectTube(uid, tube);
-    }
-
-    private void OnGetTransitConnectableDirections(EntityUid uid, DisposalTransitComponent component, ref GetDisposalsConnectableDirectionsEvent args)
+    private void OnGetTransitConnectableDirections(EntityUid uid, DisposalTubeComponent component, ref GetDisposalsConnectableDirectionsEvent args)
     {
         var rotation = Transform(uid).LocalRotation;
 
@@ -130,7 +117,7 @@ public abstract partial class SharedDisposalTubeSystem : EntitySystem
             .ToArray();
     }
 
-    private void OnGetTransitNextDirection(EntityUid uid, DisposalTransitComponent component, ref GetDisposalsNextDirectionEvent args)
+    private void OnGetTransitNextDirection(EntityUid uid, DisposalTubeComponent component, ref GetDisposalsNextDirectionEvent args)
     {
         var ev = new GetDisposalsConnectableDirectionsEvent();
         RaiseLocalEvent(uid, ref ev);
@@ -216,16 +203,6 @@ public abstract partial class SharedDisposalTubeSystem : EntitySystem
         OnGetTransitNextDirection(uid, component, ref args);
     }
 
-    private void OnStartup(EntityUid uid, DisposalTubeComponent component, ComponentStartup args)
-    {
-        UpdateAnchored(uid, component, Transform(uid).Anchored);
-    }
-
-    private void OnBreak(EntityUid uid, DisposalTubeComponent component, BreakageEventArgs args)
-    {
-        DisconnectTube(uid, component);
-    }
-
     private void OnOpenRouterUI(EntityUid uid, DisposalRouterComponent router, BoundUIOpenedEvent args)
     {
         UpdateRouterUserInterface(uid, router);
@@ -233,22 +210,22 @@ public abstract partial class SharedDisposalTubeSystem : EntitySystem
 
     private void OnOpenTaggerUI(EntityUid uid, DisposalTaggerComponent tagger, BoundUIOpenedEvent args)
     {
-        if (_uiSystem.HasUi(uid, SharedDisposalTaggerComponent.DisposalTaggerUiKey.Key))
+        if (_uiSystem.HasUi(uid, DisposalTaggerUiKey.Key))
         {
-            _uiSystem.SetUiState(uid, SharedDisposalTaggerComponent.DisposalTaggerUiKey.Key,
-                new SharedDisposalTaggerComponent.DisposalTaggerUserInterfaceState(tagger.Tag));
+            _uiSystem.SetUiState(uid, DisposalTaggerUiKey.Key,
+                new DisposalTaggerUserInterfaceState(tagger.Tag));
         }
     }
 
     /// <summary>
     /// Gets component data to be used to update the user interface client-side.
     /// </summary>
-    /// <returns>Returns a <see cref="SharedDisposalRouterComponent.DisposalRouterUserInterfaceState"/></returns>
+    /// <returns>Returns a <see cref="DisposalRouterComponent.DisposalRouterUserInterfaceState"/></returns>
     private void UpdateRouterUserInterface(EntityUid uid, DisposalRouterComponent router)
     {
         if (router.Tags.Count <= 0)
         {
-            _uiSystem.SetUiState(uid, SharedDisposalRouterComponent.DisposalRouterUiKey.Key, new SharedDisposalRouterComponent.DisposalRouterUserInterfaceState(""));
+            _uiSystem.SetUiState(uid, DisposalRouterUiKey.Key, new DisposalRouterUserInterfaceState(""));
             return;
         }
 
@@ -262,28 +239,7 @@ public abstract partial class SharedDisposalTubeSystem : EntitySystem
 
         taglist.Remove(taglist.Length - 2, 2);
 
-        _uiSystem.SetUiState(uid, SharedDisposalRouterComponent.DisposalRouterUiKey.Key, new SharedDisposalRouterComponent.DisposalRouterUserInterfaceState(taglist.ToString()));
-    }
-
-    private void OnAnchorChange(EntityUid uid, DisposalTubeComponent component, ref AnchorStateChangedEvent args)
-    {
-        UpdateAnchored(uid, component, args.Anchored);
-    }
-
-    private void UpdateAnchored(EntityUid uid, DisposalTubeComponent component, bool anchored)
-    {
-        if (anchored)
-        {
-            ConnectTube(uid, component);
-
-            // TODO this visual data should just generalized into some anchored-visuals system/comp, this has nothing to do with disposal tubes.
-            _appearanceSystem.SetData(uid, DisposalTubeVisuals.VisualState, DisposalTubeVisualState.Anchored);
-        }
-        else
-        {
-            DisconnectTube(uid, component);
-            _appearanceSystem.SetData(uid, DisposalTubeVisuals.VisualState, DisposalTubeVisualState.Free);
-        }
+        _uiSystem.SetUiState(uid, DisposalRouterUiKey.Key, new DisposalRouterUserInterfaceState(taglist.ToString()));
     }
 
     public EntityUid? NextTubeFor(EntityUid target, Direction nextDirection, DisposalTubeComponent? targetTube = null)
@@ -300,19 +256,10 @@ public abstract partial class SharedDisposalTubeSystem : EntitySystem
         foreach (var entity in _map.GetInDir(xform.GridUid.Value, grid, position, nextDirection))
         {
             if (!TryComp(entity, out DisposalTubeComponent? tube) || tube.DisposalTubeType != targetTube.DisposalTubeType)
-            {
                 continue;
-            }
 
-            if (!CanConnect(entity, tube, oppositeDirection))
-            {
+            if (!CanConnect(entity, tube, oppositeDirection) && !CanConnect(target, targetTube, nextDirection))
                 continue;
-            }
-
-            if (!CanConnect(target, targetTube, nextDirection))
-            {
-                continue;
-            }
 
             return entity;
         }
@@ -320,38 +267,16 @@ public abstract partial class SharedDisposalTubeSystem : EntitySystem
         return null;
     }
 
-    public void ConnectTube(EntityUid uid, DisposalTubeComponent tube)
+
+    public bool CanConnect(EntityUid uid, DisposalTubeComponent tube, Direction direction)
     {
-        if (tube.Connected)
-        {
-            return;
-        }
-
-        tube.Connected = true;
-        Dirty(uid, tube);
-    }
-
-
-    public void DisconnectTube(EntityUid uid, DisposalTubeComponent tube)
-    {
-        if (!tube.Connected)
-        {
-            return;
-        }
-
-        tube.Connected = false;
-        Dirty(uid, tube);
-    }
-
-    public bool CanConnect(EntityUid tubeId, DisposalTubeComponent tube, Direction direction)
-    {
-        if (!tube.Connected)
+        if (!Transform(uid).Anchored)
         {
             return false;
         }
 
         var ev = new GetDisposalsConnectableDirectionsEvent();
-        RaiseLocalEvent(tubeId, ref ev);
+        RaiseLocalEvent(uid, ref ev);
         return ev.Connectable.Contains(direction);
     }
 

@@ -118,7 +118,6 @@
       shader: unshaded
   - type: DisposalTube
     containerId: DisposalTransit
-  - type: DisposalTransit
     degrees:
     - 0
     - 180
@@ -150,7 +149,6 @@
       shader: unshaded
   - type: DisposalTube
     containerId: DisposalJunction
-  - type: DisposalTransit
     degrees:
     - 135
     - -45
@@ -191,7 +189,6 @@
       shader: unshaded
   - type: DisposalTube
     containerId: DisposalJunction
-  - type: DisposalTransit
     degrees:
     - -135
     - 135
@@ -231,7 +228,7 @@
     - map: [ "glass" ]
       state: junct_f_glass
       shader: unshaded
-  - type: DisposalTransit
+  - type: DisposalTube
     degrees:
     - 135
     - -135
@@ -269,7 +266,6 @@
       shader: unshaded      
   - type: DisposalTube
     containerId: DisposalJunction
-  - type: DisposalTransit
     degrees:
     - 135
     - 0
@@ -305,7 +301,7 @@
     - map: [ "glass" ]
       state: bend_f_glass
       shader: unshaded
-  - type: DisposalTransit
+  - type: DisposalTube
     degrees:
     - -135
     - 0
@@ -338,17 +334,8 @@
     drawdepth: Overdoors
     sprite: Structures/Piping/transit_tubes.rsi
     layers:
-    - map: [ "enum.DisposalUnitVisualLayers.Unanchored" ]
+    - map: [ "base" ]
       state: station_uni
-    - map: [ "enum.DisposalUnitVisualLayers.Base" ]
-      state: station_uni
-    - map: [ "enum.DisposalUnitVisualLayers.BaseCharging" ]  
-      state: station_uni    
-    - map: [ "enum.DisposalUnitVisualLayers.OverlayFlush" ]     
-    - map: [ "enum.DisposalUnitVisualLayers.OverlayCharging" ]      
-    - map: [ "enum.DisposalUnitVisualLayers.OverlayReady" ]     
-    - map: [ "enum.DisposalUnitVisualLayers.OverlayFull" ]    
-    - map: [ "enum.DisposalUnitVisualLayers.OverlayEngaged" ] 
     - map: [ "glass" ]  
       state: station_uni_glass
       shader: unshaded      

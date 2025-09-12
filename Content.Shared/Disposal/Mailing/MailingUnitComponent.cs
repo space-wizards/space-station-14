@@ -1,5 +1,6 @@
-﻿using Content.Shared.Disposal.Mailing;
+using Content.Shared.Disposal.Mailing;
 using Robust.Shared.GameStates;
+using Robust.Shared.Serialization;
 
 namespace Content.Shared.Disposal.Components;
 
@@ -25,4 +26,24 @@ public sealed partial class MailingUnitComponent : Component
     /// </summary>
     [DataField, AutoNetworkedField]
     public string? Tag;
+}
+
+/// <summary>
+/// Message data sent from client to server when a disposal unit ui button is pressed.
+/// </summary>
+[Serializable, NetSerializable]
+public sealed class TargetSelectedMessage : BoundUserInterfaceMessage
+{
+    public readonly string? Target;
+
+    public TargetSelectedMessage(string? target)
+    {
+        Target = target;
+    }
+}
+
+[Serializable, NetSerializable]
+public enum MailingUnitUiKey : byte
+{
+    Key
 }
