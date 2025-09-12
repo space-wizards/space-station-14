@@ -34,6 +34,8 @@
   description: A sharp blade with a cane shaped hilt.
   components:
   - type: Sharp
+  - type: Execution
+    doAfterDuration: 4.0
   - type: Sprite
     sprite: Objects/Weapons/Melee/cane_blade.rsi
     state: icon
@@ -52,6 +54,12 @@
     tags:
       - CaneBlade
   - type: DisarmMalus
+  - type: Tool
+    qualities:
+    - Slicing
+  - type: Utensil
+    types:
+    - Knife
 
 - type: entity
   parent: [Cane, SelectableLock]
