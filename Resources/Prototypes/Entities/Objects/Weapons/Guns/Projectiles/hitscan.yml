@@ -33,9 +33,6 @@
 
 - type: hitscan
   id: RedLaserPractice
-  damage:
-    types:
-      Heat: 1
   muzzleFlash:
     sprite: Objects/Weapons/Guns/Projectiles/projectiles.rsi
     state: muzzle_laser
