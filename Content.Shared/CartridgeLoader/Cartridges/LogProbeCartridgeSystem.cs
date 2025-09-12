@@ -64,6 +64,7 @@ public sealed class LogProbeCartridgeSystem : EntitySystem
         // Reverse the list so the oldest is at the bottom
         ent.Comp.PulledAccessLogs.Reverse();
 
+        Dirty(ent);
         UpdateUiState(ent, args.Loader);
     }
 
@@ -113,6 +114,7 @@ public sealed class LogProbeCartridgeSystem : EntitySystem
         _paper.SetContent((paper, paperComp), builder.ToString());
 
         _adminLogger.Add(LogType.EntitySpawn, LogImpact.Low, $"{ToPrettyString(user):user} printed out LogProbe logs ({paper}) of {ent.Comp.EntityName}");
+        Dirty(ent);
     }
 
     private void UpdateUiState(Entity<LogProbeCartridgeComponent> ent, EntityUid loaderUid)

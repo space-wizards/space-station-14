@@ -63,6 +63,7 @@ public sealed class NetProbeCartridgeSystem : EntitySystem
         );
 
         component.ProbedDevices.Add(device);
+        Dirty(uid, component);
         UpdateUiState(uid, args.Loader, component);
     }
 

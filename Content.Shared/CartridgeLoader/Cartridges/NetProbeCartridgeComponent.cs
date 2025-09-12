@@ -1,23 +1,24 @@
 ﻿using Robust.Shared.Audio;
+using Robust.Shared.GameStates;
 
 namespace Content.Shared.CartridgeLoader.Cartridges;
 
-[RegisterComponent]
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
 public sealed partial class NetProbeCartridgeComponent : Component
 {
     /// <summary>
     /// The list of probed network devices
     /// </summary>
-    [DataField("probedDevices")]
+    [DataField, AutoNetworkedField]
     public List<ProbedNetworkDevice> ProbedDevices = new();
 
     /// <summary>
     /// Limits the amount of devices that can be saved
     /// </summary>
-    [DataField("maxSavedDevices")]
+    [DataField]
     public int MaxSavedDevices { get; set; } = 9;
 
-    [DataField("soundScan")]
+    [DataField]
     public SoundSpecifier SoundScan = new SoundPathSpecifier("/Audio/Machines/scan_finish.ogg");
 }
 

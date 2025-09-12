@@ -47,6 +47,7 @@ public sealed class NotekeeperCartridgeSystem : EntitySystem
                 $"{ToPrettyString(args.Actor)} removed a note from PDA: '{message.Note}' was contained on: {ToPrettyString(uid)}");
         }
 
+        Dirty(uid, component);
         UpdateUiState(uid, GetEntity(args.LoaderUid), component);
     }
 

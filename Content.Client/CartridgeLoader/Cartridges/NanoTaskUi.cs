@@ -44,7 +44,7 @@ public sealed partial class NanoTaskUi : UIFragment
             if (_fragment.Tasks.Find(task => task.Id == id) is not NanoTaskItemAndId task)
                 return;
 
-            userInterface.SendMessage(new CartridgeUiMessage(new NanoTaskUiMessageEvent(new NanoTaskUpdateTask(new(id, new(
+            userInterface.SendPredictedMessage(new CartridgeUiMessage(new NanoTaskUiMessageEvent(new NanoTaskUpdateTask(new(id, new(
                 description: task.Data.Description,
                 taskIsFor: task.Data.TaskIsFor,
                 isTaskDone: !task.Data.IsTaskDone,
@@ -53,22 +53,22 @@ public sealed partial class NanoTaskUi : UIFragment
         };
         _popup.TaskSaved += (id, data) =>
         {
-            userInterface.SendMessage(new CartridgeUiMessage(new NanoTaskUiMessageEvent(new NanoTaskUpdateTask(new(id, data)))));
+            userInterface.SendPredictedMessage(new CartridgeUiMessage(new NanoTaskUiMessageEvent(new NanoTaskUpdateTask(new(id, data)))));
             _popup.Close();
         };
         _popup.TaskDeleted += id =>
         {
-            userInterface.SendMessage(new CartridgeUiMessage(new NanoTaskUiMessageEvent(new NanoTaskDeleteTask(id))));
+            userInterface.SendPredictedMessage(new CartridgeUiMessage(new NanoTaskUiMessageEvent(new NanoTaskDeleteTask(id))));
             _popup.Close();
         };
         _popup.TaskCreated += data =>
         {
-            userInterface.SendMessage(new CartridgeUiMessage(new NanoTaskUiMessageEvent(new NanoTaskAddTask(data))));
+            userInterface.SendPredictedMessage(new CartridgeUiMessage(new NanoTaskUiMessageEvent(new NanoTaskAddTask(data))));
             _popup.Close();
         };
         _popup.TaskPrinted += data =>
         {
-            userInterface.SendMessage(new CartridgeUiMessage(new NanoTaskUiMessageEvent(new NanoTaskPrintTask(data))));
+            userInterface.SendPredictedMessage(new CartridgeUiMessage(new NanoTaskUiMessageEvent(new NanoTaskPrintTask(data))));
         };
     }
 

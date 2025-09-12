@@ -58,6 +58,7 @@ public sealed class NanoTaskCartridgeSystem : EntitySystem
             cartridge.Comp.Tasks.Add(new(cartridge.Comp.Counter++, printed.Task));
             args.Handled = true;
             Del(args.Used);
+            Dirty(cartridge);
             UpdateUiState(cartridge, ent.Owner);
         }
     }
@@ -111,6 +112,7 @@ public sealed class NanoTaskCartridgeSystem : EntitySystem
                     return;
 
                 ent.Comp.Tasks.Add(new(ent.Comp.Counter++, task.Item));
+                Dirty(ent);
                 break;
             case NanoTaskUpdateTask task:
             {
@@ -120,10 +122,12 @@ public sealed class NanoTaskCartridgeSystem : EntitySystem
                 var idx = ent.Comp.Tasks.FindIndex(t => t.Id == task.Item.Id);
                 if (idx != -1)
                     ent.Comp.Tasks[idx] = task.Item;
+                Dirty(ent);
                 break;
             }
             case NanoTaskDeleteTask task:
                 ent.Comp.Tasks.RemoveAll(t => t.Id == task.Id);
+                Dirty(ent);
                 break;
             case NanoTaskPrintTask task:
             {
@@ -137,6 +141,7 @@ public sealed class NanoTaskCartridgeSystem : EntitySystem
                 _hands.PickupOrDrop(message.Actor, printed);
                 _audio.PlayPvs(new SoundPathSpecifier("/Audio/Machines/printer.ogg"), ent.Owner);
                 SetupPrintedTask(printed, task.Item);
+                Dirty(ent);
                 break;
             }
         }
