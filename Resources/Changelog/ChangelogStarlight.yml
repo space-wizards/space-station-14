@@ -13731,5 +13731,12 @@ Entries:
   id: 160100
   time: '2025-09-12T16:17:33.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/1601
+- author: Fractalflower
+  changes:
+  - message: Human-fox hybrids can now howl & growl
+    type: Add
+  id: 160300
+  time: '2025-09-12T16:21:05.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1603
 Order: -1
 
