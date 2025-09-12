@@ -533,6 +533,7 @@
   name: packet of gatfruit seeds
   description: "These are no peashooters."
   id: GatfruitSeeds
+  categories: [ DoNotMap ]
   components:
     - type: Seed
       seedId: gatfruit
