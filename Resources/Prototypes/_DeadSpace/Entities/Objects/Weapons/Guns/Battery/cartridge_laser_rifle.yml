@@ -35,6 +35,10 @@
         whitelist:
           tags:
           - EnergyCartridge
+  - type: ContainerContainer
+    containers:
+      cell_slot: !type:ContainerSlot
+      gun_magazine: !type:ContainerSlot
   - type: MagazineVisuals
     magState: mag
     steps: 4

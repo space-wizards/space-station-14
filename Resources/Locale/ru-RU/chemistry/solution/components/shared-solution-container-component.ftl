@@ -1,11 +1,13 @@
-shared-solution-container-component-on-examine-empty-container = Не содержит вещества.
-shared-solution-container-component-on-examine-main-text = Содержит [color={ $color }]{ $desc }[/color] { $wordedAmount }
-examinable-solution-recognized = [color={ $color }]{ $chemical }[/color]
+shared-solution-container-component-on-examine-main-text = Содержит [color={$color}]{$desc}[/color] { $chemCount ->
+    [1] вещество.
+   *[other] смесь веществ.
+    }
+examinable-solution-has-recognizable-chemicals = Вам удаётся распознать { $recognizedString } в этом растворе.
+examinable-solution-recognized = [color={$color}]{$chemical}[/color]
 examinable-solution-on-examine-volume = Ёмкость { $fillLevel ->
     [exact] содержит [color=white]{$current}/{$max} ед[/color].
    *[other] [bold]{ -solution-vague-fill-level(fillLevel: $fillLevel) }[/bold].
 }
-
 examinable-solution-on-examine-volume-no-max = Ёмкость { $fillLevel ->
     [exact] содержит [color=white]{$current} ед[/color].
    *[other] [bold]{ -solution-vague-fill-level(fillLevel: $fillLevel) }[/bold].
@@ -18,7 +20,7 @@ examinable-solution-on-examine-volume-puddle = Лужа { $fillLevel ->
     [halfempty] средняя.
    *[mostlyempty] собирается в одну.
     [empty] превращается в несколько маленьких луж.
-    }
+}
 -solution-vague-fill-level =
     { $fillLevel ->
         [full] [color=white]заполнена[/color]
@@ -28,9 +30,3 @@ examinable-solution-on-examine-volume-puddle = Лужа { $fillLevel ->
         [mostlyempty] [color=#A4A4A4]почти пустая[/color]
        *[empty] [color=gray]пустая[/color]
     }
-shared-solution-container-component-on-examine-worded-amount-one-reagent = вещество.
-shared-solution-container-component-on-examine-worded-amount-multiple-reagents = смесь веществ.
-examinable-solution-has-recognizable-chemicals = В этом растворе вы можете распознать { $recognizedString }.
-examinable-solution-recognized-first = [color={ $color }]{ $chemical }[/color]
-examinable-solution-recognized-next = , [color={ $color }]{ $chemical }[/color]
-examinable-solution-recognized-last = и [color={ $color }]{ $chemical }[/color]

@@ -491,18 +491,17 @@
   - type: Armor
     modifiers:
       coefficients:
-        Blunt: 0.3
-        Slash: 0.3
-        Piercing: 0.3
-        Heat: 0.3
-        Radiation: 0.3
-        Caustic: 0.3
-        Stun: 0.85
+        Blunt: 0.5
+        Slash: 0.5
+        Piercing: 0.4
+        Heat: 0.5
+        Radiation: 0.5
+        Caustic: 0.5
   - type: ExplosionResistance
-    damageCoefficient: 0.3
+    damageCoefficient: 0.5
   - type: ClothingSpeedModifier
-    walkModifier: 0.7
-    sprintModifier: 0.7
+    walkModifier: 0.9
+    sprintModifier: 0.9
   - type: Sprite
     sprite: _DeadSpace/Sponsor/DragonFox/MedTech/hardsuit/suit.rsi
   - type: Clothing
@@ -544,7 +543,9 @@
   - type: Clothing
     sprite: _DeadSpace/Sponsor/DragonFox/MedTech/hardsuit/helmet.rsi
   - type: PointLight
-    color: "#ffde59"
+    color: "#ffefad"
+    radius: 7
+    energy: 3
   - type: PressureProtection
     highPressureMultiplier: 0.08
     lowPressureMultiplier: 1000

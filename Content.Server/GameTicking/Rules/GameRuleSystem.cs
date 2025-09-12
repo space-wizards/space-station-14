@@ -4,6 +4,9 @@ using Content.Shared.GameTicking.Components;
 using Robust.Server.GameObjects;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
+using Content.Shared.DeadSpace.CCCCVars;
+using Robust.Server.Player;
+using Robust.Shared.Configuration;
 
 namespace Content.Server.GameTicking.Rules;
 
@@ -13,6 +16,10 @@ public abstract partial class GameRuleSystem<T> : EntitySystem where T : ICompon
     [Dependency] protected readonly IChatManager ChatManager = default!;
     [Dependency] protected readonly GameTicker GameTicker = default!;
     [Dependency] protected readonly IGameTiming Timing = default!;
+    // DS14-start
+    [Dependency] private readonly IPlayerManager _playerManager = default!;
+    [Dependency] private readonly IConfigurationManager _cfg = default!;
+    // DS14-end
 
     // Not protected, just to be used in utility methods
     [Dependency] private readonly AtmosphereSystem _atmosphere = default!;
@@ -34,19 +41,36 @@ public abstract partial class GameRuleSystem<T> : EntitySystem where T : ICompon
         if (args.Forced || args.Cancelled)
             return;
 
+        var useTotalPlayers = _cfg.GetCVar(CCCCVars.GameModesUseTotalPlayers); // DS14
+
         var query = QueryAllRules();
         while (query.MoveNext(out var uid, out _, out var gameRule))
         {
             var minPlayers = gameRule.MinPlayers;
-            if (args.Players.Length >= minPlayers)
+
+            int playerCount = useTotalPlayers ? _playerManager.PlayerCount : args.Players.Length; // DS14
+
+            if (playerCount >= minPlayers) // DS14-edit
                 continue;
 
             if (gameRule.CancelPresetOnTooFewPlayers)
             {
-                ChatManager.SendAdminAnnouncement(Loc.GetString("preset-not-enough-ready-players",
-                    ("readyPlayersCount", args.Players.Length),
-                    ("minimumPlayers", minPlayers),
-                    ("presetName", ToPrettyString(uid))));
+                // DS14-edit-start
+                if (useTotalPlayers)
+                {
+                    ChatManager.SendAdminAnnouncement(Loc.GetString("preset-not-enough-current-players",
+                        ("currentPlayers", playerCount),
+                        ("minimumPlayers", minPlayers),
+                        ("presetName", ToPrettyString(uid))));
+                }
+                else
+                {
+                    ChatManager.SendAdminAnnouncement(Loc.GetString("preset-not-enough-ready-players",
+                        ("readyPlayersCount", playerCount),
+                        ("minimumPlayers", minPlayers),
+                        ("presetName", ToPrettyString(uid))));
+                }
+                // DS14-edit-end
                 args.Cancel();
             }
             else

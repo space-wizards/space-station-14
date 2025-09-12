@@ -156,9 +156,6 @@
       effects:
       - !type:CauseEgg
         duration: 360
-        spawned:
-        - id: MobSpiderTerrorGuardian
-          amount: 4
         conditions:
         - !type:ReagentThreshold
           min: 1

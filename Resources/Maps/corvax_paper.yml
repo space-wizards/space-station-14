@@ -6451,48 +6451,6 @@ entities:
       rot: -1.5707963267948966 rad
       pos: 52.506977,17.951092
       parent: 2
-- proto: ActionToggleInternals
-  entities:
-  - uid: 10
-    components:
-    - type: Transform
-      parent: 9
-    - type: InstantAction
-      originalIconColor: '#FFFFFFFF'
-      container: 9
-  - uid: 12
-    components:
-    - type: Transform
-      parent: 11
-    - type: InstantAction
-      originalIconColor: '#FFFFFFFF'
-      container: 11
-- proto: ActionToggleLight
-  entities:
-  - uid: 14
-    components:
-    - type: Transform
-      parent: 13
-    - type: InstantAction
-      container: 13
-  - uid: 16
-    components:
-    - type: Transform
-      parent: 15
-    - type: InstantAction
-      container: 15
-  - uid: 19
-    components:
-    - type: Transform
-      parent: 18
-    - type: InstantAction
-      container: 18
-  - uid: 15687
-    components:
-    - type: Transform
-      parent: 15686
-    - type: InstantAction
-      container: 15686
 - proto: ADTDrinkTeapot
   entities:
   - uid: 7
@@ -39742,20 +39700,6 @@ entities:
     - type: Transform
       pos: 17.415573,40.39855
       parent: 2
-    - type: HandheldLight
-      toggleActionEntity: 14
-    - type: ContainerContainer
-      containers:
-        cell_slot: !type:ContainerSlot
-          showEnts: False
-          occludes: True
-          ent: null
-        actions: !type:Container
-          showEnts: False
-          occludes: True
-          ents:
-          - 14
-    - type: ActionsContainer
 - proto: ClothingHeadHatPwig
   entities:
   - uid: 5826
@@ -51417,20 +51361,6 @@ entities:
     - type: Transform
       pos: 2.4978046,0.6471896
       parent: 15685
-    - type: HandheldLight
-      toggleActionEntity: 15687
-    - type: ContainerContainer
-      containers:
-        cell_slot: !type:ContainerSlot
-          showEnts: False
-          occludes: True
-          ent: null
-        actions: !type:Container
-          showEnts: False
-          occludes: True
-          ents:
-          - 15687
-    - type: ActionsContainer
 - proto: FlashPayload
   entities:
   - uid: 7482
@@ -74550,22 +74480,8 @@ entities:
     - type: Transform
       pos: 50.424248,31.737879
       parent: 2
-    - type: HandheldLight
-      toggleActionEntity: 16
-    - type: ContainerContainer
-      containers:
-        cell_slot: !type:ContainerSlot
-          showEnts: False
-          occludes: True
-          ent: null
-        actions: !type:Container
-          showEnts: False
-          occludes: True
-          ents:
-          - 16
     - type: Physics
       canCollide: True
-    - type: ActionsContainer
   - uid: 10697
     components:
     - type: Transform
@@ -77315,38 +77231,8 @@ entities:
       desc: 'поверх экрана красным маркером написано: FIWMFD.'
     - type: Transform
       parent: 17
-    - type: ContainerContainer
-      containers:
-        PDA-id: !type:ContainerSlot
-          showEnts: False
-          occludes: True
-          ent: null
-        PDA-pen: !type:ContainerSlot
-          showEnts: False
-          occludes: True
-          ent: null
-        Cartridge-Slot: !type:ContainerSlot
-          showEnts: False
-          occludes: True
-          ent: null
-        program-container: !type:Container
-          showEnts: False
-          occludes: True
-          ents: []
-        actions: !type:Container
-          showEnts: False
-          occludes: True
-          ents:
-          - 19
-        PDA-pai: !type:ContainerSlot
-          showEnts: False
-          occludes: True
-          ent: null
-    - type: UnpoweredFlashlight
-      toggleActionEntity: 19
     - type: Physics
       canCollide: False
-    - type: ActionsContainer
 - proto: Pen
   entities:
   - uid: 10975
@@ -77640,27 +77526,11 @@ entities:
     - type: Transform
       pos: 53.19377,72.73024
       parent: 2
-    - type: GasTank
-      toggleActionEntity: 10
-    - type: ActionsContainer
-    - type: ContainerContainer
-      containers:
-        actions: !type:Container
-          ents:
-          - 10
   - uid: 11
     components:
     - type: Transform
       pos: 53.25627,73.91774
       parent: 2
-    - type: GasTank
-      toggleActionEntity: 12
-    - type: ActionsContainer
-    - type: ContainerContainer
-      containers:
-        actions: !type:Container
-          ents:
-          - 12
   - uid: 11008
     components:
     - type: Transform

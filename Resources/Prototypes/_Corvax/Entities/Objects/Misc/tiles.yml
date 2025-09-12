@@ -1,5 +1,5 @@
 - type: entity
-  name: tiles-wood-parquet
+  name: parquet wood floor tile
   parent: FloorTileItemBase
   id: FloorTileItemWoodParquet
   components:
@@ -17,7 +17,7 @@
     stackType: FloorTileWood
 
 - type: entity
-  name: tiles-wood-black
+  name: black wood floor tile
   parent: FloorTileItemBase
   id: FloorTileItemWoodBlack
   components:
@@ -35,7 +35,7 @@
     stackType: FloorTileItemWoodBlack
 
 - type: entity
-  name: tiles-wood-dark
+  name: dark wood floor tile
   parent: FloorTileItemBase
   id: FloorTileItemWoodDark
   components:
@@ -53,7 +53,7 @@
     stackType: FloorTileItemWoodDark
 
 - type: entity
-  name: tiles-wood-light
+  name: light wood floor tile
   parent: FloorTileItemBase
   id: FloorTileItemWoodLight
   components:
@@ -71,7 +71,7 @@
     stackType: FloorTileItemWoodLight
 
 - type: entity
-  name: tiles-wood-red
+  name: red wood floor tile
   parent: FloorTileItemBase
   id: FloorTileItemWoodRed
   components:

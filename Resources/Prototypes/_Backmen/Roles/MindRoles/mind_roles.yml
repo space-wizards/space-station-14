@@ -17,4 +17,5 @@
   - type: MindRole
     antagPrototype: Blob
     exclusiveAntag: true
+    subtype: role-subtype-blob
   - type: BlobRole

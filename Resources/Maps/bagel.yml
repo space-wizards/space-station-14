@@ -10903,33 +10903,6 @@ entities:
     - type: Transform
       pos: 31.477634,-79.4623
       parent: 2
-- proto: ActionToggleLight
-  entities:
-  - uid: 6
-    components:
-    - type: Transform
-      parent: 5
-    - type: InstantAction
-      container: 5
-  - uid: 8
-    components:
-    - type: Transform
-      parent: 7
-    - type: InstantAction
-      container: 7
-  - uid: 10
-    components:
-    - type: Transform
-      parent: 9
-    - type: InstantAction
-      originalIconColor: '#FFFFFFFF'
-      container: 9
-  - uid: 26572
-    components:
-    - type: Transform
-      parent: 26571
-    - type: InstantAction
-      container: 26571
 - proto: ADTBathBroom
   entities:
   - uid: 11
@@ -78277,20 +78250,6 @@ entities:
     - type: Transform
       pos: 20.983997,21.51571
       parent: 2
-    - type: HandheldLight
-      toggleActionEntity: 6
-    - type: ContainerContainer
-      containers:
-        cell_slot: !type:ContainerSlot
-          showEnts: False
-          occludes: True
-          ent: null
-        actions: !type:Container
-          showEnts: False
-          occludes: True
-          ents:
-          - 6
-    - type: ActionsContainer
   - uid: 11913
     components:
     - type: Transform
@@ -78363,20 +78322,6 @@ entities:
     - type: Transform
       pos: 2.4978046,0.6471896
       parent: 26570
-    - type: HandheldLight
-      toggleActionEntity: 26572
-    - type: ContainerContainer
-      containers:
-        cell_slot: !type:ContainerSlot
-          showEnts: False
-          occludes: True
-          ent: null
-        actions: !type:Container
-          showEnts: False
-          occludes: True
-          ents:
-          - 26572
-    - type: ActionsContainer
 - proto: FloorDrain
   entities:
   - uid: 11926
@@ -118128,22 +118073,8 @@ entities:
     - type: Transform
       pos: 35.208866,-13.201323
       parent: 2
-    - type: HandheldLight
-      toggleActionEntity: 8
-    - type: ContainerContainer
-      containers:
-        cell_slot: !type:ContainerSlot
-          showEnts: False
-          occludes: True
-          ent: null
-        actions: !type:Container
-          showEnts: False
-          occludes: True
-          ents:
-          - 8
     - type: Physics
       canCollide: True
-    - type: ActionsContainer
   - uid: 17574
     components:
     - type: Transform
@@ -118222,22 +118153,8 @@ entities:
     - type: Transform
       pos: -26.476604,2.6989434
       parent: 2
-    - type: HandheldLight
-      toggleActionEntity: 10
-    - type: ContainerContainer
-      containers:
-        cell_slot: !type:ContainerSlot
-          showEnts: False
-          occludes: True
-          ent: null
-        actions: !type:Container
-          showEnts: False
-          occludes: True
-          ents:
-          - 10
     - type: Physics
       canCollide: True
-    - type: ActionsContainer
   - uid: 17587
     components:
     - type: Transform
