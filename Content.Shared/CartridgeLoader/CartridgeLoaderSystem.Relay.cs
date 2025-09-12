@@ -28,16 +28,13 @@ public abstract partial class SharedCartridgeLoaderSystem : EntitySystem
         {
             if (ent.Comp.ActiveProgram is { } foreground)
                 RaiseLocalEvent(foreground, ref ev);
+            args = ev.Args;
+            return;
         }
-        else
-        {
-            if (!_container.TryGetContainer(ent, InstalledContainerId, out var container))
-                return;
 
-            foreach (var program in container.ContainedEntities)
-            {
-                RaiseLocalEvent(program, ref ev);
-            }
+        foreach (var program in GetAllPrograms(ent))
+        {
+            RaiseLocalEvent(program, ref ev);
         }
         args = ev.Args;
     }
@@ -49,16 +46,12 @@ public abstract partial class SharedCartridgeLoaderSystem : EntitySystem
         {
             if (ent.Comp.ActiveProgram is { } foreground)
                 RaiseLocalEvent(foreground, ref ev);
+            return;
         }
-        else
-        {
-            if (!_container.TryGetContainer(ent, InstalledContainerId, out var container))
-                return;
 
-            foreach (var program in container.ContainedEntities)
-            {
-                RaiseLocalEvent(program, ref ev);
-            }
+        foreach (var program in GetAllPrograms(ent))
+        {
+            RaiseLocalEvent(program, ref ev);
         }
     }
 }

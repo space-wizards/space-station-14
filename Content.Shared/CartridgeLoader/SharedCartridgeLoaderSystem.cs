@@ -7,8 +7,6 @@ namespace Content.Shared.CartridgeLoader;
 
 public abstract partial class SharedCartridgeLoaderSystem : EntitySystem
 {
-    public const string InstalledContainerId = "program-container";
-
     [Dependency] private readonly ItemSlotsSystem _itemSlotsSystem = default!;
     [Dependency] private readonly SharedAppearanceSystem _appearanceSystem = default!;
     [Dependency] private readonly SharedContainerSystem _container = default!;
@@ -20,8 +18,6 @@ public abstract partial class SharedCartridgeLoaderSystem : EntitySystem
 
         InitializeRelay();
 
-        SubscribeLocalEvent<CartridgeLoaderComponent, MapInitEvent>(OnMapInit);
-
         SubscribeLocalEvent<CartridgeLoaderComponent, ComponentInit>(OnComponentInit);
         SubscribeLocalEvent<CartridgeLoaderComponent, ComponentRemove>(OnComponentRemove);
 
@@ -32,152 +28,69 @@ public abstract partial class SharedCartridgeLoaderSystem : EntitySystem
         SubscribeLocalEvent<CartridgeLoaderComponent, CartridgeUiMessage>(OnUiMessage);
     }
 
-    /// <summary>
-    /// Installs programs from the list of preinstalled programs
-    /// </summary>
-    private void OnMapInit(EntityUid uid, CartridgeLoaderComponent component, MapInitEvent args)
+    private void OnComponentInit(Entity<CartridgeLoaderComponent> ent, ref ComponentInit args)
     {
-        // TODO remove this and use container fill.
-        foreach (var prototype in component.PreinstalledPrograms)
-        {
-            InstallProgram(uid, prototype, deinstallable: false);
-        }
-    }
-
-    private void OnComponentInit(EntityUid uid, CartridgeLoaderComponent loader, ComponentInit args)
-    {
-        _itemSlotsSystem.AddItemSlot(uid, CartridgeLoaderComponent.CartridgeSlotId, loader.CartridgeSlot);
+        _itemSlotsSystem.AddItemSlot(ent, CartridgeLoaderComponent.CartridgeSlotId, ent.Comp.CartridgeSlot);
+        _container.EnsureContainer<Container>(ent, CartridgeLoaderComponent.RemovableContainerId);
+        _container.EnsureContainer<Container>(ent, CartridgeLoaderComponent.UnremovableContainerId);
     }
 
     /// <summary>
     /// Marks installed program entities for deletion when the component gets removed
     /// </summary>
-    private void OnComponentRemove(EntityUid uid, CartridgeLoaderComponent loader, ComponentRemove args)
+    private void OnComponentRemove(Entity<CartridgeLoaderComponent> ent, ref ComponentRemove args)
     {
-        _itemSlotsSystem.RemoveItemSlot(uid, loader.CartridgeSlot);
-        if (_container.TryGetContainer(uid, InstalledContainerId, out var cont))
-            _container.ShutdownContainer(cont);
+        _itemSlotsSystem.RemoveItemSlot(ent, ent.Comp.CartridgeSlot);
+        if (_container.TryGetContainer(ent, CartridgeLoaderComponent.RemovableContainerId, out var removable))
+            _container.ShutdownContainer(removable);
+        if (_container.TryGetContainer(ent, CartridgeLoaderComponent.UnremovableContainerId, out var unremovable))
+            _container.ShutdownContainer(unremovable);
     }
 
-    private void OnItemInserted(EntityUid uid, CartridgeLoaderComponent loader, EntInsertedIntoContainerMessage args)
+    private void OnItemInserted(Entity<CartridgeLoaderComponent> ent, ref EntInsertedIntoContainerMessage args)
     {
-        if (args.Container.ID != InstalledContainerId && args.Container.ID != loader.CartridgeSlot.ID)
+        if (args.Container.ID != CartridgeLoaderComponent.RemovableContainerId && args.Container.ID != CartridgeLoaderComponent.UnremovableContainerId && args.Container.ID != CartridgeLoaderComponent.CartridgeSlotId)
             return;
 
-        if (TryComp(args.Entity, out CartridgeComponent? cartridge))
-            cartridge.LoaderUid = uid;
-
-        RaiseLocalEvent(args.Entity, new CartridgeAddedEvent((uid, loader)));
-        UpdateAppearanceData(uid, loader);
-    }
-
-    private void OnItemRemoved(EntityUid uid, CartridgeLoaderComponent loader, EntRemovedFromContainerMessage args)
-    {
-        if (args.Container.ID != InstalledContainerId && args.Container.ID != loader.CartridgeSlot.ID)
-            return;
-
-        if (loader.ActiveProgram == args.Entity)
+        if (TryComp<CartridgeComponent>(args.Entity, out var cartridge))
         {
-            loader.ActiveProgram = default;
-            RaiseLocalEvent(args.Entity, new CartridgeDeactivatedEvent((uid, loader)));
+            cartridge.LoaderUid = ent;
+
+            if (args.Container.ID == CartridgeLoaderComponent.RemovableContainerId)
+                UpdateCartridgeInstallationStatus((args.Entity, cartridge), InstallationStatus.Installed);
+            else if (args.Container.ID == CartridgeLoaderComponent.UnremovableContainerId)
+                UpdateCartridgeInstallationStatus((args.Entity, cartridge), InstallationStatus.Readonly);
+            else
+                UpdateCartridgeInstallationStatus((args.Entity, cartridge), InstallationStatus.Cartridge);
         }
 
-        if (TryComp(args.Entity, out CartridgeComponent? cartridge))
+        RaiseLocalEvent(args.Entity, new CartridgeAddedEvent(ent));
+        UpdateUiState(ent.AsNullable());
+        UpdateAppearanceData(ent);
+    }
+
+    private void OnItemRemoved(Entity<CartridgeLoaderComponent> ent, ref EntRemovedFromContainerMessage args)
+    {
+        if (args.Container.ID != CartridgeLoaderComponent.RemovableContainerId && args.Container.ID != CartridgeLoaderComponent.UnremovableContainerId && args.Container.ID != CartridgeLoaderComponent.CartridgeSlotId)
+            return;
+
+        if (ent.Comp.ActiveProgram == args.Entity)
+        {
+            ent.Comp.ActiveProgram = null;
+            RaiseLocalEvent(args.Entity, new CartridgeDeactivatedEvent(ent));
+        }
+
+        if (TryComp<CartridgeComponent>(args.Entity, out var cartridge))
             cartridge.LoaderUid = null;
 
-        RaiseLocalEvent(args.Entity, new CartridgeRemovedEvent((uid, loader)));
-        UpdateAppearanceData(uid, loader);
+        RaiseLocalEvent(args.Entity, new CartridgeRemovedEvent(ent));
+        UpdateUiState(ent.AsNullable());
+        UpdateAppearanceData(ent);
     }
 
-    private void UpdateAppearanceData(EntityUid uid, CartridgeLoaderComponent loader)
+    private void UpdateAppearanceData(Entity<CartridgeLoaderComponent> ent)
     {
-        _appearanceSystem.SetData(uid, CartridgeLoaderVisuals.CartridgeInserted, loader.CartridgeSlot.HasItem);
-    }
-
-    private void OnLoaderUiMessage(Entity<CartridgeLoaderComponent> ent, ref CartridgeLoaderUiMessage message)
-    {
-        var cartridge = GetEntity(message.CartridgeUid);
-
-        switch (message.Action)
-        {
-            case CartridgeUiMessageAction.Activate:
-                ActivateProgram(ent, cartridge);
-                break;
-            case CartridgeUiMessageAction.Deactivate:
-                DeactivateProgram(ent, cartridge);
-                break;
-            case CartridgeUiMessageAction.Install:
-                InstallCartridge(ent, cartridge);
-                break;
-            case CartridgeUiMessageAction.Uninstall:
-                UninstallProgram(ent, cartridge);
-                break;
-            case CartridgeUiMessageAction.UIReady:
-                if (ent.Comp.ActiveProgram is { } foreground)
-                    RaiseLocalEvent(foreground, new CartridgeUiReadyEvent(ent));
-                break;
-            default:
-                throw new ArgumentOutOfRangeException($"Unrecognized UI action passed from cartridge loader ui {message.Action}.");
-        }
-    }
-
-    /// <summary>
-    /// Relays ui messages meant for cartridges to the currently active cartridge
-    /// </summary>
-    private void OnUiMessage(Entity<CartridgeLoaderComponent> ent, ref CartridgeUiMessage args)
-    {
-        var cartridgeEvent = args.MessageEvent;
-        cartridgeEvent.User = args.Actor;
-        cartridgeEvent.LoaderUid = GetNetEntity(ent);
-        cartridgeEvent.Actor = args.Actor;
-
-        RelayEvent(ent, cartridgeEvent, true);
-    }
-
-    /// <summary>
-    /// Updates the cartridge loaders ui state.
-    /// </summary>
-    /// <remarks>
-    /// Because the cartridge loader integrates with the ui of the entity using it, the entities ui state needs to inherit from <see cref="CartridgeLoaderUiState"/>
-    /// and use this method to update its state so the cartridge loaders state can be added to it.
-    /// </remarks>
-    /// <seealso cref="PDA.PdaSystem.UpdatePdaUserInterface"/>
-    public void UpdateUiState(Entity<CartridgeLoaderComponent?> ent)
-    {
-        if (!Resolve(ent, ref ent.Comp))
-            return;
-
-        if (!_userInterface.HasUi(ent.Owner, ent.Comp.UiKey))
-            return;
-
-        var programs = GetNetEntityList(GetPrograms(ent));
-        var state = new CartridgeLoaderUiState(programs, GetNetEntity(ent.Comp.ActiveProgram));
-        _userInterface.SetUiState(ent.Owner, ent.Comp.UiKey, state);
-    }
-
-    private void UpdateCartridgeInstallationStatus(EntityUid cartridgeUid, InstallationStatus installationStatus, CartridgeComponent cartridgeComponent)
-    {
-        cartridgeComponent.InstallationStatus = installationStatus;
-        Dirty(cartridgeUid, cartridgeComponent);
-    }
-
-    /// <summary>
-    /// Updates the programs ui state
-    /// </summary>
-    /// <param name="loaderUid">The cartridge loaders entity uid</param>
-    /// <param name="state">The programs ui state. Programs should use their own ui state class inheriting from <see cref="BoundUserInterfaceState"/></param>
-    /// <param name="loader">The cartridge loader component</param>
-    /// <remarks>
-    /// This method is called "UpdateCartridgeUiState" but cartridges and a programs are the same. A cartridge is just a program as a visible item.
-    /// </remarks>
-    /// <seealso cref="Cartridges.NotekeeperCartridgeSystem.UpdateUiState"/>
-    public void UpdateCartridgeUiState(EntityUid loaderUid, BoundUserInterfaceState state, CartridgeLoaderComponent? loader = null)
-    {
-        if (!Resolve(loaderUid, ref loader))
-            return;
-
-        if (_userInterface.HasUi(loaderUid, loader.UiKey))
-            _userInterface.SetUiState(loaderUid, loader.UiKey, state);
+        _appearanceSystem.SetData(ent.Owner, CartridgeLoaderVisuals.CartridgeInserted, ent.Comp.CartridgeSlot.HasItem);
     }
 
     public void SendNotification(EntityUid loaderUid, string header, string message, CartridgeLoaderComponent? loader = default!)

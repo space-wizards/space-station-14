@@ -6,16 +6,14 @@ namespace Content.Shared.CartridgeLoader;
 [RegisterComponent, NetworkedComponent]
 public sealed partial class CartridgeLoaderComponent : Component
 {
+    public const string UnremovableContainerId = "preinstalled-program-container";
+
+    public const string RemovableContainerId = "removable-program-container";
+
     public const string CartridgeSlotId = "Cartridge-Slot";
 
     [DataField]
     public ItemSlot CartridgeSlot = new();
-
-    /// <summary>
-    /// List of programs that come preinstalled with this cartridge loader
-    /// </summary>
-    [DataField("preinstalled")] // TODO remove this and use container fill.
-    public List<string> PreinstalledPrograms = new();
 
     /// <summary>
     /// The currently running program that has its ui showing

@@ -83,12 +83,12 @@ public sealed class CrewManifestCartridgeSystem : EntitySystem
         {
             if (_unsecureViewersAllowed)
             {
-                _cartridgeLoader.InstallProgram(loaderUid, CartridgePrototypeName, false, comp);
+                _cartridgeLoader.InstallProgram((loaderUid, comp), CartridgePrototypeName, false);
                 return;
             }
 
             if (_cartridgeLoader.TryGetProgram<CrewManifestCartridgeComponent>((loaderUid, comp)) is { } program)
-                _cartridgeLoader.UninstallProgram(loaderUid, program);
+                _cartridgeLoader.UninstallProgram((loaderUid, comp), program);
         }
     }
 }

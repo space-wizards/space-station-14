@@ -1,4 +1,5 @@
 using System.Linq;
+using Robust.Shared.Prototypes;
 
 namespace Content.Shared.CartridgeLoader;
 
@@ -9,10 +10,7 @@ public abstract partial class SharedCartridgeLoaderSystem : EntitySystem
         if (!Resolve(ent, ref ent.Comp))
             return null;
 
-        if (!_container.TryGetContainer(ent, InstalledContainerId, out var container))
-            return null;
-
-        foreach (var prog in container.ContainedEntities)
+        foreach (var prog in GetAllPrograms(ent))
         {
             if (!TryComp<T>(prog, out var program))
                 continue;
@@ -28,17 +26,51 @@ public abstract partial class SharedCartridgeLoaderSystem : EntitySystem
         return TryGetProgram<T>(ent).HasValue;
     }
 
-    public IReadOnlyList<EntityUid> GetPrograms(EntityUid uid)
+    public IEnumerable<EntityUid> GetAllPrograms(EntityUid uid)
     {
-        if (_container.TryGetContainer(uid, InstalledContainerId, out var container))
+        if (_itemSlotsSystem.GetItemOrNull(uid, CartridgeLoaderComponent.CartridgeSlotId) is { } cartridge)
+            return GetDiskPrograms(uid).Append(cartridge);
+
+        return GetDiskPrograms(uid);
+    }
+
+    public IEnumerable<EntityUid> GetDiskPrograms(EntityUid uid)
+    {
+        return GetPreinstalledPrograms(uid).Concat(GetRemovablePrograms(uid));
+    }
+
+    public IReadOnlyList<EntityUid> GetRemovablePrograms(EntityUid uid)
+    {
+        if (_container.TryGetContainer(uid, CartridgeLoaderComponent.RemovableContainerId, out var container))
             return container.ContainedEntities;
 
-        return Array.Empty<EntityUid>();
+        return [];
+    }
+
+    public IReadOnlyList<EntityUid> GetPreinstalledPrograms(EntityUid uid)
+    {
+        if (_container.TryGetContainer(uid, CartridgeLoaderComponent.UnremovableContainerId, out var container))
+            return container.ContainedEntities;
+
+        return [];
+    }
+
+    public int UsedDiskSpace(EntityUid uid)
+    {
+        var ret = 0;
+
+        if (_container.TryGetContainer(uid, CartridgeLoaderComponent.RemovableContainerId, out var removable))
+            ret += removable.Count;
+
+        if (_container.TryGetContainer(uid, CartridgeLoaderComponent.UnremovableContainerId, out var unremovable))
+            ret += unremovable.Count;
+
+        return ret;
     }
 
     private bool HasProgram(EntityUid uid, EntityUid program)
     {
-        return GetPrograms(uid).Contains(program);
+        return GetAllPrograms(uid).Contains(program);
     }
 
     public void ActivateProgram(Entity<CartridgeLoaderComponent> ent, EntityUid program)
@@ -64,98 +96,75 @@ public abstract partial class SharedCartridgeLoaderSystem : EntitySystem
         UpdateUiState(ent.AsNullable());
     }
 
-
     /// <summary>
     /// Installs a program by its prototype
     /// </summary>
-    /// <param name="loaderUid">The cartridge loader uid</param>
-    /// <param name="prototype">The prototype name</param>
+    /// <param name="ent">The cartridge loader</param>
+    /// <param name="prototype">The prototype</param>
     /// <param name="deinstallable">Whether the program can be deinstalled or not</param>
-    /// <param name="loader">The cartridge loader component</param>
     /// <returns>Whether installing the cartridge was successful</returns>
-    public bool InstallProgram(EntityUid loaderUid, string prototype, bool deinstallable = true, CartridgeLoaderComponent? loader = default!)
+    public bool InstallProgram(Entity<CartridgeLoaderComponent> ent, EntProtoId prototype, bool deinstallable = true)
     {
-        if (!Resolve(loaderUid, ref loader))
+        if (UsedDiskSpace(ent) >= ent.Comp.DiskSpace)
             return false;
 
-        if (!_container.TryGetContainer(loaderUid, InstalledContainerId, out var container))
-            return false;
-
-        if (container.Count >= loader.DiskSpace)
-            return false;
-
-        var ev = new ProgramInstallationAttempt(loaderUid, prototype);
+        var ev = new ProgramInstallationAttempt(ent, prototype);
         RaiseLocalEvent(ref ev);
 
         if (ev.Cancelled)
             return false;
 
-        var installedProgram = Spawn(prototype);
-        if (!TryComp(installedProgram, out CartridgeComponent? cartridge))
+        if (!PredictedTrySpawnInContainer(prototype,
+                ent,
+                deinstallable ? CartridgeLoaderComponent.RemovableContainerId : CartridgeLoaderComponent.UnremovableContainerId,
+                out var cartridge))
             return false;
 
-        _container.Insert(installedProgram, container);
-
-        UpdateCartridgeInstallationStatus(installedProgram, deinstallable ? InstallationStatus.Installed : InstallationStatus.Readonly, cartridge);
-        cartridge.LoaderUid = loaderUid;
-
-        RaiseLocalEvent(installedProgram, new CartridgeAddedEvent((loaderUid, loader)));
-        UpdateUiState((loaderUid, loader));
         return true;
     }
 
     /// <summary>
     /// Uninstalls a program using its uid
     /// </summary>
-    /// <param name="loaderUid">The cartridge loader uid</param>
-    /// <param name="programUid">The uid of the program to be uninstalled</param>
-    /// <param name="loader">The cartridge loader component</param>
+    /// <param name="ent">The cartridge loader uid</param>
+    /// <param name="program">The uid of the program to be uninstalled</param>
     /// <returns>Whether uninstalling the program was successful</returns>
-    public bool UninstallProgram(EntityUid loaderUid, EntityUid programUid, CartridgeLoaderComponent? loader = default!)
+    public bool UninstallProgram(Entity<CartridgeLoaderComponent> ent, EntityUid program)
     {
-        if (!Resolve(loaderUid, ref loader))
+        if (!GetDiskPrograms(ent).Contains(program))
             return false;
 
-        if (!GetPrograms(loaderUid).Contains(programUid))
-            return false;
+        PredictedQueueDel(program);
 
-        if (TryComp(programUid, out CartridgeComponent? cartridge))
-            cartridge.LoaderUid = null;
-
-        if (loader.ActiveProgram == programUid)
-            loader.ActiveProgram = null;
-
-        QueueDel(programUid);
-        UpdateUiState((loaderUid, loader));
         return true;
     }
 
     /// <summary>
     /// Installs a cartridge by spawning an invisible version of the cartridges prototype into the cartridge loaders program container program container
     /// </summary>
-    /// <param name="loaderUid">The cartridge loader uid</param>
-    /// <param name="cartridgeUid">The uid of the cartridge to be installed</param>
-    /// <param name="loader">The cartridge loader component</param>
+    /// <param name="ent">The cartridge loader</param>
+    /// <param name="cartridge">The uid of the cartridge to be installed</param>
     /// <returns>Whether installing the cartridge was successful</returns>
-    public bool InstallCartridge(EntityUid loaderUid, EntityUid cartridgeUid, CartridgeLoaderComponent? loader = default!)
+    public bool InstallCartridge(Entity<CartridgeLoaderComponent> ent, EntityUid cartridge)
     {
-        if (!Resolve(loaderUid, ref loader))
+        if (!HasComp<CartridgeComponent>(cartridge))
             return false;
 
-        if (!TryComp(cartridgeUid, out CartridgeComponent? loadedCartridge))
+        if (MetaData(cartridge).EntityPrototype is not { } cartridgeProto)
             return false;
 
-        foreach (var program in GetPrograms(loaderUid))
+        foreach (var program in GetDiskPrograms(ent))
         {
-            if (TryComp(program, out CartridgeComponent? installedCartridge) && installedCartridge.ProgramName == loadedCartridge.ProgramName)
+            if (MetaData(program).EntityPrototype is { } programProto && programProto == cartridgeProto)
                 return false;
         }
 
-        //This will eventually be replaced by serializing and deserializing the cartridge to copy it when something needs
-        //the data on the cartridge to carry over when installing
+        return InstallProgram(ent, cartridgeProto);
+    }
 
-        // For anyone stumbling onto this: Do not do this or I will cut you.
-        var prototypeId = Prototype(cartridgeUid)?.ID;
-        return prototypeId != null && InstallProgram(loaderUid, prototypeId, loader: loader);
+    private void UpdateCartridgeInstallationStatus(Entity<CartridgeComponent> ent, InstallationStatus installationStatus)
+    {
+        ent.Comp.InstallationStatus = installationStatus;
+        Dirty(ent);
     }
 }
