@@ -56,7 +56,7 @@
             Quartermaster: [ 1, 1 ]
             SalvageSpecialist: [ 6, 6 ]
             CargoTechnician: [ 3, 3 ]
-            #MailTech: [ 1, 2 ]
+            MailTech: [ 1, 2 ]
             MiningSpecialist: [ 3, 3 ]
             #civilian
             Assistant: [ -1, -1 ]
