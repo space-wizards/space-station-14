@@ -27,6 +27,9 @@ public sealed class SharedCoverSystem : EntitySystem
     {
         base.Initialize();
 
+        _reqTargetQuery = GetEntityQuery<RequireProjectileTargetComponent>();
+        _fixQuery = GetEntityQuery<FixturesComponent>();
+
         SubscribeLocalEvent<CoverComponent, ProjectileMissCoverAttemptEvent>(OnMissCover);
         SubscribeLocalEvent<CoverComponent, ExaminedEvent>(OnExamine);
 

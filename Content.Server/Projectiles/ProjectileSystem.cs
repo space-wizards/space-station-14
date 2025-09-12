@@ -27,6 +27,9 @@ public sealed class ProjectileSystem : SharedProjectileSystem
     public override void Initialize()
     {
         base.Initialize();
+
+        _targettedProjQuery = GetEntityQuery<TargetedProjectileComponent>();
+
         SubscribeLocalEvent<ProjectileComponent, StartCollideEvent>(OnStartCollide);
     }
 
