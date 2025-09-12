@@ -1,9 +1,9 @@
 - type: entity
+  abstract: true
   parent: BaseItem
   id: BaseBorgModule
   name: borg module
   description: A piece of tech that gives cyborgs new abilities.
-  abstract: true
   components:
   - type: Item
     storedRotation: -90
@@ -40,8 +40,8 @@
     - Robotics
 
 - type: entity
-  id: BaseProviderBorgModule
   abstract: true
+  id: BaseProviderBorgModule
   components:
   - type: SelectableBorgModule
   - type: ContainerContainer
@@ -61,9 +61,9 @@
     event: !type:BorgModuleActionSelectedEvent
 
 - type: entity
+  abstract: true
   parent: BaseBorgModule
   id: BaseBorgModuleCargo
-  abstract: true
   components:
   - type: Tag
     tags:
@@ -86,9 +86,9 @@
         color: "#593718"
 
 - type: entity
+  abstract: true
   parent: BaseBorgModule
   id: BaseBorgModuleEngineering
-  abstract: true
   components:
   - type: Tag
     tags:
@@ -113,9 +113,9 @@
         color: "#DEC343"
 
 - type: entity
+  abstract: true
   parent: BaseBorgModule
   id: BaseBorgModuleJanitor
-  abstract: true
   components:
   - type: Tag
     tags:
@@ -140,9 +140,9 @@
         color: "#404040"
 
 - type: entity
+  abstract: true
   parent: BaseBorgModule
   id: BaseBorgModuleMedical
-  abstract: true
   components:
   - type: Tag
     tags:
@@ -167,9 +167,9 @@
         color: "#C3C3C3"
 
 - type: entity
+  abstract: true
   parent: BaseBorgModule
   id: BaseBorgModuleScience
-  abstract: true
   components:
   - type: Tag
     tags:
@@ -194,9 +194,9 @@
         color: "#C3C3C3"
 
 - type: entity
+  abstract: true
   parent: BaseBorgModule
   id: BaseBorgModuleService
-  abstract: true
   components:
   - type: Tag
     tags:
@@ -221,9 +221,9 @@
         color: "#313131"
 
 - type: entity
+  abstract: true
   parent: BaseBorgModule
   id: BaseBorgModuleSyndicate
-  abstract: true
   components:
   - type: Tag
     tags:
@@ -249,9 +249,9 @@
 
 
 - type: entity
+  abstract: true
   parent: BaseBorgModule
   id: BaseBorgModuleSyndicateAssault
-  abstract: true
   components:
   - type: Tag
     tags:
@@ -330,9 +330,9 @@
         color: "#EDB45B"
 
 - type: entity
+  abstract: true
   parent: BaseBorgModule
   id: BaseXenoborgModuleHeavy
-  abstract: true
   components:
   - type: Tag
     tags:
@@ -357,9 +357,9 @@
         color: "#962023"
 
 - type: entity
+  abstract: true
   parent: BaseBorgModule
   id: BaseXenoborgModuleScout
-  abstract: true
   components:
   - type: Tag
     tags:
@@ -384,9 +384,9 @@
         color: "#282828"
 
 - type: entity
+  abstract: true
   parent: BaseBorgModule
   id: BaseXenoborgModuleStealth
-  abstract: true
   components:
   - type: Tag
     tags:
