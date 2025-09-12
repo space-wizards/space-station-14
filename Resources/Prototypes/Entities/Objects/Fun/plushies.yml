@@ -1251,3 +1251,42 @@
   - type: FoodSequenceElement
     entries:
       CottonBurger: MothPlushie
+
+- type: entity
+  parent: BasePlushie
+  id: PlushieVulp
+  name: vulpkanin plushie
+  description: An adorable stuffed toy that resembles a vulpkanin. Yip! Yap!
+  components:
+  - type: Sprite
+    sprite: Objects/Fun/Plushies/vulp.rsi
+    state: icon
+  - type: Item
+    heldPrefix: inhand
+  - type: EmitSoundOnUse
+    sound: &PlushieVulpSound
+      path: /Audio/Voice/Vulpkanin/howl.ogg
+      params:
+        volume: -5
+  - type: EmitSoundOnLand
+    sound: *PlushieVulpSound
+  - type: EmitSoundOnActivate
+    sound: *PlushieVulpSound
+  - type: EmitSoundOnTrigger
+    sound: *PlushieVulpSound
+  - type: Edible
+    requiresSpecialDigestion: true
+    useSound:
+      path: /Audio/Voice/Vulpkanin/vulp_scream4.ogg
+      params:
+        volume: -5
+  - type: MeleeWeapon
+    soundHit: *PlushieVulpSound
+  - type: Clothing
+    quickEquip: false
+    equippedPrefix: equipped
+    slots:
+    - HEAD
+  - type: FoodSequenceElement
+    entries:
+      CottonBurger: PlushieVulp
