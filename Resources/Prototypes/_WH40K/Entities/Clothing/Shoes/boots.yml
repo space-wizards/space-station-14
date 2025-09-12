@@ -1,8 +1,8 @@
 - type: entity
   parent: ClothingShoesMilitaryBase
   id: ClothingShoesAnkleBoots
-  name: берцы флота
-  description: Прочные флотские берцы.
+  name: Боевые сапоги
+  description: Боевые сапоги имперской гвардии
   suffix: WH40K, войдсмены
   components:
   - type: Sprite
@@ -16,7 +16,7 @@
   parent: ClothingShoesMilitaryBase
   id: ClothingShoesCommissarBoots
   name: сапоги комиссара
-  description: Тяжёлые сапоги, принадлежащие самому комиссару. Мы лёд под ногами комиссара...
+  description: Мы лёд под ногами комиссара...
   suffix: WH40K
   components:
   - type: Sprite
@@ -25,6 +25,20 @@
     sprite: _WH40K/Clothing/Shoes/Boots/commissar.rsi
   - type: ClothingSlowOnDamageModifier
     modifier: 0.4
+
+- type: entity
+  parent: ClothingShoesMilitaryBase
+  id: ClothingShoesGenBoots
+  name: Сапоги офицера
+  description: Дорогие и качественные сапоги высшего офицера. 
+  suffix: WH40K
+  components:
+  - type: Sprite
+    sprite: _WH40K/Clothing/Shoes/Boots/genboots.rsi
+  - type: Clothing
+    sprite: _WH40K/Clothing/Shoes/Boots/genboots.rsi
+  - type: ClothingSlowOnDamageModifier
+    modifier: 0.3
 
 - type: entity
   parent: ClothingShoesBaseButcherable

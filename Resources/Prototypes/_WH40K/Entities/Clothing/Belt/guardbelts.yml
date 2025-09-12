@@ -1,0 +1,59 @@
+- type: entity
+  parent: ClothingBeltStorageBase
+  id: Comibelt
+  name: Пояс комиссара
+  description: Шикарно вышитый дорогой и прочный пояс комиссара, вместителен.
+  suffix: WH40K, Гвардия
+  components:
+  - type: Sprite
+    sprite: _WH40K/Clothing/Belt/comissar.rsi
+  - type: Clothing
+    sprite: _WH40K/Clothing/Belt/comissar.rsi
+
+- type: entity
+  parent: ClothingBeltStorageBase
+  id: guardbelt
+  name: Разгрузочный жилет
+  description: Грубая боевая разгрузка, созданная для гвардейцев
+  suffix: WH40K, Гвардия
+  components:
+  - type: Sprite
+    sprite: _WH40K/Clothing/Belt/guardsman.rsi
+  - type: Clothing
+    sprite: _WH40K/Clothing/Belt/guardsman.rsi
+
+- type: entity
+  parent: ClothingBeltStorageBase
+  id: offbelt
+  name: Пояс офицера
+  description: Качественный пояс для хранения всего необходимого офицеру
+  suffix: WH40K, Гвардия
+  components:
+  - type: Sprite
+    sprite: _WH40K/Clothing/Belt/officer.rsi
+  - type: Clothing
+    sprite: _WH40K/Clothing/Belt/officer.rsi
+
+- type: entity
+  parent: ClothingBeltStorageBase
+  id: psybelt
+  name: Пояс псайкера
+  description: Пояс, принадлежащий санкционированному псайкеру
+  suffix: WH40K, Гвардия
+  components:
+  - type: Sprite
+    sprite: _WH40K/Clothing/Belt/psyker.rsi
+  - type: Clothing
+    sprite: _WH40K/Clothing/Belt/psyker.rsi
+
+- type: entity
+  parent: ClothingBeltStorageBase
+  id: colbelt
+  name: Пояс полковника
+  description: Шикарно вышитый дорогой и прочный пояс Полковника, вместителен блестит.
+  suffix: WH40K, Гвардия
+  components:
+  - type: Sprite
+    sprite: _WH40K/Clothing/Belt/colonel.rsi
+  - type: Clothing
+    sprite: _WH40K/Clothing/Belt/colonel.rsi

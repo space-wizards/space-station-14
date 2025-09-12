@@ -33,3 +33,15 @@
     sprite: _WH40K/Clothing/Head/Helmets/flakhelmetresp.rsi
   - type: Clothing
     sprite: _WH40K/Clothing/Head/Helmets/flakhelmetresp.rsi
+
+- type: entity
+  parent: ClothingHeadHelmetFlak
+  id: ClothingHeadHelmetPsyker
+  name: Шлем Псайкера
+  description: Шлем, защищающий голову псайкера не только от физических, но и ментальных угроз
+  suffix: WH40K, Псайкер
+  components:
+  - type: Sprite
+    sprite: _WH40K/Clothing/Head/Helmets/psyhelmet.rsi
+  - type: Clothing
+    sprite: _WH40K/Clothing/Head/Helmets/psyhelmet.rsi
