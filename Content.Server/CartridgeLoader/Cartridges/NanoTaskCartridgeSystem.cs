@@ -35,7 +35,7 @@ public sealed class NanoTaskCartridgeSystem : SharedNanoTaskCartridgeSystem
 
     private void OnCartridgeRemoved(Entity<NanoTaskCartridgeComponent> ent, ref CartridgeRemovedEvent args)
     {
-        if (!_cartridgeLoader.HasProgram<NanoTaskCartridgeComponent>(args.Loader))
+        if (!_cartridgeLoader.HasProgram<NanoTaskCartridgeComponent>(args.Loader.AsNullable()))
         {
             RemComp<NanoTaskInteractionComponent>(args.Loader);
         }
@@ -43,7 +43,7 @@ public sealed class NanoTaskCartridgeSystem : SharedNanoTaskCartridgeSystem
 
     private void OnInteractUsing(Entity<NanoTaskInteractionComponent> ent, ref InteractUsingEvent args)
     {
-        if (!_cartridgeLoader.TryGetProgram<NanoTaskCartridgeComponent>(ent.Owner, out var uid, out var program))
+        if (_cartridgeLoader.TryGetProgram<NanoTaskCartridgeComponent>(ent.Owner) is not { } cartridge)
         {
             return;
         }
@@ -53,10 +53,10 @@ public sealed class NanoTaskCartridgeSystem : SharedNanoTaskCartridgeSystem
         }
         if (printed.Task is NanoTaskItem item)
         {
-            program.Tasks.Add(new(program.Counter++, printed.Task));
+            cartridge.Comp.Tasks.Add(new(cartridge.Comp.Counter++, printed.Task));
             args.Handled = true;
             Del(args.Used);
-            UpdateUiState(new Entity<NanoTaskCartridgeComponent>(uid.Value, program), ent.Owner);
+            UpdateUiState(cartridge, ent.Owner);
         }
     }
 

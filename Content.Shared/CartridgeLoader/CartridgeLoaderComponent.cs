@@ -20,14 +20,8 @@ public sealed partial class CartridgeLoaderComponent : Component
     /// <summary>
     /// The currently running program that has its ui showing
     /// </summary>
-    [ViewVariables(VVAccess.ReadWrite)]
+    [DataField]
     public EntityUid? ActiveProgram = default;
-
-    /// <summary>
-    /// The list of programs running in the background, listening to certain events
-    /// </summary>
-    [ViewVariables]
-    public readonly List<EntityUid> BackgroundPrograms = new();
 
     /// <summary>
     /// The maximum amount of programs that can be installed on the cartridge loader entity

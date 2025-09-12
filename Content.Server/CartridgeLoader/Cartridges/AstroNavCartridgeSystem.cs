@@ -24,7 +24,7 @@ public sealed class AstroNavCartridgeSystem : EntitySystem
     private void OnCartridgeRemoved(Entity<AstroNavCartridgeComponent> ent, ref CartridgeRemovedEvent args)
     {
         // only remove when the program itself is removed
-        if (!_cartridgeLoaderSystem.HasProgram<AstroNavCartridgeComponent>(args.Loader))
+        if (!_cartridgeLoaderSystem.HasProgram<AstroNavCartridgeComponent>(args.Loader.AsNullable()))
         {
             RemComp<HandheldGPSComponent>(args.Loader);
         }

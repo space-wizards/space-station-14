@@ -198,7 +198,7 @@ namespace Content.Server.PDA
             if (!TryComp(uid, out CartridgeLoaderComponent? loader))
                 return;
 
-            var programs = _cartridgeLoader.GetAvailablePrograms(uid, loader);
+            var programs = GetNetEntityList(_cartridgeLoader.GetPrograms(uid));
             var id = CompOrNull<IdCardComponent>(pda.ContainedId);
             var state = new PdaUpdateState(
                 programs,

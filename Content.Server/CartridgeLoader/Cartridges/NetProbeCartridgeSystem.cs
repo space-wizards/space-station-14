@@ -2,6 +2,7 @@ using Content.Shared.CartridgeLoader;
 using Content.Shared.CartridgeLoader.Cartridges;
 using Content.Shared.DeviceNetwork;
 using Content.Shared.DeviceNetwork.Components;
+using Content.Shared.Interaction;
 using Content.Shared.Popups;
 using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
@@ -20,21 +21,18 @@ public sealed class NetProbeCartridgeSystem : EntitySystem
     {
         base.Initialize();
         SubscribeLocalEvent<NetProbeCartridgeComponent, CartridgeUiReadyEvent>(OnUiReady);
-        SubscribeLocalEvent<NetProbeCartridgeComponent, CartridgeAfterInteractEvent>(AfterInteract);
+        SubscribeLocalEvent<NetProbeCartridgeComponent, CartridgeRelayedEvent<AfterInteractEvent>>(AfterInteract);
     }
 
     /// <summary>
-    /// The <see cref="CartridgeAfterInteractEvent" /> gets relayed to this system if the cartridge loader is running
-    /// the NetProbe program and someone clicks on something with it. <br/>
-    /// <br/>
     /// Saves name, address... etc. of the device that was clicked into a list on the component when the device isn't already present in that list
     /// </summary>
-    private void AfterInteract(EntityUid uid, NetProbeCartridgeComponent component, CartridgeAfterInteractEvent args)
+    private void AfterInteract(EntityUid uid, NetProbeCartridgeComponent component, CartridgeRelayedEvent<AfterInteractEvent> args)
     {
-        if (args.InteractEvent.Handled || !args.InteractEvent.CanReach || !args.InteractEvent.Target.HasValue)
+        if (args.Args.Handled || !args.Args.CanReach || !args.Args.Target.HasValue)
             return;
 
-        var target = args.InteractEvent.Target.Value;
+        var target = args.Args.Target.Value;
         DeviceNetworkComponent? networkComponent = default;
 
         if (!Resolve(target, ref networkComponent, false))
@@ -50,8 +48,8 @@ public sealed class NetProbeCartridgeSystem : EntitySystem
         //Play scanning sound with slightly randomized pitch
         //Why is there no NextFloat(float min, float max)???
         var audioParams = AudioParams.Default.WithVolume(-2f).WithPitchScale((float)_random.Next(12, 21) / 10);
-        _audioSystem.PlayEntity(component.SoundScan, args.InteractEvent.User, target, audioParams);
-        _popupSystem.PopupCursor(Loc.GetString("net-probe-scan", ("device", target)), args.InteractEvent.User);
+        _audioSystem.PlayEntity(component.SoundScan, args.Args.User, target, audioParams);
+        _popupSystem.PopupCursor(Loc.GetString("net-probe-scan", ("device", target)), args.Args.User);
 
 
         //Limit the amount of saved probe results to 9

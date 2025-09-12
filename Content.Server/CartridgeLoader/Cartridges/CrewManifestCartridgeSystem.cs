@@ -78,8 +78,8 @@ public sealed class CrewManifestCartridgeSystem : EntitySystem
     {
         _unsecureViewersAllowed = unsecureViewersAllowed;
 
-        var allCartridgeLoaders = AllEntityQuery<CartridgeLoaderComponent, ContainerManagerComponent>();
-        while (allCartridgeLoaders.MoveNext(out var loaderUid, out var comp, out var cont))
+        var allCartridgeLoaders = EntityQueryEnumerator<CartridgeLoaderComponent>();
+        while (allCartridgeLoaders.MoveNext(out var loaderUid, out var comp))
         {
             if (_unsecureViewersAllowed)
             {
@@ -87,8 +87,8 @@ public sealed class CrewManifestCartridgeSystem : EntitySystem
                 return;
             }
 
-            if (_cartridgeLoader.TryGetProgram<CrewManifestCartridgeComponent>(loaderUid, out var program, true, comp, cont))
-                _cartridgeLoader.UninstallProgram(loaderUid, program.Value, comp);
+            if (_cartridgeLoader.TryGetProgram<CrewManifestCartridgeComponent>((loaderUid, comp)) is { } program)
+                _cartridgeLoader.UninstallProgram(loaderUid, program);
         }
     }
 }
