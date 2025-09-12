@@ -1,12 +1,22 @@
-using System.Linq;
 using Content.Shared.Kitchen;
 
-namespace Content.IntegrationTests.Tests.Microwave;
+namespace Content.IntegrationTests.Tests.WizdenContentFreeze;
 
-public sealed class KillMicrowaveTest
+/// <summary>
+/// These tests are limited to adding a specific type of content, essentially freezing it. If you are a fork developer, you may want to disable these tests.
+/// </summary>
+public sealed class WizdenContentFreeze
 {
+    /// <summary>
+    /// This freeze prohibits the addition of new microwave recipes.
+    /// The maintainers decided that the mechanics of cooking food in the microwave should be removed,
+    /// and all recipes should be ported to other cooking methods.
+    /// All added recipes essentially increase the technical debt of future cooking refactoring.
+    ///
+    /// https://github.com/space-wizards/space-station-14/issues/8524
+    /// </summary>
     [Test]
-    public async Task PleaseStopAddingNewMicrowaveRecipes()
+    public async Task MicrovaweRecipesFreeze()
     {
         await using var pair = await PoolManager.GetServerClient();
         var server = pair.Server;
