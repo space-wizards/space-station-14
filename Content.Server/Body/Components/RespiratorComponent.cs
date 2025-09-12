@@ -11,16 +11,6 @@ namespace Content.Server.Body.Components
     public sealed partial class RespiratorComponent : Component
     {
         /// <summary>
-        ///     Gas container for this entity
-        /// </summary>
-        [DataField]
-        public GasMixture Air = new()
-        {
-            Volume = 6, // 6 liters, the average lung capacity for a human according to Google
-            Temperature = Atmospherics.NormalBodyTemperature
-        };
-
-        /// <summary>
         ///     Volume of our breath in liters
         /// </summary>
         [DataField]
