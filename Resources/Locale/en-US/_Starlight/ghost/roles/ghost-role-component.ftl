@@ -13,3 +13,7 @@ ghost-role-information-soviet-marine-rules = You are required to obey orders giv
 
 ghost-role-information-derelict-borgi-name = Derelict Borgi
 ghost-role-information-derelict-borgi-desc = You are a regular borgi that got lost in space. After years of exposure to ion storms you find yourself near a space station.
+
+ghost-role-information-horrific-tie-name = Horrific Necktie
+ghost-role-information-horrific-tie-description = You are a horrific necktie from Disco Elysium.
+ghost-role-information-horrific-tie-rules = [bold][color=cyan]ADMIN WARNING: Do not take this role if you don't know what Disco Elysium is and how to roleplay as necktie from it.[/color][/bold]
