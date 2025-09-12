@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Nyxilath
-  changes:
-  - message: Trash bags can be printed by Autolathes again.
-    type: Fix
-  id: 8444
-  time: '2025-05-09T03:35:49.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/37296
 - author: robinthedragon
   changes:
   - message: Basic operative bundle, which allows newkies to easily spend all 40 of
@@ -3948,3 +3941,10 @@
   id: 8955
   time: '2025-09-11T19:59:21.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/39879
+- author: SurrealShibe
+  changes:
+  - message: Toilet seats are now displayed on the correct layer.
+    type: Fix
+  id: 8956
+  time: '2025-09-12T22:47:21.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/40313
