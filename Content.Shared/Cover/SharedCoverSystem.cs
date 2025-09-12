@@ -7,6 +7,7 @@ using Robust.Shared.Configuration;
 using Robust.Shared.Physics;
 using Content.Shared.Physics;
 using Content.Shared.Damage.Components;
+using Robust.Shared.Timing;
 
 namespace Content.Shared.Cover;
 
@@ -15,6 +16,7 @@ public sealed class SharedCoverSystem : EntitySystem
     [Dependency] private readonly SharedTransformSystem _xform = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly IConfigurationManager _configuration = default!;
+    [Dependency] private readonly IGameTiming _timing = default!;
 
     private bool _coverExamineEnabled;
 
@@ -36,9 +38,14 @@ public sealed class SharedCoverSystem : EntitySystem
 
     private bool TryMissCover(EntityUid projectile, ProjectileComponent comp, Entity<CoverComponent> cover)
     {
-        // This naiive distance leaves open the possibility of some rediculous bullet curve shinanigans, but travel time counting is way more finnicky.
-        var distance = comp.Origin != null ?
-            Math.Clamp((comp.Origin.Value.Position - _xform.GetMapCoordinates(cover).Position).Length(), 0, cover.Comp.MaxDistance) :
+        // Maybe this should use comp.CreationTick instead? Adds another layer of unit conversion fuckery though.
+        // relies on the firespeed being accurate. We have to poll speed at some time-point and that one seems better than backing it out at collision time.
+        var traveltime = comp.FireTime != null ?
+            _timing.CurTime - comp.FireTime :
+            TimeSpan.MaxValue;
+
+        var distanceCalc = comp.FireSpeed != null ?
+            Math.Clamp(comp.FireSpeed.Value * (float)traveltime.Value.TotalSeconds, 0, cover.Comp.MaxDistance) :
             cover.Comp.MaxDistance;
 
         if (distance < cover.Comp.MinDistance) // we are too close and could shoot over easily

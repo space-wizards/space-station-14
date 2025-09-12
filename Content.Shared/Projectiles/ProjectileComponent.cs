@@ -101,15 +101,15 @@ public sealed partial class ProjectileComponent : Component
     [DataField]
     public FixedPoint2 PenetrationAmount = FixedPoint2.Zero;
 
-    /// <summary>
-    /// The original position this projectile was fired from.
-    /// </summary>
-    [DataField]
-    public MapCoordinates? Origin;
+    [DataField, AutoNetworkedField]
+    public TimeSpan? FireTime;
+
+    [DataField, AutoNetworkedField]
+    public float? FireSpeed;
 
     /// <summary>
     /// How much closer to consider the shots from this gun for cover purposes. For scopes.
     /// </summary>
-    [DataField]
+    [DataField, AutoNetworkedField]
     public float CoverRangeBonus = 0;
 }
