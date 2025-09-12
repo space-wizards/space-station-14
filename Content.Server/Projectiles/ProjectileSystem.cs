@@ -46,7 +46,7 @@ public sealed class ProjectileSystem : SharedProjectileSystem
         }
 
         //if were shooting right at it, always hit cover.
-        if (!(TryComp<TargetedProjectileComponent>(uid, out var targetedcomp) && target == targetedcomp.Target))
+        if (!TryComp<TargetedProjectileComponent>(uid, out var targetedcomp) || target != targetedcomp.Target)
         {
             var coverEv = new ProjectileMissCoverAttemptEvent(uid, component, false);
             RaiseLocalEvent(target, ref coverEv);
