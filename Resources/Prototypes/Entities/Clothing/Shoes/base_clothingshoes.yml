@@ -51,12 +51,11 @@
     slots:
       item:
         name: clothing-boots-sidearm
-        priority: 3
+        priority: 4
         whitelist:
           tags:
           - Knife
           - Sidearm
-        priority: 4
 
 - type: entity
   abstract: true
