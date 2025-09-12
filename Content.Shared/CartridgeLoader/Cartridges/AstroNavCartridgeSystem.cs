@@ -1,8 +1,6 @@
-using Content.Shared.CartridgeLoader;
-using Content.Shared.CartridgeLoader.Cartridges;
 using Content.Shared.GPS.Components;
 
-namespace Content.Server.CartridgeLoader.Cartridges;
+namespace Content.Shared.CartridgeLoader.Cartridges;
 
 public sealed class AstroNavCartridgeSystem : EntitySystem
 {

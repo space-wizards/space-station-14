@@ -4,7 +4,7 @@ using Robust.Shared.GameStates;
 namespace Content.Shared.CartridgeLoader;
 
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
-[Access(typeof(SharedCartridgeLoaderSystem))]
+[Access(typeof(CartridgeLoaderSystem))]
 public sealed partial class CartridgeLoaderComponent : Component
 {
     public const string UnremovableContainerId = "preinstalled-program-container";

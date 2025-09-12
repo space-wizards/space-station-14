@@ -1,7 +1,6 @@
-﻿using Content.Shared.CartridgeLoader.Cartridges;
-using Robust.Shared.Audio;
+﻿using Robust.Shared.Audio;
 
-namespace Content.Server.CartridgeLoader.Cartridges;
+namespace Content.Shared.CartridgeLoader.Cartridges;
 
 [RegisterComponent]
 public sealed partial class NetProbeCartridgeComponent : Component

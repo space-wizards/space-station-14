@@ -3,7 +3,7 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Shared.CartridgeLoader;
 
-public abstract partial class SharedCartridgeLoaderSystem : EntitySystem
+public partial class CartridgeLoaderSystem : EntitySystem
 {
     public Entity<T>? TryGetProgram<T>(Entity<CartridgeLoaderComponent?> ent) where T : IComponent
     {

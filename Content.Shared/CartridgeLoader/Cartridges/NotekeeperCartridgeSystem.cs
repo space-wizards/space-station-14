@@ -1,14 +1,12 @@
-using Content.Server.Administration.Logs;
-using Content.Shared.CartridgeLoader;
-using Content.Shared.CartridgeLoader.Cartridges;
+using Content.Shared.Administration.Logs;
 using Content.Shared.Database;
 
-namespace Content.Server.CartridgeLoader.Cartridges;
+namespace Content.Shared.CartridgeLoader.Cartridges;
 
 public sealed class NotekeeperCartridgeSystem : EntitySystem
 {
     [Dependency] private readonly CartridgeLoaderSystem? _cartridgeLoaderSystem = default!;
-    [Dependency] private readonly IAdminLogManager _adminLogger = default!;
+    [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
 
     public override void Initialize()
     {

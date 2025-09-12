@@ -5,7 +5,7 @@ using System.Diagnostics.CodeAnalysis;
 
 namespace Content.Shared.CartridgeLoader;
 
-public abstract partial class SharedCartridgeLoaderSystem : EntitySystem
+public partial class CartridgeLoaderSystem : EntitySystem
 {
     [Dependency] private readonly ItemSlotsSystem _itemSlotsSystem = default!;
     [Dependency] private readonly SharedAppearanceSystem _appearanceSystem = default!;

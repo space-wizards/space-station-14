@@ -2,7 +2,7 @@ using System.Linq;
 
 namespace Content.Shared.CartridgeLoader;
 
-public abstract partial class SharedCartridgeLoaderSystem : EntitySystem
+public partial class CartridgeLoaderSystem : EntitySystem
 {
     private void OnLoaderUiMessage(Entity<CartridgeLoaderComponent> ent, ref CartridgeLoaderUiMessage message)
     {
@@ -41,7 +41,8 @@ public abstract partial class SharedCartridgeLoaderSystem : EntitySystem
         cartridgeEvent.LoaderUid = GetNetEntity(ent);
         cartridgeEvent.Actor = args.Actor;
 
-        RelayEvent(ent, cartridgeEvent, true);
+        if (ent.Comp.ActiveProgram is { } foreground)
+            RaiseLocalEvent(foreground, cartridgeEvent);
     }
 
     /// <summary>

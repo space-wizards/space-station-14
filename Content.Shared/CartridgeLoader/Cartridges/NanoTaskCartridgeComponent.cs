@@ -1,5 +1,3 @@
-using Content.Shared.CartridgeLoader.Cartridges;
-
 namespace Content.Shared.CartridgeLoader.Cartridges;
 
 /// <summary>

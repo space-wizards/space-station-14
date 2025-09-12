@@ -3,7 +3,7 @@ using Content.Shared.Interaction;
 
 namespace Content.Shared.CartridgeLoader;
 
-public abstract partial class SharedCartridgeLoaderSystem : EntitySystem
+public partial class CartridgeLoaderSystem : EntitySystem
 {
     private void InitializeRelay()
     {

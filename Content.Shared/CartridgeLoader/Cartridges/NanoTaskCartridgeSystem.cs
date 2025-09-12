@@ -1,19 +1,14 @@
-using Content.Shared.CartridgeLoader.Cartridges;
-using Content.Shared.CartridgeLoader;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Interaction;
 using Content.Shared.Paper;
-using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
+using Robust.Shared.Audio;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 
-namespace Content.Server.CartridgeLoader.Cartridges;
+namespace Content.Shared.CartridgeLoader.Cartridges;
 
-/// <summary>
-///     Server-side class implementing the core UI logic of NanoTask
-/// </summary>
-public sealed class NanoTaskCartridgeSystem : SharedNanoTaskCartridgeSystem
+public sealed class NanoTaskCartridgeSystem : EntitySystem
 {
     [Dependency] private readonly CartridgeLoaderSystem _cartridgeLoader = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
@@ -25,12 +20,19 @@ public sealed class NanoTaskCartridgeSystem : SharedNanoTaskCartridgeSystem
     {
         base.Initialize();
 
+        SubscribeLocalEvent<NanoTaskCartridgeComponent, CartridgeAddedEvent>(OnCartridgeAdded);
+
         SubscribeLocalEvent<NanoTaskCartridgeComponent, CartridgeMessageEvent>(OnUiMessage);
         SubscribeLocalEvent<NanoTaskCartridgeComponent, CartridgeUiReadyEvent>(OnUiReady);
 
         SubscribeLocalEvent<NanoTaskCartridgeComponent, CartridgeRemovedEvent>(OnCartridgeRemoved);
 
         SubscribeLocalEvent<NanoTaskInteractionComponent, InteractUsingEvent>(OnInteractUsing);
+    }
+
+    private void OnCartridgeAdded(Entity<NanoTaskCartridgeComponent> ent, ref CartridgeAddedEvent args)
+    {
+        EnsureComp<NanoTaskInteractionComponent>(args.Loader);
     }
 
     private void OnCartridgeRemoved(Entity<NanoTaskCartridgeComponent> ent, ref CartridgeRemovedEvent args)
@@ -141,7 +143,6 @@ public sealed class NanoTaskCartridgeSystem : SharedNanoTaskCartridgeSystem
 
         UpdateUiState(ent, GetEntity(args.LoaderUid));
     }
-
 
     private void UpdateUiState(Entity<NanoTaskCartridgeComponent> ent, EntityUid loaderUid)
     {
