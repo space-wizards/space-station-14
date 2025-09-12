@@ -7,7 +7,7 @@
 # If you change/add a color here, also change it in role-types.ftl!
 
 - type: roleType
-  id: Neutral
-  name: role-type-central-command-aligned-name # DOTS - Pending rename from all instances of "Central Command" to "Corporate Aligned"
-  color: '#00b600'
+  id: CorporateAligned
+  name: role-type-corporate-aligned-name
+  color: '#134975'
   symbol: "🗡" # Should never be antag, but just in case.
