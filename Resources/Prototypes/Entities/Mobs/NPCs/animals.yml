@@ -3866,9 +3866,11 @@
     speaks:
     - Dog
     - GalacticCommon
+    - Canilunzt
     understands:
     - Dog
     - GalacticCommon
+    - Canilunzt
   # Starlight-end
   - type: Sprite
     layers:
