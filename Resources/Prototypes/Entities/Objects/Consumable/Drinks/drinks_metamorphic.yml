@@ -12,7 +12,7 @@
   - type: Sprite
     sprite: Objects/Consumable/Drinks/glass_clear.rsi
     layers:
-      - state: icon # TODO add "icon_empty" state to match "DrinkVisualsFillOverlay"
+      - state: icon
         map: [ "enum.SolutionContainerLayers.Base" ]
       - state: fill1
         map: [ "enum.SolutionContainerLayers.Fill" ]
