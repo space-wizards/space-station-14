@@ -1443,7 +1443,7 @@
   - type: Speech
     speechSounds: Monkey
     speechVerb: Monkey
-  - type: ReplacmentAccent
+  - type: ReplacementAccent
     accent: monkey
 
 - type: entity
