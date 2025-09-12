@@ -5,12 +5,11 @@
   suffix: Empty
   description: A spray bottle with an unscrewable top.
   components:
-  - type: Drink
+  - type: Edible
+    edible: Drink
     solution: spray
-    ignoreEmpty: true
-    useSound:
-      path: /Audio/Effects/spray3.ogg
-    transferAmount: 10
+    destroyOnEmpty: false
+    utensil: None
   - type: Tag
     tags:
     - Spray
