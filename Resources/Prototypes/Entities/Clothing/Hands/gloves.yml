@@ -441,7 +441,6 @@
   - type: Clothing
     sprite: Clothing/Hands/Gloves/forensic.rsi
   - type: FingerprintMask
-  - type: Insulated # starlight
   - type: GuideHelp
     guides:
     - Forensics
