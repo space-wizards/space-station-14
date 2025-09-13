@@ -1,0 +1,20 @@
+<tabs:CustomCommandBindingControl xmlns="https://spacestation14.io"
+                                  xmlns:tabs="clr-namespace:Content.Client.Options.UI.Tabs"
+                                  Orientation="Horizontal">
+    <OptionButton Name="OptionsDropDown"
+                  MinSize="150,0"
+                  Margin="10,0,0,0" />
+    <LineEdit PlaceHolder="{Loc 'ui-options-custom-command-binding-command-placeholder'}"
+              Name="CommandTextEdit"
+              StyleClasses="chatLineEdit"
+              MinSize="200,10"
+              HorizontalExpand="True"
+              Margin="10,0,0,0"/>
+    <tabs:BindButton Name="BindButton"
+                     HorizontalAlignment="Right"
+                     Margin="10,0,0,0" />
+    <Button Name="ResetButton"
+            Text="{Loc 'ui-options-add-custom-command-binding-remove-button'}"
+            StyleClasses="Caution"
+            Margin="10,0,0,0" />
+</tabs:CustomCommandBindingControl>
