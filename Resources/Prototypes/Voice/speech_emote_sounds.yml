@@ -197,9 +197,9 @@
     DefaultDeathgasp:
       collection: FemaleDeathGasp
     # Starlight-Start
-    Hiss:
+    Liss:
       collection: ReptilianHiss
-    Purr:
+    Lurr:
       path: /Audio/_Starlight/Voice/Reptilian/lizard_purr.ogg
     Rattle:
       path: /Audio/_Starlight/Voice/Reptilian/lizard_rattle.ogg
