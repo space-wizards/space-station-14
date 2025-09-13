@@ -72,7 +72,6 @@
 - type: entity
   parent: BaseMobHuman
   suffix: Dead
-  save: false # mobs are currently not saveable.
   id: SalvageHumanCorpse
   name: unidentified corpse
   description: I think they're dead.
