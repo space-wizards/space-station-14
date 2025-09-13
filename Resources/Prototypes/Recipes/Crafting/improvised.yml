@@ -173,3 +173,11 @@
   targetNode: scraphelmet
   category: construction-category-clothing
   objectType: Item
+
+- type: construction
+  id: ClothingBagPet
+  graph: ClothingBagPet
+  startNode: start
+  targetNode: bagPet
+  category: construction-category-clothing
+  objectType: Item
