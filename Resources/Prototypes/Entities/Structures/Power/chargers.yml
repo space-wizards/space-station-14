@@ -5,9 +5,6 @@
   placement:
     mode: SnapgridCenter
   components:
-  - type: Transform
-    anchored: true
-    noRot: false
   - type: Sprite
     snapCardinals: true
   - type: Appearance
