@@ -680,6 +680,7 @@
   color: "#0064C8"
   metabolisms:
     Drink:
+      metabolismRate: 3
       effects:
         - !type:SatiateThirst
           factor: 6
