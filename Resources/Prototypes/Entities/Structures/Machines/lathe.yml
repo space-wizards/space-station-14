@@ -132,6 +132,7 @@
     - ServiceStatic
     - PowerCellsStatic
     - ElectronicsStatic
+    - HydroponicsStatic
   - type: EmagLatheRecipes
     emagStaticPacks:
     - SecurityAmmoStatic
