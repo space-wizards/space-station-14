@@ -15,3 +15,6 @@ public sealed class UpdateCanMoveEvent : CancellableEntityEventArgs
 
     public EntityUid Uid { get; }
 }
+
+[ByRefEvent]
+public readonly record struct CanMoveUpdatedEvent(bool CanMove);
