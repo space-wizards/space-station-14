@@ -1,0 +1,83 @@
+﻿- type: decal
+  id: BrickTileWhiteHalfCornerNe
+  tags: ["station", "markings"]
+  sprite:
+    sprite: _Ronstation/Decals/brickhalftile.rsi
+    state: white_half_corner_ne
+
+- type: decal
+  id: BrickTileWhiteHalfCornerSe
+  tags: ["station", "markings"]
+  sprite:
+    sprite: _Ronstation/Decals/brickhalftile.rsi
+    state: white_half_corner_se
+
+- type: decal
+  id: BrickTileWhiteHalfCornerNw
+  tags: ["station", "markings"]
+  sprite:
+    sprite: _Ronstation/Decals/brickhalftile.rsi
+    state: white_half_corner_nw
+
+- type: decal
+  id: BrickTileWhiteHalfCornerSw
+  tags: ["station", "markings"]
+  sprite:
+    sprite: _Ronstation/Decals/brickhalftile.rsi
+    state: white_half_corner_sw
+
+- type: decal
+  id: BrickTileWhiteHalfInnerNe
+  tags: ["station", "markings"]
+  sprite:
+    sprite: _Ronstation/Decals/brickhalftile.rsi
+    state: white_half_inner_ne
+
+- type: decal
+  id: BrickTileWhiteHalfInnerSe
+  tags: ["station", "markings"]
+  sprite:
+    sprite: _Ronstation/Decals/brickhalftile.rsi
+    state: white_half_inner_se
+
+- type: decal
+  id: BrickTileWhiteHalfInnerNw
+  tags: ["station", "markings"]
+  sprite:
+    sprite: _Ronstation/Decals/brickhalftile.rsi
+    state: white_half_inner_nw
+
+- type: decal
+  id: BrickTileWhiteHalfInnerSw
+  tags: ["station", "markings"]
+  sprite:
+    sprite: _Ronstation/Decals/brickhalftile.rsi
+    state: white_half_inner_sw
+
+- type: decal
+  id: BrickTileWhiteHalfN
+  tags: ["station", "markings"]
+  sprite:
+    sprite: _Ronstation/Decals/brickhalftile.rsi
+    state: white_half_n
+
+- type: decal
+  id: BrickTileWhiteHalfS
+  tags: ["station", "markings"]
+  sprite:
+    sprite: _Ronstation/Decals/brickhalftile.rsi
+    state: white_half_s
+
+- type: decal
+  id: BrickTileWhiteHalfE
+  tags: ["station", "markings"]
+  sprite:
+    sprite: _Ronstation/Decals/brickhalftile.rsi
+    state: white_half_e
+
+- type: decal
+  id: BrickTileWhiteHalfW
+  tags: ["station", "markings"]
+  sprite:
+    sprite: _Ronstation/Decals/brickhalftile.rsi
+    state: white_half_w    
