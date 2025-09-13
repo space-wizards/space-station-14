@@ -38,6 +38,7 @@
     interfaces:
       enum.StorageUiKey.Key:
         type: StorageBoundUserInterface
+  - type: SwitchableEquipMode
 
 - type: entity
   abstract: true
