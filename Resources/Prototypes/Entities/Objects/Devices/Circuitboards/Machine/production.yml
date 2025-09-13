@@ -1352,6 +1352,18 @@
 
 - type: entity
   parent: BaseMachineCircuitboard
+  id: MassDriverCircuitboard
+  name: mass driver board
+  components:
+  - type: MachineBoard
+    prototype: MassDriver
+    stackRequirements:
+      Steel: 5
+      Manipulator: 2
+      Cable: 4
+
+- type: entity
+  parent: BaseMachineCircuitboard
   id: SmartFridgeCircuitboard
   name: SmartFridge machine board
   description: A machine printed circuit board for a SmartFridge.
