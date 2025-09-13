@@ -1,0 +1,9 @@
+npc-window-title = NPC debug
+npc-window-section-npc = NPC
+npc-window-thonk = Thonk
+npc-window-section-pathfinder = Pathfinder
+npc-window-path-breadcrumbs = Breadcrumbs
+npc-window-path-polygons = Polygons
+npc-window-path-neighbors = Neighbors
+npc-window-path-route-costs = Route costs
+npc-window-path-routes = Routes
