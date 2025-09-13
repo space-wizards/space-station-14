@@ -240,6 +240,7 @@
     transferName: false
     inventory: None
     forced: false
+    revertConfirmationPopup: false
     revertOnDeath: true
     allowRepeatedMorphs: false
     polymorphSound: /Audio/Magic/ethereal_enter.ogg
