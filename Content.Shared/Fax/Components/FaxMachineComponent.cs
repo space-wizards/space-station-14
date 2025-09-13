@@ -159,13 +159,13 @@ public sealed partial class FaxPrintout
     public List<StampDisplayInfo> StampedBy { get; private set; } = new();
 
     [DataField]
-    public bool Locked { get; private set; }
+    public PaperLockStatus LockStatus { get; private set; }
 
     private FaxPrintout()
     {
     }
 
-    public FaxPrintout(string content, string name, string? label = null, string? prototypeId = null, string? stampState = null, List<StampDisplayInfo>? stampedBy = null, bool locked = false)
+    public FaxPrintout(string content, string name, string? label = null, string? prototypeId = null, string? stampState = null, List<StampDisplayInfo>? stampedBy = null, PaperLockStatus lockState = PaperLockStatus.Editable)
     {
         Content = content;
         Name = name;
@@ -173,6 +173,6 @@ public sealed partial class FaxPrintout
         PrototypeId = prototypeId ?? "";
         StampState = stampState;
         StampedBy = stampedBy ?? new List<StampDisplayInfo>();
-        Locked = locked;
+        LockStatus = lockState;
     }
 }

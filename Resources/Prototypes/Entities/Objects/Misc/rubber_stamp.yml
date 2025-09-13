@@ -19,6 +19,8 @@
     state: stamp-mime
   - type: Item
     size: Tiny
+  - type: UseDelay
+    delay: 2
   - type: StealTarget
     stealGroup: Stamp
 
