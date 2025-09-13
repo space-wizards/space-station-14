@@ -1,7 +1,6 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Numerics;
-using Content.Shared.Body.Components;
 using Content.Shared.Destructible;
 using Content.Shared.Foldable;
 using Content.Shared.Hands.Components;
@@ -19,7 +18,6 @@ using Content.Shared.ActionBlocker;
 using Content.Shared.Mobs.Components;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Containers;
-using Robust.Shared.GameStates;
 using Robust.Shared.Map;
 using Robust.Shared.Network;
 using Robust.Shared.Physics;
@@ -51,28 +49,6 @@ public abstract class SharedEntityStorageSystem : EntitySystem
     protected void OnEntityUnpausedEvent(EntityUid uid, EntityStorageComponent component, EntityUnpausedEvent args)
     {
         component.NextInternalOpenAttempt += args.PausedTime;
-    }
-
-    protected void OnGetState(EntityUid uid, EntityStorageComponent component, ref ComponentGetState args)
-    {
-        args.State = new EntityStorageComponentState(component.Open,
-            component.Capacity,
-            component.IsCollidableWhenOpen,
-            component.OpenOnMove,
-            component.EnteringRange,
-            component.NextInternalOpenAttempt);
-    }
-
-    protected void OnHandleState(EntityUid uid, EntityStorageComponent component, ref ComponentHandleState args)
-    {
-        if (args.Current is not EntityStorageComponentState state)
-            return;
-        component.Open = state.Open;
-        component.Capacity = state.Capacity;
-        component.IsCollidableWhenOpen = state.IsCollidableWhenOpen;
-        component.OpenOnMove = state.OpenOnMove;
-        component.EnteringRange = state.EnteringRange;
-        component.NextInternalOpenAttempt = state.NextInternalOpenAttempt;
     }
 
     protected virtual void OnComponentInit(EntityUid uid, EntityStorageComponent component, ComponentInit args)
@@ -112,7 +88,7 @@ public abstract class SharedEntityStorageSystem : EntitySystem
     protected void OnDestruction(EntityUid uid, EntityStorageComponent component, DestructionEventArgs args)
     {
         component.Open = true;
-        Dirty(uid, component);
+        DirtyField(uid, component, nameof(component.Open));
         if (!component.DeleteContentsOnDestruction)
         {
             EmptyContents(uid, component);
@@ -137,7 +113,7 @@ public abstract class SharedEntityStorageSystem : EntitySystem
             return;
 
         component.NextInternalOpenAttempt = _timing.CurTime + EntityStorageComponent.InternalOpenAttemptDelay;
-        Dirty(uid, component);
+        DirtyField(uid, component, nameof(component.NextInternalOpenAttempt));
 
         if (component.OpenOnMove)
             TryOpenStorage(args.Entity, uid);
@@ -214,7 +190,7 @@ public abstract class SharedEntityStorageSystem : EntitySystem
         var beforeev = new StorageBeforeOpenEvent();
         RaiseLocalEvent(uid, ref beforeev);
         component.Open = true;
-        Dirty(uid, component);
+        DirtyField(uid, component, nameof(component.Open));
         EmptyContents(uid, component);
         ModifyComponents(uid, component);
         if (_net.IsClient && _timing.IsFirstTimePredicted)
@@ -240,7 +216,7 @@ public abstract class SharedEntityStorageSystem : EntitySystem
             return;
 
         component.Open = false;
-        Dirty(uid, component);
+        DirtyField(uid, component, nameof(component.Open));
 
         var entities = _lookup.GetEntitiesInRange(
             new EntityCoordinates(uid, component.EnteringOffset),

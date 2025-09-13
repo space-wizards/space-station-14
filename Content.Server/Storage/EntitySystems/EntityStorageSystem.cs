@@ -3,7 +3,6 @@ using Content.Server.Atmos.EntitySystems;
 using Content.Server.Body.Systems;
 using Content.Server.Construction;
 using Content.Server.Construction.Components;
-using Content.Server.Storage.Components;
 using Content.Shared.Destructible;
 using Content.Shared.Explosion;
 using Content.Shared.Foldable;
@@ -16,7 +15,6 @@ using Content.Shared.Tools.Systems;
 using Content.Shared.Verbs;
 using Robust.Server.GameObjects;
 using Robust.Shared.Containers;
-using Robust.Shared.GameStates;
 using Robust.Shared.Map;
 
 namespace Content.Server.Storage.EntitySystems;
@@ -42,9 +40,6 @@ public sealed class EntityStorageSystem : SharedEntityStorageSystem
         SubscribeLocalEvent<EntityStorageComponent, GetVerbsEvent<InteractionVerb>>(AddToggleOpenVerb);
         SubscribeLocalEvent<EntityStorageComponent, ContainerRelayMovementEntityEvent>(OnRelayMovement);
         SubscribeLocalEvent<EntityStorageComponent, FoldAttemptEvent>(OnFoldAttempt);
-
-        SubscribeLocalEvent<EntityStorageComponent, ComponentGetState>(OnGetState);
-        SubscribeLocalEvent<EntityStorageComponent, ComponentHandleState>(OnHandleState);
         /* CompRef things */
 
         SubscribeLocalEvent<EntityStorageComponent, MapInitEvent>(OnMapInit);

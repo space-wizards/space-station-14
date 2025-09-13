@@ -5,16 +5,18 @@ using Content.Shared.Whitelist;
 using Robust.Shared.Audio;
 using Robust.Shared.Containers;
 using Robust.Shared.GameStates;
-using Robust.Shared.Serialization;
 
 namespace Content.Shared.Storage.Components;
 
 [RegisterComponent, NetworkedComponent]
+[AutoGenerateComponentState(fieldDeltas: true)]
 public sealed partial class EntityStorageComponent : Component, IGasMixtureHolder
 {
     public readonly float MaxSize = 1.0f; // maximum width or height of an entity allowed inside the storage.
 
     public static readonly TimeSpan InternalOpenAttemptDelay = TimeSpan.FromSeconds(0.5);
+
+    [AutoNetworkedField]
     public TimeSpan NextInternalOpenAttempt;
 
     /// <summary>
@@ -34,13 +36,13 @@ public sealed partial class EntityStorageComponent : Component, IGasMixtureHolde
     /// <summary>
     /// The total amount of items that can fit in one entitystorage
     /// </summary>
-    [DataField]
+    [DataField, AutoNetworkedField]
     public int Capacity = 30;
 
     /// <summary>
     /// Whether or not the entity still has collision when open
     /// </summary>
-    [DataField]
+    [DataField, AutoNetworkedField]
     public bool IsCollidableWhenOpen;
 
     /// <summary>
@@ -48,7 +50,7 @@ public sealed partial class EntityStorageComponent : Component, IGasMixtureHolde
     /// If false, it prevents the storage from opening when the entity inside of it moves.
     /// This is for objects that you want the player to move while inside, like large cardboard boxes, without opening the storage.
     /// </summary>
-    [DataField]
+    [DataField, AutoNetworkedField]
     public bool OpenOnMove = true;
 
     //The offset for where items are emptied/vacuumed for the EntityStorage.
@@ -62,7 +64,7 @@ public sealed partial class EntityStorageComponent : Component, IGasMixtureHolde
     /// <summary>
     /// How close you have to be to the "entering" spot to be able to enter
     /// </summary>
-    [DataField]
+    [DataField, AutoNetworkedField]
     public float EnteringRange = 0.18f;
 
     /// <summary>
@@ -92,7 +94,7 @@ public sealed partial class EntityStorageComponent : Component, IGasMixtureHolde
     /// <summary>
     /// Whether or not the entitystorage is open or closed
     /// </summary>
-    [DataField]
+    [DataField, AutoNetworkedField]
     public bool Open;
 
     /// <summary>
@@ -126,32 +128,6 @@ public sealed partial class EntityStorageComponent : Component, IGasMixtureHolde
     /// </summary>
     [DataField]
     public GasMixture Air { get; set; } = new(200);
-}
-
-[Serializable, NetSerializable]
-public sealed class EntityStorageComponentState : ComponentState
-{
-    public bool Open;
-
-    public int Capacity;
-
-    public bool IsCollidableWhenOpen;
-
-    public bool OpenOnMove;
-
-    public float EnteringRange;
-
-    public TimeSpan NextInternalOpenAttempt;
-
-    public EntityStorageComponentState(bool open, int capacity, bool isCollidableWhenOpen, bool openOnMove, float enteringRange, TimeSpan nextInternalOpenAttempt)
-    {
-        Open = open;
-        Capacity = capacity;
-        IsCollidableWhenOpen = isCollidableWhenOpen;
-        OpenOnMove = openOnMove;
-        EnteringRange = enteringRange;
-        NextInternalOpenAttempt = nextInternalOpenAttempt;
-    }
 }
 
 /// <summary>
