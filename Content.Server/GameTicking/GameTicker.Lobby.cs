@@ -153,10 +153,11 @@ namespace Content.Server.GameTicking
             var status = ready ? PlayerGameStatus.ReadyToPlay : PlayerGameStatus.NotReadyToPlay;
             foreach (var playerUserId in _playerGameStatuses.Keys)
             {
-                _playerGameStatuses[playerUserId] = status;
-                if (!_playerManager.TryGetSessionById(playerUserId, out var playerSession))
+                if (!_playerManager.TryGetSessionById(playerUserId, out var playerSession) || _playerGameStatuses[playerUserId] == status)
                     continue;
+                _playerGameStatuses[playerUserId] = status;
                 RaiseNetworkEvent(GetStatusMsg(playerSession), playerSession.Channel);
+                RaiseLocalEvent(new PlayerToggleReadyEvent(playerSession));
             }
         }
 
@@ -174,8 +175,15 @@ namespace Content.Server.GameTicking
             }
 
             var status = ready ? PlayerGameStatus.ReadyToPlay : PlayerGameStatus.NotReadyToPlay;
+            // No need to update anything or raise events if the player is already (un)readied
+            if (_playerGameStatuses[player.UserId] == status)
+            {
+                return;
+            }
+
             _playerGameStatuses[player.UserId] = ready ? PlayerGameStatus.ReadyToPlay : PlayerGameStatus.NotReadyToPlay;
             RaiseNetworkEvent(GetStatusMsg(player), player.Channel);
+            RaiseLocalEvent(new PlayerToggleReadyEvent(player));
             // update server info to reflect new ready count
             UpdateInfoText();
         }
@@ -185,5 +193,15 @@ namespace Content.Server.GameTicking
 
         public bool UserHasJoinedGame(NetUserId userId)
             => PlayerGameStatuses.TryGetValue(userId, out var status) && status == PlayerGameStatus.JoinedGame;
+    }
+
+    public sealed class PlayerToggleReadyEvent : EntityEventArgs
+    {
+        public readonly ICommonSession PlayerSession;
+
+        public PlayerToggleReadyEvent(ICommonSession playerSession)
+        {
+            PlayerSession = playerSession;
+        }
     }
 }
