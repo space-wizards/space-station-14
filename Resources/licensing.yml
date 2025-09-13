@@ -1,0 +1,100 @@
+# Licensing configuration file
+
+# Used by `Tools/rga_check.py` for making sure that all assets have attribution, valid licenses,
+# that custom licenses have their files properly recorded, and various other asset compliance checks
+
+
+# Flag that designates the project as non-commercial and stops the script from screaming about license violation
+# Make sure to flip this off if you're unsure about commerciality of your project
+# This is purely for own checking of assets in your project
+projectIsNonCommercial: true
+
+
+# Checks to ignore for running the script without other parameters
+# Useful if you want to ensure linting in CI, but can't turn on full compliance checking yet
+# See ValidationFailure enum for values
+checksIgnored:
+- SOURCE_UNKNOWN
+- UNATTRIBUTED
+- FILE_ATTRIBUTIONS_MISSING
+- LICENSE_CUSTOM_UNCLARIFIED
+
+
+# HTTP/HTTPS doesn't matter here
+# Use "url" or "urls" keys to add a single or multiple sources. Don't combine all similar sources together though
+# "reason" field - describes why the source should be accepted or rejected
+# Keep this list in order from least to most specific, as acceptance/rejection can be overridden by more specific source later
+sources:
+- url: https://github.com/space-wizards/space-station-14
+  reason: "Used as a catch-all for contributions"
+  licenses: [ "*" ]
+- url: https://freesound.org/
+  reason: "Well-known site that actively takes down license violating assets"
+  licenses: [ "*" ]
+- urls: [ https://youtube.com, https://youtu.be ]
+  reason: "Generally invalid as a source due to many channels uploading assets without license attached"
+  reject: true
+- url: https://github.com/goonstation/goonstation
+  reason: "Long running codebase, previously closed source, assumed to validate assets thoroughly"
+  licenses: [ CC-BY-NC-SA-3.0 ]
+
+mimetypesAsset:
+  - image/png
+  - image/webp
+  - image/svg+xml
+  - image/vnd.microsoft.icon
+  - audio/ogg
+  - audio/x-sf2 # Made up again
+  # These have actual license files lying nearby, and RGA should point at it
+  - font/otf
+  - font/ttf
+
+mimetypesIgnore:
+  - application/json
+  - application/toml
+  - text/xml
+  - text/markdown
+  - text/plain
+  # just making shit up here
+  - application/vnd.space-wizards.shader
+  - application/vnd.mozilla.fluent
+
+# YAML file is not orphaned if the first path fragment matches something in this array
+yamlPaths:
+  # Dirs
+  - "Changelog"
+  - "Credits"
+  - "IgnoredPrototypes"
+  - "Maps"
+  - "Prototypes"
+  # Files
+  - "clientCommandPerms.yml"
+  - "engineCommandPerms.yml"
+  - "keybinds.yml"
+  - "licensing.yml"
+  - "manifest.yml"
+  - "mapping_actions.yml"
+  - "migration.yml"
+  - "toolshedEngineCommandPerms.yml"
+
+mimetypes:
+  - type: application/yaml
+    extensions: [ .yaml, .yml ]
+    iana: true # Is it on https://www.iana.org/assignments/media-types/media-types.xhtml
+  - type: application/toml
+    extensions: [ .toml ]
+    iana: true
+  - type: application/vnd.mozilla.fluent
+    extensions: [ .ftl ]
+  - type: application/vnd.space-wizards.shader
+    extensions: [ .swsl ]
+  - type: audio/x-sf2
+    extensions: [ .sf2 ]
+
+# If you want to make sure certain licenses are treated as invalid even though the project is non-commercial
+# licensesReject:
+# - "WTFPL" # Not actually allowed by the rga_validator check, but here as an example
+# - "CC-BY-NC-3.0"
+# - "CC-BY-NC-4.0"
+# - "CC-BY-NC-SA-3.0"
+# - "CC-BY-NC-SA-4.0"
