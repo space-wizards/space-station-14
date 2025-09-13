@@ -10,11 +10,31 @@ public sealed class ActivatableUIOpenAttemptEvent : CancellableEntityEventArgs
     }
 }
 
+public sealed class ActivatableUIAddVerbAttemptEvent : CancellableEntityEventArgs
+{
+    public EntityUid User { get; }
+    public ActivatableUIAddVerbAttemptEvent(EntityUid who)
+    {
+        User = who;
+    }
+}
+
 public sealed class UserOpenActivatableUIAttemptEvent : CancellableEntityEventArgs //have to one-up the already stroke-inducing name
 {
     public EntityUid User { get; }
     public EntityUid Target { get; }
     public UserOpenActivatableUIAttemptEvent(EntityUid who, EntityUid target)
+    {
+        User = who;
+        Target = target;
+    }
+}
+
+public sealed class UserAddVerbActivatableUIAttemptEvent : CancellableEntityEventArgs
+{
+    public EntityUid User { get; }
+    public EntityUid Target { get; }
+    public UserAddVerbActivatableUIAttemptEvent(EntityUid who, EntityUid target)
     {
         User = who;
         Target = target;
