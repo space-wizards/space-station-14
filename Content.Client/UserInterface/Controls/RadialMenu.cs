@@ -524,8 +524,6 @@ public class RadialMenuButtonWithSector : RadialMenuButton, IRadialMenuItemWithS
     /// <inheritdoc />
     protected override void Draw(DrawingHandleScreen handle)
     {
-        base.Draw(handle);
-
         if (_parentCenter == null)
         {
             return;
@@ -557,6 +555,9 @@ public class RadialMenuButtonWithSector : RadialMenuButton, IRadialMenuItemWithS
         {
             DrawSeparatorLines(handle, containerCenter, _innerRadius * UIScale, _outerRadius * UIScale, angleFrom, angleTo, SeparatorColor);
         }
+
+        // Draw the sprite of this TextureButton after the background.
+        base.Draw(handle);
     }
 
     /// <inheritdoc />
