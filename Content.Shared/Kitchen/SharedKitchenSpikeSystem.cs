@@ -79,7 +79,7 @@ public sealed class SharedKitchenSpikeSystem : EntitySystem
         SubscribeLocalEvent<KitchenSpikeHookedComponent, IsUnequippingAttemptEvent>(OnAttempt);
 
         // Container Jank
-        SubscribeLocalEvent<KitchenSpikeHookedComponent, AccessibleOverrideEvent>(OnAccessibleOverride);
+        SubscribeLocalEvent<KitchenSpikeHookedComponent, TargetAccessibleOverrideEvent>(OnAccessibleOverride);
     }
 
     private void OnInit(Entity<KitchenSpikeComponent> ent, ref ComponentInit args)
@@ -386,7 +386,7 @@ public sealed class SharedKitchenSpikeSystem : EntitySystem
         args.Cancel();
     }
 
-    private void OnAccessibleOverride(Entity<KitchenSpikeHookedComponent> ent, ref AccessibleOverrideEvent args)
+    private void OnAccessibleOverride(Entity<KitchenSpikeHookedComponent> ent, ref TargetAccessibleOverrideEvent args)
     {
         var xform = Transform(ent);
         if (args.Handled || !_interaction.CanAccess(args.User, xform.ParentUid))

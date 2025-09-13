@@ -148,17 +148,9 @@ public abstract partial class SharedStationAiSystem : EntitySystem
         args.Handled = true;
 
         // Hopefully AI never needs storage
-        if (_containers.TryGetContainingContainer(args.Target, out var targetContainer))
-        {
-            return;
-        }
-
-        if (!_containers.IsInSameOrTransparentContainer(args.User, args.Target, otherContainer: targetContainer))
-        {
-            return;
-        }
-
-        args.Accessible = true;
+        if (_containers.TryGetContainingContainer(args.Target, out var targetContainer) ||
+            !_containers.IsInSameOrTransparentContainer(ent.Owner, args.Target, otherContainer: targetContainer))
+            args.Accessible = false;
     }
 
     private void OnAiMenu(Entity<StationAiOverlayComponent> ent, ref MenuVisibilityEvent args)

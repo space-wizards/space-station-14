@@ -1300,17 +1300,15 @@ namespace Content.Shared.Interaction
         /// </summary>
         public bool IsAccessible(Entity<TransformComponent?> user, Entity<TransformComponent?> target)
         {
-            var ev = new AccessibleOverrideEvent(user, target);
+            var userEv = new AccessibleOverrideEvent(target);
+            var targetEv = new TargetAccessibleOverrideEvent(target);
 
-            RaiseLocalEvent(user, ref ev);
+            RaiseLocalEvent(user, ref userEv);
+            RaiseLocalEvent(target, ref targetEv);
 
-            if (ev.Handled)
-                return ev.Accessible;
-
-            RaiseLocalEvent(target, ref ev);
-
-            if (ev.Handled)
-                return ev.Accessible;
+            // If either has handled it and neither has said we can't access it then we can access it.
+            if (userEv.Handled || targetEv.Handled)
+                return userEv.Accessible && targetEv.Accessible;
 
             return CanAccess(user, target);
         }
@@ -1521,16 +1519,29 @@ namespace Content.Shared.Interaction
     /// <summary>
     /// Override event raised directed on the user to say the target is accessible.
     /// </summary>
-    /// <param name="User"></param>
-    /// <param name="Target"></param>
+    /// <param name="Target">Entity we're targeting</param>
     [ByRefEvent]
-    public record struct AccessibleOverrideEvent(EntityUid User, EntityUid Target)
+    public record struct AccessibleOverrideEvent(EntityUid Target)
     {
-        public readonly EntityUid User = User;
         public readonly EntityUid Target = Target;
 
+        // We set it to true by default for easier validation later.
         public bool Handled;
-        public bool Accessible = false;
+        public bool Accessible = true;
+    }
+
+    /// <summary>
+    /// Override event raised directed on the target to say the user can access.
+    /// </summary>
+    /// <param name="User">Entity targeting us</param>
+    [ByRefEvent]
+    public record struct TargetAccessibleOverrideEvent(EntityUid User)
+    {
+        public readonly EntityUid User = User;
+
+        // We set it to true by default for easier validation later.
+        public bool Handled;
+        public bool Accessible = true;
     }
 
     /// <summary>
