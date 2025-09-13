@@ -305,19 +305,16 @@ namespace Content.Shared.Movement.Systems
                 return;
 
             // TODO: Should move this into HandleMobMovement itself.
-            if (TryComp<RelayInputMoverComponent>(entity, out var relayMover))
+            if (moverComp.CanMove && TryComp<RelayInputMoverComponent>(entity, out var relayMover))
             {
                 DebugTools.Assert(relayMover.RelayEntity != entity);
                 DebugTools.AssertNotNull(relayMover.RelayEntity);
 
-                if (moverComp.CanMove)
-                {
-                    if (MoverQuery.TryGetComponent(entity, out var mover))
-                        SetMoveInput((entity, mover), MoveButtons.None);
+                if (MoverQuery.TryGetComponent(entity, out var mover))
+                    SetMoveInput((entity, mover), MoveButtons.None);
 
-                    HandleDirChange(relayMover.RelayEntity, dir, subTick, state);
-                    return;
-                }
+                HandleDirChange(relayMover.RelayEntity, dir, subTick, state);
+                return;
             }
 
             // For stuff like "Moving out of locker" or the likes

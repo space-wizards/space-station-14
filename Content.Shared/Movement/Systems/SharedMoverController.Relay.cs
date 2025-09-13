@@ -26,7 +26,11 @@ public abstract partial class SharedMoverController
 
     private void OnRelayCanMoveUpdated(Entity<RelayInputMoverComponent> ent, ref CanMoveUpdatedEvent args)
     {
-        Log.Debug("Updated CanMove!");
+        if (args.CanMove)
+            return;
+
+        if (MoverQuery.TryComp(ent.Comp.RelayEntity, out var inputMoverComponent))
+            SetMoveInput((ent.Comp.RelayEntity, inputMoverComponent), MoveButtons.None);
     }
 
     /// <summary>
