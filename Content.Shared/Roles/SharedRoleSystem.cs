@@ -400,7 +400,7 @@ public abstract class SharedRoleSystem : EntitySystem
 
         foreach (var role in delete)
         {
-            PredictedQueueDel(role);
+            PredictedDel(role);
         }
 
         var update = MindRolesUpdate(mind);
