@@ -77,9 +77,7 @@
         gasMixture:
           volume: 1000
           moles:
-            - 0 # oxygen
-            - 0 # nitrogen
-            - 340.5701689 # carbon dioxide
+            CarbonDioxide: 340.5701689 # carbon dioxide
           temperature: 373.15
   - type: Repairable
     doAfterDelay: 30 # you can heal the mothership core, but it takes a while
@@ -218,7 +216,7 @@
   components:
   - type: Action
     icon: { sprite: Interface/Actions/actions_borg.rsi, state: xenoborg-basic-module }
-    iconOn: Interface/Actions/actions_borg.rsi/xenoborg-basic-module.png
+    iconOn: { sprite: Interface/Actions/actions_borg.rsi, state: xenoborg-basic-module }
     keywords: [ "Mothership Core", "console", "interface" ]
     priority: -6
   - type: InstantAction
@@ -232,7 +230,7 @@
   components:
   - type: Action
     icon: { sprite: Interface/Actions/actions_borg.rsi, state: xenoborg-eye-module }
-    iconOn: Interface/Actions/actions_borg.rsi/xenoborg-eye-module.png
+    iconOn: { sprite: Interface/Actions/actions_borg.rsi, state: xenoborg-eye-module }
     keywords: [ "Mothership Core", "console", "interface" ]
     priority: -6
   - type: InstantAction
