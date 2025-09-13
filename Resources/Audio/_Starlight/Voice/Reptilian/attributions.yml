@@ -1,17 +1,16 @@
-
 - files: [lizard_hiss_1.ogg]
   copyright: 'adapted from schreibsel on Freesound'
-  license: CC0
+  license: CC-BY-SA-3.0
   source: https://freesound.org/people/schreibsel/sounds/540162/
 
 - files: [lizard_hiss_2.ogg]
   copyright: 'Adapted from xoiziox on Freesound'
-  license: CC0
+  license: CC-BY-SA-3.0
   source: https://freesound.org/people/xoiziox/sounds/553374/
 
 - files: [lizard_hiss_3.ogg]
   copyright: '"hiss.ogg" by Skyrat-SS13'
-  license: CC-BY-SA
+  license: CC-BY-SA-3.0
   source: https://github.com/Skyrat-SS13/Skyrat-tg/blob/595b17aaeaaf9fec87550bf1f8242fa9bb8e1d92/modular_skyrat/modules/emotes/sound/voice/hiss.ogg
 
 - files: [lizard_purr.ogg]
