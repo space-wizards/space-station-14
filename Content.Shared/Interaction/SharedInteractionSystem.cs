@@ -1307,6 +1307,16 @@ namespace Content.Shared.Interaction
             if (ev.Handled)
                 return ev.Accessible;
 
+            RaiseLocalEvent(target, ref ev);
+
+            if (ev.Handled)
+                return ev.Accessible;
+
+            return CanAccess(user, target);
+        }
+
+        public bool CanAccess(EntityUid user, EntityUid target)
+        {
             if (_containerSystem.IsInSameOrParentContainer(user, target, out _, out var container))
                 return true;
 
