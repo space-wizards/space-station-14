@@ -350,12 +350,12 @@ namespace Content.Server.NodeContainer.EntitySystems
         private IEnumerable<Node> GetCompatibleNodes(Node node, EntityQuery<TransformComponent> xformQuery, EntityQuery<NodeContainerComponent> nodeQuery)
         {
             var xform = xformQuery.GetComponent(node.Owner);
-            TryComp<MapGridComponent>(xform.GridUid, out var grid);
+            Entity<MapGridComponent>? gridEnt = TryComp<MapGridComponent>(xform.GridUid, out var grid) ? (xform.GridUid.Value, grid) : null;
 
             if (!node.Connectable(EntityManager, xform))
                 yield break;
 
-            foreach (var reachable in node.GetReachableNodes(xform, nodeQuery, xformQuery, grid, EntityManager))
+            foreach (var reachable in node.GetReachableNodes((node.Owner, xform), nodeQuery, xformQuery, gridEnt, EntityManager))
             {
                 DebugTools.Assert(reachable != node, "GetReachableNodes() should not include self.");
 
