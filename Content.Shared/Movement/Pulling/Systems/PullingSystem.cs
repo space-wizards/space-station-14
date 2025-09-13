@@ -101,10 +101,7 @@ public sealed class PullingSystem : EntitySystem
         if (CanPull(ent, comp.Pulling.Value, comp))
             return;
 
-        if (!TryComp<PullableComponent>(comp.Pulling, out var pullableComp))
-            return;
-
-        TryStopPull(comp.Pulling.Value, pullableComp);
+        TryStopPull(comp.Pulling);
     }
 
     private void HandlePullStarted(EntityUid uid, HandsComponent component, PullStartedMessage args)
