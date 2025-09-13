@@ -12,6 +12,9 @@ using Content.Shared.Store.Components;
 using Content.Shared.Instruments;
 using Robust.Shared.Random;
 using Robust.Shared.Prototypes;
+using Robust.Server.GameObjects;
+using Content.Shared.Overlays;
+using Content.Shared.Contraband;
 using System.Text;
 
 namespace Content.Server.PAI;
@@ -24,6 +27,7 @@ public sealed class PAISystem : SharedPAISystem
     [Dependency] private readonly SharedPopupSystem _popup = default!;
     [Dependency] private readonly StoreSystem _store = default!;
     [Dependency] private readonly ToggleableGhostRoleSystem _toggleableGhostRole = default!;
+    [Dependency] private readonly UserInterfaceSystem _ui = default!;
 
     /// <summary>
     /// Possible symbols that can be part of a scrambled pai's name.
@@ -39,7 +43,23 @@ public sealed class PAISystem : SharedPAISystem
         SubscribeLocalEvent<PAIComponent, MindRemovedMessage>(OnMindRemoved);
         SubscribeLocalEvent<PAIComponent, BeingMicrowavedEvent>(OnMicrowaved);
 
+        SubscribeLocalEvent<PAIComponent, PAIHealthBarEvent>(OnHealthBar);
+        SubscribeLocalEvent<PAIComponent, PAISecurityBarEvent>(OnSecurityBar);
+
         SubscribeLocalEvent<PAIComponent, PAIShopActionEvent>(OnShop);
+    }
+
+    private void OnHealthBar(Entity<PAIComponent> ent, ref PAIHealthBarEvent _)
+    {
+        EnsureComp<ShowHealthBarsComponent>(ent);
+    }
+
+    private void OnSecurityBar(Entity<PAIComponent> ent, ref PAISecurityBarEvent _)
+    {
+        EnsureComp<ShowCriminalRecordIconsComponent>(ent);
+        EnsureComp<ShowContrabandDetailsComponent>(ent);
+        EnsureComp<ShowJobIconsComponent>(ent);
+        EnsureComp<ShowMindShieldIconsComponent>(ent);
     }
 
     private void OnUseInHand(EntityUid uid, PAIComponent component, UseInHandEvent args)
@@ -58,18 +78,13 @@ public sealed class PAISystem : SharedPAISystem
         // Ownership tag
         var val = Loc.GetString("pai-system-pai-name", ("owner", component.LastUser));
 
-        // TODO Identity? People shouldn't dox-themselves by carrying around a PAI.
-        // But having the pda's name permanently be "old lady's PAI" is weird.
-        // Changing the PAI's identity in a way that ties it to the owner's identity also seems weird.
-        // Cause then you could remotely figure out information about the owner's equipped items.
-
         _metaData.SetEntityName(uid, val);
     }
 
     private void OnMindRemoved(EntityUid uid, PAIComponent component, MindRemovedMessage args)
     {
         // Mind was removed, shutdown the PAI.
-        PAITurningOff(uid);
+        PAITurningOff(uid, component);
     }
 
     private void OnMicrowaved(EntityUid uid, PAIComponent comp, BeingMicrowavedEvent args)
@@ -115,8 +130,11 @@ public sealed class PAISystem : SharedPAISystem
         _store.ToggleUi(args.Performer, ent, store);
     }
 
-    public void PAITurningOff(EntityUid uid)
+    public void PAITurningOff(EntityUid uid, PAIComponent? component = null)
     {
+        if (!Resolve(uid, ref component, false))
+            return;
+
         //  Close the instrument interface if it was open
         //  before closing
         if (HasComp<ActiveInstrumentComponent>(uid))

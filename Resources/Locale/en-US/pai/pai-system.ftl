@@ -23,3 +23,10 @@ pai-system-pai-name-raw = {$name}'s pAI
 
 pai-system-brick-popup = The pAI's circuits loudly pop and fizzle out!
 pai-system-scramble-popup = The pAI's circuits are overloaded with electricity!
+
+pai-customization-ui-menu = Customization Display
+pai-emotion-ui-set-label = Emotion:
+pai-glasses-ui-set-label = Glasses:
+pai-customization-name-label = Name
+pai-customization-name-placeholder = Enter name...
+pai-customization-reset-name = Reset name
