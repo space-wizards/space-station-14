@@ -17,23 +17,24 @@ using Robust.Shared.Utility;
 
 namespace Content.Shared.Tools.Systems;
 
-public abstract partial class SharedToolSystem : EntitySystem
+public sealed partial class SharedToolSystem : EntitySystem
 {
     [Dependency] private   readonly IGameTiming _timing = default!;
     [Dependency] private   readonly IMapManager _mapManager = default!;
     [Dependency] private   readonly IPrototypeManager _protoMan = default!;
-    [Dependency] protected readonly ISharedAdminLogManager AdminLogger = default!;
+    [Dependency] private   readonly ISharedAdminLogManager _adminLogger = default!;
     [Dependency] private   readonly ITileDefinitionManager _tileDefManager = default!;
     [Dependency] private   readonly SharedAudioSystem _audioSystem = default!;
     [Dependency] private   readonly SharedDoAfterSystem _doAfterSystem = default!;
-    [Dependency] protected readonly SharedInteractionSystem InteractionSystem = default!;
-    [Dependency] protected readonly ItemToggleSystem ItemToggle = default!;
+    [Dependency] private   readonly SharedInteractionSystem _interactionSystem = default!;
+    [Dependency] private   readonly ItemToggleSystem ItemToggle = default!;
     [Dependency] private   readonly SharedMapSystem _maps = default!;
     [Dependency] private   readonly SharedPopupSystem _popup = default!;
-    [Dependency] protected readonly SharedSolutionContainerSystem SolutionContainerSystem = default!;
+    [Dependency] private   readonly SharedSolutionContainerSystem _solutionContainerSystem = default!;
     [Dependency] private   readonly SharedTransformSystem _transformSystem = default!;
     [Dependency] private   readonly TileSystem _tiles = default!;
     [Dependency] private   readonly TurfSystem _turfs = default!;
+    [Dependency] private   readonly SharedAppearanceSystem _appearance = default!;
 
     public const string CutQuality = "Cutting";
     public const string PulseQuality = "Pulsing";
@@ -275,7 +276,7 @@ public abstract partial class SharedToolSystem : EntitySystem
     #region DoAfterEvents
 
     [Serializable, NetSerializable]
-    protected sealed partial class ToolDoAfterEvent : DoAfterEvent
+    private sealed partial class ToolDoAfterEvent : DoAfterEvent
     {
         [DataField]
         public float Fuel;
@@ -320,7 +321,7 @@ public abstract partial class SharedToolSystem : EntitySystem
     }
 
     [Serializable, NetSerializable]
-    protected sealed partial class LatticeCuttingCompleteEvent : DoAfterEvent
+    private sealed partial class LatticeCuttingCompleteEvent : DoAfterEvent
     {
         [DataField(required:true)]
         public NetCoordinates Coordinates;
