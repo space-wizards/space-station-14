@@ -1,0 +1,13 @@
+<paper:PaperWriteWindow xmlns="https://spacestation14.io"
+                        xmlns:paper="clr-namespace:Content.Client.Paper.UI"
+                        MouseFilter="Stop" Resizable="True" MinSize="150 150"
+                        Title="{Loc 'paper-ui-write-window-title'}"
+                        SetSize="510 660">
+    <BoxContainer Orientation="Vertical">
+        <paper:InputContainer Name="InputContainer"/>
+        <BoxContainer Orientation="Horizontal">
+            <Label Name="FillStatus" StyleClasses="LabelSecondaryColor" Access="Public"/>
+            <Button Name="SaveButton" HorizontalExpand="True"/>
+        </BoxContainer>
+    </BoxContainer>
+</paper:PaperWriteWindow>
