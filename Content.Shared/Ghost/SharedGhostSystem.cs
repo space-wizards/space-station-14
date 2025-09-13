@@ -85,7 +85,6 @@ namespace Content.Shared.Ghost
             SetCanReturnToBody((component.Owner, component), value);
         }
 
-
         /// <summary>
         /// Sets whether the ghost is allowed to interact with other entities.
         /// </summary>

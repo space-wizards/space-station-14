@@ -8,6 +8,8 @@
   components:
   - type: Emag
     emagType: All
+  - type: GhostVisibility
+    visibleOnRoundEnd: true
   - type: Input
     context: "ghost"
   - type: Spectral
