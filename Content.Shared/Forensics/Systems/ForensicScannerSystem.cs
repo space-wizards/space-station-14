@@ -114,7 +114,7 @@ namespace Content.Shared.Forensics.Systems
 
         private void OnUtilityVerb(EntityUid uid, ForensicScannerComponent component, GetVerbsEvent<UtilityVerb> args)
         {
-            if (!args.CanInteract || !args.CanAccess || component.CancelToken != null)
+            if (!args.CanInteract || !args.CanAccess)
                 return;
 
             var verb = new UtilityVerb()
@@ -130,7 +130,7 @@ namespace Content.Shared.Forensics.Systems
 
         private void OnAfterInteract(EntityUid uid, ForensicScannerComponent component, AfterInteractEvent args)
         {
-            if (component.CancelToken != null || args.Target == null || !args.CanReach)
+            if (args.Target == null || !args.CanReach)
                 return;
 
             StartScan(uid, component, args.User, args.Target.Value);
