@@ -4,5 +4,9 @@
     <BoxContainer Orientation="Vertical" SeparationOverride="4" MinWidth="380">
         <Label Name="CurrentTextLabel" Text="{Loc 'hand-labeler-current-text-label'}" />
         <LineEdit Name="LabelLineEdit" />
+        <BoxContainer Orientation="Horizontal" HorizontalExpand="True" Align="Center">
+            <Button Name="ResetLabelButton" Text="{Loc 'hand-labeler-ui-reset-label-text'}"/>
+            <Button Name="ClearLabelButton" Text="{Loc 'hand-labeler-ui-clear-label-text'}"/>
+        </BoxContainer>
     </BoxContainer>
 </DefaultWindow>
