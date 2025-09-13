@@ -1,0 +1,17 @@
+{
+    "version": 1,
+    "license": "CC0-1.0",
+    "copyright": "Created by TacoLlama (github) for Starlight",
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "states": [
+        {
+            "name": "command"
+        },
+        {
+            "name": "icon-paperwork"
+        }
+    ]
+}

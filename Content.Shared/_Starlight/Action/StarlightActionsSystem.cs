@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Content.Shared.Actions.Components;
+﻿using Content.Shared.Actions.Components;
 
 namespace Content.Shared._Starlight.Action;
 public sealed class StarlightActionsSystem : EntitySystem
@@ -13,8 +8,10 @@ public sealed class StarlightActionsSystem : EntitySystem
         if (!Resolve(performer, ref comp, false))
             return [];
 
-        var actions = comp.Actions.ToArray();
+        var actions = new EntityUid[comp.Actions.Count];
+        comp.Actions.CopyTo(actions);
         comp.Actions.Clear();
+
         Dirty(performer, comp);
         return actions;
     }
@@ -23,8 +20,10 @@ public sealed class StarlightActionsSystem : EntitySystem
         if (!Resolve(performer, ref comp, false))
             return;
 
+        comp.Actions.EnsureCapacity(comp.Actions.Count + actions.Length);
         foreach (var action in actions)
             comp.Actions.Add(action);
+
         Dirty(performer, comp);
     }
 }

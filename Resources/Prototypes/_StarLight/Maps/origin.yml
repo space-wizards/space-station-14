@@ -50,7 +50,7 @@
             Detective: [ 1, 1 ]
             SecurityOfficer: [ 10, 14 ]
             SecurityCadet: [ 2, 4 ]
-            #Brigmedic: [ 1, 1 ]
+            Brigmedic: [ 1, 1 ]
             #supply
             Quartermaster: [ 1, 1 ]
             SalvageSpecialist: [ 3, 3 ]

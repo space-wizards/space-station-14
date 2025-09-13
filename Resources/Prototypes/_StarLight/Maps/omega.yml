@@ -43,7 +43,7 @@
             ResearchDirector: [ 1, 1 ]
             Scientist: [ 4, 4 ]
             ResearchAssistant: [ 2, 2 ]
-            #Roboticist: [ 1, 1 ]
+            Roboticist: [ 1, 1 ]
             #security
             HeadOfSecurity: [ 1, 1 ]
             Warden: [ 1, 1 ]
@@ -55,7 +55,7 @@
             Quartermaster: [ 1, 1 ]
             SalvageSpecialist: [ 5, 5 ]
             CargoTechnician: [ 2, 2 ]
-            #MailTech: [ 1, 2 ]
+            MailTech: [ 1, 2 ]
             MiningSpecialist: [ 2, 3 ]
             #civilian
             Assistant: [ -1, -1 ]
