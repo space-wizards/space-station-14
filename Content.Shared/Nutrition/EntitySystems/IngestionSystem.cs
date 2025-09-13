@@ -449,7 +449,7 @@ public sealed partial class IngestionSystem : EntitySystem
 
         var edible = _proto.Index(entity.Comp.Edible);
 
-        _audio.PlayPredicted(edible.UseSound, args.Target, args.User);
+        _audio.PlayPredicted(entity.Comp.UseSound ?? edible.UseSound, args.Target, args.User);
 
         var flavors = _flavorProfile.GetLocalizedFlavorsMessage(entity.Owner, args.Target, args.Split);
 

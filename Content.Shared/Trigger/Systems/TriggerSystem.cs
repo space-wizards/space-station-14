@@ -1,6 +1,7 @@
 ﻿using Content.Shared.Administration.Logs;
 using Content.Shared.Database;
 using Content.Shared.DeviceLinking;
+using Content.Shared.EntityTable;
 using Content.Shared.Item.ItemToggle;
 using Content.Shared.Mind;
 using Content.Shared.Popups;
@@ -42,6 +43,7 @@ public sealed partial class TriggerSystem : EntitySystem
     [Dependency] private readonly SharedDeviceLinkSystem _deviceLink = default!;
     [Dependency] private readonly SharedRoleSystem _role = default!;
     [Dependency] private readonly SharedMindSystem _mind = default!;
+    [Dependency] private readonly EntityTableSystem _entityTable = default!;
 
     public const string DefaultTriggerKey = "trigger";
 
