@@ -18,7 +18,7 @@ public sealed class ShockOnTriggerSystem : EntitySystem
 
     private void OnTrigger(Entity<ShockOnTriggerComponent> ent, ref TriggerEvent args)
     {
-        if (args.Key != null && !ent.Comp.KeysIn.Contains(args.Key))
+        if (args.Keys != null && !ent.Comp.KeysIn.Overlaps(args.Keys))
             return;
 
         EntityUid? target;
