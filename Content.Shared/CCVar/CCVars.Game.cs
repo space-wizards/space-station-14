@@ -30,6 +30,12 @@ public sealed partial class CCVars
         GameDisallowLateJoins = CVarDef.Create("game.disallowlatejoins", false, CVar.ARCHIVE | CVar.SERVERONLY);
 
     /// <summary>
+    ///     Pauses the lobby timer automatically on startup.
+    /// </summary>
+    public static readonly CVarDef<bool>
+        GameDelayStart = CVarDef.Create("game.delaystart", false, CVar.ARCHIVE | CVar.SERVERONLY);
+
+    /// <summary>
     ///     Controls the default game preset.
     /// </summary>
     public static readonly CVarDef<string>
