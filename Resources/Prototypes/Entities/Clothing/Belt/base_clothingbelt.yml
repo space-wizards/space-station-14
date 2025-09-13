@@ -38,7 +38,7 @@
     interfaces:
       enum.StorageUiKey.Key:
         type: StorageBoundUserInterface
-  - type: SwitchableEquipMode
+  - type: SwitchableEquipMode # Starlight
 
 - type: entity
   abstract: true

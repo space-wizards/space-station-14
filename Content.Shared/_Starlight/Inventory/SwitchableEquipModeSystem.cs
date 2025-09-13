@@ -95,8 +95,7 @@ public sealed class SwitchableEquipModeSystem : EntitySystem
 
             default:
                 break;
-        }
-        ;
+        };
     }
 
     private void OnUnequipped(Entity<SwitchableEquipModeComponent> ent, ref GotUnequippedEvent _) => ent.Comp.Mode = EquipMode.Remove; // revert to default behaviour

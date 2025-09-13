@@ -40,7 +40,7 @@
     interfaces:
       enum.StorageUiKey.Key:
         type: StorageBoundUserInterface
-  - type: SwitchableEquipMode
+  - type: SwitchableEquipMode # Starlight
   - type: StaticPrice
     price: 70
 
