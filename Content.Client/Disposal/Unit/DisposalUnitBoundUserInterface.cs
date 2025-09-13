@@ -1,7 +1,6 @@
 using Content.Client.Disposal.Mailing;
 using Content.Client.Power.EntitySystems;
 using Content.Shared.Disposal.Components;
-using Content.Shared.Disposal.Unit;
 using JetBrains.Annotations;
 using Robust.Client.UserInterface;
 
@@ -53,11 +52,11 @@ public sealed class DisposalUnitBoundUserInterface : BoundUserInterface
 
         _disposalUnitWindow.Title = EntMan.GetComponent<MetaDataComponent>(entity.Owner).EntityName;
 
-        var state = disposalUnit.GetState(entity.Owner, entity.Comp);
+        var state = disposalUnit.GetState(entity);
 
         _disposalUnitWindow.UnitState.Text = Loc.GetString($"disposal-unit-state-{state}");
         _disposalUnitWindow.Power.Pressed = EntMan.System<PowerReceiverSystem>().IsPowered(Owner);
         _disposalUnitWindow.Engage.Pressed = entity.Comp.Engaged;
-        _disposalUnitWindow.FullPressure = disposalUnit.EstimatedFullPressure(entity.Owner, entity.Comp);
+        _disposalUnitWindow.FullPressure = disposalUnit.EstimatedFullPressure(entity);
     }
 }

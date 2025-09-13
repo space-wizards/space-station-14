@@ -58,11 +58,6 @@ public abstract partial class SharedDisposableSystem : EntitySystem
         _eye.RefreshVisibilityMask(ent.Owner);
     }
 
-    private void OnFollowerTransition(Entity<FollowerComponent> ent, ref DisposalSystemTransitionEvent args)
-    {
-        _eye.RefreshVisibilityMask(ent.Owner);
-    }
-
     private void OnGetVisibility(ref GetVisMaskEvent ev)
     {
         // Prevents mispredictions by allowing clients in the disposal system
@@ -162,7 +157,7 @@ public abstract partial class SharedDisposableSystem : EntitySystem
 
         if (disposalId != null && duc != null)
         {
-            _disposalUnitSystem.TryEjectContents(disposalId.Value, duc);
+            _disposalUnitSystem.TryEjectContents((disposalId.Value, duc));
         }
 
         MergeAtmos(ent, ent.Comp.Air);
@@ -204,15 +199,8 @@ public abstract partial class SharedDisposableSystem : EntitySystem
             return false;
         }
 
-        ent.Comp.NextTube = _disposalTubeSystem.NextTubeFor(ent.Comp.CurrentTube.Value, ent.Comp.CurrentDirection);
-
-        var xform = Transform(ent);
-
-        if (xform.GridUid != null)
-        {
-            var rotation = _xformSystem.GetWorldRotation(xform.GridUid.Value);
-            _xformSystem.SetWorldRotation(ent, ent.Comp.CurrentDirection.ToAngle() - rotation);
-        }
+        ent.Comp.NextTube = _disposalTubeSystem.NextTubeFor(tube, ent.Comp.CurrentDirection);
+        Transform(ent).LocalRotation = ent.Comp.CurrentDirection.ToAngle();
 
         // damage entities on turns and play sound
         if (ent.Comp.Container != null && ent.Comp.CurrentDirection != ent.Comp.PreviousDirection)

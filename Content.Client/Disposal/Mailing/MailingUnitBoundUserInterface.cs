@@ -1,6 +1,5 @@
 using Content.Client.Disposal.Unit;
 using Content.Client.Power.EntitySystems;
-using Content.Shared.Disposal;
 using Content.Shared.Disposal.Components;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
@@ -57,8 +56,8 @@ public sealed class MailingUnitBoundUserInterface : BoundUserInterface
         {
             var disposalSystem = EntMan.System<DisposalUnitSystem>();
 
-            var disposalState = disposalSystem.GetState(Owner, disposals);
-            var fullPressure = disposalSystem.EstimatedFullPressure(Owner, disposals);
+            var disposalState = disposalSystem.GetState((Owner, disposals));
+            var fullPressure = disposalSystem.EstimatedFullPressure((Owner, disposals));
 
             MailingUnitWindow.UnitState.Text = Loc.GetString($"disposal-unit-state-{disposalState}");
             MailingUnitWindow.FullPressure = fullPressure;

@@ -1,4 +1,3 @@
-using Content.Shared.Disposal;
 using Content.Shared.Disposal.Components;
 using Content.Shared.Disposal.Mailing;
 

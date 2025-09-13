@@ -19,34 +19,34 @@ public sealed class DisposalSignalRouterSystem : EntitySystem
         SubscribeLocalEvent<DisposalSignalRouterComponent, GetDisposalsNextDirectionEvent>(OnGetNextDirection, after: new[] { typeof(SharedDisposalTubeSystem) });
     }
 
-    private void OnInit(EntityUid uid, DisposalSignalRouterComponent comp, ComponentInit args)
+    private void OnInit(Entity<DisposalSignalRouterComponent> ent, ref ComponentInit args)
     {
-        _deviceLink.EnsureSinkPorts(uid, comp.OnPort, comp.OffPort, comp.TogglePort);
+        _deviceLink.EnsureSinkPorts(ent, ent.Comp.OnPort, ent.Comp.OffPort, ent.Comp.TogglePort);
     }
 
-    private void OnSignalReceived(EntityUid uid, DisposalSignalRouterComponent comp, ref SignalReceivedEvent args)
+    private void OnSignalReceived(Entity<DisposalSignalRouterComponent> ent, ref SignalReceivedEvent args)
     {
         // TogglePort flips it
         // OnPort sets it to true
         // OffPort sets it to false
-        comp.Routing = args.Port == comp.TogglePort
-            ? !comp.Routing
-            : args.Port == comp.OnPort;
+        ent.Comp.Routing = args.Port == ent.Comp.TogglePort
+            ? !ent.Comp.Routing
+            : args.Port == ent.Comp.OnPort;
 
-        Dirty(uid, comp);
+        Dirty(ent);
     }
 
-    private void OnGetNextDirection(EntityUid uid, DisposalSignalRouterComponent comp, ref GetDisposalsNextDirectionEvent args)
+    private void OnGetNextDirection(Entity<DisposalSignalRouterComponent> ent, ref GetDisposalsNextDirectionEvent args)
     {
-        if (!comp.Routing)
+        if (!ent.Comp.Routing)
         {
-            args.Next = Transform(uid).LocalRotation.GetDir();
+            args.Next = Transform(ent).LocalRotation.GetDir();
             return;
         }
 
         // use the junction side direction when a tag matches
         var ev = new GetDisposalsConnectableDirectionsEvent();
-        RaiseLocalEvent(uid, ref ev);
+        RaiseLocalEvent(ent, ref ev);
         args.Next = ev.Connectable[1];
     }
 }
