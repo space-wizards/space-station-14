@@ -7,7 +7,16 @@
   defaultSkinTone: "#5a3f2d"
   markingLimits: MobVulpkaninMarkingLimits
   dollPrototype: MobVulpkaninDummy
-  skinColoration: Hues # TODO: Introduce clamping once #39175 or a similiar PR is merged. Ideally lower max saturation to around 80% and some minimum brightness. Same for markings.
+  coloringRules: # TODO: Introduce clamping once #39175 or a similiar PR is merged. Ideally lower max saturation to around 80% and some minimum brightness. Same for markings.
+  - !type:HsvValueLimit
+    min: 0.2
+    max: 1
+  - !type:HsvSaturationLimit
+    min: 0
+    max: 0.8
+  - !type:HsvHueLimit
+    ranges:
+    - [0.0, 1]
   maleFirstNames: names_vulpkanin_male
   femaleFirstNames: names_vulpkanin_female
   lastNames: names_vulpkanin_last

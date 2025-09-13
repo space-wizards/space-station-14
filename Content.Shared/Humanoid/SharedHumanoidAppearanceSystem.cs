@@ -293,13 +293,14 @@ public abstract class SharedHumanoidAppearanceSystem : EntitySystem
             return;
 
         if (!_proto.Resolve<SpeciesPrototype>(humanoid.Species, out var species))
-        {
             return;
-        }
 
-        if (verify && !SkinColor.VerifySkinColor(species.SkinColoration, skinColor))
+        if (verify)
         {
-            skinColor = SkinColor.ValidSkinTone(species.SkinColoration, skinColor);
+            foreach (var rule in species.ColoringRules)
+            {
+                skinColor = rule.Clamp(skinColor);
+            }
         }
 
         humanoid.SkinColor = skinColor;
@@ -307,6 +308,7 @@ public abstract class SharedHumanoidAppearanceSystem : EntitySystem
         if (sync)
             Dirty(uid, humanoid);
     }
+
 
     /// <summary>
     ///     Sets the base layer ID of this humanoid mob. A humanoid mob's 'base layer' is
