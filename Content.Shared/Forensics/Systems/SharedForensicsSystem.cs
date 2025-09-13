@@ -53,6 +53,7 @@ public sealed class ForensicsSystem : SharedForensicsSystem
             foreach (string dna in soln)
             {
                 comp.DNAs.Add(dna);
+                Dirty(ent, ent.Comp);
             }
         }
     }
@@ -92,6 +93,7 @@ public sealed class ForensicsSystem : SharedForensicsSystem
             var partComp = EnsureComp<ForensicsComponent>(part);
             partComp.DNAs.Add(dna);
             partComp.CanDnaBeCleaned = false;
+            Dirty(uid, component);
         }
     }
 
@@ -141,6 +143,7 @@ public sealed class ForensicsSystem : SharedForensicsSystem
         {
             dest.Residues.Add(residue);
         }
+        Dirty(target, src);
     }
 
     public List<string> GetSolutionsDNA(EntityUid uid)
@@ -266,6 +269,8 @@ public sealed class ForensicsSystem : SharedForensicsSystem
 
         if (TryComp<ResidueComponent>(args.Used, out var residue))
             targetComp.Residues.Add(string.IsNullOrEmpty(residue.ResidueColor) ? Loc.GetString("forensic-residue", ("adjective", residue.ResidueAdjective)) : Loc.GetString("forensic-residue-colored", ("color", residue.ResidueColor), ("adjective", residue.ResidueAdjective)));
+
+        Dirty(uid, component);
     }
 
     public string GenerateFingerprint()
@@ -302,6 +307,8 @@ public sealed class ForensicsSystem : SharedForensicsSystem
 
         if (TryComp<FingerprintComponent>(user, out var fingerprint) && CanAccessFingerprint(user, out _))
             component.Fingerprints.Add(fingerprint.Fingerprint ?? "");
+
+        Dirty(target, component);
     }
 
     private void OnTransferDnaEvent(EntityUid uid, DnaComponent component, ref TransferDnaEvent args)
@@ -350,6 +357,8 @@ public sealed class ForensicsSystem : SharedForensicsSystem
             EnsureComp<ForensicsComponent>(recipient, out var recipientComp);
             recipientComp.DNAs.Add(donorComp.DNA);
             recipientComp.CanDnaBeCleaned = canDnaBeCleaned;
+
+            Dirty(recipient, recipientComp);
         }
     }
 
