@@ -29,7 +29,7 @@
       - id: ClothingEyesGlassesChemical
       - id: VestineChemistryVial
         amount: 2
-      - id: BaseChemistryEmptyVial
+      - id: ChemistryEmptyVial
       - id: SyringeStimulants
 
 - type: entity

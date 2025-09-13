@@ -118,10 +118,14 @@
     - 0,0,3,1
   - type: StorageFill
     contents:
-      - id: BaseChemistryEmptyVial
-        amount: 6
+      - id: ChemistryEmptyVial
+        amount: 3
       - id: ChemistryEmptyVialSmall
-        amount: 2
+        amount: 1
+      - id: ChemistryEmptyVial
+        amount: 3
+      - id: ChemistryEmptyVialSmall
+        amount: 1
   - type: Sprite
     layers:
       - state: box

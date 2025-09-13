@@ -5,33 +5,48 @@
   components:
   - type: Item
     size: Tiny
+  - type: Openable
+    sound:
+      collection: bottleCloseSounds
+    closeable: true
+    closeSound:
+      collection: bottleCloseSounds
+  - type: FitsInDispenser
+    solution: drink
+  - type: ExaminableSolution
+    exactVolume: true # It's a chemistry tool
+  - type: DamageOtherOnHit
+    damage:
+      types:
+        Blunt: 2
+  - type: Tag
+    tags:
+    - Trash
+    - CentrifugeCompatible # unique feature of vials
+
+## entities
+
+- type: entity
+  parent: BaseChemistryVial
+  id: ChemistryEmptyVial
+  name: vial
+  description: A small vial.
+  components:
+  - type: Item
     sprite: Objects/Specific/Chemistry/vial.rsi
   - type: Sprite
     sprite: Objects/Specific/Chemistry/vial.rsi
-    layers: # TODO
-    - state: vial-1-closed
-      map: ["enum.OpenableVisuals.Layer"]
-    - state: vial-1-1
-      map: ["enum.SolutionContainerLayers.Fill"]
-      visible: false
+  - type: SolutionContainerVisuals
+    maxFillLevels: 6
+    inHandsMaxFillLevels: 4
   - type: SolutionContainerManager
     solutions:
       drink:
         maxVol: 30
-  - type: FitsInDispenser
-    solution: drink
-  - type: ExaminableSolution
-    exactVolume: true
-  - type: SolutionContainerVisuals
-    maxFillLevels: 6
-    fillBaseName: vial-1- # TODO
-    inHandsMaxFillLevels: 4
-  - type: GenericVisualizer # TODO
-    visuals:
-      enum.OpenableVisuals.Opened:
-        enum.OpenableVisuals.Layer:
-          True: {state: "vial-1-open"}
-          False: {state: "vial-1-closed"}
+  - type: SolutionTransfer
+    maxTransferAmount: 30
+  - type: StaticPrice
+    price: 100
   - type: Destructible
     thresholds:
     - trigger:
@@ -56,64 +71,39 @@
         transferForensics: true
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
-  - type: DamageOtherOnHit
-    damage:
-      types:
-        Blunt: 2
-  - type: StaticPrice
-    price: 100
-  - type: Tag
-    tags:
-    - Trash
-    - CentrifugeCompatible # unique feature of vials
-
-## entities
 
 - type: entity
-  parent: BaseChemistryVial
-  id: BaseChemistryEmptyVial # TODO remove base from the id
-  name: vial
-  description: A small vial.
-
-- type: entity # TODO
   parent: BaseChemistryVial
   id: ChemistryEmptyVialSmall
   name: mini vial
   description: A smaller vial.
   components:
+  - type: Item
+    sprite: Objects/Specific/Chemistry/vial_mini.rsi
   - type: Sprite
-    sprite: Objects/Specific/Chemistry/vial.rsi
-    layers:
-    - state: vial-2-closed
-      map: ["enum.OpenableVisuals.Layer"]
-    - state: vial-2-1
-      map: ["enum.SolutionContainerLayers.Fill"]
-      visible: false
+    sprite: Objects/Specific/Chemistry/vial_mini.rsi
   - type: SolutionContainerVisuals
     maxFillLevels: 5
-    fillBaseName: vial-2-
     inHandsMaxFillLevels: 4
-    inHandsFillBaseName: -fill-
-  - type: GenericVisualizer
-    visuals:
-      enum.OpenableVisuals.Opened:
-        enum.OpenableVisuals.Layer:
-          True: {state: "vial-2-open"}
-          False: {state: "vial-2-closed"}
   - type: SolutionContainerManager
     solutions:
-      beaker:
+      drink:
         maxVol: 10
   - type: SolutionTransfer
     maxTransferAmount: 10
-    canChangeTransferAmount: true
   - type: StaticPrice
     price: 50
   - type: PhysicalComposition
     materialComposition:
       Glass: 10
-  - type: Destructible # Remove glass spawn
+  - type: Destructible # remove glass shard spawn
     thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 200
+      behaviors:
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
     - trigger:
         !type:DamageTrigger
         damage: 10 # smaller so weaker
@@ -121,8 +111,6 @@
       - !type:PlaySoundBehavior
         sound:
           collection: GlassBreak
-          params:
-            volume: -4
       - !type:SpillBehavior { }
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
@@ -130,7 +118,7 @@
 ## Reagent filled
 
 - type: entity
-  parent: BaseChemistryEmptyVial
+  parent: ChemistryEmptyVial
   id: VestineChemistryVial
   suffix: vestine
   components:
@@ -138,7 +126,7 @@
     currentLabel: reagent-name-vestine
   - type: SolutionContainerManager
     solutions:
-      beaker:
+      drink:
         maxVol: 30
         reagents:
         - ReagentId: Vestine
@@ -156,7 +144,7 @@
     currentLabel: reagent-name-radium
   - type: SolutionContainerManager
     solutions:
-      beaker:
+      drink:
         maxVol: 10
         reagents:
           - ReagentId: Radium
@@ -174,7 +162,7 @@
     currentLabel: reagent-name-chlorine
   - type: SolutionContainerManager
     solutions:
-      beaker:
+      drink:
         maxVol: 10
         reagents:
           - ReagentId: Chlorine
@@ -192,7 +180,7 @@
     currentLabel: reagent-name-plasma
   - type: SolutionContainerManager
     solutions:
-      beaker:
+      drink:
         maxVol: 10
         reagents:
           - ReagentId: Plasma

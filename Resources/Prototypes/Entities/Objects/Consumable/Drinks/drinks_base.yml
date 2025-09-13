@@ -122,7 +122,7 @@
   - type: Appearance
   - type: Sprite
     layers:
-    - state: icon_empty
+    - state: icon
     - state: fill-1
       map: ["enum.SolutionContainerLayers.Fill"]
       visible: false
@@ -141,7 +141,7 @@
   components:
   - type: Sprite
     layers:
-    - state: icon_empty
+    - state: icon
       map: [ "enum.SolutionContainerLayers.Base" ]
     - state: fill-1
       map: [ "enum.SolutionContainerLayers.Fill" ]
