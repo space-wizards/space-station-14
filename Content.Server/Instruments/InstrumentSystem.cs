@@ -12,6 +12,7 @@ using Content.Shared.Instruments;
 using Content.Shared.Instruments.UI;
 using Content.Shared.Physics;
 using Content.Shared.Popups;
+using Content.Shared.Verbs;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio.Midi;
@@ -56,13 +57,19 @@ public sealed partial class InstrumentSystem : SharedInstrumentSystem
         SubscribeNetworkEvent<InstrumentStopMidiEvent>(OnMidiStop);
         SubscribeNetworkEvent<InstrumentSetMasterEvent>(OnMidiSetMaster);
         SubscribeNetworkEvent<InstrumentSetFilteredChannelEvent>(OnMidiSetFilteredChannel);
-        SubscribeNetworkEvent<InstrumentSetChannelsEvent>(OnMidiSetChannels);
+        SubscribeNetworkEvent<InstrumentSetTracksEvent>(OnMidiSetTracks);
 
-        Subs.BuiEvents<InstrumentComponent>(InstrumentUiKey.Key, subs =>
+        Subs.BuiEvents<InstrumentComponent>(InstrumentUiKey.Key,
+            subs =>
+            {
+                subs.Event<BoundUIClosedEvent>(OnBoundUIClosed);
+                subs.Event<BoundUIOpenedEvent>(OnBoundUIOpened);
+                subs.Event<InstrumentBandRequestBuiMessage>(OnBoundUIRequestBands);
+            });
+
+        SubscribeLocalEvent((Entity<InstrumentComponent> ent, ref GetVerbsEvent<AlternativeVerb> args) =>
         {
-            subs.Event<BoundUIClosedEvent>(OnBoundUIClosed);
-            subs.Event<BoundUIOpenedEvent>(OnBoundUIOpened);
-            subs.Event<InstrumentBandRequestBuiMessage>(OnBoundUIRequestBands);
+            AddStyleVerb(ent.Owner, ent.Comp, ref args);
         });
 
         SubscribeLocalEvent<InstrumentComponent, ComponentGetState>(OnStrumentGetState);
@@ -75,8 +82,8 @@ public sealed partial class InstrumentSystem : SharedInstrumentSystem
         args.State = new InstrumentComponentState()
         {
             Playing = component.Playing,
-            InstrumentProgram = component.InstrumentProgram,
-            InstrumentBank = component.InstrumentBank,
+            InstrumentProgram = component.Instrument.Program,
+            InstrumentBank = component.Instrument.Bank,
             AllowPercussion = component.AllowPercussion,
             AllowProgramChange = component.AllowProgramChange,
             RespectMidiLimits = component.RespectMidiLimits,
@@ -140,7 +147,7 @@ public sealed partial class InstrumentSystem : SharedInstrumentSystem
     }
 
 
-    private void OnMidiSetChannels(InstrumentSetChannelsEvent msg, EntitySessionEventArgs args)
+    private void OnMidiSetTracks(InstrumentSetTracksEvent msg, EntitySessionEventArgs args)
     {
         var uid = GetEntity(msg.Uid);
 
@@ -149,13 +156,6 @@ public sealed partial class InstrumentSystem : SharedInstrumentSystem
 
         if (args.SenderSession.AttachedEntity != instrument.InstrumentPlayer)
             return;
-
-        if (msg.Tracks.Length > RobustMidiEvent.MaxChannels)
-        {
-            Log.Warning($"{args.SenderSession.UserId.ToString()} - Tried to send tracks over the limit! Received: {msg.Tracks.Length}; Limit: {RobustMidiEvent.MaxChannels}");
-            return;
-        }
-
 
         foreach (var t in msg.Tracks)
         {
@@ -173,7 +173,7 @@ public sealed partial class InstrumentSystem : SharedInstrumentSystem
         _admingLogSystem.Add(
             LogType.Instrument,
             LogImpact.Low,
-            $"{ToPrettyString(args.SenderSession.AttachedEntity)} set the midi channels for {ToPrettyString(uid)} to {tracksString}");
+            $"{ToPrettyString(args.SenderSession.AttachedEntity)} set the midi tracks for {ToPrettyString(uid)} to {tracksString}");
 
         activeInstrument.Tracks = msg.Tracks;
 
