@@ -54,9 +54,7 @@ public sealed class AccessReaderSystem : EntitySystem
         if (!GetMainAccessReader(ent, out var mainAccessReader))
             return;
 
-        // If there is no copy of the  original settings, copy the current access settings
-        if (mainAccessReader.Value.Comp.AccessListsOriginal == null)
-            mainAccessReader.Value.Comp.AccessListsOriginal = new(mainAccessReader.Value.Comp.AccessLists);
+        mainAccessReader.Value.Comp.AccessListsOriginal ??= mainAccessReader.Value.Comp.AccessLists;
 
         var accessHasBeenModified = mainAccessReader.Value.Comp.AccessLists.Count != mainAccessReader.Value.Comp.AccessListsOriginal.Count;
 
@@ -73,15 +71,16 @@ public sealed class AccessReaderSystem : EntitySystem
         }
 
         var canSeeAccessModification = accessHasBeenModified &&
-            (HasComp<ShowAccessReaderSettingsComponent>(ent) || _inventorySystem.TryGetInventoryEntity<ShowAccessReaderSettingsComponent>(args.Examiner, out _));
+            (HasComp<ShowAccessReaderSettingsComponent>(ent) ||
+            _inventorySystem.TryGetInventoryEntity<ShowAccessReaderSettingsComponent>(args.Examiner, out _));
 
         if (canSeeAccessModification)
         {
             var localizedCurrentNames = GetLocalizedAccessNames(mainAccessReader.Value.Comp.AccessLists);
-
-            var currentSettingsMessage = localizedCurrentNames.Count > 0 ?
-                Loc.GetString("access-reader-access-settings-modified-message", ("access", ContentLocalizationManager.FormatListToOr(localizedCurrentNames))) :
-                Loc.GetString("access-reader-access-settings-removed-message");
+            var accessesFormatted = ContentLocalizationManager.FormatListToOr(localizedCurrentNames);
+            var currentSettingsMessage = localizedCurrentNames.Count > 0
+                ? Loc.GetString("access-reader-access-settings-modified-message", ("access", accessesFormatted))
+                : Loc.GetString("access-reader-access-settings-removed-message");
 
             args.PushMarkup(currentSettingsMessage);
 
@@ -94,7 +93,8 @@ public sealed class AccessReaderSystem : EntitySystem
         if (localizedOriginalNames.Count == 0)
             return;
 
-        var originalSettingsMessage = Loc.GetString(mainAccessReader.Value.Comp.ExaminationText, ("access", ContentLocalizationManager.FormatListToOr(localizedOriginalNames)));
+        var originalAccessesFormatted = ContentLocalizationManager.FormatListToOr(localizedOriginalNames);
+        var originalSettingsMessage = Loc.GetString(mainAccessReader.Value.Comp.ExaminationText, ("access", originalAccessesFormatted));
         args.PushMarkup(originalSettingsMessage);
     }
 
@@ -165,8 +165,7 @@ public sealed class AccessReaderSystem : EntitySystem
     {
         // The first time that the access list of the reader is modified,
         // make a copy of the original settings
-        if (ent.Comp.AccessListsOriginal == null)
-            ent.Comp.AccessListsOriginal = new(ent.Comp.AccessLists);
+        ent.Comp.AccessListsOriginal ??= ent.Comp.AccessLists;
     }
 
     /// <summary>
@@ -871,12 +870,12 @@ public sealed class AccessReaderSystem : EntitySystem
             {
                 var accessName = Loc.GetString("access-reader-unknown-id");
 
-                if (_prototype.TryIndex(access, out var accessProto) && !string.IsNullOrWhiteSpace(accessProto.Name))
+                if (_prototype.Resolve(access, out var accessProto) && !string.IsNullOrWhiteSpace(accessProto.Name))
                     accessName = Loc.GetString(accessProto.Name);
 
                 sb.Append(Loc.GetString("access-reader-access-label", ("access", accessName)));
 
-                if (accessSubset.IndexOf(access) < accessSubset.Count - 1)
+                if (accessSubset.IndexOf(access) < (accessSubset.Count - 1))
                     sb.Append(" & ");
             }
 
