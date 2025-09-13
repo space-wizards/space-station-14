@@ -308,7 +308,7 @@
   parent: [ClothingHeadset, BaseMajorContraband]
   id: ClothingHeadsetNinja
   name: green headset
-  description: An updated, modular spider intercom. Comes with a key which can copy others headset channels.
+  description: Who could refuse to wear this stylish black and green headset?
   components:
   - type: Sprite
     sprite: Clothing/Ears/Headsets/ninja.rsi
