@@ -4,7 +4,7 @@ using Robust.Shared.GameStates;
 namespace Content.Shared.Trigger.Components.Conditions;
 
 /// <summary>
-/// Checks if the user of a trigger satisfies a whitelist and blacklist condition for the triggered entity or the one triggering it.
+/// Checks if the user of a trigger satisfies a whitelist and blacklist condition.
 /// Cancels the trigger otherwise.
 /// </summary>
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
