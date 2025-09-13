@@ -42,6 +42,7 @@
     - id: PlushieMoth
     - id: PlushieArachind
     - id: PlushiePenguin
+    - id: PlushieVulp
 
 - type: entityTable
   id: AllPottedPlantsTable
