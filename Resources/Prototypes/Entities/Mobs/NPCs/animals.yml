@@ -3672,6 +3672,13 @@
   id: MobDionaNymph
   description: It's like a cat, only.... branch-ier.
   components:
+    # Starlight-start: Languages
+  - type: LanguageKnowledge
+    speaks:
+    - Sylvan
+    understands:
+    - Sylvan
+  # Starlight-end
   - type: Sprite
     drawdepth: Mobs
     layers:
@@ -3869,6 +3876,7 @@
     understands:
     - Dog
     - GalacticCommon
+    - Canilunzt
   # Starlight-end
   - type: Sprite
     layers:
