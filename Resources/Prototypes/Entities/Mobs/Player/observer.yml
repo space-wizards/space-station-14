@@ -57,6 +57,7 @@
   - type: GhostHearing
   - type: ShowElectrocutionHUD
   - type: IntrinsicRadioReceiver
+  - type: IgnoreUIRange
   - type: ActiveRadio
     receiveAllChannels: true
     globalReceive: true
@@ -78,6 +79,7 @@
   - type: Tag
     tags:
     - AllowGhostShownByEvent
+    - NoConsoleSound
 
 - type: entity
   parent: BaseMentalAction
