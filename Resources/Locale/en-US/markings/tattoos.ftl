@@ -34,10 +34,12 @@ marking-TattooEyeMothRight = Right Eye
 marking-TattooEyeMothLeft-tattoo_eye_moth_l = Left Eye
 marking-TattooEyeMothLeft = Left Eye
 
-marking-TattooEyeVulpkaninRight-tattoo_eye_moth_r = Right Eye
+marking-TattooEyeVulpkaninRight-tattoo_eye_vulpkanin_r = Cornea
+marking-TattooEyeVulpkaninRight-tattoo_sclera_vulpkanin_r = Sclera
 marking-TattooEyeVulpkaninRight = Right Eye
 
-marking-TattooEyeVulpkaninLeft-tattoo_eye_moth_l = Left Eye
+marking-TattooEyeVulpkaninLeft-tattoo_eye_vulpkanin_l = Cornea
+marking-TattooEyeVulpkaninLeft-tattoo_sclera_vulpkanin_l = Sclera
 marking-TattooEyeVulpkaninLeft = Left Eye
 
 marking-TattooEyeVoxRight-tattoo_eye_vox_r = Right Eye
