@@ -37,7 +37,12 @@
     - type: Bloodstream
       bloodMaxVolume: 300
       # if you fuck with the gorilla he will harambe you
+    - type: CombatMode
+      canDisarm: true
+      disarmFailChance: 50
     - type: MeleeWeapon
+      altDisarm: false
+      angle: 0
       soundHit:
         collection: Punch
       damage:
@@ -45,6 +50,8 @@
           Blunt: 18
           Structural: 20
       animation: WeaponArcFist
+    - type: StaminaDamageOnHit
+      damage: 50
     - type: MeleeThrowOnHit
       speed: 20
       distance: 5
@@ -90,6 +97,10 @@
       speedModifier: 1.5
       useSound:
         path: /Audio/Items/crowbar.ogg
+    - type: SlowOnDamage
+      speedModifierThresholds:
+        200: 0.5
+    - type: IgnoreSlowOnDamage
     - type: MobThresholds
       thresholds:
         0: Alive
@@ -114,6 +125,9 @@
     - type: Tag
       tags:
         - DoorBumpOpener
+        - SlowImmune
+        - KnockdownImmune
+        - CannotSuicide
 
 - type: entity
   parent: BaseMobGorilla
@@ -152,6 +166,11 @@
     - type: Damageable
       damageContainer: Biological
       damageModifierSet: GorillaRampaging
+    - type: NpcFactionMember
+      factions:
+        - Gorilla
+        - Syndicate
+        - SyndicateSilicon
 
 - type: entity
   name: Cargorilla
