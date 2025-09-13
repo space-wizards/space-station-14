@@ -21,7 +21,7 @@ public sealed partial class GraphicsTab : Control
 
         Control.AddOptionCheckBox(CVars.DisplayVSync, VSyncCheckBox);
         Control.AddOptionCheckBox(CCVars.AmbientOcclusion, AmbientOcclusionCheckBox);
-        Control.AddOptionCheckBox(CCVars.AccessibilityHeatDistortion, HeatDistortionCheckBox);
+        Control.AddOptionCheckBox(CCVars.GraphicsHeatDistortion, HeatDistortionCheckBox);
         Control.AddOption(new OptionFullscreen(Control, _cfg, FullscreenCheckBox));
         Control.AddOption(new OptionLightingQuality(Control, _cfg, DropDownLightingQuality));
 
@@ -76,7 +76,7 @@ public sealed partial class GraphicsTab : Control
 
         _cfg.OnValueChanged(CCVars.ViewportMinimumWidth, _ => UpdateViewportWidthRange());
         _cfg.OnValueChanged(CCVars.ViewportMaximumWidth, _ => UpdateViewportWidthRange());
-        _cfg.OnValueChanged(CCVars.AccessibilityHeatDistortion, cvar => HeatDistortionCheckBox.Pressed = cvar);
+        _cfg.OnValueChanged(CCVars.GraphicsHeatDistortion, cvar => HeatDistortionCheckBox.Pressed = cvar);
 
         UpdateViewportWidthRange();
         UpdateViewportSettingsVisibility();

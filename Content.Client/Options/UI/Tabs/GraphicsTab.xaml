@@ -15,7 +15,9 @@
                 <CheckBox Name="ViewportLowResCheckBox" Text="{Loc 'ui-options-vp-low-res'}" />
                 <CheckBox Name="ParallaxLowQualityCheckBox" Text="{Loc 'ui-options-parallax-low-quality'}" />
                 <CheckBox Name="AmbientOcclusionCheckBox" Text="{Loc 'ui-options-ambient-occlusion'}" />
-                <CheckBox Name="HeatDistortionCheckBox" Text="{Loc 'ui-options-heat-distortion'}" />
+                <CheckBox Name="HeatDistortionCheckBox"
+                          Text="{Loc 'ui-options-heat-distortion'}"
+                          ToolTip="{Loc 'ui-options-heat-distortion-tooltip'}" />
 
                 <!-- Interface -->
                 <Label Text="{Loc 'ui-options-interface-label'}" StyleClasses="LabelKeyText"/>

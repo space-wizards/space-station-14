@@ -44,7 +44,7 @@ public sealed class GasTileHeatOverlay : Overlay
         _shader = _proto.Index(HeatOverlayShader).InstanceUnique();
 
         _configManager.OnValueChanged(CCVars.ReducedMotion, SetReducedMotion, invokeImmediately: true);
-        _configManager.OnValueChanged(CCVars.AccessibilityHeatDistortion, SetHeatDistortion, invokeImmediately: true);
+        _configManager.OnValueChanged(CCVars.GraphicsHeatDistortion, SetHeatDistortion, invokeImmediately: true);
     }
 
     private void SetReducedMotion(bool reducedMotion)
@@ -215,7 +215,7 @@ public sealed class GasTileHeatOverlay : Overlay
         _heatTarget = null;
         _heatBlurTarget = null;
         _configManager.UnsubValueChanged(CCVars.ReducedMotion, SetReducedMotion);
-        _configManager.UnsubValueChanged(CCVars.AccessibilityHeatDistortion, SetHeatDistortion);
+        _configManager.UnsubValueChanged(CCVars.GraphicsHeatDistortion, SetHeatDistortion);
         base.DisposeBehavior();
     }
 }
