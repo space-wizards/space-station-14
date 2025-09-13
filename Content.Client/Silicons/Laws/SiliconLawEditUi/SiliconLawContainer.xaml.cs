@@ -32,6 +32,7 @@ public sealed partial class SiliconLawContainer : BoxContainer
             if (Corrupted.Pressed)
             {
                 _law!.LawIdentifierOverride = CorruptedString;
+                _law!.SoftLaw = false;
             }
             else
             {
