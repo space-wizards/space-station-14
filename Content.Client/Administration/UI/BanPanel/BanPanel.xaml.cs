@@ -24,7 +24,7 @@ namespace Content.Client.Administration.UI.BanPanel;
 [GenerateTypedNameReferences]
 public sealed partial class BanPanel : DefaultWindow
 {
-    public event Action<string?, (IPAddress, int)?, bool, ImmutableTypedHwid?, bool, uint, string, NoteSeverity, string[]?, bool>? BanSubmitted;
+    public event Action<Ban>? BanSubmitted;
     public event Action<string>? PlayerChanged;
     private string? PlayerUsername { get; set; }
     private (IPAddress, int)? IpAddress { get; set; }
@@ -37,8 +37,8 @@ public sealed partial class BanPanel : DefaultWindow
     // This is less efficient than just holding a reference to the root control and enumerating children, but you
     // have to know how the controls are nested, which makes the code more complicated.
     // Role group name -> the role buttons themselves.
-    private readonly Dictionary<string, List<Button>> _roleCheckboxes = new();
-    private readonly ISawmill _banpanelSawmill;
+    private readonly Dictionary<string, List<(Button, IPrototype)>> _roleCheckboxes = new();
+    private readonly ISawmill _banPanelSawmill;
 
     [Dependency] private readonly IGameTiming _gameTiming = default!;
     [Dependency] private readonly IConfigurationManager _cfg = default!;
@@ -79,7 +79,7 @@ public sealed partial class BanPanel : DefaultWindow
     {
         RobustXamlLoader.Load(this);
         IoCManager.InjectDependencies(this);
-        _banpanelSawmill = _logManager.GetSawmill("admin.banpanel");
+        _banPanelSawmill = _logManager.GetSawmill("admin.banpanel");
         PlayerList.OnSelectionChanged += OnPlayerSelectionChanged;
         PlayerNameLine.OnFocusExit += _ => OnPlayerNameChanged();
         PlayerCheckbox.OnPressed += _ =>
@@ -110,7 +110,7 @@ public sealed partial class BanPanel : DefaultWindow
             TypeOption.SelectId(args.Id);
             OnTypeChanged();
         };
-        LastConnCheckbox.OnPressed += args =>
+        LastConnCheckbox.OnPressed += _ =>
         {
             IpLine.ModulateSelfOverride = null;
             HwidLine.ModulateSelfOverride = null;
@@ -164,7 +164,7 @@ public sealed partial class BanPanel : DefaultWindow
 
         var antagRoles = _protoMan.EnumeratePrototypes<AntagPrototype>()
                                   .OrderBy(x => x.ID);
-        CreateRoleGroup("Antagonist", Color.Red, antagRoles);
+        CreateRoleGroup(AntagPrototype.GroupName, AntagPrototype.GroupColor, antagRoles);
     }
 
     /// <summary>
@@ -236,14 +236,14 @@ public sealed partial class BanPanel : DefaultWindow
         {
             foreach (var role in _roleCheckboxes[groupName])
             {
-                role.Pressed = args.Pressed;
+                role.Item1.Pressed = args.Pressed;
             }
 
             if (args.Pressed)
             {
                 if (!Enum.TryParse(_cfg.GetCVar(CCVars.DepartmentBanDefaultSeverity), true, out NoteSeverity newSeverity))
                 {
-                    _banpanelSawmill
+                    _banPanelSawmill
                         .Warning("Departmental role ban severity could not be parsed from config!");
                     return;
                 }
@@ -255,14 +255,14 @@ public sealed partial class BanPanel : DefaultWindow
                 {
                     foreach (var button in roleButtons)
                     {
-                        if (button.Pressed)
+                        if (button.Item1.Pressed)
                             return;
                     }
                 }
 
                 if (!Enum.TryParse(_cfg.GetCVar(CCVars.RoleBanDefaultSeverity), true, out NoteSeverity newSeverity))
                 {
-                    _banpanelSawmill
+                    _banPanelSawmill
                         .Warning("Role ban severity could not be parsed from config!");
                     return;
                 }
@@ -294,7 +294,7 @@ public sealed partial class BanPanel : DefaultWindow
     }
 
     /// <summary>
-    /// Adds a checkbutton specifically for one "role" in a "group"
+    /// Adds a check button specifically for one "role" in a "group"
     /// E.g. it would add the Chief Medical Officer "role" into the "Medical" group.
     /// </summary>
     private void AddRoleCheckbox(string group, string role, GridContainer roleGroupInnerContainer, Button roleGroupCheckbox)
@@ -302,23 +302,36 @@ public sealed partial class BanPanel : DefaultWindow
         var roleCheckboxContainer = new BoxContainer();
         var roleCheckButton = new Button
         {
-            Name = $"{role}RoleCheckbox",
+            Name = role,
             Text = role,
             ToggleMode = true,
         };
         roleCheckButton.OnToggled += args =>
         {
             // Checks the role group checkbox if all the children are pressed
-            if (args.Pressed && _roleCheckboxes[group].All(e => e.Pressed))
+            if (args.Pressed && _roleCheckboxes[group].All(e => e.Item1.Pressed))
                 roleGroupCheckbox.Pressed = args.Pressed;
             else
                 roleGroupCheckbox.Pressed = false;
         };
 
+        IPrototype rolePrototype;
+
+        if (_protoMan.TryIndex<JobPrototype>(role, out var jobPrototype))
+            rolePrototype = jobPrototype;
+        else if (_protoMan.TryIndex<AntagPrototype>(role, out var antagPrototype))
+            rolePrototype = antagPrototype;
+        else
+        {
+            _banPanelSawmill.Error($"Adding a role checkbox for role {role}: role is not a JobPrototype or AntagPrototype.");
+
+            return;
+        }
+
         // This is adding the icon before the role name
         // TODO: This should not be using raw strings for prototypes as it means it won't be validated at all.
-        // I know the ban manager is doing the same thing, but that should not leak into UI code.
-        if (_protoMan.TryIndex<JobPrototype>(role, out var jobPrototype) && _protoMan.Resolve(jobPrototype.Icon, out var iconProto))
+        // // I know the ban manager is doing the same thing, but that should not leak into UI code.
+        if (jobPrototype is not null && _protoMan.TryIndex(jobPrototype.Icon, out var iconProto))
         {
             var jobIconTexture = new TextureRect
             {
@@ -335,7 +348,7 @@ public sealed partial class BanPanel : DefaultWindow
         roleGroupInnerContainer.AddChild(roleCheckboxContainer);
 
         _roleCheckboxes.TryAdd(group, []);
-        _roleCheckboxes[group].Add(roleCheckButton);
+        _roleCheckboxes[group].Add((roleCheckButton, rolePrototype));
     }
 
     public void UpdateBanFlag(bool newFlag)
@@ -488,7 +501,7 @@ public sealed partial class BanPanel : DefaultWindow
                     newSeverity = serverSeverity;
                 else
                 {
-                    _banpanelSawmill
+                    _banPanelSawmill
                         .Warning("Server ban severity could not be parsed from config!");
                 }
 
@@ -501,7 +514,7 @@ public sealed partial class BanPanel : DefaultWindow
                     }
                     else
                     {
-                        _banpanelSawmill
+                        _banPanelSawmill
                             .Warning("Role ban severity could not be parsed from config!");
                     }
                     break;
@@ -546,34 +559,51 @@ public sealed partial class BanPanel : DefaultWindow
 
     private void SubmitButtonOnOnPressed(BaseButton.ButtonEventArgs obj)
     {
-        string[]? roles = null;
+        ProtoId<JobPrototype>[]? jobs = null;
+        ProtoId<AntagPrototype>[]? antags = null;
+
         if (TypeOption.SelectedId == (int) Types.Role)
         {
-            var rolesList = new List<string>();
+            var jobList = new List<ProtoId<JobPrototype>>();
+            var antagList = new List<ProtoId<AntagPrototype>>();
+
             if (_roleCheckboxes.Count == 0)
                 throw new DebugAssertException("RoleCheckboxes was empty");
 
             foreach (var button in _roleCheckboxes.Values.SelectMany(departmentButtons => departmentButtons))
             {
-                if (button is { Pressed: true, Text: not null })
+                if (button.Item1 is { Pressed: true, Name: not null })
                 {
-                    rolesList.Add(button.Text);
+                    switch (button.Item2)
+                    {
+                        case JobPrototype:
+                            jobList.Add(button.Item2.ID);
+
+                            break;
+                        case AntagPrototype:
+                            antagList.Add(button.Item2.ID);
+
+                            break;
+                    }
                 }
             }
 
-            if (rolesList.Count == 0)
+            if (jobList.Count + antagList.Count == 0)
             {
                 Tabs.CurrentTab = (int) TabNumbers.Roles;
+
                 return;
             }
 
-            roles = rolesList.ToArray();
+            jobs = jobList.ToArray();
+            antags = antagList.ToArray();
         }
 
         if (TypeOption.SelectedId == (int) Types.None)
         {
             TypeOption.ModulateSelfOverride = Color.Red;
             Tabs.CurrentTab = (int) TabNumbers.BasicInfo;
+
             return;
         }
 
@@ -585,6 +615,7 @@ public sealed partial class BanPanel : DefaultWindow
             ReasonTextEdit.GrabKeyboardFocus();
             ReasonTextEdit.ModulateSelfOverride = Color.Red;
             ReasonTextEdit.OnKeyBindDown += ResetTextEditor;
+
             return;
         }
 
@@ -593,6 +624,7 @@ public sealed partial class BanPanel : DefaultWindow
             ButtonResetOn = _gameTiming.CurTime.Add(TimeSpan.FromSeconds(3));
             SubmitButton.ModulateSelfOverride = Color.Red;
             SubmitButton.Text = Loc.GetString("ban-panel-confirm");
+
             return;
         }
 
@@ -601,7 +633,22 @@ public sealed partial class BanPanel : DefaultWindow
         var useLastHwid = HwidCheckbox.Pressed && LastConnCheckbox.Pressed && Hwid is null;
         var severity = (NoteSeverity) SeverityOption.SelectedId;
         var erase = EraseCheckbox.Pressed;
-        BanSubmitted?.Invoke(player, IpAddress, useLastIp, Hwid, useLastHwid, (uint) (TimeEntered * Multiplier), reason, severity, roles, erase);
+
+        var ban = new Ban(
+            player,
+            IpAddress,
+            useLastIp,
+            Hwid,
+            useLastHwid,
+            (uint)(TimeEntered * Multiplier),
+            reason,
+            severity,
+            jobs,
+            antags,
+            erase
+        );
+
+        BanSubmitted?.Invoke(ban);
     }
 
     protected override void FrameUpdate(FrameEventArgs args)
