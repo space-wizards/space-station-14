@@ -115,6 +115,7 @@
   - type: Prying
     pryPowered: false
     force: false
+    useSound: /Audio/Items/jaws_pry.ogg
 
 - type: entity
   id: MechRipley
