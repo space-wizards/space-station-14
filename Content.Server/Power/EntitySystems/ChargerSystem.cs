@@ -46,7 +46,7 @@ internal sealed class ChargerSystem : EntitySystem
         using (args.PushGroup(nameof(ChargerComponent)))
         {
             // rate at which the charger charges
-            args.PushMarkup(Loc.GetString("charger-examine", ("color", "yellow"), ("chargeRate", (int) component.ChargeRate)));
+            args.PushMarkup(Loc.GetString("charger-examine", ("color", "yellow"), ("chargeRate", (int)component.ChargeRate)));
 
             // try to get contents of the charger
             if (!_container.TryGetContainer(uid, component.SlotId, out var container))
@@ -70,7 +70,7 @@ internal sealed class ChargerSystem : EntitySystem
                         continue;
 
                     var chargePercentage = (battery.CurrentCharge / battery.MaxCharge) * 100;
-                    args.PushMarkup(Loc.GetString("charger-content", ("chargePercentage", (int) chargePercentage)));
+                    args.PushMarkup(Loc.GetString("charger-content", ("chargePercentage", (int)chargePercentage)));
                 }
             }
         }
@@ -107,6 +107,7 @@ internal sealed class ChargerSystem : EntitySystem
         if (args.Container.ID != component.SlotId)
             return;
 
+        UpdateBatteryAppearance(uid, component);
         UpdateStatus(uid, component);
     }
 
@@ -115,6 +116,7 @@ internal sealed class ChargerSystem : EntitySystem
         if (args.Container.ID != component.SlotId)
             return;
 
+        UpdateBatteryAppearance(uid, component);
         UpdateStatus(uid, component);
     }
 
@@ -151,46 +153,43 @@ internal sealed class ChargerSystem : EntitySystem
     private void UpdateStatus(EntityUid uid, ChargerComponent component)
     {
         var status = GetStatus(uid, component);
-        TryComp(uid, out AppearanceComponent? appearance);
-
-        if (!_container.TryGetContainer(uid, component.SlotId, out var container))
-            return;
-
-        _appearance.SetData(uid, CellVisual.Occupied, container.ContainedEntities.Count != 0, appearance);
-        if (component.Status == status || !TryComp(uid, out ApcPowerReceiverComponent? receiver))
+        if (status == component.Status)
             return;
 
         component.Status = status;
+        UpdateLoad(uid, component);
+        UpdateAppearance(uid, component);
+    }
 
-        if (component.Status == CellChargerStatus.Charging)
+    private void UpdateLoad(EntityUid uid, ChargerComponent component)
+    {
+        if (TryComp(uid, out ApcPowerReceiverComponent? receiver))
         {
-            AddComp<ActiveChargerComponent>(uid);
-        }
-        else
-        {
-            RemComp<ActiveChargerComponent>(uid);
-        }
-
-        switch (component.Status)
-        {
-            case CellChargerStatus.Off:
-                receiver.Load = 0;
-                _appearance.SetData(uid, CellVisual.Light, CellChargerStatus.Off, appearance);
-                break;
-            case CellChargerStatus.Empty:
-                receiver.Load = 0;
-                _appearance.SetData(uid, CellVisual.Light, CellChargerStatus.Empty, appearance);
-                break;
-            case CellChargerStatus.Charging:
+            if (component.Status == CellChargerStatus.Charging)
+            {
                 receiver.Load = component.ChargeRate;
-                _appearance.SetData(uid, CellVisual.Light, CellChargerStatus.Charging, appearance);
-                break;
-            case CellChargerStatus.Charged:
-                receiver.Load = 0;
-                _appearance.SetData(uid, CellVisual.Light, CellChargerStatus.Charged, appearance);
-                break;
-            default:
-                throw new ArgumentOutOfRangeException();
+                AddComp<ActiveChargerComponent>(uid);
+            }
+            else
+            {
+                receiver.Load = component.MinimumLoad;
+                RemComp<ActiveChargerComponent>(uid);
+            }
+        }
+    }
+
+    private void UpdateAppearance(EntityUid uid, ChargerComponent component)
+    {
+        TryComp(uid, out AppearanceComponent? appearance);
+        _appearance.SetData(uid, CellVisual.Light, component.Status, appearance);
+    }
+
+    private void UpdateBatteryAppearance(EntityUid uid, ChargerComponent component)
+    {
+        if (TryComp(uid, out AppearanceComponent? appearance) && _container.TryGetContainer(uid, component.SlotId, out var container))
+        {
+            var containsBattery = container.ContainedEntities.Count > 0;
+            _appearance.SetData(uid, CellVisual.Occupied, containsBattery, appearance);
         }
     }
 

@@ -323,10 +323,12 @@ namespace Content.Server.Power.EntitySystems
 
         private bool IsPoweredCalculate(ApcPowerReceiverComponent comp)
         {
+            var receivingSufficientPower = comp.NetworkLoad.ReceivingPower > 0.0 && MathHelper.CloseToPercent(
+                comp.NetworkLoad.ReceivingPower, comp.Load
+            );
+
             return !comp.PowerDisabled
-                   && (!comp.NeedsPower
-                       || MathHelper.CloseToPercent(comp.NetworkLoad.ReceivingPower,
-                           comp.Load));
+                   && (!comp.NeedsPower || receivingSufficientPower);
         }
 
         public override bool IsPoweredCalculate(SharedApcPowerReceiverComponent comp)
