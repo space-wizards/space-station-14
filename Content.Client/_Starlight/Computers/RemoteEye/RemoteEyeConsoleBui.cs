@@ -1,18 +1,18 @@
-﻿using Content.Shared.Starlight.Antags.Abductor;
+﻿using Content.Client._Starlight.Antags.Abductor;
+using Content.Shared._Starlight.Computers.RemoteEye;
+using Content.Shared.Starlight.Antags.Abductor;
 using JetBrains.Annotations;
 using static Content.Shared.Pinpointer.SharedNavMapSystem;
 
-namespace Content.Client._Starlight.Antags.Abductor;
+namespace Content.Client._Starlight.Computers.RemoteEye;
 
 [UsedImplicitly]
-public sealed class AbductorCameraConsoleBui : BoundUserInterface
+public sealed class RemoteEyeConsoleBui(EntityUid owner, Enum uiKey) : BoundUserInterface(owner, uiKey)
 {
     [ViewVariables]
-    private AbductorCameraConsoleWindow? _window;
+    private RemoteEyeConsoleWindow? _window;
     private int? _station;
-    public AbductorCameraConsoleBui(EntityUid owner, Enum uiKey) : base(owner, uiKey)
-    {
-    }
+
     protected override void Open()
     {
         base.Open();
@@ -21,11 +21,11 @@ public sealed class AbductorCameraConsoleBui : BoundUserInterface
 
     protected override void UpdateState(BoundUserInterfaceState? state)
     {
-        if (state is AbductorCameraConsoleBuiState s)
+        if (state is RemoteEyeConsoleBuiState s)
             Update(s);
     }
 
-    private void Update(AbductorCameraConsoleBuiState state)
+    private void Update(RemoteEyeConsoleBuiState _)
     {
         TryInitWindow();
 
@@ -40,7 +40,7 @@ public sealed class AbductorCameraConsoleBui : BoundUserInterface
     private void TryInitWindow()
     {
         if (_window != null) return;
-        _window = new AbductorCameraConsoleWindow();
+        _window = new RemoteEyeConsoleWindow();
         _window.OnClose += Close;
         _window.Title = "Intercepted cameras.";
 
@@ -66,7 +66,7 @@ public sealed class AbductorCameraConsoleBui : BoundUserInterface
             beaconButton.Button.Modulate = beacon.Color;
             beaconButton.Button.OnPressed += _ =>
             {
-                SendMessage(new AbductorBeaconChosenBuiMsg()
+                SendMessage(new BeaconChosenBuiMsg()
                 {
                     Beacon = beacon,
                 });
@@ -79,10 +79,11 @@ public sealed class AbductorCameraConsoleBui : BoundUserInterface
 
     private void RefreshUI()
     {
-        if (_window == null || State is not AbductorCameraConsoleBuiState state)
-            return;
+        if (_window == null || State is not RemoteEyeConsoleBuiState state)
+            return; 
 
-        _window!.Stations.DisposeAllChildren();
+        _window.Separator.Color = state.Color;
+        _window.Stations.DisposeAllChildren();
         _window.Beacons.DisposeAllChildren();
 
         foreach (var station in state.Stations)
@@ -111,7 +112,7 @@ public sealed class AbductorCameraConsoleBui : BoundUserInterface
         _window.Beacons.Visible = type == ViewType.Beacons;
         _window.BeaconsButton.Disabled = type != ViewType.Beacons;
 
-        _window.Title = State is not AbductorCameraConsoleBuiState state
+        _window.Title = State is not RemoteEyeConsoleBuiState state
             || _station == null
             || !state.Stations.TryGetValue(_station.Value, out var station)
             ? "Stations"

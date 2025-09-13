@@ -145,6 +145,7 @@
   - ShuttleGunFriendshipCircuitboard
   - ShuttleGunPerforatorCircuitboard
   - ShuttleGunSvalinnMachineGunCircuitboard
+  - ScanGateMachineCircuitboard
 
 - type: latheRecipePack
   parent:

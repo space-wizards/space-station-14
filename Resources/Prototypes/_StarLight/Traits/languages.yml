@@ -31,3 +31,133 @@
     - Sign
   languagesUnderstood:
     - Sign
+
+- type: trait
+  id: Nekomimetic
+  name: trait-language-nekomimetic-name
+  description: trait-language-nekomimetic-desc
+  category: LanguageTraits
+  cost: 2
+  components:
+  - type: LanguageSpeaker
+  languagesSpoken:
+    - Nekomimetic
+  languagesUnderstood:
+    - Nekomimetic
+
+- type: trait
+  id: Canilunzt
+  name: trait-language-canilunzt-name
+  description: trait-language-canilunzt-desc
+  category: LanguageTraits
+  cost: 2
+  components:
+    - type: LanguageSpeaker
+  languagesSpoken:
+    - Canilunzt
+  languagesUnderstood:
+    - Canilunzt
+
+- type: trait
+  id: Scratch
+  name: trait-language-scratch-name
+  description: trait-language-scratch-desc
+  category: LanguageTraits
+  cost: 1
+  components:
+    - type: LanguageSpeaker
+  languagesSpoken:
+    - Scratch
+  languagesUnderstood:
+    - Scratch
+
+- type: trait
+  id: SolCommon
+  name: trait-language-solcommon-name
+  description: trait-language-solcommon-desc
+  category: LanguageTraits
+  cost: 1
+  components:
+    - type: LanguageSpeaker
+  languagesSpoken:
+    - SolCommon
+  languagesUnderstood:
+    - SolCommon
+
+- type: trait
+  id: VoxPidgin
+  name: trait-language-voxpidgin-name
+  description: trait-language-voxpidgin-desc
+  category: LanguageTraits
+  cost: 2
+  components:
+    - type: LanguageSpeaker
+  languagesSpoken:
+    - VoxPidgin
+  languagesUnderstood:
+    - VoxPidgin
+
+- type: trait
+  id: Draconic
+  name: trait-language-draconic-name
+  description: trait-language-draconic-desc
+  category: LanguageTraits
+  cost: 2
+  components:
+    - type: LanguageSpeaker
+  languagesSpoken:
+    - Draconic
+  languagesUnderstood:
+    - Draconic
+
+- type: trait
+  id: Marish
+  name: trait-language-marish-name
+  description: trait-language-marish-desc
+  category: LanguageTraits
+  cost: 2
+  components:
+    - type: LanguageSpeaker
+  languagesSpoken:
+    - Marish
+  languagesUnderstood:
+    - Marish
+
+- type: trait
+  id: Bubblish
+  name: trait-language-bubblish-name
+  description: trait-language-bubblish-desc
+  category: LanguageTraits
+  cost: 2
+  components:
+    - type: LanguageSpeaker
+  languagesSpoken:
+    - Bubblish
+  languagesUnderstood:
+    - Bubblish
+
+- type: trait
+  id: Terrum
+  name: trait-language-terrum-name
+  description: trait-language-terrum-desc
+  category: LanguageTraits
+  cost: 2
+  components:
+    - type: LanguageSpeaker
+  languagesSpoken:
+    - Terrum
+  languagesUnderstood:
+    - Terrum
+
+- type: trait
+  id: Sylvan
+  name: trait-language-sylvan-name
+  description: trait-language-sylvan-desc
+  category: LanguageTraits
+  cost: 2
+  components:
+    - type: LanguageSpeaker
+  languagesSpoken:
+    - Sylvan
+  languagesUnderstood:
+    - Sylvan

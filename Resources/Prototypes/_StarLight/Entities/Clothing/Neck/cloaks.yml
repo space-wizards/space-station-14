@@ -180,10 +180,11 @@
   - type: Clothing
     sprite: _Starlight/Clothing/Neck/Mantles/oldmantle.rsi
 
-# Fashion-O-Mat, not obtainable any other way, unless mapped
+# Fashion-O-Mat-Start, not obtainable any other way, unless mapped
+# All CC/Synd stuff in Fashion-O-Mat is replica
 
 - type: entity
-  parent: [ ClothingNeckBase, BaseCentcommContraband ]
+  parent: [ ClothingNeckBase ] 
   id: ClothingNeckCloakCentcomBlack
   name: special operations officer cloak
   description: The NanoTrasen logo embroidered in gold speaks for itself.
@@ -192,7 +193,7 @@
     sprite: _Starlight/Clothing/Neck/Cloaks/centcom_officer_black.rsi
 
 - type: entity
-  parent: [ ClothingNeckBase, BaseCentcommContraband ]
+  parent: [ ClothingNeckBase ]
   id: ClothingNeckCloakCentcomAdmiral
   name: admiral's cape
   description: A vibrant green cape with gold stitching, worn by Nanotrasen Navy Admirals.
@@ -201,7 +202,7 @@
     sprite: _Starlight/Clothing/Neck/Cloaks/admiral.rsi
 
 - type: entity
-  parent: [ ClothingNeckBase, BaseCentcommContraband ]
+  parent: [ ClothingNeckBase ]
   id: ClothingNeckMantleERTLeader
   name: ERT leader's mantle
   description: Extraordinary decorative drape over the shoulders.
@@ -217,12 +218,39 @@
   name: horrific necktie
   description: The necktie is adorned with a garish pattern. It's disturbingly vivid. Somehow you feel as if it would be wrong to ever take it off. It's your friend now. You will betray it if you change it for some boring scarf.
   components:
+  - type: GhostRole
+    makeSentient: true
+    name: ghost-role-information-horrific-tie-name
+    description: ghost-role-information-horrific-tie-description
+    rules: ghost-role-information-horrific-tie-rules
+    mindRoles:
+    - MindRoleGhostRoleFreeAgentHarmless
+    raffle:
+      settings: default
+  - type: GhostTakeoverAvailable
+  - type: MovementSpeedModifier
+    baseWalkSpeed: 0
+    baseSprintSpeed: 0
+  - type: TextToSpeech
+    voice: horrificnecktie
   - type: Sprite
     sprite: _Starlight/Clothing/Neck/Ties/disco.rsi
   - type: Clothing
     sprite: _Starlight/Clothing/Neck/Ties/disco.rsi
 
-# Fashion-O-Mat-END
+- type: entity
+  parent: ClothingNeckBase
+  id: ClothingUniformDama0965
+  name: black fur cloak 
+  description: Neat cloak with fur around the neck and hem.
+  components:
+    - type: Sprite
+      sprite: _Starlight/Clothing/Neck/Cloaks/shuba.rsi
+    - type: Clothing
+      sprite: _Starlight/Clothing/Neck/Cloaks/shuba.rsi
+
+
+# Fashion-O-Mat-End
 
 
 # ## USSP
