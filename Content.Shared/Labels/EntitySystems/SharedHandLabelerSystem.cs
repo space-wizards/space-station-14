@@ -57,7 +57,7 @@ public abstract class SharedHandLabelerSystem : EntitySystem
     {
     }
 
-    private void AddLabelTo(EntityUid uid, HandLabelerComponent? handLabeler, EntityUid target, out string? result)
+    private void AddLabelTo(EntityUid uid, HandLabelerComponent? handLabeler, EntityUid target, out string? result, bool removeOnly = false)
     {
         if (!Resolve(uid, ref handLabeler))
         {
@@ -65,7 +65,7 @@ public abstract class SharedHandLabelerSystem : EntitySystem
             return;
         }
 
-        if (handLabeler.AssignedLabel == string.Empty)
+        if (removeOnly || handLabeler.AssignedLabel == string.Empty)
         {
             if (_netManager.IsServer)
                 _labelSystem.Label(target, null);
@@ -82,18 +82,39 @@ public abstract class SharedHandLabelerSystem : EntitySystem
         if (args.Target is not { Valid: true } target || _whitelistSystem.IsWhitelistFail(handLabeler.Whitelist, target) || !args.CanAccess)
             return;
 
-        var labelerText = handLabeler.AssignedLabel == string.Empty ? Loc.GetString("hand-labeler-remove-label-text") : Loc.GetString("hand-labeler-add-label-text");
+        bool labelerBlank = (handLabeler.AssignedLabel == string.Empty);
 
-        var verb = new UtilityVerb()
+        if (!labelerBlank)
+        {
+            var labelVerb = new UtilityVerb()
+            {
+                Act = () =>
+                {
+                    Labeling(uid, target, args.User, handLabeler);
+                },
+                Text = Loc.GetString("hand-labeler-add-label-text")
+            };
+
+            args.Verbs.Add(labelVerb);
+        }
+
+        // add the unlabel verb to the menu even when the labeler has text
+        var unLabelVerb = new UtilityVerb()
         {
             Act = () =>
             {
-                Labeling(uid, target, args.User, handLabeler);
+                Labeling(uid, target, args.User, handLabeler, true);
             },
-            Text = labelerText
+            Text = Loc.GetString("hand-labeler-remove-label-text"),
+            Priority = -1,
         };
 
-        args.Verbs.Add(verb);
+        if (!labelerBlank)
+        {
+            unLabelVerb.TextStyleClass = Verb.DefaultTextStyleClass;
+        }
+
+        args.Verbs.Add(unLabelVerb);
     }
 
     private void AfterInteractOn(EntityUid uid, HandLabelerComponent handLabeler, AfterInteractEvent args)
@@ -104,9 +125,9 @@ public abstract class SharedHandLabelerSystem : EntitySystem
         Labeling(uid, target, args.User, handLabeler);
     }
 
-    private void Labeling(EntityUid uid, EntityUid target, EntityUid User, HandLabelerComponent handLabeler)
+    private void Labeling(EntityUid uid, EntityUid target, EntityUid User, HandLabelerComponent handLabeler, bool removeOnly = false)
     {
-        AddLabelTo(uid, handLabeler, target, out var result);
+        AddLabelTo(uid, handLabeler, target, out var result, removeOnly);
         if (result == null)
             return;
 
