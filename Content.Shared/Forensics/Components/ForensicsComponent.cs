@@ -2,32 +2,35 @@ using Robust.Shared.GameStates;
 
 namespace Content.Shared.Forensics.Components
 {
+    /// <summary>
+    /// Leaves evidence on entities for <see cref="ForensicScannerComponent"/> to find.
+    /// </summary>
     [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
     public sealed partial class ForensicsComponent : Component
     {
-        [DataField("fingerprints"), AutoNetworkedField]
+        [DataField, AutoNetworkedField]
         public HashSet<string> Fingerprints = new();
 
-        [DataField("fibers"), AutoNetworkedField]
+        [DataField, AutoNetworkedField]
         public HashSet<string> Fibers = new();
 
-        [DataField("dnas"), AutoNetworkedField]
+        [DataField, AutoNetworkedField]
         public HashSet<string> DNAs = new();
 
-        [DataField("residues"), AutoNetworkedField]
+        [DataField, AutoNetworkedField]
         public HashSet<string> Residues = new();
 
         /// <summary>
         /// How close you must be to wipe the prints/blood/etc. off of this entity
         /// </summary>
-        [DataField("cleanDistance"), AutoNetworkedField]
+        [DataField, AutoNetworkedField]
         public float CleanDistance = 1.5f;
 
         /// <summary>
         /// Can the DNA be cleaned off of this entity?
         /// e.g. you can wipe the DNA off of a knife, but not a cigarette
         /// </summary>
-        [DataField("canDnaBeCleaned"), AutoNetworkedField]
+        [DataField, AutoNetworkedField]
         public bool CanDnaBeCleaned = true;
     }
 }
