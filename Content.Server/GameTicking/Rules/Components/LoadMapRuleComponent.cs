@@ -34,7 +34,11 @@ public sealed partial class LoadMapRuleComponent : Component
     /// <summary>
     /// A <see cref="PreloadedGridPrototype"/> to move to a new map.
     /// If there are no instances left nothing is done.
+    /// <para>
+    /// This is deprecated. Do not create new content that uses this field,
+    /// and migrate existing content to be loaded dynamically during the round.
+    /// </para>
     /// </summary>
-    [DataField]
+    [DataField, Obsolete("Do not pre-load grids. This causes the server to have to keep that grid loaded in memory during the entire round, even if that grid is never summoned to the playspace.")]
     public ProtoId<PreloadedGridPrototype>? PreloadedGrid;
 }
