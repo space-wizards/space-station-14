@@ -89,8 +89,10 @@ public sealed partial class StatusEffectsSystem : EntitySystem
             Dirty(args.Entity, statusComp);
         }
 
-        var ev = new StatusEffectAppliedEvent(ent);
-        RaiseLocalEvent(args.Entity, ref ev);
+        var effEv = new StatusEffectAppliedEvent(ent);
+        RaiseLocalEvent(args.Entity, ref effEv);
+        var entEv = new GotStatusEffectAppliedEvent(args.Entity);
+        RaiseLocalEvent(ent, ref entEv);
     }
 
     private void OnEntityRemoved(Entity<StatusEffectContainerComponent> ent, ref EntRemovedFromContainerMessage args)
@@ -101,8 +103,10 @@ public sealed partial class StatusEffectsSystem : EntitySystem
         if (!TryComp<StatusEffectComponent>(args.Entity, out var statusComp))
             return;
 
-        var ev = new StatusEffectRemovedEvent(ent);
-        RaiseLocalEvent(args.Entity, ref ev);
+        var effEv = new StatusEffectRemovedEvent(ent);
+        RaiseLocalEvent(args.Entity, ref effEv);
+        var entEv = new GotStatusEffectRemovedEvent(args.Entity);
+        RaiseLocalEvent(ent, ref entEv);
 
         // Clear AppliedTo after events are handled so event handlers can use it.
         if (statusComp.AppliedTo == null)
@@ -244,10 +248,22 @@ public sealed partial class StatusEffectsSystem : EntitySystem
 public readonly record struct StatusEffectAppliedEvent(EntityUid Target);
 
 /// <summary>
+/// Raised against the afflicted entity when a status effect is added.
+/// </summary>
+[ByRefEvent]
+public readonly record struct GotStatusEffectAppliedEvent(EntityUid Effect);
+
+/// <summary>
 /// Calls on effect entity, when a status effect is removed.
 /// </summary>
 [ByRefEvent]
 public readonly record struct StatusEffectRemovedEvent(EntityUid Target);
+
+/// <summary>
+/// Raised against the afflicted entity when a status effect is removed.
+/// </summary>
+[ByRefEvent]
+public readonly record struct GotStatusEffectRemovedEvent(EntityUid Effect);
 
 /// <summary>
 /// Raised on an entity before a status effect is added to determine if adding it should be cancelled.
