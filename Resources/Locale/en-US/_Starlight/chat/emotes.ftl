@@ -14,6 +14,9 @@ chat-emote-name-wurble = Wurble
 chat-emote-name-scree = Scree
 chat-emote-name-call = Call
 chat-emote-name-squawk = Squawk
+chat-emote-name-lizardpurr = Purr
+chat-emote-name-lizardhiss = Hiss
+chat-emote-name-lizardrattle = Rattle
 
 # Emote Messages
 chat-emote-msg-mew = mews
@@ -31,3 +34,6 @@ chat-emote-msg-wurble = wurbles
 chat-emote-msg-scree = screes
 chat-emote-msg-call = calls
 chat-emote-msg-squawk = squawks
+chat-emote-msg-lurr = purrs
+chat-emote-msg-liss = hisses
+chat-emote-msg-rattle = rattles
