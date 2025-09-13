@@ -92,6 +92,8 @@ public sealed partial class TriggerSystem : EntitySystem
         {
             _adminLogger.Add(LogType.Trigger,
                 $"{ToPrettyString(user.Value):user} started a {ent.Comp.Delay} second timer trigger on entity {ToPrettyString(ent.Owner):timer}");
+
+            ent.Comp.User = user;
         }
         else
         {
