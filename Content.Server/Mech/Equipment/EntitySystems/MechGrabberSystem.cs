@@ -6,11 +6,11 @@ using Content.Shared.DoAfter;
 using Content.Shared.Interaction;
 using Content.Shared.Mech;
 using Content.Shared.Mech.Components;
-using Content.Shared.Mech.Equipment.Components;
+using Content.Shared.Mech.EntitySystems;
 using Content.Shared.Mobs.Components;
+using Content.Shared.Vehicle;
 using Content.Shared.Wall;
 using Robust.Server.GameObjects;
-using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Containers;
 using Robust.Shared.Map;
@@ -30,6 +30,7 @@ public sealed class MechGrabberSystem : EntitySystem
     [Dependency] private readonly InteractionSystem _interaction = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly TransformSystem _transform = default!;
+    [Dependency] private readonly VehicleSystem _vehicle = default!;
 
     /// <inheritdoc/>
     public override void Initialize()
@@ -40,7 +41,7 @@ public sealed class MechGrabberSystem : EntitySystem
         SubscribeLocalEvent<MechGrabberComponent, MechEquipmentRemovedEvent>(OnEquipmentRemoved);
         SubscribeLocalEvent<MechGrabberComponent, AttemptRemoveMechEquipmentEvent>(OnAttemptRemove);
 
-        SubscribeLocalEvent<MechGrabberComponent, UserActivateInWorldEvent>(OnInteract);
+        SubscribeLocalEvent<MechGrabberComponent, AfterInteractEvent>(OnAfterInteract);
         SubscribeLocalEvent<MechGrabberComponent, GrabberDoAfterEvent>(OnMechGrab);
     }
 
@@ -123,14 +124,23 @@ public sealed class MechGrabberSystem : EntitySystem
         args.States.Add(GetNetEntity(uid), state);
     }
 
-    private void OnInteract(EntityUid uid, MechGrabberComponent component, UserActivateInWorldEvent args)
+    private void OnAfterInteract(EntityUid uid, MechGrabberComponent component, AfterInteractEvent args)
     {
         if (args.Handled)
             return;
-        var target = args.Target;
 
-        if (args.Target == args.User || component.DoAfter != null)
+        if (args.Target is not { } target)
             return;
+
+        // Stop if target is same as grabber or already doing after
+        if (target == uid || component.DoAfter != null)
+            return;
+
+        if (!TryComp<MechEquipmentComponent>(uid, out var equipmentComponent) ||
+            equipmentComponent.EquipmentOwner == null)
+            return;
+
+        var mech = equipmentComponent.EquipmentOwner.Value;
 
         if (TryComp<PhysicsComponent>(target, out var physics) && physics.BodyType == BodyType.Static ||
             HasComp<WallMountComponent>(target) ||
@@ -145,13 +155,12 @@ public sealed class MechGrabberSystem : EntitySystem
         if (component.ItemContainer.ContainedEntities.Count >= component.MaxContents)
             return;
 
-        if (!TryComp<MechComponent>(args.User, out var mech) || mech.PilotSlot.ContainedEntity == target)
+        // Prevent grabbing the pilot operating this mech
+        if (_vehicle.GetOperatorOrNull(mech) == target)
             return;
 
-        if (mech.Energy + component.GrabEnergyDelta < 0)
-            return;
-
-        if (!_interaction.InRangeUnobstructed(args.User, target))
+        // Use mech range for interaction checks instead of the pilot
+        if (!_interaction.InRangeUnobstructed(mech, Transform(target).Coordinates))
             return;
 
         args.Handled = true;
@@ -179,11 +188,12 @@ public sealed class MechGrabberSystem : EntitySystem
 
         if (!TryComp<MechEquipmentComponent>(uid, out var equipmentComponent) || equipmentComponent.EquipmentOwner == null)
             return;
-        if (!_mech.TryChangeEnergy(equipmentComponent.EquipmentOwner.Value, component.GrabEnergyDelta))
+        var mech = equipmentComponent.EquipmentOwner.Value;
+        if (!_mech.TryChangeEnergy(mech, component.GrabEnergyDelta))
             return;
 
         _container.Insert(args.Args.Target.Value, component.ItemContainer);
-        _mech.UpdateUserInterface(equipmentComponent.EquipmentOwner.Value);
+        _mech.UpdateUserInterface(mech);
 
         args.Handled = true;
     }
