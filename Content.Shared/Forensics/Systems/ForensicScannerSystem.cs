@@ -57,7 +57,6 @@ namespace Content.Shared.Forensics.Systems
                 component.PrintCooldown,
                 component.PrintReadyAt);
 
-            Dirty(uid, component);
             _uiSystem.SetUiState(uid, ForensicScannerUiKey.Key, state);
         }
 
@@ -95,6 +94,7 @@ namespace Content.Shared.Forensics.Systems
                 }
 
                 scanner.LastScannedName = MetaData(args.Args.Target.Value).EntityName;
+                Dirty(uid, component);
             }
 
             OpenUserInterface(args.Args.User, (uid, scanner));
@@ -257,6 +257,7 @@ namespace Content.Shared.Forensics.Systems
             component.SolutionDNAs = new();
             component.LastScannedName = string.Empty;
 
+            Dirty(uid, component);
             UpdateUserInterface(uid, component);
         }
     }
