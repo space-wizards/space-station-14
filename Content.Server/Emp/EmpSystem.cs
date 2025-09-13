@@ -20,6 +20,8 @@ public sealed class EmpSystem : SharedEmpSystem
         SubscribeLocalEvent<EmpDisabledComponent, RadioReceiveAttemptEvent>(OnRadioReceiveAttempt);
         SubscribeLocalEvent<EmpDisabledComponent, ApcToggleMainBreakerAttemptEvent>(OnApcToggleMainBreaker);
         SubscribeLocalEvent<EmpDisabledComponent, SurveillanceCameraSetActiveAttemptEvent>(OnCameraSetActive);
+
+        SubscribeLocalEvent<DestroyOnEmpComponent, EmpAttemptEvent>(OnEMPDestroy);
     }
 
     public override void EmpPulse(MapCoordinates coordinates, float range, float energyConsumption, float duration)
@@ -118,6 +120,14 @@ public sealed class EmpSystem : SharedEmpSystem
     private void OnCameraSetActive(EntityUid uid, EmpDisabledComponent component, ref SurveillanceCameraSetActiveAttemptEvent args)
     {
         args.Cancelled = true;
+    }
+
+    public void OnEMPDestroy(EntityUid uid, DestroyOnEmpComponent component, EmpAttemptEvent args)
+    {
+        if (args.Cancelled)
+            return;
+
+        QueueDel(uid);
     }
 }
 
