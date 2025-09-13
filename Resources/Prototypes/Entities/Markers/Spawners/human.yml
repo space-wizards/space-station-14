@@ -33,3 +33,27 @@
   - type: ConditionalSpawner
     prototypes:
     - MobSyndicateFootsoldierPilot
+
+- type: entity
+  name: syndicate repairman spawner
+  id: SpawnMobSyndicateRepairman
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+    - state: green
+  - type: ConditionalSpawner
+    prototypes:
+    - MobSyndicateRepairman
+
+- type: entity
+  name: syndicate elite footsoldier spawner
+  id: SpawnMobSyndicateFootSoldierElite
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+    - state: green
+  - type: ConditionalSpawner
+    prototypes:
+    - MobSyndicateFootsoldierElite
