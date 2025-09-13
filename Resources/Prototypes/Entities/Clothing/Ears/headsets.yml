@@ -310,14 +310,6 @@
   name: green headset
   description: An updated, modular spider intercom. Comes with a key which can copy others headset channels.
   components:
-  - type: Headset
-  - type: EncryptionKeyChannelsCopy
-  - type: EncryptionKeyHolder
-    keySlots: 1
-  - type: ContainerFill
-    containers:
-      key_slots:
-      - EncryptionKeyNinja
   - type: Sprite
     sprite: Clothing/Ears/Headsets/ninja.rsi
   - type: Clothing

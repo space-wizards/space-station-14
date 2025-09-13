@@ -60,9 +60,9 @@ public sealed partial class EncryptionKeySystem : EntitySystem
         _audio.PlayPredicted(component.KeyExtractionSound, uid, args.User);
     }
 
-    public void UpdateChannels(EntityUid uid, EncryptionKeyHolderComponent? component = null)
+    public void UpdateChannels(EntityUid uid, EncryptionKeyHolderComponent component)
     {
-        if (!Resolve(uid, ref component, false) || !component.Initialized)
+        if (!component.Initialized)
             return;
 
         component.Channels.Clear();
@@ -78,34 +78,6 @@ public sealed partial class EncryptionKeySystem : EntitySystem
         }
 
         RaiseLocalEvent(uid, new EncryptionChannelsChangedEvent(component));
-    }
-
-    /// <summary>
-    /// Adds to <see cref="EncryptionKeyComponent"/> channels in <paramref name="channels"/>. If already had this channel will do nothing.
-    /// </summary>
-    /// <param name="channels"> while iterating checks if <see cref="RadioChannelPrototype"/> with this id exist </param>
-    /// <returns> True if any channel were added </returns>
-    public bool TryAddChannels(Entity<EncryptionKeyComponent> receiver, HashSet<string> channels)
-    {
-        var (receiverUid, receiverComp) = receiver;
-        var anyAdded = false;
-
-        foreach (var channel in channels)
-        {
-            if (!_protoManager.TryIndex<RadioChannelPrototype>(channel, out _))
-            {
-                Log.Error($"Cant Index channel proto with id {channel} while adding channel to {ToPrettyString(receiver)}");
-                continue;
-            }
-
-            if (receiverComp.Channels.Add(channel))
-                anyAdded = true;
-        }
-
-        if (_container.TryGetContainingContainer((receiverUid, null, null), out var container))
-            UpdateChannels(container.Owner);
-
-        return anyAdded;
     }
 
     private void OnContainerModified(EntityUid uid, EncryptionKeyHolderComponent component, ContainerModifiedMessage args)
