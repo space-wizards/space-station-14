@@ -100,8 +100,7 @@ public sealed class SharedKitchenSpikeSystem : EntitySystem
         if (_gameTiming.ApplyingState)
             return;
 
-        EnsureComp<KitchenSpikeHookedComponent>(args.Entity, out var spike);
-        spike.KitchenSpike = ent;
+        EnsureComp<KitchenSpikeHookedComponent>(args.Entity);
         _damageableSystem.TryChangeDamage(args.Entity, ent.Comp.SpikeDamage, true);
 
         ent.Comp.NextDamage = _gameTiming.CurTime + ent.Comp.DamageInterval;
@@ -389,7 +388,8 @@ public sealed class SharedKitchenSpikeSystem : EntitySystem
 
     private void OnAccessibleOverride(Entity<KitchenSpikeHookedComponent> ent, ref AccessibleOverrideEvent args)
     {
-        if (args.Handled || !_interaction.CanAccess(args.User, ent.Comp.KitchenSpike))
+        var xform = Transform(ent);
+        if (args.Handled || !_interaction.CanAccess(args.User, xform.ParentUid))
             return;
 
         args.Accessible = true;
