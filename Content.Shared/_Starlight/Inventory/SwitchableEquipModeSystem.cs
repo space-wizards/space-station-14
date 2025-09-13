@@ -2,10 +2,11 @@ using Content.Shared.Storage;
 using Content.Shared.Storage.EntitySystems;
 using Content.Shared.Inventory;
 using Content.Shared.Hands.EntitySystems;
+using Content.Shared.Clothing.EntitySystems;
 using Content.Shared.Verbs;
 using Robust.Shared.Utility;
 using Robust.Shared.Audio.Systems;
-using Robust.Shared.GameObjects;
+using Content.Shared.Inventory.Events;
 
 namespace Content.Shared._Starlight.Inventory;
 
@@ -28,6 +29,7 @@ public sealed class SwitchableEquipModeSystem : EntitySystem
 
         SubscribeLocalEvent<SwitchableEquipModeComponent, InventoryUseSlotEvent>(OnInventoryUseSlot);
         SubscribeLocalEvent<SwitchableEquipModeComponent, GetVerbsEvent<ActivationVerb>>(OnGetVerbs);
+        SubscribeLocalEvent<SwitchableEquipModeComponent, GotUnequippedEvent>(OnUnequipped);
     }
 
     private void OnInventoryUseSlot(EntityUid uid, SwitchableEquipModeComponent switchModeComp, ref InventoryUseSlotEvent args)
@@ -52,8 +54,9 @@ public sealed class SwitchableEquipModeSystem : EntitySystem
 
     private void OnGetVerbs(EntityUid uid, SwitchableEquipModeComponent switchModeComp, ref GetVerbsEvent<ActivationVerb> args)
     {
-        if (!args.CanInteract) return;
+        if (!args.CanInteract || !args.CanAccess) return;
         if (!TryComp<StorageComponent>(uid, out var storageComp)) return;
+        if (!_inventory.TryGetContainingSlot(uid, out var slot)) return;
 
         var modeCount = Enum.GetNames<EquipMode>().Length;
         EquipMode nextMode = (EquipMode)(((int)switchModeComp.Mode + 1) % modeCount);
@@ -78,8 +81,7 @@ public sealed class SwitchableEquipModeSystem : EntitySystem
             Priority = 0,
             Act = () =>
             {
-                if (!_inventory.TryGetContainingSlot(uid, out var slot)) return;
-                _inventory.TryUnequip(user, slot.Name, true, true);
+                _inventory.TryUnequip(user, slot.Name, false, true);
                 _hands.TryPickup(user, uid);
             }
         };
@@ -93,6 +95,9 @@ public sealed class SwitchableEquipModeSystem : EntitySystem
 
             default:
                 break;
-        };
+        }
+        ;
     }
+
+    private void OnUnequipped(Entity<SwitchableEquipModeComponent> ent, ref GotUnequippedEvent _) => ent.Comp.Mode = EquipMode.Remove; // revert to default behaviour
 }
