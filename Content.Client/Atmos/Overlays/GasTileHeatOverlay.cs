@@ -2,6 +2,7 @@
 using Content.Shared.Atmos;
 using Content.Shared.Atmos.Components;
 using Content.Client.Atmos.EntitySystems;
+using Content.Client.Graphics;
 using Content.Shared.CCVar;
 using Robust.Client.Graphics;
 using Robust.Shared.Configuration;
@@ -28,8 +29,7 @@ public sealed class GasTileHeatOverlay : Overlay
     private GasTileOverlaySystem? _gasTileOverlay;
     private readonly SharedTransformSystem _xformSys;
 
-    private IRenderTexture? _heatTarget;
-    private IRenderTexture? _heatBlurTarget;
+    private readonly OverlayResourceCache<CachedResources> _resources = new();
 
     public override OverlaySpace Space => OverlaySpace.WorldSpace;
     private readonly ShaderInstance _shader;
@@ -64,19 +64,21 @@ public sealed class GasTileHeatOverlay : Overlay
 
         var target = args.Viewport.RenderTarget;
 
+        var res = _resources.GetForViewport(args.Viewport, static _ => new CachedResources());
+
         // Probably the resolution of the game window changed, remake the textures.
-        if (_heatTarget?.Texture.Size != target.Size)
+        if (res.HeatTarget?.Texture.Size != target.Size)
         {
-            _heatTarget?.Dispose();
-            _heatTarget = _clyde.CreateRenderTarget(
+            res.HeatTarget?.Dispose();
+            res.HeatTarget = _clyde.CreateRenderTarget(
                 target.Size,
                 new RenderTargetFormatParameters(RenderTargetColorFormat.Rgba8Srgb),
                 name: nameof(GasTileHeatOverlay));
         }
-        if (_heatBlurTarget?.Texture.Size != target.Size)
+        if (res.HeatBlurTarget?.Texture.Size != target.Size)
         {
-            _heatBlurTarget?.Dispose();
-            _heatBlurTarget = _clyde.CreateRenderTarget(
+            res.HeatBlurTarget?.Dispose();
+            res.HeatBlurTarget = _clyde.CreateRenderTarget(
                 target.Size,
                 new RenderTargetFormatParameters(RenderTargetColorFormat.Rgba8Srgb),
                 name: $"{nameof(GasTileHeatOverlay)}-blur");
@@ -97,7 +99,7 @@ public sealed class GasTileHeatOverlay : Overlay
 
         // We're rendering in the context of the heat target texture, which will encode data as to where and how strong
         // the heat distortion will be
-        args.WorldHandle.RenderInRenderTarget(_heatTarget,
+        args.WorldHandle.RenderInRenderTarget(res.HeatTarget,
             () =>
             {
                 List<Entity<MapGridComponent>> grids = new();
@@ -113,7 +115,7 @@ public sealed class GasTileHeatOverlay : Overlay
                     if (!Matrix3x2.Invert(gridEntToViewportLocal, out var viewportLocalToGridEnt))
                         continue;
 
-                    var uvToUi = Matrix3Helpers.CreateScale(_heatTarget.Size.X, -_heatTarget.Size.Y);
+                    var uvToUi = Matrix3Helpers.CreateScale(res.HeatTarget.Size.X, -res.HeatTarget.Size.Y);
                     var uvToGridEnt = uvToUi * viewportLocalToGridEnt;
 
                     // Because we want the actual distortion to be calculated based on the grid coordinates*, we need
@@ -183,17 +185,19 @@ public sealed class GasTileHeatOverlay : Overlay
 
     protected override void Draw(in OverlayDrawArgs args)
     {
-        if (ScreenTexture is null || _heatTarget is null || _heatBlurTarget is null)
+        var res = _resources.GetForViewport(args.Viewport, out _, static _ => new CachedResources());
+
+        if (ScreenTexture is null || res.HeatTarget is null || res.HeatBlurTarget is null)
             return;
 
         // Blur to soften the edges of the distortion. the lower parts of the alpha channel need to get cut off in the
         // distortion shader to keep them in tile bounds.
-        _clyde.BlurRenderTarget(args.Viewport, _heatTarget, _heatBlurTarget, args.Viewport.Eye!, 14f);
+        _clyde.BlurRenderTarget(args.Viewport, res.HeatTarget, res.HeatBlurTarget, args.Viewport.Eye!, 14f);
 
         // Set up and render the distortion
         _shader.SetParameter("SCREEN_TEXTURE", ScreenTexture);
         args.WorldHandle.UseShader(_shader);
-        args.WorldHandle.DrawTextureRect(_heatTarget.Texture, args.WorldBounds);
+        args.WorldHandle.DrawTextureRect(res.HeatTarget.Texture, args.WorldBounds);
 
         // Return the draw handle to normal settings
         args.WorldHandle.UseShader(null);
@@ -202,9 +206,20 @@ public sealed class GasTileHeatOverlay : Overlay
 
     protected override void DisposeBehavior()
     {
-        _heatTarget = null;
-        _heatBlurTarget = null;
+        _resources.Dispose();
         _configManager.UnsubValueChanged(CCVars.ReducedMotion, SetReducedMotion);
         base.DisposeBehavior();
+    }
+
+    private sealed class CachedResources : IDisposable
+    {
+        public IRenderTexture? HeatTarget;
+        public IRenderTexture? HeatBlurTarget;
+
+        public void Dispose()
+        {
+            HeatTarget?.Dispose();
+            HeatBlurTarget?.Dispose();
+        }
     }
 }
