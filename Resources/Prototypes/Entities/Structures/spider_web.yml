@@ -56,11 +56,11 @@
   - type: Fixtures
     fixtures:
       fix1:
-        hard: false
+        hard: false # a hard fixture will confuse mob pathing
         density: 7
         shape:
           !type:PhysShapeAabb
-          bounds: "-0.5,-0.5,0.5,0.5"
+          bounds: "-0.5,-0.5,0.5,0.5" # full tile, otherwise you can stack webs
         layer:
         - MidImpassable
   - type: Destructible
@@ -106,16 +106,17 @@
         shape:
           !type:PhysShapeAabb
           bounds: "-0.4,-0.4,0.4,0.4"
-        hard: false
+        hard: false # a hard fixture will confuse mob pathing
         layer:
         - SlipLayer
       fix1:
         shape:
           !type:PhysShapeAabb
-          bounds: "-0.4,-0.4,0.4,0.4"
-        density: 1000
+          bounds: "-0.5,-0.5,0.5,0.5" # full tile, otherwise you can stack webs
+        hard: false # a hard fixture will confuse mob pathing
+        density: 1000 # dense because funny? idk
         mask:
-        - ItemMask
+        - MidImpassable
   - type: Destructible
     thresholds:
     - trigger:
