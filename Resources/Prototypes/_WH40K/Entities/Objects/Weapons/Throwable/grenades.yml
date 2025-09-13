@@ -1,7 +1,7 @@
 - type: entity
   id: FragGrenade
-  name: фраг граната
-  description: Стандартная противопехотная граната, используемая в основном вооружёнными силами Империума Человечества.
+  name: frag grenade 
+  description: Standard issue fragmentation grenade used by the Imperial Guard and Space Marines to clear out enemy infantry.
   parent: GrenadeBase
   suffix: WH40K
   components:
@@ -14,9 +14,15 @@
   - type: TimerTrigger
     delay: 3
     beepInterval: 2
-  - type: EmitSoundOnTrigger
-    sound:
-      path: "/Audio/Weapons/Guns/Gunshots/batrifle.ogg"
+  - type: ExplodeOnTrigger
+    keysIn:
+    - timer
+  - type: Explosive
+    explosionType: Default
+    maxIntensity: 10
+    intensitySlope: 3
+    totalIntensity: 110 # about a ~4 tile radius
+    canCreateVacuum: false
   - type: ContainerContainer
     containers:
       cluster-payload: !type:Container
@@ -26,8 +32,8 @@
 
 - type: entity
   id: KrakGrenade
-  name: крак граната
-  description: Взрывное устройство, используемое вооружёнными силами Империума Человечества для уничтожения структур, техники и тяжеловооружённой пехоты противника.
+  name: krak grenade
+  description: Explosive anti-armor grenade used by the Imperial Guard and Space Marines to destroy light vehicles and fortifications.
   parent: GrenadeBase
   suffix: WH40K
   components:
@@ -36,11 +42,14 @@
   - type: TimerTrigger
     delay: 5
   - type: ExplodeOnTrigger
+    keysIn:
+    - timer
   - type: Explosive
     explosionType: Minibomb
     totalIntensity: 200
     intensitySlope: 30
     maxIntensity: 60
+    canCreateVacuum: false
   - type: Appearance
   - type: TimerTriggerVisuals
     primingSound:
@@ -48,16 +57,18 @@
 
 - type: entity
   id: OrkGrenade
-  name: орочья граната
-  description: БУБУМКА для наимощнейшего ВААААААГХ!
+  name: coolboyz grenade
+  description: Big boom for big Waagh!
   parent: GrenadeBase
-  suffix: WH40K
+  suffix: WH40K, Ork
   components:
   - type: Sprite
     sprite: _WH40K/Objects/Weapons/Grenades/orkgrenade.rsi
   - type: TimerTrigger
     delay: 5
   - type: ExplodeOnTrigger
+    keysIn:
+    - timer
   - type: Explosive
     explosionType: Default
     maxIntensity: 10
@@ -71,8 +82,8 @@
 
 - type: entity
   id: MeltaGrenade
-  name: мельта заряд
-  description: Разрушительный и редкий подрывной заряд, использующий тот же принцип действия, что и другое мельта оружие, но в более замкнутом объёме.
+  name: melta grenade
+  description: Short-range anti-armor grenade that projects a powerful melting blast, capable of destroying heavily armored targets.
   parent: GrenadeBase
   suffix: WH40K
   components:
@@ -81,11 +92,14 @@
   - type: TimerTrigger
     delay: 5
   - type: ExplodeOnTrigger
+    keysIn:
+    - timer
   - type: Explosive
     explosionType: MicroBomb
     totalIntensity: 700
     intensitySlope: 45
     maxIntensity: 10
+    canCreateVacuum: false
   - type: TimerTriggerVisuals
     primingSound:
       path: /Audio/Items/smoke_grenade_prime.ogg
