@@ -32,21 +32,13 @@ public sealed class ChangelingStasisSystem : EntitySystem
 
     private void OnShutdown(Entity<RegenerativeStasisComponent> ent, ref ComponentShutdown args)
     {
-        if (ent.Comp.RegenStasisActionEntity != null)
-        {
-            _actions.RemoveAction(ent.Owner, ent.Comp.RegenStasisActionEntity);
-        }
+        _actions.RemoveAction(ent.Owner, ent.Comp.RegenStasisActionEntity);
     }
 
     private void OnStateChanged(Entity<RegenerativeStasisComponent> ent, ref MobStateChangedEvent args)
     {
         if (args.NewMobState == MobState.Alive && ent.Comp.IsInStasis)
             CancelStasis(ent);
-
-        // We force enter stasis on death. This is mostly for convenience as we do not have biomass or chemicals yet.
-        // TODO: Remove once we have biomass/chemicals or some other requirement.
-        if (args.NewMobState == MobState.Dead && !ent.Comp.IsInStasis)
-            EnterStasis(ent);
     }
 
     private void OnMoveGhost(Entity<RegenerativeStasisComponent> ent, ref EntityGhostAttemptEvent args)
@@ -73,7 +65,8 @@ public sealed class ChangelingStasisSystem : EntitySystem
         if (ent.Comp.IsInStasis)
             return;
 
-        _mobs.ChangeMobState(ent.Owner, MobState.Dead);
+        if (!_mobs.IsDead(ent))
+            _mobs.ChangeMobState(ent.Owner, MobState.Dead);
 
         ent.Comp.IsInStasis = true;
 
@@ -87,14 +80,15 @@ public sealed class ChangelingStasisSystem : EntitySystem
         if (!ent.Comp.IsInStasis)
             return;
 
+        // We remove all the damage.
+        _damage.SetAllDamage(ent.Owner, 0);
+
         _mobs.ChangeMobState(ent.Owner, MobState.Alive);
+        _mobs.UpdateMobState(ent.Owner);
 
         ent.Comp.IsInStasis = false;
 
         Dirty(ent);
-
-        // We remove all the damage.
-        _damage.SetAllDamage(ent.Owner, 0);
     }
 
     private void CancelStasis(Entity<RegenerativeStasisComponent> ent)
