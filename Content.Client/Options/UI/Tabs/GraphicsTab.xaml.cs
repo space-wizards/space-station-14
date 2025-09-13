@@ -108,7 +108,7 @@ public sealed partial class GraphicsTab : Control
         private const int QualityMedium = 2;
         private const int QualityHigh = 3;
 
-        private const int QualityDefault = QualityMedium;
+        private const int QualityDefault = QualityLow;
 
         public OptionLightingQuality(OptionsTabControlRow controller, IConfigurationManager cfg, OptionDropDown dropDown) : base(controller)
         {
@@ -142,12 +142,12 @@ public sealed partial class GraphicsTab : Control
                     _cfg.SetCVar(CVars.LightSoftShadows, false);
                     _cfg.SetCVar(CVars.LightBlur, false);
                     break;
-                case QualityLow:
-                    _cfg.SetCVar(CVars.LightResolutionScale, 0.5f);
+                default: // = QualityLow
+                    _cfg.SetCVar(CVars.LightResolutionScale, 0.3f);
                     _cfg.SetCVar(CVars.LightSoftShadows, false);
                     _cfg.SetCVar(CVars.LightBlur, true);
                     break;
-                default: // = QualityMedium
+                case QualityMedium:
                     _cfg.SetCVar(CVars.LightResolutionScale, 0.5f);
                     _cfg.SetCVar(CVars.LightSoftShadows, true);
                     _cfg.SetCVar(CVars.LightBlur, true);
@@ -182,7 +182,7 @@ public sealed partial class GraphicsTab : Control
             if (val <= 0.125)
                 return QualityVeryLow;
 
-            if ((val <= 0.5) && !soft)
+            if (val <= 0.3 && !soft)
                 return QualityLow;
 
             if (val <= 0.5)
