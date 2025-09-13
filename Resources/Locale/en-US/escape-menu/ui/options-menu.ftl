@@ -102,6 +102,7 @@ ui-options-vp-vertical-fit-tooltip = When enabled, the main viewport will ignore
 ui-options-vp-low-res = Low-resolution viewport
 ui-options-parallax-low-quality = Low-quality Parallax (background)
 ui-options-ambient-occlusion = Show Ambient Occlusion
+ui-options-heat-distortion = Heat distortion
 ui-options-fps-counter = Show FPS counter
 ui-options-vp-width = Viewport width:
 ui-options-hud-layout = HUD layout:

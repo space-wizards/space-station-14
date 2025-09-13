@@ -34,6 +34,8 @@ public sealed class GasTileHeatOverlay : Overlay
     public override OverlaySpace Space => OverlaySpace.WorldSpace;
     private readonly ShaderInstance _shader;
 
+    private bool _heatDistortion;
+
     public GasTileHeatOverlay()
     {
         IoCManager.InjectDependencies(this);
@@ -42,7 +44,7 @@ public sealed class GasTileHeatOverlay : Overlay
         _shader = _proto.Index(HeatOverlayShader).InstanceUnique();
 
         _configManager.OnValueChanged(CCVars.ReducedMotion, SetReducedMotion, invokeImmediately: true);
-
+        _configManager.OnValueChanged(CCVars.AccessibilityHeatDistortion, SetHeatDistortion, invokeImmediately: true);
     }
 
     private void SetReducedMotion(bool reducedMotion)
@@ -51,8 +53,16 @@ public sealed class GasTileHeatOverlay : Overlay
         _shader.SetParameter("speed_scale", reducedMotion ? 0.25f : 1f);
     }
 
+    private void SetHeatDistortion(bool value)
+    {
+        _heatDistortion = value;
+    }
+
     protected override bool BeforeDraw(in OverlayDrawArgs args)
     {
+        if (!_heatDistortion)
+            return false;
+
         if (args.MapId == MapId.Nullspace)
             return false;
 
@@ -205,6 +215,7 @@ public sealed class GasTileHeatOverlay : Overlay
         _heatTarget = null;
         _heatBlurTarget = null;
         _configManager.UnsubValueChanged(CCVars.ReducedMotion, SetReducedMotion);
+        _configManager.UnsubValueChanged(CCVars.AccessibilityHeatDistortion, SetHeatDistortion);
         base.DisposeBehavior();
     }
 }
