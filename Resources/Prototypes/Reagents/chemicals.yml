@@ -7,6 +7,7 @@
   color: "#AF14B7"
   boilingPoint: 55.5
   meltingPoint: -50.0
+  flammability: 4
 
 - type: reagent
   id: Phenol

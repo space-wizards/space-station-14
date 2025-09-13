@@ -117,6 +117,9 @@ namespace Content.Shared.Atmos.EntitySystems
             [ViewVariables]
             public readonly byte[] Opacity;
 
+            [ViewVariables]
+            public readonly byte FireType;
+
             /// <summary>
             /// This temperature is currently only used by the GasTileHeatOverlay.
             /// This value will only reflect the true temperature of the gas when the temperature is between
@@ -132,9 +135,10 @@ namespace Content.Shared.Atmos.EntitySystems
 
             // TODO change fire color based on temps
 
-            public GasOverlayData(byte fireState, byte[] opacity, float temperature)
+            public GasOverlayData(byte fireState, byte type, byte[] opacity, float temperature)
             {
                 FireState = fireState;
+                FireType = type;
                 Opacity = opacity;
                 Temperature = temperature;
             }
