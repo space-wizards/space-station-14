@@ -1,10 +1,9 @@
 ﻿using Content.Shared.Actions;
 using Content.Shared.Changeling.Components;
 using Content.Shared.Damage;
+using Content.Shared.Ghost;
 using Content.Shared.Mobs;
 using Content.Shared.Mobs.Systems;
-using Robust.Shared.Network;
-using Robust.Shared.Timing;
 
 namespace Content.Shared.Changeling.Systems;
 
@@ -13,7 +12,6 @@ public sealed class ChangelingStasisSystem : EntitySystem
     [Dependency] private readonly SharedActionsSystem _actions = default!;
     [Dependency] private readonly MobStateSystem _mobs = default!;
     [Dependency] private readonly DamageableSystem _damage = default!;
-    [Dependency] private readonly IGameTiming _timing = default!;
 
     public override void Initialize()
     {
@@ -23,6 +21,8 @@ public sealed class ChangelingStasisSystem : EntitySystem
         SubscribeLocalEvent<RegenerativeStasisComponent, ComponentShutdown>(OnShutdown);
         SubscribeLocalEvent<RegenerativeStasisComponent, MobStateChangedEvent>(OnStateChanged);
         SubscribeLocalEvent<RegenerativeStasisComponent, ChangelingStasisActionEvent>(OnStasisUse);
+
+        SubscribeLocalEvent<RegenerativeStasisComponent, EntityGhostAttemptEvent>(OnMoveGhost);
     }
 
     private void OnMapInit(Entity<RegenerativeStasisComponent> ent, ref MapInitEvent args)
@@ -49,11 +49,16 @@ public sealed class ChangelingStasisSystem : EntitySystem
             EnterStasis(ent);
     }
 
-    private void OnStasisUse(Entity<RegenerativeStasisComponent> ent, ref ChangelingStasisActionEvent args)
+    private void OnMoveGhost(Entity<RegenerativeStasisComponent> ent, ref EntityGhostAttemptEvent args)
     {
-        if (!_timing.IsFirstTimePredicted)
+        if (ent.Comp.AllowGhosting || !ent.Comp.IsInStasis)
             return;
 
+        args.Cancel();
+    }
+
+    private void OnStasisUse(Entity<RegenerativeStasisComponent> ent, ref ChangelingStasisActionEvent args)
+    {
         if (ent.Comp.IsInStasis)
         {
             ExitStasis(ent);
@@ -72,6 +77,8 @@ public sealed class ChangelingStasisSystem : EntitySystem
 
         ent.Comp.IsInStasis = true;
 
+        Dirty(ent);
+
         _actions.SetCooldown(ent.Comp.RegenStasisActionEntity, ent.Comp.StasisCooldown);
     }
 
@@ -84,6 +91,8 @@ public sealed class ChangelingStasisSystem : EntitySystem
 
         ent.Comp.IsInStasis = false;
 
+        Dirty(ent);
+
         // We remove all the damage.
         _damage.SetAllDamage(ent.Owner, 0);
     }
@@ -91,6 +100,7 @@ public sealed class ChangelingStasisSystem : EntitySystem
     private void CancelStasis(Entity<RegenerativeStasisComponent> ent)
     {
         ent.Comp.IsInStasis = false;
+        Dirty(ent);
         _actions.RemoveCooldown(ent.Comp.RegenStasisActionEntity);
     }
 }

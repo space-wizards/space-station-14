@@ -27,6 +27,13 @@ public sealed partial class RegenerativeStasisComponent : Component
     public TimeSpan StasisCooldown = TimeSpan.FromSeconds(60);
 
     /// <summary>
+    /// Whether the entity can ghost out during their stasis.
+    /// Only affects ghosting out on movement.
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public bool AllowGhosting;
+
+    /// <summary>
     /// The Action for devouring
     /// </summary>
     [DataField]
