@@ -750,7 +750,6 @@ public sealed class EntityEffectSystem : EntitySystem
         // This also works on entities that already have a mind
         // We call this before the mind check to allow things like player-controlled mice to be able to benefit from the effect
         RemComp<ReplacementAccentComponent>(uid);
-        RemComp<MonkeyAccentComponent>(uid);
 
         // Stops from adding a ghost role to things like people who already have a mind
         if (TryComp<MindContainerComponent>(uid, out var mindContainer) && mindContainer.HasMind)
