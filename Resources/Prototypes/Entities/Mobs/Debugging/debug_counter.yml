@@ -20,7 +20,6 @@
   parent: MobHuman
   id: MobDebugRandomCounter
   name: debug random counter
-  description: He can randomize
   suffix: AI, DEBUG
   components:
     - type: HTN
