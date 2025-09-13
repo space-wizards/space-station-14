@@ -1,0 +1,25 @@
+{
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "Taken from tgstation at commit https://github.com/tgstation/tgstation/commit/d917f4c2a088419d5c3aec7656b7ff8cebd1822e. idwarden modified by Merrokitsune/Bellkitsu based on sprite by pirakaplant (github).",
+    "size": {
+      "x": 32,
+      "y": 32
+    },
+    "states": [
+      {
+        "name": "default"
+      },
+      {
+        "name": "idwarden"
+      },
+      {
+        "name": "default-inhand-left",
+        "directions": 4
+      },
+      {
+        "name": "default-inhand-right",
+        "directions": 4
+      }
+    ]
+}

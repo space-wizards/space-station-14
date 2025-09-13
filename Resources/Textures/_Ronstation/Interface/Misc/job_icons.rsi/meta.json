@@ -1,7 +1,7 @@
 {
     "version": 1,
     "license": "CC-BY-SA-3.0",
-    "copyright": "Sprite made by soupcelot (GitHub).",
+    "copyright": "Vampire made by soupcelot (GitHub) | Warden redesign by @pirakaplant (GitHub) and modified by Merrokitsune for Ronstation.",
     "size": {
         "x": 8,
         "y": 8
@@ -9,6 +9,9 @@
     "states": [
         {
             "name": "Vampire"
+        },
+        {
+            "name": "Warden"
         }
     ]
 }
