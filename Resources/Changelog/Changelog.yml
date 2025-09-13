@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: murolem
-  changes:
-  - message: Silo can now accept diamonds. Shiny!
-    type: Tweak
-  id: 8447
-  time: '2025-05-09T15:41:45.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/37305
 - author: GaMEWAR360
   changes:
   - message: 'Added new bounties for: Rings, Goliath Plates, Hivelord Remains'
@@ -3947,3 +3940,10 @@
   id: 8958
   time: '2025-09-13T07:01:14.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/40103
+- author: Huaqas
+  changes:
+  - message: Vulpkanin now have Undergarments.
+    type: Add
+  id: 8959
+  time: '2025-09-13T17:36:28.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/40321
