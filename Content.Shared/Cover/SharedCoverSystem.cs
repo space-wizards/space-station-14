@@ -8,6 +8,7 @@ using Robust.Shared.Physics;
 using Content.Shared.Physics;
 using Content.Shared.Damage.Components;
 using Robust.Shared.Timing;
+using Content.Shared.Random.Helpers;
 
 namespace Content.Shared.Cover;
 
@@ -61,6 +62,11 @@ public sealed class SharedCoverSystem : EntitySystem
 
         var mix = (maxDistAdj - distance) / maxDistAdj;
         var coverPctAdj = MathHelper.Lerp(cover.Comp.CoverPct, 0, mix); // closer means easier to miss cover
+
+        // TODO: Replace with RandomPredicted once the engine PR is merged
+        var seed = SharedRandomExtensions.HashCodeCombine(new() { (int)_timing.CurTick.Value, GetNetEntity(projectile).Id });
+        var rand = new System.Random(seed);
+
         if (!_random.Prob(coverPctAdj)) // we are too far to reach over easily
         {
             // don't need to consider penetration. Things that pen can miss cover, or hit it and let pen figure it out.
