@@ -1,6 +1,7 @@
 - type: entity
   id: EffectFlashBluespace
   categories: [ HideSpawnMenu ]
+  save: false
   components:
   - type: PointLight
     radius: 10.5
