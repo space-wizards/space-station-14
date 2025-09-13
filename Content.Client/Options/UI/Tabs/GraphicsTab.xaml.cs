@@ -76,7 +76,6 @@ public sealed partial class GraphicsTab : Control
 
         _cfg.OnValueChanged(CCVars.ViewportMinimumWidth, _ => UpdateViewportWidthRange());
         _cfg.OnValueChanged(CCVars.ViewportMaximumWidth, _ => UpdateViewportWidthRange());
-        _cfg.OnValueChanged(CCVars.GraphicsHeatDistortion, cvar => HeatDistortionCheckBox.Pressed = cvar);
 
         UpdateViewportWidthRange();
         UpdateViewportSettingsVisibility();
