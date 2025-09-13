@@ -1,0 +1,83 @@
+﻿- type: decal
+  id: BrickTileSteelHalfCornerNe
+  tags: ["station", "markings"]
+  sprite:
+    sprite: _Ronstation/Decals/brickhalftile.rsi
+    state: steel_half_corner_ne
+
+- type: decal
+  id: BrickTileSteelHalfCornerSe
+  tags: ["station", "markings"]
+  sprite:
+    sprite: _Ronstation/Decals/brickhalftile.rsi
+    state: steel_half_corner_se
+
+- type: decal
+  id: BrickTileSteelHalfCornerNw
+  tags: ["station", "markings"]
+  sprite:
+    sprite: _Ronstation/Decals/brickhalftile.rsi
+    state: steel_half_corner_nw
+
+- type: decal
+  id: BrickTileSteelHalfCornerSw
+  tags: ["station", "markings"]
+  sprite:
+    sprite: _Ronstation/Decals/brickhalftile.rsi
+    state: steel_half_corner_sw
+
+- type: decal
+  id: BrickTileSteelHalfInnerNe
+  tags: ["station", "markings"]
+  sprite:
+    sprite: _Ronstation/Decals/brickhalftile.rsi
+    state: steel_half_inner_ne
+
+- type: decal
+  id: BrickTileSteelHalfInnerSe
+  tags: ["station", "markings"]
+  sprite:
+    sprite: _Ronstation/Decals/brickhalftile.rsi
+    state: steel_half_inner_se
+
+- type: decal
+  id: BrickTileSteelHalfInnerNw
+  tags: ["station", "markings"]
+  sprite:
+    sprite: _Ronstation/Decals/brickhalftile.rsi
+    state: steel_half_inner_nw
+
+- type: decal
+  id: BrickTileSteelHalfInnerSw
+  tags: ["station", "markings"]
+  sprite:
+    sprite: _Ronstation/Decals/brickhalftile.rsi
+    state: steel_half_inner_sw
+
+- type: decal
+  id: BrickTileSteelHalfN
+  tags: ["station", "markings"]
+  sprite:
+    sprite: _Ronstation/Decals/brickhalftile.rsi
+    state: steel_half_n
+
+- type: decal
+  id: BrickTileSteelHalfS
+  tags: ["station", "markings"]
+  sprite:
+    sprite: _Ronstation/Decals/brickhalftile.rsi
+    state: steel_half_s
+
+- type: decal
+  id: BrickTileSteelHalfE
+  tags: ["station", "markings"]
+  sprite:
+    sprite: _Ronstation/Decals/brickhalftile.rsi
+    state: steel_half_e
+
+- type: decal
+  id: BrickTileSteelHalfW
+  tags: ["station", "markings"]
+  sprite:
+    sprite: _Ronstation/Decals/brickhalftile.rsi
+    state: steel_half_w    

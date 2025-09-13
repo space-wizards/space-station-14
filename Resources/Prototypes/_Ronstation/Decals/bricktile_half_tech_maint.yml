@@ -1,0 +1,83 @@
+﻿- type: decal
+  id: BrickTileTMaintHalfCornerNe
+  tags: ["station", "markings"]
+  sprite:
+    sprite: _Ronstation/Decals/brickhalftile.rsi
+    state: tech_maint_half_corner_ne
+
+- type: decal
+  id: BrickTileTMaintHalfCornerSe
+  tags: ["station", "markings"]
+  sprite:
+    sprite: _Ronstation/Decals/brickhalftile.rsi
+    state: tech_maint_half_corner_se
+
+- type: decal
+  id: BrickTileTMaintHalfCornerNw
+  tags: ["station", "markings"]
+  sprite:
+    sprite: _Ronstation/Decals/brickhalftile.rsi
+    state: tech_maint_half_corner_nw
+
+- type: decal
+  id: BrickTileTMaintHalfCornerSw
+  tags: ["station", "markings"]
+  sprite:
+    sprite: _Ronstation/Decals/brickhalftile.rsi
+    state: tech_maint_half_corner_sw
+
+- type: decal
+  id: BrickTileTMaintHalfInnerNe
+  tags: ["station", "markings"]
+  sprite:
+    sprite: _Ronstation/Decals/brickhalftile.rsi
+    state: tech_maint_half_inner_ne
+
+- type: decal
+  id: BrickTileTMaintHalfInnerSe
+  tags: ["station", "markings"]
+  sprite:
+    sprite: _Ronstation/Decals/brickhalftile.rsi
+    state: tech_maint_half_inner_se
+
+- type: decal
+  id: BrickTileTMaintHalfInnerNw
+  tags: ["station", "markings"]
+  sprite:
+    sprite: _Ronstation/Decals/brickhalftile.rsi
+    state: tech_maint_half_inner_nw
+
+- type: decal
+  id: BrickTileTMaintHalfInnerSw
+  tags: ["station", "markings"]
+  sprite:
+    sprite: _Ronstation/Decals/brickhalftile.rsi
+    state: tech_maint_half_inner_sw
+
+- type: decal
+  id: BrickTileTMaintHalfN
+  tags: ["station", "markings"]
+  sprite:
+    sprite: _Ronstation/Decals/brickhalftile.rsi
+    state: tech_maint_half_n
+
+- type: decal
+  id: BrickTileTMaintHalfS
+  tags: ["station", "markings"]
+  sprite:
+    sprite: _Ronstation/Decals/brickhalftile.rsi
+    state: tech_maint_half_s
+
+- type: decal
+  id: BrickTileTMaintHalfE
+  tags: ["station", "markings"]
+  sprite:
+    sprite: _Ronstation/Decals/brickhalftile.rsi
+    state: tech_maint_half_e
+
+- type: decal
+  id: BrickTileTMaintHalfW
+  tags: ["station", "markings"]
+  sprite:
+    sprite: _Ronstation/Decals/brickhalftile.rsi
+    state: tech_maint_half_w    
