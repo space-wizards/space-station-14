@@ -7,7 +7,6 @@
 - type: entity
   parent:
   - BaseMachinePowered
-  - BaseMob
   id: MothershipCore
   name: mothership core
   description: A sentient machine that can produce Xenoborgs. Without this the Xenoborgs are doomed.
@@ -169,6 +168,7 @@
   # - type: Puller # use the conveyor
   - type: Eye
     drawFov: false
+  - type: ContentEye
   # - type: StationAiOverlay # removed until is no longer buggy
   - type: IgnoreUIRange
   - type: ComplexInteraction
@@ -204,9 +204,12 @@
   - type: ShowElectrocutionHUD
   - type: PowerMonitoringCableNetworks
   - type: RadarConsole
-  - type: BlockMovement
-    blockInteraction: false
-    blockUse: false
+  - type: DoAfter
+  - type: MobMover
+  - type: Input
+    context: "human"
+  - type: Examiner
+  - type: Alerts
 
 - type: entity
   parent: BaseAGhostAction
