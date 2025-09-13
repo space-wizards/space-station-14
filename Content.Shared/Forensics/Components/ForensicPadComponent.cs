@@ -8,11 +8,11 @@ namespace Content.Shared.Forensics.Components
     [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
     public sealed partial class ForensicPadComponent : Component
     {
-        [DataField("scanDelay"), AutoNetworkedField]
+        [DataField, AutoNetworkedField]
         public float ScanDelay = 3.0f;
 
-        [AutoNetworkedField]
-        public bool Used = false;
+        [DataField, AutoNetworkedField]
+        public bool Used;
 
         [DataField, AutoNetworkedField]
         public String Sample = string.Empty;
