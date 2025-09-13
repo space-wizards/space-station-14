@@ -393,6 +393,12 @@ public sealed partial class CCVars
         CVarDef.Create("game.contraband_examine", true, CVar.SERVER | CVar.REPLICATED);
 
     /// <summary>
+    ///     If true, cover quality can be viewed in the examine menu
+    /// </summary>
+    public static readonly CVarDef<bool> CoverExamine =
+        CVarDef.Create("game.cover_examine", true, CVar.SERVER | CVar.REPLICATED);
+
+    /// <summary>
     ///     If true, contraband examination is only possible while wearing an item with `ShowContrabandDetailsComponent`. Requires `ContrabandExamine` to be true as well.
     /// </summary>
     public static readonly CVarDef<bool> ContrabandExamineOnlyInHUD =

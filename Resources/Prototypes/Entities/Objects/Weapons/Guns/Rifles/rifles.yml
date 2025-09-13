@@ -222,6 +222,7 @@
     - Burst
     - SemiAuto
     burstFireRate: 14
+    coverRangeBonus: 8
   - type: GunWieldBonus
     minAngle: -28
     maxAngle: -25

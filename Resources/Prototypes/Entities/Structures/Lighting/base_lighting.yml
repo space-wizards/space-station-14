@@ -85,6 +85,9 @@
           collection: GlassBreak
   - type: PlacementReplacement
     key: lights
+  - type: Cover #You can shoot it directly, but it usually misses if you don't
+    coverPct: 0.10
+    showExamine: false
   placement:
     mode: SnapgridCenter
     snap:

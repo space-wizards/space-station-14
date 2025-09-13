@@ -88,6 +88,8 @@
   - type: GunRequiresWield
   - type: StaticPrice
     price: 500
+  - type: Gun
+    coverRangeBonus: 3
 
 - type: entity
   name: Hristov
@@ -111,6 +113,7 @@
     - SemiAuto
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/sniper.ogg
+    coverRangeBonus: 8
   - type: BallisticAmmoProvider
     whitelist:
       tags:
@@ -145,6 +148,7 @@
     selectedMode: SemiAuto
     availableModes:
     - SemiAuto
+    coverRangeBonus: 3
   - type: UseDelayOnShoot
   - type: UseDelay
     delay: 8 #it's a musket

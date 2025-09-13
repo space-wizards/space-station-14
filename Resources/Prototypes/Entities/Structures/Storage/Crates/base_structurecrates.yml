@@ -1,5 +1,5 @@
 - type: entity
-  parent: BaseStructureDynamic
+  parent: [ BaseCoverSome, BaseStructureDynamic ]
   id: CrateGeneric
   categories: [ HideSpawnMenu ]
   name: crate
@@ -93,7 +93,6 @@
     node: crategenericsteel
     containers:
       - entity_storage
-  - type: RequireProjectileTarget
 
 - type: entity
   parent: CrateGeneric

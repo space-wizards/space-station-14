@@ -6,6 +6,7 @@ using Content.Shared.Administration.Logs;
 using Content.Shared.Audio;
 using Content.Shared.CombatMode;
 using Content.Shared.Containers.ItemSlots;
+using Content.Shared.Coordinates;
 using Content.Shared.Damage;
 using Content.Shared.Examine;
 using Content.Shared.Hands;
@@ -428,6 +429,11 @@ public abstract partial class SharedGunSystem : EntitySystem
 
         var projectile = EnsureComp<ProjectileComponent>(uid);
         projectile.Weapon = gunUid;
+        // we cant rely on this being a gun because this code is cursed. Can't change to Entity<GunComponent> because of uses in random non-gun systems
+        if (TryComp<GunComponent>(gunUid, out var gun))
+            projectile.CoverRangeBonus = gun.CoverRangeBonus;
+        projectile.FireTime = Timing.CurTime;
+        projectile.FireSpeed = speed;
         var shooter = user ?? gunUid;
         if (shooter != null)
             Projectiles.SetShooter(uid, projectile, shooter.Value);
