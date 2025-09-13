@@ -83601,37 +83601,41 @@ entities:
     - type: Transform
       pos: -45.5,-61.5
       parent: 2
-    - type: Drink
-      useSound: !type:SoundPathSpecifier
-        path: /Audio/Items/drink.ogg
+    - type: Edible
+      edible: Drink
       solution: pool
+      destroyOnEmpty: false
+      utensil: Spoon
   - uid: 16868
     components:
     - type: Transform
       pos: -44.5,-61.5
       parent: 2
-    - type: Drink
-      useSound: !type:SoundPathSpecifier
-        path: /Audio/Items/drink.ogg
+    - type: Edible
+      edible: Drink
       solution: pool
+      destroyOnEmpty: false
+      utensil: Spoon
   - uid: 16872
     components:
     - type: Transform
       pos: -46.5,-61.5
       parent: 2
-    - type: Drink
-      useSound: !type:SoundPathSpecifier
-        path: /Audio/Items/drink.ogg
+    - type: Edible
+      edible: Drink
       solution: pool
+      destroyOnEmpty: false
+      utensil: Spoon
   - uid: 16907
     components:
     - type: Transform
       pos: -44.5,-60.5
       parent: 2
-    - type: Drink
-      useSound: !type:SoundPathSpecifier
-        path: /Audio/Items/drink.ogg
+    - type: Edible
+      edible: Drink
       solution: pool
+      destroyOnEmpty: false
+      utensil: Spoon
   - uid: 17621
     components:
     - type: Transform
