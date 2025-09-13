@@ -37,9 +37,6 @@
     - type: Bloodstream
       bloodMaxVolume: 300
       # if you fuck with the gorilla he will harambe you
-    - type: CombatMode
-      canDisarm: true
-      disarmFailChance: 50
     - type: MeleeWeapon
       altDisarm: false
       angle: 0
