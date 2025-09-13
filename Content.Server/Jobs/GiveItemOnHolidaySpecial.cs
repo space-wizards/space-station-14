@@ -1,4 +1,4 @@
-using Content.Server.Holiday;
+using Content.Shared.Holiday;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Roles;
 using JetBrains.Annotations;
@@ -24,7 +24,7 @@ namespace Content.Server.Jobs
 
             var sysMan = IoCManager.Resolve<IEntitySystemManager>();
 
-            if (!sysMan.GetEntitySystem<HolidaySystem>().IsCurrentlyHoliday(Holiday))
+            if (!sysMan.GetEntitySystem<SharedHolidaySystem>().IsCurrentlyHoliday(Holiday))
                 return;
 
             var entMan = IoCManager.Resolve<IEntityManager>();
