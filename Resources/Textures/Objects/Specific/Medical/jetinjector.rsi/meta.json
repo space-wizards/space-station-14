@@ -1,0 +1,40 @@
+{
+	"version": 1,
+	"license": "CC-BY-SA-3.0",
+	"copyright": "Sprites made by Sir_Warock on Discord",
+	"size": {
+		"x": 32,
+		"y": 32
+	},
+	"states": [
+		{
+			"name": "jetinjector_base"
+		},
+        {
+			"name": "jetinjector_filled1"
+		},
+		{
+			"name": "jetinjector_filled2"
+		},
+		{
+			"name": "jetinjector_filled3"
+		},
+		{
+			"name": "jetinjector_filled4"
+		},
+		{
+			"name": "jetinjector_filled5"
+		},
+        {
+            "name": "jetinjector_filled6"
+        },
+        {
+            "name": "inhand-left",
+            "directions": 4
+        },
+        {
+            "name": "inhand-right",
+            "directions": 4
+        }
+    ]
+}
