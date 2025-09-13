@@ -1,3 +1,4 @@
+using Content.Shared.Roles;
 using Content.Shared.Whitelist;
 using Robust.Shared.Prototypes;
 
@@ -39,9 +40,17 @@ public sealed partial class TraitPrototype : IPrototype
 
     /// <summary>
     /// The components that get added to the player, when they pick this trait.
+    /// TODO: Delete and move completely to JobSpecial.
     /// </summary>
     [DataField]
-    public ComponentRegistry Components { get; private set; } = default!;
+    [Obsolete("Use JobSpecial instead.")]
+    public ComponentRegistry Components { get; private set; } = new();
+
+    /// <summary>
+    /// Special effects applied to the player who takes this Trait
+    /// </summary>
+    [DataField(serverOnly: true)]
+    public List<JobSpecial> Special { get; private set; } = [];
 
     /// <summary>
     /// Gear that is given to the player, when they pick this trait.

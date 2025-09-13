@@ -17,6 +17,7 @@ using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+using Content.Shared.StatusEffectNew.Components;
 
 namespace Content.Server.Cloning;
 
@@ -36,6 +37,7 @@ public sealed partial class CloningSystem : SharedCloningSystem
     [Dependency] private readonly SharedStorageSystem _storage = default!;
     [Dependency] private readonly SharedSubdermalImplantSystem _subdermalImplant = default!;
     [Dependency] private readonly NameModifierSystem _nameMod = default!;
+    [Dependency] private readonly Shared.StatusEffectNew.StatusEffectsSystem _stasusEffectNew = default!; //This system uses the old status effect system using. It will need to be fixed when the old system is removed.
 
     /// <summary>
     ///     Spawns a clone of the given humanoid mob at the specified location or in nullspace.
@@ -70,6 +72,10 @@ public sealed partial class CloningSystem : SharedCloningSystem
         // This is needed for slime storage.
         if (settings.CopyInternalStorage)
             CopyStorage(original, clone.Value, settings.Whitelist, settings.Blacklist);
+
+        // Copy permanent status effects
+        if (settings.CopyEffects)
+            CopyStatusEffects(original, clone.Value);
 
         // copy implants and their storage contents
         if (settings.CopyImplants)
@@ -149,6 +155,35 @@ public sealed partial class CloningSystem : SharedCloningSystem
 
             if (cloneItem != null && !_inventory.TryEquip(clone, cloneItem.Value, slot.Name, silent: true, inventory: clone.Comp))
                 Del(cloneItem); // delete it again if the clone cannot equip it
+        }
+    }
+
+    /// <summary>
+    ///    Scans all permanent status effects applied to the original entity and transfers them to the clone.
+    /// </summary>
+    public void CopyStatusEffects(Entity<StatusEffectContainerComponent?> original, Entity<StatusEffectContainerComponent?> target)
+    {
+        if (!Resolve(original, ref original.Comp, false) || !Resolve(target, ref target.Comp, false))
+            return;
+
+        if (original.Comp.ActiveStatusEffects is null)
+            return;
+
+        foreach (var effect in original.Comp.ActiveStatusEffects.ContainedEntities)
+        {
+            if (!TryComp<StatusEffectComponent>(effect, out var effectComp))
+                continue;
+
+            //We are not interested in temporary effects, only permanent ones.
+            if (effectComp.EndEffectTime is not null)
+                continue;
+
+            var effectProto = MetaData(effect).EntityPrototype?.ID;
+
+            if (effectProto is null)
+                continue;
+
+            _stasusEffectNew.TryUpdateStatusEffectDuration(target, effectProto);
         }
     }
 
