@@ -374,7 +374,7 @@ public sealed partial class IngestionSystem : EntitySystem
         if (afterEv.Refresh)
             _solutionContainer.TryAddSolution(solution.Value, split);
 
-        _stomach.TryTransferSolution(stomachToUse.Value.Owner, split, stomachToUse);
+        _stomach.TryTransferSolution((stomachToUse.Value.Owner, stomachToUse), split);
 
         if (!afterEv.Destroy)
         {
