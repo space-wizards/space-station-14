@@ -154,11 +154,17 @@ namespace Content.Client.Cargo.UI
                     search.Length != 0 && prototype.Description.ToLowerInvariant().Contains(search) ||
                     search.Length == 0 && _category != null && Loc.GetString(prototype.Category).Equals(_category))
                 {
+                    var tooltip = prototype.Description;
+
+                    if (prototype.ApproveAccess.Length != 0)
+                        tooltip += "\n" + Loc.GetString("cargo-console-order-approve-access",
+                            ("accesses", string.Join(", ", prototype.ApproveAccess.Select(a => Loc.GetString(_protoManager.Index(a)?.Name ?? "generic-unknown")))));
+
                     var button = new CargoProductRow
                     {
                         Product = prototype,
                         ProductName = { Text = prototype.Name },
-                        MainButton = { ToolTip = prototype.Description },
+                        MainButton = { ToolTip = tooltip },
                         PointCost = { Text = Loc.GetString("cargo-console-menu-points-amount", ("amount", prototype.Cost.ToString())) },
                         Icon = { Texture = _spriteSystem.Frame0(prototype.Icon) },
                     };

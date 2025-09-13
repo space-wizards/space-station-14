@@ -1,5 +1,5 @@
+using Content.Shared.Access;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.Array;
 using Robust.Shared.Utility;
 
@@ -94,5 +94,11 @@ namespace Content.Shared.Cargo.Prototypes
         /// </summary>
         [DataField]
         public ProtoId<CargoMarketPrototype> Group { get; private set; } = "market";
+
+        /// <summary>
+        /// Access needed to approve the product.
+        /// </summary>
+        [DataField]
+        public ProtoId<AccessLevelPrototype>[] ApproveAccess = [];
     }
 }
