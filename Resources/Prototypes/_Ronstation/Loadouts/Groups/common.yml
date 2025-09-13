@@ -20,3 +20,27 @@
   loadouts:
   - PetButterfly
   - PetBee
+
+- type: loadoutGroup
+  id: BlackShoes
+  parent: BaseShoes
+  loadouts:
+  - BlackShoes
+  
+- type: loadoutGroup
+  id: BrownShoes
+  parent: BaseShoes
+  loadouts:
+  - BrownShoes
+
+- type: loadoutGroup
+  id: WhiteShoes
+  parent: BaseShoes
+  loadouts:
+  - WhiteShoes
+
+- type: loadoutGroup
+  id: LaceupShoes
+  parent: BaseShoes
+  loadouts:
+  - LaceupShoes

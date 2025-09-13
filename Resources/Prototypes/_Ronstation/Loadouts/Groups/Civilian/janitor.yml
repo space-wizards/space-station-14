@@ -24,3 +24,9 @@
   parent: BaseOuterClothing
   loadouts:
   - JanitorWintercoat
+
+- type: loadoutGroup
+  id: JanitorShoes
+  parent: BaseShoes
+  loadouts:
+  - JanitorShoes

@@ -1,5 +1,5 @@
 - type: htnCompound
-  id: PetFoodFollowCompount
+  id: PetFoodFollowCompound
   branches:
     - tasks:
         - !type:HTNCompoundTask
@@ -12,7 +12,7 @@
           task: IdleCompound
 
 - type: htnCompound
-  id: PetFollowCompount
+  id: PetFollowCompound
   branches:
     - tasks:
         - !type:HTNCompoundTask

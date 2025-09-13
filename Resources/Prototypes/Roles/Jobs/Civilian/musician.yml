@@ -1,3 +1,4 @@
+# Modified by Ronstation contributor(s), therefore this file is licensed as MIT sublicensed with AGPL-v3.0.
 - type: job
   id: Musician
   name: job-name-musician
@@ -18,7 +19,7 @@
   id: MusicianGear
   equipment:
     eyes: ClothingEyesGlassesSunglasses
-    shoes: ClothingShoesBootsLaceup
+  # shoes: ClothingShoesBootsLaceup # Ronstation - modification.
     id: MusicianPDA
     ears: ClothingHeadsetService
   #storage:

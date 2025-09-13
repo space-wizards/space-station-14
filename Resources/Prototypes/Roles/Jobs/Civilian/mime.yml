@@ -1,3 +1,4 @@
+# Modified by Ronstation contributor(s), therefore this file is licensed as MIT sublicensed with AGPL-v3.0.
 - type: job
   id: Mime
   name: job-name-mime
@@ -23,7 +24,7 @@
   id: MimeGear
   equipment:
     gloves: ClothingHandsGlovesColorWhite
-    shoes: ClothingShoesColorWhite
+  # shoes: ClothingShoesColorWhite # Ronstation - modification.
     id: MimePDA
     pocket1: CrayonMime
     ears: ClothingHeadsetService
