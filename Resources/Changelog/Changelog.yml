@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: Errant
-  changes:
-  - message: Borgs can no longer craft items using up their tools as an ingredient,
-      losing them forever.
-    type: Fix
-  id: 8446
-  time: '2025-05-09T12:43:38.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/37292
 - author: murolem
   changes:
   - message: Silo can now accept diamonds. Shiny!
@@ -3948,3 +3940,10 @@
   id: 8957
   time: '2025-09-12T23:23:58.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/37960
+- author: FungiFellow
+  changes:
+  - message: Cockroaches can Gib when Stepped on
+    type: Add
+  id: 8958
+  time: '2025-09-13T07:01:14.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/40103
