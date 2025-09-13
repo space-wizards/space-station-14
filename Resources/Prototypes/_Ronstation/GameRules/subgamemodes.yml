@@ -19,6 +19,7 @@
         sound: /Audio/Ambience/Antag/traitor_start.ogg
       components:
         - type: Vampire
+        - type: VampireFeed
       mindRoles:
         - MindRoleVampire
   - type: AntagObjectives
