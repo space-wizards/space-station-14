@@ -19,7 +19,8 @@
 #    - RRCardFoodStew
 #    - RRCardMetabolizeNicotine
 #    - RRCardMetabolizeTest
-    - RRCardCriminal
+#    - RRCardCriminal
+    - RRCardMailOpen
     
 - type: entity
   parent: BaseGameRule
@@ -37,6 +38,10 @@
     # antagonists
     
     - RRCardCriminal
+
+    # open mail
+
+    - RRCardMailOpen
 
     # Metabolize: Food
 
