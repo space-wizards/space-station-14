@@ -1,3 +1,6 @@
+using Content.Shared.Random;
+using Robust.Shared.Prototypes;
+
 namespace Content.Server.StationEvents.Components;
 
 /// <summary>
@@ -6,4 +9,6 @@ namespace Content.Server.StationEvents.Components;
 [RegisterComponent]
 public sealed partial class IonStormRuleComponent : Component
 {
+    [DataField]
+    public ProtoId<WeightedRandomPrototype>? LawFormatCorruption;
 }

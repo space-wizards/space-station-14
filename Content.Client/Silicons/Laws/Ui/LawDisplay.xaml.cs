@@ -39,7 +39,7 @@ public sealed partial class LawDisplay : Control
         var lawDescription = Loc.GetString(law.ReadLawString(false));
 
         LawNumberLabel.SetMarkup(lawIdentifier);
-        LawLabel.SetMessage(lawDescription);
+        LawLabel.SetMarkup(lawDescription);
 
         // If you can't talk, you can't state your laws...
         if (!_entityManager.TryGetComponent<SpeechComponent>(uid, out var speech) || speech.SpeechSounds is null)
@@ -57,7 +57,7 @@ public sealed partial class LawDisplay : Control
 
         foreach (var radioChannel in radioChannels)
         {
-            if (!_prototypeManager.TryIndex<RadioChannelPrototype>(radioChannel, out var radioChannelProto))
+            if (!_prototypeManager.Resolve(radioChannel, out var radioChannelProto))
                 continue;
 
             var stateLawOnRadioKey = radioChannel;
