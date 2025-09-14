@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: sowelipililimute
-  changes:
-  - message: Reagent dispensers (Chem Dispenser, Booze Dispenser, Soda Dispenser)
-      now use a grid inventory for their internal storage
-    type: Tweak
-  id: 8449
-  time: '2025-05-10T03:49:05.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/34205
 - author: B-Kirill
   changes:
   - message: Meteors no longer slow down during flight.
@@ -3945,3 +3937,11 @@
   id: 8960
   time: '2025-09-14T05:44:32.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/40339
+- author: ScarKy0
+  changes:
+  - message: Vulpkanin now use the corrent undergarments when "Censor character nudity"
+      is enabled.
+    type: Fix
+  id: 8961
+  time: '2025-09-14T07:39:38.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/40341
