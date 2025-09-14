@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Pronana
-  changes:
-  - message: You can no longer grind the smite snail
-    type: Fix
-  id: 8451
-  time: '2025-05-10T05:06:19.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/37020
 - author: PotentiallyTom
   changes:
   - message: Changed the gold requirement for the recipies of the Laser Cannon, X-Ray
@@ -3945,3 +3938,10 @@
   id: 8962
   time: '2025-09-14T15:18:49.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/40320
+- author: Winkarst-cpu
+  changes:
+  - message: Fixed the wizard's recharge spell not working on some wands.
+    type: Fix
+  id: 8963
+  time: '2025-09-14T19:26:42.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/40347
