@@ -1,3 +1,4 @@
+# Modified by Ronstation contributor(s), therefore this file is licensed as MIT sublicensed with AGPL-v3.0.
 - type: job
   id: Chaplain
   name: job-name-chaplain
@@ -17,7 +18,7 @@
 - type: startingGear
   id: ChaplainGear
   equipment:
-    shoes: ClothingShoesColorBlack
+  # shoes: ClothingShoesColorBlack # Ronstation - modification.
     id: ChaplainPDA
     ears: ClothingHeadsetService
   storage:

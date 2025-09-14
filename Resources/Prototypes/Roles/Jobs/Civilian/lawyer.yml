@@ -24,7 +24,7 @@
 - type: startingGear
   id: LawyerGear
   equipment:
-    shoes: ClothingShoesBootsLaceup
+  # shoes: ClothingShoesBootsLaceup # Ronstation - modification.
     id: LawyerPDA
     ears: ClothingHeadsetSecurity
   inhand:

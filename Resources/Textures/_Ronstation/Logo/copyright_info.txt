@@ -1,0 +1,13 @@
+"Ronstation", the Ronstation logo, and the Ronstation icon are created by Merrokitsune/Bellkitsu for the Ronstation team, and may be used under the terms of the CC-BY-SA-4.0 license.
+
+The following are covered under CC-BY-SA-4.0 license:
+- icon.ico
+- icon.svg
+- logo.png
+- logo.svg
+- icon-16x16.png
+- icon-24x24.png
+- icon-32x32.png
+- icon-48x48.png
+- icon-128x128.png
+- icon-256x256.png

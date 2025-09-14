@@ -30,10 +30,3 @@
   loadouts:
   - StationEngineerOuterVest
   - StationEngineerWintercoat
-
-- type: loadoutGroup
-  id: StationEngineerShoes
-  parent: BaseShoes
-  loadouts:
-  - WorkBoots
-  - EngineeringWinterBoots

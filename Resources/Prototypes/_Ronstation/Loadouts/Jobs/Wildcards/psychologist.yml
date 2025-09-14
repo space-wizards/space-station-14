@@ -1,0 +1,5 @@
+# Shoes
+- type: loadout
+  id: PsychologistShoes
+  equipment:
+    shoes: ClothingShoesLeather

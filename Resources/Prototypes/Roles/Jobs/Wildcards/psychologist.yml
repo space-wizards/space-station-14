@@ -1,3 +1,4 @@
+# Modified by Ronstation contributor(s), therefore this file is licensed as MIT sublicensed with AGPL-v3.0.
 - type: job
   id: Psychologist
   name: job-name-psychologist
@@ -15,7 +16,7 @@
 - type: startingGear
   id: PsychologistGear
   equipment:
-    shoes: ClothingShoesLeather
+  # shoes: ClothingShoesLeather # Ronstation - modification.
     id: PsychologistPDA
     ears: ClothingHeadsetMedical
   storage:

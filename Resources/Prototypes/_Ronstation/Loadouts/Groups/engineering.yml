@@ -5,3 +5,10 @@
   - StationEngineerBackpack
   - StationEngineerSatchel
   - StationEngineerDuffel
+
+- type: loadoutGroup
+  id: EngineeringShoes
+  parent: BaseShoes
+  loadouts:
+  - WorkBoots
+  - EngineeringWinterBoots

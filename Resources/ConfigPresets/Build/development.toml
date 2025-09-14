@@ -17,7 +17,7 @@ quick_lottery = true
 generator_enabled = false
 
 [movement]
-mob_pushing = true
+mob_pushing = false
 
 [physics]
 # Makes mapping annoying
@@ -40,6 +40,6 @@ preload_grids = false
 see_own_notes = true
 
 [ic]
-random_characters = true
+random_characters = false
 random_species_weights = ""
 ssd_sleep_time = 3600
