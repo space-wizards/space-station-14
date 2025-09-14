@@ -1,13 +1,4 @@
 ﻿Entries:
-- author: GaMEWAR360
-  changes:
-  - message: 'Added new bounties for: Rings, Goliath Plates, Hivelord Remains'
-    type: Add
-  - message: 'Increased bounty prices for: Sharkminnow Teeth and Spacecarp Teeth'
-    type: Tweak
-  id: 8448
-  time: '2025-05-09T15:52:30.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/34926
 - author: sowelipililimute
   changes:
   - message: Reagent dispensers (Chem Dispenser, Booze Dispenser, Soda Dispenser)
@@ -3947,3 +3938,10 @@
   id: 8959
   time: '2025-09-13T17:36:28.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/40321
+- author: MissKay1994
+  changes:
+  - message: Greatly reduced lethality of Man-O-War shuttle
+    type: Tweak
+  id: 8960
+  time: '2025-09-14T05:44:32.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/40339
