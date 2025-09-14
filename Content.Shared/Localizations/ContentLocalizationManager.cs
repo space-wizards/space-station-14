@@ -113,12 +113,13 @@ namespace Content.Shared.Localizations
         /// </summary>
         public static string FormatList(List<string> list)
         {
+            var strand = Loc.GetString("items-and");
             return list.Count switch
             {
                 <= 0 => string.Empty,
                 1 => list[0],
-                2 => $"{list[0]} and {list[1]}",
-                _ => $"{string.Join(", ", list.GetRange(0, list.Count - 1))}, and {list[^1]}"
+                2 => $"{list[0]} {strand} {list[1]}",
+                _ => $"{string.Join(", ", list.GetRange(0, list.Count - 1))}, {strand} {list[^1]}"
             };
         }
 
