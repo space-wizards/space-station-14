@@ -11,7 +11,6 @@
   - type: Fiber
     fiberMaterial: fibers-black-nitrile
   - type: FingerprintMask
-  - type: Insulated
 
 - type: entity
   parent: [ClothingHandsButcherable, BaseSecurityContraband]
@@ -26,7 +25,6 @@
   - type: Fiber
     fiberMaterial: fibers-red-and-black-woven
   - type: FingerprintMask
-  - type: Insulated
 
 - type: entity
   parent: [ClothingHandsButcherable, BaseSecurityContraband]
