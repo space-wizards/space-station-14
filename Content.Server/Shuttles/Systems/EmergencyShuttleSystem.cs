@@ -34,6 +34,7 @@ using Content.Shared.Tag;
 using Content.Shared.Tiles;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio.Systems;
+using Robust.Shared.Configuration; // Ronstation - modification.
 using Robust.Shared.EntitySerialization.Systems;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Player;
@@ -72,6 +73,7 @@ public sealed partial class EmergencyShuttleSystem : SharedEmergencyShuttleSyste
     [Dependency] private readonly TransformSystem _transformSystem = default!;
     [Dependency] private readonly UserInterfaceSystem _uiSystem = default!;
     [Dependency] private readonly IPrototypeManager _prototype = default!; // Ronstation - modification.
+    [Dependency] private readonly IConfigurationManager _configManager = default!; // Ronstation - modification.
 
     private const float ShuttleSpawnBuffer = 1f;
 
