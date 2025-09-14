@@ -7,6 +7,8 @@
   - type: Damageable
     damageContainer: Inorganic
   - type: DeleteOnTrigger
+    keysIn:
+    - timer
   - type: Destructible
     thresholds:
     - trigger:
@@ -14,6 +16,7 @@
         damage: 10
       behaviors:
       - !type:TriggerBehavior
+        keyOut: timer # explode immediately
   - type: ContainerContainer
     containers:
       cluster-payload: !type:Container
@@ -54,11 +57,18 @@
     fillPrototype: PelletClusterRubber
     capacity: 30
   - type: EmitSoundOnTrigger
+    keysIn:
+    - timer
     sound:
       path: "/Audio/Effects/flash_bang.ogg"
+    positional: true
   - type: SpawnOnTrigger
+    keysIn:
+    - timer
     proto: GrenadeFlashEffect
-  - type: OnUseTimerTrigger
+    predicted: true
+  - type: TriggerOnUse
+  - type: TimerTrigger
     initialBeepDelay: 0
     beepInterval: 2
     delay: 3.5
@@ -80,7 +90,8 @@
   - type: ProjectileGrenade
     fillPrototype: PelletClusterIncendiary
     capacity: 30
-  - type: OnUseTimerTrigger
+  - type: TriggerOnUse
+  - type: TimerTrigger
     beepSound:
       path: "/Audio/Effects/beep1.ogg"
       params:
@@ -89,8 +100,11 @@
     beepInterval: 2
     delay: 3.5
   - type: EmitSoundOnTrigger
+    keysIn:
+    - timer
     sound:
       path: "/Audio/Weapons/Guns/Gunshots/batrifle.ogg"
+    positional: true
   - type: StaticPrice
     price: 1500
 
@@ -108,7 +122,8 @@
   - type: ProjectileGrenade
     fillPrototype: PelletClusterLethal
     capacity: 30
-  - type: OnUseTimerTrigger
+  - type: TriggerOnUse
+  - type: TimerTrigger
     beepSound:
       path: "/Audio/Effects/beep1.ogg"
       params:
@@ -117,7 +132,10 @@
     beepInterval: 2
     delay: 3.5
   - type: EmitSoundOnTrigger
+    keysIn:
+    - timer
     sound:
       path: "/Audio/Weapons/Guns/Gunshots/batrifle.ogg"
+    positional: true
   - type: StaticPrice
     price: 1500

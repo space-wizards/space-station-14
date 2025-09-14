@@ -1,0 +1,27 @@
+﻿- type: entity
+  parent: MobStatusEffectDebuff
+  id: SpeechStatusEffectBase
+  abstract: true
+  components:
+  - type: StatusEffect
+    whitelist:
+      components:
+      - MobState
+      - Speech
+      requireAll: true
+
+# Causes you to st-t-u-t-t-t-er randomly when talking.
+- type: entity
+  parent: SpeechStatusEffectBase
+  id: StatusEffectStutter
+  name: stutter
+  components:
+  - type: StutteringAccent
+
+# Causes you to schlur your words schwhen talking.
+- type: entity
+  parent: SpeechStatusEffectBase
+  id: StatusEffectSlurred
+  name: slurred
+  components:
+  - type: SlurredAccent
