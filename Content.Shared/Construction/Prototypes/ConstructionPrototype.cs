@@ -98,4 +98,5 @@ public enum ConstructionType
 {
     Structure,
     Item,
+    Surgery, // Offbrand
 }

@@ -97,7 +97,7 @@
         amount: 2
       - id: Ointment
         amount: 1
-      - id: Bloodpack
+      - id: ChemistryBottleParacetamol # Offbrand
         amount: 1
       - id: Gauze
       - id: EmergencyMedipen #You never know what people are going to latejoin into
@@ -111,7 +111,7 @@
     contents:
       - id: Brutepack
       - id: Ointment
-      - id: Bloodpack
+      - id: ChemistryBottleParacetamol # Offbrand
       - id: Gauze
       - id: EmergencyMedipen #You never know what people are going to latejoin into
         amount: 3

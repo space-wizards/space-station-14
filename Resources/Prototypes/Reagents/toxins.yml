@@ -470,11 +470,131 @@
   worksOnTheDead: true
   metabolisms:
     Medicine:
+      # Begin Offbrand
+      metabolismRate: 0.25
+      statusEffects:
+      - statusEffect: StatusEffectHeartStrainRomerol
+        conditions:
+        - !type:MetaboliteThreshold
+          min: 30
       effects:
-        - !type:CauseZombieInfection
-          conditions:
-            - !type:ReagentThreshold
-              min: 5
+      - !type:AdjustReagentGaussian
+        reagent: Romerol
+        μ: 0.25
+        σ: 0.1
+        conditions:
+        - !type:IsZombieImmune
+          invert: true
+      - !type:PopupMessage
+        type: Local
+        visualType: MediumCaution
+        messages:
+        - zombification-30-message-1
+        - zombification-30-message-2
+        - zombification-30-message-3
+        - zombification-30-message-4
+        probability: 0.05
+        conditions:
+        - !type:MetaboliteThreshold
+          min: 30
+      - !type:HealthChange
+        damage:
+          types:
+             Poison: 0.15
+        conditions:
+        - !type:MetaboliteThreshold
+          min: 30
+      - !type:Zombify
+        conditions:
+        - !type:BrainDamage
+          min: 70
+        - !type:MetaboliteThreshold
+          min: 30
+      - !type:ModifyHeartDamage
+        amount: 0.1
+        conditions:
+        - !type:MetaboliteThreshold
+          min: 30
+      - !type:AdjustTemperature
+        amount: 3000
+        conditions:
+        - !type:MetaboliteThreshold
+          min: 30
+      - !type:Jitter
+        probability: 0.25
+        conditions:
+        - !type:MetaboliteThreshold
+          min: 60
+      - !type:AdjustTemperature
+        amount: 6000
+        conditions:
+        - !type:MetaboliteThreshold
+          min: 60
+      - !type:PopupMessage
+        type: Local
+        visualType: MediumCaution
+        messages:
+        - zombification-60-message-1
+        - zombification-60-message-2
+        - zombification-60-message-3
+        - zombification-60-message-4
+        probability: 0.05
+        conditions:
+        - !type:MetaboliteThreshold
+          min: 60
+      - !type:ModifyBrainDamage
+        amount: 0.25
+        conditions:
+        - !type:MetaboliteThreshold
+          min: 90
+      - !type:HealthChange
+        damage:
+          types:
+             Slash: 0.15
+             Blunt: 0.15
+             Piercing: 0.15
+        conditions:
+        - !type:MetaboliteThreshold
+          min: 90
+      - !type:PopupMessage
+        type: Local
+        visualType: MediumCaution
+        messages:
+        - zombification-90-message-1
+        - zombification-90-message-2
+        - zombification-90-message-3
+        - zombification-90-message-4
+        probability: 0.05
+        conditions:
+        - !type:MetaboliteThreshold
+          min: 90
+      - !type:ModifyBrainDamage
+        amount: 0.5
+        conditions:
+        - !type:MetaboliteThreshold
+          min: 120
+      - !type:PopupMessage
+        type: Local
+        visualType: MediumCaution
+        messages:
+        - zombification-120-message-1
+        - zombification-120-message-2
+        - zombification-120-message-3
+        - zombification-120-message-4
+        probability: 0.05
+        conditions:
+        - !type:MetaboliteThreshold
+          min: 120
+      - !type:ModifyBrainDamage
+        amount: 5
+        conditions:
+        - !type:MetaboliteThreshold
+          min: 140
+      - !type:Zombify
+        conditions:
+        - !type:MobStateCondition
+          mobstate: Dead
+      # End Offbrand
 
 - type: reagent
   id: UncookedAnimalProteins

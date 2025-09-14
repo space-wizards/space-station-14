@@ -31,6 +31,11 @@ namespace Content.Shared.Construction
         [DataField("entity", customTypeSerializer: typeof(GraphNodeEntitySerializer))]
         public IGraphNodeEntity Entity { get; private set; } = new NullNodeEntity();
 
+        // Begin Offbrand
+        [DataField]
+        public LocId? SurgeryName;
+        // End Offbrand
+
         /// <summary>
         ///     Ignore requests to change the entity if the entity's current prototype inherits from specified replacement
         /// </summary>

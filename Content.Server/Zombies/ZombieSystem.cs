@@ -26,6 +26,7 @@ using Content.Shared.Zombies;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
+using Content.Shared._Offbrand.Wounds; // Offbrand
 
 namespace Content.Server.Zombies
 {
@@ -43,6 +44,7 @@ namespace Content.Server.Zombies
         [Dependency] private readonly MobStateSystem _mobState = default!;
         [Dependency] private readonly SharedPopupSystem _popup = default!;
         [Dependency] private readonly SharedRoleSystem _role = default!;
+        [Dependency] private readonly Content.Shared._Offbrand.Wounds.BrainDamageSystem _brainDamage = default!; // Offbrand
 
         public readonly ProtoId<NpcFactionPrototype> Faction = "Zombie";
 
@@ -138,6 +140,7 @@ namespace Content.Server.Zombies
                     : 1f;
 
                 _damageable.TryChangeDamage(uid, comp.Damage * multiplier, true, false, damage);
+                _brainDamage.TryChangeBrainDamage(uid, multiplier / 2f); // Offbrand
             }
 
             // Heal the zombified
@@ -255,7 +258,7 @@ namespace Content.Server.Zombies
                 {
                     args.BonusDamage = -args.BaseDamage;
                 }
-                else
+                else if (!HasComp<WoundableComponent>(entity)) // Offbrand
                 {
                     if (!HasComp<ZombieImmuneComponent>(entity) && !HasComp<NonSpreaderZombieComponent>(args.User) && _random.Prob(GetZombieInfectionChance(entity, component)))
                     {
@@ -264,7 +267,7 @@ namespace Content.Server.Zombies
                     }
                 }
 
-                if (_mobState.IsIncapacitated(entity, mobState) && !HasComp<ZombieComponent>(entity) && !HasComp<ZombieImmuneComponent>(entity))
+                if (_mobState.IsIncapacitated(entity, mobState) && !HasComp<ZombieComponent>(entity) && !HasComp<ZombieImmuneComponent>(entity) && !HasComp<WoundableComponent>(entity)) // Offbrand
                 {
                     ZombifyEntity(entity);
                     args.BonusDamage = -args.BaseDamage;

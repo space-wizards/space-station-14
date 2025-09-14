@@ -5,7 +5,7 @@
   children:
   - Service
   - Cargo
-  - Medical
+  - OffbrandMedical # Offbrand
   - Science
   - Engineering
   - Security

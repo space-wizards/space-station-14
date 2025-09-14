@@ -123,14 +123,19 @@
     - !type:RobustHarvest {}
   metabolisms:
     Poison:
+      # Begin Offbrand
+      metabolismRate: 0.2
+      statusEffects:
+      - statusEffect: StatusEffectPainkillersNegligibleRobustHarvest
       effects:
       - !type:HealthChange
         damage:
           types:
-            Poison: -2
-            Blunt: -3
-            Slash: -3
-            Piercing: -3
+            Poison: -1
+      - !type:EvenHealthChange
+        damage:
+          Brute: -0.75 # Offbrand
+      # End Offbrand
         conditions:
         - !type:OrganType
           type: Plant
@@ -170,6 +175,33 @@
       probability: 0.20
     - !type:PlantAdjustPotency
       amount: -3 # Match this with current rate of Robust Harvest potency increase
+  # Begin Offbrand
+  metabolisms:
+    Poison:
+      metabolismRate: 1
+      statusEffects:
+      - statusEffect: StatusEffectHeartStrainSedin
+      effects:
+      - !type:HealthChange
+        damage:
+          types:
+            Poison: 2
+      - !type:CreateEntityReactionEffect
+        entity: MobDionaNymph
+        conditions:
+        - !type:OrganType
+          type: Plant
+        - !type:ReagentThreshold
+          min: 40
+      - !type:AdjustReagent
+        reagent: Sedin
+        amount: -20
+        conditions:
+        - !type:OrganType
+          type: Plant
+        - !type:ReagentThreshold
+          min: 40
+  # End Offbrand
 
 - type: reagent
   id: WeedKiller
@@ -217,6 +249,17 @@
         damage:
           types:
             Caustic: 1
+      # Begin Offbrand
+        conditions:
+        - !type:OrganType
+          type: Plant
+          shouldHave: false
+      - !type:SatiateHunger
+        factor: 1
+        conditions:
+        - !type:OrganType
+          type: Plant
+      # End Offbrand
     Gas:
       effects:
       - !type:HealthChange
@@ -298,8 +341,24 @@
   - !type:PlantDiethylamine {}
   metabolisms:
     Poison:
+      metabolismRate: 0.2 # Offbrand
       effects:
       - !type:HealthChange
         damage:
           types:
-            Caustic: 1
+      # Begin Offbrand
+            Caustic: 0.5
+        conditions:
+        - !type:OrganType
+          type: Plant
+          shouldHave: false
+      - !type:HealthChange
+        damage:
+          types:
+            Heat: -0.5
+            Cold: -0.5
+            Shock: -0.5
+        conditions:
+        - !type:OrganType
+          type: Plant
+      # End Offbrand

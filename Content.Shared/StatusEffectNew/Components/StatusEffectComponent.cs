@@ -39,6 +39,12 @@ public sealed partial class StatusEffectComponent : Component
     public bool Applied;
 
     /// <summary>
+    /// Offbrand - When the status effect started
+    /// </summary>
+    [DataField(customTypeSerializer: typeof(TimeOffsetSerializer)), AutoPausedField, AutoNetworkedField]
+    public TimeSpan? StartedAt;
+
+    /// <summary>
     /// Whitelist, by which it is determined whether this status effect can be imposed on a particular entity.
     /// </summary>
     [DataField]

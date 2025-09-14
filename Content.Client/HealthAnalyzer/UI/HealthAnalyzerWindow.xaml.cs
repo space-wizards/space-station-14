@@ -110,7 +110,7 @@ namespace Content.Client.HealthAnalyzer.UI
 
             // Alerts
 
-            var showAlerts = msg.Unrevivable == true || msg.Bleeding == true;
+            var showAlerts = msg.Unrevivable == true || msg.Bleeding == true || msg.WoundableData?.NonMedicalReagents == true || msg.WoundableData?.Wounds != null; // Offbrand
 
             AlertsDivider.Visible = showAlerts;
             AlertsContainer.Visible = showAlerts;
@@ -133,6 +133,115 @@ namespace Content.Client.HealthAnalyzer.UI
                     Margin = new Thickness(0, 4),
                     MaxWidth = 300
                 });
+
+            // Begin Offbrand
+            var showReagents = msg.WoundableData?.Reagents?.Count is { } count && count > 0;
+            ReagentsDivider.Visible = showReagents;
+            ReagentsContainer.Visible = showReagents;
+
+            if (msg.WoundableData is { } woundable)
+            {
+                if (woundable.Wounds is not null)
+                {
+                    foreach (var wound in woundable.Wounds)
+                    {
+                        AlertsContainer.AddChild(new RichTextLabel
+                        {
+                            Text = Loc.GetString(wound),
+                            Margin = new Thickness(0, 4),
+                            MaxWidth = 300
+                        });
+                    }
+                }
+                if (woundable.NonMedicalReagents)
+                {
+                    AlertsContainer.AddChild(new RichTextLabel
+                    {
+                        Text = Loc.GetString("health-analyzer-window-entity-non-medical-reagents"),
+                        Margin = new Thickness(0, 4),
+                        MaxWidth = 300
+                    });
+                }
+                if (woundable.Reagents is { } reagents)
+                {
+                    ReagentsContainer.DisposeAllChildren();
+                    foreach (var (reagent, amounts) in reagents.OrderBy(kvp => _prototypes.Index(kvp.Key).LocalizedName))
+                    {
+                        var (quantity, metabolites) = amounts;
+                        var proto = _prototypes.Index(reagent);
+                        ReagentsContainer.AddChild(new BoxContainer
+                        {
+                            Orientation = BoxContainer.LayoutOrientation.Horizontal,
+                            HorizontalExpand = true,
+                            Children =
+                            {
+                                new PanelContainer
+                                {
+                                    VerticalExpand = true,
+                                    MinWidth = 4,
+                                    PanelOverride = new StyleBoxFlat
+                                    {
+                                        BackgroundColor = proto.SubstanceColor
+                                    },
+                                    Margin = new Thickness(4, 1),
+                                },
+
+                                new Label { Text = proto.LocalizedName, HorizontalExpand = true, SizeFlagsStretchRatio = 3 },
+
+                                new Label { Text = $"{metabolites}u", StyleClasses = { Content.Client.Stylesheets.StyleNano.StyleClassLabelSecondaryColor }, HorizontalExpand = true, SizeFlagsStretchRatio = 1 },
+
+                                new Label { Text = $"{quantity}u", HorizontalExpand = true, SizeFlagsStretchRatio = 1 },
+                            }
+                        });
+                    }
+                }
+                BrainHealthText.Visible = true;
+                BrainHealthLabel.Visible = true;
+                BrainHealthLabel.Text = Loc.GetString("health-analyzer-window-entity-brain-health-value", ("value", $"{woundable.BrainHealth * 100:F1}"), ("rating", woundable.BrainHealthRating));
+
+                HeartHealthText.Visible = true;
+                HeartHealthLabel.Visible = true;
+                HeartHealthLabel.Text = Loc.GetString("health-analyzer-window-entity-heart-health-value", ("value", $"{woundable.HeartHealth * 100:F1}"), ("rating", woundable.HeartHealthRating));
+
+                HeartRateText.Visible = true;
+                HeartRateLabel.Visible = true;
+                HeartRateLabel.Text = Loc.GetString("health-analyzer-window-entity-heart-rate-value", ("value", woundable.HeartRate), ("rating", woundable.HeartRateRating));
+
+                BloodOxygenationText.Visible = true;
+                BloodOxygenationLabel.Visible = true;
+                BloodOxygenationLabel.Text = Loc.GetString("health-analyzer-window-entity-blood-oxygenation-value", ("value", $"{woundable.BloodOxygenation * 100:F1}"), ("rating", woundable.BloodOxygenationRating));
+
+                BloodFlowText.Visible = true;
+                BloodFlowLabel.Visible = true;
+                BloodFlowLabel.Text = Loc.GetString("health-analyzer-window-entity-blood-flow-value", ("value", $"{woundable.BloodFlow * 100:F1}"), ("rating", woundable.BloodFlowRating));
+
+                var (systolic, diastolic) = woundable.BloodPressure;
+                BloodPressureText.Visible = true;
+                BloodPressureLabel.Visible = true;
+                BloodPressureLabel.Text = Loc.GetString("health-analyzer-window-entity-blood-pressure-value", ("systolic", systolic), ("diastolic", diastolic), ("rating", woundable.BloodPressureRating));
+
+                BloodLabel.Visible = false;
+                BloodText.Visible = false;
+            }
+            else
+            {
+                BrainHealthLabel.Visible = false;
+                BloodPressureLabel.Visible = false;
+                BloodOxygenationLabel.Visible = false;
+                HeartRateLabel.Visible = false;
+                HeartHealthLabel.Visible = false;
+                BloodFlowLabel.Visible = false;
+                BrainHealthText.Visible = false;
+                BloodPressureText.Visible = false;
+                BloodOxygenationText.Visible = false;
+                BloodFlowText.Visible = false;
+                HeartRateText.Visible = false;
+                HeartHealthText.Visible = false;
+
+                BloodLabel.Visible = true;
+                BloodText.Visible = true;
+            }
+            // End Offbrand
 
             // Damage Groups
 
@@ -200,6 +309,10 @@ namespace Content.Client.HealthAnalyzer.UI
                     groupContainer.AddChild(CreateDiagnosticItemLabel(damageString.Insert(0, " · ")));
                 }
             }
+
+            // Begin Offbrand
+            NoDamagesText.Visible = GroupsContainer.ChildCount == 0;
+            // End Offbrand
         }
 
         private Texture GetTexture(string texture)

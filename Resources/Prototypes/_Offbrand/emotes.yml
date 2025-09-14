@@ -1,0 +1,25 @@
+# This Source Code Form is subject to the terms of the Mozilla Public
+# License, v. 2.0. If a copy of the MPL was not distributed with this
+# file, You can obtain one at http://mozilla.org/MPL/2.0/.
+
+- type: emote
+  id: DefaultPaingasp
+  name: chat-emote-name-paingasp
+  icon: Interface/Emotes/deathgasp.png
+  whitelist:
+    components:
+    - Pain
+  chatMessages: ["chat-emote-msg-paingasp"]
+  chatTriggers:
+  - paingasp
+
+- type: emote
+  id: DefaultBraingasp
+  name: chat-emote-name-braingasp
+  icon: Interface/Emotes/deathgasp.png
+  whitelist:
+    components:
+    - BrainDamage
+  chatMessages: ["chat-emote-msg-braingasp"]
+  chatTriggers:
+  - braingasp

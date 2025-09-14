@@ -39,7 +39,7 @@
     - id: Brutepack1
       amount: !type:RangeNumberSelector
         range: 1, 4
-    - id: Bloodpack1
+    - id: ChemistryBottleParacetamol # Offbrand
       amount: !type:RangeNumberSelector
         range: 1, 4
     - id: Ointment1

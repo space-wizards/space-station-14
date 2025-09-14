@@ -1,0 +1,109 @@
+# This Source Code Form is subject to the terms of the Mozilla Public
+# License, v. 2.0. If a copy of the MPL was not distributed with this
+# file, You can obtain one at http://mozilla.org/MPL/2.0/.
+
+- type: reaction
+  id: Tramadol
+  reactants:
+    Inaprovaline:
+      amount: 1
+    Ethanol:
+      amount: 1
+    Acetone:
+      amount: 1
+  products:
+    Tramadol: 3
+
+- type: reaction
+  id: Paracetamol
+  reactants:
+    Tramadol:
+      amount: 1
+    Sugar:
+      amount: 1
+    Water:
+      amount: 2
+  products:
+    Paracetamol: 2
+
+- type: reaction
+  id: Oxycodone
+  reactants:
+    Tramadol:
+      amount: 1
+    Ethanol:
+      amount: 2
+    Plasma:
+      amount: 1
+      catalyst: true
+  products:
+    Oxycodone: 2
+
+- type: reaction
+  id: Synthflesh
+  reactants:
+    SulfuricAcid:
+      amount: 1
+    Oxygen:
+      amount: 1
+    Acetone:
+      amount: 1
+  products:
+    Synthflesh: 4
+
+- type: reaction
+  id: Sanguine
+  reactants:
+    Synthflesh:
+      amount: 1
+    DexalinPlus:
+      amount: 1
+    Iron:
+      amount: 1
+  products:
+    Sanguine: 3
+
+- type: reaction
+  id: SalineGlucose
+  reactants:
+    Saline:
+      amount: 1
+    Sugar:
+      amount: 1
+  products:
+    SalineGlucose: 1
+
+- type: reaction
+  id: Cloneoxadone
+  reactants:
+    Cryoxadone:
+      amount: 1
+    Sodium:
+      amount: 1
+    Inaprovaline:
+      amount: 1
+  products:
+    Cloneoxadone: 3
+
+- type: reaction
+  id: Peridaxon
+  reactants:
+    Bicaridine:
+      amount: 1
+    Cryoxadone:
+      amount: 1
+    Plasma:
+      amount: 1
+      catalyst: true
+  products:
+    Peridaxon: 2
+
+- type: reaction
+  id: RomerolCharcoalCancellation
+  reactants:
+    Romerol:
+      amount: 1
+    Charcoal:
+      amount: 1
+  products:
+    Romerol: 1

@@ -9,8 +9,12 @@ job-name-scientist = Scientist
 job-name-research-assistant = Research Assistant
 job-name-rd = Research Director
 job-name-psychologist = Psychologist
-job-name-intern = Medical Intern
-job-name-doctor = Medical Doctor
+# Offbrand: name change
+# job-name-intern = Medical Intern
+job-name-intern = Medical Resident
+# Offbrand: name change
+# job-name-doctor = Medical Doctor
+job-name-doctor = Physician
 job-name-paramedic = Paramedic
 job-name-cmo = Chief Medical Officer
 job-name-chemist = Chemist

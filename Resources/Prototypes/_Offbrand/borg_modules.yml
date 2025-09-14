@@ -1,0 +1,28 @@
+# This Source Code Form is subject to the terms of the Mozilla Public
+# License, v. 2.0. If a copy of the MPL was not distributed with this
+# file, You can obtain one at http://mozilla.org/MPL/2.0/.
+
+- type: entity
+  id: BorgModuleOperatingRoom
+  parent: [ BaseBorgModuleMedical, BaseProviderBorgModule ]
+  name: operating room cyborg module
+  components:
+  - type: Sprite
+    layers:
+    - state: medical
+    - state: icon-operating-room
+      sprite: _Offbrand/borg_modules.rsi
+  - type: ItemBorgModule
+    hands:
+    - item: HandheldHealthAnalyzerUnpowered
+    - item: Scalpel
+    - item: Hemostat
+    - item: Retractor
+    - item: Cautery
+    - item: BoneGel
+    - item: BoneSetter
+    - item: Saw
+    - item: Drill
+    - item: VascularRecoupler
+  - type: BorgModuleIcon
+    icon: { sprite: _Offbrand/borg_module_actions.rsi, state: operating-room-module }

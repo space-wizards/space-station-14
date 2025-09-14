@@ -536,7 +536,7 @@
     - id: SyringeInaprovaline
     - id: SyringeEphedrine
     - id: Gauze
-    - id: Bloodpack
+    - id: ChemistryBottleTramadol # Offbrand
     - id: RegenerativeMesh
     - id: MedicatedSuture
     - id: EmergencyMedipen

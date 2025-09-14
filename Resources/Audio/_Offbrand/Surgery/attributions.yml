@@ -1,0 +1,4 @@
+- files: ["*.ogg"]
+  license: "CC-BY-SA-3.0"
+  copyright: "Sound taken from tgstation"
+  source: "https://github.com/tgstation/tgstation/tree/86d3bac030f32b016ce1b749b35f6b3930ee5d28/sound/items/handling/surgery"

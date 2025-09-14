@@ -26,6 +26,7 @@ using Content.Shared.Verbs;
 using Robust.Shared.Containers;
 using Robust.Shared.Serialization;
 using Robust.Shared.Timing;
+using Content.Shared._Offbrand.Wounds; // Offbrand
 
 namespace Content.Shared.Medical.Cryogenics;
 
@@ -105,7 +106,9 @@ public abstract partial class SharedCryoPodSystem : EntitySystem
                 && _solutionContainerQuery.TryComp(container, out var solutionContainerManagerComponent)
                 && _solutionContainer.TryGetFitsInDispenser((container.Value, fitsInDispenserComponent, solutionContainerManagerComponent),
                     out var containerSolution, out _)
-                && _bloodstreamQuery.TryComp(patient, out var bloodstream))
+                && _bloodstreamQuery.TryComp(patient, out var bloodstream)
+                && _solutionContainer.ResolveSolution(patient.Value, bloodstream.ChemicalSolutionName, ref bloodstream.ChemicalSolution, out var chemsSolution) // Offbrand
+                && !chemsSolution.HasOverlapAtLeast(containerSolution.Value.Comp.Solution, cryoPod.BeakerTransferAmount * 2)) // Offbrand
             {
                 var solutionToInject = _solutionContainer.SplitSolution(containerSolution.Value, cryoPod.BeakerTransferAmount);
                 _bloodstream.TryAddToChemicals((patient.Value, bloodstream), solutionToInject);
