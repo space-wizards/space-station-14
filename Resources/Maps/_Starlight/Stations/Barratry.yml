@@ -4,8 +4,8 @@ meta:
   engineVersion: 266.0.0
   forkId: ""
   forkVersion: ""
-  time: 09/06/2025 20:50:38
-  entityCount: 15657
+  time: 09/12/2025 21:01:14
+  entityCount: 15658
 maps:
 - 5005
 grids:
@@ -81998,11 +81998,6 @@ entities:
     - type: Transform
       pos: -57.5,60.5
       parent: 1
-  - uid: 7393
-    components:
-    - type: Transform
-      pos: -44.5,-13.5
-      parent: 1
   - uid: 8025
     components:
     - type: Transform
@@ -83853,6 +83848,11 @@ entities:
     components:
     - type: Transform
       pos: -16.5,8.5
+      parent: 1
+  - uid: 15440
+    components:
+    - type: Transform
+      pos: -45.5,-13.5
       parent: 1
   - uid: 15782
     components:
@@ -86969,6 +86969,13 @@ entities:
       parent: 1
     - type: StockLimitedProcessing
       processingListings: {}
+- proto: SLVendingMachineSalvage
+  entities:
+  - uid: 7393
+    components:
+    - type: Transform
+      pos: -44.5,-13.5
+      parent: 1
 - proto: SLVendingMachineSecurity
   entities:
   - uid: 14339
