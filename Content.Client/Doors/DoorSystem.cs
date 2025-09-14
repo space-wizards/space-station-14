@@ -92,7 +92,9 @@ public sealed class DoorSystem : SharedDoorSystem
         if (_animationSystem.HasRunningAnimation(entity, DoorComponent.AnimationKey))
             _animationSystem.Stop(entity.Owner, DoorComponent.AnimationKey);
 
-        _sprite.LayerSetVisible(entity.Owner, DoorVisualLayers.BaseEmagging, state == DoorState.Emagging);
+        // We are checking beforehand since some doors may not have an emagging animation layer, and we don't want LayerSetVisible to throw an error.
+        if (_sprite.TryGetLayer(entity.Owner, DoorVisualLayers.BaseEmagging, out var _, false))
+            _sprite.LayerSetVisible(entity.Owner, DoorVisualLayers.BaseEmagging, state == DoorState.Emagging);
 
         UpdateAppearanceForDoorState(entity, args.Sprite, state);
     }
@@ -136,7 +138,9 @@ public sealed class DoorSystem : SharedDoorSystem
 
                 return;
             case DoorState.Emagging:
-                _animationSystem.Play(entity, (Animation)entity.Comp.EmaggingAnimation, DoorComponent.AnimationKey);
+                // We are checking beforehand since some doors may not have an emagging animation layer.
+                if (_sprite.TryGetLayer(entity.Owner, DoorVisualLayers.BaseEmagging, out var _, false))
+                    _animationSystem.Play(entity, (Animation)entity.Comp.EmaggingAnimation, DoorComponent.AnimationKey);
 
                 return;
         }
