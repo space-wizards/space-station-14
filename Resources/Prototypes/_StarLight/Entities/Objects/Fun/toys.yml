@@ -26,3 +26,43 @@
     wideAnimationRotation: 180
     soundHit:
       path: /Audio/Effects/glass_smash.ogg
+
+# Fashion-O-Mat-Start
+- type: entity 
+  parent: BasePlushie
+  id: PlushieBBC
+  name: BBC entity # Even though it's a plushie, it belongs in Fashion-O-Mat, since it's 2 main sprites are the ones that are equipped to body
+  description: Apocalypse holding a lantern-Wait, why BBC?...Funny.
+  components:
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: bbc-inhand-left
+      right:
+      - state: bbc-inhand-right
+    size: Normal
+  - type: Sprite
+    sprite: _Starlight/Objects/Fun/bbc.rsi
+    state: bbc
+  - type: EmitSoundOnUse
+    sound:
+      path: /Audio/_Starlight/Items/Toys/bbc_scream.ogg
+  - type: EmitSoundOnActivate
+    sound:
+      path: /Audio/_Starlight/Items/Toys/bbc_scream.ogg
+  - type: UseDelay
+    delay: 20
+  - type: PointLight
+    radius: 1.5
+    energy: 2
+    color: "#e6b400"
+  - type: Clothing
+    slots:
+    - neck
+    - head
+    clothingVisuals:
+      head:
+      - state: bbc-equipped-HELMET
+      neck:
+      - state: bbc-equipped-NECK
+# Fashion-O-Mat-End
