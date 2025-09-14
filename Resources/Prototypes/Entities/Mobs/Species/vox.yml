@@ -46,7 +46,7 @@
       - !type:SpawnEntitiesBehavior
         spawnInContainer: true
         spawn:
-          FoodMeatChickenFried:
+          FoodMeatChickenFriedVox:
             min: 3
             max: 5
       - !type:BurnBodyBehavior { }
