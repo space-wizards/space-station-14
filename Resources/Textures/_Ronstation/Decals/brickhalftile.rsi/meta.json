@@ -222,6 +222,42 @@
 		},
 		{
 			"name": "steel_maint_half_w"
+		},
+        {
+            "name": "grating_maint_half_corner_ne"
+        },
+        {
+            "name": "grating_maint_half_corner_se"
+        },
+        {
+            "name": "grating_maint_half_corner_nw"
+        },
+        {
+            "name": "grating_maint_half_corner_sw"
+        },
+        {
+            "name": "grating_maint_half_inner_ne"
+        },
+        {
+            "name": "grating_maint_half_inner_se"
+        },
+        {
+            "name": "grating_maint_half_inner_nw"
+        },
+        {
+            "name": "grating_maint_half_inner_sw"
+        },
+		{
+			"name": "grating_maint_half_n"
+		},
+		{
+			"name": "grating_maint_half_s"
+		},
+		{
+			"name": "grating_maint_half_e"
+		},
+		{
+			"name": "grating_maint_half_w"
 		}
     ]
 }

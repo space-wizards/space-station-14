@@ -1,0 +1,83 @@
+﻿- type: decal
+  id: BrickTileGMaintHalfCornerNe
+  tags: ["station", "markings"]
+  sprite:
+    sprite: _Ronstation/Decals/brickhalftile.rsi
+    state: grating_maint_half_corner_ne
+
+- type: decal
+  id: BrickTileGMaintHalfCornerSe
+  tags: ["station", "markings"]
+  sprite:
+    sprite: _Ronstation/Decals/brickhalftile.rsi
+    state: grating_maint_half_corner_se
+
+- type: decal
+  id: BrickTileGMaintHalfCornerNw
+  tags: ["station", "markings"]
+  sprite:
+    sprite: _Ronstation/Decals/brickhalftile.rsi
+    state: grating_maint_half_corner_nw
+
+- type: decal
+  id: BrickTileGMaintHalfCornerSw
+  tags: ["station", "markings"]
+  sprite:
+    sprite: _Ronstation/Decals/brickhalftile.rsi
+    state: grating_maint_half_corner_sw
+
+- type: decal
+  id: BrickTileGMaintHalfInnerNe
+  tags: ["station", "markings"]
+  sprite:
+    sprite: _Ronstation/Decals/brickhalftile.rsi
+    state: grating_maint_half_inner_ne
+
+- type: decal
+  id: BrickTileGMaintHalfInnerSe
+  tags: ["station", "markings"]
+  sprite:
+    sprite: _Ronstation/Decals/brickhalftile.rsi
+    state: grating_maint_half_inner_se
+
+- type: decal
+  id: BrickTileGMaintHalfInnerNw
+  tags: ["station", "markings"]
+  sprite:
+    sprite: _Ronstation/Decals/brickhalftile.rsi
+    state: grating_maint_half_inner_nw
+
+- type: decal
+  id: BrickTileGMaintHalfInnerSw
+  tags: ["station", "markings"]
+  sprite:
+    sprite: _Ronstation/Decals/brickhalftile.rsi
+    state: grating_maint_half_inner_sw
+
+- type: decal
+  id: BrickTileGMaintHalfN
+  tags: ["station", "markings"]
+  sprite:
+    sprite: _Ronstation/Decals/brickhalftile.rsi
+    state: grating_maint_half_n
+
+- type: decal
+  id: BrickTileGMaintHalfS
+  tags: ["station", "markings"]
+  sprite:
+    sprite: _Ronstation/Decals/brickhalftile.rsi
+    state: grating_maint_half_s
+
+- type: decal
+  id: BrickTileGMaintHalfE
+  tags: ["station", "markings"]
+  sprite:
+    sprite: _Ronstation/Decals/brickhalftile.rsi
+    state: grating_maint_half_e
+
+- type: decal
+  id: BrickTileGMaintHalfW
+  tags: ["station", "markings"]
+  sprite:
+    sprite: _Ronstation/Decals/brickhalftile.rsi
+    state: grating_maint_half_w    
