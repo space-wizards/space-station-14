@@ -6,7 +6,7 @@ using Content.Server.Administration.Components;
 using Content.Server.Cargo.Components;
 using Content.Server.Doors.Systems;
 using Content.Server.Hands.Systems;
-using Content.Server._Impstation.Thaven; // 🌟Starlight🌟
+using Content.Server._Starlight.Thaven; // 🌟Starlight🌟
 using Content.Server.Power.Components;
 using Content.Server.Power.EntitySystems;
 using Content.Server.Stack;
@@ -27,7 +27,7 @@ using Content.Shared.Database;
 using Content.Shared.Doors.Components;
 using Content.Shared.Electrocution;
 using Content.Shared.Hands.Components;
-using Content.Shared._Impstation.Thaven.Components; // 🌟Starlight🌟
+using Content.Shared._Starlight.Thaven.Components; // 🌟Starlight🌟
 using Content.Shared.Inventory;
 using Content.Shared.PDA;
 using Content.Shared.Stacks;
