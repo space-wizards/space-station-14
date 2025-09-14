@@ -110,7 +110,6 @@ public abstract class SharedChameleonClothingSystem : EntitySystem
             proto.TryGetComponent(out AppearanceComponent? appearanceOther, Factory))
         {
             _appearance.AppendData(appearanceOther, uid);
-            Dirty(uid, appearance);
         }
 
         // properly mark contraband
