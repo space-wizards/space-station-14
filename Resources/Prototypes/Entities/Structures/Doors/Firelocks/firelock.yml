@@ -64,6 +64,10 @@
           visible: false
           shader: unshaded
           map: ["enum.FirelockVisualLayersTemperature.Base"]
+        - state: sparks
+          map: ["enum.DoorVisualLayers.BaseEmagging"]
+          shader: unshaded
+          visible: false
     - type: GenericVisualizer
       visuals:
         enum.FirelockVisuals.PressureWarning:

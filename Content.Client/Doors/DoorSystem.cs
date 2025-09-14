@@ -68,7 +68,7 @@ public sealed class DoorSystem : SharedDoorSystem
             {
                 new AnimationTrackSpriteFlick
                 {
-                    LayerKey = DoorVisualLayers.BaseUnlit,
+                    LayerKey = DoorVisualLayers.BaseEmagging,
                     KeyFrames =
                     {
                         new AnimationTrackSpriteFlick.KeyFrame(comp.EmaggingSpriteState, 0f),
@@ -91,6 +91,8 @@ public sealed class DoorSystem : SharedDoorSystem
 
         if (_animationSystem.HasRunningAnimation(entity, DoorComponent.AnimationKey))
             _animationSystem.Stop(entity.Owner, DoorComponent.AnimationKey);
+
+        _sprite.LayerSetVisible(entity.Owner, DoorVisualLayers.BaseEmagging, state == DoorState.Emagging);
 
         UpdateAppearanceForDoorState(entity, args.Sprite, state);
     }
