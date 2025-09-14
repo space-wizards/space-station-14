@@ -19,3 +19,9 @@
 - type: skinColoration
   id: HumanToned
   strategy: !type:HumanTonedSkinColoration {}
+
+- type: skinColoration
+  id: VulpkaninColors
+  strategy: !type:ClampedHslColoration
+    saturation: [0.0, 0.60]
+    lightness: [0.2, 0.9]
