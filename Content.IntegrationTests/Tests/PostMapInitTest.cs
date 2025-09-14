@@ -45,7 +45,7 @@ namespace Content.IntegrationTests.Tests
             "/Maps/centcomm.yml",
             AdminTestArenaSystem.ArenaMapPath,
             // Ronstation - start of modifications.
-            "/Maps/_Ronstation/CentComm/**",
+            "/Maps/_Ronstation/CentComm/budget.yml",
             // Ronstation - end of modifications.
         };
 
