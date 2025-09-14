@@ -1,4 +1,5 @@
 using System.Linq;
+using Content.Shared.Atmos;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Chemistry.Reagent;
@@ -43,6 +44,7 @@ public abstract partial class SharedPuddleSystem : EntitySystem
         SubscribeLocalEvent<PuddleComponent, GetFootstepSoundEvent>(OnGetFootstepSound);
         SubscribeLocalEvent<PuddleComponent, ExaminedEvent>(HandlePuddleExamined);
         SubscribeLocalEvent<PuddleComponent, EntRemovedFromContainerMessage>(OnEntRemoved);
+        SubscribeLocalEvent<PuddleComponent, TileFireEvent>(OnPuddleBurn);
 
         SubscribeLocalEvent<PrototypesReloadedEventArgs>(OnPrototypesReloaded);
 
@@ -203,6 +205,17 @@ public abstract partial class SharedPuddleSystem : EntitySystem
 
             solution.RemoveReagent(reagent, removed);
         }
+    }
+
+    public void OnPuddleBurn(Entity<PuddleComponent> ent, ref TileFireEvent args)
+    {
+        if (!_solutionContainerSystem.ResolveSolution(ent.Owner,
+                ent.Comp.SolutionName,
+                ref ent.Comp.Solution,
+                out var solution))
+            return;
+        _solutionContainerSystem.BurnFlammableReagents(ent.Comp.Solution.Value, 0.05f);
+
     }
 
     #region Spill

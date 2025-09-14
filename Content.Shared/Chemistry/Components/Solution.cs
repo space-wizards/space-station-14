@@ -922,6 +922,33 @@ namespace Content.Shared.Chemistry.Components
             return mixColor;
         }
 
+        public int GetSolutionFlammability(IPrototypeManager? protoMan)
+        {
+            IoCManager.Resolve(ref protoMan);
+            float solutionFlammability = 0;
+            foreach (var (reagent, quantity) in Contents)
+            {
+                solutionFlammability += protoMan.Index<ReagentPrototype>(reagent.Prototype).Flammability * (float)quantity;
+            }
+            return (int)MathF.Floor(solutionFlammability);
+        }
+
+        public void BurnFlammableReagents(float fraction, IPrototypeManager? protoMan)
+        {
+            IoCManager.Resolve(ref protoMan);
+            var newSoln = new Solution(this);
+            foreach (var (reagent, quantity) in Contents)
+            {
+                var quantityToBurn = Math.Ceiling(((float)quantity *
+                                                   (fraction * protoMan.Index<ReagentPrototype>(reagent.Prototype)
+                                                       .Flammability)) / 0.5) * 0.5; // Ceiling to nearest 0.5u
+                newSoln.RemoveReagent(reagent, quantityToBurn);
+            }
+            Contents = newSoln.Contents;
+            DebugTools.Assert(Volume >= newSoln.Volume);
+            Volume = newSoln.Volume;
+        }
+
         #region Enumeration
 
         public IEnumerator<ReagentQuantity> GetEnumerator()

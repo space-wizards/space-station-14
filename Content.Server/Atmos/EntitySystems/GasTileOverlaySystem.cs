@@ -179,7 +179,7 @@ namespace Content.Server.Atmos.EntitySystems
 
         public GasOverlayData GetOverlayData(GasMixture? mixture)
         {
-            var data = new GasOverlayData(0,
+            var data = new GasOverlayData(0, 0,
                 new byte[VisibleGasId.Length],
                 mixture?.Temperature ?? Atmospherics.TCMB);
 
@@ -225,13 +225,13 @@ namespace Content.Server.Atmos.EntitySystems
             if (oldData.Equals(default))
             {
                 changed = true;
-                oldData = new GasOverlayData(tile.Hotspot.State, new byte[VisibleGasId.Length], temp);
+                oldData = new GasOverlayData(tile.Hotspot.State, (byte) tile.Hotspot.Type, new byte[VisibleGasId.Length], temp);
             }
-            else if (oldData.FireState != tile.Hotspot.State ||
+            else if (oldData.FireState != tile.Hotspot.State || oldData.FireType != (byte)tile.Hotspot.Type ||
                      CheckTemperatureTolerance(oldData.Temperature, temp, _heatDistortionStrengthChangeTolerance))
             {
                 changed = true;
-                oldData = new GasOverlayData(tile.Hotspot.State, oldData.Opacity, temp);
+                oldData = new GasOverlayData(tile.Hotspot.State, (byte) tile.Hotspot.Type, oldData.Opacity, temp);
             }
 
             if (tile is {Air: not null, NoGridTile: false})

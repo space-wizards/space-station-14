@@ -172,6 +172,12 @@ namespace Content.Shared.Chemistry.Reagent
         [DataField]
         public bool WorksOnTheDead;
 
+        /// <summary>
+        /// How likely is this reagent to set on fire?
+        /// </summary>
+        [DataField]
+        public int Flammability = 0;
+
         [DataField]
         public FrozenDictionary<ProtoId<MetabolismGroupPrototype>, ReagentEffectsEntry>? Metabolisms;
 
