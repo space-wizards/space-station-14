@@ -1,8 +1,7 @@
-# Contains modifications made by Ronstation contributors, therefore this file is subject to MIT sublicensed with AGPL v3.0.
 - type: gameMap
   id: Oasis2
   mapName: 'Oasis-II'
-  mapPath: /Maps/_Ronstation/oasis-2.yml # Ronstation - modification.
+  mapPath: /Maps/_Ronstation/oasis-2.yml
   minPlayers: 35
   stations:
     Oasis:
@@ -14,12 +13,12 @@
             !type:NanotrasenNameGenerator
             prefixCreator: 'B'
         - type: StationEmergencyShuttle
-          emergencyShuttlePath: /Maps/_Ronstation/Shuttles/emergency_accordia.yml # Ronstation - modification.
+          emergencyShuttlePath: /Maps/_Ronstation/Shuttles/emergency_accordia.yml
         - type: StationJobs
           availableJobs: # 73 jobs total w/o latejoins & interns, 92 jobs total w/ latejoins & interns
             #command (8)
             Captain: [ 1, 1 ]
-            BlueshieldOfficer: [ 1, 1 ] # Ronstation - modification.
+            BlueshieldOfficer: [ 1, 1 ]
             HeadOfPersonnel: [ 1, 1 ]
             HeadOfSecurity: [ 1, 1 ]
             ChiefMedicalOfficer: [ 1, 1 ]
