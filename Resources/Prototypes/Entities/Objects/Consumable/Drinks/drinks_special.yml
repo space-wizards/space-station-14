@@ -52,7 +52,7 @@
 
 
 - type: entity
-  parent: DrinkGlassBase
+  parent: [DrinkBaseMaterialPorcelain, DrinkBase]
   id: DrinkTeapot
   name: teapot  # short and stout
   description: An elegant teapot. It simply oozes class.
