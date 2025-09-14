@@ -1,5 +1,4 @@
 using Content.Server.Chat.Systems;
-using Content.Server.Radio.Components;
 using Content.Shared.Inventory.Events;
 using Content.Shared.Radio;
 using Content.Shared.Radio.Components;

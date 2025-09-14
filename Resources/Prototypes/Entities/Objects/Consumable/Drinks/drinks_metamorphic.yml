@@ -2122,7 +2122,6 @@
   id: DrinkTomatoJuice
   suffix: tomato juice
   components:
-  - type: Drink
   - type: SolutionContainerManager
     solutions:
       drink:
