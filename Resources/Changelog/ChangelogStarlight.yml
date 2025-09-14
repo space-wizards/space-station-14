@@ -13882,5 +13882,12 @@ Entries:
   id: 161700
   time: '2025-09-13T13:57:49.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/1617
+- author: STARLIGHT TEAM
+  changes:
+  - message: Game optimization.
+    type: Tweak
+  id: 157400
+  time: '2025-09-14T15:16:03.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1574
 Order: -1
 
