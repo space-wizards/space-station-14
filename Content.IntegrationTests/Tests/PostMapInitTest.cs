@@ -58,7 +58,7 @@ namespace Content.IntegrationTests.Tests
             "/Maps/Shuttles/ShuttleEvent/instigator.yml", // Contains EXP-320g "Friendship"
             "/Maps/Shuttles/ShuttleEvent/syndie_evacpod.yml", // Contains syndicate rubber stamp
             // Ronstation - start of modifications.
-			"/Maps/_Ronstation/Shuttles/ShuttleEvent/syndie_evacpod.yml", // Contains syndicate rubber stamp
+            "/Maps/_Ronstation/Shuttles/ShuttleEvent/syndie_evacpod.yml", // Contains syndicate rubber stamp
             // Centcomm maps
             "/Maps/_Ronstation/CentComm/budget.yml"
             // Ronstation - end of modifications.
@@ -88,10 +88,10 @@ namespace Content.IntegrationTests.Tests
             "Saltern2",
             "Cluster2",
             "Atlas2",
-      	    "Atlas3",
-	        "Feint",
+            "Atlas3",
+            "Feint",
             // Centcomm maps
-	        "BudgetCentComm"
+            "BudgetCentComm"
             // Ronstation - end of modifications.
         };
 
