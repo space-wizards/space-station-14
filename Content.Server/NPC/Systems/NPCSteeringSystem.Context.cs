@@ -334,7 +334,7 @@ public sealed partial class NPCSteeringSystem
         var tickMovement = moveSpeed * frameTime;
 
         // We have the input in world terms but need to convert it back to what movercontroller is doing.
-        _jumpSystem.TryJump(uid, targetCoordinates);
+        _jumpSystem.TryJump(uid, null, targetCoordinates);
         input = offsetRot.RotateVec(input);
         var norm = input.Normalized();
         var weight = MapValue(direction.Length(), tickMovement * 0.5f, tickMovement * 0.75f);
