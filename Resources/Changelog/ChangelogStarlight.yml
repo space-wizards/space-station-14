@@ -13918,5 +13918,63 @@ Entries:
   id: 159800
   time: '2025-09-14T17:31:35.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/1598
+- author: Aedler
+  changes:
+  - message: Added new SKB deminshielder, it's faster, replacing the NT implanter
+      in the soviet uplink.
+    type: Add
+  id: 118500
+  time: '2025-09-14T17:42:11.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1185
+- author: Aedler
+  changes:
+  - message: Stechkin APS moved from TC category to weaponry as a bundle, loaded .40
+      ammo.
+    type: Tweak
+  id: 118501
+  time: '2025-09-14T17:42:11.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1185
+- author: Aedler
+  changes:
+  - message: DP28 and PPSh are now a bundle purchase in the soviet uplink.
+    type: Tweak
+  id: 118502
+  time: '2025-09-14T17:42:11.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1185
+- author: Aedler
+  changes:
+  - message: SSF Marines have revolutionary icons.
+    type: Tweak
+  id: 118503
+  time: '2025-09-14T17:42:11.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1185
+- author: Aedler
+  changes:
+  - message: Dungeon commies being hostile to revolutionaries.
+    type: Fix
+  id: 118504
+  time: '2025-09-14T17:42:11.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1185
+- author: Aedler
+  changes:
+  - message: Soviet great coat buff and supply rift crate drop changes.
+    type: Tweak
+  id: 118505
+  time: '2025-09-14T17:42:11.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1185
+- author: Aedler
+  changes:
+  - message: Fixed PPSH mag sprite error.
+    type: Fix
+  id: 118506
+  time: '2025-09-14T17:42:11.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1185
+- author: Aedler
+  changes:
+  - message: New USSP decal for the crayons.
+    type: Add
+  id: 118507
+  time: '2025-09-14T17:42:11.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1185
 Order: -1
 
