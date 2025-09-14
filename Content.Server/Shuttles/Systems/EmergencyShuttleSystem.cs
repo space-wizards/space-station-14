@@ -1,3 +1,4 @@
+// Modified by Ronstation contributor(s), therefore this file is licensed as MIT sublicensed with AGPL-v3.0.
 using System.Linq;
 using System.Numerics;
 using System.Threading;
@@ -9,6 +10,7 @@ using Content.Server.Communications;
 using Content.Server.DeviceNetwork.Systems;
 using Content.Server.GameTicking;
 using Content.Server.GameTicking.Events;
+using Content.Server.Maps; // Ronstation - modification.
 using Content.Server.Pinpointer;
 using Content.Server.RoundEnd;
 using Content.Server.Screens.Components;
@@ -23,6 +25,8 @@ using Content.Shared.DeviceNetwork;
 using Content.Shared.DeviceNetwork.Components;
 using Content.Shared.GameTicking;
 using Content.Shared.Localizations;
+using Content.Shared.Random; // Ronstation - modification.
+using Content.Shared.Random.Helpers; // Ronstation - modification.
 using Content.Shared.Shuttles.Components;
 using Content.Shared.Shuttles.Events;
 using Content.Shared.Shuttles.Systems;
@@ -30,6 +34,7 @@ using Content.Shared.Tag;
 using Content.Shared.Tiles;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio.Systems;
+using Robust.Shared.Configuration; // Ronstation - modification.
 using Robust.Shared.EntitySerialization.Systems;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Player;
@@ -67,6 +72,8 @@ public sealed partial class EmergencyShuttleSystem : SharedEmergencyShuttleSyste
     [Dependency] private readonly StationSystem _station = default!;
     [Dependency] private readonly TransformSystem _transformSystem = default!;
     [Dependency] private readonly UserInterfaceSystem _uiSystem = default!;
+    [Dependency] private readonly IPrototypeManager _prototype = default!; // Ronstation - modification.
+    [Dependency] private readonly IConfigurationManager _configManager = default!; // Ronstation - modification.
 
     private const float ShuttleSpawnBuffer = 1f;
 
@@ -526,6 +533,20 @@ public sealed partial class EmergencyShuttleSystem : SharedEmergencyShuttleSyste
             return;
         }
 
+        // Ronstation - start of modifications.
+        var centComm = _configManager.GetCVar(CCVars.CentComm);
+        if (!string.IsNullOrEmpty(centComm))
+        {
+            component.Map = new ResPath(centComm);
+        } 
+        else if (!string.IsNullOrEmpty(component.WeightedMap))
+        {
+            var randomMap = _prototype.Index(component.WeightedMap.Value).Pick(_random);
+            var mapPrototype = _prototype.Index<GameMapPrototype>(randomMap);
+            component.Map = new ResPath(mapPrototype.MapPath.ToString());
+        }
+        // Ronstation - end of modifications.
+        
         if (string.IsNullOrEmpty(component.Map.ToString()))
         {
             Log.Warning("No CentComm map found, skipping setup.");
