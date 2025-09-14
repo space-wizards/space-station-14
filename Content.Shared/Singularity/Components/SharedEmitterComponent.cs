@@ -1,11 +1,12 @@
 using System.Threading;
 using Content.Shared.DeviceLinking;
 using Robust.Shared.GameStates;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.Singularity.Components;
 
-[RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
+[RegisterComponent, NetworkedComponent]
 public sealed partial class EmitterComponent : Component
 {
     public CancellationTokenSource? TimerCancel;

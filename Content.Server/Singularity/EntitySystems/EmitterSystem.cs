@@ -7,6 +7,7 @@ using Content.Server.Projectiles;
 using Content.Server.Weapons.Ranged.Systems;
 using Content.Shared.Database;
 using Content.Shared.DeviceLinking.Events;
+using Content.Shared.Examine;
 using Content.Shared.Interaction;
 using Content.Shared.Lock;
 using Content.Shared.Popups;
@@ -15,6 +16,7 @@ using Content.Shared.Projectiles;
 using Content.Shared.Singularity.Components;
 using Content.Shared.Singularity.EntitySystems;
 using Content.Shared.Weapons.Ranged.Components;
+using Content.Shared.Weapons.Ranged.Systems;
 using Robust.Shared.Map;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Components;
@@ -34,6 +36,7 @@ namespace Content.Server.Singularity.EntitySystems
         [Dependency] private readonly ProjectileSystem _projectile = default!;
         [Dependency] private readonly GunSystem _gun = default!;
         [Dependency] private readonly BatteryWeaponFireModesSystem _fireMode= default!;
+        [Dependency] private readonly IPrototypeManager _prototype = default!;
 
         public override void Initialize()
         {
@@ -42,7 +45,6 @@ namespace Content.Server.Singularity.EntitySystems
             SubscribeLocalEvent<EmitterComponent, PowerConsumerReceivedChanged>(ReceivedChanged);
             SubscribeLocalEvent<EmitterComponent, PowerChangedEvent>(OnApcChanged);
             SubscribeLocalEvent<EmitterComponent, ActivateInWorldEvent>(OnActivate);
-            SubscribeLocalEvent<EmitterComponent, ExaminedEvent>(OnExamined);
             SubscribeLocalEvent<EmitterComponent, ExaminedEvent>(OnExamined);
             SubscribeLocalEvent<EmitterComponent, AnchorStateChangedEvent>(OnAnchorStateChanged);
             SubscribeLocalEvent<EmitterComponent, SignalReceivedEvent>(OnSignalReceived);
@@ -298,7 +300,7 @@ namespace Content.Server.Singularity.EntitySystems
             }
             else if (component.SetTypePorts.TryGetValue(args.Port, out var index))
             {
-                _fireMode.TrySetFireMode((uid, null), index);
+                // _fireMode.TrySetFireMode((uid, null), index);
             }
         }
     }

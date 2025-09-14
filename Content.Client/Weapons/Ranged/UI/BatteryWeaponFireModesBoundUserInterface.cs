@@ -45,9 +45,9 @@ public sealed class BatteryWeaponFireModesBoundUserInterface : BoundUserInterfac
     /// <summary>
     /// Collect options for radial menu from component's <see cref="BatteryWeaponFireModesComponent.FireModes"/>.
     /// </summary>
-    private List<RadialMenuOption> CreateButtons(BatteryWeaponFireModesComponent fireModes)
+    private List<RadialMenuOptionBase> CreateButtons(BatteryWeaponFireModesComponent fireModes)
     {
-        var list = new List<RadialMenuOption>();
+        var list = new List<RadialMenuOptionBase>();
 
         for (var i = 0; i < fireModes.FireModes.Count; i++)
         {
@@ -57,7 +57,7 @@ public sealed class BatteryWeaponFireModesBoundUserInterface : BoundUserInterfac
             var option = new RadialMenuActionOption<BatteryWeaponFireMode>(mode => HandleRadialMenuClick(index), fireMode)
             {
                 ToolTip = entProto.Name,
-                Sprite = fireMode.ModeIcon
+                IconSpecifier = RadialMenuIconSpecifier.With(fireMode.ModeIcon)
             };
             if (index == fireModes.CurrentFireMode)
             {
