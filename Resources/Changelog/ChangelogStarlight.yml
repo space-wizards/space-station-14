@@ -13976,5 +13976,36 @@ Entries:
   id: 118507
   time: '2025-09-14T17:42:11.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/1185
+- author: CorruptOmega
+  changes:
+  - message: White Cat Ears - Replaces the trinket and has a value of 15 spesos. Is
+      NOT contraband.
+    type: Add
+  id: 161300
+  time: '2025-09-14T18:40:15.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1613
+- author: CorruptOmega
+  changes:
+  - message: Valid White Cat Ears to match the black ones
+    type: Add
+  id: 161301
+  time: '2025-09-14T18:40:15.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1613
+- author: CorruptOmega
+  changes:
+  - message: Syndicate Cat Ears have been recolored black and given back their Syndicate
+      Contraband label and price tag kept at 15k Spesos. Happy hunting.
+    type: Tweak
+  id: 161302
+  time: '2025-09-14T18:40:15.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1613
+- author: CorruptOmega
+  changes:
+  - message: New Admin Smite - Either Black or White cat ears can be forced onto a
+      player.
+    type: Add
+  id: 161303
+  time: '2025-09-14T18:40:15.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1613
 Order: -1
 
