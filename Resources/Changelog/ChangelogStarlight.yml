@@ -13911,5 +13911,12 @@ Entries:
   id: 160900
   time: '2025-09-14T17:26:12.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/1609
+- author: Conflee
+  changes:
+  - message: Added "Tritium Fire Dragon Sword Fight" Lobby Art
+    type: Add
+  id: 159800
+  time: '2025-09-14T17:31:35.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1598
 Order: -1
 
