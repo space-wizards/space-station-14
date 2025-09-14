@@ -16,6 +16,7 @@ public sealed class ReactiveSystem : EntitySystem
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly IRobustRandom _robustRandom = default!;
     [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
+    [Dependency] private readonly SharedEntityEffectsSystem _entityEffects = default!;
 
     public void DoEntityReaction(EntityUid uid, Solution solution, ReactionMethod method)
     {
@@ -45,6 +46,7 @@ public sealed class ReactiveSystem : EntitySystem
         // If we have a source solution, use the reagent quantity we have left. Otherwise, use the reaction volume specified.
         var args = new EntityEffectReagentArgs(uid, EntityManager, null, source, source?.GetReagentQuantity(reagentQuantity.Reagent) ?? reagentQuantity.Quantity, proto, method, 1f);
 
+        /*
         // First, check if the reagent wants to apply any effects.
         if (proto.ReactiveEffects != null && reactive.ReactiveGroups != null)
         {
@@ -59,6 +61,7 @@ public sealed class ReactiveSystem : EntitySystem
                 if (!reactive.ReactiveGroups[key].Contains(method))
                     continue;
 
+
                 foreach (var effect in val.Effects)
                 {
                     if (!effect.ShouldApply(args, _robustRandom))
@@ -71,10 +74,10 @@ public sealed class ReactiveSystem : EntitySystem
                             $"Reactive effect {effect.GetType().Name:effect} of reagent {proto.ID:reagent} with method {method} applied on entity {ToPrettyString(entity):entity} at {Transform(entity).Coordinates:coordinates}");
                     }
 
-                    effect.Effect(args);
+                    effect.RaiseEvent(args);
                 }
             }
-        }
+        }*/
 
         // Then, check if the prototype has any effects it can apply as well.
         if (reactive.Reactions != null)
@@ -87,7 +90,9 @@ public sealed class ReactiveSystem : EntitySystem
                 if (entry.Reagents != null && !entry.Reagents.Contains(proto.ID))
                     continue;
 
-                foreach (var effect in entry.Effects)
+                _entityEffects.ApplyEffects(uid, entry.Effects);
+
+                /*foreach (var effect in entry.Effects)
                 {
                     if (!effect.ShouldApply(args, _robustRandom))
                         continue;
@@ -100,7 +105,7 @@ public sealed class ReactiveSystem : EntitySystem
                     }
 
                     effect.Effect(args);
-                }
+                }*/
             }
         }
     }

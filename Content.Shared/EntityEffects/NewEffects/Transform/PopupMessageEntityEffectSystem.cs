@@ -33,3 +33,9 @@ public sealed class PopupMessage : EntityEffectBase<PopupMessage>
     [DataField]
     public PopupType VisualType = PopupType.Small;
 }
+
+public enum PopupRecipients
+{
+    Pvs,
+    Local
+}

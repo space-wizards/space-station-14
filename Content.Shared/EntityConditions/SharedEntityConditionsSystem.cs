@@ -12,10 +12,25 @@ public sealed partial class SharedEntityConditionsSystem : EntitySystem, IEntity
 
     }
 
-    public void RaiseConditionEvent<T>(EntityUid target, T effect) where T : EntityConditionBase<T>
+    public bool TryConditions(EntityUid target, AnyEntityCondition[]? conditions)
+    {
+        if (conditions == null)
+            return true;
+
+        foreach (var condition in conditions)
+        {
+            if (!condition.RaiseEvent(target, this))
+                return false;
+        }
+
+        return true;
+    }
+
+    public bool RaiseConditionEvent<T>(EntityUid target, T effect) where T : EntityConditionBase<T>
     {
         var effectEv = new EntityConditionEvent<T>(effect);
         RaiseLocalEvent(target, ref effectEv);
+        return effectEv.Pass;
     }
 }
 
@@ -36,37 +51,36 @@ public abstract partial class EntityConditionSystem<T, TCon> : EntitySystem wher
 
 public interface IEntityConditionRaiser
 {
-    void RaiseConditionEvent<T>(EntityUid target, T effect) where T : EntityConditionBase<T>;
+    bool RaiseConditionEvent<T>(EntityUid target, T effect) where T : EntityConditionBase<T>;
 }
 
 public abstract partial class EntityConditionBase<T> : AnyEntityCondition where T : EntityConditionBase<T>
 {
-    public override void RaiseEvent(EntityUid target, IEntityConditionRaiser raiser)
+    public override bool RaiseEvent(EntityUid target, IEntityConditionRaiser raiser)
     {
         if (this is not T type)
-            return;
+            return false;
 
-        raiser.RaiseConditionEvent(target, type);
+        return raiser.RaiseConditionEvent(target, type);
     }
 }
 
 // This exists so we can store entity effects in list and raise events without type erasure.
 public abstract partial class AnyEntityCondition
 {
-    public abstract void RaiseEvent(EntityUid target, IEntityConditionRaiser raiser);
-
-    [DataField]
-    public float Probability = 1.0f;
+    public abstract bool RaiseEvent(EntityUid target, IEntityConditionRaiser raiser);
 
     [DataField]
     public readonly string EntityConditionGuidebookText = String.Empty;
-
 }
 
 /// <summary>
 /// An Event carrying an entity effect.
 /// </summary>
-/// <param name="Effect">The Effect</param>
-/// <param name="Scale">A strength scalar for the effect, defaults to 1 and typically only goes under for incomplete reactions.</param>
+/// <param name="Condition">The Condition we're checking</param>
 [ByRefEvent]
-public readonly record struct EntityConditionEvent<T>(T Effect, float Scale = 1f) where T : EntityConditionBase<T>;
+public record struct EntityConditionEvent<T>(T Condition) where T : EntityConditionBase<T>
+{
+    [DataField]
+    public bool Pass;
+}

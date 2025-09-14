@@ -8,7 +8,7 @@ public sealed partial class PlantChangeStat : EntityEffectBase<PlantChangeStat>
     /// sending it into an if else if else if statement that filters by object type and randomly flips bits.
     /// </remarks>
     [DataField (required: true)]
-    public string TargetValue;
+    public string TargetValue = string.Empty;
 
     [DataField]
     public float MinValue;

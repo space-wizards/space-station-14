@@ -27,6 +27,7 @@ namespace Content.Server.Body.Systems
         [Dependency] private readonly IRobustRandom _random = default!;
         [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
         [Dependency] private readonly MobStateSystem _mobStateSystem = default!;
+        [Dependency] private readonly SharedEntityEffectsSystem _entityEffects = default!;
         [Dependency] private readonly SharedSolutionContainerSystem _solutionContainerSystem = default!;
 
         private EntityQuery<OrganComponent> _organQuery;
@@ -139,8 +140,7 @@ namespace Content.Server.Body.Systems
             _random.Shuffle(list);
 
             int reagents = 0;
-            // TODO: FIX THIS
-            /*foreach (var (reagent, quantity) in list)
+            foreach (var (reagent, quantity) in list)
             {
                 if (!_prototypeManager.TryIndex<ReagentPrototype>(reagent.Prototype, out var proto))
                     continue;
@@ -190,25 +190,7 @@ namespace Content.Server.Body.Systems
                     var args = new EntityEffectReagentArgs(actualEntity, EntityManager, ent, solution, mostToRemove, proto, null, scale);
 
                     // do all effects, if conditions apply
-                    foreach (var effect in entry.Effects)
-                    {
-                        if (!effect.ShouldApply(args, _random))
-                            continue;
-
-                        if (effect.ShouldLog)
-                        {
-                            _adminLogger.Add(
-                                LogType.ReagentEffect,
-                                effect.LogImpact,
-                                $"Metabolism effect {effect.GetType().Name:effect}"
-                                + $" of reagent {proto.LocalizedName:reagent}"
-                                + $" applied on entity {actualEntity:entity}"
-                                + $" at {Transform(actualEntity).Coordinates:coordinates}"
-                            );
-                        }
-
-                        effect.Effect(args);
-                    }
+                    _entityEffects.ApplyEffects(actualEntity, entry.Effects);
                 }
 
                 // remove a certain amount of reagent
@@ -219,7 +201,7 @@ namespace Content.Server.Body.Systems
                     // We have processed a reagant, so count it towards the cap
                     reagents += 1;
                 }
-            }*/
+            }
 
             _solutionContainerSystem.UpdateChemicals(soln.Value);
         }

@@ -1,8 +1,10 @@
 ﻿using System.Linq;
+using Content.Shared.Administration.Logs;
 using Content.Shared.Chemistry;
 using Content.Shared.Chemistry.Reaction;
 using Content.Shared.Database;
 using Content.Shared.Localizations;
+using Robust.Shared.Random;
 
 namespace Content.Shared.EntityEffects;
 
@@ -13,6 +15,9 @@ namespace Content.Shared.EntityEffects;
 /// </summary>
 public sealed partial class SharedEntityEffectsSystem : EntitySystem, IEntityEffectRaiser
 {
+    [Dependency] private readonly ISharedAdminLogManager _adminLog = default!;
+    [Dependency] private readonly SharedEntityConditionsSystem _condition = default!;
+
     public override void Initialize()
     {
         SubscribeLocalEvent<ReactiveComponent, ReactionEntityEvent>(OnReactive);
@@ -20,6 +25,9 @@ public sealed partial class SharedEntityEffectsSystem : EntitySystem, IEntityEff
 
     private void OnReactive(Entity<ReactiveComponent> entity, ref ReactionEntityEvent args)
     {
+
+        // TODO: Check if the effect should apply first!
+
         if (args.Reagent.ReactiveEffects != null && entity.Comp.ReactiveGroups != null)
         {
             foreach (var (key, val) in args.Reagent.ReactiveEffects)
@@ -38,6 +46,33 @@ public sealed partial class SharedEntityEffectsSystem : EntitySystem, IEntityEff
                     effect.RaiseEvent(entity, this);
                 }
             }
+        }
+    }
+
+    public void ApplyEffects(EntityUid target, AnyEntityEffect[] effects)
+    {
+        // do all effects, if conditions apply
+        foreach (var effect in effects)
+        {
+            // TODO: This should be handled by EntityConditionsSystem...
+            if (!_condition.TryConditions(target, effect.Conditions))
+                continue;
+
+            // TODO: Logging
+            /*
+            if (effect.ShouldLog)
+            {
+                _adminLog.Add(
+                    LogType.ReagentEffect,
+                    effect.LogImpact,
+                    $"Metabolism effect {effect.GetType().Name:effect}"
+                    + $" of reagent {proto.LocalizedName:reagent}"
+                    + $" applied on entity {actualEntity:entity}"
+                    + $" at {Transform(actualEntity).Coordinates:coordinates}"
+                );
+            }*/
+
+            effect.RaiseEvent(target, this);
         }
     }
 
@@ -103,6 +138,7 @@ public abstract partial class AnyEntityEffect
     [DataField]
     public AnyEntityCondition[]? Conditions;
 
+    // TODO: This should be an entity condition
     [DataField]
     public float Probability = 1.0f;
 
