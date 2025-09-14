@@ -15,16 +15,12 @@
     solution: drink
   - type: ExaminableSolution
     exactVolume: true # It's a chemistry tool
-  - type: DamageOtherOnHit
-    damage:
-      types:
-        Blunt: 2
   - type: Tag
     tags:
     - Trash
     - CentrifugeCompatible # unique feature of vials
 
-## entities
+## Entities
 
 - type: entity
   parent: BaseChemistryVial
@@ -131,8 +127,8 @@
         reagents:
         - ReagentId: Vestine
           Quantity: 30
-  - type: Tag # Remove trash tag
-    tags:
+  - type: Tag
+    tags: &vialTag # Remove trash tag
     - CentrifugeCompatible
 
 - type: entity
@@ -149,9 +145,8 @@
         reagents:
           - ReagentId: Radium
             Quantity: 5
-  - type: Tag # Remove trash tag
-    tags:
-    - CentrifugeCompatible
+  - type: Tag
+    tags: *vialTag
 
 - type: entity
   parent: ChemistryEmptyVialSmall
@@ -167,9 +162,8 @@
         reagents:
           - ReagentId: Chlorine
             Quantity: 5
-  - type: Tag # Remove trash tag
-    tags:
-    - CentrifugeCompatible
+  - type: Tag
+    tags: *vialTag
 
 - type: entity
   parent: ChemistryEmptyVialSmall
@@ -185,6 +179,5 @@
         reagents:
           - ReagentId: Plasma
             Quantity: 10
-  - type: Tag # Remove trash tag
-    tags:
-    - CentrifugeCompatible
+  - type: Tag
+    tags: *vialTag

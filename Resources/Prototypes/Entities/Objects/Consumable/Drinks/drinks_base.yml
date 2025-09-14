@@ -110,7 +110,6 @@
     - state: icon
       map: ["enum.OpenableVisuals.Layer"]
   - type: ExaminableSolution
-    solution: *sol
     examinableWhileClosed: false # If you can't see the fill levels on the sprite, we can assume it's opaque
     heldOnly: true # If it's opaque, you probably can't see through the open lid from a distance
 
@@ -122,12 +121,11 @@
   - type: Appearance
   - type: Sprite
     layers:
-    - state: icon
+    - state: icon_empty
     - state: fill-1
       map: ["enum.SolutionContainerLayers.Fill"]
       visible: false
   - type: SolutionContainerVisuals
-    solutionName: *sol
     maxFillLevels: 5
     fillBaseName: fill-
     inHandsMaxFillLevels: 3
@@ -141,7 +139,7 @@
   components:
   - type: Sprite
     layers:
-    - state: icon
+    - state: icon_empty
       map: [ "enum.SolutionContainerLayers.Base" ]
     - state: fill-1
       map: [ "enum.SolutionContainerLayers.Fill" ]
