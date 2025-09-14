@@ -11,6 +11,7 @@
       proto: ExtRolesReq
   startingGear: NanoTrasenRepresentativeGear
   icon: JobIconNanotrasen
+  rules: job-rules-corporate-aligned
   supervisors: job-supervisors-centcom
   canBeAntag: false
   access:

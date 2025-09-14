@@ -38,3 +38,6 @@ trait-language-terrum-desc = You can speak Terrum, the language of the Cyclorite
 
 trait-language-voxpidgin-name = Vox Pidgin
 trait-language-voxpidgin-desc = You know the language of the Vox, a language mostly made of screeches, clicks, and other assorted bird noises.
+
+trait-language-moffic-name = Moffic
+trait-language-moffic-desc = The language of the moth-people, Moffic is basically completely unintelligible to all but yourself and it's native speakers.

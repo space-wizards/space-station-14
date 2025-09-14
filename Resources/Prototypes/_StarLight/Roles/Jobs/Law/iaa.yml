@@ -12,6 +12,7 @@
     time: 36000 # 10h
   startingGear: IAAGear
   icon: "JobIconIAA"
+  rules: job-rules-corporate-aligned
   supervisors: job-supervisors-magistrate
   canBeAntag: false
   displayWeight: 40

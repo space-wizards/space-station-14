@@ -13860,5 +13860,49 @@ Entries:
   id: 159902
   time: '2025-09-12T17:13:20.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/1599
+- author: biteless-dot
+  changes:
+  - message: Added new alignment type, Corporate Aligned, for Ghost roles
+    type: Add
+  id: 161000
+  time: '2025-09-12T23:08:28.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1610
+- author: biteless-dot
+  changes:
+  - message: Updated NT & CC jobs to have new spawn text denoting that they are beholden
+      to the company, and not the crew
+    type: Tweak
+  id: 161001
+  time: '2025-09-12T23:08:28.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1610
+- author: Fractalflower
+  changes:
+  - message: Moffic language trait
+    type: Add
+  id: 161700
+  time: '2025-09-13T13:57:49.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1617
+- author: STARLIGHT TEAM
+  changes:
+  - message: Game optimization.
+    type: Tweak
+  id: 157400
+  time: '2025-09-14T15:16:03.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1574
+- author: STARLIGHT TEAM
+  changes:
+  - message: Brigmedic and security gloves are no longer insulated.
+    type: Remove
+  id: 162400
+  time: '2025-09-14T16:48:55.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1624
+- author: CawsForConcern
+  changes:
+  - message: Mail Technician is no longer locked behind Cargo Department playtime
+      (previously required 5 hours)
+    type: Remove
+  id: 162100
+  time: '2025-09-14T17:03:52.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1621
 Order: -1
 
