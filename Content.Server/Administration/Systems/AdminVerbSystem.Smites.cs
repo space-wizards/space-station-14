@@ -552,6 +552,7 @@ public sealed partial class AdminVerbSystem
             };
             args.Verbs.Add(nyanify);
 
+            // Starlight - Start
             var nyanify2Name = Loc.GetString("admin-smite-nyanify-name2").ToLowerInvariant();
             Verb nyanify2 = new()
             {
@@ -569,7 +570,7 @@ public sealed partial class AdminVerbSystem
                 Message = string.Join(": ", nyanify2Name, Loc.GetString("admin-smite-nyanify2-description"))
             };
             args.Verbs.Add(nyanify2);
-
+            // Starlight - End
             var killSignName = Loc.GetString("admin-smite-kill-sign-name").ToLowerInvariant();
             Verb killSign = new()
             {
