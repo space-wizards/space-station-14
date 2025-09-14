@@ -13,6 +13,7 @@
     understands:
     - GalacticCommon
     - Moffic
+    - Mothroach
   # Starlight-end
   - type: Jump
     action: JumpMoth

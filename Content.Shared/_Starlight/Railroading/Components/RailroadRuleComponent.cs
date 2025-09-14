@@ -1,3 +1,4 @@
+using Content.Shared.Roles;
 using Robust.Shared.Prototypes;
 
 namespace Content.Shared._Starlight.Railroading;
@@ -25,6 +26,11 @@ public sealed partial class RailroadRuleComponent : Component
 
     [NonSerialized]
     public List<Entity<RailroadCardComponent, RuleOwnerComponent>> Pool = [];
+
+    // Since special job cards would just get lost in the huge pool of general cards,
+    // a priority queue has been made, only 1 card will be taken from it, placed in the center.
+    [NonSerialized]
+    public Dictionary<ProtoId<JobPrototype>, List<Entity<RailroadCardComponent, RuleOwnerComponent>>> PoolByJob = [];
 
     [DataField]
     public List<EntProtoId<RailroadCardComponent>> Cards = [];

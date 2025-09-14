@@ -15,6 +15,7 @@
     understands:
     - Dog
     - GalacticCommon
+    - Canilunzt
   # Starlight-end
   - type: Sprite
     drawdepth: Mobs
@@ -74,6 +75,7 @@
     understands:
     - Dog
     - GalacticCommon
+    - Canilunzt
   # Starlight-end
   - type: Sprite
     layers:
@@ -108,6 +110,7 @@
     understands:
     - Dog
     - GalacticCommon
+    - Canilunzt
   # Starlight-end
   - type: Sprite
     layers:
@@ -154,6 +157,7 @@
     understands:
     - Dog
     - GalacticCommon
+    - Canilunzt
   # Starlight-end
   - type: Sprite
     layers:
@@ -186,6 +190,7 @@
     understands:
     - Dog
     - GalacticCommon
+    - Canilunzt
   # Starlight-end
   - type: Grammar
     attributes:
@@ -213,6 +218,7 @@
     understands:
     - Cat
     - GalacticCommon
+    - Nekomimetic
   # Starlight-end
   - type: NpcFactionMember
     factions:
@@ -250,6 +256,7 @@
     understands:
     - Cat
     - GalacticCommon
+    - Nekomimetic
   # Starlight-end
   - type: NpcFactionMember
     factions:
@@ -284,6 +291,7 @@
     understands:
     - Cat
     - GalacticCommon
+    - Nekomimetic
   # Starlight-end
   - type: Fixtures
     fixtures:
@@ -340,6 +348,7 @@
     understands:
     - Cat
     - GalacticCommon
+    - Nekomimetic
   # Starlight-end
   - type: Sprite
     drawdepth: Mobs
@@ -407,6 +416,7 @@
     understands:
     - Dog
     - GalacticCommon
+    - Canilunzt
   # Starlight-end
   - type: Sprite
     drawdepth: Mobs
@@ -524,6 +534,7 @@
     understands:
     - Dog
     - GalacticCommon
+    - Canilunzt
   # Starlight-end
   - type: Sprite
     drawdepth: Mobs
@@ -713,6 +724,7 @@
     understands:
     - Fox
     - GalacticCommon
+    - Canilunzt
   # Starlight-end
   - type: InteractionPopup
     successChance: 1

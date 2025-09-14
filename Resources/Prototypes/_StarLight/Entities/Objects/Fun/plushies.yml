@@ -1612,29 +1612,6 @@
           voice: neon
 
 - type: entity
-  parent: BaseMothPlushie
-  id: PlushieMahio
-  name: Mahio Plushie
-  description: Is this moth even RD?
-  components:
-  - type: Item
-    size: Small
-    sprite: _Starlight/Objects/Fun/Plushies/mahio_plushie.rsi
-  - type: Sprite
-    sprite: _Starlight/Objects/Fun/Plushies/mahio_plushie.rsi
-    state: icon
-  - type: ItemToggle
-    onUse: false
-    verbToggleOn: plushie-voicebox-activate
-    verbToggleOff: plushie-voicebox-deactivate
-  - type: ComponentToggler
-    components:
-      - type: DatasetVocalizer
-        dataset: PlushiesMahio
-      - type: TextToSpeech
-        voice: engineer
-
-- type: entity
   parent: BaseResomiPlushie
   id: PlushieRhea
   name: Rhea Plushie
@@ -1798,3 +1775,108 @@
     wideAnimationRotation: 180
     soundHit:
       path: /Audio/Effects/Lightning/lightningshock.ogg
+
+- type: entity
+  parent: BasePlushie
+  id: PlushieBarfo
+  name: honking barfo plushie
+  description: Soft, squeezable, and suspiciously up to something. This pint-sized purrformer is extra fluffy for superior cuddles.
+  components:
+    - type: Item
+      size: Small
+      sprite: _Starlight/Objects/Fun/Plushies/barfo_plushie.rsi
+    - type: Sprite
+      sprite: _Starlight/Objects/Fun/Plushies/barfo_plushie.rsi
+      state: icon
+    - type: EmitSoundOnUse
+      sound:
+        path: /Audio/Items/bikehorn.ogg
+    - type: EmitSoundOnLand
+      sound:
+        path: /Audio/Animals/cat_hiss.ogg
+    - type: EmitSoundOnActivate
+      sound:
+        path: /Audio/Animals/cat_meow.ogg
+    - type: EmitSoundOnTrigger
+      sound:
+        path: /Audio/_Starlight/Voice/Felionoid/cat_mew3.ogg
+    - type: EmitSoundOnCollide
+      sound:
+        path: /Audio/_Starlight/Voice/Felionoid/cat_scream3.ogg
+    - type: Food
+      requiresSpecialDigestion: true
+      useSound:
+        path: /Audio/_Starlight/Voice/Felionoid/cat_scream2.ogg
+    - type: MeleeWeapon
+      wideAnimationRotation: 180
+      soundHit:
+        collection: FootstepClown
+
+- type: entity
+  parent: BaseResomiPlushie
+  id: PlushieEina
+  name: eina plushie
+  description: A resomi that can bring mail or be mail
+  components:
+    - type: Item
+      size: Small
+      sprite: _Starlight/Objects/Fun/Plushies/eina_plushie.rsi
+    - type: Sprite
+      sprite: _Starlight/Objects/Fun/Plushies/eina_plushie.rsi
+      state: icon
+    - type: ItemToggle
+      onUse: false
+      verbToggleOn: plushie-voicebox-activate
+      verbToggleOff: plushie-voicebox-deactivate
+    - type: ComponentToggler
+      components:
+        - type: DatasetVocalizer
+          dataset: PlushiesEina
+        - type: TextToSpeech
+          voice: amber
+
+- type: entity
+  parent: BaseResomiPlushie
+  id: PlushieEinalia
+  name: einalia plushie
+  description: A marketable plushie of one of the shortest officers in NT's Security division. The two amber eyes on its face feel as if they're boring into your soul.
+  components:
+    - type: Item
+      size: Small
+      sprite: _Starlight/Objects/Fun/Plushies/einalia_plushie.rsi
+    - type: Sprite
+      sprite: _Starlight/Objects/Fun/Plushies/einalia_plushie.rsi
+      state: icon
+    - type: ItemToggle
+      onUse: false
+      verbToggleOn: plushie-voicebox-activate
+      verbToggleOff: plushie-voicebox-deactivate
+    - type: ComponentToggler
+      components:
+        - type: DatasetVocalizer
+          dataset: PlushiesEinalia
+        - type: TextToSpeech
+          voice: lyney
+
+- type: entity
+  parent: BaseResomiPlushie
+  id: PlushieLiz
+  name: lizzy plushie
+  description: It will not hesitate to call you stinky. smells horrible
+  components:
+    - type: Item
+      size: Small
+      sprite: _Starlight/Objects/Fun/Plushies/elizabeth_plushie.rsi
+    - type: Sprite
+      sprite: _Starlight/Objects/Fun/Plushies/elizabeth_plushie.rsi
+      state: icon
+    - type: ItemToggle
+      onUse: false
+      verbToggleOn: plushie-voicebox-activate
+      verbToggleOff: plushie-voicebox-deactivate
+    - type: ComponentToggler
+      components:
+        - type: DatasetVocalizer
+          dataset: PlushiesLiz
+        - type: TextToSpeech
+          voice: junkoenoshima

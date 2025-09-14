@@ -39,15 +39,19 @@
   name: Medical
 
 - type: storeCategory
-  id: SLFahsionSkirt
+  id: SLFashionSkirt
   name: Luxury dresses 
 
 - type: storeCategory
-  id: SLFahsionSuit
+  id: SLFashionSuit
   name: Elegant suits
 
 - type: storeCategory
-  id: SLFahsionOther
+  id: SLFashionHead
+  name: Hats & Helmets
+
+- type: storeCategory
+  id: SLFashionOther
   name: Other
 
 # shuttle build uplink

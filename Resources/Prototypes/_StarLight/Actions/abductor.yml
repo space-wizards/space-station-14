@@ -31,6 +31,7 @@
       state: send-yourself
   - type: TargetAction
     checkCanAccess: false
+    checkMap: false
     range: -1
   - type: WorldTargetAction
     event: !type:SendYourselfEvent

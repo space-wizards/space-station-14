@@ -14,6 +14,7 @@
       proto: ExtRolesReq
   startingGear: MagistrateGear
   icon: "JobIconMagistrate"
+  rules: job-rules-corporate-aligned
   supervisors: job-supervisors-centcom
   canBeAntag: false
   setPreference: true
@@ -63,3 +64,13 @@
     - GavelHammer
     - GavelBlock
     - MagistrateUniformSkirt
+
+- type: chameleonOutfit
+  id: MagistrateChameleonOutfit
+  job: Magistrate
+  equipment:
+    head: ClothingHeadHatPwig
+    eyes: ClothingEyesGlassesSecurity
+    outerClothing: ClothingOuterRobesJudge
+    neck: ClothingNeckLawyerbadge
+    gloves: ClothingHandsGlovesColorWhite

@@ -42,6 +42,7 @@ using Content.Shared.Weapons.Ranged.Components;
 using Content.Shared.Weapons.Ranged.Events;
 using Content.Shared.Weapons.Ranged.Systems;
 using Content.Shared.Weapons.Reflect;
+using Content.Shared.Mech.Components; // Startlight-edit
 using Microsoft.CodeAnalysis.Elfie.Diagnostics;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
@@ -257,6 +258,8 @@ public sealed partial class GunSystem : SharedGunSystem
 
                     //in the situation when user == null, means that the cannon fires on its own (via signals). And we need the gun to not fire by itself in this case
                     var lastUser = user ?? gunUid;
+                    if (user != null && TryComp<MechPilotComponent>(user.Value, out var pilotA)) // Startlight-edit
+                        lastUser = pilotA.Mech;
 
                     if (hitscan.Reflective != ReflectType.None)
                     {
@@ -293,7 +296,7 @@ public sealed partial class GunSystem : SharedGunSystem
 
                             effects.Add((fromEffect, result.Distance, dir.Normalized().ToAngle(), hit));
 
-                            var ev = new HitScanReflectAttemptEvent(user, gunUid, hitscan.Reflective, dir, false);
+                            var ev = new HitScanReflectAttemptEvent(user, gunUid, hitscan.Reflective, dir, false, hitscan.ID); //STARLIGHT
                             RaiseLocalEvent(hit, ref ev);
 
                             if (!ev.Reflected)
@@ -396,6 +399,26 @@ public sealed partial class GunSystem : SharedGunSystem
 
         void CreateAndFireProjectiles(EntityUid ammoEnt, AmmoComponent ammoComp)
         {
+            // Startlight-edit: start
+            var isMechShooter = user != null && TryComp<MechPilotComponent>(user.Value, out _);
+            const float MechMuzzleOffset = 0.8f;
+
+            EntityCoordinates SpawnFrom(Angle angle)
+            {
+                if (!isMechShooter)
+                    return fromEnt;
+
+                var localAngle = angle;
+                if (TryComp(fromEnt.EntityId, out TransformComponent? anchorXform))
+                {
+                    var anchorRot = _transform.GetWorldRotation(anchorXform);
+                    localAngle -= anchorRot;
+                }
+
+                var dir = localAngle.ToVec().Normalized();
+                return fromEnt.Offset(dir * MechMuzzleOffset);
+            }
+            // Startlight-edit: end
             if (TryComp<ProjectileSpreadComponent>(ammoEnt, out var ammoSpreadComp))
             {
                 var spreadEvent = new GunGetAmmoSpreadEvent(ammoSpreadComp.Spread);
@@ -403,19 +426,35 @@ public sealed partial class GunSystem : SharedGunSystem
 
                 var angles = LinearSpread(mapAngle - spreadEvent.Spread / 2,
                     mapAngle + spreadEvent.Spread / 2, ammoSpreadComp.Count);
-
+                // Startlight-edit: start
+                if (isMechShooter)
+                {
+                    var spawn = SpawnFrom(angles[0]);
+                    _transform.SetCoordinates(ammoEnt, Transform(ammoEnt), spawn);
+                }
+                // Startlight-edit: end
                 ShootOrThrow(ammoEnt, angles[0].ToVec(), gunVelocity, gun, gunUid, user);
                 shotProjectiles.Add(ammoEnt);
 
                 for (var i = 1; i < ammoSpreadComp.Count; i++)
                 {
-                    var newuid = Spawn(ammoSpreadComp.Proto, fromEnt);
+                    // Startlight-edit: start
+                    var spawn = isMechShooter ? SpawnFrom(angles[i]) : fromEnt;
+                    var newuid = Spawn(ammoSpreadComp.Proto, spawn);
+                    // Startlight-edit: end
                     ShootOrThrow(newuid, angles[i].ToVec(), gunVelocity, gun, gunUid, user);
                     shotProjectiles.Add(newuid);
                 }
             }
             else
             {
+                // Startlight-edit: start
+                if (isMechShooter)
+                {
+                    var spawn = SpawnFrom(mapDirection.ToAngle());
+                    _transform.SetCoordinates(ammoEnt, Transform(ammoEnt), spawn);
+                }
+                // Startlight-edit: end
                 ShootOrThrow(ammoEnt, mapDirection, gunVelocity, gun, gunUid, user);
                 shotProjectiles.Add(ammoEnt);
             }
@@ -449,6 +488,10 @@ public sealed partial class GunSystem : SharedGunSystem
 
             //in the situation when user == null, means that the cannon fires on its own (via signals). And we need the gun to not fire by itself in this case
             var lastUser = user ?? gunUid;
+
+            if (user != null && TryComp<MechPilotComponent>(user.Value, out var pilotB)) // Startlight-edit
+                lastUser = pilotB.Mech;
+
             hitHashSet.Clear();
             hitHashSet.Add(lastUser);
 
@@ -497,7 +540,7 @@ public sealed partial class GunSystem : SharedGunSystem
 
                     if (hitscan.Reflective != ReflectType.None)
                     {
-                        var ev = new HitScanReflectAttemptEvent(user, gunUid, hitscan.Reflective, dir, false);
+                        var ev = new HitScanReflectAttemptEvent(user, gunUid, hitscan.Reflective, dir, false, hitscan.ID); //STARLIGHT
                         RaiseLocalEvent(hit, ref ev);
 
                         if (ev.Reflected)

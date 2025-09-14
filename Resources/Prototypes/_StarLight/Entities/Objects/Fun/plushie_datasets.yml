@@ -125,12 +125,6 @@
     count: 5
 
 - type: localizedDataset
-  id: PlushiesMahio
-  values:
-    prefix: plushie-mahio-
-    count: 6
-
-- type: localizedDataset
   id: PlushiesRhea
   values:
     prefix: plushie-rhea-
@@ -159,3 +153,21 @@
   values:
     prefix: plushie-killa-
     count: 5
+
+- type: localizedDataset
+  id: PlushiesEina
+  values:
+    prefix: plushie-eina-
+    count: 6
+
+- type: localizedDataset
+  id: PlushiesEinalia
+  values:
+    prefix: plushie-einalia-
+    count: 6
+
+- type: localizedDataset
+  id: PlushiesLiz
+  values:
+    prefix: plushie-liz-
+    count: 6

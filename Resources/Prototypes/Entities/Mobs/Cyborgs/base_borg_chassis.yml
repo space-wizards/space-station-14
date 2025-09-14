@@ -35,7 +35,7 @@
     baseWalkSpeed : 2.5
     baseSprintSpeed : 4.5
   - type: Sprite
-    sprite: Mobs/Silicon/chassis.rsi
+    sprite: Mobs/Silicon/Chassis/generic.rsi
   - type: RotationVisuals
     horizontalRotation: 90
   - type: MobState
@@ -248,8 +248,11 @@
     damageProtection:
       flatReductions:
         Heat: 10 # capable of touching light bulbs and stoves without feeling pain!
-  - type: CyborgSparkEffect #starlight
-  - type: StationAIShunt #Starlight allow shunting into all borgs
+  #region Starlight
+  - type: CyborgSparkEffect
+  - type: StationAIShunt
+  - type: Crawler
+  #endregion
   # Starlight-start: Languages
   - type: LanguageKnowledge
     speaks:
@@ -428,7 +431,7 @@
   - type: NameIdentifier
     group: Xenoborg
   - type: Sprite
-    sprite: Mobs/Silicon/chassis.rsi
+    sprite: Mobs/Silicon/Chassis/generic.rsi
   - type: MobThresholds
     thresholds: # slightly tankier than a normal borg
       0: Alive
