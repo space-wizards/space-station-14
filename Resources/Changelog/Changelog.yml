@@ -1,43 +1,4 @@
 ﻿Entries:
-- author: Nyxilath
-  changes:
-  - message: Trash bags can be printed by Autolathes again.
-    type: Fix
-  id: 8444
-  time: '2025-05-09T03:35:49.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/37296
-- author: robinthedragon
-  changes:
-  - message: Basic operative bundle, which allows newkies to easily spend all 40 of
-      their TC on straightforwardly useful items.
-    type: Add
-  id: 8445
-  time: '2025-05-09T11:32:30.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/37290
-- author: Errant
-  changes:
-  - message: Borgs can no longer craft items using up their tools as an ingredient,
-      losing them forever.
-    type: Fix
-  id: 8446
-  time: '2025-05-09T12:43:38.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/37292
-- author: murolem
-  changes:
-  - message: Silo can now accept diamonds. Shiny!
-    type: Tweak
-  id: 8447
-  time: '2025-05-09T15:41:45.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/37305
-- author: GaMEWAR360
-  changes:
-  - message: 'Added new bounties for: Rings, Goliath Plates, Hivelord Remains'
-    type: Add
-  - message: 'Increased bounty prices for: Sharkminnow Teeth and Spacecarp Teeth'
-    type: Tweak
-  id: 8448
-  time: '2025-05-09T15:52:30.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/34926
 - author: sowelipililimute
   changes:
   - message: Reagent dispensers (Chem Dispenser, Booze Dispenser, Soda Dispenser)
@@ -3948,3 +3909,39 @@
   id: 8955
   time: '2025-09-11T19:59:21.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/39879
+- author: SurrealShibe
+  changes:
+  - message: Toilet seats are now displayed on the correct layer.
+    type: Fix
+  id: 8956
+  time: '2025-09-12T22:47:21.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/40313
+- author: Princess-Cheeseballs
+  changes:
+  - message: Chameleon Projector will no longer cause you to be permanently slowed
+      down
+    type: Fix
+  id: 8957
+  time: '2025-09-12T23:23:58.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37960
+- author: FungiFellow
+  changes:
+  - message: Cockroaches can Gib when Stepped on
+    type: Add
+  id: 8958
+  time: '2025-09-13T07:01:14.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/40103
+- author: Huaqas
+  changes:
+  - message: Vulpkanin now have Undergarments.
+    type: Add
+  id: 8959
+  time: '2025-09-13T17:36:28.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/40321
+- author: MissKay1994
+  changes:
+  - message: Greatly reduced lethality of Man-O-War shuttle
+    type: Tweak
+  id: 8960
+  time: '2025-09-14T05:44:32.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/40339
