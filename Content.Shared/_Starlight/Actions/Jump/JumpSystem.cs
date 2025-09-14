@@ -8,6 +8,7 @@ using Content.Shared.Throwing;
 using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Map;
+using Robust.Shared.Timing;
 using Content.Shared.Stunnable;
 
 namespace Content.Shared._Starlight.Actions.Jump;
@@ -22,6 +23,7 @@ public abstract class SharedJumpSystem : EntitySystem
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly ActionContainerSystem _actionContainer = default!;
     [Dependency] private readonly SharedStunSystem _stun = default!;
+    [Dependency] private readonly IGameTiming _timing = default!;
 
     public override void Initialize()
     {
@@ -96,16 +98,7 @@ public abstract class SharedJumpSystem : EntitySystem
         if (args.FromGrid && !_mapMan.TryFindGridAt(userMapCoords, out _, out _)) return;
         args.Handled = true;
 
-        var targetMapCoords = _transform.ToMapCoordinates(args.Target);
-
-        var vector = targetMapCoords.Position - userMapCoords.Position;
-        if (!args.ToPointer
-            || Vector2.Distance(userMapCoords.Position, targetMapCoords.Position) > args.Distance)
-            vector = Vector2.Normalize(vector) * args.Distance;
-
-        _throwing.TryThrow(args.Performer, vector, baseThrowSpeed: args.Speed, doSpin: false);
-
-        _audio.PlayPredicted(args.Sound, args.Performer, args.Performer, AudioParams.Default.WithVolume(-4f));
+        TryJump(args.Performer, args.Target, 15f, args.ToPointer, args.Sound, args.Distance);
     }
 
     public bool TryJump(Entity<JumpComponent?> ent, EntityCoordinates targetCoords, float speed = 15f, bool toPointer = false, SoundSpecifier? sound = null, float? distance = null)
@@ -130,6 +123,9 @@ public abstract class SharedJumpSystem : EntitySystem
         if (distance != null
             && (!toPointer || Vector2.Distance(userMapCoords.Position, targetMapCoords.Position) > distance))
             vector = Vector2.Normalize(vector) * distance.Value;
+
+        if (ent.Comp.ActionEntity != null)
+            _action.SetCooldown(ent.Comp.ActionEntity.Value, _timing.CurTime, _timing.CurTime + TimeSpan.FromSeconds(ent.Comp.Cooldown));
 
         _throwing.TryThrow(ent.Owner, vector, baseThrowSpeed: speed, doSpin: false);
 
