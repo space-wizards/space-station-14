@@ -339,3 +339,11 @@
     Plastic: 150
     Steel: 50
     Glass: 150
+
+- type: latheRecipe
+  id: PatchPack
+  result: PatchPack
+  completetime: 2
+  materials:
+    Plastic: 200
+  name: lathe-recipe-PatchPack-name

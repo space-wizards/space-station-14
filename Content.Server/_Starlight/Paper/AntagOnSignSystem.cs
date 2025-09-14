@@ -26,10 +26,10 @@ public sealed class AntagOnSignSystem : EntitySystem
         base.Initialize();
         _sawmill = Logger.GetSawmill(this.SawmillName);
         SubscribeLocalEvent<AntagOnSignComponent, PaperSignedEvent>(OnPaperSigned, before: [typeof(ObjectiveOnSignSystem)]);
-        SubscribeLocalEvent<AntagOnSignComponent, ComponentInit>(OnComponentInit);
+        SubscribeLocalEvent<AntagOnSignComponent, MapInitEvent>(OnMapInit);
     }
 
-    private void OnComponentInit(EntityUid uid, AntagOnSignComponent comp, ComponentInit init)
+    private void OnMapInit(EntityUid uid, AntagOnSignComponent comp, ref MapInitEvent init)
     {
         if (comp.KeepFaxable) 
             return;

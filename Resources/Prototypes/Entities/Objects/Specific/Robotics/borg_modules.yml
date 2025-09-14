@@ -486,7 +486,7 @@
     - item: Wirecutter
     - item: WelderIndustrial
     - item: Multitool
-    - item: SprayPainterRecharging #STARLIGHT
+    - item: SprayPainterBorg # Starlight
   - type: BorgModuleIcon
     icon: { sprite: Interface/Actions/actions_borg.rsi, state: tool-module }
 
@@ -598,7 +598,7 @@
     - item: WelderExperimental
     - item: Multitool
     - item: RemoteSignallerAdvanced
-    - item: SprayPainterRecharging #STARLIGHT
+    - item: SprayPainterBorg # Starlight
   - type: BorgModuleIcon
     icon: { sprite: Interface/Actions/actions_borg.rsi, state: adv-tools-module }
 
@@ -647,12 +647,15 @@
           - Circuitboard
     - hand:
         emptyRepresentative: MicroManipulatorStockPart
-        emptyLabel: borg-slot-construction-empty
+        #STARLIGHT start
+        emptyLabel: borg-slot-comp-empty
         whitelist:
-          tags: #STARLIGHT start
+          tags:
           - MicroManipulatorStockPart
-          components:
-          - Battery #STARLIGHT end
+          - PowerCell
+          - PowerCellSmall
+          - PowerCage
+        #STARLIGHT end
     - hand:
         emptyRepresentative: SpaceHeaterFlatpack
         emptyLabel: borg-slot-flatpacks-empty
