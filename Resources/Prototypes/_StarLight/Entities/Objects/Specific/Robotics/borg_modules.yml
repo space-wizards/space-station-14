@@ -25,3 +25,69 @@
           - HumanoidAppearance
   - type: BorgModuleIcon
     icon: { sprite: _Starlight/Interface/Actions/actions_borg.rsi, state: hands }
+
+
+# purrfus
+- type: entity
+  id: BaseBorgModulePurrfus
+  parent: BaseBorgModule
+  abstract: true
+  components:
+  - type: Tag
+    tags:
+    - BorgModulePurrfus
+  - type: Sprite
+    sprite: Objects/Specific/Robotics/borgmodule.rsi
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: base-icon-inhand-left
+        color: "#616161"
+      - state: base-module-inhand-left
+        color: "#067aa8"
+      - state: base-stripes-inhand-left
+        color: "#ffffff"
+      right:
+      - state: base-icon-inhand-right
+        color: "#616161"
+      - state: base-module-inhand-right
+        color: "#067aa8"
+      - state: base-stripes-inhand-right
+        color: "#ffffff"
+
+- type: entity
+  id: BorgModulePaperStampPlaceholder
+  parent: BaseItem
+  components:
+  - type: Sprite
+    sprite: _Starlight/Objects/Misc/stamp-paper-borg.rsi
+    state: stamp-paper-borg
+
+- type: entity
+  id: BorgModulePaperwork
+  parent: [ BaseBorgModulePurrfus, BaseProviderBorgModule ]
+  name: paperwork cyborg module
+  components:
+  - type: Sprite
+    sprite: _Starlight/Objects/Specific/Robotics/borgmodule.rsi
+    layers:
+    - state: command
+    - state: icon-paperwork
+  - type: ItemBorgModule
+    hands:
+    - item: LuxuryPen
+    - item: BoxFolderCyborgClipboard
+    - item: RubberStampApproved
+    - item: RubberStampDenied
+    - item: HandLabeler
+    - hand:
+        emptyLabel: borg-slot-papers-empty
+        emptyRepresentative: BorgModulePaperStampPlaceholder
+        whitelist:
+          tags:
+          - Document
+          components:
+          - Stamp
+  - type: BorgModuleIcon
+    icon: { sprite: _Starlight/Interface/Actions/actions_borg.rsi, state: paperwork-module }
+

@@ -356,7 +356,7 @@
   - type: Eye
     pvsScale: 1.5
   - type: Visibility
-    layer: 2
+    layer: 32768
   - type: Sprite
     sprite: Mobs/Silicon/station_ai.rsi
     layers:

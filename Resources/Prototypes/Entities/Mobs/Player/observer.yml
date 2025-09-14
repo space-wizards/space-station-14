@@ -67,6 +67,7 @@
   - type: Tag
     tags:
     - BypassInteractionRangeChecks
+    - Ghost
   - type: PointLight
     netsync: false
     radius: 6
@@ -83,7 +84,7 @@
   - type: Tag
     tags:
     - AllowGhostShownByEvent
-
+    - Ghost
 - type: entity
   parent: BaseMentalAction
   id: ActionGhostBoo
