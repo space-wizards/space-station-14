@@ -85,76 +85,75 @@
       - HideContextMenu
   - type: AnimationPlayer
 
-# - type: entity
-#   parent: BaseItem
-#   id: PromethiumBullet
-#   name: "Горящий Прометий"
-#   description: "Если вы его видите, то вероятнее всего вы уже пахните как шашлык medium rare прожарки"
-#   components:
-#     - type: PointLight
-#       color: "#FFA600"
-#       radius: 5
-#       energy: 5
-#     - type: Ammo
-#       muzzleFlash: FlamethrowerFlashEffect
-#     - type: Sprite
-#       noRot: false
-#       rotation: -90
-#       sprite: _WH40K/Objects/Weapons/Guns/Ammunition/Projectiles/flame.rsi
-#       layers:
-#         - state: base
-#           shader: unshaded
-#     - type: FireUnderBullet
-#       pickedUp: true
-#       releaseSpeed: 1
-#       releaseTemp: 1500
-#       releaseGas:
-#         volume: 0.5
-#         moles:
-#           - 0.1     # oxygen
-#           - 0     # nitrogen
-#           - 0     # carbon dioxide
-#           - 0     # plasma
-#           - 0     # tritium
-#           - 0     # vapor
-#           - 0     # ammonia
-#           - 0  # n2o
-#           - 0     # frezon
-#           - 0.4          # ***
-#         temperature: 293.15
-#     - type: FlyBySound
-#     - type: Clickable
-#     - type: Physics
-#       bodyType: Dynamic
-#       linearDamping: 0.1
-#       angularDamping: 25
-#     - type: Fixtures
-#       fixtures:
-#         projectile:
-#           shape:
-#             !type:PhysShapeAabb
-#             bounds: "-0.1,-0.1,0.1,0.1"
-#           hard: false
-#           mask:
-#           - Impassable
-#           - BulletImpassable
-#         fly-by: &flybyfixture
-#           shape: !type:PhysShapeCircle
-#             radius: 1.5
-#           layer:
-#           - Impassable
-#           - MidImpassable
-#           - HighImpassable
-#           - LowImpassable
-#           hard: False
-#     - type: Projectile
-#       impactEffect: BulletImpactEffect
-#       damage:
-#         types:
-#           Heat: 3
-#     - type: IgniteOnCollide
-#       fireStacks: 1
-#       count: 10
+- type: entity
+  parent: BaseItem
+  id: PromethiumBullet
+  name: "Горящий Прометий"
+  description: "Если вы его видите, то вероятнее всего вы уже пахните как шашлык medium rare прожарки"
+  components:
+    - type: PointLight
+      color: "#FFA600"
+      radius: 5
+      energy: 5
+    - type: Ammo
+      muzzleFlash: FlamethrowerFlashEffect
+    - type: Sprite
+      noRot: false
+      rotation: -90
+      sprite: _WH40K/Objects/Weapons/Guns/Ammunition/Projectiles/flame.rsi
+      layers:
+        - state: base
+          shader: unshaded
+    - type: FireUnderBullet
+      pickedUp: true
+      releaseSpeed: 1
+      releaseTemp: 1500
+      releaseGas:
+        volume: 0.5
+        moles:
+          - 0.1     # oxygen
+          - 0     # nitrogen
+          - 0     # carbon dioxide
+          - 0.05     # plasma
+          - 0     # tritium
+          - 0     # vapor
+          - 0     # ammonia
+          - 0  # n2o
+          - 0     # frezon
+        temperature: 293.15
+    - type: FlyBySound
+    - type: Clickable
+    - type: Physics
+      bodyType: Dynamic
+      linearDamping: 0.1
+      angularDamping: 25
+    - type: Fixtures
+      fixtures:
+        projectile:
+          shape:
+            !type:PhysShapeAabb
+            bounds: "-0.1,-0.1,0.1,0.1"
+          hard: false
+          mask:
+          - Impassable
+          - BulletImpassable
+        fly-by: &flybyfixture
+          shape: !type:PhysShapeCircle
+            radius: 1.5
+          layer:
+          - Impassable
+          - MidImpassable
+          - HighImpassable
+          - LowImpassable
+          hard: False
+    - type: Projectile
+      impactEffect: BulletImpactEffect
+      damage:
+        types:
+          Heat: 3
+    - type: IgniteOnCollide
+      fireStacks: 1
+      count: 10
 
 - type: entity
   id: BulletRadCarabin
@@ -180,4 +179,3 @@
   - type: RadiationSource
     intensity: 6
     slope: 0.3
-
