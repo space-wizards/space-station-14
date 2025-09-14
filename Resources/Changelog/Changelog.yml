@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: B-Kirill
-  changes:
-  - message: Meteors no longer slow down during flight.
-    type: Fix
-  id: 8450
-  time: '2025-05-10T03:55:35.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/37320
 - author: Pronana
   changes:
   - message: You can no longer grind the smite snail
@@ -3945,3 +3938,10 @@
   id: 8961
   time: '2025-09-14T07:39:38.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/40341
+- author: Huaqas
+  changes:
+  - message: Vulpkanin eye tattoos now correctly changes the color of the entire eye.
+    type: Fix
+  id: 8962
+  time: '2025-09-14T15:18:49.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/40320
