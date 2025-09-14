@@ -1522,6 +1522,7 @@ namespace Content.Shared.Interaction
     [ByRefEvent]
     public record struct AccessibleOverrideEvent(EntityUid User, EntityUid Target)
     {
+        public readonly EntityUid User = User;
         public readonly EntityUid Target = Target;
 
         // We set it to true by default for easier validation later.
