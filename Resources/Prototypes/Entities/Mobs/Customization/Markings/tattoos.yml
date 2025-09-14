@@ -179,8 +179,6 @@
   sprites:
   - sprite: Mobs/Customization/tattoos.rsi
     state: tattoo_eye_vulpkanin_r
-  - sprite: Mobs/Customization/tattoos.rsi
-    state: tattoo_sclera_vulpkanin_r
 
 - type: marking
   id: TattooEyeVulpkaninLeft
@@ -195,8 +193,6 @@
   sprites:
   - sprite: Mobs/Customization/tattoos.rsi
     state: tattoo_eye_vulpkanin_l
-  - sprite: Mobs/Customization/tattoos.rsi
-    state: tattoo_sclera_vulpkanin_l
 
 - type: marking
   id: TattooEyeshadowUpper
