@@ -79,7 +79,7 @@ public sealed class SharedKitchenSpikeSystem : EntitySystem
         SubscribeLocalEvent<KitchenSpikeHookedComponent, IsUnequippingAttemptEvent>(OnAttempt);
 
         // Container Jank
-        SubscribeLocalEvent<KitchenSpikeHookedComponent, TargetAccessibleOverrideEvent>(OnAccessibleOverride);
+        SubscribeLocalEvent<KitchenSpikeHookedComponent, AccessibleOverrideEvent>(OnAccessibleOverride);
     }
 
     private void OnInit(Entity<KitchenSpikeComponent> ent, ref ComponentInit args)
@@ -386,10 +386,15 @@ public sealed class SharedKitchenSpikeSystem : EntitySystem
         args.Cancel();
     }
 
-    private void OnAccessibleOverride(Entity<KitchenSpikeHookedComponent> ent, ref TargetAccessibleOverrideEvent args)
+    private void OnAccessibleOverride(Entity<KitchenSpikeHookedComponent> ent, ref AccessibleOverrideEvent args)
     {
+        // Check if the entity is the target to avoid giving the hooked entity access to everything.
+        // If we already have access we don't need to run more code.
+        if (args.Accessible || args.Target != ent.Owner)
+            return;
+
         var xform = Transform(ent);
-        if (args.Handled || !_interaction.CanAccess(args.User, xform.ParentUid))
+        if (!_interaction.CanAccess(args.User, xform.ParentUid))
             return;
 
         args.Accessible = true;

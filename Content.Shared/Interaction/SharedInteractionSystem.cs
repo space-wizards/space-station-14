@@ -1300,15 +1300,14 @@ namespace Content.Shared.Interaction
         /// </summary>
         public bool IsAccessible(Entity<TransformComponent?> user, Entity<TransformComponent?> target)
         {
-            var userEv = new AccessibleOverrideEvent(target);
-            var targetEv = new TargetAccessibleOverrideEvent(target);
+            var ev = new AccessibleOverrideEvent(user, target);
 
-            RaiseLocalEvent(user, ref userEv);
-            RaiseLocalEvent(target, ref targetEv);
+            RaiseLocalEvent(user, ref ev);
+            RaiseLocalEvent(target, ref ev);
 
             // If either has handled it and neither has said we can't access it then we can access it.
-            if (userEv.Handled || targetEv.Handled)
-                return userEv.Accessible && targetEv.Accessible;
+            if (ev.Handled)
+                return ev.Accessible;
 
             return CanAccess(user, target);
         }
@@ -1521,27 +1520,13 @@ namespace Content.Shared.Interaction
     /// </summary>
     /// <param name="Target">Entity we're targeting</param>
     [ByRefEvent]
-    public record struct AccessibleOverrideEvent(EntityUid Target)
+    public record struct AccessibleOverrideEvent(EntityUid User, EntityUid Target)
     {
         public readonly EntityUid Target = Target;
 
         // We set it to true by default for easier validation later.
         public bool Handled;
-        public bool Accessible = true;
-    }
-
-    /// <summary>
-    /// Override event raised directed on the target to say the user can access.
-    /// </summary>
-    /// <param name="User">Entity targeting us</param>
-    [ByRefEvent]
-    public record struct TargetAccessibleOverrideEvent(EntityUid User)
-    {
-        public readonly EntityUid User = User;
-
-        // We set it to true by default for easier validation later.
-        public bool Handled;
-        public bool Accessible = true;
+        public bool Accessible;
     }
 
     /// <summary>
