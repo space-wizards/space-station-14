@@ -109,7 +109,7 @@ namespace Content.Shared.Construction
                         materials[mat] += matAmount * amount * coefficient;
                     }
                 }
-                else if (_prototype.TryIndex(defaultProtoId, out var defaultProto) &&
+                else if (_prototype.Resolve(defaultProtoId, out var defaultProto) &&
                          defaultProto.TryGetComponent<PhysicalCompositionComponent>(out var physComp, EntityManager.ComponentFactory))
                 {
                     foreach (var (mat, matAmount) in physComp.MaterialComposition)
