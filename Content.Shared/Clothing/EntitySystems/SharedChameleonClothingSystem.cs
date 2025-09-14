@@ -77,7 +77,7 @@ public abstract class SharedChameleonClothingSystem : EntitySystem
     protected void UpdateVisuals(EntityUid uid, ChameleonClothingComponent component)
     {
         if (string.IsNullOrEmpty(component.Default) ||
-            !_proto.Resolve(component.Default, out EntityPrototype? proto))
+            !Proto.Resolve(component.Default, out var proto))
             return;
 
         // world sprite icon
