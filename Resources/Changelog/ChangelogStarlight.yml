@@ -14007,5 +14007,13 @@ Entries:
   id: 161303
   time: '2025-09-14T18:40:15.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/1613
+- author: CorruptOmega
+  changes:
+  - message: 'Three new emotes for Reptilian''s to use: Hiss, Purr, Rattle // @ liss,
+      @ lurr, @ rattle'
+    type: Add
+  id: 161400
+  time: '2025-09-14T18:43:25.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1614
 Order: -1
 
