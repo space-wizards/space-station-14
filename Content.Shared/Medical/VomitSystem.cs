@@ -38,7 +38,7 @@ public sealed class VomitSystem : EntitySystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<BodyComponent, CanVomitEvent>(CanBodyVomitSolution);
+        SubscribeLocalEvent<BodyComponent, TryVomitEvent>(TryBodyVomitSolution);
     }
 
     private const float ChemMultiplier = 0.1f;
@@ -50,7 +50,7 @@ public sealed class VomitSystem : EntitySystem
     private readonly SoundSpecifier _vomitSound = new SoundCollectionSpecifier(VomitCollection,
         AudioParams.Default.WithVariation(0.2f).WithVolume(-4f));
 
-    private void CanBodyVomitSolution(Entity<BodyComponent> ent, ref CanVomitEvent args)
+    private void TryBodyVomitSolution(Entity<BodyComponent> ent, ref TryVomitEvent args)
     {
         if (args.Handled)
             return;
@@ -60,20 +60,11 @@ public sealed class VomitSystem : EntitySystem
         if (stomachList.Count == 0)
             return;
 
-        // Vomit only if entity is alive
-        // Ignore condition if force was set to true
-        if (!args.Forced && _mobState.IsDead(ent))
-            return;
-
         // Empty the stomach out into it
         foreach (var stomach in stomachList)
         {
             if (_solutionContainer.ResolveSolution(stomach.Owner, StomachSystem.DefaultSolutionName, ref stomach.Comp1.Solution, out var sol))
-            {
-                args.Sol.AddSolution(sol, _proto);
-                sol.RemoveAllSolution();
-                _solutionContainer.UpdateChemicals(stomach.Comp1.Solution.Value);
-            }
+                _solutionContainer.TryTransferSolution(stomach.Comp1.Solution.Value, args.Sol, sol.AvailableVolume);
         }
 
         args.Handled = true;
@@ -84,6 +75,20 @@ public sealed class VomitSystem : EntitySystem
     /// </summary>
     public void Vomit(EntityUid uid, float thirstAdded = -40f, float hungerAdded = -40f, bool force = false)
     {
+        // Vomit only if entity is alive
+        // Ignore condition if force was set to true
+        if (!force && _mobState.IsDead(uid))
+            return;
+
+        // TODO: Need decals
+        var solution = new Solution();
+
+        var ev = new TryVomitEvent(solution, force);
+        RaiseLocalEvent(uid, ref ev);
+
+        if (!ev.Handled)
+            return;
+
         // Vomiting makes you hungrier and thirstier
         if (TryComp<HungerComponent>(uid, out var hunger))
             _hunger.ModifyHunger(uid, hungerAdded, hunger);
@@ -93,17 +98,9 @@ public sealed class VomitSystem : EntitySystem
 
         // It fully empties the stomach, this amount from the chem stream is relatively small
         var solutionSize = (MathF.Abs(thirstAdded) + MathF.Abs(hungerAdded)) / 6;
+
         // Apply a bit of slowdown
         _movementMod.TryUpdateMovementSpeedModDuration(uid, MovementModStatusSystem.VomitingSlowdown, TimeSpan.FromSeconds(solutionSize), 0.5f);
-
-        // TODO: Need decals
-        var solution = new Solution();
-
-        var ev = new CanVomitEvent(solution, force);
-        RaiseLocalEvent(uid, ref ev);
-
-        if (!ev.Handled)
-            return;
 
         // Adds a tiny amount of the chem stream from earlier along with vomit
         if (TryComp<BloodstreamComponent>(uid, out var bloodStream))
@@ -140,4 +137,4 @@ public sealed class VomitSystem : EntitySystem
 }
 
 [ByRefEvent]
-public record struct CanVomitEvent(Solution Sol, bool Forced = false, bool Handled = false);
+public record struct TryVomitEvent(Solution Sol, bool Forced = false, bool Handled = false);
