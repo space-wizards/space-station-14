@@ -177,6 +177,7 @@
     enabled: false
     drawRate: 1
     delay: 3
+  - type: ActiveInputMover
 
 # Ripley MK-I
 - type: entity

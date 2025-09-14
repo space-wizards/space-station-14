@@ -497,6 +497,7 @@
     - RollerBedsStatic
     - MedicalClothingStatic
     - EmptyMedkitsStatic
+    - StarlightMedicalStatic # Starlight
     dynamicPacks:
     - StarlightSurgeryDynamic
     - StarlightCyberlimbDynamic

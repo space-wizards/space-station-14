@@ -16,6 +16,7 @@
     - SilentStorageUser
     - PreventAccessLogging
     - AllowBiomeLoading
+    - Ghost
   - type: Input
     context: "aghost"
   - type: Ghost

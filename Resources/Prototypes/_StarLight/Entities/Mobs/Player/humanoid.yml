@@ -41,7 +41,7 @@
     - type: GhostRole
       name: ghost-role-information-ntnc-consortium-officer-name
       description: ghost-role-information-ntnc-consortium-officer-description
-      rules: ghost-role-information-nonantagonist-rules
+      rules: ghost-role-information-corporate-aligned-rules
       raffle:
         settings: default
       job: NTNCBlueshield
@@ -68,7 +68,7 @@
     - type: GhostRole
       name: ghost-role-information-ntnc-consortium-officer-name
       description: ghost-role-information-ntnc-consortium-officer-description
-      rules: ghost-role-information-nonantagonist-rules
+      rules: ghost-role-information-corporate-aligned-rules
       raffle:
         settings: default
       job: NTNCBlueshield

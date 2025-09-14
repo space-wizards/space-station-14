@@ -1,4 +1,5 @@
 using System.Linq;
+using Content.Server._Starlight.Computers.RemoteEye;
 using Content.Shared._Starlight.Action;
 using Content.Shared.Actions;
 using Content.Shared.Actions.Components;
@@ -26,7 +27,8 @@ public sealed partial class AbductorSystem : SharedAbductorSystem
     [Dependency] private readonly InventorySystem _inv = default!;
     [Dependency] private readonly StarlightActionsSystem _starlightActions = default!;
     [Dependency] private readonly MobStateSystem _mobState = default!;
-    
+    [Dependency] private readonly RemoteEyeSystem _remoteEye = default!;
+
     private static readonly EntProtoId<InstantActionComponent> _gizmoMark = "ActionGizmoMark";
     private static readonly EntProtoId<InstantActionComponent> _sendYourself = "ActionSendYourself";
     private static readonly EntProtoId<InstantActionComponent> _exitAction = "ActionExitConsole";
@@ -37,8 +39,6 @@ public sealed partial class AbductorSystem : SharedAbductorSystem
     {
         SubscribeLocalEvent<AbductorScientistComponent, ComponentStartup>(AbductorScientistComponentStartup);
         SubscribeLocalEvent<AbductorAgentComponent, ComponentStartup>(AbductorAgentComponentStartup);
-
-        SubscribeLocalEvent<ExitConsoleEvent>(OnExit);
 
         SubscribeLocalEvent<AbductorReturnToShipEvent>(OnReturn);
         SubscribeLocalEvent<AbductorScientistComponent, AbductorReturnDoAfterEvent>(OnDoAfterAbductorScientistReturn);
@@ -161,7 +161,7 @@ public sealed partial class AbductorSystem : SharedAbductorSystem
             return;
         
         _xformSys.SetCoordinates(uid, spawnPosition.Value);
-        OnCameraExit(uid);
+        _remoteEye.CameraExit(uid);
     }
 
     private void OnSendYourself(SendYourselfEvent ev)
@@ -210,7 +210,7 @@ public sealed partial class AbductorSystem : SharedAbductorSystem
                 || !_pullingSystem.TryStopPull(ent, pullableComp)) return;
         }
         _xformSys.SetCoordinates(ent, GetCoordinates(args.TargetCoordinates));
-        OnCameraExit(ent);
+        _remoteEye.CameraExit(ent);
     }
     
     private void OnGizmoMark(GizmoMarkEvent ev)
@@ -229,28 +229,5 @@ public sealed partial class AbductorSystem : SharedAbductorSystem
         else if (TryComp<AbductorGizmoComponent>(pocket2PossibleGizmo, out var pocket2Gizmo))
             pocket2Gizmo.Target = GetNetEntity(ev.Target);
 
-    }
-
-    private void OnExit(ExitConsoleEvent ev) => OnCameraExit(ev.Performer);
-
-    private void AddActions(AbductorBeaconChosenBuiMsg args)
-    {
-        EnsureComp<AbductorsAbilitiesComponent>(args.Actor, out var comp);
-        comp.HiddenActions = _starlightActions.HideActions(args.Actor);
-        _actions.AddAction(args.Actor, ref comp.ExitConsole, _exitAction);
-        _actions.AddAction(args.Actor, ref comp.SendYourself, _sendYourself);
-        _actions.AddAction(args.Actor, ref comp.GizmoMark, _gizmoMark);
-    }
-    private void RemoveActions(EntityUid actor)
-    {
-        EnsureComp<AbductorsAbilitiesComponent>(actor, out var comp);
-        if (comp.ExitConsole is not null)
-            _actions.RemoveAction(actor, comp.ExitConsole);
-        if (comp.SendYourself is not null)
-            _actions.RemoveAction(actor, comp.SendYourself);
-        if (comp.GizmoMark is not null)
-            _actions.RemoveAction(actor, comp.GizmoMark);
-
-        _starlightActions.UnHideActions(actor, comp.HiddenActions);
     }
 }
