@@ -665,4 +665,11 @@
   id: 79
   time: '2025-09-11T01:46:55.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/40199
+- author: ToastEnjoyer
+  changes:
+  - message: On bagel, fixed some unlinked radiation shutters at engineering.
+    type: Fix
+  id: 80
+  time: '2025-09-14T23:46:04.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/40358
 Order: 1
