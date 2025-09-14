@@ -333,7 +333,7 @@ public abstract partial class SharedDisposalTubeSystem : EntitySystem
             Dirty(holder, holderComponent);
         }
 
-        return _disposableSystem.EnterTube((holder, holderComponent), (ent, ent.Comp2));
+        return _disposableSystem.TryEnterTube((holder, holderComponent), (ent, ent.Comp2));
     }
 
     protected virtual void MergeAtmos(Entity<DisposalHolderComponent> ent, GasMixture gasMix)

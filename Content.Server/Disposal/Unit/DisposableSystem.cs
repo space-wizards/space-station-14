@@ -1,14 +1,15 @@
 using Content.Server.Atmos.EntitySystems;
-using Content.Shared.Atmos;
 using Content.Shared.Disposal.Unit;
 
 namespace Content.Server.Disposal.Unit;
 
+/// <inheritdoc/>
 public sealed partial class DisposableSystem : SharedDisposableSystem
 {
     [Dependency] private readonly AtmosphereSystem _atmos = default!;
 
-    protected override void MergeAtmos(Entity<DisposalHolderComponent> ent, GasMixture gasMix)
+    /// <inheritdoc/>
+    protected override void ExpelAtmos(Entity<DisposalHolderComponent> ent)
     {
         if (_atmos.GetContainingMixture(ent.Owner, false, true) is { } environment)
         {

@@ -8,6 +8,11 @@
     snap:
     - Disposal
   components:
+  - type: DisposalUnit
+    whitelist:
+      components:
+      - Item
+      - Body
   - type: Climbable
     vaultable: false
   - type: Sprite
@@ -116,7 +121,6 @@
   - type: Construction
     graph: DisposalMachine
     node: disposal_unit
-  - type: DisposalUnit
   - type: ThrowInsertContainer
     containerId: disposals
     probability: 0.67

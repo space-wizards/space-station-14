@@ -48,7 +48,7 @@ public abstract class SharedMailingUnitSystem : EntitySystem
 
     private void OnPacketReceived(Entity<MailingUnitComponent> ent, ref DeviceNetworkPacketEvent args)
     {
-        if (!args.Data.TryGetValue(DeviceNetworkConstants.Command, out string? command) || !_power.IsPowered(uid))
+        if (!args.Data.TryGetValue(DeviceNetworkConstants.Command, out string? command) || !_power.IsPowered(ent.Owner))
             return;
 
         switch (command)
