@@ -13889,5 +13889,12 @@ Entries:
   id: 157400
   time: '2025-09-14T15:16:03.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/1574
+- author: STARLIGHT TEAM
+  changes:
+  - message: Brigmedic and security gloves are no longer insulated.
+    type: Remove
+  id: 162400
+  time: '2025-09-14T16:48:55.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1624
 Order: -1
 
