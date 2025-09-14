@@ -653,4 +653,16 @@
   id: 78
   time: '2025-09-06T06:02:26.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/40152
+- author: SlamBamActionman
+  changes:
+  - message: 'Exo: Moved the Common Telecoms from the AI Core to Bridge.'
+    type: Tweak
+  - message: 'Exo: Changed the station lighting to reduce the visual impact for colorblind
+      users.'
+    type: Fix
+  - message: 'Exo: Minor map fixes in various areas.'
+    type: Fix
+  id: 79
+  time: '2025-09-11T01:46:55.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/40199
 Order: 1
