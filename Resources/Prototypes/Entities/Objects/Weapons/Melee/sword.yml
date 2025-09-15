@@ -207,6 +207,7 @@
   parent: [ BaseSword, BaseMajorContraband ]
   id: Throngler
   description: If Security dares take it from you, just remind them that they are indeed mortal.
+  categories: [ DoNotMap ] # DS14
   components:
     - type: Sprite
       sprite: Objects/Weapons/Melee/Throngler2.rsi

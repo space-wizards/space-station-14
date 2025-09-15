@@ -18,6 +18,10 @@ public sealed partial class EggComponent : Component
     [DataField]
     public EntityUid? ActionHatchEntity;
 
+    [DataField]
+    [ViewVariables(VVAccess.ReadOnly)]
+    public bool IsHatched = false;
+
     [DataField(customTypeSerializer: typeof(TimeOffsetSerializer))]
     public TimeSpan TimeUntilSpawn;
 

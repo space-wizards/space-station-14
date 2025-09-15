@@ -101,8 +101,7 @@ public sealed class NecroobeliskSystem : SharedNecroobeliskSystem
         stationFilter.AddPlayersByPvs(uid, entityManager: EntityManager);
         RaiseNetworkEvent(msg, stationFilter);
 
-        Timer.Spawn(20000,
-        () => _chatSystem.DispatchGlobalAnnouncement(Loc.GetString(str), playSound: true, colorOverride: color));
+        _chatSystem.DispatchGlobalAnnouncement(Loc.GetString(str), playSound: true, colorOverride: color);
     }
     private void OnSeverityChanged(EntityUid uid, NecroobeliskComponent component, ref NecroobeliskPulseEvent args)
     {

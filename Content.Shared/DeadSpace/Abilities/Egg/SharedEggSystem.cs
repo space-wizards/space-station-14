@@ -29,15 +29,16 @@ public abstract class SharedEggSystem : EntitySystem
         var curTime = _timing.CurTime;
 
         var eggQuery = EntityQueryEnumerator<EggComponent>();
-        while (eggQuery.MoveNext(out var uid, out var comp))
+        while (eggQuery.MoveNext(out var uid, out var component))
         {
-            if (curTime > comp.TimeUntilSpawn)
+            if (curTime > component.TimeUntilSpawn && !component.IsHatched)
             {
                 var eggSpawnEvent = new EggSpawnEvent();
                 RaiseLocalEvent(uid, ref eggSpawnEvent);
+                component.IsHatched = true;
             }
 
-            if (curTime > comp.TimeUntilPlaySound)
+            if (curTime > component.TimeUntilPlaySound && !component.IsHatched)
             {
                 var playEggSoundEvent = new PlayEggSoundEvent();
                 RaiseLocalEvent(uid, ref playEggSoundEvent);

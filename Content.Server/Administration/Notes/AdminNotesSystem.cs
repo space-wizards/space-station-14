@@ -73,7 +73,7 @@ public sealed class AdminNotesSystem : EntitySystem
         foreach (var watchlist in watchlists)
         {
             _chat.SendAdminAlert(Loc.GetString("admin-notes-watchlist", ("player", username), ("message", watchlist.Message)));
-            _audioSystem.PlayGlobal("/Audio/_DeadSpace/Misc/watchlist.ogg", Filter.Empty().AddPlayers(_adminManager.ActiveAdmins), false, AudioParams.Default.WithVolume(-2f));
+            _audioSystem.PlayGlobal(new SoundPathSpecifier("/Audio/_DeadSpace/Misc/watchlist.ogg"), Filter.Empty().AddPlayers(_adminManager.ActiveAdmins), false, AudioParams.Default.WithVolume(-2f));
         }
 
         var messagesToShow = messages.OrderBy(x => x.CreatedAt).Where(x => !x.Dismissed).ToArray();
