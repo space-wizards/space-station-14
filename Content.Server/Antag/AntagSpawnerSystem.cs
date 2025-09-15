@@ -1,3 +1,4 @@
+using System.Linq;
 using Content.Server.Antag.Components;
 
 namespace Content.Server.Antag;
@@ -21,11 +22,14 @@ public sealed class AntagSpawnerSystem : EntitySystem
             foreach (var prototypePair in ent.Comp.Prototypes)
             {
                 var antagRole = prototypePair.Key;
-                var entityProto = prototypePair.Value;
+                var entityProtos = prototypePair.Value;
 
                 if (args.AntagRoles.Contains(antagRole))
                 {
-                    args.Entity = Spawn(entityProto);
+                    var rand = new Random();
+                    var randomEntity = entityProtos[rand.Next(entityProtos.Count)];
+
+                    args.Entity = Spawn(randomEntity);
                     return;
                 }
             }
