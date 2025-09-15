@@ -16,7 +16,7 @@
       - type: StationEmergencyShuttle
         emergencyShuttlePath: /Maps/_Ronstation/Shuttles/emergency_feint.yml
       - type: StationJobs
-        availableJobs: # 42 jobs total w/o latejoins & interns, 57 jobs total w/ latejoins & interns
+        availableJobs: # 43 jobs total w/o latejoins & interns, 58 jobs total w/ latejoins & interns
           # command (7)
           Captain: [ 1, 1 ]
           BlueshieldOfficer: [ 1, 1 ]
