@@ -1,0 +1,36 @@
+- type: marking
+  id: ResomiTattooEyeLeft
+  bodyPart: Eyes
+  markingCategory: Head
+  speciesRestriction: [ Resomi ]
+  sprites:
+    - sprite: _Starlight/Mobs/Customization/Resomi/resomi_eyes.rsi
+      state: eye_left
+
+- type: marking
+  id: ResomiTattooEyeRight
+  bodyPart: Eyes
+  markingCategory: Head
+  speciesRestriction: [ Resomi ]
+  sprites:
+    - sprite: _Starlight/Mobs/Customization/Resomi/resomi_eyes.rsi
+      state: eye_right
+      
+- type: marking
+  id: AvaliTattooEyeLeft
+  bodyPart: Eyes
+  markingCategory: Head
+  speciesRestriction: [ Avali ]
+  sprites:
+  - sprite: _Starlight/Mobs/Customization/Avali/avali_eyes.rsi
+    state: eye_left
+
+- type: marking
+  id: AvaliTattooEyeRight
+  bodyPart: Eyes
+  markingCategory: Head
+  speciesRestriction: [ Avali ]
+  sprites:
+  - sprite: _Starlight/Mobs/Customization/Avali/avali_eyes.rsi
+    state: eye_right
+    

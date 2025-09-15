@@ -43,6 +43,8 @@
     alternateState: Resomi_burning
   - type: HumanoidAppearance
     species: Resomi
+    undergarmentTop: UndergarmentTopTanktopResomi
+    undergarmentBottom: UndergarmentBottomBoxersResomi
   - type: Fixtures
     fixtures: 
       fix1:
@@ -107,6 +109,11 @@
           32:
             sprite: Mobs/Species/Resomi/displacement.rsi
             state: jumpsuit
+      head:
+        sizeMaps:
+          32:
+            sprite: Mobs/Species/Resomi/displacement.rsi
+            state: head
       eyes:
         sizeMaps:
           32:
@@ -117,11 +124,6 @@
           32:
             sprite: Mobs/Species/Resomi/displacement.rsi
             state: hands
-      head:
-        sizeMaps:
-          32:
-            sprite: Mobs/Species/Resomi/displacement.rsi
-            state: head
       back:
         sizeMaps:
           32:
@@ -168,6 +170,11 @@
           32:
             sprite: Mobs/Species/Resomi/displacement.rsi
             state: jumpsuit
+      head:
+        sizeMaps:
+          32:
+            sprite: Mobs/Species/Resomi/displacement.rsi
+            state: head
       eyes:
         sizeMaps:
           32:
@@ -178,11 +185,6 @@
           32:
             sprite: Mobs/Species/Resomi/displacement.rsi
             state: hands
-      head:
-        sizeMaps:
-          32:
-            sprite: Mobs/Species/Resomi/displacement.rsi
-            state: head
       back:
         sizeMaps:
           32:
