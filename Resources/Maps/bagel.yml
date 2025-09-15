@@ -4,7 +4,7 @@ meta:
   engineVersion: 266.0.0
   forkId: ""
   forkVersion: ""
-  time: 09/14/2025 23:31:09
+  time: 09/15/2025 00:43:45
   entityCount: 25523
 maps:
 - 943
@@ -113516,17 +113516,17 @@ entities:
     - type: Transform
       pos: -51.5,-4.5
       parent: 60
-- proto: MagazineLightRifleIncendiary
+- proto: MagazineLightRifle
   entities:
   - uid: 1138
     components:
     - type: Transform
-      pos: -26.673944,-6.3476434
+      pos: -26.262257,-6.317416
       parent: 60
   - uid: 1547
     components:
     - type: Transform
-      pos: -26.37181,-6.331765
+      pos: -26.668507,-6.333041
       parent: 60
 - proto: MagazinePistolSubMachineGunTopMounted
   entities:
