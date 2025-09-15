@@ -5,12 +5,12 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading;
+using Content.Client.Entry;
 using Content.Client.IoC;
 using Content.Client.Parallax.Managers;
 using Content.IntegrationTests.Pair;
 using Content.IntegrationTests.Tests.Destructible;
 using Content.IntegrationTests.Tests.DeviceNetwork;
-using Content.Shared.Entry;
 using Robust.Client;
 using Robust.Server;
 using Robust.Shared;
@@ -132,8 +132,9 @@ public static partial class PoolManager
             ContentStart = true,
             ContentAssemblies = new[]
             {
+                // ReSharper disable once RedundantNameQualifier
+                typeof(Shared.Entry.EntryPoint).Assembly,
                 typeof(EntryPoint).Assembly,
-                typeof(Client.Entry.EntryPoint).Assembly,
                 typeof(PoolManager).Assembly,
             }
         };
@@ -439,7 +440,8 @@ we are just going to end this here to save a lot of time. This is the exception 
         _initialized = true;
         _contentAssemblies =
         [
-            typeof(EntryPoint).Assembly,
+            // ReSharper disable once RedundantNameQualifier
+            typeof(Shared.Entry.EntryPoint).Assembly,
             typeof(Server.Entry.EntryPoint).Assembly,
             typeof(PoolManager).Assembly
         ];
