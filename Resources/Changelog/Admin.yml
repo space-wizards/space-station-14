@@ -1380,5 +1380,20 @@ Entries:
   id: 167
   time: '2025-09-04T13:03:47.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/40053
+- author: UpAndLeaves
+  changes:
+  - message: Added 8 new storage and inventory toolshed commands
+    type: Add
+  id: 168
+  time: '2025-09-11T22:07:37.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/39046
+- author: slarticodefast
+  changes:
+  - message: The listplayers command now requires PII permissions due to showing IP
+      addresses.
+    type: Tweak
+  id: 169
+  time: '2025-09-13T15:53:48.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/40324
 Name: Admin
 Order: 2
