@@ -106,8 +106,8 @@
       coefficients:
         Blunt: 0.8
         Slash: 0.8
-        Piercing: 0.8
-        Heat: 0.65
+        Piercing: 0.60
+        Heat: 0.60
         Radiation: 0.9
 
 - type: entity

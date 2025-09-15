@@ -33,6 +33,46 @@
       tags: []
 
 - type: entity
+  id: USSPUplinkImplanterEmpty
+  suffix: Empty
+  parent: BaseImplantOnlyImplanterSyndi_StarLight
+  name: SKB implanter
+  description: A brittle disposable syringe exclusively designed for the injection of subdermal implants for SKB agents.
+  components:
+  - type: Implanter
+    drawTime: 5
+    currentMode: Draw
+    implantOnly: false
+    deimplantWhitelist:
+    - MindShieldImplant
+    deimplantFailureDamage:
+        types:
+          Heat: 30
+  - type: Item
+    sprite: _Starlight/Objects/Specific/USSP/SKB_implanter.rsi
+    heldPrefix: implanter
+  - type: Sprite
+    sprite: _Starlight/Objects/Specific/USSP/SKB_implanter.rsi
+    state: implanter0
+    layers:
+      - state: implanter0
+        map: [ "implantOnly" ]
+        visible: true
+      - state: implanter1
+        map: [ "implantFull" ]
+        visible: false
+  - type: GenericVisualizer
+    visuals:
+      enum.ImplanterVisuals.Full:
+        implantFull:
+          True: {visible: true}
+          False: {visible: false}
+      enum.ImplanterImplantOnlyVisuals.ImplantOnly:
+        implantOnly:
+          True: {state: broken}
+          False: {state: implanter0}
+
+- type: entity
   id: USSPUplinkImplanter
   suffix: USSP uplink
   parent: BaseImplantOnlyImplanterSyndi_StarLight
