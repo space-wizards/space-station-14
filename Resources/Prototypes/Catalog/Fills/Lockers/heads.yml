@@ -247,8 +247,6 @@
     - id: AutoMenderBurnFilled #Starlight
     - id: AutoMenderBruteFilled #Starlight
     - id: CMOLicense #STARLIGHT
-    - id: LeftArmCyberReaper
-      prob: 0.25
 
 # Hardsuit table, used for suit storage as well
 - type: entityTable
