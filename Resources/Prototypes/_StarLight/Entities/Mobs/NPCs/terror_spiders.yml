@@ -172,9 +172,8 @@
   - type: Evolving
     evolveTo: MobTerrorPurple
     conditions: 
-    - !type:DamageDealCondition
-      targetDamageAmount: 250
-      onlyAlive: true
+    conditions: 
+    - !type:SpiderWebCondition
 
 - type: entity
   name: terror gray
