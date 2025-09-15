@@ -48,6 +48,11 @@
         key: Target
       tasks:
         - !type:HTNPrimitiveTask
+          operator: !type:JumpOperator
+            shutdownState: PlanFinished
+            removeKeyOnFinish: false
+            targetKey: TargetCoordinates
+        - !type:HTNPrimitiveTask
           operator: !type:MoveFromOperator
             shutdownState: PlanFinished
             pathfindInPlanning: true
