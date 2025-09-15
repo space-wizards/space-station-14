@@ -1,0 +1,9 @@
+- type: entity
+  id: CrateEngineeringReflector
+  parent: CrateEngineeringSecure
+  name: Reflector Crate
+  description: Reflector, for when you need to deflect your problems.
+  components:
+  - type: StorageFill
+    conents:
+      - id: ReflectorFlatpack
