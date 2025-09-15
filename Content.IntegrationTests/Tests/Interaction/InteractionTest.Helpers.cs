@@ -5,6 +5,7 @@ using System.Linq;
 using System.Numerics;
 using System.Reflection;
 using Content.Client.Construction;
+using Content.IntegrationTests.Tests.Helpers;
 using Content.Server.Atmos.EntitySystems;
 using Content.Server.Construction.Components;
 using Content.Server.Gravity;
@@ -21,6 +22,7 @@ using Robust.Shared.Input;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Maths;
+using Robust.Shared.Reflection;
 using ItemToggleComponent = Content.Shared.Item.ItemToggle.Components.ItemToggleComponent;
 
 namespace Content.IntegrationTests.Tests.Interaction;
@@ -28,6 +30,8 @@ namespace Content.IntegrationTests.Tests.Interaction;
 // This partial class defines various methods that are useful for performing & validating interactions
 public abstract partial class InteractionTest
 {
+    private Dictionary<Type, EntitySystem> _listenerCache = new();
+
     /// <summary>
     /// Begin constructing an entity.
     /// </summary>
@@ -599,6 +603,98 @@ public abstract partial class InteractionTest
 
         Assert.That(count, Is.EqualTo(value));
     }
+
+    #endregion
+
+    #region EventListener
+
+    /// <summary>
+    /// Asserts that running the given action causes an event to fired directed at the specified entity (defaults to <see cref="Target"/>).
+    /// </summary>
+    protected async Task AssertFiresEvent<TEvent>(Func<Task> act, EntityUid? uid = null, int count = 1, bool clear = true)
+        where TEvent : notnull
+    {
+        var sys = GetListenerSystem<TEvent>();
+
+        uid ??= STarget;
+        if (uid == null)
+        {
+            Assert.Fail("No target specified");
+            return;
+        }
+
+        if (clear)
+            sys.Clear(uid.Value);
+        else
+            count += sys.Count(uid.Value);
+
+        await Server.WaitPost(() => SEntMan.EnsureComponent<TestListenerComponent>(uid.Value));
+        await act();
+        AssertEvent<TEvent>(uid, count: count);
+    }
+
+    /// <summary>
+    /// Asserts that running the action on the server causes an event to fired directed at the specified entity (defaults to <see cref="Target"/>).
+    /// </summary>
+    protected async Task AssertFiresEventPost<TEvent>(Action act, EntityUid? uid = null, int count = 1, bool clear = true)
+        where TEvent : notnull
+    {
+        await AssertFiresEvent<TEvent>(async () => await Server.WaitAssertion(act), uid, count, clear);
+    }
+
+    /// <summary>
+    /// Asserts that the specified event has been fired some number of times at the given entity (defaults to <see cref="Target"/>).
+    /// For this to work, this requires that the entity has been given a <see cref="TestListenerComponent"/>
+    /// </summary>
+    protected void AssertEvent<TEvent>(EntityUid? uid = null, int count = 1, Func<TEvent,bool>? predicate = null)
+        where TEvent : notnull
+    {
+        Assert.That(GetEvents(uid, predicate).Count, Is.EqualTo(count));
+    }
+
+    /// <summary>
+    /// Gets all the events of the specified type that have been fired at the given entity.
+    /// For this to work, this requires that the entity has been given a <see cref="TestListenerComponent"/>
+    /// </summary>
+    protected IEnumerable<TEvent> GetEvents<TEvent>(EntityUid? uid = null, Func<TEvent, bool>? predicate = null)
+        where TEvent : notnull
+    {
+        uid ??= STarget;
+        if (uid == null)
+        {
+            Assert.Fail("No target specified");
+            return [];
+        }
+
+        return GetListenerSystem<TEvent>().GetEvents(uid.Value, predicate);
+    }
+
+    protected TestListenerSystem<TEvent> GetListenerSystem<TEvent>()
+        where TEvent : notnull
+    {
+        if (_listenerCache.TryGetValue(typeof(TEvent), out var listener))
+            return (TestListenerSystem<TEvent>) listener;
+
+        var type = Server.Resolve<IReflectionManager>().GetAllChildren<TestListenerSystem<TEvent>>().Single();
+        if (!SEntMan.EntitySysManager.TryGetEntitySystem(type, out var systemObj))
+        {
+            // There has to be a listener system that is manually defined. Event subscriptions are locked once
+            // finalized, so we can't really easily create new subscriptions on the fly.
+            // TODO find a better solution
+            throw new InvalidOperationException($"Event {typeof(TEvent).Name} has no associated listener system!");
+        }
+
+        var system = (TestListenerSystem<TEvent>)systemObj;
+        _listenerCache[typeof(TEvent)] = system;
+        return system;
+    }
+
+    /// <summary>
+    /// Gets all the events of the specified type that have been fired at the given entity.
+    /// For this to work, this requires that the entity has been given a <see cref="TestListenerComponent"/>
+    /// </summary>
+    protected void ClearEvents<TEvent>(EntityUid uid) where TEvent : notnull
+        => GetListenerSystem<TEvent>().Clear(uid);
 
     #endregion
 
