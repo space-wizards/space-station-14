@@ -9,7 +9,7 @@ namespace Content.Shared.Weapons.Ranged.Events;
 /// and changing <see cref="Direction"/> where shot will go next
 /// </summary>
 [ByRefEvent]
-public record struct HitScanReflectAttemptEvent(EntityUid? Shooter, EntityUid SourceItem, ReflectType Reflective, Vector2 Direction, bool Reflected) : IInventoryRelayEvent
+public record struct HitScanReflectAttemptEvent(EntityUid? Shooter, EntityUid SourceItem, ReflectType Reflective, Vector2 Direction, bool Reflected, string? HitscanId = null) : IInventoryRelayEvent //STARLIGHT
 {
     SlotFlags IInventoryRelayEvent.TargetSlots => SlotFlags.WITHOUT_POCKET;
 }

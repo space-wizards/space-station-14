@@ -41,3 +41,7 @@
 - type: lobbyBackground
   id: Turncoats
   background: /Textures/_Starlight/LobbyScreens/turncoats.webp
+
+- type: lobbyBackground
+  id: TritfireDragon
+  background: /Textures/_Starlight/LobbyScreens/tritfire_dragon.webp
