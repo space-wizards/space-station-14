@@ -1,5 +1,4 @@
 ﻿using Content.Server.Body.Systems;
-using Content.Server.Kitchen.Components;
 using Content.Shared.Administration.Logs;
 using Content.Shared.Body.Components;
 using Content.Shared.Database;
@@ -8,6 +7,7 @@ using Content.Shared.DoAfter;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Interaction;
 using Content.Shared.Kitchen;
+using Content.Shared.Kitchen.Components;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Mobs.Systems;
 using Content.Shared.Nutrition.Components;
@@ -38,7 +38,7 @@ public sealed class SharpSystem : EntitySystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<SharpComponent, AfterInteractEvent>(OnAfterInteract, before: [typeof(UtensilSystem)]);
+        SubscribeLocalEvent<SharpComponent, AfterInteractEvent>(OnAfterInteract, before: [typeof(IngestionSystem)]);
         SubscribeLocalEvent<SharpComponent, SharpDoAfterEvent>(OnDoAfter);
 
         SubscribeLocalEvent<ButcherableComponent, GetVerbsEvent<InteractionVerb>>(OnGetInteractionVerbs);
@@ -102,34 +102,39 @@ public sealed class SharpSystem : EntitySystem
 
         component.Butchering.Remove(args.Args.Target.Value);
 
-        if (_containerSystem.IsEntityInContainer(args.Args.Target.Value))
-        {
-            args.Handled = true;
-            return;
-        }
-
         var spawnEntities = EntitySpawnCollection.GetSpawns(butcher.SpawnedEntities, _robustRandom);
         var coords = _transform.GetMapCoordinates(args.Args.Target.Value);
         EntityUid popupEnt = default!;
-        foreach (var proto in spawnEntities)
+
+        if (_containerSystem.TryGetContainingContainer(args.Args.Target.Value, out var container))
         {
-            // distribute the spawned items randomly in a small radius around the origin
-            popupEnt = Spawn(proto, coords.Offset(_robustRandom.NextVector2(0.25f)));
+            foreach (var proto in spawnEntities)
+            {
+                // distribute the spawned items randomly in a small radius around the origin
+                popupEnt = SpawnInContainerOrDrop(proto, container.Owner, container.ID);
+            }
+        }
+        else
+        {
+            foreach (var proto in spawnEntities)
+            {
+                // distribute the spawned items randomly in a small radius around the origin
+                popupEnt = Spawn(proto, coords.Offset(_robustRandom.NextVector2(0.25f)));
+            }
         }
 
-        var hasBody = TryComp<BodyComponent>(args.Args.Target.Value, out var body);
-
         // only show a big popup when butchering living things.
-        var popupType = PopupType.Small;
-        if (hasBody)
-            popupType = PopupType.LargeCaution;
+        // Meant to differentiate cutting up clothes and cutting up your boss.
+        var popupType = HasComp<MobStateComponent>(args.Args.Target.Value)
+            ? PopupType.LargeCaution
+            : PopupType.Small;
 
         _popupSystem.PopupEntity(Loc.GetString("butcherable-knife-butchered-success", ("target", args.Args.Target.Value), ("knife", Identity.Entity(uid, EntityManager))),
-            popupEnt, args.Args.User, popupType);
+            popupEnt,
+            args.Args.User,
+            popupType);
 
-        if (hasBody)
-            _bodySystem.GibBody(args.Args.Target.Value, body: body);
-
+        _bodySystem.GibBody(args.Args.Target.Value); // does nothing if ent can't be gibbed
         _destructibleSystem.DestroyEntity(args.Args.Target.Value);
 
         args.Handled = true;
