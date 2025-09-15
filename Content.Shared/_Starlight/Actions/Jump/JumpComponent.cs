@@ -16,4 +16,10 @@ public sealed partial class JumpComponent : Component
 
     [DataField, AutoNetworkedField]
     public bool IsEquipment = false;
+
+    [DataField]
+    public bool KnockdownTargetOnCollision = false;
+
+    [DataField]
+    public bool KnockdownSelfOnCollision = false;
 }

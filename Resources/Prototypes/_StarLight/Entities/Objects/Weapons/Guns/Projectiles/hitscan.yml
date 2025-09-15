@@ -1029,3 +1029,17 @@
   impactFlash:
     sprite: _Starlight/Objects/Weapons/Guns/Projectiles/projectiles.rsi
     state: pd_impact
+
+# Xeno
+
+- type: hitscan
+  id: BulletAcidHitscan
+  name: acid spit
+  bullet:
+    sprite:
+      sprite: Objects/Weapons/Guns/Projectiles/xeno_toxic.rsi
+      state: xeno_toxic
+  collisionMask: 64 #BulletImpassable
+  damage:
+    types:
+      Caustic: 8
