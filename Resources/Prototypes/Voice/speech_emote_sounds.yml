@@ -518,7 +518,7 @@
     Sigh:
       collection: FemaleSigh
     Crying:
-      collection: ResomiCry
+      path: /Audio/_Starlight/Voice/Resomi/resomi_cry.ogg
     Cough:
       collection: FemaleCoughs
     Yawn:
