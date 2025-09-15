@@ -1,25 +1,17 @@
-using System.Linq;
 using Content.Server.Administration.Logs;
 using Content.Server.Chat.Systems;
 using Content.Server.Power.Components;
 using Content.Shared.Radio.Components;
 using Content.Server.Starlight.TTS;
-using Content.Server.VoiceMask;
 using Content.Shared.Access.Components;
 using Content.Shared.Access.Systems;
-using Content.Shared.Inventory;
 using Content.Shared.Chat;
 using Content.Shared.Database;
 using Content.Shared.PDA;
 using Content.Shared.Radio;
-using Content.Shared.Radio.Components;
-using Content.Shared.Roles;
 using Content.Shared.Speech;
-using Content.Shared.StatusIcon;
 using Content.Shared.Silicons.Borgs.Components;
 using Content.Shared.Silicons.StationAi;
-using Robust.Shared.Audio;
-using Robust.Shared.Audio.Systems;
 using Robust.Shared.Map;
 using Robust.Shared.Network;
 using Robust.Shared.Player;
@@ -27,13 +19,9 @@ using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Replays;
 using Robust.Shared.Utility;
-using Content.Shared.Clothing.EntitySystems;
-using Content.Shared;
-using Content.Server.Radio.Components;
 using Content.Server._Starlight.Radio.Systems;
 // Starlight - Start
 using Content.Shared._Starlight.Language;
-using Content.Shared._Starlight.Language.Systems;
 using Content.Server._Starlight.Language;
 using Content.Shared._Starlight.Silicons.Borgs;
 // Starlight - End
@@ -146,7 +134,7 @@ public sealed class RadioSystem : EntitySystem
         name = FormattedMessage.EscapeText(name);
 
         SpeechVerbPrototype speech;
-        if (evt.SpeechVerb != null && _prototype.TryIndex(evt.SpeechVerb, out var evntProto))
+        if (evt.SpeechVerb != null && _prototype.Resolve(evt.SpeechVerb, out var evntProto))
             speech = evntProto;
         else
             speech = _chat.GetSpeechVerb(messageSource, message);

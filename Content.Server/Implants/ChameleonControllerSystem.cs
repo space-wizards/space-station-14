@@ -48,8 +48,8 @@ public sealed class ChameleonControllerSystem : SharedChameleonControllerSystem
     {
         var outfitPrototype = _proto.Index(outfit);
 
-        _proto.TryIndex(outfitPrototype.Job, out var jobPrototype);
-        _proto.TryIndex(outfitPrototype.StartingGear, out var startingGearPrototype);
+        _proto.Resolve(outfitPrototype.Job, out var jobPrototype);
+        _proto.Resolve(outfitPrototype.StartingGear, out var startingGearPrototype);
 
         GetJobEquipmentInformation(jobPrototype, user, out var customRoleLoadout, out var defaultRoleLoadout, out var jobStartingGearPrototype);
 
@@ -80,7 +80,7 @@ public sealed class ChameleonControllerSystem : SharedChameleonControllerSystem
         if (jobPrototype == null)
             return;
 
-        _proto.TryIndex(jobPrototype.StartingGear, out jobStartingGearPrototype);
+        _proto.Resolve(jobPrototype.StartingGear, out jobStartingGearPrototype);
 
         var profile = _humanoidAppearanceSystem.GetBaseProfile(user);
 

@@ -338,6 +338,13 @@
       - BorgModuleMedical
     hasMindState: borg_e #Starlight ;-;
     noMindState: borg_e_r #Starlight ;-;
+  - type: SolutionScanner
+  - type: ShowHealthBars
+    damageContainers:
+    - Biological
+  - type: ShowHealthIcons
+    damageContainers:
+    - Biological
 
 - type: entity
   parent: BaseBorgChassisDerelict
