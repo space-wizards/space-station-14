@@ -24,7 +24,6 @@
 - type: speciesBaseSprites
   id: MobResomiSprites
   sprites:
-    Special: MobHumanoidAnyMarkings
     Head: MobResomiHead
     Hair: MobResomiHair
     Chest: MobResomiTorso
