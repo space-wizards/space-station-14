@@ -242,6 +242,8 @@
     - Slime
     - AmmoniaBlood
     - ZombieBlood
+    - AvaliBlood
+    - ResomiBlood
 
 - type: xenoArchTrigger
   id: TriggerThrow
