@@ -4,7 +4,7 @@ meta:
   engineVersion: 266.0.0
   forkId: ""
   forkVersion: ""
-  time: 09/15/2025 05:34:22
+  time: 09/15/2025 05:41:37
   entityCount: 20263
 maps:
 - 1
@@ -10827,7 +10827,7 @@ entities:
       pos: 11.5,-30.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -224400.75
+      secondsUntilStateChange: -224833.97
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -14816,7 +14816,7 @@ entities:
   - uid: 1057
     components:
     - type: Transform
-      pos: 55.498257,-56.247276
+      pos: 55.500893,-56.971096
       parent: 2
   - uid: 1058
     components:
@@ -90440,11 +90440,6 @@ entities:
     - type: Transform
       pos: 64.5,-46.5
       parent: 2
-  - uid: 13298
-    components:
-    - type: Transform
-      pos: 56.5,-56.5
-      parent: 2
   - uid: 13299
     components:
     - type: Transform
@@ -90455,6 +90450,11 @@ entities:
     components:
     - type: Transform
       pos: 56.5,-18.5
+      parent: 2
+  - uid: 16200
+    components:
+    - type: Transform
+      pos: 55.5,-56.5
       parent: 2
 - proto: PaperCaptainsThoughts
   entities:
@@ -109970,6 +109970,11 @@ entities:
       parent: 2
 - proto: TableWood
   entities:
+  - uid: 13298
+    components:
+    - type: Transform
+      pos: 55.5,-56.5
+      parent: 2
   - uid: 16179
     components:
     - type: Transform
@@ -109981,11 +109986,6 @@ entities:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 36.5,-51.5
-      parent: 2
-  - uid: 16181
-    components:
-    - type: Transform
-      pos: 55.5,-56.5
       parent: 2
   - uid: 16182
     components:
@@ -110078,11 +110078,6 @@ entities:
     components:
     - type: Transform
       pos: 33.5,-50.5
-      parent: 2
-  - uid: 16200
-    components:
-    - type: Transform
-      pos: 56.5,-56.5
       parent: 2
   - uid: 16201
     components:
@@ -110626,6 +110621,13 @@ entities:
     components:
     - type: Transform
       pos: -11.5,-72.5
+      parent: 2
+- proto: TelecomServerFilledLaw
+  entities:
+  - uid: 16181
+    components:
+    - type: Transform
+      pos: 56.5,-56.5
       parent: 2
 - proto: TelecomServerFilledScience
   entities:
