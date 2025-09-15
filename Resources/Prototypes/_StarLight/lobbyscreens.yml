@@ -41,3 +41,11 @@
 - type: lobbyBackground
   id: Turncoats
   background: /Textures/_Starlight/LobbyScreens/turncoats.webp
+
+- type: lobbyBackground
+  id: You are (Not) Funny
+  background: /Textures/_Starlight/LobbyScreens/you-are-not-funny.webp
+
+- type: lobbyBackground
+  id: A friendly face in space
+  background: /Textures/_Starlight/LobbyScreens/friendly-face-in-space.webp
