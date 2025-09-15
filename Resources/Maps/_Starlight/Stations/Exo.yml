@@ -4,7 +4,7 @@ meta:
   engineVersion: 266.0.0
   forkId: ""
   forkVersion: ""
-  time: 09/12/2025 23:42:03
+  time: 09/15/2025 05:34:22
   entityCount: 20263
 maps:
 - 1
@@ -9418,13 +9418,6 @@ entities:
       rot: -1.5707963267948966 rad
       pos: 72.5,-45.5
       parent: 2
-- proto: AirlockEngineering
-  entities:
-  - uid: 237
-    components:
-    - type: Transform
-      pos: 18.5,-61.5
-      parent: 2
 - proto: AirlockEngineeringGlassLocked
   entities:
   - uid: 238
@@ -9440,6 +9433,11 @@ entities:
       parent: 2
 - proto: AirlockEngineeringLocked
   entities:
+  - uid: 237
+    components:
+    - type: Transform
+      pos: 18.5,-61.5
+      parent: 2
   - uid: 240
     components:
     - type: Transform
@@ -10829,7 +10827,7 @@ entities:
       pos: 11.5,-30.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -224358.34
+      secondsUntilStateChange: -224400.75
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
