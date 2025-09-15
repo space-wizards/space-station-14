@@ -1,0 +1,5 @@
+- type: tile
+  id: FloorPlanetAstroGrass
+  name: tiles-planet-astro-grass
+  parent: FloorAstroGrass
+  weather: true
