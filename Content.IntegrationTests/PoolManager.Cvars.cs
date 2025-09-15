@@ -54,17 +54,11 @@ public static partial class PoolManager
             if (cfg.IsCVarRegistered(CCVars.GameLobbyEnabled.Name))
                 cfg.SetCVar(CCVars.GameLobbyEnabled, settings.InLobby);
 
-            if (cfg.IsCVarRegistered(CVars.NetInterp.Name))
-                cfg.SetCVar(CVars.NetInterp, settings.DisableInterpolate);
-
             if (cfg.IsCVarRegistered(CCVars.GameMap.Name))
                 cfg.SetCVar(CCVars.GameMap, settings.Map);
 
             if (cfg.IsCVarRegistered(CCVars.AdminLogsEnabled.Name))
                 cfg.SetCVar(CCVars.AdminLogsEnabled, settings.AdminLogsEnabled);
-
-            if (cfg.IsCVarRegistered(CVars.NetInterp.Name))
-                cfg.SetCVar(CVars.NetInterp, !settings.DisableInterpolate);
         });
     }
 

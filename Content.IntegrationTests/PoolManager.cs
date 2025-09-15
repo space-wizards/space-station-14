@@ -8,18 +8,17 @@ using System.Threading;
 using Content.Client.IoC;
 using Content.Client.Parallax.Managers;
 using Content.IntegrationTests.Pair;
-using Content.IntegrationTests.Tests;
 using Content.IntegrationTests.Tests.Destructible;
 using Content.IntegrationTests.Tests.DeviceNetwork;
-using Content.IntegrationTests.Tests.Interaction.Click;
+using Content.Shared.Entry;
 using Robust.Client;
 using Robust.Server;
+using Robust.Shared;
 using Robust.Shared.Configuration;
 using Robust.Shared.ContentPack;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Log;
-using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
 using Robust.UnitTesting;
 
@@ -133,7 +132,7 @@ public static partial class PoolManager
             ContentStart = true,
             ContentAssemblies = new[]
             {
-                typeof(Shared.Entry.EntryPoint).Assembly,
+                typeof(EntryPoint).Assembly,
                 typeof(Client.Entry.EntryPoint).Assembly,
                 typeof(PoolManager).Assembly,
             }
@@ -171,6 +170,11 @@ public static partial class PoolManager
         };
 
         SetDefaultCVars(options);
+
+        // I do not know why this is set then unset, but SetupCVars used to do it
+        options.CVarOverrides[CVars.NetInterp.Name] = (poolSettings.DisableInterpolate).ToString();
+        options.CVarOverrides[CVars.NetInterp.Name] = (!poolSettings.DisableInterpolate).ToString();
+
         var client = new RobustIntegrationTest.ClientIntegrationInstance(options);
         await client.WaitIdleAsync();
         await SetupCVars(client, poolSettings);
@@ -435,7 +439,7 @@ we are just going to end this here to save a lot of time. This is the exception 
         _initialized = true;
         _contentAssemblies =
         [
-            typeof(Shared.Entry.EntryPoint).Assembly,
+            typeof(EntryPoint).Assembly,
             typeof(Server.Entry.EntryPoint).Assembly,
             typeof(PoolManager).Assembly
         ];
