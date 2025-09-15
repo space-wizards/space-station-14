@@ -84,11 +84,8 @@
   - type: AntagSpawner
     prototype: XenoborgEngi
     prototypes:
-      MothershipCore: MothershipCore
-      Xenoborg: XenoborgEngi
-      Xenoborg: XenoborgHeavy
-      Xenoborg: XenoborgScout
-      Xenoborg: XenoborgStealth
+      MothershipCore: [ MothershipCore ]
+      Xenoborg: [ XenoborgEngi, XenoborgHeavy, XenoborgScout, XenoborgStealth ]
   - type: AntagSelection
     selectionTime: PrePlayerSpawn
     definitions:
@@ -107,37 +104,7 @@
       spawnerPrototype: SpawnPointGhostRoleXenoborg
       mindRoles:
       - MindRoleXenoborg
-      # entityPrototype: XenoborgEngi
-      briefing:
-        text: xenoborgs-welcome
-        color: blueViolet
-        sound: /Audio/Ambience/Antag/xenoborg_start.ogg
-    - prefRoles: [ Xenoborg ]
-      fallbackRoles: [ MothershipCore ]
-      spawnerPrototype: SpawnPointGhostRoleXenoborg
-      mindRoles:
-      - MindRoleXenoborg
-      # entityPrototype: XenoborgHeavy
-      briefing:
-        text: xenoborgs-welcome
-        color: blueViolet
-        sound: /Audio/Ambience/Antag/xenoborg_start.ogg
-    - prefRoles: [ Xenoborg ]
-      fallbackRoles: [ MothershipCore ]
-      spawnerPrototype: SpawnPointGhostRoleXenoborg
-      mindRoles:
-      - MindRoleXenoborg
-      # entityPrototype: XenoborgScout
-      briefing:
-        text: xenoborgs-welcome
-        color: blueViolet
-        sound: /Audio/Ambience/Antag/xenoborg_start.ogg
-    - prefRoles: [ Xenoborg ]
-      fallbackRoles: [ MothershipCore ]
-      spawnerPrototype: SpawnPointGhostRoleXenoborg
-      mindRoles:
-      - MindRoleXenoborg
-      # entityPrototype: XenoborgStealth
+      min: 4
       briefing:
         text: xenoborgs-welcome
         color: blueViolet
