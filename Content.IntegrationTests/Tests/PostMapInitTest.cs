@@ -102,7 +102,7 @@ namespace Content.IntegrationTests.Tests
             "Elkridge",
             "Relic",
             "dm01-entryway",
-            "Exo"
+            "Exo",
         };
 
         private static readonly ProtoId<EntityCategoryPrototype> DoNotMapCategory = "DoNotMap";
