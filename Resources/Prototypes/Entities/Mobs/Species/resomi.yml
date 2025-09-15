@@ -237,7 +237,10 @@
       Unsexed: UnisexResomi
   - type: Speech
     speechVerb: Resomi
+    speechSounds: UnisexResomi
     allowedEmotes: ['Chirp', 'Hisses', 'Purr', 'Growl', 'Trill', 'Scree', 'Call', 'Squawk']
+  - type: TypingIndicator
+    proto: resomi
   - type: Tag
     tags:
     - CanPilot
