@@ -129,13 +129,13 @@ public sealed class SharedCoverSystem : EntitySystem
             case <= 0.15f:
                 args.PushMarkup(Loc.GetString("some-cover"));
                 break;
-            case <= 0.25f:
+            case <= 0.30f:
                 args.PushMarkup(Loc.GetString("mild-cover"));
                 break;
-            case <= 0.35f:
+            case <= 0.45f:
                 args.PushMarkup(Loc.GetString("good-cover"));
                 break;
-            case <= 0.50f:
+            case <= 0.60f:
                 args.PushMarkup(Loc.GetString("great-cover"));
                 break;
             default:

@@ -16,13 +16,13 @@ public sealed partial class CoverComponent : Component
     /// The distance at which the cover reaches max effectivness.
     /// </summary>
     [DataField]
-    public float MaxDistance = 8f;
+    public float MaxDistance = 6f;
 
     /// <summary>
     /// The distance at which the cover is completely ineffective.
     /// </summary>
     [DataField]
-    public float MinDistance = .8f;
+    public float MinDistance = 0.9f;
 
     /// <summary>
     /// Should cover information show on examine?
