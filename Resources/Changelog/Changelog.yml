@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Morb0, ssdaniel24
-  changes:
-  - message: Added a Discord webhook that will receive station news
-    type: Add
-  id: 8455
-  time: '2025-05-10T18:21:02.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/36807
 - author: EmoGarbage404
   changes:
   - message: Fixed being able to toggle lighting as a ghost.
@@ -3954,3 +3947,11 @@
   id: 8966
   time: '2025-09-15T14:18:32.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/39588
+- author: Admiral-Obvious-001
+  changes:
+  - message: Increased the cooldown of ninja glove stun from 2 seconds to 10 seconds.
+      Stun duration remains unchanged at 5 seconds.
+    type: Tweak
+  id: 8967
+  time: '2025-09-15T23:31:50.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/39707
