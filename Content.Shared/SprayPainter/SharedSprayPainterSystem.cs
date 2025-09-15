@@ -99,7 +99,7 @@ public abstract class SharedSprayPainterSystem : EntitySystem
 
         Appearance.SetData(target, PaintableVisuals.Prototype, args.Prototype);
         Audio.PlayPredicted(ent.Comp.SpraySound, ent, args.Args.User);
-        Charges.TryUseCharges(new Entity<LimitedChargesComponent?>(ent, EnsureComp<LimitedChargesComponent>(ent)), args.Cost);
+        Charges.TryUseCharges((ent, EnsureComp<LimitedChargesComponent>(ent)), args.Cost); // Starlight-edit
 
         var paintedComponent = EnsureComp<PaintedComponent>(target);
         paintedComponent.DryTime = _timing.CurTime + ent.Comp.FreshPaintDuration;
@@ -187,13 +187,17 @@ public abstract class SharedSprayPainterSystem : EntitySystem
         // Valid paint target.
         args.Handled = true;
 
-        if (TryComp<LimitedChargesComponent>(args.Used, out var charges)
-            && charges.LastCharges < targetGroup.Cost)
+        // Starlight-edit: Start
+        if (TryComp<LimitedChargesComponent>(args.Used, out var charges))
         {
-            var msg = Loc.GetString("spray-painter-interact-no-charges");
-            _popup.PopupClient(msg, args.User, args.User);
-            return;
+            if (!Charges.TryUseCharges((args.Used, charges), targetGroup.Cost))
+            {
+                var msg = Loc.GetString("spray-painter-interact-no-charges");
+                _popup.PopupClient(msg, args.User, args.User);
+                return;
+            }
         }
+        // Starlight-edit: End
 
         if (!targetGroup.Styles.TryGetValue(selectedStyle, out var proto))
         {
