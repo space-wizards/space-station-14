@@ -40,6 +40,7 @@
     - state: icon
   - type: UseDelay
     delay: 10
+    preventUseInHand: false
   - type: UseDelayOnMeleeHit
   - type: MeleeThrowOnHit
     stunTime: 3
@@ -89,6 +90,7 @@
       - Item
   - type: UseDelay
     delay: 10
+    preventUseInHand: false
   - type: UseDelayOnMeleeHit
   - type: MeleeWeapon
     wideAnimationRotation: -135
