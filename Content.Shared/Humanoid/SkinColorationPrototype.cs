@@ -300,3 +300,66 @@ public sealed partial class ClampedHslColoration : ISkinColorationStrategy
         return Color.FromHsl(hsl);
     }
 }
+
+/// <summary>
+/// Unary coloration strategy that clamps the color within the Oklch colorspace
+/// </summary>
+[DataDefinition]
+[Serializable, NetSerializable]
+public sealed partial class ClampedOklchColoration : ISkinColorationStrategy
+{
+    /// <summary>
+    /// The (min, max) of the hue channel.
+    /// </summary>
+    [DataField]
+    public (float, float)? Hue;
+
+    /// <summary>
+    /// The maximum value of the chroma channel.
+    /// </summary>
+    /// <remarks>
+    /// Minimum saturation is unsupported due to technical limitations with gamut clipping.
+    /// </remarks>
+    [DataField]
+    public float? Chroma;
+
+    /// <summary>
+    /// The (min, max) of the lightness channel.
+    /// </summary>
+    [DataField]
+    public (float, float)? Lightness;
+
+    public SkinColorationStrategyInput InputType => SkinColorationStrategyInput.Color;
+
+    public bool VerifySkinColor(Color color)
+    {
+        var oklch = ColorHelper.LabToLch(ColorHelper.LinearSrgbToOklab(ColorHelper.ToLinearSrgb(color)));
+
+        if (Hue is (var minHue, var maxHue) && (oklch.Z < minHue || oklch.Z > maxHue))
+            return false;
+
+        if (Chroma is float maxChroma && oklch.Y > maxChroma)
+            return false;
+
+        if (Lightness is (var minValue, var maxValue) && (oklch.X < minValue || oklch.X > maxValue))
+            return false;
+
+        return true;
+    }
+
+    public Color ClosestSkinColor(Color color)
+    {
+        var oklch = ColorHelper.LabToLch(ColorHelper.LinearSrgbToOklab(ColorHelper.ToLinearSrgb(color)));
+
+        if (Hue is (var minHue, var maxHue))
+            oklch.Z = Math.Clamp(oklch.Z, minHue, maxHue);
+
+        if (Chroma is float maxChroma)
+            oklch.Y = Math.Min(oklch.Y, maxChroma);
+
+        if (Lightness is (var minValue, var maxValue))
+            oklch.X = Math.Clamp(oklch.X, minValue, maxValue);
+
+        return ColorHelper.FromLinearSrgb(ColorHelper.GamutClipPreserveChroma(ColorHelper.OklabToLinearSrgb(ColorHelper.LchToLab(oklch))));
+    }
+}

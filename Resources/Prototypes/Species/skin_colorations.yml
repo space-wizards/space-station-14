@@ -22,6 +22,6 @@
 
 - type: skinColoration
   id: VulpkaninColors
-  strategy: !type:ClampedHslColoration
-    saturation: [0.0, 0.60]
+  strategy: !type:ClampedOklchColoration
+    chroma: 0.25
     lightness: [0.2, 0.9]
