@@ -163,11 +163,11 @@ public sealed class SiliconLawSystem : SharedSiliconLawSystem
         {
             if (TryComp(uid, out ActiveRadioComponent? activeRadio))
             {
-                activeRadio.Channels.UnionWith(emag.ChannelAdd.Select(item => item.Id.ToString()).ToHashSet());
+                activeRadio.Channels.UnionWith(emag.ChannelAdd);
             }
             if (TryComp(uid, out IntrinsicRadioTransmitterComponent? transmitter))
             {
-                transmitter.Channels.UnionWith(emag.ChannelAdd.Select(item => item.Id.ToString()).ToHashSet());
+                transmitter.Channels.UnionWith(emag.ChannelAdd);
             }
             var lawset = emag.Lawset;
             if (lawset != null)

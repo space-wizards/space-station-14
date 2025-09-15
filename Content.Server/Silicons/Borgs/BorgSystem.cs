@@ -8,7 +8,6 @@ using Content.Server.Hands.Systems;
 using Content.Server.PowerCell;
 using Content.Shared._Starlight.Silicons.Borgs;
 using Content.Shared.Actions.Components;
-using Content.Server.Radio.Components;
 using Content.Shared.Alert;
 using Content.Shared.Body.Events;
 using Content.Shared.Database;

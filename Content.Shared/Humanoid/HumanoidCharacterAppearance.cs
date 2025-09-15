@@ -232,8 +232,6 @@ public sealed partial class HumanoidCharacterAppearance : ICharacterAppearance, 
         }
         // Starlight - End
 
-        var skinType = IoCManager.Resolve<IPrototypeManager>().Index<SpeciesPrototype>(species).SkinColoration;
-
         var newSkinColor = strategy.InputType switch
         {
             SkinColorationStrategyInput.Unary => strategy.FromUnary(random.NextFloat(0f, 100f)),

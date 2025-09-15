@@ -25,7 +25,8 @@ using Content.Shared.Tag;
 using Content.Shared.Cargo.Components; 
 using Content.Server.Administration.Managers; 
 using Content.Shared.Administration.Logs; // Starlight-edit
-using Content.Shared.Database; // Starlight-edit
+using Content.Shared.Database;
+using Robust.Shared.Player; // Starlight-edit
 
 namespace Content.Server.VendingMachines
 {

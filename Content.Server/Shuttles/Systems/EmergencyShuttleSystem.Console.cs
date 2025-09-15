@@ -215,7 +215,7 @@ public sealed partial class EmergencyShuttleSystem
             _chatSystem.DispatchGlobalAnnouncement(Loc.GetString("emergency-shuttle-left", ("transitTime", $"{TransitTime:0}")));
 
             // STARLIGHT: End round immediately when shuttle launches, but add transit time to restart countdown
-            var restartTime = TimeSpan.FromSeconds(_configManager.GetCVar(CCVars.RoundRestartTime)) + TimeSpan.FromSeconds(TransitTime) + _bufferTime;
+            var restartTime = TimeSpan.FromSeconds(ConfigManager.GetCVar(CCVars.RoundRestartTime)) + TimeSpan.FromSeconds(TransitTime) + _bufferTime;
             _roundEnd.EndRound(restartTime);
             // STARLIGHT END
         }
