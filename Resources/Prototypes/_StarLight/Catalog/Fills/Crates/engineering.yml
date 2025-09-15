@@ -5,5 +5,5 @@
   description: Reflector, for when you need to deflect your problems.
   components:
   - type: StorageFill
-    conents:
+    contents:
       - id: ReflectorFlatpack
