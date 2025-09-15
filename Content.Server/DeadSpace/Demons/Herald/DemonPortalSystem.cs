@@ -55,8 +55,7 @@ public sealed class DemonPortalSystem : EntitySystem
     private void OnDestr(EntityUid uid, DemonPortalComponent component, DestructionEventArgs args)
     {
         var location = Transform(uid).Coordinates;
-        Timer.Spawn(20000,
-        () => _chat.DispatchGlobalAnnouncement(Loc.GetString("demon-portal-destroyed", ("location", location)), playSound: true, colorOverride: Color.Green));
+        _chat.DispatchGlobalAnnouncement(Loc.GetString("demon-portal-destroyed", ("location", location)), playSound: true, colorOverride: Color.Green);
     }
 
     private void SpawnDemon(DemonPortalComponent comp, TransformComponent xform)
