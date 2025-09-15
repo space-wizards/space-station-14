@@ -30,7 +30,7 @@ public sealed class PhotocopierBoundUi : BoundUserInterface
         _window.PrintModeButtonPressed += OnPrintModeButtonPressed;
     }
 
-    private void OnFormButtonPressed(PaperworkFormPrototype formPrototype)
+    private void OnFormButtonPressed(ProtoId<PaperworkFormPrototype> formPrototype)
     {
         SendMessage(new PhotocopierChoseFormMessage(formPrototype));
     }

@@ -45,3 +45,13 @@
     back:
     - Flash
     - ADTtelescopicBaton
+
+- type: chameleonOutfit
+  id: BrigmedicChameleonOutfit
+  job: Brigmedic
+  equipment:
+    outerClothing: ClothingOuterVestSecurityMedic
+    shoes: ClothingShoesBootsBrigmedic
+    eyes: ClothingEyesHudMedical
+    head: ClothingHeadHatBeretBrigmedic
+    belt: ClothingBeltMedicalSecurityWebbing

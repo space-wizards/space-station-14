@@ -68,9 +68,7 @@ entities:
     - type: Transform
     - type: Map
       mapPaused: True
-    - type: PhysicsMap
     - type: GridTree
-    - type: MovedGrids
     - type: Broadphase
     - type: OccluderTree
   - uid: 2
@@ -5563,48 +5561,6 @@ entities:
     - type: Transform
       pos: 3.5402613,7.6028175
       parent: 2
-- proto: ActionToggleInternals
-  entities:
-  - uid: 6
-    components:
-    - type: Transform
-      parent: 5
-    - type: InstantAction
-      container: 5
-- proto: ActionToggleJetpack
-  entities:
-  - uid: 7
-    components:
-    - type: Transform
-      parent: 5
-    - type: InstantAction
-      container: 5
-- proto: ActionToggleLight
-  entities:
-  - uid: 9
-    components:
-    - type: Transform
-      parent: 8
-    - type: InstantAction
-      container: 8
-  - uid: 11
-    components:
-    - type: Transform
-      parent: 10
-    - type: InstantAction
-      container: 10
-  - uid: 13
-    components:
-    - type: Transform
-      parent: 12
-    - type: InstantAction
-      container: 12
-  - uid: 13435
-    components:
-    - type: Transform
-      parent: 13434
-    - type: InstantAction
-      container: 13434
 - proto: AirAlarm
   entities:
   - uid: 14
@@ -40505,39 +40461,11 @@ entities:
     - type: Transform
       pos: 16.59333,23.726284
       parent: 2
-    - type: HandheldLight
-      toggleActionEntity: 11
-    - type: ContainerContainer
-      containers:
-        cell_slot: !type:ContainerSlot
-          showEnts: False
-          occludes: True
-          ent: null
-        actions: !type:Container
-          showEnts: False
-          occludes: True
-          ents:
-          - 11
-    - type: ActionsContainer
   - uid: 12
     components:
     - type: Transform
       pos: 16.59333,23.476284
       parent: 2
-    - type: HandheldLight
-      toggleActionEntity: 13
-    - type: ContainerContainer
-      containers:
-        cell_slot: !type:ContainerSlot
-          showEnts: False
-          occludes: True
-          ent: null
-        actions: !type:Container
-          showEnts: False
-          occludes: True
-          ents:
-          - 13
-    - type: ActionsContainer
   - uid: 5911
     components:
     - type: Transform
@@ -40548,20 +40476,6 @@ entities:
     - type: Transform
       pos: 2.4978046,0.6471896
       parent: 13433
-    - type: HandheldLight
-      toggleActionEntity: 13435
-    - type: ContainerContainer
-      containers:
-        cell_slot: !type:ContainerSlot
-          showEnts: False
-          occludes: True
-          ent: null
-        actions: !type:Container
-          showEnts: False
-          occludes: True
-          ents:
-          - 13435
-    - type: ActionsContainer
 - proto: Floodlight
   entities:
   - uid: 8
@@ -40569,20 +40483,6 @@ entities:
     - type: Transform
       pos: 20.491627,-23.520414
       parent: 2
-    - type: HandheldLight
-      toggleActionEntity: 9
-    - type: ContainerContainer
-      containers:
-        cell_slot: !type:ContainerSlot
-          showEnts: False
-          occludes: True
-          ent: null
-        actions: !type:Container
-          showEnts: False
-          occludes: True
-          ents:
-          - 9
-    - type: ActionsContainer
 - proto: FloorDrain
   entities:
   - uid: 5912
@@ -61754,19 +61654,8 @@ entities:
     components:
     - type: Transform
       parent: 4
-    - type: GasTank
-      toggleActionEntity: 6
-    - type: Jetpack
-      toggleActionEntity: 7
     - type: Physics
       canCollide: False
-    - type: ActionsContainer
-    - type: ContainerContainer
-      containers:
-        actions: !type:Container
-          ents:
-          - 7
-          - 6
     - type: InsideEntityStorage
   - uid: 8889
     components:

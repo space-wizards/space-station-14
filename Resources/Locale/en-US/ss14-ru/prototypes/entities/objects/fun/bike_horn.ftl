@@ -6,3 +6,5 @@ ent-GoldenBikeHorn = golden honker
     .desc = A happy honk prize, pray to the gods for your reward.
 ent-BananiumHorn = bananium horn
     .desc = An air horn made from bananium.
+ent-PushHorn = push horn
+    .desc = This powerful bikehorn is sure to blast frowns away.

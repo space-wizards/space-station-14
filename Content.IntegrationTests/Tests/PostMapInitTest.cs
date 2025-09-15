@@ -48,8 +48,6 @@ namespace Content.IntegrationTests.Tests
         {
             "/Maps/centcomm.yml",
             "/Maps/bagel.yml", // Contains mime's rubber stamp --> Either fix this, remove the category, or remove this comment if intentional.
-            "/Maps/gate.yml", // Contains positronic brain and LSE-1200c "Perforator"
-            "/Maps/meta.yml", // Contains warden's rubber stamp
             "/Maps/reach.yml", // Contains handheld crew monitor
             "/Maps/Shuttles/ShuttleEvent/cruiser.yml", // Contains LSE-1200c "Perforator"
             "/Maps/Shuttles/ShuttleEvent/honki.yml", // Contains golden honker, clown's rubber stamp
@@ -85,45 +83,48 @@ namespace Content.IntegrationTests.Tests
             "TestTeg",
             "CentComm",
             "MeteorArena",
+            "dm01-entryway",
+            // "DSTaipan", // remap in progress
+            "Amber",
+            // "Aspid", // remap in progress
+            "Bagel",
+            "Barratry",
+            "Box",
+            "Cluster",
+            "Cog",
+            "Convex",
+            "Core",
             "CorvaxAstra",
             "CorvaxAvrite",
             "CorvaxDelta",
             "CorvaxPaper",
             "CorvaxSilly",
             "CorvaxSpectrum",
-            "Bagel",
-            "Barratry",
-            "Box",
-            "Cluster",
-            "Core",
+            "Elkridge",
             "Fland",
+            "Gate",
             "Gemini",
+            "Loop",
+            "Loop",
             "Marathon",
             "Meta",
             "Oasis",
             "Omega",
             "Origin",
             "Packed",
+            "Plasma",
+            "Reach",
             "Saltern",
             "Train",
-            "Cog",
-            // "DSTaipan",
-            "Amber",
-            "Gate",
-            "Amber",
-            "Loop",
-            "Plasma",
-            "Convex",
-            "Loop",
-            "Reach",
-            "Elkridge"
         };
 
         private static readonly string[] GameMapsExcludedFromTests =
         {
-            "Aspid", //remap in progress
-            "DSTaipan" //remap in progress
+            "Aspid", // remap in progress
+            "DSTaipan" // remap in progress
         };
+
+        private static readonly ProtoId<EntityCategoryPrototype> DoNotMapCategory = "DoNotMap";
 
         /// <summary>
         /// Asserts that specific files have been saved as grids and not maps.
@@ -302,7 +303,7 @@ namespace Content.IntegrationTests.Tests
                 return;
 
             var yamlEntities = node["entities"];
-            if (!protoManager.TryIndex<EntityCategoryPrototype>("DoNotMap", out var dnmCategory))
+            if (!protoManager.TryIndex(DoNotMapCategory, out var dnmCategory))
                 return;
 
             Assert.Multiple(() =>
@@ -518,7 +519,7 @@ namespace Content.IntegrationTests.Tests
             var protoMan = server.ResolveDependency<IPrototypeManager>();
 
             var gameMaps = protoMan.EnumeratePrototypes<GameMapPrototype>()
-                .Where(x => !pair.IsTestPrototype(x) && !GameMapsExcludedFromTests.Contains(x.ID)) // DS14: temp exclude broken Taipan map file
+                .Where(x => !pair.IsTestPrototype(x) && !GameMapsExcludedFromTests.Contains(x.ID)) // DS14: temp exclude broken map file's
                 .Select(x => x.ID)
                 .ToHashSet();
 

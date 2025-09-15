@@ -7,7 +7,6 @@ using Content.Server.GameTicking;
 using Content.Server.StationEvents.Events;
 using Content.Server.DeadSpace.Sith.Components;
 using Content.Server.Communications;
-using Content.Shared.Mind;
 using Content.Server.Mind;
 using Content.Server.Chat.Systems;
 using Robust.Shared.Audio;
@@ -15,6 +14,7 @@ using Content.Shared.Audio;
 using Content.Server.Station.Systems;
 using Content.Shared.DeadSpace.Sith.Components;
 using Content.Shared.Objectives.Systems;
+using Content.Server.Roles;
 
 namespace Content.Server.DeadSpace.Sith;
 
@@ -26,6 +26,7 @@ public sealed class SithRule : StationEventSystem<SithRuleComponent>
     [Dependency] private readonly ChatSystem _chatSystem = default!;
     [Dependency] private readonly StationSystem _stationSystem = default!;
     [Dependency] private readonly SharedObjectivesSystem _objectives = default!;
+    [Dependency] private readonly RoleSystem _role = default!;
 
     public override void Initialize()
     {
@@ -38,38 +39,24 @@ public sealed class SithRule : StationEventSystem<SithRuleComponent>
     {
         base.Added(uid, component, gameRule, args);
     }
+
     protected override void AppendRoundEndText(EntityUid uid, SithRuleComponent component, GameRuleComponent gameRule,
         ref RoundEndTextAppendEvent args)
     {
         base.AppendRoundEndText(uid, component, gameRule, ref args);
 
         var sessionData = _antag.GetAntagIdentifiers(uid);
-        var objQuery = _entMan.GetEntityQuery<SithSubmissionConditionsComponent>();
-        Console.WriteLine(1);
+
         foreach (var (mind, data, name) in sessionData)
         {
-            var mindUid = Comp<MindComponent>(mind);
-            foreach (var objId in mindUid.AllObjectives)
-            {
-                Console.WriteLine(objId);
-                if (objQuery.TryGetComponent(objId, out var obj))
-                {
-                    foreach (var player in obj.SubordinateCommand)
-                    {
-                        _mindSystem.TryGetSession(player, out var session);
-                        if (session != null)
-                        {
-                            args.AddLine(Loc.GetString("sith-sub-name-user",
-                            ("name", session.Name),
-                            ("username", session.Data.UserName),
-                            ("count", obj.SubordinateCommand.Count)));
-                        }
-                    }
-                }
-            }
+            _role.MindHasRole<SithSubmissionConditionComponent>(mind, out var role);
+            var count = CompOrNull<SithSubmissionConditionComponent>(role)?.SubordinateCommand.Count ?? 0;
 
+            args.AddLine(Loc.GetString("sith-sub-name-user",
+            ("name", name),
+            ("username", data.UserName),
+            ("count", count)));
         }
-
     }
 
     private void OnShuttleCallAttempt(ref CommunicationConsoleCallShuttleAttemptEvent ev)
@@ -79,7 +66,7 @@ public sealed class SithRule : StationEventSystem<SithRuleComponent>
         var querySith = EntityQueryEnumerator<SithComponent>();
         EntityUid sithEntity = default;
 
-        while (querySith.MoveNext(out var sithEnt, out var sithComp))
+        while (querySith.MoveNext(out var sithEnt, out _))
         {
             if (!_mindSystem.TryGetMind(sithEnt, out var mindId, out var mind))
                 continue;
@@ -87,9 +74,9 @@ public sealed class SithRule : StationEventSystem<SithRuleComponent>
             if (mind == null)
                 continue;
 
-            foreach (var objId in mind.AllObjectives)
+            foreach (var objId in mind.Objectives)
             {
-                if (!HasComp<SithSubmissionConditionsComponent>(objId))
+                if (!HasComp<SithSubmissionConditionComponent>(objId))
                     continue;
 
                 if (_objectives.IsCompleted(objId, (mindId, mind)))

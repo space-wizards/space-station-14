@@ -12,7 +12,7 @@
         doAfter: 1
 
   - node: emptyCase
-    entity: LandMineModular
+    entity: LandMineModularUnarmed
     edges:
     - to: wiredCase
       steps:
@@ -22,7 +22,7 @@
         icon:
           sprite: Objects/Misc/proximity_sensor.rsi
           state: icon
-        name: proximity sensor
+        name: construction-graph-tag-proximity-sensor
     - to: start
       completed:
       - !type:SpawnPrototype
@@ -34,7 +34,7 @@
         doAfter: 2
 
   - node: wiredCase
-    entity: LandMineModular
+    entity: LandMineModularUnarmed
     actions:
     - !type:PlaySound
       sound: /Audio/Machines/button.ogg
@@ -52,7 +52,7 @@
       steps:
       - tag: Payload
         store: payload
-        name: payload
+        name: construction-graph-tag-payload
         doAfter: 0.5
 
   - node: mine

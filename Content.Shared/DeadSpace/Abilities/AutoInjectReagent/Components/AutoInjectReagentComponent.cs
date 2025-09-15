@@ -5,22 +5,21 @@ using Robust.Shared.Audio;
 using Robust.Shared.Prototypes;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.FixedPoint;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
 namespace Content.Shared.DeadSpace.Abilities.AutoInjectReagent.Components;
 
 [RegisterComponent, NetworkedComponent]
 public sealed partial class AutoInjectReagentComponent : Component
 {
-    [DataField("AutoInjectReagentAction", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
-    public string? AutoInjectReagentAction = "ActionAutoInjectReagent";
+    [DataField]
+    public EntProtoId AutoInjectReagentAction = "ActionAutoInjectReagent";
 
-    [DataField("AutoInjectReagentActionEntity")]
+    [DataField]
     public EntityUid? AutoInjectReagentActionEntity;
 
-    [DataField("injectSound")]
+    [DataField]
     public SoundSpecifier InjectSound = new SoundPathSpecifier("/Audio/Items/hypospray.ogg");
 
-    [DataField("reagents", required: true)]
+    [DataField(required: true)]
     public Dictionary<ProtoId<ReagentPrototype>, FixedPoint2> Reagents { get; set; } = new Dictionary<ProtoId<ReagentPrototype>, FixedPoint2>();
 }

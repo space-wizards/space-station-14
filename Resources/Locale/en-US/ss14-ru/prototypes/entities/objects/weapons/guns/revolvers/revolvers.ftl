@@ -16,3 +16,6 @@ ent-WeaponRevolverPythonAP = { ent-WeaponRevolverPython }
     .desc = { ent-WeaponRevolverPython.desc }
 ent-WeaponRevolverPirate = pirate revolver
     .desc = A crude single-action revolver handmade by a space pirate. Old and covered in rust, it somehow still works. Loads 5 rounds of .45 magnum.
+ent-WeaponRevolverPirateEmpty = { ent-WeaponRevolverPirate }
+    .suffix = Empty
+    .desc = { ent-WeaponRevolverPirate.desc }

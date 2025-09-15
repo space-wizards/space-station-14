@@ -50,7 +50,7 @@
               amount: 10
               doAfter: 1
             - tag: BaseballBat
-              name: Бейсбольная бита
+              name: construction-graph-tag-baseball-bat
               icon:
                 sprite: _DeadSpace/Objects/Weapons/Melee/baseball_bat_with_nails.rsi
                 state: icon

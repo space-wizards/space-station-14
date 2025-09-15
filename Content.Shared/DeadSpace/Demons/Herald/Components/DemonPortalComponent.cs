@@ -1,5 +1,6 @@
 // Мёртвый Космос, Licensed under custom terms with restrictions on public hosting and commercial use, full text: https://raw.githubusercontent.com/dead-space-server/space-station-14-fobos/master/LICENSE.TXT
 
+using Content.Shared.Random;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
 
@@ -20,6 +21,6 @@ public sealed partial class DemonPortalComponent : Component
     [ViewVariables(VVAccess.ReadWrite)]
     public TimeSpan DemonSpawnTime = TimeSpan.FromSeconds(0);
 
-    [DataField, ViewVariables(VVAccess.ReadWrite)]
-    public string[] DemonSpawnIdArray = { "MobDemonSlaughter", "MobDemonHonker", "MobDemonIfrit", "MobDemonJaunt" };
+    [DataField]
+    public HashSet<EntProtoId> DemonSpawnIdArray = ["MobDemonSlaughter", "MobDemonHonker", "MobDemonIfrit", "MobDemonJaunt"];
 }

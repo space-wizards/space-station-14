@@ -1,6 +1,6 @@
 - type: gameMap
   id: CorvaxAvrite
-  mapName: 'Avrite Station'
+  mapName: 'Avrite'
   mapPath: /Maps/corvax_avrit.yml
   minPlayers: 60
   stations:

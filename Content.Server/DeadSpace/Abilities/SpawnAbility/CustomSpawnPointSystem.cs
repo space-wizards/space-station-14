@@ -102,7 +102,7 @@ public sealed class CustomSpawnPointSystem : EntitySystem
         if (_container.IsEntityOrParentInContainer(uid))
             return null;
 
-        var tile = coords.GetTileRef(EntityManager, _mapMan);
+        var tile = _turf.GetTileRef(coords);
 
         if (tile == null)
             return null;

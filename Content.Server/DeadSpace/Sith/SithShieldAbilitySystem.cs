@@ -40,7 +40,7 @@ public sealed class SithShieldAbilitySystem : EntitySystem
                 DeleteShield(uid, component);
         }
     }
-    
+
     private void OnComponentInit(EntityUid uid, SithForceShieldAbilityComponent component, ComponentInit args)
     {
         _actionsSystem.AddAction(uid, ref component.ActionSithShieldEntity, component.ActionSithShield, uid);
@@ -53,7 +53,10 @@ public sealed class SithShieldAbilitySystem : EntitySystem
 
     private void DeleteShield(EntityUid uid, SithForceShieldAbilityComponent component)
     {
-        _hands.DoDrop(uid, component.HandShield);
+        if (component.HandShieldId == null)
+            return;
+
+        _hands.DoDrop(uid, component.HandShieldId);
 
         QueueDel(component.ShieldPrototype);
 
@@ -71,7 +74,7 @@ public sealed class SithShieldAbilitySystem : EntitySystem
             return;
         }
 
-        if (hands.ActiveHand == null || hands.ActiveHandEntity != null)
+        if (_hands.GetActiveItem(uid) == null)
         {
             _popup.PopupEntity(Loc.GetString("Выберете пустую руку!"), uid, uid);
             return;
@@ -89,11 +92,11 @@ public sealed class SithShieldAbilitySystem : EntitySystem
 
         component.ShieldPrototype = shield;
 
-        if (!_hands.TryPickup(uid, shield, hands.ActiveHand))
+        if (!_hands.TryPickup(uid, shield, hands.ActiveHandId))
         {
             QueueDel(shield);
         }
-        component.HandShield = hands.ActiveHand;
+        component.HandShieldId = hands.ActiveHandId;
 
         component.IsActiveAbility = true;
 

@@ -1,4 +1,4 @@
-﻿import lokalise
+import lokalise
 import typing
 from lokalisemodels import LokaliseKey
 from pydash import py_

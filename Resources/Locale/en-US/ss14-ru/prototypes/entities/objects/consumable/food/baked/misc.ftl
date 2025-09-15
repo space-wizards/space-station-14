@@ -69,3 +69,5 @@ ent-FoodBakedCroissantCotton = cotton croissant
     .desc = Buttery, flaky, fibery goodness.
 ent-FoodBakedGrilledCheeseSandwich = grilled cheese sandwich
     .desc = Bread and cheese toasted with butter, perfect for a chilly day in space.
+ent-FoodBakedGrilledCheeseSandwichCotton = cotton grilled cheese sandwich
+    .desc = Cotton bread slightly burnt in butter, with melted cheese. Moths find it difficult to resist this combination.

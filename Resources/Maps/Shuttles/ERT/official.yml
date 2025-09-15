@@ -3441,28 +3441,6 @@ entities:
     - type: Transform
       pos: -2.5,8.5
       parent: 1
-    - type: ActionGrant
-      actions:
-      - ActionVendingThrow
-      - ActionVendingThrow
-      - ActionVendingThrow
-      - ActionVendingThrow
-      - ActionVendingThrow
-      - ActionVendingThrow
-      - ActionVendingThrow
-      - ActionVendingThrow
-      - ActionVendingThrow
-      - ActionVendingThrow
-      - ActionVendingThrow
-      - ActionVendingThrow
-      - ActionVendingThrow
-      - ActionVendingThrow
-      - ActionVendingThrow
-      - ActionVendingThrow
-      - ActionVendingThrow
-      - ActionVendingThrow
-      - ActionVendingThrow
-      - ActionVendingThrow
 - proto: VendingMachineTankDispenserEVA
   entities:
   - uid: 467
@@ -3477,28 +3455,6 @@ entities:
     - type: Transform
       pos: 3.5,2.5
       parent: 1
-    - type: ActionGrant
-      actions:
-      - ActionVendingThrow
-      - ActionVendingThrow
-      - ActionVendingThrow
-      - ActionVendingThrow
-      - ActionVendingThrow
-      - ActionVendingThrow
-      - ActionVendingThrow
-      - ActionVendingThrow
-      - ActionVendingThrow
-      - ActionVendingThrow
-      - ActionVendingThrow
-      - ActionVendingThrow
-      - ActionVendingThrow
-      - ActionVendingThrow
-      - ActionVendingThrow
-      - ActionVendingThrow
-      - ActionVendingThrow
-      - ActionVendingThrow
-      - ActionVendingThrow
-      - ActionVendingThrow
 - proto: WallShuttle
   entities:
   - uid: 469

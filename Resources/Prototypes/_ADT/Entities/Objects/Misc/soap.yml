@@ -11,8 +11,9 @@
   - type: SolutionContainerVisuals
     fillBaseName: honk-
   - type: Slippery
-    paralyzeTime: 6
-    launchForwardsMultiplier: 15
+    slipData:
+      knockdownTime: 6
+      launchForwardsMultiplier: 15
   - type: SolutionContainerManager
     solutions:
       soap:

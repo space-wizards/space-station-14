@@ -1,6 +1,6 @@
 - type: gameMap
   id: Cog
-  mapName: 'Cog Station'
+  mapName: 'Cog'
   mapPath: /Maps/cog.yml
   minPlayers: 40
   stations:

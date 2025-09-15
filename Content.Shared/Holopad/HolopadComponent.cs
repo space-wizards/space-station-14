@@ -56,12 +56,6 @@ public sealed partial class HolopadComponent : Component
     /// </summary>
     [DataField]
     public float ControlLockoutCoolDown { get; private set; } = 180f;
-
-    [DataField, ViewVariables, AutoNetworkedField]
-    public bool Portable { get; set; }
-
-    [DataField, ViewVariables, AutoNetworkedField]
-    public bool Deployed { get; set; }
 }
 
 #region: Event messages

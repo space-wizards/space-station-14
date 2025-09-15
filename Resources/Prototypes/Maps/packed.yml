@@ -1,6 +1,6 @@
 - type: gameMap
   id: Packed
-  mapName: 'Packed Station'
+  mapName: 'Packed'
   mapPath: /Maps/packed.yml
   minPlayers: 0
   maxPlayers: 40
@@ -13,6 +13,8 @@
           nameGenerator:
             !type:NanotrasenNameGenerator
             prefixCreator: 'VG'
+        - type: StationEmergencyShuttle
+          emergencyShuttlePath: /Maps/Shuttles/emergency_crimson.yml
         - type: StationJobs
           availableJobs:
             # cmd

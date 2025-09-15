@@ -1,33 +1,45 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
-  "copyright": "Created by discord:IAmRasputin#5242. Vox states by Flareguy for Space Station 14",
+  "copyright": "Created by discord:IAmRasputin#5242. Vox states by Flareguy for Space Station 14, dog states modified from base states by casiliuscestus (GitHub) for Space Station 14",
   "size": {
     "x": 32,
     "y": 32
   },
   "states": [
-    {
-      "name": "icon"
-    },
-    {
-      "name": "icon-flash"
-    },
-    {
-      "name": "off-equipped-HELMET",
-      "directions": 4
-    },
-    {
-      "name": "on-equipped-HELMET",
-      "directions": 4
-    },
-    {
-      "name": "off-equipped-HELMET-vox",
-      "directions": 4
-    },
-    {
-      "name": "on-equipped-HELMET-vox",
-      "directions": 4
-    }
+        {
+          "name": "icon"
+        },
+        {
+          "name": "icon-flash"
+        },
+        {
+          "name": "off-equipped-HELMET",
+          "directions": 4
+        },
+        {
+          "name": "on-equipped-HELMET",
+          "directions": 4
+        },
+        {
+          "name": "off-equipped-HELMET-vox",
+          "directions": 4
+        },
+        {
+          "name": "on-equipped-HELMET-vox",
+          "directions": 4
+        },
+        {
+            "name": "combat-equipped-HELMET-dog",
+            "directions": 4
+        },
+        {
+            "name": "off-equipped-HELMET-dog",
+            "directions": 4
+        },
+        {
+            "name": "on-equipped-HELMET-dog",
+            "directions": 4
+        }
   ]
 }

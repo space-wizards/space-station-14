@@ -1,3 +1,7 @@
+ent-BaseStringInstrument = { ent-BaseHandheldInstrument }
+    .desc = { ent-BaseHandheldInstrument.desc }
+ent-BaseStringInstrumentClothing = { ent-BaseStringInstrument }
+    .desc = { ent-BaseStringInstrument.desc }
 ent-ElectricGuitarInstrument = electric guitar
     .desc = Now this makes you feel like a rock star!
 ent-BassGuitarInstrument = bass guitar
@@ -10,7 +14,7 @@ ent-GuitarlessFretsInstrument = guitarless frets
     .desc = Who even needs a body?
     .suffix = Admeme
 ent-BanjoInstrument = banjo
-    .desc = { ent-BaseHandheldInstrument.desc }
+    .desc = { ent-BaseStringInstrumentClothing.desc }
 ent-ViolinInstrument = violin
     .desc = The favorite of musical virtuosos and bluegrass bands.
 ent-ViolaInstrument = viola

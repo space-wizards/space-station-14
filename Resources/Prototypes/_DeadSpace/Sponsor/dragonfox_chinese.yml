@@ -21,7 +21,7 @@
     - state: fire_icon
       shader: unshaded
       visible: false
-      map: ["enum.ToggleVisuals.Layer"]
+      map: ["enum.ToggleableVisuals.Layer"]
   - type: Item
     sprite: _DeadSpace/Sponsor/DragonFox/Chinese/chinese_lantern.rsi
     heldPrefix: lamp
@@ -33,8 +33,8 @@
       - state: inhand-right
   - type: GenericVisualizer
     visuals:
-      enum.ToggleVisuals.Toggled:
-        enum.ToggleVisuals.Layer:
+      enum.ToggleableVisuals.Enabled:
+        enum.ToggleableVisuals.Layer:
           True: { visible: true }
           False: { visible: false }
   - type: Appearance
@@ -94,7 +94,7 @@
     - state: lantern-on
       shader: unshaded
       visible: false
-      map: ["enum.ToggleVisuals.Layer"]
+      map: ["enum.ToggleableVisuals.Layer"]
   - type: Item
     sprite: _DeadSpace/Sponsor/DragonFox/Chinese/chinese_lamp.rsi
     heldPrefix: off

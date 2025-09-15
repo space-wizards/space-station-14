@@ -1,6 +1,6 @@
 - type: gameMap
   id: Fland
-  mapName: 'Fland Station'
+  mapName: 'Fland'
   mapPath: /Maps/fland.yml
   minPlayers: 60
   stations:

@@ -1,5 +1,7 @@
-ent-CargoPallet = грузовой поддон
+ent-BaseCargoPallet = грузовой поддон
     .desc = Обычное для логистических грузовых перевозок приспособление. Тонкое напоминание о том, куда девать ящики при транспортировке, чтобы избежать ушибов ног.
+ent-CargoPallet = { ent-BaseCargoPallet }
+    .desc = { ent-BaseCargoPallet.desc }
 ent-CargoPalletSell = продающий грузовой поддон
     .desc = Определяет допустимые предметы для продажи.
 ent-CargoPalletBuy = покупающий грузовой поддон

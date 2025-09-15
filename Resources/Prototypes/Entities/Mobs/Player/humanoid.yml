@@ -122,9 +122,9 @@
     - FreedomImplant
     - DeathAcidifierImplant
   - type: GhostRole
-    name: ghost-role-information-death-squad-name
-    description: ghost-role-information-death-squad-description
-    rules: ghost-role-information-death-squad-rules
+    name: ghost-role-information-Death-Squad-name
+    description: ghost-role-information-Death-Squad-description
+    rules: ghost-role-information-Death-Squad-rules
     requirements:
       - !type:OverallPlaytimeRequirement
         time: 756000 # 210 hours

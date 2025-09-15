@@ -1,6 +1,6 @@
 - type: gameMap
   id: Loop
-  mapName: 'Loop Station'
+  mapName: 'Loop'
   mapPath: /Maps/loop.yml
   minPlayers: 0
   maxPlayers: 40

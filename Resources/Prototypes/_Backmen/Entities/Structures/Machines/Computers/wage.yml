@@ -3,6 +3,7 @@
   id: ComputerWage
   name: консоль ЗУП
   description: Позволяет управлять заработной платой экипажа.
+  categories: [ DoNotMap ]
   components:
   - type: Construction
     graph: nullgraph

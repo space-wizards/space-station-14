@@ -10,13 +10,13 @@ using Robust.Server.Player;
 using Robust.Shared.Configuration;
 using Robust.Shared.Player;
 using Robust.Shared.Random;
+using Robust.Shared.Prototypes;
 
 namespace Content.Server.Backmen.Blob.Rule;
 
 public sealed class BlobGameRuleSystem : GameRuleSystem<BlobGameRuleComponent>
 {
     private ISawmill _sawmill = default!;
-
 
     private int PlayersPerBlob => _cfg.GetCVar(CCVars.BlobPlayersPer);
     private int MaxBlob => _cfg.GetCVar(CCVars.BlobMax);
@@ -26,7 +26,6 @@ public sealed class BlobGameRuleSystem : GameRuleSystem<BlobGameRuleComponent>
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly IPlayerManager _playerManager = default!;
     [Dependency] private readonly SharedActionsSystem _actions = default!;
-
 
     public override void Initialize()
     {
@@ -122,6 +121,5 @@ public sealed class BlobGameRuleSystem : GameRuleSystem<BlobGameRuleComponent>
         }
     }
 
-    [ValidatePrototypeId<AntagPrototype>]
-    private const string Blob = "Blob";
+    private static readonly ProtoId<AntagPrototype> Blob = "Blob";
 }

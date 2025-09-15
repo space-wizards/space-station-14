@@ -18,6 +18,7 @@ using System.Linq;
 using Content.Server.Chat.Managers;
 using Content.Shared.Chat;
 using Robust.Shared.Enums;
+using Robust.Server.Player;
 
 namespace Content.Server.Backmen;
 
@@ -31,6 +32,7 @@ public sealed class OldAntagSelectionSystem : EntitySystem
     [Dependency] private readonly SharedRoleSystem _roleSystem = default!;
     [Dependency] private readonly IRobustRandom _robustRandom = default!;
     [Dependency] private readonly IChatManager _chatManager = default!;
+    [Dependency] private readonly IPlayerManager _playerManager = default!;
 
     #region Eligible Player Selection
     /// <summary>
@@ -324,13 +326,13 @@ public sealed class OldAntagSelectionSystem : EntitySystem
     /// <param name="briefingSound">The sound to briefing/greeting sound to play</param>
     public void SendBriefing(EntityUid entity, string briefing, Color? briefingColor, SoundSpecifier? briefingSound)
     {
-        if (!_mindSystem.TryGetMind(entity, out _, out var mindComponent))
+        if (!_mindSystem.TryGetMind(entity, out _, out var mind))
             return;
 
-        if (mindComponent.Session == null)
+        if (!_playerManager.TryGetSessionById(mind.UserId, out var session))
             return;
 
-        SendBriefing(mindComponent.Session, briefing, briefingColor, briefingSound);
+        SendBriefing(session, briefing, briefingColor, briefingSound);
     }
 
     /// <summary>

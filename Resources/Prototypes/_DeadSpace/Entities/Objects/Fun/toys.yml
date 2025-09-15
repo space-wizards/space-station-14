@@ -15,7 +15,8 @@
   - type: EmitSoundOnTrigger
     sound:
       path: /Audio/_DeadSpace/Items/Toys/DiscordToy/user_join.ogg
-      volume: -5
+      params:
+        volume: -5
   - type: Food
     requiresSpecialDigestion: true
     useSound:

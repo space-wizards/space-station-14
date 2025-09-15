@@ -1,7 +1,6 @@
 ﻿<controls:FancyWindow xmlns="https://spacestation14.io"
                       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                       xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
-                      xmlns:ui="clr-namespace:Content.Client.Backmen.Reinforcement.UI"
                       MinWidth="600" MinHeight="350" Title="{Loc wageconsole-title}">
     <BoxContainer Orientation="Vertical" HorizontalAlignment="Stretch">
         <!-- Station name -->

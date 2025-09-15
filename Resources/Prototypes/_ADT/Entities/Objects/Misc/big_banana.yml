@@ -31,7 +31,8 @@
     state: peel
     scale: 1.5, 1.5
   - type: Slippery
-    launchForwardsMultiplier: 2.8
+    slipData:
+      launchForwardsMultiplier: 2.8
   - type: StepTrigger
     intersectRatio: 0.2
   - type: CollisionWake

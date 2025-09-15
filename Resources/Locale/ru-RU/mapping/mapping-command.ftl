@@ -2,9 +2,9 @@ cmd-mapping-desc = Создаёт или загружает карту и тел
 cmd-mapping-help = Использование: mapping [MapID] [Path]
 cmd-mapping-server = Только игроки могут использовать эту команду.
 cmd-mapping-error = При создании новой карты произошла ошибка.
-cmd-mapping-try-grid = Failed to load the file as a map. Attempting to load the file as a grid...
+cmd-mapping-try-grid = Не удалось загрузить файл как карту. Попытка загрузить файл как грид...
 cmd-mapping-success-load = Создаёт неинициализированную карту из файла { $path } с id { $mapId }.
-cmd-mapping-success-load-grid = Loaded uninitialized grid from file { $path } onto a new map with id { $mapId }.
+cmd-mapping-success-load-grid = Загружен неинициализированный грид с файла { $path } на новую карту с id { $mapId }.
 cmd-mapping-success = Создаёт неинициализированную карту с id { $mapId }.
 cmd-mapping-warning = ПРЕДУПРЕЖДЕНИЕ: На сервере используется отладочная дебаг сборка. Вы рискуете потерять свои изменения.
 # duplicate text from engine load/save map commands.

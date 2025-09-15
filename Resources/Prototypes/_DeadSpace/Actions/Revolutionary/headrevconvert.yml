@@ -4,14 +4,15 @@
   description: Attempt to convert person to revolutionar.
   categories: [ HideSpawnMenu ]
   components:
-  - type: EntityTargetAction
+  - type: Action
     useDelay: 30
     icon: { sprite : _DeadSpace/Interface/Actions/head_rev_convert.rsi, state: icon }
     iconOn: { sprite : _DeadSpace/Interface/Actions/head_rev_convert.rsi, state: icon-on }
+  - type: TargetAction
     interactOnMiss: false
-    targetingIndicator: true
+  - type: EntityTargetAction
+    canTargetSelf: false
     whitelist:
       components:
       - Body
-    canTargetSelf: false
     event: !type:HeadRevConvertActionEvent

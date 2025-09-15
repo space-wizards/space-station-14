@@ -3,5 +3,7 @@ ent-MopBucket = mop bucket
 ent-MopBucketFull = mop bucket
     .suffix = full
     .desc = { ent-MopBucket.desc }
+ent-MopBucketCubeWrapped = mop bucket cube
+    .desc = Unwrap this to get a mop bucket cube.
 ent-JanitorialTrolley = janitorial trolley
     .desc = This is the alpha and omega of sanitation.

@@ -14834,35 +14834,6 @@ entities:
     - type: ContainedSolution
       containerName: food
       container: 17
-- proto: ActionToggleLight
-  entities:
-  - uid: 30
-    components:
-    - type: Transform
-      parent: 29
-    - type: InstantAction
-      container: 29
-  - uid: 33
-    components:
-    - type: Transform
-      parent: 32
-    - type: InstantAction
-      container: 32
-- proto: ActionToggleMask
-  entities:
-  - uid: 20
-    components:
-    - type: Transform
-      parent: 19
-    - type: InstantAction
-      originalIconColor: '#FFFFFFFF'
-      container: 19
-  - uid: 35
-    components:
-    - type: Transform
-      parent: 34
-    - type: InstantAction
-      container: 34
 - proto: ADTAlternativeCurtainsRedOpen
   entities:
   - uid: 36
@@ -54449,14 +54420,6 @@ entities:
       rot: -12.566370614359172 rad
       pos: -94.352905,-59.376236
       parent: 1
-    - type: Mask
-      toggleActionEntity: 35
-    - type: ActionsContainer
-    - type: ContainerContainer
-      containers:
-        actions: !type:Container
-          ents:
-          - 35
 - proto: ClothingMaskGasSecurity
   entities:
   - uid: 19
@@ -54465,16 +54428,8 @@ entities:
       name: чёрный противогаз
     - type: Transform
       parent: 2
-    - type: Mask
-      toggleActionEntity: 20
     - type: Physics
       canCollide: False
-    - type: ActionsContainer
-    - type: ContainerContainer
-      containers:
-        actions: !type:Container
-          ents:
-          - 20
     - type: InsideEntityStorage
   - uid: 7270
     components:
@@ -87457,44 +87412,16 @@ entities:
     - type: Transform
       pos: -21.52097,-43.18509
       parent: 1
-    - type: HandheldLight
-      toggleActionEntity: 30
-    - type: ContainerContainer
-      containers:
-        cell_slot: !type:ContainerSlot
-          showEnts: False
-          occludes: True
-          ent: 31
-        actions: !type:Container
-          showEnts: False
-          occludes: True
-          ents:
-          - 30
     - type: Physics
       canCollide: True
-    - type: ActionsContainer
   - uid: 32
     components:
     - type: Transform
       rot: -12.566370614359172 rad
       pos: -82.585236,-63.30375
       parent: 1
-    - type: HandheldLight
-      toggleActionEntity: 33
-    - type: ContainerContainer
-      containers:
-        cell_slot: !type:ContainerSlot
-          showEnts: False
-          occludes: True
-          ent: null
-        actions: !type:Container
-          showEnts: False
-          occludes: True
-          ents:
-          - 33
     - type: Physics
       canCollide: True
-    - type: ActionsContainer
   - uid: 12070
     components:
     - type: Transform

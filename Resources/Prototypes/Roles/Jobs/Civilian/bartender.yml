@@ -31,3 +31,18 @@
     id: BartenderPDA
     ears: ClothingHeadsetService
     socks: ClothingUnderwearSocksBartender
+  #storage:
+    #back:
+    #- Stuff
+
+- type: chameleonOutfit
+  id: BartenderChameleonOutfit
+  job: Bartender
+  equipment:
+    head: ClothingHeadHatTophat
+    eyes: ClothingEyesGlassesSunglasses
+    mask: ClothingMaskBreath
+    neck: ClothingNeckScarfStripedBlack
+    outerClothing: ClothingOuterArmorBasicSlim
+    gloves: ClothingHandsGlovesColorBlack
+

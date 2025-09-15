@@ -1,7 +1,6 @@
 using System.Linq;
 using Content.Server.Fax;
 using Content.Server.Station.Systems;
-using Content.Shared.DeadSpace.StationGoal;
 using Content.Shared.Fax.Components;
 using Content.Shared.GameTicking;
 using Content.Shared.Paper;
@@ -10,7 +9,6 @@ using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Content.Server.Cargo.Systems;
 using Content.Shared.Cargo.Components;
-using System.Security.Principal;
 
 namespace Content.Server.DeadSpace.StationGoal;
 
@@ -46,17 +44,17 @@ public sealed class StationGoalPaperSystem : EntitySystem
     /// <returns>True if at least one fax received paper</returns>
     public bool SendStationGoal(StationGoalPrototype goal)
     {
-        var faxes = EntityManager.EntityQuery<FaxMachineComponent>();
         var wasSent = false;
         var wasModifiedOnce = false;
 
         string text = _resourceManager.ContentFileReadText(goal.Text).ReadToEnd();
 
-        foreach (var fax in faxes)
+        var query = EntityQueryEnumerator<FaxMachineComponent>();
+        while (query.MoveNext(out var uid, out var fax))
         {
             if (!fax.ReceiveStationGoal) continue;
 
-            if (_station.GetOwningStation(fax.Owner) is { } station)
+            if (_station.GetOwningStation(uid) is { } station)
             {
                 text = text.Replace("STATION XX-00", Name(station));
                 if (goal.ModifyStationBalance != null && goal.ModifyStationBalance != 0 && !wasModifiedOnce)
@@ -69,7 +67,7 @@ public sealed class StationGoalPaperSystem : EntitySystem
                     new() { StampedName = Loc.GetString("stamp-component-stamped-name-centcom"), StampedColor = Color.FromHex("#006600") },
                 });
 
-            _faxSystem.Receive(fax.Owner, printout, null, fax);
+            _faxSystem.Receive(uid, printout, null, fax);
 
             wasSent = true;
         }
@@ -85,7 +83,8 @@ public sealed class StationGoalPaperSystem : EntitySystem
     {
         if (!TryComp(station, out StationBankAccountComponent? account))
             return false;
-        _cargo.UpdateBankAccount((station, account), (int)amount, _cargo.CreateAccountDistribution(account.PrimaryAccount, account, account.PrimaryCut));
+
+        _cargo.UpdateBankAccount((station, account), amount, account.PrimaryAccount);
 
         return true;
     }

@@ -22,6 +22,6 @@
     ClothingNeckScarfStripedTrans: 2 # DS14
     ClothingNeckScarfStripedLesbianLong: 2 # DS14
   emaggedInventory:
-    ClothingNeckScarfStripedSyndieGreen: 4
-    ClothingNeckScarfStripedSyndieRed: 4
-    ClothingNeckScarfStripedCentcom: 4
+    ClothingNeckScarfStripedSyndieGreen: 1 # DS14-value
+    ClothingNeckScarfStripedSyndieRed: 1 # DS14-value
+    ClothingNeckScarfStripedCentcom: 1 # DS14

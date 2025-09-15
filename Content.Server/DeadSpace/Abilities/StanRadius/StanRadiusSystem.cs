@@ -66,7 +66,7 @@ public sealed partial class StunRadiusSystem : EntitySystem
                     _physics.SetLinearVelocity(ent, physics.LinearVelocity * component.LaunchForwardsMultiplier, body: physics);
                 }
 
-                _stun.TryParalyze(ent, TimeSpan.FromSeconds(component.ParalyzeTime), true);
+                _stun.TryUpdateParalyzeDuration(ent, TimeSpan.FromSeconds(component.ParalyzeTime));
             }
         }
 

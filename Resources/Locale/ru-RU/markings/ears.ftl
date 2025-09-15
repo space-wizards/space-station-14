@@ -1,6 +1,6 @@
 marking-HumanLongEars = Длинные уши
-marking-LongEarsWide = Long Ears Wide
-marking-LongEarsSmall = Long Ears Small
-marking-LongEarsUpwards = Long Ears Upwards
-marking-LongEarsTall = Long Ears Tall
-marking-LongEarsThin = Long Ears Thin
+marking-LongEarsWide = Длинные уши (широкие)
+marking-LongEarsSmall = Длинные уши (маленькие)
+marking-LongEarsUpwards = Длинные уши (вверх)
+marking-LongEarsTall = Длинные уши (высокие)
+marking-LongEarsThin = Длинные уши (тонкие)

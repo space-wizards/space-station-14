@@ -1,7 +1,7 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
-  "copyright": "Made by cyberboich (discord) for Space Station 14 server Мёртвый Космос",
+  "copyright": "Made by cyberboich (discord) for Space Station 14 server Мёртвый Космос. Vox states by Flareguy for Space Station 14. Dog states modified from base states by Sparlight (GitHub).",
   "size": {
     "x": 32,
     "y": 32
@@ -11,22 +11,48 @@
       "name": "icon"
     },
     {
+      "name": "icon-unshaded"
+    },
+    {
       "name": "icon-flash"
     },
     {
-      "name": "off-equipped-HELMET",
+      "name": "light-overlay"
+    },
+    {
+      "name": "equipped-head",
       "directions": 4
     },
     {
-      "name": "off-equipped-HELMET-vox",
+      "name": "equipped-head-light",
       "directions": 4
     },
     {
-      "name": "on-equipped-HELMET",
+      "name": "equipped-head-unshaded",
       "directions": 4
     },
     {
-      "name": "on-equipped-HELMET-vox",
+      "name": "equipped-head-vox",
+      "directions": 4
+    },
+    {
+      "name": "equipped-head-light-vox",
+      "directions": 4
+    },
+    {
+      "name": "equipped-head-unshaded-vox",
+      "directions": 4
+    },
+    {
+      "name": "equipped-head-dog",
+      "directions": 4
+    },
+    {
+      "name": "equipped-head-light-dog",
+      "directions": 4
+    },
+    {
+      "name": "equipped-head-unshaded-dog",
       "directions": 4
     }
   ]

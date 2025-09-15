@@ -14,8 +14,8 @@
   - Medical
   - Maintenance
   extendedAccess:
-  - Paramedic
-  - Coroner
+  - Paramedic # DS14
+  - Coroner # DS14
   special:
   - !type:GiveItemOnHolidaySpecial
     holiday: DoctorDay
@@ -33,3 +33,17 @@
     ears: ClothingHeadsetMedical
     belt: ClothingBeltMedicalFilled
     socks: ClothingUnderwearSocksDoctor
+  #storage:
+    #back:
+    #- Stuff
+
+- type: chameleonOutfit
+  id: MedicalDoctorChameleonOutfit
+  job: MedicalDoctor
+  equipment:
+    head: ClothingHeadNurseHat
+    eyes: ClothingEyesHudMedical
+    mask: ClothingMaskSterile
+    neck: ClothingNeckStethoscope
+    outerClothing: ClothingOuterCoatLab
+    gloves: ClothingHandsGlovesLatex

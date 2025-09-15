@@ -121,9 +121,7 @@ entities:
     - type: Transform
     - type: Map
       mapPaused: True
-    - type: PhysicsMap
     - type: GridTree
-    - type: MovedGrids
     - type: Broadphase
     - type: OccluderTree
     - type: FTLDestination
@@ -9100,96 +9098,6 @@ entities:
     - type: Transform
       pos: 1.2102056,2.6751404
       parent: 13766
-- proto: ActionToggleInternals
-  entities:
-  - uid: 7
-    components:
-    - type: Transform
-      parent: 6
-    - type: InstantAction
-      container: 6
-  - uid: 10
-    components:
-    - type: Transform
-      parent: 9
-    - type: InstantAction
-      container: 9
-  - uid: 9553
-    components:
-    - type: Transform
-      parent: 9552
-    - type: InstantAction
-      container: 9552
-  - uid: 9556
-    components:
-    - type: Transform
-      parent: 9555
-    - type: InstantAction
-      container: 9555
-  - uid: 9559
-    components:
-    - type: Transform
-      parent: 9558
-    - type: InstantAction
-      container: 9558
-  - uid: 9562
-    components:
-    - type: Transform
-      parent: 9561
-    - type: InstantAction
-      container: 9561
-- proto: ActionToggleJetpack
-  entities:
-  - uid: 8
-    components:
-    - type: Transform
-      parent: 6
-    - type: InstantAction
-      container: 6
-  - uid: 11
-    components:
-    - type: Transform
-      parent: 9
-    - type: InstantAction
-      container: 9
-  - uid: 9554
-    components:
-    - type: Transform
-      parent: 9552
-    - type: InstantAction
-      container: 9552
-  - uid: 9557
-    components:
-    - type: Transform
-      parent: 9555
-    - type: InstantAction
-      container: 9555
-  - uid: 9560
-    components:
-    - type: Transform
-      parent: 9558
-    - type: InstantAction
-      container: 9558
-  - uid: 9563
-    components:
-    - type: Transform
-      parent: 9561
-    - type: InstantAction
-      container: 9561
-- proto: ActionToggleLight
-  entities:
-  - uid: 13
-    components:
-    - type: Transform
-      parent: 12
-    - type: InstantAction
-      container: 12
-  - uid: 10430
-    components:
-    - type: Transform
-      parent: 10429
-    - type: InstantAction
-      container: 10429
 - proto: ADTAlternativeCurtainsRedOpen
   entities:
   - uid: 14
@@ -80127,33 +80035,11 @@ entities:
     - type: Transform
       pos: 34.269978,11.702857
       parent: 2
-    - type: GasTank
-      toggleActionEntity: 7
-    - type: Jetpack
-      toggleActionEntity: 8
-    - type: ActionsContainer
-    - type: ContainerContainer
-      containers:
-        actions: !type:Container
-          ents:
-          - 8
-          - 7
   - uid: 9
     components:
     - type: Transform
       pos: 34.686646,11.35179
       parent: 2
-    - type: GasTank
-      toggleActionEntity: 10
-    - type: Jetpack
-      toggleActionEntity: 11
-    - type: ActionsContainer
-    - type: ContainerContainer
-      containers:
-        actions: !type:Container
-          ents:
-          - 11
-          - 10
   - uid: 6094
     components:
     - type: Transform
@@ -80193,10 +80079,6 @@ entities:
     - type: Transform
       pos: 8.528088,-8.254541
       parent: 9551
-    - type: GasTank
-      toggleActionEntity: 9553
-    - type: Jetpack
-      toggleActionEntity: 9554
     - type: Physics
       bodyStatus: InAir
     - type: Fixtures
@@ -80234,13 +80116,6 @@ entities:
           hard: False
           restitution: 0
           friction: 0.4
-    - type: ActionsContainer
-    - type: ContainerContainer
-      containers:
-        actions: !type:Container
-          ents:
-          - 9554
-          - 9553
     - type: ThrownItem
       playLandSound: True
       landTime: 3514.9901319
@@ -80250,10 +80125,6 @@ entities:
     - type: Transform
       pos: 6.4613347,-8.048051
       parent: 9551
-    - type: GasTank
-      toggleActionEntity: 9556
-    - type: Jetpack
-      toggleActionEntity: 9557
     - type: Physics
       bodyStatus: InAir
     - type: Fixtures
@@ -80291,13 +80162,6 @@ entities:
           hard: False
           restitution: 0
           friction: 0.4
-    - type: ActionsContainer
-    - type: ContainerContainer
-      containers:
-        actions: !type:Container
-          ents:
-          - 9557
-          - 9556
     - type: ThrownItem
       playLandSound: True
       thrownTime: 3514.7298186
@@ -80306,10 +80170,6 @@ entities:
     - type: Transform
       pos: 8.513336,-8.107048
       parent: 9551
-    - type: GasTank
-      toggleActionEntity: 9559
-    - type: Jetpack
-      toggleActionEntity: 9560
     - type: Physics
       bodyStatus: InAir
     - type: Fixtures
@@ -80347,13 +80207,6 @@ entities:
           hard: False
           restitution: 0
           friction: 0.4
-    - type: ActionsContainer
-    - type: ContainerContainer
-      containers:
-        actions: !type:Container
-          ents:
-          - 9560
-          - 9559
     - type: ThrownItem
       playLandSound: True
       landTime: 3514.9979429
@@ -80363,10 +80216,6 @@ entities:
     - type: Transform
       pos: 6.4627113,-8.180795
       parent: 9551
-    - type: GasTank
-      toggleActionEntity: 9562
-    - type: Jetpack
-      toggleActionEntity: 9563
     - type: Physics
       bodyStatus: InAir
     - type: Fixtures
@@ -80404,13 +80253,6 @@ entities:
           hard: False
           restitution: 0
           friction: 0.4
-    - type: ActionsContainer
-    - type: ContainerContainer
-      containers:
-        actions: !type:Container
-          ents:
-          - 9563
-          - 9562
     - type: ThrownItem
       playLandSound: True
       thrownTime: 3514.7298186
@@ -80610,22 +80452,8 @@ entities:
     - type: Transform
       pos: 23.534767,-15.449184
       parent: 2
-    - type: HandheldLight
-      toggleActionEntity: 13
-    - type: ContainerContainer
-      containers:
-        cell_slot: !type:ContainerSlot
-          showEnts: False
-          occludes: True
-          ent: null
-        actions: !type:Container
-          showEnts: False
-          occludes: True
-          ents:
-          - 13
     - type: Physics
       canCollide: True
-    - type: ActionsContainer
   - uid: 6107
     components:
     - type: Transform
@@ -95761,13 +95589,6 @@ entities:
           - 10431
           - 10433
           - 10432
-        actions: !type:Container
-          showEnts: False
-          occludes: True
-          ents:
-          - 10430
-    - type: UnpoweredFlashlight
-      toggleActionEntity: 10430
     - type: Ringer
       ringtone:
       - D
@@ -95779,7 +95600,6 @@ entities:
     - type: DeviceNetwork
       address: Конс-6250-230E
       receiveFrequency: 2202
-    - type: ActionsContainer
 - proto: Screwdriver
   entities:
   - uid: 7045

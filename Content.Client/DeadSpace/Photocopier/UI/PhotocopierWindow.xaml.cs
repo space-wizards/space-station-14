@@ -15,17 +15,17 @@ public sealed partial class PhotocopierWindow : FancyWindow
 {
     private IPrototypeManager _protoManager;
 
-    public event Action<PaperworkFormPrototype>? FormButtonPressed;
+    public event Action<ProtoId<PaperworkFormPrototype>>? FormButtonPressed;
     public event Action<int, PhotocopierMode>? PrintButtonPressed;
     public event Action? CopyModeButtonPressed;
     public event Action? PrintModeButtonPressed;
 
-    private readonly List<string> _categoryStrings = new();
+    private readonly List<PhotocopierFormCategory> _categories = [];
 
-    private string? _category;
+    private PhotocopierFormCategory? _category;
     private PhotocopierMode _mode;
 
-    private PhotocopierType _type;
+    private HashSet<PhotocopierFormCategory> _allowedFormCategories = [];
     private bool _wasEmagged;
 
     private int _tonerLeft;
@@ -52,7 +52,7 @@ public sealed partial class PhotocopierWindow : FancyWindow
     public void UpdateState(PhotocopierUiState state)
     {
         _mode = state.Mode;
-        _type = state.Type;
+        _allowedFormCategories = state.AllowedFormCategories;
         _wasEmagged = state.WasEmagged;
         _tonerLeft = state.TonerLeft;
         _maxTonerAmount = state.MaxTonerAmount;
@@ -103,13 +103,13 @@ public sealed partial class PhotocopierWindow : FancyWindow
                 search.Length != 0 && Loc.GetString(prototype.Name).ToLowerInvariant().Contains(search) ||
                 search.Length == 0 && _category != null && prototype.Category.Equals(_category))
             {
-                if (_categoryStrings.Contains(prototype.Category))
+                if (_categories.Contains(prototype.Category))
                 {
                     var button = new Button();
                     button.AddStyleClass("OpenLeft");
                     button.Text = Loc.GetString(prototype.Name);
                     button.ToggleMode = false;
-                    button.OnPressed += _ => FormButtonPressed?.Invoke(prototype);
+                    button.OnPressed += _ => FormButtonPressed?.Invoke(prototype.ID);
                     PaperworkForms.AddChild(button);
                 }
             }
@@ -118,79 +118,38 @@ public sealed partial class PhotocopierWindow : FancyWindow
 
     public void PopulateCategories()
     {
-        _categoryStrings.Clear();
+        _categories.Clear();
         PaperworkCategories.DisposeAllChildren();
 
-        // Please do not read code below, that's shitcode that I will fix someday
         foreach (var prototype in PaperworkFormPrototypes)
         {
-            if (!_categoryStrings.Contains(prototype.Category))
+            if (_categories.Contains(prototype.Category))
+                continue;
+
+            if (_wasEmagged)
             {
-                if (_wasEmagged)
-                {
-                    if (prototype.Category == "operator")
-                    {
-                        continue;
-                    }
-                    _categoryStrings.Add(Loc.GetString(prototype.Category));
-                }
-                else if (_type == PhotocopierType.Centcomm)
-                {
-                    if (prototype.Category == "nukeops" || prototype.Category == "syndicate")
-                    {
-                        continue;
-                    }
-                    _categoryStrings.Add(Loc.GetString(prototype.Category));
-                }
-                else if (_type == PhotocopierType.Syndicate)
-                {
-                    if (prototype.Category == "operator" || prototype.Category == "nukeops")
-                    {
-                        continue;
-                    }
-                    _categoryStrings.Add(Loc.GetString(prototype.Category));
-                }
-                else if (_type == PhotocopierType.Nukeops)
-                {
-                    if (prototype.Category == "operator" || prototype.Category == "syndicate")
-                    {
-                        continue;
-                    }
-                    _categoryStrings.Add(Loc.GetString(prototype.Category));
-                }
-                else if (_type == PhotocopierType.Command)
-                {
-                    if (prototype.Category == "operator" || prototype.Category == "nukeops" || prototype.Category == "syndicate")
-                    {
-                        continue;
-                    }
-                    _categoryStrings.Add(Loc.GetString(prototype.Category));
-                }
-                else if (_type == PhotocopierType.Default)
-                {
-                    if (prototype.Category == "operator" || prototype.Category == "nukeops" || prototype.Category == "syndicate" || prototype.Category == "centcomm")
-                    {
-                        continue;
-                    }
-                    _categoryStrings.Add(Loc.GetString(prototype.Category));
-                }
+                _categories.Add(prototype.Category);
+                continue;
             }
+
+            if (_allowedFormCategories.Contains(prototype.Category))
+                _categories.Add(prototype.Category);
         }
 
-        _categoryStrings.Sort();
+        _categories.Sort();
 
-        foreach (var str in _categoryStrings)
+        foreach (var str in _categories)
         {
             var button = new Button();
             button.AddStyleClass("OpenRight");
-            button.Text = Loc.GetString("photocopier-ui-categorie-title-" + str);
+            button.Text = Loc.GetString("photocopier-ui-categorie-title-" + str.ToString());
             button.ToggleMode = false;
             button.OnPressed += args => OnCategorySelected(args, str);
             PaperworkCategories.AddChild(button);
         }
     }
 
-    public void OnCategorySelected(BaseButton.ButtonEventArgs args, string str)
+    public void OnCategorySelected(BaseButton.ButtonEventArgs _, PhotocopierFormCategory str)
     {
         _category = str;
         PopulateForms();

@@ -1,7 +1,6 @@
 // Мёртвый Космос, Licensed under custom terms with restrictions on public hosting and commercial use, full text: https://raw.githubusercontent.com/dead-space-server/space-station-14-fobos/master/LICENSE.TXT
 
 using Robust.Shared.GameStates;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Audio;
 
@@ -25,9 +24,9 @@ public sealed partial class InfectionDeadMutationAnalyzerComponent : Component
     [DataField, ViewVariables(VVAccess.ReadOnly)]
     public TimeSpan DurationRunning = TimeSpan.FromSeconds(5f);
 
-    [DataField("paper", required: false, customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
+    [DataField]
     [ViewVariables(VVAccess.ReadOnly)]
-    public string Paper { get; set; } = "MutationAnalyzerReportPaper";
+    public EntProtoId Paper { get; set; } = "MutationAnalyzerReportPaper";
 
     [DataField]
     [ViewVariables(VVAccess.ReadOnly)]
@@ -35,7 +34,7 @@ public sealed partial class InfectionDeadMutationAnalyzerComponent : Component
 
     #region Visualizer
 
-    [DataField("state")]
+    [DataField]
     public string State = "icon";
 
     [DataField]

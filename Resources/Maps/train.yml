@@ -82,9 +82,7 @@ entities:
     - type: Transform
     - type: Map
       mapPaused: True
-    - type: PhysicsMap
     - type: GridTree
-    - type: MovedGrids
     - type: Broadphase
     - type: OccluderTree
     - type: Parallax
@@ -6877,52 +6875,6 @@ entities:
     - type: Transform
       pos: -7.466254,-281.50427
       parent: 2
-- proto: ActionToggleInternals
-  entities:
-  - uid: 14
-    components:
-    - type: Transform
-      parent: 13
-    - type: InstantAction
-      originalIconColor: '#FFFFFFFF'
-      container: 13
-  - uid: 17
-    components:
-    - type: Transform
-      parent: 16
-    - type: InstantAction
-      originalIconColor: '#FFFFFFFF'
-      container: 16
-  - uid: 19
-    components:
-    - type: Transform
-      parent: 18
-    - type: InstantAction
-      originalIconColor: '#FFFFFFFF'
-      container: 18
-- proto: ActionToggleJetpack
-  entities:
-  - uid: 15
-    components:
-    - type: Transform
-      parent: 13
-    - type: InstantAction
-      originalIconColor: '#FFFFFFFF'
-      container: 13
-- proto: ActionToggleLight
-  entities:
-  - uid: 21
-    components:
-    - type: Transform
-      parent: 20
-    - type: InstantAction
-      container: 20
-  - uid: 18981
-    components:
-    - type: Transform
-      parent: 18980
-    - type: InstantAction
-      container: 18980
 - proto: ADTClothingEyesSupremeCommanderGlass
   entities:
   - uid: 22
@@ -50948,14 +50900,6 @@ entities:
     - type: Transform
       pos: -11.361868,-338.4604
       parent: 2
-    - type: GasTank
-      toggleActionEntity: 19
-    - type: ActionsContainer
-    - type: ContainerContainer
-      containers:
-        actions: !type:Container
-          ents:
-          - 19
 - proto: DoubleEmergencyOxygenTankFilled
   entities:
   - uid: 16
@@ -50963,14 +50907,6 @@ entities:
     - type: Transform
       pos: -11.533743,-338.3354
       parent: 2
-    - type: GasTank
-      toggleActionEntity: 17
-    - type: ActionsContainer
-    - type: ContainerContainer
-      containers:
-        actions: !type:Container
-          ents:
-          - 17
 - proto: Dresser
   entities:
   - uid: 7816
@@ -54066,20 +54002,6 @@ entities:
     - type: Transform
       pos: 2.4978046,0.6471896
       parent: 18979
-    - type: HandheldLight
-      toggleActionEntity: 18981
-    - type: ContainerContainer
-      containers:
-        cell_slot: !type:ContainerSlot
-          showEnts: False
-          occludes: True
-          ent: null
-        actions: !type:Container
-          showEnts: False
-          occludes: True
-          ents:
-          - 18981
-    - type: ActionsContainer
 - proto: FloorDrain
   entities:
   - uid: 8220
@@ -85950,17 +85872,6 @@ entities:
     - type: Transform
       pos: -14.136155,-263.57162
       parent: 2
-    - type: GasTank
-      toggleActionEntity: 14
-    - type: Jetpack
-      toggleActionEntity: 15
-    - type: ActionsContainer
-    - type: ContainerContainer
-      containers:
-        actions: !type:Container
-          ents:
-          - 15
-          - 14
 - proto: JetpackMiniFilled
   entities:
   - uid: 12801
@@ -86133,22 +86044,8 @@ entities:
       rot: 3.141592653589793 rad
       pos: -11.264969,-332.4892
       parent: 2
-    - type: HandheldLight
-      toggleActionEntity: 21
-    - type: ContainerContainer
-      containers:
-        cell_slot: !type:ContainerSlot
-          showEnts: False
-          occludes: True
-          ent: null
-        actions: !type:Container
-          showEnts: False
-          occludes: True
-          ents:
-          - 21
     - type: Physics
       canCollide: True
-    - type: ActionsContainer
 - proto: LampBanana
   entities:
   - uid: 12832

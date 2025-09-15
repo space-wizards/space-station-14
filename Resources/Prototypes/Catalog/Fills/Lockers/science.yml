@@ -3,15 +3,22 @@
   suffix: Filled
   parent: LockerScientist
   components:
-  - type: StorageFill
-    contents:
-      - id: ClothingHandsGlovesLatex
-        amount: 2
-      - id: ClothingHeadsetScience
-      - id: ClothingMaskSterile
-      - id: ClothingOuterCoatRnd
-        amount: 2
-      - id: AnomalyScanner
-      - id: NodeScanner
-      - id: NetworkConfigurator
-        prob: 0.5
+  - type: EntityTableContainerFill
+    containers:
+      entity_storage: !type:NestedSelector
+        tableId: FillLockerScientist
+
+- type: entityTable
+  id: FillLockerScientist
+  table: !type:AllSelector
+    children:
+    - id: ClothingHandsGlovesLatex
+      amount: 2 # DS14
+    - id: ClothingHeadsetScience
+    - id: ClothingMaskSterile
+    - id: ClothingOuterCoatRnd
+      amount: 2 # DS14
+    - id: AnomalyScanner
+    - id: NodeScanner
+    - id: NetworkConfigurator
+      prob: 0.5

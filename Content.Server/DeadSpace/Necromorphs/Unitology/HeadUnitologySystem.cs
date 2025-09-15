@@ -25,6 +25,7 @@ using Content.Shared.Maps;
 using Content.Shared.Decals;
 using Content.Shared.Mobs.Systems;
 using Content.Shared.Mindshield.Components;
+using Robust.Server.Player;
 
 namespace Content.Server.DeadSpace.Necromorphs.Unitology;
 
@@ -45,14 +46,15 @@ public sealed class UnitologyHeadSystem : EntitySystem
     [Dependency] private readonly TurfSystem _turf = default!;
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly MobStateSystem _mobState = default!;
+    [Dependency] private readonly IPlayerManager _player = default!;
 
-    [ValidatePrototypeId<EntityPrototype>]
-    private const string UnitologyRule = "Unitology";
 
-    [ValidatePrototypeId<AntagPrototype>]
-    public const string UnitologyAntagRole = "Uni";
+    private static readonly EntProtoId UnitologyRule = "Unitology";
+    public static readonly ProtoId<AntagPrototype> UnitologyAntagRole = "Uni";
+
     public const float DistanceRecruitmentDetermination = 2f;
     public const string CandleTag = "Candle";
+
     public override void Initialize()
     {
         base.Initialize();
@@ -108,7 +110,7 @@ public sealed class UnitologyHeadSystem : EntitySystem
             .ToList();
 
         var xform = Transform(target);
-        var tileref = xform.Coordinates.GetTileRef(EntityManager, _mapMan);
+        var tileref = _turf.GetTileRef(xform.Coordinates);
 
         if (tileref == null)
             return;
@@ -176,10 +178,12 @@ public sealed class UnitologyHeadSystem : EntitySystem
         def.PrefRoles.Contains(new ProtoId<AntagPrototype>(UnitologyAntagRole))
         );
 
-        if (definition == null)
-            definition = rule.Comp.Definitions.Last();
+        definition ??= rule.Comp.Definitions.Last();
 
-        _antag.MakeAntag(rule, mind.Session, definition.Value);
+        if (!_player.TryGetSessionById(mind.UserId, out var session))
+            return;
+
+        _antag.MakeAntag(rule, session, definition.Value);
     }
 
     private void OnOrder(EntityUid uid, UnitologyHeadComponent component, OrderToSlaveActionEvent args)

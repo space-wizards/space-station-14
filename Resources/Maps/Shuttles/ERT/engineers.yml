@@ -389,32 +389,6 @@ entities:
     - type: RadiationGridResistance
     - type: GravityShake
       shakeTimes: 10
-- proto: ActionVendingThrow
-  entities:
-  - uid: 3
-    components:
-    - type: Transform
-      parent: 2
-    - type: InstantAction
-      container: 2
-  - uid: 5
-    components:
-    - type: Transform
-      parent: 4
-    - type: InstantAction
-      container: 4
-  - uid: 7
-    components:
-    - type: Transform
-      parent: 6
-    - type: InstantAction
-      container: 6
-  - uid: 9
-    components:
-    - type: Transform
-      parent: 8
-    - type: InstantAction
-      container: 8
 - proto: AirlockAtmosphericsLocked
   entities:
   - uid: 10
@@ -9949,15 +9923,6 @@ entities:
     - type: Transform
       pos: -0.5,0.5
       parent: 1
-    - type: Actions
-      actions:
-      - 3
-    - type: ActionsContainer
-    - type: ContainerContainer
-      containers:
-        actions: !type:Container
-          ents:
-          - 3
 - proto: VendingMachineRestockEngineering
   entities:
   - uid: 638
@@ -9974,15 +9939,6 @@ entities:
     - type: Transform
       pos: 9.5,0.5
       parent: 1
-    - type: Actions
-      actions:
-      - 5
-    - type: ActionsContainer
-    - type: ContainerContainer
-      containers:
-        actions: !type:Container
-          ents:
-          - 5
 - proto: VendingMachineTankDispenserEVA
   entities:
   - uid: 6
@@ -9990,15 +9946,6 @@ entities:
     - type: Transform
       pos: 5.5,-0.5
       parent: 1
-    - type: Actions
-      actions:
-      - 7
-    - type: ActionsContainer
-    - type: ContainerContainer
-      containers:
-        actions: !type:Container
-          ents:
-          - 7
 - proto: VendingMachineYouTool
   entities:
   - uid: 8
@@ -10006,15 +9953,6 @@ entities:
     - type: Transform
       pos: 1.5,0.5
       parent: 1
-    - type: Actions
-      actions:
-      - 9
-    - type: ActionsContainer
-    - type: ContainerContainer
-      containers:
-        actions: !type:Container
-          ents:
-          - 9
 - proto: WallShuttle
   entities:
   - uid: 975

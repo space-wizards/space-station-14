@@ -8,7 +8,6 @@ using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
 namespace Content.Shared.DeadSpace.Necromorphs.InfectionDead.Components;
 
@@ -29,56 +28,56 @@ public sealed partial class NecromorfComponent : Component
     /// <summary>
     /// The eye color of the Necromorf
     /// </summary>
-    [DataField("eyeColor")]
+    [DataField]
     public Color EyeColor = new(1f, 1f, 1f);
 
     /// <summary>
     /// The base layer to apply to any 'external' humanoid layers upon zombification.
     /// </summary>
-    [DataField("baseLayerExternal")]
+    [DataField]
     public string BaseLayerExternal = "MobHumanoidMarkingMatchSkin";
 
     /// <summary>
     /// The attack arc of the Necromorf
     /// </summary>
-    [DataField("attackArc", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
-    public string AttackAnimation = "WeaponArcBite";
+    [DataField("attackArc")]
+    public EntProtoId AttackAnimation = "WeaponArcBite";
 
     /// <summary>
     /// The EntityName of the humanoid to restore in case of cloning
     /// </summary>
-    [DataField("beforeNecroficationEntityName"), ViewVariables(VVAccess.ReadOnly)]
+    [DataField, ViewVariables(VVAccess.ReadOnly)]
     public string BeforeNecroficationEntityName = string.Empty;
 
     /// <summary>
     /// The CustomBaseLayers of the humanoid to restore in case of cloning
     /// </summary>
-    [DataField("beforeNecroficationCustomBaseLayers")]
+    [DataField]
     public Dictionary<HumanoidVisualLayers, CustomBaseLayerInfo> BeforeNecroficationCustomBaseLayers = new();
 
     /// <summary>
     /// The skin color of the humanoid to restore in case of cloning
     /// </summary>
-    [DataField("beforeNecroficationSkinColor")]
+    [DataField]
     public Color BeforeNecroficationSkinColor;
 
     /// <summary>
     /// The eye color of the humanoid to restore in case of cloning
     /// </summary>
-    [DataField("beforeNecroficationEyeColor")]
+    [DataField]
     public Color BeforeNecroficationEyeColor;
 
-    [DataField("emoteId", customTypeSerializer: typeof(PrototypeIdSerializer<EmoteSoundsPrototype>))]
-    public string? EmoteSoundsId = "Necro";
+    [DataField("emoteId")]
+    public ProtoId<EmoteSoundsPrototype> EmoteSoundsId = "Necro";
     public EmoteSoundsPrototype? EmoteSounds;
 
-    [DataField("nextTick", customTypeSerializer: typeof(TimeOffsetSerializer))]
+    [DataField(customTypeSerializer: typeof(TimeOffsetSerializer))]
     public TimeSpan NextTick;
 
     /// <summary>
     /// Healing each second
     /// </summary>
-    [DataField("passiveHealing")]
+    [DataField]
     public DamageSpecifier PassiveHealing = new()
     {
         DamageDict = new()
@@ -106,14 +105,14 @@ public sealed partial class NecromorfComponent : Component
     /// <summary>
     /// The blood reagent of the humanoid to restore in case of cloning
     /// </summary>
-    [DataField("beforeNecroficationBloodReagent")]
+    [DataField]
     public string BeforeNecroficationBloodReagent = string.Empty;
 
     /// <summary>
     /// The blood reagent to give the Necromorf. In case you want Necromorfs that bleed milk, or something.
     /// </summary>
-    [DataField("newBloodReagent", customTypeSerializer: typeof(PrototypeIdSerializer<ReagentPrototype>))]
-    public string NewBloodReagent = "NecromorfBlood";
+    [DataField]
+    public ProtoId<ReagentPrototype> NewBloodReagent = "NecromorfBlood";
 
     [DataField("useInventory")]
     public bool IsCanUseInventory = true;

@@ -107,9 +107,7 @@ entities:
     - type: Transform
     - type: Map
       mapPaused: True
-    - type: PhysicsMap
     - type: GridTree
-    - type: MovedGrids
     - type: Broadphase
     - type: OccluderTree
   - uid: 2
@@ -10486,64 +10484,6 @@ entities:
     - type: Transform
       pos: 60.576687,-21.40645
       parent: 2
-- proto: ActionToggleInternals
-  entities:
-  - uid: 10
-    components:
-    - type: Transform
-      parent: 9
-    - type: InstantAction
-      container: 9
-  - uid: 12
-    components:
-    - type: Transform
-      parent: 11
-    - type: InstantAction
-      container: 11
-  - uid: 14
-    components:
-    - type: Transform
-      parent: 13
-    - type: InstantAction
-      container: 13
-  - uid: 16
-    components:
-    - type: Transform
-      parent: 15
-    - type: InstantAction
-      container: 15
-  - uid: 18
-    components:
-    - type: Transform
-      parent: 17
-    - type: InstantAction
-      container: 17
-  - uid: 20
-    components:
-    - type: Transform
-      parent: 19
-    - type: InstantAction
-      container: 19
-- proto: ActionToggleLight
-  entities:
-  - uid: 22
-    components:
-    - type: Transform
-      parent: 21
-    - type: InstantAction
-      container: 21
-  - uid: 24
-    components:
-    - type: Transform
-      parent: 23
-    - type: InstantAction
-      container: 23
-  - uid: 24069
-    components:
-    - type: Transform
-      parent: 24068
-    - type: InstantAction
-      container: 24068
 - proto: ADTClothingHeadHatFox
   entities:
   - uid: 26
@@ -55895,20 +55835,6 @@ entities:
     - type: Transform
       pos: -1.6524403,40.692146
       parent: 2
-    - type: HandheldLight
-      toggleActionEntity: 24
-    - type: ContainerContainer
-      containers:
-        cell_slot: !type:ContainerSlot
-          showEnts: False
-          occludes: True
-          ent: null
-        actions: !type:Container
-          showEnts: False
-          occludes: True
-          ents:
-          - 24
-    - type: ActionsContainer
 - proto: ClothingHeadHelmetRiot
   entities:
   - uid: 8303
@@ -67637,14 +67563,6 @@ entities:
     - type: Transform
       pos: -26.335854,15.494169
       parent: 2
-    - type: GasTank
-      toggleActionEntity: 20
-    - type: ActionsContainer
-    - type: ContainerContainer
-      containers:
-        actions: !type:Container
-          ents:
-          - 20
 - proto: DoubleEmergencyOxygenTankFilled
   entities:
   - uid: 13
@@ -67652,14 +67570,6 @@ entities:
     - type: Transform
       pos: -26.606686,15.712919
       parent: 2
-    - type: GasTank
-      toggleActionEntity: 14
-    - type: ActionsContainer
-    - type: ContainerContainer
-      containers:
-        actions: !type:Container
-          ents:
-          - 14
   - uid: 10214
     components:
     - type: Transform
@@ -69247,14 +69157,6 @@ entities:
     - type: Transform
       pos: -26.28377,14.921253
       parent: 2
-    - type: GasTank
-      toggleActionEntity: 18
-    - type: ActionsContainer
-    - type: ContainerContainer
-      containers:
-        actions: !type:Container
-          ents:
-          - 18
 - proto: EmergencyOxygenTankFilled
   entities:
   - uid: 15
@@ -69262,14 +69164,6 @@ entities:
     - type: Transform
       pos: -26.481686,14.431669
       parent: 2
-    - type: GasTank
-      toggleActionEntity: 16
-    - type: ActionsContainer
-    - type: ContainerContainer
-      containers:
-        actions: !type:Container
-          ents:
-          - 16
   - uid: 10466
     components:
     - type: Transform
@@ -69436,14 +69330,6 @@ entities:
     - type: Transform
       pos: -26.606686,14.921253
       parent: 2
-    - type: GasTank
-      toggleActionEntity: 12
-    - type: ActionsContainer
-    - type: ContainerContainer
-      containers:
-        actions: !type:Container
-          ents:
-          - 12
 - proto: ExtinguisherCabinetFilled
   entities:
   - uid: 10498
@@ -74560,20 +74446,6 @@ entities:
     - type: Transform
       pos: 2.4978046,0.6471896
       parent: 24067
-    - type: HandheldLight
-      toggleActionEntity: 24069
-    - type: ContainerContainer
-      containers:
-        cell_slot: !type:ContainerSlot
-          showEnts: False
-          occludes: True
-          ent: null
-        actions: !type:Container
-          showEnts: False
-          occludes: True
-          ents:
-          - 24069
-    - type: ActionsContainer
 - proto: FloorDrain
   entities:
   - uid: 10959
@@ -113992,22 +113864,8 @@ entities:
     - type: Transform
       pos: -31.387814,-44.28387
       parent: 2
-    - type: HandheldLight
-      toggleActionEntity: 22
-    - type: ContainerContainer
-      containers:
-        cell_slot: !type:ContainerSlot
-          showEnts: False
-          occludes: True
-          ent: null
-        actions: !type:Container
-          showEnts: False
-          occludes: True
-          ents:
-          - 22
     - type: Physics
       canCollide: True
-    - type: ActionsContainer
 - proto: LampGold
   entities:
   - uid: 16323
@@ -116437,14 +116295,6 @@ entities:
     - type: Transform
       pos: 27.505058,-41.10279
       parent: 2
-    - type: GasTank
-      toggleActionEntity: 10
-    - type: ActionsContainer
-    - type: ContainerContainer
-      containers:
-        actions: !type:Container
-          ents:
-          - 10
   - uid: 16627
     components:
     - type: Transform

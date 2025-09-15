@@ -4,8 +4,8 @@ using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Damage;
 using Content.Shared.Destructible;
-using Content.Shared.Explosion.Components;
 using Content.Shared.FixedPoint;
+using Content.Shared.Trigger.Components.Effects;
 using Content.Shared.Weapons.Melee;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
@@ -16,7 +16,6 @@ public sealed class BlobFactorySystem : EntitySystem
 {
     [Dependency] private readonly IGameTiming _gameTiming = default!;
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
-
 
     public override void Initialize()
     {
@@ -69,28 +68,14 @@ public sealed class BlobFactorySystem : EntitySystem
         }
     }
 
-    [ValidatePrototypeId<ReagentPrototype>]
-    private const string Phlogiston = "Phlogiston";
-
-    [ValidatePrototypeId<ReagentPrototype>]
-    private const string TearGas = "TearGas";
-
-    [ValidatePrototypeId<ReagentPrototype>]
-
-    private const string Lexorin = "Lexorin";
-
-    [ValidatePrototypeId<ReagentPrototype>]
-    private const string Mold = "Mold";
-
-    [ValidatePrototypeId<ReagentPrototype>]
-    private const string Bicaridine = "Bicaridine";
-
-    [ValidatePrototypeId<ReagentPrototype>]
-    private const string Aluminium = "Aluminium";
-    [ValidatePrototypeId<ReagentPrototype>]
-    private const string Iron = "Iron";
-    [ValidatePrototypeId<ReagentPrototype>]
-    private const string Uranium = "Uranium";
+    private static readonly ProtoId<ReagentPrototype> Phlogiston = "Phlogiston";
+    private static readonly ProtoId<ReagentPrototype> TearGas = "TearGas";
+    private static readonly ProtoId<ReagentPrototype> Lexorin = "Lexorin";
+    private static readonly ProtoId<ReagentPrototype> Mold = "Mold";
+    private static readonly ProtoId<ReagentPrototype> Bicaridine = "Bicaridine";
+    private static readonly ProtoId<ReagentPrototype> Aluminium = "Aluminium";
+    private static readonly ProtoId<ReagentPrototype> Iron = "Iron";
+    private static readonly ProtoId<ReagentPrototype> Uranium = "Uranium";
 
     private void FillSmokeGas(Entity<BlobPodComponent> ent, BlobChemType currentChem)
     {
@@ -101,7 +86,7 @@ public sealed class BlobFactorySystem : EntitySystem
                 blobGas.AddSolution(new Solution(Phlogiston, FixedPoint2.New(30))
                 {
                     Temperature = 1000
-                },_prototypeManager);
+                }, _prototypeManager);
                 break;
             case BlobChemType.ReactiveSpines:
                 blobGas.AddSolution(new Solution(Mold, FixedPoint2.New(30)),_prototypeManager);
@@ -113,15 +98,15 @@ public sealed class BlobFactorySystem : EntitySystem
                 blobGas.AddSolution(new Solution(Lexorin, FixedPoint2.New(30))
                 {
                     Temperature = 1000
-                },_prototypeManager);
+                }, _prototypeManager);
                 break;
             case BlobChemType.ElectromagneticWeb:
-                blobGas.AddSolution(new Solution(Aluminium, FixedPoint2.New(10)){ CanReact = false },_prototypeManager);
-                blobGas.AddSolution(new Solution(Iron, FixedPoint2.New(10)){ CanReact = false },_prototypeManager);
-                blobGas.AddSolution(new Solution(Uranium, FixedPoint2.New(10)){ CanReact = false },_prototypeManager);
+                blobGas.AddSolution(new Solution(Aluminium, FixedPoint2.New(10)){ CanReact = false }, _prototypeManager);
+                blobGas.AddSolution(new Solution(Iron, FixedPoint2.New(10)){ CanReact = false }, _prototypeManager);
+                blobGas.AddSolution(new Solution(Uranium, FixedPoint2.New(10)){ CanReact = false }, _prototypeManager);
                 break;
             default:
-                blobGas.AddSolution(new Solution(TearGas, FixedPoint2.New(30)),_prototypeManager);
+                blobGas.AddSolution(new Solution(TearGas, FixedPoint2.New(30)), _prototypeManager);
                 break;
         }
     }
@@ -151,5 +136,4 @@ public sealed class BlobFactorySystem : EntitySystem
         component.SpawnedCount += 1;
         component.NextSpawn = _gameTiming.CurTime + TimeSpan.FromSeconds(component.SpawnRate);
     }
-
 }

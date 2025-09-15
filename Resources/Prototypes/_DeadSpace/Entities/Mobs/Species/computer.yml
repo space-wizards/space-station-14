@@ -92,5 +92,11 @@
       Male: IPSIPC
       Female: IPSIPC
       Unsexed: IPSIPC
-  - type: ComputerEmotes # DS14: For emote panel
+  - type: Tag
+    tags:
+    - SiliconIPSIPCEmotes
+    - CanPilot
+    - FootstepSound
+    - DoorBumpOpener
+    - AnomalyHost
   # - type: FootPrints

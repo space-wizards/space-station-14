@@ -4,8 +4,9 @@
   name: сделать сальто
   categories: [ HideSpawnMenu ]
   components:
-  - type: InstantAction
+  - type: Action
     icon: Interface/Actions/blight.png
+  - type: InstantAction
     event: !type:EmoteFlipActionEvent
 
 # jump animation
@@ -14,9 +15,10 @@
   name: прыгнуть
   categories: [ HideSpawnMenu ]
   components:
-    - type: InstantAction
-      icon: Interface/Actions/blight.png
-      event: !type:EmoteJumpActionEvent
+  - type: Action
+    icon: Interface/Actions/blight.png
+  - type: InstantAction
+    event: !type:EmoteJumpActionEvent
 
   # turn around in 4 directions animation
 - type: entity
@@ -24,9 +26,10 @@
   name: кружится
   categories: [ HideSpawnMenu ]
   components:
-    - type: InstantAction
-      icon: Interface/Actions/blight.png
-      event: !type:EmoteTurnActionEvent
+  - type: Action
+    icon: Interface/Actions/blight.png
+  - type: InstantAction
+    event: !type:EmoteTurnActionEvent
 
   # stop-tail animation
 - type: entity
@@ -34,9 +37,10 @@
   name: перестать вилять хвостом
   categories: [ HideSpawnMenu ]
   components:
-    - type: InstantAction
-      icon: Interface/Actions/blight.png
-      event: !type:EmoteStopTailActionEvent
+  - type: Action
+    icon: Interface/Actions/blight.png
+  - type: InstantAction
+    event: !type:EmoteStopTailActionEvent
 
   # start-tail animation
 - type: entity
@@ -44,9 +48,10 @@
   name: начать вилять хвостом
   categories: [ HideSpawnMenu ]
   components:
-    - type: InstantAction
-      icon: Interface/Actions/blight.png
-      event: !type:EmoteStartTailActionEvent
+  - type: Action
+    icon: Interface/Actions/blight.png
+  - type: InstantAction
+    event: !type:EmoteStartTailActionEvent
 
 # Using EmoteAnimation from IC action chat
 - type: emote

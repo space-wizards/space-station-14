@@ -2,7 +2,6 @@
 
 using Robust.Shared.Audio;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 using Robust.Shared.GameStates;
 using Robust.Shared.Map;
 
@@ -12,28 +11,28 @@ namespace Content.Shared.DeadSpace.Abilities.SpawnAbility.Components;
 [AutoGenerateComponentState]
 public sealed partial class CustomSpawnPointComponent : Component
 {
-    [DataField("spawnedEntities", required: true)]
-    public string[] SpawnedEntities { get; set; } = Array.Empty<string>();
+    [DataField(required: true)]
+    public List<EntProtoId> SpawnedEntities { get; set; } = [];
 
-    [ViewVariables(VVAccess.ReadWrite), DataField("proto", required: false, customTypeSerializer:typeof(PrototypeIdSerializer<EntityPrototype>))]
-    public string SelectEntity = "Error";
+    [DataField("proto", required: false)]
+    public EntProtoId SelectEntity = "Error";
 
     [DataField]
-    public string? SpawnPointAction = "ActionSpawnPoint";
+    public EntProtoId SpawnPointAction = "ActionSpawnPoint";
 
     [DataField, AutoNetworkedField]
     public EntityUid? SpawnPointActionEntity;
 
     [DataField]
-    public string? SelectEntityAction = "ActionSelectEntity";
+    public EntProtoId SelectEntityAction = "ActionSelectEntity";
 
     [DataField, AutoNetworkedField]
     public EntityUid? SelectEntityActionEntity;
 
-    [DataField("duration")]
+    [DataField]
     public float Duration = 5f;
 
-    [DataField("spawnSound")]
+    [DataField]
     public SoundSpecifier? SpawnSound = default;
 
     [ViewVariables(VVAccess.ReadOnly)]

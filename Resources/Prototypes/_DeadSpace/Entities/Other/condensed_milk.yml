@@ -2,7 +2,6 @@
   id: CondensedMilk
   name: reagent-name-condensed-milk
   desc: reagent-desc-condensed-milk
-  slippery: true
   physicalDesc: reagent-physical-desc-shiny
   flavor: sweet
   color: "#FFDEAD"
@@ -11,7 +10,8 @@
   meltingPoint: 18.2
   tileReactions:
     - !type:SpillTileReaction
-      paralyzeTime: 3
+  slipData:
+      knockdownTime: 3
       launchForwardsMultiplier: 2
       requiredSlipSpeed: 1
   metabolisms:
@@ -72,7 +72,6 @@
   id: BoiledCondensedMilk
   name: reagent-name-condensed-milk
   desc: reagent-desc-condensed-milk
-  slippery: false
   physicalDesc: reagent-physical-desc-sticky
   flavor: sweet
   color: "#86521f"

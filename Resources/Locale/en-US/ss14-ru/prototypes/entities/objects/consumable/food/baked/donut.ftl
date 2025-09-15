@@ -1,5 +1,7 @@
 ent-FoodDonutBase = { ent-FoodInjectableBase }
     .desc = Goes great with robust coffee.
+ent-FoodDonutFruitBase = { ent-FoodDonutBase }
+    .desc = { ent-FoodDonutBase.desc }
 ent-FoodDonutPlain = plain donut
     .desc = { ent-FoodDonutBase.desc }
 ent-FoodDonutJellyPlain = plain jelly-donut
@@ -48,7 +50,7 @@ ent-FoodDonutJelly = matcha jelly-donut
     .desc = The L-theanine in this jelly-donut is relaxing, yet not euphoric. Goes great with a cup of tea.
 ent-FoodDonutJellySweetpea = sweet pea jelly-donut
     .desc = Goes great with a bottle of Bastion Burbon!
-ent-FoodDonutJellySlugcat = slugcat jelly-donut
+ent-FoodDonutJellyScurret = scurret jelly-donut
     .desc = No holes in this donut in case a suspicious looking pole shows up.
 ent-FoodDonutPoison = { ent-FoodDonutPink }
     .suffix = Poison

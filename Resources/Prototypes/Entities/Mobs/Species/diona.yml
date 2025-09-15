@@ -51,9 +51,9 @@
         scaleByQuantity: true
         damage:
           types:
-            Blunt: 1
-            Slash: 1
-            Piercing: 1.5
+            Blunt: 1 # DS14-value
+            Slash: 1 # DS14-value
+            Piercing: 1.5 # DS14-value
       - !type:PopupMessage
         type: Local
         visualType: Large
@@ -66,7 +66,7 @@
         scaleByQuantity: true
         damage:
           types:
-            Poison: 2.5
+            Poison: 2.5 # DS14-value
       - !type:PopupMessage
         type: Local
         visualType: Large
@@ -92,6 +92,8 @@
       Male: UnisexDiona
       Female: UnisexDiona
       Unsexed: UnisexDiona
+  - type: TypingIndicator
+    proto: diona
   - type: BodyEmotes
     soundsId: DionaBodyEmotes
   - type: IgnoreKudzu
@@ -110,6 +112,7 @@
           32:
             sprite: Mobs/Species/Human/displacement.rsi
             state: jumpsuit-female
+  - type: Rootable
   - type: ImmunitetInfectionDead # DS14
   # - type: FootPrints # Backmen-footsteps
     # leftBarePrint: "footprint-left-bare-diona"

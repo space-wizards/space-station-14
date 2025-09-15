@@ -1,4 +1,4 @@
-﻿import typing
+import typing
 import os
 from pydash import py_
 from project import Project

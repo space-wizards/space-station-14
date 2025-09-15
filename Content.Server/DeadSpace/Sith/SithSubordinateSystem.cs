@@ -14,7 +14,6 @@ using Content.Shared.Mobs.Systems;
 using System.Linq;
 using Content.Shared.Tag;
 using Content.Shared.Implants.Components;
-using Robust.Shared.Containers;
 using Content.Shared.Implants;
 
 namespace Content.Server.DeadSpace.Sith;
@@ -22,22 +21,18 @@ namespace Content.Server.DeadSpace.Sith;
 public sealed class SithSubordinateSystem : EntitySystem
 {
     [Dependency] private readonly SharedStunSystem _sharedStun = default!;
-    [Dependency] private readonly SithSubmissionConditionsSystem _sithSubmissionConditionsSystem = default!;
+    [Dependency] private readonly SithSubmissionConditionSystem _sithSubmissionConditionSystem = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
     [Dependency] private readonly MobStateSystem _mobState = default!;
-    [Dependency] private readonly TagSystem _tag = default!;
     [Dependency] private readonly SharedSubdermalImplantSystem _sharedSubdermalImplantSystem = default!;
-    
-    private EntityQuery<SithSubmissionConditionsComponent> _objQuery;
 
-    [ValidatePrototypeId<TagPrototype>]
-    public const string MindShieldTag = "MindShield";
+    private EntityQuery<SithSubmissionConditionComponent> _objQuery;
 
     public override void Initialize()
     {
         base.Initialize();
 
-        _objQuery = GetEntityQuery<SithSubmissionConditionsComponent>();
+        _objQuery = GetEntityQuery<SithSubmissionConditionComponent>();
 
         SubscribeLocalEvent<SithSubordinateComponent, MobStateChangedEvent>(OnState);
         SubscribeLocalEvent<SithSubordinateComponent, ComponentStartup>(OnComponentStartUp);
@@ -53,7 +48,7 @@ public sealed class SithSubordinateSystem : EntitySystem
         if (mind == null)
             return;
 
-        foreach (var objId in mind.AllObjectives)
+        foreach (var objId in mind.Objectives)
         {
             if (_objQuery.TryGetComponent(objId, out var objComp))
             {
@@ -62,12 +57,12 @@ public sealed class SithSubordinateSystem : EntitySystem
                 if (_mobState.IsDead(uid) && contains)
                 {
                     component.IsSubordinate = false;
-                    _sithSubmissionConditionsSystem.TryResetSubordination(objId, uid, objComp);
+                    _sithSubmissionConditionSystem.TryResetSubordination(objId, uid, objComp);
                 }
 
                 if (!_mobState.IsDead(uid) && !component.IsSubordinate)
                 {
-                    _sithSubmissionConditionsSystem.SubordinationOfCommandCharged(objId, uid, objComp);
+                    _sithSubmissionConditionSystem.SubordinationOfCommandCharged(objId, uid, objComp);
                     component.IsSubordinate = true;
                 }
             }
@@ -81,7 +76,7 @@ public sealed class SithSubordinateSystem : EntitySystem
             var implantContainer = implantedComp.ImplantContainer;
             foreach (var implantEntity in implantContainer.ContainedEntities)
             {
-                if (_tag.HasTag(implantEntity, MindShieldTag))
+                if (HasComp<MindShieldImplantComponent>(implantEntity))
                 {
                     _sharedSubdermalImplantSystem.ForceRemove(uid, implantEntity);
                     break;
@@ -98,11 +93,11 @@ public sealed class SithSubordinateSystem : EntitySystem
         if (mind == null)
             return;
 
-        foreach (var objId in mind.AllObjectives)
+        foreach (var objId in mind.Objectives)
         {
             if (_objQuery.TryGetComponent(objId, out var obj))
             {
-                _sithSubmissionConditionsSystem.SubordinationOfCommandCharged(objId, uid, obj);
+                _sithSubmissionConditionSystem.SubordinationOfCommandCharged(objId, uid, obj);
                 break;
             }
         }
@@ -127,11 +122,11 @@ public sealed class SithSubordinateSystem : EntitySystem
         if (mind == null)
             return;
 
-        foreach (var objId in mind.AllObjectives)
+        foreach (var objId in mind.Objectives)
         {
             if (_objQuery.TryGetComponent(objId, out var obj))
             {
-                _sithSubmissionConditionsSystem.TryResetSubordination(objId, uid, obj);
+                _sithSubmissionConditionSystem.TryResetSubordination(objId, uid, obj);
                 break;
             }
         }
@@ -144,7 +139,7 @@ public sealed class SithSubordinateSystem : EntitySystem
             var stunTime = TimeSpan.FromSeconds(10);
             var name = Identity.Entity(uid, EntityManager);
             RemComp<SithSubordinateComponent>(uid);
-            _sharedStun.TryParalyze(uid, stunTime, true);
+            _sharedStun.TryUpdateParalyzeDuration(uid, stunTime);
             _popup.PopupEntity(Loc.GetString("sith-break-control", ("name", name)), uid);
         }
     }

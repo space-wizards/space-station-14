@@ -414,7 +414,7 @@
     - id: DrinkBeerCan
 
 - type: entity
-  parent: BoxSurvivalNitrogen
+  parent: BoxSurvival
   id: BoxMimeMoth
   suffix: Mime, Emergency moth
   components:

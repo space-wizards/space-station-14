@@ -3,7 +3,6 @@
 using Robust.Shared.GameStates;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
 namespace Content.Shared.DeadSpace.Abilities.Evolution.Components;
 
@@ -11,20 +10,20 @@ namespace Content.Shared.DeadSpace.Abilities.Evolution.Components;
 
 public sealed partial class EvolutionComponent : Component
 {
-    [DataField("timeUntilEvolution", customTypeSerializer:typeof(TimeOffsetSerializer))]
+    [DataField(customTypeSerializer: typeof(TimeOffsetSerializer))]
     public TimeSpan TimeUntilEvolution;
 
-    [DataField("duration")]
+    [DataField]
     public float Duration = 60f;
 
-    [DataField("spawnedEntities", required: true)]
-    public string[] SpawnedEntities { get; set; } = Array.Empty<string>();
+    [DataField(required: true)]
+    public List<EntProtoId> SpawnedEntities { get; set; } = [];
 
-    [ViewVariables(VVAccess.ReadWrite), DataField("proto", required: false, customTypeSerializer:typeof(PrototypeIdSerializer<EntityPrototype>))]
-    public string SelectEntity = "Error";
+    [DataField("proto", required: false)]
+    public EntProtoId SelectEntity = "Error";
 
-    [DataField("evolutionAction", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
-    public string? EvolutionAction = "ActionEvolution";
+    [DataField]
+    public EntProtoId EvolutionAction = "ActionEvolution";
 
     [DataField]
     public string GhostRoleName = "Существо";

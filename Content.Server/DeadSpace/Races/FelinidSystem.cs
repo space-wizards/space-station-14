@@ -9,23 +9,23 @@ using Content.Shared.Actions.Events;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Nutrition.Components;
 using Content.Shared.Nutrition.EntitySystems;
-using Content.Server.Body.Components;
 using Content.Server.Medical;
 using Content.Server.Popups;
 using Robust.Shared.Random;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Player;
 using Robust.Server.Audio;
-using Content.Server.Nutrition.Components;
 using Content.Server.Chemistry.Containers.EntitySystems;
 using Content.Shared.Tag;
 using Content.Server.DeadSpace.Abilities.Felinid;
+using Content.Shared.Body.Components;
+using Content.Shared.Charges.Systems;
+using Content.Shared.Charges.Components;
 
 namespace Content.Server.DeadSpace.Races;
 
 public sealed class FelinidSystem : EntitySystem
 {
-
     [Dependency] private readonly SharedActionsSystem _actionsSystem = default!;
     [Dependency] private readonly HungerSystem _hungerSystem = default!;
     [Dependency] private readonly VomitSystem _vomitSystem = default!;
@@ -35,8 +35,9 @@ public sealed class FelinidSystem : EntitySystem
     [Dependency] private readonly InventorySystem _inventorySystem = default!;
     [Dependency] private readonly AudioSystem _audio = default!;
     [Dependency] private readonly TagSystem _tagSystem = default!;
+    [Dependency] private readonly SharedChargesSystem _charges = default!;
 
-    [ValidatePrototypeId<EntityPrototype>] private const string EatMouseActionId = "EatMouseAction";
+    private static readonly EntProtoId EatMouseActionId = "EatMouseAction";
 
     public override void Initialize()
     {
@@ -137,9 +138,10 @@ public sealed class FelinidSystem : EntitySystem
             return;
         }
 
-        if (_actionsSystem.TryGetActionData(component.HairballActionEntity, out var action))
+        if (_actionsSystem.GetAction(component.HairballActionEntity) is { } action)
         {
-            _actionsSystem.SetCharges(component.HairballActionEntity, action.Charges + 1);
+            EnsureComp<LimitedChargesComponent>(action, out var chargeComp);
+            _charges.AddCharges((action, chargeComp), 1);
         }
 
         _actionsSystem.SetEnabled(component.HairballActionEntity, true);

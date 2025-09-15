@@ -1,36 +1,26 @@
 - type: construction
-  name: шахтёрское окно
   id: MiningWindow
   graph: MiningWindow
   startNode: start
   targetNode: miningWindow
   category: construction-category-structures
-  description: Смотри не заляпай.
   canBuildInImpassable: true
   conditions:
     - !type:EmptyOrWindowValidInTile
     - !type:NoWindowsInTile
-  icon:
-    sprite: Structures/Windows/mining.rsi
-    state: full
   objectType: Structure
   placementMode: SnapgridCenter
   canRotate: false
 
 - type: construction
-  name: диагональное шахтёрское окно
   id: MiningWindowDiagonal
   graph: MiningWindow
   startNode: start
   targetNode: miningWindowDiagonal
   category: construction-category-structures
-  description: Смотри не заляпай.
   canBuildInImpassable: true
   conditions:
     - !type:EmptyOrWindowValidInTile
     - !type:NoWindowsInTile
-  icon:
-    sprite: Structures/Windows/mining_diagonal.rsi
-    state: state1
   objectType: Structure
   placementMode: SnapgridCenter

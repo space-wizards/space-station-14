@@ -1,6 +1,6 @@
 # erase
-cmd-erase-desc = Erase a player's entity if it exists and all their chat messages
-cmd-erase-help = erase <Username of User Id>
-cmd-erase-invalid-args = Invalid number of arguments
-cmd-erase-player-not-found = Player not found
-cmd-erase-player-completion = <Username>
+cmd-erase-desc = Удалить сущность игрока, если она существует, и все его сообщения в чате
+cmd-erase-help = удалить <Имя пользователя или ID>
+cmd-erase-invalid-args = Неверное количество аргументов
+cmd-erase-player-not-found = Игрок не найден
+cmd-erase-player-completion = <Имя пользователя>

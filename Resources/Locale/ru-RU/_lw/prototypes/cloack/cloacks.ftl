@@ -11,5 +11,5 @@ ent-ClothingNeckCloakSr = плащ главы персонала фронтир�
 ent-ClothingNeckCloakJanitor = плащ уборщика
     .desc = Как ты вообще это достал? ты сам его сделал?
 ent-ClothingNeckCloakJanitorFilled = { ent-ClothingNeckCloakJanitor }
-    .suffix = Filled
+    .suffix = Заполненный
     .desc = { ent-ClothingNeckCloakJanitor.desc }

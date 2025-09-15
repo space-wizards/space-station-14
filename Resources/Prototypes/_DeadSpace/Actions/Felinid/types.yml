@@ -4,10 +4,11 @@
   description: Съесть мышь, чтобы получить заряд энергии. При этом шерсть может застрять в вашем горле.
   categories: [ HideSpawnMenu ]
   components:
-  - type: InstantAction
-    icon: _DeadSpace/Icons/verbiconfangs.png
-    event: !type:EatMouseActionEvent
+  - type: Action
     checkCanInteract: false
+    icon: _DeadSpace/Icons/verbiconfangs.png
+  - type: InstantAction
+    event: !type:EatMouseActionEvent
 
 - type: entity
   id: HairballAction
@@ -15,11 +16,13 @@
   description: Откашляться, чтобы получить комок волос, застрявший в горле.
   categories: [ HideSpawnMenu ]
   components:
-  - type: InstantAction
+  - type: LimitedCharges
+    maxCharges: 1
+  - type: Action
+    checkCanInteract: false
     icon:
       sprite: _DeadSpace/Objects/Specific/Species/felinid.rsi
       state: icon
-    charges: 1
     useDelay: 30
+  - type: InstantAction
     event: !type:HairballActionEvent
-    checkCanInteract: false

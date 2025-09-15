@@ -1,7 +1,7 @@
 sandbox-window-title = Панель песочницы
-sandbox-window-map-editing-label = Editing
-sandbox-window-visibility-label = Visibility
-sandbox-window-your-character-label = Your Character
+sandbox-window-map-editing-label = Редактирование
+sandbox-window-visibility-label = Обзор
+sandbox-window-your-character-label = Ваш персонаж
 sandbox-window-ai-overlay-button = Оверлей ИИ
 sandbox-window-respawn-button = Возрождение
 sandbox-window-spawn-entities-button = Спавн сущностей
@@ -17,4 +17,3 @@ sandbox-window-toggle-suicide-button = Самоубийство
 sandbox-window-show-spawns-button = Показать спавны
 sandbox-window-show-bb-button = Показать BB
 sandbox-window-show-npc-button = Показать NPC
-sandbox-window-link-machines-button = Связать устройства

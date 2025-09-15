@@ -13,8 +13,8 @@
   access:
   - Medical
   - Maintenance
-  - Paramedic
-  - Coroner
+  - Paramedic # DS14
+  - Coroner # DS14
   extendedAccess:
   - Chemistry
   #start-backmen: currency
@@ -34,3 +34,14 @@
   storage:
     back:
     - EmergencyRollerBedSpawnFolded
+
+- type: chameleonOutfit
+  id: ParamedicChameleonOutfit
+  job: Paramedic
+  equipment:
+    head: ClothingHeadHatParamedicsoft
+    eyes: ClothingEyesHudMedical
+    mask: ClothingMaskSterile
+    neck: ClothingNeckStethoscope
+    outerClothing: ClothingOuterCoatParamedicWB
+    gloves: ClothingHandsGlovesLatex

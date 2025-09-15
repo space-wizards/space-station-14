@@ -2,7 +2,6 @@
 
 using Content.Shared.Damage;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 using Robust.Shared.Audio;
 
 namespace Content.Server.DeadSpace.Necromorphs.Deva;
@@ -54,14 +53,14 @@ public sealed partial class DevaComponent : Component
     [ViewVariables(VVAccess.ReadOnly)]
     public bool IsEnrageState = false;
 
-    [DataField("devaEnrageAction", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
-    public string? DevaEnrageAction = "ActionDevaEnrage";
+    [DataField]
+    public EntProtoId DevaEnrageAction = "ActionDevaEnrage";
 
-    [DataField("devaEnrageActionEntity")]
+    [DataField]
     [ViewVariables(VVAccess.ReadOnly)]
     public EntityUid? DevaEnrageActionEntity;
 
-    [DataField("damage")]
+    [DataField]
     public DamageSpecifier Damage = new()
     {
         DamageDict = new()
@@ -73,11 +72,11 @@ public sealed partial class DevaComponent : Component
         }
     };
 
-    [DataField("eatSound")]
+    [DataField]
     [ViewVariables(VVAccess.ReadOnly)]
     public SoundSpecifier? EatSound = default!;
 
-    [DataField("enrageSound")]
+    [DataField]
     [ViewVariables(VVAccess.ReadOnly)]
     public SoundSpecifier? EnrageSound = default!;
 }

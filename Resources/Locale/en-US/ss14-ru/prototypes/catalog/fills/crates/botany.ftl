@@ -6,3 +6,5 @@ ent-CrateHydroponicsTools = hydroponics equipment crate
     .desc = Supplies for growing a great garden! Contains some spray bottles of plant chemicals, a hatchet, a mini-hoe, scythe, as well as a pair of leather gloves and a botanist's apron.
 ent-CrateHydroponicsSeeds = seeds crate
     .desc = Big things have small beginnings. Contains twelve different seeds.
+ent-CrateHydroponicsTray = hydroponics tray crate
+    .desc = Contains a hydroponics tray flatpack.

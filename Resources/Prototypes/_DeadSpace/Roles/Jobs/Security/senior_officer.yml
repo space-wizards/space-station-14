@@ -55,3 +55,12 @@
     - HyperLinkBookCorporateLaw
     - HyperLinkBookSOPSecurity
     - RubberStampSeniorOfficer # DS14
+
+- type: chameleonOutfit
+  id: SeniorOfficerChameleonOutfit
+  job: SeniorOfficer
+  equipment:
+    eyes: ClothingEyesGlassesSecurity
+    head: ClothingHeadHatBeretSeniorOfficer
+    mask: ClothingMaskGasSecurity
+    gloves: ClothingHandsGlovesColorBlack

@@ -2,7 +2,6 @@
 
 using Content.Shared.Storage;
 using Robust.Shared.GameStates;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 using Robust.Shared.Audio;
 using Content.Shared.StatusIcon;
@@ -13,32 +12,45 @@ namespace Content.Shared.DeadSpace.Abilities.Egg.Components;
 [RegisterComponent, NetworkedComponent]
 public sealed partial class EggComponent : Component
 {
-    [DataField("actionHatch", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
-    public string ActionHatch = "ActionHatch";
+    [DataField]
+    public EntProtoId ActionHatch = "ActionHatch";
 
-    [DataField("actionHatchEntity")]
+    [DataField]
     public EntityUid? ActionHatchEntity;
 
-    [DataField("timeUntilSpawn", customTypeSerializer: typeof(TimeOffsetSerializer))]
+    [DataField]
+    [ViewVariables(VVAccess.ReadOnly)]
+    public bool IsHatched = false;
+
+    [DataField(customTypeSerializer: typeof(TimeOffsetSerializer))]
     public TimeSpan TimeUntilSpawn;
 
-    [DataField("duration")]
+    [DataField]
     public float Duration = 60f;
 
-    [DataField("spawned", required: true)]
-    [ViewVariables(VVAccess.ReadWrite)]
-    public List<EntitySpawnEntry> SpawnedEntities = new();
+    [DataField("spawned")]
+    public List<EntitySpawnEntry> SpawnedEntities = new()
+    {
+        new EntitySpawnEntry
+        {
+            PrototypeId = "MobSpiderTerrorGuardian",
+            SpawnProbability = 1.0f,
+            GroupId = null,
+            Amount = 3,
+            MaxAmount = 3
+        }
+    };
 
-    [DataField("durationPlayEggSound")]
+    [DataField]
     public float DurationPlayEggSound = 10f;
 
-    [DataField("timeUntilPlaySound", customTypeSerializer: typeof(TimeOffsetSerializer))]
+    [DataField(customTypeSerializer: typeof(TimeOffsetSerializer))]
     public TimeSpan TimeUntilPlaySound;
 
-    [DataField("eggSound")]
+    [DataField]
     public SoundSpecifier? EggSound = default;
 
-    [DataField, ViewVariables(VVAccess.ReadWrite)]
+    [DataField]
     public ProtoId<FactionIconPrototype> StatusIcon { get; set; } = "Egg";
 
     [DataField, ViewVariables(VVAccess.ReadOnly)]

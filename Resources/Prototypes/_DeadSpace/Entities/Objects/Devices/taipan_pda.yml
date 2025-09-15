@@ -88,7 +88,7 @@
       - MedTekCartridge
   - type: GuideHelp
     guides:
-    - Medical Doctor
+    - MedicalDoctor
 
 - type: entity
   parent: BaseTaipanPDA

@@ -1,33 +1,37 @@
 {
-  "version": 1,
-  "license": "CC-BY-SA-3.0",
-  "copyright": "Taken from tg station git at commit https://github.com/tgstation/tgstation/commit/97ec5ed1a0fc8263df5df5a5afbb653d4684992e, resprite by CyberBoich. Vox state made by cyberboich (discord) for Space Station 14 server Мёртвый Космос, Siren Icon made by Velen based of the helmet's colours",
-  "size": {
-    "x": 32,
-    "y": 32
-  },
-  "states": [
-    {
-      "name": "icon"
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "Taken from tg station git at commit https://github.com/tgstation/tgstation/commit/97ec5ed1a0fc8263df5df5a5afbb653d4684992e, resprite by CyberBoich. Vox state made by cyberboich (discord) for Space Station 14 server Мёртвый Космос, Siren Icon made by Velen based of the helmet's colours. equipped-OUTERCLOTHING-dog modified from equipped-OUTERCLOTHING by Sparlight (GitHub).",
+    "size": {
+        "x": 32,
+        "y": 32
     },
-    {
-      "name": "icon-siren"
-    },
-    {
-      "name": "equipped-OUTERCLOTHING",
-      "directions": 4
-    },
-    {
-      "name": "equipped-OUTERCLOTHING-vox",
-      "directions": 4
-    },
-    {
-      "name": "inhand-left",
-      "directions": 4
-    },
-    {
-      "name": "inhand-right",
-      "directions": 4
-    }
-  ]
+    "states": [
+        {
+        "name": "icon"
+        },
+        {
+        "name": "icon-siren"
+        },
+        {
+        "name": "equipped-OUTERCLOTHING",
+        "directions": 4
+        },
+        {
+        "name": "equipped-OUTERCLOTHING-vox",
+        "directions": 4
+        },
+        {
+            "name": "equipped-OUTERCLOTHING-dog",
+            "directions": 4
+        },
+        {
+        "name": "inhand-left",
+        "directions": 4
+        },
+        {
+        "name": "inhand-right",
+        "directions": 4
+        }
+    ]
 }

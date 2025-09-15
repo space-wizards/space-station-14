@@ -1,0 +1,12 @@
+ent-NukeOpsLootSpawner = спавнер предметов ЯО
+    .desc = { ent-MarkerBase.desc }
+ent-NukeOpsWeaponSpawner = спавнер оружия ЯО
+    .desc = { ent-MarkerBase.desc }
+ent-NukeOpsMedkitBruteSpawner = спавнер боевых аптечек ЯО
+    .desc = { ent-MarkerBase.desc }
+ent-NukeOpsMedkitSpawner = спавнер общих аптечек ЯО
+    .desc = { ent-MarkerBase.desc }
+ent-NukeOpsGrenadeSpawner = спавнер гранат ЯО
+    .desc = { ent-MarkerBase.desc }
+ent-NukeOpsAmmoSpawner = спавнер боеприпасов ЯО
+    .desc = { ent-MarkerBase.desc }

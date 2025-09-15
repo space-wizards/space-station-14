@@ -91,7 +91,7 @@ reagent-effect-guidebook-cure-sanity =
 
 ent-SyringeExtractInfectorDead = шприц
     .desc = { ent-BaseSyringe.desc }
-    .suffix = Экстракт заразителя, Не маппить
+    .suffix = Экстракт заразителя, НЕ МАППИТЬ
 entity-name-extract-infector = экстракт заразителя
 reagent-desc-extract-infector = Густой и розовый, пахнет отвратительно. Пробовать не стану!
 reagent-effect-guidebook-cause-infection-dead =
@@ -103,13 +103,11 @@ reagent-effect-guidebook-cause-infection-dead =
 # МУТАГЕН
 
 entity-name-stable-mutagen = стабильный мутаген
-
 reagent-effect-guidebook-mutate-infection-dead =
     { $chance ->
         [1] Стимулирует
        *[other] стимулирует
     } некроинфецию мутировать
-
 entity-name-stable-mutagen-infection-dead = стабильный мутаген некроинфекции
 entity-name-stable-not-mutagen-infection-dead = нестабильный мутаген некроинфекции
 reagent-desc-mutagen-infection-dead = Мощный мутаген, вызывающий некроинфекцию, стабилен и опасен.

@@ -1,12 +1,12 @@
 using Content.Shared.DeadSpace.Abilities.Bloodsucker.Components;
 using Content.Shared.NPC.Systems;
-using Content.Server.Body.Components;
 using Content.Shared.DeadSpace.Abilities.Bloodsucker;
 using Content.Server.DeadSpace.Abilities.Bloodsucker.Components;
 using Content.Shared.Examine;
 using Content.Shared.Chemistry.Components;
 using Content.Server.DeadSpace.Abilities.Cocoon.Components;
 using Content.Shared.Mobs.Systems;
+using Content.Shared.Body.Components;
 
 namespace Content.Server.DeadSpace.Abilities.Bloodsucker;
 

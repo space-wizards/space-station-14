@@ -23,9 +23,27 @@ public abstract class SharedEggSystem : EntitySystem
         SubscribeLocalEvent<EggComponent, HatchActionEvent>(OnHatch);
     }
 
-    private void OnShutdown(EntityUid uid, EggComponent component, ComponentShutdown args)
+    public override void Update(float frameTime)
     {
-        _actionsSystem.RemoveAction(uid, component.ActionHatchEntity);
+        base.Update(frameTime);
+        var curTime = _timing.CurTime;
+
+        var eggQuery = EntityQueryEnumerator<EggComponent>();
+        while (eggQuery.MoveNext(out var uid, out var component))
+        {
+            if (curTime > component.TimeUntilSpawn && !component.IsHatched)
+            {
+                var eggSpawnEvent = new EggSpawnEvent();
+                RaiseLocalEvent(uid, ref eggSpawnEvent);
+                component.IsHatched = true;
+            }
+
+            if (curTime > component.TimeUntilPlaySound && !component.IsHatched)
+            {
+                var playEggSoundEvent = new PlayEggSoundEvent();
+                RaiseLocalEvent(uid, ref playEggSoundEvent);
+            }
+        }
     }
 
     private void OnComponentInit(EntityUid uid, EggComponent component, ComponentInit args)
@@ -35,6 +53,17 @@ public abstract class SharedEggSystem : EntitySystem
 
         component.TimeUntilSpawn = _timing.CurTime + TimeSpan.FromSeconds(component.Duration);
         component.TimeUntilPlaySound = TimeSpan.FromSeconds(component.DurationPlayEggSound) + _timing.CurTime;
+    }
+
+    private void OnShutdown(EntityUid uid, EggComponent component, ComponentShutdown args)
+    {
+        _actionsSystem.RemoveAction(uid, component.ActionHatchEntity);
+    }
+
+    private void OnEggUnpause(EntityUid uid, EggComponent component, ref EntityUnpausedEvent args)
+    {
+        component.TimeUntilSpawn += args.PausedTime;
+        component.TimeUntilPlaySound += args.PausedTime;
     }
 
     private void OnHatch(EntityUid uid, EggComponent component, HatchActionEvent args)
@@ -48,34 +77,6 @@ public abstract class SharedEggSystem : EntitySystem
         args.Handled = true;
     }
 
-    private void OnEggUnpause(EntityUid uid, EggComponent component, ref EntityUnpausedEvent args)
-    {
-        component.TimeUntilSpawn += args.PausedTime;
-        component.TimeUntilPlaySound += args.PausedTime;
-    }
-
-    public override void Update(float frameTime)
-    {
-        base.Update(frameTime);
-        var curTime = _timing.CurTime;
-
-        var eggQuery = EntityQueryEnumerator<EggComponent>();
-        while (eggQuery.MoveNext(out var uid, out var comp))
-        {
-            if (curTime > comp.TimeUntilSpawn)
-            {
-                var eggSpawnEvent = new EggSpawnEvent();
-                RaiseLocalEvent(uid, ref eggSpawnEvent);
-            }
-
-            if (curTime > comp.TimeUntilPlaySound)
-            {
-                var playEggSoundEvent = new PlayEggSoundEvent();
-                RaiseLocalEvent(uid, ref playEggSoundEvent);
-            }
-        }
-    }
-
     public bool IsInfectPossible(EntityUid target)
     {
         if (HasComp<ImmunEggComponent>(target))
@@ -87,7 +88,7 @@ public abstract class SharedEggSystem : EntitySystem
         if (HasComp<InfectionDeadComponent>(target) || HasComp<NecromorfComponent>(target))
             return false;
 
-        if (HasComp<ZombieComponent>(target) || HasComp<PendingZombieComponent>(target))
+        if (HasComp<ZombieComponent>(target) || HasComp<PendingZombieComponent>(target) || HasComp<ZombifyOnDeathComponent>(target))
             return false;
 
         return true;

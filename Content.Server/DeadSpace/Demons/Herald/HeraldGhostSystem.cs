@@ -10,6 +10,7 @@ using Content.Shared.Physics;
 using Content.Shared.Mind;
 using Content.Server.Ghost.Roles.Components;
 using Content.Server.Ghost.Roles;
+using Robust.Shared.Player;
 
 namespace Content.Server.DeadSpace.Demons.Herald;
 
@@ -19,6 +20,10 @@ public sealed class HeraldGhostSystem : EntitySystem
     [Dependency] private readonly PhysicsSystem _physics = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
     [Dependency] private readonly SharedMindSystem _mindSystem = default!;
+    [Dependency] private readonly TurfSystem _turf = default!;
+    [Dependency] private readonly GhostRoleSystem _ghost = default!;
+    [Dependency] private readonly ISharedPlayerManager _player = default!;
+
     public override void Initialize()
     {
         base.Initialize();
@@ -37,7 +42,7 @@ public sealed class HeraldGhostSystem : EntitySystem
         if (args.Handled)
             return;
 
-        var tileref = Transform(uid).Coordinates.GetTileRef();
+        var tileref = _turf.GetTileRef(Transform(uid).Coordinates);
         if (tileref != null)
         {
             if (_physics.GetEntitiesIntersectingBody(uid, (int)CollisionGroup.Impassable).Count > 0)
@@ -64,11 +69,12 @@ public sealed class HeraldGhostSystem : EntitySystem
         }
 
         var id = ghostRoleComponent.Identifier;
-        var session = mind.Session; // Store session in a local variable
+        if (!_player.TryGetSessionById(mind.UserId, out var session))
+            return;
 
         if (session != null)
         {
-            EntityManager.EntitySysManager.GetEntitySystem<GhostRoleSystem>().Takeover(session, id);
+            _ghost.Takeover(session, id);
         }
         else
         {

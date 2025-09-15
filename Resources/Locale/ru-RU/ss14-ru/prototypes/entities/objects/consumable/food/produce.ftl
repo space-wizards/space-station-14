@@ -157,3 +157,5 @@ ent-TrashCherryPit = вишнёвая косточка
     .desc = { ent-FoodInjectableBase.desc }
 ent-FoodAnomalyBerry = аномальная ягода
     .desc = Странная синяя ягода. Что-то в ней не так.
+ent-FoodBloonion = лук-летун
+    .desc = Странная летающая луковица... Она не стоит ваших слёз.

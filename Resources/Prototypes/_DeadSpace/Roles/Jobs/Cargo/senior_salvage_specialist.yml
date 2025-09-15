@@ -30,8 +30,16 @@
   equipment:
     id: SeniorSalvagePDA
     ears: ClothingHeadsetMining
-    neck: ClothingNeckCloakMiner
+    neck: ClothingNeckCloakSalvagerSupreme
     socks: ClothingUnderwearSocksSeniorSalvage
   storage:
     back:
     - RubberStampSeniorSalvage # DS14
+
+- type: chameleonOutfit
+  id: SeniorSalvageSpecialistChameleonOutfit
+  job: SeniorSalvageSpecialist
+  equipment:
+    ears: ClothingHeadsetMining
+    neck: ClothingNeckCloakSalvagerSupreme
+    socks: ClothingUnderwearSocksSeniorSalvage

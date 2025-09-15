@@ -18,16 +18,26 @@
   id: Detective
   name: id-card-access-level-detective
 
+# DS14-start
 - type: accessLevel
   id: Brigmedic
   name: id-card-access-level-brigmedic
+# DS14-end
+
+- type: accessLevel
+  id: GenpopEnter
+  name: id-card-access-level-genpop-enter
+
+- type: accessLevel
+  id: GenpopLeave
+  name: id-card-access-level-genpop-leave
 
 - type: accessGroup
   id: Security
   tags:
   - HeadOfSecurity
   - Security
-  - Brigmedic
+  - Brigmedic # DS14
   - Armory
   - Brig
   - Detective

@@ -1,6 +1,6 @@
 // Мёртвый Космос, Licensed under custom terms with restrictions on public hosting and commercial use, full text: https://raw.githubusercontent.com/dead-space-server/space-station-14-fobos/master/LICENSE.TXT
 
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
+using Robust.Shared.Prototypes;
 
 namespace Content.Server.DeadSpace.ERTCall;
 
@@ -8,29 +8,27 @@ namespace Content.Server.DeadSpace.ERTCall;
 public sealed partial class ERTCallComponent : Component
 {
     [ViewVariables]
-    public ERTTeamPrototype? ERTTeams;
+    public ProtoId<ERTTeamPrototype>? ERTTeams;
 
     [ViewVariables]
     public ERTTeamDetail? ERTCalledTeam;
 
-    [DataField("ertTeamPrototype", required: true, customTypeSerializer: typeof(PrototypeIdSerializer<ERTTeamPrototype>))]
-    public string ERTTeamPrototype = default!;
+    [DataField("ertTeamPrototype", required: true)]
+    public ProtoId<ERTTeamPrototype> ERTTeamPrototype = default!;
 
     [ViewVariables(VVAccess.ReadWrite)]
     public bool ERTCalled = false;
 
-    [DataField("timeToApprove")]
-    [ViewVariables(VVAccess.ReadWrite)]
+    [DataField]
     public TimeSpan TimeToApprove { get; private set; } = TimeSpan.FromMinutes(5);
 
-    [DataField("timeToAnotherSpawn")]
-    [ViewVariables(VVAccess.ReadWrite)]
+    [DataField]
     public TimeSpan TimeToAnotherSpawn { get; private set; } = TimeSpan.FromMinutes(15);
 
-    [DataField("wasApproved")]
+    [DataField]
     public bool WasApproved = false;
 
-    [DataField("awaitsSpawn")]
+    [DataField]
     public bool AwaitsSpawn = false;
 
     [ViewVariables(VVAccess.ReadWrite)]

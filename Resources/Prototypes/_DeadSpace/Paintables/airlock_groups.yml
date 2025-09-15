@@ -1,0 +1,34 @@
+- type: paintableGroup
+  id: TaipanAirlockStandard
+  time: 3
+  cost: 3
+  defaultStyle: basic
+  styles:
+    базовый тёмный: AirlockTaipan
+    атмосферный тёмный: AirlockTaipanAtmospherics
+    снабжение тёмный: AirlockTaipanCargo
+    командование тёмный: AirlockTaipanCommand
+    инженерный тёмный: AirlockTaipanEngineering
+    морозильник тёмный: AirlockTaipanFreezer
+    технический тёмный: AirlockTaipanMaint
+    медицинский тёмный: AirlockTaipanMedical
+    научный тёмный: AirlockTaipanScience
+    сервисный тёмный: AirlockTaipanService
+    вирусология тёмный: AirlockTaipanVirology
+
+- type: paintableGroup
+  id: TaipanAirlockGlass
+  time: 3
+  cost: 3
+  defaultStyle: basic
+  styles:
+    базовый тёмный: AirlockTaipanGlass
+    атмосферный тёмный: AirlockTaipanGlassAtmospherics
+    снабжение тёмный: AirlockTaipanGlassCargo
+    командование тёмный: AirlockTaipanGlassCommand
+    инженерный тёмный: AirlockTaipanGlassEngineering
+    технический тёмный: AirlockTaipanGlassMaint
+    медицинский тёмный: AirlockTaipanGlassMedical
+    научный тёмный: AirlockTaipanGlassScience
+    сервисный тёмный: AirlockTaipanGlassService
+    вирусология тёмный: AirlockTaipanGlassVirology

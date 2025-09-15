@@ -71,3 +71,12 @@
   storage:
     back:
     - RubberStampSeniorAdministrator
+
+- type: chameleonOutfit
+  id: SeniorAdministratorChameleonOutfit
+  job: SeniorAdministrator
+  equipment:
+    shoes: ClothingShoesBootsLaceup
+    ears: ClothingHeadsetService
+    belt: BoxFolderClipboard
+    socks: ClothingUnderwearSocksCurator

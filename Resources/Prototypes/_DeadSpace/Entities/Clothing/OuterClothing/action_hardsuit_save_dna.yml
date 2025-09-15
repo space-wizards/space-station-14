@@ -4,8 +4,9 @@
   description: Скафандр сохранит ваше ДНК и детонирует если кто-то с другим ДНК его наденет.
   categories: [ HideSpawnMenu ]
   components:
-  - type: InstantAction
+  - type: Action
     icon: Interface/Actions/action_hardsuit_save_dna.png
     priority: -20
     useDelay: 10
+  - type: InstantAction
     event: !type:StoreDNAActionEvent

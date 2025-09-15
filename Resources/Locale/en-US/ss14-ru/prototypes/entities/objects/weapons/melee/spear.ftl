@@ -8,3 +8,5 @@ ent-SpearUranium = uranium spear
     .desc = A spear with a uranium shard as a tip.
 ent-SpearBone = bone spear
     .desc = A spear made of bones.
+ent-SpearSharkMinnow = sharkminnow tooth spear
+    .desc = A spear with a sharkminnow tooth as a tip.

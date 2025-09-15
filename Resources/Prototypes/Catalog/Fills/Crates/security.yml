@@ -81,6 +81,38 @@
         amount: 2
 
 - type: entity
+  id: CrateSecurityTrackingMindshieldImplants
+  name: implanter crate
+  description: Contains 4 MindShield implants and 4 tracking implant. Requires Security access to open.
+  parent: CrateSecgear
+  components:
+  - type: StorageFill
+    contents:
+      - id: MindShieldImplanter
+        amount: 4
+      - id: TrackingImplanter
+        amount: 2
+
+- type: entity
+  parent: CrateSecgear
+  id: CrateSecNonlethalThrowables
+  name: nonlethal throwables crate
+  description: Contains one box each of flashbangs, stingers, tear gas grenades, and four bolas. Requires Security access to open.
+  components:
+  - type: StorageFill
+    contents:
+    - id: BoxFlashbang
+      amount: 1
+    - id: BoxStinger
+      amount: 1
+    - id: BoxTearGas
+      amount: 1
+    - id: Bola # replace with 4 e-bolas when added
+      amount: 4
+
+# DS14-start
+
+- type: entity
   id: CrateSecurityHardsuit
   parent: CrateSecgear
   components:
@@ -99,16 +131,3 @@
       - id: ADTClothingHeadUSSPjuggernautHelmetArmored
       - id: ClothingUniformJumpsuitUSSPBlack
       - id: ClothingHandsGlovesLeatherUSSPBlack
-
-- type: entity
-  id: CrateSecurityTrackingMindshieldImplants
-  name: implanter crate
-  description: Contains 4 MindShield implants and 4 tracking implant. Requires Security access to open.
-  parent: CrateSecgear
-  components:
-  - type: StorageFill
-    contents:
-      - id: MindShieldImplanter
-        amount: 4
-      - id: TrackingImplanter
-        amount: 2

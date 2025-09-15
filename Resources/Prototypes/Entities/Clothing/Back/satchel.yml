@@ -181,8 +181,20 @@
     maxItemSize: Huge
     grid:
     - 0,0,19,9
-  - type: ExplosionResistance
+  - type: ExplosionResistance # DS14
     damageCoefficient: 0.1
+
+- type: entity
+  parent: ClothingBackpackSatchelHolding
+  id: ClothingBackpackSatchelAdmin
+  name: satchel of administration
+  suffix: Admin
+  description: If you are somehow seeing this, no you're not.
+  components:
+  - type: ExplosionResistance
+    damageCoefficient: 0
+
+# DS14-start
 
 - type: entity
   parent: ClothingBackpackSatchel

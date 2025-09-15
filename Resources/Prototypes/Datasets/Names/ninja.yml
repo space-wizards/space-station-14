@@ -2,7 +2,7 @@
   id: NamesNinja
   values:
     prefix: names-ninja-dataset-
-    count: 34
+    count: 39
 
 - type: localizedDataset
   id: NamesNinjaTitle

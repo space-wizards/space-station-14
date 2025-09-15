@@ -1,7 +1,7 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
-  "copyright": "Taken from tgstation at commit https://github.com/tgstation/tgstation/commit/5a73e8f825ff279e82949b9329783a9e3070e2da. Equipped-EYES-arachnid and equipped-EYES-moth motified from equipped-EYES. Tweak by @linkblyat",
+  "copyright": "Taken from tgstation at commit https://github.com/tgstation/tgstation/commit/5a73e8f825ff279e82949b9329783a9e3070e2da. Equipped-EYES-arachnid and equipped-EYES-moth motified from equipped-EYES. Tweak by @linkblyat. equipped-EYES-dog modified from equipped-EYES by Sparlight (GitHub).",
   "size": {
     "x": 32,
     "y": 32
@@ -17,6 +17,10 @@
     {
       "name": "equipped-EYES-arachnid",
       "directions": 4
+    },
+    {
+        "name": "equipped-EYES-dog",
+        "directions": 4
     },
     {
       "name": "equipped-EYES-moth",

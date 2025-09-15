@@ -18,7 +18,8 @@ using Robust.Shared.Prototypes;
 using Content.Shared.StatusEffect;
 using Content.Shared.Jittering;
 using Content.Server.Speech.EntitySystems;
-using Content.Shared.Stunnable;
+using Robust.Shared.Player;
+using System.Linq;
 
 namespace Content.Server.DeadSpace.Necromorphs.Sanity
 {
@@ -32,16 +33,19 @@ namespace Content.Server.DeadSpace.Necromorphs.Sanity
         [Dependency] private readonly GhostSystem _ghosts = default!;
         [Dependency] private readonly SharedTransformSystem _transform = default!;
         [Dependency] private readonly NpcFactionSystem _faction = default!;
-        [Dependency] private readonly StatusEffectsSystem _statusEffect = default!;
         [Dependency] private readonly SharedJitteringSystem _sharedJittering = default!;
         [Dependency] private readonly SlurredSystem _slurred = default!;
+        [Dependency] private readonly ISharedPlayerManager _player = default!;
+
         private const string HighSanityMessage = "Вы чувствуете головную боль";
         private const string MediumSanityMessage = "У вас болит голова, кости будто ломаются на части";
         private const string LowSanityMessage = "Вы теряете рассудок, вам совсем плохо!";
         private const string LostSanityMessage = "Вы теряете сознание.";
 
-        [ValidatePrototypeId<StatusEffectPrototype>]
-        public const string SlowedDownKey = "SlowedDown";
+        public static readonly ProtoId<StatusEffectPrototype> SlowedDownKey = "SlowedDown";
+        public static readonly ProtoId<NpcFactionPrototype> SimpleHostileFaction = "SimpleHostile";
+        public static readonly ProtoId<HTNCompoundPrototype> SimpleHostileCompound = "SimpleHostileCompound";
+
         public override void Initialize()
         {
             base.Initialize();
@@ -50,6 +54,7 @@ namespace Content.Server.DeadSpace.Necromorphs.Sanity
             SubscribeLocalEvent<SanityComponent, CheckCrazyMobEvent>(CheckCrazyMob);
             SubscribeLocalEvent<SanityComponent, ComponentShutdown>(OnSanityShutdown);
         }
+
         private void OnSanityShutdown(EntityUid uid, SanityComponent comp, ComponentShutdown args)
         {
             if (!TryComp<GhostComponent>(comp.Ghost, out _))
@@ -62,6 +67,7 @@ namespace Content.Server.DeadSpace.Necromorphs.Sanity
 
             UnCrazy(uid, comp);
         }
+
         private void OnSanity(EntityUid uid, SanityComponent comp, ref SanityEvent args)
         {
             if (comp.SanityLevel >= comp.MaxSanityLevel)
@@ -92,22 +98,25 @@ namespace Content.Server.DeadSpace.Necromorphs.Sanity
                     break;
             }
         }
+
         private void LowSanity(EntityUid uid, SanityComponent comp)
         {
             MediumSanity(uid, comp);
             HighSanity(uid, comp);
             _slurred.DoSlur(uid, TimeSpan.FromSeconds(comp.UpdateDuration + 1));
-            _statusEffect.TryAddStatusEffect<SlowedDownComponent>(uid, SlowedDownKey, TimeSpan.FromSeconds(comp.UpdateDuration + 1), true);
         }
+
         private void MediumSanity(EntityUid uid, SanityComponent comp)
         {
             _sharedJittering.DoJitter(uid, TimeSpan.FromSeconds(comp.UpdateDuration + 1), true);
             HighSanity(uid, comp);
         }
+
         private void HighSanity(EntityUid uid, SanityComponent comp)
         {
             return;
         }
+
         private void CheckCrazyMob(EntityUid uid, SanityComponent comp, ref CheckCrazyMobEvent args)
         {
             if (comp.SanityLevel <= 0)
@@ -119,13 +128,14 @@ namespace Content.Server.DeadSpace.Necromorphs.Sanity
                 UnCrazy(uid, comp);
             }
         }
+
         private void Crazy(EntityUid uid, SanityComponent comp)
         {
             if (comp.IsCrazy)
                 return;
 
             if (TryComp<NpcFactionMemberComponent>(uid, out var factionComp))
-                comp.OldFaction = GetFirstElement(factionComp.Factions);
+                comp.OldFaction = factionComp.Factions.FirstOrDefault();
 
             if (TryComp<HTNComponent>(uid, out var hTNComponent))
                 comp.OldTask = hTNComponent.RootTask.Task;
@@ -134,32 +144,27 @@ namespace Content.Server.DeadSpace.Necromorphs.Sanity
 
             RemComp<HTNComponent>(uid);
             var htn = EnsureComp<HTNComponent>(uid);
-            htn.RootTask = new HTNCompoundTask() { Task = "SimpleHostileCompound" };
+            htn.RootTask = new HTNCompoundTask() { Task = SimpleHostileCompound };
             htn.Blackboard.SetValue(NPCBlackboard.Owner, uid);
             _npc.WakeNPC(uid, htn);
             _faction.ClearFactions(uid, dirty: false);
-            _faction.AddFaction(uid, "SimpleHostile");
+            _faction.AddFaction(uid, SimpleHostileFaction);
 
-            if (hasMind && _mindSystem.TryGetSession(mindId, out var session))
+            if (hasMind && mind != null && _player.TryGetSessionById(mind.UserId, out var session))
             {
                 _chatMan.DispatchServerMessage(session, Loc.GetString("Вас поглотило безумие, вы больше не подвластны самому себе."));
 
-                if (mind != null)
-                {
-                    var position = Deleted(mind.OwnedEntity)
-                        ? _gameTicker.GetObserverSpawnPoint().ToMap(EntityManager, _transform)
-                        : _transform.GetMapCoordinates(mind.OwnedEntity.Value);
+                var position = Deleted(mind.OwnedEntity)
+                    ? _gameTicker.GetObserverSpawnPoint().ToMap(EntityManager, _transform)
+                    : _transform.GetMapCoordinates(mind.OwnedEntity.Value);
 
+                var entity = Spawn(GameTicker.ObserverPrototypeName, position);
+                EnsureComp<MindContainerComponent>(entity);
+                var ghostComponent = Comp<GhostComponent>(entity);
+                _ghosts.SetCanReturnToBody(ghostComponent, false);
 
-
-                    var entity = Spawn(GameTicker.ObserverPrototypeName, position);
-                    EnsureComp<MindContainerComponent>(entity);
-                    var ghostComponent = Comp<GhostComponent>(entity);
-                    _ghosts.SetCanReturnToBody(ghostComponent, false);
-
-                    _mindSystem.Visit(mindId, entity, mind);
-                    comp.Ghost = entity;
-                }
+                _mindSystem.Visit(mindId, entity, mind);
+                comp.Ghost = entity;
             }
 
             comp.IsCrazy = true;
@@ -180,7 +185,7 @@ namespace Content.Server.DeadSpace.Necromorphs.Sanity
                 htn.Blackboard.SetValue(NPCBlackboard.Owner, uid);
                 _npc.WakeNPC(uid, htn);
                 _faction.ClearFactions(uid, dirty: false);
-                _faction.AddFaction(uid, "SimpleHostile");
+                _faction.AddFaction(uid, SimpleHostileFaction);
                 comp.OldTask = "";
             }
             else
@@ -196,22 +201,13 @@ namespace Content.Server.DeadSpace.Necromorphs.Sanity
 
             _ghosts.SetCanReturnToBody(ghostComponent, true);
 
-            if (!_mindSystem.TryGetMind(comp.Ghost, out var mindId, out var mind))
+            if (!_mindSystem.TryGetMind(comp.Ghost, out _, out var mind))
                 return;
 
-            if (_mindSystem.TryGetSession(mindId, out var session))
+            if (_player.TryGetSessionById(mind.UserId, out var session))
                 _chatMan.DispatchServerMessage(session, Loc.GetString("Вы можете вернуться в своё тело."));
 
             comp.IsCrazy = false;
-        }
-        static ProtoId<NpcFactionPrototype>? GetFirstElement(HashSet<ProtoId<NpcFactionPrototype>> set)
-        {
-            foreach (var element in set)
-            {
-                return element;
-            }
-
-            return null;
         }
     }
 }

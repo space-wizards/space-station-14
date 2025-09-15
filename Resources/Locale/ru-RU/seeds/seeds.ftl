@@ -140,3 +140,5 @@ seeds-cherry-name = вишня
 seeds-cherry-display-name = вишнёвое дерево
 seeds-anomaly-berry-name = аномальные ягоды
 seeds-anomaly-berry-display-name = куст аномальных ягод
+seeds-bloonion-name = лук-летун
+seeds-bloonion-display-name = луковицы лука-летуна

@@ -96,7 +96,7 @@
     min: 4
     max: 4
     title: objective-condition-subordination-command-title
-  - type: SithSubmissionConditions
+  - type: SithSubmissionCondition
 
 - type: entity
   parent: [BaseSithObjective, BaseSurviveObjective]

@@ -1,3 +1,5 @@
+ent-CoreSubstation = { "" }
+    .desc = { "" }
 ent-BaseSubstation = подстанция
     .desc = Понижает напряжение подаваемого в него электричества.
 ent-BaseSubstationWall = настенная подстанция

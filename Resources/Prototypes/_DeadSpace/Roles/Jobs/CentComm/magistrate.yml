@@ -104,3 +104,13 @@
     sprite: Clothing/Ears/Headsets/servicesecurity.rsi
   - type: Headset
     color: "#d98b71"
+
+- type: chameleonOutfit
+  id: MagistratChameleonOutfit
+  job: Magistrat
+  equipment:
+    shoes: ClothingShoesBootsLaceup
+    outerClothing: ClothingOuterRobesJudge
+    eyes: ClothingEyesGlassesSunglasses
+    head: ClothingHeadHatPwig
+    socks: ClothingUnderwearSockMagistrat

@@ -1,7 +1,7 @@
 - type: entity
   parent: ClothingHeadHelmetHardsuitSecurityRed
   id: ClothingHeadHelmetHardsuitBlueShield
-  categories: [ HideSpawnMenu ]
+  categories: [ HideSpawnMenu, DoNotMap ]
   name: шлем скафандра офицера "Синий Щит"
   description: Предназначен для защитника командования.
   components:

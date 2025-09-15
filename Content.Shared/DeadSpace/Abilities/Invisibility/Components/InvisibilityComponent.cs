@@ -2,7 +2,6 @@
 
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 using Robust.Shared.Audio;
 
 namespace Content.Shared.DeadSpace.Abilities.Invisibility.Components;
@@ -11,19 +10,19 @@ namespace Content.Shared.DeadSpace.Abilities.Invisibility.Components;
 [AutoGenerateComponentState]
 public sealed partial class InvisibilityComponent : Component
 {
-    [DataField("actionInvisibility", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
-    public string ActionInvisibility = "ActionInvisibility";
+    [DataField]
+    public EntProtoId ActionInvisibility = "ActionInvisibility";
 
-    [DataField("actionInvisibilityEntity")]
+    [DataField]
     public EntityUid? ActionInvisibilityEntity;
 
-    [DataField("InvisibilitySound")]
+    [DataField]
     public SoundSpecifier? InvisibilitySound = default;
 
     [ViewVariables(VVAccess.ReadOnly)]
     public bool IsInvisible = false;
 
-    [DataField("visibility"), ViewVariables(VVAccess.ReadWrite), AutoNetworkedField]
+    [DataField, AutoNetworkedField]
     public float Visibility = 0.5f;
 
     [DataField]

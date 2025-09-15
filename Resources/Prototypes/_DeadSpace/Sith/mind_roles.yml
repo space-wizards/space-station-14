@@ -6,4 +6,5 @@
   - type: MindRole
     antagPrototype: Sith
     exclusiveAntag: true
+    subtype: role-subtype-sith
   - type: SithRole

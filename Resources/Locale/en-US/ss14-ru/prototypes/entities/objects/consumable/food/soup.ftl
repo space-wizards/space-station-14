@@ -1,5 +1,5 @@
-ent-FoodBowlBase = { ent-FoodBase }
-    .desc = { ent-FoodBase.desc }
+ent-FoodBowlBase = { ent-FoodInjectableBase }
+    .desc = { ent-FoodInjectableBase.desc }
 ent-FoodSoupPea = pea soup
     .desc = A humble split pea soup.
 ent-FoodSaladAesir = aesir salad

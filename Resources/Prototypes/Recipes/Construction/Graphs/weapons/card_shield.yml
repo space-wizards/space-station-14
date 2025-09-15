@@ -1,0 +1,17 @@
+- type: constructionGraph
+  id: CardShield
+  start: start
+  graph:
+  - node: start
+    edges:
+    - to: cardShield
+      steps:
+      - material: Cable
+        amount: 2
+        doAfter: 2
+      - material: Cardboard
+        amount: 6
+        doAfter: 2
+
+  - node: cardShield
+    entity: CardShield

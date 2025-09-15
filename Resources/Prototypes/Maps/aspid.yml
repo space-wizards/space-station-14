@@ -1,6 +1,6 @@
 # - type: gameMap
 #   id: Aspid
-#   mapName: 'DS Aspid Station'
+#   mapName: 'Aspid'
 #   mapPath: /Maps/ds_aspid.yml
 #   minPlayers: 20
 #   maxPlayers: 60

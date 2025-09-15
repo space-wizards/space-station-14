@@ -45,10 +45,11 @@
     - id: FoodSnackEnergy
     - id: FoodSnackMREBrownie
     - id: FoodSnackNutribrick
-    - id: FoodSnackFabricbrick
+    - id: FoodSnackFabricbrick # DS14
     - id: FoodSnackPistachios
     - id: FoodSnackPopcorn
     - id: FoodSnackRaisins
     - id: FoodSnackSemki
     - id: FoodSnackSus
     - id: FoodSnackSyndi
+    - id: FoodSnackSwirlLollipop

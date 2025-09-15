@@ -8,6 +8,7 @@ using Content.Shared.Mobs;
 using Content.Shared.Destructible;
 using Content.Server.Ghost.Roles.Components;
 using Content.Server.Ghost.Roles;
+using Robust.Shared.Player;
 
 namespace Content.Server.DeadSpace.Necromorphs.Leviathan;
 
@@ -15,6 +16,9 @@ public sealed class LeviathanSystem : EntitySystem
 {
     [Dependency] private readonly MobStateSystem _mobState = default!;
     [Dependency] private readonly SharedMindSystem _mindSystem = default!;
+    [Dependency] private readonly GhostRoleSystem _ghost = default!;
+    [Dependency] private readonly ISharedPlayerManager _player = default!;
+
     public override void Initialize()
     {
         base.Initialize();
@@ -24,6 +28,7 @@ public sealed class LeviathanSystem : EntitySystem
         SubscribeLocalEvent<LeviathanComponent, MobStateChangedEvent>(OnMobState);
         SubscribeLocalEvent<LeviathanComponent, DestructionEventArgs>(OnDestruction);
     }
+
     private void OnMindAdded(EntityUid uid, LeviathanComponent component, MindAddedMessage args)
     {
         TryTerminateGhost(component);
@@ -43,11 +48,12 @@ public sealed class LeviathanSystem : EntitySystem
         }
 
         var id = ghostRoleComponent.Identifier;
-        var session = args.Mind.Comp.Session;
+        if (!_player.TryGetSessionById(args.Mind.Comp.UserId, out var session))
+            return;
 
         if (session != null)
         {
-            EntityManager.EntitySysManager.GetEntitySystem<GhostRoleSystem>().Takeover(session, id);
+            _ghost.Takeover(session, id);
         }
         else
         {
@@ -56,20 +62,24 @@ public sealed class LeviathanSystem : EntitySystem
 
         component.MindFlag = true;
     }
+
     private void OnMindRemoved(EntityUid uid, LeviathanComponent component, MindRemovedMessage args)
     {
         if (component.MindFlag)
             TryTerminateGhost(component);
     }
+
     private void OnMobState(EntityUid uid, LeviathanComponent component, MobStateChangedEvent args)
     {
         if (_mobState.IsDead(uid))
             TryTerminateGhost(component);
     }
+
     private void OnDestruction(EntityUid uid, LeviathanComponent component, DestructionEventArgs args)
     {
         TryTerminateGhost(component);
     }
+
     private bool TryTerminateGhost(LeviathanComponent component)
     {
         if (component.GhostLeviathanEntity != null)
@@ -82,5 +92,4 @@ public sealed class LeviathanSystem : EntitySystem
 
         return false;
     }
-
 }

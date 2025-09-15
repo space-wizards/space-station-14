@@ -68,3 +68,37 @@
     Plastic: 200
     Silver: 200
     Diamond: 100
+
+- type: latheRecipe
+  id: PKAUpgradeDamage
+  result: PKAUpgradeDamage
+  categories:
+  - Weapons
+  completetime: 5
+  materials:
+    Steel: 1500
+    Gold: 500
+    Silver: 500
+
+- type: latheRecipe
+  id: PKAUpgradeRange
+  result: PKAUpgradeRange
+  categories:
+  - Weapons
+  completetime: 5
+  materials:
+    Steel: 1500
+    Gold: 500
+    Silver: 500
+
+- type: latheRecipe
+  id: PKAUpgradeFireRate
+  result: PKAUpgradeFireRate
+  categories:
+  - Weapons
+  completetime: 5
+  materials:
+    Steel: 1500
+    Gold: 500
+    Silver: 500
+

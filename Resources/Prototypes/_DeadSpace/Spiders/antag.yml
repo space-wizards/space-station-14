@@ -99,4 +99,4 @@
     min: 5000
     max: 5000
     title: objective-condition-capture-spiderterror-title
-  - type: SpiderTerrorConditions
+  - type: SpiderTerrorCondition

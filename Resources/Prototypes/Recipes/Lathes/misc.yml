@@ -13,6 +13,8 @@
 - type: latheRecipe
   abstract: true
   id: BaseFauxTileRecipe
+  categories:
+  - Faux # DS14
   completetime: 1
   materials:
     Plastic: 100
@@ -106,6 +108,15 @@
     Glass: 100
 
 - type: latheRecipe
+  id: PushHorn
+  result: PushHorn
+  completetime: 5
+  materials:
+    Steel: 500
+    Plastic: 500
+    Plasma: 200
+
+- type: latheRecipe
   parent: BaseToolRecipe
   id: NodeScanner
   result: NodeScanner
@@ -159,6 +170,16 @@
     Silver: 500
 
 - type: latheRecipe
+  id: ClothingShoesBootsJump
+  result: ClothingShoesBootsJump
+  completetime: 2
+  materials:
+    Steel: 1400
+    Plastic: 600
+    Silver: 200
+    Plasma: 200
+
+- type: latheRecipe
   id: ModularReceiver
   result: ModularReceiver
   completetime: 12
@@ -197,6 +218,12 @@
   result: FloorTileItemAstroAsteroidSand
 
 - type: latheRecipe
+  parent: BaseFauxTileRecipe
+  id: FauxTileAstroAsteroidSandBorderless
+  result: FloorTileItemAstroAsteroidSandBorderless
+
+- type: latheRecipe
+  parent: BaseCircuitTileRecipe # DS14
   id: FloorGreenCircuit
   result: FloorTileItemGCircuit4
   completetime: 2
@@ -204,11 +231,12 @@
     Steel: 100
 
 - type: latheRecipe
-  parent: FloorGreenCircuit
+  parent: BaseCircuitTileRecipe # DS14
   id: FloorBlueCircuit
   result: FloorTileItemBCircuit4
 
 - type: latheRecipe
+  parent: BaseCircuitTileRecipe # DS14
   id: FloorRedCircuit
   result: FloorTileItemRCircuit4
   completetime: 2
@@ -237,6 +265,38 @@
   completetime: 3
   materials:
     Plastic: 200
+
+- type: latheRecipe
+  id: ClothingOuterVestTank
+  result: ClothingOuterVestTank
+  completetime: 2
+  materials:
+    Cloth: 100
+    Steel: 50
+
+- type: latheRecipe
+  id: Ashtray
+  result: Ashtray
+  completetime: 1
+  materials:
+    Steel: 30
+
+- type: latheRecipe
+  id: BoxFolderClipboardEmpty
+  result: BoxFolderClipboardEmpty
+  completetime: 2
+  materials:
+    Wood: 100
+    Steel: 25
+
+- type: latheRecipe
+  id: BoxFolderPlasticClipboardEmpty
+  result: BoxFolderPlasticClipboardEmpty
+  completetime: 2
+  materials:
+    Plastic: 100
+    Steel: 25
+
 
  # DS14-start
 

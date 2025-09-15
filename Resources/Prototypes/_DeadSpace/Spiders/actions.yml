@@ -4,11 +4,12 @@
   description: Взорваться.
   categories: [ HideSpawnMenu ]
   components:
-  - type: InstantAction
+  - type: Action
     useDelay: 60
     icon:
       sprite: Actions/Implants/implants.rsi
       state: explosive
+  - type: InstantAction
     event: !type:ExplosionAbilityActionEvent
 
 - type: entity
@@ -17,11 +18,12 @@
   description:  Пронзительный крик станит всех врагов поблизости.
   categories: [ HideSpawnMenu ]
   components:
-  - type: InstantAction
+  - type: Action
     useDelay: 60
     icon:
       sprite: Interface/Actions/voice-mask.rsi
       state: icon
+  - type: InstantAction
     event: !type:StunRadiusActionEvent
 
 - type: entity
@@ -30,11 +32,12 @@
   description: Обычное, защита или атака? Потребляет кровь.
   categories: [ HideSpawnMenu ]
   components:
-  - type: InstantAction
+  - type: Action
     useDelay: 0.5
     icon:
       sprite: Interface/Actions/actions_mecha.rsi
       state: mech_cycle_equip_on
+  - type: InstantAction
     event: !type:SpiderKnightActionEvent
 
 - type: entity
@@ -43,9 +46,10 @@
   description: Вы становитесь невидимым.
   categories: [ HideSpawnMenu ]
   components:
-  - type: InstantAction
+  - type: Action
     useDelay: 5
     icon: Interface/Actions/eyeclose.png
+  - type: InstantAction
     event: !type:InvisibilityActionEvent
 
 - type: entity
@@ -54,11 +58,12 @@
   description: Выпускает дым, стоит 10 крови.
   categories: [ HideSpawnMenu ]
   components:
-  - type: InstantAction
+  - type: Action
     useDelay: 30
     icon:
       sprite: Interface/Actions/actions_mecha.rsi
       state: mech_smoke
+  - type: InstantAction
     event: !type:SpiderLurkerActionEvent
 
 - type: entity
@@ -67,11 +72,13 @@
   description: Поглощает кровь у выбранной цели.
   categories: [ HideSpawnMenu ]
   components:
-  - type: EntityTargetAction
+  - type: Action
     useDelay: 1
     icon:
       sprite: Interface/Actions/devour.rsi
       state: icon
+  - type: TargetAction
+  - type: EntityTargetAction
     event: !type:SuckBloodActionEvent
 
 - type: entity
@@ -80,11 +87,13 @@
   description: Заплести цель паутиной.
   categories: [ HideSpawnMenu ]
   components:
-  - type: EntityTargetAction
+  - type: Action
     useDelay: 3
     icon:
       sprite: Objects/Misc/handcuffs.rsi
       state: handcuff
+  - type: TargetAction
+  - type: EntityTargetAction
     event: !type:ChainAbilityActionEvent
 
 - type: entity
@@ -93,11 +102,12 @@
   description: Выделяет вещества и впрыскивает их в ваше тело.
   categories: [ HideSpawnMenu ]
   components:
-  - type: InstantAction
+  - type: Action
     useDelay: 5
     icon:
       sprite: Interface/Actions/actions_mecha.rsi
       state: mech_damtype_toxin
+  - type: InstantAction
     event: !type:AutoInjectReagentActionEvent
 
 - type: entity
@@ -106,10 +116,11 @@
   description: Спавнит выбранную сущность напротив.
   categories: [ HideSpawnMenu ]
   components:
-  - type: InstantAction
+  - type: Action
     icon: _DeadSpace/Interface/Actions/create.png
-    event: !type:SpawnAgainstActionEvent
     checkCanInteract: false
+  - type: InstantAction
+    event: !type:SpawnAgainstActionEvent
 
 - type: entity
   id: ActionEvolution
@@ -117,11 +128,12 @@
   description: Эволюционирует в выбранную сущность.
   categories: [ HideSpawnMenu ]
   components:
-  - type: InstantAction
+  - type: Action
     useDelay: 5
     icon: { sprite: Interface/Actions/actions_mecha.rsi, state: mech_ivanov }
-    event: !type:EvolutionActionEvent
     checkCanInteract: false
+  - type: InstantAction
+    event: !type:EvolutionActionEvent
 
 - type: entity
   id: ActionLockCocoon
@@ -129,14 +141,16 @@
   description: Помещает существо в кокон.
   categories: [ HideSpawnMenu ]
   components:
-  - type: EntityTargetAction
+  - type: Action
     useDelay: 10
     icon:
       sprite: _DeadSpace/Spiders/cocoon.rsi
       state: SPIDER-WEBBING-1
-    event: !type:LockCocoonEvent
-    checkCanAccess: false
+  - type: TargetAction
     range: 2
+    checkCanAccess: false
+  - type: EntityTargetAction
+    event: !type:LockCocoonEvent
 
 - type: entity
   id: ActionSpiderInfector
@@ -144,14 +158,16 @@
   description: Помещает в существо паучье яйца.
   categories: [ HideSpawnMenu ]
   components:
-  - type: EntityTargetAction
+  - type: Action
     useDelay: 10
     icon:
       sprite: /Textures/_DeadSpace/Interface/Misc/antag_icons.rsi
       state: Egg
-    event: !type:SpiderInfectorActionEvent
-    checkCanAccess: false
+  - type: TargetAction
     range: 2
+    checkCanAccess: false
+  - type: EntityTargetAction
+    event: !type:SpiderInfectorActionEvent
 
 - type: entity
   id: ActionHatch
@@ -159,9 +175,10 @@
   description: Вылезти из носителя.
   categories: [ HideSpawnMenu ]
   components:
-  - type: InstantAction
+  - type: Action
     useDelay: 10
     icon:
       sprite: /Textures/_DeadSpace/Interface/Misc/antag_icons.rsi
       state: Egg
+  - type: InstantAction
     event: !type:HatchActionEvent

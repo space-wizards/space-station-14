@@ -1,5 +1,3 @@
-ent-ClothingHeadHelmetHardsuitBasic = basic hardsuit helmet
-    .desc = A basic-looking hardsuit helmet that provides minor protection against most sources of damage.
 ent-ClothingHeadHelmetHardsuitAtmos = atmos hardsuit helmet
     .desc = A special hardsuit helmet designed for working in low-pressure, high thermal environments.
 ent-ClothingHeadHelmetHardsuitEngineering = engineering hardsuit helmet
@@ -37,7 +35,7 @@ ent-ClothingHeadHelmetHardsuitSyndie = blood-red hardsuit helmet
 ent-ClothingHeadHelmetHardsuitSyndieMedic = blood-red medic hardsuit helmet
     .desc = An advanced red hardsuit helmet specifically designed for field medic operations.
 ent-ClothingHeadHelmetHardsuitSyndieElite = syndicate elite helmet
-    .desc = An elite version of the blood-red hardsuit's helmet, with improved armor and fireproofing. Property of Gorlex Marauders.
+    .desc = An elite version of the blood-red hardsuit's helmet, with improved radiation resistance and fireproofing. Property of Gorlex Marauders.
 ent-ClothingHeadHelmetHardsuitSyndieCommander = syndicate commander helmet
     .desc = A bulked up version of the blood-red hardsuit's helmet, purpose-built for the commander of a syndicate operative squad. Has significantly improved armor for those deadly front-lines firefights.
 ent-ClothingHeadHelmetHardsuitCybersun = cybersun juggernaut helmet

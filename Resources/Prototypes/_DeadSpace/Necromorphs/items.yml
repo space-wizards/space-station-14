@@ -84,6 +84,7 @@
 - type: entity
   parent: BaseSyringe
   id: SyringeExtractInfectorDead
+  categories: [ DoNotMap ]
   components:
     - type: SolutionContainerManager
       solutions:
@@ -153,7 +154,7 @@
 - type: entity
   parent: BaseItem
   id: ObeliskSplinter
-  name: Осколок обелиска
+  name: осколок обелиска
   components:
   - type: Sprite
     sprite: _DeadSpace/Necromorfs/splinter.rsi
@@ -165,7 +166,6 @@
       collection: SoundsHeadaches
   - type: LimitedCharges
     maxCharges: 2
-    charges: 2
   - type: Physics
     bodyType: Dynamic
   - type: CollisionWake

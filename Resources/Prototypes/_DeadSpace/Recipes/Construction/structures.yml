@@ -1,84 +1,116 @@
 - type: construction
   id: ReinforcedSecretDoor
-  name: reinforced secret door
   graph: SecretDoor
   startNode: start
   targetNode: reinforcedSecretDoor
   category: construction-category-structures
-  description: A secret door for the wall.
+  description: recipes-secret-door-desc
   objectType: Structure
   placementMode: SnapgridCenter
   canBuildInImpassable: false
-  icon:
-    sprite: _DeadSpace/Structures/Doors/SecretDoors/reinforced_secret_door.rsi
-    state: closed
   conditions:
     - !type:TileNotBlocked
 
 - type: construction
   id: WoodSecretDoor
-  name: wood secret door
   graph: SecretDoor
   startNode: start
   targetNode: woodSecretDoor
   category: construction-category-structures
-  description: A secret door for the wall.
+  description: recipes-secret-door-desc
   objectType: Structure
   placementMode: SnapgridCenter
   canBuildInImpassable: false
-  icon:
-    sprite: _DeadSpace/Structures/Doors/SecretDoors/wood_secret_door.rsi
-    state: closed
   conditions:
     - !type:TileNotBlocked
 
 - type: construction
   id: GoldSecretDoor
-  name: gold secret door
   graph: SecretDoor
   startNode: start
   targetNode: goldSecretDoor
   category: construction-category-structures
-  description: A secret door for the wall.
+  description: recipes-secret-door-desc
   objectType: Structure
   placementMode: SnapgridCenter
   canBuildInImpassable: false
-  icon:
-    sprite: _DeadSpace/Structures/Doors/SecretDoors/gold_secret_door.rsi
-    state: closed
   conditions:
     - !type:TileNotBlocked
 
 - type: construction
   id: SilverSecretDoor
-  name: silver secret door
   graph: SecretDoor
   startNode: start
   targetNode: silverSecretDoor
   category: construction-category-structures
-  description: A secret door for the wall.
+  description: recipes-secret-door-desc
   objectType: Structure
   placementMode: SnapgridCenter
   canBuildInImpassable: false
-  icon:
-    sprite: _DeadSpace/Structures/Doors/SecretDoors/silver_secret_door.rsi
-    state: closed
   conditions:
     - !type:TileNotBlocked
 
 - type: construction
   id: BrassSecretDoor
-  name: brass secret door
   graph: SecretDoor
   startNode: start
   targetNode: brassSecretDoor
   category: construction-category-structures
-  description: A secret door for the wall.
+  description: recipes-secret-door-desc
   objectType: Structure
   placementMode: SnapgridCenter
   canBuildInImpassable: false
-  icon:
-    sprite: _DeadSpace/Structures/Doors/SecretDoors/brass_secret_door.rsi
-    state: closed
   conditions:
     - !type:TileNotBlocked
+
+- type: construction
+  id: MiningWall
+  graph: Girder
+  startNode: start
+  targetNode: miningWall
+  category: construction-category-structures
+  canBuildInImpassable: true
+  conditions:
+    - !type:EmptyOrWindowValidInTile
+    - !type:NoWindowsInTile
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canRotate: false
+
+- type: construction
+  id: MiningWallDiagonal
+  graph: Girder
+  startNode: start
+  targetNode: diagonalMiningWall
+  category: construction-category-structures
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
+
+- type: construction
+  id: UraniumWindowDirectional
+  graph: WindowDirectional
+  startNode: start
+  targetNode: uraniumWindowDirectional
+  category: construction-category-structures
+  canBuildInImpassable: true
+  conditions:
+    - !type:EmptyOrWindowValidInTile
+    - !type:NoWindowsInTile
+  objectType: Structure
+  placementMode: SnapgridCenter
+
+- type: construction
+  id: UraniumReinforcedWindowDirectional
+  graph: WindowDirectional
+  startNode: start
+  targetNode: uraniumReinforcedWindowDirectional
+  category: construction-category-structures
+  canBuildInImpassable: true
+  conditions:
+    - !type:EmptyOrWindowValidInTile
+    - !type:NoWindowsInTile
+  objectType: Structure
+  placementMode: SnapgridCenter

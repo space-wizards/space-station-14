@@ -13,3 +13,5 @@ ent-GoldenPlunger = golden plunger
     .desc = A plunger with a plastic suction cup coated in a thin layer of gold given as a token of appreciation for years of service. Still used to unclog drains.
 ent-RagItem = damp rag
     .desc = For cleaning up messes, you suppose.
+ent-WireBrush = wire brush
+    .desc = A bristly steel wire brush, perfect for scraping away even the toughest patches of rust.
