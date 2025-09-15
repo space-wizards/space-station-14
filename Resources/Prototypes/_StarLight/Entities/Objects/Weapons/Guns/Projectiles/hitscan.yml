@@ -1042,4 +1042,4 @@
   collisionMask: 64 #BulletImpassable
   damage:
     types:
-      Caustic: 5
+      Caustic: 8
