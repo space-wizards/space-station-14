@@ -81,6 +81,14 @@
     minPlayers: 40
   - type: LoadMapRule
     gridPath: /Maps/Shuttles/mothership.yml
+  - type: AntagSpawner
+    prototype: XenoborgEngi
+    prototypes:
+      MothershipCore: MothershipCore
+      Xenoborg: XenoborgEngi
+      Xenoborg: XenoborgHeavy
+      Xenoborg: XenoborgScout
+      Xenoborg: XenoborgStealth
   - type: AntagSelection
     selectionTime: PrePlayerSpawn
     definitions:
@@ -89,7 +97,7 @@
       spawnerPrototype: SpawnPointGhostRoleMothershipCore
       mindRoles:
       - MindRoleMothershipCore
-      entityPrototype: MothershipCore
+      # entityPrototype: MothershipCore
       briefing:
         text: mothership-welcome
         color: blueViolet
@@ -99,7 +107,7 @@
       spawnerPrototype: SpawnPointGhostRoleXenoborg
       mindRoles:
       - MindRoleXenoborg
-      entityPrototype: XenoborgEngi
+      # entityPrototype: XenoborgEngi
       briefing:
         text: xenoborgs-welcome
         color: blueViolet
@@ -109,7 +117,7 @@
       spawnerPrototype: SpawnPointGhostRoleXenoborg
       mindRoles:
       - MindRoleXenoborg
-      entityPrototype: XenoborgHeavy
+      # entityPrototype: XenoborgHeavy
       briefing:
         text: xenoborgs-welcome
         color: blueViolet
@@ -119,7 +127,7 @@
       spawnerPrototype: SpawnPointGhostRoleXenoborg
       mindRoles:
       - MindRoleXenoborg
-      entityPrototype: XenoborgScout
+      # entityPrototype: XenoborgScout
       briefing:
         text: xenoborgs-welcome
         color: blueViolet
@@ -129,7 +137,7 @@
       spawnerPrototype: SpawnPointGhostRoleXenoborg
       mindRoles:
       - MindRoleXenoborg
-      entityPrototype: XenoborgStealth
+      # entityPrototype: XenoborgStealth
       briefing:
         text: xenoborgs-welcome
         color: blueViolet
