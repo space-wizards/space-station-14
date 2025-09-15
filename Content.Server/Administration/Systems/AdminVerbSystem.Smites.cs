@@ -537,7 +537,7 @@ public sealed partial class AdminVerbSystem
             {
                 Text = nyanifyName,
                 Category = VerbCategory.Smite,
-                Icon = new SpriteSpecifier.Rsi(new ("/Textures/Clothing/Head/Hats/catears.rsi"), "icon"),
+                Icon = new SpriteSpecifier.Rsi(new ("/Textures/_Starlight/Clothing/Head/Hats/blackcatears.rsi"), "icon"),
                 Act = () =>
                 {
                     var ears = Spawn("ClothingHeadHatCatEars", Transform(args.Target).Coordinates);
@@ -550,6 +550,25 @@ public sealed partial class AdminVerbSystem
             };
             args.Verbs.Add(nyanify);
 
+            // Starlight - Start
+            var nyanify2Name = Loc.GetString("admin-smite-nyanify-name2").ToLowerInvariant();
+            Verb nyanify2 = new()
+            {
+                Text = nyanify2Name,
+                Category = VerbCategory.Smite,
+                Icon = new SpriteSpecifier.Rsi(new ("/Textures/Clothing/Head/Hats/catears.rsi"), "icon"),
+                Act = () =>
+                {
+                    var ears = Spawn("ClothingHeadHatWhiteCatEars", Transform(args.Target).Coordinates);
+                    EnsureComp<UnremoveableComponent>(ears);
+                    _inventorySystem.TryUnequip(args.Target, "head", true, true, false, inventory);
+                    _inventorySystem.TryEquip(args.Target, ears, "head", true, true, false, inventory);
+                },
+                Impact = LogImpact.Extreme,
+                Message = string.Join(": ", nyanify2Name, Loc.GetString("admin-smite-nyanify2-description"))
+            };
+            args.Verbs.Add(nyanify2);
+            // Starlight - End
             var killSignName = Loc.GetString("admin-smite-kill-sign-name").ToLowerInvariant();
             Verb killSign = new()
             {

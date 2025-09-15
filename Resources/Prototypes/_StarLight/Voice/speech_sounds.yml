@@ -34,3 +34,12 @@
   exclaimSound:
     path: /Audio/_Starlight/Voice/gorilla.ogg
 
+- type: speechSounds
+  id: UnisexResomi
+  saySound:
+    path: /Audio/_Starlight/Voice/Talk/resomi_1.ogg
+  askSound:
+    path: /Audio/_Starlight/Voice/Talk/resomi_1_ask.ogg
+  exclaimSound:
+    path: /Audio/_Starlight/Voice/Talk/resomi_1_exclaim.ogg
+    
