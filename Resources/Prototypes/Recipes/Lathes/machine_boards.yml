@@ -252,10 +252,10 @@
   result: DawInstrumentMachineCircuitboard
 
 - type: latheRecipe
-  parent: [BaseCircuitboardRecipe]
-  id: SmartFridgeCircuitboard
-  result: SmartFridgeCircuitboard
-  
+  parent: [ BaseCircuitboardRecipe, BaseServiceMachineRecipeCategory ]
+  id: FaxMachineCircuitboard
+  result: FaxMachineCircuitboard
+
 # Bar
 - type: latheRecipe
   parent: [ BaseCircuitboardRecipe, BaseServiceMachineRecipeCategory ]
