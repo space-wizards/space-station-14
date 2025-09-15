@@ -609,7 +609,7 @@ public abstract partial class InteractionTest
     #region EventListener
 
     /// <summary>
-    /// Asserts that running the given action causes an event to fired directed at the specified entity (defaults to <see cref="Target"/>).
+    /// Asserts that running the given action causes an event to be fired directed at the specified entity (defaults to <see cref="Target"/>).
     /// </summary>
     protected async Task AssertFiresEvent<TEvent>(Func<Task> act, EntityUid? uid = null, int count = 1, bool clear = true)
         where TEvent : notnull
@@ -653,7 +653,7 @@ public abstract partial class InteractionTest
     }
 
     /// <summary>
-    /// Gets all the events of the specified type that have been fired at the given entity.
+    /// Gets all the events of the specified type that have been fired at the given entity (defaults to <see cref="Target"/>).
     /// For this to work, this requires that the entity has been given a <see cref="TestListenerComponent"/>
     /// </summary>
     protected IEnumerable<TEvent> GetEvents<TEvent>(EntityUid? uid = null, Func<TEvent, bool>? predicate = null)

@@ -11,8 +11,6 @@ namespace Content.IntegrationTests.Tests.Helpers;
 /// </summary>
 public abstract class TestListenerSystem<TEvent> : EntitySystem where TEvent : notnull
 {
-    // public List<TEvent> BroadcastEvents = new();
-
     public override void Initialize()
     {
         // TODO
