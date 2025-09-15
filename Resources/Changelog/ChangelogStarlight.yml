@@ -14044,5 +14044,47 @@ Entries:
   id: 162900
   time: '2025-09-15T15:12:47.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/1629
+- author: Trep_Maul
+  changes:
+  - message: Abductors guidebook entry.
+    type: Tweak
+  id: 163000
+  time: '2025-09-15T15:25:38.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1630
+- author: Trep_Maul
+  changes:
+  - message: Paradox Clone guidebook entry.
+    type: Tweak
+  id: 163001
+  time: '2025-09-15T15:25:38.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1630
+- author: Trep_Maul
+  changes:
+  - message: Revenant guidebook entry.
+    type: Tweak
+  id: 163002
+  time: '2025-09-15T15:25:38.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1630
+- author: Trep_Maul
+  changes:
+  - message: Rat King guidebook entry.
+    type: Tweak
+  id: 163003
+  time: '2025-09-15T15:25:38.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1630
+- author: Trep_Maul
+  changes:
+  - message: Space Dragon guidebook entry.
+    type: Tweak
+  id: 163004
+  time: '2025-09-15T15:25:38.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1630
+- author: Trep_Maul
+  changes:
+  - message: Slimes and Spiders guidebook entry.
+    type: Tweak
+  id: 163005
+  time: '2025-09-15T15:25:38.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1630
 Order: -1
 
