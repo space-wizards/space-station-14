@@ -233,7 +233,7 @@ public sealed partial class RailroadRuleSystem : GameRuleSystem<RailroadRuleComp
     private Entity<RailroadCardComponent, RuleOwnerComponent>? PopRandomFromPool(List<Entity<RailroadCardComponent, RuleOwnerComponent>> pool, EntityUid subject)
     {
         var startIndex = _random.Next(pool.Count);
-        for (var i = startIndex; i < ProcessingMaxTry + startIndex; i++)
+        for (var i = startIndex; i < ProcessingMaxTry + startIndex && pool.Count > 0; i++)
         {
             var index = i % pool.Count;
             var card = pool[index];

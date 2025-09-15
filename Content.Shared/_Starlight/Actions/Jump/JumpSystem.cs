@@ -12,8 +12,8 @@ using Content.Shared.Throwing;
 using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Map;
-using Robust.Shared.Player;
-using Robust.Shared.Prototypes;
+using Robust.Shared.Physics.Events;
+using Content.Shared.Stunnable;
 
 namespace Content.Shared._Starlight.Actions.Jump;
 
@@ -26,7 +26,7 @@ public abstract class SharedJumpSystem : EntitySystem
     [Dependency] private readonly IMapManager _mapMan = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly ActionContainerSystem _actionContainer = default!;
-
+    [Dependency] private readonly SharedStunSystem _stun = default!;
 
     public override void Initialize()
     {
@@ -36,7 +36,17 @@ public abstract class SharedJumpSystem : EntitySystem
         SubscribeLocalEvent<JumpComponent, ComponentShutdown>(OnShutdown);
         SubscribeLocalEvent<JumpComponent, JetJumpActionEvent>(OnJump);
         SubscribeLocalEvent<JumpComponent, GetItemActionsEvent>(OnGetItemActions);
+        SubscribeLocalEvent<JumpComponent, ThrowDoHitEvent>(OnThrowCollide);
         SubscribeLocalEvent<JumpActionEvent>(OnJump);
+    }
+
+    private void OnThrowCollide(EntityUid uid, JumpComponent component, ref ThrowDoHitEvent args)
+    {
+        if (component.KnockdownSelfOnCollision)
+            _stun.TryKnockdown(uid, TimeSpan.FromSeconds(2), true);
+
+        if (component.KnockdownTargetOnCollision)
+            _stun.TryKnockdown(args.Target, TimeSpan.FromSeconds(2), true);
     }
 
     private void OnGetItemActions(Entity<JumpComponent> ent, ref GetItemActionsEvent args)
@@ -64,9 +74,7 @@ public abstract class SharedJumpSystem : EntitySystem
             return;
 
         if (component.IsEquipment)
-        {
             _actionContainer.RemoveAction(component.ActionEntity.Value);
-        }
         else
             _action.RemoveAction((uid, null), component.ActionEntity);
     }
