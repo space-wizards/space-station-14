@@ -946,7 +946,7 @@ public sealed class AccessReaderSystem : EntitySystem
                 sb.Append(Loc.GetString("access-reader-access-label", ("access", accessName)));
 
                 if (accessSubset.IndexOf(access) < (accessSubset.Count - 1))
-                    sb.Append(" & ");
+                    sb.Append(" " + Loc.GetString("generic-and") + " ");
             }
 
             // Add this string to the list
