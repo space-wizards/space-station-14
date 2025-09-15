@@ -244,6 +244,7 @@
     - ZombieBlood
     - AvaliBlood
     - ResomiBlood
+    - Sap
 
 - type: xenoArchTrigger
   id: TriggerThrow
