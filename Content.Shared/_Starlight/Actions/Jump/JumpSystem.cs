@@ -98,18 +98,18 @@ public abstract class SharedJumpSystem : EntitySystem
         if (args.FromGrid && !_mapMan.TryFindGridAt(userMapCoords, out _, out _)) return;
         args.Handled = true;
 
-        TryJump(args.Performer, null, args.Target, 15f, args.ToPointer, args.Sound, args.Distance);
+        TryJump(args.Performer, args.Target, 15f, args.ToPointer, args.Sound, args.Distance);
     }
 
-    public bool TryJump(EntityUid uid, JumpComponent? comp, EntityCoordinates targetCoords, float speed = 15f, bool toPointer = false, SoundSpecifier? sound = null, float? distance = null)
+    public bool TryJump(Entity<JumpComponent?> ent, EntityCoordinates targetCoords, float speed = 15f, bool toPointer = false, SoundSpecifier? sound = null, float? distance = null)
     {
-        if ((comp == null && !TryComp<JumpComponent>(uid, out comp))
-            || comp.ActionEntity == null
-            || !TryComp<ActionComponent>(comp.ActionEntity, out var action)
+        if (!Resolve(ent, ref ent.Comp, false)
+            || ent.Comp.ActionEntity == null
+            || !TryComp<ActionComponent>(ent.Comp.ActionEntity, out var action)
             || _action.IsCooldownActive(action))
             return false;
 
-        Jump(new Entity<JumpComponent>(uid, comp), targetCoords, speed, toPointer, sound, distance);
+        Jump(new Entity<JumpComponent>(ent, ent.Comp), targetCoords, speed, toPointer, sound, distance);
         return true;
     }
 
