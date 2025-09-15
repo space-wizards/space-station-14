@@ -8,6 +8,15 @@
     ignoreAllowRepeatedMorphs: true
 
 - type: polymorph
+  id: AdminVulpSmite
+  configuration:
+    entity: MobVulpkanin
+    forced: true
+    transferName: true
+    inventory: Transfer
+    ignoreAllowRepeatedMorphs: true
+
+- type: polymorph
   id: AdminMonkeySmite
   configuration:
     entity: MobMonkey
