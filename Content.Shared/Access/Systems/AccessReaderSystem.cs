@@ -441,7 +441,7 @@ public sealed class AccessReaderSystem : EntitySystem
     }
 
     /// <summary>
-    /// Tires to replace the access permissions in an entity's <see cref="AccessReaderComponent.AccessLists"/> with a supplied list.
+    /// Tries to replace the access permissions in an entity's <see cref="AccessReaderComponent.AccessLists"/> with a supplied list.
     /// </summary>
     /// <param name="ent">The access reader entity which is having its list of access permissions replaced.</param>
     /// <param name="accesses">The list of access permissions replacing the original one.</param>
@@ -929,6 +929,7 @@ public sealed class AccessReaderSystem : EntitySystem
     private List<string> GetLocalizedAccessNames(List<HashSet<ProtoId<AccessLevelPrototype>>> accessLists)
     {
         var localizedNames = new List<string>();
+        string? andSeparator = null;
 
         foreach (var accessHashSet in accessLists)
         {
@@ -946,7 +947,10 @@ public sealed class AccessReaderSystem : EntitySystem
                 sb.Append(Loc.GetString("access-reader-access-label", ("access", accessName)));
 
                 if (accessSubset.IndexOf(access) < (accessSubset.Count - 1))
-                    sb.Append(" " + Loc.GetString("generic-and") + " ");
+                {
+                    andSeparator ??= " " + Loc.GetString("generic-and") + " ";
+                    sb.Append(andSeparator);
+                }
             }
 
             // Add this string to the list
