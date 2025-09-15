@@ -67,6 +67,11 @@
   - type: Body
     prototype: Resomi
     requiredLegs: 2
+  - type: Butcherable
+    butcheringType: Spike
+    spawned:
+    - id: FoodMeatChicken
+      amount: 3
   - type: MobThresholds
     thresholds:
       0: Alive
