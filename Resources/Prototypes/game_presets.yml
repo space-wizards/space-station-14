@@ -256,22 +256,6 @@
   - BasicRoundstartVariation
 
 - type: gamePreset
-  id: XenoborgsSecret
-  alias:
-    - xenoborgsSecret
-  name: secret-title
-  description: secret-description
-  showInVote: false
-  rules:
-  - Xenoborgs
-  - DummyNonAntagChance
-  - SubGamemodesRuleNoXenoborg # no two motherships
-  - BasicStationEventScheduler
-  - MeteorSwarmScheduler
-  - SpaceTrafficControlEventScheduler
-  - BasicRoundstartVariation
-
-- type: gamePreset
   id: Zombie
   alias:
   - zombie
