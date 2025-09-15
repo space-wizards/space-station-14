@@ -438,16 +438,16 @@ public abstract partial class InteractionTest
     /// <summary>
     /// Make the player shoot with their currently held gun.
     /// The player needs to be able to enter combat mode for this.
-    /// Defaults to targeting the current <see cref="TargetCoords"/>.
     /// This does not pass a target entity into the GunSystem, meaning that targets that
     /// need to be aimed at directly won't be hit.
     /// </summary>
     /// <remarks>
     /// Guns have a cooldown when picking them up.
     /// So make sure to wait a little after spawning a gun in the player's hand or this will fail.
-    /// TODO: Validate that the gun was sucessfully fired.
     /// </remarks>
-    protected async Task AttemptShoot(NetCoordinates? target = null)
+    /// <param name="target">The target coordinates to shoot at. Defaults to the current <see cref="TargetCoords"/>.</param>
+    /// <param name="assert">If true this method will assert that the gun was successfully fired.</param>
+    protected async Task AttemptShoot(NetCoordinates? target = null, bool assert = true)
     {
         var actualTarget = SEntMan.GetCoordinates(target ?? TargetCoords);
 
@@ -463,7 +463,12 @@ public abstract partial class InteractionTest
 
         Assert.That(SGun.TryGetGun(SPlayer, out var gunUid, out var gunComp), "Player was not holding a gun!");
 
-        await Server.WaitPost(() => SGun.AttemptShoot(SPlayer, gunUid, gunComp!, actualTarget));
+        await Server.WaitAssertion(() =>
+        {
+            var success = SGun.AttemptShoot(SPlayer, gunUid, gunComp!, actualTarget);
+            if (assert)
+                Assert.That(success, "Gun failed to shoot.");
+        });
         await RunTicks(1);
 
         // If the player was not in combat mode before then disable it again.
@@ -473,14 +478,14 @@ public abstract partial class InteractionTest
     /// <summary>
     /// Make the player shoot with their currently held gun.
     /// The player needs to be able to enter combat mode for this.
-    /// Defaults to targeting the current <see cref="Target"/> entity.
     /// </summary>
     /// <remarks>
     /// Guns have a cooldown when picking them up.
     /// So make sure to wait a little after spawning a gun in the player's hand or this will fail.
-    /// TODO: Validate that the gun was sucessfully fired.
     /// </remarks>
-    protected async Task AttemptShoot(NetEntity? target = null)
+    /// <param name="target">The target entity to shoot at. Defaults to the current <see cref="Target"/> entity.</param>
+    /// <param name="assert">If true this method will assert that the gun was successfully fired.</param>
+    protected async Task AttemptShoot(NetEntity? target = null, bool assert = true)
     {
         var actualTarget = target ?? Target;
         Assert.That(actualTarget, Is.Not.Null, "No target to shoot at!");
@@ -497,7 +502,12 @@ public abstract partial class InteractionTest
 
         Assert.That(SGun.TryGetGun(SPlayer, out var gunUid, out var gunComp), "Player was not holding a gun!");
 
-        await Server.WaitPost(() => SGun.AttemptShoot(SPlayer, gunUid, gunComp!, Position(actualTarget!.Value), ToServer(actualTarget)));
+        await Server.WaitAssertion(() =>
+        {
+            var success = SGun.AttemptShoot(SPlayer, gunUid, gunComp!, Position(actualTarget!.Value), ToServer(actualTarget));
+            if (assert)
+                Assert.That(success, "Gun failed to shoot.");
+        });
         await RunTicks(1);
 
         // If the player was not in combat mode before then disable it again.

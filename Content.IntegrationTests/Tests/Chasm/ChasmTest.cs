@@ -11,7 +11,7 @@ namespace Content.IntegrationTests.Tests.Chasm;
 
 /// <summary>
 /// A test for chasms, which delete entities when a player walks over them.
-/// </summary>>>>
+/// </summary>
 [TestOf(typeof(ChasmComponent))]
 public sealed class ChasmTest : MovementTest
 {
@@ -21,7 +21,7 @@ public sealed class ChasmTest : MovementTest
 
     /// <summary>
     /// Test that a player falls into the chasm when walking over it.
-    /// </summary>>>>
+    /// </summary>
     [Test]
     public async Task ChasmFallTest()
     {
@@ -47,7 +47,7 @@ public sealed class ChasmTest : MovementTest
 
     /// <summary>
     /// Test that a catwalk placed over a chasm will protect a player from falling.
-    /// </summary>>>>
+    /// </summary>
     [Test]
     public async Task ChasmCatwalkTest()
     {
@@ -85,7 +85,7 @@ public sealed class ChasmTest : MovementTest
 
     /// <summary>
     /// Tests that a player is able to cross a chasm by using a grappling gun.
-    /// </summary>>>>
+    /// </summary>
     [Test]
     public async Task ChasmGrappleTest()
     {
