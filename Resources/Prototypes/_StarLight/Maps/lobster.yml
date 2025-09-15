@@ -37,8 +37,9 @@
             Chemist: [ 2, 3 ]
             MedicalDoctor: [ 7, 12 ]
             MedicalIntern: [ 6, 8 ]
+            Psychologist: [ 1, 1 ]
             Paramedic: [ 2, 2 ]
-            #Surgeon: [ 2, 2 ]
+            Surgeon: [ 2, 2 ]
             #science
             ResearchDirector: [ 1, 1 ]
             Scientist: [ 4, 10 ]

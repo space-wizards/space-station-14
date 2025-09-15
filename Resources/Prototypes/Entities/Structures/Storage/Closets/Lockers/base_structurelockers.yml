@@ -76,9 +76,6 @@
   - type: Tag
     tags: 
       - Locker
-  - type: Electrified
-    enabled: false
-    requirePower: false
   - type: PoweredLocker
   - type: StationAiWhitelist
   - type: WiresPanel
