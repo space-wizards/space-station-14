@@ -1,0 +1,83 @@
+﻿- type: decal
+  id: BrickTileMaintSteelHalfCornerNe
+  tags: ["station", "markings"]
+  sprite:
+    sprite: _Ronstation/Decals/brickhalftile.rsi
+    state: steel_maint_half_corner_ne
+
+- type: decal
+  id: BrickTileMaintSteelHalfCornerSe
+  tags: ["station", "markings"]
+  sprite:
+    sprite: _Ronstation/Decals/brickhalftile.rsi
+    state: steel_maint_half_corner_se
+
+- type: decal
+  id: BrickTileMaintSteelHalfCornerNw
+  tags: ["station", "markings"]
+  sprite:
+    sprite: _Ronstation/Decals/brickhalftile.rsi
+    state: steel_maint_half_corner_nw
+
+- type: decal
+  id: BrickTileMaintSteelHalfCornerSw
+  tags: ["station", "markings"]
+  sprite:
+    sprite: _Ronstation/Decals/brickhalftile.rsi
+    state: steel_maint_half_corner_sw
+
+- type: decal
+  id: BrickTileMaintSteelHalfInnerNe
+  tags: ["station", "markings"]
+  sprite:
+    sprite: _Ronstation/Decals/brickhalftile.rsi
+    state: steel_maint_half_inner_ne
+
+- type: decal
+  id: BrickTileMaintSteelHalfInnerSe
+  tags: ["station", "markings"]
+  sprite:
+    sprite: _Ronstation/Decals/brickhalftile.rsi
+    state: steel_maint_half_inner_se
+
+- type: decal
+  id: BrickTileMaintSteelHalfInnerNw
+  tags: ["station", "markings"]
+  sprite:
+    sprite: _Ronstation/Decals/brickhalftile.rsi
+    state: steel_maint_half_inner_nw
+
+- type: decal
+  id: BrickTileMaintSteelHalfInnerSw
+  tags: ["station", "markings"]
+  sprite:
+    sprite: _Ronstation/Decals/brickhalftile.rsi
+    state: steel_maint_half_inner_sw
+
+- type: decal
+  id: BrickTileMaintSteelHalfN
+  tags: ["station", "markings"]
+  sprite:
+    sprite: _Ronstation/Decals/brickhalftile.rsi
+    state: steel_maint_half_n
+
+- type: decal
+  id: BrickTileMaintSteelHalfS
+  tags: ["station", "markings"]
+  sprite:
+    sprite: _Ronstation/Decals/brickhalftile.rsi
+    state: steel_maint_half_s
+
+- type: decal
+  id: BrickTileMaintSteelHalfE
+  tags: ["station", "markings"]
+  sprite:
+    sprite: _Ronstation/Decals/brickhalftile.rsi
+    state: steel_maint_half_e
+
+- type: decal
+  id: BrickTileMaintSteelHalfW
+  tags: ["station", "markings"]
+  sprite:
+    sprite: _Ronstation/Decals/brickhalftile.rsi
+    state: steel_maint_half_w    
