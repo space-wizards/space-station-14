@@ -25,7 +25,8 @@ public sealed partial class RailroadingSystem : SharedRailroadingSystem
     [Dependency] private readonly EuiManager _euiManager = default!;
     [Dependency] private readonly AlertsSystem _alerts = default!;
     [Dependency] private readonly StarlightEntitySystem _entitySystem = default!;
-
+    [Dependency] private readonly RailroadRuleSystem _railroadRule = default!;
+    
     public readonly ProtoId<AlertPrototype> AlertProtoId = "RailroadingChoice";
 
     public override void Initialize()
@@ -140,7 +141,7 @@ public sealed partial class RailroadingSystem : SharedRailroadingSystem
                 RaiseLocalEvent(card, ref @event);
             }
             else if (_entitySystem.TryEntity<RailroadRuleComponent>(card.Comp2.RuleOwner, out var rule))
-                rule.Comp.Pool.Add(card);
+                _railroadRule.AddCardToPool(rule, card);
 
         subject.Comp.IssuedCards = null;
     }

@@ -40,3 +40,9 @@ MagazinePistol: MagazinePistolSP
 
 # 2025-09-02
 PosterContrabandRouny: RandomPosterLegit
+SpeedLoaderMagnum: SpeedLoaderMagnumBasic
+WeaponShotgunEnforcerRubber: WeaponShotgunEnforcer
+MagazineBoxMagnum: MagazineBoxMagnumSP
+CartridgeMagnum: CartridgeMagnumSP
+CartridgePistol: CartridgePistolSP
+CartridgeRifle: CartridgeRifleSP

@@ -454,6 +454,7 @@
             - Prying
           useSound:
             path: /Audio/Items/crowbar.ogg
+        - type: Prying
         - type: MeleeWeapon
           wideAnimationRotation: -135
           soundHit:
@@ -707,6 +708,7 @@
             - Prying
           useSound:
             path: /Audio/Items/crowbar.ogg
+        - type: Prying
         - type: MeleeWeapon
           wideAnimationRotation: -135
           soundHit:
