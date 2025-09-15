@@ -54923,9 +54923,6 @@ entities:
     - type: Transform
       pos: 72.5,-10.5
       parent: 2
-    - type: DeviceNetwork
-      configurators:
-      - invalid
       deviceLists:
       - 19077
       - 85
