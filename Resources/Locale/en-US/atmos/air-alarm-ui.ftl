@@ -2,6 +2,8 @@
 
 ## Window
 
+air-alarm-ui-title = Air Alarm
+
 air-alarm-ui-access-denied = Insufficient access!
 
 air-alarm-ui-window-pressure-label = Pressure
@@ -13,6 +15,7 @@ air-alarm-ui-window-device-count-label = Total Devices
 air-alarm-ui-window-resync-devices-label = Resync
 
 air-alarm-ui-window-mode-label = Mode
+air-alarm-ui-window-mode-select-locked-label = [bold][color=red] Mode selector failure! [/color][/bold]
 air-alarm-ui-window-auto-mode-label = Auto mode
 
 -air-alarm-state-name = { $state ->
@@ -44,6 +47,18 @@ air-alarm-ui-mode-fill = Fill
 air-alarm-ui-mode-panic = Panic
 air-alarm-ui-mode-none = None
 
+
+air-alarm-ui-pump-direction-siphoning = Siphoning
+air-alarm-ui-pump-direction-scrubbing = Scrubbing
+air-alarm-ui-pump-direction-releasing = Releasing
+
+air-alarm-ui-pressure-bound-nobound = No Bound
+air-alarm-ui-pressure-bound-internalbound = Internal Bound
+air-alarm-ui-pressure-bound-externalbound = External Bound
+air-alarm-ui-pressure-bound-both = Both
+
+air-alarm-ui-widget-gas-filters = Gas Filters
+
 ## Widgets
 
 ### General
@@ -66,6 +81,8 @@ air-alarm-ui-vent-internal-bound-label = Internal bound
 air-alarm-ui-scrubber-pump-direction-label = Direction
 air-alarm-ui-scrubber-volume-rate-label = Rate (L)
 air-alarm-ui-scrubber-wide-net-label = WideNet
+air-alarm-ui-scrubber-select-all-gases-label = Select all
+air-alarm-ui-scrubber-deselect-all-gases-label = Deselect all
 
 ### Thresholds
 

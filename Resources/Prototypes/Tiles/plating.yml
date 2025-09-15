@@ -72,6 +72,7 @@
   isSpace: true
   itemDrop: PartRodMetal1
   heatCapacity: 10000
+  mass: 200
 
 - type: tile
   id: TrainLattice
@@ -87,3 +88,4 @@
   isSpace: true
   itemDrop: PartRodMetal1
   heatCapacity: 10000
+  mass: 200

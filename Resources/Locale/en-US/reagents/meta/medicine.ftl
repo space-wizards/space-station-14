@@ -134,7 +134,7 @@ reagent-name-necrosol = necrosol
 reagent-desc-necrosol = A necrotic substance that seems to be able to heal frozen corpses. It can treat and rejuvenate plants when applied in small doses.
 
 reagent-name-aloxadone = aloxadone
-reagent-desc-aloxadone = A cryogenics chemical. Used to treat severe third degree burns via regeneration of the burnt tissue. Works regardless of the patient being alive or dead.
+reagent-desc-aloxadone = A cryogenics chemical. Used to treat severe burns and frostbite via regeneration of the affected tissue. Works regardless of the patient being alive or dead.
 
 reagent-name-mannitol = mannitol
 reagent-desc-mannitol = Efficiently restores brain damage.

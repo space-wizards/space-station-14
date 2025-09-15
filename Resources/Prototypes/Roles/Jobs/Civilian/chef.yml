@@ -28,3 +28,15 @@
   #storage:
     #back:
     #- Stuff
+
+- type: chameleonOutfit
+  id: ChefChameleonOutfit
+  job: Chef
+  equipment:
+    head: ClothingHeadHatChef
+    eyes: ClothingEyesGlassesCheapSunglasses
+    mask: ClothingMaskItalianMoustache
+    neck: ClothingNeckScarfStripedBrown
+    outerClothing: ClothingOuterJacketChef
+    gloves: ClothingHandsGlovesColorWhite
+    shoes: ClothingShoesChef

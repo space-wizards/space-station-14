@@ -54,3 +54,20 @@
     count: 10
   - type: TimedDespawn
     lifetime: 0.25
+
+- type: entity
+  id: PelletClusterLessLethal
+  name: pellet (ball, less lethal)
+  categories: [ HideSpawnMenu ]
+  parent: BaseBullet
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Projectiles/projectiles2.rsi
+    state: buckshot
+  - type: Projectile
+    deleteOnCollide: false
+    damage:
+      types:
+        Piercing: 5
+  - type: TimedDespawn
+    lifetime: 0.25

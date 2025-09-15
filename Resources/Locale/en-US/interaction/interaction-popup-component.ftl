@@ -32,6 +32,7 @@ petting-success-slimes = You pet {THE($target)} on {POSS-ADJ($target)} mucous su
 petting-success-snake = You pet {THE($target)} on {POSS-ADJ($target)} scaly large head.
 petting-success-monkey = You pet {THE($target)} on {POSS-ADJ($target)} mischevious little head.
 petting-success-nymph = You pet {THE($target)} on {POSS-ADJ($target)} wooden little head.
+petting-success-scurret = You pet {THE($target)} on {POSS-ADJ($target)} legally distinct head.
 
 petting-failure-generic = You reach out to pet {THE($target)}, but {SUBJECT($target)} {CONJUGATE-BE($target)} aloof towards you.
 
@@ -53,6 +54,7 @@ petting-failure-bear = You reach out to pet {THE($target)}, but {SUBJECT($target
 petting-failure-monkey = You reach out to pet {THE($target)}, but {SUBJECT($target)} almost {CONJUGATE-BASIC($target, "bite", "bites")} your fingers!
 petting-failure-nymph = You reach out to pet {THE($target)}, but {SUBJECT($target)} {CONJUGATE-BASIC($target, "move", "moves")} {POSS-ADJ($target)} branches away.
 petting-failure-shadow = You try to pet {THE($target)}, but your hand passes through the cold darkness of {POSS-ADJ($target)} body.
+petting-failure-scurret = You reach out to pet {THE($target)}, but {SUBJECT($target)} does a backflip!
 
 ## Petting silicons
 
@@ -98,6 +100,9 @@ fence-rattle-success = *rattle*
 hugging-success-generic = You hug {THE($target)}.
 hugging-success-generic-others = { CAPITALIZE(THE($user)) } hugs {THE($target)}.
 hugging-success-generic-target = { CAPITALIZE(THE($user)) } hugs you.
+
+petting-success-soft-floofy-vulp = You pet { THE($target) } on {POSS-ADJ($target)} soft floofy head.
+petting-success-soft-floofy-vulp-others = { CAPITALIZE(THE($user)) } pets {THE($target)} on {POSS-ADJ($target)} soft floofy head.
 
 ## Other
 

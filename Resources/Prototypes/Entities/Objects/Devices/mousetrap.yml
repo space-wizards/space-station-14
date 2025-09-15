@@ -8,32 +8,37 @@
       sprite: Objects/Devices/mousetrap.rsi
       drawdepth: SmallMobs # if mice can hide under tables, so can mousetraps
       layers:
-        - state: mousetrap
-          map: ["base"]
+      - state: mousetrap
+        map: ["enum.ToggleableVisuals.Layer"]
     - type: StepTrigger
       intersectRatio: 0.2
       requiredTriggeredSpeed: 2
     - type: Mousetrap
+    - type: ItemToggle
+      soundActivate: "/Audio/Items/Handcuffs/cuff_end.ogg"
+      soundDeactivate: "/Audio/Items/snap.ogg"
+      popupActivate: mousetrap-on-activate
+      popupDeactivate: mousetrap-on-deactivate
+    - type: UseDelay
+    - type: ItemToggleOnTrigger
+      canActivate: false
+      showPopup: false # only show the popup when arming/disarming the trap in your hand
     - type: TriggerOnStepTrigger
     - type: PreventableStepTrigger
-    - type: DamageUserOnTrigger
+    - type: DamageOnTrigger
+      targetUser: true
       damage:
         types:
           Blunt: 2 # base damage, scales based on mass
-    - type: EmitSoundOnUse
-      sound: "/Audio/Items/Handcuffs/cuff_end.ogg"
-      handle: false
-    - type: EmitSoundOnTrigger
-      sound: "/Audio/Items/snap.ogg"
     - type: Item
       sprite: Objects/Devices/mousetrap.rsi
     - type: Appearance
     - type: GenericVisualizer
       visuals:
-        enum.MousetrapVisuals.Visual:
-          base:
-            Armed: { state: mousetraparmed }
-            Unarmed: { state: mousetrap }
+        enum.ToggleableVisuals.Enabled:
+          enum.ToggleableVisuals.Layer:
+            True: {state: mousetraparmed}
+            False: {state: mousetrap}
     - type: Physics
       bodyType: Dynamic
     - type: CollisionWake
@@ -66,6 +71,6 @@
   - type: Sprite
     layers:
     - state: mousetraparmed
-      map: ["base"]
-  - type: Mousetrap
-    isActive: true
+      map: ["enum.ToggleableVisuals.Layer"]
+  - type: ItemToggle
+    activated: true

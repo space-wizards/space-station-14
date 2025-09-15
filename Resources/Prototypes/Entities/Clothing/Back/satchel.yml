@@ -50,6 +50,12 @@
   - type: Storage
     storageOpenSound:
       collection: BikeHorn
+      params:
+        variation: 0.125
+    storageInsertSound:
+      collection: FootstepClown
+      params:
+        variation: 0.125
 
 - type: entity
   parent: ClothingBackpackSatchel
@@ -178,3 +184,13 @@
     maxItemSize: Huge
     grid:
     - 0,0,19,9
+
+- type: entity
+  parent: ClothingBackpackSatchelHolding
+  id: ClothingBackpackSatchelAdmin
+  name: satchel of administration
+  suffix: Admin
+  description: If you are somehow seeing this, no you're not.
+  components:
+  - type: ExplosionResistance
+    damageCoefficient: 0

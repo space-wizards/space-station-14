@@ -57,27 +57,6 @@
         amount: 4
 
 # Magnum
-- type: entity
-  name: box of SMG .45 magnum magazines
-  parent: BoxMagazine
-  id: BoxMagazineMagnumSubMachineGun
-  description: A box full of SMG .45 magnum magazines.
-  components:
-  - type: StorageFill
-    contents:
-      - id: MagazineMagnumSubMachineGun
-        amount: 3
-
-- type: entity
-  name: box of SMG .45 magnum (practice) magazines
-  parent: BoxMagazine
-  id: BoxMagazineMagnumSubMachineGunPractice
-  description: A box full of SMG .45 magnum (practice) magazines.
-  components:
-  - type: StorageFill
-    contents:
-      - id: MagazineMagnumSubMachineGunPractice
-        amount: 3
 
 # Pistol
 - type: entity

@@ -20,13 +20,6 @@ public sealed partial class AnomalySupercriticalComponent : Component
     public TimeSpan EndTime;
 
     /// <summary>
-    /// The length of the animation before it goes supercritical.
-    /// </summary>
-    [AutoNetworkedField]
-    [ViewVariables(VVAccess.ReadWrite)]
-    public TimeSpan SupercriticalDuration = TimeSpan.FromSeconds(10);
-
-    /// <summary>
     /// The maximum size the anomaly scales to while going supercritical
     /// </summary>
     [DataField]

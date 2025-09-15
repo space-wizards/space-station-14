@@ -3378,9 +3378,7 @@ entities:
     - type: Transform
     - type: Map
       mapPaused: True
-    - type: PhysicsMap
     - type: GridTree
-    - type: MovedGrids
     - type: Broadphase
     - type: OccluderTree
     - type: LoadedMap
@@ -32340,7 +32338,7 @@ entities:
       pos: 40.5,4.5
       parent: 31
     - type: FaxMachine
-      name: engineering
+      name: Engineering
   - uid: 2045
     components:
     - type: Transform
@@ -32355,7 +32353,7 @@ entities:
       pos: 9.5,-28.5
       parent: 31
     - type: FaxMachine
-      name: library
+      name: Library
   - uid: 8994
     components:
     - type: Transform
@@ -32370,15 +32368,15 @@ entities:
       pos: 8.5,18.5
       parent: 31
     - type: FaxMachine
-      name: hop's office
+      name: HoP's office
   - uid: 10825
     components:
     - type: Transform
       pos: 1.5,32.5
       parent: 31
     - type: FaxMachine
-      destinationAddress: bridge
-      name: bridge
+      destinationAddress: Bridge
+      name: Bridge
 - proto: FaxMachineCaptain
   entities:
   - uid: 9686
@@ -32387,7 +32385,7 @@ entities:
       pos: 7.5,24.5
       parent: 31
     - type: FaxMachine
-      name: captain's office
+      name: Captain's office
 - proto: filingCabinetDrawerRandom
   entities:
   - uid: 4637

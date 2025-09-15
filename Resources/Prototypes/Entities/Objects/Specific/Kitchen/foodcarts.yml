@@ -73,7 +73,6 @@
   description: Get out there and slang some dogs.
   components:
     - type: Sprite
-      netSync: false
       noRot: true
       sprite: Objects/Specific/Kitchen/food_carts.rsi
       layers:
@@ -154,7 +153,6 @@
   description: It's the Ice Cream Man! It's the Ice Cream Man!
   components:
     - type: Sprite
-      netSync: false
       noRot: true
       sprite: Objects/Specific/Kitchen/food_carts.rsi
       layers:

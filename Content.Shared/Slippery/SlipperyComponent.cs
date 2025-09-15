@@ -22,6 +22,25 @@ namespace Content.Shared.Slippery
         public SoundSpecifier SlipSound = new SoundPathSpecifier("/Audio/Effects/slip.ogg");
 
         /// <summary>
+        /// Should this component's friction factor into sliding friction?
+        /// </summary>
+        [DataField, AutoNetworkedField]
+        public bool AffectsSliding;
+
+        /// <summary>
+        /// How long should this component apply the FrictionStatusComponent?
+        /// Note: This does stack with SlidingComponent since they are two separate Components
+        /// </summary>
+        [DataField, AutoNetworkedField]
+        public TimeSpan FrictionStatusTime = TimeSpan.FromSeconds(0.5f);
+
+        /// <summary>
+        /// How much stamina damage should this component do on slip?
+        /// </summary>
+        [DataField, AutoNetworkedField]
+        public float StaminaDamage = 25f;
+
+        /// <summary>
         /// Loads the data needed to determine how slippery something is.
         /// </summary>
         [DataField, AutoNetworkedField]
@@ -34,10 +53,22 @@ namespace Content.Shared.Slippery
     public sealed partial class SlipperyEffectEntry
     {
         /// <summary>
-        /// How many seconds the mob will be paralyzed for.
+        /// How many seconds the mob will be stunned for.
         /// </summary>
         [DataField]
-        public TimeSpan ParalyzeTime = TimeSpan.FromSeconds(1.5);
+        public TimeSpan StunTime = TimeSpan.FromSeconds(0.5);
+
+        /// <summary>
+        /// How many seconds the mob will be knocked down for.
+        /// </summary>
+        [DataField]
+        public TimeSpan KnockdownTime = TimeSpan.FromSeconds(1.5);
+
+        /// <summary>
+        /// Should the slipped entity try to stand up when Knockdown ends?
+        /// </summary>
+        [DataField]
+        public bool AutoStand = true;
 
         /// <summary>
         /// The entity's speed will be multiplied by this to slip it forwards.
@@ -63,6 +94,6 @@ namespace Content.Shared.Slippery
         /// This is used to store the friction modifier that is used on a sliding entity.
         /// </summary>
         [DataField]
-        public float SlipFriction;
+        public float SlipFriction = 0.5f;
     }
 }

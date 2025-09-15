@@ -16,16 +16,16 @@
   ## Operatives
   Your team will be made up of several different roles, which are:
   - [bold]Operatives[/bold], standard soldiers who can take up the grunt work.
-  - The [bold]Agent[/bold] who works with reagents to make medicines or chemical weapons.
+  - The [bold]Corpsman[/bold] who works with reagents to make medicines or chemical weapons.
   - The [bold]Commander[/bold] who draws up the plan and leads the team.
 
   <Box>
     <GuideEntityEmbed Entity="ClothingOuterHardsuitSyndie"/>
-    <GuideEntityEmbed Entity="ClothingOuterHardsuitSyndieMedic" Caption="agent's hardsuit"/>
+    <GuideEntityEmbed Entity="ClothingOuterHardsuitSyndieMedic" Caption="corpsman's hardsuit"/>
     <GuideEntityEmbed Entity="ClothingOuterHardsuitSyndieCommander" Caption="commander's hardsuit"/>
   </Box>
 
-  If you have been selected as the Agent or Commander but don't feel ready, one of your teammates can take responsibility.
+  If you have been selected as the Corpsman or Commander but don't feel ready, one of your teammates can take over your responsibilities.
 
   ## The Disk
 

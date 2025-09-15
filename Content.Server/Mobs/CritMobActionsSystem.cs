@@ -65,6 +65,10 @@ public sealed class CritMobActionsSystem : EntitySystem
         _quickDialog.OpenDialog(actor.PlayerSession, Loc.GetString("action-name-crit-last-words"), "",
             (string lastWords) =>
             {
+                // if a person is gibbed/deleted, they can't say last words
+                if (Deleted(uid))
+                    return;
+
                 // Intentionally does not check for muteness
                 if (actor.PlayerSession.AttachedEntity != uid
                     || !_mobState.IsCritical(uid))

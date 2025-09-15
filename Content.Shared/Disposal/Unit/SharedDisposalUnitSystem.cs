@@ -1,7 +1,6 @@
 using System.Linq;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Administration.Logs;
-using Content.Shared.Body.Components;
 using Content.Shared.Climbing.Systems;
 using Content.Shared.Containers;
 using Content.Shared.Database;
@@ -15,10 +14,12 @@ using Content.Shared.Hands.EntitySystems;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Interaction;
 using Content.Shared.Item;
+using Content.Shared.Mobs.Components;
 using Content.Shared.Movement.Events;
 using Content.Shared.Popups;
 using Content.Shared.Power;
 using Content.Shared.Power.EntitySystems;
+using Content.Shared.Storage.Components;
 using Content.Shared.Throwing;
 using Content.Shared.Verbs;
 using Content.Shared.Whitelist;
@@ -90,6 +91,9 @@ public abstract class SharedDisposalUnitSystem : EntitySystem
         SubscribeLocalEvent<DisposalUnitComponent, AfterInteractUsingEvent>(OnAfterInteractUsing);
         SubscribeLocalEvent<DisposalUnitComponent, DragDropTargetEvent>(OnDragDropOn);
         SubscribeLocalEvent<DisposalUnitComponent, ContainerRelayMovementEntityEvent>(OnMovement);
+
+        SubscribeLocalEvent<DisposalUnitComponent, GetDumpableVerbEvent>(OnGetDumpableVerb);
+        SubscribeLocalEvent<DisposalUnitComponent, DumpEvent>(OnDump);
     }
 
     private void AddDisposalAltVerbs(Entity<DisposalUnitComponent> ent, ref GetVerbsEvent<AlternativeVerb> args)
@@ -141,7 +145,7 @@ public abstract class SharedDisposalUnitSystem : EntitySystem
             Category = VerbCategory.Insert,
             Act = () =>
             {
-                _handsSystem.TryDropIntoContainer(args.User, args.Using.Value, component.Container, checkActionBlocker: false, args.Hands);
+                _handsSystem.TryDropIntoContainer((args.User, args.Hands), args.Using.Value, component.Container, checkActionBlocker: false);
                 _adminLog.Add(LogType.Action, LogImpact.Medium, $"{ToPrettyString(args.User):player} inserted {ToPrettyString(args.Using.Value)} into {ToPrettyString(uid)}");
                 AfterInsert(uid, component, args.Using.Value, args.User);
             }
@@ -446,7 +450,7 @@ public abstract class SharedDisposalUnitSystem : EntitySystem
             return false;
 
         var storable = HasComp<ItemComponent>(entity);
-        if (!storable && !HasComp<BodyComponent>(entity))
+        if (!storable && !HasComp<MobStateComponent>(entity))
             return false;
 
         if (_whitelistSystem.IsBlacklistPass(component.Blacklist, entity) ||
@@ -784,5 +788,24 @@ public abstract class SharedDisposalUnitSystem : EntitySystem
         // create a verb category for "enter"?
         // See also, medical scanner. Also maybe add verbs for entering lockers/body bags?
         args.Verbs.Add(verb);
+    }
+
+    private void OnGetDumpableVerb(Entity<DisposalUnitComponent> ent, ref GetDumpableVerbEvent args)
+    {
+        args.Verb = Loc.GetString("dump-disposal-verb-name", ("unit", ent));
+    }
+
+    private void OnDump(Entity<DisposalUnitComponent> ent, ref DumpEvent args)
+    {
+        if (args.Handled)
+            return;
+
+        args.Handled = true;
+        args.PlaySound = true;
+
+        foreach (var entity in args.DumpQueue)
+        {
+            DoInsertDisposalUnit(ent, entity, args.User);
+        }
     }
 }

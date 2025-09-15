@@ -8,6 +8,7 @@ using Content.Shared.Radio.Components;
 using Content.Shared.Doors.Components;
 using Content.Shared.Doors.Systems;
 using Content.Shared.GameTicking.Components;
+using Content.Shared.Light.Components;
 
 namespace Content.Server.StationEvents.Events;
 

@@ -84,11 +84,68 @@
     sprite: Objects/Specific/Chapel/necronomicon.rsi
 
 - type: entity
+  parent: BaseAction
   id: ActionBibleSummon
   name: Summon familiar
   description: Summon a familiar that will aid you and gain humanlike intelligence once inhabited by a soul.
   components:
-  - type: InstantAction
+  - type: Action
     icon: { sprite: Clothing/Head/Hats/witch.rsi, state: icon }
-    event: !type:SummonActionEvent
     useDelay: 1
+  - type: InstantAction
+    event: !type:SummonActionEvent
+
+- type: entity
+  parent: Bible
+  name: tanakh
+  description: "For God's chosen crewmembers"
+  id: BibleTanakh
+  components:
+  - type: Sprite
+    sprite: Objects/Specific/Chapel/tanakh.rsi
+  - type: Item
+    sprite: Objects/Specific/Chapel/tanakh.rsi
+
+- type: entity
+  parent: Bible
+  name: druidic tablet
+  description: "It's the mystery of the druids!"
+  id: BibleDruid
+  components:
+  - type: Sprite
+    sprite: Objects/Specific/Chapel/mysteryofthedruids.rsi
+  - type: Item
+    sprite: Objects/Specific/Chapel/mysteryofthedruids.rsi
+
+- type: entity
+  parent: Bible
+  name: communist manifesto
+  description: "Remove the mask of humanity from Capital."
+  id: BibleCommunistManifesto
+  components:
+  - type: Sprite
+    sprite: Objects/Specific/Chapel/communistmanifesto.rsi
+  - type: Item
+    sprite: Objects/Specific/Chapel/communistmanifesto.rsi
+
+- type: entity
+  parent: Bible
+  name: satanic bible
+  description: "What could possibly go wrong?"
+  id: BibleSatanic
+  components:
+  - type: Sprite
+    sprite: Objects/Specific/Chapel/satanicbible.rsi
+  - type: Item
+    sprite: Objects/Specific/Chapel/satanicbible.rsi
+
+- type: entity
+  parent: Bible
+  name: codex nanotrasimus
+  description: "A familiar book containing the Sacred Operating Procedures."
+  id: BibleNanoTrasen
+  components:
+  - type: Sprite
+    sprite: Objects/Specific/Chapel/codexnanotrasimus.rsi
+  - type: Item
+    sprite: Objects/Specific/Chapel/codexnanotrasimus.rsi

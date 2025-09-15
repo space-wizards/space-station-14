@@ -10,8 +10,8 @@
     FoodTinBeans: 3
     FoodTinPeaches: 3
     DrinkBeerCan: 6
-  emaggedInventory:
     KitchenKnife: 2
+  emaggedInventory:
     ClothingMaskBreath: 3
     EmergencyOxygenTankFilled: 3
     DrinkNukieCan: 2

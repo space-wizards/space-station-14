@@ -273,11 +273,11 @@ namespace Content.Server.Construction
 
                     // Since many things inherit this step, we delegate the "is this entity valid?" logic to them.
                     // While this is very OOP and I find it icky, I must admit that it simplifies the code here a lot.
-                    if(!insertStep.EntityValid(insert, EntityManager, _factory))
+                    if(!insertStep.EntityValid(insert, EntityManager, Factory))
                         return HandleResult.False;
 
-                    // Unremovable items can't be inserted, unless they are a lingering stack
-                    if(HasComp<UnremoveableComponent>(insert) && (!TryComp<StackComponent>(insert, out var comp) || !comp.Lingering))
+                    // Unremovable items can't be inserted
+                    if(HasComp<UnremoveableComponent>(insert))
                         return HandleResult.False;
 
                     // If we're only testing whether this step would be handled by the given event, then we're done.
@@ -569,6 +569,10 @@ namespace Content.Server.Construction
 
                 handled.Handled = true;
             }
+
+            // Make sure the event passes validation before enqueuing it
+            if (HandleEvent(uid, args, true, construction) != HandleResult.Validated)
+                return;
 
             // Enqueue this event so it'll be handled in the next tick.
             // This prevents some issues that could occur from entity deletion, component deletion, etc in a handler.

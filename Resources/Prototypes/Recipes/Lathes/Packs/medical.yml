@@ -44,6 +44,8 @@
   - DiseaseSwab
   - BodyBag
   - WhiteCane
+  - OffsetCane
+  - OffsetCaneWood
 
 - type: latheRecipePack
   id: RollerBedsStatic
@@ -93,6 +95,8 @@
   - SyringeCryostasis
   - BluespaceBeaker
   - SyringeBluespace
+  - LauncherSyringe
+  - MiniSyringe
 
 - type: latheRecipePack
   id: MedicalBoards

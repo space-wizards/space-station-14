@@ -1,8 +1,8 @@
 using System.Linq;
-using Content.Server.Station.Components;
 using Content.Shared.Cargo;
 using Content.Shared.Cargo.Components;
 using Content.Shared.Cargo.Prototypes;
+using Content.Shared.Station.Components;
 using Robust.Shared.Prototypes;
 
 namespace Content.Server.Cargo.Components;
@@ -30,6 +30,16 @@ public sealed partial class StationCargoOrderDatabaseComponent : Component
     /// </summary>
     [ViewVariables]
     public int NumOrdersCreated;
+
+    /// <summary>
+    /// An all encompassing determiner of what markets can be ordered from.
+    /// Not every console can order from every market, but a console can't order from a market not on this list.
+    /// </summary>
+    [DataField]
+    public List<ProtoId<CargoMarketPrototype>> Markets = new()
+    {
+        "market",
+    };
 
     // TODO: Can probably dump this
     /// <summary>

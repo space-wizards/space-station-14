@@ -65,7 +65,20 @@
     id: HoPPDA
     gloves: ClothingHandsGlovesHop
     ears: ClothingHeadsetAltCommand
-    belt: BoxFolderClipboard
+    belt: BoxFolderClipboardThreePapers
+    eyes: ClothingEyesHudCommand
   storage:
     back:
     - Flash
+
+- type: chameleonOutfit
+  id: HeadOfPersonnelChameleonOutfit
+  job: HeadOfPersonnel
+  hasMindShield: true
+  equipment:
+    head: ClothingHeadHatHopcap
+    eyes: ClothingEyesHudCommand
+    mask: ClothingMaskNeckGaiterRed
+    neck: ClothingNeckCloakHop
+    outerClothing: ClothingOuterWinterHoP
+

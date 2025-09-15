@@ -1,9 +1,205 @@
 - type: jobIcon
-  id: JobIcon
   abstract: true
+  id: JobIcon
   priority: 1
   locationPreference: Right
   isShaded: true
+
+# Cargo
+
+- type: jobIcon
+  parent: JobIcon
+  id: JobIconCargoTechnician
+  icon:
+    sprite: /Textures/Interface/Misc/job_icons.rsi
+    state: CargoTechnician
+  jobName: job-name-cargotech
+
+- type: jobIcon
+  parent: JobIcon
+  id: JobIconShaftMiner
+  icon:
+    sprite: /Textures/Interface/Misc/job_icons.rsi
+    state: ShaftMiner
+  jobName: job-name-salvagespec
+
+# Command
+
+- type: jobIcon
+  parent: JobIcon
+  id: JobIconCaptain
+  icon:
+    sprite: /Textures/Interface/Misc/job_icons.rsi
+    state: Captain
+  jobName: job-name-captain
+
+- type: jobIcon
+  parent: JobIcon
+  id: JobIconChiefEngineer
+  icon:
+    sprite: /Textures/Interface/Misc/job_icons.rsi
+    state: ChiefEngineer
+  jobName: job-name-ce
+
+- type: jobIcon
+  parent: JobIcon
+  id: JobIconChiefMedicalOfficer
+  icon:
+    sprite: /Textures/Interface/Misc/job_icons.rsi
+    state: ChiefMedicalOfficer
+  jobName: job-name-cmo
+
+- type: jobIcon
+  parent: JobIcon
+  id: JobIconHeadOfPersonnel
+  icon:
+    sprite: /Textures/Interface/Misc/job_icons.rsi
+    state: HeadOfPersonnel
+  jobName: job-name-hop
+
+- type: jobIcon
+  parent: JobIcon
+  id: JobIconHeadOfSecurity
+  icon:
+    sprite: /Textures/Interface/Misc/job_icons.rsi
+    state: HeadOfSecurity
+  jobName: job-name-hos
+
+- type: jobIcon
+  parent: JobIcon
+  id: JobIconResearchDirector
+  icon:
+    sprite: /Textures/Interface/Misc/job_icons.rsi
+    state: ResearchDirector
+  jobName: job-name-rd
+
+- type: jobIcon
+  parent: JobIcon
+  id: JobIconQuarterMaster
+  icon:
+    sprite: /Textures/Interface/Misc/job_icons.rsi
+    state: QuarterMaster
+  jobName: job-name-qm
+
+# Engineering
+
+- type: jobIcon
+  parent: JobIcon
+  id: JobIconAtmosphericTechnician
+  icon:
+    sprite: /Textures/Interface/Misc/job_icons.rsi
+    state: AtmosphericTechnician
+  jobName: job-name-atmostech
+
+- type: jobIcon
+  parent: JobIcon
+  id: JobIconStationEngineer
+  icon:
+    sprite: /Textures/Interface/Misc/job_icons.rsi
+    state: StationEngineer
+  jobName: job-name-engineer
+
+- type: jobIcon
+  parent: JobIcon
+  id: JobIconTechnicalAssistant
+  icon:
+    sprite: /Textures/Interface/Misc/job_icons.rsi
+    state: TechnicalAssistant
+  jobName: job-name-technical-assistant
+
+# Medical
+
+- type: jobIcon
+  parent: JobIcon
+  id: JobIconChemist
+  icon:
+    sprite: /Textures/Interface/Misc/job_icons.rsi
+    state: Chemist
+  jobName: job-name-chemist
+
+- type: jobIcon
+  parent: JobIcon
+  id: JobIconGeneticist
+  icon:
+    sprite: /Textures/Interface/Misc/job_icons.rsi
+    state: Geneticist
+  jobName: job-name-geneticist
+
+- type: jobIcon
+  parent: JobIcon
+  id: JobIconMedicalDoctor
+  icon:
+    sprite: /Textures/Interface/Misc/job_icons.rsi
+    state: MedicalDoctor
+  jobName: job-name-doctor
+
+- type: jobIcon
+  parent: JobIcon
+  id: JobIconMedicalIntern
+  icon:
+    sprite: /Textures/Interface/Misc/job_icons.rsi
+    state: MedicalIntern
+  jobName: job-name-intern
+
+- type: jobIcon
+  parent: JobIcon
+  id: JobIconParamedic
+  icon:
+    sprite: /Textures/Interface/Misc/job_icons.rsi
+    state: Paramedic
+  jobName: job-name-paramedic
+
+- type: jobIcon
+  parent: JobIcon
+  id: JobIconPsychologist
+  icon:
+    sprite: /Textures/Interface/Misc/job_icons.rsi
+    state: Psychologist
+  jobName: job-name-psychologist
+
+- type: jobIcon
+  parent: JobIcon
+  id: JobIconVirologist
+  icon:
+    sprite: /Textures/Interface/Misc/job_icons.rsi
+    state: Virologist
+  jobName: job-name-virologist
+
+# Research
+
+- type: jobIcon
+  parent: JobIcon
+  id: JobIconResearchAssistant
+  icon:
+    sprite: /Textures/Interface/Misc/job_icons.rsi
+    state: ResearchAssistant
+  jobName: job-name-research-assistant
+
+- type: jobIcon
+  parent: JobIcon
+  id: JobIconRoboticist
+  icon:
+    sprite: /Textures/Interface/Misc/job_icons.rsi
+    state: Roboticist
+  jobName: job-name-roboticist
+
+- type: jobIcon
+  parent: JobIcon
+  id: JobIconScientist
+  icon:
+    sprite: /Textures/Interface/Misc/job_icons.rsi
+    state: Scientist
+  jobName: job-name-scientist
+
+# Security
+
+- type: jobIcon
+  parent: JobIcon
+  id: JobIconBrigmedic
+  icon:
+    sprite: /Textures/Interface/Misc/job_icons.rsi
+    state: Brigmedic
+  jobName: job-name-brigmedic
 
 - type: jobIcon
   parent: JobIcon
@@ -15,27 +211,37 @@
 
 - type: jobIcon
   parent: JobIcon
-  id: JobIconQuarterMaster
+  id: JobIconSecurityCadet
   icon:
     sprite: /Textures/Interface/Misc/job_icons.rsi
-    state: QuarterMaster
-  jobName: job-name-qm
+    state: SecurityCadet
+  jobName: job-name-cadet
 
 - type: jobIcon
   parent: JobIcon
-  id: JobIconBorg
+  id: JobIconSecurityOfficer
   icon:
     sprite: /Textures/Interface/Misc/job_icons.rsi
-    state: Borg
-  jobName: job-name-borg
+    state: SecurityOfficer
+  jobName: job-name-security
 
 - type: jobIcon
   parent: JobIcon
-  id: JobIconStationAi
+  id: JobIconWarden
   icon:
     sprite: /Textures/Interface/Misc/job_icons.rsi
-    state: StationAi
-  jobName: job-name-station-ai
+    state: Warden
+  jobName: job-name-warden
+
+# Service
+
+- type: jobIcon
+  parent: JobIcon
+  id: JobIconBartender
+  icon:
+    sprite: /Textures/Interface/Misc/job_icons.rsi
+    state: Bartender
+  jobName: job-name-bartender
 
 - type: jobIcon
   parent: JobIcon
@@ -55,243 +261,11 @@
 
 - type: jobIcon
   parent: JobIcon
-  id: JobIconAtmosphericTechnician
-  icon:
-    sprite: /Textures/Interface/Misc/job_icons.rsi
-    state: AtmosphericTechnician
-  jobName: job-name-atmostech
-
-- type: jobIcon
-  parent: JobIcon
-  id: JobIconNanotrasen
-  icon:
-    sprite: /Textures/Interface/Misc/job_icons.rsi
-    state: Nanotrasen
-  jobName: job-name-centcomoff
-
-- type: jobIcon
-  parent: JobIcon
-  id: JobIconPrisoner
-  icon:
-    sprite: /Textures/Interface/Misc/job_icons.rsi
-    state: Prisoner
-  jobName: job-name-prisoner
-
-- type: jobIcon
-  parent: JobIcon
-  id: JobIconJanitor
-  icon:
-    sprite: /Textures/Interface/Misc/job_icons.rsi
-    state: Janitor
-  jobName: job-name-janitor
-
-- type: jobIcon
-  parent: JobIcon
-  id: JobIconChemist
-  icon:
-    sprite: /Textures/Interface/Misc/job_icons.rsi
-    state: Chemist
-  jobName: job-name-chemist
-
-- type: jobIcon
-  parent: JobIcon
-  id: JobIconStationEngineer
-  icon:
-    sprite: /Textures/Interface/Misc/job_icons.rsi
-    state: StationEngineer
-  jobName: job-name-engineer
-
-- type: jobIcon
-  parent: JobIcon
-  id: JobIconSecurityOfficer
-  icon:
-    sprite: /Textures/Interface/Misc/job_icons.rsi
-    state: SecurityOfficer
-  jobName: job-name-security
-
-- type: jobIcon
-  parent: JobIcon
-  id: JobIconNoId
-  icon:
-    sprite: /Textures/Interface/Misc/job_icons.rsi
-    state: NoId
-  jobName: job-name-no-id
-
-- type: jobIcon
-  parent: JobIcon
-  id: JobIconChiefMedicalOfficer
-  icon:
-    sprite: /Textures/Interface/Misc/job_icons.rsi
-    state: ChiefMedicalOfficer
-  jobName: job-name-cmo
-
-- type: jobIcon
-  parent: JobIcon
-  id: JobIconRoboticist
-  icon:
-    sprite: /Textures/Interface/Misc/job_icons.rsi
-    state: Roboticist
-  jobName: job-name-roboticist
-
-- type: jobIcon
-  parent: JobIcon
   id: JobIconChaplain
   icon:
     sprite: /Textures/Interface/Misc/job_icons.rsi
     state: Chaplain
   jobName: job-name-chaplain
-
-- type: jobIcon
-  parent: JobIcon
-  id: JobIconLawyer
-  icon:
-    sprite: /Textures/Interface/Misc/job_icons.rsi
-    state: Lawyer
-  jobName: job-name-lawyer
-
-- type: jobIcon
-  parent: JobIcon
-  id: JobIconUnknown
-  icon:
-    sprite: /Textures/Interface/Misc/job_icons.rsi
-    state: Unknown
-  jobName: job-name-unknown
-
-- type: jobIcon
-  parent: JobIcon
-  id: JobIconLibrarian
-  icon:
-    sprite: /Textures/Interface/Misc/job_icons.rsi
-    state: Librarian
-  jobName: job-name-librarian
-
-- type: jobIcon
-  parent: JobIcon
-  id: JobIconCargoTechnician
-  icon:
-    sprite: /Textures/Interface/Misc/job_icons.rsi
-    state: CargoTechnician
-  jobName: job-name-cargotech
-
-- type: jobIcon
-  parent: JobIcon
-  id: JobIconScientist
-  icon:
-    sprite: /Textures/Interface/Misc/job_icons.rsi
-    state: Scientist
-  jobName: job-name-scientist
-
-- type: jobIcon
-  parent: JobIcon
-  id: JobIconResearchAssistant
-  icon:
-    sprite: /Textures/Interface/Misc/job_icons.rsi
-    state: ResearchAssistant
-  jobName: job-name-research-assistant
-
-- type: jobIcon
-  parent: JobIcon
-  id: JobIconGeneticist
-  icon:
-    sprite: /Textures/Interface/Misc/job_icons.rsi
-    state: Geneticist
-  jobName: job-name-geneticist
-
-- type: jobIcon
-  parent: JobIcon
-  id: JobIconClown
-  icon:
-    sprite: /Textures/Interface/Misc/job_icons.rsi
-    state: Clown
-  jobName: job-name-clown
-
-- type: jobIcon
-  parent: JobIcon
-  id: JobIconCaptain
-  icon:
-    sprite: /Textures/Interface/Misc/job_icons.rsi
-    state: Captain
-  jobName: job-name-captain
-
-- type: jobIcon
-  parent: JobIcon
-  id: JobIconHeadOfPersonnel
-  icon:
-    sprite: /Textures/Interface/Misc/job_icons.rsi
-    state: HeadOfPersonnel
-  jobName: job-name-hop
-
-- type: jobIcon
-  parent: JobIcon
-  id: JobIconVirologist
-  icon:
-    sprite: /Textures/Interface/Misc/job_icons.rsi
-    state: Virologist
-  jobName: job-name-virologist
-
-- type: jobIcon
-  parent: JobIcon
-  id: JobIconShaftMiner
-  icon:
-    sprite: /Textures/Interface/Misc/job_icons.rsi
-    state: ShaftMiner
-  jobName: job-name-salvagespec
-
-- type: jobIcon
-  parent: JobIcon
-  id: JobIconPassenger
-  icon:
-    sprite: /Textures/Interface/Misc/job_icons.rsi
-    state: Passenger
-  jobName: job-name-passenger
-
-- type: jobIcon
-  parent: JobIcon
-  id: JobIconChiefEngineer
-  icon:
-    sprite: /Textures/Interface/Misc/job_icons.rsi
-    state: ChiefEngineer
-  jobName: job-name-ce
-
-- type: jobIcon
-  parent: JobIcon
-  id: JobIconBartender
-  icon:
-    sprite: /Textures/Interface/Misc/job_icons.rsi
-    state: Bartender
-  jobName: job-name-bartender
-
-- type: jobIcon
-  parent: JobIcon
-  id: JobIconHeadOfSecurity
-  icon:
-    sprite: /Textures/Interface/Misc/job_icons.rsi
-    state: HeadOfSecurity
-  jobName: job-name-hos
-
-- type: jobIcon
-  parent: JobIcon
-  id: JobIconBrigmedic
-  icon:
-    sprite: /Textures/Interface/Misc/job_icons.rsi
-    state: Brigmedic
-  jobName: job-name-brigmedic
-
-- type: jobIcon
-  parent: JobIcon
-  id: JobIconMedicalDoctor
-  icon:
-    sprite: /Textures/Interface/Misc/job_icons.rsi
-    state: MedicalDoctor
-  jobName: job-name-doctor
-
-- type: jobIcon
-  parent: JobIcon
-  id: JobIconParamedic
-  icon:
-    sprite: /Textures/Interface/Misc/job_icons.rsi
-    state: Paramedic
-  jobName: job-name-paramedic
 
 - type: jobIcon
   parent: JobIcon
@@ -303,19 +277,61 @@
 
 - type: jobIcon
   parent: JobIcon
-  id: JobIconWarden
+  id: JobIconJanitor
   icon:
     sprite: /Textures/Interface/Misc/job_icons.rsi
-    state: Warden
-  jobName: job-name-warden
+    state: Janitor
+  jobName: job-name-janitor
 
 - type: jobIcon
   parent: JobIcon
-  id: JobIconResearchDirector
+  id: JobIconLawyer
   icon:
     sprite: /Textures/Interface/Misc/job_icons.rsi
-    state: ResearchDirector
-  jobName: job-name-rd
+    state: Lawyer
+  jobName: job-name-lawyer
+
+- type: jobIcon
+  parent: JobIcon
+  id: JobIconLibrarian
+  icon:
+    sprite: /Textures/Interface/Misc/job_icons.rsi
+    state: Librarian
+  jobName: job-name-librarian
+
+- type: jobIcon
+  parent: JobIcon
+  id: JobIconReporter
+  icon:
+    sprite: /Textures/Interface/Misc/job_icons.rsi
+    state: Reporter
+  jobName: job-name-reporter
+
+- type: jobIcon
+  parent: JobIcon
+  id: JobIconServiceWorker
+  icon:
+    sprite: /Textures/Interface/Misc/job_icons.rsi
+    state: ServiceWorker
+  jobName: job-name-serviceworker
+
+- type: jobIcon
+  parent: JobIcon
+  id: JobIconZookeeper
+  icon:
+    sprite: /Textures/Interface/Misc/job_icons.rsi
+    state: Zookeeper
+  jobName: job-name-zookeeper
+
+# Entertainer (like service, but not actually service)
+
+- type: jobIcon
+  parent: JobIcon
+  id: JobIconClown # :o)
+  icon:
+    sprite: /Textures/Interface/Misc/job_icons.rsi
+    state: Clown
+  jobName: job-name-clown
 
 - type: jobIcon
   parent: JobIcon
@@ -333,61 +349,59 @@
     state: Musician
   jobName: job-name-musician
 
-- type: jobIcon
-  parent: JobIcon
-  id: JobIconReporter
-  icon:
-    sprite: /Textures/Interface/Misc/job_icons.rsi
-    state: Reporter
-  jobName: job-name-reporter
+# Passenger
 
 - type: jobIcon
   parent: JobIcon
-  id: JobIconPsychologist
+  id: JobIconPassenger
   icon:
     sprite: /Textures/Interface/Misc/job_icons.rsi
-    state: Psychologist
-  jobName: job-name-psychologist
+    state: Passenger
+  jobName: job-name-passenger
 
 - type: jobIcon
   parent: JobIcon
-  id: JobIconMedicalIntern
+  id: JobIconVisitor
   icon:
     sprite: /Textures/Interface/Misc/job_icons.rsi
-    state: MedicalIntern
-  jobName: job-name-intern
+    state: Visitor
+  jobName: job-name-visitor
+
+# Silicon
 
 - type: jobIcon
   parent: JobIcon
-  id: JobIconTechnicalAssistant
+  id: JobIconBorg
   icon:
     sprite: /Textures/Interface/Misc/job_icons.rsi
-    state: TechnicalAssistant
-  jobName: job-name-technical-assistant
+    state: Borg
+  jobName: job-name-borg
 
 - type: jobIcon
   parent: JobIcon
-  id: JobIconServiceWorker
+  id: JobIconStationAi
   icon:
     sprite: /Textures/Interface/Misc/job_icons.rsi
-    state: ServiceWorker
-  jobName: job-name-serviceworker
+    state: StationAi
+  jobName: job-name-station-ai
+
+# Bad guys
 
 - type: jobIcon
   parent: JobIcon
-  id: JobIconSecurityCadet
+  id: JobIconCluwne # >:o(
   icon:
     sprite: /Textures/Interface/Misc/job_icons.rsi
-    state: SecurityCadet
-  jobName: job-name-cadet
+    state: Cluwne
+  jobName: job-name-cluwne
 
 - type: jobIcon
   parent: JobIcon
-  id: JobIconZombie # This is a perfectly legitimate profession to pursue
+  id: JobIconPrisoner
   icon:
     sprite: /Textures/Interface/Misc/job_icons.rsi
-    state: Zombie
-  jobName: job-name-zombie
+    state: Prisoner
+  jobName: job-name-prisoner
 
 - type: jobIcon
   parent: JobIcon
@@ -399,11 +413,29 @@
 
 - type: jobIcon
   parent: JobIcon
-  id: JobIconZookeeper
+  id: JobIconZombie # This is a perfectly legitimate profession to pursue
   icon:
     sprite: /Textures/Interface/Misc/job_icons.rsi
-    state: Zookeeper
-  jobName: job-name-zookeeper
+    state: Zombie
+  jobName: job-name-zombie
+
+# Admin
+
+- type: jobIcon
+  parent: JobIcon
+  id: JobIconNanotrasen
+  icon:
+    sprite: /Textures/Interface/Misc/job_icons.rsi
+    state: Nanotrasen
+  jobName: job-name-centcomoff
+
+- type: jobIcon
+  parent: JobIcon
+  id: JobIconAdmin
+  icon:
+    sprite: /Textures/Interface/Misc/job_icons.rsi
+    state: Admin
+  allowSelection: false
 
 - type: jobIcon
   parent: JobIcon
@@ -437,18 +469,20 @@
     state: SeniorResearcher
   allowSelection: false
 
-- type: jobIcon
-  parent: JobIcon
-  id: JobIconVisitor
-  icon:
-    sprite: /Textures/Interface/Misc/job_icons.rsi
-    state: Visitor
-  jobName: job-name-visitor
+# Other
 
 - type: jobIcon
   parent: JobIcon
-  id: JobIconAdmin
+  id: JobIconNoId
   icon:
     sprite: /Textures/Interface/Misc/job_icons.rsi
-    state: Admin
-  allowSelection: false
+    state: NoId
+  jobName: job-name-no-id
+
+- type: jobIcon
+  parent: JobIcon
+  id: JobIconUnknown
+  icon:
+    sprite: /Textures/Interface/Misc/job_icons.rsi
+    state: Unknown
+  jobName: job-name-unknown

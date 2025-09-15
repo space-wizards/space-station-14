@@ -50,12 +50,8 @@ public abstract partial class SharedSalvageSystem
                 var configProto =_proto.Index(configId);
                 var layers = new Dictionary<string, int>();
 
-                var data = new DungeonData();
-                data.Apply(configProto.Data);
-
                 var config = new DungeonConfig
                 {
-                    Data = data,
                     Layers = new(configProto.Layers),
                     MaxCount = configProto.MaxCount,
                     MaxOffset = configProto.MaxOffset,

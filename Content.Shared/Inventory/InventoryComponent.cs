@@ -1,7 +1,7 @@
 ﻿using Content.Shared.DisplacementMap;
 using Robust.Shared.Containers;
 using Robust.Shared.GameStates;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
+using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Inventory;
 
@@ -10,28 +10,46 @@ namespace Content.Shared.Inventory;
 [AutoGenerateComponentState(true)]
 public sealed partial class InventoryComponent : Component
 {
-    [DataField("templateId", customTypeSerializer: typeof(PrototypeIdSerializer<InventoryTemplatePrototype>))]
-    [AutoNetworkedField]
-    public string TemplateId { get; set; } = "human";
+    /// <summary>
+    /// The template defining how the inventory layout will look like.
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    [ViewVariables] // use the API method
+    public ProtoId<InventoryTemplatePrototype> TemplateId = "human";
 
-    [DataField("speciesId")] public string? SpeciesId { get; set; }
+    /// <summary>
+    /// For setting the TemplateId.
+    /// </summary>
+    [ViewVariables(VVAccess.ReadWrite)]
+    public ProtoId<InventoryTemplatePrototype> TemplateIdVV
+    {
+        get => TemplateId;
+        set => IoCManager.Resolve<IEntityManager>().System<InventorySystem>().SetTemplateId((Owner, this), value);
+    }
 
+    [DataField, AutoNetworkedField]
+    public string? SpeciesId;
+
+
+    [ViewVariables]
     public SlotDefinition[] Slots = Array.Empty<SlotDefinition>();
+
+    [ViewVariables]
     public ContainerSlot[] Containers = Array.Empty<ContainerSlot>();
 
-    [DataField]
+    [DataField, AutoNetworkedField]
     public Dictionary<string, DisplacementData> Displacements = new();
 
     /// <summary>
     /// Alternate displacement maps, which if available, will be selected for the player of the appropriate gender.
     /// </summary>
-    [DataField]
+    [DataField, AutoNetworkedField]
     public Dictionary<string, DisplacementData> FemaleDisplacements = new();
 
     /// <summary>
     /// Alternate displacement maps, which if available, will be selected for the player of the appropriate gender.
     /// </summary>
-    [DataField]
+    [DataField, AutoNetworkedField]
     public Dictionary<string, DisplacementData> MaleDisplacements = new();
 }
 

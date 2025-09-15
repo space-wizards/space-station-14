@@ -37,3 +37,15 @@
   storage:
     back:
     - Flash
+
+- type: chameleonOutfit
+  id: ResearchDirectorChameleonOutfit
+  job: ResearchDirector
+  hasMindShield: true
+  equipment:
+    head: ClothingHeadHatBeretRND
+    eyes: ClothingEyesGlasses
+    mask: ClothingMaskGas
+    neck: ClothingNeckCloakRd
+    outerClothing: ClothingOuterCoatRD
+    gloves: ClothingHandsGlovesColorPurple

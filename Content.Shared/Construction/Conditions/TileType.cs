@@ -20,12 +20,13 @@ namespace Content.Shared.Construction.Conditions
 
         public bool Condition(EntityUid user, EntityCoordinates location, Direction direction)
         {
-            var tileFound = location.GetTileRef();
-
-            if (tileFound == null)
+            if (!IoCManager.Resolve<IEntityManager>().TrySystem<TurfSystem>(out var turfSystem))
                 return false;
 
-            var tile = tileFound.Value.Tile.GetContentTileDefinition();
+            if (!turfSystem.TryGetTileRef(location, out var tileFound))
+                return false;
+
+            var tile = turfSystem.GetContentTileDefinition(tileFound.Value);
             foreach (var targetTile in TargetTiles)
             {
                 if (tile.ID == targetTile)

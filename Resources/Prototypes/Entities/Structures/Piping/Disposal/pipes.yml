@@ -152,6 +152,43 @@
     - DisposalTagger
 
 - type: entity
+  id: DisposalSignaller
+  parent: DisposalPipeBase
+  name: disposal signaller
+  description: A pipe that emits a signal when in item goes through it.
+  components:
+  - type: Sprite
+    layers:
+    - map: [ "pipe" ]
+      state: conpipe-signaller
+  - type: DisposalTube
+    containerId: DisposalTransit
+  - type: DisposalTransit
+  - type: DeviceNetwork
+    deviceNetId: Wireless
+    receiveFrequencyId: BasicDevice
+  - type: DeviceLinkSource
+    ports:
+    - ItemDetected
+  - type: WirelessNetworkConnection
+    range: 200
+  - type: DisposalSignaller
+  - type: ContainerContainer
+    containers:
+      DisposalTransit: !type:Container
+  - type: GenericVisualizer
+    visuals:
+      enum.DisposalTubeVisuals.VisualState:
+        pipe:
+          Free: { state: conpipe-signaller }
+          Anchored: { state: pipe-signaller }
+  - type: Construction
+    graph: DisposalPipe
+    node: pipe
+    containers:
+    - DisposalTransit
+
+- type: entity
   id: DisposalTrunk
   parent: DisposalPipeBase
   name: disposal trunk

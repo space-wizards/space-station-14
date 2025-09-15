@@ -1,0 +1,12 @@
+- type: entity
+  parent: MobHuman
+  id: MobLing
+  name: Urist McLing
+  suffix: Non-Antag
+  components:
+  - type: ChangelingDevour
+  - type: ChangelingIdentity
+  - type: ChangelingTransform
+  - type: ActionGrant
+    actions:
+    - ActionRetractableItemArmBlade # Temporary addition, will inevitably be a purchasable in the bio-store
