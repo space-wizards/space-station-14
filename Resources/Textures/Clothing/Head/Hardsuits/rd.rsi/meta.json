@@ -1,7 +1,7 @@
 {
     "version": 1,
     "license": "CC-BY-SA-3.0",
-    "copyright": "Taken from tgstation at commit https://github.com/tgstation/tgstation/commit/4f6190e2895e09116663ef282d3ce1d8b35c032e. Vox states made by Flareguy for SS14. Dog states modified from base states by Sparlight (GitHub).",
+    "copyright": "Taken from tgstation at commit https://github.com/tgstation/tgstation/commit/4f6190e2895e09116663ef282d3ce1d8b35c032e. Vox states made by Flareguy for SS14. Dog states modified from base states by Sparlight (GitHub). Resomi state created by Huaqas (Github).",
     "size": {
         "x": 32,
         "y": 32
@@ -26,6 +26,10 @@
             "directions": 4
         },
         {
+            "name": "off-equipped-HELMET-resomi",
+            "directions": 4
+        },
+        {
             "name": "on-equipped-HELMET-vox",
             "directions": 4
         },
@@ -35,6 +39,10 @@
         },
         {
             "name": "on-equipped-HELMET-dog",
+            "directions": 4
+        },
+        {
+            "name": "on-equipped-HELMET-resomi",
             "directions": 4
         }
     ]
