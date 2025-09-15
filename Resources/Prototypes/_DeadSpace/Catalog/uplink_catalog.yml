@@ -57,6 +57,20 @@
       - SurplusBundle
 
 - type: listing
+  id: UplinkSyndieSabre
+  name: uplink-syndiesabre-name
+  description: uplink-syndiesabre-desc
+  icon: { sprite: _DeadSpace/Objects/Weapons/Melee/syndie_sabre.rsi, state: icon }
+  discountCategory: veryRareDiscounts
+  discountDownTo:
+    Telecrystal: 6
+  productEntity: ClothingBeltSheathSyndieFilled
+  cost:
+    Telecrystal: 10
+  categories:
+  - UplinkWeaponry
+
+- type: listing
   id: UplinkAdvansedMagboots
   name: uplink-advanced-magboots-name
   description: uplink-advanced-magboots-desc

@@ -1,5 +1,7 @@
 uplink-energy-crossbow-name = Энергетический арбалет
 uplink-energy-crossbow-desc = Маленькое, тихое оружие, которое можно спрятать в карман. Отрявляет и изнемождает жертв.
+uplink-syndiesabre-name = Пластитановая рапира
+uplink-syndiesabre-desc = Набор ножен с рапирой из пластитана способной проникать сквозь броню, лучший выбор элегантнаного убийцы.
 uplink-advanced-magboots-name = Продвинутые магнитные ботинки Синдиката
 uplink-advanced-magboots-desc = Улучшенные магнитные ботинки Синдиката.
 uplink-akms-bundle-name = Набор АКМС

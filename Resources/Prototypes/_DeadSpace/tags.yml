@@ -80,6 +80,9 @@
   id: SoapSyndie
 
 - type: Tag
+  id: SyndieSabre
+
+- type: Tag
   id: ToySword
 
 - type: Tag

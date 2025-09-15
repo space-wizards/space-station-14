@@ -1,0 +1,28 @@
+- type: entity
+  parent: ClothingBeltSheath
+  id: ClothingBeltSheathSyndie
+  name: ножны синдиката
+  description: Элегантные ножны, что хранят в себе лезвия смерти и убийства.
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Clothing/Belt/syndie_sheath.rsi
+    state: sheath
+  - type: Clothing
+    sprite: _DeadSpace/Clothing/Belt/syndie_sheath.rsi
+  - type: ItemSlots
+    slots:
+      item:
+        name: Sabre
+        insertVerbText: sheath-insert-verb
+        ejectVerbText: sheath-eject-verb
+        insertSound: /Audio/Items/sheath.ogg
+        ejectSound: /Audio/Items/unsheath.ogg
+        whitelist:
+          tags:
+          - SyndieSabre
+  - type: ItemMapper
+    mapLayers:
+      sheath-sabre:
+        whitelist:
+          tags:
+          - SyndieSabre
