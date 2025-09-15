@@ -46,3 +46,12 @@
     back:
     - PlushieHampter
   groupBy: "plushies"
+
+- type: loadout
+  id: PlushieHampterHead
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: PlushieHampter
+  equipment:
+    head: PlushieHampter
+  groupBy: "plushies"

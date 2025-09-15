@@ -1,3 +1,4 @@
+// Modified by Ronstation contributor(s), therefore this file is licensed as MIT sublicensed with AGPL-v3.0.
 using Content.Server.Access.Systems;
 using Content.Server.Humanoid;
 using Content.Server.IdentityManagement;
@@ -117,6 +118,7 @@ public sealed class StationSpawningSystem : SharedStationSpawningSystem
             if (loadout != null)
             {
                 EquipRoleName(jobEntity, loadout, roleProto!);
+                EquipRoleLoadout(jobEntity, loadout, roleProto!); // Ronstation - modification.
             }
 
             DoJobSpecials(job, jobEntity);

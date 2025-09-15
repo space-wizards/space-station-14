@@ -1,0 +1,12 @@
+- type: loadout
+  id: PlushieLizard
+  storage:
+    back:
+    - PlushieLizard
+  groupBy: "plushies"
+
+- type: loadout
+  id: PlushieLizardHead
+  equipment:
+    head: PlushieLizard
+  groupBy: "plushies"

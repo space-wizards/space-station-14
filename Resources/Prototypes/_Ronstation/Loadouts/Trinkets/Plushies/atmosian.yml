@@ -21,3 +21,12 @@
     back:
     - PlushieAtmosian
   groupBy: "plushies"
+
+- type: loadout
+  id: PlushieAtmosianHead
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: PlushieAtmosian
+  equipment:
+    head: PlushieAtmosian
+  groupBy: "plushies"

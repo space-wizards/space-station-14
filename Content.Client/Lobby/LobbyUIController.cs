@@ -1,3 +1,4 @@
+// Modified by Ronstation contributor(s), therefore this file is licensed as MIT sublicensed with AGPL-v3.0.
 using System.Linq;
 using Content.Client.Guidebook;
 using Content.Client.Humanoid;
@@ -466,6 +467,13 @@ public sealed class LobbyUIController : UIController, IOnStateEntered<LobbyState
         {
             // Special type like borg or AI, do not spawn a human just spawn the entity.
             dummyEnt = EntityManager.SpawnEntity(previewEntity, MapCoordinates.Nullspace);
+            // Ronstation - start of modifications.
+            if (humanoid != null && job != null && _prototypeManager.HasIndex<RoleLoadoutPrototype>(LoadoutSystem.GetJobPrototype(job.ID)))
+            {
+                var loadout = humanoid.GetLoadoutOrDefault(LoadoutSystem.GetJobPrototype(job.ID), _playerManager.LocalSession, humanoid.Species, EntityManager, _prototypeManager);
+                GiveDummyLoadout(dummyEnt, loadout);
+            }
+            // Ronstation - end of modifications.
             return dummyEnt;
         }
         else if (humanoid is not null)
