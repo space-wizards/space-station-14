@@ -54,7 +54,7 @@ public sealed class AccessReaderSystem : EntitySystem
         if (!GetMainAccessReader(ent, out var mainAccessReader))
             return;
 
-        mainAccessReader.Value.Comp.AccessListsOriginal ??= mainAccessReader.Value.Comp.AccessLists;
+        mainAccessReader.Value.Comp.AccessListsOriginal ??= new(mainAccessReader.Value.Comp.AccessLists);
 
         var accessHasBeenModified = mainAccessReader.Value.Comp.AccessLists.Count != mainAccessReader.Value.Comp.AccessListsOriginal.Count;
 
@@ -165,7 +165,7 @@ public sealed class AccessReaderSystem : EntitySystem
     {
         // The first time that the access list of the reader is modified,
         // make a copy of the original settings
-        ent.Comp.AccessListsOriginal ??= ent.Comp.AccessLists;
+        ent.Comp.AccessListsOriginal ??= new(ent.Comp.AccessLists);
     }
 
     /// <summary>
