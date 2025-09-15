@@ -1,0 +1,43 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "by Fire3Dox",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "bbc"
+    },
+    {
+      "name": "bbc-inhand-right",
+      "directions": 4
+    },
+    {
+      "name": "bbc-inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "bbc-equipped-HELMET",
+      "delays": [
+        [
+          0.2,
+          0.2,
+          0.2,
+          0.2,
+          0.2,
+          0.2,
+          0.2,
+          0.2,
+          0.2,
+          0.2
+        ]
+      ]
+    },
+    {
+      "name": "bbc-equipped-NECK",
+      "directions": 4
+    }
+  ]
+}

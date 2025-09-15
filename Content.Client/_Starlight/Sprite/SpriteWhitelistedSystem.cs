@@ -9,7 +9,6 @@ using Content.Shared._Starlight.OnCollide;
 using Content.Shared.Silicons.StationAi;
 using Content.Shared.Tag;
 using Content.Shared.Whitelist;
-using Microsoft.CodeAnalysis.Elfie.Serialization;
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
 using Robust.Client.Player;
