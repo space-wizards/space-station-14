@@ -4,7 +4,7 @@ meta:
   engineVersion: 266.0.0
   forkId: ""
   forkVersion: ""
-  time: 09/14/2025 19:31:28
+  time: 09/15/2025 15:36:08
   entityCount: 19091
 maps:
 - 1
@@ -8752,7 +8752,7 @@ entities:
       pos: 2.5,-6.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -325721.7
+      secondsUntilStateChange: -325731.28
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -9165,7 +9165,7 @@ entities:
       pos: -22.5,7.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -13389.34
+      secondsUntilStateChange: -13398.935
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -9178,7 +9178,7 @@ entities:
       pos: -22.5,8.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -285148.72
+      secondsUntilStateChange: -285158.3
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -9249,7 +9249,7 @@ entities:
       pos: 36.5,-61.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -170364.28
+      secondsUntilStateChange: -170373.88
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -53373,7 +53373,7 @@ entities:
       pos: 54.5,-27.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -7659.0454
+      secondsUntilStateChange: -7668.64
       state: Closing
     - type: DeviceNetwork
       deviceLists:
@@ -54752,7 +54752,7 @@ entities:
       pos: -7.5,-30.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -577.92035
+      secondsUntilStateChange: -587.5152
       state: Closing
     - type: DeviceNetwork
       deviceLists:
@@ -54837,7 +54837,7 @@ entities:
       pos: 9.5,-48.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -831.6534
+      secondsUntilStateChange: -841.2482
       state: Closing
     - type: Firelock
       emergencyCloseCooldown: 2974.9303604
@@ -54923,11 +54923,6 @@ entities:
     - type: Transform
       pos: 72.5,-10.5
       parent: 2
-      deviceLists:
-      - 19077
-      - 85
-      - 7683
-      - 19079
 - proto: Fireplace
   entities:
   - uid: 8347
@@ -83769,7 +83764,7 @@ entities:
       pos: 7.5,9.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -305428.1
+      secondsUntilStateChange: -305437.7
       state: Opening
   - uid: 12499
     components:
@@ -83777,7 +83772,7 @@ entities:
       pos: 7.5,10.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -305427.6
+      secondsUntilStateChange: -305437.2
       state: Opening
 - proto: HospitalCurtainsOpen
   entities:
@@ -83787,7 +83782,7 @@ entities:
       pos: -6.5,-4.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -318692.44
+      secondsUntilStateChange: -318702.03
       state: Closing
   - uid: 12501
     components:
