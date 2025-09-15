@@ -14086,5 +14086,68 @@ Entries:
   id: 163005
   time: '2025-09-15T15:25:38.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/1630
+- author: Huaqas
+  changes:
+  - message: Glasses and Masks should now look good on Resomi.
+    type: Fix
+  id: 163300
+  time: '2025-09-15T16:16:10.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1633
+- author: Huaqas
+  changes:
+  - message: Resomi now have custom sprites for most hardsuits.
+    type: Add
+  id: 163301
+  time: '2025-09-15T16:16:10.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1633
+- author: Huaqas
+  changes:
+  - message: Resomi now have gauze markings.
+    type: Add
+  id: 163302
+  time: '2025-09-15T16:16:10.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1633
+- author: Huaqas
+  changes:
+  - message: Avali and Resomi now have heterochromia markings!
+    type: Add
+  id: 163303
+  time: '2025-09-15T16:16:10.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1633
+- author: Huaqas
+  changes:
+  - message: Avali and Resomi now have undergarments.
+    type: Add
+  id: 163304
+  time: '2025-09-15T16:16:10.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1633
+- author: Huaqas
+  changes:
+  - message: Resomi now give Chicken instead of Meat when butchered.
+    type: Tweak
+  id: 163305
+  time: '2025-09-15T16:16:10.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1633
+- author: Huaqas
+  changes:
+  - message: Resomi now have a custom typing indicator.
+    type: Add
+  id: 163306
+  time: '2025-09-15T16:16:10.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1633
+- author: Huaqas
+  changes:
+  - message: Resomi now have custom speech sounds.
+    type: Add
+  id: 163307
+  time: '2025-09-15T16:16:10.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1633
+- author: Huaqas
+  changes:
+  - message: Changed the Resomi crying sound.
+    type: Tweak
+  id: 163308
+  time: '2025-09-15T16:16:10.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1633
 Order: -1
 
