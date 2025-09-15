@@ -201,12 +201,6 @@ public partial struct AntagSelectionDefinition()
     /// </remarks>
     [DataField]
     public EntProtoId? SpawnerPrototype;
-
-    /// <summary>
-    /// Prototype of the entity this antag selection should use
-    /// </summary>
-    [DataField]
-    public EntProtoId? EntityPrototype;
 }
 
 /// <summary>

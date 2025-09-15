@@ -393,23 +393,7 @@ public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelection
 
         if (!antagEnt.HasValue)
         {
-            var getEntEv = new AntagSelectEntityEvent(session, ent);
-
-            AntagSelectionDefinition? antagSelectDef = null;
-            if (session != null)
-            {
-                foreach (var pair in ent.Comp.PreSelectedSessions)
-                {
-                    if (pair.Value.Contains(session))
-                        antagSelectDef = pair.Key;
-                }
-            }
-
-            if (antagSelectDef != null)
-            {
-                if (antagSelectDef.Value.EntityPrototype != null)
-                    getEntEv.Entity = Spawn(antagSelectDef.Value.EntityPrototype);
-            }
+            var getEntEv = new AntagSelectEntityEvent(session, ent, def.PrefRoles);
 
             RaiseLocalEvent(ent, ref getEntEv, true);
             antagEnt = getEntEv.Entity;
@@ -620,9 +604,11 @@ public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelection
 /// Only raised if the selected player's current entity is invalid.
 /// </summary>
 [ByRefEvent]
-public record struct AntagSelectEntityEvent(ICommonSession? Session, Entity<AntagSelectionComponent> GameRule)
+public record struct AntagSelectEntityEvent(ICommonSession? Session, Entity<AntagSelectionComponent> GameRule, List<ProtoId<AntagPrototype>>? AntagRoles)
 {
     public readonly ICommonSession? Session = Session;
+
+    public readonly List<ProtoId<AntagPrototype>>? AntagRoles = AntagRoles;
 
     public bool Handled => Entity != null;
 
