@@ -14149,5 +14149,12 @@ Entries:
   id: 163308
   time: '2025-09-15T16:16:10.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/1633
+- author: Miracula
+  changes:
+  - message: Added "You Are (Not) Funny" and "A friendly face in space" lobby screens
+    type: Add
+  id: 162800
+  time: '2025-09-15T17:22:12.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1628
 Order: -1
 
