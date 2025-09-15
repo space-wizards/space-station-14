@@ -14037,5 +14037,12 @@ Entries:
   id: 162002
   time: '2025-09-14T20:44:16.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/1620
+- author: Arkanic
+  changes:
+  - message: Fix railroading crash
+    type: Fix
+  id: 162900
+  time: '2025-09-15T15:12:47.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1629
 Order: -1
 
