@@ -611,6 +611,9 @@ public abstract partial class InteractionTest
     /// <summary>
     /// Asserts that running the given action causes an event to be fired directed at the specified entity (defaults to <see cref="Target"/>).
     /// </summary>
+    /// <remarks>
+    /// This currently only checks server-side events.
+    /// </remarks>
     protected async Task AssertFiresEvent<TEvent>(Func<Task> act, EntityUid? uid = null, int count = 1, bool clear = true)
         where TEvent : notnull
     {
@@ -636,6 +639,9 @@ public abstract partial class InteractionTest
     /// <summary>
     /// Asserts that running the action on the server causes an event to fired directed at the specified entity (defaults to <see cref="Target"/>).
     /// </summary>
+    /// <remarks>
+    /// This currently only checks for server-side events.
+    /// </remarks>
     protected async Task AssertFiresEventPost<TEvent>(Action act, EntityUid? uid = null, int count = 1, bool clear = true)
         where TEvent : notnull
     {
@@ -646,6 +652,9 @@ public abstract partial class InteractionTest
     /// Asserts that the specified event has been fired some number of times at the given entity (defaults to <see cref="Target"/>).
     /// For this to work, this requires that the entity has been given a <see cref="TestListenerComponent"/>
     /// </summary>
+    /// <remarks>
+    /// This currently only checks server-side events.
+    /// </remarks>
     protected void AssertEvent<TEvent>(EntityUid? uid = null, int count = 1, Func<TEvent,bool>? predicate = null)
         where TEvent : notnull
     {
@@ -656,6 +665,9 @@ public abstract partial class InteractionTest
     /// Gets all the events of the specified type that have been fired at the given entity (defaults to <see cref="Target"/>).
     /// For this to work, this requires that the entity has been given a <see cref="TestListenerComponent"/>
     /// </summary>
+    /// <remarks>
+    /// This currently only gets for server-side events.
+    /// </remarks>
     protected IEnumerable<TEvent> GetEvents<TEvent>(EntityUid? uid = null, Func<TEvent, bool>? predicate = null)
         where TEvent : notnull
     {
@@ -666,6 +678,7 @@ public abstract partial class InteractionTest
             return [];
         }
 
+        Assert.That(SEntMan.HasComponent<TestListenerComponent>(uid), $"Entity must have {nameof(TestListenerComponent)}");
         return GetListenerSystem<TEvent>().GetEvents(uid.Value, predicate);
     }
 
@@ -690,8 +703,7 @@ public abstract partial class InteractionTest
     }
 
     /// <summary>
-    /// Gets all the events of the specified type that have been fired at the given entity.
-    /// For this to work, this requires that the entity has been given a <see cref="TestListenerComponent"/>
+    /// Clears all recorded events of the given type.
     /// </summary>
     protected void ClearEvents<TEvent>(EntityUid uid) where TEvent : notnull
         => GetListenerSystem<TEvent>().Clear(uid);
