@@ -125,7 +125,7 @@
     fireCost: 100
   - type: Battery
     maxCharge: 2000
-    startingCharge: 0
+    startingCharge: 2000
   - type: ApcPowerReceiverBattery
     idleLoad: 5
     batteryRechargeRate: 200
@@ -136,3 +136,5 @@
   - type: HTN
     rootTask:
       task: EnergyTurretCompound
+  - type: StaticPrice
+    price: 200
