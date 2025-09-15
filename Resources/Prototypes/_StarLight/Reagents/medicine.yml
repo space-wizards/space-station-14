@@ -98,3 +98,23 @@
           type: Resomi
           shouldHave: true
         amount: 3
+
+- type: reagent
+  id: Hyrithoxidone
+  name: reagent-name-hyrithoxidone
+  group: Medicine
+  desc: reagent-desc-hyrithoxidone
+  physicalDesc: reagent-physical-desc-strong-smelling
+  flavor: medicine
+  color: "#850063"
+  worksOnTheDead: true
+  metabolisms:
+    Medicine:
+      effects:
+        - !type:HealthChange
+          conditions:
+          - !type:Temperature
+            max: 213.0
+          damage:
+            types:
+              Radiation: -5

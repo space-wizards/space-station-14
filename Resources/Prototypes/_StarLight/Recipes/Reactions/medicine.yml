@@ -11,3 +11,15 @@
       amount: 1
   products:
     Amoxla: 2
+
+- type: reaction
+  id: Hyrithoxidone
+  reactants:
+    Hyronalin:
+      amount: 2
+    Arithrazine:
+      amount: 2
+    Cryoxadone:
+      amount: 2
+  products:
+    Hyrithoxidone: 3
