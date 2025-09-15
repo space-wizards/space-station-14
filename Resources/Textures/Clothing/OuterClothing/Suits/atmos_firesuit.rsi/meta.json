@@ -1,7 +1,7 @@
 {
     "version": 1,
     "license": "CC-BY-SA-3.0",
-    "copyright": "Taken from tgstation https://github.com/tgstation/tgstation/blob/master/icons/mob/clothing/suit.dmi. equipped-OUTERCLOTHING-dog modified from equipped-OUTERCLOTHING by @Aisfae(facebook).",
+    "copyright": "Taken from tgstation https://github.com/tgstation/tgstation/blob/master/icons/mob/clothing/suit.dmi. equipped-OUTERCLOTHING-dog modified from equipped-OUTERCLOTHING by @Aisfae(facebook). Resomi state created by Huaqas (GitHub).",
     "size": {
         "x": 32,
         "y": 32
@@ -16,6 +16,10 @@
         },
         {
             "name": "equipped-OUTERCLOTHING-dog",
+            "directions": 4
+        },
+        {
+            "name": "equipped-OUTERCLOTHING-resomi",
             "directions": 4
         },
         {
