@@ -6,6 +6,8 @@ using Content.Shared.Traits;
 using Content.Shared.Whitelist;
 using Robust.Shared.Prototypes;
 using Content.Server._Starlight.Language; // Starlight
+using Content.Shared.Tag;
+using System.Linq;
 
 namespace Content.Server.Traits;
 
@@ -14,6 +16,7 @@ public sealed class TraitSystem : EntitySystem
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly SharedHandsSystem _sharedHandsSystem = default!;
     [Dependency] private readonly EntityWhitelistSystem _whitelistSystem = default!;
+    [Dependency] private readonly TagSystem _tag = default!;
 
     public override void Initialize()
     {
@@ -66,6 +69,13 @@ public sealed class TraitSystem : EntitySystem
             if (traitPrototype.LanguagesUnderstood is not null)
                 foreach (var lang in traitPrototype.LanguagesUnderstood)
                     language.AddLanguage(args.Mob, lang, false, true);
+
+            if (!string.IsNullOrEmpty(traitPrototype.Background))
+            {
+                var tag = new ProtoId<TagPrototype>(traitPrototype.Background + "TraitBackground");
+                _tag.TryAddTag(args.Mob, tag);
+            }
+
             // Starlight - end
 
             // Add item required by the trait

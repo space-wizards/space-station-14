@@ -238,6 +238,7 @@
   - type: ContainerContainer
     containers:
       cell_slot: !type:ContainerSlot
+      toggleable-clothing: !type:ContainerSlot
   - type: ItemSlots
     slots:
       cell_slot:

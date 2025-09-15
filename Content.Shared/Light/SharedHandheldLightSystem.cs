@@ -22,18 +22,18 @@ public abstract class SharedHandheldLightSystem : EntitySystem
     public override void Initialize()
     {
         base.Initialize();
-        SubscribeLocalEvent<HandheldLightComponent, ComponentInit>(OnInit);
+        SubscribeLocalEvent<HandheldLightComponent, MapInitEvent>(OnMapInit);
         SubscribeLocalEvent<HandheldLightComponent, ComponentHandleState>(OnHandleState);
 
         SubscribeLocalEvent<HandheldLightComponent, GetVerbsEvent<ActivationVerb>>(AddToggleLightVerb);
     }
 
-    private void OnInit(EntityUid uid, HandheldLightComponent component, ComponentInit args)
+    public virtual void OnMapInit(Entity<HandheldLightComponent> ent, ref MapInitEvent args)
     {
-        UpdateVisuals(uid, component);
+        UpdateVisuals(ent, ent.Comp);
 
         // Want to make sure client has latest data on level so battery displays properly.
-        Dirty(uid, component);
+        Dirty(ent, ent.Comp);
     }
 
     private void OnHandleState(EntityUid uid, HandheldLightComponent component, ref ComponentHandleState args)

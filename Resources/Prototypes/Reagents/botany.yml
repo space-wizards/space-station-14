@@ -218,6 +218,9 @@
         - !type:OrganType
           type: Avali
           shouldHave: false
+        - !type:OrganType
+          type: Resomi
+          shouldHave: false
         damage:
           types:
             Caustic: 1
@@ -227,6 +230,14 @@
         conditions:
         - !type:OrganType
           type: Avali
+          shouldHave: true
+        damage:
+          types:
+            Asphyxiation: -1
+      - !type:HealthChange
+        conditions:
+        - !type:OrganType
+          type: Resomi
           shouldHave: true
         damage:
           types:

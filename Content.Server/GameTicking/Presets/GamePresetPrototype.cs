@@ -40,5 +40,10 @@ namespace Content.Server.GameTicking.Presets
         /// </summary>
         [DataField("supportedMaps", customTypeSerializer: typeof(PrototypeIdSerializer<GameMapPoolPrototype>))]
         public string? MapPool;
+
+        //starlight start
+        [DataField("voteCooldown")]
+        public int VoteCooldown = 2; // How many rounds before this preset can be voted for again.
+        //starlight end
     }
 }

@@ -14,6 +14,7 @@
     angleDecay: 16
     fireRate: 0.5
     selectedMode: SemiAuto
+    clumsyProof: true # Starlight
     availableModes:
       - SemiAuto
     soundGunshot:
@@ -44,6 +45,7 @@
     selectedMode: SemiAuto
     availableModes:
       - SemiAuto
+    clumsyProof: true # Starlight
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/grenade_launcher.ogg
     soundEmpty:
