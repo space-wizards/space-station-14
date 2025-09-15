@@ -1,0 +1,37 @@
+- type: entity
+  parent: [ SmokeGrenade ]
+  id: LubeGrenade
+  name: lube grenade
+  description: Special grenade for shenanigans, releasing large cloud of lube foam.
+  components:
+  - type: Sprite
+    sprite: _Starlight/Objects/Weapons/Grenades/lube.rsi
+  - type: SmokeOnTrigger
+    keysIn:
+    - timer
+    duration: 15
+    spreadAmount: 40
+    smokePrototype: Foam
+    solution:
+      reagents:
+      - ReagentId: SpaceLube
+        Quantity: 20
+
+- type: entity
+  parent: [ SmokeGrenade ]
+  id: GlueGrenade
+  name: glue grenade
+  description: Special grenade for shenanigans, releasing large cloud of glue foam.
+  components:
+  - type: Sprite
+    sprite: _Starlight/Objects/Weapons/Grenades/glue.rsi
+  - type: SmokeOnTrigger
+    keysIn:
+    - timer
+    duration: 20
+    spreadAmount: 30
+    smokePrototype: Foam
+    solution:
+      reagents:
+      - ReagentId: SpaceGlue
+        Quantity: 20
