@@ -39,7 +39,6 @@ public sealed class ForensicsSystem : SharedForensicsSystem
         SubscribeLocalEvent<ForensicsComponent, GotRehydratedEvent>(OnRehydrated);
         SubscribeLocalEvent<CleansForensicsComponent, AfterInteractEvent>(OnAfterInteract, after: new[] { typeof(SharedAbsorbentSystem) });
         SubscribeLocalEvent<ForensicsComponent, CleanForensicsDoAfterEvent>(OnCleanForensicsDoAfter);
-        SubscribeLocalEvent<DnaComponent, TransferDnaEvent>(OnTransferDnaEvent);
         SubscribeLocalEvent<DnaSubstanceTraceComponent, SolutionContainerChangedEvent>(OnSolutionChanged);
         SubscribeLocalEvent<CleansForensicsComponent, GetVerbsEvent<UtilityVerb>>(OnUtilityVerb);
     }
@@ -309,16 +308,6 @@ public sealed class ForensicsSystem : SharedForensicsSystem
             component.Fingerprints.Add(fingerprint.Fingerprint ?? "");
 
         Dirty(target, component);
-    }
-
-    private void OnTransferDnaEvent(EntityUid uid, DnaComponent component, ref TransferDnaEvent args)
-    {
-        if (component.DNA == null)
-            return;
-
-        var recipientComp = EnsureComp<ForensicsComponent>(args.Recipient);
-        recipientComp.DNAs.Add(component.DNA);
-        recipientComp.CanDnaBeCleaned = args.CanDnaBeCleaned;
     }
 
     #region PublicAPI

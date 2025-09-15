@@ -4,7 +4,7 @@ using Content.Shared.Containers.ItemSlots;
 using Content.Shared.Damage;
 using Content.Shared.DoAfter;
 using Content.Shared.Examine;
-using Content.Shared.Forensics;
+using Content.Shared.Forensics.Systems;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Implants.Components;
 using Content.Shared.Interaction.Events;
@@ -28,6 +28,7 @@ public abstract class SharedImplanterSystem : EntitySystem
     [Dependency] private readonly DamageableSystem _damageableSystem = default!;
     [Dependency] private readonly SharedUserInterfaceSystem _uiSystem = default!;
     [Dependency] private readonly IPrototypeManager _proto = default!;
+    [Dependency] private readonly ForensicsSystem _forensics = default!;
 
     public override void Initialize()
     {
@@ -146,8 +147,7 @@ public abstract class SharedImplanterSystem : EntitySystem
         else
             ImplantMode(implanter, component);
 
-        var ev = new TransferDnaEvent { Donor = target, Recipient = implanter };
-        RaiseLocalEvent(target, ref ev);
+        _forensics.TransferDna(implanter, target);
 
         Dirty(implanter, component);
     }
@@ -283,8 +283,7 @@ public abstract class SharedImplanterSystem : EntitySystem
         implantComp.ImplantedEntity = null;
         _container.Insert(implant, implanterContainer);
 
-        var ev = new TransferDnaEvent { Donor = target, Recipient = implanter };
-        RaiseLocalEvent(target, ref ev);
+        _forensics.TransferDna(implanter, target);
     }
 
     private void DrawCatastrophicFailure(EntityUid implanter, ImplanterComponent component, EntityUid user)

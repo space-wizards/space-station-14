@@ -2,7 +2,7 @@ using Content.Shared.Administration.Logs;
 using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Database;
 using Content.Shared.FixedPoint;
-using Content.Shared.Forensics;
+using Content.Shared.Forensics.Systems;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Events;
@@ -12,7 +12,6 @@ using Content.Shared.Popups;
 using Content.Shared.Verbs;
 using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
-using Robust.Shared.Player;
 
 namespace Content.Shared.Nutrition.EntitySystems;
 
@@ -25,6 +24,7 @@ public abstract partial class SharedDrinkSystem : EntitySystem
     [Dependency] private readonly IngestionSystem _ingestion = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
     [Dependency] private readonly SharedSolutionContainerSystem _solutionContainer = default!;
+    [Dependency] private readonly ForensicsSystem _forensics = default!;
 
     public override void Initialize()
     {
@@ -154,13 +154,7 @@ public abstract partial class SharedDrinkSystem : EntitySystem
             return;
 
         // Leave some of the consumer's DNA on the consumed item...
-        var ev = new TransferDnaEvent
-        {
-            Donor = args.Target,
-            Recipient = entity,
-            CanDnaBeCleaned = false,
-        };
-        RaiseLocalEvent(args.Target, ref ev);
+        _forensics.TransferDna(entity, args.Target, false);
 
         args.Repeat = !args.ForceFed;
     }

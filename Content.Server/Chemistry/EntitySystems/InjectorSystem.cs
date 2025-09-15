@@ -7,7 +7,7 @@ using Content.Shared.Body.Components;
 using Content.Shared.Database;
 using Content.Shared.DoAfter;
 using Content.Shared.FixedPoint;
-using Content.Shared.Forensics;
+using Content.Shared.Forensics.Systems;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Interaction;
 using Content.Shared.Mobs.Components;
@@ -21,6 +21,7 @@ public sealed class InjectorSystem : SharedInjectorSystem
     [Dependency] private readonly BloodstreamSystem _blood = default!;
     [Dependency] private readonly ReactiveSystem _reactiveSystem = default!;
     [Dependency] private readonly OpenableSystem _openable = default!;
+    [Dependency] private readonly ForensicsSystem _forensics = default!;
 
     public override void Initialize()
     {
@@ -302,8 +303,7 @@ public sealed class InjectorSystem : SharedInjectorSystem
         }
 
         // Leave some DNA from the injectee on it
-        var ev = new TransferDnaEvent { Donor = target, Recipient = injector };
-        RaiseLocalEvent(target, ref ev);
+        _forensics.TransferDna(injector, target);
     }
 
     private void AfterDraw(Entity<InjectorComponent> injector, EntityUid target)
@@ -316,8 +316,7 @@ public sealed class InjectorSystem : SharedInjectorSystem
         }
 
         // Leave some DNA from the drawee on it
-        var ev = new TransferDnaEvent { Donor = target, Recipient = injector };
-        RaiseLocalEvent(target, ref ev);
+        _forensics.TransferDna(injector, target);
     }
 
     private bool TryDraw(Entity<InjectorComponent> injector, Entity<BloodstreamComponent?> target,
