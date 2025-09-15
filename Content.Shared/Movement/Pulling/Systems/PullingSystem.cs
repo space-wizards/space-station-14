@@ -625,7 +625,7 @@ public sealed class PullingSystem : EntitySystem
             return true;
 
         var msg = new AttemptStopPullingEvent(user);
-        RaiseLocalEvent(pullable, msg, true);
+        RaiseLocalEvent(pullable, ref msg, true);
 
         if (msg.Cancelled)
             return false;
