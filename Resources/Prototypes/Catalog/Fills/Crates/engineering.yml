@@ -256,3 +256,14 @@
     contents:
     - id: AirGrenade
       amount: 3
+
+- type: entity
+  id: CrateAntiMeteorTurret
+  parent: CrateEngineering
+  name: point defense turret crate
+  description: A crate containing 4 point defense turrets.
+  components:
+  - type: StorageFill
+    contents:
+    - id: WeaponTurretAntiMeteorEnergyFlatpack
+      amount: 4
