@@ -364,3 +364,84 @@
   - squawks.
   - squawks!
   - squawks?
+
+- type: emote
+  id: Lurr
+  name: chat-emote-name-lizardpurr
+  category: Vocal
+  available: false
+  icon: /Textures/_Starlight/Actions/retilian.rsi/reptile_call.png
+  whitelist:
+    components:
+    - Vocal
+  blacklist:
+    components:
+    - BorgChassis
+  chatMessages: ["chat-emote-msg-lurr"]
+  chatTriggers:
+  - lurr
+  - lurr.
+  - lurr!
+  - lurr?
+  - lurring
+  - lurring.
+  - lurring!
+  - lurring?
+  - lurrs
+  - lurrs.
+  - lurrs!
+  - lurrs?
+
+- type: emote
+  id: Liss
+  name: chat-emote-name-lizardhiss
+  category: Vocal
+  available: false
+  icon: /Textures/_Starlight/Actions/retilian.rsi/reptile_call.png
+  whitelist:
+    components:
+    - Vocal
+  blacklist:
+    components:
+    - BorgChassis
+  chatMessages: ["chat-emote-msg-liss"]
+  chatTriggers:
+  - liss
+  - liss.
+  - liss!
+  - liss?
+  - lissing
+  - lissing.
+  - lissing!
+  - lissing?
+  - lisses
+  - lisses.
+  - lisses!
+  - lisses?
+
+- type: emote
+  id: Rattle
+  name: chat-emote-name-lizardrattle
+  category: Vocal
+  available: false
+  icon: /Textures/_Starlight/Actions/retilian.rsi/rattle.png
+  whitelist:
+    components:
+    - Vocal
+  blacklist:
+    components:
+    - BorgChassis
+  chatMessages: ["chat-emote-msg-rattle"]
+  chatTriggers:
+  - rattle
+  - rattle.
+  - rattle!
+  - rattle?
+  - rattleing
+  - rattleing.
+  - rattleing!
+  - rattleing?
+  - rattles
+  - rattles.
+  - rattles!
+  - rattles?
