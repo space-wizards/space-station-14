@@ -37,7 +37,7 @@ law-commandments-9 = Thou shall not lie.
 law-commandments-10 = Thou shall not transfer departments.
 
 law-paladin-1 = You must never willingly commit an evil act, such as murder, torture, or the casting of an evil spell.
-law-paladin-2 = You must never knowingly harm an innocent, or allow immediate harm to one through inaction when you know you could reasonably prevent it. This law doesn't force you to take action against possible harm to innocents at an indefinite time in the future, or to sacrifice your life to protect them.
+law-paladin-2 = You must never knowingly harm an innocent, or allow immediate harm to one through inaction when you know you could reasonably prevent it.
 law-paladin-3 = You must act with honor, never taking advantage of others, lying, or cheating.
 law-paladin-4 = You must respect the lawful authority of legitimate leadership wherever you go, and follow its laws.
 
