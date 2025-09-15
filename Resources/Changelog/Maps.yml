@@ -679,4 +679,11 @@
   id: 81
   time: '2025-09-15T00:36:47.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/39887
+- author: ToastEnjoyer
+  changes:
+  - message: On bagel, replaced the mapped incendiary AK47 ammo for normal AK ammo.
+    type: Remove
+  id: 82
+  time: '2025-09-15T01:13:12.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/40359
 Order: 1
