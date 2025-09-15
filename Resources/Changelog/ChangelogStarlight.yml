@@ -14156,5 +14156,13 @@ Entries:
   id: 162800
   time: '2025-09-15T17:22:12.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/1628
+- author: CrazyPhantom
+  changes:
+  - message: Fixes Airlocks, Canisters and pipes being unable to spray paint when
+      recharging spray painter reaches 0
+    type: Fix
+  id: 160000
+  time: '2025-09-15T18:37:18.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1600
 Order: -1
 
