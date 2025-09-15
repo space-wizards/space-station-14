@@ -376,7 +376,7 @@
 
 #proto-kinetic accelerator
 - type: entity
-  parent: WeaponProtoKineticAcceleratorBase
+  parent: WeaponProtoKineticAccelerator
   id: WeaponProtoKineticAcceleratorTheZuTi
   categories: [ HideSpawnMenu ]
   name: Правосудие

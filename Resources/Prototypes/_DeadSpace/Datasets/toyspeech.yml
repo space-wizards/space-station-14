@@ -183,3 +183,81 @@
   values:
     prefix: plushies-tim-akkerman-
     count: 6
+
+- type: localizedDataset
+  id: PlushieKianaSpeech
+  values:
+    prefix: plushies-kiana-
+    count: 3
+
+- type: localizedDataset
+  id: PlushieSaiSpeech
+  values:
+    prefix: plushies-sai-
+    count: 3
+
+- type: localizedDataset
+  id: PlushieZhdanSpeech
+  values:
+    prefix: plushies-zhdan-
+    count: 3
+
+- type: localizedDataset
+  id: PlushieElenaSpeech
+  values:
+    prefix: plushies-elena-
+    count: 3
+
+- type: localizedDataset
+  id: PlushieMeiSpeech
+  values:
+    prefix: plushies-mei-
+    count: 3
+
+- type: localizedDataset
+  id: PlushieRygoslavSpeech
+  values:
+    prefix: plushies-rygoslav-
+    count: 3
+
+- type: localizedDataset
+  id: PlushieFlemSpeech
+  values:
+    prefix: plushies-flem-
+    count: 3
+
+- type: localizedDataset
+  id: PlushieMarrySpeech
+  values:
+    prefix: plushies-marry-
+    count: 3
+
+- type: localizedDataset
+  id: PlushieAlekseySpeech
+  values:
+    prefix: plushies-aleksey-
+    count: 3
+
+- type: localizedDataset
+  id: PlushieArevinSpeech
+  values:
+    prefix: plushies-arevin-
+    count: 4
+
+- type: localizedDataset
+  id: PlushieMilaSpeech
+  values:
+    prefix: plushies-mila-
+    count: 3
+
+- type: localizedDataset
+  id: PlushieRizaSpeech
+  values:
+    prefix: plushies-riza-
+    count: 3
+
+- type: localizedDataset
+  id: PlushieMurenSpeech
+  values:
+    prefix: plushies-muren-
+    count: 3
