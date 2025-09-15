@@ -25,10 +25,8 @@
             Chef: [ 2, 2 ]
             Janitor: [ 1, 2 ]
             Chaplain: [ 1, 1 ]
-            Reporter: [ 2, 2 ]
             Librarian: [ 1, 1 ]
             ServiceWorker: [ 3, 3 ]
-            Zookeeper: [ 1, 1 ] 
             #engineering
             ChiefEngineer: [ 1, 1 ]
             AtmosphericTechnician: [ 3, 3 ]
@@ -36,10 +34,9 @@
             TechnicalAssistant: [ 3, 3 ]
             #medical
             ChiefMedicalOfficer: [ 1, 1 ]
-            Chemist: [ 3, 3 ]
+            Chemist: [ 2, 2 ]
             MedicalDoctor: [ 4, 4 ]
             MedicalIntern: [ 3, 3 ]
-            Psychologist: [ 1, 1 ]
             Paramedic: [ 1, 1 ]
             Surgeon: [ 2, 2 ]  
             #science

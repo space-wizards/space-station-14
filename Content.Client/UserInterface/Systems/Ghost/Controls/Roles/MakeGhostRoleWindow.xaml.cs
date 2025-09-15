@@ -69,17 +69,30 @@ namespace Content.Client.UserInterface.Systems.Ghost.Controls.Roles
                 _prototypeManager.EnumeratePrototypes<GhostRoleRaffleSettingsPrototype>();
 
             var idx = 0;
+            var raffleDefault = -1; //Starlight raffle default
             foreach (var raffleProto in raffleProtos)
             {
                 _rafflePrototypes.Add(raffleProto);
                 var s = raffleProto.Settings;
                 var label =
                     $"{raffleProto.ID} (initial {s.InitialDuration}s, max {s.MaxDuration}s, join adds {s.JoinExtendsDurationBy}s)";
+                #region Starlight raffle by default
+                if (raffleProto.Default)
+                    raffleDefault = idx;
+                #endregion
                 RaffleButton.AddItem(label, idx++);
             }
 
             MakeButton.OnPressed += OnMakeButtonPressed;
             RaffleButton.OnItemSelected += OnRaffleButtonItemSelected;
+
+            #region Starlight raffle by default
+            if (raffleDefault != -1)
+            {
+                RaffleButton.Select(raffleDefault);
+                OnRaffleButtonItemSelected(new OptionButton.ItemSelectedEventArgs(raffleDefault, RaffleButton));
+            }
+            #endregion
         }
 
         private void OnRaffleDurationChanged(ValueChangedEventArgs args)

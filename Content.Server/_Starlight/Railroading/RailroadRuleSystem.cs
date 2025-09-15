@@ -1,11 +1,15 @@
 ﻿using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+using Content.Server.GameTicking;
 using Content.Server.GameTicking.Rules;
 using Content.Server.Mind;
 using Content.Shared._Starlight.Abstract.Conditions;
 using Content.Shared._Starlight.Railroading;
 using Content.Shared.Alert;
 using Content.Shared.GameTicking.Components;
+using Content.Shared.Mind;
+using Content.Shared.Roles.Jobs;
 using Content.Shared.Starlight;
 using Content.Shared.Store;
 using Robust.Server.Player;
@@ -28,6 +32,9 @@ public sealed partial class RailroadRuleSystem : GameRuleSystem<RailroadRuleComp
     [Dependency] private readonly IComponentFactory _comp = default!;
     [Dependency] private readonly IPlayerManager _players = default!;
     [Dependency] private readonly RailroadingSystem _railroading = default!;
+    [Dependency] private readonly GameTicker _gameTicker = default!;
+    [Dependency] private readonly SharedJobSystem _job = default!;
+    [Dependency] private readonly SharedMindSystem _mind = default!;
 
     public override void Initialize()
     {
@@ -36,9 +43,17 @@ public sealed partial class RailroadRuleSystem : GameRuleSystem<RailroadRuleComp
 
     protected override void Added(EntityUid uid, RailroadRuleComponent comp, GameRuleComponent gameRule, GameRuleAddedEvent args)
     {
+        if (TryGetActiveRule(out var rule))
+        {
+            foreach (var card in rule.Cards)
+                comp.DynamicCards.Enqueue(card);
+            _gameTicker.EndGameRule(uid);
+            return;
+        }
         base.Added(uid, comp, gameRule, args);
         comp.Timer = comp.PreSpawnDelay;
     }
+
 
     protected override void ActiveTick(EntityUid uid, RailroadRuleComponent comp, GameRuleComponent gameRule, float frameTime)
     => _ = comp.Stage switch
@@ -91,6 +106,9 @@ public sealed partial class RailroadRuleSystem : GameRuleSystem<RailroadRuleComp
         return true;
     }
 
+    // The shuffle is done because after a card’s condition isn’t met, we take the next card in order
+    // and this prevents us from running into 10 cards in a row with the same conditions.
+    // At the same time, for the job-specific pool this isn’t needed, since there are only a few cards there.
     private bool TickCardShuffle(Entity<RailroadRuleComponent> ruleEnt)
     {
         _random.Shuffle(ruleEnt.Comp.Pool);
@@ -121,12 +139,24 @@ public sealed partial class RailroadRuleSystem : GameRuleSystem<RailroadRuleComp
                 && (subject.Comp.ActiveCard == null || Deleted(subject.Comp.ActiveCard)))
             {
                 subject.Comp.IssuedCards ??= new List<Entity<RailroadCardComponent, RuleOwnerComponent>>(CardPerUser);
-                var cardsToIssue = Math.Min(CardPerUser - subject.Comp.IssuedCards.Count, ruleEnt.Comp.Pool.Count);
+                var cardsToIssue = CardPerUser - subject.Comp.IssuedCards.Count;
                 for (var i = 0; i < cardsToIssue; i++)
                 {
-                    var card = PopRandomFromProcessingPool(ruleEnt, subject);
+                    if(subject.Comp.IssuedCards.Count == 1
+                        && TryGetJobSpecificPool(ruleEnt, subject, out var jobPool))
+                    {
+                        var jobCard = PopRandomFromPool(jobPool, subject);
+                        if (jobCard is not null)
+                        {
+                            subject.Comp.IssuedCards.Add(jobCard.Value);
+                            continue;
+                        }
+                    }
+
+                    var card = PopRandomFromPool(ruleEnt.Comp.Pool, subject);
                     if (card == null)
                         break;
+
                     subject.Comp.IssuedCards.Add(card.Value);
                 }
 
@@ -154,6 +184,24 @@ public sealed partial class RailroadRuleSystem : GameRuleSystem<RailroadRuleComp
 
     #endregion
 
+    public void AddCardToPool(Entity<RailroadRuleComponent> ruleEnt, Entity<RailroadCardComponent> card)
+    {
+        var ruleOwner = EnsureComp<RuleOwnerComponent>(card.Owner);
+        ruleOwner.RuleOwner = ruleEnt.Owner;
+
+        if (TryComp<RailroadSpawnFlowComponent>(card.Owner, out var flow) && flow.JobPrototype is { } job)
+        {
+            if (ruleEnt.Comp.PoolByJob.TryGetValue(job, out var list))
+                list.Add((card.Owner, card.Comp, ruleOwner));
+            else
+                ruleEnt.Comp.PoolByJob.Add(job, [(card.Owner, card.Comp, ruleOwner)]);
+        }
+        else
+        {
+            ruleEnt.Comp.Pool.Add((card.Owner, card.Comp, ruleOwner));
+        }
+    }
+
     #region ——— Helpers ———
 
     private void RegisterCardInstance(EntProtoId<RailroadCardComponent> proto, Entity<RailroadRuleComponent> ruleEnt)
@@ -178,31 +226,64 @@ public sealed partial class RailroadRuleSystem : GameRuleSystem<RailroadRuleComp
         {
             var eid = Spawn(proto, MapCoordinates.Nullspace);
             var cardComp = EnsureComp<RailroadCardComponent>(eid);
-            var ruleOwner = EnsureComp<RuleOwnerComponent>(eid);
-            ruleOwner.RuleOwner = ruleEnt.Owner;
-            ruleEnt.Comp.Pool.Add((eid, cardComp, ruleOwner));
+            AddCardToPool(ruleEnt, (eid, cardComp));
         }
     }
 
-    private Entity<RailroadCardComponent, RuleOwnerComponent>? PopRandomFromProcessingPool(Entity<RailroadRuleComponent> ruleEnt, EntityUid subject)
+    private Entity<RailroadCardComponent, RuleOwnerComponent>? PopRandomFromPool(List<Entity<RailroadCardComponent, RuleOwnerComponent>> pool, EntityUid subject)
     {
-        var startIndex = _random.Next(ruleEnt.Comp.Pool.Count);
+        var startIndex = _random.Next(pool.Count);
         for (var i = startIndex; i < ProcessingMaxTry + startIndex; i++)
         {
-            var index = i % ruleEnt.Comp.Pool.Count;
-            var card = ruleEnt.Comp.Pool[index];
+            var index = i % pool.Count;
+            var card = pool[index];
             if (Deleted(card))
             {
-                ruleEnt.Comp.Pool.RemoveSwapBack(index);
+                pool.RemoveSwapBack(index);
                 continue;
             }
             if (TryComp<ConditionsComponent>(card, out var conditions)
                 && !conditions.Conditions.All(x => x.Handle(subject, card)))
                 continue;
-            ruleEnt.Comp.Pool.RemoveSwapBack(index);
+            pool.RemoveSwapBack(index);
             return card;
         }
         return null;
+    }
+
+    private bool TryGetActiveRule([NotNullWhen(true)] out RailroadRuleComponent? rule)
+    {
+        rule = null;
+        var query = EntityQueryEnumerator<RailroadRuleComponent, GameRuleComponent>();
+        while (query.MoveNext(out var uid, out var comp1, out var comp2))
+        {
+            if (!GameTicker.IsGameRuleActive(uid, comp2))
+                continue;
+
+            rule = comp1;
+            return true;
+        }
+        return false;
+    }
+
+    private bool TryGetJobSpecificPool
+    (
+        Entity<RailroadRuleComponent> ruleEnt,
+        Entity<RailroadableComponent> subject,
+        [NotNullWhen(true)] out List<Entity<RailroadCardComponent, RuleOwnerComponent>>? pool
+    )
+    {
+        if (_mind.TryGetMind(subject.Owner, out var mindUid, out var mind)
+            && _job.MindTryGetJobId(mindUid, out var job)
+            && job != null
+            && ruleEnt.Comp.PoolByJob.TryGetValue(job.Value, out var jobPool)
+            && jobPool.Count > 0)
+        {
+            pool = jobPool;
+            return true;
+        }
+        pool = null;
+        return false;
     }
     #endregion
 }

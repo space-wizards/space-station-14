@@ -49,7 +49,7 @@
             Detective: [ 1, 1 ]
             SecurityOfficer: [ 4, 4 ]
             SecurityCadet: [ 4, 4 ]
-            Brigmedic: [ 1, 1 ]
+            #Brigmedic: [ 1, 1 ]
             #supply
             SalvageSpecialist: [ 6, 6 ]
             CargoTechnician: [ 2, 2 ]
