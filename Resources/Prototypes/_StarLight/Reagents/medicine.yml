@@ -115,6 +115,8 @@
           conditions:
           - !type:Temperature
             max: 213.0
+          - !type:MobStateCondition
+            mobstate: Dead
           damage:
             types:
               Radiation: -5
