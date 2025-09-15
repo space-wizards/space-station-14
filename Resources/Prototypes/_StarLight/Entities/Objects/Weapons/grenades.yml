@@ -9,8 +9,8 @@
   - type: SmokeOnTrigger
     keysIn:
     - timer
-    duration: 15
-    spreadAmount: 40
+    duration: 10
+    spreadAmount: 25
     smokePrototype: Foam
     solution:
       reagents:
@@ -28,8 +28,8 @@
   - type: SmokeOnTrigger
     keysIn:
     - timer
-    duration: 20
-    spreadAmount: 30
+    duration: 15
+    spreadAmount: 20
     smokePrototype: Foam
     solution:
       reagents:
