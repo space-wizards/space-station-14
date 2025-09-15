@@ -647,12 +647,15 @@
           - Circuitboard
     - hand:
         emptyRepresentative: MicroManipulatorStockPart
-        emptyLabel: borg-slot-construction-empty
+        #STARLIGHT start
+        emptyLabel: borg-slot-comp-empty
         whitelist:
-          tags: #STARLIGHT start
+          tags:
           - MicroManipulatorStockPart
-          components:
-          - Battery #STARLIGHT end
+          - PowerCell
+          - PowerCellSmall
+          - PowerCage
+        #STARLIGHT end
     - hand:
         emptyRepresentative: SpaceHeaterFlatpack
         emptyLabel: borg-slot-flatpacks-empty

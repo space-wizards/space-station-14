@@ -79,6 +79,7 @@
     - toilet
     - toolbox
     - uboa
+    - ussp #SL revs
     radius: 0.5
     randomRotation: true
     maxDecals: 1

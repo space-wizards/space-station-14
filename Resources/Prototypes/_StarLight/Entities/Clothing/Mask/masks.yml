@@ -99,3 +99,83 @@
     sprite: _Starlight/Clothing/Mask/squid_three.rsi
   - type: Clothing
     sprite: _Starlight/Clothing/Mask/squid_three.rsi
+
+# Fashion-O-Mat-Start
+- type: entity
+  parent: ClothingMaskBase
+  id: ClothingMaskGeneralBorg
+  name: protogen mask
+  description: You don't understand, we are not cybor- POW POW POW
+  components:
+  - type: Sprite
+    sprite: _Starlight/Clothing/Mask/general.rsi
+    state: icon
+  - type: Clothing
+    sprite: _Starlight/Clothing/Mask/general.rsi
+  - type: BreathMask
+  - type: IngestionBlocker
+  - type: IdentityBlocker
+  - type: Tag
+    tags: []
+  - type: HideLayerClothing
+    slots:
+    - Hair
+    - Snout
+  - type: TypingIndicatorClothing
+    proto: robot
+
+- type: entity
+  parent: ClothingMaskGeneralBorg
+  id: ClothingMaskCargoBorg
+  name: protogen salvager mask
+  description: Now that's a mask that really digs the look.
+  components:
+  - type: Sprite
+    sprite: _Starlight/Clothing/Mask/cargo.rsi
+  - type: Clothing
+    sprite: _Starlight/Clothing/Mask/cargo.rsi
+
+- type: entity
+  parent: ClothingMaskGeneralBorg
+  id: ClothingMaskMedicBorg
+  name: protogen medic mask
+  description: Look me in the face while i cut you.
+  components:
+  - type: Sprite
+    sprite: _Starlight/Clothing/Mask/medic.rsi
+  - type: Clothing
+    sprite: _Starlight/Clothing/Mask/medic.rsi
+
+- type: entity
+  parent: ClothingMaskGeneralBorg
+  id: ClothingMaskEngiBorg
+  name: protogen engineer mask
+  description: Bolts it all together.
+  components:
+  - type: Sprite
+    sprite: _Starlight/Clothing/Mask/eng.rsi
+  - type: Clothing
+    sprite: _Starlight/Clothing/Mask/eng.rsi
+
+- type: entity
+  parent: ClothingMaskGeneralBorg
+  id: ClothingMaskJanitorBorg
+  name: protogen janitor mask
+  description: Sweep the floor with protogen style!
+  components:
+  - type: Sprite
+    sprite: _Starlight/Clothing/Mask/janitor.rsi
+  - type: Clothing
+    sprite: _Starlight/Clothing/Mask/janitor.rsi
+
+- type: entity
+  parent: ClothingMaskGeneralBorg
+  id: ClothingMaskSecBorg
+  name: protogen security mask
+  description: Always on guard, nothing escapes those mechanical eyes.
+  components:
+  - type: Sprite
+    sprite: _Starlight/Clothing/Mask/sec.rsi
+  - type: Clothing
+    sprite: _Starlight/Clothing/Mask/sec.rsi
+# Fashion-O-Mat-End

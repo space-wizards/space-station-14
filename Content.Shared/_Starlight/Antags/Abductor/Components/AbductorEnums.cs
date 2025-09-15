@@ -24,11 +24,6 @@ public enum AbductorArmorModeType : byte
     Combat,
     Stealth
 }
-[Serializable, NetSerializable]
-public enum AbductorCameraConsoleUIKey
-{
-    Key
-}
 
 [Serializable, NetSerializable]
 public enum AbductorConsoleUIKey
