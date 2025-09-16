@@ -700,6 +700,13 @@
     Telecrystal: 6
   categories:
   - UplinkChemicals
+# DS14-start Hypopen for agents only
+  conditions:
+  - !type:StoreWhitelistCondition
+    blacklist:
+      tags:
+      - NukeOpsUplink
+# DS14-end
 
 - type: listing
   id: UplinkHypoDart
@@ -1884,10 +1891,10 @@
   # DS14-start
   discountCategory: veryRareDiscounts
   discountDownTo:
-    Telecrystal: 20
+    Telecrystal: 35 # DS14-value
   # DS14-end
   cost:
-    Telecrystal: 25 # DS14-value
+    Telecrystal: 40 # DS14-value
   categories:
   - UplinkWearables
   conditions:

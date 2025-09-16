@@ -9,14 +9,14 @@
   categories:
   - UplinkWeaponry
   conditions:
-    - !type:StoreWhitelistCondition
-      blacklist:
-        tags:
-          - NukeOpsUplink
-    - !type:BuyerWhitelistCondition
-      blacklist:
-        components:
-          - SurplusBundle
+  - !type:StoreWhitelistCondition
+    blacklist:
+      tags:
+      - NukeOpsUplink
+  - !type:BuyerWhitelistCondition
+    blacklist:
+      components:
+      - SurplusBundle
 
 - type: listing
   id: UplinkEnergyCrossbow
@@ -28,14 +28,14 @@
   categories:
   - UplinkWeaponry
   conditions:
-    - !type:StoreWhitelistCondition
-      blacklist:
-        tags:
-          - NukeOpsUplink
-    - !type:BuyerWhitelistCondition
-      blacklist:
-        components:
-          - SurplusBundle
+  - !type:StoreWhitelistCondition
+    blacklist:
+      tags:
+      - NukeOpsUplink
+  - !type:BuyerWhitelistCondition
+    blacklist:
+      components:
+      - SurplusBundle
 
 - type: listing
   id: UplinkEnergyCrossbowNuke
@@ -97,20 +97,20 @@
   categories:
   - UplinkWeaponry
   conditions:
-    - !type:StoreWhitelistCondition
-      whitelist:
-        tags:
-          - NukeOpsUplink
-    - !type:BuyerWhitelistCondition
-      blacklist:
-        components:
-          - SurplusBundle
+  - !type:StoreWhitelistCondition
+    whitelist:
+      tags:
+      - NukeOpsUplink
+  - !type:BuyerWhitelistCondition
+    blacklist:
+      components:
+      - SurplusBundle
 
 - type: listing
   id: UplinkXC67Bundle
   name: uplink-xc67-bundle-name
   description: uplink-xc67-bundle-desc
-  icon: { sprite: /Textures/_ADT/Objects/Weapons/Guns/Rifels/xc67.rsi, state: icon}
+  icon: { sprite: /Textures/_ADT/Objects/Weapons/Guns/Rifels/xc67.rsi, state: icon }
   productEntity: ClothingBackpackDuffelSyndicateFilledXC67
   cost:
     Telecrystal: 18
@@ -286,7 +286,7 @@
   cost:
     Telecrystal: 8
   categories:
-    - UplinkImplants
+  - UplinkImplants
 
 - type: listing
   id: UplinkReviveAutosurgeon
@@ -300,7 +300,7 @@
   cost:
     Telecrystal: 8
   categories:
-    - UplinkImplants
+  - UplinkImplants
 
 - type: listing
   id: UplinkClothingEyesPNVAdvSyndicate
@@ -310,12 +310,12 @@
   cost:
     Telecrystal: 4
   categories:
-    - UplinkWearables
+  - UplinkWearables
   conditions:
-    - !type:StoreWhitelistCondition
-      whitelist:
-        tags:
-          - NukeOpsUplink
+  - !type:StoreWhitelistCondition
+    whitelist:
+      tags:
+      - NukeOpsUplink
 
 - type: listing
   id: UplinkTommyGunBundleAgent
@@ -334,7 +334,7 @@
   - !type:StoreWhitelistCondition
     blacklist:
       tags:
-        - NukeOpsUplink
+      - NukeOpsUplink
 
 - type: listing
   id: UplinkTommyGunBundle
@@ -412,6 +412,57 @@
     - Chef
 
 - type: listing
+  id: UplinkShakerSyndie
+  name: uplink-syndie-shaker-name
+  description: uplink-syndie-shaker-desc
+  productEntity: DrinkShakerSyndie
+  discountCategory: rareDiscounts
+  discountDownTo:
+    Telecrystal: 2
+  cost:
+    Telecrystal: 4
+  categories:
+  - UplinkChemicals
+  conditions:
+  - !type:StoreWhitelistCondition
+    whitelist:
+      tags:
+      - NukeOpsUplink
+
+- type: listing
+  id: UplinkClothingEyesHudSyndicateAgent
+  name: uplink-clothing-eyes-hud-syndicate-agent-name
+  description: uplink-clothing-eyes-hud-syndicate-agent-desc
+  productEntity: ClothingEyesHudSyndicateAgent
+  cost:
+    Telecrystal: 2
+  categories:
+  - UplinkWearables
+  conditions:
+  - !type:StoreWhitelistCondition
+    whitelist:
+      tags:
+      - NukeOpsUplink
+
+- type: listing
+  id: UplinkCyberHypospray
+  name: uplink-cyber-hypospray-name
+  description: uplink-cyber-hypospray-desc
+  productEntity: ADTCyberHypospray
+  discountCategory: rareDiscounts
+  discountDownTo:
+    Telecrystal: 6
+  cost:
+    Telecrystal: 8
+  categories:
+  - UplinkChemicals
+  conditions:
+  - !type:StoreWhitelistCondition
+    whitelist:
+      tags:
+      - NukeOpsUplink
+
+- type: listing
   id: UplinkFlippoSyndicateLighter
   name: uplink-syndicate-flippo-syndicate-lighter-name
   description: uplink-syndicate-flippo-syndicate-lighter-desc
@@ -420,7 +471,7 @@
   cost:
     Telecrystal: 1
   categories:
-    - UplinkPointless
+  - UplinkPointless
   conditions:
   - !type:ListingLimitedStockCondition
     stock: 1
@@ -452,7 +503,7 @@
   categories:
   - UplinkAmmo
   conditions:
-    - !type:StoreWhitelistCondition
-      whitelist:
-        tags:
-          - NukeOpsUplink
+  - !type:StoreWhitelistCondition
+    whitelist:
+      tags:
+      - NukeOpsUplink

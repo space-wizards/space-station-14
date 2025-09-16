@@ -1,0 +1,20 @@
+- type: entity
+  parent: DrinkShaker
+  id: DrinkShakerSyndie
+  name: синди-шейкер
+  description: Фирменный шейкер, которым пользуются большинство оперативников Синдиката.
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 200
+  - type: ExaminableSolution
+    solution: drink
+  - type: InjectableSolution
+    solution: drink
+  - type: Sprite
+    sprite: _DeadSpace/Objects/Consumable/Drinks/syndie_shaker.rsi
+    layers:
+      - state: base
+      - state: base-unshaded
+        shader: unshaded

@@ -1217,6 +1217,7 @@
       - item: Emag
       - item: AccessBreaker
       - item: PinpointerSyndicateNuclear
+      - item: PinpointerSyndicateNuclearBomb # DS14
     - type: BorgModuleIcon
       icon: { sprite: Interface/Actions/actions_borg.rsi, state: syndicate-operative-module }
 
@@ -1234,6 +1235,7 @@
     hands:
     - item: CyborgEnergySword
     - item: PinpointerSyndicateNuclear
+    - item: PinpointerSyndicateNuclearBomb # DS14
   - type: BorgModuleIcon
     icon: { sprite: Interface/Actions/actions_borg.rsi, state: syndicate-esword-module }
 
@@ -1268,6 +1270,7 @@
     hands:
     - item: WeaponLightMachineGunL6C
     - item: PinpointerSyndicateNuclear
+    - item: PinpointerSyndicateNuclearBomb # DS14
   - type: BorgModuleIcon
     icon: { sprite: Interface/Actions/actions_borg.rsi, state: syndicate-l6c-module }
 
