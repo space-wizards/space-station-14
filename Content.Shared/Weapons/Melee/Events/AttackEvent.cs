@@ -1,21 +1,22 @@
 using Content.Shared.Damage;
 using Robust.Shared.Map;
 using Robust.Shared.Serialization;
+using Robust.Shared.Timing;
 
 namespace Content.Shared.Weapons.Melee.Events
 {
     [Serializable, NetSerializable]
-    public abstract class AttackEvent : EntityEventArgs
+    public abstract class AttackEvent(NetCoordinates coordinates, GameTick? tick) : EntityEventArgs
     {
         /// <summary>
         /// Coordinates being attacked.
         /// </summary>
-        public readonly NetCoordinates Coordinates;
+        public readonly NetCoordinates Coordinates = coordinates;
 
-        protected AttackEvent(NetCoordinates coordinates)
-        {
-            Coordinates = coordinates;
-        }
+        /// <summary>
+        /// The client's last applied server state. Used for lag compensation.
+        /// </summary>
+        public readonly GameTick? Tick = tick;
     }
 
     /// <summary>

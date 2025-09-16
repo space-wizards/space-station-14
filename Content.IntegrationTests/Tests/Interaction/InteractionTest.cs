@@ -23,6 +23,7 @@ using Robust.Shared.Timing;
 using Robust.UnitTesting;
 using Content.Shared.Item.ItemToggle;
 using Robust.Client.State;
+using Robust.Client.Timing;
 
 namespace Content.IntegrationTests.Tests.Interaction;
 
@@ -104,13 +105,14 @@ public abstract partial class InteractionTest
     protected ItemToggleSystem ItemToggleSys = default!;
     protected InteractionTestSystem STestSystem = default!;
     protected SharedTransformSystem Transform = default!;
+    protected SharedTransformSystem CTransform = default!;
     protected SharedMapSystem MapSystem = default!;
     protected ISawmill SLogger = default!;
     protected SharedUserInterfaceSystem SUiSys = default!;
 
     // CLIENT dependencies
     protected IEntityManager CEntMan = default!;
-    protected IGameTiming CTiming = default!;
+    protected IClientGameTiming CTiming = default!;
     protected IUserInterfaceManager UiMan = default!;
     protected IInputManager InputManager = default!;
     protected Robust.Client.GameObjects.InputSystem InputSystem = default!;
@@ -179,7 +181,7 @@ public abstract partial class InteractionTest
         // client dependencies
         CEntMan = Client.ResolveDependency<IEntityManager>();
         UiMan = Client.ResolveDependency<IUserInterfaceManager>();
-        CTiming = Client.ResolveDependency<IGameTiming>();
+        CTiming = Client.Resolve<IClientGameTiming>();
         InputManager = Client.ResolveDependency<IInputManager>();
         InputSystem = CEntMan.System<Robust.Client.GameObjects.InputSystem>();
         CTestSystem = CEntMan.System<InteractionTestSystem>();
@@ -187,6 +189,7 @@ public abstract partial class InteractionTest
         ExamineSys = CEntMan.System<ExamineSystem>();
         CLogger = Client.ResolveDependency<ILogManager>().RootSawmill;
         CUiSys = Client.System<SharedUserInterfaceSystem>();
+        CTransform = Client.System<SharedTransformSystem>();
 
         // Setup map.
         await Pair.CreateTestMap();
