@@ -192,7 +192,6 @@
     - id: ClothingShoesColorWhite
     - id: ClothingOuterCoatRnd
     - id: ClothingUniformJumpskirtScientist
-    - id: ClothingEyesGlasses
 
 - type: entity
   id: WardrobeBotanistFilled
@@ -241,7 +240,6 @@
     - id: ClothingOuterCoatLab
     - id: ClothingUniformJumpskirtMedicalDoctor
     - id: ClothingHandsGlovesLatex
-    - id: ClothingEyesGlasses
 
 - type: entity
   id: WardrobeChapelFilled
