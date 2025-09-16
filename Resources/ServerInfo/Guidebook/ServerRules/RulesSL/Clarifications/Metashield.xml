@@ -35,7 +35,7 @@ Examples:
 ## Unknown Information
 [color=#ff6200]Unknown Information[/color] is not known by anyone, or is only known by a very small group of people which is defined specifically. This section covers everything from Metagaming to niche information that so few people know that it might as well not be known by anybody.
 
-[bold][color=#ff6200]Meta Information[/color][/bold]
+[bold][color=#ff6200]Meta Information || [/color][/bold]
 Meta Information such as the current gamemode and the possible antagonists there may be in play, events you experienced as a different character, information about a player instead of their character, etc is all considered Meta and is never allowed to be known by anybody. Secret uses for items, checking headsets without good cause, and using Chameleon items are all also classified as Meta Information and Metagaming.
 
 Examples:
@@ -46,7 +46,7 @@ Examples:
 - You may never know an item has a secret use by right clicking it, such as exploding pens or chameleon gloves.
 
 
-[bold][color=#ff6200]Unconscious Information[/color][/bold]
+[bold][color=#ff6200]Unconscious Information || [/color][/bold]
 Unconscious Information is information you learned while your character was asleep, in critical condition, dead, or while you were moving around as a ghost while you were dead. If you are injured to the point that you enter critical condition or die, you forget the previous 5 minutes and do not remember details about what killed you or how you died. You may use common sense to notice what type of wounds you have however.
 
 Examples:
@@ -63,27 +63,27 @@ Examples:
 Corporate Secrets may be revealed to individuals, departments, or the station as a whole if deemed necessary. You had better have a damn good reason to do so however, and expect your reasoning to be cross examined and scrutinized heavily by Central Command. Revealing Corporate Secrets to Security is generally deemed more acceptable, better for them to clean up an issue without panicking the rest of the Crew.
 
 
-[bold][color=#9819ff]Ninjas[/color][/bold]
+[bold][color=#9819ff]Ninjas || [/color][/bold]
 Ninjas are a collective of Clans that seek to steal our research and disrupt our operations. They frequently target vital systems to cause a distraction, and then attempt to hack into Research Servers to download what we have learned. How hostile these Clans are varies greatly, so we advise attempting to handle them discreetly if able to minimize disruption.
 
 
-[bold][color=#9819ff]Abductors[/color][/bold]
+[bold][color=#9819ff]Abductors || [/color][/bold]
 Silent and uncommunicative, Abductors is the name given to an advanced alien species that has been probing the edges of TSF space for over a decade now, long enough that their image has worked its way into media and rumor. Our official stance is that they are not real. Should Abductor activity be identified, due to the nature of their experiments you are advised to inform necessary Medical staff only. Surgeons will be needed to remove foreign organs and replace them.
 
 
-[bold][color=#9819ff]Romerol Virus[/color][/bold]
+[bold][color=#9819ff]Romerol Virus || [/color][/bold]
 Romerol is a highly violent contagion that pilots the dead to facilitate its own spread. The current source is unknown, but it is suspected to be artificial in nature. A cure has been documented, and this information should be disseminated to Medical staff in the event of an outbreak. Subjects are capable of revival via cloning should their corpse be recovered rapidly. If quarantine can not be maintained, requesting for CBURN is advised.
 
 
-[bold][color=#9819ff]Paradox Clones[/color][/bold]
+[bold][color=#9819ff]Paradox Clones || [/color][/bold]
 Cracks in reality sometimes result in intrusions from other parallel worlds. This phenominon is exclusive to sectors near the Null Scar, and is a matter of great interest to NanoTrasen. Should a duplicate be discovered it should be observed and studied, and only terminated if it proves to be hostile.
 
 
-[bold][color=#9819ff]Nuclear Operatives[/color][/bold]
+[bold][color=#9819ff]Nuclear Operatives || [/color][/bold]
 The Syndicate is a shell of its former self, due to their involvement in and defeat during the Pod Wars. They have grown increasingly more irrational and hostile since their resurgence however, and the rumors you have heard about Nuclear attacks are true. You must protect the Warhead onboard your station, and the Authentication Disk to activate it, at all costs. A confirmed attack from Nuclear Operatives is grounds to suspend Corporate Law and Standard Operating Procedure. Contact Central Command immediately to establish Martial Law.
 
 
-[bold][color=#9819ff]NTSF Decimus[/color][/bold]
+[bold][color=#9819ff]NTSF Decimus || [/color][/bold]
 NanoTrasen Special Forces are broken up into Task Forces that specialize in different scenarios and problems. Officially, there are only Nine of these Task Forces. Unofficially, there are Ten. Task Force Ten, Decimus, handles termination of rogue stations. This is reserved only for extreme situations where an entire station has defected to an enemy of the Trans-Solar Federation, such as the Syndicate or the USSP.
 
 Code Epsilon is the designation for this necessary last resort measure, should it ever occur. Thankfully it has never seen deployment, as no station would ever willingly defect to an enemy like that. Still, the protocol exists, and if the general public were to learn of it, it would be disastrous. The existence of Decimus should never be revealed under any circumstances.
@@ -93,7 +93,7 @@ Code Epsilon is the designation for this necessary last resort measure, should i
 [color=#f00000]Secure Knowledge[/color] is only known by members of Security, Internal Affairs Agents, and everyone who knows Corporate Secrets. This includes the Brig Medic, Warden, Security Cadets- all Security jobs. Secure Knowledge should be kept secret until necessary, but may be revealed in order to preserve Crew lives at the discretion of the Head of Security.
 
 
-[bold][color=#f00000]Revolutionary Methods[/color][/bold]
+[bold][color=#f00000]Revolutionary Methods || [/color][/bold]
 The fact that USSP infiltrators make use of mind control flashes to forcibly control individuals, and unstable Redspace rifts to transport bulk equipment crates, is something that CentComm has learned through repeated incidents. Mindshields were specifically developed to counter this forced control, by Revolutionaries and by any others who might exploit the same weakness in the mind for their own ends. It is known that Mindshields will prevent and break this control.
 
 Not all flashes have this power however, and it should never be the first assumption. Strong evidence is needed before Revolutionaries are suspected, as revealing that the USSP has this capability would undermine the Crew's ability to trust one another and would significantly damage cohesion and moral.
@@ -104,11 +104,11 @@ Examples:
 - A Mindshielding failing on a Crewmember is proof that there is a Revolution.
 
 
-[bold][color=#f00000]Changelings[/color][/bold]
+[bold][color=#f00000]Changelings || [/color][/bold]
 The existence of Changelings, alien parasites that can steal the likeness of your friends and coworkers to blend in, is a serious but uncommon threat that stations may face. They pose an undue risk to the moral and cohesion of a station should they be revealed, paranoia and distrust severely and negatively impact the bottom line. Should Changelings be identified onboard your Station, you are advised to inform necessary Medical staff only. Chemists may facilitate blood tests, Surgeons may attempt to revive hollow corpses with organ transplants or cryopods.
 
 
-[bold][color=#f00000]Suspected Syndicate Corporations[/color][/bold]
+[bold][color=#f00000]Suspected Syndicate Corporations || [/color][/bold]
 While nobody is able to prove anything, Central Command maintains a small curated list of corporations they believe to be backing the Syndicate. Security is made privy to this list so they may observe and report any connections to Syndicate activity onboard stations.
 
 These suspected corporations are:
@@ -119,19 +119,19 @@ These suspected corporations are:
 Their products should be viewed with suspicion but may or may not be considered contraband. Consult with Corporate Law for more information.
 
 
-[bold][color=#f00000]Non-NanoTrasen Implants[/color][/bold]
+[bold][color=#f00000]Non-NanoTrasen Implants || [/color][/bold]
 While it is known that NanoTrasen are not the only company to make Implanters, you may not suspect someone of having an Implant without valid evidence, such as seeing them do something they should not be able to do, seeing them use an Implanter, finding a spent Implanter with their DNA or prints on it, etc. Spent Implanters and Implant Boxes have labels, and these may be used to figure out which Implant someone has for removal.
 
 
-[bold][color=#f00000]Vampires[/color][/bold]
+[bold][color=#f00000]Vampires || [/color][/bold]
 The fact that Vampires are real is unknown to the general public. While not inherently illegal, Vampires sometimes have an agenda onboard a Station and should be kept under extra scrutiny if they reveal themselves.
 
 
-[bold][color=#f00000]Wizards[/color][/bold]
+[bold][color=#f00000]Wizards || [/color][/bold]
 The Wizard Federation is very outspoken about their so-called 'magic', but most consider them to be nutjobs roleplaying in space. Whether that they do is actually 'magic' or not, they are a danger and Security has been briefed on them. Security knows they may have access to strange abilities, but they do not know the extent of the Wizard's capabilities.
 
 
-[bold][color=#f00000]Syndicate Equipment[/color][/bold]
+[bold][color=#f00000]Syndicate Equipment || [/color][/bold]
 Security is aware of some specific equipment associated with the Syndicate. They are not aware of all or even most of the items within the uplink, however they do get foreknowledge of;
 - Syndicate Hardsuits, EVA Suits, Jetpacks, Mag Boots, Chest Rigs, and Web Vests
 - Syndicate Guns and Energy Swords
@@ -149,7 +149,7 @@ Examples:
 - You may not know, on examining a Hypopen, that it is a Hypopen just because the game tells you it has fluid storage.
 
 
-[bold][color=#f00000]High Value Targets[/color][/bold]
+[bold][color=#f00000]High Value Targets || [/color][/bold]
 All items that can be targets of theft by the Syndicate are known to Security. This includes the CE's Mag Boots, Captain's Gun, RD's Hardsuit, etc. While normal crew know they are somewhat valuable, they do not know that they are deliberately targeted for theft.
 
 
@@ -159,35 +159,35 @@ All items that can be targets of theft by the Syndicate are known to Security. T
 Your backstory does not have to line up 1:1 with these descriptions, but should be similar in scope and not imply that you know more than your chosen Background allows. For example, you may have been an emergency responder to the aftermath of a Romerol Disaster, or you have have been a chef on a mercenary base to gain Former Soldier knowledge. As long as it does not imply you know more than your Background allows, it is fine.
 
 
-[bold][color=#0af024]Civilian[/color][/bold]
+[bold][color=#0af024]Civilian || [/color][/bold]
 You gain no additional information.
 
 
-[bold][color=#0af024]Former Soldier[/color][/bold]
+[bold][color=#0af024]Former Soldier || [/color][/bold]
 As a former member of a Mercenary Company, the NanoTrasen Naval Corps, or a Sector Militia, you have passing familiarity with all firearms. While you may not know who uses them or that their typical users are even real, such as Nuclear Operatives with the China Lake, you do know that the gun itself exists. You may pick and choose how far this knowledge goes, and choose to simply know nothing about certain guns.
 
 
-[bold][color=#0af024]Romerol Disaster Survivor[/color][/bold]
+[bold][color=#0af024]Romerol Disaster Survivor || [/color][/bold]
 You are one of a few survivors of a Romerol outbreak, from before the implementation of the PSO Cloning System. You know that the undead are real, and some of how they behave. Of course nobody would ever believe you if you told them.
 
 
-[bold][color=#0af024]Xenos Disaster Survivor[/color][/bold]
+[bold][color=#0af024]Xenos Disaster Survivor || [/color][/bold]
 You are one of a few survivors from a Xenos attack. You know what types of Xenos there are, and how they operate in general terms. Most people have never even seen a real Xenos, and surviving an encounter is rare. You have seen horrible things that very few others have. Does not refer to Xenoborgs.
 
 
-[bold][color=#0af024]Deific Encounter[/color][/bold]
+[bold][color=#0af024]Deific Encounter || [/color][/bold]
 You have experienced something that you are certain was a miracle. Something that could only have been an act of a God.
 
 
-[bold][color=#0af024]Magical Encounter[/color][/bold]
+[bold][color=#0af024]Magical Encounter || [/color][/bold]
 You survived an encounter with something that you can only describe as magic. Something you can not explain rationally. Maybe those Wizard Federation people are only partially insane.
 
 
-[bold][color=#0af024]Abducted[/color][/bold]
+[bold][color=#0af024]Abducted || [/color][/bold]
 You were once the unfortunate recipient of a probing. The Grays are real! They have a fork-sword that makes you fall asleep, and they teleported you to a shuttle, and made you lay eggs! No, not alien eggs, chicken eggs! Why won't anyone believe you!? - You may choose which gland you had, but the goal is crazy alien story tone.
 
 
-[bold][color=#0af024]Petty Criminal[/color][/bold]
+[bold][color=#0af024]Petty Criminal || [/color][/bold]
 While reformed, more or less, you used to get involved in the types of crowds and businesses you really shouldn't have. Because of these connections, you are aware of what items on the station are likely to be worth a lot, and that they are probably targeted by the Syndicate and other Thieves. You know what all the Steal Objective Targets are.
 
 
