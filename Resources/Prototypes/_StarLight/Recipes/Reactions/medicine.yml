@@ -13,7 +13,7 @@
     Amoxla: 2
 
 - type: reaction
-  id: Hyrithoxidone
+  id: Chronexaline
   reactants:
     Hyronalin:
       amount: 2
@@ -24,4 +24,4 @@
     Necrosol:
       amount: 1
   products:
-    Hyrithoxidone: 3
+    Chronexaline: 3
