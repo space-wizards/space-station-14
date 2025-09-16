@@ -1269,5 +1269,139 @@ Entries:
   id: 154
   time: '2025-07-14T15:45:13.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/38155
+- author: slarticodefast
+  changes:
+  - message: The aghost's satchel of holding is now explosion resistant. Same for
+      the aghost themselves, so held explosives no longer chain react.
+    type: Tweak
+  id: 155
+  time: '2025-07-16T22:35:14.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38384
+- author: perryprog
+  changes:
+  - message: Rejuvenate will now remove drowsiness, forced sleep, and the seeing rainbows
+      status effect.
+    type: Add
+  id: 156
+  time: '2025-07-24T15:13:29.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/39025
+- author: slarticodefast, beck-thompson
+  changes:
+  - message: Added the "Open Camera" admin verb and the "camera" console command which
+      allow you to observe entities in separate window using a remote camera.
+    type: Add
+  id: 157
+  time: '2025-07-25T16:53:01.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/36969
+- author: perryprog
+  changes:
+  - message: savegrid and savemap will no longer fail to save unpaused grids with
+      vending machines on them.
+    type: Fix
+  id: 158
+  time: '2025-07-31T18:34:29.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38406
+- author: PJB3005
+  changes:
+  - message: The "scale" console command was replaced with a toolshed command.
+    type: Tweak
+  id: 159
+  time: '2025-08-06T15:09:51.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/39421
+- author: slarticodefast
+  changes:
+  - message: Added the "scale:multiplyvector" toolshed command.
+    type: Add
+  id: 160
+  time: '2025-08-06T17:23:06.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/39424
+- author: slarticodefast
+  changes:
+  - message: Paused maps from cryostorage and polymorphing are now named to make them
+      easier to find when debugging.
+    type: Tweak
+  id: 161
+  time: '2025-08-07T14:55:26.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/39453
+- author: K-Dynamic
+  changes:
+  - message: Centcomm Official now starts with administration glasses.
+    type: Tweak
+  id: 162
+  time: '2025-08-08T19:00:41.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/35531
+- author: EmoGarbage404, soutbridge-fur
+  changes:
+  - message: A new experimental gamemode "Dynamic" has been added to the voting options
+      and admin seletion.
+    type: Add
+  id: 163
+  time: '2025-08-15T14:06:51.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37783
+- author: Samuka
+  changes:
+  - message: edited law boards now work correctly
+    type: Fix
+  id: 164
+  time: '2025-08-19T23:04:24.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/39756
+- author: Southbridge
+  changes:
+  - message: Added dropdown to every log entry in the admin log viewer with additional
+      information.
+    type: Add
+  - message: Added color-highlighting in the log search to find results.
+    type: Add
+  - message: Modified player list searches and the log search to utilize regex instead
+      of regular string searches.
+    type: Tweak
+  id: 165
+  time: '2025-08-21T20:12:16.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/39130
+- author: slarticodefast
+  changes:
+  - message: The 'Delete' button in the objects tab is now a confirm button.
+    type: Tweak
+  - message: Fixed the 'Teleport' button in the objects tab not working for stations
+      and maps.
+    type: Fix
+  id: 166
+  time: '2025-08-22T22:37:52.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/39832
+- author: Samuka
+  changes:
+  - message: setgamepreset now takes another argument that determines what title and
+      description of the game mode will be shown in the lobby screen.
+    type: Tweak
+  - message: Removed SecretGreenshift from game presets.
+    type: Remove
+  - message: Removed SecretExtended from game presets.
+    type: Remove
+  id: 167
+  time: '2025-09-04T13:03:47.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/40053
+- author: UpAndLeaves
+  changes:
+  - message: Added 8 new storage and inventory toolshed commands
+    type: Add
+  id: 168
+  time: '2025-09-11T22:07:37.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/39046
+- author: slarticodefast
+  changes:
+  - message: The listplayers command now requires PII permissions due to showing IP
+      addresses.
+    type: Tweak
+  id: 169
+  time: '2025-09-13T15:53:48.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/40324
+- author: slarticodefast
+  changes:
+  - message: The listplayers command now requires PII permissions due to showing IP
+      addresses.
+    type: Tweak
+  id: 170
+  time: '2025-09-16T07:59:11.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/40395
 Name: Admin
 Order: 2
