@@ -122,6 +122,8 @@ namespace Content.Server.GameTicking
 
                 case SessionStatus.Disconnected:
                 {
+                    if (_playerGameStatuses[session.UserId] == PlayerGameStatus.ReadyToPlay)
+                        ToggleReady(session, false);
                     _chatManager.SendAdminAnnouncement(Loc.GetString("player-leave-message", ("name", args.Session.Name)));
                     if (mindId != null)
                     {
