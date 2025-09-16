@@ -1,0 +1,14 @@
+# Operation Whiskey admeme
+- type: entity
+  name: operation whiskey rubber stamp
+  parent: [RubberStampBase, BaseWhiskeyOperatorContraband]
+  id: RubberStampOperationWhiskey
+  suffix: Admeme, OpWhiskey
+  components:
+  - type: Stamp
+    stampedName: stamp-component-stamped-name-operation-whiskey
+    stampedColor: "#853100"
+    stampState: "paper_stamp-whiskey"
+  - type: Sprite
+    sprite: _Ronstation/Objects/Misc/stamps.rsi
+    state: stamp-whiskey
