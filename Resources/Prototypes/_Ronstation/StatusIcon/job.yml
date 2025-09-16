@@ -1,8 +1,0 @@
-# Operation Whiskey admeme
-- type: jobIcon
-  parent: JobIcon
-  id: JobIconWhiskeyOperator
-  icon:
-    sprite: /Textures/_Ronstation/Interface/Misc/job_icons.rsi
-    state: WhiskeyOperator
-  jobName: job-name-whiskey-operator
