@@ -371,6 +371,7 @@
     access: [ [ "Command" ] ]
   - type: StorageFill
     contents:
+    - id: CigarGoldCase
     - id: WeaponRevolverDeckard
     - id: JetpackBlue
     - id: SpaceCash1000
