@@ -127,7 +127,7 @@
       state: "ai_cat"
     Dead:
       sprite: Mobs/Silicon/station_ai.rsi
-      state: ai_dead
+      state: "ai_dead"
 
 # Holograms
 - type: stationAiCustomization

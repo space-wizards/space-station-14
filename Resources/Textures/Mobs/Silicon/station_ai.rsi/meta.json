@@ -184,13 +184,7 @@
             ]
         },
         {
-            "name": "ai_cat",
-            "delays": [
-                [
-                    0.5,
-                    0.5
-                ]
-            ]
+            "name": "ai_cat"
         },
         {
             "name": "ai_camera",
