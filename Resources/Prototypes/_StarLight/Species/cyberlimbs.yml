@@ -177,3 +177,36 @@
   baseSprite:
     sprite: _Starlight/Mobs/Species/Cyberlimbs/parts.rsi
     state: r_mantis_blade_arm_BLADE
+
+#ripper
+- type: humanoidBaseSprite
+  id: CyberLArmRipper
+  matchSkin: false
+  markingsMatchSkin: false
+  baseSprite:
+    sprite: _Starlight/Mobs/Species/Cyberlimbs/parts.rsi
+    state: l_ripper_arm
+
+- type: humanoidBaseSprite
+  id: CyberLArmRipperRipping
+  matchSkin: false
+  markingsMatchSkin: false
+  baseSprite:
+    sprite: _Starlight/Mobs/Species/Cyberlimbs/parts.rsi
+    state: l_ripper_arm_SURG
+
+- type: humanoidBaseSprite
+  id: CyberRArmRipper
+  matchSkin: false
+  markingsMatchSkin: false
+  baseSprite:
+    sprite: _Starlight/Mobs/Species/Cyberlimbs/parts.rsi
+    state: r_ripper_arm
+
+- type: humanoidBaseSprite
+  id: CyberRArmRipperRipping
+  matchSkin: false
+  markingsMatchSkin: false
+  baseSprite:
+    sprite: _Starlight/Mobs/Species/Cyberlimbs/parts.rsi
+    state: r_ripper_arm_SURG

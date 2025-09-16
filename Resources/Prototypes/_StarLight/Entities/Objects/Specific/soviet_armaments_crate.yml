@@ -12,7 +12,6 @@
     sound:
       path: /Audio/Effects/teleport_arrival.ogg
   - type: EntityStorage
-    isCollidable: true
     showContents: false
     occludesLight: true
   - type: EntityTableContainerFill

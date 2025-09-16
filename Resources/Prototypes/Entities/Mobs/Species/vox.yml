@@ -96,6 +96,7 @@
     - map: [ "back" ]
     - map: [ "neck" ]
     - map: [ "suitstorage" ] # This is not in the default order
+    - map: [ "enum.HumanoidVisualLayers.SnoutCover" ]
     - map: [ "enum.HumanoidVisualLayers.FacialHair" ]
     - map: [ "enum.HumanoidVisualLayers.Hair" ]
     - map: [ "enum.HumanoidVisualLayers.HeadSide" ]

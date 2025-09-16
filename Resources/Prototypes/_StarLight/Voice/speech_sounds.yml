@@ -1,13 +1,4 @@
 - type: speechSounds
-  id: Vulpkanin
-  saySound:
-    path: /Audio/_Starlight/Voice/Vulpkanin/vulp.ogg
-  askSound:
-    path: /Audio/_Starlight/Voice/Vulpkanin/vulp_ask.ogg
-  exclaimSound:
-    path: /Audio/_Starlight/Voice/Vulpkanin/vulp_exclaim.ogg
-
-- type: speechSounds
   id: MaleAvali
   saySound:
     path: /Audio/_Starlight/Voice/Avali/avali_1.ogg
