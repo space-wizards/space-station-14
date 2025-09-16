@@ -333,15 +333,15 @@ public sealed partial class ClampedOklchColoration : ISkinColorationStrategy
 
     public bool VerifySkinColor(Color color)
     {
-        var oklch = ColorHelper.LabToLch(ColorHelper.LinearSrgbToOklab(ColorHelper.ToLinearSrgb(color)));
+        var oklch = color.ToColors().ToLinear().ToOklab().ToOklch();
 
-        if (Hue is (var minHue, var maxHue) && (oklch.Z < minHue || oklch.Z > maxHue))
+        if (Hue is (var minHue, var maxHue) && (oklch.H < minHue || oklch.H > maxHue))
             return false;
 
-        if (Chroma is float maxChroma && oklch.Y > maxChroma)
+        if (Chroma is { } maxChroma && oklch.C > maxChroma)
             return false;
 
-        if (Lightness is (var minValue, var maxValue) && (oklch.X < minValue || oklch.X > maxValue))
+        if (Lightness is (var minValue, var maxValue) && (oklch.Lr < minValue || oklch.Lr > maxValue))
             return false;
 
         return true;
@@ -349,17 +349,17 @@ public sealed partial class ClampedOklchColoration : ISkinColorationStrategy
 
     public Color ClosestSkinColor(Color color)
     {
-        var oklch = ColorHelper.LabToLch(ColorHelper.LinearSrgbToOklab(ColorHelper.ToLinearSrgb(color)));
+        var oklch = color.ToColors().ToLinear().ToOklab().ToOklch();
 
         if (Hue is (var minHue, var maxHue))
-            oklch.Z = Math.Clamp(oklch.Z, minHue, maxHue);
+            oklch.H = Math.Clamp(oklch.H, minHue, maxHue);
 
-        if (Chroma is float maxChroma)
-            oklch.Y = Math.Min(oklch.Y, maxChroma);
+        if (Chroma is { } maxChroma)
+            oklch.C = Math.Min(oklch.C, maxChroma);
 
-        if (Lightness is (var minValue, var maxValue))
-            oklch.X = Math.Clamp(oklch.X, minValue, maxValue);
+        if (Lightness is (var minValue, var maxValue) && (oklch.Lr < minValue || oklch.Lr > maxValue))
+            oklch.Lr = Math.Clamp(oklch.Lr, minValue, maxValue);
 
-        return ColorHelper.FromLinearSrgb(ColorHelper.GamutClipPreserveChroma(ColorHelper.OklabToLinearSrgb(ColorHelper.LchToLab(oklch))));
+        return oklch.ToOklab().GamutClipPreserveChroma().ToLinear().ToSrgb().ToColor();
     }
 }
