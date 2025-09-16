@@ -5,7 +5,7 @@
         "y": 32
     },
     "license": "CC-BY-SA-3.0",
-    "copyright": "modified from Frontier Station 14 at  https://github.com/new-frontiers-14/frontier-station-14/pull/484/files by hq._.dishka(discord) for Space Station 14 server Мёртвый Космос",
+    "copyright": "modified from Frontier Station 14 at  https://github.com/new-frontiers-14/frontier-station-14/pull/484/files by hq._.dishka(discord), inhand by andrew_fenriz (discord) for Space Station 14 server Мёртвый Космос",
     "states": [
         {
             "name": "scanner",
@@ -20,6 +20,14 @@
         {
             "name": "icon",
             "directions": 1
+        },
+        {
+            "name": "inhand-left",
+            "directions": 4
+        },
+        {
+            "name": "inhand-right",
+            "directions": 4
         }
     ]
 }

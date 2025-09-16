@@ -702,25 +702,3 @@
     onlyAffectsMobs: false
   - type: UseDelay
     delay: 0.5
-
-# Plushie toys
-
-- type: entity
-  parent: BasePlushie
-  id: PlushieDragonFoxMedTech
-  name: плюшевый боец МедТех
-  description: Плюшевая игрушка, внешне напоминающая рядового бойца МедТех.
-  components:
-  - type: Sprite
-    sprite: _DeadSpace/Sponsor/DragonFox/dragonfox_plushie.rsi
-    state: plush_medtech
-
-- type: entity
-  parent: BasePlushie
-  id: PlushieDragonFoxMadParadox
-  name: плюшевый Парадокс
-  description: Мягкая игрушка человека в волшебном наряде. Имеет мягкий и пушистый хвостик.
-  components:
-  - type: Sprite
-    sprite: _DeadSpace/Sponsor/DragonFox/dragonfox_plushie.rsi
-    state: plush_madparadox

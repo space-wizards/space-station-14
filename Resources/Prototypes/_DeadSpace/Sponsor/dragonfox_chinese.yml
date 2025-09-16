@@ -38,7 +38,7 @@
           True: { visible: true }
           False: { visible: false }
   - type: Appearance
-  - type: ToggleableLightVisuals
+  - type: ToggleableVisuals
     spriteLayer: flame
     inhandVisuals:
       left:
@@ -104,7 +104,7 @@
       - state: off-inhand-left
       right:
       - state: off-inhand-right
-  - type: ToggleableLightVisuals
+  - type: ToggleableVisuals
     spriteLayer: flame
     inhandVisuals:
       left:
@@ -144,11 +144,9 @@
         shape:
           !type:PhysShapeAabb
           bounds: "-0.45,-0.45,0.45,0.45"
-        density: 1000
+        density: 190
         mask:
-        - MachineMask
-        layer:
-        - MachineLayer
+        - HighImpassable
   - type: Pullable
   - type: Damageable
     damageContainer: StructuralInorganic
@@ -183,29 +181,98 @@
       - Trash
 
 - type: entity
-  parent: PaintingBase
+  name: свиток удачи и благополучия
+  parent: BaseItem
+  id: PosterScrollSuccessDragonFox
+  description: Свёрнутый свиток с золотыми символами, готовый украсить стену и принести удачу хозяину.
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/DragonFox/Chinese/poster.rsi
+    state: scroll
+  - type: Item
+    sprite: _DeadSpace/Sponsor/DragonFox/Chinese/poster.rsi
+    size: Normal
+    heldPrefix: poster
+  - type: SpawnAfterInteract
+    prototype: PosterSuccessDragonFox
+    doAfter: 1
+    removeOnInteract: true
+
+- type: entity
+  name: свиток богатства и процветания
+  parent: BaseItem
+  id: PosterScrollRichesDragonFox
+  description: Традиционный свёрнутый свиток, который вешают на праздник в надежде на богатство и процветание.
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/DragonFox/Chinese/poster.rsi
+    state: scroll
+  - type: Item
+    sprite: _DeadSpace/Sponsor/DragonFox/Chinese/poster.rsi
+    size: Normal
+    heldPrefix: poster
+  - type: SpawnAfterInteract
+    prototype: PosterRichesDragonFox
+    doAfter: 1
+    removeOnInteract: true
+
+- type: entity
+  parent: PosterBase
   id: PosterSuccessDragonFox
   name: свиток удачи и благополучия
-  description: Традиционный новогодний свиток, символизирующий удачу и благополучие.
+  description: Традиционный праздничный свиток, символизирующий удачу и семейное благополучие. Его красный цвет отгоняет несчастья и привлекает счастье.
   components:
   - type: Sprite
     sprite: _DeadSpace/Sponsor/DragonFox/Chinese/poster.rsi
     state: success
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 10
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          path: /Audio/Effects/poster_broken.ogg
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+      - !type:SpawnEntitiesBehavior
+        spawn:
+            PosterScrollSuccessDragonFox:
+              min: 1
+              max: 1
 
 - type: entity
-  parent: PaintingBase
+  parent: PosterBase
   id: PosterRichesDragonFox
   name: свиток богатства и процветания
-  description: Яркий праздничный постер с пожеланием богатства и процветания. Говорят, что его присутствие в доме приносит финансовый успех в наступающем году.
+  description: Яркий праздничный свиток с пожеланием богатства и процветания. Считается, что его присутствие приносит достаток и успех в доме.
   components:
   - type: Sprite
     sprite: _DeadSpace/Sponsor/DragonFox/Chinese/poster.rsi
     state: riches
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 10
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          path: /Audio/Effects/poster_broken.ogg
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+      - !type:SpawnEntitiesBehavior
+        spawn:
+            PosterScrollRichesDragonFox:
+              min: 1
+              max: 1
 
 - type: entity
   parent: ClothingUniformJumpsuitKimono
   id: ClothingUniformHanfuRedMDragonFox
   name: мужское красное ханьфу
+  description: Традиционное мужское  китайское одеяние в красном цвете.
   components:
   - type: Sprite
     sprite: _DeadSpace/Sponsor/DragonFox/Chinese/man_hanfu_RB1.rsi
@@ -216,6 +283,7 @@
   parent: ClothingUniformJumpsuitKimono
   id: ClothingUniformHanfuBlackMDragonFox
   name: мужское чёрное ханьфу
+  description: Традиционное мужское китайское одеяние в чёрном цвете.
   components:
   - type: Sprite
     sprite: _DeadSpace/Sponsor/DragonFox/Chinese/man_hanfu_RB2.rsi
@@ -226,6 +294,7 @@
   parent: ClothingUniformJumpsuitKimono
   id: ClothingUniformHanfuWhiteMDragonFox
   name: мужское белое ханьфу
+  description: Традиционное мужское китайское одеяние в белом цвете.
   components:
   - type: Sprite
     sprite: _DeadSpace/Sponsor/DragonFox/Chinese/man_hanfu_WB.rsi
@@ -236,6 +305,7 @@
   parent: ClothingUniformJumpsuitKimono
   id: ClothingUniformHanfuRedFDragonFox
   name: женское красное ханьфу
+  description: Традиционное женское китайское одеяние в красном цвете.
   components:
   - type: Sprite
     sprite: _DeadSpace/Sponsor/DragonFox/Chinese/woman_hanfu_R.rsi
@@ -246,6 +316,7 @@
   parent: ClothingUniformJumpsuitKimono
   id: ClothingUniformHanfuWhiteFDragonFox
   name: женское белое ханьфу
+  description: Традиционное женское китайское одеяние в белом цвете.
   components:
   - type: Sprite
     sprite: _DeadSpace/Sponsor/DragonFox/Chinese/woman_hanfu_W.rsi
@@ -256,6 +327,7 @@
   parent: ClothingUniformJumpsuitKimono
   id: ClothingUniformHanfuRedWhiteFDragonFox
   name: женское бело-красное ханьфу
+  description: Традиционное женское китайское одеяние в бело-красном цвете.
   components:
   - type: Sprite
     sprite: _DeadSpace/Sponsor/DragonFox/Chinese/woman_hanfu_WR.rsi
@@ -304,7 +376,7 @@
   - type: MeleeWeapon
     damage:
       types:
-        Slash: 15
+        Slash: 5
     soundHit:
       path: /Audio/Weapons/bladeslice.ogg
   - type: Item
@@ -357,10 +429,54 @@
       - JianDragonFox
 
 - type: entity
+  parent: BaseItem
+  id: ClusterChinesePetardDragonFox
+  name: связка китайских петард
+  description: Традиционная связка ярких петард, перевязанная красной нитью. При взрыве разлетается на множество огненных вспышек, создавая настоящий фейерверк!
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/DragonFox/Chinese/cluster_petard.rsi
+    state: icon
+  - type: Damageable
+    damageContainer: Inorganic
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 10
+      behaviors:
+      - !type:TriggerBehavior
+        keyOut: timer # explode immediately
+  - type: ContainerContainer
+    containers:
+      cluster-payload: !type:Container
+  - type: ScatteringGrenade
+    fillPrototype: ChinesePetardDragonFox
+    capacity: 5
+    distance: 4
+    velocity: 5
+    delayBeforeTriggerContents: 10
+    randomDistance: true
+    randomThrowDistanceMax: 3
+  - type: EmitSoundOnTrigger
+    keysIn:
+    - timer
+    sound:
+      collection: "ExplosionSmall"
+      params:
+        volume: 1
+    positional: true
+  - type: LandAtCursor
+  - type: DamageOnLand
+    damage:
+      types:
+        Blunt: 10
+
+- type: entity
   parent: SnapPop
   id: ChinesePetardDragonFox
-  name: китайские петарды
-  description: Яркий набор петард, связанный прочной нитью. Каждая петарда украшена традиционными красными и золотыми узорами, символизирующими удачу и благополучие
+  name: китайская петарда
+  description: Яркая петарда, украшенная традиционными красными и золотыми узорами, символизирующими удачу и благополучие
   components:
   - type: Sprite
     sprite: _DeadSpace/Sponsor/DragonFox/Chinese/petard.rsi
@@ -368,3 +484,42 @@
   - type: Item
     sprite: _DeadSpace/Sponsor/DragonFox/Chinese/petard.rsi
     size: Small
+
+- type: entity
+  id: CrateServiceChineseDragonFox
+  parent: CrateGenericSteel
+  name: ящик китайского праздничного снаряжения
+  description: Ящик снаряжения для вечеринок в китайском стиле.
+  components:
+  - type: StorageFill
+    contents:
+    - id: ClusterChinesePetardDragonFox
+      amount: 3
+    - id: ChinesePetardDragonFox
+      amount: 5
+    - id: LanternChineseDragonFox
+      amount: 2
+    - id: LampChineseDragonFox
+      amount: 2
+    - id: PosterScrollSuccessDragonFox
+      amount: 2
+    - id: PosterScrollRichesDragonFox
+      amount: 2
+    - id: ClothingUniformHanfuRedMDragonFox
+    - id: ClothingUniformHanfuBlackMDragonFox
+    - id: ClothingUniformHanfuWhiteMDragonFox
+    - id: ClothingUniformHanfuRedFDragonFox
+    - id: ClothingUniformHanfuWhiteFDragonFox
+    - id: ClothingUniformHanfuRedWhiteFDragonFox
+    - id: ClothingOuterDragonSuitDragonFox
+    - id: ClothingBeltSheathJianDragonFoxFilled
+
+- type: cargoProduct
+  id: ServiceChineseDragonFox
+  icon:
+    sprite: _DeadSpace/Sponsor/DragonFox/Chinese/dragon_red_head.rsi
+    state: icon
+  product: CrateServiceChineseDragonFox
+  cost: 2400
+  category: cargoproduct-category-name-fun
+  group: market

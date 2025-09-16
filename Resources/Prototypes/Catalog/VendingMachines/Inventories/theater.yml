@@ -47,6 +47,13 @@
     ClothingOuterClownPriest: 1
     ClothingMaskSadMime: 1
     ClothingMaskScaredMime: 1
+    ClothingOuterDragonSuitDragonFox: 1 # DS14
+    ClothingUniformHanfuRedMDragonFox: 1 # DS14
+    ClothingUniformHanfuBlackMDragonFox: 1 # DS14
+    ClothingUniformHanfuWhiteMDragonFox: 1 # DS14
+    ClothingUniformHanfuRedFDragonFox: 1 # DS14
+    ClothingUniformHanfuRedWhiteFDragonFox: 1 # DS14
+    ClothingUniformHanfuWhiteFDragonFox: 1 # DS14
     ClothingUniformJumpsuitKimono: 1
     ClothingHeadHatCasa: 1
     FoodPoppy: 1

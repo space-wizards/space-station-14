@@ -47,7 +47,7 @@
   description: Увы...
   components:
   - type: Sprite
-    sprite: _DeadSpace/Items/Toys/jokerge.rsi
+    sprite: _DeadSpace/Items/Toys/misc.rsi
     state: jokerge
 
 - type: entity
@@ -79,7 +79,7 @@
   - type: Sprite
     sprite: _DeadSpace/Items/Toys/misc.rsi
     state: ips
-    
+
 - type: entity
   name: двухклинковый игрушечный меч
   parent: ToySword
@@ -104,321 +104,6 @@
   - type: Wieldable
   - type: StaminaDamageOnHit
     damage: 10
-
-#Plushie base (фигурка + плюшевая игрушка)
-- type: entity
-  parent: BaseItem
-  id: BasePlushieDeadSpaceMisc
-  abstract: true
-  components:
-  - type: Sprite
-    sprite: _DeadSpace/Items/Toys/misc.rsi
-  - type: Tag
-    tags:
-    - Figurine
-    - Payload
-    - ClothMade
-  - type: UseDelay
-    delay: 160
-  - type: TriggerOnActivate
-  - type: TriggerOnSignal
-  - type: DeviceNetwork
-    deviceNetId: Wireless
-    receiveFrequencyId: BasicDevice
-  - type: WirelessNetworkConnection
-    range: 200
-  - type: DeviceLinkSink
-    ports:
-    - Trigger
-  - type: Speech
-  - type: EmitSoundOnLand
-    sound:
-      collection: ToyFall
-  - type: MeleeWeapon
-    wideAnimationRotation: 180
-    soundHit:
-      collection: ToySqueak
-    damage:
-      types:
-        Blunt: 0
-    hidden: true
-  - type: PhysicalComposition
-    materialComposition:
-      Cloth: 100
-  - type: StaticPrice
-    price: 5
-  - type: Food
-    requiresSpecialDigestion: true
-    useSound:
-      collection: ToySqueak
-    delay: 2
-  - type: SolutionContainerManager
-    solutions:
-      food:
-        maxVol: 10
-        reagents:
-        - ReagentId: Fiber
-          Quantity: 10
-  - type: ContainerContainer
-    containers:
-      stash: !type:ContainerSlot {}
-  - type: SecretStash
-    secretStashName: secret-stash-plushie
-    blacklist:
-      components:
-      - SecretStash
-      - NukeDisk
-      tags:
-      - QuantumSpinInverter
-      - FakeNukeDisk
-  - type: ToolOpenable
-    openToolQualityNeeded: Slicing
-    closeToolQualityNeeded: Slicing
-    name: secret-stash-plushie
-
-#Admin Staff
-- type: entity
-  parent: BasePlushieDeadSpaceMisc
-  id: PlushieBoich
-  name: плюшевый Boich
-  description: Великий и прекрасный, всемогущий Боич. Преклони колено перед отцом всего и вся
-  components:
-  - type: Sprite
-    state: boich
-
-- type: entity
-  parent: BasePlushieDeadSpaceMisc
-  id: PlushieCyberFox
-  name: плюшевый Юрий Кривда
-  description: Плюшевая игрушка могучего, но доброго мага. На бирке написано "CyberBoich"
-  components:
-  - type: Sprite
-    state: cyberfox
-
-- type: entity
-  parent: BasePlushieDeadSpaceMisc
-  id: PlushieAhahaahahaha
-  name: плюшевый Ахахаахич
-  description: Всеми любимый главный разработчик!
-  components:
-  - type: Sprite
-    state: ahahaahahaha
-  - type: TTS
-    voice: Clockwerk
-  - type: SpeakOnTrigger
-    pack: PlushieAhahaahahahaSpeech
-
-- type: entity
-  parent: BasePlushieDeadSpaceMisc
-  id: PlushieKriss
-  name: плюшевая Кристина
-  description: От игрушки пахнет егерьмейстером
-  components:
-  - type: Sprite
-    state: kriss
-  - type: TTS
-    voice: Kerrigan
-  - type: SpeakOnTrigger
-    pack: PlushieKrissSpeech
-
-- type: entity
-  parent: BasePlushieDeadSpaceMisc
-  id: PlushieOstwind
-  name: плюшевый Ostwind
-  description: Ходят слухи, что он всё ещё в запое
-  components:
-  - type: Sprite
-    state: ostwind
-  - type: TTS
-    voice: Volskaya
-  - type: SpeakOnTrigger
-    pack: PlushieOstwindSpeech
-  
-- type: entity
-  parent: BasePlushieDeadSpaceMisc
-  id: PlushieJeleshka
-  name: плюшевый Инспектор Желешка
-  description: 
-  components:
-  - type: Sprite
-    state: jeleshka
-  - type: TTS
-    voice: Nick
-  - type: SpeakOnTrigger
-    pack: PlushieJeleshkaSpeech
-
-- type: entity
-  parent: BasePlushieDeadSpaceMisc
-  id: PlushieDobryash
-  name: плюшевый Лоуд Хернет
-  description: плюшевая игрушка одного из определённо НЕ подозрительных ассистентов.
-  components:
-  - type: Sprite
-    state: dobryash
-  - type: TTS
-    voice: DreadT
-  - type: SpeakOnTrigger
-    pack: PlushieDobryashSpeech
-
-- type: entity
-  parent: BasePlushieDeadSpaceMisc
-  id: PlushieHqdishka
-  name: игрушечная Айрис Луа
-  description:  Это привлекательная игрушка, несмотря на то что она выглядит мило, когда вы её видите вы ощущаете удар палкой. "Осторожно, оно дерется и любит".
-  components:
-  - type: Sprite
-    state: iris
-  - type: TTS
-    voice: Templar
-  - type: SpeakOnTrigger
-    pack: FigurinesHqdishkaSpeech
-
-- type: entity
-  parent: BaseFigurine
-  id: ToyFigurineHqdishka
-  name: игрушечная Айрис Луа
-  description: Фигурка, изображающая Айрис Луа
-  components:
-  - type: Sprite
-    sprite: _DeadSpace/Items/Toys/misc.rsi
-    state: hqdishka
-  - type: SpeakOnTrigger
-    pack: FigurinesHqdishkaSpeech
-  - type: TTS
-    voice: Templar
-
-- type: entity
-  parent: BaseFigurine
-  id: ToyFigurineHacksLua
-  name: игрушечный Хакс Луа
-  description: Фигурка, изображающая Хакса Луа
-  components:
-  - type: Sprite
-    sprite: _DeadSpace/Items/Toys/misc.rsi
-    state: hackslua
-  - type: SpeakOnTrigger
-    pack: FigurinesHacksLuaSpeech
-  - type: TTS
-    voice: Annah
-
-#Sponsor Staff
-- type: entity
-  parent: BasePlushieDeadSpaceMisc
-  id: PlushieWillie
-  name: плюшевый Вилли Айрон
-  description: Взяв данную мягкую игрушку в руки, вы сразу можете обратить своё внимания на большое подобие шрама на левой части лица игрушки, а осмотрев со спины данное чудо, можно заметить короткий хвостик, которым удобно крутить данную игрушку в руках. Если у вас появиться острое желание понюхать данную плюшку, то иногда вы можете почувствовать запах различной руды, иногда денег, а иногда мармелада...
-  components:
-  - type: Sprite
-    state: willie
-  - type: TTS
-    voice: Lancer
-  - type: SpeakOnTrigger
-    pack: PlushieWillieSpeech
-
-- type: entity
-  parent: BasePlushieDeadSpaceMisc
-  id: PlushieAinnete
-  name: плюшевый Ирвин Ван’Астрея
-  description: Плюшевая игрушка представителя расы аркан. На бирке надпись гласит, что эта игрушка создана корпорацией 1’А. От неё пахнет цветком ириса.
-  components:
-  - type: Sprite
-    state: ainnetel
-  - type: TTS
-    voice: Valerian
-  - type: SpeakOnTrigger
-    pack: PlushieAinnetelSpeech
-
-- type: entity
-  parent: BasePlushieDeadSpaceMisc
-  id: PlushieAlex
-  name: плюшевый Алекс Спектр
-  description: Плюшевая игрушка, приобретённая на средства, сэкономленные благодаря оптимизации поставок ручек в юридический отдел, выглядит слегка уставшей.
-  components:
-  - type: Sprite
-    state: alex
-  - type: TTS
-    voice: P3
-  - type: SpeakOnTrigger
-    pack: PlushieAlexSpeech
-
-- type: entity
-  parent: BasePlushieDeadSpaceMisc
-  id: PlushieElizabeth
-  name: плюшевая Элизабет Фламар
-  description: Милая плюшевая игрушка розоволосой фелинидки. Она похожа на маленького ангелочка, но, возможно, это не так.
-  components:
-  - type: Sprite
-    state: elizabeth
-  - type: TTS
-    voice: Neeko
-  - type: SpeakOnTrigger
-    pack: PlushieElizabethSpeech
-
-- type: entity
-  parent: BasePlushieDeadSpaceMisc
-  id: PlushieEllis
-  name: плюшевый Эллис Ар’Еви
-  description: Плюшевая игрушка белого вульпканина в форме офицера "синий щит". При виде плюшки внутри вас появляется ощущение спокойствия и надежности, будто эта игрушка способна вас защитить от любой угрозы. Пахнет омнизином и метом
-  components:
-  - type: Sprite
-    state: ellis
-  - type: TTS
-    voice: Ellis
-  - type: SpeakOnTrigger
-    pack: PlushieEllisSpeech
-
-- type: entity
-  parent: BasePlushieDeadSpaceMisc
-  id: PlushieKermuth
-  name: плюшевый Кемлухт К’Хфнг 
-  description: Плюшевая игрушка представителя расы Ниан. Его глаза словно смотрят вам в душу. Пахнет сигаретным дымом
-  components:
-  - type: Sprite
-    state: kermuth
-  - type: TTS
-    voice: Zenyatta
-  - type: SpeakOnTrigger
-    pack: PlushieKermuthSpeech
-
-- type: entity
-  parent: BasePlushieDeadSpaceMisc
-  id: PlushieLucius
-  name: плюшевый Люций Ван'Астрея
-  description: Плюшевая игрушка представителя расы аркан. На бирке надпись гласит, что эта игрушка создана корпорацией 1’А. На ощупь такой мягкий, что с ним можно спать в обнимку.
-  components:
-  - type: Sprite
-    state: lucius
-  - type: TTS
-    voice: Guillaume
-  - type: SpeakOnTrigger
-    pack: PlushieLuciusSpeech
-
-- type: entity
-  parent: BasePlushieDeadSpaceMisc
-  id: PlushieEvelina
-  name: плюшевая Эвелиина Ридницохккаль Синаиккало
-  description: Плюшевая игрушка полуночно-синей арканы. Даже в виде плюшки выглядит так, словно вот-вот провалится в сон. На ощупь такая мягкая, что с ней можно спать в обнимку.
-  components:
-  - type: Sprite
-    state: evelina
-  - type: TTS
-    voice: Mercy
-  - type: SpeakOnTrigger
-    pack: PlushieEvelinaSpeech
-
-#Mics with speech
-- type: entity
-  parent: BasePlushieDeadSpaceMisc
-  id: PlushieLieutenant
-  name: плюшевый лейтенант хома
-  description: Хладнокровный и расчётливы, специализирующийся на управлении специальными операциями. Способен принимать взвешенные решения в критических ситуациях не смотря на то что он хомяк.
-  components:
-  - type: Sprite
-    state: lieutenant
-  - type: TTS
-    voice: Spy
-  - type: SpeakOnTrigger
-    pack: PlushieLieutenantSpeech
 
 - type: entity
   parent: WeaponSMGTommyGun
@@ -552,3 +237,805 @@
     steps: 2
     zeroVisible: false
   - type: Appearance
+
+#Plushie base (фигурка + плюшевая игрушка)
+- type: entity
+  parent: BaseItem
+  id: BasePlushieDeadSpaceMisc
+  abstract: true
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Items/Toys/misc.rsi
+  - type: Tag
+    tags:
+    - Figurine
+    - Payload
+    - ClothMade
+  - type: UseDelay
+    delay: 160
+  - type: TriggerOnActivate
+  - type: TriggerOnSignal
+  - type: DeviceNetwork
+    deviceNetId: Wireless
+    receiveFrequencyId: BasicDevice
+  - type: WirelessNetworkConnection
+    range: 200
+  - type: DeviceLinkSink
+    ports:
+    - Trigger
+  - type: Speech
+  - type: EmitSoundOnLand
+    sound:
+      collection: ToyFall
+  - type: MeleeWeapon
+    wideAnimationRotation: 180
+    soundHit:
+      collection: ToySqueak
+    damage:
+      types:
+        Blunt: 0
+    hidden: true
+  - type: PhysicalComposition
+    materialComposition:
+      Cloth: 100
+  - type: StaticPrice
+    price: 5
+  - type: Food
+    requiresSpecialDigestion: true
+    useSound:
+      collection: ToySqueak
+    delay: 2
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 10
+        reagents:
+        - ReagentId: Fiber
+          Quantity: 10
+  - type: ContainerContainer
+    containers:
+      stash: !type:ContainerSlot {}
+  - type: SecretStash
+    secretStashName: secret-stash-plushie
+    blacklist:
+      components:
+      - SecretStash
+      - NukeDisk
+      tags:
+      - QuantumSpinInverter
+      - FakeNukeDisk
+  - type: ToolOpenable
+    openToolQualityNeeded: Slicing
+    closeToolQualityNeeded: Slicing
+    name: secret-stash-plushie
+
+#Admin Staff
+- type: entity
+  parent: BasePlushieDeadSpaceMisc
+  id: PlushieBoich
+  name: плюшевый Boich
+  description: Великий и прекрасный, всемогущий Боич. Преклони колено перед отцом всего и вся
+  components:
+  - type: Sprite
+    state: boich
+
+- type: entity
+  parent: BasePlushieDeadSpaceMisc
+  id: PlushieCyberFox
+  name: плюшевый Юрий Кривда
+  description: Плюшевая игрушка могучего, но доброго мага. На бирке написано "CyberBoich"
+  components:
+  - type: Sprite
+    state: cyberfox
+
+- type: entity
+  parent: BasePlushieDeadSpaceMisc
+  id: PlushieAhahaahahaha
+  name: плюшевый Ахахаахич
+  description: Всеми любимый главный разработчик!
+  components:
+  - type: Sprite
+    state: ahahaahahaha
+  - type: TTS
+    voice: Clockwerk
+  - type: SpeakOnTrigger
+    pack: PlushieAhahaahahahaSpeech
+
+- type: entity
+  parent: BasePlushieDeadSpaceMisc
+  id: PlushieKriss
+  name: плюшевая Кристина
+  description: От игрушки пахнет егерьмейстером
+  components:
+  - type: Sprite
+    state: kriss
+  - type: TTS
+    voice: Kerrigan
+  - type: SpeakOnTrigger
+    pack: PlushieKrissSpeech
+
+- type: entity
+  parent: BasePlushieDeadSpaceMisc
+  id: PlushieOstwind
+  name: плюшевый Ostwind
+  description: Ходят слухи, что он всё ещё в запое
+  components:
+  - type: Sprite
+    state: ostwind
+  - type: TTS
+    voice: Volskaya
+  - type: SpeakOnTrigger
+    pack: PlushieOstwindSpeech
+
+- type: entity
+  parent: BasePlushieDeadSpaceMisc
+  id: PlushieJeleshka
+  name: плюшевый Инспектор Желешка
+  description:
+  components:
+  - type: Sprite
+    state: jeleshka
+  - type: TTS
+    voice: Nick
+  - type: SpeakOnTrigger
+    pack: PlushieJeleshkaSpeech
+
+- type: entity
+  parent: BasePlushieDeadSpaceMisc
+  id: PlushieDobryash
+  name: плюшевый Лоуд Хернет
+  description: плюшевая игрушка одного из определённо НЕ подозрительных ассистентов.
+  components:
+  - type: Sprite
+    state: dobryash
+  - type: TTS
+    voice: DreadT
+  - type: SpeakOnTrigger
+    pack: PlushieDobryashSpeech
+
+- type: entity
+  parent: BasePlushieDeadSpaceMisc
+  id: PlushieHqdishka
+  name: игрушечная Айрис Луа
+  description:  Это привлекательная игрушка, несмотря на то что она выглядит мило, когда вы её видите вы ощущаете удар палкой. "Осторожно, оно дерется и любит".
+  components:
+  - type: Sprite
+    state: iris
+  - type: TTS
+    voice: Templar
+  - type: SpeakOnTrigger
+    pack: FigurinesHqdishkaSpeech
+
+#Sponsor Staff
+- type: entity
+  parent: BasePlushieDeadSpaceMisc
+  id: PlushieWillie
+  name: плюшевый Вилли Айрон
+  description: Взяв данную мягкую игрушку в руки, вы сразу можете обратить своё внимания на большое подобие шрама на левой части лица игрушки, а осмотрев со спины данное чудо, можно заметить короткий хвостик, которым удобно крутить данную игрушку в руках. Если у вас появиться острое желание понюхать данную плюшку, то иногда вы можете почувствовать запах различной руды, иногда денег, а иногда мармелада...
+  components:
+  - type: Sprite
+    state: willie
+  - type: TTS
+    voice: Lancer
+  - type: SpeakOnTrigger
+    pack: PlushieWillieSpeech
+
+- type: entity
+  parent: BasePlushieDeadSpaceMisc
+  id: PlushieAinnete
+  name: плюшевый Ирвин Ван’Астрея
+  description: Плюшевая игрушка представителя расы аркан. На бирке надпись гласит, что эта игрушка создана корпорацией 1’А. От неё пахнет цветком ириса.
+  components:
+  - type: Sprite
+    state: ainnetel
+  - type: TTS
+    voice: Valerian
+  - type: SpeakOnTrigger
+    pack: PlushieAinnetelSpeech
+
+- type: entity
+  parent: BasePlushieDeadSpaceMisc
+  id: PlushieAlex
+  name: плюшевый Алекс Спектр
+  description: Плюшевая игрушка, приобретённая на средства, сэкономленные благодаря оптимизации поставок ручек в юридический отдел, выглядит слегка уставшей.
+  components:
+  - type: Sprite
+    state: alex
+  - type: TTS
+    voice: P3
+  - type: SpeakOnTrigger
+    pack: PlushieAlexSpeech
+
+- type: entity
+  parent: BasePlushieDeadSpaceMisc
+  id: PlushieElizabeth
+  name: плюшевая Элизабет Фламар
+  description: Милая плюшевая игрушка розоволосой фелинидки. Она похожа на маленького ангелочка, но, возможно, это не так.
+  components:
+  - type: Sprite
+    state: elizabeth
+  - type: TTS
+    voice: Neeko
+  - type: SpeakOnTrigger
+    pack: PlushieElizabethSpeech
+
+- type: entity
+  parent: BasePlushieDeadSpaceMisc
+  id: PlushieEllis
+  name: плюшевый Эллис Ар’Еви
+  description: Плюшевая игрушка белого вульпканина в форме офицера "синий щит". При виде плюшки внутри вас появляется ощущение спокойствия и надежности, будто эта игрушка способна вас защитить от любой угрозы. Пахнет омнизином и метом
+  components:
+  - type: Sprite
+    state: ellis
+  - type: TTS
+    voice: Ellis
+  - type: SpeakOnTrigger
+    pack: PlushieEllisSpeech
+
+- type: entity
+  parent: BasePlushieDeadSpaceMisc
+  id: PlushieKermuth
+  name: плюшевый Кемлухт К’Хфнг
+  description: Плюшевая игрушка представителя расы Ниан. Его глаза словно смотрят вам в душу. Пахнет сигаретным дымом
+  components:
+  - type: Sprite
+    state: kermuth
+  - type: TTS
+    voice: Zenyatta
+  - type: SpeakOnTrigger
+    pack: PlushieKermuthSpeech
+
+- type: entity
+  parent: BasePlushieDeadSpaceMisc
+  id: PlushieLucius
+  name: плюшевый Люций Ван'Астрея
+  description: Плюшевая игрушка представителя расы аркан. На бирке надпись гласит, что эта игрушка создана корпорацией 1’А. На ощупь такой мягкий, что с ним можно спать в обнимку.
+  components:
+  - type: Sprite
+    state: lucius
+  - type: TTS
+    voice: Guillaume
+  - type: SpeakOnTrigger
+    pack: PlushieLuciusSpeech
+
+- type: entity
+  parent: BasePlushieDeadSpaceMisc
+  id: PlushieEvelina
+  name: плюшевая Эвелиина Ридницохккаль Синаиккало
+  description: Плюшевая игрушка полуночно-синей арканы. Даже в виде плюшки выглядит так, словно вот-вот провалится в сон. На ощупь такая мягкая, что с ней можно спать в обнимку.
+  components:
+  - type: Sprite
+    state: evelina
+  - type: TTS
+    voice: Mercy
+  - type: SpeakOnTrigger
+    pack: PlushieEvelinaSpeech
+
+- type: entity
+  parent: BasePlushieDeadSpaceMisc
+  id: PlushieLieutenant
+  name: плюшевый лейтенант хома
+  description: Хладнокровный и расчётливы, специализирующийся на управлении специальными операциями. Способен принимать взвешенные решения в критических ситуациях не смотря на то что он хомяк.
+  components:
+  - type: Sprite
+    state: lieutenant
+  - type: TTS
+    voice: Spy
+  - type: SpeakOnTrigger
+    pack: PlushieLieutenantSpeech
+
+- type: entity
+  parent: BasePlushieDeadSpaceMisc
+  id: PlushieSilAily
+  name: плюшевая Айли
+  description: Плюшевая игрушка вульпканина в форме офицера специальных операций. Её хвост необычайно мягкий.
+  components:
+  - type: Sprite
+    state: plushie_aily
+  - type: TTS
+    voice: Karastamper
+  - type: SpeakOnTrigger
+    pack: PlushieAilySpeech
+
+- type: entity
+  parent: BasePlushieDeadSpaceMisc
+  id: PlushieSilAizek
+  name: плюшевый Айзек
+  description: Плюшевая игрушка в виде человека. От фигурки веет диктатурой. По виду игрушки можно недооценить способности её оригинальной версии что может быть фатально. От фигурки веет травкой и виски.
+  components:
+  - type: Sprite
+    state: plushie_aizek
+  - type: TTS
+    voice: Soldier_Metro
+  - type: SpeakOnTrigger
+    pack: PlushieAizekSpeech
+
+- type: entity
+  parent: BasePlushieDeadSpaceMisc
+  id: PlushieSilAzrail
+  name: плюшевый Азраил
+  description: Плюшевая игрушка главного врача резко пахнущая метом и сливками. Ни в коем случае не ложить рядом с ней осколок стекла....
+  components:
+  - type: Sprite
+    state: plushie_azrail
+  - type: TTS
+    voice: Valeera
+  - type: SpeakOnTrigger
+    pack: PlushieAzrailSpeech
+
+- type: entity
+  parent: BasePlushieDeadSpaceMisc
+  id: PlushieSilEmilia
+  name: плюшевая Эмилия
+  description: Плюшевая игрушка Главного врача с недовольным выражением лица. От неё веет духотой и педантичностью, а рядом с ней вам становится очень некомфортно. Почему-то вам кажется, что она постоянно наблюдает за вами, а её взгляд каждую секунду становиться всё злее и враждебнее, вызывая у вас чувство тревоги, переростающее в панику. Пожалуй, стоит отойти от неё на несколько метров. На ощупь жесткая.
+  components:
+  - type: Sprite
+    state: plushie_emilia
+  - type: TTS
+    voice: Kerrigan
+  - type: SpeakOnTrigger
+    pack: PlushieEmiliaSpeech
+
+- type: entity
+  parent: BasePlushieDeadSpaceMisc
+  id: PlushieSilEva
+  name: плюшевая Ева
+  description: Плюшевая игрушка строгого ведущего врача, чей жизненный слоган «Нас окружают одни бандиты». Будь готов, интерн, учиться — или стать частью «корабля» медицинского отсека... От фигурки исходит тонкий аромат фиалок и никотина — как напоминание о том, что милое не всегда безопасно.
+  components:
+  - type: Sprite
+    state: plushie_eva
+  - type: TTS
+    voice: Lina
+  - type: SpeakOnTrigger
+    pack: PlushieEvaSpeech
+
+- type: entity
+  parent: BasePlushieDeadSpaceMisc
+  id: PlushieSilKrivazora
+  name: плюшевый Кривазора
+  description: Плюшевая игрушка старшего инженера. От неё исходит легкий фрезоновый холодок, навевающий теплые воспоминания. Слегка покалывает электрическим током.
+  components:
+  - type: Sprite
+    state: plushie_krivazzora
+  - type: TTS
+    voice: FArgo
+  - type: SpeakOnTrigger
+    pack: PlushieKrivazoraSpeech
+
+- type: entity
+  parent: BasePlushieDeadSpaceMisc
+  id: PlushieSilAzrailHardsuit
+  name: плюшевый Азраил в "СЕВЕ"
+  description: Мягкая игрушка феленида в необычном белом скафандре. На плече виднеется необычный шевроном на котором изображен человек с изображением атома. Взяв игрушку в руки вы начинаете чувствовать что вами будто повелевают...
+  components:
+  - type: Sprite
+    state: plushie_azrail_hardsuit
+  - type: TTS
+    voice: Valeera
+  - type: SpeakOnTrigger
+    pack: PlushieAzrailHardsuitSpeech
+
+- type: entity
+  parent: BasePlushieDeadSpaceMisc
+  id: PlushieSilSharp
+  name: плюшевый Ликаон
+  description: При виде этой игрушки, вам хочется кинуть её в стену. Пахнет космической смазкой...
+  components:
+  - type: Sprite
+    state: plushie_sharp
+  - type: TTS
+    voice: Flark
+  - type: SpeakOnTrigger
+    pack: PlushieSharpSpeech
+
+- type: entity
+  parent: BasePlushieDeadSpaceMisc
+  id: PlushieSilRenaTakala
+  name: плюшевая Рене Такала
+  description: Плющевая игрушка в форме Квартирмейстера, на 65% состоит из чего-то синтетического и на 35% из натурального хлопка. От игрушки пахнет морепродуктами и нотками аммиака.
+  components:
+  - type: Sprite
+    state: plushie_rene
+  - type: TTS
+    voice: Tracer
+  - type: SpeakOnTrigger
+    pack: PlushieReneTakalaSpeech
+  - type: RoarAccent
+
+- type: entity
+  parent: BasePlushieDeadSpaceMisc
+  id: PlushieSilEso
+  name: плюшевый Эсо
+  description: Плюшевая игрушка вульпканина в форме бригмедика. Пахнет фенолом. Выглядит одиноким и растерянным, словно ему чего-то не хватает…
+  components:
+  - type: Sprite
+    state: plushie_eso
+  - type: TTS
+    voice: Ancano
+  - type: SpeakOnTrigger
+    pack: PlushieEsoSpeech
+  - type: RoarAccent
+
+- type: entity
+  parent: BasePlushieDeadSpaceMisc
+  id: PlushieSilKel
+  name: плюшевый Кел
+  description: Плюшевая игрушка улыбающегося коронера, с большими голубыми глазами которые смотрят прямо в душу, от игрушки исходит резкий запах металла и ванили — как намек на то, что за этой милой улыбкой что-то скрывается, последнее что ты услышишь метнув ее в стену - «Коронерское проклятие»
+  components:
+  - type: Sprite
+    state: plushie_kel
+  - type: TTS
+    voice: Aragorn
+  - type: SpeakOnTrigger
+    pack: PlushieKelSpeech
+
+- type: entity
+  parent: BasePlushieDeadSpaceMisc
+  id: PlushieSilWeaver
+  name: плюшевый Ткач
+  description: Плюшевая игрушка немного трусливого Парамедика, который возможно спасёт ваш труп. Немного пыльная, исходит лёгкий запах сирени.
+  components:
+  - type: Sprite
+    state: plushie_weaver
+  - type: TTS
+    voice: Sova
+  - type: SpeakOnTrigger
+    pack: PlushieWeaverSpeech
+
+- type: entity
+  parent: BasePlushieDeadSpaceMisc
+  id: PlushieSilEyrinLiht
+  name: плюшевая Эйрин Като
+  description: Это чёрная плюшевая плафеимка с лиловыми волосами. На этикетке написано "Сварим базу за 15 минут. Или? Без или."
+  components:
+  - type: Sprite
+    state: plushie_eirin
+  - type: TTS
+    voice: Templar
+  - type: SpeakOnTrigger
+    pack: PlushieEyrinLihtSpeech
+  - type: RoarAccent
+
+- type: entity
+  parent: BasePlushieDeadSpaceMisc
+  id: PlushieSilKelicKato1
+  name: плюшевая Келик Като
+  description: Плюшевая игрушка, на бирке написано - рыба, пахнет омега мылом.
+  components:
+  - type: Sprite
+    state: plushie_kelic
+  - type: SpeakOnTrigger
+    pack: PlushieKelicKatoSpeech
+  - type: RoarAccent
+  - type: TTS
+    voice: Demoman
+
+- type: entity
+  parent: BasePlushieDeadSpaceMisc
+  id: PlushieSilKelicKato2
+  name: плюшевая Келик Като
+  description: Плюшевая игрушка, на бирке написано - рыба, пахнет омега мылом.
+  components:
+  - type: Sprite
+    state: plushie_kelic2
+  - type: SpeakOnTrigger
+    pack: PlushieKelicKatoSpeech
+  - type: RoarAccent
+  - type: TTS
+    voice: Demoman
+
+- type: entity
+  parent: BasePlushieDeadSpaceMisc
+  id: PlushieSilYuliWinter
+  name: плюшевый Юлий Фон Винтер
+  description: От неё чувствуется запах трития и гари. На ощупь шереховато-мягкая.
+  components:
+  - type: Sprite
+    state: plushie_yliiy
+
+- type: entity
+  parent: BasePlushieDeadSpaceMisc
+  id: PlushieSilEkaterinaAkkerman
+  name: плюшевый Екатерина Аккерман
+  description: От нее пахнет медикоментами. На ощупь влажно-мягкая.
+  components:
+  - type: Sprite
+    state: plushie_ekaterina
+
+- type: entity
+  parent: BasePlushieDeadSpaceMisc
+  id: PlushieSilYohanaWinter
+  name: плюшевый Йоханна Фон Винтер
+  description: От нее веет бюрократией. На ощупь мягкая.
+  components:
+  - type: Sprite
+    state: plushie_yohanna
+
+- type: entity
+  parent: BasePlushieDeadSpaceMisc
+  id: PlushieSilGermanKvaSki
+  name: плюшевый Герман Ква'Ский
+  description: От нее веет медикоментами и пироманией. На ощупь мягкая.
+  components:
+  - type: Sprite
+    state: plushie_german
+
+- type: entity
+  parent: BasePlushieDeadSpaceMisc
+  id: PlushieSilTimAkkerman
+  name: плюшевая Тимофей Аккерман
+  description: От неё чувствуется власть и ужас. На ощупь мягкая.
+  components:
+  - type: Sprite
+    state: plushie_timofei
+  - type: SpeakOnTrigger
+    pack: PlushieTimAkkermanSpeech
+
+- type: entity
+  parent: BasePlushieDeadSpaceMisc
+  id: PlushieSilKiana
+  name: плюшевая Киана
+  description: Плюшевая игрушка в инженерной униформе с магнитками. Её сшитое лицо выражает непоколебимую уверенность в себе, граничащую с высокомерием. От неё будто бы исходит аура превосходства.
+  components:
+  - type: Sprite
+    state: plushie_kiana
+  - type: TTS
+    voice: Cerys
+  - type: SpeakOnTrigger
+    pack: PlushieKianaSpeech
+
+- type: entity
+  parent: BasePlushieDeadSpaceMisc
+  id: PlushieSilSai
+  name: плюшевый Саи
+  description: Плюшевый инженер с мягкими чертами лица и задумчивым, рассеянным взглядом, устремлённым куда-то вдаль. Кажется, он видит миры, недоступные простому смертному.
+  components:
+  - type: Sprite
+    state: plushie_sai
+  - type: TTS
+    voice: Sova
+  - type: SpeakOnTrigger
+    pack: PlushieSaiSpeech
+
+- type: entity
+  parent: BasePlushieDeadSpaceMisc
+  id: PlushieSilZhdan
+  name: плюшевый Ждан
+  description: Плюшевый инженер с добрым и немного уставшим выражением лица. В его позе читается спокойное, почти философское принятие жизненных перипетий.
+  components:
+  - type: Sprite
+    state: plushie_zhdan
+  - type: TTS
+    voice: Garen
+  - type: SpeakOnTrigger
+    pack: PlushieZhdanSpeech
+
+- type: entity
+  parent: BasePlushieDeadSpaceMisc
+  id: PlushieSilElena
+  name: плюшевая Елена
+  description: Плюшевый плафеим в безупречной униформе АЦК. Её пластиковый взгляд суров и непреклонен, а от фигуры веет ледяной официальностью и запахом окисленного металла.
+  components:
+  - type: Sprite
+    state: plushie_elena
+  - type: TTS
+    voice: Sage
+  - type: SpeakOnTrigger
+    pack: PlushieElenaSpeech
+  - type: RoarAccent
+
+- type: entity
+  parent: BasePlushieDeadSpaceMisc
+  id: PlushieSilMei
+  name: плюшевая Мэй
+  description: Плюшевая фигурка в форме офицера СБ. Её поза излучает абсолютную власть, а сшитые брови намекают на нулевое терпение к беспорядку и беззаконию в её владениях.
+  components:
+  - type: Sprite
+    state: plushie_mei
+  - type: TTS
+    voice: Magess
+  - type: SpeakOnTrigger
+    pack: PlushieMeiSpeech
+
+- type: entity
+  parent: BasePlushieDeadSpaceMisc
+  id: PlushieSilRygoslav
+  name: плюшевый Рыгослав
+  description: Крепко сбитый плюшевый дворф с могучей прошитой бородой. Его бархатный жилет будто хранит аромат хмельного эля, а весёлые глаза обещают шумное веселье.
+  components:
+  - type: Sprite
+    state: plushie_rygoslav
+  - type: TTS
+    voice: Guru
+  - type: SpeakOnTrigger
+    pack: PlushieRygoslavSpeech
+  - type: ReplacementAccent
+    accent: dwarf
+
+- type: entity
+  parent: BasePlushieDeadSpaceMisc
+  id: PlushieSilFlem
+  name: плюшевая Флэм
+  description: Аккуратная плюшевая вульпаканка с идеально уложенной шёрсткой и внимательным, оценивающим взглядом. Одета в строгую униформу, начищенную до блеска.
+  components:
+  - type: Sprite
+    state: plushie_flem
+  - type: TTS
+    voice: Samira
+  - type: SpeakOnTrigger
+    pack: PlushieFlemSpeech
+  - type: RoarAccent
+  - type: GermanAccent
+
+- type: entity
+  parent: BasePlushieDeadSpaceMisc
+  id: PlushieSilMarry
+  name: плюшевая Мэрри
+  description: Плюшевая игрушка с хитрой ухмылкой и дерзким блеском в глазах. Её вид сочетает в себе манию величия и непоколебимую уверенность в собственной гениальности.
+  components:
+  - type: Sprite
+    state: plushie_marry
+  - type: TTS
+    voice: Jaina
+  - type: SpeakOnTrigger
+    pack: PlushieMarrySpeech
+
+- type: entity
+  parent: BasePlushieDeadSpaceMisc
+  id: PlushieSilAleksey
+  name: плюшевый Алексей
+  description: Плюшевый человечек с невероятно добродушным и приветливым выражением лица. Его улыбка искренна, а поза выражает готовность помочь и всё доступно объяснить.
+  components:
+  - type: Sprite
+    state: plushie_aleksey
+  - type: TTS
+    voice: TonyStark
+  - type: SpeakOnTrigger
+    pack: PlushieAlekseySpeech
+
+- type: entity
+  parent: BasePlushieDeadSpaceMisc
+  id: PlushieSilArevin
+  name: плюшевый Аревин
+  description: Плюшевая вульпа с загадочным, немного отрешённым выражением мордочки. Его шёрстка будто тронута космическим холодом, а взгляд направлен куда-то дальше окружающей реальности.
+  components:
+  - type: Sprite
+    state: plushie_arevin
+  - type: TTS
+    voice: Flark
+  - type: SpeakOnTrigger
+    pack: PlushieArevinSpeech
+  - type: RoarAccent
+
+- type: entity
+  parent: BasePlushieDeadSpaceMisc
+  id: PlushieSilMila
+  name: плюшевая Мила
+  description: Плюшевая вульпаканка с озадаченно-возмущённым выражением мордочки. Кажется, она только что услышала что-то невероятное и уже готова яростно оспорить услышанное.
+  components:
+  - type: Sprite
+    state: plushie_mila
+  - type: TTS
+    voice: Norroa
+  - type: SpeakOnTrigger
+    pack: PlushieMilaSpeech
+  - type: RoarAccent
+
+- type: entity
+  parent: BasePlushieDeadSpaceMisc
+  id: PlushieSilRiza
+  name: плюшевая Риза
+  description: Плюшевая вульпаканка в научной униформе. Её большие глаза выражают научный интерес, смешанный с лёгкой растерянностью перед необъяснимыми явлениями вселенной.
+  components:
+  - type: Sprite
+    state: plushie_riza
+  - type: TTS
+    voice: Yuumi
+  - type: SpeakOnTrigger
+    pack: PlushieRizaSpeech
+  - type: RoarAccent
+
+- type: entity
+  parent: BasePlushieDeadSpaceMisc
+  id: PlushieSilMuren
+  name: плюшевый Мурен
+  description: Плюшевый плафеим с тяжёлым, неодобрительным взглядом. От него будто бы исходит едва уловимый запах спирта и категорическое нежелание участвовать в чьих-то финансовых махинациях.
+  components:
+  - type: Sprite
+    state: plushie_muren
+  - type: TTS
+    voice: Kizi
+  - type: SpeakOnTrigger
+    pack: PlushieMurenSpeech
+  - type: RoarAccent
+
+- type: entity
+  parent: BasePlushie
+  id: PlushieDragonFoxMedTech
+  name: плюшевый боец МедТех
+  description: Плюшевая игрушка, внешне напоминающая рядового бойца МедТех.
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Items/Toys/misc.rsi
+    state: plush_medtech
+
+- type: entity
+  parent: BasePlushie
+  id: PlushieDragonFoxMadParadox
+  name: плюшевый Парадокс
+  description: Мягкая игрушка человека в волшебном наряде. Имеет мягкий и пушистый хвостик.
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Items/Toys/misc.rsi
+    state: plush_madparadox
+
+- type: entity
+  parent: BasePlushieDeadSpaceMisc
+  id: PlushieSilRalseya
+  name: плюшевая Ральсея
+  description: Плюшевая вульпаканка с хитрой ухмылкой. Кажется, она вот-вот предложит выпить чего-то крепкого.
+  components:
+  - type: Sprite
+    state: plushie_ralseya
+  - type: TTS
+    voice: Maiev
+  - type: SpeakOnTrigger
+    pack: PlushieRalseyaSpeech
+  - type: RoarAccent
+
+- type: entity
+  parent: BasePlushieDeadSpaceMisc
+  id: PlushieSilAmaliya
+  name: плюшевая Амалия
+  description: Плюшевая игрушка в капитанской форме. От неё веет ароматом дорогого алкоголя.
+  components:
+  - type: Sprite
+    state: plushie_amaliya
+  - type: TTS
+    voice: Polina
+  - type: SpeakOnTrigger
+    pack: PlushieAmaliyaSpeech
+
+- type: entity
+  parent: BasePlushie
+  id: PlushieYosifAnita
+  name: плюшевая Анита
+  description: Милая плюшевая игрушка.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Items/Toys/misc.rsi
+    state: anita
+
+- type: entity
+  parent: BasePlushie
+  id: PlushieYosifEvelina
+  name: плюшевая Эвелина
+  description: Милая плюшевая игрушка.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Items/Toys/misc.rsi
+    state: evelina
+
+- type: entity
+  parent: BasePlushie
+  id: PlushieYosifLucius
+  name: плюшевая Люциус
+  description: Милая плюшевая игрушка.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Items/Toys/misc.rsi
+    state: lucius
+
+- type: entity
+  parent: PlushieMoth
+  id: PlushieMoth3eilado
+  name: ниан Кемлухт
+  description: Милый и пушистый плюшевый ниан. Приятного аппетита, bz!
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Items/Toys/misc.rsi
+    state: plushie_moth

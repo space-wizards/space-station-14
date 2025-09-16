@@ -22,7 +22,7 @@
   - type: Clothing
     sprite: _DeadSpace/Sponsor/3eilado/backpack.rsi
     clothingVisuals:
-      back: 
+      back:
       - state: equipped-BACKPACK
         scale: 0.5, 0.5
       - state: eyes
@@ -130,7 +130,7 @@
   parent: ClothingOuterHardsuitBase
   id: ClothingOuterHardsuit3eilado
   name: скафардр Виндемиатрикс
-  description: Скафандр модификации Виндемиатрикс собранный на станции 1’А. 
+  description: Скафандр модификации Виндемиатрикс собранный на станции 1’А.
   categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
@@ -160,7 +160,7 @@
   parent: [ ClothingHeadHardsuitBase, ClothingHeadSuitWithLightBase ]
   id: ClothingHeadHelmetHardsuit3eilado
   name: шлем скафардра Виндемиатрикс
-  description: Скафандр модификации Виндемиатрикс собранный на станции 1’А. 
+  description: Скафандр модификации Виндемиатрикс собранный на станции 1’А.
   categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
@@ -222,7 +222,7 @@
   parent: WelderExperimental
   id: WelderExperimental3eilado
   name: цветок опаляющих душ
-  description: Цветок выведенный в суровых условиях на станции 1'А. 
+  description: Цветок выведенный в суровых условиях на станции 1'А.
   categories: [ HideSpawnMenu ]
   components:
   - type: PointLight
@@ -307,7 +307,7 @@
   parent: Multitool
   id: Multitool3eilado
   name: альдафирах
-  description: Модифицированное устройство со станции 1'А. 
+  description: Модифицированное устройство со станции 1'А.
   categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
@@ -327,7 +327,7 @@
   description: Модифицированное странное приспособление со станции 1'А.
   categories: [ HideSpawnMenu ]
   components:
-  - type: Sprite  
+  - type: Sprite
     sprite: _DeadSpace/Sponsor/3eilado/handheldmass.rsi
   - type: Item
     sprite: _DeadSpace/Sponsor/3eilado/handheldmass.rsi
@@ -489,18 +489,6 @@
     radius: 10
     color: "#66CCFF"
 
-#Plushie
-- type: entity
-  parent: PlushieMoth
-  id: PlushieMoth3eilado
-  name: ниан Кемлухт
-  description: Милый и пушистый плюшевый ниан. Приятного аппетита, bz!
-  categories: [ HideSpawnMenu ]
-  components:
-  - type: Sprite
-    sprite: _DeadSpace/Sponsor/3eilado/moth.rsi
-    state: plushie_moth
-
 #Tail
 - type: marking
   id: 3eiladoTail
@@ -557,7 +545,7 @@
   categories: [ HideSpawnMenu ]
   components:
   - type: Icon
-    sprite: _DeadSpace/Sponsor/3eilado/pda.rsi 
+    sprite: _DeadSpace/Sponsor/3eilado/pda.rsi
   - type: Sprite
     sprite: _DeadSpace/Sponsor/3eilado/pda.rsi
     layers:
@@ -570,7 +558,7 @@
     - state: "id_overlay"
       map: [ "enum.PdaVisualLayers.IdLight" ]
       visible: false
-  
+
 # GoldenPlunger
 - type: entity
   parent: GoldenPlunger
@@ -624,7 +612,7 @@
     enabled: true
     radius: 1.5
     color: "#6600FF"
-    
+
 # Uniform
 - type: entity
   parent: ClothingUniformBase
@@ -698,7 +686,7 @@
 - type: entity
   parent: ClothingNeckBase
   id: ClothingNeckCloak3eiladoWhite
-  name: белый плащ полярного дня 
+  name: белый плащ полярного дня
   description: На этом плаще значок юридического департамента.
   categories: [ HideSpawnMenu ]
   components:
@@ -716,7 +704,7 @@
 - type: entity
   parent: ClothingHeadBase
   id: ClothingHeadHatHood3eiladoWhite
-  name: капюшон белого плаща полярного дня 
+  name: капюшон белого плаща полярного дня
   categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
@@ -790,7 +778,7 @@
 - type: entity
   parent: BaseItem
   id: Hypo3eilado
-  name: гипоспрей «Astreya» 
+  name: гипоспрей «Astreya»
   description: Гипоспрей модификации «Макнота». Создан корпорацией 1’А.
   categories: [ HideSpawnMenu ]
   components:
@@ -818,7 +806,7 @@
   parent: ClothingUniformBase
   id: ClothingUniformJumpsuit3eiladoSpicebush
   name: белый ханбок Линдеры
-  description: От этой одежды пахнет цветками линдеры. 
+  description: От этой одежды пахнет цветками линдеры.
   categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
@@ -826,12 +814,12 @@
   - type: Clothing
     sprite: _DeadSpace/Sponsor/3eilado/Spicebush/jumpsuit.rsi
 
-# Coat 
+# Coat
 - type: entity
   parent: ClothingOuterStorageBase
   id: ClothingOuterCoat3eiladoSpicebush
   name: хаори цветущей E.G.O Линдеры
-  description: От этой одежды пахнет цветками линдеры. 
+  description: От этой одежды пахнет цветками линдеры.
   categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
@@ -852,7 +840,7 @@
   parent: ClothingHeadBase
   id: ClothingHeadHat3eiladoSpicebush
   name: венок цветущей Линдеры
-  description: Венок сделанный из веток куста линдеры. 
+  description: Венок сделанный из веток куста линдеры.
   categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
@@ -942,7 +930,7 @@
   parent: HolofanProjector
   id: HolofanProjector3eilado
   name: ригиль
-  description: Модифицированное приспособление со станции 1'А. 
+  description: Модифицированное приспособление со станции 1'А.
   categories: [ HideSpawnMenu ]
   components:
   - type: Sprite

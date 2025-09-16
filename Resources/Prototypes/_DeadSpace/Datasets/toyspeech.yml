@@ -261,3 +261,15 @@
   values:
     prefix: plushies-muren-
     count: 3
+
+- type: localizedDataset
+  id: PlushieRalseyaSpeech
+  values:
+    prefix: plushies-ralseya-
+    count: 3
+
+- type: localizedDataset
+  id: PlushieAmaliyaSpeech
+  values:
+    prefix: plushies-amaliya-
+    count: 3
