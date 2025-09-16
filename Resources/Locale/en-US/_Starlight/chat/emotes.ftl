@@ -4,6 +4,7 @@ chat-emote-name-hiss = Hiss
 chat-emote-name-purr = Purr
 chat-emote-name-meow = Meow
 chat-emote-name-trill = Trill
+chat-emote-name-yip = Yip
 chat-emote-name-mar = Mar
 chat-emote-name-wurble = Wurble
 chat-emote-name-scree = Scree

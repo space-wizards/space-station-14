@@ -625,15 +625,17 @@
     Scream:
       collection: VulpkaninScreams
     Growl:
-      collection: VulpkaninGrowls
+      collection: Growl #Starlight bark
     Snarl:
       collection: VulpkaninSnarls
     Bark:
-      collection: VulpkaninBarks
+      collection: Bark #Starlight bark
     Whine:
-      collection: VulpkaninWhines
+      collection: Whine #Starlight whine
     Howl:
-      collection: VulpkaninHowls
+      collection: /Audio/_Starlight/Effects/howl.ogg #Starlight howl
+    Yip:
+      path: /Audio/_Starlight/Effects/yip.ogg #Starlight Yip
 
 - type: emoteSounds
   id: FemaleVulpkanin
@@ -653,15 +655,17 @@
     Scream:
       collection: VulpkaninScreams
     Growl:
-      collection: VulpkaninGrowls
+      collection: Growl #Starlight bark
     Snarl:
       collection: VulpkaninSnarls
     Bark:
-      collection: VulpkaninBarks
+      collection: Bark #Starlight bark
     Whine:
-      collection: VulpkaninWhines
+      collection: Whine #Starlight whine
     Howl:
-      collection: VulpkaninHowls
+      collection: /Audio/_Starlight/Effects/howl.ogg #Starlight howl
+    Yip:
+      path: /Audio/_Starlight/Effects/yip.ogg #Starlight Yip
 
 # body emotes
 - type: emoteSounds
