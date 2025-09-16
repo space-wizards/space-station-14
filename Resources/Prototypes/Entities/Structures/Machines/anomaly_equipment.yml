@@ -164,10 +164,10 @@
     onState: firing
     underpoweredState: underpowered
     setTypePorts:
-      SetParticleDelta: 0
-      SetParticleEpsilon: 1
-      SetParticleZeta: 2
-      SetParticleSigma: 3
+      SetParticleDelta: AnomalousParticleDelta
+      SetParticleEpsilon: AnomalousParticleEpsilon
+      SetParticleZeta: AnomalousParticleZeta
+      SetParticleSigma: AnomalousParticleSigma
     fireBurstSize: 1
     fireBurstDelayMin: 2
     fireBurstDelayMax: 6

@@ -68,10 +68,48 @@ public sealed class BatteryWeaponFireModesSystem : EntitySystem
         return true;
     }
 
-    private void SetFireMode(EntityUid uid, BatteryWeaponFireModesComponent component, int index, EntityUid? user = null)
+    public bool TrySetFireMode(
+        EntityUid uid,
+        BatteryWeaponFireModesComponent component,
+        EntProtoId protoId,
+        EntityUid? user = null
+    )
+    {
+        foreach (var mode in component.FireModes)
+        {
+            if (mode.Prototype == protoId)
+            {
+                SetFireMode(uid, component, mode, user);
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    public bool TrySetFireMode(Entity<BatteryWeaponFireModesComponent?> ent, EntProtoId protoId, EntityUid? user = null)
+    {
+        if (!Resolve(ent.Owner, ref ent.Comp))
+            return false;
+
+        return TrySetFireMode(ent, ent.Comp, protoId, user);
+    }
+
+    private void SetFireMode(
+        EntityUid uid,
+        BatteryWeaponFireModesComponent component,
+        int index,
+        EntityUid? user = null
+    )
     {
         var fireMode = component.FireModes[index];
-        component.CurrentFireMode = index;
+
+        SetFireMode(uid, component, fireMode, user);
+    }
+
+    private void SetFireMode(EntityUid uid, BatteryWeaponFireModesComponent component, BatteryWeaponFireMode fireMode, EntityUid? user = null)
+    {
+        component.CurrentFireMode = component.FireModes.IndexOf(fireMode);
         Dirty(uid, component);
 
         if (_prototypeManager.TryIndex<EntityPrototype>(fireMode.Prototype, out var prototype))

@@ -35,7 +35,7 @@ namespace Content.Server.Singularity.EntitySystems
         [Dependency] private readonly SharedPopupSystem _popup = default!;
         [Dependency] private readonly ProjectileSystem _projectile = default!;
         [Dependency] private readonly GunSystem _gun = default!;
-        [Dependency] private readonly BatteryWeaponFireModesSystem _fireMode= default!;
+        [Dependency] private readonly BatteryWeaponFireModesSystem _fireMode = default!;
         [Dependency] private readonly IPrototypeManager _prototype = default!;
 
         public override void Initialize()
@@ -298,9 +298,9 @@ namespace Content.Server.Singularity.EntitySystems
                     SwitchOn(uid, component);
                 }
             }
-            else if (component.SetTypePorts.TryGetValue(args.Port, out var index))
+            else if (component.SetTypePorts.TryGetValue(args.Port, out var protoId))
             {
-                // _fireMode.TrySetFireMode((uid, null), index);
+                _fireMode.TrySetFireMode((uid, null), protoId);
             }
         }
     }
