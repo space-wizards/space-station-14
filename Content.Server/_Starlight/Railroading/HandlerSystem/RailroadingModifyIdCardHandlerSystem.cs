@@ -45,7 +45,7 @@ public sealed partial class RailroadingModifyIdCardHandlerSystem : EntitySystem
             }
         }
 
-        if (cardUid == null)
+        if (cardUid == null && comp.AccessAdd.Count > 0)
         {
             // no ID was found, but there are accesses to grant. Make an ID so that required accesses can still be granted
             cardUid = Spawn(comp.DefaultIdPrototypeIfNoneFound, Transform(args.Subject).Coordinates);
@@ -53,8 +53,8 @@ public sealed partial class RailroadingModifyIdCardHandlerSystem : EntitySystem
             ModifyId(comp, cardUid.Value);
         }
 
-        // guaranteed to exist now, update accesses
-        ModifyIdAccess(comp, cardUid.Value);
+        // update accesses
+        if(cardUid != null) ModifyIdAccess(comp, cardUid.Value);
     }
 
     private void ModifyId(RailroadModifyIdCardComponent comp, EntityUid target)
