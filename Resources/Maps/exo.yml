@@ -4,8 +4,8 @@ meta:
   engineVersion: 266.0.0
   forkId: ""
   forkVersion: ""
-  time: 09/10/2025 20:15:35
-  entityCount: 19959
+  time: 09/16/2025 02:02:47
+  entityCount: 19960
 maps:
 - 1
 grids:
@@ -10045,7 +10045,7 @@ entities:
       pos: 11.5,-30.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -244104.44
+      secondsUntilStateChange: -244153.2
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -10135,6 +10135,8 @@ entities:
     - type: Transform
       pos: -19.5,-18.5
       parent: 2
+    - type: AccessReader
+      accessListsOriginal: []
 - proto: AirlockScienceGlassLocked
   entities:
   - uid: 1215
@@ -10401,7 +10403,7 @@ entities:
       pos: 34.5,-36.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -19602.13
+      secondsUntilStateChange: -19650.902
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -45338,6 +45340,9 @@ entities:
       rot: 1.5707963267948966 rad
       pos: -8.5,-19.5
       parent: 2
+    - type: AccessReader
+      accessListsOriginal:
+      - - Research
 - proto: ComputerCargoOrdersSecurity
   entities:
   - uid: 9332
@@ -45412,6 +45417,9 @@ entities:
       rot: 3.141592653589793 rad
       pos: -2.5,-14.5
       parent: 2
+    - type: AccessReader
+      accessListsOriginal:
+      - - Security
   - uid: 4212
     components:
     - type: Transform
@@ -103251,10 +103259,10 @@ entities:
       parent: 2
 - proto: SpawnMobBandito
   entities:
-  - uid: 17339
+  - uid: 18143
     components:
     - type: Transform
-      pos: -21.5,-18.5
+      pos: -22.5,-20.5
       parent: 2
 - proto: SpawnMobCatException
   entities:
@@ -104250,6 +104258,16 @@ entities:
     - type: Transform
       pos: 27.420341,-61.6539
       parent: 2
+- proto: StationAiFixerComputer
+  entities:
+  - uid: 17339
+    components:
+    - type: Transform
+      pos: -21.5,-18.5
+      parent: 2
+    - type: AccessReader
+      accessListsOriginal:
+      - - ResearchDirector
 - proto: StationAiUploadComputer
   entities:
   - uid: 15546

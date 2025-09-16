@@ -4,8 +4,8 @@ meta:
   engineVersion: 266.0.0
   forkId: ""
   forkVersion: ""
-  time: 09/15/2025 00:43:45
-  entityCount: 25523
+  time: 09/16/2025 02:05:45
+  entityCount: 25524
 maps:
 - 943
 grids:
@@ -117162,11 +117162,6 @@ entities:
       parent: 60
 - proto: PottedPlant19
   entities:
-  - uid: 9600
-    components:
-    - type: Transform
-      pos: -40.522816,2.2133622
-      parent: 60
   - uid: 17951
     components:
     - type: Transform
@@ -137035,6 +137030,24 @@ entities:
     - type: Transform
       pos: 40.5,-20.5
       parent: 60
+- proto: StationAiFixerCircuitboard
+  entities:
+  - uid: 18092
+    components:
+    - type: Transform
+      pos: -103.67538,15.571511
+      parent: 60
+- proto: StationAiFixerComputer
+  entities:
+  - uid: 9600
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: -40.5,2.5
+      parent: 60
+    - type: AccessReader
+      accessListsOriginal:
+      - - ResearchDirector
 - proto: StationAiUploadComputer
   entities:
   - uid: 7413

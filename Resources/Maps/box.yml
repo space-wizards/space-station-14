@@ -4,8 +4,8 @@ meta:
   engineVersion: 266.0.0
   forkId: ""
   forkVersion: ""
-  time: 09/06/2025 03:51:25
-  entityCount: 28793
+  time: 09/16/2025 02:07:09
+  entityCount: 28794
 maps:
 - 780
 grids:
@@ -10936,8 +10936,8 @@ entities:
           id: docking46345
           localAnchorB: -0.5,-1
           localAnchorA: -66.5,22
-          damping: 42.40102
-          stiffness: 380.5907
+          damping: 42.401035
+          stiffness: 380.59082
     - type: OccluderTree
     - type: Shuttle
       dampingModifier: 0.25
@@ -155965,6 +155965,14 @@ entities:
     components:
     - type: Transform
       pos: 34.5,-36.5
+      parent: 8364
+- proto: StationAiFixerComputer
+  entities:
+  - uid: 28794
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: 74.5,-36.5
       parent: 8364
 - proto: StationAiUploadComputer
   entities:
