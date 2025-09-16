@@ -85,7 +85,7 @@ public abstract partial class InteractionTest
     }
 
     /// <summary>
-    /// Spawn an entity entity and set it as the target.
+    /// Spawn an entity at the current <see cref="TargetCoords"/> and set it as the target entity.
     /// </summary>
     [MemberNotNull(nameof(Target), nameof(STarget), nameof(CTarget))]
 #pragma warning disable CS8774 // Member must have a non-null value when exiting.

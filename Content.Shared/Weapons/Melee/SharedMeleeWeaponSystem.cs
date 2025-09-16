@@ -20,6 +20,7 @@ using Content.Shared.Inventory.VirtualItem;
 using Content.Shared.Item.ItemToggle.Components;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Mobs.Systems;
+using Content.Shared.Movement.Systems;
 using Content.Shared.Physics;
 using Content.Shared.Popups;
 using Content.Shared.StatusEffect;
@@ -38,6 +39,7 @@ using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
+using Robust.Shared.Utility;
 using ItemToggleMeleeWeaponComponent = Content.Shared.Item.ItemToggle.Components.ItemToggleMeleeWeaponComponent;
 
 namespace Content.Shared.Weapons.Melee;
@@ -63,6 +65,7 @@ public abstract class SharedMeleeWeaponSystem : EntitySystem
     [Dependency] protected readonly SharedPopupSystem PopupSystem = default!;
     [Dependency] protected readonly SharedTransformSystem TransformSystem = default!;
     [Dependency] private   readonly SharedStaminaSystem _stamina = default!;
+    [Dependency] private readonly SharedLagCompensationSystem _lag = default!;
 
     private const int AttackMask = (int) (CollisionGroup.MobMask | CollisionGroup.Opaque);
 
@@ -198,7 +201,7 @@ public abstract class SharedMeleeWeaponSystem : EntitySystem
             return;
         }
 
-        AttemptAttack(user, weaponUid, weapon, msg, args.SenderSession);
+        AttemptAttack(user, weaponUid, weapon, msg, args);
     }
 
     private void OnHeavyAttack(HeavyAttackEvent msg, EntitySessionEventArgs args)
@@ -212,7 +215,7 @@ public abstract class SharedMeleeWeaponSystem : EntitySystem
             return;
         }
 
-        AttemptAttack(user, weaponUid, weapon, msg, args.SenderSession);
+        AttemptAttack(user, weaponUid, weapon, msg, args);
     }
 
     private void OnDisarmAttack(DisarmAttackEvent msg, EntitySessionEventArgs args)
@@ -221,7 +224,7 @@ public abstract class SharedMeleeWeaponSystem : EntitySystem
             return;
 
         if (TryGetWeapon(user, out var weaponUid, out var weapon))
-            AttemptAttack(user, weaponUid, weapon, msg, args.SenderSession);
+            AttemptAttack(user, weaponUid, weapon, msg, args);
     }
 
     /// <summary>
@@ -349,7 +352,8 @@ public abstract class SharedMeleeWeaponSystem : EntitySystem
     /// Called when a windup is finished and an attack is tried.
     /// </summary>
     /// <returns>True if attack successful</returns>
-    private bool AttemptAttack(EntityUid user, EntityUid weaponUid, MeleeWeaponComponent weapon, AttackEvent attack, ICommonSession? session)
+    private bool AttemptAttack(EntityUid user, EntityUid weaponUid, MeleeWeaponComponent weapon, AttackEvent attack,
+        EntitySessionEventArgs? sessionArgs)
     {
         var curTime = Timing.CurTime;
 
@@ -431,17 +435,17 @@ public abstract class SharedMeleeWeaponSystem : EntitySystem
             switch (attack)
             {
                 case LightAttackEvent light:
-                    DoLightAttack(user, light, weaponUid, weapon, session);
+                    DoLightAttack(user, light, weaponUid, weapon, sessionArgs);
                     animation = weapon.Animation;
                     break;
                 case DisarmAttackEvent disarm:
-                    if (!DoDisarm(user, disarm, weaponUid, weapon, session))
+                    if (!DoDisarm(user, disarm, weaponUid, weapon, sessionArgs))
                         return false;
 
                     animation = weapon.Animation;
                     break;
                 case HeavyAttackEvent heavy:
-                    if (!DoHeavyAttack(user, heavy, weaponUid, weapon, session))
+                    if (!DoHeavyAttack(user, heavy, weaponUid, weapon, sessionArgs))
                         return false;
 
                     animation = weapon.WideAnimation;
@@ -461,9 +465,32 @@ public abstract class SharedMeleeWeaponSystem : EntitySystem
         return true;
     }
 
-    protected abstract bool InRange(EntityUid user, EntityUid target, float range, ICommonSession? session);
+    private bool InRange(EntityUid user, EntityUid target, float range, EntitySessionEventArgs? sessionArgs)
+    {
+        EntityCoordinates targetCoordinates;
+        Angle targetLocalAngle;
 
-    protected virtual void DoLightAttack(EntityUid user, LightAttackEvent ev, EntityUid meleeUid, MeleeWeaponComponent component, ICommonSession? session)
+        if (sessionArgs is not { } args || args.LastAppliedTick == GameTick.Zero)
+            return Interaction.InRangeUnobstructed(user, target, range);
+
+        if (args.SenderSession.AttachedEntity != user)
+        {
+            // AFAIK This is not possible, unless players can remotely force others to attack?
+            DebugTools.Assert($"Attack sender was not the user?");
+            return false;
+        }
+
+        (targetCoordinates, targetLocalAngle) = _lag.GetCoordinatesAngle(target, args.LastAppliedTick);
+        return Interaction.InRangeUnobstructed(user,
+            target,
+            targetCoordinates,
+            targetLocalAngle,
+            range,
+            overlapCheck: false);
+    }
+
+    protected virtual void DoLightAttack(EntityUid user, LightAttackEvent ev, EntityUid meleeUid, MeleeWeaponComponent component,
+        EntitySessionEventArgs? sessionArgs)
     {
         // If I do not come back later to fix Light Attacks being Heavy Attacks you can throw me in the spider pit -Errant
         var damage = GetDamage(meleeUid, user, component) * GetHeavyDamageModifier(meleeUid, user, component);
@@ -475,7 +502,7 @@ public abstract class SharedMeleeWeaponSystem : EntitySystem
             !HasComp<DamageableComponent>(target) ||
             !TryComp(target, out TransformComponent? targetXform) ||
             // Not in LOS.
-            !InRange(user, target.Value, component.Range, session))
+            !InRange(user, target.Value, component.Range, sessionArgs))
         {
             // Leave IsHit set to true, because the only time it's set to false
             // is when a melee weapon is examined. Misses are inferred from an
@@ -562,7 +589,8 @@ public abstract class SharedMeleeWeaponSystem : EntitySystem
 
     protected abstract void DoDamageEffect(List<EntityUid> targets, EntityUid? user,  TransformComponent targetXform);
 
-    private bool DoHeavyAttack(EntityUid user, HeavyAttackEvent ev, EntityUid meleeUid, MeleeWeaponComponent component, ICommonSession? session)
+    private bool DoHeavyAttack(EntityUid user, HeavyAttackEvent ev, EntityUid meleeUid, MeleeWeaponComponent component,
+        EntitySessionEventArgs? sessionArgs)
     {
         // TODO: This is copy-paste as fuck with DoPreciseAttack
         if (!TryComp(user, out TransformComponent? userXform))
@@ -620,7 +648,7 @@ public abstract class SharedMeleeWeaponSystem : EntitySystem
                     distance,
                     userXform.MapID,
                     user,
-                    session))
+                    sessionArgs))
             {
                 continue;
             }
@@ -768,7 +796,7 @@ public abstract class SharedMeleeWeaponSystem : EntitySystem
         float range,
         MapId mapId,
         EntityUid ignore,
-        ICommonSession? session)
+        EntitySessionEventArgs? args)
     {
         // Only matters for server.
         return true;
@@ -817,7 +845,8 @@ public abstract class SharedMeleeWeaponSystem : EntitySystem
         return Math.Clamp(chance, 0f, 1f);
     }
 
-    private bool DoDisarm(EntityUid user, DisarmAttackEvent ev, EntityUid meleeUid, MeleeWeaponComponent component, ICommonSession? session)
+    private bool DoDisarm(EntityUid user, DisarmAttackEvent ev, EntityUid meleeUid, MeleeWeaponComponent component,
+        EntitySessionEventArgs? sessionArgs)
     {
         var target = GetEntity(ev.Target);
 
@@ -853,7 +882,7 @@ public abstract class SharedMeleeWeaponSystem : EntitySystem
             }
         }
 
-        if (!InRange(user, target.Value, component.Range, session))
+        if (!InRange(user, target.Value, component.Range, sessionArgs))
         {
             return false;
         }

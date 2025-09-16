@@ -47,7 +47,7 @@ public sealed class MeleeWeaponSystem : SharedMeleeWeaponSystem
         float range,
         MapId mapId,
         EntityUid ignore,
-        ICommonSession? session)
+        EntitySessionEventArgs? args)
     {
         // Originally the client didn't predict damage effects so you'd intuit some level of how far
         // in the future you'd need to predict, but then there was a lot of complaining like "why would you add artifical delay" as if ping is a choice.
@@ -62,25 +62,13 @@ public sealed class MeleeWeaponSystem : SharedMeleeWeaponSystem
         // Could also check the arc though future effort + if they're aimbotting it's not really going to make a difference.
 
         // (This runs lagcomp internally and is what clickattacks use)
+        // TODO MELEE FIX
+        // I'm 99% it doesn't, or at least not anymore.
         if (!Interaction.InRangeUnobstructed(ignore, targetUid, range + 0.1f, overlapCheck: false))
             return false;
 
         // TODO: Check arc though due to the aforementioned aimbot + damage split comments it's less important.
         return true;
-    }
-
-    protected override bool InRange(EntityUid user, EntityUid target, float range, ICommonSession? session)
-    {
-        EntityCoordinates targetCoordinates;
-        Angle targetLocalAngle;
-
-        if (session is { } pSession)
-        {
-            (targetCoordinates, targetLocalAngle) = _lag.GetCoordinatesAngle(target, pSession);
-            return Interaction.InRangeUnobstructed(user, target, targetCoordinates, targetLocalAngle, range, overlapCheck: false);
-        }
-
-        return Interaction.InRangeUnobstructed(user, target, range);
     }
 
     protected override void DoDamageEffect(List<EntityUid> targets, EntityUid? user, TransformComponent targetXform)

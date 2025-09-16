@@ -61,5 +61,22 @@ public abstract class MovementTest : InteractionTest
         var delta = Transform.GetWorldPosition(SEntMan.GetEntity(target.Value)) - Transform.GetWorldPosition(SEntMan.GetEntity(other ?? Player));
         return delta.X;
     }
+
+    /// <summary>
+    /// Variant of <see cref="Delta"/> that runs on the client instead of server.
+    /// </summary>
+    protected float ClientDelta(NetEntity? target = null, NetEntity? other = null)
+    {
+        target ??= Target;
+        if (target == null)
+        {
+            Assert.Fail("No target specified");
+            return 0;
+        }
+
+        var delta = CTransform.GetWorldPosition(ToClient(target.Value))
+                    - CTransform.GetWorldPosition(ToClient(other ?? Player));
+        return delta.X;
+    }
 }
 
