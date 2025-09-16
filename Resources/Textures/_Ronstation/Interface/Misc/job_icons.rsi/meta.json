@@ -1,7 +1,7 @@
 {
     "version": 1,
     "license": "CC-BY-SA-3.0",
-    "copyright": "Vampire made by soupcelot (GitHub) | Warden redesign by @pirakaplant (GitHub) and modified by Merrokitsune for Ronstation.",
+    "copyright": "Vampire made by soupcelot (GitHub) | Warden redesign by @pirakaplant (GitHub) and modified by Merrokitsune for Ronstation, WhiskeyOperator resprite by Atakku (github) of Syndicate and Bartender",
     "size": {
         "x": 8,
         "y": 8
@@ -12,6 +12,9 @@
         },
         {
             "name": "Warden"
+        },
+        {
+            "name": "WhiskeyOperator"
         }
     ]
 }
