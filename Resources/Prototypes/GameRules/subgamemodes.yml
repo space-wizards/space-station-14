@@ -105,6 +105,7 @@
       mindRoles:
       - MindRoleXenoborg
       min: 4
+      max: 4
       briefing:
         text: xenoborgs-welcome
         color: blueViolet

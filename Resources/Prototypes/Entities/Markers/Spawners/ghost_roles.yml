@@ -243,7 +243,7 @@
 
 - type: entity
   categories: [ Spawner ]
-  parent: BaseAntagSpawner # [BaseAntagSpawner, MothershipCore]
+  parent: BaseAntagSpawner
   id: SpawnPointGhostRoleMothershipCore
   components:
   - type: Tag
