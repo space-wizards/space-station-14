@@ -35,8 +35,6 @@ namespace Content.Server.Singularity.EntitySystems
         [Dependency] private readonly SharedPopupSystem _popup = default!;
         [Dependency] private readonly ProjectileSystem _projectile = default!;
         [Dependency] private readonly GunSystem _gun = default!;
-        [Dependency] private readonly BatteryWeaponFireModesSystem _fireMode = default!;
-        [Dependency] private readonly IPrototypeManager _prototype = default!;
 
         public override void Initialize()
         {
@@ -45,7 +43,6 @@ namespace Content.Server.Singularity.EntitySystems
             SubscribeLocalEvent<EmitterComponent, PowerConsumerReceivedChanged>(ReceivedChanged);
             SubscribeLocalEvent<EmitterComponent, PowerChangedEvent>(OnApcChanged);
             SubscribeLocalEvent<EmitterComponent, ActivateInWorldEvent>(OnActivate);
-            SubscribeLocalEvent<EmitterComponent, ExaminedEvent>(OnExamined);
             SubscribeLocalEvent<EmitterComponent, AnchorStateChangedEvent>(OnAnchorStateChanged);
             SubscribeLocalEvent<EmitterComponent, SignalReceivedEvent>(OnSignalReceived);
         }
@@ -95,15 +92,6 @@ namespace Content.Server.Singularity.EntitySystems
                 _popup.PopupEntity(Loc.GetString("comp-emitter-not-anchored",
                     ("target", uid)), uid, args.User);
             }
-        }
-
-        private void OnExamined(EntityUid uid, EmitterComponent component, ExaminedEvent args)
-        {
-            if (!_fireMode.TryGetFireMode((uid, null), out var fireMode ))
-                return;
-
-            var proto = _prototype.Index<EntityPrototype>(fireMode.Prototype);
-            args.PushMarkup(Loc.GetString("emitter-component-current-type", ("type", proto.Name)));
         }
 
         private void ReceivedChanged(
@@ -156,7 +144,7 @@ namespace Content.Server.Singularity.EntitySystems
 
         public void SwitchOn(EntityUid uid, EmitterComponent component)
         {
-            if (!_fireMode.TryGetFireMode((uid, null), out var fireMode))
+            if (!FireMode.TryGetFireMode((uid, null), out var fireMode))
                 return;
 
             component.IsOn = true;
@@ -242,7 +230,7 @@ namespace Content.Server.Singularity.EntitySystems
             if (!TryComp<GunComponent>(uid, out var gunComponent))
                 return;
 
-            if(!_fireMode.TryGetFireMode((uid, null), out var fireMode))
+            if(!FireMode.TryGetFireMode((uid, null), out var fireMode))
                 return;
 
             var xform = Transform(uid);
@@ -300,7 +288,7 @@ namespace Content.Server.Singularity.EntitySystems
             }
             else if (component.SetTypePorts.TryGetValue(args.Port, out var protoId))
             {
-                _fireMode.TrySetFireMode((uid, null), protoId);
+                FireMode.TrySetFireMode((uid, null), protoId);
             }
         }
     }
