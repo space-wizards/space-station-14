@@ -14266,5 +14266,21 @@ Entries:
   id: 163601
   time: '2025-09-15T19:34:23.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/1636
+- author: stickycheZ101
+  changes:
+  - message: added the ripperdoc arm, an overall worse version of the reaper arm,
+      but much more accessible (ghetto surgeons rejoice)
+    type: Add
+  id: 157800
+  time: '2025-09-16T18:14:16.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1578
+- author: stickycheZ101
+  changes:
+  - message: added the ability to take budget cyber organs to gain +1 tolerance per
+      organ
+    type: Add
+  id: 157801
+  time: '2025-09-16T18:14:16.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1578
 Order: -1
 

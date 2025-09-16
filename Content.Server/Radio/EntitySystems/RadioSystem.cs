@@ -1,17 +1,33 @@
+using System.Linq;
+using Content.Server._Starlight.Language;
+using Content.Server._Starlight.Radio.Systems;
 using Content.Server.Administration.Logs;
 using Content.Server.Chat.Systems;
 using Content.Server.Power.Components;
-using Content.Shared.Radio.Components;
+using Content.Server.Radio.Components;
 using Content.Server.Starlight.TTS;
+using Content.Server.VoiceMask;
+using Content.Shared;
+using Content.Shared._Starlight.Language;
+using Content.Shared._Starlight.Language.Systems;
+using Content.Shared._Starlight.Silicons.Borgs;
 using Content.Shared.Access.Components;
 using Content.Shared.Access.Systems;
 using Content.Shared.Chat;
+using Content.Shared.Clothing.EntitySystems;
 using Content.Shared.Database;
+using Content.Shared.Inventory;
 using Content.Shared.PDA;
 using Content.Shared.Radio;
 using Content.Shared.Speech;
 using Content.Shared.Silicons.Borgs.Components;
 using Content.Shared.Silicons.StationAi;
+using Content.Shared.Radio.Components;
+using Content.Shared.Roles;
+using Content.Shared.Starlight.TextToSpeech;
+using Content.Shared.StatusIcon;
+using Robust.Shared.Audio;
+using Robust.Shared.Audio.Systems;
 using Robust.Shared.Map;
 using Robust.Shared.Network;
 using Robust.Shared.Player;
@@ -19,12 +35,6 @@ using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Replays;
 using Robust.Shared.Utility;
-using Content.Server._Starlight.Radio.Systems;
-// Starlight - Start
-using Content.Shared._Starlight.Language;
-using Content.Server._Starlight.Language;
-using Content.Shared._Starlight.Silicons.Borgs;
-// Starlight - End
 
 namespace Content.Server.Radio.EntitySystems;
 
@@ -76,6 +86,8 @@ public sealed class RadioSystem : EntitySystem
 
             if (listener != null && !_language.CanUnderstand(listener, args.Language.ID))
                 msg = args.LanguageObfuscatedChatMsg;
+            else if(args.MessageSource != uid)
+                args.Receivers.Add(uid);
 
             _netMan.ServerSendMessage(new MsgChatMessage { Message = msg }, actor.PlayerSession.Channel);
             // Starlight - End
