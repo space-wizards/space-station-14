@@ -5,8 +5,7 @@
   - Omnitool
 
 - type: entity
-  parent:
-  - BaseMachinePowered
+  parent: [ BaseControllable, BaseMachinePowered ]
   id: MothershipCore
   name: mothership core
   description: A sentient machine that can produce Xenoborgs. Without this the Xenoborgs are doomed.
@@ -162,13 +161,24 @@
   - type: NpcFactionMember
     factions:
     - Xenoborg
-  - type: Body
-    prototype: MothershipCoreBody
   - type: Hands
+    hands:
+      hand_right1:
+        location: Right
+      hand_right2:
+        location: Right
+      hand_left1:
+        location: Left
+      hand_left2:
+        location: Left
+    sortedHands:
+    - hand_right1
+    - hand_right2
+    - hand_left1
+    - hand_left2
   # - type: Puller # use the conveyor
   - type: Eye
     drawFov: false
-  - type: ContentEye
   # - type: StationAiOverlay # removed until is no longer buggy
   - type: IgnoreUIRange
   - type: ComplexInteraction
@@ -204,13 +214,6 @@
   - type: ShowElectrocutionHUD
   - type: PowerMonitoringCableNetworks
   - type: RadarConsole
-  - type: DoAfter
-  - type: MobMover
-  - type: Input
-    context: "human"
-  - type: Examiner
-  - type: Alerts
-  - type: ContainerContainer
 
 - type: entity
   parent: BaseAGhostAction
