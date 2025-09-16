@@ -197,7 +197,7 @@
   parent: WeaponRifleLecter
   id: WeaponRifleLecterXL8
   name: XL8
-  description: |
+  description: |-
     The Experimental Lecter 8
     An unreasonably expensive military grade assault rifle with integrated optic. 
     Uses .20 rifle ammo.
