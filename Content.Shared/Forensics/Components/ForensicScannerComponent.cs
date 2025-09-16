@@ -24,7 +24,7 @@ namespace Content.Shared.Forensics.Components
         public List<string> Fibers = new();
 
         /// <summary>
-        /// DNA that the forensic scanner found from the <see cref="DNAComponent"/> on an entity.
+        /// DNA that the forensic scanner found from the <see cref="DnaComponent"/> on an entity.
         /// </summary>
         [DataField, AutoNetworkedField]
         public List<string> TouchDNAs = new();

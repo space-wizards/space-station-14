@@ -8,6 +8,6 @@ namespace Content.Shared.Forensics.Components;
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
 public sealed partial class DnaComponent : Component
 {
-    [DataField("dna"), AutoNetworkedField]
+    [DataField, AutoNetworkedField]
     public string? DNA;
 }
