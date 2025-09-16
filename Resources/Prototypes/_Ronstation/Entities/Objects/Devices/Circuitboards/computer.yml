@@ -7,6 +7,7 @@
   description: A computer printed circuit board for a operation whiskey communications console.
   components:
   - type: Sprite
+    sprite: _Ronstation/Objects/Misc/module.rsi
     state: cpu_whiskey
   - type: ComputerBoard
     prototype: OperationWhiskeyComputerComms
