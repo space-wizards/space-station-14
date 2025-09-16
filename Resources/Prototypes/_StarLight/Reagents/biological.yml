@@ -10,7 +10,7 @@
   physicalDesc: reagent-physical-desc-abductor
 
 - type: reagent
-  parent: AmmoniaBlood
+  parent: Blood
   id: AvaliBlood
   name: reagent-name-avali-blood
   group: Biological
@@ -21,7 +21,7 @@
   physicalDesc: reagent-physical-desc-avali
 
 - type: reagent
-  parent: AmmoniaBlood
+  parent: Blood
   id: ResomiBlood
   name: reagent-name-resomi-blood
   group: Biological
