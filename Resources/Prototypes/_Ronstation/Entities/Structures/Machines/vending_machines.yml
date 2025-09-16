@@ -1,14 +1,13 @@
 # Operation Whiskey admeme
 - type: entity
-  parent: VendingMachine
-  id: VendingMachineOperationWhiskey
-  suffix: Admeme, OpWhiskey
-  name: SyndieVend
+  parent: VendingMachineBoozeSyndicate
+  id: VendingMachineWhiskeyDeluxe
+  suffix: Admeme, OpWhiskeyWhisk
+  categories: [ DoNotMap ]
+  name: Whiskey Deluxe
+  description: A repurposed Bruise-O-Mat crammed with more stuff that you thought could possibly fit.
   components:
   - type: VendingMachine
-    pack: SyndieDrobeInventory
-    offState: off
-    brokenState: broken
-    normalState: normal-unshaded
+    pack: WhiskeyDeluxeInventory
   - type: AccessReader
     access: [["CentralCommand"]] # Unused anywhere but CC, perfect for admeme

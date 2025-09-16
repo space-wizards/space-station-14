@@ -1,0 +1,188 @@
+# Operation Whiskey admeme
+- type: vendingMachineInventory
+  id: WhiskeyDeluxeInventory
+  startingInventory:
+    # Staff supplies
+    DrinkGlass: 20
+    DrinkShotGlass: 10
+    DrinkShaker: 6
+    DrinkJigger: 3
+    BarSpoon: 3
+    CustomDrinkJug: 5 # For putting custom mixes in disp
+    DrinkFlaskBar: 5 # Drinks to go
+    DrinkVacuumFlask: 5
+    DrinkIceBucket: 3
+
+    # Staff clothing
+    ClothingHeadHatChef: 2
+    ClothingHeadHatBowlerHat: 2
+    ClothingHeadHatTophat: 2
+    ClothingEyesHudBeer: 3 # Beer goggles
+    ClothingEyesGlassesSunglasses: 3 # Flash immunity
+    ClothingNeckScarfStripedLesbianLong: 3 # Long bacon
+
+    # Backup equipment
+    RCDAmmo: 1 # Just in case
+    ClothingBackpackDuffelSyndicatePyjamaBundle: 1
+    EncryptionKeyFreelance: 1 # Backup key
+    
+    # Alcohol
+    DrinkAbsintheBottleFull: 2
+    DrinkAleBottleFullGrowler: 2
+    DrinkBeerGrowler: 2
+    DrinkBlueCuracaoBottleFull: 2
+    DrinkChampagneBottleFull: 2
+    DrinkCoffeeLiqueurBottleFull: 3
+    DrinkCognacBottleFull: 4
+    DrinkGildlagerBottleFull: 2
+    DrinkGinBottleFull: 3
+    DrinkMelonLiquorBottleFull: 3
+    DrinkPatronBottleFull: 2
+    DrinkRumBottleFull: 4
+    DrinkSakeBottleFull: 3
+    DrinkTequilaBottleFull: 3
+    DrinkVermouthBottleFull: 5
+    DrinkVodkaBottleFull: 5
+    DrinkWhiskeyBottleFull: 5
+    DrinkWineBottleFull: 5
+
+    # Juices
+    DrinkJuiceLemonCarton: 3
+    DrinkJuiceLimeCarton: 3
+    DrinkJuiceLimeCartonXL: 1
+    DrinkJuiceOrangeCarton: 3
+    DrinkJuiceOrangeCartonXL: 1
+    DrinkJuicePineappleCarton: 3
+    DrinkJuiceTomatoCarton: 3
+    DrinkWaterMelonJuiceJug: 3
+
+    # Bottles
+    DrinkAleBottleFull: 5
+    DrinkBeerBottleFull: 5
+    DrinkWaterBottleFull: 5
+
+    # Cans
+    DrinkBeerCan: 8
+    DrinkChangelingStingCan: 8
+    DrinkColaCan: 8
+    DrinkDrGibbCan: 8
+    DrinkEnergyDrinkCan: 8
+    DrinkFourteenLokoCan: 8
+    DrinkGrapeCan: 8
+    DrinkIcedTeaCan: 8
+    DrinkLemonLimeCan: 8
+    DrinkLemonLimeCranberryCan: 8
+    DrinkNukieCan: 8
+    DrinkPwrGameCan: 8
+    DrinkRootBeerCan: 8
+    DrinkShamblersJuiceCan: 8
+    DrinkSodaWaterCan: 8
+    DrinkSolDryCan: 8
+    DrinkSpaceMountainWindCan: 8
+    DrinkSpaceUpCan: 8
+    DrinkStarkistCan: 8
+    DrinkTonicWaterCan: 8
+    DrinkWineCan: 8
+
+    # Non alcohols
+    DrinkCoconutWaterCarton: 3
+    DrinkCoconutWaterJug: 4
+    DrinkCoffeeJug: 4
+    DrinkColaBottleFull: 4
+    DrinkCreamCarton: 5
+    DrinkCreamCartonXL: 1
+    DrinkDrGibbJug: 4
+    DrinkEnergyDrinkJug: 4
+    DrinkGreenTeaJug: 4
+    DrinkGrenadineBottleFull: 2
+    DrinkIcedTeaJug: 4
+    DrinkIceJug: 4
+    DrinkLemonLimeJug: 4
+    DrinkMeadJug: 4
+    DrinkMilkCarton: 2
+    DrinkOatMilkCarton: 2
+    DrinkRootBeerJug: 4
+    DrinkSodaWaterBottleFull: 4
+    DrinkSoyMilkCarton: 2
+    DrinkSpaceMountainWindBottleFull: 4
+    DrinkSpaceUpBottleFull: 4
+    DrinkSugarJug: 4
+    DrinkTeaJug: 4
+    DrinkTonicWaterBottleFull: 4
+
+    # Specials
+    DrinkMopwataBottleRandom: 4
+    DrinkBottleOfNothingFull: 4
+    ChemistryBottleEthanol: 4
+    ChemistryBottleIron: 4
+
+    # Raw fruits and vegetables because we ain't got hydro
+    # Each is 10u so 30 is 10 servings of juice
+    WheatBushel: 30
+    MeatwheatBushel: 30
+    OatBushel: 30
+    Sugarcane: 30
+    FoodLaughinPeaPod: 30
+    FoodBanana: 30
+    FoodMimana: 30
+    FoodCarrot: 30
+    FoodCabbage: 10
+    FoodGarlic: 10
+    FoodLemon: 30
+    FoodLime: 30
+    FoodOrange: 30
+    FoodPineapple: 30
+    FoodPotato: 10
+    FoodTomato: 30
+    FoodBloodTomato: 30
+    FoodEggplant: 10
+    FoodApple: 30
+    FoodCocoaPod: 10
+    FoodCorn: 30
+    FoodOnion: 10
+    FoodOnionRed: 10
+    FoodMushroom: 10
+    FoodChiliPepper: 10
+    RiceBushel: 10
+    FoodSoybeans: 10
+    FoodWatermelon: 15
+    FoodGrape: 30
+    FoodBerries: 30
+    FoodBungo: 30
+    FoodPeaPod: 10
+    FoodPumpkin: 10
+    CottonBol: 10
+    FoodCherry: 30
+
+    # Donks
+    FoodBoxDonkpocket: 2
+    FoodBoxDonkpocketBerry: 2
+    FoodBoxDonkpocketCarp: 2
+    FoodBoxDonkpocketDink: 2
+    FoodBoxDonkpocketHonk: 2
+    FoodBoxDonkpocketMoth: 2
+    FoodBoxDonkpocketPizza: 2
+    FoodBoxDonkpocketSpicy: 2
+    FoodBoxDonkpocketStonk: 1 # Limited edition
+    FoodBoxDonkpocketTeriyaki: 2
+
+    # Smokes
+    CigPackSyndicate: 5 # Interdynes are the best
+    CigPackBlue: 5
+    CigPackRed: 5
+    CigPackBlack: 5
+    CigPackGreen: 5
+
+    # Flippos
+    SyndicateFlippo: 2
+    CybersunFlippo: 2
+    DonkcoLighter: 2
+    InterdyneFlippo: 2
+    SpiderclanFlippo: 2
+    WaffleCoFlippo: 2
+
+    # Promotional stuff
+    SyndieHandyFlag: 10
+    BalloonSyn: 10
+    SyndicateBusinessCard: 10
+    HappyHonkNukieSnacks: 5
