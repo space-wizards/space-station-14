@@ -68,7 +68,7 @@
     animation: WeaponArcClaw
     damage:
       types:
-        Slash: 5 # Reduce?
+        Slash: 6
   - type: Sprite # Need to redefine the whole order to draw the tail over their gas tank
     layers:
     - map: [ "enum.HumanoidVisualLayers.Chest" ]
