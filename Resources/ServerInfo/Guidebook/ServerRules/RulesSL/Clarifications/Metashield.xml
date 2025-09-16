@@ -1,227 +1,210 @@
 <Document>
 # Metashields
+A full version of this may be viewed on the Starlight Wiki.
 
-The up to date metashield cheat sheet can be found on the starlight wiki. However, for your convenience a list has been provided here:
+## What is the 'Metashield'?
+The [bold]Metashield[/bold] is the system that determines what your character can know at the start of every round, and is used in conjunction with the Continuity Guideline rule. Something that is "shielded" can not be known by your character unless they meet certain criteria. This also means your character can not do things based on "shielded" information.
 
-[bold]Never Revealed:[/bold] The current gamemode and possible antagonists; sensitive information from previous rounds; information from other characters you've played; information about other players rather than their characters; information gained while dead, critical, observing, or a ghost.
+This system is broken up into four core pillars: [bold]Unknown Information, Corporate Secrets, Secure Knowledge, and Background.[/bold]
 
-[bold]Believed Rumors:[/bold] Abductors, vampires, and wizards are probably real, but nobody knows specifics.
+- [bold][color=#ff6200]Unknown Information[/color][/bold] is not known by anyone, or is only known by a very small group of people which is defined specifically.
+- [bold][color=#9819ff]Corporate Secrets[/color][/bold] are only known by high value members of the corporation. These are; All of Command, the Station AI, NanoTrasen Representative, Blue Shield Officer, Magistrate, and all Central Command roles such as ERT, OPs, CBURN, etc. Corporate Secrets must be kept secret until it is absolutely necessary to reveal them, even if it means endangering a small percentage of the Crew to do so.
+- [bold][color=#f00000]Secure Knowledge[/color][/bold] is only known by members of Security, Internal Affairs Agents, and everyone who knows Corporate Secrets. This includes the Brig Medic, Warden, Security Cadets- all Security jobs. Secure Knowledge should be kept secret until necessary, but may be revealed in order to preserve Crew lives.
+- [bold][color=#0af024]Background[/color][/bold] is a system that allows any characters to know specific pieces of ordinarily Metashielded knowledge. Every character may only have one Background, which is picked during Character Creation as a Trait and can not be changed mid-round or frequently at all. Your Background should reflect the life your character has lived, and act in complement to their characterization and backstory.
 
-[bold]Revealed to Certain Jobs:[/bold] Changelings are real and how they function, Paradox Clones are real, Which corporations are members of the syndicate, Zombies are real and how they function, Ninjas are real and what their goals and tools are, Revolutionaries use mind control flashes, Nuclear operatives are real, Non-NanoTrasen implant specifics, Memetic and Mystical effects
+Additionally, there are some pieces of information that exist as rumors or as pieces of pop culture and media that are not believed to be real by most people. These pieces of information will be listed near the bottom of the page, as additive worldbuilding information.
 
-[bold]Revealed by Discovery:[/bold] Chamelon items exist, Additional Communication channels in headsets, Secret purpose items like exploding pens, Deathsquad's true purpose.  
+### Common Sense Clause
+It should not need stated, but it will be anyway: If your role is a piece of Metashielded information, or lets you purchase Metashielded items, you know that you exist, and you know that anything you can purchase also exists. If you are told a piece of Metashielded information, you are now aware of that information for the duration of the shift. If you witness something, you know about it to the extent that you witnessed it.
 
-## Never Revealed IC
-Anything listed below can never be known by your characters, and knowledge of any of the below always constitutes metagaming.
-\n
-- The current game mode and possible antagonists during the current game mode.
-- Metashielded or sensitive information that happened in previous rounds.
-- Events you experienced as a different character.
-- All information related to the player of a character rather than the character itself.
-- All information gained while critical, dead, sleep, a ghost, unconscious in any way, or observing.
+Examples:
+- Abductors know that Abductors are real.
+- Thieves know how to use their Chameleon items, and their other tools with secret uses.
+- Traitors know that everything in the Uplink exists and how to use it.
+- Traitors and Thieves know that their steal objective targets exist.
+- Nuclear Operatives know that Nukies are real.
+- NTSF Decimus Task Force members know that Code Epsilon exists.
+- If you as a Janitor watch someone in a Blood-Red Hardsuit murder someone with an Energy Sword, you now know that those things exist.
+- If you as a Chemist are told by the Chief Medical Officer about Romerol and are told how to make Ambuzol, you now know that Romerol is real and how to make Ambuzol.
 
-## Believed Rumors
-Rumors that exist, which are commonly believed. These are often partial-truths that are accepted due to numerous witness testimonies and a lack of any effort to obscure this information, but come with blind spots and misconceptions.
+[color=#db1200]Traitors[/color] do not know that [color=#db1200]Nuclear Operatives[/color] are real, nor do they gain any Metashielded information beyond what the Common Sense Clause implies.
 
-- Abductors are understood to probably be real, but are so rarely encountered that most people have never seen one. This has not prevented their image from seeping into media and iconography. What they actually do and how they function is completely unknown.
-- Vampires are understood to be real, but most people believe outlandish versions that more closely resemble movie vampires than actual vampires. Knowledge of the Vampire Elders is completely unknown.
-- Wizards are understood to be real, but most people believe them to be an esoteric and outlandish cult mistaking alien artifacts for wizardry. The Wizard Federation is a known faction, but how they operate and what they do is completely unknown.
-- Revealed to Certain Jobs
-
-## Known to Certain Jobs
-
-This covers cases when a certain job should realistically come into contact with these things often, and failure to know them while holding certain positions would be considered incompetence.
-
-[bold][color=green]The fact that Changelings are real. The concept of shapeshifters exists in media in universe, but the fact that they are real, how they function, and how to test for one is unknown to the common crewmember.
-
-### Revealed to:
-
-- Brigmedics
-- Heads of Security
-- Wardens
-- Chief Medical Officers
-- Blue Shield Officers
-- Captains
-- AIs
-- Revealed to others by:
-- Being directly told by somebody who does know
-- Witnessing someone using any Changeling abilities
-- Discovering a Hollow corpse
-
-[bold][color=green]The fact that Paradox Clones are real. The concept of parallel realities exists in media in universe, but the fact that they are real is unknown to the common crew member. No one knows their true goals, even those with knowledge of their existence. Both clones are the "real" clone and all other crew has memories that match the history of both clones, until one is removed from the current reality. Because of this, crew should treat their memory as unreliable and trust that both clones are telling the truth. Additionally, both clones believe they are the original.[/color][/bold]
-
-### Revelaed to:
-- Wardens
-- Science
-- AI
-
-### Revealed to others by 
-- Being directly told by somebody who already knows
-- Witnessing two clones in the same place at the same time
-
-[bold][color=green]The fact that certain corporations such as Donk Co, Cybersun, etc are in league with the Syndicate is kept fairly well concealed. The war between the corporations is an underground cold war in most shifts. This does not shield the fact that the Syndicate exists, just which corporations are a part of the Syndicate.
-
-### Revealed to:
-- Security
-- Blue Shield Officers
-- Command
-- Syndicate
-- Revealed to others by:
-- Being directly told by somebody who does know
+[color=#db1200]Nuclear Operatives[/color] may know any [color=#f00000]Secure Knowledge[/color], and are specifically allowed to know that [color=#9819ff]NTSF Decimus Squad[/color] and [color=#9819ff]Code Epsilon[/color] are real.
 
 
-[bold][color=green]Zombies are believed to be a completely fabricated story to most crew. Zombies are outlandish, and you will be mocked for believing in them. Likewise, any chemicals that can cause or cure Zombification are also considered nonsense to most. Initial Infected are aware they are infected, and are antagonists with the goal of converting the station.
+## Unknown Information
+[color=#ff6200]Unknown Information[/color] is not known by anyone, or is only known by a very small group of people which is defined specifically. This section covers everything from Metagaming to niche information that so few people know that it might as well not be known by anybody.
 
-### Revealed to:
-- Medical
-- Security
-- Blue Shield Officers
-- Command
-- Initial Infected and Infected
-- Central Command and their forces
+### [color=#ff6200]Meta Information[/color]
+Meta Information such as the current gamemode and the possible antagonists there may be in play, events you experienced as a different character, information about a player instead of their character, etc is all considered Meta and is never allowed to be known by anybody. Secret uses for items, checking headsets without good cause, and using Chameleon items are all also classified as Meta Information and Metagaming.
 
-### Revealed to others by:
-- Being directly told by somebody who does know
-- Witnessing the dead rising
-
-[bold][color=green]The fact that Ninjas are real, how they operate, and what their goals are is kept fairly well concealed. Ninjas typically go unseen, and the aftermath of their work is often mistaken for the Greytide Virus’s work. What Ninjas are, what they want, and what they can do is mostly unknown.
-
-### Revealed to:
-- Command
-- Security
-- Blue Shield Officers
-
-### Revealed to others by:
-- Being directly told by somebody who does know
-- Witnessing a Ninja
-- Seeing a Ninja’s equipment, such as their suit or katana
-
-[bold][color=green]The fact that Revolutionaries use Mind Control, and how that Mind Control is applied, is unknown to the average crewmember. The concept of a revolution, and there being leaders to that revolution, is obviously not shielded. Only specified jobs know about the Mind Control Flashes, or that Mindshields are needed to prevent or undo them.
-
-### Revealed to:
-- Command
-- Security
-- Blue Shield Officers
-- Revolutionaries and Former Revolutionaries
-- Head Revolutionaries
-
-### Revealed to others by:
-- Being directly told by somebody who does know
-- Witnessing a Conversion directly
-
-[bold][color=green]The existence of Nuclear Operatives are considered a total fabrication, insane spacer tall tales made up to scare off annoying passengers and only high ranking members within NanoTrasen are aware they exist, that being Captain, Central Command and those sent by NanoTrasen themselves. It is a fabrication that has gained some traction in media however, with Blood-Reds being incorporated into toy lines across numerous sectors. Despite this, the nuke disk is obviously known to be a potential target for bad actors, and must be protected. Not even other Syndicate Agents know that Nuclear Operatives are real, believing the hardsuits to simply be ordinary Syndicate gear. Those that do know of Nuclear Operatives are expected to keep a tight lid on that knowledge, as revealing they exist can cause mass panic and termination of their contract.
-
-### Revealed to:
-- Captains
-- AIs
-- Blue Shield Officers
-- NanoTrasen Representatives
-- Central Command and their forces
-
-### Revealed by:
-- Witnessing Nuclear Operatives (Not every Blood-Red is a Nukie, but if there are multiple they might be)
-- Discovering a Nuclear Operative’s Shuttle
-- Being a Nuclear Operative
-- Declaration of a War Op
-- Being directly told by somebody who does know
+Examples:
+- You may never know that because the gamemode is Survival, there will be an escalating number of threats.
+- You may never know that the player Gregman69 only ever plays Security, and thus since he is an Assistant this shift he must be an Antagonist.
+- You may never know that the last round was Nukies, or any other Metashielded gamemode, per Continuity Rules.
+- You may never know anything that you did not learn in character, such as things witnessed while observing as a ghost before spawning, things you were told by a friend out of game, etc.
+- You may never know an item has a secret use by right clicking it, such as exploding pens or chameleon gloves.
 
 
-[bold][color=green]The fact that the Gods are real entities with real powers is unknown to almost everybody, including their most devout followers among crew with the exception of the chaplain themselves. You can not claim to have witnessed them prior, and any proof you see must be the first true proof you have ever seen. You may believe something to have been a miracle, but it can not have actually been one. This includes Ratvar, Nar’sei, and the Honkmother.
+### [color=#ff6200]Unconscious Information[/color]
+Unconscious Information is information you learned while your character was asleep, in critical condition, dead, or while you were moving around as a ghost while you were dead. If you are injured to the point that you enter critical condition or die, you forget the previous 5 minutes and do not remember details about what killed you or how you died. You may use common sense to notice what type of wounds you have however.
 
-### Revealed to:
-- Chaplains
-
-### Revealed by:
-- Witnessing a miracle
-- Being spoken to by the gods
-- Experiencing a situation where absolutely no other explanation is possible
-- Witnessing the God physically
-
-
-[bold][color=green]The fact that syndicates have an Implant implanted. The fact that implanters and un-implanted implanters exist is known, with the Syndicate Implants names being known by Command and Security. However the specifics of non-NanoTrasen Implants are generally unknown even to Command, while the names of the syndicate implants may be known and you may speculate on their use.
-
-### Revealed to:
-- Central Command and their forces
-- Command
-- Nanotransen Personnel
-- Security
-- Medical
-
-### Reavealed by:
-- Discovering a used or unused non-NT implanter or implanter box
-- Discovering use of a non-NT implant by anyone, such as cuffs being broken, an EMP going off, etc
-- Experiencing a situation where absolutely no other explanation is possible, such as someone who was stripped completely suddenly having an object
-- Discovering an unlocked uplink
-
-## Revealed by Discovery
-Things that are unknown until specific circumstances reveal them, judged on a case-by-case basis. Knowing any of these things without them being revealed is metagaming.
-
-[bold][color=green]The fact that Chameleon items exist is unknown to everyone. Suspicion of an item being fake or stolen is not shielded, but testing items or calling them chameleon is metagaming. This prohibits right-click testing items for chameleon options, as untrained individuals would not know how to activate or use chameleon items.
-
-### Revealed by:
-- Seeing someone else cause any chameleon item to change
-- Finding holographic nanomachine fibers
-- Experiencing a situation where absolutely no other explanation is possible
-- Discovering an unlocked uplink Being a Thief or Syndicate
+Examples:
+- You may never remember who attacked and killed you.
+- You may never remember who stole something from you while you were sleep, whether voluntary or you were drugged.
+- You can remember walking to Solars with a fellow engineer to repair it, if you decided to do so or did so more than 5 minutes before dying, though this does not automatically mean they killed you.
+- You can, after being revived, comment on the fact that you have stab wounds if you were killed with a bladed weapon, or that your clothes look burned.
+- You can not, after being revived, comment that you have bullet wounds of a specific caliber which must mean a specific gun was used to kill you. You can't tell that by looking at a wound.
 
 
-[bold][color=green]The fact that a headset has additional comms channels. This prohibits randomly checking headsets with right-click to see channels, or using a screwdriver to remove encryption keys without probable cause. This also shields the existence of Syndicate Encryption Keys
+## Corporate Secrets
+[color=#9819ff]Corporate Secrets[/color] are only known by high value members of the corporation. These are; All of Command, the Station AI, NanoTrasen Representative, Blue Shield Officer, Magistrate, and all Central Command roles such as ERT, OPs, CBURN, etc. Corporate Secrets must be kept secret until it is absolutely necessary to reveal them, even if it means endangering a small percentage of the Crew to do so. This information is considered sensitive and libel to cause mass panic if learned by the Crew.
 
-### Revealed by:
-- Witnessing someone add an unauthorized encryption key to their headset
-- Witnessing someone use the headset to communicate in a channel that can not be heard, primarily for Command who have all channels and can hear that what they said was not in any standard channels
-- Hearing someone speak in a channel they should not have access to, or knowing they have stolen Encryption Keys or headsets during the shift
-- Seeing a Syndicate Encryption Key
-- Being a Syndicate
-- Discovering an unlocked uplink
-- Hearing someone speak in the Syndicate channel while wearing a headset
+Corporate Secrets may be revealed to individuals, departments, or the station as a whole if deemed necessary. You had better have a damn good reason to do so however, and expect your reasoning to be cross examined and scrutinized heavily by Central Command. Revealing Corporate Secrets to Security is generally deemed more acceptable, better for them to clean up an issue without panicking the rest of the Crew.
 
-[bold][color=green]The fact that an item can be something other than what its visual appearance and examine description indicates. This exists to protect stealth items such as energy pens, explosive pens, etc. This includes the Cybersun pen’s ability to rewrite documents, though Cybersun pens are still contraband regardless. This prohibits using damage values, charge indicators, or any other right-click options to know that it is anything other than what it appears to be.
+### [color=#9819ff]Ninjas[/color]
+Ninjas are a collective of Clans that seek to steal our research and disrupt our operations. They frequently target vital systems to cause a distraction, and then attempt to hack into Research Servers to download what we have learned. How hostile these Clans are varies greatly, so we advise attempting to handle them discreetly if able to minimize disruption.
 
-### Revealed by:
-- Seeing an item behave differently than the expected behavior for the item
-- Seeing the item used for its hidden purpose
-- Experiencing a situation where absolutely no other explanation is possible
-- Discovering an unlocked uplink
+### [color=#9819ff]Abductors[/color]
+Silent and uncommunicative, Abductors is the name given to an advanced alien species that has been probing the edges of TSF space for over a decade now, long enough that their image has worked its way into media and rumor. Our official stance is that they are not real. Should Abductor activity be identified, due to the nature of their experiments you are advised to inform necessary Medical staff only. Surgeons will be needed to remove foreign organs and replace them.
 
-[bold][color=green]The fact that Deathsquad is used to terminate NanoTrasen stations. Deathsquad is known to exist as an arm of Central Command, but it is believed to be their ‘Navy Seals’. Any illegal or horrific use of Deathsquad is shielded. NT Personnel should never reveal to crew the true purpose of deathsquad, unless forced through duress or code epsilon is declared.
+### [color=#9819ff]Romerol Virus[/color]
+Romerol is a highly violent contagion that pilots the dead to facilitate its own spread. The current source is unknown, but it is suspected to be artificial in nature. A cure has been documented, and this information should be disseminated to Medical staff in the event of an outbreak. Subjects are capable of revival via cloning should their corpse be recovered rapidly. If quarantine can not be maintained, requesting for CBURN is advised.
 
-### Revealed by:
-- Code Epsilon being declared
-- Being a Magistrate, BSO, or NT Representative.
-- Being a member of Deathsquad
-- Being a Nuclear Operative
-- Witnessing Deathsquad perform crew executions
+### [color=#9819ff]Paradox Clones[/color]
+Cracks in reality sometimes result in intrusions from other parallel worlds. This phenominon is exclusive to sectors near the Null Scar, and is a matter of great interest to NanoTrasen. Should a duplicate be discovered it should be observed and studied, and only terminated if it proves to be hostile.
+
+### [color=#9819ff]Nuclear Operatives[/color]
+The Syndicate is a shell of its former self, due to their involvement in and defeat during the Pod Wars. They have grown increasingly more irrational and hostile since their resurgence however, and the rumors you have heard about Nuclear attacks are true. You must protect the Warhead onboard your station, and the Authentication Disk to activate it, at all costs. A confirmed attack from Nuclear Operatives is grounds to suspend Corporate Law and Standard Operating Procedure. Contact Central Command immediately to establish Martial Law.
+
+### [color=#9819ff]NTSF Decimus[/color]
+NanoTrasen Special Forces are broken up into Task Forces that specialize in different scenarios and problems. Officially, there are only Nine of these Task Forces. Unofficially, there are Ten. Task Force Ten, Decimus, handles termination of rogue stations. This is reserved only for extreme situations where an entire station has defected to an enemy of the Trans-Solar Federation, such as the Syndicate or the USSP.
+
+Code Epsilon is the designation for this necessary last resort measure, should it ever occur. Thankfully it has never seen deployment, as no station would ever willingly defect to an enemy like that. Still, the protocol exists, and if the general public were to learn of it, it would be disastrous. The existence of Decimus should never be revealed under any circumstances.
 
 
-## Metafriending and Metagrudging
-This section provides additional information on a concept that is prohibited by multiple metashield items that are never revealed IC. Giving a person or character preferential treatment based on something that your character should not know is considered metafriending. Treating a person or character negatively based on something that your character should not know is considered metagrudging.
+## Secure Knowledge
+[color=#f00000]Secure Knowledge[/color] is only known by members of Security, Internal Affairs Agents, and everyone who knows Corporate Secrets. This includes the Brig Medic, Warden, Security Cadets- all Security jobs. Secure Knowledge should be kept secret until necessary, but may be revealed in order to preserve Crew lives at the discretion of the Head of Security.
+
+### [color=#f00000]Revolutionary Methods[/color]
+The fact that USSP infiltrators make use of mind control flashes to forcibly control individuals, and unstable Redspace rifts to transport bulk equipment crates, is something that CentComm has learned through repeated incidents. Mindshields were specifically developed to counter this forced control, by Revolutionaries and by any others who might exploit the same weakness in the mind for their own ends. It is known that Mindshields will prevent and break this control.
+
+Not all flashes have this power however, and it should never be the first assumption. Strong evidence is needed before Revolutionaries are suspected, as revealing that the USSP has this capability would undermine the Crew's ability to trust one another and would significantly damage cohesion and moral.
+
+Examples:
+- A Scientist flashing someone in the bar is not grounds to suspect there is a Revolution.
+- A large group of Crew in a department they should not be in all passing around weapons or flashes is grounds to suspect there is a Revolution.
+- A Mindshielding failing on a Crewmember is proof that there is a Revolution.
+
+### [color=#f00000]Changelings[/color]
+The existence of Changelings, alien parasites that can steal the likeness of your friends and coworkers to blend in, is a serious but uncommon threat that stations may face. They pose an undue risk to the moral and cohesion of a station should they be revealed, paranoia and distrust severely and negatively impact the bottom line. Should Changelings be identified onboard your Station, you are advised to inform necessary Medical staff only. Chemists may facilitate blood tests, Surgeons may attempt to revive hollow corpses with organ transplants or cryopods.
+
+### [color=#f00000]Suspected Syndicate Corporations[/color]
+While nobody is able to prove anything, Central Command maintains a small curated list of corporations they believe to be backing the Syndicate. Security is made privy to this list so they may observe and report any connections to Syndicate activity onboard stations.
+
+These suspected corporations are:
+- Cybersun
+- Waffle Co.
+- Interdyne
+
+Their products should be viewed with suspicion but may or may not be considered contraband. Consult with Corporate Law for more information.
+
+### [color=#f00000]Non-NanoTrasen Implants[/color]
+While it is known that NanoTrasen are not the only company to make Implanters, you may not suspect someone of having an Implant without valid evidence, such as seeing them do something they should not be able to do, seeing them use an Implanter, finding a spent Implanter with their DNA or prints on it, etc. Spent Implanters and Implant Boxes have labels, and these may be used to figure out which Implant someone has for removal.
+
+### [color=#f00000]Vampires[/color]
+The fact that Vampires are real is unknown to the general public. While not inherently illegal, Vampires sometimes have an agenda onboard a Station and should be kept under extra scrutiny if they reveal themselves.
+
+### [color=#f00000]Wizards[/color]
+The Wizard Federation is very outspoken about their so-called 'magic', but most consider them to be nutjobs roleplaying in space. Whether that they do is actually 'magic' or not, they are a danger and Security has been briefed on them. Security knows they may have access to strange abilities, but they do not know the extent of the Wizard's capabilities.
+
+### [color=#f00000]Syndicate Equipment[/color]
+Security is aware of some specific equipment associated with the Syndicate. They are not aware of all or even most of the items within the uplink, however they do get foreknowledge of;
+- Syndicate Hardsuits, EVA Suits, Jetpacks, Mag Boots, Chest Rigs, and Web Vests
+- Syndicate Guns and Energy Swords
+- Basic tools; Syndicate Jaws of Life, EMAG, Access Breaker, Suspicious Toolbox and its contents, and Radio Jammer
+
+You also know that things called [bold]'Uplinks'[/bold] exist which allow the Syndicate to access their tools, but you do not know how they work or are accessed unless you find one open.
+
+You may use examine text to identify that something is in fact Syndicate Contraband, but this only applies if the item has a Contraband tag that explicitly tells you it is Contraband. Examining items to reveal secret uses, such as Hypopens, Exploding Pens, Energy Daggers, or Chameleon items, is not allowed.
+
+Examples:
+- You may know, without encountering one, that Syndicate Agent may have a Blood-Red Harduit.
+- You may know, without encountering one, that Syndicate Agents may have a Viper Pistol.
+- You can not know, until encountering one, that Syndicate Agents may have Access Breakers.
+- You can know, on examining a Camera Bug, that it is Syndicate Contraband, because the game tells you it is.
+- You may not know, on examining a Hypopen, that it is a Hypopen just because the game tells you it has fluid storage.
+
+### [color=#f00000]High Value Targets[/color]
+All items that can be targets of theft by the Syndicate are known to Security. This includes the CE's Mag Boots, Captain's Gun, RD's Hardsuit, etc. While normal crew know they are somewhat valuable, they do not know that they are deliberately targeted for theft.
+
+
+## Backgrounds
+[color=#0af024]Background[/color] is a system that allows any characters to know specific pieces of ordinarily Metashielded knowledge. Every character may only have one Background, which is picked during Character Creation as a Trait and can not be changed mid-round or frequently at all. Your Background should reflect the life your character has lives, and act in complement to their characterization and backstory. These are additive Roleplay features, and do not impact gameplay directly.
+
+Your backstory does not have to line up 1:1 with these descriptions, but should be similar in scope and not imply that you know more than your chosen Background allows. For example, you may have been an emergency responder to the aftermath of a Romerol Disaster, or you have have been a chef on a mercenary base to gain Former Soldier knowledge. As long as it does not imply you know more than your Background allows, it is fine.
+
+### [color=#0af024]Civilian[/color]
+You gain no additional information.
+
+### [color=#0af024]Former Soldier[/color]
+As a former member of a Mercenary Company, the NanoTrasen Naval Corps, or a Sector Militia, you have passing familiarity with all firearms. While you may not know who uses them or that their typical users are even real, such as Nuclear Operatives with the China Lake, you do know that the gun itself exists. You may pick and choose how far this knowledge goes, and choose to simply know nothing about certain guns.
+
+### [color=#0af024]Romerol Disaster Survivor[/color]
+You are one of a few survivors of a Romerol outbreak, from before the implementation of the PSO Cloning System. You know that the undead are real, and some of how they behave. Of course nobody would ever believe you if you told them.
+
+### [color=#0af024]Xenos Disaster Survivor[/color]
+You are one of a few survivors from a Xenos attack. You know what types of Xenos there are, and how they operate in general terms. Most people have never even seen a real Xenos, and surviving an encounter is rare. You have seen horrible things that very few others have. Does not refer to Xenoborgs.
+
+### [color=#0af024]Deific Encounter[/color]
+You have experienced something that you are certain was a miracle. Something that could only have been an act of a God.
+
+### [color=#0af024]Magical Encounter[/color]
+You survived an encounter with something that you can only describe as magic. Something you can not explain rationally. Maybe those Wizard Federation people are only partially insane.
+
+### [color=#0af024]Abducted[/color]
+You were once the unfortunate recipient of a probing. The Grays are real! They have a fork-sword that makes you fall asleep, and they teleported you to a shuttle, and made you lay eggs! No, not alien eggs, chicken eggs! Why won't anyone believe you!? - You may choose which gland you had, but the goal is crazy alien story tone.
+
+### [color=#0af024]Petty Criminal[/color]
+While reformed, more or less, you used to get involved in the types of crowds and businesses you really shouldn't have. Because of these connections, you are aware of what items on the station are likely to be worth a lot, and that they are probably targeted by the Syndicate and other Thieves. You know what all the Steal Objective Targets are.
+
+
+## Additional Information
+### Rumors and Pop Culture
+Over the years a number of things have slipped through the cracks. While they are generally not believed by sane people, none the less the image and rumor persists. Think of it like how in the real world, we have a concept of what a Vampire is. Vampires are obviously not real, but we have a conception of what they should be like if they were. This carries into roleplay as well.
+
+- Nukies: Based on old rumors from the Pod Wars, the image of the Blood-Red has persisted into the century that followed and to the modern day. Some history buffs might know the actual origin, being a simple space suit worn back in that old war. It has become associated with the idea of 'Nuclear Operatives' in recent times as rumors of stations and military outposts being nuked have begun to spread. These rumors are fringe, but have been adopted back into pop culture, with plushies and figures based on the myths.
+- Supernatural Entities: The concept of Shapechangers, Wizards, Vampires, and even Abductors have existing in Human culture for many centuries. Of course, in the age of enlightenment that is the space age, belief in such things is very fringe. Some conspirators may associate them now with 'aliens' given extraterrestrial life is confirmed, but they are considered crazy people.
+- Parallel Realities: A staple of sci-fi and bad superhero franchises for centuries now, the idea of a multiverse is known to the public. The idea of interlopers coming from a parallel world is common enough in movies, usually used to spark Red Scare fears of Communist infiltration in the public following the formation of the USSP- although this use is outdated and considered hooky in the modern day. More recently, those in the Starlight Sector began hearing many rumors related to 'clones' from another world, rumors that were fanned by leaked documents about an ocean world found in the Null Scar. Still, it's all movie nonsense at the end of the day, right?
+
+
+### Metafriending and Metagrudging
+Giving a person or character preferential treatment based on something that your character should not know is considered metafriending. Treating a person or character negatively based on something that your character should not know is considered metagrudging.
 
 Friendships between characters may grow and develop and carry over between rounds, so long as they are not based solely on knowing someone out of character and this friendship does not impede or prevent you from fulfilling traitor objectives that harm them.
 
-### Metafriending Examples
-- Giving a character additional access or a job because you are friends with the player who is playing that character.
-- Trusting a character because you are friends with the player who is playing that character.
-- Not fighting a character because you are friends with the player who is playing that character.
-- Ignoring your objective to kill a character because your character and theirs became friends in a previous round.
+Metafriending Examples
+- Doing any of the following because you are friends with the player who is playing a character or because you have made friends in character in a previous shift or during a previous life:
+- Giving a character additional access or a job beyond what makes sense
+- Trusting a character beyond what makes sense
+- Refusing to fight a character when it would otherwise make sense
+- Ignoring your objective to kill a character
 
-### Metagrudging Examples
-- Not giving a character additional access or a job because you are mad at or don't like the player who is playing that character.
-- Not trusting a character because you are mad at or don't like the player who is playing that character.
-- Starting a fight with a character because of something that they did last round.
-- Starting a fight with a character because they killed you while you were playing a different character.
-- Targeting or harassing a character based on anything which that character did outside of the current round.
-- Targeting or harassing a character based on anything which the character's player did while not playing the character.
+Metagrudging Examples
+- Doing any of the following because of out of character reasons or something that happened in a previous round or during a previous life:
+- Not giving a character additional access or a job when it would otherwise make sense
+- Not trusting a character when it would otherwise make sense
+- Starting a fight with a character without in-character reason
+- Targeting or harassing a character without in-character reason
 
-## Explicitly Not Shielded
+### Explicitly Not Shielded
 The following is a list of things that are explicitly not shielded. If something is not on this list, it doesn’t mean that it is shielded, but if something is on it then it definitely is not shielded.
 
-- The fact that the nuke disk must be protected and could be used by a bad actor to try to destroy the station.
-- The fact that alternative law sets for a Cyborg or AI exist, and could be used to alter the Silicon’s behavior. Antimov included.
-- Items that are of high value and are desired by the Syndicate, and are therefore likely targets of theft. Should include all high value items, not just items known to be Traitor objectives OOC.
+- The existence of the nuke disk and the fact that it must be protected and could be used by a bad actor to try to destroy the station.
+- The fact that alternative law sets for a Cyborg or AI exist, and could be used to alter the Silicon’s behavior. This includes the antimov lawset.
 - The idea that any Syndicate Agent or bad actor has goals or objectives that they are attempting to accomplish. They must have been sent here for a reason.
-- The fact that the Syndicate exist and are enemies of NanoTrasen, and that they regularly attempt to send covert agents to spy on, sabotage, or attack NanoTrasen. Which corporations are a part of the Syndicate is shielded.
+- The fact that the Syndicate exist and are enemies of NanoTrasen, and that they regularly attempt to send covert agents to spy on, sabotage, or attack NanoTrasen.
 - A character’s typical appearance, though you should keep in mind that multiple characters can share the same name or features.
-- The fact that the Syndicate have covert items capable of getting items to them, and that these items are known as uplinks.
-- The existence of Space Dragons, Space Carps, Pirates, Thieves, and Xenos.
+- The existence of Space Dragons, Space Carps, Pirates, Thieves, and Xenos. Specific information on hostile fauna is limited. Does your doctor need to know how a Goliath works?
+
 </Document>
