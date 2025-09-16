@@ -57,7 +57,7 @@
       path: /Audio/Effects/countdown.ogg
 
 - type: entity
-  parent: [ProjectileGrenadeBase, BaseCentcommContraband]
+  parent: [ProjectileGrenadeBase, BaseSyndicateContraband]
   id: GrenadeIncendiary
   name: incendiary grenade
   description: Guaranteed to light up the mood.

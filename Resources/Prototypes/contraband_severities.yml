@@ -30,3 +30,8 @@
 - type: contrabandSeverity
   id: Magical
   examineText: contraband-examine-text-Magical
+
+# This is CentComm contraband and not permitted for crew members.
+- type: contrabandSeverity
+  id: CentComm
+  examineText: contraband-examine-text-CentComm
