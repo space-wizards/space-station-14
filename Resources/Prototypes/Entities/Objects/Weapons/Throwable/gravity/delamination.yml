@@ -9,8 +9,6 @@
     - state: icon
   - type: Physics
     bodyType: Static
-    density: true
-    hard: true
   - type: Transform
     anchored: true
   - type: Fixtures
