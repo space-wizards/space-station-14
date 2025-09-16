@@ -1,0 +1,149 @@
+{
+    "version": 1,
+    "license": "CC-BY-SA-4.0",
+    "copyright": "made by Alkheemist (GitHub/Discord)",
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "states": [
+        {
+            "name": "stencil0"
+        },
+        {
+            "name": "stencil1"
+        },
+        {
+            "name": "stencil2"
+        },
+        {
+            "name": "stencil3"
+        },
+        {
+            "name": "stencil4"
+        },
+        {
+            "name": "stencil5"
+        },
+        {
+            "name": "stencil6"
+        },
+        {
+            "name": "stencil7"
+        },
+        {
+            "name": "stencil8"
+        },
+        {
+            "name": "stencil9"
+        },
+        {
+            "name": "stencilA"
+        },
+        {
+            "name": "stencilB"
+        },
+        {
+            "name": "stencilC"
+        },
+        {
+            "name": "stencilD"
+        },
+        {
+            "name": "stencilE"
+        },
+        {
+            "name": "stencilF"
+        },
+        {
+            "name": "stencilG"
+        },
+        {
+            "name": "stencilH"
+        },
+        {
+            "name": "stencilI"
+        },
+        {
+            "name": "stencilJ"
+        },
+        {
+            "name": "stencilK"
+        },
+        {
+            "name": "stencilL"
+        },
+        {
+            "name": "stencilM"
+        },
+        {
+            "name": "stencilN"
+        },
+        {
+            "name": "stencilO"
+        },
+        {
+            "name": "stencilP"
+        },
+        {
+            "name": "stencilQ"
+        },
+        {
+            "name": "stencilR"
+        },
+        {
+            "name": "stencilS"
+        },
+        {
+            "name": "stencilT"
+        },
+        {
+            "name": "stencilU"
+        },
+        {
+            "name": "stencilV"
+        },
+        {
+            "name": "stencilW"
+        },
+        {
+            "name": "stencilX"
+        },
+        {
+            "name": "stencilY"
+        },
+        {
+            "name": "stencilZ"
+        },
+        {
+            "name": "stencil_Ampersand"
+        },
+        {
+            "name": "stencil_Asterix"
+        },
+        {
+            "name": "stencil_Dash"
+        },
+		{
+            "name": "stencil_Equals"
+        },
+        {
+            "name": "stencil_Exclaim"
+        },
+        {
+            "name": "stencil_Hash"
+        },
+        {
+            "name": "stencil_Speso"
+        },
+        {
+            "name": "stencil_Multiocular"
+        },
+		{
+            "name": "stencil_Plus"
+        },
+		{
+            "name": "stencil_Question"
+        }
+    ]
+}

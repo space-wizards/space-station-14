@@ -1,21 +1,33 @@
 {
-   "copyright" : "Taken from https://github.com/tgstation/tgstation",
+   "version": 1,
    "license" : "CC-BY-SA-3.0",
+   "copyright" : "Icon modified from VG Station https://github.com/vgstation-coders/vgstation13/commit/4fc020f93702a45a66ebf01aed66864355393550, inhands/belt by TiniestShark (Github)",
    "size" : {
       "x" : 32,
       "y" : 32
    },
-   "states" : [
-      {
-         "delays" : [
-            [
-               0.8,
-               0.2
+    "states": [
+        {
+            "name": "icon",
+            "delays": [
+                [
+                    0.8,
+                    0.2,
+                    0.2
+                ]
             ]
-         ],
-         "directions" : 1,
-         "name" : "forensicnew"
-      }
-   ],
-   "version" : 1
+        },
+        {
+            "name": "equipped-BELT",
+            "directions": 4
+        },
+        {
+            "name": "inhand-left",
+            "directions": 4
+        },
+        {
+            "name": "inhand-right",
+            "directions": 4
+        }
+    ]
 }

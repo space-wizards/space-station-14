@@ -1,149 +1,158 @@
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Numerics;
 using System.IO;
 using System.Threading.Tasks;
+using Content.Client.Markers;
 using Content.IntegrationTests;
+using Content.IntegrationTests.Pair;
 using Content.Server.GameTicking;
 using Robust.Client.GameObjects;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
+using Robust.Shared.ContentPack;
 using Robust.Shared.EntitySerialization;
 using Robust.Shared.EntitySerialization.Systems;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
-using Robust.Shared.Map.Events;
 using Robust.Shared.Maths;
 using Robust.Shared.Timing;
-using Robust.Shared.Utility;
 using SixLabors.ImageSharp;
 using SixLabors.ImageSharp.PixelFormats;
 using SixLabors.ImageSharp.Processing;
 
 namespace Content.MapRenderer.Painters
 {
-    public sealed class MapPainter
+    public sealed class MapPainter : IAsyncDisposable
     {
-        public static async IAsyncEnumerable<RenderedGridImage<Rgba32>> Paint(string map,
-            bool mapIsFilename = false,
-            bool showMarkers = false)
-        {
-            var stopwatch = new Stopwatch();
-            stopwatch.Start();
+        private readonly RenderMap _map;
+        private readonly ITestContextLike _testContextLike;
 
-            await using var pair = await PoolManager.GetServerClient(new PoolSettings
+        private TestPair? _pair;
+        private Entity<MapGridComponent>[] _grids = [];
+
+        public MapPainter(RenderMap map, ITestContextLike testContextLike)
+        {
+            _map = map;
+            _testContextLike = testContextLike;
+        }
+
+        public async Task Initialize()
+        {
+            var stopwatch = RStopwatch.StartNew();
+
+            var poolSettings = new PoolSettings
             {
                 DummyTicker = false,
                 Connected = true,
+                Destructive = true,
                 Fresh = true,
                 // Seriously whoever made MapPainter use GameMapPrototype I wish you step on a lego one time.
-                Map = mapIsFilename ? "Empty" : map,
-            });
-
-            var server = pair.Server;
-            var client = pair.Client;
+                Map = _map is RenderMapPrototype prototype ? prototype.Prototype : PoolManager.TestMap,
+            };
+            _pair = await PoolManager.GetServerClient(poolSettings, _testContextLike);
 
             Console.WriteLine($"Loaded client and server in {(int)stopwatch.Elapsed.TotalMilliseconds} ms");
 
-            stopwatch.Restart();
-
-            var cEntityManager = client.ResolveDependency<IClientEntityManager>();
-            var cPlayerManager = client.ResolveDependency<Robust.Client.Player.IPlayerManager>();
-
-            await client.WaitPost(() =>
+            if (_map is RenderMapFile mapFile)
             {
-                if (cEntityManager.TryGetComponent(cPlayerManager.LocalEntity, out SpriteComponent? sprite))
+                using var stream = File.OpenRead(mapFile.FileName);
+
+                await _pair.Server.WaitPost(() =>
                 {
-                    cEntityManager.System<SpriteSystem>().SetVisible((cPlayerManager.LocalEntity.Value, sprite), false);
+                    var loadOptions = new MapLoadOptions
+                    {
+                        // Accept loading both maps and grids without caring about what the input file truly is.
+                        DeserializationOptions =
+                        {
+                            LogOrphanedGrids = false,
+                        },
+                    };
+
+                    if (!_pair.Server.System<MapLoaderSystem>().TryLoadGeneric(stream, mapFile.FileName, out var loadResult, loadOptions))
+                        throw new IOException($"File {mapFile.FileName} could not be read");
+
+                    _grids = loadResult.Grids.ToArray();
+                });
+            }
+        }
+
+        public async Task SetupView(bool showMarkers)
+        {
+            if (_pair == null)
+                throw new InvalidOperationException("Instance not initialized!");
+
+            await _pair.Client.WaitPost(() =>
+            {
+                if (_pair.Client.EntMan.TryGetComponent(_pair.Client.PlayerMan.LocalEntity, out SpriteComponent? sprite))
+                {
+                    _pair.Client.System<SpriteSystem>()
+                        .SetVisible((_pair.Client.PlayerMan.LocalEntity.Value, sprite), false);
                 }
             });
 
             if (showMarkers)
-                await pair.WaitClientCommand("showmarkers");
+            {
+                await _pair.Client.WaitPost(() =>
+                {
+                    _pair.Client.System<MarkerSystem>().MarkersVisible = true;
+                });
+            }
+        }
+
+        public async Task<MapViewerData> GenerateMapViewerData(ParallaxOutput? parallaxOutput)
+        {
+            if (_pair == null)
+                throw new InvalidOperationException("Instance not initialized!");
+
+            var mapShort = _map.ShortName;
+
+            string fullName;
+            if (_map is RenderMapPrototype prototype)
+            {
+                fullName = _pair.Server.ProtoMan.Index(prototype.Prototype).MapName;
+            }
+            else
+            {
+                fullName = CultureInfo.CurrentCulture.TextInfo.ToTitleCase(mapShort);
+            }
+
+            var mapViewerData = new MapViewerData
+            {
+                Id = mapShort,
+                Name = fullName,
+            };
+
+            if (parallaxOutput != null)
+            {
+                await _pair.Client.WaitPost(() =>
+                {
+                    var res = _pair.Client.InstanceDependencyCollection.Resolve<IResourceManager>();
+                    mapViewerData.ParallaxLayers.Add(LayerGroup.DefaultParallax(res, parallaxOutput));
+                });
+            }
+
+            return mapViewerData;
+        }
+
+        public async IAsyncEnumerable<RenderedGridImage<Rgba32>> Paint()
+        {
+            if (_pair == null)
+                throw new InvalidOperationException("Instance not initialized!");
+
+            var client = _pair.Client;
+            var server = _pair.Server;
 
             var sEntityManager = server.ResolveDependency<IServerEntityManager>();
             var sPlayerManager = server.ResolveDependency<IPlayerManager>();
 
             var entityManager = server.ResolveDependency<IEntityManager>();
-            var mapLoader = entityManager.System<MapLoaderSystem>();
             var mapSys = entityManager.System<SharedMapSystem>();
-            var deps = server.ResolveDependency<IEntitySystemManager>().DependencyCollection;
 
-            Entity<MapGridComponent>[] grids = [];
-
-            if (mapIsFilename)
-            {
-                var resPath = new ResPath(map);
-
-                if (!mapLoader.TryReadFile(resPath, out var data))
-                    throw new IOException($"File {map} could not be read");
-
-                var ev = new BeforeEntityReadEvent();
-                server.EntMan.EventBus.RaiseEvent(EventSource.Local, ev);
-
-                var deserializer = new EntityDeserializer(deps,
-                    data,
-                    DeserializationOptions.Default,
-                    ev.RenamedPrototypes,
-                    ev.DeletedPrototypes);
-
-                if (!deserializer.TryProcessData())
-                {
-                    throw new IOException($"Failed to process entity data in {map}");
-                }
-
-                if (deserializer.Result.Category == FileCategory.Unknown && deserializer.Result.Version < 7)
-                {
-                    var mapCount = 0;
-                    var gridCount = 0;
-                    foreach (var (entId, ent) in deserializer.YamlEntities)
-                    {
-                        if (ent.Components != null && ent.Components.ContainsKey("MapGrid"))
-                        {
-                            gridCount++;
-                        }
-                        if (ent.Components != null && ent.Components.ContainsKey("Map"))
-                        {
-                            mapCount++;
-                        }
-                    }
-                    if (mapCount == 1)
-                        deserializer.Result.Category = FileCategory.Map;
-                    else if (mapCount == 0 && gridCount == 1)
-                        deserializer.Result.Category = FileCategory.Grid;
-                }
-
-                switch (deserializer.Result.Category)
-                {
-                    case FileCategory.Map:
-                        await server.WaitPost(() =>
-                        {
-                            if (mapLoader.TryLoadMap(resPath, out _, out var loadedGrids))
-                            {
-                                grids = loadedGrids.ToArray();
-                            }
-                        });
-                        break;
-
-                    case FileCategory.Grid:
-                        await server.WaitPost(() =>
-                        {
-                            if (mapLoader.TryLoadGrid(resPath, out _, out var loadedGrids))
-                            {
-                                grids = [(Entity<MapGridComponent>)loadedGrids];
-                            }
-                        });
-                        break;
-
-                    default:
-                        throw new IOException($"Unknown category {deserializer.Result.Category}");
-
-                }
-            }
-
-            await pair.RunTicksSync(10);
+            await _pair.RunTicksSync(10);
             await Task.WhenAll(client.WaitIdleAsync(), server.WaitIdleAsync());
 
             var sMapManager = server.ResolveDependency<IMapManager>();
@@ -162,23 +171,23 @@ namespace Content.MapRenderer.Painters
                     sEntityManager.DeleteEntity(playerEntity.Value);
                 }
 
-                if (!mapIsFilename)
+                if (_map is RenderMapPrototype)
                 {
                     var mapId = sEntityManager.System<GameTicker>().DefaultMap;
-                    grids = sMapManager.GetAllGrids(mapId).ToArray();
+                    _grids = sMapManager.GetAllGrids(mapId).ToArray();
                 }
 
-                foreach (var (uid, _) in grids)
+                foreach (var (uid, _) in _grids)
                 {
                     var gridXform = xformQuery.GetComponent(uid);
                     xformSystem.SetWorldRotation(gridXform, Angle.Zero);
                 }
             });
 
-            await pair.RunTicksSync(10);
+            await _pair.RunTicksSync(10);
             await Task.WhenAll(client.WaitIdleAsync(), server.WaitIdleAsync());
 
-            foreach (var (uid, grid) in grids)
+            foreach (var (uid, grid) in _grids)
             {
                 var tiles = mapSys.GetAllTiles(uid, grid).ToList();
                 if (tiles.Count == 0)
@@ -219,16 +228,20 @@ namespace Content.MapRenderer.Painters
 
                 yield return renderedImage;
             }
+        }
 
-            // We don't care if it fails as we have already saved the images.
-            try
-            {
-                await pair.CleanReturnAsync();
-            }
-            catch
-            {
-                // ignored
-            }
+        public async Task CleanReturnAsync()
+        {
+            if (_pair == null)
+                throw new InvalidOperationException("Instance not initialized!");
+
+            await _pair.CleanReturnAsync();
+        }
+
+        public async ValueTask DisposeAsync()
+        {
+            if (_pair != null)
+                await _pair.DisposeAsync();
         }
     }
 }
