@@ -1,7 +1,6 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Numerics;
 using Content.Shared.Alert;
-using Content.Shared.ActionBlocker;
 using Content.Shared.Buckle.Components;
 using Content.Shared.Cuffs.Components;
 using Content.Shared.Database;
@@ -12,14 +11,12 @@ using Content.Shared.Movement.Events;
 using Content.Shared.Movement.Pulling.Events;
 using Content.Shared.Popups;
 using Content.Shared.Pulling.Events;
-using Content.Shared.Rotation;
 using Content.Shared.Standing;
 using Content.Shared.Storage.Components;
 using Content.Shared.Stunnable;
 using Content.Shared.Throwing;
 using Content.Shared.Whitelist;
 using Robust.Shared.Containers;
-using Robust.Shared.GameStates;
 using Robust.Shared.Map;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Events;
@@ -199,11 +196,11 @@ public abstract partial class SharedBuckleSystem
         {
             strapEnt.Comp.BuckledEntities.Add(buckle);
             Dirty(strapEnt);
-            _alerts.ShowAlert(buckle, strapEnt.Comp.BuckledAlertType);
+            _alerts.ShowAlert(buckle.Owner, strapEnt.Comp.BuckledAlertType);
         }
         else
         {
-            _alerts.ClearAlertCategory(buckle, BuckledAlertCategory);
+            _alerts.ClearAlertCategory(buckle.Owner, BuckledAlertCategory);
         }
 
         buckle.Comp.BuckledTo = strap;

@@ -75,7 +75,7 @@ public sealed class WiresSystem : SharedWiresSystem
         List<IWireAction> wireActions = new();
         var dummyWires = 0;
 
-        if (!_protoMan.TryIndex(wires.LayoutId, out WireLayoutPrototype? layoutPrototype))
+        if (!_protoMan.Resolve(wires.LayoutId, out WireLayoutPrototype? layoutPrototype))
         {
             return;
         }
