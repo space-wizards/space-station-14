@@ -18,7 +18,7 @@
   description: Reform back into a whole Diona.
   components:
   - type: Action
-    useDelay: 600 # Once every 10 minutes. Keep them dead for a fair bit before reforming
+    useDelay: 300 # Once every 5 minutes. Keep them dead for a fair bit before reforming
     icon:
       sprite: Mobs/Species/Diona/parts.rsi
       state: full
