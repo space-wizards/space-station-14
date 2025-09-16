@@ -11,7 +11,7 @@
   - StationAiIconDorf
   - StationAiIconHeartline
   - StationAiIconSmiley
-  - StationAiIconKerfus
+  - StationAiIconCat
 
 - type: stationAiCustomizationGroup
   id: StationAiHolograms
@@ -119,12 +119,12 @@
 
 - type: stationAiCustomization
   parent: StationAiIconBase
-  id: StationAiIconKerfus
-  name: station-ai-icon-kerfus
+  id: StationAiIconCat
+  name: station-ai-icon-cat
   layerData:
     Occupied:
       sprite: Mobs/Silicon/station_ai.rsi
-      state: ai
+      state: "ai_cat"
     Dead:
       sprite: Mobs/Silicon/station_ai.rsi
       state: ai_dead
