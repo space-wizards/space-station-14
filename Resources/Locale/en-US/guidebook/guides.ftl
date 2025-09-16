@@ -37,6 +37,7 @@ guide-entry-gasminingandstorage = Gas Mining and Storage
 guide-entry-atmosphericupsets = Atmospheric Upsets
 guide-entry-fires = Fires
 guide-entry-spacing = Spacing
+guide-entry-deltapressure = Delta Pressure
 guide-entry-atmostools = Atmos Tools
 guide-entry-gasses = Gasses
 guide-entry-botany = Botany
