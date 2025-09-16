@@ -7,6 +7,24 @@
     sprite: Objects/Weapons/Grenades/GravitationalGrenades/emfield.rsi
     layers:
     - state: icon
+  - type: Physics
+    bodyType: Static
+    density: true
+    hard: true
+  - type: Transform
+    anchored: true
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.45,-0.45,0.45,0.45"
+        density: 60
+        mask:
+        - MachineMask
+        layer:
+        - MidImpassable
+        - LowImpassable
   - type: TriggerOnSpawn
     keyOut: trigger
   - type: TimerTrigger
@@ -31,9 +49,9 @@
       path: /Audio/Effects/Grenades/Supermatter/supermatter.loop.ogg # 1.6
   - type: GravityWell
     maxRange: 15
-    baseRadialAcceleration: 40
+    baseRadialAcceleration: 200
     baseTangentialAcceleration: 1
-    gravPulsePeriod: 0.03
+    gravPulsePeriod: 0.05
   - type: SingularityDistortion
     intensity: 150
     falloffPower: 1.5
@@ -107,7 +125,7 @@
     sound:
       path: /Audio/Effects/Grenades/Supermatter/whitehole.loop.ogg #1.617
   - type: GravityWell
-    baseRadialAcceleration: -40
+    baseRadialAcceleration: -200
     baseTangentialAcceleration: -1
   - type: SingularityDistortion
     intensity: -150
