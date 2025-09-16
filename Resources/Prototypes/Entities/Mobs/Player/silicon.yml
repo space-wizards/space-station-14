@@ -177,7 +177,7 @@
   suffix: Empty
   components:
   - type: Anchorable
-    flags: 
+    flags:
     - Anchorable
   - type: Rotatable
   - type: WarpPoint
@@ -459,6 +459,7 @@
   - Incorporeal
   - BaseMob
   id: StationAiHolo
+  save: true # override Incorporeal
   name: AI eye
   description: The AI's viewer.
   categories: [ HideSpawnMenu, DoNotMap ]

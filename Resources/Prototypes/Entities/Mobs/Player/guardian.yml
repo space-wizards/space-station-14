@@ -4,7 +4,6 @@
   name: GuardianBase
   id: MobGuardianBase
   description: guardian
-  save: false
   components:
     - type: LagCompensation
     - type: GhostRole

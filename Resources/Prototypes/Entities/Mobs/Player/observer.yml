@@ -1,6 +1,10 @@
 - type: entity
   id: Incorporeal
-  save: false
+  # TODO PERSISTENCE enable this
+  # I'm leaving this disabled untill theres some system that prevents mapping ghosts from the saved to pre-init maps
+  # But in general various entities that need to be saveable inherit from Incorporeal (e.g., Revenant, StationAiHolo)
+  # So this really should be true to prevent people from accidentally making entities non-saveable.
+  save: false 
   abstract: true
   description: Mobs without physical bodies
   components:
