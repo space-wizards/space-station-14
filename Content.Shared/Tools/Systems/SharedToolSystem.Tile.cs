@@ -11,7 +11,7 @@ using Robust.Shared.Utility;
 
 namespace Content.Shared.Tools.Systems;
 
-public abstract partial class SharedToolSystem
+public sealed partial class SharedToolSystem
 {
     [Dependency] private readonly INetManager _net = default!;
 
@@ -53,7 +53,7 @@ public abstract partial class SharedToolSystem
         if (!TryDeconstructWithToolQualities(tileRef, tool.Qualities))
             return;
 
-        AdminLogger.Add(
+        _adminLogger.Add(
             LogType.LatticeCut,
             LogImpact.Medium,
             $"{ToPrettyString(args.User):player} used {ToPrettyString(ent)} to edit the tile at {coords}");
@@ -84,7 +84,7 @@ public abstract partial class SharedToolSystem
             return false;
 
         var coordinates = _maps.GridTileToLocal(gridUid, mapGrid, tileRef.GridIndices);
-        if (!InteractionSystem.InRangeUnobstructed(user, coordinates, popup: false))
+        if (!_interactionSystem.InRangeUnobstructed(user, coordinates, popup: false))
             return false;
 
         var args = new TileToolDoAfterEvent(GetNetEntity(gridUid), tileRef.GridIndices);
