@@ -35,7 +35,6 @@
   table: !type:AllSelector
     children:
     - id: CaptainIDCard
-    - id: CigarGoldCase
     - id: ClothingBeltSheathFilled
     - id: ClothingHeadsetAltCommand
     - id: ClothingOuterArmorCaptainCarapace

@@ -18,3 +18,4 @@
     - id: ClothingOuterCoatRnd
     - id: AnomalyScanner
     - id: NodeScanner
+    - id: NetworkConfigurator
