@@ -14296,5 +14296,56 @@ Entries:
   id: 152500
   time: '2025-09-16T20:52:26.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/1525
+- author: STARLIGHT TEAM
+  changes:
+  - message: A diona can restore its body in 5 minutes instead of 10.
+    type: Tweak
+  id: 165000
+  time: '2025-09-16T22:34:12.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1650
+- author: STARLIGHT TEAM
+  changes:
+  - message: The liver of vox now absorbs much more damage. When removed from the
+      body, it takes on 280 toxins. Don’t forget that if you restore a vox this way
+      by transplanting a human liver, it will just be normal.
+    type: Tweak
+  id: 165001
+  time: '2025-09-16T22:34:12.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1650
+- author: STARLIGHT TEAM
+  changes:
+  - message: Vox can now regenerate up to 25 damage instead of the base 20.
+    type: Tweak
+  id: 165002
+  time: '2025-09-16T22:34:12.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1650
+- author: STARLIGHT TEAM
+  changes:
+  - message: Vox claws now deal 6 damage instead of 5.
+    type: Tweak
+  id: 165003
+  time: '2025-09-16T22:34:12.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1650
+- author: STARLIGHT TEAM
+  changes:
+  - message: Cyclorites are now 10% slower instead of 15%.
+    type: Tweak
+  id: 165004
+  time: '2025-09-16T22:34:12.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1650
+- author: STARLIGHT TEAM
+  changes:
+  - message: Dwarves now go into crit at 110 damage and die at 220.
+    type: Tweak
+  id: 165005
+  time: '2025-09-16T22:34:12.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1650
+- author: STARLIGHT TEAM
+  changes:
+  - message: Arachnids are no longer slowed down when walking on webs.
+    type: Add
+  id: 165006
+  time: '2025-09-16T22:34:12.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1650
 Order: -1
 

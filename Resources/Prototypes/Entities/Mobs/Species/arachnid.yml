@@ -13,6 +13,7 @@
     understands:
     - GalacticCommon
     - Chittin
+  - type: IgnoreSpiderWeb
   # Starlight-end
   - type: Absorbable
   - type: Body
