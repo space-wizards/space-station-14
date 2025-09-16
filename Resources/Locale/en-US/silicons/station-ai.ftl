@@ -43,6 +43,7 @@ station-ai-icon-clown = Clownin' around
 station-ai-icon-dorf = Adventure awaits
 station-ai-icon-heartline = Lifeline
 station-ai-icon-smiley = All smiles
+station-ai-icon-kerfus = Kerfus
 
 station-ai-hologram-female = Female appearance
 station-ai-hologram-male = Male appearance
