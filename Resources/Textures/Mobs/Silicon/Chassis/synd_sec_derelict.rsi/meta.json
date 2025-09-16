@@ -1,0 +1,23 @@
+{
+    "version": 1,
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "license": "CC-BY-SA-3.0",
+    "copyright": "Derelict Engineer, Janitor, Miner, Medical, and Assault Borg sprites by _miket on Discord.",
+    "states": [
+        {
+            "name": "synd_sec_derelict",
+            "directions": 4
+        },
+        {
+            "name": "synd_sec_derelict_e",
+            "directions": 4
+        },
+        {
+            "name": "synd_sec_derelict_l",
+            "directions": 4
+        }
+    ]
+}
