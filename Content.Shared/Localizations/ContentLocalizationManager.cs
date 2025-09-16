@@ -119,7 +119,7 @@ namespace Content.Shared.Localizations
                 <= 0 => string.Empty,
                 1 => list[0],
                 2 => $"{list[0]} {strand} {list[1]}",
-                _ => $"{string.Join(",  ", list.GetRange(0, list.Count - 1))}, {strand} {list[^1]}"
+                _ => $"{string.Join(", ", list.GetRange(0, list.Count - 1))}, {strand} {list[^1]}"
             };
         }
 
