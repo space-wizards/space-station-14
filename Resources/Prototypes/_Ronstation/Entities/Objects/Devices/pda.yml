@@ -21,3 +21,34 @@
       enum.PdaVisuals.PdaType:
         !type:String
         pda-blueshield
+
+# Operation Whiskey admeme
+- type: entity
+  parent: [ BasePDA, BaseWhiskeyOperatorContraband ]
+  id: WhiskeyOperatorPDA
+  name: whiskey operator PDA
+  suffix: Admeme, OpWhiskey
+  description: Smells like whiskey.
+  components:
+  - type: Sprite
+    sprite: _Ronstation/Objects/Devices/pda.rsi
+    state: pda-whiskey
+  - type: Icon
+    sprite: _Ronstation/Objects/Devices/pda.rsi
+    state: pda-whiskey
+  - type: Pda
+    id: WhiskeyOperatorIDCard
+  - type: PdaBorderColor
+    borderColor: "#8A3C15"
+  - type: Appearance
+    appearanceDataInit:
+      enum.PdaVisuals.PdaType:
+        !type:String
+        pda-whiskey
+  - type: CartridgeLoader
+    uiKey: enum.PdaUiKey.Key
+    preinstalled:
+      - NotekeeperCartridge
+      - NanoTaskCartridge
+      - MedTekCartridge
+      - AstroNavCartridge
