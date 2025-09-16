@@ -38,7 +38,7 @@ public sealed partial class ReagentThreshold : EntityEffectCondition
             return quant >= Min && quant <= Max;
         }
 
-        // TODO: Someone needs to figure out how to do this for non-reagent effects. >:)
+        // TODO: Someone needs to figure out how to do this for non-reagent effects. >:) I DID IT FUCKER!!!
         throw new NotImplementedException();
     }
 

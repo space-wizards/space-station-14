@@ -177,7 +177,18 @@ public abstract partial class AnyEntityEffect
 /// <param name="Effect">The Effect</param>
 /// <param name="Scale">A strength scalar for the effect, defaults to 1 and typically only goes under for incomplete reactions.</param>
 [ByRefEvent]
-public readonly record struct EntityEffectEvent<T>(T Effect, float Scale = 1f) where T : EntityEffectBase<T>;
+public readonly record struct EntityEffectEvent<T>(T Effect, float Scale = 1f) where T : EntityEffectBase<T>
+{
+    /// <summary>
+    /// The Condition being raised in this event
+    /// </summary>
+    public readonly T Effect = Effect;
+
+    /// <summary>
+    /// The Scale modifier of this Effect.
+    /// </summary>
+    public readonly float Scale = Scale;
+}
 
 public enum StatusEffectMetabolismType
 {

@@ -30,7 +30,7 @@ public sealed partial class SharedEntityConditionsSystem : EntitySystem, IEntity
     {
         var effectEv = new EntityConditionEvent<T>(effect);
         RaiseLocalEvent(target, ref effectEv);
-        return effectEv.Pass;
+        return effectEv.Result;
     }
 }
 
@@ -61,7 +61,8 @@ public abstract partial class EntityConditionBase<T> : AnyEntityCondition where 
         if (this is not T type)
             return false;
 
-        return raiser.RaiseConditionEvent(target, type);
+        // If the result of the event matches the result we're looking for then we pass.
+        return type.Condition = raiser.RaiseConditionEvent(target, type);
     }
 }
 
@@ -69,6 +70,10 @@ public abstract partial class EntityConditionBase<T> : AnyEntityCondition where 
 public abstract partial class AnyEntityCondition
 {
     public abstract bool RaiseEvent(EntityUid target, IEntityConditionRaiser raiser);
+
+    // TODO: Rename this shit it's ass.
+    [DataField]
+    public bool Condition = true;
 
     [DataField]
     public readonly string EntityConditionGuidebookText = String.Empty;
@@ -81,6 +86,16 @@ public abstract partial class AnyEntityCondition
 [ByRefEvent]
 public record struct EntityConditionEvent<T>(T Condition) where T : EntityConditionBase<T>
 {
+    /// <summary>
+    /// The result of our check, defaults to false if nothing handles it.
+    /// </summary>
     [DataField]
-    public bool Pass;
+    public bool Result;
+
+    /// <summary>
+    /// The Condition being raised in this event
+    /// </summary>
+    public readonly T Condition = Condition;
 }
+
+// TODO: Make a struct for or/and/xor linked conditions.

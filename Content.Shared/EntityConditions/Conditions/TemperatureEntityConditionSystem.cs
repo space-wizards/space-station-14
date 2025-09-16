@@ -1,4 +1,5 @@
-﻿using Content.Shared.EntityEffects;
+﻿using Content.Shared.Chemistry.Components;
+using Content.Shared.EntityEffects;
 using Content.Shared.Temperature.Components;
 
 namespace Content.Shared.EntityConditions.Conditions;
@@ -8,7 +9,17 @@ public sealed partial class TemperatureEntityConditionSystem : EntityConditionSy
     protected override void Condition(Entity<TemperatureComponent> entity, ref EntityConditionEvent<Temperature> args)
     {
         if (entity.Comp.CurrentTemperature >= args.Condition.Min && entity.Comp.CurrentTemperature <= args.Condition.Max)
-            args.Pass = true;
+            args.Result = true;
+    }
+}
+
+// TODO: These should be merged together when we get a proper temperature struct
+public sealed partial class SolutionTemperatureEntityConditionSystem : EntityConditionSystem<SolutionComponent, Temperature>
+{
+    protected override void Condition(Entity<SolutionComponent> entity, ref EntityConditionEvent<Temperature> args)
+    {
+        if (entity.Comp.Solution.Temperature >= args.Condition.Min && entity.Comp.Solution.Temperature <= args.Condition.Max)
+            args.Result = true;
     }
 }
 
