@@ -1,0 +1,14 @@
+# Operation Whiskey admeme
+- type: entity
+  parent: VendingMachine
+  id: VendingMachineOperationWhiskey
+  suffix: Admeme, OpWhiskey
+  name: SyndieVend
+  components:
+  - type: VendingMachine
+    pack: SyndieDrobeInventory
+    offState: off
+    brokenState: broken
+    normalState: normal-unshaded
+  - type: AccessReader
+    access: [["CentralCommand"]] # Unused anywhere but CC, perfect for admeme

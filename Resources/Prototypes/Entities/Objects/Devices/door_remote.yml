@@ -1,4 +1,3 @@
-# Modified by Ronstation contributor(s), therefore this file is licensed as MIT sublicensed with AGPL-v3.0.
 - type: entity
   parent: BaseItem
   id: DoorRemoteDefault
@@ -185,7 +184,6 @@
     - SyndicateAgent
     - Wizard
     - Xenoborg
-    - WhiskeyOperator # Ronstation - modification.
 
 - type: entity
   parent: [ DoorRemoteDefault, BaseXenoborgContraband ]
