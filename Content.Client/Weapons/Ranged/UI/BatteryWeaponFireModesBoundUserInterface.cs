@@ -9,20 +9,15 @@ namespace Content.Client.Weapons.Ranged.UI;
 /// <summary>
 /// BUI for simple radial that helps to change battery-weapons fire mode.
 /// </summary>
-public sealed class BatteryWeaponFireModesBoundUserInterface : BoundUserInterface
+public sealed class BatteryWeaponFireModesBoundUserInterface(EntityUid owner, Enum uiKey)
+    : BoundUserInterface(owner, uiKey)
 {
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
 
     private SimpleRadialMenu? _menu;
 
-    private readonly Color _selectedModeBackgroundColor = StyleNano.ButtonColorGoodDefault.WithAlpha(128);
-    private readonly Color _selectedModeHoverBackgroundColor = StyleNano.ButtonColorGoodHovered.WithAlpha(128);
-
-    /// <inheritdoc />
-    public BatteryWeaponFireModesBoundUserInterface(EntityUid owner, Enum uiKey) : base(owner, uiKey)
-    {
-        IoCManager.InjectDependencies(this);
-    }
+    private static readonly Color SelectedModeBackgroundColor = StyleNano.ButtonColorGoodDefault.WithAlpha(128);
+    private static readonly Color SelectedModeHoverBackgroundColor = StyleNano.ButtonColorGoodHovered.WithAlpha(128);
 
     /// <inheritdoc />
     protected override void Open()
@@ -33,7 +28,7 @@ public sealed class BatteryWeaponFireModesBoundUserInterface : BoundUserInterfac
             return;
 
         var models = CreateButtons(fireModes);
-        if (models.Count<= 1)
+        if (models.Count <= 1)
             Close();
 
         _menu = this.CreateWindow<SimpleRadialMenu>();
@@ -49,20 +44,19 @@ public sealed class BatteryWeaponFireModesBoundUserInterface : BoundUserInterfac
     {
         var list = new List<RadialMenuOptionBase>();
 
-        for (var i = 0; i < fireModes.FireModes.Count; i++)
+        for (var index = 0; index < fireModes.FireModes.Count; index++)
         {
-            var fireMode = fireModes.FireModes[i];
+            var fireMode = fireModes.FireModes[index];
             var entProto = _prototypeManager.Index<EntityPrototype>(fireMode.Prototype);
-            var index = i;
-            var option = new RadialMenuActionOption<BatteryWeaponFireMode>(mode => HandleRadialMenuClick(index), fireMode)
+            var option = new RadialMenuActionOption<int>(HandleRadialMenuClick, index)
             {
                 ToolTip = entProto.Name,
                 IconSpecifier = RadialMenuIconSpecifier.With(fireMode.ModeIcon)
             };
             if (index == fireModes.CurrentFireMode)
             {
-                option.BackgroundColor = _selectedModeBackgroundColor;
-                option.HoverBackgroundColor = _selectedModeHoverBackgroundColor;
+                option.BackgroundColor = SelectedModeBackgroundColor;
+                option.HoverBackgroundColor = SelectedModeHoverBackgroundColor;
             }
 
             list.Add(option);
