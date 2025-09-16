@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: gorillagaming
-  changes:
-  - message: The space dragon briefing now shows the correct direction to the station
-    type: Fix
-  id: 8457
-  time: '2025-05-10T23:35:27.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/37181
 - author: pyvik
   changes:
   - message: New hair named "Long With Bangs"
@@ -3955,3 +3948,10 @@
   id: 8968
   time: '2025-09-16T15:35:51.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/40401
+- author: ScarKy0
+  changes:
+  - message: Intellicards now get renamed to the name of the AI stored on them.
+    type: Add
+  id: 8969
+  time: '2025-09-16T19:04:50.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/40402
