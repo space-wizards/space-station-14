@@ -1387,5 +1387,13 @@ Entries:
   id: 168
   time: '2025-09-11T22:07:37.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/39046
+- author: slarticodefast
+  changes:
+  - message: The listplayers command now requires PII permissions due to showing IP
+      addresses.
+    type: Tweak
+  id: 169
+  time: '2025-09-13T15:53:48.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/40324
 Name: Admin
 Order: 2
