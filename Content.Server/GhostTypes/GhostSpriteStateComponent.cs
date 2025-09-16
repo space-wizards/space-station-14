@@ -7,7 +7,8 @@ namespace Content.Server.GhostTypes;
 public sealed partial class GhostSpriteStateComponent : Component
 {
     /// <summary>
-    /// Prefix the system will add to the damage name it's using
+    /// Prefix the GhostSpriteStateSystem will add to the name of the damage type it chooses.
+    /// It should be identical to the prefix of the entity optional damage sprites.
     /// </summary>
     [DataField]
     public string Prefix;

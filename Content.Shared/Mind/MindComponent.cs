@@ -125,12 +125,15 @@ public sealed partial class MindComponent : Component
     [DataField]
     public LocId? Subtype;
 
-
-    // sucks to save the information this way, find a better method
+    /// <summary>
+    /// Entity damage stored by the MindRememberBodySystem, indexed by the DamageableSystem.
+    /// </summary>
     [DataField]
     public Dictionary<string, FixedPoint2>? DamagePerGroup;
 
+    /// <summary>
+    /// Collection of possible damage types, stored by the MindRememberBodySystem.
+    /// </summary>
     [DataField]
     public DamageSpecifier? Damage;
-
 }
