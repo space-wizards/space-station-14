@@ -24,7 +24,6 @@
   - type: InteractionOutline
   - type: Input
     context: "human"
-  - type: LagCompensation
   - type: Actions
   - type: Alerts
   - type: Appearance
@@ -37,7 +36,6 @@
   - type: ContentEye
   - type: CameraRecoil
   - type: MindContainer
-  - type: MovementSpeedModifier
   - type: RequireProjectileTarget
     active: False
 
@@ -54,6 +52,8 @@
     bodyType: KinematicController
   - type: InputMover
   - type: MobMover
+  - type: MovementSpeedModifier
+  - type: LagCompensation
 
 - type: entity
   save: false
