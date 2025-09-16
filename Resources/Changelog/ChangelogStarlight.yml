@@ -14282,5 +14282,12 @@ Entries:
   id: 157801
   time: '2025-09-16T18:14:16.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/1578
+- author: STARLIGHT TEAM
+  changes:
+  - message: Fix borg radio TTS.
+    type: Fix
+  id: 164800
+  time: '2025-09-16T20:42:33.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1648
 Order: -1
 
