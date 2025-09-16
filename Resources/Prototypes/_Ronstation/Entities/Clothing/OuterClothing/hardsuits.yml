@@ -83,3 +83,47 @@
     # no CorgiWearable because motherfuck that extra spritework
     - Hardsuit
     - WhitelistChameleon
+
+# Operation Whiskey admeme
+- type: entity
+  parent: [ ClothingOuterHardsuitBase, BaseWhiskeyOperatorContraband ]
+  id: ClothingOuterHardsuitWhiskeyOperator
+  name: antique "whiskey"-red hardsuit
+  suffix: Admeme, OpWhiskey
+  description: Hasn't been serviced for quite a while, but still good for serving drinks.
+  components:
+  - type: Sprite
+    sprite: _Ronstation/Clothing/OuterClothing/Hardsuits/whiskey.rsi
+  - type: Item
+    size: Huge
+    shape:
+    - 0,0,4,4 # Ronstation
+  - type: Clothing
+    sprite: _Ronstation/Clothing/OuterClothing/Hardsuits/whiskey.rsi
+  - type: PressureProtection
+    highPressureMultiplier: 0.05
+    lowPressureMultiplier: 1000
+  - type: ExplosionResistance
+    damageCoefficient: 0.5
+  - type: StaminaResistance
+    damageCoefficient: 0.75
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.75
+        Slash: 0.75
+        Piercing: 0.75
+        Heat: 0.75
+        Radiation: 0.75
+  - type: ClothingSpeedModifier
+    walkModifier: 0.9
+    sprintModifier: 0.9
+  - type: HeldSpeedModifier
+  - type: ToggleableClothing
+    clothingPrototype: ClothingHeadHelmetSyndicate
+  - type: Tag
+    tags:
+    - MonkeyWearable
+    - Hardsuit
+    - CorgiWearable
+    - ScurretWearable
