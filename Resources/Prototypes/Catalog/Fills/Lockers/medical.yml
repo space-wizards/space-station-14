@@ -40,7 +40,6 @@
   id: LockerFillMedicalDoctor
   table: !type:AllSelector
     children:
-    - id: HandheldHealthAnalyzer
     - id: ClothingHandsGlovesLatex
     - id: ClothingHeadsetMedical
     - id: ClothingEyesHudMedical
