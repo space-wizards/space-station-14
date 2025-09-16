@@ -86,7 +86,7 @@
 
 # Operation Whiskey admeme
 - type: entity
-  parent: [ ClothingOuterHardsuitBase, BaseWhiskeyOperatorContraband ]
+  parent: [ ClothingOuterHardsuitBase, BaseSyndicateContraband ]
   id: ClothingOuterHardsuitWhiskeyOperator
   name: antique "whiskey"-red hardsuit
   suffix: Admeme, OpWhiskey

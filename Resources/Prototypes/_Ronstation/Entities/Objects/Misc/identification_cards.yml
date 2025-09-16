@@ -12,7 +12,7 @@
 
 # Operation Whiskey admeme
 - type: entity
-  parent: [ IDCardStandard, BaseWhiskeyOperatorContraband ]
+  parent: [ IDCardStandard, BaseSyndicateContraband ]
   id: WhiskeyOperatorIDCard
   suffix: Admeme, OpWhiskey
   name: whiskey operator ID card
@@ -21,6 +21,9 @@
     sprite: _Ronstation/Objects/Misc/id_cards.rsi
     layers:
     - state: whiskey
+  - type: IdCard
+    jobTitle: job-title-whiskey-operator
+    jobIcon: JobIconVisitor
   - type: Access
     tags:
-    - WhiskeyOperator
+    - CentralCommand # Unused anywhere but CC, perfect for admeme

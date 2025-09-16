@@ -24,7 +24,7 @@
 
 # Operation Whiskey admeme
 - type: entity
-  parent: [ BasePDA, BaseWhiskeyOperatorContraband ]
+  parent: [ BasePDA, BaseSyndicateContraband ]
   id: WhiskeyOperatorPDA
   name: whiskey operator PDA
   suffix: Admeme, OpWhiskey

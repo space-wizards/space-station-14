@@ -1,7 +1,7 @@
 # Operation Whiskey admeme
 - type: entity
   name: operation whiskey rubber stamp
-  parent: [RubberStampBase, BaseWhiskeyOperatorContraband]
+  parent: [RubberStampBase, BaseSyndicateContraband]
   id: RubberStampOperationWhiskey
   suffix: Admeme, OpWhiskey
   components:

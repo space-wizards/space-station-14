@@ -1,6 +1,6 @@
 # Operation Whiskey admeme
 - type: entity
-  parent: [ BaseComputerCircuitboard, BaseWhiskeyOperatorContraband ]
+  parent: [ BaseComputerCircuitboard, BaseSyndicateContraband ]
   id: OperationWhiskeyCommsComputerCircuitboard
   suffix: Admeme, OpWhiskey
   name: operation whiskey communications computer board
