@@ -4,7 +4,7 @@
   components:
   - type: StationEvent
     earliestStart: 15
-    weight: 7.5
+    weight: 3
     minimumPlayers: 10
     duration: null
   - type: RuleGrids

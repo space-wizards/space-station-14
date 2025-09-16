@@ -164,7 +164,7 @@
   id: DragonSpawn
   components:
   - type: StationEvent
-    weight: 5.5 # 🌟Starlight🌟 Casualization
+    weight: 3 # 🌟Starlight🌟 Casualization
     earliestStart: 50 # 🌟Starlight🌟 Casualization
     reoccurrenceDelay: 45 # 🌟Starlight🌟 Casualization
     minimumPlayers: 20
@@ -193,7 +193,7 @@
   id: NinjaSpawn
   components:
   - type: StationEvent
-    weight: 5 # 🌟Starlight🌟 Casualization
+    weight: 3 # 🌟Starlight🌟 Casualization
     duration: null
     earliestStart: 45 # 🌟Starlight🌟 Casualization
     reoccurrenceDelay: 45 # 🌟Starlight🌟 Casualization
@@ -534,7 +534,7 @@
   components:
   - type: StationEvent
     earliestStart: 55 # 🌟Starlight🌟 Casualization
-    weight: 4.5 # 🌟Starlight🌟 Casualization
+    weight: 3 # 🌟Starlight🌟 Casualization
     minimumPlayers: 35
     duration: null # LoneOpsSpawn needs an infinite duration so that it inherits the NukeOpsRule things of an actually appropriate end scrreen (not always "Neutral outcome!") and... ending the game if the station is nuked.
   - type: RuleGrids
