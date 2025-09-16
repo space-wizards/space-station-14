@@ -1,3 +1,4 @@
+# Modified by Ronstation contributor(s), therefore this file is licensed as MIT sublicensed with AGPL-v3.0.
 - type: entity
   parent: [MobObserverBase, InventoryBase]
   id: AdminObserver
@@ -45,6 +46,7 @@
     - NuclearOperative
     - SyndicateAgent
     - CentralCommand
+    - WhiskeyOperator # Ronstation - modification.
   - type: UserInterface
     interfaces:
       enum.SolarControlConsoleUiKey.Key:

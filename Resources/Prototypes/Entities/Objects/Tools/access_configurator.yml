@@ -1,3 +1,4 @@
+# Modified by Ronstation contributor(s), therefore this file is licensed as MIT sublicensed with AGPL-v3.0.
 - type: entity
   parent: BaseItem
   id: AccessConfigurator
@@ -131,6 +132,7 @@
     - Xenoborg
     - GenpopEnter
     - GenpopLeave
+    - WhiskeyOperator # Ronstation - modification.
     privilegedIdSlot:
       name: id-card-console-privileged-id
       startingItem: UniversalIDCard
