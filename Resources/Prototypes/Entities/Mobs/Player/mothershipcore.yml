@@ -210,6 +210,7 @@
     context: "human"
   - type: Examiner
   - type: Alerts
+  - type: ContainerContainer
 
 - type: entity
   parent: BaseAGhostAction
