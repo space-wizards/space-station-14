@@ -1,5 +1,3 @@
-using System.Linq;
-using System.Text;
 using Content.Shared.Atmos;
 using Content.Shared.Disposal.Components;
 using Content.Shared.Disposal.Unit;
@@ -8,9 +6,8 @@ using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Containers;
 using Robust.Shared.Map.Components;
-using Robust.Shared.Physics;
-using Robust.Shared.Physics.Components;
 using Robust.Shared.Random;
+using System.Linq;
 
 namespace Content.Shared.Disposal.Tube;
 
@@ -18,7 +15,6 @@ public abstract partial class SharedDisposalTubeSystem : EntitySystem
 {
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly SharedPopupSystem _popups = default!;
-    [Dependency] private readonly SharedUserInterfaceSystem _uiSystem = default!;
     [Dependency] private readonly SharedAudioSystem _audioSystem = default!;
     [Dependency] private readonly SharedDisposableSystem _disposableSystem = default!;
     [Dependency] private readonly SharedContainerSystem _containerSystem = default!;
@@ -29,42 +25,33 @@ public abstract partial class SharedDisposalTubeSystem : EntitySystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<DisposalTubeComponent, GetDisposalsConnectableDirectionsEvent>(OnGetTransitConnectableDirections);
-        SubscribeLocalEvent<DisposalTubeComponent, GetDisposalsNextDirectionEvent>(OnGetTransitNextDirection);
-
-        SubscribeLocalEvent<DisposalEntryComponent, GetDisposalsConnectableDirectionsEvent>(OnGetEntryConnectableDirections);
         SubscribeLocalEvent<DisposalEntryComponent, GetDisposalsNextDirectionEvent>(OnGetEntryNextDirection);
-
-        SubscribeLocalEvent<DisposalRouterComponent, GetDisposalsConnectableDirectionsEvent>(OnGetRouterConnectableDirections);
+        SubscribeLocalEvent<DisposalTubeComponent, GetDisposalsNextDirectionEvent>(OnGetTubeNextDirection);
         SubscribeLocalEvent<DisposalRouterComponent, GetDisposalsNextDirectionEvent>(OnGetRouterNextDirection);
-
-        SubscribeLocalEvent<DisposalTaggerComponent, GetDisposalsConnectableDirectionsEvent>(OnGetTaggerConnectableDirections);
         SubscribeLocalEvent<DisposalTaggerComponent, GetDisposalsNextDirectionEvent>(OnGetTaggerNextDirection);
 
         Subs.BuiEvents<DisposalRouterComponent>(DisposalRouterUiKey.Key, subs =>
         {
-            subs.Event<BoundUIOpenedEvent>(OnOpenRouterUI);
             subs.Event<DisposalRouterUiActionMessage>(OnUiAction);
         });
 
         Subs.BuiEvents<DisposalTaggerComponent>(DisposalTaggerUiKey.Key, subs =>
         {
-            subs.Event<BoundUIOpenedEvent>(OnOpenTaggerUI);
             subs.Event<DisposalTaggerUiActionMessage>(OnUiAction);
         });
     }
 
     /// <summary>
-    /// Handles ui messages from the client. For things such as button presses
+    /// Handles UI messages from the client. For things such as button presses
     /// which interact with the world and require server action.
     /// </summary>
     /// <param name="msg">A user interface message from the client.</param>
     private void OnUiAction(Entity<DisposalTaggerComponent> ent, ref DisposalTaggerUiActionMessage msg)
     {
-        if (TryComp<PhysicsComponent>(ent, out var physBody) && physBody.BodyType != BodyType.Static)
+        if (!Exists(msg.Actor))
             return;
 
-        //Check for correct message and ignore maleformed strings
+        // Check for correct message and ignore maleformed strings
         if (msg.Action == DisposalTaggerUiAction.Ok && DisposalTaggerComponent.TagRegex.IsMatch(msg.Tag))
         {
             ent.Comp.Tag = msg.Tag.Trim();
@@ -75,7 +62,7 @@ public abstract partial class SharedDisposalTubeSystem : EntitySystem
     }
 
     /// <summary>
-    /// Handles ui messages from the client. For things such as button presses
+    /// Handles UI messages from the client. For things such as button presses
     /// which interact with the world and require server action.
     /// </summary>
     /// <param name="msg">A user interface message from the client.</param>
@@ -84,17 +71,16 @@ public abstract partial class SharedDisposalTubeSystem : EntitySystem
         if (!Exists(msg.Actor))
             return;
 
-        if (TryComp<PhysicsComponent>(ent, out var physBody) && physBody.BodyType != BodyType.Static)
-            return;
-
-        //Check for correct message and ignore maleformed strings
+        // Check for correct message and ignore maleformed strings
         if (msg.Action == DisposalRouterUiAction.Ok && DisposalRouterComponent.TagRegex.IsMatch(msg.Tags))
         {
             ent.Comp.Tags.Clear();
+
             foreach (var tag in msg.Tags.Split(',', StringSplitOptions.RemoveEmptyEntries))
             {
                 var trimmed = tag.Trim();
-                if (trimmed == "")
+
+                if (string.IsNullOrEmpty(trimmed))
                     continue;
 
                 ent.Comp.Tags.Add(trimmed);
@@ -106,45 +92,103 @@ public abstract partial class SharedDisposalTubeSystem : EntitySystem
         }
     }
 
-    private void OnGetTransitConnectableDirections(Entity<DisposalTubeComponent> ent, ref GetDisposalsConnectableDirectionsEvent args)
+    private void OnGetEntryNextDirection(Entity<DisposalEntryComponent> ent, ref GetDisposalsNextDirectionEvent args)
+    {
+        // Ejects contents when they pass into the entry from within the disposals system
+        if (args.Holder.PreviousDirectionFrom != Direction.Invalid)
+        {
+            args.Next = Direction.Invalid;
+            return;
+        }
+
+        args.Next = Transform(ent).LocalRotation.GetDir();
+    }
+
+    private void OnGetTubeNextDirection(Entity<DisposalTubeComponent> ent, ref GetDisposalsNextDirectionEvent args)
+    {
+        var exits = GetTubeConnectableDirections(ent);
+        HandleTubeChoice(ent, exits, ref args);
+    }
+
+    private void OnGetRouterNextDirection(Entity<DisposalRouterComponent> ent, ref GetDisposalsNextDirectionEvent args)
+    {
+        var exits = GetTubeConnectableDirections((ent, ent.Comp));
+
+        if (exits.Length < 3 || args.Holder.Tags.Overlaps(ent.Comp.Tags))
+        {
+            HandleTubeChoice((ent, ent.Comp), exits, ref args);
+            return;
+        }
+
+        HandleTubeChoice((ent, ent.Comp), exits.Skip(1).ToArray(), ref args);
+    }
+
+    private void OnGetTaggerNextDirection(Entity<DisposalTaggerComponent> ent, ref GetDisposalsNextDirectionEvent args)
+    {
+        args.Holder.Tags.Add(ent.Comp.Tag);
+        OnGetTubeNextDirection((ent, ent.Comp), ref args);
+    }
+
+    /// <summary>
+    /// Returns a list of all potential exits to a disposal tube, accounting for its local rotation.
+    /// </summary>
+    /// <param name="ent">The disposal tube.</param>
+    private Direction[] GetTubeConnectableDirections(Entity<DisposalTubeComponent> ent)
     {
         var rotation = Transform(ent).LocalRotation;
 
-        args.Connectable = ent.Comp.Exits
+        return ent.Comp.Exits
             .Select(exit => new Angle(exit.ToAngle() + rotation).GetDir())
             .ToArray();
     }
 
-    private void OnGetTransitNextDirection(Entity<DisposalTubeComponent> ent, ref GetDisposalsNextDirectionEvent args)
+    /// <summary>
+    /// Selects the best exit for a disposal tube, based on a curated list of choices.
+    /// </summary>
+    /// <param name="ent">The disposal tube.</param>
+    /// <param name="exits">The currated list of possible exits from the disposal tube.</param>
+    /// <param name="args">The args for the 'get next direction' event.</param>
+    private void HandleTubeChoice(Entity<DisposalTubeComponent> ent, Direction[] exits, ref GetDisposalsNextDirectionEvent args)
     {
-        var ev = new GetDisposalsConnectableDirectionsEvent();
-        RaiseLocalEvent(ent, ref ev);
+        if (exits.Length == 0)
+            return;
 
-        args.Next = ev.Connectable[0];
-        var previousDF = args.Holder.PreviousDirectionFrom;
+        // The first exit is the default
+        args.Next = exits[0];
 
-        switch (ev.Connectable.Length)
+        // This may change based on the number of potential exits available
+        var previousDirectionFrom = args.Holder.PreviousDirectionFrom;
+
+        switch (exits.Length)
         {
+            // There is only one exit
             case 1:
                 return;
 
+            // If there are two exits
             case 2:
-                if (args.Next == previousDF)
-                    args.Next = ev.Connectable[1];
+                if (args.Next == previousDirectionFrom)
+                    args.Next = exits[1];
 
                 return;
 
+            // If there are more than two exits
             default:
-                if (previousDF == args.Next ||
-                    Math.Abs(Angle.ShortestDistance(previousDF.ToAngle(), args.Next.ToAngle()).Theta) < ent.Comp.MinDeltaAngle.Theta)
-                {
-                    var directions = ev.Connectable.Skip(1).
-                        Where(direction => direction != previousDF &&
-                        Math.Abs(Angle.ShortestDistance(previousDF.ToAngle(), direction.ToAngle()).Theta) >= ent.Comp.MinDeltaAngle).ToArray();
 
+                // Check that the default exit is valid
+                if (previousDirectionFrom == args.Next ||
+                    Math.Abs(Angle.ShortestDistance(previousDirectionFrom.ToAngle(), args.Next.ToAngle()).Theta) < ent.Comp.MinDeltaAngle.Theta)
+                {
+                    // If it isn't, remove it from the list, along with any other invalid exits
+                    var directions = exits.Skip(1).
+                        Where(direction => direction != previousDirectionFrom &&
+                        Math.Abs(Angle.ShortestDistance(previousDirectionFrom.ToAngle(), direction.ToAngle()).Theta) >= ent.Comp.MinDeltaAngle).ToArray();
+
+                    // If no exits were valid, just use the default
                     if (directions.Length == 0)
                         return;
 
+                    // Otherwise, pick one of the remaining exits at random
                     args.Next = _random.Pick(directions);
                 }
 
@@ -152,115 +196,27 @@ public abstract partial class SharedDisposalTubeSystem : EntitySystem
         }
     }
 
-    private void OnGetEntryConnectableDirections(Entity<DisposalEntryComponent> ent, ref GetDisposalsConnectableDirectionsEvent args)
-    {
-        args.Connectable = new[] { Transform(ent).LocalRotation.GetDir() };
-    }
-
-    private void OnGetEntryNextDirection(EntityUid uid, DisposalEntryComponent component, ref GetDisposalsNextDirectionEvent args)
-    {
-        // Ejects contents when they come from the same direction the entry is facing.
-        if (args.Holder.PreviousDirectionFrom != Direction.Invalid)
-        {
-            args.Next = Direction.Invalid;
-            return;
-        }
-
-        var ev = new GetDisposalsConnectableDirectionsEvent();
-        RaiseLocalEvent(uid, ref ev);
-        args.Next = ev.Connectable[0];
-    }
-
-    private void OnGetRouterConnectableDirections(Entity<DisposalRouterComponent> ent, ref GetDisposalsConnectableDirectionsEvent args)
-    {
-        OnGetTransitConnectableDirections((ent, ent.Comp), ref args);
-    }
-
-    private void OnGetRouterNextDirection(Entity<DisposalRouterComponent> ent, ref GetDisposalsNextDirectionEvent args)
-    {
-        var ev = new GetDisposalsConnectableDirectionsEvent();
-        RaiseLocalEvent(ent, ref ev);
-
-        if (args.Holder.Tags.Overlaps(ent.Comp.Tags))
-        {
-            args.Next = ev.Connectable[1];
-            return;
-        }
-
-        args.Next = Transform(ent).LocalRotation.GetDir();
-    }
-
-    private void OnGetTaggerConnectableDirections(Entity<DisposalTaggerComponent> ent, ref GetDisposalsConnectableDirectionsEvent args)
-    {
-        OnGetTransitConnectableDirections((ent, ent.Comp), ref args);
-    }
-
-    private void OnGetTaggerNextDirection(Entity<DisposalTaggerComponent> ent, ref GetDisposalsNextDirectionEvent args)
-    {
-        args.Holder.Tags.Add(ent.Comp.Tag);
-        OnGetTransitNextDirection((ent, ent.Comp), ref args);
-    }
-
-    private void OnOpenRouterUI(Entity<DisposalRouterComponent> ent, ref BoundUIOpenedEvent args)
-    {
-        UpdateRouterUserInterface(ent);
-    }
-
-    private void OnOpenTaggerUI(Entity<DisposalTaggerComponent> ent, ref BoundUIOpenedEvent args)
-    {
-        if (_uiSystem.HasUi(ent, DisposalTaggerUiKey.Key))
-        {
-            _uiSystem.SetUiState(ent.Owner, DisposalTaggerUiKey.Key,
-                new DisposalTaggerUserInterfaceState(ent.Comp.Tag));
-        }
-    }
-
     /// <summary>
-    /// Gets component data to be used to update the user interface client-side.
+    /// Tries to find an adjacent disposal tube in a specified direction.
     /// </summary>
-    /// <returns>Returns a <see cref="DisposalRouterComponent.DisposalRouterUserInterfaceState"/></returns>
-    private void UpdateRouterUserInterface(Entity<DisposalRouterComponent> ent)
-    {
-        if (ent.Comp.Tags.Count <= 0)
-        {
-            _uiSystem.SetUiState(ent.Owner, DisposalRouterUiKey.Key, new DisposalRouterUserInterfaceState(""));
-            return;
-        }
-
-        var taglist = new StringBuilder();
-
-        foreach (var tag in ent.Comp.Tags)
-        {
-            taglist.Append(tag);
-            taglist.Append(", ");
-        }
-
-        taglist.Remove(taglist.Length - 2, 2);
-
-        _uiSystem.SetUiState(ent.Owner, DisposalRouterUiKey.Key, new DisposalRouterUserInterfaceState(taglist.ToString()));
-    }
-
-    /// <summary>
-    ///
-    /// </summary>
-    /// <param name="target"></param>
-    /// <param name="nextDirection"></param>
-    /// <returns></returns>
-    public EntityUid? NextTubeFor(Entity<DisposalTubeComponent> target, Direction nextDirection)
+    /// <param name="ent">The original disposal tube.</param>
+    /// <param name="nextDirection">The specified direction.</param>
+    /// <returns>The adjacent disposal tube.</returns>
+    public EntityUid? NextTubeFor(Entity<DisposalTubeComponent> ent, Direction nextDirection)
     {
         var oppositeDirection = nextDirection.GetOpposite();
 
-        var xform = Transform(target);
+        var xform = Transform(ent);
         if (!TryComp<MapGridComponent>(xform.GridUid, out var grid))
             return null;
 
         var position = xform.Coordinates;
         foreach (var entity in _map.GetInDir(xform.GridUid.Value, grid, position, nextDirection))
         {
-            if (!TryComp(entity, out DisposalTubeComponent? tube) || tube.DisposalTubeType != target.Comp.DisposalTubeType)
+            if (!TryComp(entity, out DisposalTubeComponent? tube) || tube.DisposalTubeType != ent.Comp.DisposalTubeType)
                 continue;
 
-            if (!CanConnect((entity, tube), oppositeDirection) && !CanConnect(target, nextDirection))
+            if (!CanConnect((entity, tube), oppositeDirection) && !CanConnect(ent, nextDirection))
                 continue;
 
             return entity;
@@ -270,44 +226,47 @@ public abstract partial class SharedDisposalTubeSystem : EntitySystem
     }
 
     /// <summary>
-    ///
+    /// Checks whether a disposal tube can make a valid connection in a specified direction.
     /// </summary>
-    /// <param name="ent"></param>
-    /// <param name="direction"></param>
-    /// <returns></returns>
+    /// <param name="ent">The disposal tube.</param>
+    /// <param name="direction">The specified direction.</param>
+    /// <returns>True if a valid conenction can be made.</returns>
     public bool CanConnect(Entity<DisposalTubeComponent> ent, Direction direction)
     {
         if (!Transform(ent).Anchored)
-        {
             return false;
-        }
 
-        var ev = new GetDisposalsConnectableDirectionsEvent();
-        RaiseLocalEvent(ent, ref ev);
-        return ev.Connectable.Contains(direction);
+        var exits = GetTubeConnectableDirections(ent);
+
+        if (exits.Length == 0)
+            return false;
+
+        return exits.Contains(direction);
     }
 
     /// <summary>
-    ///
+    /// Creates a pop up message over a disposal tube, listing its potential exits.
     /// </summary>
-    /// <param name="ent"></param>
-    /// <param name="recipient"></param>
+    /// <param name="ent">The disposal tube.</param>
+    /// <param name="recipient">The recipient of the pop up message.</param>
     public void PopupDirections(Entity<DisposalTubeComponent> ent, EntityUid recipient)
     {
-        var ev = new GetDisposalsConnectableDirectionsEvent();
-        RaiseLocalEvent(ent, ref ev);
-        var directions = string.Join(", ", ev.Connectable);
+        var exits = GetTubeConnectableDirections(ent);
 
+        if (exits.Length == 0)
+            return;
+
+        var directions = string.Join(", ", exits);
         _popups.PopupPredicted(Loc.GetString("disposal-tube-component-popup-directions-text", ("directions", directions)), ent, recipient);
     }
 
     /// <summary>
-    ///
+    /// Tries to insert the contents of a disposal unit into the disposals system.
     /// </summary>
-    /// <param name="ent"></param>
-    /// <param name="unit"></param>
-    /// <param name="tags"></param>
-    /// <returns></returns>
+    /// <param name="ent">The entry point into disposals.</param>
+    /// <param name="unit">The disposals unit.</param>
+    /// <param name="tags">Tags to add to the disposed contents.</param>
+    /// <returns>True if the insertion was successful.</returns>
     public bool TryInsert(Entity<DisposalEntryComponent, DisposalTubeComponent> ent, Entity<DisposalUnitComponent> unit, IEnumerable<string>? tags = default)
     {
         if (unit.Comp.Container.Count == 0)
@@ -325,7 +284,7 @@ public abstract partial class SharedDisposalTubeSystem : EntitySystem
             }
         }
 
-        MergeAtmos((holder, holderComponent), unit.Comp.Air);
+        IntakeAtmos((holder, holderComponent), unit);
 
         if (tags != null)
         {
@@ -336,8 +295,13 @@ public abstract partial class SharedDisposalTubeSystem : EntitySystem
         return _disposableSystem.TryEnterTube((holder, holderComponent), (ent, ent.Comp2));
     }
 
-    protected virtual void MergeAtmos(Entity<DisposalHolderComponent> ent, GasMixture gasMix)
+    /// <summary>
+    /// Intakes the atmos of disposal unit into a disposal holder.
+    /// </summary>
+    /// <param name="ent">The disposal holder.</param>
+    /// /// <param name="ent">The disposal unit.</param>
+    protected virtual void IntakeAtmos(Entity<DisposalHolderComponent> ent, Entity<DisposalUnitComponent> unit)
     {
-
+        // Handled by the server
     }
 }

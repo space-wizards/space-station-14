@@ -316,6 +316,6 @@ public abstract partial class SharedDisposableSystem : EntitySystem
     /// <param name="ent">The disposal holder.</param>
     protected virtual void ExpelAtmos(Entity<DisposalHolderComponent> ent)
     {
-
+        // Handled by the server
     }
 }

@@ -2,7 +2,6 @@ using Content.Shared.Disposal.Tube;
 using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
 using Robust.Shared.Serialization;
-using System.Text.RegularExpressions;
 
 namespace Content.Shared.Disposal.Components;
 
@@ -13,8 +12,6 @@ namespace Content.Shared.Disposal.Components;
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
 public sealed partial class DisposalTaggerComponent : DisposalTubeComponent
 {
-    public static readonly Regex TagRegex = new("^[a-zA-Z0-9 ]*$", RegexOptions.Compiled);
-
     /// <summary>
     /// Tag to apply to passing entities.
     /// </summary>

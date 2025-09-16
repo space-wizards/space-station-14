@@ -2,15 +2,12 @@ using Content.Shared.Disposal.Tube;
 using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
 using Robust.Shared.Serialization;
-using System.Text.RegularExpressions;
 
 namespace Content.Shared.Disposal.Components;
 
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
 public sealed partial class DisposalRouterComponent : DisposalTubeComponent
 {
-    public static readonly Regex TagRegex = new("^[a-zA-Z0-9, ]*$", RegexOptions.Compiled);
-
     /// <summary>
     /// List of tags that will be compared against the tags possessed
     /// by any disposal holders that pass by. If the tag lists overlap,

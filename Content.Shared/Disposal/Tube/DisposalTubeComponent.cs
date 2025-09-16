@@ -3,6 +3,7 @@ using Content.Shared.Disposal.Unit;
 using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
 using Robust.Shared.Serialization;
+using System.Text.RegularExpressions;
 
 namespace Content.Shared.Disposal.Tube;
 
@@ -13,6 +14,8 @@ namespace Content.Shared.Disposal.Tube;
 [Virtual]
 public partial class DisposalTubeComponent : Component
 {
+    public static readonly Regex TagRegex = new("^[a-zA-Z0-9, ]*$", RegexOptions.Compiled);
+
     /// <summary>
     /// Sound played when entities passing through this pipe change direction.
     /// </summary>
@@ -38,7 +41,7 @@ public partial class DisposalTubeComponent : Component
     };
 
     /// <summary>
-    /// Array of directions that entities can exit the disposal tube from.
+    /// Array of directions that entities can potentially exit the disposal tube from.
     /// </summary>
     /// <remarks>
     /// The direction that entities will exit preferentially follows the order the list (from most to least).
@@ -50,6 +53,7 @@ public partial class DisposalTubeComponent : Component
 
     /// <summary>
     /// The smallest angle that entities can turn while traveling through the conduit.
+    /// Only applies when there are more than two potential exits.
     /// </summary>
     [DataField]
     public Angle MinDeltaAngle = 0;
@@ -60,12 +64,6 @@ public partial class DisposalTubeComponent : Component
     /// </summary>
     [DataField]
     public DisposalTubeType DisposalTubeType = DisposalTubeType.Disposals;
-}
-
-[ByRefEvent]
-public record struct GetDisposalsConnectableDirectionsEvent
-{
-    public Direction[] Connectable;
 }
 
 [ByRefEvent]
@@ -85,6 +83,12 @@ public enum DisposalTubeType
 public enum DisposalTubeVisuals
 {
     VisualState
+}
+
+[Serializable, NetSerializable]
+public enum DisposalUiAction
+{
+    Ok
 }
 
 [Serializable, NetSerializable]
