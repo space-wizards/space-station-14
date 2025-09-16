@@ -4,22 +4,18 @@ using Robust.Shared.Console;
 namespace Content.Server.Administration.Commands;
 
 [AdminCommand(AdminFlags.Debug)]
-public sealed class DirtyCommand : IConsoleCommand
+public sealed class DirtyCommand : LocalizedEntityCommands
 {
-    [Dependency] private readonly IEntityManager _entManager = default!;
+    public override string Command => "dirty";
 
-    public string Command => "dirty";
-    public string Description => "Marks all components on an entity as dirty, if not specified, dirties everything";
-    public string Help => $"Usage: {Command} [entityUid]";
-
-    public async void Execute(IConsoleShell shell, string argStr, string[] args)
+    public override async void Execute(IConsoleShell shell, string argStr, string[] args)
     {
         switch (args.Length)
         {
             case 0:
-                foreach (var entity in _entManager.GetEntities())
+                foreach (var entity in EntityManager.GetEntities())
                 {
-                    DirtyAll(_entManager, entity);
+                    DirtyAll(entity);
                 }
                 break;
             case 1:
@@ -28,7 +24,7 @@ public sealed class DirtyCommand : IConsoleCommand
                     shell.WriteError(Loc.GetString("shell-entity-uid-must-be-number"));
                     return;
                 }
-                DirtyAll(_entManager, _entManager.GetEntity(parsedTarget));
+                DirtyAll(EntityManager.GetEntity(parsedTarget));
                 break;
             default:
                 shell.WriteLine(Loc.GetString("shell-wrong-arguments-number"));
@@ -36,11 +32,11 @@ public sealed class DirtyCommand : IConsoleCommand
         }
     }
 
-    private static void DirtyAll(IEntityManager manager, EntityUid entityUid)
+    private void DirtyAll(EntityUid entityUid)
     {
-        foreach (var component in manager.GetNetComponents(entityUid))
+        foreach (var component in EntityManager.GetNetComponents(entityUid))
         {
-            manager.Dirty(entityUid, component.component);
+            EntityManager.Dirty(entityUid, component.component);
         }
     }
 }
