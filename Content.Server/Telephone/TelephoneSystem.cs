@@ -144,28 +144,28 @@ public sealed class TelephoneSystem : SharedTelephoneSystem
             {
                 // Try to play ring tone if ringing
                 case TelephoneState.Ringing:
-                    if (_timing.CurTime > telephone.StateStartTime + TimeSpan.FromSeconds(telephone.RingingTimeout))
+                    if (_timing.CurTime > telephone.StateStartTime + telephone.RingingTimeout)
                         EndTelephoneCalls(entity);
 
                     else if (telephone.RingTone != null &&
                         _timing.CurTime > telephone.NextRingToneTime)
                     {
                         _audio.PlayPvs(telephone.RingTone, uid);
-                        telephone.NextRingToneTime = _timing.CurTime + TimeSpan.FromSeconds(telephone.RingInterval);
+                        telephone.NextRingToneTime = _timing.CurTime + telephone.RingInterval;
                     }
 
                     break;
 
                 // Try to hang up if there has been no recent in-call activity
                 case TelephoneState.InCall:
-                    if (_timing.CurTime > telephone.StateStartTime + TimeSpan.FromSeconds(telephone.IdlingTimeout))
+                    if (_timing.CurTime > telephone.StateStartTime + telephone.IdlingTimeout)
                         EndTelephoneCalls(entity);
 
                     break;
 
                 // Try to terminate if the telephone has finished hanging up
                 case TelephoneState.EndingCall:
-                    if (_timing.CurTime > telephone.StateStartTime + TimeSpan.FromSeconds(telephone.HangingUpTimeout))
+                    if (_timing.CurTime > telephone.StateStartTime + telephone.HangingUpTimeout)
                         TerminateTelephoneCalls(entity);
 
                     break;
@@ -180,12 +180,22 @@ public sealed class TelephoneSystem : SharedTelephoneSystem
         if (IsTelephoneEngaged(source))
             return;
 
+        // Save the user as the last caller
+        var callerInfo = GetNameAndJobOfCallingEntity(user);
+        source.Comp.LastCallerId = (callerInfo.Item1, callerInfo.Item2, null);
+        Dirty(source);
+
+        // Attempt to call all receivers
         foreach (var receiver in receivers)
+        {
             TryCallTelephone(source, receiver, user, options);
+        }
 
         // If no connections could be made, hang up the telephone
         if (!IsTelephoneEngaged(source))
+        {
             EndTelephoneCalls(source);
+        }
     }
 
     public void CallTelephone(Entity<TelephoneComponent> source, Entity<TelephoneComponent> receiver, EntityUid user, TelephoneCallOptions? options = null)
@@ -390,6 +400,7 @@ public sealed class TelephoneSystem : SharedTelephoneSystem
     {
         var oldState = entity.Comp.CurrentState;
 
+        entity.Comp.PreviousState = entity.Comp.CurrentState;
         entity.Comp.CurrentState = newState;
         entity.Comp.StateStartTime = _timing.CurTime;
         Dirty(entity);
