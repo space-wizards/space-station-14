@@ -403,14 +403,14 @@
   components:
   - type: StorageFill
     contents:
+    - id: BoxBodyBag
     - id: JugDexPlusSaline
     - id: JugPunctTranex
+    - id: BeakerSmallBruiz
     - id: JugPyraDerma
     - id: JugTrico
-    - id: BeakerSmallBruiz
     - id: BeakerSmallLace
     - id: PowerCellHigh
+      amount: 2
     - id: Cautery
-    - id: BodyBagFolded
-      amount: 6
 

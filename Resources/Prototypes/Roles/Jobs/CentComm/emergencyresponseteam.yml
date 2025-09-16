@@ -45,25 +45,23 @@
   storage:
     back:
     - WeaponPistolN1984
+    - MagazineMagnum
+    - MagazineMagnum
     - CrowbarRed
     - Binoculars
-    - PinpointerNuclear
-    - TelescopicShield
     - MedkitCombatFilled
     - EmergencyMedipen # End of first line
     - MedkitCombatFilled
-    - PowerCellHigh
-    - PowerCellHigh
-    - PowerCellHigh
-    - PowerCellHigh
+    - PinpointerNuclear
+    - TelescopicShield
     belt:
     - Stunbaton
     - Handcuffs
     - Handcuffs
     - HoloprojectorField
     - PhoneInstrument
-    - MagazineMagnum
-    - MagazineMagnum
+    - PowerCellHigh
+    - PowerCellHigh
 
 - type: startingGear
   parent: ERTLeaderGearEVA
@@ -82,17 +80,17 @@
     - EmergencyMedipen # End of first line
     - MedkitCombatFilled
     - PinpointerNuclear
-    - PhoneInstrument
-    - HoloprojectorField
-    - Handcuffs
+    - GrenadeShrapnel
+    - MagazineRifleIncendiary
+    - MagazineRifleUranium
     belt:
     - Truncheon
     - Handcuffs
-    - GrenadeShrapnel
+    - Handcuffs
+    - HoloprojectorField
+    - PhoneInstrument
     - MagazineRifle
     - MagazineRifle
-    - MagazineRifleIncendiary
-    - MagazineRifleUranium
 
 - type: chameleonOutfit
   id: ERTLeaderChameleonOutfit
@@ -323,6 +321,7 @@
     mask: ClothingMaskGasERT
     eyes: ClothingEyesHudSecurity
     gloves: ClothingHandsGlovesCombat
+    neck: SecurityWhistle
     outerClothing: ClothingOuterHardsuitERTSecurity
     id: ERTSecurityPDA
     ears: ClothingHeadsetAltCentCom
@@ -336,13 +335,11 @@
     - MagazinePistol
     - CrowbarRed
     - Flash
-    - SecurityWhistle
+    - Zipties
     - MedkitCombatFilled
     - EmergencyMedipen
     - Zipties # End of first line
     - HoloprojectorSecurity
-    - Zipties
-    - Zipties
     belt:
     - Stunbaton
     - Handcuffs
@@ -399,7 +396,6 @@
     - GrenadeEMP
     - GrenadeEMP
     - GrenadeEMP
-    - SmokeGrenade
     - GrenadeFlash
     - GrenadeFlash
     - GrenadeFlash
@@ -422,16 +418,11 @@
     back:
     - CrowbarRed
     - EnergyShield
-    - MagazineBoxPistol
-    - MagazineBoxPistol
-    - MagazineBoxRifle
     - SyringeEphedrine
     - ChemistryBottleEphedrine
     - ChemistryBottleEphedrine
     - ChemistryBottleEphedrine
     - MedkitCombatFilled # End of first line
-    - BoxLethalshot
-    - BoxLethalshot
     - Handcuffs
     - Handcuffs
     belt:
@@ -528,27 +519,27 @@
   id: ERTMedicalGearArmed
   equipment:
     suitstorage: WeaponRifleLecter
-    pocket2: WeaponPistolMk58
+    pocket2: WeaponDisabler
   storage:
     back:
+    - WeaponPistolMk58
     - MagazinePistol
     - MagazinePistol
     - CrowbarRed
-    - Hypospray
+    - MedkitCombatFilled
+    - MedkitCombatFilled
+    - ChemistryBottleOmnizine # End of first line
     - DefibrillatorCompact
-    - MedkitCombatFilled
-    - ChemistryBottleEphedrine
-    - ChemistryBottleEphedrine
-    - MedkitCombatFilled
-    - ClothingEyesGlassesChemical
+    - MagazineRifleIncendiary
+    - MagazineRifleUranium
     belt:
     - Truncheon
     - Handcuffs
     - Handcuffs
     - MagazineRifle
     - MagazineRifle
-    - MagazineRifleIncendiary
-    - MagazineRifleUranium
+    - Hypospray
+    - ClothingEyesGlassesChemical
 
 - type: chameleonOutfit
   id: ERTMedicalChameleonOutfit
@@ -613,16 +604,15 @@
     - GrenadeCleanade
     - GrenadeCleanade
     - GrenadeCleanade
-    - WelderIndustrial
     belt:
     - SoapNT
     - MegaSprayBottleSpaceCleaner
+    - MagazinePistol
+    - MagazinePistol
     - Holoprojector
-    - Plunger
-    - Screwdriver
     - LightReplacer
-    - MagazinePistol
-    - MagazinePistol
+    - WireBrush
+    - Plunger
 
 - type: chameleonOutfit
   id: ERTJanitorChameleonOutfit
