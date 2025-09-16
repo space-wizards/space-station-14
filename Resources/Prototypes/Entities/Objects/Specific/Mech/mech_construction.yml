@@ -74,7 +74,7 @@
     sprite: Objects/Specific/Mech/Mechs/Basic/clarke.rsi
   - type: ContainerContainer
     containers:
-      mech-assembly-container: !type:Container
+      part-container: !type:Container
       battery-container: !type:Container
   - type: MechAssemblyVisuals
     statePrefix: clarke
@@ -213,7 +213,7 @@
     sprite: Objects/Specific/Mech/Mechs/Basic/durand.rsi
   - type: ContainerContainer
     containers:
-      mech-assembly-container: !type:Container
+      part-container: !type:Container
       battery-container: !type:Container
   - type: MechAssemblyVisuals
     statePrefix: durand
@@ -365,7 +365,7 @@
     sprite: Objects/Specific/Mech/Mechs/Basic/gygax.rsi
   - type: ContainerContainer
     containers:
-      mech-assembly-container: !type:Container
+      part-container: !type:Container
       battery-container: !type:Container
   - type: MechAssemblyVisuals
     statePrefix: gygax
@@ -620,7 +620,7 @@
     sprite: Objects/Specific/Mech/Mechs/Basic/ripleymkii.rsi
   - type: ContainerContainer
     containers:
-      mech-assembly-container: !type:Container
+      part-container: !type:Container
   - type: MechAssemblyVisuals
     statePrefix: ripleymkii
   - type: PartAssembly
