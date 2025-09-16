@@ -113,13 +113,13 @@ namespace Content.Shared.Localizations
         /// </summary>
         public static string FormatList(List<string> list)
         {
-            var strand = Loc.GetString("items-and");
+            var strand = Loc.GetString("zzzz-fmt-list-and");
             return list.Count switch
             {
                 <= 0 => string.Empty,
                 1 => list[0],
                 2 => $"{list[0]} {strand} {list[1]}",
-                _ => $"{string.Join(", ", list.GetRange(0, list.Count - 1))}, {strand} {list[^1]}"
+                _ => $"{string.Join(",  ", list.GetRange(0, list.Count - 1))}, {strand} {list[^1]}"
             };
         }
 
@@ -128,12 +128,13 @@ namespace Content.Shared.Localizations
         /// </summary>
         public static string FormatListToOr(List<string> list)
         {
+            var stror = Loc.GetString("zzzz-fmt-list-or");
             return list.Count switch
             {
                 <= 0 => string.Empty,
                 1 => list[0],
-                2 => $"{list[0]} or {list[1]}",
-                _ => $"{string.Join(" or ", list)}"
+                2 => $"{list[0]} {stror} {list[1]}",
+                _ => $"{string.Join(" {stror} ", list)}"
             };
         }
 
