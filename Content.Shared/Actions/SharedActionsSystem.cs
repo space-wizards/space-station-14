@@ -319,7 +319,6 @@ public abstract partial class SharedActionsSystem : EntitySystem
         var provider = action.Comp.Container ?? user;
         var validateEv = new ActionValidateEvent()
         {
-            Input = ev,
             User = user,
             Provider = provider
         };
