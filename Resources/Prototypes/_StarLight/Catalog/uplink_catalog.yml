@@ -422,6 +422,11 @@
     Telecrystal: 2
   categories:
   - UplinkDisruption
+  conditions:
+    - !type:StoreWhitelistCondition
+      blacklist:
+        tags:
+          - NukeOpsUplink
 
 - type: listing
   id: UplinkGlueGrenade
@@ -435,3 +440,8 @@
     Telecrystal: 2
   categories:
   - UplinkDisruption
+  conditions:
+    - !type:StoreWhitelistCondition
+      blacklist:
+        tags:
+          - NukeOpsUplink
