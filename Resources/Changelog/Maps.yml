@@ -637,4 +637,12 @@
   id: 76
   time: '2025-08-30T19:31:36.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/39969
+- author: Southbridge
+  changes:
+  - message: On the Cryptid, Flatline, and Cruiser event shuttles, replaced some static
+      spawns with random ones.
+    type: Tweak
+  id: 77
+  time: '2025-09-01T23:13:52.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/40059
 Order: 1
