@@ -45,7 +45,7 @@
     # This allows Vox to take their mask off temporarily to eat something without needing a trip to medbay afterwards.
     allowedStates:
     - Alive
-    damageCap: 20
+    damageCap: 25
     damage:
       types:
         Heat: -0.07
