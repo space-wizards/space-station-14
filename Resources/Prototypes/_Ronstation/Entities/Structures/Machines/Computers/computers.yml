@@ -2,6 +2,7 @@
 - type: entity
   parent: ComputerComms
   id: OperationWhiskeyComputerComms
+  suffix: Admeme, OpWhiskey
   name: operation whiskey communications computer
   description: A computer capable of remotely hacking into the station's communications systems. Using this to make an announcement will alert the station to your presence.
   components:

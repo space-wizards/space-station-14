@@ -2,6 +2,7 @@
 - type: entity
   parent: [ BaseComputerCircuitboard, BaseWhiskeyOperatorContraband ]
   id: OperationWhiskeyCommsComputerCircuitboard
+  suffix: Admeme, OpWhiskey
   name: operation whiskey communications computer board
   description: A computer printed circuit board for a operation whiskey communications console.
   components:
