@@ -344,7 +344,7 @@
   - type: StorageFill
     contents:
     - id: EmergencyMedipen
-    - id: FoodBreadBaguette
+    - id: FoodSnackNutribrick #Never 4 get. the day wizden took mime's baugettes
     - id: DrinkWaterBottleFull
     - id: Flare
   - type: Sprite
