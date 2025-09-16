@@ -1,3 +1,72 @@
+# Station Roles
+- type: jobIcon
+  parent: JobIcon
+  id: JobIconSeniorPhysician
+  icon:
+    sprite: /Textures/Interface/Misc/job_icons.rsi
+    state: SeniorPhysician
+  allowSelection: false
+
+- type: jobIcon
+  parent: JobIcon
+  id: JobIconSeniorOfficer
+  icon:
+    sprite: /Textures/Interface/Misc/job_icons.rsi
+    state: SeniorOfficer
+  allowSelection: false
+
+- type: jobIcon
+  parent: JobIcon
+  id: JobIconSeniorEngineer
+  icon:
+    sprite: /Textures/Interface/Misc/job_icons.rsi
+    state: SeniorEngineer
+  allowSelection: false
+
+- type: jobIcon
+  parent: JobIcon
+  id: JobIconSeniorResearcher
+  icon:
+    sprite: /Textures/Interface/Misc/job_icons.rsi
+    state: SeniorResearcher
+  allowSelection: false
+
+- type: jobIcon
+  parent: JobIcon
+  id: JobIconBlueShieldOfficer
+  icon:
+    sprite: /Textures/Interface/Misc/job_icons.rsi
+    state: BlueShieldOfficer
+
+- type: jobIcon
+  parent: JobIcon
+  id: JobIconCoroner
+  icon:
+    sprite: /Textures/Interface/Misc/job_icons.rsi
+    state: Coroner
+
+- type: jobIcon
+  parent: JobIcon
+  id: JobIconSecurityPilot
+  icon:
+    sprite: /Textures/Interface/Misc/job_icons.rsi
+    state: SecurityPilot
+
+- type: jobIcon
+  parent: JobIcon
+  id: JobIconSeniorSalvageSpecialist
+  icon:
+    sprite: /Textures/Interface/Misc/job_icons.rsi
+    state: SeniorCargo
+
+- type: jobIcon
+  parent: JobIcon
+  id: JobIconSeniorAdministrator
+  icon:
+    sprite: /Textures/Interface/Misc/job_icons.rsi
+    state: SeniorService
+
+# Taipan 
 - type: jobIcon
   parent: JobIcon
   id: JobIconSyndicateAtmos
@@ -61,3 +130,32 @@
     sprite: /Textures/_DeadSpace/Interface/Misc/job_icons.rsi
     state: security_officer
   jobName: job-name-taipan-telecommunications-officer
+
+# CentComm & ERT
+- type: jobIcon
+  parent: JobIcon
+  id: JobIconNanotrasenRed
+  icon:
+    sprite: /Textures/Interface/Misc/job_icons.rsi
+    state: NanotrasenRed
+
+- type: jobIcon
+  parent: JobIcon
+  id: JobIconMagistrat
+  icon:
+    sprite: /Textures/Interface/Misc/job_icons.rsi
+    state: Magistrat
+
+- type: jobIcon
+  parent: JobIcon
+  id: JobIconERT
+  icon:
+    sprite: /Textures/Interface/Misc/job_icons.rsi
+    state: ERT
+
+- type: jobIcon
+  parent: JobIcon
+  id: JobIconERTLeader
+  icon:
+    sprite: /Textures/Interface/Misc/job_icons.rsi
+    state: ERTLeader
