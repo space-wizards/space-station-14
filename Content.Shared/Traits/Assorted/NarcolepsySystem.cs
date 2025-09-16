@@ -1,4 +1,5 @@
 using Content.Shared.Bed.Sleep;
+using Content.Shared.Random.Helpers;
 using Content.Shared.StatusEffectNew;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
@@ -19,10 +20,10 @@ public sealed class NarcolepsySystem : EntitySystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<NarcolepsyComponent, ComponentStartup>(OnComponentStartup);
+        SubscribeLocalEvent<NarcolepsyComponent, MapInitEvent>(OnMapInit);
     }
 
-    private void OnComponentStartup(Entity<NarcolepsyComponent> ent, ref ComponentStartup args)
+    private void OnMapInit(Entity<NarcolepsyComponent> ent, ref MapInitEvent args)
     {
         ent.Comp.NextIncidentTime = _timing.CurTime + _random.Next(ent.Comp.MinTimeBetweenIncidents, ent.Comp.MaxTimeBetweenIncidents);
         DirtyField(ent, ent.Comp, nameof(ent.Comp.NextIncidentTime));
@@ -51,11 +52,15 @@ public sealed class NarcolepsySystem : EntitySystem
             if (narcolepsy.NextIncidentTime > _timing.CurTime)
                 continue;
 
-            var duration = _random.Next(narcolepsy.MinDurationOfIncident, narcolepsy.MaxDurationOfIncident);
+            // TODO: Replace with RandomPredicted once the engine PR is merged
+            var seed = SharedRandomExtensions.HashCodeCombine(new() { (int)_timing.CurTick.Value, GetNetEntity(uid).Id });
+            var rand = new System.Random(seed);
+
+            var duration = narcolepsy.MinDurationOfIncident + (narcolepsy.MaxDurationOfIncident - narcolepsy.MinDurationOfIncident) * rand.NextDouble();
 
             // Set the new time.
             narcolepsy.NextIncidentTime +=
-                _random.Next(narcolepsy.MinTimeBetweenIncidents, narcolepsy.MaxTimeBetweenIncidents) + duration;
+                narcolepsy.MinTimeBetweenIncidents + (narcolepsy.MaxTimeBetweenIncidents - narcolepsy.MinTimeBetweenIncidents) * rand.NextDouble() + duration;
             DirtyField(uid, narcolepsy, nameof(narcolepsy.NextIncidentTime));
 
             _statusEffects.TryAddStatusEffectDuration(uid, SleepingSystem.StatusEffectForcedSleeping, duration);
