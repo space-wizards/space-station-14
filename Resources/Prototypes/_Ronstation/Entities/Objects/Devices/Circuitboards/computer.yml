@@ -1,0 +1,11 @@
+# Operation Whiskey admeme
+- type: entity
+  parent: [ BaseComputerCircuitboard, BaseWhiskeyOperatorContraband ]
+  id: OperationWhiskeyCommsComputerCircuitboard
+  name: operation whiskey communications computer board
+  description: A computer printed circuit board for a operation whiskey communications console.
+  components:
+  - type: Sprite
+    state: cpu_whiskey
+  - type: ComputerBoard
+    prototype: OperationWhiskeyComputerComms
