@@ -5,19 +5,30 @@
   id: BaseMobVulpkanin
   name: Urist McBark
   components:
+  #Starlight
+  - type: LanguageKnowledge
+    speaks:
+    - GalacticCommon
+    - Canilunzt
+    understands:
+    - GalacticCommon
+    - Canilunzt
+    - Fox # "vaguely canidae"
+    - Dog # "vaguely canidae"
+  #Starlight
   - type: Hunger
   - type: Thirst
   - type: MessyDrinker
     spillChance: 0.33
   - type: Icon
-    sprite: Mobs/Species/Vulpkanin/parts.rsi
+    sprite: _Starlight/Mobs/Species/Vulpkanin/parts.rsi #Starlight
     state: full
   - type: Body
     prototype: Vulpkanin
   - type: Speech
     speechSounds: Vulpkanin
     speechVerb: Vulpkanin
-    allowedEmotes: [ 'Bark', 'Snarl', 'Whine', 'Howl', 'Growl' ]
+    allowedEmotes: [ 'Bark', 'Snarl', 'Whine', 'Howl', 'Growl', 'Yip' ] #Starlight Yip
   - type: Vocal
     sounds:
       Male: MaleVulpkanin
