@@ -37,6 +37,14 @@
   components:
   - type: Metabolizer
     metabolizerTypes: [Vox]
+  - type: OrganDamage
+    damage:
+      types:
+        Poison: 280
+        Cellular: 40
+        Bloodloss: 40
+        Caustic: 40
+        Radiation: 60
 
 - type: entity
   parent: OrganHumanHeart
