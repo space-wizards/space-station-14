@@ -34,6 +34,7 @@
   - type: StorageFill
     contents:
     - id: StationAiCoreElectronics
+    - id: Intellicard
     - id: SheetPlasteel1
       amount: 4
     - id: CableApcStack1
