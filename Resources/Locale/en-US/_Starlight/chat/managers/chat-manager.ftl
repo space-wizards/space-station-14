@@ -4,10 +4,6 @@ chat-speech-verb-felionoid-2 = meows
 chat-speech-verb-felionoid-3 = hisses
 chat-speech-verb-felionoid-4 = yowls
 chat-speech-verb-name-vulpkanin = Vulpkanin
-chat-speech-verb-vulpkanin-1 = rawrs
-chat-speech-verb-vulpkanin-2 = barks
-chat-speech-verb-vulpkanin-3 = rurs
-chat-speech-verb-vulpkanin-4 = yaps
 
 chat-speech-verb-marish = mars
 

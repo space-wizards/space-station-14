@@ -11,7 +11,7 @@
     randomRotation: true
     maxDecals: 3
     prob: 0.5
-    zIndex: 1
+    zIndex: 5
     color: '#9900007F'
     cleanable: true
     deleteSpawnerAfterSpawn: true
@@ -79,6 +79,7 @@
     - toilet
     - toolbox
     - uboa
+    - ussp #SL revs
     radius: 0.5
     randomRotation: true
     maxDecals: 1

@@ -37,6 +37,42 @@
   - type: SpawnOnCollide
     prototype: SpiderWeb
 
+# Terror spiders
+
+- type: entity
+  id: ActionEvolve
+  name: Evolve
+  description: evolve into a new entity.
+  components:
+  - type: Action
+    useDelay: 3
+    itemIconStyle: BigAction
+    sound: /Audio/Effects/pop.ogg
+    icon:
+      sprite: _Starlight/Interface/Actions/actions_spider.rsi
+      state: evolve
+  - type: InstantAction
+    event: !type:EvolveEvent
+
+- type: entity
+  id: ActionSpiderEMPScream
+  name: EMP Scream
+  description: Emit an EMP scream that disables electronics in a radius.
+  components:
+  - type: Action
+    useDelay: 3
+    itemIconStyle: BigAction
+    sound: /Audio/Effects/pop.ogg
+    icon:
+      sprite:  _Starlight/Interface/Actions/actions_spider.rsi
+      state: spiderscream
+  - type: LimitedCharges
+    maxCharges: 2
+  - type: AutoRecharge
+    rechargeDuration: 60
+  - type: InstantAction
+    event: !type:EMPScreamEvent
+
 - type: entity
   id: ActionEggInjection
   name: Egg injection
