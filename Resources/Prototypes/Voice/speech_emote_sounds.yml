@@ -633,7 +633,7 @@
     Whine:
       collection: Whine #Starlight whine
     Howl:
-      collection: /Audio/_Starlight/Effects/howl.ogg #Starlight howl
+      path: /Audio/_Starlight/Effects/howl.ogg #Starlight howl
     Yip:
       path: /Audio/_Starlight/Effects/yip.ogg #Starlight Yip
 
@@ -663,7 +663,7 @@
     Whine:
       collection: Whine #Starlight whine
     Howl:
-      collection: /Audio/_Starlight/Effects/howl.ogg #Starlight howl
+      path: /Audio/_Starlight/Effects/howl.ogg #Starlight howl
     Yip:
       path: /Audio/_Starlight/Effects/yip.ogg #Starlight Yip
 
