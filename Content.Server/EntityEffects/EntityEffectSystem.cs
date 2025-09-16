@@ -1,6 +1,5 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
-using Content.Server.Atmos.Components;
 using Content.Server.Atmos.EntitySystems;
 using Content.Server.Body.Components;
 using Content.Server.Body.Systems;
@@ -22,6 +21,8 @@ using Content.Server.Temperature.Systems;
 using Content.Server.Traits.Assorted;
 using Content.Server.Zombies;
 using Content.Shared.Atmos;
+using Content.Shared.Atmos.Components;
+using Content.Shared.Body.Components;
 using Content.Shared.Coordinates.Helpers;
 using Content.Shared.EntityEffects.EffectConditions;
 using Content.Shared.EntityEffects.Effects.PlantMetabolism;
@@ -47,6 +48,8 @@ namespace Content.Server.EntityEffects;
 
 public sealed class EntityEffectSystem : EntitySystem
 {
+    private static readonly ProtoId<WeightedRandomFillSolutionPrototype> RandomPickBotanyReagent = "RandomPickBotanyReagent";
+
     [Dependency] private readonly AtmosphereSystem _atmosphere = default!;
     [Dependency] private readonly BloodstreamSystem _bloodstream = default!;
     [Dependency] private readonly ChatSystem _chat = default!;
@@ -130,7 +133,7 @@ public sealed class EntityEffectSystem : EntitySystem
         args.Result = false;
         if (TryComp(args.Args.TargetEntity, out TemperatureComponent? temp))
         {
-            if (temp.CurrentTemperature > args.Condition.Min && temp.CurrentTemperature < args.Condition.Max)
+            if (temp.CurrentTemperature >= args.Condition.Min && temp.CurrentTemperature <= args.Condition.Max)
                 args.Result = true;
         }
     }
@@ -558,11 +561,11 @@ public sealed class EntityEffectSystem : EntitySystem
                 return;
 
             cleanseRate *= reagentArgs.Scale.Float();
-            _bloodstream.FlushChemicals(args.Args.TargetEntity, reagentArgs.Reagent.ID, cleanseRate);
+            _bloodstream.FlushChemicals(args.Args.TargetEntity, reagentArgs.Reagent, cleanseRate);
         }
         else
         {
-            _bloodstream.FlushChemicals(args.Args.TargetEntity, "", cleanseRate);
+            _bloodstream.FlushChemicals(args.Args.TargetEntity, null, cleanseRate);
         }
     }
 
@@ -780,7 +783,7 @@ public sealed class EntityEffectSystem : EntitySystem
                 amt *= reagentArgs.Scale.Float();
             }
 
-            _bloodstream.TryModifyBleedAmount(args.Args.TargetEntity, amt, blood);
+            _bloodstream.TryModifyBleedAmount((args.Args.TargetEntity, blood), amt);
         }
     }
 
@@ -796,7 +799,7 @@ public sealed class EntityEffectSystem : EntitySystem
                 amt *= reagentArgs.Scale;
             }
 
-            _bloodstream.TryModifyBloodLevel(args.Args.TargetEntity, amt, blood);
+            _bloodstream.TryModifyBloodLevel((args.Args.TargetEntity, blood), amt);
         }
     }
 
@@ -853,7 +856,7 @@ public sealed class EntityEffectSystem : EntitySystem
             return;
 
         var chemicals = plantholder.Seed.Chemicals;
-        var randomChems = _protoManager.Index<WeightedRandomFillSolutionPrototype>("RandomPickBotanyReagent").Fills;
+        var randomChems = _protoManager.Index(RandomPickBotanyReagent).Fills;
 
         // Add a random amount of a random chemical to this set of chemicals
         if (randomChems != null)
@@ -886,7 +889,7 @@ public sealed class EntityEffectSystem : EntitySystem
         if (plantholder.Seed == null)
             return;
 
-        var gasses = plantholder.Seed.ExudeGasses;
+        var gasses = plantholder.Seed.ConsumeGasses;
 
         // Add a random amount of a random gas to this gas dictionary
         float amount = _random.NextFloat(args.Effect.MinValue, args.Effect.MaxValue);
@@ -908,7 +911,7 @@ public sealed class EntityEffectSystem : EntitySystem
         if (plantholder.Seed == null)
             return;
 
-        var gasses = plantholder.Seed.ConsumeGasses;
+        var gasses = plantholder.Seed.ExudeGasses;
 
         // Add a random amount of a random gas to this gas dictionary
         float amount = _random.NextFloat(args.Effect.MinValue, args.Effect.MaxValue);
@@ -946,9 +949,7 @@ public sealed class EntityEffectSystem : EntitySystem
             return;
 
         var targetProto = _random.Pick(plantholder.Seed.MutationPrototypes);
-        _protoManager.TryIndex(targetProto, out SeedPrototype? protoSeed);
-
-        if (protoSeed == null)
+        if (!_protoManager.TryIndex(targetProto, out SeedPrototype? protoSeed))
         {
             Log.Error($"Seed prototype could not be found: {targetProto}!");
             return;

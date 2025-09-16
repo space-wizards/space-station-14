@@ -9,6 +9,7 @@ credits-window-contribute-button = Contribute!
 credits-window-contributors-section-title = Space Station 14 Contributors
 credits-window-codebases-section-title = Space Station 13 Codebases
 credits-window-original-remake-team-section-title = Original Space Station 13 Remake Team
+credits-window-immortals-title = In Memoriam
 credits-window-special-thanks-section-title = Special Thanks
 
 credits-window-attributions-directory = [color=white]Directory:[/color] {$directory}

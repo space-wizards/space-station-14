@@ -5,6 +5,7 @@ using Content.Shared.Database;
 using Content.Shared.Inventory;
 using Content.Shared.Popups;
 using Content.Shared.Storage;
+using Content.Shared.Trigger;
 using Robust.Server.Containers;
 
 namespace Content.Server.VoiceTrigger;
@@ -40,7 +41,7 @@ public sealed class StorageVoiceControlSystem : EntitySystem
             return;
 
         // If the player has something in their hands, try to insert it into the storage
-        if (_hands.TryGetActiveItem(ent.Owner, out var activeItem))
+        if (_hands.TryGetActiveItem(args.Source, out var activeItem))
         {
             // Disallow insertion and provide a reason why if the person decides to insert the item into itself
             if (ent.Owner.Equals(activeItem.Value))
