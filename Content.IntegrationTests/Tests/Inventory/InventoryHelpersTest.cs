@@ -4,7 +4,7 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
 
-namespace Content.IntegrationTests.Tests
+namespace Content.IntegrationTests.Tests.Inventory
 {
     [TestFixture]
     public sealed class InventoryHelpersTest

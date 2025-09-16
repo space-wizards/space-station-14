@@ -4,7 +4,7 @@ using Content.Shared.Inventory;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 
-namespace Content.IntegrationTests.Tests
+namespace Content.IntegrationTests.Tests.Inventory
 {
     [TestFixture]
     public sealed class DeleteInventoryTest
