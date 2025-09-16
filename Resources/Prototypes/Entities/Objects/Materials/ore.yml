@@ -253,21 +253,23 @@
   - type: PhysicalComposition
     materialComposition:
       RawUranium: 300
-  - type: PointLight
-    radius: 1.2
-    energy: 0.8
-    castShadows: false
-    color: "#9be792"
+#  - type: PointLight # DS14-uranium-rework
+#    radius: 1.2
+#    energy: 0.8
+#    castShadows: false
+#    color: "#9be792"
   - type: Extractable
     grindableSolutionName: uraniumore
   - type: SolutionContainerManager
     solutions:
       uraniumore:
         reagents:
-        - ReagentId: Uranium
-          Quantity: 8
-        - ReagentId: Radium
-          Quantity: 2
+        - ReagentId: RawUranium
+          Quantity: 5
+#        - ReagentId: Uranium # DS14-uranium-rework
+#          Quantity: 8
+#        - ReagentId: Radium
+#          Quantity: 2
         canReact: false
   - type: Item
     heldPrefix: uranium

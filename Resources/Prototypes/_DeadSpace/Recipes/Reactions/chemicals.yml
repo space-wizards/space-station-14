@@ -1,0 +1,34 @@
+- type: reaction
+  id: YellowCake
+  reactants:
+    RawUranium:
+      amount: 2
+    SulfuricAcid:
+      amount: 1
+  products:
+    YellowCake: 2
+
+- type: reaction
+  id: uraniumhexafluoride
+  reactants:
+    YellowCake:
+      amount: 3
+    Fluorine:
+      amount: 1
+  products:
+    uraniumhexafluoride: 3
+
+- type: reaction
+  id: uraniumhexafluorideBreakdown
+  source: true
+  requiredMixerCategories:
+  - Centrifuge
+  reactants:
+    uraniumhexafluoride:
+      amount: 5
+  products:
+    Fluorine: 1
+    Sulfur: 1
+  effects:
+    - !type:CreateEntityReactionEffect
+      entity: SheetUranium1

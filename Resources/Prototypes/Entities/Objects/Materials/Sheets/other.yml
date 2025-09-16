@@ -236,6 +236,8 @@
         - ReagentId: Radium
           Quantity: 2
         canReact: false
+  - type: RadiationSource # DS14-uranium-rework
+    intensity: 0.1
 
 - type: entity
   parent: SheetUranium
