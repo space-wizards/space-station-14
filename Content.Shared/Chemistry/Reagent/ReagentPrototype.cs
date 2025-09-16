@@ -6,10 +6,12 @@ using Content.Shared.Administration.Logs;
 using Content.Shared.Body.Prototypes;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Reaction;
+using Content.Shared.Contraband;
 using Content.Shared.EntityEffects;
 using Content.Shared.Database;
 using Content.Shared.Nutrition;
 using Content.Shared.Prototypes;
+using Content.Shared.Roles;
 using Content.Shared.Slippery;
 using Robust.Shared.Audio;
 using Robust.Shared.Map;
@@ -56,6 +58,25 @@ namespace Content.Shared.Chemistry.Reagent
 
         [ViewVariables(VVAccess.ReadOnly)]
         public string LocalizedPhysicalDescription => Loc.GetString(PhysicalDescription);
+
+        /// <summary>
+        ///     The degree of contraband severity this reagent is considered to have.
+        ///     If AllowedDepartments or AllowedJobs are set, they take precedent and override this value.
+        /// </summary>
+        [DataField]
+        public ProtoId<ContrabandSeverityPrototype>? ContrabandSeverity = null;
+
+        /// <summary>
+        ///     Which departments is this reagent restricted to, if any?
+        /// </summary>
+        [DataField]
+        public HashSet<ProtoId<DepartmentPrototype>> AllowedDepartments = new();
+
+        /// <summary>
+        ///     Which jobs is this reagent restricted to, if any?
+        /// </summary>
+        [DataField]
+        public HashSet<ProtoId<JobPrototype>> AllowedJobs = new();
 
         /// <summary>
         ///     Is this reagent recognizable to the average spaceman (water, welding fuel, ketchup, etc)?

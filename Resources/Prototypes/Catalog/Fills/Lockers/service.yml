@@ -17,6 +17,9 @@
     - id: DrinkShaker
     - id: ClothingEyesHudBeer
     - id: HandLabeler
+    - id: DrinkBeerBottleFull
+      amount: !type:BinomialNumberSelector
+        trials: 3
     - id: BoxBeanbag
     - id: RagItem
       amount: 2
