@@ -10,6 +10,7 @@ using Robust.Shared.Map;
 using Robust.Shared.Player;
 using System.Linq;
 using System.Numerics;
+using Robust.Shared.Timing;
 
 namespace Content.Server.Weapons.Melee;
 
@@ -47,7 +48,7 @@ public sealed class MeleeWeaponSystem : SharedMeleeWeaponSystem
         float range,
         MapId mapId,
         EntityUid ignore,
-        EntitySessionEventArgs? args)
+        GameTick? tick)
     {
         // Originally the client didn't predict damage effects so you'd intuit some level of how far
         // in the future you'd need to predict, but then there was a lot of complaining like "why would you add artifical delay" as if ping is a choice.

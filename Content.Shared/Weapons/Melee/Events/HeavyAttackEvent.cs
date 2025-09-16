@@ -1,5 +1,6 @@
 using Robust.Shared.Map;
 using Robust.Shared.Serialization;
+using Robust.Shared.Timing;
 
 namespace Content.Shared.Weapons.Melee.Events;
 
@@ -16,7 +17,7 @@ public sealed class HeavyAttackEvent : AttackEvent
     /// </summary>
     public List<NetEntity> Entities;
 
-    public HeavyAttackEvent(NetEntity weapon, List<NetEntity> entities, NetCoordinates coordinates) : base(coordinates)
+    public HeavyAttackEvent(NetEntity weapon, List<NetEntity> entities, NetCoordinates coordinates, GameTick? tick) : base(coordinates, tick)
     {
         Weapon = weapon;
         Entities = entities;

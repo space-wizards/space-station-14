@@ -88,7 +88,7 @@ public sealed class LagCompensationTest : MovementTest
         Assert.That(Delta(), Is.GreaterThan(1 + tickDelta));
         Assert.That(ClientDelta(), Is.LessThan(1));
 
-        // The client will attempt to kick the roomba, and the server should permit the boop, even though it is
+        // The client will attempt to kick the roomba, and the server should permit the kick, even though it is
         // technically out of range
         await Client.WaitPost(() => Client.System<RoombaController>().Kick(CTarget));
         Assert.That(cComp.Kicked, Is.EqualTo(CPlayer));
@@ -155,7 +155,7 @@ public sealed partial class RoombaController : VirtualController
         if (GetEntity(msg.Target) is not { Valid:true } target)
             return;
 
-        var lagCoords = _lag.GetCoordinates(target, args.LastAppliedTick);
+        var lagCoords = _lag.GetCoordinates(target, msg.Tick);
 
         var userPos = TransformSystem.GetWorldPosition(user);
         var targetPos = TransformSystem.ToWorldPosition(lagCoords);
