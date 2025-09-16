@@ -4,8 +4,8 @@ meta:
   engineVersion: 266.0.0
   forkId: ""
   forkVersion: ""
-  time: 09/15/2025 21:44:00
-  entityCount: 19097
+  time: 09/16/2025 14:32:40
+  entityCount: 19105
 maps:
 - 1
 grids:
@@ -6157,7 +6157,6 @@ entities:
       - 10829
       - 8179
       - 8180
-      - 8175
       - 8174
       - 8173
     - type: Fixtures
@@ -6781,7 +6780,6 @@ entities:
       parent: 2
     - type: DeviceList
       devices:
-      - 8333
       - 8093
       - 8094
       - 10858
@@ -7224,7 +7222,6 @@ entities:
       - 8177
       - 8174
       - 8173
-      - 8175
     - type: Fixtures
       fixtures: {}
   - uid: 85
@@ -8748,7 +8745,7 @@ entities:
       pos: 2.5,-6.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -327498.8
+      secondsUntilStateChange: -327803.88
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -9160,7 +9157,7 @@ entities:
       pos: -22.5,7.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -15166.483
+      secondsUntilStateChange: -15471.558
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -9173,7 +9170,7 @@ entities:
       pos: -22.5,8.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -286925.84
+      secondsUntilStateChange: -287230.9
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -9244,7 +9241,7 @@ entities:
       pos: 36.5,-61.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -172141.42
+      secondsUntilStateChange: -172446.5
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -11155,6 +11152,18 @@ entities:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 47.5,13.5
+      parent: 2
+  - uid: 18716
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: 11.5,-70.5
+      parent: 2
+  - uid: 19098
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: 65.5,1.5
       parent: 2
 - proto: AtmosFixBlockerMarker
   entities:
@@ -23580,6 +23589,41 @@ entities:
     components:
     - type: Transform
       pos: 76.5,-12.5
+      parent: 2
+  - uid: 19099
+    components:
+    - type: Transform
+      pos: 59.5,0.5
+      parent: 2
+  - uid: 19100
+    components:
+    - type: Transform
+      pos: 60.5,0.5
+      parent: 2
+  - uid: 19101
+    components:
+    - type: Transform
+      pos: 61.5,0.5
+      parent: 2
+  - uid: 19102
+    components:
+    - type: Transform
+      pos: 62.5,0.5
+      parent: 2
+  - uid: 19103
+    components:
+    - type: Transform
+      pos: 63.5,0.5
+      parent: 2
+  - uid: 19104
+    components:
+    - type: Transform
+      pos: 64.5,0.5
+      parent: 2
+  - uid: 19105
+    components:
+    - type: Transform
+      pos: 64.5,1.5
       parent: 2
 - proto: CableApcStack
   entities:
@@ -51161,7 +51205,6 @@ entities:
       - 8042
       - 8038
       - 8332
-      - 8333
       - 8334
       - 8054
       - 8050
@@ -51330,7 +51373,6 @@ entities:
       - 8242
       - 8173
       - 8174
-      - 8175
       - 8176
       - 8029
     - type: Fixtures
@@ -51403,7 +51445,6 @@ entities:
       - 8237
       - 8173
       - 8174
-      - 8175
       - 8176
       - 8180
       - 8179
@@ -53394,17 +53435,10 @@ entities:
     - type: Transform
       pos: 54.5,-27.5
       parent: 2
-    - type: Door
-      secondsUntilStateChange: -9436.189
-      state: Closing
     - type: DeviceNetwork
       deviceLists:
       - 17
-      - 84
-      - 7988
       - 7989
-      - 18
-      - 7982
   - uid: 8176
     components:
     - type: Transform
@@ -53860,13 +53894,6 @@ entities:
     - type: Transform
       pos: 70.5,-16.5
       parent: 2
-      deviceLists:
-      - 86
-      - 85
-      - 15608
-      - 7985
-      - 19
-      - 20
   - uid: 8219
     components:
     - type: Transform
@@ -54772,15 +54799,10 @@ entities:
     - type: Transform
       pos: -7.5,-30.5
       parent: 2
-    - type: Door
-      secondsUntilStateChange: -2355.0645
-      state: Closing
     - type: DeviceNetwork
       deviceLists:
-      - 98
-      - 56
       - 7971
-      - 7973
+      - 98
   - uid: 8334
     components:
     - type: Transform
@@ -54858,7 +54880,7 @@ entities:
       pos: 9.5,-48.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -2608.7976
+      secondsUntilStateChange: -2913.8713
       state: Closing
     - type: Firelock
       emergencyCloseCooldown: 2974.9303604
@@ -54943,8 +54965,6 @@ entities:
     - type: Transform
       pos: 72.5,-10.5
       parent: 2
-      deviceLists:
-      - 15608
 - proto: Fireplace
   entities:
   - uid: 8347
@@ -76473,11 +76493,6 @@ entities:
     - type: Transform
       pos: 4.5,-10.5
       parent: 2
-  - uid: 11081
-    components:
-    - type: Transform
-      pos: 3.5,-10.5
-      parent: 2
   - uid: 11082
     components:
     - type: Transform
@@ -83751,7 +83766,7 @@ entities:
       pos: 7.5,9.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -307205.22
+      secondsUntilStateChange: -307510.28
       state: Opening
   - uid: 12499
     components:
@@ -83759,7 +83774,7 @@ entities:
       pos: 7.5,10.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -307204.72
+      secondsUntilStateChange: -307509.78
       state: Opening
 - proto: HospitalCurtainsOpen
   entities:
@@ -83769,7 +83784,7 @@ entities:
       pos: -6.5,-4.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -320469.56
+      secondsUntilStateChange: -320774.62
       state: Closing
   - uid: 12501
     components:
@@ -89364,8 +89379,8 @@ entities:
   - uid: 13268
     components:
     - type: Transform
-      rot: 1.5707963267948966 rad
-      pos: 52.5,-27.5
+      rot: -1.5707963267948966 rad
+      pos: 54.5,-28.5
       parent: 2
   - uid: 13269
     components:
@@ -121376,6 +121391,13 @@ entities:
       - - ResearchDirector
 - proto: Window
   entities:
+  - uid: 11081
+    components:
+    - type: Transform
+      pos: 3.5,-10.5
+      parent: 2
+    - type: DeltaPressure
+      gridUid: 2
   - uid: 18694
     components:
     - type: Transform
@@ -121527,13 +121549,6 @@ entities:
     components:
     - type: Transform
       pos: 33.5,-9.5
-      parent: 2
-    - type: DeltaPressure
-      gridUid: 2
-  - uid: 18716
-    components:
-    - type: Transform
-      pos: 3.5,-10.5
       parent: 2
     - type: DeltaPressure
       gridUid: 2
