@@ -242,7 +242,9 @@
     - Slime
     - AmmoniaBlood
     - ZombieBlood
-    - Sap
+    - Sap # Starlight-start
+    - AvaliBlood
+    - ResomiBlood # Starlight-end
 
 - type: xenoArchTrigger
   id: TriggerThrow
