@@ -54,8 +54,12 @@
     heatDamage:
       types:
         Heat: 2.5 # Per second, scales with temperature & other constants
-  # - type: Wagging TODO: Add back once we have animated tails again. Were removed due to the sprite rework, causing all of them to not fit anymore.
-  #   action: ActionToggleWaggingVulpkanin
+    # Starlight start
+    # - type: Wagging TODO: Add back once we have animated tails again. Were removed due to the sprite rework, causing all of them to not fit anymore.
+    #   action: ActionToggleWaggingVulpkanin
+  - type: Wagging
+  - type: GrowlingAccent
+    # Starlight end
   - type: TemperatureProtection
     heatingCoefficient: 1.2
     coolingCoefficient: 0.3
@@ -128,60 +132,38 @@
     - HeadTop
     - HeadSide
     - FacialHair
-    markingsDisplacement:
-      Hair:
-        sizeMaps:
-          32:
-            sprite: Mobs/Species/Vulpkanin/displacement.rsi
-            state: hair
+  # Starlight start
+    # our vulpkanin hair follows normal human layout
+    #markingsDisplacement:
+    #  Hair:
+    #    sizeMaps:
+    #      32:
+    #        sprite: Mobs/Species/Vulpkanin/displacement.rsi
+    #        state: hair
   - type: Inventory
     speciesId: vulpkanin
-    displacements:
-      jumpsuit:
-        sizeMaps:
-          32:
-            sprite: Mobs/Species/Vulpkanin/displacement.rsi
-            state: jumpsuit
-      back:
-        sizeMaps:
-          32:
-            sprite: Mobs/Species/Vulpkanin/displacement.rsi
-            state: back
-      outerClothing:
-        sizeMaps:
-          32:
-            sprite: Mobs/Species/Vulpkanin/displacement.rsi
-            state: outerwear
-      gloves:
-        sizeMaps:
-          32:
-            sprite: Mobs/Species/Vulpkanin/displacement.rsi
-            state: hand
-      shoes:
-        sizeMaps:
-          32:
-            sprite: Mobs/Species/Vulpkanin/displacement.rsi
-            state: shoes
+    displacements: 
       head:
         sizeMaps:
           32:
-            sprite: Mobs/Species/Vulpkanin/displacement.rsi
+            sprite: _Starlight/Mobs/Species/Vulpkanin/displacement.rsi
             state: head
-      neck:
+      outerClothing:
         sizeMaps:
           32:
-            sprite: Mobs/Species/Vulpkanin/displacement.rsi
-            state: neck
-      eyes:
+            sprite: _Starlight/Mobs/Species/Vulpkanin/displacement.rsi
+            state: outerClothing
+      jumpsuit:
         sizeMaps:
           32:
-            sprite: Mobs/Species/Vulpkanin/displacement.rsi
-            state: eyes
-      belt:
+            sprite: _Starlight/Mobs/Species/Vulpkanin/displacement.rsi
+            state: jumpsuit
+      shoes: # DM only for colored shoes!
         sizeMaps:
           32:
-            sprite: Mobs/Species/Vulpkanin/displacement.rsi
-            state: belt
+            sprite: _Starlight/Mobs/Species/Vulpkanin/displacement.rsi
+            state: shoes
+  # Starlight end
 
 - type: entity
   parent: [BaseSpeciesDummy]
@@ -192,61 +174,30 @@
   components:
   - type: HumanoidAppearance
     species: Vulpkanin
+    # Starlight start
     hideLayersOnEquip:
     - Snout
     - HeadTop
     - HeadSide
-    markingsDisplacement:
-      Hair:
-        sizeMaps:
-          32:
-            sprite: Mobs/Species/Vulpkanin/displacement.rsi
-            state: hair
+    #markingsDisplacement:
+    #  Hair:
+    #    sizeMaps:
+    #      32:
+    #        sprite: Mobs/Species/Vulpkanin/displacement.rsi
+    #        state: hair
+    # Starlight
   - type: Inventory
     speciesId: vulpkanin
-    displacements:
+    # Starlight start
+    displacements: 
       jumpsuit:
         sizeMaps:
           32:
-            sprite: Mobs/Species/Vulpkanin/displacement.rsi
+            sprite: _Starlight/Mobs/Species/Vulpkanin/displacement.rsi
             state: jumpsuit
-      back:
+      shoes: # DM only for colored shoes!
         sizeMaps:
           32:
-            sprite: Mobs/Species/Vulpkanin/displacement.rsi
-            state: back
-      outerClothing:
-        sizeMaps:
-          32:
-            sprite: Mobs/Species/Vulpkanin/displacement.rsi
-            state: outerwear
-      gloves:
-        sizeMaps:
-          32:
-            sprite: Mobs/Species/Vulpkanin/displacement.rsi
-            state: hand
-      shoes:
-        sizeMaps:
-          32:
-            sprite: Mobs/Species/Vulpkanin/displacement.rsi
+            sprite: _Starlight/Mobs/Species/Vulpkanin/displacement.rsi
             state: shoes
-      head:
-        sizeMaps:
-          32:
-            sprite: Mobs/Species/Vulpkanin/displacement.rsi
-            state: head
-      neck:
-        sizeMaps:
-          32:
-            sprite: Mobs/Species/Vulpkanin/displacement.rsi
-            state: neck
-      eyes:
-        sizeMaps:
-          32:
-            sprite: Mobs/Species/Vulpkanin/displacement.rsi
-            state: eyes
-      belt:
-        sizeMaps:
-          32:
-            sprite: Mobs/Species/Vulpkanin/displacement.rsi
-            state: belt
+    # Starlight end
