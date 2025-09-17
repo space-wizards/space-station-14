@@ -4,3 +4,10 @@
   icon: { sprite: Objects/Misc/bureaucracy.rsi, state: paper }
   spawn: SheetPrinter1
   maxCount: 30
+
+- type: stack
+  id: CrushedPhosphorus
+  name: stack-phosphorus
+  icon: { sprite: _Starlight/Objects/Materials/phosphorus.rsi, state: phosphorus_3 }
+  spawn: CrushedPhosphorus1
+  maxCount: 30

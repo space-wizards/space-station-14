@@ -219,6 +219,46 @@
   description: crafting-menu-text-IMGB
 
 - type: construction
+  name: crafting-menu-name-IMGP
+  id: MagazineBoxImprovisedPistol
+  graph: ImprovisedMagazineBoxGraph
+  startNode: startpistol
+  targetNode: pistol
+  category: construction-category-weapons
+  objectType: Item
+  description: crafting-menu-text-IMGP
+
+- type: construction
+  name: crafting-menu-name-IMGR
+  id: MagazineBoxImprovisedRifle
+  graph: ImprovisedMagazineBoxGraph
+  startNode: startrifle
+  targetNode: rifle
+  category: construction-category-weapons
+  objectType: Item
+  description: crafting-menu-text-IMGR
+
+- type: construction
+  name: crafting-menu-name-IMGM
+  id: MagazineBoxImprovisedMagnum
+  graph: ImprovisedMagazineBoxGraph
+  startNode: startmagnum
+  targetNode: magnum
+  category: construction-category-weapons
+  objectType: Item
+  description: crafting-menu-text-IMGM
+
+- type: construction
+  name: crafting-menu-name-IMGS
+  id: MagazineBoxImprovisedShotgun
+  graph: ImprovisedMagazineBoxGraph
+  startNode: startshotgun
+  targetNode: shotgun
+  category: construction-category-weapons
+  objectType: Item
+  description: crafting-menu-text-IMGS
+
+- type: construction
   name: crafting-menu-name-MC
   id: CrowbarMakeshift
   graph: MakeshiftCrowbarGraph
@@ -307,7 +347,7 @@
   category: construction-category-tools
   objectType: Item
   description: crafting-menu-text-WH
- 
+
 - type: construction
   name: crafting-menu-name-PH
   id: HiltPlasteel
@@ -527,3 +567,4 @@
   category: construction-category-weapons
   objectType: Item
   description: crafting-menu-text-IRS
+
