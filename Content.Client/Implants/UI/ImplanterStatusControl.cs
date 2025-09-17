@@ -49,7 +49,7 @@ public sealed class ImplanterStatusControl : Control
         if (_parent.CurrentMode == ImplanterToggleMode.Draw)
         {
             string implantName = _parent.DeimplantChosen != null
-                ? (_prototype.TryIndex(_parent.DeimplantChosen.Value, out EntityPrototype? implantProto) ? implantProto.Name : Loc.GetString("implanter-empty-text"))
+                ? (_prototype.Resolve(_parent.DeimplantChosen.Value, out EntityPrototype? implantProto) ? implantProto.Name : Loc.GetString("implanter-empty-text"))
                 : Loc.GetString("implanter-empty-text");
 
             _label.SetMarkup(Loc.GetString("implanter-label-draw",
