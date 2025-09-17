@@ -14354,5 +14354,61 @@ Entries:
   id: 162700
   time: '2025-09-16T23:30:53.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/1627
+- author: Conflee
+  changes:
+  - message: Added information on Story Objectives to the Guidebook at the bottom
+      of the Traitors page
+    type: Add
+  id: 164300
+  time: '2025-09-17T15:11:33.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1643
+- author: Conflee
+  changes:
+  - message: Changed the icon for all Story Objectives to be a green "RP" icon, to
+      communicate what they are better
+    type: Tweak
+  id: 164301
+  time: '2025-09-17T15:11:33.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1643
+- author: Conflee
+  changes:
+  - message: Updated the Metashield page in the Guidebook to the newest massive overhaul
+      from the wiki. READ IT!!!!!!
+    type: Tweak
+  id: 164302
+  time: '2025-09-17T15:11:33.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1643
+- author: Conflee
+  changes:
+  - message: Added info on the Flavor Text system and explained the Background traits
+      on the Character Creation page in the Guidebook
+    type: Add
+  id: 165200
+  time: '2025-09-17T15:15:32.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1652
+- author: Conflee
+  changes:
+  - message: Added a Content Warning to the top of the New Players page in the Guidebook,
+      as a general QOL / comfort feature
+    type: Add
+  id: 165201
+  time: '2025-09-17T15:15:32.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1652
+- author: CorruptOmega
+  changes:
+  - message: Chronexaline - New Cryo-Pod Chemical that only works when the target
+      is dead. Heals Radiation Poisoning in large amounts.
+    type: Add
+  id: 164200
+  time: '2025-09-17T15:18:17.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1642
+- author: CorruptOmega
+  changes:
+  - message: Reflector Flatpack purchasable through Cargo for 5000 spesos - Let the
+      engineering shenanigans continue!
+    type: Add
+  id: 164000
+  time: '2025-09-17T15:19:00.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1640
 Order: -1
 

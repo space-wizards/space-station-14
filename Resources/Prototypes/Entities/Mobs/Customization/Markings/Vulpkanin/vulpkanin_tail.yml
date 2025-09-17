@@ -1,49 +1,53 @@
 # Tail Markings
-- type: marking
-  id: VulpTailFennec
-  bodyPart: Tail
-  markingCategory: Tail
-  speciesRestriction: [ Vulpkanin ]
-  sprites:
-    - sprite: Mobs/Customization/Vulpkanin/tail_markings.rsi
-      state: fennec
-    - sprite: Mobs/Customization/Vulpkanin/tail_markings.rsi
-      state: fennec-tip
 
-- type: marking
-  id: VulpTailFluffy
-  bodyPart: Tail
-  markingCategory: Tail
-  speciesRestriction: [ Vulpkanin ]
-  sprites:
-    - sprite: Mobs/Customization/Vulpkanin/tail_markings.rsi
-      state: fluffy
-    - sprite: Mobs/Customization/Vulpkanin/tail_markings.rsi
-      state: fluffy-tip
+#STARLIGHT START
+# - type: marking
+#   id: VulpTailFennec
+#   bodyPart: Tail
+#   markingCategory: Tail
+#   speciesRestriction: [ Vulpkanin ]
+#   sprites:
+#     - sprite: Mobs/Customization/Vulpkanin/tail_markings.rsi
+#       state: fennec
+#     - sprite: Mobs/Customization/Vulpkanin/tail_markings.rsi
+#       state: fennec-tip
 
-- type: marking
-  id: VulpTailHusky
-  bodyPart: Tail
-  markingCategory: Tail
-  speciesRestriction: [ Vulpkanin ]
-  sprites:
-    - sprite: Mobs/Customization/Vulpkanin/tail_markings.rsi
-      state: husky
-    - sprite: Mobs/Customization/Vulpkanin/tail_markings.rsi
-      state: husky-inner
-    - sprite: Mobs/Customization/Vulpkanin/tail_markings.rsi
-      state: husky-outer
+# - type: marking
+#   id: VulpTailFluffy
+#   bodyPart: Tail
+#   markingCategory: Tail
+#   speciesRestriction: [ Vulpkanin ]
+#   sprites:
+#     - sprite: Mobs/Customization/Vulpkanin/tail_markings.rsi
+#       state: fluffy
+#     - sprite: Mobs/Customization/Vulpkanin/tail_markings.rsi
+#       state: fluffy-tip
 
-- type: marking
-  id: VulpTailLong
-  bodyPart: Tail
-  markingCategory: Tail
-  speciesRestriction: [ Vulpkanin ]
-  sprites:
-    - sprite: Mobs/Customization/Vulpkanin/tail_markings.rsi
-      state: long
-    - sprite: Mobs/Customization/Vulpkanin/tail_markings.rsi
-      state: long-tip
+# - type: marking
+#   id: VulpTailHusky
+#   bodyPart: Tail
+#   markingCategory: Tail
+#   speciesRestriction: [ Vulpkanin ]
+#   sprites:
+#     - sprite: Mobs/Customization/Vulpkanin/tail_markings.rsi
+#       state: husky
+#     - sprite: Mobs/Customization/Vulpkanin/tail_markings.rsi
+#       state: husky-inner
+#     - sprite: Mobs/Customization/Vulpkanin/tail_markings.rsi
+#       state: husky-outer
+
+# - type: marking
+#   id: VulpTailLong
+#   bodyPart: Tail
+#   markingCategory: Tail
+#   speciesRestriction: [ Vulpkanin ]
+#   sprites:
+#     - sprite: Mobs/Customization/Vulpkanin/tail_markings.rsi
+#       state: long
+#     - sprite: Mobs/Customization/Vulpkanin/tail_markings.rsi
+#       state: long-tip
+
+# STARLIGHT END
 
 - type: marking
   id: VulpTailVulp

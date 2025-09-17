@@ -67,6 +67,8 @@
   Your objectives may require you to [italic][color=cyan]make it to CentComm without being killed or captured.[/color][/italic] Don't let [color=#cb0000]Security[/color] stop you, complete your other objectives and [bold]come back alive.[/bold]
 
   Alternatively, your objectives may require you to [italic][color=cyan]die a glorious death.[/color][/italic] [bold]Make sure you don't come back from the dead,[/bold] or else you may wake up in cuffs.
+  
+  DAGD allows a lot of things that are normally banned, but you can never loose the Tesla. If you aren't sure if what you want to do is allowed, Ahelp it!
 
   ## Appropriation
   More often than not, you'll have to [italic][color=cyan]steal a possession of a department head.[/color][/italic]
@@ -108,5 +110,26 @@
     <GuideEntityEmbed Entity="MobCorgiIan" Caption=""/>
     <GuideEntityEmbed Entity="FoodMeatCorgi" Caption=""/>
   </Box>
+
+  ## Roleplay and Story Objectives
+  There are a number of ways to do your job as an antagonist, but some objectives are much more open ended than others. [bold]Story Objectives[/bold] are objectives that are designed to be more free-form and encourage you to complete them however you see fit. They are also often things that would be hard or impossible to track mechanically.
+  
+  Because of this, all Story Objectives require you to [italic][color=cyan]make it to CentComm without being killed or captured.[/color][/italic]
+  
+  All Story Objectives are denoted by a bold green  [bold][color=green]'RP'[/bold][/color]  icon
+  
+  Story Objectives may ask you to:
+  - Recover captured Contraband from the Armory in [color=#cb0000]Security[/color]. Security often gathers a large amount of Contraband that they lock in the Armory, much of it being Syndicate in origin. Deprive the enemy of material, and recover it.
+  - Interrogate the [color=#1f78ff]NanoTrasen Representative[/color] and other Department Heads for [color=#9819ff]Corporate Secrets[/color]. A very risky objective, making using of disguises and Security gear to detain may be needed. Remember to turn off their coordinates or take them off-station to prevent trackers from finding them.
+  - Challenge people to duels, to the death or otherwise. Remember you need to escape to Central Command still, so murder isn't advised- unless you use this as a guise to get to a kill target that is. Consensual duels are the best excuse.
+  - Many many more!
+
+  
+  [bold]A few more tips:[/bold]
+  - What makes fun roleplay always reigns supreme.
+  - If you aren't sure if you would be allowed to do something, Ahelp it. Admins will usually allow things that border on or even cross the line, if its done in an MRP way that makes good Roleplay!
+  - You can [bold]EMAG[/bold] any Fax Machine to unlock the Syndicate Fax. If you need to pass information on to the Syndicate for an objective but won't make it out alive, this can be an alternative way to do that.
+  - Other antagonists aren't always trustworthy, even fellow Traitors. They could be assigned to kill [bold]you[/bold].
+
 
 </Document>
