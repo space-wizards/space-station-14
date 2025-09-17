@@ -24,7 +24,7 @@ using Robust.Shared.Map.Components;
 using Robust.Shared.Player;
 using Robust.Shared.Random;
 using Robust.Shared.Utility;
-using Content.Shared._Starlight.Lock; // Starlight-edit
+using Content.Server._Starlight.Lock; // Starlight-edit
 
 namespace Content.Server.Nuke;
 
