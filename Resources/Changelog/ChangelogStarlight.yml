@@ -14501,5 +14501,13 @@ Entries:
   id: 135504
   time: '2025-09-17T15:58:49.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/1355
+- author: Yagwog
+  changes:
+  - message: Added fillable and automatic fields to documents, [Signature], [Fill]
+      and [Check]
+    type: Add
+  id: 123400
+  time: '2025-09-17T16:09:40.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1234
 Order: -1
 
