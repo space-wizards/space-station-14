@@ -14509,5 +14509,13 @@ Entries:
   id: 123400
   time: '2025-09-17T16:09:40.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/1234
+- author: Aedler
+  changes:
+  - message: Added buncha missing sprites for shotguns and rifles such as ARG and
+      Aussec.
+    type: Add
+  id: 118600
+  time: '2025-09-17T16:10:45.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1186
 Order: -1
 
