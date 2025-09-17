@@ -9,3 +9,16 @@
     - type: NightVision
     - type: FlashModifier
       modifier: 2
+      
+- type: entity # Starlight
+  id: OrganResomiHeart
+  parent: OrganHumanHeart
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Metabolizer
+    maxReagents: 2
+    metabolizerTypes: [Resomi]
+    groups:
+    - id: Medicine
+    - id: Poison
+    - id: Narcotic

@@ -1,5 +1,6 @@
 using Content.Shared.Access.Systems;
 using Content.Shared.Containers.ItemSlots;
+using Content.Shared.Roles;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
@@ -25,9 +26,9 @@ public sealed partial class IdCardConsoleComponent : Component
         public readonly string FullName;
         public readonly string JobTitle;
         public readonly List<ProtoId<AccessLevelPrototype>> AccessList;
-        public readonly ProtoId<AccessLevelPrototype> JobPrototype;
+        public readonly ProtoId<JobPrototype> JobPrototype;
 
-        public WriteToTargetIdMessage(string fullName, string jobTitle, List<ProtoId<AccessLevelPrototype>> accessList, ProtoId<AccessLevelPrototype> jobPrototype)
+        public WriteToTargetIdMessage(string fullName, string jobTitle, List<ProtoId<AccessLevelPrototype>> accessList, ProtoId<JobPrototype> jobPrototype)
         {
             FullName = fullName;
             JobTitle = jobTitle;
@@ -66,7 +67,7 @@ public sealed partial class IdCardConsoleComponent : Component
         public readonly string? TargetIdJobTitle;
         public readonly List<ProtoId<AccessLevelPrototype>>? TargetIdAccessList;
         public readonly List<ProtoId<AccessLevelPrototype>>? AllowedModifyAccessList;
-        public readonly ProtoId<AccessLevelPrototype> TargetIdJobPrototype;
+        public readonly ProtoId<JobPrototype> TargetIdJobPrototype;
         public readonly ProtoId<AccessGroupPrototype> CurrentAccessGroup; // Starlight-edit
 
         public IdCardConsoleBoundUserInterfaceState(bool isPrivilegedIdPresent,
@@ -76,7 +77,7 @@ public sealed partial class IdCardConsoleComponent : Component
             string? targetIdJobTitle,
             List<ProtoId<AccessLevelPrototype>>? targetIdAccessList,
             List<ProtoId<AccessLevelPrototype>>? allowedModifyAccessList,
-            ProtoId<AccessLevelPrototype> targetIdJobPrototype,
+            ProtoId<JobPrototype> targetIdJobPrototype,
             string privilegedIdName,
             string targetIdName,
             ProtoId<AccessGroupPrototype> currentAccessGroup) // Starlight-edit

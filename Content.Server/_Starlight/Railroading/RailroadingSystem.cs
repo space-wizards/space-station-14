@@ -25,19 +25,20 @@ public sealed partial class RailroadingSystem : SharedRailroadingSystem
     [Dependency] private readonly EuiManager _euiManager = default!;
     [Dependency] private readonly AlertsSystem _alerts = default!;
     [Dependency] private readonly StarlightEntitySystem _entitySystem = default!;
-
+    [Dependency] private readonly RailroadRuleSystem _railroadRule = default!;
+    
     public readonly ProtoId<AlertPrototype> AlertProtoId = "RailroadingChoice";
 
     public override void Initialize()
     {
         base.Initialize();
-        SubscribeLocalEvent<RailroadCardComponent, ComponentInit>(OnInit);
+        SubscribeLocalEvent<RailroadCardComponent, MapInitEvent>(OnMapInit);
         SubscribeLocalEvent<RailroadableComponent, OpenCardsAlertEvent>(ShowCardsUi);
         SubscribeLocalEvent<RailroadableComponent, ExaminedEvent>(OnExamined);
         SubscribeLocalEvent<RailroadableComponent, CollectObjectivesEvent>(OnCollectObjectiveInfo);
     }
 
-    private void OnInit(Entity<RailroadCardComponent> ent, ref ComponentInit args)
+    private void OnMapInit(Entity<RailroadCardComponent> ent, ref MapInitEvent args)
     {
         if (ent.Comp.Images != null && ent.Comp.Images.Count != 0)
             ent.Comp.Image = _random.Pick(ent.Comp.Images); // Randomly picks Image from collection.
@@ -115,7 +116,8 @@ public sealed partial class RailroadingSystem : SharedRailroadingSystem
         };
         _euiManager.OpenEui(eui, user);
         eui.StateDirty();
-        _alerts.ClearAlert(ent, AlertProtoId);
+        if (TryComp<AlertsComponent>(ent, out var alerts))
+            _alerts.ClearAlert((ent,alerts), AlertProtoId);
     }
 
     // todo: timer
@@ -140,7 +142,7 @@ public sealed partial class RailroadingSystem : SharedRailroadingSystem
                 RaiseLocalEvent(card, ref @event);
             }
             else if (_entitySystem.TryEntity<RailroadRuleComponent>(card.Comp2.RuleOwner, out var rule))
-                rule.Comp.Pool.Add(card);
+                _railroadRule.AddCardToPool(rule, card);
 
         subject.Comp.IssuedCards = null;
     }

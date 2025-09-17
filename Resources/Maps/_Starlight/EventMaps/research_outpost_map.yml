@@ -39,9 +39,7 @@ entities:
     - type: Transform
     - type: Map
       mapPaused: True
-    - type: PhysicsMap
     - type: GridTree
-    - type: MovedGrids
     - type: Broadphase
     - type: OccluderTree
     - type: Parallax
@@ -11942,8 +11940,6 @@ entities:
       rot: 1.5707963267948966 rad
       pos: 6.5,2.5
       parent: 2
-    - type: VentCrawTube
-      connected: True
 - proto: GasPipeStraight
   entities:
   - uid: 1115
@@ -11952,8 +11948,6 @@ entities:
       rot: 1.5707963267948966 rad
       pos: 8.5,2.5
       parent: 2
-    - type: VentCrawTube
-      connected: True
 - proto: GasPipeTJunction
   entities:
   - uid: 993
@@ -11961,8 +11955,6 @@ entities:
     - type: Transform
       pos: 7.5,2.5
       parent: 2
-    - type: VentCrawTube
-      connected: True
 - proto: GasPort
   entities:
   - uid: 1116
@@ -11971,8 +11963,6 @@ entities:
       rot: 3.141592653589793 rad
       pos: 7.5,0.5
       parent: 2
-    - type: VentCrawTube
-      connected: True
 - proto: GasPressurePump
   entities:
   - uid: 1117
@@ -11983,8 +11973,6 @@ entities:
       parent: 2
     - type: GasPressurePump
       targetPressure: 200
-    - type: VentCrawTube
-      connected: True
 - proto: GasThermoMachineHellfireFreezer
   entities:
   - uid: 995

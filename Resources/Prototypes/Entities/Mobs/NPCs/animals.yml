@@ -439,8 +439,6 @@
       - !type:GibBehavior
         recursive: false
   - type: NonSpreaderZombie
-  - type: SentienceTarget
-    flavorKind: station-event-random-sentience-flavor-organic
   - type: MeleeWeapon
     soundHit:
       path: /Audio/Effects/bite.ogg
@@ -864,6 +862,7 @@
       behaviors:
       - !type:GibBehavior
         recursive: false
+  - type: ZombieImmune
 
 - type: entity
   name: cow
@@ -1435,14 +1434,15 @@
   description: New church of neo-darwinists actually believe that EVERY animal evolved from a monkey. Tastes like pork, and killing them is both fun and relaxing.
   suffix: syndicate base
   components:
-  # Starlight-start: Languages
+  # Starlight-Start
+  - type: LanguageSpeaker
   - type: LanguageKnowledge
     speaks:
     - Ancestor
     understands:
     - Ancestor
     - GalacticCommon
-  # Starlight-end
+  # Starlight-End
   - type: NameIdentifier
     group: Monkey
   - type: SentienceTarget
@@ -1476,6 +1476,15 @@
   components:
     # make the player a traitor once its taken
   - type: VentCrawler
+  # Starlight-Start
+  - type: LanguageSpeaker
+  - type: LanguageKnowledge
+    speaks:
+    - Ancestor
+    understands:
+    - Ancestor
+    - GalacticCommon
+  # Starlight-End
   - type: AutoTraitor
     profile: TraitorReinforcement
 
@@ -1485,6 +1494,15 @@
   suffix: NukeOps
   components:
   - type: VentCrawler
+  # Starlight-Start
+  - type: LanguageSpeaker
+  - type: LanguageKnowledge
+    speaks:
+    - Ancestor
+    understands:
+    - Ancestor
+    - GalacticCommon
+  # Starlight-End
   - type: NukeOperative
 
 - type: entity
@@ -1622,6 +1640,15 @@
   parent: MobBaseKobold
   suffix: syndicate base
   components:
+  # Starlight-Start
+  - type: LanguageSpeaker
+  - type: LanguageKnowledge
+    speaks:
+    - Ancestor
+    understands:
+    - Ancestor
+    - GalacticCommon
+  # Starlight-End
   - type: MobThresholds
     thresholds:
       0: Alive
@@ -1638,6 +1665,15 @@
   parent: MobBaseSyndicateKobold
   suffix: syndicate agent
   components:
+  # Starlight-Start
+  - type: LanguageSpeaker
+  - type: LanguageKnowledge
+    speaks:
+    - Ancestor
+    understands:
+    - Ancestor
+    - GalacticCommon
+  # Starlight-End
     # make the player a traitor once its taken
   - type: AutoTraitor
     profile: TraitorReinforcement
@@ -1647,6 +1683,15 @@
   parent: MobBaseSyndicateKobold
   suffix: NukeOps
   components:
+  # Starlight-Start
+  - type: LanguageSpeaker
+  - type: LanguageKnowledge
+    speaks:
+    - Ancestor
+    understands:
+    - Ancestor
+    - GalacticCommon
+  # Starlight-End
   - type: NukeOperative
 
 - type: entity
@@ -3626,6 +3671,13 @@
   id: MobDionaNymph
   description: It's like a cat, only.... branch-ier.
   components:
+    # Starlight-start: Languages
+  - type: LanguageKnowledge
+    speaks:
+    - Sylvan
+    understands:
+    - Sylvan
+  # Starlight-end
   - type: Sprite
     drawdepth: Mobs
     layers:
@@ -3823,6 +3875,7 @@
     understands:
     - Dog
     - GalacticCommon
+    - Canilunzt
   # Starlight-end
   - type: Sprite
     layers:

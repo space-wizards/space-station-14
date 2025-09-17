@@ -30,6 +30,7 @@ using System.Collections.Frozen;
 using System.Diagnostics.CodeAnalysis;
 using Content.Shared.Bed.Sleep;
 using Content.Shared.Flash.Components;
+using Content.Shared.Storage.Components;
 
 namespace Content.Server.Vampire;
 

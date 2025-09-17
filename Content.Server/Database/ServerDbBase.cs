@@ -290,7 +290,7 @@ namespace Content.Server.Database
             if (profile.CharacterInfo != null)
             {
                 physicalDesc = profile.CharacterInfo.PhysicalDesc;
-                if (physicalDesc == string.Empty)
+                if (string.IsNullOrEmpty(physicalDesc))
                 {
                     physicalDesc = profile.FlavorText;
                 }
@@ -299,6 +299,13 @@ namespace Content.Server.Database
                 oocNotes = profile.CharacterInfo.OOCNotes;
                 characterSecrets = profile.CharacterInfo.CharacterSecrets;
                 exploitableInfo = profile.CharacterInfo.ExploitableInfo;
+            }
+            else
+            {
+                if (string.IsNullOrEmpty(physicalDesc))
+                {
+                    physicalDesc = profile.FlavorText;
+                }
             }
             //end starlight
             return new HumanoidCharacterProfile(
