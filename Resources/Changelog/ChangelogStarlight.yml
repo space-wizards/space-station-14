@@ -14402,5 +14402,13 @@ Entries:
   id: 164200
   time: '2025-09-17T15:18:17.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/1642
+- author: CorruptOmega
+  changes:
+  - message: Reflector Flatpack purchasable through Cargo for 5000 spesos - Let the
+      engineering shenanigans continue!
+    type: Add
+  id: 164000
+  time: '2025-09-17T15:19:00.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1640
 Order: -1
 
