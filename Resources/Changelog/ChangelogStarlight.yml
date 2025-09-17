@@ -14551,5 +14551,12 @@ Entries:
   id: 129603
   time: '2025-09-17T16:12:09.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/1296
+- author: PubliclyExecutedPig
+  changes:
+  - message: Space has been buffed into a Goldilocks zone. Not too weak, not too strong
+    type: Tweak
+  id: 137000
+  time: '2025-09-17T16:23:05.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1370
 Order: -1
 
