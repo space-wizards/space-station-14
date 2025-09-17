@@ -28,6 +28,7 @@ using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Content.Shared._Starlight.Weapon.Components;
+using Content.Shared.Kitchen.Components;
 
 namespace Content.Server.Execution;
 

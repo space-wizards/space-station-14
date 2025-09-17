@@ -99,7 +99,7 @@ public sealed class IdCardConsoleSystem : SharedIdCardConsoleSystem
             var targetIdComponent = Comp<IdCardComponent>(targetId);
             var targetAccessComponent = Comp<AccessComponent>(targetId);
 
-            var jobProto = targetIdComponent.JobPrototype ?? new ProtoId<AccessLevelPrototype>(string.Empty);
+            var jobProto = targetIdComponent.JobPrototype ?? new ProtoId<JobPrototype>(string.Empty);
             if (TryComp<StationRecordKeyStorageComponent>(targetId, out var keyStorage)
                 && keyStorage.Key is { } key
                 && _record.TryGetRecord<GeneralStationRecord>(key, out var record))
@@ -131,7 +131,7 @@ public sealed class IdCardConsoleSystem : SharedIdCardConsoleSystem
         string newFullName,
         string newJobTitle,
         List<ProtoId<AccessLevelPrototype>> newAccessList,
-        ProtoId<AccessLevelPrototype> newJobProto,
+        ProtoId<JobPrototype> newJobProto,
         EntityUid player,
         IdCardConsoleComponent? component = null)
     {
@@ -145,7 +145,7 @@ public sealed class IdCardConsoleSystem : SharedIdCardConsoleSystem
         _idCard.TryChangeJobTitle(targetId, newJobTitle, player: player);
 
         if (_prototype.TryIndex<JobPrototype>(newJobProto, out var job)
-            && _prototype.TryIndex(job.Icon, out var jobIcon))
+            && _prototype.Resolve(job.Icon, out var jobIcon))
         {
             _idCard.TryChangeJobIcon(targetId, jobIcon, player: player);
             _idCard.TryChangeJobDepartment(targetId, job);

@@ -74,6 +74,19 @@ namespace Content.Shared.VendingMachines
 
         public string? NextItemToEject;
 
+        // Starlight-edit start: vend operation tracking for idempotent charging and accounting
+        [ViewVariables]
+        public int VendOperationId = 0; // incremented each time an ejection starts
+
+        [ViewVariables]
+        public bool DebitApplied = false; // set true once we debit for the current operation
+
+        [ViewVariables]
+        public EntityUid? LastBuyer; // who initiated the current vend
+
+        [ViewVariables]
+        public InventoryType CurrentItemType; // inventory bucket for NextItemToEject during current operation
+        // Startlight-edit end:
         public bool Broken;
 
         /// <summary>
@@ -153,6 +166,12 @@ namespace Content.Shared.VendingMachines
         /// </summary>
         [DataField(customTypeSerializer: typeof(TimeOffsetSerializer))]
         public TimeSpan NextEmpEject = TimeSpan.Zero;
+
+        /// <summary>
+        /// Audio entity used during restock in case the doafter gets canceled.
+        /// </summary>
+        [DataField]
+        public EntityUid? RestockStream;
 
         #region Client Visuals
         /// <summary>

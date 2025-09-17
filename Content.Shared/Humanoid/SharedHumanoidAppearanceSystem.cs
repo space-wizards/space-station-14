@@ -120,7 +120,7 @@ public abstract class SharedHumanoidAppearanceSystem : EntitySystem
         }
 
         if (string.IsNullOrEmpty(humanoid.Initial)
-            || !_proto.TryIndex(humanoid.Initial, out HumanoidProfilePrototype? startingSet))
+            || !_proto.Resolve(humanoid.Initial, out HumanoidProfilePrototype? startingSet))
         {
             LoadProfile(uid, HumanoidCharacterProfile.DefaultWithSpecies(humanoid.Species), humanoid);
             return;
@@ -324,14 +324,15 @@ public abstract class SharedHumanoidAppearanceSystem : EntitySystem
         if (!Resolve(uid, ref humanoid))
             return;
 
-        if (!_proto.TryIndex<SpeciesPrototype>(humanoid.Species, out var species))
+        if (!_proto.Resolve<SpeciesPrototype>(humanoid.Species, out var species))
         {
             return;
         }
 
-        if (verify && !SkinColor.VerifySkinColor(species.SkinColoration, skinColor))
+        if (verify && _proto.Resolve(species.SkinColoration, out var index))
         {
-            skinColor = SkinColor.ValidSkinTone(species.SkinColoration, skinColor);
+            var strategy = index.Strategy;
+            skinColor = strategy.EnsureVerified(skinColor);
         }
 
         humanoid.SkinColor = skinColor;
@@ -535,6 +536,8 @@ public abstract class SharedHumanoidAppearanceSystem : EntitySystem
         humanoid.CustomSpecieName = profile.CustomSpecieName; // Starlight
 
         Dirty(uid, humanoid);
+        var update = new MarkingsUpdateEvent(); //starlight
+        RaiseLocalEvent(uid, ref update); //starlight
     }
 
     /// <summary>
@@ -555,7 +558,7 @@ public abstract class SharedHumanoidAppearanceSystem : EntitySystem
     /// </summary>
     public HumanoidCharacterProfile? GetBaseProfile(Entity<HumanoidAppearanceComponent?> ent)
     {
-        if (!Resolve(ent, ref ent.Comp))
+        if (!Resolve(ent, ref ent.Comp, false))
             return null;
 
         return ent.Comp.BaseProfile;
@@ -594,6 +597,9 @@ public abstract class SharedHumanoidAppearanceSystem : EntitySystem
 
         if (sync)
             Dirty(uid, humanoid);
+
+        var ev = new MarkingsUpdateEvent(); //starlight
+        RaiseLocalEvent(uid, ref ev); //starlight
     }
 
     private void EnsureDefaultMarkings(EntityUid uid, HumanoidAppearanceComponent? humanoid)
@@ -631,6 +637,9 @@ public abstract class SharedHumanoidAppearanceSystem : EntitySystem
 
         if (sync)
             Dirty(uid, humanoid);
+
+        var ev = new MarkingsUpdateEvent(); //starlight
+        RaiseLocalEvent(uid, ref ev); //starlight
     }
     //Starlight
     public void SetTTSVoice(EntityUid uid, string voiceId, HumanoidAppearanceComponent humanoid)
@@ -679,3 +688,8 @@ public abstract class SharedHumanoidAppearanceSystem : EntitySystem
         return Loc.GetString("identity-age-old");
     }
 }
+
+#region Starlight
+[ByRefEvent]
+public record struct MarkingsUpdateEvent();
+#endregion

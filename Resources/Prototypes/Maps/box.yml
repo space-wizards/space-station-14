@@ -52,7 +52,7 @@
             Detective: [ 1, 1 ]
             SecurityCadet: [ 2, 4 ] #intern, exclude from dept count
             Lawyer: [ 2, 2 ]
-            Brigmedic: [ 1, 1 ]
+            #Brigmedic: [ 1, 1 ]
             #supply
             SalvageSpecialist: [ 6, 6 ]
             CargoTechnician: [ 3, 3 ]

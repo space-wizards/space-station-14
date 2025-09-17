@@ -75,7 +75,7 @@ public sealed class WiresSystem : SharedWiresSystem
         List<IWireAction> wireActions = new();
         var dummyWires = 0;
 
-        if (!_protoMan.TryIndex(wires.LayoutId, out WireLayoutPrototype? layoutPrototype))
+        if (!_protoMan.Resolve(wires.LayoutId, out WireLayoutPrototype? layoutPrototype))
         {
             return;
         }
@@ -621,10 +621,14 @@ public sealed class WiresSystem : SharedWiresSystem
 
     public void SetWiresPanelSecurity(EntityUid uid, WiresPanelSecurityComponent component, WiresPanelSecurityEvent args)
     {
-        component.Examine = args.Examine;
-        component.WiresAccessible = args.WiresAccessible;
+        //starlight, only update if map initialized
+        if (MetaData(uid).EntityLifeStage == EntityLifeStage.MapInitialized)
+        {
+            component.Examine = args.Examine;
+            component.WiresAccessible = args.WiresAccessible;
 
-        Dirty(uid, component);
+            Dirty(uid, component);
+        }
 
         if (!args.WiresAccessible)
         {

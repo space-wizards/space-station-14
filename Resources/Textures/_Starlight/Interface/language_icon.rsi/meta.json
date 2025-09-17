@@ -1,7 +1,7 @@
 {
     "version": 1,
     "license": "CC-BY-SA-3.0",
-    "copyright": "Taken from https://github.com/tgstation/tgstation/blob/master/icons/ui/chat/language.dmi // survivror from rainworld.miraheze.org // avali from https://avali.fandom.com",
+    "copyright": "Taken from https://github.com/tgstation/tgstation/blob/master/icons/ui/chat/language.dmi // survivror from rainworld.miraheze.org // avali from https://avali.fandom.com // shadekin, vox and vulp icons by StudioFaewilds",
     "size": {
         "x": 16,
         "y": 16
@@ -57,6 +57,15 @@
         },
         {
             "name": "buzz"
+        },
+        {
+            "name": "shadekin"
+        },
+        {
+            "name": "vox"
+        },
+        {
+            "name": "vulp"
         },
         {
             "name": "brain"

@@ -1,0 +1,43 @@
+{
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "themageofmicrosoftpaints",
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "states": [
+        {
+            "name": "blades",
+            "directions": 4
+        },
+        {
+            "name": "bunks",
+            "directions": 4
+        },
+        {
+            "name": "carblunkle",
+            "directions": 4
+        },
+        {
+            "name": "foxlike",
+            "directions": 4
+        },
+        {
+            "name": "hoppers",
+            "directions": 4
+        },
+        {
+            "name": "stalks",
+            "directions": 4
+        },
+        {
+            "name": "stalks_small",
+            "directions": 4
+        },
+        {
+            "name": "thorns",
+            "directions": 4
+        }
+    ]
+}

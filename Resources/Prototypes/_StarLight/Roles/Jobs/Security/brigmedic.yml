@@ -41,3 +41,10 @@
     - Flash
     - SecurityMedkit
     - DefibrillatorBrigmedical
+
+- type: chameleonOutfit
+  id: BrigmedicChameleonOutfit
+  job: Brigmedic
+  equipment:
+    mask: ClothingMaskBreathMedicalSecurity
+    neck: ClothingNeckTieRed

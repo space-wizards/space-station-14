@@ -102,3 +102,17 @@
     maxSyllables: 3
     replacement:
     - oink
+
+- type: language
+  id: Bat
+  icon: LanguageIconAnimal
+  obfuscation:
+    !type:SyllableObfuscation
+    minSyllables: 1
+    maxSyllables: 1
+    replacement:
+    - ee
+    - eek
+    - chirp
+    - squeak
+    - screech

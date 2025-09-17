@@ -1,3 +1,10 @@
+## Static Recipes
+
+- type: latheRecipePack
+  id: StarlightMedicalStatic
+  recipes:
+    - PatchPack # Starlight
+
 ## Dynamic recipes
 
 - type: latheRecipePack
@@ -52,3 +59,12 @@
   - EyeImplantWelding
   - EyeImplantMedical
   - EyeImplantSecurity
+
+- type: latheRecipePack
+  id: StarlightBudgetCyberOrgansDynamic
+  recipes:
+  - BudgetCyberEyes
+  - BudgetCyberTongue
+  - BudgetCyberLiver
+  - BudgetCyberStomach
+  - BudgetCyberKidneys
