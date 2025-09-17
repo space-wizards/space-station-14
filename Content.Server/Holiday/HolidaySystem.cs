@@ -71,7 +71,7 @@ public sealed class HolidaySystem : SharedHolidaySystem
     [PublicAPI]
     public override void RefreshCurrentHolidays(bool announce = true)
     {
-        SetActiveHolidays(DateTime.Now);
+        SetActiveHolidays(DateTime.Today);
 
         if (announce)
             DoGreet();
