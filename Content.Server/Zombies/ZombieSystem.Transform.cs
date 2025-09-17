@@ -7,10 +7,10 @@ using Content.Server.Humanoid;
 using Content.Server.IdentityManagement;
 using Content.Server.Inventory;
 using Content.Server.Mind;
-using Content.Server.Mind.Commands;
 using Content.Server.NPC;
 using Content.Server.NPC.HTN;
 using Content.Server.NPC.Systems;
+using Content.Server.StationEvents.Components;
 using Content.Server.Speech.Components;
 using Content.Server.Temperature.Components;
 using Content.Shared.Body.Components;
@@ -40,6 +40,8 @@ using Content.Shared.Tag;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Content.Shared.NPC.Prototypes;
+using Content.Server._Starlight.Language; // Starlight-edit: Languages
+using Content.Shared._Starlight.Language.Components; // Starlight-edit: Languages
 
 namespace Content.Server.Zombies;
 
@@ -65,6 +67,7 @@ public sealed partial class ZombieSystem
     [Dependency] private readonly TagSystem _tag = default!;
     [Dependency] private readonly NameModifierSystem _nameMod = default!;
     [Dependency] private readonly ISharedPlayerManager _player = default!;
+    [Dependency] private readonly LanguageSystem _language = default!; // Starlight-edit: Languages
 
     private static readonly ProtoId<TagPrototype> InvalidForGlobalSpawnSpellTag = "InvalidForGlobalSpawnSpell";
     private static readonly ProtoId<TagPrototype> CannotSuicideTag = "CannotSuicide";
@@ -107,7 +110,7 @@ public sealed partial class ZombieSystem
         var zombiecomp = AddComp<ZombieComponent>(target);
 
         //we need to basically remove all of these because zombies shouldn't
-        //get diseases, breath, be thirst, be hungry, die in space, have offspring or be paraplegic.
+        //get diseases, breath, be thirst, be hungry, die in space, get double sentience, have offspring or be paraplegic.
         RemComp<RespiratorComponent>(target);
         RemComp<BarotraumaComponent>(target);
         RemComp<HungerComponent>(target);
@@ -116,13 +119,21 @@ public sealed partial class ZombieSystem
         RemComp<ReproductivePartnerComponent>(target);
         RemComp<LegsParalyzedComponent>(target);
         RemComp<ComplexInteractionComponent>(target);
+        RemComp<SentienceTargetComponent>(target);
 
-        //funny voice
-        var accentType = "zombie";
-        if (TryComp<ZombieAccentOverrideComponent>(target, out var accent))
-            accentType = accent.Accent;
+        // Starlight-start: Add Zombie Language - Starlight
+        RemComp<UniversalLanguageSpeakerComponent>(target);
+        EnsureComp<LanguageKnowledgeComponent>(target, out var knowledge);
+        EnsureComp<LanguageSpeakerComponent>(target, out var speaker);
 
-        EnsureComp<ReplacementAccentComponent>(target).Accent = accentType;
+        knowledge.SpokenLanguages.Clear();
+        knowledge.UnderstoodLanguages.Clear();
+
+        speaker.SpokenLanguages.Clear();
+        speaker.UnderstoodLanguages.Clear();
+
+        _language.AddLanguage(target, "Zombie");
+        // Starlight-end
 
         //This is needed for stupid entities that fuck up combat mode component
         //in an attempt to make an entity not attack. This is the easiest way to do it.
@@ -198,6 +209,10 @@ public sealed partial class ZombieSystem
             Dirty(target, pryComp);
         }
 
+        //starlight start
+        if(!melee.Damage.AnyPositive()) melee.Damage = zombiecomp.MinimumDamageOnBite;
+        //starlight end
+
         Dirty(target, melee);
 
         //The zombie gets the assigned damage weaknesses and strengths
@@ -208,17 +223,17 @@ public sealed partial class ZombieSystem
         _bloodstream.SetBloodLossThreshold(target, 0f);
         //Give them zombie blood
         _bloodstream.ChangeBloodReagent(target, zombiecomp.NewBloodReagent);
+        //Should prevent instances of zombies using comms for information they shouldnt be able to have.
+        //_inventory.TryUnequip(target, "ears", true, true); Starlight-edit: Languages
 
         //This is specifically here to combat insuls, because frying zombies on grilles is funny as shit.
         _inventory.TryUnequip(target, "gloves", true, true);
-        //Should prevent instances of zombies using comms for information they shouldnt be able to have.
-        _inventory.TryUnequip(target, "ears", true, true);
 
         //popup
         _popup.PopupEntity(Loc.GetString("zombie-transform", ("target", target)), target, PopupType.LargeCaution);
 
         //Make it sentient if it's an animal or something
-        MakeSentientCommand.MakeSentient(target, EntityManager);
+        _mind.MakeSentient(target);
 
         //Make the zombie not die in the cold. Good for space zombies
         if (TryComp<TemperatureComponent>(target, out var tempComp))

@@ -185,7 +185,8 @@ public sealed class MaterialReclaimerSystem : SharedMaterialReclaimerSystem
 
         var xform = Transform(uid);
 
-        SpawnMaterialsFromComposition(uid, item, completion * component.Efficiency, xform: xform);
+        if (component.ReclaimMaterials)
+            SpawnMaterialsFromComposition(uid, item, completion * component.Efficiency, xform: xform);
 
         //Starlight
         var ev = new RecyclerTryGibEvent(item);
@@ -195,21 +196,19 @@ public sealed class MaterialReclaimerSystem : SharedMaterialReclaimerSystem
         {
             var logImpact = HasComp<HumanoidAppearanceComponent>(item) ? LogImpact.Extreme : LogImpact.Medium;
             _adminLogger.Add(LogType.Gib, logImpact, $"{ToPrettyString(item):victim} was gibbed by {ToPrettyString(uid):entity} ");
-            SpawnChemicalsFromComposition(uid, item, completion, false, component, xform);
-            //Starlight
+            if (component.ReclaimSolutions)
+                SpawnChemicalsFromComposition(uid, item, completion, false, component, xform);
             if (!ev.Handled)
                 _body.GibBody(item, true);
-            //Starlight
             _appearance.SetData(uid, RecyclerVisuals.Bloody, true);
         }
         else
         {
-            SpawnChemicalsFromComposition(uid, item, completion, true, component, xform);
+            if (component.ReclaimSolutions)
+                SpawnChemicalsFromComposition(uid, item, completion, true, component, xform);
         }
-        //Starlight
-        if (!ev.Handled)
-            QueueDel(item);
-        //Starlight
+
+        QueueDel(item);
     }
 
     private void SpawnMaterialsFromComposition(EntityUid reclaimer,

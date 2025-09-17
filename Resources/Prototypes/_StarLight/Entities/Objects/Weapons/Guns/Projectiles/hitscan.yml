@@ -844,6 +844,24 @@
   damage:
     types:
       Heat: 60
+
+- type: hitscan
+  id: DeleteBeam
+  name: erasing beam
+  parent: LaserTrace
+  muzzleFlash:
+    sprite: Objects/Weapons/Guns/Projectiles/projectiles.rsi
+    state: muzzle_blue
+  travelFlash:
+    sprite: Objects/Weapons/Guns/Projectiles/projectiles.rsi
+    state: beam_blue
+  impactFlash:
+    sprite: Objects/Weapons/Guns/Projectiles/projectiles.rsi
+    state: impact_blue
+  damage:
+    types:
+      Heat: 10
+      Blunt: 40
       
 - type: hitscan
   id: DisablerBoltPractice
@@ -879,6 +897,22 @@
   staminaDamage: 33
   knockdownAmount: 0.5
   maxLength: 5
+  damage:
+    types:
+      Heat: 0
+      
+- type: hitscan
+  id: TaserBoltExtreme
+  name: taser bolt
+  parent: EnergyTrace
+  bullet:
+    sprite:
+      sprite: Objects/Weapons/Guns/Projectiles/projectiles2.rsi
+      state: spark
+    color: "#ffff33"
+  staminaDamage: 100
+  #knockdownAmount: 0.5
+  #maxLength: 5
   damage:
     types:
       Heat: 0
@@ -976,8 +1010,8 @@
     polymorph: AdmemeForcedJohnToe
   - type: TriggerOnCollide
     fixtureID: projectile
-  - type: TriggerWhitelist
-    whitelist:
+  - type: WhitelistTriggerCondition
+    userWhitelist:
       components:
       - Body
 
@@ -995,3 +1029,17 @@
   impactFlash:
     sprite: _Starlight/Objects/Weapons/Guns/Projectiles/projectiles.rsi
     state: pd_impact
+
+# Xeno
+
+- type: hitscan
+  id: BulletAcidHitscan
+  name: acid spit
+  bullet:
+    sprite:
+      sprite: Objects/Weapons/Guns/Projectiles/xeno_toxic.rsi
+      state: xeno_toxic
+  collisionMask: 64 #BulletImpassable
+  damage:
+    types:
+      Caustic: 8

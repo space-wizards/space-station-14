@@ -217,7 +217,6 @@
         Radiation: 0.6
         Caustic: 0.6
     staminaModifier: 0.3
-    ingoreKnockdown: true
   - type: ExplosionResistance
     damageCoefficient: 0.5
   - type: ToggleClothing
@@ -239,6 +238,7 @@
   - type: ContainerContainer
     containers:
       cell_slot: !type:ContainerSlot
+      toggleable-clothing: !type:ContainerSlot
   - type: ItemSlots
     slots:
       cell_slot:
@@ -301,7 +301,6 @@
         Radiation: 0.1
         Caustic: 0.4
     staminaModifier: 1
-    ingoreKnockdown: false
   - type: ClothingSpeedModifier
     walkModifier: 0.90
     sprintModifier: 0.90

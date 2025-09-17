@@ -17,7 +17,7 @@ public abstract partial class SharedStunSystem
         if (!Resolve(entity, ref entity.Comp2, false))
             return false;
 
-        return _blocker.CanConsciouslyPerformAction(entity);
+        return Blocker.CanConsciouslyPerformAction(entity);
     }
 
     private void OnStunMobStateChanged(Entity<StunVisualsComponent> entity, ref MobStateChangedEvent args)
@@ -40,7 +40,7 @@ public abstract partial class SharedStunSystem
         if (!Appearance.TryGetData<bool>(entity, StunVisuals.SeeingStars, out var stars, entity.Comp) && stars)
             return;
 
-        if (!_blocker.CanConsciouslyPerformAction(entity))
+        if (!Blocker.CanConsciouslyPerformAction(entity))
             return;
 
         Appearance.SetData(entity, StunVisuals.SeeingStars, true);

@@ -22,11 +22,21 @@ using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
+using Prometheus; //Starlight
+
 
 namespace Content.Server.Store.Systems;
 
 public sealed partial class StoreSystem
 {
+    #region Starlight
+    private static readonly Histogram _storePurchasesMetric = Metrics.CreateHistogram(
+        "sl_store_purchases",
+        "Everything bounght from a \"store\" which include ling upgrades, traitor uplinks, wizard grimoires",
+        ["store_name", "purchased_item", "discounted"]
+    );
+    #endregion
+
     [Dependency] private readonly IAdminLogManager _admin = default!;
     [Dependency] private readonly SharedHandsSystem _hands = default!;
     [Dependency] private readonly ActionsSystem _actions = default!;
@@ -83,17 +93,17 @@ public sealed partial class StoreSystem
         _ui.CloseUi(uid, StoreUiKey.Key);
     }
 
-        /// <summary>
-        /// STARLIGHT: Updates the user interface for a store and refreshes the listings
-        /// </summary>
-        /// <param name="user">The person who if opening the store ui. Listings are filtered based on this.</param>
-        /// <param name="store">The store entity itself</param>
-        /// <param name="component">The store component being refreshed.</param>
-        public void UpdateUserInterface(EntityUid? user, EntityUid store, StoreComponent? component = null)
+    /// <summary>
+    /// STARLIGHT: Updates the user interface for a store and refreshes the listings
+    /// </summary>
+    /// <param name="user">The person who if opening the store ui. Listings are filtered based on this.</param>
+    /// <param name="store">The store entity itself</param>
+    /// <param name="component">The store component being refreshed.</param>
+    public void UpdateUserInterface(EntityUid? user, EntityUid store, StoreComponent? component = null)
     {
         if (!Resolve(store, ref component))
             return;
-            
+
         // STARLIGHT: Check if a rift has been destroyed and update the listing accordingly
         // This ensures the rift listing remains unavailable even when the UI is refreshed
         _revSupplyRift.CheckRiftDestroyedAndUpdateListing(component);
@@ -149,11 +159,11 @@ public sealed partial class StoreSystem
         }
 
         var buyer = msg.Actor;
-        
+
         // STARLIGHT: Raise an event to allow other systems to potentially cancel this purchase
         var purchaseAttemptEvent = new StorePurchaseAttemptEvent(listing.ID, uid, buyer);
         RaiseLocalEvent(ref purchaseAttemptEvent);
-        
+
         // STARLIGHT: If the event handler requested cancellation, cancel the purchase
         if (purchaseAttemptEvent.Cancel)
             return;
@@ -171,7 +181,7 @@ public sealed partial class StoreSystem
             if (!conditionsMet)
                 return;
         }
-        
+
         // Starlight: Check if the listing is unavailable (e.g., out of stock)
         // We still want to show the listing in the UI, but prevent purchase
         if (listing.Unavailable)
@@ -288,13 +298,13 @@ public sealed partial class StoreSystem
         //log dat shit.
         // Starlight: Get the resolved name without any placeholders
         var resolvedName = ListingLocalisationHelpers.GetLocalisedNameOrEntityName(listing, _proto);
-        
+
         // Remove any stock count or "Out of Stock" text for the log
         if (resolvedName.Contains(" ("))
         {
             resolvedName = resolvedName.Substring(0, resolvedName.IndexOf(" ("));
         }
-        
+
         _admin.Add(LogType.StorePurchase,
             LogImpact.Low,
             $"{ToPrettyString(buyer):player} purchased listing \"{resolvedName}\" from {ToPrettyString(uid)}"); // Starlight
@@ -315,7 +325,7 @@ public sealed partial class StoreSystem
                     {
                         buyerName = metadata.EntityName;
                     }
-                    
+
                     // Update the stock count and last purchaser
                     StockLimitedListingCondition.OnItemPurchased(listing.ID, buyerName, stockCondition.StockLimit);
                     break;
@@ -324,20 +334,20 @@ public sealed partial class StoreSystem
         }
 
         // STARLIGHT END
-        
+
         var buyFinished = new StoreBuyFinishedEvent
         {
             PurchasedItem = listing,
             StoreUid = uid
         };
         RaiseLocalEvent(ref buyFinished);
-        
+
         // STARLIGHT: Raise an event to notify other systems that a purchase was completed
         var purchaseCompletedEvent = new StorePurchaseCompletedEvent(listing.ID, uid, buyer);
         RaiseLocalEvent(ref purchaseCompletedEvent);
 
         UpdateUserInterface(buyer, uid, component);
-        
+
         // STARLIGHT START: If this was a stock-limited item, update all USSP uplink UIs
         if (listing.Conditions != null)
         {
@@ -350,8 +360,21 @@ public sealed partial class StoreSystem
                 }
             }
         }
+
+        #region Starlight statistics
+        var accu = 0f;
+        foreach (var item in listing.Cost)
+        {
+            accu += item.Value.Float();
+        }
+        _storePurchasesMetric.WithLabels([
+            Loc.GetString(component.Name),
+            listing.ID,
+            listing.IsCostModified.ToString()
+        ]).Observe(accu);
+        #endregion
     }
-    
+
     /// <summary>
     /// Updates all USSP uplink UIs to ensure they show the latest stock counts and last purchaser information.
     /// </summary>
@@ -364,25 +387,25 @@ public sealed partial class StoreSystem
             // Skip if this is not a USSP uplink
             if (!storeComp.CurrencyWhitelist.Contains("Telebond"))
                 continue;
-                
+
             // Refresh all listings to ensure they have the latest stock count and last purchaser information
             RefreshAllListings(storeComp);
-            
+
             // Force a refresh of the available listings
             if (storeComp.AccountOwner != null)
             {
                 storeComp.LastAvailableListings = GetAvailableListings(storeComp.AccountOwner.Value, storeComp.Owner, storeComp)
                     .ToHashSet();
             }
-            
+
             // Update the UI to reflect the changes
             // We'll just update it with a null user to ensure the listings are refreshed
             // The next time someone opens the UI, they'll see the updated listings
             UpdateUserInterface(null, storeComp.Owner, storeComp);
-            
+
             // Force update the UI for all currently connected sessions
             ForceUpdateUiForAllSessions(storeComp.Owner, storeComp);
-            
+
             Logger.DebugS("store", $"Updated USSP uplink UI for {ToPrettyString(storeComp.Owner)}");
         }
     }
@@ -460,9 +483,9 @@ public sealed partial class StoreSystem
         foreach (var value in sortedCashValues)
         {
             var cashId = proto.Cash[value];
-            var amountToSpawn = (int) MathF.Floor((float) (amountRemaining / value));
+            var amountToSpawn = (int)MathF.Floor((float)(amountRemaining / value));
             var ents = _stack.SpawnMultiple(cashId, amountToSpawn, coordinates);
-            if (ents.FirstOrDefault() is {} ent)
+            if (ents.FirstOrDefault() is { } ent)
                 _hands.PickupOrDrop(buyer, ent);
             amountRemaining -= value * amountToSpawn;
         }

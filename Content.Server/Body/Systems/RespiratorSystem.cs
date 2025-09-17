@@ -20,6 +20,7 @@ using Content.Shared.Mobs.Systems;
 using JetBrains.Annotations;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
+using Content.Shared.Chat; // Starlight
 
 namespace Content.Server.Body.Systems;
 
@@ -390,7 +391,7 @@ public sealed class RespiratorSystem : EntitySystem
         var organs = _bodySystem.GetBodyOrganEntityComps<LungComponent>((ent, null));
         foreach (var entity in organs)
         {
-            _alertsSystem.ShowAlert(ent, entity.Comp1.Alert);
+            _alertsSystem.ShowAlert(ent.Owner, entity.Comp1.Alert);
         }
     }
 
@@ -400,7 +401,7 @@ public sealed class RespiratorSystem : EntitySystem
         var organs = _bodySystem.GetBodyOrganEntityComps<LungComponent>((ent, null));
         foreach (var entity in organs)
         {
-            _alertsSystem.ClearAlert(ent, entity.Comp1.Alert);
+            _alertsSystem.ClearAlert(ent.Owner, entity.Comp1.Alert);
         }
     }
 

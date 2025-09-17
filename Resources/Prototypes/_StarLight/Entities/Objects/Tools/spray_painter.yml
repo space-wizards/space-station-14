@@ -1,0 +1,7 @@
+- type: entity
+  parent: SprayPainter
+  id: SprayPainterBorg
+  suffix: Cyborg
+  components:
+  - type: AutoRecharge
+    rechargeDuration: 5 

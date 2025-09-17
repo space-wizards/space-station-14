@@ -52,11 +52,12 @@
     - type: GhostRole
       name: ghost-role-information-Death-Squad-name
       description: ghost-role-information-Death-Squad-description
-      rules: ghost-role-information-Death-Squad-rules
+      rules: ghost-role-information-corporate-aligned-rules # Starlight
       raffle:
         settings: short
       mindRoles:
-      - MindRoleGhostRoleFamiliar
+#      - MindRoleGhostRoleFamiliar  # DOTS - look at deleting this entire line, if we are reclassifying DS. Does this break stuff?
+      - MindRoleGhostCorporateAligned # Starlight
       job: DeathSquad
       requirements:
       - !type:OverallPlaytimeRequirement
@@ -99,7 +100,7 @@
     - type: GhostRole
       name: ghost-role-information-ert-leader-name
       description: ghost-role-information-ert-leader-description
-      rules: ghost-role-information-nonantagonist-rules
+      rules: ghost-role-information-corporate-aligned-rules # Starlight
       raffle:
         settings: short
       job: ERTLeader
@@ -184,7 +185,7 @@
     - type: GhostRole
       name: ghost-role-information-ert-chaplain-name
       description: ghost-role-information-ert-chaplain-description
-      rules: ghost-role-information-nonantagonist-rules
+      rules: ghost-role-information-corporate-aligned-rules # Starlight
       raffle:
         settings: short
       job: ERTChaplain
@@ -250,7 +251,7 @@
     - type: GhostRole
       name: ghost-role-information-ert-janitor-name
       description: ghost-role-information-ert-janitor-description
-      rules: ghost-role-information-nonantagonist-rules
+      rules: ghost-role-information-corporate-aligned-rules # Starlight
       raffle:
         settings: short
       job: ERTJanitor
@@ -315,7 +316,7 @@
     - type: GhostRole
       name: ghost-role-information-ert-engineer-name
       description: ghost-role-information-ert-engineer-description
-      rules: ghost-role-information-nonantagonist-rules
+      rules: ghost-role-information-corporate-aligned-rules # Starlight
       raffle:
         settings: short
       job: ERTEngineer
@@ -380,7 +381,7 @@
     - type: GhostRole
       name: ghost-role-information-ert-security-name
       description: ghost-role-information-ert-security-description
-      rules: ghost-role-information-nonantagonist-rules
+      rules: ghost-role-information-corporate-aligned-rules # Starlight
       raffle:
         settings: short
       job: ERTSecurity
@@ -461,7 +462,7 @@
     - type: GhostRole
       name: ghost-role-information-ert-medical-name
       description: ghost-role-information-ert-medical-description
-      rules: ghost-role-information-nonantagonist-rules
+      rules: ghost-role-information-corporate-aligned-rules # Starlight
       raffle:
         settings: short
       job: ERTMedical
@@ -526,7 +527,7 @@
     - type: GhostRole
       name: ghost-role-information-cburn-agent-name
       description: ghost-role-information-cburn-agent-description
-      rules: ghost-role-information-nonantagonist-rules
+      rules: ghost-role-information-corporate-aligned-rules # Starlight
       raffle:
         settings: short
       job: CBURN
@@ -564,7 +565,7 @@
     - type: GhostRole
       name: ghost-role-information-centcom-official-name
       description: ghost-role-information-centcom-official-description
-      rules: ghost-role-information-nonantagonist-rules
+      rules: ghost-role-information-corporate-aligned-rules # Starlight
       raffle:
         settings: default
       requirements:
@@ -642,3 +643,4 @@
       raffle:
         settings: default
     - type: Cluwne
+      unremovable: true #Starlight

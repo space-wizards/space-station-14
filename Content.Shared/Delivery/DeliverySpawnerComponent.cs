@@ -40,4 +40,13 @@ public sealed partial class DeliverySpawnerComponent : Component
     /// </summary>
     [DataField]
     public SoundSpecifier? OpenSound = new SoundCollectionSpecifier("storageRustle");
+
+    #region Starlight
+
+    /// <summary>
+    /// the table to switch to when this device is emagged. if it is null cant be emagged.
+    /// </summary>
+    [DataField]
+    public EntityTableSelector? EmagTable;
+    #endregion
 }

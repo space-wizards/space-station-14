@@ -11,3 +11,17 @@
       amount: 1
   products:
     Amoxla: 2
+
+- type: reaction
+  id: Chronexaline
+  reactants:
+    Hyronalin:
+      amount: 2
+    Arithrazine:
+      amount: 2
+    Cryoxadone:
+      amount: 2
+    Necrosol:
+      amount: 1
+  products:
+    Chronexaline: 3

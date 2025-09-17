@@ -1,0 +1,132 @@
+# Top Undergarments
+- type: marking
+  id: UndergarmentTopBinderAvali
+  bodyPart: UndergarmentTop
+  markingCategory: UndergarmentTop
+  speciesRestriction: [Avali]
+  coloring:
+    default:
+      type: !type:SimpleColoring
+        color: "#FFFFFF"
+  sprites:
+  - sprite: _Starlight/Mobs/Customization/undergarments.rsi
+    state: binder_avali
+
+- type: marking
+  id: UndergarmentTopBraAvali
+  bodyPart: UndergarmentTop
+  markingCategory: UndergarmentTop
+  speciesRestriction: [Avali]
+  coloring:
+    default:
+      type: !type:SimpleColoring
+        color: "#FFFFFF"
+  sprites:
+  - sprite: _Starlight/Mobs/Customization/undergarments.rsi
+    state: classic_avali
+
+
+- type: marking
+  id: UndergarmentTopSportsbraAvali
+  bodyPart: UndergarmentTop
+  markingCategory: UndergarmentTop
+  speciesRestriction: [Avali]
+  coloring:
+    default:
+      type: !type:SimpleColoring
+        color: "#FFFFFF"
+  sprites:
+  - sprite: _Starlight/Mobs/Customization/undergarments.rsi
+    state: sports_avali
+
+- type: marking
+  id: UndergarmentTopTanktopAvali
+  bodyPart: UndergarmentTop
+  markingCategory: UndergarmentTop
+  speciesRestriction: [Avali]
+  coloring:
+    default:
+      type: !type:SimpleColoring
+        color: "#FFFFFF"
+  sprites:
+  - sprite: _Starlight/Mobs/Customization/undergarments.rsi
+    state: tanktop_avali
+
+- type: marking
+  id: UndergarmentTopTanktopResomi
+  bodyPart: UndergarmentTop
+  markingCategory: UndergarmentTop
+  speciesRestriction: [Resomi]
+  coloring:
+    default:
+      type: !type:SimpleColoring
+        color: "#FFFFFF"
+  sprites:
+  - sprite: _Starlight/Mobs/Customization/undergarments.rsi
+    state: tanktop_resomi
+
+# Bottom Undergarments
+- type: marking
+  id: UndergarmentBottomBriefsAvali
+  bodyPart: UndergarmentBottom
+  markingCategory: UndergarmentBottom
+  speciesRestriction: [Avali]
+  coloring:
+    default:
+      type: !type:SimpleColoring
+        color: "#FFFFFF"
+  sprites:
+  - sprite: _Starlight/Mobs/Customization/undergarments.rsi
+    state: briefs_avali
+
+- type: marking
+  id: UndergarmentBottomSatinAvali
+  bodyPart: UndergarmentBottom
+  markingCategory: UndergarmentBottom
+  speciesRestriction: [Avali]
+  coloring:
+    default:
+      type: !type:SimpleColoring
+        color: "#FFFFFF"
+  sprites:
+  - sprite: _Starlight/Mobs/Customization/undergarments.rsi
+    state: satin_avali
+
+- type: marking
+  id: UndergarmentBottomBoxersAvali
+  bodyPart: UndergarmentBottom
+  markingCategory: UndergarmentBottom
+  speciesRestriction: [Avali]
+  coloring:
+    default:
+      type: !type:SimpleColoring
+        color: "#FFFFFF"
+  sprites:
+  - sprite: _Starlight/Mobs/Customization/undergarments.rsi
+    state: boxers_avali
+
+- type: marking
+  id: UndergarmentBottomBoxersResomi
+  bodyPart: UndergarmentBottom
+  markingCategory: UndergarmentBottom
+  speciesRestriction: [Resomi]
+  coloring:
+    default:
+      type: !type:SimpleColoring
+        color: "#FFFFFF"
+  sprites:
+  - sprite: _Starlight/Mobs/Customization/undergarments.rsi
+    state: boxers_resomi
+
+- type: marking
+  id: UndergarmentBottomThongResomi
+  bodyPart: UndergarmentBottom
+  markingCategory: UndergarmentBottom
+  speciesRestriction: [Resomi]
+  coloring:
+    default:
+      type: !type:SimpleColoring
+        color: "#FFFFFF"
+  sprites:
+  - sprite: _Starlight/Mobs/Customization/undergarments.rsi
+    state: thong_resomi

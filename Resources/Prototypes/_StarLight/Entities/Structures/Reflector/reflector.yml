@@ -1,5 +1,6 @@
 - type: entity
   id: Reflector
+  parent: BaseStructure
   name: reflector
   placement:
     mode: SnapgridCenter
@@ -11,7 +12,6 @@
   - type: Anchorable
   - type: Pullable
   - type: Rotatable
-  - type: Machine
   - type: Clickable
   - type: Physics
     bodyType: Static

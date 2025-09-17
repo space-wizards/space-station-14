@@ -657,7 +657,6 @@
         Radiation: 0.5
         Caustic: 0.5
     staminaModifier: 0.3
-    ingoreKnockdown: true
   - type: ClothingSpeedModifier
     walkModifier: 0.9
     sprintModifier: 0.9
@@ -729,7 +728,6 @@
         Radiation: 0.01
         Caustic: 0.5
     staminaModifier: 0.2
-    ingoreKnockdown: true
   - type: Item
     size: Huge
   - type: ClothingSpeedModifier
@@ -774,7 +772,6 @@
         Radiation: 0.25
         Caustic: 0.4
     staminaModifier: 0.1
-    ingoreKnockdown: true
   - type: ClothingSpeedModifier
     walkModifier: 0.95
     sprintModifier: 0.95
@@ -821,7 +818,6 @@
         Radiation: 0.2
         Caustic: 0.2
     staminaModifier: 0.1
-    ingoreKnockdown: true
   - type: ClothingSpeedModifier
     walkModifier: 0.65
     sprintModifier: 0.65
@@ -1010,7 +1006,6 @@
         Radiation: 0.01 #sl Change
         Caustic: 0.4 #sl Change
     staminaModifier: 0.1
-    ingoreKnockdown: true
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitERTLeader
 
@@ -1111,6 +1106,8 @@
     damageCoefficient: 0.2
   - type: FireProtection
     reduction: 0.8
+  - type: StaminaResistance # do not add these to other equipment or mobs, we don't want to microbalance these everywhere
+    damageCoefficient: 0.15 # Needs 21 hits with a disabler to stun :godo:
   - type: Pierceable
     level: Rock
   - type: Armor
@@ -1123,7 +1120,6 @@
         Radiation: 0.1
         Caustic: 0.1
     staminaModifier: 0.0
-    ingoreKnockdown: true
   - type: ClothingSpeedModifier
     walkModifier: 1.0
     sprintModifier: 1.0
@@ -1136,6 +1132,7 @@
   parent: [ BaseCentcommContraband, ClothingOuterHardsuitBase ]
   id: ClothingOuterHardsuitCBURN
   name: CBURN exosuit
+  suffix: DO NOT USE # Starlight
   description: A lightweight yet strong exosuit used for special cleanup operations.
   components:
   - type: Sprite
@@ -1198,7 +1195,6 @@
         Piercing: 0.9
         Caustic: 0.8
     staminaModifier: 0.8
-    ingoreKnockdown: true
   - type: ClothingSpeedModifier
     walkModifier: 0.9
     sprintModifier: 0.9

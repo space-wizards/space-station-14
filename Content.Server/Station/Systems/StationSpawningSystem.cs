@@ -2,9 +2,10 @@ using System.Linq;
 using Content.Server._Starlight.Medical.Limbs;
 using Content.Server.Access.Systems;
 using Content.Server.Body.Systems;
+using Content.Server.GameTicking;
 using Content.Server.Humanoid;
 using Content.Server.IdentityManagement;
-using Content.Server.Mind.Commands;
+using Content.Server.Mind;
 using Content.Server.PDA;
 using Content.Server.Station.Components;
 using Content.Shared.Access.Components;
@@ -23,6 +24,7 @@ using Content.Shared.Roles;
 using Content.Shared.Starlight.TextToSpeech;
 using Content.Shared.Station;
 using JetBrains.Annotations;
+using Prometheus;
 using Robust.Shared.Configuration;
 using Robust.Shared.Map;
 using Robust.Shared.Player;
@@ -47,10 +49,22 @@ public sealed class StationSpawningSystem : SharedStationSpawningSystem
     [Dependency] private readonly MetaDataSystem _metaSystem = default!;
     [Dependency] private readonly PdaSystem _pdaSystem = default!;
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+    [Dependency] private readonly MindSystem _mindSystem = default!;
     [Dependency] private readonly LimbSystem _limbSystem = default!;
     [Dependency] private readonly BodySystem _bodySystem = default!;
 
     private List<CyberneticImplant> _allCybernetics = default!; // Starlight
+
+    #region Starlight
+    [Dependency] private readonly GameTicker _gameTicker = default!;
+    private static readonly ProtoId<SpeciesPrototype> FallbackSpecies = "Human";
+    private static readonly ProtoId<JobPrototype> FallbackJob = "Assistant";
+    private static readonly Gauge _speciesJobsSpawns = Metrics.CreateGauge(
+        "sl_species_jobs_spawns",
+        "Contains info on species and jobs spawned at and during the round.",
+        ["species", "job", "spawn_time"]
+    );
+    #endregion
 
     // Starlight
     public override void Initialize()
@@ -104,7 +118,7 @@ public sealed class StationSpawningSystem : SharedStationSpawningSystem
         EntityUid? station,
         EntityUid? entity = null)
     {
-        _prototypeManager.TryIndex(job ?? string.Empty, out var prototype);
+        _prototypeManager.Resolve(job, out var prototype);
         RoleLoadout? loadout = null;
 
         // Need to get the loadout up-front to handle names if we use an entity spawn override.
@@ -127,7 +141,7 @@ public sealed class StationSpawningSystem : SharedStationSpawningSystem
         {
             DebugTools.Assert(entity is null);
             var jobEntity = Spawn(prototype.JobEntity, coordinates);
-            MakeSentientCommand.MakeSentient(jobEntity, EntityManager);
+            _mindSystem.MakeSentient(jobEntity);
 
             // Make sure custom names get handled, what is gameticker control flow whoopy.
             if (loadout != null)
@@ -152,10 +166,11 @@ public sealed class StationSpawningSystem : SharedStationSpawningSystem
             _humanoidSystem.LoadProfile(entity.Value, profile);
             _metaSystem.SetEntityName(entity.Value, profile.Name);
 
-            if (profile.FlavorText != "" && _configurationManager.GetCVar(CCVars.FlavorText))
-            {
-                AddComp<DetailExaminableComponent>(entity.Value).Content = profile.FlavorText;
-            }
+            //Starlight remove
+            // if (profile.FlavorText != "" && _configurationManager.GetCVar(CCVars.FlavorText))
+            // {
+            //     AddComp<DetailExaminableComponent>(entity.Value).Content = profile.FlavorText;
+            // }
         }
 
         SetupCybernetics(entity.Value, profile?.Cybernetics ?? []); // Starlight
@@ -181,12 +196,37 @@ public sealed class StationSpawningSystem : SharedStationSpawningSystem
 
         DoJobSpecials(job, entity.Value);
         _identity.QueueIdentityUpdate(entity.Value);
+
+        #region StarlightStats
+        if (entity.HasValue)
+        {
+            if (!_prototypeManager.TryIndex(profile?.Species, out SpeciesPrototype? speciesProto))
+            {
+                speciesProto = _prototypeManager.Index(FallbackSpecies);
+                Log.Warning($"Unable to find species {profile?.Species}, falling back to {FallbackSpecies}");
+            }
+
+            if (!_prototypeManager.TryIndex(job, out JobPrototype? jobProto))
+            {
+                jobProto = _prototypeManager.Index(FallbackJob);
+                Log.Warning($"Unable to find job {job}, falling back to {FallbackJob}");
+            }
+
+            _speciesJobsSpawns
+                .WithLabels(
+                    Loc.GetString(speciesProto.Name),
+                    jobProto.LocalizedName,
+                    _gameTicker.RunLevel.ToString())
+                .Inc();
+        }
+        #endregion
+
         return entity.Value;
     }
 
     private void DoJobSpecials(ProtoId<JobPrototype>? job, EntityUid entity)
     {
-        if (!_prototypeManager.TryIndex(job ?? string.Empty, out JobPrototype? prototype))
+        if (!_prototypeManager.Resolve(job, out JobPrototype? prototype))
             return;
 
         foreach (var jobSpecial in prototype.Special)
@@ -270,7 +310,7 @@ public sealed class StationSpawningSystem : SharedStationSpawningSystem
         _cardSystem.TryChangeFullName(cardId, characterName, card);
         _cardSystem.TryChangeJobTitle(cardId, jobPrototype.LocalizedName, card);
 
-        if (_prototypeManager.TryIndex(jobPrototype.Icon, out var jobIcon))
+        if (_prototypeManager.Resolve(jobPrototype.Icon, out var jobIcon))
             _cardSystem.TryChangeJobIcon(cardId, jobIcon, card);
 
         var extendedAccess = false;

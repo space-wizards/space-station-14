@@ -1,0 +1,32 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Sprites by TacoLlama (github) created for Starlight",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "clipboard"
+    },
+    {
+      "name": "clipboard_over"
+    },
+    {
+      "name": "clipboard_paper"
+    },
+    {
+      "name": "clipboard_pen"
+    },
+    {
+      "name": "equipped-BELT"
+    },
+    {
+      "name": "inhand-left"
+    },
+    {
+      "name": "inhand-right"
+    }
+  ]
+}

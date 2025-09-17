@@ -208,6 +208,19 @@
   - !type:TileNotBlocked
 
 - type: construction
+  id: Cardwall
+  graph: Cardwall
+  startNode: start
+  targetNode: cardwall
+  category: construction-category-structures
+  conditions:
+  - !type:TileNotBlocked
+    failIfSpace: false
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canRotate: false
+
+- type: construction
   id: Grille
   graph: Grille
   startNode: start
@@ -518,6 +531,7 @@
   placementMode: SnapgridCenter
   canRotate: false
 
+
 - type: construction
   id: UraniumWindowDiagonal
   name: construction-recipe-uranium-window-diagonal
@@ -546,6 +560,32 @@
   objectType: Structure
   placementMode: SnapgridCenter
 
+- type: construction
+  id: UraniumWindowDirectional
+  graph: WindowDirectional
+  startNode: start
+  targetNode: uraniumWindowDirectional
+  category: construction-category-structures
+  canBuildInImpassable: true
+  conditions:
+    - !type:EmptyOrWindowValidInTile
+    - !type:NoWindowsInTile
+  objectType: Structure
+  placementMode: SnapgridCenter
+
+- type: construction
+  id: UraniumReinforcedWindowDirectional
+  graph: WindowDirectional
+  startNode: start
+  targetNode: uraniumReinforcedWindowDirectional
+  category: construction-category-structures
+  canBuildInImpassable: true
+  conditions:
+    - !type:EmptyOrWindowValidInTile
+    - !type:NoWindowsInTile
+  objectType: Structure
+  placementMode: SnapgridCenter
+  
 - type: construction
   id: Firelock
   graph: Firelock
@@ -1187,6 +1227,16 @@
   graph: DoorGraph
   startNode: start
   targetNode: paperDoor
+  category: construction-category-structures
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+
+- type: construction
+  id: CardDoor
+  graph: DoorGraph
+  startNode: start
+  targetNode: cardDoor
   category: construction-category-structures
   objectType: Structure
   placementMode: SnapgridCenter

@@ -1,0 +1,45 @@
+- type: priceCategory
+  id: food_cheap
+  min: 1
+  max: 3
+
+- type: priceCategory
+  id: food_medium
+  min: 3
+  max: 6
+
+- type: priceCategory
+  id: cigaretes
+  min: 3
+  max: 15
+
+- type: priceCategory
+  id: drink
+  min: 1
+  max: 10
+
+- type: priceCategory
+  id: tool_cheap
+  min: 3
+  max: 18
+
+- type: priceCategory
+  id: tool_basic
+  min: 10
+  max: 30
+
+- type: priceCategory
+  id: medical
+  min: 4
+  max: 20
+
+- type: priceCategory
+  id: clothing
+  min: 2
+  max: 18
+
+- type: priceCategory
+  id: miscellaneous
+  min: 1
+  max: 5
+

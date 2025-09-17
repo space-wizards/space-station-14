@@ -18,6 +18,7 @@ using Content.Shared.Item.ItemToggle.Components;
 using JetBrains.Annotations;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Utility;
+using Content.Shared._Starlight.Power.Components; // Starlight-edit
 
 namespace Content.Shared.Lock;
 
@@ -29,12 +30,12 @@ public sealed class LockSystem : EntitySystem
 {
     [Dependency] private readonly AccessReaderSystem _accessReader = default!;
     [Dependency] private readonly ActionBlockerSystem _actionBlocker = default!;
-    [Dependency] private readonly ActivatableUISystem _activatableUI = default!;
     [Dependency] private readonly EmagSystem _emag = default!;
     [Dependency] private readonly SharedAppearanceSystem _appearanceSystem = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly SharedPopupSystem _sharedPopupSystem = default!;
     [Dependency] private readonly SharedDoAfterSystem _doAfter = default!;
+    [Dependency] private readonly SharedUserInterfaceSystem _ui = default!;
 
     /// <inheritdoc />
     public override void Initialize()
@@ -49,14 +50,15 @@ public sealed class LockSystem : EntitySystem
         SubscribeLocalEvent<LockComponent, GotEmaggedEvent>(OnEmagged);
         SubscribeLocalEvent<LockComponent, LockDoAfter>(OnDoAfterLock);
         SubscribeLocalEvent<LockComponent, UnlockDoAfter>(OnDoAfterUnlock);
-        SubscribeLocalEvent<LockComponent, StorageInteractAttemptEvent>(OnStorageInteractAttempt);
+
 
         SubscribeLocalEvent<LockedWiresPanelComponent, LockToggleAttemptEvent>(OnLockToggleAttempt);
         SubscribeLocalEvent<LockedWiresPanelComponent, AttemptChangePanelEvent>(OnAttemptChangePanel);
         SubscribeLocalEvent<LockedAnchorableComponent, UnanchorAttemptEvent>(OnUnanchorAttempt);
+        SubscribeLocalEvent<LockedStorageComponent, StorageInteractAttemptEvent>(OnStorageInteractAttempt);
 
-        SubscribeLocalEvent<ActivatableUIRequiresLockComponent, ActivatableUIOpenAttemptEvent>(OnUIOpenAttempt);
-        SubscribeLocalEvent<ActivatableUIRequiresLockComponent, LockToggledEvent>(LockToggled);
+        SubscribeLocalEvent<UIRequiresLockComponent, ActivatableUIOpenAttemptEvent>(OnUIOpenAttempt);
+        SubscribeLocalEvent<UIRequiresLockComponent, LockToggledEvent>(LockToggled);
 
         SubscribeLocalEvent<ItemToggleRequiresLockComponent, ItemToggleActivateAttemptEvent>(OnActivateAttempt);
     }
@@ -74,11 +76,13 @@ public sealed class LockSystem : EntitySystem
         // Only attempt an unlock by default on Activate
         if (lockComp.Locked && lockComp.UnlockOnClick)
         {
-            args.Handled = TryUnlock(uid, args.User, lockComp);
+            args.Handled = true;
+            TryUnlock(uid, args.User, lockComp);
         }
         else if (!lockComp.Locked && lockComp.LockOnClick)
         {
-            args.Handled = TryLock(uid, args.User, lockComp);
+            args.Handled = true;
+            TryLock(uid, args.User, lockComp);
         }
     }
 
@@ -87,7 +91,7 @@ public sealed class LockSystem : EntitySystem
         if (!component.Locked)
             return;
 
-        if (!args.Silent)
+        if (!args.Silent && component.PopupMessage) // Starlight-edit
             _sharedPopupSystem.PopupClient(Loc.GetString("entity-storage-component-locked-message"), uid, args.User);
 
         args.Cancelled = true;
@@ -95,6 +99,9 @@ public sealed class LockSystem : EntitySystem
 
     private void OnExamined(EntityUid uid, LockComponent lockComp, ExaminedEvent args)
     {
+        if (!lockComp.ShowExamine)
+            return;
+
         args.PushText(Loc.GetString(lockComp.Locked
                 ? "lock-comp-on-examined-is-locked"
                 : "lock-comp-on-examined-is-unlocked",
@@ -150,7 +157,7 @@ public sealed class LockSystem : EntitySystem
         if (!Resolve(uid, ref lockComp))
             return;
 
-        if (lockComp.Locked)
+        if (lockComp.Locked || (lockComp.PowerNeeded && TryComp<PoweredLockerComponent>(uid, out var power) && !power.Powered)) // Starlight-edit: Powered Locker
             return;
 
         if (user is { Valid: true })
@@ -183,7 +190,7 @@ public sealed class LockSystem : EntitySystem
         if (!Resolve(uid, ref lockComp))
             return;
 
-        if (!lockComp.Locked)
+        if (!lockComp.Locked || (lockComp.PowerNeeded && TryComp<PoweredLockerComponent>(uid, out var power) && !power.Powered)) // Starlight-edit: Powered Locker
             return;
 
         if (user is { Valid: true })
@@ -245,6 +252,20 @@ public sealed class LockSystem : EntitySystem
     }
 
     /// <summary>
+    /// Toggle the lock to locked if unlocked, and unlocked if locked.
+    /// </summary>
+    /// <param name="uid">Entity to toggle the lock state of.</param>
+    /// <param name="user">The person trying to toggle the lock</param>
+    /// <param name="lockComp">Entities lock comp (will be resolved)</param>
+    public void ToggleLock(EntityUid uid, EntityUid? user, LockComponent? lockComp = null)
+    {
+        if (IsLocked((uid, lockComp)))
+            Unlock(uid, user, lockComp);
+        else
+            Lock(uid, user, lockComp);
+    }
+
+    /// <summary>
     /// Returns true if the entity is locked.
     /// Entities with no lock component are considered unlocked.
     /// </summary>
@@ -302,11 +323,12 @@ public sealed class LockSystem : EntitySystem
 
     private void AddToggleLockVerb(EntityUid uid, LockComponent component, GetVerbsEvent<AlternativeVerb> args)
     {
-        if (!args.CanAccess || !args.CanInteract || !args.CanComplexInteract)
+        if (!args.CanAccess || !args.CanInteract || !args.CanComplexInteract || !component.ShowLockVerbs)
             return;
 
         AlternativeVerb verb = new()
         {
+            Disabled = !CanToggleLock(uid, args.User),
             Act = component.Locked
                 ? () => TryUnlock(uid, args.User, component)
                 : () => TryLock(uid, args.User, component),
@@ -323,7 +345,7 @@ public sealed class LockSystem : EntitySystem
         if (!_emag.CompareFlag(args.Type, EmagType.Access))
             return;
 
-        if (!component.Locked || !component.BreakOnAccessBreaker)
+        if (!component.Locked || !component.BreakOnAccessBreaker || (component.PowerNeeded && TryComp<PoweredLockerComponent>(uid, out var power) && !power.Powered)) // Starlight-edit: Powered Locker
             return;
 
         _audio.PlayPredicted(component.UnlockSound, uid, args.UserUid);
@@ -355,9 +377,9 @@ public sealed class LockSystem : EntitySystem
         TryUnlock(uid, args.User, skipDoAfter: true);
     }
 
-    private void OnStorageInteractAttempt(Entity<LockComponent> ent, ref StorageInteractAttemptEvent args)
+    private void OnStorageInteractAttempt(Entity<LockedStorageComponent> ent, ref StorageInteractAttemptEvent args)
     {
-        if (ent.Comp.Locked)
+        if (IsLocked(ent.Owner))
             args.Cancelled = true;
     }
 
@@ -409,41 +431,54 @@ public sealed class LockSystem : EntitySystem
         args.Cancel();
     }
 
-    private void OnUIOpenAttempt(EntityUid uid, ActivatableUIRequiresLockComponent component, ActivatableUIOpenAttemptEvent args)
+    private void OnUIOpenAttempt(EntityUid uid, UIRequiresLockComponent component, ActivatableUIOpenAttemptEvent args)
     {
         if (args.Cancelled)
             return;
 
-        if (TryComp<LockComponent>(uid, out var lockComp) && lockComp.Locked != component.RequireLocked)
-        {
-            args.Cancel();
-            if (lockComp.Locked)
-            {
-                _sharedPopupSystem.PopupClient(Loc.GetString("entity-storage-component-locked-message"), uid, args.User);
-            }
+        if (!TryComp<LockComponent>(uid, out var lockComp) || lockComp.Locked == component.RequireLocked)
+            return;
 
-            _audio.PlayPredicted(component.AccessDeniedSound, uid, args.User);
+        args.Cancel();
+        if (lockComp.Locked && component.Popup != null)
+        {
+            _sharedPopupSystem.PopupClient(Loc.GetString(component.Popup), uid, args.User);
         }
+
+        _audio.PlayPredicted(component.AccessDeniedSound, uid, args.User);
     }
 
-    private void LockToggled(EntityUid uid, ActivatableUIRequiresLockComponent component, LockToggledEvent args)
+    private void LockToggled(EntityUid uid, UIRequiresLockComponent component, LockToggledEvent args)
     {
         if (!TryComp<LockComponent>(uid, out var lockComp) || lockComp.Locked == component.RequireLocked)
             return;
 
-        _activatableUI.CloseAll(uid);
+        if (component.UserInterfaceKeys == null)
+        {
+            _ui.CloseUis(uid);
+            return;
+        }
+
+        foreach (var key in component.UserInterfaceKeys)
+        {
+            _ui.CloseUi(uid, key);
+        }
     }
+
     private void OnActivateAttempt(EntityUid uid, ItemToggleRequiresLockComponent component, ref ItemToggleActivateAttemptEvent args)
     {
         if (args.Cancelled)
             return;
 
-        if (TryComp<LockComponent>(uid, out var lockComp) && lockComp.Locked != component.RequireLocked)
+        if (!TryComp<LockComponent>(uid, out var lockComp) || lockComp.Locked == component.RequireLocked)
+            return;
+
+        args.Cancelled = true;
+
+        if (lockComp.Locked && component.LockedPopup != null)
         {
-            args.Cancelled = true;
-            if (lockComp.Locked)
-                _sharedPopupSystem.PopupClient(Loc.GetString("lock-comp-generic-fail",
-                ("target", Identity.Entity(uid, EntityManager))),
+            _sharedPopupSystem.PopupClient(Loc.GetString(component.LockedPopup,
+                    ("target", Identity.Entity(uid, EntityManager))),
                 uid,
                 args.User);
         }

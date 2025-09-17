@@ -1,4 +1,5 @@
 using System.Linq;
+using Content.Server.Starlight.Cybernetics.Components;
 using Content.Shared.CCVar;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Nutrition.Components;
@@ -16,30 +17,48 @@ public sealed class FlavorProfileSystem : EntitySystem
     [Dependency] private readonly IConfigurationManager _configManager = default!;
 
     private const string BackupFlavorMessage = "flavor-profile-unknown";
+    private const string BlandFlavorMessage = "flavor-profile-bland"; // Starlight-edit
 
     private int FlavorLimit => _configManager.GetCVar(CCVars.FlavorLimit);
 
-    public string GetLocalizedFlavorsMessage(EntityUid uid, EntityUid user, Solution solution,
-        FlavorProfileComponent? flavorProfile = null)
+    public string GetLocalizedFlavorsMessage(Entity<FlavorProfileComponent?> entity, EntityUid user, Solution? solution)
     {
-        if (!Resolve(uid, ref flavorProfile, false))
+        // Starlight-edit: start
+        if (TryComp<UnableToTasteComponent>(user, out var _))
+            return Loc.GetString(BlandFlavorMessage);
+        // Starlight-edit: end
+
+        HashSet<string> flavors = new();
+        HashSet<string>? ignore = null;
+
+        if (Resolve(entity, ref entity.Comp, false))
         {
-            return Loc.GetString(BackupFlavorMessage);
+            flavors = entity.Comp.Flavors;
+            ignore = entity.Comp.IgnoreReagents;
         }
 
-        var flavors = new HashSet<string>(flavorProfile.Flavors);
-        flavors.UnionWith(GetFlavorsFromReagents(solution, FlavorLimit - flavors.Count, flavorProfile.IgnoreReagents));
+        if (solution != null)
+            flavors.UnionWith(GetFlavorsFromReagents(solution, FlavorLimit - flavors.Count, ignore));
 
         var ev = new FlavorProfileModificationEvent(user, flavors);
+
         RaiseLocalEvent(ev);
-        RaiseLocalEvent(uid, ev);
+        RaiseLocalEvent(entity, ev);
         RaiseLocalEvent(user, ev);
+
+        if (flavors.Count == 0)
+            return Loc.GetString(BackupFlavorMessage);
 
         return FlavorsToFlavorMessage(flavors);
     }
 
     public string GetLocalizedFlavorsMessage(EntityUid user, Solution solution)
     {
+        // Starlight-edit: start
+        if (TryComp<UnableToTasteComponent>(user, out var _))
+            return Loc.GetString(BlandFlavorMessage);
+        // Starlight-edit: end
+            
         var flavors = GetFlavorsFromReagents(solution, FlavorLimit);
         var ev = new FlavorProfileModificationEvent(user, flavors);
         RaiseLocalEvent(user, ev, true);

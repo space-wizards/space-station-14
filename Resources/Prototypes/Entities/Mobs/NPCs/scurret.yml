@@ -7,9 +7,14 @@
   parent: [ MobBaseAncestor, BaseSpeciesPickupable ] #Starlight - give the scurret uppies.
   abstract: true
   components:
+  # Starlight-start: Languages
+  - type: LanguageKnowledge
+    speaks:
+    - ScurretSign
+    understands:
+    - ScurretSign
+  # Starlight-end
   # Custom names
-  - type: ReplacementAccent
-    accent: scurret
   - type: Sprite
     layers:
     - map: ["enum.DamageStateVisualLayers.Base"]
@@ -61,6 +66,7 @@
     proto: moth
   - type: InteractionPopup
     successChance: 0.99 # Imagine not being allowed to headpat a scurret, chat
+    interactDelay: 2.25
     interactSuccessString: petting-success-scurret
     interactFailureString: petting-failure-scurret
     interactSuccessSpawn: EffectHearts
@@ -189,6 +195,14 @@
   parent: MobBaseScurret
   abstract: true
   components:
+  # Starlight-start: Languages
+    - type: LanguageKnowledge
+      speaks:
+      - ScurretSign
+      understands:
+      - ScurretSign
+      - GalacticCommon
+  # Starlight-end
     - type: Loadout
       prototypes: [ EmotionalSupportScurretGear ]
     - type: NpcFactionMember

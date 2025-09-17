@@ -36,6 +36,12 @@
   - ClothingNeckTransPin
   - ClothingNeckAutismPin
   - ClothingNeckGoldAutismPin
+  - OffsetCane
+  - OffsetCaneWood
+  - OffsetCaneClown
+  - OffsetCaneMime
+  - OffsetCaneNT
+  - Cane
   - TowelColorBlack
   - TowelColorDarkBlue
   - TowelColorDarkGreen
@@ -56,7 +62,7 @@
   - ClothingUnderSocksCoder # 🌟Starlight🌟
   - ClothWrap # 🌟Starlight🌟
   - ClothingUniformJumpskirtElegantMaid # 🌟Starlight🌟
-  - ClothingHeadHatCatEars # 🌟Starlight🌟
+  - ClothingHeadHatWhiteCatEars # 🌟Starlight🌟
   - RolliePack #SL
   - GoldRing #SL
   - SilverRing #SL
@@ -88,6 +94,8 @@
   - DaBling #SL
   - CrapPlushie #SL ##not a typo
   - LighterGatcha #SL
+  - MagicCrayon #SL
+  - HappyHonk #SL
 
 - type: loadoutGroup
   id: Glasses
@@ -795,6 +803,13 @@
   - Heels # 🌟Starlight🌟
 
 - type: loadoutGroup
+  id: CargoTechnicianID
+  name: loadout-group-cargo-technician-id
+  loadouts:
+  - CargoTechnicianPDA
+  - SeniorCourierPDA
+
+- type: loadoutGroup
   id: SalvageSpecialistBackpack
   name: loadout-group-salvage-specialist-backpack
   loadouts:
@@ -1108,6 +1123,8 @@
   - HeadofSecurityTurtleneckSkirt
   - HeadofSecurityFormalSuit
   - HeadofSecurityFormalSkirt
+  - HeadofSecurityBlueJumpsuit
+  - HeadofSecurityGreyJumpsuit
 
 - type: loadoutGroup
   id: HeadofSecurityNeck
@@ -1237,6 +1254,7 @@
   - SeniorOfficerJumpsuit
   - SeniorOfficerJumpskirt
   - TrooperUniform
+  - SecurityJumpsuitBlue
 
 - type: loadoutGroup
   id: SecurityBackpack

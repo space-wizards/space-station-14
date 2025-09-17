@@ -15,10 +15,6 @@
     bodyType: KinematicController # Same for all inheritors
   - type: StatusEffects
     allowed:
-    - Stun
-    - KnockedDown
-    - SlowedDown
-    - Stutter
     - Electrocution
   - type: Repairable
     doAfterDelay: 8
@@ -54,6 +50,15 @@
   - type: ProtectedFromStepTriggers
   - type: NoSlip
   - type: Insulated
+  # Starlight-start: Languages
+  - type: LanguageKnowledge
+    speaks:
+    - GalacticCommon
+    - Machine
+    understands:
+    - GalacticCommon
+    - Machine
+  # Starlight-end
 
 # Used for bots
 - type: entity

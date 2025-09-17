@@ -8,6 +8,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Content.Server.Administration.Logs;
 using Content.Server.Administration.Managers;
+using Content.Server.Humanoid.Markings.Extensions;
 using Content.Shared.Administration.Logs;
 using Content.Shared.Construction.Prototypes;
 using Content.Shared.Database;
@@ -23,11 +24,10 @@ using Robust.Shared.Enums;
 using Robust.Shared.Network;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
-using Content.Server.Humanoid.Markings.Extensions;
 
 namespace Content.Server.Database
 {
-    public abstract class ServerDbBase
+    public abstract partial class ServerDbBase
     {
         private readonly ISawmill _opsLog;
 
@@ -53,6 +53,7 @@ namespace Content.Server.Database
                 .Include(p => p.Profiles).ThenInclude(h => h.Traits)
                 .Include(p => p.Profiles) // Starlight
                     .ThenInclude(h => h.StarLightProfile) // Starlight
+                .Include(p => p.Profiles).ThenInclude(h => h.CharacterInfo)// Starlight
                 .Include(p => p.Profiles)
                     .ThenInclude(h => h.Loadouts)
                     .ThenInclude(l => l.Groups)
@@ -107,6 +108,7 @@ namespace Content.Server.Database
                 .Include(p => p.Loadouts)
                     .ThenInclude(l => l.Groups)
                     .ThenInclude(group => group.Loadouts)
+                .Include(p => p.CharacterInfo) // Starlight-edit
                 .AsSplitQuery()
                 .SingleOrDefault(h => h.Slot == slot);
 
@@ -277,11 +279,45 @@ namespace Content.Server.Database
                 loadouts[role.RoleName] = loadout;
             }
 
+            //start starlight
+            string physicalDesc = string.Empty;
+            string personalityDesc = string.Empty;
+            string personalNotes = string.Empty;
+            string oocNotes = string.Empty;
+            string characterSecrets = string.Empty;
+            string exploitableInfo = string.Empty;
+
+            if (profile.CharacterInfo != null)
+            {
+                physicalDesc = profile.CharacterInfo.PhysicalDesc;
+                if (string.IsNullOrEmpty(physicalDesc))
+                {
+                    physicalDesc = profile.FlavorText;
+                }
+                personalityDesc = profile.CharacterInfo.PersonalityDesc;
+                personalNotes = profile.CharacterInfo.PersonalNotes;
+                oocNotes = profile.CharacterInfo.OOCNotes;
+                characterSecrets = profile.CharacterInfo.CharacterSecrets;
+                exploitableInfo = profile.CharacterInfo.ExploitableInfo;
+            }
+            else
+            {
+                if (string.IsNullOrEmpty(physicalDesc))
+                {
+                    physicalDesc = profile.FlavorText;
+                }
+            }
+            //end starlight
             return new HumanoidCharacterProfile(
                 profile.CharacterName,
                 profile.Voice,
                 profile.SiliconVoice, // 🌟Starlight🌟
-                profile.FlavorText,
+                physicalDesc, // Starlight
+                personalityDesc, // Starlight
+                personalNotes, // Starlight
+                oocNotes, // Starlight
+                characterSecrets,// Starlight
+                exploitableInfo,// Starlight
                 profile.Species,
                 profile.StarLightProfile?.CustomSpecieName ?? "", // Starlight
                 profile.Age,
@@ -326,7 +362,14 @@ namespace Content.Server.Database
             profile.CharacterName = humanoid.Name;
             profile.Voice = humanoid.Voice;
             profile.SiliconVoice = humanoid.SiliconVoice; // 🌟Starlight🌟
-            profile.FlavorText = humanoid.FlavorText;
+            profile.FlavorText = string.Empty; //Starlight
+            profile.CharacterInfo ??= new StarLightModel.CharacterInfo();//Starlight
+            profile.CharacterInfo.PhysicalDesc = humanoid.PhysicalDescription;//Starlight
+            profile.CharacterInfo.PersonalityDesc = humanoid.PersonalityDescription;//Starlight
+            profile.CharacterInfo.PersonalNotes = humanoid.PersonalNotes;//Starlight
+            profile.CharacterInfo.OOCNotes = humanoid.OOCNotes;//Starlight
+            profile.CharacterInfo.CharacterSecrets = humanoid.Secrets;//Starlight
+            profile.CharacterInfo.ExploitableInfo = humanoid.ExploitableInfo;//Starlight
             profile.Species = humanoid.Species;
             profile.StarLightProfile ??= new StarLightModel.StarLightProfile(); // Starlight
             profile.StarLightProfile.CustomSpecieName = humanoid.CustomSpecieName; // Starlight
@@ -753,33 +796,7 @@ namespace Content.Server.Database
         }
 
         #endregion
-        #region Player data
-        /*
-         * Player data 🌟Starlight🌟
-         */
-        public async Task<PlayerDataDTO?> GetPlayerDataDTOForAsync(NetUserId userId, CancellationToken cancel)
-        {
-            await using var db = await GetDb(cancel);
-            return await db.DbContext.PlayerData
-                .SingleOrDefaultAsync(p => p.UserId == userId.UserId, cancel);
-        }
-        public async Task SetPlayerDataForAsync(NetUserId userId, PlayerDataDTO data, CancellationToken cancel)
-        {
-            await using var db = await GetDb(cancel);
 
-            var obj = await db.DbContext.PlayerData
-                .SingleOrDefaultAsync(p => p.UserId == userId.UserId, cancel);
-            if (obj != null)
-            {
-                obj.Balance = data.Balance;
-                obj.GhostTheme = data.GhostTheme;
-            }
-            else
-                db.DbContext.PlayerData.Add(data);
-
-            await db.DbContext.SaveChangesAsync();
-        }
-        #endregion
         #region Admin Ranks
         /*
          * ADMIN RANKS

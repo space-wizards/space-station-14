@@ -14,6 +14,8 @@ using Content.Shared.Verbs;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Containers;
 using Robust.Shared.Prototypes;
+using Content.Shared.Emag.Systems; //Starlight
+using Content.Shared._Starlight.Railroading.Events; // starlight
 
 namespace Content.Shared.Delivery;
 
@@ -31,7 +33,7 @@ public abstract class SharedDeliverySystem : EntitySystem
     [Dependency] private readonly SharedContainerSystem _container = default!;
     [Dependency] private readonly SharedHandsSystem _hands = default!;
     [Dependency] private readonly NameModifierSystem _nameModifier = default!;
-
+    [Dependency] private readonly EmagSystem _emag = default!; //Starlight
     private static readonly ProtoId<TagPrototype> TrashTag = "Trash";
     private static readonly ProtoId<TagPrototype> RecyclableTag = "Recyclable";
 
@@ -47,6 +49,8 @@ public abstract class SharedDeliverySystem : EntitySystem
 
         SubscribeLocalEvent<DeliverySpawnerComponent, ExaminedEvent>(OnSpawnerExamine);
         SubscribeLocalEvent<DeliverySpawnerComponent, GetVerbsEvent<AlternativeVerb>>(OnGetSpawnerVerbs);
+
+        SubscribeLocalEvent<DeliverySpawnerComponent, GotEmaggedEvent>(OnGotEmagged); //Starlight
     }
 
     private void OnDeliveryExamine(Entity<DeliveryComponent> ent, ref ExaminedEvent args)
@@ -198,6 +202,9 @@ public abstract class SharedDeliverySystem : EntitySystem
 
         var ev = new DeliveryOpenedEvent(user);
         RaiseLocalEvent(ent, ref ev);
+        // starlight start - raise event on user for railroad mail task
+        RaiseLocalEvent(user, ref ev);
+        // starlight end
 
         if (attemptPickup)
             _hands.TryDrop(user, ent);
@@ -288,6 +295,18 @@ public abstract class SharedDeliverySystem : EntitySystem
 
         return totalMultiplier;
     }
+
+    #region Starlight
+    protected void OnGotEmagged(Entity<DeliverySpawnerComponent> deliverySpawner, ref GotEmaggedEvent args)
+    {
+        if (!_emag.CompareFlag(args.Type, EmagType.Interaction))
+            return;
+        var emagTable = deliverySpawner.Comp.EmagTable;
+        if (emagTable != null)
+            deliverySpawner.Comp.Table = emagTable;
+        args.Handled = true;
+    }
+    #endregion
 
     protected virtual void GrantSpesoReward(Entity<DeliveryComponent?> ent) { }
 

@@ -34,7 +34,7 @@
   name: gas pump
   description: A pump that moves gas by pressure.
   placement:
-    mode: SnapgridCenter
+    mode: AlignAtmosPipeLayers
   components:
   - type: ExtensionCableReceiver
   - type: LightningTarget
@@ -55,6 +55,11 @@
       map: [ "enum.PipeVisualLayers.Pipe" ]
     - state: pumpPressure
       map: [ "enum.SubfloorLayers.FirstLayer", "enabled" ]
+  - type: AtmosPipeLayers
+    alternativePrototypes:
+      Primary: GasPressurePump
+      Secondary: GasPressurePumpAlt1
+      Tertiary: GasPressurePumpAlt2
   - type: Appearance
   - type: GenericVisualizer
     visuals:
@@ -84,7 +89,6 @@
   - type: AtmosMonitoringConsoleDevice
     navMapBlip: GasFlowRegulator
   - type: VentCrawTube
-    containerId: VentCrawTube
   - type: VentCrawTransit
   - type: ContainerContainer
     containers:
@@ -99,7 +103,7 @@
   name: volumetric gas pump
   description: A pump that moves gas by volume.
   placement:
-    mode: SnapgridCenter
+    mode: AlignAtmosPipeLayers
   components:
     - type: ExtensionCableReceiver
     - type: LightningTarget
@@ -120,6 +124,11 @@
           map: [ "enum.PipeVisualLayers.Pipe" ]
         - state: pumpVolume
           map: [ "enum.SubfloorLayers.FirstLayer", "enabled" ]
+    - type: AtmosPipeLayers
+      alternativePrototypes:
+        Primary: GasVolumePump
+        Secondary: GasVolumePumpAlt1
+        Tertiary: GasVolumePumpAlt2
     - type: Appearance
     - type: GenericVisualizer
       visuals:
@@ -158,7 +167,6 @@
     - type: AtmosMonitoringConsoleDevice
       navMapBlip: GasFlowRegulator
     - type: VentCrawTube
-      containerId: VentCrawTube
     - type: VentCrawTransit
     - type: ContainerContainer
       containers:
@@ -173,7 +181,7 @@
   name: inlet pressure regulator
   description: A valve that releases gas when the inlet pressure exceeds a certain threshold.
   placement:
-    mode: SnapgridCenter
+    mode: AlignAtmosPipeLayers
   components:
   - type: Rotatable
   - type: Transform
@@ -189,6 +197,11 @@
       map: [ "enum.PipeVisualLayers.Pipe" ]
     - state: pumpPressureRegulator
       map: [ "enum.SubfloorLayers.FirstLayer", "enabled" ]
+  - type: AtmosPipeLayers
+    alternativePrototypes:
+      Primary: GasPressureRegulator
+      Secondary: GasPressureRegulatorAlt1
+      Tertiary: GasPressureRegulatorAlt2
   - type: Appearance
   - type: GenericVisualizer
     visuals:
@@ -229,7 +242,7 @@
   name: passive gate
   description: A one-way air valve that does not require power.
   placement:
-    mode: SnapgridCenter
+    mode: AlignAtmosPipeLayers
   components:
     - type: SubFloorHide
       visibleLayers:
@@ -242,6 +255,11 @@
           map: [ "enum.PipeVisualLayers.Pipe" ]
         - state: pumpPassiveGate
           map: [ "enum.SubfloorLayers.FirstLayer" ]
+    - type: AtmosPipeLayers
+      alternativePrototypes:
+        Primary: GasPassiveGate
+        Secondary: GasPassiveGateAlt1
+        Tertiary: GasPassiveGateAlt2
     - type: Appearance
     - type: PipeColorVisuals
     - type: GasPassiveGate
@@ -257,7 +275,6 @@
     - type: AtmosMonitoringConsoleDevice
       navMapBlip: GasValve
     - type: VentCrawTube
-      containerId: VentCrawTube
     - type: VentCrawTransit
     - type: ContainerContainer
       containers:
@@ -272,7 +289,7 @@
   name: manual valve
   description: A pipe with a valve that can be used to disable the flow of gas through it.
   placement:
-    mode: SnapgridCenter
+    mode: AlignAtmosPipeLayers
   components:
     # TODO ATMOS: Give unique sprite.
     - type: SubFloorHide
@@ -286,6 +303,11 @@
           map: [ "enum.PipeVisualLayers.Pipe" ]
         - state: pumpManualValve
           map: [ "enum.SubfloorLayers.FirstLayer", "enabled" ]
+    - type: AtmosPipeLayers
+      alternativePrototypes:
+        Primary: GasValve
+        Secondary: GasValveAlt1
+        Tertiary: GasValveAlt2
     - type: Appearance
     - type: GenericVisualizer
       visuals:
@@ -319,7 +341,6 @@
     - type: AtmosMonitoringConsoleDevice
       navMapBlip: GasValve
     - type: VentCrawTube
-      containerId: VentCrawTube
     - type: VentCrawTransit
     - type: ContainerContainer
       containers:
@@ -334,7 +355,7 @@
   name: signal valve
   description: A pipe with a valve that can be controlled with signals.
   placement:
-    mode: SnapgridCenter
+    mode: AlignAtmosPipeLayers
   components:
   - type: StationAiWhitelist
   - type: SubFloorHide
@@ -348,6 +369,11 @@
       map: [ "enum.PipeVisualLayers.Pipe" ]
     - state: pumpSignalValve
       map: [ "enum.SubfloorLayers.FirstLayer", "enabled" ]
+  - type: AtmosPipeLayers
+    alternativePrototypes:
+      Primary: SignalControlledValve
+      Secondary: SignalControlledValveAlt1
+      Tertiary: SignalControlledValveAlt2
   - type: Appearance
   - type: GenericVisualizer
     visuals:
@@ -392,7 +418,6 @@
   - type: AtmosMonitoringConsoleDevice
     navMapBlip: GasValve
   - type: VentCrawTube
-    containerId: VentCrawTube
   - type: VentCrawTransit
   - type: ContainerContainer
     containers:
@@ -437,7 +462,6 @@
     - type: AtmosMonitoringConsoleDevice
       navMapBlip: GasVentOpening
     - type: VentCrawTube
-      containerId: VentCrawTube
     - type: VentCrawJunction
       degrees:
         - 0

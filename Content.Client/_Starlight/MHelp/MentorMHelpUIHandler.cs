@@ -25,10 +25,11 @@ public sealed class MentorMHelpUIHandler(NetUserId owner) : IMHelpUIHandler
     public event Action<Guid?, string> OnInputTextChanged = delegate { };
     public event Action<Guid?, string, bool> OnMessageSend = delegate { };
     public event Action<Guid> OnTicketClosed = delegate { };
+    public event Action<Guid> OnTptoPressed = delegate { };
 
     public void Receive(SharedMentorSystem.MHelpTextMessage message)
     {
-        if(message.Ticket is null)
+        if (message.Ticket is null)
             return;
         var panel = EnsurePanel(message.Ticket.Value);
         panel.ReceiveLine(message);
@@ -140,6 +141,8 @@ public sealed class MentorMHelpUIHandler(NetUserId owner) : IMHelpUIHandler
         existingPanel.OnMessageSend += text => OnMessageSend?.Invoke(ticketId, text, Window?.MHelpControl.PlaySound.Pressed ?? true);
         existingPanel.OnInputTextChanged += text => OnInputTextChanged?.Invoke(ticketId, text);
         existingPanel.OnTicketClosed += () => OnTicketClosed.Invoke(ticketId);
+        existingPanel.OnTptoPressed += () => OnTptoPressed.Invoke(ticketId);
+        existingPanel.ShowTpto = IsMentor;
         existingPanel.Visible = false;
         if (!Control!.MhelpArea.Children.Contains(existingPanel))
             Control.MhelpArea.AddChild(existingPanel);

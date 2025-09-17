@@ -114,7 +114,7 @@
     color: "#43ccb5"
 
 - type: entity
-  parent: BaseComputer
+  parent: BaseComputerAiAccess
   id: BaseComputerShuttle
   name: shuttle console
   description: Used to pilot a shuttle.
@@ -630,7 +630,7 @@
 - type: entity
   parent: BaseComputerAiAccess
   id: computerBodyScanner
-  name: body scanner computer
+  name: operating computer # Starlight-edit
   description: A body scanner.
   components:
   - type: ApcPowerReceiver
@@ -641,6 +641,37 @@
     radius: 1.5
     energy: 1.6
     color: "#1f8c28"
+  # Starlight-start: Surgery body scanner
+  - type: Sprite
+    layers:
+    - map: ["computerLayerBody"]
+      state: computer
+    - map: ["computerLayerKeyboard"]
+      state: generic_keyboard
+    - map: ["computerLayerScreen"]
+      state: crew
+    - map: ["computerLayerKeys"]
+      state: med_key
+    - map: [ "enum.WiresVisualLayers.MaintenancePanel" ]
+      state: generic_panel_open
+  - type: Speech
+  - type: BodyScanner
+  - type: HealthAnalyzer
+    talk: true
+  - type: ActivatableUI
+    key: enum.HealthAnalyzerUiKey.Key
+  - type: UserInterface
+    interfaces:
+      enum.HealthAnalyzerUiKey.Key:
+        type: HealthAnalyzerBoundUserInterface
+  - type: DeviceList
+  - type: DeviceNetwork
+    deviceNetId: Wired
+  - type: DeviceLinkSource
+    range: 2
+    ports:
+      - BodyScannerSender
+  # Starlight-end
 
 - type: entity
   parent: BaseComputerAiAccess
@@ -666,6 +697,7 @@
     title: comms-console-announcement-title-station
     sound: /Audio/_Starlight/Announcements/announce2.ogg #Starlight
   - type: DeviceNetwork
+    deviceNetId: Wireless
     transmitFrequencyId: ShuttleTimer
   - type: ActivatableUI
     key: enum.CommunicationsConsoleUiKey.Key
@@ -1138,7 +1170,7 @@
     key: enum.FundingAllocationConsoleUiKey.Key
   - type: ActivatableUIRequiresAccess
   - type: AccessReader
-    access: [["HeadOfPersonnel"]]
+    access: [["HeadOfPersonnel"]] #Starlight Change needs to make QM
   - type: UserInterface
     interfaces:
       enum.FundingAllocationConsoleUiKey.Key:
@@ -1375,6 +1407,21 @@
           type: WiresBoundUserInterface
 
 - type: entity
+  parent: ComputerSurveillanceWirelessCameraMonitor
+  id: ComputerSurveillanceWirelessXenoborgCameraMonitor
+  name: xenoborg camera monitor
+  description: A wireless xenoborg camera monitor. You're watching them. Maybe.
+  components:
+  - type: Computer
+    board: XenoborgCameraMonitorCircuitboard
+  - type: DeviceNetwork
+    deviceNetId: Wireless
+    receiveFrequencyId: Mothership
+    transmitFrequencyId: Mothership
+  - type: WirelessNetworkConnection
+    range: 2000
+
+- type: entity
   id: ComputerPalletConsole
   parent: BaseComputerAiAccess
   name: cargo sale computer
@@ -1540,6 +1587,39 @@
     access: [["ResearchDirector"]]
   - type: Lock
     unlockOnClick: false
+
+- type: entity
+  parent: ComputerRoboticsControl
+  id: ComputerXenoborgsControl
+  name: xenoborgs control console
+  description: Used to remotely monitor all xenoborgs.
+  components:
+  - type: Sprite
+    layers:
+    - map: ["computerLayerBody"]
+      state: computer
+    - map: ["computerLayerKeyboard"]
+      state: generic_keyboard
+    - map: ["computerLayerScreen"]
+      state: xenorobot
+    - map: ["computerLayerKeys"]
+      state: rd_key
+    - map: [ "enum.WiresVisualLayers.MaintenancePanel" ]
+      state: generic_panel_open
+  - type: RoboticsConsole
+    allowBorgControl: false
+    radioChannel: Xenoborg
+  - type: ActiveRadio
+    channels:
+    - Xenoborg
+  - type: DeviceNetwork
+    deviceNetId: Wireless
+    receiveFrequencyId: Mothership
+    transmitFrequencyId: Xenoborg
+  - type: Computer
+    board: ComputerXenoborgsControlCircuitboard
+  - type: AccessReader # only used for dangerous things
+    access: [["Xenoborg"]]
 
 - type: entity
   id: StationAiUploadComputer

@@ -1,10 +1,8 @@
 using System.Threading;
 using Content.Server.Administration.Components;
-using Content.Server.Atmos.Components;
 using Content.Server.Atmos.EntitySystems;
 using Content.Server.Body.Components;
 using Content.Server.Body.Systems;
-using Content.Server.Clothing.Systems;
 using Content.Server.Electrocution;
 using Content.Server.Explosion.EntitySystems;
 using Content.Server.GhostKick;
@@ -14,13 +12,13 @@ using Content.Server.Pointing.Components;
 using Content.Server.Polymorph.Systems;
 using Content.Server.Popups;
 using Content.Server.Speech.Components;
-using Content.Server.Storage.Components;
 using Content.Server.Storage.EntitySystems;
 using Content.Server.Tabletop;
 using Content.Server.Tabletop.Components;
 using Content.Shared.Administration;
 using Content.Shared.Administration.Components;
-using Content.Shared.Alert;
+using Content.Shared.Atmos.Components;
+using Content.Shared.Alert; //Starlight
 using Content.Shared.Body.Components;
 using Content.Shared.Body.Part;
 using Content.Shared.Clumsy;
@@ -30,6 +28,7 @@ using Content.Shared.Damage;
 using Content.Shared.Damage.Systems;
 using Content.Shared.Database;
 using Content.Shared.Electrocution;
+using Content.Shared.Gravity;
 using Content.Shared.Interaction.Components;
 using Content.Shared.Inventory;
 using Content.Shared.Mobs;
@@ -40,7 +39,7 @@ using Content.Shared.Movement.Systems;
 using Content.Shared.Nutrition.Components;
 using Content.Shared.Popups;
 using Content.Shared.Slippery;
-using Content.Shared.Stunnable;
+using Content.Shared.Storage.Components;
 using Content.Shared.Tabletop.Components;
 using Content.Shared.Tools.Systems;
 using Content.Shared.Verbs;
@@ -52,7 +51,6 @@ using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Systems;
 using Robust.Shared.Player;
 using Robust.Shared.Random;
-using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 using Timer = Robust.Shared.Timing.Timer;
 
@@ -539,7 +537,7 @@ public sealed partial class AdminVerbSystem
             {
                 Text = nyanifyName,
                 Category = VerbCategory.Smite,
-                Icon = new SpriteSpecifier.Rsi(new ("/Textures/Clothing/Head/Hats/catears.rsi"), "icon"),
+                Icon = new SpriteSpecifier.Rsi(new ("/Textures/_Starlight/Clothing/Head/Hats/blackcatears.rsi"), "icon"),
                 Act = () =>
                 {
                     var ears = Spawn("ClothingHeadHatCatEars", Transform(args.Target).Coordinates);
@@ -552,6 +550,25 @@ public sealed partial class AdminVerbSystem
             };
             args.Verbs.Add(nyanify);
 
+            // Starlight - Start
+            var nyanify2Name = Loc.GetString("admin-smite-nyanify-name2").ToLowerInvariant();
+            Verb nyanify2 = new()
+            {
+                Text = nyanify2Name,
+                Category = VerbCategory.Smite,
+                Icon = new SpriteSpecifier.Rsi(new ("/Textures/Clothing/Head/Hats/catears.rsi"), "icon"),
+                Act = () =>
+                {
+                    var ears = Spawn("ClothingHeadHatWhiteCatEars", Transform(args.Target).Coordinates);
+                    EnsureComp<UnremoveableComponent>(ears);
+                    _inventorySystem.TryUnequip(args.Target, "head", true, true, false, inventory);
+                    _inventorySystem.TryEquip(args.Target, ears, "head", true, true, false, inventory);
+                },
+                Impact = LogImpact.Extreme,
+                Message = string.Join(": ", nyanify2Name, Loc.GetString("admin-smite-nyanify2-description"))
+            };
+            args.Verbs.Add(nyanify2);
+            // Starlight - End
             var killSignName = Loc.GetString("admin-smite-kill-sign-name").ToLowerInvariant();
             Verb killSign = new()
             {
@@ -577,7 +594,8 @@ public sealed partial class AdminVerbSystem
 
                 Act = () =>
                 {
-                    EnsureComp<CluwneComponent>(args.Target);
+                    var cluwne = EnsureComp<CluwneComponent>(args.Target); //Starlight
+                    cluwne.Unremovable = true; //Starlight
                 },
                 Impact = LogImpact.Extreme,
                 Message = string.Join(": ", cluwneName, Loc.GetString("admin-smite-cluwne-description"))
@@ -679,6 +697,11 @@ public sealed partial class AdminVerbSystem
                 grav.Weightless = true;
 
                 Dirty(args.Target, grav);
+
+                EnsureComp<GravityAffectedComponent>(args.Target, out var weightless);
+                weightless.Weightless = true;
+
+                Dirty(args.Target, weightless);
             },
             Impact = LogImpact.Extreme,
             Message = string.Join(": ", noGravityName, Loc.GetString("admin-smite-remove-gravity-description"))

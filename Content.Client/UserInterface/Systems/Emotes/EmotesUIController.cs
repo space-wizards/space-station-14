@@ -20,7 +20,6 @@ namespace Content.Client.UserInterface.Systems.Emotes;
 [UsedImplicitly]
 public sealed class EmotesUIController : UIController, IOnStateChanged<GameplayState>
 {
-    [Dependency] private readonly IEntityManager _entityManager = default!;
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly IPlayerManager _playerManager = default!;
     [Dependency] private readonly IClientConsoleHost _consoleHost = default!; // Starlight
@@ -28,11 +27,11 @@ public sealed class EmotesUIController : UIController, IOnStateChanged<GameplayS
     private MenuButton? EmotesButton => UIManager.GetActiveUIWidgetOrNull<MenuBar.Widgets.GameTopMenuBar>()?.EmotesButton;
     private SimpleRadialMenu? _menu;
 
-    private static readonly Dictionary<EmoteCategory, (string Tooltip, SpriteSpecifier Sprite)> EmoteGroupingInfo
-        = new Dictionary<EmoteCategory, (string Tooltip, SpriteSpecifier Sprite)>
+    private static readonly Dictionary<EmoteCategory, (string Tooltip, SpriteSpecifier Sprite)> EmoteGroupingInfo =
+        new()
         {
-            [EmoteCategory.General] = ("emote-menu-category-general", new SpriteSpecifier.Texture(new ResPath("/Textures/Clothing/Head/Soft/mimesoft.rsi/icon.png"))),
-            [EmoteCategory.Hands] = ("emote-menu-category-hands", new SpriteSpecifier.Texture(new ResPath("/Textures/Clothing/Hands/Gloves/latex.rsi/icon.png"))),
+            [EmoteCategory.General] = ("emote-menu-category-general", new SpriteSpecifier.Rsi(new ResPath("/Textures/Clothing/Head/Soft/mimesoft.rsi"), "icon")),
+            [EmoteCategory.Hands] = ("emote-menu-category-hands", new SpriteSpecifier.Rsi(new ResPath("/Textures/Clothing/Hands/Gloves/latex.rsi"), "icon")),
             [EmoteCategory.Vocal] = ("emote-menu-category-vocal", new SpriteSpecifier.Texture(new ResPath("/Textures/Interface/Emotes/vocal.png"))),
             [EmoteCategory.Cloud] = ("emote-menu-category-cloud", new SpriteSpecifier.Rsi(new ResPath("/Textures/_Starlight/Effects/cloud_emotes.rsi"), "emote_mark")), // Starlight
         };
@@ -134,12 +133,12 @@ public sealed class EmotesUIController : UIController, IOnStateChanged<GameplayS
         _menu = null;
     }
 
-    private IEnumerable<RadialMenuOption> ConvertToButtons(IEnumerable<EmotePrototype> emotePrototypes)
+    private IEnumerable<RadialMenuOptionBase> ConvertToButtons(IEnumerable<EmotePrototype> emotePrototypes)
     {
         var whitelistSystem = EntitySystemManager.GetEntitySystem<EntityWhitelistSystem>();
         var player = _playerManager.LocalSession?.AttachedEntity;
 
-        Dictionary<EmoteCategory, List<RadialMenuOption>> emotesByCategory = new();
+        Dictionary<EmoteCategory, List<RadialMenuOptionBase>> emotesByCategory = new();
         foreach (var emote in emotePrototypes)
         {
             if (emote.Category == EmoteCategory.Invalid)
@@ -159,13 +158,13 @@ public sealed class EmotesUIController : UIController, IOnStateChanged<GameplayS
 
             if (!emotesByCategory.TryGetValue(emote.Category, out var list))
             {
-                list = new List<RadialMenuOption>();
+                list = new List<RadialMenuOptionBase>();
                 emotesByCategory.Add(emote.Category, list);
             }
 
             var actionOption = new RadialMenuActionOption<EmotePrototype>(HandleRadialButtonClick, emote)
             {
-                Sprite = emote.Icon,
+                IconSpecifier = RadialMenuIconSpecifier.With(emote.Icon),
                 ToolTip = Loc.GetString(emote.Name)
             };
             list.Add(actionOption);
@@ -177,20 +176,20 @@ public sealed class EmotesUIController : UIController, IOnStateChanged<GameplayS
         {
             if (!emotesByCategory.TryGetValue(EmoteCategory.Cloud, out var list))
             {
-                list = new List<RadialMenuOption>();
+                list = new List<RadialMenuOptionBase>();
                 emotesByCategory.Add(EmoteCategory.Cloud, list);
             }
 
             var actionOption = new RadialMenuActionOption<CloudEmotePrototype>(HandleCloudRadialButtonClick, emote)
             {
-                Sprite = emote.Icon,
+                IconSpecifier = RadialMenuIconSpecifier.With(emote.Icon),
                 ToolTip = Loc.GetString(emote.ID)
             };
             list.Add(actionOption);
         }
         // Starlight - End
 
-        var models = new RadialMenuOption[emotesByCategory.Count];
+        var models = new RadialMenuOptionBase[emotesByCategory.Count];
         var i = 0;
         foreach (var (key, list) in emotesByCategory)
         {
@@ -198,7 +197,7 @@ public sealed class EmotesUIController : UIController, IOnStateChanged<GameplayS
 
             models[i] = new RadialMenuNestedLayerOption(list)
             {
-                Sprite = tuple.Sprite,
+                IconSpecifier = RadialMenuIconSpecifier.With(tuple.Sprite),
                 ToolTip = Loc.GetString(tuple.Tooltip)
             };
             i++;
@@ -209,7 +208,7 @@ public sealed class EmotesUIController : UIController, IOnStateChanged<GameplayS
 
     private void HandleRadialButtonClick(EmotePrototype prototype)
     {
-        _entityManager.RaisePredictiveEvent(new PlayEmoteMessage(prototype.ID));
+        EntityManager.RaisePredictiveEvent(new PlayEmoteMessage(prototype.ID));
     }
 
     // Starlight

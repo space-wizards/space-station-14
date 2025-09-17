@@ -1,0 +1,15 @@
+- type: sourcePort
+  id: BodyScannerSender
+  name: signal-port-name-body-scanner-sender
+  description: signal-port-description-body-scanner-sender
+  defaultLinks: [ BodyScannerReceiver ]
+
+- type: sourcePort
+  id: ScanGateSuccess
+  name: signal-port-name-scan-gate-success
+  description: signal-port-description-scan-gate-success
+
+- type: sourcePort
+  id: ScanGateFail
+  name: signal-port-name-scan-gate-fail
+  description: signal-port-description-scan-gate-fail

@@ -1775,6 +1775,18 @@
     OrganAnimalHeart: 1
 
 - type: microwaveMealRecipe
+  id: RecipeBerryDelight
+  name: berry delight recipe
+  result: FoodCakeBerryDelight
+  time: 5
+  group: Cake
+  solids:
+    FoodCakeBlueberry: 1
+    FoodBerries: 2
+  reagents:
+    Milk: 10
+
+- type: microwaveMealRecipe
   id: RecipeBreadDog
   name: bread dog recipe
   result: MobBreadDog
@@ -2524,3 +2536,15 @@
     MobMothroach: 1
     OrganAnimalHeart: 1
     MoproachShoes: 1
+
+- type: microwaveMealRecipe
+  id: RecipeCottonCake
+  name: cotton cake recipe
+  result: FoodCottonCake #Starlight moff cake
+  time: 5
+  group: Cake
+  reagents:
+    Fiber: 10
+  solids:
+    FoodCakePlain: 1
+    

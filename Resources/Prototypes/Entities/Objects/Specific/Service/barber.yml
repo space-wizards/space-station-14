@@ -24,13 +24,14 @@
         Piercing: 6
     soundHit:
       path: "/Audio/Weapons/bladeslice.ogg"
-  - type: Scalpel
+  # 🌟Starlight-start🌟
+  - type: Hemostat
   - type: SurgeryTool
-    successRate: 0.12
+    successRate: 0.05 # Using something sharp as a hemostat is very dangerous
+    speed: 1.5
     startSound:
-      path: /Audio/_Starlight/Medical/Surgery/scalpel1.ogg
-    endSound:
-      path: /Audio/_Starlight/Medical/Surgery/scalpel2.ogg
+      path: /Audio/_Starlight/Medical/Surgery/hemostat1.ogg
+  # 🌟Starlight-end🌟
   - type: PhysicalComposition
     materialComposition:
       Steel: 200

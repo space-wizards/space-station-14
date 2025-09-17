@@ -1,7 +1,7 @@
 using Content.Shared.Actions;
 using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
-using Robust.Shared.Prototypes; //Starlight
+using Robust.Shared.Prototypes; // 🌟Starlight🌟 
 using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
@@ -48,6 +48,12 @@ namespace Content.Shared.VendingMachines
         [DataField]
         public bool Contraband;
 
+        /// <summary>
+        /// If true, items in this vending machine will display prices. If false, items are free 
+        /// </summary>
+        [DataField]
+        public bool ShowPrices = true;
+
         [ViewVariables]
         public bool Ejecting => EjectEnd != null;
 
@@ -68,6 +74,19 @@ namespace Content.Shared.VendingMachines
 
         public string? NextItemToEject;
 
+        // Starlight-edit start: vend operation tracking for idempotent charging and accounting
+        [ViewVariables]
+        public int VendOperationId = 0; // incremented each time an ejection starts
+
+        [ViewVariables]
+        public bool DebitApplied = false; // set true once we debit for the current operation
+
+        [ViewVariables]
+        public EntityUid? LastBuyer; // who initiated the current vend
+
+        [ViewVariables]
+        public InventoryType CurrentItemType; // inventory bucket for NextItemToEject during current operation
+        // Startlight-edit end:
         public bool Broken;
 
         /// <summary>
@@ -148,6 +167,12 @@ namespace Content.Shared.VendingMachines
         [DataField(customTypeSerializer: typeof(TimeOffsetSerializer))]
         public TimeSpan NextEmpEject = TimeSpan.Zero;
 
+        /// <summary>
+        /// Audio entity used during restock in case the doafter gets canceled.
+        /// </summary>
+        [DataField]
+        public EntityUid? RestockStream;
+
         #region Client Visuals
         /// <summary>
         /// RSI state for when the vending machine is unpowered.
@@ -202,20 +227,27 @@ namespace Content.Shared.VendingMachines
         #endregion
     }
 
-    [Serializable, NetSerializable]
-    public sealed class VendingMachineInventoryEntry
+    [Serializable, NetSerializable, DataDefinition]
+    public sealed partial class VendingMachineInventoryEntry
     {
-        [ViewVariables(VVAccess.ReadWrite)]
+        [DataField]
         public InventoryType Type;
-        [ViewVariables(VVAccess.ReadWrite)]
+
+        [DataField]
         public string ID;
-        [ViewVariables(VVAccess.ReadWrite)]
+
+        [DataField]
         public uint Amount;
-        public VendingMachineInventoryEntry(InventoryType type, string id, uint amount)
+        
+        [ViewVariables(VVAccess.ReadWrite)]
+        public int Price; // 🌟Starlight🌟 
+    
+        public VendingMachineInventoryEntry(InventoryType type, string id, uint amount, int price = 0)
         {
             Type = type;
             ID = id;
             Amount = amount;
+            Price = price; // 🌟Starlight🌟 
         }
 
         public VendingMachineInventoryEntry(VendingMachineInventoryEntry entry)
@@ -223,6 +255,7 @@ namespace Content.Shared.VendingMachines
             Type = entry.Type;
             ID = entry.ID;
             Amount = entry.Amount;
+            Price = entry.Price; // 🌟Starlight🌟 
         }
     }
 
@@ -294,6 +327,7 @@ namespace Content.Shared.VendingMachines
         public Dictionary<string, VendingMachineInventoryEntry> ContrabandInventory = new();
 
         public bool Contraband;
+        public bool ShowPrices; // 🌟Starlight🌟
 
         public TimeSpan? EjectEnd;
 
