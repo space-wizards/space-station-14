@@ -1,14 +1,4 @@
 ﻿Entries:
-- author: CyberTropic
-  changes:
-  - message: MapRenderer can now render map files from a file directly without needing
-      a prototype.
-    type: Tweak
-  - message: Fixed maprenderer drawing tiles upside down.
-    type: Fix
-  id: 8459
-  time: '2025-05-11T14:06:09.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/37306
 - author: JrInventor05
   changes:
   - message: The syringe gun is now a T3 civilian science research.
@@ -3955,3 +3945,10 @@
   id: 8970
   time: '2025-09-17T17:00:22.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/40374
+- author: IProduceWidgets
+  changes:
+  - message: Gender pins no longer shuffle when EMP'd
+    type: Fix
+  id: 8971
+  time: '2025-09-17T21:49:50.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/40425
