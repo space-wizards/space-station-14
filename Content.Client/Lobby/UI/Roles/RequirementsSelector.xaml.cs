@@ -52,7 +52,6 @@ public sealed partial class RequirementsSelector : BoxContainer
             HorizontalAlignment = HAlignment.Center,
             StyleClasses = { StyleBase.StyleClassLabelSubText }
         };
-        _requirementsLabel.LineBreaksAuto = false;
         _requirementsLabel.SetMessage(FormattedMessage.FromUnformatted(Loc.GetString("role-timer-locked")));
         _lockStripe = new StripeBack()
         {
