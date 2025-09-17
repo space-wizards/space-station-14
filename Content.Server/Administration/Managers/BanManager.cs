@@ -16,7 +16,6 @@ using Robust.Server.Player;
 using Robust.Shared.Asynchronous;
 using Robust.Shared.Collections;
 using Robust.Shared.Configuration;
-using Robust.Shared.CPUJob.JobQueues;
 using Robust.Shared.Enums;
 using Robust.Shared.Network;
 using Robust.Shared.Player;
@@ -232,6 +231,14 @@ public sealed partial class BanManager : IBanManager, IPostInjectInit
         // TODO: Note that it's possible to clash IDs here between a job and an antag. The refactor that introduced
         // this check has consciously avoided refactoring Job and Antag prototype.
         // Refactor Job- and Antag- Prototype to introduce a common RolePrototype, which will fix this possible clash.
+
+        //TODO remove this check as part of the above refactor
+        if (_prototypeManager.HasIndex<JobPrototype>(role) && _prototypeManager.HasIndex<AntagPrototype>(role))
+        {
+            _sawmill.Error($"Creating role ban for {role}: cannot create role ban, role is both JobPrototype and AntagPrototype.");
+
+            return;
+        }
 
         // Don't trust the input: make sure the job or antag actually exists.
         if (_prototypeManager.HasIndex<JobPrototype>(role))
