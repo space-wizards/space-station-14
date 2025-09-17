@@ -14447,5 +14447,21 @@ Entries:
   id: 164500
   time: '2025-09-17T15:52:01.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/1645
+- author: princess_gurchi
+  changes:
+  - message: 'New biome for salvager expeditions: Abyss Touched. It replaces Abyss
+      for normal mission generation and features mining.'
+    type: Add
+  id: 135600
+  time: '2025-09-17T15:56:46.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1356
+- author: princess_gurchi
+  changes:
+  - message: Elder boss has been relocated into old Abyss where he's feeling much
+      better and no longer identifying as communist.
+    type: Tweak
+  id: 135601
+  time: '2025-09-17T15:56:46.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1356
 Order: -1
 
