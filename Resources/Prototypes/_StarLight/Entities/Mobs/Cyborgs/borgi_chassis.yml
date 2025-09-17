@@ -130,7 +130,7 @@
         - BorgModuleSyndicateWeapon
 
 - type: entity
-  parent: [ BaseXenoborgChassis, BaseBorgiChassis ]
+  parent: [ BaseXenoborgChassis, BaseXenoborgTransponder, BaseBorgiChassis ]
   id: XenoBorgiChassis
   name: XenoBorgi
   description:  A man-machine hybrid that aims to replicate itself. They love extracting brains to insert into fresh Xenoborg chassis to grow their army. This one seems to be an borgi type, as it has inferior flesh in exchange for hands to support the other Xenoborgs.
