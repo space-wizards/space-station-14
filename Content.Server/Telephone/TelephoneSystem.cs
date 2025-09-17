@@ -105,7 +105,7 @@ public sealed class TelephoneSystem : SharedTelephoneSystem
         RaiseLocalEvent(args.MessageSource, nameEv);
 
         // Determine if speech should be relayed via the telephone itself or a designated speaker
-        var speaker = entity.Comp.Speaker != null ? entity.Comp.Speaker.Value.Owner : entity.Owner;
+        var speaker = (entity.Comp.Speaker != null) ? entity.Comp.Speaker.Value : entity.Owner;
 
         var name = Loc.GetString("chat-telephone-name-relay",
             ("originalName", nameEv.VoiceName),
@@ -181,8 +181,7 @@ public sealed class TelephoneSystem : SharedTelephoneSystem
             return;
 
         // Save the user as the last caller
-        var callerInfo = GetNameAndJobOfCallingEntity(user);
-        source.Comp.LastCallerId = (callerInfo.Item1, callerInfo.Item2, null);
+        source.Comp.LastCallerId = GetNameAndJobOfCallingEntity(user);
         Dirty(source);
 
         // Attempt to call all receivers
@@ -232,12 +231,12 @@ public sealed class TelephoneSystem : SharedTelephoneSystem
         var callerInfo = GetNameAndJobOfCallingEntity(user);
 
         // Base the name of the device on its label
-        string? deviceName = null;
-
         if (TryComp<LabelComponent>(source, out var label))
-            deviceName = label.CurrentLabel;
+        {
+            callerInfo.DeviceId = label.CurrentLabel;
+        }
 
-        receiver.Comp.LastCallerId = (callerInfo.Item1, callerInfo.Item2, deviceName); // This will be networked when the state changes
+        receiver.Comp.LastCallerId = callerInfo; // This will be networked when the state changes
         receiver.Comp.LinkedTelephones.Add(source);
         receiver.Comp.Muted = options?.MuteReceiver == true;
 
@@ -430,24 +429,21 @@ public sealed class TelephoneSystem : SharedTelephoneSystem
         entity.Comp.Speaker = speaker;
     }
 
-    private (string?, string?) GetNameAndJobOfCallingEntity(EntityUid uid)
+    private TelephoneCallRecord GetNameAndJobOfCallingEntity(EntityUid uid)
     {
-        string? presumedName = null;
-        string? presumedJob = null;
+        var record = new TelephoneCallRecord();
 
         if (HasComp<StationAiHeldComponent>(uid) || HasComp<BorgChassisComponent>(uid))
         {
-            presumedName = Name(uid);
-            return (presumedName, presumedJob);
+            record.CallerId = Name(uid);
         }
-
-        if (_idCardSystem.TryFindIdCard(uid, out var idCard))
+        else if (_idCardSystem.TryFindIdCard(uid, out var idCard))
         {
-            presumedName = string.IsNullOrWhiteSpace(idCard.Comp.FullName) ? null : idCard.Comp.FullName;
-            presumedJob = idCard.Comp.LocalizedJobTitle;
+            record.CallerId = string.IsNullOrWhiteSpace(idCard.Comp.FullName) ? null : idCard.Comp.FullName;
+            record.CallerJob = idCard.Comp.LocalizedJobTitle;
         }
 
-        return (presumedName, presumedJob);
+        return record;
     }
 
     public bool IsSourceAbleToReachReceiver(Entity<TelephoneComponent> source, Entity<TelephoneComponent> receiver)

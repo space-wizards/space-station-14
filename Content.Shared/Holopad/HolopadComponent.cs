@@ -18,14 +18,14 @@ public sealed partial class HolopadComponent : Component
     /// <summary>
     /// The entity being projected by the holopad
     /// </summary>
-    [ViewVariables]
-    public Entity<HolopadHologramComponent>? Hologram;
+    [DataField]
+    public EntityUid? Hologram;
 
     /// <summary>
     /// The entity using the holopad
     /// </summary>
-    [ViewVariables]
-    public Entity<HolopadUserComponent>? User;
+    [DataField]
+    public EntityUid? User;
 
     /// <summary>
     /// Proto ID for the user's hologram
@@ -40,10 +40,16 @@ public sealed partial class HolopadComponent : Component
     public EntityUid? ControlLockoutOwner = null;
 
     /// <summary>
-    /// The game tick the control lockout was initiated
+    /// The time the control lockout will end
     /// </summary>
     [DataField, AutoNetworkedField, AutoPausedField]
     public TimeSpan ControlLockoutEndTime;
+
+    /// <summary>
+    /// The time the control lockout cool down will end
+    /// </summary>
+    [DataField, AutoNetworkedField, AutoPausedField]
+    public TimeSpan ControlLockoutCoolDownEndTime;
 
     /// <summary>
     /// The duration that the control lockout will last in seconds

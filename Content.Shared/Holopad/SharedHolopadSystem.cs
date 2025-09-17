@@ -24,7 +24,7 @@ public abstract class SharedHolopadSystem : EntitySystem
 
     public bool IsHolopadBroadcastOnCoolDown(Entity<HolopadComponent> entity)
     {
-        if (_timing.CurTime > entity.Comp.ControlLockoutEndTime)
+        if (_timing.CurTime > entity.Comp.ControlLockoutCoolDownEndTime)
             return false;
 
         return true;
@@ -32,6 +32,6 @@ public abstract class SharedHolopadSystem : EntitySystem
 
     public TimeSpan GetHolopadBroadcastCoolDown(Entity<HolopadComponent> entity)
     {
-        return entity.Comp.ControlLockoutEndTime - _timing.CurTime;
+        return entity.Comp.ControlLockoutCoolDownEndTime - _timing.CurTime;
     }
 }

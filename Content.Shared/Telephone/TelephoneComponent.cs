@@ -3,6 +3,7 @@ using Content.Shared.Speech;
 using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
 using Robust.Shared.Serialization;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 
 namespace Content.Shared.Telephone;
 
@@ -90,8 +91,8 @@ public sealed partial class TelephoneComponent : Component
     /// <summary>
     /// Speech is relayed through this entity instead of the telephone
     /// </summary>
-    [ViewVariables(VVAccess.ReadOnly)]
-    public Entity<SpeechComponent>? Speaker = null;
+    [DataField]
+    public EntityUid? Speaker = null;
 
     /// <summary>
     /// Telephone number for this device
@@ -137,7 +138,20 @@ public sealed partial class TelephoneComponent : Component
     /// and the name of the device that they used to do so
     /// </summary>
     [DataField, AutoNetworkedField]
-    public (string?, string?, string?) LastCallerId;
+    public TelephoneCallRecord? LastCallerId;
+}
+
+[DataRecord, Serializable, NetSerializable]
+public record struct TelephoneCallRecord
+{
+    [DataField]
+    public string? CallerId;
+
+    [DataField]
+    public string? CallerJob;
+
+    [DataField]
+    public string? DeviceId;
 }
 
 #region: Telephone events
