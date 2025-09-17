@@ -110,7 +110,7 @@
       sprite: _Starlight/Mobs/Species/Cyclorite/parts.rsi
       state: "l_leg"
     - type: MovementBodyPart
-      sprintSpeed : 3.825
+      sprintSpeed : 4.05
       maxDensity: 111
       
 - type: entity
@@ -125,7 +125,7 @@
       sprite: _Starlight/Mobs/Species/Cyclorite/parts.rsi
       state: "r_leg"
     - type: MovementBodyPart
-      sprintSpeed : 3.825
+      sprintSpeed : 4.05
       maxDensity: 111
 
 - type: entity

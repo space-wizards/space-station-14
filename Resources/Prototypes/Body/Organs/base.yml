@@ -35,6 +35,7 @@
     entries:
       Burger: Brain
       Taco: Brain
+  - type: ActiveInputMover # Starlight
 
 - type: entity
   id: BaseOrganEyes

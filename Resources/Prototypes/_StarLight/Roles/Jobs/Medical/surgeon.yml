@@ -19,5 +19,17 @@
   id: SurgeonGear
   equipment:
     ears: ClothingHeadsetMedical
+    belt: ClothingBeltMedicalFilled
   inhand:
     - ClothingBackpackDuffelSurgeryFilled
+
+- type: chameleonOutfit
+  id: SurgeonChameleonOutfit
+  job: Surgeon
+  equipment:
+    head: ClothingHeadNurseHat
+    eyes: ClothingEyesHudMedical
+    mask: ClothingMaskSterile
+    neck: ClothingNeckStethoscope
+    outerClothing: ClothingOuterCoatLab
+    gloves: ClothingHandsGlovesLatex

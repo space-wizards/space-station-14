@@ -108,7 +108,7 @@
   parent: [ ClothingShoesBase, BaseJanitorContraband ]
   id: ClothingShoesGaloshes
   name: galoshes
-  description: Rubber boots.
+  description: Specialised non-slip rubber boots, designed to reduce janitorial workplace accidents; a tider's treasure.
   components:
   - type: Sprite
     sprite: Clothing/Shoes/Specific/galoshes.rsi

@@ -1,0 +1,8 @@
+- type: entity
+  parent: BaseMindRoleAntag
+  id: RRMindRoleCriminal
+  name: Criminal Role
+  components:
+  - type: MindRole
+    exclusiveAntag: true
+    subtype: rr-criminal
