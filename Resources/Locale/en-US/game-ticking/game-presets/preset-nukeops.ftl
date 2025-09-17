@@ -1,4 +1,4 @@
-﻿nukeops-title = Nuclear Operatives
+nukeops-title = Nuclear Operatives
 nukeops-description = Nuclear operatives have targeted the station. Try to keep them from arming and detonating the nuke by protecting the nuke disk!
 
 nukeops-welcome =
@@ -13,7 +13,8 @@ nukeops-crewminor = [color=green]Crew minor victory![/color]
 nukeops-crewmajor = [color=green]Crew major victory![/color]
 
 nukeops-cond-nukeexplodedoncorrectstation = The nuclear operatives managed to blow up the station.
-nukeops-cond-nukeexplodedonnukieoutpost = The nuclear operative outpost was destroyed by a nuclear blast.
+# Starlight-edit
+nukeops-cond-nukeexplodedonnukieoutpost = The crew gave the syndicate back their bomb.
 nukeops-cond-nukeexplodedonincorrectlocation = The nuclear bomb was detonated off-station.
 nukeops-cond-nukeactiveinstation = The nuclear bomb was left armed on-station.
 nukeops-cond-nukeactiveatcentcom = The nuclear bomb was delivered to Central Command!

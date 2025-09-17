@@ -1,8 +1,19 @@
-﻿# used by the unique items of xenoborgs (like modules and stuff)
+﻿# generic "highly illegal" contraband; Syndicate/magical contraband are already considered highly illegal under Space Law,
+# so this is mostly for stuff that should be equally illegal but doesn't need its own unique contraband tier added
+- type: entity
+  id: BaseHighlyIllegalContraband
+  abstract: true
+  components:
+  - type: ScanDetectable # Starlight
+  - type: Contraband
+    severity: HighlyIllegal
+
+# used by the unique items of xenoborgs (like modules and stuff)
 - type: entity
   id: BaseXenoborgContraband
   abstract: true
   components:
+  - type: ScanDetectable # Starlight
   - type: Contraband
     severity: Major # placeholder until they make a better severity
 
@@ -11,6 +22,7 @@
   id: BaseMagicalContraband
   abstract: true
   components:
+  - type: ScanDetectable # Starlight
   - type: Contraband
     severity: Magical
 
@@ -19,6 +31,7 @@
   id: BaseSyndicateContraband
   abstract: true
   components:
+  - type: ScanDetectable # Starlight
   - type: Contraband
     severity: Syndicate
 
@@ -35,6 +48,7 @@
   id: BaseMajorContraband
   abstract: true
   components:
+  - type: ScanDetectable # Starlight
   - type: Contraband
     severity: Major
 

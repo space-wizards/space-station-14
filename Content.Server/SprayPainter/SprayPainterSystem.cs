@@ -1,5 +1,5 @@
-using Content.Shared.Atmos.Components;
-using Content.Shared.Atmos.EntitySystems;
+using Content.Server.Atmos.Piping.Components;
+using Content.Server.Atmos.Piping.EntitySystems;
 using Content.Server.Charges;
 using Content.Server.Decals;
 using Content.Server.Destructible;
@@ -51,12 +51,17 @@ public sealed class SprayPainterSystem : SharedSprayPainterSystem
         if (args.Handled || !args.CanReach || args.Target != null)
             return;
 
-        // Includes both off and all other don't cares
         if (ent.Comp.DecalMode != DecalPaintMode.Add && ent.Comp.DecalMode != DecalPaintMode.Remove)
             return;
 
         args.Handled = true;
-        if (TryComp(ent, out LimitedChargesComponent? charges) && charges.LastCharges < ent.Comp.DecalChargeCost)
+
+        // Starlight-edit: Start
+        if (!TryComp(ent, out LimitedChargesComponent? charges))
+            return;
+
+        if (!_charges.TryUseCharges((ent, charges), ent.Comp.DecalChargeCost))
+        // Starlight-edit: End
         {
             _popup.PopupEntity(Loc.GetString("spray-painter-interact-no-charges"), args.User, args.User);
             return;
@@ -68,7 +73,6 @@ public sealed class SprayPainterSystem : SharedSprayPainterSystem
 
         if (ent.Comp.DecalMode == DecalPaintMode.Add)
         {
-            // Offset painting for adding decals
             position = position.Offset(new(-0.5f));
 
             if (!_decals.TryAddDecal(ent.Comp.SelectedDecal, position, out _, ent.Comp.SelectedDecalColor, Angle.FromDegrees(ent.Comp.SelectedDecalAngle), 0, false))
@@ -91,15 +95,10 @@ public sealed class SprayPainterSystem : SharedSprayPainterSystem
             }
 
             foreach (var decal in decals)
-            {
                 _decals.RemoveDecal(grid, decal.Index, decalGridComp);
-            }
         }
 
         _audio.PlayPvs(ent.Comp.SpraySound, ent);
-
-        _charges.TryUseCharges((ent, charges), ent.Comp.DecalChargeCost);
-
         AdminLogger.Add(LogType.CrayonDraw, LogImpact.Low, $"{EntityManager.ToPrettyString(args.User):user} painted a {ent.Comp.SelectedDecal}");
     }
 
@@ -142,13 +141,16 @@ public sealed class SprayPainterSystem : SharedSprayPainterSystem
         if (!TryComp<AtmosPipeColorComponent>(target, out var color))
             return;
 
-        if (TryComp<LimitedChargesComponent>(ent, out var charges) &&
-            !_charges.TryUseCharges((ent, charges), ent.Comp.PipeChargeCost))
+        // Starlight-edit: Start
+        if (!TryComp(ent, out LimitedChargesComponent? charges))
+            return;
+
+        if (!_charges.TryUseCharges((ent, charges), ent.Comp.PipeChargeCost))
+        // Starlight-edit: End
             return;
 
         Audio.PlayPvs(ent.Comp.SpraySound, ent);
-        _pipeColor.SetColor((target, color), args.Color);
-
+        _pipeColor.SetColor(target, color, args.Color);
         args.Handled = true;
     }
 
@@ -163,12 +165,17 @@ public sealed class SprayPainterSystem : SharedSprayPainterSystem
 
         if (!painter.ColorPalette.TryGetValue(colorName, out var color))
             return;
-
-        if (TryComp<LimitedChargesComponent>(args.Used, out var charges)
-            && charges.LastCharges < painter.PipeChargeCost)
+        // Starlight-edit: Start
+        if (!TryComp(args.Used, out LimitedChargesComponent? charges))
         {
-            var msg = Loc.GetString("spray-painter-interact-no-charges");
-            _popup.PopupEntity(msg, args.User, args.User);
+            _popup.PopupEntity(Loc.GetString("spray-painter-interact-no-charges"), args.User, args.User);
+            return;
+        }
+
+        if (!_charges.TryUseCharges((args.Used, charges), painter.PipeChargeCost))
+        {
+            _popup.PopupEntity(Loc.GetString("spray-painter-interact-no-charges"), args.User, args.User);
+            // Starlight-edit: End
             return;
         }
 
@@ -182,7 +189,6 @@ public sealed class SprayPainterSystem : SharedSprayPainterSystem
         {
             BreakOnMove = true,
             BreakOnDamage = true,
-            // multiple pipes can be sprayed at once just not the same one
             DuplicateCondition = DuplicateConditions.SameTarget,
             NeedHand = true,
         };

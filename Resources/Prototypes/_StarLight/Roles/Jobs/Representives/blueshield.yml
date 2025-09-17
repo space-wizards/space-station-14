@@ -14,6 +14,7 @@
       proto: ExtRolesReq
   startingGear: BlueShieldGear
   icon: JobIconBlueShield
+  rules: job-rules-corporate-aligned
   supervisors: job-supervisors-centcom
   canBeAntag: false
   access:
@@ -59,3 +60,10 @@
     back:
     - Flash
     - ClothingMaskGasBSO
+
+- type: chameleonOutfit
+  id: BlueShieldChameleonOutfit
+  job: BlueShield
+  equipment:
+    head: ClothingHeadHatBeretBlueShield
+    gloves: ClothingHandsGlovesCombat

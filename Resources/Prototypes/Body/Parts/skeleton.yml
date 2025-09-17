@@ -38,6 +38,14 @@
   description: Alas poor Yorick...
   parent: [ PartSkeleton, BaseMob ]
   components:
+  # Starlight Start
+    - type: LanguageSpeaker
+    - type: LanguageKnowledge
+      speaks:
+      - GalacticCommon
+      understands:
+      - GalacticCommon
+  # Starlight End
     - type: Sprite
       sprite: Mobs/Species/Skeleton/parts.rsi
       state: "skull_icon"

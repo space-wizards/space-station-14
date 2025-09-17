@@ -277,7 +277,7 @@ public sealed class AmeControllerSystem : EntitySystem
 
         var safeLimit = int.MaxValue;
         if (TryGetAMENodeGroup(uid, out var group))
-            safeLimit = group.CoreCount * 4;
+            safeLimit = group.SafeFuelLimit; /* STARLIGHT code was being calculated twice. */
 
         var logImpact = (oldValue <= safeLimit && value > safeLimit) ? LogImpact.Extreme : LogImpact.Medium;
 

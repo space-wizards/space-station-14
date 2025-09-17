@@ -1,5 +1,7 @@
+using Content.Client.Wires.Visualizers; // Starlight-edit
 using Content.Shared.SprayPainter.Prototypes;
 using Content.Shared.Storage;
+using Content.Shared.Wires; // Starlight-edit
 using Robust.Client.GameObjects;
 using Robust.Shared.Prototypes;
 
@@ -42,7 +44,7 @@ public sealed class EntityStorageVisualizerSystem : VisualizerSystem<EntityStora
         var forceRedrawBase = false;
         if (AppearanceSystem.TryGetData<string>(uid, PaintableVisuals.Prototype, out var prototype, args.Component))
         {
-            if (_prototypeManager.TryIndex(prototype, out var proto))
+            if (_prototypeManager.Resolve(prototype, out var proto))
             {
                 if (proto.TryGetComponent(out SpriteComponent? sprite, _componentFactory))
                 {
@@ -81,6 +83,9 @@ public sealed class EntityStorageVisualizerSystem : VisualizerSystem<EntityStora
                     SpriteSystem.LayerSetRsiState((uid, args.Sprite), StorageVisualLayers.Base, comp.StateBaseOpen);
                 else if (forceRedrawBase && comp.StateBaseClosed != null)
                     SpriteSystem.LayerSetRsiState((uid, args.Sprite), StorageVisualLayers.Base, comp.StateBaseClosed);
+
+                if (SpriteSystem.LayerMapTryGet((uid, args.Sprite), WiresVisualLayers.MaintenancePanel, out _, false))
+                    SpriteSystem.LayerSetVisible((uid, args.Sprite), WiresVisualLayers.MaintenancePanel, false); // Starlight-edit
             }
             else
             {
@@ -99,6 +104,10 @@ public sealed class EntityStorageVisualizerSystem : VisualizerSystem<EntityStora
                     SpriteSystem.LayerSetRsiState((uid, args.Sprite), StorageVisualLayers.Base, comp.StateBaseClosed);
                 else if (forceRedrawBase && comp.StateBaseOpen != null)
                     SpriteSystem.LayerSetRsiState((uid, args.Sprite), StorageVisualLayers.Base, comp.StateBaseOpen);
+
+                if (SpriteSystem.LayerMapTryGet((uid, args.Sprite), WiresVisualLayers.MaintenancePanel, out _, false)
+                    && args.AppearanceData.TryGetValue(WiresVisuals.MaintenancePanelState, out var panelStateObject) && panelStateObject is bool panelState)
+                    SpriteSystem.LayerSetVisible((uid, args.Sprite), WiresVisualLayers.MaintenancePanel, panelState); // Starlight-edit
             }
         }
     }

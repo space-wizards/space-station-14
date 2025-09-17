@@ -74,12 +74,10 @@
   - type: StaticPrice
     price: 1000
   - type: WiresPanel
-  # Starlight-start: Fix reagents dissapears when deconsturct/destruct
   - type: EmptyOnMachineDeconstruct
     containers:
-      - storagebase
-      - beakerSlot
-  # Starlight-end
+    - storagebase
+    - beakerSlot
   
 # Starlight-start: power cell chem dispenser
   

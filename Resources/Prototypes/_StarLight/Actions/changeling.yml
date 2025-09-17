@@ -19,31 +19,6 @@
     useInLesserForm: true
 
 - type: entity
-  id: ActionAbsorbDNA
-  name: Absorb DNA
-  description: Absorb the target's DNA, husking them in the process. Costs 25 chemicals.
-  categories: [ HideSpawnMenu ]
-  components:
-  - type: Action
-    useDelay: 5
-    itemIconStyle: NoItem
-    icon:
-      sprite: Changeling/changeling_abilities.rsi
-      state: absorb_dna
-  - type: TargetAction
-    interactOnMiss: false
-  - type: EntityTargetAction
-    whitelist:
-      components:
-      - Body
-    canTargetSelf: false
-    event: !type:AbsorbDNAEvent {}
-  - type: ChangelingAction
-    chemicalCost: 25
-    requireBiomass: false
-    useInLesserForm: true
-
-- type: entity
   id: ActionStingExtractDNA
   name: Extract DNA sting
   description: Steal your target's genetic information. Costs 25 chemicals.
@@ -66,40 +41,6 @@
     chemicalCost: 25
     useInLesserForm: true
 
-- type: entity
-  id: ActionChangelingTransformCycle
-  name: Cycle DNA
-  description: Cycle your available DNA.
-  categories: [ HideSpawnMenu ]
-  components:
-  - type: Action
-    itemIconStyle: NoItem
-    icon:
-      sprite: Changeling/changeling_abilities.rsi
-      state: transform_cycle
-  - type: InstantAction
-    event: !type:ChangelingTransformCycleEvent {}
-  - type: ChangelingAction
-    requireBiomass: false
-    useInLesserForm: true
-
-- type: entity
-  id: ActionChangelingTransform
-  name: Transform
-  description: Transform into another humanoid. Doesn't come with clothes. Costs 5 chemicals.
-  categories: [ HideSpawnMenu ]
-  components:
-  - type: Action
-    useDelay: 5
-    itemIconStyle: NoItem
-    icon:
-      sprite: Changeling/changeling_abilities.rsi
-      state: transform
-  - type: InstantAction
-    event: !type:ChangelingTransformEvent {}
-  - type: ChangelingAction
-    chemicalCost: 5
-    useInLesserForm: true
 
 - type: entity
   id: ActionEnterStasis
@@ -143,24 +84,6 @@
 
 # combat
 - type: entity
-  id: ActionToggleArmblade
-  name: Toggle Arm Blade
-  description: Reform one of your arms into a strong blade, composed of bone and flesh. Retract on secondary use. Costs 15 chemicals.
-  categories: [ HideSpawnMenu ]
-  components:
-  - type: Action
-    useDelay: 2
-    itemIconStyle: NoItem
-    icon:
-      sprite: Changeling/changeling_abilities.rsi
-      state: armblade
-  - type: InstantAction
-    event: !type:ToggleArmbladeEvent {}
-  - type: ChangelingAction
-    chemicalCost: 30
-    requireAbsorbed: 2
-
-- type: entity
   id: ActionCreateBoneShard
   name: Form Bone Shard
   description: Break off shards of your bone and shape them into a throwing star. Costs 15 chemicals.
@@ -196,6 +119,7 @@
     requireAbsorbed: 2
 
 - type: entity
+  parent: BaseAction
   id: ActionToggleOrganicShield
   name: Form Shield
   description: Reform one of your arms into a large, fleshy shield. Costs 20 chemicals.
@@ -203,12 +127,19 @@
   components:
   - type: Action
     useDelay: 2
+    raiseOnAction: true
     itemIconStyle: NoItem
     icon:
       sprite: Changeling/changeling_abilities.rsi
       state: organic_shield
   - type: InstantAction
-    event: !type:ToggleOrganicShieldEvent {}
+    event: !type:OnRetractableItemActionEvent
+  - type: RetractableItemAction
+    spawnedPrototype: ChangelingShield
+    summonSounds:
+      collection: gib # Placeholder
+    retractSounds:
+      collection: gib # Placeholder
   - type: ChangelingAction
     chemicalCost: 20
     requireAbsorbed: 1
@@ -312,7 +243,10 @@
       components:
       - Body
     canTargetSelf: false
-    event: !type:StingCryoEvent {}
+    event: !type:StingChemEvent {
+      chems: { Fresium: 20, ChloralHydrate: 20 }
+    }
+
   - type: ChangelingAction
     chemicalCost: 35
     useInLesserForm: true
@@ -335,7 +269,7 @@
       components:
       - Body
     canTargetSelf: false
-    event: !type:StingLethargicEvent {}
+    event: !type:StingChemEvent { chems: {Impedrezene: 10, MuteToxin: 5}}
   - type: ChangelingAction
     chemicalCost: 35
     useInLesserForm: true
@@ -358,7 +292,7 @@
       components:
       - Body
     canTargetSelf: false
-    event: !type:StingMuteEvent {}
+    event: !type:StingChemEvent {chems: {MuteToxin: 15}}
   - type: ChangelingAction
     chemicalCost: 35
     useInLesserForm: true

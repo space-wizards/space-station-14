@@ -5,6 +5,20 @@
   id: BaseMobDwarf
   abstract: true
   components:
+  # Starlight-start: Languages
+  - type: LanguageKnowledge
+    speaks:
+    - GalacticCommon
+    - SolCommon
+    understands:
+    - GalacticCommon
+    - SolCommon
+  - type: MobThresholds
+    thresholds:
+      0: Alive
+      110: Critical
+      220: Dead
+  # Starlight-end
   - type: Absorbable
   - type: Hunger
   - type: Thirst
@@ -18,6 +32,8 @@
     damageRecovery:
       types:
         Asphyxiation: -1.0
+  #- type: ScaleVisuals # STARLIGHT
+  #  scale: 1, 0.8 # STARLIGHT
   - type: Body
     prototype: Dwarf
     requiredLegs: 2
@@ -66,8 +82,8 @@
   id: MobDwarfDummy
   categories: [ HideSpawnMenu ]
   components:
-  - type: Sprite
-    scale: 1, 0.8
+  #- type: ScaleVisuals # STARLIGHT
+  #  scale: 1, 0.8 # STARLIGHT
   - type: Inventory
     femaleDisplacements:
       jumpsuit:

@@ -41,7 +41,7 @@ namespace Content.Server.Light.EntitySystems
             SubscribeLocalEvent<HandheldLightComponent, ComponentRemove>(OnRemove);
             SubscribeLocalEvent<HandheldLightComponent, ComponentGetState>(OnGetState);
 
-            SubscribeLocalEvent<HandheldLightComponent, MapInitEvent>(OnMapInit);
+            //SubscribeLocalEvent<HandheldLightComponent, MapInitEvent>(OnMapInit); //starlight, disabled, handled in parent
             SubscribeLocalEvent<HandheldLightComponent, ComponentShutdown>(OnShutdown);
 
             SubscribeLocalEvent<HandheldLightComponent, ExaminedEvent>(OnExamine);
@@ -90,8 +90,9 @@ namespace Content.Server.Light.EntitySystems
             args.State = new HandheldLightComponent.HandheldLightComponentState(ent.Comp.Activated, GetLevel(ent));
         }
 
-        private void OnMapInit(Entity<HandheldLightComponent> ent, ref MapInitEvent args)
+        public override void OnMapInit(Entity<HandheldLightComponent> ent, ref MapInitEvent args) //starlight map init
         {
+            base.OnMapInit(ent, ref args);
             var component = ent.Comp;
             _actionContainer.EnsureAction(ent, ref component.ToggleActionEntity, component.ToggleAction);
             _actions.AddAction(ent, ref component.SelfToggleActionEntity, component.ToggleAction);

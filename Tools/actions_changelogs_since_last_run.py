@@ -20,7 +20,7 @@ DEBUG_CHANGELOG_FILE_OLD = Path("Resources/Changelog/Old.yml")
 GITHUB_API_URL = os.environ.get("GITHUB_API_URL", "https://api.github.com")
 
 DISCORD_WEBHOOK_URL = os.environ.get("DISCORD_WEBHOOK_URL")
-DISCORD_CHANGELOG_ROLE_ID = 1308143973684088883
+DISCORD_CHANGELOG_ROLE_ID = int(os.environ.get("DISCORD_CHANGELOG_ROLE_ID", "1308143973684088883"))
 
 CHANGELOG_FILE = "Resources/Changelog/ChangelogStarlight.yml"
 TYPES_TO_EMOJI = {"Fix": "🐛", "Add": "🆕", "Remove": "❌", "Tweak": "⚒️"}
@@ -51,7 +51,7 @@ def main():
         print("No new entries to report.")
         return
 
-    ping_role_once(DISCORD_CHANGELOG_ROLE_ID)
+    ping_role_once(str(DISCORD_CHANGELOG_ROLE_ID))
 
     pr_groups = group_entries_by_pr(new_entries)
     for pr_id, entries in pr_groups.items():
@@ -179,9 +179,9 @@ def build_embed_for_pr(pr_id: str, entries: list[ChangelogEntry]) -> dict[str, A
     embed: dict[str, Any] = {
         "title": title,
         "description": description,
-        "fields": [
-            {"name": "Author(s)", "value": author_field[:EMBED_FIELD_VALUE_LIMIT], "inline": False}
-        ],
+  #      "fields": [
+  #          {"name": "Author(s)", "value": author_field[:EMBED_FIELD_VALUE_LIMIT], "inline": False}
+  #      ],
         "footer": {"text": "Starlight changelog"},
         "timestamp": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()),
     }
@@ -207,82 +207,30 @@ def ping_role_once(role_id: str):
     post_with_retries(payload)
 
 
-def send_discord_webhook(lines: list[str]):
-    content = "".join(lines)
-    body = get_discord_body(content)
-    retry_attempt = 0
-
-    try:
-        response = requests.post(DISCORD_WEBHOOK_URL, json=body, timeout=10)
-        while response.status_code == 429:
-            retry_attempt += 1
-            if retry_attempt > 20:
-                print("Too many retries on a single request despite following retry_after header... giving up")
-                exit(1)
-            retry_after = response.json().get("retry_after", 5)
-            print(f"Rate limited, retrying after {retry_after} seconds")
-            time.sleep(retry_after)
-            response = requests.post(DISCORD_WEBHOOK_URL, json=body, timeout=10)
-        response.raise_for_status()
-    except requests.exceptions.RequestException as e:
-        print(f"Failed to send message: {e}")
-        exit(1)
-
-
-def changelog_entries_to_message_lines(entries: Iterable[ChangelogEntry]) -> list[str]:
-    """Process structured changelog entries into a list of lines making up a formatted message."""
-    message_lines = []
-
-    for contributor_name, group in itertools.groupby(entries, lambda x: x["author"]):
-        message_lines.append("\n")
-        message_lines.append(f"**{contributor_name}** updated:\n")
-
-        for entry in group:
-            url = entry.get("url")
-            if url and not url.strip():
-                url = None
-
-            for change in entry["changes"]:
-                emoji = TYPES_TO_EMOJI.get(change["type"], "❓")
-                message = change["message"]
-
-                # if a single line is longer than the limit, it needs to be truncated
-                if len(message) > DISCORD_SPLIT_LIMIT:
-                    message = message[: DISCORD_SPLIT_LIMIT - 100].rstrip() + " [...]"
-
-                if url is not None:
-                    pr_number = url.split("/")[-1]
-                    line = f"{emoji} - {message} ([#{pr_number}]({url}))\n"
-                else:
-                    line = f"{emoji} - {message}\n"
-
-                message_lines.append(line)
-
-    return message_lines
-
-
-def send_message_lines(message_lines: list[str]):
-    """Join a list of message lines into chunks that are each below Discord's message length limit, and send them."""
-    chunk_lines = []
-    chunk_length = 0
-
-    for line in message_lines:
-        line_length = len(line)
-        new_chunk_length = chunk_length + line_length
-
-        if new_chunk_length > DISCORD_SPLIT_LIMIT:
-            print("Split changelog and sending to discord")
-            send_discord_webhook(chunk_lines)
-
-            new_chunk_length = line_length
-            chunk_lines.clear()
-
-        chunk_lines.append(line)
-        chunk_length = new_chunk_length
-
-    if chunk_lines:
-        print("Sending final changelog to discord")
-        send_discord_webhook(chunk_lines)
+def post_with_retries(payload: dict[str, Any]):
+    attempt = 0
+    while True:
+        try:
+            resp = requests.post(DISCORD_WEBHOOK_URL, json=payload, timeout=10)
+            if resp.status_code == 429:
+                attempt += 1
+                if attempt > 20:
+                    print("Too many rate limit retries; giving up", file=sys.stderr)
+                    sys.exit(1)
+                retry_after = resp.json().get("retry_after", 5)
+                print(f"Rate limited; sleeping {retry_after}s (attempt {attempt})")
+                time.sleep(retry_after)
+                continue
+            resp.raise_for_status()
+            return
+        except requests.exceptions.RequestException as e:
+            attempt += 1
+            if attempt > 5:
+                print(f"Failed after retries: {e}", file=sys.stderr)
+                return
+            backoff = 2 ** attempt
+            print(f"Request failed ({e}), backing off {backoff}s and retrying")
+            time.sleep(backoff)
 
 
 if __name__ == "__main__":

@@ -194,6 +194,9 @@ binds:
 - function: OpenEmotesMenu
   type: State
   key: Y
+- function: OpenLanguageMenu # Starlight
+  type: State
+  key: L
 - function: TextCursorSelect
   # TextCursorSelect HAS to be above ExamineEntity
   # So that LineEdit receives it correctly.

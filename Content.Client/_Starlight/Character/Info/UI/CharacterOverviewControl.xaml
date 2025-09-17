@@ -1,0 +1,15 @@
+﻿<ui:CharacterOverviewControl
+     xmlns="https://spacestation14.io"
+     xmlns:cc="clr-namespace:Content.Client.UserInterface.Controls"
+     xmlns:ui="clr-namespace:Content.Client._Starlight.Character.Info.UI"
+     xmlns:ui1="clr-namespace:Content.Client._Starlight.Character.UI">
+    <BoxContainer Orientation="Vertical">
+        <Label VerticalAlignment="Top" Margin="0 6 0 10" HorizontalAlignment="Center" StyleClasses="LabelHeading" Access="Public" Text="Objectives:"/>
+        <Label Name="RoleType" VerticalAlignment="Top" Margin="0 6 0 10" HorizontalAlignment="Center" StyleClasses="LabelHeading" Access="Public"/>
+        <ui1:CharacterViewControl Name="CharacterPreview" Access="Public"/>
+        <Label Name="ObjectivesLabel" Access="Public" Text="{Loc 'character-info-objectives-label'}" HorizontalAlignment="Center"/>
+        <BoxContainer Orientation="Vertical" Name="Objectives" Access="Public"/>
+        <BoxContainer Orientation="Vertical" Name="Minds" Access="Public"/>
+        <cc:Placeholder Name="RolePlaceholder" Access="Public" PlaceholderText="{Loc 'character-info-roles-antagonist-text'}"/>
+    </BoxContainer>
+</ui:CharacterOverviewControl>
