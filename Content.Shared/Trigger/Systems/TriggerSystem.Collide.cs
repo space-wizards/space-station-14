@@ -18,8 +18,16 @@ public sealed partial class TriggerSystem
 
     private void OnCollide(Entity<TriggerOnCollideComponent> ent, ref StartCollideEvent args)
     {
-        if (args.OurFixtureId == ent.Comp.FixtureID && (!ent.Comp.IgnoreOtherNonHard || args.OtherFixture.Hard))
+        if (
+            args.OurFixtureId == ent.Comp.FixtureID
+            && (!ent.Comp.IgnoreOtherNonHard || args.OtherFixture.Hard)
+            && (ent.Comp.MaxTriggers == null || ent.Comp.MaxTriggers > 0)
+        )
+        {
+            if (ent.Comp.MaxTriggers != null)
+                ent.Comp.MaxTriggers--;
             Trigger(ent.Owner, args.OtherEntity, ent.Comp.KeyOut);
+        }
     }
 
     private void OnStepTriggered(Entity<TriggerOnStepTriggerComponent> ent, ref StepTriggeredOffEvent args)
