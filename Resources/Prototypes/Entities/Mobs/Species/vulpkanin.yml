@@ -186,7 +186,7 @@
     #      32:
     #        sprite: Mobs/Species/Vulpkanin/displacement.rsi
     #        state: hair
-    # Starlight
+    # Starlight end
   - type: Inventory
     speciesId: vulpkanin
     # Starlight start
