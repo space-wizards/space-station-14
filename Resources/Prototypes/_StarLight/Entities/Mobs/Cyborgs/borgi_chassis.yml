@@ -233,6 +233,11 @@
               state: corgi_head_displacement
     - type: LockingWhitelist
       blacklist: #N/A you are the 2nd in command. if the mothership put you in this spot you are TRUSTED
+    - type: BorgTransponder
+      name: xenoborgi
+      sprite:
+        sprite: Mobs/Pets/corgi.rsi
+        state: corgi
 
 - type: entity
   parent: XenoBorgiChassis
