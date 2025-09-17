@@ -902,6 +902,7 @@
     containers:
       cluster-payload: !type:Container
   - type: ProjectileGrenade
+    triggerKey: trigger
     fillPrototype: PelletClusterLessLethal
     capacity: 30
 
@@ -925,6 +926,7 @@
         Quantity: 30
   - type: EmitSoundOnTrigger
     sound: /Audio/Items/smoke_grenade_smoke.ogg
+    positional: true
   - type: ExplodeOnTrigger
   - type: Explosive
     explosionType: Default

@@ -23,7 +23,7 @@ namespace Content.Shared.Access.Systems
             // Add all tags in groups to the list of tags.
             foreach (var group in component.Groups)
             {
-                if (!_prototypeManager.TryIndex<AccessGroupPrototype>(group, out var proto))
+                if (!_prototypeManager.Resolve<AccessGroupPrototype>(group, out var proto))
                     continue;
 
                 component.Tags.UnionWith(proto.Tags);
@@ -79,7 +79,7 @@ namespace Content.Shared.Access.Systems
 
             foreach (var group in newGroups)
             {
-                if (!_prototypeManager.TryIndex<AccessGroupPrototype>(group, out var proto))
+                if (!_prototypeManager.Resolve<AccessGroupPrototype>(group, out var proto))
                     continue;
 
                 access.Tags.UnionWith(proto.Tags);
