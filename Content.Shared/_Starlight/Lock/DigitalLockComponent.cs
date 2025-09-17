@@ -14,13 +14,14 @@ public sealed partial class DigitalLockComponent : Component
     /// <summary>
     /// Password of the digital lock
     /// </summary>
+    [DataField]
     public string Code = "";
 
     /// <summary>
     /// Determines, is the service panel open
     /// </summary>
 
-    [AutoNetworkedField]
+    [DataField, AutoNetworkedField]
     public bool MaintenanceOpen = false;
 
     /// <summary>
