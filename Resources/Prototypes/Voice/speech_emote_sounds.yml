@@ -53,6 +53,10 @@
       path: /Audio/_Starlight/Effects/yip.ogg
     Whine:
       collection: Whine
+    Growl:
+      collection: Growl
+    Howl:
+      path: /Audio/_Starlight/Effects/howl.ogg
     #endregion Starlight
 
 - type: emoteSounds
@@ -109,6 +113,10 @@
       path: /Audio/_Starlight/Effects/yip.ogg
     Whine:
       collection: Whine
+    Growl:
+      collection: Growl
+    Howl:
+      path: /Audio/_Starlight/Effects/howl.ogg
     #endregion Starlight
 
 - type: emoteSounds
