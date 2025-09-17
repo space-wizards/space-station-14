@@ -35,18 +35,19 @@
 #       state: husky-inner
 #     - sprite: Mobs/Customization/Vulpkanin/tail_markings.rsi
 #       state: husky-outer
-# STARLIGHT END
 
-- type: marking
-  id: VulpTailLong
-  bodyPart: Tail
-  markingCategory: Tail
-  speciesRestriction: [ Vulpkanin ]
-  sprites:
-    - sprite: Mobs/Customization/Vulpkanin/tail_markings.rsi
-      state: long
-    - sprite: Mobs/Customization/Vulpkanin/tail_markings.rsi
-      state: long-tip
+# - type: marking
+#   id: VulpTailLong
+#   bodyPart: Tail
+#   markingCategory: Tail
+#   speciesRestriction: [ Vulpkanin ]
+#   sprites:
+#     - sprite: Mobs/Customization/Vulpkanin/tail_markings.rsi
+#       state: long
+#     - sprite: Mobs/Customization/Vulpkanin/tail_markings.rsi
+#       state: long-tip
+
+# STARLIGHT END
 
 - type: marking
   id: VulpTailVulp
