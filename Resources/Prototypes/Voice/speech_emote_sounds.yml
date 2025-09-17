@@ -564,7 +564,7 @@
     Sigh:
       collection: FemaleSigh
     Crying:
-      collection: ResomiCry
+      path: /Audio/Voice/Resomi/resomi_cry.ogg
     Cough:
       collection: FemaleCoughs
     Yawn:
@@ -605,6 +605,67 @@
       collection: XenoborgBikeHorn
     Ping:
       collection: XenoborgPing
+
+# Vulp Sounds
+- type: emoteSounds
+  id: MaleVulpkanin
+  params:
+    variation: 0.125
+  sounds:
+    Laugh:
+      collection: MaleLaugh
+    Sneeze:
+      collection: MaleSneezes
+    Cough:
+      collection: MaleCoughs
+    Whistle:
+      collection: Whistles
+    Sigh:
+      collection: MaleSigh
+    Scream:
+      collection: VulpkaninScreams
+    Growl:
+      collection: Growl #Starlight bark
+    Snarl:
+      collection: VulpkaninSnarls
+    Bark:
+      collection: Bark #Starlight bark
+    Whine:
+      collection: Whine #Starlight whine
+    Howl:
+      path: /Audio/_Starlight/Effects/howl.ogg #Starlight howl
+    Yip:
+      path: /Audio/_Starlight/Effects/yip.ogg #Starlight Yip
+
+- type: emoteSounds
+  id: FemaleVulpkanin
+  params:
+    variation: 0.125
+  sounds:
+    Laugh:
+      collection: FemaleLaugh
+    Sneeze:
+      collection: FemaleSneezes
+    Cough:
+      collection: FemaleCoughs
+    Whistle:
+      collection: Whistles
+    Sigh:
+      collection: FemaleSigh
+    Scream:
+      collection: VulpkaninScreams
+    Growl:
+      collection: Growl #Starlight bark
+    Snarl:
+      collection: VulpkaninSnarls
+    Bark:
+      collection: Bark #Starlight bark
+    Whine:
+      collection: Whine #Starlight whine
+    Howl:
+      path: /Audio/_Starlight/Effects/howl.ogg #Starlight howl
+    Yip:
+      path: /Audio/_Starlight/Effects/yip.ogg #Starlight Yip
 
 # body emotes
 - type: emoteSounds

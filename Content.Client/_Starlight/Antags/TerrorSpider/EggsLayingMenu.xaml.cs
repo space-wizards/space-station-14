@@ -62,7 +62,7 @@ public sealed partial class EggsLayingMenu : RadialMenu
     }
 }
 
-public sealed class MenuButton : RadialMenuTextureButton
+public sealed class MenuButton : RadialMenuButton
 {
     public MenuButton()
     {
