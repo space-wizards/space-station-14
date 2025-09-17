@@ -14463,5 +14463,43 @@ Entries:
   id: 135601
   time: '2025-09-17T15:56:46.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/1356
+- author: Rinary
+  changes:
+  - message: Now chem. dispenser works on powercells.
+    type: Tweak
+  id: 135500
+  time: '2025-09-17T15:58:49.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1355
+- author: Rinary
+  changes:
+  - message: Returned chem. dispenser states, like disabled, opened panel.
+    type: Tweak
+  id: 135501
+  time: '2025-09-17T15:58:49.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1355
+- author: Rinary
+  changes:
+  - message: Now chem. dispenser again can generate reagents, but currently ONLY basic(aluminium,
+      carbon, copper, hydrogen, oxygen, sugar, silicon, phosphorus). It can storage
+      jugs anyway. Generating reagents drain powercell power.
+    type: Tweak
+  id: 135502
+  time: '2025-09-17T15:58:49.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1355
+- author: Rinary
+  changes:
+  - message: Fixed reagents disappearing from reagent dispensers(chem., soda, booze).
+    type: Fix
+  id: 135503
+  time: '2025-09-17T15:58:49.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1355
+- author: Rinary
+  changes:
+  - message: Fixed reagents dupe with soda/booze dispensers. (temporary, fixed by
+      wizdens).
+    type: Fix
+  id: 135504
+  time: '2025-09-17T15:58:49.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1355
 Order: -1
 
