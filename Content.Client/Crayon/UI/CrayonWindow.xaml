@@ -4,10 +4,32 @@
             SetSize="450 500">
     <BoxContainer Orientation="Vertical">
         <ColorSelectorSliders Name="ColorSelector" Visible="False" />
+        <!-- Starlight-start -->
+        <Label Text="{Loc 'crayon-window-rotation'}" Margin="0 0 0 1" />
+        <BoxContainer Name="RotationContainer" Orientation="Horizontal" Margin="0 0 0 4">
+            <Button Name="Neg180Btn" Text="-180" SetWidth="40" SetHeight="30"></Button>
+            <Button Name="Neg90Btn" Text="-90" SetWidth="36" SetHeight="30"></Button>
+            <Button Name="Neg45Btn" Text="-45" SetWidth="36" SetHeight="30"></Button>
+            <Button Name="Neg10Btn" Text="-10" SetWidth="36" SetHeight="30"></Button>
+            <Button Name="Neg1Btn" Text="-1" SetWidth="30" SetHeight="30"></Button>
+            <LineEdit Name="RotationValue" Margin="0 0 0 0" Text="0" HorizontalExpand="True"></LineEdit>
+            <Button Name="Pos1Btn" Text="+1" SetWidth="30" SetHeight="30"></Button>
+            <Button Name="Pos10Btn" Text="+10" SetWidth="36" SetHeight="30"></Button>
+            <Button Name="Pos45Btn" Text="+45" SetWidth="36" SetHeight="30"></Button>
+            <Button Name="Pos90Btn" Text="+90" SetWidth="36" SetHeight="30"></Button>
+            <Button Name="Pos180Btn" Text="+180" SetWidth="40" SetHeight="30"></Button>
+        </BoxContainer>
+        <!-- Starlight-end -->
         <LineEdit Name="Search" Margin="0 0 0 8" PlaceHolder="{Loc 'crayon-window-placeholder'}" />
         <ScrollContainer VerticalExpand="True">
             <BoxContainer Name="Grids" Orientation="Vertical">
             </BoxContainer>
         </ScrollContainer>
+        <!-- Starlight-start -->
+        <BoxContainer>
+            <Label Text="{Loc 'crayon-window-preview'}" Margin="0 6 8 0" />
+            <CheckBox Name="PreviewCheckbox" Margin="0 8 0 0"></CheckBox>
+        </BoxContainer>
+        <!-- Starlight-end -->
     </BoxContainer>
 </DefaultWindow>
