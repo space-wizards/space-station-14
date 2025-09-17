@@ -40,7 +40,6 @@
             Chemist: [ 2, 2 ]
             MedicalIntern: [ 3, 3 ]
             Paramedic: [ 1, 2 ]
-            Surgeon: [ 2, 2 ]  
             #science
             ResearchDirector: [ 1, 1 ]
             Scientist: [ 3, 3 ]
@@ -57,7 +56,6 @@
             CargoTechnician: [ 3, 3 ]
             Quartermaster: [ 1, 1 ]
             SalvageSpecialist: [ 5, 5 ]
-            MailTech: [ 1, 2 ]
             #civilian
             Assistant: [ -1, -1 ]
             Clown: [ 1, 1 ]

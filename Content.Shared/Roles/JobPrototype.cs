@@ -64,7 +64,14 @@ namespace Content.Shared.Roles
         /// </summary>
         [DataField("requireAdminNotify")]
         public bool RequireAdminNotify { get; private set; } = false;
-
+        
+        /// <summary> // Starlight begin
+        ///     When set in job yaml - the player will receive a message about their specific job rules.
+        /// </summary>
+        [DataField("rules")] 
+        public string JobRules { get; private set; } = string.Empty;
+        // Starlight end
+        
         /// <summary>
         ///     Should this job appear in preferences menu?
         /// </summary>

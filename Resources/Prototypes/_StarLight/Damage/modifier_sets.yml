@@ -1,10 +1,4 @@
 - type: damageModifierSet
-  id: Vulpkanin # Because of fur is more flammable and more resistant to cold.
-  coefficients:
-    Cold: 0.5
-    Heat: 1.5
-
-- type: damageModifierSet
   id: Avali # Not as good as thick fur like the vulps, but still rather insulating.
   coefficients:
     Cold: 0.6

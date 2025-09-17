@@ -80,7 +80,7 @@ public abstract class SharedArmorSparkEffectSystem : EntitySystem
         if (HasComp<ArmorComponent>(armorUid))
         {
             var coeffQuery = new CoefficientQueryEvent(SlotFlags.OUTERCLOTHING);
-            var relayedEvent = new InventoryRelayedEvent<CoefficientQueryEvent>(coeffQuery);
+            var relayedEvent = new InventoryRelayedEvent<CoefficientQueryEvent>(coeffQuery, armorUid);
             RaiseLocalEvent(armorUid, relayedEvent);
             
             if (coeffQuery.DamageModifiers.Coefficients.TryGetValue("Piercing", out var pierceCoeff))

@@ -123,6 +123,7 @@
     - PartsStatic
     - AtmosStatic
     - CablesStatic
+    - PaperworkStatic
     - CargoStatic
     - MaterialsStatic
     - BasicChemistryStatic
@@ -496,6 +497,7 @@
     - RollerBedsStatic
     - MedicalClothingStatic
     - EmptyMedkitsStatic
+    - StarlightMedicalStatic # Starlight
     dynamicPacks:
     - StarlightSurgeryDynamic
     - StarlightCyberlimbDynamic

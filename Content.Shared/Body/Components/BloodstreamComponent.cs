@@ -199,12 +199,6 @@ public sealed partial class BloodstreamComponent : Component
     public Entity<SolutionComponent>? TemporarySolution;
 
     /// <summary>
-    /// Variable that stores the amount of status time added by having a low blood level.
-    /// </summary>
-    [DataField, AutoNetworkedField]
-    public TimeSpan StatusTime;
-
-    /// <summary>
     /// Alert to show when bleeding.
     /// </summary>
     [DataField]

@@ -36,6 +36,16 @@ public sealed partial class SpiderComponent : Component
     /// </summary>
     [DataField]
     public TimeSpan? NextWebSpawn;
+
+    #region Starlight
+
+    [DataField]
+    public bool OneWebSpawn = true;
+
+    [DataField]
+    public bool CantBreakWeb = true;
+
+    #endregion
 }
 
 public sealed partial class SpiderWebActionEvent : InstantActionEvent { }
