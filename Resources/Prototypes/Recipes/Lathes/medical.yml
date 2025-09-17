@@ -218,6 +218,22 @@
     Plastic: 100
 
 - type: latheRecipe
+  id: OffsetCane
+  result: OffsetCane
+  completetime: 2
+  materials:
+    Steel: 100
+    Plastic: 100
+
+- type: latheRecipe
+  id: OffsetCaneWood
+  result: OffsetCaneWood
+  completetime: 2
+  materials:
+    Steel: 100
+    Wood: 100
+
+- type: latheRecipe
   id: LauncherSyringe
   result: LauncherSyringe
   completetime: 10

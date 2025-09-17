@@ -4,7 +4,7 @@ chat-emote-name-laugh = Laugh
 chat-emote-name-honk = Honk
 chat-emote-name-sigh = Sigh
 chat-emote-name-whistle = Whistle
-chat-emote-name-crying = Crying
+chat-emote-name-crying = Cry
 chat-emote-name-squish = Squish
 chat-emote-name-chitter = Chitter
 chat-emote-name-squeak = Squeak
@@ -27,11 +27,16 @@ chat-emote-name-ping = Ping
 chat-emote-name-sneeze = Sneeze
 chat-emote-name-cough = Cough
 chat-emote-name-catmeow = Cat Meow
-chat-emote-name-cathisses = Cat Hisses
-chat-emote-name-monkeyscreeches = Monkey Screeches
+chat-emote-name-cathisses = Cat Hiss
+chat-emote-name-monkeyscreeches = Monkey Screech
 chat-emote-name-robotbeep = Robot
 chat-emote-name-yawn = Yawn
 chat-emote-name-snore = Snore
+chat-emote-name-bark = Bark
+chat-emote-name-snarl = Snarl
+chat-emote-name-whine = Whine
+chat-emote-name-howl = Howl
+chat-emote-name-growl = Growl
 
 # Message
 chat-emote-msg-scream = screams!

@@ -2,9 +2,7 @@ using Content.Server.Chat.Managers;
 using Content.Server.GameTicking;
 using Content.Shared.Holiday;
 using JetBrains.Annotations;
-using Robust.Server.Player;
-using Robust.Shared.Enums;
-using Robust.Shared.Player;
+using Robust.Shared.Prototypes;
 
 namespace Content.Server.Holiday;
 
@@ -12,48 +10,57 @@ namespace Content.Server.Holiday;
 public sealed class HolidaySystem : SharedHolidaySystem
 {
     [Dependency] private readonly IChatManager _chatManager = default!;
-    [Dependency] private readonly IPlayerManager _player = default!;
+    [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
 
     /// <inheritdoc/>
     public override void Initialize()
     {
         base.Initialize();
-        RefreshCurrentHolidays();
 
         SubscribeLocalEvent<GameRunLevelChangedEvent>(OnRunLevelChanged);
-        _player.PlayerStatusChanged += OnPlayerStatusChanged;
     }
 
-    #region Event Handlers
+    #region Internal
 
     /// <summary>
-    ///     Reset holidays when going to lobby, and run holiday specific code at round start.
+    /// At round start, create the current holidays list and run holiday specific code.
     /// </summary>
     private void OnRunLevelChanged(GameRunLevelChangedEvent eventArgs)
     {
-        switch (eventArgs.New)
+        if (eventArgs.New != GameRunLevel.InRound)
+            return;
+
+        RefreshCurrentHolidays();
+        DoCelebrate();
+    }
+
+    /// <summary>
+    /// Send a chat message to the server announcing the holidays.
+    /// </summary>
+    private void DoGreet()
+    {
+        if (!TryGetInstance(out var singleton) || !singleton.Value.Comp.Enabled)
+            return;
+
+        foreach (var holidayId in singleton.Value.Comp.CurrentHolidays)
         {
-            case GameRunLevel.PreRoundLobby:
-                RefreshCurrentHolidays(announce: false);
-                break;
-            case GameRunLevel.InRound:
-                DoGreet();
-                DoCelebrate();
-                break;
-            case GameRunLevel.PostRound:
-                // TODO post round celebration.
-                break;
+            var holiday = _prototypeManager.Index(holidayId);
+            _chatManager.DispatchServerAnnouncement(holiday.Greet());
         }
     }
 
     /// <summary>
-    ///     Send new client sessions the active holidays.
+    /// Function called at round start to run shenanigans (code) stored by each active holiday.
     /// </summary>
-    private void OnPlayerStatusChanged(object? sender, SessionStatusEventArgs e)
+    private void DoCelebrate()
     {
-        if (e.NewStatus == SessionStatus.Connected)
+        if (!TryGetInstance(out var singleton) || !singleton.Value.Comp.Enabled)
+            return;
+
+        foreach (var holidayId in singleton.Value.Comp.CurrentHolidays)
         {
-            RaiseNetworkEvent(new DoRefreshHolidaysEvent(CurrentDate), e.Session);
+            var holiday = _prototypeManager.Index(holidayId);
+            holiday.Celebrate();
         }
     }
 
@@ -64,12 +71,7 @@ public sealed class HolidaySystem : SharedHolidaySystem
     [PublicAPI]
     public override void RefreshCurrentHolidays(bool announce = true)
     {
-        base.RefreshCurrentHolidays(announce);
-
-        var now = DateTime.Now;
-
-        SetActiveHolidays(now);
-        RaiseNetworkEvent(new DoRefreshHolidaysEvent(now));
+        SetActiveHolidays(DateTime.Today);
 
         if (announce)
             DoGreet();
@@ -81,39 +83,9 @@ public sealed class HolidaySystem : SharedHolidaySystem
     {
         base.RefreshCurrentHolidays(date, announce);
 
-        RaiseNetworkEvent(new DoRefreshHolidaysEvent(date));
-
         if (announce)
             DoGreet();
     }
 
     #endregion
-
-    /// <summary>
-    ///     Send a chat message to the server announcing the holidays.
-    /// </summary>
-    private void DoGreet()
-    {
-        if (!_enabled)
-            return;
-
-        foreach (var holiday in CurrentHolidays)
-        {
-            _chatManager.DispatchServerAnnouncement(holiday.Greet());
-        }
-    }
-
-    /// <summary>
-    ///     Function called at round start to run shenanigans (code) stored by each active holiday.
-    /// </summary>
-    private void DoCelebrate()
-    {
-        if (!_enabled)
-            return;
-
-        foreach (var holiday in CurrentHolidays)
-        {
-            holiday.Celebrate();
-        }
-    }
 }
