@@ -131,16 +131,16 @@ public abstract class SharedHandLabelerSystem : EntitySystem
             $"{ToPrettyString(args.Actor):user} set {ToPrettyString(uid):labeler} to apply label \"{handLabeler.AssignedLabel}\"");
     }
 
-    private void OnExamined(EntityUid uid, HandLabelerComponent? handLabeler, ref ExaminedEvent args)
+    private void OnExamined(Entity<HandLabelerComponent> ent, ref ExaminedEvent args)
     {
-        if (!args.IsInDetailsRange || !Resolve(uid, ref handLabeler))
+        if (!args.IsInDetailsRange)
         {
             return;
         }
 
-        var text = handLabeler.AssignedLabel == string.Empty
+        var text = ent.Comp.AssignedLabel == string.Empty
             ? Loc.GetString("hand-labeler-examine-blank")
-            : Loc.GetString("hand-labeler-examine-label-text", ("label-text", handLabeler.AssignedLabel));
+            : Loc.GetString("hand-labeler-examine-label-text", ("label-text", ent.Comp.AssignedLabel));
         args.PushMarkup(text);
     }
 }
