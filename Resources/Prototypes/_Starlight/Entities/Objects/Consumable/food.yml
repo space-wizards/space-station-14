@@ -1,0 +1,27 @@
+- type: entity
+  name: raw thaven fillet
+  parent: FoodMeatBase
+  # MeatFish?...
+  id: FoodThavenMeat
+  description: Concerning.
+  components:
+  - type: FlavorProfile
+    flavors:
+      - fishy
+  - type: Tag
+    tags:
+    - Raw
+    - Meat
+  - type: Sprite
+    state: fish
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        reagents:
+        - ReagentId: CarpoToxin
+          Quantity: 5
+  - type: Extractable
+    juiceSolution:
+      reagents:
+      - ReagentId: CarpoToxin
+        Quantity: 5
