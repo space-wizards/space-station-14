@@ -125,6 +125,14 @@ namespace Content.Shared.Preferences
             return GetAllProfilesForJobInternal(job, onlyEnabled: false);
         }
 
+        /// <summary>
+        /// Get all enabled profiles asking for an antag
+        /// </summary>
+        public Dictionary<int, HumanoidCharacterProfile> GetAllEnabledProfilesForAntag(ProtoId<AntagPrototype> antag)
+        {
+            return GetAllProfilesForAntagInternal(antag, onlyEnabled: true);
+        }
+
         private Dictionary<int, HumanoidCharacterProfile> GetAllProfilesForJobInternal(ProtoId<JobPrototype> job, bool onlyEnabled)
         {
             var result = new Dictionary<int, HumanoidCharacterProfile>();
@@ -141,6 +149,22 @@ namespace Content.Shared.Preferences
             return result;
         }
 
+        private Dictionary<int, HumanoidCharacterProfile> GetAllProfilesForAntagInternal(ProtoId<AntagPrototype> antag,
+            bool onlyEnabled)
+        {
+            var result = new Dictionary<int, HumanoidCharacterProfile>();
+            foreach (var (slot, profile) in Characters)
+            {
+                if (profile is not HumanoidCharacterProfile humanoid)
+                    continue;
+                if (onlyEnabled && !humanoid.Enabled)
+                    continue;
+                if (humanoid.AntagPreferences.Contains(antag))
+                    result.Add(slot, humanoid);
+            }
+
+            return result;
+        }
 
         /// <summary>
         /// Get any random enabled profile

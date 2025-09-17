@@ -2,7 +2,6 @@ using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Server.Antag.Components;
 using Content.Server.GameTicking.Rules.Components;
-using Content.Server.Objectives;
 using Content.Shared.Antag;
 using Content.Shared.Chat;
 using Content.Shared.GameTicking.Components;
@@ -163,7 +162,8 @@ public sealed partial class AntagSelectionSystem
     }
 
     /// <summary>
-    /// Return true if a player has any character that could take any antagonist in antagList
+    /// Return true if a player has any character that could take any antagonist in antagList.
+    /// Additionally ensures that the player is not blocked by requirements or bans.
     /// </summary>
     /// <param name="session">The player session to pull preferences from</param>
     /// <param name="antagList">List of AntagPrototypes to query</param>
@@ -173,6 +173,9 @@ public sealed partial class AntagSelectionSystem
     {
         if (session == null)
             return true;
+
+        if (antagList.Count == 0)
+            return false;
 
         var pref = _pref.GetPreferences(session.UserId);
         var priorities = pref.JobPriorities.Where(kvp => kvp.Value != JobPriority.Never).ToDictionary().Keys;
@@ -189,7 +192,9 @@ public sealed partial class AntagSelectionSystem
 
             foreach (var antag in antagList)
             {
-                if (humanoid.AntagPreferences.Contains(antag))
+                if (humanoid.AntagPreferences.Contains(antag)
+                    && !_ban.IsRoleBanned(session, [antag])
+                    && _playTime.IsAllowed(session, antag))
                     return true;
             }
         }
@@ -200,6 +205,7 @@ public sealed partial class AntagSelectionSystem
     /// <summary>
     /// Return true if a player has a positive priority for <paramref name="job"/> and also has any character with a
     /// preference for <paramref name="job"/> with that could take any antagonist in antagList.
+    /// Additionally ensures that the player is not blocked by requirements or bans.
     /// </summary>
     /// <param name="session">The player session to pull preferences from</param>
     /// <param name="antagList">List of AntagPrototypes to query</param>
@@ -236,7 +242,9 @@ public sealed partial class AntagSelectionSystem
 
             foreach (var antag in antagList)
             {
-                if (humanoid.AntagPreferences.Contains(antag))
+                if (humanoid.AntagPreferences.Contains(antag)
+                    && !_ban.IsRoleBanned(session, [antag])
+                    && _playTime.IsAllowed(session, antag))
                     return true;
             }
         }
