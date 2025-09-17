@@ -10,7 +10,7 @@
     - state: base
       map: ["enum.GunVisualLayers.Base"]
   - type: Item
-    size: Huge
+    size: Large
   - type: Clothing
     sprite: Objects/Weapons/Guns/Snipers/bolt_gun_wood.rsi
     quickEquip: false
@@ -95,6 +95,10 @@
   id: WeaponSniperHristov
   description: For when you absolutely, positively need to make someone regret their life choices from a safe distance. Uses .60 anti-materiel ammo.
   components:
+  - type: Item
+    size: Huge
+    shape:
+    - 0,0,5,1
   - type: Sprite
     sprite: Objects/Weapons/Guns/Snipers/heavy_sniper.rsi
   - type: Clothing
@@ -176,7 +180,7 @@
     shape:
     - 0,0,1,0
     - 0,1,0,1
-    storedRotation: 0
+    storedOffset: 0,-5
   - type: Sprite
     sprite: Objects/Weapons/Guns/Snipers/flintlock.rsi
   - type: Clothing
