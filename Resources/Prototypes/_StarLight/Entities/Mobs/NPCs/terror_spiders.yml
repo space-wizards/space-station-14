@@ -172,9 +172,7 @@
   - type: Evolving
     evolveTo: MobTerrorPurple
     conditions: 
-    - !type:DamageDealCondition
-      targetDamageAmount: 250
-      onlyAlive: true
+    - !type:SpiderWebCondition
 
 - type: entity
   name: terror gray
@@ -323,6 +321,8 @@
       sprite: _Starlight/Mobs/Animals/Spiders/terror_widow.rsi
   - type: Jump
     knockdownTargetOnCollision: true
+  - type: Spider
+    webPrototype: SpiderWebPoison
 
 # Purple
 

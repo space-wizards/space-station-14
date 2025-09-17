@@ -363,7 +363,7 @@
 
 - type: Tag
   id: CluwneBeastWearable
-  
+
 - type: Tag
   id: Cola
 
@@ -693,6 +693,9 @@
   id: GhostOnlyWarp
 
 - type: Tag
+  id: GenderPin
+
+- type: Tag
   id: GlassAirlock
 
 - type: Tag
@@ -721,7 +724,7 @@
 
 - type: Tag
   id: GrenadeFlashBang
-  
+
 - type: Tag
   id: GygaxArmor
 
@@ -888,6 +891,9 @@
   id: Ingot
 
 - type: Tag
+  id: Inflatable
+
+- type: Tag
   id: InstantDoAfters
 
 - type: Tag
@@ -931,7 +937,7 @@
 
 - type: Tag
   id: LightBulb
-  
+
 - type: Tag
   id: Lighters
 
@@ -1022,6 +1028,9 @@
 
 - type: Tag
   id: Medkit
+
+- type: Tag
+  id: MessyDrinkerImmune
 
 - type: Tag
   id: Metal
@@ -1392,7 +1401,7 @@
 
 - type: Tag
   id: IndustrialMech
-  
+
 - type: Tag
   id: IgnoreMelee
 

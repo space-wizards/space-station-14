@@ -217,7 +217,9 @@
     - id: SleeperAgents
 #    - id: ZombieOutbreak
     - id: LoneOpsSpawn
-    - id: DerelictCyborgSpawn
+    - !type:NestedSelector
+      tableId: DerelictBorgEventTable
+    - id: DerelictBorgiSpawn
     - id: WizardSpawn
 
     # Starlight gamerules

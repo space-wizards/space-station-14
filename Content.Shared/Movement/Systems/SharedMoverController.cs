@@ -1,3 +1,4 @@
+using System.Collections.Concurrent;
 using System.Diagnostics.CodeAnalysis;
 using System.Net;
 using System.Numerics;
@@ -40,16 +41,16 @@ public abstract partial class SharedMoverController : VirtualController
 {
     [Dependency] private   readonly IConfigurationManager _configManager = default!;
     [Dependency] protected readonly IGameTiming Timing = default!;
-    [Dependency] private   readonly ITileDefinitionManager _tileDefinitionManager = default!;
+    [Dependency] protected readonly ITileDefinitionManager _tileDefinitionManager = default!;
     [Dependency] private   readonly ActionBlockerSystem _blocker = default!;
-    [Dependency] private   readonly EntityLookupSystem _lookup = default!;
+    [Dependency] protected readonly EntityLookupSystem _lookup = default!;
     [Dependency] private   readonly InventorySystem _inventory = default!;
     [Dependency] private   readonly MobStateSystem _mobState = default!;
     [Dependency] private   readonly SharedAudioSystem _audio = default!;
     [Dependency] private   readonly SharedContainerSystem _container = default!;
-    [Dependency] private   readonly SharedMapSystem _mapSystem = default!;
-    [Dependency] private   readonly SharedGravitySystem _gravity = default!;
-    [Dependency] private   readonly SharedTransformSystem _transform = default!;
+    [Dependency] protected readonly SharedMapSystem _mapSystem = default!;
+    [Dependency] protected readonly SharedGravitySystem _gravity = default!;
+    [Dependency] protected readonly SharedTransformSystem _transform = default!;
     [Dependency] private   readonly TagSystem _tags = default!;
     [Dependency] private   readonly SharedActionsSystem _action = default!; //🌟Starlight🌟
     [Dependency] private   readonly SharedChargesSystem _charges = default!; //🌟Starlight🌟
@@ -71,14 +72,14 @@ public abstract partial class SharedMoverController : VirtualController
     private static readonly ProtoId<TagPrototype> FootstepSoundTag = "FootstepSound";
 
     private bool _relativeMovement;
-    private float _minDamping;
-    private float _airDamping;
-    private float _offGridDamping;
+    protected float _minDamping;
+    protected float _airDamping;
+    protected float _offGridDamping;
 
     /// <summary>
     /// Cache the mob movement calculation to re-use elsewhere.
     /// </summary>
-    public Dictionary<EntityUid, bool> UsedMobMovement = new();
+    public ConcurrentDictionary<EntityUid, bool> UsedMobMovement = new(); // Starlight
 
     private readonly HashSet<EntityUid> _aroundColliderSet = [];
 
@@ -203,8 +204,7 @@ public abstract partial class SharedMoverController : VirtualController
         }
 
         // If the body is in air but isn't weightless then it can't move
-        // TODO: MAKE ISWEIGHTLESS EVENT BASED
-        var weightless = _gravity.IsWeightless(uid, physicsComponent, xform);
+        var weightless = _gravity.IsWeightless(uid);
         var inAirHelpless = false;
 
         if (physicsComponent.BodyStatus != BodyStatus.OnGround && !CanMoveInAirQuery.HasComponent(uid))
@@ -459,7 +459,7 @@ public abstract partial class SharedMoverController : VirtualController
     /// <summary>
     /// Used for weightlessness to determine if we are near a wall.
     /// </summary>
-    private bool IsAroundCollider(EntityLookupSystem lookupSystem, Entity<PhysicsComponent, MobMoverComponent, TransformComponent> entity)
+    protected bool IsAroundCollider(EntityLookupSystem lookupSystem, Entity<PhysicsComponent, MobMoverComponent, TransformComponent> entity)
     {
         var (uid, collider, mover, transform) = entity;
         var enlargedAABB = _lookup.GetWorldAABB(entity.Owner, transform).Enlarged(mover.GrabRange);
@@ -492,7 +492,7 @@ public abstract partial class SharedMoverController : VirtualController
 
     protected abstract bool CanSound();
 
-    private bool TryGetSound(
+    protected bool TryGetSound(
         bool weightless,
         EntityUid uid,
         InputMoverComponent mover,
@@ -622,7 +622,7 @@ public abstract partial class SharedMoverController : VirtualController
         return sound != null;
     }
 
-    private Vector2 AssertValidWish(InputMoverComponent mover, float walkSpeed, float sprintSpeed)
+    protected Vector2 AssertValidWish(InputMoverComponent mover, float walkSpeed, float sprintSpeed)
     {
         var (walkDir, sprintDir) = GetVelocityInput(mover);
 
@@ -641,8 +641,7 @@ public abstract partial class SharedMoverController : VirtualController
         if (!TryComp<PhysicsComponent>(ent, out var physicsComponent) || !XformQuery.TryComp(ent, out var xform))
             return;
 
-        // TODO: Make IsWeightless event based!!!
-        if (physicsComponent.BodyStatus != BodyStatus.OnGround || _gravity.IsWeightless(ent, physicsComponent, xform))
+        if (physicsComponent.BodyStatus != BodyStatus.OnGround || _gravity.IsWeightless(ent.Owner))
             args.Modifier *= ent.Comp.BaseWeightlessFriction;
         else
             args.Modifier *= ent.Comp.BaseFriction;
