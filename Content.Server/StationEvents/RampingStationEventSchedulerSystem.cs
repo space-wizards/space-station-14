@@ -3,6 +3,7 @@ using Content.Server.GameTicking.Rules;
 using Content.Server.StationEvents.Components;
 using Content.Shared.GameTicking.Components;
 using Robust.Shared.Random;
+// STARLIGHT using
 using Robust.Shared.Configuration;
 using Content.Shared.CCVar;
 
@@ -13,6 +14,7 @@ public sealed class RampingStationEventSchedulerSystem : GameRuleSystem<RampingS
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly EventManagerSystem _event = default!;
     [Dependency] private readonly GameTicker _gameTicker = default!;
+    // STARLIGHT dependency
     [Dependency] private readonly IConfigurationManager _cfg = default!;
 
     /// <summary>
@@ -30,12 +32,14 @@ public sealed class RampingStationEventSchedulerSystem : GameRuleSystem<RampingS
     protected override void Started(EntityUid uid, RampingStationEventSchedulerComponent component, GameRuleComponent gameRule, GameRuleStartedEvent args)
     {
         base.Started(uid, component, gameRule, args);
+        // STARLIGHT variable
         float AverageEndTime = _cfg.GetCVar(CCVars.EmergencyShuttleAutoCallTime);
 
         // Worlds shittiest probability distribution
         // Got a complaint? Send them to
         component.MaxChaos = _random.NextFloat(component.AverageChaos - component.AverageChaos / 4, component.AverageChaos + component.AverageChaos / 4);
         // This is in minutes, so *60 for seconds (for the chaos calc)
+        // STARLIGHT variable instead of hardcode
         component.EndTime = _random.NextFloat(AverageEndTime - AverageEndTime / 4, AverageEndTime + AverageEndTime / 4) * 60f;
         component.StartingChaos = component.MaxChaos / 10;
 
