@@ -22,7 +22,4 @@ public sealed partial class JumpComponent : Component
 
     [DataField]
     public bool KnockdownSelfOnCollision = false;
-
-    [DataField]
-    public float Cooldown = 30f;
 }

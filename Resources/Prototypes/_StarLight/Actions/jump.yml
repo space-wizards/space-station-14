@@ -5,6 +5,7 @@
   categories: [ HideSpawnMenu ]
   components:
   - type: Action
+    useDelay: 30
     itemIconStyle: NoItem
     icon:
       sprite: _Starlight/Actions/resomi.rsi
