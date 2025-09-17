@@ -111,6 +111,7 @@ namespace Content.IntegrationTests.Tests
             "Saltern",
             "Reach",
             "Oasis",
+			"Oasis2",
             "Amber",
             "Plasma",
             "Elkridge",
