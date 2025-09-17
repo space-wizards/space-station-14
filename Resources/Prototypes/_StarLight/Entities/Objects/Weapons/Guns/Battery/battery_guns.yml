@@ -867,7 +867,7 @@
     startingCharge: 1500
   - type: BatterySelfRecharger
     autoRecharge: true
-    autoRechargeRate: 100
+    autoRechargeRate: 80
     autoRechargePause: true
     autoRechargePauseTime: 10
 

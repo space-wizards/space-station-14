@@ -4,6 +4,15 @@
   id: BaseMobSlimePerson
   abstract: true
   components:
+  # Starlight-start: Languages
+  - type: LanguageKnowledge
+    speaks:
+    - GalacticCommon
+    - Bubblish
+    understands:
+    - GalacticCommon
+    - Bubblish
+  # Starlight-end
   - type: UserInterface
     interfaces:
       enum.StorageUiKey.Key:
@@ -30,11 +39,17 @@
   # they like eat it idk lol
   - type: Storage
     clickInsert: false
+    showVerb: false # Starlight Edit
     grid:
     - 0,0,1,2
     maxItemSize: Large
     storageInsertSound:
       path: /Audio/Voice/Slime/slime_squish.ogg
+    # Starlight Edit - Start
+  - type: PrivateStorage
+    accessDelay: 3.0
+    accessPopup: "laspi-storage-accessing"
+    # Starlight Edit - End
   - type: ContainerContainer
     containers:
       storagebase: !type:Container
@@ -125,6 +140,7 @@
             state: jumpsuit-female
   - type: ShowThirstIcons # starlight
   - type: SolutionScanner # starlight
+  - type: Wagging # starlight
 
 - type: entity
   parent: MobHumanDummy

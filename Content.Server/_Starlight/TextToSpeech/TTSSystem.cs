@@ -1,9 +1,11 @@
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using Content.Server._Starlight.Language;
 using Content.Server._Starlight.Radio.Systems;
 using Content.Server.Chat.Systems;
 using Content.Server.Starlight.TextToSpeech;
+using Content.Shared._Starlight.Language;
 using Content.Shared.Humanoid;
 using Content.Shared.Mind;
 using Content.Shared.Mind.Components;
@@ -27,6 +29,7 @@ public sealed partial class TTSSystem : EntitySystem
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly ITTSManager _ttsManager = default!;
     [Dependency] private readonly IRobustRandom _rng = default!;
+    [Dependency] private readonly LanguageSystem _language = default!;
 
     private readonly List<string> _sampleText =
     [
@@ -93,12 +96,12 @@ public sealed partial class TTSSystem : EntitySystem
         if (!TryComp(args.Source, out TextToSpeechComponent? senderComponent)
             || senderComponent.VoicePrototypeId is not string voiceId)
         {
-            HandleRadio(args.Receivers, args.Message, 92, chime);
+            HandleRadio(args.Receivers, args.Message, 92, chime, args.Language);
         }
         else
         {
             var voice = _prototypeManager.TryIndex(voiceId, out VoicePrototype? proto) ? proto.Voice : 1;
-            HandleRadio(args.Receivers, args.Message, voice, chime);
+            HandleRadio(args.Receivers, args.Message, voice, chime, args.Language);
         }
     }
 
@@ -141,7 +144,7 @@ public sealed partial class TTSSystem : EntitySystem
 
     private async void OnEntitySpoke(EntityUid uid, TextToSpeechComponent component, EntitySpokeEvent args)
     {
-        if (!_isEnabled || args.Message.Length > MaxChars) return;
+        if (!_isEnabled || args.Message.Length > MaxChars || !args.Language.SpeechOverride.RequireSpeech) return;
         var voice = DefaultAnnounceVoice;
         if (!_prototypeManager.TryIndex(component.VoicePrototypeId ?? "", out VoicePrototype? proto))
         {
@@ -154,12 +157,12 @@ public sealed partial class TTSSystem : EntitySystem
                 if (voicePrototypes.Length != 0)
                 {
                     var index = Random.Shared.Next(voicePrototypes.Length);
-                    if (TryComp<MindContainerComponent>(uid, out var mindContainer) && mindContainer.HasMind 
+                    if (TryComp<MindContainerComponent>(uid, out var mindContainer) && mindContainer.HasMind
                     && TryComp<MindComponent>(mindContainer.Mind, out var mind))
                     {
-                        for(int i = 0; i < voicePrototypes.Length; i++)
+                        for (int i = 0; i < voicePrototypes.Length; i++)
                         {
-                            if(voicePrototypes[i].Value.Name == mind.Voice)
+                            if (voicePrototypes[i].Value.Name == mind.Voice)
                             {
                                 index = i;
                                 break;
@@ -177,12 +180,12 @@ public sealed partial class TTSSystem : EntitySystem
                 if (voicePrototypes.Length != 0)
                 {
                     var index = Random.Shared.Next(voicePrototypes.Length);
-                    if (TryComp<MindContainerComponent>(uid, out var mindContainer) && mindContainer.HasMind 
+                    if (TryComp<MindContainerComponent>(uid, out var mindContainer) && mindContainer.HasMind
                     && TryComp<MindComponent>(mindContainer.Mind, out var mind))
                     {
-                        for(int i = 0; i < voicePrototypes.Length; i++)
+                        for (int i = 0; i < voicePrototypes.Length; i++)
                         {
-                            if(voicePrototypes[i].Value.Name == mind.SiliconVoice)
+                            if (voicePrototypes[i].Value.Name == mind.SiliconVoice)
                             {
                                 index = i;
                                 break;
@@ -198,48 +201,56 @@ public sealed partial class TTSSystem : EntitySystem
         else
             voice = proto.Voice;
 
-        if (args.ObfuscatedMessage != null)
+        if (args.IsWhisper)
         {
-            HandleWhisper(uid, args.Message, voice);
+            HandleWhisper(uid, args.Message, voice, args.Language);
             return;
         }
 
-        HandleSay(uid, args.Message, voice);
+        HandleSay(uid, args.Message, voice, args.Language);
     }
     private void OnTransformSpeech(TransformSpeechEvent args)
     {
         if (!_isEnabled) return;
         args.Message = args.Message.Replace("+", "");
     }
-    private async void HandleSay(EntityUid uid, string message, int voice)
+    private async void HandleSay(EntityUid uid, string message, int voice, LanguagePrototype language)
     {
-        var recipients = Robust.Shared.Player.Filter.Pvs(uid, 1F).RemovePlayers(_ignoredRecipients);
+        var recipients = Filter.Pvs(uid, 1F).RemovePlayers(_ignoredRecipients);
 
         var soundData = await GenerateTTS(message, voice);
 
         if (soundData is null)
             return;
 
-        var netEntity = GetNetEntity(uid);
+        foreach (var session in recipients.Recipients)
+            if (session.AttachedEntity.HasValue
+            && session.AttachedEntity != uid
+            && !_language.CanUnderstand(session.AttachedEntity.Value, language.ID))
+                recipients.RemovePlayer(session);
 
         if (TryComp<EyeComponent>(uid, out var eye) && eye is not null)
         {
             recipients.RemovePlayerByAttachedEntity(uid);
-            RaiseNetworkEvent(new PlayTTSEvent
+
+            if (_language.CanUnderstand(uid, language.ID))
             {
-                Data = soundData,
-                SourceUid = GetNetEntity(eye.Target)
-            }, Filter.Empty().FromEntities(uid), false);
+                RaiseNetworkEvent(new PlayTTSEvent
+                {
+                    Data = soundData,
+                    SourceUid = GetNetEntity(eye.Target)
+                }, Filter.Empty().FromEntities(uid), false);
+            }
         }
 
         RaiseNetworkEvent(new PlayTTSEvent
         {
             Data = soundData,
-            SourceUid = netEntity
+            SourceUid = GetNetEntity(uid)
         }, recipients, false);
     }
 
-    private async void HandleWhisper(EntityUid uid, string message, int voice)
+    private async void HandleWhisper(EntityUid uid, string message, int voice, LanguagePrototype language)
     {
         var soundData = await GenerateTTS(message, voice);
         if (soundData is null)
@@ -252,6 +263,9 @@ public sealed partial class TTSSystem : EntitySystem
         {
             if (!session.AttachedEntity.HasValue
                 || _ignoredRecipients.Contains(session))
+                continue;
+
+            if (!_language.CanUnderstand(session.AttachedEntity.Value, language.ID))
                 continue;
 
             var transform = transformQuery.GetComponent(session.AttachedEntity.Value);
@@ -280,13 +294,19 @@ public sealed partial class TTSSystem : EntitySystem
         }
     }
 
-    private async void HandleRadio(EntityUid[] uIds, string message, int voice, SoundSpecifier? chime)
+    private async void HandleRadio(EntityUid[] uIds, string message, int voice, SoundSpecifier? chime, LanguagePrototype language)
     {
+        var recipients = Filter.Entities(uIds).RemovePlayers(_ignoredRecipients);
+        foreach (var session in recipients.Recipients)
+            if (session.AttachedEntity.HasValue
+            && !_language.CanUnderstand(session.AttachedEntity.Value, language.ID))
+                recipients.RemovePlayer(session);
+
         var soundData = await GenerateTTS(message, voice, isRadio: true);
         if (soundData is null)
             return;
 
-        RaiseNetworkEvent(new PlayTTSEvent { IsRadio = true, Chime = chime, Data = soundData }, Filter.Entities(uIds).RemovePlayers(_ignoredRecipients), false);
+        RaiseNetworkEvent(new PlayTTSEvent { IsRadio = true, Chime = chime, Data = soundData }, recipients, false);
     }
 
     private async void HandleCollectiveMind(EntityUid[] uIds, string message, int voice)

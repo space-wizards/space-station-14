@@ -1,0 +1,11 @@
+- type: language
+  id: Xeno
+  icon: LanguageIconXeno
+  obfuscation:
+    !type:SyllableObfuscation
+    minSyllables: 1
+    maxSyllables: 2
+    replacement:
+    - sss
+    - sSs
+    - SSS

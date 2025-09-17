@@ -21,6 +21,12 @@
         },
         {
             "name": "mag-4"
+        },
+        {
+            "name": "inhand-left"
+        },
+        {
+            "name": "inhand-right"
         }
     ]
 }

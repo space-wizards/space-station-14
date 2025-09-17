@@ -1,0 +1,9 @@
+- type: htnCompound
+  id: SimpleAvoidanceCompound
+  branches:
+    - tasks:
+        - !type:HTNCompoundTask
+          task: MeleeAvoidanceCompound
+    - tasks:
+        - !type:HTNCompoundTask
+          task: IdleCompound

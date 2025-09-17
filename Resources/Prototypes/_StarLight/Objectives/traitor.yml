@@ -10,6 +10,12 @@
     - type: TargetObjective
       title: objective-condition-teach-lesson-title
     - type: PickRandomPerson
+      filters:
+      # Can't have multiple objectives to teach the same person.
+      - !type:TargetObjectiveMindFilter
+        blacklist:
+          components:
+          - TeachALessonTarget
 
 - type: entity
   parent: [BaseTraitorObjective, BaseTeachALessonObjective]
@@ -23,7 +29,16 @@
       unique: true
     - type: TargetObjective
       title: objective-condition-teach-lesson-title
-    - type: PickRandomHead
+    - type: PickRandomPerson
+      filters:
+      - !type:BodyMindFilter
+        whitelist:
+          components:
+          - CommandStaff
+      - !type:TargetObjectiveMindFilter
+        blacklist:
+          components:
+          - TeachALessonTarget # dont let mutiple teach someone.
 
 - type: entity
   parent: BaseRDStealObjective
@@ -39,7 +54,8 @@
   - type: StealCondition
     stealGroup: CMOLicenseSteal
     
-  # Story Objectives
+  # RP OBJECTIVES START
+  
 - type: entity
   parent: BaseStoryObjective
   id: RetrieveContrabandObjective
@@ -50,7 +66,7 @@
       difficulty: 2
       unique: true
       icon:
-        sprite: Clothing/Back/Satchels/smuggler.rsi
+        sprite: _Starlight/Interface/Misc/rp_icon.rsi
         state: icon
 
 
@@ -64,7 +80,7 @@
       difficulty: 2
       unique: true
       icon:
-        sprite: Objects/Tools/access_breaker.rsi
+        sprite: _Starlight/Interface/Misc/rp_icon.rsi
         state: icon
 
 - type: entity
@@ -77,7 +93,7 @@
       difficulty: 2
       unique: true
       icon:
-        sprite: Objects/Weapons/Guns/Rifles/ak.rsi
+        sprite: _Starlight/Interface/Misc/rp_icon.rsi
         state: icon   
 
 
@@ -90,8 +106,8 @@
       difficulty: 2
       unique: true
       icon:
-        sprite: Objects/Misc/bureaucracy.rsi
-        state: syndicate_card
+        sprite: _Starlight/Interface/Misc/rp_icon.rsi
+        state: icon
     - type: DepartmentObjective
       title: objective-framing
     - type: PickRandomDepartment
@@ -105,8 +121,8 @@
       difficulty: 2
       unique: true
       icon:
-        sprite: Objects/Weapons/Melee/flash.rsi
-        state: flash
+        sprite: _Starlight/Interface/Misc/rp_icon.rsi
+        state: icon
     - type: DepartmentObjective
       title: objective-false-uprising
     - type: PickRandomDepartment
@@ -121,7 +137,7 @@
       difficulty: 2
       unique: true
       icon:
-        sprite: Objects/Weapons/Melee/captain_sabre.rsi
+        sprite: _Starlight/Interface/Misc/rp_icon.rsi
         state: icon
 
 - type: entity
@@ -134,8 +150,8 @@
       difficulty: 2
       unique: true
       icon:
-        sprite: Objects/Misc/Lights/lampint.rsi
-        state: lamp-int
+        sprite: _Starlight/Interface/Misc/rp_icon.rsi
+        state: icon
         
 - type: entity
   parent: BaseStoryObjective
@@ -147,8 +163,8 @@
       difficulty: 2
       unique: true
       icon:
-        sprite: Objects/Misc/bureaucracy.rsi
-        state: scrap_bloodied
+        sprite: _Starlight/Interface/Misc/rp_icon.rsi
+        state: icon
 
 - type: entity
   parent: BaseStoryObjective
@@ -160,8 +176,8 @@
       difficulty: 2
       unique: true
       icon:
-        sprite: Objects/Misc/bureaucracy.rsi
-        state: syndicate_card
+        sprite: _Starlight/Interface/Misc/rp_icon.rsi
+        state: icon
 
 - type: entity
   parent: BaseStoryObjective
@@ -173,8 +189,8 @@
       difficulty: 2
       unique: true
       icon:
-        sprite: Objects/Specific/Robotics/mmi.rsi
-        state: posibrain
+        sprite: _Starlight/Interface/Misc/rp_icon.rsi
+        state: icon
 
 - type: entity
   parent: BaseStoryObjective
@@ -185,8 +201,8 @@
       difficulty: 2
       unique: true
       icon:
-        sprite: Objects/Misc/folders.rsi
-        state: folder-white
+        sprite: _Starlight/Interface/Misc/rp_icon.rsi
+        state: icon
     - type: DepartmentObjective
       title: objective-stalking
     - type: PickRandomDepartment
@@ -200,7 +216,7 @@
       difficulty: 2
       unique: true
       icon:
-        sprite: Objects/Fun/whoopie.rsi
+        sprite: _Starlight/Interface/Misc/rp_icon.rsi
         state: icon
     - type: DepartmentObjective
       title: objective-disgrace
@@ -216,5 +232,14 @@
       difficulty: 2
       unique: true
       icon:
-        sprite: Objects/Consumable/Drinks/beer.rsi
+        sprite: _Starlight/Interface/Misc/rp_icon.rsi
         state: icon
+
+# RP OBJECTIVES END
+
+- type: entity
+  parent: BaseTraitorStealObjective
+  id: HoPBoardStealObjective
+  components:
+  - type: StealCondition
+    stealGroup: HoPBoardSteal

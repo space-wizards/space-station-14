@@ -1,7 +1,6 @@
 - type: entity
   id: LockerBase
   parent: ClosetBase
-  abstract: true
   components:
   - type: AccessReader
   - type: Lock
@@ -30,6 +29,7 @@
     # Starlight-start: Maintenance panel
     - state: panel_open
       map: ["enum.WiresVisualLayers.MaintenancePanel"]
+      visible: false
     - state: electrified_ai
       sprite: Interface/Misc/ai_hud.rsi
       shader: unshaded
@@ -73,13 +73,14 @@
   - type: Paintable
     group: Locker
   # Starlight-start: Wires panel
-  - type: Electrified
-    enabled: false
-    requirePower: false
+  - type: Tag
+    tags: 
+      - Locker
   - type: PoweredLocker
   - type: StationAiWhitelist
   - type: WiresPanel
   - type: WiresPanelSecurity
+    wiresAccessible: false
   - type: WiresVisuals
   - type: Wires
     boardName: wires-board-name-locker
@@ -99,7 +100,7 @@
 - type: entity
   id: LockerBaseSecure
   parent: LockerBase
-  abstract: true
+  name: secure closet # Starlight-edit
   components:
   - type: Damageable
     damageContainer: StructuralInorganic
@@ -112,3 +113,13 @@
       behaviors:
       - !type:DoActsBehavior
         acts: ["Destruction"]
+# Starlight-start: Base Locker
+  - type: Tag
+    tags: 
+      - SecuredLocker
+  - type: Appearance
+  - type: EntityStorageVisuals
+    stateBaseClosed: secure
+    stateDoorOpen: secure_open
+    stateDoorClosed: secure_door
+# Starlight-end

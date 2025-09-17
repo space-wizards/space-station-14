@@ -5,7 +5,7 @@
   - !type:JobRequirementLoadoutEffect
     requirement:
       !type:OverallPlaytimeRequirement
-      time: 360000 #100 hours of activity in the Starlight sectors ##changed from musician because musician isn't mechanically fun to play, and the slot was always hogged for playtime for this item
+      time: 180000 #50 hours of activity in the Starlight sectors ##changed from musician because musician isn't mechanically fun to play, and the slot was always hogged for playtime for this item
   storage:
     back:
     - SuperSynthesizerInstrument
@@ -66,7 +66,7 @@
   groupBy: "cat maid"
 
 - type: loadout
-  id: ClothingHeadHatCatEars
+  id: ClothingHeadHatWhiteCatEars
   effects:
     - !type:JobRequirementLoadoutEffect
       requirement:
@@ -74,7 +74,7 @@
         time: 144000 # 40hr
   storage:
     back:
-    - ClothingHeadHatCatEars
+    - ClothingHeadHatWhiteCatEars
   groupBy: "cat maid"
 
 - type: loadout
@@ -413,3 +413,25 @@
     back:
     - MysteryLighterBox
   groupBy: "smokeables"
+
+- type: loadout
+  id: MagicCrayon
+  effects:
+    - !type:JobRequirementLoadoutEffect
+      requirement:
+        !type:OverallPlaytimeRequirement
+        time: 36000 # 10hr
+  storage:
+    back:
+      - CrayonMagic
+
+- type: loadout
+  id: HappyHonk
+  effects:
+    - !type:JobRequirementLoadoutEffect
+      requirement:
+        !type:OverallPlaytimeRequirement
+        time: 36000 # 10hr
+  storage:
+    back:
+      - HappyHonk

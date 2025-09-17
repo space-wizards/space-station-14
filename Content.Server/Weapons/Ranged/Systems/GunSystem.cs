@@ -1,58 +1,63 @@
+using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Numerics;
-using Content.Server.Atmos.EntitySystems;
 using Content.Server.Atmos.Components;
+using Content.Server.Atmos.EntitySystems;
+using Content.Server.Body.Components;
 using Content.Server.Cargo.Systems;
+using Content.Server.Decals;
+using Content.Server.Emp;
+using Content.Server.IgnitionSource;
 using Content.Server.Interaction;
 using Content.Server.Mech.Equipment.Components;
 using Content.Server.Power.EntitySystems;
-using Content.Server.Weapons.Ranged.Components;
+using Content.Server.PowerCell;
 using Content.Server.Stunnable;
 using Content.Server.Stunnable.Components;
-using Content.Server.Emp;
+using Content.Server.Weapons.Ranged.Components;
+using Content.Shared._Starlight.Weapon;
+using Content.Shared._Starlight.Weapon.Components;
+using Content.Shared.Body.Components;
+using Content.Shared.Cargo;
+using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Damage;
+using Content.Shared.Damage.Components;
 using Content.Shared.Damage.Systems;
 using Content.Shared.Database;
+using Content.Shared.Decals;
 using Content.Shared.Effects;
 using Content.Shared.Interaction.Components;
 using Content.Shared.Mech.Equipment.Components;
+using Content.Shared.Movement.Components;
+using Content.Shared.Movement.Systems;
+using Content.Shared.Pinpointer;
 using Content.Shared.Projectiles;
+using Content.Shared.Standing;
 using Content.Shared.StatusEffect;
+using Content.Shared.Stunnable;
 using Content.Shared.Weapons.Melee;
 using Content.Shared.Weapons.Ranged;
 using Content.Shared.Weapons.Ranged.Components;
 using Content.Shared.Weapons.Ranged.Events;
 using Content.Shared.Weapons.Ranged.Systems;
 using Content.Shared.Weapons.Reflect;
-using Content.Shared.Damage.Components;
+using Content.Shared.Mech.Components; // Startlight-edit
+using Microsoft.CodeAnalysis.Elfie.Diagnostics;
+using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
+using Robust.Shared.Containers;
 using Robust.Shared.Map;
+using Robust.Shared.Maths;
 using Robust.Shared.Physics;
+using Robust.Shared.Physics.Dynamics;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Utility;
-using Robust.Shared.Containers;
-using Content.Shared._Starlight.Weapon.Components;
-using Robust.Shared.Physics.Dynamics;
-using Content.Shared.Movement.Components;
 using Robust.Shared.Random;
-using Content.Shared.Decals;
-using Content.Server.Body.Components;
-using Content.Shared.Chemistry.Reagent;
 using Robust.Shared.Timing;
-using Content.Server.Decals;
-using System;
-using Content.Server.IgnitionSource;
-using Microsoft.CodeAnalysis.Elfie.Diagnostics;
-using Content.Shared._Starlight.Weapon;
-using Robust.Shared.Maths;
+using Robust.Shared.Utility;
 using static Content.Server.Starlight.TextToSpeech.TTSManager;
-using Content.Shared.Pinpointer;
-using Robust.Server.GameObjects;
-using System.Collections.Generic;
-using Content.Server.PowerCell;
-using Content.Shared.Body.Components;
-using Content.Shared.Cargo;
+using Content.Shared.Atmos.Components;
 
 namespace Content.Server.Weapons.Ranged.Systems;
 
@@ -73,6 +78,7 @@ public sealed partial class GunSystem : SharedGunSystem
     [Dependency] private readonly FlammableSystem _flammableSystem = default!; // 🌟Starlight🌟
     [Dependency] private readonly AtmosphereSystem _atmosphere = default!; // 🌟Starlight🌟
     [Dependency] private readonly StunSystem _stunSystem = default!; // 🌟Starlight🌟
+    [Dependency] private readonly MovementModStatusSystem _movementMod = default!; // 🌟Starlight🌟
     [Dependency] private readonly EmpSystem _emp = default!; // 🌟Starlight🌟
 
     private const float DamagePitchVariation = 0.05f;
@@ -175,12 +181,12 @@ public sealed partial class GunSystem : SharedGunSystem
                             for (var i = 0; i < hitscanPrototype.Count; i++)
                                 hits.Add(Hitscan(gunUid, gun, fromCoordinates, user, fromMap, pointerLength, angles[i].ToVec(), hitscanPrototype, hitHashSet));
 
-                            FireEffects(fromCoordinates, hitscanPrototype.MaxLength, mapDirection.ToAngle(), hitscanPrototype);
+                            FireEffects(hits.ToList(), hitscanPrototype);
                         }
                         else
                         {
                             var hits = Hitscan(gunUid, gun, fromCoordinates, user, fromMap, pointerLength, mapDirection, hitscanPrototype, hitHashSet);
-                            FireEffects(fromCoordinates, hitscanPrototype.MaxLength, mapDirection.ToAngle(), hitscanPrototype);
+                            FireEffects([hits], hitscanPrototype);
                         }
 
                         RaiseLocalEvent(ent!.Value, new AmmoShotEvent()
@@ -253,6 +259,8 @@ public sealed partial class GunSystem : SharedGunSystem
 
                     //in the situation when user == null, means that the cannon fires on its own (via signals). And we need the gun to not fire by itself in this case
                     var lastUser = user ?? gunUid;
+                    if (user != null && TryComp<MechPilotComponent>(user.Value, out var pilotA)) // Startlight-edit
+                        lastUser = pilotA.Mech;
 
                     if (hitscan.Reflective != ReflectType.None)
                     {
@@ -289,7 +297,7 @@ public sealed partial class GunSystem : SharedGunSystem
 
                             effects.Add((fromEffect, result.Distance, dir.Normalized().ToAngle(), hit));
 
-                            var ev = new HitScanReflectAttemptEvent(user, gunUid, hitscan.Reflective, dir, false);
+                            var ev = new HitScanReflectAttemptEvent(user, gunUid, hitscan.Reflective, dir, false, hitscan.ID); //STARLIGHT
                             RaiseLocalEvent(hit, ref ev);
 
                             if (!ev.Reflected)
@@ -307,6 +315,21 @@ public sealed partial class GunSystem : SharedGunSystem
                         var hitEntity = lastHit.Value;
                         if (hitscan.StaminaDamage > 0f)
                             _stamina.TakeStaminaDamage(hitEntity, hitscan.StaminaDamage, source: user);
+
+                        if (TryComp<CrawlerComponent>(hitEntity, out var standing))
+                        {
+                            _stunSystem.TryAddStunDuration(hitEntity, TimeSpan.FromSeconds(hitscan.StunAmount));
+
+                            _stunSystem.TryKnockdown((hitEntity, standing), TimeSpan.FromSeconds(hitscan.KnockdownAmount), true);
+
+                            _movementMod.TryUpdateMovementSpeedModDuration(
+                                hitEntity,
+                                MovementModStatusSystem.TaserSlowdown,
+                                TimeSpan.FromSeconds(hitscan.SlowdownAmount),
+                                hitscan.WalkSpeedMultiplier,
+                                hitscan.RunSpeedMultiplier
+                            );
+                        }
 
                         if (hitscan.Ignite)
                         {
@@ -360,7 +383,7 @@ public sealed partial class GunSystem : SharedGunSystem
                         effects.Add((fromEffect, hitscan.MaxLength, dir.ToAngle(), null));
                     }
 
-                    FireEffects(fromCoordinates, hitscan.MaxLength, mapDirection.ToAngle(), hitscan);
+                    FireEffects([effects], hitscan);
 
                     Audio.PlayPredicted(gun.SoundGunshotModified, gunUid, user);
                     break;
@@ -377,6 +400,26 @@ public sealed partial class GunSystem : SharedGunSystem
 
         void CreateAndFireProjectiles(EntityUid ammoEnt, AmmoComponent ammoComp)
         {
+            // Startlight-edit: start
+            var isMechShooter = user != null && TryComp<MechPilotComponent>(user.Value, out _);
+            const float MechMuzzleOffset = 0.8f;
+
+            EntityCoordinates SpawnFrom(Angle angle)
+            {
+                if (!isMechShooter)
+                    return fromEnt;
+
+                var localAngle = angle;
+                if (TryComp(fromEnt.EntityId, out TransformComponent? anchorXform))
+                {
+                    var anchorRot = _transform.GetWorldRotation(anchorXform);
+                    localAngle -= anchorRot;
+                }
+
+                var dir = localAngle.ToVec().Normalized();
+                return fromEnt.Offset(dir * MechMuzzleOffset);
+            }
+            // Startlight-edit: end
             if (TryComp<ProjectileSpreadComponent>(ammoEnt, out var ammoSpreadComp))
             {
                 var spreadEvent = new GunGetAmmoSpreadEvent(ammoSpreadComp.Spread);
@@ -384,19 +427,35 @@ public sealed partial class GunSystem : SharedGunSystem
 
                 var angles = LinearSpread(mapAngle - spreadEvent.Spread / 2,
                     mapAngle + spreadEvent.Spread / 2, ammoSpreadComp.Count);
-
+                // Startlight-edit: start
+                if (isMechShooter)
+                {
+                    var spawn = SpawnFrom(angles[0]);
+                    _transform.SetCoordinates(ammoEnt, Transform(ammoEnt), spawn);
+                }
+                // Startlight-edit: end
                 ShootOrThrow(ammoEnt, angles[0].ToVec(), gunVelocity, gun, gunUid, user);
                 shotProjectiles.Add(ammoEnt);
 
                 for (var i = 1; i < ammoSpreadComp.Count; i++)
                 {
-                    var newuid = Spawn(ammoSpreadComp.Proto, fromEnt);
+                    // Startlight-edit: start
+                    var spawn = isMechShooter ? SpawnFrom(angles[i]) : fromEnt;
+                    var newuid = Spawn(ammoSpreadComp.Proto, spawn);
+                    // Startlight-edit: end
                     ShootOrThrow(newuid, angles[i].ToVec(), gunVelocity, gun, gunUid, user);
                     shotProjectiles.Add(newuid);
                 }
             }
             else
             {
+                // Startlight-edit: start
+                if (isMechShooter)
+                {
+                    var spawn = SpawnFrom(mapDirection.ToAngle());
+                    _transform.SetCoordinates(ammoEnt, Transform(ammoEnt), spawn);
+                }
+                // Startlight-edit: end
                 ShootOrThrow(ammoEnt, mapDirection, gunVelocity, gun, gunUid, user);
                 shotProjectiles.Add(ammoEnt);
             }
@@ -430,6 +489,10 @@ public sealed partial class GunSystem : SharedGunSystem
 
             //in the situation when user == null, means that the cannon fires on its own (via signals). And we need the gun to not fire by itself in this case
             var lastUser = user ?? gunUid;
+
+            if (user != null && TryComp<MechPilotComponent>(user.Value, out var pilotB)) // Startlight-edit
+                lastUser = pilotB.Mech;
+
             hitHashSet.Clear();
             hitHashSet.Add(lastUser);
 
@@ -478,7 +541,7 @@ public sealed partial class GunSystem : SharedGunSystem
 
                     if (hitscan.Reflective != ReflectType.None)
                     {
-                        var ev = new HitScanReflectAttemptEvent(user, gunUid, hitscan.Reflective, dir, false);
+                        var ev = new HitScanReflectAttemptEvent(user, gunUid, hitscan.Reflective, dir, false, hitscan.ID); //STARLIGHT
                         RaiseLocalEvent(hit, ref ev);
 
                         if (ev.Reflected)
@@ -712,63 +775,96 @@ public sealed partial class GunSystem : SharedGunSystem
 
     // TODO: Pseudo RNG so the client can predict these.
     #region Hitscan effects
-    private void FireEffects(EntityCoordinates fromCoordinates, float distance, Angle angle, HitscanPrototype hitscan, EntityUid? hitEntity = null)
+    // 🌟Starlight🌟
+    private void FireEffects(List<List<(EntityCoordinates fromCoordinates, float distance, Angle angle, EntityUid? hitEntity)>> hits, HitscanPrototype hitscan)
     {
-        // Lord
-        // Forgive me for the shitcode I am about to do
-        // Effects tempt me not
-        var sprites = new List<(NetCoordinates coordinates, Angle angle, SpriteSpecifier sprite, float scale)>();
-        var fromXform = Transform(fromCoordinates.EntityId);
-
-        // We'll get the effects relative to the grid / map of the firer
-        // Look you could probably optimise this a bit with redundant transforms at this point.
-
-        var gridUid = fromXform.GridUid;
-        if (gridUid != fromCoordinates.EntityId && TryComp(gridUid, out TransformComponent? gridXform))
+        if (hits.Count == 0) return;
+        var hitscanEvent = new HitscanEvent
         {
-            var (_, gridRot, gridInvMatrix) = TransformSystem.GetWorldPositionRotationInvMatrix(gridXform);
-            var map = TransformSystem.ToMapCoordinates(fromCoordinates);
-            fromCoordinates = new EntityCoordinates(gridUid.Value, Vector2.Transform(map.Position, gridInvMatrix));
-            angle -= gridRot;
-        }
-        else
-        {
-            angle -= TransformSystem.GetWorldRotation(fromXform);
-        }
+            Hitscan = hitscan.ID,
+            Effects = new Effect[hits.Count][]
+        };
+        var spreadIndex = -1;
+        HashSet<EntityCoordinates> pvs = [];
 
-        if (distance >= 1f)
+        foreach (var hit in hits)
         {
-            if (hitscan.MuzzleFlash != null)
+            spreadIndex++;
+            var index = -1;
+
+            hitscanEvent.Effects[spreadIndex] = new Effect[hit.Count];
+            ref var effects = ref hitscanEvent.Effects[spreadIndex];
+
+            foreach (var item in hit)
             {
-                var coords = fromCoordinates.Offset(angle.ToVec().Normalized() / 2);
-                var netCoords = GetNetCoordinates(coords);
+                var (fromCoordinates, distance, angle, hitEntity) = item;
 
-                sprites.Add((netCoords, angle, hitscan.MuzzleFlash, 1f));
+                var fromXform = Transform(fromCoordinates.EntityId);
+
+                var gridUid = fromXform.GridUid;
+
+                if (gridUid != fromCoordinates.EntityId && TryComp(gridUid, out TransformComponent? gridXform))
+                {
+                    var (_, gridRot, gridInvMatrix) = TransformSystem.GetWorldPositionRotationInvMatrix(gridXform);
+                    var map = _transform.ToMapCoordinates(fromCoordinates);
+                    fromCoordinates = new EntityCoordinates(gridUid.Value, Vector2.Transform(map.Position, gridInvMatrix));
+                    angle -= gridRot;
+                }
+                else
+                {
+                    angle -= _transform.GetWorldRotation(fromXform);
+                }
+
+                index++;
+                effects[index] = new Effect
+                {
+                    Angle = angle,
+                    Distance = distance,
+                };
+                ref var effect = ref effects[index];
+
+                if (distance >= 1f)
+                {
+                    var muzzleCoords = fromCoordinates.Offset(angle.ToVec().Normalized() / 2);
+                    var travelCoords = fromCoordinates.Offset(angle.ToVec() * (distance + 0.5f) / 2);
+                    effect.MuzzleCoordinates = GetNetCoordinates(muzzleCoords);
+                    effect.TravelCoordinates = GetNetCoordinates(travelCoords);
+                }
+                var impactCoords = fromCoordinates.Offset(angle.ToVec() * distance);
+                effect.ImpactCoordinates = GetNetCoordinates(impactCoords);
+
+                if (hitEntity is not null)
+                {
+                    if (hitscan.Reflective == ReflectType.NonEnergy)
+                    {
+                        if (TryComp<BloodstreamComponent>(hitEntity, out var bloodstream))
+                        {
+                            Timer.Spawn(200, () =>
+                            {
+                                var color = _proto.Index(bloodstream.BloodReagent).SubstanceColor;
+                                // A flash of the neuralyzer, then a man in a black suit says that you didn’t see any “vector crutch” here, and if you did—read it again.
+                                var coords = fromCoordinates.Offset((angle.ToVec() * (distance + 1.3f)) + new Vector2(-0.5f, -0.5f));
+                                _decals.TryAddDecal(_rand.Pick(_bloodDecals), coords, out _, color, angle + Angle.FromDegrees(-45), cleanable: true);
+                            });
+                        }
+                        else
+                        {
+                            effect.ImpactEnt = GetNetEntity(hitEntity.Value);
+                        }
+                    }
+                }
+
+                pvs.Add(fromCoordinates);
             }
-
-            if (hitscan.TravelFlash != null)
-            {
-                var coords = fromCoordinates.Offset(angle.ToVec() * (distance + 0.5f) / 2);
-                var netCoords = GetNetCoordinates(coords);
-
-                sprites.Add((netCoords, angle, hitscan.TravelFlash, distance - 1.5f));
-            }
         }
 
-        if (hitscan.ImpactFlash != null)
+        if (pvs.Count > 0)
         {
-            var coords = fromCoordinates.Offset(angle.ToVec() * distance);
-            var netCoords = GetNetCoordinates(coords);
+            var filter = Filter.Empty();
+            foreach (var pos in pvs.Where(x => x.IsValid(EntityManager)))
+                filter.Merge(Filter.Pvs(pos, entityMan: EntityManager));
 
-            sprites.Add((netCoords, angle.FlipPositive(), hitscan.ImpactFlash, 1f));
-        }
-
-        if (sprites.Count > 0)
-        {
-            RaiseNetworkEvent(new HitscanEvent
-            {
-                Sprites = sprites,
-            }, Filter.Pvs(fromCoordinates, entityMan: EntityManager));
+            RaiseNetworkEvent(hitscanEvent, filter);
         }
     }
     #endregion

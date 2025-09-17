@@ -4,8 +4,8 @@
   id: EvolutionMenuCombatArmblade
   name: evolutionmenu-combat-armblade-name
   description: evolutionmenu-combat-armblade-desc
-  icon: { sprite: Changeling/changeling_abilities.rsi, state: armblade }
-  productAction: ActionToggleArmblade
+  icon: { sprite: Interface/Actions/changeling.rsi, state: armblade }
+  productAction: ActionRetractableItemArmBlade
   cost:
     EvolutionPoint: 4
   categories:

@@ -11,6 +11,7 @@ using Content.Shared.StationRecords;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Containers;
 using Robust.Shared.Prototypes;
+using Content.Shared.Chat; // Starlight
 
 namespace Content.Server.Delivery;
 
@@ -102,7 +103,7 @@ public sealed partial class DeliverySystem : SharedDeliverySystem
         if (ent.Comp.WasPenalized)
             return;
 
-        if (!_protoMan.TryIndex(ent.Comp.PenaltyBankAccount, out var accountInfo))
+        if (!_protoMan.Resolve(ent.Comp.PenaltyBankAccount, out var accountInfo))
             return;
 
         var multiplier = GetDeliveryMultiplier(ent);

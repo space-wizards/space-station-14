@@ -9,6 +9,16 @@
     - type: Paper
     
 # Reports
+
+- type: entity
+  parent: PrintedDocument
+  id: PrintedDocumentReportMorgue
+  name: Morgue report
+  categories: [ HideSpawnMenu ]
+  components:
+    - type: Paper
+      content: doc-text-printer-report-morgue
+      
     
 - type: entity
   parent: PrintedDocument

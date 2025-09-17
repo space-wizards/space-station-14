@@ -26,6 +26,7 @@
   id: LockerRepresentativeFilledBluespaced
   suffix: Filled, Bluespaced
   parent: LockerRepresentativeFilled
+  categories: [ Spawner ]
   components:
   - type: TriggerOnSpawn
   - type: SpawnOnTrigger
@@ -62,6 +63,7 @@
   id: LockerBSOFilledBluespaced
   suffix: Filled, Bluespaced
   parent: LockerBSOFilled
+  categories: [ Spawner ]
   components:
   - type: TriggerOnSpawn
   - type: SpawnOnTrigger

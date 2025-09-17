@@ -7,7 +7,6 @@ using Content.Client.Lobby.UI.Roles;
 using Content.Client.Message;
 using Content.Client.Players.PlayTimeTracking;
 using Content.Client.Sprite;
-using Content.Client._Starlight.TTS;
 using Content.Client.Stylesheets;
 using Content.Client.UserInterface.Systems.Guidebook;
 using Content.Shared.CCVar;
@@ -33,6 +32,8 @@ using Robust.Shared.ContentPack;
 using Robust.Shared.Enums;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
+using Content.Shared.Starlight.CCVar;
+using Content.Client._Starlight.TTS;
 
 namespace Content.Client.Lobby.UI
 {
@@ -54,8 +55,11 @@ namespace Content.Client.Lobby.UI
         private int _maxNameLength;
         private bool _allowFlavorText;
 
-        private FlavorText.FlavorText? _flavorText;
-        private TextEdit? _flavorTextEdit;
+        //begin starlight
+        private bool _allowCharacterSecrets;
+        private bool _allowExploitables;
+        private bool _allowRPNotes;
+        //end starlight
 
         // One at a time.
         private LoadoutWindow? _loadoutWindow;
@@ -139,6 +143,15 @@ namespace Content.Client.Lobby.UI
             _maxNameLength = _cfgManager.GetCVar(CCVars.MaxNameLength);
             _allowFlavorText = _cfgManager.GetCVar(CCVars.FlavorText);
 
+            //begin starlight
+            _allowCharacterSecrets = _cfgManager.GetCVar(StarlightCCVars.ICSecrets);
+            _allowExploitables = _cfgManager.GetCVar(StarlightCCVars.ExploitableSecrets);
+            _allowRPNotes = _cfgManager.GetCVar(StarlightCCVars.OOCNotes);
+
+            OOCInfoTab.Visible = _allowRPNotes;
+            ICInfoTab.Visible = _allowFlavorText || _allowExploitables || _allowCharacterSecrets;
+            //end starlight
+
             ImportButton.OnPressed += args =>
             {
                 ImportProfile();
@@ -190,8 +203,6 @@ namespace Content.Client.Lobby.UI
             // Starlight - End
 
             #region Appearance
-
-            TabContainer.SetTabTitle(0, Loc.GetString("humanoid-profile-editor-appearance-tab"));
 
             #region Sex
 
@@ -461,7 +472,7 @@ namespace Content.Client.Lobby.UI
 
             #region Jobs
 
-            TabContainer.SetTabTitle(1, Loc.GetString("humanoid-profile-editor-jobs-tab"));
+
 
             _jobCategories = new Dictionary<string, BoxContainer>();
 
@@ -470,13 +481,13 @@ namespace Content.Client.Lobby.UI
 
             #endregion Jobs
 
-            TabContainer.SetTabTitle(2, Loc.GetString("humanoid-profile-editor-antags-tab"));
+
 
             RefreshTraits();
 
             #region Markings
 
-            TabContainer.SetTabTitle(4, Loc.GetString("humanoid-profile-editor-markings-tab"));
+
 
             Markings.OnMarkingAdded += OnMarkingChange;
             Markings.OnMarkingRemoved += OnMarkingChange;
@@ -487,11 +498,10 @@ namespace Content.Client.Lobby.UI
 
             // Starlight
             #region Cybernetics
-            TabContainer.SetTabTitle(5, Loc.GetString("humanoid-profile-editor-cybernetics-tab"));
             Cybernetics.OnCyberneticsUpdated += OnCyberneticsUpdated;
             #endregion Cybernetics
 
-            RefreshFlavorText();
+            RefreshCharacterInfo();
 
             #region Dummy
 
@@ -540,6 +550,10 @@ namespace Content.Client.Lobby.UI
             };
             SiliconVoicePreviewButton.OnPressed +=
                 _ => _entManager.System<TextToSpeechSystem>().RequestPreviewTts(Profile?.SiliconVoice ?? "");
+
+            SetupTabs();
+            SetupInfoEditors();
+            RefreshCharacterInfo();
             // 🌟Starlight🌟 end
         }
         private void UpdateVoicesControls()
@@ -570,6 +584,18 @@ namespace Content.Client.Lobby.UI
                 VoiceButton.TrySelectId(voiceChoiceId);
         }
         // 🌟Starlight🌟 Start
+
+        private void SetupTabs()
+        {
+            TabContainer.SetTabTitle(0, Loc.GetString("humanoid-profile-editor-appearance-tab"));
+            TabContainer.SetTabTitle(1, Loc.GetString("humanoid-profile-editor-jobs-tab"));
+            TabContainer.SetTabTitle(2, Loc.GetString("humanoid-profile-editor-antags-tab"));
+            TabContainer.SetTabTitle(3, Loc.GetString("humanoid-profile-editor-traits-tab"));
+            TabContainer.SetTabTitle(4, Loc.GetString("humanoid-profile-editor-markings-tab"));
+            TabContainer.SetTabTitle(5, Loc.GetString("humanoid-profile-editor-cybernetics-tab"));
+            TabContainer.SetTabTitle(6, Loc.GetString("humanoid-profile-editor-ic-info-tab"));
+            TabContainer.SetTabTitle(7, Loc.GetString("humanoid-profile-editor-ooc-info-tab"));
+        }
         private void UpdateSiliconVoicesControls()
         {
             if (Profile is null)
@@ -598,38 +624,40 @@ namespace Content.Client.Lobby.UI
             if (siliconVoiceChoiceId != -1)
                 SiliconVoiceButton.TrySelectId(siliconVoiceChoiceId);
         }
-        // 🌟Starlight🌟 end
+
+
+        private void SetupInfoEditors()
+        {
+            ICInfoEditor.PhysicalDescInput.OnTextChanged += OnPhysicalDescChanged;
+            ICInfoEditor.PersonalityDescInput.OnTextChanged += OnPersonalityDescChanged;
+            ICInfoEditor.ExploitableInput.OnTextChanged += OnExploitablesChanged;
+            ICInfoEditor.SecretsInput.OnTextChanged += OnSecretsChanged;
+
+
+            OOCInfoEditor.PersonalNotesInput.OnTextChanged += OnPersonalNotesChanged;
+            OOCInfoEditor.OOCNotesInput.OnTextChanged += OnOOCNotesChanged;
+        }
 
         /// <summary>
         /// Refreshes the flavor text editor status.
         /// </summary>
-        public void RefreshFlavorText()
+        public void RefreshCharacterInfo()
         {
-            if (_allowFlavorText)
+            if (ICInfoEditor.VisibleInTree)
             {
-                if (_flavorText != null)
-                    return;
-
-                _flavorText = new FlavorText.FlavorText();
-                TabContainer.AddChild(_flavorText);
-                TabContainer.SetTabTitle(TabContainer.ChildCount - 1, Loc.GetString("humanoid-profile-editor-flavortext-tab"));
-                _flavorTextEdit = _flavorText.CFlavorTextInput;
-
-                _flavorText.OnFlavorTextChanged += OnFlavorTextChange;
+                ICInfoEditor.Physical.Visible = _allowFlavorText;
+                ICInfoEditor.Personality.Visible = _allowFlavorText;
+                ICInfoEditor.Secrets.Visible = _allowCharacterSecrets;
+                ICInfoEditor.Exploitable.Visible = _allowCharacterSecrets;
             }
-            else
+            if (OOCInfoEditor.VisibleInTree)
             {
-                if (_flavorText == null)
-                    return;
-
-                TabContainer.RemoveChild(_flavorText);
-                _flavorText.OnFlavorTextChanged -= OnFlavorTextChange;
-                _flavorText.Dispose();
-                _flavorTextEdit?.Dispose();
-                _flavorTextEdit = null;
-                _flavorText = null;
+                OOCInfoEditor.OOCNotes.Visible = _allowRPNotes;
+                OOCInfoEditor.PersonalNotes.Visible = _allowRPNotes;
             }
         }
+
+        // 🌟Starlight🌟 end
 
         /// <summary>
         /// Refreshes traits selector
@@ -639,7 +667,6 @@ namespace Content.Client.Lobby.UI
             TraitsList.DisposeAllChildren();
 
             var traits = _prototypeManager.EnumeratePrototypes<TraitPrototype>().OrderBy(t => Loc.GetString(t.Name)).ToList();
-            TabContainer.SetTabTitle(3, Loc.GetString("humanoid-profile-editor-traits-tab"));
 
             if (traits.Count < 1)
             {
@@ -893,7 +920,7 @@ namespace Content.Client.Lobby.UI
 
             UpdateNameEdit();
             UpdateCustomSpecieNameEdit(); // Starlight
-            UpdateFlavorTextEdit();
+            UpdateCharacterInfoEditorText(); //Starlight
             UpdateSexControls();
             UpdateGenderControls();
             UpdateSizeControls(); //starlight
@@ -915,7 +942,7 @@ namespace Content.Client.Lobby.UI
             RefreshLoadouts();
             RefreshSpecies();
             RefreshTraits();
-            RefreshFlavorText();
+            RefreshCharacterInfo(); //starlight
             Preview.Initialize(this, _entManager, _preferencesManager, _prototypeManager, _playerManager);
             ReloadPreview();
         }
@@ -957,7 +984,7 @@ namespace Content.Client.Lobby.UI
             if (_prototypeManager.HasIndex<GuideEntryPrototype>(species))
                 page = new ProtoId<GuideEntryPrototype>(species.Id); // Gross. See above todo comment.
 
-            if (_prototypeManager.TryIndex(DefaultSpeciesGuidebook, out var guideRoot))
+            if (_prototypeManager.Resolve(DefaultSpeciesGuidebook, out var guideRoot))
             {
                 var dict = new Dictionary<ProtoId<GuideEntryPrototype>, GuideEntry>();
                 dict.Add(DefaultSpeciesGuidebook, guideRoot);
@@ -1148,7 +1175,7 @@ namespace Content.Client.Lobby.UI
 
             _loadoutWindow = new LoadoutWindow(Profile, roleLoadout, roleLoadoutProto, _playerManager.LocalSession, collection)
             {
-                Title = jobProto?.ID + "-loadout",
+                Title = Loc.GetString("loadout-window-title-loadout", ("job", $"{jobProto?.LocalizedName}")),
             };
 
             // Refresh the buttons etc.
@@ -1193,14 +1220,62 @@ namespace Content.Client.Lobby.UI
             UpdateJobPreferences();
         }
 
-        private void OnFlavorTextChange(string content)
+        //starlight start
+        private void OnPhysicalDescChanged(TextEdit.TextEditEventArgs args)
         {
             if (Profile is null)
                 return;
 
-            Profile = Profile.WithFlavorText(content);
-            SetDirty();
+            Profile = Profile.WithPhysicalDesc(Rope.Collapse(args.TextRope).Trim());
+            IsDirty = true;
         }
+
+
+        private void OnPersonalityDescChanged(TextEdit.TextEditEventArgs args)
+        {
+            if (Profile is null)
+                return;
+
+            Profile = Profile.WithPersonalityDesc(Rope.Collapse(args.TextRope).Trim());
+            IsDirty = true;
+        }
+
+        private void OnExploitablesChanged(TextEdit.TextEditEventArgs args)
+        {
+            if (Profile is null)
+                return;
+
+            Profile = Profile.WithExploitable(Rope.Collapse(args.TextRope).Trim());
+            IsDirty = true;
+        }
+
+        private void OnSecretsChanged(TextEdit.TextEditEventArgs args)
+        {
+            if (Profile is null)
+                return;
+
+            Profile = Profile.WithSecrets(Rope.Collapse(args.TextRope).Trim());
+            IsDirty = true;
+        }
+
+        private void OnPersonalNotesChanged(TextEdit.TextEditEventArgs args)
+        {
+            if (Profile is null)
+                return;
+
+            Profile = Profile.WithPersonalNotes(Rope.Collapse(args.TextRope).Trim());
+            IsDirty = true;
+        }
+        private void OnOOCNotesChanged(TextEdit.TextEditEventArgs args)
+        {
+            if (Profile is null)
+                return;
+
+            Profile = Profile.WithOOCNotes(Rope.Collapse(args.TextRope).Trim());
+            IsDirty = true;
+        }
+
+        //starlight end
 
         private void OnMarkingChange(MarkingSet markings)
         {
@@ -1216,63 +1291,40 @@ namespace Content.Client.Lobby.UI
             if (Profile is null) return;
 
             var skin = _prototypeManager.Index<SpeciesPrototype>(Profile.Species).SkinColoration;
+            var strategy = _prototypeManager.Index(skin).Strategy;
 
-            switch (skin)
+            switch (strategy.InputType)
             {
-                case HumanoidSkinColor.HumanToned:
+                case SkinColorationStrategyInput.Unary:
+                {
+                    if (!Skin.Visible)
                     {
-                        if (!Skin.Visible)
-                        {
-                            Skin.Visible = true;
-                            RgbSkinColorContainer.Visible = false;
-                        }
-
-                        var color = SkinColor.HumanSkinTone((int)Skin.Value);
-
-                        Markings.CurrentSkinColor = color;
-                        Profile = Profile.WithCharacterAppearance(Profile.Appearance.WithSkinColor(color));//
-                        break;
+                        Skin.Visible = true;
+                        RgbSkinColorContainer.Visible = false;
                     }
-                case HumanoidSkinColor.Hues:
+
+                    var color = strategy.FromUnary(Skin.Value);
+
+                    Markings.CurrentSkinColor = color;
+                    Profile = Profile.WithCharacterAppearance(Profile.Appearance.WithSkinColor(color));
+
+                    break;
+                }
+                case SkinColorationStrategyInput.Color:
+                {
+                    if (!RgbSkinColorContainer.Visible)
                     {
-                        if (!RgbSkinColorContainer.Visible)
-                        {
-                            Skin.Visible = false;
-                            RgbSkinColorContainer.Visible = true;
-                        }
-
-                        Markings.CurrentSkinColor = _rgbSkinColorSelector.Color;
-                        Profile = Profile.WithCharacterAppearance(Profile.Appearance.WithSkinColor(_rgbSkinColorSelector.Color));
-                        break;
+                        Skin.Visible = false;
+                        RgbSkinColorContainer.Visible = true;
                     }
-                case HumanoidSkinColor.TintedHues:
-                    {
-                        if (!RgbSkinColorContainer.Visible)
-                        {
-                            Skin.Visible = false;
-                            RgbSkinColorContainer.Visible = true;
-                        }
 
-                        var color = SkinColor.TintedHues(_rgbSkinColorSelector.Color);
+                    var color = strategy.ClosestSkinColor(_rgbSkinColorSelector.Color);
 
-                        Markings.CurrentSkinColor = color;
-                        Profile = Profile.WithCharacterAppearance(Profile.Appearance.WithSkinColor(color));
-                        break;
-                    }
-                case HumanoidSkinColor.VoxFeathers:
-                    {
-                        if (!RgbSkinColorContainer.Visible)
-                        {
-                            Skin.Visible = false;
-                            RgbSkinColorContainer.Visible = true;
-                        }
+                    Markings.CurrentSkinColor = color;
+                    Profile = Profile.WithCharacterAppearance(Profile.Appearance.WithSkinColor(color));
 
-                        var color = SkinColor.ClosestVoxColor(_rgbSkinColorSelector.Color);
-
-                        Markings.CurrentSkinColor = color;
-                        Profile = Profile.WithCharacterAppearance(Profile.Appearance.WithSkinColor(color));
-                        break;
-                    }
+                    break;
+                }
             }
 
             ReloadProfilePreview();
@@ -1425,12 +1477,17 @@ namespace Content.Client.Lobby.UI
         }
         // Starlight - End
 
-        private void UpdateFlavorTextEdit()
+        private void UpdateCharacterInfoEditorText()
         {
-            if (_flavorTextEdit != null)
-            {
-                _flavorTextEdit.TextRope = new Rope.Leaf(Profile?.FlavorText ?? "");
-            }
+            if (!_allowFlavorText)
+                return;
+            ICInfoEditor.PhysicalDescInput.TextRope = new Rope.Leaf(Profile?.PhysicalDescription ?? "");
+            ICInfoEditor.PersonalityDescInput.TextRope = new Rope.Leaf(Profile?.PersonalityDescription ?? "");
+            ICInfoEditor.ExploitableInput.TextRope = new Rope.Leaf(Profile?.ExploitableInfo ?? "");
+            ICInfoEditor.SecretsInput.TextRope = new Rope.Leaf(Profile?.Secrets ?? "");
+
+            OOCInfoEditor.PersonalNotesInput.TextRope = new Rope.Leaf(Profile?.PersonalNotes ?? "");
+            OOCInfoEditor.OOCNotesInput.TextRope = new Rope.Leaf(Profile?.OOCNotes ?? "");
         }
 
         private void UpdateAgeEdit()
@@ -1459,7 +1516,7 @@ namespace Content.Client.Lobby.UI
             var sexes = new List<Sex>();
 
             // add species sex options, default to just none if we are in bizzaro world and have no species
-            if (_prototypeManager.TryIndex<SpeciesPrototype>(Profile.Species, out var speciesProto))
+            if (_prototypeManager.Resolve<SpeciesPrototype>(Profile.Species, out var speciesProto))
             {
                 foreach (var sex in speciesProto.Sexes)
                 {
@@ -1509,57 +1566,34 @@ namespace Content.Client.Lobby.UI
                 return;
 
             var skin = _prototypeManager.Index<SpeciesPrototype>(Profile.Species).SkinColoration;
+            var strategy = _prototypeManager.Index(skin).Strategy;
 
-            switch (skin)
+            switch (strategy.InputType)
             {
-                case HumanoidSkinColor.HumanToned:
+                case SkinColorationStrategyInput.Unary:
+                {
+                    if (!Skin.Visible)
                     {
-                        if (!Skin.Visible)
-                        {
-                            Skin.Visible = true;
-                            RgbSkinColorContainer.Visible = false;
-                        }
-
-                        Skin.Value = SkinColor.HumanSkinToneFromColor(Profile.Appearance.SkinColor);
-
-                        break;
+                        Skin.Visible = true;
+                        RgbSkinColorContainer.Visible = false;
                     }
-                case HumanoidSkinColor.Hues:
+
+                    Skin.Value = strategy.ToUnary(Profile.Appearance.SkinColor);
+
+                    break;
+                }
+                case SkinColorationStrategyInput.Color:
+                {
+                    if (!RgbSkinColorContainer.Visible)
                     {
-                        if (!RgbSkinColorContainer.Visible)
-                        {
-                            Skin.Visible = false;
-                            RgbSkinColorContainer.Visible = true;
-                        }
-
-                        // set the RGB values to the direct values otherwise
-                        _rgbSkinColorSelector.Color = Profile.Appearance.SkinColor;
-                        break;
+                        Skin.Visible = false;
+                        RgbSkinColorContainer.Visible = true;
                     }
-                case HumanoidSkinColor.TintedHues:
-                    {
-                        if (!RgbSkinColorContainer.Visible)
-                        {
-                            Skin.Visible = false;
-                            RgbSkinColorContainer.Visible = true;
-                        }
 
-                        // set the RGB values to the direct values otherwise
-                        _rgbSkinColorSelector.Color = Profile.Appearance.SkinColor;
-                        break;
-                    }
-                case HumanoidSkinColor.VoxFeathers:
-                    {
-                        if (!RgbSkinColorContainer.Visible)
-                        {
-                            Skin.Visible = false;
-                            RgbSkinColorContainer.Visible = true;
-                        }
+                    _rgbSkinColorSelector.Color = strategy.ClosestSkinColor(Profile.Appearance.SkinColor);
 
-                        _rgbSkinColorSelector.Color = SkinColor.ClosestVoxColor(Profile.Appearance.SkinColor);
-
-                        break;
-                    }
+                    break;
+                }
             }
         }
 
@@ -1571,7 +1605,7 @@ namespace Content.Client.Lobby.UI
             if (species is null)
                 return;
 
-            if (!_prototypeManager.TryIndex<SpeciesPrototype>(species, out var speciesProto))
+            if (!_prototypeManager.Resolve<SpeciesPrototype>(species, out var speciesProto))
                 return;
 
             // Don't display the info button if no guide entry is found

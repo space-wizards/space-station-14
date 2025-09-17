@@ -1,0 +1,284 @@
+- type: entity
+  parent: BaseBorgiChassis
+  id: DerelictBorgiChassis
+  name: derelict borgi
+  description: even after all these years. still loves chasing it's tail.
+  components:
+    - type: ContainerFill
+      containers:
+        borg_brain:
+          - PositronicBrain
+        borg_module:
+          - BorgModuleTool
+          - BorgModuleFireExtinguisher
+        ears: 
+          - ClothingHeadsetAssistant
+        head: 
+          - ClothingHeadHelmetEVALarge
+        outerClothing: 
+          - ClothingOuterHardsuitEVA
+        mask:
+          - ClothingMaskBreath
+        suitstorage:
+          - OxygenTankFilled
+        id:
+          - BorgiClearPDA
+    - type: ItemSlots
+      slots:
+        cell_slot:
+          name: power-cell-slot-component-slot-name-default
+          startingItem: PowerCellHigh
+    - type: StartIonStormed
+      ionStormAmount: 3
+    - type: IonStormTarget
+      chance: 1.0 # just like derelicts. it catches EVERY ionstorm.
+
+- type: entity
+  parent: BaseStationBorgiChassis
+  description: A smart dog, loves stating it's laws.
+  id: StationBorgiChassis
+  components:
+    - type: ReplacementAccent
+      accent: dog
+    - type: ItemSlots
+      slots:
+        cell_slot:
+          name: power-cell-slot-component-slot-name-default
+          startingItem: PowerCellHigh
+    - type: ContainerFill
+      containers:
+        borg_brain:
+          - PositronicBrain
+
+- type: entity
+  parent: BaseStationBorgiChassis
+  id: SmartSubwooferBorgiChassis
+  name: Smart SubWoofer
+  description: An unusually smart dog, with an obsession for sick bass beats and stating laws.
+  components:
+    - type: ActionGrant
+      actions:
+      - ActionBorgiPlayMidi
+    - type: ItemSlots
+      slots:
+        cell_slot:
+          name: power-cell-slot-component-slot-name-default
+          startingItem: PowerCellHigh
+    - type: ContainerFill
+      containers:
+        borg_brain:
+          - PositronicBrain
+
+- type: entity
+  parent: SmartSubwooferBorgiChassis
+  id: SubwooferBorgiChassis
+  name: SubWoofer
+  description: A smart dog, with an obsession for sick bass beats and stating laws.
+  components:
+    - type: ReplacementAccent
+      accent: dog
+    - type: ItemSlots
+      slots:
+        cell_slot:
+          name: power-cell-slot-component-slot-name-default
+          startingItem: PowerCellHigh
+    - type: ContainerFill
+      containers:
+        borg_brain:
+          - PositronicBrain
+
+# Syndicate Borgi
+
+- type: entity
+  parent: BaseSyndicateBorgiChassis
+  id: SyndiBorgiKit1
+  name: Syndi Borgi
+  suffix: Antag, L6 Esword
+  description: An unusually smart dog, but hell bent on MURDER.
+  components:
+    - type: ContainerFill
+      containers:
+        borg_brain:
+        - PositronicBrain
+        borg_module:
+        - BorgModuleOperative
+        - BorgModuleL6C
+        - BorgModuleEsword
+
+- type: entity
+  parent: BaseSyndicateBorgiChassis
+  id: SyndiBorgiKit2
+  name: Syndi Borgi
+  suffix: Antag, Quick Dagger
+  description: An unusually smart dog, but hell bent on MURDER.
+  components:
+    - type: MovementSpeedModifier
+      baseWalkSpeed : 4
+      baseSprintSpeed: 6
+    - type: BorgChassis
+      maxModules: 3
+      moduleWhitelist:
+        tags:
+        - BorgModuleSyndicate
+        - BorgModuleGeneric
+    - type: ContainerFill
+      containers:
+        borg_brain:
+        - PositronicBrain
+        borg_module:
+        - BorgModuleOperative
+        - BorgModuleSyndicateWeapon
+
+- type: entity
+  parent: [ BaseXenoborgChassis, BaseXenoborgTransponder, BaseBorgiChassis ]
+  id: XenoBorgiChassis
+  name: XenoBorgi
+  description:  A man-machine hybrid that aims to replicate itself. They love extracting brains to insert into fresh Xenoborg chassis to grow their army. This one seems to be an borgi type, as it has inferior flesh in exchange for hands to support the other Xenoborgs.
+  components:
+    - type: Sprite
+      drawdepth: Mobs
+      sprite: Mobs/Pets/corgi.rsi
+      layers:
+      # Additional layers required for borg states
+      - map: ["enum.DamageStateVisualLayers.Base"]
+        state: corgi
+      - map: [ "enum.HumanoidVisualLayers.Handcuffs" ]
+        color: "#ffffff"
+        sprite: Objects/Misc/handcuffs.rsi # Would do a custom dog handcuff sprite but unfortunately handcuffs have their overlay baked-in to the cuff itself so this is mostly filler
+        state: body-overlay-2
+        visible: false
+      - map: ["enum.BorgVisualLayers.Body"]
+        state: corgi
+        visible: false
+      - state: corgitag
+        map: ["enum.BorgVisualLayers.Light"]
+        shader: unshaded
+        visible: false
+      - state: corgitag
+        map: ["enum.BorgVisualLayers.LightStatus"]
+        shader: unshaded
+        visible: false
+    - type: BorgChassis
+      hasMindState: corgitag
+      noMindState: corgitag
+      maxModules: 8
+      moduleWhitelist:
+        tags:
+        - BorgModuleSyndicate
+        - BorgModuleGeneric
+        - BorgModuleMedical
+        - XenoborgModuleGeneric
+    - type: SiliconLawProvider
+      laws: ShadowFactoryBorgiLawset
+      subverted: true
+    - type: RandomMetadata
+      nameSegments:
+      - NamesShadowBorgi
+    - type: ContainerFill
+      containers:
+        borg_module:
+        - XenoborgModuleBasic
+        - XenoborgModuleTool
+        - BorgModuleSyndicateWeapon
+        - BorgModuleTopicals
+    - type: Barotrauma # borgis largely do not have access to hardsuits so nerf the space damage they take
+      maxDamage: 1
+      damage:
+        types:
+          Blunt: 0.01
+    - type: Temperature
+      coldDamage:
+        types:
+          Cold: 0.01
+    - type: LanguageKnowledge
+      speaks:
+      - GalacticCommon
+      - Machine
+      - Dog
+      understands:
+      - GalacticCommon
+      - SolCommon
+      - Machine
+      - Canilunzt
+      - Sign
+      - Bubblish
+      - Chittin
+      - Draconic
+      - Marish
+      - Moffic
+      - Nekomimetic
+      - Sylvan
+      - Terrum
+      - VoxPidgin
+      - Scratch
+      - Dog
+    - type: Inventory
+      speciesId: dog
+      templateId: SmartCorgi
+      displacements:
+        belt:
+          sizeMaps:
+            32:
+              sprite: Mobs/Pets/displacements.rsi
+              state: corgi_belt_displacement
+        ears:
+          sizeMaps:
+            32:
+              sprite: Mobs/Pets/displacements.rsi
+              state: corgi_belt_displacement
+        head:
+          sizeMaps:
+            32:
+              sprite: Mobs/Pets/displacements.rsi
+              state: corgi_head_displacement
+    - type: LockingWhitelist
+      blacklist: #N/A you are the 2nd in command. if the mothership put you in this spot you are TRUSTED
+    - type: BorgTransponder
+      name: xenoborgi
+      sprite:
+        sprite: Mobs/Pets/corgi.rsi
+        state: corgi
+
+- type: entity
+  parent: XenoBorgiChassis
+  id: XenoBorgiPrinted
+  suffix: Cell
+  components:
+    - type: ContainerFill
+      containers:
+        borg_brain:
+        - MMI
+        borg_module:
+        - XenoborgModuleBasic
+        - XenoborgModuleTool
+        - BorgModuleSyndicateWeapon
+        - BorgModuleTopicals
+    - type: ItemSlots
+      slots:
+        cell_slot:
+          name: power-cell-slot-component-slot-name-default
+          startingItem: PowerCellHyper
+
+
+- type: entity
+  parent: XenoBorgiPrinted
+  id: FilledXenoBorgiChassis
+  name: XenoBorgi
+  suffix: Cell, Brain
+  components:
+    - type: GhostRole
+      name: XenoBorgi
+      description: Your job is to assist the mothership with their duties with your pair of hands. You of inferior flesh have a job to do.
+      rules: Check your laws upon being fitted to your chassis. You are a team antagonist, and your goal is to kill everyone you can on the station, bring them back to your ship, gib them, and borg them. Exercise prudence about your targetting as you are made of flesh, and therefore feeble.
+      raffle:
+        settings: default
+    - type: GhostTakeoverAvailable
+    - type: ContainerFill
+      containers:
+        borg_brain:
+        - MMIFilled
+        borg_module:
+        - XenoborgModuleBasic
+        - XenoborgModuleTool
+        - BorgModuleSyndicateWeapon
+        - BorgModuleTopicals

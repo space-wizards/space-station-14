@@ -27,7 +27,7 @@ public sealed partial class SurgeryToolComponent : Component
 [AutoGenerateComponentState]
 public sealed partial class OperatingTableComponent : Component
 {
-    [ViewVariables, AutoNetworkedField]
+    [DataField, AutoNetworkedField]
     public EntityUid? Scanner;
 }
 
@@ -36,7 +36,7 @@ public sealed partial class OperatingTableComponent : Component
 public sealed partial class BodyScannerComponent : Component
 {
     [DataField, AutoNetworkedField]
-    public NetEntity? TableEntity;
+    public EntityUid? TableEntity;
     
     /// <summary>
     /// The machine linking port

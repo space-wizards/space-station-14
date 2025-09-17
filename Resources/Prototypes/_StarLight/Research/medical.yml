@@ -41,6 +41,26 @@
   radioChannels:
   - Medical
 
+- type: technology
+  id: BudgetCyberOrgansTech
+  name: research-technology-budget-cyber-organs
+  icon:
+    sprite: _Starlight/Objects/Specific/Medical/budget_cyber_organs.rsi
+    state: liver
+  discipline: Biochemical
+  tier: 1
+  cost: 4000
+  recipeUnlocks:
+    - BudgetCyberEyes
+    - BudgetCyberTongue
+    - BudgetCyberLiver
+    - BudgetCyberStomach
+    - BudgetCyberKidneys
+  technologyPrerequisites:
+    - SurgeryTech
+  radioChannels:
+  - Medical
+
 # Tier 2
 
 - type: technology
@@ -106,8 +126,8 @@
   id: MechanizedTreatment
   name: research-technology-mechanized-treatment
   icon:
-    sprite: Mobs/Silicon/chassis.rsi
-    state: medical
+    sprite: Mobs/Silicon/Chassis/medical.rsi
+    state: borg
   discipline: Biochemical
   tier: 2
   cost: 5000
