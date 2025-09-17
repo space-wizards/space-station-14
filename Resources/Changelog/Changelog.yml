@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: JrInventor05
-  changes:
-  - message: The syringe gun is now a T3 civilian science research.
-    type: Add
-  id: 8460
-  time: '2025-05-12T00:14:13.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/37251
 - author: EmoGarbage404
   changes:
   - message: Added chemical barrels. These can be found on salvage debris and contain
@@ -3952,3 +3945,10 @@
   id: 8971
   time: '2025-09-17T21:49:50.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/40425
+- author: Errant, beck-thompson, FairlySadPanda
+  changes:
+  - message: Players can now be banned from enabling/taking antag roles.
+    type: Add
+  id: 8972
+  time: '2025-09-17T21:59:07.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/35966
