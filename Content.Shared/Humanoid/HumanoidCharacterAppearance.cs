@@ -1,5 +1,4 @@
 ﻿using System.Linq;
-using System.Numerics;
 using Content.Shared.Humanoid.Markings;
 using Content.Shared.Humanoid.Prototypes;
 using Robust.Shared.Prototypes;
@@ -28,7 +27,7 @@ public sealed partial class HumanoidCharacterAppearance : ICharacterAppearance, 
     public Color EyeColor { get; set; } = Color.Black;
 
     [DataField]
-    public Color SkinColor { get; set; } = Color.FromHsv(new Vector4(0.07f, 0.2f, 1f, 1f));
+    public Color SkinColor { get; set; } = Humanoid.SkinColor.ValidHumanSkinTone;
 
     [DataField]
     public List<Marking> Markings { get; set; } = new();
@@ -93,13 +92,14 @@ public sealed partial class HumanoidCharacterAppearance : ICharacterAppearance, 
 
     public static HumanoidCharacterAppearance DefaultWithSpecies(string species)
     {
-        var protoMan = IoCManager.Resolve<IPrototypeManager>();
-        var speciesPrototype = protoMan.Index<SpeciesPrototype>(species);
-        var skinColoration = protoMan.Index(speciesPrototype.SkinColoration).Strategy;
-        var skinColor = skinColoration.InputType switch
+        var speciesPrototype = IoCManager.Resolve<IPrototypeManager>().Index<SpeciesPrototype>(species);
+        var skinColor = speciesPrototype.SkinColoration switch
         {
-            SkinColorationStrategyInput.Unary => skinColoration.FromUnary(speciesPrototype.DefaultHumanSkinTone),
-            SkinColorationStrategyInput.Color => skinColoration.ClosestSkinColor(speciesPrototype.DefaultSkinTone),
+            HumanoidSkinColor.HumanToned => Humanoid.SkinColor.HumanSkinTone(speciesPrototype.DefaultHumanSkinTone),
+            HumanoidSkinColor.Hues => speciesPrototype.DefaultSkinTone,
+            HumanoidSkinColor.TintedHues => Humanoid.SkinColor.TintedHues(speciesPrototype.DefaultSkinTone),
+            HumanoidSkinColor.VoxFeathers => Humanoid.SkinColor.ClosestVoxColor(speciesPrototype.DefaultSkinTone),
+            _ => Humanoid.SkinColor.ValidHumanSkinTone,
         };
 
         return new(
@@ -147,15 +147,23 @@ public sealed partial class HumanoidCharacterAppearance : ICharacterAppearance, 
 
         var newEyeColor = random.Pick(RealisticEyeColors);
 
-        var protoMan = IoCManager.Resolve<IPrototypeManager>();
-        var skinType = protoMan.Index<SpeciesPrototype>(species).SkinColoration;
-        var strategy = protoMan.Index(skinType).Strategy;
+        var skinType = IoCManager.Resolve<IPrototypeManager>().Index<SpeciesPrototype>(species).SkinColoration;
 
-        var newSkinColor = strategy.InputType switch
+        var newSkinColor = new Color(random.NextFloat(1), random.NextFloat(1), random.NextFloat(1), 1);
+        switch (skinType)
         {
-            SkinColorationStrategyInput.Unary => strategy.FromUnary(random.NextFloat(0f, 100f)),
-            SkinColorationStrategyInput.Color => strategy.ClosestSkinColor(new Color(random.NextFloat(1), random.NextFloat(1), random.NextFloat(1), 1)),
-        };
+            case HumanoidSkinColor.HumanToned:
+                newSkinColor = Humanoid.SkinColor.HumanSkinTone(random.Next(0, 101));
+                break;
+            case HumanoidSkinColor.Hues:
+                break;
+            case HumanoidSkinColor.TintedHues:
+                newSkinColor = Humanoid.SkinColor.ValidTintedHuesSkinTone(newSkinColor);
+                break;
+            case HumanoidSkinColor.VoxFeathers:
+                newSkinColor = Humanoid.SkinColor.ProportionalVoxColor(newSkinColor);
+                break;
+        }
 
         return new HumanoidCharacterAppearance(newHairStyle, newHairColor, newFacialHairStyle, newHairColor, newEyeColor, newSkinColor, new ());
 
@@ -199,8 +207,10 @@ public sealed partial class HumanoidCharacterAppearance : ICharacterAppearance, 
             markingSet = new MarkingSet(appearance.Markings, speciesProto.MarkingPoints, markingManager, proto);
             markingSet.EnsureValid(markingManager);
 
-            var strategy = proto.Index(speciesProto.SkinColoration).Strategy;
-            skinColor = strategy.EnsureVerified(skinColor);
+            if (!Humanoid.SkinColor.VerifySkinColor(speciesProto.SkinColoration, skinColor))
+            {
+                skinColor = Humanoid.SkinColor.ValidSkinTone(speciesProto.SkinColoration, skinColor);
+            }
 
             markingSet.EnsureSpecies(species, skinColor, markingManager);
             markingSet.EnsureSexes(sex, markingManager);

@@ -228,12 +228,12 @@ public abstract partial class SharedGravitySystem : EntitySystem
 
     private void OnThrowerImpulse(Entity<GravityAffectedComponent> entity, ref ThrowerImpulseEvent args)
     {
-        args.Push |= IsWeightless((entity.Owner, entity.Comp));
+        args.Push = true;
     }
 
     private void OnShooterImpulse(Entity<GravityAffectedComponent> entity, ref ShooterImpulseEvent args)
     {
-        args.Push |= IsWeightless((entity.Owner, entity.Comp));
+        args.Push = true;
     }
 }
 

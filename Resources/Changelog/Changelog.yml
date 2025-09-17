@@ -1,4 +1,89 @@
 ﻿Entries:
+- author: murolem
+  changes:
+  - message: Silo can now accept diamonds. Shiny!
+    type: Tweak
+  id: 8447
+  time: '2025-05-09T15:41:45.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37305
+- author: GaMEWAR360
+  changes:
+  - message: 'Added new bounties for: Rings, Goliath Plates, Hivelord Remains'
+    type: Add
+  - message: 'Increased bounty prices for: Sharkminnow Teeth and Spacecarp Teeth'
+    type: Tweak
+  id: 8448
+  time: '2025-05-09T15:52:30.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/34926
+- author: sowelipililimute
+  changes:
+  - message: Reagent dispensers (Chem Dispenser, Booze Dispenser, Soda Dispenser)
+      now use a grid inventory for their internal storage
+    type: Tweak
+  id: 8449
+  time: '2025-05-10T03:49:05.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/34205
+- author: B-Kirill
+  changes:
+  - message: Meteors no longer slow down during flight.
+    type: Fix
+  id: 8450
+  time: '2025-05-10T03:55:35.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37320
+- author: Pronana
+  changes:
+  - message: You can no longer grind the smite snail
+    type: Fix
+  id: 8451
+  time: '2025-05-10T05:06:19.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37020
+- author: PotentiallyTom
+  changes:
+  - message: Changed the gold requirement for the recipies of the Laser Cannon, X-Ray
+      Cannon, and Advanced Laser Pistol.
+    type: Tweak
+  - message: The Advanced Laser Pistol now requires uranium to make.
+    type: Tweak
+  id: 8452
+  time: '2025-05-10T09:58:03.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37308
+- author: EmoGarbage404
+  changes:
+  - message: Omnizine no longer "wastes" healing when administered to patients without
+      even amounts of all damage types.
+    type: Tweak
+  id: 8453
+  time: '2025-05-10T12:51:28.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37129
+- author: Nukesthestation
+  changes:
+  - message: The maximum character limit for paper has been increased to 10,000, hop
+      mains rejoice!
+    type: Tweak
+  id: 8454
+  time: '2025-05-10T15:12:18.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37270
+- author: Morb0, ssdaniel24
+  changes:
+  - message: Added a Discord webhook that will receive station news
+    type: Add
+  id: 8455
+  time: '2025-05-10T18:21:02.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/36807
+- author: EmoGarbage404
+  changes:
+  - message: Fixed being able to toggle lighting as a ghost.
+    type: Fix
+  id: 8456
+  time: '2025-05-10T21:41:40.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37335
+- author: gorillagaming
+  changes:
+  - message: The space dragon briefing now shows the correct direction to the station
+    type: Fix
+  id: 8457
+  time: '2025-05-10T23:35:27.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37181
 - author: pyvik
   changes:
   - message: New hair named "Long With Bangs"
@@ -3862,96 +3947,3 @@
   id: 8958
   time: '2025-09-13T07:01:14.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/40103
-- author: Huaqas
-  changes:
-  - message: Vulpkanin now have Undergarments.
-    type: Add
-  id: 8959
-  time: '2025-09-13T17:36:28.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/40321
-- author: MissKay1994
-  changes:
-  - message: Greatly reduced lethality of Man-O-War shuttle
-    type: Tweak
-  id: 8960
-  time: '2025-09-14T05:44:32.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/40339
-- author: ScarKy0
-  changes:
-  - message: Vulpkanin now use the corrent undergarments when "Censor character nudity"
-      is enabled.
-    type: Fix
-  id: 8961
-  time: '2025-09-14T07:39:38.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/40341
-- author: Huaqas
-  changes:
-  - message: Vulpkanin eye tattoos now correctly changes the color of the entire eye.
-    type: Fix
-  id: 8962
-  time: '2025-09-14T15:18:49.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/40320
-- author: Winkarst-cpu
-  changes:
-  - message: Fixed the wizard's recharge spell not working on some wands.
-    type: Fix
-  id: 8963
-  time: '2025-09-14T19:26:42.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/40347
-- author: SharkSnake98
-  changes:
-  - message: Added 3 new Astrotiles for dark grass, light grass, and desert sand.
-    type: Add
-  id: 8964
-  time: '2025-09-15T01:30:12.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/37867
-- author: chromiumboy
-  changes:
-  - message: Devices with access restrictions now list those restrictions in their
-      examination description
-    type: Add
-  - message: Wearing a diagnostic HUD will reveal if a device's access restrictions
-      have been modified and in what way
-    type: Add
-  id: 8965
-  time: '2025-09-15T07:19:25.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/37712
-- author: chromiumboy
-  changes:
-  - message: AI cores now require power to function and can be damaged/destroyed.
-      Any AI inhabiting an AI core when it breaks or runs out of power will be killed.
-      AI cores have an internal battery that can provide up to 10 minutes of emergency
-      power in the event of a power interruption. Damage to the AI core itself can
-      be repaired with a welding tool.
-    type: Tweak
-  - message: New AI cores can be constructed using the 'Build' menu. The parts needed
-      to construct an AI core can be purchased through cargo.
-    type: Add
-  - message: Deceased AIs can be revived using an AI restoration console. A spare
-      circuit board for this computer can be found in the Research Director's locker.
-    type: Add
-  id: 8966
-  time: '2025-09-15T14:18:32.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/39588
-- author: Admiral-Obvious-001
-  changes:
-  - message: Increased the cooldown of ninja glove stun from 2 seconds to 10 seconds.
-      Stun duration remains unchanged at 5 seconds.
-    type: Tweak
-  id: 8967
-  time: '2025-09-15T23:31:50.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/39707
-- author: ScarKy0
-  changes:
-  - message: Intellicards can now be obtained from the Station AI Electronics crates.
-    type: Add
-  id: 8968
-  time: '2025-09-16T15:35:51.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/40401
-- author: ScarKy0
-  changes:
-  - message: Intellicards now get renamed to the name of the AI stored on them.
-    type: Add
-  id: 8969
-  time: '2025-09-16T19:04:50.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/40402

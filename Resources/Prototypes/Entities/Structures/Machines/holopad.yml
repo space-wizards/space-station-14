@@ -76,7 +76,6 @@
     speakerVolume: Speak
   - type: AccessReader
     access: [[ "Command" ]]
-    examinationText: access-reader-examination-functionality-restricted
   - type: ActivatableUI
     key: enum.HolopadUiKey.InteractionWindow
   - type: ActivatableUIRequiresPower

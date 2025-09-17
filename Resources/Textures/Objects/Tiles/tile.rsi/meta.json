@@ -35,9 +35,6 @@
             "name": "dark-offset"
         },
         {
-            "name": "desertsand"
-        },
-        {
             "name": "dirty"
         },
         {
@@ -132,12 +129,6 @@
         },
         {
             "name": "grass"
-        },
-        {
-            "name": "grassdark"
-        },
-        {
-            "name": "grasslight"
         },
         {
             "name": "grassjungle"
@@ -448,35 +439,11 @@
             "directions": 4
         },
         {
-            "name": "grasslight-inhand-left",
-            "directions": 4
-        },
-        {
-            "name": "grasslight-inhand-right",
-            "directions": 4
-        },
-        {
             "name": "snow-inhand-left",
             "directions": 4
         },
         {
             "name": "snow-inhand-right",
-            "directions": 4
-        },
-        {
-            "name": "grassdark-inhand-left",
-            "directions": 4
-        },
-        {
-            "name": "grassdark-inhand-right",
-            "directions": 4
-        },
-        {
-            "name": "desertsand-inhand-left",
-            "directions": 4
-        },
-        {
-            "name": "desertsand-inhand-right",
             "directions": 4
         },
         {

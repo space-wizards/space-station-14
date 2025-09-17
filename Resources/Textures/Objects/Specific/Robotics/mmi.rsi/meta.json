@@ -8,9 +8,6 @@
   },
   "states": [
     {
-      "name": "mmi_icon"
-    },
-    {
       "name": "mmi_off"
     },
     {
