@@ -3,10 +3,10 @@
   startingInventory:
     DrinkLemonLimeCan: 8
     DrinkLemonLimeCranberryCan: 6
-    DrinkColaCan: 3
-    DrinkSolDryCan: 3
+    DrinkColaCan: 4 #Starlight +1
+    DrinkSolDryCan: 4 #Starlight +1
   contrabandInventory:
-    DrinkStarkistCan: 2
+    DrinkStarkistCan: 4 #Starlight +2
     ToyHammer: 1
     DrinkChangelingStingCan: 2
   emaggedInventory:
