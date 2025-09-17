@@ -623,7 +623,7 @@
     Sigh:
       collection: MaleSigh
     Scream:
-      collection: VulpkaninScreams
+      collection: MaleScreams # Starlight
     Growl:
       collection: Growl #Starlight bark
     Snarl:
@@ -636,6 +636,22 @@
       path: /Audio/_Starlight/Effects/howl.ogg #Starlight howl
     Yip:
       path: /Audio/_Starlight/Effects/yip.ogg #Starlight Yip
+    # STARLIGHT START
+    Yawn:
+      collection: MaleYawn
+    Snore:
+      collection: Snores
+    Crying:
+      collection: MaleCry
+    Weh:
+      collection: Weh
+    Hew:
+      collection: Hew
+    Gasp:
+      collection: MaleGasp
+    DefaultDeathgasp:
+      collection: MaleDeathGasp
+    # STARLIGHT END
 
 - type: emoteSounds
   id: FemaleVulpkanin
@@ -653,7 +669,7 @@
     Sigh:
       collection: FemaleSigh
     Scream:
-      collection: VulpkaninScreams
+      collection: FemaleScreams # Starlight
     Growl:
       collection: Growl #Starlight bark
     Snarl:
@@ -666,6 +682,22 @@
       path: /Audio/_Starlight/Effects/howl.ogg #Starlight howl
     Yip:
       path: /Audio/_Starlight/Effects/yip.ogg #Starlight Yip
+    # STARLIGHT START
+    Yawn:
+      collection: FemaleYawn
+    Snore:
+      collection: Snores
+    Crying:
+      collection: FemaleCry
+    Weh:
+      collection: Weh
+    Hew:
+      collection: Hew
+    Gasp:
+      collection: FemaleGasp
+    DefaultDeathgasp:
+      collection: FemaleDeathGasp
+    # STARLIGHT END
 
 # body emotes
 - type: emoteSounds
