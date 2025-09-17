@@ -38,12 +38,15 @@ public abstract class SharedHolidaySystem : EntitySystem
         // TODO use HolidaysGotRefreshedEvent to update HolidayVisualsComponent and HolidayRsiSwapComponent
     }
 
-    #region Subscriptions
+    #region Internal
 
     private void HandleCvar(bool enabled)
     {
-        if (TryGetInstance(out var ent))
-            ent.Value.Comp.Enabled = enabled;
+        if (!TryGetInstance(out var ent))
+            return;
+
+        ent.Value.Comp.Enabled = enabled;
+        Dirty(ent.Value);
     }
 
     private void OnComponentInit(Entity<CurrentHolidaySingletonComponent> entity, ref ComponentInit args)
@@ -72,9 +75,48 @@ public abstract class SharedHolidaySystem : EntitySystem
         }
     }
 
+    /// <summary>
+    /// Refreshes the currently active holidays.
+    /// </summary>
+    protected void SetActiveHolidays(DateTime now)
+    {
+        if (!TryGetInstance(out var singleton))
+            return;
+
+        var (_, comp) = singleton.Value;
+
+        // No need to redo everything if the date hasn't changed.
+        if (comp.CurrentDate == now)
+            return;
+
+        comp.CurrentHolidays.Clear();
+        comp.CurrentDate = now;
+
+        // Festively find what holidays we're celebrating
+        foreach (var holiday in _prototypeManager.EnumeratePrototypes<HolidayPrototype>())
+        {
+            if (holiday.ShouldCelebrate(comp.CurrentDate))
+            {
+                comp.CurrentHolidays.Add(holiday);
+            }
+        }
+
+        Dirty(singleton.Value);
+        var ev = new HolidaysGotRefreshedEvent();
+        RaiseLocalEvent(ref ev);
+    }
+
     #endregion
     #region Singleton
+    // This region is extremely similar to the methods found in https://github.com/space-wizards/RobustToolbox/pull/5683
 
+    /// <summary>
+    /// Attempts to get the singleton instance.
+    /// This always succeeds on the server, where the instance will be created if it does not exist yet.
+    /// On the client, this can return false if attempting to access the instance before it has been sent from the server.
+    /// </summary>
+    /// <param name="instance">The singleton Entity{CurrentHolidaySingletonComponent} instance.</param>
+    /// <returns>True if the instance was found or created, otherwise false.</returns>
     protected bool TryGetInstance([NotNullWhen(true)] out Entity<CurrentHolidaySingletonComponent>? instance)
     {
         instance = FindOrCreateHolder();
@@ -83,12 +125,10 @@ public abstract class SharedHolidaySystem : EntitySystem
 
     private Entity<CurrentHolidaySingletonComponent>? FindOrCreateHolder()
     {
-        var query = EntityQueryEnumerator<CurrentHolidaySingletonComponent>();
-        while (query.MoveNext(out var uid, out var comp))
-        {
-            return (uid, comp);
-        }
+        if (_cachedEntity != null)
+            return _cachedEntity;
 
+        // Client can't create the singleton, so it needs to wait for server
         if (_netMan.IsClient)
             return null;
 
@@ -108,36 +148,6 @@ public abstract class SharedHolidaySystem : EntitySystem
     }
 
     #endregion
-
-    /// <summary>
-    /// Refreshes the currently active holidays.
-    /// </summary>
-    protected void SetActiveHolidays(DateTime now)
-    {
-        if (!TryGetInstance(out var singleton))
-            return;
-
-        var (_, comp) = singleton.Value;
-
-        if (comp.CurrentDate == now)
-            return;
-
-        comp.CurrentHolidays.Clear();
-        comp.CurrentDate = now;
-
-        // Festively find what holidays we're celebrating
-        foreach (var holiday in _prototypeManager.EnumeratePrototypes<HolidayPrototype>())
-        {
-            if (holiday.ShouldCelebrate(comp.CurrentDate))
-            {
-                comp.CurrentHolidays.Add(holiday);
-            }
-        }
-
-        var ev = new HolidaysGotRefreshedEvent();
-        RaiseLocalEvent(ref ev);
-    }
-
     #region Public API
 
     /// <returns> All currently active holidays (if cvar is enabled). </returns>
@@ -178,6 +188,7 @@ public abstract class SharedHolidaySystem : EntitySystem
     /// Note that DateTime.Now can be different between client and server.
     /// Only call this method with a specific time.
     /// </remarks>
+    /// <param name="date">The new date to start celebrating.</param>
     /// <param name="announce">If true, announce the holiday greeting.</param>
     [PublicAPI]
     public virtual void RefreshCurrentHolidays(DateTime date, bool announce = true)

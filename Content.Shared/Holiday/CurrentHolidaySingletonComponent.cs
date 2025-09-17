@@ -1,4 +1,5 @@
 using Content.Shared.CCVar;
+using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Holiday;
@@ -6,7 +7,7 @@ namespace Content.Shared.Holiday;
 /// <summary>
 /// This is a singleton component, used on a single entity in nullspace to store data for <see cref="SharedHolidaySystem"/>.
 /// </summary>
-[RegisterComponent, AutoGenerateComponentState]
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
 [Access(typeof(SharedHolidaySystem))]
 public sealed partial class CurrentHolidaySingletonComponent : Component
 {
@@ -20,7 +21,7 @@ public sealed partial class CurrentHolidaySingletonComponent : Component
     /// The date used for holidays. Might not be the real world current date if the round passes over midnight, or admin shenanigans.
     /// Set each time the lobby starts.
     /// </summary>
-    [DataField]
+    [DataField, AutoNetworkedField]
     public DateTime CurrentDate = DateTime.MinValue;
 
     /// <summary>

@@ -21,7 +21,7 @@ public sealed class HolidaySystem : SharedHolidaySystem
     }
 
     /// <summary>
-    ///     Swaps the rsi of particularly festive entities during the holiday.
+    /// Swaps the rsi of particularly festive entities during the holiday.
     /// </summary>
     private void OnAppearanceChange(Entity<HolidayRsiSwapComponent> ent, ref AppearanceChangeEvent args)
     {

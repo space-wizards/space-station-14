@@ -21,7 +21,7 @@ public sealed class HolidaySystem : SharedHolidaySystem
     }
 
     /// <summary>
-    ///     Reset holidays when going to lobby, and run holiday specific code at round start.
+    /// At round start, create the current holidays list and run holiday specific code.
     /// </summary>
     private void OnRunLevelChanged(GameRunLevelChangedEvent eventArgs)
     {
@@ -57,7 +57,7 @@ public sealed class HolidaySystem : SharedHolidaySystem
     #endregion
 
     /// <summary>
-    ///     Send a chat message to the server announcing the holidays.
+    /// Send a chat message to the server announcing the holidays.
     /// </summary>
     private void DoGreet()
     {
@@ -72,7 +72,7 @@ public sealed class HolidaySystem : SharedHolidaySystem
     }
 
     /// <summary>
-    ///     Function called at round start to run shenanigans (code) stored by each active holiday.
+    /// Function called at round start to run shenanigans (code) stored by each active holiday.
     /// </summary>
     private void DoCelebrate()
     {
