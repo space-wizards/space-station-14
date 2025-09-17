@@ -61,74 +61,6 @@ public sealed partial class HailerComponent : Component
     public TimeSpan TimeVerbReady = TimeSpan.Zero;
 
     /// <summary>
-    /// Is the gas mask an ERT one ?
-    /// Then needs special voicelines and behavior
-    /// </summary>
-    [DataField]
-    public bool IsERT = false;
-
-    /// <summary>
-    /// Is the gas mask an SWAT one ?
-    /// We need to replace a voiceline in that case
-    /// </summary>
-    [DataField]
-    public bool IsHOS = false;
-
-    /// <summary>
-    /// What localized line to replace in special circumstances
-    /// </summary>
-    [DataField]
-    public Dictionary<string, string> ReplaceVoicelinesLocalizeForHOS = new();
-
-    /// <summary>
-    /// Index of the sound that need replacing for the HOS
-    /// </summary>
-    [DataField]
-    public int SecHailHighIndexForHOS;
-
-    /// <summary>
-    /// Aggression level of the hailer, how aggressive is it ?
-    /// </summary>
-    [DataField, AutoNetworkedField]
-    public AggresionState AggresionLevel = AggresionState.Low;
-
-    /// <summary>
-    /// Soundcollection of AggresionState.Low
-    /// </summary>
-    [DataField]
-    public SoundSpecifier LowAggressionSounds = new SoundCollectionSpecifier("SecHailLow");
-
-    /// <summary>
-    /// Soundcollection of AggresionState.Medium
-    /// </summary>
-    [DataField]
-    public SoundSpecifier MediumAggressionSounds = new SoundCollectionSpecifier("SecHailMedium");
-
-    /// <summary>
-    /// Soundcollection of AggresionState.High
-    /// </summary>
-    [DataField]
-    public SoundSpecifier HighAggressionSounds = new SoundCollectionSpecifier("SecHailHigh");
-
-    /// <summary>
-    /// Soundcollection when Emagged
-    /// </summary>
-    [DataField]
-    public SoundSpecifier EmagAggressionSounds = new SoundCollectionSpecifier("SecHailEmag");
-
-    /// <summary>
-    /// Soundcollection of when the mask is the ERT one
-    /// </summary>
-    [DataField]
-    public SoundSpecifier ERTAggressionSounds = new SoundCollectionSpecifier("SecHailERT");
-
-    /// <summary>
-    /// Soundcollection for replacing one voiceline when it's the SWAT mask
-    /// </summary>
-    [DataField]
-    public SoundSpecifier HOSReplaceSounds = new SoundCollectionSpecifier("SecHailHOS");
-
-    /// <summary>
     /// Soundcollection of screwing sounds.
     /// </summary>
     [DataField]
@@ -169,6 +101,18 @@ public sealed partial class HailerComponent : Component
     /// </summary>
     [DataField]
     public EntProtoId ExclamationEffect = "WhistleExclamation";
+
+    [DataField]
+    public List<HailLevel> HailLevels = new();
+
+    /// <summary>
+    /// Aggression level of the hailer, how aggressive is it ?
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public HailLevel? CurrentHailLevel;
+
+    [DataField]
+    public List<HailOrder> Orders = new();
 }
 
 [Serializable, NetSerializable]
@@ -185,12 +129,32 @@ public enum SecMaskState : byte
 }
 
 /// <summary>
-/// How aggresive are the orders coming from the hailer ? Higher means more aggressive / shitsec
+/// Measure the level of the hails produced, ex: more or less aggressive
 /// </summary>
-[Serializable, NetSerializable]
-public enum AggresionState : byte
+[DataRecord, Serializable, NetSerializable]
+public record struct HailLevel
 {
-    Low = 0,
-    Medium = 1,
-    High = 2
+    public HailLevel() => Name = String.Empty;
+
+    [DataField]
+    public string Name;
+
+    [DataField]
+    public bool Cyclable = true;
+}
+
+[DataRecord, Serializable, NetSerializable]
+public record struct HailOrder
+{
+    [DataField]
+    public string? Name;
+
+    [DataField]
+    public string? Description;
+
+    [DataField]
+    public string? SoundCollection;
+
+    [DataField]
+    public string? LocalePrefix;
 }

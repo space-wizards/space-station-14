@@ -47,8 +47,29 @@
         Piercing: 0.95
         Heat: 0.95
   - type: Hailer
-    soundCollection:
-    localePrefix:
+    hailLevels:
+    - name: low
+    - name: med
+    - name: high
+    - name: emag
+      cyclable: false
+    orders:
+    - name: attention
+      description: blah blah blah
+      soundCollection: hailsec-attention
+      localePrefix: hailsec-attention
+    - name: oneliner
+      description: blah blah blah
+      soundCollection: hailsec-oneliner
+      localePrefix: hailsec-oneliner
+    - name: compliance
+      description: blah blah blah
+      soundCollection: hailsec-compliance
+      localePrefix: hailsec-compliance
+    - name: aggression
+      description: blah blah blah
+      soundCollection: hailsec-aggression
+      localePrefix: hailsec-aggression
     chatName: "Security Hailer"
     distance: 5
   - type: AccessReader
@@ -416,13 +437,13 @@
         Slash: 0.90
         Piercing: 0.95
         Heat: 0.95
-  - type: SecurityHailer #Because the HOS has this one
-    distance: 5
-    aggresionLevel: High
-    isHOS: true
-    replaceVoicelinesLocalizeForHOS:
-      hail-high-5: hail-high-HOS
-    secHailHighIndexForHOS: 5
+  # - type: SecurityHailer #Because the HOS has this one
+  #   distance: 5
+  #   aggresionLevel: High
+  #   isHOS: true
+  #   replaceVoicelinesLocalizeForHOS:
+  #     hail-high-5: hail-high-HOS
+  #   secHailHighIndexForHOS: 5
   - type: AccessReader
     access: [["HeadOfSecurity"]]
     loggingDisabled: true
@@ -473,11 +494,11 @@
         Slash: 0.95
         Piercing: 0.95
         Heat: 0.95
-  - type: SecurityHailer #For security ERT and because it's fitting really
-    distance: 5
-    aggresionLevel: High #This is just for examination purposes
-    isERT: true
-    chatName: ERT hailer
+  # - type: SecurityHailer #For security ERT and because it's fitting really
+  #   distance: 5
+  #   aggresionLevel: High #This is just for examination purposes
+  #   isERT: true
+  #   chatName: ERT hailer
 
 - type: entity
   parent: ClothingMaskGasERT
