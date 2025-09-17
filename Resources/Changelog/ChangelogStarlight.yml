@@ -14565,5 +14565,19 @@ Entries:
   id: 166000
   time: '2025-09-17T16:42:13.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/1660
+- author: stickycheZ101
+  changes:
+  - message: added filled improvised ammo boxes, along with associated recipes
+    type: Add
+  id: 117000
+  time: '2025-09-17T16:49:23.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1170
+- author: stickycheZ101
+  changes:
+  - message: added crushed phosphorus, used in the creation of improvised ammunition
+    type: Add
+  id: 117001
+  time: '2025-09-17T16:49:23.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1170
 Order: -1
 
