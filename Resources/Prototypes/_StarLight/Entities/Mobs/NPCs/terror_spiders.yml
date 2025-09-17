@@ -371,44 +371,6 @@
       - Burst
     soundGunshot: /Audio/Weapons/Xeno/alien_spitacid.ogg
 
-# Tier 3
-
-# Prince
-
-- type: entity
-  name: prince of terror
-  parent: MobTerrorRedUnevolvable
-  id: MobTerrorPrince
-  components:
-  - type: Sprite
-    drawdepth: Mobs
-    layers:
-    - map: ["enum.DamageStateVisualLayers.Base"]
-      state: alive
-      sprite: _Starlight/Mobs/Animals/Spiders/terror_prince.rsi
-  - type: MobThresholds
-    thresholds:
-      0: Alive
-      125: Critical
-      150: Dead
-  - type: MeleeWeapon
-    damage:
-      types:
-        Piercing: 25
-  - type: PassiveDamage 
-    allowedStates:
-    - Alive
-    - Critical
-    damageCap: 149
-    damage:
-      types:
-        Poison: -0.1
-      groups:
-        Brute: -0.1
-        Burn: -0.1
-
-# Princess
-
 - type: entity
   name: princess of terror
   parent: MobTerrorSpider
