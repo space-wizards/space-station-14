@@ -14410,5 +14410,26 @@ Entries:
   id: 164000
   time: '2025-09-17T15:19:00.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/1640
+- author: Rinary
+  changes:
+  - message: Added prince of terror as new tier 3 terror spider.
+    type: Add
+  id: 163700
+  time: '2025-09-17T15:37:31.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1637
+- author: Rinary
+  changes:
+  - message: Added spiderlings as new spider.
+    type: Add
+  id: 163701
+  time: '2025-09-17T15:37:31.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1637
+- author: Rinary
+  changes:
+  - message: Now all npc's know how to jump.
+    type: Tweak
+  id: 163702
+  time: '2025-09-17T15:37:31.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1637
 Order: -1
 
