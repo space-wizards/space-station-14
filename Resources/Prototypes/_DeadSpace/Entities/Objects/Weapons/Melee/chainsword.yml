@@ -1,6 +1,6 @@
 - type: entity
   parent: BaseItem
-  id: ChainswordDragonFox
+  id: WeaponMeleeChainsword
   name: цепной меч
   description: Представляет собой ничто иное, как меч, оснащённый зубчатой цепью.
   components:
