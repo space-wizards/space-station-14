@@ -10,4 +10,4 @@
   - type: VendingMachine
     pack: WhiskeyDeluxeInventory
   - type: AccessReader
-    access: [["CentralCommand"]] # Unused anywhere but CC, perfect for admeme
+    access: [["Xenoborg"]] # Unused anywhere but xenoborgs, perfect for admeme

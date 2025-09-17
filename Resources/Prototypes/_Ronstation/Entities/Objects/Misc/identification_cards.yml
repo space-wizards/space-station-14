@@ -26,4 +26,4 @@
     jobIcon: JobIconVisitor
   - type: Access
     tags:
-    - CentralCommand # Unused anywhere but CC, perfect for admeme
+    - Xenoborg # Unused anywhere but xenoborgs, perfect for admeme

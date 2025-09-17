@@ -19,7 +19,7 @@
     - map: [ "enum.WiresVisualLayers.MaintenancePanel" ]
       state: generic_panel_open
   - type: AccessReader
-    access: [["CentralCommand"]] # Unused anywhere but CC, perfect for admeme
+    access: [["Xenoborg"]] # Unused anywhere but xenoborgs, perfect for admeme
   - type: CommunicationsConsole
     title: comms-console-announcement-title-operation-whiskey
     color: "#FF5E00"
