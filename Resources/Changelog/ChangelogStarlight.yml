@@ -14517,5 +14517,39 @@ Entries:
   id: 118600
   time: '2025-09-17T16:10:45.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/1186
+- author: Conflee
+  changes:
+  - message: Increased the stock of nearly every item in every snack and drink vending
+      machine by 1, with some exceptions that didn't get buffed (14loco, contra stock,
+      etc)
+    type: Tweak
+  id: 129600
+  time: '2025-09-17T16:12:09.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1296
+- author: Conflee
+  changes:
+  - message: Increased the amount of flour, rice, cheese, and meat in the chef vender
+      slightly to aid in feeding the 200 hungry mouths we regularly have
+    type: Tweak
+  id: 129601
+  time: '2025-09-17T16:12:09.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1296
+- author: Conflee
+  changes:
+  - message: There is now a 50% chance of a second emergency EVA suit being in every
+      emergency closet, and a 50% chance of a space medipen being in every emergency
+      clost, to account for higher population and increased space damage now
+    type: Tweak
+  id: 129602
+  time: '2025-09-17T16:12:09.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1296
+- author: Conflee
+  changes:
+  - message: Increased the number of N2 and O2 tanks in EVA Tank Dispensers from 10
+      to 13, to account for higher population slightly
+    type: Tweak
+  id: 129603
+  time: '2025-09-17T16:12:09.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1296
 Order: -1
 
