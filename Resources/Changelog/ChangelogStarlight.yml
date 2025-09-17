@@ -14394,5 +14394,13 @@ Entries:
   id: 165201
   time: '2025-09-17T15:15:32.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/1652
+- author: CorruptOmega
+  changes:
+  - message: Chronexaline - New Cryo-Pod Chemical that only works when the target
+      is dead. Heals Radiation Poisoning in large amounts.
+    type: Add
+  id: 164200
+  time: '2025-09-17T15:18:17.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1642
 Order: -1
 
