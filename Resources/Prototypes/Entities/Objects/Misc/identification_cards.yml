@@ -38,7 +38,7 @@
     - state: default
     - sprite: Interface/Misc/job_icons.rsi
       state: Passenger
-      offset: -0.09375, 0.0625
+      offset: -0.09375, 0.0625 #3 pixels left, 2 pixels up
   - type: PresetIdCard
     job: Passenger
 
