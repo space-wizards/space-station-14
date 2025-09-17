@@ -10,24 +10,32 @@ namespace Content.Client.Chemistry.UI;
 [GenerateTypedNameReferences]
 public sealed partial class ReagentCardControl : Control
 {
-    public ItemStorageLocation StorageLocation { get; }
-    public Action<ItemStorageLocation>? OnPressed;
+    public ReagentDispenseData Data { get; } // Starlight-edit
+    public ItemStorageLocation? StorageLocation { get; } // Starlight-edit
+    public Action<ReagentDispenseData>? OnPressed; // Starlight-edit
     public Action<ItemStorageLocation>? OnEjectButtonPressed;
 
     public ReagentCardControl(ReagentInventoryItem item)
     {
         RobustXamlLoader.Load(this);
 
-        StorageLocation = item.StorageLocation;
+        Data = item.Data; // Starlight-edit
+        StorageLocation = item.Data.StorageLocation; // Starlight-edit
         ColorPanel.PanelOverride = new StyleBoxFlat { BackgroundColor = item.ReagentColor };
         ReagentNameLabel.Text = item.ReagentLabel;
-        FillLabel.Text = Loc.GetString("reagent-dispenser-window-quantity-label-text", ("quantity", item.Quantity));;
+        FillLabel.Text = Loc.GetString("reagent-dispenser-window-quantity-label-text", ("quantity", item.Generatable ? "∞" : item.Quantity));; // Starlight-edit
         EjectButtonIcon.Text = Loc.GetString("reagent-dispenser-window-eject-container-button");
+        
+        // Starlight-start
+        if (StorageLocation != null)
+            EjectButton.OnPressed += args => OnEjectButtonPressed?.Invoke(StorageLocation.Value);
+        else
+            EjectButton.Visible = false;
+        // Starlight-end
 
         if (item.Quantity == 0.0)
             MainButton.Disabled = true;
 
-        MainButton.OnPressed += args => OnPressed?.Invoke(StorageLocation);
-        EjectButton.OnPressed += args => OnEjectButtonPressed?.Invoke(StorageLocation);
+        MainButton.OnPressed += args => OnPressed?.Invoke(Data);
     }
 }
