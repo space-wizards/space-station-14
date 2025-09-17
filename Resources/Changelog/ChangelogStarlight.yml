@@ -14431,5 +14431,13 @@ Entries:
   id: 163702
   time: '2025-09-17T15:37:31.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/1637
+- author: walksanatora
+  changes:
+  - message: Fixed xenoborgis not showing up in the xenoborg managment console or
+      on xenoborg camera router
+    type: Fix
+  id: 165300
+  time: '2025-09-17T15:39:14.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1653
 Order: -1
 
