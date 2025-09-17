@@ -14378,5 +14378,21 @@ Entries:
   id: 164302
   time: '2025-09-17T15:11:33.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/1643
+- author: Conflee
+  changes:
+  - message: Added info on the Flavor Text system and explained the Background traits
+      on the Character Creation page in the Guidebook
+    type: Add
+  id: 165200
+  time: '2025-09-17T15:15:32.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1652
+- author: Conflee
+  changes:
+  - message: Added a Content Warning to the top of the New Players page in the Guidebook,
+      as a general QOL / comfort feature
+    type: Add
+  id: 165201
+  time: '2025-09-17T15:15:32.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1652
 Order: -1
 
