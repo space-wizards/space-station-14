@@ -147,8 +147,7 @@
   name: steal-target-groups-id-cards
   sprite:
     sprite: Objects/Misc/id_cards.rsi
-    layers:
-    - state: default
+    state: default
 
 - type: stealTargetGroup
   id: LAMP
