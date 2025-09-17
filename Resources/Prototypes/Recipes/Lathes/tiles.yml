@@ -363,6 +363,16 @@
 
 - type: latheRecipe
   parent: BaseFauxTileRecipe
+  id: FauxTileDarkAstroGrass
+  result: FloorTileItemDarkAstroGrass
+
+- type: latheRecipe
+  parent: BaseFauxTileRecipe
+  id: FauxTileLightAstroGrass
+  result: FloorTileItemLightAstroGrass
+
+- type: latheRecipe
+  parent: BaseFauxTileRecipe
   id: FauxTileAstroIce
   result: FloorTileItemAstroIce
 
@@ -380,6 +390,11 @@
   parent: BaseFauxTileRecipe
   id: FauxTileAstroAsteroidSandBorderless
   result: FloorTileItemAstroAsteroidSandBorderless
+
+- type: latheRecipe
+  parent: BaseFauxTileRecipe
+  id: FauxTileDesertAstroSand
+  result: FloorTileItemDesertAstroSand
 
 # Marble
 - type: latheRecipe
