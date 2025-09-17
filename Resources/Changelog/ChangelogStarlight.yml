@@ -14579,5 +14579,26 @@ Entries:
   id: 117001
   time: '2025-09-17T16:49:23.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/1170
+- author: Give Grace To Gods
+  changes:
+  - message: Thaven
+    type: Add
+  id: 144000
+  time: '2025-09-17T16:58:28.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1440
+- author: Give Grace To Gods
+  changes:
+  - message: Thaven brains can be used as borg brains directly
+    type: Tweak
+  id: 144001
+  time: '2025-09-17T16:58:28.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1440
+- author: Give Grace To Gods
+  changes:
+  - message: Thaven "no syringes" mood can now ban pills and patches
+    type: Tweak
+  id: 144002
+  time: '2025-09-17T16:58:28.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1440
 Order: -1
 
