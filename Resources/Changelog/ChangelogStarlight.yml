@@ -14558,5 +14558,12 @@ Entries:
   id: 137000
   time: '2025-09-17T16:23:05.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/1370
+- author: STARLIGHT TEAM
+  changes:
+  - message: Fixed surgery. get ripping.
+    type: Fix
+  id: 166000
+  time: '2025-09-17T16:42:13.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1660
 Order: -1
 
