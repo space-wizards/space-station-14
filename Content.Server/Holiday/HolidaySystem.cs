@@ -49,10 +49,31 @@ public sealed class HolidaySystem : SharedHolidaySystem
         }
     }
 
+    #endregion
+    #region Public API
+
+    /// <inheritdoc />
+    [PublicAPI]
+    public override void RefreshCurrentHolidays(bool announce = true)
+    {
+        RefreshCurrentHolidays(DateTime.Today, announce);
+    }
+
+    /// <inheritdoc />
+    [PublicAPI]
+    public override void RefreshCurrentHolidays(DateTime date, bool announce = true)
+    {
+        SetActiveHolidays(date);
+
+        if (announce)
+            DoGreet();
+    }
+
     /// <summary>
-    /// Function called at round start to run shenanigans (code) stored by each active holiday.
+    /// Runs shenanigans (code) stored by each active holiday.
     /// </summary>
-    private void DoCelebrate()
+    [PublicAPI]
+    public void DoCelebrate()
     {
         if (!TryGetInstance(out var singleton) || !singleton.Value.Comp.Enabled)
             return;
@@ -62,29 +83,6 @@ public sealed class HolidaySystem : SharedHolidaySystem
             var holiday = _prototypeManager.Index(holidayId);
             holiday.Celebrate();
         }
-    }
-
-    #endregion
-    #region Public API
-
-    /// <inheritdoc />
-    [PublicAPI]
-    public override void RefreshCurrentHolidays(bool announce = true)
-    {
-        SetActiveHolidays(DateTime.Today);
-
-        if (announce)
-            DoGreet();
-    }
-
-    /// <inheritdoc />
-    [PublicAPI]
-    public override void RefreshCurrentHolidays(DateTime date, bool announce = true)
-    {
-        base.RefreshCurrentHolidays(date, announce);
-
-        if (announce)
-            DoGreet();
     }
 
     #endregion

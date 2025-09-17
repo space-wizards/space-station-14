@@ -152,15 +152,12 @@ public abstract class SharedHolidaySystem : EntitySystem
 
     /// <returns> All currently active holidays (if cvar is enabled). </returns>
     [PublicAPI]
-    public bool TryGetCurrentHolidays([NotNullWhen(true)] out IEnumerable<ProtoId<HolidayPrototype>>? instance)
+    public IEnumerable<ProtoId<HolidayPrototype>> GetCurrentHolidays()
     {
-        instance = null;
-
         if (!TryGetInstance(out var singleton) || !singleton.Value.Comp.Enabled)
-            return false;
+            return [];
 
-        instance = singleton.Value.Comp.CurrentHolidays;
-        return true;
+        return singleton.Value.Comp.CurrentHolidays;
     }
 
     /// <returns> True if <paramref name="holiday"/> is currently celebrated. Always false if cvar is false. </returns>
