@@ -14600,5 +14600,12 @@ Entries:
   id: 144002
   time: '2025-09-17T16:58:28.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/1440
+- author: STARLIGHT TEAM
+  changes:
+  - message: Temporarily switch back to starlight vulpkanin stats
+    type: Tweak
+  id: 166800
+  time: '2025-09-18T19:52:00.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1668
 Order: -1
 
