@@ -1,11 +1,11 @@
 - type: construction
-  name: construction-metal-wall-name
+  name: recipes-metal-wall-name
   id: metalWall
   graph: Girder
   startNode: start
   targetNode: metalWall
   category: construction-category-structures
-  description: construction-metal-wall-description
+  description: recipes-metal-wall-desc
   # icon:
   #   sprite: _WH40K/Structures/Walls/solid.rsi
   #   state: rgeneric

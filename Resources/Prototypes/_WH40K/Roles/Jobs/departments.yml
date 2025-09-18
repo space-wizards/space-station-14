@@ -1,6 +1,6 @@
 - type: department
   id: Personnel
-  name: department-Personnel-name
+  name: department-Personnel
   description: department-Personnel-description
   color: "#ADFF2F"
   weight: -10
@@ -18,7 +18,7 @@
 
 - type: department
   id: Governance
-  name: department-Governance-name
+  name: department-Governance
   description: department-Governance-description
   color: "#334E6D"
   roles:
@@ -30,7 +30,7 @@
 
 - type: department
   id: Mechanicus
-  name: department-Mechanicus-name
+  name: department-Mechanicus
   description: department-Mechanicus-description
   color: "#800000"
   roles:
@@ -43,7 +43,7 @@
 
 - type: department
   id: Voidsmen
-  name: department-Voidsmen-name
+  name: department-Voidsmen
   description: department-Voidsmen-description
   color: "#2F4F4F"
   roles:
