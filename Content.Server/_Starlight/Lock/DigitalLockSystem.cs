@@ -2,6 +2,7 @@ using Content.Shared.Lock;
 using Content.Shared.Audio;
 using Content.Shared.Tools.Systems;
 using Content.Shared.Interaction;
+using Content.Shared._Starlight.Lock;
 using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.GameObjects;
