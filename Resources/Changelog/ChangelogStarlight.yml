@@ -14614,5 +14614,61 @@ Entries:
   id: 167000
   time: '2025-09-18T20:25:30.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/1670
+- author: Arkanic, Walksanatora
+  changes:
+  - message: Fix vulpkanin displacements, fix incorrect hair displacements
+    type: Fix
+  id: 165700
+  time: '2025-09-17T15:06:54.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1657
+- author: Arkanic, Walksanatora
+  changes:
+  - message: Fix vulpkanin wagging, fix vulpkanin growling accent
+    type: Fix
+  id: 165701
+  time: '2025-09-17T15:06:54.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1657
+- author: Arkanic, Walksanatora
+  changes:
+  - message: Fix vulpkanin eyes being wizden vulp eyes (sleepy)
+    type: Fix
+  id: 165702
+  time: '2025-09-17T15:06:54.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1657
+- author: Arkanic, Walksanatora
+  changes:
+  - message: Fix default vulpkanin markings to prevent character changes after update
+    type: Fix
+  id: 165703
+  time: '2025-09-17T15:06:54.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1657
+- author: Arkanic, Walksanatora
+  changes:
+  - message: Switch back to SL vulpkanin screams
+    type: Fix
+  id: 165704
+  time: '2025-09-17T15:06:54.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1657
+- author: Arkanic, Walksanatora
+  changes:
+  - message: Fix vulpkanin hair showing when wearing hardsuits
+    type: Fix
+  id: 165705
+  time: '2025-09-17T15:06:54.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1657
+- author: Arkanic, Walksanatora
+  changes:
+  - message: Switch back to using SL markings where duplicates exist
+    type: Tweak
+  id: 165706
+  time: '2025-09-17T15:06:54.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1657
+- author: Arkanic, Walksanatora
+  changes:
+  - message: Add missing emotes back to vulpkanin, fix creampie sprites
+    type: Fix
+  id: 165707
+  time: '2025-09-17T15:06:54.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1657
 Order: -1
 
