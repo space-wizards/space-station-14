@@ -553,7 +553,7 @@
         - to: girder
           completed:
             - !type:SpawnPrototype
-              prototype: N14IngotLead1
+              prototype: SheetSteel1
               amount: 1
             - !type:SpawnPrototype
               prototype: SheetPlasteel1

@@ -16,6 +16,4 @@
         shader: unshaded
   - type: FlashImmunity
   - type: EyeProtection
-    damageContainers:
-    - Biological
-    - Inorganic
+    protectionTime: 5

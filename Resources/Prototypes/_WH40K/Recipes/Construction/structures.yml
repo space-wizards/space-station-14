@@ -1,11 +1,11 @@
 - type: construction
-  name: metal wall
+  name: construction-metal-wall-name
   id: metalWall
   graph: Girder
   startNode: start
   targetNode: metalWall
   category: construction-category-structures
-  description: Keeps the air in and the greytide out.
+  description: construction-metal-wall-description
   # icon:
   #   sprite: _WH40K/Structures/Walls/solid.rsi
   #   state: rgeneric

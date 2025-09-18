@@ -1,6 +1,6 @@
 - type: radioChannel
   id: Hive
-  name: Улей
+  name: chat-radio-hive
   keycode: 'у'
   frequency: 1845
   color: "#E0FFFF"
