@@ -14684,5 +14684,12 @@ Entries:
   id: 134800
   time: '2025-09-17T16:07:35.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/1348
+- author: CorruptOmega
+  changes:
+  - message: CentComm Communication paper to the document printer
+    type: Add
+  id: 147200
+  time: '2025-09-17T16:21:14.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1472
 Order: -1
 
