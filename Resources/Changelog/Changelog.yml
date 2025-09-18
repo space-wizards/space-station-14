@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: ScarKy0
-  changes:
-  - message: Added "Yellowtexting" for when you don't quite complete your objectives.
-    type: Add
-  id: 8463
-  time: '2025-05-12T16:22:25.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/37360
 - author: Radezolid
   changes:
   - message: The cyborg cable module can be printed at the exosuit fabricator once
@@ -3954,3 +3947,10 @@
   id: 8974
   time: '2025-09-18T00:15:18.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/37304
+- author: Kittygyat
+  changes:
+  - message: Updated the weapon cyborg model's uplink description to be correct
+    type: Fix
+  id: 8975
+  time: '2025-09-18T00:25:32.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/40429
