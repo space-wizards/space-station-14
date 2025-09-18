@@ -36,9 +36,9 @@
   - type: Sprite
     layers:
     - state: default
-    - sprite: Interface/Misc/job_icons.rsi
+    - sprite: &icon-rsi Interface/Misc/job_icons.rsi
+      offset: &icon-offset -0.09375, 0.0625 #3 pixels left, 2 pixels up
       state: Passenger
-      offset: -0.09375, 0.0625 #3 pixels left, 2 pixels up
   - type: PresetIdCard
     job: Passenger
 
@@ -53,9 +53,9 @@
     layers:
     - state: gold
     - state: stripe_command
-    - sprite: Interface/Misc/job_icons.rsi
+    - sprite: *icon-rsi
+      offset: *icon-offset
       state: Captain
-      offset: -0.09375, 0.0625
   - type: Item
     heldPrefix: gold
   - type: PresetIdCard
@@ -78,9 +78,9 @@
     layers:
     - state: silver
     - state: stripe_service
-    - sprite: Interface/Misc/job_icons.rsi
+    - sprite: *icon-rsi
+      offset: *icon-offset
       state: HeadOfPersonnel
-      offset: -0.09375, 0.0625
   - type: Item
     heldPrefix: silver
   - type: PresetIdCard
@@ -95,9 +95,9 @@
     layers:
     - state: silver
     - state: stripe_engineering
-    - sprite: Interface/Misc/job_icons.rsi
+    - sprite: *icon-rsi
+      offset: *icon-offset
       state: ChiefEngineer
-      offset: -0.09375, 0.0625
   - type: Item
     heldPrefix: silver
   - type: PresetIdCard
@@ -112,9 +112,9 @@
     layers:
     - state: silver
     - state: stripe_medical
-    - sprite: Interface/Misc/job_icons.rsi
+    - sprite: *icon-rsi
+      offset: *icon-offset
       state: ChiefMedicalOfficer
-      offset: -0.09375, 0.0625
   - type: Item
     heldPrefix: silver
   - type: PresetIdCard
@@ -129,9 +129,9 @@
     layers:
     - state: silver
     - state: stripe_science
-    - sprite: Interface/Misc/job_icons.rsi
+    - sprite: *icon-rsi
+      offset: *icon-offset
       state: ResearchDirector
-      offset: -0.09375, 0.0625
   - type: Item
     heldPrefix: silver
   - type: PresetIdCard
@@ -146,9 +146,9 @@
     layers:
     - state: silver
     - state: stripe_security
-    - sprite: Interface/Misc/job_icons.rsi
+    - sprite: *icon-rsi
+      offset: *icon-offset
       state: HeadOfSecurity
-      offset: -0.09375, 0.0625
   - type: Item
     heldPrefix: silver
   - type: PresetIdCard
@@ -163,9 +163,9 @@
     layers:
     - state: silver
     - state: stripe_supply
-    - sprite: Interface/Misc/job_icons.rsi
+    - sprite: *icon-rsi
+      offset: *icon-offset
       state: QuarterMaster
-      offset: -0.09375, 0.0625
   - type: Item
     heldPrefix: silver
   - type: PresetIdCard
@@ -174,19 +174,19 @@
 #Engineering
 
 - type: entity
-  parent: PassengerIDCard
+  parent: IDCardStandard
   id: TechnicalAssistantIDCard
   name: technical assistant ID card
   components:
-  - type: PresetIdCard
-    job: TechnicalAssistant
   - type: Sprite
     layers:
     - state: default
     - state: stripe_engineering
-    - sprite: Interface/Misc/job_icons.rsi
+    - sprite: *icon-rsi
+      offset: *icon-offset
       state: TechnicalAssistant
-      offset: -0.09375, 0.0625
+  - type: PresetIdCard
+    job: TechnicalAssistant
 
 - type: entity
   parent: IDCardStandard
@@ -197,9 +197,9 @@
     layers:
     - state: default
     - state: stripe_engineering
-    - sprite: Interface/Misc/job_icons.rsi
+    - sprite: *icon-rsi
+      offset: *icon-offset
       state: StationEngineer
-      offset: -0.09375, 0.0625
   - type: PresetIdCard
     job: StationEngineer
 
@@ -212,9 +212,9 @@
     layers:
     - state: default
     - state: stripe_engineering
-    - sprite: Interface/Misc/job_icons.rsi
+    - sprite: *icon-rsi
+      offset: *icon-offset
       state: AtmosphericTechnician
-      offset: -0.09375, 0.0625
   - type: PresetIdCard
     job: AtmosphericTechnician
 
@@ -227,26 +227,26 @@
     layers:
     - state: default
     - state: stripe_engineering
-    - sprite: Interface/Misc/job_icons.rsi
+    - sprite: *icon-rsi
+      offset: *icon-offset
       state: SeniorEngineer
-      offset: -0.09375, 0.0625
 
 #Medical
 
 - type: entity
-  parent: PassengerIDCard
+  parent: IDCardStandard
   id: MedicalInternIDCard
   name: medical intern ID card
   components:
-  - type: PresetIdCard
-    job: MedicalIntern
   - type: Sprite
     layers:
     - state: default
     - state: stripe_medical
-    - sprite: Interface/Misc/job_icons.rsi
+    - sprite: *icon-rsi
+      offset: *icon-offset
       state: MedicalIntern
-      offset: -0.09375, 0.0625
+  - type: PresetIdCard
+    job: MedicalIntern
 
 - type: entity
   parent: IDCardStandard
@@ -257,9 +257,9 @@
     layers:
     - state: default
     - state: stripe_medical
-    - sprite: Interface/Misc/job_icons.rsi
+    - sprite: *icon-rsi
+      offset: *icon-offset
       state: MedicalDoctor
-      offset: -0.09375, 0.0625
   - type: PresetIdCard
     job: MedicalDoctor
 
@@ -272,9 +272,9 @@
     layers:
     - state: default
     - state: stripe_medical
-    - sprite: Interface/Misc/job_icons.rsi
+    - sprite: *icon-rsi
+      offset: *icon-offset
       state: Paramedic
-      offset: -0.09375, 0.0625
   - type: PresetIdCard
     job: Paramedic
 
@@ -287,9 +287,9 @@
     layers:
     - state: default
     - state: stripe_medical
-    - sprite: Interface/Misc/job_icons.rsi
+    - sprite: *icon-rsi
+      offset: *icon-offset
       state: Chemist
-      offset: -0.09375, 0.0625
   - type: PresetIdCard
     job: Chemist
 
@@ -302,9 +302,9 @@
     layers:
     - state: default
     - state: stripe_medical
-    - sprite: Interface/Misc/job_icons.rsi
+    - sprite: *icon-rsi
+      offset: *icon-offset
       state: Psychologist
-      offset: -0.09375, 0.0625
   - type: PresetIdCard
     job: Psychologist
 
@@ -317,26 +317,26 @@
     layers:
     - state: default
     - state: stripe_medical
-    - sprite: Interface/Misc/job_icons.rsi
+    - sprite: *icon-rsi
+      offset: *icon-offset
       state: SeniorPhysician
-      offset: -0.09375, 0.0625
 
 #Science
 
 - type: entity
-  parent: PassengerIDCard
+  parent: IDCardStandard
   id: ResearchAssistantIDCard
   name: research assistant ID card
   components:
-  - type: PresetIdCard
-    job: ResearchAssistant
   - type: Sprite
     layers:
     - state: default
     - state: stripe_science
-    - sprite: Interface/Misc/job_icons.rsi
+    - sprite: *icon-rsi
+      offset: *icon-offset
       state: ResearchAssistant
-      offset: -0.09375, 0.0625
+  - type: PresetIdCard
+    job: ResearchAssistant
 
 - type: entity
   parent: IDCardStandard
@@ -347,9 +347,9 @@
     layers:
     - state: default
     - state: stripe_science
-    - sprite: Interface/Misc/job_icons.rsi
+    - sprite: *icon-rsi
+      offset: *icon-offset
       state: Scientist
-      offset: -0.09375, 0.0625
   - type: PresetIdCard
     job: Scientist
 
@@ -362,26 +362,26 @@
     layers:
     - state: default
     - state: stripe_science
-    - sprite: Interface/Misc/job_icons.rsi
+    - sprite: *icon-rsi
+      offset: *icon-offset
       state: SeniorResearcher
-      offset: -0.09375, 0.0625
 
 #Security
 
 - type: entity
-  parent: PassengerIDCard
+  parent: IDCardStandard
   id: SecurityCadetIDCard
   name: security cadet ID card
   components:
-  - type: PresetIdCard
-    job: SecurityCadet
   - type: Sprite
     layers:
     - state: default
     - state: stripe_security
-    - sprite: Interface/Misc/job_icons.rsi
+    - sprite: *icon-rsi
+      offset: *icon-offset
       state: SecurityCadet
-      offset: -0.09375, 0.0625
+  - type: PresetIdCard
+    job: SecurityCadet
 
 - type: entity
   parent: IDCardStandard
@@ -392,9 +392,9 @@
     layers:
     - state: default
     - state: stripe_security
-    - sprite: Interface/Misc/job_icons.rsi
+    - sprite: *icon-rsi
+      offset: *icon-offset
       state: SecurityOfficer
-      offset: -0.09375, 0.0625
   - type: PresetIdCard
     job: SecurityOfficer
 
@@ -407,9 +407,9 @@
     layers:
     - state: default
     - state: stripe_security
-    - sprite: Interface/Misc/job_icons.rsi
+    - sprite: *icon-rsi
+      offset: *icon-offset
       state: Warden
-      offset: -0.09375, 0.0625
   - type: PresetIdCard
     job: Warden
 
@@ -422,9 +422,9 @@
     layers:
     - state: default
     - state: stripe_security
-    - sprite: Interface/Misc/job_icons.rsi
+    - sprite: *icon-rsi
+      offset: *icon-offset
       state: Detective
-      offset: -0.09375, 0.0625
   - type: PresetIdCard
     job: Detective
 
@@ -437,9 +437,9 @@
     layers:
     - state: default
     - state: stripe_security
-    - sprite: Interface/Misc/job_icons.rsi
+    - sprite: *icon-rsi
+      offset: *icon-offset
       state: Brigmedic
-      offset: -0.09375, 0.0625
 
 - type: entity
   parent: SecurityIDCard
@@ -450,26 +450,26 @@
     layers:
     - state: default
     - state: stripe_security
-    - sprite: Interface/Misc/job_icons.rsi
+    - sprite: *icon-rsi
+      offset: *icon-offset
       state: SeniorOfficer
-      offset: -0.09375, 0.0625
 
 #Service
 
 - type: entity
-  parent: PassengerIDCard
+  parent: IDCardStandard
   id: ServiceWorkerIDCard
   name: service worker ID card
   components:
-  - type: PresetIdCard
-    job: ServiceWorker
   - type: Sprite
     layers:
     - state: default
     - state: stripe_service
-    - sprite: Interface/Misc/job_icons.rsi
+    - sprite: *icon-rsi
+      offset: *icon-offset
       state: ServiceWorker
-      offset: -0.09375, 0.0625
+  - type: PresetIdCard
+    job: ServiceWorker
 
 - type: entity
   parent: IDCardStandard
@@ -480,9 +480,9 @@
     layers:
     - state: default
     - state: stripe_clown
-    - sprite: Interface/Misc/job_icons.rsi
+    - sprite: *icon-rsi
+      offset: *icon-offset
       state: Clown
-      offset: -0.09375, 0.0625
   - type: PresetIdCard
     job: Clown
 
@@ -495,9 +495,9 @@
     layers:
     - state: default
     - state: stripe_mime
-    - sprite: Interface/Misc/job_icons.rsi
+    - sprite: *icon-rsi
+      offset: *icon-offset
       state: Mime
-      offset: -0.09375, 0.0625
   - type: PresetIdCard
     job: Mime
 
@@ -510,9 +510,9 @@
     layers:
     - state: default
     - state: stripe_musician
-    - sprite: Interface/Misc/job_icons.rsi
+    - sprite: *icon-rsi
+      offset: *icon-offset
       state: Musician
-      offset: -0.09375, 0.0625
   - type: PresetIdCard
     job: Musician
 
@@ -525,9 +525,9 @@
     layers:
     - state: default
     - state: stripe_service
-    - sprite: Interface/Misc/job_icons.rsi
+    - sprite: *icon-rsi
+      offset: *icon-offset
       state: Chaplain
-      offset: -0.09375, 0.0625
   - type: PresetIdCard
     job: Chaplain
 
@@ -540,9 +540,9 @@
     layers:
     - state: default
     - state: stripe_service
-    - sprite: Interface/Misc/job_icons.rsi
+    - sprite: *icon-rsi
+      offset: *icon-offset
       state: Janitor
-      offset: -0.09375, 0.0625
   - type: PresetIdCard
     job: Janitor
 
@@ -555,9 +555,9 @@
     layers:
     - state: default
     - state: stripe_service
-    - sprite: Interface/Misc/job_icons.rsi
+    - sprite: *icon-rsi
+      offset: *icon-offset
       state: Bartender
-      offset: -0.09375, 0.0625
   - type: PresetIdCard
     job: Bartender
 
@@ -570,9 +570,9 @@
     layers:
     - state: default
     - state: stripe_service
-    - sprite: Interface/Misc/job_icons.rsi
+    - sprite: *icon-rsi
+      offset: *icon-offset
       state: Bartender
-      offset: -0.09375, 0.0625
   - type: PresetIdCard
     job: Bartender
     name: Pun Pun
@@ -589,9 +589,9 @@
     layers:
     - state: default
     - state: stripe_service
-    - sprite: Interface/Misc/job_icons.rsi
+    - sprite: *icon-rsi
+      offset: *icon-offset
       state: Chef
-      offset: -0.09375, 0.0625
   - type: PresetIdCard
     job: Chef
 
@@ -604,9 +604,9 @@
     layers:
     - state: default
     - state: stripe_service
-    - sprite: Interface/Misc/job_icons.rsi
+    - sprite: *icon-rsi
+      offset: *icon-offset
       state: Botanist
-      offset: -0.09375, 0.0625
   - type: PresetIdCard
     job: Botanist
 
@@ -619,9 +619,9 @@
     layers:
     - state: default
     - state: stripe_service
-    - sprite: Interface/Misc/job_icons.rsi
+    - sprite: *icon-rsi
+      offset: *icon-offset
       state: Librarian
-      offset: -0.09375, 0.0625
   - type: PresetIdCard
     job: Librarian
 
@@ -634,9 +634,9 @@
     layers:
     - state: default
     - state: stripe_service
-    - sprite: Interface/Misc/job_icons.rsi
+    - sprite: *icon-rsi
+      offset: *icon-offset
       state: Lawyer
-      offset: -0.09375, 0.0625
   - type: PresetIdCard
     job: Lawyer
 
@@ -649,9 +649,9 @@
     layers:
     - state: default
     - state: stripe_service
-    - sprite: Interface/Misc/job_icons.rsi
+    - sprite: *icon-rsi
+      offset: *icon-offset
       state: Reporter
-      offset: -0.09375, 0.0625
   - type: PresetIdCard
     job: Reporter
 
@@ -664,9 +664,9 @@
     layers:
     - state: default
     - state: stripe_service
-    - sprite: Interface/Misc/job_icons.rsi
+    - sprite: *icon-rsi
+      offset: *icon-offset
       state: Boxer
-      offset: -0.09375, 0.0625
   - type: PresetIdCard
     job: Boxer
 
@@ -679,9 +679,9 @@
     layers:
     - state: default
     - state: stripe_service
-    - sprite: Interface/Misc/job_icons.rsi
+    - sprite: *icon-rsi
+      offset: *icon-offset
       state: Zookeeper
-      offset: -0.09375, 0.0625
   - type: PresetIdCard
     job: Zookeeper
 
@@ -696,9 +696,9 @@
     layers:
     - state: default
     - state: stripe_supply
-    - sprite: Interface/Misc/job_icons.rsi
+    - sprite: *icon-rsi
+      offset: *icon-offset
       state: CargoTechnician
-      offset: -0.09375, 0.0625
   - type: PresetIdCard
     job: CargoTechnician
 
@@ -711,9 +711,9 @@
     layers:
     - state: default
     - state: stripe_supply
-    - sprite: Interface/Misc/job_icons.rsi
+    - sprite: *icon-rsi
+      offset: *icon-offset
       state: ShaftMiner
-      offset: -0.09375, 0.0625
   - type: PresetIdCard
     job: SalvageSpecialist
 
@@ -728,9 +728,9 @@
   - type: Sprite
     layers:
     - state: orange
-    - sprite: Interface/Misc/job_icons.rsi
+    - sprite: *icon-rsi
+      offset: *icon-offset
       state: Prisoner
-      offset: -0.09375, 0.0625
   - type: Item
     heldPrefix: orange
   - type: Access
@@ -766,9 +766,9 @@
     layers:
     - state: default
     - state: stripe_cluwne
-    - sprite: Interface/Misc/job_icons.rsi
+    - sprite: *icon-rsi
+      offset: *icon-offset
       state: Cluwne
-      offset: -0.09375, 0.0625
   - type: IdCard
     jobTitle: job-title-cluwne
     jobIcon: JobIconCluwne
@@ -782,9 +782,9 @@
   - type: Sprite
     layers:
     - state: default
-    - sprite: Interface/Misc/job_icons.rsi
+    - sprite: *icon-rsi
+      offset: *icon-offset
       state: Visitor
-      offset: -0.09375, 0.0625
   - type: IdCard
     jobTitle: job-title-visitor
     jobIcon: JobIconVisitor
@@ -808,9 +808,9 @@
   - type: Sprite
     layers:
     - state: default
-    - sprite: Interface/Misc/job_icons.rsi
+    - sprite: *icon-rsi
+      offset: *icon-offset
       state: Passenger
-      offset: -0.09375, 0.0625
   - type: AgentIDCard
   - type: UIRequiresLock
   - type: ActivatableUI
@@ -851,9 +851,9 @@
   - type: Sprite
     layers:
     - state: syndie
-    - sprite: Interface/Misc/job_icons.rsi
+    - sprite: *icon-rsi
+      offset: *icon-offset
       state: Syndicate
-      offset: -0.09375, 0.0625
   - type: Access
     tags:
     - NuclearOperative
@@ -880,9 +880,11 @@
   - type: Sprite
     layers:
     - state: wizard
-    - sprite: Interface/Misc/job_icons.rsi
+    - sprite: *icon-rsi
+      offset: *icon-offset
       state: Wizard
-      offset: -0.09375, 0.0625
+  - type: Item
+    heldPrefix: green
   - type: Access
     tags:
     - Wizard
@@ -900,9 +902,9 @@
     layers:
     - state: centcom
     - state: stripe_centcom
-    - sprite: Interface/Misc/job_icons.rsi
+    - sprite: *icon-rsi
+      offset: *icon-offset
       state: Nanotrasen
-      offset: -0.09375, 0.0625
   - type: Item
     heldPrefix: blue
   - type: PresetIdCard
@@ -917,13 +919,13 @@
     layers:
     - state: gold
     - state: stripe_centcom
-    - sprite: Interface/Misc/job_icons.rsi
+    - sprite: *icon-rsi
+      offset: *icon-offset
       state: Nanotrasen
-      offset: -0.09375, 0.0625
-  - type: PresetIdCard
-    job: ERTLeader
   - type: Item
     heldPrefix: gold
+  - type: PresetIdCard
+    job: ERTLeader
 
 - type: entity
   parent: IDCardStandard
@@ -934,13 +936,13 @@
     layers:
     - state: centcom
     - state: stripe_service
-    - sprite: Interface/Misc/job_icons.rsi
+    - sprite: *icon-rsi
+      offset: *icon-offset
       state: ERTChaplain
-      offset: -0.09375, 0.0625
-  - type: PresetIdCard
-    job: ERTChaplain
   - type: Item
     heldPrefix: blue
+  - type: PresetIdCard
+    job: ERTChaplain
 
 - type: entity
   parent: IDCardStandard
@@ -951,9 +953,11 @@
     layers:
     - state: centcom
     - state: stripe_engineering
-    - sprite: Interface/Misc/job_icons.rsi
+    - sprite: *icon-rsi
+      offset: *icon-offset
       state: ERTEngineer
-      offset: -0.09375, 0.0625
+  - type: Item
+    heldPrefix: blue
   - type: PresetIdCard
     job: ERTEngineer
 
@@ -966,9 +970,11 @@
     layers:
     - state: centcom
     - state: stripe_service
-    - sprite: Interface/Misc/job_icons.rsi
+    - sprite: *icon-rsi
+      offset: *icon-offset
       state: ERTJanitor
-      offset: -0.09375, 0.0625
+  - type: Item
+    heldPrefix: blue
   - type: PresetIdCard
     job: ERTJanitor
 
@@ -981,9 +987,11 @@
     layers:
     - state: centcom
     - state: stripe_medical
-    - sprite: Interface/Misc/job_icons.rsi
+    - sprite: *icon-rsi
+      offset: *icon-offset
       state: ERTMedical
-      offset: -0.09375, 0.0625
+  - type: Item
+    heldPrefix: blue
   - type: PresetIdCard
     job: ERTMedical
 
@@ -996,9 +1004,11 @@
     layers:
     - state: centcom
     - state: stripe_security
-    - sprite: Interface/Misc/job_icons.rsi
+    - sprite: *icon-rsi
+      offset: *icon-offset
       state: ERTSecurity
-      offset: -0.09375, 0.0625
+  - type: Item
+    heldPrefix: blue
   - type: PresetIdCard
     job: ERTSecurity
 
@@ -1011,16 +1021,14 @@
     layers:
     - state: syndie #the ss13 base sprite of the death squad ID was the same as the syndicate ID
     - state: stripe_centcom
-    - sprite: Interface/Misc/job_icons.rsi
+    - sprite: *icon-rsi
+      offset: *icon-offset
       state: DeathSquad
-      offset: -0.09375, 0.0625
-  - type: Item
-    heldPrefix: blue
   - type: PresetIdCard
     job: DeathSquad
 
 - type: entity
-  parent: CentcomIDCard
+  parent: IDCardStandard
   id: CBURNIDcard
   name: CBURN ID card
   suffix: CBURN
@@ -1029,9 +1037,9 @@
     layers:
     - state: centcom
     - state: stripe_centcom
-    - sprite: Interface/Misc/job_icons.rsi
+    - sprite: *icon-rsi
+      offset: *icon-offset
       state: CBURN
-      offset: -0.09375, 0.0625
   - type: Item
     heldPrefix: blue
   - type: PresetIdCard
@@ -1048,9 +1056,9 @@
     sprite: Objects/Misc/id_cards.rsi
     layers:
     - state: admin
-    - sprite: Interface/Misc/job_icons.rsi
+    - sprite: *icon-rsi
+      offset: *icon-offset
       state: Admin
-      offset: -0.09375, 0.0625
   - type: Clothing
     sprite: Objects/Misc/id_cards.rsi
   - type: Item
