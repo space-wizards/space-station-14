@@ -377,3 +377,9 @@
   name: guide-entry-rules-ban-durations
   ruleEntry: true
   text: "/ServerInfo/Guidebook/ServerRules/BanDurations.xml"
+
+- type: guideEntry
+  id: CrimsonRules
+  name: guide-entry-rules-crimson
+  ruleEntry: true
+  text: "/ServerInfo/Guidebook/ServerRules/CrimsonRules.xml"
