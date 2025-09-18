@@ -198,7 +198,7 @@
     sprite: Clothing/Head/Misc/fancycrown.rsi
   - type: TypingIndicatorClothing
     proto: regal
-  - type: MobPrice
+  - type: StaticPrice
     price: 3000
   - type: AddAccentClothing
     accent: MobsterAccent
@@ -320,6 +320,7 @@
     solution: drink
     delay: 0.5
     forceFeedDelay: 1.5
+    utensil: Spoon
   - type: FlavorProfile
     flavors:
       - water
