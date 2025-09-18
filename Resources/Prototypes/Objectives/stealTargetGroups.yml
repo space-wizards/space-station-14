@@ -257,13 +257,6 @@
     state: cpuboard
 
 - type: stealTargetGroup
-  id: BartenderShotgun
-  name: steal-target-groups-bartender-shotgun
-  sprite:
-    sprite: Objects/Weapons/Guns/Shotguns/db_shotgun.rsi
-    state: icon
-
-- type: stealTargetGroup
   id: ClothingEyesHudBeer
   name: steal-target-groups-clothing-eyes-hud-beer
   sprite:
@@ -297,13 +290,6 @@
   sprite:
     sprite: Objects/Devices/cartridge.rsi
     state: cart-sec
-
-- type: stealTargetGroup
-  id: DeckardSteal
-  name: steal-target-groups-deckard
-  sprite:
-    sprite: Objects/Weapons/Guns/Revolvers/deckard.rsi
-    state: base
 
 - type: stealTargetGroup
   id: CaptainSword
