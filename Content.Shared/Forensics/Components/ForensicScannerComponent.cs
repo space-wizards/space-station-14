@@ -1,43 +1,45 @@
 using System.Threading;
+using Content.Server.Forensics;
 using Robust.Shared.Audio;
+using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
-namespace Content.Server.Forensics
+namespace Content.Shared.Forensics.Components
 {
-    [RegisterComponent]
+    [RegisterComponent, NetworkedComponent, AutoGenerateComponentState, AutoGenerateComponentPause]
     public sealed partial class ForensicScannerComponent : Component
     {
-        public CancellationTokenSource? CancelToken;
 
         /// <summary>
         /// A list of fingerprint GUIDs that the forensic scanner found from the <see cref="ForensicsComponent"/> on an entity.
         /// </summary>
-        [ViewVariables(VVAccess.ReadOnly), DataField("fingerprints")]
+        [ViewVariables, DataField]
         public List<string> Fingerprints = new();
 
         /// <summary>
         /// A list of glove fibers that the forensic scanner found from the <see cref="ForensicsComponent"/> on an entity.
         /// </summary>
-        [ViewVariables(VVAccess.ReadOnly), DataField("fibers")]
+        [ViewVariables, DataField]
         public List<string> Fibers = new();
 
         /// <summary>
-        /// DNA that the forensic scanner found from the <see cref="DNAComponent"/> on an entity.
+        /// DNA that the forensic scanner found from the <see cref="DnaComponent"/> on an entity.
         /// </summary>
-        [ViewVariables(VVAccess.ReadOnly), DataField("dnas")]
+        [ViewVariables, DataField]
         public List<string> TouchDNAs = new();
 
         /// <summary>
         /// DNA that the forensic scanner found from the solution containers in an entity.
         /// </summary>
-        [ViewVariables(VVAccess.ReadOnly), DataField]
+        [ViewVariables, DataField]
         public List<string> SolutionDNAs = new();
 
         /// <summary>
         /// Residue that the forensic scanner found from the <see cref="ForensicsComponent"/> on an entity.
         /// </summary>
-        [ViewVariables(VVAccess.ReadOnly), DataField("residues")]
+        [ViewVariables, DataField]
         public List<string> Residues = new();
 
         /// <summary>
@@ -46,51 +48,51 @@ namespace Content.Server.Forensics
         /// <remarks>
         /// This will be used for the title of the printout and displayed to players.
         /// </remarks>
-        [ViewVariables(VVAccess.ReadOnly)]
+        [ViewVariables, DataField]
         public string LastScannedName = string.Empty;
 
         /// <summary>
         /// When will the scanner be ready to print again?
         /// </summary>
-        [ViewVariables(VVAccess.ReadOnly)]
+        [DataField(customTypeSerializer: typeof(TimeOffsetSerializer)), AutoPausedField, AutoNetworkedField]
         public TimeSpan PrintReadyAt = TimeSpan.Zero;
 
         /// <summary>
         /// The time (in seconds) that it takes to scan an entity.
         /// </summary>
-        [DataField("scanDelay")]
+        [DataField, AutoNetworkedField]
         public float ScanDelay = 3.0f;
 
         /// <summary>
         /// How often can the scanner print out reports?
         /// </summary>
-        [DataField("printCooldown")]
+        [DataField, AutoNetworkedField]
         public TimeSpan PrintCooldown = TimeSpan.FromSeconds(5);
 
         /// <summary>
         /// The sound that's played when there's a match between a scan and an
         /// inserted forensic pad.
         /// </summary>
-        [DataField("soundMatch")]
+        [DataField, AutoNetworkedField]
         public SoundSpecifier SoundMatch = new SoundPathSpecifier("/Audio/Machines/Nuke/angry_beep.ogg");
 
         /// <summary>
         /// The sound that's played when there's no match between a scan and an
         /// inserted forensic pad.
         /// </summary>
-        [DataField("soundNoMatch")]
+        [DataField, AutoNetworkedField]
         public SoundSpecifier SoundNoMatch = new SoundPathSpecifier("/Audio/Machines/airlock_deny.ogg");
 
         /// <summary>
         /// The sound that's played when the scanner prints off a report.
         /// </summary>
-        [DataField("soundPrint")]
+        [DataField, AutoNetworkedField]
         public SoundSpecifier SoundPrint = new SoundPathSpecifier("/Audio/Machines/short_print_and_rip.ogg");
 
         /// <summary>
         /// What the machine will print
         /// </summary>
-        [DataField("machineOutput", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
+        [DataField(customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>)), AutoNetworkedField]
         public string MachineOutput = "ForensicReportPaper";
 
     }

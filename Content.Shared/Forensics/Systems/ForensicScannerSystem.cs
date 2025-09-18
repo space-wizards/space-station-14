@@ -1,9 +1,7 @@
 using System.Linq;
 using System.Text;
-using Content.Server.Popups;
 using Content.Shared.UserInterface;
 using Content.Shared.DoAfter;
-using Content.Shared.Fluids.Components;
 using Content.Shared.Forensics;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Interaction;
@@ -11,11 +9,11 @@ using Content.Shared.Paper;
 using Content.Shared.Verbs;
 using Content.Shared.Tag;
 using Robust.Shared.Audio.Systems;
-using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
-using Robust.Shared.Player;
 using Robust.Shared.Timing;
-using Content.Server.Chemistry.Containers.EntitySystems;
+using Content.Shared.Forensics.Components;
+using Content.Shared.Forensics.Systems;
+using Content.Shared.Popups;
 using Robust.Shared.Prototypes;
 // todo: remove this stinky LINQy
 
@@ -25,8 +23,8 @@ namespace Content.Server.Forensics
     {
         [Dependency] private readonly IGameTiming _gameTiming = default!;
         [Dependency] private readonly SharedDoAfterSystem _doAfterSystem = default!;
-        [Dependency] private readonly UserInterfaceSystem _uiSystem = default!;
-        [Dependency] private readonly PopupSystem _popupSystem = default!;
+        [Dependency] private readonly SharedUserInterfaceSystem _uiSystem = default!;
+        [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
         [Dependency] private readonly PaperSystem _paperSystem = default!;
         [Dependency] private readonly SharedHandsSystem _handsSystem = default!;
         [Dependency] private readonly SharedAudioSystem _audioSystem = default!;
@@ -98,6 +96,7 @@ namespace Content.Server.Forensics
                 }
 
                 scanner.LastScannedName = MetaData(args.Args.Target.Value).EntityName;
+                Dirty(uid, component);
             }
 
             OpenUserInterface(args.Args.User, (uid, scanner));
@@ -117,7 +116,7 @@ namespace Content.Server.Forensics
 
         private void OnUtilityVerb(EntityUid uid, ForensicScannerComponent component, GetVerbsEvent<UtilityVerb> args)
         {
-            if (!args.CanInteract || !args.CanAccess || component.CancelToken != null)
+            if (!args.CanInteract || !args.CanAccess)
                 return;
 
             var verb = new UtilityVerb()
@@ -135,7 +134,7 @@ namespace Content.Server.Forensics
 
         private void OnAfterInteract(EntityUid uid, ForensicScannerComponent component, AfterInteractEvent args)
         {
-            if (component.CancelToken != null || args.Target == null || !args.CanReach)
+            if (args.Target == null || !args.CanReach)
                 return;
 
             StartScan(uid, component, args.User, args.Target.Value);
@@ -153,8 +152,8 @@ namespace Content.Server.Forensics
             {
                 if (fiber == pad.Sample)
                 {
-                    _audioSystem.PlayPvs(component.SoundMatch, uid);
-                    _popupSystem.PopupEntity(Loc.GetString("forensic-scanner-match-fiber"), uid, args.User);
+                    _audioSystem.PlayPredicted(component.SoundMatch, uid, args.User);
+                    _popupSystem.PopupClient(Loc.GetString("forensic-scanner-match-fiber"), uid, args.User);
                     return;
                 }
             }
@@ -163,14 +162,14 @@ namespace Content.Server.Forensics
             {
                 if (fingerprint == pad.Sample)
                 {
-                    _audioSystem.PlayPvs(component.SoundMatch, uid);
-                    _popupSystem.PopupEntity(Loc.GetString("forensic-scanner-match-fingerprint"), uid, args.User);
+                    _audioSystem.PlayPredicted(component.SoundMatch, uid, args.User);
+                    _popupSystem.PopupClient(Loc.GetString("forensic-scanner-match-fingerprint"), uid, args.User);
                     return;
                 }
             }
 
-            _audioSystem.PlayPvs(component.SoundNoMatch, uid);
-            _popupSystem.PopupEntity(Loc.GetString("forensic-scanner-match-none"), uid, args.User);
+            _audioSystem.PlayPredicted(component.SoundNoMatch, uid, args.User);
+            _popupSystem.PopupClient(Loc.GetString("forensic-scanner-match-none"), uid, args.User);
         }
 
         private void OnBeforeActivatableUIOpen(EntityUid uid, ForensicScannerComponent component, BeforeActivatableUIOpenEvent args)
@@ -193,12 +192,12 @@ namespace Content.Server.Forensics
             {
                 // This shouldn't occur due to the UI guarding against it, but
                 // if it does, tell the user why nothing happened.
-                _popupSystem.PopupEntity(Loc.GetString("forensic-scanner-printer-not-ready"), uid, user);
+                _popupSystem.PopupClient(Loc.GetString("forensic-scanner-printer-not-ready"), uid, user);
                 return;
             }
 
             // Spawn a piece of paper.
-            var printed = Spawn(component.MachineOutput, Transform(uid).Coordinates);
+            var printed = PredictedSpawnAtPosition(component.MachineOutput, Transform(uid).Coordinates);
             _handsSystem.PickupOrDrop(args.Actor, printed, checkActionBlocker: false);
 
             if (!TryComp<PaperComponent>(printed, out var paperComp))
@@ -243,7 +242,7 @@ namespace Content.Server.Forensics
             }
 
             _paperSystem.SetContent((printed, paperComp), text.ToString());
-            _audioSystem.PlayPvs(component.SoundPrint, uid,
+            _audioSystem.PlayPredicted(component.SoundPrint, uid, args.Actor,
                 AudioParams.Default
                 .WithVariation(0.25f)
                 .WithVolume(3f)
@@ -251,6 +250,7 @@ namespace Content.Server.Forensics
                 .WithMaxDistance(4.5f));
 
             component.PrintReadyAt = _gameTiming.CurTime + component.PrintCooldown;
+            Dirty(uid, component);
         }
 
         private void OnClear(EntityUid uid, ForensicScannerComponent component, ForensicScannerClearMessage args)
@@ -261,6 +261,7 @@ namespace Content.Server.Forensics
             component.SolutionDNAs = new();
             component.LastScannedName = string.Empty;
 
+            Dirty(uid, component);
             UpdateUserInterface(uid, component);
         }
     }
