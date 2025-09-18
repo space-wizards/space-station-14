@@ -1056,7 +1056,7 @@
   components:
   - type: Sprite
     layers:
-    - state: syndie #the ss13 base sprite of the death squad ID was the same as the syndicate ID
+    - state: black
     - state: stripe_centcom
     - sprite: *icon-rsi
       offset: *icon-offset
