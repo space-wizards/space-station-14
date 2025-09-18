@@ -1,372 +1,166 @@
-# These can still be used as containers
+# File for containers like bottles or milk jugs that are empty
+# TODO these prototypes have ambiguous names and should be renamed to match their filled versions, with "Full" replaced by "Empty"
+
+# When used as the first parent, this empties a bottle's reagent and spawns it already opened
 - type: entity
-  name: base empty bottle
+  abstract: true
+  parent: [ DrinkBaseOpenableOpen, DrinkBaseEmptyTrash ]
   id: DrinkBottleBaseEmpty
-  parent: BaseItem
-  abstract: true
-  description: An empty bottle.
-  suffix: Empty
   components:
-  - type: Sprite
-    state: icon
-  - type: Item
-    size: Normal
   - type: SolutionContainerManager
     solutions:
       drink:
         maxVol: 100
-  - type: SolutionTransfer
-    canChangeTransferAmount: true
-    maxTransferAmount: 5
-  - type: Drink
-  - type: MeleeWeapon
-    soundNoDamage:
-      path: "/Audio/Effects/Fluids/splat.ogg"
-    damage:
-      types:
-        Blunt: 0
-  - type: MixableSolution
-    solution: drink
-  - type: Spillable
-    solution: drink
-  - type: FitsInDispenser
-    solution: drink
-  - type: DrawableSolution
-    solution: drink
-  - type: RefillableSolution
-    solution: drink
-  - type: DrainableSolution
-    solution: drink
-  - type: UserInterface
-    interfaces:
-      enum.TransferAmountUiKey.Key:
-        type: TransferAmountBoundUserInterface
-  - type: DamageOnLand
-    damage:
-      types:
-        Blunt: 5
-  - type: DamageOtherOnHit
-    damage:
-      types:
-        Blunt: 4
-  - type: Damageable
-    damageContainer: Inorganic
-  - type: Destructible
-    thresholds:
-    - trigger:
-        !type:DamageTrigger
-        damage: 5
-      behaviors:
-      - !type:PlaySoundBehavior
-        sound:
-          collection: GlassBreak
-      - !type:SpillBehavior { }
-      - !type:SpawnEntitiesBehavior
-        spawn:
-          BrokenBottle:
-            min: 1
-            max: 1
-        transferForensics: true
-      - !type:DoActsBehavior
-        acts: [ "Destruction" ]
   - type: Tag
     tags:
+    - DrinkBottle
     - Trash
-  - type: PhysicalComposition
-    materialComposition:
-      Glass: 100
-  - type: SpaceGarbage
-  - type: DnaSubstanceTrace
 
 - type: entity
-  name: base empty bottle
+  abstract: true
+  parent: [ DrinkBaseOpenableOpen, DrinkBaseEmptyTrash ]
   id: DrinkBottleBaseSmallEmpty
-  parent: DrinkBottleBaseEmpty
-  abstract: true
   components:
-  - type: Item
-    size: Small
   - type: SolutionContainerManager
     solutions:
       drink:
         maxVol: 50
-
-- type: entity
-  name: base empty carton
-  id: DrinkCartonBaseEmpty
-  parent: BaseItem
-  abstract: true
-  description: An empty carton.
-  suffix: Empty
-  components:
-  - type: Sprite
-    state: icon
-  - type: SolutionContainerManager
-    solutions:
-      drink:
-        maxVol: 50
-  - type: MixableSolution
-    solution: drink
-  - type: SolutionTransfer
-    canChangeTransferAmount: true
-    maxTransferAmount: 5
-  - type: Drink
-  - type: Spillable
-    solution: drink
-  - type: FitsInDispenser
-    solution: drink
-  - type: DrawableSolution
-    solution: drink
-  - type: RefillableSolution
-    solution: drink
-  - type: DrainableSolution
-    solution: drink
-  - type: UserInterface
-    interfaces:
-      enum.TransferAmountUiKey.Key:
-        type: TransferAmountBoundUserInterface
-  - type: Damageable
-    damageContainer: Inorganic
-  - type: Destructible
-    thresholds:
-    - trigger:
-        !type:DamageTrigger
-        damage: 20
-      behaviors:
-      - !type:SpillBehavior { }
-      - !type:DoActsBehavior
-        acts: [ "Destruction" ]
   - type: Tag
     tags:
+    - DrinkBottle
     - Trash
-  - type: PhysicalComposition
-    materialComposition:
-      Cardboard: 20
-  - type: SpaceGarbage
 
 - type: entity
-  name: base empty bottle
-  id: DrinkCartonBaseLargeEmpty
-  parent: DrinkCartonBaseEmpty
   abstract: true
+  parent: [ DrinkBaseOpenableOpen, DrinkBaseEmptyTrash ]
+  id: DrinkCartonBaseEmpty
   components:
-  - type: Item
-    size: Normal
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 50
+
+- type: entity
+  abstract: true
+  parent: [ DrinkBaseOpenableOpen, DrinkBaseEmptyTrash ]
+  id: DrinkCartonBaseLargeEmpty
+  components:
   - type: SolutionContainerManager
     solutions:
       drink:
         maxVol: 100
 
-# Containers
-- type: entity
-  name: Jailbreaker Verte bottle
-  parent: DrinkBottleBaseEmpty
-  id: DrinkBottleAbsinthe
-  components:
-  - type: Sprite
-    sprite: Objects/Consumable/TrashDrinks/absinthebottle_empty.rsi
-
+# Small bottles
 
 - type: entity
-  name: alcohol bottle
-  parent: DrinkBottleBaseEmpty
-  id: DrinkBottleAlcoClear
-  components:
-  - type: Sprite
-    sprite: Objects/Consumable/TrashDrinks/alco-clear.rsi
-
-
-- type: entity
-  name: ale bottle
-  parent: DrinkBottleBaseSmallEmpty
+  parent: [ DrinkBottleBaseSmallEmpty, DrinkAleBottleFull ]
   id: DrinkBottleAle
-  components:
-  - type: Sprite
-    sprite: Objects/Consumable/TrashDrinks/alebottle_empty.rsi
-
 
 - type: entity
-  name: beer bottle
-  parent: DrinkBottleBaseSmallEmpty
+  parent: [ DrinkBottleBaseSmallEmpty, DrinkBeerBottleFull ]
   id: DrinkBottleBeer
   components:
-  - type: Sprite
-    sprite: Objects/Consumable/TrashDrinks/beer_empty.rsi
+  - type: Tag
+    tags:
+    - Beer
+    - Trash
 
+# Large bottles
 
 - type: entity
-  name: cognac bottle
-  parent: DrinkBottleBaseEmpty
+  parent: [ DrinkBottleBaseEmpty, DrinkAbsintheBottleFull ]
+  id: DrinkBottleAbsinthe
+
+- type: entity
+  parent: [DrinkBottleBaseEmpty, DrinkBlueCuracaoBottleFull]
+  id: DrinkBottleAlcoClear
+
+- type: entity
+  parent: [ DrinkBottleBaseEmpty, DrinkCognacBottleFull ]
   id: DrinkBottleCognac
-  components:
-  - type: Sprite
-    sprite: Objects/Consumable/TrashDrinks/cognacbottle_empty.rsi
-
 
 - type: entity
-  name: Griffeater gin bottle
-  parent: DrinkBottleBaseEmpty
+  parent: [ DrinkBottleBaseEmpty, DrinkGinBottleFull ]
   id: DrinkBottleGin
-  components:
-  - type: Sprite
-    sprite: Objects/Consumable/TrashDrinks/ginbottle_empty.rsi
-
 
 - type: entity
-  name: gildlager bottle
-  parent: DrinkBottleBaseEmpty
+  parent: [DrinkBottleBaseEmpty, DrinkGildlagerBottleFull]
   id: DrinkBottleGildlager
-  components:
-  - type: Sprite
-    sprite: Objects/Consumable/TrashDrinks/gildlagerbottle_empty.rsi
-
 
 - type: entity
   name: coffee liqueur bottle
-  parent: DrinkBottleBaseEmpty
+  parent: [DrinkBottleBaseEmpty, DrinkCoffeeLiqueurBottleFull]
   id: DrinkBottleCoffeeLiqueur
-  components:
-  - type: Sprite
-    sprite: Objects/Consumable/TrashDrinks/coffeeliqueurbottle_empty.rsi
 
-
+# todo make a real cahors bottle
 - type: entity
   name: nt cahors bottle
-  parent: DrinkBottleBaseEmpty
+  parent: [DrinkBottleBaseEmpty, DrinkBottleGlassBaseFull]
   id: DrinkBottleNTCahors
   components:
   - type: Sprite
-    sprite: Objects/Consumable/TrashDrinks/ntcahors_empty.rsi
-
+    sprite: Objects/Consumable/Drinks/ntcahors.rsi
 
 - type: entity
-  name: patron bottle
-  parent: DrinkBottleBaseEmpty
+  parent: [DrinkBottleBaseEmpty, DrinkPatronBottleFull]
   id: DrinkBottlePatron
-  components:
-  - type: Sprite
-    sprite: Objects/Consumable/TrashDrinks/patronbottle_empty.rsi
-
 
 - type: entity
-  name: poison wine bottle
-  parent: DrinkBottleBaseEmpty
+  parent: [DrinkBottleBaseEmpty, DrinkPoisonWinebottleFull]
   id: DrinkBottlePoisonWine
-  components:
-  - type: Sprite
-    sprite: Objects/Consumable/TrashDrinks/pwinebottle_empty.rsi
-
 
 - type: entity
-  name: rum bottle
-  parent: DrinkBottleBaseEmpty
+  parent: [DrinkBottleBaseEmpty, DrinkRumBottleFull]
   id: DrinkBottleRum
-  components:
-  - type: Sprite
-    sprite: Objects/Consumable/TrashDrinks/rumbottle_empty.rsi
-
 
 - type: entity
-  name: tequila bottle
-  parent: DrinkBottleBaseEmpty
+  parent: [DrinkBottleBaseEmpty, DrinkTequilaBottleFull]
   id: DrinkBottleTequila
-  components:
-  - type: Sprite
-    sprite: Objects/Consumable/TrashDrinks/tequillabottle_empty.rsi
-
 
 - type: entity
-  name: vermouth bottle
-  parent: DrinkBottleBaseEmpty
+  parent: [DrinkBottleBaseEmpty, DrinkVermouthBottleFull]
   id: DrinkBottleVermouth
-  components:
-  - type: Sprite
-    sprite: Objects/Consumable/TrashDrinks/vermouthbottle_empty.rsi
-
 
 - type: entity
-  name: vodka bottle
-  parent: DrinkBottleBaseEmpty
+  parent: [DrinkBottleBaseEmpty, DrinkVodkaBottleFull]
   id: DrinkBottleVodka
-  components:
-  - type: Sprite
-    sprite: Objects/Consumable/TrashDrinks/vodkabottle_empty.rsi
-
 
 - type: entity
-  name: whiskey bottle
-  parent: DrinkBottleBaseEmpty
+  parent: [DrinkBottleBaseEmpty, DrinkWhiskeyBottleFull]
   id: DrinkBottleWhiskey
-  components:
-  - type: Sprite
-    sprite: Objects/Consumable/TrashDrinks/whiskeybottle_empty.rsi
-
 
 - type: entity
-  name: wine bottle
-  parent: DrinkBottleBaseEmpty
+  parent: [DrinkBottleBaseEmpty, DrinkWineBottleFull]
   id: DrinkBottleWine
-  components:
-  - type: Sprite
-    sprite: Objects/Consumable/TrashDrinks/winebottle_empty.rsi
 
+# Small cartons
 
 - type: entity
-  name: lime juice carton
-  parent: DrinkCartonBaseEmpty
+  parent: [DrinkCartonBaseEmpty, DrinkJuiceLimeCarton]
   id: DrinkCartonLime
-  components:
-  - type: Sprite
-    sprite: Objects/Consumable/Drinks/limejuice.rsi
-
 
 - type: entity
-  name: orange juice carton
-  parent: DrinkCartonBaseEmpty
+  parent: [DrinkCartonBaseEmpty, DrinkJuiceOrangeCarton]
   id: DrinkCartonOrange
-  components:
-  - type: Sprite
-    sprite: Objects/Consumable/Drinks/orangejuice.rsi
-
 
 - type: entity
-  name: tomato juice carton
-  parent: DrinkCartonBaseEmpty
+  parent: [DrinkCartonBaseEmpty, DrinkJuiceTomatoCarton]
   id: DrinkCartonTomato
-  components:
-  - type: Sprite
-    sprite: Objects/Consumable/Drinks/tomatojuice.rsi
-
 
 - type: entity
-  name: milk cream carton
-  parent: DrinkCartonBaseEmpty
+  parent: [DrinkCartonBaseEmpty, DrinkCreamCarton]
   id: DrinkCartonCream
-  components:
-  - type: Sprite
-    sprite: Objects/Consumable/Drinks/cream.rsi
 
+# Large cartons
 
 - type: entity
-  name: milk carton
-  parent: DrinkCartonBaseLargeEmpty
+  parent: [DrinkCartonBaseLargeEmpty, DrinkMilkCarton]
   id: DrinkCartonMilk
-  components:
-  - type: Sprite
-    sprite: Objects/Consumable/Drinks/milk.rsi
 
 - type: entity
-  name: soy milk carton
-  parent: DrinkCartonBaseLargeEmpty
+  parent: [DrinkCartonBaseLargeEmpty, DrinkSoyMilkCarton]
   id: DrinkCartonSoyMilk
-  components:
-  - type: Sprite
-    sprite: Objects/Consumable/Drinks/soymilk.rsi
 
 - type: entity
-  name: oat milk carton
-  parent: DrinkCartonBaseLargeEmpty
+  parent: [DrinkCartonBaseLargeEmpty, DrinkOatMilkCarton]
   id: DrinkCartonOatMilk
-  components:
-  - type: Sprite
-    sprite: Objects/Consumable/Drinks/oatmilk.rsi
