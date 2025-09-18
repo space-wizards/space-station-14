@@ -84,8 +84,10 @@ public sealed class SpiderSystem : SharedSpiderSystem
             _popup.PopupEntity(Loc.GetString("spider-web-action-success"), args.Performer, args.Performer);
             args.Handled = true;
         }
-        else
+        else if (!component.OneWebSpawn)
             _popup.PopupEntity(Loc.GetString("spider-web-action-fail"), args.Performer, args.Performer);
+        else
+            _popup.PopupEntity(Loc.GetString("spider-web-action-fail-single"), args.Performer, args.Performer);
     }
 
     private bool SpawnWeb(Entity<SpiderComponent> ent, EntityCoordinates coords)

@@ -125,7 +125,7 @@ public abstract class SharedJumpSystem : EntitySystem
             vector = Vector2.Normalize(vector) * distance.Value;
 
         if (ent.Comp.ActionEntity != null)
-            _action.SetCooldown(ent.Comp.ActionEntity.Value, _timing.CurTime, _timing.CurTime + TimeSpan.FromSeconds(ent.Comp.Cooldown));
+            _action.SetUseDelay(ent.Comp.ActionEntity.Value, TimeSpan.FromSeconds(ent.Comp.Cooldown));
 
         _throwing.TryThrow(ent.Owner, vector, baseThrowSpeed: speed, doSpin: false);
 

@@ -85,11 +85,17 @@ public sealed partial class TTSSystem : EntitySystem
             _ignoredRecipients.Add(args.SenderSession);
     }
 
+    // Removes all [tag] and [/tag] style markup
+    private static string StripRichTextTags(string text) =>
+        TagStripperRegex().Replace(text, "");
+
     private void OnRadioReceiveEvent(RadioSpokeEvent args)
     {
         if (!_isEnabled
             || args.Message.Length > MaxChars)
             return;
+
+        args.Message = StripRichTextTags(args.Message);
 
         _chime.TryGetSenderHeadsetChime(args.Source, out var chime);
 
@@ -392,4 +398,6 @@ public sealed partial class TTSSystem : EntitySystem
 
     [GeneratedRegex(@"(?<![a-zA-Zа-яёА-ЯЁ0-9])([a-zA-Zа-яёА-ЯЁ]+|(\(•`ω´•\)|;;w;;|owo|UwU|>w<|\^w\^))(?![a-zA-Zа-яёА-ЯЁ0-9])", RegexOptions.IgnoreCase | RegexOptions.Multiline, "en-US")]
     private static partial Regex SymbolFilter();
+    [GeneratedRegex(@"\[[^\]]*\]")]
+    private static partial Regex TagStripperRegex();
 }

@@ -14600,5 +14600,158 @@ Entries:
   id: 144002
   time: '2025-09-17T16:58:28.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/1440
+- author: STARLIGHT TEAM
+  changes:
+  - message: Temporarily switch back to starlight vulpkanin stats
+    type: Tweak
+  id: 166800
+  time: '2025-09-18T19:52:00.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1668
+- author: STARLIGHT TEAM
+  changes:
+  - message: Bold for Bold
+    type: Fix
+  id: 167000
+  time: '2025-09-18T20:25:30.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1670
+- author: Arkanic, Walksanatora
+  changes:
+  - message: Fix vulpkanin displacements, fix incorrect hair displacements
+    type: Fix
+  id: 165700
+  time: '2025-09-17T15:06:54.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1657
+- author: Arkanic, Walksanatora
+  changes:
+  - message: Fix vulpkanin wagging, fix vulpkanin growling accent
+    type: Fix
+  id: 165701
+  time: '2025-09-17T15:06:54.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1657
+- author: Arkanic, Walksanatora
+  changes:
+  - message: Fix vulpkanin eyes being wizden vulp eyes (sleepy)
+    type: Fix
+  id: 165702
+  time: '2025-09-17T15:06:54.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1657
+- author: Arkanic, Walksanatora
+  changes:
+  - message: Fix default vulpkanin markings to prevent character changes after update
+    type: Fix
+  id: 165703
+  time: '2025-09-17T15:06:54.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1657
+- author: Arkanic, Walksanatora
+  changes:
+  - message: Switch back to SL vulpkanin screams
+    type: Fix
+  id: 165704
+  time: '2025-09-17T15:06:54.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1657
+- author: Arkanic, Walksanatora
+  changes:
+  - message: Fix vulpkanin hair showing when wearing hardsuits
+    type: Fix
+  id: 165705
+  time: '2025-09-17T15:06:54.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1657
+- author: Arkanic, Walksanatora
+  changes:
+  - message: Switch back to using SL markings where duplicates exist
+    type: Tweak
+  id: 165706
+  time: '2025-09-17T15:06:54.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1657
+- author: Arkanic, Walksanatora
+  changes:
+  - message: Add missing emotes back to vulpkanin, fix creampie sprites
+    type: Fix
+  id: 165707
+  time: '2025-09-17T15:06:54.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1657
+- author: CorruptOmega
+  changes:
+  - message: Satanic Bible visual has been flipped upside down.
+    type: Tweak
+  id: 159100
+  time: '2025-09-17T15:29:24.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1591
+- author: Killer Tamashi
+  changes:
+  - message: Added Security shuttle "SEC-657 'Pursuit"
+    type: Add
+  id: 134800
+  time: '2025-09-17T16:07:35.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1348
+- author: CorruptOmega
+  changes:
+  - message: CentComm Communication paper to the document printer
+    type: Add
+  id: 147200
+  time: '2025-09-17T16:21:14.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1472
+- author: walksanatora
+  changes:
+  - message: New wizard spell that randomizes all spoken and understood languages
+      across everyone in the game. really should not spite your new god.
+    type: Add
+  id: 142700
+  time: '2025-09-17T16:25:10.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1427
+- author: Rinary
+  changes:
+  - message: Fixed emp scream & jump cooldowns.
+    type: Fix
+  id: 166600
+  time: '2025-09-18T21:46:21.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1666
+- author: Rinary
+  changes:
+  - message: Changed poison web injection from 2 to 0.5.
+    type: Tweak
+  id: 166601
+  time: '2025-09-18T21:46:21.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1666
+- author: Rinary
+  changes:
+  - message: Changed white spider battery from 200 to 150 and charge rate from 25
+      to 10.
+    type: Tweak
+  id: 166602
+  time: '2025-09-18T21:46:21.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1666
+- author: Rinary
+  changes:
+  - message: Fixed spider popup, now it separated and part with directions will be
+      popuped only when your spider can spawn more than one web in one action.
+    type: Fix
+  id: 166603
+  time: '2025-09-18T21:46:21.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1666
+- author: Rinary
+  changes:
+  - message: Changed web spinning cooldown from 25 to 15, but terror spiders web condition
+      target web count changed from 24 to 36.
+    type: Tweak
+  id: 166604
+  time: '2025-09-18T21:46:21.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1666
+- author: Conflee
+  changes:
+  - message: Changed pricing of some restock crates to be more reasonable. If the
+      resell price was close to the buy price, I made them cost slightly more. If
+      the resell price was way under the buy price, I made them cost slightly less.
+    type: Tweak
+  id: 166200
+  time: '2025-09-18T22:21:33.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1662
+- author: Conflee
+  changes:
+  - message: Fixed infinite money glitch with restock crates in cargo
+    type: Fix
+  id: 166201
+  time: '2025-09-18T22:21:33.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1662
 Order: -1
 
