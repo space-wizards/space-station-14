@@ -60,6 +60,10 @@
         maxVol: 100
   - type: TrashOnSolutionEmpty
     solution: drink
+  - type: DnaSubstanceTrace
+  - type: Tag
+    tags:
+    - Ingredient
   - type: Item
     size: Normal
 
