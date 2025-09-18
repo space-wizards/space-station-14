@@ -1,20 +1,4 @@
 ﻿Entries:
-- author: Hanzdegloker
-  changes:
-  - message: Previously unused flavors alongside some reworked ones now appear in
-      Dan's soaked smokes packs.
-    type: Tweak
-  id: 8469
-  time: '2025-05-12T23:27:26.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/36979
-- author: EmoGarbage404
-  changes:
-  - message: Added the basilisk! This mob can be found on the vgroid and can freeze
-      you with his eye beam. His diamond exterior can sell for a pretty penny, however...
-    type: Add
-  id: 8470
-  time: '2025-05-12T23:42:51.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/37135
 - author: perryprog
   changes:
   - message: You can now link uniform printers to silos.
@@ -3952,3 +3936,18 @@
   id: 8979
   time: '2025-09-18T17:39:35.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/40201
+- author: TrixxedHeart
+  changes:
+  - message: The generic implanter that can be crafted in the medifab has been renamed
+      to implant extractor to better communicate its purpose.
+    type: Tweak
+  id: 8980
+  time: '2025-09-18T17:47:38.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/40375
+- author: aada
+  changes:
+  - message: Mime bags are now silent for everyone.
+    type: Tweak
+  id: 8981
+  time: '2025-09-18T17:47:56.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/40317
