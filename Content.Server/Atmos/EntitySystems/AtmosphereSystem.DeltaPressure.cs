@@ -63,7 +63,7 @@ public sealed partial class AtmosphereSystem
                 var direction = (AtmosDirection)(1 << i);
                 if (!airtightComp.AirBlockedDirection.HasFlag(direction))
                 {
-                    pressures[i] = gridAtmosComp.Tiles[currentPos].Air?.Pressure ?? 0f;
+                    pressures[i] = gridAtmosComp.Tiles.GetValueOrDefault(currentPos)?.Air?.Pressure ?? 0f;
                 }
             }
         }
