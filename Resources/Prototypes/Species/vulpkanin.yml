@@ -10,7 +10,6 @@
   skinColoration: Hues # TODO: Introduce clamping once #39175 or a similiar PR is merged. Ideally lower max saturation to around 80% and some minimum brightness. Same for markings.
   maleFirstNames: names_vulpkanin_male
   femaleFirstNames: names_vulpkanin_female
-  lastNames: names_vulpkanin_last
 
 - type: speciesBaseSprites
   id: MobVulpkaninSprites
