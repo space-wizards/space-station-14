@@ -82,6 +82,13 @@
       path: /Audio/_Starlight/Medical/Surgery/cautery1.ogg
     endSound:
       path: /Audio/_Starlight/Medical/Surgery/cautery2.ogg
+  - type: HeldSpeedModifier
+    walkModifier: 1
+    sprintModifier: 0.9
+  - type: MeleeWeapon
+    damage:
+      types:
+        Piercing: 1
 
 # Drill
 
@@ -149,6 +156,13 @@
     speed: 1.2
     startSound:
       path: /Audio/_Starlight/Medical/Surgery/saw.ogg
+  - type: HeldSpeedModifier
+    walkModifier: 1
+    sprintModifier: 0.9
+  - type: MeleeWeapon
+    damage:
+      types:
+        Piercing: 1
 
 # Scalpel
 
@@ -232,6 +246,13 @@
       path: /Audio/_Starlight/Medical/Surgery/scalpel1.ogg
     endSound:
       path: /Audio/_Starlight/Medical/Surgery/scalpel2.ogg
+  - type: HeldSpeedModifier
+    walkModifier: 1
+    sprintModifier: 0.9
+  - type: MeleeWeapon
+    damage:
+      types:
+        Piercing: 1
 
 - type: entity
   name: shiv
@@ -382,6 +403,13 @@
       path: /Audio/_Starlight/Medical/Surgery/retractor1.ogg
     endSound:
       path: /Audio/_Starlight/Medical/Surgery/retractor2.ogg
+  - type: HeldSpeedModifier
+    walkModifier: 1
+    sprintModifier: 0.9
+  - type: MeleeWeapon
+    damage:
+      types:
+        Piercing: 1
 
 - type: entity
   name: hemostat
@@ -452,6 +480,13 @@
     speed: 1.2
     startSound:
       path: /Audio/_Starlight/Medical/Surgery/hemostat1.ogg
+  - type: HeldSpeedModifier
+    walkModifier: 1
+    sprintModifier: 0.9
+  - type: MeleeWeapon
+    damage:
+      types:
+        Piercing: 1
 
 - type: entity
   name: bone setter
@@ -532,6 +567,13 @@
     speed: 1.2
     startSound:
       path: /Audio/_Starlight/Medical/Surgery/bone_setter.ogg
+  - type: HeldSpeedModifier
+    walkModifier: 1
+    sprintModifier: 0.9
+  - type: MeleeWeapon
+    damage:
+      types:
+        Piercing: 1
 
 # Saws
 
@@ -685,6 +727,13 @@
       path: /Audio/_Starlight/Medical/Surgery/saw.ogg
     endSound:
       path: /Audio/Items/drill_hit.ogg
+  - type: HeldSpeedModifier
+    walkModifier: 1
+    sprintModifier: 0.9
+  - type: MeleeWeapon
+    damage:
+      types:
+        Piercing: 1
 
 # BoneGel
 
@@ -721,3 +770,6 @@
     speed: 1
     startSound:
       path: /Audio/_Starlight/Medical/Surgery/bone_setter.ogg
+  - type: HeldSpeedModifier
+    walkModifier: 1
+    sprintModifier: 0.9
