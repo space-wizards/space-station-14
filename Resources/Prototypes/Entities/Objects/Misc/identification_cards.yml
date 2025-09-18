@@ -867,7 +867,9 @@
   - type: Sprite
     layers:
     - state: black
-    - state: syndi_operative
+    - sprite: *icon-rsi
+      offset: *icon-offset
+      state: SyndicateOperative
   - type: AgentIDCard
 
 - type: entity
@@ -878,7 +880,9 @@
   - type: Sprite
     layers:
     - state: black
-    - state: syndi_corpsman
+    - sprite: *icon-rsi
+      offset: *icon-offset
+      state: SyndicateCorpsman
 
 - type: entity
   parent: [ SyndiOperativeIDCard, BaseSyndicateContraband ]
@@ -888,7 +892,9 @@
   - type: Sprite
     layers:
     - state: black
-    - state: syndi_commander
+    - sprite: *icon-rsi
+      offset: *icon-offset
+      state: SyndicateCommander
 
 - type: entity
   parent: [ IDCardStandard, BaseMajorContraband ]

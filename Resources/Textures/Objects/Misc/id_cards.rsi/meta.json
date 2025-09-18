@@ -11,6 +11,9 @@
             "name": "admin"
         },
         {
+            "name": "black"
+        },
+        {
             "name": "blue-inhand-left",
             "directions": 4
         },
@@ -116,7 +119,7 @@
             "name": "stripe_supply"
         },
         {
-            "name": "syndie"
+            "name": "stripe_syndicate"
         },
         {
             "name": "wizard"
