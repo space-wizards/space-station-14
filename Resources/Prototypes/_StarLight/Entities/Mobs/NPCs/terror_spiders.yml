@@ -359,10 +359,10 @@
     fireCost: 50
   - type: BatterySelfRecharger
     autoRecharge: true
-    autoRechargeRate: 25
+    autoRechargeRate: 10
   - type: Battery
-    maxCharge: 200
-    startingCharge: 200
+    maxCharge: 150
+    startingCharge: 150
   - type: Gun
     fireRate: 0.5
     useKey: false
