@@ -72,8 +72,7 @@
 - type: weightedRandom
   id: ThiefObjectiveGroupItem
   weights:
-    DeckardStealObjective: .75                          #command
-    ChiefEngineerToolbeltStealObjective: .5
+    ChiefEngineerToolbeltStealObjective: .5             #command
     CaptainSwordStealObjective: .5
     ClothingHeadsetAltMedicalStealObjective: 1
     ForensicScannerStealObjective: 1                    #sec
@@ -87,7 +86,6 @@
     ExpeditionsCircuitboardStealObjective: 1            #sup
     CargoShuttleCircuitboardStealObjective: 1
     ClothingEyesHudBeerStealObjective: 0.5              #srv, beer goggles less common cause its so easy
-    BartenderShotgunStealObjective: 1
     BibleStealObjective: 1
     ClothingNeckGoldmedalStealObjective: 1              #other
     ClothingNeckClownmedalStealObjective: 0.5

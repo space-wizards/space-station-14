@@ -78,8 +78,6 @@
   - type: Appearance
   - type: StaticPrice
     price: 1500
-  - type: StealTarget
-    stealGroup: DeckardSteal
 
 - type: entity
   name: Inspector

@@ -210,15 +210,6 @@
   - type: Objective
     difficulty: 1
 
-- type: entity
-  parent: BaseThiefStealObjective
-  id: DeckardStealObjective
-  components:
-  - type: StealCondition
-    stealGroup: DeckardSteal
-  - type: Objective
-    difficulty: 1.1
-
 - type: entity                                      #Medical subgroup
   parent: BaseThiefStealObjective
   id: ClothingOuterHardsuitVoidParamedStealObjective
@@ -317,17 +308,6 @@
     stealGroup: ClothingEyesHudBeer
   - type: Objective
     difficulty: 0.3
-
-- type: entity
-  parent: BaseThiefStealObjective
-  id: BartenderShotgunStealObjective
-  components:
-  - type: NotJobRequirement
-    job: Bartender #TODO: make it so this also includes zookeeper and probably also service worker
-  - type: StealCondition
-    stealGroup: BartenderShotgun
-  - type: Objective
-    difficulty: 0.7
 
 - type: entity
   parent: BaseThiefStealObjective

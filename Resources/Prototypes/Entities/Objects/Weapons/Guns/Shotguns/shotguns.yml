@@ -123,8 +123,6 @@
     graph: ShotgunSawn
     node: start
     deconstructionTarget: null
-  - type: StealTarget
-    stealGroup: BartenderShotgun
 
 - type: entity
   name: double-barreled shotgun
@@ -205,8 +203,6 @@
     graph: ShotgunSawn
     node: shotgunsawn
     deconstructionTarget: null
-  - type: StealTarget
-    stealGroup: BartenderShotgun
 
 - type: entity
   name: sawn-off shotgun
