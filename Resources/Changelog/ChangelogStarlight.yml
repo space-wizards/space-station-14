@@ -14670,5 +14670,12 @@ Entries:
   id: 165707
   time: '2025-09-17T15:06:54.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/1657
+- author: CorruptOmega
+  changes:
+  - message: Satanic Bible visual has been flipped upside down.
+    type: Tweak
+  id: 159100
+  time: '2025-09-17T15:29:24.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1591
 Order: -1
 
