@@ -280,9 +280,6 @@
   group: Botanical
   desc: reagent-desc-diethylamine
   physicalDesc: reagent-physical-desc-strong-smelling
-  allowedJobs:
-  - Chemist
-  - Botanist
   flavor: bitter
   color: "#a1000b"
   boilingPoint: 55.5
