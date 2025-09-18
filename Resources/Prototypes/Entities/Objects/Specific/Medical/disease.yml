@@ -13,6 +13,7 @@
     tags:
     - Recyclable
     - Trash
+    - BotanyTool
   - type: BotanySwab
   - type: GuideHelp
     guides:
@@ -30,6 +31,9 @@
     layers:
     - state: boxwide
     - state: swab
+  - type: Tag
+    tags:
+    - BotanyTool
   - type: BallisticAmmoProvider
     whitelist:
       components:

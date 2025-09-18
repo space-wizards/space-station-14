@@ -1099,12 +1099,9 @@
   - type: Sprite
     layers:
     - state: service
-    - state: icon-gardening
+    - state: icon-cooking
   - type: ItemBorgModule
     hands:
-    - item: KitchenKnife
-    - item: RollingPin
-    - item: BorgDropper
     - hand:
         emptyLabel: borg-slot-dining-ware-empty
         emptyRepresentative: FoodPlate
@@ -1115,9 +1112,12 @@
           components:
           - Utensil
           - Food
+    - item: KitchenKnife
+    - item: RollingPin
+    - item: BorgDropper
     - item: Beaker
       hand:
-        emptyLabel: borg-slot-chemical-containers-empty
+        emptyLabel: borg-slot-small-containers-empty
         emptyRepresentative: Beaker
         whitelist:
           components:
@@ -1131,6 +1131,7 @@
           - Ingredient
           - Meat
           - Packet
+          - MonkeyCube
           components:
           - Produce
         blacklist:
@@ -1143,41 +1144,6 @@
     icon: { sprite: Interface/Actions/actions_borg.rsi, state: cooking-module }
 
 - type: entity
-  id: BorgModuleGardening
-  parent: [ BaseBorgModuleService, BaseProviderBorgModule ]
-  name: gardening cyborg module
-  components:
-  - type: Sprite
-    layers:
-    - state: service
-    - state: icon-gardening
-  - type: ItemBorgModule
-    hands:
-    - item: HydroponicsToolMiniHoe
-    - item: HydroponicsToolSpade
-    - item: HydroponicsToolClippers
-    - item: Bucket
-  - type: BorgModuleIcon
-    icon: { sprite: Interface/Actions/actions_borg.rsi, state: gardening-module }
-
-- type: entity
-  id: BorgModuleHarvesting
-  parent: [ BaseBorgModuleService, BaseProviderBorgModule ]
-  name: harvesting cyborg module
-  components:
-  - type: Sprite
-    layers:
-    - state: service
-    - state: icon-harvesting
-  - type: ItemBorgModule
-    hands:
-    - item: HydroponicsToolScythe
-    - item: HydroponicsToolHatchet
-    - item: PlantBag
-  - type: BorgModuleIcon
-    icon: { sprite: Interface/Actions/actions_borg.rsi, state: harvesting-module }
-
-- type: entity
   id: BorgModuleBotany
   parent: [ BaseBorgModuleService, BaseProviderBorgModule ]
   name: botany cyborg module
@@ -1185,17 +1151,18 @@
   - type: Sprite
     layers:
     - state: service
-    - state: icon-gardening
+    - state: icon-botany
   - type: ItemBorgModule
     hands:
-    - item: HydroponicsToolMiniHoe
-    - item: HydroponicsToolSpade
-    - item: HydroponicsToolClippers
-    - item: HydroponicsToolScythe
-    - item: HydroponicsToolHatchet
+    - hand:
+        emptyLabel: borg-slot-gardening-tools-empty
+        emptyRepresentative: HydroponicsToolMiniHoe
+        whitelist:
+          tags:
+            - BotanyTool
     - item: BorgDropper
-    - item: PlantBag
     - item: BorgBucket
+    - item: PlantBag
     - hand:
         emptyLabel: borg-slot-seeds-empty
         emptyRepresentative: WheatSeeds
@@ -1209,7 +1176,7 @@
           components:
           - Produce
   - type: BorgModuleIcon
-    icon: { sprite: Interface/Actions/actions_borg.rsi, state: gardening-module }
+    icon: { sprite: Interface/Actions/actions_borg.rsi, state: botany-module }
 
 - type: entity
   id: BorgModuleClowning

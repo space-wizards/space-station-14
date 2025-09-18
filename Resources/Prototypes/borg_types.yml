@@ -207,9 +207,8 @@
 
   defaultModules:
   - BorgModuleTool
-  - BorgModuleMusique
   - BorgModuleService
-  - BorgModuleClowning
+  - BorgModuleMusique
   - BorgModuleBotany
   - BorgModuleCooking
   radioChannels:

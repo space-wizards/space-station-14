@@ -716,3 +716,7 @@ ClothingUniformJumpsuitParamedicNT: ClothingUniformJumpsuitParamedic
 
 # 2025-08-29
 PrefilledSyringe: Syringe
+
+# 2025-09-08
+BorgModuleGardening: BorgModuleBotany
+BorgModuleHarvesting: BorgModuleBotany

@@ -15,4 +15,6 @@ borg-slot-inflatable-wall-empty = Inflatable Wall
 borg-slot-seeds-empty = Seeds
 borg-slot-dining-ware-empty = Empty platter
 borg-slot-produce-empty = Produce
+borg-slot-pen-empty = Pens
+borg-slot-gardening-tools-empty = Gardening tools
 borg-slot-ingredients-empty = Ingredients

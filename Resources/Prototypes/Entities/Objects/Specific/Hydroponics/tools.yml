@@ -8,6 +8,7 @@
     tags:
     - Hoe
     - BotanyHoe
+    - BotanyTool
   - type: Sprite
     sprite: Objects/Tools/Hydroponics/hoe.rsi
     state: icon
@@ -32,6 +33,7 @@
   - type: Tag
     tags:
     - PlantSampleTaker
+    - BotanyTool
   - type: Sprite
     sprite: Objects/Tools/Hydroponics/clippers.rsi
     state: icon
@@ -53,6 +55,9 @@
   id: HydroponicsToolScythe
   description: A sharp and curved blade on a long fibremetal handle, this tool makes it easy to reap what you sow.
   components:
+  - type: Tag
+    tags:
+    - BotanyTool
   - type: Sharp
   - type: Sprite
     sprite: Objects/Tools/Hydroponics/scythe.rsi
@@ -84,6 +89,7 @@
   - type: Tag
     tags:
     - BotanyHatchet
+    - BotanyTool
   - type: Sharp
   - type: Sprite
     sprite: Objects/Tools/Hydroponics/hatchet.rsi
@@ -110,6 +116,7 @@
   - type: Tag
     tags:
     - BotanyShovel
+    - BotanyTool
   - type: Sprite
     sprite: Objects/Tools/Hydroponics/spade.rsi
     state: icon
