@@ -6,11 +6,14 @@ using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.Player;
 using Robust.Server.Audio;
+using Content.Shared.Actions;
+using Content.Shared.Charges.Systems;
 
 namespace Content.Server._Starlight.Antags.Actions;
 
 public sealed partial class EMPScreamSystem : EntitySystem
 {
+    [Dependency] private readonly SharedChargesSystem _chargesSystem = default!;
     [Dependency] private readonly EmpSystem _emp = default!;
     [Dependency] private readonly TransformSystem _transform = default!;
     [Dependency] private readonly ISharedPlayerManager _player = default!;
@@ -26,6 +29,10 @@ public sealed partial class EMPScreamSystem : EntitySystem
 
     private void OnEMPScream(EMPScreamEvent ev)
     {
+        if (ev.Handled || _chargesSystem.GetCurrentCharges(ev.Action.Owner) == 0)
+            return;
+
+        ev.Handled = true;
         var uid = ev.Performer;
 
         ScreamEffect(uid, ev.Power, ev.ScreamSound);
