@@ -3,6 +3,7 @@ using System.Text.RegularExpressions;
 using Content.Shared.CCVar;
 using Content.Shared.Starlight.CCVar; // Starlight
 using Content.Shared.GameTicking;
+using Content.Shared._CD.Records;
 using Content.Shared.Humanoid;
 using Content.Shared.Humanoid.Prototypes;
 using Content.Shared.Preferences.Loadouts;
@@ -91,6 +92,9 @@ namespace Content.Shared.Preferences
         /// </summary>
         [DataField]
         public HumanoidCharacterAppearance Appearance { get; set; } = new();
+
+        [DataField("characterRecords")]
+        public PlayerProvidedCharacterRecords? CharacterRecords { get; private set; } = PlayerProvidedCharacterRecords.DefaultRecords();
 
         /// <summary>
         /// When spawning into a round what's the preferred spot to spawn.
@@ -186,6 +190,10 @@ namespace Content.Shared.Preferences
                 other.Cybernetics, // Starlight
                 other.Enabled)
         {
+            CharacterRecords = other.CharacterRecords != null
+                ? new PlayerProvidedCharacterRecords(other.CharacterRecords)
+                : PlayerProvidedCharacterRecords.DefaultRecords();
+            CharacterRecords.EnsureValid();
         }
 
         /// <summary>
@@ -314,6 +322,13 @@ namespace Content.Shared.Preferences
         public HumanoidCharacterProfile WithCharacterAppearance(HumanoidCharacterAppearance appearance)
         {
             return new(this) { Appearance = appearance };
+        }
+
+        public HumanoidCharacterProfile WithCharacterRecords(PlayerProvidedCharacterRecords records)
+        {
+            var copy = new PlayerProvidedCharacterRecords(records);
+            copy.EnsureValid();
+            return new HumanoidCharacterProfile(this) { CharacterRecords = copy };
         }
 
         public HumanoidCharacterProfile WithSpawnPriorityPreference(SpawnPriorityPreference spawnPriority)
@@ -466,6 +481,15 @@ namespace Content.Shared.Preferences
             if (!Loadouts.SequenceEqual(other.Loadouts)) return false;
             if (FlavorText != other.FlavorText) return false;
             if (Enabled != other.Enabled) return false;
+            if (CharacterRecords != null)
+            {
+                if (other.CharacterRecords == null || !CharacterRecords.MemberwiseEquals(other.CharacterRecords))
+                    return false;
+            }
+            else if (other.CharacterRecords != null)
+            {
+                return false;
+            }
             return Appearance.MemberwiseEquals(other.Appearance);
         }
 
@@ -642,6 +666,9 @@ namespace Content.Shared.Preferences
             {
                 _loadouts.Remove(value);
             }
+
+            CharacterRecords ??= PlayerProvidedCharacterRecords.DefaultRecords();
+            CharacterRecords.EnsureValid();
         }
 
         /// <summary>

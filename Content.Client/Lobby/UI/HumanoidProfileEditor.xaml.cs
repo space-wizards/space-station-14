@@ -9,6 +9,7 @@ using Content.Client.Players.PlayTimeTracking;
 using Content.Client.Sprite;
 using Content.Client.Stylesheets;
 using Content.Client.UserInterface.Systems.Guidebook;
+using Content.Client._CD.Records.UI;
 using Content.Shared.CCVar;
 using Content.Shared.Clothing;
 using Content.Shared.Guidebook;
@@ -34,6 +35,7 @@ using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
 using Content.Shared.Starlight.CCVar;
 using Content.Client._Starlight.TTS;
+using Content.Shared._CD.Records;
 
 namespace Content.Client.Lobby.UI
 {
@@ -115,6 +117,8 @@ namespace Content.Client.Lobby.UI
         private List<VoicePrototype> _voices = [];
 
         private List<VoicePrototype> _siliconVoices = []; // 🌟Starlight🌟
+
+        private readonly RecordEditorGui _recordsTab;
 
         public HumanoidProfileEditor(
             IClientPreferencesManager preferencesManager,
@@ -552,6 +556,7 @@ namespace Content.Client.Lobby.UI
                 _ => _entManager.System<TextToSpeechSystem>().RequestPreviewTts(Profile?.SiliconVoice ?? "");
 
             SetupTabs();
+            _recordsTab = CreateRecordEditorTab();
             SetupInfoEditors();
             RefreshCharacterInfo();
             // 🌟Starlight🌟 end
@@ -595,6 +600,21 @@ namespace Content.Client.Lobby.UI
             TabContainer.SetTabTitle(5, Loc.GetString("humanoid-profile-editor-cybernetics-tab"));
             TabContainer.SetTabTitle(6, Loc.GetString("humanoid-profile-editor-ic-info-tab"));
             TabContainer.SetTabTitle(7, Loc.GetString("humanoid-profile-editor-ooc-info-tab"));
+        }
+
+        private RecordEditorGui CreateRecordEditorTab()
+        {
+            // Create the record editor in code so that we can provide a callback for saving edits back to the profile.
+            var recordEditor = new RecordEditorGui(UpdateProfileRecords)
+            {
+                HorizontalExpand = true,
+                VerticalExpand = true
+            };
+
+            TabContainer.AddChild(recordEditor);
+            TabContainer.SetTabTitle(TabContainer.ChildCount - 1, Loc.GetString("humanoid-profile-editor-cd-records-tab"));
+            recordEditor.Update(Profile);
+            return recordEditor;
         }
         private void UpdateSiliconVoicesControls()
         {
@@ -942,6 +962,8 @@ namespace Content.Client.Lobby.UI
             RefreshLoadouts();
             RefreshSpecies();
             RefreshTraits();
+            // Ensure the record editor reflects the freshly-loaded profile data.
+            _recordsTab.Update(Profile);
             RefreshCharacterInfo(); //starlight
             Preview.Initialize(this, _entManager, _preferencesManager, _prototypeManager, _playerManager);
             ReloadPreview();
@@ -1447,6 +1469,16 @@ namespace Content.Client.Lobby.UI
         private void SetSpawnPriority(SpawnPriorityPreference newSpawnPriority)
         {
             Profile = Profile?.WithSpawnPriorityPreference(newSpawnPriority);
+            SetDirty();
+        }
+
+        private void UpdateProfileRecords(PlayerProvidedCharacterRecords records)
+        {
+            if (Profile is null)
+                return;
+
+            // Persist the record edits on the working profile so they will be saved later.
+            Profile = Profile.WithCDCharacterRecords(records);
             SetDirty();
         }
 

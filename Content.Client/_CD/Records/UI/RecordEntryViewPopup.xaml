@@ -1,0 +1,38 @@
+<controls:FancyWindow xmlns="https://spacestation14.io"
+                      xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
+                      MinSize="500 700"
+                      SetSize="600 700"
+                      Title="{Loc 'cd-records-entry-view-popup-title'}">
+    <BoxContainer Margin="5 2 5 5" Orientation="Vertical" HorizontalExpand="True" SeparationOverride="2">
+        <!-- Header section -->
+        <PanelContainer StyleClasses="AngleRect">
+            <BoxContainer Orientation="Vertical" HorizontalExpand="True" Margin="4">
+                <BoxContainer Orientation="Horizontal" HorizontalExpand="True">
+                    <Label Text="{Loc 'cd-character-records-entry-view-title'}" StyleClasses="LabelBig"/>
+                    <Control MinWidth="5"/>
+                    <RichTextLabel HorizontalAlignment="Right" Name="EntryTitle" HorizontalExpand="True" StyleClasses="LabelBig" />
+                </BoxContainer>
+                <BoxContainer Orientation="Horizontal" HorizontalExpand="True">
+                    <Label Text="{Loc 'cd-character-records-entry-view-involved'}" StyleClasses="LabelBig"/>
+                    <Control MinWidth="5"/>
+                    <RichTextLabel HorizontalAlignment="Right" Name="EntryInvolved" HorizontalExpand="True" StyleClasses="LabelBig"/>
+                </BoxContainer>
+            </BoxContainer>
+        </PanelContainer>
+
+        <!-- Content section with styled background -->
+        <PanelContainer Name="ContentPanel" VerticalExpand="True">
+            <ScrollContainer HorizontalExpand="True"
+                           VerticalExpand="True"
+                           HScrollEnabled="False">
+                <BoxContainer Orientation="Vertical"
+                            HorizontalExpand="True"
+                            Margin="8 4 8 8">
+                    <RichTextLabel Name="EntryDesc"
+                                 HorizontalExpand="True"
+                                 Margin="4"/>
+                </BoxContainer>
+            </ScrollContainer>
+        </PanelContainer>
+    </BoxContainer>
+</controls:FancyWindow>
