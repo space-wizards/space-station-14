@@ -1,5 +1,5 @@
 ﻿crafting-menu-name-FDB = forged double-barrel shotgun
-crafting-menu-text-FDB = The cousin of the improvised shotgun, this one is made from better quality parts and an additional barrel! Takes time and welding supplies to make, however. 
+crafting-menu-text-FDB = The cousin of the improvised shotgun, this one is made from better quality parts and an additional barrel! Takes time and welding supplies to make, however.
 
 crafting-menu-name-MP = makeshift pistol
 crafting-menu-text-MP = A hastily built pistol, looks horrible and is liable to explode in your face.
@@ -61,8 +61,23 @@ crafting-menu-text-FRR = The peak of tider engineering. But does need welding su
 crafting-menu-name-IRB = improvised rifle bullet
 crafting-menu-text-IRB = Better than nothing. Fairly full with phosphorus but still won't hit as hard.
 
-crafting-menu-name-IMGB = improvised magazine box
+crafting-menu-name-IMGB = improvised ammo box
 crafting-menu-text-IMGB = Organization is not the strong suit of any tider. Can hold all kinds of bullets.
+
+crafting-menu-name-IMGP = improvised ammo box (.35 auto)
+crafting-menu-text-IMGP = Organization is not the strong suit of any tider. Holds 40 improvised .35 auto rounds.
+
+crafting-menu-name-IMGR = improvised ammo box (.30 rifle)
+crafting-menu-text-IMGR = Organization is not the strong suit of any tider. Holds 40 improvised .30 rifle rounds.
+
+crafting-menu-name-IMGM = improvised ammo box (.45 magnum)
+crafting-menu-text-IMGM = Organization is not the strong suit of any tider. Holds 40 improvised .45 magnum rounds.
+
+crafting-menu-name-IMGS = improvised ammo box (.50 shotgun)
+crafting-menu-text-IMGS = Organization is not the strong suit of any tider. Holds 40 improvised .50 shotgun shells.
+
+crafting-menu-name-phosphorus = crushed phosphorus
+crafting-menu-text-phosphorus = Crushing the tips off of matches yields this bright red, exceedingly volatile compound.
 
 crafting-menu-name-MC = makeshift crowbar
 crafting-menu-text-MC = You must be REALLY desperate..
@@ -173,3 +188,4 @@ crafting-menu-name-CYELO = yellow crayon
 
 crafting-menu-name-IRS = improvised .30/.45 speed loader
 crafting-menu-text-IRS = Little more than a spring-loaded tube that can hold bullets.
+

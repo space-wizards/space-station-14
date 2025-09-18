@@ -51,6 +51,7 @@
     ClothingEyesEyepatchHudMedical: 2
     AutoMenderBruteFilled: 1
     AutoMenderBurnFilled: 1
+    SpaceMedipen: 1 #Starlight
   contrabandInventory:
     PillCanisterRandom: 3
     PillSpaceDrugs: 3
