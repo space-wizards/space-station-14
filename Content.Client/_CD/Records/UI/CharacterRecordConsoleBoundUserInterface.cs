@@ -1,12 +1,8 @@
-using System;
 using Content.Shared.CriminalRecords.Components;
 using Content.Shared.CriminalRecords;
 using Content.Shared.StationRecords;
 using Content.Shared._CD.Records;
 using JetBrains.Annotations;
-using Robust.Client.GameObjects;
-using Robust.Shared.GameObjects;
-using Robust.Shared.ViewVariables;
 
 namespace Content.Client._CD.Records.UI;
 
@@ -62,10 +58,7 @@ public sealed class CharacterRecordConsoleBoundUserInterface(EntityUid owner, En
                 : new CharacterRecordsConsoleFilterMsg(new StationRecordsFilter(ty, txt)));
         };
 
-        _window.OnSetSecurityStatus += (status, reason) =>
-        {
-            SendMessage(new CriminalRecordChangeStatus(status, reason));
-        };
+        _window.OnSetSecurityStatus += (status, reason) => SendMessage(new CriminalRecordChangeStatus(status, reason));
 
         _window.OpenCentered();
     }

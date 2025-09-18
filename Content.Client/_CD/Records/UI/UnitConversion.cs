@@ -1,5 +1,3 @@
-using System;
-
 namespace Content.Client._CD.Records.UI;
 
 public static class UnitConversion

@@ -1,4 +1,3 @@
-using Content.Server._CD.Records;
 using Content.Server.Popups;
 using Content.Server.Radio.EntitySystems;
 using Content.Server.Station.Systems;
@@ -17,6 +16,10 @@ using Content.Shared.Security.Components;
 using System.Linq;
 using Content.Shared.Roles.Jobs;
 
+// CD: imports
+using Content.Server._CD.Records;
+using Content.Shared._CD.Records;
+
 namespace Content.Server.CriminalRecords.Systems;
 
 /// <summary>
@@ -32,11 +35,13 @@ public sealed class CriminalRecordsConsoleSystem : SharedCriminalRecordsConsoleS
     [Dependency] private readonly StationSystem _station = default!;
     [Dependency] private readonly UserInterfaceSystem _ui = default!;
 
+
     public override void Initialize()
     {
         SubscribeLocalEvent<CriminalRecordsConsoleComponent, RecordModifiedEvent>(UpdateUserInterface);
         SubscribeLocalEvent<CriminalRecordsConsoleComponent, AfterGeneralRecordCreatedEvent>(UpdateUserInterface);
 
+        /* CD: We disable the wizden Criminal Records computer and reuse some of the Bui events
         Subs.BuiEvents<CriminalRecordsConsoleComponent>(CriminalRecordsConsoleKey.Key, subs =>
         {
             subs.Event<BoundUIOpenedEvent>(UpdateUserInterface);
@@ -46,16 +51,16 @@ public sealed class CriminalRecordsConsoleSystem : SharedCriminalRecordsConsoleS
             subs.Event<CriminalRecordAddHistory>(OnAddHistory);
             subs.Event<CriminalRecordDeleteHistory>(OnDeleteHistory);
             subs.Event<CriminalRecordSetStatusFilter>(OnStatusFilterPressed);
-        });
+        }); */
 
-        // Cosmatic Drift: bridge the character record console UI with the existing
-        // criminal records logic so security status edits keep both interfaces in sync.
+        // CD: also subscribe to status changes from the CD records console
         Subs.BuiEvents<CriminalRecordsConsoleComponent>(CharacterRecordConsoleKey.Key, subs =>
         {
             subs.Event<SelectStationRecord>(OnKeySelected);
             subs.Event((Entity<CriminalRecordsConsoleComponent> ent, ref CriminalRecordChangeStatus args) =>
             {
                 OnChangeStatus(ent, ref args);
+                RaiseLocalEvent(ent, new CharacterRecordsModifiedEvent());
             });
         });
     }
