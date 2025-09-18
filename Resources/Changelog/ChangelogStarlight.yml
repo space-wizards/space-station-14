@@ -14607,5 +14607,12 @@ Entries:
   id: 166800
   time: '2025-09-18T19:52:00.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/1668
+- author: STARLIGHT TEAM
+  changes:
+  - message: Bold for Bold
+    type: Fix
+  id: 167000
+  time: '2025-09-18T20:25:30.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1670
 Order: -1
 
