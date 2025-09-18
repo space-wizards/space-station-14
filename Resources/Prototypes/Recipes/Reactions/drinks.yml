@@ -1555,3 +1555,13 @@
       amount: 1
   products:
     BacchusBlessing: 4
+
+- type: reaction
+  id: Whilk
+  reactants:
+    Milk:
+      amount: 2
+    Whiskey:
+      amount: 1
+  products:
+    Whilk: 1

@@ -2546,3 +2546,27 @@
         - !type:OrganType
           type: Dwarf
           shouldHave: false
+
+- type:  reagent
+  id: Whilk
+  name: reagent-name-Whilk
+  parent: BaseAlcohol
+  desc: reagent-desc-Whilk
+  physicalDesc: reagent-desc-Milky
+  flavor: Whilk
+  color: "#f2e0ac"
+  metamorphicSprite:
+    sprite: Objects/Consumable/Drinks/glass_orange.rsi
+    state: icon_empty
+  metamorphicMaxFillLevels: 4
+  metamorphicFillBaseName: fill-
+  metamorphicChangeColor: false
+  metabolisms:
+    drink:
+      effects:
+      - !type:SatiateThirst
+        factor: 3
+      - !type:AdjustReagent
+        reagent: Ethanol
+        amount: 0.1
+
