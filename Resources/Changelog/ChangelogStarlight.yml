@@ -14691,5 +14691,13 @@ Entries:
   id: 147200
   time: '2025-09-17T16:21:14.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/1472
+- author: walksanatora
+  changes:
+  - message: New wizard spell that randomizes all spoken and understood languages
+      across everyone in the game. really should not spite your new god.
+    type: Add
+  id: 142700
+  time: '2025-09-17T16:25:10.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1427
 Order: -1
 
