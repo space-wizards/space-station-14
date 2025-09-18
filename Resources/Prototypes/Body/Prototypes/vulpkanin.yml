@@ -18,9 +18,9 @@
       - right leg
       - left leg
       organs:
-        heart: OrganAnimalHeart
+        heart: OrganVulpkaninHeart # starlight - temp vulpkanin revert
         lungs: OrganHumanLungs
-        stomach: OrganAnimalStomach
+        stomach: OrganVulpkaninStomach # starlight - temp vulpkanin revert
         liver: OrganAnimalLiver
         kidneys: OrganHumanKidneys
     right arm:

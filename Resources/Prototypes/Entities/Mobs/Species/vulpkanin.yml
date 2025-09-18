@@ -44,16 +44,18 @@
       types:
         Piercing: 2
         Slash: 3
-  - type: Temperature # Same as moth temperatures until below is solved.
-    heatDamageThreshold: 320 # TODO: 315 when there is a way to make the temperature alert not blink to the side of the screen and disappear when you "sweat" at 39C.
-    coldDamageThreshold: 230 # TODO: 220 when the above is solved.
-    specificHeat: 44
-    coldDamage:
-      types:
-        Cold: 0.05 # Per second, scales with temperature & other constants
-    heatDamage:
-      types:
-        Heat: 2.5 # Per second, scales with temperature & other constants
+  # starlight start - temp vulpkanin revert
+  # - type: Temperature # Same as moth temperatures until below is solved.
+  #   heatDamageThreshold: 320 # TODO: 315 when there is a way to make the temperature alert not blink to the side of the screen and disappear when you "sweat" at 39C.
+  #   coldDamageThreshold: 230 # TODO: 220 when the above is solved.
+  #   specificHeat: 44
+  #   coldDamage:
+  #     types:
+  #       Cold: 0.05 # Per second, scales with temperature & other constants
+  #   heatDamage:
+  #     types:
+  #       Heat: 2.5 # Per second, scales with temperature & other constants
+  # starlight end
     # Starlight start
     # - type: Wagging TODO: Add back once we have animated tails again. Were removed due to the sprite rework, causing all of them to not fit anymore.
     #   action: ActionToggleWaggingVulpkanin
@@ -63,16 +65,18 @@
   - type: TemperatureProtection
     heatingCoefficient: 1.2
     coolingCoefficient: 0.3
-  - type: JumpAbility
-    action: ActionVulpkaninGravityJump
-    canCollide: true
-    jumpDistance: 3
-    jumpSound:
-      path: /Audio/Weapons/punchmiss.ogg
-      params:
-        pitch: 1.33
-        volume: -5
-        variation: 0.05
+  # STARLIGHT START
+  # - type: JumpAbility
+  #   action: ActionVulpkaninGravityJump
+  #   canCollide: true
+  #   jumpDistance: 3
+  #   jumpSound:
+  #     path: /Audio/Weapons/punchmiss.ogg
+  #     params:
+  #       pitch: 1.33
+  #       volume: -5
+  #       variation: 0.05
+  # STARLIGHT END
   - type: InteractionPopup # Crucial detail.
     successChance: 1
     interactSuccessString: petting-success-soft-floofy-vulp
@@ -165,6 +169,38 @@
             sprite: _Starlight/Mobs/Species/Vulpkanin/displacement.rsi
             state: shoes
   # Starlight end
+  # starlight start - temp vulpkanin revert
+  - type: Hunger # on 1.5x more
+    thresholds:
+      Overfed: 250
+      Okay: 200
+      Peckish: 150
+      Starving: 100
+      Dead: 0
+    baseDecayRate: 0.02
+  - type: Thirst # on 1.5x more
+    thresholds:
+      OverHydrated: 650
+      Okay: 500
+      Thirsty: 350
+      Parched: 200
+      Dead: 0
+    baseDecayRate: 0.15
+  - type: Temperature # Ported over from CD. Afterall, it does make sense that something with fur can handle more cold/less heat. Basegame Moths, apparently, have similar resistances.
+    heatDamageThreshold: 325
+    coldDamageThreshold: 230
+    currentTemperature: 310.15
+    specificHeat: 46
+    coldDamage:
+      types:
+        Cold : 0.05 #per second, scales with temperature & other constants
+    heatDamage:
+      types:
+        Heat : 1.75 #per second, scales with temperature & other constants
+  - type: ContentEye
+    targetZoom: "1.125, 1.125"
+    maxZoom: "1.125, 1.125"
+  # starlight end
 
 - type: entity
   parent: [BaseSpeciesDummy]
