@@ -3,10 +3,10 @@ using Robust.Shared.GameStates;
 namespace Content.Shared.Bible.Components;
 
 /// <summary>
-/// For humanoids/entities that can interact with bibles, religion related things. i.e., summon entity with bible or pray on bible.
+/// For humanoids/entities that can interact with bibles, religion related things. i.e., summon entity with the bible or pray on the bible.
 /// </summary>
 /// <remarks>
-/// Only chapelain's client get networked and informed as bibleUser. No other entity get informed.
+/// Only chaplain's client get networked and informed as <see cref="BibleUserComponent"/>.
 /// </remarks>
 [RegisterComponent, NetworkedComponent]
 public sealed partial class BibleUserComponent : Component

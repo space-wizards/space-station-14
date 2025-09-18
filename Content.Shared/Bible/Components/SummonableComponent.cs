@@ -8,7 +8,7 @@ namespace Content.Shared.Bible.Components;
 /// <summary>
 /// This lets you summon a mob or item with an alternative verb on the item.
 /// </summary>
-[RegisterComponent, NetworkedComponent]
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
 [AutoGenerateComponentPause]
 public sealed partial class SummonableComponent : Component
 {
@@ -25,12 +25,12 @@ public sealed partial class SummonableComponent : Component
     public EntProtoId? SpecialItemPrototype = null;
 
     /// <summary>
-    /// Is the summoned entity is alive.
+    /// Is the summoned entity is alive?
     /// </summary>
     public bool AlreadySummoned = false;
 
     /// <summary>
-    /// Is entity's user should have <see cref="BibleUserComponent"/>.
+    /// If the entity's user should have <see cref="BibleUserComponent"/>.
     /// </summary>
     [DataField]
     public bool RequiresBibleUser = true;
@@ -38,20 +38,20 @@ public sealed partial class SummonableComponent : Component
     /// <summary>
     /// The specific creature this summoned, if the SpecialItemPrototype has a mobstate.
     /// </summary>
-    [ViewVariables]
+    [DataField, AutoNetworkedField]
     public EntityUid? Summon = null;
 
     [DataField]
     public EntProtoId SummonAction = "ActionBibleSummon";
 
-    [DataField]
+    [DataField, AutoNetworkedField]
     public EntityUid? SummonActionEntity;
 
     /// <summary>
     /// Used for respawning.
     /// </summary>
     [DataField(customTypeSerializer: typeof(TimeOffsetSerializer))]
-    [AutoPausedField]
+    [AutoNetworkedField, AutoPausedField]
     public TimeSpan? RespawnEndTime;
 
     /// <summary>
