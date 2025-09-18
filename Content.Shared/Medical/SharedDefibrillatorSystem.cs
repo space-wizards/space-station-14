@@ -36,15 +36,15 @@ public abstract class SharedDefibrillatorSystem : EntitySystem
         SubscribeLocalEvent<DefibrillatorComponent, DefibrillatorZapDoAfterEvent>(OnDoAfter);
     }
 
-    private void OnAfterInteract(EntityUid uid, DefibrillatorComponent component, AfterInteractEvent args)
+    private void OnAfterInteract(Entity<DefibrillatorComponent> ent, ref AfterInteractEvent args)
     {
         if (args.Handled || args.Target is not { } target)
             return;
 
-        args.Handled = TryStartZap(uid, target, args.User, component);
+        args.Handled = TryStartZap(ent.Owner, target, args.User, ent.Comp);
     }
 
-    private void OnDoAfter(EntityUid uid, DefibrillatorComponent component, DefibrillatorZapDoAfterEvent args)
+    private void OnDoAfter(Entity<DefibrillatorComponent> ent, ref DefibrillatorZapDoAfterEvent args)
     {
         if (args.Handled || args.Cancelled)
             return;
@@ -52,11 +52,11 @@ public abstract class SharedDefibrillatorSystem : EntitySystem
         if (args.Target is not { } target)
             return;
 
-        if (!CanZap(uid, target, args.User, component))
+        if (!CanZap(ent.Owner, target, args.User, ent.Comp))
             return;
 
         args.Handled = true;
-        Zap(uid, target, args.User, component);
+        Zap(ent.Owner, target, args.User, ent.Comp);
     }
 
     /// <summary>
@@ -79,8 +79,8 @@ public abstract class SharedDefibrillatorSystem : EntitySystem
 
         if (!_toggle.IsActivated(uid))
         {
-            if (user != null && _net.IsClient && _timing.IsFirstTimePredicted)
-                _popup.PopupEntity(Loc.GetString("defibrillator-not-on"), uid, user.Value);
+            _popup.PopupClient(Loc.GetString("defibrillator-not-on"), uid);
+
             return false;
         }
 
