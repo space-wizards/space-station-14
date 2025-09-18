@@ -1,0 +1,9 @@
+- type: soundCollection
+  id: Spike
+  files:
+  - /Audio/Effects/Fluids/splat.ogg
+
+- type: soundCollection
+  id: SpikeButcher
+  files:
+  - /Audio/Weapons/bladeslice.ogg

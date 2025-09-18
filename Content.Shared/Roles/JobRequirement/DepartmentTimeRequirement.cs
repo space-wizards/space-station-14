@@ -53,7 +53,7 @@ public sealed partial class DepartmentTimeRequirement : JobRequirement
         var formattedDeptDiff = ContentLocalizationManager.FormatPlaytime(deptDiffSpan);
         var nameDepartment = "role-timer-department-unknown";
 
-        if (protoManager.TryIndex(Department, out var departmentIndexed))
+        if (protoManager.Resolve(Department, out var departmentIndexed))
         {
             nameDepartment = departmentIndexed.Name;
         }
