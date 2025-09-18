@@ -52,7 +52,7 @@ public sealed class CharacterRecordsSystem : EntitySystem
             return;
 
         var profile = args.Profile;
-        var profileRecords = profile.CharacterRecords ?? PlayerProvidedCharacterRecords.DefaultRecords();
+        var profileRecords = profile.CDCharacterRecords ?? PlayerProvidedCharacterRecords.DefaultRecords();
 
         if (!_prototype.TryIndex(args.JobId, out JobPrototype? jobPrototype))
         {

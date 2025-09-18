@@ -93,8 +93,9 @@ namespace Content.Shared.Preferences
         [DataField]
         public HumanoidCharacterAppearance Appearance { get; set; } = new();
 
-        [DataField("characterRecords")]
-        public PlayerProvidedCharacterRecords? CharacterRecords { get; private set; } = PlayerProvidedCharacterRecords.DefaultRecords();
+        // Cosmatic Drift – stores the player's custom record data on the profile itself.
+        [DataField("cosmaticDriftCharacterRecords")]
+        public PlayerProvidedCharacterRecords? CDCharacterRecords { get; private set; } = PlayerProvidedCharacterRecords.DefaultRecords();
 
         /// <summary>
         /// When spawning into a round what's the preferred spot to spawn.
@@ -190,10 +191,10 @@ namespace Content.Shared.Preferences
                 other.Cybernetics, // Starlight
                 other.Enabled)
         {
-            CharacterRecords = other.CharacterRecords != null
-                ? new PlayerProvidedCharacterRecords(other.CharacterRecords)
+            CDCharacterRecords = other.CDCharacterRecords != null
+                ? new PlayerProvidedCharacterRecords(other.CDCharacterRecords)
                 : PlayerProvidedCharacterRecords.DefaultRecords();
-            CharacterRecords.EnsureValid();
+            CDCharacterRecords.EnsureValid();
         }
 
         /// <summary>
@@ -324,11 +325,11 @@ namespace Content.Shared.Preferences
             return new(this) { Appearance = appearance };
         }
 
-        public HumanoidCharacterProfile WithCharacterRecords(PlayerProvidedCharacterRecords records)
+        public HumanoidCharacterProfile WithCDCharacterRecords(PlayerProvidedCharacterRecords records)
         {
             var copy = new PlayerProvidedCharacterRecords(records);
             copy.EnsureValid();
-            return new HumanoidCharacterProfile(this) { CharacterRecords = copy };
+            return new HumanoidCharacterProfile(this) { CDCharacterRecords = copy };
         }
 
         public HumanoidCharacterProfile WithSpawnPriorityPreference(SpawnPriorityPreference spawnPriority)
@@ -481,12 +482,12 @@ namespace Content.Shared.Preferences
             if (!Loadouts.SequenceEqual(other.Loadouts)) return false;
             if (FlavorText != other.FlavorText) return false;
             if (Enabled != other.Enabled) return false;
-            if (CharacterRecords != null)
+            if (CDCharacterRecords != null)
             {
-                if (other.CharacterRecords == null || !CharacterRecords.MemberwiseEquals(other.CharacterRecords))
+                if (other.CDCharacterRecords == null || !CDCharacterRecords.MemberwiseEquals(other.CDCharacterRecords))
                     return false;
             }
-            else if (other.CharacterRecords != null)
+            else if (other.CDCharacterRecords != null)
             {
                 return false;
             }
@@ -667,8 +668,8 @@ namespace Content.Shared.Preferences
                 _loadouts.Remove(value);
             }
 
-            CharacterRecords ??= PlayerProvidedCharacterRecords.DefaultRecords();
-            CharacterRecords.EnsureValid();
+            CDCharacterRecords ??= PlayerProvidedCharacterRecords.DefaultRecords();
+            CDCharacterRecords.EnsureValid();
         }
 
         /// <summary>

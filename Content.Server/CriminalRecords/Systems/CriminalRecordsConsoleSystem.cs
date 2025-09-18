@@ -1,3 +1,4 @@
+using Content.Server._CD.Records;
 using Content.Server.Popups;
 using Content.Server.Radio.EntitySystems;
 using Content.Server.Station.Systems;
@@ -45,6 +46,17 @@ public sealed class CriminalRecordsConsoleSystem : SharedCriminalRecordsConsoleS
             subs.Event<CriminalRecordAddHistory>(OnAddHistory);
             subs.Event<CriminalRecordDeleteHistory>(OnDeleteHistory);
             subs.Event<CriminalRecordSetStatusFilter>(OnStatusFilterPressed);
+        });
+
+        // Cosmatic Drift: bridge the character record console UI with the existing
+        // criminal records logic so security status edits keep both interfaces in sync.
+        Subs.BuiEvents<CriminalRecordsConsoleComponent>(CharacterRecordConsoleKey.Key, subs =>
+        {
+            subs.Event<SelectStationRecord>(OnKeySelected);
+            subs.Event((Entity<CriminalRecordsConsoleComponent> ent, ref CriminalRecordChangeStatus args) =>
+            {
+                OnChangeStatus(ent, ref args);
+            });
         });
     }
 
@@ -133,7 +145,8 @@ public sealed class CriminalRecordsConsoleSystem : SharedCriminalRecordsConsoleS
         if (tryGetIdentityShortInfoEvent.Title != null)
             officer = tryGetIdentityShortInfoEvent.Title;
 
-        _criminalRecords.TryChangeStatus(key.Value, msg.Status, msg.Reason, officer);
+        if (!_criminalRecords.TryChangeStatus(key.Value, msg.Status, msg.Reason, officer))
+            return;
 
         (string, object)[] args;
         if (reason != null)
@@ -169,6 +182,10 @@ public sealed class CriminalRecordsConsoleSystem : SharedCriminalRecordsConsoleS
             ent.Comp.SecurityChannel, ent);
 
         UpdateUserInterface(ent);
+
+        // Notify the character record consoles so their view refreshes with the
+        // latest security status.
+        RaiseLocalEvent(ent, new CharacterRecordsModifiedEvent());
     }
 
     private void OnAddHistory(Entity<CriminalRecordsConsoleComponent> ent, ref CriminalRecordAddHistory msg)

@@ -361,11 +361,11 @@ namespace Content.Server.Database
             if (profile.CDProfile?.CharacterRecords != null)
             {
                 var records = RecordsSerialization.Deserialize(profile.CDProfile.CharacterRecords, profile.CDProfile.CharacterRecordEntries);
-                humanoid = humanoid.WithCharacterRecords(records);
+                humanoid = humanoid.WithCDCharacterRecords(records);
             }
             else
             {
-                humanoid = humanoid.WithCharacterRecords(PlayerProvidedCharacterRecords.DefaultRecords());
+                humanoid = humanoid.WithCDCharacterRecords(PlayerProvidedCharacterRecords.DefaultRecords());
             }
 
             return humanoid;
@@ -435,7 +435,7 @@ namespace Content.Server.Database
             );
 
             profile.CDProfile ??= new CDModel.CDProfile();
-            var storedRecords = humanoid.CharacterRecords ?? PlayerProvidedCharacterRecords.DefaultRecords();
+            var storedRecords = humanoid.CDCharacterRecords ?? PlayerProvidedCharacterRecords.DefaultRecords();
             profile.CDProfile.CharacterRecords = JsonSerializer.SerializeToDocument(storedRecords);
             profile.CDProfile.CharacterRecordEntries.Clear();
             profile.CDProfile.CharacterRecordEntries.AddRange(RecordsSerialization.GetEntries(storedRecords));

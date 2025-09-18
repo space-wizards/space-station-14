@@ -14,6 +14,11 @@
   supervisors: job-supervisors-rd
   jobEntity: StationAiBrain
   jobPreviewEntity: PlayerStationAiPreview
+  # Cosmatic Drift: AIs spawn as non-humanoids, so skip loading character records for them.
+  special:
+  - !type:AddComponentSpecial
+    components:
+    - type: SkipLoadingCharacterRecords
   applyTraits: false
 
 - type: job
@@ -28,4 +33,9 @@
   icon: JobIconBorg
   supervisors: job-supervisors-rd
   jobEntity: PlayerBorgBattery
+  # Cosmatic Drift: Cyborg shells do not use humanoid profiles, so avoid seeding records.
+  special:
+  - !type:AddComponentSpecial
+    components:
+    - type: SkipLoadingCharacterRecords
   applyTraits: false

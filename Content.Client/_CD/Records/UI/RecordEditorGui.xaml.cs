@@ -119,7 +119,7 @@ public sealed partial class RecordEditorGui : Control
     public void Update(HumanoidCharacterProfile? profile)
     {
         // Pull the saved records off the profile when the lobby refreshes the tab.
-        _records = profile?.CharacterRecords ?? PlayerProvidedCharacterRecords.DefaultRecords();
+        _records = profile?.CDCharacterRecords ?? PlayerProvidedCharacterRecords.DefaultRecords();
         EmploymentEntrySelector.UpdateContents(_records.EmploymentEntries);
         MedicalEntrySelector.UpdateContents(_records.MedicalEntries);
         SecurityEntrySelector.UpdateContents(_records.SecurityEntries);
