@@ -14699,5 +14699,43 @@ Entries:
   id: 142700
   time: '2025-09-17T16:25:10.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/1427
+- author: Rinary
+  changes:
+  - message: Fixed emp scream & jump cooldowns.
+    type: Fix
+  id: 166600
+  time: '2025-09-18T21:46:21.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1666
+- author: Rinary
+  changes:
+  - message: Changed poison web injection from 2 to 0.5.
+    type: Tweak
+  id: 166601
+  time: '2025-09-18T21:46:21.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1666
+- author: Rinary
+  changes:
+  - message: Changed white spider battery from 200 to 150 and charge rate from 25
+      to 10.
+    type: Tweak
+  id: 166602
+  time: '2025-09-18T21:46:21.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1666
+- author: Rinary
+  changes:
+  - message: Fixed spider popup, now it separated and part with directions will be
+      popuped only when your spider can spawn more than one web in one action.
+    type: Fix
+  id: 166603
+  time: '2025-09-18T21:46:21.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1666
+- author: Rinary
+  changes:
+  - message: Changed web spinning cooldown from 25 to 15, but terror spiders web condition
+      target web count changed from 24 to 36.
+    type: Tweak
+  id: 166604
+  time: '2025-09-18T21:46:21.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1666
 Order: -1
 
