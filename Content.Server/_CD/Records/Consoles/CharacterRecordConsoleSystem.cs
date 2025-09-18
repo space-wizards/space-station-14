@@ -56,6 +56,7 @@ public sealed class CharacterRecordConsoleSystem : EntitySystem
             return;
 
         var station = _station.GetOwningStation(entity);
+        // When the console is not tied to a valid station datastore, fall back to an empty UI state.
         if (!HasComp<StationRecordsComponent>(station) ||
             !HasComp<CharacterRecordsComponent>(station))
         {
@@ -72,6 +73,7 @@ public sealed class CharacterRecordConsoleSystem : EntitySystem
                 ? $"{record.Name} ({record.JobTitle})"
                 : $"{record.Name} ({netEntity}, {record.JobTitle})";
 
+            // Allow local filtering before the entry shows up in the UI list.
             if (console.Filter != null && IsSkippedRecord(console.Filter, record, displayName))
                 continue;
 
@@ -97,6 +99,7 @@ public sealed class CharacterRecordConsoleSystem : EntitySystem
         if ((console.ConsoleType == RecordConsoleType.Admin || console.ConsoleType == RecordConsoleType.Security)
             && selectedRecord?.StationRecordsKey != null)
         {
+            // Security-facing consoles surface the linked criminal record for quick context.
             var key = new StationRecordKey(selectedRecord.StationRecordsKey.Value, station.Value);
             if (_records.TryGetRecord<CriminalRecord>(key, out var entry))
                 securityStatus = (entry.Status, entry.Reason);
@@ -121,6 +124,7 @@ public sealed class CharacterRecordConsoleSystem : EntitySystem
 
     private static bool IsSkippedRecord(StationRecordsFilter filter, FullCharacterRecords record, string nameJob)
     {
+        // Each console type exposes a slightly different search surface; bail out early when nothing was typed.
         var isFilter = filter.Value.Length > 0;
         if (!isFilter)
             return false;
@@ -140,6 +144,7 @@ public sealed class CharacterRecordConsoleSystem : EntitySystem
 
     private static bool IsFilterWithSomeCodeValue(string value, string filter)
     {
+        // DNA / fingerprint filters only care about the prefix, mirroring the console UI expectations.
         return !value.StartsWith(filter, StringComparison.CurrentCultureIgnoreCase);
     }
 }

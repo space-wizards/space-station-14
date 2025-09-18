@@ -49,6 +49,7 @@ public static class RecordsSerialization
         List<CDModel.CharacterRecordEntry> entries,
         CDModel.DbRecordEntryType type)
     {
+        // Preserve the insertion order from the database so consoles show entries chronologically.
         return entries
             .Where(entry => entry.Type == type)
             .OrderBy(entry => entry.Id)
@@ -95,6 +96,7 @@ public static class RecordsSerialization
 
     public static List<CDModel.CharacterRecordEntry> GetEntries(PlayerProvidedCharacterRecords records)
     {
+        // Flatten the per-category lists into the database representation while reusing the validation logic above.
         return records.MedicalEntries.Select(medical => ConvertEntry(medical, CDModel.DbRecordEntryType.Medical))
             .Concat(records.SecurityEntries.Select(security => ConvertEntry(security, CDModel.DbRecordEntryType.Security)))
             .Concat(records.EmploymentEntries.Select(employment => ConvertEntry(employment, CDModel.DbRecordEntryType.Employment)))

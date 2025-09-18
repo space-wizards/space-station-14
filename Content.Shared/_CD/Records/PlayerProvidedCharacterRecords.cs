@@ -139,6 +139,7 @@ public sealed partial class PlayerProvidedCharacterRecords
         AdminEntries = other.AdminEntries.Select(x => new RecordEntry(x)).ToList();
     }
 
+    // Template with sensible defaults used when a profile has no saved character records.
     public static PlayerProvidedCharacterRecords DefaultRecords()
     {
         return new PlayerProvidedCharacterRecords(
@@ -190,6 +191,7 @@ public sealed partial class PlayerProvidedCharacterRecords
     [Pure]
     public PlayerProvidedCharacterRecords EnsureValid()
     {
+        // Clamp fields before serialization so database rows cannot exceed UI expectations.
         Height = Math.Clamp(Height, 0, MaxHeight);
         Weight = Math.Clamp(Weight, 0, MaxWeight);
         EmergencyContactName = ClampString(EmergencyContactName, TextMedLen);
@@ -220,6 +222,7 @@ public sealed partial class PlayerProvidedCharacterRecords
 
     private static string ClampString(string value, int length)
     {
+        // Avoid printing garbage characters by trimming to the console text limits.
         if (value.Length <= length)
             return value;
         return value[..length];
