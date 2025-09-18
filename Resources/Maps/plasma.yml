@@ -146273,6 +146273,13 @@ entities:
     - type: Transform
       pos: -46.5,-9.5
       parent: 2
+- proto: SpawnMobCrabAtmos
+  entities:
+  - uid: 26487
+    components:
+    - type: Transform
+      pos: -119.5,7.5
+      parent: 2
 - proto: SpawnMobFoxRenault
   entities:
   - uid: 22264
