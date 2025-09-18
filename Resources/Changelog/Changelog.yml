@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: EmoGarbage404
-  changes:
-  - message: Adjusted the sounds of various floors and shoes.
-    type: Tweak
-  id: 8474
-  time: '2025-05-13T09:16:17.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/36941
 - author: metalgearsloth
   changes:
   - message: Predicted freezers + heaters UIs.
@@ -3949,3 +3942,10 @@
   id: 8984
   time: '2025-09-18T19:01:22.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/40426
+- author: Shot
+  changes:
+  - message: The cane blade can now slice, cut and execute
+    type: Tweak
+  id: 8985
+  time: '2025-09-18T19:37:04.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/40311
