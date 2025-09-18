@@ -156,46 +156,6 @@ public sealed partial class PlayerProvidedCharacterRecords
         );
     }
 
-    /// <summary>
-    /// Provides development-only seed data so the record consoles immediately
-    /// display something when running the development configuration preset.
-    /// </summary>
-    public static PlayerProvidedCharacterRecords DevSampleRecords()
-    {
-        return new PlayerProvidedCharacterRecords(
-            hasWorkAuthorization: true,
-            height: 182,
-            weight: 82,
-            emergencyContactName: "Nanotrasen HR Hotline",
-            identifyingFeatures: "Scar over left eyebrow",
-            allergies: "Space pollen",
-            drugAllergies: "Penicillin",
-            postmortemInstructions: "Return to CentCom for review.",
-            medicalEntries: new List<RecordEntry>
-            {
-                new("Annual Physical", "Dr. Emilia Frost",
-                    "Routine check-up completed without complications."),
-                new("Cryo Recovery", "Dr. Jules Carter",
-                    "Recovered from cryostasis following shuttle decompression.")
-            },
-            securityEntries: new List<RecordEntry>
-            {
-                new("Incident #2234", "Officer Randall",
-                    "Verbal warning issued for unauthorized maintenance access.")
-            },
-            employmentEntries: new List<RecordEntry>
-            {
-                new("Promotion", "Chief Engineer",
-                    "Promoted to Senior Engineer for exemplary reactor work.")
-            },
-            adminEntries: new List<RecordEntry>
-            {
-                new("Admin Note", "Game Administrator",
-                    "Sample admin record inserted for development testing.")
-            }
-        );
-    }
-
     public bool MemberwiseEquals(PlayerProvidedCharacterRecords other)
     {
         var matches = Height == other.Height
