@@ -16,8 +16,8 @@
     - Fox # "vaguely canidae"
     - Dog # "vaguely canidae"
   #Starlight
-  - type: Hunger
-  - type: Thirst
+#  - type: Hunger # starlight
+#  - type: Thirst # starlight
   - type: MessyDrinker
     spillChance: 0.33
   - type: Icon
