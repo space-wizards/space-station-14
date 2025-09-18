@@ -730,6 +730,21 @@ public abstract partial class InteractionTest
         Assert.That(count, Is.EqualTo(value));
     }
 
+    /// <summary>
+    /// Check that some entity is close to a certain coordinate location.
+    /// </summary>
+    /// <param name="target">The entity to check the location for. Defaults to <see cref="target"/></param>
+    /// <param name="coordinates">The coordinates the entity should be at.</param>
+    /// <param name="radius">The maximum allowed distance from the target coords</param>
+
+    protected void AssertLocation(NetEntity? target, NetCoordinates coords, float radius = 0.01f)
+    {
+        target ??= Target;
+        Assert.That(target, Is.Not.Null, "No target specified");
+        Assert.That(Position(target!.Value).TryDelta(SEntMan, Transform, ToServer(coords), out var delta), "Could not calculate distance between coordinates.");
+        Assert.That(delta.Length(), Is.LessThanOrEqualTo(radius), $"{SEntMan.ToPrettyString(SEntMan.GetEntity(target.Value))} was not at the intended location. Distance: {delta}, allowed distance: {radius}");
+    }
+
     #endregion
 
     #region Entity lookups
@@ -1412,14 +1427,24 @@ public abstract partial class InteractionTest
     protected EntityUid? ToServer(NetEntity? nent) => SEntMan.GetEntity(nent);
     protected EntityUid? ToClient(NetEntity? nent) => CEntMan.GetEntity(nent);
     protected EntityUid ToServer(EntityUid cuid) => SEntMan.GetEntity(CEntMan.GetNetEntity(cuid));
-    protected EntityUid ToClient(EntityUid cuid) => CEntMan.GetEntity(SEntMan.GetNetEntity(cuid));
+    protected EntityUid ToClient(EntityUid suid) => CEntMan.GetEntity(SEntMan.GetNetEntity(suid));
     protected EntityUid? ToServer(EntityUid? cuid) => SEntMan.GetEntity(CEntMan.GetNetEntity(cuid));
-    protected EntityUid? ToClient(EntityUid? cuid) => CEntMan.GetEntity(SEntMan.GetNetEntity(cuid));
+    protected EntityUid? ToClient(EntityUid? suid) => CEntMan.GetEntity(SEntMan.GetNetEntity(suid));
 
     protected EntityCoordinates ToServer(NetCoordinates coords) => SEntMan.GetCoordinates(coords);
     protected EntityCoordinates ToClient(NetCoordinates coords) => CEntMan.GetCoordinates(coords);
     protected EntityCoordinates? ToServer(NetCoordinates? coords) => SEntMan.GetCoordinates(coords);
     protected EntityCoordinates? ToClient(NetCoordinates? coords) => CEntMan.GetCoordinates(coords);
+
+    protected NetEntity FromServer(EntityUid suid) => SEntMan.GetNetEntity(suid);
+    protected NetEntity FromClient(EntityUid cuid) => CEntMan.GetNetEntity(cuid);
+    protected NetEntity? FromServer(EntityUid? suid) => SEntMan.GetNetEntity(suid);
+    protected NetEntity? FromClient(EntityUid? cuid) => CEntMan.GetNetEntity(cuid);
+
+    protected NetCoordinates FromServer(EntityCoordinates scoords) => SEntMan.GetNetCoordinates(scoords);
+    protected NetCoordinates FromClient(EntityCoordinates ccoords) => CEntMan.GetNetCoordinates(ccoords);
+    protected NetCoordinates? FromServer(EntityCoordinates? scoords) => SEntMan.GetNetCoordinates(scoords);
+    protected NetCoordinates? FromClient(EntityCoordinates? ccoords) => CEntMan.GetNetCoordinates(ccoords);
 
     #endregion
 
