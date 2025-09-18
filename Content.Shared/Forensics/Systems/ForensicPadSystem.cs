@@ -1,11 +1,9 @@
 using Content.Server.Forensics;
 using Content.Shared.DoAfter;
 using Content.Shared.Examine;
-using Content.Shared.Forensics;
 using Content.Shared.Forensics.Components;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Interaction;
-using Content.Shared.Inventory;
 using Content.Shared.Labels.EntitySystems;
 using Content.Shared.Popups;
 
@@ -18,7 +16,7 @@ namespace Content.Shared.Forensics.Systems
     {
         [Dependency] private readonly SharedDoAfterSystem _doAfterSystem = default!;
         [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
-        [Dependency] private readonly ForensicsSystem _forensics = default!;
+        [Dependency] private readonly SharedForensicsSystem _forensics = default!;
         [Dependency] private readonly LabelSystem _label = default!;
 
         public override void Initialize()
