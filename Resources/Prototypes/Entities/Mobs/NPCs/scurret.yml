@@ -13,6 +13,7 @@
     - ScurretSign
     understands:
     - ScurretSign
+    - GalacticCommon
   # Starlight-end
   # Custom names
   - type: Sprite
