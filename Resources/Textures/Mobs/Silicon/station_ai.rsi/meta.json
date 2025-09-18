@@ -184,7 +184,7 @@
             ]
         },
         {
-            "name": "ai_cat",
+            "name": "ai_sillycon",
             "delays": [
                 [
                     0.4,
@@ -207,7 +207,7 @@
             ]
         },
         {
-            "name": "ai_cat_dead",
+            "name": "ai_sillycon_dead",
             "delays": [
                 [
                     0.4,
