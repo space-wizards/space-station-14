@@ -93,9 +93,19 @@ public sealed class CharacterRecordsSystem : EntitySystem
         var speciesName = profile.CustomSpecieName;
         if (string.IsNullOrWhiteSpace(speciesName))
         {
-            speciesName = _prototype.TryIndex<SpeciesPrototype>(profile.Species, out var species)
-                ? species.Name
-                : profile.Species;
+            if (_prototype.TryIndex<SpeciesPrototype>(profile.Species, out var species))
+            {
+                // Species prototypes store their display name as a localization key, so attempt to
+                // resolve it. If we fail to find a localized string fall back to the raw prototype
+                // value to avoid crashing the server, matching the behaviour on Cosmatic Drift.
+                speciesName = Loc.TryGetString(species.Name, out var localized)
+                    ? localized
+                    : species.Name;
+            }
+            else
+            {
+                speciesName = profile.Species;
+            }
         }
 
         var records = new FullCharacterRecords(
