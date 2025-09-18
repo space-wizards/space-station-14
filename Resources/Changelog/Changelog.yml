@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: AsnDen
-  changes:
-  - message: Supplybots can now pull things.
-    type: Add
-  id: 8476
-  time: '2025-05-13T17:15:30.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/32468
 - author: BigfootBravo
   changes:
   - message: Cargo acquisition slips can now fit into folders, clipboards, and envelopes,
@@ -3949,3 +3942,14 @@
   id: 8986
   time: '2025-09-18T19:59:29.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/40433
+- author: 2DSiggy
+  changes:
+  - message: Thief can now be tasked with stealing Secoff/detective handguns, Captain's
+      sabre, and the CE's toolbelt.
+    type: Add
+  - message: Heavily reduced the likelihood of the LAMP objective for thief moths
+      and reduced the chance of beer goggles appearing as an objective.
+    type: Tweak
+  id: 8987
+  time: '2025-09-18T20:09:45.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/39867
