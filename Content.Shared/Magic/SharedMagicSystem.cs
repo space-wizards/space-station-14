@@ -1,4 +1,8 @@
+using System.Linq;
 using System.Numerics;
+using Content.Shared._Starlight.Language;
+using Content.Shared._Starlight.Language.Components;
+using Content.Shared._Starlight.Language.Systems;
 using Content.Shared._Starlight.Magic.Events;
 using Content.Shared.Body.Components;
 using Content.Shared.Body.Systems;
@@ -66,8 +70,11 @@ public abstract class SharedMagicSystem : EntitySystem
     [Dependency] private readonly SharedMindSystem _mind = default!;
     [Dependency] private readonly SharedStunSystem _stun = default!;
     [Dependency] private readonly TurfSystem _turf = default!;
-    //starlight
+    #region Starlight
     [Dependency] private readonly DamageableSystem _damageable = default!;
+    [Dependency] private readonly SharedLanguageSystem _language = default!;
+    [Dependency] private readonly IPrototypeManager _prototype = default!;
+    #endregion
 
     private static readonly ProtoId<TagPrototype> InvalidForGlobalSpawnSpellTag = "InvalidForGlobalSpawnSpell";
 
@@ -89,6 +96,7 @@ public abstract class SharedMagicSystem : EntitySystem
         SubscribeLocalEvent<VoidApplauseSpellEvent>(OnVoidApplause);
         #region Starlight
         SubscribeLocalEvent<SpawnItemInHandEvent>(OnSpawnItemInHand);
+        SubscribeLocalEvent<TowerOfBabelEvent>(OnTowerOfBabel);
         #endregion
     }
 
@@ -540,6 +548,50 @@ public abstract class SharedMagicSystem : EntitySystem
             Del(star);//event has a tendency to produce client-sided cheese... this cleans those up...
         else
             _hands.TryPickupAnyHand(user, star);
+        ev.Handled = true;
+    }
+
+    private void OnTowerOfBabel(TowerOfBabelEvent ev)
+    {
+        if (ev.Handled || !PassesSpellPrerequisites(ev.Action, ev.Performer))
+            return;
+        var languages = new HashSet<ProtoId<LanguagePrototype>>();
+        foreach (var language in _prototype.EnumeratePrototypes<LanguagePrototype>())
+        {
+            languages.Add(language.ID);
+        }
+
+        var allLangs = languages.ToList(); //this list is going to be shuffled... ALOT...
+        foreach (var languageKnower in EntityManager.AllEntities<LanguageKnowledgeComponent>())
+        {
+            var comp = languageKnower.Comp;
+            if (
+                comp.SpokenLanguages.Contains(SharedLanguageSystem.UniversalPrototype) ||
+                comp.UnderstoodLanguages.Contains(SharedLanguageSystem.UniversalPrototype)
+                )
+                continue; // One who knows the knowledge of all things cannot know less.
+
+            if (comp.SpokenLanguages.Count > comp.UnderstoodLanguages.Count)
+            {
+                _random.Shuffle(allLangs);
+                comp.SpokenLanguages = [.. allLangs.Take(comp.SpokenLanguages.Count)];
+                var spoken = comp.SpokenLanguages.ToList();
+                _random.Shuffle(spoken);
+                comp.UnderstoodLanguages = [.. spoken.Take(comp.UnderstoodLanguages.Count())];
+            }
+            else
+            {
+                _random.Shuffle(allLangs);
+                comp.UnderstoodLanguages = [.. allLangs.Take(comp.UnderstoodLanguages.Count)];
+                var understood = comp.UnderstoodLanguages.ToList();
+                _random.Shuffle(understood);
+                comp.SpokenLanguages = [.. understood.Take(comp.SpokenLanguages.Count())];
+            }
+
+            if (TryComp<LanguageSpeakerComponent>(languageKnower, out var speaker))
+                _language.UpdateEntityLanguages((languageKnower, speaker));
+        }
+
         ev.Handled = true;
     }
     #endregion

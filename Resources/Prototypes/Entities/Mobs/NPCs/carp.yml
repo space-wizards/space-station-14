@@ -12,6 +12,7 @@
       - Carptongue
       understands:
       - Carptongue
+      - Thaveyan
   # Starlight-end
     - type: InputMover
     - type: MobMover

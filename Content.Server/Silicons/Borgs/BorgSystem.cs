@@ -8,7 +8,6 @@ using Content.Server.Hands.Systems;
 using Content.Server.PowerCell;
 using Content.Shared._Starlight.Silicons.Borgs;
 using Content.Shared.Actions.Components;
-using Content.Server.Radio.Components;
 using Content.Shared.Alert;
 using Content.Shared.Body.Events;
 using Content.Shared.Database;
@@ -365,8 +364,8 @@ public sealed partial class BorgSystem : SharedBorgSystem
     {
         if (!_powerCell.TryGetBatteryFromSlot(ent, out var battery, slotComponent))
         {
-            _alerts.ClearAlert(ent, ent.Comp.BatteryAlert);
-            _alerts.ShowAlert(ent, ent.Comp.NoBatteryAlert);
+            _alerts.ClearAlert(ent.Owner, ent.Comp.BatteryAlert);
+            _alerts.ShowAlert(ent.Owner, ent.Comp.NoBatteryAlert);
             return;
         }
 
@@ -379,8 +378,8 @@ public sealed partial class BorgSystem : SharedBorgSystem
             chargePercent = 1;
         }
 
-        _alerts.ClearAlert(ent, ent.Comp.NoBatteryAlert);
-        _alerts.ShowAlert(ent, ent.Comp.BatteryAlert, chargePercent);
+        _alerts.ClearAlert(ent.Owner, ent.Comp.NoBatteryAlert);
+        _alerts.ShowAlert(ent.Owner, ent.Comp.BatteryAlert, chargePercent);
     }
 
     public bool TryEjectPowerCell(EntityUid uid, BorgChassisComponent component, [NotNullWhen(true)] out List<EntityUid>? ents)
@@ -390,7 +389,7 @@ public sealed partial class BorgSystem : SharedBorgSystem
         if (!TryComp<PowerCellSlotComponent>(uid, out var slotComp) ||
             !Container.TryGetContainer(uid, slotComp.CellSlotId, out var container) ||
             !container.ContainedEntities.Any())
-                return false;
+            return false;
 
         ents = Container.EmptyContainer(container);
 
