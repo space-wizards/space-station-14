@@ -989,9 +989,9 @@ public abstract partial class InteractionTest
     /// <summary>
     ///     Sends a bui message using the given bui key.
     /// </summary>
-    protected async Task SendBui(Enum key, BoundUserInterfaceMessage msg, EntityUid? _ = null)
+    protected async Task SendBui(Enum key, BoundUserInterfaceMessage msg, NetEntity? target = null)
     {
-        if (!TryGetBui(key, out var bui))
+        if (!TryGetBui(key, out var bui, target))
             return;
 
         await Client.WaitPost(() => bui.SendMessage(msg));
@@ -1003,9 +1003,9 @@ public abstract partial class InteractionTest
     /// <summary>
     ///     Sends a bui message using the given bui key.
     /// </summary>
-    protected async Task CloseBui(Enum key, EntityUid? _ = null)
+    protected async Task CloseBui(Enum key, NetEntity? target = null)
     {
-        if (!TryGetBui(key, out var bui))
+        if (!TryGetBui(key, out var bui, target))
             return;
 
         await Client.WaitPost(() => bui.Close());

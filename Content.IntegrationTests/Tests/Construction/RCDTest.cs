@@ -3,6 +3,7 @@ using Content.IntegrationTests.Tests.Interaction;
 using Content.Shared.Charges.Systems;
 using Content.Shared.RCD;
 using Content.Shared.RCD.Components;
+using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
 
 namespace Content.IntegrationTests.Tests.Construction;
@@ -26,14 +27,25 @@ public sealed class RCDTest : InteractionTest
     {
         // Place some tiles around the player so that we have space to build.
         var pCoords = SEntMan.GetCoordinates(PlayerCoords);
-        var pNorth = pCoords.Offset(new Vector2(0, 1));
-        var pSouth = pCoords.Offset(new Vector2(0, -1));
-        var pEast = pCoords.Offset(new Vector2(1, 0));
-        var pWest = pCoords.Offset(new Vector2(-1, 0));
+        var pNorth = new EntityCoordinates(SPlayer, new Vector2(0, 1));
+        var pSouth = new EntityCoordinates(SPlayer, new Vector2(0, -1));
+        var pEast = new EntityCoordinates(SPlayer, new Vector2(1, 0));
+        var pWest = new EntityCoordinates(SPlayer, new Vector2(-1, 0));
         await SetTile(Plating, SEntMan.GetNetCoordinates(pNorth), MapData.Grid);
         await SetTile(Plating, SEntMan.GetNetCoordinates(pSouth), MapData.Grid);
         await SetTile(Plating, SEntMan.GetNetCoordinates(pEast), MapData.Grid);
         await SetTile(Lattice, SEntMan.GetNetCoordinates(pWest), MapData.Grid);
+
+        Assert.That(ProtoMan.TryIndex(RCDSettingWall, out var settingWall), $"RCDPrototype not found: {RCDSettingWall}.");
+        Assert.That(settingWall.Prototype, Is.Not.Null, "RCDPrototype has a null spawning prototype.");
+        Assert.That(ProtoMan.TryIndex(RCDSettingAirlock, out var settingAirlock), $"RCDPrototype not found: {RCDSettingAirlock}.");
+        Assert.That(settingAirlock.Prototype, Is.Not.Null, $"RCDPrototype has a null spawning prototype.");
+        Assert.That(ProtoMan.TryIndex(RCDSettingPlating, out var settingPlating), $"RCDPrototype not found: {RCDSettingPlating}.");
+        Assert.That(settingPlating.Prototype, Is.Not.Null, "RCDPrototype has a null spawning prototype.");
+        Assert.That(ProtoMan.TryIndex(RCDSettingFloorSteel, out var settingFloorSteel), $"RCDPrototype not found: {RCDSettingFloorSteel}.");
+        Assert.That(settingFloorSteel.Prototype, Is.Not.Null, "RCDPrototype has a null spawning prototype.");
+        Assert.That(ProtoMan.TryIndex(RCDSettingDeconstructTile, out var settingDeconstructTile), $"RCDPrototype not found: {RCDSettingDeconstructTile}.");
+        Assert.That(ProtoMan.TryIndex(RCDSettingDeconstructLattice, out var settingDeconstructLattice), $"RCDPrototype not found: {RCDSettingDeconstructLattice}.");
 
         var rcd = await PlaceInHands(RCDProtoId);
 
@@ -46,22 +58,21 @@ public sealed class RCDTest : InteractionTest
         Assert.That(IsUiOpen(RcdUiKey.Key), Is.False, "RCD UI was opened when picking it up.");
         await UseInHand();
         await RunTicks(3);
-        /*
+
         Assert.That(IsUiOpen(RcdUiKey.Key), Is.True, "RCD UI was not opened when using the RCD while holding it.");
 
         // Simulating a click on the right control for nested radial menus is very complicated.
         // So we just manually send a networking message from the client to tell the server we selected an option.
         // TODO: Write a separate test for clicking through a SimpleRadialMenu.
-        await SendBui(RcdUiKey.Key, new RCDSystemMessage(RCDSettingWall));
-        await CloseBui(RcdUiKey.Key);
+        await SendBui(RcdUiKey.Key, new RCDSystemMessage(RCDSettingWall), rcd);
+        await CloseBui(RcdUiKey.Key, rcd);
         Assert.That(IsUiOpen(RcdUiKey.Key), Is.False, "RCD UI is still open.");
 
         // Build a wall next to the player.
         await Interact(null, pNorth);
 
         // Check that there is exactly one wall.
-        Assert.That(ProtoMan.TryIndex(RCDSettingWall, out var settingWall), "RCDPrototype not found.");
-        Assert.That(settingWall.Prototype, Is.Not.Null, "RCDPrototype has a null spawning prototype.");
+        await RunSeconds(settingWall.Delay + 1); // wait for the construction to finish
         await AssertEntityLookup((settingWall.Prototype, 1));
 
         // Check that the wall is in the correct tile.
@@ -75,6 +86,7 @@ public sealed class RCDTest : InteractionTest
 
         // Try building another wall in the same spot.
         await Interact(null, pNorth);
+        await RunSeconds(settingWall.Delay + 1); // wait for the construction to finish
 
         // Check that there is still exactly one wall.
         await AssertEntityLookup((settingWall.Prototype, 1));
@@ -87,17 +99,19 @@ public sealed class RCDTest : InteractionTest
         await UseInHand();
         await RunTicks(3);
         Assert.That(IsUiOpen(RcdUiKey.Key), Is.True, "RCD UI was not opened when using the RCD while holding it.");
-        await SendBui(RcdUiKey.Key, new RCDSystemMessage(RCDSettingAirlock));
-        await CloseBui(RcdUiKey.Key);
+        await SendBui(RcdUiKey.Key, new RCDSystemMessage(RCDSettingAirlock), rcd);
+        await CloseBui(RcdUiKey.Key, rcd);
         Assert.That(IsUiOpen(RcdUiKey.Key), Is.False, "RCD UI is still open.");
 
         // Build an airlock next to the player.
         await Interact(null, pSouth);
 
         // Check that there is exactly one airlock.
-        Assert.That(ProtoMan.TryIndex(RCDSettingAirlock, out var settingAirlock), "RCDPrototype not found.");
-        Assert.That(settingAirlock.Prototype, Is.Not.Null, "RCDPrototype has a null spawning prototype.");
-        await AssertEntityLookup((settingAirlock.Prototype, 1));
+        await RunSeconds(settingAirlock.Delay + 1); // wait for the construction to finish
+        await AssertEntityLookup(
+            (settingWall.Prototype, 1),
+            (settingAirlock.Prototype, 1)
+            );
 
         // Check that the wall is in the correct tile.
         var airlockUid = await FindEntity(settingAirlock.Prototype);
@@ -112,24 +126,24 @@ public sealed class RCDTest : InteractionTest
         await UseInHand();
         await RunTicks(3);
         Assert.That(IsUiOpen(RcdUiKey.Key), Is.True, "RCD UI was not opened when using the RCD while holding it.");
-        await SendBui(RcdUiKey.Key, new RCDSystemMessage(RCDSettingPlating));
-        await CloseBui(RcdUiKey.Key);
+        await SendBui(RcdUiKey.Key, new RCDSystemMessage(RCDSettingPlating), rcd);
+        await CloseBui(RcdUiKey.Key, rcd);
         Assert.That(IsUiOpen(RcdUiKey.Key), Is.False, "RCD UI is still open.");
 
         // Try building plating on existing plating.
         await Interact(null, pWest);
 
         // Check that the failed construction did not cost us any charges.
+        await RunSeconds(settingPlating.Delay + 1); // wait for the construction to finish
         newCharges = sCharges.GetCurrentCharges(ToServer(rcd));
         Assert.That(initialCharges, Is.EqualTo(newCharges), "RCD has wrong amount of charges after failing to build something.");
 
         // Check that the tile did not change.
-        Assert.That(ProtoMan.TryIndex(RCDSettingAirlock, out var settingPlating), "RCDPrototype not found.");
-        Assert.That(settingPlating.Prototype, Is.Not.Null, "RCDPrototype has a null spawning prototype.");
         await AssertTile(settingPlating.Prototype, FromServer(pWest));
 
         // Try building plating on top of lattice.
         await Interact(null, pEast);
+        await RunSeconds(settingPlating.Delay + 1); // wait for the construction to finish
 
         // Check that the cost of the plating was subtracted from the current charges.
         newCharges = sCharges.GetCurrentCharges(ToServer(rcd));
@@ -143,16 +157,15 @@ public sealed class RCDTest : InteractionTest
         await UseInHand();
         await RunTicks(3);
         Assert.That(IsUiOpen(RcdUiKey.Key), Is.True, "RCD UI was not opened when using the RCD while holding it.");
-        await SendBui(RcdUiKey.Key, new RCDSystemMessage(RCDSettingFloorSteel));
-        await CloseBui(RcdUiKey.Key);
+        await SendBui(RcdUiKey.Key, new RCDSystemMessage(RCDSettingFloorSteel), rcd);
+        await CloseBui(RcdUiKey.Key, rcd);
         Assert.That(IsUiOpen(RcdUiKey.Key), Is.False, "RCD UI is still open.");
 
         // Try building a steel tile on top of plating.
         await Interact(null, pEast);
 
         // Check that the tile is now a steel tile.
-        Assert.That(ProtoMan.TryIndex(RCDSettingFloorSteel, out var settingFloorSteel), "RCDPrototype not found.");
-        Assert.That(settingFloorSteel.Prototype, Is.Not.Null, "RCDPrototype has a null spawning prototype.");
+        await RunSeconds(settingFloorSteel.Delay + 1); // wait for the construction to finish
         await AssertTile(settingFloorSteel.Prototype, FromServer(pEast));
 
         // Check that the cost of the plating was subtracted from the current charges.
@@ -164,13 +177,14 @@ public sealed class RCDTest : InteractionTest
         await UseInHand();
         await RunTicks(3);
         Assert.That(IsUiOpen(RcdUiKey.Key), Is.True, "RCD UI was not opened when using the RCD while holding it.");
-        await SendBui(RcdUiKey.Key, new RCDSystemMessage(RCDSettingDeconstruct));
-        await CloseBui(RcdUiKey.Key);
+        await SendBui(RcdUiKey.Key, new RCDSystemMessage(RCDSettingDeconstruct), rcd);
+        await CloseBui(RcdUiKey.Key, rcd);
         Assert.That(IsUiOpen(RcdUiKey.Key), Is.False, "RCD UI is still open.");
 
         // Deconstruct the wall.
         Assert.That(SEntMan.TryGetComponent<RCDDeconstructableComponent>(wallUid, out var wallComp), "Wall entity did not have the RCDDeconstructableComponent.");
         await Interact(wallUid, pNorth);
+        await RunSeconds(wallComp.Delay + 1); // wait for the deconstruction to finish
         AssertDeleted(FromServer(wallUid));
 
         // Check that the cost of the deconstruction was subtracted from the current charges.
@@ -181,6 +195,7 @@ public sealed class RCDTest : InteractionTest
         // Deconstruct the airlock.
         Assert.That(SEntMan.TryGetComponent<RCDDeconstructableComponent>(airlockUid, out var airlockComp), "Wall entity did not have the RCDDeconstructableComponent.");
         await Interact(airlockUid, pSouth);
+        await RunSeconds(airlockComp.Delay + 1); // wait for the deconstruction to finish
         AssertDeleted(FromServer(airlockUid));
 
         // Check that the cost of the deconstruction was subtracted from the current charges.
@@ -190,16 +205,17 @@ public sealed class RCDTest : InteractionTest
 
         // Deconstruct the steel tile.
         await Interact(null, pEast);
+        await RunSeconds(settingDeconstructTile.Delay + 1); // wait for the deconstruction to finish
         await AssertTile(Plating, FromServer(pEast));
 
         // Check that the cost of the deconstruction was subtracted from the current charges.
-        Assert.That(ProtoMan.TryIndex(RCDSettingDeconstructTile, out var settingDeconstructTile), "RCDPrototype not found.");
         newCharges = sCharges.GetCurrentCharges(ToServer(rcd));
         Assert.That(initialCharges - settingDeconstructTile.Cost, Is.EqualTo(newCharges), "RCD has wrong amount of charges after deconstructing something.");
         initialCharges = newCharges;
 
         // Deconstruct the plating.
         await Interact(null, pEast);
+        await RunSeconds(settingDeconstructTile.Delay + 1); // wait for the deconstruction to finish
         await AssertTile(Lattice, FromServer(pEast));
 
         // Check that the cost of the deconstruction was subtracted from the current charges.
@@ -209,12 +225,14 @@ public sealed class RCDTest : InteractionTest
 
         // Deconstruct the lattice.
         await Interact(null, pEast);
+        await RunSeconds(settingDeconstructLattice.Delay + 1); // wait for the deconstruction to finish
         await AssertTile(null, FromServer(pEast));
 
         // Check that the cost of the deconstruction was subtracted from the current charges.
-        Assert.That(ProtoMan.TryIndex(RCDSettingDeconstructLattice, out var settingDeconstructLattice), "RCDPrototype not found.");
         newCharges = sCharges.GetCurrentCharges(ToServer(rcd));
         Assert.That(initialCharges - settingDeconstructLattice.Cost, Is.EqualTo(newCharges), "RCD has wrong amount of charges after deconstructing something.");
-        */
+
+        // Check that there are no entities left.
+        await AssertEntityLookup();
     }
 }
