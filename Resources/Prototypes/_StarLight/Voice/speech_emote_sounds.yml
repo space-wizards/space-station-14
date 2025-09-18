@@ -1,320 +1,104 @@
 - type: emoteSounds
-  id: MaleFelionoid
-  params:
-    variation: 0.125
+  id: MaleThaven
   sounds:
     Scream:
-      collection: FelionoidScreams
+      collection: MaleScreams
     Laugh:
       collection: MaleLaugh
     Sneeze:
       collection: MaleSneezes
     Cough:
       collection: MaleCoughs
-    Crying:
-      collection: MaleCry
-    Whistle:
-      collection: Whistles
-    Sigh:
-      collection: MaleSigh
-    Yawn:
-      collection: MaleYawn
-    Snore:
-      collection: Snores
-    Mew:
-      collection: FelionoidMews
-    Hisses:
-      collection: FelionoidHisses
-    Meow:
-      collection: FelionoidMeows
-    Purr:
-      collection: FelionoidPurrs
-    Growl:
-      collection: FelionoidGrowls
-    Trill:
-      collection: FelionoidTrills
-    Gasp:
-      collection: MaleGasp
-    DefaultDeathgasp:
-      collection: MaleDeathGasp
-    Weh:
-      collection: Weh
-    Hew:
-      collection: Hew
-
-- type: emoteSounds
-  id: FemaleFelionoid
-  params:
-    variation: 0.125
-  sounds:
-    Scream:
-      collection: FelionoidScreams
-    Laugh:
-      collection: FemaleLaugh
-    Sneeze:
-      collection: FemaleSneezes
-    Cough:
-      collection: FemaleCoughs
-    Crying:
-      collection: FemaleCry
-    Sigh:
-      collection: FemaleSigh
-    Yawn:
-      collection: FemaleYawn
-    Snore:
-      collection: Snores
-    Whistle:
-      collection: Whistles
-    Mew:
-      collection: FelionoidMews
-    Hisses:
-      collection: FelionoidHisses
-    Meow:
-      collection: FelionoidMeows
-    Purr:
-      collection: FelionoidPurrs
-    Growl:
-      collection: FelionoidGrowls
-    Trill:
-      collection: FelionoidTrills
-    Gasp:
-      collection: FemaleGasp
-    DefaultDeathgasp:
-      collection: FemaleDeathGasp
-    Weh:
-      collection: Weh
-    Hew:
-      collection: Hew
-
-- type: emoteSounds
-  id: MaleCyclorite
-  params:
-    variation: 0.125
-  sounds:
-    Scream:
-      collection: CycloriteScreams
-    Laugh:
-      collection: CycloriteLaugh
-    Sneeze:
-      collection: CycloriteCough
-    Cough:
-      collection: CycloriteCough
-    Crying:
-      collection: CycloriteScreams
-    Whistle:
-      collection: CycloriteWhistle
-    Yawn:
-      collection: CycloriteYawn
-    Weh:
-      collection: Weh
-    Hew:
-      collection: Hew
-
-- type: emoteSounds
-  id: FemaleCyclorite
-  params:
-    variation: 0.125
-  sounds:
-    Scream:
-      collection: CycloriteScreams
-    Laugh:
-      collection: CycloriteLaugh
-    Sneeze:
-      collection: CycloriteCough
-    Cough:
-      collection: CycloriteCough
-    Crying:
-      collection: CycloriteScreams
-    Whistle:
-      collection: CycloriteWhistle
-    Yawn:
-      collection: CycloriteYawn
-    Weh:
-      collection: Weh
-    Hew:
-      collection: Hew
-
-# Avali Sounds
-- type: emoteSounds
-  id: MaleAvali
-  params:
-    variation: 0.125
-  sounds:
-    Scream:
-      path: /Audio/_Starlight/Effects/avali_scream.ogg
-    Laugh:
-      path: /Audio/_Starlight/Voice/Avali/avali_laugh.ogg
-    Sneeze:
-      collection: MaleSneezes
-    Cough:
-      collection: MaleCoughs
+    CatMeow:
+      collection: CatMeows
+    CatHisses:
+      collection: CatHisses
+    MonkeyScreeches:
+      collection: MonkeyScreeches
+    RobotBeep:
+      collection: RobotBeeps
     Yawn:
       collection: MaleYawn
     Snore:
       collection: Snores
     Sigh:
       collection: MaleSigh
-    Weh:
-      collection: Weh
-    Hew:
-      collection: Hew
-    Gasp:
-      collection: MaleGasp
-    DefaultDeathgasp:
-      collection: MaleDeathGasp
-    Hisses:
-      collection: FelionoidHisses
-    Purr:
-      collection: FelionoidPurrs
-    Growl:
-      collection: FelionoidGrowls
-    Trill:
-      collection: FelionoidTrills
-    Scree:
-      collection: ResomiScrees
-    Call:
-      collection: ResomiCalls
-    Squawk:
-      collection: ResomiSquawk
-    Crying:
-      path: /Audio/_Starlight/Voice/Avali/avali_cry.ogg
     Honk:
       collection: BikeHorn
-    Whistle:
-      path: /Audio/Voice/Resomi/resomi_whistle.ogg
-    Chirp:
-      collection: ResomiChirp
-
-- type: emoteSounds
-  id: FemaleAvali
-  params:
-    variation: 0.125
-  sounds:
-    Scream:
-      path: /Audio/_Starlight/Effects/avali_scream.ogg
-    Laugh:
-      path: /Audio/_Starlight/Voice/Avali/avali_laugh.ogg
-    Sneeze:
-      collection: FemaleSneezes
-    Cough:
-      collection: FemaleCoughs
-    Yawn:
-      collection: FemaleYawn
-    Snore:
-      collection: Snores
-    Sigh:
-      collection: FemaleSigh
-    Weh:
-      collection: Weh
-    Hew:
-      collection: Hew
-    Gasp:
-      collection: FemaleGasp
-    DefaultDeathgasp:
-      collection: FemaleDeathGasp
-    Hisses:
-      collection: FelionoidHisses
-    Purr:
-      collection: FelionoidPurrs
-    Growl:
-      collection: FelionoidGrowls
-    Trill:
-      collection: FelionoidTrills
-    Scree:
-      collection: ResomiScrees
-    Call:
-      collection: ResomiCalls
-    Squawk:
-      collection: ResomiSquawk
-    Crying:
-      path: /Audio/_Starlight/Voice/Avali/avali_cry.ogg
-    Honk:
-      collection: BikeHorn
-    Whistle:
-      path: /Audio/Voice/Resomi/resomi_whistle.ogg
-    Chirp:
-      collection: ResomiChirp
-
-- type: emoteSounds
-  id: MaleShadekin
-  params:
-    variation: 0.125
-  sounds:
-    Scream:
-      collection: ShadekinMaleScreams
-    Laugh:
-      collection: MaleLaugh
-    Sneeze:
-      collection: MaleSneezes
-    Cough:
-      collection: MaleCoughs
-    Yawn:
-      collection: MaleYawn
-    Snore:
-      collection: Snores
-    Sigh:
-      collection: MaleSigh
     Crying:
       collection: MaleCry
     Whistle:
       collection: Whistles
     Weh:
       collection: Weh
-    Hew:
-      collection: Hew
     Gasp:
       collection: MaleGasp
     DefaultDeathgasp:
       collection: MaleDeathGasp
-    Mar:
-      path: /Audio/_Starlight/Voice/Shadekin/mar.ogg
-    Wurble:
-      path: /Audio/_Starlight/Voice/Shadekin/wurble.ogg
-    Hisses:
-      collection: FelionoidHisses
-    Purr:
-      collection: FelionoidPurrs
-    Growl:
-      collection: FelionoidGrowls
+  params:
+    variation: 0.05
+    pitch: 1.25
 
 - type: emoteSounds
-  id: FemaleShadekin
-  params:
-    variation: 0.125
+  id: FemaleThaven
   sounds:
     Scream:
-      collection: ShadekinFemaleScreams
+      collection: FemaleScreams
     Laugh:
       collection: FemaleLaugh
     Sneeze:
       collection: FemaleSneezes
     Cough:
       collection: FemaleCoughs
+    CatMeow:
+      collection: CatMeows
+    CatHisses:
+      collection: CatHisses
+    MonkeyScreeches:
+      collection: MonkeyScreeches
+    RobotBeep:
+      collection: RobotBeeps
     Yawn:
       collection: FemaleYawn
     Snore:
       collection: Snores
     Sigh:
       collection: FemaleSigh
+    Honk:
+      collection: BikeHorn
     Crying:
       collection: FemaleCry
     Whistle:
       collection: Whistles
     Weh:
       collection: Weh
-    Hew:
-      collection: Hew
     Gasp:
       collection: FemaleGasp
     DefaultDeathgasp:
       collection: FemaleDeathGasp
-    Mar:
-      path: /Audio/_Starlight/Voice/Shadekin/mar.ogg
-    Wurble:
-      path: /Audio/_Starlight/Voice/Shadekin/wurble.ogg
-    Hisses:
-      collection: FelionoidHisses
-    Purr:
-      collection: FelionoidPurrs
-    Growl:
-      collection: FelionoidGrowls
+  params:
+    variation: 0.05
+    pitch: 1.25
+
+- type: emoteSounds
+  id: UnisexThaven
+  sounds:
+    CatMeow:
+      collection: CatMeows
+    CatHisses:
+      collection: CatHisses
+    MonkeyScreeches:
+      collection: MonkeyScreeches
+    RobotBeep:
+      collection: RobotBeeps
+    Snore:
+      collection: Snores
+    Honk:
+      collection: BikeHorn
+    Whistle:
+      collection: Whistles
+    Weh:
+      collection: Weh
+  params:
+    variation: 0.05
+    pitch: 1.25
