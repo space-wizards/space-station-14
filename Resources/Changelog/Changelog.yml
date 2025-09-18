@@ -1,50 +1,4 @@
 ﻿Entries:
-- author: pyvik
-  changes:
-  - message: New hair named "Long With Bangs"
-    type: Add
-  id: 8458
-  time: '2025-05-11T00:09:28.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/36613
-- author: CyberTropic
-  changes:
-  - message: MapRenderer can now render map files from a file directly without needing
-      a prototype.
-    type: Tweak
-  - message: Fixed maprenderer drawing tiles upside down.
-    type: Fix
-  id: 8459
-  time: '2025-05-11T14:06:09.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/37306
-- author: JrInventor05
-  changes:
-  - message: The syringe gun is now a T3 civilian science research.
-    type: Add
-  id: 8460
-  time: '2025-05-12T00:14:13.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/37251
-- author: EmoGarbage404
-  changes:
-  - message: Added chemical barrels. These can be found on salvage debris and contain
-      a large amount of various chemicals.
-    type: Add
-  id: 8461
-  time: '2025-05-12T10:55:12.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/37204
-- author: kosticia
-  changes:
-  - message: Moth mime survival box now contains cotton baguette.
-    type: Fix
-  id: 8462
-  time: '2025-05-12T12:37:13.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/36953
-- author: ScarKy0
-  changes:
-  - message: Added "Yellowtexting" for when you don't quite complete your objectives.
-    type: Add
-  id: 8463
-  time: '2025-05-12T16:22:25.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/37360
 - author: Radezolid
   changes:
   - message: The cyborg cable module can be printed at the exosuit fabricator once
@@ -3955,3 +3909,48 @@
   id: 8969
   time: '2025-09-16T19:04:50.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/40402
+- author: Minemoder
+  changes:
+  - message: Ion Storms no longer have a chance to roll the Drone Lawset.
+    type: Remove
+  id: 8970
+  time: '2025-09-17T17:00:22.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/40374
+- author: IProduceWidgets
+  changes:
+  - message: Gender pins no longer shuffle when EMP'd
+    type: Fix
+  id: 8971
+  time: '2025-09-17T21:49:50.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/40425
+- author: Errant, beck-thompson, FairlySadPanda
+  changes:
+  - message: Players can now be banned from enabling/taking antag roles.
+    type: Add
+  id: 8972
+  time: '2025-09-17T21:59:07.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/35966
+- author: SurrealShibe
+  changes:
+  - message: The Satanic Bible's pentagram has been turned right-side-up.
+    type: Tweak
+  - message: The Satanic Bible now has the correct left inhand sprite.
+    type: Fix
+  id: 8973
+  time: '2025-09-17T23:34:26.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/40234
+- author: PicklOH, Archee
+  changes:
+  - message: Nukie Operative, Corpsman, and Commander now have unique PDAs with unique
+      IDs that can copy accesses.
+    type: Add
+  id: 8974
+  time: '2025-09-18T00:15:18.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37304
+- author: Kittygyat
+  changes:
+  - message: Updated the weapon cyborg model's uplink description to be correct
+    type: Fix
+  id: 8975
+  time: '2025-09-18T00:25:32.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/40429

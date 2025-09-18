@@ -850,7 +850,7 @@
   components:
   - type: Sprite
     layers:
-    - state: syndie
+    - state: black
     - sprite: *icon-rsi
       offset: *icon-offset
       state: Syndicate
@@ -858,6 +858,37 @@
     tags:
     - NuclearOperative
     - SyndicateAgent
+
+- type: entity
+  parent: [ SyndicateIDCard, BaseSyndicateContraband ]
+  id: SyndiOperativeIDCard
+  name: syndicate operative ID card
+  components:
+  - type: Sprite
+    layers:
+    - state: black
+    - state: syndi_operative
+  - type: AgentIDCard
+
+- type: entity
+  parent: [ SyndiOperativeIDCard, BaseSyndicateContraband ]
+  id: SyndiCorpsmanIDCard
+  name: syndicate corpsman ID card
+  components:
+  - type: Sprite
+    layers:
+    - state: black
+    - state: syndi_corpsman
+
+- type: entity
+  parent: [ SyndiOperativeIDCard, BaseSyndicateContraband ]
+  id: SyndiCommanderIDCard
+  name: syndicate commander ID card
+  components:
+  - type: Sprite
+    layers:
+    - state: black
+    - state: syndi_commander
 
 - type: entity
   parent: [ IDCardStandard, BaseMajorContraband ]
