@@ -88,7 +88,7 @@
   - type: MeleeWeapon
     damage:
       types:
-        Piercing: 1
+        Heat: 0
 
 # Drill
 
@@ -162,7 +162,7 @@
   - type: MeleeWeapon
     damage:
       types:
-        Piercing: 1
+        Piercing: 0
 
 # Scalpel
 
@@ -252,7 +252,7 @@
   - type: MeleeWeapon
     damage:
       types:
-        Piercing: 1
+        Slash: 0
 
 - type: entity
   name: shiv
@@ -406,10 +406,6 @@
   - type: HeldSpeedModifier
     walkModifier: 1
     sprintModifier: 0.9
-  - type: MeleeWeapon
-    damage:
-      types:
-        Piercing: 1
 
 - type: entity
   name: hemostat
@@ -483,10 +479,6 @@
   - type: HeldSpeedModifier
     walkModifier: 1
     sprintModifier: 0.9
-  - type: MeleeWeapon
-    damage:
-      types:
-        Piercing: 1
 
 - type: entity
   name: bone setter
@@ -570,10 +562,6 @@
   - type: HeldSpeedModifier
     walkModifier: 1
     sprintModifier: 0.9
-  - type: MeleeWeapon
-    damage:
-      types:
-        Piercing: 1
 
 # Saws
 
@@ -732,8 +720,8 @@
     sprintModifier: 0.9
   - type: MeleeWeapon
     damage:
-      types:
-        Piercing: 1
+      groups:
+        Brute: 0
 
 # BoneGel
 
