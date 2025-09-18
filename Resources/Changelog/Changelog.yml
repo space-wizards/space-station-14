@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Prole0
-  changes:
-  - message: Changed wording/colors for alerts in health analyzer.
-    type: Tweak
-  id: 8467
-  time: '2025-05-12T20:52:17.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/37376
 - author: perryprog
   changes:
   - message: Borgs in certain circumstances will no-longer draw much more power than
@@ -3953,3 +3946,10 @@
   id: 8977
   time: '2025-09-18T17:17:37.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/40183
+- author: vgskye
+  changes:
+  - message: You can now get chemical analysis goggles from a ChemDrobe.
+    type: Add
+  id: 8978
+  time: '2025-09-18T17:35:19.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/40236
