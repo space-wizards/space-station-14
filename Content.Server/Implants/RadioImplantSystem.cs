@@ -1,6 +1,6 @@
-﻿using Content.Server.Radio.Components;
-using Content.Shared.Implants;
+﻿using Content.Shared.Implants;
 using Content.Shared.Implants.Components;
+using Content.Shared.Radio.Components;
 
 namespace Content.Server.Implants;
 
