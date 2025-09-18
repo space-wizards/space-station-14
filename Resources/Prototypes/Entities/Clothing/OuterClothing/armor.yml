@@ -513,8 +513,6 @@
     modifiers:
       coefficients:
         Blunt: 0.9
-  - type: StaminaResistance
-    damageCoefficient: 0.90
   - type: Construction
     graph: cardArmour
     node: cardarmour
