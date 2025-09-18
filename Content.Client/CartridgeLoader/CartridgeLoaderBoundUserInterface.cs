@@ -67,7 +67,7 @@ public abstract class CartridgeLoaderBoundUserInterface : BoundUserInterface
     protected void ActivateCartridge(EntityUid cartridgeUid)
     {
         var message = new CartridgeLoaderUiMessage(_entManager.GetNetEntity(cartridgeUid), CartridgeUiMessageAction.Activate);
-        SendMessage(message);
+        SendPredictedMessage(message);
     }
 
     protected void DeactivateActiveCartridge()
@@ -76,19 +76,19 @@ public abstract class CartridgeLoaderBoundUserInterface : BoundUserInterface
             return;
 
         var message = new CartridgeLoaderUiMessage(_entManager.GetNetEntity(_activeProgram.Value), CartridgeUiMessageAction.Deactivate);
-        SendMessage(message);
+        SendPredictedMessage(message);
     }
 
     protected void InstallCartridge(EntityUid cartridgeUid)
     {
         var message = new CartridgeLoaderUiMessage(_entManager.GetNetEntity(cartridgeUid), CartridgeUiMessageAction.Install);
-        SendMessage(message);
+        SendPredictedMessage(message);
     }
 
     protected void UninstallCartridge(EntityUid cartridgeUid)
     {
         var message = new CartridgeLoaderUiMessage(_entManager.GetNetEntity(cartridgeUid), CartridgeUiMessageAction.Uninstall);
-        SendMessage(message);
+        SendPredictedMessage(message);
     }
 
     private List<(EntityUid, CartridgeComponent)> GetCartridgeComponents(List<EntityUid> programs)
