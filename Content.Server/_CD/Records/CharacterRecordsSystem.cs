@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using Content.Server.StationRecords;
 using Content.Server.StationRecords.Systems;
+using Content.Shared.CCVar;
 using Content.Shared.Forensics.Components;
 using Content.Shared.GameTicking;
 using Content.Shared.Inventory;
@@ -10,6 +11,7 @@ using Content.Shared.PDA;
 using Content.Shared.Roles;
 using Content.Shared.StationRecords;
 using Content.Shared._CD.Records;
+using Robust.Shared.Configuration;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Prototypes;
 
@@ -20,6 +22,7 @@ namespace Content.Server._CD.Records;
 /// </summary>
 public sealed class CharacterRecordsSystem : EntitySystem
 {
+    [Dependency] private readonly IConfigurationManager _cfg = default!;
     [Dependency] private readonly IPrototypeManager _prototype = default!;
     [Dependency] private readonly InventorySystem _inventory = default!;
     [Dependency] private readonly StationRecordsSystem _records = default!;
@@ -53,6 +56,17 @@ public sealed class CharacterRecordsSystem : EntitySystem
 
         var profile = args.Profile;
         var profileRecords = profile.CDCharacterRecords ?? PlayerProvidedCharacterRecords.DefaultRecords();
+
+        if (_cfg.GetCVar(CCVars.ConfigPresetDevelopment))
+        {
+            var defaultRecords = PlayerProvidedCharacterRecords.DefaultRecords();
+            if (profileRecords.MemberwiseEquals(defaultRecords))
+            {
+                // Populate example entries so developers immediately see console
+                // output without editing their profile by hand.
+                profileRecords = PlayerProvidedCharacterRecords.DevSampleRecords();
+            }
+        }
 
         if (!_prototype.TryIndex(args.JobId, out JobPrototype? jobPrototype))
         {

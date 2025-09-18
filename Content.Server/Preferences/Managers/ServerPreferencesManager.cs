@@ -8,6 +8,7 @@ using Content.Shared.GameTicking;
 using Content.Shared.Construction.Prototypes;
 using Content.Shared.Preferences;
 using Content.Shared.Roles;
+using Content.Shared._CD.Records;
 using Robust.Server.Player;
 using Robust.Shared.Configuration;
 using Robust.Shared.Network;
@@ -364,7 +365,15 @@ namespace Content.Server.Preferences.Managers
             var prefs = await _db.GetPlayerPreferencesAsync(userId, cancel);
             if (prefs is null)
             {
-                return await _db.InitPrefsAsync(userId, HumanoidCharacterProfile.Random().AsEnabled(), cancel);
+                var defaultProfile = HumanoidCharacterProfile.Random().AsEnabled();
+
+                // When the development configuration preset is active, seed the
+                // default profile with example records so consoles have data to
+                // show immediately during local testing.
+                if (_cfg.GetCVar(CCVars.ConfigPresetDevelopment))
+                    defaultProfile = defaultProfile.WithCDCharacterRecords(PlayerProvidedCharacterRecords.DevSampleRecords());
+
+                return await _db.InitPrefsAsync(userId, defaultProfile, cancel);
             }
 
             return prefs;
