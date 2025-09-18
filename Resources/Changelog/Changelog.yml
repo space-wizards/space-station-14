@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: K-Dynamic
-  changes:
-  - message: Recoloured job icons of chaplain, librarian, boxer, janitor, lawyer and
-      ID icon of lawyer, boxer from grey to green
-    type: Tweak
-  id: 8472
-  time: '2025-05-13T07:43:31.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/36580
 - author: chromiumboy
   changes:
   - message: Station AIs can personalize the appearance of their cores and holograms
@@ -3952,3 +3944,10 @@
   id: 8982
   time: '2025-09-18T17:49:02.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/39855
+- author: rumaks-xyz
+  changes:
+  - message: Ichor now heals damage evenly, similarly to omnizine
+    type: Tweak
+  id: 8983
+  time: '2025-09-18T18:47:25.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/39466
