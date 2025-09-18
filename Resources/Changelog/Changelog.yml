@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: perryprog
-  changes:
-  - message: You can now link uniform printers to silos.
-    type: Tweak
-  id: 8471
-  time: '2025-05-12T23:56:02.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/37393
 - author: K-Dynamic
   changes:
   - message: Recoloured job icons of chaplain, librarian, boxer, janitor, lawyer and
@@ -3951,3 +3944,11 @@
   id: 8981
   time: '2025-09-18T17:47:56.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/40317
+- author: Hitlinemoss
+  changes:
+  - message: Spider Clan gear is now considered highly illegal contraband under Space
+      Law (rather than major contraband).
+    type: Tweak
+  id: 8982
+  time: '2025-09-18T17:49:02.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/39855
