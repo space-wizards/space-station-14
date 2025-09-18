@@ -2,7 +2,6 @@ using System.Linq;
 using System.Text;
 using Content.Shared.UserInterface;
 using Content.Shared.DoAfter;
-using Content.Shared.Forensics;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Interaction;
 using Content.Shared.Paper;
@@ -12,12 +11,11 @@ using Robust.Shared.Audio.Systems;
 using Robust.Shared.Audio;
 using Robust.Shared.Timing;
 using Content.Shared.Forensics.Components;
-using Content.Shared.Forensics.Systems;
 using Content.Shared.Popups;
 using Robust.Shared.Prototypes;
 // todo: remove this stinky LINQy
 
-namespace Content.Server.Forensics
+namespace Content.Shared.Forensics.Systems
 {
     public sealed class ForensicScannerSystem : EntitySystem
     {
@@ -29,7 +27,7 @@ namespace Content.Server.Forensics
         [Dependency] private readonly SharedHandsSystem _handsSystem = default!;
         [Dependency] private readonly SharedAudioSystem _audioSystem = default!;
         [Dependency] private readonly MetaDataSystem _metaData = default!;
-        [Dependency] private readonly ForensicsSystem _forensicsSystem = default!;
+        [Dependency] private readonly SharedForensicsSystem _forensicsSystem = default!;
         [Dependency] private readonly TagSystem _tag = default!;
 
         private static readonly ProtoId<TagPrototype> DNASolutionScannableTag = "DNASolutionScannable";

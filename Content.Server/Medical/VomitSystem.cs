@@ -24,7 +24,7 @@ namespace Content.Server.Medical
         [Dependency] private readonly AudioSystem _audio = default!;
         [Dependency] private readonly BloodstreamSystem _bloodstream = default!;
         [Dependency] private readonly BodySystem _body = default!;
-        [Dependency] private readonly ForensicsSystem _forensics = default!;
+        [Dependency] private readonly SharedForensicsSystem _forensics = default!;
         [Dependency] private readonly HungerSystem _hunger = default!;
         [Dependency] private readonly MobStateSystem _mobstate = default!;
         [Dependency] private readonly MovementModStatusSystem _movementMod = default!;

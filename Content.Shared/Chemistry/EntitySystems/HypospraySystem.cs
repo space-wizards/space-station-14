@@ -1,12 +1,9 @@
 using Content.Shared.Administration.Logs;
-using Content.Shared.Body.Components;
-using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Components.SolutionManager;
 using Content.Shared.Chemistry.Hypospray.Events;
 using Content.Shared.Database;
 using Content.Shared.FixedPoint;
-using Content.Shared.Forensics;
 using Content.Shared.Forensics.Systems;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Interaction.Events;
@@ -28,7 +25,7 @@ public sealed class HypospraySystem : EntitySystem
     [Dependency] private readonly SharedPopupSystem _popup = default!;
     [Dependency] private readonly SharedSolutionContainerSystem _solutionContainers = default!;
     [Dependency] private readonly UseDelaySystem _useDelay = default!;
-    [Dependency] private readonly ForensicsSystem _forensics = default!;
+    [Dependency] private readonly SharedForensicsSystem _forensics = default!;
 
     public override void Initialize()
     {

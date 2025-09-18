@@ -29,7 +29,7 @@ public sealed partial class CloningSystem
 {
     [Dependency] private readonly SharedStackSystem _stack = default!;
     [Dependency] private readonly LabelSystem _label = default!;
-    [Dependency] private readonly ForensicsSystem _forensics = default!;
+    [Dependency] private readonly SharedForensicsSystem _forensics = default!;
     [Dependency] private readonly PaperSystem _paper = default!;
     [Dependency] private readonly VocalSystem _vocal = default!;
     [Dependency] private readonly MovementSpeedModifierSystem _movementSpeedModifier = default!;

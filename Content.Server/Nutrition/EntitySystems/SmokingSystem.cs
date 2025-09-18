@@ -33,7 +33,7 @@ namespace Content.Server.Nutrition.EntitySystems
         [Dependency] private readonly SharedItemSystem _items = default!;
         [Dependency] private readonly SharedContainerSystem _container = default!;
         [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
-        [Dependency] private readonly ForensicsSystem _forensics = default!;
+        [Dependency] private readonly SharedForensicsSystem _forensics = default!;
 
         private const float UpdateTimer = 3f;
 
