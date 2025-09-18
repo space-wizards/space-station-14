@@ -62,7 +62,9 @@ namespace Content.Server.Database
                     .ThenInclude(group => group.Loadouts)
                 .Include(p => p.Profiles)
                     .ThenInclude(h => h.CDProfile)
-                    .ThenInclude(profile => profile.CharacterRecordEntries)
+                    // Entity Framework will populate CharacterRecordEntries for any existing CDProfile,
+                    // so it's safe to suppress the nullable warning here.
+                    .ThenInclude(cdProfile => cdProfile!.CharacterRecordEntries)
                 .Include(p => p.JobPriorities)
                 .AsSplitQuery()
                 .SingleOrDefaultAsync(p => p.UserId == userId.UserId, cancel);
@@ -115,7 +117,9 @@ namespace Content.Server.Database
                     .ThenInclude(group => group.Loadouts)
                 .Include(p => p.CharacterInfo) // Starlight-edit
                 .Include(p => p.CDProfile)
-                    .ThenInclude(profile => profile.CharacterRecordEntries)
+                    // Entity Framework will populate CharacterRecordEntries for any existing CDProfile,
+                    // so it's safe to suppress the nullable warning here as well.
+                    .ThenInclude(cdProfile => cdProfile!.CharacterRecordEntries)
                 .AsSplitQuery()
                 .SingleOrDefault(h => h.Slot == slot);
 

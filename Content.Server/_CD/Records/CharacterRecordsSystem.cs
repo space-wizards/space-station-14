@@ -5,6 +5,7 @@ using Content.Server.StationRecords.Systems;
 using Content.Shared.Forensics.Components;
 using Content.Shared.GameTicking;
 using Content.Shared.Inventory;
+using Content.Shared.Humanoid.Prototypes;
 using Content.Shared.PDA;
 using Content.Shared.Roles;
 using Content.Shared.StationRecords;
@@ -72,9 +73,16 @@ public sealed class CharacterRecordsSystem : EntitySystem
             jobTitle = stationRecord.JobTitle;
         }
 
-        var speciesName = string.IsNullOrWhiteSpace(profile.CustomSpecieName)
-            ? profile.Species
-            : profile.CustomSpecieName;
+        // Resolve a human readable species name so consoles stay legible even when the
+        // profile only stores a prototype id. This mirrors Cosmatic Drift's behaviour
+        // while also supporting custom species names defined in preferences.
+        var speciesName = profile.CustomSpecieName;
+        if (string.IsNullOrWhiteSpace(speciesName))
+        {
+            speciesName = _prototype.TryIndex<SpeciesPrototype>(profile.Species, out var species)
+                ? species.Name
+                : profile.Species;
+        }
 
         var records = new FullCharacterRecords(
             pRecords: new PlayerProvidedCharacterRecords(profileRecords),
