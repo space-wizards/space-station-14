@@ -14737,5 +14737,21 @@ Entries:
   id: 166604
   time: '2025-09-18T21:46:21.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/1666
+- author: Conflee
+  changes:
+  - message: Changed pricing of some restock crates to be more reasonable. If the
+      resell price was close to the buy price, I made them cost slightly more. If
+      the resell price was way under the buy price, I made them cost slightly less.
+    type: Tweak
+  id: 166200
+  time: '2025-09-18T22:21:33.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1662
+- author: Conflee
+  changes:
+  - message: Fixed infinite money glitch with restock crates in cargo
+    type: Fix
+  id: 166201
+  time: '2025-09-18T22:21:33.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1662
 Order: -1
 
