@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: kosticia
-  changes:
-  - message: Moth mime survival box now contains cotton baguette.
-    type: Fix
-  id: 8462
-  time: '2025-05-12T12:37:13.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/36953
 - author: ScarKy0
   changes:
   - message: Added "Yellowtexting" for when you don't quite complete your objectives.
@@ -3953,3 +3946,11 @@
   id: 8973
   time: '2025-09-17T23:34:26.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/40234
+- author: PicklOH, Archee
+  changes:
+  - message: Nukie Operative, Corpsman, and Commander now have unique PDAs with unique
+      IDs that can copy accesses.
+    type: Add
+  id: 8974
+  time: '2025-09-18T00:15:18.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37304
