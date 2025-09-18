@@ -1478,7 +1478,8 @@ namespace Content.Client.Lobby.UI
                 return;
 
             // Persist the record edits on the working profile so they will be saved later.
-            Profile = Profile.WithCDCharacterRecords(records);
+            // Store the freshly edited records back onto the profile blob.
+            Profile = Profile.WithCharacterRecords(records);
             SetDirty();
         }
 

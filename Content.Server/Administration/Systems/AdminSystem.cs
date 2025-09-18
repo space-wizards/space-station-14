@@ -7,6 +7,7 @@ using Content.Server.Mind;
 using Content.Server.Players.PlayTimeTracking;
 using Content.Server.Popups;
 using Content.Server.StationRecords.Systems;
+using Content.Server._CD.Records;
 using Content.Shared.Administration;
 using Content.Shared.Administration.Events;
 using Content.Shared.CCVar;
@@ -55,6 +56,7 @@ public sealed class AdminSystem : EntitySystem
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly StationRecordsSystem _stationRecords = default!;
     [Dependency] private readonly TransformSystem _transform = default!;
+    [Dependency] private readonly CharacterRecordsSystem _characterRecords = default!; // erase-ban helper
 
     private readonly Dictionary<NetUserId, PlayerInfo> _playerList = new();
 
@@ -449,6 +451,9 @@ public sealed class AdminSystem : EntitySystem
 
             if (_playerManager.TryGetSessionById(uid, out var session))
                 _gameTicker.SpawnObserver(session);
+
+            // Scrub any persisted records when an admin performs an erase.
+            _characterRecords.DeleteAllRecords(entity);
 
             RaiseLocalEvent(ref eraseEvent);
         }
