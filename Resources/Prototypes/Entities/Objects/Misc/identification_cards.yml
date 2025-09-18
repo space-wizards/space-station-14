@@ -854,6 +854,8 @@
     - sprite: *icon-rsi
       offset: *icon-offset
       state: Syndicate
+  - type: Item
+    heldPrefix: black
   - type: Access
     tags:
     - NuclearOperative
@@ -904,6 +906,8 @@
   - type: Sprite
     layers:
     - state: pirate
+  - type: Item
+    heldPrefix: orange #this is close enough to the weird puce color pirate IDs have going on
   - type: Access
     tags:
     - NuclearOperative
@@ -958,7 +962,7 @@
     - state: stripe_centcom
     - sprite: *icon-rsi
       offset: *icon-offset
-      state: Nanotrasen
+      state: ERTLeader
   - type: Item
     heldPrefix: gold
   - type: PresetIdCard
