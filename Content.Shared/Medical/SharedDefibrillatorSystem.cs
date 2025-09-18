@@ -8,8 +8,6 @@ using Content.Shared.Popups;
 using Content.Shared.PowerCell;
 using Content.Shared.Timing;
 using Robust.Shared.Audio.Systems;
-using Robust.Shared.Network;
-using Robust.Shared.Timing;
 
 namespace Content.Shared.Medical;
 
@@ -26,8 +24,6 @@ public abstract class SharedDefibrillatorSystem : EntitySystem
     [Dependency] private readonly SharedPowerCellSystem _powerCell = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly UseDelaySystem _useDelay = default!;
-    [Dependency] private readonly IGameTiming _timing = default!;
-    [Dependency] private readonly INetManager _net = default!;
 
     /// <inheritdoc/>
     public override void Initialize()
@@ -79,7 +75,7 @@ public abstract class SharedDefibrillatorSystem : EntitySystem
 
         if (!_toggle.IsActivated(uid))
         {
-            _popup.PopupClient(Loc.GetString("defibrillator-not-on"), uid);
+            _popup.PopupClient(Loc.GetString("defibrillator-not-on"), user);
 
             return false;
         }
