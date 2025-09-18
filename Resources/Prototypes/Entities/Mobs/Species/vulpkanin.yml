@@ -177,7 +177,7 @@
       Peckish: 150
       Starving: 100
       Dead: 0
-    baseDecayRate: 0.02
+    baseDecayRate: 0.018
   - type: Thirst # on 1.5x more
     thresholds:
       OverHydrated: 650
@@ -185,7 +185,7 @@
       Thirsty: 350
       Parched: 200
       Dead: 0
-    baseDecayRate: 0.15
+    baseDecayRate: 0.125
   - type: Temperature # Ported over from CD. Afterall, it does make sense that something with fur can handle more cold/less heat. Basegame Moths, apparently, have similar resistances.
     heatDamageThreshold: 325
     coldDamageThreshold: 230
