@@ -395,7 +395,7 @@ namespace Content.Shared.Containers.ItemSlots
             if (!Resolve(user, ref hands, false))
                 return false;
 
-            if (!_handsSystem.TryGetActiveItem((uid, hands), out var held))
+            if (!_handsSystem.TryGetActiveItem((user, hands), out var held))
                 return false;
 
             if (!CanInsert(uid, held.Value, user, slot))

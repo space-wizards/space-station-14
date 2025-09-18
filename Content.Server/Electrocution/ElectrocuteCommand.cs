@@ -2,6 +2,7 @@ using Content.Server.Administration;
 using Content.Shared.Administration;
 using Content.Shared.StatusEffect;
 using Robust.Shared.Console;
+using Robust.Shared.Prototypes;
 
 namespace Content.Server.Electrocution;
 
@@ -13,8 +14,7 @@ public sealed class ElectrocuteCommand : LocalizedEntityCommands
 
     public override string Command => "electrocute";
 
-    [ValidatePrototypeId<StatusEffectPrototype>]
-    private const string ElectrocutionStatusEffect = "Electrocution";
+    private static readonly ProtoId<StatusEffectPrototype> ElectrocutionStatusEffect = "Electrocution";
 
     public override void Execute(IConsoleShell shell, string argStr, string[] args)
     {
