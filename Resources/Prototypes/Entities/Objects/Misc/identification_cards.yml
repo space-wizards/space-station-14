@@ -851,6 +851,7 @@
   - type: Sprite
     layers:
     - state: black
+    - state: stripe_syndicate
     - sprite: *icon-rsi
       offset: *icon-offset
       state: Syndicate
@@ -869,6 +870,7 @@
   - type: Sprite
     layers:
     - state: black
+    - state: stripe_syndicate
     - sprite: *icon-rsi
       offset: *icon-offset
       state: SyndicateOperative
@@ -882,6 +884,7 @@
   - type: Sprite
     layers:
     - state: black
+    - state: stripe_syndicate
     - sprite: *icon-rsi
       offset: *icon-offset
       state: SyndicateCorpsman
@@ -894,6 +897,7 @@
   - type: Sprite
     layers:
     - state: black
+    - state: stripe_syndicate
     - sprite: *icon-rsi
       offset: *icon-offset
       state: SyndicateCommander
