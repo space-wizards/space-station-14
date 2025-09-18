@@ -1,0 +1,7 @@
+<ui:RadialMenu xmlns="https://spacestation14.io"
+                xmlns:ui="clr-namespace:Content.Client.UserInterface.Controls"
+                BackButtonStyleClass="RadialMenuBackButton"
+                CloseButtonStyleClass="RadialMenuCloseButton"
+                MinSize="450 450">
+    <ui:RadialContainer Name="Container" VerticalExpand="True" HorizontalExpand="True" InitialRadius="64"/>
+</ui:RadialMenu>

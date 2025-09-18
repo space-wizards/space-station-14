@@ -5,7 +5,7 @@ using Content.Server.Chat.Systems;
 
 namespace Content.Server.Clothing.Systems;
 
-public sealed class SecurityHailerSystem : SharedSecurityHailerSystem
+public sealed class HailerSystem : SharedHailerSystem
 {
     //[Dependency] private readonly ChatSystem _chat = default!;
 

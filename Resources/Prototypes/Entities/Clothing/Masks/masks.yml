@@ -76,6 +76,10 @@
     access: [["Security"]]
     loggingDisabled: true
     breakOnAccessBreaker: false
+  - type: UserInterface
+    interfaces:
+      enum.HailerUiKey.Key:
+        type: HailerBoundUserInterface
 
 - type: entity
   parent: [ClothingMaskGas, BaseSyndicateContraband]
