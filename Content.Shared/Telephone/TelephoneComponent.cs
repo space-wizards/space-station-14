@@ -1,9 +1,7 @@
 using Content.Shared.Chat;
-using Content.Shared.Speech;
 using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
 using Robust.Shared.Serialization;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 
 namespace Content.Shared.Telephone;
 
@@ -104,10 +102,10 @@ public sealed partial class TelephoneComponent : Component
     public int TelephoneNumber = -1;
 
     /// <summary>
-    /// Linked telephone
+    /// Other telephones that have been linked to this one
     /// </summary>
     [DataField]
-    public HashSet<Entity<TelephoneComponent>> LinkedTelephones = new();
+    public HashSet<EntityUid> LinkedTelephones = new();
 
     /// <summary>
     /// Defines the current state the telephone is in
@@ -141,18 +139,14 @@ public sealed partial class TelephoneComponent : Component
     public TelephoneCallRecord? LastCallerId;
 }
 
-[DataRecord, Serializable, NetSerializable]
-public record struct TelephoneCallRecord
-{
-    [DataField]
-    public string? CallerId;
-
-    [DataField]
-    public string? CallerJob;
-
-    [DataField]
-    public string? DeviceId;
-}
+/// <summary>
+/// A telephone call record.
+/// </summary>
+/// <param name="CallerId">The name of the person who placed the call.</param>
+/// <param name="CallerJob">The job of the person who placed the call.</param>
+/// <param name="DeviceId">The name of the device used to make the call.</param>
+[Serializable, NetSerializable]
+public record struct TelephoneCallRecord(string? CallerId, string? CallerJob, string? DeviceId);
 
 #region: Telephone events
 

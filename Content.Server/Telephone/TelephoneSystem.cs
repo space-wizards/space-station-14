@@ -130,8 +130,13 @@ public sealed class TelephoneSystem : SharedTelephoneSystem
 
             if (IsTelephoneEngaged(entity))
             {
-                foreach (var receiver in telephone.LinkedTelephones)
+                foreach (var receiverUid in telephone.LinkedTelephones)
                 {
+                    if (!TryComp<TelephoneComponent>(receiverUid, out var receiverTelephone))
+                        continue;
+
+                    var receiver = (receiverUid, receiverTelephone);
+
                     if (!IsSourceInRangeOfReceiver(entity, receiver) &&
                         !IsSourceInRangeOfReceiver(receiver, entity))
                     {
@@ -266,8 +271,12 @@ public sealed class TelephoneSystem : SharedTelephoneSystem
         if (receiver.Comp.LinkedTelephones.Count != 1)
             return;
 
-        var source = receiver.Comp.LinkedTelephones.First();
-        CommenceTelephoneCall(source, receiver);
+        var sourceUid = receiver.Comp.LinkedTelephones.First();
+
+        if (!TryComp<TelephoneComponent>(sourceUid, out var sourceTelephone))
+            return;
+
+        CommenceTelephoneCall((sourceUid, sourceTelephone), receiver);
     }
 
     private void CommenceTelephoneCall(Entity<TelephoneComponent> source, Entity<TelephoneComponent> receiver)
@@ -320,13 +329,18 @@ public sealed class TelephoneSystem : SharedTelephoneSystem
 
     private void HandleEndingTelephoneCalls(Entity<TelephoneComponent> entity, TelephoneState newState)
     {
-        foreach (var linkedTelephone in entity.Comp.LinkedTelephones)
+        foreach (var linkedUid in entity.Comp.LinkedTelephones)
         {
-            if (!linkedTelephone.Comp.LinkedTelephones.Remove(entity))
+            if (!TryComp<TelephoneComponent>(linkedUid, out var linkedTelephone))
                 continue;
 
-            if (!IsTelephoneEngaged(linkedTelephone))
-                EndTelephoneCalls(linkedTelephone);
+            var linked = (linkedUid, linkedTelephone);
+
+            if (!linkedTelephone.LinkedTelephones.Remove(entity))
+                continue;
+
+            if (!IsTelephoneEngaged(linked))
+                EndTelephoneCalls(linked);
         }
 
         entity.Comp.LinkedTelephones.Clear();
@@ -381,10 +395,13 @@ public sealed class TelephoneSystem : SharedTelephoneSystem
 
         var evReceivedMessage = new TelephoneMessageReceivedEvent(message, chatMsg, messageSource, source);
 
-        foreach (var receiver in source.Comp.LinkedTelephones)
+        foreach (var receiverUid in source.Comp.LinkedTelephones)
         {
-            RaiseLocalEvent(receiver, ref evReceivedMessage);
-            receiver.Comp.StateStartTime = _timing.CurTime;
+            if (!TryComp<TelephoneComponent>(receiverUid, out var receiverTelephone))
+                continue;
+
+            RaiseLocalEvent(receiverUid, ref evReceivedMessage);
+            receiverTelephone.StateStartTime = _timing.CurTime;
         }
 
         if (name != Name(messageSource))
