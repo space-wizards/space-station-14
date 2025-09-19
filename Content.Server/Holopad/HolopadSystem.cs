@@ -526,7 +526,7 @@ public sealed class HolopadSystem : SharedHolopadSystem
             if (source == receiver)
                 continue;
 
-            if (!_telephoneSystem.IsSourceAbleToReachReceiver(source, receiver))
+            if (!_telephoneSystem.IsSourceInRangeOfReceiver(source, receiver))
                 continue;
 
             var name = MetaData(receiverUid).EntityName;
