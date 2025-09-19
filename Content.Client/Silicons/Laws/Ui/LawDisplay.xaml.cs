@@ -1,3 +1,4 @@
+using System.Linq;
 using Content.Client.Chat.Managers;
 using Content.Client.Message;
 using Content.Shared.Chat;
@@ -23,8 +24,10 @@ public sealed partial class LawDisplay : Control
     [Dependency] private readonly EntityManager _entityManager = default!;
 
     private static readonly TimeSpan PressCooldown = TimeSpan.FromSeconds(3);
+    private const string StateLawInLocalKey = "chat-local";
 
-    private readonly Dictionary<Button, TimeSpan> _nextAllowedPress = new();
+    private readonly Dictionary<string, TimeSpan> _stateLawOnCooldownUntil = [];
+    private readonly Dictionary<string, Button> _stateLawButton = [];
 
     public LawDisplay(EntityUid uid, SiliconLaw law, HashSet<ProtoId<RadioChannelPrototype>>? radioChannels)
     {
@@ -33,9 +36,7 @@ public sealed partial class LawDisplay : Control
 
         var identifier = law.LawIdentifierOverride ?? $"{law.Order}";
         var lawIdentifier = Loc.GetString("laws-ui-law-header", ("id", identifier));
-        var lawDescription = Loc.GetString(law.ReadLawString(readoutModeEnabled));
-        var lawIdentifierPlaintext = FormattedMessage.RemoveMarkupPermissive(lawIdentifier);
-        var lawDescriptionPlaintext = FormattedMessage.RemoveMarkupPermissive(lawDescription);
+        var lawDescription = Loc.GetString(law.ReadLawString(false));
 
         LawNumberLabel.SetMarkup(lawIdentifier);
         LawLabel.SetMessage(lawDescription);
@@ -44,24 +45,12 @@ public sealed partial class LawDisplay : Control
         if (!_entityManager.TryGetComponent<SpeechComponent>(uid, out var speech) || speech.SpeechSounds is null)
             return;
 
-        var localButton = new Button
-        {
-            Text = Loc.GetString("hud-chatbox-select-channel-Local"),
-            Modulate = Color.DarkGray,
-            StyleClasses = { "chatSelectorOptionButton" },
-            MinHeight = 35,
-            MinWidth = 75,
-        };
+        var stateLawMessage = $"{FormattedMessage.RemoveMarkupPermissive(lawIdentifier)}: {FormattedMessage.RemoveMarkupPermissive(lawDescription)}";
 
-        _nextAllowedPress[localButton] = TimeSpan.Zero;
+        var stateLawInLocalButton = NewStateLawButton("hud-chatbox-select-channel-Local", Color.DarkGray);
 
-        localButton.OnPressed += _ =>
-        {
-            _chatManager.SendMessage($"{lawIdentifierPlaintext}: {lawDescriptionPlaintext}", ChatSelectChannel.Local);
-            _nextAllowedPress[localButton] = _timing.CurTime + PressCooldown;
-        };
-
-        LawAnnouncementButtons.AddChild(localButton);
+        stateLawInLocalButton.OnPressed += e => OnStateLawsButtonPressed(e.Button, stateLawMessage, string.Empty, StateLawInLocalKey);
+        AddStateLawButton(stateLawInLocalButton, StateLawInLocalKey);
 
         if (radioChannels == null)
             return;
@@ -71,31 +60,15 @@ public sealed partial class LawDisplay : Control
             if (!_prototypeManager.TryIndex<RadioChannelPrototype>(radioChannel, out var radioChannelProto))
                 continue;
 
-            var radioChannelButton = new Button
-            {
-                Text = Loc.GetString(radioChannelProto.Name),
-                Modulate = radioChannelProto.Color,
-                StyleClasses = { "chatSelectorOptionButton" },
-                MinHeight = 35,
-                MinWidth = 75,
-            };
+            var stateLawOnRadioKey = radioChannel;
+            var stateLawOnRadioButton = NewStateLawButton(radioChannelProto.Name, radioChannelProto.Color);
 
-            _nextAllowedPress[radioChannelButton] = TimeSpan.Zero;
+            var channelPrefix = radioChannel == SharedChatSystem.CommonChannel
+                ? SharedChatSystem.RadioCommonPrefix.ToString()
+                : $"{SharedChatSystem.RadioChannelPrefix}{radioChannelProto.KeyCode}";
 
-            radioChannelButton.OnPressed += _ =>
-            {
-                if (radioChannel == SharedChatSystem.CommonChannel)
-                {
-                    _chatManager.SendMessage($"{SharedChatSystem.RadioCommonPrefix} {lawIdentifierPlaintext}: {lawDescriptionPlaintext}", ChatSelectChannel.Radio);
-                }
-                else
-                {
-                    _chatManager.SendMessage($"{SharedChatSystem.RadioChannelPrefix}{radioChannelProto.KeyCode} {lawIdentifierPlaintext}: {lawDescriptionPlaintext}", ChatSelectChannel.Radio);
-                }
-                _nextAllowedPress[radioChannelButton] = _timing.CurTime + PressCooldown;
-            };
-
-            LawAnnouncementButtons.AddChild(radioChannelButton);
+            stateLawOnRadioButton.OnPressed += e => OnStateLawsButtonPressed(e.Button, stateLawMessage, channelPrefix, stateLawOnRadioKey);
+            AddStateLawButton(stateLawOnRadioButton, stateLawOnRadioKey);
         }
     }
 
@@ -103,10 +76,52 @@ public sealed partial class LawDisplay : Control
     {
         base.FrameUpdate(args);
 
+        if (_stateLawOnCooldownUntil.Count == 0)
+            return;
+
         var curTime = _timing.CurTime;
-        foreach (var (button, nextPress) in _nextAllowedPress)
+
+        // iterate over copy of keys because we are modifying the working set
+        var toCheck = _stateLawOnCooldownUntil.Keys.ToArray();
+        foreach (var stateLawKey in toCheck)
         {
-            button.Disabled = curTime < nextPress;
+            if (_stateLawOnCooldownUntil[stateLawKey] > curTime)
+                continue;
+
+            _stateLawButton[stateLawKey].Disabled = false;
+            _stateLawOnCooldownUntil.Remove(stateLawKey);
         }
+    }
+
+    private void OnStateLawsButtonPressed(BaseButton sender, string message, string channelPrefix, string stateLawKey)
+    {
+        // Send message in chat
+        var chatSelectChannel = string.IsNullOrEmpty(channelPrefix) ? ChatSelectChannel.Local : ChatSelectChannel.Radio;
+        _chatManager.SendMessage($"{channelPrefix} {message}", chatSelectChannel);
+
+        // Set cooldown if any
+        if (PressCooldown <= TimeSpan.Zero)
+            return;
+
+        _stateLawOnCooldownUntil[stateLawKey] = _timing.CurTime + PressCooldown;
+        sender.Disabled = true;
+    }
+
+    private static Button NewStateLawButton(string locStringCaption, Color color)
+    {
+        return new Button
+        {
+            Text = Loc.GetString(locStringCaption),
+            Modulate = color,
+            StyleClasses = { "chatSelectorOptionButton" },
+            MinHeight = 35,
+            MinWidth = 75,
+        };
+    }
+
+    private void AddStateLawButton(Button button, string stateLawKey)
+    {
+        _stateLawButton[stateLawKey] = button;
+        LawAnnouncementButtons.AddChild(button);
     }
 }
