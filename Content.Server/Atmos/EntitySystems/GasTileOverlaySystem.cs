@@ -33,10 +33,10 @@ namespace Content.Server.Atmos.EntitySystems
         [Dependency] private readonly IGameTiming _gameTiming = default!;
         [Dependency] private readonly IPlayerManager _playerManager = default!;
         [Dependency] private readonly IMapManager _mapManager = default!;
+        [Dependency] private readonly IConfigurationManager _confMan = default!
         [Dependency] private readonly IParallelManager _parMan = default!;
         [Dependency] private readonly AtmosphereSystem _atmosphereSystem = default!;
-        [Dependency] private readonly ChunkingSystem _chunkingSys = default!;
-        [Dependency] private readonly IConfigurationManager _confMan = default!;
+        [Dependency] private readonly ChunkingSystem _chunkingSys = default!;;
 
         /// <summary>
         /// Cache of sessions updated every tick that <see cref="_doSessionUpdate"/>
