@@ -972,8 +972,8 @@ public sealed partial class AdminVerbSystem
                 EnsureComp<SiliconLawProviderComponent>(args.Target);
                 _siliconLawSystem.SetLaws(_siliconLawSystem.GetLawset(_crewsimovLawset).Laws, args.Target);
 
-                _mindSystem.TryGetMind(args.Target, out var mindId, out _);
-                _role.MindAddRole(mindId, "MindRoleSiliconBrain");
+                if (_mindSystem.TryGetMind(args.Target, out var mindId, out _))
+                    _role.MindAddRole(mindId, "MindRoleSiliconBrain");
 
                 _popupSystem.PopupEntity(Loc.GetString("admin-smite-silicon-laws-bound-self"), args.Target,
                     args.Target, PopupType.LargeCaution);
