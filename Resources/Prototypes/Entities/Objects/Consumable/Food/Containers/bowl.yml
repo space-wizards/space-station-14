@@ -27,6 +27,7 @@
     edible: Drink
     solution: food
     destroyOnEmpty: false
+    utensil: Spoon
   - type: DamageOnLand
     damage:
       types:
