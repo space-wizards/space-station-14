@@ -2,7 +2,6 @@ using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Server.Actions;
 using Content.Server.Chat.Managers;
-using Content.Shared.CCVar;
 using Content.Shared.Chat;
 using Content.Shared.Dataset;
 using Content.Shared.Emag.Systems;
@@ -32,6 +31,7 @@ public sealed partial class ThavenMoodsSystem : SharedThavenMoodSystem
     [Dependency] private readonly IChatManager _chatManager = default!;
     [Dependency] private readonly AudioSystem _audio = default!;
 
+    [ViewVariables(VVAccess.ReadOnly)]
     public IReadOnlyList<ThavenMood> SharedMoods => _sharedMoods.AsReadOnly();
     private readonly List<ThavenMood> _sharedMoods = new();
     // cached hashset that never gets modified
@@ -40,9 +40,6 @@ public sealed partial class ThavenMoodsSystem : SharedThavenMoodSystem
     private readonly HashSet<ProtoId<ThavenMoodPrototype>> _moodProtos = new HashSet<ProtoId<ThavenMoodPrototype>>();
 
     private ProtoId<DatasetPrototype> SharedDataset = "ThavenMoodsShared";
-    private ProtoId<DatasetPrototype> YesAndDataset = "ThavenMoodsYesAnd";
-    private ProtoId<DatasetPrototype> NoAndDataset = "ThavenMoodsNoAnd";
-    private ProtoId<DatasetPrototype> WildcardDataset = "ThavenMoodsWildcard";
 
     private EntProtoId ActionViewMoods = "ActionViewMoods";
 
@@ -61,8 +58,12 @@ public sealed partial class ThavenMoodsSystem : SharedThavenMoodSystem
         SubscribeLocalEvent<RoundRestartCleanupEvent>((_) => NewSharedMoods());
     }
 
+    //vvinvoke /system/ThavenMoodSystem/NewSharedMoods
+    //vvread /system/ThavenMoodsSystem/SharedMoods[0]
+    [ViewVariables]
     private void NewSharedMoods()
     {
+        Log.Info("Rolling new Shared Moods");
         _sharedMoods.Clear();
         for (int i = 0; i < _config.GetCVar(ImpCCVars.ThavenSharedMoodCount); i++)
             TryAddSharedMood(notify: false); // don't spam notify if there are multiple moods
@@ -272,14 +273,6 @@ public sealed partial class ThavenMoodsSystem : SharedThavenMoodSystem
     }
 
     /// <summary>
-    /// Tries to add a random mood from <see cref="WildcardDataset"/>, which is the same as emagging.
-    /// </summary>
-    public bool AddWildcardMood(Entity<ThavenMoodsComponent> ent, bool notify = true)
-    {
-        return TryAddRandomMood(ent, WildcardDataset, notify);
-    }
-
-    /// <summary>
     /// Set the moods for a thaven directly.
     /// This does NOT check conflicts so be careful with what you set!
     /// </summary>
@@ -346,13 +339,12 @@ public sealed partial class ThavenMoodsSystem : SharedThavenMoodSystem
 
     private void OnThavenMoodInit(Entity<ThavenMoodsComponent> ent, ref MapInitEvent args)
     {
-        // "Yes, and" moods
-        if (TryPick(YesAndDataset, out var mood, GetActiveMoods(ent)))
-            TryAddMood(ent, mood, true, false);
 
-        // "No, and" moods
-        if (TryPick(NoAndDataset, out mood, GetActiveMoods(ent)))
-            TryAddMood(ent, mood, true, false);
+        foreach (var dataset in ent.Comp.MoodDatasets)
+        {
+            if (TryPick(dataset, out var mood, GetActiveMoods(ent)))
+                TryAddMood(ent, mood, true, false);
+        }
 
         ent.Comp.Action = _actions.AddAction(ent.Owner, ActionViewMoods);
     }
@@ -370,6 +362,6 @@ public sealed partial class ThavenMoodsSystem : SharedThavenMoodSystem
         if (!args.Handled)
             return;
 
-        AddWildcardMood(ent);
+        TryAddRandomMood(ent, ent.Comp.Wildcard);
     }
 }
