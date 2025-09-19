@@ -8,7 +8,7 @@ alert-level-green-announcement = It is now safe to return to your workplaces.
 alert-level-green-instructions = Do your job.
 
 alert-level-blue = Blue
-alert-level-blue-announcement = There may be a threat onboard the station that does not endanger the entire crew. Security should perform random checks. Crewmembers are advised to be vigilant and report suspicious activity to security.
+alert-level-blue-announcement = There may be a threat onboard the station that endangers a minority of the crew. Security should perform random checks. Crewmembers are advised to be vigilant and report suspicious activity to security.
 alert-level-blue-instructions = Crewmembers are advised to be vigilant and report suspicious activity to security.
 
 alert-level-red = Red
