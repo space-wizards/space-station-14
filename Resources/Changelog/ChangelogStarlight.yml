@@ -14788,5 +14788,13 @@ Entries:
   id: 168700
   time: '2025-09-19T18:08:03.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/1687
+- author: CorruptOmega
+  changes:
+  - message: 'Scurrets now can understand Galactic Common again. Translation: Wawa,
+      wawaaaawa. Wawa!'
+    type: Tweak
+  id: 167300
+  time: '2025-09-19T20:43:08.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1673
 Order: -1
 
