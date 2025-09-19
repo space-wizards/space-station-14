@@ -86,8 +86,8 @@ public sealed partial class AdminVerbSystem
     [Dependency] private readonly SuperBonkSystem _superBonkSystem = default!;
     [Dependency] private readonly SlipperySystem _slipperySystem = default!;
 
-    private const string ActionViewLawsProtoId = "ActionViewLaws";
-    private const string CrewsimovLawset = "Crewsimov";
+    private const EntProtoId ActionViewLawsProtoId = "ActionViewLaws";
+    private const ProtoId<SiliconLawsetPrototype> CrewsimovLawset = "Crewsimov";
 
     private const string SiliconLawBoundUserInterface = "SiliconLawBoundUserInterface";
 
