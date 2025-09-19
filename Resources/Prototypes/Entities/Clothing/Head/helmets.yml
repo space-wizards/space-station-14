@@ -191,7 +191,7 @@
 
 #Space Ninja Helmet
 - type: entity
-  parent: [ClothingHeadEVAHelmetBase, BaseMajorContraband]
+  parent: [ClothingHeadEVAHelmetBase, BaseHighlyIllegalContraband]
   id: ClothingHeadHelmetSpaceNinja
   name: space ninja helmet
   description: What may appear to be a simple black garment is in fact a highly sophisticated nano-weave helmet. Standard issue ninja gear.
