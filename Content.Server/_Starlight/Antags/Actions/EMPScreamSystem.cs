@@ -29,7 +29,7 @@ public sealed partial class EMPScreamSystem : EntitySystem
 
     private void OnEMPScream(EMPScreamEvent ev)
     {
-        if (ev.Handled || _chargesSystem.GetCurrentCharges(ev.Action.Owner) == 0)
+        if (ev.Handled || !_chargesSystem.TryUseCharge(ev.Action.Owner))
             return;
 
         ev.Handled = true;
