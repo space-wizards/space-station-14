@@ -1493,3 +1493,8 @@
   id: motivating
   flavorType: Base
   description: flavor-base-motivating
+
+- type: flavor
+  id: Whilk
+  flavorType: Base
+  description: flavor-base-Whilk

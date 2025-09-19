@@ -54,7 +54,7 @@ flavor-base-mindful = mindful
 flavor-base-chewy = chewy
 flavor-base-trashy = trashy
 flavor-base-motivating = motivating
-
+flavor-base-Whilk = yoghurty
 # Complex flavors. Put a flavor here when you want something that's more
 # specific.
 

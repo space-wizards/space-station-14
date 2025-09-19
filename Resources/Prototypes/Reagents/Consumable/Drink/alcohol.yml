@@ -2552,11 +2552,11 @@
   name: reagent-name-Whilk
   parent: BaseAlcohol
   desc: reagent-desc-Whilk
-  physicalDesc: reagent-desc-Milky
+  physicalDesc: reagent-physical-desc-milky
   flavor: Whilk
   color: "#f2e0ac"
   metamorphicSprite:
-    sprite: Objects/Consumable/Drinks/glass_orange.rsi
+    sprite: Objects/Consumable/Drinks/whilk.rsi
     state: icon_empty
   metamorphicMaxFillLevels: 4
   metamorphicFillBaseName: fill-
