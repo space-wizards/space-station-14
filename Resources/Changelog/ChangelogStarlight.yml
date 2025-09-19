@@ -14753,5 +14753,12 @@ Entries:
   id: 166201
   time: '2025-09-18T22:21:33.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/1662
+- author: CrazyPhantom
+  changes:
+  - message: Practice Laser Carbine Nerfed Into Oblivion (20 heat to 1)
+    type: Fix
+  id: 168000
+  time: '2025-09-19T01:14:47.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1680
 Order: -1
 
