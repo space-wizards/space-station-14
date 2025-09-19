@@ -1638,7 +1638,7 @@
       board: !type:Container
 
 - type: entity
-  id: SpecializationComputer
+  id: ComputerSpecialization
   parent: BaseComputer
   name: Department specialization console
   description: Used to update the laws of the station AI.
