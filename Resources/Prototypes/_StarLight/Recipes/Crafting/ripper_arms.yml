@@ -1,1 +1,19 @@
-test
+- type: construction
+  name: crafting-menu-name-RIPRL
+  id: ArmRipperLeft
+  graph: RipperLeftGraph
+  startNode: startleft
+  targetNode: left
+  category: construction-category-tools
+  objectType: Item
+  description: crafting-menu-text-RIPRL
+
+- type: construction
+  name: crafting-menu-name-RIPRR
+  id: ArmRipperRight
+  graph: RipperRightGraph
+  startNode: startright
+  targetNode: right
+  category: construction-category-tools
+  objectType: Item
+  description: crafting-menu-text-RIPRR
