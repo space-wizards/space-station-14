@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Inventory;
 using Content.Shared.Strip.Components;
@@ -85,12 +86,8 @@ public sealed class StrippableClothesTest
 ";
 
     private readonly EntProtoId _humanMob = new EntProtoId("MobHuman");
-
-    private const string LeftHandSlot = "body_part_slot_left_hand";
-    private const string RightHandSlot = "body_part_slot_right_hand";
-
-    private const int TotalHandSlotsCount = 2;
-
+    private const int TotalHandsCount = 2;
+    private const int RunSecondsDoAfterEvent = 15;
 
     [Test]
     // <summary>
@@ -179,7 +176,7 @@ public sealed class StrippableClothesTest
         });
 
         //  Time to wait doAfter event
-        await pair.RunSeconds(15);
+        await pair.RunSeconds(RunSecondsDoAfterEvent);
 
         //  Validating that slots should be stripped and empty
         await server.WaitAssertion(() =>
@@ -216,15 +213,9 @@ public sealed class StrippableClothesTest
 
         var invSystem = sEntities.System<InventorySystem>();
 
-        var items = new EntityUid[TotalHandSlotsCount];
-
         var handsSystem = sEntities.System<SharedHandsSystem>();
 
-        string[] handsSlots =
-        [
-            LeftHandSlot,
-            RightHandSlot,
-        ];
+        var items = new List<EntityUid>();
 
         var clothesSlots = new Dictionary<string, string>
         {
@@ -247,15 +238,15 @@ public sealed class StrippableClothesTest
             attacker = sEntities.SpawnEntity(_humanMob, MapCoordinates.Nullspace);
 
             //  Spawn human mobs
-            for (int i = 0; i < TotalHandSlotsCount; i++)
+            for (int i = 0; i < TotalHandsCount; i++)
             {
-                items[i] = sEntities.SpawnEntity("DummyHandItem", MapCoordinates.Nullspace);
+                items.Add(sEntities.SpawnEntity("DummyHandItem", MapCoordinates.Nullspace));
             }
 
             //  Verifying human mob for hand slots
             Assert.Multiple(() =>
             {
-                foreach (var hand in handsSlots)
+                foreach (var hand in handsSystem.EnumerateHands(attacker))
                 {
                     Assert.That(
                         handsSystem.TryGetHand(attacker, hand, out _),
@@ -268,20 +259,20 @@ public sealed class StrippableClothesTest
             //  Fulling hand slots
             Assert.Multiple(() =>
             {
-                for (int i = 0; i < TotalHandSlotsCount; i++)
+                foreach( var (slot, item) in handsSystem.EnumerateHands(attacker).Zip(items) )
                 {
                     Assert.That(
-                        handsSystem.TryPickup(attacker, items[i], handsSlots[i]),
+                        handsSystem.TryPickup(attacker, item, slot),
                         Is.True,
-                        $"Could not take item in hand {handsSlots[i]}"
-                    );
+                        $"Could not take item in hand {slot}"
+                        );
                 }
             });
 
             //  Validating that hand slots are fulled
             Assert.Multiple(() =>
             {
-                foreach (var slot in handsSlots)
+                foreach (var slot in handsSystem.EnumerateHands(attacker))
                 {
                     Assert.That(
                         handsSystem.TryGetHeldItem(attacker, slot, out _),
@@ -341,7 +332,7 @@ public sealed class StrippableClothesTest
         });
 
         //  Time to wait doAfter event
-        await pair.RunSeconds(15);
+        await pair.RunSeconds(RunSecondsDoAfterEvent);
 
         //  Validating that slots should be stripped and empty
         await server.WaitAssertion(() =>
@@ -436,7 +427,7 @@ public sealed class StrippableClothesTest
         });
 
         //  Time to wait doAfter event
-        await pair.RunSeconds(15);
+        await pair.RunSeconds(RunSecondsDoAfterEvent);
 
         //  Validating that slots should be stripped and empty
         await server.WaitAssertion(() =>
@@ -531,7 +522,7 @@ public sealed class StrippableClothesTest
         });
 
         //  Time to wait doAfter event
-        await pair.RunSeconds(15);
+        await pair.RunSeconds(RunSecondsDoAfterEvent);
 
         //  Validating that slots should be stripped and empty
         await server.WaitAssertion(() =>
@@ -566,30 +557,24 @@ public sealed class StrippableClothesTest
         EntityUid target = default!;
         EntityUid attacker = default!;
 
-        var items = new EntityUid[TotalHandSlotsCount];
-
         var handsSystem = sEntities.System<SharedHandsSystem>();
 
-        string[] handsSlots =
-        [
-            LeftHandSlot,
-            RightHandSlot,
-        ];
+        var items = new List<EntityUid>();
 
         await server.WaitAssertion(() =>
         {
             target = sEntities.SpawnEntity(_humanMob, MapCoordinates.Nullspace);
             attacker = sEntities.SpawnEntity(_humanMob, MapCoordinates.Nullspace);
 
-            for (int i = 0; i < TotalHandSlotsCount; i++)
+            for (int i = 0; i < TotalHandsCount; i++)
             {
-                items[i] = sEntities.SpawnEntity("DummyHandItem", MapCoordinates.Nullspace);
+                items.Add(sEntities.SpawnEntity("DummyHandItem", MapCoordinates.Nullspace));
             }
 
             //  Verifying human mob for hand slots
             Assert.Multiple(() =>
             {
-                foreach (var hand in handsSlots)
+                foreach (var hand in handsSystem.EnumerateHands(target))
                 {
                     Assert.That(
                         handsSystem.TryGetHand(target, hand, out _),
@@ -602,12 +587,12 @@ public sealed class StrippableClothesTest
             //  Fulling hand slots
             Assert.Multiple(() =>
             {
-                for (int i = 0; i < TotalHandSlotsCount; i++)
+                foreach( var (slot, item) in handsSystem.EnumerateHands(target).Zip(items) )
                 {
                     Assert.That(
-                        handsSystem.TryPickup(target, items[i], handsSlots[i]),
+                        handsSystem.TryPickup(attacker, item, slot),
                         Is.True,
-                        $"Could not take item in hand {handsSlots[i]}"
+                        $"Could not take item in hand {slot}"
                     );
                 }
             });
@@ -615,7 +600,7 @@ public sealed class StrippableClothesTest
             //  Validating that hand slots are fulled
             Assert.Multiple(() =>
             {
-                foreach (var slot in handsSlots)
+                foreach (var slot in handsSystem.EnumerateHands(target))
                 {
                     Assert.That(
                         handsSystem.TryGetHeldItem(target, slot, out _),
@@ -629,7 +614,7 @@ public sealed class StrippableClothesTest
 
         await server.WaitPost(() =>
         {
-            foreach (var slot in handsSlots)
+            foreach (var slot in handsSystem.EnumerateHands(target))
             {
                 var ev =  new StrippingSlotButtonPressed(slot, true);
                 ev.Actor = attacker;
@@ -638,13 +623,13 @@ public sealed class StrippableClothesTest
 
         });
 
-        await pair.RunSeconds(15);
+        await pair.RunSeconds(RunSecondsDoAfterEvent);
 
         await server.WaitAssertion(() =>
         {
             Assert.Multiple(() =>
             {
-                foreach (var slot in handsSlots)
+                foreach (var slot in handsSystem.EnumerateHands(target))
                 {
                     Assert.That(
                         handsSystem.TryGetHeldItem(target, slot, out _),
