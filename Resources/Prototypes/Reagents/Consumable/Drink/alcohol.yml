@@ -2549,11 +2549,11 @@
 
 - type:  reagent
   id: Whilk
-  name: reagent-name-Whilk
+  name: reagent-name-whilk
   parent: BaseAlcohol
-  desc: reagent-desc-Whilk
+  desc: reagent-desc-whilk
   physicalDesc: reagent-physical-desc-milky
-  flavor: Whilk
+  flavor: whilk
   color: "#f2e0ac"
   metamorphicSprite:
     sprite: Objects/Consumable/Drinks/whilk.rsi
