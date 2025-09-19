@@ -55,7 +55,6 @@ using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Utility;
 using Timer = Robust.Shared.Timing.Timer;
-using Robust.Server.GameObjects;
 
 namespace Content.Server.Administration.Systems;
 
