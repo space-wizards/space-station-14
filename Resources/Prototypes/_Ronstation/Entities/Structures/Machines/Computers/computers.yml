@@ -1,0 +1,35 @@
+# Operation Whiskey admeme
+- type: entity
+  parent: ComputerComms
+  id: OperationWhiskeyComputerComms
+  suffix: Admeme, OpWhiskey
+  name: operation whiskey communications computer
+  description: A computer capable of remotely hacking into the station's communications systems. Using this to make an announcement will alert the station to your presence.
+  components:
+  - type: Sprite
+    layers:
+    - map: ["computerLayerBody"]
+      state: computer
+    - map: ["computerLayerKeyboard"]
+      state: generic_keyboard
+    - map: ["computerLayerScreen"]
+      state: comm_whiskey
+    - map: ["computerLayerKeys"]
+      state: whiskey_key
+    - map: [ "enum.WiresVisualLayers.MaintenancePanel" ]
+      state: generic_panel_open
+  - type: AccessReader
+    access: [["Xenoborg"]] # Unused anywhere but xenoborgs, perfect for admeme
+  - type: CommunicationsConsole
+    title: comms-console-announcement-title-operation-whiskey
+    color: "#FF5E00"
+    canShuttle: false
+    global: true
+    announceSentBy: false
+    sound: /Audio/Ambience/Antag/traitor_start.ogg
+  - type: Computer
+    board: OperationWhiskeyCommsComputerCircuitboard
+  - type: PointLight
+    radius: 1.5
+    energy: 1.6
+    color: "#F76B14"

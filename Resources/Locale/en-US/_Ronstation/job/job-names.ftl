@@ -25,3 +25,6 @@ AntagZombie = Zombie
 
 # Jobs
 job-name-blueshield-officer = Blueshield Officer
+
+# Job titles
+job-title-whiskey-operator = Whiskey Operator

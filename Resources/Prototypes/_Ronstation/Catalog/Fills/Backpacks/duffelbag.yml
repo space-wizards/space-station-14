@@ -1,0 +1,16 @@
+# Operation Whiskey admeme, cant fill storage with set outfit
+- type: entity
+  parent: ClothingBackpackDuffelSyndicate
+  id: ClothingBackpackDuffelWhiskeyOperator
+  suffix: Admeme, OpWhiskey
+  name: whiskey operator duffel bag
+  components:
+  - type: StorageFill
+    contents:
+    - id: ClothingOuterHardsuitWhiskeyOperator
+    - id: ClothingMaskGasSyndicate
+    - id: DoubleEmergencyOxygenTankFilled
+    - id: DoubleEmergencyNitrogenTankFilled
+    - id: ClothingHandsGlovesCombat
+    - id: DrinkWaterBottleFull
+    - id: FoodSnackNutribrick

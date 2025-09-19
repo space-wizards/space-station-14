@@ -1,0 +1,12 @@
+# Operation Whiskey admeme
+- type: startingGear
+  id: WhiskeyOperatorGear
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitOperative
+    back: ClothingBackpackDuffelWhiskeyOperator
+    shoes: ClothingShoesChameleonNoSlips
+    id: WhiskeyOperatorPDA
+    ears: ClothingHeadsetFreelance
+    belt: ClothingBeltUtilityFilled
+    pocket1: CigPackSyndicate
+    pocket2: HandLabeler

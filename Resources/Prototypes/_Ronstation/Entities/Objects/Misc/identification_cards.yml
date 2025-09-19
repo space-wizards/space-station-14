@@ -9,3 +9,21 @@
     - state: idcentcom
   - type: PresetIdCard
     job: BlueshieldOfficer
+
+# Operation Whiskey admeme
+- type: entity
+  parent: [ IDCardStandard, BaseSyndicateContraband ]
+  id: WhiskeyOperatorIDCard
+  suffix: Admeme, OpWhiskey
+  name: whiskey operator ID card
+  components:
+  - type: Sprite
+    sprite: _Ronstation/Objects/Misc/id_cards.rsi
+    layers:
+    - state: whiskey
+  - type: IdCard
+    jobTitle: job-title-whiskey-operator
+    jobIcon: JobIconVisitor
+  - type: Access
+    tags:
+    - Xenoborg # Unused anywhere but xenoborgs, perfect for admeme

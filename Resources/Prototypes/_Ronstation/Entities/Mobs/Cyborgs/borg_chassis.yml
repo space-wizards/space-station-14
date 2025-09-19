@@ -1,0 +1,70 @@
+# Operation whiskey admeme
+- type: entity
+  parent: BaseBorgChassisNotIonStormable
+  id: BorgChassisWhiskeyBouncer
+  suffix: Admeme, OpWhiskey
+  name: operation whiskey bouncer borg
+  description: A lean, mean tasing machine with access to a variety of humiliating modules.
+  components:
+    - type: Sprite
+      layers:
+        - state: synd_sec
+        - state: synd_sec_e
+          map: ["enum.BorgVisualLayers.Light"]
+          shader: unshaded
+          visible: false
+        - state: synd_sec_l
+          shader: unshaded
+          map: ["light"]
+          visible: false
+    - type: BorgChassis
+      maxModules: 30 # Fun
+      moduleWhitelist: null # Even more fun
+      hasMindState: synd_sec_e
+      noMindState: synd_sec
+    - type: ContainerFill
+      containers:
+        cell_slot:
+        - PowerCellMicroreactor
+        borg_module:
+        - BorgModuleAdvancedClowning # For humiliating any bad actors
+        - XenoborgModuleFireExtinguisher # Unlimited fire eqxtinguisher
+        - BorgModuleInflatable # Emergency repairs
+        - BorgModuleAdvancedTool # Repairs
+        - BorgModuleConstruction # Repairs
+        - BorgModuleRCD # Repairs
+        - BorgModuleCable # Repairs
+        - BorgModuleTopicals # Heal victim customers
+        - BorgModuleMusique # Entertain customers
+        - BorgModuleService # Help around the bar
+        - XenoborgModuleSuperCloakDevice # Epic stealth (chameleon is bugged)
+        - XenoborgModuleSpaceMovement # Don't wanna get lost in space
+    - type: InteractionPopup
+      interactSuccessString: petting-success-syndicate-cyborg
+      interactFailureString: petting-failure-syndicate-cyborg
+      interactSuccessSound:
+        path: /Audio/Ambience/Objects/periodic_beep.ogg
+    - type: Access
+      tags:
+      - Xenoborg # Unused anywhere but xenoborgs, perfect for admeme
+    - type: AccessReader
+      access: [["Xenoborg"]]
+    - type: SiliconLawProvider
+      laws: Crewsimov # Manually set when spawning
+    - type: Emagged
+      emagType: Interaction # Ion storm and emag immune
+    - type: IntrinsicRadioTransmitter
+      channels:
+      - Freelance
+    - type: ActiveRadio
+      channels:
+      - Freelance
+    - type: Speech
+      speechSounds: SyndieBorg
+      allowedEmotes:
+      - Laugh
+    - type: Vocal
+      sounds:
+        Unsexed: UnisexSiliconSyndicate
+    - type: PointLight
+      color: "#dd200b"
