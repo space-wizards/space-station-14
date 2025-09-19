@@ -617,5 +617,5 @@
   id: IonStormDefaultLawFormatCorruption
   weights:
     NoFormatCorruption: 0.5
-    AllCapsFormatCorruption: 2
+    AllCapsFormatCorruption: 1
     ColorizeFormatCorruption: 1
