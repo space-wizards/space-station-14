@@ -5,7 +5,6 @@
   placement:
     mode: SnapgridCenter
   components:
-    - type: ParentCanBlockVision # Starlight-edit
     - type: Transform
       anchored: true
       noRot: true

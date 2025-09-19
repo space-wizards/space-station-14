@@ -77,7 +77,7 @@
   - type: StaticPrice
     price: 70
   - type: PowerSwitch
-  - type: ParentCanBlockVision # Starlight-edit
+  - type: ChildBlockVision # Starlight-edit
 
 - type: entity
   id: DisposalUnit

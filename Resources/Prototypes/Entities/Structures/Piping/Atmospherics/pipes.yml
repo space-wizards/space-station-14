@@ -68,7 +68,7 @@
   - type: ContainerContainer
     containers:
       VentCrawTube: !type:Container
-  - type: ParentCanBlockVision # Starlight-edit
+  - type: ChildBlockVision # Starlight-edit
 
 - type: entity
   id: VentCrawHolder
