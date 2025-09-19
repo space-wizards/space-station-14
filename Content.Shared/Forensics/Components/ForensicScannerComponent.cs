@@ -48,7 +48,7 @@ namespace Content.Shared.Forensics.Components
         /// <remarks>
         /// This will be used for the title of the printout and displayed to players.
         /// </remarks>
-        [ViewVariables, DataField]
+        [AutoNetworkedField, DataField]
         public string LastScannedName = string.Empty;
 
         /// <summary>
