@@ -39,7 +39,7 @@
         doAfter: 5
       - material: Steel
         amount: 30
-        doAfter:: 1
+        doAfter: 1
       - tag: ModularReceiver
         icon:
           sprite: Objects/Misc/modular_receiver.rsi
