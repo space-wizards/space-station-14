@@ -77,22 +77,6 @@
     solution: tank
 
 - type: entity
-  parent: ClothingBackpackWaterTank
-  id: ClothingBackpackWaterTankFlamethrower
-  suffix: flamethrower
-  components:
-  - type: Label
-    currentLabel: reagent-name-napalm
-  - type: SolutionContainerManager
-    solutions:
-      tank:
-        reagents:
-        - ReagentId: Phlogiston
-          Quantity: 10
-        - ReagentId: Napalm
-          Quantity: 990
-
-- type: entity
   parent: ClothingBackpack
   id: ClothingBagPet
   name: pet bag
