@@ -1495,6 +1495,6 @@
   description: flavor-base-motivating
 
 - type: flavor
-  id: Whilk
+  id: whilk
   flavorType: Base
-  description: flavor-base-Whilk
+  description: flavor-base-whilk
