@@ -139,6 +139,12 @@ public sealed partial class IngestionSystem
     /// </remarks>
     private void OnDrainableIsDigestible(Entity<DrainableSolutionComponent> ent, ref IsDigestibleEvent args)
     {
+        // Check for EdibleComponent or FoodComponent. Do not make universally digestible if special digestion is required.
+        if (TryComp<EdibleComponent>(ent.Owner, out var edibleComp) && edibleComp.RequiresSpecialDigestion)
+            return;
+        if (TryComp<FoodComponent>(ent.Owner, out var foodComp) && foodComp.RequiresSpecialDigestion)
+            return;
+
         args.UniversalDigestion();
     }
 
