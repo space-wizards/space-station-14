@@ -14760,5 +14760,26 @@ Entries:
   id: 168000
   time: '2025-09-19T01:14:47.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/1680
+- author: Rinary
+  changes:
+  - message: Fixed emp scream cooldown for purple terror.
+    type: Fix
+  id: 168600
+  time: '2025-09-19T16:16:39.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1686
+- author: Rinary
+  changes:
+  - message: Fixed npc's with jumping task, now they work.(Hostile)
+    type: Fix
+  id: 168601
+  time: '2025-09-19T16:16:39.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1686
+- author: Rinary
+  changes:
+  - message: Changed black terror jump knockdown duration from 2 seconds to 1 seconds.
+    type: Tweak
+  id: 168602
+  time: '2025-09-19T16:16:39.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1686
 Order: -1
 
