@@ -412,6 +412,9 @@
     - type: WithAttachedBodyParts
       parts:
         left hand: LeftHandCyber
+    - type: Construction
+      graph: RipperLeftGraph
+      node: left
 
 - type: entity
   id: RightArmCyberRipper
@@ -444,3 +447,6 @@
     - type: WithAttachedBodyParts
       parts:
         right hand: RightHandCyber
+    - type: Construction
+      graph: RipperRightGraph
+      node: right
