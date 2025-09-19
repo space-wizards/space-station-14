@@ -25,12 +25,10 @@ public sealed class SpecializationConsoleSystem : SharedSpecializationConsoleSys
     [Dependency] private readonly IPrototypeManager _prototype = default!;
     [Dependency] private readonly SharedStationRecordsSystem _records = default!;
 
-
     public override void Initialize()
     {
         base.Initialize();
 
-        // SubscribeLocalEvent<SpecializationConsoleComponent, SpecializationChangedMessage>(OnSpecializationChanged);
         SubscribeLocalEvent<SpecializationConsoleComponent, EntInsertedIntoContainerMessage>(UpdateUserInterface);
         SubscribeLocalEvent<SpecializationConsoleComponent, EntRemovedFromContainerMessage>(UpdateUserInterface);
         SubscribeLocalEvent<SpecializationConsoleComponent, BoundUIOpenedEvent>(UpdateUserInterface);
@@ -45,16 +43,16 @@ public sealed class SpecializationConsoleSystem : SharedSpecializationConsoleSys
         {
             var targetIdComponent = Comp<IdCardComponent>(targetId);
 
-            if (!TryComp<StationRecordKeyStorageComponent>(targetId, out var keyStorage))
+            if (!TryComp<StationRecordInfoStorageComponent>(targetId, out var keyStorage))
                 return;
-            var stationRecord = keyStorage.CachedRecord;
+            var stationRecord = keyStorage.Record;
 
             newState = new SpecializationConsoleBoundInterfaceState(
                 component.PrivilegedIdSlot.HasItem,
                 component.TargetIdSlot.HasItem,
                 targetIdComponent.FullName,
                 targetIdComponent.LocalizedJobTitle,
-                targetIdComponent.JobSpecTitle,
+                targetIdComponent.JobSpecializationTitle,
                 stationRecord?.Profile,
                 stationRecord?.JobPrototype);
         }

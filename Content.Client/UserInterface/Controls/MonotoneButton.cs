@@ -17,7 +17,6 @@ public sealed class MonotoneButton : Button
 
     public MonotoneButton()
     {
-        RemoveStyleClass("button");
         UpdateAppearance();
     }
 
@@ -28,7 +27,7 @@ public sealed class MonotoneButton : Button
             Label.ModulateSelfOverride = DrawMode == DrawModeEnum.Pressed ? AltTextColor : null;
 
         // Modulate the button if disabled
-        Modulate = Disabled ? Color.Gray : Color.White;
+        // Modulate = Disabled ? Color.Gray : Color.White;
     }
 
     protected override void StylePropertiesChanged()

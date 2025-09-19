@@ -1,11 +1,14 @@
 using System.Linq;
 using System.Numerics;
 using Content.Client.Lobby;
+using Content.Client.SpecializationConsole.Controls;
 using Content.Client.Stylesheets;
 using Content.Client.UserInterface.Controls;
+using Content.Shared.Access;
 using Content.Shared.Access.Components;
 using Content.Shared.Access.Systems;
 using Content.Shared.Administration;
+using Content.Shared.CCVar;
 using Content.Shared.Preferences;
 using Content.Shared.Roles;
 using Content.Shared.SpecializationConsole;
@@ -14,15 +17,15 @@ using Robust.Client.Player;
 using Robust.Client.ResourceManagement;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
-using Robust.Client.UserInterface.CustomControls;
 using Robust.Client.UserInterface.XAML;
+using Robust.Shared.Configuration;
 using Robust.Shared.Network;
 using Robust.Shared.Prototypes;
 
 namespace Content.Client.SpecializationConsole;
 
 [GenerateTypedNameReferences]
-public sealed partial class SpecializationConsoleWindow : BaseWindow
+public sealed partial class SpecializationConsoleWindow : FancyWindow
 {
     [Dependency] private readonly IEntityManager _entManager = default!;
     [Dependency] private readonly IPlayerManager _playerManager = default!;
@@ -32,6 +35,7 @@ public sealed partial class SpecializationConsoleWindow : BaseWindow
     [Dependency] private readonly IClientPreferencesManager _preferencesManager = default!;
     [Dependency] private readonly IUserInterfaceManager _userInterfaceManager = default!;
     [Dependency] private readonly IClientNetManager _netManager = default!;
+    [Dependency] private readonly IConfigurationManager _configurationManager = default!;
     private readonly AccessReaderSystem _accessReader;
 
     private EntityUid? _dummy;
@@ -40,8 +44,8 @@ public sealed partial class SpecializationConsoleWindow : BaseWindow
     private ProtoId<JobPrototype>? _job;
     private string? _spec;
 
-    private DialogWindow? _dialogWindow;
-    private int _maxLength = 32;
+    private MonotoneDialogWindow? _dialogWindow;
+    private int _maxLength;
     public event Action<string>? OnDialogConfirmed;
 
     public SpecializationConsoleWindow()
@@ -52,25 +56,30 @@ public sealed partial class SpecializationConsoleWindow : BaseWindow
 
         CloseButton.OnPressed += _ => Close();
 
-        // AccessConfiguration.OnDialogConfirmed += spec => OnDialogConfirmed?.Invoke(spec);
-
-        // Override footer font
-        var smallFont = _cache.NotoStack(size: 8);
-        Footer.FontOverride = smallFont;
-
         SetButton.OnPressed += _ => OnSetSpecializationButtonPressed();
+        DeleteButton.OnPressed += _ =>
+        {
+            _spec = null;
+            EmployeeInfo.SetJobSpec(_spec);
+        };
 
+        _maxLength = _configurationManager.GetCVar(CCVars.MaxJobSpecLength);
     }
 
     private void OnSetSpecializationButtonPressed()
     {
-        var field = "reason";
-        var title = Loc.GetString("criminal-records-status-");
+        var field = "specialization";
         var prompt = Loc.GetString("criminal-records-console-reason");
-        var entry = new QuickDialogEntry(field, QuickDialogEntryType.LongText, prompt);
-        var entries = new List<QuickDialogEntry>() { entry };
+        var entry = new QuickDialogEntry(field, QuickDialogEntryType.ShortText, prompt);
+        var entries = new List<QuickDialogEntry> { entry };
 
-        _dialogWindow = new DialogWindow(title, entries);
+        if (_dialogWindow != null && _dialogWindow.IsOpen)
+        {
+            _dialogWindow.OpenCentered();
+            return;
+        }
+
+        _dialogWindow = new MonotoneDialogWindow(entries, _maxLength);
 
         _dialogWindow.OnConfirmed += specs =>
         {
@@ -87,28 +96,21 @@ public sealed partial class SpecializationConsoleWindow : BaseWindow
             _dialogWindow = null;
             EmployeeInfo.SetJobSpec(_spec);
         };
-    }
 
-    public void SetEntity(EntityUid uid, SpriteView sprite)
-    {
-        sprite.SetEntity(uid);
     }
+    public void SetEntity(EntityUid uid, SpriteView sprite) => sprite.SetEntity(uid);
 
-    public void ClearEntity(SpriteView sprite)
-    {
-        sprite.SetEntity(null);
-    }
+    public void ClearEntity(SpriteView sprite) => sprite.SetEntity(null);
 
-    public void SetOwner(EntityUid owner)
-    {
-        _owner = owner;
-    }
+    public void SetOwner(EntityUid owner) => _owner = owner;
+
     public void UpdateState(SpecializationConsoleBoundInterfaceState state)
     {
         EntityUid? privilegedItem;
         EntityUid? targetItem;
         AccessBox.DisposeAllChildren();
-        SetButton.Visible = false;
+        EmployeeInfo.EntityViewBox.DisposeAllChildren();
+        SetButton.Visible = DeleteButton.Visible = false;
 
         if (!_entManager.TryGetComponent<SpecializationConsoleComponent>(_owner, out var specializationConsole))
             return;
@@ -124,6 +126,8 @@ public sealed partial class SpecializationConsoleWindow : BaseWindow
                 var departmentLabel = new RichTextLabel
                 {
                     Margin = new Thickness(5, 0, 5, 0),
+                    VerticalAlignment = VAlignment.Center,
+                    VerticalExpand = true,
                 };
                 departmentLabel.SetMessage($"[{department.Id}]");
                 AccessBox.AddChild(departmentLabel);
@@ -143,14 +147,9 @@ public sealed partial class SpecializationConsoleWindow : BaseWindow
             _spec = state.TargetIdJobSpec;
 
             if (_job != null && _prototype.TryIndex(_job, out var jobProto))
-            {
-                _dummy = _userInterfaceManager.GetUIController<LobbyUIController>()
-                    .LoadProfileEntity(_profile, jobProto, true);
-            }
-            else if (_job is null && _profile is null)
-            {
+                _dummy = _userInterfaceManager.GetUIController<LobbyUIController>().LoadProfileEntity(_profile, jobProto, true);
+            else if (_profile is null)
                 _dummy = _entManager.Spawn("PlushieLizard");
-            }
 
             SetEntity(targetItem.Value, TargetEntityView);
             EmployeeInfo.SetInfo(state.TargetIdFullName, state.TargetIdJobTitle, _spec);
@@ -166,26 +165,34 @@ public sealed partial class SpecializationConsoleWindow : BaseWindow
 
         if (privilegedItem != null && targetItem != null)
         {
-            var s = _accessReader.FindAccessTags(privilegedItem.Value);
-            var ss = _accessReader.FindAccessTags(targetItem.Value);
-
-            var buttonState = true;
-
-            var filteredS = s.Where(x => x != "Maintenance");
-            var filteredSs = ss.Where(x => x != "Maintenance");
-
-            if (s.Contains("Captain") || s.Contains("CentralCommand") || ss.Contains("CentralCommand") && s.Contains("CentralCommand"))
-                buttonState = false;
-            else if (s.Contains("Command") && filteredS.Intersect(filteredSs).Any())
-                buttonState = false;
-
-            SetButton.Disabled = buttonState;
-            SetButton.Visible = true;
+            SetButton.Disabled = DeleteButton.Disabled = CheckAccess(privilegedItem.Value, targetItem.Value);
+            SetButton.Visible = DeleteButton.Visible = true;
         }
     }
 
-    protected override DragMode GetDragModeFor(Vector2 relativeMousePos)
+    private bool CheckAccess(EntityUid privilegedItem, EntityUid targetItem)
     {
-        return DragMode.Move;
+        var privilegedTags = _accessReader.FindAccessTags(privilegedItem);
+        var targetTags = _accessReader.FindAccessTags(targetItem);
+
+        if (privilegedTags.Contains("Captain") &&
+            targetTags.Contains("CentralCommand"))
+            return true;
+        if (privilegedTags.Contains("CentralCommand"))
+            return false;
+
+        if (privilegedTags.Contains("Command"))
+        {
+            foreach (var tag in privilegedTags)
+            {
+                if (tag == "Maintenance")
+                    continue;
+
+                if (targetTags.Contains(tag))
+                    return false;
+            }
+        }
+
+        return true;
     }
 }

@@ -22,12 +22,6 @@ public sealed partial class SpecializationConsoleComponent : Component
 
     [DataField]
     public ItemSlot TargetIdSlot = new();
-
-    /// <summary>
-    /// Sound to play when denying access to the device.
-    /// </summary>
-    [DataField]
-    public SoundSpecifier AccessDeniedSound = new SoundPathSpecifier("/Audio/Machines/custom_deny.ogg");
 }
 
 [Serializable, NetSerializable]
@@ -35,7 +29,6 @@ public enum SpecializationConsoleWindowUiKey : byte
 {
     Key,
 }
-
 
 [Serializable, NetSerializable]
 public sealed class SpecializationConsoleBoundInterfaceState : BoundUserInterfaceState
