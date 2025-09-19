@@ -3,7 +3,7 @@ xenoborgs-description = A Xenoborg Mothership was detected near the station. Sto
 
 xenoborgs-welcome = You're a xenoborg. Protect and help the mothership core to make more xenoborgs. and eventually turn all carbon-based life form into silicon.
 
-mothership-welcome = You're the mothership core. Guide the xeonborgs so they can bring your materials and sentient brains so you can grow the xenoborg army and turn all carbon-based life form into silicon.
+mothership-welcome = You're the mothership core. Guide the xenoborgs so they can bring your materials and sentient brains so you can grow the xenoborg army and turn all carbon-based life form into silicon.
 
 xenoborgs-borgsmajor = [color=blue]Xenoborg major victory![/color]
 xenoborgs-borgsminor = [color=blue]Xenoborg minor victory![/color]
