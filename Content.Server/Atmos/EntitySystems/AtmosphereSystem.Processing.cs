@@ -649,133 +649,17 @@ namespace Content.Server.Atmos.EntitySystems
                 if (atmosphere.LifeStage >= ComponentLifeStage.Stopping || Paused(owner) || !atmosphere.Simulated)
                     continue;
 
-                atmosphere.Timer += frameTime;
-
-                if (atmosphere.Timer < AtmosTime)
-                    continue;
-
-                // We subtract it so it takes lost time into account.
-                atmosphere.Timer -= AtmosTime;
-
                 var map = new Entity<MapAtmosphereComponent?>(xform.MapUid.Value, _mapAtmosQuery.CompOrNull(xform.MapUid.Value));
 
-                switch (atmosphere.State)
+                var completionState = ProcessAtmosphere(ent, map, frameTime);
+
+                switch (completionState)
                 {
-                    case AtmosphereProcessingState.Revalidate:
-                        if (!ProcessRevalidate(ent))
-                        {
-                            atmosphere.ProcessingPaused = true;
-                            return;
-                        }
-
-                        atmosphere.ProcessingPaused = false;
-
-                        // Next state depends on whether monstermos equalization is enabled or not.
-                        // Note: We do this here instead of on the tile equalization step to prevent ending it early.
-                        //       Therefore, a change to this CVar might only be applied after that step is over.
-                        atmosphere.State = MonstermosEqualization
-                            ? AtmosphereProcessingState.TileEqualize
-                            : AtmosphereProcessingState.ActiveTiles;
+                    case AtmosphereProcessingCompletionState.Return:
+                        return;
+                    case AtmosphereProcessingCompletionState.Continue:
                         continue;
-                    case AtmosphereProcessingState.TileEqualize:
-                        if (!ProcessTileEqualize(ent))
-                        {
-                            atmosphere.ProcessingPaused = true;
-                            return;
-                        }
-
-                        atmosphere.ProcessingPaused = false;
-                        atmosphere.State = AtmosphereProcessingState.ActiveTiles;
-                        continue;
-                    case AtmosphereProcessingState.ActiveTiles:
-                        if (!ProcessActiveTiles(ent))
-                        {
-                            atmosphere.ProcessingPaused = true;
-                            return;
-                        }
-
-                        atmosphere.ProcessingPaused = false;
-                        // Next state depends on whether excited groups are enabled or not.
-                        atmosphere.State = ExcitedGroups ? AtmosphereProcessingState.ExcitedGroups : AtmosphereProcessingState.HighPressureDelta;
-                        continue;
-                    case AtmosphereProcessingState.ExcitedGroups:
-                        if (!ProcessExcitedGroups(ent))
-                        {
-                            atmosphere.ProcessingPaused = true;
-                            return;
-                        }
-
-                        atmosphere.ProcessingPaused = false;
-                        atmosphere.State = AtmosphereProcessingState.HighPressureDelta;
-                        continue;
-                    case AtmosphereProcessingState.HighPressureDelta:
-                        if (!ProcessHighPressureDelta((ent, ent)))
-                        {
-                            atmosphere.ProcessingPaused = true;
-                            return;
-                        }
-
-                        atmosphere.ProcessingPaused = false;
-                        atmosphere.State = DeltaPressureDamage
-                            ? AtmosphereProcessingState.DeltaPressure
-                            : AtmosphereProcessingState.Hotspots;
-                        continue;
-                    case AtmosphereProcessingState.DeltaPressure:
-                        if (!ProcessDeltaPressure(ent))
-                        {
-                            atmosphere.ProcessingPaused = true;
-                            return;
-                        }
-
-                        atmosphere.ProcessingPaused = false;
-                        atmosphere.State = AtmosphereProcessingState.Hotspots;
-                        continue;
-                    case AtmosphereProcessingState.Hotspots:
-                        if (!ProcessHotspots(ent))
-                        {
-                            atmosphere.ProcessingPaused = true;
-                            return;
-                        }
-
-                        atmosphere.ProcessingPaused = false;
-                        // Next state depends on whether superconduction is enabled or not.
-                        // Note: We do this here instead of on the tile equalization step to prevent ending it early.
-                        //       Therefore, a change to this CVar might only be applied after that step is over.
-                        atmosphere.State = Superconduction
-                            ? AtmosphereProcessingState.Superconductivity
-                            : AtmosphereProcessingState.PipeNet;
-                        continue;
-                    case AtmosphereProcessingState.Superconductivity:
-                        if (!ProcessSuperconductivity(atmosphere))
-                        {
-                            atmosphere.ProcessingPaused = true;
-                            return;
-                        }
-
-                        atmosphere.ProcessingPaused = false;
-                        atmosphere.State = AtmosphereProcessingState.PipeNet;
-                        continue;
-                    case AtmosphereProcessingState.PipeNet:
-                        if (!ProcessPipeNets(atmosphere))
-                        {
-                            atmosphere.ProcessingPaused = true;
-                            return;
-                        }
-
-                        atmosphere.ProcessingPaused = false;
-                        atmosphere.State = AtmosphereProcessingState.AtmosDevices;
-                        continue;
-                    case AtmosphereProcessingState.AtmosDevices:
-                        if (!ProcessAtmosDevices(ent, map))
-                        {
-                            atmosphere.ProcessingPaused = true;
-                            return;
-                        }
-
-                        atmosphere.ProcessingPaused = false;
-                        atmosphere.State = AtmosphereProcessingState.Revalidate;
-
-                        // We reached the end of this atmosphere's update tick. Break out of the switch.
+                    case AtmosphereProcessingCompletionState.Finished:
                         break;
                 }
 
@@ -786,6 +670,163 @@ namespace Content.Server.Atmos.EntitySystems
             // We finished processing all atmospheres successfully, therefore we won't be paused next tick.
             _simulationPaused = false;
         }
+
+        /// <summary>
+        /// Processes a <see cref="GridAtmosphereComponent"/> through its processing stages.
+        /// </summary>
+        /// <param name="ent">The entity to process.</param>
+        /// <param name="mapAtmosphere">The <see cref="MapAtmosphereComponent"/> belonging to the
+        /// <see cref="GridAtmosphereComponent"/>'s map.</param>
+        /// <param name="frameTime">The elapsed time since the last frame.</param>
+        /// <returns>Returns a bool pair that represents the completion state.
+        /// AtmosphereGridAtmosphereCompletionState.Return means the method is returning, ex. due to delegating processing to the next tick.
+        /// AtmosphereGridAtmosphereCompletionState.Continue means the method is continuing, ex. due to finishing a single processing stage.
+        /// (false, true) means the method is completely finished with the GridAtmosphere.</returns>
+        private AtmosphereProcessingCompletionState ProcessAtmosphere(Entity<GridAtmosphereComponent, GasTileOverlayComponent, MapGridComponent, TransformComponent> ent,
+            Entity<MapAtmosphereComponent?> mapAtmosphere,
+            float frameTime)
+        {
+            // They call me the deconstructor the way i be deconstructing it
+            // and by it, i mean... my entity
+            var (owner, atmosphere, visuals, grid, xform) = ent;
+
+            atmosphere.Timer += frameTime;
+
+            if (atmosphere.Timer < AtmosTime)
+                return AtmosphereProcessingCompletionState.Continue; // continue;
+
+            // We subtract it so it takes lost time into account.
+            atmosphere.Timer -= AtmosTime;
+
+            switch (atmosphere.State)
+            {
+                case AtmosphereProcessingState.Revalidate:
+                    if (!ProcessRevalidate(ent))
+                    {
+                        atmosphere.ProcessingPaused = true;
+                        return AtmosphereProcessingCompletionState.Return; // return;
+                    }
+
+                    atmosphere.ProcessingPaused = false;
+
+                    // Next state depends on whether monstermos equalization is enabled or not.
+                    // Note: We do this here instead of on the tile equalization step to prevent ending it early.
+                    //       Therefore, a change to this CVar might only be applied after that step is over.
+                    atmosphere.State = MonstermosEqualization
+                        ? AtmosphereProcessingState.TileEqualize
+                        : AtmosphereProcessingState.ActiveTiles;
+                    return AtmosphereProcessingCompletionState.Continue; // continue;
+                case AtmosphereProcessingState.TileEqualize:
+                    if (!ProcessTileEqualize(ent))
+                    {
+                        atmosphere.ProcessingPaused = true;
+                        return AtmosphereProcessingCompletionState.Return; // return;
+                    }
+
+                    atmosphere.ProcessingPaused = false;
+                    atmosphere.State = AtmosphereProcessingState.ActiveTiles;
+                    return AtmosphereProcessingCompletionState.Continue; // continue;
+                case AtmosphereProcessingState.ActiveTiles:
+                    if (!ProcessActiveTiles(ent))
+                    {
+                        atmosphere.ProcessingPaused = true;
+                        return AtmosphereProcessingCompletionState.Return; // return;
+                    }
+
+                    atmosphere.ProcessingPaused = false;
+                    // Next state depends on whether excited groups are enabled or not.
+                    atmosphere.State = ExcitedGroups ? AtmosphereProcessingState.ExcitedGroups : AtmosphereProcessingState.HighPressureDelta;
+                    return AtmosphereProcessingCompletionState.Continue; // continue;
+                case AtmosphereProcessingState.ExcitedGroups:
+                    if (!ProcessExcitedGroups(ent))
+                    {
+                        atmosphere.ProcessingPaused = true;
+                        return AtmosphereProcessingCompletionState.Return; // return;
+                    }
+
+                    atmosphere.ProcessingPaused = false;
+                    atmosphere.State = AtmosphereProcessingState.HighPressureDelta;
+                    return AtmosphereProcessingCompletionState.Continue; // continue;
+                case AtmosphereProcessingState.HighPressureDelta:
+                    if (!ProcessHighPressureDelta((ent, ent)))
+                    {
+                        atmosphere.ProcessingPaused = true;
+                        return AtmosphereProcessingCompletionState.Return; // return;
+                    }
+
+                    atmosphere.ProcessingPaused = false;
+                    atmosphere.State = DeltaPressureDamage
+                        ? AtmosphereProcessingState.DeltaPressure
+                        : AtmosphereProcessingState.Hotspots;
+                    return AtmosphereProcessingCompletionState.Continue; // continue;
+                case AtmosphereProcessingState.DeltaPressure:
+                    if (!ProcessDeltaPressure(ent))
+                    {
+                        atmosphere.ProcessingPaused = true;
+                        return AtmosphereProcessingCompletionState.Return; // return;
+                    }
+
+                    atmosphere.ProcessingPaused = false;
+                    atmosphere.State = AtmosphereProcessingState.Hotspots;
+                    return AtmosphereProcessingCompletionState.Continue; // continue;
+                case AtmosphereProcessingState.Hotspots:
+                    if (!ProcessHotspots(ent))
+                    {
+                        atmosphere.ProcessingPaused = true;
+                        return AtmosphereProcessingCompletionState.Return; // return;
+                    }
+
+                    atmosphere.ProcessingPaused = false;
+                    // Next state depends on whether superconduction is enabled or not.
+                    // Note: We do this here instead of on the tile equalization step to prevent ending it early.
+                    //       Therefore, a change to this CVar might only be applied after that step is over.
+                    atmosphere.State = Superconduction
+                        ? AtmosphereProcessingState.Superconductivity
+                        : AtmosphereProcessingState.PipeNet;
+                    return AtmosphereProcessingCompletionState.Continue; // continue;
+                case AtmosphereProcessingState.Superconductivity:
+                    if (!ProcessSuperconductivity(atmosphere))
+                    {
+                        atmosphere.ProcessingPaused = true;
+                        return AtmosphereProcessingCompletionState.Return; // return;
+                    }
+
+                    atmosphere.ProcessingPaused = false;
+                    atmosphere.State = AtmosphereProcessingState.PipeNet;
+                    return AtmosphereProcessingCompletionState.Continue; // continue;
+                case AtmosphereProcessingState.PipeNet:
+                    if (!ProcessPipeNets(atmosphere))
+                    {
+                        atmosphere.ProcessingPaused = true;
+                        return AtmosphereProcessingCompletionState.Return; // return;
+                    }
+
+                    atmosphere.ProcessingPaused = false;
+                    atmosphere.State = AtmosphereProcessingState.AtmosDevices;
+                    return AtmosphereProcessingCompletionState.Continue; // continue;
+                case AtmosphereProcessingState.AtmosDevices:
+                    if (!ProcessAtmosDevices(ent, mapAtmosphere))
+                    {
+                        atmosphere.ProcessingPaused = true;
+                        return AtmosphereProcessingCompletionState.Return; // return;
+                    }
+
+                    atmosphere.ProcessingPaused = false;
+                    atmosphere.State = AtmosphereProcessingState.Revalidate;
+
+                    // We reached the end of this atmosphere's update tick. Break out of the switch.
+                    break;
+            }
+
+            return AtmosphereProcessingCompletionState.Finished;
+        }
+    }
+
+    public enum AtmosphereProcessingCompletionState : byte
+    {
+        Return,
+        Continue,
+        Finished,
     }
 
     public enum AtmosphereProcessingState : byte

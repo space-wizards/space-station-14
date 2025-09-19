@@ -46,4 +46,17 @@ public sealed partial class AtmosphereSystem
 
         return processingPaused;
     }
+
+    /// <summary>
+    /// Fully runs one <see cref="GridAtmosphereComponent"/> through the entire Atmos processing loop.
+    /// </summary>
+    /// <param name="ent"></param>
+    /// <param name="mapAtmosphere"></param>
+    /// <param name="frameTime"></param>
+    public void RunFullProcessing(Entity<GridAtmosphereComponent, GasTileOverlayComponent, MapGridComponent, TransformComponent> ent,
+        Entity<MapAtmosphereComponent?> mapAtmosphere,
+        float frameTime)
+    {
+        while (ProcessAtmosphere(ent, mapAtmosphere, frameTime) != AtmosphereProcessingCompletionState.Finished) { }
+    }
 }
