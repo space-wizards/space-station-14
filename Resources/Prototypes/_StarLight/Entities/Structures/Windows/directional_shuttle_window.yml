@@ -1,7 +1,7 @@
 - type: entity
   id: ShuttleWindowDirectional
   parent: [BaseDeltaPressureReinforcedPlasma, WindowDirectionalRCDResistant]
-  name: directional reinforced plasma window
+  name: directional shuttle window
   description: Don't smudge up the glass down there.
   placement:
     mode: SnapgridCenter
