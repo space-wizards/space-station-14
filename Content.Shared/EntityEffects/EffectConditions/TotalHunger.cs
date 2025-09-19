@@ -18,8 +18,7 @@ public sealed partial class Hunger : EntityEffectCondition
         if (args.EntityManager.TryGetComponent(args.TargetEntity, out HungerComponent? hunger))
         {
             var total = args.EntityManager.System<HungerSystem>().GetHunger(hunger);
-            if (total > Min && total < Max)
-                return true;
+            return total >= Min && total <= Max;
         }
 
         return false;
