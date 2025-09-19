@@ -62,6 +62,7 @@
       DisposalTube: !type:Container
   - type: StaticPrice
     price: 30
+  - type: ParentCanBlockVision # Starlight-edit
 
 - type: entity
   id: DisposalHolder
