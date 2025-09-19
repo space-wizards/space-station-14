@@ -265,7 +265,7 @@ public sealed class StrippableClothesTest
                         handsSystem.TryPickup(attacker, item, slot),
                         Is.True,
                         $"Could not take item in hand {slot}"
-                        );
+                    );
                 }
             });
 
