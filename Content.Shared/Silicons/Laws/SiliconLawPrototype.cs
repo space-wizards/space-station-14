@@ -9,11 +9,10 @@ namespace Content.Shared.Silicons.Laws;
 public partial class SiliconLaw : IComparable<SiliconLaw>, IEquatable<SiliconLaw>
 {
     /// <summary>
-    /// A locale string which is the actual text of the law.
-    /// This is the verbatim text as visible to the law-bound player when in readout mode.
+    /// A locale string which is the underlying base text of the law, before flavor formatting is applied.
     /// If the text should appear corrupted, modify <see cref="FlavorFormattedLawString"/>.
     /// </summary>
-    [DataField(required: true), ViewVariables(VVAccess.ReadWrite)]
+    [DataField(required: true)]
     public string LawString = string.Empty;
 
     /// <summary>
@@ -24,13 +23,13 @@ public partial class SiliconLaw : IComparable<SiliconLaw>, IEquatable<SiliconLaw
     /// This is a fixedpoint2 only for the niche case of supporting laws that go between 0 and 1.
     /// Funny.
     /// </remarks>
-    [DataField(required: true), ViewVariables(VVAccess.ReadWrite)]
+    [DataField(required: true)]
     public FixedPoint2 Order;
 
     /// <summary>
     /// An identifier that overrides <see cref="Order"/> in the law menu UI.
     /// </summary>
-    [DataField, ViewVariables(VVAccess.ReadWrite)]
+    [DataField]
     public string? LawIdentifierOverride;
 
     /// <summary>
