@@ -1,0 +1,38 @@
+{
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "Made for WH14K project",
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "states": [
+        {
+            "name": "flamethrower fuel tank"
+        },
+        {
+            "name": "ig flamethrower back"
+        },
+        {
+            "name": "ig flamethrower left hand no bak"
+        },
+        {
+            "name": "ig flamethrower left hand"
+        },
+        {
+            "name": "ig flamethrower no Bak back"
+        },
+        {
+            "name": "ig flamethrower no bak two hands"
+        },
+        {
+            "name": "ig flamethrower right hand no bak"
+        },
+        {
+            "name": "ig flamethrower right hand"
+        },
+        {
+            "name": "ig flamethrower two hands"
+        }
+    ]
+}
