@@ -1,6 +1,5 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
-using System.Text;
 using Content.Shared.Access.Components;
 using Content.Shared.DeviceLinking.Events;
 using Content.Shared.Emag.Systems;
@@ -929,32 +928,40 @@ public sealed class AccessReaderSystem : EntitySystem
     private List<string> GetLocalizedAccessNames(List<HashSet<ProtoId<AccessLevelPrototype>>> accessLists)
     {
         var localizedNames = new List<string>();
-        string? andSeparator = null;
+        var listPresent = accessLists.Any(x => x.Count > 1);
 
         foreach (var accessHashSet in accessLists)
         {
-            var sb = new StringBuilder();
-            var accessSubset = accessHashSet.ToList();
+            var localizedHashSetNames = new List<string>();
 
             // Combine the names of all access levels in the subset into a single string
-            foreach (var access in accessSubset)
+            foreach (var access in accessHashSet)
             {
                 var accessName = Loc.GetString("access-reader-unknown-id");
 
                 if (_prototype.Resolve(access, out var accessProto) && !string.IsNullOrWhiteSpace(accessProto.Name))
-                    accessName = Loc.GetString(accessProto.Name);
-
-                sb.Append(Loc.GetString("access-reader-access-label", ("access", accessName)));
-
-                if (accessSubset.IndexOf(access) < (accessSubset.Count - 1))
                 {
-                    andSeparator ??= " " + Loc.GetString("generic-and") + " ";
-                    sb.Append(andSeparator);
+                    accessName = Loc.GetString(accessProto.Name);
                 }
+
+                localizedHashSetNames.Add(Loc.GetString("access-reader-access-label", ("access", accessName)));
+            }
+
+            var accessesFormatted = ContentLocalizationManager.FormatList(localizedHashSetNames);
+
+            // If there is a access hashset with more than one access in it,
+            // modify the formated list so that these strings can be
+            // chained together and still make it clear which access levels
+            // are connected. E.g., if there are three access levels,
+            // [A], [B, C, D], and [E, F], they would be written as
+            // '|A|, |B, C, and D|, or |E and F|'.
+            if (listPresent)
+            {
+                accessesFormatted = Loc.GetString("access-reader-access-list-label", ("accesses", accessesFormatted));
             }
 
             // Add this string to the list
-            localizedNames.Add(sb.ToString());
+            localizedNames.Add(accessesFormatted);
         }
 
         return localizedNames;
