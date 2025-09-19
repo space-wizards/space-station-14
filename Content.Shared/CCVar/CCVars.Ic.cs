@@ -41,7 +41,7 @@ public sealed partial class CCVars
         CVarDef.Create("ic.id_job_length", 30, CVar.SERVER | CVar.REPLICATED);
 
     /// <summary>
-    ///     Sets the maximum character length of a job on an ID.
+    ///     Sets the maximum character length of a job specialization on an ID.
     /// </summary>
     public static readonly CVarDef<int> MaxJobSpecLength =
         CVarDef.Create("ic.id_job_spec_length", 30, CVar.SERVER | CVar.REPLICATED);
