@@ -137,12 +137,12 @@ public sealed partial class IngestionSystem : EntitySystem
 
     private void OnEdibleInit(Entity<EdibleComponent> entity, ref ComponentInit args)
     {
-        // TODO: When Food and Drink component are kill make sure to nuke both TryComps and just have it update appearance...
-        // Beakers, Soap and other items have drainable, and we should be able to eat that solution...
-        // If I could make drainable properly support sound effects and such I'd just have it use TryIngest itself
-        // Does this exist just to make tests fail? That way you have the proper yaml???
+        // Beakers, Soap and other items have drainable, and we should be able to eat that solution.
+        // This ensures that tests fail when you configured the yaml from and EdibleComponent uses the wrong solution,
         if (TryComp<DrainableSolutionComponent>(entity, out var existingDrainable))
             entity.Comp.Solution = existingDrainable.Solution;
+        else
+            _solutionContainer.EnsureSolution(entity.Owner, entity.Comp.Solution, out _);
 
         UpdateAppearance(entity);
 
@@ -249,16 +249,16 @@ public sealed partial class IngestionSystem : EntitySystem
         // Can we digest the specific item we're trying to eat?
         if (!IsDigestibleBy(args.Ingested, stomachs))
         {
+            if (!args.Ingest)
+                return;
+
             if (forceFed)
-            {
                 _popup.PopupClient(Loc.GetString("ingestion-cant-digest-other", ("target", entity), ("entity", food)), entity, args.User);
-            }
             else
                 _popup.PopupClient(Loc.GetString("ingestion-cant-digest", ("entity", food)), entity, entity);
 
             return;
         }
-
 
         // Exit early if we're just trying to get verbs
         if (!args.Ingest)
@@ -339,7 +339,7 @@ public sealed partial class IngestionSystem : EntitySystem
             if (!forceFed)
                 return;
 
-            _popup.PopupClient(Loc.GetString("ingestion-other-cannot-ingest-any-more", ("target", entity), ("verb", GetEdibleVerb(food))),  args.Target.Value, args.User);
+            _popup.PopupClient(Loc.GetString("ingestion-other-cannot-ingest-any-more", ("target", entity), ("verb", GetEdibleVerb(food))), args.Target.Value, args.User);
             return;
         }
 
@@ -354,7 +354,7 @@ public sealed partial class IngestionSystem : EntitySystem
             if (!forceFed)
                 return;
 
-            _popup.PopupClient(Loc.GetString("ingestion-other-cannot-ingest-any-more", ("target", entity), ("verb", GetEdibleVerb(food))),  args.Target.Value, args.User);
+            _popup.PopupClient(Loc.GetString("ingestion-other-cannot-ingest-any-more", ("target", entity), ("verb", GetEdibleVerb(food))), args.Target.Value, args.User);
             return;
         }
 
@@ -449,7 +449,7 @@ public sealed partial class IngestionSystem : EntitySystem
 
         var edible = _proto.Index(entity.Comp.Edible);
 
-        _audio.PlayPredicted(edible.UseSound, args.Target, args.User);
+        _audio.PlayPredicted(entity.Comp.UseSound ?? edible.UseSound, args.Target, args.User);
 
         var flavors = _flavorProfile.GetLocalizedFlavorsMessage(entity.Owner, args.Target, args.Split);
 
@@ -462,13 +462,20 @@ public sealed partial class IngestionSystem : EntitySystem
             _popup.PopupClient(Loc.GetString("edible-force-feed-success-user", ("target", targetName), ("verb", edible.Verb)), args.User, args.User);
 
             // log successful forced feeding
+            // TODO: Use correct verb
             _adminLogger.Add(LogType.ForceFeed, LogImpact.Medium, $"{ToPrettyString(entity):user} forced {ToPrettyString(args.User):target} to eat {ToPrettyString(entity):food}");
         }
         else
         {
-            _popup.PopupClient(Loc.GetString(edible.Message, ("food", entity.Owner), ("flavors", flavors)), args.User, args.User);
+            _popup.PopupPredicted(Loc.GetString(edible.Message, ("food", entity.Owner), ("flavors", flavors)),
+                Loc.GetString(edible.OtherMessage),
+                args.User,
+                args.User);
 
             // log successful voluntary eating
+            // TODO: Use correct verb
+            // the past tense is tricky here
+            // localized admin logs when?
             _adminLogger.Add(LogType.Ingestion, LogImpact.Low, $"{ToPrettyString(args.User):target} ate {ToPrettyString(entity):food}");
         }
 
