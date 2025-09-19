@@ -14796,5 +14796,20 @@ Entries:
   id: 167300
   time: '2025-09-19T20:43:08.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/1673
+- author: CorruptOmega
+  changes:
+  - message: All Documents within the Document Printer have been updated with new
+      "Forms and Fields" functionality.
+    type: Tweak
+  id: 168400
+  time: '2025-09-19T22:54:25.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1684
+- author: CorruptOmega
+  changes:
+  - message: All Documents were given a bit of cleanup for formatting/grammar.
+    type: Tweak
+  id: 168401
+  time: '2025-09-19T22:54:25.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1684
 Order: -1
 
