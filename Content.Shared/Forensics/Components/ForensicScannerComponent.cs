@@ -28,13 +28,13 @@ namespace Content.Shared.Forensics.Components
         /// DNA that the forensic scanner found from the <see cref="DnaComponent"/> on an entity.
         /// </summary>
         [DataField, AutoNetworkedField]
-        public List<string> TouchDNAs = new();
+        public List<string> Dnas = new();
 
         /// <summary>
         /// DNA that the forensic scanner found from the solution containers in an entity.
         /// </summary>
         [DataField, AutoNetworkedField]
-        public List<string> SolutionDNAs = new();
+        public List<string> SolutionDnas = new();
 
         /// <summary>
         /// Residue that the forensic scanner found from the <see cref="ForensicsComponent"/> on an entity.
