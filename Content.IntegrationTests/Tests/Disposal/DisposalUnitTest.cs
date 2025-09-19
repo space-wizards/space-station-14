@@ -20,18 +20,7 @@ namespace Content.IntegrationTests.Tests.Disposal
         [Reflect(false)]
         private sealed class DisposalUnitTestSystem : EntitySystem
         {
-            public override void Initialize()
-            {
-                base.Initialize();
 
-                SubscribeLocalEvent<DoInsertDisposalUnitEvent>(ev =>
-                {
-                    var (_, toInsert, unit) = ev;
-                    var insertTransform = Comp<TransformComponent>(GetEntity(toInsert));
-                    // Not in a tube yet
-                    Assert.That(insertTransform.ParentUid, Is.EqualTo(GetEntity(unit)));
-                }, after: new[] { typeof(SharedDisposalUnitSystem) });
-            }
         }
 
         private static void UnitInsert(EntityUid uid, DisposalUnitComponent unit, bool result, SharedDisposalUnitSystem disposalSystem, params EntityUid[] entities)

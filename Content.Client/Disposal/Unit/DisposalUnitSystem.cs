@@ -6,12 +6,12 @@ using Robust.Shared.Audio.Systems;
 
 namespace Content.Client.Disposal.Unit;
 
+/// <inheritdoc/>
 public sealed class DisposalUnitSystem : SharedDisposalUnitSystem
 {
     [Dependency] private readonly AppearanceSystem _appearanceSystem = default!;
     [Dependency] private readonly AnimationPlayerSystem _animationSystem = default!;
     [Dependency] private readonly SharedAudioSystem _audioSystem = default!;
-    [Dependency] private readonly SharedUserInterfaceSystem _uiSystem = default!;
 
     private const string AnimationKey = "disposal_unit_animation";
 
@@ -58,14 +58,6 @@ public sealed class DisposalUnitSystem : SharedDisposalUnitSystem
     private void OnHandleState(EntityUid uid, DisposalUnitComponent component, ref AfterAutoHandleStateEvent args)
     {
         UpdateUI((uid, component));
-    }
-
-    private void UpdateUI(Entity<DisposalUnitComponent> entity)
-    {
-        if (_uiSystem.TryGetOpenUi<DisposalUnitBoundUserInterface>(entity.Owner, DisposalUnitUiKey.Key, out var bui))
-        {
-            bui.Refresh(entity);
-        }
     }
 
     private void OnAppearanceChange(Entity<DisposalUnitComponent> ent, ref AppearanceChangeEvent args)

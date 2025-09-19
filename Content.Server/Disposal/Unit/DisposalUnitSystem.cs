@@ -5,12 +5,14 @@ using Content.Shared.Disposal.Unit;
 
 namespace Content.Server.Disposal.Unit;
 
+/// <inheritdoc/>
 public sealed partial class DisposalUnitSystem : SharedDisposalUnitSystem
 {
     [Dependency] private readonly SharedTransformSystem _xform = default!;
     [Dependency] private readonly AtmosphereSystem _atmos = default!;
 
-    protected override void HandleAir(Entity<DisposalUnitComponent> ent, TransformComponent xform)
+    /// <inheritdoc/>
+    protected override void IntakeAir(Entity<DisposalUnitComponent> ent, TransformComponent xform)
     {
         var air = ent.Comp.Air;
         var indices = _xform.GetGridTilePositionOrDefault((ent, xform));

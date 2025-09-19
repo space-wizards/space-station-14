@@ -38,6 +38,9 @@ using System.Linq;
 
 namespace Content.Shared.Disposal.Unit;
 
+/// <summary>
+/// This system handles all operations relating to disposal units.
+/// </summary>
 public abstract class SharedDisposalUnitSystem : EntitySystem
 {
     [Dependency] private readonly ActionBlockerSystem _actionBlockerSystem = default!;
@@ -57,11 +60,6 @@ public abstract class SharedDisposalUnitSystem : EntitySystem
     [Dependency] private readonly SharedHandsSystem _handsSystem = default!;
     [Dependency] private readonly SharedUserInterfaceSystem _ui = default!;
     [Dependency] private readonly SharedMapSystem _map = default!;
-
-    private static TimeSpan _exitAttemptDelay = TimeSpan.FromSeconds(0.5);
-
-    // Percentage
-    public const float PressurePerSecond = 0.05f;
 
     public override void Initialize()
     {
@@ -94,11 +92,6 @@ public abstract class SharedDisposalUnitSystem : EntitySystem
 
         SubscribeLocalEvent<DisposalUnitComponent, GetDumpableVerbEvent>(OnGetDumpableVerb);
         SubscribeLocalEvent<DisposalUnitComponent, DumpEvent>(OnDump);
-    }
-
-    protected virtual void HandleAir(Entity<DisposalUnitComponent> ent, TransformComponent xform)
-    {
-
     }
 
     private void OnDestruction(Entity<DisposalUnitComponent> ent, ref DestructionEventArgs args)
@@ -208,7 +201,7 @@ public abstract class SharedDisposalUnitSystem : EntitySystem
 
         if (!TryComp(args.Entity, out HandsComponent? hands) ||
             hands.Count == 0 ||
-            currentTime < ent.Comp.LastExitAttempt + _exitAttemptDelay)
+            currentTime < ent.Comp.LastExitAttempt + ent.Comp.ExitAttemptDelay)
             return;
 
         Dirty(ent);
@@ -289,14 +282,22 @@ public abstract class SharedDisposalUnitSystem : EntitySystem
         args.Handled = TryInsert(ent, args.Dragged, args.User);
     }
 
-    private void UpdateUI(Entity<DisposalUnitComponent> entity)
+    protected void UpdateUI(Entity<DisposalUnitComponent> entity)
     {
+        if (_timing.ApplyingState)
+            return;
 
+        if (_ui.TryGetOpenUi(entity.Owner, DisposalUnitUiKey.Key, out var bui))
+        {
+            bui.Update<DisposalUnitBoundUserInterfaceState>();
+        }
     }
 
     /// <summary>
     /// Returns the estimated time when the disposal unit will be back to full pressure.
     /// </summary>
+    /// <param name="ent">The disposal unit.</param>
+    /// <returns>The estimated time.</returns>
     public TimeSpan EstimatedFullPressure(Entity<DisposalUnitComponent> ent)
     {
         if (ent.Comp.NextPressurized < _timing.CurTime)
@@ -305,6 +306,11 @@ public abstract class SharedDisposalUnitSystem : EntitySystem
         return ent.Comp.NextPressurized;
     }
 
+    /// <summary>
+    /// Checks whether a disposal unit can flush.
+    /// </summary>
+    /// <param name="ent">The disposal unit.</param>
+    /// <returns>True if the disposal unit can flush.</returns>
     public bool CanFlush(Entity<DisposalUnitComponent> ent)
     {
         return GetState(ent) == DisposalsPressureState.Ready
@@ -312,6 +318,11 @@ public abstract class SharedDisposalUnitSystem : EntitySystem
                && Comp<TransformComponent>(ent).Anchored;
     }
 
+    /// <summary>
+    /// Remove an entity from a disposal unit.
+    /// </summary>
+    /// <param name="ent">The disposal unit.</param>
+    /// <param name="toRemove">The entity to remove.</param>
     public void Remove(Entity<DisposalUnitComponent> ent, EntityUid toRemove)
     {
         if (_timing.ApplyingState)
@@ -336,7 +347,11 @@ public abstract class SharedDisposalUnitSystem : EntitySystem
         UpdateVisualState(ent);
     }
 
-    public void UpdateVisualState(Entity<DisposalUnitComponent> ent, bool flush = false)
+    /// <summary>
+    /// Updates the appearance data of a disposal unit.
+    /// </summary>
+    /// <param name="ent">The disposal unit.</param>
+    public void UpdateVisualState(Entity<DisposalUnitComponent> ent)
     {
         if (!TryComp(ent, out AppearanceComponent? appearance))
             return;
@@ -362,14 +377,13 @@ public abstract class SharedDisposalUnitSystem : EntitySystem
     /// <summary>
     /// Gets the current pressure state of a disposals unit.
     /// </summary>
-    /// <param name="uid"></param>
-    /// <param name="component"></param>
+    /// <param name="ent">The disposal unit.</param>
     /// <param name="metadata"></param>
-    /// <returns></returns>
+    /// <returns>The disposal unit's pressure state.</returns>
     public DisposalsPressureState GetState(Entity<DisposalUnitComponent> ent, MetaDataComponent? metadata = null)
     {
-        var nextPressure = _metaData.GetPauseTime(ent, metadata) + ent.Comp.NextPressurized - _timing.CurTime;
-        var pressurizeTime = 1f / PressurePerSecond;
+        var nextPressure = ent.Comp.NextPressurized - _timing.CurTime;
+        var pressurizeTime = 1f / ent.Comp.PressurePerSecond;
         var pressurizeDuration = pressurizeTime - ent.Comp.FlushDelay.TotalSeconds;
 
         if (nextPressure.TotalSeconds > pressurizeDuration)
@@ -383,16 +397,6 @@ public abstract class SharedDisposalUnitSystem : EntitySystem
         }
 
         return DisposalsPressureState.Ready;
-    }
-
-    public float GetPressure(Entity<DisposalUnitComponent> ent, MetaDataComponent? metadata = null)
-    {
-        if (!Resolve(ent, ref metadata))
-            return 0f;
-
-        var pauseTime = _metaData.GetPauseTime(ent, metadata);
-        return MathF.Min(1f,
-            (float)(_timing.CurTime - pauseTime - ent.Comp.NextPressurized).TotalSeconds / PressurePerSecond);
     }
 
     protected void OnPreventCollide(Entity<DisposalUnitComponent> ent, ref PreventCollideEvent args)
@@ -421,6 +425,12 @@ public abstract class SharedDisposalUnitSystem : EntitySystem
         args.Handled = true;
     }
 
+    /// <summary>
+    /// Check if an entity can be inserted into a disposal unit.
+    /// </summary>
+    /// <param name="ent">The disposal unit.</param>
+    /// <param name="toInsert">The entity to insert.</param>
+    /// <returns>True if the entity can be inserted.</returns>
     public bool CanInsert(Entity<DisposalUnitComponent> ent, EntityUid toInsert)
     {
         // TODO: All of the below should be using the EXISTING EVENT
@@ -444,21 +454,28 @@ public abstract class SharedDisposalUnitSystem : EntitySystem
             return false;
     }
 
-    public void DoInsertDisposalUnit(EntityUid uid,
-        EntityUid toInsert,
-        EntityUid user,
-        DisposalUnitComponent? disposal = null)
+    /// <summary>
+    /// Insert an entity into a disposal unit.
+    /// </summary>
+    /// <param name="ent">The disposal unit.</param>
+    /// <param name="toInsert">The entity to insert.</param>
+    /// <param name="user">The one inserting the entity.</param>
+    public void DoInsertDisposalUnit(Entity<DisposalUnitComponent> ent, EntityUid toInsert, EntityUid user)
     {
-        if (!Resolve(uid, ref disposal))
-            return;
-
-        if (!_containers.Insert(toInsert, disposal.Container))
+        if (!_containers.Insert(toInsert, ent.Comp.Container))
             return;
 
         _adminLog.Add(LogType.Action, LogImpact.Medium, $"{ToPrettyString(user):player} inserted {ToPrettyString(toInsert)} into {ToPrettyString(uid)}");
-        AfterInsert((uid, disposal), toInsert, user);
+        AfterInsert(ent, toInsert, user);
     }
 
+    /// <summary>
+    /// Handles the actual insertion of an entity into a disposal unit.
+    /// </summary>
+    /// <param name="ent">The disposal unit.</param>
+    /// <param name="inserted">The entity inserted.</param>
+    /// <param name="user">The one who inserted the entity.</param>
+    /// <param name="doInsert">Do the insertion now.</param>
     public void AfterInsert(Entity<DisposalUnitComponent> ent,
         EntityUid inserted,
         EntityUid? user = null,
@@ -480,6 +497,13 @@ public abstract class SharedDisposalUnitSystem : EntitySystem
         UpdateVisualState(ent);
     }
 
+    /// <summary>
+    /// Tries to insert an entity into a disposal unit.
+    /// </summary>
+    /// <param name="ent">The disposal unit.</param>
+    /// <param name="toInsertId">The entity to insert.</param>
+    /// <param name="userId">The one inserting the entity.</param>
+    /// <returns></returns>
     public bool TryInsert(Entity<DisposalUnitComponent> ent, EntityUid toInsertId, EntityUid? userId)
     {
         if (userId.HasValue && !HasComp<HandsComponent>(userId) && toInsertId != userId) // Mobs like mouse can Jump inside even with no hands
@@ -571,6 +595,11 @@ public abstract class SharedDisposalUnitSystem : EntitySystem
         UpdateState(ent, state);
     }
 
+    /// <summary>
+    /// Try to flush the disposal unit.
+    /// </summary>
+    /// <param name="ent">The disposal unit.</param>
+    /// <returns>True if the flush was successful.</returns>
     public bool TryFlush(Entity<DisposalUnitComponent> ent)
     {
         if (!CanFlush(ent))
@@ -609,25 +638,30 @@ public abstract class SharedDisposalUnitSystem : EntitySystem
             return false;
         }
 
-        HandleAir(ent, xform);
+        IntakeAir(ent, xform);
 
         _disposalTubeSystem.TryInsert((entry.Value, entryComp, tubeComp), ent, beforeFlushArgs.Tags);
 
         ent.Comp.NextPressurized = _timing.CurTime;
         if (!ent.Comp.DisablePressure)
-            ent.Comp.NextPressurized += TimeSpan.FromSeconds(1f / PressurePerSecond);
+            ent.Comp.NextPressurized += TimeSpan.FromSeconds(1f / ent.Comp.PressurePerSecond);
 
         ent.Comp.Engaged = false;
         // stop queuing NOW
         ent.Comp.NextFlush = null;
 
-        UpdateVisualState(ent, true);
+        UpdateVisualState(ent);
         Dirty(ent);
         UpdateUI(ent);
 
         return true;
     }
 
+    /// <summary>
+    /// Sets a disposal unit to move towards flushing itself.
+    /// </summary>
+    /// <param name="ent">The disposal unit.</param>
+    /// <param name="metadata">The disposal unit's metadata.</param>
     public void ManualEngage(Entity<DisposalUnitComponent> ent, MetaDataComponent? metadata = null)
     {
         ent.Comp.Engaged = true;
@@ -646,6 +680,10 @@ public abstract class SharedDisposalUnitSystem : EntitySystem
         ent.Comp.NextFlush = TimeSpan.FromSeconds(Math.Min((ent.Comp.NextFlush ?? TimeSpan.MaxValue).TotalSeconds, nextEngage.TotalSeconds));
     }
 
+    /// <summary>
+    /// Sets a disposal unit so it is no longer moving towards flushing itself.
+    /// </summary>
+    /// <param name="ent">The disposal unit.</param>
     public void Disengage(Entity<DisposalUnitComponent> ent)
     {
         ent.Comp.Engaged = false;
@@ -661,8 +699,9 @@ public abstract class SharedDisposalUnitSystem : EntitySystem
     }
 
     /// <summary>
-    /// Remove all entities currently in the disposal unit.
+    /// Remove all entities currently in a disposal unit.
     /// </summary>
+    /// <param name="ent">The disposal unit.</param>
     public void TryEjectContents(Entity<DisposalUnitComponent> ent)
     {
         foreach (var toRemove in ent.Comp.Container.ContainedEntities.ToArray())
@@ -679,8 +718,10 @@ public abstract class SharedDisposalUnitSystem : EntitySystem
     }
 
     /// <summary>
-    /// If something is inserted (or the likes) then we'll queue up an automatic flush in the future.
+    /// Primes a disposal unit to automatically flush sometime in the future.
     /// </summary>
+    /// <param name="ent">The disposal unit.</param>
+    /// <param name="metadata">The disposal unit's metadata.</param>
     public void QueueAutomaticEngage(Entity<DisposalUnitComponent> ent, MetaDataComponent? metadata = null)
     {
         if (ent.Comp.Deleted || !ent.Comp.AutomaticEngage || !_power.IsPowered(ent.Owner) && ent.Comp.Container.ContainedEntities.Count == 0)
@@ -722,6 +763,10 @@ public abstract class SharedDisposalUnitSystem : EntitySystem
         }
     }
 
+    /// <summary>
+    /// Toggles a disposal unit between 'engaged' and 'disengaged'.
+    /// </summary>
+    /// <param name="ent">The disposal unit.</param>
     public void ToggleEngage(Entity<DisposalUnitComponent> ent)
     {
         ent.Comp.Engaged ^= true;
@@ -784,5 +829,15 @@ public abstract class SharedDisposalUnitSystem : EntitySystem
         {
             DoInsertDisposalUnit(ent, entity, args.User);
         }
+    }
+
+    /// <summary>
+    /// Intakes the atmos surrounding the disposal unit into itself.
+    /// </summary>
+    /// <param name="ent">The disposal holder.</param>
+    /// /// <param name="ent">The disposal unit.</param>
+    protected virtual void IntakeAir(Entity<DisposalUnitComponent> ent, TransformComponent xform)
+    {
+        // Handled by the server
     }
 }

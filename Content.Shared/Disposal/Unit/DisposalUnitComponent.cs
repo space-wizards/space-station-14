@@ -71,6 +71,12 @@ public sealed partial class DisposalUnitComponent : Component
     public TimeSpan NextPressurized = TimeSpan.Zero;
 
     /// <summary>
+    /// The percentage of pressure gained per second by the unit.
+    /// </summary>
+    [DataField]
+    public float PressurePerSecond = 0.05f;
+
+    /// <summary>
     /// How long it takes to flush a disposals unit manually.
     /// </summary>
     [DataField("flushTime")]
@@ -93,6 +99,13 @@ public sealed partial class DisposalUnitComponent : Component
     /// </summary>
     [DataField, AutoNetworkedField, AutoPausedField]
     public TimeSpan LastExitAttempt;
+
+    /// <summary>
+    /// Delay in seconds before entities are allowed another
+    /// attempt to exit the disposal unit again.
+    /// </summary>
+    [DataField]
+    public TimeSpan ExitAttemptDelay = TimeSpan.FromSeconds(0.5);
 
     [DataField]
     public bool AutomaticEngage = true;
@@ -130,21 +143,33 @@ public sealed partial class DisposalUnitComponent : Component
     public TimeSpan? NextFlush;
 }
 
-[Serializable, NetSerializable]
-public record DoInsertDisposalUnitEvent(NetEntity? User, NetEntity ToInsert, NetEntity Unit);
-
 /// <summary>
 /// Event raised on entities that are entering or exiting disposals.
 /// </summary>
 [ByRefEvent]
 public record DisposalSystemTransitionEvent;
 
+/// <summary>
+/// Do after raised when attempting to insert an entity into a disposal unit.
+/// </summary>
 [Serializable, NetSerializable]
 public sealed partial class DisposalDoAfterEvent : SimpleDoAfterEvent;
 
+/// <summary>
+/// Message sent from the server to the client to update the UI of disposal units.
+/// </summary>
+[Serializable, NetSerializable]
+public sealed class DisposalUnitBoundUserInterfaceState : BoundUserInterfaceState;
+
+/// <summary>
+/// Disposal unit pressure states.
+/// </summary>
 [Serializable, NetSerializable]
 public enum DisposalsPressureState : byte
 {
+    /// <summary>
+    /// The disposal unit is fully pressurized and ready to flush.
+    /// </summary>
     Ready,
 
     /// <summary>
@@ -158,6 +183,9 @@ public enum DisposalsPressureState : byte
     Pressurizing
 }
 
+/// <summary>
+/// Visual keys for disposal units.
+/// </summary>
 [Serializable, NetSerializable]
 public enum DisposalUnitVisuals : byte
 {
@@ -168,6 +196,9 @@ public enum DisposalUnitVisuals : byte
     IsFull,
 }
 
+/// <summary>
+/// Sprite layers for disposal units.
+/// </summary>
 [Serializable, NetSerializable]
 public enum DisposalUnitVisualLayers : byte
 {
@@ -177,6 +208,9 @@ public enum DisposalUnitVisualLayers : byte
     OverlayFull,
 }
 
+/// <summary>
+/// UI button types for disposal units.
+/// </summary>
 [Serializable, NetSerializable]
 public enum DisposalUnitUiButton : byte
 {
@@ -186,7 +220,7 @@ public enum DisposalUnitUiButton : byte
 }
 
 /// <summary>
-///     Message data sent from client to server when a disposal unit ui button is pressed.
+/// Message data sent from client to server when a disposal unit ui button is pressed.
 /// </summary>
 [Serializable, NetSerializable]
 public sealed class DisposalUnitUiButtonPressedMessage : BoundUserInterfaceMessage
@@ -199,6 +233,9 @@ public sealed class DisposalUnitUiButtonPressedMessage : BoundUserInterfaceMessa
     }
 }
 
+/// <summary>
+/// UI key for disposal units.
+/// </summary>
 [Serializable, NetSerializable]
 public enum DisposalUnitUiKey : byte
 {
