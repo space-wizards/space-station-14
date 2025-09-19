@@ -191,7 +191,7 @@ public abstract class SharedBloodstreamSystem : EntitySystem
         }
 
         // TODO probably cache this or something. humans get hurt a lot
-        if (!_prototypeManager.TryIndex(ent.Comp.DamageBleedModifiers, out var modifiers))
+        if (!_prototypeManager.Resolve(ent.Comp.DamageBleedModifiers, out var modifiers))
             return;
 
         // some reagents may deal and heal different damage types in the same tick, which means DamageIncreased will be true
@@ -413,11 +413,11 @@ public abstract class SharedBloodstreamSystem : EntitySystem
         DirtyField(ent, ent.Comp, nameof(BloodstreamComponent.BleedAmount));
 
         if (ent.Comp.BleedAmount == 0)
-            _alertsSystem.ClearAlert(ent, ent.Comp.BleedingAlert);
+            _alertsSystem.ClearAlert(ent.Owner, ent.Comp.BleedingAlert);
         else
         {
             var severity = (short)Math.Clamp(Math.Round(ent.Comp.BleedAmount, MidpointRounding.ToZero), 0, 10);
-            _alertsSystem.ShowAlert(ent, ent.Comp.BleedingAlert, severity);
+            _alertsSystem.ShowAlert(ent.Owner, ent.Comp.BleedingAlert, severity);
         }
 
         return true;
