@@ -1,7 +1,8 @@
+# Contains modifications made by Ronstation contributors, therefore this file is subject to MIT sublicensed with AGPL v3.0. Due to how extensive and unpredictable map modifications can become, annotations could not be provided.
 - type: species
   id: Vulpkanin
   name: species-name-vulpkanin
-  roundStart: true
+  roundStart: false # Ronstation - modification
   prototype: MobVulpkanin
   sprites: MobVulpkaninSprites
   defaultSkinTone: "#5a3f2d"
