@@ -1,0 +1,55 @@
+- type: constructionGraph
+  id: RipperLeftGraph
+  start: startleft
+  graph:
+  - node: startleft
+    edges:
+    - to: left
+      steps:
+      - material: Plasteel
+        amount: 6
+        doAfter: 5
+      - material: Steel
+        amount: 30
+        doAfter:: 1
+      - tag: ModularReceiver
+        icon:
+          sprite: Objects/Misc/modular_receiver.rsi
+          state: icon
+        name: construction-graph-tag-modular-receiver
+      - material: Cloth
+        amount: 10
+        doAfter: 2
+      - material: Cable
+        amount: 15
+        doAfter: 1
+  - node: left
+    entity: LeftArmCyberRipper
+
+- type: constructionGraph
+  id: RipperRightGraph
+  start: startright
+  graph:
+  - node: startright
+    edges:
+    - to: right
+      steps:
+      - material: Plasteel
+        amount: 6
+        doAfter: 5
+      - material: Steel
+        amount: 30
+        doAfter:: 1
+      - tag: ModularReceiver
+        icon:
+          sprite: Objects/Misc/modular_receiver.rsi
+          state: icon
+        name: construction-graph-tag-modular-receiver
+      - material: Cloth
+        amount: 10
+        doAfter: 2
+      - material: Cable
+        amount: 15
+        doAfter: 1
+  - node: right
+    entity: RightArmCyberRipper
