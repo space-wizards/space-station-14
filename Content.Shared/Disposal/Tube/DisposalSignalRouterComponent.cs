@@ -11,7 +11,7 @@ namespace Content.Shared.Disposal.Tube;
 /// </summary>
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
 [Access(typeof(DisposalSignalRouterSystem))]
-public sealed partial class DisposalSignalRouterComponent : Component
+public sealed partial class DisposalSignalRouterComponent : DisposalTubeComponent
 {
     /// <summary>
     /// Whether to route items to the side or not.

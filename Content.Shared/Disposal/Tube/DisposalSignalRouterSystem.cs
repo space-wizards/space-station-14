@@ -1,5 +1,6 @@
 using Content.Shared.DeviceLinking;
 using Content.Shared.DeviceLinking.Events;
+using System.Linq;
 
 namespace Content.Shared.Disposal.Tube;
 
@@ -9,6 +10,7 @@ namespace Content.Shared.Disposal.Tube;
 public sealed class DisposalSignalRouterSystem : EntitySystem
 {
     [Dependency] private readonly SharedDeviceLinkSystem _deviceLink = default!;
+    [Dependency] private readonly SharedDisposalTubeSystem _disposalTube = default!;
 
     public override void Initialize()
     {
@@ -38,15 +40,14 @@ public sealed class DisposalSignalRouterSystem : EntitySystem
 
     private void OnGetNextDirection(Entity<DisposalSignalRouterComponent> ent, ref GetDisposalsNextDirectionEvent args)
     {
-        if (!ent.Comp.Routing)
+        var exits = _disposalTube.GetTubeConnectableDirections((ent, ent.Comp));
+
+        if (exits.Length < 3 || !ent.Comp.Routing)
         {
-            args.Next = Transform(ent).LocalRotation.GetDir();
+            _disposalTube.SelectNextTube((ent, ent.Comp), exits, ref args);
             return;
         }
 
-        // use the junction side direction when a tag matches
-        var ev = new GetDisposalsConnectableDirectionsEvent();
-        RaiseLocalEvent(ent, ref ev);
-        args.Next = ev.Connectable[1];
+        _disposalTube.SelectNextTube((ent, ent.Comp), exits.Skip(1).ToArray(), ref args);
     }
 }

@@ -107,7 +107,7 @@ public abstract partial class SharedDisposalTubeSystem : EntitySystem
     private void OnGetTubeNextDirection(Entity<DisposalTubeComponent> ent, ref GetDisposalsNextDirectionEvent args)
     {
         var exits = GetTubeConnectableDirections(ent);
-        HandleTubeChoice(ent, exits, ref args);
+        SelectNextTube(ent, exits, ref args);
     }
 
     private void OnGetRouterNextDirection(Entity<DisposalRouterComponent> ent, ref GetDisposalsNextDirectionEvent args)
@@ -116,11 +116,11 @@ public abstract partial class SharedDisposalTubeSystem : EntitySystem
 
         if (exits.Length < 3 || args.Holder.Tags.Overlaps(ent.Comp.Tags))
         {
-            HandleTubeChoice((ent, ent.Comp), exits, ref args);
+            SelectNextTube((ent, ent.Comp), exits, ref args);
             return;
         }
 
-        HandleTubeChoice((ent, ent.Comp), exits.Skip(1).ToArray(), ref args);
+        SelectNextTube((ent, ent.Comp), exits.Skip(1).ToArray(), ref args);
     }
 
     private void OnGetTaggerNextDirection(Entity<DisposalTaggerComponent> ent, ref GetDisposalsNextDirectionEvent args)
@@ -133,7 +133,7 @@ public abstract partial class SharedDisposalTubeSystem : EntitySystem
     /// Returns a list of all potential exits to a disposal tube, accounting for its local rotation.
     /// </summary>
     /// <param name="ent">The disposal tube.</param>
-    private Direction[] GetTubeConnectableDirections(Entity<DisposalTubeComponent> ent)
+    public Direction[] GetTubeConnectableDirections(Entity<DisposalTubeComponent> ent)
     {
         var rotation = Transform(ent).LocalRotation;
 
@@ -148,7 +148,7 @@ public abstract partial class SharedDisposalTubeSystem : EntitySystem
     /// <param name="ent">The disposal tube.</param>
     /// <param name="exits">The currated list of possible exits from the disposal tube.</param>
     /// <param name="args">The args for the 'get next direction' event.</param>
-    private void HandleTubeChoice(Entity<DisposalTubeComponent> ent, Direction[] exits, ref GetDisposalsNextDirectionEvent args)
+    public void SelectNextTube(Entity<DisposalTubeComponent> ent, Direction[] exits, ref GetDisposalsNextDirectionEvent args)
     {
         if (exits.Length == 0)
             return;
