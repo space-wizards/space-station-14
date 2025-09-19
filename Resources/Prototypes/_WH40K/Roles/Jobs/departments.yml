@@ -14,7 +14,7 @@
   - MedicalInternWH40K
   - ParamedicWH40K
   - JanitorWH40K
-  - Passenger
+  # - Passenger
 
 - type: department
   id: Governance
@@ -27,6 +27,7 @@
   - HeadOfficer
   - Magos
   weight: 100
+  primary: false
 
 - type: department
   id: Mechanicus

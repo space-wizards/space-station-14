@@ -41,6 +41,8 @@
   - type: ContainerContainer
     containers:
       key_slots: !type:Container
+      storagebase: !type:Container
+        ents: []
   - type: ContainerFill
     containers:
       key_slots:
@@ -68,6 +70,8 @@
   - type: ContainerContainer
     containers:
       key_slots: !type:Container
+      storagebase: !type:Container
+        ents: []
   - type: ContainerFill
     containers:
       key_slots:

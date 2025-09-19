@@ -39,6 +39,8 @@
     sprite: _WH40K/Clothing/Head/Hardsuits/v_officer.rsi
   - type: Clothing
     sprite: _WH40K/Clothing/Head/Hardsuits/v_officer.rsi
+  - type: Item
+    heldPrefix: off
   - type: PointLight
     color: "#ffeead"
   - type: PressureProtection
@@ -65,6 +67,8 @@
     sprite: _WH40K/Clothing/Head/Hardsuits/v_sergeant.rsi
   - type: Clothing
     sprite: _WH40K/Clothing/Head/Hardsuits/v_sergeant.rsi
+  - type: Item
+    heldPrefix: off
   - type: PointLight
     color: "#ffeead"
   - type: PressureProtection
@@ -95,6 +99,8 @@
   - type: Item
     size: Small
     storedRotation: -90
+    heldPrefix: off
+
 
 #Техножречество
 
@@ -171,6 +177,8 @@
     sprite: _WH40K/Clothing/Head/Hardsuits/vanguard_skitarii.rsi
   - type: Clothing
     sprite: _WH40K/Clothing/Head/Hardsuits/vanguard_skitarii.rsi
+  - type: Item
+    heldPrefix: off
   - type: PointLight
     color: "#ffeead"
   - type: PressureProtection

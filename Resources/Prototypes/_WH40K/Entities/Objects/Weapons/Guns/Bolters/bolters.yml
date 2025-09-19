@@ -99,104 +99,104 @@
     zeroVisible: true
   - type: Appearance
 
-- type: entity
-  parent: BaseWeaponPistol
-  id: WeaponRevolverStub
-  name: стаб-револьвер
-  description:
-  suffix: WH40K
-  components:
-  - type: Sprite
-    sprite: _WH40K/Objects/Weapons/Guns/Stubrevolver/stubrevolver.rsi
-    scale: 0.9,0.9
-    layers:
-    - state: base
-      map: ["enum.GunVisualLayers.Base"]
-    - state: mag-0
-      map: ["enum.GunVisualLayers.Mag"]
-  - type: Item
-    sprite: _WH40K/Objects/Weapons/Guns/Stubrevolver/stubrevolver.rsi
-  - type: ChamberMagazineAmmoProvider
-    soundRack:
-      path: /Audio/Weapons/Guns/Cock/sf_rifle_cock.ogg
-  - type: Gun
-    fireRate: 1.5
-    selectedMode: SemiAuto
-    availableModes:
-    - SemiAuto
-    soundGunshot:
-      path: /Audio/_WH40K/Weapons/Guns/Gunshots/bolterpistol.ogg
-  - type: ItemSlots
-    slots:
-      gun_magazine:
-        name: Magazine
-        startingItem: MagazineBolterPistol
-        insertSound: /Audio/Weapons/Guns/MagIn/batrifle_magin.ogg
-        ejectSound: /Audio/Weapons/Guns/MagOut/batrifle_magout.ogg
-        priority: 2
-        whitelist:
-          tags:
-          - MagazineBolterPistol75
-      gun_chamber:
-        name: Chamber
-        startingItem: CartridgeBolter
-        priority: 1
-        whitelist:
-          tags:
-          - CartridgeBolter75
-  - type: MagazineVisuals
-    magState: mag
-    steps: 1
-    zeroVisible: true
-  - type: Appearance
+# - type: entity
+#   parent: BaseWeaponPistol
+#   id: WeaponRevolverStub
+#   name: стаб-револьвер
+#   description:
+#   suffix: WH40K
+#   components:
+#   - type: Sprite
+#     sprite: _WH40K/Objects/Weapons/Guns/Stubrevolver/stubrevolver.rsi
+#     scale: 0.9,0.9
+#     layers:
+#     - state: base
+#       map: ["enum.GunVisualLayers.Base"]
+#     - state: mag-0
+#       map: ["enum.GunVisualLayers.Mag"]
+#   - type: Item
+#     sprite: _WH40K/Objects/Weapons/Guns/Stubrevolver/stubrevolver.rsi
+#   - type: ChamberMagazineAmmoProvider
+#     soundRack:
+#       path: /Audio/Weapons/Guns/Cock/sf_rifle_cock.ogg
+#   - type: Gun
+#     fireRate: 1.5
+#     selectedMode: SemiAuto
+#     availableModes:
+#     - SemiAuto
+#     soundGunshot:
+#       path: /Audio/_WH40K/Weapons/Guns/Gunshots/bolterpistol.ogg
+#   - type: ItemSlots
+#     slots:
+#       gun_magazine:
+#         name: Magazine
+#         startingItem: MagazineBolterPistol
+#         insertSound: /Audio/Weapons/Guns/MagIn/batrifle_magin.ogg
+#         ejectSound: /Audio/Weapons/Guns/MagOut/batrifle_magout.ogg
+#         priority: 2
+#         whitelist:
+#           tags:
+#           - MagazineBolterPistol75
+#       gun_chamber:
+#         name: Chamber
+#         startingItem: CartridgeBolter
+#         priority: 1
+#         whitelist:
+#           tags:
+#           - CartridgeBolter75
+#   - type: MagazineVisuals
+#     magState: mag
+#     steps: 1
+#     zeroVisible: true
+#   - type: Appearance
 
-- type: entity
-  parent: BaseWeaponPistol
-  id: WeaponRevolverStubHeavy
-  name: тяжёлый стаб-револьвер
-  description:
-  suffix: WH40K
-  components:
-  - type: Sprite
-    sprite: _WH40K/Objects/Weapons/Guns/Stubrevolver/heavystubrevolver.rsi
-    scale: 0.9,0.9
-    layers:
-    - state: base
-      map: ["enum.GunVisualLayers.Base"]
-    - state: mag-0
-      map: ["enum.GunVisualLayers.Mag"]
-  - type: Item
-    sprite: _WH40K/Objects/Weapons/Guns/Stubrevolver/heavystubrevolver.rsi
-  - type: ChamberMagazineAmmoProvider
-    soundRack:
-      path: /Audio/Weapons/Guns/Cock/sf_rifle_cock.ogg
-  - type: Gun
-    fireRate: 1.5
-    selectedMode: SemiAuto
-    availableModes:
-    - SemiAuto
-    soundGunshot:
-      path: /Audio/_WH40K/Weapons/Guns/Gunshots/bolterpistol.ogg
-  - type: ItemSlots
-    slots:
-      gun_magazine:
-        name: Magazine
-        startingItem: MagazineBolterPistol
-        insertSound: /Audio/Weapons/Guns/MagIn/batrifle_magin.ogg
-        ejectSound: /Audio/Weapons/Guns/MagOut/batrifle_magout.ogg
-        priority: 2
-        whitelist:
-          tags:
-          - MagazineBolterPistol75
-      gun_chamber:
-        name: Chamber
-        startingItem: CartridgeBolter
-        priority: 1
-        whitelist:
-          tags:
-          - CartridgeBolter75
-  - type: MagazineVisuals
-    magState: mag
-    steps: 1
-    zeroVisible: true
-  - type: Appearance
+# - type: entity
+#   parent: BaseWeaponPistol
+#   id: WeaponRevolverStubHeavy
+#   name: тяжёлый стаб-револьвер
+#   description:
+#   suffix: WH40K
+#   components:
+#   - type: Sprite
+#     sprite: _WH40K/Objects/Weapons/Guns/Stubrevolver/heavystubrevolver.rsi
+#     scale: 0.9,0.9
+#     layers:
+#     - state: base
+#       map: ["enum.GunVisualLayers.Base"]
+#     - state: mag-0
+#       map: ["enum.GunVisualLayers.Mag"]
+#   - type: Item
+#     sprite: _WH40K/Objects/Weapons/Guns/Stubrevolver/heavystubrevolver.rsi
+#   - type: ChamberMagazineAmmoProvider
+#     soundRack:
+#       path: /Audio/Weapons/Guns/Cock/sf_rifle_cock.ogg
+#   - type: Gun
+#     fireRate: 1.5
+#     selectedMode: SemiAuto
+#     availableModes:
+#     - SemiAuto
+#     soundGunshot:
+#       path: /Audio/_WH40K/Weapons/Guns/Gunshots/bolterpistol.ogg
+#   - type: ItemSlots
+#     slots:
+#       gun_magazine:
+#         name: Magazine
+#         startingItem: MagazineBolterPistol
+#         insertSound: /Audio/Weapons/Guns/MagIn/batrifle_magin.ogg
+#         ejectSound: /Audio/Weapons/Guns/MagOut/batrifle_magout.ogg
+#         priority: 2
+#         whitelist:
+#           tags:
+#           - MagazineBolterPistol75
+#       gun_chamber:
+#         name: Chamber
+#         startingItem: CartridgeBolter
+#         priority: 1
+#         whitelist:
+#           tags:
+#           - CartridgeBolter75
+#   - type: MagazineVisuals
+#     magState: mag
+#     steps: 1
+#     zeroVisible: true
+#   - type: Appearance

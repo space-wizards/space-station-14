@@ -27,6 +27,6 @@
       path: /Audio/Weapons/Guns/MagIn/batrifle_magin.ogg
   - type: MagazineVisuals
     magState: mag
-    steps: 2
+    steps: 1
     zeroVisible: false
   - type: Appearance

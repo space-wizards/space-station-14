@@ -38,13 +38,13 @@
             - !type:EntityAnchored {}
           steps:
             - material: Plasteel
-              amount: 2
+              amount: 1
               doAfter: 1
             - material: MetalRod
-              amount: 8
+              amount: 4
               doAfter: 1
             - material: Plasteel
-              amount: 2
+              amount: 1
               doAfter: 1
 
 # WWWWWWWWWWWWWHHHHHH
@@ -553,14 +553,11 @@
         - to: girder
           completed:
             - !type:SpawnPrototype
-              prototype: SheetSteel1
+              prototype: SheetPlasteel1
               amount: 1
             - !type:SpawnPrototype
-              prototype: SheetPlasteel1
-              amount: 3
-            - !type:SpawnPrototype
               prototype: PartRodMetal1
-              amount: 8
+              amount: 4
           steps:
             - tool: Cutting
               doAfter: 1
