@@ -7,10 +7,12 @@ using Content.Shared.FixedPoint;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Interaction;
 using Content.Shared.Popups;
+using Content.Shared.Random.Helpers;
 using Content.Shared.Tools.Systems;
 using Content.Shared.Verbs;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
+using Robust.Shared.Timing;
 using System.Numerics;
 
 namespace Content.Shared.Animals;
@@ -21,6 +23,7 @@ namespace Content.Shared.Animals;
 /// </summary>
 public sealed class SharedShearableSystem : EntitySystem
 {
+    [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly IPrototypeManager _proto = default!;
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
     [Dependency] private readonly SharedDoAfterSystem _doAfter = default!;
@@ -231,21 +234,21 @@ public sealed class SharedShearableSystem : EntitySystem
         // Split the solution inside the creature by solutionToRemove, return what was removed.
         var removedSolution = _solutionContainer.SplitSolution(shearingSolutionEnt.Value, solutionToRemove);
 
-        // Used for slightly altering the spawn position of sheared items.
-        // Don't worry about how it works, it just does, I promise.
-        var random = IoCManager.Resolve<IRobustRandom>();
+        // Psuedo shared randomness stolen from #39661
+        // Can be replaced with SharedRandom once that exists.
+        var seed = SharedRandomExtensions.HashCodeCombine(new() { (int)_timing.CurTick.Value, GetNetEntity(ent).Id });
+        var random = new System.Random(seed);
+
         var center = ent.Owner.ToCoordinates();
         // Spawn product.
         for (var i = 0; i < removedSolution.Volume.Value / productsPerSolution; i++)
         {
-            // Crazy spawn
+            // Offset the spawn position by 0.4 pixels, so they don't all stack in one spot.
             var xoffs = random.NextFloat(-0.2f, 0.2f);
             var yoffs = random.NextFloat(-0.2f, 0.2f);
             var pos = center.Offset(new Vector2(xoffs, yoffs));
-            // A weaker sheep would disable prediction here but we are pioneering technology.
+
             EntityManager.PredictedSpawnAtPosition(ent.Comp.ShearedProductID, pos);
-            // Normal spawn just in case we need it later.
-            //EntityManager.PredictedSpawnNextToOrDrop(ent.Comp.ShearedProductID, ent);
         }
 
         // Success message.
