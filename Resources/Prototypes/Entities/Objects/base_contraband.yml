@@ -55,7 +55,7 @@
   abstract: true
   components:
   - type: Contraband
-    severity: [ CentralCommand ]
+    allowedDepartments: [ CentralCommand ]
 
 - type: entity
   id: BaseCommandContraband
