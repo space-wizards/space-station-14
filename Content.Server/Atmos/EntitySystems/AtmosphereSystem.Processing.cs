@@ -693,7 +693,7 @@ namespace Content.Server.Atmos.EntitySystems
             atmosphere.Timer += frameTime;
 
             if (atmosphere.Timer < AtmosTime)
-                return AtmosphereProcessingCompletionState.Continue; // continue;
+                return AtmosphereProcessingCompletionState.Continue;
 
             // We subtract it so it takes lost time into account.
             atmosphere.Timer -= AtmosTime;
@@ -704,7 +704,7 @@ namespace Content.Server.Atmos.EntitySystems
                     if (!ProcessRevalidate(ent))
                     {
                         atmosphere.ProcessingPaused = true;
-                        return AtmosphereProcessingCompletionState.Return; // return;
+                        return AtmosphereProcessingCompletionState.Return;
                     }
 
                     atmosphere.ProcessingPaused = false;
@@ -715,65 +715,65 @@ namespace Content.Server.Atmos.EntitySystems
                     atmosphere.State = MonstermosEqualization
                         ? AtmosphereProcessingState.TileEqualize
                         : AtmosphereProcessingState.ActiveTiles;
-                    return AtmosphereProcessingCompletionState.Continue; // continue;
+                    return AtmosphereProcessingCompletionState.Continue;
                 case AtmosphereProcessingState.TileEqualize:
                     if (!ProcessTileEqualize(ent))
                     {
                         atmosphere.ProcessingPaused = true;
-                        return AtmosphereProcessingCompletionState.Return; // return;
+                        return AtmosphereProcessingCompletionState.Return;
                     }
 
                     atmosphere.ProcessingPaused = false;
                     atmosphere.State = AtmosphereProcessingState.ActiveTiles;
-                    return AtmosphereProcessingCompletionState.Continue; // continue;
+                    return AtmosphereProcessingCompletionState.Continue;
                 case AtmosphereProcessingState.ActiveTiles:
                     if (!ProcessActiveTiles(ent))
                     {
                         atmosphere.ProcessingPaused = true;
-                        return AtmosphereProcessingCompletionState.Return; // return;
+                        return AtmosphereProcessingCompletionState.Return;
                     }
 
                     atmosphere.ProcessingPaused = false;
                     // Next state depends on whether excited groups are enabled or not.
                     atmosphere.State = ExcitedGroups ? AtmosphereProcessingState.ExcitedGroups : AtmosphereProcessingState.HighPressureDelta;
-                    return AtmosphereProcessingCompletionState.Continue; // continue;
+                    return AtmosphereProcessingCompletionState.Continue;
                 case AtmosphereProcessingState.ExcitedGroups:
                     if (!ProcessExcitedGroups(ent))
                     {
                         atmosphere.ProcessingPaused = true;
-                        return AtmosphereProcessingCompletionState.Return; // return;
+                        return AtmosphereProcessingCompletionState.Return;
                     }
 
                     atmosphere.ProcessingPaused = false;
                     atmosphere.State = AtmosphereProcessingState.HighPressureDelta;
-                    return AtmosphereProcessingCompletionState.Continue; // continue;
+                    return AtmosphereProcessingCompletionState.Continue;
                 case AtmosphereProcessingState.HighPressureDelta:
                     if (!ProcessHighPressureDelta((ent, ent)))
                     {
                         atmosphere.ProcessingPaused = true;
-                        return AtmosphereProcessingCompletionState.Return; // return;
+                        return AtmosphereProcessingCompletionState.Return;
                     }
 
                     atmosphere.ProcessingPaused = false;
                     atmosphere.State = DeltaPressureDamage
                         ? AtmosphereProcessingState.DeltaPressure
                         : AtmosphereProcessingState.Hotspots;
-                    return AtmosphereProcessingCompletionState.Continue; // continue;
+                    return AtmosphereProcessingCompletionState.Continue;
                 case AtmosphereProcessingState.DeltaPressure:
                     if (!ProcessDeltaPressure(ent))
                     {
                         atmosphere.ProcessingPaused = true;
-                        return AtmosphereProcessingCompletionState.Return; // return;
+                        return AtmosphereProcessingCompletionState.Return;
                     }
 
                     atmosphere.ProcessingPaused = false;
                     atmosphere.State = AtmosphereProcessingState.Hotspots;
-                    return AtmosphereProcessingCompletionState.Continue; // continue;
+                    return AtmosphereProcessingCompletionState.Continue;
                 case AtmosphereProcessingState.Hotspots:
                     if (!ProcessHotspots(ent))
                     {
                         atmosphere.ProcessingPaused = true;
-                        return AtmosphereProcessingCompletionState.Return; // return;
+                        return AtmosphereProcessingCompletionState.Return;
                     }
 
                     atmosphere.ProcessingPaused = false;
@@ -783,32 +783,32 @@ namespace Content.Server.Atmos.EntitySystems
                     atmosphere.State = Superconduction
                         ? AtmosphereProcessingState.Superconductivity
                         : AtmosphereProcessingState.PipeNet;
-                    return AtmosphereProcessingCompletionState.Continue; // continue;
+                    return AtmosphereProcessingCompletionState.Continue;
                 case AtmosphereProcessingState.Superconductivity:
                     if (!ProcessSuperconductivity(atmosphere))
                     {
                         atmosphere.ProcessingPaused = true;
-                        return AtmosphereProcessingCompletionState.Return; // return;
+                        return AtmosphereProcessingCompletionState.Return;
                     }
 
                     atmosphere.ProcessingPaused = false;
                     atmosphere.State = AtmosphereProcessingState.PipeNet;
-                    return AtmosphereProcessingCompletionState.Continue; // continue;
+                    return AtmosphereProcessingCompletionState.Continue;
                 case AtmosphereProcessingState.PipeNet:
                     if (!ProcessPipeNets(atmosphere))
                     {
                         atmosphere.ProcessingPaused = true;
-                        return AtmosphereProcessingCompletionState.Return; // return;
+                        return AtmosphereProcessingCompletionState.Return;
                     }
 
                     atmosphere.ProcessingPaused = false;
                     atmosphere.State = AtmosphereProcessingState.AtmosDevices;
-                    return AtmosphereProcessingCompletionState.Continue; // continue;
+                    return AtmosphereProcessingCompletionState.Continue;
                 case AtmosphereProcessingState.AtmosDevices:
                     if (!ProcessAtmosDevices(ent, mapAtmosphere))
                     {
                         atmosphere.ProcessingPaused = true;
-                        return AtmosphereProcessingCompletionState.Return; // return;
+                        return AtmosphereProcessingCompletionState.Return;
                     }
 
                     atmosphere.ProcessingPaused = false;
