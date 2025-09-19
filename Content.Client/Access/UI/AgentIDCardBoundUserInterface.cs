@@ -25,6 +25,7 @@ namespace Content.Client.Access.UI
 
             _window.OnNameChanged += OnNameChanged;
             _window.OnJobChanged += OnJobChanged;
+            _window.OnSpecializationChanged += OnSpecializationChanged;
             _window.OnJobIconChanged += OnJobIconChanged;
         }
 
@@ -36,6 +37,11 @@ namespace Content.Client.Access.UI
         private void OnJobChanged(string newJob)
         {
             SendMessage(new AgentIDCardJobChangedMessage(newJob));
+        }
+
+        private void OnSpecializationChanged(string newSpec)
+        {
+            SendMessage(new AgentIDCardSpecChangedMessage(newSpec));
         }
 
         public void OnJobIconChanged(ProtoId<JobIconPrototype> newJobIconId)
@@ -55,6 +61,7 @@ namespace Content.Client.Access.UI
 
             _window.SetCurrentName(cast.CurrentName);
             _window.SetCurrentJob(cast.CurrentJob);
+            _window.SetCurrentSpecialization(cast.CurrentSpecialization);
             _window.SetAllowedIcons(cast.CurrentJobIconId);
         }
     }

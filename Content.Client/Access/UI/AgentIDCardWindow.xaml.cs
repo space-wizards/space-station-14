@@ -23,6 +23,7 @@ namespace Content.Client.Access.UI
 
         public event Action<string>? OnNameChanged;
         public event Action<string>? OnJobChanged;
+        public event Action<string>? OnSpecializationChanged;
 
         public event Action<ProtoId<JobIconPrototype>>? OnJobIconChanged;
 
@@ -37,6 +38,9 @@ namespace Content.Client.Access.UI
 
             JobLineEdit.OnTextEntered += e => OnJobChanged?.Invoke(e.Text);
             JobLineEdit.OnFocusExit += e => OnJobChanged?.Invoke(e.Text);
+
+            SpecializationLineEdit.OnTextEntered += e => OnSpecializationChanged?.Invoke(e.Text);
+            SpecializationLineEdit.OnFocusExit += e => OnSpecializationChanged?.Invoke(e.Text);
         }
 
         public void SetAllowedIcons(string currentJobIconId)
@@ -91,6 +95,11 @@ namespace Content.Client.Access.UI
         public void SetCurrentJob(string job)
         {
             JobLineEdit.Text = job;
+        }
+
+        public void SetCurrentSpecialization(string spec)
+        {
+            SpecializationLineEdit.Text = spec;
         }
     }
 }
