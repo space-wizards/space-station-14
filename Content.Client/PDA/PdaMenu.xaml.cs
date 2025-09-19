@@ -153,8 +153,8 @@ namespace Content.Client.PDA
             {
                 _owner = state.PdaOwnerInfo.IdOwner ?? Loc.GetString("comp-pda-ui-unknown");
                 _jobTitle = state.PdaOwnerInfo.JobTitle ?? Loc.GetString("comp-pda-ui-unassigned");
-                if (state.PdaOwnerInfo.JobSpecTitle != null)
-                    _jobTitle += $" ({state.PdaOwnerInfo.JobSpecTitle})";
+                if (!string.IsNullOrWhiteSpace(state.PdaOwnerInfo.JobSpecializationTitle))
+                    _jobTitle += $" ({state.PdaOwnerInfo.JobSpecializationTitle})";
                 IdInfoLabel.SetMarkup(Loc.GetString("comp-pda-ui",
                     ("owner", _owner),
                     ("jobTitle", _jobTitle)));
