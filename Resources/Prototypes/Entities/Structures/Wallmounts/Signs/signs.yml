@@ -191,7 +191,7 @@
   parent: BaseSignDirectional
   id: SignDirectionalSalvage
   name: salvage sign
-  description: A direction sign, pointing out which way Salvage is.
+  description: A direction sign, pointing towards Salvage.
   components:
   - type: Sprite
     state: direction_salvage
