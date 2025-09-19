@@ -22,14 +22,6 @@
   - type: Contraband
     severity: Syndicate
 
-# Anything used by Centcomm, even if also used by the Syndicate.
-- type: entity
-  id: BaseCentcommContraband
-  abstract: true
-  components:
-  - type: Contraband
-    severity: CentComm
-
 # minor contraband not departmentally restricted -- improvised weapons etc
 - type: entity
   id: BaseMinorContraband
@@ -57,6 +49,14 @@
     allowedJobs: [  ]
 
 # one department restricted contraband
+- type: entity
+  id: BaseCentcommContraband
+  parent: BaseRestrictedContraband
+  abstract: true
+  components:
+  - type: Contraband
+    severity: [ CentralCommand ]
+
 - type: entity
   id: BaseCommandContraband
   parent: BaseRestrictedContraband
