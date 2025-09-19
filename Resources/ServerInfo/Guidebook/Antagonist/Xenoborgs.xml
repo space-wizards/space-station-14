@@ -45,7 +45,7 @@
   There is a total of four types of Xenoborgs. Each Borg type has certain abilities that the others lack and require teamwork to help grow the xenoborgs numbers.
   Each type of Xenoborg has unique modules that only fit in that specific type. The Mothership Core can produce upgrade modules designed for specific Xenoborg types.
 
-  All Xenoborgs have a pin pointer pointing to the Mothership's location, a GPS, and a material bag for collecting materials for the creation of more xenoborgs, and basic tools.
+  All Xenoborgs have a pinpointer pointing to the Mothership's location, a GPS, and a material bag for collecting materials for the creation of more xenoborgs, and at least basic tools.
   [bold]Basic xenoborg modules:[/bold]
   <Box>
     <GuideEntityEmbed Entity="XenoborgModuleBasic" Caption="basic xenoborg module"/>
