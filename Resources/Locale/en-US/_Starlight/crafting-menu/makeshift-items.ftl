@@ -1,4 +1,4 @@
-﻿crafting-menu-name-FDB = forged double-barrel shotgun
+crafting-menu-name-FDB = forged double-barrel shotgun
 crafting-menu-text-FDB = The cousin of the improvised shotgun, this one is made from better quality parts and an additional barrel! Takes time and welding supplies to make, however.
 
 crafting-menu-name-MP = makeshift pistol
@@ -189,3 +189,8 @@ crafting-menu-name-CYELO = yellow crayon
 crafting-menu-name-IRS = improvised .30/.45 speed loader
 crafting-menu-text-IRS = Little more than a spring-loaded tube that can hold bullets.
 
+crafting-menu-name-RIPRL = left ripperdoc arm
+crafting-menu-text-RIPRL = A poorly made replica of a coveted "Reaper" arm, cobbled together from scrap found lying around in maintenance.
+
+crafting-menu-name-RIPRR = right ripperdoc arm
+crafting-menu-text-RIPRR = A poorly made replica of a coveted "Reaper" arm, cobbled together from scrap found lying around in maintenance.
