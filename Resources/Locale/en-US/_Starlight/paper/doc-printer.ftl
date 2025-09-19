@@ -150,16 +150,16 @@ doc-text-printer-report-on-the-chapters-meeting =
 
     Number of votes [italic]in favor[/italic]: [form]
     Those voting [italic]in favor[/italic]:
-    • [form]
-    • [form]
+    • [signature]
+    • [signature]
     Number of votes [italic]against[/italic]: [form]
     Those voting [italic]against[/italic]:
-    • [form]
-    • [form]
+    • [signature]
+    • [signature]
     Number of [italic]abstentions[/italic] from voting: [form]
     Those voting [italic]abstain[italic]:
-    • [form]
-    • [form]    
+    • [signature]
+    • [signature]    
     Resolution of the Meeting of Heads: [form]
     
     ─────────────────────────────────────────
