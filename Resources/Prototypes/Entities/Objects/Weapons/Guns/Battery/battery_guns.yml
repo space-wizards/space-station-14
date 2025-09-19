@@ -282,7 +282,7 @@
     maxCharge: 1500 # ~1:30 minutes for recharge
     startingCharge: 1500
   - type: HitscanBatteryAmmoProvider
-    proto: RedLaser
+    proto: RedLaserPractice # Starlight
     fireCost: 30 #Starlight - End
 
 #- type: entity
