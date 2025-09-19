@@ -86,9 +86,8 @@ public sealed partial class AdminVerbSystem
     [Dependency] private readonly SuperBonkSystem _superBonkSystem = default!;
     [Dependency] private readonly SlipperySystem _slipperySystem = default!;
 
-    private const EntProtoId ActionViewLawsProtoId = "ActionViewLaws";
-    private const ProtoId<SiliconLawsetPrototype> CrewsimovLawset = "Crewsimov";
-
+    private readonly EntProtoId _actionViewLawsProtoId = "ActionViewLaws";
+    private readonly ProtoId<SiliconLawsetPrototype> _crewsimovLawset = "Crewsimov";
     private const string SiliconLawBoundUserInterface = "SiliconLawBoundUserInterface";
 
     // All smite verbs have names so invokeverb works.
@@ -967,10 +966,10 @@ public sealed partial class AdminVerbSystem
                 _uiSystem.SetUi((args.Target, userInterfaceComp), SiliconLawsUiKey.Key, new InterfaceData(SiliconLawBoundUserInterface));
 
                 EnsureComp<SiliconLawBoundComponent>(args.Target);
-                _actions.AddAction(args.Target, ActionViewLawsProtoId);
+                _actions.AddAction(args.Target, _actionViewLawsProtoId);
 
                 EnsureComp<SiliconLawProviderComponent>(args.Target);
-                _siliconLawSystem.SetLaws(_siliconLawSystem.GetLawset(CrewsimovLawset).Laws, args.Target);
+                _siliconLawSystem.SetLaws(_siliconLawSystem.GetLawset(_crewsimovLawset).Laws, args.Target);
 
                 _popupSystem.PopupEntity(Loc.GetString("admin-smite-silicon-laws-bound-self"), args.Target,
                     args.Target, PopupType.LargeCaution);
