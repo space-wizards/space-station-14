@@ -95,7 +95,7 @@
     price: 1500
 
 - type: entity
-  parent: [ProjectileGrenadeBase, BaseCentcommContraband]
+  parent: [ProjectileGrenadeBase, BaseSyndicateContraband]
   id: GrenadeShrapnel
   name: shrapnel grenade
   description: Releases a deadly spray of shrapnel that causes severe bleeding.
