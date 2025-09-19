@@ -590,7 +590,7 @@ public sealed class StrippableClothesTest
                 foreach( var (slot, item) in handsSystem.EnumerateHands(target).Zip(items) )
                 {
                     Assert.That(
-                        handsSystem.TryPickup(attacker, item, slot),
+                        handsSystem.TryPickup(target, item, slot),
                         Is.True,
                         $"Could not take item in hand {slot}"
                     );
