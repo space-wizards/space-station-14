@@ -26,6 +26,7 @@ using Robust.Client.Graphics;
 using Robust.Client.Player;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
+using Robust.Client.UserInterface.CustomControls;
 using Robust.Client.UserInterface.XAML;
 using Robust.Client.Utility;
 using Robust.Shared.Configuration;
@@ -613,6 +614,26 @@ namespace Content.Client.Lobby.UI
             {
                 var name = Loc.GetString(_species[i].Name);
                 SpeciesButton.AddItem(name, i);
+
+                if (!_requirements.IsAllowed(
+                        _species[i],
+                        (HumanoidCharacterProfile?)_preferencesManager.Preferences?.SelectedCharacter,
+                        out var reason))
+                {
+                    SpeciesButton.SetItemDisabled(SpeciesButton.GetIdx(i), true);
+
+                    var button = SpeciesButton.OptionsScroll
+                        .Children
+                        .OfType<BoxContainer>()
+                        .Single()
+                        .Children
+                        .OfType<Button>()
+                        .Single(button => button.Text == name);
+
+                    var tooltip = new Tooltip();
+                    tooltip.SetMessage(reason);
+                    button.TooltipSupplier = _ => tooltip;
+                }
 
                 if (Profile?.Species.Equals(_species[i].ID) == true)
                 {

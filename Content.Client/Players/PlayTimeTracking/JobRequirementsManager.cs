@@ -1,10 +1,13 @@
 using System.Diagnostics.CodeAnalysis;
 using Content.Shared.CCVar;
+using Content.Shared.Humanoid.Prototypes;
 using Content.Shared.Players;
 using Content.Shared.Players.JobWhitelist;
 using Content.Shared.Players.PlayTimeTracking;
 using Content.Shared.Preferences;
 using Content.Shared.Roles;
+using Content.Shared.Species;
+using Content.Shared.Species.Systems;
 using Robust.Client;
 using Robust.Client.Player;
 using Robust.Shared.Configuration;
@@ -182,6 +185,21 @@ public sealed class JobRequirementsManager : ISharedPlaytimeManager
         return true;
     }
 
+    /// <summary>
+    /// Check the species prototype against the current player for requirements.
+    /// </summary>
+    public bool IsAllowed(
+        SpeciesPrototype species,
+        HumanoidCharacterProfile? profile,
+        [NotNullWhen(false)] out FormattedMessage? reason)
+    {
+        var restrictions = _entManager.System<SharedSpeciesSystem>().GetSpeciesRestrictions(species);
+        if (!CheckSpeciesRestrictions(restrictions, profile, out reason))
+            return false;
+
+        return true;
+    }
+
     // This must be private so code paths can't accidentally skip requirement overrides. Call this through IsAllowed()
     private bool CheckRoleRequirements(HashSet<JobRequirement>? requirements, HumanoidCharacterProfile? profile, [NotNullWhen(false)] out FormattedMessage? reason)
     {
@@ -197,6 +215,26 @@ public sealed class JobRequirementsManager : ISharedPlaytimeManager
                 continue;
 
             reasons.Add(jobReason.ToMarkup());
+        }
+
+        reason = reasons.Count == 0 ? null : FormattedMessage.FromMarkupOrThrow(string.Join('\n', reasons));
+        return reason == null;
+    }
+
+    private bool CheckSpeciesRestrictions(HashSet<SpeciesRestriction>? restrictions, HumanoidCharacterProfile? profile, [NotNullWhen(false)] out FormattedMessage? reason)
+    {
+        reason = null;
+
+        if (restrictions == null || !_cfg.GetCVar(CCVars.RoundstartSpeciesTimers))
+            return true;
+
+        var reasons = new List<string>();
+        foreach (var requirement in restrictions)
+        {
+            if (requirement.Check(_entManager, _prototypes, profile, _roles, out var _reason))
+                continue;
+
+            reasons.Add(_reason.ToMarkup());
         }
 
         reason = reasons.Count == 0 ? null : FormattedMessage.FromMarkupOrThrow(string.Join('\n', reasons));

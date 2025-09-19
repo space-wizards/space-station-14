@@ -1,7 +1,7 @@
 using Content.Shared.Dataset;
 using Content.Shared.Humanoid.Markings;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
+using Content.Shared.Species;
 
 namespace Content.Shared.Humanoid.Prototypes;
 
@@ -33,6 +33,12 @@ public sealed partial class SpeciesPrototype : IPrototype
     /// </summary>
     [DataField(required: true)]
     public bool RoundStart { get; private set; } = false;
+
+    /// <summary>
+    ///     Requirements for the species in the character editor.
+    /// </summary>
+    [DataField]
+    public HashSet<SpeciesRestriction>? Restrictions;
 
     // The below two are to avoid fetching information about the species from the entity
     // prototype.

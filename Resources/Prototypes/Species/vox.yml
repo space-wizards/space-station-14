@@ -2,6 +2,9 @@
   id: Vox
   name: species-name-vox
   roundStart: true
+  restrictions:
+    - !type:OverallPlaytimeRestriction
+      time: 14400 # 4 hrs
   prototype: MobVox
   sprites: MobVoxSprites
   markingLimits: MobVoxMarkingLimits

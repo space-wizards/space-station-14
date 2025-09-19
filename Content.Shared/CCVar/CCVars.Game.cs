@@ -110,6 +110,12 @@ public sealed partial class CCVars
         GameRoleTimers = CVarDef.Create("game.role_timers", true, CVar.SERVER | CVar.REPLICATED);
 
     /// <summary>
+    ///     If roundstart species should be restricted based on time.
+    /// </summary>
+    public static readonly CVarDef<bool>
+        RoundstartSpeciesTimers = CVarDef.Create("game.species_timers", true, CVar.SERVER | CVar.REPLICATED);
+
+    /// <summary>
     /// If role loadout items should be restricted based on time.
     /// </summary>
     public static readonly CVarDef<bool>
