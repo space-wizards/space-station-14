@@ -36,7 +36,10 @@ public sealed record GeneralStationRecord
 
     [DataField]
     public string JobPrototype = string.Empty;
-    
+
+    [DataField]
+    public string JobSpecialization = string.Empty;
+
     /// <summary>
     ///     Character Profile tied to this station record.
     /// </summary>
