@@ -25,7 +25,12 @@ public sealed partial class TriggerSystem
         )
         {
             if (ent.Comp.MaxTriggers != null)
+            {
                 ent.Comp.MaxTriggers--;
+                Dirty(ent);
+                if (ent.Comp.MaxTriggers <= 0)
+                    RemCompDeferred<TriggerOnCollideComponent>(ent);
+            }
             Trigger(ent.Owner, args.OtherEntity, ent.Comp.KeyOut);
         }
     }
