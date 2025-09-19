@@ -32,14 +32,14 @@ public sealed partial class IdCardComponent : Component
 
     [DataField]
     [AutoNetworkedField]
-    public string? JobSpecTitle;
+    public string? JobSpecializationTitle;
 
     [DataField]
     [AutoNetworkedField]
-    private string? _jobSpecTitle;
+    private string? _jobSpecializationTitle;
 
     [Access(typeof(SharedIdCardSystem), typeof(SharedPdaSystem), typeof(SharedAgentIdCardSystem), Other = AccessPermissions.ReadWriteExecute)]
-    public string? LocalizedJobSpecTitle { set => _jobSpecTitle = value; get => _jobSpecTitle ?? Loc.GetString(JobSpecTitle ?? string.Empty); }
+    public string? LocalizedJobSpecializationTitle { set => _jobSpecializationTitle = value; get => _jobSpecializationTitle ?? Loc.GetString(JobSpecializationTitle ?? string.Empty); }
 
     /// <summary>
     /// The state of the job icon rsi.

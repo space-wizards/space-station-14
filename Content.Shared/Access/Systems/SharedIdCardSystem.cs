@@ -151,9 +151,9 @@ public abstract class SharedIdCardSystem : EntitySystem
             jobSpec = null;
         }
 
-        if (id.JobSpecTitle == jobSpec)
+        if (id.JobSpecializationTitle == jobSpec)
             return true;
-        id.JobSpecTitle = jobSpec;
+        id.JobSpecializationTitle = jobSpec;
         Dirty(uid, id);
         UpdateEntityName(uid, id);
 
@@ -316,8 +316,8 @@ public abstract class SharedIdCardSystem : EntitySystem
         {
             jobSuffix = $" ({id.LocalizedJobTitle}";
 
-            if (!string.IsNullOrWhiteSpace(id.LocalizedJobSpecTitle))
-                jobSuffix += $", {id.LocalizedJobSpecTitle}";
+            if (!string.IsNullOrWhiteSpace(id.LocalizedJobSpecializationTitle))
+                jobSuffix += $", {id.LocalizedJobSpecializationTitle}";
 
             jobSuffix += ")";
         }

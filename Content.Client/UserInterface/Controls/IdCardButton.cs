@@ -7,7 +7,7 @@ namespace Content.Client.UserInterface.Controls;
 /// <summary>
 /// A button intended for use with a monotone color palette
 /// </summary>
-public sealed class MonotoneIdCardButton : Button
+public sealed class IdCardButton : Button
 {
     /// <summary>
     /// Specifies the color of the label text when the button is pressed.
@@ -15,7 +15,7 @@ public sealed class MonotoneIdCardButton : Button
     [ViewVariables]
     public Color AltTextColor { set; get; } = new Color(0.2f, 0.2f, 0.2f);
 
-    public MonotoneIdCardButton()
+    public IdCardButton()
     {
         RemoveStyleClass("button");
         UpdateAppearance();
