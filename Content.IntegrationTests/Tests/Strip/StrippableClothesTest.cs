@@ -516,7 +516,7 @@ public sealed class StrippableClothesTest
         });
         await server.WaitPost(() =>
         {
-            var ev =  new StrippingSlotButtonPressed("jumpsuit", false);
+            var ev = new StrippingSlotButtonPressed("jumpsuit", false);
             ev.Actor = attacker;
             server.EntMan.EventBus.RaiseLocalEvent(target, ev);
         });
@@ -616,7 +616,7 @@ public sealed class StrippableClothesTest
         {
             foreach (var slot in handsSystem.EnumerateHands(target))
             {
-                var ev =  new StrippingSlotButtonPressed(slot, true);
+                var ev = new StrippingSlotButtonPressed(slot, true);
                 ev.Actor = attacker;
                 server.EntMan.EventBus.RaiseLocalEvent(target, ev);
             }
