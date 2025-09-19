@@ -279,7 +279,7 @@
   - type: PacifismAllowedGun
   - type: HitscanBatteryAmmoProvider
     proto: RedLaserPractice
-    fireCost: 30 
+    fireCost: 30 # Starlight
 
 
 #- type: entity
