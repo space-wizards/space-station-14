@@ -89,6 +89,8 @@ public sealed partial class AdminVerbSystem
 
     private readonly EntProtoId _actionViewLawsProtoId = "ActionViewLaws";
     private readonly ProtoId<SiliconLawsetPrototype> _crewsimovLawset = "Crewsimov";
+
+    private readonly EntProtoId _siliconMindRole = "MindRoleSiliconBrain";
     private const string SiliconLawBoundUserInterface = "SiliconLawBoundUserInterface";
 
     // All smite verbs have names so invokeverb works.
@@ -973,7 +975,7 @@ public sealed partial class AdminVerbSystem
                 _siliconLawSystem.SetLaws(_siliconLawSystem.GetLawset(_crewsimovLawset).Laws, args.Target);
 
                 if (_mindSystem.TryGetMind(args.Target, out var mindId, out _))
-                    _role.MindAddRole(mindId, "MindRoleSiliconBrain");
+                    _role.MindAddRole(mindId, _siliconMindRole);
 
                 _popupSystem.PopupEntity(Loc.GetString("admin-smite-silicon-laws-bound-self"), args.Target,
                     args.Target, PopupType.LargeCaution);
