@@ -50,6 +50,12 @@ public sealed partial class XenoborgSystem : EntitySystem
         }
     }
 
+    /// <summary>
+    /// Makes sure the player has the xenoborg mindrole and also sends the briefing text and sound
+    /// </summary>
+    /// <param name="mindId"></param>
+    /// <param name="ent"></param>
+    /// <param name="xenoborgComp"></param>
     public void EnsureXenoborgRole(EntityUid mindId, EntityUid ent, XenoborgComponent xenoborgComp)
     {
         if (!_roles.MindHasRole<XenoborgRoleComponent>(mindId))
