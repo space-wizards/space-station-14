@@ -12,6 +12,8 @@ using Robust.Shared.Physics.Systems;
 using Robust.Shared.Timing;
 using Robust.Shared.Random;
 using Robust.Shared.Audio.Systems;
+using Robust.Shared.Physics.Components;
+using Content.Shared.Examine;
 
 
 namespace Content.Shared.Trigger.Systems;
@@ -39,13 +41,16 @@ public sealed partial class TriggerSystem : EntitySystem
     [Dependency] private readonly EntityWhitelistSystem _whitelist = default!;
     [Dependency] private readonly ItemToggleSystem _itemToggle = default!;
     [Dependency] private readonly SharedDeviceLinkSystem _deviceLink = default!;
+    [Dependency] private readonly ExamineSystemShared _examineSystem = default!;
     [Dependency] private readonly EntityTableSystem _entityTable = default!;
 
     public const string DefaultTriggerKey = "trigger";
+    private EntityQuery<PhysicsComponent> _physicsQuery;
 
     public override void Initialize()
     {
         base.Initialize();
+        _physicsQuery = GetEntityQuery<PhysicsComponent>();
 
         InitializeCollide();
         InitializeCondition();
