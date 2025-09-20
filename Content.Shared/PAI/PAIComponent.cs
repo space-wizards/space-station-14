@@ -33,6 +33,24 @@ public sealed partial class PAIComponent : Component
     public EntityUid? ShopAction;
 
     /// <summary>
+    /// The action that allows the player to customize the PAI's appearance.
+    /// </summary>
+    [DataField]
+    public EntProtoId CustomizationActionId = "ActionPAICustomization";
+
+    [DataField, AutoNetworkedField]
+    public EntityUid? EmotionAction;
+
+    /// <summary>
+    /// The action that opens the radial customization menu.
+    /// </summary>
+    [DataField]
+    public EntProtoId RadialCustomizationActionId = "ActionPAIRadialCustomization";
+
+    [DataField, AutoNetworkedField]
+    public EntityUid? RadialCustomizationAction;
+
+    /// <summary>
     /// When microwaved there is this chance to brick the pai, kicking out its player and preventing it from being used again.
     /// </summary>
     [DataField]
