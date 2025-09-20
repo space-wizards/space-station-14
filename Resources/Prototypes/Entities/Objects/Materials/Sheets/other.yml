@@ -237,7 +237,7 @@
           Quantity: 2
         canReact: false
   - type: RadiationSource # DS14-uranium-rework
-    intensity: 0.1
+    intensity: 0.06
 
 - type: entity
   parent: SheetUranium

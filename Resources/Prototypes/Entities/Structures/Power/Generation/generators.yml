@@ -213,7 +213,7 @@
 # RTG - no fuel requirement
 
 - type: entity
-  parent: BaseGenerator
+  parent: [ BaseGenerator, ConstructibleMachine ]
   id: GeneratorRTG
   name: RTG
   description: A Radioisotope Thermoelectric Generator for long term power.
@@ -257,6 +257,12 @@
                 max: 1
           - !type:DoActsBehavior
             acts: [ "Destruction" ]
+  - type: Machine
+    board: GeneratorRTGMachineCircuitboard
+  - type: StaticPrice
+    price: 5500 # DS14-uranium-rework
+  - type: RadiationBlockingContainer
+    resistance: 2
 
 # TODO: need radioactive fallout when destroyed
 
@@ -265,10 +271,10 @@
   id: GeneratorRTGDamaged
   name: damaged RTG
   description: A Radioisotope Thermoelectric Generator for long term power. This one has damaged shielding.
-  suffix: 10kW
+  suffix: 1kW # DS14-uranium-rework
   components:
   - type: PowerSupplier
-    supplyRate: 10000
+    supplyRate: 1000 # DS14-uranium-rework
   - type: Sprite
     sprite: Structures/Power/Generation/rtg.rsi
     layers:
@@ -278,7 +284,7 @@
     sprite: Structures/Power/Generation/rtg.rsi
     state: rtg_damaged
   - type: RadiationSource # ideally only when opened.
-    intensity: 2
+    intensity: 3 # DS14-uranium-rework
   - type: Destructible
     thresholds:
     - trigger:
@@ -304,3 +310,4 @@
             max: 5
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
+

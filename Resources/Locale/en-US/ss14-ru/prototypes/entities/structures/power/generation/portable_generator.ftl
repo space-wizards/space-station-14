@@ -10,8 +10,8 @@ ent-PortableGeneratorPacman = P.A.C.M.A.N.-type portable generator
 ent-PortableGeneratorSuperPacman = S.U.P.E.R.P.A.C.M.A.N.-type portable generator
     .desc =
         An advanced generator for powering departments.
-        Runs off uranium sheets and is rated for up to 50 kW.
-    .suffix = Uranium, 50 kW
+        Runs off uranium sheets and is rated for up to 75 kW.
+    .suffix = Uranium, 75 kW
 ent-PortableGeneratorJrPacman = J.R.P.A.C.M.A.N.-type portable generator
     .desc =
         A small generator capable of powering individual rooms, in case of emergencies.

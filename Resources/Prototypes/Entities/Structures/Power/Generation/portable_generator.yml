@@ -219,9 +219,9 @@
       board: PortableGeneratorSuperPacmanMachineCircuitboard
     - type: FuelGenerator
       minTargetPower: 10000
-      maxTargetPower: 50000
-      targetPower: 50000
-      optimalPower: 50000
+      maxTargetPower: 75000 # DS14-uranium-rework
+      targetPower: 75000 # DS14-uranium-rework
+      optimalPower: 75000 # DS14-uranium-rework
       # 30 minutes at full power
       optimalBurnRate: 0.016666666
       # Barely save any fuel from reducing power output
@@ -241,8 +241,8 @@
       sprite: Structures/Power/Generation/portable_generator.rsi
       state: portgen1
     - type: PowerSupplier
-      supplyRampRate: 7500
-      supplyRampTolerance: 2500
+      supplyRampRate: 10000 # DS14-uranium-rework
+      supplyRampTolerance: 4000 # DS14-uranium-rework
 
 - type: entity
   name: J.R.P.A.C.M.A.N.-type portable generator

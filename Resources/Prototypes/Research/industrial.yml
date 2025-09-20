@@ -86,6 +86,7 @@
   - SolarControlComputerCircuitboard
   - SolarTrackerElectronics
   - EmitterCircuitboard
+  - GeneratorRTGMachineCircuitboard # DS14-uranium-rework
 
 - type: technology
   id: AtmosphericTech

@@ -73,7 +73,7 @@
   name: materials-uranium
   icon: { sprite: Objects/Materials/Sheets/other.rsi, state: uranium }
   color: "#32a852"
-  price: 0.85 # $85 for 1 unit
+  price: 1.5 # $150 for 1 unit # DS14-uranium-rework
 
 - type: material
   id: Bananium
