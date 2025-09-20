@@ -48,6 +48,7 @@
     - id: WizardSpawn
     - id: ShadowDemonInvasion # DS14
     - id: DemonsInvasion # DS14
+    - id: BlobSpawn # DS14-Backmen
     - !type:NestedSelector
       tableId: DerelictBorgEventTable
 

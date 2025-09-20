@@ -3,7 +3,28 @@
   parent: BaseGameRule
   categories: [ HideSpawnMenu ]
   components:
-  - type: BlobGameRule
+  - type: GameRule
+    minPlayers: 40
+    delay: # 7-10 minutes
+      min: 420
+      max: 600
+  - type: AntagSelection
+    definitions:
+    - prefRoles: [ Blob ]
+      min: 1
+      max: 2
+      playerRatio: 60 #players = 2 blobs
+      allowNonHumans: true
+      components:
+      - type: BlobCarrier
+      blacklist:
+        components:
+        - AntagImmune
+      briefing:
+        text: blob-carrier-role-greeting
+        color: Plum
+      mindRoles:
+      - MindRoleBlob
 
 - type: entity
   id: Blob
