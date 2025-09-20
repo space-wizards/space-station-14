@@ -26,6 +26,8 @@
   table: !type:AllSelector # we need to pass a list of rules, since rules have further restrictions to consider via StationEventComp
     children:
     - id: UnknownShuttleSyndieEvacPod
+    - id: UnknownShuttleBang
+    - id: UnknownShuttleHook
 
 - type: entityTable
   id: UnknownShuttlesHostileTable
@@ -117,6 +119,16 @@
     preloadedGrid: NTQuark
 
 - type: entity
+  id: UnknownShuttleBang
+  parent: BaseUnknownShuttleRule
+  components:
+  - type: StationEvent
+    startAnnouncement: station-event-unknown-shuttle-incoming #!!
+    weight: 7 # lower because freelance, but plays well with other antags so lil higher
+  - type: LoadMapRule
+    preloadedGrid: Bang
+
+- type: entity
   id: UnknownShuttleCruiser
   parent: BaseUnknownShuttleRule
   components:
@@ -162,6 +174,16 @@
     weight: 5 # Its just a big ship, so it needs to be rarer to be interesting.
   - type: LoadMapRule
     preloadedGrid: Gym
+
+- type: entity
+  id: UnknownShuttleHook
+  parent: BaseUnknownShuttleRule
+  components:
+  - type: StationEvent
+    startAnnouncement: station-event-unknown-shuttle-incoming #!!
+    weight: 7 # lower because freelance, but plays well with other antags so lil higher
+  - type: LoadMapRule
+    preloadedGrid: Hook
 
 - type: entity
   id: UnknownShuttleNTIncorporation
