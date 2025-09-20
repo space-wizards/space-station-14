@@ -14825,5 +14825,12 @@ Entries:
   id: 155201
   time: '2025-09-20T15:47:41.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/1552
+- author: CorruptOmega
+  changes:
+  - message: A bottle of Bone Gel is now included in Reaper Arms.
+    type: Tweak
+  id: 155600
+  time: '2025-09-20T15:48:39.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1556
 Order: -1
 
