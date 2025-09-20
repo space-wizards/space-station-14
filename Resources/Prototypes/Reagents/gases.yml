@@ -212,12 +212,22 @@
         - !type:OrganType
           type: Vox
           shouldHave: false
+        - !type:OrganType
+          type: Slime
+          shouldHave: false
         scaleByQuantity: true
         ignoreResistances: true
         damage:
           types:
             Poison:
               0.8
+      - !type:HealthChange
+        conditions:
+        - !type:OrganType
+          type: Slime
+        damage:
+          types:
+            Poison: 2
       - !type:Oxygenate
         conditions:
         - !type:OrganType
@@ -238,6 +248,9 @@
         - !type:OrganType
           type: Vox
           shouldHave: false
+        - !type:OrganType
+          type: Slime
+          shouldHave: false
         # Don't want people to get toxin damage from the gas they just
         # exhaled, right?
         - !type:ReagentThreshold
@@ -248,6 +261,13 @@
           types:
             Poison:
               0.8
+      - !type:HealthChange
+        conditions:
+        - !type:OrganType
+          type: Slime
+        damage:
+          types:
+            Poison: 2
       - !type:Oxygenate # carbon dioxide displaces oxygen from the bloodstream, causing asphyxiation
         conditions:
         - !type:OrganType
@@ -257,6 +277,57 @@
       # We need a metabolism effect on reagent removal
       #- !type:AdjustAlert
       #  alertType: CarbonDioxide
+      - !type:Emote
+        conditions:
+        - !type:ReagentThreshold
+          reagent: CarbonDioxide
+          min: 0.2
+        - !type:OrganType
+          type: Slime
+        emote: Laugh
+        showInChat: true
+        probability: 0.1
+      - !type:Emote
+        conditions:
+        - !type:ReagentThreshold
+          reagent: CarbonDioxide
+          min: 0.2
+        - !type:OrganType
+          type: Slime
+        emote: Scream
+        showInChat: true
+        probability: 0.01
+      - !type:PopupMessage
+        conditions:
+        - !type:ReagentThreshold
+          reagent: CarbonDioxide
+          min: 0.5
+        - !type:OrganType
+          type: Slime
+        type: Local
+        visualType: Medium
+        messages: [ "effect-sleepy" ]
+        probability: 0.1
+      - !type:MovespeedModifier
+        conditions:
+        - !type:ReagentThreshold
+          reagent: CarbonDioxide
+          min: 1
+        - !type:OrganType
+          type: Slime
+        walkSpeedModifier: 0.65
+        sprintSpeedModifier: 0.65
+      - !type:GenericStatusEffect
+        conditions:
+        - !type:ReagentThreshold
+          reagent: CarbonDioxide
+          min: 1.8
+        - !type:OrganType
+          type: Slime
+        key: ForcedSleep
+        component: ForcedSleeping
+        time: 3
+        type: Add
 
 - type: reagent
   id: Nitrogen
@@ -313,11 +384,44 @@
     Poison:
       effects:
       - !type:HealthChange
+        conditions:
+        - !type:OrganType
+          type: Slime
+        scaleByQuantity: true
+        ignoreResistances: true
+        damage:
+          types:
+            Poison:
+              0.8
+      - !type:HealthChange
         damage:
           types:
             Poison: 2
     Gas:
       effects:
+      - !type:HealthChange
+        conditions:
+        - !type:OrganType
+          type: Slime
+        # Don't want people to get toxin damage from the gas they just
+        # exhaled, right?
+        - !type:ReagentThreshold
+          min: 0.5
+        scaleByQuantity: true
+        ignoreResistances: true
+        damage:
+          types:
+            Poison:
+              0.8
+      - !type:HealthChange
+        damage:
+          types:
+            Poison: 2
+      - !type:Oxygenate # nitrous oxide displaces nitrogen from the slime bloodstream, causing asphyxiation
+        conditions:
+        - !type:OrganType
+          type: Slime
+        factor: -4
       - !type:Emote
         conditions:
         - !type:ReagentThreshold
