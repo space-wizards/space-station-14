@@ -1,0 +1,59 @@
+- type: entity
+  name: X4
+  description: Пластичная взрывчатка повышенной мощности. Используется когда нужно отверстие побольше.
+  parent: [BasePlasticExplosive, BaseSyndicateContraband]
+  id: X4
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Objects/Weapons/Bombs/x4.rsi
+    state: icon
+    layers:
+    - state: icon
+      map: ["base"]
+  - type: Clothing
+    sprite: _DeadSpace/Objects/Weapons/Bombs/x4.rsi
+    slots:
+    - HEAD
+    quickEquip: false
+    equipDelay: 3
+    unequipDelay: 6
+  - type: TriggerOnActivate
+  - type: TriggerOnSignal
+  - type: TriggerOnStuck
+    keyOut: stuck
+  - type: ToggleTriggerCondition # for toggling the start on stuck ability
+    keys:
+    - stuck
+    toggleVerb: toggle-trigger-condition-stick-verb
+    toggleOn: toggle-trigger-condition-stick-on
+    toggleOff: toggle-trigger-condition-stick-off
+  - type: TimerTrigger
+    keysIn:
+    - trigger
+    - stuck
+    delay: 10
+    delayOptions: [10, 30, 60, 120, 300]
+    initialBeepDelay: 0
+    beepSound: /Audio/Machines/Nuke/general_beep.ogg
+  - type: DeviceLinkSink
+    ports:
+    - Trigger
+  - type: Explosive # Powerful explosion in a very small radius. Doesn't break underplating.
+    explosionType: DemolitionCharge
+    totalIntensity: 300
+    intensitySlope: 5
+    maxIntensity: 30
+    canCreateVacuum: false
+  - type: ExplodeOnTrigger
+    keysIn:
+    - timer
+  - type: Sticky
+    stickDelay: 10
+    unstickDelay: 10
+    stickPopupStart: comp-sticky-start-stick-bomb
+    stickPopupSuccess: comp-sticky-success-stick-bomb
+    unstickPopupStart: comp-sticky-start-unstick-bomb
+    unstickPopupSuccess: comp-sticky-success-unstick-bomb
+    blacklist: # can't stick it to other items
+      components:
+      - Item

@@ -1,0 +1,74 @@
+- type: entity
+  name: импульсный заряд
+  id: BulletPulse
+  parent: BulletLaser
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Objects/Weapons/Guns/Projectiles/pulse.rsi
+    layers:
+    - state: pulse1_bl
+      shader: unshaded
+  - type: Projectile
+    impactEffect: BulletImpactEffectDisabler
+    damage:
+      types:
+        Heat: 30
+
+- type: entity
+  name: широкий импульсный залп
+  id: BulletPulseSpread
+  categories: [ HideSpawnMenu ]
+  parent: BulletPulse
+  components:
+  - type: ProjectileSpread
+    proto: BulletPulse
+    count: 5 #150 heat damage if you hit all your shots, but wide spread
+    spread: 30
+
+- type: entity
+  name: узкий импульсный залп
+  id: BulletPulseSpreadNarrow
+  categories: [ HideSpawnMenu ]
+  parent: BulletPulse
+  components:
+  - type: ProjectileSpread
+    proto: BulletPulse
+    count: 3 #90 heat damage if you hit all your shots, but narrower spread
+    spread: 10
+
+- type: entity
+  name : оглушающий импульсный заряд
+  id: BulletDisablerPulse
+  parent: BulletDisablerSmg
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Objects/Weapons/Guns/Projectiles/pulse.rsi
+    layers:
+    - state: pulse_taser
+      shader: unshaded
+  - type: StunOnCollide
+    stunAmount: 5
+    knockdownAmount: 5
+  - type: StaminaDamageOnCollide
+    damage: 50
+  - type: Projectile
+    impactEffect: BulletImpactEffectDisabler
+    damage:
+      types:
+        Heat: 5
+    soundHit:
+      path: "/Audio/Weapons/Guns/Hits/taser_hit.ogg"
+    forceSound: true
+
+- type: entity
+  name: оглушающий импульсный залп
+  id: BulletDisablerPulseSpread
+  categories: [ HideSpawnMenu ]
+  parent: BulletDisablerPulse
+  components:
+  - type: ProjectileSpread
+    proto: BulletDisablerPulse
+    count: 3
+    spread: 9

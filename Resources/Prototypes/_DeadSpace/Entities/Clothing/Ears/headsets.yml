@@ -33,6 +33,26 @@
       color: "#ff144b"
 
 - type: entity
+  parent: ClothingHeadset
+  id: ClothingHeadsetDeathSquad
+  name: мастер гарнитура
+  description: Уникальный образец гарнитуры c доступом во все каналы.
+  suffix: Эскадрон смерти
+  components:
+  - type: ContainerFill
+    containers:
+      key_slots:
+      - EncryptionKeyCentCom
+      - EncryptionKeyStationMaster
+      - EncryptionKeyDeathSquad
+  - type: Sprite
+    sprite: Clothing/Ears/Headsets/base.rsi
+  - type: Clothing
+    sprite: Clothing/Ears/Headsets/base.rsi
+  - type: Headset
+    color: "#CF1CFF"
+
+- type: entity
   parent: ClothingHeadsetAlt
   id: ClothingHeadsetAltTaipan
   name: полноразмерная кроваво - красная гарнитура

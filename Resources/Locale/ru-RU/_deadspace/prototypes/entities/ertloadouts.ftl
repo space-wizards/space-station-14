@@ -88,3 +88,35 @@ ert-loadout-category-pulsepistol-name = Импульсный пистолет
 ert-loadout-category-pulsepistol-description =
     Новейший энергетический пистолет военного класса.
     Для восполнения боезапаса потребуется зарядник энергооружия.
+ert-loadout-category-hammerhead-name = Отбойник
+ert-loadout-category-hammerhead-description =
+    Автоматический дробовик с магазинным питанием для ближнего боя. Имеет высокую скорострельность, что делает его убойным в противостоянии с любой целью в ближнем бою.
+    Использует патроны калибра 12х70. В комплекте идут зажигательные патроны.
+ert-loadout-category-pulseshotgun-name = Импульсный дробовик
+ert-loadout-category-pulseshotgun-description =
+    Высокотехнологичное энергетическое оружие ближнего боя.
+    Имеет три режима стрельбы.
+ert-loadout-category-machinegun-name = Пулемёт L6
+ert-loadout-category-machinegun-description =
+    Лёгкий ручной пулемёт с высокой скорострельностью.
+    Использует патроны калибра 6.5х39 TSF.
+ert-loadout-category-pulserifle-name = Импульсная винтовка
+ert-loadout-category-pulserifle-description =
+    Оружие, почти столь же печально известное, как и его пользователи.
+    Имеет повышенную ёмкость батареи.
+ert-loadout-category-magnumap-name = Дополнительные спидлоадеры
+ert-loadout-category-magnumap-description =
+    Шесть дополнительных спидлоадеров для вашей Матебы.
+    Содержат бронебойные патроны калибра .45 магнум.
+ert-loadout-category-explosion-name = Дополнительная взрывчатка
+ert-loadout-category-explosion-description =
+    Набор из четырёх мощных взрывных устройств X4.
+    Используйте с крайней осторожностью.
+ert-loadout-category-stimulator-name = Набор стимуляторов
+ert-loadout-category-stimulator-description =
+    Шесть автоинъекторов дезоксиэфедрина.
+    Помогают обрести максимальную мобильность в пылу сражения.
+ert-loadout-category-combatmedicine-name = Набор автоинъекторов
+ert-loadout-category-combatmedicine-description =
+    Состоит из четырёх боевых, двух пунктураза, двух пиразина и двух автоинъекторов от яда.
+    Помогут вам залатать свои раны прямо в бою.

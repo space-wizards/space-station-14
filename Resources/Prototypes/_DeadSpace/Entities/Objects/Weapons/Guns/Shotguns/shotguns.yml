@@ -1,0 +1,31 @@
+- type: entity
+  name: Отбойник
+  parent: WeaponShotgunBulldog
+  id: WeaponShotgunHammerhead
+  description: Автоматический дробовик с магазинным питанием для ближнего боя. Имеет высокую скорострельность, что делает его убойным в противостоянии с любой целью в ближнем бою. Использует патроны калибра 12х70.
+  suffix: Дробовик
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Objects/Weapons/Guns/Shotguns/hammerhead.rsi
+    layers:
+    - state: base
+      map: ["enum.GunVisualLayers.Base"]
+    - state: mag-0
+      map: ["enum.GunVisualLayers.Mag"]
+  - type: Item
+    size: Large
+  - type: Clothing
+    sprite: _DeadSpace/Objects/Weapons/Guns/Shotguns/hammerhead.rsi
+    quickEquip: false
+    slots:
+    - Back
+    - suitStorage
+  - type: Gun
+    fireRate: 3.5
+    selectedMode: FullAuto
+    availableModes:
+    - FullAuto
+    soundGunshot:
+      path: /Audio/Weapons/Guns/Gunshots/shotgun.ogg
+    soundEmpty:
+      path: /Audio/Weapons/Guns/Empty/empty.ogg

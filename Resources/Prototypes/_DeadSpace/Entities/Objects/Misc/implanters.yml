@@ -1,0 +1,43 @@
+# DeathSquad implanters
+
+- type: entity
+  id: RadioImplanterDeathSquad
+  name: имплантер
+  suffix: Радио, Эскадрон
+  parent: BaseImplantOnlyImplanter
+  components:
+  - type: Implanter
+    implant: RadioImplantDeathSquad
+
+- type: entity
+  id: DeathRattleImplanterDeathSquad
+  name: имплантер
+  suffix: Предсмертный хрип, Эскадрон
+  parent: BaseImplantOnlyImplanter
+  components:
+  - type: Implanter
+    implant: DeathRattleImplantDeathSquad
+
+# DeathSquad implants
+
+- type: entity
+  parent: BaseSubdermalImplant
+  id: RadioImplantDeathSquad
+  name: имплант "радио"
+  description: Этот имплант даёт доступ к радиочастоте UNKNOWN без гарнитуры.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: SubdermalImplant
+  - type: RadioImplant
+    radioChannels:
+    - DeathSquad
+
+- type: entity
+  parent: DeathRattleImplant
+  id: DeathRattleImplantDeathSquad
+  name: имплант "предсмертный хрип"
+  description: Этот имплант сообщит по радиоканалу UNKNOWN, если пользователь окажется в критическом состоянии или умрёт.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: RattleOnTrigger
+    radioChannel: DeathSquad

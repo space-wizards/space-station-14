@@ -78,7 +78,7 @@
 - type: entity
   id: ERTloadoutAmberPrimary
   name: кейс неопределённости
-  description: Прочный военный кейс для оружия. Принадлежит отряду "Эмбер". 
+  description: Прочный военный кейс для оружия. Принадлежит отряду "Эмбер".
   suffix: ОБР, Эмбер, Основное
   parent: BaseERTloadoutPrimary
   components:
@@ -207,7 +207,7 @@
 - type: entity
   id: ERTloadoutCBURNPrimary
   name: кейс неопределённости
-  description: Прочный военный кейс для оружия. Принадлежит отряду РХБЗЗ. 
+  description: Прочный военный кейс для оружия. Принадлежит отряду РХБЗЗ.
   suffix: РХБЗЗ, Съерра, Основное
   parent: BaseERTloadoutPrimary
   components:
@@ -239,6 +239,53 @@
     possibleSets:
     - LaserGunSet
     - SawnSet
+  - type: ActivatableUI
+    key: enum.ThiefBackpackUIKey.Key
+  - type: UserInterface
+    interfaces:
+      enum.ThiefBackpackUIKey.Key:
+        type: ThiefBackpackBoundUserInterface
+
+# DeathSquad
+
+- type: entity
+  id: ERTloadoutDeathSquadPrimary
+  name: кейс неопределённости
+  description: Прочный военный кейс для оружия.
+  suffix: Эскадрон, Основное
+  parent: BaseERTloadoutPrimary
+  components:
+  - type: Sprite
+    state: deathsquad
+  - type: ThiefUndeterminedBackpack
+    possibleSets:
+    - PulseRifleSet
+    - PulseShotgunSet
+    - MachineGunSet
+    - HammerheadSet
+  - type: ActivatableUI
+    key: enum.ThiefBackpackUIKey.Key
+  - type: UserInterface
+    interfaces:
+      enum.ThiefBackpackUIKey.Key:
+        type: ThiefBackpackBoundUserInterface
+
+- type: entity
+  id: ERTloadoutDeathSquadSecondary
+  name: коробка неопределённости
+  description: Коробка с табельным оружием.
+  suffix: Эскадрон, Вторичное
+  parent: BaseERTloadoutSecondary
+  components:
+  - type: Sprite
+    state: deathsquad
+  - type: ThiefUndeterminedBackpack
+    maxSelectedSets: 2
+    possibleSets:
+    - MagnumAPSet
+    - ExplosionSet
+    - CombatMedicineSet
+    - StimulatorSet
   - type: ActivatableUI
     key: enum.ThiefBackpackUIKey.Key
   - type: UserInterface
@@ -289,6 +336,26 @@
   - BoxShotgunIncendiary
 
 - type: thiefBackpackSet
+  id: HammerheadSet
+  name: ert-loadout-category-hammerhead-name
+  description: ert-loadout-category-hammerhead-description
+  sprite:
+    sprite: _DeadSpace/Objects/Weapons/Guns/Shotguns/hammerhead.rsi
+    state: icon
+  content:
+  - WeaponShotgunHammerhead
+  - MagazineShotgunIncendiary
+  - MagazineShotgunIncendiary
+  - MagazineShotgunIncendiary
+  - MagazineShotgunIncendiary
+  - MagazineShotgunIncendiary
+  - MagazineShotgunIncendiary
+  - MagazineShotgunIncendiary
+  - MagazineShotgunIncendiary
+  - BoxShotgunIncendiary
+  - BoxShotgunIncendiary
+
+- type: thiefBackpackSet
   id: EnergyShotgunSet
   name: ert-loadout-category-energyshotgun-name
   description: ert-loadout-category-energyshotgun-description
@@ -297,6 +364,16 @@
     state: icon
   content:
   - WeaponEnergyShotgun
+
+- type: thiefBackpackSet
+  id: PulseShotgunSet
+  name: ert-loadout-category-pulseshotgun-name
+  description: ert-loadout-category-pulseshotgun-description
+  sprite:
+    sprite: _DeadSpace/Objects/Weapons/Guns/Battery/pulse_shotgun.rsi
+    state: icon
+  content:
+  - WeaponPulseShotgun
 
 ### Автоматическое
 - type: thiefBackpackSet
@@ -355,6 +432,20 @@
   - MagazineRifle
   - MagazineBoxRifle
 
+- type: thiefBackpackSet
+  id: MachineGunSet
+  name: ert-loadout-category-machinegun-name
+  description: ert-loadout-category-machinegun-description
+  sprite:
+    sprite: Objects/Weapons/Guns/LMGs/l6.rsi
+    state: icon
+  content:
+  - WeaponLightMachineGunL6
+  - MagazineLightRifleBox
+  - MagazineLightRifleBox
+  - MagazineLightRifleBox
+  - MagazineLightRifleBox
+
 ### Лазеры
 - type: thiefBackpackSet
   id: LaserCarbineSet
@@ -406,6 +497,16 @@
   content:
   - WeaponPulseCarbine
 
+- type: thiefBackpackSet
+  id: PulseRifleSet
+  name: ert-loadout-category-pulserifle-name
+  description: ert-loadout-category-pulserifle-description
+  sprite:
+    sprite: Objects/Weapons/Guns/Battery/pulse_rifle.rsi
+    state: icon
+  content:
+  - WeaponPulseRifle
+
 ## Secondary
 ### Огнестрельное
 - type: thiefBackpackSet
@@ -446,6 +547,21 @@
   - SpeedLoaderMagnum
   - MagazineBoxMagnum
   - MagazineBoxMagnum
+
+- type: thiefBackpackSet
+  id: MagnumAPSet
+  name: ert-loadout-category-magnumap-name
+  description: ert-loadout-category-magnumap-description
+  sprite:
+    sprite: Objects/Weapons/Guns/Ammunition/SpeedLoaders/Magnum/magnum_speed_loader.rsi
+    state: icon
+  content:
+  - SpeedLoaderMagnumAP
+  - SpeedLoaderMagnumAP
+  - SpeedLoaderMagnumAP
+  - SpeedLoaderMagnumAP
+  - SpeedLoaderMagnumAP
+  - SpeedLoaderMagnumAP
 
 - type: thiefBackpackSet
   id: N1984Set
@@ -512,3 +628,52 @@
     state: icon
   content:
   - WeaponPulsePistol
+
+# Взрывчатка
+- type: thiefBackpackSet
+  id: ExplosionSet
+  name: ert-loadout-category-explosion-name
+  description: ert-loadout-category-explosion-description
+  sprite:
+    sprite: _DeadSpace/Objects/Weapons/Bombs/x4.rsi
+    state: icon
+  content:
+  - X4
+  - X4
+  - X4
+  - X4
+
+# Медикаменты
+- type: thiefBackpackSet
+  id: StimulatorSet
+  name: ert-loadout-category-stimulator-name
+  description: ert-loadout-category-stimulator-description
+  sprite:
+    sprite: _DeadSpace/Objects/Specific/Medical/medipen.rsi
+    state: steam
+  content:
+  - DesoxyephedrineMedipen
+  - DesoxyephedrineMedipen
+  - DesoxyephedrineMedipen
+  - DesoxyephedrineMedipen
+  - DesoxyephedrineMedipen
+  - DesoxyephedrineMedipen
+
+- type: thiefBackpackSet
+  id: CombatMedicineSet
+  name: ert-loadout-category-combatmedicine-name
+  description: ert-loadout-category-combatmedicine-description
+  sprite:
+    sprite: Objects/Specific/Medical/medipen.rsi
+    state: morphen
+  content:
+  - CombatMedipen
+  - CombatMedipen
+  - CombatMedipen
+  - CombatMedipen
+  - PunctAutoInjector
+  - PunctAutoInjector
+  - PyraAutoInjector
+  - PyraAutoInjector
+  - AntiPoisonMedipen
+  - AntiPoisonMedipen
