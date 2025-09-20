@@ -61,3 +61,170 @@
     - BasicStationEventScheduler
     - BasicRoundstartVariation
     - SubGamemodesRuleNoWizard
+
+- type: gamePreset
+  id: SecretSurvival
+  alias:
+    - secretSurvival
+  name: secret-title
+  description: secret-description
+  showInVote: false #Admin Use
+  showInAdminVote: false # DS14
+  voteType: admin # DS14
+  rules:
+  - WageScheduler # backmen: currency
+  - MeteorSwarmScheduler
+  - RampingStationEventScheduler
+  - SpaceTrafficControlEventScheduler
+  - SpaceTrafficControlFriendlyEventScheduler
+  - BasicRoundstartVariation
+
+- type: gamePreset
+  id: SecretKesslerSyndrome
+  alias:
+    - secretKesslerSyndrome
+  name: secret-title
+  description: secret-description
+  showInVote: false #Admin Use
+  showInAdminVote: false # DS14
+  voteType: admin # DS14
+  rules:
+  - WageScheduler # backmen: currency
+  - KesslerSyndromeScheduler
+  - RampingStationEventScheduler
+  - SpaceTrafficControlEventScheduler
+  - BasicRoundstartVariation
+
+- type: gamePreset
+  id: SecretAllAtOnce
+  alias:
+    - secretAllAtOnce
+  name: secret-title
+  description: secret-description
+  showInVote: false #Admin Use
+  showInAdminVote: false # DS14
+  voteType: admin # DS14
+  rules:
+  - WageScheduler # backmen: currency
+  - Nukeops
+  - Traitor
+  - Revolutionary
+  - Zombie
+  - BlobGameMode
+  - SpiderTerror
+  - Wizard
+  - KesslerSyndromeScheduler
+  - RampingStationEventScheduler
+  - SpaceTrafficControlEventScheduler
+  - BasicRoundstartVariation
+
+- type: gamePreset
+  id: SecretTraitor
+  alias:
+    - secretTraitor
+  name: secret-title
+  description: secret-description
+  showInVote: false #Admin Use
+  showInAdminVote: false # DS14
+  voteType: admin # DS14
+  rules:
+  - WageScheduler # backmen: currency
+  - DummyNonAntagChance
+  - Traitor
+  - SubGamemodesRule
+  - BasicStationEventScheduler
+  - MeteorSwarmScheduler
+  - SpaceTrafficControlEventScheduler
+  - BasicRoundstartVariation
+
+- type: gamePreset
+  id: SecretNukeops
+  alias:
+    - secretNukeops
+  name: secret-title
+  description: secret-description
+  showInVote: false #Admin Use
+  showInAdminVote: false # DS14
+  voteType: admin # DS14
+  rules:
+  - WageScheduler # backmen: currency
+  - DummyNonAntagChance
+  - Nukeops
+  # - SubGamemodesRule # DS14
+  - BasicStationEventScheduler
+  - MeteorSwarmScheduler
+  - SpaceTrafficControlEventScheduler
+  - BasicRoundstartVariation
+
+- type: gamePreset
+  id: SecretRevolutionary
+  alias:
+    - secretRevolutionary
+  name: secret-title
+  description: secret-description
+  showInVote: false #Admin Use
+  showInAdminVote: false # DS14
+  voteType: admin # DS14
+  rules:
+  - WageScheduler # backmen: currency
+  - DummyNonAntagChance
+  - Revolutionary
+  # - SubGamemodesRule # DS14
+  - BasicStationEventScheduler
+  - MeteorSwarmScheduler
+  - SpaceTrafficControlEventScheduler
+  - BasicRoundstartVariation
+
+- type: gamePreset
+  id: SecretWizard
+  alias:
+    - secretWizard
+  name: secret-title
+  description: secret-description
+  showInVote: false #Admin Use
+  showInAdminVote: false # DS14
+  voteType: admin # DS14
+  rules:
+  - Wizard
+  - DummyNonAntagChance
+  - SubGamemodesRuleNoWizard #No Dual Wizards at the start, midround is fine
+  - BasicStationEventScheduler
+  - MeteorSwarmScheduler
+  - SpaceTrafficControlEventScheduler
+  - BasicRoundstartVariation
+
+- type: gamePreset
+  id: SecretZombie
+  alias:
+    - secretZombie
+  name: secret-title
+  description: secret-description
+  showInVote: false #Admin Use
+  showInAdminVote: false # DS14
+  voteType: admin # DS14
+  rules:
+  - WageScheduler # backmen: currency
+  - Zombie
+  - BasicStationEventScheduler
+  - MeteorSwarmScheduler
+  - SpaceTrafficControlEventScheduler
+  - BasicRoundstartVariation
+  - SubGamemodesRuleNoWizard # DS14
+  
+- type: gamePreset
+  id: SecretZombieteors
+  alias:
+    - secretZombieteors
+  name: secret-title
+  description: secret-description
+  showInVote: false #Admin Use
+  showInAdminVote: false # DS14
+  voteType: admin # DS14
+  rules:
+  - WageScheduler # backmen: currency
+  - Zombie
+  - BasicStationEventScheduler
+  - KesslerSyndromeScheduler
+  - SpaceTrafficControlEventScheduler
+  - BasicRoundstartVariation
+  - SubGamemodesRule # DS14
