@@ -10,41 +10,6 @@
     closeable: true
     closeSound:
       collection: bottleCloseSounds
-  - type: Sealable
-  - type: SolutionContainerManager
-    solutions:
-      drink:
-        maxVol: 50
-  - type: PressurizedSolution
-    solution: drink
-  - type: ExaminableSolution
-    examinableWhileClosed: false
-  - type: Shakeable
-  - type: Sprite
-    state: icon
-  - type: Item
-    size: Small
-  - type: MeleeWeapon
-    soundNoDamage:
-      path: "/Audio/Effects/Fluids/splat.ogg"
-    damage:
-      types:
-        Blunt: 0
-  - type: Damageable
-    damageContainer: Inorganic
-  - type: Destructible
-    thresholds:
-    - trigger:
-        !type:DamageTrigger
-        damage: 20
-      behaviors:
-      - !type:SpillBehavior { }
-      - !type:DoActsBehavior
-        acts: [ "Destruction" ]
-        #In future maybe add generic plastic scrap trash/debris
-  - type: TrashOnSolutionEmpty
-    solution: drink
-  - type: DnaSubstanceTrace
   - type: Tag
     tags:
     - Ingredient

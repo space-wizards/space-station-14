@@ -1539,6 +1539,9 @@
   id: WoodwindInstrument # even more like our atmos
 
 - type: Tag
+  id: WrappedCube
+
+- type: Tag
   id: Wrench
 
 - type: Tag
