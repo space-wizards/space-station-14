@@ -1,8 +1,8 @@
-using Content.Shared.Mech.Equipment.Systems;
+using Content.Shared.Mech.Systems;
 using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
 
-namespace Content.Shared.Mech.Equipment.Components;
+namespace Content.Shared.Mech.Components;
 
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
 [Access(typeof(MechSoundboardSystem))]
