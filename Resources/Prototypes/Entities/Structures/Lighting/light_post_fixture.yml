@@ -1,0 +1,109 @@
+########################
+
+#Index
+
+# 1. LIGHT POSTS
+## Empty
+## Incandescent
+## LED
+
+########################
+
+# 1. LIGHT POST
+- type: entity
+  abstract: true
+  parent: BaseLightFixture
+  id: BaseLightPostFixture
+  name: light post
+  components:
+  - type: Sprite
+    sprite: Structures/Lighting/LightPosts/small_light_post.rsi
+    snapCardinals: true
+    drawdepth: Objects
+    noRot: true
+    layers:
+    - map: ["enum.PoweredLightLayers.Base"]
+      state: base
+    - map: ["enum.PoweredLightLayers.Glow"]
+      state: glow
+      shader: unshaded
+    state: base
+  - type: PointLight
+    offset: "0, 0"
+  - type: Anchorable
+  - type: Construction
+    node: groundLight
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "0.17,0.25,-0.17,-0.30"
+        density: 190
+        mask:
+        - MachineMask
+        layer:
+        - MidImpassable
+        - LowImpassable
+        - BulletImpassable
+  - type: RequireProjectileTarget
+
+## Empty
+- type: entity
+  parent: [ BasePoweredLight , BaseLightPostFixture ]
+  id: PoweredLightPostFixtureEmpty
+  suffix: Empty
+  description: A light fixture. Draws power and produces light when equipped with a light bulb.
+  components:
+  - type: PoweredLight
+    bulb: Bulb
+
+## Incandescent
+- type: entity
+  parent: PoweredLightPostFixtureEmpty
+  id: PoweredLightPostFixtureIncandescent
+  suffix: Incandescent
+  components:
+  - type: PoweredLight
+    hasLampOnSpawn: LightBulb
+
+- type: entity
+  parent: BaseLightPostFixture
+  id: AlwaysPoweredLightPostFixtureIncandescent
+  suffix: Always powered, incandescent
+  components:
+  - type: PointLight
+    radius: 10
+    energy: 2.5
+    softness: 0.9
+    color: "#FFD1A3"
+
+## LED
+- type: entity
+  parent: PoweredLightPostFixtureEmpty
+  id: PoweredLightPostFixtureLED
+  suffix: LED
+  components:
+  - type: PoweredLight
+    hasLampOnSpawn: LedLightBulb
+  - type: DamageOnInteract
+    damage:
+      types:
+        Heat: 1 # LEDs don't get as hot
+    popupText: powered-light-component-burn-hand
+
+- type: entity
+  parent: BaseLightPostFixture
+  id: AlwaysPoweredLightPostLED
+  suffix: Always powered, LED
+  components:
+  - type: PointLight
+    radius: 15
+    energy: 1
+    softness: 0.9
+    color: "#EEEEFF"
+  - type: DamageOnInteract
+    damage:
+      types:
+        Heat: 1 # LEDs don't get as hot
+    popupText: powered-light-component-burn-hand
