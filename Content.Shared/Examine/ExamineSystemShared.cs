@@ -183,7 +183,7 @@ namespace Content.Shared.Examine
         public bool InRangeUnOccluded(MapCoordinates origin,
             MapCoordinates other,
             float range,
-            Ignored? predicate = null,
+            Ignored? predicate,
             bool ignoreInsideBlocker = true)
         {
             if (predicate == null)
@@ -198,6 +198,17 @@ namespace Content.Shared.Examine
                 range,
                 (predicate, (_transform, origin, other)),
                 static (ent, s) => s.predicate(ent) || OccluderSystem.IsColliding(ent, s.Item2));
+        }
+
+        [Obsolete("")]
+        public bool InRangeUnOccluded(MapCoordinates origin,
+            MapCoordinates other,
+            float range,
+            Ignored? predicate,
+            bool ignoreInsideBlocker = true,
+            IEntityManager? entMan = null)
+        {
+            return InRangeUnOccluded(origin, other, range, predicate, ignoreInsideBlocker);
         }
 
         [Obsolete("use Occluder System")]
