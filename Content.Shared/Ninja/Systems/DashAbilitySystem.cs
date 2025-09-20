@@ -72,7 +72,7 @@ public sealed class DashAbilitySystem : EntitySystem
 
         var origin = _transform.GetMapCoordinates(user);
         var target = _transform.ToMapCoordinates(args.Target);
-        if (!_examine.InRangeUnOccluded(origin, target, SharedInteractionSystem.MaxRaycastRange, null))
+        if (!_examine.InRangeUnOccluded(origin, target, SharedInteractionSystem.MaxRaycastRange))
         {
             // can only dash if the destination is visible on screen
             _popup.PopupClient(Loc.GetString("dash-ability-cant-see", ("item", uid)), user, user);

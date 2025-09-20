@@ -163,11 +163,11 @@ namespace Content.Shared.Examine
             return TryComp<EyeComponent>(uid, out var eye) && eye.DrawFov;
         }
 
-        public bool InRangeUnOccluded(
+        public bool InRangeUnoccluded(
             MapCoordinates origin,
             MapCoordinates other,
             float range,
-            bool ignoreInsideBlocker = true)
+            bool ignoreInsideBlocker)
         {
             if (!ignoreInsideBlocker)
                 return _occluder.InRangeUnoccluded(origin, other, range);
@@ -180,14 +180,14 @@ namespace Content.Shared.Examine
                 OccluderSystem.IsColliding);
         }
 
-        public bool InRangeUnOccluded(MapCoordinates origin,
+        public bool InRangeUnoccluded(MapCoordinates origin,
             MapCoordinates other,
             float range,
             Ignored? predicate,
-            bool ignoreInsideBlocker = true)
+            bool ignoreInsideBlocker)
         {
             if (predicate == null)
-                return InRangeUnOccluded(origin, other, range, ignoreInsideBlocker);
+                return InRangeUnoccluded(origin, other, range, ignoreInsideBlocker);
 
             if (!ignoreInsideBlocker)
                 return _occluder.InRangeUnoccluded(origin, other, range, predicate, static (e, p) => p(e));
@@ -200,7 +200,7 @@ namespace Content.Shared.Examine
                 static (ent, s) => s.predicate(ent) || OccluderSystem.IsColliding(ent, s.Item2));
         }
 
-        [Obsolete("")]
+        [Obsolete("Use InRangeUnoccluded")]
         public bool InRangeUnOccluded(MapCoordinates origin,
             MapCoordinates other,
             float range,
@@ -208,7 +208,7 @@ namespace Content.Shared.Examine
             bool ignoreInsideBlocker = true,
             IEntityManager? entMan = null)
         {
-            return InRangeUnOccluded(origin, other, range, predicate, ignoreInsideBlocker);
+            return InRangeUnoccluded(origin, other, range, predicate, ignoreInsideBlocker);
         }
 
         [Obsolete("use Occluder System")]
