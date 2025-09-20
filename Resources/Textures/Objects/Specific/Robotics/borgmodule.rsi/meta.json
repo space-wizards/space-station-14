@@ -26,6 +26,9 @@
             "name": "icon-artifacts"
         },
         {
+            "name": "icon-botany"
+        },
+        {
             "name": "icon-cables"
         },
         {
@@ -47,6 +50,9 @@
             "name": "icon-construction"
         },
         {
+            "name": "icon-cooking"
+        },
+        {
             "name": "icon-defib"
         },
         {
@@ -56,9 +62,6 @@
             "name": "icon-fire-extinguisher"
         },
         {
-            "name": "icon-gardening"
-        },
-        {
             "name": "icon-gas-analyzer"
         },
         {
@@ -66,9 +69,6 @@
         },
         {
             "name": "icon-grappling-gun"
-        },
-        {
-            "name": "icon-harvesting"
         },
         {
             "name": "icon-light-replacer"

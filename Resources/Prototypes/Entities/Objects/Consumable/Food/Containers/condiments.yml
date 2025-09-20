@@ -20,6 +20,9 @@
   - type: SpaceGarbage
   - type: StaticPrice
     price: 0
+  - type: Tag
+    tags:
+    - Condiment
 
 # Packets
 
@@ -407,6 +410,7 @@
     state: bottle-coldsauce
   - type: Tag
     tags:
+      - Condiment
       - Coldsauce
 
 - type: entity
@@ -433,6 +437,7 @@
     state: bottle-enzyme
   - type: Tag
     tags:
+      - Ingredient # Not a condiment, I hope
       - Enzyme
 
 - type: entity
@@ -482,6 +487,7 @@
     state: bottle-hotsauce
   - type: Tag
     tags:
+      - Condiment
       - Hotsauce
 
 - type: entity
@@ -508,6 +514,7 @@
     state: bottle-ketchup
   - type: Tag
     tags:
+      - Condiment
       - Ketchup
 
 - type: entity
@@ -535,6 +542,7 @@
     state: bottle-ketchup
   - type: Tag
     tags:
+      - Condiment
       - BBQsauce
 
 # Shakers
@@ -602,6 +610,7 @@
     state: shaker-salt
   - type: Tag
     tags:
+      - Condiment
       - SaltShaker
 
 - type: entity
@@ -622,4 +631,5 @@
     state: shaker-pepper
   - type: Tag
     tags:
+      - Condiment
       - PepperShaker

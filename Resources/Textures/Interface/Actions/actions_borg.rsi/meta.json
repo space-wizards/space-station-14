@@ -92,16 +92,16 @@
             "name":"musical-module"
         },
         {
-            "name":"gardening-module"
-        },
-        {
-            "name":"harvesting-module"
+            "name":"botany-module"
         },
         {
             "name":"clowning-module"
         },
         {
             "name":"adv-clowning-module"
+        },
+        {
+            "name":"cooking-module"
         },
         {
             "name":"syndicate-weapon-module"
