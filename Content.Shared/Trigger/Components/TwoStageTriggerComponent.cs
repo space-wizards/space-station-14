@@ -16,7 +16,7 @@ public sealed partial class TwoStageTriggerComponent : Component
     /// The keys that will activate the timer and add the given components (first stage).
     /// </summary>
     [DataField, AutoNetworkedField]
-    public List<string> KeysIn = new() { TriggerSystem.DefaultTriggerKey };
+    public HashSet<string> KeysIn = new() { TriggerSystem.DefaultTriggerKey };
 
     /// <summary>
     /// The key that will trigger once the timer is finished (second stage).
