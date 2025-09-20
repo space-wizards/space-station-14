@@ -1,4 +1,4 @@
-﻿using System.Threading;
+using System.Threading;
 using Content.Shared.DeviceLinking;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
@@ -6,7 +6,7 @@ using Robust.Shared.Serialization;
 
 namespace Content.Shared.Singularity.Components;
 
-[RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
+[RegisterComponent, NetworkedComponent]
 public sealed partial class EmitterComponent : Component
 {
     public CancellationTokenSource? TimerCancel;
@@ -21,21 +21,6 @@ public sealed partial class EmitterComponent : Component
     /// </summary>
     [ViewVariables]
     public int FireShotCounter;
-
-    /// <summary>
-    /// The entity that is spawned when the emitter fires.
-    /// </summary>
-    [DataField, AutoNetworkedField]
-    public EntProtoId BoltType = "EmitterBolt";
-
-    [DataField]
-    public List<EntProtoId> SelectableTypes = new();
-
-    /// <summary>
-    /// The current amount of power being used.
-    /// </summary>
-    [DataField]
-    public int PowerUseActive = 600;
 
     /// <summary>
     /// The amount of shots that are fired in a single "burst"
@@ -92,7 +77,7 @@ public sealed partial class EmitterComponent : Component
     public ProtoId<SinkPortPrototype> TogglePort = "Toggle";
 
     /// <summary>
-    /// Map of signal ports to entity prototype IDs of the entity that will be fired.
+    /// Map of signal ports to index of fire mode of the entity that will be fired.
     /// </summary>
     [DataField]
     public Dictionary<ProtoId<SinkPortPrototype>, EntProtoId> SetTypePorts = new();
