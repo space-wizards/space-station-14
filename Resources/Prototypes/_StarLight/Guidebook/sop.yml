@@ -257,6 +257,8 @@
   - security-sop-warden
   - security-sop-headofsecurity
   - security-sop-prisonertreatment
+  - security-sop-parole
+  - security-sop-permitacquisition
 
 
 - type: guideEntry

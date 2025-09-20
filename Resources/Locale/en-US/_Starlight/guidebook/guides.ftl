@@ -72,7 +72,7 @@ guide-entry-sl-security-sop-brigmedic = Brigmedic
 guide-entry-sl-security-sop-warden = Warden
 guide-entry-sl-security-sop-headofsecurity = Head of Security
 guide-entry-sl-security-sop-prisonertreatment = Prisoner Treatment
-guide-entry-sl-security-sop-parole = parole
+guide-entry-sl-security-sop-parole = Parole
 guide-entry-sl-security-sop-permitacquisition = Permit Acquisiton
 
 guide-entry-sl-legal-sop-intro = Legal
