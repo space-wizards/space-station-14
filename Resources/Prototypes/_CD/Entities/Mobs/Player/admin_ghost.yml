@@ -1,0 +1,13 @@
+- type: entity
+  parent: BaseAGhostAction
+  id: ActionAGhostShowCharacterRecords
+  name: Character Records Interface
+  description: View all of the character records
+  components:
+  - type: Action
+    icon: { sprite: Structures/Machines/parts.rsi, state: box_0 }
+    iconOn: Structures/Machines/parts.rsi/box_2.png
+    keywords: [ "AI", "console", "interface" ]
+    priority: -9
+  - type: InstantAction
+    event: !type:ToggleIntrinsicUIEvent { key: enum.CharacterRecordConsoleKey.Key }
