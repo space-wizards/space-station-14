@@ -39,7 +39,11 @@ public sealed partial class SiliconLawContainer : BoxContainer
             }
         };
 
-        LawContent.OnTextChanged += _ => _law!.LawString = Rope.Collapse(LawContent.TextRope).Trim();
+        LawContent.OnTextChanged += _ =>
+        {
+            _law!.LawString = Rope.Collapse(LawContent.TextRope).Trim();
+            _law!.FlavorFormattedLawString = null; // Edit laws UI does not support format corruption
+        };
         LawContent.Placeholder = new Rope.Leaf(Loc.GetString("silicon-law-ui-placeholder"));
         Delete.OnPressed += _ => DeleteAction?.Invoke(_law!);
     }

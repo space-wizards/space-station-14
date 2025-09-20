@@ -593,3 +593,29 @@
     AntimovLawset: 0.25
     NutimovLawset: 0.5
     Ninja: 0.25
+
+- type: lawFormatCorruption
+  id: NoFormatCorruption
+  formatCorruption: !type:NoFormatCorruption
+
+- type: lawFormatCorruption
+  id: AllCapsFormatCorruption
+  formatCorruption: !type:AllCapsFormatCorruption
+
+- type: lawFormatCorruption
+  id: ColorizeFormatCorruption
+  formatCorruption: !type:ColorizeFormatCorruption
+    possibleColors:
+    - limegreen
+    - red
+    - yellow
+    - mediumpurple
+    - orange
+    - cyan
+
+- type: weightedRandom
+  id: IonStormDefaultLawFormatCorruption
+  weights:
+    NoFormatCorruption: 0.5
+    AllCapsFormatCorruption: 1
+    ColorizeFormatCorruption: 1
