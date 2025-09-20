@@ -1,4 +1,3 @@
-using Content.Server._CD.Records;
 using Content.Server.Popups;
 using Content.Server.Radio.EntitySystems;
 using Content.Server.Station.Systems;
@@ -17,7 +16,7 @@ using Content.Shared.Security.Components;
 using System.Linq;
 using Content.Shared.Roles.Jobs;
 
-// CD: imports
+// Cosmatic Drift Record System: imports
 using Content.Server._CD.Records;
 using Content.Shared._CD.Records;
 
@@ -53,7 +52,7 @@ public sealed class CriminalRecordsConsoleSystem : SharedCriminalRecordsConsoleS
             subs.Event<CriminalRecordSetStatusFilter>(OnStatusFilterPressed);
         }); */
 
-        // CD: also subscribe to status changes from the CD records console
+        // Cosmatic Drift Record System-start: also subscribe to status changes from the CD records console
         Subs.BuiEvents<CriminalRecordsConsoleComponent>(CharacterRecordConsoleKey.Key, subs =>
         {
             subs.Event<SelectStationRecord>(OnKeySelected);
@@ -63,6 +62,7 @@ public sealed class CriminalRecordsConsoleSystem : SharedCriminalRecordsConsoleS
                 RaiseLocalEvent(ent, new CharacterRecordsModifiedEvent());
             });
         });
+        // Cosmatic Drift Record System-end
     }
 
     private void UpdateUserInterface<T>(Entity<CriminalRecordsConsoleComponent> ent, ref T args)
@@ -150,8 +150,10 @@ public sealed class CriminalRecordsConsoleSystem : SharedCriminalRecordsConsoleS
         if (tryGetIdentityShortInfoEvent.Title != null)
             officer = tryGetIdentityShortInfoEvent.Title;
 
+        // Cosmatic Drift Record System-start
         if (!_criminalRecords.TryChangeStatus(key.Value, msg.Status, msg.Reason, officer))
             return;
+        // Cosmatic Drift Record System-end
 
         (string, object)[] args;
         if (reason != null)
@@ -187,10 +189,12 @@ public sealed class CriminalRecordsConsoleSystem : SharedCriminalRecordsConsoleS
             ent.Comp.SecurityChannel, ent);
 
         UpdateUserInterface(ent);
+        // Cosmatic Drift Record System-start
 
         // Notify the character record consoles so their view refreshes with the
         // latest security status.
         RaiseLocalEvent(ent, new CharacterRecordsModifiedEvent());
+        // Cosmatic Drift Record System-end
     }
 
     private void OnAddHistory(Entity<CriminalRecordsConsoleComponent> ent, ref CriminalRecordAddHistory msg)

@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Globalization;
 using System.IO;
 using System.Linq;
@@ -21,7 +21,7 @@ namespace Content.Server.Database
 
         protected override void OnConfiguring(DbContextOptionsBuilder options)
         {
-            ((IDbContextOptionsBuilderInfrastructure) options).AddOrUpdateExtension(new SnakeCaseExtension());
+            ((IDbContextOptionsBuilderInfrastructure)options).AddOrUpdateExtension(new SnakeCaseExtension());
 
             options.ConfigureWarnings(x =>
             {
@@ -70,6 +70,7 @@ namespace Content.Server.Database
                 v => JsonDocumentToString(v),
                 v => StringToJsonDocument(v));
 
+            // Cosmatic Drift Record System-start: Reuse JSON-to-byte[] conversion so CD records persist correctly on SQLite
             var jsonByteArrayConverter = new ValueConverter<JsonDocument?, byte[]?>(
                 v => JsonDocumentToByteArray(v),
                 v => ByteArrayToJsonDocument(v));
@@ -81,11 +82,10 @@ namespace Content.Server.Database
             modelBuilder.Entity<Profile>()
                 .Property(log => log.Markings)
                 .HasConversion(jsonByteArrayConverter);
-
             modelBuilder.Entity<CDModel.CDProfile>()
                 .Property(profile => profile.CharacterRecords)
                 .HasConversion(jsonByteArrayConverter);
-
+            // Cosmatic Drift Record System-end
             // EF core can make this automatically unique on sqlite but not psql.
             modelBuilder.Entity<IPIntelCache>()
                 .HasIndex(p => p.Address)
@@ -97,7 +97,8 @@ namespace Content.Server.Database
             return AdminLog.Count();
         }
 
-        private static string InetToString(IPAddress address, int mask) {
+        private static string InetToString(IPAddress address, int mask)
+        {
             if (address.IsIPv4MappedToIPv6)
             {
                 // Fix IPv6-mapped IPv4 addresses
@@ -108,7 +109,8 @@ namespace Content.Server.Database
             return $"{address}/{mask}";
         }
 
-        private static NpgsqlInet StringToInet(string inet) {
+        private static NpgsqlInet StringToInet(string inet)
+        {
             var idx = inet.IndexOf('/', StringComparison.Ordinal);
             return new NpgsqlInet(
                 IPAddress.Parse(inet.AsSpan(0, idx)),
@@ -119,7 +121,7 @@ namespace Content.Server.Database
         private static string JsonDocumentToString(JsonDocument document)
         {
             using var stream = new MemoryStream();
-            using var writer = new Utf8JsonWriter(stream, new JsonWriterOptions {Indented = false});
+            using var writer = new Utf8JsonWriter(stream, new JsonWriterOptions { Indented = false });
 
             document.WriteTo(writer);
             writer.Flush();
@@ -132,28 +134,34 @@ namespace Content.Server.Database
             return JsonDocument.Parse(str);
         }
 
+        // Cosmatic Drift Record System-start: Convert CD record JSON documents to blobs for SQLite
         private static byte[]? JsonDocumentToByteArray(JsonDocument? document)
         {
             if (document == null)
             {
-                return null;
+                return null; // Cosmatic Drift Record System: no CD data to store
             }
 
             using var stream = new MemoryStream();
-            using var writer = new Utf8JsonWriter(stream, new JsonWriterOptions {Indented = false});
+            using var writer = new Utf8JsonWriter(stream, new JsonWriterOptions { Indented = false });
 
             document.WriteTo(writer);
             writer.Flush();
 
             return stream.ToArray();
         }
+        // Cosmatic Drift Record System-end
 
+        // Cosmatic Drift Record System-start: Rehydrate CD record blobs that were stored for SQLite
         private static JsonDocument? ByteArrayToJsonDocument(byte[]? str)
         {
+            // Cosmatic Drift Record System-start: Guard empty blobs from legacy rows
             if (str == null || str.Length == 0)
                 return null;
+            // Cosmatic Drift Record System-end
 
             return JsonDocument.Parse(str);
         }
+        // Cosmatic Drift Record System-end
     }
 }

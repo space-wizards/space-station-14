@@ -360,6 +360,7 @@
     color: "#1f8c28"
   - type: Computer
     board: MedicalRecordsComputerCircuitboard
+  # Cosmatic Drift Record System-start
   - type: CharacterRecordConsole
     consoleType: Medical
   - type: UserInterface
@@ -368,20 +369,24 @@
         type: CharacterRecordConsoleBoundUserInterface
   - type: ActivatableUI
     key: enum.CharacterRecordConsoleKey.Key
-
+  # Cosmatic Drift Record System-end
 - type: entity
   parent: BaseComputerAiAccess
   id: ComputerCriminalRecords
+  # Cosmatic Drift Record System-start: Renamed from "criminal records computer" to "security records computer" to better reflect its purpose.
   name: security records computer
   description: This can be used to access security records.
+  # Cosmatic Drift Record System-end
   components:
     # We need to have both a CriminalRecordsConsole and CharacterRecordConsole
     # component to be able to set wanted status.
   - type: CriminalRecordsConsole
   - type: UserInterface
     interfaces:
+    # Cosmatic Drift Record System-start
       enum.CharacterRecordConsoleKey.Key:
         type: CharacterRecordConsoleBoundUserInterface
+    # Cosmatic Drift Record System-end
       enum.WiresUiKey.Key:
         type: WiresBoundUserInterface
   - type: Sprite
@@ -404,28 +409,38 @@
     board: CriminalRecordsComputerCircuitboard
   - type: AccessReader
     access: [["Security"]]
+  - type: GuideHelp
+    guides:
+    - CriminalRecords
+  # Cosmatic Drift Record System-start
   - type: CharacterRecordConsole
     consoleType: Security
   - type: ActivatableUI
     key: enum.CharacterRecordConsoleKey.Key
-
+  # Cosmatic Drift Record System-end
 - type: entity
   parent: BaseComputerAiAccess
   id: ComputerStationRecords
+  # Cosmatic Drift Record System-start: Renamed from "station records computer" to "employment records computer" to better reflect its purpose.
   name: employment records computer
   description: This can be used to check employment records.
+  # Cosmatic Drift Record System-end
   components:
   - type: GeneralStationRecordConsole
   - type: UserInterface
     interfaces:
+        # Cosmatic Drift Record System-start
         enum.CharacterRecordConsoleKey.Key:
           type: CharacterRecordConsoleBoundUserInterface
+        # Cosmatic Drift Record System-end
         enum.WiresUiKey.Key:
           type: WiresBoundUserInterface
+  # Cosmatic Drift Record System-start
   - type: CharacterRecordConsole
     consoleType: Employment
+  # Cosmatic Drift Record System-end
   - type: ActivatableUI
-    key: enum.CharacterRecordConsoleKey.Key
+    key: enum.CharacterRecordConsoleKey.Key # Cosmatic Drift Record System
   - type: PointLight
     radius: 1.5
     energy: 1.6

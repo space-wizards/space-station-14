@@ -9,7 +9,10 @@ using Content.Client.Players.PlayTimeTracking;
 using Content.Client.Sprite;
 using Content.Client.Stylesheets;
 using Content.Client.UserInterface.Systems.Guidebook;
+// Cosmatic Drift Record System-start
 using Content.Client._CD.Records.UI;
+using Content.Shared._CD.Records;
+// Cosmatic Drift Record System-end
 using Content.Shared.CCVar;
 using Content.Shared.Clothing;
 using Content.Shared.Guidebook;
@@ -35,7 +38,6 @@ using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
 using Content.Shared.Starlight.CCVar;
 using Content.Client._Starlight.TTS;
-using Content.Shared._CD.Records;
 
 namespace Content.Client.Lobby.UI
 {
@@ -118,7 +120,9 @@ namespace Content.Client.Lobby.UI
 
         private List<VoicePrototype> _siliconVoices = []; // 🌟Starlight🌟
 
-        private readonly RecordEditorGui _recordsTab;
+        // Cosmatic Drift Record System-start
+        private readonly RecordEditorGui _recordsTab; // Tracks CD records UI state
+        // Cosmatic Drift Record System-end
 
         public HumanoidProfileEditor(
             IClientPreferencesManager preferencesManager,
@@ -272,7 +276,7 @@ namespace Content.Client.Lobby.UI
 
             WidthResetButton.OnPressed += _ =>
             {
-                if(Profile is null) return;
+                if (Profile is null) return;
                 if (_prototypeManager.TryIndex<SpeciesPrototype>(Profile.Species, out var speciesPrototype)) WidthSlider.Value = speciesPrototype.DefaultWidth;
             };
 
@@ -556,7 +560,9 @@ namespace Content.Client.Lobby.UI
                 _ => _entManager.System<TextToSpeechSystem>().RequestPreviewTts(Profile?.SiliconVoice ?? "");
 
             SetupTabs();
-            _recordsTab = CreateRecordEditorTab();
+            // Cosmatic Drift Record System-start
+            _recordsTab = CreateRecordEditorTab(); // Instantiate the CD record editor UI
+            // Cosmatic Drift Record System-end
             SetupInfoEditors();
             RefreshCharacterInfo();
             // 🌟Starlight🌟 end
@@ -601,7 +607,7 @@ namespace Content.Client.Lobby.UI
             TabContainer.SetTabTitle(6, Loc.GetString("humanoid-profile-editor-ic-info-tab"));
             TabContainer.SetTabTitle(7, Loc.GetString("humanoid-profile-editor-ooc-info-tab"));
         }
-
+        // Cosmatic Drift Record System-start: Build the CD record editor tab and hook persistence callbacks
         private RecordEditorGui CreateRecordEditorTab()
         {
             // Create the record editor in code so that we can provide a callback for saving edits back to the profile.
@@ -616,6 +622,8 @@ namespace Content.Client.Lobby.UI
             recordEditor.Update(Profile);
             return recordEditor;
         }
+        // Cosmatic Drift Record System-end
+
         private void UpdateSiliconVoicesControls()
         {
             if (Profile is null)
@@ -963,7 +971,9 @@ namespace Content.Client.Lobby.UI
             RefreshSpecies();
             RefreshTraits();
             // Ensure the record editor reflects the freshly-loaded profile data.
-            _recordsTab.Update(Profile);
+            // Cosmatic Drift Record System-start
+            _recordsTab.Update(Profile); // Refresh record editor when a profile is loaded
+            // Cosmatic Drift Record System-end
             RefreshCharacterInfo(); //starlight
             Preview.Initialize(this, _entManager, _preferencesManager, _prototypeManager, _playerManager);
             ReloadPreview();
@@ -982,7 +992,6 @@ namespace Content.Client.Lobby.UI
             _savedProfile = humanoid.Clone();
             SetProfile(humanoid, slot);
         }
-
 
         /// <summary>
         /// A slim reload that only updates the entity itself and not any of the job entities, etc.
@@ -1318,42 +1327,43 @@ namespace Content.Client.Lobby.UI
             switch (strategy.InputType)
             {
                 case SkinColorationStrategyInput.Unary:
-                {
-                    if (!Skin.Visible)
                     {
-                        Skin.Visible = true;
-                        RgbSkinColorContainer.Visible = false;
+                        if (!Skin.Visible)
+                        {
+                            Skin.Visible = true;
+                            RgbSkinColorContainer.Visible = false;
+                        }
+
+                        var color = strategy.FromUnary(Skin.Value);
+
+                        Markings.CurrentSkinColor = color;
+                        Profile = Profile.WithCharacterAppearance(Profile.Appearance.WithSkinColor(color));
+
+                        break;
                     }
-
-                    var color = strategy.FromUnary(Skin.Value);
-
-                    Markings.CurrentSkinColor = color;
-                    Profile = Profile.WithCharacterAppearance(Profile.Appearance.WithSkinColor(color));
-
-                    break;
-                }
                 case SkinColorationStrategyInput.Color:
-                {
-                    if (!RgbSkinColorContainer.Visible)
                     {
-                        Skin.Visible = false;
-                        RgbSkinColorContainer.Visible = true;
+                        if (!RgbSkinColorContainer.Visible)
+                        {
+                            Skin.Visible = false;
+                            RgbSkinColorContainer.Visible = true;
+                        }
+
+                        var color = strategy.ClosestSkinColor(_rgbSkinColorSelector.Color);
+
+                        Markings.CurrentSkinColor = color;
+                        Profile = Profile.WithCharacterAppearance(Profile.Appearance.WithSkinColor(color));
+
+                        break;
                     }
-
-                    var color = strategy.ClosestSkinColor(_rgbSkinColorSelector.Color);
-
-                    Markings.CurrentSkinColor = color;
-                    Profile = Profile.WithCharacterAppearance(Profile.Appearance.WithSkinColor(color));
-
-                    break;
-                }
             }
 
             ReloadProfilePreview();
         }
 
         // Starlight
-        private void OnCyberneticsUpdated(List<CyberneticImplant> cybernetics) {
+        private void OnCyberneticsUpdated(List<CyberneticImplant> cybernetics)
+        {
             Profile = Profile?.WithCybernetics(cybernetics.Select(p => p.ID).ToList());
             ReloadPreview();
         }
@@ -1405,9 +1415,11 @@ namespace Content.Client.Lobby.UI
         }
 
         //starlight start
-        private void UpdateSizeText() {
-            if(Profile is null) return;
-            if (_prototypeManager.TryIndex<SpeciesPrototype>(Profile.Species, out var speciesPrototype)) {
+        private void UpdateSizeText()
+        {
+            if (Profile is null) return;
+            if (_prototypeManager.TryIndex<SpeciesPrototype>(Profile.Species, out var speciesPrototype))
+            {
                 var height = speciesPrototype.StandardSize * (Profile.Appearance.Height - 1f) * 2f + speciesPrototype.StandardSize;
                 var weight = speciesPrototype.StandardWeight + speciesPrototype.StandardDensity * (Profile.Appearance.Width * Profile.Appearance.Height * Profile.Appearance.Height - 1);
                 HeightDescribeLabel.Text = Loc.GetString("humanoid-profile-editor-height-label", ("height", Math.Round(height)));
@@ -1471,7 +1483,7 @@ namespace Content.Client.Lobby.UI
             Profile = Profile?.WithSpawnPriorityPreference(newSpawnPriority);
             SetDirty();
         }
-
+        // Cosmatic Drift Record System-start: Persist in-editor record edits back into the profile model
         private void UpdateProfileRecords(PlayerProvidedCharacterRecords records)
         {
             if (Profile is null)
@@ -1482,6 +1494,7 @@ namespace Content.Client.Lobby.UI
             Profile = Profile.WithCDCharacterRecords(records);
             SetDirty();
         }
+        // Cosmatic Drift Record System-end
 
         public bool IsDirty
         {
@@ -1604,29 +1617,29 @@ namespace Content.Client.Lobby.UI
             switch (strategy.InputType)
             {
                 case SkinColorationStrategyInput.Unary:
-                {
-                    if (!Skin.Visible)
                     {
-                        Skin.Visible = true;
-                        RgbSkinColorContainer.Visible = false;
+                        if (!Skin.Visible)
+                        {
+                            Skin.Visible = true;
+                            RgbSkinColorContainer.Visible = false;
+                        }
+
+                        Skin.Value = strategy.ToUnary(Profile.Appearance.SkinColor);
+
+                        break;
                     }
-
-                    Skin.Value = strategy.ToUnary(Profile.Appearance.SkinColor);
-
-                    break;
-                }
                 case SkinColorationStrategyInput.Color:
-                {
-                    if (!RgbSkinColorContainer.Visible)
                     {
-                        Skin.Visible = false;
-                        RgbSkinColorContainer.Visible = true;
+                        if (!RgbSkinColorContainer.Visible)
+                        {
+                            Skin.Visible = false;
+                            RgbSkinColorContainer.Visible = true;
+                        }
+
+                        _rgbSkinColorSelector.Color = strategy.ClosestSkinColor(Profile.Appearance.SkinColor);
+
+                        break;
                     }
-
-                    _rgbSkinColorSelector.Color = strategy.ClosestSkinColor(Profile.Appearance.SkinColor);
-
-                    break;
-                }
             }
         }
 
@@ -1786,7 +1799,8 @@ namespace Content.Client.Lobby.UI
         }
 
         // Starlight
-        private void UpdateCybernetics(){
+        private void UpdateCybernetics()
+        {
             if (Profile is null)
             {
                 return;
