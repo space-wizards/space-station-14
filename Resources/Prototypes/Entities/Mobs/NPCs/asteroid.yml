@@ -301,14 +301,6 @@
   - type: TimedDespawn
     lifetime: 100
 
-  - type: Tag
-    tags:
-    - HivelordRemains
-  - type: Tag
-    tags:
-    - HivelordRemains
-
-
 - type: entity
   id: MobBasilisk
   parent: [ BaseMobAsteroid, MobBloodstream ]

@@ -436,6 +436,9 @@
   name: hivelord remains
   description: The freakish remains of a hivelord, still leaking a potent medicinal goo. Eat fast before it decays, or your appetite abandons ship.
   components:
+  - type: Tag
+    tags:
+    - HivelordRemains
   - type: Sprite
     sprite: Objects/Consumable/Food/rorocore.rsi
     state: boiled
@@ -473,6 +476,7 @@
     tags:
     - Raw
     - Meat
+    - HivelordRemains
   - type: SpaceGarbage
   - type: Item
     size: Normal
