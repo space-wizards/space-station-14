@@ -1,0 +1,26 @@
+{
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "Taken from /tg/station 13 at https://github.com/tgstation/tgstation/blob/cfba741fa2cc2038fced99a4807fe02fdd455556/icons/obj/lighting.dmi",
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "states": [
+        {
+            "name": "base"
+        },
+        {
+            "name": "broken"
+        },
+        {
+            "name": "burned"
+        },
+        {
+            "name": "empty"
+        },
+        {
+            "name": "glow"
+        }
+    ]
+}
