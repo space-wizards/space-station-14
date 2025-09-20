@@ -8,6 +8,6 @@
       steps:
       - material: Plastic
         amount: 1
-        doAfter: 3
+        doAfter: 20
   - node: waterbottle
     entity: DrinkWaterBottleEmpty
