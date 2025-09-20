@@ -11,19 +11,38 @@
       "name": "icon"
     },
     {
-      "name": "equipped-HELMET",
+      "name": "icon-visor"
+    },
+    {
+      "name": "lowered-equipped-HELMET",
       "directions": 4
     },
     {
-      "name": "equipped-HELMET-vox",
+      "name": "raised-equipped-HELMET",
       "directions": 4
     },
     {
-      "name": "inhand-left",
+      "name": "lowered-equipped-HELMET-vox",
       "directions": 4
     },
     {
-      "name": "inhand-right",
+      "name": "raised-equipped-HELMET-vox",
+      "directions": 4
+    },
+    {
+      "name": "lowered-inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "raised-inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "lowered-inhand-right",
+      "directions": 4
+    },
+    {
+      "name": "raised-inhand-right",
       "directions": 4
     }
   ]
