@@ -7,6 +7,7 @@ using Content.Shared.Damage;
 using Content.Shared.Database;
 using Content.Shared.FixedPoint;
 using Content.Shared.Projectiles;
+using Content.Shared.Weapons.Ranged.Components;
 using Robust.Shared.Physics.Events;
 using Robust.Shared.Player;
 
@@ -21,9 +22,14 @@ public sealed class ProjectileSystem : SharedProjectileSystem
     [Dependency] private readonly GunSystem _guns = default!;
     [Dependency] private readonly SharedCameraRecoilSystem _sharedCameraRecoil = default!;
 
+    private EntityQuery<TargetedProjectileComponent> _targettedProjQuery;
+
     public override void Initialize()
     {
         base.Initialize();
+
+        _targettedProjQuery = GetEntityQuery<TargetedProjectileComponent>();
+
         SubscribeLocalEvent<ProjectileComponent, StartCollideEvent>(OnStartCollide);
     }
 
@@ -42,6 +48,15 @@ public sealed class ProjectileSystem : SharedProjectileSystem
         {
             SetShooter(uid, component, target);
             return;
+        }
+
+        //if were shooting right at it, always hit cover.
+        if (!_targettedProjQuery.TryComp(uid, out var targetedcomp) || target != targetedcomp.Target)
+        {
+            var coverEv = new ProjectileMissCoverAttemptEvent(uid, component, false);
+            RaiseLocalEvent(target, ref coverEv);
+            if (coverEv.Cancelled)
+                return;
         }
 
         var ev = new ProjectileHitEvent(component.Damage * _damageableSystem.UniversalProjectileDamageModifier, target, component.Shooter);

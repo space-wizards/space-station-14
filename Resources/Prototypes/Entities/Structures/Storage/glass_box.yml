@@ -1,5 +1,5 @@
 ﻿- type: entity
-  parent: [BaseStructureDynamic, BaseItemCabinetGlass]
+  parent: [ BaseCoverMild, BaseStructureDynamic, BaseItemCabinetGlass ]
   id: BaseGlassBox
   abstract: true
   components:
@@ -207,7 +207,7 @@
   id: GlassBoxBroken
   name: broken glass box
   description: A broken showcase for a stolen expensive exhibit.
-  parent: GlassBoxFrame
+  parent: [ BaseCoverSome, GlassBoxFrame ]
   suffix: Broken
   components:
   - type: Sprite

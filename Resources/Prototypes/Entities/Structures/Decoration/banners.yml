@@ -1,6 +1,6 @@
 - type: entity
   id: BannerBase
-  parent: BaseStructureDynamic
+  parent: [ BaseCoverSome, BaseStructureDynamic ]
   name: base banner
   description: It's the concept of a banner, you shouldn't be seeing this.
   abstract: true

@@ -3,7 +3,7 @@
   name: post light
   description: "An always powered light."
   suffix: Always Powered
-  parent: BaseStructure
+  parent: [ BaseCoverMild, BaseStructure ]
   components:
   - type: Sprite
     sprite: Structures/Lighting/LightPosts/small_light_post.rsi
@@ -65,7 +65,6 @@
           collection: MetalGlassBreak
   - type: StaticPrice
     price: 75
-  - type: RequireProjectileTarget
 
 - type: entity
   id: PoweredLightPostSmallEmpty

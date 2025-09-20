@@ -1,6 +1,6 @@
 - type: entity
   abstract: true
-  parent: [BaseMachinePowered, ConstructibleMachine]
+  parent: [ BaseCoverSome, BaseMachinePowered, ConstructibleMachine ]
   id: BaseRecharger
   placement:
     mode: SnapgridCenter
@@ -66,7 +66,6 @@
       charger_slot: !type:ContainerSlot
       machine_board: !type:Container
       machine_parts: !type:Container
-  - type: RequireProjectileTarget
 
 - type: entity
   parent: BaseItemRecharger
@@ -107,7 +106,7 @@
           - PowerCellSmall
 
 - type: entity
-  parent: [ BaseItemRecharger, ConstructibleMachine ]
+  parent: [ BaseCoverSome, BaseItemRecharger, ConstructibleMachine ]
   id: PowerCageRecharger
   name: cage recharger
   components:
@@ -218,7 +217,7 @@
           - Stunbaton
 
 - type: entity
-  parent: BaseRecharger
+  parent: [ BaseCoverGood, BaseRecharger ]
   id: BorgCharger
   name: cyborg recharging station
   description: A stationary charger for various robotic and cyborg entities. Surprisingly spacious.

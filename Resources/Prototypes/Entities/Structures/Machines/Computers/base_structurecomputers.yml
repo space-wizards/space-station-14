@@ -1,5 +1,5 @@
 - type: entity
-  parent: BaseStructureComputer
+  parent: [  BaseCoverMild, BaseStructureComputer]
   id: BaseComputer
   name: computer
   placement:
@@ -72,7 +72,6 @@
         ents: []
   - type: LightningTarget
     priority: 1
-  - type: RequireProjectileTarget
   - type: Electrified
     enabled: false
     usesApcPower: true

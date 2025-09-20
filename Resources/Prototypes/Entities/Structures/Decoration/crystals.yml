@@ -1,6 +1,6 @@
 - type: entity
   id: CrystalGreen
-  parent: BaseStructure
+  parent: [ BaseCoverMild, BaseStructure ]
   suffix: green
   name: crystal
   description: A crystaline solid.
