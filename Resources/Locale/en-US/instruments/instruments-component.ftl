@@ -15,18 +15,17 @@ instruments-component-menu-channels-button = Channels
 instruments-component-menu-stop-button = Stop
 instruments-component-band-menu = Choose band leader
 instrument-component-band-refresh = Refresh
-instruments-component-channels-menu = MIDI Channel Selection
-instrument-component-channel-name = MIDI Channel {$number}
+instruments-component-channels-menu = {$name}: Channels
+instrument-component-channel-name = Channel {$number}
 instruments-component-channels-all-button = All
 instruments-component-channels-clear-button = Clear
 instruments-component-channels-track-names-toggle = Show Track Names
-instruments-component-channels-single = {$channel} {$name}
-instruments-component-channels-multi = {$channel} {$name} ({$other})
+instruments-component-channels-single = CH: {$channel} - {$name}
+instruments-component-channels-multi = CH: {$channel} - {$name} - ({$other})
 
-
-# SwappableInstrumentComponent
 swappable-instrument-component-style-set = Style set to "{$style}"
 
+instruments-component-menu-midi-channel-default = Acoustic Grand Piano
 instruments-component-menu-midi-channel-acoustic-grand-piano = Acoustic Grand Piano
 instruments-component-menu-midi-channel-bright-acoustic-piano = Bright Acoustic Piano
 instruments-component-menu-midi-channel-electric-grand-piano = Electric Grand Piano
@@ -155,3 +154,4 @@ instruments-component-menu-midi-channel-telephone-ring = Telephone Ring
 instruments-component-menu-midi-channel-helicopter = Helicopter
 instruments-component-menu-midi-channel-applause = Applause
 instruments-component-menu-midi-channel-gunshot = Gunshot
+instruments-component-menu-midi-channel-percussion = Percussion
