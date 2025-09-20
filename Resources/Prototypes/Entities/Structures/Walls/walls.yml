@@ -985,7 +985,7 @@
           collection: MetalSlam
     - trigger:
         !type:DamageTrigger
-        damage: 200
+        damage: 300
       behaviors:
       - !type:PlaySoundBehavior
         sound:
