@@ -113,13 +113,14 @@ namespace Content.Shared.Localizations
         /// </summary>
         public static string FormatList(List<string> list)
         {
-            return list.Count switch
-            {
-                <= 0 => string.Empty,
-                1 => list[0],
-                2 => $"{list[0]} and {list[1]}",
-                _ => $"{string.Join(", ", list.GetRange(0, list.Count - 1))}, and {list[^1]}"
-            };
+            if (list.Count == 0) return string.Empty;
+
+            return Loc.GetString("zzzz-fmt-list",
+                                 ("count", list.Count),
+                                 ("item1", list.ElementAtOrDefault(0) ?? ""),
+                                 ("item2", list.ElementAtOrDefault(1) ?? ""),
+                                 ("items", string.Join(Loc.GetString("zzzz-fmt-list-delimiter"), list.Take(list.Count - 1))),
+                                 ("last", list.LastOrDefault() ?? ""));
         }
 
         /// <summary>
@@ -127,13 +128,14 @@ namespace Content.Shared.Localizations
         /// </summary>
         public static string FormatListToOr(List<string> list)
         {
-            return list.Count switch
-            {
-                <= 0 => string.Empty,
-                1 => list[0],
-                2 => $"{list[0]} or {list[1]}",
-                _ => $"{string.Join(", ", list.GetRange(0, list.Count - 1))}, or {list[^1]}"
-            };
+            if (list.Count == 0) return string.Empty;
+
+            return Loc.GetString("zzzz-fmt-list-or",
+                                 ("count", list.Count),
+                                 ("item1", list.ElementAtOrDefault(0) ?? ""),
+                                 ("item2", list.ElementAtOrDefault(1) ?? ""),
+                                 ("items", string.Join(Loc.GetString("zzzz-fmt-list-delimiter"), list.Take(list.Count - 1))),
+                                 ("last", list.LastOrDefault() ?? ""));
         }
 
         /// <summary>
