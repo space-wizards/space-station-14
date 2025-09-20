@@ -376,6 +376,92 @@
     - type: SalvageMobRestrictions
 
 - type: entity
+  parent: [ SimpleSpaceMobBase, FlyingMobBase, MobSheepBase ]
+  id: MobSheepSpace
+  name: space sheep
+  description: A sheep... in space!
+  components:
+  - type: Sprite
+    drawdepth: Mobs
+    layers:
+      - state: space_sheep_bare
+        map: [ "enum.DamageStateVisualLayers.Base" ]
+        visible: true
+        sprite: Mobs/Animals/sheep.rsi
+      - state: space_sheep_wool_glowmask
+        map: [ "wooly" ]
+        visible: true
+        sprite: Mobs/Animals/sheep.rsi
+  - type: GenericVisualizer
+    visuals:
+      enum.ShearableVisuals.Shearable:
+        wooly:
+          True: {visible: true}
+          False: {visible: false}
+      enum.MobStateVisuals.State:
+        wooly:
+          Alive: {state: space_sheep_wool_glowmask}
+          Dead: {state: space_sheep_wool_dead}
+          Critical: {state: space_sheep_wool_dead}
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape: !type:PhysShapeCircle
+          radius: 0.35
+        density: 150
+        mask:
+          - FlyingMobMask
+        layer:
+          - FlyingMobLayer
+  - type: Reproductive
+    partnerWhitelist:
+      tags:
+      - Sheep
+    offspring:
+    - id: MobSheep
+  - type: DamageStateVisuals
+    states:
+      Alive:
+        Base: space_sheep_harvested
+      Critical:
+        Base: space_sheep_dead
+      Dead:
+        Base: space_sheep_dead
+  - type: Shearable
+    targetSolutionName: wool
+    shearedProductID: MaterialDurathread1
+    productsPerSolution: 0.2
+    toolQuality: Cutting # Wirecutters and barber's scissors.
+    shearableMarkupText: space-sheep-shearable-examine-markup
+    unShearableMarkupText: space-sheep-not-shearable-examine-markup
+    # Caused problems (SAD), to be re-implemented when we get a real particle system.
+  # - type: ActiveJetpack # Pretty particles
+  #   effectCooldown: 4
+  #   maxDistance: 0.3
+  - type: MovementSpeedModifier
+    baseWalkSpeed: 0.6
+    baseSprintSpeed: 2.0
+  - type: PointLight # Glows a little bit to see better in deep space.
+    radius: 2.0
+    energy: 1.0
+    color: "#4795ff" # Light blue colour.
+  - type: InteractionPopup
+    successChance: 0.8 #SHEEP so FRIEND!!! HUG! SQUISHY! SOFT!
+    interactDelay: 1
+    interactSuccessString: petting-success-sheep
+    interactFailureString: petting-failure-sheep
+    interactSuccessSpawn: EffectHearts #🥰
+    interactSuccessSound:
+      collection: SheepSpace
+      params:
+        variation: 0.05
+  - type: MobPrice
+    price: 600
+  - type: Wooly
+    quantity: 10
+    growthDelay: 120 #2 minutes
+
+- type: entity
   parent: SimpleSpaceMobBase
   id: MobSnail
   name: snail
