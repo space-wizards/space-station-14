@@ -1,89 +1,151 @@
 <controls:FancyWindow xmlns="https://spacestation14.io"
-                                xmlns:gfx="clr-namespace:Robust.Client.Graphics;assembly=Robust.Client"
-                                xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
-                                xmlns:employeeData="clr-namespace:Content.Client.SpecializationConsole.EmployeeData"
-                                xmlns:xNamespace="http://schemas.microsoft.com/winfx/2006/xaml"
-                                xmlns:s="clr-namespace:Content.Client.Stylesheets"
-                                Title="{Loc 'comp-ringer-ui-menu-title'}"
-                                SetWidth="500">
-    <BoxContainer Orientation="Vertical" HorizontalExpand="True">
-                <!-- Screen foreground -->
-                <BoxContainer Orientation="Vertical">
-                    <!-- Targeting controls -->
-                    <GridContainer Columns="2">
-                        <BoxContainer Orientation="Vertical">
-                            <Label Text="Employee Data" StyleClasses="LabelBig"
-                                   HorizontalAlignment="Center" Margin="0 5 0 5" />
-                        <BoxContainer Name="TargetingControlsPanel" VerticalExpand="True" HorizontalExpand="True">
-                            <BoxContainer Orientation="Vertical" VerticalExpand="True" Margin="5 5">
-                                <PanelContainer StyleClasses="Inset">
-                                    <BoxContainer Orientation="Vertical" Margin="5 5">
-                                        <BoxContainer Orientation="Horizontal">
-                                            <Label Text="Privileged Card Slot:" Margin="0 0 10 0"/>
-                                            <controls:IdCardButton Name="PrivilegedIdButton" Access="Public" SetSize="35 35">
-                                                <SpriteView Name="EntityView" Access="Public"
-                                                            Stretch="None" Scale="1.7 1.7"/>
+                      xmlns:gfx="clr-namespace:Robust.Client.Graphics;assembly=Robust.Client"
+                      xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
+                      xmlns:employeeData="clr-namespace:Content.Client.SpecializationConsole.EmployeeData"
+                      xmlns:xNamespace="http://schemas.microsoft.com/winfx/2006/xaml"
+                      xmlns:s="clr-namespace:Content.Client.Stylesheets"
+                      Title="{Loc 'comp-ringer-ui-menu-title'}"
+                      MinSize="575 330"
+                      SetSize="575 330">
+    <BoxContainer Orientation="Vertical"
+                  HorizontalExpand="True">
+        <!-- Screen foreground -->
+        <BoxContainer Orientation="Vertical"
+                      VerticalExpand="True">
+            <!-- Targeting controls -->
+            <GridContainer Columns="2"
+                           Margin="8"
+                           VerticalExpand="True">
+                <PanelContainer Name="TargetingControlsPanel"
+                                VerticalExpand="True"
+                                HorizontalExpand="True">
+                    <PanelContainer.PanelOverride>
+                        <gfx:StyleBoxFlat BackgroundColor="#1B1B1E" />
+                    </PanelContainer.PanelOverride>
+                    <BoxContainer Orientation="Vertical"
+                                  VerticalExpand="True"
+                                  Margin="8">
+                        <PanelContainer>
+                            <GridContainer Columns="2">
+                                <PanelContainer StyleClasses="Inset"
+                                                HorizontalExpand="True">
+                                    <BoxContainer Orientation="Vertical">
+                                        <Label Text="Privileged ID"
+                                               StyleClasses="LabelKeyText" />
+                                        <BoxContainer HorizontalAlignment="Left">
+                                            <controls:IdCardButton Name="PrivilegedIdButton"
+                                                                   Access="Public"
+                                                                   SetSize="33 33">
+                                                <SpriteView Name="EntityView"
+                                                            Access="Public"
+                                                            Stretch="None"
+                                                            Scale="1.5 1.5" />
                                             </controls:IdCardButton>
                                         </BoxContainer>
-                                        <BoxContainer Orientation="Horizontal" >
-                                            <Label Text="Access:"/>
-                                            <BoxContainer Name="AccessBox" Orientation="Vertical" SetSize="159 50">
-                                                <!-- C# -->
-                                            </BoxContainer>
+                                    </BoxContainer>
+                                </PanelContainer>
+                                <PanelContainer StyleClasses="Inset"
+                                                HorizontalExpand="True"
+                                                Margin="6 0 0 0">
+                                    <BoxContainer Orientation="Vertical">
+                                        <Label Text="Target ID"
+                                               StyleClasses="LabelKeyText" />
+                                        <BoxContainer HorizontalAlignment="Left">
+                                            <controls:IdCardButton Name="TargetIdButton"
+                                                                   Access="Public"
+                                                                   SetSize="33 33">
+                                                <SpriteView Name="TargetEntityView"
+                                                            Access="Public"
+                                                            Stretch="None"
+                                                            Scale="1.5 1.5" />
+                                            </controls:IdCardButton>
                                         </BoxContainer>
                                     </BoxContainer>
                                 </PanelContainer>
-                                <!-- Access configuration -->
-                                <PanelContainer Margin="0 10 0 0" StyleClasses="Inset">
-                                    <BoxContainer Orientation="Vertical" Margin="5 5">
-                                        <BoxContainer>
-                                            <GridContainer Columns="2" HorizontalExpand="True">
-                                                <Label Text="Target Card Slot:"
-                                                       Margin="0 0 10 0" />
-                                                <controls:IdCardButton Name="TargetIdButton" Access="Public" SetSize="35 35">
-                                                    <SpriteView Name="TargetEntityView" Access="Public"
-                                                                Stretch="None" Scale="1.7 1.7"/>
-                                                </controls:IdCardButton>
-                                            </GridContainer>
-                                        </BoxContainer>
-                                    </BoxContainer>
-                                </PanelContainer>
-                                <BoxContainer Orientation="Vertical" VerticalExpand="True" HorizontalExpand="True">
-                                    <Label Text="Actions" StyleClasses="ConsoleSubHeading"
-                                           HorizontalAlignment="Center" Margin="0 5 0 5" />
-                                    <BoxContainer Orientation="Vertical" VerticalExpand="True" HorizontalExpand="True">
-                                        <Button Name="SetButton" Text="Set Specialization" HorizontalAlignment="Center"
-                                                HorizontalExpand="True" Margin="0 5 0 5" Visible="False"/>
-                                        <Button Name="DeleteButton" Text="Delete Specialization" HorizontalAlignment="Center"
-                                                HorizontalExpand="True" Margin="0 5 0 5" Visible="False" Access="Public"/>
-                                    </BoxContainer>
+                            </GridContainer>
+                        </PanelContainer>
+                        <!-- Access configuration -->
+                        <PanelContainer StyleClasses="Inset"
+                                        Margin="0 10 0 0"
+                                        VerticalExpand="True">
+                            <BoxContainer>
+                                <Label Text="Access" />
+                                <BoxContainer Name="AccessBox"
+                                              Orientation="Vertical"
+                                              HorizontalExpand="True"
+                                              HorizontalAlignment="Right"
+                                              VerticalAlignment="Center">
+                                    <!-- C# -->
                                 </BoxContainer>
                             </BoxContainer>
-                        </BoxContainer>
-                        </BoxContainer>
-                        <BoxContainer Name="Sssss" Orientation="Vertical" HorizontalExpand="True" Margin="0 0 10 0">
-                            <Label Text="Employee Data" StyleClasses="LabelBig"
-                                   HorizontalAlignment="Center" Margin="0 5 0 5" />
-                        <BoxContainer Orientation="Vertical" Margin="0 5 0 10">
-                                <PanelContainer>
-                                    <PanelContainer.PanelOverride>
-                                        <gfx:StyleBoxFlat BorderThickness="1" BorderColor="#444444" BackgroundColor="{xNamespace:Static s:StyleNano.PanelDark}" />
-                                    </PanelContainer.PanelOverride>
-                                    <employeeData:EmployeeData Name="EmployeeInfo" Access="Public" />
-                                </PanelContainer>
-                        </BoxContainer>
-                        </BoxContainer>
-                    </GridContainer>
+                        </PanelContainer>
+                        <PanelContainer StyleClasses="Inset"
+                                        Margin="0 10 0 0">
+                            <BoxContainer Orientation="Vertical">
+                                <Label Text="Specialization" />
+                                <BoxContainer>
+                                    <Button Name="SetButton"
+                                            StyleClasses="OpenRight"
+                                            Text="Set"
+                                            Margin="0 5 0 5" />
+                                    <Button Name="DeleteButton"
+                                            StyleClasses="OpenLeft"
+                                            Text="Delete"
+                                            Margin="0 5 0 5"
+                                            Access="Public" />
+                                </BoxContainer>
+                            </BoxContainer>
+                        </PanelContainer>
+                    </BoxContainer>
+                </PanelContainer>
+                <BoxContainer Name="Sssss"
+                              HorizontalExpand="True"
+                              VerticalExpand="True"
+                              Orientation="Vertical"
+                              Margin="4 0 0 0">
+                    <PanelContainer>
+                        <controls:StripeBack HorizontalExpand="True">
+                            <BoxContainer HorizontalExpand="True"
+                                          HorizontalAlignment="Center">
+                                <Label Text="Employee Data"
+                                       StyleClasses="LabelBig" />
+                            </BoxContainer>
+                        </controls:StripeBack>
+                    </PanelContainer>
+                    <PanelContainer VerticalExpand="True">
+                        <PanelContainer.PanelOverride>
+                            <gfx:StyleBoxFlat BorderThickness="2"
+                                              BorderColor="#444444"
+                                              BackgroundColor="{xNamespace:Static s:StyleNano.PanelDark}" />
+                        </PanelContainer.PanelOverride>
+                        <employeeData:EmployeeData Name="EmployeeInfo"
+                                                   Access="Public" />
+                    </PanelContainer>
                 </BoxContainer>
-
-        <!--Footer-->
+            </GridContainer>
+        </BoxContainer>
+        <!-- Footer -->
         <BoxContainer Orientation="Vertical">
             <PanelContainer StyleClasses="LowDivider" />
             <BoxContainer Orientation="Horizontal">
-                <Label Text="⚠" Margin="0 0 4 4" HorizontalExpand="True" HorizontalAlignment="Right" Modulate="#FFD700" StyleClasses="WindowFooterText"/>
-                <Label Name="Footer" Text="{Loc 'turret-controls-window-footer'}"
-                       HorizontalAlignment="Center" Margin="0 0 0 4" Modulate="#FFCC66" StyleClasses="WindowFooterText"/>
-                <Label Text="⚠" Margin="4 0 0 4" HorizontalExpand="True" HorizontalAlignment="Left" Modulate="#FFD700" StyleClasses="WindowFooterText"/>
+                <Label Text="⚠"
+                       Margin="0 0 4 4"
+                       HorizontalExpand="True"
+                       HorizontalAlignment="Right"
+                       Modulate="#FFD700"
+                       StyleClasses="WindowFooterText" />
+                <Label Name="Footer"
+                       Text="{Loc 'turret-controls-window-footer'}"
+                       HorizontalAlignment="Center"
+                       Margin="0 0 0 4"
+                       Modulate="#FFCC66"
+                       StyleClasses="WindowFooterText" />
+                <Label Text="⚠"
+                       Margin="4 0 0 4"
+                       HorizontalExpand="True"
+                       HorizontalAlignment="Left"
+                       Modulate="#FFD700"
+                       StyleClasses="WindowFooterText" />
             </BoxContainer>
         </BoxContainer>
     </BoxContainer>
