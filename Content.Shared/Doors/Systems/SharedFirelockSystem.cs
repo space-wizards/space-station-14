@@ -5,6 +5,7 @@ using Content.Shared.Popups;
 using Content.Shared.Prying.Components;
 using Robust.Shared.Serialization;
 using Robust.Shared.Timing;
+using System.Linq;
 
 namespace Content.Shared.Doors.Systems;
 
@@ -31,6 +32,21 @@ public abstract class SharedFirelockSystem : EntitySystem
         SubscribeLocalEvent<FirelockComponent, ComponentStartup>(OnComponentStartup);
 
         SubscribeLocalEvent<FirelockComponent, ExaminedEvent>(OnExamined);
+    }
+
+    public void UrgentClosure(EntityUid uid, DoorComponent door, FirelockComponent firelock) //unsafe, better EmergencyPressureStop(I wanted it this way)
+    {
+        if (firelock.EmergencyCloseCooldown == null || _gameTiming.CurTime > firelock.EmergencyCloseCooldown)
+        {
+            firelock.EmergencyCloseCooldown = _gameTiming.CurTime + firelock.EmergencyCloseCooldownDuration;
+            var ev = new BeforeDoorClosedEvent(door.PerformCollisionCheck, false);
+            RaiseLocalEvent(uid, ev);
+            if (!ev.Cancelled && ev.PerformCollisionCheck && !_doorSystem.GetColliding(uid).Any())
+            {
+
+                _doorSystem.StartClosing(uid, door);
+            }
+        }
     }
 
     public bool EmergencyPressureStop(EntityUid uid, FirelockComponent? firelock = null, DoorComponent? door = null)
