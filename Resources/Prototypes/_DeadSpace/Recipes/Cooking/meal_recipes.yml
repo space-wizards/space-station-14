@@ -104,6 +104,46 @@
     FoodCaviar: 1
 
 - type: microwaveMealRecipe
+  id: RecipeCaviarMagicBurger
+  name: magic caviar burger recipe
+  result: FoodCaviarMagicBurger
+  time: 5
+  group: Savory
+  solids:
+    FoodBreadPlainSlice: 1
+    FoodCaviarMagic: 1
+
+- type: microwaveMealRecipe
+  id: RecipeCaviarHoloBurger
+  name: holo caviar burger recipe
+  result: FoodCaviarHoloBurger
+  time: 5
+  group: Breads
+  solids:
+    FoodBreadPlainSlice: 1
+    FoodCaviarHolo: 1
+
+- type: microwaveMealRecipe
+  id: RecipeCaviarRainbowBurger
+  name: rainbow caviar burger recipe
+  result: FoodCaviarRainbowBurger
+  time: 5
+  group: Savory
+  solids:
+    FoodBreadPlainSlice: 1
+    FoodCaviarRainbow: 1
+
+- type: microwaveMealRecipe
+  id: RecipeCaviarBlackBurger
+  name: black caviar burger recipe
+  result: FoodCaviarBlackBurger
+  time: 5
+  group: Savory
+  solids:
+    FoodBreadPlainSlice: 1
+    FoodCaviarBlack: 1
+
+- type: microwaveMealRecipe
   id: RecipeHoneyCake
   name: honey cake recipe
   result: FoodHoneyCake

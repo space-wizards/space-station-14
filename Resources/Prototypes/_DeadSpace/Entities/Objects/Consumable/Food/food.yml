@@ -139,28 +139,168 @@
   parent: FoodMealBase
   id: FoodCaviar
   name: карпья икра
-  description: От нее пахнет новогодним вайбом.
+  description: Классическая икра космического карпа. Имеет лёгкий рыбный привкус.
   components:
   - type: FlavorProfile
     flavors:
-      - caviar
+    - fishy
+    - caviar
   - type: Sprite
     sprite: /Textures/_DeadSpace/Objects/Consumable/Food/caviar.rsi
-    state: icon
+    state: green
+  - type: StaticPrice
+    price: 250
+
+- type: entity
+  parent: FoodCaviar
+  id: FoodCaviarMagic
+  name: мэджикарпья икра
+  description: Густая алая икра, будто наполненная самой сутью магии. Говорят, если съесть много, можно почувствовать, как в жилах пробегает странное тепло.
+  components:
+  - type: FlavorProfile
+    flavors:
+    - magical
+    - caviar
+  - type: Sprite
+    state: magic
+  - type: StaticPrice
+    price: 500
+
+- type: entity
+  parent: FoodCaviar
+  id: FoodCaviarHolo
+  name: голокарпья икра
+  description: Полупрозрачные икринки, дрожащие, как мираж. На удивление съедобны, но после еды остаётся лёгкое ощущение, будто вас ненадолго выдернули из реальности.
+  components:
+  - type: FlavorProfile
+    flavors:
+    - strange
+    - caviar
+  - type: Sprite
+    state: holo
+  - type: StaticPrice
+    price: 500
+
+- type: entity
+  parent: FoodCaviar
+  id: FoodCaviarRainbow
+  name: радужнокарпья икра
+  description: Икринки мерцают всеми цветами радуги, словно крошечные звёзды. На вкус как взрыв галактического фейерверка.
+  components:
+  - type: FlavorProfile
+    flavors:
+    - funny
+    - caviar
+  - type: Sprite
+    state: white
+  - type: PointLight
+    radius: 1.5
+    energy: 1
+  - type: RgbLightController
+    layers: [ 0 ]
+  - type: StaticPrice
+    price: 750
+
+- type: entity
+  parent: FoodCaviar
+  id: FoodCaviarBlack
+  name: карпоакулья икра
+  description: Чёрные, почти металлические икринки с привкусом космического ужаса.
+  components:
+  - type: FlavorProfile
+    flavors:
+    - terrible
+    - caviar
+  - type: Sprite
+    state: black
+  - type: StaticPrice
+    price: 1000
 
 - type: entity
   parent: FoodBurgerBase
   id: FoodCaviarBurger
   name: бутерброд с карпьей икрой
-  description: Культовая еда для застолья на Новый год.
+  description: Просто хлеб с икрой? Нет, это ритуал. Настоящий космический деликатес для тех, кто ценит классику.
   components:
   - type: FlavorProfile
     flavors:
-      - caviar
-      - bread
+    - fishy
+    - caviar
+    - bread
   - type: Sprite
     sprite: /Textures/_DeadSpace/Objects/Consumable/Food/caviar.rsi
-    state: on-bread
+    layers:
+    - state: bread-slice
+    - state: green-on-bread
+
+- type: entity
+  parent: FoodCaviarBurger
+  id: FoodCaviarMagicBurger
+  name: бутерброд с мэджикарпьей икрой
+  description: Хрустящий хлеб с мерцающей икрой. Говорят, если загадать желание перед укусом - оно может сбыться.
+  components:
+  - type: FlavorProfile
+    flavors:
+    - magical
+    - caviar
+    - bread
+  - type: Sprite
+    layers:
+    - state: bread-slice
+    - state: magic-on-bread
+
+- type: entity
+  parent: FoodCaviarBurger
+  id: FoodCaviarHoloBurger
+  name: бутерброд с голокарпьей икрой
+  description: Полупрозрачная икра на хлебе. Такое ощущение, что ешь что-то нереальное, но вкус - вполне осязаемый.
+  components:
+  - type: FlavorProfile
+    flavors:
+    - strange
+    - caviar
+    - bread
+  - type: Sprite
+    layers:
+    - state: bread-slice
+    - state: holo-on-bread
+
+- type: entity
+  parent: FoodCaviarBurger
+  id: FoodCaviarRainbowBurger
+  name: бутерброд с радужнокарпьей икрой
+  description: Светящийся бутерброд, который превращает любой приём пищи в мини-фестиваль. На вкус как взрыв фейерверка.
+  components:
+  - type: FlavorProfile
+    flavors:
+    - funny
+    - caviar
+    - bread
+  - type: Sprite
+    layers:
+    - state: bread-slice
+    - state: white-on-bread
+  - type: PointLight
+    radius: 1.5
+    energy: 1
+  - type: RgbLightController
+    layers: [ 1 ]
+
+- type: entity
+  parent: FoodCaviarBurger
+  id: FoodCaviarBlackBurger
+  name: бутерброд с карпоакульей икрой
+  description: Чёрные икринки на хрустящем хлебе. На вкус как космический кошмар с послевкусием роскоши.
+  components:
+  - type: FlavorProfile
+    flavors:
+    - terrible
+    - caviar
+    - bread
+  - type: Sprite
+    layers:
+    - state: bread-slice
+    - state: black-on-bread
 
 - type: entity
   parent: FoodCakePlain
