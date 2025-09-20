@@ -109,6 +109,19 @@
           32:
             sprite: Mobs/Species/Human/displacement.rsi
             state: jumpsuit-female
+  - type: Instrument
+    program: 115
+  - type: ActivatableUI
+    blockSpectators: true # otherwise they can play client-side music
+    inHandsOnly: false
+    singleUser: true
+    requiresComplex: true
+    verbText: verb-instrument-openui
+    key: enum.InstrumentUiKey.Key
+  - type: UserInterface
+    interfaces:
+      enum.InstrumentUiKey.Key:
+        type: InstrumentBoundUserInterface
 
 - type: entity
   parent: BaseSpeciesDummy
