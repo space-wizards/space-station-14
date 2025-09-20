@@ -14811,5 +14811,19 @@ Entries:
   id: 168401
   time: '2025-09-19T22:54:25.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/1684
+- author: STARLIGHT TEAM
+  changes:
+  - message: FMJ deals slightly less damage.
+    type: Tweak
+  id: 155200
+  time: '2025-09-20T15:47:41.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1552
+- author: STARLIGHT TEAM
+  changes:
+  - message: HP deals most of its damage as blunt.
+    type: Tweak
+  id: 155201
+  time: '2025-09-20T15:47:41.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1552
 Order: -1
 
