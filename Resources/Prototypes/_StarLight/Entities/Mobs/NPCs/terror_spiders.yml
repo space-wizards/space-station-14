@@ -468,6 +468,8 @@
       enum.EggsLayingUiKey.Key:
         type: EggsLayingBui
 
+# Eggs
+
 - type: entity
   parent: EggSpider
   id: TerrorGrayEggSpiderFertilized
@@ -479,12 +481,12 @@
   - type: Timer
   - type: TimedSpawner
     prototypes:
-    - MobTerrorGray
-    intervalSeconds: 180
+    - MobSpiderlingTerrorGray
+    intervalSeconds: 90
     minimumEntitiesSpawned: 1
     maximumEntitiesSpawned: 1
   - type: TimedDespawn 
-    lifetime: 181
+    lifetime: 91
 
 - type: entity
   parent: EggSpider
@@ -497,12 +499,12 @@
   - type: Timer
   - type: TimedSpawner
     prototypes:
-    - MobTerrorGreen
-    intervalSeconds: 180
+    - MobSpiderlingTerrorGreen
+    intervalSeconds: 90
     minimumEntitiesSpawned: 1
     maximumEntitiesSpawned: 1
   - type: TimedDespawn 
-    lifetime: 181
+    lifetime: 91
     
 - type: entity
   parent: EggSpider
@@ -515,9 +517,9 @@
   - type: Timer
   - type: TimedSpawner
     prototypes:
-    - MobTerrorRed
-    intervalSeconds: 180
+    - MobSpiderlingTerrorRed
+    intervalSeconds: 90
     minimumEntitiesSpawned: 1
     maximumEntitiesSpawned: 1
   - type: TimedDespawn 
-    lifetime: 181
+    lifetime: 91
