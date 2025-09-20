@@ -1,0 +1,134 @@
+﻿- type: htnCompound
+  id: HugBotCompound
+  branches:
+  - tasks:
+    - !type:HTNCompoundTask
+      task: HugNearbyCompound
+  - tasks:
+    - !type:HTNCompoundTask
+      task: IdleCompound
+
+- type: htnCompound
+  id: HugNearbyCompound
+  branches:
+  - tasks:
+    # Locate hug recipient.
+    - !type:HTNPrimitiveTask
+      operator: !type:UtilityOperator
+        proto: NearbyNeedingHug
+
+    # Announce intent to hug
+    - !type:HTNPrimitiveTask
+      operator: !type:SpeakOperator
+        speech: !type:LocalizedSetSpeakOperatorSpeech
+          lineSet: HugBotStarts
+        hidden: true
+
+    # Approach hug recipient
+    - !type:HTNPrimitiveTask
+      operator: !type:MoveToOperator
+        pathfindInPlanning: true
+        removeKeyOnFinish: false
+        targetKey: TargetCoordinates
+        pathfindKey: TargetPathfind
+        rangeKey: MeleeRange
+
+    # HUG!!
+    - !type:HTNCompoundTask
+      task: HugBotHugCompound
+
+    # Stick around to enjoy the hug instead of just running up, squeezing and leaving.
+    - !type:HTNPrimitiveTask
+      operator: !type:SetFloatOperator
+        targetKey: IdleTime
+        amount: 1
+    - !type:HTNPrimitiveTask
+      operator: !type:WaitOperator
+        key: IdleTime
+      preconditions:
+      - !type:KeyExistsPrecondition
+        key: IdleTime
+
+    # Special case operator which applies the hugbot cooldown.
+    - !type:HTNPrimitiveTask
+      operator: !type:RaiseEventForOwnerOperator
+        args: !type:HugBotDidHugEvent
+        targetKey: Target
+
+    # Announce that the hug is completed.
+    - !type:HTNCompoundTask
+      task: HugBotFinishSpeakCompound
+
+- type: htnCompound
+  id: HugBotHugCompound
+  branches:
+  # Hit if emagged
+  - preconditions:
+    - !type:IsEmaggedPrecondition
+    tasks:
+    - !type:HTNPrimitiveTask
+      preconditions:
+      - !type:TargetInRangePrecondition
+        targetKey: Target
+        rangeKey: InteractRange
+      operator: !type:MeleeAttackOperator
+        targetKey: Target
+      services:
+      - !type:UtilityService
+        id: HugService
+        proto: NearbyNeedingHug
+        key: Target
+  # Hug otherwise
+  - tasks:
+    - !type:HTNPrimitiveTask
+      preconditions:
+      - !type:TargetInRangePrecondition
+        targetKey: Target
+        rangeKey: InteractRange
+      operator: !type:InteractWithOperator
+        targetKey: Target
+      services:
+      - !type:UtilityService
+        id: HugService
+        proto: NearbyNeedingHug
+        key: Target
+
+- type: htnCompound
+  id: HugBotFinishSpeakCompound
+  branches:
+  # Say mean things if emagged
+  - preconditions:
+    - !type:IsEmaggedPrecondition
+    tasks:
+    - !type:HTNPrimitiveTask
+      operator: !type:SpeakOperator
+        speech: !type:LocalizedSetSpeakOperatorSpeech
+          lineSet: EmaggedHugBotFinishes
+        hidden: true
+  # Say nice thing otherwise
+  - tasks:
+    - !type:HTNPrimitiveTask
+      operator: !type:SpeakOperator
+        speech: !type:LocalizedSetSpeakOperatorSpeech
+          lineSet: HugBotFinishes
+        hidden: true
+
+- type: utilityQuery
+  id: NearbyNeedingHug
+  query:
+  - !type:ComponentQuery
+    components:
+    - type: HumanoidAppearance
+      species: Human # This specific value isn't actually used, so don't worry about it being just `Human`.
+  - !type:ComponentFilter
+    retainWithComp: false
+    components:
+    - type: RecentlyHuggedByHugBot
+  considerations:
+  - !type:TargetDistanceCon
+    curve: !type:PresetCurve
+      preset: TargetDistance
+  - !type:TargetAccessibleCon
+    curve: !type:BoolCurve
+  - !type:TargetInLOSOrCurrentCon
+    curve: !type:BoolCurve
