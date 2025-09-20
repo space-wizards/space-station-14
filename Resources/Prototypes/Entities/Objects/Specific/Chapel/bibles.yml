@@ -97,17 +97,6 @@
 
 - type: entity
   parent: Bible
-  name: tanakh
-  description: "For God's chosen crewmembers"
-  id: BibleTanakh
-  components:
-  - type: Sprite
-    sprite: Objects/Specific/Chapel/tanakh.rsi
-  - type: Item
-    sprite: Objects/Specific/Chapel/tanakh.rsi
-
-- type: entity
-  parent: Bible
   name: druidic tablet
   description: "It's the mystery of the druids!"
   id: BibleDruid
@@ -127,17 +116,6 @@
     sprite: Objects/Specific/Chapel/communistmanifesto.rsi
   - type: Item
     sprite: Objects/Specific/Chapel/communistmanifesto.rsi
-
-- type: entity
-  parent: Bible
-  name: satanic bible
-  description: "What could possibly go wrong?"
-  id: BibleSatanic
-  components:
-  - type: Sprite
-    sprite: Objects/Specific/Chapel/satanicbible.rsi
-  - type: Item
-    sprite: Objects/Specific/Chapel/satanicbible.rsi
 
 - type: entity
   parent: Bible
