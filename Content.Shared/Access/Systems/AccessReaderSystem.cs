@@ -76,7 +76,13 @@ public sealed class AccessReaderSystem : EntitySystem
         if (canSeeAccessModification)
         {
             var localizedCurrentNames = GetLocalizedAccessNames(mainAccessReader.Value.Comp.AccessLists);
-            var accessesFormatted = ContentLocalizationManager.FormatListToOr(localizedCurrentNames);
+
+            // If there are any grouped access levels, format the names as a complex list;
+            // otherwise, format the names as a standard list
+            var accessesFormatted = mainAccessReader.Value.Comp.AccessLists.Any(x => x.Count > 1)
+                ? ContentLocalizationManager.FormatComplexListToOr(localizedCurrentNames)
+                : ContentLocalizationManager.FormatListToOr(localizedCurrentNames);
+
             var currentSettingsMessage = localizedCurrentNames.Count > 0
                 ? Loc.GetString("access-reader-access-settings-modified-message", ("access", accessesFormatted))
                 : Loc.GetString("access-reader-access-settings-removed-message");
@@ -92,7 +98,12 @@ public sealed class AccessReaderSystem : EntitySystem
         if (localizedOriginalNames.Count == 0)
             return;
 
-        var originalAccessesFormatted = ContentLocalizationManager.FormatListToOr(localizedOriginalNames);
+        // If there are any grouped access levels, format the names as a complex list;
+        // otherwise, format the names as a standard list
+        var originalAccessesFormatted = mainAccessReader.Value.Comp.AccessListsOriginal.Any(x => x.Count > 1)
+            ? ContentLocalizationManager.FormatComplexListToOr(localizedOriginalNames)
+            : ContentLocalizationManager.FormatListToOr(localizedOriginalNames);
+
         var originalSettingsMessage = Loc.GetString(mainAccessReader.Value.Comp.ExaminationText, ("access", originalAccessesFormatted));
         args.PushMarkup(originalSettingsMessage);
     }
@@ -928,13 +939,12 @@ public sealed class AccessReaderSystem : EntitySystem
     private List<string> GetLocalizedAccessNames(List<HashSet<ProtoId<AccessLevelPrototype>>> accessLists)
     {
         var localizedNames = new List<string>();
-        var listPresent = accessLists.Any(x => x.Count > 1);
 
         foreach (var accessHashSet in accessLists)
         {
             var localizedHashSetNames = new List<string>();
 
-            // Combine the names of all access levels in the subset into a single string
+            // Combine the names of all access levels in the hashset into a single string
             foreach (var access in accessHashSet)
             {
                 var accessName = Loc.GetString("access-reader-unknown-id");
@@ -947,21 +957,10 @@ public sealed class AccessReaderSystem : EntitySystem
                 localizedHashSetNames.Add(Loc.GetString("access-reader-access-label", ("access", accessName)));
             }
 
-            var accessesFormatted = ContentLocalizationManager.FormatList(localizedHashSetNames);
-
-            // If there is a access hashset with more than one access in it,
-            // modify the formated list so that these strings can be
-            // chained together and still make it clear which access levels
-            // are connected. E.g., if there are three access levels,
-            // [A], [B, C, D], and [E, F], they would be written as
-            // '|A|, |B, C, and D|, or |E and F|'.
-            if (listPresent)
-            {
-                accessesFormatted = Loc.GetString("access-reader-access-list-label", ("accesses", accessesFormatted));
-            }
+            var localizedAndFormatted = ContentLocalizationManager.FormatList(localizedHashSetNames);
 
             // Add this string to the list
-            localizedNames.Add(accessesFormatted);
+            localizedNames.Add(localizedAndFormatted);
         }
 
         return localizedNames;

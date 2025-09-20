@@ -107,9 +107,8 @@ namespace Content.Shared.Localizations
             }
         }
 
-        // TODO: allow fluent to take in lists of strings so this can be a format function like it should be.
         /// <summary>
-        /// Formats a list as per english grammar rules.
+        /// Formats a list as per English grammar rules.
         /// </summary>
         public static string FormatList(List<string> list)
         {
@@ -117,13 +116,16 @@ namespace Content.Shared.Localizations
             {
                 <= 0 => string.Empty,
                 1 => list[0],
-                2 => $"{list[0]} and {list[1]}",
-                _ => $"{string.Join(", ", list.GetRange(0, list.Count - 1))}, and {list[^1]}"
+                2 => Loc.GetString("generic-list", ("item", list[0]), ("itemLast", list[1])),
+                _ => Loc.GetString("generic-long-list",
+                        ("items", string.Join(Loc.GetString("generic-list-separator") + " ", list.GetRange(0, list.Count - 1))),
+                        ("itemLast", list[^1])
+                    ),
             };
         }
 
         /// <summary>
-        /// Formats a list as per english grammar rules, but uses or instead of and.
+        /// Formats a list as per English grammar rules, but uses or instead of and.
         /// </summary>
         public static string FormatListToOr(List<string> list)
         {
@@ -131,8 +133,45 @@ namespace Content.Shared.Localizations
             {
                 <= 0 => string.Empty,
                 1 => list[0],
-                2 => $"{list[0]} or {list[1]}",
-                _ => $"{string.Join(", ", list.GetRange(0, list.Count - 1))}, or {list[^1]}"
+                2 => Loc.GetString("generic-or-list", ("item", list[0]), ("itemLast", list[1])),
+                _ => Loc.GetString("generic-long-or-list",
+                        ("items", string.Join(Loc.GetString("generic-list-separator") + " ", list.GetRange(0, list.Count - 1))),
+                        ("itemLast", list[^1])
+                    ),
+            };
+        }
+
+        /// <summary>
+        /// Formats a complex list as per English grammar rules.
+        /// </summary>
+        public static string FormatComplexList(List<string> list)
+        {
+            return list.Count switch
+            {
+                <= 0 => string.Empty,
+                1 => list[0],
+                2 => Loc.GetString("generic-complex-list", ("item", list[0]), ("itemLast", list[1])),
+                _ => Loc.GetString("generic-long-complex-list",
+                        ("items", string.Join(Loc.GetString("generic-complex-list-separator") + " ", list.GetRange(0, list.Count - 1))),
+                        ("itemLast", list[^1])
+                    ),
+            };
+        }
+
+        /// <summary>
+        /// Formats a complex list as per English grammar rules, but uses or instead of and.
+        /// </summary>
+        public static string FormatComplexListToOr(List<string> list)
+        {
+            return list.Count switch
+            {
+                <= 0 => string.Empty,
+                1 => list[0],
+                2 => Loc.GetString("generic-or-complex-list", ("item", list[0]), ("itemLast", list[1])),
+                _ => Loc.GetString("generic-long-or-complex-list",
+                        ("items", string.Join(Loc.GetString("generic-complex-list-separator") + " ", list.GetRange(0, list.Count - 1))),
+                        ("itemLast", list[^1])
+                    ),
             };
         }
 
