@@ -19,6 +19,7 @@ using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Reflection;
 using Robust.Shared.Timing;
+using Robust.Shared.Utility;
 
 namespace Content.Server.Administration.Logs;
 
@@ -401,6 +402,7 @@ public sealed partial class AdminLogManager : SharedAdminLogManager, IAdminLogMa
     {
         var adminLog = false;
         var logMessage = message;
+        var playerNetEnts = new List<(NetEntity, string)>();
 
         foreach (var player in players)
         {
@@ -419,6 +421,8 @@ public sealed partial class AdminLogManager : SharedAdminLogManager, IAdminLogMa
                         ("name", cachedInfo.CharacterName),
                         ("subtype", subtype));
                 }
+                if (cachedInfo != null && cachedInfo.NetEntity != null)
+                    playerNetEnts.Add((cachedInfo.NetEntity.Value, cachedInfo.CharacterName));
             }
 
             if (adminLog)
@@ -442,7 +446,44 @@ public sealed partial class AdminLogManager : SharedAdminLogManager, IAdminLogMa
         }
 
         if (adminLog)
+        {
             _chat.SendAdminAlert(logMessage);
+
+            if (CreateTptoLinks(playerNetEnts, out var outString))
+                _chat.SendAdminAlertNoFormatOrEscape(outString);
+        }
+    }
+
+    /// <summary>
+    /// Creates a list of tpto command links of the given players
+    /// </summary>
+    private bool CreateTptoLinks(List<(NetEntity NetEnt, string CharacterName)> players, out string outString)
+    {
+        outString = string.Empty;
+
+        if (players.Count == 0)
+            return false;
+
+        outString = Loc.GetString("admin-alert-tp-to-header");
+
+        for (var i = 0; i < players.Count; i++)
+        {
+            var player = players[i];
+            outString += $"[cmdlink=\"{EscapeText(player.CharacterName)}\" command=\"tpto {player.NetEnt}\"/]";
+
+            if (i < players.Count - 1)
+                outString += ", ";
+        }
+
+        return true;
+    }
+
+    /// <summary>
+    /// Escape the given text to not allow breakouts of the command tags
+    /// </summary>
+    private string EscapeText(string text)
+    {
+        return FormattedMessage.EscapeText(text).Replace("\"", "\\\"").Replace("'", "\\'");
     }
 
     public async Task<List<SharedAdminLog>> All(LogFilter? filter = null, Func<List<SharedAdminLog>>? listProvider = null)

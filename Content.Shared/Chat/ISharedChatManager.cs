@@ -5,4 +5,5 @@ public interface ISharedChatManager
     void Initialize();
     void SendAdminAlert(string message);
     void SendAdminAlert(EntityUid player, string message);
+    void SendAdminAlertNoFormatOrEscape(string message);
 }
