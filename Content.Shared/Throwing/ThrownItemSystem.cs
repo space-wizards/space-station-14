@@ -64,7 +64,7 @@ namespace Content.Shared.Throwing
             if (!args.OtherFixture.Hard)
                 return;
 
-            if (args.OtherEntity == component.Thrower)
+            if (args.OtherEntity == Resolve(component.Thrower))
                 return;
 
             ThrowCollideInteraction(component, args.OurEntity, args.OtherEntity);
@@ -72,7 +72,7 @@ namespace Content.Shared.Throwing
 
         private void PreventCollision(EntityUid uid, ThrownItemComponent component, ref PreventCollideEvent args)
         {
-            if (args.OtherEntity == component.Thrower)
+            if (args.OtherEntity == Resolve(component.Thrower))
             {
                 args.Cancelled = true;
             }
@@ -110,7 +110,7 @@ namespace Content.Shared.Throwing
                 }
             }
 
-            var ev = new StopThrowEvent(thrownItemComponent.Thrower);
+            var ev = new StopThrowEvent(Resolve(thrownItemComponent.Thrower));
             RaiseLocalEvent(uid, ref ev);
             RemComp<ThrownItemComponent>(uid);
         }
@@ -127,7 +127,7 @@ namespace Content.Shared.Throwing
                 _adminLogger.Add(LogType.Landed, LogImpact.Low, $"{ToPrettyString(uid):entity} thrown by {ToPrettyString(thrownItem.Thrower.Value):thrower} landed.");
 
             _broadphase.RegenerateContacts((uid, physics));
-            var landEvent = new LandEvent(thrownItem.Thrower, playSound);
+            var landEvent = new LandEvent(Resolve(thrownItem.Thrower), playSound);
             RaiseLocalEvent(uid, ref landEvent);
         }
 
