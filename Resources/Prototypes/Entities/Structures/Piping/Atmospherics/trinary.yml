@@ -161,6 +161,9 @@
       enabled: false
       inletOne: inlet
       inletTwo: filter
+    - type: ActivatableUI
+      key: enum.GasMixerUiKey.Key
+    - type: ActivatableUIRequiresAnchor
     - type: Flippable
       mirrorEntity: GasMixerFlipped
     - type: Construction
