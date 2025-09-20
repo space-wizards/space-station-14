@@ -122,13 +122,14 @@ namespace Content.Shared.Cuffs
                 // We temporarily allow interactions so the cuffable system does not block itself.
                 // It's assumed that this will always be false.
                 // Otherwise they would not be trying to uncuff themselves.
+                bool OldCanStillInteract = cuffable.CanStillInteract;
                 cuffable.CanStillInteract = true;
                 Dirty(args.User, cuffable);
 
                 if (!_actionBlocker.CanInteract(args.User, args.User))
                     args.Cancelled = true;
 
-                cuffable.CanStillInteract = false;
+                cuffable.CanStillInteract = OldCanStillInteract;
                 Dirty(args.User, cuffable);
             }
             else
@@ -172,13 +173,14 @@ namespace Content.Shared.Cuffs
 
         public void UpdateCuffState(EntityUid uid, CuffableComponent component)
         {
+            Dirty(uid, component);
+
             var canInteract = TryComp(uid, out HandsComponent? hands) && hands.Hands.Count > component.CuffedHandCount;
 
             if (canInteract == component.CanStillInteract)
                 return;
 
             component.CanStillInteract = canInteract;
-            Dirty(uid, component);
             _actionBlocker.UpdateCanMove(uid);
 
             if (component.CanStillInteract)
@@ -408,6 +410,9 @@ namespace Content.Shared.Cuffs
 
             var dirty = false;
             var handCount = CompOrNull<HandsComponent>(ent.Owner)?.Count ?? 0;
+
+            if (ent.Comp.CuffedHandCount == handCount && ent.Comp.CuffedHandCount > 0)
+                dirty = true;
 
             while (ent.Comp.CuffedHandCount > handCount && ent.Comp.CuffedHandCount > 0)
             {
