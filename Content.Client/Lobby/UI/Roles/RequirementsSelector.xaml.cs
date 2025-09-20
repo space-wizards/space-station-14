@@ -122,11 +122,14 @@ public sealed partial class RequirementsSelector : BoxContainer
                     value: new MarkupParameter(8),
                     attributes: null
                 ));
+                var nodeLen = requirements.Count;
+                var idx = 0;
                 foreach (var i in requirements)
                 {
                     requiremenets_short.PushTag(i);
                     if (firstNode.Name == i.Name && i.Closing)
                         break;
+                    idx++;
                 }
                 requiremenets_short.PushTag(new MarkupNode(
                     name: "font",
@@ -134,6 +137,8 @@ public sealed partial class RequirementsSelector : BoxContainer
                     attributes: null,
                     closing: true
                 ));
+                if (idx < nodeLen - 1)
+                    requiremenets_short.PushTag(new MarkupNode("..."));
                 // lss = requirements[0];
                 // requiremenets_short = FormattedMessage.Empty;
                 // requiremenets_short.PushTag(lss);

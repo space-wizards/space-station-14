@@ -108,12 +108,13 @@ public sealed class JobRequirementsManager : ISharedPlaytimeManager
     )
     {
         reason = null;
+        reason_short = null;
 
         if (antags is not null)
         {
             foreach (var proto in antags)
             {
-                if (!IsAllowed(_prototypes.Index(proto), profile, out reason))
+                if (!IsAllowed(_prototypes.Index(proto), profile, out reason, out reason_short))
                     return false;
             }
         }
@@ -122,7 +123,7 @@ public sealed class JobRequirementsManager : ISharedPlaytimeManager
         {
             foreach (var proto in jobs)
             {
-                if (!IsAllowed(_prototypes.Index(proto), profile, out reason))
+                if (!IsAllowed(_prototypes.Index(proto), profile, out reason, out reason_short))
                     return false;
             }
         }
@@ -136,8 +137,11 @@ public sealed class JobRequirementsManager : ISharedPlaytimeManager
     public bool IsAllowed(
         JobPrototype job,
         HumanoidCharacterProfile? profile,
-        [NotNullWhen(false)] out FormattedMessage? reason)
+        [NotNullWhen(false)] out FormattedMessage? reason,
+        out FormattedMessage? reason_short
+    )
     {
+        reason_short = null;
         // Check the player's bans
         if (_jobBans.Contains(job.ID))
         {
@@ -170,23 +174,32 @@ public sealed class JobRequirementsManager : ISharedPlaytimeManager
     public bool IsAllowed(
         AntagPrototype antag,
         HumanoidCharacterProfile? profile,
-        [NotNullWhen(false)] out FormattedMessage? reason)
+        [NotNullWhen(false)] out FormattedMessage? reason,
+        out FormattedMessage? reason_short
+        )
     {
+        reason_short = null;
         // Check the player's bans
         if (_antagBans.Contains(antag.ID))
         {
             reason = FormattedMessage.FromUnformatted(Loc.GetString("role-ban"));
+            reason_short = reason;
             return false;
         }
 
         // Check whitelist requirements
         if (!CheckWhitelist(antag, out reason))
+        {
+            reason_short = reason;
             return false;
+        }
 
         // Check other role requirements
         var reqs = _entManager.System<SharedRoleSystem>().GetRoleRequirements(antag);
         if (!CheckRoleRequirements(reqs, profile, out reason))
+        {
             return false;
+        }
 
         return true;
     }

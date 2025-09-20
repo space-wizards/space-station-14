@@ -663,9 +663,10 @@ namespace Content.Client.Lobby.UI
                 if (!_requirements.IsAllowed(
                         antag,
                         (HumanoidCharacterProfile?)_preferencesManager.Preferences?.SelectedCharacter,
-                        out var reason))
+                        out var reason,
+                        out var reason_short))
                 {
-                    selector.LockRequirements(reason);
+                    selector.LockRequirements(reason, reason_short);
                     Profile = Profile?.WithAntagPreference(antag.ID, false);
                     SetDirty();
                 }
