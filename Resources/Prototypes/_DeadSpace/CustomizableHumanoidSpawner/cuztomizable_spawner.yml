@@ -5,6 +5,7 @@
   name: customizable spawn point
   categories: [ Spawner ]
   components:
+  - type: MindContainer
   - type: Sprite
     layers:
     - state: timed

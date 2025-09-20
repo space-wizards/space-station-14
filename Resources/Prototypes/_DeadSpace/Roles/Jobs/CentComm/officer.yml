@@ -14,7 +14,7 @@
   - CentralCommand
   special:
   - !type:AddImplantSpecial
-    implants: [ MindShieldImplant, TrackingImplant ]
+    implants: [ MindShieldImplant, TrackingImplant, DeathRattleImplantCentcomm ]
   - !type:AddComponentSpecial
     components:
     - type: AntagImmune
@@ -23,25 +23,17 @@
 - type: startingGear
   id: CentcomOfficerGear
   equipment:
-    jumpsuit: ADTClothingUniformTurleneckGreenBlack
+    # jumpsuit: ADTClothingUniformTurleneckGreenBlack
     # back: ClothingBackpackMilitarySatchel
     mask: ClothingMaskGasSecurity
-    shoes: ClothingShoesBootsJack
+    # shoes: ClothingShoesBootsJackSecFilled
     outerClothing: ClothingOuterVestWeb
-    eyes: ClothingEyesGlassesSecurity
+    # eyes: ClothingEyesGlassesSecurity
     head: ClothingHeadHatBeretCentcomNaval
     id: CentcomPDA
     gloves: ClothingHandsGlovesCombat
     ears: ClothingHeadsetCentCom
     belt: ClothingBeltSecurityWebbingFilled
-    pocket2: WeaponPistolN1984
-  #   underwearb: ClothingUnderwearBottomBoxersCentcomm # DS14-Underwear
-  # underweart: ClothingUnderwearTopBraCentcomm # DS14-Underwear
-  # underwearb: ClothingUnderwearBottomPantiesCentcomm # DS14-Underwear
-  # innerClothingSkirt: ClothingUniformJumpskirtPencilCentcomOfficial
-  # storage:
-  #   back:
-  #   -
 
 - type: chameleonOutfit
   id: CentralCommandOfficerChameleonOutfit

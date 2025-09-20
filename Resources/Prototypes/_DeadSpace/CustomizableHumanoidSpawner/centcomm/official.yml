@@ -16,6 +16,7 @@
     - Shark
     - Demon
     - Vulpkanin
+    - Tajaran
 
 - type: roleLoadout
   id: JobCentralCommandOfficial
@@ -24,6 +25,7 @@
   - CentralCommandOfficialLoadout
   - Survival
   - GroupSpeciesBreathTool
+  - CentcommOfficerUnderwear
 
 - type: loadoutGroup
   id: CentralCommandOfficialLoadout
@@ -35,4 +37,11 @@
 - type: loadout
   id: CentralCommandOfficialLoadout
   equipment:
+    neck: ClothingNeckCloakCentcom
     back: ClothingBackpackSatchelOfficial
+    head: ClothingHeadHatCentcomcap
+    eyes: ClothingEyesGlassesHiddenSecurity
+  storage:
+    back:
+    - PhoneInstrument
+    - DoorRemoteAll

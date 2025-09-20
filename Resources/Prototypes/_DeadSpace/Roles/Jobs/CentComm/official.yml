@@ -14,7 +14,7 @@
   - CentralCommand
   special:
   - !type:AddImplantSpecial
-    implants: [ MindShieldImplant, TrackingImplant ]
+    implants: [ MindShieldImplant, TrackingImplant, DeathRattleImplantCentcomm ]
   - !type:AddComponentSpecial
     components:
     - type: AntagImmune
@@ -26,8 +26,8 @@
     jumpsuit: ClothingUniformJumpsuitCentcomOfficial
     # back: ClothingBackpackSatchelOfficial
     shoes: ClothingShoesBootsLaceup
-    head: ClothingHeadHatCentcom
-    eyes: ClothingEyesGlassesSunglasses
+    # head: ClothingHeadHatCentcom
+    # eyes: ClothingEyesGlassesSunglasses
     gloves: ClothingHandsGlovesColorBlack
     outerClothing: ClothingOuterVestWeb
     id: CentcomOfficialPDA
@@ -35,13 +35,6 @@
     belt: WeaponPistolN1984
     pocket1: RubberStampCentcom
     pocket2: ClothingMaskGasCentcom
-  #   underwearb: ClothingUnderwearBottomBoxersCentcomm # DS14-Underwear
-  # underweart: ClothingUnderwearTopBraCentcomm # DS14-Underwear
-  # underwearb: ClothingUnderwearBottomPantiesCentcomm # DS14-Underwear
-  # innerClothingSkirt: ClothingUniformJumpskirtPencilCentcomOfficial
-  # storage:
-  #   back:
-  #   -
 
 - type: entity
   parent: ClothingBackpackSatchelHoS

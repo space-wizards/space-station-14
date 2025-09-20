@@ -52,3 +52,5 @@ loadout-group-coroner-jumpsuit = Коронер, комбинезон
 loadout-group-coroner-backpack = Коронер, рюкзак
 loadout-group-coroner-head = Коронер, голова
 loadout-group-coroner-underwear = Коронер, нижнее бельё
+# Centcomm
+loadout-group-centcomm-officer-underwear = Офицер ЦК, нижнее бельё

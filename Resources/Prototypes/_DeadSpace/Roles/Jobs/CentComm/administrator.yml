@@ -14,7 +14,7 @@
   - CentralCommand
   special:
   - !type:AddImplantSpecial
-    implants: [ MindShieldImplant, TrackingImplant ]
+    implants: [ MindShieldImplant, TrackingImplant, DeathRattleImplantCentcomm, MacroBombImplant ]
   - !type:AddComponentSpecial
     components:
     - type: AntagImmune
@@ -26,17 +26,10 @@
     jumpsuit: ClothingUniformJumpsuitCentcomFormal
     shoes: ClothingShoesBootsLaceup
     head: ClothingHeadHatCentcomcap
-    eyes: ClothingEyesGlassesSecurity
+    # eyes: ClothingEyesGlassesSecurity
     gloves: ClothingHandsGlovesDominator
     id: CentcomAdministratorPDA
     ears: ClothingHeadsetAltCentCom
     neck: ClothingNeckCloakCentcom
     pocket1: RubberStampCentcom
     pocket2: ClothingMaskGasCentcom
-  #   underwearb: ClothingUnderwearBottomBoxersCentcomm # DS14-Underwear
-  # underweart: ClothingUnderwearTopBraCentcomm # DS14-Underwear
-  # underwearb: ClothingUnderwearBottomPantiesCentcomm # DS14-Underwear
-  # innerClothingSkirt: ClothingUniformJumpskirtPencilCentcomOfficial
-  # storage:
-  #   back:
-  #   -
