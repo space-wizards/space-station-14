@@ -683,8 +683,25 @@
       effects:
         - !type:SatiateThirst
           factor: 6
+# DS14-start
+          conditions:
+          - !type:OrganType
+            type: Xenomorph
+            shouldHave: false
+# DS14-end
         - !type:ModifyBloodLevel
           amount: 6
+          conditions:
+          - !type:OrganType
+            type: Xenomorph
+            shouldHave: false
+# DS14-start
+        - !type:ModifyBloodLevel
+          amount: 2
+          conditions:
+          - !type:OrganType
+            type: Xenomorph
+# DS14-end
 
 - type: reagent
   id: Siderlac

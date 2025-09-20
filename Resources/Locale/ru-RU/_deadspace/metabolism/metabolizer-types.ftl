@@ -1,0 +1,1 @@
+metabolizer-type-xenomorph = Ксеномфорф

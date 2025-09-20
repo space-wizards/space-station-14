@@ -1,0 +1,62 @@
+- type: reagent
+  id: AcidicBlood
+  name: reagent-name-acidic-blood
+  group: Biological
+  desc: reagent-desc-acidic-blood
+  flavor: acid
+  color: "#669900"
+  physicalDesc: reagent-physical-desc-strong-smelling
+  recognizable: true
+  reactiveEffects:
+    Acidic:
+      methods: [ Touch ]
+      effects:
+      - !type:HealthChange
+        scaleByQuantity: true
+        ignoreResistances: false
+        damage:
+          types:
+            Caustic: 0.6
+        conditions:
+        - !type:OrganType
+          type: Xenomorph
+          shouldHave: false
+      - !type:Emote
+        emote: Scream
+        probability: 0.2
+        conditions:
+        - !type:OrganType
+          type: Xenomorph
+          shouldHave: false
+  metabolisms:
+    Poison:
+      metabolismRate: 3.00
+      effects:
+      - !type:HealthChange
+        damage:
+          types:
+            Caustic: 12
+        conditions:
+        - !type:OrganType
+          type: Xenomorph
+          shouldHave: false
+      - !type:PopupMessage
+        type: Local
+        visualType: Large
+        messages: [ "generic-reagent-effect-burning-insides" ]
+        probability: 0.33
+        conditions:
+        - !type:OrganType
+          type: Xenomorph
+          shouldHave: false
+      - !type:Emote
+        emote: Scream
+        probability: 0.25
+        conditions:
+        - !type:OrganType
+          type: Xenomorph
+          shouldHave: false
+  footstepSound:
+    collection: FootstepBlood
+    params:
+      volume: 6

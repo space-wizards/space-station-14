@@ -9,8 +9,12 @@
       - torso
       organs:
         brain: OrganXenoBrain
+        eyes: OrganXenoEyes
     torso:
       part: TorsoXeno
+      organs:
+        heart: OrganXenoHeart
+        stomach: OrganXenoStomach
       connections:
       - right arm
       - left arm

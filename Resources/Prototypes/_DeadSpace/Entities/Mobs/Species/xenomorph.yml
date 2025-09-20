@@ -1,9 +1,6 @@
 - type: entity
   save: false
-  parent:
-  - MobBloodstream
-  - MobFlammable
-  - BaseMobSpecies
+  parent: BaseMobSpeciesOrganic
   id: BaseMobSpeciesXenomorph
   abstract: true
   components:
@@ -13,18 +10,20 @@
   - type: Barotrauma
     damage:
       types:
-        Blunt: 0.50 #per second, scales with pressure and other constants.
+        Blunt: 0.07 #per second, scales with pressure and other constants.
+  - type: Respirator #It just works?
+    minSaturation: 5.0
   - type: Temperature
     heatDamageThreshold: 325
-    coldDamageThreshold: 260
+    coldDamageThreshold: 150
     currentTemperature: 310.15
     specificHeat: 42
     coldDamage:
       types:
-        Cold: 0.5 #per second, scales with temperature & other constants
+        Cold: 0.01 #per second, scales with temperature & other constants
     heatDamage:
       types:
-        Heat: 1 #per second, scales with temperature & other constants
+        Heat: 3 #per second, scales with temperature & other constants
   - type: Fingerprint
   - type: Blindable
   - type: TypingIndicator
@@ -41,17 +40,13 @@
     damageContainer: Biological
     damageModifierSet: XenoRace
   - type: Bloodstream
-    bloodReagent: FluorosulfuricAcid
-    bloodlossDamage:
-      types:
-        Bloodloss: 0.0
-    bloodlossHealDamage:
-      types:
-        Bloodloss: -2
-    maxBleedAmount: 5
-    chemicalMaxVolume: 0
-  - type: DrawableSolution
-    solution: bloodstream
+    bloodReagent: AcidicBlood
+  - type: Hunger
+    baseDecayRate: 0.05
+  - type: Thirst
+    baseDecayRate: 0.05
+  - type: Perishable
+    molsPerSecondPerUnitMass: 0.0005
   - type: Vocal
     sounds:
       Male: UnisexXenomorph
@@ -64,6 +59,25 @@
     damage:
       types:
         Slash: 6
+  - type: StatusEffects
+    allowed:
+    - Stun
+    - KnockedDown
+    - SlowedDown
+    - Stutter
+    - Electrocution
+    - SlurredSpeech
+    - RatvarianLanguage
+    - PressureImmunity
+    - Muted
+    - ForcedSleep
+    - TemporaryBlindness
+    - Pacified
+    - StaminaModifier
+    - Flashed
+    - RadiationProtection
+    - Drowsiness
+    - Adrenaline
   - type: InteractionPopup
     successChance: 1.0
     interactSuccessString: petting-success-bingus
@@ -83,13 +97,10 @@
     - Dead
     damage:
       types:
-        Airloss: -0.5
-        Cellular: -0.5
+        Caustic: -0.7
       groups:
-        Airloss: -0.5
+        Brute: -0.5
   - type: Sanity
-  - type: ZombieImmune
-  - type: ImmunitetInfectionDead
   - type: LizardAccent
   - type: EmotePanel # DS14-Emote-panel
   # - type: FootPrints
@@ -100,15 +111,12 @@
 - type: damageModifierSet
   id: XenoRace
   coefficients:
-    Blunt: 0.85
-    Slash: 0.75
-    Piercing: 1
-    Shock: 1.25
-    Cold: 0.75
+    Blunt: 0.9
+    Slash: 0.95
+    Shock: 1.2
+    Cold: 0.5
     Heat: 1.5
-    Poison: 0
-    Radiation: 0
-    Caustic: 0
+    Caustic: 0.5
 
 - type: entity
   parent: BaseMobSpeciesXenomorph
