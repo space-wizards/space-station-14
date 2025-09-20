@@ -40,10 +40,10 @@ public abstract class SharedJumpSystem : EntitySystem
     private void OnThrowCollide(EntityUid uid, JumpComponent component, ref ThrowDoHitEvent args)
     {
         if (component.KnockdownSelfOnCollision)
-            _stun.TryKnockdown(uid, TimeSpan.FromSeconds(2), true);
+            _stun.TryKnockdown(uid, TimeSpan.FromSeconds(component.KnockdownSelfDuration), true);
 
         if (component.KnockdownTargetOnCollision)
-            _stun.TryKnockdown(args.Target, TimeSpan.FromSeconds(2), true);
+            _stun.TryKnockdown(args.Target, TimeSpan.FromSeconds(component.KnockdownTargetDuration), true);
     }
 
     private void OnGetItemActions(Entity<JumpComponent> ent, ref GetItemActionsEvent args)
@@ -125,7 +125,7 @@ public abstract class SharedJumpSystem : EntitySystem
             vector = Vector2.Normalize(vector) * distance.Value;
 
         if (ent.Comp.ActionEntity != null)
-            _action.SetCooldown(ent.Comp.ActionEntity.Value, _timing.CurTime, _timing.CurTime + TimeSpan.FromSeconds(ent.Comp.Cooldown));
+            _action.SetUseDelay(ent.Comp.ActionEntity.Value, TimeSpan.FromSeconds(ent.Comp.Cooldown));
 
         _throwing.TryThrow(ent.Owner, vector, baseThrowSpeed: speed, doSpin: false);
 
