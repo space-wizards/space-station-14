@@ -1,0 +1,71 @@
+- type: entity
+  parent: [BaseWeaponBattery, BaseGunWieldable, BaseSecurityContraband]
+  id: WeaponIonRifle
+  name: ионная винтовка
+  description: Специализированная винтовка, стреляющая ионными зарядами, способными нарушать работу электронных устройств и создавать помехи для них.
+  components:
+    - type: Sprite
+      sprite: _DeadSpace/Objects/Weapons/Guns/Battery/ion_rifle.rsi
+      layers:
+        - state: base
+          map: ["enum.GunVisualLayers.Base"]
+        - state: mag-unshaded-4
+          map: ["enum.GunVisualLayers.MagUnshaded"]
+          shader: unshaded
+    - type: Clothing
+      sprite: _DeadSpace/Objects/Weapons/Guns/Battery/ion_rifle.rsi
+    - type: StaticPrice
+      price: 1000
+    - type: GunRequiresWield
+    - type: Gun
+      fireRate: 0.4
+      selectedMode: SemiAuto
+      availableModes:
+        - SemiAuto
+      soundGunshot:
+        path: /Audio/_DeadSpace/Weapons/Guns/Gunshots/ion_rifle.ogg
+    - type: ProjectileBatteryAmmoProvider
+      proto: IonRifleBullet
+      fireCost: 40
+    - type: Battery
+      maxCharge: 600
+      startingCharge: 600
+    - type: MagazineVisuals
+      magState: mag
+      steps: 5
+      zeroVisible: true
+    - type: Appearance
+    - type: SpeedModifiedOnWield
+      walkModifier: 0.50
+      sprintModifier: 0.50
+    - type: CursorOffsetRequiresWield
+    - type: EyeCursorOffset
+      maxOffset: 3
+      pvsIncrease: 0.3
+
+- type: entity
+  name: ионный заряд
+  id: IonRifleBullet
+  parent: [BaseBulletTrigger, EmitterBolt]
+  categories: [ HideSpawnMenu ]
+  components:
+    - type: Sprite
+      sprite: _DeadSpace/Objects/Weapons/Guns/Projectiles/ion.rsi
+      layers:
+        - state: ion
+          shader: unshaded
+    - type: PointLight
+      radius: 2
+      energy: 2
+      color: "#377dff"
+    - type: Projectile
+      damage:
+        types:
+          Shock: 10
+    - type: Reflective
+      reflective:
+        - Energy
+    - type: EmpOnTrigger
+      range: 1
+      energyConsumption: 2500
+      disableDuration: 3
