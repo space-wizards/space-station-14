@@ -301,7 +301,17 @@
   text: "/ServerInfo/Guidebook/StarlightSOP/SecuritySOP/PrisonerTreatment.xml"
   priority: 7
 
+- type: guideEntry
+  id: security-sop-parole
+  name: guide-entry-sl-security-sop-parole
+  text: "/ServerInfo/Guidebook/StarlightSOP/SecuritySOP/Parole.xml"
+  priority: 8
 
+- type: guideEntry
+  id: security-sop-permitacquisition
+  name: guide-entry-sl-security-sop-permitacquisition
+  text: "/ServerInfo/Guidebook/StarlightSOP/SecuritySOP/PermitAcquisition.xml"
+  priority: 9
 
 - type: guideEntry
   id: legal-sop-intro
